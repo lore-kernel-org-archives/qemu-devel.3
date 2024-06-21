@@ -4,194 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4783C2BB85
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 20:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3CDC27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 20:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKl7Q-000179-Tj; Fri, 21 Jun 2024 16:44:24 -0400
+	id 1sKlEX-0004Ip-2Y; Fri, 21 Jun 2024 16:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tony.luck@intel.com>)
- id 1sKl7O-00014k-Ax
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 16:44:22 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1sKlER-0004Fh-7T; Fri, 21 Jun 2024 16:51:40 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tony.luck@intel.com>)
- id 1sKl7L-00081D-RS
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 16:44:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719002659; x=1750538659;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=kBqgVYbTfOa5IDnW0fpp9nr1163V/5qzJHPwi7gpY/s=;
- b=QTBAWrCSxq+cBrwo48YwmaIIdGWrDa5ljtSBQ+1GSYvRPU9SjkF46J5H
- eNvVCpRkzMNJ55fg0LDJK5Ka9KMcW6WMpOEhAZoI9i8c/UEAN7xf9d4LO
- I5A7YxbQGWqM4wolX4dmGCnlmpuDnQohNEBT/Oo/aUt88mFmUjIa364R3
- tVoGe4NN/w0PmQ/FFststYBe5QrqDVGMUCTxKnKpQJy4O/I+ZBIXKpfQJ
- 6gSfCBzRqVy6AdGNL4s79BZnO8ahX3upn2gVUPF5A0fTlQ3DIZ7ncrrJK
- jAJcuVSP5yt3ttWMRZHML8REBkfz+BQ8yLoxdxWnbFU7GBsfiXNmuKC8e w==;
-X-CSE-ConnectionGUID: FEtm2fcVSpSCksxIj+vh7A==
-X-CSE-MsgGUID: brb7DXj3S5aB+Bc1iBukGw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11110"; a="26680590"
-X-IronPort-AV: E=Sophos;i="6.08,255,1712646000"; d="scan'208";a="26680590"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Jun 2024 13:44:15 -0700
-X-CSE-ConnectionGUID: iK5n/4TZReqsQVPp40nY0A==
-X-CSE-MsgGUID: cNHGQ7CmQSuxl2SgvMrwRA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,255,1712646000"; d="scan'208";a="80218897"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
- by orviesa001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 21 Jun 2024 13:44:15 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Fri, 21 Jun 2024 13:44:14 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Fri, 21 Jun 2024 13:44:14 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.100)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Fri, 21 Jun 2024 13:44:14 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=j7mP7ZPB9+zp9M5Wp++TORdLLeVCtvyyJQqRp3CCPigMZAy95E5anF7l/IQuCbRJHR4rf0JTVcglksHLRgJmejL5+MR+ZcFHb/EV6x2CNuvXsKj+DITcbH1bts1bZDHcBP53tWJHOg539H4fyX7s4WAQPDdD3cy5srlA+9fKcjUo4tNAgLiRCeMwZ3cEQztcg+08qqvW+YAlTA7lGsekNpXthnSfpqQVOUR3tPhBgYJNsd1aH2rxnBy86rgFAnrD0sUGgzLyFZw8OiiAzuHU1aKHw+IuPrTfGv0eWGIOLNvtIzbnTXUh+d54XDSwRRE7GIBxqulEYnj8jSRrsIbUsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=m4YfTNC6Eny5SXQNDLnDp9IMKhD5CtFCWqygrfpkVX4=;
- b=hOyJ+yPMq1OniMmuBe2gpEkEL4S4iuHW2tE+ZrfArSMv4sysb/s4UvArRSv5VMxPnKCybNCokfPdhPNEnX+Rss/lr7k0Cex1Nal81YNxSMKmz1hdkbao+6+PCSnty2xZ5gilBVAmBu+xz7ldfqrxYrLbGEGK99hvZf/Bgz+D3Uo1TvR8T2n8nJt9OpbCOG5zVvE5y/XUSYUg6/x4rhlIrcSpLnt5REzY6JO93VgGtrLplLcDY+7m291tlkNYatz10R22izZ8zdx13X9QS9rKnyC1wQwfs7eMn55Chepzr5YB+MYYXjL9QgwBGqb1ZS9VoRKBpgG829cRGEafAZ80Tw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by PH7PR11MB8276.namprd11.prod.outlook.com (2603:10b6:510:1af::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.25; Fri, 21 Jun
- 2024 20:44:12 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::acfd:b7e:b73b:9361]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::acfd:b7e:b73b:9361%5]) with mapi id 15.20.7698.017; Fri, 21 Jun 2024
- 20:44:12 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>, "Williams, Dan J"
- <dan.j.williams@intel.com>
-CC: Shiyang Ruan <ruansy.fnst@fujitsu.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "linux-cxl@vger.kernel.org"
- <linux-cxl@vger.kernel.org>, "dave@stgolabs.net" <dave@stgolabs.net>, "Weiny, 
- Ira" <ira.weiny@intel.com>, "Schofield, Alison" <alison.schofield@intel.com>, 
- "Jiang, Dave" <dave.jiang@intel.com>, "Verma, Vishal L"
- <vishal.l.verma@intel.com>, Borislav Petkov <bp@alien8.de>, James Morse
- <james.morse@arm.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, "Robert
- Richter" <rric@kernel.org>, "linux-edac@vger.kernel.org"
- <linux-edac@vger.kernel.org>, Miaohe Lin <linmiaohe@huawei.com>, "Naoya
- Horiguchi" <nao.horiguchi@gmail.com>, "linux-mm@kvack.org"
- <linux-mm@kvack.org>
-Subject: RE: [RFC PATCH] cxl: avoid duplicating report from MCE & device
-Thread-Topic: [RFC PATCH] cxl: avoid duplicating report from MCE & device
-Thread-Index: AQHawzOz2XZytMimJk6HWFfyu84XE7HSgzIAgAAMqwCAAAwS4A==
-Date: Fri, 21 Jun 2024 20:44:12 +0000
-Message-ID: <SJ1PR11MB6083837A8588894E49FEBC7BFCC92@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
- <20240620180239.00004d41@Huawei.com>
- <6675bf92116ed_57ac294a@dwillia2-xfh.jf.intel.com.notmuch>
- <20240621194506.000024aa@Huawei.com>
-In-Reply-To: <20240621194506.000024aa@Huawei.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|PH7PR11MB8276:EE_
-x-ms-office365-filtering-correlation-id: 66f5a474-2a0c-4fc9-6884-08dc9232e858
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230037|366013|1800799021|376011|7416011|38070700015; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?jQwneYXvE+u5hilbX2lRt4zSgnmIRXALHoYTcIQ4Bepny773h6S/tEYx8YPi?=
- =?us-ascii?Q?E+GO034EWP4z/iSdgQk8p2Sgnq1MAwrAcV8yBFGgZBH6SNu+P6yCZ3UlSv++?=
- =?us-ascii?Q?3i3Ksn0noe251cZLxd+MMiv4RRN0nV/gqOZWd0ZIjIVmkyFNngH0Xqi41Uv/?=
- =?us-ascii?Q?2YVxYLt64aNiCeAVYPv4ukCD1+NTWfJ5MXMBna7/PxovdANaA7G0a7pMqpj0?=
- =?us-ascii?Q?gjoULphQPiB9fIBhM5PPRUEOZE4weooaRxuCng3o8xKyQOiAhOgEUZOfK6JN?=
- =?us-ascii?Q?r9VFaCiZT+23keJYRSo/YeIYveAuYdNsCakm68oib4epV2NA2c3W5To2E1kj?=
- =?us-ascii?Q?TuLxlSgNYfI14IALskR47i7WN9+G2iTBXbm/okkRsAXHpcf0LzJ+iQEQh9jQ?=
- =?us-ascii?Q?ZtJy9Mx+kBIMTLc5xcVp9bVtMViHvUs4uwE9/Vij0pBhoa6pS8oRlugFao+m?=
- =?us-ascii?Q?F4D/Po22jhw8WB1DDLWQde7ppLuCw4yVzyZAL0MRppyB/Qb7SSrrHsrVd4b9?=
- =?us-ascii?Q?sB2kzb0RldN63oMvHNBe9NepKmJ461naqt58h1UInoYiV/zIuCWQikrOp7Zz?=
- =?us-ascii?Q?mXcIYswHKAwouRbzkhOQvtkFfdr2IFCeKvl2qHxLsQ6JvxR+7iRYYSpzCxnH?=
- =?us-ascii?Q?EvX6YOOIez35ObIF79fnv2iB8lQ+OQhRl9zhBRh1SWbnQNDEWNgZ5L7e3EI1?=
- =?us-ascii?Q?Irgch50l1BSNsG6SPQHojg9/Fw8dVnRbbdA/b5jk0qBYloDcoo2HSB7HfKNh?=
- =?us-ascii?Q?O6kqH0Y+M6UqoCwKEyUuW8Om+nQOg4hIWwYIWPttb4Y85lO+kgpOJ3XZJ3SI?=
- =?us-ascii?Q?vm0hqq1b5VIOEmgDM9eF5PnVc1SzSt5Gym5azG5dQoxxUT8jSBY9B2j8uTt1?=
- =?us-ascii?Q?jrIu2yS9M9VsAasP/YtRwNi/dERlTkYZ+Bl1XRDMXb43k+IXqtPfALialVnI?=
- =?us-ascii?Q?A7bCWqh9uT017jQ2Wtl8B1YyPSDbLmmjg8k9sxZkpF+wq+LpEXFNS22gm5zN?=
- =?us-ascii?Q?JDzFSLAVPuK9Am+BM4lQlaF0ZV9Jjb5a9zROvyHbn1sILivTVmmf0DBchj5Z?=
- =?us-ascii?Q?V7MlePCmI/NqQaOzU9mWoYc5aLeelUIZm0kiUjEWv0VdiTCZKNYUfCOg2hs0?=
- =?us-ascii?Q?hcjlvgwpxF6aVFS1bbqEKeWlhFGRWVUgOG97m+hrJosVQlMKvTfQtuFaLHKQ?=
- =?us-ascii?Q?Z9GVs26GZ8JlVwmxzJqAb0QjaKC8Zh7IyxdJuvhUnj62uoDDQySoZKPLbsEl?=
- =?us-ascii?Q?7KSV01xSKQoWi31sFDx1hHc9BBKlOShJXKH2sIRbPc5MLiKE+jGf5q0XiYxu?=
- =?us-ascii?Q?zvGzB4pWS973VAS+U12GHqejCNbdk2hRtjFFPUzFnDLKD8Kox0q3JDaikkws?=
- =?us-ascii?Q?w/jfcFE=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ1PR11MB6083.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230037)(366013)(1800799021)(376011)(7416011)(38070700015); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?cTg8GMmJbgpdL8CkQVkFVKnR+pkyYxfyQIKudkc2Vr7caZVHH1ynAmdW7r15?=
- =?us-ascii?Q?oPQwvmSfXKiJwSZ+yUui1j+sDO1dRE5U7xTg6xY6aLvNX3jknNGfQ9m64IG9?=
- =?us-ascii?Q?pxHzmC5vTyqoHfBcaCH1POFWqjnA8kGYTHmklHZqsvxGf4kUQoFfuL9g00kv?=
- =?us-ascii?Q?tcwOOILt5HXZkg1Y8wJ5vi7DE5e0p5aqLWzSWtsMY7Jmo9Os0GJvOHHuTzGM?=
- =?us-ascii?Q?nA8bUcyiJebqdq2Bx9qdyNsCQIbYFGE/7TCDa9NU3oC9oulIDe01KSVOoYII?=
- =?us-ascii?Q?ECmFi0noUtP2NRiV2rsdgh3iah3RrOjpJW2YMiNgyYR5zhvMs5eoMJtH5ybt?=
- =?us-ascii?Q?RvJu7NDSiplXP+XEuEGvpFPIm6QmxMjqpz22lZvS9O6SliWiuTIKIV4l8EMs?=
- =?us-ascii?Q?7k1Rdf4tDzGAl2e3tm2jNBd4OwziyFHk5pK6OjJCjs/Qd5tIBQXmFTGn2IZ2?=
- =?us-ascii?Q?KVvS90/bFlvewiqcQJmOBIZEUwgiPDZQWrANMxNR3naGqsUUXWdATuIyvZZ6?=
- =?us-ascii?Q?jfuxbkkjAwbAlfhwNaqLBLH6p5C1zEeJ0x3lrmw3dagFrTvqrLoouO0R+1j/?=
- =?us-ascii?Q?jYlAvt840kQenuio1kRZAbGii2l/H7yhYXO8viuMZO6yRTKwN9M4mgOosbOB?=
- =?us-ascii?Q?cPXHMKHPoXhp/irjHtrJCXivL87uQzu9jLEnFNVtFy8bGXjamM+D6+D0G9pm?=
- =?us-ascii?Q?OUMj29lIE6ZXFzd7cApukwfKN6gZ+ZMryQREuN0IazzsugPLdEP09PO4LctR?=
- =?us-ascii?Q?01+2NCBIv2WYf9gPGdf5Y9ZrBNnYeD5ulO1qjNE/m+rkmrikCrlfLwXWoLY0?=
- =?us-ascii?Q?DSeR2xKCIp+4WNvGFI/FU3Ru1H2sOwSY/pf5qQstOytRKdC2vBdV7dNaN5oR?=
- =?us-ascii?Q?vSC+f3YSmpA+RPuA+Nl7d8CNwUmTCVRifck3eCXPR/ZAb4qJPEGh3PzkmnCf?=
- =?us-ascii?Q?8nCs73Q+f2MOosqlF52XdfHct21x7ujA2cCmi+zZA57Q/PFTAx7ne4ra+kV/?=
- =?us-ascii?Q?zKfVx+dEsGhjEAsDWwU5I5cNZbi31Mxln+HWS+s6WXcKU+Oofalf2ftYcuJL?=
- =?us-ascii?Q?ayVKkvn12v18jN7TugNA07U9QDR8C/GHsaV0ZiipiC5u8cfxwUKcQZJ6c33R?=
- =?us-ascii?Q?8gtpEhREXmdHflKz9lu4jomFnWNQZGIQlUJk/Ak68pYhbXyOZf5XVnx9FgHY?=
- =?us-ascii?Q?G2KGqFx4LgKPloCAg3dHkTBpnze3gwHPMrwwS5xznrTp8Bt5vHkTOOUfUry/?=
- =?us-ascii?Q?h0EOHy3Ppd0jy+XrNdydXa4j+522iYu5N4xRKHxQ5khAlTFFDCNthWR9F29t?=
- =?us-ascii?Q?WEA5MnML8NWqCxLnnExYlJGOzoxmTFYTGAsDIPVbxTfenBrWyQGfwZyPt9bT?=
- =?us-ascii?Q?CklRyxulrPj/3iMdfy7RZThyLU5FmI4r/31LL3zosVi5IrD+EYyZ4+rdRGhY?=
- =?us-ascii?Q?YCEbYk2VIYRXIrntzb5iCNptiyY2or1/Osb9R3IrA5JqxU7UP9Sn58+xCu9m?=
- =?us-ascii?Q?iyLecPyalJ+RPHw+q1n7i0/VoLV3KEGd30e52BwVD637c/ZimpOvz5478PKx?=
- =?us-ascii?Q?f5qP38AqPYJoD1zHRwYmmSmzCGDpAA6ZO0BYVSuB?=
-Content-Type: text/plain; charset="us-ascii"
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1sKlEO-0000xI-Le; Fri, 21 Jun 2024 16:51:38 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45LKcj2O011188;
+ Fri, 21 Jun 2024 20:51:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ xsZDQufO58cand+4TLMk1TqP2vks7At3YTSaG6dr5K0=; b=O/JCYJsiHlD47HtI
+ cj2ITYaDfnJ5aL2jrjVYtTfKFAOwLdHUSMKkkZASTHDc20yunzOIjbDJPhvZoAfY
+ 8Yl3r+QZ+X/g+uUpkDaG+Do4AVBv2sj8DihNv72k4nM8IAW9y1sQt3f+msTiWq8/
+ 1JZ15qvxzKl89aS/z0zXApLRBdwdH56a/WWR4NLnGWwYHCK3KNg8Z21Hl9eta8qA
+ imnvoe4XEQ4o3O7100WoRRWrNJMdQSn4klWoNyd7kYgPJp0B5cDuVnwcq7zz90+M
+ qhG81R4O86EgOwFYtxOFTAGI4osSKMqTyX8fRZIiE1zG2MWlskaXWiSekFLX6JcM
+ ctjT2g==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ywgr200ns-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Jun 2024 20:51:33 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45LKpXRL000923;
+ Fri, 21 Jun 2024 20:51:33 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ywgr200np-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Jun 2024 20:51:33 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45LJABrX019980; Fri, 21 Jun 2024 20:51:32 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3yvrqus7uv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 21 Jun 2024 20:51:32 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45LKpTsX15270606
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 21 Jun 2024 20:51:31 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AAEC558050;
+ Fri, 21 Jun 2024 20:51:29 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 808E058045;
+ Fri, 21 Jun 2024 20:51:28 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.38.232]) by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 21 Jun 2024 20:51:28 +0000 (GMT)
+Message-ID: <a3531d21082e3abf3132a4c95d6c54e8973dd27e.camel@linux.ibm.com>
+Subject: Re: [PATCH 0/7] pc-bios/s390-ccw: Merge the netboot loader into
+ s390-ccw.img
+From: Eric Farman <farman@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ "Collin L . Walling" <walling@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>, "Jason J .
+ Herne" <jjherne@linux.ibm.com>, Marc Hartmayer <mhartmay@linux.ibm.com>
+Date: Fri, 21 Jun 2024 16:51:28 -0400
+In-Reply-To: <20240621082422.136217-1-thuth@redhat.com>
+References: <20240621082422.136217-1-thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.2 (3.52.2-1.fc40) 
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66f5a474-2a0c-4fc9-6884-08dc9232e858
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Jun 2024 20:44:12.3684 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: QWCjMKQspYERD2KS8Gk8FlGAfwv4lFvrM1PVRsydNsVJ1XPCBk2pDVEFlde0hdbhmHigy3cYvnC6paWugwR2Sw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB8276
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=tony.luck@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: WX_ehhxyJtDvIjzy-e09p-gv3C6PiAd4
+X-Proofpoint-ORIG-GUID: _fLu4hvfP_N3qP6cKYAjZyomUQEuCKB2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-21_12,2024-06-21_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ priorityscore=1501 spamscore=0 malwarescore=0 phishscore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=342 clxscore=1011 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2406140001 definitions=main-2406210149
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -208,31 +118,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> So who actually cares about recovering poisoned volatile memory?
-> I'd like to understand more on how significant a use case this is.
-> Whilst I can conjecture that its an extreme case of wanting to avoid
-> loosing the ability to create 1GiB or larger pages due to poison
-> is that a real problem for anyone today?  Note this is just the case
-> where you've reached an actual uncorrectable error and probably
-> / possibly killed something, not the more common soft offlining
-> of memory due to correctable errors being detected.
+On Fri, 2024-06-21 at 10:24 +0200, Thomas Huth wrote:
+> We originally built a separate binary for the netboot code since it
+> was considered as experimental and we could not be sure that the
+> necessary SLOF module had been checked out. Time passed, the netboot
+> code proved its usefulness, and the build system nowadays makes sure
+> that the SLOF module is checked out if you have a s390x compiler
+> available
+> for building the s390-ccw bios. In fact, the possibility to build the
+> s390-ccw.img without s390-netboot.img has been removed in commit
+> bf6903f6944f ("pc-bios/s390-ccw: always build network bootloader")
+> already.
+>=20
+> So it does not make too much sense anymore to keep the netboot code
+> in a separate binary. To make it easier to support a more flexible
+> boot process soon that supports more than one boot device via the
+> bootindex properties, let's finally merge the netboot code into the
+> main s390-ccw.img binary now.
 
-I guess you really need a reply from someone with a data center
-with thousands of machines, since that's where this question
-may be important.
+Hi Thomas,
 
-My humble opinion is that, outside of the huge page issue, nobody
-should try to recover a poisoned page. Systems that can report
-and recover from poison have tens, hundreds, or more GBytes
-of memory. Dropping 4K pages will not have any measurable
-impact on a system (even if there are hundreds of pages dropped).
+I find myself wondering about the side effects of the
+s/sclp_print/printf/ changes, but I haven't come up with anything I can
+put my finger on. Maybe something will come to me over the weekend, but
+all-in-all I like the looks of this. So, FWIW:
 
-There's no reliable way to determine whether the poisoned page
-was due to some transient issue, or a permanent defect. Recovering
-a poisoned page runs the risk that the poison will re-occur. Perhaps
-next use of the page will be in some unrecoverable (kernel) context.
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 
-So recovery has some risk, but very little upside benefit.
+>=20
+> Thomas Huth (7):
+> =C2=A0 pc-bios/s390-ccw: Remove duplicated LDFLAGS
+> =C2=A0 hw/s390x/ipl: Provide more memory to the s390-ccw.img firmware
+> =C2=A0 pc-bios/s390-ccw: Use the libc from SLOF for the main s390-ccw.img
+> =C2=A0=C2=A0=C2=A0 binary, too
+> =C2=A0 pc-bios/s390-ccw: Link the netboot code into the main s390-ccw.img
+> =C2=A0=C2=A0=C2=A0 binary
+> =C2=A0 hw/s390x: Remove the possibility to load the s390-netboot.img
+> binary
+> =C2=A0 pc-bios/s390-ccw: Merge netboot.mak into the main Makefile
+> =C2=A0 docs/system/s390x/bootdevices: Update the documentation about
+> network
+> =C2=A0=C2=A0=C2=A0 booting
+>=20
+> =C2=A0docs/system/s390x/bootdevices.rst |=C2=A0 20 +++----
+> =C2=A0pc-bios/s390-ccw/netboot.mak=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 =
+62 ---------------------
+> =C2=A0hw/s390x/ipl.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 12 =
+++--
+> =C2=A0pc-bios/s390-ccw/cio.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +
+> =C2=A0pc-bios/s390-ccw/iplb.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 4 +-
+> =C2=A0pc-bios/s390-ccw/libc.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 |=C2=A0 89 ----------------------------
+> --
+> =C2=A0pc-bios/s390-ccw/s390-ccw.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0 10 +++-
+> =C2=A0pc-bios/s390-ccw/virtio.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 |=C2=A0=C2=A0 1 -
+> =C2=A0hw/s390x/ipl.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 65 =
++++-------------------
+> =C2=A0hw/s390x/s390-virtio-ccw.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 |=C2=A0 10 +---
+> =C2=A0pc-bios/s390-ccw/bootmap.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 |=C2=A0=C2=A0 4 +-
+> =C2=A0pc-bios/s390-ccw/cio.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
+> =C2=A0pc-bios/s390-ccw/dasd-ipl.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0=C2=A0 2 +-
+> =C2=A0pc-bios/s390-ccw/jump2ipl.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0=C2=A0 2 +-
+> =C2=A0pc-bios/s390-ccw/libc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 |=C2=A0 88 ----------------------------
+> -
+> =C2=A0pc-bios/s390-ccw/main.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 |=C2=A0 15 +++--
+> =C2=A0pc-bios/s390-ccw/menu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 |=C2=A0 25 ++++-----
+> =C2=A0pc-bios/s390-ccw/netmain.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 |=C2=A0 15 +----
+> =C2=A0pc-bios/s390-ccw/sclp.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
+> =C2=A0pc-bios/s390-ccw/virtio-blkdev.c=C2=A0 |=C2=A0=C2=A0 1 -
+> =C2=A0pc-bios/s390-ccw/virtio-scsi.c=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
+> =C2=A0pc-bios/s390-ccw/virtio.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 |=C2=A0=C2=A0 2 +-
+> =C2=A0pc-bios/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 -
+> =C2=A0pc-bios/s390-ccw/Makefile=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 |=C2=A0 69 +++++++++++++++++++----
+> =C2=A0pc-bios/s390-netboot.img=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 | Bin 67232 -> 0 bytes
+> =C2=A025 files changed, 122 insertions(+), 383 deletions(-)
+> =C2=A0delete mode 100644 pc-bios/s390-ccw/netboot.mak
+> =C2=A0delete mode 100644 pc-bios/s390-ccw/libc.h
+> =C2=A0delete mode 100644 pc-bios/s390-ccw/libc.c
+> =C2=A0delete mode 100644 pc-bios/s390-netboot.img
+>=20
 
--Tony
 
