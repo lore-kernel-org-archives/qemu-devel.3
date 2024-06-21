@@ -4,54 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC804C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 14:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 889DDC27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 14:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKfH0-0001AY-8s; Fri, 21 Jun 2024 10:29:54 -0400
+	id 1sKfH4-0001CS-0E; Fri, 21 Jun 2024 10:29:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sKfGz-0001AI-9d
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:29:53 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ id 1sKfH2-0001Bu-OI
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:29:56 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sKfGx-0005fe-07
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:29:53 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ id 1sKfGz-0005gO-NR
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 10:29:56 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id CCC4521B39;
- Fri, 21 Jun 2024 14:29:46 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6CCA21FB84;
+ Fri, 21 Jun 2024 14:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1718980187; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=4D1V4yQP6b0TDTMLCIza+aKR4iSlmKYTAQMfMFlvAjs=;
- b=rllOsFht+78aOzHMOyhlowMAfQ17YSpoeLwQ5KeaIGCGZSxdEf87aLTHp3HRmw/dOEc5F/
- v755I/a0k/kEUw4ZM5igGkApo7syU1vCGNzr7LsRjkSaBZmpSzIaQtDRl6170ZiNUmzIOq
- 4XTYk/PNosJjc3Zopd/fbmHKXz9rDvg=
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.com header.s=susede1 header.b=e5OLdBws
+ t=1718980192; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BB9r7BEwZqVRQIzgc4wl4TBA/AA2Dt9nHlbmTtl7eOw=;
+ b=JP9XBQSMGbVJ0PBfl3NnAYgnMNt1qFyHpKdXnD7tcQSJfntjAP5JD2lmdSr/kFeuO1JHx6
+ 5nfKnoSdUCMbKZ2wPCexP5WYWiVlxouyqYt1iM63iedlfJgP9gYdrjtP25IrtW15R1h13T
+ apoZnX8hjMopboSawdbvFZtl1U7+8rI=
+Authentication-Results: smtp-out2.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1718980186; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=4D1V4yQP6b0TDTMLCIza+aKR4iSlmKYTAQMfMFlvAjs=;
- b=e5OLdBwsbh7Z8B7foFSJKvxHa5L4RxQ/Z/ojom7YR4PMhCLASB+p1cHR7P1vhfGWZ212Vj
- 4O2s2Za2aGthu+Re17AC8FmsUXHKOc0hvgJ/83qCA4VXp4W1Abi0B+g4ATvS26aNsLdbGy
- v9OrtvrISwhT9Xn6vIVL6w0eg/r9qpg=
+ t=1718980192; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BB9r7BEwZqVRQIzgc4wl4TBA/AA2Dt9nHlbmTtl7eOw=;
+ b=JP9XBQSMGbVJ0PBfl3NnAYgnMNt1qFyHpKdXnD7tcQSJfntjAP5JD2lmdSr/kFeuO1JHx6
+ 5nfKnoSdUCMbKZ2wPCexP5WYWiVlxouyqYt1iM63iedlfJgP9gYdrjtP25IrtW15R1h13T
+ apoZnX8hjMopboSawdbvFZtl1U7+8rI=
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1806313ABD;
- Fri, 21 Jun 2024 14:29:46 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B051113ABD;
+ Fri, 21 Jun 2024 14:29:51 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id GyrBA1qOdWbwKQAAD6G6ig
- (envelope-from <roy.hopkins@suse.com>); Fri, 21 Jun 2024 14:29:46 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yFqqKF+OdWbwKQAAD6G6ig
+ (envelope-from <roy.hopkins@suse.com>); Fri, 21 Jun 2024 14:29:51 +0000
 From: Roy Hopkins <roy.hopkins@suse.com>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -66,37 +69,33 @@ Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v3 00/15] Introduce support for IGVM files
-Date: Fri, 21 Jun 2024 15:29:03 +0100
-Message-ID: <cover.1718979106.git.roy.hopkins@suse.com>
+Subject: [PATCH v3 07/15] i386/sev: Refactor setting of reset vector and
+ initial CPU state
+Date: Fri, 21 Jun 2024 15:29:10 +0100
+Message-ID: <614e1d50a0fde2512deb096fee20fa926c24fc82.1718979106.git.roy.hopkins@suse.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1718979106.git.roy.hopkins@suse.com>
+References: <cover.1718979106.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- DWL_DNSWL_MED(-2.00)[suse.com:dkim]; SUSPICIOUS_RECIPS(1.50)[];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_TWELVE(0.00)[19];
- ARC_NA(0.00)[]; DKIM_SIGNED(0.00)[suse.com:s=susede1];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
- RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.com:dkim];
+X-Spamd-Result: default: False [-1.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; MID_CONTAINS_FROM(1.00)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
  TAGGED_RCPT(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.com:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:email];
+ RCPT_COUNT_TWELVE(0.00)[19]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
+ FROM_HAS_DN(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ R_RATELIMIT(0.00)[to_ip_from(RLm8d31jk6dhzwhww9bgqrb1jt)];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1];
  FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: CCC4521B39
-Received-SPF: pass client-ip=195.135.223.130;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -119,136 +118,535 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: 02d9c38236
+When an SEV guest is started, the reset vector and state are
+extracted from metadata that is contained in the firmware volume.
 
-Here is v3 of the set of patches to add support for IGVM files to QEMU.
+In preparation for using IGVM to setup the initial CPU state,
+the code has been refactored to populate vmcb_save_area for each
+CPU which is then applied during guest startup and CPU reset.
 
-Firstly, apologies for the long gap between v2 and v3. This was due to a number
-of factors, but particularly holding back until SEV-SNP support landed in QEMU
-as well as for some changes to be merged in the upstream IGVM specification and
-library. The delay meant that I could include the SEV-SNP IGVM changes that I
-had been separately maintaining for COCONUT-SVSM into this series, giving full
-support for the full range of SEV technologies.
+Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+---
+ target/i386/sev.h | 110 ++++++++++++++++
+ target/i386/sev.c | 323 +++++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 400 insertions(+), 33 deletions(-)
 
-Thank-you to everyone who reviewed the previous set of patches [1]. I
-have hopefully addressed all of the comments in those reviews. Some of these
-changes required a reasonable amount of rework. Along with the inclusion of
-support for SEV-SNP, this has resulted in a fairly large set of differences from
-v2. This v3 patch series is also available on github: [2]
-
-For testing IGVM support in QEMU you need to generate an IGVM file that is
-configured for the platform you want to launch. I have updated the `buildigvm`
-test tool [3] to allow generation of IGVM files for all currently supported
-platforms. 
-
-In my own testing I have launched guests using IGVM files for each supported
-platform. In addition, I have verified that the launch measurement for SEV,
-SEV-ES and SEV-SNP when using QEMU with IGVM matches the pre-calculated 
-measurement using the COCONUT-SVSM `igvmmeasure` tool [4]. This same tool
-was used to sign the SEV-SNP IGVM file to verify the correct operation of
-the new support for ID_BLOCKs in v3.
-
-This patch series requires version v0.3.2 of the IGVM library to be installed
-[5].
-
-Changes in v3:
-
-* Added support for SEV-SNP on top of SEV and SEV-ES.
-* Introduced a new `IgvmCfg` user accessible object to configure and process the
-  IGVM file, moving this from `ConfidentialGuestSupport` where it resided in v2.
-  `ConfidentialGuestSupport` is still used to abstract the implementation of
-  guest configuration.
-* The IGVM processing code will use the `ConfidentialGuestSupport` functions if
-  provided, but will allow processing of a supported subset of directives if a
-  CGS instance is not provided, allowing non-confidential guest to be configured
-  with an IGVM file.
-* Added support for setting platform policy via the IGVM file.
-* Added ID_BLOCK support as part of SEV-SNP for using the platform to verify the
-  measurement and signature of the IGVM file.
-* Update documentation to describe configuring IGVM using the `igvm-cfg` object
-  and referring to it from `-machine`.
-* Pre-processing of the IGVM file during KVM initialization to determine the
-  `sev_features` to pass to the new KVM_SEV_INIT2 ioctl.
-* Tidying/rework of code as per previous review comments. In particular, the
-  IGVM library dependency has been updated to remove potential namespace
-  clashes.
-
-Patch summary:
-
-The patches have been organized so the first patches in the series mostly match
-those in v2 but with additional support for SEV-SNP and native platforms.
-This hopefully simplifies the review process for those that have already looked
-at the previous series.
-
-1-10: Add support and documentation for processing IGVM files for SEV, SEV-ES,
-SEV-SNP and native platforms. 
-
-11-14: Processing of policy and SEV-SNP ID_BLOCK from IGVM file. 
-
-15: Add pre-processing of IGVM file to support synchronization of 'SEV_FEATURES'
-from IGVM VMSA to KVM.
-
-[1] Link to v2:
-https://lore.kernel.org/qemu-devel/cover.1712138654.git.roy.hopkins@suse.com/
-
-[2] v3 patches also available here:
-https://github.com/roy-hopkins/qemu/tree/igvm_master_v3
-
-[3] `buildigvm` tool v0.2.0
-https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
-
-[4] `igvmmeasure` tool 
-https://github.com/coconut-svsm/svsm/tree/main/igvmmeasure
-
-[5] IGVM library v0.3.2
-https://github.com/microsoft/igvm/releases/tag/igvm-v0.3.2
-
-Roy Hopkins (15):
-  meson: Add optional dependency on IGVM library
-  backends/confidential-guest-support: Add functions to support IGVM
-  backends/igvm: Add IGVM loader and configuration
-  hw/core/machine: Add igvm-cfg object and processing for IGVM files
-  i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
-    IGVM
-  sev: Update launch_update_data functions to use Error handling
-  i386/sev: Refactor setting of reset vector and initial CPU state
-  i386/sev: Implement ConfidentialGuestSupport functions for SEV
-  docs/system: Add documentation on support for IGVM
-  docs/interop/firmware.json: Add igvm to FirmwareDevice
-  backends/confidential-guest-support: Add set_guest_policy() function
-  backends/igvm: Process initialization sections in IGVM file
-  backends/igvm: Handle policy for SEV guests
-  i386/sev: Add implementation of CGS set_guest_policy()
-  sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
-
- docs/interop/firmware.json                 |   9 +-
- docs/system/i386/amd-memory-encryption.rst |   2 +
- docs/system/igvm.rst                       | 157 ++++
- docs/system/index.rst                      |   1 +
- meson.build                                |   8 +
- qapi/qom.json                              |  16 +
- backends/igvm.h                            |  37 +
- include/exec/confidential-guest-support.h  |  96 +++
- include/hw/boards.h                        |   2 +
- include/sysemu/igvm-cfg.h                  |  54 ++
- target/i386/sev.h                          | 124 +++
- backends/confidential-guest-support.c      |  43 +
- backends/igvm-cfg.c                        |  66 ++
- backends/igvm.c                            | 948 +++++++++++++++++++++
- hw/core/machine.c                          |  20 +
- hw/i386/pc_sysfw.c                         |  23 +-
- target/i386/sev.c                          | 830 ++++++++++++++++--
- backends/meson.build                       |   5 +
- meson_options.txt                          |   2 +
- qemu-options.hx                            |  25 +
- scripts/meson-buildoptions.sh              |   3 +
- 21 files changed, 2393 insertions(+), 78 deletions(-)
- create mode 100644 docs/system/igvm.rst
- create mode 100644 backends/igvm.h
- create mode 100644 include/sysemu/igvm-cfg.h
- create mode 100644 backends/igvm-cfg.c
- create mode 100644 backends/igvm.c
-
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index 858005a119..167dd154d6 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -45,6 +45,116 @@ typedef struct SevKernelLoaderContext {
+     size_t cmdline_size;
+ } SevKernelLoaderContext;
+ 
++/* Save area definition for SEV-ES and SEV-SNP guests */
++struct QEMU_PACKED sev_es_save_area {
++    struct vmcb_seg es;
++    struct vmcb_seg cs;
++    struct vmcb_seg ss;
++    struct vmcb_seg ds;
++    struct vmcb_seg fs;
++    struct vmcb_seg gs;
++    struct vmcb_seg gdtr;
++    struct vmcb_seg ldtr;
++    struct vmcb_seg idtr;
++    struct vmcb_seg tr;
++    uint64_t vmpl0_ssp;
++    uint64_t vmpl1_ssp;
++    uint64_t vmpl2_ssp;
++    uint64_t vmpl3_ssp;
++    uint64_t u_cet;
++    uint8_t reserved_0xc8[2];
++    uint8_t vmpl;
++    uint8_t cpl;
++    uint8_t reserved_0xcc[4];
++    uint64_t efer;
++    uint8_t reserved_0xd8[104];
++    uint64_t xss;
++    uint64_t cr4;
++    uint64_t cr3;
++    uint64_t cr0;
++    uint64_t dr7;
++    uint64_t dr6;
++    uint64_t rflags;
++    uint64_t rip;
++    uint64_t dr0;
++    uint64_t dr1;
++    uint64_t dr2;
++    uint64_t dr3;
++    uint64_t dr0_addr_mask;
++    uint64_t dr1_addr_mask;
++    uint64_t dr2_addr_mask;
++    uint64_t dr3_addr_mask;
++    uint8_t reserved_0x1c0[24];
++    uint64_t rsp;
++    uint64_t s_cet;
++    uint64_t ssp;
++    uint64_t isst_addr;
++    uint64_t rax;
++    uint64_t star;
++    uint64_t lstar;
++    uint64_t cstar;
++    uint64_t sfmask;
++    uint64_t kernel_gs_base;
++    uint64_t sysenter_cs;
++    uint64_t sysenter_esp;
++    uint64_t sysenter_eip;
++    uint64_t cr2;
++    uint8_t reserved_0x248[32];
++    uint64_t g_pat;
++    uint64_t dbgctl;
++    uint64_t br_from;
++    uint64_t br_to;
++    uint64_t last_excp_from;
++    uint64_t last_excp_to;
++    uint8_t reserved_0x298[80];
++    uint32_t pkru;
++    uint32_t tsc_aux;
++    uint8_t reserved_0x2f0[24];
++    uint64_t rcx;
++    uint64_t rdx;
++    uint64_t rbx;
++    uint64_t reserved_0x320; /* rsp already available at 0x01d8 */
++    uint64_t rbp;
++    uint64_t rsi;
++    uint64_t rdi;
++    uint64_t r8;
++    uint64_t r9;
++    uint64_t r10;
++    uint64_t r11;
++    uint64_t r12;
++    uint64_t r13;
++    uint64_t r14;
++    uint64_t r15;
++    uint8_t reserved_0x380[16];
++    uint64_t guest_exit_info_1;
++    uint64_t guest_exit_info_2;
++    uint64_t guest_exit_int_info;
++    uint64_t guest_nrip;
++    uint64_t sev_features;
++    uint64_t vintr_ctrl;
++    uint64_t guest_exit_code;
++    uint64_t virtual_tom;
++    uint64_t tlb_id;
++    uint64_t pcpu_id;
++    uint64_t event_inj;
++    uint64_t xcr0;
++    uint8_t reserved_0x3f0[16];
++
++    /* Floating point area */
++    uint64_t x87_dp;
++    uint32_t mxcsr;
++    uint16_t x87_ftw;
++    uint16_t x87_fsw;
++    uint16_t x87_fcw;
++    uint16_t x87_fop;
++    uint16_t x87_ds;
++    uint16_t x87_cs;
++    uint64_t x87_rip;
++    uint8_t fpreg_x87[80];
++    uint8_t fpreg_xmm[256];
++    uint8_t fpreg_ymm[256];
++};
++
+ #ifdef CONFIG_SEV
+ bool sev_enabled(void);
+ bool sev_es_enabled(void);
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 1900c3d9b4..6d5f102894 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -49,6 +49,12 @@ OBJECT_DECLARE_TYPE(SevSnpGuestState, SevCommonStateClass, SEV_SNP_GUEST)
+ /* hard code sha256 digest size */
+ #define HASH_SIZE 32
+ 
++/* Convert between SEV-ES VMSA and SegmentCache flags/attributes */
++#define FLAGS_VMSA_TO_SEGCACHE(flags) \
++    ((((flags) & 0xff00) << 12) | (((flags) & 0xff) << 8))
++#define FLAGS_SEGCACHE_TO_VMSA(flags) \
++    ((((flags) & 0xff00) >> 8) | (((flags) & 0xf00000) >> 12))
++
+ typedef struct QEMU_PACKED SevHashTableEntry {
+     QemuUUID guid;
+     uint16_t len;
+@@ -88,6 +94,14 @@ typedef struct QEMU_PACKED SevHashTableDescriptor {
+     uint32_t size;
+ } SevHashTableDescriptor;
+ 
++typedef struct SevLaunchVmsa {
++    QTAILQ_ENTRY(SevLaunchVmsa) next;
++
++    uint16_t cpu_index;
++    uint64_t gpa;
++    struct sev_es_save_area vmsa;
++} SevLaunchVmsa;
++
+ struct SevCommonState {
+     X86ConfidentialGuest parent_obj;
+ 
+@@ -106,9 +120,7 @@ struct SevCommonState {
+     int sev_fd;
+     SevState state;
+ 
+-    uint32_t reset_cs;
+-    uint32_t reset_ip;
+-    bool reset_data_valid;
++    QTAILQ_HEAD(, SevLaunchVmsa) launch_vmsa;
+ };
+ 
+ struct SevCommonStateClass {
+@@ -369,6 +381,172 @@ static struct RAMBlockNotifier sev_ram_notifier = {
+     .ram_block_removed = sev_ram_block_removed,
+ };
+ 
++static void sev_apply_cpu_context(CPUState *cpu)
++{
++    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
++    X86CPU *x86;
++    CPUX86State *env;
++    struct SevLaunchVmsa *launch_vmsa;
++
++    /* See if an initial VMSA has been provided for this CPU */
++    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
++    {
++        if (cpu->cpu_index == launch_vmsa->cpu_index) {
++            x86 = X86_CPU(cpu);
++            env = &x86->env;
++
++            /*
++             * Ideally we would provide the VMSA directly to kvm which would
++             * ensure that the resulting initial VMSA measurement which is
++             * calculated during KVM_SEV_LAUNCH_UPDATE_VMSA is calculated from
++             * exactly what we provide here. Currently this is not possible so
++             * we need to copy the parts of the VMSA structure that we currently
++             * support into the CPU state.
++             */
++            cpu_load_efer(env, launch_vmsa->vmsa.efer);
++            cpu_x86_update_cr4(env, launch_vmsa->vmsa.cr4);
++            cpu_x86_update_cr0(env, launch_vmsa->vmsa.cr0);
++            cpu_x86_update_cr3(env, launch_vmsa->vmsa.cr3);
++            env->xcr0 = launch_vmsa->vmsa.xcr0;
++            env->pat = launch_vmsa->vmsa.g_pat;
++
++            cpu_x86_load_seg_cache(
++                env, R_CS, launch_vmsa->vmsa.cs.selector,
++                launch_vmsa->vmsa.cs.base, launch_vmsa->vmsa.cs.limit,
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.cs.attrib));
++            cpu_x86_load_seg_cache(
++                env, R_DS, launch_vmsa->vmsa.ds.selector,
++                launch_vmsa->vmsa.ds.base, launch_vmsa->vmsa.ds.limit,
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ds.attrib));
++            cpu_x86_load_seg_cache(
++                env, R_ES, launch_vmsa->vmsa.es.selector,
++                launch_vmsa->vmsa.es.base, launch_vmsa->vmsa.es.limit,
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.es.attrib));
++            cpu_x86_load_seg_cache(
++                env, R_FS, launch_vmsa->vmsa.fs.selector,
++                launch_vmsa->vmsa.fs.base, launch_vmsa->vmsa.fs.limit,
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.fs.attrib));
++            cpu_x86_load_seg_cache(
++                env, R_GS, launch_vmsa->vmsa.gs.selector,
++                launch_vmsa->vmsa.gs.base, launch_vmsa->vmsa.gs.limit,
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gs.attrib));
++            cpu_x86_load_seg_cache(
++                env, R_SS, launch_vmsa->vmsa.ss.selector,
++                launch_vmsa->vmsa.ss.base, launch_vmsa->vmsa.ss.limit,
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ss.attrib));
++
++            env->gdt.base = launch_vmsa->vmsa.gdtr.base;
++            env->gdt.limit = launch_vmsa->vmsa.gdtr.limit;
++            env->gdt.flags =
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gdtr.attrib);
++            env->idt.base = launch_vmsa->vmsa.idtr.base;
++            env->idt.limit = launch_vmsa->vmsa.idtr.limit;
++            env->idt.flags =
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.idtr.attrib);
++
++            cpu_x86_load_seg_cache(
++                env, R_LDTR, launch_vmsa->vmsa.ldtr.selector,
++                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.ldtr.limit,
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ldtr.attrib));
++            cpu_x86_load_seg_cache(
++                env, R_TR, launch_vmsa->vmsa.tr.selector,
++                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.tr.limit,
++                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.tr.attrib));
++
++            env->dr[6] = launch_vmsa->vmsa.dr6;
++            env->dr[7] = launch_vmsa->vmsa.dr7;
++
++            env->regs[R_EAX] = launch_vmsa->vmsa.rax;
++            env->regs[R_ECX] = launch_vmsa->vmsa.rcx;
++            env->regs[R_EDX] = launch_vmsa->vmsa.rdx;
++            env->regs[R_EBX] = launch_vmsa->vmsa.rbx;
++            env->regs[R_ESP] = launch_vmsa->vmsa.rsp;
++            env->regs[R_EBP] = launch_vmsa->vmsa.rbp;
++            env->regs[R_ESI] = launch_vmsa->vmsa.rsi;
++            env->regs[R_EDI] = launch_vmsa->vmsa.rdi;
++#ifdef TARGET_X86_64
++            env->regs[R_R8] = launch_vmsa->vmsa.r8;
++            env->regs[R_R9] = launch_vmsa->vmsa.r9;
++            env->regs[R_R10] = launch_vmsa->vmsa.r10;
++            env->regs[R_R11] = launch_vmsa->vmsa.r11;
++            env->regs[R_R12] = launch_vmsa->vmsa.r12;
++            env->regs[R_R13] = launch_vmsa->vmsa.r13;
++            env->regs[R_R14] = launch_vmsa->vmsa.r14;
++            env->regs[R_R15] = launch_vmsa->vmsa.r15;
++#endif
++            env->eip = launch_vmsa->vmsa.rip;
++            env->eflags = launch_vmsa->vmsa.rflags;
++
++            cpu_set_fpuc(env, launch_vmsa->vmsa.x87_fcw);
++            env->mxcsr = launch_vmsa->vmsa.mxcsr;
++
++            break;
++        }
++    }
++}
++
++static int sev_set_cpu_context(uint16_t cpu_index, const void *ctx,
++                               uint32_t ctx_len, hwaddr gpa, Error **errp)
++{
++    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
++    SevLaunchVmsa *launch_vmsa;
++    CPUState *cpu;
++    bool exists = false;
++
++    /*
++     * Setting the CPU context is only supported for SEV-ES and SEV-SNP. The
++     * context buffer will contain a sev_es_save_area from the Linux kernel
++     * which is defined by "Table B-4. VMSA Layout, State Save Area for SEV-ES"
++     * in the AMD64 APM, Volume 2.
++     */
++
++    if (!sev_es_enabled()) {
++        error_setg(errp, "SEV: unable to set CPU context: Not supported");
++        return -1;
++    }
++
++    if (ctx_len < sizeof(struct sev_es_save_area)) {
++        error_setg(errp, "SEV: unable to set CPU context: "
++                     "Invalid context provided");
++        return -1;
++    }
++
++    cpu = qemu_get_cpu(cpu_index);
++    if (!cpu) {
++        error_setg(errp, "SEV: unable to set CPU context for out of bounds "
++                     "CPU index %d", cpu_index);
++        return -1;
++    }
++
++    /*
++     * If the context of this VP has already been set then replace it with the
++     * new context.
++     */
++    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
++    {
++        if (cpu_index == launch_vmsa->cpu_index) {
++            launch_vmsa->gpa = gpa;
++            memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
++            exists = true;
++            break;
++        }
++    }
++
++    if (!exists) {
++        /* New VP context */
++        launch_vmsa = g_new0(SevLaunchVmsa, 1);
++        memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
++        launch_vmsa->cpu_index = cpu_index;
++        launch_vmsa->gpa = gpa;
++        QTAILQ_INSERT_TAIL(&sev_common->launch_vmsa, launch_vmsa, next);
++    }
++
++    /* Synchronise the VMSA with the current CPU state */
++    sev_apply_cpu_context(cpu);
++
++    return 0;
++}
++
+ bool
+ sev_enabled(void)
+ {
+@@ -973,6 +1151,16 @@ static int
+ sev_launch_update_vmsa(SevGuestState *sev_guest)
+ {
+     int ret, fw_error;
++    CPUState *cpu;
++
++    /*
++     * The initial CPU state is measured as part of KVM_SEV_LAUNCH_UPDATE_VMSA.
++     * Synchronise the CPU state to any provided launch VMSA structures.
++     */
++    CPU_FOREACH(cpu) {
++        sev_apply_cpu_context(cpu);
++    }
++
+ 
+     ret = sev_ioctl(SEV_COMMON(sev_guest)->sev_fd, KVM_SEV_LAUNCH_UPDATE_VMSA,
+                     NULL, &fw_error);
+@@ -1711,40 +1899,110 @@ sev_es_find_reset_vector(void *flash_ptr, uint64_t flash_size,
+     return sev_es_parse_reset_block(info, addr);
+ }
+ 
+-void sev_es_set_reset_vector(CPUState *cpu)
++
++static void seg_to_vmsa(const SegmentCache *cpu_seg, struct vmcb_seg *vmsa_seg)
+ {
+-    X86CPU *x86;
+-    CPUX86State *env;
+-    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
+-    SevCommonState *sev_common = SEV_COMMON(
+-        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
++    vmsa_seg->selector = cpu_seg->selector;
++    vmsa_seg->base = cpu_seg->base;
++    vmsa_seg->limit = cpu_seg->limit;
++    vmsa_seg->attrib = FLAGS_SEGCACHE_TO_VMSA(cpu_seg->flags);
++}
+ 
+-    /* Only update if we have valid reset information */
+-    if (!sev_common || !sev_common->reset_data_valid) {
+-        return;
+-    }
++static void initialize_vmsa(const CPUState *cpu, struct sev_es_save_area *vmsa)
++{
++    const X86CPU *x86 = X86_CPU(cpu);
++    const CPUX86State *env = &x86->env;
+ 
+-    /* Do not update the BSP reset state */
+-    if (cpu->cpu_index == 0) {
+-        return;
++    /*
++     * Initialize the SEV-ES save area from the current state of
++     * the CPU. The entire state does not need to be copied, only the state
++     * that is copied back to the CPUState in sev_apply_cpu_context.
++     */
++    memset(vmsa, 0, sizeof(struct sev_es_save_area));
++    vmsa->efer = env->efer;
++    vmsa->cr0 = env->cr[0];
++    vmsa->cr3 = env->cr[3];
++    vmsa->cr4 = env->cr[4];
++    vmsa->xcr0 = env->xcr0;
++    vmsa->g_pat = env->pat;
++
++    seg_to_vmsa(&env->segs[R_CS], &vmsa->cs);
++    seg_to_vmsa(&env->segs[R_DS], &vmsa->ds);
++    seg_to_vmsa(&env->segs[R_ES], &vmsa->es);
++    seg_to_vmsa(&env->segs[R_FS], &vmsa->fs);
++    seg_to_vmsa(&env->segs[R_GS], &vmsa->gs);
++    seg_to_vmsa(&env->segs[R_SS], &vmsa->ss);
++
++    seg_to_vmsa(&env->gdt, &vmsa->gdtr);
++    seg_to_vmsa(&env->idt, &vmsa->idtr);
++    seg_to_vmsa(&env->ldt, &vmsa->ldtr);
++    seg_to_vmsa(&env->tr, &vmsa->tr);
++
++    vmsa->dr6 = env->dr[6];
++    vmsa->dr7 = env->dr[7];
++
++    vmsa->rax = env->regs[R_EAX];
++    vmsa->rcx = env->regs[R_ECX];
++    vmsa->rdx = env->regs[R_EDX];
++    vmsa->rbx = env->regs[R_EBX];
++    vmsa->rsp = env->regs[R_ESP];
++    vmsa->rbp = env->regs[R_EBP];
++    vmsa->rsi = env->regs[R_ESI];
++    vmsa->rdi = env->regs[R_EDI];
++
++#ifdef TARGET_X86_64
++    vmsa->r8 = env->regs[R_R8];
++    vmsa->r9 = env->regs[R_R9];
++    vmsa->r10 = env->regs[R_R10];
++    vmsa->r11 = env->regs[R_R11];
++    vmsa->r12 = env->regs[R_R12];
++    vmsa->r13 = env->regs[R_R13];
++    vmsa->r14 = env->regs[R_R14];
++    vmsa->r15 = env->regs[R_R15];
++#endif
++
++    vmsa->rip = env->eip;
++    vmsa->rflags = env->eflags;
++}
++
++static void sev_es_set_ap_context(uint32_t reset_addr)
++{
++    CPUState *cpu;
++    struct sev_es_save_area vmsa;
++    SegmentCache cs;
++
++    cs.selector = 0xf000;
++    cs.base = reset_addr & 0xffff0000;
++    cs.limit = 0xffff;
++    cs.flags = DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK | DESC_R_MASK |
++               DESC_A_MASK;
++
++    CPU_FOREACH(cpu) {
++        if (cpu->cpu_index == 0) {
++            /* Do not update the BSP reset state */
++            continue;
++        }
++        initialize_vmsa(cpu, &vmsa);
++        seg_to_vmsa(&cs, &vmsa.cs);
++        vmsa.rip = reset_addr & 0x0000ffff;
++        sev_set_cpu_context(cpu->cpu_index, &vmsa,
++                            sizeof(struct sev_es_save_area),
++                            0, &error_fatal);
++        sev_apply_cpu_context(cpu);
+     }
++}
+ 
+-    x86 = X86_CPU(cpu);
+-    env = &x86->env;
+-
+-    cpu_x86_load_seg_cache(env, R_CS, 0xf000, sev_common->reset_cs, 0xffff,
+-                           DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK |
+-                           DESC_R_MASK | DESC_A_MASK);
+-
+-    env->eip = sev_common->reset_ip;
++void sev_es_set_reset_vector(CPUState *cpu)
++{
++    if (sev_enabled()) {
++        sev_apply_cpu_context(cpu);
++    }
+ }
+ 
+ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
+ {
+-    CPUState *cpu;
+     uint32_t addr;
+     int ret;
+-    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+ 
+     if (!sev_es_enabled()) {
+         return 0;
+@@ -1757,14 +2015,12 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
+         return ret;
+     }
+ 
++    /*
++     * The reset vector is saved into a CPU context for each AP but not for
++     * the BSP. This is applied during guest startup or when the CPU is reset.
++     */
+     if (addr) {
+-        sev_common->reset_cs = addr & 0xffff0000;
+-        sev_common->reset_ip = addr & 0x0000ffff;
+-        sev_common->reset_data_valid = true;
+-
+-        CPU_FOREACH(cpu) {
+-            sev_es_set_reset_vector(cpu);
+-        }
++        sev_es_set_ap_context(addr);
+     }
+ 
+     return 0;
+@@ -1999,6 +2255,7 @@ sev_common_instance_init(Object *obj)
+     object_property_add_uint32_ptr(obj, "reduced-phys-bits",
+                                    &sev_common->reduced_phys_bits,
+                                    OBJ_PROP_FLAG_READWRITE);
++    QTAILQ_INIT(&sev_common->launch_vmsa);
+ }
+ 
+ /* sev guest info common to sev/sev-es/sev-snp */
 -- 
 2.43.0
 
