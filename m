@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C36C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 08:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D7CC2BA1A
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 08:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKZJN-0001GA-Cx; Fri, 21 Jun 2024 04:07:57 -0400
+	id 1sKZJZ-0002HZ-0D; Fri, 21 Jun 2024 04:08:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZJL-00016W-46
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:07:55 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZJW-00026A-TY
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:08:06 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZJJ-00007p-BS
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:07:54 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-421cd1e5f93so12981345e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 01:07:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZJV-00008x-91
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:08:06 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-42198492353so15656125e9.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 01:08:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718957271; x=1719562071; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718957283; x=1719562083; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kNBeXm9P/Ml80/yN91/eWbfFz/hJLMpAuct+ZmQTshg=;
- b=OrBh0QKF5202eZgpnj4VVSsUmsZ3Ac0YN/BkJjSwIJYWzJgUIOpL5B4JP7rvigrgw9
- xubpYvPoJlCtDl2+D9qzhjSXRHvbteKr1sPYhNi70sFfVUsatTKtoO5ou5QoUSExy1E8
- k803Zj8As0Q4yqwjomyBpRCGuHzxK9FYEanff+eXxjSqqFM0hPAH3UoAuZ9VcvfE+fzc
- Iy668CH6aFKPFvsWU/Zj2DWCABqwwY/yCCFpmTv0XTGYwJ1haYQ+WGQZZJZzrxPxuTip
- Y+BQ3LdBtx6knaWDdmVk9g1BAguYu63RvvH0BDRSZIW7kgIotiMnfAeG0ZaYQxCWjMyT
- CnNA==
+ bh=qHkD/9LfuqpSjqb2mzBbMf8GF2z2q7mW//xxpk6LGc4=;
+ b=nEOrne24IypY8qe9EB8u2LxFPLrRTv3lnOPw3oqicn1HEKtMFhpInduKz19c1z9tLL
+ aAE6vTUyAyxiSAK8oTWT+Fjcz1YUEB/QZKwdS8ZcR1KeYa7mt9FP/6byFp9o6OluNXJS
+ JUH4PwKceDLDPUlGhasBEYmbkjN4FPeVLi9b3Gi6MuLbmVzqMB43kbRiG1uDPitAzwE8
+ hipZjbdwbrLt6MAevT+5ZfZDZ53xX2efFOE0YMkvdb491i5Q9Qktkm4Uwl2hm5Mi4kNz
+ AUkwd5OQkkYLfCVfiQLuiH5g/pqIxF2/k6bNJXN6zMjJ4HMU6qkLxQn3vt+vqsOaL/sD
+ qfBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718957271; x=1719562071;
+ d=1e100.net; s=20230601; t=1718957283; x=1719562083;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kNBeXm9P/Ml80/yN91/eWbfFz/hJLMpAuct+ZmQTshg=;
- b=a2VFm6O1lP7AQvoRFlmBvgNJxp+5rBNOddrBDXwSgumvOAG1LaNumiFhM8NWFJuTe1
- Amg7bZ7x92Mk638RwxfWnIvx/uvwOtXIp4CEH4o7bnSvTzD4IUQvSj74vgjXEp5Yr2mR
- vQk/AOg1wFGOKZyGTVaw3oxH005wFKxPitpctOrVVJEoBeVufoEuv6SmlC5lB3HegC8q
- peW7wju0PmxPmzsgbzo0g5UeSe96tvjEnBFVS47KUuLrjujJMSsuW8mUjhnrnpbiBoNB
- dNy8HZeEqYyZK0y/yR4TES7umDY+BwPZsBXx4/qzxaXioXU7I/84evvowzWgUVeEay0k
- fnFg==
-X-Gm-Message-State: AOJu0YxYiQ8FZj63rpxTWakNzI1QDgnyK+cTJHMWnuEiMpdbVtbDcgpI
- b0v4z93r6Wx2bbC3PkkkHv4AkqyHYfJ6aWk+Obl3HiVpxmRX7rfk8o5QZ0blMmUbMKWWRdeZ8T2
- 5
-X-Google-Smtp-Source: AGHT+IEqdyrdTUH8xzFAJeTGgMv41+cTdI7kRLqldWZsa0rWZmaGFn7XEb+ExxJeN1QhIbDeIIQiuw==
-X-Received: by 2002:a05:600c:2d93:b0:421:182d:9232 with SMTP id
- 5b1f17b1804b1-42475185a23mr56228875e9.18.1718957271702; 
- Fri, 21 Jun 2024 01:07:51 -0700 (PDT)
+ bh=qHkD/9LfuqpSjqb2mzBbMf8GF2z2q7mW//xxpk6LGc4=;
+ b=gjVP/vdoAXN99rhIPz3sCrMFu+Pon9iSPt+8pjF5Zg8hKdGPz8+XUzPLbRlVRSdeKI
+ aIh92Z7z4BrAfRrL3E9iMZIlqZERM+mW1v/wNuUEtnZubQe2ojlMb9UhUUTxKKKiXPKA
+ ZNGAqGFKP4jYs2hmGYIH4iq5fpC9/RdD1Sm7VC0mPbHuwd0+6FnT4Ux3ZgUHAsG3Y1an
+ oCWOZ7m1y2dLnM2wEp5JNJybfa6Xo6stRx1/D25teoJFURqi5/5BUxW0YJhoh0oy8knq
+ NHfS3HAsBVsKWMPy3+XpSeqEcci/XZQS9inwFg60uSEpFoyH5bR4wxNJWRjsBaeg2b2q
+ WFBQ==
+X-Gm-Message-State: AOJu0YwGKdqR9wEMAMazdskHccb0G046GoQKlkHt0mLKzQnG3naELEqc
+ jE2OxoX7vQWG5FBgAbZinhJhhnzV7TymNkQrqz+dciYdc2ZHMWM202zj3shVRGboHUTkwFbZDoY
+ P
+X-Google-Smtp-Source: AGHT+IE+07FWD1HD+iLXztwcy908d7cHYMN3e4/OV1PssO4as9rMtk5a2We2Haoa+wkRzyMpCyN3OA==
+X-Received: by 2002:a05:600c:2e09:b0:421:79c8:dd37 with SMTP id
+ 5b1f17b1804b1-4247529d570mr50153715e9.40.1718957283661; 
+ Fri, 21 Jun 2024 01:08:03 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.128.209])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4248191c65asm16698085e9.40.2024.06.21.01.07.50
+ 5b1f17b1804b1-4248482f1c4sm2264205e9.10.2024.06.21.01.08.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 21 Jun 2024 01:07:51 -0700 (PDT)
+ Fri, 21 Jun 2024 01:08:03 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
-Subject: [PATCH 19/23] hw/sd/sdcard: Inline BLK_READ_BLOCK / BLK_WRITE_BLOCK
- macros
-Date: Fri, 21 Jun 2024 10:05:50 +0200
-Message-ID: <20240621080554.18986-20-philmd@linaro.org>
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH 21/23] hw/sd/sdcard: Do not store vendor data on block drive
+ (CMD56)
+Date: Fri, 21 Jun 2024 10:05:52 +0200
+Message-ID: <20240621080554.18986-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240621080554.18986-1-philmd@linaro.org>
 References: <20240621080554.18986-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,75 +98,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These macros only save 3 chars and make the code harder
-to maintain, simply remove them.
+"General command" (GEN_CMD, CMD56) is described as:
+
+  GEN_CMD is the same as the single block read or write
+  commands (CMD24 or CMD17). The difference is that [...]
+  the data block is not a memory payload data but has a
+  vendor specific format and meaning.
+
+Thus this block must not be stored overwriting data block
+on underlying storage drive. Keep it in a dedicated
+'vendor_data[]' array.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+RFC: Is it safe to reuse VMSTATE_UNUSED_V() (which happens
+to be the same size)?
+
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+---
+ hw/sd/sd.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 8d63a39a54..ca2c903c5b 100644
+index 95e23abd30..712fbc0926 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -816,8 +816,6 @@ static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
-     }
- }
- 
--#define BLK_READ_BLOCK(a, len)  sd_blk_read(sd, a, len)
--#define BLK_WRITE_BLOCK(a, len) sd_blk_write(sd, a, len)
- #define APP_READ_BLOCK(a, len)  memset(sd->data, 0xec, len)
- #define APP_WRITE_BLOCK(a, len)
- 
-@@ -869,7 +867,7 @@ static void sd_erase(SDState *sd)
-                 continue;
-             }
-         }
--        BLK_WRITE_BLOCK(erase_addr, erase_len);
-+        sd_blk_write(sd, erase_addr, erase_len);
-     }
- }
- 
-@@ -1901,7 +1899,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
-         if (sd->data_offset >= sd->blk_len) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
--            BLK_WRITE_BLOCK(sd->data_start, sd->data_offset);
-+            sd_blk_write(sd, sd->data_start, sd->data_offset);
-             sd->blk_written ++;
-             sd->csd[14] |= 0x40;
-             /* Bzzzzzzztt .... Operation complete.  */
-@@ -1927,7 +1925,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
-         if (sd->data_offset >= sd->blk_len) {
-             /* TODO: Check CRC before committing */
-             sd->state = sd_programming_state;
--            BLK_WRITE_BLOCK(sd->data_start, sd->data_offset);
-+            sd_blk_read(sd, sd->data_start, sd->data_offset);
-             sd->blk_written++;
-             sd->data_start += sd->blk_len;
-             sd->data_offset = 0;
-@@ -2075,8 +2073,9 @@ uint8_t sd_read_byte(SDState *sd)
+@@ -143,6 +143,8 @@ struct SDState {
+     uint64_t data_start;
+     uint32_t data_offset;
+     uint8_t data[512];
++    uint8_t vendor_data[512];
++
+     qemu_irq readonly_cb;
+     qemu_irq inserted_cb;
+     QEMUTimer *ocr_power_timer;
+@@ -647,6 +649,7 @@ static void sd_reset(DeviceState *dev)
+     sd->wp_switch = sd->blk ? !blk_is_writable(sd->blk) : false;
+     sd->wp_group_bits = sect;
+     sd->wp_group_bmap = bitmap_new(sd->wp_group_bits);
++    memset(sd->vendor_data, 0xec, sizeof(sd->vendor_data));
+     memset(sd->function_group, 0, sizeof(sd->function_group));
+     sd->erase_start = INVALID_ADDRESS;
+     sd->erase_end = INVALID_ADDRESS;
+@@ -762,7 +765,7 @@ static const VMStateDescription sd_vmstate = {
+         VMSTATE_UINT64(data_start, SDState),
+         VMSTATE_UINT32(data_offset, SDState),
+         VMSTATE_UINT8_ARRAY(data, SDState, 512),
+-        VMSTATE_UNUSED_V(1, 512),
++        VMSTATE_UINT8_ARRAY(vendor_data, SDState, 512),
+         VMSTATE_BOOL(enable, SDState),
+         VMSTATE_END_OF_LIST()
+     },
+@@ -2019,9 +2022,8 @@ void sd_write_byte(SDState *sd, uint8_t value)
          break;
  
-     case 17:  /* CMD17:  READ_SINGLE_BLOCK */
--        if (sd->data_offset == 0)
--            BLK_READ_BLOCK(sd->data_start, io_len);
-+        if (sd->data_offset == 0) {
-+            sd_blk_read(sd, sd->data_start, io_len);
-+        }
-         ret = sd->data[sd->data_offset ++];
- 
-         if (sd->data_offset >= io_len)
-@@ -2089,7 +2088,7 @@ uint8_t sd_read_byte(SDState *sd)
-                                   sd->data_start, io_len)) {
-                 return 0x00;
-             }
--            BLK_READ_BLOCK(sd->data_start, io_len);
-+            sd_blk_read(sd, sd->data_start, io_len);
+     case 56:  /* CMD56:  GEN_CMD */
+-        sd->data[sd->data_offset ++] = value;
+-        if (sd->data_offset >= sd->blk_len) {
+-            APP_WRITE_BLOCK(sd->data_start, sd->data_offset);
++        sd->vendor_data[sd->data_offset ++] = value;
++        if (sd->data_offset >= sizeof(sd->vendor_data)) {
+             sd->state = sd_transfer_state;
          }
-         ret = sd->data[sd->data_offset ++];
+         break;
+@@ -2155,12 +2157,11 @@ uint8_t sd_read_byte(SDState *sd)
+         break;
  
+     case 56:  /* CMD56:  GEN_CMD */
+-        if (sd->data_offset == 0)
+-            APP_READ_BLOCK(sd->data_start, sd->blk_len);
+-        ret = sd->data[sd->data_offset ++];
++        ret = sd->vendor_data[sd->data_offset ++];
+ 
+-        if (sd->data_offset >= sd->blk_len)
++        if (sd->data_offset >= sizeof(sd->vendor_data)) {
+             sd->state = sd_transfer_state;
++        }
+         break;
+ 
+     default:
 -- 
 2.41.0
 
