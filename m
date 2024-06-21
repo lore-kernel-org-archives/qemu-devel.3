@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68AC6C27C4F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0A15C2D0CE
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 17:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKiTN-0003I6-Fp; Fri, 21 Jun 2024 13:54:53 -0400
+	id 1sKiTt-0003hL-LJ; Fri, 21 Jun 2024 13:55:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKiTJ-0003Fy-9k
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 13:54:49 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKiTr-0003Yv-Ky
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 13:55:23 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKiTH-0003Jz-K9
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 13:54:49 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sKiTp-0003bi-Jh
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 13:55:23 -0400
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2F3A721B37;
- Fri, 21 Jun 2024 17:54:45 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 05D0321B40;
+ Fri, 21 Jun 2024 17:55:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718992485; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718992520; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BHDDc9Txz5UoWG2oPka59YLq/Od6MbDAayJ9RVr1JIo=;
- b=m3Axk7h3xmX9kqOq3n/1FNmeuxLWewEB4dearNTIy3XKWDeaPobhBz74M2JOjpW0TDfVag
- RTUJ5wZuKm+Zzbo5M2ibNIagNVoZsA+973+BxW3PV9XjA+ODtjb96ifkqzYOm7VltuX/AK
- YVTbBNGdEFuDeEogq5jsxjnJ0/T+iys=
+ bh=7Aaj/WoDV5uAm41cMA1Jz8VwWrLFuTsQAw9Ij2plECo=;
+ b=UqeZyirSgl4zrPxBJ4R4HhItS1QsGvxT8utKE/w4CoQ4/qhGRJZl5GLIqMsCJA2GUJElXw
+ NVZ6rBAwAHYVfIjfkzlDTkbjqPY/R2jxi+Tkuf1Q24Dew/GCYJpQEFDj1xP6kVFzNQqEES
+ zr+qIE/iEhUJXsjqKWmqvGpzn/z13ig=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718992485;
+ s=susede2_ed25519; t=1718992520;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BHDDc9Txz5UoWG2oPka59YLq/Od6MbDAayJ9RVr1JIo=;
- b=3T2XGaUMA40wBvlfnON0nfFJFdxFg7Vvr74e3v9RjYR8CFN0OoEa2IyDIS+sMKgwfaNTeb
- kurl/EVqyIAL6uBg==
+ bh=7Aaj/WoDV5uAm41cMA1Jz8VwWrLFuTsQAw9Ij2plECo=;
+ b=WwEYt153PR7cBHHj5r8DV+EpqHeQweOsMBmqjPGGPxa7TYYZE0R3fyIMZZxp7dkJt7NVWy
+ lZeL3WYaqcBTVHAg==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1718992485; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1718992520; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BHDDc9Txz5UoWG2oPka59YLq/Od6MbDAayJ9RVr1JIo=;
- b=m3Axk7h3xmX9kqOq3n/1FNmeuxLWewEB4dearNTIy3XKWDeaPobhBz74M2JOjpW0TDfVag
- RTUJ5wZuKm+Zzbo5M2ibNIagNVoZsA+973+BxW3PV9XjA+ODtjb96ifkqzYOm7VltuX/AK
- YVTbBNGdEFuDeEogq5jsxjnJ0/T+iys=
+ bh=7Aaj/WoDV5uAm41cMA1Jz8VwWrLFuTsQAw9Ij2plECo=;
+ b=UqeZyirSgl4zrPxBJ4R4HhItS1QsGvxT8utKE/w4CoQ4/qhGRJZl5GLIqMsCJA2GUJElXw
+ NVZ6rBAwAHYVfIjfkzlDTkbjqPY/R2jxi+Tkuf1Q24Dew/GCYJpQEFDj1xP6kVFzNQqEES
+ zr+qIE/iEhUJXsjqKWmqvGpzn/z13ig=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1718992485;
+ s=susede2_ed25519; t=1718992520;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BHDDc9Txz5UoWG2oPka59YLq/Od6MbDAayJ9RVr1JIo=;
- b=3T2XGaUMA40wBvlfnON0nfFJFdxFg7Vvr74e3v9RjYR8CFN0OoEa2IyDIS+sMKgwfaNTeb
- kurl/EVqyIAL6uBg==
+ bh=7Aaj/WoDV5uAm41cMA1Jz8VwWrLFuTsQAw9Ij2plECo=;
+ b=WwEYt153PR7cBHHj5r8DV+EpqHeQweOsMBmqjPGGPxa7TYYZE0R3fyIMZZxp7dkJt7NVWy
+ lZeL3WYaqcBTVHAg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0788713AAA;
- Fri, 21 Jun 2024 17:54:43 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CDFF313AAA;
+ Fri, 21 Jun 2024 17:55:18 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id EJLdL2O+dWZNawAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 21 Jun 2024 17:54:43 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OJ98JIa+dWZNawAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 21 Jun 2024 17:55:18 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 04/28] tests/qtest/migration: Add a precopy file test with fdset
-Date: Fri, 21 Jun 2024 14:54:10 -0300
-Message-Id: <20240621175434.31180-5-farosas@suse.de>
+Subject: [PULL 24/28] tests/migration-tests: Always enable migration events
+Date: Fri, 21 Jun 2024 14:54:30 -0300
+Message-Id: <20240621175434.31180-25-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240621175434.31180-1-farosas@suse.de>
 References: <20240621175434.31180-1-farosas@suse.de>
@@ -117,82 +117,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a test for file migration using fdset. The passing of fds is more
-complex than using a file path. This is also the scenario where it's
-most important we ensure that the initial migration stream offset is
-respected because the fdset interface is the one used by the
-management layer when providing a non empty migration file.
+From: Peter Xu <peterx@redhat.com>
 
-Note that fd passing is not available on Windows, so anything that
-uses add-fd needs to exclude that platform.
+Libvirt should always enable it, so it'll be nice qtest also cover that for
+all tests on both sides.  migrate_incoming_qmp() used to enable it only on
+dst, now we enable them on both, as we'll start to sanity check events even
+on the src QEMU.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+We'll need to leave the one in migrate_incoming_qmp(), because
+virtio-net-failover test uses that one only, and it relies on the events to
+work.
+
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration-test.c | 44 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ tests/qtest/migration-helpers.c | 1 +
+ tests/qtest/migration-test.c    | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
+diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+index 0ac49ceb54..2ca4425d71 100644
+--- a/tests/qtest/migration-helpers.c
++++ b/tests/qtest/migration-helpers.c
+@@ -258,6 +258,7 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, const char *fmt, ...)
+     g_assert(!qdict_haskey(args, "uri"));
+     qdict_put_str(args, "uri", uri);
+ 
++    /* This function relies on the event to work, make sure it's enabled */
+     migrate_set_capability(to, "events", true);
+ 
+     rsp = qtest_qmp(to, "{ 'execute': 'migrate-incoming', 'arguments': %p}",
 diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 0a529a527b..22b07bc0ec 100644
+index b7dea1aabb..32e31fff86 100644
 --- a/tests/qtest/migration-test.c
 +++ b/tests/qtest/migration-test.c
-@@ -1990,6 +1990,46 @@ static void test_precopy_file(void)
-     test_file_common(&args, true);
- }
+@@ -852,6 +852,13 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+         unlink(shmem_path);
+     }
  
-+#ifndef _WIN32
-+static void fdset_add_fds(QTestState *qts, const char *file, int flags,
-+                          int num_fds)
-+{
-+    for (int i = 0; i < num_fds; i++) {
-+        int fd;
++    /*
++     * Always enable migration events.  Libvirt always uses it, let's try
++     * to mimic as closer as that.
++     */
++    migrate_set_capability(*from, "events", true);
++    migrate_set_capability(*to, "events", true);
 +
-+        fd = open(file, flags, 0660);
-+        assert(fd != -1);
-+
-+        qtest_qmp_fds_assert_success(qts, &fd, 1, "{'execute': 'add-fd', "
-+                                     "'arguments': {'fdset-id': 1}}");
-+        close(fd);
-+    }
-+}
-+
-+static void *file_offset_fdset_start_hook(QTestState *from, QTestState *to)
-+{
-+    g_autofree char *file = g_strdup_printf("%s/%s", tmpfs, FILE_TEST_FILENAME);
-+
-+    fdset_add_fds(from, file, O_WRONLY, 1);
-+    fdset_add_fds(to, file, O_RDONLY, 1);
-+
-+    return NULL;
-+}
-+
-+static void test_precopy_file_offset_fdset(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("file:/dev/fdset/1,offset=%d",
-+                                           FILE_TEST_OFFSET);
-+    MigrateCommon args = {
-+        .connect_uri = uri,
-+        .listen_uri = "defer",
-+        .start_hook = file_offset_fdset_start_hook,
-+    };
-+
-+    test_file_common(&args, false);
-+}
-+#endif
-+
- static void test_precopy_file_offset(void)
- {
-     g_autofree char *uri = g_strdup_printf("file:%s/%s,offset=%d", tmpfs,
-@@ -3527,6 +3567,10 @@ int main(int argc, char **argv)
-                        test_precopy_file);
-     migration_test_add("/migration/precopy/file/offset",
-                        test_precopy_file_offset);
-+#ifndef _WIN32
-+    migration_test_add("/migration/precopy/file/offset/fdset",
-+                       test_precopy_file_offset_fdset);
-+#endif
-     migration_test_add("/migration/precopy/file/offset/bad",
-                        test_precopy_file_offset_bad);
+     return 0;
+ }
  
 -- 
 2.35.3
