@@ -4,64 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC671C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 04:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC9B9C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 04:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKW2R-0006Fk-Fg; Fri, 21 Jun 2024 00:38:15 -0400
+	id 1sKW2y-0006gt-0a; Fri, 21 Jun 2024 00:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wzssyqa@gmail.com>) id 1sKW2O-0006FK-5M
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:38:12 -0400
-Received: from mail-yb1-f174.google.com ([209.85.219.174])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKW2s-0006RW-D8
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:38:42 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wzssyqa@gmail.com>) id 1sKW2M-000334-NQ
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:38:11 -0400
-Received: by mail-yb1-f174.google.com with SMTP id
- 3f1490d57ef6-dfef5980a69so1590646276.3
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 21:38:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKW2q-0003I9-D5
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 00:38:42 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-70435f4c330so1437537b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 21:38:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1718944719; x=1719549519; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=JbnYdkZoHVaSywSDipI1ub1xsTTQDuay/Y0l+sWqzKg=;
+ b=wQnq+HomryBaXokgAd9atiFgHYUZ3JXknZfhVGniqaXJmBASAy+imi9Xjs7HEZHDaD
+ 4LOBzKlaNZ875rPYDqtX3ZjFjyrP/CBOiB64b9Cuy+ZTCBdf4eZxjGWpOxvZ1MHkIFRN
+ euofHSr1SwzBR3aiMh+8c+ELtYMwGvCk3qtnKR2MLhq3kF5kqB6S/b9mYlpOPg9S+rL2
+ sPZkqibAnbJjlnX+X4eDD30xYmUN4OXYCQsqkpGim70janpMb9HLArOGEZvqz+RWaS4M
+ N4gTbcdP//Syje0tuqFQY/r/xDvyvsXh3TpV0v73f+v8Q7uRZ9IWadMqgUBdDDuOEhZ2
+ cWmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718944689; x=1719549489;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KTptgE8hNc6iHb3J/5LydqxSVcU81eNMVUVVXfBsgP4=;
- b=Int7Jxl8jqy3HdT4UMORWW6Ef/zLwVzYQnIwwJoOS3eWIsnQBJ4d7tdtGF8CmMY7rE
- YsI+UybIyi7aU2euBE+Jy8CUtl3v6ot9D994SpypAAwiJwCgTpXeUpdYkLSBUaiyW7Gx
- 1SM0w6jPG7rSi93im2cdEP4c3DzWB7FDLXT01qaUjquR24+MoBUD4fUBMUrX9CYB7Qtn
- FsS3J9knvBBBtdnZeSBdB1HMQf9xfSwYji9ubIKXGNzI6DtbNcGZLXL6VxPfkwEuiZq5
- a14yEg03D7kTLNRS+jPN3/UCLgzQgExOsHt5rnvHKspRlRw18Z5Mbz6vQimli9/99Y61
- cDqg==
-X-Gm-Message-State: AOJu0YwH0neeuhFPVB/Lfcx+Jw/rINSWMtL3p7RkNinPVC5G1uzSUJFc
- a1OHsaJnkiZDN/LO0Wp7L+JWqDeO2LrK+gckocU7cHhj5zR5iMTO7gk0wQvCFIbWoxycvRLgjoO
- DTw/58b/kYNC4DAHh4Ai7M76Avqc=
-X-Google-Smtp-Source: AGHT+IEF0Pw5aNGmP39GC8cTeu6+4gvfq6dMWyx08c8ROYgRJOqn+nscYMWfm421484XNipnEX084yn8VYwGc3OsW/s=
-X-Received: by 2002:a25:69c6:0:b0:e02:c72a:5f4e with SMTP id
- 3f1490d57ef6-e02c72a6199mr5900705276.53.1718944688438; Thu, 20 Jun 2024
- 21:38:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1718944719; x=1719549519;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JbnYdkZoHVaSywSDipI1ub1xsTTQDuay/Y0l+sWqzKg=;
+ b=KHvBn8i9Ai4eBmCAsLK2m9jsRUwQ0fkh3PctnK8DJIzfAMEWvWvC8XdcuJZsqUUIar
+ DG4f4yMB8QWPJ1SxLB2V7zvYZcjTswyEYFaG7e84By7u+SAbkejisQZEVEwXLmSYwk2B
+ +baSaWD4cddq1JptKM7WX0LJ6GgFrzCt0c258eXWth0xYYZSfjYc7W3owzzGwfwMn0NX
+ HIWwuEc2mXGEvUlYsfOHG2RbuvI5DBO2DtDdsEKeO+2UybWgeAjyKKAf6gta1htc/hl9
+ VI/OcB3YxGCZGUkCRRUxy1USWKcTIjkdLEUJ86PoCygY8Zrazfxw5zZ3z1xGBZS83qav
+ LgJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUBnhoElPiQMny8fRPgDpKJkdJrqgX9SzltMnuHV8UIgDmeKLbxqY6E0T3QCw/AqxxGaX6GBSr6cVVmhYAdinygW1FBmc=
+X-Gm-Message-State: AOJu0YxtjLRSUfCE7ev/GpaWOUMEJJnDsQ7Kgaqo3NyommWGDBiz6HYm
+ p78SzA1y1zXMx1v5FrH0JMsTazEwsV3Z1diYZ+sqLRlwNaH6UoyfFMAUpfhGh40=
+X-Google-Smtp-Source: AGHT+IGujfqRQTQQAJC+jxZmqU4UjYphm6kKrmUU3r868VRvqQwvsC8SkCIzg3prs1bIvA97xSdYXg==
+X-Received: by 2002:a05:6a00:2717:b0:705:d730:1b8 with SMTP id
+ d2e1a72fcca58-70629c54678mr7337637b3a.19.1718944718864; 
+ Thu, 20 Jun 2024 21:38:38 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70651304126sm464463b3a.206.2024.06.20.21.38.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Jun 2024 21:38:38 -0700 (PDT)
+Message-ID: <9f6e6321-647c-4ba4-8997-b6243253e761@linaro.org>
+Date: Thu, 20 Jun 2024 21:38:36 -0700
 MIME-Version: 1.0
-References: <20240620234633.74447-1-syq@debian.org>
- <3faf6561-804f-4d1c-8204-f4bb9f7a3b94@linaro.org>
-In-Reply-To: <3faf6561-804f-4d1c-8204-f4bb9f7a3b94@linaro.org>
-From: YunQiang Su <syq@debian.org>
-Date: Fri, 21 Jun 2024 12:37:57 +0800
-Message-ID: <CAKcpw6UqJFFsVJ92tU-Aod8bC_WQsEZSCRZhD3efW7v6V88hOw@mail.gmail.com>
-Subject: Re: [PATCH] mips: pass code of conditional trap
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, macro@orcam.me.uk, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=209.85.219.174; envelope-from=wzssyqa@gmail.com;
- helo=mail-yb1-f174.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/9] gdbstub: Make get cpu and hex conversion functions
+ non-internal
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org, peter.maydell@linaro.org, alex.bennee@linaro.org
+References: <20240617062849.3531745-1-gustavo.romero@linaro.org>
+ <20240617062849.3531745-8-gustavo.romero@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240617062849.3531745-8-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,30 +99,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> =E4=BA=8E2024=E5=B9=B46=E6=
-=9C=8821=E6=97=A5=E5=91=A8=E4=BA=94 12:21=E5=86=99=E9=81=93=EF=BC=9A
->
-> On 6/20/24 16:46, YunQiang Su wrote:
-> > @@ -4553,7 +4559,7 @@ static void gen_trap(DisasContext *ctx, uint32_t =
-opc,
-> >           if (ctx->hflags !=3D ctx->saved_hflags) {
-> >               tcg_gen_movi_i32(hflags, ctx->hflags);
-> >           }
-> > -        generate_exception(ctx, EXCP_TRAP);
-> > +        generate_exception_with_code(ctx, EXCP_TRAP, code);
-> >           gen_set_label(l1);
-> >       }
-> >   }
->
-> There are two instances within gen_trap, one of which *does* store into e=
-rror_code, but
-> that gets overwritten by do_raise_exception_err.
->
+On 6/16/24 23:28, Gustavo Romero wrote:
+> Make the gdb_first_attached_cpu and gdb_hextomem non-internal so they
+> are not confined to use only in gdbstub.c.
+> 
+> Signed-off-by: Gustavo Romero<gustavo.romero@linaro.org>
+> ---
+>   gdbstub/internals.h        | 2 --
+>   include/exec/gdbstub.h     | 5 +++++
+>   include/gdbstub/commands.h | 6 ++++++
+>   3 files changed, 11 insertions(+), 2 deletions(-)
 
-Ohh, yes. There is another `generate_exception_end` if cond =3D=3D 0.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> Search for EXCP_TRAP.
->
->
-> r~
+r~
 
