@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7EFDC27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:18:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A3CC27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:20:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKgy0-0000TA-Dh; Fri, 21 Jun 2024 12:18:24 -0400
+	id 1sKgzS-0001cf-I9; Fri, 21 Jun 2024 12:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=9ak7=NX=kaod.org=clg@ozlabs.org>)
- id 1sKgxy-0000Rt-2J; Fri, 21 Jun 2024 12:18:22 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1sKgzL-0001c4-8S; Fri, 21 Jun 2024 12:19:47 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=9ak7=NX=kaod.org=clg@ozlabs.org>)
- id 1sKgxw-00032U-Do; Fri, 21 Jun 2024 12:18:21 -0400
+ id 1sKgzJ-0003Bh-H0; Fri, 21 Jun 2024 12:19:46 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W5MwT74jXz4wcq;
- Sat, 22 Jun 2024 02:18:17 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W5My71sppz4wcJ;
+ Sat, 22 Jun 2024 02:19:43 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W5MwR4yPjz4wc5;
- Sat, 22 Jun 2024 02:18:15 +1000 (AEST)
-Message-ID: <9483a0a4-6da3-461b-b251-e67a9b0dba05@kaod.org>
-Date: Fri, 21 Jun 2024 18:18:13 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W5My41Z4Kz4w2Q;
+ Sat, 22 Jun 2024 02:19:39 +1000 (AEST)
+Message-ID: <01b4b5f5-2ad5-4f57-ba20-8b3d730070e5@kaod.org>
+Date: Fri, 21 Jun 2024 18:19:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/23] hw/sd/sdcard: Remove explicit entries for illegal
- commands
+Subject: Re: [PATCH 11/23] hw/sd/sdcard: Trace update of block count (CMD23)
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
 References: <20240621080554.18986-1-philmd@linaro.org>
- <20240621080554.18986-9-philmd@linaro.org>
+ <20240621080554.18986-12-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240621080554.18986-9-philmd@linaro.org>
+In-Reply-To: <20240621080554.18986-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=9ak7=NX=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -68,9 +67,6 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/21/24 10:05 AM, Philippe Mathieu-Daudé wrote:
-> NULL handler is already handled as illegal, no need to
-> duplicate (that keeps this array simpler to maintain).
-> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
@@ -82,41 +78,35 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 11 -----------
->   1 file changed, 11 deletions(-)
+>   hw/sd/sd.c         | 1 +
+>   hw/sd/trace-events | 3 ++-
+>   2 files changed, 3 insertions(+), 1 deletion(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index e9af834a8c..30239b28bc 100644
+> index 4e378f7cf7..2586d15cbd 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -2146,12 +2146,6 @@ static const SDProto sd_proto_spi = {
->       .cmd = {
->           [0]         = sd_cmd_GO_IDLE_STATE,
->           [1]         = spi_cmd_SEND_OP_COND,
-> -        [2 ... 4]   = sd_cmd_illegal,
-> -        [5]         = sd_cmd_illegal,
-> -        [7]         = sd_cmd_illegal,
-> -        [15]        = sd_cmd_illegal,
-> -        [26]        = sd_cmd_illegal,
-> -        [52 ... 54] = sd_cmd_illegal,
->       },
->       .acmd = {
->           [41]        = spi_cmd_SEND_OP_COND,
-> @@ -2162,15 +2156,10 @@ static const SDProto sd_proto_sd = {
->       .name = "SD",
->       .cmd = {
->           [0]         = sd_cmd_GO_IDLE_STATE,
-> -        [1]         = sd_cmd_illegal,
->           [2]         = sd_cmd_ALL_SEND_CID,
->           [3]         = sd_cmd_SEND_RELATIVE_ADDR,
-> -        [5]         = sd_cmd_illegal,
->           [19]        = sd_cmd_SEND_TUNING_BLOCK,
->           [23]        = sd_cmd_SET_BLOCK_COUNT,
-> -        [52 ... 54] = sd_cmd_illegal,
-> -        [58]        = sd_cmd_illegal,
-> -        [59]        = sd_cmd_illegal,
->       },
->   };
+> @@ -1087,6 +1087,7 @@ static sd_rsp_type_t sd_cmd_SET_BLOCK_COUNT(SDState *sd, SDRequest req)
+>       }
 >   
+>       sd->multi_blk_cnt = req.arg;
+> +    trace_sdcard_set_block_count(sd->multi_blk_cnt);
+>   
+>       return sd_r1;
+>   }
+> diff --git a/hw/sd/trace-events b/hw/sd/trace-events
+> index 94a00557b2..724365efc3 100644
+> --- a/hw/sd/trace-events
+> +++ b/hw/sd/trace-events
+> @@ -43,7 +43,8 @@ sdcard_response(const char *rspdesc, int rsplen) "%s (sz:%d)"
+>   sdcard_powerup(void) ""
+>   sdcard_inquiry_cmd41(void) ""
+>   sdcard_reset(void) ""
+> -sdcard_set_blocklen(uint16_t length) "0x%03x"
+> +sdcard_set_blocklen(uint16_t length) "block len 0x%03x"
+> +sdcard_set_block_count(uint32_t cnt) "block cnt 0x%"PRIx32
+>   sdcard_inserted(bool readonly) "read_only: %u"
+>   sdcard_ejected(void) ""
+>   sdcard_erase(uint32_t first, uint32_t last) "addr first 0x%" PRIx32" last 0x%" PRIx32
 
 
