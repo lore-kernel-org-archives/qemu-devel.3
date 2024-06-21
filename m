@@ -4,77 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2473BC2BA1A
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 07:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B465C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 07:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKYMh-0005bl-LP; Fri, 21 Jun 2024 03:07:20 -0400
+	id 1sKYQv-0007yh-M9; Fri, 21 Jun 2024 03:11:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
- id 1sKYMe-0005ai-6O; Fri, 21 Jun 2024 03:07:17 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
- id 1sKYMc-0005pn-0V; Fri, 21 Jun 2024 03:07:15 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a6f85f82ffeso197525166b.0; 
- Fri, 21 Jun 2024 00:07:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1718953632; x=1719558432; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ORUD6LnC/VTY4eB9puSsgy+e06sWMOiVcmkT9sDwWkc=;
- b=lj/DOtv1IQsH92fltn4NZuatEfrTXTYyk1Cjw3P6H58izMWvK/I2CbN8GnXCP205Am
- y71ZQ5RTxE22kax0Q550Axj4dwiPHcPX2fFON1Rsg21Mnx4J7+kmWBmdB+J9Fjh0Y/w/
- t5pauoXyWgAs7BGHltg04DgDwmeZiVzw5wxkkarkOWrygaUBFOuLVY5CKjGjtlpLrYX7
- OdzXYO34z5PQDcaYMNHvg+LheOsVyLGoUXiMTZpigGvmTd2xs+Br77uUoFenNA4ZDc78
- vJYtNnKPLPMAflJln/KsVwRLvisF09OcTzYT+Tv+POSOpVRPdVs+EsFv9jdMthbeQH9t
- 1QYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718953632; x=1719558432;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ORUD6LnC/VTY4eB9puSsgy+e06sWMOiVcmkT9sDwWkc=;
- b=w7WzlPYCbc293eKFqcTCxUAQ2k0ABSpeo9DId/P3FCDrCEp0lOVuA1tgJT4HkBRPmN
- tyK6SkbvD6fGuUxc3QE0lCmDJf5bQIDr0+XO5lQ95SAdSeF6SM63EOZt2SvlcVgi8j8U
- 43i5TbZd0LJesUkfiUgelw1rz2ce8i75UC0ivEjQp4CFzg/2dbBBAeIYid3U+Z1bRpGB
- 3IYVNAfwXLBfLdzrDCUhOmB+h/7DJ8ymYeSIrZZRCVeHeXnClnAUDVk18O/1A9r0xaRV
- lyqq8PpS0/xEW7Cx20VOPNSkhwQ4/GD/n+1fhrdB2d5gs8PK7Ulr/zkftJSgsYWSFi6y
- rFTg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWkgfTq5t3ly1WGXQ6oAsLx+dPE22aUAtp0cn9UcFmr/iPJ6tLXJylZL/WMIVrDlK2ebKKUYTYlZTMrDVW0F02Ccgoo3wNm1DdkmHLdcuPRgdaZQeI4NsHwOf4=
-X-Gm-Message-State: AOJu0Yxi0wE/cZeVJqG2E54bAs8rg4NbwSaEhGw4VKug8wciPhSthBDm
- 2t4HBREjxIF612IzUdm4t/OtVq+io3C++QMzzt49vIEWBimMVJxpJH9uLKPB7pL0hql3yG+2PAk
- TmQCDaNvzlaNBhxem1WKi6Gaknis=
-X-Google-Smtp-Source: AGHT+IE92qsdwveFQDb56jP+qo3bQQtsPbkizXQzqNyEL8BymwnudgK6q9b8bvfidlZcLhvOXVuMPZYmfOJWW9yL9Ok=
-X-Received: by 2002:a17:907:c089:b0:a6f:b193:7590 with SMTP id
- a640c23a62f3a-a6fb19375f7mr510011966b.14.1718953632015; Fri, 21 Jun 2024
- 00:07:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1sKYQt-0007yT-2g
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 03:11:39 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1sKYQo-0006Ye-Or
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 03:11:38 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8DxDeudJ3VmZsoIAA--.35520S3;
+ Fri, 21 Jun 2024 15:11:25 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8CxacacJ3VmfTErAA--.38120S2; 
+ Fri, 21 Jun 2024 15:11:24 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, philmd@linaro.org,
+ --cc=richard.henderson@linaro.org, maobibo@loongson.cn
+Subject: [PATCH] target/loongarch/gdbstub: Add vector registers support
+Date: Fri, 21 Jun 2024 14:54:06 +0800
+Message-Id: <20240621065406.864232-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-References: <CADueUgQh-=vmoO9kqL589Xeuf_LOM_K2Rr-rBxwe8iArdNdzsA@mail.gmail.com>
- <6b1daa9c-6f37-4edb-86d4-782941f1bcca@redhat.com>
- <CAFEAcA-Yda=XXspi49Z+-7bmBP-DzL2kFMg_XfNxMviHuAX18w@mail.gmail.com>
- <CADueUgS1==4gAmNmTBLZzrnRUp9z2wxkce8+TcOeoR3w_Pg-bg@mail.gmail.com>
-In-Reply-To: <CADueUgS1==4gAmNmTBLZzrnRUp9z2wxkce8+TcOeoR3w_Pg-bg@mail.gmail.com>
-From: Arthur Tumanyan <arthurtumanyan@gmail.com>
-Date: Fri, 21 Jun 2024 11:07:00 +0400
-Message-ID: <CADueUgT4xDJft6On4j+oic65UcQRv_PcNSWJg-CcdBM8My3zow@mail.gmail.com>
-Subject: Re: How to use designware-root-port and designware-root-host devices ?
-To: peter.maydell@linaro.org
-Cc: thuth@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- andrew.smirnov@gmail.com
-Content-Type: multipart/alternative; boundary="0000000000009f2937061b6114f3"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=arthurtumanyan@gmail.com; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8CxacacJ3VmfTErAA--.38120S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,158 +63,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009f2937061b6114f3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+GDB already support LoongArch vector extension[1], QEMU gdb adds
+LoongArch vector registers support, so that users can use 'info all-registers'
+to get all vector registers values.
 
-Hi,
+[1]: https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=1e9569f383a3d5a88ee07d0c2401bd95613c222e
 
-I just tried to run mcimx7d-sabre machine this way:
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+based-on: 
+ https://patchew.org/QEMU/20240607035016.2975799-1-maobibo@loongson.cn/ 
 
-${HOME}/cosim/usr/local/bin/qemu-system-arm -M mcimx7d-sabre -m 2G \
--kernel ${HOME}/cosim-arm/buildroot/output/images/uImage \
-        --initrd ${HOME}/cosim-arm/buildroot/output/images/rootfs.cpio.gz \
--nographic \
--net nic -net user
+ configs/targets/loongarch64-linux-user.mak |  2 +-
+ configs/targets/loongarch64-softmmu.mak    |  2 +-
+ gdb-xml/loongarch-lasx.xml                 | 60 +++++++++++++++++++
+ gdb-xml/loongarch-lsx.xml                  | 59 ++++++++++++++++++
+ target/loongarch/gdbstub.c                 | 70 +++++++++++++++++++++-
+ 5 files changed, 189 insertions(+), 4 deletions(-)
+ create mode 100644 gdb-xml/loongarch-lasx.xml
+ create mode 100644 gdb-xml/loongarch-lsx.xml
 
-and it just prints this and do nothing: *qemu-system-arm: warning: nic
-imx.enet.1 has no peer*
+diff --git a/configs/targets/loongarch64-linux-user.mak b/configs/targets/loongarch64-linux-user.mak
+index d878e5a113..ea9b7e839a 100644
+--- a/configs/targets/loongarch64-linux-user.mak
++++ b/configs/targets/loongarch64-linux-user.mak
+@@ -1,4 +1,4 @@
+ # Default configuration for loongarch64-linux-user
+ TARGET_ARCH=loongarch64
+ TARGET_BASE_ARCH=loongarch
+-TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
++TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
+diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
+index 65b65e0c34..ce19ab6a16 100644
+--- a/configs/targets/loongarch64-softmmu.mak
++++ b/configs/targets/loongarch64-softmmu.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=loongarch64
+ TARGET_BASE_ARCH=loongarch
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_SUPPORTS_MTTCG=y
+-TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
++TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
+ # all boards require libfdt
+ TARGET_NEED_FDT=y
+diff --git a/gdb-xml/loongarch-lasx.xml b/gdb-xml/loongarch-lasx.xml
+new file mode 100644
+index 0000000000..753b982c65
+--- /dev/null
++++ b/gdb-xml/loongarch-lasx.xml
+@@ -0,0 +1,60 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2022-2024 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.loongarch.lasx">
++  <vector id="v8f32" type="ieee_single" count="8"/>
++  <vector id="v4f64" type="ieee_double" count="4"/>
++  <vector id="v32i8" type="int8" count="32"/>
++  <vector id="v16i16" type="int16" count="16"/>
++  <vector id="v8i32" type="int32" count="8"/>
++  <vector id="v4i64" type="int64" count="4"/>
++  <vector id="v2ui128" type="uint128" count="2"/>
++
++  <union id="lasxv">
++    <field name="v8_float" type="v8f32"/>
++    <field name="v4_double" type="v4f64"/>
++    <field name="v32_int8" type="v32i8"/>
++    <field name="v16_int16" type="v16i16"/>
++    <field name="v8_int32" type="v8i32"/>
++    <field name="v4_int64" type="v4i64"/>
++    <field name="v2_uint128" type="v2ui128"/>
++  </union>
++
++  <reg name="xr0" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr1" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr2" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr3" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr4" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr5" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr6" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr7" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr8" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr9" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr10" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr11" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr12" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr13" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr14" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr15" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr16" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr17" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr18" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr19" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr20" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr21" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr22" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr23" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr24" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr25" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr26" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr27" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr28" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr29" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr30" bitsize="256" type="lasxv" group="lasx"/>
++  <reg name="xr31" bitsize="256" type="lasxv" group="lasx"/>
++</feature>
+diff --git a/gdb-xml/loongarch-lsx.xml b/gdb-xml/loongarch-lsx.xml
+new file mode 100644
+index 0000000000..51af1c6fd5
+--- /dev/null
++++ b/gdb-xml/loongarch-lsx.xml
+@@ -0,0 +1,59 @@
++<?xml version="1.0"?>
++<!-- Copyright (C) 2022-2024 Free Software Foundation, Inc.
++
++     Copying and distribution of this file, with or without modification,
++     are permitted in any medium without royalty provided the copyright
++     notice and this notice are preserved.  -->
++
++<!DOCTYPE feature SYSTEM "gdb-target.dtd">
++<feature name="org.gnu.gdb.loongarch.lsx">
++  <vector id="v4f32" type="ieee_single" count="4"/>
++  <vector id="v2f64" type="ieee_double" count="2"/>
++  <vector id="v16i8" type="int8" count="16"/>
++  <vector id="v8i16" type="int16" count="8"/>
++  <vector id="v4i32" type="int32" count="4"/>
++  <vector id="v2i64" type="int64" count="2"/>
++
++  <union id="lsxv">
++    <field name="v4_float" type="v4f32"/>
++    <field name="v2_double" type="v2f64"/>
++    <field name="v16_int8" type="v16i8"/>
++    <field name="v8_int16" type="v8i16"/>
++    <field name="v4_int32" type="v4i32"/>
++    <field name="v2_int64" type="v2i64"/>
++    <field name="uint128" type="uint128"/>
++  </union>
++
++  <reg name="vr0" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr1" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr2" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr3" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr4" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr5" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr6" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr7" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr8" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr9" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr10" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr11" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr12" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr13" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr14" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr15" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr16" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr17" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr18" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr19" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr20" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr21" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr22" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr23" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr26" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr25" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr26" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr27" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr28" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr29" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr30" bitsize="128" type="lsxv" group="lsx"/>
++  <reg name="vr31" bitsize="128" type="lsxv" group="lsx"/>
++</feature>
+diff --git a/target/loongarch/gdbstub.c b/target/loongarch/gdbstub.c
+index a0e1439bd0..c9e2ddd943 100644
+--- a/target/loongarch/gdbstub.c
++++ b/target/loongarch/gdbstub.c
+@@ -116,8 +116,74 @@ static int loongarch_gdb_set_fpu(CPUState *cs, uint8_t *mem_buf, int n)
+     return length;
+ }
+ 
++static int loongarch_gdb_get_vec(CPUState *cs, GByteArray *mem_buf, int n, int vl)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    CPULoongArchState *env = &cpu->env;
++    int i, length = 0;
++
++    if (0 <= n && n < 32) {
++        for (i = 0; i < vl / 64; i++) {
++            length += gdb_get_reg64(mem_buf, env->fpr[n].vreg.D(i));
++	}
++    }
++
++    return length;
++}
++
++static int loongarch_gdb_set_vec(CPUState *cs, uint8_t *mem_buf, int n, int vl)
++{
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    CPULoongArchState *env = &cpu->env;
++    int i, length = 0;
++
++    if (0 <= n && n < 32) {
++        for (i = 0; i < vl / 64; i++) {
++            env->fpr[n].vreg.D(i) = ldq_le_p(mem_buf + 8 * i);
++            length += 8;
++        }
++    }
++
++    return length;
++}
++
++static int loongarch_gdb_get_lsx(CPUState *cs, GByteArray *mem_buf, int n)
++{
++    return loongarch_gdb_get_vec(cs, mem_buf, n, LSX_LEN);
++}
++
++static int loongarch_gdb_set_lsx(CPUState *cs, uint8_t *mem_buf, int n)
++{
++    return loongarch_gdb_set_vec(cs, mem_buf, n, LSX_LEN);
++}
++
++static int loongarch_gdb_get_lasx(CPUState *cs, GByteArray *mem_buf, int n)
++{
++    return loongarch_gdb_get_vec(cs, mem_buf, n, LASX_LEN);
++}
++
++static int loongarch_gdb_set_lasx(CPUState *cs, uint8_t *mem_buf, int n)
++{
++    return loongarch_gdb_set_vec(cs, mem_buf, n, LASX_LEN);
++}
++
+ void loongarch_cpu_register_gdb_regs_for_features(CPUState *cs)
+ {
+-    gdb_register_coprocessor(cs, loongarch_gdb_get_fpu, loongarch_gdb_set_fpu,
+-                             gdb_find_static_feature("loongarch-fpu.xml"), 0);
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    CPULoongArchState *env = &cpu->env;
++
++    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, FP)) {
++        gdb_register_coprocessor(cs, loongarch_gdb_get_fpu, loongarch_gdb_set_fpu,
++                                 gdb_find_static_feature("loongarch-fpu.xml"), 0);
++    }
++
++    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, LSX)) {
++        gdb_register_coprocessor(cs, loongarch_gdb_get_lsx, loongarch_gdb_set_lsx,
++                                 gdb_find_static_feature("loongarch-lsx.xml"), 0);
++    }
++
++    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, LASX)) {
++        gdb_register_coprocessor(cs, loongarch_gdb_get_lasx, loongarch_gdb_set_lasx,
++                                 gdb_find_static_feature("loongarch-lasx.xml"), 0);
++    }
+ }
+-- 
+2.33.0
 
-Based on what I see in the mcimx7d-sabre.c , it configures just very basic
-things, no PCIe at all (may be I'm wrong ;) )
-
-Is there any idea what goes wrong here ? Maybe someone has experience with
-running this machine ?
-
-Before starting to create my own virt machine I would like to know I'm not
-missing the existing ways to run this.
-
-Thanks in advance,
-Arthur
-
-
-
-
-
-On Thu, Jun 20, 2024 at 11:37=E2=80=AFPM Arthur Tumanyan <arthurtumanyan@gm=
-ail.com>
-wrote:
-
-> Thanks for the answers, I could move forward a bit more. I'm going/I need
-> to to create a "virt" machine with designware PCI controller for simulati=
-on
-> purposes. Will get back with progress in case anyone is interested in
-> results. Thank you again for your time and support.
-> Arthur
->
-> On Thu, Jun 20, 2024, 23:05 Peter Maydell <peter.maydell@linaro.org>
-> wrote:
->
->> On Thu, 20 Jun 2024 at 18:34, Thomas Huth <thuth@redhat.com> wrote:
->> >
->> > On 20/06/2024 10.28, Arthur Tumanyan wrote:
->> > >  From the other hand the device is declared as non pluggable:
->> > > dc->user_creatable =3D false;
->> >
->> > Well, that means that you cannot use those with "-device". They can
->> only be
->> > instantiated via the code that creates the machine.
->> >
->> > > Can you please help me to use designware-root-host/port devices ?
->> >
->> > It seems like the i.MX7 SABRE machine is using this device, so instead
->> of
->> > "-M virt", you could have a try with "-M mcimx7d-sabre" (and a kernel
->> that
->> > supports this machine) instead.
->>
->> Right -- these devices are the PCIe controller that's used on the i.MX7
->> and i.MX6 SoCs, and they're automatically created when you use a machine
->> type that uses one of those SoCs. The "virt" board doesn't use that
->> PCIe controller, it uses the "generic PCIe bridge" TYPE_GPEX_HOST
->> (and you automatically get a PCIe controller when you use the virt board=
-).
->> You can't change the PCIe controller type of a QEMU machine from
->> the command line, you have to configure the guest to use the controller
->> the machine type provides.
->>
->> thanks
->> -- PMM
->>
->
-
---0000000000009f2937061b6114f3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi,<div><br></div><div>I just tried to run mcimx7d-sabre m=
-achine this way:<br></div><div><br>${HOME}/cosim/usr/local/bin/qemu-system-=
-arm -M mcimx7d-sabre -m 2G \<br>	-kernel ${HOME}/cosim-arm/buildroot/output=
-/images/uImage \<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0	--initrd ${HOME}/cosim-arm/=
-buildroot/output/images/rootfs.cpio.gz \<br>	-nographic \<br>	-net nic -net=
- user=C2=A0<br></div><div><br></div><div>and it just prints this and do not=
-hing:=C2=A0<b>qemu-system-arm: warning: nic imx.enet.1 has no peer</b></div=
-><div><br></div><div>Based on what I see in the mcimx7d-sabre.c , it config=
-ures just very basic things, no PCIe at all (may be I&#39;m wrong ;) )</div=
-><div><br></div><div>Is there any idea what goes wrong here ? Maybe someone=
- has experience with running this machine ?</div><div><br></div><div>Before=
- starting to create my own virt machine I would like to know I&#39;m not mi=
-ssing the existing ways to run this.</div><div><br></div><div>Thanks in adv=
-ance,</div><div>Arthur</div><div><br></div><div><br></div><div><br></div><d=
-iv><br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
-"gmail_attr">On Thu, Jun 20, 2024 at 11:37=E2=80=AFPM Arthur Tumanyan &lt;<=
-a href=3D"mailto:arthurtumanyan@gmail.com">arthurtumanyan@gmail.com</a>&gt;=
- wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><p dir=
-=3D"ltr">Thanks for the answers, I could move forward a bit more. I&#39;m g=
-oing/I need to to create a &quot;virt&quot; machine with designware PCI con=
-troller for simulation purposes. Will get back with progress in case anyone=
- is interested in results. Thank you again for your time and support.<br>
-Arthur </p>
-<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu=
-, Jun 20, 2024, 23:05 Peter Maydell &lt;<a href=3D"mailto:peter.maydell@lin=
-aro.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt; wrote:<br></div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">On Thu, 20 Jun 2024 at 1=
-8:34, Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" rel=3D"noreferrer=
-" target=3D"_blank">thuth@redhat.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; On 20/06/2024 10.28, Arthur Tumanyan wrote:<br>
-&gt; &gt;=C2=A0 From the other hand the device is declared as non pluggable=
-:<br>
-&gt; &gt; dc-&gt;user_creatable =3D false;<br>
-&gt;<br>
-&gt; Well, that means that you cannot use those with &quot;-device&quot;. T=
-hey can only be<br>
-&gt; instantiated via the code that creates the machine.<br>
-&gt;<br>
-&gt; &gt; Can you please help me to use designware-root-host/port devices ?=
-<br>
-&gt;<br>
-&gt; It seems like the i.MX7 SABRE machine is using this device, so instead=
- of<br>
-&gt; &quot;-M virt&quot;, you could have a try with &quot;-M mcimx7d-sabre&=
-quot; (and a kernel that<br>
-&gt; supports this machine) instead.<br>
-<br>
-Right -- these devices are the PCIe controller that&#39;s used on the i.MX7=
-<br>
-and i.MX6 SoCs, and they&#39;re automatically created when you use a machin=
-e<br>
-type that uses one of those SoCs. The &quot;virt&quot; board doesn&#39;t us=
-e that<br>
-PCIe controller, it uses the &quot;generic PCIe bridge&quot; TYPE_GPEX_HOST=
-<br>
-(and you automatically get a PCIe controller when you use the virt board).<=
-br>
-You can&#39;t change the PCIe controller type of a QEMU machine from<br>
-the command line, you have to configure the guest to use the controller<br>
-the machine type provides.<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
-</blockquote></div>
-
---0000000000009f2937061b6114f3--
 
