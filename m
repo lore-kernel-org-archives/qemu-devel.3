@@ -4,105 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3CDC27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 20:52:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A8DC2BD05
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 20:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKlEX-0004Ip-2Y; Fri, 21 Jun 2024 16:51:45 -0400
+	id 1sKlH8-00068L-VU; Fri, 21 Jun 2024 16:54:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1sKlER-0004Fh-7T; Fri, 21 Jun 2024 16:51:40 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKlH8-000684-0m
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 16:54:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1sKlEO-0000xI-Le; Fri, 21 Jun 2024 16:51:38 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45LKcj2O011188;
- Fri, 21 Jun 2024 20:51:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:subject:from:to:cc:date:in-reply-to:references
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- xsZDQufO58cand+4TLMk1TqP2vks7At3YTSaG6dr5K0=; b=O/JCYJsiHlD47HtI
- cj2ITYaDfnJ5aL2jrjVYtTfKFAOwLdHUSMKkkZASTHDc20yunzOIjbDJPhvZoAfY
- 8Yl3r+QZ+X/g+uUpkDaG+Do4AVBv2sj8DihNv72k4nM8IAW9y1sQt3f+msTiWq8/
- 1JZ15qvxzKl89aS/z0zXApLRBdwdH56a/WWR4NLnGWwYHCK3KNg8Z21Hl9eta8qA
- imnvoe4XEQ4o3O7100WoRRWrNJMdQSn4klWoNyd7kYgPJp0B5cDuVnwcq7zz90+M
- qhG81R4O86EgOwFYtxOFTAGI4osSKMqTyX8fRZIiE1zG2MWlskaXWiSekFLX6JcM
- ctjT2g==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ywgr200ns-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Jun 2024 20:51:33 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45LKpXRL000923;
- Fri, 21 Jun 2024 20:51:33 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ywgr200np-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Jun 2024 20:51:33 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45LJABrX019980; Fri, 21 Jun 2024 20:51:32 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3yvrqus7uv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 21 Jun 2024 20:51:32 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45LKpTsX15270606
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 21 Jun 2024 20:51:31 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AAEC558050;
- Fri, 21 Jun 2024 20:51:29 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 808E058045;
- Fri, 21 Jun 2024 20:51:28 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.38.232]) by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 21 Jun 2024 20:51:28 +0000 (GMT)
-Message-ID: <a3531d21082e3abf3132a4c95d6c54e8973dd27e.camel@linux.ibm.com>
-Subject: Re: [PATCH 0/7] pc-bios/s390-ccw: Merge the netboot loader into
- s390-ccw.img
-From: Eric Farman <farman@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Christian
- Borntraeger <borntraeger@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Claudio Imbrenda <imbrenda@linux.ibm.com>,
- "Collin L . Walling" <walling@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, "Jason J .
- Herne" <jjherne@linux.ibm.com>, Marc Hartmayer <mhartmay@linux.ibm.com>
-Date: Fri, 21 Jun 2024 16:51:28 -0400
-In-Reply-To: <20240621082422.136217-1-thuth@redhat.com>
-References: <20240621082422.136217-1-thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.2 (3.52.2-1.fc40) 
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKlH5-0001FZ-Ni
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 16:54:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719003262;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bVs8kyK16p1JMwZhivhXt1oJRIiEznkdBpX41/Mk+9c=;
+ b=dato+07YZNeF2AlHGFD4bxfg4n/+QDI6YgGFct0nAner/bvJfQtlfkMFuXsrkgwmAQZDrJ
+ Ewn0nqBtgTV/t+TVyyISRXLXxVrDWsOJIBEwBQMyH+/JCBjmSsGAs/+HsD7sgyKvtN+baC
+ +9hcoVjtnNvwKM4Ajkxc70RofE0Ie6g=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-629-JaktZ5xAN1GKFlKahwsCsg-1; Fri, 21 Jun 2024 16:54:20 -0400
+X-MC-Unique: JaktZ5xAN1GKFlKahwsCsg-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6b52c538d04so721836d6.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 13:54:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719003260; x=1719608060;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bVs8kyK16p1JMwZhivhXt1oJRIiEznkdBpX41/Mk+9c=;
+ b=b/P8SAp1LsKtiTUMDAsIGetokL/yd259h5O0tSpT9rUDyVis2Q7zgCXVQWDvIZ/134
+ KE5uuZK+0XlTzhglRkC0FiMG6FHYtIZigga61/+LkHG0hsnziLnqyC6KBd2GXae96/JE
+ aP4zzjrsdyOHElN4iYeKeRtaO74LWC/VKR5XNyYS3ltM4Qu+Lh2nLOWGKJUVBiBLjCxq
+ n2NBk9mDUZJUi+/RTITphlLT55dMaJyQTeYa59spNvc87vgVSWYmisFKoJhvDPTmuqI7
+ Kf2MdGK7ijvZrKdLJ+JpTnWBRIfRCLsDDhoEZErpSVJ3Dh+Rn4tra1COj6gYluyN5/0g
+ 48uw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXRaMNGeXmGYpsNWn8Dk+hnO5pBTETlcFCWVQxMczi1MI4GE8ompos8VUMFECTO9tQkVrdDd/fENakYJff9pGbBbLwVPM0=
+X-Gm-Message-State: AOJu0Yxw9l92IilYOe5TSwX8GEcvj0qvK7Cc2du3o/pl+fKgen+yUEZp
+ zhX+HNKbb6pLOFHCJqgYWQ9SzWfmjLGQ7k4AYMeC+Kdi+ssi59l/PtUfEzGC+5yZSwZQSjNwE/9
+ lvxd/bdoMIeEV2E1Oq3lnt/rUWdQ72csaUUoqj+11EPHf1flyohIQ
+X-Received: by 2002:a05:622a:199b:b0:441:2106:8c7 with SMTP id
+ d75a77b69052e-444a79a9ef6mr100757741cf.1.1719003259913; 
+ Fri, 21 Jun 2024 13:54:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHF9sIyoK+vay3HzHS4bb7mhkkU4daSn9B+CQtakO/WSHhCDFJc8GOZc8E6Mssw+EtSuEq0qA==
+X-Received: by 2002:a05:622a:199b:b0:441:2106:8c7 with SMTP id
+ d75a77b69052e-444a79a9ef6mr100757501cf.1.1719003259312; 
+ Fri, 21 Jun 2024 13:54:19 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-444c2c42242sm14476551cf.63.2024.06.21.13.54.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Jun 2024 13:54:19 -0700 (PDT)
+Date: Fri, 21 Jun 2024 16:54:16 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 0/7] migration/multifd: Introduce storage slots
+Message-ID: <ZnXoeOIbga7mu4BY@x1n>
+References: <20240620212111.29319-1-farosas@suse.de>
+ <f6f84518-530e-4332-8881-41a6219b8d4d@maciej.szmigiero.name>
+ <87v822ibh8.fsf@suse.de>
+ <dfe0384e-a765-4bfb-81c8-529329d76052@maciej.szmigiero.name>
+ <ZnWinGjeZGRGVOF-@x1n>
+ <2d245ec8-0b0d-4596-a3a7-8bbbfd9c3d41@maciej.szmigiero.name>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: WX_ehhxyJtDvIjzy-e09p-gv3C6PiAd4
-X-Proofpoint-ORIG-GUID: _fLu4hvfP_N3qP6cKYAjZyomUQEuCKB2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-21_12,2024-06-21_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- priorityscore=1501 spamscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=342 clxscore=1011 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2406140001 definitions=main-2406210149
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2d245ec8-0b0d-4596-a3a7-8bbbfd9c3d41@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,104 +104,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2024-06-21 at 10:24 +0200, Thomas Huth wrote:
-> We originally built a separate binary for the netboot code since it
-> was considered as experimental and we could not be sure that the
-> necessary SLOF module had been checked out. Time passed, the netboot
-> code proved its usefulness, and the build system nowadays makes sure
-> that the SLOF module is checked out if you have a s390x compiler
-> available
-> for building the s390-ccw bios. In fact, the possibility to build the
-> s390-ccw.img without s390-netboot.img has been removed in commit
-> bf6903f6944f ("pc-bios/s390-ccw: always build network bootloader")
-> already.
->=20
-> So it does not make too much sense anymore to keep the netboot code
-> in a separate binary. To make it easier to support a more flexible
-> boot process soon that supports more than one boot device via the
-> bootindex properties, let's finally merge the netboot code into the
-> main s390-ccw.img binary now.
+On Fri, Jun 21, 2024 at 07:40:01PM +0200, Maciej S. Szmigiero wrote:
+> On 21.06.2024 17:56, Peter Xu wrote:
+> > On Fri, Jun 21, 2024 at 05:31:54PM +0200, Maciej S. Szmigiero wrote:
+> > > On 21.06.2024 17:04, Fabiano Rosas wrote:
+> > > > "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+> > > > 
+> > > > > Hi Fabiano,
+> > > > > 
+> > > > > On 20.06.2024 23:21, Fabiano Rosas wrote:
+> > > > > > Hi folks,
+> > > > > > 
+> > > > > > First of all, apologies for the roughness of the series. I'm off for
+> > > > > > the next couple of weeks and wanted to put something together early
+> > > > > > for your consideration.
+> > > > > > 
+> > > > > > This series is a refactoring (based on an earlier, off-list
+> > > > > > attempt[0]), aimed to remove the usage of the MultiFDPages_t type in
+> > > > > > the multifd core. If we're going to add support for more data types to
+> > > > > > multifd, we first need to clean that up.
+> > > > > > 
+> > > > > > This time around this work was prompted by Maciej's series[1]. I see
+> > > > > > you're having to add a bunch of is_device_state checks to work around
+> > > > > > the rigidity of the code.
+> > > > > > 
+> > > > > > Aside from the VFIO work, there is also the intent (coming back from
+> > > > > > Juan's ideas) to make multifd the default code path for migration,
+> > > > > > which will have to include the vmstate migration and anything else we
+> > > > > > put on the stream via QEMUFile.
+> > > > > > 
+> > > > > > I have long since been bothered by having 'pages' sprinkled all over
+> > > > > > the code, so I might be coming at this with a bit of a narrow focus,
+> > > > > > but I believe in order to support more types of payloads in multifd,
+> > > > > > we need to first allow the scheduling at multifd_send_pages() to be
+> > > > > > independent of MultiFDPages_t. So here it is. Let me know what you
+> > > > > > think.
+> > > > > 
+> > > > > Thanks for the patch set, I quickly glanced at these patches and they
+> > > > > definitely make sense to me.
+> > > > > 
+> > > (..)
+> > > > > > (as I said, I'll be off for a couple of weeks, so feel free to
+> > > > > > incorporate any of this code if it's useful. Or to ignore it
+> > > > > > completely).
+> > > > > 
+> > > > > I guess you are targeting QEMU 9.2 rather than 9.1 since 9.1 has
+> > > > > feature freeze in about a month, correct?
+> > > > > 
+> > > > 
+> > > > For general code improvements like this I'm not thinking about QEMU
+> > > > releases at all. But this series is not super complex, so I could
+> > > > imagine we merging it in time for 9.1 if we reach an agreement.
+> > > > 
+> > > > Are you thinking your series might miss the target? Or have concerns
+> > > > over the stability of the refactoring? We can within reason merge code
+> > > > based on the current framework and improve things on top, we already did
+> > > > something similar when merging zero-page support. I don't have an issue
+> > > > with that.
+> > > 
+> > > The reason that I asked whether you are targeting 9.1 is because my
+> > > patch set is definitely targeting that release.
+> > > 
+> > > At the same time my patch set will need to be rebased/refactored on top
+> > > of this patch set if it is supposed to be merged for 9.1 too.
+> > > 
+> > > If this patch set gets merged quickly that's not really a problem.
+> > > 
+> > > On the other hand, if another iteration(s) is/are needed AND you are
+> > > not available in the coming weeks to work on them then there's a
+> > > question whether we will make the required deadline.
+> > 
+> > I think it's a bit rush to merge the vfio series in this release.  I'm not
+> > sure it has enough time to be properly reviewed, reposted, retested, etc.
+> > 
+> > I've already started looking at it, and so far I think I have doubt not
+> > only on agreement with Fabiano on the device_state thing which I prefer to
+> > avoid, but also I'm thinking of any possible way to at least make the
+> > worker threads generic too: a direct impact could be vDPA in the near
+> > future if anyone cared, while I don't want modules to create threads
+> > randomly during migration.
+> > 
+> > Meanwhile I'm also thinking whether that "the thread needs to dump all
+> > data, and during iteration we can't do that" is the good reason to not
+> > support that during iterations.
+> > 
+> > I didn't yet reply because I don't think I think all things through, but
+> > I'll get there.
+> > 
+> > So I'm not saying that the design is problematic, but IMHO it's just not
+> > mature enough to assume it will land in 9.1, considering it's still a large
+> > one, and the first non-rfc version just posted two days ago.
+> 
+> 
+> The RFC version was posted more than 2 months ago.
+> 
+> It has received some review comments from multiple people,
+> all of which were addressed in this patch set version.
 
-Hi Thomas,
+I thought it was mostly me who reviewed it, am I right?  Or do you have
+other thread that has such discussion happening, and the design review has
+properly done and reached an agreement?
 
-I find myself wondering about the side effects of the
-s/sclp_print/printf/ changes, but I haven't come up with anything I can
-put my finger on. Maybe something will come to me over the weekend, but
-all-in-all I like the looks of this. So, FWIW:
+IMHO that is also not how RFC works.
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+It doesn't work like "if RFC didn't got NACKed, a maintainer should merge
+v1 when someone posts it".  Instead RFC should only mean these at least to
+me: "(1) please review this from high level, things can drastically change;
+(2) please don't merge this, because it is not for merging but for getting
+comments."
 
->=20
-> Thomas Huth (7):
-> =C2=A0 pc-bios/s390-ccw: Remove duplicated LDFLAGS
-> =C2=A0 hw/s390x/ipl: Provide more memory to the s390-ccw.img firmware
-> =C2=A0 pc-bios/s390-ccw: Use the libc from SLOF for the main s390-ccw.img
-> =C2=A0=C2=A0=C2=A0 binary, too
-> =C2=A0 pc-bios/s390-ccw: Link the netboot code into the main s390-ccw.img
-> =C2=A0=C2=A0=C2=A0 binary
-> =C2=A0 hw/s390x: Remove the possibility to load the s390-netboot.img
-> binary
-> =C2=A0 pc-bios/s390-ccw: Merge netboot.mak into the main Makefile
-> =C2=A0 docs/system/s390x/bootdevices: Update the documentation about
-> network
-> =C2=A0=C2=A0=C2=A0 booting
->=20
-> =C2=A0docs/system/s390x/bootdevices.rst |=C2=A0 20 +++----
-> =C2=A0pc-bios/s390-ccw/netboot.mak=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 =
-62 ---------------------
-> =C2=A0hw/s390x/ipl.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 12 =
-++--
-> =C2=A0pc-bios/s390-ccw/cio.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +
-> =C2=A0pc-bios/s390-ccw/iplb.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 4 +-
-> =C2=A0pc-bios/s390-ccw/libc.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0 89 ----------------------------
-> --
-> =C2=A0pc-bios/s390-ccw/s390-ccw.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0 10 +++-
-> =C2=A0pc-bios/s390-ccw/virtio.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0=C2=A0 1 -
-> =C2=A0hw/s390x/ipl.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 65 =
-+++-------------------
-> =C2=A0hw/s390x/s390-virtio-ccw.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 |=C2=A0 10 +---
-> =C2=A0pc-bios/s390-ccw/bootmap.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 |=C2=A0=C2=A0 4 +-
-> =C2=A0pc-bios/s390-ccw/cio.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0pc-bios/s390-ccw/dasd-ipl.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0=C2=A0 2 +-
-> =C2=A0pc-bios/s390-ccw/jump2ipl.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0=C2=A0 2 +-
-> =C2=A0pc-bios/s390-ccw/libc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0 88 ----------------------------
-> -
-> =C2=A0pc-bios/s390-ccw/main.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0 15 +++--
-> =C2=A0pc-bios/s390-ccw/menu.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0 25 ++++-----
-> =C2=A0pc-bios/s390-ccw/netmain.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 |=C2=A0 15 +----
-> =C2=A0pc-bios/s390-ccw/sclp.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0pc-bios/s390-ccw/virtio-blkdev.c=C2=A0 |=C2=A0=C2=A0 1 -
-> =C2=A0pc-bios/s390-ccw/virtio-scsi.c=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0pc-bios/s390-ccw/virtio.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0=C2=A0 2 +-
-> =C2=A0pc-bios/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 -
-> =C2=A0pc-bios/s390-ccw/Makefile=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0 69 +++++++++++++++++++----
-> =C2=A0pc-bios/s390-netboot.img=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 | Bin 67232 -> 0 bytes
-> =C2=A025 files changed, 122 insertions(+), 383 deletions(-)
-> =C2=A0delete mode 100644 pc-bios/s390-ccw/netboot.mak
-> =C2=A0delete mode 100644 pc-bios/s390-ccw/libc.h
-> =C2=A0delete mode 100644 pc-bios/s390-ccw/libc.c
-> =C2=A0delete mode 100644 pc-bios/s390-netboot.img
->=20
+Beyond, it doesn't imply anything for what happens after the RFC series.
+
+> 
+> I have not received any further comments during these 2 months, so I thought
+> the overall design is considered okay - if anything, there might be minor
+> code comments/issues but these can easily be improved/fixed in the 5 weeks
+> remaining to the soft code freeze for 9.1.
+
+The latest email in that thread (assuming this one is what you're referring
+to) is:
+
+https://lore.kernel.org/qemu-devel/f67fcc88-aaf6-43f7-9287-90cbd7495ba1@nvidia.com/#t
+
+I didn't hear anything from Avihai yet, neither did I think we reached an
+complete agreement on the whole design.
+
+> 
+> 
+> If anything, I think that the VM live phase (non-downtime) transfers
+> functionality should be deferred until 9.2 because:
+> * It wasn't a part of the RFC so even if implemented today would get much
+> less testing overall,
+
+IMO it really depends on what was proposed.  Anyone who send patches should
+definitely test whatever the patchset provides.  If that patchset includes
+the iteration changes then that needs to be tested by the submitter.
+
+> 
+> * It's orthogonal to the switchover time device state transfer functionality
+> introduced by this patch set and could be added on top of that without
+> changing the wire protocol for switchover time device state transfers,
+
+AFAICT it will affect the wire protocol?  If the dest QEMU contains your
+patcheset to be the old version of QEMU, then the threads will only be
+created at the switchover phase, and it won't be ready to take whatever
+data sent from a new QEMU which may allow migrating VFIO iteration data,
+who may expect these VFIO data to be passed over via multifd channels
+even before the switchover.
+
+It can only be compatible at least when the threads are created before
+iteration starts on dest side, and I didn't yet check the packet headers
+and other stuffs.
+
+I think that can be a sweet spot where maybe you can land this series
+sooner, but it also gets ready for anyone who wants to further extend that
+to iteration phase easily.  Not sure whether it'll be easily feasible by
+just moving the thread creations earlier.
+
+> 
+> * It doesn't impact the switchover downtime so in this case 9.1 would
+> already contain all what's necessary to improve it.
+
+Yes it won't, but IMHO that's not an issue.
+
+Since Fabiano is going on a short break soon, I think I'll be the only one
+review it.  I'll try my best, but still I can't guarantee it will be able
+to land in 9.1, and this is not the only thing I'll need to do next week..
+
+I appreciated a lot you worked out VFIO on top of multifd, because IMHO
+that's really the right direction.  However even with that, I don't think
+the whole design is yet fully settled, not to mention the details. And that
+implies it may miss 9.1.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
