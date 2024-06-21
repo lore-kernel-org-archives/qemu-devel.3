@@ -4,89 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68181C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 15:57:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B36C6C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKgcm-0007d9-Mk; Fri, 21 Jun 2024 11:56:28 -0400
+	id 1sKgr6-0001on-JI; Fri, 21 Jun 2024 12:11:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKgch-0007Ts-9Q
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:56:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sKgqx-0001mj-8T; Fri, 21 Jun 2024 12:11:08 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sKgcf-0006eO-I9
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 11:56:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1718985379;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5qCVFnqO1tH//0CXREkWGX7cvKTBFtXygTZAp31h1JM=;
- b=jAezGZuAiaf6Se+FOupNrWQSfFZ85SkE1mwGcDv86SyaeqwvhosQDT2MNcPIAM/6YJ8EBy
- zi4saQdZNPBd/RGEtw/fttOItYrAxSLz/Hhk/BeIrSSD3jEPgxDoGOM6KIXKmRzxQSEjaG
- KZHc7O5QJChjyZcM8skq01xcC7/AaII=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-MSbUeGTCNI6LqCGB_t5dFw-1; Fri, 21 Jun 2024 11:56:18 -0400
-X-MC-Unique: MSbUeGTCNI6LqCGB_t5dFw-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-79560b25fc4so16953885a.3
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 08:56:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718985377; x=1719590177;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5qCVFnqO1tH//0CXREkWGX7cvKTBFtXygTZAp31h1JM=;
- b=RivnM5O0RdKQXoIJWA25ULwgNaQhpHQr4W3So69r3XuVub5NXmgEKWff0yFcq4FRsB
- Ele8606aB81FNcs2cRBGzKdB5lBuhYZQP+yfBMCAvWuDdBRhV+EG5TwNiV+y7MRJGHPG
- TGQSHA602GhRpnPm/kW7SsZwt6Mkl6GFWWnELEV1X0YWM7DaY+meCmPnolsnDVtUzZoN
- j8T0MAn0VVHPJ+hkZSqoYAqg1EKGFVXCAfdkDeSBXsdwmiBH5vP3Xl99sh+/pC5m2tJo
- 1HlWChIsncPa8StWDShVz7WoKrxQI+bu+GbaGmmthpYQjeuv8kope0hafoU3DRYqOnwY
- dwBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXTZcJISdyGxBBmcFPLpJeVe1oU58KRbZFIhTth1zPPaYtwkEJD1fmFwU8fs/UyoVlGokvrm4jDqmOmoOyhP5KuC56FrdM=
-X-Gm-Message-State: AOJu0YykOXfMMgpjN45nu9ky6LnH7SjsKVYt0PmdwMGEMApgdv/UBipM
- caoRmz+uGJtk9l7qgy0Ln2BfXn+8pikI7xP9CHFdD2KWSBVg5k0O1M6F7iNeg+KdWamyoAYRp8t
- ol+VdC5v5gL+Hu1ud4v8/k7hwk9UlSgzV/0goZqGhtb9JTUsSAiNr
-X-Received: by 2002:a05:6214:248f:b0:6b2:af3c:f710 with SMTP id
- 6a1803df08f44-6b501e28ab3mr91561656d6.2.1718985377410; 
- Fri, 21 Jun 2024 08:56:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEwgTkwKBJEqHeXe3Av+DmHMPchheK16JKRwpMPmfyPrsY2Q/hhYEfSKPsU/4leZXLPEjzahA==
-X-Received: by 2002:a05:6214:248f:b0:6b2:af3c:f710 with SMTP id
- 6a1803df08f44-6b501e28ab3mr91561426d6.2.1718985376770; 
- Fri, 21 Jun 2024 08:56:16 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b51ed175fasm9784196d6.34.2024.06.21.08.56.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 08:56:16 -0700 (PDT)
-Date: Fri, 21 Jun 2024 11:56:12 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 0/7] migration/multifd: Introduce storage slots
-Message-ID: <ZnWinGjeZGRGVOF-@x1n>
-References: <20240620212111.29319-1-farosas@suse.de>
- <f6f84518-530e-4332-8881-41a6219b8d4d@maciej.szmigiero.name>
- <87v822ibh8.fsf@suse.de>
- <dfe0384e-a765-4bfb-81c8-529329d76052@maciej.szmigiero.name>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sKgqu-0001Aj-2f; Fri, 21 Jun 2024 12:11:06 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W5Mll2NBRz6GCty;
+ Sat, 22 Jun 2024 00:10:43 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 796D314038F;
+ Sat, 22 Jun 2024 00:10:48 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 21 Jun
+ 2024 17:10:48 +0100
+Date: Fri, 21 Jun 2024 17:10:47 +0100
+To: Hyeongtak Ji <hyeongtak.ji@gmail.com>
+CC: <qemu-devel@nongnu.org>, <qemu-trivial@nongnu.org>
+Subject: Re: [PATCH] docs/cxl: fix some typos
+Message-ID: <20240621171047.000075fc@Huawei.com>
+In-Reply-To: <20240619045459.305997-1-hyeongtak.ji@gmail.com>
+References: <20240619045459.305997-1-hyeongtak.ji@gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <dfe0384e-a765-4bfb-81c8-529329d76052@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.174.77]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,101 +63,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 21, 2024 at 05:31:54PM +0200, Maciej S. Szmigiero wrote:
-> On 21.06.2024 17:04, Fabiano Rosas wrote:
-> > "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
-> > 
-> > > Hi Fabiano,
-> > > 
-> > > On 20.06.2024 23:21, Fabiano Rosas wrote:
-> > > > Hi folks,
-> > > > 
-> > > > First of all, apologies for the roughness of the series. I'm off for
-> > > > the next couple of weeks and wanted to put something together early
-> > > > for your consideration.
-> > > > 
-> > > > This series is a refactoring (based on an earlier, off-list
-> > > > attempt[0]), aimed to remove the usage of the MultiFDPages_t type in
-> > > > the multifd core. If we're going to add support for more data types to
-> > > > multifd, we first need to clean that up.
-> > > > 
-> > > > This time around this work was prompted by Maciej's series[1]. I see
-> > > > you're having to add a bunch of is_device_state checks to work around
-> > > > the rigidity of the code.
-> > > > 
-> > > > Aside from the VFIO work, there is also the intent (coming back from
-> > > > Juan's ideas) to make multifd the default code path for migration,
-> > > > which will have to include the vmstate migration and anything else we
-> > > > put on the stream via QEMUFile.
-> > > > 
-> > > > I have long since been bothered by having 'pages' sprinkled all over
-> > > > the code, so I might be coming at this with a bit of a narrow focus,
-> > > > but I believe in order to support more types of payloads in multifd,
-> > > > we need to first allow the scheduling at multifd_send_pages() to be
-> > > > independent of MultiFDPages_t. So here it is. Let me know what you
-> > > > think.
-> > > 
-> > > Thanks for the patch set, I quickly glanced at these patches and they
-> > > definitely make sense to me.
-> > > 
-> (..)
-> > > > (as I said, I'll be off for a couple of weeks, so feel free to
-> > > > incorporate any of this code if it's useful. Or to ignore it
-> > > > completely).
-> > > 
-> > > I guess you are targeting QEMU 9.2 rather than 9.1 since 9.1 has
-> > > feature freeze in about a month, correct?
-> > > 
-> > 
-> > For general code improvements like this I'm not thinking about QEMU
-> > releases at all. But this series is not super complex, so I could
-> > imagine we merging it in time for 9.1 if we reach an agreement.
-> > 
-> > Are you thinking your series might miss the target? Or have concerns
-> > over the stability of the refactoring? We can within reason merge code
-> > based on the current framework and improve things on top, we already did
-> > something similar when merging zero-page support. I don't have an issue
-> > with that.
+On Wed, 19 Jun 2024 13:54:59 +0900
+Hyeongtak Ji <hyeongtak.ji@gmail.com> wrote:
+
+Hi, some description would be good of how you caught these
+(I'm guessing a close read).
+
+Whilst checking this I did notice there are some errors in
+the example bus numbering but that's a separate issue.
+
+Jonathan
+
+
+> Signed-off-by: Hyeongtak Ji <hyeongtak.ji@gmail.com>
+> ---
+>  docs/system/devices/cxl.rst | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
 > 
-> The reason that I asked whether you are targeting 9.1 is because my
-> patch set is definitely targeting that release.
-> 
-> At the same time my patch set will need to be rebased/refactored on top
-> of this patch set if it is supposed to be merged for 9.1 too.
-> 
-> If this patch set gets merged quickly that's not really a problem.
-> 
-> On the other hand, if another iteration(s) is/are needed AND you are
-> not available in the coming weeks to work on them then there's a
-> question whether we will make the required deadline.
+> diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
+> index 10a0e9bc9ff4..e2497e6a098b 100644
+> --- a/docs/system/devices/cxl.rst
+> +++ b/docs/system/devices/cxl.rst
+> @@ -218,17 +218,17 @@ Notes:
+>      A complex configuration here, might be to use the following HDM
+>      decoders in HB0. HDM0 routes CFMW0 requests to RP0 and hence
+>      part of CXL Type3 0. HDM1 routes CFMW0 requests from a
+> -    different region of the CFMW0 PA range to RP2 and hence part
+> +    different region of the CFMW0 PA range to RP1 and hence part
 
-I think it's a bit rush to merge the vfio series in this release.  I'm not
-sure it has enough time to be properly reviewed, reposted, retested, etc.
+Good catch.
 
-I've already started looking at it, and so far I think I have doubt not
-only on agreement with Fabiano on the device_state thing which I prefer to
-avoid, but also I'm thinking of any possible way to at least make the
-worker threads generic too: a direct impact could be vDPA in the near
-future if anyone cared, while I don't want modules to create threads
-randomly during migration.
+>      of CXL Type 3 1.  HDM2 routes yet another PA range from within
+>      CFMW0 to be interleaved across RP0 and RP1, providing 2 way
+>      interleave of part of the memory provided by CXL Type3 0 and
+>      CXL Type 3 1. HDM3 routes those interleaved accesses from
+>      CFMW1 that target HB0 to RP 0 and another part of the memory of
+>      CXL Type 3 0 (as part of a 2 way interleave at the system level
+> -    across for example CXL Type3 0 and CXL Type3 2.
+> +    across for example CXL Type3 0 and CXL Type3 1).
+This one is wrong.  CFMW1 interleaves across both host bridges so we need
+a device below HB0 and one below HB1, so CXL type3 2 is a possible choice
+(could be CXL type3 3 as well, but that doesn't matter.)
 
-Meanwhile I'm also thinking whether that "the thread needs to dump all
-data, and during iteration we can't do that" is the good reason to not
-support that during iterations.
+>      HDM4 is used to enable system wide 4 way interleave across all
+>      the present CXL type3 devices, by interleaving those (interleaved)
+> -    requests that HB0 receives from from CFMW1 across RP 0 and
+> +    requests that HB0 receives from CFMW1 across RP 0 and
+Good.
 
-I didn't yet reply because I don't think I think all things through, but
-I'll get there.
-
-So I'm not saying that the design is problematic, but IMHO it's just not
-mature enough to assume it will land in 9.1, considering it's still a large
-one, and the first non-rfc version just posted two days ago.
-
-Thanks,
-
--- 
-Peter Xu
+>      RP 1 and hence to yet more regions of the memory of the
+>      attached Type3 devices.  Note this is a representative subset
+>      of the full range of possible HDM decoder configurations in this
 
 
