@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26993C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:35:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C654C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 16:48:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKhDw-0007Lp-Al; Fri, 21 Jun 2024 12:34:52 -0400
+	id 1sKhQh-00040y-9q; Fri, 21 Jun 2024 12:48:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKhDj-0007FP-Ed
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:34:41 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1sKhQf-0003yu-EG
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:48:01 -0400
+Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sKhDh-0006GJ-V1
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:34:39 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1f480624d10so18157595ad.1
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 09:34:37 -0700 (PDT)
+ id 1sKhQd-0000Ko-J6
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 12:48:01 -0400
+Received: by mail-pg1-x52c.google.com with SMTP id
+ 41be03b00d2f7-6bce380eb9bso1436129a12.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 09:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718987676; x=1719592476; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718988478; x=1719593278; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=onRSqIiHbzmlenVVJ7TGSGAIeXgz+PKaQXs717txMhk=;
- b=qWjn2F+1SPPuTF5JEOa6GJXSQY6Cpkbev9AXnkWmav65mzInAL7CFTmZgTxtqYHyQk
- oQqnkkK8Mi+wvbexLmcl8BEPHVWlMv4iR2mgI7ntyJ3hN5N5ZY9gKSzN4FEwQW+1fnw+
- wEPOsWO7ENK0sG1aW1vAyJXZFqnph475xBk8l1noX71NUiyi0D8sTtDLFsy/AmNehoQH
- iugkaqmchVvyIZlt/yWcK/bhe6KxKGb1+Y1TpVOkei/nKl8Ipgb5L3Yaq/etJPWTN4vu
- ORhXzPDqD61Zdf3JEg7d+/V/i8Of//7WvfdkQBrPoogmjIMivhqGcjzygbfyW1RJjmhR
- jZ8A==
+ bh=YvHvdAw+6rbSQ4u3H0WHyO4Udb0x3Rj1gDnph2JEOXA=;
+ b=TZUqJPqqWEFoIY4nYsa4jPgIFwu8nKeqGuVUmheaR96wFZWdNr4GwuVv21CkQbGuLM
+ A9NJhh2JLPwWyTcIk0v6bN5RYr0QFT0FEd30v90t/PC4fFsYiqCfNHrj39jV3sGAX2eR
+ NUWDObarMpvdyyY8ScGl8+q0dZGf398AY8gfy5aEfJ0ZlJNBSD25pyxKiVCwdnYaoccw
+ dByvmwGjeSCz3Cg9ngMpfWT5PbadipsRkKmT8Ecel10yBUjQZGttZeKAyUrMW5krrDCY
+ 33rmUc9pJotGnlP7PL3IZiMquxTEqpNU4jJybMWQMvS9zR8czLg3c2VQRGLw+0xIiOWz
+ mItQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718987676; x=1719592476;
+ d=1e100.net; s=20230601; t=1718988478; x=1719593278;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=onRSqIiHbzmlenVVJ7TGSGAIeXgz+PKaQXs717txMhk=;
- b=wTKwdIIerOCk955vOh8AwQzJiOB57Eq1b7XvBOQT3dmsxCet3Wb3N5B4HGnBsL7UEc
- vu4iDoVHxmMXbaQaQ1F6TT/Td/fHD56O8FTcE74V7PmX7nel0C5XjmtqTZLaY6r18w/s
- gFJjmpX39F+JXw/x2WbgayiFT4KDsDB4yOxS+KMSYUJcE/SB4WaSQbObzmwe5B9Ognpq
- oLbq7h3AHIR1hRmw5qXVxy37L/qSwWGzMO4t5k785RIgi+96I6mz044iIpnDUhLtwoib
- Es4pIl0+55QSYV2pDOA6XkppkzfiVzsNVUAsjyIsWhNOGzOAgnvLUJyBU342Hykf4kZd
- aD4w==
-X-Gm-Message-State: AOJu0Yxgi9NSIaGqFcSn31KxUj341zwf/Vxna7Qls0hGq8XPXZR90IoB
- c2VVJkaW4/DDBA3sHK1gfVvq5zP1uC11+5i2L7e+OozK8rn5sf67q/u160Uy+Lc=
-X-Google-Smtp-Source: AGHT+IFqbU3aDcyh/wUvfXzBgX3XGNgDBBK5jsSIkZxhmVVlJx+1LQ6ejCD7YjmCLdwW6u59+xYKLw==
-X-Received: by 2002:a17:903:41cd:b0:1f6:62cd:2c8e with SMTP id
- d9443c01a7336-1f9aa46c694mr103834965ad.58.1718987676275; 
- Fri, 21 Jun 2024 09:34:36 -0700 (PDT)
+ bh=YvHvdAw+6rbSQ4u3H0WHyO4Udb0x3Rj1gDnph2JEOXA=;
+ b=jm6I5E+T7IUH/plGecW1BlI2nQO75yKa4J9pR/DbkUUSa1NYagrFlOpU6f34cnz3C4
+ W5qfsnZJHONa2qu//a+SV09yOiReULwIAB2x69wAWwqc9zUDslr1v6d9k01RQGoIPnTZ
+ bP5ntoN+KOuBZdtl6DiHKAkCFkfv6WTgCr0d24YxYbuH+kwM8hwbDytcqzzjNVMhGbEs
+ 6GyRPvPDFLq8qcWU5IoQA5CfoehsPoYQ9+f1F9BNvKNcCuTl5JbkWvRe29iSSBMutm7z
+ IJotwG36z7uskanq2g7oAf35lAwZy5+IEDnKR2B0hIcHAlkWHW4S8qrX+p8E3VFM23Lu
+ kbwg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWgfwFCeHQ7gx7W+IrbaQ91V8U5RlTFu04UPY0bdbb9bLzYj1IZgNltUbxMpn560nEj3mrT7gWDWXR51J5poqrVKqKhqXs=
+X-Gm-Message-State: AOJu0Yy3TwatD/Rrmf16bFweHSUc7flKOTBKegxHfowtJpkU+3FpydwB
+ UFUBLGS/ojiaulF5eDcJQa0fqOUxjMwZ2+9vkktc86+fcKC6AA1NU/uOdaAJaTY=
+X-Google-Smtp-Source: AGHT+IHUn/1LnZrdIYnwY1zL1pjXDup7pAzJ6NkuBu9Aq1eryGcSvp7kKtpxGLeSV9nZpBB/LId4AA==
+X-Received: by 2002:a17:90b:368b:b0:2c8:7ea:8578 with SMTP id
+ 98e67ed59e1d1-2c807ea8af9mr4177263a91.8.1718988477870; 
+ Fri, 21 Jun 2024 09:47:57 -0700 (PDT)
 Received: from [192.168.0.4] ([71.212.132.216])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb323636sm16012335ad.102.2024.06.21.09.34.35
+ 98e67ed59e1d1-2c819a7d60bsm1815243a91.22.2024.06.21.09.47.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Jun 2024 09:34:35 -0700 (PDT)
-Message-ID: <b41472ca-5627-4f3a-ba35-cc3cded553db@linaro.org>
-Date: Fri, 21 Jun 2024 09:34:33 -0700
+ Fri, 21 Jun 2024 09:47:57 -0700 (PDT)
+Message-ID: <c8644f08-d662-4578-9d08-779449eb5c7a@linaro.org>
+Date: Fri, 21 Jun 2024 09:47:55 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] target/ppc: Update VMX storage access insns to use
- tcg_gen_qemu_ld/st_i128.
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com
-References: <20240621114604.868415-1-rathc@linux.ibm.com>
- <20240621114604.868415-3-rathc@linux.ibm.com>
+Subject: Re: [PATCH] bswap: Add st24_be_p() to store 24 bits in big-endian
+ order
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>, 
+ Fan Ni <fan.ni@samsung.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Ira Weiny <ira.weiny@intel.com>
+References: <20240621075607.17902-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240621114604.868415-3-rathc@linux.ibm.com>
+In-Reply-To: <20240621075607.17902-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,18 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/21/24 04:46, Chinmay Rath wrote:
-> +    tcg_gen_qemu_ld_i128(avr, EA, ctx->mem_idx, DEF_MEMOP(MO_128));
-> +    set_avr_full(a->rt, avr);
+On 6/21/24 00:56, Philippe Mathieu-Daudé wrote:
+> Commit 14180d6221 ("bswap: Add the ability to store to an
+> unaligned 24 bit field") added st24_le_p() for little
+> endianness, add st24_be_p() equivalent for bit one.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Some SD card registers are 3 bytes wide stored MSB first.
+> ---
+>   include/qemu/bswap.h | 7 +++++++
+>   1 file changed, 7 insertions(+)
 
-This needs to specify atomicity as well.  This is much more important to for 16 byte 
-operations than smaller accesses, as this might require stop-the-world semantics depending 
-on the host.
-
-According to section 1.4 Storage Atomicity, we need no more than 8-byte atomicity for 
-these vector operations, and then the following the alignment bits down.
-
-So: MO_128 | MO_ATOM_IFALIGN_PAIR,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
