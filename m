@@ -4,64 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F29EC2BA18
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 00:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30DC2C2BA18
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 01:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKSUw-0007Oo-9P; Thu, 20 Jun 2024 20:51:26 -0400
+	id 1sKSv5-0006uQ-Kc; Thu, 20 Jun 2024 21:18:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wzssyqa@gmail.com>) id 1sKSUu-0007OT-4k
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 20:51:24 -0400
-Received: from mail-yb1-f182.google.com ([209.85.219.182])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sKSv3-0006td-FC; Thu, 20 Jun 2024 21:18:25 -0400
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wzssyqa@gmail.com>) id 1sKSUs-0007pA-Ey
- for qemu-devel@nongnu.org; Thu, 20 Jun 2024 20:51:23 -0400
-Received: by mail-yb1-f182.google.com with SMTP id
- 3f1490d57ef6-dff305df675so1691080276.1
- for <qemu-devel@nongnu.org>; Thu, 20 Jun 2024 17:51:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sKSv1-0003kO-SX; Thu, 20 Jun 2024 21:18:25 -0400
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-48ed52b59acso550749137.1; 
+ Thu, 20 Jun 2024 18:18:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1718932702; x=1719537502; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sQefYDcRDKx2mETSvmE1rP9bHZNUYtmYm3McKVPfHbA=;
+ b=FyYd1JP9GbnxfEIiKo1uoUHYBWtv4Mt4aJXpnL3JlRbQ7mJnPJcpbLO+lWiV4WDpRA
+ zW3jT1DaZhjPpgzJo0Wao0BNwgz43JJ3N/6402uJqMaH6rNKJjB/fgfEJnHk+9oes1RG
+ ycalw/p7BASDpsTPJ3lVXyPeNkJS5Hv0t7TqeE8XTYsQWJ5oD9pZ8zxd3z3X7ggM7mGR
+ 5eSlPaCRMC6OrM9qaTrkwxHYXnW0Xt6rjFiVr+UsIIMMN2kj630YycFC6kQi22bm0hI0
+ UV7gmHpoi300wWDdK/qeyHYfQhrTMEc3q6m5uNGGrHQ9pH0Byg7q7qJW3F2Ww2xjX7Og
+ ySMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718931081; x=1719535881;
+ d=1e100.net; s=20230601; t=1718932702; x=1719537502;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6PJpxSuIgeoQ0RrXALbIzl4nASGVHq4DerIIWlI2R3c=;
- b=UU8E3HLwVW76fti6yiHHW0c7aLm1//Un3hXJxqpdEgZyDT1KIbAs1hlaXg1X8DomBi
- aDRIXwjFSaBKvyKTIgmctLg7QwwvJ2DT2FpsFjfO4O83gqTuf/c+kvSvddCOmHs4HJna
- QrT/FNOfYacrnDGe+Bsgs7xwJ1oVkeg06Pwnd9uSNB9tstRe879ESVOrBgr+vvLntQej
- ac5DQ86N7dgVJkS4/JjkbvL8kKXSzsb7xYiR/98IX3YHEt6A3ke3arp+drIV35lOJYPn
- mfszrLs2DxqMxcrq75ZE168YlmyH3WkG4tm+HHNe/x29vjsFF19r3K9BZe9HRq+YsQl3
- PKwQ==
-X-Gm-Message-State: AOJu0Yzqjq2F0F4meD1MVf7rwfbQoqkSM/BftW92vmpKNn2IHg015dF6
- reScfo/aWxwSgoxEPEgR2Ji3XPuTQRdrfg/ENLcRKtUaVHY6QBW5laSrEXAUT1Saut5Vpbr5wws
- AGuRc3MMEDlbhdYGk1qFidsQXSu8=
-X-Google-Smtp-Source: AGHT+IGhTlQSzE6Vu+zliRai37+6g9uuEzLxbYk+BvXEvk/0pAH3tAlGcqagYmOLHQiXnZbcCT2SedSy192ruCoQZ4I=
-X-Received: by 2002:a25:e004:0:b0:dff:29fc:3094 with SMTP id
- 3f1490d57ef6-e02be2302e1mr7123013276.63.1718931081048; Thu, 20 Jun 2024
- 17:51:21 -0700 (PDT)
+ bh=sQefYDcRDKx2mETSvmE1rP9bHZNUYtmYm3McKVPfHbA=;
+ b=vEG08i6M5Oo8J8bKVLQqmHGak953sVTFCxVVnNvz+yURWi9OEb/uDGNkRjmQktbdnF
+ W3TJOfeWyITvdpDgJzWGwD6IO6lxl8CtjUYQyfsgZ+yQpkBGIZJc7p2+J4vTC2EJjNV7
+ 1O94CRd4y4BnMmxaL/y69FoZyx9PI5E8vRDFGPJABKyZeK82SD1SMl6tk2t2OakiW2cg
+ knC632hTmduh/Tx0QpIbqNftBFdhfneSxqtuswHmcpJ9LlAlUEXduhjjnqjqyHZgwH6y
+ sO+KWAkB26w6Ab1whi3V+RHDRkyoLLw+NV4M35O9X3Z4GEGz3AybIg8Ms6eAeoVS46IY
+ Yw/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTgLpKW4ZcVdbfNuqnnvfmc++8g64pL8DFGPmePhk18RLVs0gg9xVix0dYH0bbHtlluQpgogeQqLIXRm0iT8uDwf87u3w=
+X-Gm-Message-State: AOJu0YwYaYBoITTlPBWpPxtl+Ag1HlO0FnAS6+6zVRDiTq1zcWMEIKop
+ p4Q0jaINuL4jd2Sfwgw0EkXKnLYHfZv63gRq0eJmgYHqoS4mbxT1Bs7Dm7n75GD2gODuYqslQP7
+ cuZpeTQeTw5Z1Pugr0PfNr9jOPIw=
+X-Google-Smtp-Source: AGHT+IFOfnY22n/PqR/hGczSfXyXeEkHn2iOmcrbIw9G2pC/5Z0AlLZab0n9elW19Qm03PsZuxB4AW1OsUTpDsRa9u4=
+X-Received: by 2002:a67:ff07:0:b0:48d:88b6:9476 with SMTP id
+ ada2fe7eead31-48f13008bdcmr7026012137.7.1718932701698; Thu, 20 Jun 2024
+ 18:18:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240620234633.74447-1-syq@debian.org>
- <alpine.DEB.2.21.2406210124020.43454@angie.orcam.me.uk>
-In-Reply-To: <alpine.DEB.2.21.2406210124020.43454@angie.orcam.me.uk>
-From: YunQiang Su <syq@debian.org>
-Date: Fri, 21 Jun 2024 08:51:09 +0800
-Message-ID: <CAKcpw6Vc9QkHWGxJmJwipaqEnGJZsPof7k25i9e1trtCTDVc=A@mail.gmail.com>
-Subject: Re: [PATCH] mips: pass code of conditional trap
-To: "Maciej W. Rozycki" <macro@orcam.me.uk>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org
+References: <20240620064718.275427-1-sunilvl@ventanamicro.com>
+In-Reply-To: <20240620064718.275427-1-sunilvl@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 21 Jun 2024 11:17:55 +1000
+Message-ID: <CAKmqyKNoq07ApxXXFFwuBrAQ_x-7coMbBJ4tXdeYb=tJLTvMmg@mail.gmail.com>
+Subject: Re: [PATCH] hw/riscv/virt.c: Make block devices default to virtio
+To: Sunil V L <sunilvl@ventanamicro.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Anup Patel <apatel@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=209.85.219.182; envelope-from=wzssyqa@gmail.com;
- helo=mail-yb1-f182.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,34 +98,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Maciej W. Rozycki <macro@orcam.me.uk> =E4=BA=8E2024=E5=B9=B46=E6=9C=8821=E6=
-=97=A5=E5=91=A8=E4=BA=94 08:41=E5=86=99=E9=81=93=EF=BC=9A
+On Thu, Jun 20, 2024 at 4:48=E2=80=AFPM Sunil V L <sunilvl@ventanamicro.com=
+> wrote:
 >
-> On Fri, 21 Jun 2024, YunQiang Su wrote:
+> RISC-V virt is currently missing default type for block devices. Without
+> this being set, proper backend is not created when option like -cdrom
+> is used. So, make the virt board's default block device type be
+> IF_VIRTIO similar to other architectures.
 >
-> > Linux and We use the code of conditional trap instructions to emit
-> > signals other than simple SIGTRAP.  Currently, code 6 (overflow),
-> > 7 (div by zero) are supported. It means that if code 7 is used with
-> > a conditional trap instruction, a SIGFPE instead of SIGTRAP will emit.
-> >
-> > But when `gen_trap` we didn't pass the code as we use `generate_excepti=
-on`,
-> > which has no info about the code.  Let's introduce a new function
-> > `generate_exception_code` for it.
+> We also need to set no_cdrom to avoid getting a default cdrom device.
 >
->  I haven't touched this stuff for ages, but AFAICT the code is already
-> passed where applicable via the environment for `do_tr_or_bp' to handle,
-> so I can't understand why your change is needed.
->
+> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
 
-The error_code in env is always zero, as we need to set it here.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
->  What problem are you trying to solve?
+Alistair
+
+> ---
+>  hw/riscv/virt.c | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-
-See the talk in GCC mailing list about testsuite/ubsan/overflow-div-3.c
-Qemu emits SIGTRAP instead of SIGFPE, due to it didn't initialize the
-code of conditional trap to env.
-
->   Maciej
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index 8675c3a7d1..b0871b7f81 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -1764,6 +1764,8 @@ static void virt_machine_class_init(ObjectClass *oc=
+, void *data)
+>      mc->init =3D virt_machine_init;
+>      mc->max_cpus =3D VIRT_CPUS_MAX;
+>      mc->default_cpu_type =3D TYPE_RISCV_CPU_BASE;
+> +    mc->block_default_type =3D IF_VIRTIO;
+> +    mc->no_cdrom =3D 1;
+>      mc->pci_allow_0_address =3D true;
+>      mc->possible_cpu_arch_ids =3D riscv_numa_possible_cpu_arch_ids;
+>      mc->cpu_index_to_instance_props =3D riscv_numa_cpu_index_to_props;
+> --
+> 2.34.1
+>
+>
 
