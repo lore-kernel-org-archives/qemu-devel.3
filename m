@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C220C27C4F
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 07:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 817E5C27C4F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Jun 2024 08:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKZ84-0007aU-TQ; Fri, 21 Jun 2024 03:56:16 -0400
+	id 1sKZHX-00052v-OO; Fri, 21 Jun 2024 04:06:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZ83-0007aI-6U
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 03:56:15 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZHU-00050o-Ho
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:01 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZ81-0006EN-JP
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 03:56:14 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-57cbc2a2496so2015016a12.0
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 00:56:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sKZHS-0008Dj-VG
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 04:06:00 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4218180a122so12893355e9.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 01:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1718956571; x=1719561371; darn=nongnu.org;
+ d=linaro.org; s=google; t=1718957157; x=1719561957; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=IzQLNAGPwNKDPbpDvBTrnLSOC5ryk7VLNi38y6lx6kE=;
- b=dIXdWOyB2FTRQZ+eytOEFh04ceuxyFlsOotedyouz+OiUSluMoBHGrT+3t9HIwtyuN
- EHAcYjQJyH6JQafXlmgt4PQly80rle8tfSiYoBJK8Uv4ZhF+ST6OZzRizE2ghKPVWFTE
- KvoErW1yaC60MnnS/WDzmn1Ln9GF0XYGiMfC6sDjI/jhsagr/0JV0geYN0uEztugqjUL
- mpzjXWiE2PlzOTzLD7/RfFsxsDEEsCab+DHIB5GrDiZSROjLwBCcVAjApg7tN8stYYRv
- Q8dAm4GbsLHhfVQH+iUIWS22V6apWqJd0IPhHztiCr6zgk3kt+l8A1yXcph3vku/l6JO
- 9KRQ==
+ bh=KN16E9BUKPMQG4T8oHAz1JXgBHAHT3sIYZJzcPVZl5U=;
+ b=qR1MWZAUk8LeMowk1kn/qfpueKB5+FuFDgRxkTamdphhLmbh4MzMTSzsXAnaZdcvdV
+ uUD4k401+VXGRyTUuDlvYX3lx24pTm9mCKWGgXfxHEjZp+j6xsRyOvxoclLWq7xrnjyJ
+ zTQrf2CBP81Y8YUzU9A3aPF6oGUb+neAxQ/Szas0s/Gx9inR9W6Dh3Jse+6wjDewViCo
+ yFfcMm1PkhKaJycNp+fWyrt0EtUhYpd2eolAvEVzNAqKAseeP3Git34nX0gppRWaWbXU
+ nB1RoCMdjYc3US3WZjx+EI4wSaaCC5W0pTrF5owdzBFZOOH9brpsCiKgaq6nxLfOaFIa
+ qudw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1718956571; x=1719561371;
+ d=1e100.net; s=20230601; t=1718957157; x=1719561957;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=IzQLNAGPwNKDPbpDvBTrnLSOC5ryk7VLNi38y6lx6kE=;
- b=Cdqy6VKpnP+pV5LJC2QxUIiiwO2raHz342aZzd/cR5+m8AzFpRCSzX+QQ4UaJ8Z74L
- y7LwhKxw3oEZdRY7vtW5hmxmfj+i9VAY7coX4ZaJ2fvDNkalwq4uRPQVfPO11X+m+47a
- 2Oko0W1Ne063Ij8K102aBzZeQzgNsBgz/rMlNVei0jGZ7APY01TMXrBvlOUOkYl3Q1em
- I3tNuh2ptV+8PdmT+ibE7fD97rRYjzek1jwM2+cSck2Icv5kqpv/wxTSKPTBmyG8ZxGu
- og4pRj+CBCFjhDY+9ni26dJ3YbOEkV7xe2BtylCca5Ub7BWXuNNm0CCopcD9kgri15AA
- Y0GA==
-X-Gm-Message-State: AOJu0YyiJaCC+7F7SppahLfEDLpt9pDMWcGRRd59GXgA1/ezNk5RdJZ6
- mtZwNVMUhK8pr6MS1v95baGv/44jRtm6UdqSwvr5V4eapJTQUeL129eTx7XMflu4is2I+iUx68f
- b
-X-Google-Smtp-Source: AGHT+IGRB/MOO1CbmTnVgzkA6wYZctk7eIPiDHG2pzi+OZ3FnRa2rD1+vKK8b8Lh/xPOzedv88j6lQ==
-X-Received: by 2002:a17:907:a608:b0:a6f:6389:4aba with SMTP id
- a640c23a62f3a-a6fab609e80mr626933066b.3.1718956570755; 
- Fri, 21 Jun 2024 00:56:10 -0700 (PDT)
+ bh=KN16E9BUKPMQG4T8oHAz1JXgBHAHT3sIYZJzcPVZl5U=;
+ b=VOFj88EELZRKAj+/3GlpOrZi4gDUf9VVVie177hQDjhF02kyxljj7kFNIJeoxnnPny
+ Gxaqv9Z2BFosqvssP5XJp3BriRi9R6b9WxXQ8lXEilNobYqXBJUEWj7ZGECelXClOw9H
+ iohj5S2sFxwBXDX5kvVUplAvabxIU1cZQrHKdLscxJfXRoLsWTjHyphVXv/rYrRIv5S/
+ G+3FOdDnHF2SxMduC0xW6f6mv7DD2v7ZAzxNZzzeJoAgEYCURMZHt/yJNANAN60OtSup
+ 1Lk7c0co0C+LDdLchnT+w6Lq8PZU4KCLpg/Zw/jj9mTHx61mJubUk+yvSvTuvGm2e5f6
+ Pusg==
+X-Gm-Message-State: AOJu0YxvNnalESZEm1NDlotQMK9koj485BiJU6g5JkXlM4ATKE3nk9KA
+ kHrR+pwUfgXz2CJbbZZGl3zoAl2r34J5P7vqtT/EjCbmdexpwrMM31DHQ7xkjq7uVMi4llU3+84
+ /
+X-Google-Smtp-Source: AGHT+IGJX7ngFSPBnIRyOaVA9IalliHYLR/ISdgUvdn3d7V3POVFPe2d3RrVq4psA/GtsbNbqq8dTA==
+X-Received: by 2002:a05:600c:2141:b0:424:74ed:dbfc with SMTP id
+ 5b1f17b1804b1-4247529fbeamr62112725e9.35.1718957157187; 
+ Fri, 21 Jun 2024 01:05:57 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.128.209])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6fcf56ea09sm54361966b.201.2024.06.21.00.56.09
+ 5b1f17b1804b1-4247d21243esm53095695e9.43.2024.06.21.01.05.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 21 Jun 2024 00:56:10 -0700 (PDT)
+ Fri, 21 Jun 2024 01:05:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>,
- Fan Ni <fan.ni@samsung.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Ira Weiny <ira.weiny@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] bswap: Add st24_be_p() to store 24 bits in big-endian order
-Date: Fri, 21 Jun 2024 09:56:07 +0200
-Message-ID: <20240621075607.17902-1-philmd@linaro.org>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
+Subject: [PATCH 00/23] hw/sd/sdcard: Accumulation of cleanups and fixes
+Date: Fri, 21 Jun 2024 10:05:31 +0200
+Message-ID: <20240621080554.18986-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,48 +93,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 14180d6221 ("bswap: Add the ability to store to an
-unaligned 24 bit field") added st24_le_p() for little
-endianness, add st24_be_p() equivalent for bit one.
+Various SD card cleanups and fixes accumulated over
+the years. Various have been useful to help integrating
+eMMC support (which will come later).
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Some SD card registers are 3 bytes wide stored MSB first.
----
- include/qemu/bswap.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+Based-on: <20240621075607.17902-1-philmd@linaro.org> st24_be_p()
 
-diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-index bd67468e5e..ad22910a5d 100644
---- a/include/qemu/bswap.h
-+++ b/include/qemu/bswap.h
-@@ -38,12 +38,14 @@ static inline void bswap64s(uint64_t *s)
- #if HOST_BIG_ENDIAN
- #define be_bswap(v, size) (v)
- #define le_bswap(v, size) glue(__builtin_bswap, size)(v)
-+#define be_bswap24(v) (v)
- #define le_bswap24(v) bswap24(v)
- #define be_bswaps(v, size)
- #define le_bswaps(p, size) \
-             do { *p = glue(__builtin_bswap, size)(*p); } while (0)
- #else
- #define le_bswap(v, size) (v)
-+#define be_bswap24(v) bswap24(v)
- #define le_bswap24(v) (v)
- #define be_bswap(v, size) glue(__builtin_bswap, size)(v)
- #define le_bswaps(v, size)
-@@ -357,6 +359,11 @@ static inline void stw_be_p(void *ptr, uint16_t v)
-     stw_he_p(ptr, be_bswap(v, 16));
- }
- 
-+static inline void st24_be_p(void *ptr, uint32_t v)
-+{
-+    st24_he_p(ptr, be_bswap24(v));
-+}
-+
- static inline void stl_be_p(void *ptr, uint32_t v)
- {
-     stl_he_p(ptr, be_bswap(v, 32));
+Philippe Mathieu-Daudé (23):
+  hw/sd/sdcard: Correct code indentation
+  hw/sd/sdcard: Rewrite sd_cmd_ALL_SEND_CID using switch case (CMD2)
+  hw/sd/sdcard: Fix typo in SEND_OP_COND command name
+  hw/sd/sdcard: Use HWBLOCK_SHIFT definition instead of magic values
+  hw/sd/sdcard: Use registerfield CSR::CURRENT_STATE definition
+  hw/sd/sdcard: Use Load/Store API to fill some CID/CSD registers
+  hw/sd/sdcard: Remove ACMD6 handler for SPI mode
+  hw/sd/sdcard: Remove explicit entries for illegal commands
+  hw/sd/sdcard: Generate random RCA value
+  hw/sd/sdcard: Track last command used to help logging
+  hw/sd/sdcard: Trace update of block count (CMD23)
+  hw/sd/sdcard: Trace block offset in READ/WRITE data accesses
+  hw/sd/sdcard: Have cmd_valid_while_locked() return a boolean value
+  hw/sd/sdcard: Factor sd_req_get_rca() method out
+  hw/sd/sdcard: Only call sd_req_get_rca() where RCA is used
+  hw/sd/sdcard: Factor sd_req_get_address() method out
+  hw/sd/sdcard: Only call sd_req_get_address() where address is used
+  hw/sd/sdcard: Add sd_invalid_mode_for_cmd to report invalid mode
+    switch
+  hw/sd/sdcard: Inline BLK_READ_BLOCK / BLK_WRITE_BLOCK macros
+  hw/sd/sdcard: Add comments around registers and commands
+  hw/sd/sdcard: Do not store vendor data on block drive (CMD56)
+  hw/sd/sdcard: Send WRITE_PROT bits MSB first (CMD30)
+  hw/sd/sdcard: Send NUM_WR_BLOCKS bits MSB first (ACMD22)
+
+ hw/sd/sd.c             | 278 +++++++++++++++++++++++------------------
+ hw/sd/sdmmc-internal.c |   2 +-
+ hw/sd/trace-events     |   7 +-
+ 3 files changed, 159 insertions(+), 128 deletions(-)
+
 -- 
 2.41.0
 
