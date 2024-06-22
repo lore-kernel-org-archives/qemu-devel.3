@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B978C2BB85
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 21:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B42C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 21:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sL8hi-0007QA-Rf; Sat, 22 Jun 2024 17:55:26 -0400
+	id 1sL8i4-0007fX-Pi; Sat, 22 Jun 2024 17:55:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sL8hh-0007PX-Ju
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:25 -0400
+ id 1sL8i3-0007fE-30
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:47 -0400
 Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sL8hg-0001Ar-15
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:25 -0400
+ id 1sL8i1-0001EO-HL
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1719093322;
- bh=vsjQDU6o24fVd5AnZ+zpHqMrrXzBZfjmUbMvz7OiZbE=;
+ s=mail; t=1719093344;
+ bh=OZj7r6bpST6WlHntKGJWWgRTddZYJ9v7VXHdGugta3o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=u8LcFbU1Z4ejpALQQRlw/u8FX+Vj/9YLzlNmYFtQLBQ8egs8m53hSb2xYjXRuBE9P
- o4NBmAUKVyiJ7ho/4+gg5VXlf7wV6KK8d3uYZ6GjR5/FvI3BZ6pnd7Q5+aDT4kKtor
- 4f/jSahjBg1TKOznHVvleXE/pzUdqf6sPM4RtbZZIHCSxTBoHds8iHLW8hz6bL+DpW
- L5/n4xcotBlX//BElziK8/n3KUkp28psBu/ssl+JTwqHNBD9LcRIs44o8F9X1Crvu2
- UHr6O60OqyNCz7kCfxVEaBjRIRT/hyVSy+IteOCzcOZrmUXPEheMfBmhGcShVILLrl
- BI6wgMxbHxLeg==
+ b=dFaYpjQARbL95k/LklDzKiQVdYVoEDFt10aUWQW0HMBexlORrhGtVUq1cnrjy5OAs
+ QoL2xbD1Ht+ved862Vx9eYwsksrGJ1DJ3fFNwKoPS3vTuyGwhbVkzEMuz/LYSC7QwV
+ 13jYlPXtkRWeCaPmUZlLrVw1sGG4aqRAHrid9ebuVO07EWo4iJK8g1+3hIQns/Lybp
+ Zd0H/bc2gfcaZhpqZ91+zmjRBLLJqOWuZGVchmBgN3vPralEKGoIdovP81YUzYnsJi
+ u/SfZwHxHvwFmkk9HhJQEPEPILhky5pnIRhJb9kF8PhlCxb1OGj5pyR94TFd5O7i6x
+ 3+zM/Mdn8ueDQ==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id CC555378205A;
- Sat, 22 Jun 2024 21:55:19 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 478DA3782113;
+ Sat, 22 Jun 2024 21:55:42 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -58,15 +58,14 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v15 01/14] virtio-gpu: Use trace events for tracking number of
- in-flight fences
-Date: Sun, 23 Jun 2024 00:54:58 +0300
-Message-ID: <20240622215511.154763-2-dmitry.osipenko@collabora.com>
+Subject: [PATCH v15 11/14] virtio-gpu: Support suspension of commands
+ processing
+Date: Sun, 23 Jun 2024 00:55:08 +0300
+Message-ID: <20240622215511.154763-12-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
 References: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=46.235.227.194;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
@@ -91,66 +90,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace printf's used for tracking of in-flight fence inc/dec events
-with tracing, for consistency with the rest of virtio-gpu code that
-uses tracing.
+Check whether command processing has been finished; otherwise, stop
+processing commands and retry the command again next time. This allows
+us to support asynchronous execution of non-fenced commands needed for
+unmapping host blobs safely.
 
-Suggested-by: Marc-André Lureau <marcandre.lureau@gmail.com>
+Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/trace-events       | 2 ++
- hw/display/virtio-gpu-virgl.c | 2 +-
- hw/display/virtio-gpu.c       | 4 ++--
- 3 files changed, 5 insertions(+), 3 deletions(-)
+ hw/display/trace-events | 1 +
+ hw/display/virtio-gpu.c | 6 ++++++
+ 2 files changed, 7 insertions(+)
 
 diff --git a/hw/display/trace-events b/hw/display/trace-events
-index 781f8a33203b..e212710284ae 100644
+index e212710284ae..d26d663f9638 100644
 --- a/hw/display/trace-events
 +++ b/hw/display/trace-events
-@@ -53,6 +53,8 @@ virtio_gpu_cmd_ctx_submit(uint32_t ctx, uint32_t size) "ctx 0x%x, size %d"
- virtio_gpu_update_cursor(uint32_t scanout, uint32_t x, uint32_t y, const char *type, uint32_t res) "scanout %d, x %d, y %d, %s, res 0x%x"
- virtio_gpu_fence_ctrl(uint64_t fence, uint32_t type) "fence 0x%" PRIx64 ", type 0x%x"
+@@ -55,6 +55,7 @@ virtio_gpu_fence_ctrl(uint64_t fence, uint32_t type) "fence 0x%" PRIx64 ", type
  virtio_gpu_fence_resp(uint64_t fence) "fence 0x%" PRIx64
-+virtio_gpu_inc_inflight_fences(uint32_t inflight) "in-flight+ %u"
-+virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
+ virtio_gpu_inc_inflight_fences(uint32_t inflight) "in-flight+ %u"
+ virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
++virtio_gpu_cmd_suspended(uint32_t cmd) "cmd 0x%x"
  
  # qxl.c
  disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 9f34d0e6619c..14091b191ec0 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -525,7 +525,7 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
-         g_free(cmd);
-         g->inflight--;
-         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
--            fprintf(stderr, "inflight: %3d (-)\r", g->inflight);
-+            trace_virtio_gpu_dec_inflight_fences(g->inflight);
-         }
-     }
- }
 diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index d60b1b2973af..602952a7041b 100644
+index 95091c4b7924..1c6e97fb6931 100644
 --- a/hw/display/virtio-gpu.c
 +++ b/hw/display/virtio-gpu.c
-@@ -1066,7 +1066,7 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
-                 if (g->stats.max_inflight < g->inflight) {
-                     g->stats.max_inflight = g->inflight;
-                 }
--                fprintf(stderr, "inflight: %3d (+)\r", g->inflight);
-+                trace_virtio_gpu_inc_inflight_fences(g->inflight);
-             }
-         } else {
-             g_free(cmd);
-@@ -1086,7 +1086,7 @@ static void virtio_gpu_process_fenceq(VirtIOGPU *g)
-         g_free(cmd);
-         g->inflight--;
+@@ -1054,6 +1054,12 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
+         /* process command */
+         vgc->process_cmd(g, cmd);
+ 
++        /* command suspended */
++        if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)) {
++            trace_virtio_gpu_cmd_suspended(cmd->cmd_hdr.type);
++            break;
++        }
++
+         QTAILQ_REMOVE(&g->cmdq, cmd, next);
          if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
--            fprintf(stderr, "inflight: %3d (-)\r", g->inflight);
-+            trace_virtio_gpu_dec_inflight_fences(g->inflight);
-         }
-     }
- }
+             g->stats.requests++;
 -- 
 2.45.2
 
