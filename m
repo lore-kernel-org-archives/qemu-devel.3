@@ -4,111 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CBF5C27C53
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 12:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08283C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 16:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sL0I0-0004Ja-P0; Sat, 22 Jun 2024 08:56:20 -0400
+	id 1sL41V-0004T4-9R; Sat, 22 Jun 2024 12:55:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wendland@live.com.au>)
- id 1sKvSR-00087m-Au
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 03:46:48 -0400
-Received: from mail-mw2nam12olkn2099.outbound.protection.outlook.com
- ([40.92.23.99] helo=NAM12-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wendland@live.com.au>)
- id 1sKvSP-0004DW-Kq
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 03:46:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AdZddKEMhqZvYEu+r0mf5fWqWqdHTeA6TFm7MPOSiq3JFyEPMZ3j5eKPUY8qQIo9l55iMngPoyypKKRdy6PNHpJ8gOdLdnUcg9pumwWI4uS01PM4b2Iq2yqtvRq7XZUfryFvMMb69rKgh5jSpjvszJBmTnIS+L1r5eRajNjWsjEesKUx1ShtrhlCVCVHrK5ITCldW+lDNG2lyo0Qx1Ao68/FyF5zJ6ZUIZ8budzS3lCqj5GvD7ObgJWOS3wYwQ6j8DeL2PpmMrJd4y0IYFThK3NwveYLhZQl85WTWRh64M4XY+3OeHCoJ/FigNR1Q0XXbb6LJeZ1wsmkoINZMtxlIg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mmXQ+Op3WrTaHYmcHws2XBqeNaH/0dqs+mSMStfK3XQ=;
- b=Kp3IX5eXTkjDKS0RgRFwG/YvXkJvnaGDn+4kWXGY5sZMd9J8Y7GwnGMQb/j242mFp5bC+qkULzB4uqi0JbQyKk1koYyOS7FB2Df74Js4Lq2GRr0YzRpXyvA/4gYKHwuiT8oox+tdgjMilz9JzwpRi1Kx8snIL24MAJJwqvOO3EyNX+DBLHkwsCSF4iaqyuyNKCivYBTZsiL+/FOXdS6MPg6aS1vbYWjHnf3bGBcN/NZPdnZOvGE0ahDjcGs+wp4bldg5DqXC9wPr/+y0Z0Z1YcoG6n/xevglRJBMWWC8yZMdflhVCJyI32Ukhxyytpq37/0Xr0/t6zt8GKVoWGefTw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=LIVE.COM.AU;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mmXQ+Op3WrTaHYmcHws2XBqeNaH/0dqs+mSMStfK3XQ=;
- b=HvJsBOmh81KCVbrGQKLmOSZzdVV1RCn9twmWQwfnBGqwrSHpIFstB3F7pPE9Et8Ab36WRzneUlImRGs6qedtlMLB2OO/xSvaQWC2VESxJ0aV5cjbmJiUM/gI9M5i4syOg7AQmiPI8SqsDtqny+5iLoEnmyaLxtWD7g5Q3T0m6qZMat4wkDm+CzZ2g3N0/RX1seeWXTr1yjARvl0oajuNiDeRwe0QCYsLrc4Ku3kqFUsKg+qKXyLhMSW2mcU3vvvg1BALXed50ZXOXhfDCNdgW5ihOfnN1JGJJ9m7FLXcrqEX38rBGOFP/36tvGEWTkjRFi1gkUJVguoByvr7IEQcmg==
-Received: from LV3P220MB1868.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:1d7::7)
- by PH7P220MB1534.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:321::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.26; Sat, 22 Jun
- 2024 07:41:38 +0000
-Received: from LV3P220MB1868.NAMP220.PROD.OUTLOOK.COM
- ([fe80::f559:6351:749f:b7fb]) by LV3P220MB1868.NAMP220.PROD.OUTLOOK.COM
- ([fe80::f559:6351:749f:b7fb%6]) with mapi id 15.20.7698.017; Sat, 22 Jun 2024
- 07:41:38 +0000
-From: Ryan Wendland <wendland@live.com.au>
-To: qemu-devel@nongnu.org
-Cc: Ryan Wendland <wendland@live.com.au>
-Subject: [PATCH] hw/usb/hcd-ohci: Set transfer error code with no dev
-Date: Sat, 22 Jun 2024 17:10:38 +0930
-Message-ID: <LV3P220MB18680A6716082003FEC1846386CA2@LV3P220MB1868.NAMP220.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-TMN: [r6V9/W9nYR7aRexWS5h6rf4X4+TN+ZB0]
-X-ClientProxiedBy: MEWP282CA0176.AUSP282.PROD.OUTLOOK.COM
- (2603:10c6:220:1cd::13) To LV3P220MB1868.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:408:1d7::7)
-X-Microsoft-Original-Message-ID: <20240622074038.62758-1-wendland@live.com.au>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sL41T-0004Sa-Ui
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 12:55:31 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sL41S-0001mX-AS
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 12:55:31 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7066c799382so370065b3a.3
+ for <qemu-devel@nongnu.org>; Sat, 22 Jun 2024 09:55:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719075329; x=1719680129; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BDsAQ7Faz0CJ6QN+3lU9nvKNb3jLqhqG+fEBguDOLOc=;
+ b=frpzp7cFcqYYGLUFOZZj9jz/KMIppHROK9YxA8AfHL6Cgd6NGQ2jFIrEvUkKjeOgAK
+ Z6kn8Uj/sj3icBzCaAtXI+gA/9+cdfLTF3DFEatPIkftwmP2omJTo/j9vpnG21x4IZvc
+ HKF5WLy04wqbn+ukkd6NovgPO9+FGuO6QsN6AN3Qze4CEMUKhR/jnd1UPnKBmjb4pmoU
+ LxeY6UmuImOtflXAWj8DcoZoozDpntVx1aEq99q4M9vo/BngDYcXBEfRuTyg/QbEXYtC
+ QOs+dBsaIkCoqaSRs5v+9fcfSbCK5YUCFIfrwG3ysB2cmUXxGJ6ITtotRh8WJimf30FQ
+ plcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719075329; x=1719680129;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BDsAQ7Faz0CJ6QN+3lU9nvKNb3jLqhqG+fEBguDOLOc=;
+ b=JzIs4YArMv/k6G8D3M+rQN5fCDJnlWDtm8EE3+DbMQ000Ell04nMayIiMZj38EeXub
+ NEB68ptLSoOo4uEEDny4Qemq7ocXHfQueIji1Whg8+woYIeTcmUgv75ZqZBvfDb6Ed/p
+ fAuzo/MEyQIHwdBKZa0Lg7+FvsxQly+JlEWfSqZRl4pwbrXu/D1e+0Rz81Up2YigU9bM
+ fD97iD/XjIH9qxIq8iysxklPRdLZG7l1xCNzorkCYJxBgAvxat7UrssLr015EOUWVvN1
+ BmdJiWbGlFOtutgnsz7mLlW/A/che1XooYAVvM7ColpHXMUHKINycWvK+032vyp1laLH
+ tRJQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcH9Q0TmYceYo//MPQNvtbFHEm/tWvGEZwlMS7+CIDjxzN3lYds5HkqagtY86PU+g/JV0oyRz5mm9DEaNz30AZtjU9sqI=
+X-Gm-Message-State: AOJu0YznZI4Ejki/xRknZ+7IDePCRBAEMgt3BCurJZw97RyyLtb1LMCT
+ Ksx8ATQlcO8W7FKrTbDn7aCtIMr3cG/4gu2PBXIJvi8/GlJfnC6nN8VPBuVfgbI=
+X-Google-Smtp-Source: AGHT+IFiEbkLzlwE3jNKxGTS8f6YG6Lz0T0fKWzbKBniK2UkWlqXZ8maz/cPHfiPtD54o4KcIp/Y1A==
+X-Received: by 2002:a05:6a20:b713:b0:1b6:da8b:ad with SMTP id
+ adf61e73a8af0-1bcf7eecf04mr285596637.34.1719075328735; 
+ Sat, 22 Jun 2024 09:55:28 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7065126d0b0sm3285189b3a.103.2024.06.22.09.55.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 22 Jun 2024 09:55:28 -0700 (PDT)
+Message-ID: <448c9d98-8793-4c1a-90a8-f4883aa67a29@linaro.org>
+Date: Sat, 22 Jun 2024 09:55:26 -0700
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV3P220MB1868:EE_|PH7P220MB1534:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4302ff5f-6851-4e9f-f48d-08dc928ebfcb
-X-Microsoft-Antispam: BCL:0;
- ARA:14566002|461199025|4302099010|440099025|3412199022|1602099009|1710799023; 
-X-Microsoft-Antispam-Message-Info: QKwoHX8jOUbeSoVGeWJIZqSWnmBsamgE8MZhiA2yZqnn8qFALw58oIF6oZFG48BgOg8pYU0Fo8gxbqwHWIKRfZf8/7DV+mchXUvHaH7VYXs+1UmI6XHvuQUylYVFNZ8l/LjBsFZjTbvc6kjaLNQ0BFZfyM96wGiuSoNAU2pT8Ycs1q55aToujBwlX5R/L+0pecwTwfIdSiD8D0R4HNshPBzTzpsjE7dmagTP+ogvPY/NBfkHU2FKoeKAsyoeEyR4sZm+sNrOyZa2b7jVZnCUF+vGWjtcYaGjzfxw5anMJMRU0XoVdBL0wUBXnnZm7/QMaDT5WfEujap+MT8OTtA3WGOk63cHcgT34UlF3O2hdMAjxsXmFCHEVejwBnZZl7WYeDdWG+pd9WGFlqI7mhgT0nunxwEpyq6GDkbTvLyjhwLH2uI7ych0WntanZ1yC6G5LwWzdY2aRHypwN1UWs2bcSbQ/4vu3hWP+pgFFx9F3CEdHrRY+7BTnCNCT9ClzYGlyFIp5IJJ1VPN8l8D4OHCm6bQWwfJvPHa+7XO9C7Zyo54jPrpAj1eFsjL2sNEBLJEGPNPpmeXBlBF+6620Q2suc1pLNi607OONGq4QfaIBfPLl8SUTm3h3Y5SS7sfMYplmkjWgALSoVFAruclOC2Q2JhGZi/UVnwxQN1fXXE1/KOACLDYxXjcxZCHn+A41tu2krhWxL226ovX+Cf7jhMxMR7UD59qzUnlTyoXA71iibc=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?oiaBUa3i0mVh98DYYh+/qRyOA7HRVSzfmD+j9ATCZ/6rfHISP17gI4ieE7wb?=
- =?us-ascii?Q?OwwmTcSU87jcZ1ZsCqKJoOlrALfXOM3ajtEavqTQ/QCkjtVTO7df0fDC0jT8?=
- =?us-ascii?Q?4rIZatFoTSJMuaGvNFWsP37TX5jOJh1xBP5pRLqVg8gJmM8+qQEs49S8U+W/?=
- =?us-ascii?Q?G3mPA4XyjyVYD+FIxytpuM2ZRKSIIs9Wrz/JZPAMOBkSoUrswINYcvdUN7nz?=
- =?us-ascii?Q?yC9aeQPiFR38lwoTIHU9YnwJtB7rDjl+kM6Hkcf1BhfsuoTqCgacDusXgwq4?=
- =?us-ascii?Q?YbJbcvbfNdi6GFqKgaU71iQt4sqiXBV8vbGxTfmwml6A9k16Qccm3MW7RO6X?=
- =?us-ascii?Q?QwL8j/S1JU8UDmRj3ht/9MIo+acA5OoFUy8yB9HxV3rIk7uoaoSwTaSUNoxE?=
- =?us-ascii?Q?DgepA1UX2tuFbYtO1Kvyllg8GEpzmsxazeK82VFQpBrJpOpSP6jp5EkGFPrX?=
- =?us-ascii?Q?AbSWUaNnlQ1ydOBPOT0tNJ1TjDJjeU861dX4wWFt16yqQTtpbIO4cXkmejXK?=
- =?us-ascii?Q?gPc65MKHSmjeyGn4dU3Zew8sCB/j1/ur89wGSE8Hanf7iGCsUym0Uwuq5rYk?=
- =?us-ascii?Q?eIoffvjrTQF2uN6ktLHJAuVfuNhrp8fJ3YfaWUSe9wy6aIBHxVbB/zJ3Zq/+?=
- =?us-ascii?Q?5SQgFJX8iEZOa6S4f7Zso6U6hgXm12xshz6J+dyxMAUaw6scMuZR+FzjmaXr?=
- =?us-ascii?Q?8i3sXfmOZqYiPHBZDnjHVk4XdD6FUHdVvUGS26G5ss4yKEeR12e7jSS01HsB?=
- =?us-ascii?Q?E00WF2UaRVUngwvksc1vqFUAAovqopX2oaIiOCX3Kumrn5OTCrqupD6qdLfi?=
- =?us-ascii?Q?5mh9wJVS+YjyA8XXFcP6QU2u3ZDR4fEci2Pec13VS2XJkjXsmVJWbJi/2KA5?=
- =?us-ascii?Q?w70TbgH3hNB39XwLP4TQqmNgoNlpa4sPUvMZC1UmVOgzVq94eACVNcbSQsBW?=
- =?us-ascii?Q?BkxeleWfq0cTzFtBY130O70LnqfDHaJLNwHKcupXDDWZB514YgOF4uSCuN/4?=
- =?us-ascii?Q?082j/e07HYAvKx7aUzXTFhyD3Q0TF+MM2BsFVefMee1uMaCgfDLeJzJYxemW?=
- =?us-ascii?Q?Rc2ODV05r9utfkV89Ca2ayEZ1SiOkluXnNt4WQ4u64+1rb33rG4D8ftNs0+Y?=
- =?us-ascii?Q?QABi4fY4eD0+zZpBxFfaHeCKtvDuyuwIlMg1ChAFCXgP4NsyRPc7Ny2Arh36?=
- =?us-ascii?Q?0ZpKKVU8GnGi9w1dxajD4QWl31ndCyXMlITgxCPnzQsJobd33M94uJAns68?=
- =?us-ascii?Q?=3D?=
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-3458f.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4302ff5f-6851-4e9f-f48d-08dc928ebfcb
-X-MS-Exchange-CrossTenant-AuthSource: LV3P220MB1868.NAMP220.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2024 07:41:38.5203 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7P220MB1534
-Received-SPF: pass client-ip=40.92.23.99; envelope-from=wendland@live.com.au;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 15/23] Revert "host/i386: assume presence of SSE2"
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240622061558.530543-1-pbonzini@redhat.com>
+ <20240622061558.530543-16-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240622061558.530543-16-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 22 Jun 2024 08:56:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,41 +97,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a usb device is disconnected the transfer service functions bails
-before appropraite transfer error flags are set.
-This patch sets the appropriate condition code OHCI_CC_DEVICENOTRESPONDING
-when a device is disconnected and consequently has no response on the USB bus.
+On 6/21/24 23:15, Paolo Bonzini wrote:
+> This reverts commit b18236897ca15c3db1506d8edb9a191dfe51429c.
+> The x86-64 instruction set can now be tuned down to x86-64 v1
+> or i386 Pentium Pro.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   host/include/i386/host/cpuinfo.h | 1 +
+>   util/bufferiszero.c              | 4 ++--
+>   util/cpuinfo-i386.c              | 1 +
+>   3 files changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/host/include/i386/host/cpuinfo.h b/host/include/i386/host/cpuinfo.h
+> index 72f6fad61e5..81771733eaa 100644
+> --- a/host/include/i386/host/cpuinfo.h
+> +++ b/host/include/i386/host/cpuinfo.h
+> @@ -14,6 +14,7 @@
+>   #define CPUINFO_POPCNT          (1u << 4)
+>   #define CPUINFO_BMI1            (1u << 5)
+>   #define CPUINFO_BMI2            (1u << 6)
+> +#define CPUINFO_SSE2            (1u << 7)
+>   #define CPUINFO_AVX1            (1u << 9)
+>   #define CPUINFO_AVX2            (1u << 10)
+>   #define CPUINFO_AVX512F         (1u << 11)
+> diff --git a/util/bufferiszero.c b/util/bufferiszero.c
+> index 11c080e02cf..74864f7b782 100644
+> --- a/util/bufferiszero.c
+> +++ b/util/bufferiszero.c
+> @@ -188,14 +188,14 @@ static biz_accel_fn const accel_table[] = {
+>   
+>   static unsigned best_accel(void)
+>   {
+> -#ifdef CONFIG_AVX2_OPT
+>       unsigned info = cpuinfo_init();
+>   
+> +#ifdef CONFIG_AVX2_OPT
+>       if (info & CPUINFO_AVX2) {
+>           return 2;
+>       }
+>   #endif
+> -    return 1;
+> +    return info & CPUINFO_SSE2 ? 1 : 0;
+>   }
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/2081
+Merge conflict with master here -- bufferiszero.c has been split.
+This hunk now goes in host/include/i386/host/bufferiszero.c.inc.
 
-Signed-off-by: Ryan Wendland <wendland@live.com.au>
----
- hw/usb/hcd-ohci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index acd6016980..8cd25d74af 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -980,7 +980,8 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
-         dev = ohci_find_device(ohci, OHCI_BM(ed->flags, ED_FA));
-         if (dev == NULL) {
-             trace_usb_ohci_td_dev_error();
--            return 1;
-+            OHCI_SET_BM(td.flags, TD_CC, OHCI_CC_DEVICENOTRESPONDING);
-+            goto exit_and_retire;
-         }
-         ep = usb_ep_get(dev, pid, OHCI_BM(ed->flags, ED_EN));
-         if (ohci->async_td) {
-@@ -1087,6 +1088,7 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
-         ed->head |= OHCI_ED_H;
-     }
- 
-+exit_and_retire:
-     /* Retire this TD */
-     ed->head &= ~OHCI_DPTR_MASK;
-     ed->head |= td.next & OHCI_DPTR_MASK;
--- 
-2.34.1
-
+r~
 
