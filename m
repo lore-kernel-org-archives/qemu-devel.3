@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0807C27C53
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 08:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECEEEC27C53
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 08:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKwQl-00031N-II; Sat, 22 Jun 2024 04:49:07 -0400
+	id 1sKwUR-0004Ou-Mk; Sat, 22 Jun 2024 04:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sKwQi-00030i-Pk
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 04:49:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sKwUQ-0004OK-88
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 04:52:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sKwQg-0000OW-6t
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 04:49:04 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sKwUO-00015m-Ms
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 04:52:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719046140;
+ s=mimecast20190719; t=1719046371;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1ghQCbfWbQkuz85wCOV3bP0VxDauZbRwV51QzMk6TnE=;
- b=bC9cO1aVQa4uGOxLDvtIEYpN2GQRzRV1lF6VttnMkW253oJq+/CEBCTCbTlQIgDef0lOkO
- KD+LsXJfti5iwn8AqM7GRvkdvWyEhjYFd+UkyTcrp4eJSVVzBUlG0l/SgpwO3gEbVjdKMx
- 0Gnnrlyv7JEf3z9KP6xraXxkwfIL9EI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YLD3XLy5OojFeqixFFEUzXEAhWbeaDSmpS5m4WB6c9w=;
+ b=OV9B+EaFAqsqTeVPT3XmovSndwLAWCgWXuvmOfRM+UoFZ6ivA/6zXT7B4USrNgEz++lOqk
+ v/mxonj5c19ax0SiEPjdUcoVQghP6UDmzd2/Kmza3FN1upImb8wIax858y0Rj2hpjbPmF8
+ j91Le4Cfc/Zsc9kolsaCrjEgRZuxTRg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-Yu3hhNsoNOihzLdM8Eni3A-1; Sat,
- 22 Jun 2024 04:48:54 -0400
-X-MC-Unique: Yu3hhNsoNOihzLdM8Eni3A-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-16-YQCD5xCzMveE29bKvrK90Q-1; Sat,
+ 22 Jun 2024 04:52:47 -0400
+X-MC-Unique: YQCD5xCzMveE29bKvrK90Q-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31A9819560AB; Sat, 22 Jun 2024 08:48:52 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 36DFB19560AE; Sat, 22 Jun 2024 08:52:45 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.93])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2F6EA1956051; Sat, 22 Jun 2024 08:48:50 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1261919560AA; Sat, 22 Jun 2024 08:52:44 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DB0B321E6757; Sat, 22 Jun 2024 10:48:47 +0200 (CEST)
+ id C47DB21E6687; Sat, 22 Jun 2024 10:52:41 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,  Stefan Hajnoczi
@@ -69,26 +69,24 @@ Cc: qemu-devel <qemu-devel@nongnu.org>,  Stefan Hajnoczi
  Qemu-block <qemu-block@nongnu.org>,  Jiri Pirko <jiri@resnulli.us>,  Alex
  Williamson <alex.williamson@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
  Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH 04/13] qapi/parser: preserve indentation in QAPIDoc
- sections
-In-Reply-To: <CAFn=p-YHowgTn52K+UE14ieaPjxZzqESM7eEzHa3p3Q3Av9_ZA@mail.gmail.com>
- (John Snow's message of "Fri, 21 Jun 2024 13:28:57 -0400")
+Subject: Re: [PATCH 09/13] qapi: convert "Note" sections to plain rST
+In-Reply-To: <CAFn=p-bsEzEr6Ww11gtoBws1LqSHTPmch4O7osOqg45=CtejPw@mail.gmail.com>
+ (John Snow's message of "Fri, 21 Jun 2024 13:41:43 -0400")
 References: <20240619003012.1753577-1-jsnow@redhat.com>
- <20240619003012.1753577-5-jsnow@redhat.com>
- <878qz12l87.fsf@pond.sub.org>
- <CAFn=p-YUUfaSKWwEwdR=+3q-TrKR6v0HmYNUk75AvmFEjpviAQ@mail.gmail.com>
- <87h6dnsldn.fsf@pond.sub.org>
- <CAFn=p-bdtS=u6upkjD6+Vn_7cC1cysd-DLKvrg6T5SPrucQpLg@mail.gmail.com>
- <87plsareai.fsf@pond.sub.org>
- <CAFn=p-YHowgTn52K+UE14ieaPjxZzqESM7eEzHa3p3Q3Av9_ZA@mail.gmail.com>
-Date: Sat, 22 Jun 2024 10:48:47 +0200
-Message-ID: <878qyxxt00.fsf@pond.sub.org>
+ <20240619003012.1753577-10-jsnow@redhat.com>
+ <87wmmlyu64.fsf@pond.sub.org> <87iky3u47v.fsf@pond.sub.org>
+ <CAFn=p-ZDQog-gS=oXPm2E+uQwa=AFodxP-TTCtLrXiOou3-McQ@mail.gmail.com>
+ <CAFn=p-abtycUzRefg8hdAENtdKMeeyEe0sMCEXee2Grn9i8PDw@mail.gmail.com>
+ <87v8221o3x.fsf@pond.sub.org>
+ <CAFn=p-bsEzEr6Ww11gtoBws1LqSHTPmch4O7osOqg45=CtejPw@mail.gmail.com>
+Date: Sat, 22 Jun 2024 10:52:41 +0200
+Message-ID: <8734p5xsti.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
@@ -115,41 +113,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> On Fri, Jun 21, 2024 at 2:38=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+> On Fri, Jun 21, 2024 at 8:23=E2=80=AFAM Markus Armbruster <armbru@redhat.=
 com> wrote:
 
 [...]
 
->> I'd like you to express more clearly that you're talking about an
->> alternative you rejected.  Perhaps like this:
->>
->>   block-level constructs such as code blocks, lists, and other such
->>   markup.
->>
->>   The alternative would be to somehow undo .get_doc_indented()'s
->>   indentation changes in the new generator.  Much messier.
->>
->> Feel free to add more detail to the last paragraph.
+>> My reason for four spaces is reducing churn.  To see by how much, I
+>> redid your change.  I found a few more notes that don't start with a
+>> capital letter, or don't end with a period.
 >>
 >
-> Eh, I just deleted it. I recall running into troubles but I can't
-> articulate the precise conditions because as you point out, it's a doomed
-> strategy for other reasons - you can't reconstruct the proper indentation.
->
-> This patch is still the correct way to go, so I don't have to explain my
-> failures at length in the commit message ... I just like giving people
-> clues for *why* I decided to implement things a certain way, because I
-> often find that more instructive than the "how".
+> ^ Guess I'll re-audit for v2. Hang on to the list of cases you found.
 
-"Why" tends to be much more useful in a commit message than "how".  I
-should be able to figure out "how" by reading the patch, whereas for
-"why", I may have to read the author's mind.
+Happy to share my patch.
 
->                                                  In this case, the "why" =
-is
-> probably more properly summarized as "it's a total shitshow in that
-> direction, trust me"
+> (Sorry for the churn, though. I obviously don't mind it as much as you do,
+> but I suspect I'm a lot less nimble with fiddling through git history than
+> you are and find the value of avoiding churn to be ... lower than you do,
+> in general. Respecting reviewer time is a strong argument, I apologize th=
+at
+> some non-mechanical changes snuck into the patch. The downside of hacking
+> together a very large series.)
 
-The right amount of detail is often not obvious.  Use your judgement.
+You did a good job splitting it up.  Minor mistakes are bound to happen.
+Got to give the reviewer soemthing to find ;)
+
+[...]
 
 
