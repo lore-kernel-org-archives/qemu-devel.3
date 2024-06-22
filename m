@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C505FC27C53
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 18:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D04E4C2BB85
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 18:50:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sL5c8-0001k2-NJ; Sat, 22 Jun 2024 14:37:28 -0400
+	id 1sL5oV-0003k8-Q9; Sat, 22 Jun 2024 14:50:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sL5c6-0001he-V7
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 14:37:26 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sL5oU-0003ju-1G
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 14:50:14 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sL5c3-0005WZ-Sr
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 14:37:26 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-2c85f0c02f5so117597a91.1
- for <qemu-devel@nongnu.org>; Sat, 22 Jun 2024 11:37:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sL5oS-0007kO-1C
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 14:50:13 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-2c7dbdc83bfso2458841a91.1
+ for <qemu-devel@nongnu.org>; Sat, 22 Jun 2024 11:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1719081441; x=1719686241;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1719082209; x=1719687009;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=OajuS3rPe6ZMEPvn56U+STwojWjPCsJfgHZTCLGZUIU=;
- b=eaEGzWtFKnBU6f5cj6cF9gHikJ06LcvuRFXpBGO05mSElGWaFiszJ+gCxtp3MkPboG
- W+To9H4RiUm3DFcrH9h8ey030dAg4/iDTUcem5uTG0x6ruWVRyZNEep1i5ssVQh+dkSx
- 5RtpzLoAnOV79uyHP1y8F3QnEeerOkzKOg9BVh88MPveghgrstO6b5FV6/yzeTWE9XQZ
- a0QIN9Ou/jwHtKNrPNrKxrhYuECiIECIeSBmL5/i2M+8vHKf4woITYJYpmrkZFsTDGa8
- /Qx04eUQVLh+I2UzxaTQSESj+bGbRGXflEEQZO8QGq7LFArPYOWyX8+74pMwSFCIXjky
- PAnw==
+ bh=Y4NTQrAWCgds4TH/RNuC+w4tcmLMWQsai/6wnvIoYyo=;
+ b=Xl7KcuCjSbrnx+Ur8dsjASJKSPfJYYLoNdaPtjGxTfALjOyhjc0FgVMhVV0+f1JhSu
+ ebvUH3B3wSsNjQPcYSqsjGSr2GY587CmxSmr0ooK21kJI8sQFIMHHbsCC6r7XeOZlvDL
+ xNelRlLBZMHTv/dpZKJ20rUzseGFn3CvIla0jFna78+6u06TLZdJx5wg5SFwfqjeQUkG
+ dmAj85PlUgSnJasNOqWxbchLjh0aEKeRJ7vlWHIvu7LQvm9SBb7Ulze7GTmKa2YxxCe8
+ N1fAVFNZx2q3I/an6y4Dp+02DHIUpoJLlUifEfmIrUq6pfWhJkZOwHd1CnaHDyW/B8C8
+ AqMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719081441; x=1719686241;
+ d=1e100.net; s=20230601; t=1719082209; x=1719687009;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=OajuS3rPe6ZMEPvn56U+STwojWjPCsJfgHZTCLGZUIU=;
- b=vTfYCo7SBuSY3nd/J8AptXA3QstOms6k0r/DFOwoXAW6DrWGcJViIoMMhmgvb5sEDm
- D0pg0jYN//sexQOwk52yI9ehVl1PdNfA3OHg/bl6nP0IDcbtB/HIMCR6I1YeafcYJM9w
- LWzSsZ6ITNTyER0pfq4ZBpNuUqLAa5Kx6u0wgIO2rxEdN3vguZvhU6QtlkStPcYOjTZa
- e26JdU4HMgiHBncE7XH3lZsMgMUb1sbgj6rSm92Aj0iKZzIDMNoX8sbiC0wFFqeT0f3N
- q4iYIF1MeoWTnHOL6aI/NF6zbt767gLA7lzTw2FD4+iCGtw7nXYpBmIJelcMC3sS6MUb
- /wNw==
+ bh=Y4NTQrAWCgds4TH/RNuC+w4tcmLMWQsai/6wnvIoYyo=;
+ b=ii9AKew+YjlC5I/yTZyVnYx9frKQ/cVjEmE9aGSO+o1v5lYVe3xvHgQbiSRKUYfPaS
+ 2EJXpCBS95kiLXdPfWAlQfWR67F0ItUlRDbL3MuVHGuUszWrswVyO2prAqhLCN5LLc+m
+ uiFloUVN5qktYFSwsnu6QfmMtUQ6niBEtntB1HU4uKyifC3JNW7yDeVlbvZAEaI2R8+N
+ 5MRKrLaDdgVcAnN+RVg30C9S1hbRRMDywSEznhgbmIyhq7rPYw/5ekoweijvQHtDZ2dn
+ MhVk2JoiVYdcBtpQeBhUDZmBBhmyAG6VwmigX9ThOhstkaWQ5rZ+CyPCcrF2ifX3MPu3
+ KrpQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWaayrWKCcVr4mnfGwaS6YZMvZjsMP4E2JYnFFrf7b+tiuDwdMqq/iyWw22kKsjXCRRgXPCkq6Fp1vy0h6etFKjGPWXDA=
-X-Gm-Message-State: AOJu0YzyNakPbKbbnl/6YBG9wB4nUOQV6AOCnP1KbqyDbncdAoNsJanW
- +lvblUJhmB7AWB5xSE9xlnQGI8xihIex1nvMliWCasZBzDFX2HgRSCkJ0qNDkt71dKXL+bBB/05
- UJIfhDqviuhF3DApIDjASY/PoigCRynUIfkE8uw==
-X-Google-Smtp-Source: AGHT+IGd07YVcRRds8C+8o7yaA57t+MK04if+qfCSKfwToG58+pIHGIBpmLT5CmrwvEd6VwO/GI0+ouV9YRHPPA3li8=
-X-Received: by 2002:a17:90b:4b4a:b0:2c2:e7e5:5c29 with SMTP id
- 98e67ed59e1d1-2c86127adf7mr395121a91.29.1719081441445; Sat, 22 Jun 2024
- 11:37:21 -0700 (PDT)
+ AJvYcCX9wm8nsHaXJrAYr94WJcBIpVpJxrdz7dvcqnLoMgdnc9hH2D7YKmOXgMMdiY2lY07pn4EdIn0fQapaB4AAavpPUHwjnEY=
+X-Gm-Message-State: AOJu0YxHs5SZ0QVnIqLvorH1sJUv9qXAt0Jn/gVqqwDKQx+qmSAl4CC4
+ w+bndBzqS/9TS12iSguXbf09eLZhCjq5/cOBGWJKJ7KUc74kzzjCDe3onysu+D0Ws1AhYxuzfAm
+ xcIUeFGeio0Bn/8JeQ7sQdVj1QlePC/eD11g5Rw==
+X-Google-Smtp-Source: AGHT+IEzHOrzf1Idj8W/oVXqIpl6I4d6FeITSJLcV+1HUAHhhbiEzipz/C4fQe4r3fhA3004MBmSdAa8b5+cL3oNxd0=
+X-Received: by 2002:a17:90b:374b:b0:2c3:e99:614f with SMTP id
+ 98e67ed59e1d1-2c86147bd5fmr408409a91.37.1719082209428; Sat, 22 Jun 2024
+ 11:50:09 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240617185804.25075-1-itachis@FreeBSD.org>
- <20240617185804.25075-2-itachis@FreeBSD.org>
- <843f41b3-5ade-47bf-9802-be94086e6168@linaro.org>
-In-Reply-To: <843f41b3-5ade-47bf-9802-be94086e6168@linaro.org>
+ <20240617185804.25075-3-itachis@FreeBSD.org>
+ <3eed856e-51bf-4dd5-8665-60132adf01a3@linaro.org>
+In-Reply-To: <3eed856e-51bf-4dd5-8665-60132adf01a3@linaro.org>
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 22 Jun 2024 12:37:10 -0600
-Message-ID: <CANCZdfpFcJ3wodLi4FsDNcPoyqiRF0dfEfkq1ahrsNCD5GM4kw@mail.gmail.com>
-Subject: Re: [PATCH 01/23] Add CPU initialization function
+Date: Sat, 22 Jun 2024 12:49:58 -0600
+Message-ID: <CANCZdfpQ0TmCU-9OAMkJo2_4UDFpRVVRPc5qzLgmo75wVXkQew@mail.gmail.com>
+Subject: Re: [PATCH 02/23] Added CPU loop function
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org, 
- Ajeet Singh <itachis@freebsd.org>, Stacey Son <sson@freebsd.org>
-Content-Type: multipart/alternative; boundary="000000000000a86cf2061b7ed620"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1032;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1032.google.com
+ Ajeet Singh <itachis@freebsd.org>, Stacey Son <sson@freebsd.org>,
+ Kyle Evans <kevans@freebsd.org>, 
+ Sean Bruno <sbruno@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>
+Content-Type: multipart/alternative; boundary="0000000000006ee95b061b7f0425"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -90,202 +92,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a86cf2061b7ed620
+--0000000000006ee95b061b7f0425
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 17, 2024 at 10:17=E2=80=AFPM Richard Henderson <
+On Mon, Jun 17, 2024 at 10:24=E2=80=AFPM Richard Henderson <
 richard.henderson@linaro.org> wrote:
 
 > On 6/17/24 11:57, Ajeet Singh wrote:
-> > From: Stacey Son <sson@FreeBSD.org>
-> >
-> > Addded function to initialize ARM CPU
-> > and to check if it supports 64 bit mode
-> >
-> > Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-> > Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> > ---
-> >   bsd-user/aarch64/target_arch_cpu.h | 42 +++++++++++++++++++++++++++++=
-+
-> >   1 file changed, 42 insertions(+)
-> >   create mode 100644 bsd-user/aarch64/target_arch_cpu.h
-> >
-> > diff --git a/bsd-user/aarch64/target_arch_cpu.h
-> b/bsd-user/aarch64/target_arch_cpu.h
-> > new file mode 100644
-> > index 0000000000..db5c7062b9
-> > --- /dev/null
-> > +++ b/bsd-user/aarch64/target_arch_cpu.h
-> > @@ -0,0 +1,42 @@
-> > +/*
-> > + *  ARM AArch64 cpu init and loop
-> > + *
-> > + * Copyright (c) 2015 Stacey Son
-> > + *
-> > + * This library is free software; you can redistribute it and/or
-> > + * modify it under the terms of the GNU Lesser General Public
-> > + * License as published by the Free Software Foundation; either
-> > + * version 2 of the License, or (at your option) any later version.
-> > + *
-> > + * This library is distributed in the hope that it will be useful,
-> > + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> > + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-> > + * Lesser General Public License for more details.
-> > + *
-> > + * You should have received a copy of the GNU Lesser General Public
-> > + * License along with this library; if not, see <
-> http://www.gnu.org/licenses/>.
-> > + */
-> > +
-> > +#ifndef TARGET_ARCH_CPU_H
-> > +#define TARGET_ARCH_CPU_H
-> > +
-> > +#include "target_arch.h"
-> > +#include "target/arm/syndrome.h"
+> > +            /*
+> > +             * The carry bit is cleared for no error; set for error.
+> > +             * See arm64/arm64/vm_machdep.c cpu_set_syscall_retval()
+> > +             */
+> > +            pstate =3D pstate_read(env);
+> > +            if (ret >=3D 0) {
+> > +                pstate &=3D ~PSTATE_C;
+> > +                env->xregs[0] =3D ret;
+> > +            } else if (ret =3D=3D -TARGET_ERESTART) {
+> > +                env->pc -=3D 4;
+> > +                break;
+> > +            } else if (ret !=3D -TARGET_EJUSTRETURN) {
+> > +                pstate |=3D PSTATE_C;
+> > +                env->xregs[0] =3D -ret;
+> > +            }
+> > +            pstate_write(env, pstate);
 >
-> Do you actually need syndrome.h?
+> No need for full pstate read/write:
+>
+>      env->CF =3D {0,1};
 >
 
-It's needed, but not for this chunk. It is needed for patch 2 because we
-start to use the syndrome functions there to dispatch / decode the traps.
-So that should be moved to patch 2 in the next round, I think.
+If I understand what you're suggesting, the quoted code can be replaced
+by the following, faster construct:
 
-Also
+            /*
+             * The carry bit is cleared for no error; set for error.
+             * See arm64/arm64/vm_machdep.c cpu_set_syscall_retval()
+             */
+            if (ret >=3D 0) {
+                env->CF =3D 0;
+                env->xregs[0] =3D ret;
+            } else if (ret =3D=3D -TARGET_ERESTART) {
+                env->pc -=3D 4;
+                break;
+            } else if (ret !=3D -TARGET_EJUSTRETURN) {
+                env->CF =3D 1;
+                env->xregs[0] =3D -ret;
+            }
+            break;
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+Is that what you're saying?
 
-since this looks correct and I didn't write it :)
+
+> > +            break;
+> > +
+> > +        case EXCP_INTERRUPT:
+> > +            /* Just indicate that signals should be handle ASAP. */
+> > +            break;
+> > +
+> > +        case EXCP_UDEF:
+> > +            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPN, env->pc)=
+;
+> > +            break;
+> > +
+> > +
+> > +        case EXCP_PREFETCH_ABORT:
+> > +        case EXCP_DATA_ABORT:
+> > +            /* We should only arrive here with EC in {DATAABORT,
+> INSNABORT}. */
+> > +            ec =3D syn_get_ec(env->exception.syndrome);
+>
+> Nevermind about my question about syndrome.h vs patch 1.
+>
+
+Ah, Since we have to re-roll this patch anyway, maybe moving it is a good
+idea?
+Honestly, I'm good either way.
 
 Warner
 
 
-> Otherwise,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->
 > r~
 >
-> > +
-> > +#define TARGET_DEFAULT_CPU_MODEL "any"
-> > +
-> > +static inline void target_cpu_init(CPUARMState *env,
-> > +    struct target_pt_regs *regs)
-> > +{
-> > +    int i;
-> > +
-> > +    if (!(arm_feature(env, ARM_FEATURE_AARCH64))) {
-> > +        fprintf(stderr, "The selected ARM CPU does not support 64 bit
-> mode\n");
-> > +        exit(1);
-> > +    }
-> > +    for (i =3D 0; i < 31; i++) {
-> > +        env->xregs[i] =3D regs->regs[i];
-> > +    }
-> > +    env->pc =3D regs->pc;
-> > +    env->xregs[31] =3D regs->sp;
-> > +}
->
->
 
---000000000000a86cf2061b7ed620
+--0000000000006ee95b061b7f0425
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 17, 2024 at 10:17=E2=80=
+<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 17, 2024 at 10:24=E2=80=
 =AFPM Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org"=
 >richard.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"=
 gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
 4,204,204);padding-left:1ex">On 6/17/24 11:57, Ajeet Singh wrote:<br>
-&gt; From: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; <br>
-&gt; Addded function to initialize ARM CPU<br>
-&gt; and to check if it supports 64 bit mode<br>
-&gt; <br>
-&gt; Signed-off-by: Ajeet Singh &lt;itachis@FreeBSD.org&gt;<br>
-&gt; Signed-off-by: Stacey Son &lt;sson@FreeBSD.org&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0bsd-user/aarch64/target_arch_cpu.h | 42 ++++++++++++++++++=
-++++++++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 42 insertions(+)<br>
-&gt;=C2=A0 =C2=A0create mode 100644 bsd-user/aarch64/target_arch_cpu.h<br>
-&gt; <br>
-&gt; diff --git a/bsd-user/aarch64/target_arch_cpu.h b/bsd-user/aarch64/tar=
-get_arch_cpu.h<br>
-&gt; new file mode 100644<br>
-&gt; index 0000000000..db5c7062b9<br>
-&gt; --- /dev/null<br>
-&gt; +++ b/bsd-user/aarch64/target_arch_cpu.h<br>
-&gt; @@ -0,0 +1,42 @@<br>
-&gt; +/*<br>
-&gt; + *=C2=A0 ARM AArch64 cpu init and loop<br>
-&gt; + *<br>
-&gt; + * Copyright (c) 2015 Stacey Son<br>
-&gt; + *<br>
-&gt; + * This library is free software; you can redistribute it and/or<br>
-&gt; + * modify it under the terms of the GNU Lesser General Public<br>
-&gt; + * License as published by the Free Software Foundation; either<br>
-&gt; + * version 2 of the License, or (at your option) any later version.<b=
-r>
-&gt; + *<br>
-&gt; + * This library is distributed in the hope that it will be useful,<br=
->
-&gt; + * but WITHOUT ANY WARRANTY; without even the implied warranty of<br>
-&gt; + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.=C2=A0 See the=
- GNU<br>
-&gt; + * Lesser General Public License for more details.<br>
-&gt; + *<br>
-&gt; + * You should have received a copy of the GNU Lesser General Public<b=
-r>
-&gt; + * License along with this library; if not, see &lt;<a href=3D"http:/=
-/www.gnu.org/licenses/" rel=3D"noreferrer" target=3D"_blank">http://www.gnu=
-.org/licenses/</a>&gt;.<br>
-&gt; + */<br>
-&gt; +<br>
-&gt; +#ifndef TARGET_ARCH_CPU_H<br>
-&gt; +#define TARGET_ARCH_CPU_H<br>
-&gt; +<br>
-&gt; +#include &quot;target_arch.h&quot;<br>
-&gt; +#include &quot;target/arm/syndrome.h&quot;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* The carry bit is cl=
+eared for no error; set for error.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* See arm64/arm64/vm_=
+machdep.c cpu_set_syscall_retval()<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pstate =3D pstate_read(env)=
+;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret &gt;=3D 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pstate &amp;=
+=3D ~PSTATE_C;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;xregs=
+[0] =3D ret;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (ret =3D=3D -TARG=
+ET_ERESTART) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;pc -=
+=3D 4;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (ret !=3D -TARGET=
+_EJUSTRETURN) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pstate |=3D P=
+STATE_C;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;xregs=
+[0] =3D -ret;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pstate_write(env, pstate);<=
+br>
 <br>
-Do you actually need syndrome.h?<br></blockquote><div><br></div><div>It&#39=
-;s needed, but not for this chunk. It is needed for patch 2 because we star=
-t to use the syndrome functions there to dispatch / decode the traps.</div>=
-<div>So that should be moved to patch 2 in the next round, I think.</div><d=
-iv><br></div><div>Also</div><div><br></div><div>Reviewed-by: Warner Losh &l=
-t;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><div><br></=
-div><div>since this looks correct and I didn&#39;t write it :)</div><div><b=
-r></div><div>Warner</div><div>=C2=A0</div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">
-Otherwise,<br>
-Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
-ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
+No need for full pstate read/write:<br>
 <br>
+=C2=A0 =C2=A0 =C2=A0env-&gt;CF =3D {0,1};<br></blockquote><div><br></div><d=
+iv>If I understand what you&#39;re suggesting, the quoted code can be repla=
+ced</div><div>by the following, faster construct:</div><div><br></div><div>=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0* The carry bit is cleared for no error; set for error=
+.<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* See arm64/arm64/vm_m=
+achdep.c cpu_set_syscall_retval()<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0*/<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret &gt;=3D 0=
+) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;CF =
+=3D 0;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;x=
+regs[0] =3D ret;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (re=
+t =3D=3D -TARGET_ERESTART) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 env-&gt;pc -=3D 4;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 break;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } els=
+e if (ret !=3D -TARGET_EJUSTRETURN) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 env-&gt;CF =3D 1;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;xregs[0] =3D -ret;<br>=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 }<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;=
+<br></div><div><br></div><div>Is that what you&#39;re saying?</div><div>=C2=
+=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 case EXCP_INTERRUPT:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Just indicate that signa=
+ls should be handle ASAP. */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 case EXCP_UDEF:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 force_sig_fault(TARGET_SIGI=
+LL, TARGET_ILL_ILLOPN, env-&gt;pc);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt; +<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 case EXCP_PREFETCH_ABORT:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 case EXCP_DATA_ABORT:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* We should only arrive he=
+re with EC in {DATAABORT, INSNABORT}. */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ec =3D syn_get_ec(env-&gt;e=
+xception.syndrome);<br>
+<br>
+Nevermind about my question about syndrome.h vs patch 1.<br></blockquote><d=
+iv><br></div><div>Ah, Since we have to re-roll this patch anyway, maybe mov=
+ing it is a good idea?</div><div>Honestly, I&#39;m good either way.</div><d=
+iv><br></div><div>Warner</div><div>=C2=A0</div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">
 r~<br>
-<br>
-&gt; +<br>
-&gt; +#define TARGET_DEFAULT_CPU_MODEL &quot;any&quot;<br>
-&gt; +<br>
-&gt; +static inline void target_cpu_init(CPUARMState *env,<br>
-&gt; +=C2=A0 =C2=A0 struct target_pt_regs *regs)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 int i;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 if (!(arm_feature(env, ARM_FEATURE_AARCH64))) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 fprintf(stderr, &quot;The selected ARM CP=
-U does not support 64 bit mode\n&quot;);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 exit(1);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 for (i =3D 0; i &lt; 31; i++) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;xregs[i] =3D regs-&gt;regs[i];<br=
->
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 env-&gt;pc =3D regs-&gt;pc;<br>
-&gt; +=C2=A0 =C2=A0 env-&gt;xregs[31] =3D regs-&gt;sp;<br>
-&gt; +}<br>
-<br>
 </blockquote></div></div>
 
---000000000000a86cf2061b7ed620--
+--0000000000006ee95b061b7f0425--
 
