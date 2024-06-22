@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF42AC27C53
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E61F8C2BD05
 	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 21:56:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sL8hy-0007d3-4a; Sat, 22 Jun 2024 17:55:42 -0400
+	id 1sL8hk-0007SV-QK; Sat, 22 Jun 2024 17:55:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sL8hw-0007c2-2U
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:40 -0400
-Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ id 1sL8hi-0007QD-VB
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:26 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sL8hu-0001Dc-Iw
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:39 -0400
+ id 1sL8hh-0001B4-Bl
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1719093337;
- bh=i6xHnEgRVKX8VgheK2nrNdCGjgNzOozzyoIi3MThrQY=;
+ s=mail; t=1719093324;
+ bh=ERCEjbeofuFXN7aryxZb+pJysYHHTmCz1fykr4fdm0M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=tyeBW3KneRZFde0rXwR7sJtllTNoEZMUI66YEIuUID0fnrkE8iwSTKbqoERiY4YgE
- rx4gAeVS3Sb/+i4g5PUvV9TdbuWRYSucsUc6XS498o/yygMPSPFYnwtPDlimxMq4Z8
- ABjNzq3iHFmbjGBbF/YmKQCl51hchJoQwgkYMnnAAbGIEOUB+xG00QD74xnFgYn6h4
- 8px1lpQQr67ZgPxerYIZlUBZ7yMNPOrgsHG6rcGMu+8dD6svYKUYEcyTRJg6Hwbl9t
- WzImvzWSu1sZzvmWXzMV9pLxOfI6OYGB/PXWy3SofH/UaVkOvAvWR6CEyrK3vJ6WEv
- 5V7fBlkuZXL/A==
+ b=d13aIEy63WR8cpZRqu5+mvxsO4gXQDdc1G+FIGFZBmz2cPXgPRFBFg5i/iFNZRM8s
+ CBffGxpUn/QYJKj9mVP9DV/da+m3LYAkKro+sZ94ANl0ZXNrPRIg8UzZjPtzITaS91
+ f22divvCZyXkTmAbazcJO5w1Nji0HwwJ8hcYh1GMbC0D+BVmbO470rxmc+Ok0sXVn0
+ ZtC+m1Y7XnZnaS6on3A+5gTiBQS0JdvHtwWb1lKScE2TNn64S7kp0kPzxD2bBxnNG+
+ 3kB9utZvZukDYGL8oEpjewt2+GSjGU+Qb4ctCYZSJqINh4A8bBejXV++eW+ffGYdzz
+ WcCEUkpHe6atA==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 966123782151;
- Sat, 22 Jun 2024 21:55:35 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 69BFF3782113;
+ Sat, 22 Jun 2024 21:55:22 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -58,17 +58,15 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v15 08/14] virtio-gpu: Don't require udmabuf when blobs and
- virgl are enabled
-Date: Sun, 23 Jun 2024 00:55:05 +0300
-Message-ID: <20240622215511.154763-9-dmitry.osipenko@collabora.com>
+Subject: [PATCH v15 02/14] virtio-gpu: Move fence_poll timer to VirtIOGPUGL
+Date: Sun, 23 Jun 2024 00:54:59 +0300
+Message-ID: <20240622215511.154763-3-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
 References: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+Received-SPF: pass client-ip=46.235.227.194;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -91,35 +89,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The udmabuf usage is mandatory when virgl is disabled and blobs feature
-enabled in the Qemu machine configuration. If virgl and blobs are enabled,
-then udmabuf requirement is optional. Since udmabuf isn't widely supported
-by a popular Linux distros today, let's relax the udmabuf requirement for
-blobs=on,virgl=on. Now, a full-featured virtio-gpu acceleration is
-available to Qemu users without a need to have udmabuf available in the
-system.
+Move fence_poll timer to VirtIOGPUGL for consistency with cmdq_resume_bh
+that are used only by GL device.
 
-Reviewed-by: Antonio Caggiano <antonio.caggiano@collabora.com>
-Signed-off-by: Huang Rui <ray.huang@amd.com>
-Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/display/virtio-gpu-virgl.c  | 8 +++++---
+ include/hw/virtio/virtio-gpu.h | 3 ++-
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 602952a7041b..40a9d089710c 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1485,6 +1485,7 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 14091b191ec0..91dce90f9176 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -594,11 +594,12 @@ static void virtio_gpu_print_stats(void *opaque)
+ static void virtio_gpu_fence_poll(void *opaque)
+ {
+     VirtIOGPU *g = opaque;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
  
-     if (virtio_gpu_blob_enabled(g->parent_obj.conf)) {
-         if (!virtio_gpu_rutabaga_enabled(g->parent_obj.conf) &&
-+            !virtio_gpu_virgl_enabled(g->parent_obj.conf) &&
-             !virtio_gpu_have_udmabuf()) {
-             error_setg(errp, "need rutabaga or udmabuf for blob resources");
-             return;
+     virgl_renderer_poll();
+     virtio_gpu_process_cmdq(g);
+     if (!QTAILQ_EMPTY(&g->cmdq) || !QTAILQ_EMPTY(&g->fenceq)) {
+-        timer_mod(g->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 10);
++        timer_mod(gl->fence_poll, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 10);
+     }
+ }
+ 
+@@ -626,6 +627,7 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+ {
+     int ret;
+     uint32_t flags = 0;
++    VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+ 
+ #if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
+     if (qemu_egl_display) {
+@@ -645,8 +647,8 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+         return ret;
+     }
+ 
+-    g->fence_poll = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+-                                 virtio_gpu_fence_poll, g);
++    gl->fence_poll = timer_new_ms(QEMU_CLOCK_VIRTUAL,
++                                  virtio_gpu_fence_poll, g);
+ 
+     if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+         g->print_stats = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 7a59379f5a7a..bc69fd78a440 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -196,7 +196,6 @@ struct VirtIOGPU {
+     uint64_t hostmem;
+ 
+     bool processing_cmdq;
+-    QEMUTimer *fence_poll;
+     QEMUTimer *print_stats;
+ 
+     uint32_t inflight;
+@@ -231,6 +230,8 @@ struct VirtIOGPUGL {
+ 
+     bool renderer_inited;
+     bool renderer_reset;
++
++    QEMUTimer *fence_poll;
+ };
+ 
+ struct VhostUserGPU {
 -- 
 2.45.2
 
