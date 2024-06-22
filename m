@@ -4,73 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA9FC2BB85
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 04:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D440C2BB85
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 04:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKsGQ-0000Ta-Qp; Sat, 22 Jun 2024 00:22:11 -0400
+	id 1sKsRs-0003v6-EW; Sat, 22 Jun 2024 00:34:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sKsGM-0000Sn-TF; Sat, 22 Jun 2024 00:22:06 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sKsGK-00058t-Sd; Sat, 22 Jun 2024 00:22:06 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3C45272EEE;
- Sat, 22 Jun 2024 07:23:14 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id E2CE6F0628;
- Sat, 22 Jun 2024 07:21:52 +0300 (MSK)
-Message-ID: <addd7e3d-c56a-4e4d-abef-52243fe6120c@tls.msk.ru>
-Date: Sat, 22 Jun 2024 07:21:52 +0300
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1sKsRr-0003us-Dk
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 00:33:59 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1sKsRp-0006w0-A4
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 00:33:59 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1f9b364faddso23248805ad.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 21:33:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719030836; x=1719635636; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U928YwRXTXmHBUJIicNJdvuxM1L86valDlAMu1boHAA=;
+ b=Y1TFHhD3LLhfNvThfXPCXVvCtt9KiVe0h5Ys3d7E3ilPSpwEtjtchiQlErG44JHPtU
+ W0KBd+OXkK+cMJ96G5sckpu4jcRyQv4LmMpHwDCKHTm/28gUzRMNrRF/z2oplGr2I5Zk
+ Lex/yUtwOSn3ONwTbIKuPmgibm39CmcG3AtHsloDlDi6RPjXzbpSOeflBm2ALpr5q7b0
+ LW9S52jpVK5pSis8/n5gKNkS7YOCZRKcorA3NgItYK6MbWPKPJWO5ox72RO2MbUu6f7o
+ aSItVFTUOPntWMleYD/x8eCXr9dnCanAFlCrgGigr3RMPrBmu0ltjiv5xjqMUEnWzYRv
+ hEhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719030836; x=1719635636;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=U928YwRXTXmHBUJIicNJdvuxM1L86valDlAMu1boHAA=;
+ b=snyBF1Q6O8mNRHBKJuX9FxMH2CX0GuBrs7xEFUp3DqS7FINhu9YQucZ3XxBGsvxpIF
+ TBnDD7rLVGMIVaAGPqKEABg9Vhsv5i13XlkL+KHncmvG0DBmCMSMuLFva1oapJs9lENp
+ TsTras3PLSqT5sA+7uPNFXVBUlrdXEOMYSLsSK7s421Qmzxym1mBMZ0mWSvgopdMmz5a
+ eb5H4ypQTL7zqO1HH7PcpgDHngzM2T5CgegWT3aRsoqEK58mrLOH1uNXssKttepFrpNy
+ ZCvSu2cuzzFXA/y635qpJzFSMJPASIeM8rVOEoQHITqs28N95Sj35yYYir9WpV+jsGVc
+ Aj9Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXM/Q+cbXPRhwGGvnbAKoaVXB592Fqo1xmQSApSfgefcMm8wnQnmKCLPMM2Sv0QcGgYL3inrq9fQgxa1pFtuSD4pIyD76k=
+X-Gm-Message-State: AOJu0YxqyweW1q3WSGYIIIouOwDDoWm54zJ6vzNytBZbYUfaMI17Lulk
+ v+VTteFQ9OzUiLFbXRFXnFmLGUaJAbbrgYQ9TgdWTqvFEcyvj4Cv
+X-Google-Smtp-Source: AGHT+IGTkHvTTtgD/iPxeXzLJIV74SUnKThkG+zYZ995v3b6eAH3aYWhO9dqrvP2lA2QT0boDrFtTw==
+X-Received: by 2002:a17:902:e5c6:b0:1f9:b681:1956 with SMTP id
+ d9443c01a7336-1f9b6811d1dmr98362505ad.61.1719030835422; 
+ Fri, 21 Jun 2024 21:33:55 -0700 (PDT)
+Received: from valdaarhun.localnet ([223.233.83.26])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f9eb3c5cf6sm22252615ad.156.2024.06.21.21.33.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Jun 2024 21:33:54 -0700 (PDT)
+From: Sahil <icegambit91@gmail.com>
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
+ Sahil Siddiq <sahilcdq@proton.me>
+Subject: Re: [RFC] vhost: Introduce packed vq and add buffer elements
+Date: Sat, 22 Jun 2024 10:03:44 +0530
+Message-ID: <3301839.44csPzL39Z@valdaarhun>
+In-Reply-To: <CAJaqyWc8L2rZULeHgqmuieAqmQvePm9sicJFGq+POKPLYQMLJg@mail.gmail.com>
+References: <20240618181834.14173-1-sahilcdq@proton.me>
+ <CAJaqyWc8L2rZULeHgqmuieAqmQvePm9sicJFGq+POKPLYQMLJg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/16] migration: Fix file migration with fdset
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
- Prasad Pandit <pjp@fedoraproject.org>, qemu-stable <qemu-stable@nongnu.org>
-References: <20240617185731.9725-1-farosas@suse.de>
- <20240617185731.9725-3-farosas@suse.de>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240617185731.9725-3-farosas@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=icegambit91@gmail.com; helo=mail-pl1-x62d.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,69 +97,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-17.06.2024 21:57, Fabiano Rosas wrote:
-> When the "file:" migration support was added we missed the special
-> case in the qemu_open_old implementation that allows for a particular
-> file name format to be used to refer to a set of file descriptors that
-> have been previously provided to QEMU via the add-fd QMP command.
-> 
-> When using this fdset feature, we should not truncate the migration
-> file because being given an fd means that the management layer is in
-> control of the file and will likely already have some data written to
-> it. This is further indicated by the presence of the 'offset'
-> argument, which indicates the start of the region where QEMU is
-> allowed to write.
-> 
-> Fix the issue by replacing the O_TRUNC flag on open by an ftruncate
-> call, which will take the offset into consideration.
-> 
-> Fixes: 385f510df5 ("migration: file URI offset")
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-> Reviewed-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->   migration/file.c | 11 +++++++++--
->   1 file changed, 9 insertions(+), 2 deletions(-)
+Hi,
 
-Is it a stable material?
+On Wednesday, June 19, 2024 3:49:29=E2=80=AFPM GMT+5:30 Eugenio Perez Marti=
+n wrote:
+> [...]
+> Hi Sahil,
+>=20
+> Just some nitpicks here and there,
+>=20
+> > [1] https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtqueue
+> >=20
+> >  hw/virtio/vhost-shadow-virtqueue.c | 124 ++++++++++++++++++++++++++++-
+> >  hw/virtio/vhost-shadow-virtqueue.h |  66 ++++++++++-----
+> >  2 files changed, 167 insertions(+), 23 deletions(-)
+> >=20
+> > diff --git a/hw/virtio/vhost-shadow-virtqueue.c
+> > b/hw/virtio/vhost-shadow-virtqueue.c index fc5f408f77..e3b276a9e9 100644
+> > --- a/hw/virtio/vhost-shadow-virtqueue.c
+> > +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> > @@ -217,6 +217,122 @@ static bool vhost_svq_add_split(VhostShadowVirtqu=
+eue *svq,
+> >      return true;
+> >  }
+> >=20
+> > +/**
+> > + * Write descriptors to SVQ packed vring
+> > + *
+> > + * @svq: The shadow virtqueue
+> > + * @sg: Cache for hwaddr
+> > + * @out_sg: The iovec from the guest that is read-only for device
+> > + * @out_num: iovec length
+> > + * @in_sg: The iovec from the guest that is write-only for device
+> > + * @in_num: iovec length
+> > + * @head_flags: flags for first descriptor in list
+> > + *
+> > + * Return true if success, false otherwise and print error.
+> > + */
+> > +static bool vhost_svq_vring_write_descs_packed(VhostShadowVirtqueue *s=
+vq, hwaddr *sg,
+> > +                                        const struct iovec *out_sg, si=
+ze_t out_num,
+> > +                                        const struct iovec *in_sg, siz=
+e_t in_num,
+> > +                                        uint16_t *head_flags)
+> > +{
+> > +    uint16_t id, curr, head, i;
+> > +    unsigned n;
+> > +    struct vring_packed_desc *descs =3D svq->vring_packed.vring.desc;
+> > +    bool ok;
+> > +
+> > +    head =3D svq->vring_packed.next_avail_idx;
+> > +    i =3D head;
+> > +    id =3D svq->free_head;
+> > +    curr =3D id;
+> > +
+> > +    size_t num =3D out_num + in_num;
+> > +
+> > +    if (num =3D=3D 0) {
+> > +        return true;
+> > +    }
+>=20
+> num =3D=3D 0 is impossible now, the caller checks for that.
+
+Oh yes, I missed that.
+
+>=20
+> > +
+> > +    ok =3D vhost_svq_translate_addr(svq, sg, out_sg, out_num);
+> > +    if (unlikely(!ok)) {
+> > +        return false;
+> > +    }
+> > +
+> > +    ok =3D vhost_svq_translate_addr(svq, sg + out_num, in_sg, in_num);
+> > +    if (unlikely(!ok)) {
+> > +        return false;
+> > +    }
+> > +
+> > +    for (n =3D 0; n < num; n++) {
+> > +        uint16_t flags =3D cpu_to_le16(svq->vring_packed.avail_used_fl=
+ags |
+> > +                (n < out_num ? 0 : VRING_DESC_F_WRITE) |
+> > +                (n + 1 =3D=3D num ? 0 : VRING_DESC_F_NEXT));
+> > +        if (i =3D=3D head) {
+> > +            *head_flags =3D flags;
+> > +        } else {
+> > +            descs[i].flags =3D flags;
+> > +        }
+> > +
+> > +        descs[i].addr =3D cpu_to_le64(sg[n]);
+> > +        descs[i].id =3D id;
+> > +        if (n < out_num) {
+> > +            descs[i].len =3D cpu_to_le32(out_sg[n].iov_len);
+> > +        } else {
+> > +            descs[i].len =3D cpu_to_le32(in_sg[n - out_num].iov_len);
+> > +        }
+> > +
+> > +        curr =3D cpu_to_le16(svq->desc_next[curr]);
+> > +
+> > +        if (++i >=3D svq->vring_packed.vring.num) {
+> > +            i =3D 0;
+> > +            svq->vring_packed.avail_used_flags ^=3D
+> > +                    1 << VRING_PACKED_DESC_F_AVAIL |
+> > +                    1 << VRING_PACKED_DESC_F_USED;
+> > +        }
+> > +    }
+> > +
+> > +    if (i <=3D head) {
+> > +        svq->vring_packed.avail_wrap_counter ^=3D 1;
+> > +    }
+> > +
+> > +    svq->vring_packed.next_avail_idx =3D i;
+> > +    svq->free_head =3D curr;
+> > +    return true;
+> > +}
+> > +
+> > +static bool vhost_svq_add_packed(VhostShadowVirtqueue *svq,
+> > +                                const struct iovec *out_sg, size_t out=
+_num,
+> > +                                const struct iovec *in_sg, size_t in_n=
+um,
+> > +                                unsigned *head)
+> > +{
+> > +    bool ok;
+> > +    uint16_t head_flags =3D 0;
+> > +    g_autofree hwaddr *sgs =3D g_new(hwaddr, out_num + in_num);
+> > +
+> > +    *head =3D svq->vring_packed.next_avail_idx;
+> > +
+> > +    /* We need some descriptors here */
+> > +    if (unlikely(!out_num && !in_num)) {
+> > +        qemu_log_mask(LOG_GUEST_ERROR,
+> > +                      "Guest provided element with no descriptors");
+> > +        return false;
+> > +    }
+> > +
+> > +    ok =3D vhost_svq_vring_write_descs_packed(svq, sgs, out_sg, out_nu=
+m,
+> > +                                            in_sg, in_num, &head_flags=
+);
+> > +    if (unlikely(!ok)) {
+> > +        return false;
+> > +    }
+> > +
+>=20
+> Ok now I see why you switched sgs length from MAX to sum. But if we're
+> here, why not just embed all vhost_svq_vring_write_descs_packed here?
+> vhost_svq_vring_write_descs makes sense to split as we repeat the
+> operation, but I think it adds nothing here. What do you think?
+
+You're right. The function is called only once and there is nothing to reus=
+e.
+I'll move "vhost_svq_vring_write_descs_packed" to "vhost_svq_add_packed".
+
+> > [...]
+> > diff --git a/hw/virtio/vhost-shadow-virtqueue.h
+> > b/hw/virtio/vhost-shadow-virtqueue.h index 19c842a15b..ee1a87f523 100644
+> > --- a/hw/virtio/vhost-shadow-virtqueue.h
+> > +++ b/hw/virtio/vhost-shadow-virtqueue.h
+> > @@ -46,10 +46,53 @@ typedef struct VhostShadowVirtqueueOps {
+> >=20
+> >      VirtQueueAvailCallback avail_handler;
+> > =20
+> >  } VhostShadowVirtqueueOps;
+> >=20
+> > +struct vring_packed {
+> > +    /* Actual memory layout for this queue. */
+> > +    struct {
+> > +        unsigned int num;
+> > +        struct vring_packed_desc *desc;
+> > +        struct vring_packed_desc_event *driver;
+> > +        struct vring_packed_desc_event *device;
+> > +    } vring;
+> > +
+> > +    /* Avail used flags. */
+> > +    uint16_t avail_used_flags;
+> > +
+> > +    /* Index of the next avail descriptor. */
+> > +    uint16_t next_avail_idx;
+> > +
+> > +    /* Driver ring wrap counter */
+> > +    bool avail_wrap_counter;
+> > +};
+> > +
+> >=20
+> >  /* Shadow virtqueue to relay notifications */
+> >  typedef struct VhostShadowVirtqueue {
+> >=20
+> > +    /* Virtio queue shadowing */
+> > +    VirtQueue *vq;
+> > +
+> > +    /* Virtio device */
+> > +    VirtIODevice *vdev;
+> > +
+> > +    /* SVQ vring descriptors state */
+> > +    SVQDescState *desc_state;
+> > +
+> > +    /*
+> > +     * Backup next field for each descriptor so we can recover securel=
+y,
+> > not +     * needing to trust the device access.
+> > +     */
+> > +    uint16_t *desc_next;
+> > +
+> > +    /* Next free descriptor */
+> > +    uint16_t free_head;
+> > +
+> > +    /* Size of SVQ vring free descriptors */
+> > +    uint16_t num_free;
+> > +
+>=20
+> Why the reorder of all of the previous members?
+
+I was thinking of placing all the members that are common to packed and
+split vring above the union while leaving the remaining members below the
+union. I did this based on our discussion here [1]. I don't think this reor=
+dering
+serves any purpose implementation-wise. Please let me know if I should reve=
+rt
+this change.
+
+> Apart from the nitpicks I don't see anything wrong with this part of
+> the project. Looking forward to the next!
+>=20
+
+Thank you for the review.
 
 Thanks,
+Sahil
 
-/mjt
+[1] https://lists.nongnu.org/archive/html/qemu-devel/2024-05/msg02591.html
 
-> diff --git a/migration/file.c b/migration/file.c
-> index 2bb8c64092..a903710f06 100644
-> --- a/migration/file.c
-> +++ b/migration/file.c
-> @@ -84,12 +84,19 @@ void file_start_outgoing_migration(MigrationState *s,
->   
->       trace_migration_file_outgoing(filename);
->   
-> -    fioc = qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O_TRUNC,
-> -                                     0600, errp);
-> +    fioc = qio_channel_file_new_path(filename, O_CREAT | O_WRONLY, 0600, errp);
->       if (!fioc) {
->           return;
->       }
->   
-> +    if (ftruncate(fioc->fd, offset)) {
-> +        error_setg_errno(errp, errno,
-> +                         "failed to truncate migration file to offset %" PRIx64,
-> +                         offset);
-> +        object_unref(OBJECT(fioc));
-> +        return;
-> +    }
-> +
->       outgoing_args.fname = g_strdup(filename);
->   
->       ioc = QIO_CHANNEL(fioc);
-
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
