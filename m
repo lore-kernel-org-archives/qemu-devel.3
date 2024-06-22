@@ -4,85 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82103C27C53
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 04:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA9FC2BB85
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 04:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKsBi-0007wv-Nl; Sat, 22 Jun 2024 00:17:18 -0400
+	id 1sKsGQ-0000Ta-Qp; Sat, 22 Jun 2024 00:22:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sKsBh-0007wL-EP
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 00:17:17 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sKsBf-0004IR-Fx
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 00:17:17 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-706683e5249so139531b3a.2
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 21:17:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719029833; x=1719634633; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Rb6KRZjYXywxtZ+0hOmRX04N1ORuklV8VDvWpQGvH6g=;
- b=X1parxN7NGqUi4gyxtcZ3J9KKPcPt8vTBoscUB2LRUjR+9HGhMsZZPc0UyWxZWltDk
- xFhACqA7VoFrv9TyPgeFR3aNm+iLGXNTBfsQWXp/QRAWMe7113OSReGEGdlc/Y2Oy8BF
- P9rLrJw0dZuLM/2S5ylxgufNgHuvqkLLCcBjcZ5fW7YeWXyvabnUOFaCCWkqYegx/70m
- x7xfmKMXM8y5+k2Y/vH4Yvwf548LySM2jTD2WoREIM6EwO5i3P1xigBL34TLGpRTqU/Y
- BVfSJiCb+0VDqrYTkjULIzPb2PddrFCgJvwhw3XOMinDrbU+7lUzzlDmvO8RucuwZIga
- rdWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719029833; x=1719634633;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Rb6KRZjYXywxtZ+0hOmRX04N1ORuklV8VDvWpQGvH6g=;
- b=wsYVPQSDg+ijZCQsu+ouHJJ/hbSTDxlJWxg3GBm1mDLfvQLo7fuZkkaRKBk5/R4W/S
- tdrAeo0AcCRaoS17rO+HjQa5peLiH4Q5kd9EJcKmCUAni/Rd+1dSMGAzTuvfw1ycBWBg
- iJgqOLQAsRq1Y7FE2eb/Vs+sAq53zBtNJPV9bBxTULwhrh+RFaaXb95axelUojK0Mtf9
- a9k2nAb2Giq1JT4+nZbaC74UJ4l1ee6a1tOY17kY5+BSW+eJE82WvexaC7RNHK8URDvK
- l217gwV1buckTGb018+aSwAyUlBoH7CgmfuXsYvfIhZuwU2yCGQZoI8zK7qo0vqP+6vu
- RTBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVnwQgyJQx9DT8MNS4Nw80EikUDyKdKqihF/md6jsrhvtw6XapYLmWPMSpBMo8AZ9OaaMiz04PX7BB7vZezLXyOK9EE3kQ=
-X-Gm-Message-State: AOJu0YxG/UbbO4UZumfke0dwCSrdOusmKBTDn0JGrQDsgK5mBAId1EJN
- /eKvkmSu+zM6D2zOd76BZdlrX4IT32C+pxiwJxkSU5DClT6UL4fY
-X-Google-Smtp-Source: AGHT+IHHrch+PgVa75WQoJfqKkExYb0VEwqsZ8bHF8vPiitflwBv1wtJtyVGhNjAYvAj8weXTBGrqA==
-X-Received: by 2002:a05:6a20:da90:b0:1b6:dae0:551a with SMTP id
- adf61e73a8af0-1bcbb574afemr12497823637.24.1719029833334; 
- Fri, 21 Jun 2024 21:17:13 -0700 (PDT)
-Received: from valdaarhun.localnet ([223.233.83.26])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9f3c6f088sm18817795ad.284.2024.06.21.21.17.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 21:17:12 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
- Sahil Siddiq <sahilcdq@proton.me>
-Subject: Re: [RFC] vhost: Introduce packed vq and add buffer elements
-Date: Sat, 22 Jun 2024 09:47:08 +0530
-Message-ID: <4927942.31r3eYUQgx@valdaarhun>
-In-Reply-To: <CAJaqyWcjfaU9mcdTsE2LkL755UCWU-KQ4jz83trr_T0C2ZaGhw@mail.gmail.com>
-References: <20240618181834.14173-1-sahilcdq@proton.me>
- <3813507.kQq0lBPeGt@valdaarhun>
- <CAJaqyWcjfaU9mcdTsE2LkL755UCWU-KQ4jz83trr_T0C2ZaGhw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sKsGM-0000Sn-TF; Sat, 22 Jun 2024 00:22:06 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sKsGK-00058t-Sd; Sat, 22 Jun 2024 00:22:06 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3C45272EEE;
+ Sat, 22 Jun 2024 07:23:14 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E2CE6F0628;
+ Sat, 22 Jun 2024 07:21:52 +0300 (MSK)
+Message-ID: <addd7e3d-c56a-4e4d-abef-52243fe6120c@tls.msk.ru>
+Date: Sat, 22 Jun 2024 07:21:52 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=icegambit91@gmail.com; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 02/16] migration: Fix file migration with fdset
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
+ Claudio Fontana <cfontana@suse.de>, Jim Fehlig <jfehlig@suse.com>,
+ Prasad Pandit <pjp@fedoraproject.org>, qemu-stable <qemu-stable@nongnu.org>
+References: <20240617185731.9725-1-farosas@suse.de>
+ <20240617185731.9725-3-farosas@suse.de>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240617185731.9725-3-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,157 +86,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+17.06.2024 21:57, Fabiano Rosas wrote:
+> When the "file:" migration support was added we missed the special
+> case in the qemu_open_old implementation that allows for a particular
+> file name format to be used to refer to a set of file descriptors that
+> have been previously provided to QEMU via the add-fd QMP command.
+> 
+> When using this fdset feature, we should not truncate the migration
+> file because being given an fd means that the management layer is in
+> control of the file and will likely already have some data written to
+> it. This is further indicated by the presence of the 'offset'
+> argument, which indicates the start of the region where QEMU is
+> allowed to write.
+> 
+> Fix the issue by replacing the O_TRUNC flag on open by an ftruncate
+> call, which will take the offset into consideration.
+> 
+> Fixes: 385f510df5 ("migration: file URI offset")
+> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>   migration/file.c | 11 +++++++++--
+>   1 file changed, 9 insertions(+), 2 deletions(-)
 
-Thank you for your reply.
-
-On Wednesday, June 19, 2024 1:07:54=E2=80=AFPM GMT+5:30 Eugenio Perez Marti=
-n wrote:
-> [...]
-> > "curr" is being updated here, but descs[i].id is always set to id which
-> > doesn't change in the loop. So all the descriptors in the chain will ha=
-ve
-> > the same id. I can't find anything in the virtio specification [1] that
-> > suggests that all descriptors in the chain have the same id. Also, going
-> > by the figure captioned "Three chained descriptors available" in the bl=
-og
-> > post on packed virtqueues [2], it looks like the descriptors in the cha=
-in
-> > have different buffer ids.
-> >=20
-> > The virtio implementation in Linux also reuses the same id value for all
-> > the descriptors in a single chain. I am not sure if I am missing
-> > something here.
->=20
-> The code is right, the id that identifies the whole chain is just the
-> one on the last descriptor. The key is that all the tail descriptors
-> of the chains will have a different id, the rest ids are ignored so it
-> is easier this way. I got it wrong in a recent mail in the list, where
-> you can find more information. Let me know if you cannot find it :).
-
-I found the mail here [1] :)
-
-> In the split vq is different as a chained descriptor can go back and
-> forth in the descriptor ring with the next id. So all of them must be
-> different. But in the packed vq, the device knows the next descriptor
-> is placed at the next entry in the descriptor ring, so the only
-> important id is the last one.
-
-Ok, this makes sense now.
-
-> > > +        if (++i >=3D svq->vring_packed.vring.num) {
-> > > +            i =3D 0;
-> > > +            svq->vring_packed.avail_used_flags ^=3D
-> > > +                    1 << VRING_PACKED_DESC_F_AVAIL |
-> > > +                    1 << VRING_PACKED_DESC_F_USED;
-> > > +        }
-> > > +    }
-> > > +
-> > > +    if (i <=3D head) {
-> > > +        svq->vring_packed.avail_wrap_counter ^=3D 1;
-> > > +    }
-> > > +
-> > > +    svq->vring_packed.next_avail_idx =3D i;
-> > > +    svq->free_head =3D curr;
-> >=20
-> > Even though the same id is used, curr will not be id+1 here.
->=20
-> curr is not the descriptor index, but the id. They're used in a stack
-> format: One available chain pops an id and one used id pushes its id
-> in the stack.
->=20
-> Maybe I'm wrong, but I think the main reason is to reuse the same
-> memory region of the descriptor state etc so less memory is changed to
-> be used in all the operations.
-
-Right, curr is the id. I didn't really understand the popping and pushing
-part.
-
-In the implementation, the possible ids are stored in svq.desc_next. And
-it's implemented in a way that the next id is (id + 1) % queue_size.
-
-By the following line:
-> Even though the same id is used, curr will not be id+1 here.
-
-I meant that if, for example,  there is a chain of 3 descriptors and the
-current id is 1, then all 3 descriptors will have 1 as their id. If the vri=
-ng
-size is 5, then the value of curr that will be filled in the 4th descriptor
-will be 4 instead of 2.
-
-> > > +    return true;
-> > > +}
-> > > +
-> > > +static bool vhost_svq_add_packed(VhostShadowVirtqueue *svq,
-> > > +                                const struct iovec *out_sg, size_t
-> > > out_num, +                                const struct iovec *in_sg,
-> > > size_t in_num, +                                unsigned *head)
-> > > +{
-> > > +    bool ok;
-> > > +    uint16_t head_flags =3D 0;
-> > > +    g_autofree hwaddr *sgs =3D g_new(hwaddr, out_num + in_num);
-> >=20
-> > I chose to use out_num+in_num as the size instead of MAX(ount_num,
-> > in_num). I found it easier to implement
-> > "vhost_svq_vring_write_descs_packed()" like this. Please let me know if
-> > this isn't feasible or ideal.
->=20
-> Not a big deal, I picked the MAX just because it is all the
-> hwaddresses the function needs at the same time. Addition should work
-> too, and AFAIK chains are usually short. We should get rid of this
-> dynamic allocation in the future anyway.
-
-Ok, understood.
-
-> [...]
-> > In "struct VhostShadowVirtqueue", I rearranged the order in which some
-> > members appear. I tried to keep the members common to split and packed
-> > virtqueues above the union and the rest below the union. I haven't
-> > entirely understood the role of some of the members (for example,
-> > VhostShadowVirtqueueOps *ops). I'll change this ordering if need be as I
-> > continue to understand them better.
->=20
-> That's fine, but do it in a separate patch for future series, so it is
-> easier to review.
-
-Sure, I'll do that.
-
-> ops is used when a kind of device wants specialized handling for the
-> descriptors forwarded. vdpa-net uses it when QEMU also needs to
-> inspect the descriptors. Feel free to ask more about it, but adding
-> packed format to SVQ should not affect the ops member.
-
-Got it. I don't have any other questions related to ops.
-
-> > For the next step, I think I should work on "vhost_svq_start()" which is
-> > where members of the struct are actually initialized. At the moment, on=
-ly
-> > the split ring part of the structure is initialized.
->=20
-> Sounds reasonable. My recommendation is to mimic the patches of the
-> kernel, doing a git log and following that order. You also need to
-> apply the fixes in the history from that moment.
->=20
-> > I think I should also start working on enhancing "vhost_svq_kick()" to
-> > actually send the buffers to the device. I think it'll be easier to test
-> > these changes once that's done (I am not sure about this though). Would
-> > this involve implementing the notification mechanism and event_idx?
-> You can start omitting event_idx if you disable it from the device or
-> from qemu's commandline with event_idx=3Doff. If you use vdpa_sim, it's
-> easier to remove it using qemu's cmdline in my opinion. Also, there is
-> a needs_kick boolean that you can set to always true for testing
-> purposes, since it is valid to send extra notifications. I think you
-> don't need to modify anything else from vhost_svq_kick to test the
-> device receives the buffer, but let me know if you find problems.
-
-I'll take a look at the kernel patches. I'll also try testing these changes=
- with
-vdpa_sim. I'll check if the device gets the buffers.
+Is it a stable material?
 
 Thanks,
-Sahil
 
-[1] https://lists.nongnu.org/archive/html/qemu-devel/2024-05/msg01843.html
+/mjt
 
+> diff --git a/migration/file.c b/migration/file.c
+> index 2bb8c64092..a903710f06 100644
+> --- a/migration/file.c
+> +++ b/migration/file.c
+> @@ -84,12 +84,19 @@ void file_start_outgoing_migration(MigrationState *s,
+>   
+>       trace_migration_file_outgoing(filename);
+>   
+> -    fioc = qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O_TRUNC,
+> -                                     0600, errp);
+> +    fioc = qio_channel_file_new_path(filename, O_CREAT | O_WRONLY, 0600, errp);
+>       if (!fioc) {
+>           return;
+>       }
+>   
+> +    if (ftruncate(fioc->fd, offset)) {
+> +        error_setg_errno(errp, errno,
+> +                         "failed to truncate migration file to offset %" PRIx64,
+> +                         offset);
+> +        object_unref(OBJECT(fioc));
+> +        return;
+> +    }
+> +
+>       outgoing_args.fname = g_strdup(filename);
+>   
+>       ioc = QIO_CHANNEL(fioc);
+
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
