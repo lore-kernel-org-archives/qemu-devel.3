@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE388C27C53
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 06:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F819C2BB85
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 06:17:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKu3g-0000iM-AJ; Sat, 22 Jun 2024 02:17:10 -0400
+	id 1sKu2p-0008M9-Vh; Sat, 22 Jun 2024 02:16:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKu3P-0000Tb-Uz
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sKu2n-0008L3-TF
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKu3O-0006Ui-D5
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:51 -0400
+ id 1sKu2m-0006NW-D9
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719037009;
+ s=mimecast20190719; t=1719036970;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PyxEzNGqoXJbFXc5PayVB6u8Z/13e83iLysZlGsVNCM=;
- b=BUqRNG2p40UFt0RIA6fbfMaXaoACX3f5KBxzlIMvUUuIRNv6O3ThEKqM/Uky/oAo/j2op4
- YjhF5xRuCsvjkuBG065cRk4xhZ1y9ZwtUeUb8Is8nBWh8ogZWmwT+g4w7Q9IDe3ogk2rHO
- V9k58TsfNgNsCfgW5181QJeLkWp/tzg=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=INLXKQAnxyLlbt49tJcziQ4qLBnfUf83esez+1sBRI0=;
+ b=BCakeXIB+tk4/AK6zrksoYIzUxK/YnM45SK/xRX5UNNWAUOtBdW62EkKihqimaHnF0PYmv
+ P90yY8J8d1I+3mhNHJPIQRoJTZekjdIRmG5sClPs2NluL+CjK1XWjlJokIT9ehmkK/ZPnm
+ Ngl0QcFuHO/KEv4uRSMjekZh0SwFdE4=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-461-wx9eeHWoNKWAiKsczlwtuA-1; Sat, 22 Jun 2024 02:16:46 -0400
-X-MC-Unique: wx9eeHWoNKWAiKsczlwtuA-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a7194d0fd53so3487066b.0
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 23:16:46 -0700 (PDT)
+ us-mta-418-AICYOFVCOVqM91qjriU-qw-1; Sat, 22 Jun 2024 02:16:05 -0400
+X-MC-Unique: AICYOFVCOVqM91qjriU-qw-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-57d3d594107so290192a12.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 23:16:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719037005; x=1719641805;
+ d=1e100.net; s=20230601; t=1719036963; x=1719641763;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PyxEzNGqoXJbFXc5PayVB6u8Z/13e83iLysZlGsVNCM=;
- b=LP5t4CLAztgskgYAQRjPPMhpAgxh8JGJgd08CEhYtxFl9MhOUgLL7uKNDhQonMJ466
- /rGvht2rOia460229tFkJ4q+Q4t4Pf8hTI8B1HBeYYzjEEbL93XY1mks/HgTHcpEoW0N
- rLmLOenD1lpPpsxTX2jVI9wqaAIx76/KGVPAL6l8zuhuZNT+iKqCTXaZKfc0nbe4h04B
- Zwxr11p1GvXogYMSfVN9q/e/arEgXDKWs+VihYoH5GJUKKMm/6FOgLjwWIIsCXYLe/nL
- M3gJatfExWhn+SP3niJM0J/A0oP7Q0lg0fbN2D6YggCq3LVEX1zLLj6k7sgTHISYqltd
- Bpjg==
-X-Gm-Message-State: AOJu0YzlrqVn2phcXE47/X1ZWHEzkKpYUrhfe8yhndGyj1F+yJ+mta8s
- joacBBk6vNq0JSl65pwH+RAwhUGSgSpP3AJASl4Wc+AhfE4pPBRiYfu6zIUcmVAl2A+q2YwNNBr
- dVcnYxE5BeF4/irMrr7bte/8EMZ9Xl/Ghzht0gkVqOhB5CHN2bC0hgogTZ3zkqX087duBfciCjr
- DGhROcMPC8xD67IHPVXkusaTfp4/wDiKc2/E7+
-X-Received: by 2002:a17:907:8011:b0:a6f:11c9:f349 with SMTP id
- a640c23a62f3a-a6fab61c1f4mr562543866b.23.1719037004830; 
- Fri, 21 Jun 2024 23:16:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFe9iBnRfv+ZELgaBbFnDqCv5mH6beg7rw3nilMQTrWV+HHH9G72Cwy273p4x/SZSVftn/nxA==
-X-Received: by 2002:a17:907:8011:b0:a6f:11c9:f349 with SMTP id
- a640c23a62f3a-a6fab61c1f4mr562543266b.23.1719037004387; 
- Fri, 21 Jun 2024 23:16:44 -0700 (PDT)
+ bh=INLXKQAnxyLlbt49tJcziQ4qLBnfUf83esez+1sBRI0=;
+ b=sera8gBAHJK8F3zE9wfYqjkeRddDb0SG3lPnh+Sjzod0dfSZYYfkkpRZk0Owz0aSrp
+ 6P7rJczf1ARl9rV9DTWdc/3ka/CYaxAcUWiV011z2bRXcxOBbm/5jj4JXD/q78xWPKSZ
+ LTdo+1Y4nuJYjyJz7QBNIS9vpKzhsSTUSSMohZAo1r/y6QBOKNat1edy1ClljMG9M2Vz
+ GpDJ2PEXYkrVnWmi25uQoTB+u7BZQP6WiVord3Qr3pkhJS6BkO9KlFLcDUJBBMGSJv6I
+ xqXIgG+2fdG23GcglK0Cj8hZJ+CpSgEnER2K7VJSj3a4zxDogb8n86z6kCm585yTyCy2
+ nZ8A==
+X-Gm-Message-State: AOJu0YzhunF8yuGy65VRTbB/3PUH2EauiSr6lwea6+BfRl/u9cgOVoDY
+ kwS+cWHclmnOtcK59dxAdtX8f9oT67eRT6rzG7EqdWU1yQrcmnwj+pwQPTSmT2PJy29tqowl1XK
+ wSODyMOQYTahKkFU3/6dTIHjQUmLNaZXfAmOHEHEGGCwGL3FJn8qZ01ZldhXTgAps5T6QQgKZJh
+ KfuJqDOSNsmUr6lZ+HvnzMPl0+bhIXS14FIQR4
+X-Received: by 2002:a05:6402:3414:b0:57c:a7dc:b0de with SMTP id
+ 4fb4d7f45d1cf-57d07ee7906mr6298000a12.39.1719036963138; 
+ Fri, 21 Jun 2024 23:16:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2G9v2ZubQK1ejU9FzinfQaoHLrZcGHxLd1CquQiKPYAfYT3Eg7IeWX8gx84fL5r2osgjo9A==
+X-Received: by 2002:a05:6402:3414:b0:57c:a7dc:b0de with SMTP id
+ 4fb4d7f45d1cf-57d07ee7906mr6297984a12.39.1719036962576; 
+ Fri, 21 Jun 2024 23:16:02 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6fcf4ba61asm157646166b.91.2024.06.21.23.16.42
- for <qemu-devel@nongnu.org>
+ 4fb4d7f45d1cf-57d3042d509sm1924241a12.43.2024.06.21.23.16.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 23:16:43 -0700 (PDT)
+ Fri, 21 Jun 2024 23:16:01 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/23] block: do not check bdrv_file_open
-Date: Sat, 22 Jun 2024 08:15:53 +0200
-Message-ID: <20240622061558.530543-20-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 01/23] configure: detect --cpu=mipsisa64r6
+Date: Sat, 22 Jun 2024 08:15:35 +0200
+Message-ID: <20240622061558.530543-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240622061558.530543-1-pbonzini@redhat.com>
 References: <20240622061558.530543-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -102,73 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The set of BlockDrivers that have .bdrv_file_open coincides with those
-that have .protocol_name and guess what---checking drv->bdrv_file_open
-is done to see if the driver is a protocol.  So check drv->protocol_name
-instead.
+Treat it as a MIPS64 machine.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- block.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block.c b/block.c
-index 69a2905178a..dd14ba85fc3 100644
---- a/block.c
-+++ b/block.c
-@@ -926,7 +926,6 @@ BlockDriver *bdrv_find_protocol(const char *filename,
-     int i;
+diff --git a/configure b/configure
+index 5ad1674ca5f..8b6a2f16ceb 100755
+--- a/configure
++++ b/configure
+@@ -450,7 +450,7 @@ case "$cpu" in
+     linux_arch=loongarch
+     ;;
  
-     GLOBAL_STATE_CODE();
--    /* TODO Drivers without bdrv_file_open must be specified explicitly */
- 
-     /*
-      * XXX(hch): we really should not let host device detection
-@@ -1983,7 +1982,7 @@ static int bdrv_open_common(BlockDriverState *bs, BlockBackend *file,
-     open_flags = bdrv_open_flags(bs, bs->open_flags);
-     node_name = qemu_opt_get(opts, "node-name");
- 
--    assert(!drv->bdrv_file_open || file == NULL);
-+    assert(!drv->protocol_name || file == NULL);
-     ret = bdrv_open_driver(bs, drv, node_name, options, open_flags, errp);
-     if (ret < 0) {
-         goto fail_opts;
-@@ -2084,7 +2083,7 @@ static int bdrv_fill_options(QDict **options, const char *filename,
-         }
-         /* If the user has explicitly specified the driver, this choice should
-          * override the BDRV_O_PROTOCOL flag */
--        protocol = drv->bdrv_file_open;
-+        protocol = drv->protocol_name;
-     }
- 
-     if (protocol) {
-@@ -4123,7 +4122,7 @@ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
-     }
- 
-     /* BDRV_O_PROTOCOL must be set iff a protocol BDS is about to be created */
--    assert(!!(flags & BDRV_O_PROTOCOL) == !!drv->bdrv_file_open);
-+    assert(!!(flags & BDRV_O_PROTOCOL) == !!drv->protocol_name);
-     /* file must be NULL if a protocol BDS is about to be created
-      * (the inverse results in an error message from bdrv_open_common()) */
-     assert(!(flags & BDRV_O_PROTOCOL) || !file);
-@@ -5971,7 +5970,7 @@ int64_t coroutine_fn bdrv_co_get_allocated_file_size(BlockDriverState *bs)
-         return drv->bdrv_co_get_allocated_file_size(bs);
-     }
- 
--    if (drv->bdrv_file_open) {
-+    if (drv->protocol_name) {
-         /*
-          * Protocol drivers default to -ENOTSUP (most of their data is
-          * not stored in any of their children (if they even have any),
-@@ -8030,7 +8029,7 @@ void bdrv_refresh_filename(BlockDriverState *bs)
-          *   Both of these conditions are represented by generate_json_filename.
-          */
-         if (primary_child_bs->exact_filename[0] &&
--            primary_child_bs->drv->bdrv_file_open &&
-+            primary_child_bs->drv->protocol_name &&
-             !drv->is_filter && !generate_json_filename)
-         {
-             strcpy(bs->exact_filename, primary_child_bs->exact_filename);
+-  mips64*)
++  mips64*|mipsisa64*)
+     cpu=mips64
+     host_arch=mips
+     linux_arch=mips
 -- 
 2.45.2
 
