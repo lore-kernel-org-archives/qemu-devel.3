@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC636C27C53
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 06:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95B5DC27C53
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 06:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKu3v-0001HB-NL; Sat, 22 Jun 2024 02:17:23 -0400
+	id 1sKu36-0000Gm-AX; Sat, 22 Jun 2024 02:16:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKu3T-0000VX-9n
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sKu30-0000Ab-99
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKu3R-0006Uz-Bc
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:54 -0400
+ id 1sKu2y-0006QN-4T
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719037012;
+ s=mimecast20190719; t=1719036983;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=d1Zs3bNs8jOuOgSShaHDoScFAM7FpjL8r/fpmfWVVwk=;
- b=cVKXLrcOCsB1OwyhcHNZKq+2/Z6/O4qm8S+JPGUYwbUXHqWlhUE1j/8psu/X1JrZiIT7Cp
- wH9zjSN1Z31SWGG3Gvu4O+V7L8iAqqQjtcw4zu5bdM8U4L4XJKRgRLi0vB0AHgadp7bwOt
- OcTUCgd+JJ/qAGkOpP0l3eNGLm4eebw=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8fM1jbKshUWdGnBBWyD6aAkpWD0IxNWpBR+laG2/iKM=;
+ b=Z1JRWCtZsyPZKwCU7VJ3pnEV5S3aZEcOsAPryWcMVshcC9Ge+6lvUVAfYRe338kOcuF/GP
+ qWaytIVQj8dmD8sgR+5CHt2BKpqb0sWcGf9q3iPlg8YvFvmPx+08BP9cEEHZx05Hldj7A1
+ zYzv0/WU5LnfMG3icBhFiPIF9I8R8Ls=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-308-zprxo6FyN0e6owYWXdnVaQ-1; Sat, 22 Jun 2024 02:16:50 -0400
-X-MC-Unique: zprxo6FyN0e6owYWXdnVaQ-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52c94ad861aso1953700e87.2
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 23:16:50 -0700 (PDT)
+ us-mta-99-On9HGLvcMj6N3E5V-X4Wug-1; Sat, 22 Jun 2024 02:16:21 -0400
+X-MC-Unique: On9HGLvcMj6N3E5V-X4Wug-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-57cad3fa0a1so1874819a12.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 23:16:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719037008; x=1719641808;
+ d=1e100.net; s=20230601; t=1719036978; x=1719641778;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=d1Zs3bNs8jOuOgSShaHDoScFAM7FpjL8r/fpmfWVVwk=;
- b=D2BdfZuqiIWCetB9j4ag9RGRth6Rad3DG5VzbNLyUoD1ak/XmQWQga5D8VzV2FLe9Z
- 8Yw8lLxVIP2SD9CYsgyBrzzL0DKxZDnh4ejARytvyV/qQYyHczZAoT+AU+ImWgnejmTO
- PNG+EDI0XBm4cJxJFxsomWXHdJMwVKX4yHuqhhQZQkx380eHqILHWtiWAq3DeGShMrR0
- O97fTlblfiKav1WZT0DU/uVJNtWnV+vjTifmvPJLujBdMmLwlNTzRSUjBV1j+CusEJr9
- czUGWKqm+3Limo6NaY9JsjUoCyVSaPeWIKvsYDxDABFg5fRLSyddANR/K05c29JeAYGZ
- F1lQ==
-X-Gm-Message-State: AOJu0Yw+Jru33D6B0HaQZMOPb9j2tNoj/9MEBnGTm85MSHiZuJAOSgs+
- 8VNB1zFt8wtyc0bNC/Xaa721ORJtbexBKtf/9dVHD9pEYpPhfSVdXLq4iOJYUtryN2BgoT6B5lv
- 31NCVd/s/lflGw7b6fa1OuchEnT45AMZzxUD/VBoHCiVGHCwIm435pgvSZyccgMXZ+vVeHKPfyw
- E8UEo6Baeci6g7aYWe2ZZ2e7g1D8o3/wuDOJXF
-X-Received: by 2002:ac2:4a6a:0:b0:52b:8c88:2d6b with SMTP id
- 2adb3069b0e04-52ccaa55843mr6297311e87.11.1719037008328; 
- Fri, 21 Jun 2024 23:16:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGNvUD8xUj7lBX4DyLFSl8joudMjA6d0t0XOOD/3nB2LuwlG07G+AYWC3U2KjizZ46Sgg1kPQ==
-X-Received: by 2002:ac2:4a6a:0:b0:52b:8c88:2d6b with SMTP id
- 2adb3069b0e04-52ccaa55843mr6297301e87.11.1719037007968; 
- Fri, 21 Jun 2024 23:16:47 -0700 (PDT)
+ bh=8fM1jbKshUWdGnBBWyD6aAkpWD0IxNWpBR+laG2/iKM=;
+ b=RHrKNBWV556Plf8qb0MwuJdZPYnR+796OBifkiEgGIvzEN6BDcZfDth2lMSO7i57Cz
+ ZG7K0x2c/J1b/B52xzZNXbm/HwHMUOcrpxABvPUYAzVhRwDUN6CgC3sC5mgVAO5wcHhO
+ E9c2ErPba+8y2sIzUkfHRZTwv2xicqTxV1WdmLd5Nb0Btfr4duiVvPTQv2bjBgpENRR5
+ Q/d8fhIL6VrykZcG30IU3xnxjKAdrnEBxkU+TD3S6M+w0Kx22hmXXMyncUgdd3KPqMrB
+ UKsfrBCslT/OT0J88dL94qLD31THHGOLr9qFIkfhiimQ701T/iARILvjSJaTGHJGjBvs
+ TSGA==
+X-Gm-Message-State: AOJu0YxMIZR+/4xrBNBtZWp7Qt9bnywJLgKnnJQ8xEue4E6rCQ953vTK
+ MeTmWpRYnFHIBk8yyNNjZgOuomRiyWWwqzCK3idimSINXjg1CeJzvtZzkYfDmzb/JKGeQypSM5C
+ gNljl2fFfCwBNqWafQg+1Y3lwxNI5O6FRnzBvqo5oOhGyk4PBmkWjf7DrhHB+/3lLziYoaEx230
+ ZNui6X+8JeSLPE/bXsudRyBwmM8NEbxW4xV/jG
+X-Received: by 2002:a50:aadc:0:b0:57d:5c0:9dc0 with SMTP id
+ 4fb4d7f45d1cf-57d4580b023mr168503a12.38.1719036978358; 
+ Fri, 21 Jun 2024 23:16:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFbagMPmjmDbkUR6QUD1jiB5NZOa8tblWa0e9Y0TMLDQOvAUTRicGTkYw4te8xZ2VV8b1qn/w==
+X-Received: by 2002:a50:aadc:0:b0:57d:5c0:9dc0 with SMTP id
+ 4fb4d7f45d1cf-57d4580b023mr168496a12.38.1719036977881; 
+ Fri, 21 Jun 2024 23:16:17 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6fe25f07efsm48016266b.12.2024.06.21.23.16.47
+ 4fb4d7f45d1cf-57d3042d2d0sm1885490a12.41.2024.06.21.23.16.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 23:16:47 -0700 (PDT)
+ Fri, 21 Jun 2024 23:16:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>
-Subject: [PULL 21/23] block: rename former bdrv_file_open callbacks
-Date: Sat, 22 Jun 2024 08:15:55 +0200
-Message-ID: <20240622061558.530543-22-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 08/23] target/i386: convert CMPXCHG8B/CMPXCHG16B to new decoder
+Date: Sat, 22 Jun 2024 08:15:42 +0200
+Message-ID: <20240622061558.530543-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240622061558.530543-1-pbonzini@redhat.com>
 References: <20240622061558.530543-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -102,142 +102,352 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since there is no bdrv_file_open callback anymore, rename the implementations
-so that they end with "_open" instead of "_file_open".  NFS is the exception
-because all the functions are named nfs_file_*.
+This moves the last LOCK-enabled instructions to the new decoder.  It is now
+possible to assume that PREFIX_LOCK gen_multi0F is called only after checking
+that LOCK was not specified.
 
-Suggested-by: Kevin Wolf <kwolf@redhat.com>
+The gen_cmpxchg8b and gen_cmpxchg16b functions even have the correct
+prototype already; the only thing that needs to be done is removing the
+gen_lea_modrm() call.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- block/blkio.c | 8 ++++----
- block/null.c  | 8 ++++----
- block/nvme.c  | 8 ++++----
- block/ssh.c   | 6 +++---
- 4 files changed, 15 insertions(+), 15 deletions(-)
+ target/i386/tcg/decode-new.h     |   2 +
+ target/i386/tcg/translate.c      | 121 +------------------------------
+ target/i386/tcg/decode-new.c.inc |  34 ++++++---
+ target/i386/tcg/emit.c.inc       |  96 ++++++++++++++++++++++++
+ 4 files changed, 124 insertions(+), 129 deletions(-)
 
-diff --git a/block/blkio.c b/block/blkio.c
-index 1a38064ce76..3d9a2e764c3 100644
---- a/block/blkio.c
-+++ b/block/blkio.c
-@@ -713,7 +713,7 @@ static int blkio_virtio_blk_connect(BlockDriverState *bs, QDict *options,
-          * for example will fail.
-          *
-          * In order to open the device read-only, we are using the `read-only`
--         * property of the libblkio driver in blkio_file_open().
-+         * property of the libblkio driver in blkio_open().
-          */
-         fd = qemu_open(path, O_RDWR, NULL);
-         if (fd < 0) {
-@@ -791,8 +791,8 @@ static int blkio_virtio_blk_connect(BlockDriverState *bs, QDict *options,
-     return 0;
+diff --git a/target/i386/tcg/decode-new.h b/target/i386/tcg/decode-new.h
+index bebc77bd54b..7f23d373ea7 100644
+--- a/target/i386/tcg/decode-new.h
++++ b/target/i386/tcg/decode-new.h
+@@ -114,6 +114,8 @@ typedef enum X86CPUIDFeature {
+     X86_FEAT_CLWB,
+     X86_FEAT_CMOV,
+     X86_FEAT_CMPCCXADD,
++    X86_FEAT_CX8,
++    X86_FEAT_CX16,
+     X86_FEAT_F16C,
+     X86_FEAT_FMA,
+     X86_FEAT_FSGSBASE,
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 1d845ff66bb..c60f18c7482 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2298,104 +2298,6 @@ static void gen_sty_env_A0(DisasContext *s, int offset, bool align)
+     tcg_gen_qemu_st_i128(t, s->tmp0, mem_index, mop);
  }
  
--static int blkio_file_open(BlockDriverState *bs, QDict *options, int flags,
--                           Error **errp)
-+static int blkio_open(BlockDriverState *bs, QDict *options, int flags,
-+                      Error **errp)
- {
-     const char *blkio_driver = bs->drv->protocol_name;
-     BDRVBlkioState *s = bs->opaque;
-@@ -1088,7 +1088,7 @@ static void blkio_refresh_limits(BlockDriverState *bs, Error **errp)
-  */
- #define BLKIO_DRIVER_COMMON \
-     .instance_size           = sizeof(BDRVBlkioState), \
--    .bdrv_open               = blkio_file_open, \
-+    .bdrv_open               = blkio_open, \
-     .bdrv_close              = blkio_close, \
-     .bdrv_co_getlength       = blkio_co_getlength, \
-     .bdrv_co_truncate        = blkio_truncate, \
-diff --git a/block/null.c b/block/null.c
-index 6fa64d20d86..4730acc1eb2 100644
---- a/block/null.c
-+++ b/block/null.c
-@@ -77,8 +77,8 @@ static void null_aio_parse_filename(const char *filename, QDict *options,
+-static void gen_cmpxchg8b(DisasContext *s, X86DecodedInsn *decode)
+-{
+-    TCGv_i64 cmp, val, old;
+-    TCGv Z;
+-
+-    gen_lea_modrm(s, decode);
+-
+-    cmp = tcg_temp_new_i64();
+-    val = tcg_temp_new_i64();
+-    old = tcg_temp_new_i64();
+-
+-    /* Construct the comparison values from the register pair. */
+-    tcg_gen_concat_tl_i64(cmp, cpu_regs[R_EAX], cpu_regs[R_EDX]);
+-    tcg_gen_concat_tl_i64(val, cpu_regs[R_EBX], cpu_regs[R_ECX]);
+-
+-    /* Only require atomic with LOCK; non-parallel handled in generator. */
+-    if (s->prefix & PREFIX_LOCK) {
+-        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_TEUQ);
+-    } else {
+-        tcg_gen_nonatomic_cmpxchg_i64(old, s->A0, cmp, val,
+-                                      s->mem_index, MO_TEUQ);
+-    }
+-
+-    /* Set tmp0 to match the required value of Z. */
+-    tcg_gen_setcond_i64(TCG_COND_EQ, cmp, old, cmp);
+-    Z = tcg_temp_new();
+-    tcg_gen_trunc_i64_tl(Z, cmp);
+-
+-    /*
+-     * Extract the result values for the register pair.
+-     * For 32-bit, we may do this unconditionally, because on success (Z=1),
+-     * the old value matches the previous value in EDX:EAX.  For x86_64,
+-     * the store must be conditional, because we must leave the source
+-     * registers unchanged on success, and zero-extend the writeback
+-     * on failure (Z=0).
+-     */
+-    if (TARGET_LONG_BITS == 32) {
+-        tcg_gen_extr_i64_tl(cpu_regs[R_EAX], cpu_regs[R_EDX], old);
+-    } else {
+-        TCGv zero = tcg_constant_tl(0);
+-
+-        tcg_gen_extr_i64_tl(s->T0, s->T1, old);
+-        tcg_gen_movcond_tl(TCG_COND_EQ, cpu_regs[R_EAX], Z, zero,
+-                           s->T0, cpu_regs[R_EAX]);
+-        tcg_gen_movcond_tl(TCG_COND_EQ, cpu_regs[R_EDX], Z, zero,
+-                           s->T1, cpu_regs[R_EDX]);
+-    }
+-
+-    /* Update Z. */
+-    gen_compute_eflags(s);
+-    tcg_gen_deposit_tl(cpu_cc_src, cpu_cc_src, Z, ctz32(CC_Z), 1);
+-}
+-
+-#ifdef TARGET_X86_64
+-static void gen_cmpxchg16b(DisasContext *s, X86DecodedInsn *decode)
+-{
+-    MemOp mop = MO_TE | MO_128 | MO_ALIGN;
+-    TCGv_i64 t0, t1;
+-    TCGv_i128 cmp, val;
+-
+-    gen_lea_modrm(s, decode);
+-
+-    cmp = tcg_temp_new_i128();
+-    val = tcg_temp_new_i128();
+-    tcg_gen_concat_i64_i128(cmp, cpu_regs[R_EAX], cpu_regs[R_EDX]);
+-    tcg_gen_concat_i64_i128(val, cpu_regs[R_EBX], cpu_regs[R_ECX]);
+-
+-    /* Only require atomic with LOCK; non-parallel handled in generator. */
+-    if (s->prefix & PREFIX_LOCK) {
+-        tcg_gen_atomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
+-    } else {
+-        tcg_gen_nonatomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
+-    }
+-
+-    tcg_gen_extr_i128_i64(s->T0, s->T1, val);
+-
+-    /* Determine success after the fact. */
+-    t0 = tcg_temp_new_i64();
+-    t1 = tcg_temp_new_i64();
+-    tcg_gen_xor_i64(t0, s->T0, cpu_regs[R_EAX]);
+-    tcg_gen_xor_i64(t1, s->T1, cpu_regs[R_EDX]);
+-    tcg_gen_or_i64(t0, t0, t1);
+-
+-    /* Update Z. */
+-    gen_compute_eflags(s);
+-    tcg_gen_setcondi_i64(TCG_COND_EQ, t0, t0, 0);
+-    tcg_gen_deposit_tl(cpu_cc_src, cpu_cc_src, t0, ctz32(CC_Z), 1);
+-
+-    /*
+-     * Extract the result values for the register pair.  We may do this
+-     * unconditionally, because on success (Z=1), the old value matches
+-     * the previous value in RDX:RAX.
+-     */
+-    tcg_gen_mov_i64(cpu_regs[R_EAX], s->T0);
+-    tcg_gen_mov_i64(cpu_regs[R_EDX], s->T1);
+-}
+-#endif
+-
+ #include "emit.c.inc"
+ 
+ static void gen_x87(DisasContext *s, X86DecodedInsn *decode)
+@@ -2971,29 +2873,10 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
+ 
+     /* now check op code */
+     switch (b) {
+-    case 0x1c7: /* cmpxchg8b */
++    case 0x1c7: /* RDSEED, RDPID with f3 prefix */
+         mod = (modrm >> 6) & 3;
+         switch ((modrm >> 3) & 7) {
+-        case 1: /* CMPXCHG8, CMPXCHG16 */
+-            if (mod == 3) {
+-                goto illegal_op;
+-            }
+-#ifdef TARGET_X86_64
+-            if (dflag == MO_64) {
+-                if (!(s->cpuid_ext_features & CPUID_EXT_CX16)) {
+-                    goto illegal_op;
+-                }
+-                gen_cmpxchg16b(s, decode);
+-                break;
+-            }
+-#endif
+-            if (!(s->cpuid_features & CPUID_CX8)) {
+-                goto illegal_op;
+-            }
+-            gen_cmpxchg8b(s, decode);
+-            break;
+-
+-        case 7: /* RDSEED, RDPID with f3 prefix */
++        case 7:
+             if (mod != 3 ||
+                 (s->prefix & (PREFIX_LOCK | PREFIX_REPNZ))) {
+                 goto illegal_op;
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index 45f4aed4611..fa51aadfcf2 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -288,6 +288,25 @@ static void decode_group8(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
      }
  }
  
--static int null_file_open(BlockDriverState *bs, QDict *options, int flags,
--                          Error **errp)
-+static int null_open(BlockDriverState *bs, QDict *options, int flags,
-+                     Error **errp)
++static void decode_group9(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
++{
++    static const X86OpEntry group9_reg =
++        X86_OP_ENTRY0(multi0F);  /* unconverted */
++    static const X86OpEntry cmpxchg8b =
++        X86_OP_ENTRY1(CMPXCHG8B,  M,q,  lock p_00 cpuid(CX8));
++    static const X86OpEntry cmpxchg16b =
++        X86_OP_ENTRY1(CMPXCHG16B, M,dq, lock p_00 cpuid(CX16));
++
++    int modrm = get_modrm(s, env);
++    int op = (modrm >> 3) & 7;
++
++    if ((modrm >> 6) == 3) {
++        *entry = group9_reg;
++    } else if (op == 1) {
++        *entry = REX_W(s) ? cmpxchg16b : cmpxchg8b;
++    }
++}
++
+ static void decode_group15(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
  {
-     QemuOpts *opts;
-     BDRVNullState *s = bs->opaque;
-@@ -283,7 +283,7 @@ static BlockDriver bdrv_null_co = {
-     .protocol_name          = "null-co",
-     .instance_size          = sizeof(BDRVNullState),
+     static const X86OpEntry group15_reg[8] = {
+@@ -1203,7 +1222,7 @@ static const X86OpEntry opcodes_0F[256] = {
+     [0xc4] = X86_OP_ENTRY4(PINSRW,     V,dq,H,dq,E,w,       vex5 mmx p_00_66),
+     [0xc5] = X86_OP_ENTRY3(PEXTRW,     G,d, U,dq,I,b,       vex5 mmx p_00_66),
+     [0xc6] = X86_OP_ENTRY4(VSHUF,      V,x, H,x, W,x,       vex4 p_00_66),
+-    [0xc7] = X86_OP_ENTRY1(multi0F,    nop,v,               nolea), /* unconverted */
++    [0xc7] = X86_OP_GROUP0(group9),
  
--    .bdrv_open              = null_file_open,
-+    .bdrv_open              = null_open,
-     .bdrv_parse_filename    = null_co_parse_filename,
-     .bdrv_co_getlength      = null_co_getlength,
-     .bdrv_co_get_allocated_file_size = null_co_get_allocated_file_size,
-@@ -304,7 +304,7 @@ static BlockDriver bdrv_null_aio = {
-     .protocol_name          = "null-aio",
-     .instance_size          = sizeof(BDRVNullState),
- 
--    .bdrv_open              = null_file_open,
-+    .bdrv_open              = null_open,
-     .bdrv_parse_filename    = null_aio_parse_filename,
-     .bdrv_co_getlength      = null_co_getlength,
-     .bdrv_co_get_allocated_file_size = null_co_get_allocated_file_size,
-diff --git a/block/nvme.c b/block/nvme.c
-index c84914af6dd..3b588b139f6 100644
---- a/block/nvme.c
-+++ b/block/nvme.c
-@@ -889,7 +889,7 @@ out:
-         qemu_vfio_pci_unmap_bar(s->vfio, 0, (void *)regs, 0, sizeof(NvmeBar));
+     [0xd0] = X86_OP_ENTRY3(VADDSUB,   V,x, H,x, W,x,        vex2 cpuid(SSE3) p_66_f2),
+     [0xd1] = X86_OP_ENTRY3(PSRLW_r,   V,x, H,x, W,x,        vex4 mmx avx2_256 p_00_66),
+@@ -2241,8 +2260,12 @@ static bool has_cpuid_feature(DisasContext *s, X86CPUIDFeature cpuid)
+         return (s->cpuid_features & CPUID_CMOV);
+     case X86_FEAT_CLFLUSH:
+         return (s->cpuid_features & CPUID_CLFLUSH);
++    case X86_FEAT_CX8:
++        return (s->cpuid_features & CPUID_CX8);
+     case X86_FEAT_FXSR:
+         return (s->cpuid_features & CPUID_FXSR);
++    case X86_FEAT_CX16:
++        return (s->cpuid_ext_features & CPUID_EXT_CX16);
+     case X86_FEAT_F16C:
+         return (s->cpuid_ext_features & CPUID_EXT_F16C);
+     case X86_FEAT_FMA:
+@@ -2722,15 +2745,6 @@ static void disas_insn(DisasContext *s, CPUState *cpu)
+         break;
      }
  
--    /* Cleaning up is done in nvme_file_open() upon error. */
-+    /* Cleaning up is done in nvme_open() upon error. */
-     return ret;
+-    /*
+-     * hack for old decoder: 0F C7 has both instructions that accept LOCK
+-     * and instructions that don't, but also needs X86_SPECIAL_NoLoadEA.
+-     * Keep this here until CMPXCHG8B/CMPXCHG16B is separated from the
+-     * other unconverted opcodes.
+-     */
+-    if (decode.e.gen == gen_multi0F) {
+-        accept_lock = true;
+-    }
+     if ((s->prefix & PREFIX_LOCK) && !accept_lock) {
+         goto illegal_op;
+     }
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index edadb51ae89..98f10ad8b4e 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1782,6 +1782,102 @@ static void gen_CMPXCHG(DisasContext *s, X86DecodedInsn *decode)
+     decode->cc_op = CC_OP_SUBB + ot;
  }
  
-@@ -967,8 +967,8 @@ static void nvme_close(BlockDriverState *bs)
-     g_free(s->device);
- }
- 
--static int nvme_file_open(BlockDriverState *bs, QDict *options, int flags,
--                          Error **errp)
-+static int nvme_open(BlockDriverState *bs, QDict *options, int flags,
-+                     Error **errp)
++static void gen_CMPXCHG16B(DisasContext *s, X86DecodedInsn *decode)
++{
++#ifdef TARGET_X86_64
++    MemOp mop = MO_TE | MO_128 | MO_ALIGN;
++    TCGv_i64 t0, t1;
++    TCGv_i128 cmp, val;
++
++    cmp = tcg_temp_new_i128();
++    val = tcg_temp_new_i128();
++    tcg_gen_concat_i64_i128(cmp, cpu_regs[R_EAX], cpu_regs[R_EDX]);
++    tcg_gen_concat_i64_i128(val, cpu_regs[R_EBX], cpu_regs[R_ECX]);
++
++    /* Only require atomic with LOCK; non-parallel handled in generator. */
++    if (s->prefix & PREFIX_LOCK) {
++        tcg_gen_atomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
++    } else {
++        tcg_gen_nonatomic_cmpxchg_i128(val, s->A0, cmp, val, s->mem_index, mop);
++    }
++
++    tcg_gen_extr_i128_i64(s->T0, s->T1, val);
++
++    /* Determine success after the fact. */
++    t0 = tcg_temp_new_i64();
++    t1 = tcg_temp_new_i64();
++    tcg_gen_xor_i64(t0, s->T0, cpu_regs[R_EAX]);
++    tcg_gen_xor_i64(t1, s->T1, cpu_regs[R_EDX]);
++    tcg_gen_or_i64(t0, t0, t1);
++
++    /* Update Z. */
++    gen_compute_eflags(s);
++    tcg_gen_setcondi_i64(TCG_COND_EQ, t0, t0, 0);
++    tcg_gen_deposit_tl(cpu_cc_src, cpu_cc_src, t0, ctz32(CC_Z), 1);
++
++    /*
++     * Extract the result values for the register pair.  We may do this
++     * unconditionally, because on success (Z=1), the old value matches
++     * the previous value in RDX:RAX.
++     */
++    tcg_gen_mov_i64(cpu_regs[R_EAX], s->T0);
++    tcg_gen_mov_i64(cpu_regs[R_EDX], s->T1);
++#else
++    abort();
++#endif
++}
++
++static void gen_CMPXCHG8B(DisasContext *s, X86DecodedInsn *decode)
++{
++    TCGv_i64 cmp, val, old;
++    TCGv Z;
++
++    cmp = tcg_temp_new_i64();
++    val = tcg_temp_new_i64();
++    old = tcg_temp_new_i64();
++
++    /* Construct the comparison values from the register pair. */
++    tcg_gen_concat_tl_i64(cmp, cpu_regs[R_EAX], cpu_regs[R_EDX]);
++    tcg_gen_concat_tl_i64(val, cpu_regs[R_EBX], cpu_regs[R_ECX]);
++
++    /* Only require atomic with LOCK; non-parallel handled in generator. */
++    if (s->prefix & PREFIX_LOCK) {
++        tcg_gen_atomic_cmpxchg_i64(old, s->A0, cmp, val, s->mem_index, MO_TEUQ);
++    } else {
++        tcg_gen_nonatomic_cmpxchg_i64(old, s->A0, cmp, val,
++                                      s->mem_index, MO_TEUQ);
++    }
++
++    /* Set tmp0 to match the required value of Z. */
++    tcg_gen_setcond_i64(TCG_COND_EQ, cmp, old, cmp);
++    Z = tcg_temp_new();
++    tcg_gen_trunc_i64_tl(Z, cmp);
++
++    /*
++     * Extract the result values for the register pair.
++     * For 32-bit, we may do this unconditionally, because on success (Z=1),
++     * the old value matches the previous value in EDX:EAX.  For x86_64,
++     * the store must be conditional, because we must leave the source
++     * registers unchanged on success, and zero-extend the writeback
++     * on failure (Z=0).
++     */
++    if (TARGET_LONG_BITS == 32) {
++        tcg_gen_extr_i64_tl(cpu_regs[R_EAX], cpu_regs[R_EDX], old);
++    } else {
++        TCGv zero = tcg_constant_tl(0);
++
++        tcg_gen_extr_i64_tl(s->T0, s->T1, old);
++        tcg_gen_movcond_tl(TCG_COND_EQ, cpu_regs[R_EAX], Z, zero,
++                           s->T0, cpu_regs[R_EAX]);
++        tcg_gen_movcond_tl(TCG_COND_EQ, cpu_regs[R_EDX], Z, zero,
++                           s->T1, cpu_regs[R_EDX]);
++    }
++
++    /* Update Z. */
++    gen_compute_eflags(s);
++    tcg_gen_deposit_tl(cpu_cc_src, cpu_cc_src, Z, ctz32(CC_Z), 1);
++}
++
+ static void gen_CPUID(DisasContext *s, X86DecodedInsn *decode)
  {
-     const char *device;
-     QemuOpts *opts;
-@@ -1630,7 +1630,7 @@ static BlockDriver bdrv_nvme = {
-     .create_opts              = &bdrv_create_opts_simple,
- 
-     .bdrv_parse_filename      = nvme_parse_filename,
--    .bdrv_open                = nvme_file_open,
-+    .bdrv_open                = nvme_open,
-     .bdrv_close               = nvme_close,
-     .bdrv_co_getlength        = nvme_co_getlength,
-     .bdrv_probe_blocksizes    = nvme_probe_blocksizes,
-diff --git a/block/ssh.c b/block/ssh.c
-index 1344822ed85..27d582e0e3d 100644
---- a/block/ssh.c
-+++ b/block/ssh.c
-@@ -837,8 +837,8 @@ static int connect_to_ssh(BDRVSSHState *s, BlockdevOptionsSsh *opts,
-     return ret;
- }
- 
--static int ssh_file_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
--                         Error **errp)
-+static int ssh_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
-+                    Error **errp)
- {
-     BDRVSSHState *s = bs->opaque;
-     BlockdevOptionsSsh *opts;
-@@ -1362,7 +1362,7 @@ static BlockDriver bdrv_ssh = {
-     .protocol_name                = "ssh",
-     .instance_size                = sizeof(BDRVSSHState),
-     .bdrv_parse_filename          = ssh_parse_filename,
--    .bdrv_open                    = ssh_file_open,
-+    .bdrv_open                    = ssh_open,
-     .bdrv_co_create               = ssh_co_create,
-     .bdrv_co_create_opts          = ssh_co_create_opts,
-     .bdrv_close                   = ssh_close,
+     gen_update_cc_op(s);
 -- 
 2.45.2
 
