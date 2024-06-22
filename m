@@ -4,68 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A3CC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 01:35:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E0FC27C4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 02:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKpe0-0008GA-Iu; Fri, 21 Jun 2024 21:34:20 -0400
+	id 1sKqQU-0000cN-1d; Fri, 21 Jun 2024 22:24:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akpm@linux-foundation.org>)
- id 1sKpdz-0008G0-M3
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 21:34:19 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akpm@linux-foundation.org>)
- id 1sKpdx-0003tN-Dr
- for qemu-devel@nongnu.org; Fri, 21 Jun 2024 21:34:19 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 5FCD96257F;
- Sat, 22 Jun 2024 01:34:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16263C2BBFC;
- Sat, 22 Jun 2024 01:34:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linux-foundation.org;
- s=korg; t=1719020055;
- bh=qm2vMyK4qA3/y0Ko7/pKvfxx5RuC8dDvYU8t1o6RE0M=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=sDqwaRZLFfHd0f1KM1T9LFUkgNQ3fBnIJdbjPE/4sd9gdDOOCgF2/9GQpF8iF2ZlL
- gnrSdzqtK3iQ4xxFCtE49X5p5HjU0AFeCnkcB+Juai0z+YfstoWZyvB4nG/fTZcDFt
- 4rOwheB3ecFSZ+f7JM2Z6NNVqXqvsmNczKzfjZ4E=
-Date: Fri, 21 Jun 2024 18:34:13 -0700
-From: Andrew Morton <akpm@linux-foundation.org>
-To: "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>
-Cc: "Jonathan Cameron" <Jonathan.Cameron@Huawei.com>, "Huang, Ying"
- <ying.huang@intel.com>, "Gregory Price" <gourry.memverge@gmail.com>,
- aneesh.kumar@linux.ibm.com, mhocko@suse.com, tj@kernel.org,
- john@jagalactic.com, "Eishan Mirakhur" <emirakhur@micron.com>,
- "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>, "Ravis OpenSrc"
- <Ravis.OpenSrc@micron.com>, "Alistair Popple" <apopple@nvidia.com>,
- "Srinivasulu Thanneeru" <sthanneeru@micron.com>, "SeongJae Park"
- <sj@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown
- <lenb@kernel.org>, Dave Jiang <dave.jiang@intel.com>, Dan Williams
- <dan.j.williams@intel.com>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>, "Ho-Ren (Jack) Chuang"
- <horenchuang@gmail.com>, linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v1] memory tier: consolidate the initialization of
- memory tiers
-Message-Id: <20240621183413.1638e7453a0bed2af5f44273@linux-foundation.org>
-In-Reply-To: <20240621044833.3953055-1-horen.chuang@linux.dev>
-References: <20240621044833.3953055-1-horen.chuang@linux.dev>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKqQS-0000cA-BN
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 22:24:24 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sKqQQ-0003ta-CH
+ for qemu-devel@nongnu.org; Fri, 21 Jun 2024 22:24:24 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-25caf76158cso1492359fac.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 19:24:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719023060; x=1719627860; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/oyyvSCE1SdZ74OlGNfCTv+7lZzt2IxKwPJwRB/ylms=;
+ b=xfi5dualRgqkIJHLa/sj96oFXyE6VwDwJG+31V4Tl0nzixdNN5ZZCmMwdwXE+mfcbb
+ euf4SRhyFEdgzS/FdLYq2sJM919Z9m0aTSMlg7KbvmTlA19sEnOd85UmpJD2oua2zSOd
+ P+ACg581tZa9VivdNzNAfre3GzVpmxteQCxC4f4JrHlij9yWPLubj2KMwIUIU8uEjJTi
+ fWKGrU1Sz2E950bdrHUC/MEWcJFp1V4nahIjF4YNzxMX7VXHAgW3YUo/ysT5IQTy2xA6
+ rK0HXri12Soq5UmelIpdeFLCB7WWX5ngVdHL5Dul8jlua1IXlB6znYUfpFw59jpGURAc
+ siLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719023060; x=1719627860;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/oyyvSCE1SdZ74OlGNfCTv+7lZzt2IxKwPJwRB/ylms=;
+ b=eUKzc2iYNXJ3PEcKQtSqRfmunMOpqu1tIjnl0aqqdCZHS+D6PabLXEu4pVzZ26e9Cd
+ ovl6sU+iU/53MHdc0MHKw+Vf/uLuxXL1HH2DYrDFyai0haZYFF+JxOg50Znmf6go0ANl
+ OKHNT53p7LX/WNdXCxLWO3jEyT9X/ya28xgdxwHYpLuiuz1GYC1/UjrQa0BxmLl3zfeP
+ /gBDbzaqB8dQsEMWpz17YF6iY5lMUZEsr6KAqBvROz6Vu11An0TqL0TG03DuLbli2rPo
+ lROHAPypJowsTf5afnkx0mtKM8YlyDdC+AWNPMp3JG5OCdUmn2DwJ8tjLaS8YpVzapZx
+ WA+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3SCzxd5JAPYTs4+iAegEGty5JZ7ANcTRjuoJpqgwGZv0fVpkuJlRPkPImpHTv/ZA/IlxBCdtI9QtOaO0n4GEoKXrLWks=
+X-Gm-Message-State: AOJu0YzTzJ9KenE97sd3zSc8UsqvEhXUfb6ltpi+ERHYzUT0PgcYIlqa
+ jqicWGKAP+90oVziEjDo6j41hvo8JQEGoMibSnHL2zpsYWti88SJdYln3yPNCAQ=
+X-Google-Smtp-Source: AGHT+IFv85qTbkIEmdnO/HyxUl3qhBR56NuxdiF7wLy7mS4SHKUn+7C1Yr008r6A4YFxomiC/By1xw==
+X-Received: by 2002:a05:6871:81f:b0:254:7f9f:3f21 with SMTP id
+ 586e51a60fabf-25c94abe807mr11447553fac.27.1719023060225; 
+ Fri, 21 Jun 2024 19:24:20 -0700 (PDT)
+Received: from [192.168.0.4] ([71.212.132.216])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7065124e354sm2095474b3a.119.2024.06.21.19.24.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Jun 2024 19:24:19 -0700 (PDT)
+Message-ID: <8c166ceb-c506-4492-8d4b-fc3cc9c691e6@linaro.org>
+Date: Fri, 21 Jun 2024 19:24:17 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/28] Migration patches for 2024-06-21
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+References: <20240621175434.31180-1-farosas@suse.de>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240621175434.31180-1-farosas@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=akpm@linux-foundation.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -85
-X-Spam_score: -8.6
-X-Spam_bar: --------
-X-Spam_report: (-8.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-1.465,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,43 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Jun 2024 04:48:30 +0000 "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev> wrote:
-
-> If we simply move the set_node_memory_tier() from memory_tier_init() to
-> late_initcall(), it will result in HMAT not registering the
-> mt_adistance_algorithm callback function,
-
-Immediate reaction: then don't do that!
-
-> because set_node_memory_tier()
-> is not performed during the memory tiering initialization phase,
-> leading to a lack of correct default_dram information.
+On 6/21/24 10:54, Fabiano Rosas wrote:
+> The following changes since commit 02d9c38236cf8c9826e5c5be61780c4444cb4ae0:
 > 
-> Therefore, we introduced a nodemask to pass the information of the
-> default DRAM nodes. The reason for not choosing to reuse
-> default_dram_type->nodes is that it is not clean enough. So in the end,
-> we use a __initdata variable, which is a variable that is released once
-> initialization is complete, including both CPU and memory nodes for HMAT
-> to iterate through.
+>    Merge tag 'pull-tcg-20240619' ofhttps://gitlab.com/rth7680/qemu  into staging (2024-06-19 14:00:39 -0700)
 > 
-> Besides, since default_dram_type may be checked/used during the
-> initialization process of HMAT and drivers, it is better to keep the
-> allocation of default_dram_type in memory_tier_init().
-
-What is this patch actually aiming to do?  Is it merely a code cleanup,
-or are there functional changes?
-
-> Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-> ---
-> Hi all,
+> are available in the Git repository at:
 > 
-> The current memory tier initialization process is distributed across two
-> different functions, memory_tier_init() and memory_tier_late_init(). This
-> design is hard to maintain. Thus, this patch is proposed to reduce the
-> possible code paths by consolidating different initialization patches into one.
+>    https://gitlab.com/farosas/qemu.git  tags/migration-20240621-pull-request
+> 
+> for you to fetch changes up to 04b09de16d78cf2d163ca65d7c6d161bf2baceb6:
+> 
+>    migration: Remove unused VMSTATE_ARRAY_TEST() macro (2024-06-21 14:37:58 -0300)
+> 
+> ----------------------------------------------------------------
+> Migration pull request
+> 
+> - Fabiano's fix for fdset + file migration truncating the migration
+>    file
+> 
+> - Fabiano's fdset + direct-io support for mapped-ram
+> 
+> - Peter's various cleanups (multifd sync, thread names, migration
+>    states, tests)
+> 
+> - Peter's new migration state postcopy-recover-setup
+> 
+> - Philippe's unused vmstate macro cleanup
 
-Ah, there it is.  Please make this the opening paragraph, not an aside
-buried below the ^---$.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-I'll await review input before proceeding with this, thanks.
+
+r~
+
 
