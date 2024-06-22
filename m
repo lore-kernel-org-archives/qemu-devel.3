@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7215C2BB85
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3442C27C53
 	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 09:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKxIV-000288-VE; Sat, 22 Jun 2024 05:44:39 -0400
+	id 1sKxIV-00027v-Rp; Sat, 22 Jun 2024 05:44:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1sKxIU-00026t-1M; Sat, 22 Jun 2024 05:44:38 -0400
-Received: from zproxy2.enst.fr ([2001:660:330f:2::dd])
+ id 1sKxIT-00026s-V3; Sat, 22 Jun 2024 05:44:37 -0400
+Received: from zproxy2.enst.fr ([137.194.2.221])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1sKxIR-0000zo-Rd; Sat, 22 Jun 2024 05:44:37 -0400
+ id 1sKxIR-0000zh-Rr; Sat, 22 Jun 2024 05:44:37 -0400
 Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id 9013980743;
- Sat, 22 Jun 2024 11:44:31 +0200 (CEST)
+ by zproxy2.enst.fr (Postfix) with ESMTP id 47A4D806FE;
+ Sat, 22 Jun 2024 11:44:30 +0200 (CEST)
 Received: from zproxy2.enst.fr ([IPv6:::1])
  by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id FhKAOX2Op71t; Sat, 22 Jun 2024 11:44:31 +0200 (CEST)
+ id EIdDC7UP7Z3V; Sat, 22 Jun 2024 11:44:29 +0200 (CEST)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy2.enst.fr (Postfix) with ESMTP id 268F480767;
- Sat, 22 Jun 2024 11:44:31 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy2.enst.fr 268F480767
+ by zproxy2.enst.fr (Postfix) with ESMTP id C730F807D6;
+ Sat, 22 Jun 2024 11:44:29 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy2.enst.fr C730F807D6
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1719049471;
- bh=LOOhynrNCYxMKqVPgh5+rrOCBqaVeVnvuaI4joP+bjA=;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1719049469;
+ bh=Wku8nU4WuFOVlOrxwroV3y3glEG7WMuejPyRaGMEs9k=;
  h=From:To:Date:Message-ID:MIME-Version;
- b=yqH0i9MrU1WJcJkRweZ0nRy7ked4agSLpvGwJOfamIHT8ZSAqHGc93pHdNjffiATX
- PRYZAwekQ9kQw341F+y+TF8Yg1dFcsOR/ZdBTfUBUO/P0fSKRsaMmcHJis5Y+ZAqTE
- iXm1teL7JZ32ZEuwbI1ccKo6NYiZe6WDHiWD60uI=
+ b=Yk4EXa15dazCW5x2UUFxVeZijV54NNhXcAAOcDyMxQuLyoRbL52NC9Lr0LEVUYlWm
+ JldupnHL0lSLCVc4cRV/HfKNHyh5CT5y/iqKUGwUBQTmKOtAJy/SirOn26xDbZLAA4
+ TZp7HdFUscy48KldIubKkPDeR+VPqf3ESRq2p0Bc=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy2.enst.fr ([IPv6:::1])
  by localhost (zproxy2.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id PTq0wfigEoXP; Sat, 22 Jun 2024 11:44:31 +0200 (CEST)
+ id pEmuL8pcZAz7; Sat, 22 Jun 2024 11:44:29 +0200 (CEST)
 Received: from inesv-Inspiron-3501.enst.fr (unknown
  [IPv6:2a04:8ec0:0:124::190c])
- by zproxy2.enst.fr (Postfix) with ESMTPSA id C035980743;
- Sat, 22 Jun 2024 11:44:29 +0200 (CEST)
+ by zproxy2.enst.fr (Postfix) with ESMTPSA id 54D35806FE;
+ Sat, 22 Jun 2024 11:44:28 +0200 (CEST)
 From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -53,16 +53,15 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
  Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-arm@nongnu.org,
  Thomas Huth <thuth@redhat.com>, Damien Hedde <damien.hedde@dahe.fr>
-Subject: [PATCH v4 1/3] hw/misc: Create STM32L4x5 SYSCFG clock
-Date: Sat, 22 Jun 2024 11:43:53 +0200
-Message-ID: <20240622094402.244604-2-ines.varhol@telecom-paris.fr>
+Subject: [PATCH v4 0/3] Check clock connection between STM32L4x5 RCC and
+ peripherals
+Date: Sat, 22 Jun 2024 11:43:52 +0200
+Message-ID: <20240622094402.244604-1-ines.varhol@telecom-paris.fr>
 X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240622094402.244604-1-ines.varhol@telecom-paris.fr>
-References: <20240622094402.244604-1-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::dd;
+Received-SPF: pass client-ip=137.194.2.221;
  envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy2.enst.fr
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,102 +84,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit creates a clock in STM32L4x5 SYSCFG and wires it up to the
-corresponding clock from STM32L4x5 RCC.
+Among implemented STM32L4x5 devices, USART, GPIO and SYSCFG
+have a clock source, but none has a corresponding test in QEMU.
+
+This patch makes sure that all 3 devices create a clock correctly,
+adds a QOM property to access clocks' periods from QTests,
+and adds QTests checking that clock enable in RCC has the
+expected results for all 3 devices.
+
+Thank you for the reviews.
+
+Changes from v3 to v4:
+- removed 2nd commit (it was bumping up version id in
+`vmstate_stm32l4x5_usart_base`, which is useless when not adding
+any fields), it was a misunderstanding
+- in `clock.c`, `vmstate_stm32l4x5_usart_base`, renamed `freq_hz` to
+`period`
+- in `clocks.rst`, specified that `qtest-clock-period` is only usable
+from the QTests and not QEMU
+- in `qtest/stm32l4x5.h`, used macros from "clock.h" to compute
+the expected clock period in the right unit
+- in `qtest/stm32l4x5.h`, removed "osdep.h" include
+
+Changes from "v1" to v3:
+- adding a commit to expose `qtest-clock-period`, a QOM property for
+all clocks, only accessible from QTests, and mention it in clock.rst
+- adapt QTests so that they use clock period instead of clock frequency
+- remove `clock-freq-hz` QOM property in STM32L4x5 USART and SYSCFG
+- dropping the commit migrating GPIO clocks as it's already upstream
+
+Changes from v1 to an unfortunate second "v1":
+- upgrading `VMStateDescription` to version 2 to account for
+`VMSTATE_CLOCK()`
+- QTests : consolidating `get_clock_freq_hz()` in a header
+and making appropriate changes in stm32l4x5q_*-test.c
 
 Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
----
- include/hw/misc/stm32l4x5_syscfg.h |  1 +
- hw/arm/stm32l4x5_soc.c             |  2 ++
- hw/misc/stm32l4x5_syscfg.c         | 19 +++++++++++++++++--
- 3 files changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/misc/stm32l4x5_syscfg.h b/include/hw/misc/stm32l4=
-x5_syscfg.h
-index 23bb564150..c450df2b9e 100644
---- a/include/hw/misc/stm32l4x5_syscfg.h
-+++ b/include/hw/misc/stm32l4x5_syscfg.h
-@@ -48,6 +48,7 @@ struct Stm32l4x5SyscfgState {
-     uint32_t swpr2;
-=20
-     qemu_irq gpio_out[GPIO_NUM_PINS];
-+    Clock *clk;
- };
-=20
- #endif
-diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
-index 38f7a2d5d9..fb2afa6cfe 100644
---- a/hw/arm/stm32l4x5_soc.c
-+++ b/hw/arm/stm32l4x5_soc.c
-@@ -236,6 +236,8 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
-c, Error **errp)
-=20
-     /* System configuration controller */
-     busdev =3D SYS_BUS_DEVICE(&s->syscfg);
-+    qdev_connect_clock_in(DEVICE(&s->syscfg), "clk",
-+        qdev_get_clock_out(DEVICE(&(s->rcc)), "syscfg-out"));
-     if (!sysbus_realize(busdev, errp)) {
-         return;
-     }
-diff --git a/hw/misc/stm32l4x5_syscfg.c b/hw/misc/stm32l4x5_syscfg.c
-index a5a1ce2680..a947a9e036 100644
---- a/hw/misc/stm32l4x5_syscfg.c
-+++ b/hw/misc/stm32l4x5_syscfg.c
-@@ -26,6 +26,9 @@
- #include "trace.h"
- #include "hw/irq.h"
- #include "migration/vmstate.h"
-+#include "hw/clock.h"
-+#include "hw/qdev-clock.h"
-+#include "qapi/error.h"
- #include "hw/misc/stm32l4x5_syscfg.h"
- #include "hw/gpio/stm32l4x5_gpio.h"
-=20
-@@ -225,12 +228,22 @@ static void stm32l4x5_syscfg_init(Object *obj)
-     qdev_init_gpio_in(DEVICE(obj), stm32l4x5_syscfg_set_irq,
-                       GPIO_NUM_PINS * NUM_GPIOS);
-     qdev_init_gpio_out(DEVICE(obj), s->gpio_out, GPIO_NUM_PINS);
-+    s->clk =3D qdev_init_clock_in(DEVICE(s), "clk", NULL, s, 0);
-+}
-+
-+static void stm32l4x5_syscfg_realize(DeviceState *dev, Error **errp)
-+{
-+    Stm32l4x5SyscfgState *s =3D STM32L4X5_SYSCFG(dev);
-+    if (!clock_has_source(s->clk)) {
-+        error_setg(errp, "SYSCFG: clk input must be connected");
-+        return;
-+    }
- }
-=20
- static const VMStateDescription vmstate_stm32l4x5_syscfg =3D {
-     .name =3D TYPE_STM32L4X5_SYSCFG,
--    .version_id =3D 1,
--    .minimum_version_id =3D 1,
-+    .version_id =3D 2,
-+    .minimum_version_id =3D 2,
-     .fields =3D (VMStateField[]) {
-         VMSTATE_UINT32(memrmp, Stm32l4x5SyscfgState),
-         VMSTATE_UINT32(cfgr1, Stm32l4x5SyscfgState),
-@@ -241,6 +254,7 @@ static const VMStateDescription vmstate_stm32l4x5_sys=
-cfg =3D {
-         VMSTATE_UINT32(swpr, Stm32l4x5SyscfgState),
-         VMSTATE_UINT32(skr, Stm32l4x5SyscfgState),
-         VMSTATE_UINT32(swpr2, Stm32l4x5SyscfgState),
-+        VMSTATE_CLOCK(clk, Stm32l4x5SyscfgState),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -251,6 +265,7 @@ static void stm32l4x5_syscfg_class_init(ObjectClass *=
-klass, void *data)
-     ResettableClass *rc =3D RESETTABLE_CLASS(klass);
-=20
-     dc->vmsd =3D &vmstate_stm32l4x5_syscfg;
-+    dc->realize =3D stm32l4x5_syscfg_realize;
-     rc->phases.hold =3D stm32l4x5_syscfg_hold_reset;
- }
-=20
+In=C3=A8s Varhol (3):
+  hw/misc: Create STM32L4x5 SYSCFG clock
+  hw/clock: Expose 'qtest-clock-period' QOM property for QTests
+  tests/qtest: Check STM32L4x5 clock connections
+
+ docs/devel/clocks.rst               |  6 +++++
+ include/hw/misc/stm32l4x5_syscfg.h  |  1 +
+ tests/qtest/stm32l4x5.h             | 42 +++++++++++++++++++++++++++++
+ hw/arm/stm32l4x5_soc.c              |  2 ++
+ hw/core/clock.c                     | 16 +++++++++++
+ hw/misc/stm32l4x5_syscfg.c          | 19 +++++++++++--
+ tests/qtest/stm32l4x5_gpio-test.c   | 23 ++++++++++++++++
+ tests/qtest/stm32l4x5_syscfg-test.c | 20 ++++++++++++--
+ tests/qtest/stm32l4x5_usart-test.c  | 26 ++++++++++++++++++
+ 9 files changed, 151 insertions(+), 4 deletions(-)
+ create mode 100644 tests/qtest/stm32l4x5.h
+
 --=20
 2.43.2
 
