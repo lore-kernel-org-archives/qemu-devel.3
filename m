@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFA46C27C53
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 06:19:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC636C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 06:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKu3R-0000TF-DV; Sat, 22 Jun 2024 02:16:53 -0400
+	id 1sKu3v-0001HB-NL; Sat, 22 Jun 2024 02:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKu31-0000Bs-Ti
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:28 -0400
+ id 1sKu3T-0000VX-9n
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKu30-0006QZ-AJ
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:27 -0400
+ id 1sKu3R-0006Uz-Bc
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719036985;
+ s=mimecast20190719; t=1719037012;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9XXSgEZfF/mgmRYz0quvK+Q6GbqXkOMqVfYjFVsm7Z8=;
- b=hdzFnZ9wvj8Kh9i70wKnYNhxG149Wytni5kyL59qy9CBtLjoqhNCngaXF7eooC6wp7P1r0
- 3pyuK0f0p59V8Vh1NqfI8TBaZWovq/Pw95QPTQL1OJdy89KRiOgJz+mz6pTkPn4+2I0q2U
- fO/P9b9e6DcrznH4R+hRuH/uKCg3+j8=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=d1Zs3bNs8jOuOgSShaHDoScFAM7FpjL8r/fpmfWVVwk=;
+ b=cVKXLrcOCsB1OwyhcHNZKq+2/Z6/O4qm8S+JPGUYwbUXHqWlhUE1j/8psu/X1JrZiIT7Cp
+ wH9zjSN1Z31SWGG3Gvu4O+V7L8iAqqQjtcw4zu5bdM8U4L4XJKRgRLi0vB0AHgadp7bwOt
+ OcTUCgd+JJ/qAGkOpP0l3eNGLm4eebw=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-rM6oYL3mMFeSt8Vt1zVVPw-1; Sat, 22 Jun 2024 02:16:24 -0400
-X-MC-Unique: rM6oYL3mMFeSt8Vt1zVVPw-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-57d172119a6so1082731a12.2
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 23:16:23 -0700 (PDT)
+ us-mta-308-zprxo6FyN0e6owYWXdnVaQ-1; Sat, 22 Jun 2024 02:16:50 -0400
+X-MC-Unique: zprxo6FyN0e6owYWXdnVaQ-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52c94ad861aso1953700e87.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 23:16:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719036981; x=1719641781;
+ d=1e100.net; s=20230601; t=1719037008; x=1719641808;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9XXSgEZfF/mgmRYz0quvK+Q6GbqXkOMqVfYjFVsm7Z8=;
- b=YsQf7cBRKARN0xmnLhvmepVJLZFDYRAYTIZZOjHcv34SYZZt5ug7Sa1ogtKOs0vBWK
- EWVn7mOMLkwq+QerWN5Z0uqbUVuoufpghS7AM/u1go3/a3cmHZCRbdSwMwxgQOduGm6y
- bX7dYrOAM8A/k9Vgfz7evmT7gdCigKYmRTGe8lsSfRZpFQbXj6O64J7WDoM9rMiQ9Rub
- v/FGzU7b655k8hOqr+e0s20ZYWEw0aZatyWEjK0CKh292EpR9JqxWAcKE2NCFaFbbOcn
- finAgSRwgDwSglkJj7CNj7o8iZoSOs97tJ/TbO4WZhSa+HfASfUwKrzRyj+leWndklLd
- 9+Pg==
-X-Gm-Message-State: AOJu0YyHJIU5HzXy3oYwHfbXBfA94FkCnRNt9qOLBmhM4zljd/Fl0q4L
- R+VnPZxstzG03KN3XRYmcsnkMQq9/Ot6wgSa3qufRK3vMkodyJqdTKMl90sv5nkFf6kcHa8ngqR
- YGPYEIfnWDe4ASSbBO+lXKO9EuoFkPkKLuUlXgzVaUnyxcp73kayQZfNeQE5P1XzF75JHiQMIux
- AfbGxdhTSVR7F7hq0p739IqXYqjTiycXkz1cV8
-X-Received: by 2002:a05:6402:1744:b0:57d:105c:c40c with SMTP id
- 4fb4d7f45d1cf-57d105cc49fmr5008897a12.24.1719036981374; 
- Fri, 21 Jun 2024 23:16:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFwHbT0WoRt1AE863/AT8eK0gyJaEa+Z6La0dbvzJbpN6EMFIkmi7erNKhuVW9nHLZ50Nh/Tw==
-X-Received: by 2002:a05:6402:1744:b0:57d:105c:c40c with SMTP id
- 4fb4d7f45d1cf-57d105cc49fmr5008890a12.24.1719036980975; 
- Fri, 21 Jun 2024 23:16:20 -0700 (PDT)
+ bh=d1Zs3bNs8jOuOgSShaHDoScFAM7FpjL8r/fpmfWVVwk=;
+ b=D2BdfZuqiIWCetB9j4ag9RGRth6Rad3DG5VzbNLyUoD1ak/XmQWQga5D8VzV2FLe9Z
+ 8Yw8lLxVIP2SD9CYsgyBrzzL0DKxZDnh4ejARytvyV/qQYyHczZAoT+AU+ImWgnejmTO
+ PNG+EDI0XBm4cJxJFxsomWXHdJMwVKX4yHuqhhQZQkx380eHqILHWtiWAq3DeGShMrR0
+ O97fTlblfiKav1WZT0DU/uVJNtWnV+vjTifmvPJLujBdMmLwlNTzRSUjBV1j+CusEJr9
+ czUGWKqm+3Limo6NaY9JsjUoCyVSaPeWIKvsYDxDABFg5fRLSyddANR/K05c29JeAYGZ
+ F1lQ==
+X-Gm-Message-State: AOJu0Yw+Jru33D6B0HaQZMOPb9j2tNoj/9MEBnGTm85MSHiZuJAOSgs+
+ 8VNB1zFt8wtyc0bNC/Xaa721ORJtbexBKtf/9dVHD9pEYpPhfSVdXLq4iOJYUtryN2BgoT6B5lv
+ 31NCVd/s/lflGw7b6fa1OuchEnT45AMZzxUD/VBoHCiVGHCwIm435pgvSZyccgMXZ+vVeHKPfyw
+ E8UEo6Baeci6g7aYWe2ZZ2e7g1D8o3/wuDOJXF
+X-Received: by 2002:ac2:4a6a:0:b0:52b:8c88:2d6b with SMTP id
+ 2adb3069b0e04-52ccaa55843mr6297311e87.11.1719037008328; 
+ Fri, 21 Jun 2024 23:16:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGNvUD8xUj7lBX4DyLFSl8joudMjA6d0t0XOOD/3nB2LuwlG07G+AYWC3U2KjizZ46Sgg1kPQ==
+X-Received: by 2002:ac2:4a6a:0:b0:52b:8c88:2d6b with SMTP id
+ 2adb3069b0e04-52ccaa55843mr6297301e87.11.1719037007968; 
+ Fri, 21 Jun 2024 23:16:47 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57d30563026sm1862743a12.85.2024.06.21.23.16.18
+ a640c23a62f3a-a6fe25f07efsm48016266b.12.2024.06.21.23.16.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 23:16:18 -0700 (PDT)
+ Fri, 21 Jun 2024 23:16:47 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 09/23] target/i386: do not check PREFIX_LOCK in old-style
- decoder
-Date: Sat, 22 Jun 2024 08:15:43 +0200
-Message-ID: <20240622061558.530543-10-pbonzini@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>
+Subject: [PULL 21/23] block: rename former bdrv_file_open callbacks
+Date: Sat, 22 Jun 2024 08:15:55 +0200
+Message-ID: <20240622061558.530543-22-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240622061558.530543-1-pbonzini@redhat.com>
 References: <20240622061558.530543-1-pbonzini@redhat.com>
@@ -103,142 +102,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is already checked before getting there.
+Since there is no bdrv_file_open callback anymore, rename the implementations
+so that they end with "_open" instead of "_file_open".  NFS is the exception
+because all the functions are named nfs_file_*.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 26 ++++++++------------------
- 1 file changed, 8 insertions(+), 18 deletions(-)
+ block/blkio.c | 8 ++++----
+ block/null.c  | 8 ++++----
+ block/nvme.c  | 8 ++++----
+ block/ssh.c   | 6 +++---
+ 4 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index c60f18c7482..501a1ef9313 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2878,7 +2878,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-         switch ((modrm >> 3) & 7) {
-         case 7:
-             if (mod != 3 ||
--                (s->prefix & (PREFIX_LOCK | PREFIX_REPNZ))) {
-+                (s->prefix & PREFIX_REPNZ)) {
-                 goto illegal_op;
-             }
-             if (s->prefix & PREFIX_REPZ) {
-@@ -2898,7 +2898,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
+diff --git a/block/blkio.c b/block/blkio.c
+index 1a38064ce76..3d9a2e764c3 100644
+--- a/block/blkio.c
++++ b/block/blkio.c
+@@ -713,7 +713,7 @@ static int blkio_virtio_blk_connect(BlockDriverState *bs, QDict *options,
+          * for example will fail.
+          *
+          * In order to open the device read-only, we are using the `read-only`
+-         * property of the libblkio driver in blkio_file_open().
++         * property of the libblkio driver in blkio_open().
+          */
+         fd = qemu_open(path, O_RDWR, NULL);
+         if (fd < 0) {
+@@ -791,8 +791,8 @@ static int blkio_virtio_blk_connect(BlockDriverState *bs, QDict *options,
+     return 0;
+ }
  
-         case 6: /* RDRAND */
-             if (mod != 3 ||
--                (s->prefix & (PREFIX_LOCK | PREFIX_REPZ | PREFIX_REPNZ)) ||
-+                (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) ||
-                 !(s->cpuid_ext_features & CPUID_EXT_RDRAND)) {
-                 goto illegal_op;
-             }
-@@ -3058,8 +3058,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
+-static int blkio_file_open(BlockDriverState *bs, QDict *options, int flags,
+-                           Error **errp)
++static int blkio_open(BlockDriverState *bs, QDict *options, int flags,
++                      Error **errp)
+ {
+     const char *blkio_driver = bs->drv->protocol_name;
+     BDRVBlkioState *s = bs->opaque;
+@@ -1088,7 +1088,7 @@ static void blkio_refresh_limits(BlockDriverState *bs, Error **errp)
+  */
+ #define BLKIO_DRIVER_COMMON \
+     .instance_size           = sizeof(BDRVBlkioState), \
+-    .bdrv_open               = blkio_file_open, \
++    .bdrv_open               = blkio_open, \
+     .bdrv_close              = blkio_close, \
+     .bdrv_co_getlength       = blkio_co_getlength, \
+     .bdrv_co_truncate        = blkio_truncate, \
+diff --git a/block/null.c b/block/null.c
+index 6fa64d20d86..4730acc1eb2 100644
+--- a/block/null.c
++++ b/block/null.c
+@@ -77,8 +77,8 @@ static void null_aio_parse_filename(const char *filename, QDict *options,
+     }
+ }
  
-         case 0xd0: /* xgetbv */
-             if ((s->cpuid_ext_features & CPUID_EXT_XSAVE) == 0
--                || (s->prefix & (PREFIX_LOCK | PREFIX_DATA
--                                 | PREFIX_REPZ | PREFIX_REPNZ))) {
-+                || (s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
-                 goto illegal_op;
-             }
-             tcg_gen_trunc_tl_i32(s->tmp2_i32, cpu_regs[R_ECX]);
-@@ -3069,8 +3068,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
+-static int null_file_open(BlockDriverState *bs, QDict *options, int flags,
+-                          Error **errp)
++static int null_open(BlockDriverState *bs, QDict *options, int flags,
++                     Error **errp)
+ {
+     QemuOpts *opts;
+     BDRVNullState *s = bs->opaque;
+@@ -283,7 +283,7 @@ static BlockDriver bdrv_null_co = {
+     .protocol_name          = "null-co",
+     .instance_size          = sizeof(BDRVNullState),
  
-         case 0xd1: /* xsetbv */
-             if ((s->cpuid_ext_features & CPUID_EXT_XSAVE) == 0
--                || (s->prefix & (PREFIX_LOCK | PREFIX_DATA
--                                 | PREFIX_REPZ | PREFIX_REPNZ))) {
-+                || (s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ))) {
-                 goto illegal_op;
-             }
-             gen_svm_check_intercept(s, SVM_EXIT_XSETBV);
-@@ -3237,8 +3235,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             gen_st_modrm(s, decode, ot);
-             break;
-         case 0xee: /* rdpkru */
--            if (s->prefix & (PREFIX_LOCK | PREFIX_DATA
--                             | PREFIX_REPZ | PREFIX_REPNZ)) {
-+            if (s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ)) {
-                 goto illegal_op;
-             }
-             tcg_gen_trunc_tl_i32(s->tmp2_i32, cpu_regs[R_ECX]);
-@@ -3246,8 +3243,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             tcg_gen_extr_i64_tl(cpu_regs[R_EAX], cpu_regs[R_EDX], s->tmp1_i64);
-             break;
-         case 0xef: /* wrpkru */
--            if (s->prefix & (PREFIX_LOCK | PREFIX_DATA
--                             | PREFIX_REPZ | PREFIX_REPNZ)) {
-+            if (s->prefix & (PREFIX_DATA | PREFIX_REPZ | PREFIX_REPNZ)) {
-                 goto illegal_op;
-             }
-             tcg_gen_concat_tl_i64(s->tmp1_i64, cpu_regs[R_EAX],
-@@ -3323,7 +3319,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             if (prefixes & PREFIX_REPZ) {
-                 /* bndcl */
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
-@@ -3331,7 +3326,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             } else if (prefixes & PREFIX_REPNZ) {
-                 /* bndcu */
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
-@@ -3345,7 +3339,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-                 }
-                 if (mod == 3) {
-                     int reg2 = (modrm & 7) | REX_B(s);
--                    if (reg2 >= 4 || (prefixes & PREFIX_LOCK)) {
-+                    if (reg2 >= 4) {
-                         goto illegal_op;
-                     }
-                     if (s->flags & HF_MPX_IU_MASK) {
-@@ -3374,7 +3368,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-                 /* bndldx */
-                 AddressParts a = decode->mem;
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16
-                     || a.base < -1) {
-                     goto illegal_op;
-@@ -3410,7 +3403,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             if (mod != 3 && (prefixes & PREFIX_REPZ)) {
-                 /* bndmk */
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
-@@ -3438,7 +3430,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-             } else if (prefixes & PREFIX_REPNZ) {
-                 /* bndcn */
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16) {
-                     goto illegal_op;
-                 }
-@@ -3450,7 +3441,7 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-                 }
-                 if (mod == 3) {
-                     int reg2 = (modrm & 7) | REX_B(s);
--                    if (reg2 >= 4 || (prefixes & PREFIX_LOCK)) {
-+                    if (reg2 >= 4) {
-                         goto illegal_op;
-                     }
-                     if (s->flags & HF_MPX_IU_MASK) {
-@@ -3477,7 +3468,6 @@ static void gen_multi0F(DisasContext *s, X86DecodedInsn *decode)
-                 /* bndstx */
-                 AddressParts a = decode->mem;
-                 if (reg >= 4
--                    || (prefixes & PREFIX_LOCK)
-                     || s->aflag == MO_16
-                     || a.base < -1) {
-                     goto illegal_op;
+-    .bdrv_open              = null_file_open,
++    .bdrv_open              = null_open,
+     .bdrv_parse_filename    = null_co_parse_filename,
+     .bdrv_co_getlength      = null_co_getlength,
+     .bdrv_co_get_allocated_file_size = null_co_get_allocated_file_size,
+@@ -304,7 +304,7 @@ static BlockDriver bdrv_null_aio = {
+     .protocol_name          = "null-aio",
+     .instance_size          = sizeof(BDRVNullState),
+ 
+-    .bdrv_open              = null_file_open,
++    .bdrv_open              = null_open,
+     .bdrv_parse_filename    = null_aio_parse_filename,
+     .bdrv_co_getlength      = null_co_getlength,
+     .bdrv_co_get_allocated_file_size = null_co_get_allocated_file_size,
+diff --git a/block/nvme.c b/block/nvme.c
+index c84914af6dd..3b588b139f6 100644
+--- a/block/nvme.c
++++ b/block/nvme.c
+@@ -889,7 +889,7 @@ out:
+         qemu_vfio_pci_unmap_bar(s->vfio, 0, (void *)regs, 0, sizeof(NvmeBar));
+     }
+ 
+-    /* Cleaning up is done in nvme_file_open() upon error. */
++    /* Cleaning up is done in nvme_open() upon error. */
+     return ret;
+ }
+ 
+@@ -967,8 +967,8 @@ static void nvme_close(BlockDriverState *bs)
+     g_free(s->device);
+ }
+ 
+-static int nvme_file_open(BlockDriverState *bs, QDict *options, int flags,
+-                          Error **errp)
++static int nvme_open(BlockDriverState *bs, QDict *options, int flags,
++                     Error **errp)
+ {
+     const char *device;
+     QemuOpts *opts;
+@@ -1630,7 +1630,7 @@ static BlockDriver bdrv_nvme = {
+     .create_opts              = &bdrv_create_opts_simple,
+ 
+     .bdrv_parse_filename      = nvme_parse_filename,
+-    .bdrv_open                = nvme_file_open,
++    .bdrv_open                = nvme_open,
+     .bdrv_close               = nvme_close,
+     .bdrv_co_getlength        = nvme_co_getlength,
+     .bdrv_probe_blocksizes    = nvme_probe_blocksizes,
+diff --git a/block/ssh.c b/block/ssh.c
+index 1344822ed85..27d582e0e3d 100644
+--- a/block/ssh.c
++++ b/block/ssh.c
+@@ -837,8 +837,8 @@ static int connect_to_ssh(BDRVSSHState *s, BlockdevOptionsSsh *opts,
+     return ret;
+ }
+ 
+-static int ssh_file_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
+-                         Error **errp)
++static int ssh_open(BlockDriverState *bs, QDict *options, int bdrv_flags,
++                    Error **errp)
+ {
+     BDRVSSHState *s = bs->opaque;
+     BlockdevOptionsSsh *opts;
+@@ -1362,7 +1362,7 @@ static BlockDriver bdrv_ssh = {
+     .protocol_name                = "ssh",
+     .instance_size                = sizeof(BDRVSSHState),
+     .bdrv_parse_filename          = ssh_parse_filename,
+-    .bdrv_open                    = ssh_file_open,
++    .bdrv_open                    = ssh_open,
+     .bdrv_co_create               = ssh_co_create,
+     .bdrv_co_create_opts          = ssh_co_create_opts,
+     .bdrv_close                   = ssh_close,
 -- 
 2.45.2
 
