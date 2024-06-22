@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F819C2BB85
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 06:17:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDCC5C27C53
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 06:17:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sKu2p-0008M9-Vh; Sat, 22 Jun 2024 02:16:16 -0400
+	id 1sKu3W-0000Xk-LO; Sat, 22 Jun 2024 02:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKu2n-0008L3-TF
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sKu38-0000JE-Aa
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sKu2m-0006NW-D9
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:13 -0400
+ id 1sKu36-0006Sb-PB
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 02:16:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719036970;
+ s=mimecast20190719; t=1719036991;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=INLXKQAnxyLlbt49tJcziQ4qLBnfUf83esez+1sBRI0=;
- b=BCakeXIB+tk4/AK6zrksoYIzUxK/YnM45SK/xRX5UNNWAUOtBdW62EkKihqimaHnF0PYmv
- P90yY8J8d1I+3mhNHJPIQRoJTZekjdIRmG5sClPs2NluL+CjK1XWjlJokIT9ehmkK/ZPnm
- Ngl0QcFuHO/KEv4uRSMjekZh0SwFdE4=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5vNRpvyeREGd2+Es2hiS7dffvsmxbIt4ClxNcgU2ADU=;
+ b=JpnTIyzFzWRVXwgCw2l3MDNeJQf5XwQy9hHBza2DMIGHsQaxTS2TZhO/bvnPxA5GltshEM
+ hXE98Cuf/sQDahktFW5ndgmKR4U1vMUs8xopVLMR/DRqZIZMj7PlcHxwO3eiECymxR0T2U
+ 9kGJKjAsBV1A+Eizl9L8mDlK40lSydw=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-418-AICYOFVCOVqM91qjriU-qw-1; Sat, 22 Jun 2024 02:16:05 -0400
-X-MC-Unique: AICYOFVCOVqM91qjriU-qw-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-57d3d594107so290192a12.3
- for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 23:16:05 -0700 (PDT)
+ us-mta-483-y7u-Dd76M-qB3uNLrg4fqw-1; Sat, 22 Jun 2024 02:16:29 -0400
+X-MC-Unique: y7u-Dd76M-qB3uNLrg4fqw-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2ec4d8ceaafso12307481fa.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Jun 2024 23:16:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719036963; x=1719641763;
+ d=1e100.net; s=20230601; t=1719036987; x=1719641787;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=INLXKQAnxyLlbt49tJcziQ4qLBnfUf83esez+1sBRI0=;
- b=sera8gBAHJK8F3zE9wfYqjkeRddDb0SG3lPnh+Sjzod0dfSZYYfkkpRZk0Owz0aSrp
- 6P7rJczf1ARl9rV9DTWdc/3ka/CYaxAcUWiV011z2bRXcxOBbm/5jj4JXD/q78xWPKSZ
- LTdo+1Y4nuJYjyJz7QBNIS9vpKzhsSTUSSMohZAo1r/y6QBOKNat1edy1ClljMG9M2Vz
- GpDJ2PEXYkrVnWmi25uQoTB+u7BZQP6WiVord3Qr3pkhJS6BkO9KlFLcDUJBBMGSJv6I
- xqXIgG+2fdG23GcglK0Cj8hZJ+CpSgEnER2K7VJSj3a4zxDogb8n86z6kCm585yTyCy2
- nZ8A==
-X-Gm-Message-State: AOJu0YzhunF8yuGy65VRTbB/3PUH2EauiSr6lwea6+BfRl/u9cgOVoDY
- kwS+cWHclmnOtcK59dxAdtX8f9oT67eRT6rzG7EqdWU1yQrcmnwj+pwQPTSmT2PJy29tqowl1XK
- wSODyMOQYTahKkFU3/6dTIHjQUmLNaZXfAmOHEHEGGCwGL3FJn8qZ01ZldhXTgAps5T6QQgKZJh
- KfuJqDOSNsmUr6lZ+HvnzMPl0+bhIXS14FIQR4
-X-Received: by 2002:a05:6402:3414:b0:57c:a7dc:b0de with SMTP id
- 4fb4d7f45d1cf-57d07ee7906mr6298000a12.39.1719036963138; 
- Fri, 21 Jun 2024 23:16:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2G9v2ZubQK1ejU9FzinfQaoHLrZcGHxLd1CquQiKPYAfYT3Eg7IeWX8gx84fL5r2osgjo9A==
-X-Received: by 2002:a05:6402:3414:b0:57c:a7dc:b0de with SMTP id
- 4fb4d7f45d1cf-57d07ee7906mr6297984a12.39.1719036962576; 
- Fri, 21 Jun 2024 23:16:02 -0700 (PDT)
+ bh=5vNRpvyeREGd2+Es2hiS7dffvsmxbIt4ClxNcgU2ADU=;
+ b=b/sybDdxMvvSYF70A+GpM1y0PBci/AkJcjD/w1BRjDTD+j1U6oN8Qxq3PpTZbHwD3i
+ VKLgtEdFsi013NMfCDatdMXM2pU305jo1JEWvrBFglOayoxGGSkzKKM/zaP5piSmwukG
+ yWV9Ekhb3Q1OclCY7RqbSNYVadIRU1kV6XGuV/dNkFoRmQN8WX8qFwtgXUSNwD4+dfaP
+ pco3jQrj9LuqrWXYxlE0Zcot3jnWcDwn1jPvXLwXYnTzxHyv+QCrVwY3YucuA28kxmIa
+ 4gsWEC88r/4Q7s6O/cdtgiEt1DLHOyAx9HfdD59TRgVpHBkoM4XiKi7AdeVQjto3Ilc0
+ oueg==
+X-Gm-Message-State: AOJu0YxZW8Ir0aKteR6GdJWY88Km2jFU/g/TdTO8snqwaQusqZDKny58
+ nFDU4MzMcU5ocmhRO48CCsvwo5obSROlRoUgXGoy3cNEg0DtLxV546OY02zl3XxjrR1kM+AkCua
+ oAwJaqPoqSfOUT4kzGtC6ENDVowbFGJKg5mvnF/ftzImIsb4uNzElIAzNu+AmSDmU/V2HNknOcK
+ SpyFQ2w8uGPA7TpdAJPkIy6t5OFJrKYhwohdOH
+X-Received: by 2002:a2e:96cc:0:b0:2ec:557b:f895 with SMTP id
+ 38308e7fff4ca-2ec557bfab4mr5533061fa.31.1719036987589; 
+ Fri, 21 Jun 2024 23:16:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6CNSDGL1xiQLRV3OZNnfNG1Laocq/PtTs6TJd4VMyG71n6LUmQDCTUzPFaFr7uymUUhKIDw==
+X-Received: by 2002:a2e:96cc:0:b0:2ec:557b:f895 with SMTP id
+ 38308e7fff4ca-2ec557bfab4mr5532921fa.31.1719036987199; 
+ Fri, 21 Jun 2024 23:16:27 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57d3042d509sm1924241a12.43.2024.06.21.23.16.00
+ a640c23a62f3a-a6fcf560ad2sm158976166b.173.2024.06.21.23.16.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Jun 2024 23:16:01 -0700 (PDT)
+ Fri, 21 Jun 2024 23:16:25 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 01/23] configure: detect --cpu=mipsisa64r6
-Date: Sat, 22 Jun 2024 08:15:35 +0200
-Message-ID: <20240622061558.530543-2-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 11/23] target/i386: assert that cc_op* and pc_save are preserved
+Date: Sat, 22 Jun 2024 08:15:45 +0200
+Message-ID: <20240622061558.530543-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240622061558.530543-1-pbonzini@redhat.com>
 References: <20240622061558.530543-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -104,28 +102,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Treat it as a MIPS64 machine.
+Now all decoding has been done before any code generation.
+There is no need anymore to save and restore cc_op* and
+pc_save but, for the time being, assert that this is indeed
+the case.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- configure | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/tcg/translate.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/configure b/configure
-index 5ad1674ca5f..8b6a2f16ceb 100755
---- a/configure
-+++ b/configure
-@@ -450,7 +450,7 @@ case "$cpu" in
-     linux_arch=loongarch
-     ;;
- 
--  mips64*)
-+  mips64*|mipsisa64*)
-     cpu=mips64
-     host_arch=mips
-     linux_arch=mips
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 501a1ef9313..d11c5e1dc13 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -3709,15 +3709,9 @@ static void i386_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+     case 2:
+         /* Restore state that may affect the next instruction. */
+         dc->pc = dc->base.pc_next;
+-        /*
+-         * TODO: These save/restore can be removed after the table-based
+-         * decoder is complete; we will be decoding the insn completely
+-         * before any code generation that might affect these variables.
+-         */
+-        dc->cc_op_dirty = orig_cc_op_dirty;
+-        dc->cc_op = orig_cc_op;
+-        dc->pc_save = orig_pc_save;
+-        /* END TODO */
++        assert(dc->cc_op_dirty == orig_cc_op_dirty);
++        assert(dc->cc_op == orig_cc_op);
++        assert(dc->pc_save == orig_pc_save);
+         dc->base.num_insns--;
+         tcg_remove_ops_after(dc->prev_insn_end);
+         dc->base.insn_start = dc->prev_insn_start;
 -- 
 2.45.2
 
