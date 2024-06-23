@@ -4,78 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE580C2BD09
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 02:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2DBFC27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 05:46:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLDFJ-00083E-SC; Sat, 22 Jun 2024 22:46:25 -0400
+	id 1sLG2M-0005vE-31; Sun, 23 Jun 2024 01:45:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1sLDFI-00082u-8V
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 22:46:24 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sLG2H-0005uw-8S
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 01:45:09 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
- id 1sLDFG-0000Is-Ie
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 22:46:24 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f4a5344ec7so21662265ad.1
- for <qemu-devel@nongnu.org>; Sat, 22 Jun 2024 19:46:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sLG2F-0000u6-6w
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 01:45:09 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2c7a6da20f2so2654442a91.0
+ for <qemu-devel@nongnu.org>; Sat, 22 Jun 2024 22:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719110780; x=1719715580; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=AZP/WdcdmHmYxpaWrBiM0FoLrhAiPW6xvRvl4Nh7Rf4=;
- b=LvI/2ZtdnxXDBWABJPIdfUGJgZYa+W3dcJdt2loO3XzZ53IFSXkKHaKW+2mOPWVNql
- vk4EQnnWhk5VSDMZ09/cRWkiEeUAmmpbMpleSmMwIC8MuNkjsN1kHy2ZDiILd3w2Ma0P
- OR9IT+/iw4Wj4DDm9N8vWYL2pl0cCFtkK0QmKnGzllW1lXTk3LhlPJi+0vXYzAVliSuK
- IwhCPGppR3Z5EuxNgUHioPMElXWD4F+Kz/ESsOUvnpVa6vFcPDnmgb0gw6SbvC4KZz7t
- AJibiGkPREjVxc+PbXgdGAY/JWSyCiAza0vb1UKe14MVCpl2CjTTLmigkAgL2pm3bdWS
- vOtQ==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719121505; x=1719726305;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7H7+G3pYIGPwXLN6p4bMkrC+Z5RldzGH2+dG6pMRikQ=;
+ b=f+OHAqxnUoIk9NlW4qgYZmNhn+c/QtR0KdVzYAh8Nro6oVqKXSqu7AfLMg/8q5zZj6
+ yrODxHkVybxMk2xJY6CEzpz2llBvpXvi4pliDWJL0qE9Qy2xpZnUOO8wB0+ZUzZxCfx5
+ vkHilhUrPBqu2qNg/wBTwMzMFEWr8KjyWgMRx7lE+YBIeAyKPchSddPxOSP9fJE3ApXq
+ wvrklPXtNzXjPXL/oriNTAxIteV2e8NVe7dnX5lJ2HWPW3WN3gpa6O2azt5Ng6pqz+Q/
+ 4iW5LUhaRT2lq/T2w3BtrB5zKLzzZUeKMPRuY/HJIhi+XAm+LmHyx7MD1bQRDTH0qKMg
+ nJeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719110780; x=1719715580;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AZP/WdcdmHmYxpaWrBiM0FoLrhAiPW6xvRvl4Nh7Rf4=;
- b=XfZh+6u0XEyCbxC/u50KHSlxK+WpS3GSq0NOuKKeX5YfMi31DK9xV4wW2PJ8/2YOSz
- be+fEpLL3LY5bbcTDoGgbsF+wSbFnN7CQcY7Wdd9ey/PaRZKT/EVUVZBwB1avIzFIYFN
- TJ/HWB8FzYAdwsmEZSdt9ZFnPG/FvoYsMiBEDc7CHeCp8/+T9Io9ul6fJixBHYN9wyKl
- q3MbdwnAicg8e5X8CNvldE59J7IAezgxn9MGNTWKJy1B0TEmMe+mYemSY7Mzv41mcjMP
- xaLdNfexTz2Q+LdMqkJBA5MqyT/gzJEqNY+M4/Cr0RsBtrWxsY9Td0Je4iDt4GUWD0FR
- vgeg==
-X-Gm-Message-State: AOJu0YxMkjXGtqRO7MlKl1GwgkRG7/9yI0iJ/PoopWXpNnkYdaQctqtu
- rtFOG2sXoCnFcCS+8XcnYgg0gSoT38FTc6zCUvZLM04RvyK2EdJO
-X-Google-Smtp-Source: AGHT+IEnb6drM7t/fSd9xsk1lX///NZUDSNw1TNNSFM9dfgKK7tzvXj1BUxs1Nkfi2ISQpVIkkupFQ==
-X-Received: by 2002:a17:902:e850:b0:1fa:2c79:7504 with SMTP id
- d9443c01a7336-1fa2c797598mr6322955ad.48.1719110780417; 
- Sat, 22 Jun 2024 19:46:20 -0700 (PDT)
-Received: from localhost ([116.121.76.56]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb3c8b5dsm37627625ad.181.2024.06.22.19.46.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 22 Jun 2024 19:46:19 -0700 (PDT)
-From: Minwoo Im <minwoo.im.dev@gmail.com>
-To: Jeuk Kim <jeuk20.kim@samsung.com>
-Cc: qemu-devel@nongnu.org, Minwoo Im <minwoo.im@samsung.com>,
- Minwoo Im <minwoo.im.dev@gmail.com>, Jeuk Kim <jeuk20.kim@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH] hw/ufs: Fix potential bugs in MMIO read|write
-Date: Sun, 23 Jun 2024 11:45:55 +0900
-Message-Id: <20240623024555.78697-1-minwoo.im.dev@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1719121505; x=1719726305;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7H7+G3pYIGPwXLN6p4bMkrC+Z5RldzGH2+dG6pMRikQ=;
+ b=ffZGuuMwtkuzBUo3mKyLHaJ/6DScbuKGcB++dRDZZi2r9kacEw65uMjB84TB0ONKbk
+ 0uU92tEKSRvG4a6g676qmIP/eokybEyEupxDImhCkH0la6GgP+fWds98LoCnctwvX/Sl
+ fhbirNUG9Jd2KB+M3dnO0twchnrLP2Ujy7zA15kHFCGqxIP4yOBJj6EKXaXykXcHdci0
+ xk7FlKGVDsOT6n5jR+V2YlmU2Akp5GCbH81wQwqWKCZN+onoBCkyzZSOpFU46lbdK1O9
+ fS7w4urvOkc/nDnPRYV0RT+zzG3yOVnpy+losS7Ub9aKSiWEKEDXnxQWGFIEj2aTGEkJ
+ T3aw==
+X-Gm-Message-State: AOJu0YzQCXDwkrle0VCLVaQ7Qlk783Vm5sdE8eOtFzO7XHKtPtGMnxXR
+ lNlKY2o3bDDtuaW/QyKWPivEhvZ4C8XQFYIGTosTD9mx0G6ZmJi3JllPuo1HVTU=
+X-Google-Smtp-Source: AGHT+IGg3ZvhMn8BoBVYicJMN+qXrrvNREgnCOLUu2heMWIak0KmBLUGBjguRgrjByfChRo4mi/hbA==
+X-Received: by 2002:a17:90a:610:b0:2c3:1937:3042 with SMTP id
+ 98e67ed59e1d1-2c8504c7eedmr1635382a91.5.1719121505091; 
+ Sat, 22 Jun 2024 22:45:05 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c819a76ccasm4269118a91.13.2024.06.22.22.45.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 22 Jun 2024 22:45:04 -0700 (PDT)
+Message-ID: <5054323e-6b23-4858-b8e5-7d498c2e6521@daynix.com>
+Date: Sun, 23 Jun 2024 14:44:58 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=minwoo.im.dev@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 10/14] virtio-gpu: Support blob scanout using dmabuf fd
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
+ <20240622215511.154763-11-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240622215511.154763-11-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,98 +115,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch fixes two points reported in coverity scan report [1].  Check
-the MMIO access address with (addr + size), not just with the start offset
-addr to make sure that the requested memory access not to exceed the
-actual register region.  We also updated (uint8_t *) to (uint32_t *) to
-represent we are accessing the MMIO registers by dword-sized only.
+On 2024/06/23 6:55, Dmitry Osipenko wrote:
+> From: Robert Beckett <bob.beckett@collabora.com>
+> 
+> Support displaying blob resources by handling SET_SCANOUT_BLOB
+> command.
+> 
+> Signed-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+> Signed-off-by: Robert Beckett <bob.beckett@collabora.com>
+> Signed-off-by: Huang Rui <ray.huang@amd.com>
+> Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   hw/display/virtio-gpu-virgl.c  | 109 +++++++++++++++++++++++++++++++++
+>   hw/display/virtio-gpu.c        |  12 ++--
+>   include/hw/virtio/virtio-gpu.h |   7 +++
+>   3 files changed, 122 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 3ffea478e723..60befab7efc2 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -17,6 +17,8 @@
+>   #include "trace.h"
+>   #include "hw/virtio/virtio.h"
+>   #include "hw/virtio/virtio-gpu.h"
+> +#include "hw/virtio/virtio-gpu-bswap.h"
+> +#include "hw/virtio/virtio-gpu-pixman.h"
+>   
+>   #include "ui/egl-helpers.h"
+>   
+> @@ -78,6 +80,7 @@ static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
+>       res->base.height = c2d.height;
+>       res->base.format = c2d.format;
+>       res->base.resource_id = c2d.resource_id;
+> +    res->base.dmabuf_fd = -1;
+>       QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
+>   
+>       args.handle = c2d.resource_id;
+> @@ -125,6 +128,7 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+>       res->base.height = c3d.height;
+>       res->base.format = c3d.format;
+>       res->base.resource_id = c3d.resource_id;
+> +    res->base.dmabuf_fd = -1;
+>       QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
+>   
+>       args.handle = c3d.resource_id;
+> @@ -509,6 +513,106 @@ static void virgl_cmd_get_capset(VirtIOGPU *g,
+>       g_free(resp);
+>   }
+>   
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
+> +                                       struct virtio_gpu_ctrl_command *cmd)
+> +{
+> +    struct virtio_gpu_framebuffer fb = { 0 };
+> +    struct virgl_renderer_resource_info info;
+> +    struct virtio_gpu_virgl_resource *res;
+> +    struct virtio_gpu_set_scanout_blob ss;
+> +    uint64_t fbend;
+> +
+> +    VIRTIO_GPU_FILL_CMD(ss);
+> +    virtio_gpu_scanout_blob_bswap(&ss);
+> +    trace_virtio_gpu_cmd_set_scanout_blob(ss.scanout_id, ss.resource_id,
+> +                                          ss.r.width, ss.r.height, ss.r.x,
+> +                                          ss.r.y);
+> +
+> +    if (ss.scanout_id >= g->parent_obj.conf.max_outputs) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout id specified %d",
+> +                      __func__, ss.scanout_id);
+> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_SCANOUT_ID;
+> +        return;
+> +    }
+> +
+> +    if (ss.resource_id == 0) {
+> +        virtio_gpu_disable_scanout(g, ss.scanout_id);
+> +        return;
+> +    }
+> +
+> +    if (ss.width < 16 ||
+> +        ss.height < 16 ||
+> +        ss.r.x + ss.r.width > ss.width ||
+> +        ss.r.y + ss.r.height > ss.height) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds for"
+> +                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
+> +                      __func__, ss.scanout_id, ss.resource_id,
+> +                      ss.r.x, ss.r.y, ss.r.width, ss.r.height,
+> +                      ss.width, ss.height);
+> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+> +        return;
+> +    }
+> +
+> +    res = virtio_gpu_virgl_find_resource(g, ss.resource_id);
+> +    if (!res) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not exist %d\n",
+> +                      __func__, ss.resource_id);
+> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+> +        return;
+> +    }
+> +    if (virgl_renderer_resource_get_info(ss.resource_id, &info)) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not have info %d\n",
+> +                      __func__, ss.resource_id);
+> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+> +        return;
+> +    }
+> +    if (res->base.dmabuf_fd < 0) {
+> +        res->base.dmabuf_fd = info.fd;
 
-[1] https://lore.kernel.org/qemu-devel/CAFEAcA82L-WZnHMW0X+Dr40bHM-EVq2ZH4DG4pdqop4xxDP2Og@mail.gmail.com/
+Just in case you missed my previous email:
+ > res->base.dmabuf_fd is conditionally assigned but
+ > virgl_renderer_resource_get_info() is called unconditionally, which is
+ > inconsistent.
 
-Cc: Jeuk Kim <jeuk20.kim@gmail.com>
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Minwoo Im <minwoo.im.dev@gmail.com>
----
- hw/ufs/ufs.c | 31 ++++++++++++++++---------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
-
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 71a88d221ced..bf2ff02ac6e5 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -55,17 +55,18 @@ static inline uint64_t ufs_reg_size(UfsHc *u)
-     return ufs_mcq_op_reg_addr(u, 0) + sizeof(u->mcq_op_reg);
- }
- 
--static inline bool ufs_is_mcq_reg(UfsHc *u, uint64_t addr)
-+static inline bool ufs_is_mcq_reg(UfsHc *u, uint64_t addr, unsigned size)
- {
-     uint64_t mcq_reg_addr = ufs_mcq_reg_addr(u, 0);
--    return addr >= mcq_reg_addr && addr < mcq_reg_addr + sizeof(u->mcq_reg);
-+    return (addr >= mcq_reg_addr &&
-+            addr + size <= mcq_reg_addr + sizeof(u->mcq_reg));
- }
- 
--static inline bool ufs_is_mcq_op_reg(UfsHc *u, uint64_t addr)
-+static inline bool ufs_is_mcq_op_reg(UfsHc *u, uint64_t addr, unsigned size)
- {
-     uint64_t mcq_op_reg_addr = ufs_mcq_op_reg_addr(u, 0);
-     return (addr >= mcq_op_reg_addr &&
--            addr < mcq_op_reg_addr + sizeof(u->mcq_op_reg));
-+            addr  + size <= mcq_op_reg_addr + sizeof(u->mcq_op_reg));
- }
- 
- static MemTxResult ufs_addr_read(UfsHc *u, hwaddr addr, void *buf, int size)
-@@ -774,25 +775,25 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
- static uint64_t ufs_mmio_read(void *opaque, hwaddr addr, unsigned size)
- {
-     UfsHc *u = (UfsHc *)opaque;
--    uint8_t *ptr;
-+    uint32_t *ptr;
-     uint64_t value;
-     uint64_t offset;
- 
--    if (addr < sizeof(u->reg)) {
-+    if (addr + size <= sizeof(u->reg)) {
-         offset = addr;
--        ptr = (uint8_t *)&u->reg;
--    } else if (ufs_is_mcq_reg(u, addr)) {
-+        ptr = (uint32_t *)&u->reg;
-+    } else if (ufs_is_mcq_reg(u, addr, size)) {
-         offset = addr - ufs_mcq_reg_addr(u, 0);
--        ptr = (uint8_t *)&u->mcq_reg;
--    } else if (ufs_is_mcq_op_reg(u, addr)) {
-+        ptr = (uint32_t *)&u->mcq_reg;
-+    } else if (ufs_is_mcq_op_reg(u, addr, size)) {
-         offset = addr - ufs_mcq_op_reg_addr(u, 0);
--        ptr = (uint8_t *)&u->mcq_op_reg;
-+        ptr = (uint32_t *)&u->mcq_op_reg;
-     } else {
-         trace_ufs_err_invalid_register_offset(addr);
-         return 0;
-     }
- 
--    value = *(uint32_t *)(ptr + offset);
-+    value = ptr[offset >> 2];
-     trace_ufs_mmio_read(addr, value, size);
-     return value;
- }
-@@ -804,11 +805,11 @@ static void ufs_mmio_write(void *opaque, hwaddr addr, uint64_t data,
- 
-     trace_ufs_mmio_write(addr, data, size);
- 
--    if (addr < sizeof(u->reg)) {
-+    if (addr + size <= sizeof(u->reg)) {
-         ufs_write_reg(u, addr, data, size);
--    } else if (ufs_is_mcq_reg(u, addr)) {
-+    } else if (ufs_is_mcq_reg(u, addr, size)) {
-         ufs_write_mcq_reg(u, addr - ufs_mcq_reg_addr(u, 0), data, size);
--    } else if (ufs_is_mcq_op_reg(u, addr)) {
-+    } else if (ufs_is_mcq_op_reg(u, addr, size)) {
-         ufs_write_mcq_op_reg(u, addr - ufs_mcq_op_reg_addr(u, 0), data, size);
-     } else {
-         trace_ufs_err_invalid_register_offset(addr);
--- 
-2.34.1
-
+ > The relevant code is better to be moved into
+ > virgl_cmd_resource_create_blob() for consistenty with
+ > virtio_gpu_resource_create_blob().
 
