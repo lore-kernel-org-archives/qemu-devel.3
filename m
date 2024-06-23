@@ -4,79 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA26EC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 13:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59015C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 15:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLMpc-00038E-UA; Sun, 23 Jun 2024 09:00:32 -0400
+	id 1sLOsj-00008t-1a; Sun, 23 Jun 2024 11:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sLMpS-00036m-Pt
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 09:00:25 -0400
-Received: from madrid.collaboradmins.com ([46.235.227.194])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sLOsi-00008i-0R
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 11:11:52 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sLMpQ-00077d-IT
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 09:00:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1719147616;
- bh=KZNMfH0731ceSOSoB1Px/Y+CdznOMIA78lZrOXCWtLc=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=CTWYZFoeEtl6fRXgBdK1DevGdxd+1+WFl2g8/CtWDO8MT2hIDiYbCKPM59TcMjKMc
- isn4RU4MdFH4DcchjKGY4H110Myu4uSRD74KWVMVZSV2ypSiENIYrGXG0OxSgsgXk+
- zBae8AqijO/nKQFjgiu/MFojVGa4jYZiMF/mxAMDVkiRmZ+uf2gBzsccU2R9RQey8K
- KKQrq0s1Oi2Q49DRqr95NNUf6AvJwE43vY9GbPQwkyp7gdMeVW/yuendjGJagPo9+4
- h0obpn4xXM///JZM8psU1w7G+JnEuuOqc4MSDw7ZS1dssvUYGmWPaBVLSS1FNEbwSb
- a5jZ8ETnaitqw==
-Received: from [100.109.49.129] (cola.collaboradmins.com [195.201.22.229])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id EBB4D37809D2;
- Sun, 23 Jun 2024 13:00:14 +0000 (UTC)
-Message-ID: <4024a6d2-bbe2-4675-9f39-57f22025fc45@collabora.com>
-Date: Sun, 23 Jun 2024 16:00:12 +0300
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sLOse-0001F3-JH
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 11:11:51 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3DF564E6001;
+ Sun, 23 Jun 2024 17:11:44 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id I17b5quDWH91; Sun, 23 Jun 2024 17:11:42 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 4308D4E6000; Sun, 23 Jun 2024 17:11:42 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 41462746E3B;
+ Sun, 23 Jun 2024 17:11:42 +0200 (CEST)
+Date: Sun, 23 Jun 2024 17:11:42 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+cc: qemu-devel@nongnu.org, laurent@vivier.eu
+Subject: Re: [PATCH 1/2] target/m68k: implement do_unaligned_access callback
+ for m68k CPUs
+In-Reply-To: <20240623115704.315645-2-mark.cave-ayland@ilande.co.uk>
+Message-ID: <fa494396-c0a8-3799-92c4-b9832dc3445b@eik.bme.hu>
+References: <20240623115704.315645-1-mark.cave-ayland@ilande.co.uk>
+ <20240623115704.315645-2-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 10/14] virtio-gpu: Support blob scanout using dmabuf fd
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
- <20240622215511.154763-11-dmitry.osipenko@collabora.com>
- <5054323e-6b23-4858-b8e5-7d498c2e6521@daynix.com>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <5054323e-6b23-4858-b8e5-7d498c2e6521@daynix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=46.235.227.194;
- envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,132 +66,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/24 08:44, Akihiko Odaki wrote:
-> On 2024/06/23 6:55, Dmitry Osipenko wrote:
->> From: Robert Beckett <bob.beckett@collabora.com>
->>
->> Support displaying blob resources by handling SET_SCANOUT_BLOB
->> command.
->>
->> Signed-by: Antonio Caggiano <antonio.caggiano@collabora.com>
->> Signed-off-by: Robert Beckett <bob.beckett@collabora.com>
->> Signed-off-by: Huang Rui <ray.huang@amd.com>
->> Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
->> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> ---
->>   hw/display/virtio-gpu-virgl.c  | 109 +++++++++++++++++++++++++++++++++
->>   hw/display/virtio-gpu.c        |  12 ++--
->>   include/hw/virtio/virtio-gpu.h |   7 +++
->>   3 files changed, 122 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/display/virtio-gpu-virgl.c
->> b/hw/display/virtio-gpu-virgl.c
->> index 3ffea478e723..60befab7efc2 100644
->> --- a/hw/display/virtio-gpu-virgl.c
->> +++ b/hw/display/virtio-gpu-virgl.c
->> @@ -17,6 +17,8 @@
->>   #include "trace.h"
->>   #include "hw/virtio/virtio.h"
->>   #include "hw/virtio/virtio-gpu.h"
->> +#include "hw/virtio/virtio-gpu-bswap.h"
->> +#include "hw/virtio/virtio-gpu-pixman.h"
->>     #include "ui/egl-helpers.h"
->>   @@ -78,6 +80,7 @@ static void virgl_cmd_create_resource_2d(VirtIOGPU
->> *g,
->>       res->base.height = c2d.height;
->>       res->base.format = c2d.format;
->>       res->base.resource_id = c2d.resource_id;
->> +    res->base.dmabuf_fd = -1;
->>       QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
->>         args.handle = c2d.resource_id;
->> @@ -125,6 +128,7 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU
->> *g,
->>       res->base.height = c3d.height;
->>       res->base.format = c3d.format;
->>       res->base.resource_id = c3d.resource_id;
->> +    res->base.dmabuf_fd = -1;
->>       QTAILQ_INSERT_HEAD(&g->reslist, &res->base, next);
->>         args.handle = c3d.resource_id;
->> @@ -509,6 +513,106 @@ static void virgl_cmd_get_capset(VirtIOGPU *g,
->>       g_free(resp);
->>   }
->>   +#if VIRGL_VERSION_MAJOR >= 1
->> +static void virgl_cmd_set_scanout_blob(VirtIOGPU *g,
->> +                                       struct virtio_gpu_ctrl_command
->> *cmd)
->> +{
->> +    struct virtio_gpu_framebuffer fb = { 0 };
->> +    struct virgl_renderer_resource_info info;
->> +    struct virtio_gpu_virgl_resource *res;
->> +    struct virtio_gpu_set_scanout_blob ss;
->> +    uint64_t fbend;
->> +
->> +    VIRTIO_GPU_FILL_CMD(ss);
->> +    virtio_gpu_scanout_blob_bswap(&ss);
->> +    trace_virtio_gpu_cmd_set_scanout_blob(ss.scanout_id, ss.resource_id,
->> +                                          ss.r.width, ss.r.height,
->> ss.r.x,
->> +                                          ss.r.y);
->> +
->> +    if (ss.scanout_id >= g->parent_obj.conf.max_outputs) {
->> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout id
->> specified %d",
->> +                      __func__, ss.scanout_id);
->> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_SCANOUT_ID;
->> +        return;
->> +    }
->> +
->> +    if (ss.resource_id == 0) {
->> +        virtio_gpu_disable_scanout(g, ss.scanout_id);
->> +        return;
->> +    }
->> +
->> +    if (ss.width < 16 ||
->> +        ss.height < 16 ||
->> +        ss.r.x + ss.r.width > ss.width ||
->> +        ss.r.y + ss.r.height > ss.height) {
->> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: illegal scanout %d bounds
->> for"
->> +                      " resource %d, rect (%d,%d)+%d,%d, fb %d %d\n",
->> +                      __func__, ss.scanout_id, ss.resource_id,
->> +                      ss.r.x, ss.r.y, ss.r.width, ss.r.height,
->> +                      ss.width, ss.height);
->> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
->> +        return;
->> +    }
->> +
->> +    res = virtio_gpu_virgl_find_resource(g, ss.resource_id);
->> +    if (!res) {
->> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not exist
->> %d\n",
->> +                      __func__, ss.resource_id);
->> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
->> +        return;
->> +    }
->> +    if (virgl_renderer_resource_get_info(ss.resource_id, &info)) {
->> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: resource does not have
->> info %d\n",
->> +                      __func__, ss.resource_id);
->> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
->> +        return;
->> +    }
->> +    if (res->base.dmabuf_fd < 0) {
->> +        res->base.dmabuf_fd = info.fd;
-> 
-> Just in case you missed my previous email:
->> res->base.dmabuf_fd is conditionally assigned but
->> virgl_renderer_resource_get_info() is called unconditionally, which is
->> inconsistent.
-> 
->> The relevant code is better to be moved into
->> virgl_cmd_resource_create_blob() for consistenty with
->> virtio_gpu_resource_create_blob().
+On Sun, 23 Jun 2024, Mark Cave-Ayland wrote:
+> For m68k CPUs that do not support unaligned accesses, any such access should
+> cause the CPU to raise an Address Error exception.
+>
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+> target/m68k/cpu.c       |  1 +
+> target/m68k/cpu.h       |  4 ++++
+> target/m68k/op_helper.c | 11 +++++++++++
+> 3 files changed, 16 insertions(+)
+>
+> diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+> index efd6bbded8..25e95f9f68 100644
+> --- a/target/m68k/cpu.c
+> +++ b/target/m68k/cpu.c
+> @@ -538,6 +538,7 @@ static const TCGCPUOps m68k_tcg_ops = {
+>     .cpu_exec_interrupt = m68k_cpu_exec_interrupt,
+>     .do_interrupt = m68k_cpu_do_interrupt,
+>     .do_transaction_failed = m68k_cpu_transaction_failed,
+> +    .do_unaligned_access = m68k_cpu_do_unaligned_access,
+> #endif /* !CONFIG_USER_ONLY */
 
-Right, I squashed this change into patch #12 instead of #10 by mistake.
-Will fix it shortly, thanks for the review!
+Why is it sysemu only? Shouldn't user mode cpu only emulation do the same? 
+I also don't get how this is restricted to pre 68020 CPUs or account for 
+differences between data and inst fetch on 20+ but I may be missing 
+somerhing as I don't know this code or 68k behaviour well. So this is just 
+a question, I'm not saying it's wrong but I don't understand why it's 
+right.
 
--- 
-Best regards,
-Dmitry
+Regards,
+BALATON Zoltan
 
+> };
+>
+> diff --git a/target/m68k/cpu.h b/target/m68k/cpu.h
+> index b5bbeedb7a..d4c9531b1c 100644
+> --- a/target/m68k/cpu.h
+> +++ b/target/m68k/cpu.h
+> @@ -590,6 +590,10 @@ void m68k_cpu_transaction_failed(CPUState *cs, hwaddr physaddr, vaddr addr,
+>                                  unsigned size, MMUAccessType access_type,
+>                                  int mmu_idx, MemTxAttrs attrs,
+>                                  MemTxResult response, uintptr_t retaddr);
+> +G_NORETURN void m68k_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+> +                                             MMUAccessType access_type,
+> +                                             int mmu_idx,
+> +                                             uintptr_t retaddr);
+> #endif
+>
+> #include "exec/cpu-all.h"
+> diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+> index 15bad5dd46..417b691d8d 100644
+> --- a/target/m68k/op_helper.c
+> +++ b/target/m68k/op_helper.c
+> @@ -558,6 +558,17 @@ raise_exception_format2(CPUM68KState *env, int tt, int ilen, uintptr_t raddr)
+>     cpu_loop_exit(cs);
+> }
+>
+> +#if !defined(CONFIG_USER_ONLY)
+> +G_NORETURN void m68k_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+> +                                             MMUAccessType access_type,
+> +                                             int mmu_idx, uintptr_t retaddr)
+> +{
+> +    CPUM68KState *env = cpu_env(cs);
+> +
+> +    raise_exception(env, EXCP_ADDRESS);
+> +}
+> +#endif
+> +
+> void HELPER(divuw)(CPUM68KState *env, int destr, uint32_t den, int ilen)
+> {
+>     uint32_t num = env->dregs[destr];
+>
 
