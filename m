@@ -4,83 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8884C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 16:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE795C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 16:45:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLQ7E-0003RD-UR; Sun, 23 Jun 2024 12:30:56 -0400
+	id 1sLQKj-0008S8-R1; Sun, 23 Jun 2024 12:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sLQ7D-0003R3-9g
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 12:30:55 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sLQKi-0008Rv-Gc
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 12:44:52 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sLQ7B-0006MM-K6
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 12:30:55 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2c7ecfc9e22so2441227a91.0
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 09:30:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sLQKg-0000kk-HQ
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 12:44:51 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42249a4f9e4so26875275e9.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 09:44:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719160250; x=1719765050; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=a2jnsvTvmDSabvV6yr8s15mB7EM1fJWOURwfeJiQrjE=;
- b=a9MQH/9pw5QlWaoR4Kklt7xZmRVpB0O98b/V+lytx1u58DcZRrikNLQrS6lFt+fHb/
- BGxBXjWQbcgV/ix2RWgTHfLBT2qmNIUVCfeNA1w30J4S1+sBD1p2KNIhBjtwD2Hy92Ps
- dHcnjMKcyGw+wUN0jaUnLMYQt8drZ1JuswFKfLVDGK5cVnyL8np2H6SpIQ34iac1kqui
- csq9RgcYL3xFhhWjCt27XEEwjLl69mwcaR0E114ZOYpUlxvc1yo4TxKLTyGWRbT3dXdO
- Rj03ySAQihn99FRIpUqRvP5PxC44WjOVftc/ur9sbGF16re/UlceGZ6x97AypOeFo5sL
- pEBQ==
+ d=linaro.org; s=google; t=1719161088; x=1719765888; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=oXckr5Y9kkzuYG8mMNW7vWG+orp8g2PjYPACq0a8NR8=;
+ b=HVDSb8FDPLxvWmnp1JloixcWfZPk1cC22rHvU1ZOFkY/VfpPwllYrTwSJ1XOlU3YYS
+ 1DU6vc9mteu/NqDDG9ldgTgG9M0KD43hmor1UxsurnExaN1V7VxbhNnlKcOwYfq3Mkfh
+ mPvxxp03SqznQAcrMLHKfVn79dfwzLevHwMw7LQyRPKN2V2tKpQBXFHi9Za8ypcued5Y
+ FrS8iztnR23T3Yjj61ZUZz3/1TfYYkDun9LtMHJbHNH14Su0uez8YQmPQeBTInhORYma
+ f4MOq0wl+zQAmriG6Zrjfz5IvRXCL9RIxcKXtX9OXqyClXhDkqRsVKj5SAbhs4TbrIbh
+ e7ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719160250; x=1719765050;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a2jnsvTvmDSabvV6yr8s15mB7EM1fJWOURwfeJiQrjE=;
- b=XJPB4PdUkVVvMtw4ZDG4vZ//PtklMEUWG9EqD/j2Ah4HUZYLvq3rarQXpHB3Ny4OqE
- ZbAgIi1LbQuhQfyGbm2Gj2J02bemQVlY2MFfMQsPb57VPPAoNWlIBh3RL1XQ2xGI51HT
- 2lJutYG4Vs4ljFLMTQbJrWjbkbV0huBem6+wCcFLYvZA0OoVVdxfYH46aVQhU6ojcgtB
- N9gpL901JxxQ/VLrAzBlOKAI3jZT+ZsA1LArOo9KKilROIc+AeOxhRd+VLtISL+K7C4V
- c65YSvs6XvDP4LSJjm36INoEMcTXu1bcvaYSTv61Mv6sflk4IVgB3AkTXNhutHZz6Jl7
- gaRA==
+ d=1e100.net; s=20230601; t=1719161088; x=1719765888;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oXckr5Y9kkzuYG8mMNW7vWG+orp8g2PjYPACq0a8NR8=;
+ b=diFChV6LGQ2HdpaafZjtbgTSJ5w7iEYcCuVfhFJKEqOHkbnVicJcJQNqWjuOOLoSwf
+ su34EYL3xxrAeeQpsae5flF16Ns+yiJTXZo+BHiXFKvn9Xeu6TB5tlEwIk3jAiPrCx0b
+ yVTUluSQVpYOl6l3Mht5Rpypj+vKtPxoRoCBKmfQZQsg3Bd4a7Y+CbQRRAMEeM0GPYc6
+ lgq70ss+VF7FgYjbRXO2H3O8/Kdvq3abRqW/4AQhxSqrZ3Jip1hsSsMHSypUSUhyqwS5
+ 7X8YdFQBoUetVKIYSlyV9j9Mnx9fIaGBgMaUOr/4NgOGm8oAwwWR+3rBCSTpcmOi3dVw
+ IiHA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWh1RAvTQX3Yc8OgZcJa414XJ18GdZ/HrOyU+zp7RkRecNoVOAK7h366EWpMb2iYBhKJXzvjMDgyL29QF2TFd+pei5HjbU=
-X-Gm-Message-State: AOJu0YwYvNMRstW3o4dvbgybc8jkLC+JEizffNtWw9AiJ3gdn02lgUrb
- zLMr4gfcY6uIvnPwiPPwk78mnRjfdLtFlmQ+fYXTpGR8K66+C1exshagsMlmx/Q=
-X-Google-Smtp-Source: AGHT+IHYLdr/A8Hjo+9fFmd9ZhrpNqI3SE32GnesrQFAqDA2HZEB3Ui0FPHrMpsP2ZmfX8ShaE9evg==
-X-Received: by 2002:a17:903:32c1:b0:1fa:643:f437 with SMTP id
- d9443c01a7336-1fa23edc81amr24325665ad.25.1719160250225; 
- Sun, 23 Jun 2024 09:30:50 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb323641sm46904215ad.101.2024.06.23.09.30.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 09:30:49 -0700 (PDT)
-Message-ID: <7db4406b-a4f6-4aa3-ab69-3dc2b0f4e0c3@linaro.org>
-Date: Sun, 23 Jun 2024 09:30:47 -0700
+ AJvYcCV/+9Ep08EghUNEQo6z8Bnun3q+waOmc7Xgtq5B5rBvmwZBG3KBjg3dC5F36sMcpcMt167JoNfLcgHH0TUpLjqaLdy07tg=
+X-Gm-Message-State: AOJu0Ywn/D97c4uxWimp9qy/+4Bg2fyFyqSkUwe56DJ+9P3UGNdl53yo
+ p6dkRQPEwYs7Kz7MAqpwf46l8tvUzx5w/h6Yj/ekSP6jExH8i8LDWuE+XtC/PGY=
+X-Google-Smtp-Source: AGHT+IEc0cH62lGbV40bXGg0eqyKFKyi+1TUGeu8esnJ76FJOZzAYbuGSSBrlbcQ9De6qcuen7BlrQ==
+X-Received: by 2002:a05:600c:4f07:b0:421:f346:6b06 with SMTP id
+ 5b1f17b1804b1-4248cc5930emr19523015e9.28.1719161087895; 
+ Sun, 23 Jun 2024 09:44:47 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4247101a955sm159904795e9.0.2024.06.23.09.44.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 23 Jun 2024 09:44:47 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6F0B45F944;
+ Sun, 23 Jun 2024 17:44:46 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
+ Stabellini <sstabellini@kernel.org>,  Antonio Caggiano
+ <quic_acaggian@quicinc.com>,  "Dr . David Alan Gilbert"
+ <dgilbert@redhat.com>,  Robert Beckett <bob.beckett@collabora.com>,  Gert
+ Wollny <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan
+ Singh <gurchetansingh@chromium.org>,  ernunes@redhat.com,  Alyssa Ross
+ <hi@alyssa.is>,  Roger Pau =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,  Stefano Stabellini
+ <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K=C3=B6nig?=
+ <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  Honglei Huang
+ <honglei1.huang@amd.com>,  Julia Zhang <julia.zhang@amd.com>,  Chen Jiqian
+ <Jiqian.Chen@amd.com>,  Yiwei Zhang <zzyiwei@chromium.org>
+Subject: Re: [PATCH v14 00/14] Support blob memory and venus on qemu
+In-Reply-To: <6e11b143-2310-4d82-a7d6-da2ff73a3261@collabora.com> (Dmitry
+ Osipenko's message of "Sat, 22 Jun 2024 01:25:32 +0300")
+References: <20240616010357.2874662-1-dmitry.osipenko@collabora.com>
+ <87bk3wdea9.fsf@draig.linaro.org>
+ <f9880609-741b-4d18-b9b0-a9b3c28c930b@collabora.com>
+ <875xu2hdsv.fsf@draig.linaro.org>
+ <6e11b143-2310-4d82-a7d6-da2ff73a3261@collabora.com>
+Date: Sun, 23 Jun 2024 17:44:46 +0100
+Message-ID: <87o77rvcap.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/23] Added CPU loop function
-To: Warner Losh <imp@bsdimp.com>
-Cc: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org,
- Ajeet Singh <itachis@freebsd.org>, Stacey Son <sson@freebsd.org>,
- Kyle Evans <kevans@freebsd.org>, Sean Bruno <sbruno@freebsd.org>,
- Jessica Clarke <jrtc27@jrtc27.com>
-References: <20240617185804.25075-1-itachis@FreeBSD.org>
- <20240617185804.25075-3-itachis@FreeBSD.org>
- <3eed856e-51bf-4dd5-8665-60132adf01a3@linaro.org>
- <CANCZdfpQ0TmCU-9OAMkJo2_4UDFpRVVRPc5qzLgmo75wVXkQew@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CANCZdfpQ0TmCU-9OAMkJo2_4UDFpRVVRPc5qzLgmo75wVXkQew@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,83 +118,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/22/24 11:49, Warner Losh wrote:
-> 
-> 
-> On Mon, Jun 17, 2024 at 10:24 PM Richard Henderson <richard.henderson@linaro.org 
-> <mailto:richard.henderson@linaro.org>> wrote:
-> 
->     On 6/17/24 11:57, Ajeet Singh wrote:
->      > +            /*
->      > +             * The carry bit is cleared for no error; set for error.
->      > +             * See arm64/arm64/vm_machdep.c cpu_set_syscall_retval()
->      > +             */
->      > +            pstate = pstate_read(env);
->      > +            if (ret >= 0) {
->      > +                pstate &= ~PSTATE_C;
->      > +                env->xregs[0] = ret;
->      > +            } else if (ret == -TARGET_ERESTART) {
->      > +                env->pc -= 4;
->      > +                break;
->      > +            } else if (ret != -TARGET_EJUSTRETURN) {
->      > +                pstate |= PSTATE_C;
->      > +                env->xregs[0] = -ret;
->      > +            }
->      > +            pstate_write(env, pstate);
-> 
->     No need for full pstate read/write:
-> 
->           env->CF = {0,1};
-> 
-> 
-> If I understand what you're suggesting, the quoted code can be replaced
-> by the following, faster construct:
-> 
->              /*
->               * The carry bit is cleared for no error; set for error.
->               * See arm64/arm64/vm_machdep.c cpu_set_syscall_retval()
->               */
->              if (ret >= 0) {
->                  env->CF = 0;
->                  env->xregs[0] = ret;
->              } else if (ret == -TARGET_ERESTART) {
->                  env->pc -= 4;
->                  break;
->              } else if (ret != -TARGET_EJUSTRETURN) {
->                  env->CF = 1;
->                  env->xregs[0] = -ret;
->              }
->              break;
-> 
-> Is that what you're saying?
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-Yes.
+> On 6/21/24 11:59, Alex Benn=C3=A9e wrote:
+>> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+>>=20
+>>> On 6/19/24 20:37, Alex Benn=C3=A9e wrote:
+>>>> So I've been experimenting with Aarch64 TCG with an Intel backend like
+>>>> this:
+>>>>
+>>>> ./qemu-system-aarch64 \
+>>>>            -M virt -cpu cortex-a76 \
+>>>>            -device virtio-net-pci,netdev=3Dunet \
+>>>>            -netdev user,id=3Dunet,hostfwd=3Dtcp::2222-:22 \
+>>>>            -m 8192 \
+>>>>            -object memory-backend-memfd,id=3Dmem,size=3D8G,share=3Don \
+>>>>            -serial mon:stdio \
+>>>>            -kernel ~/lsrc/linux.git/builds/arm64.initramfs/arch/arm64/=
+boot/Image \
+>>>>            -append "console=3DttyAMA0" \
+>>>>            -device qemu-xhci -device usb-kbd -device usb-tablet \
+>>>>            -device virtio-gpu-gl-pci,blob=3Dtrue,venus=3Dtrue,hostmem=
+=3D4G \
+>>>>            -display sdl,gl=3Don -d plugin,guest_errors,trace:virtio_gp=
+u_cmd_res_create_blob,trace:virtio_gpu_cmd_res_back_\*,trace:virtio_gpu_cmd=
+_res_xfer_toh_3d,trace:virtio_gpu_cmd_res_xfer_fromh_3d,trace:address_space=
+_map=20
+>>>>
+>>>> And I've noticed a couple of things. First trying to launch vkmark to
+>>>> run a KMS mode test fails with:
+>>>>
+>>> ...
+>>>>   virgl_render_server[1875931]: vkr: failed to import resource: invali=
+d res_id 5
+>>>>   virgl_render_server[1875931]: vkr: vkAllocateMemory resulted in CS e=
+rror=20
+>>>>   virgl_render_server[1875931]: vkr: ring_submit_cmd: vn_dispatch_comm=
+and failed
+>>>>
+>>>> More interestingly when shutting stuff down we see weirdness like:
+>>>>
+>>>>   address_space_map as:0x561b48ec48c0 addr 0x1008ac4b0:18 write:1 attr=
+s:0x1=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20
+>>>>   virgl_render_server[1875931]: vkr: destroying context 3 (vkmark) wit=
+h a valid instance=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+>>>>   virgl_render_server[1875931]: vkr: destroying device with valid obje=
+cts=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20
+>>>>   vkr_context_remove_object: -7438602987017907480=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+>>>>   vkr_context_remove_object: 7=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20
+>>>>   vkr_context_remove_object: 5=20=20=20=20=20=20=20
+>>>>
+>>>> which indicates something has gone very wrong. I'm not super familiar
+>>>> with the memory allocation patterns but should stuff that is done as
+>>>> virtio_gpu_cmd_res_back_attach() be find-able in the list of resources?
+>>>
+>>> This is expected to fail. Vkmark creates shmem virgl GBM FB BO on guest
+>>> that isn't exportable on host. AFAICT, more code changes should be
+>>> needed to support this case.
+>>=20
+>> There are a lot of acronyms there. If this is pure guest memory why
+>> isn't it exportable to the host? Or should the underlying mesa library
+>> be making sure the allocation happens from the shared region?
+>>=20
+>> Is vkmark particularly special here?
+>
+> Actually, you could get it to work to a some degree if you'll compile
+> virglrenderer with -Dminigbm_allocation=3Dtrue. On host use GTK/Wayland
+> display.
 
-> 
->      > +            break;
->      > +
->      > +        case EXCP_INTERRUPT:
->      > +            /* Just indicate that signals should be handle ASAP. */
->      > +            break;
->      > +
->      > +        case EXCP_UDEF:
->      > +            force_sig_fault(TARGET_SIGILL, TARGET_ILL_ILLOPN, env->pc);
->      > +            break;
->      > +
->      > +
->      > +        case EXCP_PREFETCH_ABORT:
->      > +        case EXCP_DATA_ABORT:
->      > +            /* We should only arrive here with EC in {DATAABORT, INSNABORT}. */
->      > +            ec = syn_get_ec(env->exception.syndrome);
-> 
->     Nevermind about my question about syndrome.h vs patch 1.
-> 
-> 
-> Ah, Since we have to re-roll this patch anyway, maybe moving it is a good idea?
-> Honestly, I'm good either way.
+I'll give that a go.
 
-Least effort is called for.  :-)
+> Vkmark isn't special. It's virglrenderer that has a room for
+> improvement. ChromeOS doesn't use KMS in VMs, proper KMS support was
+> never a priority for Venus.
 
+Is there a tracking bug for KMS support for Venus? Or Venus should work
+fine if virglrenderer can export the buffer to the host?
 
-r~
+<snip>
+>>>>
+>>>> This could be a false positive or it could be a race between the guest
+>>>> kernel clearing memory while we are still doing
+>>>> virtio_gpu_ctrl_response.
+>>>>
+>>>> What do you think?
+>>>
+>>> The memcpy warning looks a bit suspicion, but likely is harmless. I
+>>> don't see such warning with TSAN and x86 VM.
+>>=20
+>> TSAN can only pick up these interactions with TCG guests because it can
+>> track guest memory accesses. With a KVM guest we have no visibility of
+>> the guest accesses.=20
+>
+> I couldn't reproduce this issue with my KVM/TCG/ARM64 setups. Fox x86 I
+> checked both KVM and TCG, TSAN only warns about vitio-net memcpy's for
+> me.
+
+Hmm OK. I'll keep an eye out as I test the next version.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
