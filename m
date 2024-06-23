@@ -4,71 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B42C27C53
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Jun 2024 21:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6F9EC2BD09
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 02:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sL8i4-0007fX-Pi; Sat, 22 Jun 2024 17:55:48 -0400
+	id 1sLCZf-0007lN-GU; Sat, 22 Jun 2024 22:03:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sL8i3-0007fE-30
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:47 -0400
-Received: from madrid.collaboradmins.com ([46.235.227.194])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sL8i1-0001EO-HL
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 17:55:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1719093344;
- bh=OZj7r6bpST6WlHntKGJWWgRTddZYJ9v7VXHdGugta3o=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=dFaYpjQARbL95k/LklDzKiQVdYVoEDFt10aUWQW0HMBexlORrhGtVUq1cnrjy5OAs
- QoL2xbD1Ht+ved862Vx9eYwsksrGJ1DJ3fFNwKoPS3vTuyGwhbVkzEMuz/LYSC7QwV
- 13jYlPXtkRWeCaPmUZlLrVw1sGG4aqRAHrid9ebuVO07EWo4iJK8g1+3hIQns/Lybp
- Zd0H/bc2gfcaZhpqZ91+zmjRBLLJqOWuZGVchmBgN3vPralEKGoIdovP81YUzYnsJi
- u/SfZwHxHvwFmkk9HhJQEPEPILhky5pnIRhJb9kF8PhlCxb1OGj5pyR94TFd5O7i6x
- 3+zM/Mdn8ueDQ==
-Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sLCZd-0007l9-Gq
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 22:03:21 -0400
+Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
+ helo=mail.comstyle.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sLCZc-0001YI-33
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 22:03:21 -0400
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+ by mail.comstyle.com (Postfix) with ESMTP id 4W6Drn0RQJz8PbQ;
+ Sat, 22 Jun 2024 22:03:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+ :from:to:cc:subject:message-id:mime-version:content-type; s=
+ default; bh=dWz0+NkkccG2mzLfUrSg8aCoXIOWm2XKYd58Nbjz0dk=; b=pkLI
+ fpPnMzS3jTpUIvr3mSnZhwjHJ7SmAnYtl0wgPStoWDQgxZTG419TqSVFqoHuakAy
+ VBDpS+KR63NNhxEN+uOEhiNj9pvR4pMtKH3Sydp6Rm5LNdpYsdlB9CMX9jZ/Pn84
+ jpSwkXul0PuaQzr6fMccqD4wZPBebcWmvGpa/1g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+ :cc:subject:message-id:mime-version:content-type; q=dns; s=
+ default; b=oV2fgfCHjHFV7mevOf2ljUSvjK56v74wlubY83VFN15gt27uEZK/e
+ lnUS6y/HEUsHsxXfrR1dWr8ZxcQOYMaPW7CftIFKkMKakRBmP7tMeVGoIkmRyRai
+ F19tcsnbKsM49zhYW7IjtIj3PWx3f9p0FMSiVIM8MNArYVQT0dxzBM=
+Received: from humpty.home.comstyle.com (unknown
+ [IPv6:2001:470:b050:3:9ee5:c2f5:b033:d60f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 478DA3782113;
- Sat, 22 Jun 2024 21:55:42 +0000 (UTC)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v15 11/14] virtio-gpu: Support suspension of commands
- processing
-Date: Sun, 23 Jun 2024 00:55:08 +0300
-Message-ID: <20240622215511.154763-12-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
-References: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+ (No client certificate requested) (Authenticated sender: brad)
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4W6Drm6jnLz8PbP;
+ Sat, 22 Jun 2024 22:03:04 -0400 (EDT)
+Date: Sat, 22 Jun 2024 22:03:03 -0400
+From: Brad Smith <brad@comstyle.com>
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] util: fix building on OpenBSD/powerpc
+Message-ID: <ZneCVxqGDjKpa5Jp@humpty.home.comstyle.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=46.235.227.194;
- envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Received-SPF: pass client-ip=2607:f938:3000:8::2;
+ envelope-from=brad@comstyle.com; helo=mail.comstyle.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,47 +73,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check whether command processing has been finished; otherwise, stop
-processing commands and retry the command again next time. This allows
-us to support asynchronous execution of non-fenced commands needed for
-unmapping host blobs safely.
+util: fix building on OpenBSD/powerpc
 
-Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Brad Smith <brad@comstyle.com>
 ---
- hw/display/trace-events | 1 +
- hw/display/virtio-gpu.c | 6 ++++++
- 2 files changed, 7 insertions(+)
+ util/cpuinfo-ppc.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/hw/display/trace-events b/hw/display/trace-events
-index e212710284ae..d26d663f9638 100644
---- a/hw/display/trace-events
-+++ b/hw/display/trace-events
-@@ -55,6 +55,7 @@ virtio_gpu_fence_ctrl(uint64_t fence, uint32_t type) "fence 0x%" PRIx64 ", type
- virtio_gpu_fence_resp(uint64_t fence) "fence 0x%" PRIx64
- virtio_gpu_inc_inflight_fences(uint32_t inflight) "in-flight+ %u"
- virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
-+virtio_gpu_cmd_suspended(uint32_t cmd) "cmd 0x%x"
+diff --git a/util/cpuinfo-ppc.c b/util/cpuinfo-ppc.c
+index b2d8893a06..d459c9c87e 100644
+--- a/util/cpuinfo-ppc.c
++++ b/util/cpuinfo-ppc.c
+@@ -6,11 +6,13 @@
+ #include "qemu/osdep.h"
+ #include "host/cpuinfo.h"
  
- # qxl.c
- disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 95091c4b7924..1c6e97fb6931 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1054,6 +1054,12 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
-         /* process command */
-         vgc->process_cmd(g, cmd);
+-#include <asm/cputable.h>
+-#ifdef CONFIG_GETAUXVAL
+-# include <sys/auxv.h>
+-#else
+-# include "elf.h"
++#ifdef CONFIG_LINUX
++# ifdef CONFIG_GETAUXVAL
++#  include <sys/auxv.h>
++# else
++#  include <asm/cputable.h>
++#  include "elf.h"
++# endif
+ #endif
  
-+        /* command suspended */
-+        if (!cmd->finished && !(cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_FENCE)) {
-+            trace_virtio_gpu_cmd_suspended(cmd->cmd_hdr.type);
-+            break;
-+        }
+ unsigned cpuinfo;
+@@ -19,16 +21,17 @@ unsigned cpuinfo;
+ unsigned __attribute__((constructor)) cpuinfo_init(void)
+ {
+     unsigned info = cpuinfo;
+-    unsigned long hwcap, hwcap2;
+ 
+     if (info) {
+         return info;
+     }
+ 
+-    hwcap = qemu_getauxval(AT_HWCAP);
+-    hwcap2 = qemu_getauxval(AT_HWCAP2);
+     info = CPUINFO_ALWAYS;
+ 
++#ifdef CONFIG_LINUX
++    unsigned long hwcap = qemu_getauxval(AT_HWCAP);
++    unsigned long hwcap2 = qemu_getauxval(AT_HWCAP2);
 +
-         QTAILQ_REMOVE(&g->cmdq, cmd, next);
-         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
-             g->stats.requests++;
+     /* Version numbers are monotonic, and so imply all lower versions. */
+     if (hwcap2 & PPC_FEATURE2_ARCH_3_1) {
+         info |= CPUINFO_V3_1 | CPUINFO_V3_0 | CPUINFO_V2_07 | CPUINFO_V2_06;
+@@ -58,6 +61,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+             }
+         }
+     }
++#endif
+ 
+     cpuinfo = info;
+     return info;
 -- 
 2.45.2
 
