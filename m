@@ -4,59 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64CE3C2BD09
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 02:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE580C2BD09
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 02:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLCiU-0001Mb-UN; Sat, 22 Jun 2024 22:12:30 -0400
+	id 1sLDFJ-00083E-SC; Sat, 22 Jun 2024 22:46:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sLCiS-0001M4-0X
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 22:12:28 -0400
-Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
- helo=mail.comstyle.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sLCiQ-0002zM-6f
- for qemu-devel@nongnu.org; Sat, 22 Jun 2024 22:12:27 -0400
-Received: from mail.comstyle.com (localhost [127.0.0.1])
- by mail.comstyle.com (Postfix) with ESMTP id 4W6F3Y2cLmz8PbP;
- Sat, 22 Jun 2024 22:12:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
- :from:to:cc:subject:message-id:mime-version:content-type; s=
- default; bh=l0itdJ4sWXRO7UKXF3YZz+szFqAoEHcojxY5FRtV7h8=; b=mSSj
- BAFv1GfPVsMB+JFN93fg5+O2VYFRZr+mbendRU4qrN+KTpDoP1BmR2zCfF+SrEri
- PZoWwxxFUjAejdF1uQazW2KeGS+T1B1eObTtUOobkYlxU+s8CU9iSEjWLTJgdvj4
- +aL11y9xFuoRq5RhthlGhP+dJlAnbOQ7Y28s4cA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
- :cc:subject:message-id:mime-version:content-type; q=dns; s=
- default; b=o3KvLYgVTu0oVPLhJCaNOXI5M1mw62u4DV69Yu9suIPUI13cHYfxB
- jEimX6Bs3Z6Hv2eeY1eyA0S90EJ3oRYTXqNpkH9aNNI8S5gjk2RmmJvffI9rZVS0
- SPCTmjHyKVjUuDothzopZi8lqOd6L1K/rSKt7y6dCTs9mD3GVg/ciM=
-Received: from humpty.home.comstyle.com (unknown
- [IPv6:2001:470:b050:3:9ee5:c2f5:b033:d60f])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
- (No client certificate requested) (Authenticated sender: brad)
- by mail.comstyle.com (Postfix) with ESMTPSA id 4W6F3Y219sz8PbN;
- Sat, 22 Jun 2024 22:12:25 -0400 (EDT)
-Date: Sat, 22 Jun 2024 22:12:23 -0400
-From: Brad Smith <brad@comstyle.com>
-To: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] util/cpuinfo-aarch64: Add OpenBSD support
-Message-ID: <ZneEh51XKhxgZKpp@humpty.home.comstyle.com>
+ (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
+ id 1sLDFI-00082u-8V
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 22:46:24 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <minwoo.im.dev@gmail.com>)
+ id 1sLDFG-0000Is-Ie
+ for qemu-devel@nongnu.org; Sat, 22 Jun 2024 22:46:24 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1f4a5344ec7so21662265ad.1
+ for <qemu-devel@nongnu.org>; Sat, 22 Jun 2024 19:46:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719110780; x=1719715580; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=AZP/WdcdmHmYxpaWrBiM0FoLrhAiPW6xvRvl4Nh7Rf4=;
+ b=LvI/2ZtdnxXDBWABJPIdfUGJgZYa+W3dcJdt2loO3XzZ53IFSXkKHaKW+2mOPWVNql
+ vk4EQnnWhk5VSDMZ09/cRWkiEeUAmmpbMpleSmMwIC8MuNkjsN1kHy2ZDiILd3w2Ma0P
+ OR9IT+/iw4Wj4DDm9N8vWYL2pl0cCFtkK0QmKnGzllW1lXTk3LhlPJi+0vXYzAVliSuK
+ IwhCPGppR3Z5EuxNgUHioPMElXWD4F+Kz/ESsOUvnpVa6vFcPDnmgb0gw6SbvC4KZz7t
+ AJibiGkPREjVxc+PbXgdGAY/JWSyCiAza0vb1UKe14MVCpl2CjTTLmigkAgL2pm3bdWS
+ vOtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719110780; x=1719715580;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AZP/WdcdmHmYxpaWrBiM0FoLrhAiPW6xvRvl4Nh7Rf4=;
+ b=XfZh+6u0XEyCbxC/u50KHSlxK+WpS3GSq0NOuKKeX5YfMi31DK9xV4wW2PJ8/2YOSz
+ be+fEpLL3LY5bbcTDoGgbsF+wSbFnN7CQcY7Wdd9ey/PaRZKT/EVUVZBwB1avIzFIYFN
+ TJ/HWB8FzYAdwsmEZSdt9ZFnPG/FvoYsMiBEDc7CHeCp8/+T9Io9ul6fJixBHYN9wyKl
+ q3MbdwnAicg8e5X8CNvldE59J7IAezgxn9MGNTWKJy1B0TEmMe+mYemSY7Mzv41mcjMP
+ xaLdNfexTz2Q+LdMqkJBA5MqyT/gzJEqNY+M4/Cr0RsBtrWxsY9Td0Je4iDt4GUWD0FR
+ vgeg==
+X-Gm-Message-State: AOJu0YxMkjXGtqRO7MlKl1GwgkRG7/9yI0iJ/PoopWXpNnkYdaQctqtu
+ rtFOG2sXoCnFcCS+8XcnYgg0gSoT38FTc6zCUvZLM04RvyK2EdJO
+X-Google-Smtp-Source: AGHT+IEnb6drM7t/fSd9xsk1lX///NZUDSNw1TNNSFM9dfgKK7tzvXj1BUxs1Nkfi2ISQpVIkkupFQ==
+X-Received: by 2002:a17:902:e850:b0:1fa:2c79:7504 with SMTP id
+ d9443c01a7336-1fa2c797598mr6322955ad.48.1719110780417; 
+ Sat, 22 Jun 2024 19:46:20 -0700 (PDT)
+Received: from localhost ([116.121.76.56]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f9eb3c8b5dsm37627625ad.181.2024.06.22.19.46.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 22 Jun 2024 19:46:19 -0700 (PDT)
+From: Minwoo Im <minwoo.im.dev@gmail.com>
+To: Jeuk Kim <jeuk20.kim@samsung.com>
+Cc: qemu-devel@nongnu.org, Minwoo Im <minwoo.im@samsung.com>,
+ Minwoo Im <minwoo.im.dev@gmail.com>, Jeuk Kim <jeuk20.kim@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] hw/ufs: Fix potential bugs in MMIO read|write
+Date: Sun, 23 Jun 2024 11:45:55 +0900
+Message-Id: <20240623024555.78697-1-minwoo.im.dev@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Received-SPF: pass client-ip=2607:f938:3000:8::2;
- envelope-from=brad@comstyle.com; helo=mail.comstyle.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=minwoo.im.dev@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,64 +91,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-util/cpuinfo-aarch64: Add OpenBSD support
+This patch fixes two points reported in coverity scan report [1].  Check
+the MMIO access address with (addr + size), not just with the start offset
+addr to make sure that the requested memory access not to exceed the
+actual register region.  We also updated (uint8_t *) to (uint32_t *) to
+represent we are accessing the MMIO registers by dword-sized only.
 
-Signed-off-by: Brad Smith <brad@comstyle.com>
+[1] https://lore.kernel.org/qemu-devel/CAFEAcA82L-WZnHMW0X+Dr40bHM-EVq2ZH4DG4pdqop4xxDP2Og@mail.gmail.com/
+
+Cc: Jeuk Kim <jeuk20.kim@gmail.com>
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Minwoo Im <minwoo.im.dev@gmail.com>
 ---
- util/cpuinfo-aarch64.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ hw/ufs/ufs.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/util/cpuinfo-aarch64.c b/util/cpuinfo-aarch64.c
-index 4c8a005715..8a8c0a30a8 100644
---- a/util/cpuinfo-aarch64.c
-+++ b/util/cpuinfo-aarch64.c
-@@ -20,6 +20,12 @@
- #ifdef CONFIG_DARWIN
- # include <sys/sysctl.h>
- #endif
-+#ifdef __OpenBSD__
-+# include <machine/armreg.h>
-+# include <machine/cpu.h>
-+# include <sys/types.h>
-+# include <sys/sysctl.h>
-+#endif
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 71a88d221ced..bf2ff02ac6e5 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -55,17 +55,18 @@ static inline uint64_t ufs_reg_size(UfsHc *u)
+     return ufs_mcq_op_reg_addr(u, 0) + sizeof(u->mcq_op_reg);
+ }
  
- unsigned cpuinfo;
+-static inline bool ufs_is_mcq_reg(UfsHc *u, uint64_t addr)
++static inline bool ufs_is_mcq_reg(UfsHc *u, uint64_t addr, unsigned size)
+ {
+     uint64_t mcq_reg_addr = ufs_mcq_reg_addr(u, 0);
+-    return addr >= mcq_reg_addr && addr < mcq_reg_addr + sizeof(u->mcq_reg);
++    return (addr >= mcq_reg_addr &&
++            addr + size <= mcq_reg_addr + sizeof(u->mcq_reg));
+ }
  
-@@ -72,6 +78,32 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
-     info |= sysctl_for_bool("hw.optional.arm.FEAT_PMULL") * CPUINFO_PMULL;
-     info |= sysctl_for_bool("hw.optional.arm.FEAT_BTI") * CPUINFO_BTI;
- #endif
-+#ifdef __OpenBSD__
-+    int mib[2];
-+    uint64_t isar0;
-+    uint64_t pfr1;
-+    size_t len;
-+
-+    mib[0] = CTL_MACHDEP;
-+    mib[1] = CPU_ID_AA64ISAR0;
-+    len = sizeof(isar0);
-+    if (sysctl(mib, 2, &isar0, &len, NULL, 0) != -1) {
-+      if (ID_AA64ISAR0_ATOMIC(isar0) >= ID_AA64ISAR0_ATOMIC_IMPL)
-+        info |= CPUINFO_LSE;
-+      if (ID_AA64ISAR0_AES(isar0) >= ID_AA64ISAR0_AES_BASE)
-+        info |= CPUINFO_AES;
-+      if (ID_AA64ISAR0_AES(isar0) >= ID_AA64ISAR0_AES_PMULL)
-+        info |= CPUINFO_PMULL;
-+    }
-+
-+    mib[0] = CTL_MACHDEP;
-+    mib[1] = CPU_ID_AA64PFR1;
-+    len = sizeof(pfr1);
-+    if (sysctl(mib, 2, &pfr1, &len, NULL, 0) != -1) {
-+      if (ID_AA64PFR1_BT(pfr1) >= ID_AA64PFR1_BT_IMPL)
-+        info |= CPUINFO_BTI;
-+    }
-+#endif
+-static inline bool ufs_is_mcq_op_reg(UfsHc *u, uint64_t addr)
++static inline bool ufs_is_mcq_op_reg(UfsHc *u, uint64_t addr, unsigned size)
+ {
+     uint64_t mcq_op_reg_addr = ufs_mcq_op_reg_addr(u, 0);
+     return (addr >= mcq_op_reg_addr &&
+-            addr < mcq_op_reg_addr + sizeof(u->mcq_op_reg));
++            addr  + size <= mcq_op_reg_addr + sizeof(u->mcq_op_reg));
+ }
  
-     cpuinfo = info;
-     return info;
+ static MemTxResult ufs_addr_read(UfsHc *u, hwaddr addr, void *buf, int size)
+@@ -774,25 +775,25 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
+ static uint64_t ufs_mmio_read(void *opaque, hwaddr addr, unsigned size)
+ {
+     UfsHc *u = (UfsHc *)opaque;
+-    uint8_t *ptr;
++    uint32_t *ptr;
+     uint64_t value;
+     uint64_t offset;
+ 
+-    if (addr < sizeof(u->reg)) {
++    if (addr + size <= sizeof(u->reg)) {
+         offset = addr;
+-        ptr = (uint8_t *)&u->reg;
+-    } else if (ufs_is_mcq_reg(u, addr)) {
++        ptr = (uint32_t *)&u->reg;
++    } else if (ufs_is_mcq_reg(u, addr, size)) {
+         offset = addr - ufs_mcq_reg_addr(u, 0);
+-        ptr = (uint8_t *)&u->mcq_reg;
+-    } else if (ufs_is_mcq_op_reg(u, addr)) {
++        ptr = (uint32_t *)&u->mcq_reg;
++    } else if (ufs_is_mcq_op_reg(u, addr, size)) {
+         offset = addr - ufs_mcq_op_reg_addr(u, 0);
+-        ptr = (uint8_t *)&u->mcq_op_reg;
++        ptr = (uint32_t *)&u->mcq_op_reg;
+     } else {
+         trace_ufs_err_invalid_register_offset(addr);
+         return 0;
+     }
+ 
+-    value = *(uint32_t *)(ptr + offset);
++    value = ptr[offset >> 2];
+     trace_ufs_mmio_read(addr, value, size);
+     return value;
+ }
+@@ -804,11 +805,11 @@ static void ufs_mmio_write(void *opaque, hwaddr addr, uint64_t data,
+ 
+     trace_ufs_mmio_write(addr, data, size);
+ 
+-    if (addr < sizeof(u->reg)) {
++    if (addr + size <= sizeof(u->reg)) {
+         ufs_write_reg(u, addr, data, size);
+-    } else if (ufs_is_mcq_reg(u, addr)) {
++    } else if (ufs_is_mcq_reg(u, addr, size)) {
+         ufs_write_mcq_reg(u, addr - ufs_mcq_reg_addr(u, 0), data, size);
+-    } else if (ufs_is_mcq_op_reg(u, addr)) {
++    } else if (ufs_is_mcq_op_reg(u, addr, size)) {
+         ufs_write_mcq_op_reg(u, addr - ufs_mcq_op_reg_addr(u, 0), data, size);
+     } else {
+         trace_ufs_err_invalid_register_offset(addr);
 -- 
-2.45.2
+2.34.1
 
 
