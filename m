@@ -4,101 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1846FC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 05:58:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F089C41513
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 11:58:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLGEJ-0000uX-9J; Sun, 23 Jun 2024 01:57:35 -0400
+	id 1sLLqW-0002js-0R; Sun, 23 Jun 2024 07:57:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLGEH-0000td-Gy
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 01:57:33 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLGEF-0002s5-OQ
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 01:57:33 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-70671ecd334so409579b3a.0
- for <qemu-devel@nongnu.org>; Sat, 22 Jun 2024 22:57:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719122250; x=1719727050;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ysB+CNwBqOElMulAF6YFb640Tuze2xonSWNal2Cc1ww=;
- b=fcq3u+/ycjgb9UxsYHX0b45VbRAVLPa7R1v2HLhxeQx5IjGShzKJyuE+k2//f7mzqs
- jZKMO24Ta4hygSwEcp3KJM8U5FMtc4cadMWEqE+aP2/P4aa57/2dYNGTB9mwqUGlnKR1
- 6Yo9268lXwW4ck0VV+bgl4OdmB4BOrVIbW2mEuKD6IeBd1ti2skGAnOoT7CcMLGKBs04
- fHf9tMvamzIPlq4Zh/P693apArPK9WLk+Wm9ztuR9ONJimod321H16HA6twDzCl2lGov
- hudoHwKL18oPOY6FtSuVIjoAO/cImOF3xeT3NBPh3xADTPu8B4gsslMb+33BfZo5Mihe
- Z0Jw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719122250; x=1719727050;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ysB+CNwBqOElMulAF6YFb640Tuze2xonSWNal2Cc1ww=;
- b=hqRKril2o/3An4Au+hJUA5tBDd2x4fKi7NsN1ifaUqeStoZ0koiFgJK+sSOGVATls6
- dH9vlIVEP0JsV1sRIxtAoTraMg+aTPsT8TLmdSX2X7O+vlNUnCIJZdL4D1BHlyO2Jgqh
- zUO5X1EqyPebcXnp770df2N0VSlNoOHW4KOK9/tCNWrMuWBXVTwtgt0N0Gxq6A4NbeDH
- QX506XiGf8ACbuapgkmaMXdKFkwxY7zLIIqH71+QkzTznTB1pJx5np/2oj8dGCxmMfxf
- 17vLkD+br8W5sEjtfA9XPBxv42XleyzDXWQwxg/uuR0d2xRLOvdCSihN7osOxb0+oOko
- FdUw==
-X-Gm-Message-State: AOJu0YzjyquERCEhWiXRevLdKNfEt+dkGJHAAWpPDcnMvQstLsllWciH
- 9AEqTTowzEzaC6tCXqOc4ZPxljg+UOK2j0U5J8Ncyg4Zn6BIOLLanRqK9ehnbL0=
-X-Google-Smtp-Source: AGHT+IGacbpA5+wkvaAqjisPMD3AsQOk5dv1oEtYGD85qGqCFl0yr95orsJ0E71qjMVkilOuBXxgWw==
-X-Received: by 2002:a05:6a21:1a7:b0:1b5:d194:d87f with SMTP id
- adf61e73a8af0-1bcf46515d2mr2379272637.59.1719122250029; 
- Sat, 22 Jun 2024 22:57:30 -0700 (PDT)
-Received: from [157.82.204.135] ([157.82.204.135])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9ebbb2909sm39685635ad.257.2024.06.22.22.57.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 22 Jun 2024 22:57:29 -0700 (PDT)
-Message-ID: <987a2afc-c76b-4fbc-923e-466c1957a31c@daynix.com>
-Date: Sun, 23 Jun 2024 14:57:23 +0900
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sLLqU-0002j8-3o
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 07:57:22 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sLLqS-0003Z9-Ho
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 07:57:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=6m4pndhvEEGb/KsMnXUlAPgJn0IM+aTr6p0i/RohjqY=; b=yjgekzosKC8Lkb7D7pqotBe7iz
+ fiVY4bpBrnAXSwNuirBT7+Ah+MOjX5na+lPQpdNnGf/Tfb0J2SMxUn4IenlGOqbhdtCkvkQkJtsSu
+ xg/63naBbIQyKzWEdssrWSnY14jQp/GD2soLUNOS/Ag+25LMSRBX8VFFvSAu5+zBgtFwYUelwxz2a
+ LSWxGhxly9xGvLS77hDUttG37FjUixqfp7jZwBJTp1B2FwDhvN0oGxBZks+fUnduQrspzFA6fNGw3
+ Oo0uNVTWhPKJTTFJCCyiChRRUQAmmErdwkQGBvIAjArsECv4FqGaBscs+AKuK1/yNIRqNchxpw2wi
+ vCnL1aV0qJOrk8uJahga0UAkBgrStJZV01AxZ4Yi7kQGsbR7itSn94JRMOQOTydV+prZUTr5nOWqX
+ c4Pqfj0YW5z8n8+socoePJ8BhyjmvGKbPNJklzqcLQt3I9/Eql2/3p9h7pIZkm+9JxvdRZTXFPQqD
+ XlnZ4WgvKE2c8200nRu2+U0BO02PXz25FJss4g95apMhmeH6kpmGCCU/KZeHeCb9QRxoXIqrL/Udd
+ yw4Vg0JkyT5/YFnZcpJ5w2oZraFyesT93SZnSEmIv+42HO7nWhqXZXCAnYU2EY97WAGtssvddN+H8
+ z+VTSVg3zhEZ8UOkk9DdIt3WF8XXjIcSvYX/vjTVo=;
+Received: from [2a00:23c4:8bb4:4000:e8db:395:a8c5:fda6]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sLLp2-00080P-1T; Sun, 23 Jun 2024 12:55:56 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: qemu-devel@nongnu.org,
+	laurent@vivier.eu
+Date: Sun, 23 Jun 2024 12:57:02 +0100
+Message-Id: <20240623115704.315645-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 00/14] Support blob memory and venus on qemu
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240622215511.154763-1-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::42e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:e8db:395:a8c5:fda6
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH 0/2] target/m68k: implement unaligned accesses for m68k CPUs
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,18 +76,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/06/23 6:54, Dmitry Osipenko wrote:
-> Hello,
-> 
-> This series enables Vulkan Venus context support on virtio-gpu.
+This series implements unaligned accesses for early m68k CPUs that do not
+support word/long accesses at byte granularity. Patch 1 implements the
+do_unaligned_access function for m68k CPUs, whilst patch 2 is based upon a
+prototype patch developed by Laurent as part of Gitlab Issue #2165.
 
-Thanks again for keeping working on this. This series became quite a 
-mature. I still have comments for two patches, but they are trivial ones 
-so I hope it won't take much time to fix them.
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2165
 
-By the way, the rutabaga patch series added the documentation for 
-virtio-gpu at docs/system/devices/virtio-gpu.rst. It does not only cover 
-rutabaga but also virgl, and says virglrenderer translates OpenGL calls, 
-which becomes somewhat misleading after this patch. Please update it to 
-tell that it can also pass-through Vulkan calls when Venus enabled.
+
+Mark Cave-Ayland (2):
+  target/m68k: implement do_unaligned_access callback for m68k CPUs
+  target/m68k: pass alignment into TCG memory load/store routines
+
+ target/m68k/cpu.c       |  1 +
+ target/m68k/cpu.h       |  4 ++++
+ target/m68k/op_helper.c | 11 +++++++++++
+ target/m68k/translate.c | 18 +++++++++++++++---
+ 4 files changed, 31 insertions(+), 3 deletions(-)
+
+-- 
+2.39.2
+
 
