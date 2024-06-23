@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DF70C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 15:26:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EA25C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 15:26:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLP4x-0002NL-AI; Sun, 23 Jun 2024 11:24:31 -0400
+	id 1sLP4Z-0001nn-J1; Sun, 23 Jun 2024 11:24:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sLP4u-00028n-Jl
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 11:24:28 -0400
-Received: from madrid.collaboradmins.com ([2a00:1098:ed:100::25])
+ id 1sLP4W-0001my-W3
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 11:24:05 -0400
+Received: from madrid.collaboradmins.com ([46.235.227.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1sLP4s-0003OV-6S
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 11:24:28 -0400
+ id 1sLP4V-0003KL-D0
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 11:24:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
- s=mail; t=1719156265;
- bh=Sa0iDmM39CQFH2R3M8V5zK20Qkk2Ugg+D1O300Yl8S4=;
+ s=mail; t=1719156241;
+ bh=vsjQDU6o24fVd5AnZ+zpHqMrrXzBZfjmUbMvz7OiZbE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=SzkthMU79qrZWqzGUibtvU9kZrW+MXbHM3ySZOBWhezwSYAjDkmBqdGkN3qpKAPrU
- yf469U1B+CMPS5PZVCT6NspyB11DorrbLgvwfpjvKvAzs34KgJHWWCm1OIDmGD0lMu
- J9h8VyPDOeBUcBEmlEl/Rl3nzNm/MDZrrxeEZJDtjjywn38OOVwyuBOzF0hQkqq89E
- je6t5J20nBrih6sZm1mf97BwS3QUxFDyTx5cMUrP/nc4phxLN89QZW7osuOyhBuCut
- Up+bVd6zEEf0exMp/9ilzWnF7IuRi6HmDrzJCWE3Ulq+vDHVIL+5XDoX3js2pw5l+x
- GvMEHUE/0+4qQ==
+ b=iDb8N8fxS+uHnOINiLI7VTaSRESYUQzT6Qc/nOsvEt+VkTGOC+154Zz2BBjUHNnJR
+ qwP9UKMg2w31rAeoIfM0mupNZLjY1WIrxZvWe8fEwIknNOEAhp/lmTu98oG7mXe0Jm
+ PnYgpSo0QC6MIPWNC4B1RK9VEI3k82tyNvEXQ9PAR9Sthk3z2BhMrcd1i721ltKtcg
+ PEvkTplnJY/rKmBo8+Og+TwJ3JJ72r7lVtDsEU6EsgkoGhfvVrvauUeKS3uKXdJ5NF
+ LhqEyQBoQ68oot1nvboHacC2Xq4P53nQLoLhmL4003vWpay+NJE33QS4aJBcplho+k
+ fOwugvpVUZ3UA==
 Received: from workpc.. (cola.collaboradmins.com [195.201.22.229])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dmitry.osipenko)
- by madrid.collaboradmins.com (Postfix) with ESMTPSA id 6A61D3780629;
- Sun, 23 Jun 2024 15:24:23 +0000 (UTC)
+ by madrid.collaboradmins.com (Postfix) with ESMTPSA id 816F937804C9;
+ Sun, 23 Jun 2024 15:23:59 +0000 (UTC)
 From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
@@ -58,15 +58,17 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: [PATCH v16 12/13] virtio-gpu: Register capsets dynamically
-Date: Sun, 23 Jun 2024 18:23:42 +0300
-Message-ID: <20240623152343.328436-13-dmitry.osipenko@collabora.com>
+Subject: [PATCH v16 01/13] virtio-gpu: Use trace events for tracking number of
+ in-flight fences
+Date: Sun, 23 Jun 2024 18:23:31 +0300
+Message-ID: <20240623152343.328436-2-dmitry.osipenko@collabora.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
 References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1098:ed:100::25;
+Received-SPF: pass client-ip=46.235.227.194;
  envelope-from=dmitry.osipenko@collabora.com; helo=madrid.collaboradmins.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -89,124 +91,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Replace printf's used for tracking of in-flight fence inc/dec events
+with tracing, for consistency with the rest of virtio-gpu code that
+uses tracing.
 
-virtio_gpu_virgl_get_num_capsets will return "num_capsets", but we can't
-assume that capset_index 1 is always VIRGL2 once we'll support more capsets,
-like Venus and DRM capsets. Register capsets dynamically to avoid that problem.
-
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+Suggested-by: Marc-André Lureau <marcandre.lureau@gmail.com>
 Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- hw/display/virtio-gpu-gl.c     |  6 ++++--
- hw/display/virtio-gpu-virgl.c  | 33 +++++++++++++++++++++------------
- include/hw/virtio/virtio-gpu.h |  4 +++-
- 3 files changed, 28 insertions(+), 15 deletions(-)
+ hw/display/trace-events       | 2 ++
+ hw/display/virtio-gpu-virgl.c | 2 +-
+ hw/display/virtio-gpu.c       | 4 ++--
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index 5f27568d3ec8..20a7c316bb23 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -138,8 +138,8 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
-     }
+diff --git a/hw/display/trace-events b/hw/display/trace-events
+index 781f8a33203b..e212710284ae 100644
+--- a/hw/display/trace-events
++++ b/hw/display/trace-events
+@@ -53,6 +53,8 @@ virtio_gpu_cmd_ctx_submit(uint32_t ctx, uint32_t size) "ctx 0x%x, size %d"
+ virtio_gpu_update_cursor(uint32_t scanout, uint32_t x, uint32_t y, const char *type, uint32_t res) "scanout %d, x %d, y %d, %s, res 0x%x"
+ virtio_gpu_fence_ctrl(uint64_t fence, uint32_t type) "fence 0x%" PRIx64 ", type 0x%x"
+ virtio_gpu_fence_resp(uint64_t fence) "fence 0x%" PRIx64
++virtio_gpu_inc_inflight_fences(uint32_t inflight) "in-flight+ %u"
++virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
  
-     g->parent_obj.conf.flags |= (1 << VIRTIO_GPU_FLAG_VIRGL_ENABLED);
--    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets =
--        virtio_gpu_virgl_get_num_capsets(g);
-+    g->capset_ids = virtio_gpu_virgl_get_capsets(g);
-+    VIRTIO_GPU_BASE(g)->virtio_config.num_capsets = g->capset_ids->len;
- 
- #if VIRGL_VERSION_MAJOR >= 1
-     g->parent_obj.conf.flags |= 1 << VIRTIO_GPU_FLAG_CONTEXT_INIT_ENABLED;
-@@ -171,6 +171,8 @@ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
-     }
- 
-     gl->renderer_state = RS_START;
-+
-+    g_array_unref(g->capset_ids);
- }
- 
- static void virtio_gpu_gl_class_init(ObjectClass *klass, void *data)
+ # qxl.c
+ disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
 diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index b2f4e215a7ad..5a881c58a11d 100644
+index 9f34d0e6619c..14091b191ec0 100644
 --- a/hw/display/virtio-gpu-virgl.c
 +++ b/hw/display/virtio-gpu-virgl.c
-@@ -622,19 +622,13 @@ static void virgl_cmd_get_capset_info(VirtIOGPU *g,
-     VIRTIO_GPU_FILL_CMD(info);
- 
-     memset(&resp, 0, sizeof(resp));
--    if (info.capset_index == 0) {
--        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL;
--        virgl_renderer_get_cap_set(resp.capset_id,
--                                   &resp.capset_max_version,
--                                   &resp.capset_max_size);
--    } else if (info.capset_index == 1) {
--        resp.capset_id = VIRTIO_GPU_CAPSET_VIRGL2;
-+
-+    if (info.capset_index < g->capset_ids->len) {
-+        resp.capset_id = g_array_index(g->capset_ids, uint32_t,
-+                                       info.capset_index);
-         virgl_renderer_get_cap_set(resp.capset_id,
-                                    &resp.capset_max_version,
-                                    &resp.capset_max_size);
--    } else {
--        resp.capset_max_version = 0;
--        resp.capset_max_size = 0;
+@@ -525,7 +525,7 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
+         g_free(cmd);
+         g->inflight--;
+         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+-            fprintf(stderr, "inflight: %3d (-)\r", g->inflight);
++            trace_virtio_gpu_dec_inflight_fences(g->inflight);
+         }
      }
-     resp.hdr.type = VIRTIO_GPU_RESP_OK_CAPSET_INFO;
-     virtio_gpu_ctrl_response(g, cmd, &resp.hdr, sizeof(resp));
-@@ -1160,12 +1154,27 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
-     return 0;
  }
- 
--int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g)
-+static void virtio_gpu_virgl_add_capset(GArray *capset_ids, uint32_t capset_id)
-+{
-+    g_array_append_val(capset_ids, capset_id);
-+}
-+
-+GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
- {
-     uint32_t capset2_max_ver, capset2_max_size;
-+    GArray *capset_ids;
-+
-+    capset_ids = g_array_new(false, false, sizeof(uint32_t));
-+
-+    /* VIRGL is always supported. */
-+    virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL);
-+
-     virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
-                               &capset2_max_ver,
-                               &capset2_max_size);
-+    if (capset2_max_ver) {
-+        virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL2);
-+    }
- 
--    return capset2_max_ver ? 2 : 1;
-+    return capset_ids;
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index d60b1b2973af..602952a7041b 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1066,7 +1066,7 @@ void virtio_gpu_process_cmdq(VirtIOGPU *g)
+                 if (g->stats.max_inflight < g->inflight) {
+                     g->stats.max_inflight = g->inflight;
+                 }
+-                fprintf(stderr, "inflight: %3d (+)\r", g->inflight);
++                trace_virtio_gpu_inc_inflight_fences(g->inflight);
+             }
+         } else {
+             g_free(cmd);
+@@ -1086,7 +1086,7 @@ static void virtio_gpu_process_fenceq(VirtIOGPU *g)
+         g_free(cmd);
+         g->inflight--;
+         if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+-            fprintf(stderr, "inflight: %3d (-)\r", g->inflight);
++            trace_virtio_gpu_dec_inflight_fences(g->inflight);
+         }
+     }
  }
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 775005abb337..83232f4b4bfa 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -209,6 +209,8 @@ struct VirtIOGPU {
-         QTAILQ_HEAD(, VGPUDMABuf) bufs;
-         VGPUDMABuf *primary[VIRTIO_GPU_MAX_SCANOUTS];
-     } dmabuf;
-+
-+    GArray *capset_ids;
- };
- 
- struct VirtIOGPUClass {
-@@ -354,6 +356,6 @@ void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
- void virtio_gpu_virgl_reset(VirtIOGPU *g);
- int virtio_gpu_virgl_init(VirtIOGPU *g);
--int virtio_gpu_virgl_get_num_capsets(VirtIOGPU *g);
-+GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
- 
- #endif
 -- 
 2.45.2
 
