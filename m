@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A68EAC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 17:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C097EC27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Jun 2024 17:49:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLRIi-0000fX-NO; Sun, 23 Jun 2024 13:46:52 -0400
+	id 1sLRKS-0001eF-Pm; Sun, 23 Jun 2024 13:48:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sLRIb-0000et-UY
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 13:46:46 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1sLRKO-0001df-E2
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 13:48:36 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sLRIa-0003S0-5K
- for qemu-devel@nongnu.org; Sun, 23 Jun 2024 13:46:45 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-71910dfb8c0so739998a12.3
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 10:46:43 -0700 (PDT)
+ id 1sLRKM-00041V-I7
+ for qemu-devel@nongnu.org; Sun, 23 Jun 2024 13:48:36 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-706524adf91so1640833b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 10:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719164802; x=1719769602; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719164913; x=1719769713; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=pxiHYkUya/+1wFMZscZhTkjh8DQ5y9fo5j5+nxXu5E8=;
- b=yEY2dNaB/y2RMuYbkdlh+/yW6oPeJP9N6RWhLH1WC8qfIXDo/VHGqt7bgIpw6+dOfn
- 3V2RFgstNDZsQPEP7jFUpEuhRki/cJuKE72ZMUX+o8X3nytJDsDqx3vra32wo475lcIM
- aCNRO43uJnobtaoL2MF1kaUjQOntw898N+73sRPTJcgMdV2G0L/9iS5TgWx6l4GHyDOw
- JSczCmnsDebT4Qp58dbbYZnT1mG34MqTw55TZksfxtatCvOB4NCI67f3TgnJFSXDKbcz
- GHHqABzc5cVA5NkJXmAQqK7pyOtO1fond1pAmnDKkD/RCnY83KkcX+GU+j5pvmb083VL
- 4GBA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0Wm6gOMwirCIAjlbyQ36hwZxIcM1l/lqLuZn+yu3/xE=;
+ b=PVjeh6iyFz6xqOBgjxBZjdfAAe+bFPha6hLBkbrYQ24q8HFZbHpfhPi5vqoEiVX/1K
+ l6BBNUu1FSHu7IO5z9g68bSvxrQEbWTEeXS/HlO/vgXvE2aSejpacVDly7O6ERmayotM
+ F4cl2yPNMIKx1snY5uEfzlKhKkqbHjAbLI+7TYbfof7HcHYKtv+bOPLPKpBelE1R16yl
+ QRLSUIU6Jahn+i5aZ6lz/3e6mYk/ibmn8P/du0a037T8iUDPYw8/R/9wJ1VIsuqZFew5
+ Zl29yiqR8r/kUlE9188D0BxhynSSpT9iYUidn0JrSLj0unSHifQNPAu/1XURtgrTv95C
+ DmIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719164802; x=1719769602;
+ d=1e100.net; s=20230601; t=1719164913; x=1719769713;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pxiHYkUya/+1wFMZscZhTkjh8DQ5y9fo5j5+nxXu5E8=;
- b=R4+PZU+tVaL3GRd/lFPBu0Nrxwxsg1HV/6vRX10vRkJCsoRfhW8ZUx34kvxifMw5bp
- BwA6AMnYCau1PE+FORq4qW5RgLCdTKJrO1IFWLghZYufu3Ndw6kT0Kvdr8snvGVSlcYv
- 21w2ew56GFrr6g+Umtd2+yQR95NkSeEwAdxwPnaUN38A0vdwkARVb3Qipzrzx2Ku6V47
- gX2oTvVIF9cn+WEcO0U6iOocsbhLe312ty8JPmjaii2O7u4qzdbJ0KzUJvL5428gCdj7
- SahlOIYuO0FBMOixOWqmYH8J7nJMbtjVSjCarIHft+lteCye+aZdfriTi4vfuqeDgu7m
- rRVg==
+ bh=0Wm6gOMwirCIAjlbyQ36hwZxIcM1l/lqLuZn+yu3/xE=;
+ b=cjew7qyeg7riRbp7peDhNPUAaZzgKjtTP4dSKre4CRiBY1UHPmdpfRpgp88lAKTgmH
+ SHIwtjGmlU0ccon8DQ1IRZP1u0pi3yNxxA8yXFea6zeXKkm+TTP2BsioW2fGS5EHV3qH
+ KjRudSc2am4P7IVL0TksMkTsiptng1tth8HoVBH6Txa8pV4iDY1iOyIWRX/xUQUECRhy
+ g8V4vLbCcrkiA0mgLAI6kZT+e8AGEuEGYXBQt6I3hReMpPSpA+k6JFlzhteA+vM2EqL3
+ WeNQhHHpJd4UKa9z+jMLw6m2dP2vBuNVXxhG5A9bbeLm4e3YHBWugBBd10b7xnJYmxK/
+ awJw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWjPzKjHujs1PEB1Tnl4ZZr9QnKc+exSA2lKtOutkb070DAq6U6zJMCAzIKr0oRW0jT7T1JSuxfxajPOTCZuEfakmh345Q=
-X-Gm-Message-State: AOJu0YzMhyTYh7fsYfBXLbuhEsehKQABrk7WhprJZfaXfupNUHRV94L4
- mU7Ym0H3MUIjxkV16+LE4KkiMnh6TLBdLtpqYc82oTKPTmcIL6yBE4TzbanZAcE=
-X-Google-Smtp-Source: AGHT+IE+DFsFViOawh7V4RqW1317pW0PvANWfl4qyOWrunYnjjuqmiQtaGyYV378a540p9ynMnxH/A==
-X-Received: by 2002:a17:902:f54e:b0:1f8:5a60:842c with SMTP id
- d9443c01a7336-1fa1d3b6eeemr38264435ad.5.1719164801611; 
- Sun, 23 Jun 2024 10:46:41 -0700 (PDT)
+ AJvYcCVku4cmEhThQvCvt+Ocoa2eqvIWi41SLAcYviP8Chn51GRt7Eb6vv2d2RhFm+dpS+yUjWXP0H7Q/R7rTBG0Ddoab9kVCE8=
+X-Gm-Message-State: AOJu0YwOyPrpq+zbwv415J0fqWWqyatTf7HiOqa0MoonUeM539pchuO7
+ KQy2ZWt4Rm9p8XZHRXzEuuZ/cqopz0XHIWRnzq9Z8eWlBgjCqC6VTz2th01099niLeSAkveaLWJ
+ M
+X-Google-Smtp-Source: AGHT+IEqXbI083Jj35cDFsykV34Am/CliJrIz3yyF9cVkv8VyKi5MrDgpnqDe4+F8/wRh1n+mWZ2eA==
+X-Received: by 2002:a05:6a00:3d11:b0:705:95ce:cfd3 with SMTP id
+ d2e1a72fcca58-7067105619emr3908756b3a.31.1719164913003; 
+ Sun, 23 Jun 2024 10:48:33 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9ebbb3037sm47505385ad.264.2024.06.23.10.46.40
+ d2e1a72fcca58-7067eb5b970sm935673b3a.177.2024.06.23.10.48.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 10:46:41 -0700 (PDT)
-Message-ID: <87e5c820-76ef-44bc-be5a-788bc11183e8@linaro.org>
-Date: Sun, 23 Jun 2024 10:46:39 -0700
+ Sun, 23 Jun 2024 10:48:32 -0700 (PDT)
+Message-ID: <ed5ad041-80fe-45f7-a638-9df34ef37fef@linaro.org>
+Date: Sun, 23 Jun 2024 10:48:30 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/18] target-arm queue
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-References: <20240622120643.3797539-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH 22/23] Add set_mcontext function for ARM AArch64 in
+ bsd-user
+To: Warner Losh <imp@bsdimp.com>
+Cc: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org,
+ Ajeet Singh <itachis@freebsd.org>, Stacey Son <sson@freebsd.org>
+References: <20240617185804.25075-1-itachis@FreeBSD.org>
+ <20240617185804.25075-23-itachis@FreeBSD.org>
+ <8bf36c67-070e-4e04-987b-c64b502ed62d@linaro.org>
+ <CANCZdfpX1rFFznOohEenUv3kpEg91NR04QZPd3wJnBk1SmR8fg@mail.gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240622120643.3797539-1-peter.maydell@linaro.org>
+In-Reply-To: <CANCZdfpX1rFFznOohEenUv3kpEg91NR04QZPd3wJnBk1SmR8fg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,42 +103,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/22/24 05:06, Peter Maydell wrote:
-> Hi; here's the latest target-arm pullreq; this is pretty much
-> just various bugfixes.
+On 6/23/24 08:54, Warner Losh wrote:
 > 
-> -- PMM
 > 
-> The following changes since commit 02d9c38236cf8c9826e5c5be61780c4444cb4ae0:
+> On Tue, Jun 18, 2024 at 4:51 PM Richard Henderson <richard.henderson@linaro.org 
+> <mailto:richard.henderson@linaro.org>> wrote:
 > 
->    Merge tag 'pull-tcg-20240619' ofhttps://gitlab.com/rth7680/qemu  into staging (2024-06-19 14:00:39 -0700)
+>     On 6/17/24 11:58, Ajeet Singh wrote:
+>      > From: Stacey Son <sson@FreeBSD.org>
+>      >
+>      > The function copies register values from the provided target_mcontext_t
+>      > structure to the CPUARMState registers
+>      >
+>      > Signed-off-by: Stacey Son <sson@FreeBSD.org>
+>      > Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+>      > ---
+>      >   bsd-user/aarch64/signal.c | 22 ++++++++++++++++++++++
+>      >   1 file changed, 22 insertions(+)
+>      >
+>      > diff --git a/bsd-user/aarch64/signal.c b/bsd-user/aarch64/signal.c
+>      > index 43c886e603..13faac8ce6 100644
+>      > --- a/bsd-user/aarch64/signal.c
+>      > +++ b/bsd-user/aarch64/signal.c
+>      > @@ -95,3 +95,25 @@ abi_long setup_sigframe_arch(CPUARMState *env, abi_ulong frame_addr,
+>      >       return 0;
+>      >   }
+>      >
+>      > +/*
+>      > + * Compare to set_mcontext() in arm64/arm64/machdep.c
+>      > + * Assumes that the memory is locked if frame points to user memory.
+>      > + */
+>      > +abi_long set_mcontext(CPUARMState *regs, target_mcontext_t *mcp, int srflag)
+>      > +{
+>      > +    int err = 0, i;
+>      > +    const uint64_t *gr = mcp->mc_gpregs.gp_x;
+>      > +
+>      > +    for (i = 0; i < 30; i++) {
+>      > +        regs->xregs[i] = tswap64(gr[i]);
+>      > +    }
+>      > +
+>      > +    regs->xregs[TARGET_REG_SP] = tswap64(mcp->mc_gpregs.gp_sp);
+>      > +    regs->xregs[TARGET_REG_LR] = tswap64(mcp->mc_gpregs.gp_lr);
+>      > +    regs->pc = mcp->mc_gpregs.gp_elr;
 > 
-> are available in the Git repository at:
+>     tswap.
 > 
->    https://git.linaro.org/people/pmaydell/qemu-arm.git  tags/pull-target-arm-20240622
 > 
-> for you to fetch changes up to 3b36cead6ecc0e40edb8b2f3e253baa01ebc1e9a:
-> 
->    hw/arm/sbsa-ref: Enable CPU cluster on ARM sbsa machine (2024-06-21 16:24:46 +0100)
-> 
-> ----------------------------------------------------------------
-> target-arm queue:
->   * hw/net/can/xlnx-versal-canfd: Fix sorting of the tx queue
->   * hw/arm/xilinx_zynq: Fix IRQ/FIQ routing
->   * hw/intc/arm_gic: Fix deactivation of SPI lines
->   * hw/timer/a9gtimer: Handle QTest mode in a9_gtimer_get_current_cpu
->   * hw/misc: Set valid access size for Exynos4210 RNG
->   * hw/arm/sbsa-ref: switch to 1GHz timer frequency
->   * hw/arm/sbsa-ref: Enable CPU cluster on ARM sbsa machine
->   * hw/arm/virt: allow creation of a second NonSecure UART
->   * hw/arm/virt: Avoid unexpected warning from Linux guest on host with Fujitsu CPUs
->   * scripts/coverity-scan/COMPONENTS.md: update component regexes
->   * hw/usb/hcd-dwc2: Handle invalid address access in read and write functions
->   * hw/usb/hcd-ohci: Fix ohci_service_td: accept zero-length TDs where CBP=BE+1
+> So "regs->pc = tswap64(mcp->mc_gpregs.gp_elr)"  then?
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Yes.
+
+> 
+>      > +    pstate_write(regs, mcp->mc_gpregs.gp_spsr);
+>      > +
+>      > +    /* XXX FP? */
+> 
+>     Similarly, see target_restore_fpsimd_record.
+> 
+> 
+> Since neither this, nor the get_mcontext is written for FP on upstream yet, can we do 
+> those as a followup commit?
+
+Yes.
 
 
 r~
-
 
