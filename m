@@ -4,54 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF62C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 17:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34617C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 17:37:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLnX9-0003ir-4P; Mon, 24 Jun 2024 13:31:15 -0400
+	id 1sLncd-00058x-3Q; Mon, 24 Jun 2024 13:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sLnX7-0003gp-0Y; Mon, 24 Jun 2024 13:31:13 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sLnX0-0007JE-FV; Mon, 24 Jun 2024 13:31:12 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W7FNB5G69z6K6kp;
- Tue, 25 Jun 2024 01:30:18 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id D72E1140A36;
- Tue, 25 Jun 2024 01:30:54 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 24 Jun
- 2024 18:30:54 +0100
-Date: Mon, 24 Jun 2024 18:30:53 +0100
-To: Hyeongtak Ji <hyeongtak.ji@gmail.com>
-CC: <qemu-devel@nongnu.org>, <qemu-trivial@nongnu.org>
-Subject: Re: [PATCH] docs/cxl: fix some typos
-Message-ID: <20240624183053.00005205@Huawei.com>
-In-Reply-To: <CAFY0u4R8V-8rJYidvNCYjpAvF=hGy4N1j0a4PPGbaTNALeLC3A@mail.gmail.com>
-References: <20240619045459.305997-1-hyeongtak.ji@gmail.com>
- <20240621171047.000075fc@Huawei.com>
- <CAFY0u4R8V-8rJYidvNCYjpAvF=hGy4N1j0a4PPGbaTNALeLC3A@mail.gmail.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1sLncY-00058O-FH; Mon, 24 Jun 2024 13:36:51 -0400
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1sLncT-0008Gf-Cl; Mon, 24 Jun 2024 13:36:50 -0400
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-6f8ffe1b65dso2109920a34.0; 
+ Mon, 24 Jun 2024 10:36:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719250604; x=1719855404; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6IzOjt0t41WcaxP7cLu3545DN9yYiEI3hqF9omzqUzU=;
+ b=MVXRDH/QA1ZJPf/PT7cYyS+vHhAYmktk4K9m0sqksrJQQp2HUXq6Wqx8iyJQHp6CKV
+ SWVzpJ1RVVdItJ7iLXPTHX3XbUMNyY0qF3IFT6iiJqrTAI6A2n2KwL9QLk7q4+ZbbDtU
+ IADtpSgMF9e8mL48ixUV41oG8MjV2buDvH1Ze/VeWIoz9QSGet/wkVK93LQ0JpHysykw
+ hAtlFvl376N4AeZ0BhjSNcBckg3xs90vdFb4ZC5/F6P9NHFHvL+nf5kgl+4CGS+gQCld
+ BlB0QAI3GXuxX2jpK5SLgSHAkYOJ5REIrDr5UJMLUvOAoBxVB4htvDTyjuzqNFnoDQo4
+ VHzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719250604; x=1719855404;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6IzOjt0t41WcaxP7cLu3545DN9yYiEI3hqF9omzqUzU=;
+ b=mgY3AvTaipPmj0jx/NdL0Uyy59rtLtxS9aAgFn6ITgCyDSQrhlVP6Pl+nWPtIT7kfa
+ 7ZWy5Ty6a0KZNm3eJ5JDKsA4mXAwpllORS0GlC5SgcZ9QAr2Xw7GI/ueBr0LzwOnOt2e
+ lqxJwi2+MJ/5ErfKYhom/aavS1A2FFHd4aKX540s8cxNaEomTOd/4vfOJwlAW2X0v/pE
+ bGorbZmoTo6+Ll+nDxVOhEXs1gdylWJMPA9vQAiXfT8KqhlB0APbNt2GK/PgiRWA3HZC
+ jblEwBccxN4qzGGOUTZwQfEAXJ8Ae1VniCmnIz77xDEcT2KN1XudFoVdmAMmPyUaJ4g1
+ gzqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU9sKHAogaf3OgsMVIUxp745KRHgF1WGly+46+6ymlxQ/nflWL3V8qt8icTUIJmSLHzNAxC+e+78E9DkYyhdsVw0cfD
+X-Gm-Message-State: AOJu0YyaSMU+1B8EGgGqkYVMymLEOKS3Lj/u7aG0xZn7DTWLFYkhbLQD
+ YnnUtoV4UXG8ZTBQlq8pip77us7GEWIMHFeVFVMFNuWE+yySDZUDhf3t55SeR05uWWMEc+v18vv
+ TSWsIuX+lw7r6NO94N+yirPO4YzI=
+X-Google-Smtp-Source: AGHT+IErDwzyNBpVU2CZbmjPRsHZegFp//LgTUbM5upuAwv7H9PRXg6gcQMfMqIAdUobBTy6SOyycqQLK5dBPMWWFR4=
+X-Received: by 2002:a05:6830:16c8:b0:6fb:ab18:c3b3 with SMTP id
+ 46e09a7af769-700c392a133mr515751a34.11.1719250603602; Mon, 24 Jun 2024
+ 10:36:43 -0700 (PDT)
 MIME-Version: 1.0
+References: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
+ <CAFEAcA_zBhe+HxOqtAzWSCbzApEhknr+NeheA1uLj641EXMM5w@mail.gmail.com>
+ <CAKUh+QfrT3SjxHA0Y5fERwnTnqKKbJg9SFb=5J5pfbci0asjLQ@mail.gmail.com>
+ <CAFEAcA82+-=piy0skykKk7pSKU58FmXqiv2hTWv8-sXDB_qEmw@mail.gmail.com>
+In-Reply-To: <CAFEAcA82+-=piy0skykKk7pSKU58FmXqiv2hTWv8-sXDB_qEmw@mail.gmail.com>
+From: Rayhan Faizel <rayhan.faizel@gmail.com>
+Date: Mon, 24 Jun 2024 23:06:32 +0530
+Message-ID: <CAKUh+Qe4tvg+pDqODc+wdzXPpB_FN6EQO1EvQq_5Q1FawuZdNg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Initial support for One-Time Programmable Memory
+ (OTP) in BCM2835
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=rayhan.faizel@gmail.com; helo=mail-ot1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,164 +90,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 22 Jun 2024 16:25:26 +0900
-Hyeongtak Ji <hyeongtak.ji@gmail.com> wrote:
+No worries, and thanks!
 
-> Hello Jonathan,
->=20
-> Thank you for your response.
->=20
-> On Sat, Jun 22, 2024 at 1:10=E2=80=AFAM Jonathan Cameron
-> <Jonathan.Cameron@huawei.com> wrote:
+On Mon, Jun 24, 2024 at 3:52=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Mon, 24 Jun 2024 at 10:12, Rayhan Faizel <rayhan.faizel@gmail.com> wro=
+te:
 > >
-> > On Wed, 19 Jun 2024 13:54:59 +0900
-> > Hyeongtak Ji <hyeongtak.ji@gmail.com> wrote:
+> > Hi,
 > >
-> > Hi, some description would be good of how you caught these
-> > (I'm guessing a close read). =20
->=20
-> Just to confirm, are you suggesting that the patch should include a
-> commit message?  I apologize for submitting the patch without any
-> sufficient explanation.  However, I am not entirely sure if "how I
-> found these typos" needs to be included in the commit message.  For
-> your information, I discovered these typos because the ASCII art did
-> not align with the explanations (yes, a close read).
-
-Mostly just wanted a patch description that said something.
-It can be useful to have even minimal info such as
-"Found by inspection relative to the ASCII art above."
-Helps guide if people should read closely or not!
-
-Thanks,
-
-Jonathan
+> > The patch series is still not merged.
+>
+> Oops, sorry about that -- not sure how it got lost. I have
+> applied it to target-arm.next for real this time...
+>
+> -- PMM
 
 
->=20
-> >
-> > Whilst checking this I did notice there are some errors in
-> > the example bus numbering but that's a separate issue.
-> >
-> > Jonathan
-> >
-> > =20
-> > > Signed-off-by: Hyeongtak Ji <hyeongtak.ji@gmail.com>
-> > > ---
-> > >  docs/system/devices/cxl.rst | 6 +++---
-> > >  1 file changed, 3 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
-> > > index 10a0e9bc9ff4..e2497e6a098b 100644
-> > > --- a/docs/system/devices/cxl.rst
-> > > +++ b/docs/system/devices/cxl.rst
-> > > @@ -218,17 +218,17 @@ Notes:
-> > >      A complex configuration here, might be to use the following HDM
-> > >      decoders in HB0. HDM0 routes CFMW0 requests to RP0 and hence
-> > >      part of CXL Type3 0. HDM1 routes CFMW0 requests from a
-> > > -    different region of the CFMW0 PA range to RP2 and hence part
-> > > +    different region of the CFMW0 PA range to RP1 and hence part =20
-> >
-> > Good catch.
-> > =20
-> > >      of CXL Type 3 1.  HDM2 routes yet another PA range from within
-> > >      CFMW0 to be interleaved across RP0 and RP1, providing 2 way
-> > >      interleave of part of the memory provided by CXL Type3 0 and
-> > >      CXL Type 3 1. HDM3 routes those interleaved accesses from
-> > >      CFMW1 that target HB0 to RP 0 and another part of the memory of
-> > >      CXL Type 3 0 (as part of a 2 way interleave at the system level
-> > > -    across for example CXL Type3 0 and CXL Type3 2.
-> > > +    across for example CXL Type3 0 and CXL Type3 1). =20
-> > This one is wrong.  CFMW1 interleaves across both host bridges so we ne=
-ed
-> > a device below HB0 and one below HB1, so CXL type3 2 is a possible choi=
-ce
-> > (could be CXL type3 3 as well, but that doesn't matter.) =20
->=20
-> Oh, I misunderstood the original explanation.  I will correct it just by
-> adding the missing parenthesis instead.
->=20
-> > =20
-> > >      HDM4 is used to enable system wide 4 way interleave across all
-> > >      the present CXL type3 devices, by interleaving those (interleave=
-d)
-> > > -    requests that HB0 receives from from CFMW1 across RP 0 and
-> > > +    requests that HB0 receives from CFMW1 across RP 0 and =20
-> > Good.
-> > =20
-> > >      RP 1 and hence to yet more regions of the memory of the
-> > >      attached Type3 devices.  Note this is a representative subset
-> > >      of the full range of possible HDM decoder configurations in this=
- =20
-> > =20
->=20
-> I will send V2 with a decent explanation and the corrected typo fix.
->=20
-> Kind regards,
-> Hyeongtak
->=20
-> On Sat, Jun 22, 2024 at 1:10=E2=80=AFAM Jonathan Cameron
-> <Jonathan.Cameron@huawei.com> wrote:
-> >
-> > On Wed, 19 Jun 2024 13:54:59 +0900
-> > Hyeongtak Ji <hyeongtak.ji@gmail.com> wrote:
-> >
-> > Hi, some description would be good of how you caught these
-> > (I'm guessing a close read).
-> >
-> > Whilst checking this I did notice there are some errors in
-> > the example bus numbering but that's a separate issue.
-> >
-> > Jonathan
-> >
-> > =20
-> > > Signed-off-by: Hyeongtak Ji <hyeongtak.ji@gmail.com>
-> > > ---
-> > >  docs/system/devices/cxl.rst | 6 +++---
-> > >  1 file changed, 3 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
-> > > index 10a0e9bc9ff4..e2497e6a098b 100644
-> > > --- a/docs/system/devices/cxl.rst
-> > > +++ b/docs/system/devices/cxl.rst
-> > > @@ -218,17 +218,17 @@ Notes:
-> > >      A complex configuration here, might be to use the following HDM
-> > >      decoders in HB0. HDM0 routes CFMW0 requests to RP0 and hence
-> > >      part of CXL Type3 0. HDM1 routes CFMW0 requests from a
-> > > -    different region of the CFMW0 PA range to RP2 and hence part
-> > > +    different region of the CFMW0 PA range to RP1 and hence part =20
-> >
-> > Good catch.
-> > =20
-> > >      of CXL Type 3 1.  HDM2 routes yet another PA range from within
-> > >      CFMW0 to be interleaved across RP0 and RP1, providing 2 way
-> > >      interleave of part of the memory provided by CXL Type3 0 and
-> > >      CXL Type 3 1. HDM3 routes those interleaved accesses from
-> > >      CFMW1 that target HB0 to RP 0 and another part of the memory of
-> > >      CXL Type 3 0 (as part of a 2 way interleave at the system level
-> > > -    across for example CXL Type3 0 and CXL Type3 2.
-> > > +    across for example CXL Type3 0 and CXL Type3 1). =20
-> > This one is wrong.  CFMW1 interleaves across both host bridges so we ne=
-ed
-> > a device below HB0 and one below HB1, so CXL type3 2 is a possible choi=
-ce
-> > (could be CXL type3 3 as well, but that doesn't matter.)
-> > =20
-> > >      HDM4 is used to enable system wide 4 way interleave across all
-> > >      the present CXL type3 devices, by interleaving those (interleave=
-d)
-> > > -    requests that HB0 receives from from CFMW1 across RP 0 and
-> > > +    requests that HB0 receives from CFMW1 across RP 0 and =20
-> > Good.
-> > =20
-> > >      RP 1 and hence to yet more regions of the memory of the
-> > >      attached Type3 devices.  Note this is a representative subset
-> > >      of the full range of possible HDM decoder configurations in this=
- =20
-> > =20
 
+--=20
+Rayhan Faizel
 
