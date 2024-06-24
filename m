@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A2AC30658
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B57C30653
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLrCy-0006DO-Fr; Mon, 24 Jun 2024 17:26:40 -0400
+	id 1sLrBs-0002p1-Qb; Mon, 24 Jun 2024 17:25:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCx-0006Bn-6J
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:39 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrBr-0002m5-EJ
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:25:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCv-0006ru-Hs
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:38 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrBp-0006eF-Vf
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:25:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719264396;
+ s=mimecast20190719; t=1719264329;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pSYD24a7WVbr1gt4gAk8qKAsjtEP1hsHj2HHhLHyt5U=;
- b=Gh1sVoChSwoGmZJRpNfTf0mVZXdorVcQqezj0RFPUd2b+IhFsyO4525eS7Qrpg1bd3lk2h
- xSxhogjzk64V/N5OUxdQ99YLg/mIa9eCive+FGKoDQaOA/Ywup8fUc+6KYD44NhhBD9pFp
- maGlfHnnZ6bnOpU3EMQ/nNXsTL0iX4E=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jHZRRv9vLdhbh32RfyVPdqWcb/2npQ8XG0j5hmS0Xgs=;
+ b=Xiqn4a3HbOpGBUmIF1/7dxLcrZnn2cccyokSLqtamExpn6Tp4Rbw/pttgNiytAFs81X771
+ uT2AHKoDLubSkijeJ1pJSGqiBLjf+2bsedfAG+r69ByHErv40qV5dNxmyhAcsnGgjK5kbN
+ jY+wkKNka5tdlJsIBwukKDUn5TN2fxc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-04yreZBrN8GxLmFm8wz_Tw-1; Mon,
- 24 Jun 2024 17:26:33 -0400
-X-MC-Unique: 04yreZBrN8GxLmFm8wz_Tw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-303-_t6XwX1ePOStEOiupNJSKA-1; Mon,
+ 24 Jun 2024 17:25:26 -0400
+X-MC-Unique: _t6XwX1ePOStEOiupNJSKA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1E171955F32; Mon, 24 Jun 2024 21:26:32 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0664519560B0; Mon, 24 Jun 2024 21:25:23 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D2C781956051; Mon, 24 Jun 2024 21:26:30 +0000 (UTC)
+ id 53A291956053; Mon, 24 Jun 2024 21:25:21 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 37/42] vfio/container: Switch to QOM
-Date: Mon, 24 Jun 2024 23:24:51 +0200
-Message-ID: <20240624212456.350919-38-clg@redhat.com>
+ Eric Auger <eric.auger@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PULL 08/42] vfio/iommufd: Implement HostIOMMUDeviceClass::realize()
+ handler
+Date: Mon, 24 Jun 2024 23:24:22 +0200
+Message-ID: <20240624212456.350919-9-clg@redhat.com>
 In-Reply-To: <20240624212456.350919-1-clg@redhat.com>
 References: <20240624212456.350919-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -84,70 +83,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of allocating the container struct, create a QOM object of the
-appropriate type.
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+It calls iommufd_backend_get_device_info() to get host IOMMU
+related information and translate it into HostIOMMUDeviceCaps
+for query with .get_cap().
+
+For aw_bits, use the same way as legacy backend by calling
+vfio_device_get_aw_bits() which is common for different vendor
+IOMMU.
+
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/vfio/container.c | 6 +++---
- hw/vfio/iommufd.c   | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ hw/vfio/iommufd.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 3ae52530a9b500bd53ec9f9e66c73253d97c9aba..ff3a6831da83c0fe11060cd57918c4d87b10197c 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -435,7 +435,7 @@ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
-     vioc_name = vfio_get_iommu_class_name(iommu_type);
-     vioc = VFIO_IOMMU_CLASS(object_class_by_name(vioc_name));
- 
--    container = g_malloc0(sizeof(*container));
-+    container = VFIO_IOMMU_LEGACY(object_new(vioc_name));
-     container->fd = fd;
-     container->iommu_type = iommu_type;
-     vfio_container_init(&container->bcontainer, vioc);
-@@ -674,7 +674,7 @@ unregister_container_exit:
-     vfio_cpr_unregister_container(bcontainer);
- 
- free_container_exit:
--    g_free(container);
-+    object_unref(container);
- 
- close_fd_exit:
-     close(fd);
-@@ -718,7 +718,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
-         trace_vfio_disconnect_container(container->fd);
-         vfio_cpr_unregister_container(bcontainer);
-         close(container->fd);
--        g_free(container);
-+        object_unref(container);
- 
-         vfio_put_address_space(space);
-     }
 diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 3e9d642034c2d2234ea701952c94a78ab32e9147..d59df858407f3cadb9405386ad673c99cdad61d0 100644
+index e4a507d55c4df972fb4c43d31571022910bae493..1674c61227b69f5de2a32dbb8013f854c199d294 100644
 --- a/hw/vfio/iommufd.c
 +++ b/hw/vfio/iommufd.c
-@@ -239,7 +239,7 @@ static void iommufd_cdev_container_destroy(VFIOIOMMUFDContainer *container)
-     memory_listener_unregister(&bcontainer->listener);
-     vfio_container_destroy(bcontainer);
-     iommufd_backend_free_id(container->be, container->ioas_id);
--    g_free(container);
-+    object_unref(container);
- }
+@@ -619,6 +619,35 @@ static void vfio_iommu_iommufd_class_init(ObjectClass *klass, void *data)
+     vioc->pci_hot_reset = iommufd_cdev_pci_hot_reset;
+ };
  
- static int iommufd_cdev_ram_block_discard_disable(bool state)
-@@ -352,7 +352,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
- 
-     trace_iommufd_cdev_alloc_ioas(vbasedev->iommufd->fd, ioas_id);
- 
--    container = g_malloc0(sizeof(*container));
-+    container = VFIO_IOMMU_IOMMUFD(object_new(TYPE_VFIO_IOMMU_IOMMUFD));
-     container->be = vbasedev->iommufd;
-     container->ioas_id = ioas_id;
++static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
++                                      Error **errp)
++{
++    VFIODevice *vdev = opaque;
++    HostIOMMUDeviceCaps *caps = &hiod->caps;
++    enum iommu_hw_info_type type;
++    union {
++        struct iommu_hw_info_vtd vtd;
++    } data;
++
++    if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
++                                         &type, &data, sizeof(data), errp)) {
++        return false;
++    }
++
++    hiod->name = g_strdup(vdev->name);
++    caps->type = type;
++    caps->aw_bits = vfio_device_get_aw_bits(vdev);
++
++    return true;
++}
++
++static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
++{
++    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
++
++    hiodc->realize = hiod_iommufd_vfio_realize;
++};
++
+ static const TypeInfo types[] = {
+     {
+         .name = TYPE_VFIO_IOMMU_IOMMUFD,
+@@ -627,6 +656,7 @@ static const TypeInfo types[] = {
+     }, {
+         .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO,
+         .parent = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
++        .class_init = hiod_iommufd_vfio_class_init,
+     }
+ };
  
 -- 
 2.45.2
