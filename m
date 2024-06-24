@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 546C0C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5513C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcOu-0006ol-EY; Mon, 24 Jun 2024 01:38:00 -0400
+	id 1sLcPG-0007pp-H9; Mon, 24 Jun 2024 01:38:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcOr-0006d8-8g
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:37:57 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1sLcPE-0007oG-Jo
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:38:20 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcOo-0005ZH-SM
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:37:57 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-6fa0d077694so1859297a34.0
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:37:54 -0700 (PDT)
+ id 1sLcPC-0005bX-UL
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:38:20 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-70679845d69so517322b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207473; x=1719812273;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207497; x=1719812297;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OKqECE3QQhpisdRYBLXwvGk6jmgmUU6sLJN/OKW97Lg=;
- b=hN2P9SrANWHqXc4U4s0LDh113A15Fty+i/eHhQbHZdJ/gySCEhOBCQlcpRQ8MDecmi
- 65fjCX3yp6jRxaQ9IVEIcb51n5LAda5QFjxV2qeCUgiLIL1Gqzj5267Esxdd1Iaw1M1M
- VtQN0EEgEjw+mNWzVWj1IDdnhj+b6jrJXUGfdpKzElZtOW9pgLcosaU5FPRBoj5RUw1g
- RW1m55sRu5q6cuA8OTdJnxBUPUcxN0TTxV7D3SkL1+kXgNs95asL4t0rZmhNh3JLEVXf
- 4xvUpYrqAaYxWFJgJiEp8L6Gp6+ocYotngqWTe9hA7fKNNmIRxE0cSdvculAbzuSeaE4
- AU5w==
+ bh=cgI9hSP4ZTd/FnLyKh4zIejgp6yP0213M5kyxmjgu5A=;
+ b=qk+7Bn8hYnCJZ6HzjsSyv/h4O6eshDoxIoWYCaL8tbuYSkcY0ScTnxfPOd4rPCHk1S
+ dtVaF4NlesKD24N4HIQ3nXt9feZjaOOYLn+V7T5qFME50JL2krp9UTi6xRUs/+q8KvDa
+ T2PZNKR4LxLfgJQqOGbeeLkbHnT+u4t+9dN4SodegdNcsHdrNjlHDHwF/uRxj9QijOHo
+ 838XsOJFwuNFkWVxVdfG2TsBmc1IAxgS0uugTj8qei1rpMIh3y5WBaApf2cdc36RkzFX
+ VJGBDHw4jSF6E66h6aZTwB7hWYBowmq2P14I7FpT4YAFEs9gkVKBLGktKong7Zd0ZC0j
+ l7aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207473; x=1719812273;
+ d=1e100.net; s=20230601; t=1719207497; x=1719812297;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OKqECE3QQhpisdRYBLXwvGk6jmgmUU6sLJN/OKW97Lg=;
- b=DjeA1NRmsYwHqeuYnmSZ6Jezwxn3fEM4cxfrauR1GywMSEk4GFrKBQ+/63bnHYPIFV
- 7rUQvZmoaNrd+vfVpuFFCkkKgfEIDvqvOoxU+gEU+0ZnNXDYO5GtcuUbm2g03YrePuAt
- 0zuf+IfSoJ3A9x+AZpvMo8poBEzMECfI2ikB9I0ZQVVuHbwDE+30pW8cIZHHWYLcYg5T
- SZekqJlgQsjGAYofQQjDT0cb2hhXtp9lhRYfMkOr3Oaz/+y4LnfrRPl1glidbO5Kxdyj
- iSRhTsx7vjNHqyre+o2EOnOz5AX0bolTsMp9+ixesOJFJazOFfNugCdQ0SFg5nEDv+xk
- rS3A==
-X-Gm-Message-State: AOJu0Yy63e3/baVvs2SgwVQEC1yBpQZq+A78owJRkfw5cxJlkPhIf2w5
- 3czkEDJaTmgRT2yyskwxickk8UN+1cjTL5+4EBNzESp0C75rLRBZniYYVvSU4m4=
-X-Google-Smtp-Source: AGHT+IEJPlcOfKtjEPo3gicun2ZFI1rBP5KrnfniFx1TNZlmP0HPOUyYr9FuG1nWPig+HX1cg2jjdg==
-X-Received: by 2002:a9d:69c7:0:b0:6f9:90de:c67f with SMTP id
- 46e09a7af769-700b11c68f2mr4519230a34.10.1719207473550; 
- Sun, 23 Jun 2024 22:37:53 -0700 (PDT)
+ bh=cgI9hSP4ZTd/FnLyKh4zIejgp6yP0213M5kyxmjgu5A=;
+ b=QFxRpp2KLuwvlQkebG/1n4Y0gYG4wA9ZxLNFiOoML85/YVJU6zdH9q2N7eRDqTn53I
+ BT/wU1JVyUpjWxjxeZpJ0O0HUY/IqciRvieA5u+Id489g7UpqChErer1dkDtdJJVtGYP
+ 3VdMh7S+DNiPx0yeD3/Au+MIM/xt/KhMm5He+crGbtKpMtxjO6VUuwvKDU2oZrolKSwV
+ xAw3P9JpvOkyo8jZrfwcA0uxh4AxUg49/3I1eSvw6fcxr2aiEvv8YCmBA6Jbm7950JV0
+ 60URdP9qIMXSVacBY3NVE+/rne3oPxH4tfKgxN04nLdr8+LlowTy64itemekZauHA4m9
+ O6CA==
+X-Gm-Message-State: AOJu0YwjcdQhXuQ1lnPThsm+BB43UHR7PyJVrXmA/0lAHBQnavkfmah1
+ 1FJ6fb8Xsh6i8qTCp21x03TIrzSczVoiqWPghdM3ogw5zY9xsC2990sqLTMxDL3DISdVD28NObj
+ O8Ik=
+X-Google-Smtp-Source: AGHT+IER3xyrXI/lobZrjuCK35ILPXDD/xOpj3c8QGstjzEBk6dZ930dJCQwrPJNfCLECDQsoPGvrw==
+X-Received: by 2002:aa7:8ecb:0:b0:706:57ce:f042 with SMTP id
+ d2e1a72fcca58-7067455bfd2mr2912448b3a.7.1719207497532; 
+ Sun, 23 Jun 2024 22:38:17 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-716b4a7319bsm4803508a12.50.2024.06.23.22.37.48
+ d2e1a72fcca58-706511944d2sm5328390b3a.70.2024.06.23.22.38.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 22:37:53 -0700 (PDT)
-Message-ID: <30447bda-dc0f-4b56-a65c-c38de1915f45@daynix.com>
-Date: Mon, 24 Jun 2024 14:37:46 +0900
+ Sun, 23 Jun 2024 22:38:17 -0700 (PDT)
+Message-ID: <0425f585-9cbc-4c23-b3f3-7140dedcaa46@daynix.com>
+Date: Mon, 24 Jun 2024 14:38:11 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 09/13] virtio-gpu: Add virgl resource management
+Subject: Re: [PATCH v16 10/13] virtio-gpu: Support suspension of commands
+ processing
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -86,14 +88,14 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
- <20240623152343.328436-10-dmitry.osipenko@collabora.com>
+ <20240623152343.328436-11-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240623152343.328436-10-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240623152343.328436-11-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::32c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32c.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::429;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,15 +118,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/06/24 0:23, Dmitry Osipenko wrote:
-> From: Huang Rui <ray.huang@amd.com>
+> Check whether command processing has been finished; otherwise, stop
+> processing commands and retry the command again next time. This allows
+> us to support asynchronous execution of non-fenced commands needed for
+> unmapping host blobs safely.
 > 
-> In a preparation to adding host blobs support to virtio-gpu, add virgl
-> resource management that allows to retrieve resource based on its ID
-> and virgl resource wrapper on top of simple resource that will be contain
-> fields specific to virgl.
-> 
-> Signed-off-by: Huang Rui <ray.huang@amd.com>
-> Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
+> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
