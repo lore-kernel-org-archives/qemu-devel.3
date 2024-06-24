@@ -4,58 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D0DC30653
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:29:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AEB1C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLrCS-0003p0-2a; Mon, 24 Jun 2024 17:26:08 -0400
+	id 1sLrBg-0002j6-CQ; Mon, 24 Jun 2024 17:25:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCR-0003oM-4K
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrBe-0002iT-V7
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:25:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCP-0006hZ-Ex
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:06 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrBc-0006Xb-O5
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:25:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719264364;
+ s=mimecast20190719; t=1719264316;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TYFpvllfcOmT0Fmrji93QS21BlS8890C4bQrJ9iG5MQ=;
- b=aK828dq6guLv/hQUgE3TolEq0bEPy0px90h/TYn2r0pwTCsl9ylIMg8DV5vTwzqVWfj3sT
- Qt13Yuh1y4SdDiSHdIJtf3aQxJp2UyH+EUilXjBGG1u6qF0t1RgBDZiVodr1QdoshCzttE
- hNK0FnS1f45Mqcc2pfs663DZMwti2GQ=
+ bh=3Jnq15/t3RMRO+MlmhjiZee7/Nd/ewGCl8Vn49dNtKc=;
+ b=SKNdDbIPIAAkAP01dNv0/F1UQ4Xcqp7YMOmDIVENbrE8YlnmA66uczjeg4K7tMpGCU69kZ
+ GVLKDFHhdgtyUGnakOatLSi4+HMT+1Eb7uXBDVBlq5rycGXbcUAvikSw03KX8SMpn4whsW
+ E2EOHprm3Sqg18iV79NYLazB0vP1LEA=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-xv-FikCrNd-JMVa6Zn3mig-1; Mon,
- 24 Jun 2024 17:26:01 -0400
-X-MC-Unique: xv-FikCrNd-JMVa6Zn3mig-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-YJPoU2C6P5WhPPGKVGeqVA-1; Mon,
+ 24 Jun 2024 17:25:14 -0400
+X-MC-Unique: YJPoU2C6P5WhPPGKVGeqVA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38D7719560AE; Mon, 24 Jun 2024 21:25:58 +0000 (UTC)
+ id D9CAF19560B1; Mon, 24 Jun 2024 21:25:12 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6C1FB1956061; Mon, 24 Jun 2024 21:25:56 +0000 (UTC)
+ id B03001956054; Mon, 24 Jun 2024 21:25:10 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>
-Subject: [PULL 22/42] virtio-iommu: Compute host reserved regions
-Date: Mon, 24 Jun 2024 23:24:36 +0200
-Message-ID: <20240624212456.350919-23-clg@redhat.com>
+Subject: [PULL 04/42] backends/iommufd: Introduce
+ TYPE_HOST_IOMMU_DEVICE_IOMMUFD[_VFIO] devices
+Date: Mon, 24 Jun 2024 23:24:18 +0200
+Message-ID: <20240624212456.350919-5-clg@redhat.com>
 In-Reply-To: <20240624212456.350919-1-clg@redhat.com>
 References: <20240624212456.350919-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -83,206 +86,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Compute the host reserved regions in virtio_iommu_set_iommu_device().
-The usable IOVA regions are retrieved from the HostIOMMUDevice.
-The virtio_iommu_set_host_iova_ranges() helper turns usable regions
-into complementary reserved regions while testing the inclusion
-into existing ones. virtio_iommu_set_host_iova_ranges() reuse the
-implementation of virtio_iommu_set_iova_ranges() which will be
-removed in subsequent patches. rebuild_resv_regions() is just moved.
+TYPE_HOST_IOMMU_DEVICE_IOMMUFD represents a host IOMMU device under
+iommufd backend. It is abstract, because it is going to be derived
+into VFIO or VDPA type'd device.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+It will have its own .get_cap() implementation.
+
+TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO is a sub-class of
+TYPE_HOST_IOMMU_DEVICE_IOMMUFD, represents a VFIO type'd host IOMMU
+device under iommufd backend. It will be created during VFIO device
+attaching and passed to vIOMMU.
+
+It will have its own .realize() implementation.
+
+Opportunistically, add missed header to include/sysemu/iommufd.h.
+
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-iommu.c | 147 ++++++++++++++++++++++++++++++---------
- 1 file changed, 113 insertions(+), 34 deletions(-)
+ include/hw/vfio/vfio-common.h |  3 +++
+ include/sysemu/iommufd.h      | 16 ++++++++++++++++
+ backends/iommufd.c            | 35 ++++++++++++++++++-----------------
+ hw/vfio/iommufd.c             |  5 ++++-
+ 4 files changed, 41 insertions(+), 18 deletions(-)
 
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 16c8ec3ca460a6d70e83b28787398f94dd16cc99..a4c0cceb65f2452de186da10be2f449ec45fe672 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -498,11 +498,108 @@ get_host_iommu_device(VirtIOIOMMU *viommu, PCIBus *bus, int devfn) {
-     return g_hash_table_lookup(viommu->host_iommu_devices, &key);
- }
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 75b167979ac221e59b2681b2704c03778823fbb0..56d171721164991b408073488330bf1d79104970 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -32,6 +32,7 @@
+ #include "sysemu/sysemu.h"
+ #include "hw/vfio/vfio-container-base.h"
+ #include "sysemu/host_iommu_device.h"
++#include "sysemu/iommufd.h"
  
-+/**
-+ * rebuild_resv_regions: rebuild resv regions with both the
-+ * info of host resv ranges and property set resv ranges
+ #define VFIO_MSG_PREFIX "vfio %s: "
+ 
+@@ -173,6 +174,8 @@ typedef struct VFIOGroup {
+ } VFIOGroup;
+ 
+ #define TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO TYPE_HOST_IOMMU_DEVICE "-legacy-vfio"
++#define TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO \
++            TYPE_HOST_IOMMU_DEVICE_IOMMUFD "-vfio"
+ 
+ typedef struct VFIODMABuf {
+     QemuDmaBuf *buf;
+diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
+index 293bfbe967215381532b8267227dde61fa9157b7..f6e6d6e1f9f4e9b1c581100912e4864b08c9ed7d 100644
+--- a/include/sysemu/iommufd.h
++++ b/include/sysemu/iommufd.h
+@@ -1,9 +1,23 @@
++/*
++ * iommufd container backend declaration
++ *
++ * Copyright (C) 2024 Intel Corporation.
++ * Copyright Red Hat, Inc. 2024
++ *
++ * Authors: Yi Liu <yi.l.liu@intel.com>
++ *          Eric Auger <eric.auger@redhat.com>
++ *          Zhenzhong Duan <zhenzhong.duan@intel.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static int rebuild_resv_regions(IOMMUDevice *sdev)
-+{
-+    GList *l;
-+    int i = 0;
 +
-+    /* free the existing list and rebuild it from scratch */
-+    g_list_free_full(sdev->resv_regions, g_free);
-+    sdev->resv_regions = NULL;
+ #ifndef SYSEMU_IOMMUFD_H
+ #define SYSEMU_IOMMUFD_H
+ 
+ #include "qom/object.h"
+ #include "exec/hwaddr.h"
+ #include "exec/cpu-common.h"
++#include "sysemu/host_iommu_device.h"
+ 
+ #define TYPE_IOMMUFD_BACKEND "iommufd"
+ OBJECT_DECLARE_TYPE(IOMMUFDBackend, IOMMUFDBackendClass, IOMMUFD_BACKEND)
+@@ -33,4 +47,6 @@ int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
+                             ram_addr_t size, void *vaddr, bool readonly);
+ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+                               hwaddr iova, ram_addr_t size);
 +
-+    /* First add host reserved regions if any, all tagged as RESERVED */
-+    for (l = sdev->host_resv_ranges; l; l = l->next) {
-+        ReservedRegion *reg = g_new0(ReservedRegion, 1);
-+        Range *r = (Range *)l->data;
-+
-+        reg->type = VIRTIO_IOMMU_RESV_MEM_T_RESERVED;
-+        range_set_bounds(&reg->range, range_lob(r), range_upb(r));
-+        sdev->resv_regions = resv_region_list_insert(sdev->resv_regions, reg);
-+        trace_virtio_iommu_host_resv_regions(sdev->iommu_mr.parent_obj.name, i,
-+                                             range_lob(&reg->range),
-+                                             range_upb(&reg->range));
-+        i++;
-+    }
-+    /*
-+     * then add higher priority reserved regions set by the machine
-+     * through properties
-+     */
-+    add_prop_resv_regions(sdev);
-+    return 0;
-+}
-+
-+static int virtio_iommu_set_host_iova_ranges(VirtIOIOMMU *s, PCIBus *bus,
-+                                             int devfn, GList *iova_ranges,
-+                                             Error **errp)
-+{
-+    IOMMUPciBus *sbus = g_hash_table_lookup(s->as_by_busptr, bus);
-+    IOMMUDevice *sdev;
-+    GList *current_ranges;
-+    GList *l, *tmp, *new_ranges = NULL;
-+    int ret = -EINVAL;
-+
-+    if (!sbus) {
-+        error_report("%s no sbus", __func__);
-+    }
-+
-+    sdev = sbus->pbdev[devfn];
-+
-+    current_ranges = sdev->host_resv_ranges;
-+
-+    g_assert(!sdev->probe_done);
-+
-+    /* check that each new resv region is included in an existing one */
-+    if (sdev->host_resv_ranges) {
-+        range_inverse_array(iova_ranges,
-+                            &new_ranges,
-+                            0, UINT64_MAX);
-+
-+        for (tmp = new_ranges; tmp; tmp = tmp->next) {
-+            Range *newr = (Range *)tmp->data;
-+            bool included = false;
-+
-+            for (l = current_ranges; l; l = l->next) {
-+                Range * r = (Range *)l->data;
-+
-+                if (range_contains_range(r, newr)) {
-+                    included = true;
-+                    break;
-+                }
-+            }
-+            if (!included) {
-+                goto error;
-+            }
++#define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+ #endif
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index c506afbdac4beddb7dac88f74f10544f7a083e58..012f18d8d802aea40798fe3368bbdca52634f95d 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -208,23 +208,24 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+     return ret;
+ }
+ 
+-static const TypeInfo iommufd_backend_info = {
+-    .name = TYPE_IOMMUFD_BACKEND,
+-    .parent = TYPE_OBJECT,
+-    .instance_size = sizeof(IOMMUFDBackend),
+-    .instance_init = iommufd_backend_init,
+-    .instance_finalize = iommufd_backend_finalize,
+-    .class_size = sizeof(IOMMUFDBackendClass),
+-    .class_init = iommufd_backend_class_init,
+-    .interfaces = (InterfaceInfo[]) {
+-        { TYPE_USER_CREATABLE },
+-        { }
++static const TypeInfo types[] = {
++    {
++        .name = TYPE_IOMMUFD_BACKEND,
++        .parent = TYPE_OBJECT,
++        .instance_size = sizeof(IOMMUFDBackend),
++        .instance_init = iommufd_backend_init,
++        .instance_finalize = iommufd_backend_finalize,
++        .class_size = sizeof(IOMMUFDBackendClass),
++        .class_init = iommufd_backend_class_init,
++        .interfaces = (InterfaceInfo[]) {
++            { TYPE_USER_CREATABLE },
++            { }
 +        }
-+        /* all new reserved ranges are included in existing ones */
-+        ret = 0;
-+        goto out;
-+    }
-+
-+    range_inverse_array(iova_ranges,
-+                        &sdev->host_resv_ranges,
-+                        0, UINT64_MAX);
-+    rebuild_resv_regions(sdev);
-+
-+    return 0;
-+error:
-+    error_setg(errp, "%s Conflicting host reserved ranges set!",
-+               __func__);
-+out:
-+    g_list_free_full(new_ranges, g_free);
-+    return ret;
-+}
-+
- static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-                                           HostIOMMUDevice *hiod, Error **errp)
- {
-     VirtIOIOMMU *viommu = opaque;
-+    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
-     struct hiod_key *new_key;
-+    GList *host_iova_ranges = NULL;
- 
-     assert(hiod);
- 
-@@ -511,12 +608,28 @@ static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-         return false;
++    }, {
++        .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
++        .parent = TYPE_HOST_IOMMU_DEVICE,
++        .abstract = true,
      }
+ };
  
-+    if (hiodc->get_iova_ranges) {
-+        int ret;
-+        host_iova_ranges = hiodc->get_iova_ranges(hiod, errp);
-+        if (!host_iova_ranges) {
-+            return true; /* some old kernels may not support that capability */
-+        }
-+        ret = virtio_iommu_set_host_iova_ranges(viommu, hiod->aliased_bus,
-+                                                hiod->aliased_devfn,
-+                                                host_iova_ranges, errp);
-+        if (ret) {
-+            g_list_free_full(host_iova_ranges, g_free);
-+            return false;
-+        }
-+    }
-+
-     new_key = g_malloc(sizeof(*new_key));
-     new_key->bus = bus;
-     new_key->devfn = devfn;
- 
-     object_ref(hiod);
-     g_hash_table_insert(viommu->host_iommu_devices, new_key, hiod);
-+    g_list_free_full(host_iova_ranges, g_free);
- 
-     return true;
- }
-@@ -1238,40 +1351,6 @@ static int virtio_iommu_set_page_size_mask(IOMMUMemoryRegion *mr,
-     return 0;
- }
- 
--/**
-- * rebuild_resv_regions: rebuild resv regions with both the
-- * info of host resv ranges and property set resv ranges
-- */
--static int rebuild_resv_regions(IOMMUDevice *sdev)
+-static void register_types(void)
 -{
--    GList *l;
--    int i = 0;
--
--    /* free the existing list and rebuild it from scratch */
--    g_list_free_full(sdev->resv_regions, g_free);
--    sdev->resv_regions = NULL;
--
--    /* First add host reserved regions if any, all tagged as RESERVED */
--    for (l = sdev->host_resv_ranges; l; l = l->next) {
--        ReservedRegion *reg = g_new0(ReservedRegion, 1);
--        Range *r = (Range *)l->data;
--
--        reg->type = VIRTIO_IOMMU_RESV_MEM_T_RESERVED;
--        range_set_bounds(&reg->range, range_lob(r), range_upb(r));
--        sdev->resv_regions = resv_region_list_insert(sdev->resv_regions, reg);
--        trace_virtio_iommu_host_resv_regions(sdev->iommu_mr.parent_obj.name, i,
--                                             range_lob(&reg->range),
--                                             range_upb(&reg->range));
--        i++;
--    }
--    /*
--     * then add higher priority reserved regions set by the machine
--     * through properties
--     */
--    add_prop_resv_regions(sdev);
--    return 0;
+-    type_register_static(&iommufd_backend_info);
 -}
 -
- /**
-  * virtio_iommu_set_iova_ranges: Conveys the usable IOVA ranges
-  *
+-type_init(register_types);
++DEFINE_TYPES(types)
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 554f9a6292454f51015ab3a56df3fab6a482ccb7..e4a507d55c4df972fb4c43d31571022910bae493 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -624,7 +624,10 @@ static const TypeInfo types[] = {
+         .name = TYPE_VFIO_IOMMU_IOMMUFD,
+         .parent = TYPE_VFIO_IOMMU,
+         .class_init = vfio_iommu_iommufd_class_init,
+-    },
++    }, {
++        .name = TYPE_HOST_IOMMU_DEVICE_IOMMUFD_VFIO,
++        .parent = TYPE_HOST_IOMMU_DEVICE_IOMMUFD,
++    }
+ };
+ 
+ DEFINE_TYPES(types)
 -- 
 2.45.2
 
