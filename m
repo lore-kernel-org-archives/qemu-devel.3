@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95DDFC3064D
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B45AEC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:18:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLjX3-0001Lm-Ir; Mon, 24 Jun 2024 09:14:53 -0400
+	id 1sLjXA-0001QL-1g; Mon, 24 Jun 2024 09:15:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjX2-0001Ld-6p
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:14:52 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjX8-0001Mo-BR
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:14:58 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjX0-0004x3-Ke
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:14:51 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2ec5fad1984so15556521fa.0
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:14:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjX6-0004yd-Dj
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:14:58 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4217990f8baso37997685e9.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719234888; x=1719839688; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719234894; x=1719839694; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7mJMievbUPjRodtOESUjRxIX72igzigbVmP1VpcJ+Qs=;
- b=AyLzsuEvGwqKY+pNXiS6CKQuRD1FaJkYZ4FlJiCEg9DJss/XOAxVJix9cy8c41qifr
- J/obTuV8jwWhIRA3ONHYRWzTizYVGGfEbXj5716qV9Vxji7WPQSC9d3WYgYW6Gvmnvfa
- aY041ASuDB6KJfbASvDmZjeLt/Y6HzbF5iaPaJ6AGMNEmlP7qNiQt6y/p5wtbejrH1ih
- eiNXRJnV9ayr3+TkDw3JIcJGsWdgutyYJ0FAv+mTJk4olFERVqIsgyhFfFLtnE7MFTeA
- Q+L1sSTo+CGvIF5jQZWoV0ma6J61hL5RJvlHP9WHPfRM0ouFBbdRPP3aVsyjwvlmcvlF
- k2yg==
+ bh=aSK8hO4sLlN1hU/1KYxtFOH8CJir4+Yl/Ws4QmLQZLA=;
+ b=upOoYYP9Vsy5BRy55w+Egr7n6iTSPcyii49ZI9cECZIr7UYB4jX4K9fRJKquQ7dH4l
+ Lv7GZ082QeVTDCHKLxvO7R6MhR6zU++xlefFmfsIgml/TMXzhCU4lFKNYa+LDA6K8lWX
+ Hg4ugob2kVrL4EDc8F65TsZ6+1xxTw0d8Omp7zd9psdTI9Z6OnebaDnQW1lVrPxsfPj2
+ MmcMiD4xQrDErVztytfU1fdTLbBjmrL8Dxt6dwr8Ip99PEqMnPsBPNY9tT089xO9ie56
+ q+YORExKpOR9g/thnBQjiwfoURbtmJNZC6LEZMg8W4D2/rHfzMlnXjfL+XSrzn26ZxYu
+ 7OsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719234888; x=1719839688;
+ d=1e100.net; s=20230601; t=1719234894; x=1719839694;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7mJMievbUPjRodtOESUjRxIX72igzigbVmP1VpcJ+Qs=;
- b=MMoR5cAXprJKP91uLAoQu7OS5ZTUNFVWqsvyZlodCEPoDcasOnnCrJU/1ugFTv2y7w
- 4Tzg+6hSZIg8kmd3qRR79w3zkm3Gv3RdQIg1Ddx9t9eb9dnPVloCc/A2hfX1gx51sQ0J
- xcEc0p7aMT+78Wk03xKrIF2u3VudR9gh75h+ug+GhFrLT/HYUy8vsb3IHDdY74lXomNg
- CGFpVEmrKdHEFpwBuX3Q7amiuEAfSDTBzKKR7/bMbveR/FFTT/SPKZz42cGTSKesYDna
- qMVeyp3vp+UgmyVLhr9JVtpurumUZhECGGoQef/1O9X9z54qq9BBEL/Z98uLE3IPzy6o
- aIqg==
-X-Gm-Message-State: AOJu0YzSQwscAboFnzuPsglkbIzj5E6a+v/h08hIt02HjhtMIa8xjVWm
- EIawNV2JnAAo9A8urAQntRJCKYvdMYg7LJdHbw4AfisTe7M2g4oLcr1GaoRGq3yefI+JrtG2BAp
- P
-X-Google-Smtp-Source: AGHT+IFKSUCwbyug4dt9nWTfDpOjGVqMwCw2DrgQgUvfZxUzt20BuZeIWNOSINyKNPWnUN8YsDyrwA==
-X-Received: by 2002:a2e:918a:0:b0:2ec:4086:ea66 with SMTP id
- 38308e7fff4ca-2ec5b2fc27bmr38710701fa.4.1719234888511; 
- Mon, 24 Jun 2024 06:14:48 -0700 (PDT)
+ bh=aSK8hO4sLlN1hU/1KYxtFOH8CJir4+Yl/Ws4QmLQZLA=;
+ b=IWWiuT1z4bFEmZm4EnkTfwGN9ebqIPcD1p/8Q4kcbIE1ljPZ6VF01FYIfkyQQl7r2N
+ u1IyIkU90SprB5zewLgp1+aA3TP87lJK3W3f0MHo8u0OcbkCxhLx9UOlU74MAuwlDQnS
+ 5Ip/T+sqCSCY+1DxLjAAJWm7bmBzBopp1gfGr+rX3IGZU5I8mxNSs6d1DDvz/lGe58gb
+ 3mUow2fxZmBXC1XorkEV4S8u+Yy5/8a4lGG1/XT2PUiMedAn7ybh6uomLLVfGTK0wVuz
+ bQE3o4quYvQV8YGkCZlba+Y6OyH8A9EeiiJE+BjyJoTJi4GsAf7YhUAcsJpxA5WFIk4/
+ J78Q==
+X-Gm-Message-State: AOJu0YwmgGcoTsMNzZ8Q+ziZua8FMu433JQYajuP2ckDqP79qJx2pHE/
+ wYsumSlE2Sa5h/7sUujoKxRl68fyftoIz6nfo/9KXTift58gGKyMNeO0c5l7fc+LlCRuU0e/Z+y
+ 8
+X-Google-Smtp-Source: AGHT+IG27lmH8c5acaDS4R9l0BvYew+nhI6n0YlO0kNThaUfJ3gCSxR5aBmqL6Y9iCbFddBOwirUlA==
+X-Received: by 2002:a05:600c:818:b0:422:1163:4488 with SMTP id
+ 5b1f17b1804b1-4248b9c9c5dmr35020065e9.25.1719234894569; 
+ Mon, 24 Jun 2024 06:14:54 -0700 (PDT)
 Received: from m1x-phil.lan (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
  [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3663ada0bdesm10021016f8f.113.2024.06.24.06.14.47
+ 5b1f17b1804b1-4247cf5272esm176765475e9.0.2024.06.24.06.14.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Jun 2024 06:14:48 -0700 (PDT)
+ Mon, 24 Jun 2024 06:14:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 01/19] bswap: Add st24_be_p() to store 24 bits in big-endian
- order
-Date: Mon, 24 Jun 2024 15:14:22 +0200
-Message-ID: <20240624131440.81111-2-philmd@linaro.org>
+ Alexander Bulekov <alxndr@bu.edu>
+Subject: [PULL 02/19] hw/sd/sdcard: Avoid OOB in sd_read_byte() during
+ unexpected CMD switch
+Date: Mon, 24 Jun 2024 15:14:23 +0200
+Message-ID: <20240624131440.81111-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240624131440.81111-1-philmd@linaro.org>
 References: <20240624131440.81111-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,49 +95,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 14180d6221 ("bswap: Add the ability to store to an
-unaligned 24 bit field") added st24_le_p() for little
-endianness, add st24_be_p() equivalent for bit one.
+For multi-bytes commands, our implementation uses the @data_start
+and @data_offset fields to track byte access. We initialize the
+command start/offset in buffer once. Malicious guest might abuse
+by switching command while staying in the 'transfer' state, switching
+command buffer size, and our implementation can access out of buffer
+boundary. For example, CMD17 (READ_SINGLE_BLOCK) allows to read up to
+512 bytes, and CMD13 (SEND_STATUS) up to 64 bytes. By switching from
+CMD17 to CMD13 (see reproducer below), bytes [64-511] are out of the
+'status' buffer.
 
+Our implementation return R0 status code for unexpected commands.
+Such in-transaction command switch is unexpected and returns R0.
+This is a good place to reset the start/offset fields to avoid
+malicious accesses.
+
+Can be reproduced running:
+
+  $ export UBSAN_OPTIONS=print_stacktrace=1:halt_on_error=1
+  $ cat << EOF | qemu-system-i386 \
+                     -display none -nographic \
+                     -machine accel=qtest -m 512M \
+                     -nodefaults \
+                     -device sdhci-pci,sd-spec-version=3 \
+                     -device sd-card,drive=mydrive \
+                     -drive if=none,index=0,file=null-co://,format=raw,id=mydrive \
+                     -qtest stdio -trace sd\* -trace -sdbus_read
+  outl 0xcf8 0x80001010
+  outl 0xcfc 0xe0000000
+  outl 0xcf8 0x80001004
+  outw 0xcfc 0x02
+  write 0xe000002c 0x1 0x05
+  write 0xe000000f 0x1 0x37
+  write 0xe000000a 0x1 0x01
+  write 0xe000000f 0x1 0x29
+  write 0xe000000f 0x1 0x02
+  write 0xe000000f 0x1 0x03
+  write 0xe000000c 0x1 0x32
+  write 0xe000000f 0x1 0x06
+  write 0xe0000005 0x1 0x01
+  write 0xe0000007 0x1 0x01
+  write 0xe0000003 0x1 0x00
+  write 0xe000000f 0x1 0x11
+  write 0xe000002a 0x1 0x01
+  write 0xe000002a 0x1 0x02
+  write 0xe000000f 0x1 0x0d
+  write 0xe000002a 0x1 0x01
+  write 0xe000002a 0x1 0x02
+  EOF
+  hw/sd/sd.c:1984:15: runtime error: index 256 out of bounds for type 'uint8_t [64]'
+  #0 sd_read_byte hw/sd/sd.c:1984:15
+  #1 sdbus_read_data hw/sd/core.c:157:23
+  #2 sdhci_read_block_from_card hw/sd/sdhci.c:423:9
+  #3 sdhci_blkgap_write hw/sd/sdhci.c:1074:13
+  #4 sdhci_write hw/sd/sdhci.c:1195:13
+  #5 memory_region_write_accessor softmmu/memory.c:492:5
+  #6 access_with_adjusted_size softmmu/memory.c:554:18
+  #7 memory_region_dispatch_write softmmu/memory.c
+  #8 flatview_write_continue softmmu/physmem.c:2778:23
+  #9 flatview_write softmmu/physmem.c:2818:14
+  #10 address_space_write softmmu/physmem.c:2910:18
+  SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior hw/sd/sd.c:1984:15
+
+Reported-by: Alexander Bulekov <alxndr@bu.edu>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/487
+Buglink: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=36240
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240621075607.17902-1-philmd@linaro.org>
+Message-Id: <20240408141717.66154-2-philmd@linaro.org>
 ---
- include/qemu/bswap.h | 7 +++++++
+ hw/sd/sd.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/include/qemu/bswap.h b/include/qemu/bswap.h
-index bd67468e5e..ad22910a5d 100644
---- a/include/qemu/bswap.h
-+++ b/include/qemu/bswap.h
-@@ -38,12 +38,14 @@ static inline void bswap64s(uint64_t *s)
- #if HOST_BIG_ENDIAN
- #define be_bswap(v, size) (v)
- #define le_bswap(v, size) glue(__builtin_bswap, size)(v)
-+#define be_bswap24(v) (v)
- #define le_bswap24(v) bswap24(v)
- #define be_bswaps(v, size)
- #define le_bswaps(p, size) \
-             do { *p = glue(__builtin_bswap, size)(*p); } while (0)
- #else
- #define le_bswap(v, size) (v)
-+#define be_bswap24(v) bswap24(v)
- #define le_bswap24(v) (v)
- #define be_bswap(v, size) glue(__builtin_bswap, size)(v)
- #define le_bswaps(v, size)
-@@ -357,6 +359,11 @@ static inline void stw_be_p(void *ptr, uint16_t v)
-     stw_he_p(ptr, be_bswap(v, 16));
- }
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 807b5d3de3..6a7a10501b 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -1826,6 +1826,13 @@ send_response:
+         break;
  
-+static inline void st24_be_p(void *ptr, uint32_t v)
-+{
-+    st24_he_p(ptr, be_bswap24(v));
-+}
-+
- static inline void stl_be_p(void *ptr, uint32_t v)
- {
-     stl_he_p(ptr, be_bswap(v, 32));
+     case sd_r0:
++        /*
++         * Invalid state transition, reset implementation
++         * fields to avoid OOB abuse.
++         */
++        sd->data_start = 0;
++        sd->data_offset = 0;
++        /* fall-through */
+     case sd_illegal:
+         rsplen = 0;
+         break;
 -- 
 2.41.0
 
