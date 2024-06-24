@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A55F6C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56559C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:36:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcMt-0001PY-K8; Mon, 24 Jun 2024 01:35:55 -0400
+	id 1sLcNQ-00041R-AC; Mon, 24 Jun 2024 01:36:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcMs-00019V-0x
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:54 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1sLcNM-0003y4-8L
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:36:24 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcMq-0005MT-A7
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:53 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-70656b43fd4so1764753b3a.0
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:35:51 -0700 (PDT)
+ id 1sLcNK-0005UA-Mc
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:36:24 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2c7dd4586afso3095282a91.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:36:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207351; x=1719812151;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207381; x=1719812181;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=emPhRUMi3Y+67u9Y2hEPgVEwvlb7TYgX3iKz8DMYQBw=;
- b=Qcy23NZCSdllP7Ruj3mdCwmUPrSWVTt6bgokml6dkgm+6G3LY/DwkfyxlsekArnuvr
- DulgMX0eKYNNQRLez9awPKdl/JlUHGVTzfgtC2tVDu2St0UUGgMpCzu7OEHp0YCllV2n
- nRuLUF0tGbsx9EesHI6GdKwu/iFtE4HHxB8l12Q6XwXvM2LGZdL76FPr3G+CcmIHl9BA
- z7axH69NybgohM/LZ8BqXWN4j2PzTGtY+ISGiv0HjyOEzTJwI2BTmXe5hKiHmMyJniqR
- fMVbHPpmovVSnkaQ4zZJel3hkBuDRbOXfsyDf/qvOdQ7nZNSuFY3YoHw2VurTRPtR1MX
- M53g==
+ bh=6owLCSe6BBCkMd1NWEllzZetRY1hre26/jlQgj8oghQ=;
+ b=bURBBr/zWGq3ePQaYrGC3faYXbm9pWPMNxVdSzObV9qeop+0pX0aKaEJY06Q0zkTPx
+ 14HVIyCy+CTubb953tc3s0nRYI9GdYvR3KOGu5YPkV6lHh5wn/HnpcgRnUvn7mty7bsY
+ 4/0aQimJm9ZYSdzVtE91BH6tlK+0Q33+ohCBad5VvmJlG1FS18JxjvqDkpzCTwU6Q1a7
+ Aab0uPlBBNly9ZQqxjpwpS5bSIVeq5Vcjl/nmS3R14hRO4RatvJMnPx5Mjee+RUepcoq
+ Zm/ntKHyMQO2OFre+dDJyhmftaWMKsirkzovnbyBVBI4PrcoYw9/ci8bG+ElVRFtGfiv
+ lZYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207351; x=1719812151;
+ d=1e100.net; s=20230601; t=1719207381; x=1719812181;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=emPhRUMi3Y+67u9Y2hEPgVEwvlb7TYgX3iKz8DMYQBw=;
- b=a1EZuTDi9WfqOvPk/cKEYDLpnK9gthQCPJemVbQ1+HOru/Cp9ZhR404SYBgsHhe6Lb
- NO6PI8vzYw6xe49p9M2HB8YiusjdydlBrg1J8E/ArVPx6c/Ny9D5tDud+bngVjkhbevC
- KB20ge7+xajbzExlgq93XDKNI8yopVjUyEhiLkUssHC+7Dzyct2Ac+UAbIEnExUijYDd
- 5uhbbUL+1ChKEbUlwOmYy64LUjd/ItEtFI0Bw8jW+otO9DsudjGGJ0auZDIHkV0OHaQr
- C8dRYfmRhXHw4WoyIj3N964JmKEswB+xUrhYnKnIdk0szvmqC/BZoVZrNs/LEbCucLsg
- vC7Q==
-X-Gm-Message-State: AOJu0Yx1AJ2MmuHELslp6GBs9wZMwN06dS/Kg6JgFX/vvVor0xhyFBVx
- fkuVIhPUKzt4SClaTh98wgjW6rKCDAQVQFKoppu2zK6ZdCGpm9XBHpJZJO3RKpY=
-X-Google-Smtp-Source: AGHT+IF9tOIexbHElw2XCTZAJkJYHBwV5J/wi2riZdPJX04o3qYBZXHv3yarm6Ffna2IalLD9k6K3g==
-X-Received: by 2002:a05:6a20:1595:b0:1bc:de4d:1c53 with SMTP id
- adf61e73a8af0-1bcf7eb7a17mr2909983637.29.1719207351003; 
- Sun, 23 Jun 2024 22:35:51 -0700 (PDT)
+ bh=6owLCSe6BBCkMd1NWEllzZetRY1hre26/jlQgj8oghQ=;
+ b=jOvUErC1F5o3IZZAhsfaswylfdpm1LEgoBguCLOjqTJr80DlQxzHYaPz2wkqSoZiZl
+ gcDRSwz5kxUz6rHjL+GHLj+nv6jrboZtl7W0GNQsi/erk+NuTJX/4P2ds2LBV6GlfMXr
+ TFFYCFJEzKjwBI1Gl22nMljWinWgjse+z8fTkvaVg5XI8f0WDTNLq6kzWFXN2C+/2GTf
+ 9eO3yw1jOwiAijtxExWLLxFhGCMpiqqcAsJ0vy5Rhk614Q3dBy1UO4QQkke1/HopogjP
+ R367GRin4cai43q6Y8MOe6tfS60zlkOUylQL6HXuMpBXCSCP+M8+lQxs8vk+hBQ6tBiC
+ 9b7A==
+X-Gm-Message-State: AOJu0YzvHFrNoJBJfnK9tUOvA6NKC9tOtNREgcx3zpxlPlg0/nNy1jCG
+ xJBrVzMg/ws0sCHmr+f5oOB3oZQEdFoXr233ZznTMxxvSDIv4t2Ctoy/NnONvbE=
+X-Google-Smtp-Source: AGHT+IEU/kVRrShRYYTRctglPUb/fEzG6ZKmUxflsPd9v2lnzIJt/lyzfCAnI8uK0xAynrKLnAEGvQ==
+X-Received: by 2002:a17:90b:38c5:b0:2c8:50cc:8571 with SMTP id
+ 98e67ed59e1d1-2c8581e7076mr3440068a91.22.1719207381339; 
+ Sun, 23 Jun 2024 22:36:21 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb32170asm54193165ad.86.2024.06.23.22.35.46
+ 98e67ed59e1d1-2c81eaf92b2sm5609893a91.40.2024.06.23.22.36.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 22:35:50 -0700 (PDT)
-Message-ID: <9b8ac69a-ca24-48b1-8622-6b7800ce5930@daynix.com>
-Date: Mon, 24 Jun 2024 14:35:45 +0900
+ Sun, 23 Jun 2024 22:36:21 -0700 (PDT)
+Message-ID: <44d485ae-fd84-4df2-acef-83b9f58dbf0f@daynix.com>
+Date: Mon, 24 Jun 2024 14:36:15 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 04/13] virtio-gpu: Handle virtio_gpu_virgl_init()
- failure
+Subject: Re: [PATCH v16 05/13] virtio-gpu: Unrealize GL device
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -87,14 +86,14 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
- <20240623152343.328436-5-dmitry.osipenko@collabora.com>
+ <20240623152343.328436-6-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240623152343.328436-5-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240623152343.328436-6-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::42b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42b.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,12 +116,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/06/24 0:23, Dmitry Osipenko wrote:
-> virtio_gpu_virgl_init() may fail, leading to a further Qemu crash
-> because Qemu assumes it never fails. Check virtio_gpu_virgl_init()
-> return code and don't execute virtio commands on error. Failed
-> virtio_gpu_virgl_init() will result in a timed out virtio commands
-> for a guest OS.
+> Even though GL GPU doesn't support hotplugging today, free virgl
+> resources when GL device is unrealized. For consistency.
 > 
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com
 
