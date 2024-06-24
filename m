@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFFC2C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 14:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E11BC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 14:10:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLkGI-0001XY-I9; Mon, 24 Jun 2024 10:01:38 -0400
+	id 1sLkO7-0004or-1X; Mon, 24 Jun 2024 10:09:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sLkGE-0001WK-9T
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:01:34 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sLkGC-0007PL-9D
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:01:34 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-57d07464aa9so4064381a12.2
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 07:01:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719237688; x=1719842488; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TsEaTKpu47SdPW+RydyV2ylH3pJT/VZC8Bxke+9Lm0g=;
- b=WqIdt4/J1bMTj9Zon6fEHcTURTCi08f8lFLNdEf/PJeQHPeBZ3l/b8EvWjsGSbGTPE
- TuDwWjry2sdRO1wfv3PxEtKJLlvGbe7sZBmNTCH2rJBxPXUqtc6FZEiBLbz3irKxPOA0
- 0rhnH/c6EDpl4f3QsuBFr7vbOzzXVHbz0musKSEhp3/d5tOnkWLh/okPIZVth+WZki36
- 5d/wbL0Urb4rxAFFusewNpm7XgNsFIT1RntzRxeHYvzr8D1skrGXJdUH1ObJ92cT8pcb
- k7S2urD0XSLgLU4rry0zc7MIfCIKpiyGGc0LN73/A5er7gOODDgLmyQbcfEaxeeUzj0b
- iy5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719237688; x=1719842488;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TsEaTKpu47SdPW+RydyV2ylH3pJT/VZC8Bxke+9Lm0g=;
- b=e6Kk5KAJFS91zCX0nWY8S9Yv8sQchnMu9lgYpKR/UxejFzIjfXhEwUg3obBSn7Eoxr
- txwxq2yUGNxaTR8D0cFuyn9E2wDrwhfX63dStmoQdMvkFbNxxkQrdewteKArH6ppnPdJ
- cHwBE0OiZb6hhM7ij9Clpein6mxEvmO2TIfvHVwZ8UsZ09XEVpHmBUxqIqqHkQtcJ6z5
- Z0/bwqYl9iN87hS2pYQsQMcgEFneDUt48P4ZTF/CwzMCqstc36iDh37WPI5U5YigsxXH
- vRFsfw8maqtywX4f5PtR+DhfE0zEZaWPCDMgXvvVCRn++Kio/Flt2Juuz2nDt9hcb2ld
- ArTw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYV1lz2Tbn861JyCbMBo5CrUo1HnIB6ToyuNwNV4shEJswsOpMRs5Iv6U320N125wvoPkkuK9C21DgMSHWMLHa/NGiOMU=
-X-Gm-Message-State: AOJu0YyjZCr26RZpZlMcMGjE+y3MnEa5xH/Rmb2x9J2Hy0zPEqOKNU6K
- ++YqgwT4Ka0hYwfjEjBHTozAoLMQxSHBlEqLnqDtF0fRW8FxGn6xyzfBkdZyt/94lJCYFRVCIZ4
- /2X3pXT8wOLcsRPQO8qarwQN9Hyp8LqxVJBKYNQ==
-X-Google-Smtp-Source: AGHT+IEKD0JKkYkbDwW8Ki7ihme4CPqBUHu082NSXAvWZ/FxkBx1QS6po3C3C6VfptO0uqZni9KRhg4Ha2PQyzSxGUY=
-X-Received: by 2002:a50:f604:0:b0:57c:aac9:cd8 with SMTP id
- 4fb4d7f45d1cf-57d4bd5648amr2949038a12.8.1719237687896; Mon, 24 Jun 2024
- 07:01:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sLkO5-0004nP-EH
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:09:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sLkO3-0000hX-Fd
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:09:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719238178;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=SW/uFAw4V6reigCHixEt4ovWgNXrMbGzDEuXfjfsmn4=;
+ b=Xz++g9RQfhFycGoAG4o/aXhmcuVKdY4KyvGffoBh4a2ehOEXU228BilPuNxceOemvOEKm4
+ S2+pZwSVk+XmgOIDmO72njyaoRZBWnTFf1CloWnqTG0M91d/1VMUcdTpmNcdyoin9CDA+O
+ aw/HpJf4zxqw+cphjkTkzlSbzUh3F84=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-LK82E_QWOc2i7oOX3UXE4Q-1; Mon,
+ 24 Jun 2024 10:09:35 -0400
+X-MC-Unique: LK82E_QWOc2i7oOX3UXE4Q-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6EBAC19560B5; Mon, 24 Jun 2024 14:09:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.226])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7C4CE3000219; Mon, 24 Jun 2024 14:09:25 +0000 (UTC)
+Date: Mon, 24 Jun 2024 15:09:22 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v3 09/15] docs/system: Add documentation on support for
+ IGVM
+Message-ID: <Znl-EjTr30PrNe4F@redhat.com>
+References: <cover.1718979106.git.roy.hopkins@suse.com>
+ <b666f4e30e8785de3dc944ac8dbefd0a23f49f5d.1718979106.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
-References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
- <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
- <CAFEAcA8tTHusKOR7JhyU+wwA3JJWq1o5wVaNXugw2S9SjAsESw@mail.gmail.com>
- <b013bd79-c206-446e-b482-91eeb926c70a@kaod.org>
-In-Reply-To: <b013bd79-c206-446e-b482-91eeb926c70a@kaod.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Jun 2024 15:01:16 +0100
-Message-ID: <CAFEAcA_fWTUpfRvYjDDXnXBoFuiZZubzVaKDbgKpmsDr98uXtw@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] aspeed/soc: fix coverity issue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Troy Lee <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
- Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b666f4e30e8785de3dc944ac8dbefd0a23f49f5d.1718979106.git.roy.hopkins@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,54 +93,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 24 Jun 2024 at 14:58, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
->
-> On 6/24/24 2:18 PM, Peter Maydell wrote:
-> > On Wed, 19 Jun 2024 at 10:35, Jamin Lin <jamin_lin@aspeedtech.com> wrot=
-e:
-> >>
-> >> Fix coverity defect: DIVIDE_BY_ZERO.
-> >>
-> >> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> >> ---
-> >>   hw/arm/aspeed_ast27x0.c | 6 ++++++
-> >>   1 file changed, 6 insertions(+)
-> >>
-> >> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> >> index b6876b4862..d14a46df6f 100644
-> >> --- a/hw/arm/aspeed_ast27x0.c
-> >> +++ b/hw/arm/aspeed_ast27x0.c
-> >> @@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void *opaqu=
-e, hwaddr addr, uint64_t data,
-> >>       ram_size =3D object_property_get_uint(OBJECT(&s->sdmc), "ram-siz=
-e",
-> >>                                           &error_abort);
-> >>
-> >> +    if (!ram_size) {
-> >> +        qemu_log_mask(LOG_GUEST_ERROR,
-> >> +                      "%s: ram_size is zero",  __func__);
-> >> +        return;
-> >> +    }
-> >> +
-> >
-> > Isn't this a QEMU bug rather than a guest error? The
-> > RAM size presumably should never be zero unless the board
-> > set the ram-size property on the SDMC incorrectly. So the
-> > SDMC device should check (and return an error from its realize
-> > method) that the ram-size property is valid,
->
-> That's the case in aspeed_sdmc_set_ram_size() which is called from
-> the aspeed machine init routine when the ram size is set.
+On Fri, Jun 21, 2024 at 03:29:12PM +0100, Roy Hopkins wrote:
+> IGVM support has been implemented for Confidential Guests that support
+> AMD SEV and AMD SEV-ES. Add some documentation that gives some
+> background on the IGVM format and how to use it to configure a
+> confidential guest.
+> 
+> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> ---
+>  docs/system/i386/amd-memory-encryption.rst |   2 +
+>  docs/system/igvm.rst                       | 157 +++++++++++++++++++++
+>  docs/system/index.rst                      |   1 +
+>  3 files changed, 160 insertions(+)
+>  create mode 100644 docs/system/igvm.rst
 
-True, but if the property is never set at all then the
-struct field will be left at whatever value it had, which
-is 0, I think. So if that's not valid then it either needs
-to be a different default or else the realize method should
-complain that the property was never set.
+> diff --git a/docs/system/igvm.rst b/docs/system/igvm.rst
+> new file mode 100644
+> index 0000000000..b6e544a508
+> --- /dev/null
+> +++ b/docs/system/igvm.rst
 
-thanks
--- PMM
+> +Running a Confidential Guest configured using IGVM
+> +--------------------------------------------------
+> +
+> +To run a confidential guest configured with IGVM you need to add an
+> +``igvm-cfg`` object and refer to it from the ``-machine`` parameter:
+> +
+> +Example (for AMD SEV)::
+> +
+> +    qemu-system-x86_64 \
+> +        <other parameters> \
+> +        -machine ...,confidential-guest-support=sev0,igvm-cfg=igvm0 \
+> +        -object sev-guest,id=sev0,cbitpos=47,reduced-phys-bits=1 \
+> +        -object igvm-cfg,id=igvm0,file=/path/to/guest.igvm
+
+Perhaps also illustrate use of your 'buildigvm' tool for creating
+the igvm file first, assuming that's the tool users are most likely
+to end up needing ?
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
