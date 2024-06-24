@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D809C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 06:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C97D5C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 06:05:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcnr-000866-Qm; Mon, 24 Jun 2024 02:03:47 -0400
+	id 1sLcp4-0000Oh-5q; Mon, 24 Jun 2024 02:05:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sLcnq-00085n-98; Mon, 24 Jun 2024 02:03:46 -0400
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ id 1sLcp2-0000NT-LW; Mon, 24 Jun 2024 02:05:00 -0400
+Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sLcno-00015s-5C; Mon, 24 Jun 2024 02:03:46 -0400
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-4ef765e6dcaso169514e0c.1; 
- Sun, 23 Jun 2024 23:03:42 -0700 (PDT)
+ id 1sLcp1-0001G9-3T; Mon, 24 Jun 2024 02:05:00 -0400
+Received: by mail-ua1-x931.google.com with SMTP id
+ a1e0cc1a2514c-80f5cd5717cso2191057241.1; 
+ Sun, 23 Jun 2024 23:04:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719209022; x=1719813822; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719209097; x=1719813897; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pRjjzrwoopXOsYzu6jLr+pwyQKTmPnQYozm0u0J2YTM=;
- b=iX0XJY3yCz4WndDZOsOz17Qub6BdUbHOo1Ye7EZXvIb25rUXypsA44I02mbh+uUcKz
- m68tofezDOgNwCJ3pf61Zgc/vodspvqEn41TBKIIO/cgQz8NcMRCIW+noDivUWquHaij
- 8wA42ry40JJH4eGy+hkwRoyNskrg7xOEXfLGuqLPMjoZ2o0g0a0hKTP2iiowCBnEAcl6
- OxUaDS7kf5dPYGUNP2Fx8UuiJkMiMSOg5VIaz2DA6GLWfb6I3dRbvJS3oqmo9vCUfVyV
- BE9B28nhC4eSBfhmzvwuo7Eq6Z8+ClggWlvEgTyCaYTInQxtza0LudScRl1BXw6v46Qa
- 3yNA==
+ bh=FIqx486pjvWcB0j9Rra+5ck4J91i2YBVFGZKXLlW6lA=;
+ b=iRtTASiU7OQocs/veab4MKh+D7TnMWqLusjOyoIHAt6bvcN3Cyp+PEOLuQ/7vU//1G
+ 7YFfmxcFvc6Ufo/k7KWBL01mkmarH66ULVTfak3EeA7l+jFKawdwx1WqMzZVUVrzLDwe
+ y/KnUBJpSlbk8i1GPj+UeJzVTuDftibmSCGY8+ynAwnNylky3YVNwA3/mxP1Z5lm/KqN
+ 8dfnyT9vzOSsd38R4bsTKkfM1I6kNHP5aPK6WVjLf5e/L73Tov2XnxOvyZTuWLUiff84
+ nn+cqHTRhDuzUAJSOizqdQ/wRqcExSD5N76sy9GHJ+PnfC4CEl4+vB8EQ4Lf0Ii4Z7HF
+ ABnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719209022; x=1719813822;
+ d=1e100.net; s=20230601; t=1719209097; x=1719813897;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pRjjzrwoopXOsYzu6jLr+pwyQKTmPnQYozm0u0J2YTM=;
- b=nI8rlvFO3diSBN+DCq7CsmcGy3TgiJZtxwDCtA3N8B7fMlzA8cWspI+YfW9qpVtwYh
- hW1CK07QtyNVl+GH8/FL0c2zyRb189qVgw+K75eMiemIIYc3SDgxaFj5zxgKHFLOOHvq
- TjSxZ15Ok0V1FyAgHdfa7Sxd+eb3KdMYz+LPJfnW3SnrmZxs5zmAgwaG/UuwV3MLwiU9
- qanVByjDKPN4XGDLUcz9/+pe5PlvLm1oTCy7OtuFphTe9/x7PvTgmyuU/p8eLamnNYQc
- 7/6T0RjZU7KKYgL1Z/UmtZxaknnLCTAZ52UYueJt1uEQ831qUiM8a/WXtRSvLsGm5Svi
- xLsg==
+ bh=FIqx486pjvWcB0j9Rra+5ck4J91i2YBVFGZKXLlW6lA=;
+ b=nShaXcSJOIggIlg5l7TojpgYKNTsQYHJdux41BPH6PphN7tY50k9H72+j3taUax6cp
+ YTtUFTy2X0VUuPhju6ElsHSZWpJmJMBTUlkXNyuuYPBlROSer2io+5b9lyS0RXfXXsbz
+ CvuCbBY9uIveyq+6I7EGHDbiY3vRJvWAqf3zXYXEQ97cjeexTstpi6jkjaerqaf7aDAE
+ YxNXz36lG78gWRm7b87plvPkFMuv3PZMuDw7jzN5sZtHT+pLgz9/wtyhRCFdpS75+36u
+ +Jt8QvjBLt1cTM46C9/ALv5MdgaxgmNW6+8OG2BbqaqQX1L9Lb1QC4DClKWrvg48xuQW
+ uO0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjh9acmVXEx6QDaNYt7Km3YiAfI1sv4Oa2D5DYdxCv/GiE4dkKiaaBWVS7MAk/HVmjThRG2SMD+0BTcIUJPq6I4PD/TUXPQ6sqnsO44DIhar3FaEEV45u+xHw=
-X-Gm-Message-State: AOJu0YyENnPUq4+aSI8gesmyachO7pP8k1U4UBfLjj2bxJXbdBqHV6VE
- q99K6Y3aE1BYFYjrrRdDlPebKxPpHxmlBSFCnbAGYz0tV0dhrAvmJ4kY+G5dHb4KAWVr6TbgD8Z
- MV81+9nGKHWwM7LFm30BvO8abKjg=
-X-Google-Smtp-Source: AGHT+IEcWsqd89DLCmWK0tK7I6cDExskcfvlt5EnUjJAuJgXABnuiug2pvWsnT04x9/vig2PEScH26loBO2Cem3yF/c=
-X-Received: by 2002:a05:6122:1790:b0:4ef:6865:8ffd with SMTP id
- 71dfb90a1353d-4ef6a73802bmr1655165e0c.10.1719209022128; Sun, 23 Jun 2024
- 23:03:42 -0700 (PDT)
+ AJvYcCW/wMCFQ1IIrVm9SznGNR5uLtQoamsWNcuy596+NqrNrhQguYfgsKOsyY3ztKs6q1kz6bMdmA8v3pOqt5y8qZKBWmD5Asf9Lf5TY/DPS5YZKd8j1QYRCYmq3vY=
+X-Gm-Message-State: AOJu0YxKvqLIqM5amFg6hpf0BsT0jPAEMNpEAtWKZFL9JrNatFmYWBHO
+ cAvwutENIvhZixZRikw4nnUfMZh9pKuWaPfq2SuSJy4cAnLug53xESVv7o3IKnKEkpBtCXWuPGB
+ RtPqTcujqWq0EAV2ayW0nm6IYCLU=
+X-Google-Smtp-Source: AGHT+IHRGHQM4tNv3dj7Te/fJMYoksrjC6PmrX2Akjqxw9mpNuXh6pkyhyY7tW6RI/0IHJ6TZuHky5Nyx9PDE/p9YCY=
+X-Received: by 2002:a05:6122:a1d:b0:4d3:34f4:7e99 with SMTP id
+ 71dfb90a1353d-4ef652101e6mr2322868e0c.0.1719209097273; Sun, 23 Jun 2024
+ 23:04:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240621115906.1049832-1-sunilvl@ventanamicro.com>
- <20240621115906.1049832-6-sunilvl@ventanamicro.com>
-In-Reply-To: <20240621115906.1049832-6-sunilvl@ventanamicro.com>
+ <20240621115906.1049832-7-sunilvl@ventanamicro.com>
+In-Reply-To: <20240621115906.1049832-7-sunilvl@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Jun 2024 16:03:15 +1000
-Message-ID: <CAKmqyKOXXRtu3U4xPp57_4qoCAx07Q3o50oEVHKPgZ=0EjAoXg@mail.gmail.com>
-Subject: Re: [PATCH v3 05/15] tests/qtest/bios-tables-test.c: Add support for
- arch in path
+Date: Mon, 24 Jun 2024 16:04:31 +1000
+Message-ID: <CAKmqyKPrCjRNXKc6GWERwYzgrsQ3ed6XKa+Swf_8Y2ds27a58w@mail.gmail.com>
+Subject: Re: [PATCH v3 06/15] tests/qtest/bios-tables-test.c: Set "arch" for
+ aarch64 tests
 To: Sunil V L <sunilvl@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, 
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -80,8 +80,8 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,10 +108,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Jun 21, 2024 at 9:59=E2=80=AFPM Sunil V L <sunilvl@ventanamicro.com=
 > wrote:
 >
-> Since machine name can be common for multiple architectures (ex: virt),
-> add "arch" in the path to search for expected AML files. Since the AML
-> files are still under old path, add support for searching with and
-> without arch in the path.
+> To search for expected AML files under ${arch}/${machine} path, set this
+> field for AARCH64 related test cases.
 >
 > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
 
@@ -120,67 +118,81 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  tests/qtest/bios-tables-test.c | 23 ++++++++++++++++++++---
->  1 file changed, 20 insertions(+), 3 deletions(-)
+>  tests/qtest/bios-tables-test.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 >
 > diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-tes=
 t.c
-> index c4a4d1c7bf..29c52952f4 100644
+> index 29c52952f4..007c281c9a 100644
 > --- a/tests/qtest/bios-tables-test.c
 > +++ b/tests/qtest/bios-tables-test.c
-> @@ -78,6 +78,7 @@
->  typedef struct {
->      bool tcg_only;
->      const char *machine;
-> +    const char *arch;
->      const char *machine_param;
->      const char *variant;
->      const char *uefi_fl1;
-> @@ -262,8 +263,19 @@ static void dump_aml_files(test_data *data, bool reb=
-uild)
->          g_assert(exp_sdt->aml);
->
->          if (rebuild) {
-> -            aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir, data-=
->machine,
-> +            aml_file =3D g_strdup_printf("%s/%s/%s/%.4s%s", data_dir,
-> +                                       data->arch, data->machine,
->                                         sdt->aml, ext);
-> +
-> +            /*
-> +             * To keep test cases not failing before the DATA files are =
-moved to
-> +             * ${arch}/${machine} folder, add this check as well.
-> +             */
-> +            if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
-> +                aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir,
-> +                                           data->machine, sdt->aml, ext)=
-;
-> +            }
-> +
->              if (!g_file_test(aml_file, G_FILE_TEST_EXISTS) &&
->                  sdt->aml_len =3D=3D exp_sdt->aml_len &&
->                  !memcmp(sdt->aml, exp_sdt->aml, sdt->aml_len)) {
-> @@ -398,8 +410,13 @@ static GArray *load_expected_aml(test_data *data)
->          memset(&exp_sdt, 0, sizeof(exp_sdt));
->
->  try_again:
-> -        aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir, data->mac=
-hine,
-> -                                   sdt->aml, ext);
-> +        aml_file =3D g_strdup_printf("%s/%s/%s/%.4s%s", data_dir, data->=
-arch,
-> +                                   data->machine, sdt->aml, ext);
-> +        if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
-> +            aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir, data-=
->machine,
-> +                                       sdt->aml, ext);
-> +        }
-> +
->          if (verbosity_level >=3D 2) {
->              fprintf(stderr, "Looking for expected file '%s'\n", aml_file=
-);
->          }
+> @@ -1591,6 +1591,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
+>  {
+>      test_data data =3D {
+>          .machine =3D "virt",
+> +        .arch =3D "aarch64",
+>          .tcg_only =3D true,
+>          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
+>          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
+> @@ -1684,6 +1685,7 @@ static void test_acpi_aarch64_virt_tcg_numamem(void=
+)
+>  {
+>      test_data data =3D {
+>          .machine =3D "virt",
+> +        .arch =3D "aarch64",
+>          .tcg_only =3D true,
+>          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
+>          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
+> @@ -1706,6 +1708,7 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
+>  {
+>      test_data data =3D {
+>          .machine =3D "virt",
+> +        .arch =3D "aarch64",
+>          .tcg_only =3D true,
+>          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
+>          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
+> @@ -1779,6 +1782,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(vo=
+id)
+>  {
+>      test_data data =3D {
+>          .machine =3D "virt",
+> +        .arch =3D "aarch64",
+>          .tcg_only =3D true,
+>          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
+>          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
+> @@ -1935,6 +1939,7 @@ static void test_acpi_aarch64_virt_tcg(void)
+>  {
+>      test_data data =3D {
+>          .machine =3D "virt",
+> +        .arch =3D "aarch64",
+>          .tcg_only =3D true,
+>          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
+>          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
+> @@ -1954,6 +1959,7 @@ static void test_acpi_aarch64_virt_tcg_topology(voi=
+d)
+>  {
+>      test_data data =3D {
+>          .machine =3D "virt",
+> +        .arch =3D "aarch64",
+>          .variant =3D ".topology",
+>          .tcg_only =3D true,
+>          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
+> @@ -2037,6 +2043,7 @@ static void test_acpi_aarch64_virt_viot(void)
+>  {
+>      test_data data =3D {
+>          .machine =3D "virt",
+> +        .arch =3D "aarch64",
+>          .tcg_only =3D true,
+>          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
+>          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
+> @@ -2213,6 +2220,7 @@ static void test_acpi_aarch64_virt_oem_fields(void)
+>  {
+>      test_data data =3D {
+>          .machine =3D "virt",
+> +        .arch =3D "aarch64",
+>          .tcg_only =3D true,
+>          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
+>          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
 > --
 > 2.40.1
 >
