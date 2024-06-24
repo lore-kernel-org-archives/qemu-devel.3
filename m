@@ -4,74 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7BBFC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E493C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:32:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcIM-00031f-1b; Mon, 24 Jun 2024 01:31:15 -0400
+	id 1sLcIe-00034k-16; Mon, 24 Jun 2024 01:31:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcIK-000318-TJ
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:12 -0400
-Received: from mail-io1-xd36.google.com ([2607:f8b0:4864:20::d36])
+ id 1sLcIY-00033V-Cr
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:27 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcIH-0004XD-4o
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:12 -0400
-Received: by mail-io1-xd36.google.com with SMTP id
- ca18e2360f4ac-7eb5dd9f994so140878439f.2
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:31:08 -0700 (PDT)
+ id 1sLcIW-0004b2-Ey
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:26 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-70671ecd334so876232b3a.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719207067; x=1719811867; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6qMIabyzReTYtnz2ctTAi3uRfHEGT9rkNoJ1Jc8AvYQ=;
- b=Q11as8q7GFmEAgknALcRIRzJLZCpTyzq1g4p2mmd50OetEnGVIyquk0HdeueCyc+uI
- u11zonqPuTZg0VqhHKLlf3+bF4WsS4COQdSD6yMACKtLuiNH2psahBodthmE6MEIiqAC
- 4ensQ50+ewyWHlPqaVnRWCvfJI55YDSNmUQqOBduoLcmhNdzO+Q45HN069Q6fMurxATr
- 1w++xvt0OutRFz7PiO6sYU9WrmooQdKw9EKdst5Gda2p9MjFN1KhdVmwhsk+jYiqwfSN
- rzQYhellXUL1NS73H9QLvA3bG5tx8ZXjpeDxvYIPnX7W+h45uHPNPHysTb4vbeiJ0b7B
- oJhw==
+ d=linaro.org; s=google; t=1719207082; x=1719811882; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8iJ/HuUc4gPL6Bek0vAIaSv9Lqxnq8U+8yqS5vGEFYg=;
+ b=eYjMn2CWiLEcp4eQqYjzpDdl2xu0/w9XyDEs7XABnPfGq535BFJNkCNI72IO2wJZnY
+ 04smpS67nJUqqdsPl7qV6fCSjt/j0JN7pffyf+D2GlsWNtLqceuAtl3dvL1l3XaURxCg
+ AM0xAGwSAB5Dq6hwsZ5V9yqj8hpQ6qflADI06RxznkiIN/Iwyfrdhf20p3mwnCvTXJSn
+ CH7kKTqV14QzdJ7WEHc1F4LiOx0WXDpJkCHXw8WS3sANFzGDniXlOduf5Rs20CY4hmU9
+ mKK+JJazKEfgjquVGDfPMj0MaN73aw8qPBJmkZovQNTZ9cXS86ggcKPxUWIBz62muEpJ
+ Sz5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207067; x=1719811867;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6qMIabyzReTYtnz2ctTAi3uRfHEGT9rkNoJ1Jc8AvYQ=;
- b=tkU/gh8tc1jBpFSZxyGEERz5Ht4c9Q3T5lbejP/sZkrNh2dYNNsbcQZ2H6w5LxJWD2
- or63PpqklJc2FfzMtytZdZdSDD8l/iXNvQpYUyW0ZJXs0e6at606STTd6AfA/Z/kD20H
- ArnSfwlHwnU7Ar6fMTUr0r2bZftGm9daG7DsNE4fuIURMsGPy4RBhGVz+U1gI/Ak4cMT
- 6djH/gGtGLWIq6VI+VMgbn3i6j3cF3h04LJeSrIVoQSenb5vN5983wu2L5xsY3kRIMZo
- JYg40R24QuevtUc1Io+eRhZoWSRq8VQKXkZbC1EwrkQHZsuiwYCg88u4uLBSmtOVgc5d
- eWTw==
-X-Gm-Message-State: AOJu0Yz29XYtvHBQpyQtiSP6d579QKmKP9D+8Zg+L0y8mleZbnjb+2wu
- 4yCpc44b31B5Iol1UTlmQhEl9+TSqmS09kVy6Pm5y6uy/adSC4T54h+VR5K6YJPuGloOn85b+GF
- b
-X-Google-Smtp-Source: AGHT+IGhRiRfqMI3WNgIxJM5hu7JMrZqJ61dJXYTVNRTWksM/S13swfIE7hW/HfhkXZ/1HYpo8Oztw==
-X-Received: by 2002:a05:6e02:b47:b0:376:3e9c:d9a8 with SMTP id
- e9e14a558f8ab-3763e9cddffmr46035665ab.9.1719207066997; 
- Sun, 23 Jun 2024 22:31:06 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719207082; x=1719811882;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8iJ/HuUc4gPL6Bek0vAIaSv9Lqxnq8U+8yqS5vGEFYg=;
+ b=QUn1DsTusL0HDFKv1WX2pgBtY3rmLZtTSHu8pDi07IgaArbWWrfS/NUe8M3nQSps+6
+ KfbIbaunt0gGiAm20wlcnEYCnIcgK9kMVmnx1UhsDhADYrmFSuz2Hrq1hMKEx7oPKTKc
+ AnMLA8YojEGD5+mV41QWdG1c2wBrFyfWQHS7+H+tH/VD/cvTDPopAytrrk657Z4jLwf9
+ zily3o/T6inWTab+a6BEUWg9/Kmsxx/mg+19jC7+92ge5/L4GG0pkLB2S1Wc3PDKiRww
+ mUmE0e1u2xMzKybph8NkG+izmF7ubhnJJYIBwcQmO/1k+pGevIcJLFM+l/m75RCEiu0y
+ hsnQ==
+X-Gm-Message-State: AOJu0YyuFnBM6bDMsBBOq4RMYiBzyC7qMUTHNRHbqSirsi9MBkC+HJ6n
+ mwyAfaQqj4gO7NpzXI/925m3YJNaSbqyxKecIhW0pxLc1cDKG1OKRz2g9zv2Sbb2GcVqs6p4fH2
+ 1g4Q=
+X-Google-Smtp-Source: AGHT+IGPkcB1mPLKWHp6ccRvEoBXk8TjRqXZktogzEcLg2V8o4EwD4BVV5t9ihpE3nPE9NM00BN6xw==
+X-Received: by 2002:a05:6a20:4da6:b0:1bc:f67f:604a with SMTP id
+ adf61e73a8af0-1bcf67f7e5cmr3830998637.30.1719207082389; 
+ Sun, 23 Jun 2024 22:31:22 -0700 (PDT)
 Received: from amd.. ([2804:7f0:b401:1758:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-716b4a73183sm3953601a12.39.2024.06.23.22.31.04
+ 41be03b00d2f7-716b4a73183sm3953601a12.39.2024.06.23.22.31.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Jun 2024 22:31:06 -0700 (PDT)
+ Sun, 23 Jun 2024 22:31:21 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, alex.bennee@linaro.org, richard.henderson@linaro.org
 Cc: philmd@linaro.org,
 	peter.maydell@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v4 0/9] Add MTE stubs for aarch64 user mode
-Date: Mon, 24 Jun 2024 05:30:37 +0000
-Message-Id: <20240624053046.221802-1-gustavo.romero@linaro.org>
+Subject: [PATCH v4 5/9] target/arm: Make some MTE helpers widely available
+Date: Mon, 24 Jun 2024 05:30:42 +0000
+Message-Id: <20240624053046.221802-6-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240624053046.221802-1-gustavo.romero@linaro.org>
+References: <20240624053046.221802-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d36;
- envelope-from=gustavo.romero@linaro.org; helo=mail-io1-xd36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,103 +96,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset adds the stubs necessary to support GDB memory tagging
-commands on QEMU aarch64 user mode.
+Make the MTE helpers allocation_tag_mem_probe, load_tag1, and store_tag1
+available to other subsystems.
 
-These new stubs handle the qIsAddressTagged, qMemTag, and QMemTag
-packets, which allow GDB memory tagging subcommands 'check',
-'print-allocation-tag', and 'set-allocation-tag' to work. The remaining
-memory tagging commands ('print-logical-tag' and 'with-logical-tag')
-will also work, but they don't rely on any stub because they perform
-local operations.
-
-Since the memory tagging stubs are not common to all architectures, this
-patchset also introduces three functions: gdb_extend_qsupported_features,
-gdb_extend_query_table, and gdb_extend_set_table. These functions can be
-used to extend the target-specific 'qSupported' feature string and the
-handlers for the 'q' (query) and 'Q' (set) packets. These new functions
-are used to add the MTE stubs for the aarch64 gdbstub.
- 
-Note that this patchset requires a GDB that supports the
-qIsAddressTagged packet (recently added to GDB), so the gdbstub MTE
-tests introduced by it must be run using GDB's master branch, since the
-GDB in the distros hasn't picked up the change yet.
-
-Once GDB is built and installed locally, the tests can be exercised, for
-example, this way:
-
-make GDB=~/.local/bin/gdb run-tcg-tests-aarch64-linux-user -j 32
-
-v2:
- - Addressed comments from Richard, Phil, and Alex
- - Made the series more granular by splitting it into more patches
- - Moved gdbstub command-specific structs and functions into a new header, gdbstub/commands.h
- - Fixed exception in allocation_tag_mem_probe()
- - Used MTE helpers ({store,load}_tag1 and allocation_tag_mem_probe) in the MTE stubs
- - Factored out MTE code to set TCF0, avoiding duplication (both prctl and gdbstub code use it)
- - Hoisted sscanf() out of loop in handle_Q_memtag stub and use gdb_hextomem instead
- - Rebased this series on Alex's gdb/next branch
- 
-v3:
- - Moved stubs to gdbstub64.c
- - Fixed build for BSD target
- - Fixed license tags in the new header files
- - Use of only function prototypes in mte_helpers.h
- - Added prefix to arm_set_mte_tcf0 and marked it inline
- - Moved target/arm/mte.h -> target/arm/tcg/mte_user_helper.h
- - Cleaned up leftover in mte-8 test
- 
-v4:
- - Don't run tests when GDB < 15 (i.e., lacks most recent MTE changes) (Alex's review)
- - Added g_assert()s in new gdb_extend_* API functions to ensure all CPUs have the same features/query/set tables (Alex's review)
- - Move load_tag1 and store_tag1 to mte_helpers.h marking them as "static inline" (Richard's review)
- - Move mte_user_helper.h to linux-user/aarch64/ and include it from gdbstub64.c (Richard's review)
-
-
-Cheers,
-Gustavo
-
-Gustavo Romero (9):
-  gdbstub: Clean up process_string_cmd
-  gdbstub: Move GdbCmdParseEntry into a new header file
-  gdbstub: Add support for target-specific stubs
-  target/arm: Fix exception case in allocation_tag_mem_probe
-  target/arm: Make some MTE helpers widely available
-  target/arm: Factor out code for setting MTE TCF0 field
-  gdbstub: Make get cpu and hex conversion functions non-internal
-  gdbstub: Add support for MTE in user mode
-  tests/tcg/aarch64: Add MTE gdbstub tests
-
- configs/targets/aarch64-linux-user.mak |   2 +-
- configure                              |  11 ++
- gdb-xml/aarch64-mte.xml                |  11 ++
- gdbstub/gdbstub.c                      | 254 +++++++++++++++----------
- gdbstub/internals.h                    |  24 ---
- gdbstub/syscalls.c                     |   7 +-
- gdbstub/system.c                       |   7 +-
- gdbstub/user-target.c                  |  25 +--
- gdbstub/user.c                         |   7 +-
- include/exec/gdbstub.h                 |   5 +
- include/gdbstub/commands.h             | 102 ++++++++++
- linux-user/aarch64/mte_user_helper.h   |  38 ++++
- linux-user/aarch64/target_prctl.h      |  22 +--
- target/arm/cpu.c                       |   1 +
- target/arm/gdbstub.c                   |  46 +++++
- target/arm/gdbstub64.c                 | 219 +++++++++++++++++++++
- target/arm/internals.h                 |   6 +
- target/arm/tcg/mte_helper.c            |  57 +-----
- target/arm/tcg/mte_helper.h            |  74 +++++++
- tests/tcg/aarch64/Makefile.target      |  14 +-
- tests/tcg/aarch64/gdbstub/test-mte.py  |  86 +++++++++
- tests/tcg/aarch64/mte-8.c              |  98 ++++++++++
- 22 files changed, 900 insertions(+), 216 deletions(-)
- create mode 100644 gdb-xml/aarch64-mte.xml
- create mode 100644 include/gdbstub/commands.h
- create mode 100644 linux-user/aarch64/mte_user_helper.h
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/mte_helper.c | 54 +++------------------------
+ target/arm/tcg/mte_helper.h | 74 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 79 insertions(+), 49 deletions(-)
  create mode 100644 target/arm/tcg/mte_helper.h
- create mode 100644 tests/tcg/aarch64/gdbstub/test-mte.py
- create mode 100644 tests/tcg/aarch64/mte-8.c
 
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index a50d576294..da6bc72b9c 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -29,6 +29,7 @@
+ #include "hw/core/tcg-cpu-ops.h"
+ #include "qapi/error.h"
+ #include "qemu/guest-random.h"
++#include "mte_helper.h"
+ 
+ 
+ static int choose_nonexcluded_tag(int tag, int offset, uint16_t exclude)
+@@ -50,42 +51,10 @@ static int choose_nonexcluded_tag(int tag, int offset, uint16_t exclude)
+     return tag;
+ }
+ 
+-/**
+- * allocation_tag_mem_probe:
+- * @env: the cpu environment
+- * @ptr_mmu_idx: the addressing regime to use for the virtual address
+- * @ptr: the virtual address for which to look up tag memory
+- * @ptr_access: the access to use for the virtual address
+- * @ptr_size: the number of bytes in the normal memory access
+- * @tag_access: the access to use for the tag memory
+- * @probe: true to merely probe, never taking an exception
+- * @ra: the return address for exception handling
+- *
+- * Our tag memory is formatted as a sequence of little-endian nibbles.
+- * That is, the byte at (addr >> (LOG2_TAG_GRANULE + 1)) contains two
+- * tags, with the tag at [3:0] for the lower addr and the tag at [7:4]
+- * for the higher addr.
+- *
+- * Here, resolve the physical address from the virtual address, and return
+- * a pointer to the corresponding tag byte.
+- *
+- * If there is no tag storage corresponding to @ptr, return NULL.
+- *
+- * If the page is inaccessible for @ptr_access, or has a watchpoint, there are
+- * three options:
+- * (1) probe = true, ra = 0 : pure probe -- we return NULL if the page is not
+- *     accessible, and do not take watchpoint traps. The calling code must
+- *     handle those cases in the right priority compared to MTE traps.
+- * (2) probe = false, ra = 0 : probe, no fault expected -- the caller guarantees
+- *     that the page is going to be accessible. We will take watchpoint traps.
+- * (3) probe = false, ra != 0 : non-probe -- we will take both memory access
+- *     traps and watchpoint traps.
+- * (probe = true, ra != 0 is invalid and will assert.)
+- */
+-static uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
+-                                         uint64_t ptr, MMUAccessType ptr_access,
+-                                         int ptr_size, MMUAccessType tag_access,
+-                                         bool probe, uintptr_t ra)
++uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
++                                  uint64_t ptr, MMUAccessType ptr_access,
++                                  int ptr_size, MMUAccessType tag_access,
++                                  bool probe, uintptr_t ra)
+ {
+ #ifdef CONFIG_USER_ONLY
+     uint64_t clean_ptr = useronly_clean_ptr(ptr);
+@@ -287,12 +256,6 @@ uint64_t HELPER(addsubg)(CPUARMState *env, uint64_t ptr,
+     return address_with_allocation_tag(ptr + offset, rtag);
+ }
+ 
+-static int load_tag1(uint64_t ptr, uint8_t *mem)
+-{
+-    int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
+-    return extract32(*mem, ofs, 4);
+-}
+-
+ uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt)
+ {
+     int mmu_idx = arm_env_mmu_index(env);
+@@ -320,13 +283,6 @@ static void check_tag_aligned(CPUARMState *env, uint64_t ptr, uintptr_t ra)
+     }
+ }
+ 
+-/* For use in a non-parallel context, store to the given nibble.  */
+-static void store_tag1(uint64_t ptr, uint8_t *mem, int tag)
+-{
+-    int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
+-    *mem = deposit32(*mem, ofs, 4, tag);
+-}
+-
+ /* For use in a parallel context, atomically store to the given nibble.  */
+ static void store_tag1_parallel(uint64_t ptr, uint8_t *mem, int tag)
+ {
+diff --git a/target/arm/tcg/mte_helper.h b/target/arm/tcg/mte_helper.h
+new file mode 100644
+index 0000000000..6a82ff3403
+--- /dev/null
++++ b/target/arm/tcg/mte_helper.h
+@@ -0,0 +1,74 @@
++/*
++ * ARM MemTag operation helpers.
++ *
++ * This code is licensed under the GNU GPL v2 or later.
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
++
++#ifndef TARGET_ARM_MTE_H
++#define TARGET_ARM_MTE_H
++
++/**
++ * allocation_tag_mem_probe:
++ * @env: the cpu environment
++ * @ptr_mmu_idx: the addressing regime to use for the virtual address
++ * @ptr: the virtual address for which to look up tag memory
++ * @ptr_access: the access to use for the virtual address
++ * @ptr_size: the number of bytes in the normal memory access
++ * @tag_access: the access to use for the tag memory
++ * @probe: true to merely probe, never taking an exception
++ * @ra: the return address for exception handling
++ *
++ * Our tag memory is formatted as a sequence of little-endian nibbles.
++ * That is, the byte at (addr >> (LOG2_TAG_GRANULE + 1)) contains two
++ * tags, with the tag at [3:0] for the lower addr and the tag at [7:4]
++ * for the higher addr.
++ *
++ * Here, resolve the physical address from the virtual address, and return
++ * a pointer to the corresponding tag byte.
++ *
++ * If there is no tag storage corresponding to @ptr, return NULL.
++ *
++ * If the page is inaccessible for @ptr_access, or has a watchpoint, there are
++ * three options:
++ * (1) probe = true, ra = 0 : pure probe -- we return NULL if the page is not
++ *     accessible, and do not take watchpoint traps. The calling code must
++ *     handle those cases in the right priority compared to MTE traps.
++ * (2) probe = false, ra = 0 : probe, no fault expected -- the caller guarantees
++ *     that the page is going to be accessible. We will take watchpoint traps.
++ * (3) probe = false, ra != 0 : non-probe -- we will take both memory access
++ *     traps and watchpoint traps.
++ * (probe = true, ra != 0 is invalid and will assert.)
++ */
++uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
++                                  uint64_t ptr, MMUAccessType ptr_access,
++                                  int ptr_size, MMUAccessType tag_access,
++                                  bool probe, uintptr_t ra);
++
++/**
++ * load_tag1 - Load 1 tag (nibble) from byte
++ * @ptr: The tagged address
++ * @mem: The tag address (packed, 2 tags in byte)
++ */
++static inline int load_tag1(uint64_t ptr, uint8_t *mem)
++{
++    int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
++    return extract32(*mem, ofs, 4);
++}
++
++/**
++ * store_tag1 - Store 1 tag (nibble) into byte
++ * @ptr: The tagged address
++ * @mem: The tag address (packed, 2 tags in byte)
++ * @tag: The tag to be stored in the nibble
++ *
++ * For use in a non-parallel context, store to the given nibble.
++ */
++static inline void store_tag1(uint64_t ptr, uint8_t *mem, int tag)
++{
++    int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
++    *mem = deposit32(*mem, ofs, 4, tag);
++}
++
++#endif /* TARGET_ARM_MTE_H */
 -- 
 2.34.1
 
