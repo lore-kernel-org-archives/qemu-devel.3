@@ -4,68 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A8A6C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:12:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44A4FC2D0D1
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:12:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLfja-00080G-Hp; Mon, 24 Jun 2024 05:11:34 -0400
+	id 1sLfkX-0002VI-9d; Mon, 24 Jun 2024 05:12:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfjY-0007zf-RK
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfjX-0003uF-Ee
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719220288;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W7ohm5evrWfnX6RaracvxTgW8W6EpOv2Muym3qslNwI=;
- b=OmcqLa9HuGmPKClv4FbT28pJbBkDHfzutqkJPO6mLMYO1f+iFq5dGueXbTBGPSHmsuJfyU
- DL58hlmYVkmo4Xwg0DuQw997J/5Kt7IdHKkLJh7a6tGITAQ7oucK+Z1VGS9xa5ntReT1ld
- 8BzoQsDAdMfWCgYikhJ3AIdsmQcg8j4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-EMjXoU1cMaC80Kw4zFqqEg-1; Mon,
- 24 Jun 2024 05:11:18 -0400
-X-MC-Unique: EMjXoU1cMaC80Kw4zFqqEg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0CE2019560AE; Mon, 24 Jun 2024 09:11:17 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.193.33])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DE75E300021C; Mon, 24 Jun 2024 09:11:14 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Richard Henderson <richard.henderson@linaro.org>
-Cc: Omar Sandoval <osandov@osandov.com>
-Subject: [PULL 09/11] target/s390x/arch_dump: use correct byte order for pid
-Date: Mon, 24 Jun 2024 11:10:41 +0200
-Message-ID: <20240624091043.177484-10-thuth@redhat.com>
-In-Reply-To: <20240624091043.177484-1-thuth@redhat.com>
-References: <20240624091043.177484-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1sLfkV-0002Jx-KQ; Mon, 24 Jun 2024 05:12:31 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
+ id 1sLfkT-000429-L7; Mon, 24 Jun 2024 05:12:31 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-6f9b213ebf9so1639906a34.1; 
+ Mon, 24 Jun 2024 02:12:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719220346; x=1719825146; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rQmGJCx2a/QLm1eOxOqwGqqV3/kxCAgqSMcL+my6qVo=;
+ b=QRnMNK621DHzfV1AVpEx/PvSQysO8NSrX+RfsJgjwaKoe3vi2eJcn/fjrABwK+1YdQ
+ nEcBj5ee81+BK9+eT2HPki+okrFsyTRqvqoKEirI6UdcUUPTT+eq3B2uR/V3TmpSxgLM
+ ubC113rRwYHWcgfz1s2e5TS4bLnNxiZJ4GmTbXdTY2a35jEm2F+RmOXCehI3YdwvuSQV
+ ipDUWoSHAtr8iy5Jgi0I19y3rX2ofcsP6li/xln5NoPQiVUrexdAkFmv6DHxhbD9uEpn
+ bbqIY9rGAOU5VRtrgY7+sG1t+Yzc5RoxO4f613M02U0Yb1/j8uAawS6UG6Ob0Yt1iT7c
+ BewQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719220346; x=1719825146;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rQmGJCx2a/QLm1eOxOqwGqqV3/kxCAgqSMcL+my6qVo=;
+ b=ldHMmoVEm+M4Obji+Cw5URotGldr8tAmkICnj7ZZYm5DFM8cKZ84nYbt3nycc2Xuyn
+ 8Dq9boeFtBLLemUWvFgzPwAL3zRU0vVMrw/LNwqzfHCj6X8VRlkCaJQvblQiOZ1j+K3l
+ CeZehRcUrVTyoNX9iAwT9yaHPkWXTLKHWbs8/e2na/8s4VTLNuP3W9ELm0iZZqJ28tGD
+ DIDIrQvukx6vCQJLbY70OmdEMC4FPu2KxRQN4lKKxF+0uBc3KTXZodwgM5bY7GqdH8Ya
+ NKtLA39b1tnJiOAfefoCwVj+zV0O+00u0mXg1zR/UK8oQcTpT9JS0pcPb5vblJvhWRvd
+ /KhQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUG314ktbal09OnPUenvGyZ7X0VO/FOktgvKNBGzYW5ACoUvnZUWkiz1lLwVsMJynXTaLk8XhnAccA0XAfGxbYUEDLv
+X-Gm-Message-State: AOJu0Yws4l9etAiKfe59TyxjyZgrmaYRxs3tT+s5+sfMu0805nE4XQY9
+ ZENb44tjbIYuKp6TgkF1SXd1NUABnja+PGazEVWaHNwrR7CjfOkth1i/TuBtNfCt/bFFcRlceZ4
+ 8ez5leqF/5qec9yFitY/eRFErnp8=
+X-Google-Smtp-Source: AGHT+IHfRJJDHbk7PXLG+NWy8LdtH2ITw55i6iAw7mwl92PzQUEmIoCIXkWVM1T6vPLWCMnKyXY/LTEXW9LrdEVlOUo=
+X-Received: by 2002:a9d:6e04:0:b0:700:b405:dac2 with SMTP id
+ 46e09a7af769-700b405dbe4mr1258600a34.35.1719220346045; Mon, 24 Jun 2024
+ 02:12:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
+ <CAFEAcA_zBhe+HxOqtAzWSCbzApEhknr+NeheA1uLj641EXMM5w@mail.gmail.com>
+In-Reply-To: <CAFEAcA_zBhe+HxOqtAzWSCbzApEhknr+NeheA1uLj641EXMM5w@mail.gmail.com>
+From: Rayhan Faizel <rayhan.faizel@gmail.com>
+Date: Mon, 24 Jun 2024 14:42:14 +0530
+Message-ID: <CAKUh+QfrT3SjxHA0Y5fERwnTnqKKbJg9SFb=5J5pfbci0asjLQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Initial support for One-Time Programmable Memory
+ (OTP) in BCM2835
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=rayhan.faizel@gmail.com; helo=mail-ot1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,34 +91,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Omar Sandoval <osandov@osandov.com>
+Hi,
 
-The pid field of prstatus needs to be big endian like all of the other
-fields.
+The patch series is still not merged.
 
-Fixes: f738f296eaae ("s390x/arch_dump: pass cpuid into notes sections")
-Signed-off-by: Omar Sandoval <osandov@osandov.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <5929f76d536d355afd04af51bf293695a1065118.1718771802.git.osandov@osandov.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- target/s390x/arch_dump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/s390x/arch_dump.c b/target/s390x/arch_dump.c
-index 7e8a1b4fc0..029d91d93a 100644
---- a/target/s390x/arch_dump.c
-+++ b/target/s390x/arch_dump.c
-@@ -102,7 +102,7 @@ static void s390x_write_elf64_prstatus(Note *note, S390CPU *cpu, int id)
-         regs->acrs[i] = cpu_to_be32(cpu->env.aregs[i]);
-         regs->gprs[i] = cpu_to_be64(cpu->env.regs[i]);
-     }
--    note->contents.prstatus.pid = id;
-+    note->contents.prstatus.pid = cpu_to_be32(id);
- }
- 
- static void s390x_write_elf64_fpregset(Note *note, S390CPU *cpu, int id)
--- 
-2.45.2
-
+On Thu, May 30, 2024 at 6:57=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Sun, 19 May 2024 at 10:42, Rayhan Faizel <rayhan.faizel@gmail.com> wro=
+te:
+> >
+> > All BCM2835 boards have on-board OTP memory with 66 32-bit rows. Usuall=
+y,
+> > its contents are accessible via mailbox commands.
+> >
+> > [Changes in v3]
+> >
+> > - Forgot to replace constant with macro in one particular spot.
+> >
+> > [Changes in v2]
+> >
+> > - Replace read/write with get/set in bcm2835_otp.c.
+> > - Use impl instead of valid in bcm2835_otp.c.
+> > - Replace all constant values with macros defined in bcm2835_otp.h.
+> > - Change memory region size of OTP device to 0x80.
+> > - After further testing on a real Raspberry Pi 3, I noticed a few thing=
+s
+> > contrary to my initial assumptions:
+> > -- The customer OTP lock bit is bit 6 of row 32, NOT bit 30 of row 30. =
+This is
+> > currently undocumented to my knowledge.
+> > -- The above lock indeed applies to the private key as well.
+> >
+> > Rayhan Faizel (3):
+> >   hw/nvram: Add BCM2835 OTP device
+> >   hw/arm: Connect OTP device to BCM2835
+> >   hw/misc: Implement mailbox properties for customer OTP and device
+> >     specific private keys
+>
+>
+>
+> Applied to target-arm.next, thanks.
+>
+> -- PMM
+--=20
+Rayhan Faizel
 
