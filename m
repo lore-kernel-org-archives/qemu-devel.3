@@ -4,88 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C81C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8600C2D0D1
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcNZ-00049o-EO; Mon, 24 Jun 2024 01:36:37 -0400
+	id 1sLcNk-0004Pc-MN; Mon, 24 Jun 2024 01:36:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcNX-00046C-Ir
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:36:35 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sLcNe-0004Ip-Og
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:36:43 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcNV-0005Ui-16
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:36:35 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2c7bf925764so3136775a91.0
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:36:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sLcNd-0005V6-Bm
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:36:42 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-3d35f1dfda2so2138647b6e.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:36:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719207391; x=1719812191; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:to:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zmddwG1XUgAHZfl1cEJisui/kr7qnIJZ3jHCYpNaBa8=;
- b=UIVMiOy6rv9fsdk6ryTRf/5mY68TW0ZyMmjFIITXwwEIe3GwOOwvl6n7sbuGJLYT0P
- MfYJAFXwc+W0qCf055guS7ufhB0NHQVRy+e/g+h0O1kmElHP1l5i21/eJp+jPirWcqSy
- ZxP1kO7bYf8quJ1C8eZs1ScGN7dZwJjzrqDCCrH8w39y4yM6SCIuhDc4sJkIU1IEx8bI
- 82YHsyZ/6DFx9ARoNTecmYAz5Zwy0VNeCgq2xLI1LSE1jy7HBi60+Sms/Me5Z7OrO2ER
- ynNP1o9ybUJfwhYZ5gLO9i53ghhcfuKysYcr+uGwBvHHH0sB8flKvF9jcOTGxJf09NB4
- s4qA==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207399; x=1719812199;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4UeIrnK+x4MJL0Fd1GojjIUpYNBbEWfFqfmaS+MdeYc=;
+ b=rNN4rigGeMDuecT2H0QxzUwkLm7okJmJRBAqU6LEhBw/CYC14ZhnFkaMLwY0/oPupP
+ pIIx20t9Y2yBVM4oacqf89DyikxEJPldX4B7TvO2INCgioB5S/xAE1MIgeuZIMS7vYsQ
+ FAOU0C4GjqZ9CKfk7KYe7P3p9IQcAj3OkH64BKXgbgsFXE7XlIiPo9QbT0imYKNvazdj
+ tf9x3djYkabwUKZoilyaFkMYnGKLFhJrpKSCULuZdJUvgDXMw6PopzgTmZXPfezFvWRP
+ dFtgffrer7ENQEz2HXEHyuGDBN++wOfrxqw0o4yz3uca+PnQ4Ig97CNdrYg2xMcD3nGv
+ EZ4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207391; x=1719812191;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:to:subject
+ d=1e100.net; s=20230601; t=1719207399; x=1719812199;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zmddwG1XUgAHZfl1cEJisui/kr7qnIJZ3jHCYpNaBa8=;
- b=N/uQxUrAHUo7dObIaKNcWlkzIiVRuM5F/247EK0UiTYz1pWluTYkdOqE0iVIeeuotv
- Ow6Lw8l4Ecxmy9uLf9ANq+Q4JppRbctiwCLdaIltwzp+4Sb7KMSduZFDeg0VC/Zt2bCx
- v5mbc04qqgECon3Icya3V7yCOHD8O0GyjW2L9lnCUfQ9TJDPGGZKGPMogpGuebYTqG4e
- 1EbsIWw+qHnNQrYeuM1BAD3ZSPwc5UOzGhNShr+BNvbMh+F6f5A2p3/abbYxYvciyVse
- iI9IraYEsQZ5XQXqcQCnV+AheJi0Ym+YhtSlOdnjAl2FUwXMTniUXRtR1KmStzgw1y0O
- TbDg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8or8CY4jT3JtwQ/bdBoEAoaDflsc1LWzUCK/XTOpJi9P5NKas8bAciLPzni6afRKBsHOgzqyVcFFx0H8ZRbpxeUQI3H0=
-X-Gm-Message-State: AOJu0YzouEPsoN9WolcZQLJ/zzjTU9DkOafRIq7GjYnKq27Rkm+hpkkD
- PS2GAZYgqsJWMQgSmIuR+0sWyapIj9cyEX+Zx5R7vHQHLbebhxwTe3zgLEV4NnE=
-X-Google-Smtp-Source: AGHT+IEfQJihTWSGcgoAGJHz+roQefE6n8Qbl7MTSbBqsfqSY0T2M4LupEDfBMMT6IJL7Gyulo/7QQ==
-X-Received: by 2002:a17:90b:17c9:b0:2c8:647:1708 with SMTP id
- 98e67ed59e1d1-2c861214411mr2694943a91.7.1719207391512; 
- Sun, 23 Jun 2024 22:36:31 -0700 (PDT)
-Received: from ?IPv6:2804:7f0:b401:1758:f7d8:1e03:a6d:61a0?
- ([2804:7f0:b401:1758:f7d8:1e03:a6d:61a0])
+ bh=4UeIrnK+x4MJL0Fd1GojjIUpYNBbEWfFqfmaS+MdeYc=;
+ b=msAXMzB8bx8D4fVzUXG5wTi9+bAubI3CFVKSJhaql0sjey6FaPJffrDmo0kehtv3Mk
+ N423+zLPYzdCyLMNOW2ETl4m3LScLgJz/I6OghgBYkQmdTF1QodohiCkqS5GVUZhNDSU
+ RocwBZQhqBwgR1IZTfI0UNFQMtf86yB9XOIz7HK3UIIGrB5CuQ1AI1q67nN7yXIGMPnL
+ mSwXGetG1xAGdAWXMEmU7CXIHcy25e7At18xktpu0NzafKskz9lqVsLcqvyuJZUSnq0i
+ bzYiRHd8u5kgWW8W4J4omiEZM4sb4ocMfswWbdEm5XhAH/l8nhsxhAxRPQXOBD9wqaYa
+ T2og==
+X-Gm-Message-State: AOJu0YxINME/hzhcdekcZa03/lnxVnc/0BEBKY2e+quVY1BL1nHXl+2S
+ AIZ4FuIXvZ4o2kd9ePGae61kaIdPaRwWaQ8m+Tyt8gNDrQeIIazFNtmTSsY5GWs=
+X-Google-Smtp-Source: AGHT+IHbp0eiyz0zbaapHbvhjQwCWjEb4yMPDxXBpMVZbRziGJf4DxLGkZTOndrHIUgaGn31osxHbQ==
+X-Received: by 2002:a05:6808:bc9:b0:3d1:d3f6:455a with SMTP id
+ 5614622812f47-3d541c65829mr5299997b6e.20.1719207399325; 
+ Sun, 23 Jun 2024 22:36:39 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c819a8c935sm5785139a91.27.2024.06.23.22.36.29
+ d2e1a72fcca58-7067e0e5723sm1582153b3a.75.2024.06.23.22.36.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 22:36:30 -0700 (PDT)
-Subject: Re: [PATCH v3 5/9] target/arm: Make some MTE helpers widely available
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- philmd@linaro.org, peter.maydell@linaro.org, alex.bennee@linaro.org
-References: <20240617062849.3531745-1-gustavo.romero@linaro.org>
- <20240617062849.3531745-6-gustavo.romero@linaro.org>
- <6c36a71f-f149-4a86-a015-d2a18129ac55@linaro.org>
-From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <3c17921b-0329-4696-9f35-505eb78f3886@linaro.org>
-Date: Mon, 24 Jun 2024 02:36:27 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ Sun, 23 Jun 2024 22:36:39 -0700 (PDT)
+Message-ID: <8af265a0-7e15-4944-b40c-a4d19f5928cf@daynix.com>
+Date: Mon, 24 Jun 2024 14:36:33 +0900
 MIME-Version: 1.0
-In-Reply-To: <6c36a71f-f149-4a86-a015-d2a18129ac55@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 06/13] virtio-gpu: Use pkgconfig version to decide
+ which virgl features are available
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
+ <20240623152343.328436-7-dmitry.osipenko@collabora.com>
 Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240623152343.328436-7-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x1034.google.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.379,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::232;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x232.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,36 +116,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
-
-On 6/21/24 1:31 AM, Richard Henderson wrote:
-> On 6/16/24 23:28, Gustavo Romero wrote:
->> @@ -287,7 +256,7 @@ uint64_t HELPER(addsubg)(CPUARMState *env, uint64_t ptr,
->>       return address_with_allocation_tag(ptr + offset, rtag);
->>   }
->> -static int load_tag1(uint64_t ptr, uint8_t *mem)
->> +inline int load_tag1(uint64_t ptr, uint8_t *mem)
->>   {
->>       int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
->>       return extract32(*mem, ofs, 4);
->> @@ -321,7 +290,7 @@ static void check_tag_aligned(CPUARMState *env, uint64_t ptr, uintptr_t ra)
->>   }
->>   /* For use in a non-parallel context, store to the given nibble.  */
->> -static void store_tag1(uint64_t ptr, uint8_t *mem, int tag)
->> +inline void store_tag1(uint64_t ptr, uint8_t *mem, int tag)
->>   {
->>       int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
->>       *mem = deposit32(*mem, ofs, 4, tag);
+On 2024/06/24 0:23, Dmitry Osipenko wrote:
+> New virglrerenderer features were stabilized with release of v1.0.0.
+> Presence of symbols in virglrenderer.h doesn't guarantee ABI compatibility
+> with pre-release development versions of libvirglerender. Use virglrenderer
+> version to decide reliably which virgl features are available.
 > 
-> Move these two entirely to the header as static inline.
-> In general, inline without static doesn't mean what you think.
-> 
-> With that,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Done in v4. Thanks.
-
-
-Cheers,
-Gustavo
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
