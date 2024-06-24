@@ -4,91 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4197BC2D0D1
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 06:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEEBBC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 07:28:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLdXF-0004I0-5t; Mon, 24 Jun 2024 02:50:41 -0400
+	id 1sLe7O-0003SE-1d; Mon, 24 Jun 2024 03:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1sLdXD-0004H2-O3
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 02:50:39 -0400
-Received: from mail-il1-x12f.google.com ([2607:f8b0:4864:20::12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1sLdXB-0000YE-OP
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 02:50:39 -0400
-Received: by mail-il1-x12f.google.com with SMTP id
- e9e14a558f8ab-375af3538f2so17017115ab.3
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 23:50:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1719211836; x=1719816636; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DAVzGjK5sXVJtAfTUtSFPiGGD39VHhVvUhPK0ce9O5k=;
- b=HBWa8I2JOXxVGwZor9AlqDyiKFHgoO/7cAg7l8R7Z1bWGMAERlilJhn+rxJdq49V9H
- sDeslvohdTN88lUa0h57YRs/B+PgVD+IRzosFFJq5mryae1I2VZnW7EXeRtQjVu71825
- DsylUWZzJVs2Xoqmq2K1+36vBcIwx0+sb0smMZdjqcZMJXEdExWy2Xvg3E/o5SrKhNVj
- 2f4RbXZXKDOqWvb3QxRr5G+a0MUOicv+LDVDF1/nCf7Tm4hPITN4Zlf3oZ33Is/rNt8O
- O31Frx56l6b4Ega8ka2bToN3n1ECnC3xME9t4lFyHt3t4oMwE7h2NmIhS4QdPy+RrzUD
- e0TA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719211836; x=1719816636;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DAVzGjK5sXVJtAfTUtSFPiGGD39VHhVvUhPK0ce9O5k=;
- b=QG+CH15CUJ5/Cwn6jsGKWAvjSlTZL6keFo9HtU/boXhLG+h607mPRILPgOaRbNT3ir
- BnMKBVe01O+7bYowHZibzZnrdVcPmNOyLxUN+1Yq35LcEt2qUZ+wJL1GocDChBNJa/Eb
- Jh+hy5XR4gmYpmpHAYQrTTJVKH5d+dbnoxn/aw4sGhlCULF5dHuRV8fm7iRwMYAhlcvq
- 1Xf2t780WO61bk7z9qsZVFxnVnTzyg9wl7kgltssduJ+r0IgEDZB/dAXhfXDBDXbxj0w
- ySeT6bNwPp13ES7XpWj4LXhnSkjORKjII2ysrTXIGwYJXfJcpNCFCu3H3373h130/mhO
- iqow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVNuuix8P2W8Qh3bPeRKxy6W9O1Jloiz7VqCk6G4GMjRvvH9ley7l0RHi9TUV+8FdvUI/Z6OGvAmMdB0L7H9Iii0yQKBkY=
-X-Gm-Message-State: AOJu0Ywua3Y/yg/HvqnOgOMAzJW4Yfttv/NxWuWdCVBt1oixgXmfVvaL
- 4sPaoXBYHvThLQfydHWOIzHE4JvvMUIYBR+kbtQ9Juth6aQmUD20D7RIQXwfkXE=
-X-Google-Smtp-Source: AGHT+IFK84K+t5FbFNmPUplQoLxz/WDi+H1e5Q1PQc1DEeNFVBO8NOv5QZ9NDa3MkWN9pdyOBl97fw==
-X-Received: by 2002:a92:c266:0:b0:375:da02:b7ef with SMTP id
- e9e14a558f8ab-3763f5d9cf2mr41569845ab.19.1719211836043; 
- Sun, 23 Jun 2024 23:50:36 -0700 (PDT)
-Received: from [100.64.0.1] (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-716b4a72f9fsm4093779a12.48.2024.06.23.23.50.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 23:50:35 -0700 (PDT)
-Message-ID: <f4c6e859-f4dc-49be-8c1d-cc817116bb05@sifive.com>
-Date: Mon, 24 Jun 2024 14:50:32 +0800
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sLe7M-0003Qs-N1; Mon, 24 Jun 2024 03:28:00 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1sLe7K-0000iS-KU; Mon, 24 Jun 2024 03:28:00 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45O5TshA006195;
+ Mon, 24 Jun 2024 07:27:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=o
+ 5eUvLJLf7rnvgOafZmBPyYbZxH8hq1yCtixkm7FE2Q=; b=hPDoGUOEeMSV/sm/z
+ E7oESzdywoZ2qAf4nKifO6VRMAZVMImvMz/Vuup+6WLvBCVI+ni6Px1o2Ssm0GQi
+ RZYWa2HfVQWGH6H+soa2DJDREPcrdULGizJ+46+GaWdSzZegxZvGf2cxacMbDXR2
+ AZ4p2zb88EiwOLyPOBPpJxovlMWWPHNL8ZRX05WhIfmeTfor1tRCHIufFHxwvBdg
+ t/27CqZY9kRsOWTeP69kxukImaGvll1788AehyS9W1/diDNzTodf+QyJndFNhr9N
+ N+lROXWEtA4K/rL3dAYJvhi8V83pok16c6f/XfwtE7kU6zkpsdKZa40hjDhMbwdM
+ IZSTw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yy2pp8b62-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Jun 2024 07:27:53 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45O7Qt4b024519;
+ Mon, 24 Jun 2024 07:27:53 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3yy2pp8b3w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Jun 2024 07:27:52 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45O7JP5c019548; Mon, 24 Jun 2024 07:23:09 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3yx9xpp73h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 24 Jun 2024 07:23:09 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45O7N6t35374472
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 24 Jun 2024 07:23:09 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C2B8A58071;
+ Mon, 24 Jun 2024 07:23:04 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62ACA58082;
+ Mon, 24 Jun 2024 07:23:01 +0000 (GMT)
+Received: from [9.109.242.165] (unknown [9.109.242.165])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 24 Jun 2024 07:23:01 +0000 (GMT)
+Message-ID: <d719e182-eff7-48d6-a6fe-618c784ed433@linux.ibm.com>
+Date: Mon, 24 Jun 2024 12:52:59 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 4/5] target/riscv: rvv: Provide group continuous
- ld/st flow for unit-stride ld/st instructions
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <20240613175122.1299212-1-max.chou@sifive.com>
- <20240613175122.1299212-5-max.chou@sifive.com>
- <acbf0fae-51be-4aa1-ba79-94345ecfbb21@linaro.org>
+Subject: Re: [PATCH 2/2] target/ppc/arch_dump: set prstatus pid to cpuid
+To: Omar Sandoval <osandov@osandov.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ linux-debuggers@vger.kernel.org
+References: <cover.1718771802.git.osandov@osandov.com>
+ <ac09da04c8e6dd777945219815d1c53b02291b5b.1718771802.git.osandov@osandov.com>
 Content-Language: en-US
-From: Max Chou <max.chou@sifive.com>
-In-Reply-To: <acbf0fae-51be-4aa1-ba79-94345ecfbb21@linaro.org>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <ac09da04c8e6dd777945219815d1c53b02291b5b.1718771802.git.osandov@osandov.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12f;
- envelope-from=max.chou@sifive.com; helo=mail-il1-x12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 4uvSc5ez22pzUqe8Ye740KIB_wl9HYjr
+X-Proofpoint-ORIG-GUID: RgZiazhRHMw6P-pUTBLv24qg3kGQpUB0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-24_07,2024-06-21_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0
+ spamscore=0 clxscore=1011 priorityscore=1501 mlxlogscore=962 mlxscore=0
+ malwarescore=0 adultscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2406240058
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,103 +121,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/6/20 12:38 PM, Richard Henderson wrote:
+Hi Omar,
 
-> On 6/13/24 10:51, Max Chou wrote:
->> The vector unmasked unit-stride and whole register load/store
->> instructions will load/store continuous memory. If the endian of both
->> the host and guest architecture are the same, then we can group the
->> element load/store to load/store more data at a time.
->>
->> Signed-off-by: Max Chou <max.chou@sifive.com>
->> ---
->>   target/riscv/vector_helper.c | 160 +++++++++++++++++++++++++----------
->>   1 file changed, 117 insertions(+), 43 deletions(-)
->>
->> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
->> index 793337a6f96..cba46ef16a5 100644
->> --- a/target/riscv/vector_helper.c
->> +++ b/target/riscv/vector_helper.c
->> @@ -457,6 +457,69 @@ GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw)
->>   GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl)
->>   GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq)
->>   +static inline uint32_t
->> +vext_group_ldst_host(CPURISCVState *env, void *vd, uint32_t byte_end,
->> +                     uint32_t byte_offset, void *host, uint32_t esz,
->> +                     bool is_load)
->> +{
->> +    uint32_t group_size;
->> +    static vext_ldst_elem_fn_host * const fns[2][4] = {
->> +        /* Store */
->> +        { ste_b_host, ste_h_host, ste_w_host, ste_d_host },
->> +        /* Load */
->> +        { lde_b_host, lde_h_host, lde_w_host, lde_d_host }
->> +    };
->> +    vext_ldst_elem_fn_host *fn;
->> +
->> +    if (byte_offset + 8 < byte_end) {
->> +        group_size = MO_64;
->> +    } else if (byte_offset + 4 < byte_end) {
->> +        group_size = MO_32;
->> +    } else if (byte_offset + 2 < byte_end) {
->> +        group_size = MO_16;
->> +    } else {
->> +        group_size = MO_8;
->> +    }
->> +
->> +    fn = fns[is_load][group_size];
->> +    fn(vd, byte_offset, host + byte_offset);
->
-> This is a really bad idea.  The table and indirect call means that 
-> none of these will be properly inlined.  Anyway...
->
->> +
->> +    return 1 << group_size;
->> +}
->> +
->> +static inline void
->> +vext_continus_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb 
->> *ldst_tlb,
->> +                       void *vd, uint32_t evl, target_ulong addr,
->> +                       uint32_t reg_start, uintptr_t ra, uint32_t esz,
->> +                       bool is_load)
->> +{
->> +    for (; reg_start < evl; reg_start++, addr += esz) {
->> +        ldst_tlb(env, adjust_addr(env, addr), reg_start * esz, vd, ra);
->> +    }
->> +}
->> +
->> +static inline void
->> +vext_continus_ldst_host(CPURISCVState *env, vext_ldst_elem_fn_host 
->> *ldst_host,
->> +                        void *vd, uint32_t evl, uint32_t reg_start, 
->> void *host,
->> +                        uint32_t esz, bool is_load)
->> +{
->> +#if TARGET_BIG_ENDIAN != HOST_BIG_ENDIAN
->> +    for (; reg_start < evl; reg_start++) {
->> +        uint32_t byte_off = reg_start * esz;
->> +        ldst_host(vd, byte_off, host + byte_off);
->> +    }
->> +#else
->> +    uint32_t group_byte;
->> +    uint32_t byte_start = reg_start * esz;
->> +    uint32_t byte_end = evl * esz;
->> +    while (byte_start < byte_end) {
->> +        group_byte = vext_group_ldst_host(env, vd, byte_end, 
->> byte_start, host,
->> +                                          esz, is_load);
->> +        byte_start += group_byte;
->> +    }
->
-> ... this is much better handled with memcpy, given that you know 
-> endianness matches.
-Thanks for the suggestion.
-I'll try to replace the original implementation of the table and 
-indirect calls by handled with memcpy at the next version.
+On 6/19/24 10:30, Omar Sandoval wrote:
+> Every other architecture does this, and debuggers need it to be able to
+> identify which prstatus note corresponds to which CPU.
+> 
+> Signed-off-by: Omar Sandoval <osandov@osandov.com>
+> ---
+>   target/ppc/arch_dump.c | 21 ++++++++++++---------
+>   1 file changed, 12 insertions(+), 9 deletions(-)
+> 
+> diff --git a/target/ppc/arch_dump.c b/target/ppc/arch_dump.c
+> index a8315659d9..78b4205319 100644
+> --- a/target/ppc/arch_dump.c
+> +++ b/target/ppc/arch_dump.c
+> @@ -47,9 +47,11 @@ struct PPCUserRegStruct {
+>   } QEMU_PACKED;
+>   
+>   struct PPCElfPrstatus {
+> -    char pad1[112];
+> +    char pad1[32];
+> +    uint32_t pid;
+> +    uint8_t pad2[76];
+>       struct PPCUserRegStruct pr_reg;
+> -    char pad2[40];
+> +    char pad3[40];
+>   } QEMU_PACKED;
+>   
 
-Max.
->
->
-> r~
+Could you please add a comment above the struct providing reference to 
+the spec being referred here for member position across the status bits?
+
+With that,
+
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+
+>   
+> @@ -96,7 +98,7 @@ typedef struct NoteFuncArg {
+>       DumpState *state;
+>   } NoteFuncArg;
+>   
+> -static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       int i;
+>       reg_t cr;
+> @@ -109,6 +111,7 @@ static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu)
+>   
+>       prstatus = &note->contents.prstatus;
+>       memset(prstatus, 0, sizeof(*prstatus));
+> +    prstatus->pid = cpu_to_dump32(s, id);
+>       reg = &prstatus->pr_reg;
+>   
+>       for (i = 0; i < 32; i++) {
+> @@ -127,7 +130,7 @@ static void ppc_write_elf_prstatus(NoteFuncArg *arg, PowerPCCPU *cpu)
+>       reg->ccr = cpu_to_dump_reg(s, cr);
+>   }
+>   
+> -static void ppc_write_elf_fpregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_fpregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       int i;
+>       struct PPCElfFpregset  *fpregset;
+> @@ -146,7 +149,7 @@ static void ppc_write_elf_fpregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+>       fpregset->fpscr = cpu_to_dump_reg(s, cpu->env.fpscr);
+>   }
+>   
+> -static void ppc_write_elf_vmxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_vmxregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       int i;
+>       struct PPCElfVmxregset *vmxregset;
+> @@ -178,7 +181,7 @@ static void ppc_write_elf_vmxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+>       vmxregset->vscr.u32[3] = cpu_to_dump32(s, ppc_get_vscr(&cpu->env));
+>   }
+>   
+> -static void ppc_write_elf_vsxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_vsxregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       int i;
+>       struct PPCElfVsxregset *vsxregset;
+> @@ -195,7 +198,7 @@ static void ppc_write_elf_vsxregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+>       }
+>   }
+>   
+> -static void ppc_write_elf_speregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+> +static void ppc_write_elf_speregset(NoteFuncArg *arg, PowerPCCPU *cpu, int id)
+>   {
+>       struct PPCElfSperegset *speregset;
+>       Note *note = &arg->note;
+> @@ -211,7 +214,7 @@ static void ppc_write_elf_speregset(NoteFuncArg *arg, PowerPCCPU *cpu)
+>   
+>   static const struct NoteFuncDescStruct {
+>       int contents_size;
+> -    void (*note_contents_func)(NoteFuncArg *arg, PowerPCCPU *cpu);
+> +    void (*note_contents_func)(NoteFuncArg *arg, PowerPCCPU *cpu, int id);
+>   } note_func[] = {
+>       {sizeof_field(Note, contents.prstatus),  ppc_write_elf_prstatus},
+>       {sizeof_field(Note, contents.fpregset),  ppc_write_elf_fpregset},
+> @@ -282,7 +285,7 @@ static int ppc_write_all_elf_notes(const char *note_name,
+>           arg.note.hdr.n_descsz = cpu_to_dump32(s, nf->contents_size);
+>           strncpy(arg.note.name, note_name, sizeof(arg.note.name));
+>   
+> -        (*nf->note_contents_func)(&arg, cpu);
+> +        (*nf->note_contents_func)(&arg, cpu, id);
+>   
+>           note_size =
+>               sizeof(arg.note) - sizeof(arg.note.contents) + nf->contents_size;
 
