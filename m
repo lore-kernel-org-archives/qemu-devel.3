@@ -4,55 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E81F0C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2C4C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:45:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLg14-00034Y-0F; Mon, 24 Jun 2024 05:29:38 -0400
+	id 1sLgFl-00054i-Vk; Mon, 24 Jun 2024 05:44:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sLg12-00034K-7f
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:29:36 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sLg0y-0007BW-VY
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:29:35 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 483394E6010;
- Mon, 24 Jun 2024 11:29:29 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id GiO_WUVXRCqd; Mon, 24 Jun 2024 11:29:26 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E10724E6001; Mon, 24 Jun 2024 11:29:26 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DEEF5746E3B;
- Mon, 24 Jun 2024 11:29:26 +0200 (CEST)
-Date: Mon, 24 Jun 2024 11:29:26 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-cc: qemu-devel@nongnu.org, laurent@vivier.eu
-Subject: Re: [PATCH 2/2] target/m68k: pass alignment into TCG memory load/store
- routines
-In-Reply-To: <da3ef608-8eff-485a-b831-9192c412858f@ilande.co.uk>
-Message-ID: <dc9f80da-5cae-f696-d57e-ad32bce6c040@eik.bme.hu>
-References: <20240623115704.315645-1-mark.cave-ayland@ilande.co.uk>
- <20240623115704.315645-3-mark.cave-ayland@ilande.co.uk>
- <9d74ba20-a17d-64fd-7203-e4d450f77472@eik.bme.hu>
- <da3ef608-8eff-485a-b831-9192c412858f@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLgFk-00054G-6P
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:44:48 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLgFi-0001Km-Ny
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:44:47 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-35f090093d8so2832044f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 02:44:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719222285; x=1719827085; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LM1zqwG0qVVj/aYY64cZFNVJLh0Zy0mhN0dAF+NUZ2I=;
+ b=rBWv/aX2NAfVX+B2zG9SuT6+SJyYudDKYaB4ua9F8lRuDar49e4HF3YI3UVnod17J9
+ +7ytOpXBhVcaDykrKbpDA9N8BHb9zBN6E/bDVxu+LJzmRXJ03j17YBvBBMJbQcLAuPi0
+ IgVVuenpEUoh0woWSiW+FBeWxg6hDtdU0oe0nxVlITcqSEq+mxcnuRfTtd4PWbBPi0V6
+ 693mHb0n8+ZVqh7XGdsBx6pdc3Cv/9Ho89lydA4KF3zjH5jlaaAJtRHMdUdLYAD9i08b
+ 3KV1Rl9C3sJ9x7gpReJ6Alayxp+llT4sLTY7LGI8kO+4nlIfOD80E4j8KyZ7tSTiW01P
+ zrZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719222285; x=1719827085;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LM1zqwG0qVVj/aYY64cZFNVJLh0Zy0mhN0dAF+NUZ2I=;
+ b=DrlUL31cK1orKKjvraqsRkg9UvafhIcdvqzm1w8QbBYez8noE3incv1Mni06S1Gayw
+ 9htiEIeAGv/TanTXWn6Az+af1RMPKPk1hRawOXKqwENSc5rSS79+iK9An1sNylSICWKP
+ ksCQdimGOsp02unQWkYB6vsxOPm5YyQkOLiArmSmDs5l5QnD9mI0jgjtpBHZ04Q05UCy
+ deF7UOEJzVZBd8R+A99awC76YB7vaPmwCXq3lzj0ESLRN3s26RRH6CErEMeLD9aagFKq
+ T9h9e+ZSXV+RM0jk3kk7Rt6m21Y25g3aBg3iDRN3LK39q+MrhewrooKprp8iJZw8Y9dK
+ VOsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXt/eaqA+WWm+ExLTpwFldIGd4IrAOkPGuCoc093f5deHDn/bKtjOnOwD66NExADsGOX7576msxH+ZPlA7UOMPoLOBnMQU=
+X-Gm-Message-State: AOJu0YzbTJUMgOJyzxSx2dNgvL6B002NYo1pIJ5AIsnplEsX/3Ka3246
+ lWKSPecWmITIqr7K5Raf0ITCbPe2Yo1ktIhxIsVRVfBpu9YzaUXj6mSxgsARSPI=
+X-Google-Smtp-Source: AGHT+IGrtefBk4dCeSdhJSdr+YFzN6moDdKOYR+zvKp2OY1bIl/kMA1eds/PTJ9H3sFFsCf8jrEbKw==
+X-Received: by 2002:a5d:484a:0:b0:363:c25:ddc9 with SMTP id
+ ffacd0b85a97d-366e7a639dbmr3218010f8f.65.1719222284648; 
+ Mon, 24 Jun 2024 02:44:44 -0700 (PDT)
+Received: from [192.168.69.100] (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
+ [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36638d9c1d1sm9534424f8f.51.2024.06.24.02.44.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Jun 2024 02:44:44 -0700 (PDT)
+Message-ID: <78125cf4-ab43-467b-ae84-fd2e4eba05ce@linaro.org>
+Date: Mon, 24 Jun 2024 11:44:41 +0200
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1542887832-1719221366=:66817"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] i386/sev: Fix error message in sev_get_capabilities()
+To: Michal Privoznik <mprivozn@redhat.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, michael.roth@amd.com
+References: <cover.1719218926.git.mprivozn@redhat.com>
+ <b4648905d399780063dc70851d3d6a3cd28719a5.1719218926.git.mprivozn@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <b4648905d399780063dc70851d3d6a3cd28719a5.1719218926.git.mprivozn@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,86 +96,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 24/6/24 10:52, Michal Privoznik wrote:
+> When a custom path is provided to sev-guest object and opening
+> the path fails an error message is reported. But the error
+> message still mentions DEFAULT_SEV_DEVICE ("/dev/sev") instead of
+> the custom path.
+> 
+> Fixes: 16dcf200dc951c1cde3e5b442457db5f690b8cf0
+> Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+> ---
+>   target/i386/sev.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
---3866299591-1542887832-1719221366=:66817
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-On Mon, 24 Jun 2024, Mark Cave-Ayland wrote:
-> On 23/06/2024 16:23, BALATON Zoltan wrote:
->> On Sun, 23 Jun 2024, Mark Cave-Ayland wrote:
->>> Now that do_unaligned_access has been implemented for 68k CPUs, pass the 
->>> required
->>> alignment into the TCG memory load/store routines. This allows the TCG 
->>> memory core
->>> to generate an Address Error exception for unaligned memory accesses if 
->>> required.
->>> 
->>> Suggested-by: Laurent Vivier <laurent@vivier.eu>
->>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2165
->>> ---
->>> target/m68k/translate.c | 18 +++++++++++++++---
->>> 1 file changed, 15 insertions(+), 3 deletions(-)
->>> 
->>> diff --git a/target/m68k/translate.c b/target/m68k/translate.c
->>> index 445966fb6a..661a7b4def 100644
->>> --- a/target/m68k/translate.c
->>> +++ b/target/m68k/translate.c
->>> @@ -303,13 +303,18 @@ static inline TCGv gen_load(DisasContext *s, int 
->>> opsize, TCGv addr,
->>>                             int sign, int index)
->>> {
->>>     TCGv tmp = tcg_temp_new_i32();
->>> +    MemOp memop = opsize | (sign ? MO_SIGN : 0) | MO_TE;
->>> 
->>>     switch (opsize) {
->>>     case OS_BYTE:
->>> +        tcg_gen_qemu_ld_tl(tmp, addr, index, memop);
->>> +        break;
->>>     case OS_WORD:
->>>     case OS_LONG:
->>> -        tcg_gen_qemu_ld_tl(tmp, addr, index,
->>> -                           opsize | (sign ? MO_SIGN : 0) | MO_TE);
->>> +        if (!m68k_feature(s->env, M68K_FEATURE_UNALIGNED_DATA)) {
->>> +            memop |= MO_ALIGN_2;
->>> +        }
->>> +        tcg_gen_qemu_ld_tl(tmp, addr, index, memop);
->> 
->> You could swap the order of these so byte comes last and fall through to it 
->> from word/long to avoid duplicated line.
->> 
->> Maybe this answers my question about where it's restriced by CPU type. I 
->> wonder if this check for M68K_FEATURE_UNALIGNED_DATA could be avoded here 
->> and done by checking it in init and only set the unaligned method for CPUs 
->> that need it to not add overhead for most CPUs that don't need it.
->
-> I don't think that it matters too much if the method isn't implemented as the 
-> logic surrounding when to call do_unaligned_access is contained within the 
-> TCG core.
-
-I've seen this after I've sent a patch for PPC where removing a 
-conditional from a helper often called for memory access showed it had an 
-effect on performance. So I thought adding a conditional here might cause 
-some slow down for CPUs that don't need this. But this is compile time so 
-maybe it's not that big problem as in a hepler. Yet only adding the 
-unaligned method for CPUs then always set MO_ALIGN here avoiding the if 
-only calls the method when needed if that works at all. I don't know if 
-that's worth it, you could test with some memory intensive benchmark such 
-as STREAM benchmark to check if this has any effect.
-
-Regards,
-BALATON Zotan
-
-> I'll have a go at updating the ordering and send a v2 if it looks good.
->
->
-> ATB,
->
-> Mark.
->
->
---3866299591-1542887832-1719221366=:66817--
 
