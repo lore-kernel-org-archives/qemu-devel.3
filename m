@@ -4,96 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6628BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 17:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF62C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 17:32:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLnHj-0007vd-1d; Mon, 24 Jun 2024 13:15:19 -0400
+	id 1sLnX9-0003ir-4P; Mon, 24 Jun 2024 13:31:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sLnHh-0007vC-5T
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 13:15:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sLnX7-0003gp-0Y; Mon, 24 Jun 2024 13:31:13 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sLnHZ-0004G2-4h
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 13:15:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719249307;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8y6yIquyQ9xFIBHw9avM/SsIFOc52VWpb0J9P/SZ4J4=;
- b=NS9gTP1UroUMkk2W5TC3e8aZR0CC2MiA2u/NCth8/aNW+my5ap1GGECMrPaamLTWxTB3yG
- d7GnOXK8oNMx5bVt7Q2u8KJVgAfFZwO6fq9ysTzPolEf0AyJsLFhWq2iNNcMeYzXG6swIa
- XdWiLRA3zeF6fuSRIkLIUZ5wo1jlVww=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-370-QvSk-c2cN3-HQBywwG8W2Q-1; Mon, 24 Jun 2024 13:15:05 -0400
-X-MC-Unique: QvSk-c2cN3-HQBywwG8W2Q-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3634a634f8aso2194765f8f.2
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 10:15:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719249304; x=1719854104;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8y6yIquyQ9xFIBHw9avM/SsIFOc52VWpb0J9P/SZ4J4=;
- b=bVr6GTxOr7XpDvk8Ilpu1YfYvlrj56lumwiBjhTuhJvtbfrrMZ+03KM1OMCev3z5xq
- I0ssLHnLMeGIjl2uCkpDubo2XinQdsItSycDN2FBWUvYp+Due7DgdVrlGuAGqMvX05gw
- NT1vLdRuxQQet2bBIQUgK0X1VtiXW4hqEANbQ3wx8+2CqHmdK/pHrvTXumGHO1TqG46B
- K+DQA1CEDW7yto5CjimikLLD69fQUByYEATLLjeiURqzm+n4AdEUa/7nxkMhMfl93KGM
- 8wPfVu4QmSBtAdAkxXFAGsrjNlVeJtTuCWzqVUD36hiDotR2QJr8W+AbFdgBJKFIW4lI
- NJvg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvRU+wj2hJ1Ewq41yINVSTdZaISWw30B/R6KJPEWfupfvq2RL/sMZN7KCTsvNrMe6AroA9mXycEEOnR68gwVyggunIo6U=
-X-Gm-Message-State: AOJu0YyiJIjVkgzHfuP3FOVOjtooIuyBmxkLyKq+LiPUbK1FHQHgx4/h
- eUyQ+bmTY14CT3HLbpe2QXhuM6wO4uvK2FKMsBP82wY1Fim8VTZjGHLjrhZCEGRbGoLG3X9wBbr
- TdjYv41QFsZuQ9MbJP8wdFI33YHpFSZznfBIYjFYuelD5jAIMC8IJrtAG9ET1IZmeAMAZDe7QUF
- 5QnUqbWTU5xIkS8Xr09jqHG/6Ss5w=
-X-Received: by 2002:a05:6000:1fa7:b0:365:32e0:f757 with SMTP id
- ffacd0b85a97d-366e96b22acmr4507249f8f.50.1719249304128; 
- Mon, 24 Jun 2024 10:15:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IErRD2itdA0VK1u9quntlNef5jmZQ4YeFqzvrugj/V9YATo44KCu4NUHB3eGohE2pzti2A3KELXZs0MKcgaLBg=
-X-Received: by 2002:a05:6000:1fa7:b0:365:32e0:f757 with SMTP id
- ffacd0b85a97d-366e96b22acmr4507221f8f.50.1719249303684; Mon, 24 Jun 2024
- 10:15:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sLnX0-0007JE-FV; Mon, 24 Jun 2024 13:31:12 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W7FNB5G69z6K6kp;
+ Tue, 25 Jun 2024 01:30:18 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id D72E1140A36;
+ Tue, 25 Jun 2024 01:30:54 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 24 Jun
+ 2024 18:30:54 +0100
+Date: Mon, 24 Jun 2024 18:30:53 +0100
+To: Hyeongtak Ji <hyeongtak.ji@gmail.com>
+CC: <qemu-devel@nongnu.org>, <qemu-trivial@nongnu.org>
+Subject: Re: [PATCH] docs/cxl: fix some typos
+Message-ID: <20240624183053.00005205@Huawei.com>
+In-Reply-To: <CAFY0u4R8V-8rJYidvNCYjpAvF=hGy4N1j0a4PPGbaTNALeLC3A@mail.gmail.com>
+References: <20240619045459.305997-1-hyeongtak.ji@gmail.com>
+ <20240621171047.000075fc@Huawei.com>
+ <CAFY0u4R8V-8rJYidvNCYjpAvF=hGy4N1j0a4PPGbaTNALeLC3A@mail.gmail.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
- <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
- <ZnmkN2PL3r-2sxqe@redhat.com>
-In-Reply-To: <ZnmkN2PL3r-2sxqe@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 24 Jun 2024 19:14:53 +0200
-Message-ID: <CABgObfbH4KpFv+eKr3BLpk0S9TOkQNiyQN5q6JAFGsMrWmSGnA@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 1/5] build-sys: Add rust feature option
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
- Richard Henderson <richard.henderson@linaro.org>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000006ddae061ba5ec59"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.174.77]
+X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,207 +65,164 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000006ddae061ba5ec59
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Sat, 22 Jun 2024 16:25:26 +0900
+Hyeongtak Ji <hyeongtak.ji@gmail.com> wrote:
 
-Il lun 24 giu 2024, 18:52 Daniel P. Berrang=C3=A9 <berrange@redhat.com> ha
-scritto:
-
-> On Wed, Jun 19, 2024 at 11:13:58PM +0300, Manos Pitsidianakis wrote:
-> > Add options for Rust in meson_options.txt, meson.build, configure to
-> > prepare for adding Rust code in the followup commits.
+> Hello Jonathan,
+>=20
+> Thank you for your response.
+>=20
+> On Sat, Jun 22, 2024 at 1:10=E2=80=AFAM Jonathan Cameron
+> <Jonathan.Cameron@huawei.com> wrote:
 > >
-> > `rust` is a reserved meson name, so we have to use an alternative.
-> > `with_rust` was chosen.
+> > On Wed, 19 Jun 2024 13:54:59 +0900
+> > Hyeongtak Ji <hyeongtak.ji@gmail.com> wrote:
 > >
-> > A cargo_wrapper.py script is added that is heavily based on the work of
-> > Marc-Andr=C3=A9 Lureau from 2021.
+> > Hi, some description would be good of how you caught these
+> > (I'm guessing a close read). =20
+>=20
+> Just to confirm, are you suggesting that the patch should include a
+> commit message?  I apologize for submitting the patch without any
+> sufficient explanation.  However, I am not entirely sure if "how I
+> found these typos" needs to be included in the commit message.  For
+> your information, I discovered these typos because the ASCII art did
+> not align with the explanations (yes, a close read).
+
+Mostly just wanted a patch description that said something.
+It can be useful to have even minimal info such as
+"Found by inspection relative to the ASCII art above."
+Helps guide if people should read closely or not!
+
+Thanks,
+
+Jonathan
+
+
+>=20
 > >
+> > Whilst checking this I did notice there are some errors in
+> > the example bus numbering but that's a separate issue.
 > >
-> https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat=
-.com/
+> > Jonathan
 > >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > ---
-> >  MAINTAINERS                   |   5 +
-> >  configure                     |  11 ++
-> >  meson.build                   |  11 ++
-> >  meson_options.txt             |   4 +
-> >  scripts/cargo_wrapper.py      | 279 ++++++++++++++++++++++++++++++++++
-> >  scripts/meson-buildoptions.sh |   6 +
-> >  6 files changed, 316 insertions(+)
-> >  create mode 100644 scripts/cargo_wrapper.py
->
-> > diff --git a/configure b/configure
-> > index 38ee257701..6894d7c2d1 100755
-> > --- a/configure
-> > +++ b/configure
-> > @@ -302,6 +302,9 @@ else
-> >    objcc=3D"${objcc-${cross_prefix}clang}"
-> >  fi
+> > =20
+> > > Signed-off-by: Hyeongtak Ji <hyeongtak.ji@gmail.com>
+> > > ---
+> > >  docs/system/devices/cxl.rst | 6 +++---
+> > >  1 file changed, 3 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
+> > > index 10a0e9bc9ff4..e2497e6a098b 100644
+> > > --- a/docs/system/devices/cxl.rst
+> > > +++ b/docs/system/devices/cxl.rst
+> > > @@ -218,17 +218,17 @@ Notes:
+> > >      A complex configuration here, might be to use the following HDM
+> > >      decoders in HB0. HDM0 routes CFMW0 requests to RP0 and hence
+> > >      part of CXL Type3 0. HDM1 routes CFMW0 requests from a
+> > > -    different region of the CFMW0 PA range to RP2 and hence part
+> > > +    different region of the CFMW0 PA range to RP1 and hence part =20
 > >
-> > +with_rust=3D"auto"
->
-> On last week's call one of the things we discussed is the expectations
-> for consumers of QEMU around the usage of Rust & its optionality (or
-> not) long term.
->
-> I'm of the view that to be valuable for QEMU, we need to consider
-> Rust to become a mandatory feature. There's a question of how quickly
-> we move, however, before declaring it mandatory. The longer we take
-> to declare it mandatory, the longer we are limiting the value we
-> can take from Rust.
->
-
-Yes, I agree. However, considering we haven't even checked the situation
-with what language features are required by any idiomatic bindings vs the
-1.63 version that we need to support for Debian, I think it's a bit
-premature to make it mandatory.
-
-As soon as the PL011 device is a reasonable example of how to write good
-Rust device models, however, we should switch to making it default-on, and
---without-rust can go away within one or two releases.
-
-> +  --with-rust-target-triple=3D*) with_rust_target_triple=3D"$optarg"
->
-As with previous posting, IMHO, this should ideally not exist. We should
-> honour the --cross-prefix=3D values, re-mapping to to Rust targets for al=
-l
-> the combos we know about
-
-
-More precisely it should be based not on the cross prefix, but on the same
-OS and CPU values that are detected from cpp symbols and used for the meson
-cross file. I have already made a rough list of differences between these
-and the Rust target triples, but I haven't yet turned them to code.
-
-It would however be the first patch I send after these are in a good shape
-for inclusion.
-
-The priority right now should be to investigate the build tree workspace
-design that I sketched last week in my reply to Richard. Once that can be
-considered a stable build system integration, further improvements can be
-done in tree.
-
---with-rust-target-triple should only be needed
-> as a workaround for where we might have missed a mapping.
->
-
-Agreed.
-
-Paolo
-
---00000000000006ddae061ba5ec59
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il lun 24 giu 2024, 18:52 Daniel P. Berrang=C3=A9 &lt;=
-<a href=3D"mailto:berrange@redhat.com" target=3D"_blank" rel=3D"noreferrer"=
->berrange@redhat.com</a>&gt; ha scritto:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">On Wed, Jun 19, 2024 at 11:13:58PM +0300, Manos Pi=
-tsidianakis wrote:<br>
-&gt; Add options for Rust in meson_options.txt, meson.build, configure to<b=
-r>
-&gt; prepare for adding Rust code in the followup commits.<br>
-&gt; <br>
-&gt; `rust` is a reserved meson name, so we have to use an alternative.<br>
-&gt; `with_rust` was chosen.<br>
-&gt; <br>
-&gt; A cargo_wrapper.py script is added that is heavily based on the work o=
-f<br>
-&gt; Marc-Andr=C3=A9 Lureau from 2021.<br>
-&gt; <br>
-&gt; <a href=3D"https://patchew.org/QEMU/20210907121943.3498701-1-marcandre=
-.lureau@redhat.com/" rel=3D"noreferrer noreferrer noreferrer" target=3D"_bl=
-ank">https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@red=
-hat.com/</a><br>
-&gt; <br>
-&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
-lureau@redhat.com" rel=3D"noreferrer noreferrer" target=3D"_blank">marcandr=
-e.lureau@redhat.com</a>&gt;<br>
-&gt; Signed-off-by: Manos Pitsidianakis &lt;<a href=3D"mailto:manos.pitsidi=
-anakis@linaro.org" rel=3D"noreferrer noreferrer" target=3D"_blank">manos.pi=
-tsidianakis@linaro.org</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A05 +<br>
-&gt;=C2=A0 configure=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0|=C2=A0 11 ++<br>
-&gt;=C2=A0 meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0|=C2=A0 11 ++<br>
-&gt;=C2=A0 meson_options.txt=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0|=C2=A0 =C2=A04 +<br>
-&gt;=C2=A0 scripts/cargo_wrapper.py=C2=A0 =C2=A0 =C2=A0 | 279 +++++++++++++=
-+++++++++++++++++++++<br>
-&gt;=C2=A0 scripts/meson-buildoptions.sh |=C2=A0 =C2=A06 +<br>
-&gt;=C2=A0 6 files changed, 316 insertions(+)<br>
-&gt;=C2=A0 create mode 100644 scripts/cargo_wrapper.py<br>
-<br>
-&gt; diff --git a/configure b/configure<br>
-&gt; index 38ee257701..6894d7c2d1 100755<br>
-&gt; --- a/configure<br>
-&gt; +++ b/configure<br>
-&gt; @@ -302,6 +302,9 @@ else<br>
-&gt;=C2=A0 =C2=A0 objcc=3D&quot;${objcc-${cross_prefix}clang}&quot;<br>
-&gt;=C2=A0 fi<br>
-&gt;=C2=A0 <br>
-&gt; +with_rust=3D&quot;auto&quot;<br>
-<br>
-On last week&#39;s call one of the things we discussed is the expectations<=
-br>
-for consumers of QEMU around the usage of Rust &amp; its optionality (or<br=
->
-not) long term.<br>
-<br>I&#39;m of the view that to be valuable for QEMU, we need to consider<b=
-r>
-Rust to become a mandatory feature. There&#39;s a question of how quickly<b=
-r>
-we move, however, before declaring it mandatory. The longer we take<br>
-to declare it mandatory, the longer we are limiting the value we<br>
-can take from Rust.<br></blockquote></div></div><div dir=3D"auto"><br></div=
-><div dir=3D"auto">Yes, I agree. However, considering we haven&#39;t even c=
-hecked the situation with what language features are required by any idioma=
-tic bindings vs the 1.63 version that we need to support for Debian, I thin=
-k it&#39;s a bit premature to make it mandatory.</div><div dir=3D"auto"><br=
-></div><div dir=3D"auto">As soon as the PL011 device is a reasonable exampl=
-e of how to write good Rust device models, however, we should switch to mak=
-ing it default-on, and --without-rust can go away within one or two release=
-s.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_q=
-uote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">&gt; +=C2=A0 --with=
--rust-target-triple=3D*) with_rust_target_triple=3D&quot;$optarg&quot;<br><=
-/blockquote></div></div><div dir=3D"auto"><div class=3D"gmail_quote"><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">As with previous posting, IMHO,=
- this should ideally not exist. We should<br>
-honour the --cross-prefix=3D values, re-mapping to to Rust targets for all<=
-br>
-the combos we know about</blockquote></div></div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">More precisely it should be based not on the cross pref=
-ix, but on the same OS and CPU values that are detected from cpp symbols an=
-d used for the meson cross file. I have already made a rough list of differ=
-ences between these and the Rust target triples, but I haven&#39;t yet turn=
-ed them to code.</div><div dir=3D"auto"><br></div><div dir=3D"auto">It woul=
-d however be the first patch I send after these are in a good shape for inc=
-lusion.</div><div dir=3D"auto"><br></div><div dir=3D"auto">The priority rig=
-ht now should be to investigate the build tree workspace design that I sket=
-ched last week in my reply to Richard. Once that can be considered a stable=
- build system integration, further improvements can be done in tree.</div><=
-div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">--with-rust-target-triple sh=
-ould only be needed<br>
-as a workaround for where we might have missed a mapping.<br></blockquote><=
-/div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Agreed.</div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div>
-
---00000000000006ddae061ba5ec59--
+> > Good catch.
+> > =20
+> > >      of CXL Type 3 1.  HDM2 routes yet another PA range from within
+> > >      CFMW0 to be interleaved across RP0 and RP1, providing 2 way
+> > >      interleave of part of the memory provided by CXL Type3 0 and
+> > >      CXL Type 3 1. HDM3 routes those interleaved accesses from
+> > >      CFMW1 that target HB0 to RP 0 and another part of the memory of
+> > >      CXL Type 3 0 (as part of a 2 way interleave at the system level
+> > > -    across for example CXL Type3 0 and CXL Type3 2.
+> > > +    across for example CXL Type3 0 and CXL Type3 1). =20
+> > This one is wrong.  CFMW1 interleaves across both host bridges so we ne=
+ed
+> > a device below HB0 and one below HB1, so CXL type3 2 is a possible choi=
+ce
+> > (could be CXL type3 3 as well, but that doesn't matter.) =20
+>=20
+> Oh, I misunderstood the original explanation.  I will correct it just by
+> adding the missing parenthesis instead.
+>=20
+> > =20
+> > >      HDM4 is used to enable system wide 4 way interleave across all
+> > >      the present CXL type3 devices, by interleaving those (interleave=
+d)
+> > > -    requests that HB0 receives from from CFMW1 across RP 0 and
+> > > +    requests that HB0 receives from CFMW1 across RP 0 and =20
+> > Good.
+> > =20
+> > >      RP 1 and hence to yet more regions of the memory of the
+> > >      attached Type3 devices.  Note this is a representative subset
+> > >      of the full range of possible HDM decoder configurations in this=
+ =20
+> > =20
+>=20
+> I will send V2 with a decent explanation and the corrected typo fix.
+>=20
+> Kind regards,
+> Hyeongtak
+>=20
+> On Sat, Jun 22, 2024 at 1:10=E2=80=AFAM Jonathan Cameron
+> <Jonathan.Cameron@huawei.com> wrote:
+> >
+> > On Wed, 19 Jun 2024 13:54:59 +0900
+> > Hyeongtak Ji <hyeongtak.ji@gmail.com> wrote:
+> >
+> > Hi, some description would be good of how you caught these
+> > (I'm guessing a close read).
+> >
+> > Whilst checking this I did notice there are some errors in
+> > the example bus numbering but that's a separate issue.
+> >
+> > Jonathan
+> >
+> > =20
+> > > Signed-off-by: Hyeongtak Ji <hyeongtak.ji@gmail.com>
+> > > ---
+> > >  docs/system/devices/cxl.rst | 6 +++---
+> > >  1 file changed, 3 insertions(+), 3 deletions(-)
+> > >
+> > > diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
+> > > index 10a0e9bc9ff4..e2497e6a098b 100644
+> > > --- a/docs/system/devices/cxl.rst
+> > > +++ b/docs/system/devices/cxl.rst
+> > > @@ -218,17 +218,17 @@ Notes:
+> > >      A complex configuration here, might be to use the following HDM
+> > >      decoders in HB0. HDM0 routes CFMW0 requests to RP0 and hence
+> > >      part of CXL Type3 0. HDM1 routes CFMW0 requests from a
+> > > -    different region of the CFMW0 PA range to RP2 and hence part
+> > > +    different region of the CFMW0 PA range to RP1 and hence part =20
+> >
+> > Good catch.
+> > =20
+> > >      of CXL Type 3 1.  HDM2 routes yet another PA range from within
+> > >      CFMW0 to be interleaved across RP0 and RP1, providing 2 way
+> > >      interleave of part of the memory provided by CXL Type3 0 and
+> > >      CXL Type 3 1. HDM3 routes those interleaved accesses from
+> > >      CFMW1 that target HB0 to RP 0 and another part of the memory of
+> > >      CXL Type 3 0 (as part of a 2 way interleave at the system level
+> > > -    across for example CXL Type3 0 and CXL Type3 2.
+> > > +    across for example CXL Type3 0 and CXL Type3 1). =20
+> > This one is wrong.  CFMW1 interleaves across both host bridges so we ne=
+ed
+> > a device below HB0 and one below HB1, so CXL type3 2 is a possible choi=
+ce
+> > (could be CXL type3 3 as well, but that doesn't matter.)
+> > =20
+> > >      HDM4 is used to enable system wide 4 way interleave across all
+> > >      the present CXL type3 devices, by interleaving those (interleave=
+d)
+> > > -    requests that HB0 receives from from CFMW1 across RP 0 and
+> > > +    requests that HB0 receives from CFMW1 across RP 0 and =20
+> > Good.
+> > =20
+> > >      RP 1 and hence to yet more regions of the memory of the
+> > >      attached Type3 devices.  Note this is a representative subset
+> > >      of the full range of possible HDM decoder configurations in this=
+ =20
+> > =20
 
 
