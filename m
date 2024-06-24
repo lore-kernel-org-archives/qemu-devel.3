@@ -4,81 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3570C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59041C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLfBc-0006bX-ID; Mon, 24 Jun 2024 04:36:28 -0400
+	id 1sLfJC-0007ni-TY; Mon, 24 Jun 2024 04:44:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sLfBZ-0006bL-Vf
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:36:26 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
+ (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
+ id 1sLfJA-0007n0-Le; Mon, 24 Jun 2024 04:44:16 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sLfBW-0005fN-6n
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:36:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719218182; x=1750754182;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=y7E5P8y0OutV0LXtH5PDqcJH/gl2g2S4MTBuCD7Ew6w=;
- b=aD4DQI5Ghj1FQSlnpu8qQwus+rmP9UOMDXpDO5aMY2qPLe8DvDDVwizW
- NC8sOtxM1F/ousvZNbCyGE+0RRN1NvyZoecf/e9ueF8Egb2nJk5/Ni2tU
- RKeviW9oWhiXAiiIAYdYO4a815klVEVSOLLRqyyUR14VJjseUEtVv6Lcz
- tWtoe2W1EUKub9x/ijcHElBKYFj31G6KKNfCgMH2oZ2x6/NepWuwDYA17
- GPahVM+Z6tVxQqL26acHX38GqC2eV0rhCuYehwMwRcNhUZWyqvIUibdjw
- PIxMB3tjgVGS0oyzhg3e0K0K8JnDTYpTWOJ6sbyC90kb9qJZGZba1JQUJ w==;
-X-CSE-ConnectionGUID: KTAuwimuSyelXILssseXZQ==
-X-CSE-MsgGUID: 3RI+AlEeT5eJduIvs8/5fQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11112"; a="16054795"
-X-IronPort-AV: E=Sophos;i="6.08,261,1712646000"; d="scan'208";a="16054795"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Jun 2024 01:36:18 -0700
-X-CSE-ConnectionGUID: /gC6NGrvQ1G+DnwO2D2I0A==
-X-CSE-MsgGUID: ENkbAMvPRmqpV5Pr96QSSA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,261,1712646000"; d="scan'208";a="66459776"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 24 Jun 2024 01:36:14 -0700
-Date: Mon, 24 Jun 2024 16:51:48 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Subject: Re: [RFC PATCH v3 1/5] build-sys: Add rust feature option
-Message-ID: <ZnkzpBUQMMGTgQlL@intel.com>
-References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
- <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
- <ae1397b5-4154-4aeb-bf5f-3a62adcc05fd@redhat.com>
+ (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
+ id 1sLfJ8-0006qi-5Q; Mon, 24 Jun 2024 04:44:16 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W71j50gLhz4x0r;
+ Mon, 24 Jun 2024 18:44:09 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W71j129Chz4wx6;
+ Mon, 24 Jun 2024 18:44:04 +1000 (AEST)
+Message-ID: <2d0bcf57-0a76-458a-a40f-70a31135e9e5@kaod.org>
+Date: Mon, 24 Jun 2024 10:44:02 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ae1397b5-4154-4aeb-bf5f-3a62adcc05fd@redhat.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] aspeed/soc: fix coverity issue
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
+ <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=voaC=N2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
 X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,40 +69,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[snip]
+On 6/19/24 11:35 AM, Jamin Lin wrote:
+> Fix coverity defect: DIVIDE_BY_ZERO.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-> diff --git a/meson.build b/meson.build
-> index c5360fbd299..ad7dbc0d641 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -290,6 +290,11 @@ foreach lang : all_languages
->    endif
->  endforeach
-> +cargo = not_found
-> +if 'RUST_TARGET_TRIPLE' in config_host
-> +  cargo = find_program('cargo', required: true)
-> +endif
+
+I have rewritten the commit log :
+
+     aspeed/soc: Fix possible divide by zero
+     
+     Coverity reports a possible DIVIDE_BY_ZERO issue regarding the
+     "ram_size" object property. This can not happen because RAM has
+     predefined valid sizes per SoC. Nevertheless, add a test to
+     close the issue.
+
+     Fixes: Coverity CID 1547113
+
+with that,
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+
+> ---
+>   hw/arm/aspeed_ast27x0.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index b6876b4862..d14a46df6f 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
+>       ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
+>                                           &error_abort);
+>   
+> +    if (!ram_size) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: ram_size is zero",  __func__);
+> +        return;
+> +    }
 > +
+>       /*
+>        * Emulate ddr capacity hardware behavior.
+>        * If writes the data to the address which is beyond the ram size,
 
-As with the original Manos version, it looks like there's no need to
-check cargo here? Since patch 2 checks cargo and others in rust/meson.build.
-
-Otherwise, cargo was checked twice.
-
->  # default flags for all hosts
->  # We use -fwrapv to tell the compiler that we require a C dialect where
->  # left shift of signed integers is well defined and has the expected
-> @@ -4239,6 +4244,10 @@ if 'objc' in all_languages
->  else
->    summary_info += {'Objective-C compiler': false}
->  endif
-> +summary_info += {'Rust support':      cargo.found()}
-> +if cargo.found() and config_host['RUST_TARGET_TRIPLE']) != config_host['RUST_HOST_TRIPLE']
-> +  summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
-> +endif
->  option_cflags = (get_option('debug') ? ['-g'] : [])
->  if get_option('optimization') != 'plain'
->    option_cflags += ['-O' + get_option('optimization')]
-> 
-> 
 
