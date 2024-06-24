@@ -4,71 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E2CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 16:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B72C3064D
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 16:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLmGg-0002VU-DV; Mon, 24 Jun 2024 12:10:10 -0400
+	id 1sLmRI-0000H6-Tl; Mon, 24 Jun 2024 12:21:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xoykie@gmail.com>) id 1sLki4-0001yA-CQ
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:30:20 -0400
-Received: from mail-qk1-x742.google.com ([2607:f8b0:4864:20::742])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xoykie@gmail.com>) id 1sLki2-0005Ku-6U
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:30:19 -0400
-Received: by mail-qk1-x742.google.com with SMTP id
- af79cd13be357-79bd2de2157so295544485a.0
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 07:30:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719239416; x=1719844216; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=VveAuMVcP+jyZpYtcft3KUnMYmigpS0dcqTVQs0sDuM=;
- b=J9Y3x1lU9bc9TrXg0NUGoDs+/pgsuF6msHcZj3MeCBbA6vinQNVNBYRnr5vYYbizPV
- YoGffB7VPAy7EOMlVi73RN6xWJwDa1V3Hh5SO3Vrfu52idjF2lOv5PkOnH9xdmixqAWf
- 8GcUc9Oy8h8xN3P41EPwg04MGdV1IzTGr3CxxtPFSpdy/cvNn3DEPd2DfBmm4+SjFFdy
- Oi3OU+gr6Ny5UQL2GIBwNXI6RyNoNjf27K9D/HvBpXnWmSH5pAtwKzPvLJVuWd3BLLHh
- V6wqBzow462JK4QMDUI3CFMvC28xjdOVAmLv3EkB1YkpAsHI2NWqrlQ30z7l8r2r6iDs
- plaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719239416; x=1719844216;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VveAuMVcP+jyZpYtcft3KUnMYmigpS0dcqTVQs0sDuM=;
- b=OTDUYTtsX/BYwyCEytTwX0iTteijq0GN2knRZ5wyUEnlp++fPJj+nj/7I2ASzVTZbQ
- Wo1piIT7IGiGHt142gztuQ9S2j+tW+GZVv4l60/CDSja9zEd78sz+aQUc0mL9WnWKpUM
- /4Mmxw23zhd5m3YVH0tNZctJ2fQuOUeLzFlZEa1MaKdnUuDBnIpySI/HNko1xTsMSQFB
- /WKFl2eYxiHBBftGGCz7CwA0k18dQaNE/5in/VByayEczqMH0g+BcPwasAhSas1ggppq
- u8a8oLuw5YZXfnOxxxXXTFhxmsna5HBzhsyZITFp9aTSCCczQdObM+sV7dcQSNjlb6T3
- A/7Q==
-X-Gm-Message-State: AOJu0YwgsEi1sXzBC77dLOJiAgNZunX+ySwIbUQjzz2qMMFxtlFIosjT
- mAB3OaJ+HLDoUps/0hQBMKfijN8hFaI9ZLIl/MRebGTG2O7vysGRLej+6zbudpp6/MATV1XkAxJ
- tUnwysbGvzKAbqmPQiwzFRsvWh4a7NmsrNzM=
-X-Google-Smtp-Source: AGHT+IEFxsrt1ZLG1SSygZX9w+GILdBkKYn/5FVC2npmuw3cqtvDPg7ZC2ckgR4c/JFujFb/4OvGAyGfjVH6VL2saHY=
-X-Received: by 2002:a05:622a:1491:b0:440:ec00:fff6 with SMTP id
- d75a77b69052e-444d9215b4cmr61561291cf.41.1719239416393; Mon, 24 Jun 2024
- 07:30:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sLmRD-0000FA-Ro; Mon, 24 Jun 2024 12:21:04 -0400
+Received: from muminek.juszkiewicz.com.pl ([213.251.184.221])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sLmRB-00023T-8H; Mon, 24 Jun 2024 12:21:03 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by muminek.juszkiewicz.com.pl (Postfix) with ESMTP id 8A4F126071B;
+ Mon, 24 Jun 2024 18:20:57 +0200 (CEST)
+X-Virus-Scanned: Debian amavis at juszkiewicz.com.pl
+Received: from muminek.juszkiewicz.com.pl ([127.0.0.1])
+ by localhost (muminek.juszkiewicz.com.pl [127.0.0.1]) (amavis, port 10024)
+ with ESMTP id NPAEIO_mzgcV; Mon, 24 Jun 2024 18:20:55 +0200 (CEST)
+Received: from applejack.lan (83.11.22.244.ipv4.supernova.orange.pl
+ [83.11.22.244])
+ by muminek.juszkiewicz.com.pl (Postfix) with ESMTPSA id 0C348261A96;
+ Mon, 24 Jun 2024 18:20:54 +0200 (CEST)
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Date: Mon, 24 Jun 2024 18:20:44 +0200
+Subject: [PATCH v3 2/2] tests/avocado: add test for default sbsa-ref cpu
 MIME-Version: 1.0
-From: Xoykie <xoykie@gmail.com>
-Date: Mon, 24 Jun 2024 20:00:04 +0530
-Message-ID: <CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com>
-Subject: [Bug Report] Possible Missing Endianness Conversion
-To: qemu-devel@nongnu.org, Eugenio Perez Martin <eperezma@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, thuth@redhat.com, cohuck@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::742;
- envelope-from=xoykie@gmail.com; helo=mail-qk1-x742.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240624-b4-move-to-freebsd-v3-2-71496bf119d4@linaro.org>
+References: <20240624-b4-move-to-freebsd-v3-0-71496bf119d4@linaro.org>
+In-Reply-To: <20240624-b4-move-to-freebsd-v3-0-71496bf119d4@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Radoslaw Biernacki <rad@semihalf.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, 
+ Beraldo Leal <bleal@redhat.com>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+X-Mailer: b4 0.13.0
+Received-SPF: softfail client-ip=213.251.184.221;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=muminek.juszkiewicz.com.pl
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 24 Jun 2024 12:10:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,17 +69,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio packed virtqueue support patch[1] suggests converting
-endianness by lines:
+We changed sbsa-ref cpu several times already and may do it again in a
+future. To newer core or to enable/disable some properties.
 
-virtio_tswap16s(vdev, &e->off_wrap);
-virtio_tswap16s(vdev, &e->flags);
+This change switches Neoverse-N2 tests to 'let test default cpu' ones.
 
-Though both of these conversion statements aren't present in the
-latest qemu code here[2]
+Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+---
+ tests/avocado/machine_aarch64_sbsaref.py | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
-Is this intentional?
+diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
+index bb2c098aac..43bb1860e0 100644
+--- a/tests/avocado/machine_aarch64_sbsaref.py
++++ b/tests/avocado/machine_aarch64_sbsaref.py
+@@ -115,7 +115,7 @@ def test_sbsaref_edk2_firmware(self):
+     # This tests the whole boot chain from EFI to Userspace
+     # We only boot a whole OS for the current top level CPU and GIC
+     # Other test profiles should use more minimal boots
+-    def boot_alpine_linux(self, cpu):
++    def boot_alpine_linux(self, cpu=False):
+         self.fetch_firmware()
+ 
+         iso_url = (
+@@ -128,12 +128,14 @@ def boot_alpine_linux(self, cpu):
+ 
+         self.vm.set_console()
+         self.vm.add_args(
+-            "-cpu",
+-            cpu,
+             "-drive",
+             f"file={iso_path},format=raw",
+         )
+ 
++        # let allow test which will use default cpu of platform
++        if cpu:
++            self.vm.add_args("-cpu", cpu)
++
+         self.vm.launch()
+         wait_for_console_pattern(self, "Welcome to Alpine Linux 3.17")
+ 
+@@ -144,12 +146,12 @@ def test_sbsaref_alpine_linux_cortex_a57(self):
+         """
+         self.boot_alpine_linux("cortex-a57")
+ 
+-    def test_sbsaref_alpine_linux_neoverse_n1(self):
++    # Let test whichever cpu is used as default
++    def test_sbsaref_alpine_linux_default(self):
+         """
+-        :avocado: tags=cpu:neoverse-n1
+         :avocado: tags=os:linux
+         """
+-        self.boot_alpine_linux("neoverse-n1")
++        self.boot_alpine_linux()
+ 
+     def test_sbsaref_alpine_linux_max_pauth_off(self):
+         """
+@@ -214,7 +216,7 @@ def test_sbsaref_openbsd73_cortex_a57(self):
+     # This tests the whole boot chain from EFI to Userspace
+     # We only boot a whole OS for the current top level CPU and GIC
+     # Other test profiles should use more minimal boots
+-    def boot_freebsd(self, cpu):
++    def boot_freebsd(self, cpu=False):
+         self.fetch_firmware()
+ 
+         img_url = (
+@@ -227,12 +229,14 @@ def boot_freebsd(self, cpu):
+ 
+         self.vm.set_console()
+         self.vm.add_args(
+-            "-cpu",
+-            cpu,
+             "-drive",
+             f"file={img_path},format=raw",
+         )
+ 
++        # let allow test which will use default cpu of platform
++        if cpu:
++            self.vm.add_args("-cpu", cpu)
++
+         self.vm.launch()
+         wait_for_console_pattern(self, "Welcome to FreeBSD!")
+ 
+@@ -243,13 +247,12 @@ def test_sbsaref_freebsd_cortex_a57(self):
+         """
+         self.boot_freebsd("cortex-a57")
+ 
+-    # We use Neoverse-N2 as default cpu
+-    def test_sbsaref_freebsd_neoverse_n2(self):
++    # Let test whichever cpu is used as default
++    def test_sbsaref_freebsd_default(self):
+         """
+-        :avocado: tags=cpu:neoverse-n2
+         :avocado: tags=os:freebsd
+         """
+-        self.boot_freebsd("neoverse-n2")
++        self.boot_freebsd()
+ 
+     def test_sbsaref_freebsd_max_pauth_off(self):
+         """
 
-[1]: https://mail.gnu.org/archive/html/qemu-block/2019-10/msg01492.html
-[2]: https://elixir.bootlin.com/qemu/latest/source/hw/virtio/virtio.c#L314
+-- 
+2.45.2
+
 
