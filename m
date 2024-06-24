@@ -4,87 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7630AC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AEF4C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLemc-0007Gv-4o; Mon, 24 Jun 2024 04:10:38 -0400
+	id 1sLetp-0000kr-4n; Mon, 24 Jun 2024 04:18:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLema-0007Ga-Jw
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:10:36 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLemZ-00009f-0H
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:10:36 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-42122ac2f38so23002815e9.1
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 01:10:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719216633; x=1719821433; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4RTAQwadnmzU+2BsFPLzaRXRc6gtw+sJYjl6MK8WhZU=;
- b=zawszadUYbmpYjsZomjFz3OYZsDOx8WgpgXB+xyMbOGJU1EcqNdp4Z04aVNRpWcA+k
- QYWsX/OpO0gtJAgAEEpO5su0JKrVTUS7YHvORViB+75JtIslLhXElqdlVGm8qHLfUj3d
- z41b3d5pWdFcYPKKj3E401IeDZDDhZOUxiyW1KgEa6KjYKETalpE/IRUBrIkbKaZ291t
- tZc1lPIQmwW//n5SawXz2MrD02WGvJIeDaQhJKAUycAAUONya77GKrTRdd7K4AxwtF4/
- ARcUZAhtX52ZJ046UodQ761oWCxtoUlzDRJBTpqOE998X4Q3vnClso45WiCEnFAWQhrg
- f89A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719216633; x=1719821433;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4RTAQwadnmzU+2BsFPLzaRXRc6gtw+sJYjl6MK8WhZU=;
- b=W55A1ypRvFgv+sZsqs9fnY5iUDIFiENCkpCJo71ZsC7zcpy+/fII3fuJwVUicxGJmY
- Ky1toXlJX/EbRqJOTgpy231YEcOnmqcLj09/KwYwqZeTzMvYzV2L5I24W10gg1L455OM
- E4YXwzxNSfUtuFmAy8canYeLTPtMf5+tYXrmKS8h8O7yEK60oDEtBaQ7LNsE/NyxcPc7
- LW5jlk01DDNzURauIgHectWcaZD78Dexg5zprue3EIbyt033csstJsLrtxNM+pQPx11K
- oDQRKfnpdU71Ninod3TjtlfXAmvKUoCH7BlFQLJZcfwtPC7gTyWERgr5SNYylE7aSR3G
- XcFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFDYGtwxBRK5TkgfbkQEMbo1oSN8C7zInxLjFKFNtnM3KEsCR5TSk3YJzR6QifGjYv6SxPcCCN9xk3r94kCJHFpIbYQSc=
-X-Gm-Message-State: AOJu0Yx6UCje6+SRvHjsB/nhx61TbG8xFnuT/mXivjvvYchB6tWjvIqy
- PDq2ZpLhyI2RR8Y6Ky5Kdg+SB+LxC3swjKuOyzlROyR0+gr6YuLfW+qD9t90RV0=
-X-Google-Smtp-Source: AGHT+IHq6KjIURezU8b+BRJ8jiKQzT3UWlP3f7vvC+JWUKJ7fh6QHdbUDsW/ZXHsv/XAiMs3xAx6DQ==
-X-Received: by 2002:a05:600c:470e:b0:421:79b5:6d84 with SMTP id
- 5b1f17b1804b1-42489540d0fmr42327055e9.17.1719216633255; 
- Mon, 24 Jun 2024 01:10:33 -0700 (PDT)
-Received: from [192.168.69.100] (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
- [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-424817b6121sm125415505e9.27.2024.06.24.01.10.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jun 2024 01:10:32 -0700 (PDT)
-Message-ID: <ba81d71b-ddda-4b17-af3d-2e4d7b46e554@linaro.org>
-Date: Mon, 24 Jun 2024 10:10:29 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
+ id 1sLetk-0000kM-6Q; Mon, 24 Jun 2024 04:18:00 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
+ id 1sLeth-0002Dw-Qq; Mon, 24 Jun 2024 04:17:59 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W716g1Y99z4wqM;
+ Mon, 24 Jun 2024 18:17:47 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W716c3TrFz4wbh;
+ Mon, 24 Jun 2024 18:17:44 +1000 (AEST)
+Message-ID: <a1896fdc-8a13-413d-9a6a-274330f3af03@kaod.org>
+Date: Mon, 24 Jun 2024 10:17:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] tests/avocado: make sbsa-ref working with >1 core
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Ard Biesheuvel <ardb+tianocore@kernel.org>,
- Rebecca Cran <rebecca@bsdio.com>
-References: <20240620-b4-new-firmware-v3-0-29a3a2f1be1e@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240620-b4-new-firmware-v3-0-29a3a2f1be1e@linaro.org>
+Subject: Re: [PATCH 00/23] hw/sd/sdcard: Accumulation of cleanups and fixes
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
+References: <20240621080554.18986-1-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240621080554.18986-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=voaC=N2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,23 +65,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/6/24 12:19, Marcin Juszkiewicz wrote:
-> Recent changes made sbsa-ref crash when more than 1 cpu core was used.
-> We handle it in firmware now so one patch updates it to the working
-> snapshot (TF-A 2.11 + EDK2 snapshot + EDK2-platforms snapshot).
+On 6/21/24 10:05 AM, Philippe Mathieu-Daudé wrote:
+> Various SD card cleanups and fixes accumulated over
+> the years. Various have been useful to help integrating
+> eMMC support (which will come later).
 > 
-> Other change drops "-smp 1" from CI to make sure we test default setup
-> of sbsa-ref.
+> Based-on: <20240621075607.17902-1-philmd@linaro.org> st24_be_p()
 > 
-> Previous firmware worked with 1 cpu by pure luck probably.
+> Philippe Mathieu-Daudé (23):
+>    hw/sd/sdcard: Correct code indentation
+>    hw/sd/sdcard: Rewrite sd_cmd_ALL_SEND_CID using switch case (CMD2)
+>    hw/sd/sdcard: Fix typo in SEND_OP_COND command name
+>    hw/sd/sdcard: Use HWBLOCK_SHIFT definition instead of magic values
+>    hw/sd/sdcard: Use registerfield CSR::CURRENT_STATE definition
+>    hw/sd/sdcard: Use Load/Store API to fill some CID/CSD registers
+>    hw/sd/sdcard: Remove ACMD6 handler for SPI mode
+>    hw/sd/sdcard: Remove explicit entries for illegal commands
+>    hw/sd/sdcard: Generate random RCA value
+>    hw/sd/sdcard: Track last command used to help logging
+>    hw/sd/sdcard: Trace update of block count (CMD23)
+>    hw/sd/sdcard: Trace block offset in READ/WRITE data accesses
+>    hw/sd/sdcard: Have cmd_valid_while_locked() return a boolean value
+>    hw/sd/sdcard: Factor sd_req_get_rca() method out
+>    hw/sd/sdcard: Only call sd_req_get_rca() where RCA is used
+>    hw/sd/sdcard: Factor sd_req_get_address() method out
+>    hw/sd/sdcard: Only call sd_req_get_address() where address is used
+>    hw/sd/sdcard: Add sd_invalid_mode_for_cmd to report invalid mode
+>      switch
+>    hw/sd/sdcard: Inline BLK_READ_BLOCK / BLK_WRITE_BLOCK macros
+>    hw/sd/sdcard: Add comments around registers and commands
+>    hw/sd/sdcard: Do not store vendor data on block drive (CMD56)
+>    hw/sd/sdcard: Send WRITE_PROT bits MSB first (CMD30)
+>    hw/sd/sdcard: Send NUM_WR_BLOCKS bits MSB first (ACMD22)
+> 
+>   hw/sd/sd.c             | 278 +++++++++++++++++++++++------------------
+>   hw/sd/sdmmc-internal.c |   2 +-
+>   hw/sd/trace-events     |   7 +-
+>   3 files changed, 159 insertions(+), 128 deletions(-)
+> 
 
 
-> Marcin Juszkiewicz (2):
->        tests/avocado: update firmware for sbsa-ref
->        tests/avocado: use default amount of cores on sbsa-ref
+Tested-by: Cédric Le Goater <clg@redhat.com>
 
-Series:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks,
+
+C.
+
 
 
