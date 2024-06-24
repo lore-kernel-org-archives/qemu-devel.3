@@ -4,83 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42559C41513
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C6AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLr3n-0000BE-KQ; Mon, 24 Jun 2024 17:17:11 -0400
+	id 1sLr4X-0000lF-C2; Mon, 24 Jun 2024 17:17:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLr3j-0000Ap-A1
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:17:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLr4W-0000kj-2D
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:17:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLr3h-0005O5-8j
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:17:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLr4U-0005We-F6
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:17:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719263824;
+ s=mimecast20190719; t=1719263873;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ks/lyash70NDg5KJt5IjvzjkVpCb5S9X3Q4+YXug5PI=;
- b=CD7xxj58mt6PUuuMrTYE/mNiLwvlEITBSmvzlokxluPGHqI2mLFLch89nV9y7mUn+x3iGz
- DUeWyfTgysVRiP61u62SxRAqMdDtJJTU8tClTD4lupIitCEl8ai5Teu+kiEF5Hol8EFI4k
- RuXm7TyggjTu/2ji3G2VlX/mV5Wkut0=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VZhqAksgscfA1U0w97JPmo3WQj4iKdtgPOt+pAzWfrc=;
+ b=O4ikOwrvqhaPtrSZgoxVGbAhx2xUA0uPnBRDFrcZ23AxvlwSGp+UmbdkKqPMcAvXtjPiGH
+ n8LOyYmICk6cdaAiHnVkwbFbB25PBq4wYBAZ3OaxoqYuOThC4QSRnPj2vE7JNisVRF5eVC
+ 8WFzF5WRSO1agnsQsznJxvBdMv1R6aE=
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com
+ [209.85.160.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-478-OGSHQiaOPQSQrQnTjlm4gQ-1; Mon, 24 Jun 2024 17:17:02 -0400
-X-MC-Unique: OGSHQiaOPQSQrQnTjlm4gQ-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-795509afe3cso502229385a.0
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 14:17:02 -0700 (PDT)
+ us-mta-258-wiZJ9jV6Ofal8vjiVrfrPw-1; Mon, 24 Jun 2024 17:17:52 -0400
+X-MC-Unique: wiZJ9jV6Ofal8vjiVrfrPw-1
+Received: by mail-oa1-f71.google.com with SMTP id
+ 586e51a60fabf-2500b8a716fso6176312fac.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 14:17:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719263822; x=1719868622;
+ d=1e100.net; s=20230601; t=1719263871; x=1719868671;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ks/lyash70NDg5KJt5IjvzjkVpCb5S9X3Q4+YXug5PI=;
- b=xJ+orroWoR3qZl2Gb/Au/W1hYzVP66fbJU0oZVJyUVRJF0DdJvAlPUP9s5G9VLLcMB
- sNZQDMEsDLrGXnCHvnHLPt+TCLyq6qhh+tMGAu6nuvPhK/9ksbEU6kLTXgalA8c6UiGq
- Xp9FWOrfUVKRgfei+njC4l1477UP9F1H3LzktzG6t05N5aT65J1BRW21MMdVvtiuznkX
- xwBivF6bhv9z2w+AVM4QBkgYhhvyOdG7I1GOEgEepqc0G+60aYIiGeoSSX/uYxv23Bzd
- 8l3+Ty6ggKMIHbUVvIwoOzAF/fPSjcu3jcNK45KYaOh/U7sLoIVGKxYaNg4Ga+8ZgC+h
- oZhw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW46ck6FHrB1GeroRDWv5H4FQSGFMiaRjEOg5zkIOo5BtsMHsHq0gk9f0ar+9r+Z0RbcT0Y79iKqsDmfPaBVYtBmMy2NUg=
-X-Gm-Message-State: AOJu0YztvlJYGUMn1inoRHO89vH8ZNjejxGlL1YOf3yhnJjYDcam38ri
- BzME1SLCAoR+hgpEDOxfTke1cJHEsyTkCQJ1ws79gA67qIA1thC4vg9K2fnYGqEKyP6je8+aLuL
- ueTAoJ2MxSU5sSd14KvHDVJOTMaJkEVfMKhjM7ulYXtwXJb51hAsf
-X-Received: by 2002:a05:620a:179f:b0:793:b91:2dbe with SMTP id
- af79cd13be357-79be6efbfe0mr765562185a.40.1719263821960; 
- Mon, 24 Jun 2024 14:17:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG1gcPOtpjhbrbiQ2jDYdlDHjM51RL08UIxZkjbVmhWcqtFY3x2M6r2XZkTLHrv/15pp4JPvg==
-X-Received: by 2002:a05:620a:179f:b0:793:b91:2dbe with SMTP id
- af79cd13be357-79be6efbfe0mr765559985a.40.1719263821599; 
- Mon, 24 Jun 2024 14:17:01 -0700 (PDT)
+ bh=VZhqAksgscfA1U0w97JPmo3WQj4iKdtgPOt+pAzWfrc=;
+ b=knPy9YKA8InxJe+ugMasly/qxV0eeXhe3+RthocOkc8Rp7iC4mGJrldweOCjheU384
+ dqmTVWwcTeeYju7hLiGRTy+YshZsaLFLeBueIEfsCWuplx+djvMJOTctlYnoD2lxfQEy
+ x1Ujc0o3cJrv9H/9Vd/4mdZjq+pLp3XfRbtUzffl8++dv4ODzZr30rMIy6vKmkWwMnWG
+ Hbc4HPDE/v7t5JcRYQ4fZtlBRTnl+4MEGWnPuvaUM9zrZlyTu9s4uTr20VDGuX5oUQB8
+ YFjbgCqiNXp9MagXY5UqZqy01Mt4BTC08sHhZ8Mxlj/3z9Y+4K/tJ18xKs6UAVK3AwX7
+ kEzg==
+X-Gm-Message-State: AOJu0Yzj9fal/qDhKpUSVXtUOnTtqyHj324beD6io/wRyU4bkaEgxUlg
+ apTDD3xuKYaqg2iaJBqj/df9eT7UvgwVWLBn5jfQ0XC8MOK/hFrUhWxlJzFMja1U+icNVPRGRCA
+ 3zDcQIQ5PWtThJIZOK4vcgTUwM/ZXNW9fcgxHaKZvVCWttGnZ559Lm32y8LuRs0H9m1nzYH4hfi
+ IPJqKJ3jLcrTGFlTSq0CwKfpXBcshCCw==
+X-Received: by 2002:a05:6871:8a7:b0:24f:d873:9f32 with SMTP id
+ 586e51a60fabf-25d06c51287mr6840631fac.26.1719263871288; 
+ Mon, 24 Jun 2024 14:17:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEdFt6p7ooWakyzQe9Bo2nXRkU7mO10iY0YNjFcpUK1F+lMGLcyYrZzVkEajEqeOSxVcoJdlQ==
+X-Received: by 2002:a05:6871:8a7:b0:24f:d873:9f32 with SMTP id
+ 586e51a60fabf-25d06c51287mr6840607fac.26.1719263870839; 
+ Mon, 24 Jun 2024 14:17:50 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79bce8b38acsm349567185a.41.2024.06.24.14.16.59
+ af79cd13be357-79bce8b0d64sm348957885a.28.2024.06.24.14.17.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jun 2024 14:17:01 -0700 (PDT)
-Message-ID: <5dd941b4-9731-4486-a652-cbcbbd1694b0@redhat.com>
-Date: Mon, 24 Jun 2024 23:16:58 +0200
+ Mon, 24 Jun 2024 14:17:50 -0700 (PDT)
+Message-ID: <6fdd6e84-b2db-4279-8cae-93bf7fbe4124@redhat.com>
+Date: Mon, 24 Jun 2024 23:17:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 00/17] Add a host IOMMU device abstraction to check
- with vIOMMU
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-References: <20240605083043.317831-1-zhenzhong.duan@intel.com>
+Subject: Re: [PATCH v2 00/17] vfio: QOMify VFIOContainer
+To: qemu-devel@nongnu.org
+Cc: Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20240617063409.34393-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <20240605083043.317831-1-zhenzhong.duan@intel.com>
+In-Reply-To: <20240617063409.34393-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -107,194 +104,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/24 10:30 AM, Zhenzhong Duan wrote:
-> Hi,
+On 6/17/24 8:33 AM, Cédric Le Goater wrote:
+> Hello,
 > 
-> This series introduce a HostIOMMUDevice abstraction and sub-classes.
-> Also HostIOMMUDeviceCaps structure in HostIOMMUDevice and a new interface
-> between vIOMMU and HostIOMMUDevice.
+> The series starts with simple changes (patch 1-4). Two of which were
+> initially sent by Joao in a series adding VFIO migration support with
+> vIOMMU [1].
 > 
-> A HostIOMMUDevice is an abstraction for an assigned device that is protected
-> by a physical IOMMU (aka host IOMMU). The userspace interaction with this
-> physical IOMMU can be done either through the VFIO IOMMU type 1 legacy
-> backend or the new iommufd backend. The assigned device can be a VFIO device
-> or a VDPA device. The HostIOMMUDevice is needed to interact with the host
-> IOMMU that protects the assigned device. It is especially useful when the
-> device is also protected by a virtual IOMMU as this latter use the translation
-> services of the physical IOMMU and is constrained by it. In that context the
-> HostIOMMUDevice can be passed to the virtual IOMMU to collect physical IOMMU
-> capabilities such as the supported address width. In the future, the virtual
-> IOMMU will use the HostIOMMUDevice to program the guest page tables in the
-> first translation stage of the physical IOMMU.
+> The changes following prepare VFIOContainer for QOMification, switch
+> the container models to QOM when ready and add some final cleanups.
 > 
-> HostIOMMUDeviceClass::realize() is introduced to initialize
-> HostIOMMUDeviceCaps and other fields of HostIOMMUDevice variants.
+> Applies on top of :
 > 
-> HostIOMMUDeviceClass::get_cap() is introduced to query host IOMMU
-> device capabilities.
+>   * [v7] Add a host IOMMU device abstraction to check with vIOMMU
+>     https://lore.kernel.org/all/20240605083043.317831-1-zhenzhong.duan@intel.com
+>   * [v4] VIRTIO-IOMMU/VFIO: Fix host iommu geometry
+>     https://lore.kernel.org/all/20240614095402.904691-1-eric.auger@redhat.com
 > 
-> The class tree is as below:
+> Thanks,
 > 
->                                HostIOMMUDevice
->                                       | .caps
->                                       | .realize()
->                                       | .get_cap()
->                                       |
->              .-----------------------------------------------.
->              |                        |                      |
-> HostIOMMUDeviceLegacyVFIO  {HostIOMMUDeviceLegacyVDPA}  HostIOMMUDeviceIOMMUFD
->              |                        |                      | [.iommufd]
->                                                              | [.devid]
->                                                              | [.ioas_id]
->                                                              | [.attach_hwpt()]
->                                                              | [.detach_hwpt()]
->                                                              |
->                                              .----------------------.
->                                              |                      |
->                           HostIOMMUDeviceIOMMUFDVFIO  {HostIOMMUDeviceIOMMUFDVDPA}
->                                            | [.vdev]                | {.vdev}
+> C.
 > 
-> * The attributes in [] will be implemented in nesting series.
-> * The classes in {} will be implemented in future.
-> * .vdev in different class points to different agent device,
-> * i.e., VFIODevice or VDPADevice.
+> [1] https://lore.kernel.org/qemu-devel/20230622214845.3980-1-joao.m.martins@oracle.com/
 > 
-> PATCH1-4: Introduce HostIOMMUDevice and its sub classes
-> PATCH5-10: Implement .realize() and .get_cap() handler
-> PATCH11-14: Create HostIOMMUDevice instance and pass to vIOMMU
-> PATCH15-17: Implement compatibility check between host IOMMU and vIOMMU(intel_iommu)
 > 
-> Test done:
-> make check
-> vfio device hotplug/unplug with different backend on linux
-> reboot, kexec
-> build test on linux and windows11
+> Changes in v2:
+>   - Used OBJECT_DECLARE_SIMPLE_TYPE
+>   - Introduced a instance_finalize() handler
 > 
-> Qemu code can be found at:
-> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_preq_v7
+> Avihai Horon (1):
+>    vfio/common: Extract vIOMMU code from vfio_sync_dirty_bitmap()
 > 
-> Besides the compatibility check in this series, in nesting series, this
-> host IOMMU device is extended for much wider usage. For anyone interested
-> on the nesting series, here is the link:
-> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv2
+> Cédric Le Goater (15):
+>    vfio: Make vfio_devices_dma_logging_start() return bool
+>    vfio: Remove unused declarations from vfio-common.h
+>    vfio/container: Introduce vfio_address_space_insert()
+>    vfio/container: Simplify vfio_container_init()
+>    vfio/container: Modify vfio_get_iommu_type() to use a container fd
+>    vfio/container: Introduce vfio_get_iommu_class_name()
+>    vfio/container: Introduce vfio_create_container()
+>    vfio/container: Discover IOMMU type before creating the container
+>    vfio/container: Change VFIOContainerBase to use QOM
+>    vfio/container: Switch to QOM
+>    vfio/container: Introduce an instance_init() handler
+>    vfio/container: Remove VFIOContainerBase::ops
+>    vfio/container: Remove vfio_container_init()
+>    vfio/container: Introduce vfio_iommu_legacy_instance_init()
+>    vfio/container: Move vfio_container_destroy() to an
+>      instance_finalize() handler
 > 
-> Thanks
-> Zhenzhong
+> Joao Martins (1):
+>    vfio/common: Move dirty tracking ranges update to helper
 > 
-> Changelog:
-> v7:
-> - drop config CONFIG_HOST_IOMMU_DEVICE (Cédric)
-> - introduce HOST_IOMMU_DEVICE_CAP_AW_BITS_MAX (Eric)
-> - use iova_ranges method in iommufd.realize() (Eric)
-> - introduce HostIOMMUDevice::name to facilitate tracing (Eric)
-> - implement a custom destroy hash function (Cédric)
-> - drop VTDHostIOMMUDevice and save HostIOMMUDevice in hash table (Eric)
-> - move patch5 after patch1 (Eric)
-> - squash patch3 and 4, squash patch12 and 13 (Eric)
-> - refine comments (Eric)
-> - collect Eric's R-B
+>   include/hw/vfio/vfio-common.h         |  10 ++-
+>   include/hw/vfio/vfio-container-base.h |  19 +---
+>   hw/vfio/common.c                      | 124 ++++++++++++++++----------
+>   hw/vfio/container-base.c              |  70 +++++++++------
+>   hw/vfio/container.c                   | 106 ++++++++++++----------
+>   hw/vfio/iommufd.c                     |  13 ++-
+>   hw/vfio/pci.c                         |   4 +-
+>   hw/vfio/spapr.c                       |   3 +
+>   8 files changed, 196 insertions(+), 153 deletions(-)
 > 
-> v6:
-> - open coded host_iommu_device_get_cap() to avoid #ifdef in intel_iommu.c (Cédric)
-> 
-> v5:
-> - pci_device_set_iommu_device return true (Cédric)
-> - fix build failure on windows (thanks Cédric found that issue)
-> 
-> v4:
-> - move properties vdev, iommufd and devid to nesting series where need it (Cédric)
-> - fix 32bit build with clz64 (Cédric)
-> - change check_cap naming to get_cap (Cédric)
-> - return bool if error is passed through errp (Cédric)
-> - drop HostIOMMUDevice[LegacyVFIO|IOMMUFD|IOMMUFDVFIO] declaration (Cédric)
-> - drop HOST_IOMMU_DEVICE_CAP_IOMMUFD (Cédric)
-> - replace include directive with forward declaration (Cédric)
-> 
-> v3:
-> - refine declaration and doc for HostIOMMUDevice (Cédric, Philippe)
-> - introduce HostIOMMUDeviceCaps, .realize() and .check_cap() (Cédric)
-> - introduce helper range_get_last_bit() for range operation (Cédric)
-> - separate pci_device_get_iommu_bus_devfn() in a prereq patch (Cédric)
-> - replace HIOD_ abbreviation with HOST_IOMMU_DEVICE_ (Cédric)
-> - add header in include/sysemu/iommufd.h (Cédric)
-> 
-> v2:
-> - use QOM to abstract host IOMMU device and its sub-classes (Cédric)
-> - move host IOMMU device creation in attach_device() (Cédric)
-> - refine pci_device_set/unset_iommu_device doc further (Eric)
-> - define host IOMMU info format of different backend
-> - implement get_host_iommu_info() for different backend (Cédric)
-> - drop cap/ecap update logic (MST)
-> - check aw-bits from get_host_iommu_info() in legacy mode
-> 
-> v1:
-> - use HostIOMMUDevice handle instead of union in VFIODevice (Eric)
-> - change host_iommu_device_init to host_iommu_device_create
-> - allocate HostIOMMUDevice in host_iommu_device_create callback
->    and set the VFIODevice base_hdev handle (Eric)
-> - refine pci_device_set/unset_iommu_device doc (Eric)
-> - use HostIOMMUDevice handle instead of union in VTDHostIOMMUDevice (Eric)
-> - convert HostIOMMUDevice to sub object pointer in vtd_check_hdev
-> 
-> rfcv2:
-> - introduce common abstract HostIOMMUDevice and sub struct for different BEs (Eric, Cédric)
-> - remove iommufd_device.[ch] (Cédric)
-> - remove duplicate iommufd/devid define from VFIODevice (Eric)
-> - drop the p in aliased_pbus and aliased_pdevfn (Eric)
-> - assert devfn and iommu_bus in pci_device_get_iommu_bus_devfn (Cédric, Eric)
-> - use errp in iommufd_device_get_info (Eric)
-> - split and simplify cap/ecap check/sync code in intel_iommu.c (Cédric)
-> - move VTDHostIOMMUDevice declaration to intel_iommu_internal.h (Cédric)
-> - make '(vtd->cap_reg >> 16) & 0x3fULL' a MACRO and add missed '+1' (Cédric)
-> - block migration if vIOMMU cap/ecap updated based on host IOMMU cap/ecap
-> - add R-B
-> 
-> Yi Liu (2):
->    hw/pci: Introduce pci_device_[set|unset]_iommu_device()
->    intel_iommu: Implement [set|unset]_iommu_device() callbacks
-> 
-> Zhenzhong Duan (15):
->    backends: Introduce HostIOMMUDevice abstract
->    backends/host_iommu_device: Introduce HostIOMMUDeviceCaps
->    vfio/container: Introduce TYPE_HOST_IOMMU_DEVICE_LEGACY_VFIO device
->    backends/iommufd: Introduce TYPE_HOST_IOMMU_DEVICE_IOMMUFD[_VFIO]
->      devices
->    range: Introduce range_get_last_bit()
->    vfio/container: Implement HostIOMMUDeviceClass::realize() handler
->    backends/iommufd: Introduce helper function
->      iommufd_backend_get_device_info()
->    vfio/iommufd: Implement HostIOMMUDeviceClass::realize() handler
->    vfio/container: Implement HostIOMMUDeviceClass::get_cap() handler
->    backends/iommufd: Implement HostIOMMUDeviceClass::get_cap() handler
->    vfio: Create host IOMMU device instance
->    hw/pci: Introduce helper function pci_device_get_iommu_bus_devfn()
->    vfio/pci: Pass HostIOMMUDevice to vIOMMU
->    intel_iommu: Extract out vtd_cap_init() to initialize cap/ecap
->    intel_iommu: Check compatibility with host IOMMU capabilities
-> 
->   MAINTAINERS                           |   2 +
->   include/hw/i386/intel_iommu.h         |   2 +
->   include/hw/pci/pci.h                  |  38 ++++-
->   include/hw/vfio/vfio-common.h         |   8 +
->   include/hw/vfio/vfio-container-base.h |   3 +
->   include/qemu/range.h                  |  11 ++
->   include/sysemu/host_iommu_device.h    |  91 ++++++++++++
->   include/sysemu/iommufd.h              |  19 +++
->   backends/host_iommu_device.c          |  33 +++++
->   backends/iommufd.c                    |  76 ++++++++--
->   hw/i386/intel_iommu.c                 | 203 ++++++++++++++++++++------
->   hw/pci/pci.c                          |  75 +++++++++-
->   hw/vfio/common.c                      |  16 +-
->   hw/vfio/container.c                   |  41 +++++-
->   hw/vfio/helpers.c                     |  17 +++
->   hw/vfio/iommufd.c                     |  37 ++++-
->   hw/vfio/pci.c                         |  19 ++-
->   backends/meson.build                  |   1 +
->   18 files changed, 623 insertions(+), 69 deletions(-)
->   create mode 100644 include/sysemu/host_iommu_device.h
->   create mode 100644 backends/host_iommu_device.c
-> 
-
 
 Applied to vfio-next.
 
