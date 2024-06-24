@@ -4,74 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C407C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 14:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC7CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 14:31:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLkes-0000y9-AB; Mon, 24 Jun 2024 10:27:02 -0400
+	id 1sLkiy-00022S-7r; Mon, 24 Jun 2024 10:31:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sLkeq-0000xg-Ir
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:27:00 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sLkeo-0004Qw-P2
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:27:00 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2ec1620a956so52904401fa.1
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 07:26:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719239216; x=1719844016; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=b5/ELZbK07QuVqEirB6191rfIWOxnwr8Ia4rNFVo7hE=;
- b=Wr7GbK7ogFsJZeFb4cpQ2yivygVJwIOnXRikoo8PfIUIJ1AbMq02HuDd7a0r1pluYt
- 3WMzgFKIaRxulAEWKju+gXIOpQDqypPUBect6sJ59hbX9k66tYEYxA7QSElR4tPS38hN
- Bd6gT1JcepXLtv5bv5RR4eFuvGFQwtG76ZvWSUuuy/vCFykIhxMSJHD4C5I7gLSWT5cz
- fNwjmTD4OhjZvWs7QzcSYCFwPB/qLMER/UCHYbZZZVJ3sO60K9jCPmeKzvYvoFwDftpi
- XGsqOEhMS6RFcQ+sG45RBQESc0Hvzx9UuNhswQXAiQi00Hi+NBX9I868l8Trn4qdB3nq
- OqCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719239216; x=1719844016;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=b5/ELZbK07QuVqEirB6191rfIWOxnwr8Ia4rNFVo7hE=;
- b=HfcIWY1isbLG4efUgAbuwbWSoJY1hwEQRgTt+uR/ITp+oradVhQEBvcvxBHvgFCwvY
- oIiKiWQbXlQsaxszMSHxvWZW6UwjV697+ebnitSp9c1U3RJ9aJd2fsj3rKvSxywHCouf
- byeTlUfj0/oXB2xqVlMfOF6LR1MArp6YhWvJikbQey7l3IYk+qNSiqZ++G4K0b6XeN0d
- bViDirGJeEYcPbQjYtLdMpeflNDtvnoLgqpm8y6x5CdybciDRShUm2tuL7QtGSgbEDv5
- qDwl5dQphb50vXSLrn0RMiEwRV2QlMWQo0tXl4ZhZwLKfbAGXuFItES8t4HuaKN3IH/l
- wbSg==
-X-Gm-Message-State: AOJu0YzNYpXKnQrd73r9lQ9ghxmR1RKSexrDr6d/NiNZFnuk8uxh0oYz
- +STPTD5AOZcFhRNL/OhgmzWsJUBP3ohLmY6+x1xSQpdrcmSqRTdvUkykgZq167ZN5qoGriDnZ6J
- CrhP2Mfai6IBvdA3D4iVYTby4VyiRhKppxwdvS8UyQCxzQfhv
-X-Google-Smtp-Source: AGHT+IHnNuyqqfC8ARqn62q05NqtH5o69U9Ehy/r994djLBPjC3Hbvv3pgIPAmizSY4KaXouq3lp5YJ0UZ4i9O84XTE=
-X-Received: by 2002:a2e:720b:0:b0:2ec:4096:4bc6 with SMTP id
- 38308e7fff4ca-2ec5b318000mr27467811fa.7.1719239216450; Mon, 24 Jun 2024
- 07:26:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
+ id 1sLkiv-00021y-9i; Mon, 24 Jun 2024 10:31:13 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
+ id 1sLkir-0005Vn-LE; Mon, 24 Jun 2024 10:31:13 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W79PN0YL4z4wqM;
+ Tue, 25 Jun 2024 00:31:04 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W79PJ2qsTz4wbp;
+ Tue, 25 Jun 2024 00:31:00 +1000 (AEST)
+Message-ID: <e246a4e5-fe45-423d-8986-88f75fe6799e@kaod.org>
+Date: Mon, 24 Jun 2024 16:30:58 +0200
 MIME-Version: 1.0
-References: <mvmjziepgn8.fsf@suse.de>
-In-Reply-To: <mvmjziepgn8.fsf@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Jun 2024 15:26:44 +0100
-Message-ID: <CAFEAcA_ntKQpvtrzYubvsWKy+e3R==ZfUB=TeqDc7rnbT7oiww@mail.gmail.com>
-Subject: Re: linux-user crash in python test
-To: Andreas Schwab <schwab@suse.de>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] aspeed/soc: fix coverity issue
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
+ <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
+ <CAFEAcA8tTHusKOR7JhyU+wwA3JJWq1o5wVaNXugw2S9SjAsESw@mail.gmail.com>
+ <b013bd79-c206-446e-b482-91eeb926c70a@kaod.org>
+ <CAFEAcA_fWTUpfRvYjDDXnXBoFuiZZubzVaKDbgKpmsDr98uXtw@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <CAFEAcA_fWTUpfRvYjDDXnXBoFuiZZubzVaKDbgKpmsDr98uXtw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=voaC=N2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,29 +72,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 24 Jun 2024 at 15:20, Andreas Schwab <schwab@suse.de> wrote:
->
-> $ /usr/bin/python3.11 -m unittest -v test.test_signal.StressTest.test_stress_modifying_handlers
-> test_stress_modifying_handlers (test.test_signal.StressTest.test_stress_modifying_handlers) ... ok
->
-> ----------------------------------------------------------------------
-> Ran 1 test in 0.526s
->
-> OK
-> $ qemu-x86_64 /usr/bin/python3.11 -m unittest -v test.test_signal.StressTest.test_stress_modifying_handlers
-> test_stress_modifying_handlers (test.test_signal.StressTest.test_stress_modifying_handlers) ... qemu: uncaught target signal 11 (Segmentation fault) - core dumped
-> Segmentation fault (core dumped)
+On 6/24/24 4:01 PM, Peter Maydell wrote:
+> On Mon, 24 Jun 2024 at 14:58, Cédric Le Goater <clg@kaod.org> wrote:
+>>
+>> On 6/24/24 2:18 PM, Peter Maydell wrote:
+>>> On Wed, 19 Jun 2024 at 10:35, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
+>>>>
+>>>> Fix coverity defect: DIVIDE_BY_ZERO.
+>>>>
+>>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>>> ---
+>>>>    hw/arm/aspeed_ast27x0.c | 6 ++++++
+>>>>    1 file changed, 6 insertions(+)
+>>>>
+>>>> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+>>>> index b6876b4862..d14a46df6f 100644
+>>>> --- a/hw/arm/aspeed_ast27x0.c
+>>>> +++ b/hw/arm/aspeed_ast27x0.c
+>>>> @@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
+>>>>        ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
+>>>>                                            &error_abort);
+>>>>
+>>>> +    if (!ram_size) {
+>>>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>>>> +                      "%s: ram_size is zero",  __func__);
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>
+>>> Isn't this a QEMU bug rather than a guest error? The
+>>> RAM size presumably should never be zero unless the board
+>>> set the ram-size property on the SDMC incorrectly. So the
+>>> SDMC device should check (and return an error from its realize
+>>> method) that the ram-size property is valid,
+>>
+>> That's the case in aspeed_sdmc_set_ram_size() which is called from
+>> the aspeed machine init routine when the ram size is set.
+> 
+> True, but if the property is never set at all then the
+> struct field will be left at whatever value it had, which
+> is 0, I think. So if that's not valid then it either needs
+> to be a different default or else the realize method should
+> complain that the property was never set.
 
-Just to check, does the python you're running this on
-have the change from
-https://github.com/python/cpython/pull/110659
-? That is a fix for a bug in this test which was found after 3.11
-released but was backported to the 3.11 branch, and which
-(if I'm reading the bug reports correctly) might cause either
-test failures or segfaults.
+Ah, yes, and the issue has been there for while. I will send a separate
+patch for this.
 
-Though it also wouldn't surprise me if this was a QEMU bug.
+Thanks,
 
-thanks
--- PMM
+C.
+
+
+
 
