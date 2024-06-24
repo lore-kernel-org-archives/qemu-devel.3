@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C79C3064D
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9C8CC2D0D1
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLjTP-0006mH-9m; Mon, 24 Jun 2024 09:11:07 -0400
+	id 1sLjUq-0007Ya-RD; Mon, 24 Jun 2024 09:12:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjTN-0006kw-3h
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:11:05 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjUe-0007UO-7s
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:12:25 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjTK-000405-9S
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:11:04 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2ec002caeb3so55419601fa.2
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:11:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjUa-0004Ld-UL
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:12:23 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2ec002caf3eso63226751fa.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719234660; x=1719839460; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719234738; x=1719839538; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ca/j5lYq2nn8e1I6CyXYK+okG+eIPRXYPxMcR6xeFjo=;
- b=zRL7k6qYx0Nj9cw/DJcOe0WMQDefFF5d8usHmzalwUPnzKbn/9b35Bzz2GyoZxN+pB
- I9PjOQZXcFFucqq8BgO2mdyO+XvlvbtXpE5uaii2HJRAhP9Lx3SYWuwvIvzZCtkZ0F+4
- IM7Pcs1/Y7kWtAV87WmIoN3tdoHZi6r2tcBMZ4+JLp6Fxgskzof9dsGCNl9TsW5DXrhr
- jXUCRnc8fR5RiFiXRLYEJdvwTozMXTKYYQ2EH4n0xZy50XwakyjKWnOBpTmX0DLwvC9C
- 2wusccGzBbjPCA3FjegzecpC/7MFH+aQfOAibE5HHjnMEGVeOwsARDtKqTYoNSpgYcUS
- WSTQ==
+ bh=AGrbWlTqTjPPAYMqOnG2xQY18UQcCus6pKyHNelxrHo=;
+ b=uWB29bplEFL/OVvw48IIuXpJwTa0pH8cSa0LL4GAmR79sJL+fkqbwimpu5kn/Ik3YH
+ pXvIZwD+i0m3Z8FirjkKmskMffj3Zo3SsQeS3RPIvrsm1qOzmWmu2iJmdGFIZHJohRys
+ Z4OkqZCv4m9ToHGKZOlpsddYz4XhycJqHIeMWKo4ga12/QZ7z5SzzKSkAMTo0acDmTR2
+ Uc5k94tkpCzY4HoOU1hJFvjLXJRTrBKVfup0Ls+32c1LRAXi2PkqMl1S/nAlcEG46FJt
+ MwK+QmE92isI86jFyX0rEITLGkX2Sc4dm1Z4LhzFW1UUoD8ep82itR2lg0B6kpYZB9vy
+ 6gdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719234660; x=1719839460;
+ d=1e100.net; s=20230601; t=1719234738; x=1719839538;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ca/j5lYq2nn8e1I6CyXYK+okG+eIPRXYPxMcR6xeFjo=;
- b=FANoAYIa56fDSX+ouAtupqr0b9V2jmSNJHx+YZjYt2pCEskvxGmrykpOrpyFtCht1n
- W7vjsOkfAty1zrIq/VmmKUWhAoY6Ey9uOEk7HbaLo9aK0RYb6x19hRDNUi4tiItO3eEb
- A7HR2Pb77B5upTAkqAzzuwRRVG5Bk13j+PMwLbw7M6gizFl0fsimySo0i8B/UkGDbbs6
- zpjCPLC6uHjmkMGe1B/9hPeWyesaSDUl6NRWfZYgTSgqANlmnm2TdpDN0IJPygqSq7vn
- X60Iu6kSzYoEWKmU2N4j5rvUhbL/IaGtUkaNn7w86KZNHWXklsU1GBeV+LKqGIIUW1+C
- njjg==
-X-Gm-Message-State: AOJu0YzvTKK0F/jDb9J2kZAOmlO+kQW6QMYxJHaEay45tmI+8T/8JCB0
- a0a5QEgFLEIxwQrO5CYKuvRLNHytEx0E1BaDKslQraZp/5HNht4gtVed2JcxpSCAPH6kneivY2l
- B
-X-Google-Smtp-Source: AGHT+IHqRaMklYkGg06LPTWSk+XohDEv/k+pAVZ25lTr8pZTYZbj/vF8frY9PFer8gEFvBgxSRoCpg==
-X-Received: by 2002:ac2:456b:0:b0:52c:df6e:9517 with SMTP id
- 2adb3069b0e04-52cdf7e66dfmr3173083e87.11.1719234659691; 
- Mon, 24 Jun 2024 06:10:59 -0700 (PDT)
+ bh=AGrbWlTqTjPPAYMqOnG2xQY18UQcCus6pKyHNelxrHo=;
+ b=Y3PFan+fBny7TKpeKKMKmWuQBIyejC0jf5oOcj1EJvzBtOTpbKosgAVvboPrwJ3pKS
+ 8YLdt9f4lLLmGx7wvi0lIAYL6f1frqk/0OJaHM7pelRN0DNJWIW38lFrYqlt7d/vqIsy
+ enm6Xg1X01dExotLePmfUOUdZWvmGFB1qOJP76H0oePgWfj3Lc/rw6yyb3wrqBGuLVVU
+ dGpiQJlPLuOaqvlq90b8vqtDFctU+Qhe6SAK3jl1c2SNgvk31o4xHvaCORVvVAyuAq5M
+ BBnaFTPqn21LqjbkFgL43UUgOrDR4Ozqh+Ec7CLXZ6WUx3eC/IOVKo0H2zt0Y2L3R0fO
+ MdXQ==
+X-Gm-Message-State: AOJu0YwfkodQGZ4kQDRJ+13fZWawhdXorgO8rwTM9q4o+ZQ7ut9WyA+F
+ 96astG2PjATBtoo9CyReYPMEIydbC+UY/W0NdDNmqwXh3Qm/wJg0Y37pr5C2sn06Cl+wFI709M2
+ P
+X-Google-Smtp-Source: AGHT+IGSQpe/JLjsz5jDlh9GIikh6j8jrrJ9dzj3uscIoH0dV+MBqKLeS3vOSn2tcI9FnnUV28fytQ==
+X-Received: by 2002:a2e:9057:0:b0:2ec:18bc:c455 with SMTP id
+ 38308e7fff4ca-2ec5b2c4dbdmr35699401fa.10.1719234738459; 
+ Mon, 24 Jun 2024 06:12:18 -0700 (PDT)
 Received: from [192.168.69.100] (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
  [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42481922428sm130529895e9.43.2024.06.24.06.10.58
+ 5b1f17b1804b1-4247101a955sm181604805e9.0.2024.06.24.06.12.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jun 2024 06:10:59 -0700 (PDT)
-Message-ID: <f87db622-f6c9-4f13-b285-ddb4ea38a1c5@linaro.org>
-Date: Mon, 24 Jun 2024 15:10:57 +0200
+ Mon, 24 Jun 2024 06:12:18 -0700 (PDT)
+Message-ID: <de28a8e1-494b-490e-bf4e-d5386189e4db@linaro.org>
+Date: Mon, 24 Jun 2024 15:12:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/23] hw/sd/sdcard: Accumulation of cleanups and fixes
+Subject: Re: [PATCH] bswap: Add st24_be_p() to store 24 bits in big-endian
+ order
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
-References: <20240621080554.18986-1-philmd@linaro.org>
+Cc: Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>, 
+ Fan Ni <fan.ni@samsung.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Ira Weiny <ira.weiny@intel.com>
+References: <20240621075607.17902-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240621080554.18986-1-philmd@linaro.org>
+In-Reply-To: <20240621075607.17902-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,33 +98,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/6/24 10:05, Philippe Mathieu-Daudé wrote:
-> Various SD card cleanups and fixes accumulated over
-> the years. Various have been useful to help integrating
-> eMMC support (which will come later).
+On 21/6/24 09:56, Philippe Mathieu-Daudé wrote:
+> Commit 14180d6221 ("bswap: Add the ability to store to an
+> unaligned 24 bit field") added st24_le_p() for little
+> endianness, add st24_be_p() equivalent for bit one.
 > 
-> Based-on: <20240621075607.17902-1-philmd@linaro.org> st24_be_p()
-> 
-> Philippe Mathieu-Daudé (23):
->    hw/sd/sdcard: Correct code indentation
->    hw/sd/sdcard: Rewrite sd_cmd_ALL_SEND_CID using switch case (CMD2)
->    hw/sd/sdcard: Fix typo in SEND_OP_COND command name
->    hw/sd/sdcard: Use HWBLOCK_SHIFT definition instead of magic values
->    hw/sd/sdcard: Use registerfield CSR::CURRENT_STATE definition
->    hw/sd/sdcard: Use Load/Store API to fill some CID/CSD registers
->    hw/sd/sdcard: Remove ACMD6 handler for SPI mode
->    hw/sd/sdcard: Remove explicit entries for illegal commands
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Some SD card registers are 3 bytes wide stored MSB first.
+> ---
+>   include/qemu/bswap.h | 7 +++++++
+>   1 file changed, 7 insertions(+)
 
->    hw/sd/sdcard: Have cmd_valid_while_locked() return a boolean value
->    hw/sd/sdcard: Factor sd_req_get_rca() method out
->    hw/sd/sdcard: Only call sd_req_get_rca() where RCA is used
->    hw/sd/sdcard: Factor sd_req_get_address() method out
->    hw/sd/sdcard: Only call sd_req_get_address() where address is used
->    hw/sd/sdcard: Add sd_invalid_mode_for_cmd to report invalid mode
->      switch
->    hw/sd/sdcard: Inline BLK_READ_BLOCK / BLK_WRITE_BLOCK macros
->    hw/sd/sdcard: Add comments around registers and commands
-
-Patches 1-8, 13-20 queued.
-
+Patch queued.
 
