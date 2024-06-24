@@ -4,82 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B52C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E5C1C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:23:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLgp0-00064V-5R; Mon, 24 Jun 2024 06:21:14 -0400
+	id 1sLgql-000704-3g; Mon, 24 Jun 2024 06:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sLgox-00063t-Dc
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:21:11 -0400
-Received: from mx2.zhaoxin.com ([203.110.167.99])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sLgot-0008IL-L4
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:21:11 -0400
-X-ASG-Debug-ID: 1719224459-1eb14e2e60b9290001-jgbH7p
-Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
- mx2.zhaoxin.com with ESMTP id 84MmLcTc9kLKvesU (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Mon, 24 Jun 2024 18:20:59 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Received: from zxbjmbx1.zhaoxin.com (10.29.252.163) by ZXSHMBX2.zhaoxin.com
- (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 24 Jun
- 2024 18:20:59 +0800
-Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 24 Jun
- 2024 18:20:58 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Message-ID: <8d816541-2546-42a8-b6db-bd9d50729b36@zhaoxin.com>
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.66.62
-Date: Mon, 24 Jun 2024 06:20:58 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sLgqj-0006zX-PM
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:23:01 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sLgqi-0008WI-8j
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:23:01 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-57d20d89748so3829837a12.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:22:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719224578; x=1719829378; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=yjKwqTBZuRWyXGMKA+q1H3o6bPPGQ4T7HsJKT/DWL4s=;
+ b=JGNmkdaaFstKFf+4g+ONhUVWqV26PUfluHOcGKQklMnIHfH5G87xBWezZfoyRjvenb
+ 1YPLYlqOy7PpGQGyW5SHDGiBNPpKFfLoSJGkyHNsLQAhgTFHR/AHhaA9Oa5pUEn+BPRF
+ bbY7qHWYnJlggU3ks1grIvidgHlLYwMNVOqFw4PLUuw8F9bxtc45vzEMDQFyBLKVCSak
+ VlNT+eE7cMNr05+IKVk6V90yb5CkhYjSybWYZ9Mr8IDyksuWsDSF96zA2cP83yby3UR+
+ /tjOtU6/Bzx45yOhca6EiIxSLk2SUpx6Bash4ZaT68a14b+7hh/y7KtAQzNhkNISS4h3
+ V45w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719224578; x=1719829378;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yjKwqTBZuRWyXGMKA+q1H3o6bPPGQ4T7HsJKT/DWL4s=;
+ b=CrfL7/kxkRAK5r5wWOJAhw785WDPf6aEHBaVTEPh1SkOP/NcVGmgTu+z3XWU2ShBvS
+ l5Zl4Rj7ZALDWtekOpCk0Bft3sQi5VPPBEinMRVRSLI3/f5krLxl3pV609dYA3h9hiS7
+ AimajPs5tJ25lOiTLX7KxQqjWFieM53dU12gugq4LXZt69agD2ElrYsmSGFIzGLFhXCZ
+ FkpHaqn90fYmiVaYCSjt6B+G+sue1nqlvBWszWavokY6v9wikaFR2r4K6I00J+L2AU+L
+ R5zn0Pa3JO8M5DPCFChiwxHSl64Uwrq/QdEBq38nhdgSgHp9U99NgDS3quZTI9V4dZGW
+ rAIQ==
+X-Gm-Message-State: AOJu0YzFWiRkUAgCUa86oaPap/1XHLFV/EbtoQgEjeejed+0JihGMPlX
+ nEoTJKykhUebaURp3wHpyNuHDrAszytHqGO+xLn5bHfBm1q/hInMha4hAXupLX5826/vMsLo7aR
+ DX0BpeAS8oTVYe/+HvroPSjHZfyjm8O3Efd5gBA==
+X-Google-Smtp-Source: AGHT+IGjDHcPTGyk/CgITVV+S5ljM96Z7DX8VyJigxcPPDtiVXA+5x88K7yWiO0I8PX/yRaIyjwpAmz08U2hxZCQrc0=
+X-Received: by 2002:a50:cdc2:0:b0:57d:2207:a55 with SMTP id
+ 4fb4d7f45d1cf-57d49cb2f8emr2497841a12.15.1719224578415; Mon, 24 Jun 2024
+ 03:22:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/i386/kvm: Refine VMX controls setting for
- backward compatibility
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-X-ASG-Orig-Subj: Re: [PATCH v3] target/i386/kvm: Refine VMX controls setting
- for backward compatibility
-To: <mtosatti@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- <pbonzini@redhat.com>
-CC: <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>,
- <cobechen@zhaoxin.com>, <zhao1.liu@intel.com>
-References: <20240624095806.214525-1-ewanhai-oc@zhaoxin.com>
-Content-Language: en-US
-In-Reply-To: <20240624095806.214525-1-ewanhai-oc@zhaoxin.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
-X-Barracuda-Start-Time: 1719224459
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 3148
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.126687
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=203.110.167.99;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
+ <CAFEAcA_zBhe+HxOqtAzWSCbzApEhknr+NeheA1uLj641EXMM5w@mail.gmail.com>
+ <CAKUh+QfrT3SjxHA0Y5fERwnTnqKKbJg9SFb=5J5pfbci0asjLQ@mail.gmail.com>
+In-Reply-To: <CAKUh+QfrT3SjxHA0Y5fERwnTnqKKbJg9SFb=5J5pfbci0asjLQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Jun 2024 11:22:46 +0100
+Message-ID: <CAFEAcA82+-=piy0skykKk7pSKU58FmXqiv2hTWv8-sXDB_qEmw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Initial support for One-Time Programmable Memory
+ (OTP) in BCM2835
+To: Rayhan Faizel <rayhan.faizel@gmail.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,82 +90,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry for my oversight, I am adding the maintainers who were
-missed in the previous email.
+On Mon, 24 Jun 2024 at 10:12, Rayhan Faizel <rayhan.faizel@gmail.com> wrote:
+>
+> Hi,
+>
+> The patch series is still not merged.
 
-On 6/24/24 05:58, EwanHai wrote:
-> Commit 4a910e1 ("target/i386: do not set unsupported VMX secondary
-> execution controls") implemented a workaround for hosts that have
-> specific CPUID features but do not support the corresponding VMX
-> controls, e.g., hosts support RDSEED but do not support RDSEED-Exiting.
->
-> In detail, commit 4a910e1 introduced a flag `has_msr_vmx_procbased_clts2`.
-> If KVM has `MSR_IA32_VMX_PROCBASED_CTLS2` in its msr list, QEMU would
-> use KVM's settings, avoiding any modifications to this MSR.
->
-> However, this commit (4a910e1) didn't account for cases in older Linux
-> kernels(4.17~5.2) where `MSR_IA32_VMX_PROCBASED_CTLS2` is in
-> `kvm_feature_msrs`-obtained by ioctl(KVM_GET_MSR_FEATURE_INDEX_LIST),
-> but not in `kvm_msr_list`-obtained by ioctl(KVM_GET_MSR_INDEX_LIST).
-> As a result,it did not set the `has_msr_vmx_procbased_clts2` flag based
-> on `kvm_msr_list` alone, even though KVM does maintain the value of
-> this MSR.
->
-> This patch supplements the above logic, ensuring that
-> `has_msr_vmx_procbased_clts2` is correctly set by checking both MSR
-> lists, thus maintaining compatibility with older kernels.
->
-> Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
-> ---
-> Changes in v3:
-> - Use a more precise version range in the comment, specifically "4.17~5.2"
-> instead of "<5.3".
->
-> Changes in v2:
-> - Adjusted some punctuation in the commit message as per suggestions.
-> - Added comments to the newly added code to indicate that it is a compatibility fix.
->
-> v1 link:
-> https://lore.kernel.org/all/20230925071453.14908-1-ewanhai-oc@zhaoxin.com/
->
-> v2 link:
-> https://lore.kernel.org/all/20231127034326.257596-1-ewanhai-oc@zhaoxin.com/
-> ---
->   target/i386/kvm/kvm.c | 15 +++++++++++++++
->   1 file changed, 15 insertions(+)
->
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 7ad8072748..a7c6c5b2d0 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -2386,6 +2386,7 @@ void kvm_arch_do_init_vcpu(X86CPU *cpu)
->   static int kvm_get_supported_feature_msrs(KVMState *s)
->   {
->       int ret = 0;
-> +    int i;
->   
->       if (kvm_feature_msrs != NULL) {
->           return 0;
-> @@ -2420,6 +2421,20 @@ static int kvm_get_supported_feature_msrs(KVMState *s)
->           return ret;
->       }
->   
-> +   /*
-> +    * Compatibility fix:
-> +    * Older Linux kernels (4.17~5.2) report MSR_IA32_VMX_PROCBASED_CTLS2
-> +    * in KVM_GET_MSR_FEATURE_INDEX_LIST but not in KVM_GET_MSR_INDEX_LIST.
-> +    * This leads to an issue in older kernel versions where QEMU,
-> +    * through the KVM_GET_MSR_INDEX_LIST check, assumes the kernel
-> +    * doesn't maintain MSR_IA32_VMX_PROCBASED_CTLS2, resulting in
-> +    * incorrect settings by QEMU for this MSR.
-> +    */
-> +    for (i = 0; i < kvm_feature_msrs->nmsrs; i++) {
-> +        if (kvm_feature_msrs->indices[i] == MSR_IA32_VMX_PROCBASED_CTLS2) {
-> +            has_msr_vmx_procbased_ctls2 = true;
-> +        }
-> +    }
->       return 0;
->   }
->   
+Oops, sorry about that -- not sure how it got lost. I have
+applied it to target-arm.next for real this time...
 
+-- PMM
 
