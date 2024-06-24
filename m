@@ -4,62 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF5CC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 682A8C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLffU-0005wD-KJ; Mon, 24 Jun 2024 05:07:20 -0400
+	id 1sLfj2-0007uQ-8t; Mon, 24 Jun 2024 05:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <13824125580@163.com>)
- id 1sLffR-0005vs-VB
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:07:17 -0400
-Received: from m16.mail.163.com ([117.135.210.3])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <13824125580@163.com>) id 1sLffJ-0003Bx-6a
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:07:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
- Message-ID; bh=FaJbYp7rwDr/XEkK+m7zOUMZGneLFtk9ENGp4ZBAAQI=; b=i
- 52M5C0wqoKPWrJq6/ms4obxe09HwV8lXtzErvgsHViTCfy7pMcufW2hQpy5aI1ci
- qppKkg2Imq4oRhxanNcr55raB2b7UG+sBfzOkQGNsTQxujgsp1hKgk26qELGd83l
- 42TUmvDjPdZZzbzD4DFrLNE3z3/JMRbcHo9iMN6h6s=
-Received: from 13824125580$163.com ( [14.125.52.91] ) by
- ajax-webmail-wmsvr-40-111 (Coremail) ; Mon, 24 Jun 2024 17:06:51 +0800
- (CST)
-X-Originating-IP: [14.125.52.91]
-Date: Mon, 24 Jun 2024 17:06:51 +0800 (CST)
-From: tugouxp  <13824125580@163.com>
-To: =?GBK?Q?Alex_Benn=A8=A6e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re:Re: Did the "TCG" emulation mode has a full capability compare
- with the "KVM" emulation mode?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <877ceera4b.fsf@draig.linaro.org>
-References: <62981bf0.8f16.190495cbb92.Coremail.13824125580@163.com>
- <877ceera4b.fsf@draig.linaro.org>
-X-NTES-SC: AL_Qu2aC/6Zv0gq5ymbZ+kfm0sQjuY3UcOxvPsk245RO51wjDjpxRAqTERlLFnbyvKtLQmFjT6xTBtQ4+Jcf7RZco4NXN7bzGCE4+bXINvA3vq3qg==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_147772_940375834.1719220011937"
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfj0-0007uH-UU
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:10:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfix-0003rn-78
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:10:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719220254;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0MEH/mKV63v/JJwnQ03ODMnT7oVBF8nDVD2HElTki68=;
+ b=AvWuCeqXGnVBr9aaVe1l3Hx8oiri2cORBVDuZv6583AhOA1Eo6shkp9lFtyp0HAi2+3+dv
+ SceS8J8VH5gzGNTgkBYOPtgSeFHjMhNHBoGfoKN1UoiD5Z4jePX6SMAX3NEPZwbO1t+APv
+ zkrKPe6TGaTI9Z9zJ+oUM9eUbRI/m+Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-300-ZyPEeIplM-2XMuSsTDoVgg-1; Mon,
+ 24 Jun 2024 05:10:51 -0400
+X-MC-Unique: ZyPEeIplM-2XMuSsTDoVgg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B6E61956056; Mon, 24 Jun 2024 09:10:50 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.193.33])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2C38A3000603; Mon, 24 Jun 2024 09:10:46 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Richard Henderson <richard.henderson@linaro.org>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Anthony Krowiak <akrowiak@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PULL 01/11] hw/s390x/ccw: Make s390_ccw_get_dev_info() return a bool
+Date: Mon, 24 Jun 2024 11:10:33 +0200
+Message-ID: <20240624091043.177484-2-thuth@redhat.com>
+In-Reply-To: <20240624091043.177484-1-thuth@redhat.com>
+References: <20240624091043.177484-1-thuth@redhat.com>
 MIME-Version: 1.0
-Message-ID: <75d15b4b.9cee.190497f83a1.Coremail.13824125580@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: _____wD3P+EsN3lmNuwEAA--.7117W
-X-CM-SenderInfo: bprtmjyurskkiyq6il2tof0z/xtbBchAIQmWXvyvvuAABsY
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Received-SPF: pass client-ip=117.135.210.3; envelope-from=13824125580@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: 23
-X-Spam_score: 2.3
-X-Spam_bar: ++
-X-Spam_report: (2.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001, FROM_LOCAL_HEX=0.006,
- HTML_MESSAGE=0.001, MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_BL=0.01, RCVD_IN_MSPIKE_L4=1.7, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,79 +85,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------=_Part_147772_940375834.1719220011937
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+From: Cédric Le Goater <clg@redhat.com>
 
-VGhhbmsgeW91IQoKQlRXLCBUQ0cgYWxzbyBoYXMgdHdvIGJhY2tlbmRzIGltcGxlbWVudGlvbiwg
-MS4gTmF0aXZlIGhvc3QgYXJjaCB0cmFubGF0aW9uLiBhbmQgMi4gVENJIGJ5dGUgY29kZSBpbnRl
-cnByZXRlci4gVGhlIGRpZmZlcmVuY2UgaXMgdGhhdCB0aGUgZmlyc3Qgb25lIHdpbGwgdHJhbmxh
-dGlvbiB0aGUgdGFyZ2V0IGFyY2ggY29kZSB0byBob3N0IGFyY2ggaW5zdHJ0aW9ucyBhbmQgdGhl
-biBleGVjdXRlZCBpbiBob3N0IGNwdS4gYnV0IHRoZSBsYXR0ZXIgaXMgYSBoaWdoIGxldmVsIGlu
-dGVycGVyYXRpb24uIGNvbXBhcmUgdGhlc2UgdHdvIGJhY2tlbmRzLCBBcmUgdGhlcmUgYW55IGNh
-cGFiaWxpdHkgZGlmZmVyZW5jZSBvbiB0aGUgc3lzdGVtIGVtdWxhdGlvbiBhYm91dCB0aGUgdHdv
-IGJhY2tlbmRzPyB0aGFuayB5b3UuCgoKCgoKCgoKCgoKCgoKCgoKQXQgMjAyNC0wNi0yNCAxNjo1
-Nzo0MCwgIkFsZXggQmVubqimZSIgPGFsZXguYmVubmVlQGxpbmFyby5vcmc+IHdyb3RlOgo+dHVn
-b3V4cCA8MTM4MjQxMjU1ODBAMTYzLmNvbT4gd3JpdGVzOgo+Cj4+IEhlbGxvIGZvbGtzOgo+PiAg
-ICBJIGhhdmUgYSBwdXp6bGUgb24gcWVtdSBtYWpvciB0d28gZW11YXRpb24gaW1wbGVudGlvbnMg
-b24gd2hvbGUgc3lzdGVtIGVtdWxhdGlvbiwgdGhhdCBpcyAsZXhjZXB0IHRoZSBlbXVhdGlvbiBz
-cGVlZCwKPj4gZGlkIHRoZSBUQ0cgd29yayBtb2RlIGhhcyBhbnkgd2Vha25lc3MgdGhhbiAiS1ZN
-IiB3b3JrIG1vZGUgb24gd2hvbGUgc3lzdGVtIGVtdWxhdGlvbnMoaW5jbHVkaW5nIGtlcm5layBh
-bmQKPj4gdXNlci1zcGFjZSk/Cj4KPkl0IGRlcGVuZHMgb24gdGhlIGd1ZXN0IGFyY2hpdGVjdHVy
-ZS4gU29tZSBhcmUgbW9yZSBjb21wbGV0ZSB0aGFuCj5vdGhlcnMuIFRoZSB4ODYgZW11bGF0aW9u
-IGZvciBleGFtcGxlIGRvZXNuJ3QgY292ZXIgYWxsIHRoZSBtb2Rlcm4geDg2Cj5leHRlbnNpb25z
-IGFsdGhvdWdoIHRoZXJlIGhhdmUgYmVlbiBzb21lIGltcHJvdmVtZW50cyB0byBpdHMgdmVjdG9y
-Cj5oYW5kbGluZyByZWNlbnRseS4KPgo+T25lIHRoaW5nIFRDRyBjYW4gZG8gdGhhdCBLVk0gY2Fu
-J3QgaXMgZW11bGF0ZSBjb2RlIHJ1bm5pbmcgYXQgaGlnaGVyCj5wcmlvcml0eSB0aGFuIGtlcm5l
-bC1tb2RlLiBGb3IgZXhhbXBsZSBmb3IgQVJNIHdlIGNhbiBlbXVsYXRlIHRoZQo+RUwzL1Jvb3Qg
-ZG9tYWluIGFuZCBzZWN1cmUgYW5kIGNvbmZpZGVudGlhbCByZWFsbXMuIEluIEtWTSB5b3UgY2Fu
-IG9ubHkKPnJ1biBhIGd1ZXN0IEVMMSBrZXJuZWwgYW5kIGl0cyB1c2VyIHNwYWNlLgo+Cj4+IGlz
-IHRoZXJlIGFueSB3b3JrIHRoYXQga3ZtIGNhbiBkbyBidXQgVENHIGNhbnQ/IAo+Pgo+PiBvZiBj
-b3Vyc2Uga3ZtIGlzIG11Y2ggZmFzdGVyIHRoYW4gVENHLCBidXQgbXkgcXVlc3Rpb24ganVzdCBh
-Ym91dCB0aGUgZnVudGlvbiwgbm90IGNhcmUgYWJvdXQgc3BlZWQuCj4+Cj4+IHRoYW5rcyBmb3Ig
-eW91ciBraW5kbHkgaGVscCEKPj4gQlJzCj4+IHppbG9uZy4KPgo+LS0gCj5BbGV4IEJlbm6opmUK
-PlZpcnR1YWxpc2F0aW9uIFRlY2ggTGVhZCBAIExpbmFybwo=
-------=_Part_147772_940375834.1719220011937
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+Since s390_ccw_get_dev_info() takes an 'Error **' argument, best
+practices suggest to return a bool. See the qapi/error.h Rules
+section. While at it, modify the call in s390_ccw_realize().
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgaWQ9InNwbkVkaXRvckNvbnRlbnQiPjxwIHN0eWxlPSJt
-YXJnaW46IDA7Ij5UaGFuayB5b3UhPC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij5CVFcsIFRDRyBh
-bHNvIGhhcyB0d28gYmFja2VuZHMgaW1wbGVtZW50aW9uLCAxLiBOYXRpdmUgaG9zdCBhcmNoIHRy
-YW5sYXRpb24uIGFuZCAyLiBUQ0kgYnl0ZSBjb2RlIGludGVycHJldGVyLiBUaGUgZGlmZmVyZW5j
-ZSBpcyB0aGF0IHRoZSBmaXJzdCBvbmUgd2lsbCB0cmFubGF0aW9uIHRoZSB0YXJnZXQgYXJjaCBj
-b2RlIHRvIGhvc3QgYXJjaCBpbnN0cnRpb25zIGFuZCB0aGVuIGV4ZWN1dGVkIGluIGhvc3QgY3B1
-LiBidXQgdGhlIGxhdHRlciBpcyBhIGhpZ2ggbGV2ZWwgaW50ZXJwZXJhdGlvbi4gY29tcGFyZSB0
-aGVzZSB0d28gYmFja2VuZHM8Yj4sIEFyZSB0aGVyZSBhbnkgY2FwYWJpbGl0eSBkaWZmZXJlbmNl
-IG9uIHRoZSBzeXN0ZW0gZW11bGF0aW9uIGFib3V0IHRoZSB0d28gYmFja2VuZHM/IHRoYW5rIHlv
-dS48L2I+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46
-IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJn
-aW46IDA7Ij48YnI+PC9wPjwvZGl2PjxkaXYgc3R5bGU9InBvc2l0aW9uOnJlbGF0aXZlO3pvb206
-MSI+PC9kaXY+PGRpdiBpZD0iZGl2TmV0ZWFzZU1haWxDYXJkIj48L2Rpdj48cCBzdHlsZT0ibWFy
-Z2luOiAwOyI+PGJyPjwvcD48cHJlPjxicj5BdCAyMDI0LTA2LTI0IDE2OjU3OjQwLCAiQWxleCBC
-ZW5uqKZlIiAmbHQ7YWxleC5iZW5uZWVAbGluYXJvLm9yZyZndDsgd3JvdGU6CiZndDt0dWdvdXhw
-ICZsdDsxMzgyNDEyNTU4MEAxNjMuY29tJmd0OyB3cml0ZXM6CiZndDsKJmd0OyZndDsgSGVsbG8g
-Zm9sa3M6CiZndDsmZ3Q7ICAgIEkgaGF2ZSBhIHB1enpsZSBvbiBxZW11IG1ham9yIHR3byBlbXVh
-dGlvbiBpbXBsZW50aW9ucyBvbiB3aG9sZSBzeXN0ZW0gZW11bGF0aW9uLCB0aGF0IGlzICxleGNl
-cHQgdGhlIGVtdWF0aW9uIHNwZWVkLAomZ3Q7Jmd0OyBkaWQgdGhlIFRDRyB3b3JrIG1vZGUgaGFz
-IGFueSB3ZWFrbmVzcyB0aGFuICJLVk0iIHdvcmsgbW9kZSBvbiB3aG9sZSBzeXN0ZW0gZW11bGF0
-aW9ucyhpbmNsdWRpbmcga2VybmVrIGFuZAomZ3Q7Jmd0OyB1c2VyLXNwYWNlKT8KJmd0OwomZ3Q7
-SXQgZGVwZW5kcyBvbiB0aGUgZ3Vlc3QgYXJjaGl0ZWN0dXJlLiBTb21lIGFyZSBtb3JlIGNvbXBs
-ZXRlIHRoYW4KJmd0O290aGVycy4gVGhlIHg4NiBlbXVsYXRpb24gZm9yIGV4YW1wbGUgZG9lc24n
-dCBjb3ZlciBhbGwgdGhlIG1vZGVybiB4ODYKJmd0O2V4dGVuc2lvbnMgYWx0aG91Z2ggdGhlcmUg
-aGF2ZSBiZWVuIHNvbWUgaW1wcm92ZW1lbnRzIHRvIGl0cyB2ZWN0b3IKJmd0O2hhbmRsaW5nIHJl
-Y2VudGx5LgomZ3Q7CiZndDtPbmUgdGhpbmcgVENHIGNhbiBkbyB0aGF0IEtWTSBjYW4ndCBpcyBl
-bXVsYXRlIGNvZGUgcnVubmluZyBhdCBoaWdoZXIKJmd0O3ByaW9yaXR5IHRoYW4ga2VybmVsLW1v
-ZGUuIEZvciBleGFtcGxlIGZvciBBUk0gd2UgY2FuIGVtdWxhdGUgdGhlCiZndDtFTDMvUm9vdCBk
-b21haW4gYW5kIHNlY3VyZSBhbmQgY29uZmlkZW50aWFsIHJlYWxtcy4gSW4gS1ZNIHlvdSBjYW4g
-b25seQomZ3Q7cnVuIGEgZ3Vlc3QgRUwxIGtlcm5lbCBhbmQgaXRzIHVzZXIgc3BhY2UuCiZndDsK
-Jmd0OyZndDsgaXMgdGhlcmUgYW55IHdvcmsgdGhhdCBrdm0gY2FuIGRvIGJ1dCBUQ0cgY2FudD8g
-CiZndDsmZ3Q7CiZndDsmZ3Q7IG9mIGNvdXJzZSBrdm0gaXMgbXVjaCBmYXN0ZXIgdGhhbiBUQ0cs
-IGJ1dCBteSBxdWVzdGlvbiBqdXN0IGFib3V0IHRoZSBmdW50aW9uLCBub3QgY2FyZSBhYm91dCBz
-cGVlZC4KJmd0OyZndDsKJmd0OyZndDsgdGhhbmtzIGZvciB5b3VyIGtpbmRseSBoZWxwIQomZ3Q7
-Jmd0OyBCUnMKJmd0OyZndDsgemlsb25nLgomZ3Q7CiZndDstLSAKJmd0O0FsZXggQmVubqimZQom
-Z3Q7VmlydHVhbGlzYXRpb24gVGVjaCBMZWFkIEAgTGluYXJvCjwvcHJlPjwvZGl2Pg==
-------=_Part_147772_940375834.1719220011937--
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240522170107.289532-2-clg@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/s390x/s390-ccw.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/hw/s390x/s390-ccw.c b/hw/s390x/s390-ccw.c
+index 5261e66724..a06e91dfb3 100644
+--- a/hw/s390x/s390-ccw.c
++++ b/hw/s390x/s390-ccw.c
+@@ -71,7 +71,7 @@ IOInstEnding s390_ccw_store(SubchDev *sch)
+     return ret;
+ }
+ 
+-static void s390_ccw_get_dev_info(S390CCWDevice *cdev,
++static bool s390_ccw_get_dev_info(S390CCWDevice *cdev,
+                                   char *sysfsdev,
+                                   Error **errp)
+ {
+@@ -84,12 +84,12 @@ static void s390_ccw_get_dev_info(S390CCWDevice *cdev,
+         error_setg(errp, "No host device provided");
+         error_append_hint(errp,
+                           "Use -device vfio-ccw,sysfsdev=PATH_TO_DEVICE\n");
+-        return;
++        return false;
+     }
+ 
+     if (!realpath(sysfsdev, dev_path)) {
+         error_setg_errno(errp, errno, "Host device '%s' not found", sysfsdev);
+-        return;
++        return false;
+     }
+ 
+     cdev->mdevid = g_path_get_basename(dev_path);
+@@ -98,13 +98,14 @@ static void s390_ccw_get_dev_info(S390CCWDevice *cdev,
+     tmp = g_path_get_basename(tmp_dir);
+     if (sscanf(tmp, "%2x.%1x.%4x", &cssid, &ssid, &devid) != 3) {
+         error_setg_errno(errp, errno, "Failed to read %s", tmp);
+-        return;
++        return false;
+     }
+ 
+     cdev->hostid.cssid = cssid;
+     cdev->hostid.ssid = ssid;
+     cdev->hostid.devid = devid;
+     cdev->hostid.valid = true;
++    return true;
+ }
+ 
+ static void s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
+@@ -116,8 +117,7 @@ static void s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
+     int ret;
+     Error *err = NULL;
+ 
+-    s390_ccw_get_dev_info(cdev, sysfsdev, &err);
+-    if (err) {
++    if (!s390_ccw_get_dev_info(cdev, sysfsdev, &err)) {
+         goto out_err_propagate;
+     }
+ 
+-- 
+2.45.2
 
 
