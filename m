@@ -4,57 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488D2C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C20EC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLfjX-0007zG-Sr; Mon, 24 Jun 2024 05:11:31 -0400
+	id 1sLfj8-0007w4-Ef; Mon, 24 Jun 2024 05:11:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfjV-0007yV-KP
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfj5-0007v3-A1
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfjJ-0003tV-DN
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfj3-0003s5-Kd
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719220276;
+ s=mimecast20190719; t=1719220259;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+9IY13yh8RRCqanS8sKsz76bmifajzLlE5oieW9FlZw=;
- b=JU2MLtA9Jbmkg6QbcPO7P5L2rvoRe63+r7ojw38Tqr0snCFlZJReBgMjKWJTLabdGtD3ND
- utkLjXQAv4m0SKbi9jWqxIjIMsoeerMfbw5P1DlABnN7P7Y59XmjlHHbPLkZhpqYZGgnf8
- HyZZ9JklNyT8lEZrJ8heFG3+TdfvLac=
+ bh=+4megXEFudFNidDu6usxu59kkO19OEawrxjQOAqZvUk=;
+ b=YKXP9eV9cZalEUMOOZXWPf4QvloANLhEEbQXkW3GTKh01hRUgOqwGWryHMPtEjtkBuR1nm
+ yiW0hr+Uzsb576y92LuEV54hmCB+Jf6LRsq3oamln6YCTkLvd7dhk8xh/lCHqkXLoeiOmU
+ 7IPzvWt+rZH8PPoHvStjlQcvOrHyJ0A=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-5Ojq6atiN0S2wfz5gobYkg-1; Mon,
- 24 Jun 2024 05:11:15 -0400
-X-MC-Unique: 5Ojq6atiN0S2wfz5gobYkg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-1rP4PcvANlm60yjG_2QYJg-1; Mon,
+ 24 Jun 2024 05:10:55 -0400
+X-MC-Unique: 1rP4PcvANlm60yjG_2QYJg-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F11C91955E72; Mon, 24 Jun 2024 09:11:13 +0000 (UTC)
+ id 0592E19560A2; Mon, 24 Jun 2024 09:10:54 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.33])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CDE69300070F; Mon, 24 Jun 2024 09:11:11 +0000 (UTC)
+ id D47A83000219; Mon, 24 Jun 2024 09:10:50 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: Dmitry Frolov <frolov@swemel.ru>,
-	Alexander Bulekov <alxndr@bu.edu>
-Subject: [PULL 08/11] tests/qtest/fuzz: fix memleak in qos_fuzz.c
-Date: Mon, 24 Jun 2024 11:10:40 +0200
-Message-ID: <20240624091043.177484-9-thuth@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Anthony Krowiak <akrowiak@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+Subject: [PULL 02/11] s390x/css: Make CCWDeviceClass::realize return bool
+Date: Mon, 24 Jun 2024 11:10:34 +0200
+Message-ID: <20240624091043.177484-3-thuth@redhat.com>
 In-Reply-To: <20240624091043.177484-1-thuth@redhat.com>
 References: <20240624091043.177484-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -82,29 +85,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Frolov <frolov@swemel.ru>
+From: Cédric Le Goater <clg@redhat.com>
 
-Found with fuzzing for qemu-8.2, but also relevant for master
+Since the realize() handler of CCWDeviceClass takes an 'Error **'
+argument, best practices suggest to return a bool. See the api/error.h
+Rules section. While at it, modify the call in s390_ccw_realize().
 
-Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alexander Bulekov <alxndr@bu.edu>
-Message-ID: <20240521103106.119021-3-frolov@swemel.ru>
+Message-ID: <20240522170107.289532-3-clg@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qtest/fuzz/qos_fuzz.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/s390x/ccw-device.h | 2 +-
+ hw/s390x/ccw-device.c | 3 ++-
+ hw/s390x/s390-ccw.c   | 3 +--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qtest/fuzz/qos_fuzz.c b/tests/qtest/fuzz/qos_fuzz.c
-index b71e945c5f..d3839bf999 100644
---- a/tests/qtest/fuzz/qos_fuzz.c
-+++ b/tests/qtest/fuzz/qos_fuzz.c
-@@ -180,6 +180,7 @@ static void walk_path(QOSGraphNode *orig_path, int len)
+diff --git a/hw/s390x/ccw-device.h b/hw/s390x/ccw-device.h
+index 6dff95225d..5feeb0ee7a 100644
+--- a/hw/s390x/ccw-device.h
++++ b/hw/s390x/ccw-device.h
+@@ -36,7 +36,7 @@ extern const VMStateDescription vmstate_ccw_dev;
+ struct CCWDeviceClass {
+     DeviceClass parent_class;
+     void (*unplug)(HotplugHandler *, DeviceState *, Error **);
+-    void (*realize)(CcwDevice *, Error **);
++    bool (*realize)(CcwDevice *, Error **);
+     void (*refill_ids)(CcwDevice *);
+ };
  
-         fuzz_path_vec = path_vec;
-     } else {
-+        g_string_free(cmd_line, true);
-         g_free(path_vec);
+diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
+index fb8c1acc64..a7d682e5af 100644
+--- a/hw/s390x/ccw-device.c
++++ b/hw/s390x/ccw-device.c
+@@ -31,9 +31,10 @@ static void ccw_device_refill_ids(CcwDevice *dev)
+     dev->subch_id.valid = true;
+ }
+ 
+-static void ccw_device_realize(CcwDevice *dev, Error **errp)
++static bool ccw_device_realize(CcwDevice *dev, Error **errp)
+ {
+     ccw_device_refill_ids(dev);
++    return true;
+ }
+ 
+ static Property ccw_device_properties[] = {
+diff --git a/hw/s390x/s390-ccw.c b/hw/s390x/s390-ccw.c
+index a06e91dfb3..4b8ede701d 100644
+--- a/hw/s390x/s390-ccw.c
++++ b/hw/s390x/s390-ccw.c
+@@ -137,8 +137,7 @@ static void s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
+         goto out_err;
+     }
+ 
+-    ck->realize(ccw_dev, &err);
+-    if (err) {
++    if (!ck->realize(ccw_dev, &err)) {
+         goto out_err;
      }
  
 -- 
