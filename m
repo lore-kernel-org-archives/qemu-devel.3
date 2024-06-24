@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF20C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5553BC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcQ2-0001O4-IE; Mon, 24 Jun 2024 01:39:10 -0400
+	id 1sLcQN-0001k7-Lo; Mon, 24 Jun 2024 01:39:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcQ1-0001Ni-PL
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:39:09 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1sLcQG-0001Wz-Ga
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:39:27 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcPz-0005fq-W0
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:39:09 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-71871d5e087so1385000a12.1
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:39:07 -0700 (PDT)
+ id 1sLcQF-0005gM-0D
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:39:24 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f9c2847618so32543885ad.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:39:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207546; x=1719812346;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207560; x=1719812360;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=d+W5aI5USBezVikdE6B8ndj9tRZTHyBLwqHq/qhXe70=;
- b=1qectmUUYGn9ygbPY72D1FtmSsL+4+Qgk494pM3r/FZmZbgmRUZtiMuuw6MIgb0/FM
- 7M7eRJi9HhCLyy1sFdapxi65++7fMMv6AT/S4bbo2AY2BVNVAf1A256frbjk+cC/N+vd
- mSg6aKmzR5BLxNsInatTnZxoD5YX6l4FSCLYMT5cJKlo1Cv+c903S09rnVmHa9rA+OmB
- m91/QYmiNKJ392XMCSMCNy4qRAb888FdqhnOb0LOKBZ238NhpimMFsTSbtMSzc7KSr3N
- RjmgGo3HRvsI3CkaKXG211mJcfQy2LErLwKAN2vFftG4k1XVfcB1gPjHLqOFXAc/qG/X
- ckHA==
+ bh=5XzLvTb8oNO4+M49OiqpWHVfNUt+ze8juE42LsRC82Y=;
+ b=xEHJxMOzvU+0wi3IjPkaRZ9oOQXxbSEP7mhdkwnd4HNFWhlC59jlnyht7NvuvdfidZ
+ IDOLSiaQdwZtf1sFVcTljl5saEf1nAJ6+YdRpJDQSfGakUbmu6YyrJqPmCrG+KE+mDQD
+ QSUnNFS0FhJYchxM3nQCb0hAo/SYI33N6QmIxlwEO+kHQtVZywJ1D9QQWllTlkhX4biP
+ 91TKcxMYVTIgyOrTgoN6tYRnldC1hib6OnWoRL/XxXkRyBbpPfflDRW8UirMz8EdceNQ
+ pQnXwk7R/eNWsTPIPAI+3+J+v21K3ViD/gNMHhvsHP4hVOHqI5SBIfe93scTqnoM34y8
+ OIYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207546; x=1719812346;
+ d=1e100.net; s=20230601; t=1719207560; x=1719812360;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=d+W5aI5USBezVikdE6B8ndj9tRZTHyBLwqHq/qhXe70=;
- b=Gk4SYQLPH3+3PcdLKyKle7k3RLlMb77pT3ulWn2TSIfAAsKNg7yuFWRq3bEJ+1092G
- Igcdx6SDHcBmrZ7UdhSmOfkoke2t3BcxRLHe8PU5I9yHbJ4HnNzTLywyWSvewsvHuIUt
- /Akd4HQ28g9oa0+eU1TFaRPVeRD8mGSiAf/sWwp5Xvrb9zYSCiSEgOAkNgnWDkS9kJm9
- nxD3xlP8DD8d7H28lhJtilD7LLGQkaEcDao0EqoYAu2NzRS9pgL7ks42tHE5gimjwSFU
- PFG8yPutV/0tOzBuZCRul66gCo6W4A77sl/s8Hg1PqGOF4WTWNdAkJWL82eSlqfZbfOS
- LIGw==
-X-Gm-Message-State: AOJu0YxChxE2EDJUB9itX3/i/SF6rQdboN4D/D5st7dBqI2oSuHuQ28q
- 44QcG+NYWU8FYha8FpmHqBptJCGhw1CCbn2I6JXDMf5S7avXCLPBPY9CiYI2mtU=
-X-Google-Smtp-Source: AGHT+IE7tVnBJTLzKksmmgW8mYQDhNqkJeKAsI5wu0ZkOvRWXkwLf4VwMO0fXcqziH3U1RPOvNyFtQ==
-X-Received: by 2002:a05:6a20:974e:b0:1bd:fe8:fc9a with SMTP id
- adf61e73a8af0-1bd0fe8fdc7mr239133637.17.1719207546563; 
- Sun, 23 Jun 2024 22:39:06 -0700 (PDT)
+ bh=5XzLvTb8oNO4+M49OiqpWHVfNUt+ze8juE42LsRC82Y=;
+ b=WFcj8se8z8SntBXPlwoF5OxRNK2KEj1vH7ydSpZDBLccjexbbN3K94sGM0LonNtHoh
+ Z8DJYJacYZZfz0awqlQaf7s6hETjG2vspJVy5qjBjo/5VOBLO5NSqHglhDVA1daB+/e4
+ f4LXQCjQ8KGaNtkNDbvc3S9kj+FrnLDUIupH+OQoD9YfX8TXN9O4vE5k4x3LuAr0pjEE
+ bXUxGlA7EHv/vst6dUK5OC2eP13W6zorO49DAVQSwK3iNa6IiaJuVO+8d+B58lntsqJf
+ sWC5+ZN0ztzgH68zLZA/qDdogQ259e+U1vethPwGbHY4NNQH6Ma+5NMb6Ah/0sMtSYMP
+ 0wcA==
+X-Gm-Message-State: AOJu0YxCOLn9nqIHkAWD0IhV+KqQ0TpOJ2oFFqK+6LPQeQ3RncaUVd5H
+ OBRM1PQMsWv2RnmVtqedfq/+7y+Krxsd6Y/z5o7QZE7LZShs//3PoTTQtxk210k=
+X-Google-Smtp-Source: AGHT+IHWR20RTG3hYV+Ac4JTMWZ2d+rr9i541IwRS3MiNKrStyB5Pu+7WC0Y9N5ujRjBCUdQvDHJ9w==
+X-Received: by 2002:a17:903:187:b0:1f3:b55:e247 with SMTP id
+ d9443c01a7336-1fa15937b3bmr41582855ad.55.1719207560327; 
+ Sun, 23 Jun 2024 22:39:20 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb3d49f4sm53902575ad.197.2024.06.23.22.39.01
+ d9443c01a7336-1f9ebbc2a7fsm53370625ad.283.2024.06.23.22.39.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 22:39:06 -0700 (PDT)
-Message-ID: <a6cbaab9-c672-49d1-b870-14be9af7e87a@daynix.com>
-Date: Mon, 24 Jun 2024 14:39:00 +0900
+ Sun, 23 Jun 2024 22:39:20 -0700 (PDT)
+Message-ID: <74ad61a5-888c-4a8c-bb3a-6335ee0626ad@daynix.com>
+Date: Mon, 24 Jun 2024 14:39:14 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 12/13] virtio-gpu: Register capsets dynamically
+Subject: Re: [PATCH v16 13/13] virtio-gpu: Support Venus context
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -86,14 +86,14 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
- <20240623152343.328436-13-dmitry.osipenko@collabora.com>
+ <20240623152343.328436-14-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240623152343.328436-13-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240623152343.328436-14-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::533;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x533.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,14 +116,13 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/06/24 0:23, Dmitry Osipenko wrote:
-> From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> From: Antonio Caggiano <antonio.caggiano@collabora.com>
 > 
-> virtio_gpu_virgl_get_num_capsets will return "num_capsets", but we can't
-> assume that capset_index 1 is always VIRGL2 once we'll support more capsets,
-> like Venus and DRM capsets. Register capsets dynamically to avoid that problem.
+> Request Venus when initializing VirGL and if venus=true flag is set for
+> virtio-gpu-gl device.
 > 
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+> Signed-off-by: Antonio Caggiano <antonio.caggiano@collabora.com>
+> Signed-off-by: Huang Rui <ray.huang@amd.com>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
