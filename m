@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 036FDC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5DACC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcIe-00034j-1Q; Mon, 24 Jun 2024 01:31:32 -0400
+	id 1sLcIf-00035Q-CL; Mon, 24 Jun 2024 01:31:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcIU-00032z-PY
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:26 -0400
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ id 1sLcIc-00034T-05
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:30 -0400
+Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcIT-0004ag-5K
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:22 -0400
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-250c0555a63so1944972fac.1
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:31:20 -0700 (PDT)
+ id 1sLcIZ-0004bD-TU
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:29 -0400
+Received: by mail-oo1-xc2f.google.com with SMTP id
+ 006d021491bc7-5bfa5f9bbe6so1948217eaf.3
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:31:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719207079; x=1719811879; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719207086; x=1719811886; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4TUFa5RFEE0mlvWgiU9FcmbW/faCfrest43wgdD9lPk=;
- b=u8oJpM1aJ5M714o8Zx3DhgZAHWYB54FkQvdKfjW7riUnNIRgnTLTuD5qQBmt3K/0we
- NmxIOIqhR741RHVXyBgSUOkRRE4lzvcRLBM/cRERnwSSwUEg+49K9ArhxVd2JVMM+M78
- UW+qKRTuzyfNdWsfsOd84ERKvRMQqEoqdj+HTee3HIcmV3uAMI3Pv0CbsZrfMttXfkff
- vYw97zbTRm+twpZNidLIeuF73fTw/FMuKFGwEJ+RQFZxV7O7YHOzZl3mIX+nYXCG75AP
- X6EwHz7guaIkH/jMlJjCwMhT4AsZ61FmkNwNLs2C6ZHvOOLSecKNg/qSQdvhCIvAXZr2
- pf/Q==
+ bh=yW6AGmqZg/Umn21wD61FD4HlSpwe58RxaApVtS3jS0Y=;
+ b=BzDPyHsygGp4JzmQB9B87UMD3x+7/OEisMPQhm4MeBfqdEJA+18Co+JqPexSwZm0ge
+ WttEB63JVCmV+wFPEy+ztM/jzzNCQ+gsU2XX0P7c8bMEUrnN4PJ9hS43bNak9ihXlCit
+ TU1BK2fkQiKKWDwMgQDXLJS/Fo0YWHTi7xM5fs+dmiYtD5OnD+ju9N9arDEdXvid8XVG
+ J6bPaJOKtQ0Oa52kdF3gG9DAvUU/NXiHXZ3X7YuE48e435LfDaalDRhtubo2KPCtm4Et
+ n7UOBtM3CS8lwygOLaFwMyH0/duAybnHikYUCXZJ4Th/W0E6LxBsxpK7m4Z+DjzgAa0r
+ W0Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207079; x=1719811879;
+ d=1e100.net; s=20230601; t=1719207086; x=1719811886;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4TUFa5RFEE0mlvWgiU9FcmbW/faCfrest43wgdD9lPk=;
- b=X8BfXV8ibi0uRMz8c8+aU8b82smmkeKOW2jg9sUMhZ/yB76xn0qSWhYXqjO40VZm2R
- YGiG9iAwWHNIJ3B/Lgypae1oEyerzQNlNiQ9Cpge5HbYMXgsGirF/38f5y1INZkIrEMi
- H6Uw5UaNIALcQEfLt/hSIz70qjQT+uxMB2WJeedlKX9NX4y0XkluCKyWO9zb7tJR29bX
- +gYi+sR9JjI0pomVHPa8z9Kpn1Tcf5VuXNoe+OLpSFaRcwGoa9qhAjFVH2fGaLOHF9SO
- E/hFjKZqcWGVi34c7HeeOfJSUmf5BJblISWnYOzTW67+Yht+bbtKJ7EQLdUfOKcgINVF
- LRUg==
-X-Gm-Message-State: AOJu0YxiGuTHgyM1+BFpABUTMxGjMUetejEAUf25kFgW89R3PRsHEjom
- mQ6KY7MoQuVkw1G+H7jOaPlfIOFfjeogi70nTAtDaHczdrZjt0fq85aCijGEtFTvkRzv94axwWY
- BaJg=
-X-Google-Smtp-Source: AGHT+IEqWqlPNUWqcwtW8V7oEeHp/gWBaHH3dU8nyAFsz5KQ0Luv5xFJnpgom3AXU7FQbso87RYTZg==
-X-Received: by 2002:a05:6870:96a1:b0:254:bf41:de9d with SMTP id
- 586e51a60fabf-25d06e8c2a2mr3906789fac.48.1719207079403; 
- Sun, 23 Jun 2024 22:31:19 -0700 (PDT)
+ bh=yW6AGmqZg/Umn21wD61FD4HlSpwe58RxaApVtS3jS0Y=;
+ b=DwWoKMs1ohv8239o47cz66W0ytjTLnWLmjRSnjV5Z+kDbRTNW0vnWqo5p8s+lnlZU0
+ BGUQHwKO7lcwpHemCCy/Kq1Gc89tLJtIjt36E5KY5qEFnReFWUc0w/+eRCp8CibXNSjd
+ WUlMQrI5nUEtx5I/mUkGd1hW/OfDfKdgtEYob+YUW/TzxQ2b4O2FLx7SUnZjezKCWjXn
+ XRoI5rhQGKKAjIoELLx+oCECM/wtFRcXx3i+wKzTDxRybd8PmZj7w1Lw0CZKQRf3Eemn
+ 6/K+iiFyTTE1glRZ2JUpjrXXhueCR3zLqQgZF2J5vfz3K6X9qO582vNKo6fzibW/W8YH
+ kBtg==
+X-Gm-Message-State: AOJu0YytE+teJ1ctgAMpuLSAi8/Zot+ykZl5fo2ZL0DaWnN+D7NPR5XE
+ bb2y7nnyoIhlXxS+98qtwbuf7DlFuSSfRDqJtZ6n4/luZ6jdEpkwSTtMelhU2zaE6+KxgS5/ljT
+ LpBI=
+X-Google-Smtp-Source: AGHT+IGaKFzw8ochNjV4BIJrIVZRS8hdT3fA0tQ1OmwU93h44sejt3+S0AyAGqTpqzQS2eEUvrg02w==
+X-Received: by 2002:a05:6358:5e15:b0:19f:4ca6:86bf with SMTP id
+ e5c5f4694b2df-1a23c1ccdfdmr483884055d.32.1719207085733; 
+ Sun, 23 Jun 2024 22:31:25 -0700 (PDT)
 Received: from amd.. ([2804:7f0:b401:1758:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-716b4a73183sm3953601a12.39.2024.06.23.22.31.16
+ 41be03b00d2f7-716b4a73183sm3953601a12.39.2024.06.23.22.31.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Jun 2024 22:31:18 -0700 (PDT)
+ Sun, 23 Jun 2024 22:31:24 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, alex.bennee@linaro.org, richard.henderson@linaro.org
 Cc: philmd@linaro.org,
 	peter.maydell@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v4 4/9] target/arm: Fix exception case in
- allocation_tag_mem_probe
-Date: Mon, 24 Jun 2024 05:30:41 +0000
-Message-Id: <20240624053046.221802-5-gustavo.romero@linaro.org>
+Subject: [PATCH v4 6/9] target/arm: Factor out code for setting MTE TCF0 field
+Date: Mon, 24 Jun 2024 05:30:43 +0000
+Message-Id: <20240624053046.221802-7-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240624053046.221802-1-gustavo.romero@linaro.org>
 References: <20240624053046.221802-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=gustavo.romero@linaro.org; helo=mail-oa1-x29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-oo1-xc2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,31 +96,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If page in 'ptr_access' is inaccessible and probe is 'true'
-allocation_tag_mem_probe should not throw an exception, but currently it
-does, so fix it.
+Factor out the code used for setting the MTE TCF0 field from the prctl
+code into a convenient function. Other subsystems, like gdbstub, need to
+set this field as well, so keep it as a separate function to avoid
+duplication and ensure consistency in how this field is set across the
+board.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/mte_helper.c | 3 +++
- 1 file changed, 3 insertions(+)
+ linux-user/aarch64/mte_user_helper.h | 38 ++++++++++++++++++++++++++++
+ linux-user/aarch64/target_prctl.h    | 22 ++--------------
+ 2 files changed, 40 insertions(+), 20 deletions(-)
+ create mode 100644 linux-user/aarch64/mte_user_helper.h
 
-diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index 037ac6dd60..a50d576294 100644
---- a/target/arm/tcg/mte_helper.c
-+++ b/target/arm/tcg/mte_helper.c
-@@ -96,6 +96,9 @@ static uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-     assert(!(probe && ra));
+diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
+new file mode 100644
+index 0000000000..fd92e71c00
+--- /dev/null
++++ b/linux-user/aarch64/mte_user_helper.h
+@@ -0,0 +1,38 @@
++/*
++ * ARM MemTag convenience functions.
++ *
++ * This code is licensed under the GNU GPL v2 or later.
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
++
++#ifndef MTE_H
++#define MTE_H
++
++#include "sys/prctl.h"
++
++static inline void arm_set_mte_tcf0(CPUArchState *env, abi_long value)
++{
++    /*
++     * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
++     *
++     * The kernel has a per-cpu configuration for the sysadmin,
++     * /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred,
++     * which qemu does not implement.
++     *
++     * Because there is no performance difference between the modes, and
++     * because SYNC is most useful for debugging MTE errors, choose SYNC
++     * as the preferred mode.  With this preference, and the way the API
++     * uses only two bits, there is no way for the program to select
++     * ASYMM mode.
++     */
++    unsigned tcf = 0;
++    if (value & PR_MTE_TCF_SYNC) {
++        tcf = 1;
++    } else if (value & PR_MTE_TCF_ASYNC) {
++        tcf = 2;
++    }
++    env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
++}
++
++#endif /* MTE_H */
+diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
+index aa8e203c15..ed75b9e4b5 100644
+--- a/linux-user/aarch64/target_prctl.h
++++ b/linux-user/aarch64/target_prctl.h
+@@ -7,6 +7,7 @@
+ #define AARCH64_TARGET_PRCTL_H
  
-     if (!(flags & (ptr_access == MMU_DATA_STORE ? PAGE_WRITE_ORG : PAGE_READ))) {
-+        if (probe) {
-+            return NULL;
-+        }
-         cpu_loop_exit_sigsegv(env_cpu(env), ptr, ptr_access,
-                               !(flags & PAGE_VALID), ra);
-     }
+ #include "target/arm/cpu-features.h"
++#include "mte_user_helper.h"
+ 
+ static abi_long do_prctl_sve_get_vl(CPUArchState *env)
+ {
+@@ -173,26 +174,7 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
+     env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
+ 
+     if (cpu_isar_feature(aa64_mte, cpu)) {
+-        /*
+-         * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
+-         *
+-         * The kernel has a per-cpu configuration for the sysadmin,
+-         * /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred,
+-         * which qemu does not implement.
+-         *
+-         * Because there is no performance difference between the modes, and
+-         * because SYNC is most useful for debugging MTE errors, choose SYNC
+-         * as the preferred mode.  With this preference, and the way the API
+-         * uses only two bits, there is no way for the program to select
+-         * ASYMM mode.
+-         */
+-        unsigned tcf = 0;
+-        if (arg2 & PR_MTE_TCF_SYNC) {
+-            tcf = 1;
+-        } else if (arg2 & PR_MTE_TCF_ASYNC) {
+-            tcf = 2;
+-        }
+-        env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
++        arm_set_mte_tcf0(env, arg2);
+ 
+         /*
+          * Write PR_MTE_TAG to GCR_EL1[Exclude].
 -- 
 2.34.1
 
