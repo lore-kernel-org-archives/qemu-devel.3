@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F4C6C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:42:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D269FC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcSl-0003GW-V2; Mon, 24 Jun 2024 01:42:00 -0400
+	id 1sLcVM-0003zC-TC; Mon, 24 Jun 2024 01:44:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sLcSV-0003Fh-DT
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:41:43 -0400
+ id 1sLcVL-0003yy-PZ
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:44:39 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sLcSS-00069U-Tw
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:41:42 -0400
+ id 1sLcV6-0006Jt-Hp
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:44:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=g8ytKYvbEI1Y5cIvtHafGsoL97900+lDUC8TdBr/+NM=; b=DpE6/GIXpUeimAuVTlE9K9BAwR
- +esOjsegLKRsjMlKNgF0p77d6G/ikWxAM/4rA7btV88xxjeF53vd7/DHv/Fn2VCJUi6P41Kcl2jj6
- F5LfJYKFN0EDYPPOBEmz3iqGOKfw7aFEld5qO+I83ZkFxtkW3m4/TsvtUuPT6EOIvL4XAV+FlLBjm
- 1DCRx/K5H/wguFzcZUQkFkl+27B55YLaBT+UbRDzNtajnix9ER9M+T7o0qE4+QBnBomZu0bl2+uyM
- x08ImRoCD3g/J1iQ29++L4lO53GS8C8s+wAj4lC7jc1NSm7tNCj2uB6Gu4Kb1PjaA4AMTdkSw2PD4
- sx6Ta0KS4mIuzSz6uwv5RrBAh2SMBRQNXgR5a9XgOzjxNdsYp2uC/51CQarvGsJsmW+axAWqy03RY
- SqRno0APxZU44EV6iC+GKgdCD06bC35DF3YHiJ/3au9OYmg9dRNjEsEm6Nft4i90ZfhKZUvieBcUP
- CIhfUe8mRXcqIjiljeZIQpzddjD/VMjvCiawUm6/0PjoyTBsR0OkA+Svei62TCPTC52iCB8WaY0in
- VQ2bvNpW+YSNSz/Vlml1fXSZdXygzL4EFPeHA1Vk72HXqoahVwgWza1IJyM4KYejcaDGyTkjl0lvo
- jaqsz+Hoeft53PgKFnkQiQJQigdaVQPedYmIRL1+Q=;
+ bh=ZFWEIRYHwcTV3MoceeNiwcxaBL9+RmOnSIvFT7vA3e0=; b=MS69EhpkQZOQBlfUcRYnWpfqQd
+ hsjbexY4mjYT7GBAx7tqn2GnJxkcE+LPkPFanLAE5CuItw1WvAdI72Squ0f7xo7TktgsglKqKty1X
+ dRSG/pcVxU4c0cTZnR3XKhTvYyO6yrWBCUaX6ORfvAeGCDUWMv0CJlYpTfGJ8x1QXn0UmRU2LcBD4
+ HetW1NcoYth3vgrEVZ363QfS6NUOIvay5W3DTJUXLfnDnIxOFV3s+QY7riMD81dgg+wX8kdoBIxNW
+ ban1XqL16POV2AUazovjFAM4CilG7o7/yUz5DO9lO3PiOVJGdWxsPZJ2pqJ9tiK18fogASQe2uQNc
+ f/Ao0cTGDc9JFinkg9ja5D8fwMMzr1Awz+0Ud79Va33HZmCR/Mrcsawmedm05lkkKF1Z1OAre+FYr
+ X178iv+IPdmmFarG5/dv39PdG4j6A9KoB/vjaObMpL+mvnMAx1SbhXeQtoD7jBTGLzAO0x9eNpAJe
+ 3pHN0FCqeLvHfpvjl/uhOqBH7IVc/zDv38xkIfrLS84hZUiRqgMVbUPuCQ2fu+OuTWv6uP3GxJlBa
+ 4XfCUV5XlpMOWCHzTfCr9o1y2jYPGWj3J5YaHN3EN3xD1SIZwve+2+gJMJfmMSXB4h3/mUvVnyl9E
+ Jy+wde2JownhI2pQZFlOmc4PsAKQSkemLBTaMD49E=;
 Received: from [2a00:23c4:8bb4:4000:aa92:227d:8a5b:45f1]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sLcR1-0005cp-TK; Mon, 24 Jun 2024 06:40:16 +0100
-Message-ID: <c062da2c-4303-45d9-861d-1732c8efb36c@ilande.co.uk>
-Date: Mon, 24 Jun 2024 06:41:29 +0100
+ id 1sLcTh-0005dj-7B; Mon, 24 Jun 2024 06:43:01 +0100
+Message-ID: <da3ef608-8eff-485a-b831-9192c412858f@ilande.co.uk>
+Date: Mon, 24 Jun 2024 06:44:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-devel@nongnu.org, laurent@vivier.eu
 References: <20240623115704.315645-1-mark.cave-ayland@ilande.co.uk>
- <20240623115704.315645-2-mark.cave-ayland@ilande.co.uk>
- <fa494396-c0a8-3799-92c4-b9832dc3445b@eik.bme.hu>
+ <20240623115704.315645-3-mark.cave-ayland@ilande.co.uk>
+ <9d74ba20-a17d-64fd-7203-e4d450f77472@eik.bme.hu>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,13 +74,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <fa494396-c0a8-3799-92c4-b9832dc3445b@eik.bme.hu>
+In-Reply-To: <9d74ba20-a17d-64fd-7203-e4d450f77472@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:aa92:227d:8a5b:45f1
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 1/2] target/m68k: implement do_unaligned_access callback
- for m68k CPUs
+Subject: Re: [PATCH 2/2] target/m68k: pass alignment into TCG memory
+ load/store routines
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -90,7 +90,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,39 +106,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23/06/2024 16:11, BALATON Zoltan wrote:
+On 23/06/2024 16:23, BALATON Zoltan wrote:
 
 > On Sun, 23 Jun 2024, Mark Cave-Ayland wrote:
->> For m68k CPUs that do not support unaligned accesses, any such access should
->> cause the CPU to raise an Address Error exception.
+>> Now that do_unaligned_access has been implemented for 68k CPUs, pass the required
+>> alignment into the TCG memory load/store routines. This allows the TCG memory core
+>> to generate an Address Error exception for unaligned memory accesses if required.
 >>
+>> Suggested-by: Laurent Vivier <laurent@vivier.eu>
 >> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2165
 >> ---
->> target/m68k/cpu.c       |  1 +
->> target/m68k/cpu.h       |  4 ++++
->> target/m68k/op_helper.c | 11 +++++++++++
->> 3 files changed, 16 insertions(+)
+>> target/m68k/translate.c | 18 +++++++++++++++---
+>> 1 file changed, 15 insertions(+), 3 deletions(-)
 >>
->> diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
->> index efd6bbded8..25e95f9f68 100644
->> --- a/target/m68k/cpu.c
->> +++ b/target/m68k/cpu.c
->> @@ -538,6 +538,7 @@ static const TCGCPUOps m68k_tcg_ops = {
->>     .cpu_exec_interrupt = m68k_cpu_exec_interrupt,
->>     .do_interrupt = m68k_cpu_do_interrupt,
->>     .do_transaction_failed = m68k_cpu_transaction_failed,
->> +    .do_unaligned_access = m68k_cpu_do_unaligned_access,
->> #endif /* !CONFIG_USER_ONLY */
+>> diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+>> index 445966fb6a..661a7b4def 100644
+>> --- a/target/m68k/translate.c
+>> +++ b/target/m68k/translate.c
+>> @@ -303,13 +303,18 @@ static inline TCGv gen_load(DisasContext *s, int opsize, TCGv 
+>> addr,
+>>                             int sign, int index)
+>> {
+>>     TCGv tmp = tcg_temp_new_i32();
+>> +    MemOp memop = opsize | (sign ? MO_SIGN : 0) | MO_TE;
+>>
+>>     switch (opsize) {
+>>     case OS_BYTE:
+>> +        tcg_gen_qemu_ld_tl(tmp, addr, index, memop);
+>> +        break;
+>>     case OS_WORD:
+>>     case OS_LONG:
+>> -        tcg_gen_qemu_ld_tl(tmp, addr, index,
+>> -                           opsize | (sign ? MO_SIGN : 0) | MO_TE);
+>> +        if (!m68k_feature(s->env, M68K_FEATURE_UNALIGNED_DATA)) {
+>> +            memop |= MO_ALIGN_2;
+>> +        }
+>> +        tcg_gen_qemu_ld_tl(tmp, addr, index, memop);
 > 
-> Why is it sysemu only? Shouldn't user mode cpu only emulation do the same? I also 
-> don't get how this is restricted to pre 68020 CPUs or account for differences between 
-> data and inst fetch on 20+ but I may be missing somerhing as I don't know this code 
-> or 68k behaviour well. So this is just a question, I'm not saying it's wrong but I 
-> don't understand why it's right.
+> You could swap the order of these so byte comes last and fall through to it from 
+> word/long to avoid duplicated line.
+> 
+> Maybe this answers my question about where it's restriced by CPU type. I wonder if 
+> this check for M68K_FEATURE_UNALIGNED_DATA could be avoded here and done by checking 
+> it in init and only set the unaligned method for CPUs that need it to not add 
+> overhead for most CPUs that don't need it.
 
-I'm not exactly sure, but I'm guessing that this is handled by the host user code 
-since all CPUs that implement do_unaligned_access do so in a block contained within 
-#ifndef CONFIG_USER_ONLY ... #endif.
+I don't think that it matters too much if the method isn't implemented as the logic 
+surrounding when to call do_unaligned_access is contained within the TCG core.
+
+I'll have a go at updating the ordering and send a v2 if it looks good.
 
 
 ATB,
