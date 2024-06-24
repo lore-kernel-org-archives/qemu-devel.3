@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64B85C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48F7BC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:05:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLedv-0005Gm-Q5; Mon, 24 Jun 2024 04:01:39 -0400
+	id 1sLegf-00064F-9l; Mon, 24 Jun 2024 04:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLeds-0005GI-E6
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:01:38 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLedq-0006tx-1v
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:01:35 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-52cd8897c73so2680800e87.2
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 01:01:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719216091; x=1719820891; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=B4su9eTFVO62ofnSOXmYeAcO74zsCbTRZI+iUeszDhA=;
- b=KFOTPNYOGWYsssaixq8iz6OFyeltPXarkkaD+737bqVNDnfw8vZaR9dl5rr4AKdHiE
- 7dx8H8SS9V456wg2ztW/FftAxjqB9Qh8zztTdxRGyVbxg7cV4e1GySr8zf9NgnsN6Ggq
- jtC0O7ZLuNXA5SaMLhOXY4y+upqtOn22F3k1LNplU9hbPr5YRNsV/1NE0FweVLG4LKYU
- AHZ1G1BP8pGFe8N1b4IZWua1EBse2tDMQgrxKoTrRzp9Nc8yjUS3s48es1ifRb7tmJkZ
- YTyw05zxOyAkOgKEZUfETDTNDiZ8bwGMZzMetso5hIsOWeMzF+OR1OENx2DCHeRsLdxj
- MJ/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719216091; x=1719820891;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=B4su9eTFVO62ofnSOXmYeAcO74zsCbTRZI+iUeszDhA=;
- b=mVowTqOWodVKsHXBPPNkVBBwfIwSHgjJ77TMSDbpRUFiYDRtONOVS59rMyQK26+Tyl
- FV1l+MqWbMEoy1+im1xfLw3WCRH7quG2hxUzIIEhB6CNSVAABs2ScGJwsnMlNGoEopVz
- ZhDSCfVFktN7ky0aa0FyDA2OR+Kpb78qA4d7qQ8pKtMLOdE9MZlCOce+CNtiAGSUeocK
- rvUMaObksQsuqLd582lwu7j8gctQzIIwf2VWSMIiPbmHmM+OTscIEtR3KyXu315A+QW4
- +hA9X2VNZqK3tbfAJ3sw9eVdpaot3M1hdhmDpf1K3Y5MXMyxIaEWHrCscP74HvmMOBpP
- VWHA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWJvAbhbRFJUTUEfEvmkHm0BVl0I//+B1bGuwzKRcKREuPFqvYfv/zxsaM/C6GkuPSwMh9nKy9Sh2tnmxpi3D02k5NUtc=
-X-Gm-Message-State: AOJu0YycZYY8kzQgmP9xP1wx+xLXOigvk0/WGtwgGWDK/emBySKGFZnp
- Vfco+ZknBcB+il7pa3xl3cfnzDM4vLUDB/L6lH1/+6Kyv58nRh/Brcr5KKX7qqBLxZGu1cpz/Rj
- f
-X-Google-Smtp-Source: AGHT+IFOibi/5Uj6BMXQ8+jH06LbtbX756HxIcaJAHYIkP/JS1l6NADm+xm1vYCe8i6CuKqTFUE3aQ==
-X-Received: by 2002:ac2:5dc9:0:b0:52c:dec1:4578 with SMTP id
- 2adb3069b0e04-52ce1864495mr2070407e87.60.1719216091277; 
- Mon, 24 Jun 2024 01:01:31 -0700 (PDT)
-Received: from [192.168.69.100] (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
- [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42481910fc9sm124255215e9.33.2024.06.24.01.01.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jun 2024 01:01:30 -0700 (PDT)
-Message-ID: <63937d18-e330-442d-ba91-7841171ddc55@linaro.org>
-Date: Mon, 24 Jun 2024 10:01:29 +0200
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sLegc-00063C-JW
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:04:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1sLegb-0007HP-1n
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:04:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719216263;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=shwxxz+DWV07LZ8eQUPzz4OwHTAuOGqIFG0sQ0jp6pc=;
+ b=UILzW494NAM5Ec8+NCZri5GDwCpSPj5IGvWEaXGHx0VcFUatGAZzMtsGzYWK17kaU1XBcy
+ iVv7d/C1dMyAhL/9HGo+0VDV6E5uLcgRuOFvWW3dkhYnojseUaZlwsF0AM7X7OXSOSDqQJ
+ HrxFywxmJqF05DCrR82PYofHTwH8MUs=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-Vo-gAGArNrOb4N5HGVN-_A-1; Mon,
+ 24 Jun 2024 04:04:19 -0400
+X-MC-Unique: Vo-gAGArNrOb4N5HGVN-_A-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AAC3B19560AA; Mon, 24 Jun 2024 08:04:16 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.193.0])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E500619560AE; Mon, 24 Jun 2024 08:04:13 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id D27471801099; Mon, 24 Jun 2024 10:04:03 +0200 (CEST)
+Date: Mon, 24 Jun 2024 10:04:03 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Sunil V L <sunilvl@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, 
+ Alistair Francis <alistair23@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: Re: [PATCH v3 02/15] uefi-test-tools: Add support for python based
+ build script
+Message-ID: <n64h732pyizwasqsn33k3fecd34vllstfxxmb4qjtsx36fga2v@ew633bpyli25>
+References: <20240621115906.1049832-1-sunilvl@ventanamicro.com>
+ <20240621115906.1049832-3-sunilvl@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/loongarch: Modify flash block size to 256K
-To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-References: <20240624033319.999631-1-lixianglai@loongson.cn>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240624033319.999631-1-lixianglai@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240621115906.1049832-3-sunilvl@ventanamicro.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,36 +97,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Xianglai,
-
-On 24/6/24 05:33, Xianglai Li wrote:
-> loongarch added a common library for edk2 to
-> parse flash base addresses through fdt.
-> For compatibility with other architectures,
-> the flash block size in qemu is now changed to 256k.
-
-Why is that an issue / concern?
-
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> ---
-> Cc: Bibo Mao <maobibo@loongson.cn>
-> Cc: Song Gao <gaosong@loongson.cn>
+On Fri, Jun 21, 2024 at 05:28:53PM GMT, Sunil V L wrote:
+> edk2-funcs.sh which is used in this Makefile, was removed in the commit
+> c28a2891f3 ("edk2: update build script"). It is replaced with a python
+> based script. So, update the Makefile and add the configuration file as
+> required to support the python based build script.
 > 
->   include/hw/loongarch/virt.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> index 8fdfacf268..603c1cebdb 100644
-> --- a/include/hw/loongarch/virt.h
-> +++ b/include/hw/loongarch/virt.h
-> @@ -20,7 +20,7 @@
->   #define VIRT_FWCFG_BASE         0x1e020000UL
->   #define VIRT_BIOS_BASE          0x1c000000UL
->   #define VIRT_BIOS_SIZE          (16 * MiB)
-> -#define VIRT_FLASH_SECTOR_SIZE  (128 * KiB)
-> +#define VIRT_FLASH_SECTOR_SIZE  (256 * KiB)
->   #define VIRT_FLASH0_BASE        VIRT_BIOS_BASE
->   #define VIRT_FLASH0_SIZE        VIRT_BIOS_SIZE
->   #define VIRT_FLASH1_BASE        0x1d000000UL
+> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
 
 
