@@ -4,87 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3367AC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:40:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F4C6C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcRY-0002eh-Bn; Mon, 24 Jun 2024 01:40:44 -0400
+	id 1sLcSl-0003GW-V2; Mon, 24 Jun 2024 01:42:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcRV-0002eR-Au
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:40:42 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcRT-00061D-D1
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:40:41 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-706680d3a25so960959b3a.0
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:40:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719207638; x=1719812438; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iyGtdwMI0rszyD+Q4TkSM2eREuaE56crnIAOVOO5YBU=;
- b=xO+EMbiDBJvmvsaOrUZe/3v02sc5O9QyAz6oLD6EufXPTTtFJoC9K+q78kU/ljziUM
- Wj/AesnOzMmJQlCLPTGT5xw5l4jwyWiO8Mfml6Q7BruJGLZ+YBJv8zIeUJJj4Pcw+fWK
- Dltba68+hnnNOTXLKgxb14g9B2mCa+dQrX5ayuMacpqpu0RZ1IZSibAwsTEbUP4FxcLR
- PFRgL4Le0ycwoJ/x7RCgC22j9Vt9O6D2fMIlSnbAwyYTCjjpGmeBqW/c9h/gZ8E3ANFm
- tW1N/yfYvN6LBRcrLubRzr+vXcY+diACxJATiiky2vg4OirlMuXQahncCwEwrSVCmhrd
- j7xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207638; x=1719812438;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iyGtdwMI0rszyD+Q4TkSM2eREuaE56crnIAOVOO5YBU=;
- b=XicdYGD+/66gKy7URZTv7lQI2n4yFfSV1KhIKC9aOa7cEe1ASwqu0CxKjLZaqtYnXi
- eltoQmJLs2Mby363cVX/hJyXSHKPBkv0ttcIHg4OLwFuVW1MaLFay0mpGR0/8WHX86WE
- WyIUxJFyIn03iBV5JJbOFBrWNhdvrfi5X1e+VGaw6l8wBqEHIo5vygnLDbNvFY46LQOG
- Psdl+jXxwE8ETprn8UfGRrmZdqdwKRNNcpEyvJAszSXDfbkNw3V7mtlEdD8sd8Em28Cn
- FeG0jnRIcWEgDY20ei229GE5njvQkBtLr8c+HpzF0E/hLogz3hgqovYx3vj0mgYTZw/g
- m3eQ==
-X-Gm-Message-State: AOJu0Yy2Bw/FuJbsNw3EtAMBxTrX34++0FznKtYld7AfcQUaf+Klr3Rs
- kQcHnv70uTXIwRfKK/r4XIEmzKH4Sb9RA9C+vgS2Ea721nC1Dx3GXqkienp8x+8=
-X-Google-Smtp-Source: AGHT+IGWhq6WFAEkjB4Yy82T0Hr6APa8sv7UV4+73bnGnLfGpSPAQQWqrTj+qL0oOx8tc3Zq5lAmZA==
-X-Received: by 2002:a05:6a00:2d12:b0:706:7052:205 with SMTP id
- d2e1a72fcca58-70670ee94c2mr5124185b3a.18.1719207638087; 
- Sun, 23 Jun 2024 22:40:38 -0700 (PDT)
-Received: from ?IPv6:2804:7f0:b401:1758:f7d8:1e03:a6d:61a0?
- ([2804:7f0:b401:1758:f7d8:1e03:a6d:61a0])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7067049d14esm2816461b3a.115.2024.06.23.22.40.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 22:40:37 -0700 (PDT)
-Subject: Re: [PATCH v2 0/9] Add MTE stubs for aarch64 user mode
-To: =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org
-References: <20240613172103.2987519-1-gustavo.romero@linaro.org>
- <87ed8zttge.fsf@draig.linaro.org>
- <29b9c8e6-055d-f895-f178-dddd407bdc69@linaro.org>
- <87h6drew4r.fsf@draig.linaro.org>
-From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <f6b92270-90af-1b4b-e098-eaa6d5dd4e56@linaro.org>
-Date: Mon, 24 Jun 2024 02:40:34 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sLcSV-0003Fh-DT
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:41:43 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sLcSS-00069U-Tw
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:41:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=g8ytKYvbEI1Y5cIvtHafGsoL97900+lDUC8TdBr/+NM=; b=DpE6/GIXpUeimAuVTlE9K9BAwR
+ +esOjsegLKRsjMlKNgF0p77d6G/ikWxAM/4rA7btV88xxjeF53vd7/DHv/Fn2VCJUi6P41Kcl2jj6
+ F5LfJYKFN0EDYPPOBEmz3iqGOKfw7aFEld5qO+I83ZkFxtkW3m4/TsvtUuPT6EOIvL4XAV+FlLBjm
+ 1DCRx/K5H/wguFzcZUQkFkl+27B55YLaBT+UbRDzNtajnix9ER9M+T7o0qE4+QBnBomZu0bl2+uyM
+ x08ImRoCD3g/J1iQ29++L4lO53GS8C8s+wAj4lC7jc1NSm7tNCj2uB6Gu4Kb1PjaA4AMTdkSw2PD4
+ sx6Ta0KS4mIuzSz6uwv5RrBAh2SMBRQNXgR5a9XgOzjxNdsYp2uC/51CQarvGsJsmW+axAWqy03RY
+ SqRno0APxZU44EV6iC+GKgdCD06bC35DF3YHiJ/3au9OYmg9dRNjEsEm6Nft4i90ZfhKZUvieBcUP
+ CIhfUe8mRXcqIjiljeZIQpzddjD/VMjvCiawUm6/0PjoyTBsR0OkA+Svei62TCPTC52iCB8WaY0in
+ VQ2bvNpW+YSNSz/Vlml1fXSZdXygzL4EFPeHA1Vk72HXqoahVwgWza1IJyM4KYejcaDGyTkjl0lvo
+ jaqsz+Hoeft53PgKFnkQiQJQigdaVQPedYmIRL1+Q=;
+Received: from [2a00:23c4:8bb4:4000:aa92:227d:8a5b:45f1]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sLcR1-0005cp-TK; Mon, 24 Jun 2024 06:40:16 +0100
+Message-ID: <c062da2c-4303-45d9-861d-1732c8efb36c@ilande.co.uk>
+Date: Mon, 24 Jun 2024 06:41:29 +0100
 MIME-Version: 1.0
-In-Reply-To: <87h6drew4r.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, laurent@vivier.eu
+References: <20240623115704.315645-1-mark.cave-ayland@ilande.co.uk>
+ <20240623115704.315645-2-mark.cave-ayland@ilande.co.uk>
+ <fa494396-c0a8-3799-92c4-b9832dc3445b@eik.bme.hu>
 Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <fa494396-c0a8-3799-92c4-b9832dc3445b@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.379,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:aa92:227d:8a5b:45f1
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 1/2] target/m68k: implement do_unaligned_access callback
+ for m68k CPUs
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,71 +106,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+On 23/06/2024 16:11, BALATON Zoltan wrote:
 
-On 6/17/24 6:50 AM, Alex Bennée wrote:
-> Gustavo Romero <gustavo.romero@linaro.org> writes:
-> 
->> Hi Alex,
+> On Sun, 23 Jun 2024, Mark Cave-Ayland wrote:
+>> For m68k CPUs that do not support unaligned accesses, any such access should
+>> cause the CPU to raise an Address Error exception.
 >>
->> On 6/14/24 12:49 PM, Alex Bennée wrote:
->>> Gustavo Romero <gustavo.romero@linaro.org> writes:
->>>
->>>> This patchset adds the stubs necessary to support GDB memory tagging
->>>> commands on QEMU aarch64 user mode.
->>>>
->>>> These new stubs handle the qIsAddressTagged, qMemTag, and QMemTag
->>>> packets, which allow GDB memory tagging subcommands 'check',
->>>> 'print-allocation-tag', and 'set-allocation-tag' to work. The remaining
->>>> memory tagging commands ('print-logical-tag' and 'with-logical-tag')
->>>> will also work, but they don't rely on any stub because they perform
->>>> local operations.
->>>>
->>>> Since the memory tagging stubs are not common to all architectures, this
->>>> patchset also introduces three functions: gdb_extend_qsupported_features,
->>>> gdb_extend_query_table, and gdb_extend_set_table. These functions can be
->>>> used to extend the target-specific 'qSupported' feature string and the
->>>> handlers for the 'q' (query) and 'Q' (set) packets. These new functions
->>>> are used to add the MTE stubs for the aarch64 gdbstub.
->>>>    Note that this patchset requires a GDB that supports the
->>>> qIsAddressTagged packet (recently added to GDB), so the gdbstub MTE
->>>> tests introduced by it must be run using GDB's master branch, since the
->>>> GDB in the distros hasn't picked up the change yet.
->>>>
->>>> Once GDB is built and installed locally, the tests can be exercised, for
->>>> example, this way:
->>>>
->>>> make GDB=~/.local/bin/gdb run-tcg-tests-aarch64-linux-user -j 32
->>> It looks like there might be some BSD build failures as well:
->>>     https://gitlab.com/stsquad/qemu/-/pipelines/1332635371/failures
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> ---
+>> target/m68k/cpu.c       |  1 +
+>> target/m68k/cpu.h       |  4 ++++
+>> target/m68k/op_helper.c | 11 +++++++++++
+>> 3 files changed, 16 insertions(+)
 >>
->> I fixed the build for the BSD target in v3, however I think that the GDB in
->> the test containers need to be bumped to GDB 15 so the MTE tests can pass,
->> because support for IsAddressTagged packet is necessary. GDB 15 branch
->> is created by it's not released yet, so I don't know to proceed..
+>> diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
+>> index efd6bbded8..25e95f9f68 100644
+>> --- a/target/m68k/cpu.c
+>> +++ b/target/m68k/cpu.c
+>> @@ -538,6 +538,7 @@ static const TCGCPUOps m68k_tcg_ops = {
+>>     .cpu_exec_interrupt = m68k_cpu_exec_interrupt,
+>>     .do_interrupt = m68k_cpu_do_interrupt,
+>>     .do_transaction_failed = m68k_cpu_transaction_failed,
+>> +    .do_unaligned_access = m68k_cpu_do_unaligned_access,
+>> #endif /* !CONFIG_USER_ONLY */
 > 
-> Two potential approaches, you could extend the configure segment:
-> 
-> if test -n "$gdb_bin"; then
->      gdb_version=$($gdb_bin --version | head -n 1)
->      if version_ge ${gdb_version##* } 9.1; then
->          gdb_arches=$($python "$source_path/scripts/probe-gdb-support.py" $gdb_bin)
->      else
->          gdb_bin=""
->      fi
-> fi
-> 
-> and set a variable exported to config-host.mak to then test in the tcg
-> test makefiles.
+> Why is it sysemu only? Shouldn't user mode cpu only emulation do the same? I also 
+> don't get how this is restricted to pre 68020 CPUs or account for differences between 
+> data and inst fetch on 20+ but I may be missing somerhing as I don't know this code 
+> or 68k behaviour well. So this is just a question, I'm not saying it's wrong but I 
+> don't understand why it's right.
 
-Done in v4. Thanks for the suggestions!
+I'm not exactly sure, but I'm guessing that this is handled by the host user code 
+since all CPUs that implement do_unaligned_access do so in a block contained within 
+#ifndef CONFIG_USER_ONLY ... #endif.
 
 
-Cheers,
-Gustavo
+ATB,
 
-> Or you could implement a gdb-version-test command in
-> tests/tcg/Makefile.target which you could use like the existing
-> cc-test/cc-option commands to extend config-cc.mak and use that to gate
-> the tests.
+Mark.
+
 
