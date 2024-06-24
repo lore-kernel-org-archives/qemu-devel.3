@@ -4,63 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C6BC30653
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB6DC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLrCr-0005J9-1e; Mon, 24 Jun 2024 17:26:33 -0400
+	id 1sLrCI-0003eb-0P; Mon, 24 Jun 2024 17:25:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCe-0004Vt-Ls
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCG-0003cs-DA
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:25:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCd-0006k9-01
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:20 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCE-0006gP-Ri
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:25:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719264377;
+ s=mimecast20190719; t=1719264354;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=D/SXafrkxkGy5NHSEh+oO7aSMmnWN6TGs4wA0taGcYA=;
- b=hQEwcJfOyYAol8zC0PESN1PZHsbZqnAIVmiYp8io0Zosrn9wwHlGA8QkvF/TWQ1OWBkbcG
- FFGLFcQfdRj/AsHihTitU9aXUjS1Jqj1syy56pn6Ndwe4wMcgmAuBRfyifwoPt8JqY1du2
- ZVf7FColtyEzyreBEQLqFBtgBKl0RDk=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=qhlyd6y5+YSs0sKhK6KEY/7OsA0K4HEEz9ZJHKULl/8=;
+ b=D0dcXlySfwcv3WKDZ4P+6R1bXxvGjohxfX6+FsHwvnNplqWztPDarJaDRBT3wmP78rrKjp
+ 35HEJhsW9ISAmPpAi8HoVdDLWdYYSbY2rWjwUhoqpQ4cDl4ESp+rvwTVc1dGLCEbmbHtOp
+ R4SA+KP7c4rAh0AH7CaoKPagwwak6bA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-uowE10n6Nf2PLA63yW728Q-1; Mon,
- 24 Jun 2024 17:26:13 -0400
-X-MC-Unique: uowE10n6Nf2PLA63yW728Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-slrqpkqVPeCRdOyu33PZbQ-1; Mon,
+ 24 Jun 2024 17:25:49 -0400
+X-MC-Unique: slrqpkqVPeCRdOyu33PZbQ-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B71DE19560AE; Mon, 24 Jun 2024 21:26:12 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EFEFA195608C; Mon, 24 Jun 2024 21:25:48 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ABF021956051; Mon, 24 Jun 2024 21:26:10 +0000 (UTC)
+ id 4FE5D1956051; Mon, 24 Jun 2024 21:25:47 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 28/42] vfio/common: Move dirty tracking ranges update to helper
-Date: Mon, 24 Jun 2024 23:24:42 +0200
-Message-ID: <20240624212456.350919-29-clg@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PULL 18/42] HostIOMMUDevice: Store the VFIO/VDPA agent
+Date: Mon, 24 Jun 2024 23:24:32 +0200
+Message-ID: <20240624212456.350919-19-clg@redhat.com>
 In-Reply-To: <20240624212456.350919-1-clg@redhat.com>
 References: <20240624212456.350919-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
 X-Spam_score: 1.0
@@ -85,87 +83,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joao Martins <joao.m.martins@oracle.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-Separate the changes that update the ranges from the listener, to
-make it reusable in preparation to expand its use to vIOMMU support.
+Store the agent device (VFIO or VDPA) in the host IOMMU device.
+This will allow easy access to some of its resources.
 
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-[ clg: - Rebased on upstream
-       - Introduced vfio_dirty_tracking_update_range()
-       - Fixed typ in commit log ]
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/vfio/common.c | 38 ++++++++++++++++++++++----------------
- 1 file changed, 22 insertions(+), 16 deletions(-)
+ include/sysemu/host_iommu_device.h | 1 +
+ hw/vfio/container.c                | 1 +
+ hw/vfio/iommufd.c                  | 2 ++
+ 3 files changed, 4 insertions(+)
 
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index d48cd9b9361a92d184e423ffc60aabaff40fb487..fe215918bdf66ddbe3c5db803e10ce1aa9756b90 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -839,20 +839,11 @@ static bool vfio_section_is_vfio_pci(MemoryRegionSection *section,
-     return false;
+diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+index a57873958b03e1fcd6c0c8991a2010dde02c566c..3e5f058e7ba80491eae04dc73c6957f7269150cf 100644
+--- a/include/sysemu/host_iommu_device.h
++++ b/include/sysemu/host_iommu_device.h
+@@ -34,6 +34,7 @@ struct HostIOMMUDevice {
+     Object parent_obj;
+ 
+     char *name;
++    void *agent; /* pointer to agent device, ie. VFIO or VDPA device */
+     HostIOMMUDeviceCaps caps;
+ };
+ 
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 26e6f7fb4f748162d881cb22c970428f319df3c3..b728b978a26d49b5a2895fd4d1add8f0a57787ad 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -1145,6 +1145,7 @@ static bool hiod_legacy_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+ 
+     hiod->name = g_strdup(vdev->name);
+     hiod->caps.aw_bits = vfio_device_get_aw_bits(vdev);
++    hiod->agent = opaque;
+ 
+     return true;
  }
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 409ed3dcc91cde508ac74fa693798b87e82eb9dd..dbdae1adbb66f9c8547659320ce4436825efe1a1 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -631,6 +631,8 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+         struct iommu_hw_info_vtd vtd;
+     } data;
  
--static void vfio_dirty_tracking_update(MemoryListener *listener,
--                                       MemoryRegionSection *section)
-+static void vfio_dirty_tracking_update_range(VFIODirtyRanges *range,
-+                                             hwaddr iova, hwaddr end,
-+                                             bool update_pci)
- {
--    VFIODirtyRangesListener *dirty = container_of(listener,
--                                                  VFIODirtyRangesListener,
--                                                  listener);
--    VFIODirtyRanges *range = &dirty->ranges;
--    hwaddr iova, end, *min, *max;
--
--    if (!vfio_listener_valid_section(section, "tracking_update") ||
--        !vfio_get_section_iova_range(dirty->bcontainer, section,
--                                     &iova, &end, NULL)) {
--        return;
--    }
-+    hwaddr *min, *max;
- 
-     /*
-      * The address space passed to the dirty tracker is reduced to three ranges:
-@@ -873,8 +864,7 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
-      * The alternative would be an IOVATree but that has a much bigger runtime
-      * overhead and unnecessary complexity.
-      */
--    if (vfio_section_is_vfio_pci(section, dirty->bcontainer) &&
--        iova >= UINT32_MAX) {
-+    if (update_pci && iova >= UINT32_MAX) {
-         min = &range->minpci64;
-         max = &range->maxpci64;
-     } else {
-@@ -889,7 +879,23 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
-     }
- 
-     trace_vfio_device_dirty_tracking_update(iova, end, *min, *max);
--    return;
-+}
++    hiod->agent = opaque;
 +
-+static void vfio_dirty_tracking_update(MemoryListener *listener,
-+                                       MemoryRegionSection *section)
-+{
-+    VFIODirtyRangesListener *dirty =
-+        container_of(listener, VFIODirtyRangesListener, listener);
-+    hwaddr iova, end;
-+
-+    if (!vfio_listener_valid_section(section, "tracking_update") ||
-+        !vfio_get_section_iova_range(dirty->bcontainer, section,
-+                                     &iova, &end, NULL)) {
-+        return;
-+    }
-+
-+    vfio_dirty_tracking_update_range(&dirty->ranges, iova, end,
-+                      vfio_section_is_vfio_pci(section, dirty->bcontainer));
- }
- 
- static const MemoryListener vfio_dirty_tracking_listener = {
+     if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
+                                          &type, &data, sizeof(data), errp)) {
+         return false;
 -- 
 2.45.2
 
