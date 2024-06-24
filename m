@@ -4,70 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54B0AC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A8A6C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:12:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLfjJ-0007wd-4o; Mon, 24 Jun 2024 05:11:17 -0400
+	id 1sLfja-00080G-Hp; Mon, 24 Jun 2024 05:11:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfjH-0007wQ-Li
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfjY-0007zf-RK
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfjA-0003sN-S3
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLfjX-0003uF-Ee
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:11:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719220267;
+ s=mimecast20190719; t=1719220288;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s1/JShl0HA5iIO/ldYs3XyH7C9qq8BP88fI07ymd6mI=;
- b=HNwPI+GjTV1fCiOayb0j8BgGkPJDkWcGTnN7Ke4o7bTkQsIyRx1fawZ5DG2+DZVl3+e7CK
- pzkt60l0vPOcweXHEwepAraRHsnrP8xu+qYdt3cOk2MeWgYZ0VB7tEii3yBrh21a1seuAo
- OHbwZT82W9zT/r92rIC+wEHladJpmds=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=W7ohm5evrWfnX6RaracvxTgW8W6EpOv2Muym3qslNwI=;
+ b=OmcqLa9HuGmPKClv4FbT28pJbBkDHfzutqkJPO6mLMYO1f+iFq5dGueXbTBGPSHmsuJfyU
+ DL58hlmYVkmo4Xwg0DuQw997J/5Kt7IdHKkLJh7a6tGITAQ7oucK+Z1VGS9xa5ntReT1ld
+ 8BzoQsDAdMfWCgYikhJ3AIdsmQcg8j4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-PGgbdl4zM4e_3SH_gKRCbw-1; Mon,
- 24 Jun 2024 05:11:02 -0400
-X-MC-Unique: PGgbdl4zM4e_3SH_gKRCbw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-EMjXoU1cMaC80Kw4zFqqEg-1; Mon,
+ 24 Jun 2024 05:11:18 -0400
+X-MC-Unique: EMjXoU1cMaC80Kw4zFqqEg-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AAE2C195605F; Mon, 24 Jun 2024 09:11:01 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0CE2019560AE; Mon, 24 Jun 2024 09:11:17 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.33])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 050773000618; Mon, 24 Jun 2024 09:10:57 +0000 (UTC)
+ id DE75E300021C; Mon, 24 Jun 2024 09:11:14 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Anthony Krowiak <akrowiak@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>
-Subject: [PULL 04/11] s390x/css: Make S390CCWDeviceClass::realize return bool
-Date: Mon, 24 Jun 2024 11:10:36 +0200
-Message-ID: <20240624091043.177484-5-thuth@redhat.com>
+Cc: Omar Sandoval <osandov@osandov.com>
+Subject: [PULL 09/11] target/s390x/arch_dump: use correct byte order for pid
+Date: Mon, 24 Jun 2024 11:10:41 +0200
+Message-ID: <20240624091043.177484-10-thuth@redhat.com>
 In-Reply-To: <20240624091043.177484-1-thuth@redhat.com>
 References: <20240624091043.177484-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 16
-X-Spam_score: 1.6
+X-Spam_score_int: 11
+X-Spam_score: 1.1
 X-Spam_bar: +
-X-Spam_report: (1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,91 +81,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Omar Sandoval <osandov@osandov.com>
 
-Since the realize() handler of S390CCWDeviceClass takes an 'Error **'
-argument, best practices suggest to return a bool. See the api/error.h
-Rules section. While at it, modify the call in vfio_ccw_realize().
+The pid field of prstatus needs to be big endian like all of the other
+fields.
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Fixes: f738f296eaae ("s390x/arch_dump: pass cpuid into notes sections")
+Signed-off-by: Omar Sandoval <osandov@osandov.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240522170107.289532-5-clg@redhat.com>
+Message-ID: <5929f76d536d355afd04af51bf293695a1065118.1718771802.git.osandov@osandov.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/s390x/s390-ccw.h | 2 +-
- hw/s390x/s390-ccw.c         | 7 ++++---
- hw/vfio/ccw.c               | 3 +--
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ target/s390x/arch_dump.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/s390x/s390-ccw.h b/include/hw/s390x/s390-ccw.h
-index 2c807ee3a1..2e0a709981 100644
---- a/include/hw/s390x/s390-ccw.h
-+++ b/include/hw/s390x/s390-ccw.h
-@@ -31,7 +31,7 @@ struct S390CCWDevice {
- 
- struct S390CCWDeviceClass {
-     CCWDeviceClass parent_class;
--    void (*realize)(S390CCWDevice *dev, char *sysfsdev, Error **errp);
-+    bool (*realize)(S390CCWDevice *dev, char *sysfsdev, Error **errp);
-     void (*unrealize)(S390CCWDevice *dev);
-     IOInstEnding (*handle_request) (SubchDev *sch);
-     int (*handle_halt) (SubchDev *sch);
-diff --git a/hw/s390x/s390-ccw.c b/hw/s390x/s390-ccw.c
-index b3d14c61d7..3c09750550 100644
---- a/hw/s390x/s390-ccw.c
-+++ b/hw/s390x/s390-ccw.c
-@@ -108,7 +108,7 @@ static bool s390_ccw_get_dev_info(S390CCWDevice *cdev,
-     return true;
+diff --git a/target/s390x/arch_dump.c b/target/s390x/arch_dump.c
+index 7e8a1b4fc0..029d91d93a 100644
+--- a/target/s390x/arch_dump.c
++++ b/target/s390x/arch_dump.c
+@@ -102,7 +102,7 @@ static void s390x_write_elf64_prstatus(Note *note, S390CPU *cpu, int id)
+         regs->acrs[i] = cpu_to_be32(cpu->env.aregs[i]);
+         regs->gprs[i] = cpu_to_be64(cpu->env.regs[i]);
+     }
+-    note->contents.prstatus.pid = id;
++    note->contents.prstatus.pid = cpu_to_be32(id);
  }
  
--static void s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
-+static bool s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
- {
-     CcwDevice *ccw_dev = CCW_DEVICE(cdev);
-     CCWDeviceClass *ck = CCW_DEVICE_GET_CLASS(ccw_dev);
-@@ -117,7 +117,7 @@ static void s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
-     int ret;
- 
-     if (!s390_ccw_get_dev_info(cdev, sysfsdev, errp)) {
--        return;
-+        return false;
-     }
- 
-     sch = css_create_sch(ccw_dev->devno, errp);
-@@ -142,7 +142,7 @@ static void s390_ccw_realize(S390CCWDevice *cdev, char *sysfsdev, Error **errp)
- 
-     css_generate_sch_crws(sch->cssid, sch->ssid, sch->schid,
-                           parent->hotplugged, 1);
--    return;
-+    return true;
- 
- out_err:
-     css_subch_assign(sch->cssid, sch->ssid, sch->schid, sch->devno, NULL);
-@@ -150,6 +150,7 @@ out_err:
-     g_free(sch);
- out_mdevid_free:
-     g_free(cdev->mdevid);
-+    return false;
- }
- 
- static void s390_ccw_unrealize(S390CCWDevice *cdev)
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index 2600e62e37..9a8e052711 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -582,8 +582,7 @@ static void vfio_ccw_realize(DeviceState *dev, Error **errp)
- 
-     /* Call the class init function for subchannel. */
-     if (cdc->realize) {
--        cdc->realize(cdev, vcdev->vdev.sysfsdev, &err);
--        if (err) {
-+        if (!cdc->realize(cdev, vcdev->vdev.sysfsdev, &err)) {
-             goto out_err_propagate;
-         }
-     }
+ static void s390x_write_elf64_fpregset(Note *note, S390CPU *cpu, int id)
 -- 
 2.45.2
 
