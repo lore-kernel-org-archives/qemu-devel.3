@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E1CC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3446AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcMh-0007zQ-51; Mon, 24 Jun 2024 01:35:44 -0400
+	id 1sLcMn-0000JB-Vz; Mon, 24 Jun 2024 01:35:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcME-0007ju-90
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:16 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ id 1sLcMV-0007tm-0p
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:33 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcMA-00054m-Uv
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:13 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-25cba5eea69so1906798fac.2
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:35:10 -0700 (PDT)
+ id 1sLcMS-0005B7-9R
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:29 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1f9e2affc8cso20904425ad.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207309; x=1719812109;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207326; x=1719812126;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ZruEpO/MoD1fTse4BnrJqqGy48HTV31dbaHBR+Pyh8Y=;
- b=XSYFq6SYjd5HIlzx0MI/a7HYbL+/ScrDXsvHru3mR51pU6MPY1reOkgeWLjTiZ9Xpc
- GQGPv4aF6pp1cwl6VHfgjxaJ2LT2tmajbw803+k3KjoGohVqg9vkrKuT51Ini4telXMP
- wjwULwHRjrKl8lH6oGfVfZJSsJYa72yLqZldh5ucqRB76Nkw07pgytfOOyc/6ZKcKbEG
- wdVZB++Gw6CE13IloXhMpMbXRZ5f+0d2sTjy+mNAEqAcH+buKG7u9nXeqB/ZWtZ8M4lr
- mC90QEZ3nd+Pvtt5IbGWLqtNFSweuCmxSdBoFClQhg/GQsCu5KmjRiyY7goPOA1qJeyh
- 4FqA==
+ bh=TK9jsPupGbqTFb0SSVGrHarCX3uZpmBjTVW1qQtF12Q=;
+ b=AfI4JD4+ZeWFgdSO5I+eMoZekaUcsMbeUntcEiJ33UKqugKe/P/F08yc1bXJUTNV4a
+ 2AP8PEAAXgEXzorXrTF8/5/mPD2ldQoog48TtNMYD9HW8BktkaNCSE6eNcHrtpYFm9+j
+ 6+93t6HgqJHfv+eY2hl+6oIKw48KX4Dp2NdJ0PaZtHiALRtY3ut2bqNajCrBnAtWzwsc
+ B9QEHUclvfxssLqqy0wqUGbV/7/+LT0LjgottP2BvFPYShq5GegN+BgyB+GvxfasAovW
+ yoGwICNQ0L+0NJL9VqSO6U3way5lfyXQ8RfPhMb3Lxj4sI2fUQrF/nSryMMSXhzV9nOR
+ mnXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207309; x=1719812109;
+ d=1e100.net; s=20230601; t=1719207326; x=1719812126;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZruEpO/MoD1fTse4BnrJqqGy48HTV31dbaHBR+Pyh8Y=;
- b=F4NVfnMIRZ+Mi1cQaH+xyJCkQshkVFR2EWnfeUhZo3Mtab8cZHBADvrbKWF4VluxzT
- xi7MNEamXjhEP6zTNftTmYyQlyUr0tLc2JUewmI48hqKFSvGR6x1Sa1rS1eX0An8fl75
- SP11g12TSBM97or2TUb2w/eDUYQbajtpGHtqDNCvmFwOVUGyh4pIlzpZSyA0LKoVcQgL
- 9gSF7+GRZxg8DK3mN9jV4SiljpqaTDvCsXvrnKpmzUaEMh90x9DVZV8qMp/7LrJLo9uv
- nYXg5FlpygB6Ax9SF9nsAQJY0yyWbQVt9PBZEWv72QmKAvufbMZZdhKptxX/hUEMYKHe
- DQqw==
-X-Gm-Message-State: AOJu0YznUVYiZY3+wximGVMZqHJphUThXFGA8l3fwqbEbGCVjOKZZ+sd
- yMyfvMlO3wg3D84LUwbtWiird7HYlp5TE2u1YTjK5dtMHuRUh9RhEG4HzZSQfOQ=
-X-Google-Smtp-Source: AGHT+IHQDTzi2/y9ZUWxR1dnfME2zS+83Z8PwDd+c9lhhKVHT4yqjj2r4sWhjYTgdtojg+o89fsNjA==
-X-Received: by 2002:a05:6870:9720:b0:254:b24e:e351 with SMTP id
- 586e51a60fabf-25d019339e1mr3985009fac.59.1719207309196; 
- Sun, 23 Jun 2024 22:35:09 -0700 (PDT)
+ bh=TK9jsPupGbqTFb0SSVGrHarCX3uZpmBjTVW1qQtF12Q=;
+ b=fwzO6g8DnfJKk1FAmc4MgyAM1G/lhTerIg1Jyfr9/uBnFbmzYa25emmr7d+wuNeXAj
+ UoE/MAZKlDbuAPTk1VnlrL2Or2PkTsQmIRdFS4IIzkTXXVGkeQlnSNAmF3bdqDB0fvuk
+ 08aS0PNBCgM7LOtN142YIOZSdHOF69u8vdaihCWzhTEtcDK0/wF569lfp3anA0o7vGq9
+ NoLk2izU1hQst185GXCSk+ifgV8DFb5/fAhQybCVJ4doW2+23/NgJeZ416j3VAZbtVGi
+ t/Vmsdx8Y1LhHb/kRHzY13dCO7P/iUdB0Suy3BPClS1CTLZKm+aBal2PR+0NBqrNRuZP
+ EZFw==
+X-Gm-Message-State: AOJu0YyJqYDyW/122ogfoV8NZXy/73Xjzm2L7Sw3oHnXGQTdwpmEbNMW
+ UEC8blBiMoACr2+oVAd+/4Ji6WOSwr38L0d3j95tXXXaUnaPMEvprARcOl0jEl4=
+X-Google-Smtp-Source: AGHT+IGOZhd1U2SFdnnoDjB4R2y4hDFBlFnU++u622aW3EOwwsdKbMzEjvybndaAHBxY+3m9ahqE3Q==
+X-Received: by 2002:a17:90b:4c89:b0:2c5:249d:67be with SMTP id
+ 98e67ed59e1d1-2c86126b700mr2305581a91.22.1719207326496; 
+ Sun, 23 Jun 2024 22:35:26 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7065107b892sm5518727b3a.14.2024.06.23.22.35.04
+ 98e67ed59e1d1-2c7e64a1d9esm7838919a91.56.2024.06.23.22.35.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 22:35:08 -0700 (PDT)
-Message-ID: <91ba5af8-cea5-453b-a38f-4b97f2c7268f@daynix.com>
-Date: Mon, 24 Jun 2024 14:35:03 +0900
+ Sun, 23 Jun 2024 22:35:26 -0700 (PDT)
+Message-ID: <90bea313-6bec-4937-a338-422b4b7bfb9d@daynix.com>
+Date: Mon, 24 Jun 2024 14:35:20 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 02/13] virtio-gpu: Move fence_poll timer to VirtIOGPUGL
+Subject: Re: [PATCH v16 03/13] virtio-gpu: Move print_stats timer to
+ VirtIOGPUGL
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -86,14 +87,14 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
- <20240623152343.328436-3-dmitry.osipenko@collabora.com>
+ <20240623152343.328436-4-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240623152343.328436-3-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240623152343.328436-4-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2001:4860:4864:20::2a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x2a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::633;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,8 +117,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/06/24 0:23, Dmitry Osipenko wrote:
-> Move fence_poll timer to VirtIOGPUGL for consistency with cmdq_resume_bh
-> that are used only by GL device.
+> Move print_stats timer to VirtIOGPUGL for consistency with
+> cmdq_resume_bh and fence_poll that are used only by GL device.
 > 
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
