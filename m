@@ -4,79 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A8DC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A4AC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:13:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLgf2-0003sZ-Kc; Mon, 24 Jun 2024 06:10:56 -0400
+	id 1sLghK-0004uD-QX; Mon, 24 Jun 2024 06:13:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sLgez-0003s7-Pi
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:10:53 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sLgex-0006J7-HS
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:10:53 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-a689ad8d1f6so513582766b.2
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:10:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719223849; x=1719828649;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=J5C8/LOZwWnw4oPYfpj66xsC6jUWr25QNl7ZvLDyOtY=;
- b=JNn/YVznMJQSV/ZXlnUfcJXJVqrQ6vgEPxcowDFAlsJ+eMieCPhKPTIlwpMIZXrMMv
- z4DO+tCYPXDjxi8h22qUPo6U/nByBLM/w5FlddG9Djkl3QC45L0DMmfvVL8R0NSsA6Sc
- 0IFw6F1pV2dwyi2iWXyfDHiyW5yA6PzwdxyRdUlU/oxEXFWABlyYA23z2UmSjUpGnhB8
- tXy/HYRWd1BmK/aYZeMzQpD3cQOBT9pA2C+pCcrmwBJmE66NZRlQhyt/l4ax6Apkqaca
- x2GFG2I5I5EoOAttIHMPhKhgIgSMK63gi9z5+wckOQ61L8z0LFqO8BG8tr/n1sf26vhc
- kIUg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLghJ-0004tt-44
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:13:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLghH-0006ZQ-Gf
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:13:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719223992;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=4IYosgh/Ak+8KVQ19lZDf2tmkDoaJHmZMfGthftVeBg=;
+ b=dyGNSf25+BYsvWvpW+/HuX+Tlxg0xOQC6FbFsTruh2p4H+M8ucv8C5KgXE7dLEC16sQDBE
+ +pTPKdHRygpj8Mgb9Pnfl1gtC9NvTGhxGi4w9qkCw6hWym1bW8GBaR5oJO10AykOkA5dt6
+ iQHum5RQleAAlyc+QDk1blca1kbKQCQ=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-421-kgKI2jlSOgiqJ9cWf0QCwg-1; Mon, 24 Jun 2024 06:13:11 -0400
+X-MC-Unique: kgKI2jlSOgiqJ9cWf0QCwg-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-57c6e28b151so2249195a12.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:13:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719223849; x=1719828649;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=J5C8/LOZwWnw4oPYfpj66xsC6jUWr25QNl7ZvLDyOtY=;
- b=GZ5L4IzbB25nVs3eNKXDJ8NW49CH9JlQPuLnbqvWziNPpJCkquOCvN//NiucMkowLh
- pKO0EszA5+eAXABwkoyYF+UINlT1QF9fRjYhmlZuyX8CRULGeCmItFKFYMLTbigurwGC
- STs+nRdirhRdSgrfHpltZko+B974Kvm94WDiOf0QXw1ROYuR1BUI5Hw8lEYNg/+NmUyk
- Dk5/rDThBPMqdUi/452r1OEcgdlUVTex3gnIFHy7ouEje+nftVecQ2hoqM/sTorYUyt2
- eWNGsfyocw2LUoKNkPPPYPCEV9rIRV3HvmfLOKdmuIHsnQped+HJsZyDlX4RqUX5YE2y
- xQsg==
-X-Gm-Message-State: AOJu0YyqBiyT4/I/eUXr0xIbGcwsIeUgwWoFbIZnm8X2EZ8JuLaDcJJC
- ZSCf76G2k8HpE36uRPEZ1dU0mBIoaqKOiOi61V6j9m8kIDk1w0N6DKLbIF5fIQcc3dOUzbKhIa+
- erg==
-X-Google-Smtp-Source: AGHT+IF4dV0eLIKqq6MFL6dSZZqyCciH2qpJh8kxJrATpu+SrugqwlsU9zRn2eCs8PJvOnCYSHWkaw==
-X-Received: by 2002:a17:906:4e95:b0:a6f:9b06:6b42 with SMTP id
- a640c23a62f3a-a7245c85a63mr230504466b.5.1719223848810; 
- Mon, 24 Jun 2024 03:10:48 -0700 (PDT)
-Received: from localhost.localdomain (89-104-8-17.customer.bnet.at.
- [89.104.8.17]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7246114f68sm189138666b.91.2024.06.24.03.10.47
+ d=1e100.net; s=20230601; t=1719223989; x=1719828789;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4IYosgh/Ak+8KVQ19lZDf2tmkDoaJHmZMfGthftVeBg=;
+ b=GRQuooGQ18GsiIDlZGv8uJ8GsblGma0Hn5tzy/3fT4ocKGo4lf9wflnBOOsmcFeQOv
+ 8ynoXf+nRFZdZLaJSGw37LgKNz8Wt+dwWjyGqHsBF5yqQAzwSa+aFnCUp347PyLmP3zE
+ w2CIU/R5K5J3+EuGYsSOhrkFRpi4tPGYDVzRJmXjDH4hzdI9U/Q/crerCC/OgpsZyr/X
+ 7VyPgMjY7ldWiVkoEu9xQvtNqDGguNtoJbHop1P9ksaQmKsO0xPnmolPW518GSakej6p
+ pVWSOsfQXrTynCJ8WfhzJoG0hNC5/lgkUY2++EMUtoKYUkum91jEbFrVasP8bTKE5IpY
+ VEMg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaj4uCHtqfUDCkxaPx72xKNR0+dYmM3RKnUvCPuT0/ztF6qQ+SmK4mq4R0QqDJMJyF7lUrIzQ2o/7ThMTo8LkiufzcAq4=
+X-Gm-Message-State: AOJu0Yz/8ZlZYqJfxrtjK/UKx7wOQwQkQ0UKAVRADWNhzN8v/6AnO41I
+ Cg+15PPgt4bP9xgxS8YP6D7WTGgmNz6q/NyRcnp7z44Hcqmty283Bn8dxdhmcdUff0myOSUCCwl
+ +ATO6drK5yC1dK/wDYbYl7y1fm2vdWywWD0jmA2bz/ouIW/l11PP0ZVO5UfkhMgk=
+X-Received: by 2002:a50:cd59:0:b0:57c:6a1f:11d5 with SMTP id
+ 4fb4d7f45d1cf-57d4bd63249mr2547602a12.15.1719223989242; 
+ Mon, 24 Jun 2024 03:13:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHWd+UYcg1Ws5kzQ1fVt2PLqrGEBBqJX3cPPrg/lUuJAJE81Z6Szux09GcbjNyhJM5LqVIrjA==
+X-Received: by 2002:a50:cd59:0:b0:57c:6a1f:11d5 with SMTP id
+ 4fb4d7f45d1cf-57d4bd63249mr2547574a12.15.1719223988474; 
+ Mon, 24 Jun 2024 03:13:08 -0700 (PDT)
+Received: from redhat.com ([2.52.146.100]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-57d3006d36bsm4543457a12.0.2024.06.24.03.13.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 03:10:48 -0700 (PDT)
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, akihiko.odaki@daynix.com, lists@philjordan.eu,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2] Cursor: 8 -> 1 bit alpha downsampling improvement
-Date: Mon, 24 Jun 2024 12:10:40 +0200
-Message-Id: <20240624101040.82726-1-phil@philjordan.eu>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+ Mon, 24 Jun 2024 03:13:07 -0700 (PDT)
+Date: Mon, 24 Jun 2024 06:13:03 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: "Gao,Shiyuan" <gaoshiyuan@baidu.com>
+Cc: "imammedo@redhat.com" <imammedo@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "berrange@redhat.com" <berrange@redhat.com>
+Subject: Re: Failed to hot-plug device to pxb bridge
+Message-ID: <20240624060856-mutt-send-email-mst@kernel.org>
+References: <3A8D097B-3BA7-40DC-8DDF-D79B7BEE5CEE@baidu.com>
+ <20240530160919.01a3effc@imammedo.users.ipa.redhat.com>
+ <2cae6cf3c0f64b509ceed04be6a8bd70@baidu.com>
+ <74e8929fd34d496ea64aab6b3a136b3b@baidu.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::633;
- envelope-from=phil@philjordan.eu; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <74e8929fd34d496ea64aab6b3a136b3b@baidu.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,36 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mouse cursors with 8 bit alpha were downsampled to 1-bit opacity maps by
-turning alpha values of 255 into 1 and everything else into 0. This
-means that mostly-opaque pixels ended up completely invisible.
+On Mon, Jun 24, 2024 at 03:08:55AM +0000, Gao,Shiyuan wrote:
+> > I checked the guest dmesg and found that failed load shpc driver.
+> >   [    0.966668] shpchp 0000:00:05.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0.S28_)
+> >   [    0.968238] shpchp 0000:00:05.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0)
+> >   [    0.969160] shpchp 0000:00:05.0: Cannot get control of SHPC hotplug
+> >   [    0.969876] shpchp 0000:00:06.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0.S30_)
+> >   [    0.971454] shpchp 0000:00:06.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0)
+> >   [    0.972376] shpchp 0000:00:06.0: Cannot get control of SHPC hotplug
+> >   [    0.973119] shpchp 0000:80:00.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PC80)
+> >   [    0.974674] shpchp 0000:80:00.0: Cannot get control of SHPC hotplug
+> >   [    0.979422] shpchp 0000:81:01.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PC80)
+> >   [    0.980948] shpchp 0000:81:01.0: Cannot get control of SHPC hotplug
+> >   [    0.981685] shpchp 0000:60:00.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PC60)
+> >   [    0.994623] shpchp 0000:60:00.0: Cannot get control of SHPC hotplug
+> >   [    0.995349] shpchp 0000:61:01.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PC60)
+> >   [    0.996891] shpchp 0000:61:01.0: Cannot get control of SHPC hotplug
+> >   [    0.997626] shpchp: Standard Hot Plug PCI Controller Driver version: 0.4
+> > Read the shpc driver code, I found that before shpc_init it need check the shpc capability of bridge(shpc_capable) and
+> > get hotplug control from firmware(acpi_get_hp_hw_control_from_firmware) in shpc_probe.
+> > Howerver it return fail in acpi_get_hp_hw_control_from_firmware. I dump the acpid table, not found OSC and OSHP
+> > method in dsdt.dsl.
+> > In the QEMU build_dsdt, not found build osc method in i440fx.
+> > Putting aside this pxb scenario, I suspect that after disable acpi-pci-hotplug-with-bridge-support,
+> > hot-plug into the PCI bridge via SHPC can be successful in i440fx ?
+> 
+> After adding oshp method in build_dsdt, the SHPC driver load sucess and hotplug device sucess. Maybe we need a patch
+> fix it ?
+> 
+> 
+> 
+> 
 
-This patch changes the behaviour so that only pixels with less than 50%
-alpha (0-127) are treated as transparent when converted to 1-bit alpha.
+Sorry, can't really say what you are proposing.
+Send a patch?
 
-This greatly improves the subjective appearance of anti-aliased mouse
-cursors, such as those used by macOS, when using a front-end UI without
-support for alpha-blended cursors, such as some VNC clients.
 
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
----
- ui/cursor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ui/cursor.c b/ui/cursor.c
-index 29717b3ecb..dd3853320d 100644
---- a/ui/cursor.c
-+++ b/ui/cursor.c
-@@ -232,7 +232,7 @@ void cursor_get_mono_mask(QEMUCursor *c, int transparent, uint8_t *mask)
-     for (y = 0; y < c->height; y++) {
-         bit = 0x80;
-         for (x = 0; x < c->width; x++, data++) {
--            if ((*data & 0xff000000) != 0xff000000) {
-+            if ((*data & 0x80000000) == 0x0) { /* Alpha < 0x80 (128) */
-                 if (transparent != 0) {
-                     mask[x/8] |= bit;
-                 }
--- 
-2.39.3 (Apple Git-146)
 
 
