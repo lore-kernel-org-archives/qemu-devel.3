@@ -4,92 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FCA8C2D0D1
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 15:27:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD75C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 15:41:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLlaz-0005lF-E7; Mon, 24 Jun 2024 11:27:05 -0400
+	id 1sLlnq-00021q-CQ; Mon, 24 Jun 2024 11:40:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLlax-0005kh-IU
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 11:27:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1sLlno-00020u-FD
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 11:40:20 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLlaw-0008Uq-93
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 11:27:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719242815;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TS/mmG020xJXsu7O4jsmpUCXWfR98gCyjrhSNU7IDkU=;
- b=dcdZUAvkvR7a6g+vWA1rZPhqB0DdGmiZ/ehAX6qm38xcKoOzQEcj9uhdfiZQyBpoHL64GQ
- 2NJCkDr6KLxIRvEyoawKNYpKW9eGzYFAZ9CPob6FHcR7R80hxgYcCdlhcIxAxKzl2nXMG0
- WlB7tRguAGmtzEdTomUMFOuSvOnxK4w=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-571-TjQpjUG3M76sMEQryKv1Kg-1; Mon, 24 Jun 2024 11:26:50 -0400
-X-MC-Unique: TjQpjUG3M76sMEQryKv1Kg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-366fa770e34so218611f8f.1
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 08:26:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719242809; x=1719847609;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TS/mmG020xJXsu7O4jsmpUCXWfR98gCyjrhSNU7IDkU=;
- b=FYRx5QkWpFKJlOJRmtfrLLGhPdEjKN3H+yPtGChKtTlbpkgMMZEG2SE0OhjdGbFkXc
- eiFEmqdQkSafqjbHsCpoR/6G4qXFmCAd2fAhaXBS2k8jcMRA+KXLdmentvXPUmhEuryH
- w0XL1+IJftYp8qYtec4VpwwU6xDWFUtnRaqF2HlV42HWoR7OiqM22oNVapXzlnR7/5sN
- roG5npNqTJdeF+m4qOtsoGpdu9zUmIe9Te1uxMvzsx9nhGEfrFlgIdXexdOY2I7xeytx
- GDl+154AG0ksZI17+DMnMEQLZX9mYKV8Croq0GGOnp7va6KJF3OAYJbMbYtANLxnHGH/
- hqkQ==
-X-Gm-Message-State: AOJu0YwvPF+WsUciow64y0ito8JVgqDXD+Oy51svuUpZXFD6itTeND/R
- xTIJ/JED8lMnyGu4Z/adwYLtLlncC4R0O4cqzbT0UCDqyuRJ32q10HopUjNMI1vXuqafoMJBGdf
- BzkwD4hI9jl6XFzup3h4a10dKRj5xpHKxegdTIN00x8VYKC35E/KC
-X-Received: by 2002:adf:f342:0:b0:362:52b6:bc39 with SMTP id
- ffacd0b85a97d-366e948fc8bmr3020654f8f.16.1719242809358; 
- Mon, 24 Jun 2024 08:26:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/kZAoM9fzmgwbT0s7EukNWbM9AQdYOBfgN5aHEF06g+CX9Azk+chdXoclXTwOxJqohN3DOw==
-X-Received: by 2002:adf:f342:0:b0:362:52b6:bc39 with SMTP id
- ffacd0b85a97d-366e948fc8bmr3020632f8f.16.1719242808624; 
- Mon, 24 Jun 2024 08:26:48 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f6:f72:b8c7:9fc2:4c8b:feb3])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-366389b8ab0sm10371979f8f.27.2024.06.24.08.26.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 08:26:48 -0700 (PDT)
-Date: Mon, 24 Jun 2024 11:26:44 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "imammedo@redhat.com" <imammedo@redhat.com>
-Subject: Re: [PATCH 1/1] hw/i386/acpi-build: add OSHP method support for SHPC
- driver load
-Message-ID: <20240624112611-mutt-send-email-mst@kernel.org>
-References: <20240624131426.77231-1-gaoshiyuan@baidu.com>
- <20240624091745-mutt-send-email-mst@kernel.org>
- <a15cb952e03845b684f5211d75dfb4ff@baidu.com>
- <20240624094556-mutt-send-email-mst@kernel.org>
- <a048130a668d44aa955599fc5c5e84cf@baidu.com>
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1sLlnl-0002Wc-1O
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 11:40:20 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W7Bwq5gLdz6HJZv;
+ Mon, 24 Jun 2024 23:39:55 +0800 (CST)
+Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
+ by mail.maildlp.com (Postfix) with ESMTPS id 951E3140D26;
+ Mon, 24 Jun 2024 23:40:08 +0800 (CST)
+Received: from P_UKIT01-A7bmah.china.huawei.com (10.195.34.14) by
+ lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 24 Jun 2024 16:40:04 +0100
+To: <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>,
+ <linux-edac@vger.kernel.org>
+CC: <jonathan.cameron@huawei.com>, <mchehab+huawei@kernel.org>,
+ <tanxiaofei@huawei.com>, <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>,
+ <shiju.jose@huawei.com>
+Subject: [QEMU PATCH v2 1/1] hw/arm: FW first ARM processor error injection
+Date: Mon, 24 Jun 2024 16:39:50 +0100
+Message-ID: <20240624153950.350-1-shiju.jose@huawei.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <a048130a668d44aa955599fc5c5e84cf@baidu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.195.34.14]
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ lhrpeml500006.china.huawei.com (7.191.161.198)
+Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,31 +65,486 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  <shiju.jose@huawei.com>
+From: shiju.jose--- via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 24, 2024 at 02:40:48PM +0000, Gao,Shiyuan wrote:
-> > > > > +static Aml *build_oshp_method(void)
-> > > > > +{
-> > > > > +    Aml *method;
-> > > > > +
-> > > > > +    /*
-> > > > > +     * Request control of SHPC hotplug via OSHP method,
-> > > > > +     * no need parameter and return value in acpi_pcihp.
-> > > > > +     */
-> > > >
-> > > > Quote spec and earliest version documenting this, please.
-> > >
-> > > I cann't find document describe this, only find in the kernel code
-> > > and describe it in the commit message.
-> >
-> > Hrrm you really should read the spec not just go by the fact things
-> > happen to work.  Look up PCI Firmware Specification
-> 
-> 
-> Thanks and I will quote it.
+From: Shiju Jose <shiju.jose@huawei.com>
 
-yes and also pls explain why does an empty method make sense
-from spec POV.
+Add support for QEMU based FW first ARM processor error injection.
+
+Compliance with N.2.4.4 ARM Processor Error Section in
+UEFI 2.9A/2.10 specs.
+
+Examples,
+{ "execute": "arm-inject-error",
+      "arguments": {
+        "errortypes": ['cache-error']
+      }
+}
+
+{ "execute": "arm-inject-error",
+      "arguments": {
+        "errortypes": ['tlb-error']
+      }
+}
+
+{ "execute": "arm-inject-error",
+      "arguments": {
+        "errortypes": ['bus-error']
+      }
+}
+
+{ "execute": "arm-inject-error",
+      "arguments": {
+        "errortypes": ['cache-error', 'tlb-error']
+      }
+}
+
+{ "execute": "arm-inject-error",
+      "arguments": {
+        "errortypes": ['cache-error', 'tlb-error', 'bus-error', 'micro-arch-error']
+      }
+}
+etc.
+
+The patch is added on top of the FW-first error reporting supporting
+in the following Jonathan's repo.
+http://gitlab.com/jic23/qemu/ cxl-2024-06-21
+
+Mauro Carvalho added some instructions about how to use it under rasdaemon
+page: https://github.com/mchehab/rasdaemon/wiki/Error-injection-testing
+
+Link: https://lore.kernel.org/r/20240621165115.336-1-shiju.jose@huawei.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+
+Change History:
+v1 -> V2
+1. Updated patch header.
+2. Fix the issues reported by Peter Maydell. Thanks.
+---
+ configs/targets/aarch64-softmmu.mak |   1 +
+ hw/acpi/ghes.c                      | 170 +++++++++++++++++++++++++++-
+ hw/arm/Kconfig                      |   4 +
+ hw/arm/arm_error_inject.c           |  35 ++++++
+ hw/arm/arm_error_inject_stubs.c     |  22 ++++
+ hw/arm/meson.build                  |   4 +
+ include/hw/acpi/ghes.h              |   1 +
+ qapi/arm-error-inject.json          |  44 +++++++
+ qapi/meson.build                    |   1 +
+ qapi/qapi-schema.json               |   1 +
+ 10 files changed, 282 insertions(+), 1 deletion(-)
+ create mode 100644 hw/arm/arm_error_inject.c
+ create mode 100644 hw/arm/arm_error_inject_stubs.c
+ create mode 100644 qapi/arm-error-inject.json
+
+diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
+index 84cb32dc2f..b4b3cd9793 100644
+--- a/configs/targets/aarch64-softmmu.mak
++++ b/configs/targets/aarch64-softmmu.mak
+@@ -5,3 +5,4 @@ TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml gdb-xml/aarch64-pauth.xml
+ # needed by boot.c
+ TARGET_NEED_FDT=y
++CONFIG_ARM_EINJ=y
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 34d8b8a518..ba18e849e2 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -31,6 +31,7 @@
+ #include "qemu/uuid.h"
+ #include "hw/cxl/cxl_device.h"
+ #include "hw/cxl/cxl.h"
++#include "qapi/qapi-types-arm-error-inject.h"
+ 
+ #define ACPI_GHES_ERRORS_FW_CFG_FILE        "etc/hardware_errors"
+ #define ACPI_GHES_DATA_ADDR_FW_CFG_FILE     "etc/hardware_errors_addr"
+@@ -57,6 +58,7 @@
+ /* The memory section CPER size, UEFI 2.6: N.2.5 Memory Error Section */
+ #define ACPI_GHES_MEM_CPER_LENGTH           80
+ #define ACPI_GHES_PCIE_CPER_LENGTH 208
++#define ACPI_GHES_ARM_CPER_LENGTH (72 + 600)
+ 
+ /* Masks for block_status flags */
+ #define ACPI_GEBS_UNCORRECTABLE         1
+@@ -189,6 +191,94 @@ static void acpi_ghes_build_append_mem_cper(GArray *table,
+     build_append_int_noprefix(table, 0, 7);
+ }
+ 
++/* UEFI 2.9: N.2.4.4 ARM Processor Error Section */
++static void acpi_ghes_build_append_arm_cper(uint8_t error_types, GArray *table)
++{
++    /*
++     * ARM Processor Error Record
++     */
++
++    /* Validation Bits */
++    build_append_int_noprefix(table,
++                              (1ULL << 3) | /* Vendor specific info Valid */
++                              (1ULL << 2) | /* Running status Valid */
++                              (1ULL << 1) | /* Error affinity level Valid */
++                              (1ULL << 0), /* MPIDR Valid */
++                              4);
++    /* Error Info Num */
++    build_append_int_noprefix(table, 1, 2);
++    /* Context Info Num */
++    build_append_int_noprefix(table, 1, 2);
++    /* Section length */
++    build_append_int_noprefix(table, ACPI_GHES_ARM_CPER_LENGTH, 4);
++    /* Error affinity level */
++    build_append_int_noprefix(table, 2, 1);
++    /* Reserved */
++    build_append_int_noprefix(table, 0, 3);
++    /* MPIDR_EL1 */
++    build_append_int_noprefix(table, 0xAB12, 8);
++    /* MIDR_EL1 */
++    build_append_int_noprefix(table, 0xCD24, 8);
++    /* Running state */
++    build_append_int_noprefix(table, 0x1, 4);
++    /* PSCI state */
++    build_append_int_noprefix(table, 0x1234, 4);
++
++    /* ARM Propcessor error information */
++    /* Version */
++    build_append_int_noprefix(table, 0, 1);
++    /*  Length */
++    build_append_int_noprefix(table, 32, 1);
++    /* Validation Bits */
++    build_append_int_noprefix(table,
++                              (1ULL << 4) | /* Physical fault address Valid */
++                             (1ULL << 3) | /* Virtual fault address Valid */
++                             (1ULL << 2) | /* Error information Valid */
++                              (1ULL << 1) | /* Flags Valid */
++                              (1ULL << 0), /* Multiple error count Valid */
++                              2);
++    /* Type */
++    if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_CACHE_ERROR) ||
++        error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_TLB_ERROR) ||
++        error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_BUS_ERROR) ||
++        error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_MICRO_ARCH_ERROR)) {
++        build_append_int_noprefix(table, error_types, 1);
++    } else {
++        return;
++    }
++    /* Multiple error count */
++    build_append_int_noprefix(table, 2, 2);
++    /* Flags  */
++    build_append_int_noprefix(table, 0xD, 1);
++    /* Error information  */
++    if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_CACHE_ERROR)) {
++        build_append_int_noprefix(table, 0x0091000F, 8);
++    } else if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_TLB_ERROR)) {
++        build_append_int_noprefix(table, 0x0054007F, 8);
++    } else if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_BUS_ERROR)) {
++        build_append_int_noprefix(table, 0x80D6460FFF, 8);
++    } else if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_MICRO_ARCH_ERROR)) {
++        build_append_int_noprefix(table, 0x78DA03FF, 8);
++    } else {
++        return;
++    }
++    /* Virtual fault address  */
++    build_append_int_noprefix(table, 0x67320230, 8);
++    /* Physical fault address  */
++    build_append_int_noprefix(table, 0x5CDFD492, 8);
++
++    /* ARM Propcessor error context information */
++    /* Version */
++    build_append_int_noprefix(table, 0, 2);
++    /* Validation Bits */
++    /* AArch64 EL1 context registers Valid */
++    build_append_int_noprefix(table, 5, 2);
++    /* Register array size */
++    build_append_int_noprefix(table, 592, 4);
++    /* Register array */
++    build_append_int_noprefix(table, 0x12ABDE67, 8);
++}
++
+ static void build_append_aer_cper(PCIDevice *dev, GArray *table)
+ {
+     PCIDeviceClass *pci_class = PCI_DEVICE_GET_CLASS(dev);
+@@ -468,7 +558,8 @@ static int acpi_ghes_record_mem_error(uint64_t error_block_address,
+           UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
+                   0xED, 0x7C, 0x83, 0xB1);
+ 
+-    /* invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
++    /*
++     * Invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
+      * Table 17-13 Generic Error Data Entry
+      */
+     QemuUUID fru_id = {};
+@@ -505,6 +596,54 @@ static int acpi_ghes_record_mem_error(uint64_t error_block_address,
+     return 0;
+ }
+ 
++static int acpi_ghes_record_arm_error(uint8_t error_types,
++                                      uint64_t error_block_address)
++{
++    GArray *block;
++
++    /* Memory Error Section Type */
++    const uint8_t uefi_cper_arm_sec[] =
++          UUID_LE(0xE19E3D16, 0xBC11, 0x11E4, 0x9C, 0xAA, 0xC2, 0x05, \
++                  0x1D, 0x5D, 0x46, 0xB0);
++
++    /*
++     * Invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
++     * Table 17-13 Generic Error Data Entry
++     */
++    QemuUUID fru_id = {};
++    uint32_t data_length;
++
++    block = g_array_new(false, true /* clear */, 1);
++
++    /* This is the length if adding a new generic error data entry*/
++    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_ARM_CPER_LENGTH;
++    /*
++     * It should not run out of the preallocated memory if adding a new generic
++     * error data entry
++     */
++    assert((data_length + ACPI_GHES_GESB_SIZE) <=
++            ACPI_GHES_MAX_RAW_DATA_LENGTH);
++
++    /* Build the new generic error status block header */
++    acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
++        0, 0, data_length, ACPI_CPER_SEV_RECOVERABLE);
++
++    /* Build this new generic error data entry header */
++    acpi_ghes_generic_error_data(block, uefi_cper_arm_sec,
++        ACPI_CPER_SEV_RECOVERABLE, 0, 0,
++        ACPI_GHES_ARM_CPER_LENGTH, fru_id, 0);
++
++    /* Build the ARM processor error section CPER */
++    acpi_ghes_build_append_arm_cper(error_types, block);
++
++    /* Write the generic error data entry into guest memory */
++    cpu_physical_memory_write(error_block_address, block->data, block->len);
++
++    g_array_free(block, true);
++
++    return 0;
++}
++
+ static int ghes_record_aer_error(PCIDevice *dev, uint64_t error_block_address)
+ {
+     const uint8_t aer_section_id_le[] = {
+@@ -917,6 +1056,35 @@ static bool ghes_get_addr(uint32_t notify, uint64_t *error_block_addr,
+     return true;
+ }
+ 
++bool ghes_record_arm_errors(uint8_t error_types, uint32_t notify)
++{
++    int read_ack_register = 0;
++    uint64_t read_ack_register_addr = 0;
++    uint64_t error_block_addr = 0;
++
++    if (!ghes_get_addr(notify, &error_block_addr, &read_ack_register_addr)) {
++        return false;
++    }
++
++    cpu_physical_memory_read(read_ack_register_addr,
++                             &read_ack_register, sizeof(uint64_t));
++    /* zero means OSPM does not acknowledge the error */
++    if (!read_ack_register) {
++        error_report("Last time OSPM does not acknowledge the error,"
++                     " record CPER failed this time, set the ack value to"
++                     " avoid blocking next time CPER record! exit");
++        read_ack_register = 1;
++        cpu_physical_memory_write(read_ack_register_addr,
++                                  &read_ack_register, sizeof(uint64_t));
++        return false;
++    }
++
++    read_ack_register = cpu_to_le64(0);
++    cpu_physical_memory_write(read_ack_register_addr,
++                              &read_ack_register, sizeof(uint64_t));
++    return acpi_ghes_record_arm_error(error_types, error_block_addr);
++}
++
+ bool ghes_record_aer_errors(PCIDevice *dev, uint32_t notify)
+ {
+     int read_ack_register = 0;
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 5279162287..fb31a57c20 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -717,3 +717,7 @@ config ARMSSE
+     select UNIMP
+     select SSE_COUNTER
+     select SSE_TIMER
++
++config CXL_ARM_EINJ
++    bool
++    default y if AARCH64
+diff --git a/hw/arm/arm_error_inject.c b/hw/arm/arm_error_inject.c
+new file mode 100644
+index 0000000000..8a76a31733
+--- /dev/null
++++ b/hw/arm/arm_error_inject.c
+@@ -0,0 +1,35 @@
++/*
++ * ARM Processor error injection 
++ *
++ * Copyright(C) 2024 Huawei LTD.
++ *
++ * This code is licensed under the GPL version 2 or later. See the
++ * COPYING file in the top-level directory.
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/qapi-commands-arm-error-inject.h"
++#include "qapi/error.h"
++#include "hw/boards.h"
++#include "hw/acpi/ghes.h"
++
++/* For ARM processor errors */
++void qmp_arm_inject_error(ArmProcessorErrorTypeList *errortypes, Error **errp)
++{
++    MachineState *machine = MACHINE(qdev_get_machine());
++    MachineClass *mc = MACHINE_GET_CLASS(machine);
++    uint8_t error_types = 0;
++
++    while (errortypes) {
++        error_types |= BIT(errortypes->value);
++        errortypes = errortypes->next;
++    }
++
++    ghes_record_arm_errors(error_types, ACPI_GHES_NOTIFY_GPIO);
++    if (mc->set_error) {
++        mc->set_error();
++    }
++
++    return;
++}
+diff --git a/hw/arm/arm_error_inject_stubs.c b/hw/arm/arm_error_inject_stubs.c
+new file mode 100644
+index 0000000000..065a15cfb4
+--- /dev/null
++++ b/hw/arm/arm_error_inject_stubs.c
+@@ -0,0 +1,22 @@
++/*
++ * ARM  Processor errors QMP stubs
++ *
++ * Copyright(C) 2024 Huawei LTD.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2. See the
++ * COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-v2-only
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qapi/qapi-commands-arm-error-inject.h"
++
++
++typedef struct ArmProcessorErrorTypeList ArmProcessorErrorTypeList;
++
++void qmp_arm_inject_error(ArmProcessorErrorTypeList *type, Error **errp)
++{
++    error_setg(errp, "ARM processor error support is not compiled in");
++}
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index 0c07ab522f..59666b9d4e 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -60,6 +60,10 @@ arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+ arm_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+ arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+ arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
++system_ss.add(when: 'CONFIG_ARM_EINJ', if_true: files('arm_error_inject.c'))
++system_ss.add(when: 'CONFIG_ARM_EINJ', if_false: files('arm_error_inject_stubs.c'))
++system_ss.add(when: 'CONFIG_ALL', if_true: files('arm_error_inject_stubs.c'))
++
+ 
+ system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
+ system_ss.add(when: 'CONFIG_CHEETAH', if_true: files('palm.c'))
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index a12d6a7b22..2ff89edb3c 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -78,6 +78,7 @@ int acpi_ghes_record_errors(uint8_t notify, uint64_t error_physical_addr);
+ 
+ typedef struct PCIDevice PCIDevice;
+ bool ghes_record_aer_errors(PCIDevice *dev, uint32_t notify);
++bool ghes_record_arm_errors(uint8_t type, uint32_t notify);
+ 
+ typedef struct CXLError CXLError;
+ typedef struct PCIEAERErr PCIEAERErr;
+diff --git a/qapi/arm-error-inject.json b/qapi/arm-error-inject.json
+new file mode 100644
+index 0000000000..ccd94d2987
+--- /dev/null
++++ b/qapi/arm-error-inject.json
+@@ -0,0 +1,44 @@
++# -*- Mode: Python -*-
++# vim: filetype=python
++
++##
++# = ARM Processor Errors
++##
++
++##
++# @ArmProcessorErrorType:
++#
++# Type of ARM processor error to inject
++#
++# @unknown-error: Unknown error
++#
++# @cache-error: Cache error
++#
++# @tlb-error: TLB error
++#
++# @bus-error: Bus error.
++#
++# @micro-arch-error: Micro architectural error.
++#
++# Since: 8.0
++##
++{ 'enum': 'ArmProcessorErrorType',
++  'data': ['unknown-error',
++	   'cache-error',
++           'tlb-error',
++           'bus-error',
++           'micro-arch-error']
++}
++
++##
++# @arm-inject-error:
++#
++# Inject ARM Processor error.
++#
++# @errortypes: ARM processor error types to inject
++#
++# Since: 8.1
++##
++{ 'command': 'arm-inject-error',
++  'data': { 'errortypes': ['ArmProcessorErrorType'] }
++}
+diff --git a/qapi/meson.build b/qapi/meson.build
+index e7bc54e5d0..5927932c4b 100644
+--- a/qapi/meson.build
++++ b/qapi/meson.build
+@@ -22,6 +22,7 @@ if have_system or have_tools or have_ga
+ endif
+ 
+ qapi_all_modules = [
++  'arm-error-inject',
+   'authz',
+   'block',
+   'block-core',
+diff --git a/qapi/qapi-schema.json b/qapi/qapi-schema.json
+index b1581988e4..479a22de7e 100644
+--- a/qapi/qapi-schema.json
++++ b/qapi/qapi-schema.json
+@@ -81,3 +81,4 @@
+ { 'include': 'vfio.json' }
+ { 'include': 'cryptodev.json' }
+ { 'include': 'cxl.json' }
++{ 'include': 'arm-error-inject.json' }
+-- 
+2.34.1
 
 
