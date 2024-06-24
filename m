@@ -4,59 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC7CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 14:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55771C2D0D1
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 14:42:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLkiy-00022S-7r; Mon, 24 Jun 2024 10:31:16 -0400
+	id 1sLktY-0005Df-Tb; Mon, 24 Jun 2024 10:42:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
- id 1sLkiv-00021y-9i; Mon, 24 Jun 2024 10:31:13 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
+ id 1sLktW-0005DC-Vb
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:42:10 -0400
+Received: from mx22.baidu.com ([220.181.50.185] helo=baidu.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
- id 1sLkir-0005Vn-LE; Mon, 24 Jun 2024 10:31:13 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W79PN0YL4z4wqM;
- Tue, 25 Jun 2024 00:31:04 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W79PJ2qsTz4wbp;
- Tue, 25 Jun 2024 00:31:00 +1000 (AEST)
-Message-ID: <e246a4e5-fe45-423d-8986-88f75fe6799e@kaod.org>
-Date: Mon, 24 Jun 2024 16:30:58 +0200
+ (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
+ id 1sLktU-0007pK-1t
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 10:42:10 -0400
+To: "Michael S. Tsirkin" <mst@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "imammedo@redhat.com"
+ <imammedo@redhat.com>
+Subject: Re: [PATCH 1/1] hw/i386/acpi-build: add OSHP method support for SHPC
+ driver load
+Thread-Topic: [PATCH 1/1] hw/i386/acpi-build: add OSHP method support for SHPC
+ driver load
+Thread-Index: AQHaxkSBL8TNAxRJokSQEfxysWw53g==
+Date: Mon, 24 Jun 2024 14:40:48 +0000
+Message-ID: <a048130a668d44aa955599fc5c5e84cf@baidu.com>
+References: <20240624131426.77231-1-gaoshiyuan@baidu.com>
+ <20240624091745-mutt-send-email-mst@kernel.org>
+ <a15cb952e03845b684f5211d75dfb4ff@baidu.com>,
+ <20240624094556-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240624094556-mutt-send-email-mst@kernel.org>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.157.49.59]
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] aspeed/soc: fix coverity issue
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
- <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
- <CAFEAcA8tTHusKOR7JhyU+wwA3JJWq1o5wVaNXugw2S9SjAsESw@mail.gmail.com>
- <b013bd79-c206-446e-b482-91eeb926c70a@kaod.org>
- <CAFEAcA_fWTUpfRvYjDDXnXBoFuiZZubzVaKDbgKpmsDr98uXtw@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <CAFEAcA_fWTUpfRvYjDDXnXBoFuiZZubzVaKDbgKpmsDr98uXtw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=voaC=N2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-FEAS-Client-IP: 10.127.64.11
+X-FE-Last-Public-Client-IP: 100.100.100.60
+X-FE-Policy-ID: 52:10:53:SYSTEM
+Received-SPF: pass client-ip=220.181.50.185; envelope-from=gaoshiyuan@baidu.com;
+ helo=baidu.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,59 +65,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Gao,Shiyuan" <gaoshiyuan@baidu.com>
+From:  "Gao,Shiyuan" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/24/24 4:01 PM, Peter Maydell wrote:
-> On Mon, 24 Jun 2024 at 14:58, Cédric Le Goater <clg@kaod.org> wrote:
->>
->> On 6/24/24 2:18 PM, Peter Maydell wrote:
->>> On Wed, 19 Jun 2024 at 10:35, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
->>>>
->>>> Fix coverity defect: DIVIDE_BY_ZERO.
->>>>
->>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
->>>> ---
->>>>    hw/arm/aspeed_ast27x0.c | 6 ++++++
->>>>    1 file changed, 6 insertions(+)
->>>>
->>>> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
->>>> index b6876b4862..d14a46df6f 100644
->>>> --- a/hw/arm/aspeed_ast27x0.c
->>>> +++ b/hw/arm/aspeed_ast27x0.c
->>>> @@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
->>>>        ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
->>>>                                            &error_abort);
->>>>
->>>> +    if (!ram_size) {
->>>> +        qemu_log_mask(LOG_GUEST_ERROR,
->>>> +                      "%s: ram_size is zero",  __func__);
->>>> +        return;
->>>> +    }
->>>> +
->>>
->>> Isn't this a QEMU bug rather than a guest error? The
->>> RAM size presumably should never be zero unless the board
->>> set the ram-size property on the SDMC incorrectly. So the
->>> SDMC device should check (and return an error from its realize
->>> method) that the ram-size property is valid,
->>
->> That's the case in aspeed_sdmc_set_ram_size() which is called from
->> the aspeed machine init routine when the ram size is set.
-> 
-> True, but if the property is never set at all then the
-> struct field will be left at whatever value it had, which
-> is 0, I think. So if that's not valid then it either needs
-> to be a different default or else the realize method should
-> complain that the property was never set.
-
-Ah, yes, and the issue has been there for while. I will send a separate
-patch for this.
-
-Thanks,
-
-C.
+> > > > +static Aml *build_oshp_method(void)
+> > > > +{
+> > > > +=A0 =A0 Aml *method;
+> > > > +
+> > > > +=A0 =A0 /*
+> > > > +=A0 =A0 =A0* Request control of SHPC hotplug via OSHP method,
+> > > > +=A0 =A0 =A0* no need parameter and return value in acpi_pcihp.
+> > > > +=A0 =A0 =A0*/
+> > >
+> > > Quote spec and earliest version documenting this, please.
+> >
+> > I cann't find document describe this, only find in the kernel code
+> > and describe it in the commit message.
+>
+> Hrrm you really should read the spec not just go by the fact things
+> happen to work.=A0 Look up PCI Firmware Specification
 
 
-
+Thanks and I will quote it.=
 
