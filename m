@@ -4,78 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A25AC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 20:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC75C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:13:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLqkJ-0004wi-Ck; Mon, 24 Jun 2024 16:57:03 -0400
+	id 1sLqzU-0007fW-JH; Mon, 24 Jun 2024 17:12:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3md15ZgQKCnYZfqoaiiafY.WigkYgo-XYpYfhihaho.ila@flex--flwu.bounces.google.com>)
- id 1sLqkH-0004w8-Nc
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 16:57:01 -0400
-Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3md15ZgQKCnYZfqoaiiafY.WigkYgo-XYpYfhihaho.ila@flex--flwu.bounces.google.com>)
- id 1sLqkG-0001jG-1i
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 16:57:01 -0400
-Received: by mail-pf1-x449.google.com with SMTP id
- d2e1a72fcca58-70683497777so2654817b3a.2
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 13:56:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1719262617; x=1719867417; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=9dgEvbUS8KhHzYAh7hJ0Gt03Iu7NI5Y4SX3YZrGnyMc=;
- b=4kZc7+RBmJhWSyV9ERkjlzqc9GKDJUCHAVxIW7xm4zRGbVMf8Zo5f0j4tGfGbsjOuo
- 0H7/iZg+8VpBCklziGJ9GftH3UQx6buTinlHW7/WI29qk0YoHsnaGnhsTa/1pWRVSqiK
- z2YjtsCJsslyvZ8Gn7DMPeG6dS46sYBixCznT0+Skx0d9NKAgMWE2hqHJVfdzVezYFXN
- o+Gs0C4iLTZOwprz229e1UgVYcNnggGc7N/ZY/fNWa/74i2kSxAoN2/x7PXYrgUtC+1H
- HcEeXjmOnGVlX/18tYX63Vr4/zDf6oO9S60I02dxUCBXpcJ093EgMmovoBz4BYkPXhBu
- WZPQ==
+ (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
+ id 1sLqzS-0007el-FN
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:12:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
+ id 1sLqzQ-0004ni-BK
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:12:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719263558;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ibbd3hVdbE/1r0cwDndo0YXsXE77iv1gB14iaD7leE4=;
+ b=MThIWlHD4q2VsM51tPCachMf9QxIcHvvgLEp4XtNjK0uRKg0708XinDF/yU7yKCQMv9zPi
+ bFJSAzGN73PwfkJ6IHmVVyz56UnhfSkPOuL8JRWZkZNESZ0891esn4ziqZyAzypnE+VAq+
+ 861phE8dVvElaFWQxNiGUG/Gu2mcbzE=
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
+ [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-297-sxaru6sZNCmHONihdM3tkw-1; Mon, 24 Jun 2024 17:12:36 -0400
+X-MC-Unique: sxaru6sZNCmHONihdM3tkw-1
+Received: by mail-ua1-f69.google.com with SMTP id
+ a1e0cc1a2514c-80f4a34f07dso2789652241.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 14:12:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719262617; x=1719867417;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9dgEvbUS8KhHzYAh7hJ0Gt03Iu7NI5Y4SX3YZrGnyMc=;
- b=SjVBA1LUaZ41cAAkYAYWVLQ5kBrT7Mu4EYykE0cMwcaw7H5Sv3mYlETkGukaomuE+T
- JEtIV9KQCw/Aqv6DM5l4H0uw32xpEDY34H5ugYniZ7XM2pvK3ff4xrENOYWmrZ6ZDRJr
- sEJjPGCqOfL1ZRQNqgaSSTp/e05JT1rIDclXH1lUEyrZ5WExRh7J9W7aFDzz3ST+CSxB
- XcLaCxnrvuD4NLrwq2wgzb/Pero3slnx0GbehHBxo2cPPKWGzrHOpL/1fXZ7CYvQVQM1
- M4XRRp6eexSnV4x0oMZNieu8K8uzSZCIBEdErnrUuTJv54SFOoqDyPYVky/PjdyEayw8
- 1Y4Q==
-X-Gm-Message-State: AOJu0YzKh/eYB5JWK0DWhtw8aJPL4/KrFbth4NVlLW2CoPoHeFncJRBt
- 7Le87kkFSS1Y4qdGHS4gmG0x0XohDRYYyLZ77g+ZM/mWE9KtoxdVjjLr8qWg/ohPEP0vtA==
-X-Google-Smtp-Source: AGHT+IEu5vUTTMY6UMRttocu5BLuRwNmowXHP/Xy3+omma8PvXjdnL5fwd2jWSisVQUGOjAYE6beFxuN
-X-Received: from flwu-kvm.c.googlers.com
- ([fda3:e722:ac3:cc00:7f:e700:c0a8:5ceb])
- (user=flwu job=sendgmr) by 2002:a05:6a00:6c84:b0:705:dbf5:190a with SMTP id
- d2e1a72fcca58-706747c1216mr168522b3a.6.1719262617015; Mon, 24 Jun 2024
- 13:56:57 -0700 (PDT)
-Date: Mon, 24 Jun 2024 20:56:47 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.45.2.741.gdbec12cfda-goog
-Message-ID: <20240624205647.112034-1-flwu@google.com>
-Subject: [PATCH 1/1] include/qemu: Provide a C++ compatible version of
- typeof_strip_qual
-From: Felix Wu <flwu@google.com>
-To: peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org, Roman Kiryanov <rkir@google.com>,
- Felix Wu <flwu@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
- envelope-from=3md15ZgQKCnYZfqoaiiafY.WigkYgo-XYpYfhihaho.ila@flex--flwu.bounces.google.com;
- helo=mail-pf1-x449.google.com
-X-Spam_score_int: -100
-X-Spam_score: -10.1
-X-Spam_bar: ----------
-X-Spam_report: (-10.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.453,
+ d=1e100.net; s=20230601; t=1719263555; x=1719868355;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ibbd3hVdbE/1r0cwDndo0YXsXE77iv1gB14iaD7leE4=;
+ b=KMKqXKJuMNTy7jAe/RjKrrnA3Zmlm0+jqb4ty8vACvBobLDmPxQfgXLozdapzJLYnX
+ NOUikRccCIPybJ2o6S3ebJczbMWUJTgiqcNhuJn5OQ32RMQAieJGc809JVxr6uEYdBtK
+ NHYpsgI9sz24IWOJgcdf9H9kcuQtQK7EJQoyZAF8WyYLk7sM8yHhzBIXm4A/j9J4hsDs
+ BjbnkEHD7FNMfKK6fRp6ak7GJZZZPXK3lTm3e3Tc5I0NJ3XkI/12rwcS31uKws7RedK2
+ xlP+MjOjBjTt0hOXz1eZSGX0NH7V8OXiu5FhL7RezR4ZTn/axHXXDqp65xAbBS/DUBJU
+ Vsaw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQnwqs8Rh5159e2YX2kzhgnD+ARvL53yYQ9WnQMmM9NQzFrjNi5+xu5eAPuJTSDLlG97psknilDXZNmRTzBImyxKARjfE=
+X-Gm-Message-State: AOJu0YywuOVoOU4s4a6rjgQC7iQuDofbfuliFigejyaqixz9vlHiAjfr
+ bTf3+aNq1szNFuKQdxbnJq1HtVJS4DHU67HZuQ1mZKot/tdsMrVhgU5ohUrVMk9Agfvd5ehoja4
+ +o+z1uKa5puO1VCfQMsZdvFgdDeelFuwThbrXMAwD7GROJzwie93JFjhF6Go6PVPwNIWcVMeETU
+ TQdmT0eKyWzSxnS2MEk46+dy/NHS8=
+X-Received: by 2002:a05:6122:202a:b0:4ef:5e3f:599a with SMTP id
+ 71dfb90a1353d-4ef6d8baf8emr4431730e0c.14.1719263555391; 
+ Mon, 24 Jun 2024 14:12:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHudo2yhNLWv97A8snyumY09PxXw/nwj3WFxbT8G+pIL60vo0mDD95JgHRp0M9W0YkjBFgvehdQPD9fDI24Grs=
+X-Received: by 2002:a05:6122:202a:b0:4ef:5e3f:599a with SMTP id
+ 71dfb90a1353d-4ef6d8baf8emr4431718e0c.14.1719263555021; Mon, 24 Jun 2024
+ 14:12:35 -0700 (PDT)
+MIME-Version: 1.0
+References: <20240619174022.1298578-1-nsoffer@redhat.com>
+ <CAMRbyyso9cMFueVS3SGtJ3G=-OGu+ueqqE5u2NYtsydBxf_J3Q@mail.gmail.com>
+ <20240624152302.GA2402845@fedora.redhat.com> <ZnmZ-m38IAHg0UdX@redhat.com>
+In-Reply-To: <ZnmZ-m38IAHg0UdX@redhat.com>
+From: Nir Soffer <nsoffer@redhat.com>
+Date: Tue, 25 Jun 2024 00:12:18 +0300
+Message-ID: <CAMRbyyv9utXsfXKiPz4fGw+S4JLgsZE2UDxUOxwG1fxZwGMHNQ@mail.gmail.com>
+Subject: Re: [PATCH v2] Consider discard option when writing zeros
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Fam Zheng <fam@euphon.net>, 
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000079064b061ba93d33"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=nsoffer@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,89 +101,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Roman Kiryanov <rkir@google.com>
+--00000000000079064b061ba93d33
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-to use the QEMU headers with a C++ compiler.
+On Mon, Jun 24, 2024 at 7:08=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
+:
 
-Signed-off-by: Felix Wu <flwu@google.com>
-Signed-off-by: Roman Kiryanov <rkir@google.com>
----
- include/qemu/atomic.h   |  8 ++++++++
- include/qemu/atomic.hpp | 38 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
- create mode 100644 include/qemu/atomic.hpp
+> Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:
+> > On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:
+> > > Tested using:
+> >
+> > Hi Nir,
+> > This looks like a good candidate for the qemu-iotests test suite. Addin=
+g
+> > it to the automated tests will protect against future regressions.
+> >
+> > Please add the script and the expected output to
+> > tests/qemu-iotests/test/write-zeroes-unmap and run it using
+> > `(cd build && tests/qemu-iotests/check write-zeroes-unmap)`.
+> >
+> > See the existing test cases in tests/qemu-iotests/ and
+> > tests/qemu-iotests/tests/ for examples. Some are shell scripts and
+> > others are Python. I think shell makes sense for this test case. You
+> > can copy the test framework boilerplate from an existing test case.
+>
+> 'du' can't be used like this in qemu-iotests because it makes
+> assumptions that depend on the filesystem. A test case replicating what
+> Nir did manually would likely fail on XFS with its preallocation.
+>
 
-diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
-index 99110abefb..aeaecc440a 100644
---- a/include/qemu/atomic.h
-+++ b/include/qemu/atomic.h
-@@ -20,6 +20,13 @@
- /* Compiler barrier */
- #define barrier()   ({ asm volatile("" ::: "memory"); (void)0; })
- 
-+#ifdef __cplusplus
-+
-+#ifndef typeof_strip_qual
-+#error Use the typeof_strip_qual(expr) definition from atomic.hpp on C++ builds.
-+#endif
-+
-+#else  /* __cpluplus */
- /* The variable that receives the old value of an atomically-accessed
-  * variable must be non-qualified, because atomic builtins return values
-  * through a pointer-type argument as in __atomic_load(&var, &old, MODEL).
-@@ -61,6 +68,7 @@
-         __builtin_types_compatible_p(typeof(expr), const volatile unsigned short), \
-         (unsigned short)1,                                                         \
-       (expr)+0))))))
-+#endif  /* __cpluplus */
- 
- #ifndef __ATOMIC_RELAXED
- #error "Expecting C11 atomic ops"
-diff --git a/include/qemu/atomic.hpp b/include/qemu/atomic.hpp
-new file mode 100644
-index 0000000000..5844e3d427
---- /dev/null
-+++ b/include/qemu/atomic.hpp
-@@ -0,0 +1,38 @@
-+/*
-+ * The C++ definition for typeof_strip_qual used in atomic.h.
-+ *
-+ * Copyright (C) 2024 Google, Inc.
-+ *
-+ * Author: Roman Kiryanov <rkir@google.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ * See docs/devel/atomics.rst for discussion about the guarantees each
-+ * atomic primitive is meant to provide.
-+ */
-+
-+#ifndef QEMU_ATOMIC_HPP
-+#define QEMU_ATOMIC_HPP
-+
-+#include <type_traits>
-+
-+/* Match the integer promotion behavior of typeof_strip_qual, see atomic.h */
-+template <class T> struct typeof_strip_qual_cpp { using result = decltype(+T(0)); };
-+
-+template <> struct typeof_strip_qual_cpp<bool> { using result = bool; };
-+template <> struct typeof_strip_qual_cpp<signed char> { using result = signed char; };
-+template <> struct typeof_strip_qual_cpp<unsigned char> { using result = unsigned char; };
-+template <> struct typeof_strip_qual_cpp<signed short> { using result = signed short; };
-+template <> struct typeof_strip_qual_cpp<unsigned short> { using result = unsigned short; };
-+
-+#define typeof_strip_qual(expr) \
-+    typeof_strip_qual_cpp< \
-+        std::remove_cv< \
-+            std::remove_reference< \
-+                decltype(expr) \
-+            >::type \
-+        >::type \
-+    >::result
-+
-+#endif /* QEMU_ATOMIC_HPP */
--- 
-2.45.2.741.gdbec12cfda-goog
+This is why I did not try to add a new qemu-iotest yet.
+
+
+> Maybe we could operate on a file exposed by the FUSE export that is
+> backed by qcow2, and then you can use 'qemu-img map' on that qcow2 image
+> to verify the allocation status. Somewhat complicated, but I think it
+> could work.
+>
+
+Do we have examples of using the FUSE export? It sounds complicated but
+being able to test on any file system is awesome. The complexity can be
+hidden behind simple test helpers.
+
+Another option is to use a specific file system created for the tests, for
+example
+on a loop device. We used userstorage[1] in ovirt to test on specific file
+systems
+with known sector size.
+
+But more important, are you ok with the change?
+
+I'm not sure about not creating sparse images by default - this is not
+consistent
+with qemu-img convert and qemu-nbd, which do sparsify by default. The old
+behavior seems better.
+
+[1] https://github.com/nirs/userstorage
+
+Nir
+
+--00000000000079064b061ba93d33
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">On Mon, Jun 24, 2024 at 7:08=E2=80=AFPM K=
+evin Wolf &lt;<a href=3D"mailto:kwolf@redhat.com">kwolf@redhat.com</a>&gt; =
+wrote:<br></div><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex">Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:<b=
+r>
+&gt; On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:<br>
+&gt; &gt; Tested using:<br>
+&gt; <br>
+&gt; Hi Nir,<br>
+&gt; This looks like a good candidate for the qemu-iotests test suite. Addi=
+ng<br>
+&gt; it to the automated tests will protect against future regressions.<br>
+&gt; <br>
+&gt; Please add the script and the expected output to<br>
+&gt; tests/qemu-iotests/test/write-zeroes-unmap and run it using<br>
+&gt; `(cd build &amp;&amp; tests/qemu-iotests/check write-zeroes-unmap)`.<b=
+r>
+&gt; <br>
+&gt; See the existing test cases in tests/qemu-iotests/ and<br>
+&gt; tests/qemu-iotests/tests/ for examples. Some are shell scripts and<br>
+&gt; others are Python. I think shell makes sense for this test case. You<b=
+r>
+&gt; can copy the test framework boilerplate from an existing test case.<br=
+>
+<br>
+&#39;du&#39; can&#39;t be used like this in qemu-iotests because it makes<b=
+r>
+assumptions that depend on the filesystem. A test case replicating what<br>
+Nir did manually would likely fail on XFS with its preallocation.<br></bloc=
+kquote><div><br></div><div>This is why I did not try to add a new qemu-iote=
+st yet.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"ma=
+rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
+1ex">
+Maybe we could operate on a file exposed by the FUSE export that is<br>
+backed by qcow2, and then you can use &#39;qemu-img map&#39; on that qcow2 =
+image<br>
+to verify the allocation status. Somewhat complicated, but I think it<br>
+could work.<br></blockquote><div><br></div><div>Do we have examples of usin=
+g the FUSE export? It sounds complicated but</div><div>being able to test o=
+n any file system is awesome. The complexity can be</div><div>hidden behind=
+ simple test helpers.</div><div><br></div><div>Another option is to use a s=
+pecific file system created for the tests, for example</div><div>on a loop =
+device. We used userstorage[1] in ovirt to test on specific file systems</d=
+iv><div>with known sector size.</div><div><br></div><div>But more important=
+, are you ok with the change?</div><div><br></div><div>I&#39;m not sure abo=
+ut not creating sparse images by default - this is not consistent</div><div=
+>with qemu-img convert and qemu-nbd, which do sparsify by default. The old<=
+/div><div>behavior seems better.</div><div><br></div><div>[1]=C2=A0<a href=
+=3D"https://github.com/nirs/userstorage">https://github.com/nirs/userstorag=
+e</a></div><div><br></div><div>Nir</div><div>=C2=A0</div></div></div>
+
+--00000000000079064b061ba93d33--
 
 
