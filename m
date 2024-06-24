@@ -4,56 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C7D4C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B17C41513
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:53:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLfKq-0000Hy-77; Mon, 24 Jun 2024 04:46:03 -0400
+	id 1sLfRj-0001k4-Kl; Mon, 24 Jun 2024 04:53:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
- id 1sLfKZ-0000Eu-Hm; Mon, 24 Jun 2024 04:45:50 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
+ id 1sLfRi-0001jO-EK
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:53:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
- id 1sLfKU-0007EF-EO; Mon, 24 Jun 2024 04:45:41 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W71kh6Xzvz4wx6;
- Mon, 24 Jun 2024 18:45:32 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
+ id 1sLfRg-0008Jy-U9
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:53:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719219184;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KnMkczkg0st/7s2vXcXy0ZbukC7y2g2dQra52PJdzn8=;
+ b=ilJsHhT6KUzUpCxORHxwzgA41qZSdybw6YCPawG95lkOXQjwUs7410YdEWiwYQ4Orac51q
+ 93Ta+UiPUZRMUYqc7t9NNo44fz6WCgiQ0Esg3cCL3x25S36rvu8L5TSarVESCRyV5xsSRd
+ 76Wn2/+iytHSkwvS8MfhqG6jRnQpNGM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-MUeuOACYPf2FP8OQP6lOAg-1; Mon,
+ 24 Jun 2024 04:53:02 -0400
+X-MC-Unique: MUeuOACYPf2FP8OQP6lOAg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W71kd2cnlz4wb2;
- Mon, 24 Jun 2024 18:45:29 +1000 (AEST)
-Message-ID: <3b9f1e20-75b0-4192-828d-47e769ef3de9@kaod.org>
-Date: Mon, 24 Jun 2024 10:45:26 +0200
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 717791956095; Mon, 24 Jun 2024 08:53:01 +0000 (UTC)
+Received: from maggie.brq.redhat.com (unknown [10.43.3.102])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E24EA1956048; Mon, 24 Jun 2024 08:52:59 +0000 (UTC)
+From: Michal Privoznik <mprivozn@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com,
+	mtosatti@redhat.com,
+	michael.roth@amd.com
+Subject: [PATCH 2/2] i386/sev: Fallback to the default SEV device if none
+ provided in sev_get_capabilities()
+Date: Mon, 24 Jun 2024 10:52:49 +0200
+Message-ID: <157f93712c23818be193ce785f648f0060b33dee.1719218926.git.mprivozn@redhat.com>
+In-Reply-To: <cover.1719218926.git.mprivozn@redhat.com>
+References: <cover.1719218926.git.mprivozn@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] aspeed/sdmc: fix coverity issue
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
- <20240619093508.2528537-3-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240619093508.2528537-3-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=voaC=N2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mprivozn@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,45 +85,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/19/24 11:35 AM, Jamin Lin wrote:
-> Fix coverity defect: Control flow issues (DEADCODE)
+When management tools (e.g. libvirt) query QEMU capabilities,
+they start QEMU with a minimalistic configuration and issue
+various commands on monitor. One of the command issued is/might
+be "query-sev-capabilities" to learn values like cbitpos or
+reduced-phys-bits. But as of v9.0.0-1145-g16dcf200dc the monitor
+command returns an error instead.
 
-     aspeed/sdmc: Remove extra R_MAIN_STATUS case
-     
-     Coverity reports that the newly added 'case R_MAIN_STATUS' is DEADCODE
-     because it can not be reached. This is because R_MAIN_STATUS is handled
-     before in the "Unprotected registers" switch statement. Remove it.
-     
-     Fixes: Coverity CID 1547112
-     
-with that,
+This creates a chicken-egg problem because in order to query
+those aforementioned values QEMU needs to be started with a
+'sev-guest' object. But to start QEMU with the values must be
+known.
 
+I think it's safe to assume that the default path ("/dev/sev")
+provides the same data as user provided one. So fall back to it.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Fixes: 16dcf200dc951c1cde3e5b442457db5f690b8cf0
+Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
+---
+ target/i386/sev.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-Thanks,
-
-C.
-
-
-
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> ---
->   hw/misc/aspeed_sdmc.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/hw/misc/aspeed_sdmc.c b/hw/misc/aspeed_sdmc.c
-> index 93e2e29ead..94eed9264d 100644
-> --- a/hw/misc/aspeed_sdmc.c
-> +++ b/hw/misc/aspeed_sdmc.c
-> @@ -589,7 +589,6 @@ static void aspeed_2700_sdmc_write(AspeedSDMCState *s, uint32_t reg,
->       case R_INT_STATUS:
->       case R_INT_CLEAR:
->       case R_INT_MASK:
-> -    case R_MAIN_STATUS:
->       case R_ERR_STATUS:
->       case R_ECC_FAIL_STATUS:
->       case R_ECC_FAIL_ADDR:
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 8c350d42b0..5bb1ceb3ad 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -585,13 +585,13 @@ static SevCapability *sev_get_capabilities(Error **errp)
+     }
+ 
+     sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+-    if (!sev_common) {
+-        error_setg(errp, "SEV is not configured");
+-        return NULL;
++    if (sev_common) {
++        sev_device = object_property_get_str(OBJECT(sev_common), "sev-device",
++                                             &error_abort);
++    } else {
++        sev_device = g_strdup(DEFAULT_SEV_DEVICE);
+     }
+ 
+-    sev_device = object_property_get_str(OBJECT(sev_common), "sev-device",
+-                                         &error_abort);
+     fd = open(sev_device, O_RDWR);
+     if (fd < 0) {
+         error_setg_errno(errp, errno, "SEV: Failed to open %s",
+-- 
+2.44.2
 
 
