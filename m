@@ -4,71 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A571C30653
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA06BC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 23:08:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLrD7-0006on-V8; Mon, 24 Jun 2024 17:26:50 -0400
+	id 1sLsmS-0004kl-Kk; Mon, 24 Jun 2024 19:07:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrD2-0006Z7-4D
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCz-0006sf-NC
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719264401;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tRSs/QpalEU8cRTeXtkphTZ9aUiwpnONE3iCzq698lU=;
- b=ItoA+zq+HmyOSMX6aXw4GZHUvQqUuqSrXAmlzkL9cuuvN97hpXPNfiZMf4Zj7dYkuCxjhK
- kKuzCoKGeHFKwHhr2Ci5/mpCn3xs4mCTavvngFjgzGiqVJjTIy4usIDXeVzTIsVviye/93
- CKVWiuSMViY1b0re/6TW7YsEB32/Sco=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-B5D5e-lbMQGss5WfqL3cSQ-1; Mon,
- 24 Jun 2024 17:26:37 -0400
-X-MC-Unique: B5D5e-lbMQGss5WfqL3cSQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9BF2519560B6; Mon, 24 Jun 2024 21:26:36 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.192.49])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EDA671956057; Mon, 24 Jun 2024 21:26:34 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 39/42] vfio/container: Remove VFIOContainerBase::ops
-Date: Mon, 24 Jun 2024 23:24:53 +0200
-Message-ID: <20240624212456.350919-40-clg@redhat.com>
-In-Reply-To: <20240624212456.350919-1-clg@redhat.com>
-References: <20240624212456.350919-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sLsmQ-0004jB-Sg
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 19:07:22 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sLsmO-0007HP-UX
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 19:07:22 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2c85ca2dc5cso1350741a91.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 16:07:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719270439; x=1719875239; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1pYj7UAWjaFYE6py7YstfU56Zf2I3BdkqqTvU1WuzDM=;
+ b=dz/eDDlj4lCnWv1i0q8Bx+0mNanCYNgQ+qMNSSe6R2F7FgUAmmosTLA/2nhCK9JrS6
+ YuosuxR7D1KBO7/Bj+UdzCbDVHYnTwHH0jUe9RdbjJdLpAcJlIPYhizhNu/AtWEU5glh
+ 43wOQcml6XDkc9Lies5uHkczQdJaStEBRhZ+6jF41BOADUxiLGMd8Vm8/xrNrHTxjhvD
+ iifQAmIX/FOkiVQLc9V6xQByIQVr64b5xOLh44JCC+yA7AjnkNhHnVpXUcUJjl1NwJh9
+ HESQ22gG2O/ABoX3qRsnpSKTj7yFNgXGzuO0Yj29+M8wkNK96DF69rvEtfYLYNyW/4VN
+ PQbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719270439; x=1719875239;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1pYj7UAWjaFYE6py7YstfU56Zf2I3BdkqqTvU1WuzDM=;
+ b=VzK073V5bRpCe4/jSDFkxQsK+xtnhueZdymk/b8pBm0xDg+b52yAHfODy5SUI5gEbW
+ 347jxCmY6eRT8BC0LtqD9hiKmvbOnm5PEIVopLvOujH/acD2tcuWRM9nwEz8MYasDCAo
+ 3rJi3gp2GEMagC7AHntBIJRs5Up5Opz83cxdWASiY36nKJN/Q6Z3mJoaNQNBHTVt68oJ
+ p1YxBef3qcJe37U8g9xzHpUQsmIzso9fx2gT/Z3Qe1UtApzStIldKcILLF62zSGRyKlA
+ eJa1rNa4oH2RKVY+Jee914Sg04fUkTCU+OkmXpcFid7nPqIT7XtZBWLwpf+VSlOsRCZ2
+ 0Ofg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV47KdVo8ZblgKWNZglRth2rCT6hQbm42vn+kOaFTA6agNgvSahP52DGCBE3DdbaPSLeuVbngTQCkOlS+fordigGKrQIAU=
+X-Gm-Message-State: AOJu0YxlbKfA5dA7eTPV/AoUmK9RZ6Pto+Vk+How4JhMwx8+aiUDWZoY
+ 4Y2AR8EJmQFVSCGEgsseDDm+rAyxwjSIJYY3vl4WzqxNDnlvonkVMwooKm94dE4=
+X-Google-Smtp-Source: AGHT+IG4OAj+uvZEBiO6FUyAgxgH7qpsiWx87Wm8APUVUPQalwKhU1in9WhIngpSKB1dUmdHms3v6A==
+X-Received: by 2002:a17:90b:1e0a:b0:2c7:cd4f:d765 with SMTP id
+ 98e67ed59e1d1-2c848a5a2e8mr8637747a91.21.1719270438566; 
+ Mon, 24 Jun 2024 16:07:18 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c8499c4761sm5064308a91.30.2024.06.24.16.07.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Jun 2024 16:07:18 -0700 (PDT)
+Message-ID: <91f19b8d-387a-47cd-b7cc-19cdf4442473@linaro.org>
+Date: Mon, 24 Jun 2024 16:07:16 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 30/45] i386/sev: Add handling to encrypt/finalize guest
+ launch data
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Brijesh Singh <brijesh.singh@amd.com>, Michael Roth
+ <michael.roth@amd.com>, Pankaj Gupta <pankaj.gupta@amd.com>
+References: <20240604064409.957105-1-pbonzini@redhat.com>
+ <20240604064409.957105-31-pbonzini@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240604064409.957105-31-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,229 +100,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead, use VFIO_IOMMU_GET_CLASS() to get the class pointer.
+On 6/3/24 23:43, Paolo Bonzini wrote:
+> From: Brijesh Singh <brijesh.singh@amd.com>
+> 
+> Process any queued up launch data and encrypt/measure it into the SNP
+> guest instance prior to initial guest launch.
+> 
+> This also updates the KVM_SEV_SNP_LAUNCH_UPDATE call to handle partial
+> update responses.
+> 
+> Signed-off-by: Brijesh Singh <brijesh.singh@amd.com>
+> Co-developed-by: Michael Roth <michael.roth@amd.com>
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+> Co-developed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+> Signed-off-by: Pankaj Gupta <pankaj.gupta@amd.com>
+> Message-ID: <20240530111643.1091816-17-pankaj.gupta@amd.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/sev.c        | 112 ++++++++++++++++++++++++++++++++++++++-
+>   target/i386/trace-events |   2 +
+>   2 files changed, 113 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index e89b87d2f55..ef2e592ca76 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -756,6 +756,76 @@ out:
+>       return ret;
+>   }
+>   
+> +static const char *
+> +snp_page_type_to_str(int type)
+> +{
+> +    switch (type) {
+> +    case KVM_SEV_SNP_PAGE_TYPE_NORMAL: return "Normal";
+> +    case KVM_SEV_SNP_PAGE_TYPE_ZERO: return "Zero";
+> +    case KVM_SEV_SNP_PAGE_TYPE_UNMEASURED: return "Unmeasured";
+> +    case KVM_SEV_SNP_PAGE_TYPE_SECRETS: return "Secrets";
+> +    case KVM_SEV_SNP_PAGE_TYPE_CPUID: return "Cpuid";
+> +    default: return "unknown";
+> +    }
+> +}
+> +
+> +static int
+> +sev_snp_launch_update(SevSnpGuestState *sev_snp_guest,
+> +                      SevLaunchUpdateData *data)
+> +{
+> +    int ret, fw_error;
+> +    struct kvm_sev_snp_launch_update update = {0};
+> +
+> +    if (!data->hva || !data->len) {
+> +        error_report("SNP_LAUNCH_UPDATE called with invalid address"
+> +                     "/ length: %p / %lx",
+> +                     data->hva, data->len);
 
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/vfio/vfio-container-base.h |  1 -
- hw/vfio/common.c                      |  2 +-
- hw/vfio/container-base.c              | 37 +++++++++++++++++----------
- hw/vfio/container.c                   | 15 ++++++-----
- hw/vfio/iommufd.c                     |  4 +--
- hw/vfio/pci.c                         |  4 +--
- 6 files changed, 38 insertions(+), 25 deletions(-)
+This patch does not compile on 32-bit x86:
 
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index b079b76f68975c5701a289ce9012e912a8e44fc6..6b57cd8e7f5d7d2817f6e3b96ce4566d2630bb12 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -35,7 +35,6 @@ typedef struct VFIOAddressSpace {
-  */
- typedef struct VFIOContainerBase {
-     Object parent;
--    const VFIOIOMMUClass *ops;
-     VFIOAddressSpace *space;
-     MemoryListener listener;
-     Error *error;
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 1686a0bed23bd95467bfb00a0c39a4d966e49cae..7cdb969fd396ae3815cb175ad631d93d7cca7006 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -1573,5 +1573,5 @@ void vfio_detach_device(VFIODevice *vbasedev)
-         return;
-     }
-     object_unref(vbasedev->hiod);
--    vbasedev->bcontainer->ops->detach_device(vbasedev);
-+    VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer)->detach_device(vbasedev);
- }
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index 3858f5ab1d68e897f9013161d7c5c20c0553029d..24669d4d7472f49ac3adf2618a32bf7d82c5c344 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -19,62 +19,73 @@ int vfio_container_dma_map(VFIOContainerBase *bcontainer,
-                            hwaddr iova, ram_addr_t size,
-                            void *vaddr, bool readonly)
- {
--    g_assert(bcontainer->ops->dma_map);
--    return bcontainer->ops->dma_map(bcontainer, iova, size, vaddr, readonly);
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    g_assert(vioc->dma_map);
-+    return vioc->dma_map(bcontainer, iova, size, vaddr, readonly);
- }
- 
- int vfio_container_dma_unmap(VFIOContainerBase *bcontainer,
-                              hwaddr iova, ram_addr_t size,
-                              IOMMUTLBEntry *iotlb)
- {
--    g_assert(bcontainer->ops->dma_unmap);
--    return bcontainer->ops->dma_unmap(bcontainer, iova, size, iotlb);
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    g_assert(vioc->dma_unmap);
-+    return vioc->dma_unmap(bcontainer, iova, size, iotlb);
- }
- 
- bool vfio_container_add_section_window(VFIOContainerBase *bcontainer,
-                                        MemoryRegionSection *section,
-                                        Error **errp)
- {
--    if (!bcontainer->ops->add_window) {
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    if (!vioc->add_window) {
-         return true;
-     }
- 
--    return bcontainer->ops->add_window(bcontainer, section, errp);
-+    return vioc->add_window(bcontainer, section, errp);
- }
- 
- void vfio_container_del_section_window(VFIOContainerBase *bcontainer,
-                                        MemoryRegionSection *section)
- {
--    if (!bcontainer->ops->del_window) {
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    if (!vioc->del_window) {
-         return;
-     }
- 
--    return bcontainer->ops->del_window(bcontainer, section);
-+    return vioc->del_window(bcontainer, section);
- }
- 
- int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
-                                            bool start, Error **errp)
- {
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-     if (!bcontainer->dirty_pages_supported) {
-         return 0;
-     }
- 
--    g_assert(bcontainer->ops->set_dirty_page_tracking);
--    return bcontainer->ops->set_dirty_page_tracking(bcontainer, start, errp);
-+    g_assert(vioc->set_dirty_page_tracking);
-+    return vioc->set_dirty_page_tracking(bcontainer, start, errp);
- }
- 
- int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp)
- {
--    g_assert(bcontainer->ops->query_dirty_bitmap);
--    return bcontainer->ops->query_dirty_bitmap(bcontainer, vbmap, iova, size,
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+
-+    g_assert(vioc->query_dirty_bitmap);
-+    return vioc->query_dirty_bitmap(bcontainer, vbmap, iova, size,
-                                                errp);
- }
- 
- void vfio_container_init(VFIOContainerBase *bcontainer,
-                          const VFIOIOMMUClass *ops)
- {
--    bcontainer->ops = ops;
- }
- 
- void vfio_container_destroy(VFIOContainerBase *bcontainer)
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index ff3a6831da83c0fe11060cd57918c4d87b10197c..a2f5fbad00cd228e27a47df5cd683dbb34296113 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -548,6 +548,7 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-     VFIOContainerBase *bcontainer;
-     int ret, fd;
-     VFIOAddressSpace *space;
-+    VFIOIOMMUClass *vioc;
- 
-     space = vfio_get_address_space(as);
- 
-@@ -632,9 +633,10 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
-         goto unregister_container_exit;
-     }
- 
--    assert(bcontainer->ops->setup);
-+    vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
-+    assert(vioc->setup);
- 
--    if (!bcontainer->ops->setup(bcontainer, errp)) {
-+    if (!vioc->setup(bcontainer, errp)) {
-         goto enable_discards_exit;
-     }
- 
-@@ -663,8 +665,8 @@ listener_release_exit:
-     QLIST_REMOVE(bcontainer, next);
-     vfio_kvm_device_del_group(group);
-     memory_listener_unregister(&bcontainer->listener);
--    if (bcontainer->ops->release) {
--        bcontainer->ops->release(bcontainer);
-+    if (vioc->release) {
-+        vioc->release(bcontainer);
-     }
- 
- enable_discards_exit:
-@@ -689,6 +691,7 @@ static void vfio_disconnect_container(VFIOGroup *group)
- {
-     VFIOContainer *container = group->container;
-     VFIOContainerBase *bcontainer = &container->bcontainer;
-+    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
- 
-     QLIST_REMOVE(group, container_next);
-     group->container = NULL;
-@@ -700,8 +703,8 @@ static void vfio_disconnect_container(VFIOGroup *group)
-      */
-     if (QLIST_EMPTY(&container->group_list)) {
-         memory_listener_unregister(&bcontainer->listener);
--        if (bcontainer->ops->release) {
--            bcontainer->ops->release(bcontainer);
-+        if (vioc->release) {
-+            vioc->release(bcontainer);
-         }
-     }
- 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index d59df858407f3cadb9405386ad673c99cdad61d0..7bc76f80b48ea5422e68fd4d4cb3f5bca90993f6 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -324,7 +324,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
-     /* try to attach to an existing container in this space */
-     QLIST_FOREACH(bcontainer, &space->containers, next) {
-         container = container_of(bcontainer, VFIOIOMMUFDContainer, bcontainer);
--        if (bcontainer->ops != iommufd_vioc ||
-+        if (VFIO_IOMMU_GET_CLASS(bcontainer) != iommufd_vioc ||
-             vbasedev->iommufd != container->be) {
-             continue;
-         }
-@@ -465,7 +465,7 @@ static VFIODevice *iommufd_cdev_pci_find_by_devid(__u32 devid)
-         VFIO_IOMMU_CLASS(object_class_by_name(TYPE_VFIO_IOMMU_IOMMUFD));
- 
-     QLIST_FOREACH(vbasedev_iter, &vfio_device_list, global_next) {
--        if (vbasedev_iter->bcontainer->ops != iommufd_vioc) {
-+        if (VFIO_IOMMU_GET_CLASS(vbasedev_iter->bcontainer) != iommufd_vioc) {
-             continue;
-         }
-         if (devid == vbasedev_iter->devid) {
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index d8a76c1ee003e6f5669e8390271836fd9d839a8a..e03d9f3ba5461f55f6351d937aba5d522a9128ec 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2511,9 +2511,9 @@ int vfio_pci_get_pci_hot_reset_info(VFIOPCIDevice *vdev,
- static int vfio_pci_hot_reset(VFIOPCIDevice *vdev, bool single)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
--    const VFIOIOMMUClass *ops = vbasedev->bcontainer->ops;
-+    const VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(vbasedev->bcontainer);
- 
--    return ops->pci_hot_reset(vbasedev, single);
-+    return vioc->pci_hot_reset(vbasedev, single);
- }
- 
- /*
--- 
-2.45.2
+../src/target/i386/sev.c: In function 'sev_snp_launch_update':
+../src/target/i386/sev.c:886:22: error: format '%lx' expects argument of type 'long 
+unsigned int', but argument 3 has type 'uint64_t' {aka 'long long unsigned int'} 
+[-Werror=format=]
+   886 |         error_report("SNP_LAUNCH_UPDATE called with invalid address"
+       |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   887 |                      "/ length: %p / %lx",
+   888 |                      data->hva, data->len);
+       |                                 ~~~~~~~~~
+       |                                     |
+       |                                     uint64_t {aka long long unsigned int}
+../src/target/i386/sev.c:935:22: error: format '%lx' expects argument of type 'long 
+unsigned int', but argument 2 has type 'hwaddr' {aka 'long long unsigned int'} 
+[-Werror=format=]
+   935 |         error_report("SEV-SNP: expected update of GPA range %lx-%lx,"
+       |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   936 |                      "got GPA range %lx-%llx",
+   937 |                      data->gpa, data->gpa + data->len, data->gpa,
+       |                      ~~~~~~~~~
+       |                          |
+       |                          hwaddr {aka long long unsigned int}
+../src/target/i386/sev.c:935:22: error: format '%lx' expects argument of type 'long 
+unsigned int', but argument 3 has type 'long long unsigned int' [-Werror=format=]
+   935 |         error_report("SEV-SNP: expected update of GPA range %lx-%lx,"
+       |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   936 |                      "got GPA range %lx-%llx",
+   937 |                      data->gpa, data->gpa + data->len, data->gpa,
+       |                                 ~~~~~~~~~~~~~~~~~~~~~
+       |                                           |
+       |                                           long long unsigned int
+../src/target/i386/sev.c:935:22: error: format '%lx' expects argument of type 'long 
+unsigned int', but argument 4 has type 'hwaddr' {aka 'long long unsigned int'} 
+[-Werror=format=]
+   935 |         error_report("SEV-SNP: expected update of GPA range %lx-%lx,"
+       |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   936 |                      "got GPA range %lx-%llx",
+   937 |                      data->gpa, data->gpa + data->len, data->gpa,
+       |                                                        ~~~~~~~~~
+       |                                                            |
+       |                                                            hwaddr {aka long long 
+unsigned int}
+In file included from ../src/target/i386/sev.c:22:
+../src/target/i386/sev.c: In function 'sev_snp_guest_set_guest_visible_workarounds':
+/home/rth/qemu/src/include/qapi/error.h:319:25: error: format '%lu' expects argument of 
+type 'long unsigned int', but argument 6 has type 'gsize' {aka 'unsigned int'} 
+[-Werror=format=]
+   319 |                         (fmt), ## __VA_ARGS__)
+       |                         ^~~~~
+../src/target/i386/sev.c:2149:9: note: in expansion of macro 'error_setg'
+  2149 |         error_setg(errp, "parameter length of %lu exceeds max of %lu",
+       |         ^~~~~~~~~~
+/home/rth/qemu/src/include/qapi/error.h:319:25: error: format '%lu' expects argument of 
+type 'long unsigned int', but argument 7 has type 'unsigned int' [-Werror=format=]
+   319 |                         (fmt), ## __VA_ARGS__)
+       |                         ^~~~~
+../src/target/i386/sev.c:2149:9: note: in expansion of macro 'error_setg'
+  2149 |         error_setg(errp, "parameter length of %lu exceeds max of %lu",
+       |         ^~~~~~~~~~
+../src/target/i386/sev.c: In function 'sev_snp_guest_set_id_block':
+../src/target/i386/sev.c:2174:12: error: cast to pointer from integer of different size 
+[-Werror=int-to-pointer-cast]
+  2174 |     g_free((guchar *)finish->id_block_uaddr);
+       |            ^
+../src/target/i386/sev.c:2180:9: error: cast from pointer to integer of different size 
+[-Werror=pointer-to-int-cast]
+  2180 |         (uint64_t)qbase64_decode(sev_snp_guest->id_block, -1, &len, errp);
+       |         ^
+/home/rth/qemu/src/include/qapi/error.h:319:25: error: format '%lu' expects argument of 
+type 'long unsigned int', but argument 6 has type 'gsize' {aka 'unsigned int'} 
+[-Werror=format=]
+   319 |                         (fmt), ## __VA_ARGS__)
+       |                         ^~~~~
+../src/target/i386/sev.c:2187:9: note: in expansion of macro 'error_setg'
+  2187 |         error_setg(errp, "parameter length of %lu not equal to %u",
+       |         ^~~~~~~~~~
+../src/target/i386/sev.c: In function 'sev_snp_guest_set_id_auth':
+../src/target/i386/sev.c:2211:12: error: cast to pointer from integer of different size 
+[-Werror=int-to-pointer-cast]
+  2211 |     g_free((guchar *)finish->id_auth_uaddr);
+       |            ^
+../src/target/i386/sev.c:2217:9: error: cast from pointer to integer of different size 
+[-Werror=pointer-to-int-cast]
+  2217 |         (uint64_t)qbase64_decode(sev_snp_guest->id_auth, -1, &len, errp);
+       |         ^
+/home/rth/qemu/src/include/qapi/error.h:319:25: error: format '%lu' expects argument of 
+type 'long unsigned int', but argument 6 has type 'gsize' {aka 'unsigned int'} 
+[-Werror=format=]
+   319 |                         (fmt), ## __VA_ARGS__)
+       |                         ^~~~~
+../src/target/i386/sev.c:2224:9: note: in expansion of macro 'error_setg'
+  2224 |         error_setg(errp, "parameter length:ID_AUTH %lu exceeds max of %u",
+       |         ^~~~~~~~~~
+../src/target/i386/sev.c: In function 'sev_snp_guest_set_host_data':
+/home/rth/qemu/src/include/qapi/error.h:319:25: error: format '%lu' expects argument of 
+type 'long unsigned int', but argument 6 has type 'gsize' {aka 'unsigned int'} 
+[-Werror=format=]
+   319 |                         (fmt), ## __VA_ARGS__)
+       |                         ^~~~~
+../src/target/i386/sev.c:2290:9: note: in expansion of macro 'error_setg'
+  2290 |         error_setg(errp, "parameter length of %lu not equal to %lu",
+       |         ^~~~~~~~~~
+/home/rth/qemu/src/include/qapi/error.h:319:25: error: format '%lu' expects argument of 
+type 'long unsigned int', but argument 7 has type 'unsigned int' [-Werror=format=]
+   319 |                         (fmt), ## __VA_ARGS__)
+       |                         ^~~~~
+../src/target/i386/sev.c:2290:9: note: in expansion of macro 'error_setg'
+  2290 |         error_setg(errp, "parameter length of %lu not equal to %lu",
+       |         ^~~~~~~~~~
+cc1: all warnings being treated as errors
+ninja: build stopped: subcommand failed.
+
+
+r~
 
 
