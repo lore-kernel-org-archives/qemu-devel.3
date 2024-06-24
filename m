@@ -4,92 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C97D5C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 06:05:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41DBC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 06:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcp4-0000Oh-5q; Mon, 24 Jun 2024 02:05:02 -0400
+	id 1sLd0r-0005A8-92; Mon, 24 Jun 2024 02:17:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sLcp2-0000NT-LW; Mon, 24 Jun 2024 02:05:00 -0400
-Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sLcp1-0001G9-3T; Mon, 24 Jun 2024 02:05:00 -0400
-Received: by mail-ua1-x931.google.com with SMTP id
- a1e0cc1a2514c-80f5cd5717cso2191057241.1; 
- Sun, 23 Jun 2024 23:04:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719209097; x=1719813897; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FIqx486pjvWcB0j9Rra+5ck4J91i2YBVFGZKXLlW6lA=;
- b=iRtTASiU7OQocs/veab4MKh+D7TnMWqLusjOyoIHAt6bvcN3Cyp+PEOLuQ/7vU//1G
- 7YFfmxcFvc6Ufo/k7KWBL01mkmarH66ULVTfak3EeA7l+jFKawdwx1WqMzZVUVrzLDwe
- y/KnUBJpSlbk8i1GPj+UeJzVTuDftibmSCGY8+ynAwnNylky3YVNwA3/mxP1Z5lm/KqN
- 8dfnyT9vzOSsd38R4bsTKkfM1I6kNHP5aPK6WVjLf5e/L73Tov2XnxOvyZTuWLUiff84
- nn+cqHTRhDuzUAJSOizqdQ/wRqcExSD5N76sy9GHJ+PnfC4CEl4+vB8EQ4Lf0Ii4Z7HF
- ABnA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLd0q-00059G-5Q
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 02:17:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLd0l-0003a4-9y
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 02:17:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719209826;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=gQ9TejqQPcfiIa9UnYEvu2AinTtN6JKCii4WtSCB+Ko=;
+ b=J236P3nBcw3ZgZwa2+nj80nrI1MogsJvzAIfchuSrwONPDFh35Dh/TBwce/ND2BuFpoWBx
+ tb+4vlm5lkD7zUW/BW+NEsUqrIivS8uUQD3445wuf80UTgXBMmasf0sveG7FuxN7wJEoLs
+ mbevH3umznxowy1fOoabi5EmkvYtQjY=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-17-ndfTVwcxMMOTQcnD2-xzNg-1; Mon, 24 Jun 2024 02:17:04 -0400
+X-MC-Unique: ndfTVwcxMMOTQcnD2-xzNg-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a7251e7f53fso29099966b.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 23:17:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719209097; x=1719813897;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FIqx486pjvWcB0j9Rra+5ck4J91i2YBVFGZKXLlW6lA=;
- b=nShaXcSJOIggIlg5l7TojpgYKNTsQYHJdux41BPH6PphN7tY50k9H72+j3taUax6cp
- YTtUFTy2X0VUuPhju6ElsHSZWpJmJMBTUlkXNyuuYPBlROSer2io+5b9lyS0RXfXXsbz
- CvuCbBY9uIveyq+6I7EGHDbiY3vRJvWAqf3zXYXEQ97cjeexTstpi6jkjaerqaf7aDAE
- YxNXz36lG78gWRm7b87plvPkFMuv3PZMuDw7jzN5sZtHT+pLgz9/wtyhRCFdpS75+36u
- +Jt8QvjBLt1cTM46C9/ALv5MdgaxgmNW6+8OG2BbqaqQX1L9Lb1QC4DClKWrvg48xuQW
- uO0g==
+ d=1e100.net; s=20230601; t=1719209823; x=1719814623;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gQ9TejqQPcfiIa9UnYEvu2AinTtN6JKCii4WtSCB+Ko=;
+ b=GzShsBZmtE6H6qkiLffZ91tDY71sEYjkUolksN7Q84epMGQb+pkOnp7OM+v8No5bRe
+ kaQiawnSKOhYmluGXjl7FV0LfKnc5JFOWn+DNJgHiCpe40pv5szvQHemkhpHJZj3YpzG
+ 4ZE6t1Aj258uzIKYfbMU4pIUjTRC4754OEUdZfX2yn1B63I7QBA4B5ft5EZsa2Ay7DOB
+ Uu+Wu/atXypCrj1Jj1Wvv8G2hj/DB8XOJthneskTOCpw7YXqX4Iu3cZ8WxSRqgYVkO6H
+ s2pDUFld9qDCKZaTHQjezHLMHgs2gC0LgKXjvGW36p6dknAFedUziFQz0rLZBsy3BIi0
+ kMgQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW/wMCFQ1IIrVm9SznGNR5uLtQoamsWNcuy596+NqrNrhQguYfgsKOsyY3ztKs6q1kz6bMdmA8v3pOqt5y8qZKBWmD5Asf9Lf5TY/DPS5YZKd8j1QYRCYmq3vY=
-X-Gm-Message-State: AOJu0YxKvqLIqM5amFg6hpf0BsT0jPAEMNpEAtWKZFL9JrNatFmYWBHO
- cAvwutENIvhZixZRikw4nnUfMZh9pKuWaPfq2SuSJy4cAnLug53xESVv7o3IKnKEkpBtCXWuPGB
- RtPqTcujqWq0EAV2ayW0nm6IYCLU=
-X-Google-Smtp-Source: AGHT+IHRGHQM4tNv3dj7Te/fJMYoksrjC6PmrX2Akjqxw9mpNuXh6pkyhyY7tW6RI/0IHJ6TZuHky5Nyx9PDE/p9YCY=
-X-Received: by 2002:a05:6122:a1d:b0:4d3:34f4:7e99 with SMTP id
- 71dfb90a1353d-4ef652101e6mr2322868e0c.0.1719209097273; Sun, 23 Jun 2024
- 23:04:57 -0700 (PDT)
+ AJvYcCVR+K9UhtVATaekyUTShiPgFninDbiYtYbsTAims2OH1BpiCcKiPGqhIVHJAUaoZ5BNtb3/+foysxF2jzfgHI0iQPRsECc=
+X-Gm-Message-State: AOJu0YwvpqJmCmdO9DNyBD6xQpySrL0h4pgkFlRgytD/bkadHIG7DgQp
+ 7wzcawG4KwCxgCi3LQ1ewfixQuPVs0JxeIo+DEtG/AtGw03Fiw1ICodHrgaFeX/yU+UgtUhLPrz
+ VWOoCWCc3+2hhWEBf5j7tWhCEIZmf0afCwBMszzvsLPoSEzKGZ9oW
+X-Received: by 2002:a17:906:e215:b0:a6f:b78a:b39 with SMTP id
+ a640c23a62f3a-a7245b6dcafmr192789566b.1.1719209823512; 
+ Sun, 23 Jun 2024 23:17:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHh4NsBe0Kw1exxvdki2RPXrD30P0JNZPy5P1/2jgyHm7fpw1Wmf3+xLl8Di2oudEMNmhSnew==
+X-Received: by 2002:a17:906:e215:b0:a6f:b78a:b39 with SMTP id
+ a640c23a62f3a-a7245b6dcafmr192788266b.1.1719209823136; 
+ Sun, 23 Jun 2024 23:17:03 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-178-117.web.vodafone.de.
+ [109.43.178.117]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a724c83fad0sm128052166b.168.2024.06.23.23.17.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 23 Jun 2024 23:17:02 -0700 (PDT)
+Message-ID: <e07b1538-98b7-4ade-88d4-71707b6d84e2@redhat.com>
+Date: Mon, 24 Jun 2024 08:17:00 +0200
 MIME-Version: 1.0
-References: <20240621115906.1049832-1-sunilvl@ventanamicro.com>
- <20240621115906.1049832-7-sunilvl@ventanamicro.com>
-In-Reply-To: <20240621115906.1049832-7-sunilvl@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 24 Jun 2024 16:04:31 +1000
-Message-ID: <CAKmqyKPrCjRNXKc6GWERwYzgrsQ3ed6XKa+Swf_8Y2ds27a58w@mail.gmail.com>
-Subject: Re: [PATCH v3 06/15] tests/qtest/bios-tables-test.c: Set "arch" for
- aarch64 tests
-To: Sunil V L <sunilvl@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] arch_dump: fix prstatus pid on s390x and ppc
+To: Omar Sandoval <osandov@osandov.com>, qemu-devel@nongnu.org,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: qemu-s390x@nongnu.org, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ linux-debuggers@vger.kernel.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>
+References: <cover.1718771802.git.osandov@osandov.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <cover.1718771802.git.osandov@osandov.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,95 +151,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 21, 2024 at 9:59=E2=80=AFPM Sunil V L <sunilvl@ventanamicro.com=
-> wrote:
->
-> To search for expected AML files under ${arch}/${machine} path, set this
-> field for AARCH64 related test cases.
->
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+On 19/06/2024 07.00, Omar Sandoval wrote:
+> Hello,
+> 
+> I maintain drgn [1], a debugger for the Linux kernel. I ran into a quirk
+> of the NT_PRSTATUS note in kernel core dumps [2], so I looked into how
+> QEMU's dump-guest-memory command generates NT_PRSTATUS. I noticed that
+> on most architectures, the note's PID field is set to the CPU ID plus 1.
+> There are two exceptions: on s390x, there's an endianness bug (it's not
+> byte swapped if the host is little endian), and on ppc, it's not set at
+> all (it defaults to zero). They're both easy fixes.
+> 
+> Thanks,
+> Omar
+> 
+> 1: https://github.com/osandov/drgn
+> 2: https://github.com/osandov/drgn/issues/404
+> 
+> Omar Sandoval (2):
+>    target/s390x/arch_dump: use correct byte order for pid
+>    target/ppc/arch_dump: set prstatus pid to cpuid
+> 
+>   target/ppc/arch_dump.c   | 21 ++++++++++++---------
+>   target/s390x/arch_dump.c |  2 +-
+>   2 files changed, 13 insertions(+), 10 deletions(-)
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+I'm going to pick up patch 1 for my s390x tree ... for the second patch, it 
+would be good if someone of the ppc guys could have a look at it first.
 
-Alistair
+  Thomas
 
-> ---
->  tests/qtest/bios-tables-test.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-tes=
-t.c
-> index 29c52952f4..007c281c9a 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -1591,6 +1591,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
->  {
->      test_data data =3D {
->          .machine =3D "virt",
-> +        .arch =3D "aarch64",
->          .tcg_only =3D true,
->          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
-> @@ -1684,6 +1685,7 @@ static void test_acpi_aarch64_virt_tcg_numamem(void=
-)
->  {
->      test_data data =3D {
->          .machine =3D "virt",
-> +        .arch =3D "aarch64",
->          .tcg_only =3D true,
->          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
-> @@ -1706,6 +1708,7 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
->  {
->      test_data data =3D {
->          .machine =3D "virt",
-> +        .arch =3D "aarch64",
->          .tcg_only =3D true,
->          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
-> @@ -1779,6 +1782,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(vo=
-id)
->  {
->      test_data data =3D {
->          .machine =3D "virt",
-> +        .arch =3D "aarch64",
->          .tcg_only =3D true,
->          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
-> @@ -1935,6 +1939,7 @@ static void test_acpi_aarch64_virt_tcg(void)
->  {
->      test_data data =3D {
->          .machine =3D "virt",
-> +        .arch =3D "aarch64",
->          .tcg_only =3D true,
->          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
-> @@ -1954,6 +1959,7 @@ static void test_acpi_aarch64_virt_tcg_topology(voi=
-d)
->  {
->      test_data data =3D {
->          .machine =3D "virt",
-> +        .arch =3D "aarch64",
->          .variant =3D ".topology",
->          .tcg_only =3D true,
->          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
-> @@ -2037,6 +2043,7 @@ static void test_acpi_aarch64_virt_viot(void)
->  {
->      test_data data =3D {
->          .machine =3D "virt",
-> +        .arch =3D "aarch64",
->          .tcg_only =3D true,
->          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
-> @@ -2213,6 +2220,7 @@ static void test_acpi_aarch64_virt_oem_fields(void)
->  {
->      test_data data =3D {
->          .machine =3D "virt",
-> +        .arch =3D "aarch64",
->          .tcg_only =3D true,
->          .uefi_fl1 =3D "pc-bios/edk2-aarch64-code.fd",
->          .uefi_fl2 =3D "pc-bios/edk2-arm-vars.fd",
-> --
-> 2.40.1
->
+
 
