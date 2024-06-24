@@ -4,89 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D8CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:52:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BDC0C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:59:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLk70-0005CM-AQ; Mon, 24 Jun 2024 09:52:02 -0400
+	id 1sLkDh-00076t-Ei; Mon, 24 Jun 2024 09:58:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLk6y-0005Bq-NS
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:52:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
+ id 1sLkDg-00075b-1C; Mon, 24 Jun 2024 09:58:56 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLk6x-0005b7-DY
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:52:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719237117;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=N/EVfZvBR+l9w9B5iYww32KGkGwB6S0lG5l7VQvMcTY=;
- b=WH/2WYC2Im+L28uKMmD04USZOMzgiGvi86y7EsYSnXyF8fVFM/1A5ng6o7FItbIuIFMjjI
- AgxE8TvyYZUYDiF/J4Ewdh47sRF1pySUoSjzroW9g14Dbh2ggslUPfcMTc++T9aRnfjtkM
- 2AkBooDB8FbmhvDkwjQu85s+P4f8QJY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-495-NEHpcfMzNSGQDSmPyJSBGw-1; Mon, 24 Jun 2024 09:51:55 -0400
-X-MC-Unique: NEHpcfMzNSGQDSmPyJSBGw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4246e5fd996so24442895e9.0
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:51:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719237114; x=1719841914;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=N/EVfZvBR+l9w9B5iYww32KGkGwB6S0lG5l7VQvMcTY=;
- b=JSQQeWexwglMDZ59WUdK+Mqjzq82irHb/AH8rVItnmnjJwbLaq5E4gM9KyALAwey8n
- /2igr6No2ksjUIasXTi7wCJn0rh3E5Lsb6wKxlIT9hpGFOUPfCdMHJtX5I6gQTQb8ZNC
- i3Wy7b3yam0O3gbl6lyDg9T+4HArsEAjZTdPxn89w1ydoDudctSWhvFDOiGBqxOH6/GF
- A6poVErN2LpuiqXMJX71SF8dovpN5wVT9/qgpahoQJDlQxQaaruuRNm3pRFo7O+bDcjG
- oco9fHhV1LJt79gmDI2cgxEOYcVoOCaKyFkirj+FRj3jnCKbfVr9ovI9z2YCpHpumJlE
- Q/Nw==
-X-Gm-Message-State: AOJu0YzX5e9tmsVNpuaPVQq6LKnlUfP8iC9GVjK/BRieMm97sumFzXZp
- PTmk6RUGZZYp/xq1H4saiKD5LWPxZXqgwBSFr6WuXdhw3+sqkM1wAcJvTBdE7H5nSicgw4GJnym
- t5JPezLo0GDQ8YO+7ooysHxd5L/4duRMjAG/W9M+o4+mTCGf7F7k7
-X-Received: by 2002:a05:600c:4f94:b0:424:90fa:6758 with SMTP id
- 5b1f17b1804b1-42490fa6992mr23704915e9.5.1719237114618; 
- Mon, 24 Jun 2024 06:51:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCjs8EecFrWDytXiluHrmJftQKxesX6ZDq1Rjd/VlnW/8dEFAf7waiyQpMLW1ncA96gs50/Q==
-X-Received: by 2002:a05:600c:4f94:b0:424:90fa:6758 with SMTP id
- 5b1f17b1804b1-42490fa6992mr23704685e9.5.1719237113953; 
- Mon, 24 Jun 2024 06:51:53 -0700 (PDT)
-Received: from redhat.com ([2.52.146.100]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42481921f16sm134442695e9.41.2024.06.24.06.51.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 06:51:53 -0700 (PDT)
-Date: Mon, 24 Jun 2024 09:51:50 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "imammedo@redhat.com" <imammedo@redhat.com>
-Subject: Re: [PATCH 1/1] hw/i386/acpi-build: add OSHP method support for SHPC
- driver load
-Message-ID: <20240624094556-mutt-send-email-mst@kernel.org>
-References: <20240624131426.77231-1-gaoshiyuan@baidu.com>
- <20240624091745-mutt-send-email-mst@kernel.org>
- <a15cb952e03845b684f5211d75dfb4ff@baidu.com>
+ (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
+ id 1sLkDY-0006eM-VU; Mon, 24 Jun 2024 09:58:55 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W78h03CvQz4wbh;
+ Mon, 24 Jun 2024 23:58:40 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W78gX2hzkz4wb2;
+ Mon, 24 Jun 2024 23:58:16 +1000 (AEST)
+Message-ID: <b013bd79-c206-446e-b482-91eeb926c70a@kaod.org>
+Date: Mon, 24 Jun 2024 15:58:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <a15cb952e03845b684f5211d75dfb4ff@baidu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] aspeed/soc: fix coverity issue
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>
+Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
+ <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
+ <CAFEAcA8tTHusKOR7JhyU+wwA3JJWq1o5wVaNXugw2S9SjAsESw@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <CAFEAcA8tTHusKOR7JhyU+wwA3JJWq1o5wVaNXugw2S9SjAsESw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=voaC=N2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,61 +70,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 24, 2024 at 01:34:08PM +0000, Gao,Shiyuan wrote:
-> > > SHPC driver will be loaded fail in i440fx platform, the dmesg shows
-> > > that OS cannot get control of SHPC hotplug and hotplug device to
-> > > the PCI bridge will fail when we use SHPC Native type:
-> > >
-> > >   [3.336059] shpchp 0000:00:03.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0.S28_)
-> > >   [3.337408] shpchp 0000:00:03.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0)
-> > >   [3.338710] shpchp 0000:00:03.0: Cannot get control of SHPC hotplug
-> > >
-> > > Add OSHP method support for SHPC driver load, the hotplug device to the PCI bridge will
-> > > success when we use SHPC Native type.
-> > >
-> > >   [1.703975] shpchp 0000:00:03.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0.S18_)
-> > >   [1.704934] shpchp 0000:00:03.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0)
-> > >   [1.705855] shpchp 0000:00:03.0: Gained control of SHPC hotplug (\_SB_.PCI0)
-> > >   [1.707054] shpchp 0000:00:03.0: HPC vendor_id 1b36 device_id 1 ss_vid 0 ss_did 0
-> > >
-> > > According to the acpi_pcihp, the OSHP method don't need parameter and return value now.
-> > >
-> > >   shpc_probe
-> > >     --> acpi_get_hp_hw_control_from_firmware
-> > >       --> acpi_run_oshp
-> > >         --> status = acpi_evaluate_object(handle, METHOD_NAME_OSHP, NULL, NULL);
-> > >
-> > > Signed-off-by: Shiyuan Gao <gaoshiyuan@baidu.com>
-> > > ---
-> > >  hw/i386/acpi-build.c | 14 ++++++++++++++
-> > >  1 file changed, 14 insertions(+)
-> > >
-> > > diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> > > index f4e366f64f..79622e6939 100644
-> > > --- a/hw/i386/acpi-build.c
-> > > +++ b/hw/i386/acpi-build.c
-> > > @@ -1412,6 +1412,18 @@ static void build_acpi0017(Aml *table)
-> > >      aml_append(table, scope);
-> > >  }
-> > >
-> > > +static Aml *build_oshp_method(void)
-> > > +{
-> > > +    Aml *method;
-> > > +
-> > > +    /*
-> > > +     * Request control of SHPC hotplug via OSHP method,
-> > > +     * no need parameter and return value in acpi_pcihp.
-> > > +     */
-> >
-> > Quote spec and earliest version documenting this, please.
+On 6/24/24 2:18 PM, Peter Maydell wrote:
+> On Wed, 19 Jun 2024 at 10:35, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
+>>
+>> Fix coverity defect: DIVIDE_BY_ZERO.
+>>
+>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>> ---
+>>   hw/arm/aspeed_ast27x0.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+>> index b6876b4862..d14a46df6f 100644
+>> --- a/hw/arm/aspeed_ast27x0.c
+>> +++ b/hw/arm/aspeed_ast27x0.c
+>> @@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
+>>       ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
+>>                                           &error_abort);
+>>
+>> +    if (!ram_size) {
+>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>> +                      "%s: ram_size is zero",  __func__);
+>> +        return;
+>> +    }
+>> +
 > 
-> I cann't find document describe this, only find in the kernel code
-> and describe it in the commit message.
+> Isn't this a QEMU bug rather than a guest error? The
+> RAM size presumably should never be zero unless the board
+> set the ram-size property on the SDMC incorrectly. So the
+> SDMC device should check (and return an error from its realize
+> method) that the ram-size property is valid, 
 
-Hrrm you really should read the spec not just go by the fact things
-happen to work.  Look up PCI Firmware Specification
+That's the case in aspeed_sdmc_set_ram_size() which is called from
+the aspeed machine init routine when the ram size is set.
 
--- 
-MST
+Setting the machine ram size to zero on the command line doesn't
+report an error though and the size is the default.
 
+> and then here we can just assert(ram_size != 0).
+
+Yes.
+
+Jamin, could you please send a v2 with the commit logs update
+I proposed ? See the patches on my aspeed-9.1 branch.
+
+Thanks,
+
+C.
 
