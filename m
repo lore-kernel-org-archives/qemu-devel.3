@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC75C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F7AFC30653
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLqzU-0007fW-JH; Mon, 24 Jun 2024 17:12:44 -0400
+	id 1sLr3w-0000Db-Ul; Mon, 24 Jun 2024 17:17:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sLqzS-0007el-FN
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:12:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLr3v-0000DF-M8
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:17:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sLqzQ-0004ni-BK
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:12:42 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLr3t-0005Ps-Nf
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:17:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719263558;
+ s=mimecast20190719; t=1719263837;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ibbd3hVdbE/1r0cwDndo0YXsXE77iv1gB14iaD7leE4=;
- b=MThIWlHD4q2VsM51tPCachMf9QxIcHvvgLEp4XtNjK0uRKg0708XinDF/yU7yKCQMv9zPi
- bFJSAzGN73PwfkJ6IHmVVyz56UnhfSkPOuL8JRWZkZNESZ0891esn4ziqZyAzypnE+VAq+
- 861phE8dVvElaFWQxNiGUG/Gu2mcbzE=
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7i86XXon0m8KCh7qZ7U0z744yZvCZjERZ3E1tfuh9hU=;
+ b=WOfJ7QC+bt6wNXfmdO5dtbUp4b+GJdcfZBg+zP+ROVMBVmeA6/Utr5FJZd8u7XWl5Q1yRA
+ Ori6khCXJftHWM388DcaH8HtJWYoRLOIDNMVOkPPdD5vaUotnZiXbnT0WbkQiHzBkrIH7v
+ PRA/N4jAqbWHaAIwmDFeA5eb9WfJ+7w=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-sxaru6sZNCmHONihdM3tkw-1; Mon, 24 Jun 2024 17:12:36 -0400
-X-MC-Unique: sxaru6sZNCmHONihdM3tkw-1
-Received: by mail-ua1-f69.google.com with SMTP id
- a1e0cc1a2514c-80f4a34f07dso2789652241.1
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 14:12:35 -0700 (PDT)
+ us-mta-616-qZEDXe2KNbao6swdGKNuoA-1; Mon, 24 Jun 2024 17:17:15 -0400
+X-MC-Unique: qZEDXe2KNbao6swdGKNuoA-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6af35481ea6so77936576d6.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 14:17:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719263555; x=1719868355;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ibbd3hVdbE/1r0cwDndo0YXsXE77iv1gB14iaD7leE4=;
- b=KMKqXKJuMNTy7jAe/RjKrrnA3Zmlm0+jqb4ty8vACvBobLDmPxQfgXLozdapzJLYnX
- NOUikRccCIPybJ2o6S3ebJczbMWUJTgiqcNhuJn5OQ32RMQAieJGc809JVxr6uEYdBtK
- NHYpsgI9sz24IWOJgcdf9H9kcuQtQK7EJQoyZAF8WyYLk7sM8yHhzBIXm4A/j9J4hsDs
- BjbnkEHD7FNMfKK6fRp6ak7GJZZZPXK3lTm3e3Tc5I0NJ3XkI/12rwcS31uKws7RedK2
- xlP+MjOjBjTt0hOXz1eZSGX0NH7V8OXiu5FhL7RezR4ZTn/axHXXDqp65xAbBS/DUBJU
- Vsaw==
+ d=1e100.net; s=20230601; t=1719263835; x=1719868635;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7i86XXon0m8KCh7qZ7U0z744yZvCZjERZ3E1tfuh9hU=;
+ b=T2YyX0zd0uCAR2J1Hyl/ODwS221cpvSrj3qxtDlk1NW3WIG8ED42P+AcWW6Z2DbfJ+
+ y2TtyJN/SrG4O/28o3pYF+Xk5pHX0SKa3KN8J7hNPiUEN986mJM7Mq7kV/8gD/FET1mp
+ U17HQ5aaS0D46nTu2jQjBj2IVzuors61/usplJEt0ZQrrO6VC1jev+MB34naUQSNb2Qb
+ 3jtS8NPGio53OwAcxZ6OBPxNMHlzVZXPCb4ZXjHk4n3s4lRz7w02FBJ7bCUa3lxdozUE
+ CxVj8EQ6FGZvcWNkJMUQy+41IbNBLnxuKXNKsW1BqVgfk4XaQ4IgoMWc+tInPCyvS5yj
+ d2gg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQnwqs8Rh5159e2YX2kzhgnD+ARvL53yYQ9WnQMmM9NQzFrjNi5+xu5eAPuJTSDLlG97psknilDXZNmRTzBImyxKARjfE=
-X-Gm-Message-State: AOJu0YywuOVoOU4s4a6rjgQC7iQuDofbfuliFigejyaqixz9vlHiAjfr
- bTf3+aNq1szNFuKQdxbnJq1HtVJS4DHU67HZuQ1mZKot/tdsMrVhgU5ohUrVMk9Agfvd5ehoja4
- +o+z1uKa5puO1VCfQMsZdvFgdDeelFuwThbrXMAwD7GROJzwie93JFjhF6Go6PVPwNIWcVMeETU
- TQdmT0eKyWzSxnS2MEk46+dy/NHS8=
-X-Received: by 2002:a05:6122:202a:b0:4ef:5e3f:599a with SMTP id
- 71dfb90a1353d-4ef6d8baf8emr4431730e0c.14.1719263555391; 
- Mon, 24 Jun 2024 14:12:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHudo2yhNLWv97A8snyumY09PxXw/nwj3WFxbT8G+pIL60vo0mDD95JgHRp0M9W0YkjBFgvehdQPD9fDI24Grs=
-X-Received: by 2002:a05:6122:202a:b0:4ef:5e3f:599a with SMTP id
- 71dfb90a1353d-4ef6d8baf8emr4431718e0c.14.1719263555021; Mon, 24 Jun 2024
- 14:12:35 -0700 (PDT)
+ AJvYcCXeCgWqg0gobNurbNStmTYC/z9qRpN33xgj2sk2RVnWg/4f2yXNLkMApYWK89mYngwtL3W/eOV/faIaGO6eI961wK2cFgM=
+X-Gm-Message-State: AOJu0YycrjOCa6VCwQ8M5prz6oT0shCA+IDnqWLe0k5MXbz01hsbNwd1
+ 6cbzFJBt3/Rai4JY59STA92fC5B0HWNju2uab7yweHrEidh3OGSLlRX+QQPQl7Cd9jLyLAVqahC
+ HXQ4rayUMi9Ja8XohriF3/hwHVRKml5util91gH+7sW6eW0ktcQzg
+X-Received: by 2002:ad4:5fcf:0:b0:6b5:46ad:b92c with SMTP id
+ 6a1803df08f44-6b546adbb20mr69284136d6.1.1719263834969; 
+ Mon, 24 Jun 2024 14:17:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1ginBSjo7d5Ld9eXQvvqApYXvRL4Vm6y1mQcFCETRK3+h6cRmatnGD2ioRHKVEo7mF99SGA==
+X-Received: by 2002:ad4:5fcf:0:b0:6b5:46ad:b92c with SMTP id
+ 6a1803df08f44-6b546adbb20mr69283916d6.1.1719263834639; 
+ Mon, 24 Jun 2024 14:17:14 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b51ef6e795sm37225086d6.141.2024.06.24.14.17.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Jun 2024 14:17:14 -0700 (PDT)
+Message-ID: <8a655c20-3354-4b3b-b053-e0bfd10ab26e@redhat.com>
+Date: Mon, 24 Jun 2024 23:17:11 +0200
 MIME-Version: 1.0
-References: <20240619174022.1298578-1-nsoffer@redhat.com>
- <CAMRbyyso9cMFueVS3SGtJ3G=-OGu+ueqqE5u2NYtsydBxf_J3Q@mail.gmail.com>
- <20240624152302.GA2402845@fedora.redhat.com> <ZnmZ-m38IAHg0UdX@redhat.com>
-In-Reply-To: <ZnmZ-m38IAHg0UdX@redhat.com>
-From: Nir Soffer <nsoffer@redhat.com>
-Date: Tue, 25 Jun 2024 00:12:18 +0300
-Message-ID: <CAMRbyyv9utXsfXKiPz4fGw+S4JLgsZE2UDxUOxwG1fxZwGMHNQ@mail.gmail.com>
-Subject: Re: [PATCH v2] Consider discard option when writing zeros
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Fam Zheng <fam@euphon.net>, 
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000079064b061ba93d33"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=nsoffer@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/8] VIRTIO-IOMMU/VFIO: Fix host iommu geometry
+ handling for hotplugged devices
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
+ jean-philippe@linaro.org, peter.maydell@linaro.org, yanghliu@redhat.com,
+ zhenzhong.duan@intel.com
+Cc: alex.williamson@redhat.com, jasowang@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com
+References: <20240614095402.904691-1-eric.auger@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240614095402.904691-1-eric.auger@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,122 +108,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000079064b061ba93d33
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 6/14/24 11:52 AM, Eric Auger wrote:
+> This series is based on Zhenzhong HostIOMMUDevice:
+> 
+> [PATCH v7 00/17] Add a host IOMMU device abstraction to check with vIOMMU
+> https://lore.kernel.org/all/20240605083043.317831-1-zhenzhong.duan@intel.com/
+> 
+> It allows to convey host IOVA reserved regions to the virtio-iommu and
+> uses the HostIOMMUDevice infrastructure. This replaces the usage of
+> IOMMU MR ops which fail to satisfy this need for hotplugged devices.
+> 
+> See below for additional background.
+> 
+> In [1] we attempted to fix a case where a VFIO-PCI device protected
+> with a virtio-iommu was assigned to an x86 guest. On x86 the physical
+> IOMMU may have an address width (gaw) of 39 or 48 bits whereas the
+> virtio-iommu used to expose a 64b address space by default.
+> Hence the guest was trying to use the full 64b space and we hit
+> DMA MAP failures. To work around this issue we managed to pass
+> usable IOVA regions (excluding the out of range space) from VFIO
+> to the virtio-iommu device. This was made feasible by introducing
+> a new IOMMU Memory Region callback dubbed iommu_set_iova_regions().
+> This latter gets called when the IOMMU MR is enabled which
+> causes the vfio_listener_region_add() to be called.
+> 
+> For coldplugged devices the technique works because we make sure all
+> the IOMMU MR are enabled once on the machine init done: 94df5b2180
+> ("virtio-iommu: Fix 64kB host page size VFIO device assignment")
+> for granule freeze. But I would be keen to get rid of this trick.
+> 
+> However with VFIO-PCI hotplug, this technique fails due to the
+> race between the call to the callback in the add memory listener
+> and the virtio-iommu probe request. Indeed the probe request gets
+> called before the attach to the domain. So in that case the usable
+> regions are communicated after the probe request and fail to be
+> conveyed to the guest.
+> 
+> Using an IOMMU MR Ops is unpractical because this relies on the IOMMU
+> MR to have been enabled and the corresponding vfio_listener_region_add()
+> to be executed. Instead this series proposes to replace the usage of this
+> API by the recently introduced PCIIOMMUOps: ba7d12eb8c  ("hw/pci: modify
+> pci_setup_iommu() to set PCIIOMMUOps"). That way, the callback can be
+> called earlier, once the usable IOVA regions have been collected by
+> VFIO, without the need for the IOMMU MR to be enabled.
+> 
+> This series also removes the spurious message:
+> qemu-system-aarch64: warning: virtio-iommu-memory-region-7-0: Notified about new host reserved regions after probe
+> 
+> In the short term this may also be used for passing the page size
+> mask, which would allow to get rid of the hacky transient IOMMU
+> MR enablement mentionned above.
+> 
+> [1] [PATCH v4 00/12] VIRTIO-IOMMU/VFIO: Don't assume 64b IOVA space
+>      https://lore.kernel.org/all/20231019134651.842175-1-eric.auger@redhat.com/
+> 
+> Extra Notes:
+> With that series, the reserved memory regions are communicated on time
+> so that the virtio-iommu probe request grabs them. However this is not
+> sufficient. In some cases (my case), I still see some DMA MAP failures
+> and the guest keeps on using IOVA ranges outside the geometry of the
+> physical IOMMU. This is due to the fact the VFIO-PCI device is in the
+> same iommu group as the pcie root port. Normally the kernel
+> iova_reserve_iommu_regions (dma-iommu.c) is supposed to call reserve_iova()
+> for each reserved IOVA, which carves them out of the allocator. When
+> iommu_dma_init_domain() gets called for the hotplugged vfio-pci device
+> the iova domain is already allocated and set and we don't call
+> iova_reserve_iommu_regions() again for the vfio-pci device. So its
+> corresponding reserved regions are not properly taken into account.
+> 
+> This is not trivial to fix because theoretically the 1st attached
+> devices could already have allocated IOVAs within the reserved regions
+> of the second device. Also we are somehow hijacking the reserved
+> memory regions to model the geometry of the physical IOMMU so not sure
+> any attempt to fix that upstream will be accepted. At the moment one
+> solution is to make sure assigned devices end up in singleton group.
+> Another solution is to work on a different approach where the gaw
+> can be passed as an option to the virtio-iommu device, similarly at
+> what is done with intel iommu.
+> 
+> This series can be found at:
+> https://github.com/eauger/qemu/tree/iommufd_nesting_preq_v7_resv_regions_v4
+> 
+> History:
+> v3 -> v4:
+> - add one patch to add aliased pci bus and devfn in the HostIOMMUDevice
+> - Use those for resv regions computation
+> - Remove VirtioHostIOMMUDevice and simply use the base object
+> 
+> v2 -> v3:
+> - moved the series from RFC to patch
+> - collected Zhenzhong's R-bs and took into account most of his comments
+>    (see replies on v2)
+> 
+> 
+> Eric Auger (8):
+>    HostIOMMUDevice: Store the VFIO/VDPA agent
+>    virtio-iommu: Implement set|unset]_iommu_device() callbacks
+>    HostIOMMUDevice: Introduce get_iova_ranges callback
+>    HostIOMMUDevice: Store the aliased bus and devfn
+>    virtio-iommu: Compute host reserved regions
+>    virtio-iommu: Remove the implementation of iommu_set_iova_range
+>    hw/vfio: Remove memory_region_iommu_set_iova_ranges() call
+>    memory: Remove IOMMU MR iommu_set_iova_range API
+> 
+>   include/exec/memory.h              |  32 ----
+>   include/hw/virtio/virtio-iommu.h   |   2 +
+>   include/sysemu/host_iommu_device.h |  11 ++
+>   hw/pci/pci.c                       |   8 +-
+>   hw/vfio/common.c                   |  10 -
+>   hw/vfio/container.c                |  17 ++
+>   hw/vfio/iommufd.c                  |  18 ++
+>   hw/virtio/virtio-iommu.c           | 296 +++++++++++++++++++----------
+>   system/memory.c                    |  13 --
+>   9 files changed, 249 insertions(+), 158 deletions(-)
+> 
 
-On Mon, Jun 24, 2024 at 7:08=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
-:
+Applied to vfio-next.
 
-> Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:
-> > On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:
-> > > Tested using:
-> >
-> > Hi Nir,
-> > This looks like a good candidate for the qemu-iotests test suite. Addin=
-g
-> > it to the automated tests will protect against future regressions.
-> >
-> > Please add the script and the expected output to
-> > tests/qemu-iotests/test/write-zeroes-unmap and run it using
-> > `(cd build && tests/qemu-iotests/check write-zeroes-unmap)`.
-> >
-> > See the existing test cases in tests/qemu-iotests/ and
-> > tests/qemu-iotests/tests/ for examples. Some are shell scripts and
-> > others are Python. I think shell makes sense for this test case. You
-> > can copy the test framework boilerplate from an existing test case.
->
-> 'du' can't be used like this in qemu-iotests because it makes
-> assumptions that depend on the filesystem. A test case replicating what
-> Nir did manually would likely fail on XFS with its preallocation.
->
+Thanks,
 
-This is why I did not try to add a new qemu-iotest yet.
+C.
 
 
-> Maybe we could operate on a file exposed by the FUSE export that is
-> backed by qcow2, and then you can use 'qemu-img map' on that qcow2 image
-> to verify the allocation status. Somewhat complicated, but I think it
-> could work.
->
-
-Do we have examples of using the FUSE export? It sounds complicated but
-being able to test on any file system is awesome. The complexity can be
-hidden behind simple test helpers.
-
-Another option is to use a specific file system created for the tests, for
-example
-on a loop device. We used userstorage[1] in ovirt to test on specific file
-systems
-with known sector size.
-
-But more important, are you ok with the change?
-
-I'm not sure about not creating sparse images by default - this is not
-consistent
-with qemu-img convert and qemu-nbd, which do sparsify by default. The old
-behavior seems better.
-
-[1] https://github.com/nirs/userstorage
-
-Nir
-
---00000000000079064b061ba93d33
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">On Mon, Jun 24, 2024 at 7:08=E2=80=AFPM K=
-evin Wolf &lt;<a href=3D"mailto:kwolf@redhat.com">kwolf@redhat.com</a>&gt; =
-wrote:<br></div><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote=
-" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
-padding-left:1ex">Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:<b=
-r>
-&gt; On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:<br>
-&gt; &gt; Tested using:<br>
-&gt; <br>
-&gt; Hi Nir,<br>
-&gt; This looks like a good candidate for the qemu-iotests test suite. Addi=
-ng<br>
-&gt; it to the automated tests will protect against future regressions.<br>
-&gt; <br>
-&gt; Please add the script and the expected output to<br>
-&gt; tests/qemu-iotests/test/write-zeroes-unmap and run it using<br>
-&gt; `(cd build &amp;&amp; tests/qemu-iotests/check write-zeroes-unmap)`.<b=
-r>
-&gt; <br>
-&gt; See the existing test cases in tests/qemu-iotests/ and<br>
-&gt; tests/qemu-iotests/tests/ for examples. Some are shell scripts and<br>
-&gt; others are Python. I think shell makes sense for this test case. You<b=
-r>
-&gt; can copy the test framework boilerplate from an existing test case.<br=
->
-<br>
-&#39;du&#39; can&#39;t be used like this in qemu-iotests because it makes<b=
-r>
-assumptions that depend on the filesystem. A test case replicating what<br>
-Nir did manually would likely fail on XFS with its preallocation.<br></bloc=
-kquote><div><br></div><div>This is why I did not try to add a new qemu-iote=
-st yet.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"ma=
-rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
-1ex">
-Maybe we could operate on a file exposed by the FUSE export that is<br>
-backed by qcow2, and then you can use &#39;qemu-img map&#39; on that qcow2 =
-image<br>
-to verify the allocation status. Somewhat complicated, but I think it<br>
-could work.<br></blockquote><div><br></div><div>Do we have examples of usin=
-g the FUSE export? It sounds complicated but</div><div>being able to test o=
-n any file system is awesome. The complexity can be</div><div>hidden behind=
- simple test helpers.</div><div><br></div><div>Another option is to use a s=
-pecific file system created for the tests, for example</div><div>on a loop =
-device. We used userstorage[1] in ovirt to test on specific file systems</d=
-iv><div>with known sector size.</div><div><br></div><div>But more important=
-, are you ok with the change?</div><div><br></div><div>I&#39;m not sure abo=
-ut not creating sparse images by default - this is not consistent</div><div=
->with qemu-img convert and qemu-nbd, which do sparsify by default. The old<=
-/div><div>behavior seems better.</div><div><br></div><div>[1]=C2=A0<a href=
-=3D"https://github.com/nirs/userstorage">https://github.com/nirs/userstorag=
-e</a></div><div><br></div><div>Nir</div><div>=C2=A0</div></div></div>
-
---00000000000079064b061ba93d33--
 
 
