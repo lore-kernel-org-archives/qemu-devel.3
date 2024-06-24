@@ -4,104 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCBF5C2BD09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C79C3064D
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:12:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLjTk-0006wp-05; Mon, 24 Jun 2024 09:11:28 -0400
+	id 1sLjTP-0006mH-9m; Mon, 24 Jun 2024 09:11:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sLjTh-0006wR-AQ
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:11:25 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjTN-0006kw-3h
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:11:05 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sLjTc-000448-86
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:11:25 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a6265d3ba8fso474585366b.0
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:11:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjTK-000405-9S
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:11:04 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2ec002caeb3so55419601fa.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:11:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719234678; x=1719839478; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=i4+2Eya4KDJej1eHFMFxWHJUFBQmod7jwwxhrYSVtHE=;
- b=sspjDzQBZsH0DbhaJtHUatVphtMzVnvjjtMi8qN+sZDNE3Uc2gwGBmrEriLVlRGt2a
- ySGrTkcfQjdcmXs5eQLigiQGLHkH1R56utVdI6hfvipQbVtOm+DQa+oiVPda9mdpUHy7
- SiO7apwLk4Tqk40QGXmZ1V8BMrmeFzaTtqfkiEltPyb18meQ+Mj4D08Ao4Pg+QX6gzpk
- 39cu+VjuLqP9up4RVOLqh7ZEA4GRybC0f1DX+AsRVXzr8DLsSSeDlTTaXOWPsSOGTzoh
- BMYQek+wQUc9czsJ2oGevNeTIATUvIXGxzcauLNScpONGBkl2CGwxyI0rHfTGLZdJdPX
- 8iBw==
+ d=linaro.org; s=google; t=1719234660; x=1719839460; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ca/j5lYq2nn8e1I6CyXYK+okG+eIPRXYPxMcR6xeFjo=;
+ b=zRL7k6qYx0Nj9cw/DJcOe0WMQDefFF5d8usHmzalwUPnzKbn/9b35Bzz2GyoZxN+pB
+ I9PjOQZXcFFucqq8BgO2mdyO+XvlvbtXpE5uaii2HJRAhP9Lx3SYWuwvIvzZCtkZ0F+4
+ IM7Pcs1/Y7kWtAV87WmIoN3tdoHZi6r2tcBMZ4+JLp6Fxgskzof9dsGCNl9TsW5DXrhr
+ jXUCRnc8fR5RiFiXRLYEJdvwTozMXTKYYQ2EH4n0xZy50XwakyjKWnOBpTmX0DLwvC9C
+ 2wusccGzBbjPCA3FjegzecpC/7MFH+aQfOAibE5HHjnMEGVeOwsARDtKqTYoNSpgYcUS
+ WSTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719234678; x=1719839478;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i4+2Eya4KDJej1eHFMFxWHJUFBQmod7jwwxhrYSVtHE=;
- b=vKu9WuhGRJUINmF95lUQyhh2fNsdsOXfa5uifFFCu3fxhByxpDRmZEPh2cNHSan1BC
- Kk8rlQNv3XQAs54IV8lmG94tkxHgUGu1W26hZTw3cv3HH2D0WNIyGksbmI1K7/v0fa7O
- s3jJeSYRG+wQ265IcSrgwhQqRR24aXUxHvtA7W5tUVgVT+uo48YINeYjA/MFBJqO08ud
- o8+kKelCKaBT+lEYP6QCAEYDL72ROPDXV69JTcYRzKxuPpp9aTtprC89FYLUT9Wx9667
- LFFy/5saHaRsNzV4saeXusfsyfCQL6kApSGPsSTY7LUjndBrl3D1h9wixZ9XhQqOgUHZ
- JjhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMn+DKdijpTpNVMMeMMa8fa5HRMhdY4QT3eTuUwnJCzSvtnEUflPHB3hi8IqZ/Lbm3nuQxgnYaG8+jIzju+XWI3j1EJVI=
-X-Gm-Message-State: AOJu0YyXzGbcVyJ/CISlB1lFJl5mgxeMQygu75hfbpnmDc3w19/T22N5
- IHIRa7dPT32rqkbBazZzTNbB6CuY/0sbdICv91VI3WwwOTYtjz+TBVC4Vl1nlLo=
-X-Google-Smtp-Source: AGHT+IECN+n7iVHxeSvU5Ttbd+bI/5Pljw0SjhLC9sT1X8j9ENQoqTVl9c++8nEFNBlv/8gTo1SmYQ==
-X-Received: by 2002:a17:906:40d3:b0:a6f:badc:8d2 with SMTP id
- a640c23a62f3a-a7242e13140mr294915666b.70.1719234678290; 
- Mon, 24 Jun 2024 06:11:18 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a725f5e1b52sm42423466b.135.2024.06.24.06.11.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 06:11:17 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A65745F789;
- Mon, 24 Jun 2024 14:11:16 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Andreas Faerber <afaerber@suse.de>, Alessandro Di Federico <ale@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>, Anton Johansson
- <anjo@rev.ng>, Markus Armbruster <armbru@redhat.com>, bbauman@redhat.com,
- Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org,
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
- <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
- Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com, Warner
- Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe
- <jgg@nvidia.com>, jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
- jjherne@linux.vnet.ibm.com, Joao Martins <joao.m.martins@oracle.com>,
- Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel
- <luc@lmichel.fr>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Max Chou <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
- mdean@redhat.com, mimu@linux.vnet.ibm.com, Paul Walmsley
- <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Richard
- Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Wei Wang
- <wei.w.wang@intel.com>, z.huo@139.com, LIU Zhiwei
- <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: QEMU Community Call Agenda Items (June 25th, 2024)
-Date: Mon, 24 Jun 2024 14:11:16 +0100
-Message-ID: <87pls6pjt7.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1719234660; x=1719839460;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ca/j5lYq2nn8e1I6CyXYK+okG+eIPRXYPxMcR6xeFjo=;
+ b=FANoAYIa56fDSX+ouAtupqr0b9V2jmSNJHx+YZjYt2pCEskvxGmrykpOrpyFtCht1n
+ W7vjsOkfAty1zrIq/VmmKUWhAoY6Ey9uOEk7HbaLo9aK0RYb6x19hRDNUi4tiItO3eEb
+ A7HR2Pb77B5upTAkqAzzuwRRVG5Bk13j+PMwLbw7M6gizFl0fsimySo0i8B/UkGDbbs6
+ zpjCPLC6uHjmkMGe1B/9hPeWyesaSDUl6NRWfZYgTSgqANlmnm2TdpDN0IJPygqSq7vn
+ X60Iu6kSzYoEWKmU2N4j5rvUhbL/IaGtUkaNn7w86KZNHWXklsU1GBeV+LKqGIIUW1+C
+ njjg==
+X-Gm-Message-State: AOJu0YzvTKK0F/jDb9J2kZAOmlO+kQW6QMYxJHaEay45tmI+8T/8JCB0
+ a0a5QEgFLEIxwQrO5CYKuvRLNHytEx0E1BaDKslQraZp/5HNht4gtVed2JcxpSCAPH6kneivY2l
+ B
+X-Google-Smtp-Source: AGHT+IHqRaMklYkGg06LPTWSk+XohDEv/k+pAVZ25lTr8pZTYZbj/vF8frY9PFer8gEFvBgxSRoCpg==
+X-Received: by 2002:ac2:456b:0:b0:52c:df6e:9517 with SMTP id
+ 2adb3069b0e04-52cdf7e66dfmr3173083e87.11.1719234659691; 
+ Mon, 24 Jun 2024 06:10:59 -0700 (PDT)
+Received: from [192.168.69.100] (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
+ [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42481922428sm130529895e9.43.2024.06.24.06.10.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Jun 2024 06:10:59 -0700 (PDT)
+Message-ID: <f87db622-f6c9-4f13-b285-ddb4ea38a1c5@linaro.org>
+Date: Mon, 24 Jun 2024 15:10:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/23] hw/sd/sdcard: Accumulation of cleanups and fixes
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Joel Stanley <joel@jms.id.au>, Bin Meng <bmeng.cn@gmail.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, qemu-block@nongnu.org
+References: <20240621080554.18986-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240621080554.18986-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,18 +96,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 21/6/24 10:05, Philippe Mathieu-Daudé wrote:
+> Various SD card cleanups and fixes accumulated over
+> the years. Various have been useful to help integrating
+> eMMC support (which will come later).
+> 
+> Based-on: <20240621075607.17902-1-philmd@linaro.org> st24_be_p()
+> 
+> Philippe Mathieu-Daudé (23):
+>    hw/sd/sdcard: Correct code indentation
+>    hw/sd/sdcard: Rewrite sd_cmd_ALL_SEND_CID using switch case (CMD2)
+>    hw/sd/sdcard: Fix typo in SEND_OP_COND command name
+>    hw/sd/sdcard: Use HWBLOCK_SHIFT definition instead of magic values
+>    hw/sd/sdcard: Use registerfield CSR::CURRENT_STATE definition
+>    hw/sd/sdcard: Use Load/Store API to fill some CID/CSD registers
+>    hw/sd/sdcard: Remove ACMD6 handler for SPI mode
+>    hw/sd/sdcard: Remove explicit entries for illegal commands
 
-Hi,
+>    hw/sd/sdcard: Have cmd_valid_while_locked() return a boolean value
+>    hw/sd/sdcard: Factor sd_req_get_rca() method out
+>    hw/sd/sdcard: Only call sd_req_get_rca() where RCA is used
+>    hw/sd/sdcard: Factor sd_req_get_address() method out
+>    hw/sd/sdcard: Only call sd_req_get_address() where address is used
+>    hw/sd/sdcard: Add sd_invalid_mode_for_cmd to report invalid mode
+>      switch
+>    hw/sd/sdcard: Inline BLK_READ_BLOCK / BLK_WRITE_BLOCK macros
+>    hw/sd/sdcard: Add comments around registers and commands
 
-The KVM/QEMU community call is at:
+Patches 1-8, 13-20 queued.
 
-  https://meet.jit.si/kvmcallmeeting
-  @
-  25/6/2024 14:00 UTC
-
-Are there any agenda items for the sync-up?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
