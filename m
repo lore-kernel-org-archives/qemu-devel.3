@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9F4CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:16:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 207D6C2D0D1
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLjY2-0003Fm-Aq; Mon, 24 Jun 2024 09:15:54 -0400
+	id 1sLjXv-0002if-Bb; Mon, 24 Jun 2024 09:15:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjY0-00031Y-6y
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:15:52 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjXp-0002Zp-Pf
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:15:43 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjXy-0005Wr-Ju
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:15:51 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4249196a361so6725015e9.0
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:15:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjXo-0005TC-2y
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:15:41 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-42172ed3487so32262695e9.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:15:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719234949; x=1719839749; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719234938; x=1719839738; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DdZdPflGxnU9+ulU0ghp7a6tzZgDef0bM1QxWZe/c5Y=;
- b=kkgm4+ajCkOKNAuFarhMNdjDKQo1TAN09CQdAt06qAKOJVzbHJp7mhgcKvCefjFkJd
- ylMWs89fjow63WlaoufzDas4HeWu8n8QLp2p/B9Z2ZnWHdtxmHYcKldba7co4sAqNTGs
- GG8efpvGN8tyAIwAjtLNWt6XzMXNleh2l5xag1RWZC/fqUirCFZ6aohncyDyHOsFNqKC
- fxZvAyfLkKQBLF5GUsrn+Rt65kT1OBuUhSu3BhsQMSiO73QYO6lsw0X2i7ot7qYP6+KG
- MPz80+i6ut9LN0ijm0A0U442pwiniZKrvKU97mRqZOcmBhy9tBAA4godfuy0rGc9tzYQ
- syjg==
+ bh=HxQAYADKfbhpE1hUX1tIATqcZpfO3HwJuZqR6r1E18w=;
+ b=trNSHaPgnX4IaVip/hUksNO34idS2zor3C73sUoOxui5ToLnr5dwCPwfLPGVYYmhbi
+ +pmxwL+8PXyHu0xEL9Hz1H27lEXbb3YAVso33gH93gQ9YM6tDIrjA+z1pLpSAOQz5w+/
+ cggP5Vf0aT1i4WQMAvCtbfpNQID+mXayTTJEU9YXN1vrP/QsqWWocEU9L4qE3upRHecm
+ fZZNJiQC1Gpg57ux5sRJvXfykcq/IHY9viTklOacRDCJUCa/+B4QP8qRQzwoUfEUyBPR
+ A8b3UxOQdy9AVOLJ4lNxc9pCLKf8m03h6vr8PAU1OEe0pES892y1cROnahpb/PWq9Z0w
+ bm9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719234949; x=1719839749;
+ d=1e100.net; s=20230601; t=1719234938; x=1719839738;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DdZdPflGxnU9+ulU0ghp7a6tzZgDef0bM1QxWZe/c5Y=;
- b=r5+Zd+eaETuOGuD0K3ZawCOEGmLDa2Yz6/UiH2go/6DKs64Kt7Ep67Axz93Jly+W+e
- IVFFXuRqE2nCEYufmMKcHvw1FMetA7G9N4Zd8LLLD55kMONyd1Ancqd385IDBCs0fJqe
- uMAeIoR/CFz8+6yztaRWDJkUo9/d45HF3iM0FW/C/1n5oijLF+Z9bb1/+4+nZi5GsblL
- 5fCSNCcjEN6L79DO49hI7kEssVt04OuboGQfO0tPKg7Hk53aJXHBsPI3YKsKHzvoCWlj
- mBouvETM1qO5TtegUcVQ3NwpRlwK+Ch/9wavShivV2XrpfZeMUHFiNsRJer2XmIksRkH
- AFjQ==
-X-Gm-Message-State: AOJu0YwzTW4f2gxQ82Yai59YjuOCBX/aPxVKMqANvpKBvA2uhankbwAH
- MWAVcbmU71cw8CoauiYRIPbWf/sUP50AHE6tVTdDcbXcl7K2njqHWAU+pYGaWR+fHREpECZ5YF/
- L
-X-Google-Smtp-Source: AGHT+IG08VHolRJbigqqgPAxjYP492jniy9OjguFF6SbR+ZxNeWsrb64BRgcQQXTccA6H/ogpOdleQ==
-X-Received: by 2002:a05:600c:4fc9:b0:422:7c50:18ff with SMTP id
- 5b1f17b1804b1-4248cc66677mr29054385e9.39.1719234948767; 
- Mon, 24 Jun 2024 06:15:48 -0700 (PDT)
+ bh=HxQAYADKfbhpE1hUX1tIATqcZpfO3HwJuZqR6r1E18w=;
+ b=n20sWrj78esjAuE0hZHX/wEPnjI+dhhLYOlrivP/v+EeMWklb+lYvP+JNsumfPjoc7
+ xowJFcJ0FTSHwSmygmtBdRpju8BMhYisaUOQWPKGHNZfmpntttMSXzahuBOBVWms6Vm0
+ H8r4WQaBXAgUT1JrhyNnn+rZ6yqkIqmxAV6rYxFyR9cIyQB8/hS2L5QBvRMqJpkdSpA5
+ N1GNivO1kfrZiRPqCrVu5Jd3mbadETB2UJC8E6ch0NhVfT5VMBurBRu6kyEXFi6VBQuE
+ eDwMqUi0HDD9cQhkDM43zji1Lqw7fBkHfmS+/Mk1tMp5d7Rwz7LP2SHbtRywFzlugB4s
+ lWwQ==
+X-Gm-Message-State: AOJu0YzfbL/WrUh+gYrh+WYC9+KvWltnDX+mJiPwPzCtk7KCZO3b28Bs
+ McG1fDdEmSopnso54ieyQ1QsvLO2bsOHhm0LGh5gufef/JLehmMTQkAbpOTgOmlK7EAPLzSc6EM
+ r
+X-Google-Smtp-Source: AGHT+IHSMa+DmdpNjV5w300ZJgJlatZAoa6tIbFMsUeN8M86ygBiNCh4tV9oLT2NVnZydpjdwZUw6w==
+X-Received: by 2002:a05:600c:3225:b0:421:9fc4:7490 with SMTP id
+ 5b1f17b1804b1-42489e3a9a0mr40156845e9.11.1719234938135; 
+ Mon, 24 Jun 2024 06:15:38 -0700 (PDT)
 Received: from m1x-phil.lan (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
  [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4248179d3afsm140585865e9.5.2024.06.24.06.15.47
+ 5b1f17b1804b1-42481921f16sm133394085e9.41.2024.06.24.06.15.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Jun 2024 06:15:48 -0700 (PDT)
+ Mon, 24 Jun 2024 06:15:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 12/19] hw/sd/sdcard: Have cmd_valid_while_locked() return a
- boolean value
-Date: Mon, 24 Jun 2024 15:14:33 +0200
-Message-ID: <20240624131440.81111-13-philmd@linaro.org>
+Subject: [PULL 10/19] hw/sd/sdcard: Remove explicit entries for illegal
+ commands
+Date: Mon, 24 Jun 2024 15:14:31 +0200
+Message-ID: <20240624131440.81111-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240624131440.81111-1-philmd@linaro.org>
 References: <20240624131440.81111-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,36 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+NULL handler is already handled as illegal, no need to
+duplicate (that keeps this array simpler to maintain).
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Tested-by: Cédric Le Goater <clg@redhat.com>
-Message-Id: <20240621080554.18986-14-philmd@linaro.org>
+Message-Id: <20240621080554.18986-9-philmd@linaro.org>
 ---
- hw/sd/sd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/sd/sd.c | 11 -----------
+ 1 file changed, 11 deletions(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 44225bae9b..04b141784b 100644
+index 08a6d0aff8..4afb6988c7 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -1717,7 +1717,7 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
-     return sd_illegal;
- }
+@@ -2147,12 +2147,6 @@ static const SDProto sd_proto_spi = {
+     .cmd = {
+         [0]         = sd_cmd_GO_IDLE_STATE,
+         [1]         = spi_cmd_SEND_OP_COND,
+-        [2 ... 4]   = sd_cmd_illegal,
+-        [5]         = sd_cmd_illegal,
+-        [7]         = sd_cmd_illegal,
+-        [15]        = sd_cmd_illegal,
+-        [26]        = sd_cmd_illegal,
+-        [52 ... 54] = sd_cmd_illegal,
+     },
+     .acmd = {
+         [41]        = spi_cmd_SEND_OP_COND,
+@@ -2163,15 +2157,10 @@ static const SDProto sd_proto_sd = {
+     .name = "SD",
+     .cmd = {
+         [0]         = sd_cmd_GO_IDLE_STATE,
+-        [1]         = sd_cmd_illegal,
+         [2]         = sd_cmd_ALL_SEND_CID,
+         [3]         = sd_cmd_SEND_RELATIVE_ADDR,
+-        [5]         = sd_cmd_illegal,
+         [19]        = sd_cmd_SEND_TUNING_BLOCK,
+         [23]        = sd_cmd_SET_BLOCK_COUNT,
+-        [52 ... 54] = sd_cmd_illegal,
+-        [58]        = sd_cmd_illegal,
+-        [59]        = sd_cmd_illegal,
+     },
+ };
  
--static int cmd_valid_while_locked(SDState *sd, const uint8_t cmd)
-+static bool cmd_valid_while_locked(SDState *sd, unsigned cmd)
- {
-     /* Valid commands in locked state:
-      * basic class (0)
-@@ -1731,7 +1731,7 @@ static int cmd_valid_while_locked(SDState *sd, const uint8_t cmd)
-         return cmd == 41 || cmd == 42;
-     }
-     if (cmd == 16 || cmd == 55) {
--        return 1;
-+        return true;
-     }
-     return sd_cmd_class[cmd] == 0 || sd_cmd_class[cmd] == 7;
- }
 -- 
 2.41.0
 
