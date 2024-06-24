@@ -4,57 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BDC0C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D879EC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 14:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLkDh-00076t-Ei; Mon, 24 Jun 2024 09:58:57 -0400
+	id 1sLkEa-0007bl-JE; Mon, 24 Jun 2024 09:59:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
- id 1sLkDg-00075b-1C; Mon, 24 Jun 2024 09:58:56 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sLkEZ-0007Xe-Gq
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:59:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=voaC=N2=kaod.org=clg@ozlabs.org>)
- id 1sLkDY-0006eM-VU; Mon, 24 Jun 2024 09:58:55 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W78h03CvQz4wbh;
- Mon, 24 Jun 2024 23:58:40 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W78gX2hzkz4wb2;
- Mon, 24 Jun 2024 23:58:16 +1000 (AEST)
-Message-ID: <b013bd79-c206-446e-b482-91eeb926c70a@kaod.org>
-Date: Mon, 24 Jun 2024 15:58:11 +0200
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sLkEX-00071z-Jj
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:59:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719237587;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Lo5wE2yYxroDuIy7btZ6+N8vsWXak71qS6GSeVJMx7U=;
+ b=Q3Qj6B13mOKVOSUdThAe9ekaXLce/AvNd8rj09sgAHKcbSAW5LH6xza3qt5FNJ59g2wToh
+ OVk7a+LB6HEBxRSZ0UFY2F6OgVgFi5Bo53Kuf16ad2ZTAtCibjFDp06HxX853xHygT3tr6
+ Wn8wiWMiKnRcyZJxLhFiuMhAhxqJoNM=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-115-ceR0waGwMqOrPbXhKhsUIg-1; Mon, 24 Jun 2024 09:59:44 -0400
+X-MC-Unique: ceR0waGwMqOrPbXhKhsUIg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a6fcb1a708dso173040366b.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:59:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719237583; x=1719842383;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Lo5wE2yYxroDuIy7btZ6+N8vsWXak71qS6GSeVJMx7U=;
+ b=njzMQeI5wtrg9bqS1LoBDPRvkvt8AqiqaObk1YmNen2J8Ibg7yPJgnGccHBG6zdqJQ
+ cNLpRdc+RmphHiBI+WDwugIooEAfLxLyb1Dyvs7hqSitFgUyZF9v2KNd9vJGugDPa86d
+ r80OOgq/6b0+kGcj8iUEZeWRTyMAM/F42h0of4n44j6tMFJLMKat+tbiC28g2uOL0PH4
+ MoCVCTxGysU1vrehtXt/94hTbM4eSmipdJlH6ULOsD9Rx0fh3QIZqM3RzPXtHgyC/01b
+ DoJeX6BKsKXvMhlXqHHnZQWbLJWWyn/uhzlHsaQRIC/7XEJ3mg+yasfKx47qIpctSZxe
+ kVDA==
+X-Gm-Message-State: AOJu0YzL/Rd88zs2XDE/SKkJvfOF+mSF4oVRtYHX2O+5WRtZpRHKtuRD
+ Gz+5myubuDXjqP8CMo1yMmqDBxJF7zzcDZ5fXbnb82lbSbgtDX2kW3Dp+w+SYXCnSe5qjrrO7Wn
+ XDlDvfiYbUQYdF+sF25WUznW1LdNsWrw5k758LCj/fsAx/QsCSerBmLhcxw2QlowqfHhgdCntZX
+ CAAV+UMb/DjLUWbakUS1gLRqspQOoTFFbirms1
+X-Received: by 2002:a17:907:d401:b0:a72:46f3:ffc4 with SMTP id
+ a640c23a62f3a-a7246f4005cmr280750966b.26.1719237583025; 
+ Mon, 24 Jun 2024 06:59:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFLGT8FXxygmQSJhw8IwLJ4IKtPIXHLbsDNU2kFvFS+l1f9DyEdEsb3Tlqrgz5VuVyZmWlryw==
+X-Received: by 2002:a17:907:d401:b0:a72:46f3:ffc4 with SMTP id
+ a640c23a62f3a-a7246f4005cmr280748966b.26.1719237582473; 
+ Mon, 24 Jun 2024 06:59:42 -0700 (PDT)
+Received: from avogadro.local ([151.62.196.71])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a6fe30e6a1esm297543666b.216.2024.06.24.06.59.41
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Jun 2024 06:59:41 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL v2 00/23] Misc changes for 2024-06-22
+Date: Mon, 24 Jun 2024 15:59:38 +0200
+Message-ID: <20240624135939.632257-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] aspeed/soc: fix coverity issue
-To: Peter Maydell <peter.maydell@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>
-Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
- <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
- <CAFEAcA8tTHusKOR7JhyU+wwA3JJWq1o5wVaNXugw2S9SjAsESw@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <CAFEAcA8tTHusKOR7JhyU+wwA3JJWq1o5wVaNXugw2S9SjAsESw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=voaC=N2=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,51 +99,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/24/24 2:18 PM, Peter Maydell wrote:
-> On Wed, 19 Jun 2024 at 10:35, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
->>
->> Fix coverity defect: DIVIDE_BY_ZERO.
->>
->> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
->> ---
->>   hw/arm/aspeed_ast27x0.c | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
->> index b6876b4862..d14a46df6f 100644
->> --- a/hw/arm/aspeed_ast27x0.c
->> +++ b/hw/arm/aspeed_ast27x0.c
->> @@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
->>       ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
->>                                           &error_abort);
->>
->> +    if (!ram_size) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +                      "%s: ram_size is zero",  __func__);
->> +        return;
->> +    }
->> +
-> 
-> Isn't this a QEMU bug rather than a guest error? The
-> RAM size presumably should never be zero unless the board
-> set the ram-size property on the SDMC incorrectly. So the
-> SDMC device should check (and return an error from its realize
-> method) that the ram-size property is valid, 
+The following changes since commit c9ba79baca7c673098361e3a687f72d458e0d18a:
 
-That's the case in aspeed_sdmc_set_ram_size() which is called from
-the aspeed machine init routine when the ram size is set.
+  Merge tag 'pull-target-arm-20240622' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-06-22 09:56:49 -0700)
 
-Setting the machine ram size to zero on the command line doesn't
-report an error though and the size is the default.
+are available in the Git repository at:
 
-> and then here we can just assert(ram_size != 0).
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
 
-Yes.
+for you to fetch changes up to 0753fbb4750ad6709c43b4263c3d29b00f7cd0bb:
 
-Jamin, could you please send a v2 with the commit logs update
-I proposed ? See the patches on my aspeed-9.1 branch.
+  exec: don't use void* in pointer arithmetic in headers (2024-06-24 09:17:16 +0200)
 
-Thanks,
+----------------------------------------------------------------
+* configure: detect --cpu=mipsisa64r6
+* target/i386: decode address before going back to translate.c
+* meson: allow configuring the x86-64 baseline
+* meson: remove dead optimization option
+* exec: small changes to allow compilation with C++ in Android emulator
 
-C.
+----------------------------------------------------------------
+Paolo Bonzini (21):
+      configure: detect --cpu=mipsisa64r6
+      target/i386: fix CC_OP dump
+      target/i386: use cpu_cc_dst for CC_OP_POPCNT
+      target/i386: give CC_OP_POPCNT low bits corresponding to MO_TL
+      target/i386: convert bit test instructions to new decoder
+      target/i386: try not to force EFLAGS computation for CC_OP_ADOX/ADCX
+      target/i386: decode address before going back to translate.c
+      target/i386: convert CMPXCHG8B/CMPXCHG16B to new decoder
+      target/i386: do not check PREFIX_LOCK in old-style decoder
+      target/i386: list instructions still in translate.c
+      target/i386: assert that cc_op* and pc_save are preserved
+      target/i386: remove gen_ext_tl
+      Revert "host/i386: assume presence of POPCNT"
+      Revert "host/i386: assume presence of SSSE3"
+      Revert "host/i386: assume presence of SSE2"
+      meson: allow configuring the x86-64 baseline
+      meson: remove dead optimization option
+      block: make assertion more generic
+      block: do not check bdrv_file_open
+      block: remove separate bdrv_file_open callback
+      block: rename former bdrv_file_open callbacks
+
+Roman Kiryanov (2):
+      exec: avoid using C++ keywords in function parameters
+      exec: don't use void* in pointer arithmetic in headers
+
+ configure                                 |   2 +-
+ meson.build                               |  54 ++--
+ host/include/i386/host/cpuinfo.h          |   2 +
+ include/block/block_int-common.h          |   3 -
+ include/exec/memory.h                     |   6 +-
+ target/i386/cpu.h                         |  13 +-
+ target/i386/tcg/decode-new.h              |  19 +-
+ tcg/i386/tcg-target.h                     |   5 +-
+ block.c                                   |  17 +-
+ block/blkdebug.c                          |   2 +-
+ block/blkio.c                             |   8 +-
+ block/blkverify.c                         |   2 +-
+ block/curl.c                              |   8 +-
+ block/file-posix.c                        |   8 +-
+ block/file-win32.c                        |   4 +-
+ block/gluster.c                           |   6 +-
+ block/iscsi.c                             |   4 +-
+ block/nbd.c                               |   6 +-
+ block/nfs.c                               |   2 +-
+ block/null.c                              |   8 +-
+ block/nvme.c                              |   8 +-
+ block/rbd.c                               |   3 +-
+ block/ssh.c                               |   6 +-
+ block/vvfat.c                             |   2 +-
+ target/i386/cpu-dump.c                    | 101 +++---
+ target/i386/tcg/cc_helper.c               |   2 +-
+ target/i386/tcg/translate.c               | 492 ++++++------------------------
+ util/cpuinfo-i386.c                       |   6 +-
+ host/include/i386/host/bufferiszero.c.inc |   5 +-
+ target/i386/tcg/decode-new.c.inc          | 136 ++++++---
+ target/i386/tcg/emit.c.inc                | 249 ++++++++++++++-
+ meson_options.txt                         |   5 +-
+ scripts/meson-buildoptions.sh             |   6 +-
+ 33 files changed, 619 insertions(+), 581 deletions(-)
+-- 
+2.45.2
+
 
