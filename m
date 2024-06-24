@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34617C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 17:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6B63C30653
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 18:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLncd-00058x-3Q; Mon, 24 Jun 2024 13:36:55 -0400
+	id 1sLo8C-0002Zj-RP; Mon, 24 Jun 2024 14:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
- id 1sLncY-00058O-FH; Mon, 24 Jun 2024 13:36:51 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sLo8B-0002ZV-Lv
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 14:09:31 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rayhan.faizel@gmail.com>)
- id 1sLncT-0008Gf-Cl; Mon, 24 Jun 2024 13:36:50 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-6f8ffe1b65dso2109920a34.0; 
- Mon, 24 Jun 2024 10:36:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sLo8A-0005VI-54
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 14:09:31 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-6c4926bf9baso3833623a12.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 11:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719250604; x=1719855404; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6IzOjt0t41WcaxP7cLu3545DN9yYiEI3hqF9omzqUzU=;
- b=MVXRDH/QA1ZJPf/PT7cYyS+vHhAYmktk4K9m0sqksrJQQp2HUXq6Wqx8iyJQHp6CKV
- SWVzpJ1RVVdItJ7iLXPTHX3XbUMNyY0qF3IFT6iiJqrTAI6A2n2KwL9QLk7q4+ZbbDtU
- IADtpSgMF9e8mL48ixUV41oG8MjV2buDvH1Ze/VeWIoz9QSGet/wkVK93LQ0JpHysykw
- hAtlFvl376N4AeZ0BhjSNcBckg3xs90vdFb4ZC5/F6P9NHFHvL+nf5kgl+4CGS+gQCld
- BlB0QAI3GXuxX2jpK5SLgSHAkYOJ5REIrDr5UJMLUvOAoBxVB4htvDTyjuzqNFnoDQo4
- VHzw==
+ d=linaro.org; s=google; t=1719252567; x=1719857367; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=y1sUyu2NpDGG39jui+mslSabiSdHVEC5l8i2enczN+U=;
+ b=Kfdehs4DUKViHStLURRqGjWE2mEVxxOxRVlv95Y9K+g0kxSUzm+Eeom+nVGXnQWyNl
+ vWI6gJ1Gk5xrbr6PuZiP/nKs/xwbehLfkTKPLmbBcEwOaVscbo6QPyk0l+Mq2/rsJ02E
+ hCWgfeKa5N8f3hwjeUigC+SfZinA44fZNBeHKIDJI720ZkQGd4SitIFTuLDPMjUEH5Z4
+ dAGg2FTXd0oqz5MPOGrpNIozJppx4ZEG8KiIZVRDA+yYH775165wh3t66BLWoLnXKn6x
+ 8DgqzpG/LhkxX4KYFiuNrdtFReT8eQpw0b6vBa7SY3ktFBMmm/cfUnCchwYYpM+9EIY6
+ tfrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719250604; x=1719855404;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6IzOjt0t41WcaxP7cLu3545DN9yYiEI3hqF9omzqUzU=;
- b=mgY3AvTaipPmj0jx/NdL0Uyy59rtLtxS9aAgFn6ITgCyDSQrhlVP6Pl+nWPtIT7kfa
- 7ZWy5Ty6a0KZNm3eJ5JDKsA4mXAwpllORS0GlC5SgcZ9QAr2Xw7GI/ueBr0LzwOnOt2e
- lqxJwi2+MJ/5ErfKYhom/aavS1A2FFHd4aKX540s8cxNaEomTOd/4vfOJwlAW2X0v/pE
- bGorbZmoTo6+Ll+nDxVOhEXs1gdylWJMPA9vQAiXfT8KqhlB0APbNt2GK/PgiRWA3HZC
- jblEwBccxN4qzGGOUTZwQfEAXJ8Ae1VniCmnIz77xDEcT2KN1XudFoVdmAMmPyUaJ4g1
- gzqQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9sKHAogaf3OgsMVIUxp745KRHgF1WGly+46+6ymlxQ/nflWL3V8qt8icTUIJmSLHzNAxC+e+78E9DkYyhdsVw0cfD
-X-Gm-Message-State: AOJu0YyaSMU+1B8EGgGqkYVMymLEOKS3Lj/u7aG0xZn7DTWLFYkhbLQD
- YnnUtoV4UXG8ZTBQlq8pip77us7GEWIMHFeVFVMFNuWE+yySDZUDhf3t55SeR05uWWMEc+v18vv
- TSWsIuX+lw7r6NO94N+yirPO4YzI=
-X-Google-Smtp-Source: AGHT+IErDwzyNBpVU2CZbmjPRsHZegFp//LgTUbM5upuAwv7H9PRXg6gcQMfMqIAdUobBTy6SOyycqQLK5dBPMWWFR4=
-X-Received: by 2002:a05:6830:16c8:b0:6fb:ab18:c3b3 with SMTP id
- 46e09a7af769-700c392a133mr515751a34.11.1719250603602; Mon, 24 Jun 2024
- 10:36:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719252567; x=1719857367;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=y1sUyu2NpDGG39jui+mslSabiSdHVEC5l8i2enczN+U=;
+ b=lgo+UxEnqqRik+/8Hhsj3C/xmUjeeINB/zhxwX40QCPvA/xP7yZPejZ25Pp1Bgn1+7
+ ALFeqEXgoE82sHP1hB2u4Dhb3lmf2MOOUSHt/lvFmJs/UkxKZXu4ulhmFw8xG+Uy7QXw
+ 4SWuQWltVxKQlJsX0kf2RkhpFFz6+4edqbMKde8pOEbtJ3kqtU5G/6lCQT/u4ToF1b3x
+ EYrwOm0tHXY2C6Fp82WQUuXvGlee+3v8h1BvUkA6X652/YAbtgkbY98qqKh8Wc0kO2pm
+ pGP+QXlc+B+IP+X2KEkk2giK2rS6EA7vng5nlRm+464M8E2PZrUQa8GCOeun3EIcTFm8
+ dtTA==
+X-Gm-Message-State: AOJu0YxRIK/LV8DKeUTsOT07kQRPImPCZhxPRg6wRK4bFmEh8/Q/x86M
+ p3WfqMP5W85twh78zTDAa2GLewyZIN2PwdzOERc0RbwE62pAWRYwT0rVEExt3zDjDkmcgGpy/ER
+ W
+X-Google-Smtp-Source: AGHT+IGHA3DTTprIxDPFYgRrzhHT6s+ndDFUtm77+0eMoad/OADSRVOwVD1y6N3+nkllXEESbn7GmA==
+X-Received: by 2002:a05:6a20:33a7:b0:1b5:ac9b:a59e with SMTP id
+ adf61e73a8af0-1bcf44d8c1amr5867279637.32.1719252566680; 
+ Mon, 24 Jun 2024 11:09:26 -0700 (PDT)
+Received: from amd.. ([2804:7f0:b401:1758:3e7c:3fff:fe7a:e83b])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-706666e9708sm4974942b3a.121.2024.06.24.11.09.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Jun 2024 11:09:26 -0700 (PDT)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org
+Cc: philmd@linaro.org,
+	alex.bennee@linaro.org,
+	gustavo.romero@linaro.org
+Subject: [PATCH v3 0/3] target/arm: Enable FEAT_Debugv8p8 for -cpu max
+Date: Mon, 24 Jun 2024 18:09:12 +0000
+Message-Id: <20240624180915.4528-1-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240519094106.2142896-1-rayhan.faizel@gmail.com>
- <CAFEAcA_zBhe+HxOqtAzWSCbzApEhknr+NeheA1uLj641EXMM5w@mail.gmail.com>
- <CAKUh+QfrT3SjxHA0Y5fERwnTnqKKbJg9SFb=5J5pfbci0asjLQ@mail.gmail.com>
- <CAFEAcA82+-=piy0skykKk7pSKU58FmXqiv2hTWv8-sXDB_qEmw@mail.gmail.com>
-In-Reply-To: <CAFEAcA82+-=piy0skykKk7pSKU58FmXqiv2hTWv8-sXDB_qEmw@mail.gmail.com>
-From: Rayhan Faizel <rayhan.faizel@gmail.com>
-Date: Mon, 24 Jun 2024 23:06:32 +0530
-Message-ID: <CAKUh+Qe4tvg+pDqODc+wdzXPpB_FN6EQO1EvQq_5Q1FawuZdNg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Initial support for One-Time Programmable Memory
- (OTP) in BCM2835
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=rayhan.faizel@gmail.com; helo=mail-ot1-x32e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,25 +94,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No worries, and thanks!
+Enable FEAT_Debugv8p8 on Arm max CPU.
 
-On Mon, Jun 24, 2024 at 3:52=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Mon, 24 Jun 2024 at 10:12, Rayhan Faizel <rayhan.faizel@gmail.com> wro=
-te:
-> >
-> > Hi,
-> >
-> > The patch series is still not merged.
->
-> Oops, sorry about that -- not sure how it got lost. I have
-> applied it to target-arm.next for real this time...
->
-> -- PMM
+v2:
+ - Revert to the original comment above call to aa32_max_features()
+
+v3:
+ - Added feature entry to docs/system/arm/emulation.rst
+ - Explicitly set t=0 before using it to set DBGDEVID reg.
+ - Put indent fix in a separate patch
 
 
+Cheers,
+Gustavo
 
---=20
-Rayhan Faizel
+Gustavo Romero (3):
+  target/arm: Fix indentation
+  target/arm: Move initialization of debug ID registers
+  target/arm: Enable FEAT_Debugv8p8 for -cpu max
+
+ docs/system/arm/emulation.rst |  1 +
+ target/arm/cpu.h              |  2 ++
+ target/arm/tcg/cpu32.c        | 35 ++++++++++++++++++++++++++++++-----
+ target/arm/tcg/cpu64.c        |  4 ++--
+ 4 files changed, 35 insertions(+), 7 deletions(-)
+
+-- 
+2.34.1
+
 
