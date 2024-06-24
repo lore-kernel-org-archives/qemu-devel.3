@@ -4,55 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56E89C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:20:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 703FCC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:23:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLfrM-00005a-08; Mon, 24 Jun 2024 05:19:36 -0400
+	id 1sLfuy-000156-UV; Mon, 24 Jun 2024 05:23:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sLfrK-00005I-Fx; Mon, 24 Jun 2024 05:19:34 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sLfrF-0005JN-3l; Mon, 24 Jun 2024 05:19:34 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E8B364E6004;
- Mon, 24 Jun 2024 11:19:24 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id u53lRidnyuLT; Mon, 24 Jun 2024 11:19:22 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id EA4774E6001; Mon, 24 Jun 2024 11:19:22 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E838A7470B7;
- Mon, 24 Jun 2024 11:19:22 +0200 (CEST)
-Date: Mon, 24 Jun 2024 11:19:22 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Richard Henderson <richard.henderson@linaro.org>
-cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Subject: Re: [PATCH] target/ppc/mem_helper.c: Remove a conditional from
- dcbz_common()
-In-Reply-To: <ccb2fe51-4256-42a0-b9c8-1e4886c0472a@linaro.org>
-Message-ID: <90370a73-8d47-ee91-b986-0a748ea01253@eik.bme.hu>
-References: <20240622204833.5F7C74E6000@zero.eik.bme.hu>
- <6664471b-7223-4c6e-a106-ce272be72f28@linaro.org>
- <a0e7e8e3-97b1-34a3-b688-78bf77db5fd9@eik.bme.hu>
- <ccb2fe51-4256-42a0-b9c8-1e4886c0472a@linaro.org>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sLfux-00014s-Jf
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:23:19 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sLfuv-00068M-Vg
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:23:19 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a724598cfe3so154435566b.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 02:23:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719220996; x=1719825796; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Q4BzCEV3H5pbYOJkluJc0bUCw0sfJUGWx6k8ihV4ovk=;
+ b=d7X81Wsv0d42m6okWjFLU24LJMm+E8JuvZLixzcxIK+65p8X/GFkKRrQ6m4EMs1emF
+ csWwXvSas0FubW0tPhhaqrgSrtVNmyKnYsIqHAEMLE2dyYJyTTXxkY/LUMT+Rnbs0TyQ
+ 9C5KweL9I8P8w/Dm6dNaJl575oh8cEZ1aObwIguN2aEpj6509GwVMouX+0D5+fSI2XYn
+ BVI46aokmfVgBJb6yxzUgIJd6X4/Ps+5vms5k8VXuy3WdAcUCEH2FuZbHsNJBtFvscmi
+ P2Aw6ZxFicGzSiPZAARhn79aD7GLP0MQ5/4MVJzU9wh9X3AksEACzqN7edv9wYWFQx63
+ PEWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719220996; x=1719825796;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Q4BzCEV3H5pbYOJkluJc0bUCw0sfJUGWx6k8ihV4ovk=;
+ b=E0N8ViAGOap5ioTJ3fmfoosdlQ9T0DqF9wdK6Flkv4z07njt81/Ga2hcNy4m1Q/ird
+ Sm9L41gZ32nPP0fi/mAB3WZ8t/z6AjT6Ny7MSISCqLhVUzf8xJ34WpoP5sMcjmSvHUDy
+ D/5AmsLchj4R6hkuKFiu+VIYeQ8ah6VE7++ycbguYLYQbqiAG8Yf4Km+5VznlKGkTP4w
+ uU6howDLhqICTWi3C5wLZjykGYx/O9G/wM7H74Z+I4OJS5nEffzbVibxoPpQ2LWgUUyf
+ rVvXsES8eYqmMsg+A70P5eBq/O7JmoAjmtAu6Gnl+hekZvo3RLzj6GnSs3VwHSD5Z+To
+ hj6Q==
+X-Gm-Message-State: AOJu0YyytvuKNbcf29zZT0HXjLxHPKCfx6MZWgT/tfJmzjt3EVAfXutw
+ M27qJhpTzLFiZlEywQUxyAdxs2hBI4YFYRy/GyFDG8t6OFAT3OxB/as0STuXGe9zMV3HtP8Y0m0
+ v
+X-Google-Smtp-Source: AGHT+IHoTtYmruSBJ49zUEvM3An1mAih1lDDEFBjiVViYYBjuVslwJtnUsV8snX37BVz8Q2aW+RYfg==
+X-Received: by 2002:a17:907:e9f:b0:a72:449e:e250 with SMTP id
+ a640c23a62f3a-a7245b85073mr455055866b.12.1719220995488; 
+ Mon, 24 Jun 2024 02:23:15 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7260eb1657sm12186966b.219.2024.06.24.02.23.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Jun 2024 02:23:14 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E4F4D5F789;
+ Mon, 24 Jun 2024 10:23:13 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: tugouxp <13824125580@163.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: Did the "TCG" emulation mode has a full capability compare with
+ the "KVM" emulation mode?
+In-Reply-To: <75d15b4b.9cee.190497f83a1.Coremail.13824125580@163.com>
+ (tugouxp's message of "Mon, 24 Jun 2024 17:06:51 +0800 (CST)")
+References: <62981bf0.8f16.190495cbb92.Coremail.13824125580@163.com>
+ <877ceera4b.fsf@draig.linaro.org>
+ <75d15b4b.9cee.190497f83a1.Coremail.13824125580@163.com>
+Date: Mon, 24 Jun 2024 10:23:13 +0100
+Message-ID: <8734p2r8xq.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1921675513-1719220762=:66817"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,128 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+tugouxp  <13824125580@163.com> writes:
 
---3866299591-1921675513-1719220762=:66817
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Sun, 23 Jun 2024, Richard Henderson wrote:
-> On 6/23/24 15:24, BALATON Zoltan wrote:
->> On Sun, 23 Jun 2024, Richard Henderson wrote:
->>> On 6/22/24 13:48, BALATON Zoltan wrote:
->>>> Instead of passing a bool and select a value within dcbz_common() let
->>>> the callers pass in the right value to avoid this conditional
->>>> statement. On PPC dcbz is often used to zero memory and some code uses
->>>> it a lot. This change improves the run time of a test case that copies
->>>> memory with a dcbz call in every iteration from 6.23 to 5.83 seconds.
->>>> 
->>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->>>> ---
->>>> This is just a small optimisation removing some of the overhead but
->>>> dcbz still seems to be the biggest issue with this test. Removing the
->>>> dcbz call it runs in 2 seconds. In a profile I see:
->>>>    Children      Self  Command   Shared Object            Symbol
->>>> -   55.01%    11.44%  qemu-ppc  qemu-ppc                 [.] 
->>>> dcbz_common.constprop.0
->>>>                 - 43.57% dcbz_common.constprop.0
->>>>                    - probe_access
->>>>                       - page_get_flags
->>>>                            interval_tree_iter_first
->>>>                 - 11.44% helper_raise_exception_err
->>>>                      cpu_loop_exit_restore
->>>>                      cpu_loop
->>>>                      cpu_exec
->>>>                      cpu_exec_setjmp.isra.0
->>>>                      cpu_exec_loop.constprop.0
->>>>                      cpu_tb_exec
->>>>                      0x7f262403636e
->>>>                      helper_raise_exception_err
->>>>                      cpu_loop_exit_restore
->>>>                      cpu_loop
->>>>                      cpu_exec
->>>>                      cpu_exec_setjmp.isra.0
->>>>                      cpu_exec_loop.constprop.0
->>>>                      cpu_tb_exec
->>>>                    - 0x7f26240386a4
->>>>                         11.20% helper_dcbz
->>>> +   43.81%    12.28%  qemu-ppc  qemu-ppc                 [.] probe_access
->>>> +   39.31%     0.00%  qemu-ppc  [JIT] tid 9969           [.] 
->>>> 0x00007f2624000000
->>>> +   32.45%     4.51%  qemu-ppc  qemu-ppc                 [.] 
->>>> page_get_flags
->>>> +   25.50%     2.10%  qemu-ppc  qemu-ppc                 [.] 
->>>> interval_tree_iter_first
->>>> +   24.67%    24.67%  qemu-ppc  qemu-ppc                 [.] 
->>>> interval_tree_subtree_search
->>>> +   16.75%     1.19%  qemu-ppc  qemu-ppc                 [.] helper_dcbz
->>>> +    4.78%     4.78%  qemu-ppc  [JIT] tid 9969           [.] 
->>>> 0x00007f26240386be
->>>> +    3.46%     3.46%  qemu-ppc  libc-2.32.so             [.] 
->>>> __memset_avx2_unaligned_erms
->>>> Any idea how this could be optimised further? (This is running with
->>>> qemu-ppc user mode emulation but I think with system it might be even
->>>> worse.) Could an inline implementation with TCG vector ops work to
->>>> avoid the helper and let it compile to efficient host code? Even if
->>>> that could work I don't know how to do that so I'd need some further
->>>> advice on this.
->>>> 
->>>>   target/ppc/mem_helper.c | 7 +++----
->>>>   1 file changed, 3 insertions(+), 4 deletions(-)
->>>> 
->>>> diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
->>>> index f88155ad45..361fd72226 100644
->>>> --- a/target/ppc/mem_helper.c
->>>> +++ b/target/ppc/mem_helper.c
->>>> @@ -271,12 +271,11 @@ void helper_stsw(CPUPPCState *env, target_ulong 
->>>> addr, uint32_t nb,
->>>>   }
->>>>     static void dcbz_common(CPUPPCState *env, target_ulong addr,
->>>> -                        uint32_t opcode, bool epid, uintptr_t retaddr)
->>>> +                        uint32_t opcode, int mmu_idx, uintptr_t retaddr)
->>>>   {
->>>>       target_ulong mask, dcbz_size = env->dcache_line_size;
->>>>       uint32_t i;
->>>>       void *haddr;
->>>> -    int mmu_idx = epid ? PPC_TLB_EPID_STORE : ppc_env_mmu_index(env, 
->>>> false);
->>>>     #if defined(TARGET_PPC64)
->>>>       /* Check for dcbz vs dcbzl on 970 */
->>>> @@ -309,12 +308,12 @@ static void dcbz_common(CPUPPCState *env, 
->>>> target_ulong addr,
->>>>     void helper_dcbz(CPUPPCState *env, target_ulong addr, uint32_t 
->>>> opcode)
->>>>   {
->>>> -    dcbz_common(env, addr, opcode, false, GETPC());
->>>> +    dcbz_common(env, addr, opcode, ppc_env_mmu_index(env, false), 
->>>> GETPC());
->>> 
->>> This is already computed in the translator: DisasContext.mem_idx.
->>> If you pass the mmu_idx as an argument, you can unify these two helpers.
->> 
->> I've tried that. It works but slower: I get 5.9 seconds vs 5.83 with this 
->> patch so I think I'd stay with this one. Maybe it's because making the 
->> helper take 4 parameters instead of 3? I can submit the patch for reference 
->> if it would be useful but I'd keep this one for merging for now.
+> Thank you!
 >
-> Interesting.  Can you share your test case?
+> BTW, TCG also has two backends implemention, 1. Native host arch tranlati=
+on. and 2. TCI byte code interpreter. The
+> difference is that the first one will tranlation the target arch code to =
+host arch instrtions and then executed in host cpu. but
+> the latter is a high level interperation. compare these two backends, Are=
+ there any capability difference on the system
+> emulation about the two backends? thank you.
+
+No - TCI is just a slower fallback to interpret TCG ops directly
+compared to executing JITed code.
+
 >
-> The other thing I see is that we can split out the 970 test to a separate 
-> helper.  We can test for POWERPC_EXCP_970 and !(opcode & 0x00200000) during 
-> translation.  I think the current placement, where dcbzep tests that as well, 
-> is wrong, since dcbze is an E500 insn.
-> Anyway, that would eliminate opcode as an argument bringing you back to 3.
+> At 2024-06-24 16:57:40, "Alex Benn=C3=A9e" <alex.bennee@linaro.org> wrote:
+>>tugouxp <13824125580@163.com> writes:
+>>
+>>> Hello folks:
+>>>    I have a puzzle on qemu major two emuation implentions on whole syst=
+em emulation, that is ,except the emuation speed,
+>>> did the TCG work mode has any weakness than "KVM" work mode on whole sy=
+stem emulations(including kernek and
+>>> user-space)?
+>>
+>>It depends on the guest architecture. Some are more complete than
+>>others. The x86 emulation for example doesn't cover all the modern x86
+>>extensions although there have been some improvements to its vector
+>>handling recently.
+>>
+>>One thing TCG can do that KVM can't is emulate code running at higher
+>>priority than kernel-mode. For example for ARM we can emulate the
+>>EL3/Root domain and secure and confidential realms. In KVM you can only
+>>run a guest EL1 kernel and its user space.
+>>
+>>> is there any work that kvm can do but TCG cant?=20
+>>>
+>>> of course kvm is much faster than TCG, but my question just about the f=
+untion, not care about speed.
+>>>
+>>> thanks for your kindly help!
+>>> BRs
+>>> zilong.
+>>
+>>--=20
+>>Alex Benn=C3=A9e
+>>Virtualisation Tech Lead @ Linaro
 
-It'd eliminate opcode but I think I'd need to pass cache line size instead 
-somehow so it might still need 4 parameters. I'll give that a try and see 
-if it's better or not. But the biggest overhead is still the call to 
-probe_write. Is there a way to eliminate that and maybe do the zeroing 
-with vector or 128 bir ops in compiled code and not in the helper? (I've 
-tried removing the test and memset but the slow path is really slow, takes 
-more than 9 seconds so it's still faster to test when memset can be used.)
-
-Regards,
-BALATON Zoltan
---3866299591-1921675513-1719220762=:66817--
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
