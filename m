@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4650CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641B1C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:48:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLjsJ-0008HS-0j; Mon, 24 Jun 2024 09:36:51 -0400
+	id 1sLk37-0002ml-DW; Mon, 24 Jun 2024 09:48:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sLjsH-0008HD-Kv
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:36:49 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1sLk32-0002l9-UC
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:47:57 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sLjsF-0001yD-Tb
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:36:49 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-57a30dbdb7fso5448224a12.3
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:36:47 -0700 (PDT)
+ id 1sLk2z-0004dj-GJ
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:47:55 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52cdfb69724so1938109e87.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719236206; x=1719841006; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719236870; x=1719841670; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MS+wQnVORVY3/VovjZL2n0flSwot/Y7njZyC7HF+76E=;
- b=E2GpebTahFgcfSV/ZEjZKgiaFVRM+OhLKSmTuKtAoma7x5m5CbbGlumoDH7HAA1Pfp
- BGhCoNy8jSyNilBnS4aONhoLacLI1sesvjpzbGqgbc4mlwLPe5UFk0SMN0DNWHDFGL8p
- 09aWnFvHbl+TBxRqyfpauq5DvBlXJ4lO58YmDB0Rj6215HlThSWh1M2eany4OpwILjw0
- pTV9LDX9w/q6lcPZcMjrMHRUfusmw4NUfd5o6be0ynAsdmNzQm5/P/b1lpjt3RLq+tte
- +QJ9okw9P3DMp60/K84kASwEnteDp4iODqqIphtn6iSBOOhlopUK3fYQTIqe2/X+B3JT
- Hs7A==
+ bh=0s3LydvkurpzHPSmFqn8SsqqOKpHZfLVy0YgIg6YuhM=;
+ b=Qbrb8qFUyHqUZp6Hk1DTy/pEZKvjeZewCofYSWv5rRixkeRGyHCWLB5gZUpjPtvnjM
+ F3zKQvPsrHsXkKy9SpRsDJ0mB8+flgHUMr0tAWyChQKw5CXWHKufilyxCA/v8QnVaQXo
+ TKY84UN79R0L6tXN9IP0s9TbEBETsHwgOOfRVOlqBi/0wDXJzULONaKSbnDU/olxdgSL
+ MOkSbVz9vJJGW5Fk8VAG+5c6XvezeBZPO94tEJkOaeHoyyVOFVQjG4lQTsTjwJAwMeqt
+ hJ8TopD/gDlH8Wky47ZQCwm9w5oRir8fbunrCrmMWW4y4BkfEpxw7zRTYjV6lWpklwmh
+ wHiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719236206; x=1719841006;
+ d=1e100.net; s=20230601; t=1719236870; x=1719841670;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MS+wQnVORVY3/VovjZL2n0flSwot/Y7njZyC7HF+76E=;
- b=VLgCNtr5WgQtbaZcvwv8JzntckMm8OOY7X4/QMagOHmRjDcRtjOeImZXCKfIg0z0a3
- mTZgS4sKfW+KJEU3UXb6Z/n/MZyW/u5nxP+iC7Y8YVHc1pK3Of0Vyz4p41sRAaowSaX7
- 7KbwQWmrvv+LAv2W+cHhrfhUBydreowFlp0iOhvo4tF/zV1uu42YuULPHi0OTZ4aqhK3
- 6srqa8o10Dcn/nSuA8Rw1jkr8PneZHyXh0hIo0Xo8EF3t/nmEM8IR3Ur6bllMJrsDBzE
- p49MU1twpji2PQCvaI13dZT978klYr6c0OweN49dcJHAoe2PD7XteKi1J9ODPMZsWtaN
- 1qeg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCQXS1cujSxm3Cnk8FYB5nMJ+j20d/EWu5yYtDB9FWUe+WH0Of9Cjakl2EJWvCuiXzBdTX4uNynVcYQysUx8bXlquSfcw=
-X-Gm-Message-State: AOJu0YzANRxxfpf1UH3/tS6S3NPsNAIG3W+m+MPnORS/9PWI9uJDKCHO
- EICd/OH4eJtN0Pk0ls/LI4XuvCiIYoFntASeBgHJq6B5zsDI9fawCXJFwTQunqU+LHDVfFYKQnS
- Q9FdMcqwNJiHmVisacrmrb9XySMow0qWcn1YooA==
-X-Google-Smtp-Source: AGHT+IHWftPsmcLNRwVAeE0XML4GyJSAxoSY919JYk81pnPhkWNgI5y+iWGlarUwap1XoSJ6gMiWNBsgxXThjM3Ds9k=
-X-Received: by 2002:a50:c058:0:b0:572:4fc3:3a28 with SMTP id
- 4fb4d7f45d1cf-57d4a28e8bcmr4060764a12.23.1719236205654; Mon, 24 Jun 2024
- 06:36:45 -0700 (PDT)
+ bh=0s3LydvkurpzHPSmFqn8SsqqOKpHZfLVy0YgIg6YuhM=;
+ b=XpF/LzFxrkB7Lu3U8Qu1H2DrhJkM1Qu37hCXjr+AaloF5o8uWsBm+mDL1GnDCY4YAy
+ otqXDN5CLsoHRKsaJCsVkLfLGaoOAgCPZ24jztOI9D6DLGxUvn7geHUgXOl5goprRYuS
+ uspUJTFw4YVClIKWd0ZRGa4/0lFMD3LQgt5xJJZdzW/yLfDmXWEnzkJsjicMKgXQCdMH
+ zICt0NmbvmLyeen5Dvggl6r0RIyb7fdmZAr1DYq/i9aESpFlylaZUJebSS+rX3tw94Yi
+ ktw8iydgit16CyqRk47sfWWaHt6JJBJ1lR9zVhAN7w3URhhgLtvXYagFztrWRKKXdZRO
+ i2SQ==
+X-Gm-Message-State: AOJu0Yz+h2pr8uU3NaH00AxmABvbSHF7P3L0JnkyFOJTDGOwFJ5luJx0
+ tgxuSEipQxEEsDTIxJ8dc7SNNJXXHCkAtk9c6/3PP+IkS/TP1YhxZDU/OPARbpOaWnyGOVz0MSs
+ o1BvuWMf+MdlNIfux1QsM2ia3lXb3r4kQMMOSiw==
+X-Google-Smtp-Source: AGHT+IEak+AlU/sGyNgKu71+/v2DuvHcCZWwEj3MVCEKEJeB0lgx0APIFcwedpxjChNmBHua5VVMWIwXUZl45G8fzec=
+X-Received: by 2002:ac2:550d:0:b0:52c:e126:3d50 with SMTP id
+ 2adb3069b0e04-52ce183bf44mr2481283e87.36.1719236870433; Mon, 24 Jun 2024
+ 06:47:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240619002218.926674-1-nicolinc@nvidia.com>
-In-Reply-To: <20240619002218.926674-1-nicolinc@nvidia.com>
+References: <20240621165115.336-1-shiju.jose@huawei.com>
+In-Reply-To: <20240621165115.336-1-shiju.jose@huawei.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Jun 2024 14:36:34 +0100
-Message-ID: <CAFEAcA8MnL8+TKHsCZ2c18g0+-KyL1X4PeebFo88jQu-vU-Y5w@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/smmu-common: Replace smmu_iommu_mr with
- smmu_find_sdev
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: eric.auger@redhat.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Mon, 24 Jun 2024 14:47:38 +0100
+Message-ID: <CAFEAcA9CQ_D168MmD+VbQsegUVsJuiXBP64oH0SgL=bD8EDJOA@mail.gmail.com>
+Subject: Re: [RFC PATCH 1/1] hw/arm: FW first ARM processor error injection.
+To: shiju.jose@huawei.com
+Cc: qemu-devel@nongnu.org, linux-edac@vger.kernel.org, 
+ jonathan.cameron@huawei.com, mchehab+huawei@kernel.org, tanxiaofei@huawei.com, 
+ prime.zeng@hisilicon.com, linuxarm@huawei.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,22 +89,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Jun 2024 at 01:22, Nicolin Chen <nicolinc@nvidia.com> wrote:
+On Fri, 21 Jun 2024 at 17:52, shiju.jose--- via <qemu-devel@nongnu.org> wrote:
 >
-> The caller of smmu_iommu_mr wants to get sdev for smmuv3_flush_config().
+> From: Shiju Jose <shiju.jose@huawei.com>
 >
-> Do it directly instead of bridging with an iommu mr pointer.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> ---
->  hw/arm/smmu-common.c         |  8 ++------
->  hw/arm/smmuv3.c              | 12 ++++--------
->  include/hw/arm/smmu-common.h |  4 ++--
->  3 files changed, 8 insertions(+), 16 deletions(-)
 
 
 
-Applied to target-arm.next, thanks.
+> diff --git a/hw/arm/arm_error_inject.c b/hw/arm/arm_error_inject.c
+> new file mode 100644
+> index 0000000000..953a9d6705
+> --- /dev/null
+> +++ b/hw/arm/arm_error_inject.c
+> @@ -0,0 +1,49 @@
+> +/*
+> + * CXL Type 3 (memory expander) device
 
+This doesn't seem to match what the file actually does.
+
+> + *
+> + * Copyright(C) 2020 Intel Corporation.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2. See the
+> + * COPYING file in the top-level directory.
+> + *
+> + * SPDX-License-Identifier: GPL-v2-only
+
+Why are these new files GPL-v2-only? Our general preference
+(see the LICENSE) file is for GPL-v2-or-any-later-version.
+
+I also notice that this file is marked as copyright Intel, but
+you're submitting from a Huawei email address.  What's the history
+of this code?
+
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/units.h"
+> +#include "qemu/error-report.h"
+> +#include "qapi-commands-arm-error-inject.h"
+> +#include "hw/qdev-properties.h"
+> +#include "qapi/error.h"
+> +#include "qemu/log.h"
+> +#include "qemu/module.h"
+> +#include "qemu/pmem.h"
+> +#include "qemu/range.h"
+> +#include "qemu/rcu.h"
+> +#include "qemu/guest-random.h"
+> +#include "sysemu/hostmem.h"
+> +#include "sysemu/numa.h"
+> +#include "hw/boards.h"
+> +#include "hw/acpi/ghes.h"
+
+Looking at the code here I'm pretty sure you don't need
+anywhere near all of these include lines.
+
+> +
+> +#define DWORD_BYTE 4
+
+This seems to be unused.
+
+thanks
 -- PMM
 
