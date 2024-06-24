@@ -4,138 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A800C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D809C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 06:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcgR-0005YL-9b; Mon, 24 Jun 2024 01:56:07 -0400
+	id 1sLcnr-000866-Qm; Mon, 24 Jun 2024 02:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLcgP-0005Xt-SD
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:56:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sLcgM-0008Qb-8J
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:56:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719208558;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=61+TYip7r+PDB2SDR4Hdv9saGAGBM/UZXshWuB1Rr4Q=;
- b=derElOW/PqoUWrPpdBMijWMCr6etOY+QLtmvxztjv1fdkU8+EugNUE9YTd0dSRNNSiVZbd
- hlqvNYgryBBZPSogVi4xyvrpIZEkLSAtYUdnpfNW2S9SEni22p/uBd+htG6ciblXHAoq55
- gVWPhzKVq8NAzLKSw0Q5bQpSd47ivVk=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-73-fV8R8ertM7Kbbi4wmKREYA-1; Mon, 24 Jun 2024 01:55:56 -0400
-X-MC-Unique: fV8R8ertM7Kbbi4wmKREYA-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a7240b92b4dso60365966b.1
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:55:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sLcnq-00085n-98; Mon, 24 Jun 2024 02:03:46 -0400
+Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sLcno-00015s-5C; Mon, 24 Jun 2024 02:03:46 -0400
+Received: by mail-vk1-xa29.google.com with SMTP id
+ 71dfb90a1353d-4ef765e6dcaso169514e0c.1; 
+ Sun, 23 Jun 2024 23:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719209022; x=1719813822; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pRjjzrwoopXOsYzu6jLr+pwyQKTmPnQYozm0u0J2YTM=;
+ b=iX0XJY3yCz4WndDZOsOz17Qub6BdUbHOo1Ye7EZXvIb25rUXypsA44I02mbh+uUcKz
+ m68tofezDOgNwCJ3pf61Zgc/vodspvqEn41TBKIIO/cgQz8NcMRCIW+noDivUWquHaij
+ 8wA42ry40JJH4eGy+hkwRoyNskrg7xOEXfLGuqLPMjoZ2o0g0a0hKTP2iiowCBnEAcl6
+ OxUaDS7kf5dPYGUNP2Fx8UuiJkMiMSOg5VIaz2DA6GLWfb6I3dRbvJS3oqmo9vCUfVyV
+ BE9B28nhC4eSBfhmzvwuo7Eq6Z8+ClggWlvEgTyCaYTInQxtza0LudScRl1BXw6v46Qa
+ 3yNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719208555; x=1719813355;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=61+TYip7r+PDB2SDR4Hdv9saGAGBM/UZXshWuB1Rr4Q=;
- b=wsw8P6xsADMmjcZ9bQW2iBfxb8rN7bUynK/c3nD7U+OJB5nxPUx2ec9ss4aYdbXlHT
- Oc8Lir6fBE3pWIi+iLDtCJCpVtfpQfoXO+gXmtzVALnDIvo6jaSxpaGeI0VecaRqDQGc
- FQiq6rBUq0Wmm9ETHPCgDj18WfNtpXKxPXttVEQS4gQFLpak38UVC63LJHn166wA7pr5
- NiMNCUHH03feYLmvC08MeWazlpLLNz6SJsU2NgWSX3k9fJuMm7oHDHI+mnA6dL62Q2Uo
- T3KIppoV17r7JD97aHbeI8eWe3asCzf/l4qGkF8QdvNmEYnI0+SBbX4bGG4i2tyOz+7Z
- BSfA==
-X-Gm-Message-State: AOJu0YxzRrNIq8E7G9Xw16i9nNk4kk5JWKLOu0qJnjsiN/9H8dlnCH1g
- ngHj/3Kt6kEqmT28r5DFVH+CgFVsIGFKU4aTXeb6NvdOII61byUB2LdwoCr3xCs4IOlhBBvKcJs
- COKkwi2tEgVcvWJ1ZQ7ZQsEUAG4dU4C+dNKZ2jDKkMT69xMrISMIV
-X-Received: by 2002:a17:907:9188:b0:a6f:501d:c225 with SMTP id
- a640c23a62f3a-a7242cb8d62mr185211766b.45.1719208555496; 
- Sun, 23 Jun 2024 22:55:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFO/9zAPg+3Dj4B3DZmHwslAqu4URxXZ+PjeY/sFWZETiXJwOiYjrKDnOKaS01aQpkil2fqFA==
-X-Received: by 2002:a17:907:9188:b0:a6f:501d:c225 with SMTP id
- a640c23a62f3a-a7242cb8d62mr185211366b.45.1719208555026; 
- Sun, 23 Jun 2024 22:55:55 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-178-117.web.vodafone.de.
- [109.43.178.117]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72569d169esm57362966b.188.2024.06.23.22.55.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 22:55:54 -0700 (PDT)
-Message-ID: <77f2550a-fbb7-4bcf-a6b7-b9b31934daf1@redhat.com>
-Date: Mon, 24 Jun 2024 07:55:52 +0200
+ d=1e100.net; s=20230601; t=1719209022; x=1719813822;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pRjjzrwoopXOsYzu6jLr+pwyQKTmPnQYozm0u0J2YTM=;
+ b=nI8rlvFO3diSBN+DCq7CsmcGy3TgiJZtxwDCtA3N8B7fMlzA8cWspI+YfW9qpVtwYh
+ hW1CK07QtyNVl+GH8/FL0c2zyRb189qVgw+K75eMiemIIYc3SDgxaFj5zxgKHFLOOHvq
+ TjSxZ15Ok0V1FyAgHdfa7Sxd+eb3KdMYz+LPJfnW3SnrmZxs5zmAgwaG/UuwV3MLwiU9
+ qanVByjDKPN4XGDLUcz9/+pe5PlvLm1oTCy7OtuFphTe9/x7PvTgmyuU/p8eLamnNYQc
+ 7/6T0RjZU7KKYgL1Z/UmtZxaknnLCTAZ52UYueJt1uEQ831qUiM8a/WXtRSvLsGm5Svi
+ xLsg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjh9acmVXEx6QDaNYt7Km3YiAfI1sv4Oa2D5DYdxCv/GiE4dkKiaaBWVS7MAk/HVmjThRG2SMD+0BTcIUJPq6I4PD/TUXPQ6sqnsO44DIhar3FaEEV45u+xHw=
+X-Gm-Message-State: AOJu0YyENnPUq4+aSI8gesmyachO7pP8k1U4UBfLjj2bxJXbdBqHV6VE
+ q99K6Y3aE1BYFYjrrRdDlPebKxPpHxmlBSFCnbAGYz0tV0dhrAvmJ4kY+G5dHb4KAWVr6TbgD8Z
+ MV81+9nGKHWwM7LFm30BvO8abKjg=
+X-Google-Smtp-Source: AGHT+IEcWsqd89DLCmWK0tK7I6cDExskcfvlt5EnUjJAuJgXABnuiug2pvWsnT04x9/vig2PEScH26loBO2Cem3yF/c=
+X-Received: by 2002:a05:6122:1790:b0:4ef:6865:8ffd with SMTP id
+ 71dfb90a1353d-4ef6a73802bmr1655165e0c.10.1719209022128; Sun, 23 Jun 2024
+ 23:03:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] pc-bios/s390-ccw: Merge the netboot loader into
- s390-ccw.img
-To: Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Claudio Imbrenda <imbrenda@linux.ibm.com>,
- "Collin L . Walling" <walling@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>,
- "Jason J . Herne" <jjherne@linux.ibm.com>,
- Marc Hartmayer <mhartmay@linux.ibm.com>
-References: <20240621082422.136217-1-thuth@redhat.com>
- <a3531d21082e3abf3132a4c95d6c54e8973dd27e.camel@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <a3531d21082e3abf3132a4c95d6c54e8973dd27e.camel@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20240621115906.1049832-1-sunilvl@ventanamicro.com>
+ <20240621115906.1049832-6-sunilvl@ventanamicro.com>
+In-Reply-To: <20240621115906.1049832-6-sunilvl@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 24 Jun 2024 16:03:15 +1000
+Message-ID: <CAKmqyKOXXRtu3U4xPp57_4qoCAx07Q3o50oEVHKPgZ=0EjAoXg@mail.gmail.com>
+Subject: Re: [PATCH v3 05/15] tests/qtest/bios-tables-test.c: Add support for
+ arch in path
+To: Sunil V L <sunilvl@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,44 +105,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/06/2024 22.51, Eric Farman wrote:
-> On Fri, 2024-06-21 at 10:24 +0200, Thomas Huth wrote:
->> We originally built a separate binary for the netboot code since it
->> was considered as experimental and we could not be sure that the
->> necessary SLOF module had been checked out. Time passed, the netboot
->> code proved its usefulness, and the build system nowadays makes sure
->> that the SLOF module is checked out if you have a s390x compiler
->> available
->> for building the s390-ccw bios. In fact, the possibility to build the
->> s390-ccw.img without s390-netboot.img has been removed in commit
->> bf6903f6944f ("pc-bios/s390-ccw: always build network bootloader")
->> already.
->>
->> So it does not make too much sense anymore to keep the netboot code
->> in a separate binary. To make it easier to support a more flexible
->> boot process soon that supports more than one boot device via the
->> bootindex properties, let's finally merge the netboot code into the
->> main s390-ccw.img binary now.
-> 
-> Hi Thomas,
-> 
-> I find myself wondering about the side effects of the
-> s/sclp_print/printf/ changes, but I haven't come up with anything I can
-> put my finger on. Maybe something will come to me over the weekend, but
-> all-in-all I like the looks of this.
+On Fri, Jun 21, 2024 at 9:59=E2=80=AFPM Sunil V L <sunilvl@ventanamicro.com=
+> wrote:
+>
+> Since machine name can be common for multiple architectures (ex: virt),
+> add "arch" in the path to search for expected AML files. Since the AML
+> files are still under old path, add support for searching with and
+> without arch in the path.
+>
+> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
 
-I think it should be fine, both functions are basically just a wrapper 
-around the write() function in sclp.c, with sclp_print() being rather dumb 
-while printf() is doing the usual string formatting before writing it out. I 
-think in the long run, it would be nice to get rid of sclp_print() and 
-replace it by puts() or printf() in the whole code, but doing that right now 
-would likely cause quite some conflicts for Jared with his patch series, so 
-I'd rather postpone that to a later point in time.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-> Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Alistair
 
-Thanks!
-
-  Thomas
-
+> ---
+>  tests/qtest/bios-tables-test.c | 23 ++++++++++++++++++++---
+>  1 file changed, 20 insertions(+), 3 deletions(-)
+>
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-tes=
+t.c
+> index c4a4d1c7bf..29c52952f4 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -78,6 +78,7 @@
+>  typedef struct {
+>      bool tcg_only;
+>      const char *machine;
+> +    const char *arch;
+>      const char *machine_param;
+>      const char *variant;
+>      const char *uefi_fl1;
+> @@ -262,8 +263,19 @@ static void dump_aml_files(test_data *data, bool reb=
+uild)
+>          g_assert(exp_sdt->aml);
+>
+>          if (rebuild) {
+> -            aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir, data-=
+>machine,
+> +            aml_file =3D g_strdup_printf("%s/%s/%s/%.4s%s", data_dir,
+> +                                       data->arch, data->machine,
+>                                         sdt->aml, ext);
+> +
+> +            /*
+> +             * To keep test cases not failing before the DATA files are =
+moved to
+> +             * ${arch}/${machine} folder, add this check as well.
+> +             */
+> +            if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
+> +                aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir,
+> +                                           data->machine, sdt->aml, ext)=
+;
+> +            }
+> +
+>              if (!g_file_test(aml_file, G_FILE_TEST_EXISTS) &&
+>                  sdt->aml_len =3D=3D exp_sdt->aml_len &&
+>                  !memcmp(sdt->aml, exp_sdt->aml, sdt->aml_len)) {
+> @@ -398,8 +410,13 @@ static GArray *load_expected_aml(test_data *data)
+>          memset(&exp_sdt, 0, sizeof(exp_sdt));
+>
+>  try_again:
+> -        aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir, data->mac=
+hine,
+> -                                   sdt->aml, ext);
+> +        aml_file =3D g_strdup_printf("%s/%s/%s/%.4s%s", data_dir, data->=
+arch,
+> +                                   data->machine, sdt->aml, ext);
+> +        if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
+> +            aml_file =3D g_strdup_printf("%s/%s/%.4s%s", data_dir, data-=
+>machine,
+> +                                       sdt->aml, ext);
+> +        }
+> +
+>          if (verbosity_level >=3D 2) {
+>              fprintf(stderr, "Looking for expected file '%s'\n", aml_file=
+);
+>          }
+> --
+> 2.40.1
+>
 
