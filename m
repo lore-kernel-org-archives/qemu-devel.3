@@ -4,84 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6407AC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4B4C2D0D1
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcIa-000347-HI; Mon, 24 Jun 2024 01:31:28 -0400
+	id 1sLcMU-0007pb-Ru; Mon, 24 Jun 2024 01:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcIS-00032q-RU
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:22 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sLcM2-0007fb-AA
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:09 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sLcIQ-0004aO-9b
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:31:20 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-70666aceb5bso1219084b3a.1
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:31:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sLcLz-0004r7-Lq
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:01 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-70666aceb5bso1221045b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:34:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719207076; x=1719811876; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fV2Lm6jWmJZV5HP3sflY623iLhWfKTN1g+jJJledmtw=;
- b=hvUuXYeNpOtc9S0ScjzxN3l3PDXmTzW6JqkIQCEPvBAmudNIWp64O4Nr3jB5QmsBxL
- mxPnad3COWDLTaglSGL4N5vKiYG1XAQLyqJQX0bOgQOV4senEFUyyPl1YHAlJDAA5gr8
- ZANuiN8YGbWjBJyCMGYTA+blxsHsCd+nIO2Pbh7joVTGWO5rjeVkDnuNRhXjpXsrI5Is
- PnEO+C181EfxgJCbMSHxGhHRnOZfNc667+MOkF6UhPFXzAlwi5GAJ/aKfWLKnOz/+w7V
- OWHRr2oRTsu9WwctXz2F3//8XJubDXNzpf99jUKuRxI5144+9H3hQV32CbRyCUewFJXb
- 9nAg==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207294; x=1719812094;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CBtlUKvL7QA1JOLexsqKLMt0NTeLClAOuCY4s6N/l7M=;
+ b=HIwgUKvH+H+U/J8pjjIOyxbekWF9VnshWV7FKDST+7X/5sN2EtpsMIcOuQiOkM5Fr1
+ P/BSSgQbNeIJeFNW51B7x+acrEVUzuRTOD5KQC8pG9S6cgiwZUKUvl9kw3MmLsdF937y
+ 3qO1g8PicE3IIZmOD+YtD0g1YeNJk+b4NOF8xbfh6CQXqyEu7qf0GvcF+ZBknS7rr0+S
+ Qm/sQAtm2s9okMLDnUKrhVcHt31IUR4Hlj96aw3fJWY9ODocb6fkYHqOlH4F3/L295to
+ by+f9YQMF2iU5iUmr7VQ6kU9lc2W0Th9//VdihbAUJsVDW/36Cs6E+ugxFeLceGtXvCE
+ jSbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207076; x=1719811876;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fV2Lm6jWmJZV5HP3sflY623iLhWfKTN1g+jJJledmtw=;
- b=GkfM8lxC41eaBMPT2pWROyMLJQKFvRb52+79PiRfNDsigNL1XPOjFY2BuuNyXxgBhK
- +/opidMPySOjxe8nKug1DTVd7pbUiASe5rGhcfUnVLJBFCAlXuVi+jweJXK4nyTjNf5w
- IWi+GIdrnseB5ERL12Zh0dJMP0+kJUJoYCDmDdomIteoo6ehBhcsAHJykcj0eFU6kRQv
- 449QLBFALdp/USLttjW8uWswgFhu6pDjc6W2GKj7uABXu0EU/rN+Pz16pxtRwDgy590G
- lBmjfXcvNjc7QN2bbqKv3NoO+b3xZsbL3bpUO/FqN3M2eAjP3osR9DeNiQQQWwitCyF6
- QUFw==
-X-Gm-Message-State: AOJu0Yxjnm7jxRxndFiLNtjCTH4BUOf7tSF9CV6P6JZLMpsklsxQxkVk
- GwyNtNI3dfDRw31uimn/ntE31B7yjSbpzCpZMlRV224mNKY90km7+5klonshQcpE2Hf+VXTQFTz
- ZDo4=
-X-Google-Smtp-Source: AGHT+IGiBfCHLjPlEcxsoo8UUuarMpNJq/8Kw+2A9pnmMLTXmavpXdM4SjAjf8aOVno7Vg14ogjD3Q==
-X-Received: by 2002:a05:6a00:80f2:b0:706:5c14:29b4 with SMTP id
- d2e1a72fcca58-7067473fc66mr3188497b3a.32.1719207076409; 
- Sun, 23 Jun 2024 22:31:16 -0700 (PDT)
-Received: from amd.. ([2804:7f0:b401:1758:3e7c:3fff:fe7a:e83b])
+ d=1e100.net; s=20230601; t=1719207294; x=1719812094;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CBtlUKvL7QA1JOLexsqKLMt0NTeLClAOuCY4s6N/l7M=;
+ b=IEiFX5aAlQlIKG3FFgLBCQh0L9N1j0Sk4/U6vrRlYupyweOD9uHHTeXm8ueUsuzcDA
+ 6AClzDAv+o+1N7QGuNkbeoukJYBNQPoPcdEc8H8NvYaEmGgk5HHV5jdC9YWddAHxsG97
+ fwDMEnpFNa5ALe4Q7q1V4D+plwEVzb4szFlS89jh6JD0ZHTH1lwBEO2fu4xW9MJtBnIg
+ I9N+bB8TAVBXDyc3waHtnUIC3drjbnW+b8AlvMsinV9QRca1Oj4ANvRU1DAHKeAtEvPv
+ RLkVRyRSwS7U4AoRiAMeHXjahEykA/wJVC+ZcXbv8lO8vFE8siOMgjdgVKRAEfLEIcrL
+ HMqg==
+X-Gm-Message-State: AOJu0YwUU7gT1upOGSC9H558gSLCsFirK4s6bh3bEby3MKz1hNVZ8v6r
+ YSZAv7dSNyeFz3pNApxJvxhh3riFuhq7oDG/cdyiWJffjJAisbziCNcAOqBp5C4=
+X-Google-Smtp-Source: AGHT+IGrJgFmpkpBfY07CjZ+Z5LCOmCNI8+OD/YcwlMMQso7VEKa5HdjURwTvfLO8ZvnbRdBNz/HTQ==
+X-Received: by 2002:a05:6a20:a895:b0:1b8:9f3b:65d9 with SMTP id
+ adf61e73a8af0-1bcf80059b0mr3633520637.54.1719207293820; 
+ Sun, 23 Jun 2024 22:34:53 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-716b4a73183sm3953601a12.39.2024.06.23.22.31.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 23 Jun 2024 22:31:15 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, alex.bennee@linaro.org, richard.henderson@linaro.org
-Cc: philmd@linaro.org,
-	peter.maydell@linaro.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH v4 3/9] gdbstub: Add support for target-specific stubs
-Date: Mon, 24 Jun 2024 05:30:40 +0000
-Message-Id: <20240624053046.221802-4-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240624053046.221802-1-gustavo.romero@linaro.org>
-References: <20240624053046.221802-1-gustavo.romero@linaro.org>
+ d2e1a72fcca58-70651cd4ea3sm5441991b3a.99.2024.06.23.22.34.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 23 Jun 2024 22:34:53 -0700 (PDT)
+Message-ID: <f5a8c73c-a9c8-43b0-a353-fa1424b9281a@daynix.com>
+Date: Mon, 24 Jun 2024 14:34:47 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 01/13] virtio-gpu: Use trace events for tracking
+ number of in-flight fences
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Antonio Caggiano <quic_acaggian@quicinc.com>,
+ "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
+ Robert Beckett <bob.beckett@collabora.com>,
+ Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
+ ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
+References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
+ <20240623152343.328436-2-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240623152343.328436-2-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,206 +116,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, it's not possible to have stubs specific to a given target,
-even though there are GDB features which are target-specific, like, for
-instance, memory tagging.
+On 2024/06/24 0:23, Dmitry Osipenko wrote:
+> Replace printf's used for tracking of in-flight fence inc/dec events
+> with tracing, for consistency with the rest of virtio-gpu code that
+> uses tracing.
+> 
+> Suggested-by: Marc-André Lureau <marcandre.lureau@gmail.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-This commit introduces gdb_extend_qsupported_features,
-gdb_extend_query_table, and gdb_extend_set_table functions as interfaces
-to extend the qSupported string, the query handler table, and the set
-handler table, allowing target-specific stub implementations.
-
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
----
- gdbstub/gdbstub.c          | 102 ++++++++++++++++++++++++++++++++++---
- include/gdbstub/commands.h |  22 ++++++++
- 2 files changed, 118 insertions(+), 6 deletions(-)
-
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 9ff2f4177d..b1ca253f97 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1609,6 +1609,20 @@ static void handle_query_thread_extra(GArray *params, void *user_ctx)
-     gdb_put_strbuf();
- }
- 
-+static char *extended_qsupported_features;
-+void gdb_extend_qsupported_features(char *qsupported_features)
-+{
-+    /*
-+     * We don't support different sets of CPU gdb features on different CPUs yet
-+     * so assert the feature strings are the same on all CPUs, or is set only
-+     * once (1 CPU).
-+     */
-+    g_assert(extended_qsupported_features == NULL ||
-+             g_strcmp0(extended_qsupported_features, qsupported_features) == 0);
-+
-+    extended_qsupported_features = qsupported_features;
-+}
-+
- static void handle_query_supported(GArray *params, void *user_ctx)
- {
-     CPUClass *cc;
-@@ -1648,6 +1662,11 @@ static void handle_query_supported(GArray *params, void *user_ctx)
-     }
- 
-     g_string_append(gdbserver_state.str_buf, ";vContSupported+;multiprocess+");
-+
-+    if (extended_qsupported_features) {
-+        g_string_append(gdbserver_state.str_buf, extended_qsupported_features);
-+    }
-+
-     gdb_put_strbuf();
- }
- 
-@@ -1729,6 +1748,41 @@ static const GdbCmdParseEntry gdb_gen_query_set_common_table[] = {
-     },
- };
- 
-+/* Compares if a set of command parsers is equal to another set of parsers. */
-+static bool cmp_cmds(GdbCmdParseEntry *c, GdbCmdParseEntry *d, int size)
-+{
-+    for (int i = 0; i < size; i++) {
-+        if (!(c[i].handler == d[i].handler &&
-+            g_strcmp0(c[i].cmd, d[i].cmd) == 0 &&
-+            c[i].cmd_startswith == d[i].cmd_startswith &&
-+            g_strcmp0(c[i].schema, d[i].schema) == 0)) {
-+
-+            /* Sets are different. */
-+            return false;
-+        }
-+    }
-+
-+    /* Sets are equal, i.e. contain the same command parsers. */
-+    return true;
-+}
-+
-+static GdbCmdParseEntry *extended_query_table;
-+static int extended_query_table_size;
-+void gdb_extend_query_table(GdbCmdParseEntry *table, int size)
-+{
-+    /*
-+     * We don't support different sets of CPU gdb features on different CPUs yet
-+     * so assert query table is the same on all CPUs, or is set only once
-+     * (1 CPU).
-+     */
-+    g_assert(extended_query_table == NULL ||
-+             (extended_query_table_size == size &&
-+              cmp_cmds(extended_query_table, table, size)));
-+
-+    extended_query_table = table;
-+    extended_query_table_size = size;
-+}
-+
- static const GdbCmdParseEntry gdb_gen_query_table[] = {
-     {
-         .handler = handle_query_curr_tid,
-@@ -1821,6 +1875,22 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
- #endif
- };
- 
-+static GdbCmdParseEntry *extended_set_table;
-+static int extended_set_table_size;
-+void gdb_extend_set_table(GdbCmdParseEntry *table, int size)
-+{
-+    /*
-+     * We don't support different sets of CPU gdb features on different CPUs yet
-+     * so assert set table is the same on all CPUs, or is set only once (1 CPU).
-+     */
-+    g_assert(extended_set_table == NULL ||
-+             (extended_set_table_size == size &&
-+              cmp_cmds(extended_set_table, table, size)));
-+
-+    extended_set_table = table;
-+    extended_set_table_size = size;
-+}
-+
- static const GdbCmdParseEntry gdb_gen_set_table[] = {
-     /* Order is important if has same prefix */
-     {
-@@ -1859,11 +1929,21 @@ static void handle_gen_query(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
--                            gdb_gen_query_table,
--                            ARRAY_SIZE(gdb_gen_query_table))) {
--        gdb_put_packet("");
-+    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-+                           gdb_gen_query_table,
-+                           ARRAY_SIZE(gdb_gen_query_table))) {
-+        return;
-+    }
-+
-+    if (extended_query_table &&
-+        process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-+                           extended_query_table,
-+                           extended_query_table_size)) {
-+        return;
-     }
-+
-+    /* Can't handle query, return Empty response. */
-+    gdb_put_packet("");
- }
- 
- static void handle_gen_set(GArray *params, void *user_ctx)
-@@ -1878,11 +1958,21 @@ static void handle_gen_set(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-+    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-                            gdb_gen_set_table,
-                            ARRAY_SIZE(gdb_gen_set_table))) {
--        gdb_put_packet("");
-+        return;
-     }
-+
-+    if (extended_set_table &&
-+        process_string_cmd(gdb_get_cmd_param(params, 0)->data,
-+                           extended_set_table,
-+                           extended_set_table_size)) {
-+        return;
-+    }
-+
-+    /* Can't handle set, return Empty response. */
-+    gdb_put_packet("");
- }
- 
- static void handle_target_halt(GArray *params, void *user_ctx)
-diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-index dd45c38472..2204c3ddbe 100644
---- a/include/gdbstub/commands.h
-+++ b/include/gdbstub/commands.h
-@@ -71,4 +71,26 @@ typedef struct GdbCmdParseEntry {
-  */
- int gdb_put_packet(const char *buf);
- 
-+/**
-+ * gdb_extend_query_table() - Extend query table.
-+ * @table: The table with the additional query packet handlers.
-+ * @size: The number of handlers to be added.
-+ */
-+void gdb_extend_query_table(GdbCmdParseEntry *table, int size);
-+
-+/**
-+ * gdb_extend_set_table() - Extend set table.
-+ * @table: The table with the additional set packet handlers.
-+ * @size: The number of handlers to be added.
-+ */
-+void gdb_extend_set_table(GdbCmdParseEntry *table, int size);
-+
-+/**
-+ * gdb_extend_qsupported_features() - Extend the qSupported features string.
-+ * @qsupported_features: The additional qSupported feature(s) string. The string
-+ * should start with a semicolon and, if there are more than one feature, the
-+ * features should be separate by a semiocolon.
-+ */
-+void gdb_extend_qsupported_features(char *qsupported_features);
-+
- #endif /* GDBSTUB_COMMANDS_H */
--- 
-2.34.1
-
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
