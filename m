@@ -4,104 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5513C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE679C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcPG-0007pp-H9; Mon, 24 Jun 2024 01:38:22 -0400
+	id 1sLcPI-0007rj-3b; Mon, 24 Jun 2024 01:38:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcPE-0007oG-Jo
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:38:20 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sLcPF-0007pf-Q8
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:38:21 -0400
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcPC-0005bX-UL
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:38:20 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70679845d69so517322b3a.1
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sLcPD-0005bZ-2s
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:38:21 -0400
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3d229baccc4so2076972b6e.1
  for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207497; x=1719812297;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cgI9hSP4ZTd/FnLyKh4zIejgp6yP0213M5kyxmjgu5A=;
- b=qk+7Bn8hYnCJZ6HzjsSyv/h4O6eshDoxIoWYCaL8tbuYSkcY0ScTnxfPOd4rPCHk1S
- dtVaF4NlesKD24N4HIQ3nXt9feZjaOOYLn+V7T5qFME50JL2krp9UTi6xRUs/+q8KvDa
- T2PZNKR4LxLfgJQqOGbeeLkbHnT+u4t+9dN4SodegdNcsHdrNjlHDHwF/uRxj9QijOHo
- 838XsOJFwuNFkWVxVdfG2TsBmc1IAxgS0uugTj8qei1rpMIh3y5WBaApf2cdc36RkzFX
- VJGBDHw4jSF6E66h6aZTwB7hWYBowmq2P14I7FpT4YAFEs9gkVKBLGktKong7Zd0ZC0j
- l7aQ==
+ d=linaro.org; s=google; t=1719207498; x=1719812298; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:to:subject:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1yd9jpLBAWeoF91GL2dOD1ecxQtcA5dMx4lXJm0N/uI=;
+ b=SNoh37P1YJT4vj8Q9EEEJeP89A3kreVk73yNfccy8P+96qamLyn5xiwu3bLRkwI4ji
+ IYkCwRiZZ67kd+q9tAuqGlGb6Z4TgVFqDr9GhxsVhFvTKIDIgJpGc74J8PBDFY2uSgCX
+ 4pkSKVdcXMWRZU0ty8l8riMy+HXggwcT8cO2mmifHD5+bgg8La3SPLc2EUl2Nk5d3Jzj
+ WGWkLxdWNa/T7h0YENxxIclQFhAaMkSfhEUAFS+v9rtcakeo1Sn+BQu7vpTg56X/QeoW
+ wOtdDP8SIszZ0TA1UC1oiVNZ169GVGKM7AkPElsBrpUCa/Yz2XUdrGypgJ0FWghIcYul
+ H+PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207497; x=1719812297;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1719207498; x=1719812298;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:to:subject
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cgI9hSP4ZTd/FnLyKh4zIejgp6yP0213M5kyxmjgu5A=;
- b=QFxRpp2KLuwvlQkebG/1n4Y0gYG4wA9ZxLNFiOoML85/YVJU6zdH9q2N7eRDqTn53I
- BT/wU1JVyUpjWxjxeZpJ0O0HUY/IqciRvieA5u+Id489g7UpqChErer1dkDtdJJVtGYP
- 3VdMh7S+DNiPx0yeD3/Au+MIM/xt/KhMm5He+crGbtKpMtxjO6VUuwvKDU2oZrolKSwV
- xAw3P9JpvOkyo8jZrfwcA0uxh4AxUg49/3I1eSvw6fcxr2aiEvv8YCmBA6Jbm7950JV0
- 60URdP9qIMXSVacBY3NVE+/rne3oPxH4tfKgxN04nLdr8+LlowTy64itemekZauHA4m9
- O6CA==
-X-Gm-Message-State: AOJu0YwjcdQhXuQ1lnPThsm+BB43UHR7PyJVrXmA/0lAHBQnavkfmah1
- 1FJ6fb8Xsh6i8qTCp21x03TIrzSczVoiqWPghdM3ogw5zY9xsC2990sqLTMxDL3DISdVD28NObj
- O8Ik=
-X-Google-Smtp-Source: AGHT+IER3xyrXI/lobZrjuCK35ILPXDD/xOpj3c8QGstjzEBk6dZ930dJCQwrPJNfCLECDQsoPGvrw==
-X-Received: by 2002:aa7:8ecb:0:b0:706:57ce:f042 with SMTP id
- d2e1a72fcca58-7067455bfd2mr2912448b3a.7.1719207497532; 
+ bh=1yd9jpLBAWeoF91GL2dOD1ecxQtcA5dMx4lXJm0N/uI=;
+ b=w2M0xd8Yp+IShbY//otrHzpBNReiFyuyN7aRQKd6JByT8PzXKmE6mwtYhgTe2AzHbl
+ xyPK5l7NEHuPDjBCYcwSrmanQoil7VnvwVqsjK0ZD5b4Ebbcwk+yEfEkkTnGekzUjDoy
+ 7V/yheJJ2BTYSWH3sDFfggnbaGsQHO+VIJDQ7aeTjizX3k1rpNigvgTpm4tqunKjKXJF
+ 0hkwGLtR3igWo+I8E0qMvZwfsWX1tYLrg2LyoyEcgcv3PR+iEJCuRX5V1Ms4x9ZGKqkd
+ 8Go/3npK0ODVJDDpP2oZ9/q5ehTYoCLErAvxluKw9AwbFX0yYZNHWdUirx3DNo3dbtbm
+ 9NTw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJlgduR52dRbzn7J089X7fwKmXJNlkl+7TCxUIUifb0cS2ZezhqDykOEL7v3fsY3Af3ibCedF++hA94Ia+BegsExLX1vw=
+X-Gm-Message-State: AOJu0Yy55wqzLvy5xMqDAWIbHsT5hufD8jHqUz5v+VgzpmVeoPjcizCP
+ tBCVRcr0TjJ3A42669XGwz03TKMbELy5zfj2T/fQaPHpOD55xUWP/Wl7AXmfSKg=
+X-Google-Smtp-Source: AGHT+IHvX1WpgSxDgq/cddsCs4LJSYlmyqfGBea7UAJbor14vsnnODKZG+fJGOn5yStGKvTWiwc0Fg==
+X-Received: by 2002:a05:6870:470e:b0:250:756b:b1ed with SMTP id
+ 586e51a60fabf-25d06c0b974mr3005128fac.19.1719207497807; 
  Sun, 23 Jun 2024 22:38:17 -0700 (PDT)
-Received: from [157.82.204.135] ([157.82.204.135])
+Received: from ?IPv6:2804:7f0:b401:1758:f7d8:1e03:a6d:61a0?
+ ([2804:7f0:b401:1758:f7d8:1e03:a6d:61a0])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-706511944d2sm5328390b3a.70.2024.06.23.22.38.12
+ d2e1a72fcca58-70651191da0sm5350312b3a.50.2024.06.23.22.38.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
  Sun, 23 Jun 2024 22:38:17 -0700 (PDT)
-Message-ID: <0425f585-9cbc-4c23-b3f3-7140dedcaa46@daynix.com>
-Date: Mon, 24 Jun 2024 14:38:11 +0900
+Subject: Re: [PATCH v3 6/9] target/arm: Factor out code for setting MTE TCF0
+ field
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org, peter.maydell@linaro.org, alex.bennee@linaro.org
+References: <20240617062849.3531745-1-gustavo.romero@linaro.org>
+ <20240617062849.3531745-7-gustavo.romero@linaro.org>
+ <9127eb3a-0a95-4c72-96b9-9a6af6725c2d@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <74c77eaf-a900-5881-b3c5-d87975e4f2de@linaro.org>
+Date: Mon, 24 Jun 2024 02:38:14 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 10/13] virtio-gpu: Support suspension of commands
- processing
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
- ernunes@redhat.com, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
- <20240623152343.328436-11-dmitry.osipenko@collabora.com>
+In-Reply-To: <9127eb3a-0a95-4c72-96b9-9a6af6725c2d@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240623152343.328436-11-dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::429;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-oi1-x22f.google.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-2.379,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,14 +102,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/06/24 0:23, Dmitry Osipenko wrote:
-> Check whether command processing has been finished; otherwise, stop
-> processing commands and retry the command again next time. This allows
-> us to support asynchronous execution of non-fenced commands needed for
-> unmapping host blobs safely.
-> 
-> Suggested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Hi Richard,
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+On 6/21/24 1:35 AM, Richard Henderson wrote:
+> On 6/16/24 23:28, Gustavo Romero wrote:
+>> Factor out the code used for setting the MTE TCF0 field from the prctl
+>> code into a convenient function. Other subsystems, like gdbstub, need to
+>> set this field as well, so keep it as a separate function to avoid
+>> duplication and ensure consistency in how this field is set across the
+>> board.
+>>
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> ---
+>>   linux-user/aarch64/target_prctl.h | 22 ++---------------
+>>   target/arm/tcg/mte_user_helper.h  | 40 +++++++++++++++++++++++++++++++
+> 
+> I'm not keen on this placement, because this is specifically linux syscall semantics.
+> 
+> I'm not sure what the right thing to do here, because it's not like there are any other OS that support MTE at the moment, and gdb is inheriting linux's ptrace interface.
+> 
+> I think it would be less bad if we put the header in linux-user/aarch64/ and have target/arm/gdbstub.c include that if CONFIG_USER_ONLY & CONFIG_LINUX.
+
+I think that makes more sense indeed. Done in v4. Thanks.
+
+
+Cheers,
+Gustavo
 
