@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BA9CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C8F4C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLjjP-0003Pp-CG; Mon, 24 Jun 2024 09:27:42 -0400
+	id 1sLjlP-0004h8-GN; Mon, 24 Jun 2024 09:29:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sLjjF-0003Oh-SY
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:27:29 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sLjj5-0008Sg-AF
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:27:27 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-57d10354955so4729155a12.1
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:27:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719235636; x=1719840436; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=50nYGk586z/gKiWcz9UDdTQVKsHnISgxYYZdpSgqZqA=;
- b=SfSgCvBJfwbJC0bhwzD6waASkFEe9HaTAUYLijXmcqQ4c1/mduEOt6jV7vN195tgRG
- SJa6Rfz8NklY/wSp2czgA5m3LSt3Iu3YfNSO3RLc8Akhd1N7orDeA2wED82pCQLh6wze
- /g4g03DQwNY+lPbB5WoVR8nyqAjNR/kMVsMVFkYXYaHf0KNFQ9Hp2pN/RsINprB50paX
- UhWexBhB/0hz4UDObYLYEArje0IWYzNAeGjsfhoO6dl4EQR+817W9rue8Z1W7IApWWpY
- pbz8izT3kKKJI/tgxo+xygIkwaK2N8WaEafIIbBvCG4Zd6r7WlohSA+TjKCRqKu9flnT
- qrag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719235636; x=1719840436;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=50nYGk586z/gKiWcz9UDdTQVKsHnISgxYYZdpSgqZqA=;
- b=o1fKR9Sw7JKBG/pV402h2yY2pH0J/9W7fRjFkfSh22OzmvhAcYMXPyo8eXF3P0Dxf7
- RKGFWLSRpF7MePNwMiULjegxNXhbtwtJtPbu4mCYZHr5FbQzq5oMoUIUhXLOnxU9PfUn
- jm9I1LWo5V9nOU0qioKiN3Mls1qT3aXPKTTlHYJAZbKXgCFmIusDQ6uBL2oF5jGTqVmF
- fz+1OiMsMHC85RKPcXFHxtfPmw4pr7RzzEFyppMh4O9+J5RVkLOUnL5OkdvgpGdAIyvU
- YQUD24R8zXAZkybo43UeQg0xUiaHo9OZAwOnJLMMSiXDkFgPmQVt4NVxsXdzHl6rhQ3e
- rGow==
-X-Gm-Message-State: AOJu0YxlSyhkZX/p60Zsya9PcSAeAb2xaegYxcrJw+oxspY5gvnXHZSJ
- D79cZxeuMIr23eFR/CMYnMYBxZDvZxsC8hM+7Ko9oVQXS3BpFBmUwVi7suEG5VAcV2Se+dEqva+
- VCTPtBh8/S78LoEUYGSQXZAw/R7K1tki/ndE7Rg==
-X-Google-Smtp-Source: AGHT+IGygVPw927zyTHptOApZJWM3M/fjSLxb1Rm66H2ppnru5hfckRUGTQQaSURRCp2q4/k5V/mlKVS7Csj51yFpyI=
-X-Received: by 2002:a50:d504:0:b0:57c:749f:f5ef with SMTP id
- 4fb4d7f45d1cf-57d4a020170mr3045706a12.34.1719235636161; Mon, 24 Jun 2024
- 06:27:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sLjlI-0004d4-My
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:29:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sLjlD-0000Kr-R4
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:29:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719235770;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=JhesVBtNl7YTokSEIqKhTXJ2swYMOJ1WEh41iN9UJT0=;
+ b=JjY0TUHItakgiQcvpGwBENJIphK1xYvSEGoLkHnuZRRKCB95eQHtMcUqJxQ+9+yTTyzcNk
+ WYn0E/vF3RIO84YPt+el3t+lWpButdZ956T72Mro9uc58yNLHJbRWN6hOfpPo56UpmDm20
+ nBn2yIvARV6nxdCqPinqppuvaFpqj9U=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-cTYHYwddPDKci14QiUHkHA-1; Mon,
+ 24 Jun 2024 09:29:26 -0400
+X-MC-Unique: cTYHYwddPDKci14QiUHkHA-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3069319560B1; Mon, 24 Jun 2024 13:29:25 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.226])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BE4AC19560AE; Mon, 24 Jun 2024 13:29:19 +0000 (UTC)
+Date: Mon, 24 Jun 2024 14:29:11 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v3 03/15] backends/igvm: Add IGVM loader and configuration
+Message-ID: <Znl0p9IwzT24uHlf@redhat.com>
+References: <cover.1718979106.git.roy.hopkins@suse.com>
+ <31e19ee36bdbf0ba91d95bc2d71865d7d0007ff1.1718979106.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
-References: <20240621143903.3598230-1-gustavo.romero@linaro.org>
- <20240621143903.3598230-3-gustavo.romero@linaro.org>
-In-Reply-To: <20240621143903.3598230-3-gustavo.romero@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Jun 2024 14:27:05 +0100
-Message-ID: <CAFEAcA_tNM7Oo+rHHTCBW=LpibieQNktczqv2R=34gPv5smD_g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] target/arm: Enable FEAT_Debugv8p8 for -cpu max
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org, 
- richard.henderson@linaro.org, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <31e19ee36bdbf0ba91d95bc2d71865d7d0007ff1.1718979106.git.roy.hopkins@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,64 +92,414 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Jun 2024 at 15:39, Gustavo Romero <gustavo.romero@linaro.org> wrote:
->
-> Enable FEAT_Debugv8p8 for max CPU. This feature is out of scope for QEMU
-> since it concerns the external debug interface for JTAG, but is
-> mandatory in Armv8.8 implementations, hence it is reported as supported
-> in the ID registers.
->
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+On Fri, Jun 21, 2024 at 03:29:06PM +0100, Roy Hopkins wrote:
+> Adds an IGVM loader to QEMU which processes a given IGVM file and
+> applies the directives within the file to the current guest
+> configuration.
+> 
+> The IGVM loader can be used to configure both confidential and
+> non-confidential guests. For confidential guests, the
+> ConfidentialGuestSupport object for the system is used to encrypt
+> memory, apply the initial CPU state and perform other confidential guest
+> operations.
+> 
+> The loader is configured via a new IgvmCfg QOM object which allows the
+> user to provide a path to the IGVM file to process.
+> 
+> Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
 > ---
->  target/arm/tcg/cpu32.c | 6 +++---
->  target/arm/tcg/cpu64.c | 2 +-
->  2 files changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
-> index b155a0136f..a1273a73a3 100644
-> --- a/target/arm/tcg/cpu32.c
-> +++ b/target/arm/tcg/cpu32.c
-> @@ -82,8 +82,8 @@ void aa32_max_features(ARMCPU *cpu)
->      cpu->isar.id_pfr2 = t;
->
->      t = cpu->isar.id_dfr0;
-> -    t = FIELD_DP32(t, ID_DFR0, COPDBG, 9);        /* FEAT_Debugv8p4 */
-> -    t = FIELD_DP32(t, ID_DFR0, COPSDBG, 9);       /* FEAT_Debugv8p4 */
-> +    t = FIELD_DP32(t, ID_DFR0, COPDBG, 10);       /* FEAT_Debugv8p8 */
-> +    t = FIELD_DP32(t, ID_DFR0, COPSDBG, 10);      /* FEAT_Debugv8p8 */
->      t = FIELD_DP32(t, ID_DFR0, PERFMON, 6);       /* FEAT_PMUv3p5 */
->      cpu->isar.id_dfr0 = t;
->
-> @@ -93,7 +93,7 @@ void aa32_max_features(ARMCPU *cpu)
->      t = 0x00008000;
->      t = FIELD_DP32(t, DBGDIDR, SE_IMP, 1);
->      t = FIELD_DP32(t, DBGDIDR, NSUHD_IMP, 1);
-> -    t = FIELD_DP32(t, DBGDIDR, VERSION, 6);       /* Armv8 debug */
-> +    t = FIELD_DP32(t, DBGDIDR, VERSION, 10);      /* FEAT_Debugv8p8 */
->      t = FIELD_DP32(t, DBGDIDR, CTX_CMPS, 1);
->      t = FIELD_DP32(t, DBGDIDR, BRPS, 5);
->      t = FIELD_DP32(t, DBGDIDR, WRPS, 3);
-> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-> index 71e1bfcd4e..fe232eb306 100644
-> --- a/target/arm/tcg/cpu64.c
-> +++ b/target/arm/tcg/cpu64.c
-> @@ -1253,7 +1253,7 @@ void aarch64_max_tcg_initfn(Object *obj)
->      cpu->isar.id_aa64zfr0 = t;
->
->      t = cpu->isar.id_aa64dfr0;
-> -    t = FIELD_DP64(t, ID_AA64DFR0, DEBUGVER, 9);  /* FEAT_Debugv8p4 */
-> +    t = FIELD_DP64(t, ID_AA64DFR0, DEBUGVER, 10); /* FEAT_Debugv8p8 */
->      t = FIELD_DP64(t, ID_AA64DFR0, PMUVER, 6);    /* FEAT_PMUv3p5 */
->      t = FIELD_DP64(t, ID_AA64DFR0, HPMN0, 1);     /* FEAT_HPMN0 */
->      cpu->isar.id_aa64dfr0 = t;
-> --
+>  qapi/qom.json             |  16 +
+>  backends/igvm.h           |  37 ++
+>  include/sysemu/igvm-cfg.h |  54 +++
+>  backends/igvm-cfg.c       |  66 ++++
+>  backends/igvm.c           | 791 ++++++++++++++++++++++++++++++++++++++
+>  backends/meson.build      |   2 +
+>  6 files changed, 966 insertions(+)
+>  create mode 100644 backends/igvm.h
+>  create mode 100644 include/sysemu/igvm-cfg.h
+>  create mode 100644 backends/igvm-cfg.c
+>  create mode 100644 backends/igvm.c
+> 
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 8bd299265e..e586707c4c 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -874,6 +874,18 @@
+>    'base': 'RngProperties',
+>    'data': { '*filename': 'str' } }
+>  
+> +##
+> +# @IgvmCfgProperties:
+> +#
+> +# Properties common to objects that handle IGVM files.
+> +#
+> +# @file: IGVM file to use to configure guest (default: none)
+> +#
+> +# Since: 9.1
+> +##
+> +{ 'struct': 'IgvmCfgProperties',
+> +  'data': { '*file': 'str' } }
+> +
+>  ##
+>  # @SevCommonProperties:
+>  #
+> @@ -1039,6 +1051,8 @@
+>      'filter-redirector',
+>      'filter-replay',
+>      'filter-rewriter',
+> +    { 'name': 'igvm-cfg',
+> +      'if': 'CONFIG_IGVM' },
+>      'input-barrier',
+>      { 'name': 'input-linux',
+>        'if': 'CONFIG_LINUX' },
+> @@ -1111,6 +1125,8 @@
+>        'filter-redirector':          'FilterRedirectorProperties',
+>        'filter-replay':              'NetfilterProperties',
+>        'filter-rewriter':            'FilterRewriterProperties',
+> +      'igvm-cfg':                   { 'type': 'IgvmCfgProperties',
+> +                                      'if': 'CONFIG_IGVM' },
+>        'input-barrier':              'InputBarrierProperties',
+>        'input-linux':                { 'type': 'InputLinuxProperties',
+>                                        'if': 'CONFIG_LINUX' },
+> diff --git a/backends/igvm.h b/backends/igvm.h
+> new file mode 100644
+> index 0000000000..3a3824b391
+> --- /dev/null
+> +++ b/backends/igvm.h
+> @@ -0,0 +1,37 @@
+> +/*
+> + * QEMU IGVM configuration backend for Confidential Guests
+> + *
+> + * Copyright (C) 2023-2024 SUSE
+> + *
+> + * Authors:
+> + *  Roy Hopkins <roy.hopkins@suse.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef BACKENDS_IGVM_H
+> +#define BACKENDS_IGVM_H
+> +
+> +#include "exec/confidential-guest-support.h"
+> +#include "sysemu/igvm-cfg.h"
+> +#include "qapi/error.h"
+> +
+> +#if defined(CONFIG_IGVM)
+> +
+> +int igvm_process_file(IgvmCfgState *igvm, ConfidentialGuestSupport *cgs,
+> +                      Error **errp);
+> +
+> +#else
+> +
+> +static inline int igvm_process_file(IgvmCfgState *igvm,
+> +                                    ConfidentialGuestSupport *cgs, Error **errp)
+> +{
+> +    error_setg(
+> +        errp, "Invalid call to igvm_process_file when CONFIG_IGVM is disabled");
+> +    return -1;
+> +}
 
-We also need to add Feat_Debugv8p8 to the (alphabetically-sorted)
-list of emulated features in docs/system/arm/emulation.rst.
+IIUC, the only call to this is from igvm-cfg.c, but that file is not
+compiled if CONFIG_IGVM is unset.
 
-thanks
--- PMM
+IOW, isn't this inline stub deadcode that will never been compiled,
+let alone called ?  Can we just get rid of the conditional in this
+file entirely ? If someone were to change the build rules to create
+an inconsistent build scenario, they'd get a linker error from the
+missing igvm_process_file which seems good enough ?
+
+
+
+
+> diff --git a/backends/igvm.c b/backends/igvm.c
+> new file mode 100644
+> index 0000000000..25bbddfa33
+> --- /dev/null
+> +++ b/backends/igvm.c
+> @@ -0,0 +1,791 @@
+> +/*
+> + * QEMU IGVM configuration backend for guests
+> + *
+> + * Copyright (C) 2023-2024 SUSE
+> + *
+> + * Authors:
+> + *  Roy Hopkins <roy.hopkins@suse.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +
+> +#include "igvm.h"
+> +#include "qapi/error.h"
+> +#include "exec/memory.h"
+> +#include "exec/address-spaces.h"
+> +#include "hw/core/cpu.h"
+> +
+> +#include <igvm/igvm.h>
+> +#include <igvm/igvm_defs.h>
+> +
+> +typedef struct IgvmParameterData {
+> +    QTAILQ_ENTRY(IgvmParameterData) next;
+> +    uint8_t *data;
+> +    uint32_t size;
+> +    uint32_t index;
+> +} IgvmParameterData;
+> +
+> +/*
+> + * QemuIgvm contains the information required during processing
+> + * of a single IGVM file.
+> + */
+> +typedef struct QemuIgvm {
+> +    IgvmHandle file;
+> +    ConfidentialGuestSupport *cgs;
+> +    ConfidentialGuestSupportClass *cgsc;
+> +    uint32_t compatibility_mask;
+> +    unsigned current_header_index;
+> +    QTAILQ_HEAD(, IgvmParameterData) parameter_data;
+> +
+> +    /* These variables keep track of contiguous page regions */
+> +    IGVM_VHS_PAGE_DATA region_prev_page_data;
+> +    uint64_t region_start;
+> +    unsigned region_start_index;
+> +    unsigned region_last_index;
+> +    unsigned region_page_count;
+> +} QemuIgvm;
+> +
+> +static int directive_page_data(QemuIgvm *ctx, const uint8_t *header_data,
+> +                               Error **errp);
+> +static int directive_vp_context(QemuIgvm *ctx, const uint8_t *header_data,
+> +                                Error **errp);
+> +static int directive_parameter_area(QemuIgvm *ctx, const uint8_t *header_data,
+> +                                    Error **errp);
+> +static int directive_parameter_insert(QemuIgvm *ctx, const uint8_t *header_data,
+> +                                      Error **errp);
+> +static int directive_memory_map(QemuIgvm *ctx, const uint8_t *header_data,
+> +                                Error **errp);
+> +static int directive_vp_count(QemuIgvm *ctx, const uint8_t *header_data,
+> +                              Error **errp);
+> +static int directive_environment_info(QemuIgvm *ctx, const uint8_t *header_data,
+> +                                      Error **errp);
+> +static int directive_required_memory(QemuIgvm *ctx, const uint8_t *header_data,
+> +                                     Error **errp);
+> +
+> +struct IGVMHandler {
+> +    uint32_t type;
+> +    uint32_t section;
+> +    int (*handler)(QemuIgvm *ctx, const uint8_t *header_data, Error **errp);
+
+All the impls of the handler are doing manual casts from 'header_data' to
+some other struct. If you declare this 'void *' instead, then all those
+manual casts are redundant.
+
+> +};
+> +
+> +static struct IGVMHandler handlers[] = {
+> +    { IGVM_VHT_PAGE_DATA, IGVM_HEADER_SECTION_DIRECTIVE, directive_page_data },
+> +    { IGVM_VHT_VP_CONTEXT, IGVM_HEADER_SECTION_DIRECTIVE,
+> +      directive_vp_context },
+> +    { IGVM_VHT_PARAMETER_AREA, IGVM_HEADER_SECTION_DIRECTIVE,
+> +      directive_parameter_area },
+> +    { IGVM_VHT_PARAMETER_INSERT, IGVM_HEADER_SECTION_DIRECTIVE,
+> +      directive_parameter_insert },
+> +    { IGVM_VHT_MEMORY_MAP, IGVM_HEADER_SECTION_DIRECTIVE,
+> +      directive_memory_map },
+> +    { IGVM_VHT_VP_COUNT_PARAMETER, IGVM_HEADER_SECTION_DIRECTIVE,
+> +      directive_vp_count },
+> +    { IGVM_VHT_ENVIRONMENT_INFO_PARAMETER, IGVM_HEADER_SECTION_DIRECTIVE,
+> +      directive_environment_info },
+> +    { IGVM_VHT_REQUIRED_MEMORY, IGVM_HEADER_SECTION_DIRECTIVE,
+> +      directive_required_memory },
+> +};
+> +
+> +static int handler(QemuIgvm *ctx, uint32_t type, Error **errp)
+> +{
+> +    size_t handler;
+> +    IgvmHandle header_handle;
+> +    const uint8_t *header_data;
+> +    int result;
+> +
+> +    for (handler = 0; handler < G_N_ELEMENTS(handlers); handler++) {
+> +        if (handlers[handler].type != type) {
+> +            continue;
+> +        }
+> +        header_handle = igvm_get_header(ctx->file,
+> +                                        handlers[handler].section,
+> +                                        ctx->current_header_index);
+> +        if (header_handle < 0) {
+> +            error_setg(
+> +                errp,
+> +                "IGVM file is invalid: Failed to read directive header (code: %d)",
+> +                (int)header_handle);
+> +            return -1;
+> +        }
+> +        header_data = igvm_get_buffer(ctx->file, header_handle) +
+> +                      sizeof(IGVM_VHS_VARIABLE_HEADER);
+> +        result = handlers[handler].handler(ctx, header_data, errp);
+> +        igvm_free_buffer(ctx->file, header_handle);
+> +        return result;
+> +    }
+> +    error_setg(errp,
+> +               "IGVM: Unknown header type encountered when processing file: "
+> +               "(type 0x%X)",
+> +               type);
+> +    return -1;
+> +}
+> +
+> +static void *igvm_prepare_memory(QemuIgvm *ctx, uint64_t addr, uint64_t size,
+> +                                 int region_identifier, Error **errp)
+> +{
+> +    ERRP_GUARD();
+> +    MemoryRegion *igvm_pages = NULL;
+> +    Int128 gpa_region_size;
+> +    MemoryRegionSection mrs =
+> +        memory_region_find(get_system_memory(), addr, size);
+> +    if (mrs.mr) {
+> +        if (!memory_region_is_ram(mrs.mr)) {
+> +            memory_region_unref(mrs.mr);
+> +            error_setg(
+> +                errp,
+> +                "Processing of IGVM file failed: Could not prepare memory "
+> +                "at address 0x%lX due to existing non-RAM region",
+> +                addr);
+> +            return NULL;
+> +        }
+> +
+> +        gpa_region_size = int128_make64(size);
+> +        if (int128_lt(mrs.size, gpa_region_size)) {
+> +            memory_region_unref(mrs.mr);
+> +            error_setg(
+> +                errp,
+> +                "Processing of IGVM file failed: Could not prepare memory "
+> +                "at address 0x%lX: region size exceeded",
+> +                addr);
+> +            return NULL;
+> +        }
+> +        return qemu_map_ram_ptr(mrs.mr->ram_block, mrs.offset_within_region);
+> +    } else {
+> +        /*
+> +         * The region_identifier is the is the index of the IGVM directive that
+> +         * contains the page with the lowest GPA in the region. This will
+> +         * generate a unique region name.
+> +         */
+> +        g_autofree char *region_name =
+> +            g_strdup_printf("igvm.%X", region_identifier);
+> +        igvm_pages = g_malloc(sizeof(*igvm_pages));
+
+nit-pick, typically we'd prefer g_new0 over g_malloc + sizeof
+
+> +        if (ctx->cgs && ctx->cgs->require_guest_memfd) {
+> +            if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
+> +                                                    region_name, size, errp)) {
+> +                return NULL;
+> +            }
+> +        } else {
+> +            if (!memory_region_init_ram(igvm_pages, NULL, region_name, size,
+> +                                        errp)) {
+> +                return NULL;
+> +            }
+> +        }
+> +        memory_region_add_subregion(get_system_memory(), addr, igvm_pages);
+> +        return memory_region_get_ram_ptr(igvm_pages);
+> +    }
+
+> +static int directive_memory_map(QemuIgvm *ctx, const uint8_t *header_data,
+> +                                Error **errp)
+> +{
+> +    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
+
+If changing header_data to 'const void *', then this repetition
+of typename goes away e.g.
+
+   const IGVM_VHS_PARAMETER *param = header_data;
+
+
+
+
+> +int igvm_process_file(IgvmCfgState *cfg, ConfidentialGuestSupport *cgs,
+> +                      Error **errp)
+> +{
+> +    int32_t header_count;
+> +    IgvmParameterData *parameter;
+> +    int retval = -1;
+> +    QemuIgvm ctx;
+> +
+> +    memset(&ctx, 0, sizeof(ctx));
+
+Can avoid the manual memset using
+
+  QemuIgvm ctx = {};
+
+> +    ctx.file = igvm_file_init(cfg->filename, errp);
+> +    if (ctx.file < 0) {
+> +        return -1;
+> +    }
+> +
+> +    /*
+> +     * The ConfidentialGuestSupport object is optional and allows a confidential
+> +     * guest platform to perform extra processing, such as page measurement, on
+> +     * IGVM directives.
+> +     */
+> +    ctx.cgs = cgs;
+> +    ctx.cgsc = cgs ? CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs) : NULL;
+> +
+> +    /*
+> +     * Check that the IGVM file provides configuration for the current
+> +     * platform
+> +     */
+> +    if (supported_platform_compat_mask(&ctx, errp) < 0) {
+> +        return -1;
+> +    }
+> +
+> +    header_count = igvm_header_count(ctx.file, IGVM_HEADER_SECTION_DIRECTIVE);
+> +    if (header_count <= 0) {
+> +        error_setg(
+> +            errp, "Invalid directive header count in IGVM file. Error code: %X",
+> +            header_count);
+> +        return -1;
+> +    }
+> +
+> +    QTAILQ_INIT(&ctx.parameter_data);
+> +
+> +    for (ctx.current_header_index = 0;
+> +         ctx.current_header_index < (unsigned)header_count;
+> +         ctx.current_header_index++) {
+> +        IgvmVariableHeaderType type = igvm_get_header_type(
+> +            ctx.file, IGVM_HEADER_SECTION_DIRECTIVE, ctx.current_header_index);
+> +        if (handler(&ctx, type, errp) < 0) {
+> +            goto cleanup;
+> +        }
+> +    }
+> +
+> +    /*
+> +     * Contiguous pages of data with compatible flags are grouped together in
+> +     * order to reduce the number of memory regions we create. Make sure the
+> +     * last group is processed with this call.
+> +     */
+> +    retval = process_mem_page(&ctx, NULL, errp);
+> +
+> +cleanup:
+> +    QTAILQ_FOREACH(parameter, &ctx.parameter_data, next)
+> +    {
+> +        g_free(parameter->data);
+> +        parameter->data = NULL;
+> +    }
+> +
+> +    return retval;
+> +}
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
