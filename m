@@ -4,98 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D3A3C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 16:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96B0AC3064D
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 16:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLmff-0005a2-GG; Mon, 24 Jun 2024 12:35:59 -0400
+	id 1sLmvg-0008Ti-10; Mon, 24 Jun 2024 12:52:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sLmfe-0005Zi-52
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 12:35:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sLmvd-0008TD-T1
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 12:52:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sLmfW-0004ys-PC
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 12:35:57 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sLmvY-00009g-Ef
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 12:52:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719246949;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1719247943;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Meivl4Agu7d29WsADN49B9HDfoVc4uC6eggOyBtWcGk=;
- b=C8Ny/SnEyuD0uSeOZJpA8IJWH480yZE7cFkoQkWRak/fswxY0qSOi/6MvyrZuPmwLQ1H94
- IX6ALlRdz59SYORCRxTJbaDAxv6a5OewodjPqrGXmkcuEVsQsejqRnl88mVDvqvzlt7+IE
- 72jiUdmcEZ3CX+R7VrZNzqr06rH/R4E=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-3gXz9UMqNvqZan8yM0bkaA-1; Mon, 24 Jun 2024 12:35:45 -0400
-X-MC-Unique: 3gXz9UMqNvqZan8yM0bkaA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-363542774e1so3713468f8f.2
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 09:35:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719246944; x=1719851744;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Meivl4Agu7d29WsADN49B9HDfoVc4uC6eggOyBtWcGk=;
- b=tcRJHYwHN1I2/INspucFgScDyZpQ7m6k4lIDOy+Kcktp9jBZ+L0x/Ef3niyNERhesz
- pKyStVAlU8tOWM1EFY7UnxILYeLhmKpKiR3WV2dQrAyHcwuTXOLHgrnDQqFcNnexQ9jY
- GyrfoEl+WzdwvhCIjU2PRnmY7L0dcZjLpdWPl5YH19UW5+Lj8tdrasl+o4R8IbMUR3rV
- rO6RCLyoj9VIkQef54MqXPzhbGzbt475nvRRSc5BNxj043hgelpQKkRBYnJUNk0rkMng
- 6isH3P/ic1W4NwfnTZtbHLnFwr9KsZqiNIAuHzsSOGDB+303eevuCtBO+vhfAY9XSFMc
- Q53A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVIfeyBCi+kk6ef3tRdSQnTypnZE7yOxRdCdCgVCwq9Cga4/E8+TSNJoxZ+a/9pCQNMex8SgXD2G2DX5qVGzfg2O3FhcwY=
-X-Gm-Message-State: AOJu0Yw6aPw/op1OE6ZgNAnx13GF6km9gjHw4KV+P6e1wWfXtZQjFp9m
- HZedjF7nfyNocWUWR16FCvEygwMd1FpTK290XoRhN3Vp/nndXgcvdn8A9mdvWxF2+XPr4NVgMxI
- HDnMgyp72QS6cLiYx2fP9wSj0czZvQJB2X9+ulDja9ouatNS0MzU5JX1qqFTB8mNCJ7lj8caG58
- FMFeD6apZDB9mouVji+bqPqNFyPnA=
-X-Received: by 2002:a05:6000:1847:b0:366:eba0:8d8c with SMTP id
- ffacd0b85a97d-366eba08d93mr4940193f8f.54.1719246944210; 
- Mon, 24 Jun 2024 09:35:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHz7huzo+HcNwTRYqAtMGx96rZvu7zEcosz/B1azQBp7Ms2cvDehzb8qzMNubVzoaCgr2gSv/zSstpCiC+KySw=
-X-Received: by 2002:a05:6000:1847:b0:366:eba0:8d8c with SMTP id
- ffacd0b85a97d-366eba08d93mr4940161f8f.54.1719246943905; Mon, 24 Jun 2024
- 09:35:43 -0700 (PDT)
-MIME-Version: 1.0
+ bh=llpvSV62JQaxnuw6MTYZruZzcT7eOgPQdd6jb39f2Co=;
+ b=RhH9O6nnC5dAK+JjVgjILTYJO9/8PuDUT58SyPZNXOkJq+Cqch2+MYxUM/U+DhIfdjsnse
+ lMpOlOEmR1J1MNK57zwNXz3bgknmpjKJ+ECF0h52tn3NBGnL3EosUiF7CTKdOocbscUEsQ
+ Gsy2vVw36Ifob18OOxlRQKHIVatXQFU=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-JmX5wpcAOquDDyg4W40aew-1; Mon,
+ 24 Jun 2024 12:52:20 -0400
+X-MC-Unique: JmX5wpcAOquDDyg4W40aew-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F387A1955EF2; Mon, 24 Jun 2024 16:52:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.226])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BCAC195605B; Mon, 24 Jun 2024 16:52:11 +0000 (UTC)
+Date: Mon, 24 Jun 2024 17:52:07 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: Re: [RFC PATCH v3 1/5] build-sys: Add rust feature option
+Message-ID: <ZnmkN2PL3r-2sxqe@redhat.com>
 References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
  <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
- <ae1397b5-4154-4aeb-bf5f-3a62adcc05fd@redhat.com> <ZnkzpBUQMMGTgQlL@intel.com>
-In-Reply-To: <ZnkzpBUQMMGTgQlL@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 24 Jun 2024 18:35:33 +0200
-Message-ID: <CABgObfaJ3MzG-G+4+gwRO5oTwPV1ma0Yxce-RJrWEqzhv1jG=g@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 1/5] build-sys: Add rust feature option
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- rowan.hart@intel.com, Richard Henderson <richard.henderson@linaro.org>, 
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000005f86b3061ba55ffe"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,125 +94,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000005f86b3061ba55ffe
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Jun 19, 2024 at 11:13:58PM +0300, Manos Pitsidianakis wrote:
+> Add options for Rust in meson_options.txt, meson.build, configure to
+> prepare for adding Rust code in the followup commits.
+> 
+> `rust` is a reserved meson name, so we have to use an alternative.
+> `with_rust` was chosen.
+> 
+> A cargo_wrapper.py script is added that is heavily based on the work of
+> Marc-André Lureau from 2021.
+> 
+> https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat.com/
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> ---
+>  MAINTAINERS                   |   5 +
+>  configure                     |  11 ++
+>  meson.build                   |  11 ++
+>  meson_options.txt             |   4 +
+>  scripts/cargo_wrapper.py      | 279 ++++++++++++++++++++++++++++++++++
+>  scripts/meson-buildoptions.sh |   6 +
+>  6 files changed, 316 insertions(+)
+>  create mode 100644 scripts/cargo_wrapper.py
 
-Il lun 24 giu 2024, 10:36 Zhao Liu <zhao1.liu@intel.com> ha scritto:
+> diff --git a/configure b/configure
+> index 38ee257701..6894d7c2d1 100755
+> --- a/configure
+> +++ b/configure
+> @@ -302,6 +302,9 @@ else
+>    objcc="${objcc-${cross_prefix}clang}"
+>  fi
+>  
+> +with_rust="auto"
 
-> [snip]
->
-> > diff --git a/meson.build b/meson.build
-> > index c5360fbd299..ad7dbc0d641 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -290,6 +290,11 @@ foreach lang : all_languages
-> >    endif
-> >  endforeach
-> > +cargo = not_found
-> > +if 'RUST_TARGET_TRIPLE' in config_host
-> > +  cargo = find_program('cargo', required: true)
-> > +endif
-> > +
->
-> As with the original Manos version, it looks like there's no need to
-> check cargo here? Since patch 2 checks cargo and others in
-> rust/meson.build.
->
-> Otherwise, cargo was checked twice.
->
+On last week's call one of the things we discussed is the expectations
+for consumers of QEMU around the usage of Rust & its optionality (or
+not) long term.
 
-Yes, I would check it here though because it's used in the summary, already
-in this patch.
+If we consider Rust to be an optional feature, then this largely
+precludes re-writing existing C code in Rust, as we would be
+forced to either remove existing features from users, or maintain
+parallel impls in both C & Rust. Neither of these are desirable
+situations.
 
-Paolo
+I'm of the view that to be valuable for QEMU, we need to consider
+Rust to become a mandatory feature. There's a question of how quickly
+we move, however, before declaring it mandatory. The longer we take
+to declare it mandatory, the longer we are limiting the value we
+can take from Rust.
+
+If we want to make Rust mandatory, then we should set the user
+expectations to reflect this from the start.
 
 
-> >  # default flags for all hosts
-> >  # We use -fwrapv to tell the compiler that we require a C dialect where
-> >  # left shift of signed integers is well defined and has the expected
-> > @@ -4239,6 +4244,10 @@ if 'objc' in all_languages
-> >  else
-> >    summary_info += {'Objective-C compiler': false}
-> >  endif
-> > +summary_info += {'Rust support':      cargo.found()}
-> > +if cargo.found() and config_host['RUST_TARGET_TRIPLE']) !=
-> config_host['RUST_HOST_TRIPLE']
-> > +  summary_info += {'Rust target':     config_host['RUST_TARGET_TRIPLE']}
-> > +endif
-> >  option_cflags = (get_option('debug') ? ['-g'] : [])
-> >  if get_option('optimization') != 'plain'
-> >    option_cflags += ['-O' + get_option('optimization')]
-> >
-> >
->
->
+IOW, with_rust="enabled" should be the default, and require an
+explicit  --disable-rust to opt-out on a very time limited
+basis.  Any use of --disable-rust ought to print a warning at
+the end of configure, and solicit feedback:
 
---0000000000005f86b3061ba55ffe
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+    WARNING: Building without Rust is deprecated. QEMU intends
+    WARNING: to make Rust a mandatory build dependency in the
+    WARNING: 10.0.0 release.
+    WARNING:
+    WARNING: If you have concerns about this requirement
+    WARNING: please contact qemu-devel@nongnu.org
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il lun 24 giu 2024, 10:36 Zhao Liu &lt;<a href=3D"mail=
-to:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; ha scritto:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">[snip]<br>
-<br>
-&gt; diff --git a/meson.build b/meson.build<br>
-&gt; index c5360fbd299..ad7dbc0d641 100644<br>
-&gt; --- a/meson.build<br>
-&gt; +++ b/meson.build<br>
-&gt; @@ -290,6 +290,11 @@ foreach lang : all_languages<br>
-&gt;=C2=A0 =C2=A0 endif<br>
-&gt;=C2=A0 endforeach<br>
-&gt; +cargo =3D not_found<br>
-&gt; +if &#39;RUST_TARGET_TRIPLE&#39; in config_host<br>
-&gt; +=C2=A0 cargo =3D find_program(&#39;cargo&#39;, required: true)<br>
-&gt; +endif<br>
-&gt; +<br>
-<br>
-As with the original Manos version, it looks like there&#39;s no need to<br=
->
-check cargo here? Since patch 2 checks cargo and others in rust/meson.build=
-.<br>
-<br>
-Otherwise, cargo was checked twice.<br></blockquote></div></div><div dir=3D=
-"auto"><br></div><div dir=3D"auto">Yes, I would check it here though becaus=
-e it&#39;s used in the summary, already in this patch.</div><div dir=3D"aut=
-o"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div =
-dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
-ding-left:1ex">
-<br>
-&gt;=C2=A0 # default flags for all hosts<br>
-&gt;=C2=A0 # We use -fwrapv to tell the compiler that we require a C dialec=
-t where<br>
-&gt;=C2=A0 # left shift of signed integers is well defined and has the expe=
-cted<br>
-&gt; @@ -4239,6 +4244,10 @@ if &#39;objc&#39; in all_languages<br>
-&gt;=C2=A0 else<br>
-&gt;=C2=A0 =C2=A0 summary_info +=3D {&#39;Objective-C compiler&#39;: false}=
-<br>
-&gt;=C2=A0 endif<br>
-&gt; +summary_info +=3D {&#39;Rust support&#39;:=C2=A0 =C2=A0 =C2=A0 cargo.=
-found()}<br>
-&gt; +if cargo.found() and config_host[&#39;RUST_TARGET_TRIPLE&#39;]) !=3D =
-config_host[&#39;RUST_HOST_TRIPLE&#39;]<br>
-&gt; +=C2=A0 summary_info +=3D {&#39;Rust target&#39;:=C2=A0 =C2=A0 =C2=A0c=
-onfig_host[&#39;RUST_TARGET_TRIPLE&#39;]}<br>
-&gt; +endif<br>
-&gt;=C2=A0 option_cflags =3D (get_option(&#39;debug&#39;) ? [&#39;-g&#39;] =
-: [])<br>
-&gt;=C2=A0 if get_option(&#39;optimization&#39;) !=3D &#39;plain&#39;<br>
-&gt;=C2=A0 =C2=A0 option_cflags +=3D [&#39;-O&#39; + get_option(&#39;optimi=
-zation&#39;)]<br>
-&gt; <br>
-&gt; <br>
-<br>
-</blockquote></div></div></div>
+I illustrated '10.0.0' on the assumption that we add Rust
+support in 9.1.0, and thus have 2 releases where it is
+optional to align with our deprecation policy. Even though
+we don't usually apply our deprecation policy to build
+dependencies, this is a significant unique situation so
+IMHO worth doing.
 
---0000000000005f86b3061ba55ffe--
+
+> +with_rust_target_triple=""
+> +
+>  ar="${AR-${cross_prefix}ar}"
+>  as="${AS-${cross_prefix}as}"
+>  ccas="${CCAS-$cc}"
+> @@ -760,6 +763,12 @@ for opt do
+>    ;;
+>    --gdb=*) gdb_bin="$optarg"
+>    ;;
+> +  --enable-with-rust) with_rust=enabled
+> +  ;;
+> +  --disable-with-rust) with_rust=disabled
+> +  ;;
+
+--enable-with-XXX / --disable-with-XXX is pretty unsual naming.
+
+Normally you'd see either --enable-XXX or --with-XXX and their
+corresponding --disable-XXX or --without-XXX.
+
+
+
+
+> +  --with-rust-target-triple=*) with_rust_target_triple="$optarg"
+
+As with previous posting, IMHO, this should ideally not exist. We should
+honour the --cross-prefix= values, re-mapping to to Rust targets for all
+the combos we know about. --with-rust-target-triple should only be needed
+as a workaround for where we might have missed a mapping.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
