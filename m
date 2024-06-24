@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C81C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 546C0C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcOS-0005PD-FQ; Mon, 24 Jun 2024 01:37:32 -0400
+	id 1sLcOu-0006ol-EY; Mon, 24 Jun 2024 01:38:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcOC-00056e-SM
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:37:18 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1sLcOr-0006d8-8g
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:37:57 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcO7-0005XZ-30
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:37:12 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-6c5bcb8e8edso2659740a12.2
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:37:10 -0700 (PDT)
+ id 1sLcOo-0005ZH-SM
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:37:57 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-6fa0d077694so1859297a34.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207429; x=1719812229;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207473; x=1719812273;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=r/TlZl62s/0JwilXPCCEFYa5cWIGjt4qRe/1E+/8vu0=;
- b=bCyhD+T+lYcbAq6OeTDlweaXtrqzI5f/6L8SLtBmsOqx97CE77QKznTjcyVOgFqzDk
- oytQBANXMD/fTEPm7V6NkzGajh93vPd14UUAmnLpfhKDCtfcxxFvwJDw8ZqDXalkh9x2
- pyyObKVqwQPPACnAxu0Dpk2JMDVDKlbTSCBK01Z+PpMqniqmbv7/Gja2DwwbMo1F94V4
- pNRVPrP9nWJtTnw7/pf5+4+awJt3j/hwfuerCBWU8+ztTzpox8Kk2BI/lSQUFrigCMC5
- Todq88/ClJKefsn1ZYFAs1R+/pWwJ4WVnw7x5QAs9QYistORY3YGhmoLQ1QqyC6x4dK1
- FWng==
+ bh=OKqECE3QQhpisdRYBLXwvGk6jmgmUU6sLJN/OKW97Lg=;
+ b=hN2P9SrANWHqXc4U4s0LDh113A15Fty+i/eHhQbHZdJ/gySCEhOBCQlcpRQ8MDecmi
+ 65fjCX3yp6jRxaQ9IVEIcb51n5LAda5QFjxV2qeCUgiLIL1Gqzj5267Esxdd1Iaw1M1M
+ VtQN0EEgEjw+mNWzVWj1IDdnhj+b6jrJXUGfdpKzElZtOW9pgLcosaU5FPRBoj5RUw1g
+ RW1m55sRu5q6cuA8OTdJnxBUPUcxN0TTxV7D3SkL1+kXgNs95asL4t0rZmhNh3JLEVXf
+ 4xvUpYrqAaYxWFJgJiEp8L6Gp6+ocYotngqWTe9hA7fKNNmIRxE0cSdvculAbzuSeaE4
+ AU5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207429; x=1719812229;
+ d=1e100.net; s=20230601; t=1719207473; x=1719812273;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r/TlZl62s/0JwilXPCCEFYa5cWIGjt4qRe/1E+/8vu0=;
- b=oz/Il1gYlNlVc3SAV/zayKI9XnvrrWXRf6w8Di9PlQmgpHjqE3Kt1f3/aHqiST3CRK
- f1TbjBKJl6PDxOG2caRsMBVqH6qb3DtN3AG8XbGk7s5kp5CHJmkyAxEzy5K/a95MLEuA
- LTAmKihF3IdqeOgrB3ix4CSIed9Unn1Nx9rgS0BUJdDWLw8a11YyN5zz1a+34eSZj+Sr
- 8Ye++VpymFhkNK7O2fL9piaDbDJlo+BLpvMRUis5HMJpTRX4b7bPj4YekMF7h9IpdxMP
- I7ACsP2UR5Yhq0yG9mPpxhU3maO8rydwfELHU7c2E7aS1dSUVidKOPDz7UCmc8rQFKaO
- cyFA==
-X-Gm-Message-State: AOJu0YwMcMV4GAGxELEIFNDge3bRCloTE8dyLNiBAMkolnUJE21A3C6R
- Vtt2v793m5ib+3eKyRmHezMrlM+oJaUcurTzYP2KuLliYpETsGHRG2zB3CODAtM=
-X-Google-Smtp-Source: AGHT+IEiQKmpIV/Tgxkq2nmyXGkGFXJK6QMYBTJwWc3qOQFnpfJMvmp0mqKs8XNpepIwxcjLZL5ZvQ==
-X-Received: by 2002:a05:6a21:196:b0:1bc:9b00:e012 with SMTP id
- adf61e73a8af0-1bcf8006722mr4635913637.58.1719207428601; 
- Sun, 23 Jun 2024 22:37:08 -0700 (PDT)
+ bh=OKqECE3QQhpisdRYBLXwvGk6jmgmUU6sLJN/OKW97Lg=;
+ b=DjeA1NRmsYwHqeuYnmSZ6Jezwxn3fEM4cxfrauR1GywMSEk4GFrKBQ+/63bnHYPIFV
+ 7rUQvZmoaNrd+vfVpuFFCkkKgfEIDvqvOoxU+gEU+0ZnNXDYO5GtcuUbm2g03YrePuAt
+ 0zuf+IfSoJ3A9x+AZpvMo8poBEzMECfI2ikB9I0ZQVVuHbwDE+30pW8cIZHHWYLcYg5T
+ SZekqJlgQsjGAYofQQjDT0cb2hhXtp9lhRYfMkOr3Oaz/+y4LnfrRPl1glidbO5Kxdyj
+ iSRhTsx7vjNHqyre+o2EOnOz5AX0bolTsMp9+ixesOJFJazOFfNugCdQ0SFg5nEDv+xk
+ rS3A==
+X-Gm-Message-State: AOJu0Yy63e3/baVvs2SgwVQEC1yBpQZq+A78owJRkfw5cxJlkPhIf2w5
+ 3czkEDJaTmgRT2yyskwxickk8UN+1cjTL5+4EBNzESp0C75rLRBZniYYVvSU4m4=
+X-Google-Smtp-Source: AGHT+IEJPlcOfKtjEPo3gicun2ZFI1rBP5KrnfniFx1TNZlmP0HPOUyYr9FuG1nWPig+HX1cg2jjdg==
+X-Received: by 2002:a9d:69c7:0:b0:6f9:90de:c67f with SMTP id
+ 46e09a7af769-700b11c68f2mr4519230a34.10.1719207473550; 
+ Sun, 23 Jun 2024 22:37:53 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb3d4c3fsm53812595ad.195.2024.06.23.22.37.03
+ 41be03b00d2f7-716b4a7319bsm4803508a12.50.2024.06.23.22.37.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 22:37:08 -0700 (PDT)
-Message-ID: <edc41d3d-990d-462f-ab22-be26ec1455f8@daynix.com>
-Date: Mon, 24 Jun 2024 14:37:02 +0900
+ Sun, 23 Jun 2024 22:37:53 -0700 (PDT)
+Message-ID: <30447bda-dc0f-4b56-a65c-c38de1915f45@daynix.com>
+Date: Mon, 24 Jun 2024 14:37:46 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 07/13] virtio-gpu: Support context-init feature with
- virglrenderer
+Subject: Re: [PATCH v16 09/13] virtio-gpu: Add virgl resource management
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -87,14 +86,14 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
- <20240623152343.328436-8-dmitry.osipenko@collabora.com>
+ <20240623152343.328436-10-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240623152343.328436-8-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240623152343.328436-10-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::536;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x536.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -119,11 +118,11 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 2024/06/24 0:23, Dmitry Osipenko wrote:
 > From: Huang Rui <ray.huang@amd.com>
 > 
-> Patch "virtio-gpu: CONTEXT_INIT feature" has added the context_init
-> feature flags. Expose this feature and support creating virglrenderer
-> context with flags using context_id if libvirglrenderer is new enough.
+> In a preparation to adding host blobs support to virtio-gpu, add virgl
+> resource management that allows to retrieve resource based on its ID
+> and virgl resource wrapper on top of simple resource that will be contain
+> fields specific to virgl.
 > 
-> Originally-by: Antonio Caggiano <antonio.caggiano@collabora.com>
 > Signed-off-by: Huang Rui <ray.huang@amd.com>
 > Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
