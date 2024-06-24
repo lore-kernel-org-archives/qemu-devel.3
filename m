@@ -4,82 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16001C2D0D1
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05DF1C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:19:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLjXr-0002c4-SH; Mon, 24 Jun 2024 09:15:43 -0400
+	id 1sLjX7-0001MJ-5z; Mon, 24 Jun 2024 09:14:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjXf-0002Tp-Ua
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:15:32 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjXe-0005LN-9P
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:15:31 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-421cd1e5f93so32928525e9.0
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:15:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719234927; x=1719839727; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RqlOEyj+8xJJtMHox3KeLzXAnw9eaudtpJH6jXIsYOM=;
- b=w0e55R1jxQgPIHzVaV8IuY/CBhxuRl9AU+O7IwifzRNR3XHo2LxmK2r3qx103Ot2Ez
- J6jMXIlUSP0OZKyTy5fEXo69zPdklwb8jni5l/7DNffh3sQ1lH3F5f0w0a6IYk71c6Vs
- kBDXhRrTEdgprWDipP7WXgL2v2CIyZVBcYOl1ZyPTfpgwleiFHWVBd3aE/NwyB7rxQE9
- TomomL3lxNLukEC1OI179MXjhDnVWM+fd3BkR4c1+iTEttYnhhDyZgk1aZN+5LoL3rVH
- Z7yNuZqV1jIGQFQkXHobCB5+gQdK1XcAhAsKzoAHEHI4LvNL1MCbqDxwYGWuz7THobNd
- olEw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLjX5-0001M3-5e
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:14:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLjX3-0004xn-6G
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:14:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719234891;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=psoXTWsyRrOWGiZ3rF1af656XfNZf/PEqwEZrKB+trs=;
+ b=TSnLSfTiry6rWcy+aBrEoVwWdwH9NM+mU6SWMsP5iM1rVpi5aQ0dyIKW2n10uXLr3wfL3e
+ LwhAaiSDq3/Ilv6zvwA7WybN92VBrJNIDeLugHetm1JO/Xb+U3/T/oSPmJTeQBYXmfrTnk
+ jpjmCyobnip3jkxtI46j/j4yJtvw7P0=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-327-H-r7trx6N1u0ScVAJSJEkQ-1; Mon, 24 Jun 2024 09:14:49 -0400
+X-MC-Unique: H-r7trx6N1u0ScVAJSJEkQ-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2ec55065e52so13340251fa.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:14:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719234927; x=1719839727;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RqlOEyj+8xJJtMHox3KeLzXAnw9eaudtpJH6jXIsYOM=;
- b=f5gtK1oSxYfsY/AymIVXtNieF7tPqworGcz3lXYYLJOJ0UTqqpF7xBXUV1uTgStTXc
- Bp84Xiz+tGN/89qLLxnXtg396mdyhtqRJHucZdCuNs38AgGOjLiURXfpZsWo6QAXmDZB
- 9EJI/WxSWFO7SU5opjbbaGWtIzkDMzsbSNbGnst/OPs5KuDH5yljJyakGAQ366F/HAzL
- 2AOUseYN2wZTbKoeLMkcf27SfYrlzFB8FuLenbMdFwbNDMRZex7xJ9uCCXRdSrDG/CMx
- vhYPshall2xMudRnu6k8U+JSJPpRMryCFpvQ4XE6S4SbQQsYSr/0au22aMdHpJPEeJ8M
- KlHg==
-X-Gm-Message-State: AOJu0YyAXDNQuHi0hjsSQsG7lpsRblonjrooae/eRsVsh6u9gJplGHjq
- AosDWwd7J/7o2lhpV46pleEKAbPRqEMLjrpm9srmPuOh6Aifo7Jt2As7I03HE1CtSEoQnk//1RV
- g
-X-Google-Smtp-Source: AGHT+IFsGfWXVlKYx1jXjut4nYsav94FY1kOlHlNu6rHSUcoaGHmH89Sv1fd8lDZH79ER3hC9L0ijg==
-X-Received: by 2002:a05:600c:354a:b0:420:ffe3:8536 with SMTP id
- 5b1f17b1804b1-4248cc66a8emr36771655e9.37.1719234927498; 
- Mon, 24 Jun 2024 06:15:27 -0700 (PDT)
-Received: from m1x-phil.lan (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
- [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4248191c5adsm133571485e9.39.2024.06.24.06.15.26
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Jun 2024 06:15:27 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 08/19] hw/sd/sdcard: Use Load/Store API to fill some CID/CSD
- registers
-Date: Mon, 24 Jun 2024 15:14:29 +0200
-Message-ID: <20240624131440.81111-9-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240624131440.81111-1-philmd@linaro.org>
-References: <20240624131440.81111-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1719234888; x=1719839688;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=psoXTWsyRrOWGiZ3rF1af656XfNZf/PEqwEZrKB+trs=;
+ b=HPtNHMo49/VPMqBMi5JxCsFvrDysAb63bGeHPU/6fDBVs8dIFKEIHai5ouhfltI9l4
+ zi5M/I+jhdZJbUnXCcqZOYGaTLMEZupHSr7pQH3T49CtaU3SGktLp27TeehykPjQnQbo
+ qCD2LPRBbj6tWaBgXCsO6jPM4CKPLIq1h5blU9Z2a+m/R75lL2YgGw8w/8581AOVTazJ
+ CC9BKaP1/h4eLRlY7aqFOJu6OHC93RZhM/qzhZS7LDHCWpBXT04QwJbL0f7i+umRFVCw
+ QrrK+OkdMLDrGgY8WltZ6U5CbgbrntqhMQvKhiVGGx7Ua23FlxM6Ygxj1UljR8+JOs0G
+ oLBw==
+X-Gm-Message-State: AOJu0Yxe84jJqT/eKrZXQE4ozuQNakxqGf/N4nIhsmLlZrhbmxGzZi58
+ JhuIgZ1N50CH8HqwGFAgOIJwZsolyhcd5la6wvj6kcnQDUHVRYMTf2qoGo3a70mrjL6pOatwBna
+ Y4BRfIQ0Z46FX3Y4lDoOBeAeLh4YW2QcCmcb60RfY31NADtzHLUZY
+X-Received: by 2002:a19:9115:0:b0:52c:df63:bebd with SMTP id
+ 2adb3069b0e04-52ce0673528mr3081102e87.49.1719234887613; 
+ Mon, 24 Jun 2024 06:14:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEK6SFsYetZGUqeLgQLZvwhl1ZS0DQXPNrYO89UhypzC2WfyA0fXYNZTx19ynIFE/km2tg/Xg==
+X-Received: by 2002:a19:9115:0:b0:52c:df63:bebd with SMTP id
+ 2adb3069b0e04-52ce0673528mr3081072e87.49.1719234886822; 
+ Mon, 24 Jun 2024 06:14:46 -0700 (PDT)
+Received: from redhat.com ([2.52.146.100]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42481910fd4sm133401405e9.30.2024.06.24.06.14.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Jun 2024 06:14:46 -0700 (PDT)
+Date: Mon, 24 Jun 2024 09:14:42 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, kvm@vger.kernel.org,
+ Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
+Subject: Re: [PATCH] i386: revert defaults to 'legacy-vm-type=true' for
+ SEV(-ES) guests
+Message-ID: <20240624090345-mutt-send-email-mst@kernel.org>
+References: <20240614103924.1420121-1-berrange@redhat.com>
+ <20240624080458-mutt-send-email-mst@kernel.org>
+ <Znlo4GMgJ91nKyft@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <Znlo4GMgJ91nKyft@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,46 +106,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ld/st API helps noticing CID or CSD bytes refer
-to the same field. Multi-bytes fields are stored MSB
-first in CID / CSD.
+On Mon, Jun 24, 2024 at 01:38:56PM +0100, Daniel P. Berrangé wrote:
+> On Mon, Jun 24, 2024 at 08:27:01AM -0400, Michael S. Tsirkin wrote:
+> > On Fri, Jun 14, 2024 at 11:39:24AM +0100, Daniel P. Berrangé wrote:
+> > > The KVM_SEV_INIT2 ioctl was only introduced in Linux 6.10, which will
+> > > only have been released for a bit over a month when QEMU 9.1 is
+> > > released.
+> > > 
+> > > The SEV(-ES) support in QEMU has been present since 2.12 dating back
+> > > to 2018. With this in mind, the overwhealming majority of users of
+> > > SEV(-ES) are unlikely to be running Linux >= 6.10, any time in the
+> > > forseeable future.
+> > > 
+> > > IOW, defaulting new QEMU to 'legacy-vm-type=false' means latest QEMU
+> > > machine types will be broken out of the box for most SEV(-ES) users.
+> > > Even if the kernel is new enough, it also affects the guest measurement,
+> > > which means that their existing tools for validating measurements will
+> > > also be broken by the new default.
+> > > 
+> > > This is not a sensible default choice at this point in time. Revert to
+> > > the historical behaviour which is compatible with what most users are
+> > > currently running.
+> > > 
+> > > This can be re-evaluated a few years down the line, though it is more
+> > > likely that all attention will be on SEV-SNP by this time. Distro
+> > > vendors may still choose to change this default downstream to align
+> > > with their new major releases where they can guarantee the kernel
+> > > will always provide the required functionality.
+> > > 
+> > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > 
+> > This makes sense superficially, so
+> > 
+> > Acked-by: Michael S. Tsirkin <mst@redhat.com>
+> > 
+> > and I'll let kvm maintainers merge this.
+> > 
+> > However I wonder, wouldn't it be better to refactor this:
+> > 
+> >     if (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common)) == KVM_X86_DEFAULT_VM) {
+> >         cmd = sev_es_enabled() ? KVM_SEV_ES_INIT : KVM_SEV_INIT;
+> >         
+> >         ret = sev_ioctl(sev_common->sev_fd, cmd, NULL, &fw_error);
+> >     } else {
+> >         struct kvm_sev_init args = { 0 };
+> >                 
+> >         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
+> >     }   
+> > 
+> > to something like:
+> > 
+> > if (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common)) != KVM_X86_DEFAULT_VM) {
+> >         struct kvm_sev_init args = { 0 };
+> >                 
+> >         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
+> > 	if (ret && errno == ENOTTY) {
+> > 		cmd = sev_es_enabled() ? KVM_SEV_ES_INIT : KVM_SEV_INIT;
+> > 
+> > 		ret = sev_ioctl(sev_common->sev_fd, cmd, NULL, &fw_error);
+> > 	}
+> > }
+> > 
+> > 
+> > Yes I realize this means measurement will then depend on the host
+> > but it seems nicer than failing guest start, no?
+> 
+> IMHO having an invariant measurement for a given guest configuration
+> is a critical guarantee. We should not be allowing guest attestation
+> to break as a side-effect of upgrading a software component, while
+> keeping the guest config unchanged.
 
-Signed-off-by: Philippe Mathieu-DaudÃ© <philmd@linaro.org>
-Reviewed-by: CÃ©dric Le Goater <clg@redhat.com>
-Tested-by: CÃ©dric Le Goater <clg@redhat.com>
-Message-Id: <20240621080554.18986-7-philmd@linaro.org>
----
- hw/sd/sd.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+Well attenstation can change for a variety of reasons involving software
+upgrades: host or guest. It is up to user to either trust both old and
+new attestion, or pick one. Seems better than forcing policy host side.
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 64270dec0f..6e346e28ca 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -393,10 +393,7 @@ static void sd_set_cid(SDState *sd)
-     sd->cid[6] = PNM[3];
-     sd->cid[7] = PNM[4];
-     sd->cid[8] = PRV;       /* Fake product revision (PRV) */
--    sd->cid[9] = 0xde;      /* Fake serial number (PSN) */
--    sd->cid[10] = 0xad;
--    sd->cid[11] = 0xbe;
--    sd->cid[12] = 0xef;
-+    stl_be_p(&sd->cid[9], 0xdeadbeef); /* Fake serial number (PSN) */
-     sd->cid[13] = 0x00 |    /* Manufacture date (MDT) */
-         ((MDT_YR - 2000) / 10);
-     sd->cid[14] = ((MDT_YR % 10) << 4) | MDT_MON;
-@@ -462,9 +459,7 @@ static void sd_set_csd(SDState *sd, uint64_t size)
-         sd->csd[4] = 0x5b;
-         sd->csd[5] = 0x59;
-         sd->csd[6] = 0x00;
--        sd->csd[7] = (size >> 16) & 0xff;
--        sd->csd[8] = (size >> 8) & 0xff;
--        sd->csd[9] = (size & 0xff);
-+        st24_be_p(&sd->csd[7], size);
-         sd->csd[10] = 0x7f;
-         sd->csd[11] = 0x80;
-         sd->csd[12] = 0x0a;
--- 
-2.41.0
+> IOW, I'd view measurement as being "guest ABI", and versioned machine
+> types are there to provide invariant guest ABI.
+
+In practice we can't always do this exactly: e.g. vhost has
+a rich feature mask and what we do is clear features not
+supported by a specific host kernel.
+
+Similarly for vhost-user where the ABI depends on an
+external component.
+
+So things can change if you move across host kernels.
+
+
+
+
+> Personally, if we want simplicitly then just not using KVM_SEV_INIT2
+> at all would be the easiest option. SEV/SEV-ES are legacy technology
+> at this point, so we could be justified in leaving it unchanged and
+> only focusing on SEV-SNP. Unless someone can say what the critical
+> *must have* benefit of using KVM_SEV_INIT2 is ?
+
+
+No objection.
+
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
