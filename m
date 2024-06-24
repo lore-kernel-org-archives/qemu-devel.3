@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD0FFC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06FF3C30653
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 21:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLrCC-0003KF-Nt; Mon, 24 Jun 2024 17:25:52 -0400
+	id 1sLrCw-00066r-BJ; Mon, 24 Jun 2024 17:26:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCB-0003CJ-G3
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:25:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCt-0005he-GU
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrC9-0006g1-Lu
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:25:51 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sLrCr-0006rO-HF
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 17:26:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719264349;
+ s=mimecast20190719; t=1719264392;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mr05o3PNbaiGr+j10jJQ3rwE+cjH0xSS581I9pWwi4U=;
- b=A9+Kj8WuoR4scMF1Ze4euesCqVsVsE+agKKC8KMch4e8NodBOLxh7qZA2x5Jq8wUXPNXnx
- wk3hXcBrbqhaNItpnp/57ZVlcbMamhemc6YDgEHsILewK1CrnWDxO1to0BPchcMAeZbZbD
- tfJ32ZLxuL456Hu97UZ3YcuJKirD0CQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=OBq61iAeWHT+8oXnJgWDEC4tGrxsioEtPTb5O+a6nVI=;
+ b=PGubGb4gc44tguoMkmztcw+mH89XO2dlMZ6lk82p4gDBvJL24cNR7Yx3L1O4YqNUSAFXDu
+ Lrb9V8+uox+7M7KbJ1VnOmTGt9P58Dqk9f4bez8RIEAP74PKIVVCEkV2Mv1Io7Y0ErmWOZ
+ 26hwiaO5sHxtWYC2EYzVuhkUDVRqESo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-0UZ2NLWQNdmdWysIk1ypYA-1; Mon,
- 24 Jun 2024 17:25:45 -0400
-X-MC-Unique: 0UZ2NLWQNdmdWysIk1ypYA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-226-GPd5RrMUOMW2qoOVH4BJzg-1; Mon,
+ 24 Jun 2024 17:26:29 -0400
+X-MC-Unique: GPd5RrMUOMW2qoOVH4BJzg-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A1D4A195608B; Mon, 24 Jun 2024 21:25:44 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 69AC7195608C; Mon, 24 Jun 2024 21:26:28 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 51F4A1956053; Mon, 24 Jun 2024 21:25:42 +0000 (UTC)
+ id BA03A1956053; Mon, 24 Jun 2024 21:26:26 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Yi Sun <yi.y.sun@linux.intel.com>,
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Subject: [PULL 16/42] intel_iommu: Implement [set|unset]_iommu_device()
- callbacks
-Date: Mon, 24 Jun 2024 23:24:30 +0200
-Message-ID: <20240624212456.350919-17-clg@redhat.com>
+ Eric Auger <eric.auger@redhat.com>
+Subject: [PULL 35/42] vfio/container: Discover IOMMU type before creating the
+ container
+Date: Mon, 24 Jun 2024 23:24:49 +0200
+Message-ID: <20240624212456.350919-36-clg@redhat.com>
 In-Reply-To: <20240624212456.350919-1-clg@redhat.com>
 References: <20240624212456.350919-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 10
 X-Spam_score: 1.0
@@ -84,160 +85,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yi Liu <yi.l.liu@intel.com>
+Since the QEMU struct type representing the VFIO container is deduced
+from the IOMMU type exposed by the host, this type should be well
+defined *before* creating the container struct. This will be necessary
+to instantiate a QOM object of the correct type in future changes.
 
-Implement [set|unset]_iommu_device() callbacks in Intel vIOMMU.
-In set call, we take a reference of HostIOMMUDevice and store it
-in hash table indexed by PCI BDF.
+Rework vfio_set_iommu() to extract the part doing the container
+initialization and move it under vfio_create_container().
 
-Note this BDF index is device's real BDF not the aliased one which
-is different from the index of VTDAddressSpace. There can be multiple
-assigned devices under same virtual iommu group and share same
-VTDAddressSpace, but each has its own HostIOMMUDevice.
-
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/hw/i386/intel_iommu.h |  2 +
- hw/i386/intel_iommu.c         | 81 +++++++++++++++++++++++++++++++++++
- 2 files changed, 83 insertions(+)
+ hw/vfio/container.c | 47 ++++++++++++++++++++++-----------------------
+ 1 file changed, 23 insertions(+), 24 deletions(-)
 
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 7fa0a695c87bb8569fd6985e299fc0a1cc4b0c0c..1eb05c29fc9c703a61f06d90616694e74fb61c15 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -292,6 +292,8 @@ struct IntelIOMMUState {
-     /* list of registered notifiers */
-     QLIST_HEAD(, VTDAddressSpace) vtd_as_with_notifiers;
- 
-+    GHashTable *vtd_host_iommu_dev;             /* HostIOMMUDevice */
-+
-     /* interrupt remapping */
-     bool intr_enabled;              /* Whether guest enabled IR */
-     dma_addr_t intr_root;           /* Interrupt remapping table pointer */
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index c69c0d285b1fa85da22440934178243942fe42ab..019d1c9c800cde1d84f50e29eac02bea0e3329f3 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -61,6 +61,12 @@ struct vtd_as_key {
-     uint32_t pasid;
- };
- 
-+/* bus/devfn is PCI device's real BDF not the aliased one */
-+struct vtd_hiod_key {
-+    PCIBus *bus;
-+    uint8_t devfn;
-+};
-+
- struct vtd_iotlb_key {
-     uint64_t gfn;
-     uint32_t pasid;
-@@ -250,6 +256,25 @@ static guint vtd_as_hash(gconstpointer v)
-     return (guint)(value << 8 | key->devfn);
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index a8691942791006f44f7a3c34b32c67ca51766182..31bdc46a96d1626b237227a25007957e1d472757 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -389,54 +389,56 @@ static const char *vfio_get_iommu_class_name(int iommu_type)
+     };
  }
  
-+/* Same implementation as vtd_as_hash() */
-+static guint vtd_hiod_hash(gconstpointer v)
-+{
-+    return vtd_as_hash(v);
-+}
-+
-+static gboolean vtd_hiod_equal(gconstpointer v1, gconstpointer v2)
-+{
-+    const struct vtd_hiod_key *key1 = v1;
-+    const struct vtd_hiod_key *key2 = v2;
-+
-+    return (key1->bus == key2->bus) && (key1->devfn == key2->devfn);
-+}
-+
-+static void vtd_hiod_destroy(gpointer v)
-+{
-+    object_unref(v);
-+}
-+
- static gboolean vtd_hash_remove_by_domain(gpointer key, gpointer value,
-                                           gpointer user_data)
+-static bool vfio_set_iommu(VFIOContainer *container, int group_fd,
+-                           Error **errp)
++static bool vfio_set_iommu(int container_fd, int group_fd,
++                           int *iommu_type, Error **errp)
  {
-@@ -3812,6 +3837,58 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
-     return vtd_dev_as;
+-    int iommu_type;
+-    const VFIOIOMMUClass *vioc;
+-    const char *vioc_name;
+-
+-    iommu_type = vfio_get_iommu_type(container->fd, errp);
+-    if (iommu_type < 0) {
+-        return false;
+-    }
+-
+-    if (ioctl(group_fd, VFIO_GROUP_SET_CONTAINER, &container->fd)) {
++    if (ioctl(group_fd, VFIO_GROUP_SET_CONTAINER, &container_fd)) {
+         error_setg_errno(errp, errno, "Failed to set group container");
+         return false;
+     }
+ 
+-    while (ioctl(container->fd, VFIO_SET_IOMMU, iommu_type)) {
+-        if (iommu_type == VFIO_SPAPR_TCE_v2_IOMMU) {
++    while (ioctl(container_fd, VFIO_SET_IOMMU, *iommu_type)) {
++        if (*iommu_type == VFIO_SPAPR_TCE_v2_IOMMU) {
+             /*
+              * On sPAPR, despite the IOMMU subdriver always advertises v1 and
+              * v2, the running platform may not support v2 and there is no
+              * way to guess it until an IOMMU group gets added to the container.
+              * So in case it fails with v2, try v1 as a fallback.
+              */
+-            iommu_type = VFIO_SPAPR_TCE_IOMMU;
++            *iommu_type = VFIO_SPAPR_TCE_IOMMU;
+             continue;
+         }
+         error_setg_errno(errp, errno, "Failed to set iommu for container");
+         return false;
+     }
+ 
+-    container->iommu_type = iommu_type;
+-
+-    vioc_name = vfio_get_iommu_class_name(iommu_type);
+-    vioc = VFIO_IOMMU_CLASS(object_class_by_name(vioc_name));
+-
+-    vfio_container_init(&container->bcontainer, vioc);
+     return true;
  }
  
-+static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-+                                     HostIOMMUDevice *hiod, Error **errp)
-+{
-+    IntelIOMMUState *s = opaque;
-+    struct vtd_as_key key = {
-+        .bus = bus,
-+        .devfn = devfn,
-+    };
-+    struct vtd_as_key *new_key;
-+
-+    assert(hiod);
-+
-+    vtd_iommu_lock(s);
-+
-+    if (g_hash_table_lookup(s->vtd_host_iommu_dev, &key)) {
-+        error_setg(errp, "Host IOMMU device already exist");
-+        vtd_iommu_unlock(s);
-+        return false;
-+    }
-+
-+    new_key = g_malloc(sizeof(*new_key));
-+    new_key->bus = bus;
-+    new_key->devfn = devfn;
-+
-+    object_ref(hiod);
-+    g_hash_table_insert(s->vtd_host_iommu_dev, new_key, hiod);
-+
-+    vtd_iommu_unlock(s);
-+
-+    return true;
-+}
-+
-+static void vtd_dev_unset_iommu_device(PCIBus *bus, void *opaque, int devfn)
-+{
-+    IntelIOMMUState *s = opaque;
-+    struct vtd_as_key key = {
-+        .bus = bus,
-+        .devfn = devfn,
-+    };
-+
-+    vtd_iommu_lock(s);
-+
-+    if (!g_hash_table_lookup(s->vtd_host_iommu_dev, &key)) {
-+        vtd_iommu_unlock(s);
-+        return;
-+    }
-+
-+    g_hash_table_remove(s->vtd_host_iommu_dev, &key);
-+
-+    vtd_iommu_unlock(s);
-+}
-+
- /* Unmap the whole range in the notifier's scope. */
- static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n)
+ static VFIOContainer *vfio_create_container(int fd, VFIOGroup *group,
+                                             Error **errp)
  {
-@@ -4116,6 +4193,8 @@ static AddressSpace *vtd_host_dma_iommu(PCIBus *bus, void *opaque, int devfn)
++    int iommu_type;
++    const VFIOIOMMUClass *vioc;
++    const char *vioc_name;
+     VFIOContainer *container;
  
- static PCIIOMMUOps vtd_iommu_ops = {
-     .get_address_space = vtd_host_dma_iommu,
-+    .set_iommu_device = vtd_dev_set_iommu_device,
-+    .unset_iommu_device = vtd_dev_unset_iommu_device,
- };
++    iommu_type = vfio_get_iommu_type(fd, errp);
++    if (iommu_type < 0) {
++        return NULL;
++    }
++
++    if (!vfio_set_iommu(fd, group->fd, &iommu_type, errp)) {
++        return NULL;
++    }
++
++    vioc_name = vfio_get_iommu_class_name(iommu_type);
++    vioc = VFIO_IOMMU_CLASS(object_class_by_name(vioc_name));
++
+     container = g_malloc0(sizeof(*container));
+     container->fd = fd;
++    container->iommu_type = iommu_type;
++    vfio_container_init(&container->bcontainer, vioc);
+     return container;
+ }
  
- static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-@@ -4235,6 +4314,8 @@ static void vtd_realize(DeviceState *dev, Error **errp)
-                                      g_free, g_free);
-     s->vtd_address_spaces = g_hash_table_new_full(vtd_as_hash, vtd_as_equal,
-                                       g_free, g_free);
-+    s->vtd_host_iommu_dev = g_hash_table_new_full(vtd_hiod_hash, vtd_hiod_equal,
-+                                                  g_free, vtd_hiod_destroy);
-     vtd_init(s);
-     pci_setup_iommu(bus, &vtd_iommu_ops, dev);
-     /* Pseudo address space under root PCI bus. */
+@@ -618,9 +620,6 @@ static bool vfio_connect_container(VFIOGroup *group, AddressSpace *as,
+     if (!container) {
+         goto close_fd_exit;
+     }
+-    if (!vfio_set_iommu(container, group->fd, errp)) {
+-        goto free_container_exit;
+-    }
+     bcontainer = &container->bcontainer;
+ 
+     if (!vfio_cpr_register_container(bcontainer, errp)) {
 -- 
 2.45.2
 
