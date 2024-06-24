@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A19EC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB0EEC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:25:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLgqv-000746-9w; Mon, 24 Jun 2024 06:23:13 -0400
+	id 1sLgsO-0008UT-MK; Mon, 24 Jun 2024 06:24:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLgqs-00070n-W0
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:23:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLgsM-0008Ty-Nl
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:24:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLgqr-00005O-67
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:23:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLgsL-0000FP-G8
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:24:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719224587;
+ s=mimecast20190719; t=1719224681;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dVIZiTR+Qlx7R63DABIwO7Immyiuqt5V5O4QrLSqxwM=;
- b=WX1pplJd8VfCtoRsZxuO2jamuDbvZPLXp4Sz1LmC2crBaKlE2nbSNAr55SEp2djuMauVxD
- EFm+H70Bbq9tOdLR533OcU1K5QvvX/Z4kiJrHeuGnJxmGNbl2hXxP6d15QmmrqYS/Km8Ix
- 0t9zI4PITU0T+8/Q4TnhahshKSgjDeE=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iM11OO4SiRnwNxmrfUxUKOThrETXsIrwlvl+1l2huyA=;
+ b=CMJX/JBEg0JdQzjNMCM81DUFarB8CS/5vl683OxkLUIooqGgrsziy8qeCLItkIvQv5yBEJ
+ aZSP9VYu6FI9zKAdCZuc5bM7pezOD5h6I0+icZZgb8TwfYoRhT3F37yPeYiRsMxVCQKKnh
+ AVDQh44Im5K0G6yMk9Zrt7pIMd4kVVU=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-Rqehakn-OYqvOS_hY24o7w-1; Mon, 24 Jun 2024 06:23:06 -0400
-X-MC-Unique: Rqehakn-OYqvOS_hY24o7w-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a725eed1cfeso23262866b.3
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:23:05 -0700 (PDT)
+ us-mta-266-xexkuNpJOcyH-wapqJ7L0A-1; Mon, 24 Jun 2024 06:24:39 -0400
+X-MC-Unique: xexkuNpJOcyH-wapqJ7L0A-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-57d0f3455ceso631717a12.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:24:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719224584; x=1719829384;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dVIZiTR+Qlx7R63DABIwO7Immyiuqt5V5O4QrLSqxwM=;
- b=YkLX/xiFePp1lRNyVGx0y3nCo6sKRZVxHpwvdYEui/mjqpXd1t/Iy1/ZwKa+1uX1AN
- LhrAEnauGFpGwQQj092uOQdCj6C3veGL/pdJ1eL3HkW2uikfty9ZImEU39qiQFt7x58z
- EVQ8PTyGR3zyzVMTj50i3U0vawuQB4O8jhZ/oEy1gxlePLnX6IihtWuSzTCFwIJMZTef
- +gGsDuCjPK0CXXNHvTDlg7SxYm7ZmX7Ar0O0wFOpMhWKeS13/uhp0qdHwgPsCrbFq5n8
- 88tuk9lkO1wjQ3i3dYydYyCZzvHW1WRba4tHg9PRUKuB0LYf+EJeGx0LqOk3dWNUmsMA
- uAsQ==
-X-Gm-Message-State: AOJu0Yy8mhII0ORTfNOTVsj+yrmwAvReYMM569pOo6DyF/Y50AA4qBXp
- HCwCKDuSTnD5Z+4Sgamr7p5+97a5GAz1tNkMdo5rWxXrJVdoWl37ay31YcS1HPnQPpZ8/3G1Y7p
- HB0tFIpVhTWbgj6K1F0/7Ke1WSD8kwlEA8rlCOS6e2Vc9oPwMwv6JsJfUyw6cxio=
-X-Received: by 2002:a17:906:99cd:b0:a72:5e95:ad46 with SMTP id
- a640c23a62f3a-a725e95ae70mr78552466b.31.1719224584271; 
- Mon, 24 Jun 2024 03:23:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH01EqJ3vLSAtqjAMtoJ2pr13lRaFFGRKNotzMXwqGJx3UqiQohJpcMC67EeXtqyPzXgP6vYg==
-X-Received: by 2002:a17:906:99cd:b0:a72:5e95:ad46 with SMTP id
- a640c23a62f3a-a725e95ae70mr78549566b.31.1719224583480; 
- Mon, 24 Jun 2024 03:23:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719224678; x=1719829478;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iM11OO4SiRnwNxmrfUxUKOThrETXsIrwlvl+1l2huyA=;
+ b=PAZLTb7CjXwfx6FQj4DfxCJwt6lbmtoVMe8Jm3iq4nSmXRSkJ6OYEBtYIBZK1lRvSC
+ ILtZBLYenCmmrJcsFYLX+vpT+zh1BJ8k8lJGq7BN29YMw/jeOh8tqJM021wYFPkY/D0E
+ lAMWSrmfmIWWLU0Ja9oVV6/AzHKtD5H1s6lxxCSs+dN6Ea+5rrKVQBR07Ts+m9hqaaSS
+ /0yGXGetMKCplfiTEzVlpJXyUjYXCNnoo5POZx4Ud/TnZB1Q8/70nl6ptStPbbg97vi/
+ dwb1sZuGBjnbFkTKFKp6KLNIS2i3iVvCE+Kn/1wTzcjA/V/Cl3QvQ/wnkDwljXi7CzZp
+ d5Fg==
+X-Gm-Message-State: AOJu0Yxx3Bak88ME0ItNZ8H5ctCtQt61qiAwxDa5ByaU5cJcwiGrWgDE
+ RnXEQRockfeSmXcatBBfPK/8N9gcO1Xe5+8B/AtNJRKDpkshVhi6KSYXiGFgv4gFPTFMGpT+iYj
+ gCwP4V5MSq1cdc8dEStyQWW+LgPbQZEwBEZM2NWxSM+VWoxB9WORb
+X-Received: by 2002:a50:d481:0:b0:57d:10c7:96b0 with SMTP id
+ 4fb4d7f45d1cf-57d4bddfb93mr3016075a12.38.1719224678008; 
+ Mon, 24 Jun 2024 03:24:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHCaqqqRMX2gX856/225iJ5zFYnbEb5gW29yVh0Gva1kZOkpkA0ui8ZIv7c5n1/7LrpHK/Omg==
+X-Received: by 2002:a50:d481:0:b0:57d:10c7:96b0 with SMTP id
+ 4fb4d7f45d1cf-57d4bddfb93mr3016048a12.38.1719224677210; 
+ Mon, 24 Jun 2024 03:24:37 -0700 (PDT)
 Received: from redhat.com ([2.52.146.100]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a724fe5d3a8sm133612866b.75.2024.06.24.03.23.01
+ 4fb4d7f45d1cf-57d303da3edsm4555955a12.2.2024.06.24.03.24.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 03:23:02 -0700 (PDT)
-Date: Mon, 24 Jun 2024 06:22:53 -0400
+ Mon, 24 Jun 2024 03:24:36 -0700 (PDT)
+Date: Mon, 24 Jun 2024 06:24:32 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: thomas <east.moutain.yang@gmail.com>
+To: Yang Dongshan <east.moutain.yang@gmail.com>
 Cc: qemu-devel@nongnu.org, jasowang@redhat.com, qemu-stable@nongnu.org
-Subject: Re: [PATCH v3] vritio-net: Notify the guest with the latest
- available idx
-Message-ID: <20240624061458-mutt-send-email-mst@kernel.org>
-References: <20240624081901.38956-1-east.moutain.yang@gmail.com>
+Subject: Re: [PATCH] Update event idx if guest has made extra buffers during
+ double check
+Message-ID: <20240624062345-mutt-send-email-mst@kernel.org>
+References: <20240613022147.5886-1-east.moutain.yang@gmail.com>
+ <20240617065455-mutt-send-email-mst@kernel.org>
+ <CALrP2iV14404dq+5xO8Ziq4fEuacvkU=SjJLT=FJGLAq1Xanhg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20240624081901.38956-1-east.moutain.yang@gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALrP2iV14404dq+5xO8Ziq4fEuacvkU=SjJLT=FJGLAq1Xanhg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -97,70 +101,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vritio -> virtio?
+On Mon, Jun 17, 2024 at 09:51:33PM +0800, Yang Dongshan wrote:
+> Similar to the first check, if the buffer size still can't satisfy the request,
+> notify the
+> guest with the updated shadow_avail_idx, it's better than the old one.
 
-When I see a typo straight in the subject I get suspicious about
-the patch itself.
+So it's an optimization then? Same as any optimization, it should
+come with measurements showing the performance benefit.
 
-
-On Mon, Jun 24, 2024 at 04:19:01PM +0800, thomas wrote:
-> Patch 06b12970174 ("virtio-net: fix network stall under load")
-> added double-check to test whether the available buffer size
-> can satisfy the request or not, in case the guest has added
-> some buffers to the avail ring simultaneously after the first
-> check.
-> 
-> It will be lucky if the available buffer size becomes okay
-> after the double-check, then the host can send the packet to
-> the guest. If the buffer size still can't satisfy the request,
-> even if the guest has added some buffers, notify the guest
-> with the latest available idx seen by the host, similiar to
-> the action taken by the host after the first check.
-
-The action taken there is to enable host notifications.
-And this is also what your code does.
-
-Is this some kind of optimization? Bugfix? Can't tell from
-commit log.
-
-
-> Fixes: 06b12970174 ("virtio-net: fix network stall under load")
-> Signed-off-by: wencheng Yang <east.moutain.yang@gmail.com>
-
-Is this spelling with lowercase w in wencheng, intentional?
-
-
-> ---
-
-Add changelog here.
-
-
->  hw/net/virtio-net.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 9c7e85caea..23c6c8c898 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -1654,6 +1654,7 @@ static int virtio_net_has_buffers(VirtIONetQueue *q, int bufsize)
->          if (virtio_queue_empty(q->rx_vq) ||
->              (n->mergeable_rx_bufs &&
->               !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
-> +            virtio_queue_set_notification(q->rx_vq, 1);
-
-
-
-I don't really understand what is going on here.
-Why is the previous virtio_queue_set_notification(q->rx_vq, 1)
-insufficient?
-
-
-
-
->              return 0;
->          }
->      }
-> -- 
-> 2.39.0
+-- 
+MST
 
 
