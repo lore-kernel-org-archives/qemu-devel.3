@@ -4,90 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A4AC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E55C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLghK-0004uD-QX; Mon, 24 Jun 2024 06:13:18 -0400
+	id 1sLgjA-0005gn-Lp; Mon, 24 Jun 2024 06:15:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLghJ-0004tt-44
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:13:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLghH-0006ZQ-Gf
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:13:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719223992;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4IYosgh/Ak+8KVQ19lZDf2tmkDoaJHmZMfGthftVeBg=;
- b=dyGNSf25+BYsvWvpW+/HuX+Tlxg0xOQC6FbFsTruh2p4H+M8ucv8C5KgXE7dLEC16sQDBE
- +pTPKdHRygpj8Mgb9Pnfl1gtC9NvTGhxGi4w9qkCw6hWym1bW8GBaR5oJO10AykOkA5dt6
- iQHum5RQleAAlyc+QDk1blca1kbKQCQ=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-421-kgKI2jlSOgiqJ9cWf0QCwg-1; Mon, 24 Jun 2024 06:13:11 -0400
-X-MC-Unique: kgKI2jlSOgiqJ9cWf0QCwg-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-57c6e28b151so2249195a12.2
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:13:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sLgj8-0005gM-2Z
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:15:10 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sLgj3-0006zs-1A
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:15:09 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-717f17d7c63so1730577a12.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:15:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719224103; x=1719828903; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rMt95/eWbzku0b99P1I1bYk1mlMIcBFWWEob7XFQtZ4=;
+ b=KtVZ+5EGmzh8HZ/bYnCeZGKvsgTS151sdO9Mxaf5f/6RJtmIFvTMZW4hJh/miuLCnc
+ KhOjJudnqkG0CsIJJcleOU0KsYx8GStWhahTCDlF9pJaBMF9D7pWuxZ/0Kvp3v/HpDEf
+ CHTUTFd1GF6lExcJ5mBDSG/ghlaa3OQPhbmIg5W7yE0uvdXO3QTKF9b/m79o3JJ15wui
+ /hMLC9h/uJ2AmMqRkX1zVTkpYinZZCigAH0k5Y1NuW4bVA5YeKtlCJGbdteQ+Ze1VHwY
+ tqJg0S+T0PXxyEjVDy7Ij8Q1ZcimSFeOIVOtdjxy5Hf8YPmFtfsHWAMG+TC6Yiw83ojK
+ R7cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719223989; x=1719828789;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4IYosgh/Ak+8KVQ19lZDf2tmkDoaJHmZMfGthftVeBg=;
- b=GRQuooGQ18GsiIDlZGv8uJ8GsblGma0Hn5tzy/3fT4ocKGo4lf9wflnBOOsmcFeQOv
- 8ynoXf+nRFZdZLaJSGw37LgKNz8Wt+dwWjyGqHsBF5yqQAzwSa+aFnCUp347PyLmP3zE
- w2CIU/R5K5J3+EuGYsSOhrkFRpi4tPGYDVzRJmXjDH4hzdI9U/Q/crerCC/OgpsZyr/X
- 7VyPgMjY7ldWiVkoEu9xQvtNqDGguNtoJbHop1P9ksaQmKsO0xPnmolPW518GSakej6p
- pVWSOsfQXrTynCJ8WfhzJoG0hNC5/lgkUY2++EMUtoKYUkum91jEbFrVasP8bTKE5IpY
- VEMg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWaj4uCHtqfUDCkxaPx72xKNR0+dYmM3RKnUvCPuT0/ztF6qQ+SmK4mq4R0QqDJMJyF7lUrIzQ2o/7ThMTo8LkiufzcAq4=
-X-Gm-Message-State: AOJu0Yz/8ZlZYqJfxrtjK/UKx7wOQwQkQ0UKAVRADWNhzN8v/6AnO41I
- Cg+15PPgt4bP9xgxS8YP6D7WTGgmNz6q/NyRcnp7z44Hcqmty283Bn8dxdhmcdUff0myOSUCCwl
- +ATO6drK5yC1dK/wDYbYl7y1fm2vdWywWD0jmA2bz/ouIW/l11PP0ZVO5UfkhMgk=
-X-Received: by 2002:a50:cd59:0:b0:57c:6a1f:11d5 with SMTP id
- 4fb4d7f45d1cf-57d4bd63249mr2547602a12.15.1719223989242; 
- Mon, 24 Jun 2024 03:13:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWd+UYcg1Ws5kzQ1fVt2PLqrGEBBqJX3cPPrg/lUuJAJE81Z6Szux09GcbjNyhJM5LqVIrjA==
-X-Received: by 2002:a50:cd59:0:b0:57c:6a1f:11d5 with SMTP id
- 4fb4d7f45d1cf-57d4bd63249mr2547574a12.15.1719223988474; 
- Mon, 24 Jun 2024 03:13:08 -0700 (PDT)
-Received: from redhat.com ([2.52.146.100]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57d3006d36bsm4543457a12.0.2024.06.24.03.13.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 03:13:07 -0700 (PDT)
-Date: Mon, 24 Jun 2024 06:13:03 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-Cc: "imammedo@redhat.com" <imammedo@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "berrange@redhat.com" <berrange@redhat.com>
-Subject: Re: Failed to hot-plug device to pxb bridge
-Message-ID: <20240624060856-mutt-send-email-mst@kernel.org>
-References: <3A8D097B-3BA7-40DC-8DDF-D79B7BEE5CEE@baidu.com>
- <20240530160919.01a3effc@imammedo.users.ipa.redhat.com>
- <2cae6cf3c0f64b509ceed04be6a8bd70@baidu.com>
- <74e8929fd34d496ea64aab6b3a136b3b@baidu.com>
+ d=1e100.net; s=20230601; t=1719224103; x=1719828903;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rMt95/eWbzku0b99P1I1bYk1mlMIcBFWWEob7XFQtZ4=;
+ b=VvxiYnBa+LYI7uxxBEoElV/yg0KsAU0ZHFA5b+okcphrXCj+ExPlGtFaV1l61DVsvG
+ EKNOoDjvn1LVVB/JfedEcGTZd65Bczq7NH8kMJkx8ApL8deVkiEcuQdLl4VcRdPrxbfB
+ DUWXN3VrypIz+suBMCR7hfI9o2R1MNJEUvvCO7ZotxcYkIlSy7CB/woaKMJVIUzZVs2a
+ vGuKPnkfcHtlfSWsFSV2litD2Rb7wP3xtDBJtmykb1hHIxPGcA/vzXKEDITXHOG6RGGU
+ YR0EqN5P46ubx1pLVcoPWvL9akCfs3FMa6guwAa/wURx7l6XoLiW27VkHwzpR28aAmah
+ JHOg==
+X-Gm-Message-State: AOJu0Yyi/2sBIGry9U7JqiTXYV2zb91ER7rvJZ6gBpuN8J+eA5NFtJUw
+ TTCVV4VDoZhUUDYbNDdkoP4jaJnLtFTFCc64/LSdzu+qgaEJB7N0
+X-Google-Smtp-Source: AGHT+IFKu78lB8aKs4oaU18Q/QqyLtJ4RkAHESwYkQ9FXjXp9Z0JG2wi8NU9vIXKon6y18tqs58Lxw==
+X-Received: by 2002:a17:90b:a50:b0:2c8:880:fba5 with SMTP id
+ 98e67ed59e1d1-2c86146d12bmr3081182a91.34.1719224102879; 
+ Mon, 24 Jun 2024 03:15:02 -0700 (PDT)
+Received: from [192.168.0.22] ([210.223.46.112])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c7e5af9b96sm8332589a91.35.2024.06.24.03.15.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Jun 2024 03:15:02 -0700 (PDT)
+Message-ID: <fbc0a8cd-8b29-4cb0-8ea6-c7fb34f52c18@gmail.com>
+Date: Mon, 24 Jun 2024 19:14:59 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <74e8929fd34d496ea64aab6b3a136b3b@baidu.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/ufs: Fix potential bugs in MMIO read|write
+To: Minwoo Im <minwoo.im.dev@gmail.com>, Jeuk Kim <jeuk20.kim@samsung.com>
+Cc: qemu-devel@nongnu.org, Minwoo Im <minwoo.im@samsung.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240623024555.78697-1-minwoo.im.dev@gmail.com>
+Content-Language: ko
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+In-Reply-To: <20240623024555.78697-1-minwoo.im.dev@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,41 +95,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 24, 2024 at 03:08:55AM +0000, Gao,Shiyuan wrote:
-> > I checked the guest dmesg and found that failed load shpc driver.
-> >   [    0.966668] shpchp 0000:00:05.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0.S28_)
-> >   [    0.968238] shpchp 0000:00:05.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0)
-> >   [    0.969160] shpchp 0000:00:05.0: Cannot get control of SHPC hotplug
-> >   [    0.969876] shpchp 0000:00:06.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0.S30_)
-> >   [    0.971454] shpchp 0000:00:06.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0)
-> >   [    0.972376] shpchp 0000:00:06.0: Cannot get control of SHPC hotplug
-> >   [    0.973119] shpchp 0000:80:00.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PC80)
-> >   [    0.974674] shpchp 0000:80:00.0: Cannot get control of SHPC hotplug
-> >   [    0.979422] shpchp 0000:81:01.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PC80)
-> >   [    0.980948] shpchp 0000:81:01.0: Cannot get control of SHPC hotplug
-> >   [    0.981685] shpchp 0000:60:00.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PC60)
-> >   [    0.994623] shpchp 0000:60:00.0: Cannot get control of SHPC hotplug
-> >   [    0.995349] shpchp 0000:61:01.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PC60)
-> >   [    0.996891] shpchp 0000:61:01.0: Cannot get control of SHPC hotplug
-> >   [    0.997626] shpchp: Standard Hot Plug PCI Controller Driver version: 0.4
-> > Read the shpc driver code, I found that before shpc_init it need check the shpc capability of bridge(shpc_capable) and
-> > get hotplug control from firmware(acpi_get_hp_hw_control_from_firmware) in shpc_probe.
-> > Howerver it return fail in acpi_get_hp_hw_control_from_firmware. I dump the acpid table, not found OSC and OSHP
-> > method in dsdt.dsl.
-> > In the QEMU build_dsdt, not found build osc method in i440fx.
-> > Putting aside this pxb scenario, I suspect that after disable acpi-pci-hotplug-with-bridge-support,
-> > hot-plug into the PCI bridge via SHPC can be successful in i440fx ?
-> 
-> After adding oshp method in build_dsdt, the SHPC driver load sucess and hotplug device sucess. Maybe we need a patch
-> fix it ?
-> 
-> 
-> 
-> 
 
-Sorry, can't really say what you are proposing.
-Send a patch?
+On 6/23/2024 11:45 AM, Minwoo Im wrote:
+> This patch fixes two points reported in coverity scan report [1].  Check
+> the MMIO access address with (addr + size), not just with the start offset
+> addr to make sure that the requested memory access not to exceed the
+> actual register region.  We also updated (uint8_t *) to (uint32_t *) to
+> represent we are accessing the MMIO registers by dword-sized only.
+>
+> [1] https://lore.kernel.org/qemu-devel/CAFEAcA82L-WZnHMW0X+Dr40bHM-EVq2ZH4DG4pdqop4xxDP2Og@mail.gmail.com/
+>
+> Cc: Jeuk Kim <jeuk20.kim@gmail.com>
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Minwoo Im <minwoo.im.dev@gmail.com>
+Thank you for the patch.
 
-
+Reviewed-by: Jeuk Kim <jeuk20.kim@samsung.com>
 
 
