@@ -4,63 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F102EC3064D
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 12:52:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCBF5C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:12:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLjAH-0000nN-04; Mon, 24 Jun 2024 08:51:21 -0400
+	id 1sLjTk-0006wp-05; Mon, 24 Jun 2024 09:11:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sLgGq-0005UZ-Ba
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:45:56 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sLgGo-0001gb-Cu
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:45:56 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 078CF60B8D;
- Mon, 24 Jun 2024 09:45:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0246FC2BBFC;
- Mon, 24 Jun 2024 09:45:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1719222345;
- bh=cW52zxJgpVsSrE9cLev7A24Pl9+DDNAp4ic425Ti+Y4=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=EVvXwvTa2dRso95ijmvxkEJ8uAhkbmG37zOi+grH8prpdua6kADnowYph3H4mI6+g
- JkKtGCwrutt4IJnNqvNDIYX0YHJHV35/afDZZh8vCfWmvWXGQDZMl+CzNDS5a3iPre
- AXbfEpO30WPRVmcVvicq0wk4IefC+thYSegFbpRXdRH9q79whpXhO5DXxwUXpCHB22
- ZqpJV3IWeID8vFwEnEH3kNvSsKFsXw8Aq8dXhi5ir0EnZKXit3Am/8upEBGDnWLWzL
- 2R6Bo6feNlIHLKqIXVIkiiJfqJRKA23Dvp6KLxxdLlnBicDmP7JGDfUt/qQ7HvN68I
- sa8162M5uux4w==
-Date: Mon, 24 Jun 2024 11:45:40 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: <shiju.jose@huawei.com>, <qemu-devel@nongnu.org>,
- <linux-edac@vger.kernel.org>, <tanxiaofei@huawei.com>,
- <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>
-Subject: Re: [RFC PATCH 1/1] hw/arm: FW first ARM processor error injection.
-Message-ID: <20240624114540.400b70a1@coco.lan>
-In-Reply-To: <20240621193316.00000d83@Huawei.com>
-References: <20240621165115.336-1-shiju.jose@huawei.com>
- <20240621193316.00000d83@Huawei.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sLjTh-0006wR-AQ
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:11:25 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sLjTc-000448-86
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:11:25 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a6265d3ba8fso474585366b.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719234678; x=1719839478; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=i4+2Eya4KDJej1eHFMFxWHJUFBQmod7jwwxhrYSVtHE=;
+ b=sspjDzQBZsH0DbhaJtHUatVphtMzVnvjjtMi8qN+sZDNE3Uc2gwGBmrEriLVlRGt2a
+ ySGrTkcfQjdcmXs5eQLigiQGLHkH1R56utVdI6hfvipQbVtOm+DQa+oiVPda9mdpUHy7
+ SiO7apwLk4Tqk40QGXmZ1V8BMrmeFzaTtqfkiEltPyb18meQ+Mj4D08Ao4Pg+QX6gzpk
+ 39cu+VjuLqP9up4RVOLqh7ZEA4GRybC0f1DX+AsRVXzr8DLsSSeDlTTaXOWPsSOGTzoh
+ BMYQek+wQUc9czsJ2oGevNeTIATUvIXGxzcauLNScpONGBkl2CGwxyI0rHfTGLZdJdPX
+ 8iBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719234678; x=1719839478;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=i4+2Eya4KDJej1eHFMFxWHJUFBQmod7jwwxhrYSVtHE=;
+ b=vKu9WuhGRJUINmF95lUQyhh2fNsdsOXfa5uifFFCu3fxhByxpDRmZEPh2cNHSan1BC
+ Kk8rlQNv3XQAs54IV8lmG94tkxHgUGu1W26hZTw3cv3HH2D0WNIyGksbmI1K7/v0fa7O
+ s3jJeSYRG+wQ265IcSrgwhQqRR24aXUxHvtA7W5tUVgVT+uo48YINeYjA/MFBJqO08ud
+ o8+kKelCKaBT+lEYP6QCAEYDL72ROPDXV69JTcYRzKxuPpp9aTtprC89FYLUT9Wx9667
+ LFFy/5saHaRsNzV4saeXusfsyfCQL6kApSGPsSTY7LUjndBrl3D1h9wixZ9XhQqOgUHZ
+ JjhQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMn+DKdijpTpNVMMeMMa8fa5HRMhdY4QT3eTuUwnJCzSvtnEUflPHB3hi8IqZ/Lbm3nuQxgnYaG8+jIzju+XWI3j1EJVI=
+X-Gm-Message-State: AOJu0YyXzGbcVyJ/CISlB1lFJl5mgxeMQygu75hfbpnmDc3w19/T22N5
+ IHIRa7dPT32rqkbBazZzTNbB6CuY/0sbdICv91VI3WwwOTYtjz+TBVC4Vl1nlLo=
+X-Google-Smtp-Source: AGHT+IECN+n7iVHxeSvU5Ttbd+bI/5Pljw0SjhLC9sT1X8j9ENQoqTVl9c++8nEFNBlv/8gTo1SmYQ==
+X-Received: by 2002:a17:906:40d3:b0:a6f:badc:8d2 with SMTP id
+ a640c23a62f3a-a7242e13140mr294915666b.70.1719234678290; 
+ Mon, 24 Jun 2024 06:11:18 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a725f5e1b52sm42423466b.135.2024.06.24.06.11.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Jun 2024 06:11:17 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A65745F789;
+ Mon, 24 Jun 2024 14:11:16 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Andreas Faerber <afaerber@suse.de>, Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson
+ <anjo@rev.ng>, Markus Armbruster <armbru@redhat.com>, bbauman@redhat.com,
+ Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ cw@f00f.org,
+ dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
+ Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com, Warner
+ Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe
+ <jgg@nvidia.com>, jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ jjherne@linux.vnet.ibm.com, Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel
+ <luc@lmichel.fr>, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Chou <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ mdean@redhat.com, mimu@linux.vnet.ibm.com, Paul Walmsley
+ <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
+ Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Richard
+ Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Wei Wang
+ <wei.w.wang@intel.com>, z.huo@139.com, LIU Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: QEMU Community Call Agenda Items (June 25th, 2024)
+Date: Mon, 24 Jun 2024 14:11:16 +0100
+Message-ID: <87pls6pjt7.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 24 Jun 2024 08:51:19 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,89 +117,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Fri, 21 Jun 2024 19:33:16 +0100
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> escreveu:
 
-> On Fri, 21 Jun 2024 17:51:15 +0100
-> <shiju.jose@huawei.com> wrote:
-> 
-> > From: Shiju Jose <shiju.jose@huawei.com>  
-> Thanks for posting this.
-> 
-> Given this is going to linux-edac, probably should mention
-> this is QEMU based error injection.  For cross postings
-> between kernel related and qemu lists I tend to stick
-> qemu in the [] of the patch description.
+Hi,
 
-Thank you for that! It is really useful. Btw, I'm using a small
-script to do the error injection using netcat (nc), and assuming
-that the QMP interface used for error injection will be started 
-at localhost port 4445, e. g. qemu is started with:
+The KVM/QEMU community call is at:
 
-	-qmp tcp:localhost:4445,server=on,wait=off
+  https://meet.jit.si/kvmcallmeeting
+  @
+  25/6/2024 14:00 UTC
 
-Btw, I added some instructions about how to use it under rasdaemon
-page:
+Are there any agenda items for the sync-up?
 
-	https://github.com/mchehab/rasdaemon/wiki/Error-injection-testing
-
-Feel free to improve it.
-
-Thanks,
-Mauro
-
----
-
-
-#!/bin/bash
-
-trap 'catch $LINENO "$BASH_COMMAND"' ERR
-catch() {
-	echo "Error on line $1: $2"
-	exit 1
-}
-
-ERROR_DEFAULT='"cache-error"'
-ERROR=""
-
-HELP="$0 [<-c|--cache-error> <-t|--tlb-error> <-b|--bus-error> <-v|--vendor-error>|--micro-arch-error]"
-
-while [ "$1" != "" ]; do
-	case "$1" in
-		-c|--cache-error)
-			if [ ! -z "$ERROR" ]; then ERROR="$ERROR, "; fi
-			ERROR+='"cache-error"'
-			;;
-		-t|--tlb-error)
-			if [ ! -z "$ERROR" ]; then ERROR="$ERROR, "; fi
-			ERROR+='"tlb-error"'
-			;;
-		-b|--bus-error)
-			if [ ! -z "$ERROR" ]; then ERROR="$ERROR, "; fi
-			ERROR+='"bus-error"'
-			;;
-		-v|--vendor-error|--micro-arch-error)
-			if [ ! -z "$ERROR" ]; then ERROR="$ERROR, "; fi
-			ERROR+='"micro-arch-error"'
-			;;
-		help|-h|--help)
-			echo $HELP
-			exit 0
-			;;
-	esac
-	shift
-done
-
-
-if [ -z "$ERROR" ]; then
-	ERROR=$ERROR_DEFAULT
-fi
-
-CACHE_MSG='{ "execute": "qmp_capabilities" } '
-CACHE_MSG+='{ "execute": "arm-inject-error", "arguments": { "errortypes": ['$ERROR'] } }'
-
-echo $CACHE_MSG
-echo $CACHE_MSG | nc -v localhost 4445
-
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
