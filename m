@@ -4,71 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC9E2C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5773CC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLfRm-0001kq-Kp; Mon, 24 Jun 2024 04:53:10 -0400
+	id 1sLfWE-0003ut-JY; Mon, 24 Jun 2024 04:57:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sLfRi-0001jP-Gt
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:53:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mprivozn@redhat.com>)
- id 1sLfRh-0008K2-4n
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:53:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719219184;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tnjsktsspHq3Jz/+qqe2K2/d41Y840qObNnUfGZPbSM=;
- b=Oa/a8uddJ0ROlxqbvE6zMVmM0QlO4fSef5W+j7j7jxJX5fm2XIXaDLfKQbYIC3FzGl3D0R
- WcwDdmB4nATe77qk0BgIZGMNVllQrb8FoyH0oLw0Cw3g3AhsJNFuJMNcYHqlYi0A5NbIRi
- AN6vXeGU4KKjLDK6QVotKZNuAipcuD4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-411-Zj4ZjO32ODiSVZaUpN_W4A-1; Mon,
- 24 Jun 2024 04:53:00 -0400
-X-MC-Unique: Zj4ZjO32ODiSVZaUpN_W4A-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 882781956096; Mon, 24 Jun 2024 08:52:59 +0000 (UTC)
-Received: from maggie.brq.redhat.com (unknown [10.43.3.102])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F06491956048; Mon, 24 Jun 2024 08:52:56 +0000 (UTC)
-From: Michal Privoznik <mprivozn@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com,
-	mtosatti@redhat.com,
-	michael.roth@amd.com
-Subject: [PATCH 1/2] i386/sev: Fix error message in sev_get_capabilities()
-Date: Mon, 24 Jun 2024 10:52:48 +0200
-Message-ID: <b4648905d399780063dc70851d3d6a3cd28719a5.1719218926.git.mprivozn@redhat.com>
-In-Reply-To: <cover.1719218926.git.mprivozn@redhat.com>
-References: <cover.1719218926.git.mprivozn@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sLfWD-0003uk-Do
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:57:45 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sLfWB-0000fr-S5
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:57:45 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a6fd513f18bso239113266b.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 01:57:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719219462; x=1719824262; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=TG9RYctjuvVk+ReKmjNSNBamoxLlAFcFzKZFsKk6czs=;
+ b=j8Jwjp9S4kbK8ex8Ywm3PdjBpVClwYQ3myTJef/UmdMxxpehkVqR/uaU/S2oKc7K1R
+ ugLjGLwkIPUL88vi7KqDqzFxMag/zrcHLtLidNTq1z9auMDZLWjLxaKUg7PaK2XlxT0u
+ iUdghxRPto7pob1LycK7xdKrPaJ1JPQG1R7/c2H2I5SZKsg/JSVTEX+eX9GuaY+1NevB
+ xjxNKE/bDiF3N6qsODNQx7H24Ap2DdCqgNbnwNl+fyl6VGC82aw/0834H+FJjXQZqI9r
+ IjP9qF35itg132YqqySHf1WuLjfxqCvYYCgMs8StMBEMw6KhlTbOTGlb3HebQuajWpXP
+ dkkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719219462; x=1719824262;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TG9RYctjuvVk+ReKmjNSNBamoxLlAFcFzKZFsKk6czs=;
+ b=F9DH2OrYw1Yi5MfakxNCSswRHybgNaWz3/CS5wgFnD3lFVc1PLSQ2uSycZ6Reaw420
+ Z80Z/cuXenGRD47WuOfIzIEq7RDIdSksEEXHZZ+BJLnvmHvKHvjS/i9IctRLpYrcKS3X
+ 2G5GEHevZ3FJ9lsM8WEj4aSP9vnlX0X6/NSaOVHJ8f+ZeYvRSLdyDuhEOH5aoSicepik
+ xa++k2/l0lfTmXHsAWsWS1VOzyfTAtAwX2VEwZZWSTZSRHPIfAOmP8agir9X7ZRSOpL6
+ qeGxjmyutcmXctO/mie1/dgjwxOR54qmkcembEzu6G7DejVPgd7jQrziKbEE49Mx8AaR
+ KGSA==
+X-Gm-Message-State: AOJu0YxTZGAp8b8cr02GBoqCroc6vmosHTkMvlSxnSdscs7fqcvpL8bT
+ PPRpYeY9mgULrIt0Au2/HCDJ0Kc2yS889R3skhGohq3O3HGCkKKkdp4F8LlcAJQ=
+X-Google-Smtp-Source: AGHT+IHvw1csdPACauyVkAKxbn3Axbz7CQGHD4tMG0lhdM8BarfDLukUqwrQHNsMYK4xhx3b+TqauQ==
+X-Received: by 2002:a17:906:bf45:b0:a6f:e8c3:4c with SMTP id
+ a640c23a62f3a-a7245c2cc70mr277869666b.52.1719219461686; 
+ Mon, 24 Jun 2024 01:57:41 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a725d546f6asm33110366b.125.2024.06.24.01.57.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Jun 2024 01:57:41 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4C29C5F789;
+ Mon, 24 Jun 2024 09:57:40 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: tugouxp <13824125580@163.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: Did the "TCG" emulation mode has a full capability compare with
+ the "KVM" emulation mode?
+In-Reply-To: <62981bf0.8f16.190495cbb92.Coremail.13824125580@163.com>
+ (tugouxp's message of "Mon, 24 Jun 2024 16:28:52 +0800 (CST)")
+References: <62981bf0.8f16.190495cbb92.Coremail.13824125580@163.com>
+Date: Mon, 24 Jun 2024 09:57:40 +0100
+Message-ID: <877ceera4b.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mprivozn@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,31 +96,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a custom path is provided to sev-guest object and opening
-the path fails an error message is reported. But the error
-message still mentions DEFAULT_SEV_DEVICE ("/dev/sev") instead of
-the custom path.
+tugouxp <13824125580@163.com> writes:
 
-Fixes: 16dcf200dc951c1cde3e5b442457db5f690b8cf0
-Signed-off-by: Michal Privoznik <mprivozn@redhat.com>
----
- target/i386/sev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Hello folks:
+>    I have a puzzle on qemu major two emuation implentions on whole system=
+ emulation, that is ,except the emuation speed,
+> did the TCG work mode has any weakness than "KVM" work mode on whole syst=
+em emulations(including kernek and
+> user-space)?
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 30b83f1d77..8c350d42b0 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -595,7 +595,7 @@ static SevCapability *sev_get_capabilities(Error **errp)
-     fd = open(sev_device, O_RDWR);
-     if (fd < 0) {
-         error_setg_errno(errp, errno, "SEV: Failed to open %s",
--                         DEFAULT_SEV_DEVICE);
-+                         sev_device);
-         g_free(sev_device);
-         return NULL;
-     }
--- 
-2.44.2
+It depends on the guest architecture. Some are more complete than
+others. The x86 emulation for example doesn't cover all the modern x86
+extensions although there have been some improvements to its vector
+handling recently.
 
+One thing TCG can do that KVM can't is emulate code running at higher
+priority than kernel-mode. For example for ARM we can emulate the
+EL3/Root domain and secure and confidential realms. In KVM you can only
+run a guest EL1 kernel and its user space.
+
+> is there any work that kvm can do but TCG cant?=20
+>
+> of course kvm is much faster than TCG, but my question just about the fun=
+tion, not care about speed.
+>
+> thanks for your kindly help!
+> BRs
+> zilong.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
