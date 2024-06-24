@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B5DC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7311C2BD09
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLgma-0006l4-2F; Mon, 24 Jun 2024 06:18:44 -0400
+	id 1sLgmk-0006r6-Vd; Mon, 24 Jun 2024 06:18:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sLgmX-0006kU-OT
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:18:41 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1sLgmj-0006qJ-LF
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:18:53 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sLgmW-0007eJ-3p
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:18:41 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-57d280e2d5dso3868654a12.1
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:18:39 -0700 (PDT)
+ id 1sLgmd-0007hh-Cr
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:18:53 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-57cf8880f95so4674460a12.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:18:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719224318; x=1719829118; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719224326; x=1719829126; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YP0Mfaa8TidAoBaCJkmfwZz45gYzsO0OgSu5WsDjDig=;
- b=MiREaZaFoc2AVznp0DA9m82WvUVOW33SuQoV3qXafPTenH6aoCwyiYwZcAJh8QLYBs
- n1gZpNheTI0vZLWRrYiyEOGHHIPCgAkKMl+j5Gd3F1bmJAdt3YbeU1h3o1KpHJ4uKBi1
- m9qUQAqQ5Im3YUpL4AdLS9ogLJISGA45VxQmEQ5FPMD/1ARiC3h9HFGircJdiUo/FP61
- fA6m9ncR0XOtff9n32wx93NGb3xuqypIu32NVfHaVnohSQFSuC4541Ri+9573o6cEM3D
- JrSZWOVVMCjbWMzv23jFlBJl3RPYWJiacPnupdenyU7pRWKdlh2qy47wp4UULoHcgDq7
- biHw==
+ bh=qjVpqIsr2KpoX8UmLmTVI1cUhWtUJxDYaiW1+kp25gQ=;
+ b=vh3ccqDMtFdQZi8XkjR/ckM6yFK0UavkPktIyo0nZnb5KuB/Brw4OLUo0T5OVDvhax
+ kshdAG7IyIDTycMpIToYQnQcdaK7UXIDQo4UZ57Sth0HGsNzhr7ZD3Fvu3t5+dvGPUwk
+ 1mlkhTQ7UMtW6ItEArCDhFAyQ5am4geG+kK/FvkMGM9peJQU1ECcFYTY6ZSfnLeLecZx
+ ffuFfA793nufOv5p3U15ukbJ6qq1u7ONNcxc+Aph2dBnxWP5bxh7m7RrUPTRAM/UiHgH
+ u6n2QM0G7sBcOAnkmuYg7PWn5/jBvR65BoKT14uJvYQLnlyqunonnJoXeAisj68pQXjI
+ mT9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719224318; x=1719829118;
+ d=1e100.net; s=20230601; t=1719224326; x=1719829126;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YP0Mfaa8TidAoBaCJkmfwZz45gYzsO0OgSu5WsDjDig=;
- b=SsWOR3Pxf8SnhFM2T2SFPqDFhZ22HkcoHqAcDsrTwcnE+P2Py2pISgdUnHGxRT0SyL
- U1ok3rJJg4YCxL1b51yCwf+afeXSiNn+4sptMzrtgOByX5dcC6LPAgzhTR4MTM9Adxff
- IvWZZbg5Pruz2tsUayuhz4z27FQUSmnzBIW4xozsyO6Q7WLzl7Hcqv+ItsJtB5awanBj
- yyuAoo9lo60Ky/4b/KlWGhfBWd3d6XbXu/F/MU7oP804QaO6216VREKAYjMiAyuah94G
- rRXbCKaqgIeQ2wEwd3yIhgB6Pe27Fa+bzBgPXk4a3ZFHAU5U9o4h3eNOaFhoUcPthqxj
- xUhQ==
-X-Gm-Message-State: AOJu0YxBCj983BdOC/lwqgJc0llBud9//FIoKYL3vbsf9ioFAqYgeZYq
- 9sgNrxCl63uVi1m0KPhkcrwIl4usDFFj+EbZMXcNSe5jnrU5f/PiQLhkBqQzeQU=
-X-Google-Smtp-Source: AGHT+IF4essl0D3NCh21YCVBk4QmnMUZNsoHttfpzdI8If1i1Ku3Wd/clzMBdtd3brt/2etryP4u4w==
-X-Received: by 2002:a50:ab01:0:b0:57d:5388:bdd3 with SMTP id
- 4fb4d7f45d1cf-57d5388bdedmr1803171a12.10.1719224317986; 
- Mon, 24 Jun 2024 03:18:37 -0700 (PDT)
+ bh=qjVpqIsr2KpoX8UmLmTVI1cUhWtUJxDYaiW1+kp25gQ=;
+ b=ofHHY2D8NibO0l/sV7HliFaQkdEGJuhxbXMxOJS41fMJIXBZKeGYYpho98DLUR4g+f
+ u0bEzw2RRYkNE4PtU8BDOrNIl421I7krh/ZA4MzwZitYoyNcY4ilvlVBh8qZb5jsdhyD
+ 2ee7/RvuelIMZ5WpkBbI9Zmxrjc0W6zuZop0Uv924qXyDrqYQWT7DBori+nY+m7w5t9W
+ liqENgbMcF5WWvzLhCF57GkXWlI8+8/LMXFt59rWzTaHyTCnXVQP9OWTOlTtxX0ZeM3T
+ iDSeU+1i009mYJxYM9U5P5/vlo6FbaXd4UPjD2aITR3schsl87W4WpTiU1RKB7l3o4pm
+ NDpA==
+X-Gm-Message-State: AOJu0Yy1VyiMAQrTlyjRipUe+iP3uNhrLrS54t3FTiuL4fUFgGabk9jY
+ aYHy4YQxyTKd2tNJdkvwws1UMb4Kgaem9FeMab8WfpCD5/UfAuL+2scpPrG8Qdk=
+X-Google-Smtp-Source: AGHT+IFb/dvIQ5GlRzE+g8IdJCLffOe3aUE7j3u/i2+9N1+3aiVUaNWwiQm5//ekNxmY29/wy4qDTA==
+X-Received: by 2002:a50:99d4:0:b0:57d:34e2:f554 with SMTP id
+ 4fb4d7f45d1cf-57d4bd61381mr3563554a12.11.1719224325574; 
+ Mon, 24 Jun 2024 03:18:45 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57d3042fd17sm4556554a12.47.2024.06.24.03.18.37
+ 4fb4d7f45d1cf-57d303da25fsm4539897a12.5.2024.06.24.03.18.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 03:18:37 -0700 (PDT)
+ Mon, 24 Jun 2024 03:18:41 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5FF055F956;
- Mon, 24 Jun 2024 11:18:36 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 5096D5FA2C;
+ Mon, 24 Jun 2024 11:18:37 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/12] include/exec: add missing include guard comment
-Date: Mon, 24 Jun 2024 11:18:25 +0100
-Message-Id: <20240624101836.193761-2-alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 10/12] contrib/plugins: add Instructions Per Second (IPS)
+ example for cost modeling
+Date: Mon, 24 Jun 2024 11:18:34 +0100
+Message-Id: <20240624101836.193761-11-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240624101836.193761-1-alex.bennee@linaro.org>
 References: <20240624101836.193761-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,21 +100,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240620152220.2192768-2-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index eb14b91139..008a92198a 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -144,4 +144,4 @@ void gdb_set_stop_cpu(CPUState *cpu);
- /* in gdbstub-xml.c, generated by scripts/feature_to_c.py */
- extern const GDBFeature gdb_static_features[];
+This plugin uses the new time control interface to make decisions
+about the state of time during the emulation. The algorithm is
+currently very simple. The user specifies an ips rate which applies
+per core. If the core runs ahead of its allocated execution time the
+plugin sleeps for a bit to let real time catch up. Either way time is
+updated for the emulation as a function of total executed instructions
+with some adjustments for cores that idle.
+
+Examples
+--------
+
+Slow down execution of /bin/true:
+$ num_insn=$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
+$ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ips=$(($num_insn/4)) /bin/true
+real 4.000s
+
+Boot a Linux kernel simulating a 250MHz cpu:
+$ /build/qemu-system-x86_64 -kernel /boot/vmlinuz-6.1.0-21-amd64 -append "console=ttyS0" -plugin ./build/contrib/plugins/libips.so,ips=$((250*1000*1000)) -smp 1 -m 512
+check time until kernel panic on serial0
+
+Tested in system mode by booting a full debian system, and using:
+$ sysbench cpu run
+Performance decrease linearly with the given number of ips.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240530220610.1245424-7-pierrick.bouvier@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240620152220.2192768-11-alex.bennee@linaro.org>
+
+diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
+new file mode 100644
+index 0000000000..29fa556d0f
+--- /dev/null
++++ b/contrib/plugins/ips.c
+@@ -0,0 +1,164 @@
++/*
++ * Instructions Per Second (IPS) rate limiting plugin.
++ *
++ * This plugin can be used to restrict the execution of a system to a
++ * particular number of Instructions Per Second (IPS). This controls
++ * time as seen by the guest so while wall-clock time may be longer
++ * from the guests point of view time will pass at the normal rate.
++ *
++ * This uses the new plugin API which allows the plugin to control
++ * system time.
++ *
++ * Copyright (c) 2023 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <stdio.h>
++#include <glib.h>
++#include <qemu-plugin.h>
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++
++/* how many times do we update time per sec */
++#define NUM_TIME_UPDATE_PER_SEC 10
++#define NSEC_IN_ONE_SEC (1000 * 1000 * 1000)
++
++static GMutex global_state_lock;
++
++static uint64_t max_insn_per_second = 1000 * 1000 * 1000; /* ips per core, per second */
++static uint64_t max_insn_per_quantum; /* trap every N instructions */
++static int64_t virtual_time_ns; /* last set virtual time */
++
++static const void *time_handle;
++
++typedef struct {
++    uint64_t total_insn;
++    uint64_t quantum_insn; /* insn in last quantum */
++    int64_t last_quantum_time; /* time when last quantum started */
++} vCPUTime;
++
++struct qemu_plugin_scoreboard *vcpus;
++
++/* return epoch time in ns */
++static int64_t now_ns(void)
++{
++    return g_get_real_time() * 1000;
++}
++
++static uint64_t num_insn_during(int64_t elapsed_ns)
++{
++    double num_secs = elapsed_ns / (double) NSEC_IN_ONE_SEC;
++    return num_secs * (double) max_insn_per_second;
++}
++
++static int64_t time_for_insn(uint64_t num_insn)
++{
++    double num_secs = (double) num_insn / (double) max_insn_per_second;
++    return num_secs * (double) NSEC_IN_ONE_SEC;
++}
++
++static void update_system_time(vCPUTime *vcpu)
++{
++    int64_t elapsed_ns = now_ns() - vcpu->last_quantum_time;
++    uint64_t max_insn = num_insn_during(elapsed_ns);
++
++    if (vcpu->quantum_insn >= max_insn) {
++        /* this vcpu ran faster than expected, so it has to sleep */
++        uint64_t insn_advance = vcpu->quantum_insn - max_insn;
++        uint64_t time_advance_ns = time_for_insn(insn_advance);
++        int64_t sleep_us = time_advance_ns / 1000;
++        g_usleep(sleep_us);
++    }
++
++    vcpu->total_insn += vcpu->quantum_insn;
++    vcpu->quantum_insn = 0;
++    vcpu->last_quantum_time = now_ns();
++
++    /* based on total number of instructions, what should be the new time? */
++    int64_t new_virtual_time = time_for_insn(vcpu->total_insn);
++
++    g_mutex_lock(&global_state_lock);
++
++    /* Time only moves forward. Another vcpu might have updated it already. */
++    if (new_virtual_time > virtual_time_ns) {
++        qemu_plugin_update_ns(time_handle, new_virtual_time);
++        virtual_time_ns = new_virtual_time;
++    }
++
++    g_mutex_unlock(&global_state_lock);
++}
++
++static void vcpu_init(qemu_plugin_id_t id, unsigned int cpu_index)
++{
++    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
++    vcpu->total_insn = 0;
++    vcpu->quantum_insn = 0;
++    vcpu->last_quantum_time = now_ns();
++}
++
++static void vcpu_exit(qemu_plugin_id_t id, unsigned int cpu_index)
++{
++    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
++    update_system_time(vcpu);
++}
++
++static void every_quantum_insn(unsigned int cpu_index, void *udata)
++{
++    vCPUTime *vcpu = qemu_plugin_scoreboard_find(vcpus, cpu_index);
++    g_assert(vcpu->quantum_insn >= max_insn_per_quantum);
++    update_system_time(vcpu);
++}
++
++static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
++{
++    size_t n_insns = qemu_plugin_tb_n_insns(tb);
++    qemu_plugin_u64 quantum_insn =
++        qemu_plugin_scoreboard_u64_in_struct(vcpus, vCPUTime, quantum_insn);
++    /* count (and eventually trap) once per tb */
++    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++        tb, QEMU_PLUGIN_INLINE_ADD_U64, quantum_insn, n_insns);
++    qemu_plugin_register_vcpu_tb_exec_cond_cb(
++        tb, every_quantum_insn,
++        QEMU_PLUGIN_CB_NO_REGS, QEMU_PLUGIN_COND_GE,
++        quantum_insn, max_insn_per_quantum, NULL);
++}
++
++static void plugin_exit(qemu_plugin_id_t id, void *udata)
++{
++    qemu_plugin_scoreboard_free(vcpus);
++}
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info, int argc,
++                                           char **argv)
++{
++    for (int i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "ips") == 0) {
++            max_insn_per_second = g_ascii_strtoull(tokens[1], NULL, 10);
++            if (!max_insn_per_second && errno) {
++                fprintf(stderr, "%s: couldn't parse %s (%s)\n",
++                        __func__, tokens[1], g_strerror(errno));
++                return -1;
++            }
++        } else {
++            fprintf(stderr, "option parsing failed: %s\n", opt);
++            return -1;
++        }
++    }
++
++    vcpus = qemu_plugin_scoreboard_new(sizeof(vCPUTime));
++    max_insn_per_quantum = max_insn_per_second / NUM_TIME_UPDATE_PER_SEC;
++
++    time_handle = qemu_plugin_request_time_control();
++    g_assert(time_handle);
++
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
++    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
++    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);
++    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
++
++    return 0;
++}
+diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+index 0b64d2c1e3..449ead1130 100644
+--- a/contrib/plugins/Makefile
++++ b/contrib/plugins/Makefile
+@@ -27,6 +27,7 @@ endif
+ NAMES += hwprofile
+ NAMES += cache
+ NAMES += drcov
++NAMES += ips
  
--#endif
-+#endif /* GDBSTUB_H */
+ ifeq ($(CONFIG_WIN32),y)
+ SO_SUFFIX := .dll
 -- 
 2.39.2
 
