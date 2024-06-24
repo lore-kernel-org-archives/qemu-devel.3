@@ -4,88 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB0EEC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F7CC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 10:27:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLgsO-0008UT-MK; Mon, 24 Jun 2024 06:24:44 -0400
+	id 1sLgus-0001kt-Ot; Mon, 24 Jun 2024 06:27:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLgsM-0008Ty-Nl
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:24:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sLgsL-0000FP-G8
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:24:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719224681;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iM11OO4SiRnwNxmrfUxUKOThrETXsIrwlvl+1l2huyA=;
- b=CMJX/JBEg0JdQzjNMCM81DUFarB8CS/5vl683OxkLUIooqGgrsziy8qeCLItkIvQv5yBEJ
- aZSP9VYu6FI9zKAdCZuc5bM7pezOD5h6I0+icZZgb8TwfYoRhT3F37yPeYiRsMxVCQKKnh
- AVDQh44Im5K0G6yMk9Zrt7pIMd4kVVU=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-266-xexkuNpJOcyH-wapqJ7L0A-1; Mon, 24 Jun 2024 06:24:39 -0400
-X-MC-Unique: xexkuNpJOcyH-wapqJ7L0A-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-57d0f3455ceso631717a12.3
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:24:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sLgur-0001kj-HR
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:27:17 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sLgup-0000xp-JM
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 06:27:17 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-57d07673185so3800100a12.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 03:27:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719224834; x=1719829634; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HBK0Vy+vs/LZfKujLdNrgfZSRGMpe3jalDCBZm4GeQI=;
+ b=SpfdtXBmw1ynSYdWUnfZvrraVorwL+TCh7CI3O65nepWzf8zjasqbd4n+OTilLtVWJ
+ 1u3BKn42PI5yKnLdRQ4z0PVUpLFm88MSNnsfvc/MPCw6OtS4r8+3thu1j34mDoijRZZu
+ lPDkk2+WqFzB6TBTtWQSWSJm801wB3789gUbvVF/hZVmBf3p9a4OrorhqMdJjTfwhV4h
+ BRz3S8P9euyG8onpfFRsXrEvhLykJ1WzJHIs00ju2sG+M36mHGX+rkRsCnqLkESxwiZa
+ 3bB/MMfcWW13/4FDSRnGxb93TuL2nm6lJUMDfScl4NnFI5jeqpz3ke4f4yeLVLajpbtF
+ uqHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719224678; x=1719829478;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iM11OO4SiRnwNxmrfUxUKOThrETXsIrwlvl+1l2huyA=;
- b=PAZLTb7CjXwfx6FQj4DfxCJwt6lbmtoVMe8Jm3iq4nSmXRSkJ6OYEBtYIBZK1lRvSC
- ILtZBLYenCmmrJcsFYLX+vpT+zh1BJ8k8lJGq7BN29YMw/jeOh8tqJM021wYFPkY/D0E
- lAMWSrmfmIWWLU0Ja9oVV6/AzHKtD5H1s6lxxCSs+dN6Ea+5rrKVQBR07Ts+m9hqaaSS
- /0yGXGetMKCplfiTEzVlpJXyUjYXCNnoo5POZx4Ud/TnZB1Q8/70nl6ptStPbbg97vi/
- dwb1sZuGBjnbFkTKFKp6KLNIS2i3iVvCE+Kn/1wTzcjA/V/Cl3QvQ/wnkDwljXi7CzZp
- d5Fg==
-X-Gm-Message-State: AOJu0Yxx3Bak88ME0ItNZ8H5ctCtQt61qiAwxDa5ByaU5cJcwiGrWgDE
- RnXEQRockfeSmXcatBBfPK/8N9gcO1Xe5+8B/AtNJRKDpkshVhi6KSYXiGFgv4gFPTFMGpT+iYj
- gCwP4V5MSq1cdc8dEStyQWW+LgPbQZEwBEZM2NWxSM+VWoxB9WORb
-X-Received: by 2002:a50:d481:0:b0:57d:10c7:96b0 with SMTP id
- 4fb4d7f45d1cf-57d4bddfb93mr3016075a12.38.1719224678008; 
- Mon, 24 Jun 2024 03:24:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCaqqqRMX2gX856/225iJ5zFYnbEb5gW29yVh0Gva1kZOkpkA0ui8ZIv7c5n1/7LrpHK/Omg==
-X-Received: by 2002:a50:d481:0:b0:57d:10c7:96b0 with SMTP id
- 4fb4d7f45d1cf-57d4bddfb93mr3016048a12.38.1719224677210; 
- Mon, 24 Jun 2024 03:24:37 -0700 (PDT)
-Received: from redhat.com ([2.52.146.100]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57d303da3edsm4555955a12.2.2024.06.24.03.24.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 03:24:36 -0700 (PDT)
-Date: Mon, 24 Jun 2024 06:24:32 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Yang Dongshan <east.moutain.yang@gmail.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, qemu-stable@nongnu.org
-Subject: Re: [PATCH] Update event idx if guest has made extra buffers during
- double check
-Message-ID: <20240624062345-mutt-send-email-mst@kernel.org>
-References: <20240613022147.5886-1-east.moutain.yang@gmail.com>
- <20240617065455-mutt-send-email-mst@kernel.org>
- <CALrP2iV14404dq+5xO8Ziq4fEuacvkU=SjJLT=FJGLAq1Xanhg@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1719224834; x=1719829634;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HBK0Vy+vs/LZfKujLdNrgfZSRGMpe3jalDCBZm4GeQI=;
+ b=nSFzxxI5G3hdYVAyg0S3e1XBS9okOxtx/ehkJmYa4vAde7+O0hZYvfVaNt5Ye1O4ev
+ 2XR9FPWBLjIuAuN1la3fg/FjtTLRg6lqbfblR/sZiqLCHnUiaUJSju4KLw/d3qyf6G01
+ yr/wH15grTe6ZMelRop2KvnICicilm3J5AdEQfHRlPawGYDeWTT2Vlux81Zt7xL9EYDd
+ 7GRsLb78hTYdi2GlFvxDmcoah37RG60cOqiSgORldSv1k8hjtTQam+Uj4wQE6X/XAVQr
+ HCzvc3IbRMccM5Os5DsILmF6qhToKeNEKp2aPRWDI5bpPLnJcolVnxfSvXos8zNXs2/z
+ IS2g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUNIeIkjBupry7U0MGXr5TMbcqcs6Lm+J15ylwcoc2bzRusVcpKS1LVSpadOCEergdvh1hbF36GE9A+51MNhSO0/VVhl18=
+X-Gm-Message-State: AOJu0Yyw5PvQrgfVm7to1XFvDDOBw/7Eej9aNc2v+gGPuJ/YfTg29Juo
+ MK2oCDraT6oVrZOLt7UupJYSu3VD8sNzyQ0tZcn7sYs/plhdKiuZBNxXlPYMqlJ5TUFtMl9ZhMz
+ etQnyS37pRXjplFFkoeaE75J85BtNgUmTPgNW3Q==
+X-Google-Smtp-Source: AGHT+IFBDlZlKJK1nB9Z+jJDCR8sMwIoQR+C4qhYVw5TcD7fsvdaGC0Q0J7lXXcM6Ezhdp+kznK5q9qcCApjVLRCj8M=
+X-Received: by 2002:a50:d7cf:0:b0:57d:2e1b:6c93 with SMTP id
+ 4fb4d7f45d1cf-57d4a2ed8a9mr2877278a12.42.1719224833640; Mon, 24 Jun 2024
+ 03:27:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CALrP2iV14404dq+5xO8Ziq4fEuacvkU=SjJLT=FJGLAq1Xanhg@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20240623024555.78697-1-minwoo.im.dev@gmail.com>
+In-Reply-To: <20240623024555.78697-1-minwoo.im.dev@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Jun 2024 11:27:02 +0100
+Message-ID: <CAFEAcA-NmcugQwa1u=Yt0GF4y1BAGUhi3ZnLhs6SPGP+s1sDLA@mail.gmail.com>
+Subject: Re: [PATCH] hw/ufs: Fix potential bugs in MMIO read|write
+To: Minwoo Im <minwoo.im.dev@gmail.com>
+Cc: Jeuk Kim <jeuk20.kim@samsung.com>, qemu-devel@nongnu.org, 
+ Minwoo Im <minwoo.im@samsung.com>, Jeuk Kim <jeuk20.kim@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.149,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,15 +90,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 17, 2024 at 09:51:33PM +0800, Yang Dongshan wrote:
-> Similar to the first check, if the buffer size still can't satisfy the request,
-> notify the
-> guest with the updated shadow_avail_idx, it's better than the old one.
+On Sun, 23 Jun 2024 at 03:46, Minwoo Im <minwoo.im.dev@gmail.com> wrote:
+>
+> This patch fixes two points reported in coverity scan report [1].  Check
+> the MMIO access address with (addr + size), not just with the start offset
+> addr to make sure that the requested memory access not to exceed the
+> actual register region.  We also updated (uint8_t *) to (uint32_t *) to
+> represent we are accessing the MMIO registers by dword-sized only.
+>
+> [1] https://lore.kernel.org/qemu-devel/CAFEAcA82L-WZnHMW0X+Dr40bHM-EVq2ZH4DG4pdqop4xxDP2Og@mail.gmail.com/
+>
+> Cc: Jeuk Kim <jeuk20.kim@gmail.com>
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Minwoo Im <minwoo.im.dev@gmail.com>
+> ---
+>  hw/ufs/ufs.c | 31 ++++++++++++++++---------------
+>  1 file changed, 16 insertions(+), 15 deletions(-)
+>
+> diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+> index 71a88d221ced..bf2ff02ac6e5 100644
+> --- a/hw/ufs/ufs.c
+> +++ b/hw/ufs/ufs.c
+> @@ -55,17 +55,18 @@ static inline uint64_t ufs_reg_size(UfsHc *u)
+>      return ufs_mcq_op_reg_addr(u, 0) + sizeof(u->mcq_op_reg);
+>  }
+>
+> -static inline bool ufs_is_mcq_reg(UfsHc *u, uint64_t addr)
+> +static inline bool ufs_is_mcq_reg(UfsHc *u, uint64_t addr, unsigned size)
+>  {
+>      uint64_t mcq_reg_addr = ufs_mcq_reg_addr(u, 0);
+> -    return addr >= mcq_reg_addr && addr < mcq_reg_addr + sizeof(u->mcq_reg);
+> +    return (addr >= mcq_reg_addr &&
+> +            addr + size <= mcq_reg_addr + sizeof(u->mcq_reg));
+>  }
+>
+> -static inline bool ufs_is_mcq_op_reg(UfsHc *u, uint64_t addr)
+> +static inline bool ufs_is_mcq_op_reg(UfsHc *u, uint64_t addr, unsigned size)
+>  {
+>      uint64_t mcq_op_reg_addr = ufs_mcq_op_reg_addr(u, 0);
+>      return (addr >= mcq_op_reg_addr &&
+> -            addr < mcq_op_reg_addr + sizeof(u->mcq_op_reg));
+> +            addr  + size <= mcq_op_reg_addr + sizeof(u->mcq_op_reg));
 
-So it's an optimization then? Same as any optimization, it should
-come with measurements showing the performance benefit.
+Stray extra space after "addr".
 
--- 
-MST
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
+-- PMM
 
