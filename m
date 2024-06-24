@@ -4,83 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5773CC2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 08:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF5CC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 09:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLfWE-0003ut-JY; Mon, 24 Jun 2024 04:57:46 -0400
+	id 1sLffU-0005wD-KJ; Mon, 24 Jun 2024 05:07:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sLfWD-0003uk-Do
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:57:45 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sLfWB-0000fr-S5
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 04:57:45 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a6fd513f18bso239113266b.3
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 01:57:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719219462; x=1719824262; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TG9RYctjuvVk+ReKmjNSNBamoxLlAFcFzKZFsKk6czs=;
- b=j8Jwjp9S4kbK8ex8Ywm3PdjBpVClwYQ3myTJef/UmdMxxpehkVqR/uaU/S2oKc7K1R
- ugLjGLwkIPUL88vi7KqDqzFxMag/zrcHLtLidNTq1z9auMDZLWjLxaKUg7PaK2XlxT0u
- iUdghxRPto7pob1LycK7xdKrPaJ1JPQG1R7/c2H2I5SZKsg/JSVTEX+eX9GuaY+1NevB
- xjxNKE/bDiF3N6qsODNQx7H24Ap2DdCqgNbnwNl+fyl6VGC82aw/0834H+FJjXQZqI9r
- IjP9qF35itg132YqqySHf1WuLjfxqCvYYCgMs8StMBEMw6KhlTbOTGlb3HebQuajWpXP
- dkkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719219462; x=1719824262;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TG9RYctjuvVk+ReKmjNSNBamoxLlAFcFzKZFsKk6czs=;
- b=F9DH2OrYw1Yi5MfakxNCSswRHybgNaWz3/CS5wgFnD3lFVc1PLSQ2uSycZ6Reaw420
- Z80Z/cuXenGRD47WuOfIzIEq7RDIdSksEEXHZZ+BJLnvmHvKHvjS/i9IctRLpYrcKS3X
- 2G5GEHevZ3FJ9lsM8WEj4aSP9vnlX0X6/NSaOVHJ8f+ZeYvRSLdyDuhEOH5aoSicepik
- xa++k2/l0lfTmXHsAWsWS1VOzyfTAtAwX2VEwZZWSTZSRHPIfAOmP8agir9X7ZRSOpL6
- qeGxjmyutcmXctO/mie1/dgjwxOR54qmkcembEzu6G7DejVPgd7jQrziKbEE49Mx8AaR
- KGSA==
-X-Gm-Message-State: AOJu0YxTZGAp8b8cr02GBoqCroc6vmosHTkMvlSxnSdscs7fqcvpL8bT
- PPRpYeY9mgULrIt0Au2/HCDJ0Kc2yS889R3skhGohq3O3HGCkKKkdp4F8LlcAJQ=
-X-Google-Smtp-Source: AGHT+IHvw1csdPACauyVkAKxbn3Axbz7CQGHD4tMG0lhdM8BarfDLukUqwrQHNsMYK4xhx3b+TqauQ==
-X-Received: by 2002:a17:906:bf45:b0:a6f:e8c3:4c with SMTP id
- a640c23a62f3a-a7245c2cc70mr277869666b.52.1719219461686; 
- Mon, 24 Jun 2024 01:57:41 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a725d546f6asm33110366b.125.2024.06.24.01.57.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 01:57:41 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4C29C5F789;
- Mon, 24 Jun 2024 09:57:40 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: tugouxp <13824125580@163.com>
+ (Exim 4.90_1) (envelope-from <13824125580@163.com>)
+ id 1sLffR-0005vs-VB
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:07:17 -0400
+Received: from m16.mail.163.com ([117.135.210.3])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <13824125580@163.com>) id 1sLffJ-0003Bx-6a
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 05:07:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+ Message-ID; bh=FaJbYp7rwDr/XEkK+m7zOUMZGneLFtk9ENGp4ZBAAQI=; b=i
+ 52M5C0wqoKPWrJq6/ms4obxe09HwV8lXtzErvgsHViTCfy7pMcufW2hQpy5aI1ci
+ qppKkg2Imq4oRhxanNcr55raB2b7UG+sBfzOkQGNsTQxujgsp1hKgk26qELGd83l
+ 42TUmvDjPdZZzbzD4DFrLNE3z3/JMRbcHo9iMN6h6s=
+Received: from 13824125580$163.com ( [14.125.52.91] ) by
+ ajax-webmail-wmsvr-40-111 (Coremail) ; Mon, 24 Jun 2024 17:06:51 +0800
+ (CST)
+X-Originating-IP: [14.125.52.91]
+Date: Mon, 24 Jun 2024 17:06:51 +0800 (CST)
+From: tugouxp  <13824125580@163.com>
+To: =?GBK?Q?Alex_Benn=A8=A6e?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org
-Subject: Re: Did the "TCG" emulation mode has a full capability compare with
- the "KVM" emulation mode?
-In-Reply-To: <62981bf0.8f16.190495cbb92.Coremail.13824125580@163.com>
- (tugouxp's message of "Mon, 24 Jun 2024 16:28:52 +0800 (CST)")
+Subject: Re:Re: Did the "TCG" emulation mode has a full capability compare
+ with the "KVM" emulation mode?
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <877ceera4b.fsf@draig.linaro.org>
 References: <62981bf0.8f16.190495cbb92.Coremail.13824125580@163.com>
-Date: Mon, 24 Jun 2024 09:57:40 +0100
-Message-ID: <877ceera4b.fsf@draig.linaro.org>
+ <877ceera4b.fsf@draig.linaro.org>
+X-NTES-SC: AL_Qu2aC/6Zv0gq5ymbZ+kfm0sQjuY3UcOxvPsk245RO51wjDjpxRAqTERlLFnbyvKtLQmFjT6xTBtQ4+Jcf7RZco4NXN7bzGCE4+bXINvA3vq3qg==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_147772_940375834.1719220011937"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-ID: <75d15b4b.9cee.190497f83a1.Coremail.13824125580@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: _____wD3P+EsN3lmNuwEAA--.7117W
+X-CM-SenderInfo: bprtmjyurskkiyq6il2tof0z/xtbBchAIQmWXvyvvuAABsY
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Received-SPF: pass client-ip=117.135.210.3; envelope-from=13824125580@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: 23
+X-Spam_score: 2.3
+X-Spam_bar: ++
+X-Spam_report: (2.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001, FROM_LOCAL_HEX=0.006,
+ HTML_MESSAGE=0.001, MIME_CHARSET_FARAWAY=2.45, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_BL=0.01, RCVD_IN_MSPIKE_L4=1.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,35 +76,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tugouxp <13824125580@163.com> writes:
+------=_Part_147772_940375834.1719220011937
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
-> Hello folks:
->    I have a puzzle on qemu major two emuation implentions on whole system=
- emulation, that is ,except the emuation speed,
-> did the TCG work mode has any weakness than "KVM" work mode on whole syst=
-em emulations(including kernek and
-> user-space)?
+VGhhbmsgeW91IQoKQlRXLCBUQ0cgYWxzbyBoYXMgdHdvIGJhY2tlbmRzIGltcGxlbWVudGlvbiwg
+MS4gTmF0aXZlIGhvc3QgYXJjaCB0cmFubGF0aW9uLiBhbmQgMi4gVENJIGJ5dGUgY29kZSBpbnRl
+cnByZXRlci4gVGhlIGRpZmZlcmVuY2UgaXMgdGhhdCB0aGUgZmlyc3Qgb25lIHdpbGwgdHJhbmxh
+dGlvbiB0aGUgdGFyZ2V0IGFyY2ggY29kZSB0byBob3N0IGFyY2ggaW5zdHJ0aW9ucyBhbmQgdGhl
+biBleGVjdXRlZCBpbiBob3N0IGNwdS4gYnV0IHRoZSBsYXR0ZXIgaXMgYSBoaWdoIGxldmVsIGlu
+dGVycGVyYXRpb24uIGNvbXBhcmUgdGhlc2UgdHdvIGJhY2tlbmRzLCBBcmUgdGhlcmUgYW55IGNh
+cGFiaWxpdHkgZGlmZmVyZW5jZSBvbiB0aGUgc3lzdGVtIGVtdWxhdGlvbiBhYm91dCB0aGUgdHdv
+IGJhY2tlbmRzPyB0aGFuayB5b3UuCgoKCgoKCgoKCgoKCgoKCgoKQXQgMjAyNC0wNi0yNCAxNjo1
+Nzo0MCwgIkFsZXggQmVubqimZSIgPGFsZXguYmVubmVlQGxpbmFyby5vcmc+IHdyb3RlOgo+dHVn
+b3V4cCA8MTM4MjQxMjU1ODBAMTYzLmNvbT4gd3JpdGVzOgo+Cj4+IEhlbGxvIGZvbGtzOgo+PiAg
+ICBJIGhhdmUgYSBwdXp6bGUgb24gcWVtdSBtYWpvciB0d28gZW11YXRpb24gaW1wbGVudGlvbnMg
+b24gd2hvbGUgc3lzdGVtIGVtdWxhdGlvbiwgdGhhdCBpcyAsZXhjZXB0IHRoZSBlbXVhdGlvbiBz
+cGVlZCwKPj4gZGlkIHRoZSBUQ0cgd29yayBtb2RlIGhhcyBhbnkgd2Vha25lc3MgdGhhbiAiS1ZN
+IiB3b3JrIG1vZGUgb24gd2hvbGUgc3lzdGVtIGVtdWxhdGlvbnMoaW5jbHVkaW5nIGtlcm5layBh
+bmQKPj4gdXNlci1zcGFjZSk/Cj4KPkl0IGRlcGVuZHMgb24gdGhlIGd1ZXN0IGFyY2hpdGVjdHVy
+ZS4gU29tZSBhcmUgbW9yZSBjb21wbGV0ZSB0aGFuCj5vdGhlcnMuIFRoZSB4ODYgZW11bGF0aW9u
+IGZvciBleGFtcGxlIGRvZXNuJ3QgY292ZXIgYWxsIHRoZSBtb2Rlcm4geDg2Cj5leHRlbnNpb25z
+IGFsdGhvdWdoIHRoZXJlIGhhdmUgYmVlbiBzb21lIGltcHJvdmVtZW50cyB0byBpdHMgdmVjdG9y
+Cj5oYW5kbGluZyByZWNlbnRseS4KPgo+T25lIHRoaW5nIFRDRyBjYW4gZG8gdGhhdCBLVk0gY2Fu
+J3QgaXMgZW11bGF0ZSBjb2RlIHJ1bm5pbmcgYXQgaGlnaGVyCj5wcmlvcml0eSB0aGFuIGtlcm5l
+bC1tb2RlLiBGb3IgZXhhbXBsZSBmb3IgQVJNIHdlIGNhbiBlbXVsYXRlIHRoZQo+RUwzL1Jvb3Qg
+ZG9tYWluIGFuZCBzZWN1cmUgYW5kIGNvbmZpZGVudGlhbCByZWFsbXMuIEluIEtWTSB5b3UgY2Fu
+IG9ubHkKPnJ1biBhIGd1ZXN0IEVMMSBrZXJuZWwgYW5kIGl0cyB1c2VyIHNwYWNlLgo+Cj4+IGlz
+IHRoZXJlIGFueSB3b3JrIHRoYXQga3ZtIGNhbiBkbyBidXQgVENHIGNhbnQ/IAo+Pgo+PiBvZiBj
+b3Vyc2Uga3ZtIGlzIG11Y2ggZmFzdGVyIHRoYW4gVENHLCBidXQgbXkgcXVlc3Rpb24ganVzdCBh
+Ym91dCB0aGUgZnVudGlvbiwgbm90IGNhcmUgYWJvdXQgc3BlZWQuCj4+Cj4+IHRoYW5rcyBmb3Ig
+eW91ciBraW5kbHkgaGVscCEKPj4gQlJzCj4+IHppbG9uZy4KPgo+LS0gCj5BbGV4IEJlbm6opmUK
+PlZpcnR1YWxpc2F0aW9uIFRlY2ggTGVhZCBAIExpbmFybwo=
+------=_Part_147772_940375834.1719220011937
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-It depends on the guest architecture. Some are more complete than
-others. The x86 emulation for example doesn't cover all the modern x86
-extensions although there have been some improvements to its vector
-handling recently.
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgaWQ9InNwbkVkaXRvckNvbnRlbnQiPjxwIHN0eWxlPSJt
+YXJnaW46IDA7Ij5UaGFuayB5b3UhPC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij5CVFcsIFRDRyBh
+bHNvIGhhcyB0d28gYmFja2VuZHMgaW1wbGVtZW50aW9uLCAxLiBOYXRpdmUgaG9zdCBhcmNoIHRy
+YW5sYXRpb24uIGFuZCAyLiBUQ0kgYnl0ZSBjb2RlIGludGVycHJldGVyLiBUaGUgZGlmZmVyZW5j
+ZSBpcyB0aGF0IHRoZSBmaXJzdCBvbmUgd2lsbCB0cmFubGF0aW9uIHRoZSB0YXJnZXQgYXJjaCBj
+b2RlIHRvIGhvc3QgYXJjaCBpbnN0cnRpb25zIGFuZCB0aGVuIGV4ZWN1dGVkIGluIGhvc3QgY3B1
+LiBidXQgdGhlIGxhdHRlciBpcyBhIGhpZ2ggbGV2ZWwgaW50ZXJwZXJhdGlvbi4gY29tcGFyZSB0
+aGVzZSB0d28gYmFja2VuZHM8Yj4sIEFyZSB0aGVyZSBhbnkgY2FwYWJpbGl0eSBkaWZmZXJlbmNl
+IG9uIHRoZSBzeXN0ZW0gZW11bGF0aW9uIGFib3V0IHRoZSB0d28gYmFja2VuZHM/IHRoYW5rIHlv
+dS48L2I+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46
+IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJn
+aW46IDA7Ij48YnI+PC9wPjwvZGl2PjxkaXYgc3R5bGU9InBvc2l0aW9uOnJlbGF0aXZlO3pvb206
+MSI+PC9kaXY+PGRpdiBpZD0iZGl2TmV0ZWFzZU1haWxDYXJkIj48L2Rpdj48cCBzdHlsZT0ibWFy
+Z2luOiAwOyI+PGJyPjwvcD48cHJlPjxicj5BdCAyMDI0LTA2LTI0IDE2OjU3OjQwLCAiQWxleCBC
+ZW5uqKZlIiAmbHQ7YWxleC5iZW5uZWVAbGluYXJvLm9yZyZndDsgd3JvdGU6CiZndDt0dWdvdXhw
+ICZsdDsxMzgyNDEyNTU4MEAxNjMuY29tJmd0OyB3cml0ZXM6CiZndDsKJmd0OyZndDsgSGVsbG8g
+Zm9sa3M6CiZndDsmZ3Q7ICAgIEkgaGF2ZSBhIHB1enpsZSBvbiBxZW11IG1ham9yIHR3byBlbXVh
+dGlvbiBpbXBsZW50aW9ucyBvbiB3aG9sZSBzeXN0ZW0gZW11bGF0aW9uLCB0aGF0IGlzICxleGNl
+cHQgdGhlIGVtdWF0aW9uIHNwZWVkLAomZ3Q7Jmd0OyBkaWQgdGhlIFRDRyB3b3JrIG1vZGUgaGFz
+IGFueSB3ZWFrbmVzcyB0aGFuICJLVk0iIHdvcmsgbW9kZSBvbiB3aG9sZSBzeXN0ZW0gZW11bGF0
+aW9ucyhpbmNsdWRpbmcga2VybmVrIGFuZAomZ3Q7Jmd0OyB1c2VyLXNwYWNlKT8KJmd0OwomZ3Q7
+SXQgZGVwZW5kcyBvbiB0aGUgZ3Vlc3QgYXJjaGl0ZWN0dXJlLiBTb21lIGFyZSBtb3JlIGNvbXBs
+ZXRlIHRoYW4KJmd0O290aGVycy4gVGhlIHg4NiBlbXVsYXRpb24gZm9yIGV4YW1wbGUgZG9lc24n
+dCBjb3ZlciBhbGwgdGhlIG1vZGVybiB4ODYKJmd0O2V4dGVuc2lvbnMgYWx0aG91Z2ggdGhlcmUg
+aGF2ZSBiZWVuIHNvbWUgaW1wcm92ZW1lbnRzIHRvIGl0cyB2ZWN0b3IKJmd0O2hhbmRsaW5nIHJl
+Y2VudGx5LgomZ3Q7CiZndDtPbmUgdGhpbmcgVENHIGNhbiBkbyB0aGF0IEtWTSBjYW4ndCBpcyBl
+bXVsYXRlIGNvZGUgcnVubmluZyBhdCBoaWdoZXIKJmd0O3ByaW9yaXR5IHRoYW4ga2VybmVsLW1v
+ZGUuIEZvciBleGFtcGxlIGZvciBBUk0gd2UgY2FuIGVtdWxhdGUgdGhlCiZndDtFTDMvUm9vdCBk
+b21haW4gYW5kIHNlY3VyZSBhbmQgY29uZmlkZW50aWFsIHJlYWxtcy4gSW4gS1ZNIHlvdSBjYW4g
+b25seQomZ3Q7cnVuIGEgZ3Vlc3QgRUwxIGtlcm5lbCBhbmQgaXRzIHVzZXIgc3BhY2UuCiZndDsK
+Jmd0OyZndDsgaXMgdGhlcmUgYW55IHdvcmsgdGhhdCBrdm0gY2FuIGRvIGJ1dCBUQ0cgY2FudD8g
+CiZndDsmZ3Q7CiZndDsmZ3Q7IG9mIGNvdXJzZSBrdm0gaXMgbXVjaCBmYXN0ZXIgdGhhbiBUQ0cs
+IGJ1dCBteSBxdWVzdGlvbiBqdXN0IGFib3V0IHRoZSBmdW50aW9uLCBub3QgY2FyZSBhYm91dCBz
+cGVlZC4KJmd0OyZndDsKJmd0OyZndDsgdGhhbmtzIGZvciB5b3VyIGtpbmRseSBoZWxwIQomZ3Q7
+Jmd0OyBCUnMKJmd0OyZndDsgemlsb25nLgomZ3Q7CiZndDstLSAKJmd0O0FsZXggQmVubqimZQom
+Z3Q7VmlydHVhbGlzYXRpb24gVGVjaCBMZWFkIEAgTGluYXJvCjwvcHJlPjwvZGl2Pg==
+------=_Part_147772_940375834.1719220011937--
 
-One thing TCG can do that KVM can't is emulate code running at higher
-priority than kernel-mode. For example for ARM we can emulate the
-EL3/Root domain and secure and confidential realms. In KVM you can only
-run a guest EL1 kernel and its user space.
-
-> is there any work that kvm can do but TCG cant?=20
->
-> of course kvm is much faster than TCG, but my question just about the fun=
-tion, not care about speed.
->
-> thanks for your kindly help!
-> BRs
-> zilong.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
