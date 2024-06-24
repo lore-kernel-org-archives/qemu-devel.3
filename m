@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB537C2BD05
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 11:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A8C5C2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 11:38:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLhtV-0000Yq-3v; Mon, 24 Jun 2024 07:29:57 -0400
+	id 1sLi0j-0002WS-8O; Mon, 24 Jun 2024 07:37:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLhtS-0000Wm-Q1
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 07:29:54 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLhtR-0007xI-5S
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 07:29:54 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-70346ae2c43so3325749a12.1
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 04:29:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719228591; x=1719833391;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bzBW7KxL2vtgTSUtPo2iWV1IDl9ycCmbCGXl/Q+pxyI=;
- b=tzPRru1MbEO/bu8+eONDtZLn/8WFrYof91w70OsM3oST7ODZqa2Lo2Cbm7ngag6Wn7
- QbbfJOEpCdBKrCfdMqMVXtCtBtBkaI1oMplHz7B4GNHbDvQQrQpLDnmXNG8DbY27mfDS
- sMC5rCJaWHhk3PR0qiZ/e+gZKs3YWGlcP7+HBZMV0epD28qTQkg2xmPn1/7sEQ3rmL9N
- fnpT0m6BNFr+fUcSbbwVEl65zazEut5LcUN2QF+OxmLaBZAqnOFXvbr/faDkrYjrk3dL
- /BFH/kO7p4WhLXFMQQTSbcY8gCB76tnpXTpVVX6ndCxiokNMo5Uu2LZTR9JnVjmHnnbU
- S/9Q==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sLi0i-0002WJ-JC
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 07:37:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sLi0g-0000to-EP
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 07:37:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719229041;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4kkHQXYFhstTMykWlrAfAEHhlVfXCUVY7/kGEuPXpCY=;
+ b=Y4uINMMPDOJ85CIKOoBA6Gx921cw09Qdobgve4dMZR/Zw2PyA9e9+9PbYvxGXeEYKGPs13
+ EtVLoNuq+uo9wpLENSBFIWtCmBnCbtgyCPrrwNZhYrXFOyS5IZSjBz4mh5jTqwqhoIuSXL
+ IpvQapDF5A3i8ft5iM5rAWo5kvo2wBo=
+Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
+ [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-638-_eo0cXGROm675fu2MNjVOQ-1; Mon, 24 Jun 2024 07:37:19 -0400
+X-MC-Unique: _eo0cXGROm675fu2MNjVOQ-1
+Received: by mail-yw1-f199.google.com with SMTP id
+ 00721157ae682-63bb7fb3229so88769807b3.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 04:37:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719228591; x=1719833391;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bzBW7KxL2vtgTSUtPo2iWV1IDl9ycCmbCGXl/Q+pxyI=;
- b=k8eBJeTYS9jeaq1Nsb+zmLk9T2/xHmFbEgdMyS9ovefSdfZMvl0DDCU2c/PoitbjIt
- EHZmnPXlPbRlGFGoBHpcHKlRZfDUcdOZc5f39uG3uQCBh5qwSxR+S2I4SyHuIj1z80KL
- HxZ5sCXH4Za2WkQHkBWEFaaGeNie+BzVih+r+7585Y+Y2SWTJ7RhK5ugLUbIQVLb+NKT
- Lxd012KsLa0ofO8Vtu15Ze/UnM3snUXAYHqjOcZRZx63glhICoQ6+VOuCGTOi9xT490+
- brMeGKM4TCHyh/ognd+V0yopNmOmW4nE8dbfOfp6M7xQkSp5JZvE1Za30KsLHK/ekRtC
- cCFQ==
+ d=1e100.net; s=20230601; t=1719229039; x=1719833839;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4kkHQXYFhstTMykWlrAfAEHhlVfXCUVY7/kGEuPXpCY=;
+ b=S8M/xGk0G3yokm/Cys6qMg5F/p5Mny7eaj5+lSAybmVymlqGiBEBfnUJbCi5WePatr
+ Pf6WJLdlZwRqN0M0HqHmHZRpdR+ELDnLBcDP26j7E93l1m7DvxL0Y5AzPp7WHv0e3QlT
+ H63QPBJMomqr1/ymLybftKr/s9CBh/SOnjhEScbJdBruQM7u2stUnvnYD41dUCV7NgXV
+ iwQaRhTZkmQfcZGW721O0Negi5rnG3msAaTccNb5rD5rxMefIHgUq1/z3NguLHqxY0sk
+ xwgrYOdzoeF7PJWoRhG+O2p6JjuVD9WpwbqpEOvTAhIyN2YXPsow/ZYW3TAH/dq93JMM
+ 3cGw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWE/yQsZcKcUEk69d04Seisd+cHwsT+lWROFYCta1buVRr1OrnH4Df7GggNAdefHe2TdWA2X9gNBrvoJSqIBmVwo+CFAWo=
-X-Gm-Message-State: AOJu0YxOFhPFgwpLASPm8nqiwRKkICRnIcHoyJfJs0iPZJN40NlrvZna
- JtD4zRLbrBbM3auxupok8XCCEsIalkn0Fjf/mZhWxrtIaLpTFRbBYt80dqSwBkU=
-X-Google-Smtp-Source: AGHT+IHYKOBdBtioyMqV4BOp0Aa2dthDEiyKrMj4L6IXy5Ky1tkZJvYAYnwWNGVyKGidagkPmwByGA==
-X-Received: by 2002:a17:90b:1e0a:b0:2c7:cd4f:d765 with SMTP id
- 98e67ed59e1d1-2c848a5a2e8mr6362058a91.21.1719228591158; 
- Mon, 24 Jun 2024 04:29:51 -0700 (PDT)
-Received: from [157.82.204.135] ([157.82.204.135])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-716baf4c053sm5362426a12.78.2024.06.24.04.29.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jun 2024 04:29:50 -0700 (PDT)
-Message-ID: <95837863-77fd-4816-b777-6da9b2b7dc66@daynix.com>
-Date: Mon, 24 Jun 2024 20:29:48 +0900
+ AJvYcCVXVwuQu7hBqP5B9yblBl3YYRJTc37PZFclbJm7VrafRktVFkkd8CQ19hYfkAzS0qRljxOdgLq2yKM316nFCZIhLdjv7E4=
+X-Gm-Message-State: AOJu0YwWEkzWwsVo+xnzWzPiEq9I0Y6SuCgrKahVZiFK0KQmqvcEEtqw
+ bsJvmCHM2NMlCFjFV97ez7khEVvz3NbF/iQZen+QNvZUUUiiADZ83oek2oqqyhvvu7fdbHrZ58Y
+ +UlhmgSK3iibN6ra47+WzLPUYn1cHYZeAJxGRbWvxOmKLzr83zRFMmyD0syGyV7JvOSaP5btmG0
+ 9f7QMLwCUGKw2ocyJMTHMGBqVkg7Y=
+X-Received: by 2002:a25:add9:0:b0:dfb:b53:aaf3 with SMTP id
+ 3f1490d57ef6-e0304042e33mr3436230276.64.1719229038780; 
+ Mon, 24 Jun 2024 04:37:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWtSIoXLGqsFDwmxYDmMC00WH5DAyKjYRrVtyK87R67NaNk2rPjgZJPCdMQ0tZVJH3beWScLMnuQGs9qKUdRo=
+X-Received: by 2002:a25:add9:0:b0:dfb:b53:aaf3 with SMTP id
+ 3f1490d57ef6-e0304042e33mr3436220276.64.1719229038443; Mon, 24 Jun 2024
+ 04:37:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] Cursor: 8 -> 1 bit alpha downsampling improvement
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, lists@philjordan.eu
-References: <20240624101040.82726-1-phil@philjordan.eu>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240624101040.82726-1-phil@philjordan.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::529;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20240618181834.14173-1-sahilcdq@proton.me>
+ <CAJaqyWc8L2rZULeHgqmuieAqmQvePm9sicJFGq+POKPLYQMLJg@mail.gmail.com>
+ <3301839.44csPzL39Z@valdaarhun>
+In-Reply-To: <3301839.44csPzL39Z@valdaarhun>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 24 Jun 2024 13:36:42 +0200
+Message-ID: <CAJaqyWeXZ3HAxga1aH4hURnydwZhTMSoV65ReqiX1hVWMRYzbA@mail.gmail.com>
+Subject: Re: [RFC] vhost: Introduce packed vq and add buffer elements
+To: Sahil <icegambit91@gmail.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ Sahil Siddiq <sahilcdq@proton.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,19 +101,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/06/24 19:10, Phil Dennis-Jordan wrote:
-> Mouse cursors with 8 bit alpha were downsampled to 1-bit opacity maps by
-> turning alpha values of 255 into 1 and everything else into 0. This
-> means that mostly-opaque pixels ended up completely invisible.
-> 
-> This patch changes the behaviour so that only pixels with less than 50%
-> alpha (0-127) are treated as transparent when converted to 1-bit alpha.
-> 
-> This greatly improves the subjective appearance of anti-aliased mouse
-> cursors, such as those used by macOS, when using a front-end UI without
-> support for alpha-blended cursors, such as some VNC clients.
-> 
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+On Sat, Jun 22, 2024 at 6:34=E2=80=AFAM Sahil <icegambit91@gmail.com> wrote=
+:
+>
+> Hi,
+>
+> On Wednesday, June 19, 2024 3:49:29=E2=80=AFPM GMT+5:30 Eugenio Perez Mar=
+tin wrote:
+> > [...]
+> > Hi Sahil,
+> >
+> > Just some nitpicks here and there,
+> >
+> > > [1] https://wiki.qemu.org/Internships/ProjectIdeas/PackedShadowVirtqu=
+eue
+> > >
+> > >  hw/virtio/vhost-shadow-virtqueue.c | 124 +++++++++++++++++++++++++++=
++-
+> > >  hw/virtio/vhost-shadow-virtqueue.h |  66 ++++++++++-----
+> > >  2 files changed, 167 insertions(+), 23 deletions(-)
+> > >
+> > > diff --git a/hw/virtio/vhost-shadow-virtqueue.c
+> > > b/hw/virtio/vhost-shadow-virtqueue.c index fc5f408f77..e3b276a9e9 100=
+644
+> > > --- a/hw/virtio/vhost-shadow-virtqueue.c
+> > > +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> > > @@ -217,6 +217,122 @@ static bool vhost_svq_add_split(VhostShadowVirt=
+queue *svq,
+> > >      return true;
+> > >  }
+> > >
+> > > +/**
+> > > + * Write descriptors to SVQ packed vring
+> > > + *
+> > > + * @svq: The shadow virtqueue
+> > > + * @sg: Cache for hwaddr
+> > > + * @out_sg: The iovec from the guest that is read-only for device
+> > > + * @out_num: iovec length
+> > > + * @in_sg: The iovec from the guest that is write-only for device
+> > > + * @in_num: iovec length
+> > > + * @head_flags: flags for first descriptor in list
+> > > + *
+> > > + * Return true if success, false otherwise and print error.
+> > > + */
+> > > +static bool vhost_svq_vring_write_descs_packed(VhostShadowVirtqueue =
+*svq, hwaddr *sg,
+> > > +                                        const struct iovec *out_sg, =
+size_t out_num,
+> > > +                                        const struct iovec *in_sg, s=
+ize_t in_num,
+> > > +                                        uint16_t *head_flags)
+> > > +{
+> > > +    uint16_t id, curr, head, i;
+> > > +    unsigned n;
+> > > +    struct vring_packed_desc *descs =3D svq->vring_packed.vring.desc=
+;
+> > > +    bool ok;
+> > > +
+> > > +    head =3D svq->vring_packed.next_avail_idx;
+> > > +    i =3D head;
+> > > +    id =3D svq->free_head;
+> > > +    curr =3D id;
+> > > +
+> > > +    size_t num =3D out_num + in_num;
+> > > +
+> > > +    if (num =3D=3D 0) {
+> > > +        return true;
+> > > +    }
+> >
+> > num =3D=3D 0 is impossible now, the caller checks for that.
+>
+> Oh yes, I missed that.
+>
+> >
+> > > +
+> > > +    ok =3D vhost_svq_translate_addr(svq, sg, out_sg, out_num);
+> > > +    if (unlikely(!ok)) {
+> > > +        return false;
+> > > +    }
+> > > +
+> > > +    ok =3D vhost_svq_translate_addr(svq, sg + out_num, in_sg, in_num=
+);
+> > > +    if (unlikely(!ok)) {
+> > > +        return false;
+> > > +    }
+> > > +
+> > > +    for (n =3D 0; n < num; n++) {
+> > > +        uint16_t flags =3D cpu_to_le16(svq->vring_packed.avail_used_=
+flags |
+> > > +                (n < out_num ? 0 : VRING_DESC_F_WRITE) |
+> > > +                (n + 1 =3D=3D num ? 0 : VRING_DESC_F_NEXT));
+> > > +        if (i =3D=3D head) {
+> > > +            *head_flags =3D flags;
+> > > +        } else {
+> > > +            descs[i].flags =3D flags;
+> > > +        }
+> > > +
+> > > +        descs[i].addr =3D cpu_to_le64(sg[n]);
+> > > +        descs[i].id =3D id;
+> > > +        if (n < out_num) {
+> > > +            descs[i].len =3D cpu_to_le32(out_sg[n].iov_len);
+> > > +        } else {
+> > > +            descs[i].len =3D cpu_to_le32(in_sg[n - out_num].iov_len)=
+;
+> > > +        }
+> > > +
+> > > +        curr =3D cpu_to_le16(svq->desc_next[curr]);
+> > > +
+> > > +        if (++i >=3D svq->vring_packed.vring.num) {
+> > > +            i =3D 0;
+> > > +            svq->vring_packed.avail_used_flags ^=3D
+> > > +                    1 << VRING_PACKED_DESC_F_AVAIL |
+> > > +                    1 << VRING_PACKED_DESC_F_USED;
+> > > +        }
+> > > +    }
+> > > +
+> > > +    if (i <=3D head) {
+> > > +        svq->vring_packed.avail_wrap_counter ^=3D 1;
+> > > +    }
+> > > +
+> > > +    svq->vring_packed.next_avail_idx =3D i;
+> > > +    svq->free_head =3D curr;
+> > > +    return true;
+> > > +}
+> > > +
+> > > +static bool vhost_svq_add_packed(VhostShadowVirtqueue *svq,
+> > > +                                const struct iovec *out_sg, size_t o=
+ut_num,
+> > > +                                const struct iovec *in_sg, size_t in=
+_num,
+> > > +                                unsigned *head)
+> > > +{
+> > > +    bool ok;
+> > > +    uint16_t head_flags =3D 0;
+> > > +    g_autofree hwaddr *sgs =3D g_new(hwaddr, out_num + in_num);
+> > > +
+> > > +    *head =3D svq->vring_packed.next_avail_idx;
+> > > +
+> > > +    /* We need some descriptors here */
+> > > +    if (unlikely(!out_num && !in_num)) {
+> > > +        qemu_log_mask(LOG_GUEST_ERROR,
+> > > +                      "Guest provided element with no descriptors");
+> > > +        return false;
+> > > +    }
+> > > +
+> > > +    ok =3D vhost_svq_vring_write_descs_packed(svq, sgs, out_sg, out_=
+num,
+> > > +                                            in_sg, in_num, &head_fla=
+gs);
+> > > +    if (unlikely(!ok)) {
+> > > +        return false;
+> > > +    }
+> > > +
+> >
+> > Ok now I see why you switched sgs length from MAX to sum. But if we're
+> > here, why not just embed all vhost_svq_vring_write_descs_packed here?
+> > vhost_svq_vring_write_descs makes sense to split as we repeat the
+> > operation, but I think it adds nothing here. What do you think?
+>
+> You're right. The function is called only once and there is nothing to re=
+use.
+> I'll move "vhost_svq_vring_write_descs_packed" to "vhost_svq_add_packed".
+>
+> > > [...]
+> > > diff --git a/hw/virtio/vhost-shadow-virtqueue.h
+> > > b/hw/virtio/vhost-shadow-virtqueue.h index 19c842a15b..ee1a87f523 100=
+644
+> > > --- a/hw/virtio/vhost-shadow-virtqueue.h
+> > > +++ b/hw/virtio/vhost-shadow-virtqueue.h
+> > > @@ -46,10 +46,53 @@ typedef struct VhostShadowVirtqueueOps {
+> > >
+> > >      VirtQueueAvailCallback avail_handler;
+> > >
+> > >  } VhostShadowVirtqueueOps;
+> > >
+> > > +struct vring_packed {
+> > > +    /* Actual memory layout for this queue. */
+> > > +    struct {
+> > > +        unsigned int num;
+> > > +        struct vring_packed_desc *desc;
+> > > +        struct vring_packed_desc_event *driver;
+> > > +        struct vring_packed_desc_event *device;
+> > > +    } vring;
+> > > +
+> > > +    /* Avail used flags. */
+> > > +    uint16_t avail_used_flags;
+> > > +
+> > > +    /* Index of the next avail descriptor. */
+> > > +    uint16_t next_avail_idx;
+> > > +
+> > > +    /* Driver ring wrap counter */
+> > > +    bool avail_wrap_counter;
+> > > +};
+> > > +
+> > >
+> > >  /* Shadow virtqueue to relay notifications */
+> > >  typedef struct VhostShadowVirtqueue {
+> > >
+> > > +    /* Virtio queue shadowing */
+> > > +    VirtQueue *vq;
+> > > +
+> > > +    /* Virtio device */
+> > > +    VirtIODevice *vdev;
+> > > +
+> > > +    /* SVQ vring descriptors state */
+> > > +    SVQDescState *desc_state;
+> > > +
+> > > +    /*
+> > > +     * Backup next field for each descriptor so we can recover secur=
+ely,
+> > > not +     * needing to trust the device access.
+> > > +     */
+> > > +    uint16_t *desc_next;
+> > > +
+> > > +    /* Next free descriptor */
+> > > +    uint16_t free_head;
+> > > +
+> > > +    /* Size of SVQ vring free descriptors */
+> > > +    uint16_t num_free;
+> > > +
+> >
+> > Why the reorder of all of the previous members?
+>
+> I was thinking of placing all the members that are common to packed and
+> split vring above the union while leaving the remaining members below the
+> union. I did this based on our discussion here [1]. I don't think this re=
+ordering
+> serves any purpose implementation-wise. Please let me know if I should re=
+vert
+> this change.
+>
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+I'm not against the change, but removing superfluous changes helps the
+reviewing. If you send the reordering, please use a separate patch so
+it's easier to review.
+
+Thanks!
+
+> > Apart from the nitpicks I don't see anything wrong with this part of
+> > the project. Looking forward to the next!
+> >
+>
+> Thank you for the review.
+>
+> Thanks,
+> Sahil
+>
+> [1] https://lists.nongnu.org/archive/html/qemu-devel/2024-05/msg02591.htm=
+l
+>
+>
+
 
