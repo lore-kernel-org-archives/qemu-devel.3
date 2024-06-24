@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D4B4C2D0D1
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E1CC2BD05
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 05:35:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLcMU-0007pb-Ru; Mon, 24 Jun 2024 01:35:32 -0400
+	id 1sLcMh-0007zQ-51; Mon, 24 Jun 2024 01:35:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcM2-0007fb-AA
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:09 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1sLcME-0007ju-90
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:16 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sLcLz-0004r7-Lq
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:01 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-70666aceb5bso1221045b3a.1
- for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:34:54 -0700 (PDT)
+ id 1sLcMA-00054m-Uv
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 01:35:13 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-25cba5eea69so1906798fac.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Jun 2024 22:35:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207294; x=1719812094;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719207309; x=1719812109;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CBtlUKvL7QA1JOLexsqKLMt0NTeLClAOuCY4s6N/l7M=;
- b=HIwgUKvH+H+U/J8pjjIOyxbekWF9VnshWV7FKDST+7X/5sN2EtpsMIcOuQiOkM5Fr1
- P/BSSgQbNeIJeFNW51B7x+acrEVUzuRTOD5KQC8pG9S6cgiwZUKUvl9kw3MmLsdF937y
- 3qO1g8PicE3IIZmOD+YtD0g1YeNJk+b4NOF8xbfh6CQXqyEu7qf0GvcF+ZBknS7rr0+S
- Qm/sQAtm2s9okMLDnUKrhVcHt31IUR4Hlj96aw3fJWY9ODocb6fkYHqOlH4F3/L295to
- by+f9YQMF2iU5iUmr7VQ6kU9lc2W0Th9//VdihbAUJsVDW/36Cs6E+ugxFeLceGtXvCE
- jSbg==
+ bh=ZruEpO/MoD1fTse4BnrJqqGy48HTV31dbaHBR+Pyh8Y=;
+ b=XSYFq6SYjd5HIlzx0MI/a7HYbL+/ScrDXsvHru3mR51pU6MPY1reOkgeWLjTiZ9Xpc
+ GQGPv4aF6pp1cwl6VHfgjxaJ2LT2tmajbw803+k3KjoGohVqg9vkrKuT51Ini4telXMP
+ wjwULwHRjrKl8lH6oGfVfZJSsJYa72yLqZldh5ucqRB76Nkw07pgytfOOyc/6ZKcKbEG
+ wdVZB++Gw6CE13IloXhMpMbXRZ5f+0d2sTjy+mNAEqAcH+buKG7u9nXeqB/ZWtZ8M4lr
+ mC90QEZ3nd+Pvtt5IbGWLqtNFSweuCmxSdBoFClQhg/GQsCu5KmjRiyY7goPOA1qJeyh
+ 4FqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719207294; x=1719812094;
+ d=1e100.net; s=20230601; t=1719207309; x=1719812109;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CBtlUKvL7QA1JOLexsqKLMt0NTeLClAOuCY4s6N/l7M=;
- b=IEiFX5aAlQlIKG3FFgLBCQh0L9N1j0Sk4/U6vrRlYupyweOD9uHHTeXm8ueUsuzcDA
- 6AClzDAv+o+1N7QGuNkbeoukJYBNQPoPcdEc8H8NvYaEmGgk5HHV5jdC9YWddAHxsG97
- fwDMEnpFNa5ALe4Q7q1V4D+plwEVzb4szFlS89jh6JD0ZHTH1lwBEO2fu4xW9MJtBnIg
- I9N+bB8TAVBXDyc3waHtnUIC3drjbnW+b8AlvMsinV9QRca1Oj4ANvRU1DAHKeAtEvPv
- RLkVRyRSwS7U4AoRiAMeHXjahEykA/wJVC+ZcXbv8lO8vFE8siOMgjdgVKRAEfLEIcrL
- HMqg==
-X-Gm-Message-State: AOJu0YwUU7gT1upOGSC9H558gSLCsFirK4s6bh3bEby3MKz1hNVZ8v6r
- YSZAv7dSNyeFz3pNApxJvxhh3riFuhq7oDG/cdyiWJffjJAisbziCNcAOqBp5C4=
-X-Google-Smtp-Source: AGHT+IGrJgFmpkpBfY07CjZ+Z5LCOmCNI8+OD/YcwlMMQso7VEKa5HdjURwTvfLO8ZvnbRdBNz/HTQ==
-X-Received: by 2002:a05:6a20:a895:b0:1b8:9f3b:65d9 with SMTP id
- adf61e73a8af0-1bcf80059b0mr3633520637.54.1719207293820; 
- Sun, 23 Jun 2024 22:34:53 -0700 (PDT)
+ bh=ZruEpO/MoD1fTse4BnrJqqGy48HTV31dbaHBR+Pyh8Y=;
+ b=F4NVfnMIRZ+Mi1cQaH+xyJCkQshkVFR2EWnfeUhZo3Mtab8cZHBADvrbKWF4VluxzT
+ xi7MNEamXjhEP6zTNftTmYyQlyUr0tLc2JUewmI48hqKFSvGR6x1Sa1rS1eX0An8fl75
+ SP11g12TSBM97or2TUb2w/eDUYQbajtpGHtqDNCvmFwOVUGyh4pIlzpZSyA0LKoVcQgL
+ 9gSF7+GRZxg8DK3mN9jV4SiljpqaTDvCsXvrnKpmzUaEMh90x9DVZV8qMp/7LrJLo9uv
+ nYXg5FlpygB6Ax9SF9nsAQJY0yyWbQVt9PBZEWv72QmKAvufbMZZdhKptxX/hUEMYKHe
+ DQqw==
+X-Gm-Message-State: AOJu0YznUVYiZY3+wximGVMZqHJphUThXFGA8l3fwqbEbGCVjOKZZ+sd
+ yMyfvMlO3wg3D84LUwbtWiird7HYlp5TE2u1YTjK5dtMHuRUh9RhEG4HzZSQfOQ=
+X-Google-Smtp-Source: AGHT+IHQDTzi2/y9ZUWxR1dnfME2zS+83Z8PwDd+c9lhhKVHT4yqjj2r4sWhjYTgdtojg+o89fsNjA==
+X-Received: by 2002:a05:6870:9720:b0:254:b24e:e351 with SMTP id
+ 586e51a60fabf-25d019339e1mr3985009fac.59.1719207309196; 
+ Sun, 23 Jun 2024 22:35:09 -0700 (PDT)
 Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70651cd4ea3sm5441991b3a.99.2024.06.23.22.34.48
+ d2e1a72fcca58-7065107b892sm5518727b3a.14.2024.06.23.22.35.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Jun 2024 22:34:53 -0700 (PDT)
-Message-ID: <f5a8c73c-a9c8-43b0-a353-fa1424b9281a@daynix.com>
-Date: Mon, 24 Jun 2024 14:34:47 +0900
+ Sun, 23 Jun 2024 22:35:08 -0700 (PDT)
+Message-ID: <91ba5af8-cea5-453b-a38f-4b97f2c7268f@daynix.com>
+Date: Mon, 24 Jun 2024 14:35:03 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 01/13] virtio-gpu: Use trace events for tracking
- number of in-flight fences
+Subject: Re: [PATCH v16 02/13] virtio-gpu: Move fence_poll timer to VirtIOGPUGL
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
@@ -87,14 +86,14 @@ Cc: qemu-devel@nongnu.org, Gurchetan Singh <gurchetansingh@chromium.org>,
  Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
  Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
 References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
- <20240623152343.328436-2-dmitry.osipenko@collabora.com>
+ <20240623152343.328436-3-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240623152343.328436-2-dmitry.osipenko@collabora.com>
+In-Reply-To: <20240623152343.328436-3-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::42c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2001:4860:4864:20::2a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x2a.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,11 +116,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2024/06/24 0:23, Dmitry Osipenko wrote:
-> Replace printf's used for tracking of in-flight fence inc/dec events
-> with tracing, for consistency with the rest of virtio-gpu code that
-> uses tracing.
+> Move fence_poll timer to VirtIOGPUGL for consistency with cmdq_resume_bh
+> that are used only by GL device.
 > 
-> Suggested-by: Marc-André Lureau <marcandre.lureau@gmail.com>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
