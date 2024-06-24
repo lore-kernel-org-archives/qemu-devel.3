@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DADF3C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4512C41513
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Jun 2024 13:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLjXt-0002iI-N8; Mon, 24 Jun 2024 09:15:45 -0400
+	id 1sLje4-0000me-Nt; Mon, 24 Jun 2024 09:22:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjXk-0002Wm-IG
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:15:38 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLje2-0000lh-Qk
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:22:07 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjXj-0005Pf-0z
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:15:36 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-362b32fbb3bso2930488f8f.2
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:15:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLjds-0006yq-Ig
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 09:22:06 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52ce0140416so1835905e87.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 06:21:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719234933; x=1719839733; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Te+GIxXW5gxfuWRPules7rOyRScrC1BJa4kjtT/0R0c=;
- b=EcW/XXJF+iN5ouAe7RWaQicBoYHFZj3RWCaz5nAgCtl+4mBKv1QjL1czSvuZtaCf2x
- mXEOW7sMhx+jFpIdbJrvm1bKiXsbcTJEOl5wkGxGLkpSlp6gzsV4YAIqR6NqUbKfBWoi
- f7YdUx3bXZzYpg17/cvIrEpPd9uLKOgW34HeFfYx5dpWE4e+Yk1hYuRlDD9d+AGYZTTu
- +rQ2PNxGK0FARe//K9HrOM29szC0005cM3Gl3zDZV4+1QZtcaehHxAD/G85uL0IVu8zf
- HHdkWPIwP9uDECxJ70SEmzOHBG6F83S1RKD+yKOT+R1HWeRpPwpESrdOglKq06QSn9WV
- M/Fw==
+ d=linaro.org; s=google; t=1719235314; x=1719840114; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qtPfj3Rr8TYOLDSlaqbXQgaU5zT7Ct0Jmt7DP5WEx3Q=;
+ b=u1gPrvZExOKOIEOtUNlzxMwG9Ce8g837VIdmQnWPiDwBuZKlLxxOklyMRihLx5ZTA+
+ 4UjhkecCTqvdhf3/8eTipVmg595Ot4era85PdzbeC4BN19ClOnH6dhveRKplkBNaMA+W
+ Dq/WduKFqQ5+fH606w/r8VeL9peGvKCGkTBRVWiH4raOFwDDwD0w+41TwRKuf2zMyqPq
+ MZxQ2bKnuHgTMd6m5FdAM9I0r36XeUuJuYOL5mwQQdMVTwkppFCGYboF7AZO5qchA26s
+ +U6i28OVa19In3+IYF4GWejxZMp3JcKwc+mTOmvLudgU6OiLJvdAWHfcC2o4OxQnOKdi
+ AQhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719234933; x=1719839733;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Te+GIxXW5gxfuWRPules7rOyRScrC1BJa4kjtT/0R0c=;
- b=KPNaStrdW9SPDwASSvv2X78zllXamNZeKuOWICymMFgJdhRoLwZke0B4KhJzWCakUa
- lE9N/rY1HfmqKP/7rJp+eyaPh8bL5vHz62gM+CagIOWa46xE86KwMOc+0jkjr3/VjWGg
- d5C1fyepsuEcKq269lugPV9+aTMDZVwfC/w5EkfxPjmO/9Ffn/EFNeQs4EG7zsoekbqr
- 2tnbnu9IMN+mwP9cT8ZVJKrAMfwk7m6aAkP9obWvIv+HtWVFmBoGsy03MSCcmRKsB1Ij
- O4lvQeR8nHupbBkueG0A2tl3VE48b4nJ8Q/XFm8wB/vdlGpg01C5RYNmCT1mAHI4DAYl
- yWBg==
-X-Gm-Message-State: AOJu0YxTPcerKtdMoGa9PyBF6Xj24nrfBUlpa7YOmzDXxDpvUasM6JBJ
- MmSmA2GlknmEL0aMcNTNoczWCRNSO72yE363eARuZdJkVALU17H6DgNGOXme51WnHyhrkeDm5TO
- 8
-X-Google-Smtp-Source: AGHT+IH6toEszfWTYfOKgCh9I2fmxLt20QYVDKJ7HQVNVoi5h4sWO0/cOZ+E6wYKJF+5qP1VkOoOYg==
-X-Received: by 2002:adf:f610:0:b0:362:bb3e:93da with SMTP id
- ffacd0b85a97d-366e7a637e1mr3579520f8f.62.1719234932841; 
- Mon, 24 Jun 2024 06:15:32 -0700 (PDT)
-Received: from m1x-phil.lan (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
+ d=1e100.net; s=20230601; t=1719235314; x=1719840114;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qtPfj3Rr8TYOLDSlaqbXQgaU5zT7Ct0Jmt7DP5WEx3Q=;
+ b=MKpYCDgMkzzUyJ4WdRt+l3znbqVXiR24l1WI2GpVtnoTrUSeYPRSHBxtTenfySD2kV
+ eRhGMhb8S4E6P4Kdlt7eO/+SSOR2xTZRgzddKF1wOzHgHpH7cmbuRSJneNJogxsFX/5z
+ twNLzhWbg81klNHGG0Aq3pvF0U/flGpA9r6Zs6Rb+0vgdn55Ed3KhCTvzMZ7vFdUpcpQ
+ pWId8APsv0BNDcY7ow61bMiMlcXpWVe/oQ1KrZIrMogco3D6th6mMnyYTFRiSKCKr+rZ
+ 6Z9oFH0EJdFOVqzQ4uBTUARGeXgOGf1B0+8ZNBiHBxH77laMpCmXy6QkO8dIqMA0o8Wk
+ 7B/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCiypiwHx/5xIk10pz0f+MP3QlNXvVX1ovW9kVqsPi2SEC6YcdoXhBVxi2oBAdfQKR1z9xoKtuh7eTa0dkW+mUu27TiuA=
+X-Gm-Message-State: AOJu0YyVNPjSJjVG+GJ/RE0dmjLvOcqVJ7gmfgglaEcZWWx3ZsEFa30H
+ ygt0y0ax/oUCemWDP+Xb7jL+T4QgVW927sUH1+XBiMq5BaUclFoZ9+7NlAVY7d8=
+X-Google-Smtp-Source: AGHT+IGXKCvTDanaK8S04z1nwTF3Ox2ijSAf+LOM3aJfcjddmSmE/i1jEBNdBOWjLWYXNXmh/TTnbQ==
+X-Received: by 2002:a05:6512:2827:b0:52b:c296:902a with SMTP id
+ 2adb3069b0e04-52ce0610642mr4384985e87.5.1719235314279; 
+ Mon, 24 Jun 2024 06:21:54 -0700 (PDT)
+Received: from [192.168.69.100] (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
  [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36638301cffsm10046735f8f.10.2024.06.24.06.15.31
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Jun 2024 06:15:32 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 09/19] hw/sd/sdcard: Remove ACMD6 handler for SPI mode
-Date: Mon, 24 Jun 2024 15:14:30 +0200
-Message-ID: <20240624131440.81111-10-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240624131440.81111-1-philmd@linaro.org>
-References: <20240624131440.81111-1-philmd@linaro.org>
+ ffacd0b85a97d-366383f6777sm10115425f8f.21.2024.06.24.06.21.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Jun 2024 06:21:53 -0700 (PDT)
+Message-ID: <dc589268-efa3-45ae-85e9-30937fef81cd@linaro.org>
+Date: Mon, 24 Jun 2024 15:21:51 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] tests/avocado: sbsa-ref: switch from OpenBSD to
+ FreeBSD
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+References: <20240624-b4-move-to-freebsd-v2-0-64ea7b04998f@linaro.org>
+ <20240624-b4-move-to-freebsd-v2-1-64ea7b04998f@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240624-b4-move-to-freebsd-v2-1-64ea7b04998f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,40 +101,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no ACMD6 command in SPI mode, remove the pointless
-handler introduced in commit 946897ce18 ("sdcard: handles
-more commands in SPI mode"). Keep sd_cmd_unimplemented()
-since we'll reuse it later.
+Hi Marcin,
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Message-Id: <20240621080554.18986-8-philmd@linaro.org>
----
- hw/sd/sd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 24/6/24 15:14, Marcin Juszkiewicz wrote:
+> FreeBSD has longer support cycle for stable release (14.x EoL in 2028)
+> than OpenBSD (7.3 we used is already EoL). Also bugfixes are backported
+> so we can stay on 14.x for longer.
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 6e346e28ca..08a6d0aff8 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1012,6 +1012,7 @@ static sd_rsp_type_t sd_cmd_illegal(SDState *sd, SDRequest req)
- }
- 
- /* Commands that are recognised but not yet implemented. */
-+__attribute__((unused))
- static sd_rsp_type_t sd_cmd_unimplemented(SDState *sd, SDRequest req)
- {
-     qemu_log_mask(LOG_UNIMP, "%s: CMD%i not implemented\n",
-@@ -2154,7 +2155,6 @@ static const SDProto sd_proto_spi = {
-         [52 ... 54] = sd_cmd_illegal,
-     },
-     .acmd = {
--        [6]         = sd_cmd_unimplemented,
-         [41]        = spi_cmd_SEND_OP_COND,
-     },
- };
--- 
-2.41.0
+Could we keep the test but not run it by default on CI? No need to
+upgrade the distro version, using the fixed cortex-a57 (and not 'max').
+I find it useful when bisecting hw model changes, when we don't need
+to test the bleeding edge sbsa-ref. At least I'd like to keep
+test_sbsaref_openbsd73_cortex_a57. Maybe:
+
+   @skipIf(os.getenv('GITLAB_CI'), 'Running on GitLab')
+
+> 
+> Moved from Neoverse-N1 to Neoverse-N2 as sbsa-ref defaults were changed.
+> 
+> Timeout messages expanded to mention being affected by PAuth emulation:
+> 
+> test_sbsaref_alpine_linux_cortex_a57: PASS (24.00 s)
+> test_sbsaref_alpine_linux_neoverse_n2: PASS (82.24 s)
+> test_sbsaref_alpine_linux_max: PASS (81.10 s)
+> test_sbsaref_alpine_linux_max_pauth_off: PASS (23.54 s)
+> test_sbsaref_alpine_linux_max_pauth_impdef: PASS (28.96 s)
+
+(These are Linux test outputs).
+
+> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> ---
+>   tests/avocado/machine_aarch64_sbsaref.py | 53 ++++++++++++++++----------------
+>   1 file changed, 27 insertions(+), 26 deletions(-)
 
 
