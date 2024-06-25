@@ -4,70 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B142AC30653
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 21:03:55 +0000 (UTC)
-Received: from localhost ([::1] helo=lists1p.gnu.org)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 629E2C30653
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 21:08:10 +0000 (UTC)
+Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMBsW-0006HU-9M; Tue, 25 Jun 2024 15:31:16 -0400
-Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
+	id 1sMDBM-0001N8-3D; Tue, 25 Jun 2024 16:54:34 -0400
+Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sMBo7-00051t-Ty
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 15:26:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sMDB1-0001Ld-Aq
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 16:54:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sMBnE-0003UE-Eb
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 15:25:59 -0400
+ id 1sMDAJ-0003Ww-Pu
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 16:53:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719343473;
+ s=mimecast20190719; t=1719348732;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=fiBoRbKqcXPEaXb9Wfb7tOE/hP9waTBqlmTEDeA82AQ=;
- b=RfFX98lLlSPCZxQoFS4Kp5WEEFiX93gsmG2yKsILjOzyaM19vWFk/CFPJuIuAWPtk851FX
- 1n5cp2c1V/HkEQAHbklBzpxMi+dkjkKXwJdFAGUQFUq42FvSQwHzu1XbefzwAovLD3qXu2
- N6dAut7NMG3kEX0k816//BYUj7EbTiY=
+ bh=FnEow6ItVCsHy3Wj8fYlpWX03DfWKKdSG2Ud1N0AXcs=;
+ b=Z/OE3OvAa0nQJg6wZU8zERsbzQbn3YTnM9sJcKBd8eVBL8LKae0j6gxqTwRdgLdabtjoxa
+ bOD32Ub9olt06ejYzwhT4IWiLXORHrbfkDKANbYvHPH7Jmd6xWlQ89qTbnmqAtqhiiFz8O
+ 8yFuMyZId4olXJfWItdO6CRqhWEUDc8=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-187-P0bWCPHlM1iTwXBfgWbUPQ-1; Tue,
- 25 Jun 2024 15:05:35 -0400
-X-MC-Unique: P0bWCPHlM1iTwXBfgWbUPQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-jYAau6XdMRmHZp7zFd2L-w-1; Tue,
+ 25 Jun 2024 14:37:51 -0400
+X-MC-Unique: jYAau6XdMRmHZp7zFd2L-w-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC33C19560BC; Tue, 25 Jun 2024 19:05:32 +0000 (UTC)
+ id DA52B1955BDB; Tue, 25 Jun 2024 18:37:49 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.31])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24B1519560AB; Tue, 25 Jun 2024 19:05:28 +0000 (UTC)
-Date: Tue, 25 Jun 2024 20:05:25 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED0431956050; Tue, 25 Jun 2024 18:37:45 +0000 (UTC)
+Date: Tue, 25 Jun 2024 19:37:42 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-Cc: qemu-devel@nongnu.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- philmd@linaro.org, wangyanan55@huawei.com, peterx@redhat.com,
- farosas@suse.de, eblake@redhat.com, armbru@redhat.com
-Subject: Re: [PATCH RFC 1/2] migration: abort when switchover limit exceeded
-Message-ID: <ZnsU9aWczE3vWISR@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, qemu-devel@nongnu.org,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, farosas@suse.de, eblake@redhat.com,
+ armbru@redhat.com
+Subject: Re: [PATCH RFC 2/2] migration: abort on destination if switchover
+ limit exceeded
+Message-ID: <ZnsOdiHACtL90f3J@redhat.com>
 References: <20240621143221.198784-1-elena.ufimtseva@oracle.com>
- <20240621143221.198784-2-elena.ufimtseva@oracle.com>
+ <20240621143221.198784-3-elena.ufimtseva@oracle.com>
+ <ZnnL42_iDip3hfUh@x1n>
+ <9eeea2a9-b3ef-4791-94de-fb06ad2bd9b4@oracle.com>
+ <ZnrZ9W6WpvmDBpgv@x1n>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240621143221.198784-2-elena.ufimtseva@oracle.com>
+In-Reply-To: <ZnrZ9W6WpvmDBpgv@x1n>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_score_int: 13
+X-Spam_score: 1.3
+X-Spam_bar: +
+X-Spam_report: (1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_SBL_CSS=3.335,
+ T_SPF_HELO_TEMPERROR=0.01,
  T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,63 +92,30 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 21, 2024 at 07:32:20AM -0700, Elena Ufimtseva wrote:
-> Introduce capability switchover_abort and migration parameter switchover_limit
-> to allow for live migration abort when the source downtime exceeded by
-> switchover_limit.
+On Tue, Jun 25, 2024 at 10:53:41AM -0400, Peter Xu wrote:
+> Then the question is how should we suggest the user to specify these two
+> parameters.
 > 
-> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
-> ---
->  hw/core/machine.c                  |  1 +
->  include/migration/client-options.h |  1 +
->  migration/migration-hmp-cmds.c     | 10 ++++++
->  migration/migration.c              | 39 +++++++++++++++++++++
->  migration/migration.h              |  5 +++
->  migration/options.c                | 56 ++++++++++++++++++++++++++++++
->  migration/options.h                |  1 +
->  migration/savevm.c                 | 13 +++++++
->  qapi/migration.json                | 27 +++++++++++---
->  9 files changed, 149 insertions(+), 4 deletions(-)
+> The cover letter used:
+> 
+>   migrate_set_parameter downtime-limit 300
+>   migrate_set_parameter switchover-limit 10
 
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 470f746cc5..069a44f207 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -469,6 +469,10 @@
->  #     each RAM page.  Requires a migration URI that supports seeking,
->  #     such as a file.  (since 9.0)
->  #
-> +# @switchover-abort: abort migration if downtime exceeds the downtime
-> +#     limit configured by the specified value by switchover-limit
-> +#     migration parameter.
-> +#
->  # Features:
->  #
->  # @unstable: Members @x-colo and @x-ignore-shared are experimental.
-> @@ -485,7 +489,7 @@
->             { 'name': 'x-ignore-shared', 'features': [ 'unstable' ] },
->             'validate-uuid', 'background-snapshot',
->             'zero-copy-send', 'postcopy-preempt', 'switchover-ack',
-> -           'dirty-limit', 'mapped-ram'] }
-> +           'dirty-limit', 'mapped-ram', 'switchover-abort'] }
->  
->  ##
->  # @MigrationCapabilityStatus:
-> @@ -821,6 +825,10 @@
->  #     See description in @ZeroPageDetection.  Default is 'multifd'.
->  #     (since 9.0)
->  #
-> +# @switchover-limit: Switchover limit (ms) that would be used to
-> +#     intiate abort of live migration if the total switchover time
-> +#     exceeded downtime_limit + switchover_limit (Since 9.1)
+What this means is that in practice the total downtime limit
+is 310 ms, however, expressing this as two parameters is
+incredibly inflexible.
 
-IMHO switchover_limit should not exist.
+If the actual RAM transfer downtime only took 50 ms, then why
+should the switchover downtime still be limited to 10ms, when
+we've still got a budget of 250 ms that was unused.
 
-When 'switchover-abort' is enabled, then the existing downtime_limit
-semantics should just be defined to also include the switchover
-time.  The admin (on behalf of the guest owner) only cares about
-the overall downtime experianced by the VM, not the individual
-phases of the switch process.
+IOW, if my VM tolerates a downtime of 310ms, then I want that
+310ms spread across the RAM transfer downtime and switchover
+downtime in *any* ratio. ALl that matters is the overall
+completion time.
+
+IMHO exposing 2 distinct parameters is horrible from a
+usability POV.
 
 
 With regards,
