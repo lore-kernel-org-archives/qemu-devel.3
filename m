@@ -4,89 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0256C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 23:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ABEFC30653
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 23:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMFuW-0005mM-Jy; Tue, 25 Jun 2024 19:49:23 -0400
+	id 1sMEGW-0005jo-MJ; Tue, 25 Jun 2024 18:03:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMFuK-0005a3-E8
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 19:49:05 -0400
-Received: from [2607:f8b0:4864:20::230] (helo=mail-oi1-x230.google.com)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sMEEC-0004S4-Fx
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 18:03:42 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMFtO-0006dt-5t
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 19:48:43 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-3d552600917so1248230b6e.2
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 16:46:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sMEDT-0004Nj-6b
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 18:01:19 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-35f090093d8so4020678f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 14:59:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719359191; x=1719963991; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fSSKCItYz8+su55zaCeDfZqGcLGOvzO1zgA32uDbBb8=;
- b=bFOvCvJGlvhaMTXGW7EA8/zrQqn161UdjBk+b3SuN/xgU8fhPEIPuPbSN6oLEPxedL
- oRV8FwKgFwpz6VG3K36NzsgCvdxxoswrCFhUGMIM/yPOa109JxxiJ1gcEiAzr8OZfoAR
- ztNcH6BajJto4V2Rvy0skBa8J5lo5F72IHlfY+gm4eDMVuxTMk3dzH5k0svv0APREGVC
- P4zKZje+uVjai5iltV9uKdJGS2+b6vzDUaWnR7P9CAvL0Id5kQwupuDcxg6OkcmoyNT8
- 93cc2Zd98Q9De7nd9p0Q+eADLQRDwQ63FPx2qhGxjVB+VyC/FXzL258P4LiDf7X/Iz4Y
- FUlw==
+ d=linaro.org; s=google; t=1719352766; x=1719957566; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=TjW1GXTcGm9YmOJIxkA2iUtgfvQ8so7g3ogkHAqvClU=;
+ b=DXmKgURH436u465PdFkMzUo1YQatVPPLNvepmHBkbe+YCFipHmk5MphlHaJ+WncdAz
+ 0o8MjqK+aOQ5g83q8h48V2soF+HzpYpwOUEGMRYgoNnoqnM+fwTiLgGZrTeDvSyN32Te
+ X0X9Uhbh47Rju+tqoA8P6UPAVUZTMolFmLCB5IT/b3tr8Okuw1nHzzOBI22REOfYN/z5
+ x1oRDLYaWFTy1dpgz3VTU1xXN0ozzPyFT+Ps3u8icPAfaWVPEIRyNoDU/Tk5OfzBsLVL
+ CYsEzSbcIXqsu0ImQvtt6/psHE4KnvRhlfPj7Pj7zy1s0CCT8LU9IgwM2jJEM7Qt/IHx
+ odyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719359191; x=1719963991;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fSSKCItYz8+su55zaCeDfZqGcLGOvzO1zgA32uDbBb8=;
- b=c8T1fFvqzZ+qWlMgGuotFPPC6GrQBNInsv9bhfJ94V2Yi04Rg7O1WzIooNkW2A1i4s
- grC/5Y/glzt4al2/1Ruo8xoLvEu+18Y6VU3WoRiPv2Ra+0QfoiKsHXOrCdg2TKz/nis1
- 8UjzQE6lmV1DLYexz7+mhp166aYYIlgJPneT4mMc2UNc2tsm6sBCYcxRbdTO61vJ56cc
- kPwotsb8x4Ux5wUR5z55ZZUsjy/p9GF22N1klOAyHB9A5b5wQPwIuXJJKJtql+8hJtjE
- 9g7lqL3QP6jegrBislApQ39tvyz/91jUPoiwq8eWfou4dj7pCSHc4sn8svg+Hl0qxYct
- 01+Q==
+ d=1e100.net; s=20230601; t=1719352766; x=1719957566;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TjW1GXTcGm9YmOJIxkA2iUtgfvQ8so7g3ogkHAqvClU=;
+ b=QTefJJTByb5/o43KbaXFBJ4oqQXMERlf/UK4TQfOY5Xja/HNK1lmQDRoKZBRspXQiq
+ TGCNXt9RYwjv9hOBX0nA9Xa3PAXqRiUxqoMs8muH0xtzmIoKsgc/xwoqKM7Mc85mLuMR
+ t3tvi+gBidvQq+LcMu8sFt8Gkdkm0rG30ec7JdSpDHNGqyyY0kEsiNPL2joc3BLQaVBL
+ vJB0vpppUEi8w5T7YVopDwvG/0x1v1tTR+oTEIxoagUCpgZBJGZsQ/IRi31ImXqKfCFC
+ gE6+BlWBsxCtyB6qxZhJNQk/LupyEeeL0zgfO/mdSusRURkSYQZNaWvE2WpggPP51nVF
+ bIRw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXWRPvDPQnbf7+dyDNHPOZhJpyr6QbkcEw2VfkXt1c1UPpfVHHk85adj+KzRkBJ9qLtIFvCB9xBfBFCUy1M/EtJYjYkhkY=
-X-Gm-Message-State: AOJu0YxlFo/x0r2gCyfm0VPs0Fd10X7PJDd0nHuOg28Rz+HfYbYDOJ2d
- qU4XL0Sp6Xus8PEkiLAyJBBJQAfQsuhMtlAsutpIFQ0NPCYHPRH1+qAwlMpwxMUzz9GMvXUYC70
- e
-X-Google-Smtp-Source: AGHT+IFvVr28JLQAg9NoI+p/5/VRlo4mG2mg4ER6rd3Lc8iRdJTjdFIgre4+/paZJnIEh2MiCiBcsQ==
-X-Received: by 2002:a05:6a20:3944:b0:1b5:cf26:ecfd with SMTP id
- adf61e73a8af0-1bcee6f0162mr11027723637.24.1719339511426; 
- Tue, 25 Jun 2024 11:18:31 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ AJvYcCV2mc/u/fdAf6nKgH+Z16eRZuLcJSUVeoMNWfSph3QTsABRDGEpniP3e5Z2qLxFrQiL0gL4S7LYS9tvU05palSyeVSLrds=
+X-Gm-Message-State: AOJu0Yxd5J+lsx0+tginU8CTlWLeOIfwt3i7wM7ApJgXirRmIflLMDQf
+ Dx2CXDIMXeDw3tpPRVFjLN1j5VAF6FMHN8rfgf4cen2bsARKgLH9bTfHBO30FeFS2nZj0b0TgzS
+ Z7L0=
+X-Google-Smtp-Source: AGHT+IHW7qx95/o4A5F8y4GugXRfpn98849ocjNWvlLAQ6jbEJorWAFGOUqstJXb8yyRStj4HgeJvA==
+X-Received: by 2002:a05:6512:3095:b0:52c:d7d9:9ba6 with SMTP id
+ 2adb3069b0e04-52ce06413c4mr7802025e87.50.1719352288169; 
+ Tue, 25 Jun 2024 14:51:28 -0700 (PDT)
+Received: from meli-email.org (adsl-73.109.242.224.tellas.gr. [109.242.224.73])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-716bb22d45fsm7482622a12.86.2024.06.25.11.18.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Jun 2024 11:18:31 -0700 (PDT)
-Message-ID: <2cb94b34-1a5f-4dc9-bec4-78c7008cd79d@linaro.org>
-Date: Tue, 25 Jun 2024 11:18:29 -0700
+ 5b1f17b1804b1-424c825e583sm2085035e9.21.2024.06.25.14.51.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Jun 2024 14:51:27 -0700 (PDT)
+Date: Wed, 26 Jun 2024 00:47:01 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: Re: [RFC PATCH v3 1/5] build-sys: Add rust feature option
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
+ <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
+ <ZnmkN2PL3r-2sxqe@redhat.com>
+ <CABgObfbH4KpFv+eKr3BLpk0S9TOkQNiyQN5q6JAFGsMrWmSGnA@mail.gmail.com>
+In-Reply-To: <CABgObfbH4KpFv+eKr3BLpk0S9TOkQNiyQN5q6JAFGsMrWmSGnA@mail.gmail.com>
+Message-ID: <fnopq.orjfjqf36hxp@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Add support for machine specific pmu's
- events
-To: Alexei Filippov <alexei.filippov@syntacore.com>, palmer@dabbelt.com
-Cc: alistair.francis@wdc.com, bmeng.cn@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-References: <20240625144643.34733-1-alexei.filippov@syntacore.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240625144643.34733-1-alexei.filippov@syntacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 2607:f8b0:4864:20::230
- (deferred)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, PDS_HP_HELO_NORDNS=0.001, RDNS_NONE=0.793,
- T_SPF_HELO_TEMPERROR=0.01,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, T_SPF_HELO_TEMPERROR=0.01,
  T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,42 +110,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/24 07:46, Alexei Filippov wrote:
-> Was added call backs for machine specific pmu events.
-> Simplify monitor functions by adding new hash table, which going to map
-> counter number and event index.
-> Was added read/write callbacks which going to simplify support for events,
-> which expected to have different behavior.
-> 
-> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
-> ---
-> Changes since v2:
-> 		-rebased to latest master
->   target/riscv/cpu.h |   9 +++
->   target/riscv/csr.c |  43 +++++++++-----
->   target/riscv/pmu.c | 139 ++++++++++++++++++++++-----------------------
->   target/riscv/pmu.h |  11 ++--
->   4 files changed, 115 insertions(+), 87 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 6fe0d712b4..fbf82b050b 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -374,6 +374,13 @@ struct CPUArchState {
->       uint64_t (*rdtime_fn)(void *);
->       void *rdtime_fn_arg;
->   
-> +    /*machine specific pmu callback */
-> +    void (*pmu_ctr_write)(PMUCTRState *counter, uint32_t event_idx,
-> +                          target_ulong val, bool high_half);
-> +    target_ulong (*pmu_ctr_read)(PMUCTRState *counter, uint32_t event_idx,
-> +                                 bool high_half);
-> +    bool (*pmu_vendor_support)(uint32_t event_idx);
+On Mon, 24 Jun 2024 20:14, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>Yes, I agree. However, considering we haven't even checked the 
+>situation
+>with what language features are required by any idiomatic bindings vs the
+>1.63 version that we need to support for Debian, I think it's a bit
+>premature to make it mandatory.
+>
 
-Do these really belong in CPUArchState, rather than RISCVCPUClass?
+FWIW, I just ran
 
-Surely there's more to this series, since these fields are never set...
+`cargo msrv -- cargo check --target x86_64-unknown-linux-gnu`
 
+And the result was `The MSRV is: 1.77.2`
 
-r~
+and the most important issue was that the mem::offset_of! macro was 
+unstable till then.
 
