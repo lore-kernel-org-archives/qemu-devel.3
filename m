@@ -4,83 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16D4C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 04:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ADDEC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 04:33:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLxp5-0001fB-Af; Tue, 25 Jun 2024 00:30:27 -0400
+	id 1sLxrX-0002xX-P7; Tue, 25 Jun 2024 00:32:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sLxp2-0001dI-Tz
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 00:30:24 -0400
-Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sLxp0-000369-94
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 00:30:23 -0400
-Received: by mail-il1-x12a.google.com with SMTP id
- e9e14a558f8ab-37636c3872bso11670295ab.3
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 21:30:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719289821; x=1719894621; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MevDkSwh/hK42NLzDU7PiIgkqotpPKvejuToxDUDioM=;
- b=Mtfbv1ppve2+MG3I2Gdok1SoG59CBlqmPx48ug3jO9WYUOXWhc/U/VRIll0MTcEnyh
- vpMA3/Z0oKuYbMO2i/oMU5CwxAq1t3X0ginCjWHPlGchfW+HBHovVEilBSUWCKO4IDXL
- JoutjwI/pBuVn7jPRT85r5R22hAD4nKtSGN4dikJjsJd4iRK7K4Un3bNs9iA0VrqdT06
- YaRVFLHqtBpZTXz88gCvuf/db+39caYWY/1tiYKdazOy4hwFiz5ez9CJjMKiM267018Y
- BXLHKBjBi+5HtHmw/48x7z5mKylU9xUFkhRx4PkTrPAvjMhzPd9RAYP2OVr6svrs5wSJ
- ZIVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719289821; x=1719894621;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MevDkSwh/hK42NLzDU7PiIgkqotpPKvejuToxDUDioM=;
- b=JByRfxKg/yhJuDP1OXN7V8y2YyP6zgiLSVGm/POYyiiL8Hzzqy31I4228lxfxSyRYV
- t7PS/XXrw4P9W7mJWVEsJDOMgwhTOuomiQnl3ASu5pkQHM8ImS++L+7DaXswytKIR0P1
- D+LqurAg5JggRnFrBmd8JeeAd2Cx7KHp7kNcYrowiwGwWZDYfefin1ygVKaZJcW/gWWs
- LQIDZfWaGyLxexsFEO9NTx+xfknQO2EdEGa3giO0WHGNuasukgRQ1fog2Ksl34z0Sw1w
- O/S/bD5TKOZNs2/qWoFpqky6gxKPTHffIOe4/fcWSq+0SR5kSxneWvnt2i4VI38LywTz
- lAIA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWsSZwXNMEWK97c2Hqdy4XQK+FoA6GZMTUCjgCdmP6mHAJAxp511UjGOGYDgAEI1Us0eeNZMAj3J/7AXrG63OwqZVfDalk=
-X-Gm-Message-State: AOJu0YxOVATW3BpDK5eI9v/qgj7MmmUVlR3SWIismM+nvLOEv4el2mrf
- iexm3SoWyoS5EaG/2hv/uqAQKKvz1uRf0r1H4PvdWJCqDleNIvWA8HSsvQJt4HI=
-X-Google-Smtp-Source: AGHT+IFUW4meVkbMdZaMeZYNvnBGPT8ORhVy/Y+oV+TDbvbWaQoks6md5VdWXMNiDBBZAlAS7nT/Cw==
-X-Received: by 2002:a92:c242:0:b0:374:a412:3da1 with SMTP id
- e9e14a558f8ab-3763f69621fmr81987225ab.20.1719289820689; 
- Mon, 24 Jun 2024 21:30:20 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-716b3ee8e1fsm5288417a12.32.2024.06.24.21.30.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jun 2024 21:30:20 -0700 (PDT)
-Message-ID: <25859d67-d2b1-4614-a2f9-b1eb1ca7c4cf@linaro.org>
-Date: Mon, 24 Jun 2024 21:30:18 -0700
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sLxrV-0002wx-PI; Tue, 25 Jun 2024 00:32:57 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sLxrR-0003VN-Sn; Tue, 25 Jun 2024 00:32:57 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1c20:0:640:f632:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id C3BCF61379;
+ Tue, 25 Jun 2024 07:32:47 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b5bf::1:d] (unknown
+ [2a02:6b8:b081:b5bf::1:d])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id jWGcYI0Ih0U0-tLdBbkNi; Tue, 25 Jun 2024 07:32:46 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1719289966;
+ bh=hb6iVfMwjHpxM/NPC8d4hURXS9rYNtsSE13sI5ITKZY=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=SjCVqTMwx+lcqCaW2VUem9PdKg9mWrp7dRu8QKhuzI/sE89XWQQimFKG4qwREla+a
+ 7EZfE+yed+dsrFWAI+aDXhFaTN6GhVvGHPQp0vyRsd6WRGnvIDE/WTHl5uhgerZbql
+ Ud867w3GFusC1t7DngONHHQJ/X95Qs+vbs7oJrsA=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <ae83e414-6a60-4431-885c-d67eabf0494d@yandex-team.ru>
+Date: Tue, 25 Jun 2024 07:32:45 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/19] SD/MMC patches for 2024-06-24
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240624131440.81111-1-philmd@linaro.org>
+Subject: Re: [PATCH v4 3/5] mirror: allow specifying working bitmap
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com,
+ f.gruenbichler@proxmox.com, t.lamprecht@proxmox.com,
+ mahaocong@didichuxing.com, xiechanglong.d@gmail.com, wencongyang2@huawei.com
+References: <20240521122014.333221-1-f.ebner@proxmox.com>
+ <20240521122014.333221-4-f.ebner@proxmox.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240624131440.81111-1-philmd@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240521122014.333221-4-f.ebner@proxmox.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x12a.google.com
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,27 +78,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/24/24 06:14, Philippe Mathieu-Daudé wrote:
-> The following changes since commit c9ba79baca7c673098361e3a687f72d458e0d18a:
+On 21.05.24 15:20, Fiona Ebner wrote:
+> From: John Snow <jsnow@redhat.com>
 > 
->    Merge tag 'pull-target-arm-20240622' ofhttps://git.linaro.org/people/pmaydell/qemu-arm  into staging (2024-06-22 09:56:49 -0700)
+> for the mirror job. The bitmap's granularity is used as the job's
+> granularity.
 > 
-> are available in the Git repository at:
+> The new @bitmap parameter is marked unstable in the QAPI and can
+> currently only be used for @sync=full mode.
 > 
->    https://github.com/philmd/qemu.git  tags/sdmmc-20240624
+> Clusters initially dirty in the bitmap as well as new writes are
+> copied to the target.
 > 
-> for you to fetch changes up to 76ae9a231487a2b127c90bcb657fd42a1f6c06f8:
+> Using block-dirty-bitmap-clear and block-dirty-bitmap-merge API,
+> callers can simulate the three kinds of @BitmapSyncMode (which is used
+> by backup):
+> 1. always: default, just pass bitmap as working bitmap.
+> 2. never: copy bitmap and pass copy to the mirror job.
+> 3. on-success: copy bitmap and pass copy to the mirror job and if
+>     successful, merge bitmap into original afterwards.
 > 
->    hw/sd/sdcard: Add comments around registers and commands (2024-06-24 15:08:40 +0200)
+> When the target image is a non-COW "diff image", i.e. one that was not
+> used as the target of a previous mirror and the target image's cluster
+> size is larger than the bitmap's granularity, or when
+> @copy-mode=write-blocking is used, there is a pitfall, because the
+> cluster in the target image will be allocated, but not contain all the
+> data corresponding to the same region in the source image.
 > 
-> ----------------------------------------------------------------
-> SD/MMC patches queue
+> An idea to avoid the limitation would be to mark clusters which are
+> affected by unaligned writes and are not allocated in the target image
+> dirty, so they would be copied fully later. However, for migration,
+> the invariant that an actively synced mirror stays actively synced
+> (unless an error happens) is useful, because without that invariant,
+> migration might inactivate block devices when mirror still got work
+> to do and run into an assertion failure [0].
 > 
-> One fix and various cleanups for the SD card model.
+> Another approach would be to read the missing data from the source
+> upon unaligned writes to be able to write the full target cluster
+> instead.
+> 
+> But certain targets like NBD do not allow querying the cluster size.
+> To avoid limiting/breaking the use case of syncing to an existing
+> target, which is arguably more common than the diff image use case,
+> document the limitation in QAPI.
+> 
+> This patch was originally based on one by Ma Haocong, but it has since
+> been modified pretty heavily, first by John and then again by Fiona.
+> 
+> [0]: https://lore.kernel.org/qemu-devel/1db7f571-cb7f-c293-04cc-cd856e060c3f@proxmox.com/
+> 
+> Suggested-by: Ma Haocong <mahaocong@didichuxing.com>
+> Signed-off-by: Ma Haocong <mahaocong@didichuxing.com>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> [FG: switch to bdrv_dirty_bitmap_merge_internal]
+> Signed-off-by: Fabian Grünbichler <f.gruenbichler@proxmox.com>
+> Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+> [FE: rebase for 9.1
+>       get rid of bitmap mode parameter
+>       use caller-provided bitmap as working bitmap
+>       turn bitmap parameter experimental]
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   block/mirror.c                         | 80 +++++++++++++++++++++-----
+>   blockdev.c                             | 44 +++++++++++---
+>   include/block/block_int-global-state.h |  5 +-
+>   qapi/block-core.json                   | 35 ++++++++++-
+>   tests/unit/test-block-iothread.c       |  2 +-
+>   5 files changed, 141 insertions(+), 25 deletions(-)
+> 
+> diff --git a/block/mirror.c b/block/mirror.c
+> index ca23d6ef65..d3d0698116 100644
+> --- a/block/mirror.c
+> +++ b/block/mirror.c
+> @@ -73,6 +73,11 @@ typedef struct MirrorBlockJob {
+>       size_t buf_size;
+>       int64_t bdev_length;
+>       unsigned long *cow_bitmap;
+> +    /*
+> +     * Whether the bitmap is created locally or provided by the caller (for
+> +     * incremental sync).
+> +     */
+> +    bool dirty_bitmap_is_local;
+>       BdrvDirtyBitmap *dirty_bitmap;
+>       BdrvDirtyBitmapIter *dbi;
+>       uint8_t *buf;
+> @@ -691,7 +696,11 @@ static int mirror_exit_common(Job *job)
+>           bdrv_unfreeze_backing_chain(mirror_top_bs, target_bs);
+>       }
+>   
+> -    bdrv_release_dirty_bitmap(s->dirty_bitmap);
+> +    if (s->dirty_bitmap_is_local) {
+> +        bdrv_release_dirty_bitmap(s->dirty_bitmap);
+> +    } else {
+> +        bdrv_enable_dirty_bitmap(s->dirty_bitmap);
+> +    }
+>   
+>       /* Make sure that the source BDS doesn't go away during bdrv_replace_node,
+>        * before we can call bdrv_drained_end */
+> @@ -820,6 +829,16 @@ static void mirror_abort(Job *job)
+>       assert(ret == 0);
+>   }
+>   
+> +/* Always called after commit/abort. */
+> +static void mirror_clean(Job *job)
+> +{
+> +    MirrorBlockJob *s = container_of(job, MirrorBlockJob, common.job);
+> +
+> +    if (!s->dirty_bitmap_is_local && s->dirty_bitmap) {
+> +        bdrv_dirty_bitmap_set_busy(s->dirty_bitmap, false);
+> +    }
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+why not do that in existing mirror_exit_common, where we already do release/enable?
+
+> +}
+> +
 
 
-r~
+-- 
+Best regards,
+Vladimir
 
 
