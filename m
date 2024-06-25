@@ -4,84 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC819C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 11:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5558C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 11:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM4dh-00083v-Sf; Tue, 25 Jun 2024 07:47:09 -0400
+	id 1sM4mn-00051F-3h; Tue, 25 Jun 2024 07:56:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sM4dd-00081u-Ja
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 07:47:05 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sM4ml-00050T-IL
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 07:56:31 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1sM4db-0000dP-4t
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 07:47:04 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1f9aeb96b93so38492855ad.3
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 04:47:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sM4mi-00029Q-EP
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 07:56:31 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-57d20d89748so5208108a12.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 04:56:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1719316021; x=1719920821; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=i3sU1P3Bi7Bp0EOiBgadVjj6g4xG1ocNLTAeQdyId9c=;
- b=CTFN2GNi8Yc84TRiCccNh9jQlVImk0Fp0qqwyICe39zVGz/HJm/5sAISv67ftbeIG2
- 3e1f2YMKeYRvk2Pph41arbAPSocsK2lkYsPgk7nKUDaUTTHqiRH6WoxTJGNzxDU6d2We
- INIhOXuiUnByZGwXym6B3gQ1z8O97af5gbzoYpk+P2nppGDcRuzaCIOhJNvvty1J4hfE
- Chdsc4yOhnFEAiBdjkNcd/j7UGGMH2WpfuE4UUv39/FyHU6PmnrTjzAeT5oj4hgDmHlW
- RDbEyw8LtcUFjrbt+h68MF6U8MM4aRL2g/asrsTjPrTh/ON/X3pjLZ8w6a9H4f+Cbg3c
- M35g==
+ d=linaro.org; s=google; t=1719316586; x=1719921386; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=n6m1uGYAw2V2tNzKuzzVU/1bGox9Nl4LZRtZ579+Yc8=;
+ b=a+iTbYgTW6t83KNGGgwvdfPmi98jLFx32jhuWCYeiqFrPZEZkka+JXvn20SadW4Leg
+ PLn2lLZCurrLRmpw9Sa0sa8snG5FUZRetKvL2wnl/j/1L8I/rMEt41jNja1K1SJ3k5mV
+ N2BAFFkjZn66SXYdmcq+jwWNWE5FcVd4L3cPE4yqT0EmMbADuxRm+AHY8L9or6p/nWFr
+ oIKrsn4eLbG3Z2q+S01Tt7+id7pANjGHvNFCnXi1d0a10UuVulJ62DucviuekuoDodeo
+ VyrmcEvW+6qIJEmcMaThwz76ssEeAxzE25hWe59d1ZU6cM46r8LAFGRs4FE0HJCqCb9+
+ p5Gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719316021; x=1719920821;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=i3sU1P3Bi7Bp0EOiBgadVjj6g4xG1ocNLTAeQdyId9c=;
- b=O+fNI7dbUgbqwdJKNog9r1YTDWacstCtERL4paS9ATje5tvnYSu1YZZhYw0tOO/YDQ
- be2KrLXjsYbyil3js1X6ln677mByK89vvt6tGg2JGbWgll2QOiVS3NZJI3nzP4sFpowL
- JiM0xaPm6ud3cxzDIvv64IurRy8MZ3l/nxaQXevF6PDoqW6jsGwRoarGDPxyQWj7GWwi
- Q4GM+IzgDqRNYmNIZ+zT6vlBPzKG4PeV4EOVduLa49VxZ7BvtYiInmMm3IxTD3p1MioH
- eT/Af1hMQWiganJjS7MNmqsZfaa69J+9GF1ni7YLTIAhuhzSI67fY3+vE8JK5nFe73O5
- azLA==
-X-Gm-Message-State: AOJu0Yxlg8qVS0jxOsF/6nDs7IvTod7y0HHJV907hVUFZCId4YEntQ+o
- 3He1eJdlU0UfSdD03XRghl9gC2jZMowd7ugBKOuQrXHL+INHrFnxLxl4oaZwsur7IZyG20VuA80
- Ng7Uv5sypSpS3N+gSHEPtgQ/MO7Qfzb2TfJYnbqfcpYvHcuKyVeK8zO6OvB9h1N1DA3kVWw5jo0
- M7VfBOQUkiyoUDDr0Btt8v6ohPAyOWJg9x4p+fjX44sqJP
-X-Google-Smtp-Source: AGHT+IFi3LEOZRrUQ6uJUwacub3AD+Z7K94Gvpu/nQAIEGG16LbV9EN9T6AQb6UJDIB3NoJz8UjeoQ==
-X-Received: by 2002:a17:902:d2c5:b0:1fa:2e45:bcb8 with SMTP id
- d9443c01a7336-1fa2e45bd32mr76106865ad.2.1719316021414; 
- Tue, 25 Jun 2024 04:47:01 -0700 (PDT)
-Received: from hsinchu16.internal.sifive.com
- (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb321d4esm79472325ad.67.2024.06.25.04.46.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 04:47:01 -0700 (PDT)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
- Frank Chang <frank.chang@sifive.com>,
- Jerry Zhang Jian <jerry.zhangjian@sifive.com>,
- Max Chou <max.chou@sifive.com>
-Subject: [PATCH v3 5/6] target/riscv: Add Zc extension implied rule
-Date: Tue, 25 Jun 2024 19:46:28 +0800
-Message-ID: <20240625114629.27793-6-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240625114629.27793-1-frank.chang@sifive.com>
-References: <20240625114629.27793-1-frank.chang@sifive.com>
+ d=1e100.net; s=20230601; t=1719316586; x=1719921386;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n6m1uGYAw2V2tNzKuzzVU/1bGox9Nl4LZRtZ579+Yc8=;
+ b=R5CDg7CIkF8tVuOmjd41nLWxqcEYly5MHtbscgzroJ2BqiKOU9jrmsKmX8o/1r4AzT
+ 1LjEuj55AXC7oeEoRy6GdQxu7Zy+6wdOFz8MOvbFKpiAZQuNNuYSDpBB7PzNI0EhyLLl
+ hvMpLWQltG/NsgGQHENDLKgtGEUYKvDrOkvtL7dIh5Sk5G7Qu0LIof8hV0oFnYlQL1l4
+ ojYwhIpoI+lbAxeT60JpgWWXsk2y308NaNPzg65j2fAt9PTEzGRPjOubtkxhImpbN9An
+ B8kglGv9p+CjCmmA8LxrkYfcFgG8mpScrTMOoQW6ppxmKT0/lMMGdR/1EHkI/ycxVMlP
+ onGA==
+X-Gm-Message-State: AOJu0YzP9KHTGE0x0UFVrXnVayoRll2e6P9Z25IyFZRtML318dQL+sYz
+ BQbtRcTv+hQ3dHmKmTtrY4FFoZqtRAPcPp0UHtq2lF03oRwbcR/pPKCXZEEH282AKwOGAZomZuZ
+ j+acLh1bRyFoXnD9VeX9ilHf1+loa2jZHzVeBOw==
+X-Google-Smtp-Source: AGHT+IEzZsY0Z5jznPPGFuN/M3Uwa2xoAeYNL8JD433/fSEb26I9CE+yO5XgK4TX7zXJtz9TR2lEwV63taUnS6Amhgg=
+X-Received: by 2002:a05:6402:270c:b0:57d:6079:3916 with SMTP id
+ 4fb4d7f45d1cf-57d607939edmr4357359a12.26.1719316586234; Tue, 25 Jun 2024
+ 04:56:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=frank.chang@sifive.com; helo=mail-pl1-x62c.google.com
+References: <20240625050810.1475643-1-richard.henderson@linaro.org>
+ <20240625050810.1475643-4-richard.henderson@linaro.org>
+In-Reply-To: <20240625050810.1475643-4-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 25 Jun 2024 12:56:15 +0100
+Message-ID: <CAFEAcA9t6nzxj4Lj769vHjyrLSrCKstnyWi2RVqJG0=J_j6jbw@mail.gmail.com>
+Subject: Re: [PATCH 03/13] target/arm: Fix FJCVTZS vs flush-to-zero
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,69 +88,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+On Tue, 25 Jun 2024 at 06:09, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Input denormals cause the Javascript inexact bit
+> (output to Z) to be set.
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 6c1f6f2733a ("target/arm: Implement ARMv8.3-JSConv")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2375
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
 
-Zc extension has special implied rules that need to be handled separately.
+> --- /dev/null
+> +++ b/tests/tcg/aarch64/test-2375.c
+> @@ -0,0 +1,20 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/* See https://gitlab.com/qemu-project/qemu/-/issues/2375 */
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
-Tested-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/tcg/tcg-cpu.c | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+Not a project requirement, I guess, but on the Linaro end I
+think we want a
+ /* Copyright (c) 2024 Linaro Ltd */
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 1a3aef5bff..ccca9037ed 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -925,11 +925,45 @@ static void cpu_enable_implied_rule(RISCVCPU *cpu,
-     }
- }
- 
-+/* Zc extension has special implied rules that need to be handled separately. */
-+static void cpu_enable_zc_implied_rules(RISCVCPU *cpu)
-+{
-+    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cpu);
-+    CPURISCVState *env = &cpu->env;
-+
-+    if (cpu->cfg.ext_zce) {
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcb), true);
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcmp), true);
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcmt), true);
-+
-+        if (riscv_has_ext(env, RVF) && mcc->misa_mxl_max == MXL_RV32) {
-+            cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcf), true);
-+        }
-+    }
-+
-+    /* Zca, Zcd and Zcf has a PRIV 1.12.0 restriction */
-+    if (riscv_has_ext(env, RVC) && env->priv_ver >= PRIV_VERSION_1_12_0) {
-+        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
-+
-+        if (riscv_has_ext(env, RVF) && mcc->misa_mxl_max == MXL_RV32) {
-+            cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcf), true);
-+        }
-+
-+        if (riscv_has_ext(env, RVD)) {
-+            cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcd), true);
-+        }
-+    }
-+}
-+
- static void riscv_cpu_enable_implied_rules(RISCVCPU *cpu)
- {
-     RISCVCPUImpliedExtsRule *rule;
-     int i;
- 
-+    /* Enable the implied extensions for Zc. */
-+    cpu_enable_zc_implied_rules(cpu);
-+
-     /* Enable the implied MISAs. */
-     for (i = 0; (rule = riscv_misa_ext_implied_rules[i]); i++) {
-         if (riscv_has_ext(&cpu->env, rule->ext)) {
--- 
-2.43.2
+too.
 
+> +
+> +#include <assert.h>
+> +
+> +int main()
+
+Missing "void".
+
+> +{
+> +   int r, z;
+> +
+> +   asm("msr fpcr, %2\n\t"
+> +       "fjcvtzs %w0, %d3\n\t"
+> +       "cset %1, eq"
+> +       : "=r"(r), "=r"(z)
+> +       : "r"(0x01000000L),     /* FZ = 1 */
+> +         "w"(0xfcff00L));       /* denormal */
+> +
+> +    assert(r == 0);
+> +    assert(z == 0);
+> +    return 0;
+> +}
+
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+(If these are the only issues in the patchset I'll fix them
+up when I apply it.)
+
+thanks
+-- PMM
 
