@@ -4,76 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8866FC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 16:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00BC2C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 16:10:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM8do-0002q2-JQ; Tue, 25 Jun 2024 12:03:32 -0400
+	id 1sM8ji-0005Tb-Mx; Tue, 25 Jun 2024 12:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sM8dn-0002pZ-35; Tue, 25 Jun 2024 12:03:31 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sM8jf-0005TG-Kb; Tue, 25 Jun 2024 12:09:35 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sM8dk-0001jV-Gc; Tue, 25 Jun 2024 12:03:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719331408; x=1750867408;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=aqtR3/KU2BgFo+Rt5bpSW19OPfURXowtgqJrCWMwTto=;
- b=M/k1gba+zXVJzjhdMDMKmzRZ1AVW3dIkZPLDy8RH4PEqclNVqsrXsK4a
- wrB5b/NQ5vwLzrhWej/W2Ki2LTVUDc3FuLINgqTXoYwT9AFktuLroGbSR
- Zbmpl/xSvhI7k5DpEYwNXXcStNcxrOmZS6Zw7463uI62iHhVoEB6hTGrM
- JieHVAy0Fn6OFCNKQttX6KL12Sh1iePHgLe8Oum2q4zwwlM10XUb30BuP
- zHm7RWKXzmkZdFWgKvrM+whfotROCz6M1Y2vl1Zvkwm6kvcZA3J8I1LTi
- espeyPmiQ4Wx+ZP1PJ/KYFCiBomKRVBiiNGD2SVdlpPjUQ2RaJIgSfeWd w==;
-X-CSE-ConnectionGUID: 257frDDiTQecGAo6pj5a4w==
-X-CSE-MsgGUID: O6m6bWjDR7C6nJ2ej6AWhw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11114"; a="20138445"
-X-IronPort-AV: E=Sophos;i="6.08,264,1712646000"; d="scan'208";a="20138445"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2024 09:03:25 -0700
-X-CSE-ConnectionGUID: q1TTNfjCSSOZQQDuzM+KzA==
-X-CSE-MsgGUID: G9h8UzVKSUKFgZcCn1LrSQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,264,1712646000"; d="scan'208";a="43765999"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa009.fm.intel.com with ESMTP; 25 Jun 2024 09:03:21 -0700
-Date: Wed, 26 Jun 2024 00:18:55 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
-Subject: Re: [RFC PATCH v3 5/5] DO NOT MERGE: replace TYPE_PL011 with
- x-pl011-rust in arm virt machine
-Message-ID: <Znrt77XOc2YBNZyM@intel.com>
-References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
- <229703c7f4394691f254b02c012ee0d7dcf57afb.1718827153.git.manos.pitsidianakis@linaro.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sM8jb-0002dy-Ds; Tue, 25 Jun 2024 12:09:35 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c16:1680:0:640:d42f:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 6195C6129A;
+ Tue, 25 Jun 2024 19:09:21 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b645::1:29] (unknown
+ [2a02:6b8:b081:b645::1:29])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id K9St0M0IZ0U0-O5qniPT5; Tue, 25 Jun 2024 19:09:20 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1719331760;
+ bh=RCl/cuG/sChzakxzfMyv4/EwCA5OhCIKbuQiAds2+MM=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=OAjvK64JwRUq9GcGl4Y9YJiE97l+fp7SpSOuR8l/v4RkMdG+VHb2H9w+MjHjX2zDg
+ Gq2jAbBkcYGVIzkpYiqE3X4tmhniOB9hspqI4PoHSqcB5DK5+sAaaeIjGIzy5YjYXY
+ yhxVQgsPYFViiJDaQzfC34K+YOgwKHne158VXZo8=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <7085db33-2ff1-42aa-ac3e-63cf55c8b6b5@yandex-team.ru>
+Date: Tue, 25 Jun 2024 19:09:20 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <229703c7f4394691f254b02c012ee0d7dcf57afb.1718827153.git.manos.pitsidianakis@linaro.org>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] prealloc: add truncate mode for prealloc filter
+To: "Denis V. Lunev" <den@openvz.org>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+References: <20240430170510.148812-1-den@openvz.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240430170510.148812-1-den@openvz.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,56 +77,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Manos,
-
-On Wed, Jun 19, 2024 at 11:14:02PM +0300, Manos Pitsidianakis wrote:
-> Date: Wed, 19 Jun 2024 23:14:02 +0300
-> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Subject: [RFC PATCH v3 5/5] DO NOT MERGE: replace TYPE_PL011 with
->  x-pl011-rust in arm virt machine
-> X-Mailer: git-send-email 2.44.0
+On 30.04.24 20:05, Denis V. Lunev via wrote:
+> Preallocate filter allows to implement really interesting setups.
 > 
-> Convenience patch for testing the rust device.
+> Assume that we have
+> * shared block device, f.e. iSCSI LUN, implemented with some HW device
+> * clustered LVM on top of it
+> * QCOW2 image stored inside LVM volume
 > 
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> This allows very cheap clustered setups with all QCOW2 features intact.
+> Currently supported setups using QCOW2 with data_file option are not
+> so cool as snapshots are not allowed, QCOW2 should be placed into some
+> additional distributed storage and so on.
+> 
+> Though QCOW2 inside LVM volume has a drawback. The image is growing and
+> in order to accomodate that image LVM volume is to be resized. This
+> could be done externally using ENOSPACE event/condition but this is
+> cumbersome.
+> 
+> This patch introduces native implementation for such a setup. We should
+> just put prealloc filter in between QCOW2 format and file nodes. In that
+> case LVM will be resized at proper moment and that is done effectively
+> as resizing is done in chinks.
+> 
+> The patch adds allocation mode for this purpose in order to distinguish
+> 'fallocate' for ordinary file system and 'truncate'.
+> 
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+> CC: Kevin Wolf <kwolf@redhat.com>
+> CC: Hanna Reitz <hreitz@redhat.com>
+> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->  hw/arm/virt.c | 4 ++++
->  1 file changed, 4 insertions(+)
+>   block/preallocate.c | 50 +++++++++++++++++++++++++++++++++++++++++++--
+>   1 file changed, 48 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 3c93c0c0a6..f33b58ae0d 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -912,7 +912,11 @@ static void create_uart(const VirtMachineState *vms, int uart,
->      int irq = vms->irqmap[uart];
->      const char compat[] = "arm,pl011\0arm,primecell";
->      const char clocknames[] = "uartclk\0apb_pclk";
-> +#ifdef CONFIG_WITH_RUST
-> +    DeviceState *dev = qdev_new("x-pl011-rust");
-> +#else
->      DeviceState *dev = qdev_new(TYPE_PL011);
-> +#endif
->      SysBusDevice *s = SYS_BUS_DEVICE(dev);
->      MachineState *ms = MACHINE(vms);
->
+> diff --git a/block/preallocate.c b/block/preallocate.c
+> index 4d82125036..6d31627325 100644
+> --- a/block/preallocate.c
+> +++ b/block/preallocate.c
+> @@ -33,10 +33,24 @@
+>   #include "block/block-io.h"
+>   #include "block/block_int.h"
+>   
+> +typedef enum PreallocateMode {
+> +    PREALLOCATE_MODE_FALLOCATE = 0,
+> +    PREALLOCATE_MODE_TRUNCATE = 1,
+> +    PREALLOCATE_MODE__MAX = 2,
+> +} PreallocateMode;
+> +
+> +static QEnumLookup prealloc_mode_lookup = {
+> +    .array = (const char *const[]) {
+> +        "falloc",
+> +        "truncate",
+> +    },
+> +    .size = PREALLOCATE_MODE__MAX,
+> +};
 
-I realized that if we want to merge the rust pl011 device, then this
-patch or similar enablement support is necessary, otherwise, the rust
-code is only used for compilation and cannot actually be run...
+I think instead we should update BlockdevOptionsPreallocate options in qapi/block-core.json. Then corresponding enum would be generated.
 
-This is also an open for the devices that are rewrite in Rust.
+Example of parsing options, reusing qapi mechanics is in block/copy-before-write.c - cbw_parse_options(). on-cbw-error field is enum.
 
-I think there should be an option for the user to choose whether to
-enable pl011 in C or pl011 in Rust. What do you think?
+>   
+>   typedef struct PreallocateOpts {
+>       int64_t prealloc_size;
+>       int64_t prealloc_align;
+> +    PreallocateMode prealloc_mode;
+>   } PreallocateOpts;
+>   
+>   typedef struct BDRVPreallocateState {
+> @@ -79,6 +93,7 @@ typedef struct BDRVPreallocateState {
+>   
+>   #define PREALLOCATE_OPT_PREALLOC_ALIGN "prealloc-align"
+>   #define PREALLOCATE_OPT_PREALLOC_SIZE "prealloc-size"
+> +#define PREALLOCATE_OPT_MODE "mode"
+>   static QemuOptsList runtime_opts = {
+>       .name = "preallocate",
+>       .head = QTAILQ_HEAD_INITIALIZER(runtime_opts.head),
+> @@ -94,7 +109,14 @@ static QemuOptsList runtime_opts = {
+>               .type = QEMU_OPT_SIZE,
+>               .help = "how much to preallocate, default 128M",
+>           },
+> -        { /* end of list */ }
+> +        {
+> +            .name = PREALLOCATE_OPT_MODE,
+> +            .type = QEMU_OPT_STRING,
+> +            .help = "Preallocation mode on image expansion "
+> +                    "(allowed values: falloc, truncate)",
+> +            .def_value_str = "falloc",
+> +        },
+> +        { /* end of list */ },
+>       },
+>   };
+>   
+> @@ -102,6 +124,8 @@ static bool preallocate_absorb_opts(PreallocateOpts *dest, QDict *options,
+>                                       BlockDriverState *child_bs, Error **errp)
+>   {
+>       QemuOpts *opts = qemu_opts_create(&runtime_opts, NULL, 0, &error_abort);
+> +    Error *local_err = NULL;
+> +    char *buf;
+>   
+>       if (!qemu_opts_absorb_qdict(opts, options, errp)) {
+>           return false;
+> @@ -112,6 +136,17 @@ static bool preallocate_absorb_opts(PreallocateOpts *dest, QDict *options,
+>       dest->prealloc_size =
+>           qemu_opt_get_size(opts, PREALLOCATE_OPT_PREALLOC_SIZE, 128 * MiB);
+>   
+> +    buf = qemu_opt_get_del(opts, PREALLOCATE_OPT_MODE);
+> +    /* prealloc_mode can be downgraded later during allocate_clusters */
+> +    dest->prealloc_mode = qapi_enum_parse(&prealloc_mode_lookup, buf,
+> +                                          PREALLOCATE_MODE_FALLOCATE,
+> +                                          &local_err);
+> +    g_free(buf);
+> +    if (local_err != NULL) {
+> +        error_propagate(errp, local_err);
+> +        return false;
+> +    }
+> +
+>       qemu_opts_del(opts);
+>   
+>       if (!QEMU_IS_ALIGNED(dest->prealloc_align, BDRV_SECTOR_SIZE)) {
+> @@ -335,9 +370,20 @@ handle_write(BlockDriverState *bs, int64_t offset, int64_t bytes,
+>   
+>       want_merge_zero = want_merge_zero && (prealloc_start <= offset);
+>   
+> -    ret = bdrv_co_pwrite_zeroes(
+> +    switch (s->opts.prealloc_mode) {
+> +    case PREALLOCATE_MODE_FALLOCATE:
+> +        ret = bdrv_co_pwrite_zeroes(
+>               bs->file, prealloc_start, prealloc_end - prealloc_start,
+>               BDRV_REQ_NO_FALLBACK | BDRV_REQ_SERIALISING | BDRV_REQ_NO_WAIT);
+> +        break;
+> +    case PREALLOCATE_MODE_TRUNCATE:
+> +        ret = bdrv_co_truncate(bs->file, prealloc_end, false,
+> +                               PREALLOC_MODE_OFF, 0, NULL);
+> +        break;
+> +    default:
+> +        return false;
+> +    }
+> +
+>       if (ret < 0) {
+>           s->file_end = ret;
+>           return false;
 
-Perhaps the easiest way to enable rust pl011 is to add an option for
-virt machine... But that's certainly not a long-term approach. I think
-the ideal way would be to allow rust pl011 to be specified in the
-command line via -device, but this approach would mean allowing the
-user to create pl011 and would require changes to the current buildin
-pl011's creation logic.
-
--Zhao
-
+-- 
+Best regards,
+Vladimir
 
 
