@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E600EC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 14:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF15C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 14:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM7Mb-0000Bu-4B; Tue, 25 Jun 2024 10:41:41 -0400
+	id 1sM7Rj-0001Mc-Mp; Tue, 25 Jun 2024 10:46:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sM7MY-0000B7-SH; Tue, 25 Jun 2024 10:41:38 -0400
+ id 1sM7Rh-0001M5-Jh; Tue, 25 Jun 2024 10:46:57 -0400
 Received: from mta-04.yadro.com ([89.207.88.248])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sM7MW-0000qz-20; Tue, 25 Jun 2024 10:41:38 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com CADDEC000A
+ id 1sM7Rf-0001yJ-8G; Tue, 25 Jun 2024 10:46:57 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 91C71C000D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1719326485;
- bh=2gl8cvlNjg5deM4FjBtfADGUAw7RbFntY1yRiRsLYQE=;
+ s=mta-04; t=1719326812;
+ bh=+b1uQRjJMEIN549+zHrhMasy4rzZQe526ayHxdTof6Y=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=clwg6sFnYUMmDhSAIxef7vc4DqtwNJTvZMBF0F1iFgj1Gom3R/WEswQs14T04j16u
- Wn7SIAZD/ScXZCuk0AfQyZ7XSAj4/Qg0B2B7tQ3rOvvFtTOWXLzKiBwE4HgAPkus5J
- 87E4rCOeMbENErS/27ZGMxThI//1ABD0GyfojnyKv0IIBauQw5wKdcoTh7CnZrE/d5
- fnvg962c23/c5/b5OWzbJ/qdID3bBbpmy6X+1fewzKMnegZ5vj1B37LaN2/JRtPx/h
- pGIbmPGwZPpwjf38Re2f5EU9+W4rOQboT2nJ9dUfwzg4NwUkCBoUv9JdmI69Mxnolv
- f4FPq2HXkxmcw==
+ b=leJTph7oQVxU/dJdiSfWmp0qXADraNwCdsKgVwVDar6houN04k/AUACnLYu8nS6t7
+ t2IDRSnahaRVPzhx8QN4iFLkXq0KLYOl+47a3Dw3YlWM4eEs8+BZdUjWzmAK3afjJq
+ pBmhL8GKpOso4OhzUKvyextdrrc512d2QIhLlzjdJp4uUnXJBT53N1i/YFNvZ7EWNJ
+ zGayNBEoRnjmxjvdERjzi9v59lHNchp9jM9pEfMnqgdk3ZTHXbISsM/iLGSmD7/gNw
+ n9MRbcqr27BXJInQxKhl6yxcwqNb+lk5Cp9y6HbE+UKnqCbORlzRpOfyI8fbRfv4d/
+ B3M/xaY0CpaeQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1719326485;
- bh=2gl8cvlNjg5deM4FjBtfADGUAw7RbFntY1yRiRsLYQE=;
+ s=mta-03; t=1719326812;
+ bh=+b1uQRjJMEIN549+zHrhMasy4rzZQe526ayHxdTof6Y=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=PKWpNveJ0JOJ5NTTi37w4CCRIRmRUpxI64F0+vLTnV8TKd821kU1de00G1LDBMptQ
- 7t8kdth0okqeVa3kRQMlCBXEph+o2Mc5inNHQYLBxu1CLr4mYGP3t7VKchzjxGAKjR
- HQGWKLSE7CXyJHlBwUYKoticQ0waLH5X+y07vP3K0SSb6R7ct7vZbkZmrU6quUe0ED
- B4GKyEzoKmLchVb5VdiZk0xC5LgqHIxDneEQX45Y0RjTw5iLSsHo4ER8xRdSk1plVx
- VsV6chDFCHF8bHtBx1tLFYnvMtk9O/ohcvWZWqvYXj2JmaTa0AfLAf/wMBwFUcLNiA
- a29BUS+bxn6GA==
+ b=ivuCE1vLCPUoDU55ZBS0IzOz/bfIn+Wg/236aw9NKOCeTM41tgD9ZDqLnbjGcJtOC
+ 0Lx6ufMbA5wVxgGO3mFcp7jxYgQC99urIMz9jS21W+AyWAOrTBZotFQvLh+vXSKUs9
+ JNDqUEc5MqmtNbD68/1o0qDfmVmbDILc1TDs+1szoqx67yVb8ApshNsoaeux1EuBrq
+ jSc9E8b6dfnBkHX4dg3viev6pKBXlyT+evBEyarF7QAFabJQzamLElww/AZ3Zusnpu
+ pBapprdY3WmR1UV0fem3ghE3U2elaE8qb7eRWCg20EkmUQVv6qbS5XsPoXYJSEsxUF
+ CSK5O0D+0s6rA==
 From: Alexei Filippov <alexei.filippov@syntacore.com>
 To: <palmer@dabbelt.com>
 CC: <alexei.filippov@syntacore.com>, <alistair.francis@wdc.com>,
  <bmeng.cn@gmail.com>, <dbarboza@ventanamicro.com>,
  <zhiwei_liu@linux.alibaba.com>, <liwei1518@gmail.com>,
  <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
-Subject: [PATCH] target/riscv: Add support for machine specific pmu's events
-Date: Tue, 25 Jun 2024 17:41:18 +0300
-Message-ID: <20240625144118.32194-1-alexei.filippov@syntacore.com>
+Subject: [PATCH v2] target/riscv: Add support for machine specific pmu's events
+Date: Tue, 25 Jun 2024 17:46:43 +0300
+Message-ID: <20240625144643.34733-1-alexei.filippov@syntacore.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -85,6 +85,8 @@ which expected to have different behavior.
 
 Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
 ---
+Changes since v2:
+		-rebased to latest master
  target/riscv/cpu.h |   9 +++
  target/riscv/csr.c |  43 +++++++++-----
  target/riscv/pmu.c | 139 ++++++++++++++++++++++-----------------------
@@ -92,10 +94,10 @@ Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
  4 files changed, 115 insertions(+), 87 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index a137b0f5a1..12542f413b 100644
+index 6fe0d712b4..fbf82b050b 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -368,6 +368,13 @@ struct CPUArchState {
+@@ -374,6 +374,13 @@ struct CPUArchState {
      uint64_t (*rdtime_fn)(void *);
      void *rdtime_fn_arg;
  
@@ -109,20 +111,20 @@ index a137b0f5a1..12542f413b 100644
      /* machine specific AIA ireg read-modify-write callback */
  #define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen) \
      ((((__xlen) & 0xff) << 24) | \
-@@ -454,6 +461,8 @@ struct ArchCPU {
+@@ -455,6 +462,8 @@ struct ArchCPU {
      uint32_t pmu_avail_ctrs;
      /* Mapping of events to counters */
      GHashTable *pmu_event_ctr_map;
 +    /* Mapping of counters to events */
 +    GHashTable *pmu_ctr_event_map;
+     const GPtrArray *decoders;
  };
  
- /**
 diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index c47056ec33..21bb5bfdc4 100644
+index 58ef7079dc..b541852c84 100644
 --- a/target/riscv/csr.c
 +++ b/target/riscv/csr.c
-@@ -862,20 +862,25 @@ static int write_mhpmcounter(CPURISCVState *env, int csrno, target_ulong val)
+@@ -875,20 +875,25 @@ static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
      int ctr_idx = csrno - CSR_MCYCLE;
      PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
      uint64_t mhpmctr_val = val;
@@ -154,7 +156,7 @@ index c47056ec33..21bb5bfdc4 100644
          counter->mhpmcounter_prev = val;
      }
  
-@@ -888,13 +893,19 @@ static int write_mhpmcounterh(CPURISCVState *env, int csrno, target_ulong val)
+@@ -902,13 +907,19 @@ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
      PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
      uint64_t mhpmctr_val = counter->mhpmcounter_val;
      uint64_t mhpmctrh_val = val;
@@ -178,7 +180,7 @@ index c47056ec33..21bb5bfdc4 100644
              riscv_pmu_setup_timer(env, mhpmctr_val, ctr_idx);
          }
      } else {
-@@ -912,6 +923,7 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+@@ -926,6 +937,7 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
                                           counter->mhpmcounter_prev;
      target_ulong ctr_val = upper_half ? counter->mhpmcounterh_val :
                                          counter->mhpmcounter_val;
@@ -186,7 +188,7 @@ index c47056ec33..21bb5bfdc4 100644
  
      if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
          /*
-@@ -932,9 +944,14 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+@@ -946,9 +958,14 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
       * The kernel computes the perf delta by subtracting the current value from
       * the value it initialized previously (ctr_val).
       */
@@ -229,23 +231,31 @@ index 0e7d58b8a5..c3b6b20337 100644
      RISCVCPU *cpu;
      uint32_t event_idx;
 -    uint32_t ctr_idx;
--
+ 
 -    /* Fixed instret counter */
 -    if (target_ctr == 2) {
 -        return true;
--    }
--
--    cpu = env_archcpu(env);
++    if (target_ctr < 3) {
++        return target_ctr;
+     }
+ 
+     cpu = env_archcpu(env);
 -    if (!cpu->pmu_event_ctr_map) {
 -        return false;
--    }
--
++    if (!cpu->pmu_ctr_event_map || !cpu->pmu_event_ctr_map) {
++        return RISCV_PMU_EVENT_NOT_PRESENTED;
+     }
+ 
 -    event_idx = RISCV_PMU_EVENT_HW_INSTRUCTIONS;
 -    ctr_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_event_ctr_map,
 -                               GUINT_TO_POINTER(event_idx)));
 -    if (!ctr_idx) {
 -        return false;
--    }
++    event_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_ctr_event_map,
++                                                     GUINT_TO_POINTER(target_ctr)));
++    if (!event_idx) {
++        return RISCV_PMU_EVENT_NOT_PRESENTED;
+     }
  
 -    return target_ctr == ctr_idx ? true : false;
 -}
@@ -259,17 +269,13 @@ index 0e7d58b8a5..c3b6b20337 100644
 -    /* Fixed mcycle counter */
 -    if (target_ctr == 0) {
 -        return true;
-+    if (target_ctr < 3) {
-+        return target_ctr;
-     }
- 
-     cpu = env_archcpu(env);
+-    }
+-
+-    cpu = env_archcpu(env);
 -    if (!cpu->pmu_event_ctr_map) {
 -        return false;
-+    if (!cpu->pmu_ctr_event_map || !cpu->pmu_event_ctr_map) {
-+        return RISCV_PMU_EVENT_NOT_PRESENTED;
-     }
- 
+-    }
+-
 -    event_idx = RISCV_PMU_EVENT_HW_CPU_CYCLES;
 -    ctr_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_event_ctr_map,
 -                               GUINT_TO_POINTER(event_idx)));
@@ -277,12 +283,8 @@ index 0e7d58b8a5..c3b6b20337 100644
 -    /* Counter zero is not used for event_ctr_map */
 -    if (!ctr_idx) {
 -        return false;
-+    event_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_ctr_event_map,
-+                                                     GUINT_TO_POINTER(target_ctr)));
-+    if (!event_idx) {
-+        return RISCV_PMU_EVENT_NOT_PRESENTED;
-     }
- 
+-    }
+-
 -    return (target_ctr == ctr_idx) ? true : false;
 +    return event_idx;
  }
@@ -457,10 +459,10 @@ index 0e7d58b8a5..c3b6b20337 100644
      }
  
 diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
-index 505fc850d3..f80e757055 100644
+index 7c0ad661e0..b99a5f58d4 100644
 --- a/target/riscv/pmu.h
 +++ b/target/riscv/pmu.h
-@@ -19,10 +19,12 @@
+@@ -22,10 +22,12 @@
  #include "cpu.h"
  #include "qapi/error.h"
  
@@ -477,11 +479,13 @@ index 505fc850d3..f80e757055 100644
  void riscv_pmu_timer_cb(void *priv);
  void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
  int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
-@@ -31,3 +33,4 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
+@@ -34,5 +36,6 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
  void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
  int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
                            uint32_t ctr_idx);
 +bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx);
+ 
+ #endif /* RISCV_PMU_H */
 -- 
 2.34.1
 
