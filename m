@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ABE9C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 18:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A80FDC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 18:53:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMB5i-000172-9I; Tue, 25 Jun 2024 14:40:47 -0400
-Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
+	id 1sMB7J-0001YM-1O; Tue, 25 Jun 2024 14:42:32 -0400
+Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMB3q-0000rb-2L
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 14:38:50 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1sMB44-0000wr-Tv
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 14:38:57 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMB2N-00065Z-Dk
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 14:38:08 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f9cd92b146so45735165ad.3
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 11:35:48 -0700 (PDT)
+ id 1sMB2q-00066c-UT
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 14:38:39 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1fa2ea1c443so23091735ad.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 11:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719340538; x=1719945338; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=o3TrT+1edJpCmza9gqCf/5QxVas39HNQW55OMRlXNaM=;
- b=pEYHdZc7MX4nHHg+1XqAoAJaK1cgzcV0IoO2mpA3An0zKelWyIfQKQ3y1WRmsVSQBd
- qCSh064B7dQJ2UUKDsOR1CpdOHgV8iyVte3qDkgePWg+pjiJN2ugwVo6vpNb+w+no/Sl
- scAlozovotCgb8IoiPrG90E7vJ4PgnxnsKV51OMx5U3QoauHuSjpqQwZqEgwIeUf2bvU
- PGTuxCK3eVK/vgyDgiCEdi/8e/kzIJ4QoqPIQfPHSP1BXyCwS1YZur+MwB85xw+1D8sN
- EoaSOSgkrzI03IMQmk9GTm/L3k6OtrZu1XLLKMBjq+QlnXwJ2Oc9h5DKDjNabsUaglbI
- +0pg==
+ d=linaro.org; s=google; t=1719340544; x=1719945344; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wsKF91GwX4/Knu6MbETuxw4jFllUHVVW6ayUlN0J0DQ=;
+ b=xNOYjSaDJrUVpHygzM01J8Z6foF5lHqzbog8hYIbqd0s6EQyiPVSTdV7d9N0rLretU
+ FepHmDElB2ywoS+xLmgweZUBXTOhMLGBsnQikrX1Hq+pHvpc7BJccCzftf0quVXcwcVV
+ 2X/KIyNQI5Bn1Ou6dV7J64oqeu3QL4t7gnBqZncuL4XKpaZ4p2e0sNcWBllU5Q9crN4l
+ U183x+0Yeg/xelMu8awtA5OOfpyuBKdorhIfYW75EuJdhuKFRGiZEZXzv6ect0Mcri/8
+ 0Jdy5VrAtOOMCTLvceU59Bqca9pRrrJKc2NRjcyVXn8RrVvu8TfBEvyOgeW7QV6cr9eT
+ hAbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719340538; x=1719945338;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=o3TrT+1edJpCmza9gqCf/5QxVas39HNQW55OMRlXNaM=;
- b=e9AZ22QAYd9QGJlKP4EXZfBRadd9+1vzYb5sprccwoRvDoP9J72wq/C7XrtW/FD2GS
- YS9YXpxaVOcWJ9Ge3/Wj17DmLbZQx2wE6glKdz7+jQTq09bKBBLcvq48qOnLn537ECeU
- lfONG63fXnhwBiwArP2ZWX8io1lg5wj0xAjzk/sB7+/eP9srqNNsig6U8BJzOS94dfxQ
- TK0pzIs/S+xHLGotev3+nREaVpzcuPD86jK43y7OJJ/mInEqBSU9NtAp3sBQ1Tv9VClE
- qpRq00XCcUjcvEa1MTsWHFSJcz18VZunwIYqU7iBz8KxIenX5zx1p6sF7C/AUInZR/ki
- FLYQ==
-X-Gm-Message-State: AOJu0Yw8mEMBmXnIl/RY7sjP0OrYSWroDHwC5CnFDmvGdTE7Y15zxCGg
- Zj2Y61+G8G4LXF+x0d5W66wTANUCLqoLpiktehkX9+4ZQ5fZylU6xnvu7fQtYhgplG/0+m6XxVu
- v
-X-Google-Smtp-Source: AGHT+IGKcK+3ox4nQ3B5KiL9UYM/bEI495nOyo6Vv1n7zlciQs3nJZNhpDz5B8su6nG9uCZld+gWPA==
-X-Received: by 2002:a17:902:c407:b0:1f6:e4ab:a1f2 with SMTP id
- d9443c01a7336-1fa1d51e50amr99561685ad.25.1719340537890; 
- Tue, 25 Jun 2024 11:35:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719340544; x=1719945344;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wsKF91GwX4/Knu6MbETuxw4jFllUHVVW6ayUlN0J0DQ=;
+ b=IO7JnGTvx3F/Gh3fzYnah1aql8HuMO9py7ijsAxf8Kwetr1TFmH9nRDArYgn/7+96W
+ IJjuZXtCjXby5uIseojT9ai6DJwHZ37C2nTQBd6YVUl5/96UfcDIbSkenOQDPhfulogc
+ eheTwq6vS4mAaNTicveGbAp7jBUo9l8bwUYwbeEWRg3XGnpL/flD2y3yCVMOco3ySbLy
+ zIU9llmPSbMmRuVbwbPRTRSWkXP4tEkQDRYEEfy3PXajTHITfJhTbs+NB+HFzDCJcimB
+ SzGx/KBS0WIO7OAoyfkE4SV4rNGbuUfpxLL2dZJIDyefMFbdn+H3HsmSiP4/vc9zPeNg
+ PLoA==
+X-Gm-Message-State: AOJu0Yx+j/O/aV341kQapkn3bmfpPTPKX7M2QWuYrc4cDwRzq/ekqXdw
+ iDARGaffmoIJnBQC6NcnOlxAHnivLBYYUSKXtP2lIsGV5GX8J+ir+559bE1xfRS8DGeQGbTwB37
+ c
+X-Google-Smtp-Source: AGHT+IHSHVekOq6k8kQ1LaTC/I9rHDeQ584jfWTN7v/3VgrbaE7Dc00zlxeBTe7yS4aO3PRRiEoOoA==
+X-Received: by 2002:a17:903:244a:b0:1f9:a602:5e39 with SMTP id
+ d9443c01a7336-1fa238e4665mr108256365ad.11.1719340544327; 
+ Tue, 25 Jun 2024 11:35:44 -0700 (PDT)
 Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb3c6027sm84693235ad.133.2024.06.25.11.35.37
+ d9443c01a7336-1f9eb3c6027sm84693235ad.133.2024.06.25.11.35.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 11:35:37 -0700 (PDT)
+ Tue, 25 Jun 2024 11:35:43 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 00/13] target/arm: AdvSIMD conversion, part 2
-Date: Tue, 25 Jun 2024 11:35:23 -0700
-Message-Id: <20240625183536.1672454-1-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 07/13] target/arm: Convert BFDOT to decodetree
+Date: Tue, 25 Jun 2024 11:35:30 -0700
+Message-Id: <20240625183536.1672454-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240625183536.1672454-1-richard.henderson@linaro.org>
+References: <20240625183536.1672454-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
 X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, T_SPF_HELO_TEMPERROR=0.01,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
  T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,38 +94,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert another hand-full of instructions, plus fixes
-for two issues that are related.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/a64.decode      |  2 ++
+ target/arm/tcg/translate-a64.c | 20 +++++---------------
+ 2 files changed, 7 insertions(+), 15 deletions(-)
 
-
-r~
-
-
-Richard Henderson (13):
-  target/arm: Fix VCMLA Dd, Dn, Dm[idx]
-  target/arm: Fix SQDMULH (by element) with Q=0
-  target/arm: Fix FJCVTZS vs flush-to-zero
-  target/arm: Convert SQRDMLAH, SQRDMLSH to decodetree
-  target/arm: Convert SDOT, UDOT to decodetree
-  target/arm: Convert SUDOT, USDOT to decodetree
-  target/arm: Convert BFDOT to decodetree
-  target/arm: Convert BFMLALB, BFMLALT to decodetree
-  target/arm: Convert BFMMLA, SMMLA, UMMLA, USMMLA to decodetree
-  target/arm: Add data argument to do_fp3_vector
-  target/arm: Convert FCADD to decodetree
-  target/arm: Convert FCMLA to decodetree
-  target/arm: Delete dead code from disas_simd_indexed
-
- target/arm/helper.h               |  10 +
- target/arm/tcg/a64.decode         |  43 ++
- target/arm/tcg/translate-a64.c    | 808 +++++++++---------------------
- target/arm/tcg/vec_helper.c       | 100 +++-
- target/arm/vfp_helper.c           |  18 +-
- tests/tcg/aarch64/test-2375.c     |  21 +
- tests/tcg/aarch64/Makefile.target |   3 +-
- 7 files changed, 421 insertions(+), 582 deletions(-)
- create mode 100644 tests/tcg/aarch64/test-2375.c
-
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 8a0251f83c..6819fd2587 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -950,6 +950,7 @@ SQRDMLSH_v      0.10 1110 ..0 ..... 10001 1 ..... ..... @qrrr_e
+ SDOT_v          0.00 1110 100 ..... 10010 1 ..... ..... @qrrr_s
+ UDOT_v          0.10 1110 100 ..... 10010 1 ..... ..... @qrrr_s
+ USDOT_v         0.00 1110 100 ..... 10011 1 ..... ..... @qrrr_s
++BFDOT_v         0.10 1110 010 ..... 11111 1 ..... ..... @qrrr_s
+ 
+ ### Advanced SIMD scalar x indexed element
+ 
+@@ -1029,6 +1030,7 @@ SDOT_vi         0.00 1111 10 .. .... 1110 . 0 ..... .....   @qrrx_s
+ UDOT_vi         0.10 1111 10 .. .... 1110 . 0 ..... .....   @qrrx_s
+ SUDOT_vi        0.00 1111 00 .. .... 1111 . 0 ..... .....   @qrrx_s
+ USDOT_vi        0.00 1111 10 .. .... 1111 . 0 ..... .....   @qrrx_s
++BFDOT_vi        0.00 1111 01 .. .... 1111 . 0 ..... .....   @qrrx_s
+ 
+ # Floating-point conditional select
+ 
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 9a658ca876..0f44cd5aee 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -5604,6 +5604,7 @@ static bool do_dot_vector(DisasContext *s, arg_qrrr_e *a,
+ TRANS_FEAT(SDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_sdot_b)
+ TRANS_FEAT(UDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_udot_b)
+ TRANS_FEAT(USDOT_v, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_usdot_b)
++TRANS_FEAT(BFDOT_v, aa64_bf16, do_dot_vector, a, gen_helper_gvec_bfdot)
+ 
+ /*
+  * Advanced SIMD scalar/vector x indexed element
+@@ -5942,6 +5943,8 @@ TRANS_FEAT(SUDOT_vi, aa64_i8mm, do_dot_vector_idx, a,
+            gen_helper_gvec_sudot_idx_b)
+ TRANS_FEAT(USDOT_vi, aa64_i8mm, do_dot_vector_idx, a,
+            gen_helper_gvec_usdot_idx_b)
++TRANS_FEAT(BFDOT_vi, aa64_bf16, do_dot_vector_idx, a,
++           gen_helper_gvec_bfdot_idx)
+ 
+ /*
+  * Advanced SIMD scalar pairwise
+@@ -10951,11 +10954,11 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+         break;
+     case 0x1f:
+         switch (size) {
+-        case 1: /* BFDOT */
+         case 3: /* BFMLAL{B,T} */
+             feature = dc_isar_feature(aa64_bf16, s);
+             break;
+         default:
++        case 1: /* BFDOT */
+             unallocated_encoding(s);
+             return;
+         }
+@@ -11036,9 +11039,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+         return;
+     case 0xf:
+         switch (size) {
+-        case 1: /* BFDOT */
+-            gen_gvec_op4_ool(s, is_q, rd, rn, rm, rd, 0, gen_helper_gvec_bfdot);
+-            break;
+         case 3: /* BFMLAL{B,T} */
+             gen_gvec_op4_fpst(s, 1, rd, rn, rm, rd, false, is_q,
+                               gen_helper_gvec_bfmlal);
+@@ -12053,13 +12053,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+         break;
+     case 0x0f:
+         switch (size) {
+-        case 1: /* BFDOT */
+-            if (is_scalar || !dc_isar_feature(aa64_bf16, s)) {
+-                unallocated_encoding(s);
+-                return;
+-            }
+-            size = MO_32;
+-            break;
+         case 3: /* BFMLAL{B,T} */
+             if (is_scalar || !dc_isar_feature(aa64_bf16, s)) {
+                 unallocated_encoding(s);
+@@ -12070,6 +12063,7 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+             break;
+         default:
+         case 0: /* SUDOT */
++        case 1: /* BFDOT */
+         case 2: /* USDOT */
+             unallocated_encoding(s);
+             return;
+@@ -12179,10 +12173,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+     switch (16 * u + opcode) {
+     case 0x0f:
+         switch (extract32(insn, 22, 2)) {
+-        case 1: /* BFDOT */
+-            gen_gvec_op4_ool(s, is_q, rd, rn, rm, rd, index,
+-                             gen_helper_gvec_bfdot_idx);
+-            return;
+         case 3: /* BFMLAL{B,T} */
+             gen_gvec_op4_fpst(s, 1, rd, rn, rm, rd, 0, (index << 1) | is_q,
+                               gen_helper_gvec_bfmlal_idx);
 -- 
 2.34.1
 
