@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2F4C30653
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 19:29:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2199BC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 20:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMBiv-00037C-3J; Tue, 25 Jun 2024 15:21:19 -0400
-Received: from eggs.gnu.org ([2001:470:142:3::10])
+	id 1sMC6E-0002IX-3N; Tue, 25 Jun 2024 15:45:17 -0400
+Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sMBgg-0002Un-Ai
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 15:18:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sMBg3-0002df-RN
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 15:18:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719343021;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=AEQjQ8J55hwIzfmoesWqLHpIacoHUj34dmwhha0SGcM=;
- b=Q2rrMsW5uosrY0NatUrWbBO8hkc5fl3cVCYxRYkweoclGk0KA891nOBTbaIp9CkX0bO/q5
- vvOY0NMSIE3kBDRUK/HqXTTbX8VK8qzJYdSlRY17cJuzyQozlJ4Nwk90Ru0X2UPJcbIB5Q
- 2RhGAVQr3NA/tbezx8x8/BOh1tyWMAo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-576-8qYm6tRuOymG68ScYeRX6A-1; Tue,
- 25 Jun 2024 15:15:21 -0400
-X-MC-Unique: 8qYm6tRuOymG68ScYeRX6A-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1749E19560AE; Tue, 25 Jun 2024 19:15:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.31])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2BD891956050; Tue, 25 Jun 2024 19:15:10 +0000 (UTC)
-Date: Tue, 25 Jun 2024 20:15:07 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org
-Subject: Re: [RFC PATCH v3 5/5] DO NOT MERGE: replace TYPE_PL011 with
- x-pl011-rust in arm virt machine
-Message-ID: <ZnsXOyYJAlae1Ito@redhat.com>
-References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
- <229703c7f4394691f254b02c012ee0d7dcf57afb.1718827153.git.manos.pitsidianakis@linaro.org>
- <Znrt77XOc2YBNZyM@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sMC3E-0001Py-GA
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 15:44:17 -0400
+Received: from mail-io1-xd2c.google.com ([2607:f8b0:4864:20::d2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sMC2E-0005hp-7B
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 15:41:48 -0400
+Received: by mail-io1-xd2c.google.com with SMTP id
+ ca18e2360f4ac-7eeea388a8eso234636939f.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 12:40:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719344410; x=1719949210; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1/yBAbsCLBOpqzRXUHLaN5XW4PU7cxhMwdfGxxg8ELk=;
+ b=ia4716n5sU9+KlRAHMLfZjJAymOQKhY1peR8Vc4Pgdh9YUwxgiEr0khm3+9ed00v3M
+ iOa9NXsBZTXJ/WnFUlnv5sKLppJ1viz5ETrS0gg23+5IVXnVj+ao5NINeL9OtgYfzapW
+ S5QuI4YGVZGUBCJIvFT9y5uXOhJJJAJLGIlHlC3kpeoQ602u49rbPUmbb1qRlfrPiRah
+ qwKr7fYy4HSob5MX3SSj6VVjfT7SGqpSzBxIjDnWIPojnvS9eWWHFf2Bh2PquuV9nX2y
+ cgmXVGIYVNKghnsSZgcReKQEACycXqaz80AmMt+hUjImfsf5FHhv1K7tJOtDlWwxPb4P
+ y8Tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719344410; x=1719949210;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1/yBAbsCLBOpqzRXUHLaN5XW4PU7cxhMwdfGxxg8ELk=;
+ b=kV8AWkEKlt2XDc72NFF3c9NURPhWGKk4KK7MKgoULouT/frU/9zQ2SrFUdwo6YPEHr
+ ItV/iNwYywu8g/lckOuE6jVMOJ3+TBXsQUWBTvje03C3fNM+8Vnc7MK0HW3bFgPIqGx4
+ byOcWc9L6SqQr2jBmXVVVJCtTeJDukk++wSQGUenVy+CTXEkPCh7GrB15uCFvC5vnvkq
+ LC8yy4CqoBDudEPHHjfy18ZWC7E04gkgZa4ir77WLPS6yi4hL6Q2SFxxT8gyFRXjij5n
+ MILQNVmvqtAtOvLPiiWilnIdV2lgdPbXh2X74TWgiC3ziRKy2xzAsnRsm6SJXX9l//IX
+ 7Yrg==
+X-Gm-Message-State: AOJu0YxckpcKXlWrpukSxM6p/zxbLI68D3f8zAE4TEGq+h1GAmDHcVWG
+ 3uhc4OORxeHlMcqcQCiK90nfh8qt1667U3pdq4lZuvQx8IKPDy9tCyNkzEhA71ui25zYam8VFZX
+ S
+X-Google-Smtp-Source: AGHT+IGAr3EMIMVn1tHmyZ/iNeiGBpog9WxixSJsvwRa2DE5lIBf7MYYp0J4AoIeeMpu75nRwfYfKA==
+X-Received: by 2002:a17:903:22d1:b0:1fa:2ae7:cc79 with SMTP id
+ d9443c01a7336-1fa2ae7d470mr90117385ad.11.1719340549074; 
+ Tue, 25 Jun 2024 11:35:49 -0700 (PDT)
+Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f9eb3c6027sm84693235ad.133.2024.06.25.11.35.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Jun 2024 11:35:48 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v2 12/13] target/arm: Convert FCMLA to decodetree
+Date: Tue, 25 Jun 2024 11:35:35 -0700
+Message-Id: <20240625183536.1672454-13-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240625183536.1672454-1-richard.henderson@linaro.org>
+References: <20240625183536.1672454-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Znrt77XOc2YBNZyM@intel.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-io1-xd2c.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -90,73 +90,356 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 26, 2024 at 12:18:55AM +0800, Zhao Liu wrote:
-> Hi Manos,
-> 
-> On Wed, Jun 19, 2024 at 11:14:02PM +0300, Manos Pitsidianakis wrote:
-> > Date: Wed, 19 Jun 2024 23:14:02 +0300
-> > From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > Subject: [RFC PATCH v3 5/5] DO NOT MERGE: replace TYPE_PL011 with
-> >  x-pl011-rust in arm virt machine
-> > X-Mailer: git-send-email 2.44.0
-> > 
-> > Convenience patch for testing the rust device.
-> > 
-> > Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> > ---
-> >  hw/arm/virt.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> > 
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 3c93c0c0a6..f33b58ae0d 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -912,7 +912,11 @@ static void create_uart(const VirtMachineState *vms, int uart,
-> >      int irq = vms->irqmap[uart];
-> >      const char compat[] = "arm,pl011\0arm,primecell";
-> >      const char clocknames[] = "uartclk\0apb_pclk";
-> > +#ifdef CONFIG_WITH_RUST
-> > +    DeviceState *dev = qdev_new("x-pl011-rust");
-> > +#else
-> >      DeviceState *dev = qdev_new(TYPE_PL011);
-> > +#endif
-> >      SysBusDevice *s = SYS_BUS_DEVICE(dev);
-> >      MachineState *ms = MACHINE(vms);
-> >
-> 
-> I realized that if we want to merge the rust pl011 device, then this
-> patch or similar enablement support is necessary, otherwise, the rust
-> code is only used for compilation and cannot actually be run...
-> 
-> This is also an open for the devices that are rewrite in Rust.
-> 
-> I think there should be an option for the user to choose whether to
-> enable pl011 in C or pl011 in Rust. What do you think?
-> 
-> Perhaps the easiest way to enable rust pl011 is to add an option for
-> virt machine... But that's certainly not a long-term approach. I think
-> the ideal way would be to allow rust pl011 to be specified in the
-> command line via -device, but this approach would mean allowing the
-> user to create pl011 and would require changes to the current buildin
-> pl011's creation logic.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/a64.decode      |   6 +
+ target/arm/tcg/translate-a64.c | 238 ++++++++++-----------------------
+ 2 files changed, 74 insertions(+), 170 deletions(-)
 
-While having both impls present is reasonable for the RFC, IMHO, if
-we're to merge this, then the Rust impl of pl011 should fully replace
-the C impl. Maintaining 2 different impls of the same device in
-parallel is highly undesirable. This would of course impl that the
-Rust impls needs to be a feature match for the existing impl. If we
-do a full replacement, then the question of how the user chooses
-between the 2 impls is then entirely avoided.
-
-With regards,
-Daniel
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index f330919851..223eac3cac 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -960,6 +960,8 @@ USMMLA          0100 1110 100 ..... 10101 1 ..... ..... @rrr_q1e0
+ FCADD_90        0.10 1110 ..0 ..... 11100 1 ..... ..... @qrrr_e
+ FCADD_270       0.10 1110 ..0 ..... 11110 1 ..... ..... @qrrr_e
+ 
++FCMLA_v         0 q:1 10 1110 esz:2 0 rm:5 110 rot:2 1 rn:5 rd:5
++
+ ### Advanced SIMD scalar x indexed element
+ 
+ FMUL_si         0101 1111 00 .. .... 1001 . 0 ..... .....   @rrx_h
+@@ -1041,6 +1043,10 @@ USDOT_vi        0.00 1111 10 .. .... 1111 . 0 ..... .....   @qrrx_s
+ BFDOT_vi        0.00 1111 01 .. .... 1111 . 0 ..... .....   @qrrx_s
+ BFMLAL_vi       0.00 1111 11 .. .... 1111 . 0 ..... .....   @qrrx_h
+ 
++FCMLA_vi        0 0 10 1111 01 idx:1 rm:5 0 rot:2 1 0 0 rn:5 rd:5 esz=1 q=0
++FCMLA_vi        0 1 10 1111 01 . rm:5 0 rot:2 1 . 0 rn:5 rd:5 esz=1 idx=%hl q=1
++FCMLA_vi        0 1 10 1111 10 0 rm:5 0 rot:2 1 idx:1 0 rn:5 rd:5 esz=2 q=1
++
+ # Floating-point conditional select
+ 
+ FCSEL           0001 1110 .. 1 rm:5 cond:4 11 rn:5 rd:5     esz=%esz_hsd
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index a1b338263f..161fa2659c 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -5631,6 +5631,39 @@ static gen_helper_gvec_3_ptr * const f_vector_fcadd[3] = {
+ TRANS_FEAT(FCADD_90, aa64_fcma, do_fp3_vector, a, 0, f_vector_fcadd)
+ TRANS_FEAT(FCADD_270, aa64_fcma, do_fp3_vector, a, 1, f_vector_fcadd)
+ 
++static bool trans_FCMLA_v(DisasContext *s, arg_FCMLA_v *a)
++{
++    gen_helper_gvec_4_ptr *fn;
++
++    if (!dc_isar_feature(aa64_fcma, s)) {
++        return false;
++    }
++    switch (a->esz) {
++    case MO_64:
++        if (!a->q) {
++            return false;
++        }
++        fn = gen_helper_gvec_fcmlad;
++        break;
++    case MO_32:
++        fn = gen_helper_gvec_fcmlas;
++        break;
++    case MO_16:
++        if (!dc_isar_feature(aa64_fp16, s)) {
++            return false;
++        }
++        fn = gen_helper_gvec_fcmlah;
++        break;
++    default:
++        return false;
++    }
++    if (fp_access_check(s)) {
++        gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
++                          a->esz == MO_16, a->rot, fn);
++    }
++    return true;
++}
++
+ /*
+  * Advanced SIMD scalar/vector x indexed element
+  */
+@@ -5985,6 +6018,33 @@ static bool trans_BFMLAL_vi(DisasContext *s, arg_qrrx_e *a)
+     return true;
+ }
+ 
++static bool trans_FCMLA_vi(DisasContext *s, arg_FCMLA_vi *a)
++{
++    gen_helper_gvec_4_ptr *fn;
++
++    if (!dc_isar_feature(aa64_fcma, s)) {
++        return false;
++    }
++    switch (a->esz) {
++    case MO_16:
++        if (!dc_isar_feature(aa64_fp16, s)) {
++            return false;
++        }
++        fn = gen_helper_gvec_fcmlah_idx;
++        break;
++    case MO_32:
++        fn = gen_helper_gvec_fcmlas_idx;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++    if (fp_access_check(s)) {
++        gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
++                          a->esz == MO_16, (a->idx << 2) | a->rot, fn);
++    }
++    return true;
++}
++
+ /*
+  * Advanced SIMD scalar pairwise
+  */
+@@ -10942,90 +11002,6 @@ static void disas_simd_three_reg_diff(DisasContext *s, uint32_t insn)
+     }
+ }
+ 
+-/* AdvSIMD three same extra
+- *  31   30  29 28       24 23  22  21 20  16  15 14    11  10 9  5 4  0
+- * +---+---+---+-----------+------+---+------+---+--------+---+----+----+
+- * | 0 | Q | U | 0 1 1 1 0 | size | 0 |  Rm  | 1 | opcode | 1 | Rn | Rd |
+- * +---+---+---+-----------+------+---+------+---+--------+---+----+----+
+- */
+-static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+-{
+-    int rd = extract32(insn, 0, 5);
+-    int rn = extract32(insn, 5, 5);
+-    int opcode = extract32(insn, 11, 4);
+-    int rm = extract32(insn, 16, 5);
+-    int size = extract32(insn, 22, 2);
+-    bool u = extract32(insn, 29, 1);
+-    bool is_q = extract32(insn, 30, 1);
+-    bool feature;
+-    int rot;
+-
+-    switch (u * 16 + opcode) {
+-    case 0x18: /* FCMLA, #0 */
+-    case 0x19: /* FCMLA, #90 */
+-    case 0x1a: /* FCMLA, #180 */
+-    case 0x1b: /* FCMLA, #270 */
+-        if (size == 0
+-            || (size == 1 && !dc_isar_feature(aa64_fp16, s))
+-            || (size == 3 && !is_q)) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        feature = dc_isar_feature(aa64_fcma, s);
+-        break;
+-    default:
+-    case 0x02: /* SDOT (vector) */
+-    case 0x03: /* USDOT */
+-    case 0x04: /* SMMLA */
+-    case 0x05: /* USMMLA */
+-    case 0x10: /* SQRDMLAH (vector) */
+-    case 0x11: /* SQRDMLSH (vector) */
+-    case 0x12: /* UDOT (vector) */
+-    case 0x14: /* UMMLA */
+-    case 0x1c: /* FCADD, #90 */
+-    case 0x1d: /* BFMMLA */
+-    case 0x1e: /* FCADD, #270 */
+-    case 0x1f: /* BFDOT / BFMLAL */
+-        unallocated_encoding(s);
+-        return;
+-    }
+-    if (!feature) {
+-        unallocated_encoding(s);
+-        return;
+-    }
+-    if (!fp_access_check(s)) {
+-        return;
+-    }
+-
+-    switch (opcode) {
+-    case 0x8: /* FCMLA, #0 */
+-    case 0x9: /* FCMLA, #90 */
+-    case 0xa: /* FCMLA, #180 */
+-    case 0xb: /* FCMLA, #270 */
+-        rot = extract32(opcode, 0, 2);
+-        switch (size) {
+-        case 1:
+-            gen_gvec_op4_fpst(s, is_q, rd, rn, rm, rd, true, rot,
+-                              gen_helper_gvec_fcmlah);
+-            break;
+-        case 2:
+-            gen_gvec_op4_fpst(s, is_q, rd, rn, rm, rd, false, rot,
+-                              gen_helper_gvec_fcmlas);
+-            break;
+-        case 3:
+-            gen_gvec_op4_fpst(s, is_q, rd, rn, rm, rd, false, rot,
+-                              gen_helper_gvec_fcmlad);
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+-        return;
+-
+-    default:
+-        g_assert_not_reached();
+-    }
+-}
+-
+ static void handle_2misc_widening(DisasContext *s, int opcode, bool is_q,
+                                   int size, int rn, int rd)
+ {
+@@ -12001,10 +11977,7 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+     int rn = extract32(insn, 5, 5);
+     int rd = extract32(insn, 0, 5);
+     bool is_long = false;
+-    int is_fp = 0;
+-    bool is_fp16 = false;
+     int index;
+-    TCGv_ptr fpst;
+ 
+     switch (16 * u + opcode) {
+     case 0x02: /* SMLAL, SMLAL2 */
+@@ -12024,16 +11997,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+     case 0x0b: /* SQDMULL, SQDMULL2 */
+         is_long = true;
+         break;
+-    case 0x11: /* FCMLA #0 */
+-    case 0x13: /* FCMLA #90 */
+-    case 0x15: /* FCMLA #180 */
+-    case 0x17: /* FCMLA #270 */
+-        if (is_scalar || !dc_isar_feature(aa64_fcma, s)) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        is_fp = 2;
+-        break;
+     default:
+     case 0x00: /* FMLAL */
+     case 0x01: /* FMLA */
+@@ -12046,7 +12009,11 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+     case 0x0e: /* SDOT */
+     case 0x0f: /* SUDOT / BFDOT / USDOT / BFMLAL */
+     case 0x10: /* MLA */
++    case 0x11: /* FCMLA #0 */
++    case 0x13: /* FCMLA #90 */
+     case 0x14: /* MLS */
++    case 0x15: /* FCMLA #180 */
++    case 0x17: /* FCMLA #270 */
+     case 0x18: /* FMLAL2 */
+     case 0x19: /* FMULX */
+     case 0x1c: /* FMLSL2 */
+@@ -12057,46 +12024,12 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+         return;
+     }
+ 
+-    switch (is_fp) {
+-    case 1: /* normal fp */
+-        unallocated_encoding(s); /* in decodetree */
+-        return;
+-
+-    case 2: /* complex fp */
+-        /* Each indexable element is a complex pair.  */
+-        size += 1;
+-        switch (size) {
+-        case MO_32:
+-            if (h && !is_q) {
+-                unallocated_encoding(s);
+-                return;
+-            }
+-            is_fp16 = true;
+-            break;
+-        case MO_64:
+-            break;
+-        default:
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        break;
+-
+-    default: /* integer */
+-        switch (size) {
+-        case MO_8:
+-        case MO_64:
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        break;
+-    }
+-    if (is_fp16 && !dc_isar_feature(aa64_fp16, s)) {
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+     /* Given MemOp size, adjust register and indexing.  */
+     switch (size) {
++    case MO_8:
++    case MO_64:
++        unallocated_encoding(s);
++        return;
+     case MO_16:
+         index = h << 2 | l << 1 | m;
+         break;
+@@ -12104,14 +12037,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+         index = h << 1 | l;
+         rm |= m << 4;
+         break;
+-    case MO_64:
+-        if (l || !is_q) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        index = h;
+-        rm |= m << 4;
+-        break;
+     default:
+         g_assert_not_reached();
+     }
+@@ -12120,32 +12045,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+         return;
+     }
+ 
+-    if (is_fp) {
+-        fpst = fpstatus_ptr(is_fp16 ? FPST_FPCR_F16 : FPST_FPCR);
+-    } else {
+-        fpst = NULL;
+-    }
+-
+-    switch (16 * u + opcode) {
+-    case 0x11: /* FCMLA #0 */
+-    case 0x13: /* FCMLA #90 */
+-    case 0x15: /* FCMLA #180 */
+-    case 0x17: /* FCMLA #270 */
+-        {
+-            int rot = extract32(insn, 13, 2);
+-            int data = (index << 2) | rot;
+-            tcg_gen_gvec_4_ptr(vec_full_reg_offset(s, rd),
+-                               vec_full_reg_offset(s, rn),
+-                               vec_full_reg_offset(s, rm),
+-                               vec_full_reg_offset(s, rd), fpst,
+-                               is_q ? 16 : 8, vec_full_reg_size(s), data,
+-                               size == MO_64
+-                               ? gen_helper_gvec_fcmlas_idx
+-                               : gen_helper_gvec_fcmlah_idx);
+-        }
+-        return;
+-    }
+-
+     if (size == 3) {
+         g_assert_not_reached();
+     } else if (!is_long) {
+@@ -12407,7 +12306,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+  */
+ static const AArch64DecodeTable data_proc_simd[] = {
+     /* pattern  ,  mask     ,  fn                        */
+-    { 0x0e008400, 0x9f208400, disas_simd_three_reg_same_extra },
+     { 0x0e200000, 0x9f200c00, disas_simd_three_reg_diff },
+     { 0x0e200800, 0x9f3e0c00, disas_simd_two_reg_misc },
+     { 0x0e300800, 0x9f3e0c00, disas_simd_across_lanes },
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.34.1
 
 
