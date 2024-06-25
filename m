@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA82C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC788C3064D
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 13:50:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM6YW-0006x2-Cf; Tue, 25 Jun 2024 09:49:56 -0400
+	id 1sM6YZ-0006zN-N1; Tue, 25 Jun 2024 09:49:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sM6YT-0006vB-ST
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:49:53 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1sM6YX-0006yr-9d
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:49:57 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sM6YQ-0007II-Mb
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:49:52 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-57d07f07a27so6285350a12.3
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 06:49:49 -0700 (PDT)
+ id 1sM6YU-0007Kt-9X
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:49:56 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2eaea28868dso73417441fa.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 06:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719323388; x=1719928188;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719323392; x=1719928192;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=d1fYQ7uSy0JYSBDhMCphzksyQ7P/f641WoT9TQMYJeE=;
- b=jE+UaBgI4a625dI54X67TEcN1f8yfWkJmrTHvw4l28FyXab4Oq08BRC8sRoIsF28R+
- /5RK9XREpY9rN9JsarJB0HhuHAa8mR/6zQndNEl00vSAdYIABkGOkepHa+AiijZDSnhM
- b+oUQL/rzmls0ZBLikNdIod57Twa6gE26ExGIesVQf0Exw8tf61W9GJvFwZmJQEd9VY7
- m5n2LfaDaJfQS5CaN3zYDJ5OIy1oJ8ijGxxzoSHV7D7ZaE3m9KTeZNbIccFJ4m7Ezbdl
- JPPMf6sZcVECczK8mC04WrN7FHZG+PG9kaprXB1rfRFgY1s6MovdCpcwBLglM0s/Si2Q
- KepA==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fblMUAK/+8LE6mBEBaO4iTmx3F9Zc50cn4A+rhgKV38=;
+ b=qjTJdSNYDWKR/B+FuCQOeeQWKo8J83R4A3MmSyPLdDDdTc3fqfKWdJieEBkULSvdl4
+ Pl8d0IlU6x+f9psY3Amc13nBb8xvh2YFe8WJw4g4QZT+NV4XMc9uemmPfyDQb5PIjGuD
+ ofDaks/5Db8UYGbP2sIIuAypeTUBHPOPp7IV6rTkX6RR7IfuZ9io+jfNW+V/T4cb/81O
+ OY6FDFNCbmeYT7ylbsG5/TYqPTqcYT6w0jE/rIFCDC99Zg6ZpvsysxlR/1kIjkZ4XSu2
+ sjt1s9eN3g49EMoTY3c6ERQMZl7qxhliisi7JJYW+7YRxJK+MzDORP1JvKFQZgrPy5xy
+ zRZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719323388; x=1719928188;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=d1fYQ7uSy0JYSBDhMCphzksyQ7P/f641WoT9TQMYJeE=;
- b=OtZNvFT/0Evu8PruPdK4JMPdDXHYyUi5wMPAhxcxjlruFuNUjo1AUyMenJF6QYZFlY
- g30LK5JKupywEBfLVzArVCR010P8q6CqaJ95DwjQ8FyUJ2CrcWWrKDOome29DtWc3Eu2
- 9w43dUs3t4GARiaZKWE8cg+Er0Qx11+SoR1c6E8cu7gxZObRY9aufdKKKfMZnG0cGOlx
- If8vkd3RwQRZXJWOB014oxfbUag3FAbd2DVZgqOCY37lbOSREhvB0JlDSkfMXmKggd/2
- ydQqRHYmFCuji2eGU6/nKdOSOIM0KvoENn+DUJ439El0/jBkio6MJgL2z4caAB39hup7
- Q5dQ==
-X-Gm-Message-State: AOJu0YyxINWC0aXg37x2sepLHSn9kDxhWdVbZQMf3DRjY+24556IbFen
- ESzgoR/E8sgNG4/5dMDQhr+JJcqzWZzXysYixkGSA9iMYBZW9cdAOU1lGeX1r+BRu0HQz3R7rZI
- q5Q==
-X-Google-Smtp-Source: AGHT+IENc6qXlA18ThHHXpxt/cA1tjoEgnfXbNtZqjAkF9vjVyRSdmQVFDXXxCkyh2uKMBglywNdyA==
-X-Received: by 2002:a17:906:199a:b0:a72:450f:6045 with SMTP id
- a640c23a62f3a-a7245b6252cmr388985366b.21.1719323387966; 
- Tue, 25 Jun 2024 06:49:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719323392; x=1719928192;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fblMUAK/+8LE6mBEBaO4iTmx3F9Zc50cn4A+rhgKV38=;
+ b=gipXhGSBIKEJV2OTdgKor71ApNipvr/r7itdSLDQRul8jMbzOzvg/Od7Iu7HO48LbK
+ dpud3QpwmQcIoKDWyLA6iKvibYoRrwYNp4pomOkYncEQVntFKmLsvpjNF2wH7hqv40wi
+ W8yQnO6Rhz/R4URpRZ/5/Y4Jm1Jew2fK1fIoxntTyl70ESNgpF4ujctbA26U0fQuqJYq
+ DcyBu3IAVM+Sq4kpCbn3SuQDXl3A/RolH8LX2GkHc0R7Yiptb6IVz1O33CiAMBnKy3v9
+ BWAjIfhVr/VRiYh2K9/E1tUawFor09weM+rOA5+VU2hYvNrer+/uRAGzJ4beXm2pzPw8
+ z1aA==
+X-Gm-Message-State: AOJu0Yy41ZZzPr+sg0WCmOBUccm61vimWZlwzyHarxAoJwkKdOSSqNj4
+ ed59CYoBPyqyRXZNuTabdBv6YCGwdZy5j+avHb2ZjrT4ISNFmvNhULKMoslvagPCeCivAzDieDf
+ gXA==
+X-Google-Smtp-Source: AGHT+IHrzcuQUcF8hirbaCMrHB+nev4Ps+eKDNJVnmxIXcXjtQGLOwwgbk5nzOp1ZPflW5qRvAIedw==
+X-Received: by 2002:a05:6512:48c5:b0:52c:dba2:4f1 with SMTP id
+ 2adb3069b0e04-52ce18524e1mr4890998e87.48.1719323392538; 
+ Tue, 25 Jun 2024 06:49:52 -0700 (PDT)
 Received: from localhost.localdomain (89-104-8-17.customer.bnet.at.
  [89.104.8.17]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a726e13a4d7sm77299166b.19.2024.06.25.06.49.46
+ a640c23a62f3a-a726e13a4d7sm77299166b.19.2024.06.25.06.49.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 06:49:47 -0700 (PDT)
+ Tue, 25 Jun 2024 06:49:52 -0700 (PDT)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, philmd@linaro.org, marcandre.lureau@redhat.com,
  akihiko.odaki@daynix.com, lists@philjordan.eu,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2 0/2] ui/cocoa: Adds native absolute pointer support
-Date: Tue, 25 Jun 2024 15:49:29 +0200
-Message-Id: <20240625134931.92279-1-phil@philjordan.eu>
+Subject: [PATCH v2 2/2] ui/cocoa: Adds NSCursor absolute pointer support
+Date: Tue, 25 Jun 2024 15:49:31 +0200
+Message-Id: <20240625134931.92279-3-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20240625134931.92279-1-phil@philjordan.eu>
+References: <20240625134931.92279-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::534;
- envelope-from=phil@philjordan.eu; helo=mail-ed1-x534.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::229;
+ envelope-from=phil@philjordan.eu; helo=mail-lj1-x229.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -94,37 +97,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change implements passing guest cursors through to the native
-Cocoa host NSCursor on macOS when using absolute pointing device
-input.
+When pointer input is absolute, use the native macOS host’s Cocoa
+NSCursor to render the guest’s cursor. The rendered cursor is no longer
+cropped to the guest viewport, and the correct cursor image is passed to
+anything tapping into the host system’s native cursor. (such as remote
+access)
 
-The first pass at this was based purely on NSCursor, which drew
-some criticism due to the somewhat complex nature of the code which
-was required to generate correct relative pointer input events
-after teleporting the host cursor.
+The CALayer is retained for rendering the cursor in relative pointer
+input mode. Cropping the cursor here gives a visual indication of the
+captured pointer (the mouse must be explicitly ungrabbed before allowing
+the cursor to leave the Qemu window), and teleporting the host cursor
+when its position is changed by the guest causes a feedback loop in
+input events.
 
-This new version builds on Akihiko Odaki's work implementing CALayer
-based cursors. We retain CALayer for compositing cursors when the
-input is relative and the pointer thus completely captured by the
-guest. When using absolute positioning of the pointer, we use the
-fully host-integrated NSCursor, with no offsetting or teleporting
-needed.
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+---
+ ui/cocoa.m | 82 +++++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 65 insertions(+), 17 deletions(-)
 
-The first patch consists of a few reference counting fixes to the
-existing CALayer patch, the second implements the NSCursor logic
-and switches between CALayer and NSCursor depending on whether
-relative or absolute input is used.
-
-Based-on: <20240318-cursor-v1-2-0bbe6c382217@daynix.com>
-
-
-Phil Dennis-Jordan (2):
-  ui/cocoa: Minor fixes to CALayer based cursors
-  ui/cocoa: Adds NSCursor absolute pointer support
-
- ui/cocoa.m | 93 +++++++++++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 75 insertions(+), 18 deletions(-)
-
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index cca987eac7..131c442e16 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -314,6 +314,7 @@ @interface QemuCocoaView : NSView
+     CFMachPortRef eventsTap;
+     CALayer *cursorLayer;
+     QEMUCursor *cursor;
++    NSCursor *cocoaCursor;
+     int mouseX;
+     int mouseY;
+     int mouseOn;
+@@ -402,6 +403,9 @@ - (void) dealloc
+ 
+     [cursorLayer release];
+     cursorLayer = nil;
++    [cocoaCursor release];
++    cocoaCursor = nil;
++
+     [super dealloc];
+ }
+ 
+@@ -460,27 +464,14 @@ - (void)setMouseX:(int)x y:(int)y on:(int)on
+     [CATransaction begin];
+     [CATransaction setDisableActions:YES];
+     [cursorLayer setPosition:position];
+-    [cursorLayer setHidden:!mouseOn];
++    [cursorLayer setHidden:!mouseOn || isAbsoluteEnabled];
+     [CATransaction commit];
+ }
+ 
+-- (void)setCursor:(QEMUCursor *)given_cursor
++static CGImageRef cursor_cgimage_create(QEMUCursor *cursor)
+ {
+     CGDataProviderRef provider;
+     CGImageRef image;
+-    CGRect bounds = CGRectZero;
+-
+-    cursor_unref(cursor);
+-    cursor = given_cursor;
+-
+-    if (!cursor) {
+-        return;
+-    }
+-
+-    cursor_ref(cursor);
+-
+-    bounds.size.width = cursor->width;
+-    bounds.size.height = cursor->height;
+     CGColorSpaceRef color_space = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
+ 
+     provider = CGDataProviderCreateWithData(
+@@ -506,6 +497,43 @@ - (void)setCursor:(QEMUCursor *)given_cursor
+ 
+     CGDataProviderRelease(provider);
+     CGColorSpaceRelease(color_space);
++    return image;
++}
++
++static NSCursor *cocoa_cursor_create(QEMUCursor *cursor, CGImageRef image)
++{
++    NSPoint hotspot = { cursor->hot_x, cursor->hot_y };
++    NSSize size = NSMakeSize(cursor->width, cursor->height);
++    NSImage *cursor_image = [[NSImage alloc] initWithCGImage:image size:size];
++    NSCursor *cocoa_cursor =
++        [[NSCursor alloc] initWithImage:cursor_image hotSpot:hotspot];
++    [cursor_image release];
++    return cocoa_cursor;
++}
++
++- (void)setCursor:(QEMUCursor *)given_cursor
++{
++    CGImageRef image;
++    NSImage *cursor_nsimage = nil;
++    CGRect bounds = CGRectZero;
++
++    cursor_unref(cursor);
++    cursor = given_cursor;
++
++    if (!cursor) {
++        return;
++    }
++
++    cursor_ref(cursor);
++
++    bounds.size.width = cursor->width;
++    bounds.size.height = cursor->height;
++
++    image = cursor_cgimage_create(cursor);
++    [cocoaCursor release];
++    cocoaCursor = cocoa_cursor_create(cursor, image);
++    [self.window invalidateCursorRectsForView:self];
++
+     [CATransaction begin];
+     [CATransaction setDisableActions:YES];
+     [cursorLayer setBounds:bounds];
+@@ -514,6 +542,16 @@ - (void)setCursor:(QEMUCursor *)given_cursor
+     CGImageRelease(image);
+ }
+ 
++- (void) resetCursorRects
++{
++    if (self->cocoaCursor == nil) {
++        [super resetCursorRects];
++    } else {
++        NSRect guest_area = {{ 0.0, 0.0 }, { screen.width, screen.height }};
++        [self addCursorRect:guest_area cursor:cocoaCursor];
++    }
++}
++
+ - (void) drawRect:(NSRect) rect
+ {
+     COCOA_DEBUG("QemuCocoaView: drawRect\n");
+@@ -1181,7 +1219,12 @@ - (void) grabMouse
+         [[self window] setTitle:[NSString stringWithFormat:@"QEMU %s - (Press  " UC_CTRL_KEY " " UC_ALT_KEY " G  to release Mouse)", qemu_name]];
+     else
+         [[self window] setTitle:@"QEMU - (Press  " UC_CTRL_KEY " " UC_ALT_KEY " G  to release Mouse)"];
+-    [self hideCursor];
++
++    [cursorLayer setHidden:!mouseOn || isAbsoluteEnabled];
++    if (!isAbsoluteEnabled) {
++        [self hideCursor];
++    }
++
+     CGAssociateMouseAndMouseCursorPosition(isAbsoluteEnabled);
+     isMouseGrabbed = TRUE; // while isMouseGrabbed = TRUE, QemuCocoaApp sends all events to [cocoaView handleEvent:]
+ }
+@@ -1194,7 +1237,11 @@ - (void) ungrabMouse
+         [[self window] setTitle:[NSString stringWithFormat:@"QEMU %s", qemu_name]];
+     else
+         [[self window] setTitle:@"QEMU"];
+-    [self unhideCursor];
++
++    [cursorLayer setHidden:!mouseOn || isAbsoluteEnabled];
++    if (!isAbsoluteEnabled) {
++        [self unhideCursor];
++    }
+     CGAssociateMouseAndMouseCursorPosition(TRUE);
+     isMouseGrabbed = FALSE;
+     [self raiseAllButtons];
+@@ -1216,6 +1263,7 @@ - (void) notifyMouseModeChange {
+             [self ungrabMouse];
+         } else {
+             CGAssociateMouseAndMouseCursorPosition(isAbsoluteEnabled);
++            [self hideCursor];
+         }
+     }
+ }
 -- 
 2.39.3 (Apple Git-146)
 
