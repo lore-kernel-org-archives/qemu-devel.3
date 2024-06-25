@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FE82C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 17:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF581C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 17:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM9ys-00022O-U4; Tue, 25 Jun 2024 13:29:31 -0400
+	id 1sM9xC-0001JQ-P8; Tue, 25 Jun 2024 13:27:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbouman03@gmail.com>)
- id 1sM7Yx-0003iz-Hz
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:54:27 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1sM7Yp-0003cB-Iq
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:54:19 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbouman03@gmail.com>)
- id 1sM7Yv-0003Ih-QA
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:54:27 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-57d20d89748so5472806a12.0
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 07:54:25 -0700 (PDT)
+ id 1sM7Yo-0003GF-0U
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:54:19 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-57cc1c00b97so5574308a12.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 07:54:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719327264; x=1719932064; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719327255; x=1719932055; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FTEABTvUlmGhewuD80/IM0/j/3yvJVyKCKjnPPFuNU0=;
- b=k8HYSXgd51oJj2eU40HRf/HIBE+3Du/YmvD+/xaCUftsZsmKY4W52lbpHunHHd2G2b
- WYEjX9X+geTYDM4W/Kf5IVt1Q+5sqSYw6UcNoLd/Gyo/Wg/3TPiBFc2l1QPgNXdjtzLN
- yCO6ynYV8PXX60f8ZrVqlDngKdpxKUjFkV2fPyHTpu0jai0H0YN1i5xQgoTJ/m4PGT+E
- c6rH1SJkkMd0R6dnCYTLA9UeOX0XesBR0svcDG7m21lyZqAwtk7qeUvZkfrwyN40xjI0
- wT6Kz2mVB+mTH5qkG9AMTK4keLaua5bgSVCfbuH6e0O+bheDBLte0qxLxMk/0wVO1KpB
- w2eA==
+ bh=gd1bnX5yMsLjKAf/zlmApEfZTYiMqAMKaFxN5Ze85Yc=;
+ b=i3gBoxlrtqBamK0ytEM0RYFDW1E67Q08WQxMa9FsiHACz4RoB7x60IHfMTOGTHBw97
+ 4iLaAfynHRCzdKjXlIetMfFs8/M0Xv/ur8YACVuCItyGEwxuLFy1gfy3qPhI35w4WDXY
+ Z0N9coGVi5iikR5A2wiNu4Ybq0kFqcZ90Ega4bTsqd47wfwY+KqgfTszhCYi5AAbj/Rn
+ lpiWvVreDolD3YUYmpkEwKCdlFyJAo4qSppCz6Nl13AwMSZW276eCFwOfTj7Nnd4TtLD
+ 8smgBvMmcbiYic9YDppc6y8KTcUwoiekIEz5cBEDUl4sL2SSTxVO4vCJE6ga7HNVq3Fz
+ MBSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719327264; x=1719932064;
+ d=1e100.net; s=20230601; t=1719327255; x=1719932055;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FTEABTvUlmGhewuD80/IM0/j/3yvJVyKCKjnPPFuNU0=;
- b=tsEr1NAqyOhdOecHBkxXHhA7HTmYCSW1g6TOVzUSAKCtpwkn+pnAH2rTUNXA7W/2fi
- sVU+QcUffss9nWgXmTWQlTBh0XaNkt5SrOHzhUUHJIfppEoQ1lJ/ws+INT88gQQmUhK5
- KxMDzffMitIZFbcO0t6cDMQ2r2y4b9dfDfniTStozY5XYczoAckp049xhzzTfKueEpKq
- HTXj8rpX8vukqtzq+mxjOxqu0WwW5Ac4DZPSfUfF/Yu9m0PfQzuP5Oms5hqyH2bgt2yg
- NB96VkZAbXGNjluCvlsnXVDO6YODsGqut1C7OkYFgZ4I+MSLx0VP3hEkKfYatAA3Gp4/
- fSTg==
-X-Gm-Message-State: AOJu0YzG4BgFuz2eC/KmckTMZ/07IezynkMWUThUuO+7F+jHxBjvzX/W
- E8dbgf4yI+IwQUyKOEILw7sss4VyjhiaRR90KX3aCMQvFkmFFZQfl7zexA==
-X-Google-Smtp-Source: AGHT+IHX12OXseF02pCwYdu3uF8zcxfHzMRAHLlJqHuLhiPN/zKgFHLh+cXRKPot5fkv3+UKKUv1uQ==
-X-Received: by 2002:a50:8ad7:0:b0:57d:692:33ee with SMTP id
- 4fb4d7f45d1cf-57d4a03eba4mr5905730a12.36.1719327264064; 
- Tue, 25 Jun 2024 07:54:24 -0700 (PDT)
+ bh=gd1bnX5yMsLjKAf/zlmApEfZTYiMqAMKaFxN5Ze85Yc=;
+ b=TienmJYXb+BFYhpTseUSPTnKilWXUySjOict4xfWiDiN8hB5oHmT4qVeQSu5Nx0i1u
+ 8a+HlXOKYPQeoHzZN1mBQHgBzA/C8dvNP2yQpF28S5RLe15pE0OEIy/Rtg5htq8JszyL
+ cc30JZ7ujzepsxB1vuVPcOhTdbqleFnNLE4ps2OqH+LBdFHtpP9Pe47Nq6jj3FUo0+kE
+ CI+lEbi3XzdDH7bxkl+RxHDswJ4zLYAMid/66exmmpl6wx9FdBnM2C+tmqETVemMWyhh
+ QUvcsZq7D23TicdN+Laozu8AC5SRldzFXswxszCxUNP8jEHDptS2FNNjTJMvNmOdrV40
+ ixBg==
+X-Gm-Message-State: AOJu0Yz/pQlGDmLq10s7RRmjGX0oV9hfYjze4BrpYdHkL0NySG4a6nTU
+ 3aERC0xlARZIsPfRyTXYKWLjddHEyFUbIrEfah9FvecUox5cusdn4OSbbQ==
+X-Google-Smtp-Source: AGHT+IGqX5yA+0k3VJ5/KXQ+ampjX9TzFY8KWbpglDZmONHaMBeigDL/BjTd77zUURHG4QynOlWREA==
+X-Received: by 2002:a50:aa96:0:b0:57d:788:aaae with SMTP id
+ 4fb4d7f45d1cf-57d4bddfabamr6098598a12.35.1719327255483; 
+ Tue, 25 Jun 2024 07:54:15 -0700 (PDT)
 Received: from 41414141.home (84-82-177-210.fixed.kpn.net. [84.82.177.210])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57d3042d421sm6092740a12.42.2024.06.25.07.54.23
+ 4fb4d7f45d1cf-57d3042d421sm6092740a12.42.2024.06.25.07.54.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 07:54:23 -0700 (PDT)
+ Tue, 25 Jun 2024 07:54:15 -0700 (PDT)
 From: David Bouman <dbouman03@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: David Bouman <dbouman03@gmail.com>
-Subject: [PATCH 4/4] hw/usb/u2f-passthru: Implement FIDO U2FHID keep-alive
-Date: Tue, 25 Jun 2024 16:53:50 +0200
-Message-Id: <20240625145350.65978-5-dbouman03@gmail.com>
+Subject: [PATCH 1/4] hw/usb/u2f: Add `start` and `stop` callbacks to U2F key
+ class
+Date: Tue, 25 Jun 2024 16:53:47 +0200
+Message-Id: <20240625145350.65978-2-dbouman03@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240625145350.65978-1-dbouman03@gmail.com>
 References: <20240625145350.65978-1-dbouman03@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=dbouman03@gmail.com; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=dbouman03@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -80,7 +81,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 25 Jun 2024 13:25:51 -0400
+X-Mailman-Approved-At: Tue, 25 Jun 2024 13:25:46 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,52 +96,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FIDO U2FHID features a keep-alive response command (code 0xbb). A
-keep-alive response signifies that the request is being processed
-and the transaction should not be closed yet.
+Preparation for improved u2f-passthru hidraw handle lifetimes:
 
-u2f-passthru does not recognize this command, and hence closes the
-transaction prematurely upon receiving it. This prevents some U2F
-security keys from being passed through correctly (Yubikey 4/5).
+These callbacks can be implemented by the backing implementation,
+i.e. u2f-passthru or u2f-emulated.
 
-Fix this by recognizing the keep-alive response and, if received,
-by keeping the transaction alive regardless of the resp_bcnt limit.
+The start callback is invoked when the device receives an INTR IN, and
+the stop callback is invoked when the endpoint has been unlinked/stopped.
+
+For a Linux guest, the start callback corresponds to the `hid_hw_open` and
+`hid_hw_close` routines, invoked whenever the first user opens, respectively
+the last user closes the emulated hidraw device.
 
 Signed-off-by: David Bouman <dbouman03@gmail.com>
-Fixes: 299976b050bf (hw/usb: Add U2F key passthru mode)
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2293
 ---
- hw/usb/u2f-passthru.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ hw/usb/u2f.c | 23 +++++++++++++++++++++++
+ hw/usb/u2f.h |  5 +++++
+ 2 files changed, 28 insertions(+)
 
-diff --git a/hw/usb/u2f-passthru.c b/hw/usb/u2f-passthru.c
-index d0fb7b377c..c1e4db3467 100644
---- a/hw/usb/u2f-passthru.c
-+++ b/hw/usb/u2f-passthru.c
-@@ -296,10 +296,14 @@ static void u2f_passthru_recv_from_host(U2FPassthruState *key,
-         return;
-     }
- 
-+    bool keepalive = false;
-     if (packet_is_init(packet)) {
-         transaction->resp_bcnt = packet_init_get_bcnt(packet);
-         transaction->resp_size = PACKET_INIT_DATA_SIZE;
- 
-+        if (packet->init.cmd == U2FHID_CMD_KEEPALIVE)
-+            keepalive = true;
+diff --git a/hw/usb/u2f.c b/hw/usb/u2f.c
+index 1fb59cf404..cc1abd6c7d 100644
+--- a/hw/usb/u2f.c
++++ b/hw/usb/u2f.c
+@@ -253,6 +253,12 @@ static void u2f_key_handle_data(USBDevice *dev, USBPacket *p)
+     case USB_TOKEN_IN:
+         packet_in = u2f_pending_in_get(key);
+         if (packet_in == NULL) {
++            U2FKeyClass *kc = U2F_KEY_GET_CLASS(key);
 +
-         if (packet->cid == BROADCAST_CID) {
-             /* Nonce checking for legitimate response */
-             if (memcmp(transaction->nonce, packet->init.data, NONCE_SIZE)
-@@ -312,7 +316,7 @@ static void u2f_passthru_recv_from_host(U2FPassthruState *key,
++            /* An early INTR IN is sent to kick the device. */
++            if (!key->started) {
++                key->started = (kc->start ? kc->start(key) : true);
++            }
+             p->status = USB_RET_NAK;
+             return;
+         }
+@@ -317,6 +323,21 @@ const VMStateDescription vmstate_u2f_key = {
      }
+ };
  
-     /* Transaction end check */
--    if (transaction->resp_size >= transaction->resp_bcnt) {
-+    if (!keepalive && transaction->resp_size >= transaction->resp_bcnt) {
-         u2f_transaction_close(key, cid);
-     }
-     u2f_send_to_guest(&key->base, raw_packet);
++static void u2f_ep_stopped(USBDevice *dev, USBEndpoint *ep)
++{
++    U2FKeyState *key = U2F_KEY(dev);
++    U2FKeyClass *kc = U2F_KEY_GET_CLASS(key);
++
++    if (!key->started) {
++        return;
++    }
++    if (kc->stop) {
++        kc->stop(key);
++    }
++    key->started = false;
++}
++
++
+ static void u2f_key_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -332,6 +353,8 @@ static void u2f_key_class_init(ObjectClass *klass, void *data)
+     uc->unrealize      = u2f_key_unrealize;
+     dc->desc           = "QEMU U2F key";
+     dc->vmsd           = &vmstate_u2f_key;
++
++    uc->ep_stopped     = u2f_ep_stopped;
+ }
+ 
+ static const TypeInfo u2f_key_info = {
+diff --git a/hw/usb/u2f.h b/hw/usb/u2f.h
+index 8bff13141a..56d989c783 100644
+--- a/hw/usb/u2f.h
++++ b/hw/usb/u2f.h
+@@ -49,6 +49,9 @@ struct U2FKeyClass {
+                             const uint8_t packet[U2FHID_PACKET_SIZE]);
+     void (*realize)(U2FKeyState *key, Error **errp);
+     void (*unrealize)(U2FKeyState *key);
++
++    bool (*start)(U2FKeyState *key);
++    void (*stop)(U2FKeyState *key);
+ };
+ 
+ /*
+@@ -64,6 +67,8 @@ struct U2FKeyState {
+     uint8_t pending_in_start;
+     uint8_t pending_in_end;
+     uint8_t pending_in_num;
++
++    bool started;
+ };
+ 
+ /*
 -- 
 2.34.1
 
