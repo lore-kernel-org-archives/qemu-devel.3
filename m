@@ -4,64 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AF15C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 14:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7091C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 14:52:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM7Rj-0001Mc-Mp; Tue, 25 Jun 2024 10:46:59 -0400
+	id 1sM7W8-0002sW-BR; Tue, 25 Jun 2024 10:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sM7Rh-0001M5-Jh; Tue, 25 Jun 2024 10:46:57 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sM7Rf-0001yJ-8G; Tue, 25 Jun 2024 10:46:57 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 91C71C000D
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1719326812;
- bh=+b1uQRjJMEIN549+zHrhMasy4rzZQe526ayHxdTof6Y=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=leJTph7oQVxU/dJdiSfWmp0qXADraNwCdsKgVwVDar6houN04k/AUACnLYu8nS6t7
- t2IDRSnahaRVPzhx8QN4iFLkXq0KLYOl+47a3Dw3YlWM4eEs8+BZdUjWzmAK3afjJq
- pBmhL8GKpOso4OhzUKvyextdrrc512d2QIhLlzjdJp4uUnXJBT53N1i/YFNvZ7EWNJ
- zGayNBEoRnjmxjvdERjzi9v59lHNchp9jM9pEfMnqgdk3ZTHXbISsM/iLGSmD7/gNw
- n9MRbcqr27BXJInQxKhl6yxcwqNb+lk5Cp9y6HbE+UKnqCbORlzRpOfyI8fbRfv4d/
- B3M/xaY0CpaeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1719326812;
- bh=+b1uQRjJMEIN549+zHrhMasy4rzZQe526ayHxdTof6Y=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=ivuCE1vLCPUoDU55ZBS0IzOz/bfIn+Wg/236aw9NKOCeTM41tgD9ZDqLnbjGcJtOC
- 0Lx6ufMbA5wVxgGO3mFcp7jxYgQC99urIMz9jS21W+AyWAOrTBZotFQvLh+vXSKUs9
- JNDqUEc5MqmtNbD68/1o0qDfmVmbDILc1TDs+1szoqx67yVb8ApshNsoaeux1EuBrq
- jSc9E8b6dfnBkHX4dg3viev6pKBXlyT+evBEyarF7QAFabJQzamLElww/AZ3Zusnpu
- pBapprdY3WmR1UV0fem3ghE3U2elaE8qb7eRWCg20EkmUQVv6qbS5XsPoXYJSEsxUF
- CSK5O0D+0s6rA==
-From: Alexei Filippov <alexei.filippov@syntacore.com>
-To: <palmer@dabbelt.com>
-CC: <alexei.filippov@syntacore.com>, <alistair.francis@wdc.com>,
- <bmeng.cn@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <liwei1518@gmail.com>,
- <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
-Subject: [PATCH v2] target/riscv: Add support for machine specific pmu's events
-Date: Tue, 25 Jun 2024 17:46:43 +0300
-Message-ID: <20240625144643.34733-1-alexei.filippov@syntacore.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1sM7W6-0002sO-Cm
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:51:30 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lists@philjordan.eu>)
+ id 1sM7W4-0002r7-5j
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:51:30 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2ec52fbb50bso35465581fa.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 07:51:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719327085; x=1719931885;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4P75rDyTSplQeLAXdN/mqNMm+RR7OzIGar44BqAtbzo=;
+ b=aLgTVilDotrZCyW8C23bzn4gIpkQj4Up/ijSwlsrz5SU6h4kTM8vFFOk6tQA1wWfxv
+ rv/HtMsLuVNPPr4AKuVLA4TJWjYHuzGQMYfLwvmCEoMBylI9664Rnn45F8B5SuPUceBc
+ UvcaO7qjp5L/+SAm3GUO40r1U/F0m9s5P0K7Kt+MJopyNWdEPLhS+1xZ3NAY1fmg4m+4
+ PQw+mssup0/HRLZ4ub7+LSe/8fFUrGouUoSYVCW9iyLj+wlZIzU+cxV73ae6Ybkbpfi+
+ B2W4R3glWif+WVE9pqCeiXBKc57Gu9bfraWdfTuFL0IwCyvB/qpI/aSZvTjHUmWP+Y6P
+ Np1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719327085; x=1719931885;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4P75rDyTSplQeLAXdN/mqNMm+RR7OzIGar44BqAtbzo=;
+ b=Hxgc0B0ABIqL2RcJtYrjp7L+Lvho0beceoZ+A6JwgxbsKM+w/EIsr99Ul2OuiQPhi7
+ 9BN8xRdYSvpR/z0kGLS0YLOY1A2tfm5t1NFvhWLjhURGAr3N8opGxK4go9XLm1/TUvUu
+ NoEWddTZEqyc03gpQ4tRcB2+aBsgdU+w57oCSmad1MDzGrZICFiAjgvFb4pG1ixU2g8W
+ tkZe5nEq6aMR3zBd1e0gTPNpBuIvf1f4Z+MAbcC2mn7SVMrfnQWlBlchfJJksNATMmp2
+ QSt/mprpm0TcCs1P9ytiz0i+XA+C/uD6Wo8pl0i2+Stqd1iAGQd1qPlZkOBGfoX40Ul1
+ RR0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWUf/UQOcYnhOeCXmZOPrOGChEdwjUB1zE9xjFcTYf690DCbe4iTUtY58DQ8WB0wUMd6F8bnf75MZO0RKuySyZvNRZsiwc=
+X-Gm-Message-State: AOJu0Yyn8zsRcL5lDz0aHmN3GN3wK/prs1ufR0tFNfKobi0ZGNOMZzhl
+ AXoAAYf89JBG0Y3IUv/v4wZREE6oMfv/gBZtMWKIHlgDh2kyIZ4CJfzcBroOysHTLoZJnhsM4T+
+ P1WSjn5aKgjoA2RdYwNSZ1kZe3Xej0dLpxPk2
+X-Google-Smtp-Source: AGHT+IGRtSx3pIKqHOd3bi60PRofm16doUjFvyEZIOgUThGgXb0BpOViTy8YyeIDkzrYznUTsp5k5lwELt4ki/V2bSI=
+X-Received: by 2002:a2e:998b:0:b0:2ec:59d8:a7e9 with SMTP id
+ 38308e7fff4ca-2ec5b3e35b1mr44979031fa.52.1719327084575; Tue, 25 Jun 2024
+ 07:51:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-07.corp.yadro.com (172.17.11.57) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+References: <20240318-cursor-v1-0-0bbe6c382217@daynix.com>
+ <20240318-cursor-v1-1-0bbe6c382217@daynix.com>
+In-Reply-To: <20240318-cursor-v1-1-0bbe6c382217@daynix.com>
+From: Phil Dennis-Jordan <lists@philjordan.eu>
+Date: Tue, 25 Jun 2024 16:51:12 +0200
+Message-ID: <CAGCz3vufEYgFYMUx+d2pvW-E-z3Wpar=tr79hfHTjGsXJj+n+g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] ui/cocoa: Add cursor composition
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: neutral client-ip=2a00:1450:4864:20::22c;
+ envelope-from=lists@philjordan.eu; helo=mail-lj1-x22c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,416 +98,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Was added call backs for machine specific pmu events.
-Simplify monitor functions by adding new hash table, which going to map
-counter number and event index.
-Was added read/write callbacks which going to simplify support for events,
-which expected to have different behavior.
+On Mon, 18 Mar 2024 at 08:59, Akihiko Odaki <akihiko.odaki@daynix.com> wrot=
+e:
+> The common pattern to implement accelerated cursor composition is to
+> replace the cursor and warp it so that the replaced cursor is shown at
+> the correct position on the guest display. Unfortunately, ui/cocoa
+> cannot do the same because warping the cursor position interfers with
+> the mouse input so it uses CALayer instead; although it is not
+> specialized for cursor composition, it still can compose images with
+> hardware acceleration.
 
-Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
----
-Changes since v2:
-		-rebased to latest master
- target/riscv/cpu.h |   9 +++
- target/riscv/csr.c |  43 +++++++++-----
- target/riscv/pmu.c | 139 ++++++++++++++++++++++-----------------------
- target/riscv/pmu.h |  11 ++--
- 4 files changed, 115 insertions(+), 87 deletions(-)
+As discussed in another thread, this limitation doesn't apply when
+using absolute pointer input. I much prefer "native" cursor rendering,
+especially in the absolute pointer case, but this is definitely an
+improvement over no cursor support at all.
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 6fe0d712b4..fbf82b050b 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -374,6 +374,13 @@ struct CPUArchState {
-     uint64_t (*rdtime_fn)(void *);
-     void *rdtime_fn_arg;
- 
-+    /*machine specific pmu callback */
-+    void (*pmu_ctr_write)(PMUCTRState *counter, uint32_t event_idx,
-+                          target_ulong val, bool high_half);
-+    target_ulong (*pmu_ctr_read)(PMUCTRState *counter, uint32_t event_idx,
-+                                 bool high_half);
-+    bool (*pmu_vendor_support)(uint32_t event_idx);
-+
-     /* machine specific AIA ireg read-modify-write callback */
- #define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen) \
-     ((((__xlen) & 0xff) << 24) | \
-@@ -455,6 +462,8 @@ struct ArchCPU {
-     uint32_t pmu_avail_ctrs;
-     /* Mapping of events to counters */
-     GHashTable *pmu_event_ctr_map;
-+    /* Mapping of counters to events */
-+    GHashTable *pmu_ctr_event_map;
-     const GPtrArray *decoders;
- };
- 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 58ef7079dc..b541852c84 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -875,20 +875,25 @@ static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
-     int ctr_idx = csrno - CSR_MCYCLE;
-     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-     uint64_t mhpmctr_val = val;
-+    int event_idx;
- 
-     counter->mhpmcounter_val = val;
--    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
--        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
--        counter->mhpmcounter_prev = get_ticks(false);
--        if (ctr_idx > 2) {
-+    event_idx = riscv_pmu_get_event_by_ctr(env, ctr_idx);
-+
-+    if (event_idx != RISCV_PMU_EVENT_NOT_PRESENTED) {
-+        if (RISCV_PMU_CTR_IS_HPM(ctr_idx) && env->pmu_ctr_write) {
-+            env->pmu_ctr_write(counter, event_idx, val, false);
-+        } else {
-+            counter->mhpmcounter_prev = get_ticks(false);
-+        }
-+        if (RISCV_PMU_CTR_IS_HPM(ctr_idx)) {
-             if (riscv_cpu_mxl(env) == MXL_RV32) {
-                 mhpmctr_val = mhpmctr_val |
-                               ((uint64_t)counter->mhpmcounterh_val << 32);
-             }
-             riscv_pmu_setup_timer(env, mhpmctr_val, ctr_idx);
-         }
--     } else {
--        /* Other counters can keep incrementing from the given value */
-+    } else {
-         counter->mhpmcounter_prev = val;
-     }
- 
-@@ -902,13 +907,19 @@ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
-     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-     uint64_t mhpmctr_val = counter->mhpmcounter_val;
-     uint64_t mhpmctrh_val = val;
-+    int event_idx;
- 
-     counter->mhpmcounterh_val = val;
-     mhpmctr_val = mhpmctr_val | (mhpmctrh_val << 32);
--    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
--        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
--        counter->mhpmcounterh_prev = get_ticks(true);
--        if (ctr_idx > 2) {
-+    event_idx = riscv_pmu_get_event_by_ctr(env, ctr_idx);
-+
-+    if (event_idx != RISCV_PMU_EVENT_NOT_PRESENTED) {
-+        if (RISCV_PMU_CTR_IS_HPM(ctr_idx) && env->pmu_ctr_write) {
-+            env->pmu_ctr_write(counter, event_idx, val, true);
-+        } else {
-+            counter->mhpmcounterh_prev = get_ticks(true);
-+        }
-+        if (RISCV_PMU_CTR_IS_HPM(ctr_idx)) {
-             riscv_pmu_setup_timer(env, mhpmctr_val, ctr_idx);
-         }
-     } else {
-@@ -926,6 +937,7 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-                                          counter->mhpmcounter_prev;
-     target_ulong ctr_val = upper_half ? counter->mhpmcounterh_val :
-                                         counter->mhpmcounter_val;
-+    int event_idx;
- 
-     if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
-         /*
-@@ -946,9 +958,14 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-      * The kernel computes the perf delta by subtracting the current value from
-      * the value it initialized previously (ctr_val).
-      */
--    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
--        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
--        *val = get_ticks(upper_half) - ctr_prev + ctr_val;
-+    event_idx = riscv_pmu_get_event_by_ctr(env, ctr_idx);
-+    if (event_idx != RISCV_PMU_EVENT_NOT_PRESENTED) {
-+        if (RISCV_PMU_CTR_IS_HPM(ctr_idx) && env->pmu_ctr_read) {
-+            *val = env->pmu_ctr_read(counter, event_idx,
-+                                     upper_half);
-+        } else {
-+            *val = get_ticks(upper_half) - ctr_prev + ctr_val;
-+        }
-     } else {
-         *val = ctr_val;
-     }
-diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-index 0e7d58b8a5..c3b6b20337 100644
---- a/target/riscv/pmu.c
-+++ b/target/riscv/pmu.c
-@@ -88,7 +88,7 @@ static bool riscv_pmu_counter_valid(RISCVCPU *cpu, uint32_t ctr_idx)
-     }
- }
- 
--static bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx)
-+bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx)
- {
-     CPURISCVState *env = &cpu->env;
- 
-@@ -207,59 +207,28 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx)
-     return ret;
- }
- 
--bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
--                                        uint32_t target_ctr)
-+int riscv_pmu_get_event_by_ctr(CPURISCVState *env,
-+                               uint32_t target_ctr)
- {
-     RISCVCPU *cpu;
-     uint32_t event_idx;
--    uint32_t ctr_idx;
- 
--    /* Fixed instret counter */
--    if (target_ctr == 2) {
--        return true;
-+    if (target_ctr < 3) {
-+        return target_ctr;
-     }
- 
-     cpu = env_archcpu(env);
--    if (!cpu->pmu_event_ctr_map) {
--        return false;
-+    if (!cpu->pmu_ctr_event_map || !cpu->pmu_event_ctr_map) {
-+        return RISCV_PMU_EVENT_NOT_PRESENTED;
-     }
- 
--    event_idx = RISCV_PMU_EVENT_HW_INSTRUCTIONS;
--    ctr_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_event_ctr_map,
--                               GUINT_TO_POINTER(event_idx)));
--    if (!ctr_idx) {
--        return false;
-+    event_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_ctr_event_map,
-+                                                     GUINT_TO_POINTER(target_ctr)));
-+    if (!event_idx) {
-+        return RISCV_PMU_EVENT_NOT_PRESENTED;
-     }
- 
--    return target_ctr == ctr_idx ? true : false;
--}
--
--bool riscv_pmu_ctr_monitor_cycles(CPURISCVState *env, uint32_t target_ctr)
--{
--    RISCVCPU *cpu;
--    uint32_t event_idx;
--    uint32_t ctr_idx;
--
--    /* Fixed mcycle counter */
--    if (target_ctr == 0) {
--        return true;
--    }
--
--    cpu = env_archcpu(env);
--    if (!cpu->pmu_event_ctr_map) {
--        return false;
--    }
--
--    event_idx = RISCV_PMU_EVENT_HW_CPU_CYCLES;
--    ctr_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_event_ctr_map,
--                               GUINT_TO_POINTER(event_idx)));
--
--    /* Counter zero is not used for event_ctr_map */
--    if (!ctr_idx) {
--        return false;
--    }
--
--    return (target_ctr == ctr_idx) ? true : false;
-+    return event_idx;
- }
- 
- static gboolean pmu_remove_event_map(gpointer key, gpointer value,
-@@ -268,6 +237,12 @@ static gboolean pmu_remove_event_map(gpointer key, gpointer value,
-     return (GPOINTER_TO_UINT(value) == GPOINTER_TO_UINT(udata)) ? true : false;
- }
- 
-+static gboolean pmu_remove_ctr_map(gpointer key, gpointer value,
-+                                   gpointer udata)
-+{
-+    return (GPOINTER_TO_UINT(key) == GPOINTER_TO_UINT(udata)) ? true : false;
-+}
-+
- static int64_t pmu_icount_ticks_to_ns(int64_t value)
- {
-     int64_t ret = 0;
-@@ -286,8 +261,11 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
- {
-     uint32_t event_idx;
-     RISCVCPU *cpu = env_archcpu(env);
-+    bool machine_specific = false;
- 
--    if (!riscv_pmu_counter_valid(cpu, ctr_idx) || !cpu->pmu_event_ctr_map) {
-+    if (!riscv_pmu_counter_valid(cpu, ctr_idx) ||
-+        !cpu->pmu_event_ctr_map ||
-+        !cpu->pmu_ctr_event_map) {
-         return -1;
-     }
- 
-@@ -299,6 +277,9 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
-         g_hash_table_foreach_remove(cpu->pmu_event_ctr_map,
-                                     pmu_remove_event_map,
-                                     GUINT_TO_POINTER(ctr_idx));
-+        g_hash_table_foreach_remove(cpu->pmu_ctr_event_map,
-+                                    pmu_remove_ctr_map,
-+                                    GUINT_TO_POINTER(ctr_idx));
-         return 0;
-     }
- 
-@@ -308,40 +289,39 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
-         return 0;
-     }
- 
--    switch (event_idx) {
--    case RISCV_PMU_EVENT_HW_CPU_CYCLES:
--    case RISCV_PMU_EVENT_HW_INSTRUCTIONS:
--    case RISCV_PMU_EVENT_CACHE_DTLB_READ_MISS:
--    case RISCV_PMU_EVENT_CACHE_DTLB_WRITE_MISS:
--    case RISCV_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS:
--        break;
--    default:
--        /* We don't support any raw events right now */
--        return -1;
-+    if (RISCV_PMU_CTR_IS_HPM(ctr_idx) && env->pmu_vendor_support) {
-+        machine_specific = env->pmu_vendor_support(event_idx);
-+    }
-+
-+    if (!machine_specific) {
-+        switch (event_idx) {
-+        case RISCV_PMU_EVENT_HW_CPU_CYCLES:
-+        case RISCV_PMU_EVENT_HW_INSTRUCTIONS:
-+        case RISCV_PMU_EVENT_CACHE_DTLB_READ_MISS:
-+        case RISCV_PMU_EVENT_CACHE_DTLB_WRITE_MISS:
-+        case RISCV_PMU_EVENT_CACHE_ITLB_PREFETCH_MISS:
-+            break;
-+        default:
-+            return -1;
-+        }
-     }
-     g_hash_table_insert(cpu->pmu_event_ctr_map, GUINT_TO_POINTER(event_idx),
-                         GUINT_TO_POINTER(ctr_idx));
-+    g_hash_table_insert(cpu->pmu_ctr_event_map, GUINT_TO_POINTER(ctr_idx),
-+                        GUINT_TO_POINTER(event_idx));
- 
-     return 0;
- }
- 
- static void pmu_timer_trigger_irq(RISCVCPU *cpu,
--                                  enum riscv_pmu_event_idx evt_idx)
-+                                  uint32_t ctr_idx)
- {
--    uint32_t ctr_idx;
-     CPURISCVState *env = &cpu->env;
-     PMUCTRState *counter;
-     target_ulong *mhpmevent_val;
-     uint64_t of_bit_mask;
-     int64_t irq_trigger_at;
- 
--    if (evt_idx != RISCV_PMU_EVENT_HW_CPU_CYCLES &&
--        evt_idx != RISCV_PMU_EVENT_HW_INSTRUCTIONS) {
--        return;
--    }
--
--    ctr_idx = GPOINTER_TO_UINT(g_hash_table_lookup(cpu->pmu_event_ctr_map,
--                               GUINT_TO_POINTER(evt_idx)));
-     if (!riscv_pmu_counter_enabled(cpu, ctr_idx)) {
-         return;
-     }
-@@ -349,7 +329,7 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
-     if (riscv_cpu_mxl(env) == MXL_RV32) {
-         mhpmevent_val = &env->mhpmeventh_val[ctr_idx];
-         of_bit_mask = MHPMEVENTH_BIT_OF;
--     } else {
-+    } else {
-         mhpmevent_val = &env->mhpmevent_val[ctr_idx];
-         of_bit_mask = MHPMEVENT_BIT_OF;
-     }
-@@ -372,14 +352,25 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
-     }
- }
- 
-+static void riscv_pmu_timer_trigger_irq(gpointer ctr, gpointer event_idx,
-+                                            gpointer opaque)
-+{
-+    RISCVCPU *cpu = opaque;
-+
-+    pmu_timer_trigger_irq(cpu, GPOINTER_TO_UINT(ctr));
-+}
-+
- /* Timer callback for instret and cycle counter overflow */
- void riscv_pmu_timer_cb(void *priv)
- {
-     RISCVCPU *cpu = priv;
- 
--    /* Timer event was triggered only for these events */
--    pmu_timer_trigger_irq(cpu, RISCV_PMU_EVENT_HW_CPU_CYCLES);
--    pmu_timer_trigger_irq(cpu, RISCV_PMU_EVENT_HW_INSTRUCTIONS);
-+    if (!cpu->pmu_ctr_event_map || !cpu->pmu_event_ctr_map) {
-+        return;
-+    }
-+    g_hash_table_foreach(cpu->pmu_ctr_event_map,
-+                         riscv_pmu_timer_trigger_irq,
-+                         cpu);
- }
- 
- int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
-@@ -388,6 +379,7 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
-     int64_t overflow_ns, overflow_left = 0;
-     RISCVCPU *cpu = env_archcpu(env);
-     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-+    uint32_t event_idx;
- 
-     if (!riscv_pmu_counter_valid(cpu, ctr_idx) || !cpu->cfg.ext_sscofpmf) {
-         return -1;
-@@ -408,8 +400,9 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
-         overflow_left = overflow_delta - INT64_MAX;
-     }
- 
--    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
--        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
-+    event_idx = riscv_pmu_get_event_by_ctr(env, ctr_idx);
-+
-+    if (event_idx != RISCV_PMU_EVENT_NOT_PRESENTED) {
-         overflow_ns = pmu_icount_ticks_to_ns((int64_t)overflow_delta);
-         overflow_left = pmu_icount_ticks_to_ns(overflow_left) ;
-     } else {
-@@ -443,7 +436,13 @@ void riscv_pmu_init(RISCVCPU *cpu, Error **errp)
- 
-     cpu->pmu_event_ctr_map = g_hash_table_new(g_direct_hash, g_direct_equal);
-     if (!cpu->pmu_event_ctr_map) {
--        error_setg(errp, "Unable to allocate PMU event hash table");
-+        error_setg(errp, "Unable to allocate first PMU event hash table");
-+        return;
-+    }
-+
-+    cpu->pmu_ctr_event_map = g_hash_table_new(g_direct_hash, g_direct_equal);
-+    if (!cpu->pmu_ctr_event_map) {
-+        error_setg(errp, "Unable to allocate second PMU event hash table");
-         return;
-     }
- 
-diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
-index 7c0ad661e0..b99a5f58d4 100644
---- a/target/riscv/pmu.h
-+++ b/target/riscv/pmu.h
-@@ -22,10 +22,12 @@
- #include "cpu.h"
- #include "qapi/error.h"
- 
--bool riscv_pmu_ctr_monitor_instructions(CPURISCVState *env,
--                                        uint32_t target_ctr);
--bool riscv_pmu_ctr_monitor_cycles(CPURISCVState *env,
--                                  uint32_t target_ctr);
-+#define RISCV_PMU_EVENT_NOT_PRESENTED -1
-+
-+#define RISCV_PMU_CTR_IS_HPM(x) (x > 2)
-+
-+int riscv_pmu_get_event_by_ctr(CPURISCVState *env,
-+                               uint32_t target_ctr);
- void riscv_pmu_timer_cb(void *priv);
- void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
- int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
-@@ -34,5 +36,6 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
- void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
- int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
-                           uint32_t ctr_idx);
-+bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx);
- 
- #endif /* RISCV_PMU_H */
--- 
-2.34.1
+Perhaps some others can chip in with preferences on the way forward.
 
+> @@ -313,6 +318,11 @@ @interface QemuCocoaView : NSView
+>      BOOL isMouseGrabbed;
+>      BOOL isAbsoluteEnabled;
+>      CFMachPortRef eventsTap;
+> +    CALayer *cursorLayer;
+> +    QEMUCursor *cursor;
+
+As far as I can see, these can leak on dealloc.
+
+> +    int mouseX;
+> +    int mouseY;
+> +    int mouseOn;
+
+Any reason not to use a boolean type (bool or BOOL) for this?
+
+> +- (void)setCursor:(QEMUCursor *)given_cursor
+> +{
+> [=E2=80=A6]
+> +    image =3D CGImageCreate(
+> +        cursor->width, //width
+> +        cursor->height, //height
+> +        8, //bitsPerComponent
+> +        32, //bitsPerPixel
+> +        cursor->width * 4, //bytesPerRow
+> +        CGColorSpaceCreateWithName(kCGColorSpaceSRGB), //colorspace
+
+This leaks the colour space object; CGImageCreate unfortunately does
+not consume the reference.
+
+> +        kCGBitmapByteOrder32Little | kCGImageAlphaFirst, //bitmapInfo
+> +        provider, //provider
+> +        NULL, //decode
+> +        0, //interpolate
+> +        kCGRenderingIntentDefault //intent
+> +    );
+> +
+> +    CGDataProviderRelease(provider);
+> +    [CATransaction begin];
+> +    [CATransaction setDisableActions:YES];
+> +    [cursorLayer setBounds:bounds];
+> +    [cursorLayer setContents:(id)image];
+> +    [CATransaction commit];
+> +    CGImageRelease(image);
+> +}
+
+This method also runs on for quite a bit. I'd prefer some parts broken
+out into a helper function or two.
 
