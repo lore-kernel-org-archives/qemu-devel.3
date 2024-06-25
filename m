@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E7F7C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 05:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46129C41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 05:10:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLyPt-00019T-2G; Tue, 25 Jun 2024 01:08:29 -0400
+	id 1sLyPr-00018R-VU; Tue, 25 Jun 2024 01:08:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sLyPo-00014a-FW
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 01:08:24 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1sLyPq-00016c-ST
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 01:08:26 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sLyPk-0001Wa-0P
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 01:08:23 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-706680d3a25so1875766b3a.0
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 22:08:18 -0700 (PDT)
+ id 1sLyPn-0001Y0-Vy
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 01:08:26 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1f9aa039327so41745275ad.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 22:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719292097; x=1719896897; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719292101; x=1719896901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZMOv1zIzE6GspuhwPHSAou1PZaQbe4Ud5p+lD2q/SHc=;
- b=LINO3Bnnn5u8ACllH+r/Ms1H64hcBudwXLON8ap0wQCNa5U4+Aqx4Appc1NQjALf8+
- woOui85FsLIK/DHTnjqM6tEp33q0WCEROXNq/sVnFzwq/sU3RaaPKbDJ2yK4OzmMwzYb
- lgeqzcovOcZBeYdYQUbnaF+9GFcU2E926zz+3DU9geo0H9GHjKiPNGqbABCJU9TvN7WX
- sCz/sE+UiHtgqZQ+zq+FhlnsrqKaWt6boe7aaIQQxtSsp4pm8FZ+4r6kfqiqDK5XMSJ3
- sJSnWry9mDsKUvtmiBv0We6I+rQTJ5lQEHZb2abL76Bb1zF9lMII/CWal+FeOK64KAZR
- X1Dg==
+ bh=eCY0RuPqHu5iM13PrDmlYJVrVT2SB405qXFZ6R1XSxw=;
+ b=OGw7SqyqP58h/6yQ1GL/wnUuKwe42/j/s+AdWGXVsc9kSbgD71TC3JneDog+Z4dJtT
+ L9CoutR+KYeyPFzetyBdoYFIbI9yWt9zjiNKEV55xwu3mbD3guuIcTOSZusCCfw5YedA
+ ImofbPoePNTUqNNFx+7smvLONAx9v6iqXAPOFSjlrNcsts7iDwcziLCQG9XGbUI7pEje
+ 4LRlTSVDPl9NJ3AR1lDLf9eX9epAmC5H/BfpATDCkeyhBPZp1T+y8rCyk6tN7twE+CjH
+ AISjsJwRAw7UL1SApgJ1M6SDW9LwkuZlxYQ+lQJbqjMpx+ftfDmpw86AgTOHGNfe5HAC
+ QkIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719292097; x=1719896897;
+ d=1e100.net; s=20230601; t=1719292101; x=1719896901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZMOv1zIzE6GspuhwPHSAou1PZaQbe4Ud5p+lD2q/SHc=;
- b=xEhzFFN9ov1G30VJ1zj24ZpK6n/GA5ENtZl0HX70WtJFh5jhKPqWK4eTTcSz5jM8JW
- Pe82gBph9BMV3Jz0nrM/+qiLSM0z66npulnzTIBl0Rdyg5YDKUsAnOsGc9bZDThIJc2E
- H6+HR9WFe2kedo8KHgGvVst+ZZGC05kkM4Y/dZPrOcSi88ek+mPIlYBlT2o1FtMwx70D
- hjaI+dJJz9FkYkSGujVg1/ohka3ZIA+otQmGgFl5DlAgS3CWrHiUfNzrr6JES2lHr0Tc
- KpoB+sI1Hw/2iDC/41SVo8BhlNOwiOKDvsesYf9K+PrBS+/Mt9YBBwKCJ2rbd6pZaFEC
- Wdhw==
-X-Gm-Message-State: AOJu0YwBvWRi6rZXhr6MB4z79HzZ1BgeUoYOPINQKBnVg9yCD/908X7N
- K+pNrtO2mSFxtuOwHT/cIdMppXYMPo97dFhptcutTv4wNk1G9EfzFF/xrtTqucWpFbfF3kZ245q
- C
-X-Google-Smtp-Source: AGHT+IH2joKZMwdf/1YUzCMjUf9R++cLwe4wJhqRw5t5oyVFapQd4ouqbeYtXq8d/1zizXx42opmAg==
-X-Received: by 2002:a05:6a20:3952:b0:1bd:18ee:f141 with SMTP id
- adf61e73a8af0-1bd18eef20cmr1570883637.4.1719292097270; 
- Mon, 24 Jun 2024 22:08:17 -0700 (PDT)
+ bh=eCY0RuPqHu5iM13PrDmlYJVrVT2SB405qXFZ6R1XSxw=;
+ b=TMtJbs8/jb26N2+H1Q027xt/Tn8rSJjDBer3cpUwog+3aqvA6GzU5kgH2RPpM7bXJc
+ IVF66RqzhbgumHndn7cGLevRHz4OtksEsoJay0VjhtCmutHjT7PeK10co7hT613dDdIr
+ XdojnhUfKUO3WxUJkzViWWEfXdcPSSLFSQocccDadHjOQHaZ5W3cGEL4hmT5EA5siYEC
+ YAL0zTPCNgmQ7zfRm5nId9zMXQvqksKLMkr6ADM+JSzKBMznfBaJQ0zTxJJznBrPhJnd
+ D6xkMStJOzivHUA3Nd2qFJeWW5rJu/C8ivN9UIUDUqQikU8Hqi8vQQCZXbyOT9pzFtv2
+ 5h+g==
+X-Gm-Message-State: AOJu0YyL9q3k7hLSLr6c+3UwYsBfGsI83DYZmQA/W2OI63bV3F+x2pIx
+ 5T83/H4XXjBfVUJggISXn5jtD3DE4askgVt/XEZp3ptmu+QkrieiF8IbMLMIHBIlQAofTlGdFuB
+ j
+X-Google-Smtp-Source: AGHT+IFgbK/S0Z4g0xHzym3C2mnj1pVFRk6Ky5nCkuxY57RPLUrqxeP2P4J/euwlRw50kKVpTml4vg==
+X-Received: by 2002:a17:902:d50b:b0:1f8:67e4:3979 with SMTP id
+ d9443c01a7336-1fa1d6533bcmr90624085ad.47.1719292101326; 
+ Mon, 24 Jun 2024 22:08:21 -0700 (PDT)
 Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9ebbc72e9sm70843865ad.296.2024.06.24.22.08.16
+ d9443c01a7336-1f9ebbc72e9sm70843865ad.296.2024.06.24.22.08.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Jun 2024 22:08:16 -0700 (PDT)
+ Mon, 24 Jun 2024 22:08:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 05/13] target/arm: Convert SDOT, UDOT to decodetree
-Date: Mon, 24 Jun 2024 22:08:02 -0700
-Message-Id: <20240625050810.1475643-6-richard.henderson@linaro.org>
+Subject: [PATCH 09/13] target/arm: Convert BFMMLA, SMMLA, UMMLA,
+ USMMLA to decodetree
+Date: Mon, 24 Jun 2024 22:08:06 -0700
+Message-Id: <20240625050810.1475643-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240625050810.1475643-1-richard.henderson@linaro.org>
 References: <20240625050810.1475643-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,164 +97,106 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/a64.decode      |  7 +++++
- target/arm/tcg/translate-a64.c | 54 ++++++++++++++++++----------------
- 2 files changed, 35 insertions(+), 26 deletions(-)
+ target/arm/tcg/a64.decode      |  4 ++++
+ target/arm/tcg/translate-a64.c | 36 ++++++++--------------------------
+ 2 files changed, 12 insertions(+), 28 deletions(-)
 
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 613cc9365c..7411d4ba97 100644
+index 15344a73de..b2c7e36969 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -61,6 +61,7 @@
+@@ -952,6 +952,10 @@ UDOT_v          0.10 1110 100 ..... 10010 1 ..... ..... @qrrr_s
+ USDOT_v         0.00 1110 100 ..... 10011 1 ..... ..... @qrrr_s
+ BFDOT_v         0.10 1110 010 ..... 11111 1 ..... ..... @qrrr_s
+ BFMLAL_v        0.10 1110 110 ..... 11111 1 ..... ..... @qrrr_h
++BFMMLA          0110 1110 010 ..... 11101 1 ..... ..... @rrr_q1e0
++SMMLA           0100 1110 100 ..... 10100 1 ..... ..... @rrr_q1e0
++UMMLA           0110 1110 100 ..... 10100 1 ..... ..... @rrr_q1e0
++USMMLA          0100 1110 100 ..... 10101 1 ..... ..... @rrr_q1e0
  
- @qrrr_b         . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=0
- @qrrr_h         . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=1
-+@qrrr_s         . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=2
- @qrrr_sd        . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=%esz_sd
- @qrrr_e         . q:1 ...... esz:2 . rm:5 ...... rn:5 rd:5  &qrrr_e
- @qr2r_e         . q:1 ...... esz:2 . ..... ...... rm:5 rd:5 &qrrr_e rn=%rd
-@@ -946,6 +947,9 @@ SQRDMULH_v      0.10 1110 ..1 ..... 10110 1 ..... ..... @qrrr_e
- SQRDMLAH_v      0.10 1110 ..0 ..... 10000 1 ..... ..... @qrrr_e
- SQRDMLSH_v      0.10 1110 ..0 ..... 10001 1 ..... ..... @qrrr_e
- 
-+SDOT_v          0.00 1110 100 ..... 10010 1 ..... ..... @qrrr_s
-+UDOT_v          0.10 1110 100 ..... 10010 1 ..... ..... @qrrr_s
-+
  ### Advanced SIMD scalar x indexed element
  
- FMUL_si         0101 1111 00 .. .... 1001 . 0 ..... .....   @rrx_h
-@@ -1020,6 +1024,9 @@ SQRDMLAH_vi     0.10 1111 10 .. .... 1101 . 0 ..... .....   @qrrx_s
- SQRDMLSH_vi     0.10 1111 01 .. .... 1111 . 0 ..... .....   @qrrx_h
- SQRDMLSH_vi     0.10 1111 10 .. .... 1111 . 0 ..... .....   @qrrx_s
- 
-+SDOT_vi         0.00 1111 10 .. .... 1110 . 0 ..... .....   @qrrx_s
-+UDOT_vi         0.10 1111 10 .. .... 1110 . 0 ..... .....   @qrrx_s
-+
- # Floating-point conditional select
- 
- FCSEL           0001 1110 .. 1 rm:5 cond:4 11 rn:5 rd:5     esz=%esz_hsd
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 32c24c7422..f2e7d8d75c 100644
+index 95be862dde..2697c4b305 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -5592,6 +5592,18 @@ TRANS(SQRDMULH_v, do_gvec_fn3_no8_no64, a, gen_gvec_sqrdmulh_qc)
- TRANS_FEAT(SQRDMLAH_v, aa64_rdm, do_gvec_fn3_no8_no64, a, gen_gvec_sqrdmlah_qc)
- TRANS_FEAT(SQRDMLSH_v, aa64_rdm, do_gvec_fn3_no8_no64, a, gen_gvec_sqrdmlsh_qc)
+@@ -5605,6 +5605,10 @@ TRANS_FEAT(SDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_sdot_b)
+ TRANS_FEAT(UDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_udot_b)
+ TRANS_FEAT(USDOT_v, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_usdot_b)
+ TRANS_FEAT(BFDOT_v, aa64_bf16, do_dot_vector, a, gen_helper_gvec_bfdot)
++TRANS_FEAT(BFMMLA, aa64_bf16, do_dot_vector, a, gen_helper_gvec_bfmmla)
++TRANS_FEAT(SMMLA, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_smmla_b)
++TRANS_FEAT(UMMLA, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_ummla_b)
++TRANS_FEAT(USMMLA, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_usmmla_b)
  
-+static bool do_dot_vector(DisasContext *s, arg_qrrr_e *a,
-+                          gen_helper_gvec_4 *fn)
-+{
-+    if (fp_access_check(s)) {
-+        gen_gvec_op4_ool(s, a->q, a->rd, a->rn, a->rm, a->rd, 0, fn);
-+    }
-+    return true;
-+}
-+
-+TRANS_FEAT(SDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_sdot_b)
-+TRANS_FEAT(UDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_udot_b)
-+
- /*
-  * Advanced SIMD scalar/vector x indexed element
-  */
-@@ -5914,6 +5926,18 @@ static gen_helper_gvec_4 * const f_vector_idx_sqrdmlsh[2] = {
- TRANS_FEAT(SQRDMLSH_vi, aa64_rdm, do_int3_qc_vector_idx, a,
-            f_vector_idx_sqrdmlsh)
- 
-+static bool do_dot_vector_idx(DisasContext *s, arg_qrrx_e *a,
-+                              gen_helper_gvec_4 *fn)
-+{
-+    if (fp_access_check(s)) {
-+        gen_gvec_op4_ool(s, a->q, a->rd, a->rn, a->rm, a->rd, a->idx, fn);
-+    }
-+    return true;
-+}
-+
-+TRANS_FEAT(SDOT_vi, aa64_dp, do_dot_vector_idx, a, gen_helper_gvec_sdot_idx_b)
-+TRANS_FEAT(UDOT_vi, aa64_dp, do_dot_vector_idx, a, gen_helper_gvec_udot_idx_b)
-+
- /*
-  * Advanced SIMD scalar pairwise
-  */
-@@ -10890,14 +10914,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+ static bool trans_BFMLAL_v(DisasContext *s, arg_qrrr_e *a)
+ {
+@@ -10949,15 +10953,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
      int rot;
  
      switch (u * 16 + opcode) {
--    case 0x02: /* SDOT (vector) */
--    case 0x12: /* UDOT (vector) */
--        if (size != MO_32) {
+-    case 0x04: /* SMMLA */
+-    case 0x14: /* UMMLA */
+-    case 0x05: /* USMMLA */
+-        if (!is_q || size != MO_32) {
 -            unallocated_encoding(s);
 -            return;
 -        }
--        feature = dc_isar_feature(aa64_dp, s);
+-        feature = dc_isar_feature(aa64_i8mm, s);
 -        break;
-     case 0x03: /* USDOT */
-         if (size != MO_32) {
-             unallocated_encoding(s);
-@@ -10947,8 +10963,10 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+     case 0x18: /* FCMLA, #0 */
+     case 0x19: /* FCMLA, #90 */
+     case 0x1a: /* FCMLA, #180 */
+@@ -10972,19 +10967,16 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
          }
+         feature = dc_isar_feature(aa64_fcma, s);
          break;
+-    case 0x1d: /* BFMMLA */
+-        if (size != MO_16 || !is_q) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        feature = dc_isar_feature(aa64_bf16, s);
+-        break;
      default:
-+    case 0x02: /* SDOT (vector) */
+     case 0x02: /* SDOT (vector) */
+     case 0x03: /* USDOT */
++    case 0x04: /* SMMLA */
++    case 0x05: /* USMMLA */
      case 0x10: /* SQRDMLAH (vector) */
      case 0x11: /* SQRDMLSH (vector) */
-+    case 0x12: /* UDOT (vector) */
+     case 0x12: /* UDOT (vector) */
++    case 0x14: /* UMMLA */
++    case 0x1d: /* BFMMLA */
+     case 0x1f: /* BFDOT / BFMLAL */
          unallocated_encoding(s);
          return;
-     }
-@@ -10961,11 +10979,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+@@ -10998,15 +10990,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
      }
  
      switch (opcode) {
--    case 0x2: /* SDOT / UDOT */
--        gen_gvec_op4_ool(s, is_q, rd, rn, rm, rd, 0,
--                         u ? gen_helper_gvec_udot_b : gen_helper_gvec_sdot_b);
+-    case 0x04: /* SMMLA, UMMLA */
+-        gen_gvec_op4_ool(s, 1, rd, rn, rm, rd, 0,
+-                         u ? gen_helper_gvec_ummla_b
+-                         : gen_helper_gvec_smmla_b);
+-        return;
+-    case 0x05: /* USMMLA */
+-        gen_gvec_op4_ool(s, 1, rd, rn, rm, rd, 0, gen_helper_gvec_usmmla_b);
 -        return;
 -
-     case 0x3: /* USDOT */
-         gen_gvec_op4_ool(s, is_q, rd, rn, rm, rd, 0, gen_helper_gvec_usdot_b);
+     case 0x8: /* FCMLA, #0 */
+     case 0x9: /* FCMLA, #90 */
+     case 0xa: /* FCMLA, #180 */
+@@ -11051,9 +11034,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+         }
          return;
-@@ -12043,13 +12056,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     case 0x0b: /* SQDMULL, SQDMULL2 */
-         is_long = true;
-         break;
--    case 0x0e: /* SDOT */
--    case 0x1e: /* UDOT */
--        if (is_scalar || size != MO_32 || !dc_isar_feature(aa64_dp, s)) {
--            unallocated_encoding(s);
--            return;
--        }
--        break;
-     case 0x0f:
-         switch (size) {
-         case 0: /* SUDOT */
-@@ -12099,12 +12105,14 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     case 0x09: /* FMUL */
-     case 0x0c: /* SQDMULH */
-     case 0x0d: /* SQRDMULH */
-+    case 0x0e: /* SDOT */
-     case 0x10: /* MLA */
-     case 0x14: /* MLS */
-     case 0x18: /* FMLAL2 */
-     case 0x19: /* FMULX */
-     case 0x1c: /* FMLSL2 */
-     case 0x1d: /* SQRDMLAH */
-+    case 0x1e: /* UDOT */
-     case 0x1f: /* SQRDMLSH */
-         unallocated_encoding(s);
-         return;
-@@ -12180,12 +12188,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
-     }
  
-     switch (16 * u + opcode) {
--    case 0x0e: /* SDOT */
--    case 0x1e: /* UDOT */
--        gen_gvec_op4_ool(s, is_q, rd, rn, rm, rd, index,
--                         u ? gen_helper_gvec_udot_idx_b
--                         : gen_helper_gvec_sdot_idx_b);
+-    case 0xd: /* BFMMLA */
+-        gen_gvec_op4_ool(s, is_q, rd, rn, rm, rd, 0, gen_helper_gvec_bfmmla);
 -        return;
-     case 0x0f:
-         switch (extract32(insn, 22, 2)) {
-         case 0: /* SUDOT */
+     default:
+         g_assert_not_reached();
+     }
 -- 
 2.34.1
 
