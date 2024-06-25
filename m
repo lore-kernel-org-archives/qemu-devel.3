@@ -4,27 +4,24 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B1C3C30659
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 01:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D8B8C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 01:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLvKV-0001o4-MP; Mon, 24 Jun 2024 21:50:44 -0400
+	id 1sLvKX-0001py-6l; Mon, 24 Jun 2024 21:50:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sLvKS-0001mz-Rx; Mon, 24 Jun 2024 21:50:41 -0400
+ id 1sLvKU-0001nr-Vo; Mon, 24 Jun 2024 21:50:42 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sLvKQ-000106-Ap; Mon, 24 Jun 2024 21:50:40 -0400
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
+ id 1sLvKT-000106-JL; Mon, 24 Jun 2024 21:50:42 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Tue, 25 Jun
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Tue, 25 Jun
  2024 09:50:28 +0800
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 25 Jun
- 2024 09:50:30 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
  Transport; Tue, 25 Jun 2024 09:50:28 +0800
@@ -33,18 +30,17 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
  Stanley" <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>
-Subject: [PATCH v2 0/2] Fix coverity issues for AST2700
-Date: Tue, 25 Jun 2024 09:50:26 +0800
-Message-ID: <20240625015028.1382059-1-jamin_lin@aspeedtech.com>
+CC: <jamin_lin@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v2 1/2] aspeed/soc: Fix possible divide by zero
+Date: Tue, 25 Jun 2024 09:50:27 +0800
+Message-ID: <20240625015028.1382059-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240625015028.1382059-1-jamin_lin@aspeedtech.com>
+References: <20240625015028.1382059-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
- does not designate 192.168.10.10 as permitted sender)
- receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
- helo=localhost.localdomain;
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -69,21 +65,37 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-change from v1:
-aspeed/soc: coverity defect: DIVIDE_BY_ZERO
-aspeed/sdmc: coverity defect: Control flow issues (DEADCODE)
+Coverity reports a possible DIVIDE_BY_ZERO issue regarding the
+"ram_size" object property. This can not happen because RAM has
+predefined valid sizes per SoC. Nevertheless, add a test to
+close the issue.
 
-change from v2:
-add more commit log from reviewer, Cédric.
-
-Jamin Lin (2):
-  aspeed/soc: Fix possible divide by zero
-  aspeed/sdmc: Remove extra R_MAIN_STATUS case
-
+Fixes: Coverity CID 1547113
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+[ clg: Rewrote commit log ]
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
  hw/arm/aspeed_ast27x0.c | 6 ++++++
- hw/misc/aspeed_sdmc.c   | 1 -
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ 1 file changed, 6 insertions(+)
 
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index b6876b4862..d14a46df6f 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
+     ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
+                                         &error_abort);
+ 
++    if (!ram_size) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: ram_size is zero",  __func__);
++        return;
++    }
++
+     /*
+      * Emulate ddr capacity hardware behavior.
+      * If writes the data to the address which is beyond the ram size,
 -- 
 2.25.1
 
