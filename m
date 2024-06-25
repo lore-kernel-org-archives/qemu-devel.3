@@ -4,57 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 526B4C30658
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 15:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBD1C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 15:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM7rx-0006tA-8A; Tue, 25 Jun 2024 11:14:05 -0400
+	id 1sM7sZ-0007Yz-UK; Tue, 25 Jun 2024 11:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=+2S4=N3=kaod.org=clg@ozlabs.org>)
- id 1sM7ru-0006sW-LD
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 11:14:03 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=+2S4=N3=kaod.org=clg@ozlabs.org>)
- id 1sM7rs-0007nq-LX
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 11:14:02 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W7pJM5J4cz4w2F;
- Wed, 26 Jun 2024 01:13:55 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W7pJK3Q49z4wc3;
- Wed, 26 Jun 2024 01:13:53 +1000 (AEST)
-Message-ID: <4c336e09-910c-4452-becf-54f10718017f@kaod.org>
-Date: Tue, 25 Jun 2024 17:13:47 +0200
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1sM7sY-0007Yj-Tv
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 11:14:42 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1sM7sW-00082z-Sn
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 11:14:42 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-706680d3a25so2282261b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 08:14:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1719328479; x=1719933279; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=v8CQodUEsJ8wrSh+aicDqfHJszLhKGqWXGJGC/q4lmA=;
+ b=UGCcCw19t70KqwXlZIxIbFMfZr7DWbjDka+2ncav3w9F9aUEWC04SlfZRe1q8Z6Qq6
+ HbdAv7D6d5eXXd8S/gJQ39LZD7q7Lsr7bm26g4hQ2y5Zg1TA/vq0a67KNaaYY1SWPWfy
+ jc4sqT5xR8hRpvVlNWCkToXWYsFvYf1o1ILCZMbPAboAedQ53vDeNc+9MHAOVm2Udzs2
+ jaKk4sONNQzFa8Z7Eq/1oyD97qjIgdkl3y59u89G1WVFLFoYCoiW7uBJa0B2VzWfDqoP
+ Z4vbKP2zIUtBzJVNaU4lz5bHla8+y8llRNMiBu1xpETVlsni26oSE2oj/LshfpYo4rVw
+ epAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719328479; x=1719933279;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=v8CQodUEsJ8wrSh+aicDqfHJszLhKGqWXGJGC/q4lmA=;
+ b=n+Cr6eQpm6KRNWGkf1OZnntanEXEllM/yBvu3S/2OqzcDGywyWzmfW49oEPNRVBWrd
+ 6soYrp78cgGRWA8qHbB4FKwD6brl2KpR7Gt8tj9ZVrQO2G9bIvSpdoamWuDGW7Aqj+LS
+ DNbgORB1SKee8qNr9jYGrEJ3ZXbQPuETif/YVhqpBnuTziDTutMQLLIV1BTOVA97yEdO
+ enlwTnj3tS3VemtZrw6YKhfPVHjs9/4KrLyitdHKuWTS6WXeg2gCvk8jP57nIPMrsGuS
+ D58W+npzQVFzZ0FlMbCBTR0dOzapvuYhknyXmeoa6/6ceR05fQ4eKM3zXKSMR3otAsTc
+ nEJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMjhEPQDa+uL8DCH1XWQ7QfRRm6r20AqqAWDgz1ebrMRHDFkc107naNpJaLuorTEHpbnEzVlx4R3M5+KjZDLFLWm3cu1Q=
+X-Gm-Message-State: AOJu0YyAiEnJMfU2bUewyeiJsT2bg79Vr7B819wTBeC3b5+bHOhmFvVw
+ dyUXBJUgcQWdrMhe64X0LUvyyH1jCSKVdJTo25EGiY2VTp2+sA2rQKUiantV+WM=
+X-Google-Smtp-Source: AGHT+IGt8yp2Zq43FZu650IJBlb24eslDkyrMT5/8zRgxuIwrlwRIgGU9KeaUtESBbtW2c+YkpndBA==
+X-Received: by 2002:a05:6a21:7899:b0:1b7:77ef:b121 with SMTP id
+ adf61e73a8af0-1bcf4446ef4mr8912021637.13.1719328477979; 
+ Tue, 25 Jun 2024 08:14:37 -0700 (PDT)
+Received: from [100.64.0.1] (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1f9eb320b33sm82759735ad.83.2024.06.25.08.14.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Jun 2024 08:14:37 -0700 (PDT)
+Message-ID: <6e7ca292-3c96-4aa4-ab74-2f9328033aa4@sifive.com>
+Date: Tue, 25 Jun 2024 23:14:34 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/32] hw/sd: Add emmc_cmd_APP_CMD() handler
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Bin Meng <bin.meng@windriver.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Lucien Murray-Pitts <lucienmp.qemu@gmail.com>
-References: <20230703132509.2474225-1-clg@kaod.org>
- <20230703132509.2474225-19-clg@kaod.org>
- <1dd454c4-d7cd-4e8f-a824-e7743360b853@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <1dd454c4-d7cd-4e8f-a824-e7743360b853@linaro.org>
+Subject: Re: [RFC PATCH v4 2/5] target/riscv: rvv: Provide a fast path using
+ direct access to host ram for unmasked unit-stride load/store
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240613175122.1299212-1-max.chou@sifive.com>
+ <20240613175122.1299212-3-max.chou@sifive.com>
+ <4d7d0813-2ba3-416e-9bb9-3f0ef00818f1@linaro.org>
+Content-Language: en-US
+From: Max Chou <max.chou@sifive.com>
+In-Reply-To: <4d7d0813-2ba3-416e-9bb9-3f0ef00818f1@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=+2S4=N3=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=max.chou@sifive.com; helo=mail-pf1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,52 +105,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/24 5:04 PM, Philippe Mathieu-Daudé wrote:
-> Hi Cédric,
-> 
-> On 3/7/23 15:24, Cédric Le Goater wrote:
->> Signed-off-by: Cédric Le Goater <clg@kaod.org>
->> ---
->>   hw/sd/sd.c | 6 ++++++
->>   1 file changed, 6 insertions(+)
+On 2024/6/20 12:29 PM, Richard Henderson wrote:
+
+> On 6/13/24 10:51, Max Chou wrote:
+>> This commit references the sve_ldN_r/sve_stN_r helper functions in ARM
+>> target to optimize the vector unmasked unit-stride load/store
+>> instructions by following items:
 >>
->> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->> index 5ff132139ea9..95cb46b87519 100644
->> --- a/hw/sd/sd.c
->> +++ b/hw/sd/sd.c
->> @@ -2207,6 +2207,11 @@ static sd_rsp_type_t emmc_cmd_ALL_SEND_CID(SDState *sd, SDRequest req)
->>       return sd_r2_i;
+>> * Get the loose bound of activate elements
+>> * Probing pages/resolving host memory address/handling watchpoint at 
+>> beginning
+>> * Provide new interface to direct access host memory
+>>
+>> The original element load/store interface is replaced by the new element
+>> load/store functions with _tlb & _host postfix that means doing the
+>> element load/store through the original softmmu flow and the direct
+>> access host memory flow.
+>>
+>> Signed-off-by: Max Chou <max.chou@sifive.com>
+>> ---
+>>   target/riscv/insn_trans/trans_rvv.c.inc |   3 +
+>>   target/riscv/vector_helper.c            | 637 +++++++++++++++++++-----
+>>   target/riscv/vector_internals.h         |  48 ++
+>>   3 files changed, 551 insertions(+), 137 deletions(-)
+>>
+>> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc 
+>> b/target/riscv/insn_trans/trans_rvv.c.inc
+>> index 3a3896ba06c..14e10568bd7 100644
+>> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+>> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+>> @@ -770,6 +770,7 @@ static bool ld_us_mask_op(DisasContext *s, 
+>> arg_vlm_v *a, uint8_t eew)
+>>       /* Mask destination register are always tail-agnostic */
+>>       data = FIELD_DP32(data, VDATA, VTA, s->cfg_vta_all_1s);
+>>       data = FIELD_DP32(data, VDATA, VMA, s->vma);
+>> +    data = FIELD_DP32(data, VDATA, VM, 1);
+>>       return ldst_us_trans(a->rd, a->rs1, data, fn, s, false);
 >>   }
->> +static sd_rsp_type_t emmc_cmd_APP_CMD(SDState *sd, SDRequest req)
+>>   @@ -787,6 +788,7 @@ static bool st_us_mask_op(DisasContext *s, 
+>> arg_vsm_v *a, uint8_t eew)
+>>       /* EMUL = 1, NFIELDS = 1 */
+>>       data = FIELD_DP32(data, VDATA, LMUL, 0);
+>>       data = FIELD_DP32(data, VDATA, NF, 1);
+>> +    data = FIELD_DP32(data, VDATA, VM, 1);
+>>       return ldst_us_trans(a->rd, a->rs1, data, fn, s, true);
+>>   }
+>>   @@ -1106,6 +1108,7 @@ static bool ldst_whole_trans(uint32_t vd, 
+>> uint32_t rs1, uint32_t nf,
+>>       TCGv_i32 desc;
+>>         uint32_t data = FIELD_DP32(0, VDATA, NF, nf);
+>> +    data = FIELD_DP32(data, VDATA, VM, 1);
+>>       dest = tcg_temp_new_ptr();
+>>       desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
+>>                                         s->cfg_ptr->vlenb, data));
+>
+> This is ok, and would warrant a separate patch.
+Ok, I'll split this part to a separate patch at next version.
+Thanks.
+
+>
+>
+>> +    if (vm == 0) {
+>> +        for (i = vstart; i < evl; ++i) {
+>> +            if (vext_elem_mask(v0, i)) {
+>> +                reg_idx_last = i;
+>> +                if (reg_idx_first < 0) {
+>> +                    reg_idx_first = i;
+>> +                }
+>> +            }
+>> +        }
+>
+> This isn't great, and isn't used for now, since only unmasked 
+> unit-stride is handled so far.  I think this first patch should be 
+> simpler and *assume* VM is set.
+Indeed. I'll remove this part at next version.
+I agree that this first patch should be simpler and assume VM is set.
+Thank you for the suggestion.
+
+>
+>> +/*
+>> + * Resolve the guest virtual addresses to info->page[].
+>> + * Control the generation of page faults with @fault.  Return false if
+>> + * there is no work to do, which can only happen with @fault == 
+>> FAULT_NO.
+>> + */
+>> +static bool vext_cont_ldst_pages(CPURISCVState *env, RVVContLdSt *info,
+>> +                                 target_ulong addr, bool is_load,
+>> +                                 uint32_t desc, uint32_t esz, 
+>> uintptr_t ra,
+>> +                                 bool is_us_whole)
 >> +{
->> +    return sd_r0;
-> 
-> Why are you returning R0? This is invalid, only R1 can be
-> returned by APP_CMD.
-
-Probably a typo. This is old ... 4/5 years at least.
-
-Thanks,
-
-C.
-
-
-
-
-> 
->> +}
->> +
->>   static const SDProto sd_proto_emmc = {
->>       .name = "eMMC",
->>       .cmd = {
->> @@ -2219,6 +2224,7 @@ static const SDProto sd_proto_emmc = {
->>           [23]        = sd_cmd_SET_BLOCK_COUNT,
->>           [41]        = sd_cmd_illegal,
->>           [52 ... 54] = sd_cmd_illegal,
->> +        [55]        = emmc_cmd_APP_CMD,
->>           [58]        = sd_cmd_illegal,
->>           [59]        = sd_cmd_illegal,
->>       },
-> 
-
+>> +    uint32_t vm = vext_vm(desc);
+>> +    uint32_t nf = vext_nf(desc);
+>> +    bool nofault = (vm == 1 ? false : true);
+>
+> Why is nofault == "!vm"?
+>
+> Also, it's silly to use ?: with true/false -- use the proper boolean 
+> expression in the first place.
+>
+> That said... faults with RVV must interact with vstart.
+>
+> I'm not sure what the best code organization is.
+>
+> Perhaps a subroutine, passed the first and last elements for a single 
+> page.
+>
+>   Update vstart, resolve the page, allowing the exception.
+>   If watchpoints, one call to cpu_check_watchpoint for the entire 
+> memory range.
+>   If ram, iterate through the rest of the page using host accesses; 
+> otherwise,
+>   iterate through the rest of the page using tlb accesses, making sure 
+> vstart
+>   is always up-to-date.
+>
+> The main routine looks for the page_split, invokes the subroutine for 
+> the first (and likely only) page.  Special case any split-page 
+> element.  Invoke the subroutine for the second page.
+>
+>
+> r~
+According to the v spec, the vector unit-stride and constant-stride 
+memory accesses do not guarantee ordering between individual element 
+accesses.
+So it may affects how we handle the precise vector traps here.
+I'll replace the nofault part and try to update the subroutine flow with 
+the suggestion and think about how to update vstart here.
+Thanks you for the suggestions.
 
