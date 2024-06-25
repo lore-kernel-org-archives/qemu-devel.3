@@ -4,92 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 895B5C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 06:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F339C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 06:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLzJ1-0004DZ-ML; Tue, 25 Jun 2024 02:05:27 -0400
+	id 1sLzJW-0004Vq-ML; Tue, 25 Jun 2024 02:05:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sLzIv-0004Bl-5C
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 02:05:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=+2S4=N3=kaod.org=clg@ozlabs.org>)
+ id 1sLzJU-0004Tg-6j; Tue, 25 Jun 2024 02:05:56 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sLzIs-0004Qz-Pk
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 02:05:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719295517;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=73mmcmEiwcz38wndhx71jn6+9IApmb3rLIyx+uWB+rY=;
- b=JE+axHy9spVigIV/NmB/vSo1aXOb+FRZk4881+wDX+ivgUNsHbABHUBZ/j3au1j6/DKWdS
- RSFmDGWE8pxoGxbW/hTSnDz5J/FJW8DT9nkDQnInBtF4qTXUoCyuJS+puPkNjZHDSA17BA
- WEJkE1Y8QDNnGc9Pl4egwKoFZxW6VvA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-450-B3TjgeI5Pd-DPn12zHj-qw-1; Tue, 25 Jun 2024 02:05:15 -0400
-X-MC-Unique: B3TjgeI5Pd-DPn12zHj-qw-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3643d0e3831so3370042f8f.0
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 23:05:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719295514; x=1719900314;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=73mmcmEiwcz38wndhx71jn6+9IApmb3rLIyx+uWB+rY=;
- b=aoCjc74daAYcmnV7wM8T/y0lNg2Y0sl9SCM8AP0ZkrRTbutNAK5WqTbxeq2G0bJwMe
- LDwZ54U6UptJW6dNjnEXAiUPqH2XpKbsj7CCNn47bUMnfwMSx8Wi606d99mdt+Bw7vsL
- jl86WljaNr1jdm4hi44hK60U/WQqsj3CSQrYIYDeqbWwAe7WSaZIuMgZRLyPq7gZ2RRR
- WQ2JiX0sGa6eGb6G/hmD9sIh4iiaf+A/QncXENZFtxpktNrD/iR7do6FazoEKS8LJZhd
- AnhyqJio56lkPQRmvRMEV4lSA97zF3gi932JZfZ34kCAzukJLdjwWgOp1zAUkqUokBCs
- Pb+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7JiblzepWhEcAFyD+ZJZMhN5/H1nGkH1QI2zbIpP/SjDlOc21Rgz3xVPqSFZ6RYoP8oyYp2JlUJOqokH1SokXRFeH7nw=
-X-Gm-Message-State: AOJu0YwYDth9/NGfmjVXNst1Wbnx8bYGxBC6RhbmZcWCjPxKkELXcsdj
- 4UtB84QzYeu3G5eGpIeDspBtPuYuZCohkMv2AtTMNeRAX15wsvor262JTZ/OQF5iRGZmHTqmYSt
- QFEVOlirGb3D8lMXey9TKahjiZtf1shL7fbPc50WJEd8B5VwyrE8i6PkaacxUYZeNzF9V06LtDj
- k1H6Euc6FbogNkJ91zT9e4akUPlpo=
-X-Received: by 2002:a05:6000:1847:b0:366:ec2c:8648 with SMTP id
- ffacd0b85a97d-366ec2c86camr4807692f8f.43.1719295513958; 
- Mon, 24 Jun 2024 23:05:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEy4LgGsMHhf2dfdkIT6C6dQacl4vKrKS9aGBTHccTGaWIYG1Q9bLZTMN3pX7ZtQVQigYK6J5yS0nnl53s/o9E=
-X-Received: by 2002:a05:6000:1847:b0:366:ec2c:8648 with SMTP id
- ffacd0b85a97d-366ec2c86camr4807674f8f.43.1719295513580; Mon, 24 Jun 2024
- 23:05:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=+2S4=N3=kaod.org=clg@ozlabs.org>)
+ id 1sLzJR-0004m6-Kn; Tue, 25 Jun 2024 02:05:55 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W7Z7w1X15z4wcJ;
+ Tue, 25 Jun 2024 16:05:48 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W7Z7r4J9rz4wbr;
+ Tue, 25 Jun 2024 16:05:44 +1000 (AEST)
+Message-ID: <ff45f5c5-5586-4c21-bf86-ad82eb2c5f0d@kaod.org>
+Date: Tue, 25 Jun 2024 08:05:42 +0200
 MIME-Version: 1.0
-References: <20240624205647.112034-1-flwu@google.com>
- <8e54bd41-9a7e-4b1e-ad99-33de1615374c@linaro.org>
- <CAOGAQeq0b3_g80k5xa-6f+XPkv6C=nfMLkJt=X3-6FD_d3sJUA@mail.gmail.com>
-In-Reply-To: <CAOGAQeq0b3_g80k5xa-6f+XPkv6C=nfMLkJt=X3-6FD_d3sJUA@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 25 Jun 2024 08:05:03 +0200
-Message-ID: <CABgObfZ6U0pEcvr-J5H3sYjTU0-kOr4NOLjBRh0Vg-vfutRCqQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] include/qemu: Provide a C++ compatible version of
- typeof_strip_qual
-To: Roman Kiryanov <rkir@google.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Felix Wu <flwu@google.com>, qemu-devel <qemu-devel@nongnu.org>, 
- "Maydell, Peter" <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000059f043061bb0ae57"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] aspeed/soc: fix coverity issue
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang <yunlin.tang@aspeedtech.com>
+References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
+ <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
+ <CAFEAcA8tTHusKOR7JhyU+wwA3JJWq1o5wVaNXugw2S9SjAsESw@mail.gmail.com>
+ <b013bd79-c206-446e-b482-91eeb926c70a@kaod.org>
+ <SI2PR06MB50412C68BF0AD9B4ED91B75FFCD52@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <SI2PR06MB50412C68BF0AD9B4ED91B75FFCD52@SI2PR06MB5041.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=+2S4=N3=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,80 +72,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000059f043061bb0ae57
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hello
 
-Il mar 25 giu 2024, 04:32 Roman Kiryanov <rkir@google.com> ha scritto:
+On 6/25/24 3:55 AM, Jamin Lin wrote:
+> Hi Cedric,
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@kaod.org>
+>> Sent: Monday, June 24, 2024 9:58 PM
+>> To: Peter Maydell <peter.maydell@linaro.org>; Jamin Lin
+>> <jamin_lin@aspeedtech.com>
+>> Cc: Steven Lee <steven_lee@aspeedtech.com>; Troy Lee
+>> <leetroy@gmail.com>; Andrew Jeffery <andrew@codeconstruct.com.au>; Joel
+>> Stanley <joel@jms.id.au>; open list:ASPEED BMCs <qemu-arm@nongnu.org>;
+>> open list:All patches CC here <qemu-devel@nongnu.org>; Troy Lee
+>> <troy_lee@aspeedtech.com>; Yunlin Tang <yunlin.tang@aspeedtech.com>
+>> Subject: Re: [PATCH v1 1/2] aspeed/soc: fix coverity issue
+>>
+>> On 6/24/24 2:18 PM, Peter Maydell wrote:
+>>> On Wed, 19 Jun 2024 at 10:35, Jamin Lin <jamin_lin@aspeedtech.com>
+>> wrote:
+>>>>
+>>>> Fix coverity defect: DIVIDE_BY_ZERO.
+>>>>
+>>>> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+>>>> ---
+>>>>    hw/arm/aspeed_ast27x0.c | 6 ++++++
+>>>>    1 file changed, 6 insertions(+)
+>>>>
+>>>> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c index
+>>>> b6876b4862..d14a46df6f 100644
+>>>> --- a/hw/arm/aspeed_ast27x0.c
+>>>> +++ b/hw/arm/aspeed_ast27x0.c
+>>>> @@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void
+>> *opaque, hwaddr addr, uint64_t data,
+>>>>        ram_size = object_property_get_uint(OBJECT(&s->sdmc),
+>> "ram-size",
+>>>>                                            &error_abort);
+>>>>
+>>>> +    if (!ram_size) {
+>>>> +        qemu_log_mask(LOG_GUEST_ERROR,
+>>>> +                      "%s: ram_size is zero",  __func__);
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>
+>>> Isn't this a QEMU bug rather than a guest error? The RAM size
+>>> presumably should never be zero unless the board set the ram-size
+>>> property on the SDMC incorrectly. So the SDMC device should check (and
+>>> return an error from its realize
+>>> method) that the ram-size property is valid,
+>>
+>> That's the case in aspeed_sdmc_set_ram_size() which is called from the
+>> aspeed machine init routine when the ram size is set.
+>>
+>> Setting the machine ram size to zero on the command line doesn't report an
+>> error though and the size is the default.
+>>
+>>> and then here we can just assert(ram_size != 0).
+>>
+>> Yes.
+>>
+>> Jamin, could you please send a v2 with the commit logs update I proposed ?
+>> See the patches on my aspeed-9.1 branch.
+> I resend v2 patch with your commit log, https://www.mail-archive.com/qemu-devel@nongnu.org/msg1050302.html
 
-> Hi Philippe, thank you for looking.
->
-> On Mon, Jun 24, 2024 at 7:27=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> <philmd@linaro.org> wrote:
-> > In particular this patch seems contained well enough
-> > to be carried in forks were C++ _is_ used.
->
-> Will you agree to take #ifdef __cplusplus  and #error to the QEMU side
-> in atomic.h and
-> we will keep atomic.hpp on our side? The error message looks better
-> when atomic.hpp
-> is somewhere near.
->
+We'll need a v3 with the assert. No hurries. We still have some time
+before the soft freeze.
 
-I think we should also move typeof_strip_qual elsewhere; I will take a
-look. I think there are a couple headers that already have #ifdef
-__cplusplus, but I need to check (no source code around right now).
+Thanks,
 
-But another good thing to do would be to avoid having atomic.h as a
-rebuild-the-world header, and any steps towards that would be very welcome.
-
-Paolo
+C.
 
 
-> Regards,
-> Roman.
->
->
 
---00000000000059f043061bb0ae57
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il mar 25 giu 2024, 04:32 Roman Kiryanov &lt;<a href=
-=3D"mailto:rkir@google.com">rkir@google.com</a>&gt; ha scritto:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">Hi Philippe, thank you for =
-looking.<br>
-<br>
-On Mon, Jun 24, 2024 at 7:27=E2=80=AFPM Philippe Mathieu-Daud=C3=A9<br>
-&lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank" rel=3D"noreferre=
-r">philmd@linaro.org</a>&gt; wrote:<br>
-&gt; In particular this patch seems contained well enough<br>
-&gt; to be carried in forks were C++ _is_ used.<br>
-<br>
-Will you agree to take #ifdef __cplusplus=C2=A0 and #error to the QEMU side=
-<br>
-in atomic.h and<br>
-we will keep atomic.hpp on our side? The error message looks better<br>
-when atomic.hpp<br>
-is somewhere near.<br></blockquote></div></div><div dir=3D"auto"><br></div>=
-<div dir=3D"auto">I think we should also move typeof_strip_qual elsewhere; =
-I will take a look. I think there are a couple headers that already have #i=
-fdef __cplusplus, but I need to check (no source code around right now).</d=
-iv><div dir=3D"auto"><br></div><div dir=3D"auto">But another good thing to =
-do would be to avoid having atomic.h as a rebuild-the-world header, and any=
- steps towards that would be very welcome.</div><div dir=3D"auto"><br></div=
-><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"=
-><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">
-<br>
-Regards,<br>
-Roman.<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000059f043061bb0ae57--
+> Do we need to drop this patch, https://www.mail-archive.com/qemu-devel@nongnu.org/msg1050301.html?
+> 
+> Thanks-Jamin
+>>
+>> Thanks,
+>>
+>> C.
 
 
