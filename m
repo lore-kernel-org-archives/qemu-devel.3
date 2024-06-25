@@ -4,76 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D586C41513
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 09:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E31EEC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 09:49:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM2nU-0007jb-Pz; Tue, 25 Jun 2024 05:49:08 -0400
+	id 1sM2n3-0007g6-5z; Tue, 25 Jun 2024 05:48:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
- id 1sM2nT-0007iq-B3; Tue, 25 Jun 2024 05:49:07 -0400
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1sM2n1-0007fH-6l
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 05:48:39 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
- id 1sM2nR-0003Fe-I2; Tue, 25 Jun 2024 05:49:07 -0400
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-5c2177bf7a8so102088eaf.2; 
- Tue, 25 Jun 2024 02:49:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1sM2my-0003E9-6L
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 05:48:38 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2c2c6277ef3so4021650a91.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 02:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719308943; x=1719913743; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ScpTwYEgj3XP1Q2imqxoItyBRdYB3AJf+gJpu+LZmxg=;
- b=McK/1NZt4R+SctpChBrf/NBWTcSESz5xcnbOzd7wE7CNDyYJr7zp65rj5oL5o0CqIe
- Fjul8d7lsL4j7jxrSNI37k72AnxvSiSCHZ1O3+v91c/rvyHC4Ck9P/Kh39f4nk2i/opK
- plbpNMHBxO1vSRORHAZ1IZwn8X3r7KDHJiVShDkvw0gc+VIhdr/e+kFm6fRcKbTo1MTr
- eKCl1h+qbX37o6yPP4L0z/TEND7bmTda82JsNkSuCeYg1KwpyuuIDDrvphNAXvuEkuS/
- Nwwhfsr+Wc6LmENM/XpkSJXVov8Yo9ix6H2mBRPV7Qg2MuwkMDItO2JAImtjl+tsdt7z
- Yocw==
+ d=sifive.com; s=google; t=1719308914; x=1719913714; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=6UmzqdyUh2HhY12DmOBbdCBiZttJu4k0dI3aAGt34M4=;
+ b=Etgp2ThJP3wm6GfEL04wA97IUMsdp+jGfBTZv7f6Ryq6GSAL6vpCnjeFzaqOen7T6W
+ KX4ravxXohbRsjlsbBNv+eiKRH8QCX/9q+iNVVikrAFUdVM5Zk6Wsq2vU4Jz0/lq/UDm
+ 1mBpFhlXIOv01hDY0//pOQEKbjA8cVY2npjdJtJ+qm12SQuFDfA3So05WhQOs0HV0+km
+ BLNF4LoAyTUE659rDECiFK0dQaFkPuBBsqivg8mvCwGAeDWBEJQ1XBZ6BlKooLnS8j/c
+ 4xds8BCpI5KSkhc+J1WthWFbTmETvL9SeCx4cc7R7Dn8MKWKWsA7NkuRUqCuJzdp1Nnc
+ 3nMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719308943; x=1719913743;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ScpTwYEgj3XP1Q2imqxoItyBRdYB3AJf+gJpu+LZmxg=;
- b=xTiuegUzQqYJs+X1g/+yYmFZfiahvCgmC5fQprfMGbRcVwspuaYKq9FeFaH1fJOtkF
- tdwb8sbtRnY88IrbrjAtdSmj5gGy2h/Yz84crKM0BrLmaDqElDx9DVoRgJFrF8i9bWk6
- tVTa5OFDZdhAHth5vPZZzAz1b7Ehh87WQmQw2AzsifUqZVt8sAXoeZ1EHSXCD52ZSsMH
- /0atd+P33FZANQ8I+7dt4vp0GjpSG8+Q1vB379vUbdPr6ZW0BgtBDnCB2+k1dJW88Ldl
- Lb9BVM29hdnjqFH1RTA3BH6zMESJDJme9atFfw6GbEUFuaKNLJ2AAAQA03Os0aKipnGg
- OAZQ==
+ d=1e100.net; s=20230601; t=1719308914; x=1719913714;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6UmzqdyUh2HhY12DmOBbdCBiZttJu4k0dI3aAGt34M4=;
+ b=cQjs2TAV+AR15y8NhHYD6pty0axMPWr0lERUE4OjaWQo6T/mnN/De7ACYh8LQlqKw7
+ CPmtfN4iIV8dqRH6L0a2MvAvC0ObDNDcJkqQqw9cpyhhqXHfKYvbkaafPvIrZjDZrpZD
+ nrpUBB+dYuy/DU23tzzCnUjAqcqkVckJTMUhoFD5DVz0gMZRj2mhyC+n36PlhIM/MVCG
+ tfMZMUqRwv2qdGua55RijbmXSPpQmXE+1SAUKWBzQmNVZpSvdPiGbPZbkcTqHunc2xLP
+ EKzeXQvHtSkM/Ya9DK07orZvD26mxL6SiQujVPw8DxDpEVx+FyA/bRR7Sroh+cP4W2R3
+ 45wA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNS/6zxYv9gw5e6ShJqadspu/j0rXMQXfB0qICfyPW9XktVln8O6YCylpHgwwlcZZFIknGLWl9CpF+iOS1ncFqwW6iiXBT
-X-Gm-Message-State: AOJu0YwX+82Wd7Yug60nPUN8dMfIvbJnslGl8zUdd5dOx2H2J92QxFd4
- 62Dd/YeDqi1oTgV82ydOOslMc7GWzR4ukpewQWwvJEyI196fHwsXgpRtgwVP4+o=
-X-Google-Smtp-Source: AGHT+IG+NAHBxlhvrocSQH+QlSRJ/ve3AiLibaLODN+W/a9pusNx8K2d+xmAeWAyX7N5mSMeJgyLkw==
-X-Received: by 2002:a05:6870:1602:b0:259:8c82:999 with SMTP id
- 586e51a60fabf-25d06cd3dc7mr8321740fac.25.1719308942746; 
- Tue, 25 Jun 2024 02:49:02 -0700 (PDT)
-Received: from localhost.localdomain ([118.242.3.34])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70672e24d7asm4784363b3a.114.2024.06.25.02.49.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 02:49:02 -0700 (PDT)
-From: Wencheng Yang <east.moutain.yang@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, jasowang@redhat.com, qemu-stable@nongnu.org,
- thomas <east.moutain.yang@gmail.com>
-Subject: [PATCH v4] virtio-net: Notify the guest with the latest available idx
-Date: Tue, 25 Jun 2024 17:48:51 +0800
-Message-Id: <20240625094851.5252-1-east.moutain.yang@gmail.com>
-X-Mailer: git-send-email 2.39.0
+ AJvYcCX5B5nJ+0vnUfYcE8f+SxO2r9NIhuZDQW5P/rpVzvBfKMerExdt9FuP44k//Ug7iLAasBaGVbHw4FecwFEonxI8+yC7D1A=
+X-Gm-Message-State: AOJu0Yw53JiteRXQDrVWXEkli4BYDOJiN62dHngzNrNF3Y+J89Jk9OD9
+ Xy5lcLVkN7b/e5GOUohJKUZ+D6VQSyEXWeElQCOUPYzSyb3CwYhNz/3dniIKgow=
+X-Google-Smtp-Source: AGHT+IF7XwLcdDU8s3VE4ApssoYHjoxOs+yo3MedCL3MZ9dCTSP8JOaMpkx2sDMWmi/I8rL+dGd23g==
+X-Received: by 2002:a17:90a:a395:b0:2c8:946f:5fe7 with SMTP id
+ 98e67ed59e1d1-2c8946f6240mr3543514a91.17.1719308913906; 
+ Tue, 25 Jun 2024 02:48:33 -0700 (PDT)
+Received: from [192.168.100.252] (59-124-168-89.hinet-ip.hinet.net.
+ [59.124.168.89]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c7e53e7bf0sm10318753a91.19.2024.06.25.02.48.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Jun 2024 02:48:33 -0700 (PDT)
+Message-ID: <17803f4f-145e-4314-81ca-7f19c614afb6@sifive.com>
+Date: Tue, 25 Jun 2024 17:48:29 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/6] target/riscv: Add support to access ctrsource,
+ ctrtarget, ctrdata regs.
+To: Rajnesh Kanwal <rkanwal@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ atishp@rivosinc.com, apatel@ventanamicro.com, beeman@rivosinc.com,
+ tech-control-transfer-records@lists.riscv.org
+References: <20240619152708.135991-1-rkanwal@rivosinc.com>
+ <20240619152708.135991-7-rkanwal@rivosinc.com>
+Content-Language: en-US
+From: Jason Chien <jason.chien@sifive.com>
+In-Reply-To: <20240619152708.135991-7-rkanwal@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c33;
- envelope-from=east.moutain.yang@gmail.com; helo=mail-oo1-xc33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=jason.chien@sifive.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,172 +103,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: thomas <east.moutain.yang@gmail.com>
+Hi Rajnesh,
 
-Patch 06b12970174 ("virtio-net: fix network stall under load")
-added double-check to test whether the available buffer size
-can satisfy the request or not, in case the guest has added
-some buffers to the avail ring simultaneously after the first
-check.
+On 2024/6/19 下午 11:27, Rajnesh Kanwal wrote:
+> CTR entries are accessed using ctrsource, ctrtarget and ctrdata
+> registers using smcsrind/sscsrind extension. This commits extends
+> the csrind extension to support CTR registers.
+>
+> ctrsource is accessible through xireg CSR, ctrtarget is accessible
+> through xireg1 and ctrdata is accessible through xireg2 CSR.
+>
+> CTR supports maximum depth of 256 entries which are accessed using
+> xiselect range 0x200 to 0x2ff.
+>
+> This commits also adds properties to enable CTR extension. CTR can be
+> enabled using smctr=true and ssctr=true now.
+>
+> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+> ---
+>   target/riscv/cpu.c         |   4 +
+>   target/riscv/csr.c         | 148 ++++++++++++++++++++++++++++++++++++-
+>   target/riscv/tcg/tcg-cpu.c |   6 ++
+>   3 files changed, 157 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 30bdfc22ae..a77b1d5caf 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -193,6 +193,8 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>       ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+>       ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
+>       ISA_EXT_DATA_ENTRY(svade, PRIV_VERSION_1_11_0, ext_svade),
+> +    ISA_EXT_DATA_ENTRY(smctr, PRIV_VERSION_1_12_0, ext_smctr),
+> +    ISA_EXT_DATA_ENTRY(ssctr, PRIV_VERSION_1_12_0, ext_ssctr),
+>       ISA_EXT_DATA_ENTRY(svadu, PRIV_VERSION_1_12_0, ext_svadu),
+>       ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
+>       ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
+> @@ -1473,6 +1475,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>       MULTI_EXT_CFG_BOOL("sscsrind", ext_sscsrind, false),
+>       MULTI_EXT_CFG_BOOL("smcdeleg", ext_smcdeleg, false),
+>       MULTI_EXT_CFG_BOOL("ssccfg", ext_ssccfg, false),
+> +    MULTI_EXT_CFG_BOOL("smctr", ext_smctr, false),
+> +    MULTI_EXT_CFG_BOOL("ssctr", ext_ssctr, false),
+>       MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
+>       MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
+>       MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 0b5bf4d050..3ed9f95a4f 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2278,6 +2278,13 @@ static bool xiselect_cd_range(target_ulong isel)
+>       return (ISELECT_CD_FIRST <= isel && isel <= ISELECT_CD_LAST);
+>   }
+>   
+> +static bool xiselect_ctr_range(int csrno, target_ulong isel)
+> +{
+> +    /* MIREG-MIREG6 for the range 0x200-0x2ff are not used by CTR. */
+> +    return CTR_ENTRIES_FIRST <= isel && isel <= CTR_ENTRIES_LAST &&
+> +           csrno < CSR_MIREG;
+> +}
+> +
+>   static int rmw_iprio(target_ulong xlen,
+>                        target_ulong iselect, uint8_t *iprio,
+>                        target_ulong *val, target_ulong new_val,
+> @@ -2323,6 +2330,124 @@ static int rmw_iprio(target_ulong xlen,
+>       return 0;
+>   }
+>   
+> +static int rmw_ctrsource(CPURISCVState *env, int isel, target_ulong *val,
+> +                          target_ulong new_val, target_ulong wr_mask)
+> +{
+> +    /*
+> +     * CTR arrays are treated as circular buffers and TOS always points to next
+> +     * empty slot, keeping TOS - 1 always pointing to latest entry. Given entry
+> +     * 0 is always the latest one, traversal is a bit different here. See the
+> +     * below example.
+> +     *
+> +     * Depth = 16.
+> +     *
+> +     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
+> +     * TOS                                 H
+> +     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8   7
+> +     */
+> +    const uint64_t entry = isel - CTR_ENTRIES_FIRST;
+> +    const uint64_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
+> +    uint64_t idx;
+> +
+> +    /* Entry greater than depth-1 is read-only zero */
+> +    if (entry >= depth) {
+> +        if (val) {
+> +            *val = 0;
+> +        }
+> +        return 0;
+> +    }
+> +
+> +    idx = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
+> +    idx = (idx - entry - 1) & (depth - 1);
+> +
+> +    if (val) {
+> +        *val = env->ctr_src[idx];
+> +    }
+> +
+> +    env->ctr_src[idx] = (env->ctr_src[idx] & ~wr_mask) | (new_val & wr_mask);
+> +
+> +    return 0;
+> +}
+> +
+> +static int rmw_ctrtarget(CPURISCVState *env, int isel, target_ulong *val,
+> +                          target_ulong new_val, target_ulong wr_mask)
+> +{
+> +    /*
+> +     * CTR arrays are treated as circular buffers and TOS always points to next
+> +     * empty slot, keeping TOS - 1 always pointing to latest entry. Given entry
+> +     * 0 is always the latest one, traversal is a bit different here. See the
+> +     * below example.
+> +     *
+> +     * Depth = 16.
+> +     *
+> +     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
+> +     * head                                H
+> +     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8   7
+> +     */
+> +    const uint64_t entry = isel - CTR_ENTRIES_FIRST;
+> +    const uint64_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
+> +    uint64_t idx;
+> +
+> +    /* Entry greater than depth-1 is read-only zero */
+> +    if (entry >= depth) {
+> +        if (val) {
+> +            *val = 0;
+> +        }
+> +        return 0;
+> +    }
+> +
+> +    idx = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
+> +    idx = (idx - entry - 1) & (depth - 1);
+> +
+> +    if (val) {
+> +        *val = env->ctr_dst[idx];
+> +    }
+> +
+> +    env->ctr_dst[idx] = (env->ctr_dst[idx] & ~wr_mask) | (new_val & wr_mask);
+> +
+> +    return 0;
+> +}
+> +
+> +static int rmw_ctrdata(CPURISCVState *env, int isel, target_ulong *val,
+> +                        target_ulong new_val, target_ulong wr_mask)
+> +{
+> +    /*
+> +     * CTR arrays are treated as circular buffers and TOS always points to next
+> +     * empty slot, keeping TOS - 1 always pointing to latest entry. Given entry
+> +     * 0 is always the latest one, traversal is a bit different here. See the
+> +     * below example.
+> +     *
+> +     * Depth = 16.
+> +     *
+> +     * idx    [0] [1] [2] [3] [4] [5] [6] [7] [8] [9] [A] [B] [C] [D] [E] [F]
+> +     * head                                H
+> +     * entry   6   5   4   3   2   1   0   F   E   D   C   B   A   9   8   7
+> +     */
+> +    const uint64_t entry = isel - CTR_ENTRIES_FIRST;
+> +    const uint64_t mask = wr_mask & CTRDATA_MASK;
+> +    const uint64_t depth = 16 << get_field(env->sctrdepth, SCTRDEPTH_MASK);
+> +    uint64_t idx;
+> +
+> +    /* Entry greater than depth-1 is read-only zero */
+> +    if (entry >= depth) {
+> +        if (val) {
+> +            *val = 0;
+> +        }
+> +        return 0;
+> +    }
+> +
+> +    idx = get_field(env->sctrstatus, SCTRSTATUS_WRPTR_MASK);
+> +    idx = (idx - entry - 1) & (depth - 1);
+> +
+> +    if (val) {
+> +        *val = env->ctr_data[idx];
+> +    }
+> +
+> +    env->ctr_data[idx] = (env->ctr_data[idx] & ~mask) | (new_val & mask);
+> +
+> +    return 0;
+> +}
+> +
+>   static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+>                            target_ulong isel, target_ulong *val,
+>                            target_ulong new_val, target_ulong wr_mask)
+> @@ -2473,6 +2598,25 @@ done:
+>       return ret;
+>   }
+>   
+> +static int rmw_xireg_ctr(CPURISCVState *env, int csrno,
+> +                        target_ulong isel, target_ulong *val,
+> +                        target_ulong new_val, target_ulong wr_mask)
+> +{
+> +    if (!riscv_cpu_cfg(env)->ext_smctr && !riscv_cpu_cfg(env)->ext_ssctr) {
+> +        return -EINVAL;
+> +    }
+> +
+> +    if (csrno == CSR_SIREG || csrno == CSR_VSIREG) {
+> +        return rmw_ctrsource(env, isel, val, new_val, wr_mask);
+> +    } else if (csrno == CSR_SIREG2 || csrno == CSR_VSIREG2) {
+> +        return rmw_ctrtarget(env, isel, val, new_val, wr_mask);
+> +    } else if (csrno == CSR_SIREG3 || csrno == CSR_VSIREG3) {
+> +        return rmw_ctrdata(env, isel, val, new_val, wr_mask);
+> +    }
 
-It will be lucky if the available buffer size becomes okay
-after the double-check, then the host can send the packet to
-the guest. If the buffer size still can't satisfy the request,
-even if the guest has added some buffers, notify the guest
-with the latest available idx seen by the host, similiar to
-the action taken by the host after the first check, else
-viritio-net would stall at the host side forever.
+[s|vs]ireg4/5/6 are read-only 0. We should make *val=0 for such cases.
 
-The case below can reproduce the stall.
+The spec states:
+When siselect holds a value in this range, sireg provides access to 
+ctrsource, sireg2 provides access to ctrtarget, and sireg3 provides 
+access to ctrdata. sireg4, sireg5, and sireg6 are read-only 0.
+When vsiselect holds a value in 0x200..0x2FF, the vsireg* registers 
+provide access to the same CTR entry register state as the analogous 
+sireg* registers.
 
-                                       Guest 0
-                                     +--------+
-                                     | iperf  |
-                    ---------------> | server |
-         Host       |                +--------+
-       +--------+   |                    ...
-       | iperf  |----
-       | client |----                  Guest n
-       +--------+   |                +--------+
-                    |                | iperf  |
-                    ---------------> | server |
-                                     +--------+
-
-Boot many guests from qemu with virtio network:
- qemu ... -netdev tap,id=net_x \
-    -device virtio-net-pci-non-transitional,\
-    iommu_platform=on,mac=xx:xx:xx:xx:xx:xx,netdev=net_x
-
-Each guest acts as iperf server with commands below:
- iperf3 -s -D -i 10 -p 8001
- iperf3 -s -D -i 10 -p 8002
-
-The host as iperf client:
- iperf3 -c guest_IP -p 8001 -i 30 -w 256k -P 20 -t 40000
- iperf3 -c guest_IP -p 8002 -i 30 -w 256k -P 20 -t 40000
-
-After some time, the host loses connection to the guest,
-the guest can send packet to the host, but can't receive
-packet from host.
-
-It's more likely to happen if SWIOTLB is enabled in the guest,
-allocating and freeing bounce buffer takes some CPU ticks,
-copying from/to bounce buffer takes more CPU ticks, compared
-with that there is no bounce buffer in the guest.
-Once the rate of producing packets from the host approximates
-the rate of receiveing packets in the guest, the guest would
-loop in NAPI.
-
-         receive packets    ---
-               |             |
-               v             |
-           free buf      virtnet_poll
-               |             |
-               v             |
-     add buf to avail ring  ---
-               |
-               |  need kick the host?
-               |  NAPI continues
-               v
-         receive packets    ---
-               |             |
-               v             |
-           free buf      virtnet_poll
-               |             |
-               v             |
-     add buf to avail ring  ---
-               |
-               v
-              ...           ...
-
-On the other hand, the host fetches free buf from avail
-ring, if the buf in the avail ring is not enough, the
-host notifies the guest the event by writing the avail
-idx read from avail ring to the event idx of used ring,
-then the host goes to sleep, waiting for the kick signal
-from the guest.
-
-Once the guest finds the host is waiting for kick singal
-(in virtqueue_kick_prepare_split()), it kicks the host.
-
-The host may stall forever at the sequences below:
-
-         Host                        Guest
-     ------------                 -----------
- fetch buf, send packet           receive packet ---
-         ...                          ...         |
- fetch buf, send packet             add buf       |
-         ...                        add buf   virtnet_poll
-    buf not enough      avail idx-> add buf       |
-    read avail idx                  add buf       |
-                                    add buf      ---
-                                  receive packet ---
-    write event idx                   ...         |
-    waiting for kick                 add buf   virtnet_poll
-                                      ...         |
-                                                 ---
-                                 no more packet, exit NAPI
-
-In the first loop of NAPI above, indicated in the range of
-virtnet_poll above, the host is sending packets while the
-guest is receiving packets and adding buf.
- step 1: The buf is not enough, for example, a big packet
-         needs 5 buf, but the available buf count is 3.
-         The host read current avail idx.
- step 2: The guest adds some buf, then checks whether the
-         host is waiting for kick signal, not at this time.
-         The used ring is not empty, the guest continues
-         the second loop of NAPI.
- step 3: The host write the avail idx readed from avail
-         ring to used ring as event idx via
-         virtio_queue_set_notification(q->rx_vq, 1).
- step 4: At the end of the second loop of NAPI, recheck
-         whether kick is needed, as the event idx in the
-         used ring written by the host is beyound the
-         range of kick condition, the guest will not
-         send kick signal to the host.
-
-The patch notifies the guest with the latest avail idx seen
-by the host in the double-check, which increases the
-probability of hitting kick condition, but logically
-speaking, it can't resolve the issue. It's kind of
-optimization agianst patch 06b12970174.
-
-Changelog:
-v4:
-- Correct spelling mistake in the subject
-- Describe the issue that virtio-net is blocked at host side
-
-v3:
-- Add virtio-net tag in the subject
-- Refine commit log
-
-v2:
-- Add SOB tag at the end of the commit message
-- Place Fixes tag at the end of the commit message
-
-v1:
-- Initial patch
-
-Fixes: 06b12970174 ("virtio-net: fix network stall under load")
-Signed-off-by: Wencheng Yang <east.moutain.yang@gmail.com>
----
- hw/net/virtio-net.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9c7e85caea..23c6c8c898 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1654,6 +1654,7 @@ static int virtio_net_has_buffers(VirtIONetQueue *q, int bufsize)
-         if (virtio_queue_empty(q->rx_vq) ||
-             (n->mergeable_rx_bufs &&
-              !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
-+            virtio_queue_set_notification(q->rx_vq, 1);
-             return 0;
-         }
-     }
--- 
-2.39.0
-
+> +
+> +    return 0;
+> +}
+> +
+>   /*
+>    * rmw_xireg_sxcsrind: Perform indirect access to xireg and xireg2-xireg6
+>    *
+> @@ -2484,11 +2628,13 @@ static int rmw_xireg_sxcsrind(CPURISCVState *env, int csrno,
+>                                 target_ulong isel, target_ulong *val,
+>                                 target_ulong new_val, target_ulong wr_mask)
+>   {
+> -    int ret = -EINVAL;
+>       bool virt = csrno == CSR_VSIREG ? true : false;
+> +    int ret = -EINVAL;
+>   
+>       if (xiselect_cd_range(isel)) {
+>           ret = rmw_xireg_cd(env, csrno, isel, val, new_val, wr_mask);
+> +    } else if (xiselect_ctr_range(csrno, isel)) {
+> +        ret = rmw_xireg_ctr(env, csrno, isel, val, new_val, wr_mask);
+>       } else {
+>           /*
+>            * As per the specification, access to unimplented region is undefined
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 683f604d9f..df75bb190b 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -726,6 +726,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+>           cpu->pmu_avail_ctrs = 0;
+>       }
+>   
+> +    if ((cpu->cfg.ext_smctr || cpu->cfg.ext_ssctr) &&
+> +        (!riscv_has_ext(env, RVS) || !cpu->cfg.ext_sscsrind)) {
+I see other extensions check dependency with cpu_cfg_ext_is_user_set() 
+and an error is reported if the dependent extension is disabled by the 
+user. Is it better to put it this way?
+> +        error_setg(errp, "Smctr and Ssctr require S-mode and Sscsrind");
+> +        return;
+> +    }
+> +
+>       /*
+>        * Disable isa extensions based on priv spec after we
+>        * validated and set everything we need.
 
