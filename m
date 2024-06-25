@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D48CC30653
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 21:29:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1E68C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 21:34:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMDbB-0008SZ-Dn; Tue, 25 Jun 2024 17:21:12 -0400
+	id 1sMBzR-0008Ss-L3; Tue, 25 Jun 2024 15:38:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sMDaf-0008QJ-C1
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 17:20:43 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sMByM-0008Bd-8t
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 15:37:03 -0400
+Received: from [2607:f8b0:4864:20::c2d] (helo=mail-oo1-xc2d.google.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sMDa6-00073L-A6
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 17:20:27 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-364a39824baso4321530f8f.1
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 14:19:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sMBxf-0004wV-5C
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 15:36:42 -0400
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-5c21f3fbdd3so140145eaf.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 12:35:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719350331; x=1719955131; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=hgiwM1GTLb1Ew4GegPzA5Oi1QUY7ia/+4MPTtt50CTw=;
- b=w56CMhLiJjW9GT6EHFSteMjV100kvSAkBdG8SqVm67hV4upFFZel/gisZoSfVb+h3U
- 0+6KhF6jAy0bACZM4/XEoK59T1NBe4wWAt2WEHKotaVAgWhG1bzqgDhRYi+KS5TNiUNv
- rOhKnX4Htn0p+fgevCodEdIrbE/K0SGf3MzcOZQ7QC/sS7+9wPY0pQxvBuDv6yfQVbfh
- mItwJ5k8XFpcBoJHOb+XcJ2QUx4ZuMqddm+aB00JZ47cvalmqUdRi/b7RJDM+3BySNVE
- 6pPqeL+gbZWWEF3LiRP9rRHiTpEDfx6oQoabj64cZ1YcKgs7HnRJdGd+dhkRwgLq7JZe
- dQXg==
+ d=linaro.org; s=google; t=1719344093; x=1719948893; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pO8S7b7Lc2zYJ5YuH/uyew7KLH8ZATkGu/zVIu9bhOw=;
+ b=KF1/iPLwMvGnba+5VVDm/w+NbAXjqjY6APH59mphvdyUeHUuIxfF/tTTl6O6vfNzSR
+ yzTxYuCR2qQ5cPsdQjq1GSCdbTL0nHdUha3zUJeKfXRkUDOT+IDeJnW1ravE7riSxkOa
+ CkphCmyawKcNrkSg00qorFZMhtobWIdA6fUo0xxmRzWSHCMCOoOj3qnvlZ8MCnBGkEK8
+ JwFC54r47Cywt15LzpFLDeFtKn1B4mFZ25i+KSekkxtLKcOyKy2z7XGsYnvmJWTxQqRv
+ HyvrwfM0ZkYYwOVTdz6vw3Mmk5fB2pPeVPA+sURJNMa7aLPlMJs9EohM5qiAexN4f00t
+ s1rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719350331; x=1719955131;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hgiwM1GTLb1Ew4GegPzA5Oi1QUY7ia/+4MPTtt50CTw=;
- b=hvIKCpjKtx4Shj8oerzZaly77uFEllncY0ST4z6UC4zZSoBv/sE4I+38Z3adRO9IN5
- aVbfQPBOQjbykI1QN1+pI3BVmc4KY65bJbWafecyP3Gf1F5WDxafitL5t65nNDMzEgsw
- uxIDa8WlznxXV9IhEIGQDa+A3n5d6YMqMLgVFObzOB11+S3nC+kotGS1hYVj7eaLgvXU
- 2qE/Rpd6GtHiHNicp8wxKYOEVONpKhZdnt1/xBlH3xVpgjmFnI6NHasW6yt+N/VQB5ev
- b5XKsfwQRZDTIlFjyc1eWAy/R8YrqhDHuy+VTn4+4IZunSMcYoydCUjmq3jviXtuMShi
- h3Cg==
-X-Gm-Message-State: AOJu0YzAk0UwHAh3spxGlkCE3GilStjBNXJ59bkxsWSS1leBCaxSuMBk
- PTtaPpvPQTW9TPHq8grJS8Q40ltwC/A6rUcywWqa7VekYgjAKUIrHQ88sx8kw6kt8s1YNZ+51B4
- EXZ0=
-X-Google-Smtp-Source: AGHT+IH2l8opDlUnhqAvGTMn4+SNSHydEnBS+EkB0J7kpXsTSEW9uXud+2LZq0EeVCfn95r4TKlHng==
-X-Received: by 2002:a7b:cb0f:0:b0:421:f4da:f4b with SMTP id
- 5b1f17b1804b1-4248b9ece43mr57552395e9.40.1719343042361; 
- Tue, 25 Jun 2024 12:17:22 -0700 (PDT)
-Received: from meli-email.org (adsl-193.37.6.1.tellas.gr. [37.6.1.193])
+ d=1e100.net; s=20230601; t=1719344093; x=1719948893;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pO8S7b7Lc2zYJ5YuH/uyew7KLH8ZATkGu/zVIu9bhOw=;
+ b=su/Ko+TTVZvZL/v1LsBfW8mjdYG4rDPc4nbK5unmnHmz1rTgr/0TNbPtu59N1TyMAI
+ Jc04Khu4wKujQ4N+Itsg8sS9IlCsYB7EMQ5GrMJv2rCvnEgG9NdcD7aWNVI2DOY+jyq9
+ VMqi23j6i/prOXpQfndHdOJH4oZTfr3vEDkjehyfNlIq9V1PvPlGCIUJqvAsRBNzsdKp
+ 8pHxEhltgIMjl9DuMPS1lFkaenotctEAV0VNmvLauJBnklZVDfCFyE2MDWdTwn+3Vrs1
+ HnZ62wg+xLdKF86+XP/IiGuCTH5kDnYoBaAyDpP7l3bq/C4SwqI5E3JGax8aSkqBlS9O
+ 6Qpg==
+X-Gm-Message-State: AOJu0YzL9xvzBJzXmGfmKd6kwHc0RjvMihI8IGXbXSOQyRMZm4xgXW2O
+ itIINH2INi3QmI1AWYgLKlct9O9LtSlzuwUFws7rpQ1NHEdj4izfyKt/yYafL+jXQiHm3f2u2A7
+ P
+X-Google-Smtp-Source: AGHT+IEZESXdMDpgCdRWY14uSmLYthzzVVuhnprWD09BpoP2ADUSgtjTQOqVKmCpvHDp+YW2a/rE7A==
+X-Received: by 2002:a17:903:32ce:b0:1fa:2420:33ed with SMTP id
+ d9443c01a7336-1fa24203694mr94894665ad.65.1719340545240; 
+ Tue, 25 Jun 2024 11:35:45 -0700 (PDT)
+Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-366383f6717sm13870971f8f.9.2024.06.25.12.17.21
+ d9443c01a7336-1f9eb3c6027sm84693235ad.133.2024.06.25.11.35.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 12:17:22 -0700 (PDT)
-Date: Tue, 25 Jun 2024 22:12:54 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Cc: flwu@google.com, berrange@redhat.com, peter.maydell@linaro.org,
- rkir@google.com
-Subject: Re: [PATCH] include: move typeof_strip_qual to compiler.h,
- use it in QAPI_LIST_LENGTH()
-User-Agent: meli 0.8.6
-References: <20240625111848.709176-1-pbonzini@redhat.com>
-In-Reply-To: <20240625111848.709176-1-pbonzini@redhat.com>
-Message-ID: <fnhkw.xyx5xkm2lgb@linaro.org>
+ Tue, 25 Jun 2024 11:35:44 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 08/13] target/arm: Convert BFMLALB, BFMLALT to decodetree
+Date: Tue, 25 Jun 2024 11:35:31 -0700
+Message-Id: <20240625183536.1672454-9-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240625183536.1672454-1-richard.henderson@linaro.org>
+References: <20240625183536.1672454-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 2607:f8b0:4864:20::c2d
+ (deferred)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2d.google.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, PDS_HP_HELO_NORDNS=0.001, RDNS_NONE=0.793,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,173 +96,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 25 Jun 2024 14:18, Paolo Bonzini <pbonzini@redhat.com> wrote:
->The typeof_strip_qual() is most useful for the atomic fetch-and-modify
->operations in atomic.h, but it can be used elsewhere as well.  For example,
->QAPI_LIST_LENGTH() assumes that the argument is not const, which is not a
->requirement.
->
->Move the macro to compiler.h and, while at it, move it under #ifndef
->__cplusplus to emphasize that it uses C-only constructs.  A C++ version
->of typeof_strip_qual() using type traits is possible[1], but beyond the
->scope of this patch because the little C++ code that is in QEMU does not
->use QAPI.
->
->The patch was tested by changing the declaration of strv_from_str_list()
->in qapi/qapi-type-helpers.c to:
->
->    char **strv_from_str_list(const strList *const list)
->
->This is valid C code, and it fails to compile without this change.
->
->[1] https://lore.kernel.org/qemu-devel/20240624205647.112034-1-flwu@google.com/
->
->Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->---
-> include/qapi/util.h     |  2 +-
-> include/qemu/atomic.h   | 42 -------------------------------------
-> include/qemu/compiler.h | 46 +++++++++++++++++++++++++++++++++++++++++
-> 3 files changed, 47 insertions(+), 43 deletions(-)
->
->diff --git a/include/qapi/util.h b/include/qapi/util.h
->index 20dfea8a545..b8254247b8d 100644
->--- a/include/qapi/util.h
->+++ b/include/qapi/util.h
->@@ -62,7 +62,7 @@ int parse_qapi_name(const char *name, bool complete);
-> #define QAPI_LIST_LENGTH(list)                                      \
->     ({                                                              \
->         size_t _len = 0;                                            \
->-        typeof(list) _tail;                                         \
->+        typeof_strip_qual(list) _tail;                              \
->         for (_tail = list; _tail != NULL; _tail = _tail->next) {    \
->             _len++;                                                 \
->         }                                                           \
->diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
->index 99110abefb3..dc4118ddd9e 100644
->--- a/include/qemu/atomic.h
->+++ b/include/qemu/atomic.h
->@@ -20,48 +20,6 @@
-> /* Compiler barrier */
-> #define barrier()   ({ asm volatile("" ::: "memory"); (void)0; })
-> 
->-/* The variable that receives the old value of an atomically-accessed
->- * variable must be non-qualified, because atomic builtins return values
->- * through a pointer-type argument as in __atomic_load(&var, &old, MODEL).
->- *
->- * This macro has to handle types smaller than int manually, because of
->- * implicit promotion.  int and larger types, as well as pointers, can be
->- * converted to a non-qualified type just by applying a binary operator.
->- */
->-#define typeof_strip_qual(expr)                                                    \
->-  typeof(                                                                          \
->-    __builtin_choose_expr(                                                         \
->-      __builtin_types_compatible_p(typeof(expr), bool) ||                          \
->-        __builtin_types_compatible_p(typeof(expr), const bool) ||                  \
->-        __builtin_types_compatible_p(typeof(expr), volatile bool) ||               \
->-        __builtin_types_compatible_p(typeof(expr), const volatile bool),           \
->-        (bool)1,                                                                   \
->-    __builtin_choose_expr(                                                         \
->-      __builtin_types_compatible_p(typeof(expr), signed char) ||                   \
->-        __builtin_types_compatible_p(typeof(expr), const signed char) ||           \
->-        __builtin_types_compatible_p(typeof(expr), volatile signed char) ||        \
->-        __builtin_types_compatible_p(typeof(expr), const volatile signed char),    \
->-        (signed char)1,                                                            \
->-    __builtin_choose_expr(                                                         \
->-      __builtin_types_compatible_p(typeof(expr), unsigned char) ||                 \
->-        __builtin_types_compatible_p(typeof(expr), const unsigned char) ||         \
->-        __builtin_types_compatible_p(typeof(expr), volatile unsigned char) ||      \
->-        __builtin_types_compatible_p(typeof(expr), const volatile unsigned char),  \
->-        (unsigned char)1,                                                          \
->-    __builtin_choose_expr(                                                         \
->-      __builtin_types_compatible_p(typeof(expr), signed short) ||                  \
->-        __builtin_types_compatible_p(typeof(expr), const signed short) ||          \
->-        __builtin_types_compatible_p(typeof(expr), volatile signed short) ||       \
->-        __builtin_types_compatible_p(typeof(expr), const volatile signed short),   \
->-        (signed short)1,                                                           \
->-    __builtin_choose_expr(                                                         \
->-      __builtin_types_compatible_p(typeof(expr), unsigned short) ||                \
->-        __builtin_types_compatible_p(typeof(expr), const unsigned short) ||        \
->-        __builtin_types_compatible_p(typeof(expr), volatile unsigned short) ||     \
->-        __builtin_types_compatible_p(typeof(expr), const volatile unsigned short), \
->-        (unsigned short)1,                                                         \
->-      (expr)+0))))))
->-
-> #ifndef __ATOMIC_RELAXED
-> #error "Expecting C11 atomic ops"
-> #endif
->diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
->index c797f0d4572..554c5ce7df7 100644
->--- a/include/qemu/compiler.h
->+++ b/include/qemu/compiler.h
->@@ -227,4 +227,50 @@
-> #define SECOND_ARG(first, second, ...) second
-> #define IS_EMPTY_(junk_maybecomma)     SECOND_ARG(junk_maybecomma 1, 0)
-> 
->+#ifndef __cplusplus
->+/*
->+ * Useful in macros that need to declare temporary variables.  For example,
->+ * the variable that receives the old value of an atomically-accessed
->+ * variable must be non-qualified, because atomic builtins return values
->+ * through a pointer-type argument as in __atomic_load(&var, &old, MODEL).
->+ *
->+ * This macro has to handle types smaller than int manually, because of
->+ * implicit promotion.  int and larger types, as well as pointers, can be
->+ * converted to a non-qualified type just by applying a binary operator.
->+ */
->+#define typeof_strip_qual(expr)                                                    \
->+  typeof(                                                                          \
->+    __builtin_choose_expr(                                                         \
->+      __builtin_types_compatible_p(typeof(expr), bool) ||                          \
->+        __builtin_types_compatible_p(typeof(expr), const bool) ||                  \
->+        __builtin_types_compatible_p(typeof(expr), volatile bool) ||               \
->+        __builtin_types_compatible_p(typeof(expr), const volatile bool),           \
->+        (bool)1,                                                                   \
->+    __builtin_choose_expr(                                                         \
->+      __builtin_types_compatible_p(typeof(expr), signed char) ||                   \
->+        __builtin_types_compatible_p(typeof(expr), const signed char) ||           \
->+        __builtin_types_compatible_p(typeof(expr), volatile signed char) ||        \
->+        __builtin_types_compatible_p(typeof(expr), const volatile signed char),    \
->+        (signed char)1,                                                            \
->+    __builtin_choose_expr(                                                         \
->+      __builtin_types_compatible_p(typeof(expr), unsigned char) ||                 \
->+        __builtin_types_compatible_p(typeof(expr), const unsigned char) ||         \
->+        __builtin_types_compatible_p(typeof(expr), volatile unsigned char) ||      \
->+        __builtin_types_compatible_p(typeof(expr), const volatile unsigned char),  \
->+        (unsigned char)1,                                                          \
->+    __builtin_choose_expr(                                                         \
->+      __builtin_types_compatible_p(typeof(expr), signed short) ||                  \
->+        __builtin_types_compatible_p(typeof(expr), const signed short) ||          \
->+        __builtin_types_compatible_p(typeof(expr), volatile signed short) ||       \
->+        __builtin_types_compatible_p(typeof(expr), const volatile signed short),   \
->+        (signed short)1,                                                           \
->+    __builtin_choose_expr(                                                         \
->+      __builtin_types_compatible_p(typeof(expr), unsigned short) ||                \
->+        __builtin_types_compatible_p(typeof(expr), const unsigned short) ||        \
->+        __builtin_types_compatible_p(typeof(expr), volatile unsigned short) ||     \
->+        __builtin_types_compatible_p(typeof(expr), const volatile unsigned short), \
->+        (unsigned short)1,                                                         \
->+      (expr)+0))))))
->+#endif
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/a64.decode      |  2 +
+ target/arm/tcg/translate-a64.c | 77 +++++++++++++---------------------
+ 2 files changed, 31 insertions(+), 48 deletions(-)
 
-Should we add an #else to provide a fallback for cplusplus until the 
-alternative is merged?
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 6819fd2587..15344a73de 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -951,6 +951,7 @@ SDOT_v          0.00 1110 100 ..... 10010 1 ..... ..... @qrrr_s
+ UDOT_v          0.10 1110 100 ..... 10010 1 ..... ..... @qrrr_s
+ USDOT_v         0.00 1110 100 ..... 10011 1 ..... ..... @qrrr_s
+ BFDOT_v         0.10 1110 010 ..... 11111 1 ..... ..... @qrrr_s
++BFMLAL_v        0.10 1110 110 ..... 11111 1 ..... ..... @qrrr_h
+ 
+ ### Advanced SIMD scalar x indexed element
+ 
+@@ -1031,6 +1032,7 @@ UDOT_vi         0.10 1111 10 .. .... 1110 . 0 ..... .....   @qrrx_s
+ SUDOT_vi        0.00 1111 00 .. .... 1111 . 0 ..... .....   @qrrx_s
+ USDOT_vi        0.00 1111 10 .. .... 1111 . 0 ..... .....   @qrrx_s
+ BFDOT_vi        0.00 1111 01 .. .... 1111 . 0 ..... .....   @qrrx_s
++BFMLAL_vi       0.00 1111 11 .. .... 1111 . 0 ..... .....   @qrrx_h
+ 
+ # Floating-point conditional select
+ 
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 0f44cd5aee..95be862dde 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -5606,6 +5606,19 @@ TRANS_FEAT(UDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_udot_b)
+ TRANS_FEAT(USDOT_v, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_usdot_b)
+ TRANS_FEAT(BFDOT_v, aa64_bf16, do_dot_vector, a, gen_helper_gvec_bfdot)
+ 
++static bool trans_BFMLAL_v(DisasContext *s, arg_qrrr_e *a)
++{
++    if (!dc_isar_feature(aa64_bf16, s)) {
++        return false;
++    }
++    if (fp_access_check(s)) {
++        /* Q bit selects BFMLALB vs BFMLALT. */
++        gen_gvec_op4_fpst(s, true, a->rd, a->rn, a->rm, a->rd, false, a->q,
++                          gen_helper_gvec_bfmlal);
++    }
++    return true;
++}
++
+ /*
+  * Advanced SIMD scalar/vector x indexed element
+  */
+@@ -5946,6 +5959,20 @@ TRANS_FEAT(USDOT_vi, aa64_i8mm, do_dot_vector_idx, a,
+ TRANS_FEAT(BFDOT_vi, aa64_bf16, do_dot_vector_idx, a,
+            gen_helper_gvec_bfdot_idx)
+ 
++static bool trans_BFMLAL_vi(DisasContext *s, arg_qrrx_e *a)
++{
++    if (!dc_isar_feature(aa64_bf16, s)) {
++        return false;
++    }
++    if (fp_access_check(s)) {
++        /* Q bit selects BFMLALB vs BFMLALT. */
++        gen_gvec_op4_fpst(s, true, a->rd, a->rn, a->rm, a->rd, 0,
++                          (a->idx << 1) | a->q,
++                          gen_helper_gvec_bfmlal_idx);
++    }
++    return true;
++}
++
+ /*
+  * Advanced SIMD scalar pairwise
+  */
+@@ -10952,23 +10979,13 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+         }
+         feature = dc_isar_feature(aa64_bf16, s);
+         break;
+-    case 0x1f:
+-        switch (size) {
+-        case 3: /* BFMLAL{B,T} */
+-            feature = dc_isar_feature(aa64_bf16, s);
+-            break;
+-        default:
+-        case 1: /* BFDOT */
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        break;
+     default:
+     case 0x02: /* SDOT (vector) */
+     case 0x03: /* USDOT */
+     case 0x10: /* SQRDMLAH (vector) */
+     case 0x11: /* SQRDMLSH (vector) */
+     case 0x12: /* UDOT (vector) */
++    case 0x1f: /* BFDOT / BFMLAL */
+         unallocated_encoding(s);
+         return;
+     }
+@@ -11037,17 +11054,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+     case 0xd: /* BFMMLA */
+         gen_gvec_op4_ool(s, is_q, rd, rn, rm, rd, 0, gen_helper_gvec_bfmmla);
+         return;
+-    case 0xf:
+-        switch (size) {
+-        case 3: /* BFMLAL{B,T} */
+-            gen_gvec_op4_fpst(s, 1, rd, rn, rm, rd, false, is_q,
+-                              gen_helper_gvec_bfmlal);
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+-        return;
+-
+     default:
+         g_assert_not_reached();
+     }
+@@ -12051,24 +12057,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+     case 0x0b: /* SQDMULL, SQDMULL2 */
+         is_long = true;
+         break;
+-    case 0x0f:
+-        switch (size) {
+-        case 3: /* BFMLAL{B,T} */
+-            if (is_scalar || !dc_isar_feature(aa64_bf16, s)) {
+-                unallocated_encoding(s);
+-                return;
+-            }
+-            /* can't set is_fp without other incorrect size checks */
+-            size = MO_16;
+-            break;
+-        default:
+-        case 0: /* SUDOT */
+-        case 1: /* BFDOT */
+-        case 2: /* USDOT */
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        break;
+     case 0x11: /* FCMLA #0 */
+     case 0x13: /* FCMLA #90 */
+     case 0x15: /* FCMLA #180 */
+@@ -12089,6 +12077,7 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+     case 0x0c: /* SQDMULH */
+     case 0x0d: /* SQRDMULH */
+     case 0x0e: /* SDOT */
++    case 0x0f: /* SUDOT / BFDOT / USDOT / BFMLAL */
+     case 0x10: /* MLA */
+     case 0x14: /* MLS */
+     case 0x18: /* FMLAL2 */
+@@ -12171,14 +12160,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+     }
+ 
+     switch (16 * u + opcode) {
+-    case 0x0f:
+-        switch (extract32(insn, 22, 2)) {
+-        case 3: /* BFMLAL{B,T} */
+-            gen_gvec_op4_fpst(s, 1, rd, rn, rm, rd, 0, (index << 1) | is_q,
+-                              gen_helper_gvec_bfmlal_idx);
+-            return;
+-        }
+-        g_assert_not_reached();
+     case 0x11: /* FCMLA #0 */
+     case 0x13: /* FCMLA #90 */
+     case 0x15: /* FCMLA #180 */
+-- 
+2.34.1
 
--#endif
-+#else /* __cpluplus */
-+#define typeof_strip_qual typeof
-+#endif /* __cplusplus */
-
->+
-> #endif /* COMPILER_H */
->-- 
->2.45.2
->
->
-
-
-
-With that comment addressed,
-
-Tested-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
