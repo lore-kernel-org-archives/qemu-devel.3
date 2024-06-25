@@ -4,69 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33ABDC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 14:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCCAC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 14:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM6xj-0000uO-11; Tue, 25 Jun 2024 10:15:59 -0400
+	id 1sM6zv-0001rG-1Z; Tue, 25 Jun 2024 10:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sM6xe-0000rW-Ly
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:15:55 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sM6xa-0003Uz-Ty
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:15:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719324952; x=1750860952;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=I3srXga0wNGNFokbzv6aed3xUsaz/KaZZxaaTkWpc0E=;
- b=BqPE10aGwCT1+QvscPZXAqidX3F9jKJ7PEclKlQ9U5O6eZqAL8YnWwq1
- 4xd5c8UFXQPfbv6egjUCVDnsZM8+HCiAlJdNI5QnOlFOEdz9zq0gPLB8c
- 8iAcE0myx3qxmFjoUlYBBethccQ/25Td0jBrY1UtQT0GGfdccggMyFoQx
- 9NR8fTPakHfplIQm0il3QImE0uGIjMJY1zLgFKjQr+OFv8zlVjFuggEIx
- KOKADf8Iugdw0vlUUIqx78rGKEqtcVMcj2GeRfVXqM93y5fmaLZGpALxe
- ZXFTFoiT+LLfn8xZisldCqaSX48C2S5HpAwOSk7zRnZg6TPaBA/i2pOeI Q==;
-X-CSE-ConnectionGUID: jtzxIoNMQbiGKqhSG5kFiA==
-X-CSE-MsgGUID: OizDBvndRAeh5qBD2l2Waw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11114"; a="16173194"
-X-IronPort-AV: E=Sophos;i="6.08,264,1712646000"; d="scan'208";a="16173194"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2024 07:15:48 -0700
-X-CSE-ConnectionGUID: f67jgbjHSd+LRalE8IowgQ==
-X-CSE-MsgGUID: do+1UBLsRlSTzU+dCJUC0g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,264,1712646000"; d="scan'208";a="43473978"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa006.fm.intel.com with ESMTP; 25 Jun 2024 07:15:45 -0700
-Date: Tue, 25 Jun 2024 22:31:19 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: EwanHai <ewanhai-oc@zhaoxin.com>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, ewanhai@zhaoxin.com,
- cobechen@zhaoxin.com, rockcui@zhaoxin.com, louisqi@zhaoxin.com
-Subject: Re: [PATCH 0/4] Add support for Zhaoxin Yongfeng CPU model and other
- improvements
-Message-ID: <ZnrUt0/5CZ2Ww45e@intel.com>
-References: <20240625091905.1325205-1-ewanhai-oc@zhaoxin.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sM6zt-0001qu-HX
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:18:13 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sM6zs-00043r-1i
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:18:13 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-7065a2f4573so2853997b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 07:18:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719325090; x=1719929890; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=H/ixWVkgpNyWpGkhhn1OIETZnWzp+znJ996xRf7NEyw=;
+ b=JplviN+7lp0PLLA3sBbGDth3M0AroN4OJyMlv4CjIUZBliBByMvrkQm5pKS9KeZLhx
+ FxH4RLlPBpKSMQ9GEw6kccuJRqN0kgsTp12IHPdfo4wWJdCUb+/gZsp+18LjOPMhAk+t
+ CY9Wpa30ss085Ms1l5KC/Q4btJnB9FxOuWCGc1mxmM0X02WmTYGs57LYNR0cKNHP4fXh
+ KG0CvpMHTnZYTuHXgnJV95JlTn+Gg9hYX02WUzz9c2xigw0iwjY37VLIKb2YzKKljFo5
+ VCMcpwKNSxRTYvjr4iBuawv43OOO9FdJew0T+RKBWERVgZca/twl/evXZQkiz1tzJXDE
+ E0bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719325090; x=1719929890;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H/ixWVkgpNyWpGkhhn1OIETZnWzp+znJ996xRf7NEyw=;
+ b=UqkssK/KbpVH6JmI+EoXhE9ZedDcjVKvQJWOHDcBz9sPYRL6Cqxh90qIJG1AdQoRtw
+ wCa00tcCKTp5qy9+rv7QudyryuQgbzClbcVAAatO7LODaRez/0z9amnX86BuOYr1B0l7
+ JFEx7VU4noHUxtjGVWKV/nTpjWPY1wyYY14BvIp0rTT8Un7eBA9Bgfq1EKx7awenoSd/
+ JHFNw27WfkT5DvWyO8KKFqMnvrxPbxwbUq+XYTb3i3sEvZcKi6jQW2KxkDe/q433IpV2
+ 0qdXPkuLLejSulKba0NjURaWtZpIs5rUP82lyfbsYwPqAO1aPwFf0mAwqJU3tYeJdPKO
+ fyTg==
+X-Gm-Message-State: AOJu0Yw+6koi1cyjaOwkTF7cw06+yEXl32mUNXhmG5LwBNJmuP9y0bSb
+ NgoVpbJBozdnoiV/SI1YTx5oUpMwXH3tVSgalY3sz2KZQhoT1Hyvwr1O6G3BGJQ=
+X-Google-Smtp-Source: AGHT+IFOgoScXf43JaGat5It76WNdx4p08uhjYDYNZx/z5yM/BQ2Nlc0HS7JabwGsUuGveTha+osPw==
+X-Received: by 2002:a05:6a20:72a4:b0:1bd:1d6e:d448 with SMTP id
+ adf61e73a8af0-1bd1d6ed4d2mr2260438637.27.1719325089452; 
+ Tue, 25 Jun 2024 07:18:09 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7068c719371sm3232547b3a.102.2024.06.25.07.18.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Jun 2024 07:18:09 -0700 (PDT)
+Message-ID: <997bc99a-bf16-4a6e-80a7-c750435395f0@linaro.org>
+Date: Tue, 25 Jun 2024 07:18:07 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240625091905.1325205-1-ewanhai-oc@zhaoxin.com>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
-X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/13] target/arm: Delete dead code from disas_simd_indexed
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240625050810.1475643-1-richard.henderson@linaro.org>
+ <20240625050810.1475643-14-richard.henderson@linaro.org>
+ <CAFEAcA9aij1SbdEQkR9=UhJO2uz1u90881FwC8KHLYuLFto5AQ@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA9aij1SbdEQkR9=UhJO2uz1u90881FwC8KHLYuLFto5AQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,50 +97,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi EwanHai,
+On 6/25/24 05:41, Peter Maydell wrote:
+> On Tue, 25 Jun 2024 at 06:09, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> The last insns in this block, MLA and MLS, were converted
+>> with f80701cb44d, and this code should have been removed then.
+> 
+> "MLA, MLS, SQDMULH, SQRDMULH, were converted with f80701cb44d
+> and f80701cb44d33", I think, since there's still code for
+> all four of those insns that we're deleting here ?
 
-On Tue, Jun 25, 2024 at 05:19:01AM -0400, EwanHai wrote:
-> Date: Tue, 25 Jun 2024 05:19:01 -0400
-> From: EwanHai <ewanhai-oc@zhaoxin.com>
-> Subject: [PATCH 0/4] Add support for Zhaoxin Yongfeng CPU model and other
->  improvements
-> X-Mailer: git-send-email 2.34.1
-> 
-> This patch series introduces support for the Zhaoxin Yongfeng CPU model and includes
-> some improvements and updates related to Zhaoxin and VIA CPUs. The changes ensure that
-> QEMU can correctly identify and emulate Zhaoxin CPUs, providing accurate functionality
-> and performance characteristics.
-> 
->
-> ### Summary of Changes
-> 
-> EwanHai (4):
->   target/i386: Add support for Zhaoxin/VIA CPU vendor identification
->   target/i386: Add CPUID leaf 0xC000_0001 EDX definitions
->   target/i386: Introduce Zhaoxin Yongfeng CPU model
->   target/i386: Update CMPLegacy handling for Zhaoxin and VIA CPUs
-> 
->  target/i386/cpu.c | 130 ++++++++++++++++++++++++++++++++++++++++++++--
->  target/i386/cpu.h |  38 ++++++++++++++
->  2 files changed, 165 insertions(+), 3 deletions(-)
-> 
-> ### Known Bugs
-> 
-> 1. Issue with VMX Preemption Timer Rate on Yongfeng CPU:
->    - Description: On Yongfeng CPUs, the VMX preemption timer rate is 128, meaning that
->      bits 4:0 of MSR_IA32_VMX_MISC_CTLS should be set to 7. However, due to Intel's rate
->      being 5, the Linux kernel has hardcoded this value as 5:
->      `#define VMX_MISC_EMULATED_PREEMPTION_TIMER_RATE 5`
->    - Impact: This discrepancy can cause incorrect behavior in the VMX preemption timer on
->      Yongfeng CPUs.
->    - Workaround: A patch to correct this issue in the Linux kernel is currently being
->      prepared and will be submitted soon.
->  
+Yes.
 
-Thanks for your patch. Is there some spec/datasheet link that people can
-refer to?
 
-Regards,
-Zhao
-
+r~
 
