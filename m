@@ -4,169 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E883C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 01:56:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45BFAC2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 02:01:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLvP6-0004AM-C4; Mon, 24 Jun 2024 21:55:28 -0400
+	id 1sLvUb-0005oY-3p; Mon, 24 Jun 2024 22:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sLvP4-00049y-My; Mon, 24 Jun 2024 21:55:27 -0400
-Received: from mail-tyzapc01on20700.outbound.protection.outlook.com
- ([2a01:111:f403:2011::700]
- helo=APC01-TYZ-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sLvP2-0001uV-2I; Mon, 24 Jun 2024 21:55:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=h0NE4u6NslqJH+glLy+mguuVuAmrCh7y4VhuYLKtsMh3H63y4/DHPCmc2Wqc6uy3zo9FDecz6IYLCAn7Xyt2W8hL6xRBYiV3abpj4Tl+IAc+h0OT6nmSYzCkyPf8+Zmp6nK6ifD84d3zpJXpYajH6HIHrPzOxPuu9j4YAa7Q8IclhcgIp/1O1POsRqwQtEH2x9YHSeO7Iw2AllDK+PW69vA6OE3Yt8Wsk2OxlWAb0xp6eeRNhjnq1LTS5GaRH3rnZKMkMN0n5X/58xIMKryXzIb8KeI/SRMCxXazfGVi0/4SjvjcwcRBlXJqsYap3MxPnU2xa05K3ur6y7TYR1R5IQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lgrIDtDlDGhQqIgwzpOS83uDb0BWNUB1zyQwtoD8F5s=;
- b=iShgydIJHdDL58S+AtVzNuuLHIQwqTG9XTTXNO1nQ5xa/y79cYfc6a3CzIhEWkxd6rVtHPGGyYEYyd5D/ptwARxHgZjiDG0+9hArsXyHOaQBB6eVwfOj2Adyi+4bljgoWH1Lm3U1BTfFXZFyn1XBnzwWYVQrUaM5nE36mZn1fUouDfIjyPoM1+FHCvIX670sil/Re9M+4+s9sdHOAzlACXCD3JAsKmOQw2h0WH7BAEK70cKyyQCpbm2XpYGbqHxnCKemNytoBPZpJkMKO7vTO91ARS/F7LclUunwx78PFIFY3RKlDOWxlgAf/A6t+GNSqLuNVLGlRkTEtB4Z+X87TA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lgrIDtDlDGhQqIgwzpOS83uDb0BWNUB1zyQwtoD8F5s=;
- b=J81qAtn2LFErUYQA+p2HbhcYEZXDyqiXi22/NX9Nlb7FwBXSoaHjxT3SH4kmFcYm6zgGYhMNyPjJtJG1KDeSAUwjzwXViDy3pYOvoUCpIn68bYvEVva3vuVn2AYZoy8Cm8EhcHuW4+wQgpl6j4qxDr3roQtFKTWmP6k+OQxlUW4Cc+AGguO70aXgQnSWY9G5UR2PPobK1MWybG+O9+GENomCml0Xgqb8kMTcjHMEt69hG0tEPhrVBrLvVrp0Srm4A5yN6TsyeRgyc6bMTin7c6t9LWRqlnq8Jj2/qQrKyhs79U7SimGz6TD0Mp9H9j7KYKT0w20ry/EhlJfoZ1UdQA==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- SEZPR06MB5118.apcprd06.prod.outlook.com (2603:1096:101:38::10) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7698.30; Tue, 25 Jun 2024 01:55:10 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%4]) with mapi id 15.20.7698.025; Tue, 25 Jun 2024
- 01:55:10 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>
-CC: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC
- here" <qemu-devel@nongnu.org>, Troy Lee <troy_lee@aspeedtech.com>, Yunlin
- Tang <yunlin.tang@aspeedtech.com>
-Subject: RE: [PATCH v1 1/2] aspeed/soc: fix coverity issue
-Thread-Topic: [PATCH v1 1/2] aspeed/soc: fix coverity issue
-Thread-Index: AQHawiv9tvtH3acF/EeO4aBMMhGyy7HW3PKAgAAbz4CAAMceQA==
-Date: Tue, 25 Jun 2024 01:55:10 +0000
-Message-ID: <SI2PR06MB50412C68BF0AD9B4ED91B75FFCD52@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20240619093508.2528537-1-jamin_lin@aspeedtech.com>
- <20240619093508.2528537-2-jamin_lin@aspeedtech.com>
- <CAFEAcA8tTHusKOR7JhyU+wwA3JJWq1o5wVaNXugw2S9SjAsESw@mail.gmail.com>
- <b013bd79-c206-446e-b482-91eeb926c70a@kaod.org>
-In-Reply-To: <b013bd79-c206-446e-b482-91eeb926c70a@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|SEZPR06MB5118:EE_
-x-ms-office365-filtering-correlation-id: 1f93a340-6c64-4fcc-edaf-08dc94b9d882
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230037|366013|1800799021|376011|38070700015;
-x-microsoft-antispam-message-info: =?utf-8?B?WW1lWFA4Z09FMGpMaHltT2hWODFmaTBMMllWSGYra0lXU3FiMHhYNmF0aUlJ?=
- =?utf-8?B?R3p2MFhBQURaTU92UDUwL25TTjRGUmY2M1FpM3h3K1M3Nkw0RndIaWs4Y3Rs?=
- =?utf-8?B?Wm9jdHl0dG1EaEw1VHcrMmY1MGlvQTNQM2FadklwRitxNDgwS0M3QnlmTmo3?=
- =?utf-8?B?bll3MHBFbmZDYWhVL1ZWcnlMU3JLaUF0c1NtMlRaMFlFZCtsV25GUjNlc25w?=
- =?utf-8?B?QnB3TFRXaXBXaVFDbHZieXlRRkhsWVNQZllkcktYMHNGZGdzOGlsck9LNmVt?=
- =?utf-8?B?aWFpa3o0bUk4ZGQ3OWpPaHJwNHViNlczeStNOURMRnk1VERGazRSc2V2Um1T?=
- =?utf-8?B?S0xHeDQ5dDRxcVE3ZnFSdzBxSi9GWTg3blZQaWhQNUVwTU1HZGJNb2dOWVdN?=
- =?utf-8?B?NCs1TTN3aElJb1E1dGRxTldxRFpEMm52MklrQXh1cVdGUzhHQVN2MUUyaS8z?=
- =?utf-8?B?b1M5WUhoK3M2KzlPU001QTlZT3o1WW5mVW1TWjR4a2ZnS0RZSjgzTWdmUFJG?=
- =?utf-8?B?RHJTMW5PamRsWnNXUW5jelhpRnFsQXNXa1Y1Mm1icklSWkNlekJmbUVlNHIy?=
- =?utf-8?B?V2RDVFZhdEtpamkrRzlubkp6cnA2b0N2VE45b2w4eEtTRE5SSE1KK3BrcnBI?=
- =?utf-8?B?WTlzUld5b3RDMkp0TjdOTThLK2l5bHJlYzVaOWx2RnhBMWZpN1cvZ2RESi9S?=
- =?utf-8?B?bm53bjJScUhtUkJiKzRqSS84bVI3OTQzb04rZDlkU1hwRnR1dEVtRGpndWhI?=
- =?utf-8?B?b2dyUURDY1JsSXQ3cUo3T2F0VDd5V0YwSGdoMUZadlVhYXJSVmFHd3hkSnBZ?=
- =?utf-8?B?V1Zwd3VjT05ObWVzWVFoSDJxdXEwa1RIa3pTSmpqKzFBc3hacHJXcTRJTGlw?=
- =?utf-8?B?S3F1SWpTOWd6cmtSM0ZmTHhCRWlDcVdJTGx6VDk2UHEwWnNVRml5TFQ5Y2J5?=
- =?utf-8?B?RVdHMU9RUFF2TlRudEkyU2VIZ3krbU9wY1dvcFJ2T1o4REgvc3haZjJ2dExp?=
- =?utf-8?B?V1RpQ2xLVkh6a3JmSGp3RHhjNlIwSFBmeFlqUk5oVitPT01rWWZyQjJQSEIr?=
- =?utf-8?B?SjNTbDB2MnhYSUZyTFdhZlVpRmtKZXBRYjhxQjF0VVBNbncvQ2dETURUa0d6?=
- =?utf-8?B?RUI3RDN1eVpwcGZSVHBTdHoyTklndlhGZ0hWTllxOE9uRjF1Q05HTU5PSUQ2?=
- =?utf-8?B?azllcXVsK25nc1JvWXZiVzFnb2xtZHRHTEZxbk5IaVF4QkNWbFpUV21TOU8x?=
- =?utf-8?B?c0RwOG9vL1UyNzdqVGljMVl2UlljVWZsdVplUzhIRjdMTXJBdllNSXNSZlJ4?=
- =?utf-8?B?LytDNmRRRFZiOCtnUGNaQTdrMjJ5bUhyNkdiUEZQMkxrRTVEZncvaG8yY21P?=
- =?utf-8?B?cHkzVCsvaWY0N05zMXhudCs1bEZnVHFGMmZjZHp4WVhmRGZFSXBjSWQ4cWJh?=
- =?utf-8?B?M2xtVlVQZXpDaktvTCtDS0lRUzI3NktxSGxwRmRBbG5oSUxTRVBXSFZmVHky?=
- =?utf-8?B?UExFYldFaElLZjNPcG54aVFiQUtVckt6TEZ2VWpYaGhDajFYUU9pNWNBcnVX?=
- =?utf-8?B?WlhUMGpPcGIxb3htVit4ak1kbk5GaVNhM0ptdFNNNjlIaFRhMzdsSFpiR3hK?=
- =?utf-8?B?UkJQUXpSOXlkVFd4MWVaYVR1Z25xdHRwT08yVUFhUjBhU0UrOERnTzZYMUx0?=
- =?utf-8?B?VXpiZUR3clpKZDZVZWtKcURSMnFrTXorVDc4OVRKMDR6ZmY5R2tvSS9WdFFG?=
- =?utf-8?Q?FNpHeUoQF3gQ68W+UcrSiIdm126pmrssz347DPX?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230037)(366013)(1800799021)(376011)(38070700015); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?czJJV0VhVW4xSXltMXZ3UWw0MzI3SVZNNGVzejdSVjZ6VTJKb3ZmRXZBWktU?=
- =?utf-8?B?QXBGcTBwcmYycTFKeXJjMUlWZGpNaDg3b2xQNVYvdFFkbG9lbUlJY2kvN25J?=
- =?utf-8?B?MnRFcU0ra1BEUmhLdW1oejFtVyt4Y25iVHlpZjdrdlFRUUVhYXZjK0FSSGFp?=
- =?utf-8?B?bnhjdk9KYXFuK0ZzQktyL1ZEOC9qYmNiWHhYd21LV09lUzNDZnFMRzR6OTBs?=
- =?utf-8?B?M0J3RWFQZUQ1bGdLVHFleURWcXBieUdpR1VBSkhCMU1pK0Y5UmpEdktxTVNR?=
- =?utf-8?B?R1BQeTF3U2EwZVE1L0lGaWVLWVBKOUdDcytmN0Q0eXlhKzkxOFhjbzZsNi9h?=
- =?utf-8?B?WFd6NXlMbXd2NUdFeEJWSzhqM2tTclNRSEJ5Mk8vVktZZ054cGNlbGhqUkx4?=
- =?utf-8?B?SlBLQXc1RW1iT1NFYlJPeC82VUY5MnhGa2FWN01aTkNzdDdRU0Y4dVZQeXdu?=
- =?utf-8?B?amtqUTdsUUduamltVnF4MjlyZWltY005YzcvdTBPY2JmVUJEclpzTC9yK3Rh?=
- =?utf-8?B?cG51clNiZFFuSStuZFlsN256Wm9FcDUvblNZTTJYYXFDZlNCS25yeStmUXcr?=
- =?utf-8?B?bWhySmNKVnFJY295ZDhUV0dBOW1ZKzcyTGZnSzNRV2F4SFhxSEl3cTBiOXpw?=
- =?utf-8?B?ZUU3S2MyRW4yQlJTdXNmWWo2RGZzSkZRM3lOdVpiUTlUMzFhdmRXRjRHTlcy?=
- =?utf-8?B?YTRjdTdrWDFoMzhZOXFxQzg3NFdJNHRvUnZCZ3dYQTMybGV0TTRBM0F4bHFM?=
- =?utf-8?B?UG9Rd0lDTmlsZytrNXlQcmZwc01yTXlSWmpBV2REc0hrSUViSUsxUEtEQ2l0?=
- =?utf-8?B?a1hKNlF1dXZxa21iME5iUXFjVmtyWGdIK21JblN5azc4MWN3Wkg4WnZ2amxm?=
- =?utf-8?B?aW42TXl5bmtnY2FrQ3FlSGlsTElJVVBEL05QK0h0Wms5TE9MeUYvNVVraWJD?=
- =?utf-8?B?UVJ1bmFqbGlUNUJkUVdOeU1qS2d0T1kvMG9UTy9SVExaMERKdmtBV3hyVWVh?=
- =?utf-8?B?ZThMRCt2U0FnVlVzUUhUblE0cm10QzdNVVBYc1AvYlYzVjd5ZTVXaFcxYlcx?=
- =?utf-8?B?bTNoM0gvalVEUXVkdjhKaW5YNS9MQTRPd2M0NDhxWjR3YWhCNEh4aERRRU81?=
- =?utf-8?B?MjFsbTg3dFlaaDlsV2VvWU0ydHBLYytBMysvMXFScXVYdHp1dUtHWUJIQ016?=
- =?utf-8?B?WUxVZXd6eXNqczArazdtY2R4aEVDWjJXdHV1QUtlcUFSWTJsaXYwelJhY2U4?=
- =?utf-8?B?d2ZqREs0YktWOXZtaDFqd0tVbkVEMTB3S2RadjdrSGVvcFBqRzdtSmJJY0k4?=
- =?utf-8?B?ZEdaWVdHSGpVZENOUHFQSWVod0NldjA5bWZUZ2ozaHJsSkpuZENWdHEvVURZ?=
- =?utf-8?B?NWs5VFJYelJDd1hVWndZTVdrTXoxTFBOdDVRVWFIREM3YjA2WkpuRkh3UCtP?=
- =?utf-8?B?em5yUXo0cW1sRS83Lzd4RmpLV0VTZ3pxYlNxazNaZjhZVG9BVVhNeUZYSGVx?=
- =?utf-8?B?T0NjTGFCRkpKSWZqRkxBaXhENXc2dXNDc2JOaHZOSVVDRTc1MkYwR2p6cHZk?=
- =?utf-8?B?dHdMc2V3SHNoRGNsVUhlNE9KMU9ZRElXQUUyRXJNOUxNelp4TGl6ZEkvTnZt?=
- =?utf-8?B?N051ckpHSExKaUpJOS9wM3QrVFlIS0lMUkltZkt2VDZ0Wk5QUG1lN1lzWU95?=
- =?utf-8?B?OGU3WjF4QVlaZ1REWFkvVHVoVE4rSC9yQitoWlladWdzQm90bUovZDhKSGpp?=
- =?utf-8?B?dmNuTklMWFlod09qUHVKT3dEb2F3QWZOYjlkQmRZMDczVGRwUG03aVBRd0dR?=
- =?utf-8?B?S2lSYXpJeitHcFl6QWptYjhyY1NWYVFLQWZiOTI2RVZqc0thOU9sSGIveWNz?=
- =?utf-8?B?bEVLZk1DWUJ5U1M2ZkVmNmdCdy9qWVFGRTNXZ2hLVjVubXhjeFVTVzRqUVdy?=
- =?utf-8?B?Mm1rYXJMT0Mrd2RRWHJ4OThPMExXMGd3bzdLRnFSSWhRTzBBRjlJVUx2Um83?=
- =?utf-8?B?VFEvV0c0eVlCS2h2VHNqNVlJdGJTV0pvVVVsVGJ5bFA4U3BBRDVWblhDRmRJ?=
- =?utf-8?B?aG1xUS9qVTcyaHpnM3hsYzBRTlVKL1N4ZjMvWGlybllwaTFESzNKWWN2b1pk?=
- =?utf-8?Q?f9Fyx6OodyqAB5+IDQvLNq3F6?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sLvUY-0005oD-7I
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 22:01:06 -0400
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sLvUS-0002Gm-TD
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 22:01:05 -0400
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-24542b8607fso2503009fac.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 18:58:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1719280737; x=1719885537;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=TF8shNaT/QLWQC7VdF+da0g+s7RS8KsUomYGgRDrh8c=;
+ b=amH2G00OLythSm1jQv28wuZPLjrVm3GeJ1WsEtMY0H3iO2pCsyoVlHAnUoSYn7lgq9
+ LUls5b/vveX88JlftYwuE0CTv0DhZWVDEP3Qocc+oDg9xOhSqmirwSWKdI76BBC320aU
+ Mua1/p4tamxAV6wcTQyjickMuVIz0PRL1EejbuWRt3ERgpc6EbEpWq4EkuaYtYhXoXoq
+ WnCxO6DVODXtVe5E0NUF59VRHyVfzsA+6IvqJGuUuIUhrjdyF2TkiYPfPOEj68Wo9MSi
+ 6sEiISUK7Ics1/do0FXy0XFFab0NPV1awT0DX+WeNtKQEBNUtN/nqOE3xopgq0F90TME
+ PyJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719280737; x=1719885537;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TF8shNaT/QLWQC7VdF+da0g+s7RS8KsUomYGgRDrh8c=;
+ b=ANeYca7peVfuqP9WOPPatqd/qEGsi70yCFdLTAxt8b/NLvT+wHZLTqQf5smK0TtFxX
+ CA/12Wl5twJrWE072mXFEerVigzb10IPHxORLceCiCSw5AcEbKyImlkx5lsAaISZ/p7F
+ e9MwYnrkcHzMIU2gTEEfJ1aK97dIbfFRUZpsgFG4vCGBUsuBXlTGvK2FP12lDU1IPGio
+ oeewsAlyweaDCMt0DpvUeOJfZzwIFbbw2VvyASTQ+ObZdSK167ID7RKi1Ig8vN2mWk9S
+ 7Lsq4wUWEOTwE4bHay1RnDCEzcbnaqe8d8pL60i28IC4C4ujEE89ZhSYF4JHWwvi7v0Z
+ cbGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8/URpkyOWvz58DAyJd7yxrKCokup8f9CTZzWpNncm7nHyeUB5GJJspcJulcsp63XCSP6peLyyoIZ74z4JU+0RHwbKo4E=
+X-Gm-Message-State: AOJu0YzJFdC07gkK4K3/6Ah1yVTkcPACeXl4a30mELhc6e7OBdzSl+hC
+ vNWMbRQzNiqe98+FTMNHuELjuh5Wsjv3F4hBjFmDwq0iw1hZW5GGdCZ7mIRTe20OU2dpSH7WDqO
+ DaOoElalp5VKAI26OhmldWcosMfJMmGK+8hLFPg==
+X-Google-Smtp-Source: AGHT+IHADYNk1qnQuGUShedQqDrAHE9QoyUoj/hc30aM+8jUt2u1+ZFi5C3UavD3wxfBoUXVCgawhQHwg5zD64meWes=
+X-Received: by 2002:a05:6871:154:b0:251:109:98f4 with SMTP id
+ 586e51a60fabf-25d06e36745mr7172990fac.47.1719280736139; Mon, 24 Jun 2024
+ 18:58:56 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1f93a340-6c64-4fcc-edaf-08dc94b9d882
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jun 2024 01:55:10.1993 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 6EkRY+n3WKzSc6q5RdFA4sgSOOIBRpe1KXVysAQAu2ra8+hvXg/12qM+rrLCWdtnsgV0UyD9RMd5l04Fb95upbmXOgsmeZ63XtN0zXdZM6M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5118
-Received-SPF: pass client-ip=2a01:111:f403:2011::700;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=APC01-TYZ-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240610170252.26516-1-pbonzini@redhat.com>
+ <b625d08e-e65f-4da4-818d-bbc4e2015122@redhat.com>
+In-Reply-To: <b625d08e-e65f-4da4-818d-bbc4e2015122@redhat.com>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Tue, 25 Jun 2024 09:58:40 +0800
+Message-ID: <CAK9dgmYbuQnX1ny=R3C6705dS5D1tv9vBVmkuqXzH=6GzkybpQ@mail.gmail.com>
+Subject: Re: [PATCH v2] scsi-disk: Fix crash for VM configured with USB CDROM
+ after live migration
+To: Thomas Huth <thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000008c15fe061bad3de3"
+Received-SPF: none client-ip=2001:4860:4864:20::2c;
+ envelope-from=yong.huang@smartx.com; helo=mail-oa1-x2c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,50 +91,644 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2VkcmljLA0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBDw6lkcmlj
-IExlIEdvYXRlciA8Y2xnQGthb2Qub3JnPg0KPiBTZW50OiBNb25kYXksIEp1bmUgMjQsIDIwMjQg
-OTo1OCBQTQ0KPiBUbzogUGV0ZXIgTWF5ZGVsbCA8cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnPjsg
-SmFtaW4gTGluDQo+IDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+DQo+IENjOiBTdGV2ZW4gTGVl
-IDxzdGV2ZW5fbGVlQGFzcGVlZHRlY2guY29tPjsgVHJveSBMZWUNCj4gPGxlZXRyb3lAZ21haWwu
-Y29tPjsgQW5kcmV3IEplZmZlcnkgPGFuZHJld0Bjb2RlY29uc3RydWN0LmNvbS5hdT47IEpvZWwN
-Cj4gU3RhbmxleSA8am9lbEBqbXMuaWQuYXU+OyBvcGVuIGxpc3Q6QVNQRUVEIEJNQ3MgPHFlbXUt
-YXJtQG5vbmdudS5vcmc+Ow0KPiBvcGVuIGxpc3Q6QWxsIHBhdGNoZXMgQ0MgaGVyZSA8cWVtdS1k
-ZXZlbEBub25nbnUub3JnPjsgVHJveSBMZWUNCj4gPHRyb3lfbGVlQGFzcGVlZHRlY2guY29tPjsg
-WXVubGluIFRhbmcgPHl1bmxpbi50YW5nQGFzcGVlZHRlY2guY29tPg0KPiBTdWJqZWN0OiBSZTog
-W1BBVENIIHYxIDEvMl0gYXNwZWVkL3NvYzogZml4IGNvdmVyaXR5IGlzc3VlDQo+IA0KPiBPbiA2
-LzI0LzI0IDI6MTggUE0sIFBldGVyIE1heWRlbGwgd3JvdGU6DQo+ID4gT24gV2VkLCAxOSBKdW4g
-MjAyNCBhdCAxMDozNSwgSmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5jb20+DQo+IHdy
-b3RlOg0KPiA+Pg0KPiA+PiBGaXggY292ZXJpdHkgZGVmZWN0OiBESVZJREVfQllfWkVSTy4NCj4g
-Pj4NCj4gPj4gU2lnbmVkLW9mZi1ieTogSmFtaW4gTGluIDxqYW1pbl9saW5AYXNwZWVkdGVjaC5j
-b20+DQo+ID4+IC0tLQ0KPiA+PiAgIGh3L2FybS9hc3BlZWRfYXN0Mjd4MC5jIHwgNiArKysrKysN
-Cj4gPj4gICAxIGZpbGUgY2hhbmdlZCwgNiBpbnNlcnRpb25zKCspDQo+ID4+DQo+ID4+IGRpZmYg
-LS1naXQgYS9ody9hcm0vYXNwZWVkX2FzdDI3eDAuYyBiL2h3L2FybS9hc3BlZWRfYXN0Mjd4MC5j
-IGluZGV4DQo+ID4+IGI2ODc2YjQ4NjIuLmQxNGE0NmRmNmYgMTAwNjQ0DQo+ID4+IC0tLSBhL2h3
-L2FybS9hc3BlZWRfYXN0Mjd4MC5jDQo+ID4+ICsrKyBiL2h3L2FybS9hc3BlZWRfYXN0Mjd4MC5j
-DQo+ID4+IEBAIC0yMTEsNiArMjExLDEyIEBAIHN0YXRpYyB2b2lkIGFzcGVlZF9yYW1fY2FwYWNp
-dHlfd3JpdGUodm9pZA0KPiAqb3BhcXVlLCBod2FkZHIgYWRkciwgdWludDY0X3QgZGF0YSwNCj4g
-Pj4gICAgICAgcmFtX3NpemUgPSBvYmplY3RfcHJvcGVydHlfZ2V0X3VpbnQoT0JKRUNUKCZzLT5z
-ZG1jKSwNCj4gInJhbS1zaXplIiwNCj4gPj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgJmVycm9yX2Fib3J0KTsNCj4gPj4NCj4gPj4gKyAgICBpZiAoIXJhbV9zaXpl
-KSB7DQo+ID4+ICsgICAgICAgIHFlbXVfbG9nX21hc2soTE9HX0dVRVNUX0VSUk9SLA0KPiA+PiAr
-ICAgICAgICAgICAgICAgICAgICAgICIlczogcmFtX3NpemUgaXMgemVybyIsICBfX2Z1bmNfXyk7
-DQo+ID4+ICsgICAgICAgIHJldHVybjsNCj4gPj4gKyAgICB9DQo+ID4+ICsNCj4gPg0KPiA+IElz
-bid0IHRoaXMgYSBRRU1VIGJ1ZyByYXRoZXIgdGhhbiBhIGd1ZXN0IGVycm9yPyBUaGUgUkFNIHNp
-emUNCj4gPiBwcmVzdW1hYmx5IHNob3VsZCBuZXZlciBiZSB6ZXJvIHVubGVzcyB0aGUgYm9hcmQg
-c2V0IHRoZSByYW0tc2l6ZQ0KPiA+IHByb3BlcnR5IG9uIHRoZSBTRE1DIGluY29ycmVjdGx5LiBT
-byB0aGUgU0RNQyBkZXZpY2Ugc2hvdWxkIGNoZWNrIChhbmQNCj4gPiByZXR1cm4gYW4gZXJyb3Ig
-ZnJvbSBpdHMgcmVhbGl6ZQ0KPiA+IG1ldGhvZCkgdGhhdCB0aGUgcmFtLXNpemUgcHJvcGVydHkg
-aXMgdmFsaWQsDQo+IA0KPiBUaGF0J3MgdGhlIGNhc2UgaW4gYXNwZWVkX3NkbWNfc2V0X3JhbV9z
-aXplKCkgd2hpY2ggaXMgY2FsbGVkIGZyb20gdGhlDQo+IGFzcGVlZCBtYWNoaW5lIGluaXQgcm91
-dGluZSB3aGVuIHRoZSByYW0gc2l6ZSBpcyBzZXQuDQo+IA0KPiBTZXR0aW5nIHRoZSBtYWNoaW5l
-IHJhbSBzaXplIHRvIHplcm8gb24gdGhlIGNvbW1hbmQgbGluZSBkb2Vzbid0IHJlcG9ydCBhbg0K
-PiBlcnJvciB0aG91Z2ggYW5kIHRoZSBzaXplIGlzIHRoZSBkZWZhdWx0Lg0KPiANCj4gPiBhbmQg
-dGhlbiBoZXJlIHdlIGNhbiBqdXN0IGFzc2VydChyYW1fc2l6ZSAhPSAwKS4NCj4gDQo+IFllcy4N
-Cj4gDQo+IEphbWluLCBjb3VsZCB5b3UgcGxlYXNlIHNlbmQgYSB2MiB3aXRoIHRoZSBjb21taXQg
-bG9ncyB1cGRhdGUgSSBwcm9wb3NlZCA/DQo+IFNlZSB0aGUgcGF0Y2hlcyBvbiBteSBhc3BlZWQt
-OS4xIGJyYW5jaC4NCkkgcmVzZW5kIHYyIHBhdGNoIHdpdGggeW91ciBjb21taXQgbG9nLCBodHRw
-czovL3d3dy5tYWlsLWFyY2hpdmUuY29tL3FlbXUtZGV2ZWxAbm9uZ251Lm9yZy9tc2cxMDUwMzAy
-Lmh0bWwNCkRvIHdlIG5lZWQgdG8gZHJvcCB0aGlzIHBhdGNoLCBodHRwczovL3d3dy5tYWlsLWFy
-Y2hpdmUuY29tL3FlbXUtZGV2ZWxAbm9uZ251Lm9yZy9tc2cxMDUwMzAxLmh0bWw/IA0KDQpUaGFu
-a3MtSmFtaW4NCj4gDQo+IFRoYW5rcywNCj4gDQo+IEMuDQo=
+--0000000000008c15fe061bad3de3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Jun 24, 2024 at 6:06=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
+e:
+
+> On 10/06/2024 19.02, Paolo Bonzini wrote:
+> > From: Hyman Huang <yong.huang@smartx.com>
+> >
+> > For VMs configured with the USB CDROM device:
+> >
+> > -drive
+> file=3D/path/to/local/file,id=3Ddrive-usb-disk0,media=3Dcdrom,readonly=3D=
+on...
+> > -device usb-storage,drive=3Ddrive-usb-disk0,id=3Dusb-disk0...
+> >
+> > QEMU process may crash after live migration, to reproduce the issue,
+> > configure VM (Guest OS ubuntu 20.04 or 21.10) with the following XML:
+> >
+> > <disk type=3D'file' device=3D'cdrom'>
+> >    <driver name=3D'qemu' type=3D'raw'/>
+> >    <source file=3D'/path/to/share_fs/cdrom.iso'/>
+> >    <target dev=3D'sda' bus=3D'usb'/>
+> >    <readonly/>
+> >    <address type=3D'usb' bus=3D'0' port=3D'2'/>
+> > </disk>
+> > <controller type=3D'usb' index=3D'0' model=3D'piix3-uhci'/>
+> >
+> > Do the live migration repeatedly, crash may happen after live migratoin=
+,
+> > trace log at the source before live migration is as follows:
+> >
+> > 324808@1711972823.521945:usb_uhci_frame_start nr 319
+> > 324808@1711972823.521978:usb_uhci_qh_load qh 0x35cb5400
+> > 324808@1711972823.521989:usb_uhci_qh_load qh 0x35cb5480
+> > 324808@1711972823.521997:usb_uhci_td_load qh 0x35cb5480, td 0x35cbe000,
+> ctrl 0x0, token 0xffe07f69
+> > 324808@1711972823.522010:usb_uhci_td_nextqh qh 0x35cb5480, td 0x35cbe00=
+0
+> > 324808@1711972823.522022:usb_uhci_qh_load qh 0x35cb5680
+> > 324808@1711972823.522030:usb_uhci_td_load qh 0x35cb5680, td 0x75ac5180,
+> ctrl 0x19800000, token 0x3c903e1
+> > 324808@1711972823.522045:usb_uhci_packet_add token 0x103e1, td
+> 0x75ac5180
+> > 324808@1711972823.522056:usb_packet_state_change bus 0, port 2, ep 2,
+> packet 0x559f9ba14b00, state undef -> setup
+> > 324808@1711972823.522079:usb_msd_cmd_submit lun 0, tag 0x472, flags
+> 0x00000080, len 10, data-len 8
+> > 324808@1711972823.522107:scsi_req_parsed target 0 lun 0 tag 1138
+> command 74 dir 1 length 8
+> > 324808@1711972823.522124:scsi_req_parsed_lba target 0 lun 0 tag 1138
+> command 74 lba 4096
+> > 324808@1711972823.522139:scsi_req_alloc target 0 lun 0 tag 1138
+> > 324808@1711972823.522169:scsi_req_continue target 0 lun 0 tag 1138
+> > 324808@1711972823.522181:scsi_req_data target 0 lun 0 tag 1138 len 8
+> > 324808@1711972823.522194:usb_packet_state_change bus 0, port 2, ep 2,
+> packet 0x559f9ba14b00, state setup -> complete
+> > 324808@1711972823.522209:usb_uhci_packet_complete_success token
+> 0x103e1, td 0x75ac5180
+> > 324808@1711972823.522219:usb_uhci_packet_del token 0x103e1, td
+> 0x75ac5180
+> > 324808@1711972823.522232:usb_uhci_td_complete qh 0x35cb5680, td
+> 0x75ac5180
+> >
+> > trace log at the destination after live migration is as follows:
+> >
+> > 3286206@1711972823.951646:usb_uhci_frame_start nr 320
+> > 3286206@1711972823.951663:usb_uhci_qh_load qh 0x35cb5100
+> > 3286206@1711972823.951671:usb_uhci_qh_load qh 0x35cb5480
+> > 3286206@1711972823.951680:usb_uhci_td_load qh 0x35cb5480, td
+> 0x35cbe000, ctrl 0x1000000, token 0xffe07f69
+> > 3286206@1711972823.951693:usb_uhci_td_nextqh qh 0x35cb5480, td
+> 0x35cbe000
+> > 3286206@1711972823.951702:usb_uhci_qh_load qh 0x35cb5700
+> > 3286206@1711972823.951709:usb_uhci_td_load qh 0x35cb5700, td
+> 0x75ac5240, ctrl 0x39800000, token 0xe08369
+> > 3286206@1711972823.951727:usb_uhci_queue_add token 0x8369
+> > 3286206@1711972823.951735:usb_uhci_packet_add token 0x8369, td
+> 0x75ac5240
+> > 3286206@1711972823.951746:usb_packet_state_change bus 0, port 2, ep 1,
+> packet 0x56066b2fb5a0, state undef -> setup
+> > 3286206@1711972823.951766:usb_msd_data_in 8/8 (scsi 8)
+> > 2024-04-01 12:00:24.665+0000: shutting down, reason=3Dcrashed
+> >
+> > The backtrace reveals the following:
+> >
+> > Program terminated with signal SIGSEGV, Segmentation fault.
+> > 0  __memmove_sse2_unaligned_erms () at
+> ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:312
+> > 312        movq    -8(%rsi,%rdx), %rcx
+> > [Current thread is 1 (Thread 0x7f0a9025fc00 (LWP 3286206))]
+> > (gdb) bt
+> > 0  __memmove_sse2_unaligned_erms () at
+> ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:312
+> > 1  memcpy (__len=3D8, __src=3D<optimized out>, __dest=3D<optimized out>=
+) at
+> /usr/include/bits/string_fortified.h:34
+> > 2  iov_from_buf_full (iov=3D<optimized out>, iov_cnt=3D<optimized out>,
+> offset=3D<optimized out>, buf=3D0x0, bytes=3Dbytes@entry=3D8) at ../util/=
+iov.c:33
+> > 3  iov_from_buf (bytes=3D8, buf=3D<optimized out>, offset=3D<optimized =
+out>,
+> iov_cnt=3D<optimized out>, iov=3D<optimized out>)
+> >     at
+> /usr/src/debug/qemu-6-6.2.0-75.7.oe1.smartx.git.40.x86_64/include/qemu/io=
+v.h:49
+> > 4  usb_packet_copy (p=3Dp@entry=3D0x56066b2fb5a0, ptr=3D<optimized out>=
+,
+> bytes=3Dbytes@entry=3D8) at ../hw/usb/core.c:636
+> > 5  usb_msd_copy_data (s=3Ds@entry=3D0x56066c62c770, p=3Dp@entry=3D0x560=
+66b2fb5a0)
+> at ../hw/usb/dev-storage.c:186
+> > 6  usb_msd_handle_data (dev=3D0x56066c62c770, p=3D0x56066b2fb5a0) at
+> ../hw/usb/dev-storage.c:496
+> > 7  usb_handle_packet (dev=3D0x56066c62c770, p=3Dp@entry=3D0x56066b2fb5a=
+0) at
+> ../hw/usb/core.c:455
+> > 8  uhci_handle_td (s=3Ds@entry=3D0x56066bd5f210, q=3D0x56066bb7fbd0, q@=
+entry=3D0x0,
+> qh_addr=3Dqh_addr@entry=3D902518530, td=3Dtd@entry=3D0x7fffe6e788f0,
+> td_addr=3D<optimized out>,
+> >     int_mask=3Dint_mask@entry=3D0x7fffe6e788e4) at ../hw/usb/hcd-uhci.c=
+:885
+> > 9  uhci_process_frame (s=3Ds@entry=3D0x56066bd5f210) at
+> ../hw/usb/hcd-uhci.c:1061
+> > 10 uhci_frame_timer (opaque=3Dopaque@entry=3D0x56066bd5f210) at
+> ../hw/usb/hcd-uhci.c:1159
+> > 11 timerlist_run_timers (timer_list=3D0x56066af26bd0) at
+> ../util/qemu-timer.c:642
+> > 12 qemu_clock_run_timers (type=3DQEMU_CLOCK_VIRTUAL) at
+> ../util/qemu-timer.c:656
+> > 13 qemu_clock_run_all_timers () at ../util/qemu-timer.c:738
+> > 14 main_loop_wait (nonblocking=3Dnonblocking@entry=3D0) at
+> ../util/main-loop.c:542
+> > 15 qemu_main_loop () at ../softmmu/runstate.c:739
+> > 16 main (argc=3D<optimized out>, argv=3D<optimized out>, envp=3D<optimi=
+zed
+> out>) at ../softmmu/main.c:52
+> > (gdb) frame 5
+> > (gdb) p ((SCSIDiskReq *)s->req)->iov
+> > $1 =3D {iov_base =3D 0x0, iov_len =3D 0}
+> > (gdb) p/x s->req->tag
+> > $2 =3D 0x472
+> >
+> > When designing the USB mass storage device model, QEMU places SCSI disk
+> > device as the backend of USB mass storage device. In addition, USB mass
+> > device driver in Guest OS conforms to the "Universal Serial Bus Mass
+> > Storage Class Bulk-Only Transport" specification in order to simulate
+> > the transform behavior between a USB controller and a USB mass device.
+> > The following shows the protocol hierarchy:
+> >
+> >                        +----------------+
+> >   CDROM driver         |  scsi command  |        CDROM
+> >                        +----------------+
+> >
+> >                     +-----------------------+
+> >   USB mass          | USB Mass Storage Class|    USB mass
+> >   storage driver    | Bulk-Only Transport   |    storage device
+> >                     +-----------------------+
+> >
+> >                        +----------------+
+> >   USB Controller       |  USB Protocol  |        USB device
+> >                        +----------------+
+> >
+> > In the USB protocol layer, between the USB controller and USB device, a=
+t
+> > least two USB packets will be transformed when guest OS send a
+> > read operation to USB mass storage device:
+> >
+> > 1. The CBW packet, which will be delivered to the USB device's Bulk-Out
+> > endpoint. In order to simulate a read operation, the USB mass storage
+> > device parses the CBW and converts it to a SCSI command, which would be
+> > executed by CDROM(represented as SCSI disk in QEMU internally), and sto=
+re
+> > the result data of the SCSI command in a buffer.
+> >
+> > 2. The DATA-IN packet, which will be delivered from the USB device's
+> > Bulk-In endpoint(fetched directly from the preceding buffer) to the USB
+> > controller.
+> >
+> > We consider UHCI to be the controller. The two packets mentioned above
+> may
+> > have been processed by UHCI in two separate frame entries of the Frame
+> List
+> > , and also described by two different TDs. Unlike the physical
+> environment,
+> > a virtualized environment requires the QEMU to make sure that the resul=
+t
+> > data of CBW is not lost and is delivered to the UHCI controller.
+> >
+> > Currently, these types of SCSI requests are not migrated, so QEMU canno=
+t
+> > ensure the result data of the IO operation is not lost if there are
+> > inflight emulated SCSI requests during the live migration.
+> >
+> > Assume for the moment that the USB mass storage device is processing th=
+e
+> > CBW and storing the result data of the read operation to a buffre, live
+> > migration happens and moves the VM to the destination while not migrati=
+ng
+> > the result data of the read operation.
+> >
+> > After migration, when UHCI at the destination issues a DATA-IN request =
+to
+> > the USB mass storage device, a crash happens because USB mass storage
+> device
+> > fetches the result data and get nothing.
+> >
+> > The scenario this patch addresses is this one.
+> >
+> > Theoretically, any device that uses the SCSI disk as a back-end would b=
+e
+> > affected by this issue. In this case, it is the USB CDROM.
+> >
+> > To fix it, inflight emulated SCSI request be migrated during live
+> migration,
+> > similar to the DMA SCSI request.
+> >
+> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> > Message-ID: <
+> 878c8f093f3fc2f584b5c31cb2490d9f6a12131a.1716531409.git.yong.huang@smartx=
+.com
+> >
+> > [Do not bump migration version, introduce compat property instead. -
+> Paolo]
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> > ---
+> >   hw/core/machine.c   |  1 +
+> >   hw/scsi/scsi-disk.c | 24 +++++++++++++++++++++++-
+> >   2 files changed, 24 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/core/machine.c b/hw/core/machine.c
+> > index c93d2492443..655d75c21fc 100644
+> > --- a/hw/core/machine.c
+> > +++ b/hw/core/machine.c
+> > @@ -36,6 +36,7 @@
+> >
+> >   GlobalProperty hw_compat_9_0[] =3D {
+> >       {"arm-cpu", "backcompat-cntfrq", "true" },
+> > +    {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
+> >       {"vfio-pci", "skip-vsc-check", "false" },
+> >   };
+>
+>   Hi Paolo, hi Hyman,
+>
+> this patch introduced a problem with device introspection on older machin=
+e
+> types. Running "make check-qtest SPEED=3Dslow" is now failing for older
+> machine types.
+>
+> Or if you want to reproduce it manually:
+>
+>   $ ./qemu-system-x86_64 -M pc-q35-8.0 -monitor stdio
+>   QEMU 9.0.50 monitor - type 'help' for more information
+>   (qemu) device_add scsi-block,help
+>   Unexpected error in object_property_find_err() at
+>   ../../devel/qemu/qom/object.c:1357:
+>   can't apply global scsi-disk-base.migrate-emulated-scsi-request=3Dfalse=
+:
+>   Property 'scsi-block.migrate-emulated-scsi-request' not found
+>   Aborted (core dumped)
+>
+> I think the problem is that the property is only added to certain SCSI
+> devices via the DEFINE_SCSI_DISK_PROPERTIES macro, but "scsi-block" devic=
+e
+> does not use this macro and thus does not have this property. So when the
+> compat code tries to set this property for "scsi-block" (which is also
+> derived from "scsi-disk-base"), it fails, of course.
+>
+"scsi-block" appears to handle two different types of devices:
+passthrough-ed block devices and scsi-block devices.
+
+Since each of them is capable of supporting the load/save scsi request,
+and this patchset does not address any problems for them.
+
+So, IMHO, The "scsi-disk-base" class may not be the best place for the
+"migrate-emulated-scsi-request" attribute?
+
+
+>
+> Should the "migrate-emulated-scsi-request" property maybe rather be added
+> to
+> the "scsi-disk-base" class instead? Or should hw_compat_9_0 rather list
+> the
+> devices that have the property instead of using the parent class? Could
+> you
+> please have a look?
+>
+>   Thanks,
+>    Thomas
+>
+>
+
+--=20
+Best regards
+
+--0000000000008c15fe061bad3de3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 24, 20=
+24 at 6:06=E2=80=AFPM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">t=
+huth@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:so=
+lid;border-left-color:rgb(204,204,204);padding-left:1ex">On 10/06/2024 19.0=
+2, Paolo Bonzini wrote:<br>
+&gt; From: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=
+=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt; <br>
+&gt; For VMs configured with the USB CDROM device:<br>
+&gt; <br>
+&gt; -drive file=3D/path/to/local/file,id=3Ddrive-usb-disk0,media=3Dcdrom,r=
+eadonly=3Don...<br>
+&gt; -device usb-storage,drive=3Ddrive-usb-disk0,id=3Dusb-disk0...<br>
+&gt; <br>
+&gt; QEMU process may crash after live migration, to reproduce the issue,<b=
+r>
+&gt; configure VM (Guest OS ubuntu 20.04 or 21.10) with the following XML:<=
+br>
+&gt; <br>
+&gt; &lt;disk type=3D&#39;file&#39; device=3D&#39;cdrom&#39;&gt;<br>
+&gt;=C2=A0 =C2=A0 &lt;driver name=3D&#39;qemu&#39; type=3D&#39;raw&#39;/&gt=
+;<br>
+&gt;=C2=A0 =C2=A0 &lt;source file=3D&#39;/path/to/share_fs/cdrom.iso&#39;/&=
+gt;<br>
+&gt;=C2=A0 =C2=A0 &lt;target dev=3D&#39;sda&#39; bus=3D&#39;usb&#39;/&gt;<b=
+r>
+&gt;=C2=A0 =C2=A0 &lt;readonly/&gt;<br>
+&gt;=C2=A0 =C2=A0 &lt;address type=3D&#39;usb&#39; bus=3D&#39;0&#39; port=
+=3D&#39;2&#39;/&gt;<br>
+&gt; &lt;/disk&gt;<br>
+&gt; &lt;controller type=3D&#39;usb&#39; index=3D&#39;0&#39; model=3D&#39;p=
+iix3-uhci&#39;/&gt;<br>
+&gt; <br>
+&gt; Do the live migration repeatedly, crash may happen after live migratoi=
+n,<br>
+&gt; trace log at the source before live migration is as follows:<br>
+&gt; <br>
+&gt; 324808@1711972823.521945:usb_uhci_frame_start nr 319<br>
+&gt; 324808@1711972823.521978:usb_uhci_qh_load qh 0x35cb5400<br>
+&gt; 324808@1711972823.521989:usb_uhci_qh_load qh 0x35cb5480<br>
+&gt; 324808@1711972823.521997:usb_uhci_td_load qh 0x35cb5480, td 0x35cbe000=
+, ctrl 0x0, token 0xffe07f69<br>
+&gt; 324808@1711972823.522010:usb_uhci_td_nextqh qh 0x35cb5480, td 0x35cbe0=
+00<br>
+&gt; 324808@1711972823.522022:usb_uhci_qh_load qh 0x35cb5680<br>
+&gt; 324808@1711972823.522030:usb_uhci_td_load qh 0x35cb5680, td 0x75ac5180=
+, ctrl 0x19800000, token 0x3c903e1<br>
+&gt; 324808@1711972823.522045:usb_uhci_packet_add token 0x103e1, td 0x75ac5=
+180<br>
+&gt; 324808@1711972823.522056:usb_packet_state_change bus 0, port 2, ep 2, =
+packet 0x559f9ba14b00, state undef -&gt; setup<br>
+&gt; 324808@1711972823.522079:usb_msd_cmd_submit lun 0, tag 0x472, flags 0x=
+00000080, len 10, data-len 8<br>
+&gt; 324808@1711972823.522107:scsi_req_parsed target 0 lun 0 tag 1138 comma=
+nd 74 dir 1 length 8<br>
+&gt; 324808@1711972823.522124:scsi_req_parsed_lba target 0 lun 0 tag 1138 c=
+ommand 74 lba 4096<br>
+&gt; 324808@1711972823.522139:scsi_req_alloc target 0 lun 0 tag 1138<br>
+&gt; 324808@1711972823.522169:scsi_req_continue target 0 lun 0 tag 1138<br>
+&gt; 324808@1711972823.522181:scsi_req_data target 0 lun 0 tag 1138 len 8<b=
+r>
+&gt; 324808@1711972823.522194:usb_packet_state_change bus 0, port 2, ep 2, =
+packet 0x559f9ba14b00, state setup -&gt; complete<br>
+&gt; 324808@1711972823.522209:usb_uhci_packet_complete_success token 0x103e=
+1, td 0x75ac5180<br>
+&gt; 324808@1711972823.522219:usb_uhci_packet_del token 0x103e1, td 0x75ac5=
+180<br>
+&gt; 324808@1711972823.522232:usb_uhci_td_complete qh 0x35cb5680, td 0x75ac=
+5180<br>
+&gt; <br>
+&gt; trace log at the destination after live migration is as follows:<br>
+&gt; <br>
+&gt; 3286206@1711972823.951646:usb_uhci_frame_start nr 320<br>
+&gt; 3286206@1711972823.951663:usb_uhci_qh_load qh 0x35cb5100<br>
+&gt; 3286206@1711972823.951671:usb_uhci_qh_load qh 0x35cb5480<br>
+&gt; 3286206@1711972823.951680:usb_uhci_td_load qh 0x35cb5480, td 0x35cbe00=
+0, ctrl 0x1000000, token 0xffe07f69<br>
+&gt; 3286206@1711972823.951693:usb_uhci_td_nextqh qh 0x35cb5480, td 0x35cbe=
+000<br>
+&gt; 3286206@1711972823.951702:usb_uhci_qh_load qh 0x35cb5700<br>
+&gt; 3286206@1711972823.951709:usb_uhci_td_load qh 0x35cb5700, td 0x75ac524=
+0, ctrl 0x39800000, token 0xe08369<br>
+&gt; 3286206@1711972823.951727:usb_uhci_queue_add token 0x8369<br>
+&gt; 3286206@1711972823.951735:usb_uhci_packet_add token 0x8369, td 0x75ac5=
+240<br>
+&gt; 3286206@1711972823.951746:usb_packet_state_change bus 0, port 2, ep 1,=
+ packet 0x56066b2fb5a0, state undef -&gt; setup<br>
+&gt; 3286206@1711972823.951766:usb_msd_data_in 8/8 (scsi 8)<br>
+&gt; 2024-04-01 12:00:24.665+0000: shutting down, reason=3Dcrashed<br>
+&gt; <br>
+&gt; The backtrace reveals the following:<br>
+&gt; <br>
+&gt; Program terminated with signal SIGSEGV, Segmentation fault.<br>
+&gt; 0=C2=A0 __memmove_sse2_unaligned_erms () at ../sysdeps/x86_64/multiarc=
+h/memmove-vec-unaligned-erms.S:312<br>
+&gt; 312=C2=A0 =C2=A0 =C2=A0 =C2=A0 movq=C2=A0 =C2=A0 -8(%rsi,%rdx), %rcx<b=
+r>
+&gt; [Current thread is 1 (Thread 0x7f0a9025fc00 (LWP 3286206))]<br>
+&gt; (gdb) bt<br>
+&gt; 0=C2=A0 __memmove_sse2_unaligned_erms () at ../sysdeps/x86_64/multiarc=
+h/memmove-vec-unaligned-erms.S:312<br>
+&gt; 1=C2=A0 memcpy (__len=3D8, __src=3D&lt;optimized out&gt;, __dest=3D&lt=
+;optimized out&gt;) at /usr/include/bits/string_fortified.h:34<br>
+&gt; 2=C2=A0 iov_from_buf_full (iov=3D&lt;optimized out&gt;, iov_cnt=3D&lt;=
+optimized out&gt;, offset=3D&lt;optimized out&gt;, buf=3D0x0, bytes=3Dbytes=
+@entry=3D8) at ../util/iov.c:33<br>
+&gt; 3=C2=A0 iov_from_buf (bytes=3D8, buf=3D&lt;optimized out&gt;, offset=
+=3D&lt;optimized out&gt;, iov_cnt=3D&lt;optimized out&gt;, iov=3D&lt;optimi=
+zed out&gt;)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0at /usr/src/debug/qemu-6-6.2.0-75.7.oe1.smartx.git.=
+40.x86_64/include/qemu/iov.h:49<br>
+&gt; 4=C2=A0 usb_packet_copy (p=3Dp@entry=3D0x56066b2fb5a0, ptr=3D&lt;optim=
+ized out&gt;, bytes=3Dbytes@entry=3D8) at ../hw/usb/core.c:636<br>
+&gt; 5=C2=A0 usb_msd_copy_data (s=3Ds@entry=3D0x56066c62c770, p=3Dp@entry=
+=3D0x56066b2fb5a0) at ../hw/usb/dev-storage.c:186<br>
+&gt; 6=C2=A0 usb_msd_handle_data (dev=3D0x56066c62c770, p=3D0x56066b2fb5a0)=
+ at ../hw/usb/dev-storage.c:496<br>
+&gt; 7=C2=A0 usb_handle_packet (dev=3D0x56066c62c770, p=3Dp@entry=3D0x56066=
+b2fb5a0) at ../hw/usb/core.c:455<br>
+&gt; 8=C2=A0 uhci_handle_td (s=3Ds@entry=3D0x56066bd5f210, q=3D0x56066bb7fb=
+d0, q@entry=3D0x0, qh_addr=3Dqh_addr@entry=3D902518530, td=3Dtd@entry=3D0x7=
+fffe6e788f0, td_addr=3D&lt;optimized out&gt;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0int_mask=3Dint_mask@entry=3D0x7fffe6e788e4) at ../h=
+w/usb/hcd-uhci.c:885<br>
+&gt; 9=C2=A0 uhci_process_frame (s=3Ds@entry=3D0x56066bd5f210) at ../hw/usb=
+/hcd-uhci.c:1061<br>
+&gt; 10 uhci_frame_timer (opaque=3Dopaque@entry=3D0x56066bd5f210) at ../hw/=
+usb/hcd-uhci.c:1159<br>
+&gt; 11 timerlist_run_timers (timer_list=3D0x56066af26bd0) at ../util/qemu-=
+timer.c:642<br>
+&gt; 12 qemu_clock_run_timers (type=3DQEMU_CLOCK_VIRTUAL) at ../util/qemu-t=
+imer.c:656<br>
+&gt; 13 qemu_clock_run_all_timers () at ../util/qemu-timer.c:738<br>
+&gt; 14 main_loop_wait (nonblocking=3Dnonblocking@entry=3D0) at ../util/mai=
+n-loop.c:542<br>
+&gt; 15 qemu_main_loop () at ../softmmu/runstate.c:739<br>
+&gt; 16 main (argc=3D&lt;optimized out&gt;, argv=3D&lt;optimized out&gt;, e=
+nvp=3D&lt;optimized out&gt;) at ../softmmu/main.c:52<br>
+&gt; (gdb) frame 5<br>
+&gt; (gdb) p ((SCSIDiskReq *)s-&gt;req)-&gt;iov<br>
+&gt; $1 =3D {iov_base =3D 0x0, iov_len =3D 0}<br>
+&gt; (gdb) p/x s-&gt;req-&gt;tag<br>
+&gt; $2 =3D 0x472<br>
+&gt; <br>
+&gt; When designing the USB mass storage device model, QEMU places SCSI dis=
+k<br>
+&gt; device as the backend of USB mass storage device. In addition, USB mas=
+s<br>
+&gt; device driver in Guest OS conforms to the &quot;Universal Serial Bus M=
+ass<br>
+&gt; Storage Class Bulk-Only Transport&quot; specification in order to simu=
+late<br>
+&gt; the transform behavior between a USB controller and a USB mass device.=
+<br>
+&gt; The following shows the protocol hierarchy:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 +----------------+<br>
+&gt;=C2=A0 =C2=A0CDROM driver=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 scsi=
+ command=C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 CDROM<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 +----------------+<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0+-----------------------+<br>
+&gt;=C2=A0 =C2=A0USB mass=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | USB Mass Stor=
+age Class|=C2=A0 =C2=A0 USB mass<br>
+&gt;=C2=A0 =C2=A0storage driver=C2=A0 =C2=A0 | Bulk-Only Transport=C2=A0 =
+=C2=A0|=C2=A0 =C2=A0 storage device<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0+-----------------------+<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 +----------------+<br>
+&gt;=C2=A0 =C2=A0USB Controller=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 USB Proto=
+col=C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 USB device<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 +----------------+<br>
+&gt; <br>
+&gt; In the USB protocol layer, between the USB controller and USB device, =
+at<br>
+&gt; least two USB packets will be transformed when guest OS send a<br>
+&gt; read operation to USB mass storage device:<br>
+&gt; <br>
+&gt; 1. The CBW packet, which will be delivered to the USB device&#39;s Bul=
+k-Out<br>
+&gt; endpoint. In order to simulate a read operation, the USB mass storage<=
+br>
+&gt; device parses the CBW and converts it to a SCSI command, which would b=
+e<br>
+&gt; executed by CDROM(represented as SCSI disk in QEMU internally), and st=
+ore<br>
+&gt; the result data of the SCSI command in a buffer.<br>
+&gt; <br>
+&gt; 2. The DATA-IN packet, which will be delivered from the USB device&#39=
+;s<br>
+&gt; Bulk-In endpoint(fetched directly from the preceding buffer) to the US=
+B<br>
+&gt; controller.<br>
+&gt; <br>
+&gt; We consider UHCI to be the controller. The two packets mentioned above=
+ may<br>
+&gt; have been processed by UHCI in two separate frame entries of the Frame=
+ List<br>
+&gt; , and also described by two different TDs. Unlike the physical environ=
+ment,<br>
+&gt; a virtualized environment requires the QEMU to make sure that the resu=
+lt<br>
+&gt; data of CBW is not lost and is delivered to the UHCI controller.<br>
+&gt; <br>
+&gt; Currently, these types of SCSI requests are not migrated, so QEMU cann=
+ot<br>
+&gt; ensure the result data of the IO operation is not lost if there are<br=
+>
+&gt; inflight emulated SCSI requests during the live migration.<br>
+&gt; <br>
+&gt; Assume for the moment that the USB mass storage device is processing t=
+he<br>
+&gt; CBW and storing the result data of the read operation to a buffre, liv=
+e<br>
+&gt; migration happens and moves the VM to the destination while not migrat=
+ing<br>
+&gt; the result data of the read operation.<br>
+&gt; <br>
+&gt; After migration, when UHCI at the destination issues a DATA-IN request=
+ to<br>
+&gt; the USB mass storage device, a crash happens because USB mass storage =
+device<br>
+&gt; fetches the result data and get nothing.<br>
+&gt; <br>
+&gt; The scenario this patch addresses is this one.<br>
+&gt; <br>
+&gt; Theoretically, any device that uses the SCSI disk as a back-end would =
+be<br>
+&gt; affected by this issue. In this case, it is the USB CDROM.<br>
+&gt; <br>
+&gt; To fix it, inflight emulated SCSI request be migrated during live migr=
+ation,<br>
+&gt; similar to the DMA SCSI request.<br>
+&gt; <br>
+&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
+" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt; Message-ID: &lt;<a href=3D"mailto:878c8f093f3fc2f584b5c31cb2490d9f6a12=
+131a.1716531409.git.yong.huang@smartx.com" target=3D"_blank">878c8f093f3fc2=
+f584b5c31cb2490d9f6a12131a.1716531409.git.yong.huang@smartx.com</a>&gt;<br>
+&gt; [Do not bump migration version, introduce compat property instead. - P=
+aolo]<br>
+&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
+" target=3D"_blank">pbonzini@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0hw/core/machine.c=C2=A0 =C2=A0|=C2=A0 1 +<br>
+&gt;=C2=A0 =C2=A0hw/scsi/scsi-disk.c | 24 +++++++++++++++++++++++-<br>
+&gt;=C2=A0 =C2=A02 files changed, 24 insertions(+), 1 deletion(-)<br>
+&gt; <br>
+&gt; diff --git a/hw/core/machine.c b/hw/core/machine.c<br>
+&gt; index c93d2492443..655d75c21fc 100644<br>
+&gt; --- a/hw/core/machine.c<br>
+&gt; +++ b/hw/core/machine.c<br>
+&gt; @@ -36,6 +36,7 @@<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0GlobalProperty hw_compat_9_0[] =3D {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0{&quot;arm-cpu&quot;, &quot;backcompat-cntfr=
+q&quot;, &quot;true&quot; },<br>
+&gt; +=C2=A0 =C2=A0 {&quot;scsi-disk-base&quot;, &quot;migrate-emulated-scs=
+i-request&quot;, &quot;false&quot; },<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0{&quot;vfio-pci&quot;, &quot;skip-vsc-check&=
+quot;, &quot;false&quot; },<br>
+&gt;=C2=A0 =C2=A0};<br>
+<br>
+=C2=A0 Hi Paolo, hi Hyman,<br>
+<br>
+this patch introduced a problem with device introspection on older machine =
+<br>
+types. Running &quot;make check-qtest SPEED=3Dslow&quot; is now failing for=
+ older <br>
+machine types.<br>
+<br>
+Or if you want to reproduce it manually:<br>
+<br>
+=C2=A0 $ ./qemu-system-x86_64 -M pc-q35-8.0 -monitor stdio<br>
+=C2=A0 QEMU 9.0.50 monitor - type &#39;help&#39; for more information<br>
+=C2=A0 (qemu) device_add scsi-block,help<br>
+=C2=A0 Unexpected error in object_property_find_err() at<br>
+=C2=A0 ../../devel/qemu/qom/object.c:1357:<br>
+=C2=A0 can&#39;t apply global scsi-disk-base.migrate-emulated-scsi-request=
+=3Dfalse:<br>
+=C2=A0 Property &#39;scsi-block.migrate-emulated-scsi-request&#39; not foun=
+d<br>
+=C2=A0 Aborted (core dumped)<br>
+<br>
+I think the problem is that the property is only added to certain SCSI <br>
+devices via the DEFINE_SCSI_DISK_PROPERTIES macro, but &quot;scsi-block&quo=
+t; device <br>
+does not use this macro and thus does not have this property. So when the <=
+br>
+compat code tries to set this property for &quot;scsi-block&quot; (which is=
+ also <br>
+derived from &quot;scsi-disk-base&quot;), it fails, of course.<br></blockqu=
+ote><div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" cl=
+ass=3D"gmail_default"></div><div class=3D"gmail_default"><font face=3D"comi=
+c sans ms, sans-serif">&quot;scsi-block&quot; appears to handle two differe=
+nt types of devices:=C2=A0</font></div><div class=3D"gmail_default"><font f=
+ace=3D"comic sans ms, sans-serif">passthrough-ed block devices and scsi-blo=
+ck devices.=C2=A0</font></div><div class=3D"gmail_default"><span style=3D"f=
+ont-family:&quot;comic sans ms&quot;,sans-serif"><br></span></div><div clas=
+s=3D"gmail_default"><span style=3D"font-family:&quot;comic sans ms&quot;,sa=
+ns-serif">Since each of them is capable of supporting the load/save scsi re=
+quest,=C2=A0</span><br></div><div class=3D"gmail_default"><font face=3D"com=
+ic sans ms, sans-serif">and this patchset does not address any problems for=
+ them.</font></div></div><div class=3D"gmail_default"><font face=3D"comic s=
+ans ms, sans-serif"><br></font></div><div class=3D"gmail_default"><font fac=
+e=3D"comic sans ms, sans-serif">So,=C2=A0IMHO,=C2=A0The &quot;scsi-disk-bas=
+e&quot; class may not be the best place for the</font></div><div class=3D"g=
+mail_default"><font face=3D"comic sans ms, sans-serif">&quot;migrate-emulat=
+ed-scsi-request&quot; attribute?</font></div><div>=C2=A0</div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1p=
+x;border-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1=
+ex">
+<br>
+Should the &quot;migrate-emulated-scsi-request&quot; property maybe rather =
+be added to <br>
+the &quot;scsi-disk-base&quot; class instead? Or should hw_compat_9_0 rathe=
+r list the <br>
+devices that have the property instead of using the parent class? Could you=
+ <br>
+please have a look?<br>
+<br>
+=C2=A0 Thanks,<br>
+=C2=A0 =C2=A0Thomas<br>
+<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
+</div></div></div>
+
+--0000000000008c15fe061bad3de3--
 
