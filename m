@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCCAC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 14:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E16C2C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 14:22:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM6zv-0001rG-1Z; Tue, 25 Jun 2024 10:18:15 -0400
+	id 1sM736-0002vj-Bs; Tue, 25 Jun 2024 10:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sM6zt-0001qu-HX
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:18:13 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sM734-0002vO-H0
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:21:30 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sM6zs-00043r-1i
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:18:13 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7065a2f4573so2853997b3a.2
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 07:18:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sM732-0004oy-Oc
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:21:30 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-57d1679ee83so6034320a12.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 07:21:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719325090; x=1719929890; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=H/ixWVkgpNyWpGkhhn1OIETZnWzp+znJ996xRf7NEyw=;
- b=JplviN+7lp0PLLA3sBbGDth3M0AroN4OJyMlv4CjIUZBliBByMvrkQm5pKS9KeZLhx
- FxH4RLlPBpKSMQ9GEw6kccuJRqN0kgsTp12IHPdfo4wWJdCUb+/gZsp+18LjOPMhAk+t
- CY9Wpa30ss085Ms1l5KC/Q4btJnB9FxOuWCGc1mxmM0X02WmTYGs57LYNR0cKNHP4fXh
- KG0CvpMHTnZYTuHXgnJV95JlTn+Gg9hYX02WUzz9c2xigw0iwjY37VLIKb2YzKKljFo5
- VCMcpwKNSxRTYvjr4iBuawv43OOO9FdJew0T+RKBWERVgZca/twl/evXZQkiz1tzJXDE
- E0bg==
+ d=linaro.org; s=google; t=1719325287; x=1719930087; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=O9cqHsdsLOQR94Ee7h9BJMPEQ9Tc9DlvOrfbkkjIBQA=;
+ b=r+nVFikugSV44+bqn5EWfY3tm5UazZV8yrXBd2r6LhEDfoGUkoWX9ti8pCSrPz4Ed4
+ cWtjG+3Ommv0HqFPI5BC7WGP9fT3pqruNrrA0EiFo2HUtDTLDLgs+xyT57bH2ksqNTdO
+ SF1L42tm42uaK35pcrQCMfrPHAjFYxb3pV3TG0oYKWLpJLMhOkR95uNZdFEK5Nj9Ht6S
+ fAOAwSQfCxgDnytiEeHU82RzgPeGvVs305+s1cgCa8Lpd4tLvPXIySqdCe4wnZSJEEXP
+ 0TPyqpqZ+In1fUtc7YFMkmPyBLfdwc1M+rmCDM6OW6A3h9+0v55bhy/9g5pD4heU9j0A
+ 0Qxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719325090; x=1719929890;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H/ixWVkgpNyWpGkhhn1OIETZnWzp+znJ996xRf7NEyw=;
- b=UqkssK/KbpVH6JmI+EoXhE9ZedDcjVKvQJWOHDcBz9sPYRL6Cqxh90qIJG1AdQoRtw
- wCa00tcCKTp5qy9+rv7QudyryuQgbzClbcVAAatO7LODaRez/0z9amnX86BuOYr1B0l7
- JFEx7VU4noHUxtjGVWKV/nTpjWPY1wyYY14BvIp0rTT8Un7eBA9Bgfq1EKx7awenoSd/
- JHFNw27WfkT5DvWyO8KKFqMnvrxPbxwbUq+XYTb3i3sEvZcKi6jQW2KxkDe/q433IpV2
- 0qdXPkuLLejSulKba0NjURaWtZpIs5rUP82lyfbsYwPqAO1aPwFf0mAwqJU3tYeJdPKO
- fyTg==
-X-Gm-Message-State: AOJu0Yw+6koi1cyjaOwkTF7cw06+yEXl32mUNXhmG5LwBNJmuP9y0bSb
- NgoVpbJBozdnoiV/SI1YTx5oUpMwXH3tVSgalY3sz2KZQhoT1Hyvwr1O6G3BGJQ=
-X-Google-Smtp-Source: AGHT+IFOgoScXf43JaGat5It76WNdx4p08uhjYDYNZx/z5yM/BQ2Nlc0HS7JabwGsUuGveTha+osPw==
-X-Received: by 2002:a05:6a20:72a4:b0:1bd:1d6e:d448 with SMTP id
- adf61e73a8af0-1bd1d6ed4d2mr2260438637.27.1719325089452; 
- Tue, 25 Jun 2024 07:18:09 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7068c719371sm3232547b3a.102.2024.06.25.07.18.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Jun 2024 07:18:09 -0700 (PDT)
-Message-ID: <997bc99a-bf16-4a6e-80a7-c750435395f0@linaro.org>
-Date: Tue, 25 Jun 2024 07:18:07 -0700
+ d=1e100.net; s=20230601; t=1719325287; x=1719930087;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=O9cqHsdsLOQR94Ee7h9BJMPEQ9Tc9DlvOrfbkkjIBQA=;
+ b=hlQJcWv8/1iuS1DP1wZlGMYBXGaK6fs6yRIwv8ypD6nJ2HVDC1Vrpr6dY6BvWLUQHz
+ S5TtrqgKHpT8z+41bFI9ibjw1IIuww61hiCgtoUdFbVB7mdUNhnv0LbqOgUBv9YI7wNZ
+ Fr+akeHe5VEUURpWEzsmyvHaTw0oGjDohsMGcP6mrTPigRh4lVV4iZgivvusYebC5gpN
+ gvNAm7h1DuiBYPMF2jeAXzqMeQeks3dvczwSvLuiELdU7DNy0goQnzfjP++utnrWQh5f
+ pi5xidCNQpuW7OU+6+JhBh8O0lTAk46OoRoX1gnZs2QgqaOCrFDFV179PzKVFEnmhyPL
+ K8EQ==
+X-Gm-Message-State: AOJu0Yy+IwZpnlbaCaXNeMJgwFYO2n3nsYL2Vi4pCSvwUUpHRK6SFt2e
+ /6GsJ+Ui7HWzbF+PF5i2ZFFY9sdxSFFbTxYdWk4UcJKlkSXY74Qk0AogaE6/FMzV+hTHI3ndCEe
+ 7OMSg5wwm2Lqsjn2UqfuBMlxglIwkIuZljLkqFA==
+X-Google-Smtp-Source: AGHT+IFbYhE1rookAZGSLg0GmC2GBweyel+0FX+KOx7kG6kLFbaKhCNnj+EykSwuLumf3f2zFcYocoAebuIMdkQb9q8=
+X-Received: by 2002:a50:99de:0:b0:57c:fa44:7a04 with SMTP id
+ 4fb4d7f45d1cf-57d4580b070mr6056896a12.39.1719325286790; Tue, 25 Jun 2024
+ 07:21:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/13] target/arm: Delete dead code from disas_simd_indexed
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 References: <20240625050810.1475643-1-richard.henderson@linaro.org>
  <20240625050810.1475643-14-richard.henderson@linaro.org>
  <CAFEAcA9aij1SbdEQkR9=UhJO2uz1u90881FwC8KHLYuLFto5AQ@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAFEAcA9aij1SbdEQkR9=UhJO2uz1u90881FwC8KHLYuLFto5AQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+ <997bc99a-bf16-4a6e-80a7-c750435395f0@linaro.org>
+In-Reply-To: <997bc99a-bf16-4a6e-80a7-c750435395f0@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 25 Jun 2024 15:21:15 +0100
+Message-ID: <CAFEAcA_Gh5ChFNRFsA==oLWfmkZWWcLQyb7ZjcPE8=28p4r5Qg@mail.gmail.com>
+Subject: Re: [PATCH 13/13] target/arm: Delete dead code from disas_simd_indexed
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,19 +90,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/24 05:41, Peter Maydell wrote:
-> On Tue, 25 Jun 2024 at 06:09, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> The last insns in this block, MLA and MLS, were converted
->> with f80701cb44d, and this code should have been removed then.
-> 
-> "MLA, MLS, SQDMULH, SQRDMULH, were converted with f80701cb44d
-> and f80701cb44d33", I think, since there's still code for
-> all four of those insns that we're deleting here ?
+On Tue, 25 Jun 2024 at 15:18, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 6/25/24 05:41, Peter Maydell wrote:
+> > On Tue, 25 Jun 2024 at 06:09, Richard Henderson
+> > <richard.henderson@linaro.org> wrote:
+> >>
+> >> The last insns in this block, MLA and MLS, were converted
+> >> with f80701cb44d, and this code should have been removed then.
+> >
+> > "MLA, MLS, SQDMULH, SQRDMULH, were converted with f80701cb44d
+> > and f80701cb44d33", I think, since there's still code for
+> > all four of those insns that we're deleting here ?
+>
+> Yes.
 
-Yes.
+...except "with 8db93dcd3def0ca and f80701cb44d".
 
-
-r~
+-- PMM
 
