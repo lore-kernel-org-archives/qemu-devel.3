@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C49DC30658
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 13:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA82C41513
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 13:50:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM67W-0000Br-D2; Tue, 25 Jun 2024 09:22:02 -0400
+	id 1sM6YW-0006x2-Cf; Tue, 25 Jun 2024 09:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pykfirst@gmail.com>)
- id 1sM4Lg-00016P-6H
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 07:28:32 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sM6YT-0006vB-ST
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:49:53 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pykfirst@gmail.com>)
- id 1sM4Le-0005c7-Bh
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 07:28:31 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1f9cd92b146so42033985ad.3
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 04:28:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sM6YQ-0007II-Mb
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:49:52 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-57d07f07a27so6285350a12.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 06:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719314907; x=1719919707; darn=nongnu.org;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719323388; x=1719928188;
+ darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uBaSheNEI17XWmXxdX9yRTMBkPWOO88fG/ISELWu8bk=;
- b=Zdgbs/wj+BQaCqPailsHmqlgrs8IiTlLNi+6kwjn6wN2QSfYVyiOioc+9lWvnP9sv0
- EQe2A9q5c7Sk2lkOaWz488tdp3J9e4S5x2tlujP5gjend7uvEC1VoUL2JOTwd441bEcP
- 01tvT24R9Dnc8luZCAfTXV8Y1Yl+Ke98O380OJXcJ8V+qNE2KNYpM15eJY2vTPZl2yXS
- dv1rK6O6uh6LeoHYDBhFkLVMS5pZ5emx9uxlYxpaMIp4mYLKucr6nYmY6BGjEf9nk1G8
- CEq9jTzmHF4T2XALmh9AaIY8qiu3PMW1jKjrZFYEShqugdYbDmd09jLVsTQGy9Hpv9wO
- SQGw==
+ bh=d1fYQ7uSy0JYSBDhMCphzksyQ7P/f641WoT9TQMYJeE=;
+ b=jE+UaBgI4a625dI54X67TEcN1f8yfWkJmrTHvw4l28FyXab4Oq08BRC8sRoIsF28R+
+ /5RK9XREpY9rN9JsarJB0HhuHAa8mR/6zQndNEl00vSAdYIABkGOkepHa+AiijZDSnhM
+ b+oUQL/rzmls0ZBLikNdIod57Twa6gE26ExGIesVQf0Exw8tf61W9GJvFwZmJQEd9VY7
+ m5n2LfaDaJfQS5CaN3zYDJ5OIy1oJ8ijGxxzoSHV7D7ZaE3m9KTeZNbIccFJ4m7Ezbdl
+ JPPMf6sZcVECczK8mC04WrN7FHZG+PG9kaprXB1rfRFgY1s6MovdCpcwBLglM0s/Si2Q
+ KepA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719314907; x=1719919707;
+ d=1e100.net; s=20230601; t=1719323388; x=1719928188;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uBaSheNEI17XWmXxdX9yRTMBkPWOO88fG/ISELWu8bk=;
- b=vp8xVyx2o2m0Z1R/hIUd/cD3XJWpwLi0ju1wDMBy0NHXrvy4O4B4CB3x51kfwMMNUV
- vE4t8gxvmohfu0LJHCQyiOXMDX40hd4d+cjItRzmKtQ1SFbzSjd6VmRosU9Ee0ODO8DR
- gxlnQeeyVBH4LltNXlr/jrda6mw1N3CBtWJxiO53vGhioafEdIqJebzIUnrTjk7zVplK
- JiTYpskbZaRHSm9d3ZRFb5Ec0ooI1ivc1IOsaa3MpLXe3LgOPJthRhmzdghn37eJptAo
- qqM+hKleaMkjYimFnpICXi7W45qdJYk8fFnjvAUW+mqxQAALQDSGGMH4tVVbYB7hvsbc
- stBQ==
-X-Gm-Message-State: AOJu0Yzqgjk/W9YCoMKBJK2uf7IVkdQA4Ij0ta9f0GoCfxW8OWn7TKlo
- RjbXccVlvC9/UMOGF6tBd8T06Pyt6tJ0cTlkVXQ+mEMxLuj0Kou8rh6tIo03IPM=
-X-Google-Smtp-Source: AGHT+IHqUwRJFUoCz3qbjNJ+CVqW/avNyaw7XogtfvaL3OLauEv8OnVL1WH4He+7BQQ+X8daubb57g==
-X-Received: by 2002:a17:902:f685:b0:1f7:2050:9a76 with SMTP id
- d9443c01a7336-1fa1d3de5bcmr104365535ad.8.1719314906934; 
- Tue, 25 Jun 2024 04:28:26 -0700 (PDT)
-Received: from waoa-XPS-8940.. ([103.172.41.204])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9ec6595ebsm78466885ad.25.2024.06.25.04.28.23
+ bh=d1fYQ7uSy0JYSBDhMCphzksyQ7P/f641WoT9TQMYJeE=;
+ b=OtZNvFT/0Evu8PruPdK4JMPdDXHYyUi5wMPAhxcxjlruFuNUjo1AUyMenJF6QYZFlY
+ g30LK5JKupywEBfLVzArVCR010P8q6CqaJ95DwjQ8FyUJ2CrcWWrKDOome29DtWc3Eu2
+ 9w43dUs3t4GARiaZKWE8cg+Er0Qx11+SoR1c6E8cu7gxZObRY9aufdKKKfMZnG0cGOlx
+ If8vkd3RwQRZXJWOB014oxfbUag3FAbd2DVZgqOCY37lbOSREhvB0JlDSkfMXmKggd/2
+ ydQqRHYmFCuji2eGU6/nKdOSOIM0KvoENn+DUJ439El0/jBkio6MJgL2z4caAB39hup7
+ Q5dQ==
+X-Gm-Message-State: AOJu0YyxINWC0aXg37x2sepLHSn9kDxhWdVbZQMf3DRjY+24556IbFen
+ ESzgoR/E8sgNG4/5dMDQhr+JJcqzWZzXysYixkGSA9iMYBZW9cdAOU1lGeX1r+BRu0HQz3R7rZI
+ q5Q==
+X-Google-Smtp-Source: AGHT+IENc6qXlA18ThHHXpxt/cA1tjoEgnfXbNtZqjAkF9vjVyRSdmQVFDXXxCkyh2uKMBglywNdyA==
+X-Received: by 2002:a17:906:199a:b0:a72:450f:6045 with SMTP id
+ a640c23a62f3a-a7245b6252cmr388985366b.21.1719323387966; 
+ Tue, 25 Jun 2024 06:49:47 -0700 (PDT)
+Received: from localhost.localdomain (89-104-8-17.customer.bnet.at.
+ [89.104.8.17]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a726e13a4d7sm77299166b.19.2024.06.25.06.49.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 04:28:26 -0700 (PDT)
-From: Yuke Peng <pykfirst@gmail.com>
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH] hw/i386/intel_iommu: Block CFI when necessary
-Date: Tue, 25 Jun 2024 19:28:19 +0800
-Message-Id: <20240625112819.862282-1-pykfirst@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ Tue, 25 Jun 2024 06:49:47 -0700 (PDT)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, philmd@linaro.org, marcandre.lureau@redhat.com,
+ akihiko.odaki@daynix.com, lists@philjordan.eu,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH v2 0/2] ui/cocoa: Adds native absolute pointer support
+Date: Tue, 25 Jun 2024 15:49:29 +0200
+Message-Id: <20240625134931.92279-1-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pykfirst@gmail.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: neutral client-ip=2a00:1450:4864:20::534;
+ envelope-from=phil@philjordan.eu; helo=mail-ed1-x534.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 25 Jun 2024 09:22:01 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,109 +94,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to Intel VT-d specification 5.1.4, CFI must be blocked when
-Extended Interrupt Mode is enabled or Compatibility format interrupts
-are disabled.
+This change implements passing guest cursors through to the native
+Cocoa host NSCursor on macOS when using absolute pointing device
+input.
 
-Signed-off-by: Yuke Peng <pykfirst@gmail.com>
----
- hw/i386/intel_iommu.c         | 28 ++++++++++++++++++++++++++++
- hw/i386/trace-events          |  1 +
- include/hw/i386/intel_iommu.h |  1 +
- 3 files changed, 30 insertions(+)
+The first pass at this was based purely on NSCursor, which drew
+some criticism due to the somewhat complex nature of the code which
+was required to generate correct relative pointer input events
+after teleporting the host cursor.
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 5085a6fee3..dfa2f979e7 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2410,6 +2410,22 @@ static void vtd_handle_gcmd_ire(IntelIOMMUState *s, bool en)
-     }
- }
- 
-+/* Handle Compatibility Format Interrupts Enable/Disable */
-+static void vtd_handle_gcmd_cfi(IntelIOMMUState *s, bool en)
-+{
-+    trace_vtd_cfi_enable(en);
-+
-+    if (en) {
-+        s->cfi_enabled = true;
-+        /* Ok - report back to driver */
-+        vtd_set_clear_mask_long(s, DMAR_GSTS_REG, 0, VTD_GSTS_CFIS);
-+    } else {
-+        s->cfi_enabled = false;
-+        /* Ok - report back to driver */
-+        vtd_set_clear_mask_long(s, DMAR_GSTS_REG, VTD_GSTS_CFIS, 0);
-+    }
-+}
-+
- /* Handle write to Global Command Register */
- static void vtd_handle_gcmd_write(IntelIOMMUState *s)
- {
-@@ -2440,6 +2456,10 @@ static void vtd_handle_gcmd_write(IntelIOMMUState *s)
-         /* Interrupt remap enable/disable */
-         vtd_handle_gcmd_ire(s, val & VTD_GCMD_IRE);
-     }
-+    if (changed & VTD_GCMD_CFI) {
-+        /* Compatibility format interrupts enable/disable */
-+        vtd_handle_gcmd_cfi(s, val & VTD_GCMD_CFI);
-+    }
- }
- 
- /* Handle write to Context Command Register */
-@@ -3304,6 +3324,7 @@ static const VMStateDescription vtd_vmstate = {
-         VMSTATE_BOOL(dmar_enabled, IntelIOMMUState),
-         VMSTATE_BOOL(qi_enabled, IntelIOMMUState),
-         VMSTATE_BOOL(intr_enabled, IntelIOMMUState),
-+        VMSTATE_BOOL(cfi_enabled, IntelIOMMUState),
-         VMSTATE_BOOL(intr_eime, IntelIOMMUState),
-         VMSTATE_END_OF_LIST()
-     }
-@@ -3525,6 +3546,12 @@ static int vtd_interrupt_remap_msi(IntelIOMMUState *iommu,
- 
-     /* This is compatible mode. */
-     if (addr.addr.int_mode != VTD_IR_INT_FORMAT_REMAP) {
-+        if (iommu->intr_eime || !iommu->cfi_enabled) {
-+            if (do_fault) {
-+                vtd_report_ir_fault(iommu, sid, VTD_FR_IR_REQ_COMPAT, 0);
-+            }
-+            return -EINVAL;
-+        }
-         memcpy(translated, origin, sizeof(*origin));
-         goto out;
-     }
-@@ -3950,6 +3977,7 @@ static void vtd_init(IntelIOMMUState *s)
-     s->root_scalable = false;
-     s->dmar_enabled = false;
-     s->intr_enabled = false;
-+    s->cfi_enabled = false;
-     s->iq_head = 0;
-     s->iq_tail = 0;
-     s->iq = 0;
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index 53c02d7ac8..ffd87db65f 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -57,6 +57,7 @@ vtd_dmar_translate(uint8_t bus, uint8_t slot, uint8_t func, uint64_t iova, uint6
- vtd_dmar_enable(bool en) "enable %d"
- vtd_dmar_fault(uint16_t sid, int fault, uint64_t addr, bool is_write) "sid 0x%"PRIx16" fault %d addr 0x%"PRIx64" write %d"
- vtd_ir_enable(bool en) "enable %d"
-+vtd_cfi_enable(bool en) "enable %d"
- vtd_ir_irte_get(int index, uint64_t lo, uint64_t hi) "index %d low 0x%"PRIx64" high 0x%"PRIx64
- vtd_ir_remap(int index, int tri, int vec, int deliver, uint32_t dest, int dest_mode) "index %d trigger %d vector %d deliver %d dest 0x%"PRIx32" mode %d"
- vtd_ir_remap_type(const char *type) "%s"
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 7fa0a695c8..38e20d0f2c 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -294,6 +294,7 @@ struct IntelIOMMUState {
- 
-     /* interrupt remapping */
-     bool intr_enabled;              /* Whether guest enabled IR */
-+    bool cfi_enabled;               /* Whether CFI is enabled */
-     dma_addr_t intr_root;           /* Interrupt remapping table pointer */
-     uint32_t intr_size;             /* Number of IR table entries */
-     bool intr_eime;                 /* Extended interrupt mode enabled */
+This new version builds on Akihiko Odaki's work implementing CALayer
+based cursors. We retain CALayer for compositing cursors when the
+input is relative and the pointer thus completely captured by the
+guest. When using absolute positioning of the pointer, we use the
+fully host-integrated NSCursor, with no offsetting or teleporting
+needed.
+
+The first patch consists of a few reference counting fixes to the
+existing CALayer patch, the second implements the NSCursor logic
+and switches between CALayer and NSCursor depending on whether
+relative or absolute input is used.
+
+Based-on: <20240318-cursor-v1-2-0bbe6c382217@daynix.com>
+
+
+Phil Dennis-Jordan (2):
+  ui/cocoa: Minor fixes to CALayer based cursors
+  ui/cocoa: Adds NSCursor absolute pointer support
+
+ ui/cocoa.m | 93 +++++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 75 insertions(+), 18 deletions(-)
+
 -- 
-2.34.1
+2.39.3 (Apple Git-146)
 
 
