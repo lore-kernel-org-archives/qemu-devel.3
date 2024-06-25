@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB4BC30653
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 19:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFBCDC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 19:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMBOm-00060e-Qt; Tue, 25 Jun 2024 15:00:19 -0400
+	id 1sMBTT-0007VV-EN; Tue, 25 Jun 2024 15:05:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMB8J-0001tq-4I
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 14:44:30 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ id 1sMBBt-0002th-Pc
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 14:47:18 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMB7M-0006p2-1K
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 14:42:57 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-25cc6962c24so2624200fac.3
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 11:40:55 -0700 (PDT)
+ id 1sMBBB-0007Bm-30
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 14:46:41 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-70656b43fd4so3399723b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 11:44:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719340845; x=1719945645; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6KuISq7Eq2uldN7W6ls6TqJkng66O5auRfGJh0XlrPQ=;
- b=gpwzQYKY07RHvenjsV9mL4hFyidKTEOSAWCIHj8Uz+Y9cSpUYkzyUoMhTsFNtLgwfr
- DFAlub/GvWDpTjxxWXuimbO7d+Xq1ATM5i0pk2N5wZMr/NIgKHnNHCeBv/z/lNMpcKsi
- zRyWy5F84NxEJBekEMnDNs1BkaL4mx1qvO/cE0+eeb61iWzW9gv3wPayyn1R+EZinZPf
- lmY5GmC3etNxLPRmo7D7luLxc3JfRzncR4ijEIIBW2yLccVcK3Tz8luRw5nSgi27cgpY
- OGcnBYphIlKeIo4u1yAEMkMUvY9N6pjcRhewOI5wqwiRXpNwz3ZWsqSQY4B84pLdOObE
- WFVg==
+ d=linaro.org; s=google; t=1719341069; x=1719945869; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=u70FGhdj6+SDi8C75S6LZSmiHm3Th47xqHQlbQAfOcI=;
+ b=Jodi/6k7s3Ih+jiSPmaaz8zmC7y9UxJbJ+6xOTPm37cToQHFbjJcIhegVHMprDiGR7
+ hd4ZSK7SmnOv9cGfZCQf0s3HFU0L9A3OnyWGjAaFvhCOvZxEcWC90sbCNrzkrCkH3fgD
+ 0kittIlkMqFr3H9ueaaGRH+WVeI3OV2cjNDyjwCbn5rBONjJ+ljDY5H/YXhgw0uf/CdS
+ c3awaLgB69u6ZxVeZPPz0zN+mw4jSBexGrvQNONxvVWcLxpammV78DBtLwBeFx7Qzd1h
+ Qn5QAZops9cLhaXNHIVkw0L1Hq2yXzTkWp5CkTAOrX4mTSNh3zl+5KzLDP9g9hU2Oezi
+ FN5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719340845; x=1719945645;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6KuISq7Eq2uldN7W6ls6TqJkng66O5auRfGJh0XlrPQ=;
- b=Njz2llreOaLSPTzV3bFZwEvPSJJIuX+sG6euOZzt8L7LieFGeppZeVaf5Ez45zQblS
- ZL3+mVXfg2owIZ9wvpy9xmA1E5DKvpmx5y08cw0LE/HTy+MUl7fjlQWPNLZ72HWPWhJs
- tqE1J8Bs86ustDWZo1Y9W3UN5Y/R/BfNWUXHEsMoSONdpmcfJoNe/5L6FndemvX0YuEp
- uVqVkZ5HZdFhW1wvS/0OLruOThsvRjNujedllfqtZTuNksRHIs9MHBvVagGOsiz59rL2
- sMlv4gHCh0YDyl/NNR5ViLg3WamfE/VPBfIsFkkjSx9pKRawlQxWlY9Jiy0XIH8/DTi6
- 5oPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVVNofkkM7JByuJdFHW7x6xL7EJWLaqQTa33OP9mUdwXHl/feZDhs3NlcDgxDr2k0jVqAQp7rQ7Gl3IpumGmnlkY0Y1mAY=
-X-Gm-Message-State: AOJu0YwHv2+48mM/UUCEfQA8c2B4+qtJGqHEdb9pjMDV9w522rG0m/8Y
- XYJT9dFdKGj45VIe2CxsTNNW09JrfkOr/eJJ4rvAISjJQsKE3UieRtObuCGE8JredgD8bB3zhLp
- 3
-X-Google-Smtp-Source: AGHT+IGKYJpyIYjsGeMaUqsnlpNStNs7GW8QiC2j5TgIcMwtwy0tGqD5VjbKhUBepTVodJLhM4GbJg==
-X-Received: by 2002:a17:903:32d1:b0:1fa:80b3:d63b with SMTP id
- d9443c01a7336-1fa80b3d9d1mr13791095ad.55.1719340306135; 
- Tue, 25 Jun 2024 11:31:46 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ d=1e100.net; s=20230601; t=1719341069; x=1719945869;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=u70FGhdj6+SDi8C75S6LZSmiHm3Th47xqHQlbQAfOcI=;
+ b=gUWVr/jUFOS4ZdhFMwak+/DsW2vfsWrMglPQnbCUoqiBNjg/x/MX/gRtX+J1vIbDMn
+ YCE8KGEd1BZSQ1I0duMxAfW6olgJmOibBnk7xcvu31woVzkhoHDJ9Mw/HrPvKb+Nlqrt
+ KBE/0BQWru70eYnc6bag6yV1UVPlWyhlTPOtT4FMg5scnpHjQ7N6CVJRV2LyJ9x1Ocih
+ plRFgdf5xGhSQBXx5d/mRHxBC0mziT45bR6iyMd2A8WjxkPHm/SZrAtfW356Q5BPc6jD
+ XnTqplR++J7oidTrLy4nNU3te20b645hdiTFALXtGWZOqVGhhNt0dU/4XaRCMMaYQzc1
+ 6Wsg==
+X-Gm-Message-State: AOJu0YyRBVqsiJjzRtWmRYZiUIaHAzhySfQb3YC07FyVnoy5lb6VnMbg
+ mRT811rLRcQaHF/ZJJkqPEciLWlO0ZJOZ1UcBIp2X7hI50VasFbQqJv0dssFJo2cs0QjTCxB19C
+ l
+X-Google-Smtp-Source: AGHT+IExR7US1/HehZRxiSXpfdKHm0AYigFlSgCTddaoCmbwZwMcvf+HaoeSRclDw4L0pW3MMJxikQ==
+X-Received: by 2002:a17:903:41cd:b0:1f9:bb35:f313 with SMTP id
+ d9443c01a7336-1fa23edc8c2mr80059025ad.30.1719340546997; 
+ Tue, 25 Jun 2024 11:35:46 -0700 (PDT)
+Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1f9eb2f2a06sm84617045ad.31.2024.06.25.11.31.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Jun 2024 11:31:45 -0700 (PDT)
-Message-ID: <d7790078-80d8-4d02-82d1-7109040db81e@linaro.org>
-Date: Tue, 25 Jun 2024 11:31:44 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] include: move typeof_strip_qual to compiler.h, use it in
- QAPI_LIST_LENGTH()
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: flwu@google.com, berrange@redhat.com, peter.maydell@linaro.org,
- rkir@google.com
-References: <20240625111848.709176-1-pbonzini@redhat.com>
-Content-Language: en-US
+ d9443c01a7336-1f9eb3c6027sm84693235ad.133.2024.06.25.11.35.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Jun 2024 11:35:46 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240625111848.709176-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v2 10/13] target/arm: Add data argument to do_fp3_vector
+Date: Tue, 25 Jun 2024 11:35:33 -0700
+Message-Id: <20240625183536.1672454-11-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240625183536.1672454-1-richard.henderson@linaro.org>
+References: <20240625183536.1672454-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,35 +94,228 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/24 04:18, Paolo Bonzini wrote:
-> The typeof_strip_qual() is most useful for the atomic fetch-and-modify
-> operations in atomic.h, but it can be used elsewhere as well.  For example,
-> QAPI_LIST_LENGTH() assumes that the argument is not const, which is not a
-> requirement.
-> 
-> Move the macro to compiler.h and, while at it, move it under #ifndef
-> __cplusplus to emphasize that it uses C-only constructs.  A C++ version
-> of typeof_strip_qual() using type traits is possible[1], but beyond the
-> scope of this patch because the little C++ code that is in QEMU does not
-> use QAPI.
-> 
-> The patch was tested by changing the declaration of strv_from_str_list()
-> in qapi/qapi-type-helpers.c to:
-> 
->      char **strv_from_str_list(const strList *const list)
-> 
-> This is valid C code, and it fails to compile without this change.
-> 
-> [1]https://lore.kernel.org/qemu-devel/20240624205647.112034-1-flwu@google.com/
-> 
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   include/qapi/util.h     |  2 +-
->   include/qemu/atomic.h   | 42 -------------------------------------
->   include/qemu/compiler.h | 46 +++++++++++++++++++++++++++++++++++++++++
->   3 files changed, 47 insertions(+), 43 deletions(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-a64.c | 52 +++++++++++++++++-----------------
+ 1 file changed, 26 insertions(+), 26 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 2697c4b305..57cdde008e 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -5290,7 +5290,7 @@ TRANS(CMHS_s, do_cmop_d, a, TCG_COND_GEU)
+ TRANS(CMEQ_s, do_cmop_d, a, TCG_COND_EQ)
+ TRANS(CMTST_s, do_cmop_d, a, TCG_COND_TSTNE)
+ 
+-static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a,
++static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a, int data,
+                           gen_helper_gvec_3_ptr * const fns[3])
+ {
+     MemOp esz = a->esz;
+@@ -5313,7 +5313,7 @@ static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a,
+     }
+     if (fp_access_check(s)) {
+         gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
+-                          esz == MO_16, 0, fns[esz - 1]);
++                          esz == MO_16, data, fns[esz - 1]);
+     }
+     return true;
+ }
+@@ -5323,168 +5323,168 @@ static gen_helper_gvec_3_ptr * const f_vector_fadd[3] = {
+     gen_helper_gvec_fadd_s,
+     gen_helper_gvec_fadd_d,
+ };
+-TRANS(FADD_v, do_fp3_vector, a, f_vector_fadd)
++TRANS(FADD_v, do_fp3_vector, a, 0, f_vector_fadd)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fsub[3] = {
+     gen_helper_gvec_fsub_h,
+     gen_helper_gvec_fsub_s,
+     gen_helper_gvec_fsub_d,
+ };
+-TRANS(FSUB_v, do_fp3_vector, a, f_vector_fsub)
++TRANS(FSUB_v, do_fp3_vector, a, 0, f_vector_fsub)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fdiv[3] = {
+     gen_helper_gvec_fdiv_h,
+     gen_helper_gvec_fdiv_s,
+     gen_helper_gvec_fdiv_d,
+ };
+-TRANS(FDIV_v, do_fp3_vector, a, f_vector_fdiv)
++TRANS(FDIV_v, do_fp3_vector, a, 0, f_vector_fdiv)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmul[3] = {
+     gen_helper_gvec_fmul_h,
+     gen_helper_gvec_fmul_s,
+     gen_helper_gvec_fmul_d,
+ };
+-TRANS(FMUL_v, do_fp3_vector, a, f_vector_fmul)
++TRANS(FMUL_v, do_fp3_vector, a, 0, f_vector_fmul)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmax[3] = {
+     gen_helper_gvec_fmax_h,
+     gen_helper_gvec_fmax_s,
+     gen_helper_gvec_fmax_d,
+ };
+-TRANS(FMAX_v, do_fp3_vector, a, f_vector_fmax)
++TRANS(FMAX_v, do_fp3_vector, a, 0, f_vector_fmax)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmin[3] = {
+     gen_helper_gvec_fmin_h,
+     gen_helper_gvec_fmin_s,
+     gen_helper_gvec_fmin_d,
+ };
+-TRANS(FMIN_v, do_fp3_vector, a, f_vector_fmin)
++TRANS(FMIN_v, do_fp3_vector, a, 0, f_vector_fmin)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmaxnm[3] = {
+     gen_helper_gvec_fmaxnum_h,
+     gen_helper_gvec_fmaxnum_s,
+     gen_helper_gvec_fmaxnum_d,
+ };
+-TRANS(FMAXNM_v, do_fp3_vector, a, f_vector_fmaxnm)
++TRANS(FMAXNM_v, do_fp3_vector, a, 0, f_vector_fmaxnm)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fminnm[3] = {
+     gen_helper_gvec_fminnum_h,
+     gen_helper_gvec_fminnum_s,
+     gen_helper_gvec_fminnum_d,
+ };
+-TRANS(FMINNM_v, do_fp3_vector, a, f_vector_fminnm)
++TRANS(FMINNM_v, do_fp3_vector, a, 0, f_vector_fminnm)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmulx[3] = {
+     gen_helper_gvec_fmulx_h,
+     gen_helper_gvec_fmulx_s,
+     gen_helper_gvec_fmulx_d,
+ };
+-TRANS(FMULX_v, do_fp3_vector, a, f_vector_fmulx)
++TRANS(FMULX_v, do_fp3_vector, a, 0, f_vector_fmulx)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmla[3] = {
+     gen_helper_gvec_vfma_h,
+     gen_helper_gvec_vfma_s,
+     gen_helper_gvec_vfma_d,
+ };
+-TRANS(FMLA_v, do_fp3_vector, a, f_vector_fmla)
++TRANS(FMLA_v, do_fp3_vector, a, 0, f_vector_fmla)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmls[3] = {
+     gen_helper_gvec_vfms_h,
+     gen_helper_gvec_vfms_s,
+     gen_helper_gvec_vfms_d,
+ };
+-TRANS(FMLS_v, do_fp3_vector, a, f_vector_fmls)
++TRANS(FMLS_v, do_fp3_vector, a, 0, f_vector_fmls)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fcmeq[3] = {
+     gen_helper_gvec_fceq_h,
+     gen_helper_gvec_fceq_s,
+     gen_helper_gvec_fceq_d,
+ };
+-TRANS(FCMEQ_v, do_fp3_vector, a, f_vector_fcmeq)
++TRANS(FCMEQ_v, do_fp3_vector, a, 0, f_vector_fcmeq)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fcmge[3] = {
+     gen_helper_gvec_fcge_h,
+     gen_helper_gvec_fcge_s,
+     gen_helper_gvec_fcge_d,
+ };
+-TRANS(FCMGE_v, do_fp3_vector, a, f_vector_fcmge)
++TRANS(FCMGE_v, do_fp3_vector, a, 0, f_vector_fcmge)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fcmgt[3] = {
+     gen_helper_gvec_fcgt_h,
+     gen_helper_gvec_fcgt_s,
+     gen_helper_gvec_fcgt_d,
+ };
+-TRANS(FCMGT_v, do_fp3_vector, a, f_vector_fcmgt)
++TRANS(FCMGT_v, do_fp3_vector, a, 0, f_vector_fcmgt)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_facge[3] = {
+     gen_helper_gvec_facge_h,
+     gen_helper_gvec_facge_s,
+     gen_helper_gvec_facge_d,
+ };
+-TRANS(FACGE_v, do_fp3_vector, a, f_vector_facge)
++TRANS(FACGE_v, do_fp3_vector, a, 0, f_vector_facge)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_facgt[3] = {
+     gen_helper_gvec_facgt_h,
+     gen_helper_gvec_facgt_s,
+     gen_helper_gvec_facgt_d,
+ };
+-TRANS(FACGT_v, do_fp3_vector, a, f_vector_facgt)
++TRANS(FACGT_v, do_fp3_vector, a, 0, f_vector_facgt)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fabd[3] = {
+     gen_helper_gvec_fabd_h,
+     gen_helper_gvec_fabd_s,
+     gen_helper_gvec_fabd_d,
+ };
+-TRANS(FABD_v, do_fp3_vector, a, f_vector_fabd)
++TRANS(FABD_v, do_fp3_vector, a, 0, f_vector_fabd)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_frecps[3] = {
+     gen_helper_gvec_recps_h,
+     gen_helper_gvec_recps_s,
+     gen_helper_gvec_recps_d,
+ };
+-TRANS(FRECPS_v, do_fp3_vector, a, f_vector_frecps)
++TRANS(FRECPS_v, do_fp3_vector, a, 0, f_vector_frecps)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_frsqrts[3] = {
+     gen_helper_gvec_rsqrts_h,
+     gen_helper_gvec_rsqrts_s,
+     gen_helper_gvec_rsqrts_d,
+ };
+-TRANS(FRSQRTS_v, do_fp3_vector, a, f_vector_frsqrts)
++TRANS(FRSQRTS_v, do_fp3_vector, a, 0, f_vector_frsqrts)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_faddp[3] = {
+     gen_helper_gvec_faddp_h,
+     gen_helper_gvec_faddp_s,
+     gen_helper_gvec_faddp_d,
+ };
+-TRANS(FADDP_v, do_fp3_vector, a, f_vector_faddp)
++TRANS(FADDP_v, do_fp3_vector, a, 0, f_vector_faddp)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmaxp[3] = {
+     gen_helper_gvec_fmaxp_h,
+     gen_helper_gvec_fmaxp_s,
+     gen_helper_gvec_fmaxp_d,
+ };
+-TRANS(FMAXP_v, do_fp3_vector, a, f_vector_fmaxp)
++TRANS(FMAXP_v, do_fp3_vector, a, 0, f_vector_fmaxp)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fminp[3] = {
+     gen_helper_gvec_fminp_h,
+     gen_helper_gvec_fminp_s,
+     gen_helper_gvec_fminp_d,
+ };
+-TRANS(FMINP_v, do_fp3_vector, a, f_vector_fminp)
++TRANS(FMINP_v, do_fp3_vector, a, 0, f_vector_fminp)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fmaxnmp[3] = {
+     gen_helper_gvec_fmaxnump_h,
+     gen_helper_gvec_fmaxnump_s,
+     gen_helper_gvec_fmaxnump_d,
+ };
+-TRANS(FMAXNMP_v, do_fp3_vector, a, f_vector_fmaxnmp)
++TRANS(FMAXNMP_v, do_fp3_vector, a, 0, f_vector_fmaxnmp)
+ 
+ static gen_helper_gvec_3_ptr * const f_vector_fminnmp[3] = {
+     gen_helper_gvec_fminnump_h,
+     gen_helper_gvec_fminnump_s,
+     gen_helper_gvec_fminnump_d,
+ };
+-TRANS(FMINNMP_v, do_fp3_vector, a, f_vector_fminnmp)
++TRANS(FMINNMP_v, do_fp3_vector, a, 0, f_vector_fminnmp)
+ 
+ static bool do_fmlal(DisasContext *s, arg_qrrr_e *a, bool is_s, bool is_2)
+ {
+-- 
+2.34.1
 
-r~
 
