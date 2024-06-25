@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599BEC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 05:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25276C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 06:00:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLz8t-0002hL-AO; Tue, 25 Jun 2024 01:54:59 -0400
+	id 1sLzDw-0002LZ-GK; Tue, 25 Jun 2024 02:00:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLz8r-0002ZK-2S
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 01:54:57 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <clement.mathieudrif.etu@gmail.com>)
+ id 1sLzDk-0002IK-9S; Tue, 25 Jun 2024 02:00:00 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLz8p-0001gy-HQ
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 01:54:56 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-362f62ae4c5so2925350f8f.1
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 22:54:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clement.mathieudrif.etu@gmail.com>)
+ id 1sLzDi-0002uP-Jj; Tue, 25 Jun 2024 01:59:59 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4217136a74dso42218585e9.2; 
+ Mon, 24 Jun 2024 22:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719294894; x=1719899694; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5P7HyM7CLqMyqYOTJNfxbyYOLKZqsQ3trYZWJFhWDzE=;
- b=jUxo+UMRrb4lQQJOA1iKG8vA2k7OE0McSg16cyQRGH+1+H5Md9XTIrKFhWTCxvoLyV
- kXwPTFiGFI3ItGHq1B0mzAIhpPNzpA33/znaQq9PjrOnTOgBPL4V2vgYkY8Vr4sZJCPV
- 198lvfcNO65oumKNZXtKj5NtijfAyZA3IKKOY+Tlah6JkqF7joS++UGEsNWgmmPkCspZ
- YAa4abh71wSTaamug3R0u4vLILfbrzaCRafdK5JwdM1PMpL+dJch7xQVv8LyWfrHViiy
- lYhpcxQGiQgPbZ7DOh8oI8bOUNQS/Mv4bhdyKctnopFX8XvTTA3D/QZPTE+JnR9CB6Gs
- rgdA==
+ d=gmail.com; s=20230601; t=1719295196; x=1719899996; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kzV2R7UjISGN4klcLuozxDG84FUbG0/gq9Bmu7Iw+zc=;
+ b=NJMAIm16wEjQT2vRuROcq/MqZkX7tcds7FPMIeq871DxzUm82sRTE/D64/uEz0hBxs
+ HyH31L4uO2DPbdOhQttp8UZ1UgxwOkj4Dc1ds+MAKqKc1cDjoJIUdlvOOJRcDIKOt8Wa
+ c7D0G/HRty6H843xejLMOQknCy3S2XOVwVjPNCfjS06y8fQtJIpZ1UtqCFsqGHF+2jsT
+ x8uMd6JtiCWPB4VRa//PJh5IT46SVq8Vy+JRWwYimyKIlKgnv3YavNqGVRHMmnRj7Gug
+ Mtcp/V16z+vJwDXpgkOL2jwTmoGLl7kLNEaPvi/rnNhS8gcqP6R2I5AmaT8WFQqcuzlc
+ gmLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719294894; x=1719899694;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5P7HyM7CLqMyqYOTJNfxbyYOLKZqsQ3trYZWJFhWDzE=;
- b=VWeSlgYHBoIUFMDM5ICNwZmy1GC+FQLFJ/iz7sAHetQhKckY3zRatP5ViXA4B6ap7h
- ztBrHpTB/Moj2lqqUMxp2+nzs7lbtfUn0X4fpfMZ9VHwzcrCOjPU7DlQFSdshI9uEFEq
- PSnN8qB8i9dbi++4wWc1BLLE8CvVuZR2n1gi4+ev3EgqNXUqbdeCXEd4zgxCKHdEz+lU
- i+Ae5R4rq/pnQKAgLIEIJZjZvOIh34lTau5n3zw0QtsboldA7KwKDUoFR9byK9fQdOjP
- 6doz7geRbVu3t/jta6Z2OUAtN+gt/+EDqJaOUb8TtejBMPBeN4V62ut8CDcvnpK2yibf
- NiNQ==
-X-Gm-Message-State: AOJu0YxRO6xpaHdLCKCI33yYxAoV3EdzGPqvV1GYAcWqF1g24EAWHEH6
- R8FR96BACp/LZUsEJrTuXNYaho4NAxlmVCVIgsFz/4KotSSQToavlVtZCEfI6drEcLV+44IX7FS
- y
-X-Google-Smtp-Source: AGHT+IEAlgGMpHRcV9j43LCtCz2MJYI2Au6h0fZSPqtRVLGMXc/0FJ3cHCluLTMK6HzHOlQ+UjboVw==
-X-Received: by 2002:a05:6000:b0c:b0:366:dfc4:3790 with SMTP id
- ffacd0b85a97d-366e34a3d7dmr6074472f8f.0.1719294893836; 
- Mon, 24 Jun 2024 22:54:53 -0700 (PDT)
-Received: from m1x-phil.lan (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
- [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-366e88c0c38sm7509752f8f.32.2024.06.24.22.54.52
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Jun 2024 22:54:53 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>
-Subject: [PATCH v2 10/12] hw/sd/sdcard: Simplify sd_inactive_state handling
-Date: Tue, 25 Jun 2024 07:53:51 +0200
-Message-ID: <20240625055354.23273-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240625055354.23273-1-philmd@linaro.org>
-References: <20240625055354.23273-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1719295196; x=1719899996;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kzV2R7UjISGN4klcLuozxDG84FUbG0/gq9Bmu7Iw+zc=;
+ b=biI4gccH89ksAbJOcpxpTLU2YR+6gCesNS0gTYNUDeOXmCpRuclwkdNbVHviRJt7cr
+ bDQeTUNghphrSCC2NsFNjRZctRlCczvZb6w19PkF0Fd0e4yg2jwppImb3gxTD5qb+Vnr
+ k+K2iQc8ltfblB7mPjEELWiuWh6SF1SIkCrxMFDZrL0jdaCoAb4zlCJll7lAB6UuBbXh
+ RDJCBWHJe68S8Db8fS6zOaLtiU+6Pf2OZ85Fq2NEIztf0hZjUISrcGsawCcTFw4lpRc4
+ m/VcDP1BssdxXNZoHr/i+ArCUIHg8Si4aYLNHQHkASf5avENJSi7cwLxD7h0ztx40CSq
+ vR1w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXY6t8ZEzgH3sHCprvTze4UxdfDZ3wHa59kB5jJ9iyEwAru3T2fKDw1xfqvhLNuQGyZdNYQiknEiCoOZd41tTDSiJOLjGlg4HKXZffbqrXvFXBZ9RUFkJCt9I=
+X-Gm-Message-State: AOJu0Yyz9vJjkwNHlZFRKyCWF9iacNI6ER466u6G2SDW+pTwhk/Tobc8
+ mCaTZ0GQR1Iporc5QffboViu5M1ESrTjbFHu1lGIlzRy2bH0PH0A
+X-Google-Smtp-Source: AGHT+IGPRSHeP5jkA0AlYunTrb9jFSFTAqfaM//fAdkR28S80kcTwFjHxxsvP5UCT3QAumoYna/kYQ==
+X-Received: by 2002:a05:600c:3b14:b0:424:8dba:4a4e with SMTP id
+ 5b1f17b1804b1-4248dba4d43mr41758835e9.6.1719295196038; 
+ Mon, 24 Jun 2024 22:59:56 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:136:9c60:df8c:dbac:5023:d101?
+ ([2a01:e0a:136:9c60:df8c:dbac:5023:d101])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-366f973b7e5sm3112986f8f.14.2024.06.24.22.59.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Jun 2024 22:59:55 -0700 (PDT)
+Message-ID: <24dbb79e-cdcc-4415-befa-e6351c8f29b4@gmail.com>
+Date: Tue, 25 Jun 2024 08:00:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] aspeed/soc: Fix possible divide by zero
+To: Jamin Lin <jamin_lin@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20240625015028.1382059-1-jamin_lin@aspeedtech.com>
+ <20240625015028.1382059-2-jamin_lin@aspeedtech.com>
+Content-Language: en-US
+From: cmd <clement.mathieudrif.etu@gmail.com>
+In-Reply-To: <20240625015028.1382059-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=clement.mathieudrif.etu@gmail.com; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,54 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Card entering sd_inactive_state powers off, and won't respond
-anymore. Handle that once when entering sd_do_command().
+Hi
 
-Remove condition always true in sd_cmd_GO_IDLE_STATE().
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/sd/sd.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
-
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 36955189e8..fce99d655d 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1072,10 +1072,8 @@ static sd_rsp_type_t sd_cmd_unimplemented(SDState *sd, SDRequest req)
- /* CMD0 */
- static sd_rsp_type_t sd_cmd_GO_IDLE_STATE(SDState *sd, SDRequest req)
- {
--    if (sd->state != sd_inactive_state) {
--        sd->state = sd_idle_state;
--        sd_reset(DEVICE(sd));
--    }
-+    sd->state = sd_idle_state;
-+    sd_reset(DEVICE(sd));
- 
-     return sd_is_spi(sd) ? sd_r1 : sd_r0;
- }
-@@ -1570,7 +1568,6 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
-         switch (sd->state) {
-         case sd_ready_state:
-         case sd_identification_state:
--        case sd_inactive_state:
-             return sd_illegal;
-         case sd_idle_state:
-             if (rca) {
-@@ -1791,6 +1788,11 @@ int sd_do_command(SDState *sd, SDRequest *req,
-         return 0;
-     }
- 
-+    if (sd->state == sd_inactive_state) {
-+        rtype = sd_illegal;
-+        goto send_response;
-+    }
-+
-     if (sd_req_crc_validate(req)) {
-         sd->card_status |= COM_CRC_ERROR;
-         rtype = sd_illegal;
--- 
-2.41.0
-
+On 25/06/2024 03:50, Jamin Lin via wrote:
+> Coverity reports a possible DIVIDE_BY_ZERO issue regarding the
+> "ram_size" object property. This can not happen because RAM has
+> predefined valid sizes per SoC. Nevertheless, add a test to
+> close the issue.
+>
+> Fixes: Coverity CID 1547113
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> [ clg: Rewrote commit log ]
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/arm/aspeed_ast27x0.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+>
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index b6876b4862..d14a46df6f 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -211,6 +211,12 @@ static void aspeed_ram_capacity_write(void *opaque, hwaddr addr, uint64_t data,
+>       ram_size = object_property_get_uint(OBJECT(&s->sdmc), "ram-size",
+>                                           &error_abort);
+>   
+> +    if (!ram_size) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: ram_size is zero",  __func__);
+> +        return;
+> +    }
+> +
+If we are sure that the error cannot happen, shouldn't we assert instead?
+>       /*
+>        * Emulate ddr capacity hardware behavior.
+>        * If writes the data to the address which is beyond the ram size,
 
