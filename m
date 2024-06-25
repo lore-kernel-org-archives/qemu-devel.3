@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F751C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 12:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A01E8C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 13:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM5ZW-0001aO-DU; Tue, 25 Jun 2024 08:46:54 -0400
+	id 1sM5sM-0005Oe-2C; Tue, 25 Jun 2024 09:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sM5ZT-0001Zy-1Y
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 08:46:51 -0400
-Received: from mx1.zhaoxin.com ([210.0.225.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sM5ZQ-0003IN-0r
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 08:46:50 -0400
-X-ASG-Debug-ID: 1719319578-086e231107134460001-jgbH7p
-Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
- mx1.zhaoxin.com with ESMTP id RXG6L8YQHwsrUlpW (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Tue, 25 Jun 2024 20:46:18 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from zxbjmbx1.zhaoxin.com (10.29.252.163) by ZXSHMBX1.zhaoxin.com
- (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 25 Jun
- 2024 20:46:18 +0800
-Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 25 Jun
- 2024 20:46:17 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Message-ID: <53119b66-3528-41d6-ac44-df166699500a@zhaoxin.com>
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.66.62
-Date: Tue, 25 Jun 2024 08:46:16 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sM5sK-0005O2-23
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:06:20 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sM5sI-0006z2-6z
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:06:19 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-57d106e69a2so158649a12.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 06:06:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719320776; x=1719925576; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=daJwH3TpEvhFy7z51X7AKTRuLJM31mKSMpN38C0iSMI=;
+ b=EloEZun4dYkuiGE4TpIg5MpuwI6Vd77NTnIZTRRKsKbpO8xYmkVWaKNqQzkGUgeraX
+ +UKgntHoBBU6Zjc/jbvF+p2UwZukiZQGHuU157u7HJy3OcmqZY1Vqi9FzBIvfX6E5O9T
+ b6rzOgMwAcMaVCX8h1lD4n5X2G5kg2UtYgZYtYfBVsw8SaUsdqmSPQKQdjSr5BO8P+5h
+ LC7XSGhUwe6k3zuRD/C0PLnJnwXUZAalYhTUuBfrbN4yFg6MvH8/GmZn6yt3zyNgFd0j
+ epuCvRDMVEyJPMKWVNHBuiJ6LJW/31EHNyE4PKHwQlvWehMG9XD8CpjfLGu4tZj3zxqZ
+ /2Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719320776; x=1719925576;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=daJwH3TpEvhFy7z51X7AKTRuLJM31mKSMpN38C0iSMI=;
+ b=bAW9QRLZoyZeUpv1RyEiOMChxyDZsLVYwWkFVB87SGoRfGiJYuhAY8ceq4LhCZYszx
+ YulXVnRt4sUapIsuLh15/1VcT4w+T6QKIPVWn+3+fy7FeCajIqpCj1zdAwJw/vXW3Gen
+ 5KS7AC0aK86U4aD6d0lh4TUD2D40DqogdCa7eMcxVom0wf0jl+LNxLHinw8jY/0xXriu
+ uwv+LrufMXLmxPg3N2PA85WJ6xb5mPhGd1fX4ACymWrFN8KdhfnVa7Ar+8va7l7c1sGt
+ ulV/4oHP1v0C2z71vW0Il3/MIIA8IoQrW/+F8LTmul+B23LrMV3WNjc+ekYLg6Gvz94c
+ dKTg==
+X-Gm-Message-State: AOJu0YzoNReYje30HpcoTN2d3A9B/2QBouLQB74A3PU+ijs+zmT0/+No
+ covItwdL2gdtXVHqubCDljo7Ti0ti7VtgR/xcMripteWX7/vOANEzcA5vUpy253krcHFZlQdbqS
+ Pzoq7rQlQcgp96PVxzM6ZfgLUVT1BgOrxILfmRA==
+X-Google-Smtp-Source: AGHT+IHU71qft/Tb+1/wWCEgHtHdL6tbfcqkNL6ZX5347bmnUtT78T7YAyKlbkAkLZPv/H445eP/YtERaltRJI1DWUk=
+X-Received: by 2002:a50:9f49:0:b0:57c:c171:2fb6 with SMTP id
+ 4fb4d7f45d1cf-57d701badadmr2130914a12.1.1719320775918; Tue, 25 Jun 2024
+ 06:06:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/i386/kvm: Refine VMX controls setting for
- backward compatibility
-To: Zhao Liu <zhao1.liu@intel.com>
-X-ASG-Orig-Subj: Re: [PATCH v3] target/i386/kvm: Refine VMX controls setting
- for backward compatibility
-CC: Xiaoyao Li <xiaoyao.li@intel.com>, <pbonzini@redhat.com>,
- <mtosatti@redhat.com>, <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>,
- <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>
-References: <20240624095806.214525-1-ewanhai-oc@zhaoxin.com>
- <ZnqSj4PGrUeZ7OT1@intel.com>
-Content-Language: en-US
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <ZnqSj4PGrUeZ7OT1@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
-X-Barracuda-Start-Time: 1719319578
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 2922
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.126740
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
- helo=mx1.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+References: <cover.1717527933.git.mst@redhat.com>
+In-Reply-To: <cover.1717527933.git.mst@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 25 Jun 2024 14:06:04 +0100
+Message-ID: <CAFEAcA_cJjtN8Qq=9xJiyJLtazL-8zTWJTgjFG74SE3MQHpdNA@mail.gmail.com>
+Subject: Re: [PULL 00/46] virtio: features,fixes
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,84 +87,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/25/24 05:49, Zhao Liu wrote:
->> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
->> index 7ad8072748..a7c6c5b2d0 100644
->> --- a/target/i386/kvm/kvm.c
->> +++ b/target/i386/kvm/kvm.c
->> @@ -2386,6 +2386,7 @@ void kvm_arch_do_init_vcpu(X86CPU *cpu)
->>   static int kvm_get_supported_feature_msrs(KVMState *s)
->>   {
->>       int ret = 0;
->> +    int i;
->>
->>       if (kvm_feature_msrs != NULL) {
->>           return 0;
->> @@ -2420,6 +2421,20 @@ static int kvm_get_supported_feature_msrs(KVMState *s)
->>           return ret;
->>       }
->>
->> +   /*
->> +    * Compatibility fix:
->> +    * Older Linux kernels (4.17~5.2) report MSR_IA32_VMX_PROCBASED_CTLS2
->> +    * in KVM_GET_MSR_FEATURE_INDEX_LIST but not in KVM_GET_MSR_INDEX_LIST.
->> +    * This leads to an issue in older kernel versions where QEMU,
->> +    * through the KVM_GET_MSR_INDEX_LIST check, assumes the kernel
->> +    * doesn't maintain MSR_IA32_VMX_PROCBASED_CTLS2, resulting in
->> +    * incorrect settings by QEMU for this MSR.
->> +    */
->> +    for (i = 0; i < kvm_feature_msrs->nmsrs; i++) {
-> nit: `i` could be declared here,
+On Tue, 4 Jun 2024 at 20:06, Michael S. Tsirkin <mst@redhat.com> wrote:
+> ----------------------------------------------------------------
+> virtio: features,fixes
 >
-> for (int i = 0; i < kvm_feature_msrs->nmsrs; i++) {
-do I need to send a v4 version patch,to do this fix?
->> +        if (kvm_feature_msrs->indices[i] == MSR_IA32_VMX_PROCBASED_CTLS2) {
->> +            has_msr_vmx_procbased_ctls2 = true;
->> +        }
->> +    }
->>       return 0;
->>   }
->>
->> --
->> 2.34.1
->>
-> Since the minimum KVM version supported for i386 is v4.5 (docs/system/
-> target-i386.rst), this fix makes sense, so for this patch,
+> A bunch of improvements:
+> - vhost dirty log is now only scanned once, not once per device
+> - virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
+> - cxl gained DCD emulation support
+> - pvpanic gained shutdown support
+> - acpi now supports Generic Port Affinity Structure
+> - new tests
+> - bugfixes
 >
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->
-> Additionally, has_msr_vmx_vmfunc has the similar compat issue. I think
-> it deserves a fix, too.
->
-> -Zhao
-Thanks for your reply. In fact, I've tried to process has_msr_vmx_vmfunc 
-in the same
-way as has_msr_vmx_procbased_ctls in this patch, but when I tested on 
-Linux kernel
-4.19.67, I encountered an "error: failed to set MSR 0x491 to 0x***".
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> Cindy Lu (2):
+>       virtio-pci: Fix the use of an uninitialized irqfd.
+>       virtio-pci: Fix the failure process in kvm_virtio_pci_vector_use_one()
 
-This issue is due to Linux kernel commit 27c42a1bb ("KVM: nVMX: Enable 
-VMFUNC
-for the L1 hypervisor", 2017-08-03) exposing VMFUNC to the QEMU guest 
-without
-corresponding VMFUNC MSR modification code, leading to an error when 
-QEMU attempts
-to set the VMFUNC MSR. This bug affects kernels from 4.14 to 5.2, with a 
-fix introduced
-in 5.3 by Paolo (e8a70bd4e "KVM: nVMX: allow setting the VMFUNC controls 
-MSR", 2019-07-02).
+Hi -- I was wondering what happened to this virtio-pci patch,
+which I reviewed. It seems like it got into this pullreq
+which didn't get merged because of a bios-tables-test failure.
 
-So the fix for has_msr_vmx_vmfunc is clearly different from 
-has_msr_vmx_procbased_ctls2.
-However, due to the different kernel support situations, I have not yet 
-come up with a suitable
-way to handle the compatibility of has_msr_vmx_procbased_ctls2 across 
-different kernel versions.
+Michael, do you plan to respin this pullreq soon ?
 
-Therefore, should we consider only fixing has_msr_vmx_procbased_ctls2 
-this time and addressing
-has_msr_vmx_vmfunc in a future patch when the timing is more appropriate?
-
+-- PMM
 
