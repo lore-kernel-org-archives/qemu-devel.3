@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F3DC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 13:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 137EAC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 13:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM6bx-0000g2-Cv; Tue, 25 Jun 2024 09:53:29 -0400
+	id 1sM6fO-0001ya-JH; Tue, 25 Jun 2024 09:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sM6bv-0000fn-Sg
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:53:27 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sM6fM-0001y9-EQ
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:57:00 -0400
+Received: from esa12.hc1455-7.c3s2.iphmx.com ([139.138.37.100])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sM6bs-00085b-Mo
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:53:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719323605; x=1750859605;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=VDqj8FLLXt2GlyHOeiwwgvCcHIxT7PLjCZ1Sav3JPg4=;
- b=ACOlRgsdXmeJ/JP9b3X6ZZyykynpWxFZroQVGEAgFz19CfUu3f8N7vgC
- XCGff00fQF++4oRUpkS1rqeC3aaFH4DPjiPUTAml6bjSbQz+IZf6PiDJ0
- ojL/7sqH4pMHCbnBKE3d5vNh8aOfYGxYPusi/hQl5IQuZTZgvu9yvgYhF
- 10qJMslDsNLZep2r8IxNTr1Br5scNtqiMyEPoH0kI1k1pPkJN4HouDglN
- 4fr0QT9+hMp9lW55lNXNZ/1F7ejjGBZgwZU2KqwbavGCxx2015tK7+9DQ
- 6v06zY87MH0wORlh14paCM4v+NiaxtiMOnXyJfdwpz2ArEvfs66J9NQZC g==;
-X-CSE-ConnectionGUID: PU10bj/mQDqTENPDpUPnNw==
-X-CSE-MsgGUID: N+deJ68DQzKR/EsMxIRNRw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11114"; a="20119523"
-X-IronPort-AV: E=Sophos;i="6.08,264,1712646000"; d="scan'208";a="20119523"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 25 Jun 2024 06:53:22 -0700
-X-CSE-ConnectionGUID: JQb3GVzcQ+6FV7eH1DDqzg==
-X-CSE-MsgGUID: Gt67F+chRiWxW5GuUeWN4A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.08,264,1712646000"; d="scan'208";a="43539764"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa010.jf.intel.com with ESMTP; 25 Jun 2024 06:53:19 -0700
-Date: Tue, 25 Jun 2024 22:08:53 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, pbonzini@redhat.com,
- mtosatti@redhat.com, kvm@vger.kernel.org, qemu-devel@nongnu.org,
- ewanhai@zhaoxin.com, cobechen@zhaoxin.com
-Subject: Re: [PATCH v3] target/i386/kvm: Refine VMX controls setting for
- backward compatibility
-Message-ID: <ZnrPdZdgcBSY1sMi@intel.com>
-References: <20240624095806.214525-1-ewanhai-oc@zhaoxin.com>
- <ZnqSj4PGrUeZ7OT1@intel.com>
- <53119b66-3528-41d6-ac44-df166699500a@zhaoxin.com>
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sM6fK-0000Eo-50
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:57:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1719323818; x=1750859818;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=od/J33fdJNZ9Rdr41ekxlwM7bqqV3VVVriEyW9v/q4g=;
+ b=oWs5XMAY3AuFbhVcnhUiO+cJ6WhBGXV0BeyIk04uYns8LtG7gc3GFgTT
+ 5RWfstLq0pVtijRO5QCsF9VtJ+4SEkFnQOIUrVTgsVSBrFZ55SCte/rjq
+ PZeCuoqAuqsddJJt96FyIo+88cK7eKp5ENXEjEKOHPsW0D3Q+cWVMD9iM
+ Jw4xViZGPO1apkUkDk89WffKjC+H/SJSfYr+elfjT6qVv+Yk7JO8erH6G
+ 1k8UyWTUCHEmrtsmzjJo1yX2Qsyh9MQv93aiC9f8hfzv8lJebyMXUVA2H
+ cqf9CL+MH3GQc1zRXViqof0glEJGCnghR3kM4VEFr2rSu33UWe1LAxtwD w==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11114"; a="143930138"
+X-IronPort-AV: E=Sophos;i="6.08,264,1712588400"; d="scan'208";a="143930138"
+Received: from unknown (HELO yto-r1.gw.nic.fujitsu.com) ([218.44.52.217])
+ by esa12.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jun 2024 22:56:53 +0900
+Received: from yto-m4.gw.nic.fujitsu.com (yto-nat-yto-m4.gw.nic.fujitsu.com
+ [192.168.83.67])
+ by yto-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id E739AD6EEF
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 22:56:50 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by yto-m4.gw.nic.fujitsu.com (Postfix) with ESMTP id 3702BD3F03
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 22:56:50 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id BDD89401EB
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 22:56:49 +0900 (JST)
+Received: from [10.193.128.195] (unknown [10.193.128.195])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id B67C51A000A;
+ Tue, 25 Jun 2024 21:56:48 +0800 (CST)
+Message-ID: <965e2c27-6147-4237-b4b6-6aaf74363aa2@fujitsu.com>
+Date: Tue, 25 Jun 2024 21:56:48 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <53119b66-3528-41d6-ac44-df166699500a@zhaoxin.com>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -45
-X-Spam_score: -4.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
+To: Dan Williams <dan.j.williams@intel.com>, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org
+Cc: jonathan.cameron@huawei.com, dave@stgolabs.net, ira.weiny@intel.com,
+ alison.schofield@intel.com, dave.jiang@intel.com, vishal.l.verma@intel.com
+References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
+ <6675bd86ea005_57ac29411@dwillia2-xfh.jf.intel.com.notmuch>
+In-Reply-To: <6675bd86ea005_57ac29411@dwillia2-xfh.jf.intel.com.notmuch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28480.000
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28480.000
+X-TMASE-Result: 10--23.326400-10.000000
+X-TMASE-MatchedRID: +J68l7PWK+aPvrMjLFD6eKn9fPsu8s0aw5PXDQWptSnHr4PSWTXSLMWl
+ hj9iHeVpZrChzCJ9VmyNZCQJKjBBDgMPXi5ZiyFvVnzlQiaE21r4h+uI7dxXxOjMOEZ5AL0SsJs
+ JK5IfvnZTx0o+4nb1whJ+INVehs+97IFOpFOFSvixaW0fY4IMuDqu3dM+YhFRVxk27EKh25K0pv
+ xdZww2r8T+c55jUI9At1K/UeVR3qjWNSt25psfwjz6L+U/pejxpSwAzAEivMea9Zo7TJaDsJgUL
+ y4zAbFBOQzI/xUtTVxfahmBw9cTVoke/R2iCaQjn6y0mNkW0aSlY4F8r0vXP6Y5ZGw7wyeHsDBn
+ W53+2jl755lTx6LDRs9gc1n8GYlrmcUNCy5hvn9kBXeGzp60+nZljA0Gozoih2WtnORUKg685QX
+ 45szp96KnDnwlJfeMOyOCKgT1VIspsn9kdROMaR+0aBf65h9MBGvINcfHqhevY1zctlJ9TB8aRh
+ KglPt8mNVEdxRO2BKiQrGQ0QrIUWFqPXSLpNdAuce7gFxhKa3BOVz0Jwcxl6vCrG0TnfVUEW6ng
+ Ig0fclgYWutzp9Uz8dS8JMpci4WUT8BEtUV1doFxov+3JYvY74X/8yfdrbDm5T5iF8gWt8YQb1o
+ GZV/vOfOVcxjDhcwAYt5KiTiutm/v0UhTKC9nMRB0bsfrpPI6T/LTDsmJmg=
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.37.100;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa12.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,52 +102,150 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[snip]
 
-> > Additionally, has_msr_vmx_vmfunc has the similar compat issue. I think
-> > it deserves a fix, too.
-> > 
-> > -Zhao
-> Thanks for your reply. In fact, I've tried to process has_msr_vmx_vmfunc in
-> the same
-> way as has_msr_vmx_procbased_ctls in this patch, but when I tested on Linux
-> kernel
-> 4.19.67, I encountered an "error: failed to set MSR 0x491 to 0x***".
+
+在 2024/6/22 1:51, Dan Williams 写道:
+> Shiyang Ruan wrote:
+>> Background:
+>> Since CXL device is a memory device, while CPU consumes a poison page of
+>> CXL device, it always triggers a MCE by interrupt (INT18), no matter
+>> which-First path is configured.  This is the first report.  Then
+>> currently, in FW-First path, the poison event is transferred according
+>> to the following process: CXL device -> firmware -> OS:ACPI->APEI->GHES
+>>   -> CPER -> trace report.  This is the second one.  These two reports
+>> are indicating the same poisoning page, which is the so-called "duplicate
+>> report"[1].  And the memory_failure() handling I'm trying to add in
+>> OS-First path could also be another duplicate report.
+>>
+>> Hope the flow below could make it easier to understand:
+>> CPU accesses bad memory on CXL device, then
+>>   -> MCE (INT18), *always* report (1)
+>>   -> * FW-First (implemented now)
+>>        -> CXL device -> FW
+>> 	      -> OS:ACPI->APEI->GHES->CPER -> trace report (2.a)
+>>      * OS-First (not implemented yet, I'm working on it)
+>>        -> CXL device -> MSI
+>> 	      -> OS:CXL driver -> memory_failure() (2.b)
+>> so, the (1) and (2.a/b) are duplicated.
+>>
+>> (I didn't get response in my reply for [1] while I have to make patch to
+>> solve this problem, so please correct me if my understanding is wrong.)
 > 
-> This issue is due to Linux kernel commit 27c42a1bb ("KVM: nVMX: Enable
-> VMFUNC
-> for the L1 hypervisor", 2017-08-03) exposing VMFUNC to the QEMU guest
-> without
-> corresponding VMFUNC MSR modification code, leading to an error when QEMU
-> attempts
-> to set the VMFUNC MSR. This bug affects kernels from 4.14 to 5.2, with a fix
-> introduced
-> in 5.3 by Paolo (e8a70bd4e "KVM: nVMX: allow setting the VMFUNC controls
-> MSR", 2019-07-02).
+> The CPU MCE may not be in the loop. Consider the case of patrol scrub,
+> or device-DMA accessing poison. In that case the device will signal a
+> component event and the CPU may never issue the MCE.
 
-It looks like this fix was not ported to the 4.19 stable kernel.
+My other patch: "cxl/core: add poison creation event handler", adds 
+calling memory_failure() when an event is received form device, which 
+checks the poison record (insert if not exists) to make sure poison 
+would be reported/handled, but not twice, no matter CPU issues the MCE 
+later or earlier.  And the lock of poison record makes sure that it's 
+fine even in race condition.
 
-> So the fix for has_msr_vmx_vmfunc is clearly different from
-> has_msr_vmx_procbased_ctls2.
-> However, due to the different kernel support situations, I have not yet come
-> up with a suitable
-> way to handle the compatibility of has_msr_vmx_procbased_ctls2 across
-> different kernel versions.
 > 
-> Therefore, should we consider only fixing has_msr_vmx_procbased_ctls2 this
-> time and addressing
-> has_msr_vmx_vmfunc in a future patch when the timing is more appropriate?
+> What is missing for me from this description is *why* does the duplicate
+> report matter in practice? If all that happens is that the kernel
+> repeats the lookup to offline the page and set the HWPoison bit, is that
+> duplicated work worth adding more tracking?
+
+Besides setting the HWPoison bit for the poison page, memory_failure() 
+also finds and notifies those processes who are accessing the poison 
+page, and tries to recovery the page.  And there seems no lock to 
+prevent the 2nd memory_failure() and clearing poison operation from 
+being called in race, then the HWPoison bit could be unsure.  I think 
+that's the problem.
+
+ > So, I think all CXL poison notification events should trigger an
+ > action optional memory_failure(). I expect this needs to make sure
+ > that duplicates re not a problem. I.e. in the case of CPU consumption
+ > of CXL poison, that causes a synchronous MF_ACTION_REQUIRED event via
+ > the MCE path *and* it may trigger the device to send an error record
+ > for the same page. As far as I can see, duplicate reports (MCE + CXL
+ > device) are unavoidable.
+
+As you mentioned in my other patch, this problem should be solved at 
+first.  My patch adds the poison record (tracking, which might not 
+become very large) to prevent duplicating report.
+
 > 
+>> This patch adds a new notifier_block and MCE_PRIO_CXL, for CXL memdev
+>> to check whether the current poison page has been reported (if yes,
+>> stop the notifier chain, won't call the following memory_failure()
+>> to report), into `x86_mce_decoder_chain`.  In this way, if the poison
+>> page already handled(recorded and reported) in (1) or (2), the other one
+>> won't duplicate the report.  The record could be clear when
+>> cxl_clear_poison() is called.
+>>
+>> [1] https://lore.kernel.org/linux-cxl/664d948fb86f0_e8be294f8@dwillia2-mobl3.amr.corp.intel.com.notmuch/
+>>
+>> Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
+>> ---
+>>   arch/x86/include/asm/mce.h |   1 +
+>>   drivers/cxl/core/mbox.c    | 130 +++++++++++++++++++++++++++++++++++++
+>>   drivers/cxl/core/memdev.c  |   6 +-
+>>   drivers/cxl/cxlmem.h       |   3 +
+>>   4 files changed, 139 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/x86/include/asm/mce.h b/arch/x86/include/asm/mce.h
+>> index dfd2e9699bd7..d8109c48e7d9 100644
+>> --- a/arch/x86/include/asm/mce.h
+>> +++ b/arch/x86/include/asm/mce.h
+>> @@ -182,6 +182,7 @@ enum mce_notifier_prios {
+>>   	MCE_PRIO_NFIT,
+>>   	MCE_PRIO_EXTLOG,
+>>   	MCE_PRIO_UC,
+>> +	MCE_PRIO_CXL,
+>>   	MCE_PRIO_EARLY,
+>>   	MCE_PRIO_CEC,
+>>   	MCE_PRIO_HIGHEST = MCE_PRIO_CEC
+>> diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
+>> index 2626f3fff201..0eb3c5401e81 100644
+>> --- a/drivers/cxl/core/mbox.c
+>> +++ b/drivers/cxl/core/mbox.c
+>> @@ -4,6 +4,8 @@
+>>   #include <linux/debugfs.h>
+>>   #include <linux/ktime.h>
+>>   #include <linux/mutex.h>
+>> +#include <linux/notifier.h>
+>> +#include <asm/mce.h>
+>>   #include <asm/unaligned.h>
+>>   #include <cxlpci.h>
+>>   #include <cxlmem.h>
+>> @@ -880,6 +882,9 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
+>>   		if (cxlr)
+>>   			hpa = cxl_trace_hpa(cxlr, cxlmd, dpa);
+>>   
+>> +		if (hpa != ULLONG_MAX && cxl_mce_recorded(hpa))
+>> +			return;
+>> +
+>>   		if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
+>>   			trace_cxl_general_media(cxlmd, type, cxlr, hpa,
+>>   						&evt->gen_media);
+>> @@ -1408,6 +1413,127 @@ int cxl_poison_state_init(struct cxl_memdev_state *mds)
+>>   }
+>>   EXPORT_SYMBOL_NS_GPL(cxl_poison_state_init, CXL);
+>>   
+>> +struct cxl_mce_record {
+>> +	struct list_head node;
+>> +	u64 hpa;
+>> +};
+>> +LIST_HEAD(cxl_mce_records);
+>> +DEFINE_MUTEX(cxl_mce_mutex);
+> 
+> I would recommend an xarray for this use case as that already has its
+> own internal locking and efficient memory allocation for new nodes.
+> 
+> However, the "why" question needs to be answered first.
 
-I agree this fix should focus on MSR_IA32_VMX_PROCBASED_CTLS2.
+xarray does look better.  I didn't think of it befre.  Thanks for 
+suggestion.
 
-But I think at least we need a comment (maybe a TODO) to note the case of
-has_msr_vmx_vmfunc in a followup patch.
-
-Let's wait and see what Paolo will say.
-
--Zhao
+--
+Thanks
+Ruan.
 
