@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37362C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 13:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F3DC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 13:53:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM6YZ-0006zJ-FF; Tue, 25 Jun 2024 09:49:59 -0400
+	id 1sM6bx-0000g2-Cv; Tue, 25 Jun 2024 09:53:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sM6YV-0006x0-Ok
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:49:55 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sM6YT-0007KH-Kc
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:49:54 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a6f8ebbd268so1085822866b.0
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 06:49:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719323391; x=1719928191;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RJhNG6W/u2QBb+Lr2mxjHC9Dx9KTVbi65U/cSPuIL0U=;
- b=x1/IXBqc0fKLBKQ0jl9Mr4me0mNZtKVp4veVJYLjZyA83eEjFIlM69nUwy6ifAOX1O
- rBGqvB7s1EDbsFdACIcs5EylrYEskK1nEWXt+1cViHhs/ndHsUzMkAyIqRYRVY/HQ2t9
- /CvBYxXXu+hgqXJuUA5FwfOxjHkcX/KofIE4DUCCDZKOsy3/OvzDpv0NBGZNK/t7IiHB
- 7BjWmdgGy3Akc6X7yRNYCX0aolVpi4YnbF4I7A8ki3U6+3S5YU55a3NmNtpCFm5NXPHm
- 2gyw2Yf/VnaCM+j+hyO0llLhJGo1qz8qgEIIG+PCL4UIn/ZIJ4XnDWSVG9HZBh+yiRZN
- RyDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719323391; x=1719928191;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RJhNG6W/u2QBb+Lr2mxjHC9Dx9KTVbi65U/cSPuIL0U=;
- b=f5DIEzowKgwgwRUEgX6hWcnppXAhU0oBtwyTSGYv1+LaZEsCh5Y1ppHbEbbbOkmzQ+
- rh2cjwYlnwR/CEUpAfeMtvWelFyzJCwLFbJfWdYbw4fKaBOzByS+8FyzOfLSQPZhHGoQ
- O68wsbFUgIw6/z2RdjleAXKzK2aZM3VmljCKXzeqapdYsb4x50dpooNIqJWsmRoTO3nd
- 7+QLSMe0C7UWf5XPkrvfrEhMFcEM+Qw4hlG1bykQ+oxUqLSd8lZKnMJb10PPDjnP1N9J
- yH7NUE0AndpDUkjP/EkuSabIebfmHp31+UDaNAfd5c2e26kW286KPlM1zQV8vmvh9NN0
- 6fkA==
-X-Gm-Message-State: AOJu0YypOfysUTMM59xKiKlV2nOJvMBkLImlgdsiLUHLEiGYNsW9Q4/c
- 6dtpfds6uMpp7W7/YXiCtekFnYI0J+0GWJHn/KQmULqvWpiK3J8siWYptZxwWZyE9BaRjTYE85P
- xwQ==
-X-Google-Smtp-Source: AGHT+IHkWoyye5aFgxtGCab24XrPAMz+pZCcRPfDgntmT+aNwSZpZQdQrI8K/fY4jjOp778PEcE+vQ==
-X-Received: by 2002:a17:906:57cb:b0:a6f:e3e4:e0b6 with SMTP id
- a640c23a62f3a-a700e70884emr725231766b.27.1719323390852; 
- Tue, 25 Jun 2024 06:49:50 -0700 (PDT)
-Received: from localhost.localdomain (89-104-8-17.customer.bnet.at.
- [89.104.8.17]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a726e13a4d7sm77299166b.19.2024.06.25.06.49.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 06:49:50 -0700 (PDT)
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, philmd@linaro.org, marcandre.lureau@redhat.com,
- akihiko.odaki@daynix.com, lists@philjordan.eu,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2 1/2] ui/cocoa: Minor fixes to CALayer based cursors
-Date: Tue, 25 Jun 2024 15:49:30 +0200
-Message-Id: <20240625134931.92279-2-phil@philjordan.eu>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20240625134931.92279-1-phil@philjordan.eu>
-References: <20240625134931.92279-1-phil@philjordan.eu>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sM6bv-0000fn-Sg
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:53:27 -0400
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sM6bs-00085b-Mo
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 09:53:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1719323605; x=1750859605;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=VDqj8FLLXt2GlyHOeiwwgvCcHIxT7PLjCZ1Sav3JPg4=;
+ b=ACOlRgsdXmeJ/JP9b3X6ZZyykynpWxFZroQVGEAgFz19CfUu3f8N7vgC
+ XCGff00fQF++4oRUpkS1rqeC3aaFH4DPjiPUTAml6bjSbQz+IZf6PiDJ0
+ ojL/7sqH4pMHCbnBKE3d5vNh8aOfYGxYPusi/hQl5IQuZTZgvu9yvgYhF
+ 10qJMslDsNLZep2r8IxNTr1Br5scNtqiMyEPoH0kI1k1pPkJN4HouDglN
+ 4fr0QT9+hMp9lW55lNXNZ/1F7ejjGBZgwZU2KqwbavGCxx2015tK7+9DQ
+ 6v06zY87MH0wORlh14paCM4v+NiaxtiMOnXyJfdwpz2ArEvfs66J9NQZC g==;
+X-CSE-ConnectionGUID: PU10bj/mQDqTENPDpUPnNw==
+X-CSE-MsgGUID: N+deJ68DQzKR/EsMxIRNRw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11114"; a="20119523"
+X-IronPort-AV: E=Sophos;i="6.08,264,1712646000"; d="scan'208";a="20119523"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Jun 2024 06:53:22 -0700
+X-CSE-ConnectionGUID: JQb3GVzcQ+6FV7eH1DDqzg==
+X-CSE-MsgGUID: Gt67F+chRiWxW5GuUeWN4A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.08,264,1712646000"; d="scan'208";a="43539764"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa010.jf.intel.com with ESMTP; 25 Jun 2024 06:53:19 -0700
+Date: Tue, 25 Jun 2024 22:08:53 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Ewan Hai <ewanhai-oc@zhaoxin.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, pbonzini@redhat.com,
+ mtosatti@redhat.com, kvm@vger.kernel.org, qemu-devel@nongnu.org,
+ ewanhai@zhaoxin.com, cobechen@zhaoxin.com
+Subject: Re: [PATCH v3] target/i386/kvm: Refine VMX controls setting for
+ backward compatibility
+Message-ID: <ZnrPdZdgcBSY1sMi@intel.com>
+References: <20240624095806.214525-1-ewanhai-oc@zhaoxin.com>
+ <ZnqSj4PGrUeZ7OT1@intel.com>
+ <53119b66-3528-41d6-ac44-df166699500a@zhaoxin.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::636;
- envelope-from=phil@philjordan.eu; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <53119b66-3528-41d6-ac44-df166699500a@zhaoxin.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,58 +86,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change fixes some object lifetime issues. (Unreleased reference
-counts)
+[snip]
 
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
----
- ui/cocoa.m | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+> > Additionally, has_msr_vmx_vmfunc has the similar compat issue. I think
+> > it deserves a fix, too.
+> > 
+> > -Zhao
+> Thanks for your reply. In fact, I've tried to process has_msr_vmx_vmfunc in
+> the same
+> way as has_msr_vmx_procbased_ctls in this patch, but when I tested on Linux
+> kernel
+> 4.19.67, I encountered an "error: failed to set MSR 0x491 to 0x***".
+> 
+> This issue is due to Linux kernel commit 27c42a1bb ("KVM: nVMX: Enable
+> VMFUNC
+> for the L1 hypervisor", 2017-08-03) exposing VMFUNC to the QEMU guest
+> without
+> corresponding VMFUNC MSR modification code, leading to an error when QEMU
+> attempts
+> to set the VMFUNC MSR. This bug affects kernels from 4.14 to 5.2, with a fix
+> introduced
+> in 5.3 by Paolo (e8a70bd4e "KVM: nVMX: allow setting the VMFUNC controls
+> MSR", 2019-07-02).
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index 06ca114800..cca987eac7 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -395,6 +395,13 @@ - (void) dealloc
-         CFRelease(eventsTap);
-     }
- 
-+    if (cursor) {
-+        cursor_unref(cursor);
-+        cursor = NULL;
-+    }
-+
-+    [cursorLayer release];
-+    cursorLayer = nil;
-     [super dealloc];
- }
- 
-@@ -474,6 +481,7 @@ - (void)setCursor:(QEMUCursor *)given_cursor
- 
-     bounds.size.width = cursor->width;
-     bounds.size.height = cursor->height;
-+    CGColorSpaceRef color_space = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
- 
-     provider = CGDataProviderCreateWithData(
-         NULL,
-@@ -488,7 +496,7 @@ - (void)setCursor:(QEMUCursor *)given_cursor
-         8, //bitsPerComponent
-         32, //bitsPerPixel
-         cursor->width * 4, //bytesPerRow
--        CGColorSpaceCreateWithName(kCGColorSpaceSRGB), //colorspace
-+        color_space, //colorspace
-         kCGBitmapByteOrder32Little | kCGImageAlphaFirst, //bitmapInfo
-         provider, //provider
-         NULL, //decode
-@@ -497,6 +505,7 @@ - (void)setCursor:(QEMUCursor *)given_cursor
-     );
- 
-     CGDataProviderRelease(provider);
-+    CGColorSpaceRelease(color_space);
-     [CATransaction begin];
-     [CATransaction setDisableActions:YES];
-     [cursorLayer setBounds:bounds];
--- 
-2.39.3 (Apple Git-146)
+It looks like this fix was not ported to the 4.19 stable kernel.
 
+> So the fix for has_msr_vmx_vmfunc is clearly different from
+> has_msr_vmx_procbased_ctls2.
+> However, due to the different kernel support situations, I have not yet come
+> up with a suitable
+> way to handle the compatibility of has_msr_vmx_procbased_ctls2 across
+> different kernel versions.
+> 
+> Therefore, should we consider only fixing has_msr_vmx_procbased_ctls2 this
+> time and addressing
+> has_msr_vmx_vmfunc in a future patch when the timing is more appropriate?
+> 
+
+I agree this fix should focus on MSR_IA32_VMX_PROCBASED_CTLS2.
+
+But I think at least we need a comment (maybe a TODO) to note the case of
+has_msr_vmx_vmfunc in a followup patch.
+
+Let's wait and see what Paolo will say.
+
+-Zhao
 
