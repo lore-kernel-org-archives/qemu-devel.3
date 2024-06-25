@@ -4,101 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9A5C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 11:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4398C30653
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 11:30:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM4DY-00063B-71; Tue, 25 Jun 2024 07:20:08 -0400
+	id 1sM4Mb-0001Xh-6H; Tue, 25 Jun 2024 07:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sM4DW-00062M-A3
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 07:20:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sM4MZ-0001Ww-1u; Tue, 25 Jun 2024 07:29:27 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sM4DU-0003Uh-LF
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 07:20:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719314403;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TxfK50CM39AgyHMqWIsuemzgcz5lpe3wAS/FH8p5QME=;
- b=Xlo8dGkF2gnAdtBwQlJJbTXhsHRe0RDK6iY/U15obCcc5qicOBhiNZGtBCKkweAKaAcMuA
- nqWeBN7zYdBENQDGVSZti6owC16HVjtk+twL760QCuOrTY0IpLv6wq2Y06eqpBM7bBZwsL
- lrDpRb6brt/H+h5vL33NtwFjjZYmv00=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-526-5jeUyjP0Py-qXDATY_jfZQ-1; Tue, 25 Jun 2024 07:20:02 -0400
-X-MC-Unique: 5jeUyjP0Py-qXDATY_jfZQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3643d0e3831so3517482f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 04:20:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719314401; x=1719919201;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TxfK50CM39AgyHMqWIsuemzgcz5lpe3wAS/FH8p5QME=;
- b=tC0YxDHxqj1ClZUNDUEJcvXjOBqcLYf9oTft8rXH505G6eMFOcWddVVURRe6ZTeZGA
- /eVnkWGgR6ftmkrOwt0p9+a7ISsJIe5IV6QT4G+KibE6THJptNe8SqSNQkMjNn/AoCip
- /ApzwlwEfk3Tq+QpOf5foV7u0yyJdzSI4eV8Iylh4MlyxwECbPMtyuovRhtqZ2ksmGvp
- rAIjwMZQy7O5i/OQHi2SV39OGa6BaijFUCQP976h/PGqBHciXGnO6NB8QRROccSFny8q
- I/W0VnIJN3pFB9qCTTPBXazg11WzwUt8WrqtlvGByMlIQtPEhPGYUtzuvZolo4FASJYp
- jWaQ==
-X-Gm-Message-State: AOJu0YyRoHghStJurvY0mwnPUJp7aYpq1UoUakcqv4yOrl0KNHlCaNxt
- KHizoq0y8EzpzLJfCaRqZPDKc1lg/y2a1KhZlU83NIAPyrhU1/6tQYqLWEX5fI1YG4KlKiVzkM6
- z04T/svwcy/V9LbSsC0uNf3A7t5cWbwCsrKWv5Ssc1Rhnptq+sEr+
-X-Received: by 2002:adf:e58b:0:b0:35f:1dce:8671 with SMTP id
- ffacd0b85a97d-366e948eb63mr4549694f8f.25.1719314401141; 
- Tue, 25 Jun 2024 04:20:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcLxacYR4nykxujNhQdXMes9ZuyxkAAaFrXTW1/Li9bQClY0Za9ENc9OchVqJwrOj5T++SoQ==
-X-Received: by 2002:adf:e58b:0:b0:35f:1dce:8671 with SMTP id
- ffacd0b85a97d-366e948eb63mr4549679f8f.25.1719314400680; 
- Tue, 25 Jun 2024 04:20:00 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36638f858fbsm12641652f8f.65.2024.06.25.04.19.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 04:20:00 -0700 (PDT)
-Date: Tue, 25 Jun 2024 13:19:59 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Sunil V L <sunilvl@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-riscv@nongnu.org, Paolo
- Bonzini <pbonzini@redhat.com>, =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau
- <marcandre.lureau@redhat.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>, Philippe
- =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, "Michael S . Tsirkin"
- <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Laurent Vivier
- <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Sia Jee Heng
- <jeeheng.sia@starfivetech.com>, Alistair Francis <alistair23@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Alistair
- Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH v3 14/15] tests/qtest/bios-tables-test.c: Enable basic
- testing for RISC-V
-Message-ID: <20240625131959.67c2fc74@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240621115906.1049832-15-sunilvl@ventanamicro.com>
-References: <20240621115906.1049832-1-sunilvl@ventanamicro.com>
- <20240621115906.1049832-15-sunilvl@ventanamicro.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sM4MV-0005jH-1Z; Tue, 25 Jun 2024 07:29:26 -0400
+Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:2208:0:640:cdc8:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 1EAEE60BA0;
+ Tue, 25 Jun 2024 14:29:15 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b645::1:29] (unknown
+ [2a02:6b8:b081:b645::1:29])
+ by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id DTNkUG0IjSw0-AT8Dgu1S; Tue, 25 Jun 2024 14:29:14 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1719314954;
+ bh=W+cZdRvy95FUSfOg6/73/RQu02gtiRHrpJSsjqGRuho=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=RwTP/mOZVA+jaS6sAeEUzwsuWiti1QAQE8n7SdEpa4Kqvp+EDQwMzJ3J9b1FKxrgD
+ v++Iw65kEpSlIaO3pSr/cb06nZvJspqehJY3FOprEVgeIB/ffLmasVV+FR1NLlQwwm
+ 3JVsujEJlSNB3v6l1zrVSKnxHYiQH3xYQKAzCyJk=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <35c36e55-aaa6-4854-b6e9-b7bbf69c7aad@yandex-team.ru>
+Date: Tue, 25 Jun 2024 14:29:13 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] copy-before-write: allow specifying minimum
+ cluster size
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, armbru@redhat.com, eblake@redhat.com,
+ hreitz@redhat.com, kwolf@redhat.com, jsnow@redhat.com
+References: <20240528120114.344416-1-f.ebner@proxmox.com>
+ <20240528120114.344416-2-f.ebner@proxmox.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20240528120114.344416-2-f.ebner@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,63 +77,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 21 Jun 2024 17:29:05 +0530
-Sunil V L <sunilvl@ventanamicro.com> wrote:
-
-> Add basic ACPI table test case for RISC-V.
+On 28.05.24 15:01, Fiona Ebner wrote:
+> In the context of backup fleecing, discarding the source will not work
+> when the fleecing image has a larger granularity than the one used for
+> block-copy operations (can happen if the backup target has smaller
+> cluster size), because cbw_co_pdiscard_snapshot() will align down the
+> discard requests and thus effectively ignore then.
 > 
-> Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
+> To make @discard-source work in such a scenario, allow specifying the
+> minimum cluster size used for block-copy operations and thus in
+> particular also the granularity for discard requests to the source.
+> 
+> The type 'size' (corresponding to uint64_t in C) is used in QAPI to
+> rule out negative inputs and for consistency with already existing
+> @cluster-size parameters. Since block_copy_calculate_cluster_size()
+> uses int64_t for its result, a check that the input is not too large
+> is added in block_copy_state_new() before calling it. The calculation
+> in block_copy_calculate_cluster_size() is done in the target int64_t
+> type.
+> 
+> Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 > ---
->  tests/qtest/bios-tables-test.c | 26 ++++++++++++++++++++++++++
->  1 file changed, 26 insertions(+)
 > 
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> index f4c4704bab..0f9c654e96 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -1977,6 +1977,28 @@ static void test_acpi_microvm_acpi_erst(void)
->  }
->  #endif /* CONFIG_POSIX */
->  
-> +static void test_acpi_riscv64_virt_tcg(void)
-> +{
-> +    test_data data = {
-> +        .machine = "virt",
-> +        .arch = "riscv64",
-> +        .tcg_only = true,
-> +        .uefi_fl1 = "pc-bios/edk2-riscv-code.fd",
-> +        .uefi_fl2 = "pc-bios/edk2-riscv-vars.fd",
-> +        .cd = "tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2",
-> +        .ram_start = 0x80000000ULL,
-> +        .scan_len = 128ULL * 1024 * 1024,
-> +    };
+> Changes in v2:
+> * Use 'size' type in QAPI.
+> * Remove option in cbw_parse_options(), i.e. before parsing generic
+>    blockdev options.
+> 
+>   block/block-copy.c         | 22 ++++++++++++++++++----
+>   block/copy-before-write.c  | 10 +++++++++-
+>   include/block/block-copy.h |  1 +
+>   qapi/block-core.json       |  8 +++++++-
+>   4 files changed, 35 insertions(+), 6 deletions(-)
+> 
+> diff --git a/block/block-copy.c b/block/block-copy.c
+> index 7e3b378528..36eaecaaf4 100644
+> --- a/block/block-copy.c
+> +++ b/block/block-copy.c
+> @@ -310,6 +310,7 @@ void block_copy_set_copy_opts(BlockCopyState *s, bool use_copy_range,
+>   }
+>   
+>   static int64_t block_copy_calculate_cluster_size(BlockDriverState *target,
+> +                                                 int64_t min_cluster_size,
+>                                                    Error **errp)
+>   {
+>       int ret;
+> @@ -335,7 +336,7 @@ static int64_t block_copy_calculate_cluster_size(BlockDriverState *target,
+>                       "used. If the actual block size of the target exceeds "
+>                       "this default, the backup may be unusable",
+>                       BLOCK_COPY_CLUSTER_SIZE_DEFAULT);
+> -        return BLOCK_COPY_CLUSTER_SIZE_DEFAULT;
+> +        return MAX(min_cluster_size, (int64_t)BLOCK_COPY_CLUSTER_SIZE_DEFAULT);
+
+instead of triple use MAX(min_..., let's just do
+
+    min_cluster_size = MAX(min_cluster_size, (int64_t)BLOCK_COPY_CLUSTER_SIZE_DEFAULT);
+
+at start of function, and then use min_cluster_size
+
+
+anyway:
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
+>       } else if (ret < 0 && !target_does_cow) {
+>           error_setg_errno(errp, -ret,
+>               "Couldn't determine the cluster size of the target image, "
+> @@ -345,16 +346,18 @@ static int64_t block_copy_calculate_cluster_size(BlockDriverState *target,
+>           return ret;
+>       } else if (ret < 0 && target_does_cow) {
+>           /* Not fatal; just trudge on ahead. */
+> -        return BLOCK_COPY_CLUSTER_SIZE_DEFAULT;
+> +        return MAX(min_cluster_size, (int64_t)BLOCK_COPY_CLUSTER_SIZE_DEFAULT);
+>       }
+>   
+> -    return MAX(BLOCK_COPY_CLUSTER_SIZE_DEFAULT, bdi.cluster_size);
+> +    return MAX(min_cluster_size,
+> +               (int64_t)MAX(BLOCK_COPY_CLUSTER_SIZE_DEFAULT, bdi.cluster_size));
+>   }
+>   
+>   BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
+>                                        BlockDriverState *copy_bitmap_bs,
+>                                        const BdrvDirtyBitmap *bitmap,
+>                                        bool discard_source,
+> +                                     uint64_t min_cluster_size,
+>                                        Error **errp)
+>   {
+>       ERRP_GUARD();
+> @@ -365,7 +368,18 @@ BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
+>   
+>       GLOBAL_STATE_CODE();
+>   
+> -    cluster_size = block_copy_calculate_cluster_size(target->bs, errp);
+> +    if (min_cluster_size > INT64_MAX) {
+> +        error_setg(errp, "min-cluster-size too large: %lu > %ld",
+> +                   min_cluster_size, INT64_MAX);
+> +        return NULL;
+> +    } else if (min_cluster_size && !is_power_of_2(min_cluster_size)) {
+> +        error_setg(errp, "min-cluster-size needs to be a power of 2");
+> +        return NULL;
+> +    }
 > +
-> +    /*
-> +     * RHCT will have ISA string encoded. To reduce the effort
-> +     * of updating expected AML file for any new default ISA extension,
-> +     * use the profile rva22s64.
-> +     */
-> +    test_acpi_one("-cpu rva22s64 ", &data);
-> +    free_test_data(&data);
-> +}
+> +    cluster_size = block_copy_calculate_cluster_size(target->bs,
+> +                                                     (int64_t)min_cluster_size,
+> +                                                     errp);
+>       if (cluster_size < 0) {
+>           return NULL;
+>       }
+> diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+> index cd65524e26..ef0bc4dcfe 100644
+> --- a/block/copy-before-write.c
+> +++ b/block/copy-before-write.c
+> @@ -417,6 +417,7 @@ static BlockdevOptions *cbw_parse_options(QDict *options, Error **errp)
+>       qdict_extract_subqdict(options, NULL, "bitmap");
+>       qdict_del(options, "on-cbw-error");
+>       qdict_del(options, "cbw-timeout");
+> +    qdict_del(options, "min-cluster-size");
+>   
+>   out:
+>       visit_free(v);
+> @@ -432,6 +433,7 @@ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
+>       BDRVCopyBeforeWriteState *s = bs->opaque;
+>       BdrvDirtyBitmap *bitmap = NULL;
+>       int64_t cluster_size;
+> +    uint64_t min_cluster_size = 0;
+>       g_autoptr(BlockdevOptions) full_opts = NULL;
+>       BlockdevOptionsCbw *opts;
+>       int ret;
+> @@ -476,8 +478,14 @@ static int cbw_open(BlockDriverState *bs, QDict *options, int flags,
+>                bs->file->bs->supported_zero_flags);
+>   
+>       s->discard_source = flags & BDRV_O_CBW_DISCARD_SOURCE;
 > +
->  static void test_acpi_aarch64_virt_tcg(void)
->  {
->      test_data data = {
-> @@ -2455,6 +2477,10 @@ int main(int argc, char *argv[])
->                  qtest_add_func("acpi/virt/viot", test_acpi_aarch64_virt_viot);
->              }
->          }
-> +    } else if (strcmp(arch, "riscv64") == 0) {
-> +        if (has_tcg && qtest_has_device("virtio-blk-pci")) {
-> +            qtest_add_func("acpi/virt", test_acpi_riscv64_virt_tcg);
-> +        }
->      }
->      ret = g_test_run();
->      boot_sector_cleanup(disk);
+> +    if (opts->has_min_cluster_size) {
+> +        min_cluster_size = opts->min_cluster_size;
+> +    }
+> +
+>       s->bcs = block_copy_state_new(bs->file, s->target, bs, bitmap,
+> -                                  flags & BDRV_O_CBW_DISCARD_SOURCE, errp);
+> +                                  flags & BDRV_O_CBW_DISCARD_SOURCE,
+> +                                  min_cluster_size, errp);
+>       if (!s->bcs) {
+>           error_prepend(errp, "Cannot create block-copy-state: ");
+>           return -EINVAL;
+> diff --git a/include/block/block-copy.h b/include/block/block-copy.h
+> index bdc703bacd..dd5cc82f3b 100644
+> --- a/include/block/block-copy.h
+> +++ b/include/block/block-copy.h
+> @@ -28,6 +28,7 @@ BlockCopyState *block_copy_state_new(BdrvChild *source, BdrvChild *target,
+>                                        BlockDriverState *copy_bitmap_bs,
+>                                        const BdrvDirtyBitmap *bitmap,
+>                                        bool discard_source,
+> +                                     uint64_t min_cluster_size,
+>                                        Error **errp);
+>   
+>   /* Function should be called prior any actual copy request */
+> diff --git a/qapi/block-core.json b/qapi/block-core.json
+> index df5e07debd..8fc0a4b234 100644
+> --- a/qapi/block-core.json
+> +++ b/qapi/block-core.json
+> @@ -4642,12 +4642,18 @@
+>   #     @on-cbw-error parameter will decide how this failure is handled.
+>   #     Default 0.  (Since 7.1)
+>   #
+> +# @min-cluster-size: Minimum size of blocks used by copy-before-write
+> +#     operations.  Has to be a power of 2.  No effect if smaller than
+> +#     the maximum of the target's cluster size and 64 KiB.  Default 0.
+> +#     (Since 9.1)
+> +#
+>   # Since: 6.2
+>   ##
+>   { 'struct': 'BlockdevOptionsCbw',
+>     'base': 'BlockdevOptionsGenericFormat',
+>     'data': { 'target': 'BlockdevRef', '*bitmap': 'BlockDirtyBitmap',
+> -            '*on-cbw-error': 'OnCbwError', '*cbw-timeout': 'uint32' } }
+> +            '*on-cbw-error': 'OnCbwError', '*cbw-timeout': 'uint32',
+> +            '*min-cluster-size': 'size' } }
+>   
+>   ##
+>   # @BlockdevOptions:
+
+-- 
+Best regards,
+Vladimir
 
 
