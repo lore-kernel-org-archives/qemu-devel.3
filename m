@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F63C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 07:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A97ABC30653
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 07:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM0yt-00046l-As; Tue, 25 Jun 2024 03:52:47 -0400
+	id 1sM13N-00061l-FL; Tue, 25 Jun 2024 03:57:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
- id 1sM0yr-00046W-9r; Tue, 25 Jun 2024 03:52:45 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sM13L-00061I-P2
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 03:57:23 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <arthurtumanyan@gmail.com>)
- id 1sM0yp-0007As-1q; Tue, 25 Jun 2024 03:52:44 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a6f8ebbd268so1024055366b.0; 
- Tue, 25 Jun 2024 00:52:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sM13J-0007ru-Si
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 03:57:23 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4217d451f69so44767655e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 00:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719301960; x=1719906760; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=psxBGR4BEdSA8CxtBRYpCiDkFnYW9Y8BOVctpJ+Kmdk=;
- b=lVCrVefjm83FAD3ocr9D4VZ0h7ra6+/F6OyAsPK4Nfp99tbd0l8QO7erYBK01v+jpm
- ZZsshqOqrAlz0QWwZrF0Eh3Hs9JwB2L0uhmXr+PJZlt66fdRgISv1CKhNqmN1Bbiq0vZ
- sxdzt8hSprURzAOIQO57lJI1K48okIRFDbmEqnwjH+P4+p7D3Z6hjNkqWRcFw2BRxQ6+
- vD+nq5U7kweXvqJK+e3jAYvtG/yV7U8w5ciCPIQ6oP3pStpbEpmod2CDVomwFXuIUUe9
- zXFUiL1Z5YRSFMnxaVop4QdBaWFq5UzKHrOm1VaO6nC8eFqjB2qG2dpQs1UKzRt1mxpq
- rEsw==
+ d=linaro.org; s=google; t=1719302239; x=1719907039; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WBCJjW5vif2LHelkGvlFGYgM3YeiN3kgyhPutsaEpy8=;
+ b=u0lwQVWAAypNNFyuYRrNnC1lE1Op8ZQJrXlbUyFUbl0feK2BYxeZ5EAtJ3A8NpAJEh
+ uJNB+rCYejnwpc8DzhGtabx23R/eUm04zQbiDFOmGVUX49F3NJ9L2WWgf5Yg8ZCBdSHP
+ TaU43vvON5x4Kx6aidYNQnuYBVvVvIcCr5koCkKzTAL7L+tnIShQMNq5VUSfpnmPIqc+
+ hs5aCbZHvBHeqIH6BQj7t/X594+Wkm1AtWAifVCC5pygEy8gzdmrHT70mKHbfnSVdF/S
+ 0YKAFly+7vgx0FZ2/4SA+kg1BXPhsqEyJYl78w0rDcYou/EYqVaiovyNyXSRGG1GN7td
+ YWuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719301960; x=1719906760;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=psxBGR4BEdSA8CxtBRYpCiDkFnYW9Y8BOVctpJ+Kmdk=;
- b=o/RHVGjNuQBbbo9bnv+QBUhWXkYCloFT7tun94hu3fc/YkdYtA5aeDfwpsHU5vWmlg
- UJlfOeeNAhpzVdvSVYNNmwE8Msmr7oDMnDD/PmdQOf/Nj6EeSnNcWuKVlhkcCL2yJ9rj
- J/Ce37Kj0kzVKx2809oyYrY0gJLEzgf8aexT7fyc6X74z9LhRgytKtyrzu5S7nQW54az
- 2iL5rnxDfim6K6+w/Hid5fc/UKtNHQkMCbkM8s0aD1EIDmqpNXryNLEcrJG0kai0ttMZ
- P1EQ6q1L7zH3ba4de7ou9j1VATyK6OOurn6e+dX0G8fsDjRmDCXNmQMrjdG97CyBlzxN
- xTlw==
+ d=1e100.net; s=20230601; t=1719302239; x=1719907039;
+ h=content-transfer-encoding:in-reply-to:from:cc:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WBCJjW5vif2LHelkGvlFGYgM3YeiN3kgyhPutsaEpy8=;
+ b=rRZ9wOw01SyMi6ndVUfWqHa2qEgbY13aS7sYL8iOS4woRW5/k6p+K35CQolOvH803x
+ A3S11j41I5AwkF8KUATvpb5Un8CvYt3CcUIGPfd3EJ8e8cf8LvEz69IzLahfu4QqEoq8
+ 1t5v3mRzByfw8lZqMLrB71ANnKjxsEZr7Q78z9j/GaX775WyAEBu0VGcOSLCOqCs+jmD
+ 3QSjS7NChfQ1AjvBRi7Ch+4LaPgaNK9sZY3YHVYVSOcz5+O6EaWz8IdkuqumeEtbh4uW
+ aLUnJmyJN3NETEs2ZZYR9rMHh5UC4YqetMNORwn1KzR8sJt5ZO8r7fdcj7o7Snlyj49M
+ nXyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUaGR1ZAPCDHnbmAykCIQ66I2+DWpm70oe3KpvtrXfPTZE/lUea5WA6oEGZ0hwTZJQcAV1i4T7MBUL50/obchjfMAhRvriLjvLdNdN0ewrt7a7BJ3IenSTfnIM=
-X-Gm-Message-State: AOJu0YwN1IgFAbsWsKDvny7W+DBQvnu5XqIu0LWVD4/DlT/pkgwa7zna
- rKEkXMWKpAnaov7JJ1XVd8Fr8QWBjQOqeQloIYnDsTTglIfwQW/iGfw4yVGjJOKP/LGEFffI0if
- xnvQyhXQdoTbj8ZCCY+/kbMckXNw=
-X-Google-Smtp-Source: AGHT+IHGBL7EV6Pu3DkfAF8neOju2zapgEgwAWzFGLZeRF+oPv5K0phFYaDjR1q8KVVXQgnUUkxWmhagPZQccAh0uFI=
-X-Received: by 2002:a17:907:208b:b0:a6f:881a:cd52 with SMTP id
- a640c23a62f3a-a6ffe3ccd23mr634567966b.17.1719301960224; Tue, 25 Jun 2024
- 00:52:40 -0700 (PDT)
+ AJvYcCX7p3IryU/JRsr+N1w8vUiVYNljgE/u0VcbNvpCdk4Ro/g+/uf6xNjT5e3giYM74jXe1oBiGJ6dGfdMMnpKCobAtCgRWFM=
+X-Gm-Message-State: AOJu0YyuWFhbCQNXPyHqB8gRgui//os4AiSXZzXYwZ0Uo4dCIII1sDRm
+ Y9CERjaabLweEP05Y3JsGK2gnHO8rGNUVpW9CVUacFwOyVQr4wxKSHT0pwK6NzU=
+X-Google-Smtp-Source: AGHT+IFAE75zsstpfd9ckvqfICq43v7lBMKc1+H0vfw230z0x2AHHOswqQGvim235QLd0LyekU5LPQ==
+X-Received: by 2002:a05:600c:4711:b0:422:5d3d:34cd with SMTP id
+ 5b1f17b1804b1-4248cc2a7a6mr46055725e9.16.1719302238722; 
+ Tue, 25 Jun 2024 00:57:18 -0700 (PDT)
+Received: from [192.168.69.100] (mau49-h01-176-184-41-129.dsl.sta.abo.bbox.fr.
+ [176.184.41.129]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4247d212254sm201106575e9.45.2024.06.25.00.57.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Jun 2024 00:57:18 -0700 (PDT)
+Message-ID: <40e4c21a-1f64-445e-a385-a9f4ccec0b0d@linaro.org>
+Date: Tue, 25 Jun 2024 09:57:16 +0200
 MIME-Version: 1.0
-References: <CADueUgQh-=vmoO9kqL589Xeuf_LOM_K2Rr-rBxwe8iArdNdzsA@mail.gmail.com>
- <6b1daa9c-6f37-4edb-86d4-782941f1bcca@redhat.com>
- <CAFEAcA-Yda=XXspi49Z+-7bmBP-DzL2kFMg_XfNxMviHuAX18w@mail.gmail.com>
- <CADueUgS1==4gAmNmTBLZzrnRUp9z2wxkce8+TcOeoR3w_Pg-bg@mail.gmail.com>
- <CADueUgT4xDJft6On4j+oic65UcQRv_PcNSWJg-CcdBM8My3zow@mail.gmail.com>
- <CAFEAcA-TV6MKC32zd3WP5yhLABkbDrLKtP7CCZ0kB5pbV+-5Vg@mail.gmail.com>
- <76070bb3-abf6-491a-a9f3-549f615e23fd@redhat.com>
-In-Reply-To: <76070bb3-abf6-491a-a9f3-549f615e23fd@redhat.com>
-From: Arthur Tumanyan <arthurtumanyan@gmail.com>
-Date: Tue, 25 Jun 2024 11:52:29 +0400
-Message-ID: <CADueUgSoR4_WgCh4kZ0fsPsY_tq1YXQkPri5th73rK-pQqxu7Q@mail.gmail.com>
-Subject: Re: How to use designware-root-port and designware-root-host devices ?
-To: Thomas Huth <thuth@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, andrew.smirnov@gmail.com
-Content-Type: multipart/alternative; boundary="00000000000099d834061bb22e0d"
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=arthurtumanyan@gmail.com; helo=mail-ej1-x632.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Help improve 32-bit testing
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <ab8beba8-658a-4359-bfb1-672e5782633d@linaro.org>
+Content-Language: en-US
+Cc: Dov Murik <dovmurik@linux.ibm.com>, Michael Roth <michael.roth@amd.com>,
+ Pankaj Gupta <pankaj.gupta@amd.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ab8beba8-658a-4359-bfb1-672e5782633d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,142 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000099d834061bb22e0d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Richard,
 
-Hi,
+On 25/6/24 01:33, Richard Henderson wrote:
+> Hiya,
+> 
+> I've just discovered a 32-bit build issue that is probably 3 weeks old.
 
-I ported DWC PCIE part from fsl-imx7.c to my new cusotm virt machine based
-on RISC-V "virt".
+How and what did you notice?
 
-It looks ok so far. Now i'm wondering whether there is a "standard/ready to
-use for most of cases" device tree description for the synopsis pcie host
-device ?
+> While we still support 32-bit builds at all, I would request that we 
+> improve our cross-i686 testing.  For instance: we have cross-i686-user 
+> and cross-i686-tci.  There is some system build testing in the tci job, 
+> but (rightfully) not everything.
+> 
+> I would like a full cross-i686-system target that builds all targets, 
+> and I would like the debian-i686-cross image on which we base these to 
+> be more complete -- ideally, exactly matching x86_64.  In particular, 
+> CONFIG_SEV is not detected within the current docker image, which is 
+> where the current build error is located.
 
-Looking this way:
-https://mjmwired.net/kernel/Documentation/devicetree/bindings/pci/designwar=
-e-pcie.txt
-but would be glad to hear some advices if any.
+Orthogonally to whether we should improve x86 testing on 32-bit
+hosts, IIRC this isn't the first time we have an issue with SEV
+(or more generically Confidential Computing) on 32-bit host, so
+I wonder if this is a feature worth testing & supporting there
+(thus Cc'ing more maintainers).
 
-Best regards,
-Arthur
+Regards,
 
-On Fri, Jun 21, 2024 at 1:30=E2=80=AFPM Thomas Huth <thuth@redhat.com> wrot=
-e:
-
-> On 21/06/2024 11.16, Peter Maydell wrote:
-> > On Fri, 21 Jun 2024 at 08:07, Arthur Tumanyan <arthurtumanyan@gmail.com=
->
-> wrote:
-> >>
-> >> Hi,
-> >>
-> >> I just tried to run mcimx7d-sabre machine this way:
-> >>
-> >> ${HOME}/cosim/usr/local/bin/qemu-system-arm -M mcimx7d-sabre -m 2G \
-> >> -kernel ${HOME}/cosim-arm/buildroot/output/images/uImage \
-> >>          --initrd
-> ${HOME}/cosim-arm/buildroot/output/images/rootfs.cpio.gz \
-> >> -nographic \
-> >> -net nic -net user
-> >>
-> >> and it just prints this and do nothing: qemu-system-arm: warning: nic
-> imx.enet.1 has no peer
-> >>
-> >> Based on what I see in the mcimx7d-sabre.c , it configures just very
-> basic things, no PCIe at all (may be I'm wrong ;) )
-> >
-> > The machine model in mcimx7d-sabre.c creates the SoC object
-> > (TYPE_FSL_IMX7). It's the code for that in hw/arm/fsl-imx7.c
-> > that creates all the SoC devices including the PCIe controller.
-> > (This structure is similar to real hardware where you have a
-> > board, which has one or two chips on it like RAM but most of
-> > the complicated stuff is inside the one big SoC chip.)
-> >
-> >> Is there any idea what goes wrong here ? Maybe someone has experience
-> with running this machine ?
-> >
-> > "No output" usually means "your guest kernel is not configured
-> > correctly for this machine type", and/or possibly "you didn't
-> > tell the kernel to output on the serial port".
->
-> By the way, it seems like we don't even have an avocado test for that
-> machine available. Peter, do you know whether there is a kernel for this
-> machine available somewhere that we could use for testing?
->
->   Thomas
->
->
->
-
---00000000000099d834061bb22e0d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi,</div><div><br></div>I ported DWC PCIE part from f=
-sl-imx7.c to my new cusotm virt machine based on RISC-V &quot;virt&quot;.=
-=C2=A0<div><br></div><div>It looks ok so far. Now i&#39;m wondering whether=
- there is a &quot;standard/ready to use for most of cases&quot; device tree=
- description for the synopsis pcie host device ?=C2=A0</div><div><br><div>L=
-ooking this way:=C2=A0<a href=3D"https://mjmwired.net/kernel/Documentation/=
-devicetree/bindings/pci/designware-pcie.txt">https://mjmwired.net/kernel/Do=
-cumentation/devicetree/bindings/pci/designware-pcie.txt</a> but would be gl=
-ad to hear some advices if any.</div></div><div><br></div><div>Best regards=
-,</div><div>Arthur</div></div><br><div class=3D"gmail_quote"><div dir=3D"lt=
-r" class=3D"gmail_attr">On Fri, Jun 21, 2024 at 1:30=E2=80=AFPM Thomas Huth=
- &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wrote:<br=
-></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
-border-left:1px solid rgb(204,204,204);padding-left:1ex">On 21/06/2024 11.1=
-6, Peter Maydell wrote:<br>
-&gt; On Fri, 21 Jun 2024 at 08:07, Arthur Tumanyan &lt;<a href=3D"mailto:ar=
-thurtumanyan@gmail.com" target=3D"_blank">arthurtumanyan@gmail.com</a>&gt; =
-wrote:<br>
-&gt;&gt;<br>
-&gt;&gt; Hi,<br>
-&gt;&gt;<br>
-&gt;&gt; I just tried to run mcimx7d-sabre machine this way:<br>
-&gt;&gt;<br>
-&gt;&gt; ${HOME}/cosim/usr/local/bin/qemu-system-arm -M mcimx7d-sabre -m 2G=
- \<br>
-&gt;&gt; -kernel ${HOME}/cosim-arm/buildroot/output/images/uImage \<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --initrd ${HOME}/cosim-arm/build=
-root/output/images/rootfs.cpio.gz \<br>
-&gt;&gt; -nographic \<br>
-&gt;&gt; -net nic -net user<br>
-&gt;&gt;<br>
-&gt;&gt; and it just prints this and do nothing: qemu-system-arm: warning: =
-nic imx.enet.1 has no peer<br>
-&gt;&gt;<br>
-&gt;&gt; Based on what I see in the mcimx7d-sabre.c , it configures just ve=
-ry basic things, no PCIe at all (may be I&#39;m wrong ;) )<br>
-&gt; <br>
-&gt; The machine model in mcimx7d-sabre.c creates the SoC object<br>
-&gt; (TYPE_FSL_IMX7). It&#39;s the code for that in hw/arm/fsl-imx7.c<br>
-&gt; that creates all the SoC devices including the PCIe controller.<br>
-&gt; (This structure is similar to real hardware where you have a<br>
-&gt; board, which has one or two chips on it like RAM but most of<br>
-&gt; the complicated stuff is inside the one big SoC chip.)<br>
-&gt; <br>
-&gt;&gt; Is there any idea what goes wrong here ? Maybe someone has experie=
-nce with running this machine ?<br>
-&gt; <br>
-&gt; &quot;No output&quot; usually means &quot;your guest kernel is not con=
-figured<br>
-&gt; correctly for this machine type&quot;, and/or possibly &quot;you didn&=
-#39;t<br>
-&gt; tell the kernel to output on the serial port&quot;.<br>
-<br>
-By the way, it seems like we don&#39;t even have an avocado test for that <=
-br>
-machine available. Peter, do you know whether there is a kernel for this <b=
-r>
-machine available somewhere that we could use for testing?<br>
-<br>
-=C2=A0 Thomas<br>
-<br>
-<br>
-</blockquote></div>
-
---00000000000099d834061bb22e0d--
+Phil.
 
