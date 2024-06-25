@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A856C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 02:21:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26C4CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 02:27:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sLvnl-0000OV-HW; Mon, 24 Jun 2024 22:20:57 -0400
+	id 1sLvtj-0002Dc-6N; Mon, 24 Jun 2024 22:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLvnj-0000MV-7G
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 22:20:55 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLvtf-0002Cn-W2
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 22:27:04 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLvnh-000612-CL
- for qemu-devel@nongnu.org; Mon, 24 Jun 2024 22:20:54 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42108856c33so35225715e9.1
- for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 19:20:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sLvtd-0006q2-V1
+ for qemu-devel@nongnu.org; Mon, 24 Jun 2024 22:27:03 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4217990f8baso44204695e9.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Jun 2024 19:27:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719282050; x=1719886850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719282420; x=1719887220; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qErrVXLVGUsWCWpltTsIpHAWmnkCJE8w5g6z6C6wIww=;
- b=xOSwCca6/5ZqCGC6YMCivm1RZ/8vywgiPqEXx2CS3KFZuyzUgAaThYKVqYn7MaICF2
- L09pirW8WhkiliSLOqub3ds4mxdZFAHYJ+JkzrE/A75HwBkc2ux3GK4o5hIHeWoAG7B6
- wJS2HLtIPijZB9dunAXXkfP+RxDDFerM8aCDK4hQqmOX0GuuCuxtVSyCduUmtf067PFV
- Xl41HGJOzlMySpQFf7pA4ZQGqFNYWeAY8cVsddeMD1n/xHZ2nlXkwC+xel7tPOqH8ULR
- vFMP+2e8nTy83G3SGtkoD5a1IJPXB5dW/BZ2cUsE0abZTHx4XesiqCCEVn0khWvA/5KO
- OLmQ==
+ bh=84RpPkQd2DBF7+TaxX2PqpYU8EwWFPMS3TNuYOVwLCk=;
+ b=HnHqjuhh9t8r7CaoosJozdG2Nty9WCp/36ZUZ4pki4uixU+A+igbrE+sw6WCjD6j3f
+ T+rZgQuugR21H0yJCIFFUeX6k/Obl5qsIO6Ax8Fn42biaMZ/tSDDLgyRseRdkHI9lI6s
+ U411mv/WRxZ5a/E2FBQAMtm8AwNP/VG3eH3ZB5fDHkRYCW7yC9sN4Dt6k6YIr9AChJwX
+ npmW8Y7cyoaKaPh66H2tX6fJ/5B1YzQhzgO6GNF3k0TrdzmiOaH2oqSrf/M6PIOI0fTc
+ O74u0GnKZHeavh7MwCC/z+z7m6Pp9UMgOtdLOYIVmbt8Xj3XgB7K3VoxCSWAWlVfvYck
+ 5BwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719282050; x=1719886850;
+ d=1e100.net; s=20230601; t=1719282420; x=1719887220;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qErrVXLVGUsWCWpltTsIpHAWmnkCJE8w5g6z6C6wIww=;
- b=Kd8FCJ3mC4FHI2Yd7Z3aTXptBYhnL2TtLp/StXr/ZUrBdtp2n9qMFNYZ+JQg4JqePH
- d45fmNZpfmNJzwMJ2kuHajTlaaiF7wkaCw1o3qLqOqntk/H+iDFQGwt1Emvl6VGgW6Wo
- McfzKFUQL/+E5Nq7FlKBPgNB3IrhNVdrQh+/XnkhKh2Z7pfPok0num9KkabyBdTh3aTY
- IVzj0OzfRGINV2Z8ZeOuFyzj9K0kLIZafLp/t/o5e6yxZ9hwehRNoCjXcMnMoK5oujAg
- 3KBsW75zIOQPGDbj/WjEddOf3iIM0IuDESKCcRS98B6GQr+mV3RRyvNVj8l7V+DXQ9nD
- 8PQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW6heUAVQqvYRyQl9Xxe7Vxv4OG+tkNWmyBmuk3sPXrRyjGyTtUNUOa1tTZutiRQnCxb9i99dS8FOlbtx/NLwzdsc5Gzl8=
-X-Gm-Message-State: AOJu0YzdoV+jZp+FOtWQBJC/xcpO6c67QWJnGRXfEWQW1njhJIT4EmBy
- lyyDQihqt5mBZC5k3GqUuQfYb8aOrwvIKKlj4iPH73qtO99llbEV88Yfknla6u8=
-X-Google-Smtp-Source: AGHT+IGPWB5lVPZPRO+KRvbE1BWqx310iJrAM0xH0t0AUNNCBIL0qv1VJbo+KcIdStdmSeX1xi3aKA==
-X-Received: by 2002:a05:6000:45a7:b0:366:e2a0:9a68 with SMTP id
- ffacd0b85a97d-366e3669768mr5374592f8f.9.1719282049651; 
- Mon, 24 Jun 2024 19:20:49 -0700 (PDT)
+ bh=84RpPkQd2DBF7+TaxX2PqpYU8EwWFPMS3TNuYOVwLCk=;
+ b=vq6bN6EDoVSv+i+eybPS/vujke+i/tkFka9mZ3oawvMzM/qb8GhF6L6FDORqQbe5sh
+ H446Eg0jCE7gfAI7Wl2mhNAcSb1G4rVR9pS5ygIQKzKg/TEEBDOvH6AFVKgkpedrwe6c
+ QClwFWpfHi6Ks0dShQUKDaQGz+MJD4Y/qSy9JqN8TEoVVs7X412deAuPrLvqIVuOVNCm
+ i1Q2uv/l5BmSMLGSVRcLsX/fFtZxa1v/cW6UWCERM2Ms7xN+gm/E3n0YrFrFGVmj+fhR
+ RJvYkf/+kgw7/yqsQffzeXk4V9rVztZR0EoXC/6Z/Znlb68eqbr9XFxJWTjcpECF4Z4y
+ ddOQ==
+X-Gm-Message-State: AOJu0YzShs+a8J8nfQu4FNMt/Lq5cJMjlK/Y/C6n+eHBVhVogTOHjSB/
+ xURQpI/RKhU8WZRBzX+UpAnG+cx33lquwvOFYuxHyRa9Y9kVVf5UTtO3Ign1iLs=
+X-Google-Smtp-Source: AGHT+IGGHvbIQBpvDqWRLl9uZivqB0uv0qqv3rQ0bsHDEHjpH8bEtxcOyqbp/czbCuZymn5Om7Iswg==
+X-Received: by 2002:a05:600c:4ab0:b0:421:7983:f1a8 with SMTP id
+ 5b1f17b1804b1-4248b9c9cdcmr54402685e9.32.1719282420102; 
+ Mon, 24 Jun 2024 19:27:00 -0700 (PDT)
 Received: from [192.168.69.100] (bd137-h02-176-184-46-22.dsl.sta.abo.bbox.fr.
  [176.184.46.22]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-366383f668asm11521590f8f.20.2024.06.24.19.20.47
+ 5b1f17b1804b1-4247d0c54e4sm196303705e9.23.2024.06.24.19.26.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Jun 2024 19:20:49 -0700 (PDT)
-Message-ID: <d82916f9-3f5c-43f1-a545-0f5a30c8459e@linaro.org>
-Date: Tue, 25 Jun 2024 04:20:46 +0200
+ Mon, 24 Jun 2024 19:26:59 -0700 (PDT)
+Message-ID: <8e54bd41-9a7e-4b1e-ad99-33de1615374c@linaro.org>
+Date: Tue, 25 Jun 2024 04:26:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] qom: Rename Object::class into Object::klass
+Subject: Re: [PATCH 1/1] include/qemu: Provide a C++ compatible version of
+ typeof_strip_qual
 To: Felix Wu <flwu@google.com>
-Cc: pbonzini@redhat.com, berrange@redhat.com, peter.maydell@linaro.org,
- eduardo@habkost.net, peterx@redhat.com, david@redhat.com,
- qemu-devel@nongnu.org, Roman Kiryanov <rkir@google.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20240624204400.103747-1-flwu@google.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ Roman Kiryanov <rkir@google.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240624205647.112034-1-flwu@google.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240624204400.103747-1-flwu@google.com>
+In-Reply-To: <20240624205647.112034-1-flwu@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,65 +100,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Felix,
 
-On 24/6/24 22:43, Felix Wu wrote:
+On 24/6/24 22:56, Felix Wu wrote:
 > From: Roman Kiryanov <rkir@google.com>
 > 
-> 'class' is a C++ keyword and it prevents from
-> using the QEMU headers with a C++ compiler.
+> to use the QEMU headers with a C++ compiler.
 > 
-> Google-Bug-Id: 331190993
-
-I asked Roman twice about this tag meaning:
-https://lore.kernel.org/qemu-devel/e865d8e3-e768-4b1f-86d3-aeabe8f1d511@linaro.org/
-https://lore.kernel.org/qemu-devel/09b7e7e1-30a6-49d0-a5f8-9cfc62884c55@linaro.org/
-Since you are taking his work, do you mind clarifying?
-
-Please include a cover letter for your series:
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#include-a-meaningful-cover-letter
-
-Also for headers refactors, enabling scripts/git.orderfile helps
-reviewers.
-
-Since you are posting different C++ enablement cleanups,
-I suggest you add a section in our docs/devel/style.rst
-requesting to keep headers C++ compatible, by not using
-C++ reserved keywords, etc...
-In particular because the mainstream project is not build-testing
-for C++, thus we will likely merge patches breaking C++ and
-make your life harder. That said, a C++ header smoke-build job
-in our CI could help.
-
-> Change-Id: I9ab7d2d77edef654a9c7b7cb9cd01795a6ed65a2
 > Signed-off-by: Felix Wu <flwu@google.com>
 > Signed-off-by: Roman Kiryanov <rkir@google.com>
 > ---
->   hw/core/qdev-properties-system.c |  2 +-
->   include/exec/memory.h            |  2 +-
->   include/qom/object.h             |  2 +-
->   qom/object.c                     | 90 ++++++++++++++++----------------
->   4 files changed, 48 insertions(+), 48 deletions(-)
+>   include/qemu/atomic.h   |  8 ++++++++
+>   include/qemu/atomic.hpp | 38 ++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 46 insertions(+)
+>   create mode 100644 include/qemu/atomic.hpp
+> 
+> diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
+> index 99110abefb..aeaecc440a 100644
+> --- a/include/qemu/atomic.h
+> +++ b/include/qemu/atomic.h
+> @@ -20,6 +20,13 @@
+>   /* Compiler barrier */
+>   #define barrier()   ({ asm volatile("" ::: "memory"); (void)0; })
+>   
+> +#ifdef __cplusplus
+> +
+> +#ifndef typeof_strip_qual
+> +#error Use the typeof_strip_qual(expr) definition from atomic.hpp on C++ builds.
+> +#endif
+> +
+> +#else  /* __cpluplus */
+>   /* The variable that receives the old value of an atomically-accessed
+>    * variable must be non-qualified, because atomic builtins return values
+>    * through a pointer-type argument as in __atomic_load(&var, &old, MODEL).
+> @@ -61,6 +68,7 @@
+>           __builtin_types_compatible_p(typeof(expr), const volatile unsigned short), \
+>           (unsigned short)1,                                                         \
+>         (expr)+0))))))
+> +#endif  /* __cpluplus */
+>   
+>   #ifndef __ATOMIC_RELAXED
+>   #error "Expecting C11 atomic ops"
+> diff --git a/include/qemu/atomic.hpp b/include/qemu/atomic.hpp
+> new file mode 100644
+> index 0000000000..5844e3d427
+> --- /dev/null
+> +++ b/include/qemu/atomic.hpp
+> @@ -0,0 +1,38 @@
+> +/*
+> + * The C++ definition for typeof_strip_qual used in atomic.h.
+> + *
+> + * Copyright (C) 2024 Google, Inc.
+> + *
+> + * Author: Roman Kiryanov <rkir@google.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + *
+> + * See docs/devel/atomics.rst for discussion about the guarantees each
+> + * atomic primitive is meant to provide.
+> + */
+> +
+> +#ifndef QEMU_ATOMIC_HPP
+> +#define QEMU_ATOMIC_HPP
+> +
+> +#include <type_traits>
+> +
+> +/* Match the integer promotion behavior of typeof_strip_qual, see atomic.h */
+> +template <class T> struct typeof_strip_qual_cpp { using result = decltype(+T(0)); };
+> +
+> +template <> struct typeof_strip_qual_cpp<bool> { using result = bool; };
+> +template <> struct typeof_strip_qual_cpp<signed char> { using result = signed char; };
+> +template <> struct typeof_strip_qual_cpp<unsigned char> { using result = unsigned char; };
+> +template <> struct typeof_strip_qual_cpp<signed short> { using result = signed short; };
+> +template <> struct typeof_strip_qual_cpp<unsigned short> { using result = unsigned short; };
+> +
+> +#define typeof_strip_qual(expr) \
+> +    typeof_strip_qual_cpp< \
+> +        std::remove_cv< \
+> +            std::remove_reference< \
+> +                decltype(expr) \
+> +            >::type \
+> +        >::type \
+> +    >::result
+> +
+> +#endif /* QEMU_ATOMIC_HPP */
 
-
-> diff --git a/include/qom/object.h b/include/qom/object.h
-> index 13d3a655dd..7afdb261a8 100644
-> --- a/include/qom/object.h
-> +++ b/include/qom/object.h
-> @@ -153,7 +153,7 @@ struct ObjectClass
->   struct Object
->   {
->       /* private: */
-> -    ObjectClass *class;
-> +    ObjectClass *klass;
->       ObjectFree *free;
->       GHashTable *properties;
->       uint32_t ref;
-
-I suppose the OBJECT_CLASS / OBJECT_CLASS_CHECK / OBJECT_GET_CLASS
-macros aren't compiled so "class" isn't a problem there.
-
-Since it isn't worst than our INTERFACE_CLASS() use:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+As mentioned previously by Thomas, Daniel and Peter, mainstream QEMU
+doesn't use C++ and isn't being built-tested for it. I'm not against
+trying to keep the code C++ compatible, but I don't see the point of
+adding C++ files in the code base. In particular this patch seems
+contained well enough to be carried in forks were C++ _is_ used.
 
 Regards,
 
