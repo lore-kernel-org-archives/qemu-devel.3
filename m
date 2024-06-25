@@ -4,82 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5293C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 14:55:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A70D7C30658
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Jun 2024 15:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sM7Zb-0004Iy-4U; Tue, 25 Jun 2024 10:55:08 -0400
+	id 1sM7hU-0007Vw-Vg; Tue, 25 Jun 2024 11:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sM7ZW-0004Hr-MW
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:55:03 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sM7ZV-0003LN-0u
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 10:55:02 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-57d4ee2aaabso3002462a12.2
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 07:55:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719327299; x=1719932099; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=s2Wjn7dnTiu4c6dDztY2mJxot7GXZViiw/Q6aeaYO+k=;
- b=Y/1m7BAFaIA03MynH66K1nOPPBKh6AsUH13gCojhvZ83EsYEh753mOm5MZr1/dve3U
- HSzS6vHEBToNvnHzTzQx14fZtCC3o14NNoKP3x55Yksw4GFqDk/y9k/3hNbK6NOL6Iln
- w5aIaYMpCnfh9IF74yGpaFup0NpPGq+Vm72NZCEh84aS1CMYUi/88rh4eXkg9+CMxi4h
- jwM/X18HLwtx3iYeOjYCIxGd1h7HOLE1YE1qt4n2yGiIyq9/YiOjXu5IdNZ4qF2kuhg0
- ZlVfSMEeUW1t2sz0hNh0tFArHYOIhZUdh7LDwzR6Ykj/1+acX/5tFb8XG6HmOjaAveWG
- hdDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719327299; x=1719932099;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=s2Wjn7dnTiu4c6dDztY2mJxot7GXZViiw/Q6aeaYO+k=;
- b=Cz/7KVwsCkPObf3+gHOA5hRTqMdH4XOiG/Jkz6D3nqzzmyTA7ICV1C0OnbXKJfA/Zf
- QNesk3ukUcZ0yZDw3IgCFVfNEg7vuG6kAm6jJiHhhCzjbF1a5bE83aZgaw+2RNREhNQR
- D0WBoT48TMnR88ucPEBalPQabPyTgr3kC7b6kX7POVFALxfJaLMoqg0B02BvoD0ykQD8
- vWEzh0Bc656ddW+/FUC40sj4wJy/bNrclijZnon9iq3c6YiKJWLGl2av0MBwbjqZst0b
- AQ3L3ylzlwG/jwNYWY8g3LirOPW57hJhUZXjMWdrw1VV2lOkavmgmjl1gB4VJljEU2gX
- B/fQ==
-X-Gm-Message-State: AOJu0Yz+b89KgKN8Mt3aLjvZGmRHjIzftCQ9XEtuxbzhiYNc2jv7X7Ix
- i2A/F5w0PMOoNVuC9FRtpV/7NTV1X1NMjO+ZYI0F5kuX9Y2k34ZflSxYOzM6e24=
-X-Google-Smtp-Source: AGHT+IFdDaOt7xORw4Ljwh/fLQwSCe900qR+GtqCtMQVjvEWX46axiESH+wjI6Skig9Ll8rwEWdqng==
-X-Received: by 2002:a50:d653:0:b0:57c:74ea:8d24 with SMTP id
- 4fb4d7f45d1cf-57d4bd71891mr4923680a12.18.1719327299026; 
- Tue, 25 Jun 2024 07:54:59 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-57d303da3d6sm5959613a12.13.2024.06.25.07.54.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Jun 2024 07:54:58 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E939A5F85F;
- Tue, 25 Jun 2024 15:54:57 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Subject: Re: Help improve 32-bit testing
-In-Reply-To: <ab8beba8-658a-4359-bfb1-672e5782633d@linaro.org> (Richard
- Henderson's message of "Mon, 24 Jun 2024 16:33:08 -0700")
-References: <ab8beba8-658a-4359-bfb1-672e5782633d@linaro.org>
-Date: Tue, 25 Jun 2024 15:54:57 +0100
-Message-ID: <87le2toywu.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1sM7hR-0007Uv-Qm; Tue, 25 Jun 2024 11:03:13 -0400
+Received: from mta-04.yadro.com ([89.207.88.248])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
+ id 1sM7hP-0005RO-PN; Tue, 25 Jun 2024 11:03:13 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com E9183C0002
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-04; t=1719327786;
+ bh=F5K14Dgm7czKoHpqiITeyoTA7+fEe18XDLC4sSFwo8I=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=EyRd2yOTLLTtYADLN2V+sJVvQWAoBC+AbF1KaV350Abb+7nQhNiVBNUr+fgEHxdUl
+ SU07b5aK4cSSFcE44SooEfN1SOcLpMvpHMTKLnckpvCH9vIvF6nfR4kVFP65PTCVlY
+ 4YY6rylm/az+zD1OhoaiChAvNyiHP54KFYtfGaosHTqbujB5co+znfOUZ70yqwuIyw
+ Z8HeE+4p+X2Z5WFWnNjkeb0oshNbonrmPcTf7el8gRg2vnlIV/J9HPkFWokhMRH1aH
+ 41F2aeb05g3g+CQ4FBnXd9J7X2mfy23GG+EYniCo51Pg2MWmOOgD28K/KmDYHv1/3L
+ tigbHT/XGcqPQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
+ s=mta-03; t=1719327786;
+ bh=F5K14Dgm7czKoHpqiITeyoTA7+fEe18XDLC4sSFwo8I=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
+ b=JTZKDob6gbIBoashckprM8OlRkmuhNkOO3W2wGvrYR6GDzS3GZIgiHdTlW7JQusi0
+ 3bYmEUjaaND2Ch2Fw//06HLgGJjEoBwUlJfzJTHwJvq3WYXbG8pimzMM0dX3RJEaWd
+ KpPTdH9HwEaKvheckAaYJBC5Hdo2TJkykrOxbYCUwIYPkgjCdgaGkuT9cOVMoj7TKk
+ h1h/3pX1ghQurdWyqyOouRE1+WIw3PG5lyKmgI9QXKMUjXfjqSrQ46Bl3jWBG9rKhE
+ vgfGDI99R9FHVBmetn2IG5/NfThil6PkBOLKRXlLhl8+pasRqueKG6boAThWoIV/vM
+ QQZnmEqIPVQoQ==
+From: Alexei Filippov <alexei.filippov@syntacore.com>
+To: <ajones@ventanamicro.com>
+CC: <alexei.filippov@syntacore.com>, <alistair.francis@wdc.com>,
+ <alistair23@gmail.com>, <apatel@ventanamicro.com>, <bin.meng@windriver.com>,
+ <dbarboza@ventanamicro.com>, <liwei1518@gmail.com>, <palmer@dabbelt.com>,
+ <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>,
+ <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v8] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi() fail
+ with vendor-specific SBI
+Date: Tue, 25 Jun 2024 18:02:54 +0300
+Message-ID: <20240625150254.38790-1-alexei.filippov@syntacore.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240527-3510206a25da720148c06a43@orel>
+References: <20240527-3510206a25da720148c06a43@orel>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
+ T-EXCH-12.corp.yadro.com (172.17.11.143)
+Received-SPF: permerror client-ip=89.207.88.248;
+ envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SORTED_RECIPS=2.499,
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,32 +81,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+kvm_riscv_handle_sbi() may return not supported return code to not
+trigger qemu abort with vendor-specific sbi.
 
-> Hiya,
->
-> I've just discovered a 32-bit build issue that is probably 3 weeks old.
->
-> While we still support 32-bit builds at all, I would request that we
-> improve our cross-i686 testing.  For instance: we have cross-i686-user
-> and cross-i686-tci.  There is some system build testing in the tci
-> job, but (rightfully) not everything.
->
-> I would like a full cross-i686-system target that builds all targets,
-> and I would like the debian-i686-cross image on which we base these to
-> be more complete -- ideally, exactly matching x86_64.  In particular,
-> CONFIG_SEV is not detected within the current docker image, which is
-> where the current build error is located.
->
-> Do you have time to look at this?
+Add new error path to provide proper error in case of
+qemu_chr_fe_read_all() may not return sizeof(ch), because exactly zero
+just means we failed to read input, which can happen, so
+telling the SBI caller we failed to read, but telling the caller of this
+function that we successfully emulated the SBI call, is correct. However,
+anything else, other than sizeof(ch), means something unexpected happened,
+so we should return an error.
 
-See:
+Added SBI related return code's defines.
 
-  Subject: [RFC PATCH] testing: restore some testing for i686
-  Date: Tue, 25 Jun 2024 15:54:18 +0100
-  Message-Id: <20240625145418.694476-1-alex.bennee@linaro.org>
+Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
+---
+Changes since v7:
+		- Fix error handling according to Andrew Jones suggestion.
+ target/riscv/kvm/kvm-cpu.c         |  9 +++++----
+ target/riscv/sbi_ecall_interface.h | 12 ++++++++++++
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 235e2cdaca..1afbabe19f 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1515,19 +1515,20 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+         ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
+         if (ret == sizeof(ch)) {
+             run->riscv_sbi.ret[0] = ch;
++        } else if (ret == 0) {
++            run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
+         } else {
+-            run->riscv_sbi.ret[0] = -1;
++            ret = -1;
+         }
+-        ret = 0;
+         break;
+     case SBI_EXT_DBCN:
+         kvm_riscv_handle_sbi_dbcn(cs, run);
+         break;
+     default:
+         qemu_log_mask(LOG_UNIMP,
+-                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
++                      "%s: Unhandled SBI exit with extension-id %lu\n",
+                       __func__, run->riscv_sbi.extension_id);
+-        ret = -1;
++        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+         break;
+     }
+     return ret;
+diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+index 7dfe5f72c6..4df0accd78 100644
+--- a/target/riscv/sbi_ecall_interface.h
++++ b/target/riscv/sbi_ecall_interface.h
+@@ -86,4 +86,16 @@
+ #define SBI_EXT_VENDOR_END              0x09FFFFFF
+ /* clang-format on */
+ 
++/* SBI return error codes */
++#define SBI_SUCCESS                  0
++#define SBI_ERR_FAILURE             -1
++#define SBI_ERR_NOT_SUPPORTED       -2
++#define SBI_ERR_INVALID_PARAM       -3
++#define SBI_ERR_DENIED              -4
++#define SBI_ERR_INVALID_ADDRESS     -5
++#define SBI_ERR_ALREADY_AVAILABLE   -6
++#define SBI_ERR_ALREADY_STARTED     -7
++#define SBI_ERR_ALREADY_STOPPED     -8
++#define SBI_ERR_NO_SHMEM            -9
++
+ #endif
+-- 
+2.34.1
+
 
