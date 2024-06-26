@@ -4,90 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D18EC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 02:48:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D107C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 02:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMGLO-0006PV-51; Tue, 25 Jun 2024 20:17:11 -0400
+	id 1sMIpa-0004Xh-A9; Tue, 25 Jun 2024 22:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sMGL7-0006OX-Vj
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 20:16:48 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sMGKT-0002MZ-5C
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 20:16:40 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-363bbd51050so4821392f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 17:15:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1719360897; x=1719965697; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QtlLaNBH/RbSlotEEbZpY7+zgKvTQho2Lbmamu2yflA=;
- b=BS3Y1qJHp/nJihnZ8HO3KL+uw39//qfAFK5Mw4B29eCXH9SOFR/IqmH4YDGfXwfJXt
- sEVC30/xzF3BKjtNnwCkl6uAQcnALYXxKaq1T5OBmDpUOeyeBvo1X12MKHI1mBz90+ZP
- wG8Pg1Rw13hKsQOtMwN1effM94VNym3wXfLn48+VUP/CGmqiIUXbf/21Y98A86gFWoOq
- X+zsPGh3kq380hNGSqAwYVGAPt5EDSx+v7WGJ/sB+ndQgN4xyQuJGpOguAKWReCcifY4
- g94D3rvrzoVAM5cRNEjloPIhD2L2RwY3P+6tX+EFzPIWg0VBsNXa2vd6zBIjtUD9e2cI
- zNFg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sMIpV-0004I9-H4
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:56:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sMIpP-00042V-56
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:56:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719370570;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IBcq190+e2ihQcLbFFmgfkeHSPmb85KY/WSMG+N+9ek=;
+ b=gOa2Cm3v28ANeqRNOVqhMVTJWG2W3v+ucq5qFBHmFI60JnUxYFtU4nHJEWGni0MfWwuTi/
+ sAQ2ycwBK7JxJtKfH1aEXP4/V9aTE7ocP7UCwPuKPmy1Z5ozJ3alvGC/WQJFtM0PIkT5v4
+ gdn0kbubnJu0LAzPcWtRoEWJQiuvDQE=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-400-iCYC_OzoOFGucl_fFeXiKw-1; Tue, 25 Jun 2024 21:51:22 -0400
+X-MC-Unique: iCYC_OzoOFGucl_fFeXiKw-1
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-6447ed19e9eso1654287b3.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 18:51:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719360897; x=1719965697;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QtlLaNBH/RbSlotEEbZpY7+zgKvTQho2Lbmamu2yflA=;
- b=wZC0KOJHDWWgdo37/8mZartgLU0sN7MJrgp11kvLCAR/sIdd5+BdJqJhz5ubOk7FH1
- zvUr3kTCpXLPH3kHH4amx+o56V8REJ/skjq3DIPv11l8qlnRMrWspUKiZbPuXFjMV0oe
- 9m/B8GOTndS2wNt5wfqpGNk+T3pWFwfKi+Tl/AI2du4yJSikSlrHPpavO6vQDIMfBpI7
- OanlicvMrr2agzgdnkHsXKcsYopoI9jR3pj1BbSiVJLiwy4IWkM+RQA8nVy629vvzHmO
- sqYeN2KbBxZyCor/DUnj7adb2zOBJhTXAWVIuXF3NoZtGmm+Ul+Y1fsoiEFC6rB5kZM0
- atfQ==
+ d=1e100.net; s=20230601; t=1719366682; x=1719971482;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IBcq190+e2ihQcLbFFmgfkeHSPmb85KY/WSMG+N+9ek=;
+ b=NZRhdaPRHeBFRfrZs1VdIKHWJpdDPKErxHvmfAestQyPjzEws17V1H3AG88D3KuaTp
+ tOxfBwa96UJmW1v+Mkq+xt48raCCjyASz1EkHsrU16Vz7acB3QwY29nmccR8RlbIYb7p
+ ClP8gAHTE5uMZnKpMFcYOfgEFwKe3442Ti7lQNZ2DkKbu1/B5QHkCCucyzHcwKBpkL10
+ TFLrRB3+PEPX/Yd/RbiQZMA1wekeivB+vwrMfXaYaSsYt7cMAuocU4ZZ2OCWjTpQASA8
+ pKzPBcVnWGO6RsvN3U4NsnRenOSENcMiU+AO2AqgUKDX+WJ5/GNyYOQh8JbJd0BbB+Z7
+ lXrw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlkJ89GbDHig7RGwTEofvGihNi2VH1T41tQjvzDzQYDWYeAxKDGy6+AFjesCNTtCEzj3KkwtiTLx4JHv0swD3zr3lf3J0=
-X-Gm-Message-State: AOJu0YzttXTokaf6hD+ARottvrO+x5DDswu/nxdBbD/88OAIMULjt93Z
- 4Y5tZtybKmPVBsBvl1HzWTc8uoam1/0hzuQBBS4jrcf0gPo1yzO0fWJcDRpbPMqIvfAkm0xvwE/
- k1A2kXH2AbA3KJleKk84EEGCugmpwtpf/TotyfgIyF5PxMfpBGKk=
-X-Google-Smtp-Source: AGHT+IGaQr2CmTJfMRAb0ZDgxI2m4hNF68Clz4thlMBXZ5rgoJuH0Kauotj6gBDpYBrxNr2/o80KX/xUDYR9VvS2Iko=
-X-Received: by 2002:a17:907:c086:b0:a72:7a8c:9885 with SMTP id
- a640c23a62f3a-a727a8c99e1mr213620466b.63.1719359484007; Tue, 25 Jun 2024
- 16:51:24 -0700 (PDT)
+ AJvYcCWrc5rZ6zSMtJIrpN6p+3RcQjLB/9tLzFSTBqBHOCV4PCoasF8tq7X+ivGZpKPFzo3F65uPOqhf2yoIQqUHUCSW+b514KA=
+X-Gm-Message-State: AOJu0YxPmwdQKwZVk2aVXmByC/gc0zXye1mIGfeZvAxrx+j69l0YAaW/
+ Ar15KhAFkHtkAW8FyEl1RBgQwFwTaUgTVzBtKl932ACJBZjQO3NSTK96jRz0ltlpZzGBTWRn/Ap
+ PRaFG2jyVszmZHijrh8vTq5ZLql1YYdM7y1inuHlewXOCPc379UlI
+X-Received: by 2002:a25:b80f:0:b0:df7:8a41:3009 with SMTP id
+ 3f1490d57ef6-e02f7908173mr7895451276.6.1719366681310; 
+ Tue, 25 Jun 2024 18:51:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFsuN+dc3nTA5moU3Q5WEcAvhP2h8Qy3axB1bffYbuagSHZmZ38QotFf9q5czln+t3kNyA6tw==
+X-Received: by 2002:a25:b80f:0:b0:df7:8a41:3009 with SMTP id
+ 3f1490d57ef6-e02f7908173mr7895420276.6.1719366680605; 
+ Tue, 25 Jun 2024 18:51:20 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-444c2b84599sm62070781cf.39.2024.06.25.18.51.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Jun 2024 18:51:20 -0700 (PDT)
+Date: Tue, 25 Jun 2024 21:51:17 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v1 00/13] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
+ device state transfer support with VFIO consumer
+Message-ID: <Znt0FQHJEtGxcLxj@x1n>
+References: <cover.1718717584.git.maciej.szmigiero@oracle.com>
+ <ZniFH14DT6ycjbrL@x1n>
+ <b0dc8bc4-742b-474b-a4c4-4e190fd6af37@maciej.szmigiero.name>
+ <Znr9mOo_t0DkkLbD@x1n>
+ <9e85016e-ac72-4207-8e69-8cba054cefb7@maciej.szmigiero.name>
 MIME-Version: 1.0
-References: <20240529234241.205053-1-salil.mehta@huawei.com>
- <20240602180241-mutt-send-email-mst@kernel.org>
- <20240605160327.3c71f4ab@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240605160327.3c71f4ab@imammedo.users.ipa.redhat.com>
-From: Salil Mehta <salil.mehta@opnsrc.net>
-Date: Wed, 26 Jun 2024 00:51:12 +0100
-Message-ID: <CAJ7pxeYehVhPWfbEqRMMSCVHk31JQhtQhRSM_4e1WqBhqv0UHQ@mail.gmail.com>
-Subject: Re: [PATCH V12 0/8] Add architecture agnostic code to support vCPU
- Hotplug
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Salil Mehta <salil.mehta@huawei.com>,
- qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, maz@kernel.org, jean-philippe@linaro.org, 
- jonathan.cameron@huawei.com, lpieralisi@kernel.org, peter.maydell@linaro.org, 
- richard.henderson@linaro.org, andrew.jones@linux.dev, david@redhat.com, 
- philmd@linaro.org, eric.auger@redhat.com, oliver.upton@linux.dev, 
- pbonzini@redhat.com, will@kernel.org, gshan@redhat.com, rafael@kernel.org, 
- alex.bennee@linaro.org, linux@armlinux.org.uk, darren@os.amperecomputing.com, 
- ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com, 
- karl.heubaum@oracle.com, miguel.luis@oracle.com, zhukeqian1@huawei.com, 
- wangxiongfeng2@huawei.com, wangyanan55@huawei.com, jiakernel2@gmail.com, 
- maobibo@loongson.cn, lixianglai@loongson.cn, npiggin@gmail.com, 
- harshpb@linux.ibm.com, linuxarm@huawei.com
-Content-Type: multipart/alternative; boundary="000000000000492ba6061bbf9379"
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, HTML_MESSAGE=0.001, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9e85016e-ac72-4207-8e69-8cba054cefb7@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,548 +110,476 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000492ba6061bbf9379
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Wed, Jun 26, 2024 at 12:44:29AM +0200, Maciej S. Szmigiero wrote:
+> On 25.06.2024 19:25, Peter Xu wrote:
+> > On Mon, Jun 24, 2024 at 09:51:18PM +0200, Maciej S. Szmigiero wrote:
+> > > Hi Peter,
+> > 
+> > Hi, Maciej,
+> > 
+> > > 
+> > > On 23.06.2024 22:27, Peter Xu wrote:
+> > > > On Tue, Jun 18, 2024 at 06:12:18PM +0200, Maciej S. Szmigiero wrote:
+> > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+> > > > > 
+> > > > > This is an updated v1 patch series of the RFC (v0) series located here:
+> > > > > https://lore.kernel.org/qemu-devel/cover.1713269378.git.maciej.szmigiero@oracle.com/
+> > > > 
+> > > > OK I took some hours thinking about this today, and here's some high level
+> > > > comments for this series.  I'll start with which are more relevant to what
+> > > > Fabiano has already suggested in the other thread, then I'll add some more.
+> > > > 
+> > > > https://lore.kernel.org/r/20240620212111.29319-1-farosas@suse.de
+> > > 
+> > > That's a long list, thanks for these comments.
+> > > 
+> > > I have responded to them inline below.
+> > > 
+> (..)
+> > > 
+> > > > 3. load_state_buffer() and VFIODeviceStatePacket protocol
+> > > > =========================================================
+> > > > 
+> > > > VFIODeviceStatePacket is the new protocol you introduced into multifd
+> > > > packets, along with the new load_state_buffer() hook for loading such
+> > > > buffers.  My question is whether it's needed at all, or.. whether it can be
+> > > > more generic (and also easier) to just allow taking any device state in the
+> > > > multifd packets, then load it with vmstate load().
+> > > > 
+> > > > I mean, the vmstate_load() should really have worked on these buffers, if
+> > > > after all VFIO is looking for: (1) VFIO_MIG_FLAG_DEV_DATA_STATE as the
+> > > > first flag (uint64), size as the 2nd, then (2) load that rest buffer into
+> > > > VFIO kernel driver.  That is the same to happen during the blackout window.
+> > > > It's not clear to me why load_state_buffer() is needed.
+> > > > 
+> > > > I also see that you're also using exactly the same chunk size for such
+> > > > buffering (VFIOMigration.data_buffer_size).
+> > > > 
+> > > > I think you have a "reason": VFIODeviceStatePacket and loading of the
+> > > > buffer data resolved one major issue that wasn't there before but start to
+> > > > have now: multifd allows concurrent arrivals of vfio buffers, even if the
+> > > > buffer *must* be sequentially loaded.
+> > > > 
+> > > > That's a major pain for current VFIO kernel ioctl design, IMHO.  I think I
+> > > > used to ask nVidia people on whether the VFIO get_state/set_state interface
+> > > > can allow indexing or tagging of buffers but I never get a real response.
+> > > > IMHO that'll be extremely helpful for migration purpose on concurrency if
+> > > > it can happen, rather than using a serialized buffer.  It means
+> > > > concurrently save/load one VFIO device could be extremely hard, if not
+> > > > impossible.
+> > > 
+> > > I am pretty sure that the current kernel VFIO interface requires for the
+> > > buffers to be loaded in-order - accidentally providing the out of order
+> > > definitely breaks the restore procedure.
+> > 
+> > Ah, I didn't mean that we need to do it with the current API.  I'm talking
+> > about whether it's possible to have a v2 that will support those otherwise
+> > we'll need to do "workarounds" like what you're doing with "unlimited
+> > buffer these on dest, until we receive continuous chunk of data" tricks.
+> 
+> Better kernel API might be possible in the long term but for now we have
+> to live with what we have right now.
+> 
+> After all, adding true unordered loading - I mean not just moving the
+> reassembly process from QEMU to the kernel but making the device itself
+> accept buffers out out order - will likely be pretty complex (requiring
+> adding such functionality to the device firmware, etc).
 
-Hi Igor,
+I would expect the device will need to be able to provision the device
+states so it became smaller objects rather than one binary object, then
+either tag-able or address-able on those objects.
 
-On Wed, Jun 5, 2024 at 3:03=E2=80=AFPM Igor Mammedov <imammedo@redhat.com> =
-wrote:
+> 
+> > And even with that trick, it'll still need to be serialized on the read()
+> > syscall so it won't scale either if the state is huge.  For that issue
+> > there's no workaround we can do from userspace.
+> 
+> The read() calls for multiple VFIO devices can be issued in parallel,
+> and in fact they are in my patch set.
 
-> On Sun, 2 Jun 2024 18:03:05 -0400
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
->
-> > On Thu, May 30, 2024 at 12:42:33AM +0100, Salil Mehta wrote:
-> > > Virtual CPU hotplug support is being added across various
-> architectures[1][3].
-> > > This series adds various code bits common across all architectures:
-> > >
-> > > 1. vCPU creation and Parking code refactor [Patch 1]
-> > > 2. Update ACPI GED framework to support vCPU Hotplug [Patch 2,3]
-> > > 3. ACPI CPUs AML code change [Patch 4,5]
-> > > 4. Helper functions to support unrealization of CPU objects [Patch 6,=
-7]
-> > > 5. Docs [Patch 8]
-> > >
-> > >
-> > > Repository:
-> > >
-> > > [*] https://github.com/salil-mehta/qemu.git
-> virt-cpuhp-armv8/rfc-v3.arch.agnostic.v12
-> > >
-> > > NOTE: This series is meant to work in conjunction with Architecture
-> specific patch-set.
-> > > For ARM, this will work in combination of the architecture specific
-> part based on
-> > > RFC V2 [1]. This architecture specific patch-set RFC V3 shall be
-> floated soon and is
-> > > present at below location
-> > >
-> > > [*]
-> https://github.com/salil-mehta/qemu/tree/virt-cpuhp-armv8/rfc-v3-rc1
-> > >
-> >
-> >
-> > Igor plan to take a look?
->
-> Yep, I plan to review it
->
+I was talking about concurrency for one device.
 
-A gentle reminder on this.
+> 
+> (..)
+> > > > 4. Risk of OOM on unlimited VFIO buffering
+> > > > ==========================================
+> > > > 
+> > > > This follows with above bullet, but my pure question to ask here is how
+> > > > does VFIO guarantees no OOM condition by buffering VFIO state?
+> > > > 
+> > > > I mean, currently your proposal used vfio_load_bufs_thread() as a separate
+> > > > thread to only load the vfio states until sequential data is received,
+> > > > however is there an upper limit of how much buffering it could do?  IOW:
+> > > > 
+> > > > vfio_load_state_buffer():
+> > > > 
+> > > >     if (packet->idx >= migration->load_bufs->len) {
+> > > >         g_array_set_size(migration->load_bufs, packet->idx + 1);
+> > > >     }
+> > > > 
+> > > >     lb = &g_array_index(migration->load_bufs, typeof(*lb), packet->idx);
+> > > >     ...
+> > > >     lb->data = g_memdup2(&packet->data, data_size - sizeof(*packet));
+> > > >     lb->len = data_size - sizeof(*packet);
+> > > >     lb->is_present = true;
+> > > > 
+> > > > What if garray keeps growing with lb->data allocated, which triggers the
+> > > > memcg limit of the process (if QEMU is in such process)?  Or just deplete
+> > > > host memory and causing OOM kill.
+> > > > 
+> > > > I think we may need to find a way to throttle max memory usage of such
+> > > > buffering.
+> > > > 
+> > > > So far this will be more of a problem indeed if this will be done during
+> > > > VFIO iteration phases, but I still hope a solution can work with both
+> > > > iteration phase and the switchover phase, even if you only do that in
+> > > > switchover phase
+> > > 
+> > > Unfortunately, this issue will be hard to fix since the source can
+> > > legitimately send the very first buffer (chunk) of data as the last one
+> > > (at the very end of the transmission).
+> > > 
+> > > In this case, the target will need to buffer nearly the whole data.
+> > > 
+> > > We can't stop the receive on any channel, either, since the next missing
+> > > buffer can arrive at that channel.
+> > > 
+> > > However, I don't think purposely DoSing the target QEMU is a realistic
+> > > security concern in the typical live migration scenario.
+> > > 
+> > > I mean the source can easily force the target QEMU to exit just by
+> > > feeding it wrong migration data.
+> > > 
+> > > In case someone really wants to protect against the impact of
+> > > theoretically unbounded QEMU memory allocations during live migration
+> > > on the rest of the system they can put the target QEMU process
+> > > (temporally) into a memory-limited cgroup.
+> > 
+> > Note that I'm not worrying about DoS of a malicious src QEMU, and I'm
+> > exactly talking about the generic case where QEMU (either src or dest, in
+> > that case normally both) is put into the memcg and if QEMU uses too much
+> > memory it'll literally get killed even if no DoS issue at all.
+> > 
+> > In short, we hopefully will have a design that will always work with QEMU
+> > running in a container, without 0.5% chance dest qemu being killed, if you
+> > see what I meant.
+> > 
+> > The upper bound of VFIO buffering will be needed so the admin can add that
+> > on top of the memcg limit and as long as QEMU keeps its words it'll always
+> > work without sudden death.
+> > 
+> > I think I have some idea about resolving this problem.  That idea can
+> > further complicate the protocol a little bit.  But before that let's see
+> > whether we can reach an initial consensus on this matter first, on whether
+> > this is a sane request.  In short, we'll need to start to have a
+> > configurable size to say how much VFIO can buffer, maybe per-device, or
+> > globally.  Then based on that we need to have some logic guarantee that
+> > over-mem won't happen, also without heavily affecting concurrency (e.g.,
+> > single thread is definitely safe and without caching, but it can be
+> > slower).
+> 
+> Here, I think I can add a per-device limit parameter on the number of
+> buffers received out-of-order or waiting to be loaded into the device -
+> with a reasonable default.
 
-Thanks
-Salil.
+Yes that should work.
 
+I don't even expect people would change that, but this might be the
+information people will need to know before putting it into a container if
+it's larger than how qemu dynamically consumes memories here and there.
+I'd expect it is still small enough so nobody will notice it (maybe a few
+tens of MBs? but just wildly guessing, where tens of MBs could fall into
+the "noise" memory allocation window of a VM).
 
->
-> >
-> > > Revision History:
-> > >
-> > > Patch-set  V11 -> V12
-> > > 1. Addressed Harsh Prateek Bora's (IBM) comment
-> > >    - Changed @cpu to @vcpu_id in the kvm_unpark_vcpu protoype header/
-> > > 2. Added Zhao Liu's (Intel) Tested-by for whole series
-> > >    - Qtest does not breaks on Intel platforms now.
-> > > 3. Added Zhao Liu's (Intel) Reviewed-by for [PATCH V11 {1/8 - 3/8}]
-> > > Link: https://lore.kernel.org/qemu-devel/ZlRSPuJGBgyEUW6w@intel.com/
-> > > Link:
-> https://lore.kernel.org/qemu-devel/a5f3d78e-cfed-441f-9c56-e3e78fa5edee@l=
-inux.ibm.com/
-> > >
-> > > Patch-set  V10 -> V11
-> > > 1. Addressed Nicholas Piggin's (IBM) comment
-> > >    - moved the traces in kvm_unpark_vcpu and kvm_create_vcpu at the e=
-nd
-> > >    - Added the Reviewed-by Tag for [PATCH V10 1/8]
-> > > 2.  Addressed Alex Benn=C3=A9e's (Linaro) comments
-> > >    - Added a note explaining dependency of the [PATCH V10 7/8] on Arc=
-h
-> specific patch-set
-> > > Link:
-> https://lore.kernel.org/qemu-devel/D1FS5GOOFWWK.2PNRIVL0V6DBL@gmail.com/
-> > > Link:
-> https://lore.kernel.org/qemu-devel/87frubi402.fsf@draig.linaro.org/
-> > >
-> > > Patch-set  V9 -> V10
-> > > 1. Addressed Nicholas Piggin's (IBM) & Philippe Mathieu-Daud=C3=A9 (L=
-inaro)
-> comments
-> > >    - carved out kvm_unpark_vcpu and added its trace
-> > >    - Widened the scope of the kvm_unpark_vcpu so that it can be used
-> by generic framework
-> > >      being thought out
-> > > Link:
-> https://lore.kernel.org/qemu-devel/20240519210620.228342-1-salil.mehta@hu=
-awei.com/
-> > > Link:
-> https://lore.kernel.org/qemu-devel/e94b0e14-efee-4050-9c9f-08382a36b63a@l=
-inaro.org/
-> > >
-> > > Patch-set  V8 -> V9
-> > > 1. Addressed Vishnu Pajjuri's (Ampere) comments
-> > >    - Added kvm_fd to trace in kvm_create_vcpu
-> > >    - Some clean ups: arch vcpu-id and sbd variable
-> > >    - Added the missed initialization of cpu->gdb_num_regs
-> > > 2. Addressed the commnet from Zhao Liu (Intel)
-> > >    - Make initialization of CPU Hotplug state conditional
-> (possible_cpu_arch_ids!=3DNULL)
-> > > Link:
-> https://lore.kernel.org/qemu-devel/20240312020000.12992-1-salil.mehta@hua=
-wei.com/
-> > >
-> > > Patch-set V7 -> V8
-> > > 1. Rebased and Fixed the conflicts
-> > >
-> > > Patch-set  V6 -> V7
-> > > 1. Addressed Alex Benn=C3=A9e's comments
-> > >    - Updated the docs
-> > > 2. Addressed Igor Mammedov's comments
-> > >    - Merged patches [Patch V6 3/9] & [Patch V6 7/9] with [Patch V6 4/=
-9]
-> > >    - Updated commit-log of [Patch V6 1/9] and [Patch V6 5/9]
-> > > 3. Added Shaoqin Huang's Reviewed-by tags for whole series.
-> > > Link:
-> https://lore.kernel.org/qemu-devel/20231013105129.25648-1-salil.mehta@hua=
-wei.com/
-> > >
-> > > Patch-set  V5 -> V6
-> > > 1. Addressed Gavin Shan's comments
-> > >    - Fixed the assert() ranges of address spaces
-> > >    - Rebased the patch-set to latest changes in the qemu.git
-> > >    - Added Reviewed-by tags for patches {8,9}
-> > > 2. Addressed Jonathan Cameron's comments
-> > >    - Updated commit-log for [Patch V5 1/9] with mention of trace even=
-ts
-> > >    - Added Reviewed-by tags for patches {1,5}
-> > > 3. Added Tested-by tags from Xianglai Li
-> > > 4. Fixed checkpatch.pl error "Qemu -> QEMU" in [Patch V5 1/9]
-> > > Link:
-> https://lore.kernel.org/qemu-devel/20231011194355.15628-1-salil.mehta@hua=
-wei.com/
-> > >
-> > > Patch-set  V4 -> V5
-> > > 1. Addressed Gavin Shan's comments
-> > >    - Fixed the trace events print string for
-> kvm_{create,get,park,destroy}_vcpu
-> > >    - Added Reviewed-by tag for patch {1}
-> > > 2. Added Shaoqin Huang's Reviewed-by tags for Patches {2,3}
-> > > 3. Added Tested-by Tag from Vishnu Pajjuri to the patch-set
-> > > 4. Dropped the ARM specific [Patch V4 10/10]
-> > > Link:
-> https://lore.kernel.org/qemu-devel/20231009203601.17584-1-salil.mehta@hua=
-wei.com/
-> > >
-> > > Patch-set  V3 -> V4
-> > > 1. Addressed David Hilderbrand's comments
-> > >    - Fixed the wrong doc comment of kvm_park_vcpu API prototype
-> > >    - Added Reviewed-by tags for patches {2,4}
-> > > Link:
-> https://lore.kernel.org/qemu-devel/20231009112812.10612-1-salil.mehta@hua=
-wei.com/
-> > >
-> > > Patch-set  V2 -> V3
-> > > 1. Addressed Jonathan Cameron's comments
-> > >    - Fixed 'vcpu-id' type wrongly changed from 'unsigned long' to
-> 'integer'
-> > >    - Removed unnecessary use of variable 'vcpu_id' in kvm_park_vcpu
-> > >    - Updated [Patch V2 3/10] commit-log with details of
-> ACPI_CPU_SCAN_METHOD macro
-> > >    - Updated [Patch V2 5/10] commit-log with details of conditional
-> event handler method
-> > >    - Added Reviewed-by tags for patches {2,3,4,6,7}
-> > > 2. Addressed Gavin Shan's comments
-> > >    - Remove unnecessary use of variable 'vcpu_id' in kvm_par_vcpu
-> > >    - Fixed return value in kvm_get_vcpu from -1 to -ENOENT
-> > >    - Reset the value of 'gdb_num_g_regs' in
-> gdb_unregister_coprocessor_all
-> > >    - Fixed the kvm_{create,park}_vcpu prototypes docs
-> > >    - Added Reviewed-by tags for patches {2,3,4,5,6,7,9,10}
-> > > 3. Addressed one earlier missed comment by Alex Benn=C3=A9e in RFC V1
-> > >    - Added traces instead of DPRINTF in the newly added and some
-> existing functions
-> > > Link:
-> https://lore.kernel.org/qemu-devel/20230930001933.2660-1-salil.mehta@huaw=
-ei.com/
-> > >
-> > > Patch-set V1 -> V2
-> > > 1. Addressed Alex Benn=C3=A9e's comments
-> > >    - Refactored the kvm_create_vcpu logic to get rid of goto
-> > >    - Added the docs for kvm_{create,park}_vcpu prototypes
-> > >    - Splitted the gdbstub and AddressSpace destruction change into
-> separate patches
-> > >    - Added Reviewed-by tags for patches {2,10}
-> > > Link:
-> https://lore.kernel.org/qemu-devel/20230929124304.13672-1-salil.mehta@hua=
-wei.com/
-> > >
-> > > References:
-> > >
-> > > [1]
-> https://lore.kernel.org/qemu-devel/20230926100436.28284-1-salil.mehta@hua=
-wei.com/
-> > > [2]
-> https://lore.kernel.org/all/20230913163823.7880-1-james.morse@arm.com/
-> > > [3]
-> https://lore.kernel.org/qemu-devel/cover.1695697701.git.lixianglai@loongs=
-on.cn/
-> > >
-> > >
-> > >
-> > > Salil Mehta (8):
-> > >   accel/kvm: Extract common KVM vCPU {creation,parking} code
-> > >   hw/acpi: Move CPU ctrl-dev MMIO region len macro to common header
-> file
-> > >   hw/acpi: Update ACPI GED framework to support vCPU Hotplug
-> > >   hw/acpi: Update GED _EVT method AML with CPU scan
-> > >   hw/acpi: Update CPUs AML with cpu-(ctrl)dev change
-> > >   physmem: Add helper function to destroy CPU AddressSpace
-> > >   gdbstub: Add helper function to unregister GDB register space
-> > >   docs/specs/acpi_hw_reduced_hotplug: Add the CPU Hotplug Event Bit
-> > >
-> > >  accel/kvm/kvm-all.c                    | 95 +++++++++++++++++-------=
---
-> > >  accel/kvm/kvm-cpus.h                   | 23 +++++++
-> > >  accel/kvm/trace-events                 |  5 +-
-> > >  docs/specs/acpi_hw_reduced_hotplug.rst |  3 +-
-> > >  gdbstub/gdbstub.c                      | 13 ++++
-> > >  hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++
-> > >  hw/acpi/cpu.c                          | 33 ++++++---
-> > >  hw/acpi/generic_event_device.c         | 21 ++++++
-> > >  hw/core/cpu-common.c                   |  1 -
-> > >  hw/i386/acpi-build.c                   |  3 +-
-> > >  include/exec/cpu-common.h              |  8 +++
-> > >  include/exec/gdbstub.h                 |  6 ++
-> > >  include/hw/acpi/cpu.h                  |  5 +-
-> > >  include/hw/acpi/cpu_hotplug.h          |  4 ++
-> > >  include/hw/acpi/generic_event_device.h |  4 ++
-> > >  include/hw/core/cpu.h                  |  1 +
-> > >  system/physmem.c                       | 29 ++++++++
-> > >  17 files changed, 212 insertions(+), 48 deletions(-)
-> > >
-> > > --
-> > > 2.34.1
-> >
->
->
+> 
+> (..)
+> > > > 5. Worker thread model
+> > > > ======================
+> > > > 
+> > > > I'm so far not happy with what this proposal suggests on creating the
+> > > > threads, also the two new hooks mostly just to create these threads..
+> > > 
+> > > That VFIO .save_live_complete_precopy_begin handler crates a new
+> > > per-device thread is an implementation detail for this particular
+> > > driver.
+> > > 
+> > > The whole idea behind this and save_live_complete_precopy_end hook was
+> > > that details how the particular device driver does its own async saving
+> > > is abstracted away from the migration core.
+> > > 
+> > > The device then can do what's best / most efficient for it to do.
+> > 
+> > Yes, and what I was thinking is whether it does it in form of "enqueue a
+> > task to migration worker threads", rather than "creating its own threads in
+> > the device hooks, and managing those threads alone".
+> > 
+> > It's all about whether such threading can be reused by non-VFIO devices.
+> > They can't be reused if VFIO is in charge here, and it will make migration
+> > less generic.
+> > 
+> > My current opinion is they can and should be re-usable. Consider if someone
+> > starts to teach multifd carry non-vfio data (e.g. a generic VMSD), then we
+> > can enqueue a task, do e.g. ioctl(KVM_GET_REGS) in those threads (rather
+> > than VFIO read()).
+> 
+> Theoretically, it's obviously possible to wrap every operation in a request
+> to some thread pool.
+> 
+> 
+> But that would bring a lot of complexity, since instead of performing these
+> operation directly now the requester will need to:
+> 1) Prepare some "Operation" structure with the parameters of the requested
+> operation (task).
+> In your case this could be QEMU_OP_GET_VCPU_REGS operation using
+> "OperationGetVCPURegs" struct containing vCPU number parameter = 1.
 
---000000000000492ba6061bbf9379
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Why such complexity is needed?
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hi Igor,<br></div><br><div class=3D"gmail=
-_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jun 5, 2024 at 3:03=
-=E2=80=AFPM Igor Mammedov &lt;<a href=3D"mailto:imammedo@redhat.com">imamme=
-do@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">On Sun, 2 Jun 2024 18:03:05 -0400<br>
-&quot;Michael S. Tsirkin&quot; &lt;<a href=3D"mailto:mst@redhat.com" target=
-=3D"_blank">mst@redhat.com</a>&gt; wrote:<br>
-<br>
-&gt; On Thu, May 30, 2024 at 12:42:33AM +0100, Salil Mehta wrote:<br>
-&gt; &gt; Virtual CPU hotplug support is being added across various archite=
-ctures[1][3].<br>
-&gt; &gt; This series adds various code bits common across all architecture=
-s:<br>
-&gt; &gt; <br>
-&gt; &gt; 1. vCPU creation and Parking code refactor [Patch 1]<br>
-&gt; &gt; 2. Update ACPI GED framework to support vCPU Hotplug [Patch 2,3]<=
-br>
-&gt; &gt; 3. ACPI CPUs AML code change [Patch 4,5]<br>
-&gt; &gt; 4. Helper functions to support unrealization of CPU objects [Patc=
-h 6,7]<br>
-&gt; &gt; 5. Docs [Patch 8]<br>
-&gt; &gt; <br>
-&gt; &gt; <br>
-&gt; &gt; Repository:<br>
-&gt; &gt; <br>
-&gt; &gt; [*] <a href=3D"https://github.com/salil-mehta/qemu.git" rel=3D"no=
-referrer" target=3D"_blank">https://github.com/salil-mehta/qemu.git</a> vir=
-t-cpuhp-armv8/rfc-v3.arch.agnostic.v12<br>
-&gt; &gt; <br>
-&gt; &gt; NOTE: This series is meant to work in conjunction with Architectu=
-re specific patch-set.<br>
-&gt; &gt; For ARM, this will work in combination of the architecture specif=
-ic part based on<br>
-&gt; &gt; RFC V2 [1]. This architecture specific patch-set RFC V3 shall be =
-floated soon and is<br>
-&gt; &gt; present at below location<br>
-&gt; &gt; <br>
-&gt; &gt; [*] <a href=3D"https://github.com/salil-mehta/qemu/tree/virt-cpuh=
-p-armv8/rfc-v3-rc1" rel=3D"noreferrer" target=3D"_blank">https://github.com=
-/salil-mehta/qemu/tree/virt-cpuhp-armv8/rfc-v3-rc1</a><br>
-&gt; &gt;=C2=A0 =C2=A0<br>
-&gt; <br>
-&gt; <br>
-&gt; Igor plan to take a look?<br>
-<br>
-Yep, I plan to review it<br></blockquote><div><br></div><div>A gentle remin=
-der on this.</div><div><br></div><div>Thanks</div><div>Salil.</div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; <br>
-&gt; &gt; Revision History:<br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set=C2=A0 V11 -&gt; V12<br>
-&gt; &gt; 1. Addressed Harsh Prateek Bora&#39;s (IBM) comment<br>
-&gt; &gt;=C2=A0 =C2=A0 - Changed @cpu to @vcpu_id in the kvm_unpark_vcpu pr=
-otoype header/<br>
-&gt; &gt; 2. Added Zhao Liu&#39;s (Intel) Tested-by for whole series<br>
-&gt; &gt;=C2=A0 =C2=A0 - Qtest does not breaks on Intel platforms now.<br>
-&gt; &gt; 3. Added Zhao Liu&#39;s (Intel) Reviewed-by for [PATCH V11 {1/8 -=
- 3/8}]<br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/ZlRSPuJGBgyEU=
-W6w@intel.com/" rel=3D"noreferrer" target=3D"_blank">https://lore.kernel.or=
-g/qemu-devel/ZlRSPuJGBgyEUW6w@intel.com/</a><br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/a5f3d78e-cfed=
--441f-9c56-e3e78fa5edee@linux.ibm.com/" rel=3D"noreferrer" target=3D"_blank=
-">https://lore.kernel.org/qemu-devel/a5f3d78e-cfed-441f-9c56-e3e78fa5edee@l=
-inux.ibm.com/</a><br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set=C2=A0 V10 -&gt; V11<br>
-&gt; &gt; 1. Addressed Nicholas Piggin&#39;s (IBM) comment<br>
-&gt; &gt;=C2=A0 =C2=A0 - moved the traces in kvm_unpark_vcpu and kvm_create=
-_vcpu at the end<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added the Reviewed-by Tag for [PATCH V10 1/8]<br>
-&gt; &gt; 2.=C2=A0 Addressed Alex Benn=C3=A9e&#39;s (Linaro) comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added a note explaining dependency of the [PATCH V=
-10 7/8] on Arch specific patch-set<br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/D1FS5GOOFWWK.=
-2PNRIVL0V6DBL@gmail.com/" rel=3D"noreferrer" target=3D"_blank">https://lore=
-.kernel.org/qemu-devel/D1FS5GOOFWWK.2PNRIVL0V6DBL@gmail.com/</a> <br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/87frubi402.fs=
-f@draig.linaro.org/" rel=3D"noreferrer" target=3D"_blank">https://lore.kern=
-el.org/qemu-devel/87frubi402.fsf@draig.linaro.org/</a><br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set=C2=A0 V9 -&gt; V10<br>
-&gt; &gt; 1. Addressed Nicholas Piggin&#39;s (IBM) &amp; Philippe Mathieu-D=
-aud=C3=A9 (Linaro) comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - carved out kvm_unpark_vcpu and added its trace<br>
-&gt; &gt;=C2=A0 =C2=A0 - Widened the scope of the kvm_unpark_vcpu so that i=
-t can be used by generic framework<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0 being thought out<br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/2024051921062=
-0.228342-1-salil.mehta@huawei.com/" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://lore.kernel.org/qemu-devel/20240519210620.228342-1-salil.mehta@huawei=
-.com/</a><br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/e94b0e14-efee=
--4050-9c9f-08382a36b63a@linaro.org/" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://lore.kernel.org/qemu-devel/e94b0e14-efee-4050-9c9f-08382a36b63a@lina=
-ro.org/</a><br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set=C2=A0 V8 -&gt; V9<br>
-&gt; &gt; 1. Addressed Vishnu Pajjuri&#39;s (Ampere) comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added kvm_fd to trace in kvm_create_vcpu<br>
-&gt; &gt;=C2=A0 =C2=A0 - Some clean ups: arch vcpu-id and sbd variable<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added the missed initialization of cpu-&gt;gdb_num=
-_regs<br>
-&gt; &gt; 2. Addressed the commnet from Zhao Liu (Intel)<br>
-&gt; &gt;=C2=A0 =C2=A0 - Make initialization of CPU Hotplug state condition=
-al (possible_cpu_arch_ids!=3DNULL)<br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/2024031202000=
-0.12992-1-salil.mehta@huawei.com/" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://lore.kernel.org/qemu-devel/20240312020000.12992-1-salil.mehta@huawei.c=
-om/</a><br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set V7 -&gt; V8<br>
-&gt; &gt; 1. Rebased and Fixed the conflicts<br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set=C2=A0 V6 -&gt; V7<br>
-&gt; &gt; 1. Addressed Alex Benn=C3=A9e&#39;s comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Updated the docs<br>
-&gt; &gt; 2. Addressed Igor Mammedov&#39;s comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Merged patches [Patch V6 3/9] &amp; [Patch V6 7/9]=
- with [Patch V6 4/9]<br>
-&gt; &gt;=C2=A0 =C2=A0 - Updated commit-log of [Patch V6 1/9] and [Patch V6=
- 5/9]=C2=A0 =C2=A0 =C2=A0<br>
-&gt; &gt; 3. Added Shaoqin Huang&#39;s Reviewed-by tags for whole series.<b=
-r>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/2023101310512=
-9.25648-1-salil.mehta@huawei.com/" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://lore.kernel.org/qemu-devel/20231013105129.25648-1-salil.mehta@huawei.c=
-om/</a><br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set=C2=A0 V5 -&gt; V6<br>
-&gt; &gt; 1. Addressed Gavin Shan&#39;s comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Fixed the assert() ranges of address spaces<br>
-&gt; &gt;=C2=A0 =C2=A0 - Rebased the patch-set to latest changes in the qem=
-u.git<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added Reviewed-by tags for patches {8,9}<br>
-&gt; &gt; 2. Addressed Jonathan Cameron&#39;s comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Updated commit-log for [Patch V5 1/9] with mention=
- of trace events<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added Reviewed-by tags for patches {1,5}<br>
-&gt; &gt; 3. Added Tested-by tags from Xianglai Li<br>
-&gt; &gt; 4. Fixed <a href=3D"http://checkpatch.pl" rel=3D"noreferrer" targ=
-et=3D"_blank">checkpatch.pl</a> error &quot;Qemu -&gt; QEMU&quot; in [Patch=
- V5 1/9] <br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/2023101119435=
-5.15628-1-salil.mehta@huawei.com/" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://lore.kernel.org/qemu-devel/20231011194355.15628-1-salil.mehta@huawei.c=
-om/</a><br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set=C2=A0 V4 -&gt; V5<br>
-&gt; &gt; 1. Addressed Gavin Shan&#39;s comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Fixed the trace events print string for kvm_{creat=
-e,get,park,destroy}_vcpu<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added Reviewed-by tag for patch {1}<br>
-&gt; &gt; 2. Added Shaoqin Huang&#39;s Reviewed-by tags for Patches {2,3}<b=
-r>
-&gt; &gt; 3. Added Tested-by Tag from Vishnu Pajjuri to the patch-set<br>
-&gt; &gt; 4. Dropped the ARM specific [Patch V4 10/10]<br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/2023100920360=
-1.17584-1-salil.mehta@huawei.com/" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://lore.kernel.org/qemu-devel/20231009203601.17584-1-salil.mehta@huawei.c=
-om/</a><br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set=C2=A0 V3 -&gt; V4<br>
-&gt; &gt; 1. Addressed David Hilderbrand&#39;s comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Fixed the wrong doc comment of kvm_park_vcpu API p=
-rototype<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added Reviewed-by tags for patches {2,4}<br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/2023100911281=
-2.10612-1-salil.mehta@huawei.com/" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://lore.kernel.org/qemu-devel/20231009112812.10612-1-salil.mehta@huawei.c=
-om/</a><br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set=C2=A0 V2 -&gt; V3<br>
-&gt; &gt; 1. Addressed Jonathan Cameron&#39;s comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Fixed &#39;vcpu-id&#39; type wrongly changed from =
-&#39;unsigned long&#39; to &#39;integer&#39;<br>
-&gt; &gt;=C2=A0 =C2=A0 - Removed unnecessary use of variable &#39;vcpu_id&#=
-39; in kvm_park_vcpu<br>
-&gt; &gt;=C2=A0 =C2=A0 - Updated [Patch V2 3/10] commit-log with details of=
- ACPI_CPU_SCAN_METHOD macro<br>
-&gt; &gt;=C2=A0 =C2=A0 - Updated [Patch V2 5/10] commit-log with details of=
- conditional event handler method<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added Reviewed-by tags for patches {2,3,4,6,7}<br>
-&gt; &gt; 2. Addressed Gavin Shan&#39;s comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Remove unnecessary use of variable &#39;vcpu_id&#3=
-9; in kvm_par_vcpu<br>
-&gt; &gt;=C2=A0 =C2=A0 - Fixed return value in kvm_get_vcpu from -1 to -ENO=
-ENT<br>
-&gt; &gt;=C2=A0 =C2=A0 - Reset the value of &#39;gdb_num_g_regs&#39; in gdb=
-_unregister_coprocessor_all<br>
-&gt; &gt;=C2=A0 =C2=A0 - Fixed the kvm_{create,park}_vcpu prototypes docs<b=
-r>
-&gt; &gt;=C2=A0 =C2=A0 - Added Reviewed-by tags for patches {2,3,4,5,6,7,9,=
-10}<br>
-&gt; &gt; 3. Addressed one earlier missed comment by Alex Benn=C3=A9e in RF=
-C V1<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added traces instead of DPRINTF in the newly added=
- and some existing functions<br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/2023093000193=
-3.2660-1-salil.mehta@huawei.com/" rel=3D"noreferrer" target=3D"_blank">http=
-s://lore.kernel.org/qemu-devel/20230930001933.2660-1-salil.mehta@huawei.com=
-/</a><br>
-&gt; &gt; <br>
-&gt; &gt; Patch-set V1 -&gt; V2<br>
-&gt; &gt; 1. Addressed Alex Benn=C3=A9e&#39;s comments<br>
-&gt; &gt;=C2=A0 =C2=A0 - Refactored the kvm_create_vcpu logic to get rid of=
- goto<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added the docs for kvm_{create,park}_vcpu prototyp=
-es<br>
-&gt; &gt;=C2=A0 =C2=A0 - Splitted the gdbstub and AddressSpace destruction =
-change into separate patches<br>
-&gt; &gt;=C2=A0 =C2=A0 - Added Reviewed-by tags for patches {2,10}<br>
-&gt; &gt; Link: <a href=3D"https://lore.kernel.org/qemu-devel/2023092912430=
-4.13672-1-salil.mehta@huawei.com/" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://lore.kernel.org/qemu-devel/20230929124304.13672-1-salil.mehta@huawei.c=
-om/</a><br>
-&gt; &gt; <br>
-&gt; &gt; References:<br>
-&gt; &gt; <br>
-&gt; &gt; [1] <a href=3D"https://lore.kernel.org/qemu-devel/20230926100436.=
-28284-1-salil.mehta@huawei.com/" rel=3D"noreferrer" target=3D"_blank">https=
-://lore.kernel.org/qemu-devel/20230926100436.28284-1-salil.mehta@huawei.com=
-/</a><br>
-&gt; &gt; [2] <a href=3D"https://lore.kernel.org/all/20230913163823.7880-1-=
-james.morse@arm.com/" rel=3D"noreferrer" target=3D"_blank">https://lore.ker=
-nel.org/all/20230913163823.7880-1-james.morse@arm.com/</a><br>
-&gt; &gt; [3] <a href=3D"https://lore.kernel.org/qemu-devel/cover.169569770=
-1.git.lixianglai@loongson.cn/" rel=3D"noreferrer" target=3D"_blank">https:/=
-/lore.kernel.org/qemu-devel/cover.1695697701.git.lixianglai@loongson.cn/</a=
-><br>
-&gt; &gt; <br>
-&gt; &gt; <br>
-&gt; &gt; <br>
-&gt; &gt; Salil Mehta (8):<br>
-&gt; &gt;=C2=A0 =C2=A0accel/kvm: Extract common KVM vCPU {creation,parking}=
- code<br>
-&gt; &gt;=C2=A0 =C2=A0hw/acpi: Move CPU ctrl-dev MMIO region len macro to c=
-ommon header file<br>
-&gt; &gt;=C2=A0 =C2=A0hw/acpi: Update ACPI GED framework to support vCPU Ho=
-tplug<br>
-&gt; &gt;=C2=A0 =C2=A0hw/acpi: Update GED _EVT method AML with CPU scan<br>
-&gt; &gt;=C2=A0 =C2=A0hw/acpi: Update CPUs AML with cpu-(ctrl)dev change<br=
->
-&gt; &gt;=C2=A0 =C2=A0physmem: Add helper function to destroy CPU AddressSp=
-ace<br>
-&gt; &gt;=C2=A0 =C2=A0gdbstub: Add helper function to unregister GDB regist=
-er space<br>
-&gt; &gt;=C2=A0 =C2=A0docs/specs/acpi_hw_reduced_hotplug: Add the CPU Hotpl=
-ug Event Bit<br>
-&gt; &gt; <br>
-&gt; &gt;=C2=A0 accel/kvm/kvm-all.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 95 +++++++++++++++++---------<br>
-&gt; &gt;=C2=A0 accel/kvm/kvm-cpus.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 23 +++++++<br>
-&gt; &gt;=C2=A0 accel/kvm/trace-events=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 5 +-<br>
-&gt; &gt;=C2=A0 docs/specs/acpi_hw_reduced_hotplug.rst |=C2=A0 3 +-<br>
-&gt; &gt;=C2=A0 gdbstub/gdbstub.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 13 ++++<br>
-&gt; &gt;=C2=A0 hw/acpi/acpi-cpu-hotplug-stub.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-|=C2=A0 6 ++<br>
-&gt; &gt;=C2=A0 hw/acpi/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 33 ++++++---<br>
-&gt; &gt;=C2=A0 hw/acpi/generic_event_device.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0| 21 ++++++<br>
-&gt; &gt;=C2=A0 hw/core/cpu-common.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 1 -<br>
-&gt; &gt;=C2=A0 hw/i386/acpi-build.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 3 +-<br>
-&gt; &gt;=C2=A0 include/exec/cpu-common.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 |=C2=A0 8 +++<br>
-&gt; &gt;=C2=A0 include/exec/gdbstub.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 6 ++<br>
-&gt; &gt;=C2=A0 include/hw/acpi/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 +-<br>
-&gt; &gt;=C2=A0 include/hw/acpi/cpu_hotplug.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 |=C2=A0 4 ++<br>
-&gt; &gt;=C2=A0 include/hw/acpi/generic_event_device.h |=C2=A0 4 ++<br>
-&gt; &gt;=C2=A0 include/hw/core/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 1 +<br>
-&gt; &gt;=C2=A0 system/physmem.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 29 ++++++++<br>
-&gt; &gt;=C2=A0 17 files changed, 212 insertions(+), 48 deletions(-)<br>
-&gt; &gt; <br>
-&gt; &gt; -- <br>
-&gt; &gt; 2.34.1=C2=A0 <br>
-&gt; <br>
-<br>
-</blockquote></div></div>
+Can it be as simple as func(opaque) to be queued, then here
+func==vfio_save_complete_precopy_async_thread, opaque=VFIODevice*?
 
---000000000000492ba6061bbf9379--
+> 
+> 2) Submit this operation to the thread pool and wait for it to complete,
+
+VFIO doesn't need to have its own code waiting.  If this pool is for
+migration purpose in general, qemu migration framework will need to wait at
+some point for all jobs to finish before moving on.  Perhaps it should be
+at the end of the non-iterative session.
+
+> 
+> 3) Thread pool needs to check whether it has any free threads in the pool
+> available to perform this operation.
+> 
+> If not, and the count of threads that are CPU-bound (~aren't sleeping on
+> some I/O operation) is less than the number of logical CPUs in the system
+> the thread pool needs to spawn a new thread since there's some CPU capacity
+> available,
+
+For this one it can follow what thread-pool.c is doing, and the upper bound
+of n-threads can start from simple, e.g. min(n_channels_multifd, 8)?
+
+> 
+> 4) The operation needs to be dispatched to the actual execution thread,
+> 
+> 5) The execution thread needs to figure out which operation it needs to
+> actually do, fetch the necessary parameters from the proper "Operation"
+> structure, maybe take the necessary locks, before it can actually perform
+> the requested operation,
+> 
+> 6) The execution thread needs to serialize (write) the operation result
+> back into some "OperationResult" structure, like "OperationGetVCPURegsResult",
+
+I think in this simplest case, the thread should simply run fn(opaque), in
+which it should start to call multifd_queue_device_state() and queue
+multifd jobs from the worker thread instead of the vfio dedicated threads.
+I don't yet expect much to change in your code from that regard inside what
+vfio_save_complete_precopy_async_thread() used to do.
+
+> 
+> 7) The execution thread needs to submit this result back to the requester,
+> 
+> 8) The thread pool needs to decide whether to keep this (now idle) execution
+> thread in the pool as a reserve thread or terminate it immediately,
+> 
+> 9) The requester needs to be resumed somehow (returned from wait) now that
+> the operation it requested is complete,
+> 
+> 10) The requester needs the fetch the operation results from the proper
+> "OperationResult" structure and decode them accordingly.
+> 
+> 
+> As you can see, that's *a lot* of extra code that needs to be maintained
+> for just a single operation type.
+
+I don't yet know why you designed it so complicated, but if I missed
+something above please let me know.
+
+> 
+> > > 
+> > > > I know I suggested that.. but that's comparing to what I read in the even
+> > > > earlier version, and sorry I wasn't able to suggest something better at
+> > > > that time because I simply thought less.
+> > > > 
+> > > > As I mentioned in the other reply elsewhere, I think we should firstly have
+> > > > these threads ready to take data at the start of migration, so that it'll
+> > > > work when someone wants to add vfio iteration support.  Then the jobs
+> > > > (mostly what vfio_save_complete_precopy_async_thread() does now) can be
+> > > > enqueued into the thread pools.
+> > > 
+> > > I'm not sure that we can get way with using fewer threads than devices
+> > > as these devices might not support AIO reads from their migration file
+> > > descriptor.
+> > 
+> > It doesn't need to use AIO reads - I'll be happy if the thread model can be
+> > generic, VFIO can still enqueue a task that does blocking reads.
+> > 
+> > It can take a lot of time, but it's fine: others who like to enqueue too
+> > and see all threads busy, they should simply block there and waiting for
+> > the worker threads to be freed again.  It's the same when there's no
+> > migration worker threads as it means the read() will block the main
+> > migration thread.
+> 
+> Oh no, waiting for another device blocking read to complete before
+> scheduling another device blocking read is surely going to negatively
+> impact the performance.
+
+There can be e.g. 8 worker threads.  If you want you can make sure the
+worker threads are at least more than vfio threads.  Then it will guarantee
+vfio will dump / save() one device per thread concurrently.
+
+> 
+> For best performance we need to maximize parallelism - that means
+> reading (and loading) all the VFIO devices present in parallel.
+> 
+> The whole point of having per-device threads is for the whole operation
+> to be I/O bound but never CPU bound on a reasonably fast machine - and
+> especially not number-of-threads-in-pool bound.
+> 
+> > Now we can have multiple worker threads doing things concurrently if
+> > possible (some of them may not, especially when BQL will be required, but
+> > that's a separate thing, and many device save()s may not need BQL, and when
+> > it needs we can take it in the enqueued tasks).
+> > 
+> > > 
+> > > mlx5 devices, for example, seems to support only poll()ed / non-blocking
+> > > reads at best - with unknown performance in comparison with issuing
+> > > blocking reads from dedicated threads.
+> > > 
+> > > On the other hand, handling a single device from multiple threads in
+> > > parallel is generally not possible due to difficulty of establishing in
+> > > which order the buffers were read.
+> > > 
+> > > And if we need a per-VFIO device thread anyway then using a thread pool
+> > > doesn't help much - but brings extra complexity.
+> > > 
+> > > In terms of starting the loading thread earlier to load also VM live
+> > > phase data it looks like a small change to the code so it shouldn't be
+> > > a problem.
+> > 
+> > That's good to know.  Please still consider a generic thread model and see
+> > what that would also work for your VFIO use case.
+> > 
+> > If you see what thread-pool.c did right now is it'll dynamically create
+> > threads on the fly.  I think that's something we can do too but just apply
+> > an upper limit to the thread numbers.
+> 
+> We have an upper limit on the count of saving threads already - it's the
+> count of VFIO devices in the VM.
+> 
+> The API in util/thread-pool.c is very basic and basically only allows
+> submitting either AIO operations or generic function call operation
+> but still within some AioContext.
+
+What I'm saying is a thread pool _without_ aio.  I think it might be called
+ThreadPoolRaw and let ThreadPool depend on it, but I didn't further check yet.
+
+> 
+> There's almost none of the operation execution logic I described above -
+> all of these would need to be written and maintained.
+> 
+> > > 
+> > > > It's better to create the thread pool owned by migration, rather than
+> > > > threads owned by VFIO, because it also paves way for non-VFIO device state
+> > > > save()s, as I mentioned also above on the multifd packet header.  Maybe we
+> > > > can have a flag in the packet header saying "this is device xxx's state,
+> > > > just load it".
+> > > 
+> > > I think the same could be done by simply implementing these hooks in other
+> > > device types than VFIO, right?
+> > > 
+> > > And if we notice that these implementations share a bit of code then we
+> > > can think about making a common helper library out of this code.
+> > > 
+> > > After, all that's just an implementation detail that does not impact
+> > > the underlying bit stream protocol.
+> > 
+> > You're correct.
+> > 
+> > However, it still affects a few things.
+> > 
+> > Firstly, it may mean that we may not even need those two extra vmstate
+> > hooks: the enqueue can happen already with save_state() if the migration
+> > worker model exists.
+> > 
+> > So instead of this:
+> > 
+> >          vfio_save_state():
+> >          if (migration->multifd_transfer) {
+> >                  /* Emit dummy NOP data */
+> >                  qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+> >                  return;
+> >          }
+> > 
+> > We can already do:
+> > 
+> >          if (migration->multifd_transfer) {
+> >                  // enqueue task to load state for this vfio device
+> >                  ...
+> >                  return;
+> >          }
+> > 
+> > IMHO it'll be much cleaner in VFIO code, and much cleaner too for migration
+> > code.
+> 
+> The save_state hook is executed too late - only after all iterable
+> hooks have already transferred all their data.
+> 
+> We want to start saving this device state as early as possible to not
+> have to wait for any other device to transfer its data first.
+> 
+> That's why the code introduces save_live_complete_precopy_begin hook
+> that's guaranteed to be the very first hook called during switchover
+> phase device state saving.
+
+I think I mis-typed.. What I wanted to say is vfio_save_complete_precopy(),
+not vfio_save_state().
+
+There will be one challenge though where RAM is also an iterable, so RAM's
+save_live_complete_precopy() can delay VFIO's, even if it simply only need
+to enqueue a job.
+
+Two solutions I can think of:
+
+  (1) Provide a separate hook, e.g. save_live_complete_precopy_async(),
+  when save_live_complete_precopy_async(opaque) is provided, instead of
+  calling save_live_complete_precopy(), we inject that job into the worker
+  threads.  In that case we can loop over *_precopy_async() before all the
+  rest *_precopy() calls.
+
+  (2) Make RAM's save_live_complete_precopy() also does similar enqueue
+  when multifd enabled, so RAM will be saved in the worker thread too.
+
+However (2) can have other issues to work out.  Do you think (1) is still
+doable?
+
+> 
+> > Another (possibly personal) reason is, I will not dare to touch VFIO code
+> > too much to do such a refactoring later.  I simply don't have the VFIO
+> > devices around and I won't be able to test.  So comparing to other things,
+> > I hope VFIO stuff can land more stable than others because I am not
+> > confident at least myself to clean it.
+> 
+> That's a fair request, will keep this on mind.
+> 
+> > I simply also don't like random threads floating around, considering that
+> > how we already have slightly a mess with migration on other reasons (we can
+> > still have random TLS threads floating around, I think... and they can
+> > cause very hard to debug issues). I feel shaky to maintain it when any
+> > device can also start to create whatever threads they can during migration.
+> 
+> The threads themselves aren't very expensive as long as their number
+> is kept within reasonable bounds.
+> 
+> 4 additional threads (present only during active migration operation)
+> with 4 VFIO devices is really not a lot.
+
+It's not about number, it's about management, and when something crashed at
+some unwanted point, then we may want to know what happened to those
+threads and how to recycle them.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
