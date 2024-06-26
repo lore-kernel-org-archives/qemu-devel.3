@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 462D5C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 02:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C019CC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 02:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMIAz-0005WS-UC; Tue, 25 Jun 2024 22:14:29 -0400
+	id 1sMI5N-0003pQ-0m; Tue, 25 Jun 2024 22:08:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sMIAK-0005TC-5h
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:13:50 -0400
-Received: from mail-sn1nam02on20604.outbound.protection.outlook.com
- ([2a01:111:f400:7ea9::604]
- helo=NAM02-SN1-obe.outbound.protection.outlook.com)
+ id 1sMI51-0003nI-C6
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:08:18 -0400
+Received: from mail-bn1nam02on20616.outbound.protection.outlook.com
+ ([2a01:111:f403:2407::616]
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sMI9a-0004Pm-4B
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:13:29 -0400
+ id 1sMI4Q-0003fc-Dx
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:08:10 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UA/VWhyhc7/tTdmctfMHxQgPo2oyDO0x7XGzJXOPpFLlFWXRwLMlWJgCARxeVda+0aU5YWwGtgeuw/kIhxcVV76mERPyG8Ll9Txuj878AOmrhlLvXpBl3g0spMP7A4UQCmoE9+3uaDeojGE8l9jjrETt2iapakofiOP0zFg+G63E5SpuB5yXcyUZwC6rbPrLk7vob4XfuBREJi+vRpav1zMvDp8xDAv6KuBsVN4Cnb50Ib5a06P4m6zk2xhYH1+b7/P2P8RLrTWtX2okjKg0fxyVNsUrc7Fu1qwkpidbDQ3tDaU2GDpamVgGJwhoGEy+nG0KNzo8A6zY/Bgrnbln0g==
+ b=h9mz20+7Zc+3nDMJPq8YOF2kAb37d2iuqXdrXBPOlJ34CuWWSgG2mGlmjrVurLq/GGvIJJdpjP4LVmboT3qRD8MSlX6KwUK1Auqctf+WNSXmmp+8CZghVJ1LD1oNY7ZdWM+iuh6FLOvE+s1cXSm6EpI/bLhotKEeZHo0WbQ/+MdYi3rEHsusG4NCmvRhIYz8Yu5YgE92YUvaSL/+UoaxCkpHUvWKJ5iN8f/WoXQ4XiSMahJWRpHK+kOFdn8Sv/uZ3Ncd4RMyjGXw57Qm0Jp3b6LyXoYV98EWf4DrkE5NWPvY1KtR5vJ2dhMgmARiFn9FqOn9OwFhlOu2BkHGokFw+Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VT9dhE5C30C/kMiM4NyBOMn7CmmxC/qeuX97X8XzTHA=;
- b=KF5vI8vgRDVDfD/T1aXfSfJUyu0yN030p7DbW/FIU7VumIzobwTgmrZwgtCezE6fRYDz8psIkHAQvfVM4h+sSZ0Ho9zu0DmNM8GtfcCt10bzhIxnCHSgMuAlblfI0aNg0Vo0wZ58Rf/0s0uNruoHFGxNFoPa46FZdzu86RUlU41VdqeVEnnwqLVROHpe9hRc1IZkltnn+Jlzmlj+J/Z1A+BeLlMr6awmaYlFb8OMOj90DNpwDkrlufDs1mXOc+C5HQl3VNVrxyBSMOmixpQ7GMM56B+u8CcD1+nN2fBzzQiSNQqrfrwyJSAvzD6t+Q9g2OULqBUcINKF9k8ZnEEKCg==
+ bh=3JMy6Or3KW8qCfpz3EkC9MUSXl+ggzi3XZvt+LeIJ38=;
+ b=i6ysUjPO3E7dJD17VW8Z7eyKsVO/4XqVjw9cHr2G6FLf0h4w6AiJ2hAAPbxLVyEp9Efvt0ueVvK7gX438eWtWiAHB+foHDdGPEu1vT+E2p747S9S1ex4FTPXnte+LRTnNB4WoX0TM2h1VhQ5i5uM5N0ySu778vixFOI28EX/O/mdos/V6mjGXpnHY72Qt/6/exWdg/NocVM2RKoqDp+YqC31cWgPn2ZVbT+3A4NJjCo/l528uFfagQdLXyPV35EpO7ppshbTwnfUDGbvob/Si1mGZl4VNWWhQxJJTwkSTkHdxDuYXbaDThLIsCkkQtJhqRNDM4jIEGh7UxdEDWsbzQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.118.232) smtp.rcpttodomain=linaro.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -36,18 +36,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VT9dhE5C30C/kMiM4NyBOMn7CmmxC/qeuX97X8XzTHA=;
- b=b9YsiDsXFQG6zcFs0+Ipkj4wEmJvyzGUJkv076VeV2gNHpIzdKvSbAjX6DzudWfRDlVD7XOkj50Iql6dcz8BdJEeEQ+pgpK/g/FA/EP2InXgS12Jxlm5IfjSVkEzU2L6T2idL/Ik0NMB/28cjsns8IqB2etKZAX44hEWokc4id7Bn43jNLEYQ3wVI66Z508ebhyx0mpm46d3fGzpy4Z9cgZzd6E4KnacD34UEHX0eivxArvKF3XMHRCfbiHgmpjVZ1vIJVXKfjKAT50u9w0S/XS47WZHYhv6Vg2JJyE63txYy+nhBlRjDoWAjg0QUScn81RX29n3c5OntT8DWJYMEw==
-Received: from BN0PR07CA0029.namprd07.prod.outlook.com (2603:10b6:408:141::11)
- by MN6PR12MB8513.namprd12.prod.outlook.com (2603:10b6:208:472::13)
+ bh=3JMy6Or3KW8qCfpz3EkC9MUSXl+ggzi3XZvt+LeIJ38=;
+ b=s3Z7khQMR8T9G2v1ft9JqpNMQtnTKgnWwhmlMQhHUrUiqyvXvkifPsmYMwsHC74WaXEg5VEgK7Quvz8YzMRX/Dr9hAf51dnDkXZDufV7AHDh8TZzrdtNzOfg8Igtbk8obhtjmn+IIntpbYPLKP4yJe+3+MN9fx7PbpsQhWaRJwwtiTB85uQYlx2vLLH2tiZXDZqRziNnraS6cRKZ+4q042AcNy0IRctdYmz4Lzhlo6I7+BxNDnWlqk0TFmXkjwE5+cc9LNxhvhgEWN6+YbShCaBPcmGYJ28zrgXO1KiBotldJNSFVa72iind5pwyaRZsz8KUlXqdL2J78ii+vVWBjA==
+Received: from BN0PR08CA0023.namprd08.prod.outlook.com (2603:10b6:408:142::17)
+ by LV3PR12MB9216.namprd12.prod.outlook.com (2603:10b6:408:1a5::13)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.26; Wed, 26 Jun
- 2024 00:29:37 +0000
-Received: from BN3PEPF0000B071.namprd04.prod.outlook.com
- (2603:10b6:408:141:cafe::40) by BN0PR07CA0029.outlook.office365.com
- (2603:10b6:408:141::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.30; Wed, 26 Jun
+ 2024 00:29:32 +0000
+Received: from BN3PEPF0000B077.namprd04.prod.outlook.com
+ (2603:10b6:408:142:cafe::7c) by BN0PR08CA0023.outlook.office365.com
+ (2603:10b6:408:142::17) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7719.22 via Frontend
- Transport; Wed, 26 Jun 2024 00:29:37 +0000
+ Transport; Wed, 26 Jun 2024 00:29:32 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
@@ -56,29 +56,30 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.118.232 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.118.232) by
- BN3PEPF0000B071.mail.protection.outlook.com (10.167.243.116) with Microsoft
+ BN3PEPF0000B077.mail.protection.outlook.com (10.167.243.122) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7677.15 via Frontend Transport; Wed, 26 Jun 2024 00:29:37 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ 15.20.7677.15 via Frontend Transport; Wed, 26 Jun 2024 00:29:31 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
  (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 25 Jun
- 2024 17:29:28 -0700
+ 2024 17:29:25 -0700
 Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 25 Jun 2024 17:29:28 -0700
+ 15.2.1544.4; Tue, 25 Jun 2024 17:29:24 -0700
 Received: from Asurada-Nvidia.nvidia.com (10.127.8.10) by mail.nvidia.com
  (10.126.190.182) with Microsoft SMTP Server id 15.2.1544.4 via Frontend
- Transport; Tue, 25 Jun 2024 17:29:27 -0700
+ Transport; Tue, 25 Jun 2024 17:29:24 -0700
 From: Nicolin Chen <nicolinc@nvidia.com>
 To: <peter.maydell@linaro.org>, <shannon.zhaosl@gmail.com>, <mst@redhat.com>, 
  <imammedo@redhat.com>, <anisinha@redhat.com>, <eric.auger@redhat.com>,
  <peterx@redhat.com>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <jgg@nvidia.com>,
  <shameerali.kolothum.thodi@huawei.com>, <jasowang@redhat.com>
-Subject: [PATCH RFCv1 05/10] hw/arm/virt: Add VIRT_NESTED_SMMU
-Date: Tue, 25 Jun 2024 17:28:32 -0700
-Message-ID: <bc7a57311ac4976699789ceca329edfdfe823c2d.1719361174.git.nicolinc@nvidia.com>
+Subject: [PATCH RFCv1 01/10] hw/arm/virt-acpi-build: Add IORT RMR regions to
+ handle MSI nested binding
+Date: Tue, 25 Jun 2024 17:28:28 -0700
+Message-ID: <aef143f212f9ad9ac65f9bfd70f875ae5b452c7a.1719361174.git.nicolinc@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1719361174.git.nicolinc@nvidia.com>
 References: <cover.1719361174.git.nicolinc@nvidia.com>
@@ -88,59 +89,58 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B071:EE_|MN6PR12MB8513:EE_
-X-MS-Office365-Filtering-Correlation-Id: a7eb4f23-0abe-415f-adfa-08dc95770f95
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B077:EE_|LV3PR12MB9216:EE_
+X-MS-Office365-Filtering-Correlation-Id: aa58b68c-3716-4f24-dbbb-08dc95770c44
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230038|36860700011|376012|7416012|1800799022|82310400024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?8tzZCxKKHnT5xI4q+9gDUgpLbQI5kYRrya2sVdHmmCMK8FKMKyMuAMgK608K?=
- =?us-ascii?Q?vL1NUpB99zRhd6O8wJafrhM19YcWScjeJvPXEq2+AMzxHMHgcEdW+iWIcs+z?=
- =?us-ascii?Q?bqBZFkWvev2tA7mihAUkR0UvU+OOaAUmjsJUg7EtgkmrAvTyV4XADpo+ulmp?=
- =?us-ascii?Q?YKpbNmwSU7Iapq8IgZsn6OsbOq5YGsOlBHj0I2ODu/oiTiXqhiMS4IFT/4k7?=
- =?us-ascii?Q?k0FkKfNISgK/KmD0a+bKoeUNstRb35MEEj2heKgMp8McYROW+VSUD7zW3Cxa?=
- =?us-ascii?Q?rLv3UIM5nJezjVpt/vZWhPcI6sCkoCdZs14DgkKGyeRIrWmeRqqxWEimveQ/?=
- =?us-ascii?Q?IdcRPZ0b4Yq+By8UC59ZWBZbCs0fmIup5ROqH76KKwD1v3qP/XQ7YvmippIw?=
- =?us-ascii?Q?DbgLU2DQ0hl16+AZf/+r3kQ3D4lxTkpoKHAD66EIKAPLwcGPKtrrNy2Edb8E?=
- =?us-ascii?Q?FDI6lNIxfrDnaDvGQ/q0oMAdjYY1L4PDeLPAxaa10rFUy96LeXVDiQ6abFf3?=
- =?us-ascii?Q?1SntjSrHlJ5+jsa+D7QZejWlYx/i4TPTUPppk905cDuvWU42RF4UfTpWr1gU?=
- =?us-ascii?Q?m+nEar5Q4f9HcKZOvT2g+KDzDj7oyMJf/I0ZCtn7roiXfI+nx1ylXiioEnMW?=
- =?us-ascii?Q?rFdah1GuVQQDsxpLxlZgJ8DUEJ75sdNpJEZQy20ICrXd1ANTIhw34Iymg0Y1?=
- =?us-ascii?Q?xGuoZ9A+m2U/bx1zWGgmyxZCrtXFSlCq6JLTDjZ9JwhtgM6XlRQIK4HONItY?=
- =?us-ascii?Q?LQm6w2DqMzb67DLAb7/UhdDOS8Q+EM4QqWk9NwwoeSM2R3mYdEPS6FJaQF2I?=
- =?us-ascii?Q?MYU9VALtdDEkX1NfbAwbUkbA6EoUHHWubBEWJxQWoczSb55Bs+TIvSsnCOWr?=
- =?us-ascii?Q?vuhNt0AUcPl4O9i+Idcw/VfmJ1+0066n947SA7Godbl/Ny7khhzEQsqM/Lic?=
- =?us-ascii?Q?c9Xyn1fLQUmNyfgVRKdI03yFuXexS1vs5OPNati1axh3D7PALOY4HMtrbszX?=
- =?us-ascii?Q?LoIh/CAkCAzxjcYUe+hS9EroXZAO8DWtuVOl0kyQxoVdaZDXXgHLkAf5X1jN?=
- =?us-ascii?Q?brprSAmw7Kk9y0uUvorL4ZbgXM7ebHzwviFe0t3aWBau989vThpZPx1bTqLD?=
- =?us-ascii?Q?kWa7jOJXgQI2tysfVGL2A1i8edpQbIvZSmTLX6NHB7NYKhhtxe1DWh2L62Re?=
- =?us-ascii?Q?1wWF0Rhn/m9DOCLg0ZUDxcj9MrGGhofjYti8imSEii9HdQ3j8eFr4ca4v7Ft?=
- =?us-ascii?Q?MZRr/fJ5mheuBkRtD+p/N8KaXTAhoXdqw7jFckzd6MHY6Fy/lyFtN16sbhMS?=
- =?us-ascii?Q?wTnDwHlrW6P4fSkmqYvsoEUCMiaAO5jZuiyZjgVa0O3cRHaqy3jm8lVxaqpg?=
- =?us-ascii?Q?s/OlAadjE2y3KGmVtq4c5DBVw9mLQbQLjliY6C1Xom8/uyEfrSjXX1RaB974?=
- =?us-ascii?Q?q3Qa1KKrOc96KHSW249eV7l3kOecjDWC?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Z+UkL8PqjmL27JtixBriGNDW0AkCocb8MiF9RcGOwiLDdeamk+Im8/VB2RFb?=
+ =?us-ascii?Q?r2B7ucowSA0czC3cgWF/HIzSkTQAIrYsgWtp9ebMfhlxQcYwrs3iJkiIApa5?=
+ =?us-ascii?Q?1Zi+eOAGDUign46CbDrBuX/qo8URSXXsAOUJ1HOh+Yv89DO7oIizWLTTmZ+J?=
+ =?us-ascii?Q?QrhxsMzE+4PJWBonEQF5F73bjv3z5gA+g46RBL9OWK2/ybEpjZV+YJ1Bm8gP?=
+ =?us-ascii?Q?AXsilZ5EA0Qi+w/53fc10SACPfD95+c6tz63T/Z4IpRtiYvDhA57FStQIKX4?=
+ =?us-ascii?Q?l409a+B/1BwQgkomp9VnCHqTWWyIdrgJkpdlkrhB4fi5ahIREty77vYEoWqB?=
+ =?us-ascii?Q?rsW+Sa0x7v8ntZI7OExqvufkbpTwbvQ/qrp39wDV9shv8f8U1+RS18T7Fpq4?=
+ =?us-ascii?Q?fnSSi04YXG96bije+IM9Kbr4QvtOYTfvKqPMko6CUio5mgnPE99ePBEWMvW8?=
+ =?us-ascii?Q?QGcXxPAaLfW9UlwNRwFxkX0C/rnl7aoSnENz/Fu7Ra5RBpu9Vj8PpxaJX9QQ?=
+ =?us-ascii?Q?FLSm7DOyxc4KTW/zlnHJETaglXwsclkEbj4EBlMQ2doy7zrNzuQAWCLmhr6d?=
+ =?us-ascii?Q?kxFYsW6rozqBoKc9yJIAPnQj+XcUrB2MAfXaV5yH8zyfs036bYmNl44sVpcg?=
+ =?us-ascii?Q?0qVQPM/gUKWLtZ8FJe62MwTY6hpfm8HIRNW90WuG7z7jXqHFBOQpxO6ATVqL?=
+ =?us-ascii?Q?E9B9YRGeFsjOwlidQa/U0CJBEhq2lnBxfA6uR0P2fmYxVWFwMf5yy2V/3hvs?=
+ =?us-ascii?Q?8QQlqh8UyFcOLWmiSQZP4lf1gXb6+QdjUfwaMwCtNZWU5QGjevgqGocJz8AI?=
+ =?us-ascii?Q?UW6BBnUXa+hEZegmBGKJ8wXqMXzYaD1+8K47T8RJkpN9GsO1cG5h1tSsB7SV?=
+ =?us-ascii?Q?xN3lILUF1jYeRpypk7a32v2rE9EB9SA5WBd4VCXClE0uFa0gncudBgZ7K3vO?=
+ =?us-ascii?Q?eUic+faKdLNBakQYX8RKRnigvjaAlCj9K36+FsbN8jUXA1jXnfX3KJJybN9x?=
+ =?us-ascii?Q?KT9P5JNi0ebDxr8RlpUWb2ZoG+z32ii+CQppQItH3DFAAkZkkoSFFERhRSb5?=
+ =?us-ascii?Q?jQ/mhtdp/PVeFIoSjZH33hwwZ4fHqorc1rUAKhononsg9Eq6kUxhdHki2XWM?=
+ =?us-ascii?Q?tfSGIMRJgcFE5xl+nYwJZtORjIfOwD829IlrJ4tWYN8SYZO2ngoWw8kH3SuY?=
+ =?us-ascii?Q?SOVa/2/0HAD+bRnmOIiAuAO4Q29g0SCYHLSqCSccKgdvowfuIz+0fYVi3p3d?=
+ =?us-ascii?Q?TBUL8X9Mp0+/c8+KDTaeeoZAYNwbyUyvwdTUTLaKDkifjt/UZDpsZ1kmfMNC?=
+ =?us-ascii?Q?FcIMqkfn/WY8SRgHwmhgqoQ/yFor/TNMFM42USavParSBWtpNTncjoszYQj+?=
+ =?us-ascii?Q?8nnJ3Lll8pHq/QjOWvB49rm3MVEn7+eNPheEhYMDtoYf4PWZOw=3D=3D?=
 X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
  SFS:(13230038)(36860700011)(376012)(7416012)(1800799022)(82310400024); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2024 00:29:37.2851 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a7eb4f23-0abe-415f-adfa-08dc95770f95
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2024 00:29:31.7222 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa58b68c-3716-4f24-dbbb-08dc95770c44
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B071.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B077.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR12MB8513
-Received-SPF: softfail client-ip=2a01:111:f400:7ea9::604;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9216
+Received-SPF: softfail client-ip=2a01:111:f403:2407::616;
  envelope-from=nicolinc@nvidia.com;
- helo=NAM02-SN1-obe.outbound.protection.outlook.com
+ helo=NAM02-BN1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -12
 X-Spam_score: -1.3
 X-Spam_bar: -
 X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, KHOP_HELO_FCRDNS=0.4, T_SPF_HELO_TEMPERROR=0.01,
+ DKIM_SIGNED=0.1, KHOP_HELO_FCRDNS=0.4,
  T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,263 +157,297 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VIRT_SMMU can be used as an emulated SMMU, i.e. iommu=smmuv3. However, the
-MMIO space for VIRT_SMMU isn't large enough to accommodate multiple nested
-SMMUv3 instances. Add a new VIRT_NESTED_SMMU to separate MMIO space.
+From: Eric Auger <eric.auger@redhat.com>
 
-Meanwhile, a nested SMMUv3 could only work with a vfio-pci device that is
-physically associated to a host-level SMMUv3 instance, meaning that such a
-passthrough deivce must be linked to a nesteed SMMU corresponding to the
-underlying host-level SMMUv3 instance:
-      HW SMMU0 <-----------------> vSMMU0 (nested)
-          ^                             ^
-	  |                             |
-	  ----> PCI dev0 & PCI dev1 <----
-      HW SMMU1 <-----------------> vSMMU1 (nested)
-          ^                             ^
-	  |                             |
-	  ----> PCI dev2 & PCI dev3 <----
+To handle SMMUv3 nested stage support it is practical to
+expose the guest with reserved memory regions (RMRs)
+covering the IOVAs used by the host kernel to map
+physical MSI doorbells.
 
-Note that, on the other hand, an emulated deivce should not be associated
-to a nested SMMU.
+Those IOVAs belong to [0x8000000, 0x8100000] matching
+MSI_IOVA_BASE and MSI_IOVA_LENGTH definitions in kernel
+arm-smmu-v3 driver. This is the window used to allocate
+IOVAs matching physical MSI doorbells.
 
-To prepare for that, create a PCIe Expander Bridge per nested SMMU as a
-docker for pci-vfio devices. It eases the QEMU code to build ID mappings
-in the IORT.
+With those RMRs, the guest is forced to use a flat mapping
+for this range. Hence the assigned device is programmed
+with one IOVA from this range. Stage 1, owned by the guest
+has a flat mapping for this IOVA. Stage2, owned by the VMM
+then enforces a mapping from this IOVA to the physical
+MSI doorbell.
 
+The creation of those RMR nodes only is relevant if nested
+stage SMMU is in use, along with VFIO. As VFIO devices can be
+hotplugged, all RMRs need to be created in advance. Hence
+the patch introduces a new arm virt "nested-smmuv3" iommu type.
+
+ARM DEN 0049E.b IORT specification also mandates that when
+RMRs are present, the OS must preserve PCIe configuration
+performed by the boot FW. So along with the RMR IORT nodes,
+a _DSM function #5, as defined by PCI FIRMWARE SPECIFICATION
+EVISION 3.3, chapter 4.6.5 is added to PCIe host bridge
+and PCIe expander bridge objects.
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Suggested-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
----
- hw/arm/virt.c         | 110 +++++++++++++++++++++++++++++++++++++-----
- include/hw/arm/virt.h |  17 +++++++
- 2 files changed, 116 insertions(+), 11 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index ef59c79ca3..a54332fca8 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -55,6 +55,7 @@
- #include "qemu/bitops.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
-+#include "hw/pci/pci_bus.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/virtio/virtio-pci.h"
- #include "hw/core/sysbus-fdt.h"
-@@ -83,6 +84,7 @@
- #include "hw/virtio/virtio-md-pci.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/char/pl011.h"
-+#include "qemu/config-file.h"
- #include "qemu/guest-random.h"
+---
+
+v2 -> v3:
+- Comply with IORT E.d spec. RMR node rev = 3; IORT rev = 5
+  With this spec revision, the restriction on number of
+  Stream IDs that can be associated with memory ranges in an
+  RMR node was removed. So no need anymore to define 1 RMR node per
+  SID!
+---
+ hw/arm/virt-acpi-build.c | 84 +++++++++++++++++++++++++++++++++-------
+ hw/arm/virt.c            |  7 +++-
+ include/hw/arm/virt.h    |  7 ++++
+ 3 files changed, 84 insertions(+), 14 deletions(-)
+
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 94363a6d65..d5e72800f6 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -132,6 +132,14 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+         .bus    = vms->bus,
+     };
  
- static GlobalProperty arm_virt_compat[] = {
-@@ -177,6 +179,7 @@ static const MemMapEntry base_memmap[] = {
-     [VIRT_PVTIME] =             { 0x090a0000, 0x00010000 },
-     [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
-     [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
-+    [VIRT_NESTED_SMMU] =        { 0x0b000000, 0x01000000 },
-     /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
-     [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
-     [VIRT_SECURE_MEM] =         { 0x0e000000, 0x01000000 },
-@@ -221,7 +224,8 @@ static const int a15irqmap[] = {
-     [VIRT_MMIO] = 16, /* ...to 16 + NUM_VIRTIO_TRANSPORTS - 1 */
-     [VIRT_GIC_V2M] = 48, /* ...to 48 + NUM_GICV2M_SPIS - 1 */
-     [VIRT_SMMU] = 74,    /* ...to 74 + NUM_SMMU_IRQS - 1 */
--    [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 */
-+    [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 (179) */
-+    [VIRT_NESTED_SMMU] = 200, /* Keep it at the end of list */
- };
- 
- static void create_randomness(MachineState *ms, const char *node)
-@@ -1383,21 +1387,19 @@ static void create_pcie_irq_map(const MachineState *ms,
-                            0x7           /* PCI irq */);
++    /*
++     * Nested SMMU requires RMRs for MSI 1-1 mapping, which
++     * require _DSM for PreservingPCI Boot Configurations
++     */
++    if (vms->iommu == VIRT_IOMMU_NESTED_SMMUV3) {
++        cfg.preserve_config = true;
++    }
++
+     if (vms->highmem_mmio) {
+         cfg.mmio64 = memmap[VIRT_HIGH_PCIE_MMIO];
+     }
+@@ -216,16 +224,16 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
+  *
+  * Note that @id_count gets internally subtracted by one, following the spec.
+  */
+-static void build_iort_id_mapping(GArray *table_data, uint32_t input_base,
+-                                  uint32_t id_count, uint32_t out_ref)
++static void
++build_iort_id_mapping(GArray *table_data, uint32_t input_base,
++                      uint32_t id_count, uint32_t out_ref, uint32_t flags)
+ {
+     build_append_int_noprefix(table_data, input_base, 4); /* Input base */
+     /* Number of IDs - The number of IDs in the range minus one */
+     build_append_int_noprefix(table_data, id_count - 1, 4);
+     build_append_int_noprefix(table_data, input_base, 4); /* Output base */
+     build_append_int_noprefix(table_data, out_ref, 4); /* Output Reference */
+-    /* Flags */
+-    build_append_int_noprefix(table_data, 0 /* Single mapping (disabled) */, 4);
++    build_append_int_noprefix(table_data, flags, 4); /* Flags */
  }
  
--static void create_smmu(const VirtMachineState *vms,
--                        PCIBus *bus)
-+static DeviceState *_create_smmu(const VirtMachineState *vms, PCIBus *bus,
-+                                 hwaddr base, hwaddr size, int irq,
-+                                 uint32_t smmu_phandle)
- {
-     char *node;
-     const char compat[] = "arm,smmu-v3";
--    int irq =  vms->irqmap[VIRT_SMMU];
-     int i;
--    hwaddr base = vms->memmap[VIRT_SMMU].base;
--    hwaddr size = vms->memmap[VIRT_SMMU].size;
-     const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
+ struct AcpiIortIdMapping {
+@@ -267,6 +275,48 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
+     return idmap_a->input_base - idmap_b->input_base;
+ }
+ 
++static void
++build_iort_rmr_nodes(GArray *table_data, GArray *smmu_idmaps, int smmu_offset, uint32_t *id) {
++    AcpiIortIdMapping *range;
++    int i;
++
++    for (i = 0; i < smmu_idmaps->len; i++) {
++        range = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
++        int bdf = range->input_base;
++
++        /* Table 18 Reserved Memory Range Node */
++
++        build_append_int_noprefix(table_data, 6 /* RMR */, 1); /* Type */
++        /* Length */
++        build_append_int_noprefix(table_data, 28 + ID_MAPPING_ENTRY_SIZE + 20, 2);
++        build_append_int_noprefix(table_data, 3, 1); /* Revision */
++        build_append_int_noprefix(table_data, *id, 4); /* Identifier */
++        /* Number of ID mappings */
++        build_append_int_noprefix(table_data, 1, 4);
++        /* Reference to ID Array */
++        build_append_int_noprefix(table_data, 28, 4);
++
++        /* RMR specific data */
++
++        /* Flags */
++        build_append_int_noprefix(table_data, 0 /* Disallow remapping */, 4);
++        /* Number of Memory Range Descriptors */
++        build_append_int_noprefix(table_data, 1 , 4);
++        /* Reference to Memory Range Descriptors */
++        build_append_int_noprefix(table_data, 28 + ID_MAPPING_ENTRY_SIZE, 4);
++        build_iort_id_mapping(table_data, bdf, range->id_count, smmu_offset, 1);
++
++        /* Table 19 Memory Range Descriptor */
++
++        /* Physical Range offset */
++        build_append_int_noprefix(table_data, 0x8000000, 8);
++        /* Physical Range length */
++        build_append_int_noprefix(table_data, 0x100000, 8);
++        build_append_int_noprefix(table_data, 0, 4); /* Reserved */
++        *id += 1;
++    }
++}
++
+ /*
+  * Input Output Remapping Table (IORT)
+  * Conforms to "IO Remapping Table System Software on ARM Platforms",
+@@ -282,17 +332,19 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     GArray *smmu_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+     GArray *its_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+ 
+-    AcpiTable table = { .sig = "IORT", .rev = 3, .oem_id = vms->oem_id,
++    AcpiTable table = { .sig = "IORT", .rev = 5, .oem_id = vms->oem_id,
+                         .oem_table_id = vms->oem_table_id };
+     /* Table 2 The IORT */
+     acpi_table_begin(&table, table_data);
+ 
+-    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
++    if (virt_has_smmuv3(vms)) {
+         AcpiIortIdMapping next_range = {0};
+ 
+         object_child_foreach_recursive(object_get_root(),
+                                        iort_host_bridges, smmu_idmaps);
+ 
++        nb_nodes = 3; /* RC, ITS, SMMUv3 */
++
+         /* Sort the smmu idmap by input_base */
+         g_array_sort(smmu_idmaps, iort_idmap_compare);
+ 
+@@ -309,6 +361,9 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             }
+ 
+             next_range.input_base = idmap->input_base + idmap->id_count;
++            if (vms->iommu == VIRT_IOMMU_NESTED_SMMUV3) {
++                nb_nodes++;
++            }
+         }
+ 
+         /* Append the last RC -> ITS ID mapping */
+@@ -317,7 +372,6 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             g_array_append_val(its_idmaps, next_range);
+         }
+ 
+-        nb_nodes = 3; /* RC, ITS, SMMUv3 */
+         rc_mapping_count = smmu_idmaps->len + its_idmaps->len;
+     } else {
+         nb_nodes = 2; /* RC, ITS */
+@@ -342,7 +396,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     /* GIC ITS Identifier Array */
+     build_append_int_noprefix(table_data, 0 /* MADT translation_id */, 4);
+ 
+-    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
++    if (virt_has_smmuv3(vms)) {
+         int irq =  vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
+ 
+         smmu_offset = table_data->len - table.table_offset;
+@@ -372,7 +426,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+         build_append_int_noprefix(table_data, 0, 4);
+ 
+         /* output IORT node is the ITS group node (the first node) */
+-        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
++        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET, 0);
+     }
+ 
+     /* Table 17 Root Complex Node */
+@@ -405,7 +459,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     build_append_int_noprefix(table_data, 0, 3); /* Reserved */
+ 
+     /* Output Reference */
+-    if (vms->iommu == VIRT_IOMMU_SMMUV3) {
++    if (virt_has_smmuv3(vms)) {
+         AcpiIortIdMapping *range;
+ 
+         /* translated RIDs connect to SMMUv3 node: RC -> SMMUv3 -> ITS */
+@@ -413,7 +467,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             range = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
+             /* output IORT node is the smmuv3 node */
+             build_iort_id_mapping(table_data, range->input_base,
+-                                  range->id_count, smmu_offset);
++                                  range->id_count, smmu_offset, 0);
+         }
+ 
+         /* bypassed RIDs connect to ITS group node directly: RC -> ITS */
+@@ -421,11 +475,15 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+             range = &g_array_index(its_idmaps, AcpiIortIdMapping, i);
+             /* output IORT node is the ITS group node (the first node) */
+             build_iort_id_mapping(table_data, range->input_base,
+-                                  range->id_count, IORT_NODE_OFFSET);
++                                  range->id_count, IORT_NODE_OFFSET, 0);
+         }
+     } else {
+         /* output IORT node is the ITS group node (the first node) */
+-        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
++        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET, 0);
++    }
++
++    if (vms->iommu == VIRT_IOMMU_NESTED_SMMUV3) {
++        build_iort_rmr_nodes(table_data, smmu_idmaps, smmu_offset, &id);
+     }
+ 
+     acpi_table_end(linker, &table);
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3c93c0c0a6..78af2d2195 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1396,7 +1396,7 @@ static void create_smmu(const VirtMachineState *vms,
      DeviceState *dev;
      MachineState *ms = MACHINE(vms);
  
--    if (!virt_has_smmuv3(vms) || !vms->iommu_phandle) {
--        return;
-+    if (!virt_has_smmuv3(vms) || !smmu_phandle) {
-+        return NULL;
+-    if (vms->iommu != VIRT_IOMMU_SMMUV3 || !vms->iommu_phandle) {
++    if (!virt_has_smmuv3(vms) || !vms->iommu_phandle) {
+         return;
      }
  
-     dev = qdev_new(TYPE_ARM_SMMUV3);
-@@ -1436,8 +1438,31 @@ static void create_smmu(const VirtMachineState *vms,
- 
-     qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
- 
--    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
-+    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", smmu_phandle);
-     g_free(node);
-+
-+    return dev;
-+}
-+
-+static DeviceState *create_smmu(const VirtMachineState *vms, PCIBus *bus)
-+{
-+    hwaddr base = vms->memmap[VIRT_SMMU].base;
-+    hwaddr size = vms->memmap[VIRT_SMMU].size;
-+    int irq = vms->irqmap[VIRT_SMMU];
-+
-+    return _create_smmu(vms, bus, base, size, irq, vms->iommu_phandle);
-+}
-+
-+static DeviceState *create_nested_smmu(const VirtMachineState *vms, PCIBus *bus,
-+                                       int i)
-+{
-+    hwaddr base = vms->memmap[VIRT_NESTED_SMMU].base + i * SMMU_IO_LEN;
-+    int irq = vms->irqmap[VIRT_SMMU] + i * NUM_SMMU_IRQS;
-+    hwaddr size = SMMU_IO_LEN;
-+    DeviceState *dev;
-+
-+    dev = _create_smmu(vms, bus, base, size, irq, vms->nested_smmu_phandle[i]);
-+    return dev;
- }
- 
- static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
-@@ -1466,6 +1491,48 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
-                            bdf + 1, vms->iommu_phandle, bdf + 1, 0xffff - bdf);
- }
- 
-+/*
-+ * FIXME this is used to reverse for hotplug devices, yet it could result in a
-+ * big waste of PCI bus numbners.
-+ */
-+#define MAX_DEV_PER_NESTED_SMMU (4)
-+
-+static PCIBus *create_pcie_expander_bridge(VirtMachineState *vms, uint8_t idx)
-+{
-+    /* Total = PXB + MAX_DEV_PER_NESTED_SMMU x (Rootport + device) */
-+    const uint8_t total_bus_nums = 1 + MAX_DEV_PER_NESTED_SMMU * 2;
-+    uint8_t bus_nr = PCI_BUS_MAX -
-+                     (vms->num_nested_smmus - idx) * total_bus_nums;
-+
-+    VirtNestedSmmu *nested_smmu = find_nested_smmu_by_index(vms, idx);
-+    char *name_pxb = g_strdup_printf("pxb_for_smmu.%d", idx);
-+    PCIBus *bus = vms->bus;
-+    DeviceState *dev;
-+
-+    /* Create an expander bridge */
-+    dev = qdev_new("pxb-pcie");
-+    if (!qdev_set_id(dev, name_pxb, &error_fatal)) {
-+        return NULL;
-+    }
-+
-+    qdev_prop_set_uint8(dev, "bus_nr", bus_nr);
-+    qdev_prop_set_uint16(dev, "numa_node", idx);
-+    qdev_realize_and_unref(dev, BUS(bus), &error_fatal);
-+
-+    /* Get the pxb bus */
-+    QLIST_FOREACH(bus, &bus->child, sibling) {
-+        if (pci_bus_num(bus) == bus_nr) {
-+            break;
-+        }
-+    }
-+    g_assert(bus && pci_bus_num(bus) == bus_nr);
-+    nested_smmu->pci_bus = bus;
-+    nested_smmu->reserved_bus_nums = total_bus_nums;
-+
-+    /* Return the pxb bus */
-+    return bus;
-+}
-+
- static void create_pcie(VirtMachineState *vms)
- {
-     hwaddr base_mmio = vms->memmap[VIRT_PCIE_MMIO].base;
-@@ -1580,12 +1647,33 @@ static void create_pcie(VirtMachineState *vms)
-     qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
-     create_pcie_irq_map(ms, vms->gic_phandle, irq, nodename);
- 
--    if (vms->iommu) {
-+    /* Build PCI Expander Bridge + Root Port from the top of PCI_BUS_MAX */
-+    if (vms->num_nested_smmus) {
-+        /* VIRT_NESTED_SMMU must hold all vSMMUs */
-+        g_assert(vms->num_nested_smmus <=
-+                 vms->memmap[VIRT_NESTED_SMMU].size / SMMU_IO_LEN);
-+
-+        vms->nested_smmu_phandle = g_new0(uint32_t, vms->num_nested_smmus);
-+
-+        for (i = 0; i < vms->num_nested_smmus; i++) {
-+            DeviceState *smmu_dev;
-+            PCIBus *pxb_bus;
-+
-+            pxb_bus = create_pcie_expander_bridge(vms, i);
-+            g_assert(pxb_bus);
-+
-+            vms->nested_smmu_phandle[i] = qemu_fdt_alloc_phandle(ms->fdt);
-+            smmu_dev = create_nested_smmu(vms, pxb_bus, i);
-+            g_assert(smmu_dev);
-+
-+            qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map", 0x0,
-+                                   vms->nested_smmu_phandle[i], 0x0, 0x10000);
-+        }
-+    } else if (vms->iommu) {
-         vms->iommu_phandle = qemu_fdt_alloc_phandle(ms->fdt);
+@@ -1578,6 +1578,7 @@ static void create_pcie(VirtMachineState *vms)
  
          switch (vms->iommu) {
          case VIRT_IOMMU_SMMUV3:
--        case VIRT_IOMMU_NESTED_SMMUV3:
++        case VIRT_IOMMU_NESTED_SMMUV3:
              create_smmu(vms, vms->bus);
              qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
                                     0x0, vms->iommu_phandle, 0x0, 0x10000);
+@@ -2653,6 +2654,8 @@ static char *virt_get_iommu(Object *obj, Error **errp)
+         return g_strdup("none");
+     case VIRT_IOMMU_SMMUV3:
+         return g_strdup("smmuv3");
++    case VIRT_IOMMU_NESTED_SMMUV3:
++        return g_strdup("nested-smmuv3");
+     default:
+         g_assert_not_reached();
+     }
+@@ -2664,6 +2667,8 @@ static void virt_set_iommu(Object *obj, const char *value, Error **errp)
+ 
+     if (!strcmp(value, "smmuv3")) {
+         vms->iommu = VIRT_IOMMU_SMMUV3;
++    } else if (!strcmp(value, "nested-smmuv3")) {
++        vms->iommu = VIRT_IOMMU_NESTED_SMMUV3;
+     } else if (!strcmp(value, "none")) {
+         vms->iommu = VIRT_IOMMU_NONE;
+     } else {
 diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index b35c4f62d7..0a3f1ab8b5 100644
+index bb486d36b1..7df0813e28 100644
 --- a/include/hw/arm/virt.h
 +++ b/include/hw/arm/virt.h
-@@ -63,6 +63,7 @@ enum {
-     VIRT_GIC_ITS,
-     VIRT_GIC_REDIST,
-     VIRT_SMMU,
-+    VIRT_NESTED_SMMU,
-     VIRT_UART,
-     VIRT_MMIO,
-     VIRT_RTC,
-@@ -141,6 +142,8 @@ struct VirtMachineClass {
- typedef struct VirtNestedSmmu {
-     int index;
-     char *smmu_node;
-+    PCIBus *pci_bus;
-+    int reserved_bus_nums;
-     QLIST_ENTRY(VirtNestedSmmu) next;
- } VirtNestedSmmu;
+@@ -89,6 +89,7 @@ enum {
+ typedef enum VirtIOMMUType {
+     VIRT_IOMMU_NONE,
+     VIRT_IOMMU_SMMUV3,
++    VIRT_IOMMU_NESTED_SMMUV3,
+     VIRT_IOMMU_VIRTIO,
+ } VirtIOMMUType;
  
-@@ -179,6 +182,7 @@ struct VirtMachineState {
-     uint32_t gic_phandle;
-     uint32_t msi_phandle;
-     uint32_t iommu_phandle;
-+    uint32_t *nested_smmu_phandle;
-     int psci_conduit;
-     hwaddr highest_gpa;
-     DeviceState *gic;
-@@ -229,4 +233,17 @@ static inline bool virt_has_smmuv3(const VirtMachineState *vms)
-            vms->iommu == VIRT_IOMMU_NESTED_SMMUV3;
+@@ -209,4 +210,10 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
+             vms->highmem_redists) ? 2 : 1;
  }
  
-+static inline VirtNestedSmmu *
-+find_nested_smmu_by_index(VirtMachineState *vms, int index)
++static inline bool virt_has_smmuv3(const VirtMachineState *vms)
 +{
-+    VirtNestedSmmu *nested_smmu;
-+
-+    QLIST_FOREACH(nested_smmu, &vms->nested_smmu_list, next) {
-+        if (nested_smmu->index == index) {
-+            return nested_smmu;
-+        }
-+    }
-+    return NULL;
++    return vms->iommu == VIRT_IOMMU_SMMUV3 ||
++           vms->iommu == VIRT_IOMMU_NESTED_SMMUV3;
 +}
 +
  #endif /* QEMU_ARM_VIRT_H */
