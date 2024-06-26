@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44444C30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 21:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3E04C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 21:42:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMaGL-0004nZ-Mi; Wed, 26 Jun 2024 17:33:09 -0400
+	id 1sMaOh-0006IU-7D; Wed, 26 Jun 2024 17:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sMaGK-0004nF-2H
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 17:33:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sMaGH-0006HP-RL
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 17:33:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719437584;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=L4deKOcLvJA49Ab6v1E/DoQ6HZfgThMX4TEs3I/eZHc=;
- b=DjIbUG3QpCvfW5maowj23tsj/mM2bB6PoS6adgyvQyHqNHRYKwg5GVP8qoxoziR57UbKxP
- nI1GRUfL4ozqJhPj5ZDmkX5LpCEcKdToV862f4JuhQjKupSDAjOU+54N9tV+G1wMXyMJvy
- UX/1h0upG6ynuBopuhpOGrXuyoep/os=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-480-wYL5PTC1MaSZpR7_tUcTOQ-1; Wed, 26 Jun 2024 17:33:03 -0400
-X-MC-Unique: wYL5PTC1MaSZpR7_tUcTOQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-362763f8d2eso3641822f8f.3
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 14:33:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sMaOe-0006IB-5g
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 17:41:44 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sMaOc-0007yW-F0
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 17:41:43 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1fa3086cf25so17785ad.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 14:41:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1719438101; x=1720042901; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uVKzMtxOca7/8HftdvQ/Z4Czo5Qf/IXfcZnHSh3IGak=;
+ b=HLyJ4Omx28lSBQhMTDpiyAIKAQdteCERLLZGUZcg3u4P7XMkdmi9To0ker9gBwpzBh
+ EEtyLfajWBgn/iJqZBV8CJLJbHCm7Uzeu3AoL9lXuq1kncJMdejcMlaez/kGTLfhAPis
+ 25znnCUIWIN5fX445LHUIH76NBDQX1bk6R9ODNeqtV+L0PnW0YKALCZLDEClgzaX4xHj
+ 3BzkK+sUMn/KqGdc3LZO/n5p8tV3GheDVDDDwPwOO0BDL9hTXz7hDjBB8bKAMpBoLz1j
+ RdJjnj4LofZGuVBJB1hVqTunrUVop3iM2GB+pKzN1/08vkWOvToliKWSDrth9DUAFHfs
+ 8kjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719437562; x=1720042362;
+ d=1e100.net; s=20230601; t=1719438101; x=1720042901;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=L4deKOcLvJA49Ab6v1E/DoQ6HZfgThMX4TEs3I/eZHc=;
- b=fkTr/Llvfgl7OH0ut0krnZAN/IEjaxmr6g8m9Fiwfn+xBC4C4FeNurZ2n/npcXnR4E
- 7iyXbm6pHmZ1C9w+ib5ZBrC0qW3lUp1qneQubJCe4dSDD1sfMvttoe37Y8aZ23xfecCX
- Z54iHwowLNBoCgC3uaRM56NPp96Bg8EkFTyxKihMh0TV0oa/FbtUH8rPuc0x3OMoIb4a
- 6+Ex9P8FYqztCpI1HlVXI8/W5tRBzQzcJ8Dxd25wPKdZrYOejyyCb5T2GlZx6rOYcr0Z
- jX+MTz8QjZr5F2+DQu8ylqey4zLRbgHHDWh1QVue6dLPL4A1VzE9ewWy6KWnpIFWvfIM
- 8xNg==
-X-Gm-Message-State: AOJu0Ywu8qj+r7rb6C+tEqCHOfZA1owYyJvkzOwOYtLBMTpPQm+ijtOW
- B26wvbVHFaeGgGJlPp/jwWyyfg8OSAJl7dugoq7FsMCAFjwYf0nAb4QTkNhkGG6cn9Mb4pcXV2D
- JBxMMGQWVk0LrWPQqo75mF3cSCTckxJ6LR+gD1hAIwAFZ0JP0zAlZx8c5cU+4PZU5yHhhZqIfwK
- m44DRTCEP+OA89AHfzSb6Jq6aL2RQ=
-X-Received: by 2002:adf:e6c6:0:b0:35f:2725:f6cd with SMTP id
- ffacd0b85a97d-366e4f0bf67mr8062948f8f.59.1719437562400; 
- Wed, 26 Jun 2024 14:32:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGIlE7KwDmCBWbuGKyZnKwVh0U2IOh+UmQ7NJkqU6EjQqqEWPZtWUbEB4xg8vszk0iMPH70xKr9ORDrdX3qqBs=
-X-Received: by 2002:adf:e6c6:0:b0:35f:2725:f6cd with SMTP id
- ffacd0b85a97d-366e4f0bf67mr8062937f8f.59.1719437562101; Wed, 26 Jun 2024
- 14:32:42 -0700 (PDT)
+ bh=uVKzMtxOca7/8HftdvQ/Z4Czo5Qf/IXfcZnHSh3IGak=;
+ b=X/LsjXAK48I2e+QbTfj4C+0pmzEyg7p4HzCtTrJzW0ozU/09Is2y0KOeBaYqcW9aYO
+ utqsM6ZAE7WVIr3oK2Wq7GU0JzjdIALmxrwl/CmeXdXAguVOY4AszU2ACSyoJzHA9VT4
+ AbvXpnF9xJouJjyzc1FYWaXOLrZBInPaXSn9rDXfu5OWjDhJFYLAosn9CJKQ7nxbyqAo
+ 42uW+q8gagZJkOjcPGDsY4Jf18MKf4FcM+I46y9ed7xKjPOmOk+bB5uGi3gd1B7ThtPd
+ cH8hZLeumzrlV808fEaOrxAdp1s7gdo4TBK5AiwCzv0e3XxgwYlmH6bQ3CjTLL/P0t7+
+ 56/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXpruBRhCX6nwS1DzsOORoFHNsiaD+J5g1rU3GdIkA3hApl0A9X8+TL0mf/hrezaN2Mcx1r1K6GM8Htcj9jqjgzUVg9gkE=
+X-Gm-Message-State: AOJu0YyVOdb8A2BJzN7R1GOp2EWo9+3sceptGLfnAUwbw62NJkkXTa2w
+ V+KfK63bEVkEHItV/iOhaJ12ry/szuR28PBv7SuftTWeWw06EshpgFL5dKYSCobSg8eph+WlEgp
+ rqtzNXapW88poaM513e/MW+tEZh7crb1AKata
+X-Google-Smtp-Source: AGHT+IE8m8ljWSQnFZ7Ygr5gfUOp+pdgS5ez8f8uiQ8Sp0HRCe5f0LT6FfCI0v6El+NXt5+21e9+1OOt24+PXsNfdmo=
+X-Received: by 2002:a17:902:6a81:b0:1f9:e3f9:6dd3 with SMTP id
+ d9443c01a7336-1faa9928becmr1206175ad.16.1719438100549; Wed, 26 Jun 2024
+ 14:41:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240625111848.709176-1-pbonzini@redhat.com>
- <fnhkw.xyx5xkm2lgb@linaro.org>
-In-Reply-To: <fnhkw.xyx5xkm2lgb@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 26 Jun 2024 23:32:26 +0200
-Message-ID: <CABgObfaK+CQTni9MQjTADY-Fode9Fg3hTqSfm+2K8R9DCRJ5cw@mail.gmail.com>
-Subject: Re: [PATCH] include: move typeof_strip_qual to compiler.h,
- use it in QAPI_LIST_LENGTH()
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, flwu@google.com, berrange@redhat.com, 
- peter.maydell@linaro.org, rkir@google.com
+References: <20240620201654.598024-1-rkir@google.com>
+ <09b7e7e1-30a6-49d0-a5f8-9cfc62884c55@linaro.org>
+In-Reply-To: <09b7e7e1-30a6-49d0-a5f8-9cfc62884c55@linaro.org>
+From: Roman Kiryanov <rkir@google.com>
+Date: Wed, 26 Jun 2024 14:41:29 -0700
+Message-ID: <CAOGAQep9ua4Vd8wigAb7SrdOjkc3kfvSEmjgcfh=asZRe=begA@mail.gmail.com>
+Subject: Re: [PATCH v2] exec: don't use void* in pointer arithmetic in headers
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: richard.henderson@linaro.org, peter.maydell@linaro.org, 
+ pbonzini@redhat.com, qemu-devel@nongnu.org, jansene@google.com, 
+ mett@google.com, jpcottin@google.com, alex.bennee@linaro.org, 
+ berrange@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=rkir@google.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -180
+X-Spam_score: -18.1
+X-Spam_bar: ------------------
+X-Spam_report: (-18.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.454,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,20 +94,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 25, 2024 at 9:17=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> >Move the macro to compiler.h and, while at it, move it under #ifndef
-> >__cplusplus to emphasize that it uses C-only constructs.  A C++ version
-> >of typeof_strip_qual() using type traits is possible[1], but beyond the
-> >scope of this patch because the little C++ code that is in QEMU does not
-> >use QAPI.
+On Thu, Jun 20, 2024 at 11:42=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> Should we add an #else to provide a fallback for cplusplus until the
-> alternative is merged?
+> Hi Roman,
+>
+> On 20/6/24 22:16, Roman Kiryanov wrote:
+> > Google-Bug-Id: 331190993
+>
+> Again [*] I'm trying to figure what this tag is, no hit on
+> https://issuetracker.google.com/issues?q=3Did:331190993; is
+> this useful to commit it in the mainstream repository? So
+> far it is confusing me.
+>
+> [*]
+> https://lore.kernel.org/qemu-devel/e865d8e3-e768-4b1f-86d3-aeabe8f1d511@l=
+inaro.org/
+>
+> > Change-Id: I5a064853429f627c17a9213910811dea4ced6174
+>
+> Ditto, not useful.
 
-As the commit message says, I don't think we need to include the C++
-code in QEMU since it would be essentially dead.
+I am sorry, Philippe, I missed your message. If you prefer us to remove
+Google specific tags from our commits, we will remove them.
 
-Paolo
-
+Regards,
+Roman.
 
