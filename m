@@ -4,84 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C916FC30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:40:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0E44C30653
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMQzu-0002oa-Ck; Wed, 26 Jun 2024 07:39:34 -0400
+	id 1sMREL-0006OC-KN; Wed, 26 Jun 2024 07:54:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sMQzo-0002oA-Kw
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:39:30 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sMQzj-0004gj-Fz
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:39:27 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-57d10354955so162656a12.1
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:39:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1719401957; x=1720006757; darn=nongnu.org;
- h=cc:to:subject:message-id:date:references:user-agent:mime-version
- :from:in-reply-to:from:to:cc:subject:date:message-id:reply-to;
- bh=8NsG/CGbwjFmn8K6htkzx/acdwk5yWWD08GPjMXzkfs=;
- b=Ab1mZm6vAVufqb3JWMORBwR3u51jyvTfIywyMCxF9HF7mPWh2v1TIuPWQ4natDQojM
- 5GF3QaNNheDVXISyYEsZw7GKzH4m+JWm4KTchwn4PN3H+jcKTqK4qFdc/a/xHiDCZG4j
- EmLomYImxU6MmNckbGC4pSyTfMTe5Qx6d3an+Lb+5Eh18uq9nrEeST7U8ka7bqgSwzPF
- NoO6FzfNtMLIDOShX2sYb7D3tpOkYKDbLTkaA9kovADQ6bwuD0wNu08+Z+fyYAsgqfGo
- Vli3utwA4x1L989QtiZLGVFMFoptdX+gAQ8D9HHXFzHkupEvR1xkfhjJLApcswclLD8c
- 5V5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719401957; x=1720006757;
- h=cc:to:subject:message-id:date:references:user-agent:mime-version
- :from:in-reply-to:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8NsG/CGbwjFmn8K6htkzx/acdwk5yWWD08GPjMXzkfs=;
- b=A4FaCqmrkatvnByY3Ptje5VCs02cBChyNDyI3pYify1CafB6xR604OcVfONAy7R65v
- Orcflr4qzeo8V8pJqwxsNspGuylehvfFUrpXd9Rc+pmFA6lRnB48yhZJDMcgvwh81Llt
- qDOf3QsI1oFL+k6g5xf2pM2uLFvpD6hL+jTUoCBK728dLQeTL/PrBR4BK4+UK3jV1qwA
- Z5Ajjf+pT6AyavVB1IdF+/yCeazCGevmcI9Cwvqgv4f4x5aWmk5bs9A+beFrCusJFyFF
- hRa424oeQwe+Ybw07q5zJF8gJRttQ1YVsQzTCOyYO/Emgh7gMx0M3SKKuK/GoW8ZyDuK
- bQIA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVMbwxv8mTqhv/9yhD+EI/vpvCIQ2IRCm1qzk4L8mA4Vb2vuftKmx2db7j2qhaabiHwaRuo6w3xr3HGzLR4koeOTc0Sq9I=
-X-Gm-Message-State: AOJu0YztJouMUZ+XC+/VEQtwuUDZhp7XGHENvjXAIkVc8kQOeea3oYCZ
- q/1RCDqCcUn0nWNV7OnN5EWuHm5V7knS+vLHOBgiWatMwtWThK2aL/cNI3ROekLzTJmsKY9mUdG
- NHltn//g0UytuhGfDI+D9RmObVAvO6++0Cw6FjA==
-X-Google-Smtp-Source: AGHT+IFCKXigQklrkAwCCty1gPi0ZrouXk77fZLA/dmErXOuVlnsbyEHtqg9CtxigTlETq1xCVTOYNeXddyEFls3FvA=
-X-Received: by 2002:a50:9b17:0:b0:57d:619:7721 with SMTP id
- 4fb4d7f45d1cf-57d49dbf387mr6725951a12.21.1719401956627; Wed, 26 Jun 2024
- 04:39:16 -0700 (PDT)
-Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
- Wed, 26 Jun 2024 04:39:16 -0700
-X-Original-From: =?UTF-8?B?5Y2i6ZW/5aWHIDxsdWNoYW5ncWkuMTIzQGJ5dGVkYW5jZS5jb20+?=
-In-Reply-To: <3c9b7bb9-cb69-49c4-b7cf-5503baeee09d@bytedance.com>
-From: =?UTF-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
-Mime-Version: 1.0
-User-Agent: Mozilla Thunderbird
-References: <20240613071327.2498953-1-luchangqi.123@bytedance.com>
- <3c9b7bb9-cb69-49c4-b7cf-5503baeee09d@bytedance.com>
-Date: Wed, 26 Jun 2024 04:39:16 -0700
-Message-ID: <CAO5cSZBVDO4McPuiLwesGUQuYnaZzyXBQJTyXNY-3nagytP0Ow@mail.gmail.com>
-Subject: PING: [PATCH v6 00/10] Support persistent reservation operations
-To: qemu-block@nongnu.org, qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net, 
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de, 
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org, 
- pizhenwei@bytedance.com
-Content-Type: multipart/alternative; boundary="000000000000da09e8061bc97695"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: 2
-X-Spam_score: 0.2
-X-Spam_bar: /
-X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sMREJ-0006NH-Am; Wed, 26 Jun 2024 07:54:27 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sMRE5-0007Hx-DY; Wed, 26 Jun 2024 07:54:27 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id C73EA60E31;
+ Wed, 26 Jun 2024 14:54:11 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b645::1:29])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id prOe6Z0rMmI0-mrNAPsry; Wed, 26 Jun 2024 14:54:11 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1719402851;
+ bh=I+QF3fGvYELrEM7l+N59iHJKrQZhPHPzowmp1e2a5tw=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=Az1t7s2xJXSNg2ThBBYNl5LD5KkoPWZoz2woraYmqbv6rHNWRIjzPLJN1J5R4wud2
+ AofZ5WdXYGgkoNRpfIPRVvQ7rnSTPzsC409/UL523D5t8lCr+Gq/K/99XBzQ/kwXJc
+ pMT+kaSqV5LrZxzTsc0sRM9IwP3ZopynXSqTQxzg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, armbru@redhat.com,
+ eblake@redhat.com, hreitz@redhat.com, kwolf@redhat.com,
+ vsementsov@yandex-team.ru
+Subject: [PATCH v9 5/7] block: bdrv_get_xdbg_block_graph(): report export ids
+Date: Wed, 26 Jun 2024 14:53:48 +0300
+Message-Id: <20240626115350.405778-6-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240626115350.405778-1-vsementsov@yandex-team.ru>
+References: <20240626115350.405778-1-vsementsov@yandex-team.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,192 +72,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000da09e8061bc97695
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Currently for block exports we report empty blk names. That's not good.
+Let's try to find corresponding block export and report its id.
 
-Hi,
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+ block.c                     |  4 ++++
+ block/export/export.c       | 13 +++++++++++++
+ include/block/export.h      |  1 +
+ stubs/blk-exp-find-by-blk.c |  9 +++++++++
+ stubs/meson.build           |  1 +
+ 5 files changed, 28 insertions(+)
+ create mode 100644 stubs/blk-exp-find-by-blk.c
 
-Could everyone please review this series?
+diff --git a/block.c b/block.c
+index f6292f459a..601475e835 100644
+--- a/block.c
++++ b/block.c
+@@ -6326,7 +6326,11 @@ XDbgBlockGraph *bdrv_get_xdbg_block_graph(Error **errp)
+     for (blk = blk_all_next(NULL); blk; blk = blk_all_next(blk)) {
+         char *allocated_name = NULL;
+         const char *name = blk_name(blk);
++        BlockExport *exp = blk_exp_find_by_blk(blk);
+ 
++        if (!*name && exp) {
++            name = exp->id;
++        }
+         if (!*name) {
+             name = allocated_name = blk_get_attached_dev_id(blk);
+         }
+diff --git a/block/export/export.c b/block/export/export.c
+index 57beae7982..8744a1171e 100644
+--- a/block/export/export.c
++++ b/block/export/export.c
+@@ -60,6 +60,19 @@ BlockExport *blk_exp_find(const char *id)
+     return NULL;
+ }
+ 
++BlockExport *blk_exp_find_by_blk(BlockBackend *blk)
++{
++    BlockExport *exp;
++
++    QLIST_FOREACH(exp, &block_exports, next) {
++        if (exp->blk == blk) {
++            return exp;
++        }
++    }
++
++    return NULL;
++}
++
+ static const BlockExportDriver *blk_exp_find_driver(BlockExportType type)
+ {
+     int i;
+diff --git a/include/block/export.h b/include/block/export.h
+index f2fe0f8078..16863d37cf 100644
+--- a/include/block/export.h
++++ b/include/block/export.h
+@@ -82,6 +82,7 @@ struct BlockExport {
+ 
+ BlockExport *blk_exp_add(BlockExportOptions *export, Error **errp);
+ BlockExport *blk_exp_find(const char *id);
++BlockExport *blk_exp_find_by_blk(BlockBackend *blk);
+ void blk_exp_ref(BlockExport *exp);
+ void blk_exp_unref(BlockExport *exp);
+ void blk_exp_request_shutdown(BlockExport *exp);
+diff --git a/stubs/blk-exp-find-by-blk.c b/stubs/blk-exp-find-by-blk.c
+new file mode 100644
+index 0000000000..2fc1da953b
+--- /dev/null
++++ b/stubs/blk-exp-find-by-blk.c
+@@ -0,0 +1,9 @@
++#include "qemu/osdep.h"
++#include "sysemu/block-backend.h"
++#include "block/export.h"
++
++BlockExport *blk_exp_find_by_blk(BlockBackend *blk)
++{
++    return NULL;
++}
++
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 068998c1a5..cbe30f94e8 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -16,6 +16,7 @@ if have_block
+   stub_ss.add(files('blk-commit-all.c'))
+   stub_ss.add(files('blk-exp-close-all.c'))
+   stub_ss.add(files('blk-by-qdev-id.c'))
++  stub_ss.add(files('blk-exp-find-by-blk.c'))
+   stub_ss.add(files('blockdev-close-all-bdrv-states.c'))
+   stub_ss.add(files('change-state-handler.c'))
+   stub_ss.add(files('get-vm-name.c'))
+-- 
+2.34.1
 
-On 2024/6/19 10:49, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
-> Hi,
->
-> Klaus, the pr related operations of the
-> nvme layer are almost ready.
->
-> Stefan, the block layer has been modified
-> according to your comments.
->
-> Please help review the code again. Thanks!
->
-> On 2024/6/13 15:13, Changqi Lu wrote:
->> Hi,
->>
->> patch v6 has been modified.
->>
->> v5->v6:
->> - Add relevant comments in the io layer.
->>
->> v4->v5:
->> - Fixed a memory leak bug at hw/nvme/ctrl.c.
->>
->> v3->v4:
->> - At the nvme layer, the two patches of enabling the ONCS
->> function and enabling rescap are combined into one.
->> - At the nvme layer, add helper functions for pr capacity
->> conversion between the block layer and the nvme layer.
->>
->> v2->v3:
->> In v2 Persist Through Power Loss(PTPL) is enable default.
->> In v3 PTPL is supported, which is passed as a parameter.
->>
->> v1->v2:
->> - Add sg_persist --report-capabilities for SCSI protocol and enable
->> oncs and rescap for NVMe protocol.
->> - Add persistent reservation capabilities constants and helper functions
-for
->> SCSI and NVMe protocol.
->> - Add comments for necessary APIs.
->>
->> v1:
->> - Add seven APIs about persistent reservation command for block layer.
->> These APIs including reading keys, reading reservations, registering,
->> reserving, releasing, clearing and preempting.
->> - Add the necessary pr-related operation APIs for both the
->> SCSI protocol and NVMe protocol at the device layer.
->> - Add scsi driver at the driver layer to verify the functions
->>
->> Changqi Lu (10):
->> block: add persistent reservation in/out api
->> block/raw: add persistent reservation in/out driver
->> scsi/constant: add persistent reservation in/out protocol constants
->> scsi/util: add helper functions for persistent reservation types
->> conversion
->> hw/scsi: add persistent reservation in/out api for scsi device
->> block/nvme: add reservation command protocol constants
->> hw/nvme: add helper functions for converting reservation types
->> hw/nvme: enable ONCS and rescap function
->> hw/nvme: add reservation protocal command
->> block/iscsi: add persistent reservation in/out driver
->>
->> block/block-backend.c | 403 +++++++++++++++++++++++++++
->> block/io.c | 163 +++++++++++
->> block/iscsi.c | 443 ++++++++++++++++++++++++++++++
->> block/raw-format.c | 56 ++++
->> hw/nvme/ctrl.c | 326 +++++++++++++++++++++-
->> hw/nvme/ns.c | 5 +
->> hw/nvme/nvme.h | 84 ++++++
->> hw/scsi/scsi-disk.c | 352 ++++++++++++++++++++++++
->> include/block/block-common.h | 40 +++
->> include/block/block-io.h | 20 ++
->> include/block/block_int-common.h | 84 ++++++
->> include/block/nvme.h | 98 +++++++
->> include/scsi/constants.h | 52 ++++
->> include/scsi/utils.h | 8 +
->> include/sysemu/block-backend-io.h | 24 ++
->> scsi/utils.c | 81 ++++++
->> 16 files changed, 2237 insertions(+), 2 deletions(-)
->>
-
---000000000000da09e8061bc97695
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<p>Hi,
-<br>
-<br>Could everyone please review this series?
-<br>
-<br>On 2024/6/19 10:49, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
-<br>&gt; Hi,
-<br>&gt;=20
-<br>&gt; Klaus, the pr related operations of the
-<br>&gt; nvme layer are almost ready.
-<br>&gt;=20
-<br>&gt; Stefan, the block layer has been modified
-<br>&gt; according to your comments.
-<br>&gt;=20
-<br>&gt; Please help review the code again. Thanks!
-<br>&gt;=20
-<br>&gt; On 2024/6/13 15:13, Changqi Lu wrote:
-<br>&gt;&gt; Hi,
-<br>&gt;&gt;
-<br>&gt;&gt; patch v6 has been modified.
-<br>&gt;&gt;
-<br>&gt;&gt; v5-&gt;v6:
-<br>&gt;&gt; - Add relevant comments in the io layer.
-<br>&gt;&gt;
-<br>&gt;&gt; v4-&gt;v5:
-<br>&gt;&gt; - Fixed a memory leak bug at hw/nvme/ctrl.c.
-<br>&gt;&gt;
-<br>&gt;&gt; v3-&gt;v4:
-<br>&gt;&gt; - At the nvme layer, the two patches of enabling the ONCS
-<br>&gt;&gt;   function and enabling rescap are combined into one.
-<br>&gt;&gt; - At the nvme layer, add helper functions for pr capacity
-<br>&gt;&gt;   conversion between the block layer and the nvme layer.
-<br>&gt;&gt;
-<br>&gt;&gt; v2-&gt;v3:
-<br>&gt;&gt; In v2 Persist Through Power Loss(PTPL) is enable default.
-<br>&gt;&gt; In v3 PTPL is supported, which is passed as a parameter.
-<br>&gt;&gt;
-<br>&gt;&gt; v1-&gt;v2:
-<br>&gt;&gt; - Add sg_persist --report-capabilities for SCSI protocol and e=
-nable
-<br>&gt;&gt;   oncs and rescap for NVMe protocol.
-<br>&gt;&gt; - Add persistent reservation capabilities constants and helper=
- functions for
-<br>&gt;&gt;   SCSI and NVMe protocol.
-<br>&gt;&gt; - Add comments for necessary APIs.
-<br>&gt;&gt;
-<br>&gt;&gt; v1:
-<br>&gt;&gt; - Add seven APIs about persistent reservation command for bloc=
-k layer.
-<br>&gt;&gt;   These APIs including reading keys, reading reservations, reg=
-istering,
-<br>&gt;&gt;   reserving, releasing, clearing and preempting.
-<br>&gt;&gt; - Add the necessary pr-related operation APIs for both the
-<br>&gt;&gt;   SCSI protocol and NVMe protocol at the device layer.
-<br>&gt;&gt; - Add scsi driver at the driver layer to verify the functions
-<br>&gt;&gt;
-<br>&gt;&gt; Changqi Lu (10):
-<br>&gt;&gt;   block: add persistent reservation in/out api
-<br>&gt;&gt;   block/raw: add persistent reservation in/out driver
-<br>&gt;&gt;   scsi/constant: add persistent reservation in/out protocol co=
-nstants
-<br>&gt;&gt;   scsi/util: add helper functions for persistent reservation t=
-ypes
-<br>&gt;&gt;     conversion
-<br>&gt;&gt;   hw/scsi: add persistent reservation in/out api for scsi devi=
-ce
-<br>&gt;&gt;   block/nvme: add reservation command protocol constants
-<br>&gt;&gt;   hw/nvme: add helper functions for converting reservation typ=
-es
-<br>&gt;&gt;   hw/nvme: enable ONCS and rescap function
-<br>&gt;&gt;   hw/nvme: add reservation protocal command
-<br>&gt;&gt;   block/iscsi: add persistent reservation in/out driver
-<br>&gt;&gt;
-<br>&gt;&gt;  block/block-backend.c             | 403 +++++++++++++++++++++=
-++++++
-<br>&gt;&gt;  block/io.c                        | 163 +++++++++++
-<br>&gt;&gt;  block/iscsi.c                     | 443 +++++++++++++++++++++=
-+++++++++
-<br>&gt;&gt;  block/raw-format.c                |  56 ++++
-<br>&gt;&gt;  hw/nvme/ctrl.c                    | 326 +++++++++++++++++++++=
--
-<br>&gt;&gt;  hw/nvme/ns.c                      |   5 +
-<br>&gt;&gt;  hw/nvme/nvme.h                    |  84 ++++++
-<br>&gt;&gt;  hw/scsi/scsi-disk.c               | 352 +++++++++++++++++++++=
-+++
-<br>&gt;&gt;  include/block/block-common.h      |  40 +++
-<br>&gt;&gt;  include/block/block-io.h          |  20 ++
-<br>&gt;&gt;  include/block/block_int-common.h  |  84 ++++++
-<br>&gt;&gt;  include/block/nvme.h              |  98 +++++++
-<br>&gt;&gt;  include/scsi/constants.h          |  52 ++++
-<br>&gt;&gt;  include/scsi/utils.h              |   8 +
-<br>&gt;&gt;  include/sysemu/block-backend-io.h |  24 ++
-<br>&gt;&gt;  scsi/utils.c                      |  81 ++++++
-<br>&gt;&gt;  16 files changed, 2237 insertions(+), 2 deletions(-)
-<br>&gt;&gt;</p>
-
---000000000000da09e8061bc97695--
 
