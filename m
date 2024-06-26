@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6CA3C30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:59:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA2FC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 13:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMSFM-0008PR-Cr; Wed, 26 Jun 2024 08:59:37 -0400
+	id 1sMSb0-00007k-Kx; Wed, 26 Jun 2024 09:21:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sMSF7-0008LO-BZ
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:59:23 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMSaz-000076-RB
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 09:21:57 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sMSF1-0003RO-Fp
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:59:21 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-57cbc66a0a6so304562a12.1
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 05:59:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMSay-0000iI-9m
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 09:21:57 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-5295eb47b48so8003147e87.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 06:21:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719406753; x=1720011553; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=RfjqgRQN62njRMxr0q0bMCSpuB1g6VKOAlFWkM4SAj4=;
- b=TzakKqmgcjnryvm7FUc3pmte2APtZsZCqwMwGZvQrGaJ/HgSxisI5Bq6P8x3z1hrqk
- pUasQc5A6qHWu4CTUPCikfwJZRiRdN7LKC1ogCs56GqhNGkW99EnXUa99Ikh8+/E7vFQ
- PuCKnvIYDn81P/9QAuVp7nu+iz6y6tGsQMGkr1P9FEk5zl30l2fhQOsewxzLriCv1tnt
- T4KIj8cTtQq7e5kFKrVWcK6CMAfKeKVD18hQnrlAe5IalgDINp7RHr/IxptLJqeEr3kt
- 0WtvjHtceJtqlqhyGb2hPc7I4wMLkRy9fnwLn0YOoRkzxCEE+XdU6nQA24nYXagUA5hB
- 8upg==
+ d=linaro.org; s=google; t=1719408114; x=1720012914; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fdI7oA71sdJ6m6giX5xNvhJ8sHjl3mNUcqVd6fev7xI=;
+ b=ejWAyebHmG7Yf8EB7HWkTl1vAK7oDO0ykr235LhTf9tOYKNPcsWMMDjqPDccS43+4h
+ aYvlNd7LlEkVJW2MFcvam06YBYQTIXOjz0oIyXRfwkZ0K1QP8fXs0IGjkZD/Dc66dP95
+ MQAUsmotqYQpy5ZAgFo6eum3RM5SUBtiipn0JmHktapos7xMYDiE+z7xgC6WXbGRVCeO
+ W0oesjxis0YqsKvUgj5rpyLOg4Rj+7q2eUOL4CWdpBlza3Ns0QZedchNbkkGNak6Nj7k
+ 0GXGi19fU8FFBsswSQT5LunSP/YbQr14xqax3uChcyS6dsfImoQtYQGG8NwImdNh08uL
+ PtoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719406753; x=1720011553;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RfjqgRQN62njRMxr0q0bMCSpuB1g6VKOAlFWkM4SAj4=;
- b=KKcZlG68ysxu79anTjBCeN525ij3ebZCsP61WcBrxf/b57KwQqX6M8ua7sLUDWqc0t
- 7xJJXlIiHzurit5ON4Ko4V4rC9jxyZzhn6HBtzXDbI1n1JClQmHBYEWLUwRkrkYHpAjU
- 7cWmkct032kmaBXnfHHCGsi77Jbx77VpyQbGfsOdhU+TGw8JHs+HWSqgAJ7n0Qovu8vK
- xeKTK2zuGKSyYGj2CzA7H7TSQxEGtMSeFu4EwT3Y52o36OI8cskQl0GBU/qDiChpqM63
- ytDqlEbt+gpU1YYJoeFSNO5hG82xq5wFAmQGzL5PpNmWp9qf46ywpr0Li2bh88RPa0HG
- ulUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWly+5UHy108mPw0nQ/7EyaHJvGCQFPcH30pT1WlaSrOX8pjGmaVGb8HSV43E1qlvBhupAA0DYMFcRPydLjml3hMbx+TNQ=
-X-Gm-Message-State: AOJu0YzbMNCGZc5Qcxj/uvBSYi/k8Ew70ZeAWkGqjIpkaZZa1xxOQg/B
- UZ59PyJnbUqFyUGIdKIKAUyS1VDijiwS1W7YR1cjtuDQmLVTylYmLYS02iUjA6No9U0ZK1jGdgE
- ny4OYzKpIBjBYvGGxM0ipbserKGqz7cWbZI4lqA==
-X-Google-Smtp-Source: AGHT+IFwfuCv1nIAAensBiLVIG0MYsmQY/GTxY9qCP04zDpxbswBfRmwy98QhtZ3qAOrHaXibuKuuKBBX1szgxEMJoc=
-X-Received: by 2002:a50:d50c:0:b0:57c:bec1:ff4b with SMTP id
- 4fb4d7f45d1cf-57d701edfbemr4666485a12.10.1719406753231; Wed, 26 Jun 2024
- 05:59:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719408114; x=1720012914;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fdI7oA71sdJ6m6giX5xNvhJ8sHjl3mNUcqVd6fev7xI=;
+ b=LEa7HMtorBzxiklOMbe5xLBJeRLe3tQ6Vpw+yYtSm9lEYU1DCOGkO/+fS2UDQpuUOc
+ iyYX2VkZa/cT+cyAE2hztKmGeHUYUq+m35nPacXFcPt1mxF01ckbwIkhqKc0ZD3Ky/Uw
+ XU8u9OjgKPu53Hb+6+Arhlv/W/mqH8iDTUE7lthsOczQGuHW2W0J4O8mnCdIPmi3LjRW
+ tA/rzHNhYV2MIZGs6a8S+3fYLm9d4QG9JjdkT4csP9JRVTN+CbFHl6E/k43aecpN6Ytr
+ Xc0PAUE6+ahNDPhDB537Vh2ViJBSlYb4o6BR3T+E7cbJ8AbxGMX+zJIWguakk22knO+X
+ 1DUA==
+X-Gm-Message-State: AOJu0YyYKDE7JeOin/QgL+Wjh2YF1LmGcXCnvZg7UB+oNpOTBwpounw4
+ 2LUkc5vpRKLLtqX9Uyj4O666kRdNaIA0ApKat3b8XKSCcuo/zVYuwupedj7g9CU=
+X-Google-Smtp-Source: AGHT+IG7G/SzOC2Lj6QFu/IYrv2VpXXyxLmZ96pSMcUg8PpawfivRFrpEgKFFdw5hQHlJ7yPIwsfuw==
+X-Received: by 2002:a19:9115:0:b0:52c:a7c8:ec43 with SMTP id
+ 2adb3069b0e04-52ce05c23damr9146612e87.0.1719408114066; 
+ Wed, 26 Jun 2024 06:21:54 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.212.234])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-424bb91c9d3sm26572855e9.0.2024.06.26.06.21.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Jun 2024 06:21:53 -0700 (PDT)
+Message-ID: <2757fe3c-b629-4190-8ad1-4fff364fb1a8@linaro.org>
+Date: Wed, 26 Jun 2024 15:21:52 +0200
 MIME-Version: 1.0
-References: <20240626-san-v1-0-f3cc42302189@daynix.com>
- <20240626-san-v1-2-f3cc42302189@daynix.com>
-In-Reply-To: <20240626-san-v1-2-f3cc42302189@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 26 Jun 2024 13:59:02 +0100
-Message-ID: <CAFEAcA-DNieFTV7VbM1MBTbEr9zd5kJ4oaWcsUrsPxCzQki+_g@mail.gmail.com>
-Subject: Re: [PATCH 02/14] hw/ide: Free macio-ide IRQs
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, 
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] util: fix building on OpenBSD/powerpc
+To: Brad Smith <brad@comstyle.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <ZneCVxqGDjKpa5Jp@humpty.home.comstyle.com>
+ <c8841c2f-3903-42ee-9bf5-2c74185dc007@linaro.org>
+ <86abae67-79ba-487a-925a-de6a55f2b525@linaro.org>
+ <a1491c86-3711-4cb4-a6f4-7f586daf5a72@comstyle.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <a1491c86-3711-4cb4-a6f4-7f586daf5a72@comstyle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,46 +98,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 26 Jun 2024 at 12:09, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> This suppresses LeakSanitizer warnings.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/ide/macio.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-> index aca90d04f0e8..d8fbc1a17ba6 100644
-> --- a/hw/ide/macio.c
-> +++ b/hw/ide/macio.c
-> @@ -464,6 +464,14 @@ static void macio_ide_initfn(Object *obj)
->                               qdev_prop_allow_set_link_before_realize, 0);
->  }
->
-> +static void macio_ide_finalize(Object *obj)
-> +{
-> +    MACIOIDEState *s = MACIO_IDE(obj);
-> +
-> +    qemu_free_irq(s->dma_irq);
-> +    qemu_free_irq(s->ide_irq);
-> +}
-> +
->  static Property macio_ide_properties[] = {
->      DEFINE_PROP_UINT32("channel", MACIOIDEState, channel, 0),
->      DEFINE_PROP_UINT32("addr", MACIOIDEState, addr, -1),
-> @@ -486,6 +494,7 @@ static const TypeInfo macio_ide_type_info = {
->      .parent = TYPE_SYS_BUS_DEVICE,
->      .instance_size = sizeof(MACIOIDEState),
->      .instance_init = macio_ide_initfn,
-> +    .instance_finalize = macio_ide_finalize,
->      .class_init = macio_ide_class_init,
->  };
+On 26/6/24 06:38, Brad Smith wrote:
+> On 2024-06-23 6:03 p.m., Richard Henderson wrote:
+>> On 6/23/24 10:53, Richard Henderson wrote:
+>>> On 6/22/24 19:03, Brad Smith wrote:
+>>>> util: fix building on OpenBSD/powerpc
+>>>>
+>>>> Signed-off-by: Brad Smith<brad@comstyle.com>
+>>>> ---
+>>>>   util/cpuinfo-ppc.c | 20 ++++++++++++--------
+>>>>   1 file changed, 12 insertions(+), 8 deletions(-)
+>>>
+>>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>>
+>>> r~
+>>
+>> Queued to tcg-next.
+> 
+> 
+> There was one minor change I wanted to make to this. Do I send a v2?
 
-Rather than this, I suspect macio_ide_initfn() should not
-be using qemu_allocate_irq() in the first place. Looks like
-maybe a QOM conversion that left a loose end un-tidied-up.
+Preferably before Richard post his pull request...
 
-thanks
--- PMM
 
