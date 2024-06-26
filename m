@@ -4,68 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C97F3C30658
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 15:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20091C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 15:54:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMUx7-000249-IQ; Wed, 26 Jun 2024 11:52:57 -0400
+	id 1sMUyZ-0003IU-8w; Wed, 26 Jun 2024 11:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1sMUx4-00023p-Bq
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 11:52:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1sMUx2-0001Wz-BI
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 11:52:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719417171;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=yUc2JAmzNScQ21iDVf6IVAjmDF7CxJE686b2I+3r24Q=;
- b=K3FH/yLstZLX5unAVXxEoewKh6whTgkTvseqgXhMToxv5c5bM7EWOfl5OVeaKZo/b152G8
- zdtplpopAOqnh4/JsTEffy+Vxdeg1iD5l/tbiv8mlwS07JXKY2O+D5Z8cEuNwg6NVhIpAV
- 7K1ZaDlWK5ylGBFiWKevv3l7sDo3o64=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-557--AVzxjllNVqNFW06AfuWaQ-1; Wed,
- 26 Jun 2024 11:51:45 -0400
-X-MC-Unique: -AVzxjllNVqNFW06AfuWaQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 52FE4195604F
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 15:51:44 +0000 (UTC)
-Received: from lenovo-t14s.redhat.com (unknown [10.39.193.34])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E030F300021A; Wed, 26 Jun 2024 15:51:41 +0000 (UTC)
-From: Laurent Vivier <lvivier@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>,
-	Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH] net: update netdev stream/dgram man page
-Date: Wed, 26 Jun 2024 17:51:40 +0200
-Message-ID: <20240626155140.74752-1-lvivier@redhat.com>
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sMUyU-0003B6-Qp
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 11:54:25 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sMUyR-0001tX-PM
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 11:54:21 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7066f68e22cso3232032b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 08:54:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1719417258; x=1720022058;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nmg0M+BfElfb4Qi01C0VYSmJOt4qxm83BG7qHL0XGIE=;
+ b=EkjWraa9e71W9Bu/iBExHxBNxqTRoTro7S3jUFgQEDH4w35d/bEq0Rsy/uFPeLPYki
+ C2t8c5K7SFDJb76an4AJem0unGeuNSGsWOOPZEqYDW8NOsQGXFNLV/pTAyglnHHj0eOF
+ b7Buixo3sKtYmesdQiBFlSaaOlvY0KaiU4nawpQ43ZPF0LisVL0IbMfxhqrv9Yyk7TAJ
+ Db7w4psw+Ma//QpEuu6suTIzLcjefroU3xwxhKcBwC9FeSA5Tnrnq/OeURKbIlNvEt1U
+ Bb1eQ/3KoMr477ANcLbMsqBElGCZbLGMyUzWI4Ik9K9/uTREKBqE7rDQe0T7Ckgu/wI6
+ thxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719417258; x=1720022058;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nmg0M+BfElfb4Qi01C0VYSmJOt4qxm83BG7qHL0XGIE=;
+ b=nRuuzM42SZazyJB+0W5e4SHhyLGVglyY6oo+EySbKoRw9ZSUaSoTUdKpsgrqE3WgZi
+ YC9iioE3jZ9JgylnUlLH7QVy9E9hsrs57S/SyAm/d6Dnk5R95K+THvst9RMXyw2hq3ko
+ j49zAbPGIfcbu6MtSmkI+H9OrP4Oh38JlkD814QOS6VCbfP9l0Jx/0q44dNFRKYM/vil
+ IQ5VL4Bx2peDR4lgohZ5lJTz7DR9V8/6dnQ4vG7Yz+lJH+bTSZnGiHVuK2saAkUjgqql
+ eYDkxQL20dIZ8p2DQfEOXVhyGjTP3Z9KtPRwv6rsgBseSsyDIQovPtnxYjFgcyCc5nIP
+ 48aw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVv15quAcvG0OE5od2/RzHI+ui4QIyL4gPm/N0U02aArVTKPh8HLp5ds1gyrnOIIF+qdDEaiIDU47uPtQnsUPvevZcG1V8=
+X-Gm-Message-State: AOJu0Yz9DpNkJxwCTZjkArdho/k16pVFLO6CF4BEjwfJSay+Lv2Bpen4
+ RD2dThMyEt2n4fcjJBM7nijoA2Fzc8PwRTvzwpDErLvcUW0CAYro1yvaB94WXOsJxlTa/2oc54M
+ 5Y68ssNFnMg3OftG86yrwURpDDqWzMycsfN9IUv0Fa8VWlG0BSUA=
+X-Google-Smtp-Source: AGHT+IHLXP5Nz27AwGPWbjhiMGjOktLOJ9PwXduum96I6ZBontFkED5QgdMMeMn429wUOSRLeiq3hh0iwh1e5Oop4AA=
+X-Received: by 2002:a05:6a20:7b23:b0:1bd:1df4:bd43 with SMTP id
+ adf61e73a8af0-1bd1df4be82mr4930848637.54.1719417257652; Wed, 26 Jun 2024
+ 08:54:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <mvm8qytp828.fsf@suse.de>
+ <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org>
+ <mvm4j9gp0xd.fsf@suse.de> <34fed985-6a6a-4458-95f9-aa651744ef1a@linaro.org>
+In-Reply-To: <34fed985-6a6a-4458-95f9-aa651744ef1a@linaro.org>
+From: Warner Losh <imp@bsdimp.com>
+Date: Wed, 26 Jun 2024 09:54:06 -0600
+Message-ID: <CANCZdfq4=s=g8GoeCKY4576xgJs4-X+fXh7m5ZOJ1UeBXwWdCQ@mail.gmail.com>
+Subject: Re: linux-user cannot allocate stack memory on riscv64 host due to
+ non-zero guest_base
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Andreas Schwab <schwab@suse.de>, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000dd0be4061bcd0644"
+Received-SPF: none client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,225 +90,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the description of "-netdev stream" and "-netdev dgram" in the QEMU
-manpage.
+--000000000000dd0be4061bcd0644
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add some examples on how to use them, including a way to use
-"-netdev stream" and "passt" in place of "-netdev user".
-("passt" is a non privileged translation proxy between layer-2,
-like "-netdev stream", and layer-4 on host, like TCP, UDP,
-ICMP/ICMPv6 echo)
+On Wed, Jun 26, 2024 at 9:48=E2=80=AFAM Richard Henderson <
+richard.henderson@linaro.org> wrote:
 
-Fixes: 5166fe0ae46d ("qapi: net: add stream and dgram netdevs")
-Fixes: 13c6be96618c ("net: stream: add unix socket")
-Fixes: 784e7a253104 ("net: dgram: add unix socket")
-Fixes: 148fbf0d58a6 ("net: stream: add a new option to automatically reconnect"
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
----
- qemu-options.hx | 189 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 189 insertions(+)
+> On 6/26/24 01:23, Andreas Schwab wrote:
+> > On Jun 25 2024, Richard Henderson wrote:
+> >
+> >> can always force the use of a non-zero base with -B or -R.
+> >
+> > $ qemu-riscv64 -d page -B 0x3ee000 hello.riscv64
+> > host mmap_min_addr=3D0x1000 (fallback)
+> > qemu-riscv64: /daten/src/test/hello.riscv64: requires virtual address
+> space that is in use (omit the -B option or choose a different value)
+> >
+>
+> Well, sure, but that obviously is where qemu-riscv64 itself is located.
+> Still not a valid test case.
+>
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 8ca7f34ef0c8..b8a1a65f05e7 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3353,6 +3353,195 @@ SRST
-                          -device e1000,netdev=n1,mac=52:54:00:12:34:56 \\
-                          -netdev socket,id=n1,mcast=239.192.168.1:1102,localaddr=1.2.3.4
- 
-+``-netdev stream,id=str[,server=on|off],addr.type=inet,addr.host=host,addr.port=port[,to=maxport][,numeric=on|off][,keep-alive=on|off][,mptcp=on|off][,addr.ipv4=on|off][,addr.ipv6=on|off][,reconnect=seconds]``
-+    Configure a network backend to connect to another QEMU virtual machine or a proxy using a TCP/IP socket.
-+
-+    ``server=on|off``
-+        if ``on`` create a server socket
-+
-+    ``addr.host=host,addr.port=port``
-+        socket address to listen on (server=on) or connect to (server=off)
-+
-+    ``to=maxport``
-+        if present, this is range of possible addresses, with port between ``port`` and ``maxport``.
-+
-+    ``numeric=on|off``
-+        if ``on`` ``host`` and ``port`` are guaranteed to be numeric, otherwise a name resolution should be attempted (default: ``off``)
-+
-+    ``keep-alive=on|off``
-+        enable keep-alive when connecting to this socket.  Not supported for passive sockets.
-+
-+    ``mptcp=on|off``
-+        enable multipath TCP
-+
-+    ``ipv4=on|off``
-+        whether to accept IPv4 addresses, default to try both IPv4 and IPv6
-+
-+    ``ipv6=on|off``
-+        whether to accept IPv6 addresses, default to try both IPv4 and IPv6
-+
-+    ``reconnect=seconds``
-+        for a client socket, if a socket is disconnected, then attempt a reconnect after the given number of seconds.
-+        Setting this to zero disables this function.  (default: 0)
-+
-+    Example (two guests connected using a TCP/IP socket):
-+
-+    .. parsed-literal::
-+
-+        # first VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:56 \\
-+                      -netdev stream,id=net0,server=on,addr.type=inet,addr.host=localhost,addr.port=1234
-+        # second VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:57 \\
-+                      -netdev stream,id=net0,server=off,addr.type=inet,addr.host=localhost,addr.port=1234,reconnect=5
-+
-+``-netdev stream,id=str[,server=on|off],addr.type=unix,addr.path=path[,abstract=on|off][,tight=on|off][,reconnect=seconds]``
-+    Configure a network backend to connect to another QEMU virtual machine or a proxy using a TCP/UNIX socket.
-+
-+    ``server=on|off``
-+        if ``on`` create a server socket
-+
-+    ``addr.path=path``
-+        filesystem path to use
-+
-+    ``abstract=on|off``
-+        if ``on``, this is a Linux abstract socket address.
-+
-+    ``tight=on|off``
-+        if false, pad an abstract socket address with enough null bytes to make it fill struct sockaddr_un member sun_path.
-+
-+    ``reconnect=seconds``
-+        for a client socket, if a socket is disconnected, then attempt a reconnect after the given number of seconds.
-+        Setting this to zero disables this function.  (default: 0)
-+
-+    Example (using passt as a replacement of -netdev user):
-+
-+    .. parsed-literal::
-+
-+        # start passt server as a non privileged user
-+        passt
-+        UNIX domain socket bound at /tmp/passt_1.socket
-+        # start QEMU to connect to passt
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0 \\
-+                      -netdev stream,id=net0,server=off,addr.type=unix,addr.path=/tmp/passt_1.socket
-+
-+    Example (two guests connected using a TCP/UNIX socket):
-+
-+    .. parsed-literal::
-+
-+        # first VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:56 \\
-+                      netdev stream,id=net0,server=on,addr.type=unix,addr.path=/tmp/qemu0
-+        # second VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:57 \\
-+                      -netdev stream,id=net0,server=off,addr.type=unix,addr.path=/tmp/qemu0,reconnect=5
-+
-+``-netdev stream,id=str[,server=on|off],addr.type=fd,addr.str=file-descriptor[,reconnect=seconds]``
-+    Configure a network backend to connect to another  QEMU  virtual machine or a proxy using a TCP socket file descriptor.
-+
-+    ``server=on|off``
-+        if ``on`` create a server socket
-+
-+    ``addr.str=file-descriptor``
-+        file descriptor number to use as a socket
-+
-+    ``reconnect=seconds``
-+        for a client socket, if a socket is disconnected, then attempt a reconnect after the given number of seconds.
-+        Setting this to zero disables this function.  (default: 0)
-+
-+``-netdev dgram,id=str,remote.type=inet,remote.host=maddr,remote.port=port[,local.type=inet,local.host=addr]``
-+    Configure a network backend to connect to a multicast address.
-+
-+    ``remote.host=maddr,remote.port=port``
-+        multicast address
-+
-+    ``local.host=addr``
-+        specify the host address to send packets from
-+
-+    Example:
-+
-+    .. parsed-literal::
-+
-+        # launch one QEMU instance
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:56 \\
-+                      -netdev dgram,id=net0,remote.type=inet,remote.host=224.0.0.1,remote.port=1234
-+        # launch another QEMU instance on same "bus"
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:57 \\
-+                      -netdev dgram,id=net0,remote.type=inet,remote.host=224.0.0.1,remote.port=1234
-+        # launch yet another QEMU instance on same "bus"
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:58 \\
-+                      -netdev dgram,id=net0,remote.type=inet,remote.host=224.0.0.1,remote.port=1234
-+
-+``-netdev dgram,id=str,remote.type=inet,remote.host=maddr,remote.port=port[,local.type=fd,local.str=file-descriptor]``
-+    Configure a network backend to connect to a multicast address using a UDP socket file descriptor.
-+
-+    ``remote.host=maddr,remote.port=port``
-+        multicast address
-+
-+    ``local.str=file-descriptor``
-+        File descriptor to use to send packets
-+
-+``-netdev dgram,id=str,local.type=inet,local.host=addr,local.port=port[,remote.type=inet,remote.host=addr,remote.port=port]``
-+    Configure a network backend to connect to another QEMU virtual
-+    machine or a proxy using an UDP/IP socket.
-+
-+    ``local.host=addr,local.port=port``
-+        IP address to use to send the packets from
-+
-+    ``remote.host=addr,remote.port=port``
-+        Destination IP address
-+
-+    Example (two guests connected using an UDP/IP socket):
-+
-+    .. parsed-literal::
-+
-+        # first VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:56 \\
-+                      -netdev dgram,id=net0,local.type=inet,local.host=localhost,local.port=1234,remote.type=inet,remote.host=localhost,remote.port=1235
-+        # second VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:56 \\
-+                      -netdev dgram,id=net0,local.type=inet,local.host=localhost,local.port=1235,remote.type=inet,remote.host=localhost,remote.port=1234
-+
-+``-netdev dgram,id=str,local.type=unix,local.path=path[,remote.type=unix,remote.path=path]``
-+    Configure a network backend to connect to another QEMU virtual
-+    machine or a proxy using an UDP/UNIX socket.
-+
-+    ``local.path=path``
-+        filesystem path to use to bind the socket
-+
-+    ``remote.path=path``
-+        filesystem path to use as a destination (see sendto(2))
-+
-+    Example (two guests connected using an UDP/UNIX socket):
-+
-+    .. parsed-literal::
-+
-+        # first VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:56 \\
-+                      -netdev dgram,id=net0,local.type=unix,local.path=/tmp/qemu0,remote.type=unix,remote.path=/tmp/qemu1
-+        # second VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:57 \\
-+                      -netdev dgram,id=net0,local.type=unix,local.path=/tmp/qemu1,remote.type=unix,remote.path=/tmp/qemu0
-+
-+``-netdev dgram,id=str,local.type=fd,local.str=file-descriptor``
-+    Configure a network backend to connect to another QEMU virtual
-+    machine or a proxy using an UDP socket file descriptor.
-+
-+    ``local.str=file-descriptor``
-+        File descriptor to use to send packets
-+
- ``-netdev l2tpv3,id=id,src=srcaddr,dst=dstaddr[,srcport=srcport][,dstport=dstport],txsession=txsession[,rxsession=rxsession][,ipv6=on|off][,udp=on|off][,cookie64][,counter][,pincounter][,txcookie=txcookie][,rxcookie=rxcookie][,offset=offset]``
-     Configure a L2TPv3 pseudowire host network backend. L2TPv3 (RFC3931)
-     is a popular protocol to transport Ethernet (and other Layer 2) data
--- 
-2.45.2
+Yea, what happens if you say -B 0x3ee000000 or something else that won't
+conflict?
 
+Warner
+
+--000000000000dd0be4061bcd0644
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jun 26, 2024 at 9:48=E2=80=AF=
+AM Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">ri=
+chard.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex">On 6/26/24 01:23, Andreas Schwab wrote:<br>
+&gt; On Jun 25 2024, Richard Henderson wrote:<br>
+&gt; <br>
+&gt;&gt; can always force the use of a non-zero base with -B or -R.<br>
+&gt; <br>
+&gt; $ qemu-riscv64 -d page -B 0x3ee000 hello.riscv64<br>
+&gt; host mmap_min_addr=3D0x1000 (fallback)<br>
+&gt; qemu-riscv64: /daten/src/test/hello.riscv64: requires virtual address =
+space that is in use (omit the -B option or choose a different value)<br>
+&gt; <br>
+<br>
+Well, sure, but that obviously is where qemu-riscv64 itself is located.<br>
+Still not a valid test case.<br></blockquote><div><br></div><div>Yea, what =
+happens if you say -B 0x3ee000000 or something else that won&#39;t conflict=
+?</div><div><br></div><div>Warner=C2=A0</div></div></div>
+
+--000000000000dd0be4061bcd0644--
 
