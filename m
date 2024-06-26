@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43505C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6CA3C30653
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMSDW-0006ws-7X; Wed, 26 Jun 2024 08:57:42 -0400
+	id 1sMSFM-0008PR-Cr; Wed, 26 Jun 2024 08:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sMSDU-0006wA-Bf
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:57:40 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1sMSF7-0008LO-BZ
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:59:23 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sMSDE-00035U-1u
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:57:40 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-57d15b85a34so231723a12.3
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 05:57:16 -0700 (PDT)
+ id 1sMSF1-0003RO-Fp
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:59:21 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-57cbc66a0a6so304562a12.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 05:59:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719406636; x=1720011436; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719406753; x=1720011553; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WtG4m9Utz5M+zu25p1aXt/yhnygvOT0cR527ODxScvo=;
- b=GYrogNdWWzk7PvwSRPnhuFdpTpN6KWb5iqnO+jj03JLPYuLbMR77ot0IXv5FmR3poi
- 7eVUexQPI64R5A+qqSph7KdPTI8mG4xenLasmwtAv7SnXJQ+C/W9JQEFwnfBw/CRqp40
- ynT7LGAmoya03twr+EoIWssuhvrzUWN/2VMTWUNVJJvE+RuymfGhRs2AvFo8eHadC+4A
- ACkIlTl+eJ36UbLdr4RImhHhrWeq4l4mZ89l8bKtjeiDwIniv+G1rC5FqaNFdeWQ5AZN
- mROSxPR7/Gywxx4P5RCKXGthVex5eoDcGOFHGUdaFftKntL5haQVuLFEtmWpk+cjYGW3
- 1sqA==
+ bh=RfjqgRQN62njRMxr0q0bMCSpuB1g6VKOAlFWkM4SAj4=;
+ b=TzakKqmgcjnryvm7FUc3pmte2APtZsZCqwMwGZvQrGaJ/HgSxisI5Bq6P8x3z1hrqk
+ pUasQc5A6qHWu4CTUPCikfwJZRiRdN7LKC1ogCs56GqhNGkW99EnXUa99Ikh8+/E7vFQ
+ PuCKnvIYDn81P/9QAuVp7nu+iz6y6tGsQMGkr1P9FEk5zl30l2fhQOsewxzLriCv1tnt
+ T4KIj8cTtQq7e5kFKrVWcK6CMAfKeKVD18hQnrlAe5IalgDINp7RHr/IxptLJqeEr3kt
+ 0WtvjHtceJtqlqhyGb2hPc7I4wMLkRy9fnwLn0YOoRkzxCEE+XdU6nQA24nYXagUA5hB
+ 8upg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719406636; x=1720011436;
+ d=1e100.net; s=20230601; t=1719406753; x=1720011553;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WtG4m9Utz5M+zu25p1aXt/yhnygvOT0cR527ODxScvo=;
- b=Z0hqYoK7UQ+gq1KP8uceogZm+3V8OVDBPxyABcbCtbwVDa+qGlyqXbE9CGLthuEuP3
- oeYRbcvmmfxNXtmA7HhxHd1jJ0/9kPCYDcl2fEcF0RSDQtV/YC+TExqJx1ESJZnDWRbN
- 4JJ2gwbkqGTIe2l+HzmboTFWSclOvebaFcoj3t7tZB3Jcy9KJhGBByrpR3sC5a6C7qcU
- lGS/5N5e15STIf02PoSrAD2S/mYdr9fKe27zPAaBWBZQxvAfIYSINb9hpSLHzWqnL3LL
- ov20pyAA0HdcDFNnNE9tzshConX3stesxfu37D26kPXcagcABil42cin+yKSjj9XUbuB
- Dwcw==
+ bh=RfjqgRQN62njRMxr0q0bMCSpuB1g6VKOAlFWkM4SAj4=;
+ b=KKcZlG68ysxu79anTjBCeN525ij3ebZCsP61WcBrxf/b57KwQqX6M8ua7sLUDWqc0t
+ 7xJJXlIiHzurit5ON4Ko4V4rC9jxyZzhn6HBtzXDbI1n1JClQmHBYEWLUwRkrkYHpAjU
+ 7cWmkct032kmaBXnfHHCGsi77Jbx77VpyQbGfsOdhU+TGw8JHs+HWSqgAJ7n0Qovu8vK
+ xeKTK2zuGKSyYGj2CzA7H7TSQxEGtMSeFu4EwT3Y52o36OI8cskQl0GBU/qDiChpqM63
+ ytDqlEbt+gpU1YYJoeFSNO5hG82xq5wFAmQGzL5PpNmWp9qf46ywpr0Li2bh88RPa0HG
+ ulUA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0SNPN1EXUrN33QethsquZVO35B13+hUwOn6y4pm/e0E6GmMK/Utrxtk4JY3etc/EHSKNM6Pl5+T5pttQoOynCaHvGQ3o=
-X-Gm-Message-State: AOJu0Yzm5wJtZrOHwaPeNwpyQqudF3AEXex4IbLfYVCtPEqnwYvBrb0w
- OMID5ou91hP6QvtbCs0xWPDkuJLHeZn4EGBPGk5C0tQrCaHzFKpX3fJbHY8bydVhwsOC6g13pmU
- mvoflbetEzJPXwHKnOVZAlFaMyjJef3PRH3DrkQ==
-X-Google-Smtp-Source: AGHT+IE6rV9Ij3MUBI+4vABAm/HxN5dNQnBlq3IrKnlqp57GH8GiNwfyarSrw/rYanQ32DFeZ74lVLfcl1nole4y2gI=
-X-Received: by 2002:a50:f61d:0:b0:57d:5c0:9dc0 with SMTP id
- 4fb4d7f45d1cf-57d7007f509mr4340248a12.38.1719406635772; Wed, 26 Jun 2024
- 05:57:15 -0700 (PDT)
+ AJvYcCWly+5UHy108mPw0nQ/7EyaHJvGCQFPcH30pT1WlaSrOX8pjGmaVGb8HSV43E1qlvBhupAA0DYMFcRPydLjml3hMbx+TNQ=
+X-Gm-Message-State: AOJu0YzbMNCGZc5Qcxj/uvBSYi/k8Ew70ZeAWkGqjIpkaZZa1xxOQg/B
+ UZ59PyJnbUqFyUGIdKIKAUyS1VDijiwS1W7YR1cjtuDQmLVTylYmLYS02iUjA6No9U0ZK1jGdgE
+ ny4OYzKpIBjBYvGGxM0ipbserKGqz7cWbZI4lqA==
+X-Google-Smtp-Source: AGHT+IFwfuCv1nIAAensBiLVIG0MYsmQY/GTxY9qCP04zDpxbswBfRmwy98QhtZ3qAOrHaXibuKuuKBBX1szgxEMJoc=
+X-Received: by 2002:a50:d50c:0:b0:57c:bec1:ff4b with SMTP id
+ 4fb4d7f45d1cf-57d701edfbemr4666485a12.10.1719406753231; Wed, 26 Jun 2024
+ 05:59:13 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240626-san-v1-0-f3cc42302189@daynix.com>
- <20240626-san-v1-3-f3cc42302189@daynix.com>
-In-Reply-To: <20240626-san-v1-3-f3cc42302189@daynix.com>
+ <20240626-san-v1-2-f3cc42302189@daynix.com>
+In-Reply-To: <20240626-san-v1-2-f3cc42302189@daynix.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 26 Jun 2024 13:57:04 +0100
-Message-ID: <CAFEAcA9Jg8vm5EtazbnTRn5ADNSr_7yvWaLnWYgJJt7ub6Q-LQ@mail.gmail.com>
-Subject: Re: [PATCH 03/14] hw/isa/vt82c686: Free irqs
+Date: Wed, 26 Jun 2024 13:59:02 +0100
+Message-ID: <CAFEAcA-DNieFTV7VbM1MBTbEr9zd5kJ4oaWcsUrsPxCzQki+_g@mail.gmail.com>
+Subject: Re: [PATCH 02/14] hw/ide: Free macio-ide IRQs
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
@@ -81,13 +81,14 @@ Cc: Eduardo Habkost <eduardo@habkost.net>,
  Laurent Vivier <lvivier@redhat.com>, 
  qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,54 +105,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 26 Jun 2024 at 12:08, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+On Wed, 26 Jun 2024 at 12:09, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
 >
 > This suppresses LeakSanitizer warnings.
 >
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->  hw/isa/vt82c686.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  hw/ide/macio.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 >
-> diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-> index 8582ac0322eb..189b487f1d22 100644
-> --- a/hw/isa/vt82c686.c
-> +++ b/hw/isa/vt82c686.c
-> @@ -721,7 +721,6 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
+> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+> index aca90d04f0e8..d8fbc1a17ba6 100644
+> --- a/hw/ide/macio.c
+> +++ b/hw/ide/macio.c
+> @@ -464,6 +464,14 @@ static void macio_ide_initfn(Object *obj)
+>                               qdev_prop_allow_set_link_before_realize, 0);
+>  }
 >
->      qdev_init_gpio_out(dev, &s->cpu_intr, 1);
->      qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
-> -    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
->      isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
->                            errp);
->
-> @@ -729,7 +728,9 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
->          return;
->      }
->
-> +    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
->      s->isa_irqs_in = i8259_init(isa_bus, *isa_irq);
-> +    qemu_free_irqs(isa_irq, 1);
+> +static void macio_ide_finalize(Object *obj)
+> +{
+> +    MACIOIDEState *s = MACIO_IDE(obj);
+> +
+> +    qemu_free_irq(s->dma_irq);
+> +    qemu_free_irq(s->ide_irq);
+> +}
+> +
+>  static Property macio_ide_properties[] = {
+>      DEFINE_PROP_UINT32("channel", MACIOIDEState, channel, 0),
+>      DEFINE_PROP_UINT32("addr", MACIOIDEState, addr, -1),
+> @@ -486,6 +494,7 @@ static const TypeInfo macio_ide_type_info = {
+>      .parent = TYPE_SYS_BUS_DEVICE,
+>      .instance_size = sizeof(MACIOIDEState),
+>      .instance_init = macio_ide_initfn,
+> +    .instance_finalize = macio_ide_finalize,
+>      .class_init = macio_ide_class_init,
+>  };
 
-This looks pretty weird -- we allocate the irq array, and
-then immediately free it. The memory ought not to be
-freed until the end of the simulation.
-
-The ideal way to resolve this kind of leak with qemu_allocate_irqs()
-is to avoid using the function entirely, and instead use IRQ
-arrays allocated via qdev_init_gpio_* or the sysbus IRQ APIs.
-qemu_allocate_irqs() is old and a sort of inherently leaky API.
-
-The less ideal way is to keep the pointer to the array in the
-device stuct.
-
-If you look through 'git log' for qemu_allocate_irqs() you'll
-see various places in the past where we've refactored things
-to avoid this kind of uninteresting memory leak.
-
->      isa_bus_register_input_irqs(isa_bus, s->isa_irqs_in);
->      i8254_pit_init(isa_bus, 0x40, 0, NULL);
->      i8257_dma_init(OBJECT(d), isa_bus, 0);
+Rather than this, I suspect macio_ide_initfn() should not
+be using qemu_allocate_irq() in the first place. Looks like
+maybe a QOM conversion that left a loose end un-tidied-up.
 
 thanks
 -- PMM
