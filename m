@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4A11C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 04:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A9F4C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 04:39:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMKOQ-0002b5-IW; Wed, 26 Jun 2024 00:36:26 -0400
+	id 1sMKQl-0005YL-Bl; Wed, 26 Jun 2024 00:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sMKOO-0002Wt-VV
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 00:36:24 -0400
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sMKQj-0005Xt-41
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 00:38:49 -0400
 Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
  helo=mail.comstyle.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sMKON-0004gy-Ep
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 00:36:24 -0400
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sMKQh-0005M5-O8
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 00:38:48 -0400
 Received: from mail.comstyle.com (localhost [127.0.0.1])
- by mail.comstyle.com (Postfix) with ESMTP id 4W88671Lcnz8PbP;
- Wed, 26 Jun 2024 00:36:15 -0400 (EDT)
+ by mail.comstyle.com (Postfix) with ESMTP id 4W88931BqQz8PbP;
+ Wed, 26 Jun 2024 00:38:47 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=
  message-id:date:mime-version:subject:to:cc:references:from
  :in-reply-to:content-type:content-transfer-encoding; s=default;
- bh=+T8IVboqETIprlLBdE6KtAcC1UvwB/XObl6DvrIbrmE=; b=I8Tyrp+Hcv30
- VETNld01zTmV0OYyrbnZVdaFBc/RgniSVEDcoEY69rfDNyNNv8A1i50FIm+7Zub+
- 3JXGToSu6IUKNqnxVPyfXGEGbdiIG+XSdqn53l/2dZZ2v8JFYg60S3ElXTSrTiMx
- 1nIY5eYN80arDorOi5T/ZbZu72pC2B0=
+ bh=wK6Pxk8pG4r1u1isNdr3J+yz8PfXaXzqtycU3/ZQXqg=; b=l605xYytWfTe
+ Bp3b1ORZAficohgQ4JfrcBPU7Bi6xLxDIMC5LiAJFcnWnEqfyOCTSMEDeatqeSW7
+ vY+mw5rWdRNLHFshD7c6j1xbHM+95MWZ3HhkZ+4/Ykm1ysNN/oK4WkYL3zawcK+m
+ 6xdoE4y93mh4TI391Cqu0g8o72CLXeE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
  :date:mime-version:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding; q=dns; s=default; b=XYw
- XziCC+6sWVZGBs7QQa+y7ZyiUiOrpiteh9fm2pMlslnZkB6z5tfjmAExz9hw4HiM
- 8GoybZUiIO+Fqh7RF1PdNmF5G9OepkADTD5huP7ICXWXRVBquCo6ma2RqVsdOyEa
- 7tO+t/ShhZkX3OAHhqxY+8Lp5u3O/cQA/WIs2+io=
+ :content-type:content-transfer-encoding; q=dns; s=default; b=P/n
+ EDlcS/LGY7ZQgXydoy1YnOXWlKtOcz+A3bl1bZAjFLw91N83BOsq3oNnLVFlCF+Z
+ UFBp3jaIJmZsHK2RKAgRE2pcZpgFH3CppvzZeCTX4X4aZgAkJek4cWFVJn9GBHvB
+ PUSkdqrnAqrZ9rfQW7TyTChc+LQL4xLYlH9WHxmg=
 Received: from [192.168.6.81] (172-97-210-189.cpe.distributel.net
  [172.97.210.189])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: brad)
- by mail.comstyle.com (Postfix) with ESMTPSA id 4W88670m51z8PbN;
- Wed, 26 Jun 2024 00:36:15 -0400 (EDT)
-Message-ID: <a12e896b-7bb3-436c-a699-8c3658b55292@comstyle.com>
-Date: Wed, 26 Jun 2024 00:36:13 -0400
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4W88930ZFjz8PbN;
+ Wed, 26 Jun 2024 00:38:47 -0400 (EDT)
+Message-ID: <a1491c86-3711-4cb4-a6f4-7f586daf5a72@comstyle.com>
+Date: Wed, 26 Jun 2024 00:38:46 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] util/cpuinfo-aarch64: Add OpenBSD support
+Subject: Re: [PATCH] util: fix building on OpenBSD/powerpc
 To: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
-References: <ZneEh51XKhxgZKpp@humpty.home.comstyle.com>
- <99682aaf-935a-4986-8832-dd2f2415f4ef@linaro.org>
- <169b725e-44f4-4fe7-9049-174136c393fb@linaro.org>
+References: <ZneCVxqGDjKpa5Jp@humpty.home.comstyle.com>
+ <c8841c2f-3903-42ee-9bf5-2c74185dc007@linaro.org>
+ <86abae67-79ba-487a-925a-de6a55f2b525@linaro.org>
 Content-Language: en-US
 From: Brad Smith <brad@comstyle.com>
-In-Reply-To: <169b725e-44f4-4fe7-9049-174136c393fb@linaro.org>
+In-Reply-To: <86abae67-79ba-487a-925a-de6a55f2b525@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f938:3000:8::2;
@@ -81,36 +81,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-06-23 6:08 p.m., Richard Henderson wrote:
-> On 6/23/24 10:55, Richard Henderson wrote:
->> On 6/22/24 19:12, Brad Smith wrote:
->>> +=C2=A0=C2=A0=C2=A0 if (sysctl(mib, 2, &isar0, &len, NULL, 0) !=3D -1=
-) {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (ID_AA64ISAR0_ATOMIC(isar0) >=3D I=
-D_AA64ISAR0_ATOMIC_IMPL)
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 info |=3D CPUINFO_LSE;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (ID_AA64ISAR0_AES(isar0) >=3D ID_A=
-A64ISAR0_AES_BASE)
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 info |=3D CPUINFO_AES;
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (ID_AA64ISAR0_AES(isar0) >=3D ID_A=
-A64ISAR0_AES_PMULL)
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 info |=3D CPUINFO_PMULL;
->>> +=C2=A0=C2=A0=C2=A0 }
->>> +
->>> +=C2=A0=C2=A0=C2=A0 mib[0] =3D CTL_MACHDEP;
->>> +=C2=A0=C2=A0=C2=A0 mib[1] =3D CPU_ID_AA64PFR1;
->>> +=C2=A0=C2=A0=C2=A0 len =3D sizeof(pfr1);
->>> +=C2=A0=C2=A0=C2=A0 if (sysctl(mib, 2, &pfr1, &len, NULL, 0) !=3D -1)=
- {
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (ID_AA64PFR1_BT(pfr1) >=3D ID_AA64=
-PFR1_BT_IMPL)
->>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 info |=3D CPUINFO_BTI;
->>> +=C2=A0=C2=A0=C2=A0 }
+On 2024-06-23 6:03 p.m., Richard Henderson wrote:
+> On 6/23/24 10:53, Richard Henderson wrote:
+>> On 6/22/24 19:03, Brad Smith wrote:
+>>> util: fix building on OpenBSD/powerpc
+>>>
+>>> Signed-off-by: Brad Smith<brad@comstyle.com>
+>>> ---
+>>> =C2=A0 util/cpuinfo-ppc.c | 20 ++++++++++++--------
+>>> =C2=A0 1 file changed, 12 insertions(+), 8 deletions(-)
 >>
->> Need braces for all of the if's.=C2=A0 Otherwise,
 >> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>
+>> r~
 >
-> Fixed braces and queued to tcg-next.
+> Queued to tcg-next.
 
-Thanks.
+
+There was one minor change I wanted to make to this. Do I send a v2?
+
 
