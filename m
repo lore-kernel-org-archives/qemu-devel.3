@@ -4,59 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793E3C30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FEFBC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:00:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMRED-0006LN-0S; Wed, 26 Jun 2024 07:54:21 -0400
+	id 1sMRJb-0003lE-NA; Wed, 26 Jun 2024 07:59:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sMREB-0006KP-1s; Wed, 26 Jun 2024 07:54:19 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sMRE4-0007Hb-Ui; Wed, 26 Jun 2024 07:54:18 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 2673260AE3;
- Wed, 26 Jun 2024 14:54:08 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b645::1:29])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id prOe6Z0rMmI0-3RnPKRXS; Wed, 26 Jun 2024 14:54:07 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1719402847;
- bh=2BpnIA0zjzXHw3gjw9gzQ72vpaN5s71FnzZnW95EkHo=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=sv5rS/eDc36iLXabYoI5odp3k9QPCuVDv8eqjcCxYZ2WsZBG7Y/lsF4c1YwiH9jg6
- B9gEbx/ObT0JhiYxf37a3NgEhnGMyObhpaQaVAQxalD9IPPUJ9/FeZyVvenDOcAGUj
- EwUM0++lT96qqAUtER/pW/38i8RHskf0LVZf//HM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, armbru@redhat.com,
- eblake@redhat.com, hreitz@redhat.com, kwolf@redhat.com,
- vsementsov@yandex-team.ru
-Subject: [PATCH v9 1/7] block-backend: blk_root(): drop const specifier on
- return type
-Date: Wed, 26 Jun 2024 14:53:44 +0300
-Message-Id: <20240626115350.405778-2-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240626115350.405778-1-vsementsov@yandex-team.ru>
-References: <20240626115350.405778-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRJa-0003kq-55
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:59:54 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRJY-0008RG-JH
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:59:53 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42561c16ffeso581075e9.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:59:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719403190; x=1720007990; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7wHcWilqVSRZPvFxkj06uhy4pkzct8uXR1y7Br2IGyo=;
+ b=eiXqcgmAG1NTHiH6d9tUq228DWe1DQu+eTbGxf8y8XEsoSEeqPfvBiAdYPUwKykKtO
+ faUHleJf8+rzkioLd9HnvEtCErY/3QmiN9tuK2FE60nuTCN5TywNlZbU9Xm74oZRfLLQ
+ MAPGduEOcBoGbYO4AiCojJm6OJRrT0xs+M5C9F9oxs2g4EtPoe5x6OYXcLVoMrzkNCR/
+ xV2P8VL6SVoQ46W+iuYaRbgRdbyXhwrRPi5Zvlg9XRXJJzg9fTd6RsgPu+fE51l13YOE
+ 3NFe7vXsTWFRgVcD9bheqcVcWtB1OE/vC/nq2VgeUtfaOXoyiCfZrPCexTyizWUw3x2g
+ PHxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719403190; x=1720007990;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7wHcWilqVSRZPvFxkj06uhy4pkzct8uXR1y7Br2IGyo=;
+ b=n8wBKcM6S1ZfLek3HTULB9gYNxLa84mU/k2HO/m8gC/LdUyrCBl0mmLYmmE0FK4uKE
+ FgqyuSjChWTseMR9rK0YDETMnYOCY2T+l5R4cW03lyIuTrRJDMCnmHrFLmxX9EAWTCpV
+ 0NV2N7v8UhRYpY+UZOePbwP0HYiYT4i0v91DjHepWU/F7WtzdDGUVGeneBFqw8typRos
+ iEVF/tcu77tFLrXLy7JDgkz+ZLnfW0/JEJr1chLvOMqXtGAdrlhWcGEHITXsY+9mHgOY
+ 2Xb5qz9E+ri85fO3EkFfEZPJPbmbw0hlKDWZaFEH31iPlPmIccF0ALnVUtsrdyuTfLZi
+ wQfw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlZDwLYuiFDi69IAVjRxRDi8TAEl31Y1RlZKWynxmblfbskS3gB9l8IIXmgpDXg7DjOWBTyxNDMLVwrw/P0VSIuIpGeFA=
+X-Gm-Message-State: AOJu0Yyme5wdfS0ayQaqh4Ocwg2Pd760T2FEMcXjCNJ+28eP2B4zyXbA
+ IjRp+TVvMcet22UfW6oyI6vCeGd+lswbuJdGDCV16wqeIOig+ufGyRDXqzGDGbw=
+X-Google-Smtp-Source: AGHT+IFbkM6EGc89VPRfeNSwpIH8kVr6dyOl5JZQcU4Wae212EsXiuzf+/Cll3sS9WtLWGn7X87GvQ==
+X-Received: by 2002:adf:f48c:0:b0:35f:1753:7159 with SMTP id
+ ffacd0b85a97d-366e948e6ccmr7028384f8f.19.1719403190135; 
+ Wed, 26 Jun 2024 04:59:50 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.212.234])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-367011c4600sm4320196f8f.61.2024.06.26.04.59.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Jun 2024 04:59:49 -0700 (PDT)
+Message-ID: <6be35719-6dc0-4e3a-b0db-3614f0c028b0@linaro.org>
+Date: Wed, 26 Jun 2024 13:59:47 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] tests/tcg/aarch64: Explicitly specify register width
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20240626-tcg-v1-0-0bad656307d8@daynix.com>
+ <20240626-tcg-v1-3-0bad656307d8@daynix.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240626-tcg-v1-3-0bad656307d8@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,42 +97,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll need get non-const child pointer for graph modifications in
-further commits.
+On 26/6/24 13:26, Akihiko Odaki wrote:
+> clang version 18.1.6 assumes a register is 64-bit by default and
+> complains if a 32-bit value is given. Explicitly specify register width
+> when passing a 32-bit value.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>   tests/tcg/aarch64/bti-1.c | 6 +++---
+>   tests/tcg/aarch64/bti-3.c | 6 +++---
+>   2 files changed, 6 insertions(+), 6 deletions(-)
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- block/block-backend.c                       | 2 +-
- include/sysemu/block-backend-global-state.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/block/block-backend.c b/block/block-backend.c
-index db6f9b92a3..71d5002198 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -2879,7 +2879,7 @@ int coroutine_fn blk_co_copy_range(BlockBackend *blk_in, int64_t off_in,
-                               bytes, read_flags, write_flags);
- }
- 
--const BdrvChild *blk_root(BlockBackend *blk)
-+BdrvChild *blk_root(BlockBackend *blk)
- {
-     GLOBAL_STATE_CODE();
-     return blk->root;
-diff --git a/include/sysemu/block-backend-global-state.h b/include/sysemu/block-backend-global-state.h
-index 49c12b0fa9..ccb35546a1 100644
---- a/include/sysemu/block-backend-global-state.h
-+++ b/include/sysemu/block-backend-global-state.h
-@@ -126,7 +126,7 @@ void blk_set_force_allow_inactivate(BlockBackend *blk);
- bool blk_register_buf(BlockBackend *blk, void *host, size_t size, Error **errp);
- void blk_unregister_buf(BlockBackend *blk, void *host, size_t size);
- 
--const BdrvChild *blk_root(BlockBackend *blk);
-+BdrvChild *blk_root(BlockBackend *blk);
- 
- int blk_make_empty(BlockBackend *blk, Error **errp);
- 
--- 
-2.34.1
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
