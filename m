@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF56DC3064D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 14:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B04CC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 14:10:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMTFB-0001x9-9V; Wed, 26 Jun 2024 10:03:29 -0400
+	id 1sMTLS-0004n8-WF; Wed, 26 Jun 2024 10:09:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sMTF8-0001vv-Eu
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 10:03:27 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1sMTLR-0004jk-7k
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 10:09:57 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sMTEw-0003CP-3K
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 10:03:26 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-57cb9efd8d1so506860a12.0
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 07:03:13 -0700 (PDT)
+ id 1sMTLP-0004Lp-G5
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 10:09:56 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a689ad8d1f6so901137966b.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 07:09:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719410592; x=1720015392; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=hb6LcajEHMuf71XU0VM8Xn9J7SZV1K25f5gPBrNRxwY=;
- b=yGzwtLd9LhUr8Ycfr+MuW2jjKy2gtYEiMG//dIwo88jcUHj8Shjxc+7P1q7iw2WNlO
- cy6gctnbBjQj8HfiNuC4sj/pyFHbhLWruvM4Bt4jASPpLYM9MGFBV202eLRcb77Y+pPp
- dyRG0CowB7Yhy6kkGd3mkuCgoCSukjLjjp9qyBRli2ZAiBti0Nr3by23WTNx5EQ1DoNm
- AwaxMOCxCdaSV/4wv74VfV0vRGSbcwCJCV+CiCVKNCOC8SVwg3OtJFvX2QxEXG2eCDq4
- DMqOl6t7A3bVO7lETr7wduwBb8Wul3qIFHGJ6elt8MYE5gkRrex9JsW4hdiPtFUkPVNN
- 7BRQ==
+ d=linaro.org; s=google; t=1719410993; x=1720015793; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Kb/rUJvAJjCHGS7f4Ys34/yH37oh1jmL/xUtcv7u0aA=;
+ b=fOQYq9YuwrIGj/a8TshMYKNyeXdSWeWa0nJbgHgFq2I7Uw84jIiWWieatWKyO+Ed7S
+ BjdNDOmASdmyk7jqbAbHK9aLyRBUu1VdSlAQ+NhT2fPoFg41JOoh/uWpxdIXzE62ZQVf
+ kT24IgnAxxD1ShJKPo3dbiLIx7YuJQUjIwdkv6MGu/wYQKLDpAtDuDBn4tzSogSAOMgQ
+ jASVBw3nBaJhIHttrPWizTL7dONxnpj7uZcBZ8TPmhRSnJxvMfHS6u4DbzRS2M5jV7A7
+ Yr3wepdDEh5fuoky5OZBpzG/blJfY8L9rRDQwE+j1ntK8RihuKGoiC6G/AjwQur2cTM6
+ uKog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719410592; x=1720015392;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hb6LcajEHMuf71XU0VM8Xn9J7SZV1K25f5gPBrNRxwY=;
- b=pl9N3qxAig2XZVwfPp5C386qVHFqvbYL232D55828zf4/B/80shL5IZ7czhT2Jm4Q4
- WSGW1bDeBZT5WmVCiWRI53OC5lkIJ9pa2+gV6tGBD3D6aDHhyn06PFbT36cGDQsULJUH
- I5CvLZReD/DQkhz75cnz4WfBhG4zDkDEOkqtCkdvM1415Rx38k5ZFNtK8SRXKDrtGFoS
- Gu7TCaj22A6NghEkiBSUllEtXMcX5o6RFUX7wCtEQQCTyZrDbzkrNbZtxAyisbuiFFGz
- c+hb3wJhdBs0Cko1/0ZvoovyU0Bg3TI9W0efFd5AiGDYFCXB8KDE/XV7M4NiF1FHU9iV
- 61Ng==
-X-Gm-Message-State: AOJu0Yw5scq7EztDo7ljFDTQQmMaQoMv1p6tJ8pbOdWjURpObXU35V9x
- NSNXILlMbNMUJ7W3gPsnbpOR3c/ggFiKFJHnxom7b49MZ4MoA0aVy5CsSh6TArc=
-X-Google-Smtp-Source: AGHT+IGlV17/zBQgow1726AbkNZwtdZH1JCC1vuie9PnfspBFdgxeCw+GkOY6yUXX55JTu2Y5kiFYg==
-X-Received: by 2002:a17:906:abd2:b0:a6f:e2f1:537b with SMTP id
- a640c23a62f3a-a700e706f07mr954361266b.28.1719410591717; 
- Wed, 26 Jun 2024 07:03:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719410993; x=1720015793;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Kb/rUJvAJjCHGS7f4Ys34/yH37oh1jmL/xUtcv7u0aA=;
+ b=u8uXlp56hhHfDpcYf128MVG2vd9RVdiFCUjoOM2NufKQP18HamuRIUWO/MaE0wXIkI
+ 6HmAjv7qc46OvFUn9rPIe6Aij179cnAYw8WRymAhyXfDHqT1VUdpdbALaQnDk7v/hkMR
+ wvnrvWq8U7dqtEQVqX11nQ0iJG+GoQ7eeY2KOhcITcOQjjFiQqImfz/wwFj6OwgZMqNL
+ zTATpunlOWgvR+w3idM6yTeYOaGhmkwNW78QtLdCiiHW4221aewidavrU+9vU70p/D8z
+ 3hW0vIYV9IBxvjSXA6j9Wm68NcvrJ9F/tocLPf6s+8KFO/Bjsli0izu0WNTyyah9FwA2
+ F4+g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWaor3Xr+wZjSL7fMitqTFszWCvxYvlvavuvoNSFij0lwS+RthkAkGme80+fo4RE4SfwgiYVwtW6GjsVmkRroFnjScBZZo=
+X-Gm-Message-State: AOJu0YwqZEuCczhzjDcoh0OLZWqgEUxUjJFFnnchSqxFxurL6WMpkD8Z
+ MvtU4KUmMo8gnIr/l/QbPXMlHrIvbt5BWw8HyJOMcluRJWdhfa2ywUNXjKbIdhs=
+X-Google-Smtp-Source: AGHT+IFfmp/bHv7cTb8g3Qa5opZnZhApOMLKK0xsMQ0EQ7i3RzqOG7TFlg0k1bMaGKZh8pjnGLTBDA==
+X-Received: by 2002:a17:907:d401:b0:a72:46f3:ffc4 with SMTP id
+ a640c23a62f3a-a7246f4005cmr754374666b.26.1719410992654; 
+ Wed, 26 Jun 2024 07:09:52 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a6fcf54923fsm617544466b.104.2024.06.26.07.03.10
+ a640c23a62f3a-a72451fd535sm427734666b.149.2024.06.26.07.09.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Jun 2024 07:03:11 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5A06A5F8AA;
- Wed, 26 Jun 2024 15:03:10 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- kvm@vger.kernel.org (open list:X86 KVM CPUs)
-Subject: [RFC PATCH] target/i386: restrict SEV to 64 bit host builds
-Date: Wed, 26 Jun 2024 15:03:07 +0100
-Message-Id: <20240626140307.1026816-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+ Wed, 26 Jun 2024 07:09:52 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0EAFB5F8AA;
+ Wed, 26 Jun 2024 15:09:51 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/6] tests/tcg/aarch64: Fix inline assemblies for clang
+In-Reply-To: <20240626-tcg-v1-0-0bad656307d8@daynix.com> (Akihiko Odaki's
+ message of "Wed, 26 Jun 2024 20:26:21 +0900")
+References: <20240626-tcg-v1-0-0bad656307d8@daynix.com>
+Date: Wed, 26 Jun 2024 15:09:51 +0100
+Message-ID: <878qyrpzgw.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,55 +98,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Re-enabling the 32 bit host build on i686 showed the recently merged
-SEV code doesn't take enough care over its types. While the format
-strings could use more portable types there isn't much we can do about
-casting uint64_t into a pointer. The easiest solution seems to be just
-to disable SEV for a 32 bit build. It's highly unlikely anyone would
-want this functionality anyway.
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/i386/sev.h       | 2 +-
- target/i386/meson.build | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+> Unlike GCC, clang checks if the operands in assembly matches with the
+> type in C. It also does not support "x" constraint for AArch64 and
+> complains about them.
 
-diff --git a/target/i386/sev.h b/target/i386/sev.h
-index 858005a119..b0cb9dd7ed 100644
---- a/target/i386/sev.h
-+++ b/target/i386/sev.h
-@@ -45,7 +45,7 @@ typedef struct SevKernelLoaderContext {
-     size_t cmdline_size;
- } SevKernelLoaderContext;
- 
--#ifdef CONFIG_SEV
-+#if defined(CONFIG_SEV) && defined(HOST_X86_64)
- bool sev_enabled(void);
- bool sev_es_enabled(void);
- bool sev_snp_enabled(void);
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 075117989b..d2a008926c 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -6,7 +6,7 @@ i386_ss.add(files(
-   'xsave_helper.c',
-   'cpu-dump.c',
- ))
--i386_ss.add(when: 'CONFIG_SEV', if_true: files('host-cpu.c', 'confidential-guest.c'))
-+i386_ss.add(when: ['CONFIG_SEV', 'HOST_X86_64'], if_true: files('host-cpu.c', 'confidential-guest.c'))
- 
- # x86 cpu type
- i386_ss.add(when: 'CONFIG_KVM', if_true: files('host-cpu.c'))
-@@ -21,7 +21,7 @@ i386_system_ss.add(files(
-   'cpu-apic.c',
-   'cpu-sysemu.c',
- ))
--i386_system_ss.add(when: 'CONFIG_SEV', if_true: files('sev.c'), if_false: files('sev-sysemu-stub.c'))
-+i386_system_ss.add(when: ['CONFIG_SEV', 'HOST_X86_64'], if_true: files('sev.c'), if_false: files('sev-sysemu-stub.c'))
- 
- i386_user_ss = ss.source_set()
- 
--- 
-2.39.2
+When are the test cases ever built with clang? Is this for Arm on Arm
+testing only?
 
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+> Akihiko Odaki (6):
+>       tests/tcg/arm: Fix fcvt result messages
+>       tests/tcg/aarch64: Fix test architecture specification
+>       tests/tcg/aarch64: Explicitly specify register width
+>       tests/tcg/aarch64: Fix irg operand type
+>       tests/tcg/aarch64: Do not use x constraint
+>       tests/tcg/arm: Manually bit-cast half-precision numbers
+>
+>  tests/tcg/aarch64/bti-1.c         |   6 +-
+>  tests/tcg/aarch64/bti-3.c         |   6 +-
+>  tests/tcg/aarch64/mte-1.c         |   2 +-
+>  tests/tcg/aarch64/sme-smopa-2.c   |   2 +-
+>  tests/tcg/arm/fcvt.c              |  20 +-
+>  tests/tcg/aarch64/Makefile.target |  12 +-
+>  tests/tcg/aarch64/fcvt.ref        | 604 +++++++++++++++++++-------------=
+------
+>  7 files changed, 331 insertions(+), 321 deletions(-)
+> ---
+> base-commit: 74abb45dac6979e7ff76172b7f0a24e869405184
+> change-id: 20240624-tcg-bf8116e80afa
+>
+> Best regards,
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
