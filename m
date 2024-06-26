@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6DFFC3064D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 16:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 814FFC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 16:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMVJs-0005xy-92; Wed, 26 Jun 2024 12:16:28 -0400
+	id 1sMVLi-0006vQ-FX; Wed, 26 Jun 2024 12:18:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sMVJo-0005uW-0U
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:16:25 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1sMVLg-0006v6-CD
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:18:20 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sMVJm-0005rY-D8
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:16:23 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a6fe617966fso458798266b.1
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 09:16:21 -0700 (PDT)
+ id 1sMVLP-0006Kg-RS
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:18:20 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2ebe40673d8so79827601fa.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 09:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719418581; x=1720023381; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719418681; x=1720023481; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WWFhJQV9EcgvIMRLXLoG6uNdudSKhjHqBmF9m0oHDgY=;
- b=ZFinh8oE3RfRK3BYGgdf1rH7UBybdfc0UrUOcOK4R0ZlqwiDGDw187o6JP+eaqf5iL
- 38pBMzcRRXYmGuJ52WmSnt9Llm7Ee1XWQcNVV3sGsy5HsAyJtgoZXq+o8k+Liwmrk1f4
- 96sGqp56sx75lgQadWA3Nq9IR7NZfw+6xcDdZ4eaL7mRa+odSWu8BmxlErApm9b/fgso
- /YepL0pTbYryNnFCO3+wqcM0boAJ6RUL5M7uYclPJfAZpP4ckpi+qLcJ05ldeCIvASnt
- pv2t2bKw98BG6WOGJkBFdIzU3I1BF3UGdo5SDlRpSOkpZCNUOO08XAht0e55qeYXduh2
- afbw==
+ :reply-to; bh=DcB6IPPrpjOpTbKaDWEUmYeQ2UAfTwqRY22CEK/B2iA=;
+ b=Y42Mkd8PKK76rfo72uBRcMSH/u52umKj4f4++Tc8eGwCD2vLvqHdmXo4l/qpnBp1Yx
+ Rfrvji+xJNq0NcBgdnkxw0Rs6KAIGkVapbcaXC2STYZXSoVjoIq2Pjtt7Vovy+YvVrFH
+ IVJ2j5QQ9C0b0ZVecaigBceJwasjEMLU7j8ceRKhej5DIvdT/ibfae2oi2aP5rZDU3De
+ hLL04ygjig308eDG5twBWVwVr+5dwl1lKhIqshDw5jMlzhAEsC6fsrpIz5UyjT1vdXLk
+ Jsalp2UG2gDdEDVlAf5c/f7U6Lj7qAe6oiBOtDwJgD+nrF7r7/HN0391td+EHsKiKz2j
+ Mltw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719418581; x=1720023381;
+ d=1e100.net; s=20230601; t=1719418681; x=1720023481;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WWFhJQV9EcgvIMRLXLoG6uNdudSKhjHqBmF9m0oHDgY=;
- b=gueoor46GIH5Mn30cYiqdU5d0kBHqjPyJH3KFU5ZT6MwyhJ569DKsa5fNh/8+TyLDT
- ZbxPQmyKv12tzP1HkmsYX5FAo57J/v97Q/W+za2zZ/2OOxUjrvNsk47RR/yCxbwApw/D
- uZvULBdCKJBl7JPPBfzTNnrtKAsDmqfBLZM7iC+YM+41FbvKHoWyXzOdHZW5RwyBeuOf
- +hUEOt8VQ47BanAO4cDfKiwxUUomWXc3BaDr9NL8fA5vgGVERZlhbIwajoClBosE0OGw
- a1tbRccpcc0KsNmKqMhyB2bmOKWoZlLntSID/nXUPglnIGCO+zIZzgOyoyvEWEx/gW3e
- 4y1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWTfB/ZLS2RHUqtuX8vAdwUZFiRc4val5CoTxguVMlvgXz481CMQDcuCFhcno4m3QbA0K6Kh4PyB6qV+j+EUpLzKjmfZ8E=
-X-Gm-Message-State: AOJu0Yy7swNIlkrLUmiB3SGZn56nh27T1JZQ4fz+TZygmMRiLjLJfm3Q
- YK+pIHGFS76AgHLs7Nc7G0Sj1ccAgj4c4AGtK19FRC/muqo1nmx8MBJBcmuRsoCTW4t5cb81wLs
- V
-X-Google-Smtp-Source: AGHT+IE0QBgAJUr5eJ+5F6SO0x5tR8DNTo1gdbGLeYm2/cUIaIw8TmP5WeMtSV5eQp1ZaqqfehHTZg==
-X-Received: by 2002:a17:906:c2d5:b0:a6f:6b6a:e8d2 with SMTP id
- a640c23a62f3a-a7245b4cac4mr666935066b.11.1719418580532; 
- Wed, 26 Jun 2024 09:16:20 -0700 (PDT)
+ bh=DcB6IPPrpjOpTbKaDWEUmYeQ2UAfTwqRY22CEK/B2iA=;
+ b=LgpglWn0Y1ug3hFqTKEoyxaNer31UvloFkuZOk3DcwjYcQbEZSGhlJ36UxcLdY876f
+ 37fv7fH1rrCiiFBM+2H43WvZ25nyjjFEsXwYTFFiDS1wqP0H6/1G7PrNhdqJMkEUMohG
+ jyATKTKVoJLKPe1tECT3Tw7QnANMq+lGpeWAG7zpGwrWnf46gr/yJyWCuktLoPGwsK22
+ dpXr7ItoUjjZhvlPpweSz8J6hq6/aGebgqgAgNyP9at2ouIpFLNnYEFNoOaG2AQa8CyW
+ 5/4CJMOvXJaR9n8kUmH3TTKibxK1kC1aVOPaTn5mXa2YjSzUmQPXCZfu7omB2VREN9hf
+ 76Kw==
+X-Gm-Message-State: AOJu0YzjEfmUHFaxYvkeBjKoeYK8iXrSmZVczQ7U15Ave80xwBQKZDJD
+ 4OE9QP7Bdfy3cDqDc9F22tLclOfYWcYJCi8fCOBf8rSXy3p1AWrCSypl4DZWtKbMYeMwF0wGhdQ
+ 3
+X-Google-Smtp-Source: AGHT+IFfXwEtsh+T/sDn+2rc5XBZnHCaEiUAyswzSvtd5UKEMWXGnkc3/U4D8XcR5I/y5ovhWxbUow==
+X-Received: by 2002:a05:651c:211d:b0:2ec:5dfc:a64e with SMTP id
+ 38308e7fff4ca-2ec5dfca6demr78654281fa.0.1719418681072; 
+ Wed, 26 Jun 2024 09:18:01 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7265580e84sm222724166b.98.2024.06.26.09.16.19
+ 4fb4d7f45d1cf-581e920112dsm1974823a12.93.2024.06.26.09.18.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Jun 2024 09:16:19 -0700 (PDT)
+ Wed, 26 Jun 2024 09:18:00 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2B18D5F8AA;
- Wed, 26 Jun 2024 17:16:19 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 78D215F8AA;
+ Wed, 26 Jun 2024 17:17:59 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Thomas Huth
- <thuth@redhat.com>,  Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] tests/docker: Specify --userns keep-id for Podman
-In-Reply-To: <20240626-podman-v1-1-f8c8daf2bb0a@daynix.com> (Akihiko Odaki's
- message of "Wed, 26 Jun 2024 20:09:37 +0900")
-References: <20240626-podman-v1-1-f8c8daf2bb0a@daynix.com>
-Date: Wed, 26 Jun 2024 17:16:19 +0100
-Message-ID: <87v81vof1o.fsf@draig.linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  "open list:X86 KVM CPUs"
+ <kvm@vger.kernel.org>
+Subject: Re: [RFC PATCH] target/i386: restrict SEV to 64 bit host builds
+In-Reply-To: <ZnwjtOxQy1iiRoFh@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 26 Jun 2024 15:20:36 +0100")
+References: <20240626140307.1026816-1-alex.bennee@linaro.org>
+ <ZnwjtOxQy1iiRoFh@redhat.com>
+Date: Wed, 26 Jun 2024 17:17:59 +0100
+Message-ID: <87r0cjoeyw.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,24 +99,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> Previously we are always specifying -u $(UID) to match the UID in the
-> container with one outside. This causes a problem with rootless Podman.
+> On Wed, Jun 26, 2024 at 03:03:07PM +0100, Alex Benn=C3=A9e wrote:
+>> Re-enabling the 32 bit host build on i686 showed the recently merged
+>> SEV code doesn't take enough care over its types. While the format
+>> strings could use more portable types there isn't much we can do about
+>> casting uint64_t into a pointer. The easiest solution seems to be just
+>> to disable SEV for a 32 bit build. It's highly unlikely anyone would
+>> want this functionality anyway.
+>>=20
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>  target/i386/sev.h       | 2 +-
+>>  target/i386/meson.build | 4 ++--
+>>  2 files changed, 3 insertions(+), 3 deletions(-)
+>>=20
+>> diff --git a/target/i386/sev.h b/target/i386/sev.h
+>> index 858005a119..b0cb9dd7ed 100644
+>> --- a/target/i386/sev.h
+>> +++ b/target/i386/sev.h
+>> @@ -45,7 +45,7 @@ typedef struct SevKernelLoaderContext {
+>>      size_t cmdline_size;
+>>  } SevKernelLoaderContext;
+>>=20=20
+>> -#ifdef CONFIG_SEV
+>> +#if defined(CONFIG_SEV) && defined(HOST_X86_64)
+>>  bool sev_enabled(void);
+>>  bool sev_es_enabled(void);
+>>  bool sev_snp_enabled(void);
+>> diff --git a/target/i386/meson.build b/target/i386/meson.build
+>> index 075117989b..d2a008926c 100644
+>> --- a/target/i386/meson.build
+>> +++ b/target/i386/meson.build
+>> @@ -6,7 +6,7 @@ i386_ss.add(files(
+>>    'xsave_helper.c',
+>>    'cpu-dump.c',
+>>  ))
+>> -i386_ss.add(when: 'CONFIG_SEV', if_true: files('host-cpu.c', 'confident=
+ial-guest.c'))
+>> +i386_ss.add(when: ['CONFIG_SEV', 'HOST_X86_64'], if_true: files('host-c=
+pu.c', 'confidential-guest.c'))
+>>=20=20
+>>  # x86 cpu type
+>>  i386_ss.add(when: 'CONFIG_KVM', if_true: files('host-cpu.c'))
+>> @@ -21,7 +21,7 @@ i386_system_ss.add(files(
+>>    'cpu-apic.c',
+>>    'cpu-sysemu.c',
+>>  ))
+>> -i386_system_ss.add(when: 'CONFIG_SEV', if_true: files('sev.c'), if_fals=
+e: files('sev-sysemu-stub.c'))
+>> +i386_system_ss.add(when: ['CONFIG_SEV', 'HOST_X86_64'], if_true: files(=
+'sev.c'), if_false: files('sev-sysemu-stub.c'))
+>>=20=20
+>>  i386_user_ss =3D ss.source_set()
 >
-> Rootless Podman remaps user IDs in the container to ones controllable
-> for the current user outside. The -u option instructs Podman to use
-> a specified UID in the container but does not affect the UID remapping.
-> Therefore, the UID in the container can be remapped to some other UID
-> outside the container. This can make the access to bind-mounted volumes
-> fail because the remapped UID mismatches with the owner of the
-> directories.
+> Instead of changing each usage of CONFIG_SEV, is it better to
+> prevent it getting enabled in the first place ?
 >
-> Replace -u $(UID) with --userns keep-id, which fixes the UID remapping.
-> This change is limited to Podman because Docker does not support
-> --userns keep-id.
+> eg. move
+>
+>   #CONFIG_SEV=3Dn
+>
+> From
+>
+>   configs/devices/i386-softmmu/default.mak
+>
+> to
+>
+>   configs/devices/x86_64-softmmu/default.mak
+>
+> And then also change
+>
+>   hw/i386/Kconfig
+>
+> to say
+>
+>   config SEV
+>       bool
+>       select X86_FW_OVMF
+>       depends on KVM && X86_64
 
-Queued to testing/next, thanks.
+I was wondering if I could do it all with Kconfig. Will respin thanks.
+
+>
+>
+> With regards,
+> Daniel
 
 --=20
 Alex Benn=C3=A9e
