@@ -4,103 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 268BCC3064D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 06:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30429C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 06:16:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMLkU-0003sx-1P; Wed, 26 Jun 2024 02:03:18 -0400
+	id 1sMLwX-0000e9-By; Wed, 26 Jun 2024 02:15:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1sMLkS-0003sb-38
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 02:03:16 -0400
-Received: from esa2.hc1455-7.c3s2.iphmx.com ([207.54.90.48])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1sMLkP-0000Nx-RT
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 02:03:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1719381794; x=1750917794;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=m8YTY6GpEs3iSnFV8kd7Br7h+HDW2hkTnhnYCYUuL6g=;
- b=SPqXIPOwI38Sx8XBO8uD5hfZYPTAE4Q1MWA+GaEZkZZQOYRvmIb50iY6
- oxkJjhre8Q9Tyhhn4W9oWDcRWx1Dx8iJhOr+tBjIQPVNChRmErKOhwIx8
- InPxHcmod0wWf5bcyZDsS+ZhzXtWT1ZcuLq5pBbC/UN6LnEgzl5ZmFnRf
- LVlt+JlFD/zxbGrPgc3XZtGbUwhyai4pus9HpPidDQQ+DOaUJZU+L891t
- biifLYaiUhPkdHqF707Nkuetwm1o+45+B6vtJVeuM8H/w3N0hSDHrh1m7
- o36b8yigz/2bPIbVv3OVXGe7aH9iYegQFd36S/ZGOgmnniRmQE9GVlhdb g==;
-X-IronPort-AV: E=McAfee;i="6700,10204,11114"; a="165028310"
-X-IronPort-AV: E=Sophos;i="6.08,266,1712588400"; d="scan'208";a="165028310"
-Received: from unknown (HELO oym-r3.gw.nic.fujitsu.com) ([210.162.30.91])
- by esa2.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 26 Jun 2024 15:03:09 +0900
-Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
- [192.168.87.58])
- by oym-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id B812BCA1E1
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 15:03:07 +0900 (JST)
-Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
- [192.51.206.21])
- by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 50170D8B6A
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 15:03:06 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id D3E202007CAA6
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 15:03:05 +0900 (JST)
-Received: from [192.168.50.5] (unknown [10.167.226.114])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 087111A0002;
- Wed, 26 Jun 2024 14:03:03 +0800 (CST)
-Message-ID: <bc58d99a-785f-4bb3-a9c9-9cf50ea7e06d@fujitsu.com>
-Date: Wed, 26 Jun 2024 14:03:03 +0800
+ (Exim 4.90_1) (envelope-from <clement.mathieudrif.etu@gmail.com>)
+ id 1sMLwV-0000dH-R3
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 02:15:43 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <clement.mathieudrif.etu@gmail.com>)
+ id 1sMLwT-0003hB-RO
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 02:15:43 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-52cdb0d8107so5894315e87.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 23:15:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719382537; x=1719987337; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aSyGffkMjerVf/jIJYa5CWxy3pFcK+I+Sdt2TMFAIjs=;
+ b=ZZ24673K6UIbBwqtSfvAqsZT0AVJXebYUh7Zwjwd+Nm3qR/x5pLNTA3KFTt5HA3JIJ
+ x8XHXDBoLG45Vu04Tf86qCfG0zZfrtxMtnbpvpcnMrfWA0iIp3byNw55Zqd9ccYZTCaW
+ VjorIfVpHiee6NjxPOgZ4owXZc4Go7ISYSH3Y13IuFgkyfLvPX5aa4RWJO/Ox63M37qc
+ Wme71vMYgwxy2ZcSyvlHcOhRX1aNZo7YHEtnxigWv8FIUSASfHhWFURyBkJ2ZMlv7nG7
+ 2GECH6dpxXXAsKGpGEeom2HiZ4JALCTZO3JD+l8KaZXXC7XG4NwiAn5SZ1mPP4iQjF5H
+ gGtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719382537; x=1719987337;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aSyGffkMjerVf/jIJYa5CWxy3pFcK+I+Sdt2TMFAIjs=;
+ b=ZpzDIrEKy3wuFObh8xx98qlNg8m1MIIUXSV10I9POFCXKwvHsXO7yvQgDDkubomKqV
+ lzU/ESkEZ7VnjOEA7ZswxbVJWn2lFJLTo1sqwD4kQZtAUgbhjTt8dm25PXErCo+Wjivh
+ 08RqSCKAIsrqqweY99fcFgHzHg9Xfw3k7bXPcJnkvzCHjRPEF7UmCQMgy1Etcs6UTzn8
+ 8Lzh11zSQlLHVvI9URbNnIZnGsr2MBBiA4iO223Tz2QmRfIOmh+7b9Y4+Gx6wJ1fw0Mt
+ 5KONdet4uVS3aTlpwrSDEOlt4u9VllBXalAu8TOL/zVOAAFK6kd2qq8H2eWE1PMg9pM+
+ /wog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUeYzD6DpZ9U9iq0l/+0hGZCJx4i9RfcsfpBozCYufXmysGO2ZpMeNrSHSqsNeoN0pKD/+uD9r9T+qlWQQxz6EtWVwfe8U=
+X-Gm-Message-State: AOJu0Yzwh+lRSBbPt+bqVS/EblIdHb8EOUtOR9h6ufQUTCbCH/35qHU0
+ Fli1rhob0Y7v6JYn80wYDJfYi/w1I7TPTEhrUkEXifLH0A/ZwEWg
+X-Google-Smtp-Source: AGHT+IFHfnZRfkbnHqv9BHu9/0fZpa4JW6LmC3d8Tun/uMGu7nYbYobP45lzWyCUxOpk4opvUQV0ww==
+X-Received: by 2002:ac2:5f63:0:b0:52c:a002:1afc with SMTP id
+ 2adb3069b0e04-52cdf7f66f2mr6331435e87.34.1719382537169; 
+ Tue, 25 Jun 2024 23:15:37 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:136:9c60:df8c:dbac:5023:d101?
+ ([2a01:e0a:136:9c60:df8c:dbac:5023:d101])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-424c823c2c1sm12493325e9.7.2024.06.25.23.15.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Jun 2024 23:15:36 -0700 (PDT)
+Message-ID: <0baa7fcd-0b86-4ce0-88c9-4954363c2616@gmail.com>
+Date: Wed, 26 Jun 2024 08:16:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
-To: "Luck, Tony" <tony.luck@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
- "Williams, Dan J" <dan.j.williams@intel.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
- "dave@stgolabs.net" <dave@stgolabs.net>, "Weiny, Ira" <ira.weiny@intel.com>,
- "Schofield, Alison" <alison.schofield@intel.com>,
- "Jiang, Dave" <dave.jiang@intel.com>,
- "Verma, Vishal L" <vishal.l.verma@intel.com>, Borislav Petkov
- <bp@alien8.de>, James Morse <james.morse@arm.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Robert Richter
- <rric@kernel.org>, "linux-edac@vger.kernel.org"
- <linux-edac@vger.kernel.org>, Miaohe Lin <linmiaohe@huawei.com>,
- Naoya Horiguchi <nao.horiguchi@gmail.com>,
- "linux-mm@kvack.org" <linux-mm@kvack.org>
-References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
- <20240620180239.00004d41@Huawei.com>
- <6675bf92116ed_57ac294a@dwillia2-xfh.jf.intel.com.notmuch>
- <20240621194506.000024aa@Huawei.com>
- <SJ1PR11MB6083837A8588894E49FEBC7BFCC92@SJ1PR11MB6083.namprd11.prod.outlook.com>
-In-Reply-To: <SJ1PR11MB6083837A8588894E49FEBC7BFCC92@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Subject: Re: [PATCH] hw/i386/intel_iommu: Block CFI when necessary
+To: Yuke Peng <pykfirst@gmail.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240625112819.862282-1-pykfirst@gmail.com>
+Content-Language: en-US
+From: cmd <clement.mathieudrif.etu@gmail.com>
+In-Reply-To: <20240625112819.862282-1-pykfirst@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28482.005
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28482.005
-X-TMASE-Result: 10--14.782900-10.000000
-X-TMASE-MatchedRID: bdIiGNtle6uPvrMjLFD6eKn9fPsu8s0a2q80vLACqaeqvcIF1TcLYPAF
- 43IXaj2gSY/hjDx7hppvUDqCNlsvKH+zsg6kp2C3Q0Xm0pWWLkroUwvpyt4rucg9ufahCGm1l2i
- SdQmYgPCf4Zlhm+r+lc5cp47XA8AiC9QTSuTOQRl+J3gtIe0gA8qspZV+lCSLdBaEtWosUzVYTF
- /5quaSLwftggnq5tKUMTii0wFdgxqOeQ6RXnGCFkX/j4QZJ10NajzNTFMlQCNtfzoljzPXO9F8e
- 0i2JFlZ371UTvxX45vRKmOlruuzzop+5WdOMDCgv8fLAX0P50B2ZYwNBqM6IlLvEapiw2T1hXAr
- +h4GfTAIZNHliKo/PSm+XCxBE3RsKgAlgjPhYpaOtWfhyZ77Dn0tCKdnhB581B0Hk1Q1KyIOsEC
- O9s+GHnQdJ7XfU86eOwBXM346/+z07YdcTiNsP7Uv9Q5rrJhWezfWWH34ZgZxRwXGk1PHIsR47n
- 50KUDY
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=207.54.90.48;
- envelope-from=ruansy.fnst@fujitsu.com; helo=esa2.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=clement.mathieudrif.etu@gmail.com; helo=mail-lf1-x135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,55 +99,115 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
-From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
 
-
-在 2024/6/22 4:44, Luck, Tony 写道:
->> So who actually cares about recovering poisoned volatile memory?
->> I'd like to understand more on how significant a use case this is.
->> Whilst I can conjecture that its an extreme case of wanting to avoid
->> loosing the ability to create 1GiB or larger pages due to poison
->> is that a real problem for anyone today?  Note this is just the case
->> where you've reached an actual uncorrectable error and probably
->> / possibly killed something, not the more common soft offlining
->> of memory due to correctable errors being detected.
-> 
-> I guess you really need a reply from someone with a data center
-> with thousands of machines, since that's where this question
-> may be important.
-> 
-> My humble opinion is that, outside of the huge page issue, nobody
-> should try to recover a poisoned page. Systems that can report
-> and recover from poison have tens, hundreds, or more GBytes
-> of memory. Dropping 4K pages will not have any measurable
-> impact on a system (even if there are hundreds of pages dropped).
-> 
-> There's no reliable way to determine whether the poisoned page
-> was due to some transient issue, or a permanent defect. Recovering
-> a poisoned page runs the risk that the poison will re-occur. Perhaps
-> next use of the page will be in some unrecoverable (kernel) context.
-> 
-> So recovery has some risk, but very little upside benefit.
-
-Since the hardware provides the instruction(CPU)/command(CXL) to clear 
-the poison, we could make the function work, at least as an optional 
-feature.  Then users could decide to use it or not after evaluating the 
-risk and benefit.
-
-I think doing recovery is an improvement step, and may need a lot of 
-discussion.  I'm not sure if we could reach a conclusion in this thread. 
-  Just hope more comments on the original problem (duplicate report) to 
-solve in this patch.
-
-
---
-Thanks,
-Ruan.
-
-> 
-> -Tony
+On 25/06/2024 13:28, Yuke Peng wrote:
+> According to Intel VT-d specification 5.1.4, CFI must be blocked when
+> Extended Interrupt Mode is enabled or Compatibility format interrupts
+> are disabled.
+>
+> Signed-off-by: Yuke Peng <pykfirst@gmail.com>
+> ---
+>   hw/i386/intel_iommu.c         | 28 ++++++++++++++++++++++++++++
+>   hw/i386/trace-events          |  1 +
+>   include/hw/i386/intel_iommu.h |  1 +
+>   3 files changed, 30 insertions(+)
+>
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index 5085a6fee3..dfa2f979e7 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -2410,6 +2410,22 @@ static void vtd_handle_gcmd_ire(IntelIOMMUState *s, bool en)
+>       }
+>   }
+>   
+> +/* Handle Compatibility Format Interrupts Enable/Disable */
+> +static void vtd_handle_gcmd_cfi(IntelIOMMUState *s, bool en)
+> +{
+> +    trace_vtd_cfi_enable(en);
+> +
+> +    if (en) {
+> +        s->cfi_enabled = true;
+> +        /* Ok - report back to driver */
+> +        vtd_set_clear_mask_long(s, DMAR_GSTS_REG, 0, VTD_GSTS_CFIS);
+> +    } else {
+> +        s->cfi_enabled = false;
+> +        /* Ok - report back to driver */
+> +        vtd_set_clear_mask_long(s, DMAR_GSTS_REG, VTD_GSTS_CFIS, 0);
+> +    }
+You have the same comment in both branches of the if statement, couldn't 
+we put it between 'trace' and 'if'?
+> +}
+> +
+>   /* Handle write to Global Command Register */
+>   static void vtd_handle_gcmd_write(IntelIOMMUState *s)
+>   {
+> @@ -2440,6 +2456,10 @@ static void vtd_handle_gcmd_write(IntelIOMMUState *s)
+>           /* Interrupt remap enable/disable */
+>           vtd_handle_gcmd_ire(s, val & VTD_GCMD_IRE);
+>       }
+> +    if (changed & VTD_GCMD_CFI) {
+> +        /* Compatibility format interrupts enable/disable */
+> +        vtd_handle_gcmd_cfi(s, val & VTD_GCMD_CFI);
+> +    }
+>   }
+>   
+>   /* Handle write to Context Command Register */
+> @@ -3304,6 +3324,7 @@ static const VMStateDescription vtd_vmstate = {
+>           VMSTATE_BOOL(dmar_enabled, IntelIOMMUState),
+>           VMSTATE_BOOL(qi_enabled, IntelIOMMUState),
+>           VMSTATE_BOOL(intr_enabled, IntelIOMMUState),
+> +        VMSTATE_BOOL(cfi_enabled, IntelIOMMUState),
+>           VMSTATE_BOOL(intr_eime, IntelIOMMUState),
+>           VMSTATE_END_OF_LIST()
+>       }
+> @@ -3525,6 +3546,12 @@ static int vtd_interrupt_remap_msi(IntelIOMMUState *iommu,
+>   
+>       /* This is compatible mode. */
+>       if (addr.addr.int_mode != VTD_IR_INT_FORMAT_REMAP) {
+> +        if (iommu->intr_eime || !iommu->cfi_enabled) {
+> +            if (do_fault) {
+> +                vtd_report_ir_fault(iommu, sid, VTD_FR_IR_REQ_COMPAT, 0);
+> +            }
+> +            return -EINVAL;
+> +        }
+>           memcpy(translated, origin, sizeof(*origin));
+>           goto out;
+>       }
+> @@ -3950,6 +3977,7 @@ static void vtd_init(IntelIOMMUState *s)
+>       s->root_scalable = false;
+>       s->dmar_enabled = false;
+>       s->intr_enabled = false;
+> +    s->cfi_enabled = false;
+>       s->iq_head = 0;
+>       s->iq_tail = 0;
+>       s->iq = 0;
+> diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+> index 53c02d7ac8..ffd87db65f 100644
+> --- a/hw/i386/trace-events
+> +++ b/hw/i386/trace-events
+> @@ -57,6 +57,7 @@ vtd_dmar_translate(uint8_t bus, uint8_t slot, uint8_t func, uint64_t iova, uint6
+>   vtd_dmar_enable(bool en) "enable %d"
+>   vtd_dmar_fault(uint16_t sid, int fault, uint64_t addr, bool is_write) "sid 0x%"PRIx16" fault %d addr 0x%"PRIx64" write %d"
+>   vtd_ir_enable(bool en) "enable %d"
+> +vtd_cfi_enable(bool en) "enable %d"
+>   vtd_ir_irte_get(int index, uint64_t lo, uint64_t hi) "index %d low 0x%"PRIx64" high 0x%"PRIx64
+>   vtd_ir_remap(int index, int tri, int vec, int deliver, uint32_t dest, int dest_mode) "index %d trigger %d vector %d deliver %d dest 0x%"PRIx32" mode %d"
+>   vtd_ir_remap_type(const char *type) "%s"
+> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+> index 7fa0a695c8..38e20d0f2c 100644
+> --- a/include/hw/i386/intel_iommu.h
+> +++ b/include/hw/i386/intel_iommu.h
+> @@ -294,6 +294,7 @@ struct IntelIOMMUState {
+>   
+>       /* interrupt remapping */
+>       bool intr_enabled;              /* Whether guest enabled IR */
+> +    bool cfi_enabled;               /* Whether CFI is enabled */
+>       dma_addr_t intr_root;           /* Interrupt remapping table pointer */
+>       uint32_t intr_size;             /* Number of IR table entries */
+>       bool intr_eime;                 /* Extended interrupt mode enabled */
+LGTM
 
