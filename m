@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466F7C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7C8C30653
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:09:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMQV7-0006RV-FG; Wed, 26 Jun 2024 07:07:45 -0400
+	id 1sMQUK-0005Kr-2A; Wed, 26 Jun 2024 07:06:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQUt-0005vY-GL
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:07:33 -0400
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ id 1sMQUI-0005Jy-HM
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:06:54 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQUe-0004k2-9e
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:07:31 -0400
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-5c21a177affso637898eaf.2
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:07:15 -0700 (PDT)
+ id 1sMQUG-0004fX-NG
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:06:53 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-70683d96d0eso2313305b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:06:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719400035; x=1720004835;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719400011; x=1720004811;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9ZmBpokay/lsP22q1IUevpTwDSp5jcANCIzAYF/y6M8=;
- b=Kasg5Bb6Tt1MkaOqRSR7GYkmqClZjSFA1Ek09+duFTpFHx8U/caOqF3wwwDCHi8Cs6
- MvaXjdmCZvQxjkJYrcpMIKAt55JWqv8oiaL0ZMXyZe+hUm+F5jCHPKk5flUDlBcLivSW
- af1/socvMxka6Es9Smlf6QBhQog53apInvYwoGj96q4gLIEXAGBClT0r2jc3LcW0kH5k
- r4R03sL57xjHxPjRRPTz4sklJYVS7Rvb7ih8YnDw8yHIBKQJmD1/7Z3XqgcbfdWnMnQY
- IDO7nKvObSJzw8s9irW7dVvNRKNrqQWqmQpm7rbQlaAd6bQoZ94sk80fYzMRpy3X1JuV
- /x+A==
+ :reply-to; bh=iRIsabjOCp7YSjFwcV1tRdeNsvY9o6uLKWp2oClGRk0=;
+ b=nquZsbtDjKaqBReVXGUBgvoJcu7jMPDMavaSDJKxdOyHK79I8gDeSfpUthJAlCMwNr
+ a3eBmMMiDrNqKZn0UPF2d0ZV3lKBlIjJtPBe8/mcR8MDEm5piiyoIRx98FaK0l77tGtc
+ moxNYjF9Eko3w3oX0Qm97VpXUwJ8cbMpgasTTyHh5Dy8CdjgdSZHkzT7bVKUXLkT0a/N
+ GFPOIJOvwXRlHU+AYyzhZ9IgNDEcItmSI5Kz4kp/D/6B7hG+Rx8eRqTtO9ooy2u6Pdv2
+ mot+HTd8dRrVyEYGAMD5HaW4v9ygPsyfAzmgiGTZx74Uk6pBGk8PzOkqiJGqqvkCWTZR
+ f1gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719400035; x=1720004835;
+ d=1e100.net; s=20230601; t=1719400011; x=1720004811;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9ZmBpokay/lsP22q1IUevpTwDSp5jcANCIzAYF/y6M8=;
- b=s8+tAAdtssglbgLgGe3auF+XD8sepJ8ioSNrzZ8SnvUsqhd81/yNF+y82ny7aVOvTA
- kWWpbrCF+IkzPIGqei5b+KktUj7eY4OPXE9oqa4G+V13blRqm3XNwLveliqcpk9RtkN5
- T+rDgyyzeZRTMx/NOq8H2ItiV9y/I4fx2Yx+bVa7Nb/LKGIYZsR2NUcr1WAnsR7Iqi4L
- 6RaVQEb2MEjds/O/7y/dJlBQb9aaNqzmnYQQjrWIlyYC4tnooLwehLnKCgYmIElPwJU0
- OBX6jFphys9hMJGhD/ovkiVjGLXhwBGh8ktIBiErg+n7fSgC8aEpbXlvwUbDvSMoy9UQ
- lsaQ==
-X-Gm-Message-State: AOJu0Yz7QScGomP5E2AUGdhgLhBTo9wLxpJLM1/7LAjCdfhlHjDCDvjQ
- B9xi/YNEGckDfxE8Yn2mLEgLB47uzAjoXi8BbcRm+SplXAOhCUY8Y1tftqKUdEo=
-X-Google-Smtp-Source: AGHT+IGr7mhUQc/kwzoC2SIj/Sh4EbH/tfTc7GcCgH2CK8pzXdS0VBUK4r8QMhdZTjnrV0Z6lwmRkw==
-X-Received: by 2002:a05:6358:2824:b0:1a1:cb05:243c with SMTP id
- e5c5f4694b2df-1a23c1b2289mr1333891255d.25.1719400034980; 
- Wed, 26 Jun 2024 04:07:14 -0700 (PDT)
+ bh=iRIsabjOCp7YSjFwcV1tRdeNsvY9o6uLKWp2oClGRk0=;
+ b=IMxHje8yZPjdRg6FD6KOVYZzFgwQUDQHSZI3FJ/rtWrDiUJDHuR4CaXQJpK86dOoj/
+ 9I7EM1L2Ij8o9pyJWjDMXqq57dwKlhh6HMhfrboQS9MtcYfyW0LNMNMs+GUz60YA/aaH
+ YyI5D2XEkTTTpTvLBHGFL3ZIHsGZ3evW7er4QXFQufCz6wBFDxlCo9zs6wv9m/4eWLh5
+ 4Qsk5VLbAOGzxuLoyHkbjaMKB8WVxKQ4pcFqgmkULnDhLQiCzg6mO3056hJj/cyE/Y7f
+ LF6++jT+F3Uza1GdUO/9eK5ySWkhL50aeB0gEmDKWTOS8fdthHJt19w7JqwvvjOmoBON
+ IUzg==
+X-Gm-Message-State: AOJu0Yx7Fo3w0wqINZusqEs4EEjkLQAw5CcNNG7x5yuiRVd68DobMob0
+ uJw/onosIPt55gugmtpNGrrnoY/VTTcPAFvcFDfJx/dWs8Ig2Ckf6oK75GdmrqQ=
+X-Google-Smtp-Source: AGHT+IH4urPQ6j+xa/HuI9tGhGaIO4IdTUEaZsjK099SMnteGDVmWKgkI9WZGwDiutNH4K+I8urtaA==
+X-Received: by 2002:a05:6a00:4ba6:b0:706:61d5:2792 with SMTP id
+ d2e1a72fcca58-7066e52a5bfmr8524764b3a.8.1719400011404; 
+ Wed, 26 Jun 2024 04:06:51 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-71e1314dc83sm4678927a12.56.2024.06.26.04.07.10
+ d2e1a72fcca58-7067d11a437sm6020153b3a.118.2024.06.26.04.06.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 04:07:14 -0700 (PDT)
+ Wed, 26 Jun 2024 04:06:50 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 26 Jun 2024 20:06:29 +0900
-Subject: [PATCH 06/14] hw/virtio: Free vqs before vhost_dev_cleanup()
+Date: Wed, 26 Jun 2024 20:06:25 +0900
+Subject: [PATCH 02/14] hw/ide: Free macio-ide IRQs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240626-san-v1-6-f3cc42302189@daynix.com>
+Message-Id: <20240626-san-v1-2-f3cc42302189@daynix.com>
 References: <20240626-san-v1-0-f3cc42302189@daynix.com>
 In-Reply-To: <20240626-san-v1-0-f3cc42302189@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
@@ -84,8 +84,8 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc2f.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::431;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -111,29 +111,36 @@ This suppresses LeakSanitizer warnings.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/virtio/vhost-user-base.c | 2 ++
- 1 file changed, 2 insertions(+)
+ hw/ide/macio.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-index a83167191ee6..124ef536206f 100644
---- a/hw/virtio/vhost-user-base.c
-+++ b/hw/virtio/vhost-user-base.c
-@@ -223,6 +223,7 @@ static void vub_disconnect(DeviceState *dev)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostUserBase *vub = VHOST_USER_BASE(vdev);
-+    struct vhost_virtqueue *vhost_vqs = vub->vhost_dev.vqs;
+diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+index aca90d04f0e8..d8fbc1a17ba6 100644
+--- a/hw/ide/macio.c
++++ b/hw/ide/macio.c
+@@ -464,6 +464,14 @@ static void macio_ide_initfn(Object *obj)
+                              qdev_prop_allow_set_link_before_realize, 0);
+ }
  
-     if (!vub->connected) {
-         return;
-@@ -231,6 +232,7 @@ static void vub_disconnect(DeviceState *dev)
++static void macio_ide_finalize(Object *obj)
++{
++    MACIOIDEState *s = MACIO_IDE(obj);
++
++    qemu_free_irq(s->dma_irq);
++    qemu_free_irq(s->ide_irq);
++}
++
+ static Property macio_ide_properties[] = {
+     DEFINE_PROP_UINT32("channel", MACIOIDEState, channel, 0),
+     DEFINE_PROP_UINT32("addr", MACIOIDEState, addr, -1),
+@@ -486,6 +494,7 @@ static const TypeInfo macio_ide_type_info = {
+     .parent = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(MACIOIDEState),
+     .instance_init = macio_ide_initfn,
++    .instance_finalize = macio_ide_finalize,
+     .class_init = macio_ide_class_init,
+ };
  
-     vub_stop(vdev);
-     vhost_dev_cleanup(&vub->vhost_dev);
-+    g_free(vhost_vqs);
- 
-     /* Re-instate the event handler for new connections */
-     qemu_chr_fe_set_handlers(&vub->chardev,
 
 -- 
 2.45.2
