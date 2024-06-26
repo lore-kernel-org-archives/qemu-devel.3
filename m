@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A017C30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:08:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B11C30653
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:08:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMQVE-0007Bd-L7; Wed, 26 Jun 2024 07:07:52 -0400
+	id 1sMQUP-0005R4-Fz; Wed, 26 Jun 2024 07:07:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQVC-0006wT-NL
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:07:50 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1sMQUO-0005OP-3H
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:07:00 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQUx-0004rT-7y
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:07:50 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-71884eda768so3148265a12.1
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:07:33 -0700 (PDT)
+ id 1sMQUM-0004gS-Hx
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:06:59 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1fa2ea1c443so29122345ad.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:06:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719400052; x=1720004852;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719400017; x=1720004817;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Yvl4pAdGzIA/y7zkDQtF9iZK7ptxPpuy1nIWlUirby4=;
- b=RaX/RR0RVcL47N6gFfw+ZCUD20pZ5aYjajuvAQCLLup4OzYcfm7ziRV6vXpR4yL0EI
- DsM2KzHyFrpfpHHPAV6/5XgUUbciw6PhXKEJn1pe5nfVoFthpw0mfM9mPJxq1NDZhM51
- a4yMRmyZ3wfIp1AIW/S0KBl8AdlZXoQrLVrPFsA6jcjhHQc1bnP0Urqc2/vdi+eOAQ9C
- D/iZQa2/+3wT+49Hpk87Q7iiSb+yRws9X7xDQBMqv2XS5WOsBQJRl2Z+3tdGwxo0jsKO
- xNESN9n5BeCJ8Gv7E6zZ8yLgIM1E1Qmuk4N94bUSfEqQRW3JBmlK8tPY5FCK0m62941Y
- gjag==
+ :reply-to; bh=NdtXuYtoYpM+68cWqs8hQd4tffE/iSVor/TSMG9jMpE=;
+ b=PPauVM+UgMUALgAr2fPV8PkAPs0l5wP4h749VNITr2FVNnIZj9Vjp9bDeD5Enqgi1e
+ zKzqgow6MU7nCBGtWauC0qWWuCCNbC4EaAAJQpCLy3P4Rplcfn+h5KWDU46JbmJfG5JC
+ HJHjNXi26vgwn0ryQpxYpnFNnZVA0ndESeppXClx8QKUqRk1h2n/FUM1SeiUAKSYk3IL
+ 1ORmS4qWGyTolpD7fUc79OP7QiWEPsFG9stszDntRN8lVHu5kjYpIpAvkuVNXJCAKHmK
+ ABGk4R5CH4QR4ZIIcFd1aFBDiucay75pDnt8t70Ft7+yhjCjiy5SAQZrbhFU2Gi/emDR
+ JITw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719400052; x=1720004852;
+ d=1e100.net; s=20230601; t=1719400017; x=1720004817;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Yvl4pAdGzIA/y7zkDQtF9iZK7ptxPpuy1nIWlUirby4=;
- b=qAXb5NoekInFXwnCIzxEXoNOIkX3QYMdMpX2laVfIXWs0xswZ75q07FOLhKh9tBK8O
- 2IXb59lyHT0B4Q5YFLbyYGs9Q5YMkNGsxzvMDq5Wr0/HxWg3z5vO/thLnhae4et5Vh8N
- oJotljoo6zNHEA43YnUd5likB6h0zwhDHGa71JUbqbw+SJHOCZrek7gnKUZks9DMGxnV
- 7Jzhgh4HuSlHm09HSHSES22MPSosAEqUCitGZID6erI04rEHGz6v8qCYTjCbhsNnAMB7
- NffrQoNWtudzNEmHkOZZ6exlwim8RMaWbIF8UQ1Fmt23s68hwLWRDrzabywvjYjeXI8n
- HrjQ==
-X-Gm-Message-State: AOJu0YxmW+C05MilVwiShVnXncjRdLQJPb1pdnyp7AGTCXIxZ+NAFF1C
- Unv6+WpUfdXKmL198k0idmmNaDqckajdysjC2wqFY7Ub+SZa37uArNf8fZKPh7o=
-X-Google-Smtp-Source: AGHT+IGNy/dg4U98Mw6L58Fmy/xCAk1HTRjbu/c/K6qeFGwdBgIn6n/Pydp7aNAArHz0d6fsSKBO2g==
-X-Received: by 2002:a17:90a:c28c:b0:2c7:cf90:bd13 with SMTP id
- 98e67ed59e1d1-2c8613d2058mr8807637a91.26.1719400052622; 
- Wed, 26 Jun 2024 04:07:32 -0700 (PDT)
+ bh=NdtXuYtoYpM+68cWqs8hQd4tffE/iSVor/TSMG9jMpE=;
+ b=AQc6QXlGYToUtD4IQrchzh3jK8ghgOWbEzm4yroj6j1neO2jLFT6cIbQFh8JH1Q5QG
+ vbS8diu3oSZU7pr9xCm4U3XPOmFrULumk/Gn7yckA14YCzHT7b5TV/d8GXfhtGFNqGR+
+ CCDRYZ+QduEwfCreGkPksSy6Uxak0XWkrcNxq7EbMruDlTjp1ictuLodlba0sJGdwYsN
+ vhlotoEwQM7RhImmxTwX2BB9mdym33rp2otpXKIceGXq55OnzyivhCQY6hxDXNZb/zvK
+ yxg3D0IEEJmGdEVowl3XedCNGsYsVXhlSpjEoexNSHxf8h/+aZ1u/BeS0HtPja+GxwGt
+ IFfQ==
+X-Gm-Message-State: AOJu0YweL/YTNwAtsG3SJUcF7+Imdfu8Tl+o+FOCQ/kiEMZxNmDVhT9C
+ SWk2yItSdbBcf1dB6Yak5HVAq39xUdsWbmpu8BrfS61vGsgI/MwrXXM/XNBDa/o=
+X-Google-Smtp-Source: AGHT+IFg1T+vqFnUee178oY9EUIeMhokug+RTUydh6dLIMpcg1X+lIRMwce+VWX5z7BcMoNNVng/8A==
+X-Received: by 2002:a17:902:ea01:b0:1f7:3a5b:2f0 with SMTP id
+ d9443c01a7336-1fa23ef7803mr126640085ad.44.1719400017213; 
+ Wed, 26 Jun 2024 04:06:57 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2c8d81d2a9dsm1370410a91.54.2024.06.26.04.07.28
+ d9443c01a7336-1fa2ac93ad8sm62979925ad.266.2024.06.26.04.06.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 04:07:32 -0700 (PDT)
+ Wed, 26 Jun 2024 04:06:56 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 26 Jun 2024 20:06:32 +0900
-Subject: [PATCH 09/14] tests/qtest: Use qtest_add_data_func_full()
+Date: Wed, 26 Jun 2024 20:06:26 +0900
+Subject: [PATCH 03/14] hw/isa/vt82c686: Free irqs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240626-san-v1-9-f3cc42302189@daynix.com>
+Message-Id: <20240626-san-v1-3-f3cc42302189@daynix.com>
 References: <20240626-san-v1-0-f3cc42302189@daynix.com>
 In-Reply-To: <20240626-san-v1-0-f3cc42302189@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
@@ -84,14 +84,14 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::536;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x536.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::634;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_NONE=0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,51 +107,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A test function may not be executed depending on the test command line
-so it is wrong to free data with a test function. Use
-qtest_add_data_func_full() to register a function to free data.
+This suppresses LeakSanitizer warnings.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- tests/qtest/device-introspect-test.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ hw/isa/vt82c686.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/device-introspect-test.c b/tests/qtest/device-introspect-test.c
-index 5b0ffe43f5f4..587da59623dc 100644
---- a/tests/qtest/device-introspect-test.c
-+++ b/tests/qtest/device-introspect-test.c
-@@ -266,7 +266,6 @@ static void test_device_intro_concrete(const void *args)
+diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+index 8582ac0322eb..189b487f1d22 100644
+--- a/hw/isa/vt82c686.c
++++ b/hw/isa/vt82c686.c
+@@ -721,7 +721,6 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
  
-     qobject_unref(types);
-     qtest_quit(qts);
--    g_free((void *)args);
- }
+     qdev_init_gpio_out(dev, &s->cpu_intr, 1);
+     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
+-    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
+     isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
+                           errp);
  
- static void test_abstract_interfaces(void)
-@@ -310,12 +309,12 @@ static void add_machine_test_case(const char *mname)
- 
-     path = g_strdup_printf("device/introspect/concrete/defaults/%s", mname);
-     args = g_strdup_printf("-M %s", mname);
--    qtest_add_data_func(path, args, test_device_intro_concrete);
-+    qtest_add_data_func_full(path, args, test_device_intro_concrete, g_free);
-     g_free(path);
- 
-     path = g_strdup_printf("device/introspect/concrete/nodefaults/%s", mname);
-     args = g_strdup_printf("-nodefaults -M %s", mname);
--    qtest_add_data_func(path, args, test_device_intro_concrete);
-+    qtest_add_data_func_full(path, args, test_device_intro_concrete, g_free);
-     g_free(path);
- }
- 
-@@ -330,7 +329,7 @@ int main(int argc, char **argv)
-     qtest_add_func("device/introspect/abstract-interfaces", test_abstract_interfaces);
-     if (g_test_quick()) {
-         qtest_add_data_func("device/introspect/concrete/defaults/none",
--                            g_strdup(common_args), test_device_intro_concrete);
-+                            common_args, test_device_intro_concrete);
-     } else {
-         qtest_cb_for_every_machine(add_machine_test_case, true);
+@@ -729,7 +728,9 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
+         return;
      }
+ 
++    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
+     s->isa_irqs_in = i8259_init(isa_bus, *isa_irq);
++    qemu_free_irqs(isa_irq, 1);
+     isa_bus_register_input_irqs(isa_bus, s->isa_irqs_in);
+     i8254_pit_init(isa_bus, 0x40, 0, NULL);
+     i8257_dma_init(OBJECT(d), isa_bus, 0);
 
 -- 
 2.45.2
