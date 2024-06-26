@@ -4,77 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FEFBC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:00:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D064C30653
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMRJb-0003lE-NA; Wed, 26 Jun 2024 07:59:55 -0400
+	id 1sMRLt-0005Gp-Q8; Wed, 26 Jun 2024 08:02:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRJa-0003kq-55
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:59:54 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRLs-0005GT-H1
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:02:16 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRJY-0008RG-JH
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:59:53 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42561c16ffeso581075e9.3
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:59:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRLq-0000xD-Sj
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:02:16 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-424adaa6ceeso5028115e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 05:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719403190; x=1720007990; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719403333; x=1720008133; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7wHcWilqVSRZPvFxkj06uhy4pkzct8uXR1y7Br2IGyo=;
- b=eiXqcgmAG1NTHiH6d9tUq228DWe1DQu+eTbGxf8y8XEsoSEeqPfvBiAdYPUwKykKtO
- faUHleJf8+rzkioLd9HnvEtCErY/3QmiN9tuK2FE60nuTCN5TywNlZbU9Xm74oZRfLLQ
- MAPGduEOcBoGbYO4AiCojJm6OJRrT0xs+M5C9F9oxs2g4EtPoe5x6OYXcLVoMrzkNCR/
- xV2P8VL6SVoQ46W+iuYaRbgRdbyXhwrRPi5Zvlg9XRXJJzg9fTd6RsgPu+fE51l13YOE
- 3NFe7vXsTWFRgVcD9bheqcVcWtB1OE/vC/nq2VgeUtfaOXoyiCfZrPCexTyizWUw3x2g
- PHxA==
+ bh=ltow7ytQdvOPrZqOjowQbu5j0rIIyg2tUaYK4AdJlxo=;
+ b=p/VW3THmmRti62nsHT+/olW3Phtxh5f3WhLJMCgMzHxcnDZpnbH0xEaFA7/rtgh5aH
+ r80ZeyhgY0EaVaz5wnKKLk5hysRPcfL50erBR9VJ2HDyuRoa7pJ30ybev/rlQDhe+hTn
+ lbgtBiYdFml1d54bHD8jOF0DXvtrzZXPDSEsbWYzv05V2802f4sMKTYprBIJCspl78Qm
+ Upw3kLfL6+YTTmZ7tEvHwjreSd/7WWoviVUs72yv+c0IH1ZnNmu0wXX9QyBUqDiGKQWT
+ 6py/UxrgzcUolEw6EGUgZDxwmDOdm+mzZrO0j4iO2SR6AqOP94eZ1yz16knOwkSrzvn7
+ DWpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719403190; x=1720007990;
+ d=1e100.net; s=20230601; t=1719403333; x=1720008133;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7wHcWilqVSRZPvFxkj06uhy4pkzct8uXR1y7Br2IGyo=;
- b=n8wBKcM6S1ZfLek3HTULB9gYNxLa84mU/k2HO/m8gC/LdUyrCBl0mmLYmmE0FK4uKE
- FgqyuSjChWTseMR9rK0YDETMnYOCY2T+l5R4cW03lyIuTrRJDMCnmHrFLmxX9EAWTCpV
- 0NV2N7v8UhRYpY+UZOePbwP0HYiYT4i0v91DjHepWU/F7WtzdDGUVGeneBFqw8typRos
- iEVF/tcu77tFLrXLy7JDgkz+ZLnfW0/JEJr1chLvOMqXtGAdrlhWcGEHITXsY+9mHgOY
- 2Xb5qz9E+ri85fO3EkFfEZPJPbmbw0hlKDWZaFEH31iPlPmIccF0ALnVUtsrdyuTfLZi
- wQfw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlZDwLYuiFDi69IAVjRxRDi8TAEl31Y1RlZKWynxmblfbskS3gB9l8IIXmgpDXg7DjOWBTyxNDMLVwrw/P0VSIuIpGeFA=
-X-Gm-Message-State: AOJu0Yyme5wdfS0ayQaqh4Ocwg2Pd760T2FEMcXjCNJ+28eP2B4zyXbA
- IjRp+TVvMcet22UfW6oyI6vCeGd+lswbuJdGDCV16wqeIOig+ufGyRDXqzGDGbw=
-X-Google-Smtp-Source: AGHT+IFbkM6EGc89VPRfeNSwpIH8kVr6dyOl5JZQcU4Wae212EsXiuzf+/Cll3sS9WtLWGn7X87GvQ==
-X-Received: by 2002:adf:f48c:0:b0:35f:1753:7159 with SMTP id
- ffacd0b85a97d-366e948e6ccmr7028384f8f.19.1719403190135; 
- Wed, 26 Jun 2024 04:59:50 -0700 (PDT)
+ bh=ltow7ytQdvOPrZqOjowQbu5j0rIIyg2tUaYK4AdJlxo=;
+ b=Esbr/oenHWzzhjjnsg2jzazLCE/lSqhDMDQQUomvvfp7pjayNtyPKUrH1+ql+Hoi/q
+ HUdbtvyTOtX7C8zrTaRYRRMV0VhUS56D4pXw6yyWpyDtGz7Dr5KwioQ9e6eanBHRZLsO
+ CN0tb3hm0hFbeBBgidIGSzIxiKQwaQN/qy2BYUnRTt4Buy5j42tPar+UUFGfZCOS4OQq
+ bZPCX0wjb1JPkdYci/7aZtgSUnRyCLhnI11kDcz6Vp2+1mpnxTCn+2b4As8Zo2O1amVf
+ 4GmAYahF1NbM69wnRxiNayBAX0hX3gWcsyBtR/vEGQVGo0+N6Hq/aiej+AT36O3r4QNC
+ q27Q==
+X-Gm-Message-State: AOJu0Yz6W9/X0xzKbVjlqFWLO2FL9YIHp6gHOSZE/S/M7Y0Gu719oI0T
+ MvxkJMUAsXtsMABF4GnHaL0kQ7rsNYOTcPvmPYM6TbJ/32iSUcCCYxllRwED8oo=
+X-Google-Smtp-Source: AGHT+IGfOsHlBDCv90QPKZ0gnXF7c2MpiksUy0G3OXcIhw9a+8cWMyqI1wcf/8hX+LGD6tYJpXDYNg==
+X-Received: by 2002:a5d:5591:0:b0:362:2111:4816 with SMTP id
+ ffacd0b85a97d-366e95e7178mr7046195f8f.55.1719403332936; 
+ Wed, 26 Jun 2024 05:02:12 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.234])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367011c4600sm4320196f8f.61.2024.06.26.04.59.49
+ ffacd0b85a97d-36638f858fbsm15560449f8f.65.2024.06.26.05.02.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 04:59:49 -0700 (PDT)
-Message-ID: <6be35719-6dc0-4e3a-b0db-3614f0c028b0@linaro.org>
-Date: Wed, 26 Jun 2024 13:59:47 +0200
+ Wed, 26 Jun 2024 05:02:12 -0700 (PDT)
+Message-ID: <10d140df-1c80-457e-be6d-9b6bc299b056@linaro.org>
+Date: Wed, 26 Jun 2024 14:02:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] tests/tcg/aarch64: Explicitly specify register width
+Subject: Re: [PATCH 04/14] spapr: Free stdout path
 To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20240626-tcg-v1-0-0bad656307d8@daynix.com>
- <20240626-tcg-v1-3-0bad656307d8@daynix.com>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
+References: <20240626-san-v1-0-f3cc42302189@daynix.com>
+ <20240626-san-v1-4-f3cc42302189@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240626-tcg-v1-3-0bad656307d8@daynix.com>
+In-Reply-To: <20240626-san-v1-4-f3cc42302189@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,16 +107,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/6/24 13:26, Akihiko Odaki wrote:
-> clang version 18.1.6 assumes a register is 64-bit by default and
-> complains if a 32-bit value is given. Explicitly specify register width
-> when passing a 32-bit value.
+On 26/6/24 13:06, Akihiko Odaki wrote:
+> This suppresses LeakSanitizer warnings.
 > 
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->   tests/tcg/aarch64/bti-1.c | 6 +++---
->   tests/tcg/aarch64/bti-3.c | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
+>   hw/ppc/spapr_vof.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
