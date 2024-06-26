@@ -4,143 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7667EC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 02:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEA05C3064D
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 02:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMGaf-00032T-W7; Tue, 25 Jun 2024 20:32:54 -0400
-Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
+	id 1sMIhP-00037m-Ih; Tue, 25 Jun 2024 22:47:55 -0400
+Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sMGaP-0002ym-PW
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 20:32:41 -0400
-Received: from mail-dm6nam12on20601.outbound.protection.outlook.com
- ([2a01:111:f403:2417::601]
- helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1sMIhM-00034v-PI
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:47:52 -0400
+Received: from mx2.zhaoxin.com ([203.110.167.99])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sMGZR-0005AS-Rf
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 20:32:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AwinHG9r4rMTlQxLRH8Sm8vskCZmMm4jLFhL/1iKVI15q3Jjvk/+V/GKr4OMGiOSfBkNJ0StZPzcw6WShQbbBa1P8NknEI4+TU4D6m4uM4L0I+o+Nr3vm2um82Y3BGetGyO/BMUrgP4P5Rgcy+FZsnFoXJ4CdZ++IIT8SlSOmgqVY8VrcwwhQICJy94BO/3ZfhekqNGPCUBXMVMktXytANv8UjzjE0qxTWHJ+sSUFq/Rh1myAhWeWVHiXjpA/5V2Dzq/z99Q4XfxE/rR3e7X8prTsKdggev021eEsRkpiEVGk55jpGgUsw22+QQKkp2ciomfnXJGfuUe7Vz120mR+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=st6cXlXTtG4KWRzuy7Kgk9SpM3l4nRJKRVnsNJCtIGs=;
- b=kgSpCjH0pusS3lw3AfxGladS1eKmOfbO+RNuqsIdV5rrTLeHeTP+2NK1sub1l1gLS0pQkIkY6/DtxcQu43gvr5NeGA3bMR8rYrybUSMhDeihWNOgjbuYBszIpco3hAzyp2MKIIWiMUH7w+WGFeJUhjUsJkopn898fVf256U8BUK75pLGKJ7wdiDGijqO+cj6HP07EmPMWYLi3iFWKIdDoPEjb8az3AVWM9SfpyUzcMrAS6NfGd1NboWdrHOIMfgsHYTfHIHe+asqtZ86I8dv7Ka3LAzK68HnIy+ZgQ4GcV7hJ+0XasstL3E0zOyobkyzH5sBl4K51+CmjECNl2c8lQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=linaro.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=st6cXlXTtG4KWRzuy7Kgk9SpM3l4nRJKRVnsNJCtIGs=;
- b=Tv4PpvP6ahFkQSMl7YXS34j50mQ+f7J3AdFf0k0a/h8cfnT7aKkXUkhLFFZdxaiozVINyXfJhhMFDsPYteVkOKAktSVO92lP2xQj3AWFQ/56kWdSbZqyeRjZw3rwcDFKJ84BHymWGxyqRF53BL7XYw15NgxDDu/aDTFF+DWMtniL713RnBS7V19Ij86fSpEnW+4h1f477JjQwmMQKu6dFM1CUI7gMq8DGm8n2+W6ZbaeS5z2fsM+muj6bF6VssjohKv4vbVqiaesTytJh7BQV2YHkEpxLhR2HjWgjMa5mfKStpjJFAxlxj5oNdbIh8abFInfCwt+zYBLYXvA2+YkvQ==
-Received: from BN9PR03CA0949.namprd03.prod.outlook.com (2603:10b6:408:108::24)
- by IA1PR12MB7541.namprd12.prod.outlook.com (2603:10b6:208:42f::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.30; Wed, 26 Jun
- 2024 00:29:40 +0000
-Received: from BN3PEPF0000B075.namprd04.prod.outlook.com
- (2603:10b6:408:108:cafe::c5) by BN9PR03CA0949.outlook.office365.com
- (2603:10b6:408:108::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.38 via Frontend
- Transport; Wed, 26 Jun 2024 00:29:40 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- BN3PEPF0000B075.mail.protection.outlook.com (10.167.243.120) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7677.15 via Frontend Transport; Wed, 26 Jun 2024 00:29:39 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 25 Jun
- 2024 17:29:30 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 25 Jun 2024 17:29:30 -0700
-Received: from Asurada-Nvidia.nvidia.com (10.127.8.10) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server id 15.2.1544.4 via Frontend
- Transport; Tue, 25 Jun 2024 17:29:29 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: <peter.maydell@linaro.org>, <shannon.zhaosl@gmail.com>, <mst@redhat.com>, 
- <imammedo@redhat.com>, <anisinha@redhat.com>, <eric.auger@redhat.com>,
- <peterx@redhat.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <jgg@nvidia.com>,
- <shameerali.kolothum.thodi@huawei.com>, <jasowang@redhat.com>
-Subject: [PATCH RFCv1 07/10] hw/arm/virt: Bypass iommu for default PCI bus
-Date: Tue, 25 Jun 2024 17:28:34 -0700
-Message-ID: <27c5765e7a945de1c10269f05ca3347b5d62eedb.1719361174.git.nicolinc@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1719361174.git.nicolinc@nvidia.com>
-References: <cover.1719361174.git.nicolinc@nvidia.com>
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1sMIhK-0002ZF-B4
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:47:52 -0400
+X-ASG-Debug-ID: 1719370055-1eb14e2e5ebbd40001-jgbH7p
+Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
+ mx2.zhaoxin.com with ESMTP id uyWzLZiY1u5x9S5H (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Wed, 26 Jun 2024 10:47:35 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from zxbjmbx1.zhaoxin.com (10.29.252.163) by ZXSHMBX3.zhaoxin.com
+ (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 26 Jun
+ 2024 10:47:35 +0800
+Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 26 Jun
+ 2024 10:47:34 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Message-ID: <d4c0dae5-b9d5-4deb-b300-78492ab11ed8@zhaoxin.com>
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.66.62
+Date: Tue, 25 Jun 2024 22:47:33 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] Add support for Zhaoxin Yongfeng CPU model and other
+ improvements
+To: Zhao Liu <zhao1.liu@intel.com>
+X-ASG-Orig-Subj: Re: [PATCH 0/4] Add support for Zhaoxin Yongfeng CPU model
+ and other improvements
+CC: <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>,
+ <cobechen@zhaoxin.com>, <rockcui@zhaoxin.com>, <louisqi@zhaoxin.com>
+References: <20240625091905.1325205-1-ewanhai-oc@zhaoxin.com>
+ <ZnrUt0/5CZ2Ww45e@intel.com>
+Content-Language: en-US
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+In-Reply-To: <ZnrUt0/5CZ2Ww45e@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B075:EE_|IA1PR12MB7541:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6453cc0c-adfa-4dab-a3e4-08dc9577111c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230038|36860700011|376012|7416012|1800799022|82310400024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?C8onOuZJcVof3n1G/tZBkqCJMvQgpMjjfp7FIQRJ7wGK8HRFqk7eXLE5fPCu?=
- =?us-ascii?Q?gKZAC4daPDnX0tIiRqru8pHjyq+WtV5X2DMapd90QreDmIWMErGM+XD1fLA9?=
- =?us-ascii?Q?F4iee9rfddq3ryZoiIPW+FdPWVW4X5xNnzWaOdIBTzs2idYkI+tM7go6QmqR?=
- =?us-ascii?Q?dz9W+cZt9kXsJMwApqAVDCBK632RdPqJtrY7Flxbx+dU2ASjKtj1QuHvdX71?=
- =?us-ascii?Q?FSr/uUkVlAM7Fz0tvuiVnCResHdh8rkoMrCF75j/zhQ2kdXDaApnmS+n8CSP?=
- =?us-ascii?Q?WZOWkKwy9UxH2VFtanoQ8u3yBLjqfmB5VQbwW0NeA4ColQXzOxgPLAYqa3nY?=
- =?us-ascii?Q?DAB4ScckUWtuw0Ow8SY6txCahRtYgPyqN6NXrrIpEKsZNAeNBBtF1W5viKg1?=
- =?us-ascii?Q?aWjhcW9lTiwOCXjUICfjD3xvsgzKlb70Ms83gsWMymuowIKRwgvjkeGqAZYC?=
- =?us-ascii?Q?/Wpd3En0efJ7Qfm+zjTZfZRFsyBJkqrbj74AZAE0rv3dKLL3x5j/NNmWMC6S?=
- =?us-ascii?Q?RI/qSqIHSqOwVmwgGEprJ0VNs9IJCrrPQR+ju67xVlNZkF0dH/w0meX5vONZ?=
- =?us-ascii?Q?44UHClVcXOeO3WUj7y6Mi1AlSJFfgCR4sFTwhxKYIfPS71dfAQ007g3+beZB?=
- =?us-ascii?Q?cBYZEHGEzenk9Mp/4E34IcABT37QelCN7VG32l4kIe7vtaQ53G3f06UQNkqg?=
- =?us-ascii?Q?1NXM1iOuZYdwkI6wJUAGSmnHZgn/tt6M2JskbHJ12yMwutsRIId15H2cP1qt?=
- =?us-ascii?Q?2lJwFpyVdZYhgyebvx0CSlocspzK++T2+6aRTfiEu6lSYH4m/IsJLL1RSafa?=
- =?us-ascii?Q?DBqtP1En/GU4aaaXrqZMxD9Ih8f3yZRNHI4/OWL6ADnCO+pcoNGU6D1byDSy?=
- =?us-ascii?Q?Qxj1GYdDikJz5UHwC0AlJYTQb/S84CXeaMiZWofinMiQQ7UiyFj9btUFKpaI?=
- =?us-ascii?Q?GhRlo7fMBbKN9W4BcVMiOeyYlAn1VcrRPDapV5KvgYUh9qEeyhXzrEa/iitl?=
- =?us-ascii?Q?eF1V6nzfyqVnKY2gevZyfVJ8QoZD7Oes0ws+9/v5Pn9U5KT4p9TPF+htr9lf?=
- =?us-ascii?Q?CU0K0DCc6ifcfnuqjev0+15dSWmH9YAhsVNpw8uiTQLMlLheEAqaQeMoMm1N?=
- =?us-ascii?Q?wAjQ/c1QcuFu+8zdLYHoC755+ilEVeiB7U4MGa/EQbsJyJjKcFpz4f9HhCRo?=
- =?us-ascii?Q?tJ9bircNto2PtwtXW6vBMqzb8HpsyjuhpPIdYNTZ+UrZVbEqchrJPODDv0st?=
- =?us-ascii?Q?sEVn9jl7rQu+Z9WO9mkYdooY0ekGpj95yJ91Ip7S3d5Udv5ox5nFEW8u5x/c?=
- =?us-ascii?Q?9h2l8tye4S//PQ6KdCrGpwgM/uJ62ZiGjfUeVte2LVqP1rf7IBhWx17TtEtw?=
- =?us-ascii?Q?s0+pS5SdSIIAqGZRzCjIf0DfHtkI/2DXLr7LpulXKgHUe4xjcQ=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
- SFS:(13230038)(36860700011)(376012)(7416012)(1800799022)(82310400024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2024 00:29:39.8316 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6453cc0c-adfa-4dab-a3e4-08dc9577111c
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B075.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7541
-Received-SPF: softfail client-ip=2a01:111:f403:2417::601;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
+X-Barracuda-Start-Time: 1719370055
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 2975
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.126768
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=203.110.167.99;
+ envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, KHOP_HELO_FCRDNS=0.4, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,34 +96,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now, all passthrough devices that should benefit from the nested SMMUv3
-feature are assigned to dedicated pxb buses. So, the default PCI bus can
-be only used by emulated devices.
+I’m sorry, but currently Zhaoxin has not released any specs or 
+datasheets related
+to the current patch. Zhaoxin CPUs are compatible with the x86 architecture,
+particularly with Intel. For example, you can refer to the Intel SDM 
+(Software
+Developer’s Manual). Regarding the current patch, except for the 
+features in the
+EDX of CPUID leaf 0xC000_0001, all other features can be found in the 
+general Intel
+specs and are already well known. The Zhaoxin-specific features in CPUID 
+leaf
+0xC000_0001 were introduced to the Linux Kernel a long time ago. For 
+example, the
+FEAT_C000_0001_EDX feature word defined in QEMU comes from the Linux 
+kernel’s
+arch/x86/include/asm/cpufeatures.h. The CPU model is just a feature 
+enumeration
+function, which I believe does not require as deep an understanding of 
+the features
+as driver code does. These changes will only affect users attempting to 
+emulate
+Zhaoxin CPUs and will not impact other Vendor/Micro-Arch CPUs.
 
-In theory, these emualted devices can be still attached to an emualted
-SMMUv3 instance, yet there is no gain doing that. Set the default PCI bus
-to bypass iommu, for the maximum performance.
-
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
----
- hw/arm/virt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 3610f53304..5e91dc8c3d 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1708,7 +1708,8 @@ static void create_pcie(VirtMachineState *vms)
-     }
- 
-     pci = PCI_HOST_BRIDGE(dev);
--    pci->bypass_iommu = vms->default_bus_bypass_iommu;
-+    /* Default bus used by emulated devices does not go through nested SMMUs */
-+    pci->bypass_iommu = vms->default_bus_bypass_iommu || vms->num_nested_smmus;
-     vms->bus = pci->bus;
-     if (vms->bus) {
-         pci_init_nic_devices(pci->bus, mc->default_nic);
--- 
-2.43.0
+On 6/25/24 10:31, Zhao Liu wrote:
+>
+> [这封邮件来自外部发件人 谨防风险]
+>
+> Hi EwanHai,
+>
+> On Tue, Jun 25, 2024 at 05:19:01AM -0400, EwanHai wrote:
+>> Date: Tue, 25 Jun 2024 05:19:01 -0400
+>> From: EwanHai <ewanhai-oc@zhaoxin.com>
+>> Subject: [PATCH 0/4] Add support for Zhaoxin Yongfeng CPU model and other
+>>   improvements
+>> X-Mailer: git-send-email 2.34.1
+>>
+>> This patch series introduces support for the Zhaoxin Yongfeng CPU model and includes
+>> some improvements and updates related to Zhaoxin and VIA CPUs. The changes ensure that
+>> QEMU can correctly identify and emulate Zhaoxin CPUs, providing accurate functionality
+>> and performance characteristics.
+>>
+>>
+>> ### Summary of Changes
+>>
+>> EwanHai (4):
+>>    target/i386: Add support for Zhaoxin/VIA CPU vendor identification
+>>    target/i386: Add CPUID leaf 0xC000_0001 EDX definitions
+>>    target/i386: Introduce Zhaoxin Yongfeng CPU model
+>>    target/i386: Update CMPLegacy handling for Zhaoxin and VIA CPUs
+>>
+>>   target/i386/cpu.c | 130 ++++++++++++++++++++++++++++++++++++++++++++--
+>>   target/i386/cpu.h |  38 ++++++++++++++
+>>   2 files changed, 165 insertions(+), 3 deletions(-)
+>>
+>> ### Known Bugs
+>>
+>> 1. Issue with VMX Preemption Timer Rate on Yongfeng CPU:
+>>     - Description: On Yongfeng CPUs, the VMX preemption timer rate is 128, meaning that
+>>       bits 4:0 of MSR_IA32_VMX_MISC_CTLS should be set to 7. However, due to Intel's rate
+>>       being 5, the Linux kernel has hardcoded this value as 5:
+>>       `#define VMX_MISC_EMULATED_PREEMPTION_TIMER_RATE 5`
+>>     - Impact: This discrepancy can cause incorrect behavior in the VMX preemption timer on
+>>       Yongfeng CPUs.
+>>     - Workaround: A patch to correct this issue in the Linux kernel is currently being
+>>       prepared and will be submitted soon.
+>>
+> Thanks for your patch. Is there some spec/datasheet link that people can
+> refer to?
+>
+> Regards,
+> Zhao
+>
 
 
