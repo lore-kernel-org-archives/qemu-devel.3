@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24724C30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0300C30659
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:04:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMRMw-00064D-Fd; Wed, 26 Jun 2024 08:03:22 -0400
+	id 1sMRO1-00078e-LS; Wed, 26 Jun 2024 08:04:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRMu-00063F-Pl
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:03:20 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRO0-00078D-JI
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:04:28 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRMt-0001Jm-44
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:03:20 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3626c29d3f0so3564374f8f.1
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 05:03:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMRNx-0001Q1-Bu
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:04:28 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-421f4d1c057so51557345e9.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 05:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719403397; x=1720008197; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719403464; x=1720008264; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pNotolGjEzosFZxUZhK/Xq2SnJYjKmHcUh/U8UvdC4g=;
- b=wCvyo6HhAq7TZ75+c/Lf9PIYZstRrU+ZAluJ5YsGG1hlhrIPYkvj3kHJzKjS8glF2f
- qp+elCbq5mdeQbHlUzlwCZ5BIMb0qCiRlWpy+SuM3eLnF8WGXkp9IpOdLDixkuNOK7hH
- 2sFgBgNPx5+FoBE/BCkBwYZiBT9DN42q8CrSKm1X3y5PBsQOPSfi5GyqKrD4SYTbj+c0
- 5VoKIM4wO//Fm+2ABM+5OJ3lzzJWk6moWkpymZZv3bZsOB6zlFWOHDUW0lS33nc+ssEt
- vgQTReCdu0qixSwohu0cNmt5TqiGLBkXmDbxIJvf7hEowlnvRRM6VA0DNQpHVqTnl+d8
- wsnw==
+ bh=5oQWaIBZ17CKlldckKnapKuRBrmyX7UwkA/lwYdTLUY=;
+ b=P50oMXo27lLiW6HJVzOt9QUk7mTKrcfjRtEK9LCb+2vKviNqA1EZ0jVelnzGF+amnP
+ pLVj4F7ovGHj5as4UwlqFaHnetFRcu0JLvvz4qiVhuBcSExFb7LsqJj5qpIlk+r9/URh
+ 1M9aL22htwS5SS2foUh5tu5ILchPin10c1zByM1CifRjHmn8CwfNpg33yqjhD5bXHa3Q
+ 12Po7L7ZH5099O+Nikq1EbS2CTTn1mduuMmAwvY4/L+a0B0Z9+4fUyB/q9EGVyIat+wH
+ I2lc2SxqrIYFtJa3DxMBuasbCBsswk2bqXfsrRgO4+bRsLlwfbJhpHu5C9vt2ViyQtp2
+ 3J3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719403397; x=1720008197;
+ d=1e100.net; s=20230601; t=1719403464; x=1720008264;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pNotolGjEzosFZxUZhK/Xq2SnJYjKmHcUh/U8UvdC4g=;
- b=ElbmwskEKFbzjsTA073/vhZrEhudcao51i2Uo0AoNvwdRAKJexIE0Zt4TMPX8C7U9H
- VtZdCsRJljhXliCXnLbqiKHtCsId+NerbEVo6nkVHelYNxzSQtp4gqxSL2Y9AWNIAeam
- QKUQJlTFi97HJTgJY0b4C5hHvEXy427AM7iI0/ScUEPRg7ZGiAmg8+TkNFOnlCzgu8xV
- QT/XyP70RiRUvXVsNHu+o7zBt1GeLCv7LcBQG/ZXzyGZJedc64iaedxHIM3pA20jfLtS
- /1SggBZqSfVxn1k5mnrRvOfKsvQsIG+3uFj+jqoyacRsudbxKhUjuQmBQT1tssdYCGix
- DBnQ==
-X-Gm-Message-State: AOJu0YxaNz8uRTxsPDKFLdVmE1/YO8QjN2N5YYuFAEjzv8Rby4OOy2dW
- GtCMgpekXlty2gHSFfqYDv3OXvQmg4V1P7tUqVSP/GTyPDyFltdEM8p4oqX94t0=
-X-Google-Smtp-Source: AGHT+IHJvivtO64hzjs1VtcKhIhY999KPvUtNHmK+wIiobjUCFGR2xfAbXQ5Iy5jh129Qu3sLZuqWA==
-X-Received: by 2002:a5d:634d:0:b0:364:1692:ea05 with SMTP id
- ffacd0b85a97d-366e948e6d7mr6753449f8f.21.1719403397526; 
- Wed, 26 Jun 2024 05:03:17 -0700 (PDT)
+ bh=5oQWaIBZ17CKlldckKnapKuRBrmyX7UwkA/lwYdTLUY=;
+ b=J6YpSrfuc+N1Ve7eYcWlv48IUPA8v5FFP9Jfz+Kn1zqMnv+qtGisHoDwGVEdGZsGoo
+ jQ78YqrLw4QvmuGjZw9iWXvInmMTz5+QmxfmQIqi/d2O+kb5cG89eVn1emB6D9b+2Ho5
+ uF9rKG+SteN/brcfaywNoTJmJmrQxDhZnDyZXmDsMA3h0LL7XIFElXLXwOW6perm4MIC
+ iN2m+gbaTdigSKS+cI+GQHFlg1pLH7MTyVltrMvOuMMQntd1sm984dlx6R+J7RL/k8Ri
+ qO1T/Ea1mLKmrCbKAuPu1Kfn8uJOLVSCtF34+7JOZlypp0eY45fz/3JZwQDsQ79VNxBQ
+ DFfA==
+X-Gm-Message-State: AOJu0Yz53OHzkx2P3d4f+uTI80qUOmp9tq9p2uB3nEi9vLXDGZc59M4k
+ ZYmGD16LfFnly1tPNWGv4Vr/JQ3PKCzisuYbmQeuUgb6Vh0oPHdScYY0tzu3Vhg=
+X-Google-Smtp-Source: AGHT+IEPlk5GYi+TpijixAFYL8UHMtD/cD7+35/u7wPSPDc51W45D3aXtuFnuScUhQQqEOi/eHpUiw==
+X-Received: by 2002:a05:6000:178a:b0:362:9313:e535 with SMTP id
+ ffacd0b85a97d-366e7a56799mr9129145f8f.48.1719403463541; 
+ Wed, 26 Jun 2024 05:04:23 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.234])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36638f858fbsm15562855f8f.65.2024.06.26.05.03.15
+ ffacd0b85a97d-366389b8ad2sm15554877f8f.33.2024.06.26.05.04.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 05:03:17 -0700 (PDT)
-Message-ID: <efdfa803-775c-4aa2-b7c4-f016dafe9a88@linaro.org>
-Date: Wed, 26 Jun 2024 14:03:14 +0200
+ Wed, 26 Jun 2024 05:04:23 -0700 (PDT)
+Message-ID: <abae8326-84a8-4cdd-aad7-8986cb655a68@linaro.org>
+Date: Wed, 26 Jun 2024 14:04:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/14] ppc/vof: Fix unaligned FDT property access
+Subject: Re: [PATCH 01/14] hw/core: Free CPUState allocations
 To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -75,23 +75,24 @@ To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-trival@nongnu.org
 References: <20240626-san-v1-0-f3cc42302189@daynix.com>
- <20240626-san-v1-5-f3cc42302189@daynix.com>
+ <20240626-san-v1-1-f3cc42302189@daynix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240626-san-v1-5-f3cc42302189@daynix.com>
+In-Reply-To: <20240626-san-v1-1-f3cc42302189@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,29 +109,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 26/6/24 13:06, Akihiko Odaki wrote:
-> FDT properties are aligned by 4 bytes, not 8 bytes.
+> This suppresses LeakSanitizer warnings.
 > 
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->   hw/ppc/vof.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/core/cpu-common.c | 3 +++
+>   1 file changed, 3 insertions(+)
 > 
-> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-> index e3b430a81f4f..b5b6514d79fc 100644
-> --- a/hw/ppc/vof.c
-> +++ b/hw/ppc/vof.c
-> @@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
->       mem0_reg = fdt_getprop(fdt, offset, "reg", &proplen);
->       g_assert(mem0_reg && proplen == sizeof(uint32_t) * (ac + sc));
->       if (sc == 2) {
-> -        mem0_end = be64_to_cpu(*(uint64_t *)(mem0_reg + sizeof(uint32_t) * ac));
-> +        mem0_end = ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
->       } else {
->           mem0_end = be32_to_cpu(*(uint32_t *)(mem0_reg + sizeof(uint32_t) * ac));
-
-OK but please keep API uses consistent, so convert other uses please.
-
->       }
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index 0f0a247f5642..42f38b01a97f 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -274,6 +274,9 @@ static void cpu_common_finalize(Object *obj)
+>   {
+>       CPUState *cpu = CPU(obj);
+>   
+> +    g_free(cpu->thread);
+> +    g_free(cpu->halt_cond);
+> +    g_free(cpu->cpu_ases);
+>       g_array_free(cpu->gdb_regs, TRUE);
+>       qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
+>       qemu_mutex_destroy(&cpu->work_mutex);
 > 
+
+Similar patch queued via trivial tree:
+https://lore.kernel.org/qemu-devel/3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com/
 
 
