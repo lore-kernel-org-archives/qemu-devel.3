@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D4DFC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 16:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3A70C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 16:16:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMVGT-0004AW-5K; Wed, 26 Jun 2024 12:12:57 -0400
+	id 1sMVIo-0005CT-MU; Wed, 26 Jun 2024 12:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sMVGQ-00049B-PM
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:12:55 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ id 1sMVIk-0005BY-Be
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:15:19 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sMVGM-0005Dh-IQ
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:12:52 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-52ce6c93103so4531996e87.3
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 09:12:49 -0700 (PDT)
+ id 1sMVIf-0005bm-LS
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:15:15 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-a725d756d41so133443766b.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 09:15:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719418368; x=1720023168; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719418512; x=1720023312; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=seAmd6wTy1ADKAlft+hRSaoA+AE4vdMEF+mfVdiiDik=;
- b=E+2WXLXNt5JizvMWm/BOamsYNDUqCCi4Jtapl3TDrytG0qbx17CshFYejl2TlF2r2R
- rzsyeIti8MAz0gcXwKgM0tbVTWSv/9RE4D4yw4AVTFRsAA9IjJnpLQkDAsXx1pkvejbi
- hh/a+lJrHlxopm4xZVatDcK5Cw112DQHc6G5kraqlsBI23AyjcYWeFyywTWQmPwKj5Da
- xNAxHIurtEh6hjrPPSAgV044v0BgQrwO5jU3PD4NQP7h8jiVYrLggLW0YWBjCJtnJuOT
- 2kB5OBnSxRPyEsa3iBTuRYPYhiy/NTlrV+2vdTTUT2ZXlkRY+j09rVuv4OyQwqHFfoWO
- ANCw==
+ :reply-to; bh=MWDLW8saGRSrZMAnW8LFvRs007oaRULLteZ343lZWiY=;
+ b=YGZz36YfUNI7ckBI2Oa/NGLFq/7FQMtVF493hR1jmNuaMHbK0V21KKMd7pCjVEb7Fw
+ JPHVgDgAAlChxZaQ3brQX/EOxo3K0Mcyi4yCOZxuuAvPSte+V+ig7N8+/PNdmTLBQmCy
+ lumi/AYPpU7fJxspoFRBUHSLS80tJdqVGa6k8qGwkiJZPdX9+OHkeH08WXghb3Tb11yb
+ TxzHRPQFiNxT9qUiseXYSiW2vxSRLEPceuyEXIDgD/1/vda9wr97m66LcXFMHS1vvxo0
+ XhX4YdnswOtRH5hRogMDs7uUKywFmV9Jwz8IfY8r+0GWd7RghilRifjjRPkoq9MjgcaR
+ 0yVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719418368; x=1720023168;
+ d=1e100.net; s=20230601; t=1719418512; x=1720023312;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=seAmd6wTy1ADKAlft+hRSaoA+AE4vdMEF+mfVdiiDik=;
- b=eN4ou3T9IVATadHwLsDXhKGDKQ/ftUUqlgTJrZ8Z0g6LQ5TwERWqcIN5WFHvPXix+P
- QMqRXrkQuRTEzjhf7jbx7oAKwkVyaBXsiWm0kUhVHttVT0TA6MAXju9luhnt7q9NyK/0
- KzT8azs0r9ubUjc+Uz21qYrKgxEBwbOB+d+snRqngBIx5hnzt5uA2FK5eEc1xBvNRN+r
- BVOML7yLIn3B4adxlkCV1hyavOnpyKo3ruk4ao4j9/mFSNFTijLO/lcwoeAjiVAIqaPS
- ZlB5P+a1E7QtqeEa32l6ZgaWuGzTiU/hycS9rCyMAhvt9s3lWJXFttUpq86Izl7e1t87
- 73vQ==
+ bh=MWDLW8saGRSrZMAnW8LFvRs007oaRULLteZ343lZWiY=;
+ b=FPMKzKh6fndCwFxErI7AUAnrHRcAdaeYh2YJHgcBF9znAWWjzo0Wrum5wxvyDSyiFN
+ BWo6l83CVStyWrzRaWoKxd4lwmC63AS6RR9yqRAe0uHZr5m1t+rzkfckg+4NmFFAfpiD
+ cCvavHvE4jb8b1ZoNUrtmOe6ejga7Mr0Zua+LsPz6NmmsDMdi6L7/7j0f6rGiYb/d/5d
+ 6QA2HMBUTdpmFlY8+Zsqb5g6MvQBXVfVPftcv3TPsOkhauWIXWCmDvxWSqkQkzTm9T16
+ D/lbIRPDarI+spHWOqYmLf7mDZzCuecS9Cj49V9TpGpeIbX55wF9uV4vYdydVfJGfwBW
+ 7Y3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRDIvFviVALcaHEGOMJzAXWXgVJK4OsBS4YY2A6wPEg04maNVIxpY6NaT+ZU3DXZ80Ykznpc+XnB7Y5qWpq9gTocv4ghM=
-X-Gm-Message-State: AOJu0YzwQ5TM8xvwXdnT1Pz9cGYuJgVjkWHfNFebM+a+JqFbBVSoxxyg
- fA7qDcFMV6dblPadNIfNWUUVM3UNCLeL+l4h9xeQlMRbYetyguknzsLixT7NUJc=
-X-Google-Smtp-Source: AGHT+IGzAiNVJnN+zheQ5ZX7JPksb4EJvm2J7joqnDuOJQV7E4+vMdKRj9eiJjS4g6siO6qkBOsX/Q==
-X-Received: by 2002:ac2:4e07:0:b0:52c:d5e4:9a99 with SMTP id
- 2adb3069b0e04-52ce18329c2mr11309099e87.17.1719418367325; 
- Wed, 26 Jun 2024 09:12:47 -0700 (PDT)
+ AJvYcCXSLNrhnZbSH9yiC2HT8SkFOW0qarimF92or5CQgfKbeNUIVEy0cPgby4SqnJc++USto/fuw2z0yrrh9Ne0ykaTfpmdVsQ=
+X-Gm-Message-State: AOJu0YwneQ/pw6tt0laKqZ/JH5RslbIljFNkvwv9RfCd14VqBvQtS7Yg
+ tA3yS7tuO6clHFqPhwijmBekiklREodxJ7OVvYGloBogu/AseARyanODhPovcyk=
+X-Google-Smtp-Source: AGHT+IHRbMJvPWpk5hUeIuKGMrgi09UuRcILUogDkK9KEwJh4shu+h3qpkx7OT77jx40wcKA1WzagA==
+X-Received: by 2002:a17:906:f9c8:b0:a6f:b91c:5197 with SMTP id
+ a640c23a62f3a-a729706be69mr4708966b.36.1719418511324; 
+ Wed, 26 Jun 2024 09:15:11 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a724837222fsm408234466b.80.2024.06.26.09.12.46
+ a640c23a62f3a-a7287b7e17asm87340966b.222.2024.06.26.09.15.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Jun 2024 09:12:46 -0700 (PDT)
+ Wed, 26 Jun 2024 09:15:10 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2763C5F8AA;
- Wed, 26 Jun 2024 17:12:45 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 790D95F8AA;
+ Wed, 26 Jun 2024 17:15:09 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Akihiko Odaki <akihiko.odaki@daynix.com>
 Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,
@@ -70,20 +70,20 @@ In-Reply-To: <20240626-tcg-v1-2-0bad656307d8@daynix.com> (Akihiko Odaki's
  message of "Wed, 26 Jun 2024 20:26:23 +0900")
 References: <20240626-tcg-v1-0-0bad656307d8@daynix.com>
  <20240626-tcg-v1-2-0bad656307d8@daynix.com>
-Date: Wed, 26 Jun 2024 17:12:45 +0100
-Message-ID: <874j9fpts2.fsf@draig.linaro.org>
+Date: Wed, 26 Jun 2024 17:15:09 +0100
+Message-ID: <87zfr7of3m.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,55 +109,33 @@ Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 > clang version 18.1.6 does not support such mixing so properly specify
 > the extension with the compiler option instead.
 
-I think we need fixes for older clangs supported by our distros as well:
+Also with gcc on aarch64.ci.qemu.org (Ubuntu 22.04.4 LTS) I get:
 
-  16:08:26 [alex@aarch64:~/l/q/b/all.clang] plugins/next|=E2=9C=9A1=E2=80=
-=A6(+0/-0) 2 + clang --version
-  Ubuntu clang version 14.0.0-1ubuntu1.1
-  Target: aarch64-unknown-linux-gnu
-  Thread model: posix
-  InstalledDir: /usr/bin
-
-Gives:
-
-  tests/tcg/aarch64-linux-user: -Wa,-march=3Darmv9-a+sme-i16i64 detected
-  /home/alex/lsrc/qemu.git/tests/tcg/aarch64/sme-smopa-1.c:17:19: error: in=
-struction requires: sve or sme
-          "smstart\n\t"
-                    ^
-  <inline asm>:3:2: note: instantiated into assembly here
-          index z0.b, #0, #1
-          ^
-  /home/alex/lsrc/qemu.git/tests/tcg/aarch64/sme-smopa-1.c:18:30: error: in=
-struction requires: sve or sme
-          "index z0.b, #0, #1\n\t"
-                               ^
-  <inline asm>:4:2: note: instantiated into assembly here
-          movprfx z1, z0
-          ^
-  /home/alex/lsrc/qemu.git/tests/tcg/aarch64/sme-smopa-1.c:19:26: error: in=
-struction requires: sve or sme
-          "movprfx z1, z0\n\t"
-                           ^
-  <inline asm>:5:2: note: instantiated into assembly here
-          add z1.b, z1.b, #16
-          ^
-  /home/alex/lsrc/qemu.git/tests/tcg/aarch64/sme-smopa-1.c:20:31: error: in=
-struction requires: sve or sme
-          "add z1.b, z1.b, #16\n\t"
-                                ^
-  <inline asm>:6:2: note: instantiated into assembly here
-          ptrue p0.b
-          ^
-  /home/alex/lsrc/qemu.git/tests/tcg/aarch64/sme-smopa-1.c:22:47: error: in=
-struction requires: sve or sme
-          "smopa za0.s, p0/m, p0/m, z0.b, z1.b\n\t"
-                                                ^
-  <inline asm>:8:2: note: instantiated into assembly here
-          ptrue p0.s, vl4
-          ^
-  5 errors generated.
-
+  16:05:44 [alex@aarch64:~/l/q/b/all] plugins/next|=E2=9C=9A1=E2=80=A6(+0/-=
+0) + make run-tcg-tests-aarch64-linux-user
+  ninja: no work to do.
+  /home/alex/lsrc/qemu.git/builds/all/pyvenv/bin/meson introspect --targets=
+ --tests --benchmarks | /home/alex/lsrc/qemu.git/builds/all/pyvenv/bin/pyth=
+on3 -B scripts/mtest2make.py > Makefile.mtest
+    BUILD   aarch64-linux-user guest-tests
+  tests/tcg/aarch64-linux-user: -march=3Darmv8.1-a+sve detected
+  tests/tcg/aarch64-linux-user: -march=3Darmv8.1-a+sve2 detected
+  tests/tcg/aarch64-linux-user: -march=3Darmv8.2-a detected
+  tests/tcg/aarch64-linux-user: -march=3Darmv8.3-a detected
+  tests/tcg/aarch64-linux-user: -march=3Darmv8.5-a detected
+  tests/tcg/aarch64-linux-user: -mbranch-protection=3Dstandard detected
+  tests/tcg/aarch64-linux-user: -march=3Darmv8.5-a+memtag detected
+  tests/tcg/aarch64-linux-user: -Wa,-march=3Darmv9-a+sme detected
+  tests/tcg/aarch64-linux-user: -Wa,-march=3Darmv9-a+sme-i16i64 not detected
+  cc1: error: unknown value =E2=80=98armv9-a+sme=E2=80=99 for =E2=80=98-mar=
+ch=E2=80=99
+  cc1: note: valid arguments are: armv8-a armv8.1-a armv8.2-a armv8.3-a arm=
+v8.4-a armv8.5-a armv8.6-a armv8-r native
+  make[1]: *** [Makefile:116: sme-outprod1] Error 1
+  make: *** [/home/alex/lsrc/qemu.git/tests/Makefile.include:50: build-tcg-=
+tests-aarch64-linux-user] Error 2
+  16:08:32 [alex@aarch64:~/l/q/b/all] plugins/next|=E2=9C=9A1=E2=80=A6(+0/-=
+0) 2 +=20
 >
 > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
