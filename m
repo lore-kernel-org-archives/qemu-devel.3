@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E80C3064D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 17:00:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEEAC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 17:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMW0X-0003er-4K; Wed, 26 Jun 2024 13:00:33 -0400
+	id 1sMW65-0006qA-R3; Wed, 26 Jun 2024 13:06:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMW0Q-0003cN-Mc
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 13:00:27 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMW64-0006pw-J3
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 13:06:16 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMW0O-00067c-PU
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 13:00:26 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3645e9839b3so5240100f8f.3
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 10:00:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMW63-00079o-0U
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 13:06:16 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-366de090da9so3197340f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 10:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719421223; x=1720026023; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719421573; x=1720026373; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=x6yy8q2jpoHXlXg85ZR/IswxE+kPuXBhTZOVGyO+mIA=;
- b=N9tqXG5oTV9+nT4LW4lFvSnHkvsuHIZB2c4bl2MmdpEfZU+mW8CZQqVqHNFMUYoNLu
- VY1Th76R+R0Nxbn/Kvw5Pvd163OeaDKR1gHiz/b8gn0QOQ4hmP1vses81STKnaXElYiX
- ZuJjKrCJu9uc6Pz1HD9mIKYWi2g5SJsHzr8bTk4jWVYWmJishgacnEtZXIeDSH6hFZRx
- qXlcZpSQluLMQtJZDER/ajLOsE98qeiyxO40OVQtksRe81vjYCJWbKEmZZ75CMiVOrxt
- xhrRMqofTkJq4KHMk7UTTWme/x6RMIXi5TrhhYBEs+WtnseFsBmgl1k3cEE0D6855VaT
- yIrg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=inE83XdkTpfJZ2qFl+V3HYw0FLo/roOl5wWMzFlDjEI=;
+ b=a9hdTHvMb7u1nGzOI/cfLfqkhYYiIFXv8bZs9f69SBQRdl5sT4sNYLOtAqY3UM0yvD
+ y5HQqIfNrUlfzdBYGyIEUavxFp7rPDKU67OMD/bHxW4uPmu/Zgm5oBlrhnWVtWUKgVT2
+ sLdI98IKgFKPhwgROCNTDDLMHvaMnzMVXIIOVA0NYDxZHXvwBS+n5EGhFbtHOFluFpuN
+ ywM7bbeaNv+Bpn9xPPIP0VGXm83aOq+laY6MiGJs7DtJoWIP+XxmLrPRk6gUt6nR5arp
+ JqKW7Xuyerauk0Vrx6c6cyQItyBec8NpSrIPFzMAJ3PYSfJ7JB03tq1eqMA39lQMlEAl
+ c8Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719421223; x=1720026023;
+ d=1e100.net; s=20230601; t=1719421573; x=1720026373;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x6yy8q2jpoHXlXg85ZR/IswxE+kPuXBhTZOVGyO+mIA=;
- b=XGY/sPdGZx4RVv08AT1F0d/EUoeXZJsTqSoTSxI1ebknjOQU+w+636DxLZX6bcZpKC
- T9QCOjwwSGlOp0ph6xMlTrC5C2VvdEo+w4zBXZre5OfnXcQSBXac7QxALd3ChUY82H9O
- IsKFOcV1BrN8LZj6P/vCKmvKDd6fdTO2CrXm9EIdoQz2WoLvYF8tO+ieO5+fpEr3REJx
- LU4thcg4J+eddjSjCIsYRpCYQ7cxrRLPWxmGXbgnE4BNsGjnLHLTbxJ4C9wTO3/06NBx
- h1fdKrjPfy5flLb2QOUFwdQUWwQgy7JJEt/VzbhTo1Fnn24jLpOxNiYpKpTLXgqZL+r1
- /E4w==
-X-Gm-Message-State: AOJu0YzaU2ZGdw3fI1cGpzOsHjU4P5r6qqRxLvOqJAhubo+vPPin5Aph
- EglE9LgqFElyoFxnbVxIOtIIzMJQqUEvo4YM6a4OUIt9ZOd2cjGDgIEFKPtiuME=
-X-Google-Smtp-Source: AGHT+IHekq5X45p/uxBeKBBUxxp+qRbVObCTDUz7b0tXridZSYxP52Ve467QzaCptI5BxhMcyTmvdw==
-X-Received: by 2002:a5d:4712:0:b0:35f:1128:2514 with SMTP id
- ffacd0b85a97d-366e7a0fc96mr6581641f8f.32.1719421222777; 
- Wed, 26 Jun 2024 10:00:22 -0700 (PDT)
+ bh=inE83XdkTpfJZ2qFl+V3HYw0FLo/roOl5wWMzFlDjEI=;
+ b=Ltji32ljMLf7BOCpWCl+NeHg0hVEm/9HTLmuJnPOwt1gKW0/EWGq1uW+gx3Th2u0rr
+ Z2ZngKxnIJjP+jk91LwgM+4WzIOZGL5NsZdN2fRbDweTUv194Ry2spNWxSdH1d+NONSb
+ gqISShE9X0PqufekL9j/QG5rzWUlrKT9ya2Qf5N5dx+BcQULUSQr0xJRvwEwQ1NayVlB
+ AXvaGJBjKOqPOzFX8X1GxNNYbaXiV6j60b2wUBtGdFmVMnFfx+ljj6iPdWoi3Zkt+6yu
+ 9CFMKPRoIeMt40kPlAq9RJnM1y4XT1084Enu30Wc46A43Wb1uht8aDixPExccB5DXIsp
+ CI+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX6J0YB09Jr/2VTPKo7YfsPi/O4KmF96wd2Hezz1azCqz7yDvlO3xPa9M5svuEHvr3D76BXUCEUTZXM+YsXxSA2cgjYNho=
+X-Gm-Message-State: AOJu0YypxGhqTWy3LoTATNbhjnvXIMzZZb04AN/wSlkNEhJE7yOMfjUC
+ 0xmV1WDF0X/ePwtfL3Igk6GxqydZ6JQhAw8OZ7hkB57tpN/alsxCMI+Wkfs386lxftxv2sVA8kI
+ O
+X-Google-Smtp-Source: AGHT+IGJFn802s0OWlIomec24jvR+as30k2gnZuYERilV7TldOV/QAtO9g1ia1hYXKNCWm+L0WSDqQ==
+X-Received: by 2002:adf:f083:0:b0:363:74a4:2ac4 with SMTP id
+ ffacd0b85a97d-366e94d5ac7mr6157105f8f.40.1719421572922; 
+ Wed, 26 Jun 2024 10:06:12 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.234])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3663a8c8b27sm16258033f8f.104.2024.06.26.10.00.21
+ ffacd0b85a97d-36730236a59sm1522499f8f.45.2024.06.26.10.06.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 10:00:22 -0700 (PDT)
-Message-ID: <2756549c-867d-43c0-a332-beac708da443@linaro.org>
-Date: Wed, 26 Jun 2024 19:00:20 +0200
+ Wed, 26 Jun 2024 10:06:12 -0700 (PDT)
+Message-ID: <0399c37b-e4cc-441d-874b-ba3feb537dc4@linaro.org>
+Date: Wed, 26 Jun 2024 19:06:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] target/i386: restrict SEV to 64 bit host builds
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "open list:X86 KVM CPUs" <kvm@vger.kernel.org>
-References: <20240626140307.1026816-1-alex.bennee@linaro.org>
- <ZnwjtOxQy1iiRoFh@redhat.com>
+Subject: Re: [PATCH] ui/gtk: Negative Page number is not valid
+To: dongwon.kim@intel.com, qemu-devel@nongnu.org
+References: <20240626000835.248538-1-dongwon.kim@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZnwjtOxQy1iiRoFh@redhat.com>
+In-Reply-To: <20240626000835.248538-1-dongwon.kim@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,82 +95,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/6/24 16:20, Daniel P. Berrangé wrote:
-> On Wed, Jun 26, 2024 at 03:03:07PM +0100, Alex Bennée wrote:
->> Re-enabling the 32 bit host build on i686 showed the recently merged
->> SEV code doesn't take enough care over its types. While the format
->> strings could use more portable types there isn't much we can do about
->> casting uint64_t into a pointer. The easiest solution seems to be just
->> to disable SEV for a 32 bit build. It's highly unlikely anyone would
->> want this functionality anyway.
->>
->> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->> ---
->>   target/i386/sev.h       | 2 +-
->>   target/i386/meson.build | 4 ++--
->>   2 files changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/target/i386/sev.h b/target/i386/sev.h
->> index 858005a119..b0cb9dd7ed 100644
->> --- a/target/i386/sev.h
->> +++ b/target/i386/sev.h
->> @@ -45,7 +45,7 @@ typedef struct SevKernelLoaderContext {
->>       size_t cmdline_size;
->>   } SevKernelLoaderContext;
->>   
->> -#ifdef CONFIG_SEV
->> +#if defined(CONFIG_SEV) && defined(HOST_X86_64)
->>   bool sev_enabled(void);
->>   bool sev_es_enabled(void);
->>   bool sev_snp_enabled(void);
->> diff --git a/target/i386/meson.build b/target/i386/meson.build
->> index 075117989b..d2a008926c 100644
->> --- a/target/i386/meson.build
->> +++ b/target/i386/meson.build
->> @@ -6,7 +6,7 @@ i386_ss.add(files(
->>     'xsave_helper.c',
->>     'cpu-dump.c',
->>   ))
->> -i386_ss.add(when: 'CONFIG_SEV', if_true: files('host-cpu.c', 'confidential-guest.c'))
->> +i386_ss.add(when: ['CONFIG_SEV', 'HOST_X86_64'], if_true: files('host-cpu.c', 'confidential-guest.c'))
->>   
->>   # x86 cpu type
->>   i386_ss.add(when: 'CONFIG_KVM', if_true: files('host-cpu.c'))
->> @@ -21,7 +21,7 @@ i386_system_ss.add(files(
->>     'cpu-apic.c',
->>     'cpu-sysemu.c',
->>   ))
->> -i386_system_ss.add(when: 'CONFIG_SEV', if_true: files('sev.c'), if_false: files('sev-sysemu-stub.c'))
->> +i386_system_ss.add(when: ['CONFIG_SEV', 'HOST_X86_64'], if_true: files('sev.c'), if_false: files('sev-sysemu-stub.c'))
->>   
->>   i386_user_ss = ss.source_set()
-> 
-> Instead of changing each usage of CONFIG_SEV, is it better to
-> prevent it getting enabled in the first place ?
-> 
-> eg. move
-> 
->    #CONFIG_SEV=n
-> 
-> From
-> 
->    configs/devices/i386-softmmu/default.mak
-> 
-> to
-> 
->    configs/devices/x86_64-softmmu/default.mak
-> 
-> And then also change
-> 
->    hw/i386/Kconfig
-> 
-> to say
-> 
->    config SEV
->        bool
->        select X86_FW_OVMF
->        depends on KVM && X86_64
+Hi Dongwon,
 
-Both are *targets*, IIUC we want to disable on *hosts*.
+On 26/6/24 02:08, dongwon.kim@intel.com wrote:
+> From: Dongwon Kim <dongwon.kim@intel.com>
+> 
+> Negative page number means the page with that number does not
+> belong to the notebook so it shouldn't be used as a valid page
+> number in gd_vc_find_by_page. This function should just return
+> null in such case.
+> 
+> This change, however, will cause a segfault during detaching
+> /untabifying process in gtk_release_modifiers because the
+> current VC's page number suddenly becomes '-1' as soon as
+> the VC is detached, which makes gd_vc_find_by_page return
+> null. So gtk_release_modifiers should do the null check on
+> VC returned from gd_vc_find_by_page.
+> 
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+> ---
+>   ui/gtk.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/ui/gtk.c b/ui/gtk.c
+> index 93b13b7a30..1f8523fd81 100644
+> --- a/ui/gtk.c
+> +++ b/ui/gtk.c
+> @@ -164,7 +164,7 @@ static VirtualConsole *gd_vc_find_by_page(GtkDisplayState *s, gint page)
+
+The caller should check gtk_notebook_get_current_page() != -1.
+
+We might assert(page >= 0) here.
+
+>       for (i = 0; i < s->nb_vcs; i++) {
+>           vc = &s->vc[i];
+>           p = gtk_notebook_page_num(GTK_NOTEBOOK(s->notebook), vc->tab_item);
+> -        if (p == page) {
+> +        if (p > -1 && p == page) {
+
+Then this is not necessary.
+
+>               return vc;
+>           }
+>       }
+         return NULL;
+
+I wonder about returning NULL, maybe just
+
+        g_assert_not_reached();
+
+> @@ -357,7 +357,7 @@ static void gtk_release_modifiers(GtkDisplayState *s)
+>   {
+>       VirtualConsole *vc = gd_vc_find_current(s);
+>   
+> -    if (vc->type != GD_VC_GFX ||
+> +    if (!vc || vc->type != GD_VC_GFX ||
+
+Then this is not necessary.
+
+>           !qemu_console_is_graphic(vc->gfx.dcl.con)) {
+>           return;
+>       }
 
 
