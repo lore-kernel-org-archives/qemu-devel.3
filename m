@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7C8C30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40986C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:09:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMQUK-0005Kr-2A; Wed, 26 Jun 2024 07:06:57 -0400
+	id 1sMQVK-0007eE-Sb; Wed, 26 Jun 2024 07:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQUI-0005Jy-HM
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:06:54 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1sMQVH-0007Vs-3s
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:07:56 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQUG-0004fX-NG
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:06:53 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-70683d96d0eso2313305b3a.0
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:06:52 -0700 (PDT)
+ id 1sMQVE-0004wa-Fa
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:07:54 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-70683d96d0eso2313960b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719400011; x=1720004811;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719400070; x=1720004870;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iRIsabjOCp7YSjFwcV1tRdeNsvY9o6uLKWp2oClGRk0=;
- b=nquZsbtDjKaqBReVXGUBgvoJcu7jMPDMavaSDJKxdOyHK79I8gDeSfpUthJAlCMwNr
- a3eBmMMiDrNqKZn0UPF2d0ZV3lKBlIjJtPBe8/mcR8MDEm5piiyoIRx98FaK0l77tGtc
- moxNYjF9Eko3w3oX0Qm97VpXUwJ8cbMpgasTTyHh5Dy8CdjgdSZHkzT7bVKUXLkT0a/N
- GFPOIJOvwXRlHU+AYyzhZ9IgNDEcItmSI5Kz4kp/D/6B7hG+Rx8eRqTtO9ooy2u6Pdv2
- mot+HTd8dRrVyEYGAMD5HaW4v9ygPsyfAzmgiGTZx74Uk6pBGk8PzOkqiJGqqvkCWTZR
- f1gw==
+ :reply-to; bh=IDtmLd4DIh+2XRkZ57QtXjyzkDOakOx1Ds4rKdXYuOE=;
+ b=MmUcDohBTSvlo2NHH7APomDrwVolYb3Z3vp23AkMn2GWrmuomUSlqUufc+wRx5WM12
+ SA0dhfZESVCBGOlnk87nanuXx3KtgT/8Kz3IAFs7oatxKFArO2oIRPeXlJ2GWDdJCcXn
+ GWsxDNTk+hpiDHnMfnraAiMIG0fLr9nqHdyJsFyI5KNcElqCdHxlK6HWr8S/xjONmZ3m
+ +0JCUMoCZsLQWKpfZEHc5QcdCVMZST0sfk15w43ppTJMFeg/yHFdFeEpcBtlxbZXB73j
+ 5bZeV2/SnqPJUs6a+VadeyaO5pX8ji25Sd/fmLrGDwGXS4+QNRY9sIPgeCeBvuKhkBgU
+ e7DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719400011; x=1720004811;
+ d=1e100.net; s=20230601; t=1719400070; x=1720004870;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iRIsabjOCp7YSjFwcV1tRdeNsvY9o6uLKWp2oClGRk0=;
- b=IMxHje8yZPjdRg6FD6KOVYZzFgwQUDQHSZI3FJ/rtWrDiUJDHuR4CaXQJpK86dOoj/
- 9I7EM1L2Ij8o9pyJWjDMXqq57dwKlhh6HMhfrboQS9MtcYfyW0LNMNMs+GUz60YA/aaH
- YyI5D2XEkTTTpTvLBHGFL3ZIHsGZ3evW7er4QXFQufCz6wBFDxlCo9zs6wv9m/4eWLh5
- 4Qsk5VLbAOGzxuLoyHkbjaMKB8WVxKQ4pcFqgmkULnDhLQiCzg6mO3056hJj/cyE/Y7f
- LF6++jT+F3Uza1GdUO/9eK5ySWkhL50aeB0gEmDKWTOS8fdthHJt19w7JqwvvjOmoBON
- IUzg==
-X-Gm-Message-State: AOJu0Yx7Fo3w0wqINZusqEs4EEjkLQAw5CcNNG7x5yuiRVd68DobMob0
- uJw/onosIPt55gugmtpNGrrnoY/VTTcPAFvcFDfJx/dWs8Ig2Ckf6oK75GdmrqQ=
-X-Google-Smtp-Source: AGHT+IH4urPQ6j+xa/HuI9tGhGaIO4IdTUEaZsjK099SMnteGDVmWKgkI9WZGwDiutNH4K+I8urtaA==
-X-Received: by 2002:a05:6a00:4ba6:b0:706:61d5:2792 with SMTP id
- d2e1a72fcca58-7066e52a5bfmr8524764b3a.8.1719400011404; 
- Wed, 26 Jun 2024 04:06:51 -0700 (PDT)
+ bh=IDtmLd4DIh+2XRkZ57QtXjyzkDOakOx1Ds4rKdXYuOE=;
+ b=SmX7VXkpTzwecPd6yRJeOy2r6GM1bd307tUttXfnKUZfhK8HHfVSWPP+a2NS1dVd9/
+ cYi6qch9RVwwkVLLfNDx3x7KUJH/g96+BDH2xJVh7/vBiN59uHsB3hhBGT++2g8sUVBY
+ eSiZNkpXihgWlbzxfl8H78tuTk0UMoz9F3cwucVdvxplK+StVDqw5k7spriWm8pZ+ckJ
+ dW4CVx8r6KK58uZmDFBNAmCcEkKj10K08udacSAtAjVtOMESxG7sudUHHAMF0oE/Uc4w
+ dtLJb1OzAD6jbLSUfQABoslHTsjUby2Ij2f3Rpw53UiXEVzo/uD0VyCgl/9dRa62NSQ0
+ j+Dw==
+X-Gm-Message-State: AOJu0Yyvz87bXMzGx7rmVha04OiO4RMfBbn20nupYLWQszU0SQMKgG7n
+ 4hHMSrlYMML+HPjRDb4M5+vUtw9eyudPg+GvMJWqKxCOpxOpM6TTRa5E/OYUJz8=
+X-Google-Smtp-Source: AGHT+IEtTUgO/yYQ0iY6MlOqVPv57FtOgSJbQp3S4MxOFQ5jPw6w5cGtdccBLo9897IO/nsxIpFxsw==
+X-Received: by 2002:a05:6a00:22cc:b0:705:ddbf:5c05 with SMTP id
+ d2e1a72fcca58-7066e52a7cbmr12746690b3a.11.1719400070579; 
+ Wed, 26 Jun 2024 04:07:50 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-7067d11a437sm6020153b3a.118.2024.06.26.04.06.46
+ d2e1a72fcca58-7069d65dfc7sm2664394b3a.133.2024.06.26.04.07.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 04:06:50 -0700 (PDT)
+ Wed, 26 Jun 2024 04:07:50 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 26 Jun 2024 20:06:25 +0900
-Subject: [PATCH 02/14] hw/ide: Free macio-ide IRQs
+Date: Wed, 26 Jun 2024 20:06:35 +0900
+Subject: [PATCH 12/14] tests/qtest: Delete previous boot file
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240626-san-v1-2-f3cc42302189@daynix.com>
+Message-Id: <20240626-san-v1-12-f3cc42302189@daynix.com>
 References: <20240626-san-v1-0-f3cc42302189@daynix.com>
 In-Reply-To: <20240626-san-v1-0-f3cc42302189@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
@@ -84,14 +84,14 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::431;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::432;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,40 +107,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This suppresses LeakSanitizer warnings.
+A test run may create boot files several times. Delete the previous boot
+file before creating a new one.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/ide/macio.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tests/qtest/migration-test.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-index aca90d04f0e8..d8fbc1a17ba6 100644
---- a/hw/ide/macio.c
-+++ b/hw/ide/macio.c
-@@ -464,6 +464,14 @@ static void macio_ide_initfn(Object *obj)
-                              qdev_prop_allow_set_link_before_realize, 0);
- }
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index b7e3406471a6..5c0d669b6df3 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -129,12 +129,23 @@ static char *bootpath;
+ #include "tests/migration/aarch64/a-b-kernel.h"
+ #include "tests/migration/s390x/a-b-bios.h"
  
-+static void macio_ide_finalize(Object *obj)
++static void bootfile_delete(void)
 +{
-+    MACIOIDEState *s = MACIO_IDE(obj);
-+
-+    qemu_free_irq(s->dma_irq);
-+    qemu_free_irq(s->ide_irq);
++    unlink(bootpath);
++    g_free(bootpath);
++    bootpath = NULL;
 +}
 +
- static Property macio_ide_properties[] = {
-     DEFINE_PROP_UINT32("channel", MACIOIDEState, channel, 0),
-     DEFINE_PROP_UINT32("addr", MACIOIDEState, addr, -1),
-@@ -486,6 +494,7 @@ static const TypeInfo macio_ide_type_info = {
-     .parent = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(MACIOIDEState),
-     .instance_init = macio_ide_initfn,
-+    .instance_finalize = macio_ide_finalize,
-     .class_init = macio_ide_class_init,
- };
+ static void bootfile_create(char *dir, bool suspend_me)
+ {
+     const char *arch = qtest_get_arch();
+     unsigned char *content;
+     size_t len;
  
++    if (bootpath) {
++        bootfile_delete();
++    }
++
+     bootpath = g_strdup_printf("%s/bootsect", dir);
+     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
+         /* the assembled x86 boot sector should be exactly one sector large */
+@@ -164,13 +175,6 @@ static void bootfile_create(char *dir, bool suspend_me)
+     fclose(bootfile);
+ }
+ 
+-static void bootfile_delete(void)
+-{
+-    unlink(bootpath);
+-    g_free(bootpath);
+-    bootpath = NULL;
+-}
+-
+ /*
+  * Wait for some output in the serial output file,
+  * we get an 'A' followed by an endless string of 'B's
 
 -- 
 2.45.2
