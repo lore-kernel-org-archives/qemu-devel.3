@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3843C30659
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 09:06:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A13BC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 09:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMObF-0005nq-U1; Wed, 26 Jun 2024 05:05:57 -0400
+	id 1sMObS-0005tm-KM; Wed, 26 Jun 2024 05:06:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1sMObD-0005mc-H3; Wed, 26 Jun 2024 05:05:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1sMObQ-0005sH-2R; Wed, 26 Jun 2024 05:06:08 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
- id 1sMObB-0005oK-5m; Wed, 26 Jun 2024 05:05:55 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45Q8x9hA024415;
- Wed, 26 Jun 2024 09:05:41 GMT
+ id 1sMObM-0005v2-IS; Wed, 26 Jun 2024 05:06:07 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45Q8SYtp006380;
+ Wed, 26 Jun 2024 09:05:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:mime-version:content-type
- :content-transfer-encoding; s=pp1; bh=HP2FJm2c0CHWB1ddiJW5gN563V
- xWA/IughUqY9mcjUo=; b=f/pdQKfaXd352rIzkNYnlqaSDuFrpVpm46Ha11Etcd
- 7hNuRZaMfc1ZW+af0oTKWSO9nZKcSNPSX3UlQFBGeQ+fuDkUBAv7O5LNJdN0ZFWF
- DXZUJ9yYdJGYEbLsGcGUP6hEXd4us5YBTSG5xQAZo1vJwleEBSSFk/G9nKaa4AFG
- yM47Z4mTwBA+eHJMa38YtY/BH58OmWz+ipVa9djJpx5JyZjQlqkFGFCNwUZy+ZUm
- D3kL5yhN96NB6/nedduFi7zILmAG60adeRmaBYpbk8NAoB5jxgEjC2ihk/8NeuoY
- l4AK2W3CbcQLFOoijYh2G/Q9g9NEtsvtMzen4z55ugBg==
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ 06eiwRxYEfvHumpi+6WeiQinq+9LxH9LBhq2tCZVWds=; b=MGiPYisE9p6MnBRc
+ 9geQESrzc0qKACwGsivmuuUWEzn/HWos8dRpMKYqB8zjIrIr9ORItmXiyv68qsA1
+ UL7HM9UYstnQNPMThNYQy9NyKAEfNPLItrQ9iaQE3ewG0TZgxa/yFH2ChKBW1zDV
+ 8RsQBnAZ3iZw2emEyFdHXR7e6UN1pSMV1mBHVCNh6Lmd8pb7x6f+3lF2kB8DMOcR
+ RQnGrvDIypcW3fwq27Jxn+WiL3Xgs5+8sk/gC6J6lN3T7eoFdYdKSklQYs1spBKM
+ W5u8e+c8RqQqky4VhEONcn1CKkXePh0ryVah3L4sHs6vnCUriKCrn978vfX3Vtv5
+ FJhvEg==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 400fx9g0jk-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 400fgng2u4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Jun 2024 09:05:41 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45Q95ep3002552;
- Wed, 26 Jun 2024 09:05:40 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 400fx9g0jh-1
+ Wed, 26 Jun 2024 09:05:55 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45Q95tOF029117;
+ Wed, 26 Jun 2024 09:05:55 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 400fgng2u3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Jun 2024 09:05:40 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45Q71nL6032373; Wed, 26 Jun 2024 09:05:40 GMT
+ Wed, 26 Jun 2024 09:05:55 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45Q8TPxC018099; Wed, 26 Jun 2024 09:05:54 GMT
 Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3yxbn3ax4g-1
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3yx8xubjc1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 26 Jun 2024 09:05:39 +0000
+ Wed, 26 Jun 2024 09:05:54 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
  by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45Q95YMA10551794
+ 45Q95mdt30605948
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 26 Jun 2024 09:05:36 GMT
+ Wed, 26 Jun 2024 09:05:50 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 405CD2004D;
- Wed, 26 Jun 2024 09:05:34 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CC3EA2004B;
+ Wed, 26 Jun 2024 09:05:48 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 632242004B;
- Wed, 26 Jun 2024 09:05:32 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E6F8D2004F;
+ Wed, 26 Jun 2024 09:05:46 +0000 (GMT)
 Received: from gfwr527.rchland.ibm.com (unknown [9.10.239.127])
  by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 26 Jun 2024 09:05:32 +0000 (GMT)
+ Wed, 26 Jun 2024 09:05:46 +0000 (GMT)
 From: Chalapathi V <chalapathi.v@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
  clg@kaod.org, calebs@us.ibm.com, chalapathi.v@ibm.com,
  chalapathi.v@linux.ibm.com, saif.abrar@linux.ibm.com,
  dantan@us.ibm.com, milesg@linux.ibm.com
-Subject: [PATCH v5 0/6] hw/ppc: SPI model
-Date: Wed, 26 Jun 2024 04:05:22 -0500
-Message-Id: <20240626090528.812-1-chalapathi.v@linux.ibm.com>
+Subject: [PATCH v5 4/6] hw/block: Add Microchip's 25CSM04 to m25p80
+Date: Wed, 26 Jun 2024 04:05:26 -0500
+Message-Id: <20240626090528.812-5-chalapathi.v@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240626090528.812-1-chalapathi.v@linux.ibm.com>
+References: <20240626090528.812-1-chalapathi.v@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: lDv0H6Uc24BN9FPiERmLVOVMnCrfv52E
-X-Proofpoint-ORIG-GUID: mHp2tPWBFBg9l8SootWwYPIgd11Cw6tq
+X-Proofpoint-ORIG-GUID: oigAWCF63cywgDUofaUR2D8PkpZhN_Ip
+X-Proofpoint-GUID: qta_3ASPIQNHPDbSbaiR70Zv5_5fF3lH
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-26_03,2024-06-25_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=560 spamscore=0
- suspectscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- malwarescore=0 priorityscore=1501 mlxscore=0 bulkscore=0 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406260062
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ mlxscore=0 adultscore=0
+ suspectscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 bulkscore=0 malwarescore=0 phishscore=0 mlxlogscore=915
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406260067
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=chalapathi.v@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -113,89 +116,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Add Microchip's 25CSM04 Serial EEPROM to m25p80.  25CSM04 provides 4 Mbits
+of Serial EEPROM utilizing the Serial Peripheral Interface (SPI) compatible
+bus. The device is organized as 524288 bytes of 8 bits each (512Kbyte) and
+is optimized for use in consumer and industrial applications where reliable
+and dependable nonvolatile memory storage is essential.
 
-Thank You so much for reviewing patch v4.
-In patch v5,
-- Added a new commit to remove the dependency from include/hw/ppc/pnv_xscom.h
-so that pnv_xscom.h can be included in hw/ssi/pnv_spi.c in PATCH2.
-- General comments from Cedric and Glenn were addressed.
+Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+---
+ hw/block/m25p80.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-The new qom-tree looks like below.
-(qemu) info qom-tree 
-/machine (powernv10-machine)
-  /chip[0] (power10_v2.0-pnv-chip)
-    /pib_spic[0] (pnv-spi)
-      /pnv-spi-bus.0 (SSI)
-      /xscom-spi[0] (memory-region)
-    /pib_spic[1] (pnv-spi)
-      /pnv-spi-bus.1 (SSI)
-      /xscom-spi[0] (memory-region)
-    /pib_spic[2] (pnv-spi)
-      /pnv-spi-bus.2 (SSI)
-      /xscom-spi[0] (memory-region)
-    /pib_spic[3] (pnv-spi)
-      /pnv-spi-bus.3 (SSI)
-      /xscom-spi[0] (memory-region)
-    /pib_spic[4] (pnv-spi)
-      /pnv-spi-bus.4 (SSI)
-      /xscom-spi[0] (memory-region)
-    /pib_spic[5] (pnv-spi)
-      /pnv-spi-bus.5 (SSI)
-      /xscom-spi[0] (memory-region)
-
-(qemu) info qom-tree 
-/machine (powernv10-machine)
-  /peripheral-anon (container)
-    /device[0] (25csm04)
-      /WP#[0] (irq)
-      /ssi-gpio-cs[0] (irq)
-
-Patches overview in v4.
-PATCH1: Remove ppc target dependency from include/hw/ppc/pnv_xscom.h so
-        that pnv_xscom.h can be included in hw/ssi/pnv_spi.c in PATCH2.
-PATCH2: Create a PNV SPI model and implement configuration unit
-        to model SCOM registers.
-PATCH3: Extend PNV SPI model: implement sequencer FSM and shift engine.
-PATCH4: Add Microchip's SEEPROM 25csm04 model on top of m25p80.
-PATCH5: Connect SPI controllers to p10 chip and connect cs lines.
-PATCH6: Write a qtest pnv-spi-seeprom-test to check the SPI transactions
-        between spi controller and seeprom device.
-
-Test covered:
-make check
-make check-avocado
-
-Thank You,
-Chalapathi
-
-Chalapathi V (6):
-  ppc/pnv: Remove ppc target dependency from pnv_xscom.h
-  hw/ssi: Add SPI model
-  hw/ssi: Extend SPI model
-  hw/block: Add Microchip's 25CSM04 to m25p80
-  hw/ppc: SPI controller wiring to P10 chip
-  tests/qtest: Add pnv-spi-seeprom qtest
-
- include/hw/ppc/pnv_chip.h          |    3 +
- include/hw/ppc/pnv_xscom.h         |    5 +-
- include/hw/ssi/pnv_spi.h           |   67 ++
- include/hw/ssi/pnv_spi_regs.h      |  133 +++
- hw/block/m25p80.c                  |    3 +
- hw/ppc/pnv.c                       |   21 +-
- hw/ssi/pnv_spi.c                   | 1267 ++++++++++++++++++++++++++++
- tests/qtest/pnv-spi-seeprom-test.c |  110 +++
- hw/ppc/Kconfig                     |    3 +
- hw/ssi/Kconfig                     |    4 +
- hw/ssi/meson.build                 |    1 +
- hw/ssi/trace-events                |   21 +
- tests/qtest/meson.build            |    1 +
- 13 files changed, 1637 insertions(+), 2 deletions(-)
- create mode 100644 include/hw/ssi/pnv_spi.h
- create mode 100644 include/hw/ssi/pnv_spi_regs.h
- create mode 100644 hw/ssi/pnv_spi.c
- create mode 100644 tests/qtest/pnv-spi-seeprom-test.c
-
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 8dec134832..824a6c5c60 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -357,6 +357,9 @@ static const FlashPartInfo known_devices[] = {
+       .sfdp_read = m25p80_sfdp_w25q512jv },
+     { INFO("w25q01jvq",   0xef4021,      0,  64 << 10, 2048, ER_4K),
+       .sfdp_read = m25p80_sfdp_w25q01jvq },
++
++    /* Microchip */
++    { INFO("25csm04",      0x29cc00,      0x100,  64 << 10,  8, 0) },
+ };
+ 
+ typedef enum {
 -- 
 2.39.3
 
