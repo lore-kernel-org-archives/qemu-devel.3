@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 994F7C3064D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA25DC41513
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 14:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMTzG-0000rY-6z; Wed, 26 Jun 2024 10:51:06 -0400
+	id 1sMTzF-0000qA-23; Wed, 26 Jun 2024 10:51:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sMTzD-0000oz-4o; Wed, 26 Jun 2024 10:51:03 -0400
+ id 1sMTzB-0000oS-Oz; Wed, 26 Jun 2024 10:51:01 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sMTz9-0005Ug-Sw; Wed, 26 Jun 2024 10:51:02 -0400
+ id 1sMTz9-0005Uf-SV; Wed, 26 Jun 2024 10:51:01 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c16:1680:0:640:d42f:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 8662260F46;
- Wed, 26 Jun 2024 17:50:55 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 55F6B60F06;
+ Wed, 26 Jun 2024 17:50:56 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b645::1:29])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id eoRt0i0IXKo0-aGvznVwT; Wed, 26 Jun 2024 17:50:54 +0300
+ ESMTPSA id eoRt0i0IXKo0-4cjltysf; Wed, 26 Jun 2024 17:50:55 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1719413454;
- bh=jdtR5KedLtA8nYH1kzysbX30CDHfRJIk3o3vHQGa1vI=;
+ s=default; t=1719413455;
+ bh=yjKIFn3IW3Wt3M76Ap6pQxfEulndCa+O/gp6BbNy0EY=;
  h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=s5WPuvz0H/3AkhTmarxrLwuk1uPusypk9W7HOoU3C1QluqLZf3G4eQX8k90LQzZ5F
- J8Oul9KR0Uzb0ik4+EgSxc2Ggyt2Sp6YZGsW0AY2NMzk1wERFGX0roX/5u8cZfjfeW
- 3zecqLBvinN4n1QqJWQGkarZWW4AmIrNQQso+91s=
+ b=ZYE1WDhfPGfnGUVguhK8p5YsbAQ58RmxHrHtvN1pmx8d7Sn9iUcD9EsYWm67yogkZ
+ +5yB24kwuCB+IfxNxx8B9dI+q25ObhGQz8uaF64DJzX55clq0EBJazu1GZA0mhTolF
+ 3Z4QbD8xHL2RIbCRQ+cMoYssH0f+BtKW4kOqX2bc=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -41,9 +41,9 @@ To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
  vsementsov@yandex-team.ru, jsnow@redhat.com, den@openvz.org,
  f.ebner@proxmox.com
-Subject: [PATCH v2 2/3] block/stream: implement final flush
-Date: Wed, 26 Jun 2024 17:50:37 +0300
-Message-Id: <20240626145038.458709-3-vsementsov@yandex-team.ru>
+Subject: [PATCH v2 3/3] block/backup: implement final flush
+Date: Wed, 26 Jun 2024 17:50:38 +0300
+Message-Id: <20240626145038.458709-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240626145038.458709-1-vsementsov@yandex-team.ru>
 References: <20240626145038.458709-1-vsementsov@yandex-team.ru>
@@ -79,112 +79,79 @@ crashed/killed.
 
 Mirror job already has mirror_flush() for this. So, it's OK.
 
-Do this for stream job too.
+Do this for backup job too.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- block/stream.c | 67 ++++++++++++++++++++++++++++++--------------------
- 1 file changed, 41 insertions(+), 26 deletions(-)
+ block/backup.c             | 2 +-
+ block/block-copy.c         | 7 +++++++
+ include/block/block-copy.h | 1 +
+ 3 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/block/stream.c b/block/stream.c
-index 7031eef12b..893db258d4 100644
---- a/block/stream.c
-+++ b/block/stream.c
-@@ -160,6 +160,7 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
-     int64_t offset = 0;
-     int error = 0;
-     int64_t n = 0; /* bytes */
-+    bool need_final_flush = true;
+diff --git a/block/backup.c b/block/backup.c
+index 3dd2e229d2..fee78ba5ad 100644
+--- a/block/backup.c
++++ b/block/backup.c
+@@ -156,7 +156,7 @@ static int coroutine_fn backup_loop(BackupBlockJob *job)
+         job->bg_bcs_call = s = block_copy_async(job->bcs, 0,
+                 QEMU_ALIGN_UP(job->len, job->cluster_size),
+                 job->perf.max_workers, job->perf.max_chunk,
+-                backup_block_copy_callback, job);
++                true, backup_block_copy_callback, job);
  
-     WITH_GRAPH_RDLOCK_GUARD() {
-         unfiltered_bs = bdrv_skip_filters(s->target_bs);
-@@ -175,10 +176,13 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
-     }
-     job_progress_set_remaining(&s->common.job, len);
- 
--    for ( ; offset < len; offset += n) {
--        bool copy;
-+    for ( ; offset < len || need_final_flush; offset += n) {
-+        bool copy = false;
-+        bool error_is_read = true;
-         int ret;
- 
-+        n = 0;
-+
-         /* Note that even when no rate limit is applied we need to yield
-          * with no pending I/O here so that bdrv_drain_all() returns.
+         while (!block_copy_call_finished(s) &&
+                !job_is_cancelled(&job->common.job))
+diff --git a/block/block-copy.c b/block/block-copy.c
+index 7e3b378528..842b0383db 100644
+--- a/block/block-copy.c
++++ b/block/block-copy.c
+@@ -54,6 +54,7 @@ typedef struct BlockCopyCallState {
+     int max_workers;
+     int64_t max_chunk;
+     bool ignore_ratelimit;
++    bool need_final_flush;
+     BlockCopyAsyncCallbackFunc cb;
+     void *cb_opaque;
+     /* Coroutine where async block-copy is running */
+@@ -899,6 +900,10 @@ block_copy_common(BlockCopyCallState *call_state)
           */
-@@ -187,35 +191,46 @@ static int coroutine_fn stream_run(Job *job, Error **errp)
-             break;
-         }
+     } while (ret > 0 && !qatomic_read(&call_state->cancelled));
  
--        copy = false;
--
--        WITH_GRAPH_RDLOCK_GUARD() {
--            ret = bdrv_co_is_allocated(unfiltered_bs, offset, STREAM_CHUNK, &n);
--            if (ret == 1) {
--                /* Allocated in the top, no need to copy.  */
--            } else if (ret >= 0) {
--                /*
--                 * Copy if allocated in the intermediate images.  Limit to the
--                 * known-unallocated area [offset, offset+n*BDRV_SECTOR_SIZE).
--                 */
--                ret = bdrv_co_is_allocated_above(bdrv_cow_bs(unfiltered_bs),
--                                                 s->base_overlay, true,
--                                                 offset, n, &n);
--                /* Finish early if end of backing file has been reached */
--                if (ret == 0 && n == 0) {
--                    n = len - offset;
-+        if (offset < len) {
-+            WITH_GRAPH_RDLOCK_GUARD() {
-+                ret = bdrv_co_is_allocated(unfiltered_bs, offset, STREAM_CHUNK,
-+                                           &n);
-+                if (ret == 1) {
-+                    /* Allocated in the top, no need to copy.  */
-+                } else if (ret >= 0) {
-+                    /*
-+                     * Copy if allocated in the intermediate images.  Limit to
-+                     * the known-unallocated area
-+                     * [offset, offset+n*BDRV_SECTOR_SIZE).
-+                     */
-+                    ret = bdrv_co_is_allocated_above(bdrv_cow_bs(unfiltered_bs),
-+                                                     s->base_overlay, true,
-+                                                     offset, n, &n);
-+                    /* Finish early if end of backing file has been reached */
-+                    if (ret == 0 && n == 0) {
-+                        n = len - offset;
-+                    }
++    if (ret == 0 && call_state->need_final_flush) {
++        ret = bdrv_co_flush(s->target->bs);
++    }
 +
-+                    copy = (ret > 0);
-                 }
--
--                copy = (ret > 0);
-             }
--        }
--        trace_stream_one_iteration(s, offset, n, ret);
--        if (copy) {
--            ret = stream_populate(s->blk, offset, n);
-+            trace_stream_one_iteration(s, offset, n, ret);
-+            if (copy) {
-+                ret = stream_populate(s->blk, offset, n);
-+            }
-+        } else {
-+            assert(need_final_flush);
-+            ret = blk_co_flush(s->blk);
-+            if (ret < 0) {
-+                error_is_read = false;
-+            } else {
-+                need_final_flush = false;
-+            }
-         }
-         if (ret < 0) {
-             BlockErrorAction action =
--                block_job_error_action(&s->common, s->on_error, true, -ret);
-+                block_job_error_action(&s->common, s->on_error,
-+                                       error_is_read, -ret);
-             if (action == BLOCK_ERROR_ACTION_STOP) {
-                 n = 0;
-                 continue;
+     qatomic_store_release(&call_state->finished, true);
+ 
+     if (call_state->cb) {
+@@ -954,6 +959,7 @@ int coroutine_fn block_copy(BlockCopyState *s, int64_t start, int64_t bytes,
+ BlockCopyCallState *block_copy_async(BlockCopyState *s,
+                                      int64_t offset, int64_t bytes,
+                                      int max_workers, int64_t max_chunk,
++                                     bool need_final_flush,
+                                      BlockCopyAsyncCallbackFunc cb,
+                                      void *cb_opaque)
+ {
+@@ -965,6 +971,7 @@ BlockCopyCallState *block_copy_async(BlockCopyState *s,
+         .bytes = bytes,
+         .max_workers = max_workers,
+         .max_chunk = max_chunk,
++        .need_final_flush = need_final_flush,
+         .cb = cb,
+         .cb_opaque = cb_opaque,
+ 
+diff --git a/include/block/block-copy.h b/include/block/block-copy.h
+index bdc703bacd..6588ebaf77 100644
+--- a/include/block/block-copy.h
++++ b/include/block/block-copy.h
+@@ -62,6 +62,7 @@ int coroutine_fn block_copy(BlockCopyState *s, int64_t offset, int64_t bytes,
+ BlockCopyCallState *block_copy_async(BlockCopyState *s,
+                                      int64_t offset, int64_t bytes,
+                                      int max_workers, int64_t max_chunk,
++                                     bool need_final_flush,
+                                      BlockCopyAsyncCallbackFunc cb,
+                                      void *cb_opaque);
+ 
 -- 
 2.34.1
 
