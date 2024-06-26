@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A6FC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 20:55:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA50C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 21:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMZfi-0004rS-EM; Wed, 26 Jun 2024 16:55:18 -0400
+	id 1sMa0J-0000ft-Sj; Wed, 26 Jun 2024 17:16:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sMZfh-0004rH-0Y
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 16:55:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sMZff-0006T9-Ip
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 16:55:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719435314;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Q0/0BuU7AuVzHzLa0zMypCTBGwoBkwfTtssoa9w9xU0=;
- b=V1ML9qR0cnc7g/9wf+ZNyGBzOiUOjY1ovDNYPIKr7lIdjgNsbe1pkCIFOb8H971gpQonHL
- 6qpOG7s54eiYvXps+6BCD99tsT4NqLkTKW/waMcp6lGjNepV1IvgwoUj83+l3y01SDN54a
- ryXS0LX4CSVzSwaN1/dzercMVDv16cw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-298-A6OHa_RUMz-bjO5u45Y8oA-1; Wed,
- 26 Jun 2024 16:55:11 -0400
-X-MC-Unique: A6OHa_RUMz-bjO5u45Y8oA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F3F0919560AF; Wed, 26 Jun 2024 20:55:07 +0000 (UTC)
-Received: from localhost (unknown [10.39.192.29])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 722021956087; Wed, 26 Jun 2024 20:55:06 +0000 (UTC)
-Date: Wed, 26 Jun 2024 16:55:04 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Changqi Lu <luchangqi.123@bytedance.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
- hreitz@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
- pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org,
- its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com
-Subject: Re: [PATCH v6 04/10] scsi/util: add helper functions for persistent
- reservation types conversion
-Message-ID: <20240626205504.GD2529519@fedora.redhat.com>
-References: <20240613071327.2498953-1-luchangqi.123@bytedance.com>
- <20240613071327.2498953-5-luchangqi.123@bytedance.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="T/pc96+KM8qEpxtS"
-Content-Disposition: inline
-In-Reply-To: <20240613071327.2498953-5-luchangqi.123@bytedance.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+ (Exim 4.90_1) (envelope-from
+ <3KoV8ZgcKCmEUDMSTQDFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--venture.bounces.google.com>)
+ id 1sMa0I-0000fg-EP
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 17:16:34 -0400
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3KoV8ZgcKCmEUDMSTQDFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--venture.bounces.google.com>)
+ id 1sMa0D-0002CA-Ch
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 17:16:34 -0400
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-6c559235c6eso9318190a12.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 14:16:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1719436586; x=1720041386; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=itDBadyiS8ipJvku8Ye2MDbtKB5QxB35THvZWt4WM88=;
+ b=hMPSxX0HXUcmEcd49YrC+dDnQrF5xwNuZRefu13PBiqe3W/HMmm3yFHNUj8tHJGESa
+ nTYvNUTX2N9rtSIy+a0tYC+mOG1eIuyoY5iU003u17/9kKawdcfFLbKKj+45QyQl2E26
+ xNPV/arRru153ft1CNiYjKJpAxT72GxE0W2etfB4rV52CkrCLRcspsNn6h6WQiYZ/iL1
+ R89UwakktXYKem3UWINS8bKkNaFzJnCtCCjLBSnJZvGpGQmMG5xYDD4vZVfzLztMIOzr
+ 3XvPb4W5m0Y3ms6hDHkALiZn8rvsfiOUH0fBFZJq/ntjwG16HgVbMFcv1ewZDP7JxH0a
+ LRAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719436586; x=1720041386;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=itDBadyiS8ipJvku8Ye2MDbtKB5QxB35THvZWt4WM88=;
+ b=V+6l+T+culTx45T5Pw09vgFca+bmOrTjc8oiBN2MoD8af5g9u9OLA9I9BY2m5UPnPQ
+ yToJ4qCcRU/5NyaK2kNVX7SScFx/isD3TQZj3OAs5QJBjXtJRRUUJH2/jmiF6Vu1qqD6
+ IlmjPTIJq0iPAbHG/R0V1Xf6aiKgrXVrSL0VYG3KTx0/J0Thr+6DRjoymaRpEgDdDDNJ
+ vQxh7pSAypj6QzJgF/gBLVpZFyf2SJu+Ux5kC0bddY442do6M3oBMAYrsh0bKldVFvoP
+ bpasIUkQLE+VZlI45qcKMBlUG0NE5wQ+yR+xyFkDQs1mMUh5G+vnZrex6pdGQeAypOqM
+ OsdQ==
+X-Gm-Message-State: AOJu0YwhBBbLILBzU54KUKJEm5XGU07Rb/idyddj6zkoSQ8sojPtnBTV
+ UulZENZczXnF3xqGDKxHp3ElJrClHP1a1nFWB10gjoMh9q51hhfq6z0tYMIxs+h55Xz7ApUjmNd
+ mMQ1/hg==
+X-Google-Smtp-Source: AGHT+IH1AuYI0i41m3qFKQB5EscxHM8DwTwzOBrt6PtqZ5hZnYc598B/F8uIuXHapxXNARGCGcW46Lc9+eMc
+X-Received: from venture.c.googlers.com
+ ([fda3:e722:ac3:cc00:24:72f4:c0a8:5c34])
+ (user=venture job=sendgmr) by 2002:a05:6a02:5a1:b0:680:6ded:349e with SMTP id
+ 41be03b00d2f7-71b60bb521bmr35437a12.12.1719436586234; Wed, 26 Jun 2024
+ 14:16:26 -0700 (PDT)
+Date: Wed, 26 Jun 2024 21:16:22 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.45.2.741.gdbec12cfda-goog
+Message-ID: <20240626211623.3510701-1-venture@google.com>
+Subject: [PATCH] MAINTAINERS: Update my family name
+From: Patrick Leis <venture@google.com>
+To: peter.maydell@linaro.org
+Cc: qemu-devel@nongnu.org, Patrick Leis <venture@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3KoV8ZgcKCmEUDMSTQDFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--venture.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
+X-Spam_score_int: -99
+X-Spam_score: -10.0
+X-Spam_bar: ----------
+X-Spam_report: (-10.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.454,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,42 +90,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: Patrick Leis <venture@google.com>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---T/pc96+KM8qEpxtS
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Jun 13, 2024 at 03:13:21PM +0800, Changqi Lu wrote:
-> This commit introduces two helper functions
-> that facilitate the conversion between the
-> persistent reservation types used in the SCSI
-> protocol and those used in the block layer.
->=20
-> Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
-> Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-> ---
->  include/scsi/utils.h |  8 +++++
->  scsi/utils.c         | 81 ++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 89 insertions(+)
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---T/pc96+KM8qEpxtS
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmZ8gCgACgkQnKSrs4Gr
-c8jiAAf/RwysrYd1T5ezYs9qMKHltmnVGxrro0PudVzeLSnS8SclBaOZzOBgEFzM
-Tap0t7EWY8tR7R8zxnBNR72tu0hUVtBL2UXOpPsNKutGlbP5ahFod5tkeZ/J29PM
-qHzvyDuF16z9q+o7yp89hRP0U2z3YmxIuyTfA//wA0+i/gFXpN2S5Nt68wKpk9s5
-CjgHqRVVYngWI3RvB0Bb3FsFQMKXJdEkDvbwNYXS3tWTigs1i6FHVg+KkZ6uVI4r
-kll7pu+PCaTItKrAjTPeMlE+HboQ5GrjliUsZw3bMUbV/z4zrtoQ+pTAF2lfsQo4
-dECQPsMjw6qC4yQ6aO2LN9USJI+vCA==
-=ImYt
------END PGP SIGNATURE-----
-
---T/pc96+KM8qEpxtS--
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 19f67dc5d2..13255d4a3b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2496,7 +2496,7 @@ F: hw/net/tulip.c
+ F: hw/net/tulip.h
+ 
+ pca954x
+-M: Patrick Venture <venture@google.com>
++M: Patrick Leis <venture@google.com>
+ S: Maintained
+ F: hw/i2c/i2c_mux_pca954x.c
+ F: include/hw/i2c/i2c_mux_pca954x.h
+-- 
+2.45.2.741.gdbec12cfda-goog
 
 
