@@ -4,85 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092BEC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:10:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D8CC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMQXG-0005k0-SO; Wed, 26 Jun 2024 07:09:59 -0400
+	id 1sMQj8-0006ON-54; Wed, 26 Jun 2024 07:22:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQXA-0005WJ-Da
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:09:52 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQX7-0005IB-VJ
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:09:51 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1f6da06ba24so48171825ad.2
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:09:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719400188; x=1720004988;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=imzyvSBElsn5CvDFjciPKcWXkdE1van1cg6iWIofoSY=;
- b=chhqXDHXyP2pPn0/POUtfPEzgQ5gTyH/tzMXAr7E1x1lhA0pgP9R2Uy1ENnQb6HMJ7
- VulGjhHvixvnJhJepD+VrmwET6A/WgwhpNIp7mUtyvc9hgwZPr3mwVnxG3tZnoVxSPii
- eVXna3voxfGXfS9SKsG8hJ9Ufiw8ixgIzedx9pZkFWp9/a67wTFPT3f6jxKlW5+icj5g
- eCOU1JA8jFXFt6G+uOD+JxPVdC58L9/IzCeNBbFEHduJ0UgZphbWIABJQPN9RnzuUqhD
- bi56xrXbbD7Ocvq9uV4D2DL54ji84aBl0MhmoysPyJhhN/NhPhw2Q0m45eRNffoLsmhF
- JOdQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sMQj5-0006N9-0G
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:22:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sMQj3-0008Og-DT
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:22:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719400928;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dmH6KlfR1UXPMPBwi7it0oifJs4psMRc9Y3kX3/JiLA=;
+ b=bDO8KmU/xAGxiU5cXkX1wme9r94h7Flkle8DJTDGJ+5zmy2zMFsNvBHlcAC0lKp9qUHRY3
+ 7hpF3ifOvhgnBLTVAE1/aVv4SA9Jm79wvD/QzYRnQonDG/1QU2Y6eXm22XFu0p2UpCdhva
+ KSqN6I3uELypGGLmSLbiR+Wb5mOD2xo=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-235-9oy_S9xlPayfsguREdsZ0Q-1; Wed, 26 Jun 2024 07:22:06 -0400
+X-MC-Unique: 9oy_S9xlPayfsguREdsZ0Q-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a7293303840so3423766b.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:22:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719400188; x=1720004988;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=imzyvSBElsn5CvDFjciPKcWXkdE1van1cg6iWIofoSY=;
- b=uUljoMaEpi5RaJoMCreJD3sO9mRsZRhurakGA7rBB8ooJhIWEDM7y+m1zTk2E+cUge
- /2wdLq5I8tIB9OE9FsVrw/0yjVy0lszrYaznoO0GWPrPvoYY3gkyQqvlDG1RNsjAOZRo
- 8DJu2ORsfEIcCsoH4Au88IE2IVaWUEjXJNjgnFcC2p+r2yxqOTZ1p+qlhUgGRqMWrizw
- 2zwZKg8AATijK0iKAg+lYwxFVt+eNYvPEg7B0eD2KZSzL0Da24Cp8r4MYvmf9OXBBGiU
- vWdykH6ERPURZrZIZ+sqVqiGfjPohgJ3Q2m70Y2LNM0J+g8jzST87uIYbDiRSEzuPQrp
- xvFQ==
-X-Gm-Message-State: AOJu0YyMDIkBT9KU3qiCAO3cmGWDOurfcMoB1mihop0mD3Q57/exw8io
- 2pp0edxturZQURAj64bYo+RTVuMFu4pi0Dsud+qbZFKNOq+e7S6J25XAYe3Kmzw=
-X-Google-Smtp-Source: AGHT+IEzOjaTkLaT2BqKu5ac11FPDXhoZ8h59+mSvzVI0ejWggv54XHCljgeWJnS79TqD9o9pDrCNg==
-X-Received: by 2002:a17:902:d4d2:b0:1f6:ef4f:19c3 with SMTP id
- d9443c01a7336-1fa23f0716cmr120609735ad.1.1719400187870; 
- Wed, 26 Jun 2024 04:09:47 -0700 (PDT)
-Received: from localhost ([157.82.204.135])
- by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1f9eb2f0318sm97495165ad.2.2024.06.26.04.09.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 04:09:47 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 26 Jun 2024 20:09:37 +0900
-Subject: [PATCH] tests/docker: Specify --userns keep-id for Podman
+ d=1e100.net; s=20230601; t=1719400925; x=1720005725;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dmH6KlfR1UXPMPBwi7it0oifJs4psMRc9Y3kX3/JiLA=;
+ b=t4FNCmjgH5t52iCYU+d4bcQWeBmR3ol9QWskk0fYaIj8bflBKmhccCd8kKAG3MgP0F
+ hFZ1QtmIIUuqeYZg3khQoSpV8WiXKkrROzab/Gq3mdrhX+ZvKHlX76MVUEDAdTr88TNF
+ FWwqA/dcSmn5SzdL5td+wzc6BQAiLQQiY6L/gYOprK61YuB0x2N/D2UWtKmQdj/za7H5
+ keJVTuj/KLapEweTzqTDGUsQLMrVMK4ozuVmbEjnPRVaoDworVAvrxvkKpXwVhDKS0Y6
+ orvz4AdWE2ag9GduTSaYd0Grl8S5ChHLVtrtMNwXbp37nDJPEdQDAxPq1hgnGbHK95lN
+ +UOg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXEAm6hmMpsyOd1x1TTW/KZeMFFrH9VocVARjTmu+WA4pHzO3UHb1U/oOw2dTzrbLI+WBwX+Nc0fJ1eWzJq9zNB/Cg9mzM=
+X-Gm-Message-State: AOJu0Yy4QaeAHM298obV/EFnF1EgXYdscxrb0WYX9J2c8xANvTiFVWez
+ 6Qmz7q+BFzZw33X28fdm7w5Jfkk5rA9sSTiTLUM/l+rQNzdsUIn06CWzggbit6YHsNcXwKlzIsQ
+ kBtQC3BcWCZjvdirfwhy+so6SLkPXAuY42YWRay4dGtpmDVnIGz/q
+X-Received: by 2002:a17:907:a709:b0:a72:8a0b:9ba5 with SMTP id
+ a640c23a62f3a-a728a0ba5f6mr154240466b.54.1719400925408; 
+ Wed, 26 Jun 2024 04:22:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGnQYx1dMgnGabIrZZWyhDTdfzKIxkESpYeLMln3wM3Mkl/l85SahlPBHA3rNdjkQLpfPe/hw==
+X-Received: by 2002:a17:907:a709:b0:a72:8a0b:9ba5 with SMTP id
+ a640c23a62f3a-a728a0ba5f6mr154236166b.54.1719400924610; 
+ Wed, 26 Jun 2024 04:22:04 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:342:f1b5:a48c:a59a:c1d6:8d0a])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7243b778bcsm421147866b.94.2024.06.26.04.22.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Jun 2024 04:22:04 -0700 (PDT)
+Date: Wed, 26 Jun 2024 07:21:47 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
+Subject: Re: [PATCH 06/14] hw/virtio: Free vqs before vhost_dev_cleanup()
+Message-ID: <20240626072105-mutt-send-email-mst@kernel.org>
+References: <20240626-san-v1-0-f3cc42302189@daynix.com>
+ <20240626-san-v1-6-f3cc42302189@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240626-podman-v1-1-f8c8daf2bb0a@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAPD2e2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDMyMD3YL8lNzEPF1LyxRT0xTjRDNDgyQloOKCotS0zAqwQdGxtbUAQbx
- hTVgAAAA=
-To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>, 
- Beraldo Leal <bleal@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240626-san-v1-6-f3cc42302189@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,51 +114,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously we are always specifying -u $(UID) to match the UID in the
-container with one outside. This causes a problem with rootless Podman.
+On Wed, Jun 26, 2024 at 08:06:29PM +0900, Akihiko Odaki wrote:
+> This suppresses LeakSanitizer warnings.
+> 
 
-Rootless Podman remaps user IDs in the container to ones controllable
-for the current user outside. The -u option instructs Podman to use
-a specified UID in the container but does not affect the UID remapping.
-Therefore, the UID in the container can be remapped to some other UID
-outside the container. This can make the access to bind-mounted volumes
-fail because the remapped UID mismatches with the owner of the
-directories.
+more specifically, is there a leak here this fixes?
+or a false positive warning?
 
-Replace -u $(UID) with --userns keep-id, which fixes the UID remapping.
-This change is limited to Podman because Docker does not support
---userns keep-id.
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+>  hw/virtio/vhost-user-base.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+> index a83167191ee6..124ef536206f 100644
+> --- a/hw/virtio/vhost-user-base.c
+> +++ b/hw/virtio/vhost-user-base.c
+> @@ -223,6 +223,7 @@ static void vub_disconnect(DeviceState *dev)
+>  {
+>      VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>      VHostUserBase *vub = VHOST_USER_BASE(vdev);
+> +    struct vhost_virtqueue *vhost_vqs = vub->vhost_dev.vqs;
+>  
+>      if (!vub->connected) {
+>          return;
+> @@ -231,6 +232,7 @@ static void vub_disconnect(DeviceState *dev)
+>  
+>      vub_stop(vdev);
+>      vhost_dev_cleanup(&vub->vhost_dev);
+> +    g_free(vhost_vqs);
+>  
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- tests/docker/Makefile.include | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
-index 8df50a0ca06f..708e3a72fb8a 100644
---- a/tests/docker/Makefile.include
-+++ b/tests/docker/Makefile.include
-@@ -207,7 +207,12 @@ docker-run: docker-qemu-src
- 	$(call quiet-command,						\
- 		$(RUNC) run 						\
- 			--rm						\
--			$(if $(NOUSER),,-u $(UID)) 			\
-+			$(if $(NOUSER),,				\
-+				$(if $(filter docker,$(RUNC)),		\
-+					-u $(UID),			\
-+					--userns keep-id		\
-+				)					\
-+			) 						\
- 			--security-opt seccomp=unconfined		\
- 			$(if $(DEBUG),-ti,)				\
- 			$(if $(NETWORK),$(if $(subst $(NETWORK),,1),--net=$(NETWORK)),--net=none) \
+code does not match $subj
 
----
-base-commit: 74abb45dac6979e7ff76172b7f0a24e869405184
-change-id: 20240620-podman-99d55d3a610b
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+>      /* Re-instate the event handler for new connections */
+>      qemu_chr_fe_set_handlers(&vub->chardev,
+> 
+> -- 
+> 2.45.2
 
 
