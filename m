@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C95BC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 18:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED5EC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 18:11:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMWxf-0002MF-AY; Wed, 26 Jun 2024 14:01:39 -0400
+	id 1sMX68-00047r-CJ; Wed, 26 Jun 2024 14:10:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sMWxY-0002LG-Tv; Wed, 26 Jun 2024 14:01:32 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sMWxV-0001uD-LF; Wed, 26 Jun 2024 14:01:32 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W8TxB0ZSdz6K9LZ;
- Thu, 27 Jun 2024 01:59:42 +0800 (CST)
-Received: from lhrpeml500003.china.huawei.com (unknown [7.191.162.67])
- by mail.maildlp.com (Postfix) with ESMTPS id C5C4E140A87;
- Thu, 27 Jun 2024 02:01:24 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
- lhrpeml500003.china.huawei.com (7.191.162.67) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 26 Jun 2024 19:01:24 +0100
-Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
- lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
- Wed, 26 Jun 2024 19:01:24 +0100
-To: Vishnu Pajjuri <vishnu@amperemail.onmicrosoft.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "mst@redhat.com" <mst@redhat.com>
-CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
- <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
- <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "will@kernel.org"
- <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>,
- "rafael@kernel.org" <rafael@kernel.org>, "borntraeger@linux.ibm.com"
- <borntraeger@linux.ibm.com>, "alex.bennee@linaro.org"
- <alex.bennee@linaro.org>, "npiggin@gmail.com" <npiggin@gmail.com>,
- "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>, "linux@armlinux.org.uk"
- <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
- <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
- <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
- <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
- <karl.heubaum@oracle.com>, "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
- "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>, zhukeqian
- <zhukeqian1@huawei.com>, "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
- "wangyanan (Y)" <wangyanan55@huawei.com>, "jiakernel2@gmail.com"
- <jiakernel2@gmail.com>, "maobibo@loongson.cn" <maobibo@loongson.cn>,
- "lixianglai@loongson.cn" <lixianglai@loongson.cn>, "shahuang@redhat.com"
- <shahuang@redhat.com>, "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm
- <linuxarm@huawei.com>
-Subject: RE: [PATCH RFC V3 00/29] Support of Virtual CPU Hotplug for ARMv8 Arch
-Thread-Topic: [PATCH RFC V3 00/29] Support of Virtual CPU Hotplug for ARMv8
- Arch
-Thread-Index: AQHaveq2F6TAeAWelEWGVYAetyN5RLHZ0LIAgACXIUA=
-Date: Wed, 26 Jun 2024 18:01:24 +0000
-Message-ID: <e3668ef162b5428ba2422bb7607d20b4@huawei.com>
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <3d4692d4-b802-4367-87f8-411a8a7b6b3f@amperemail.onmicrosoft.com>
-In-Reply-To: <3d4692d4-b802-4367-87f8-411a8a7b6b3f@amperemail.onmicrosoft.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.195.33.18]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3iFl8ZgQKCmcWPNWLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--rkir.bounces.google.com>)
+ id 1sMX66-00047Z-J6
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 14:10:22 -0400
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3iFl8ZgQKCmcWPNWLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--rkir.bounces.google.com>)
+ id 1sMX64-0002zy-SI
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 14:10:22 -0400
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-648cabfaeecso10570407b3.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 11:10:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1719425417; x=1720030217; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=FldijschhLQ+XaonRMFWfUWX1O0P0VnZhMNiod+FW8k=;
+ b=UNvUhReaRNPgEo4IbHZWmutN99wYC4L63allfG7StgqWOVb/qnG2SgYpi+AoONKJaY
+ 0qCTXhTbP/IjMhri0Ng7QnR8K3ZC+aZWzq2WXo9Q23Q/aP7G6nkMHhEsMzkFptFt4NH5
+ RFrxdFQ6/I9lnc5M1w+hgdMqgkkOQMoRwNJGquCFYLuvf871rjnLLCApQ2laBqAY8j+i
+ HLeit8fAb5E6bcG6VpnT5419J0SFOyp83cuM0fBtprFrihgfswkzj0h+hO1Q2yqE/qZK
+ 0tYiKXhisahKK1H8hCY+uIoPl32BSEgihQHLG6iCQ/rT1Rs12whwcTpKPahuL/awWqtG
+ jVqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719425417; x=1720030217;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FldijschhLQ+XaonRMFWfUWX1O0P0VnZhMNiod+FW8k=;
+ b=pf5cVCCou9ORnMQwrmkodEsahlbrUwbefj4kirDga1r8bimo6nI+m9xm6MZuGSEQJt
+ tmywu7duvg02tD6werY5k/cZhDn/m8X1VNPxHz/xtMLsGosOmm8cX7CwfQZWypuEl3M/
+ r3mexW6rGN2kHIgoAQfCwLStWfqj3+1aYvD0zTNO+7fRRhrtoW/9ymWQHwQvHzDhlzW7
+ H7GqBWbtYXJlXcoTj+ms9hwAoV6uZ09Vkg/v0eDk1nFkUfKoWROg+/Kqnue9ER/4vQLB
+ Ulo3VVJww2yCddusTnFgkLhfmlPyeh+46JMZu8YuHbbjukrcm5xbIdNNe2YtuI0rquTj
+ oF3Q==
+X-Gm-Message-State: AOJu0YxIcKLiwwffmLoDxlAWpruYmTgITkKYEVAUWummiziMlFJyOfdt
+ a0vbQUvGYqocAtVJ7Z1IYCiAxzppDULO5c/aWXft/zogQDnt3DNh4g0gUBPHBpY2DBCUajIfzk/
+ V95qydvrqWIdUrBEIZloPy10jdAT66OcbshBTCZMXo3ECc5sGdt2ifdcImh5DEHZuZdzKrkmwNI
+ yMp6o4jaOqw7kl2T0VZSiH
+X-Google-Smtp-Source: AGHT+IE6rncvHu/b1HiG7lnftLgvaBJdBnVVeZXN5KoMOiDbOe9nj6gW5SppnCUX8hiIZN7VzfvYz+Dg
+X-Received: from rkir98.kir.corp.google.com
+ ([2620:15c:7d:4:e7b4:877a:d463:4598])
+ (user=rkir job=sendgmr) by 2002:a05:690c:4909:b0:62f:5d17:3628 with SMTP id
+ 00721157ae682-643a8a205b4mr4590557b3.0.1719425416975; Wed, 26 Jun 2024
+ 11:10:16 -0700 (PDT)
+Date: Wed, 26 Jun 2024 11:10:12 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.45.2.741.gdbec12cfda-goog
+Message-ID: <20240626181012.3321084-1-rkir@google.com>
+Subject: [PATCH] timer: Fix a race condition between timer's callback and
+ destroying code
+From: Roman Kiryanov <rkir@google.com>
+To: qemu-devel@nongnu.org
+Cc: jansene@google.com, mett@google.com, jpcottin@google.com, 
+ Roman Kiryanov <rkir@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=3iFl8ZgQKCmcWPNWLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--rkir.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
+X-Spam_score_int: -100
+X-Spam_score: -10.1
+X-Spam_bar: ----------
+X-Spam_report: (-10.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,45 +90,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgVmlzaG51LA0KIA0KPiBGcm9tOiBWaXNobnUgUGFqanVyaSA8dmlzaG51QGFtcGVyZW1haWwu
-b25taWNyb3NvZnQuY29tPiANCj4gU2VudDogV2VkbmVzZGF5LCBKdW5lIDI2LCAyMDI0IDEwOjUz
-IEFNDQo+IFRvOiBTYWxpbCBNZWh0YSA8c2FsaWwubWVodGFAaHVhd2VpLmNvbT47IHFlbXUtZGV2
-ZWxAbm9uZ251Lm9yZzsgcWVtdS1hcm1Abm9uZ251Lm9yZzsgbXN0QHJlZGhhdC5jb20NCj4gDQo+
-IEhpIFNhbGlsLA0KPiBPbiAxNC0wNi0yMDI0IDA1OjA2LCBTYWxpbCBNZWh0YSB3cm90ZToNCj4g
-UFJPTE9HVUUNCj4gPT09PT09PT0NCj4gDQo+IFRvIGFzc2lzdCBpbiByZXZpZXcgYW5kIHNldCB0
-aGUgcmlnaHQgZXhwZWN0YXRpb25zIGZyb20gdGhpcyBSRkMsIHBsZWFzZSBmaXJzdA0KPiByZWFk
-IHRoZSBzZWN0aW9ucyAqQVBQRU5ERUQgQVQgVEhFIEVORCogb2YgdGhpcyBjb3ZlciBsZXR0ZXI6
-DQo+IA0KPiAxLiBJbXBvcnRhbnQgKkRJU0NMQUlNRVIqIFtTZWN0aW9uIChYKV0NCj4gMi4gV29y
-ayBwcmVzZW50ZWQgYXQgS1ZNRm9ydW0gQ29uZmVyZW5jZSAoc2xpZGVzIGF2YWlsYWJsZSkgW1Nl
-Y3Rpb24gKFYpRl0NCj4gMy4gT3JnYW5pemF0aW9uIG9mIHBhdGNoZXMgW1NlY3Rpb24gKFhJKV0N
-Cj4gNC4gUmVmZXJlbmNlcyBbU2VjdGlvbiAoWElJKV0NCj4gNS4gRGV0YWlsZWQgVE9ETyBsaXN0
-IG9mIGxlZnRvdmVyIHdvcmsgb3Igd29yay1pbi1wcm9ncmVzcyBbU2VjdGlvbiAoSVgpXQ0KPiAN
-Cj4gVGhlcmUgaGFzIGJlZW4gaW50ZXJlc3Qgc2hvd24gYnkgb3RoZXIgb3JnYW5pemF0aW9ucyBp
-biBhZGFwdGluZyB0aGlzIHNlcmllcw0KPiBmb3IgdGhlaXIgYXJjaGl0ZWN0dXJlLiBIZW5jZSwg
-UkZDIFYyIFsyMV0gaGFzIGJlZW4gc3BsaXQgaW50byBhcmNoaXRlY3R1cmUNCj4gKmFnbm9zdGlj
-KiBbMjJdIGFuZCAqc3BlY2lmaWMqIHBhdGNoIHNldHMuDQo+IA0KPiBUaGlzIGlzIGFuIEFSTSBh
-cmNoaXRlY3R1cmUtc3BlY2lmaWMgcGF0Y2ggc2V0IGNhcnZlZCBvdXQgb2YgUkZDIFYyLiBQbGVh
-c2UNCj4gY2hlY2sgc2VjdGlvbiAoWEkpQiBmb3IgZGV0YWlscyBvZiBhcmNoaXRlY3R1cmUgYWdu
-b3N0aWMgcGF0Y2hlcy4NCj4gDQo+IFNFQ1RJT05TIFtJIC0gWElJSV0gYXJlIGFzIGZvbGxvd3M6
-DQo+IA0KPiAoSSkgS2V5IENoYW5nZXMgW2RldGFpbHMgaW4gbGFzdCBzZWN0aW9uIChYSVYpXQ0K
-PiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09DQo+IA0KPiBS
-RkMgVjIgLT4gUkZDIFYzDQo+IA0KPiAxLiBTcGxpdCBpbnRvIEFyY2hpdGVjdHVyZSAqYWdub3N0
-aWMqIChWMTMpIFsyMl0gYW5kICpzcGVjaWZpYyogKFJGQyBWMykgcGF0Y2ggc2V0cy4NCj4gMi4g
-QWRkcmVzc2VkIGNvbW1lbnRzIGJ5IEdhdmluIFNoYW4gKFJlZEhhdCksIFNoYW9xaW4gSHVhbmcg
-KFJlZEhhdCksIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIChMaW5hcm8pLA0KPiA+IEpvbmF0aGFu
-IENhbWVyb24gKEh1YXdlaSksIFpoYW8gTGl1IChJbnRlbCkuDQo+IEkgdHJpZWQgZm9sbG93aW5n
-IHRlc3QgY2FzZXMgd2l0aCByZmMtdjMgYW5kIGtlcm5lbCBwYXRjaGVzIHYxMCwgYW5kIGl0J3Mg
-bG9va2luZyBnb29kIG9uIEFtcGVyZSBwbGF0Zm9ybXMuDQo+IOKAoiBSZWd1bGFyIGhvdHBsdWcg
-YW5kIGhvdCB1bnBsdWcgdGVzdHMNCj4g4oCiIExpdmUgbWlncmF0aW9uIHdpdGggYW5kIHdpdGgg
-b3V0IGhvdC1wbHVnZ2luZyB2Y3B1cyB0ZXN0cw0KPiBQbGVhc2UgZmVlbCBmcmVlIHRvIGFkZCwN
-Cj4gVGVzdGVkLWJ5OiBWaXNobnUgUGFqanVyaSBtYWlsdG86dmlzaG51QG9zLmFtcGVyZWNvbXB1
-dGluZy5jb20NCg0KDQpNYW55IHRoYW5rcyBmb3IgdGVzdGluZyBhbmQgY29uZmlybWluZyB0aGUg
-ZnVuY3Rpb25hbGl0eS4gUmVhbGx5IGFwcHJlY2lhdGUgdGhpcyENCg0KQmVzdA0KU2FsaWwuDQoN
-Cg0KPiANCj4gUmVnYXJkcywNCj4gLVZpc2hudS4NCj4gDQo+IFJGQyBWMSAtPiBSRkMgVjINCj4g
-DQo=
+`timerlist_run_timers` provides no mechanism to
+make sure the data pointed by `opaque` is valid
+when calling timer's callback: there could be
+another thread running which is destroying
+timer's opaque data.
+
+With this change `timer_del` becomes blocking if
+timer's callback is running and it will be safe
+to destroy timer's data once `timer_del` returns.
+
+Google-Bug-Id: 348598513
+Change-Id: I3cd6350587fb67c73bbee7b934d2c0c1acb27229
+Signed-off-by: Roman Kiryanov <rkir@google.com>
+---
+ include/qemu/timer.h |  4 ++++
+ util/qemu-timer.c    | 22 ++++++++++++++++++++++
+ 2 files changed, 26 insertions(+)
+
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index 9a366e551f..de82ed78ae 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -3,6 +3,7 @@
+ 
+ #include "qemu/bitops.h"
+ #include "qemu/notify.h"
++#include "qemu/thread.h"
+ #include "qemu/host-utils.h"
+ 
+ #define NANOSECONDS_PER_SECOND 1000000000LL
+@@ -86,9 +87,12 @@ struct QEMUTimer {
+     QEMUTimerList *timer_list;
+     QEMUTimerCB *cb;
+     void *opaque;
++    QemuMutex opaque_lock;
++    QemuCond cb_done;
+     QEMUTimer *next;
+     int attributes;
+     int scale;
++    bool cb_running;
+ };
+ 
+ extern QEMUTimerListGroup main_loop_tlg;
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 6a0de33dd2..9eb6fca5fa 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -369,7 +369,10 @@ void timer_init_full(QEMUTimer *ts,
+     ts->opaque = opaque;
+     ts->scale = scale;
+     ts->attributes = attributes;
++    qemu_mutex_init(&ts->opaque_lock);
++    qemu_cond_init(&ts->cb_done);
+     ts->expire_time = -1;
++    ts->cb_running = false;
+ }
+ 
+ void timer_deinit(QEMUTimer *ts)
+@@ -394,6 +397,12 @@ static void timer_del_locked(QEMUTimerList *timer_list, QEMUTimer *ts)
+         }
+         pt = &t->next;
+     }
++
++    qemu_mutex_lock(&ts->opaque_lock);
++    while (ts->cb_running) {
++        qemu_cond_wait(&ts->cb_done, &ts->opaque_lock);
++    }
++    qemu_mutex_unlock(&ts->opaque_lock);
+ }
+ 
+ static bool timer_mod_ns_locked(QEMUTimerList *timer_list,
+@@ -571,9 +580,22 @@ bool timerlist_run_timers(QEMUTimerList *timer_list)
+         cb = ts->cb;
+         opaque = ts->opaque;
+ 
++        /* Mark the callback as running to prevent
++         * destroying `opaque` in another thread.
++         */
++        qemu_mutex_lock(&ts->opaque_lock);
++        ts->cb_running = true;
++        qemu_mutex_unlock(&ts->opaque_lock);
++
+         /* run the callback (the timer list can be modified) */
+         qemu_mutex_unlock(&timer_list->active_timers_lock);
+         cb(opaque);
++
++        qemu_mutex_lock(&ts->opaque_lock);
++        ts->cb_running = false;
++        qemu_cond_broadcast(&ts->cb_done);
++        qemu_mutex_unlock(&ts->opaque_lock);
++
+         qemu_mutex_lock(&timer_list->active_timers_lock);
+ 
+         progress = true;
+-- 
+2.45.2.741.gdbec12cfda-goog
+
 
