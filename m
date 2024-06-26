@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA01DC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 16:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DCDAC3064D
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 16:28:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMVSr-0000rh-9f; Wed, 26 Jun 2024 12:25:45 -0400
+	id 1sMVUh-0002Mk-PB; Wed, 26 Jun 2024 12:27:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sMVSp-0000qq-Fe
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:25:43 -0400
+ id 1sMVUe-0002Lp-Rd
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:27:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sMVSn-0007iF-GT
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:25:43 -0400
+ id 1sMVUd-0007yz-0b
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:27:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719419139;
+ s=mimecast20190719; t=1719419254;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=xQgmATcWRLST385uitgeRxWgQj0Eo5fFKFIoP1kZlYM=;
- b=VPui9GHrTf2N+Tiv/z7i3ZJ9Ak/xUZPu5CDTgTY/6z5z75it8UfLHLPISryxFaGeJn6TJd
- NZIrfw2HpBcHKWvdJxeSz9iJhenEtlj/U40SZNBt+Y7odA2vvMyGRZNvTikGj+PsHcvdrm
- Fj0u4qNbIlPEWo7IR6rVMfLicJjjHg8=
+ bh=Dkc32KD6jHiG2WGVGYTRiTN9Bb2ES53OK7rvF1bVN10=;
+ b=fi8qiX9xjuCKiCu1gIjKe763M6UVS8UkICHcAo0srdM8u9kMw+2olEEzRpGdlbGl2eaJC3
+ rs6raAt3qaNcakApqBnRROt0ZQ1lNJg/CWe/Oq75EkiaEaLiu5fHCnENI/1ZEpmAjjX/e3
+ MJQ1Cy0BRKS6uL/PUPRHo6H24kVe3iw=
 Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
  [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-5qgRO6doNnO_AbGiqcOHkA-1; Wed, 26 Jun 2024 12:25:38 -0400
-X-MC-Unique: 5qgRO6doNnO_AbGiqcOHkA-1
+ us-mta-395-VFUs1X04OF6JzRk0PSNK-Q-1; Wed, 26 Jun 2024 12:27:32 -0400
+X-MC-Unique: VFUs1X04OF6JzRk0PSNK-Q-1
 Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6b50b0270d8so104235476d6.0
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 09:25:38 -0700 (PDT)
+ 6a1803df08f44-6b50f078c46so107811576d6.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 09:27:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719419137; x=1720023937;
+ d=1e100.net; s=20230601; t=1719419252; x=1720024052;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xQgmATcWRLST385uitgeRxWgQj0Eo5fFKFIoP1kZlYM=;
- b=L96q/X4vzrIjGVRmqA9NaEvpZctI4ynYb8vwizO8KQ2fme2w9krYTJZyIB83TWmHCt
- m6RkQwHJEwelayqxRfBLTTTVd2OacKhF82epSS8t9wNAhdWa66hJaRWAd9GkKgZ5zBZu
- y4D3CnuzenyFE5+rYgK+XIcb7zS0/W7UQd2ZiJIwpRUk7QmKMTjHIAKBzkuYtFLCT7we
- HsVGqtF0WbfSVIhvqGXaIRJ9fik7WJLHw/5mJS9wwGDAVEv+Zq3nDhGWCj6ZziJNtLx+
- KIFWruYZ7GoxxKnUiZ/ca75hDFpuZwRlsI69VwVt24pfQgg7B43AGYCwrvkO3LaIW/2a
- e2wA==
+ bh=Dkc32KD6jHiG2WGVGYTRiTN9Bb2ES53OK7rvF1bVN10=;
+ b=P9bzGd0h2Cdr0dDoMa1SxgZOnRedcyKuoNT9O8j0FpnJd3qpYSUy7CSgY258mQ4bo1
+ zMH0AxO0mNisxNSDGwKwoo70I3vUkmA1xUXTlUtQkjSj+EGzgmLVaV1ivtAuuQFDvFk1
+ s37MniI8W4UpiC2LH1i2wGQgN910ObomY1/J9YGEl5h4CH7AdRKaLaEWBCxeDWnwvU44
+ VkO5h9ldXKxFWXH5l0irlbJ00wXmgIvTPpnkNmbbeUZJzYlcq7TftEXHYuMvXLpqw4c8
+ R2R/rytbca/noatnEJVtE/XweKGpWVKxFzK7YnQtuMts1gBwhURlV/RM7j2hpjD5yZG1
+ VnAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXKKtzm3gRUWeVmUa/b9yRXnCQR6NZ/syJtlv37oX2E9jlRC7q+BZGM+sQhhncNI9KMa4Cn4holaXV4/9/3xr0bWrrONjg=
-X-Gm-Message-State: AOJu0YxXG7KEzt4rozSXACfmqw8B6j7eJoGzvfLLUR1Og64XiiwTN/pp
- CVmibFKpQBmFN07sXxRUdz0CFJBOlxicWMnNsMBYvrau/T7eLbUOiq6s9ifEQyyk18KZzgrsUFE
- yWpxqDJYLPiAK4npQQ0lTSUt1BVlaUVMYEPk2cekfZBMYNy/lDctFJXpHryrbpmT9PbkJ/SePuC
- 7/Z5QW/UVLp7iJ5l+Qp5FCQDVLTS593erSf9c=
-X-Received: by 2002:ad4:5d4e:0:b0:6b5:40c:dfcc with SMTP id
- 6a1803df08f44-6b53bfdc130mr149032356d6.51.1719419137353; 
- Wed, 26 Jun 2024 09:25:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG3a8U9KD4Nmw6PfFYgbotPlu9YcWhYHcti9fLQPBI7qYWc94d4wTWJ//erCsFDzMfQ5R+gWQsl/1ntKmPn4mc=
-X-Received: by 2002:ad4:5d4e:0:b0:6b5:40c:dfcc with SMTP id
- 6a1803df08f44-6b53bfdc130mr149032096d6.51.1719419137082; Wed, 26 Jun 2024
- 09:25:37 -0700 (PDT)
+ AJvYcCX+5pi/5hqIwEuORwb6GDJM6onZB0cwXccF2/ToCWPlcgbIwzZeZyIYajjMqhavcUTS1UiISPo+2K4vz7NrU9Giw2d9rjs=
+X-Gm-Message-State: AOJu0Yw+w3J+GRvhNAr70IcUC0lySfpWqXsav/nViXndLBYVYTQ0+lKJ
+ yabIHR+gbT+WBBLU1iHPzC+5JV9V8W8Ri/n6uJ5BFk16T1X5YcpPqsVNQgcrRmTLhN73jE6UN3N
+ darSPlVwqazRD9coIi7eUwaq0XkuuHKvjLhngL+RHkViw10OHSmNp9+hoe2Igao2SXj2LlGq3BV
+ Z/IrLMAlvErVoOIoF4WWIgQvvtI2Q=
+X-Received: by 2002:ad4:5fcf:0:b0:6b5:46ad:b92c with SMTP id
+ 6a1803df08f44-6b546adbb20mr135309036d6.1.1719419252235; 
+ Wed, 26 Jun 2024 09:27:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTQUvmd1TnXKoURK2aUWdnY0dtqN1gOBMq4c4gRoP4QmMjD9+jgJN4a03whPtSTgKAeI6jgoIX1Wub/FzryJU=
+X-Received: by 2002:ad4:5fcf:0:b0:6b5:46ad:b92c with SMTP id
+ 6a1803df08f44-6b546adbb20mr135308816d6.1.1719419251941; Wed, 26 Jun 2024
+ 09:27:31 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240619174022.1298578-1-nsoffer@redhat.com>
  <CAMRbyyso9cMFueVS3SGtJ3G=-OGu+ueqqE5u2NYtsydBxf_J3Q@mail.gmail.com>
  <20240624152302.GA2402845@fedora.redhat.com> <ZnmZ-m38IAHg0UdX@redhat.com>
- <CAMRbyyv9utXsfXKiPz4fGw+S4JLgsZE2UDxUOxwG1fxZwGMHNQ@mail.gmail.com>
- <ZnvUcQiXzQW-Mq1s@redhat.com>
-In-Reply-To: <ZnvUcQiXzQW-Mq1s@redhat.com>
+ <Znvcq1H7sGtwxIAd@redhat.com>
+In-Reply-To: <Znvcq1H7sGtwxIAd@redhat.com>
 From: Nir Soffer <nsoffer@redhat.com>
-Date: Wed, 26 Jun 2024 19:25:19 +0300
-Message-ID: <CAMRbyys5RLpD+45HXFDoV7KKf8TKwn9i8GDqLC7LtOasUptAuQ@mail.gmail.com>
+Date: Wed, 26 Jun 2024 19:27:15 +0300
+Message-ID: <CAMRbyyugz47v7k=tw7=ed45m8m_m70pL56PHpc+Qj-WHRUTC6g@mail.gmail.com>
 Subject: Re: [PATCH v2] Consider discard option when writing zeros
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
- Fam Zheng <fam@euphon.net>, 
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000e2df17061bcd76cb"
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ qemu-devel@nongnu.org, Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000bb7ba0061bcd7d55"
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=nsoffer@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
@@ -103,205 +102,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e2df17061bcd76cb
+--000000000000bb7ba0061bcd7d55
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 26, 2024 at 11:42=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrot=
-e:
+On Wed, Jun 26, 2024 at 12:17=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com>
+wrote:
 
-> Am 24.06.2024 um 23:12 hat Nir Soffer geschrieben:
-> > On Mon, Jun 24, 2024 at 7:08=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> w=
-rote:
-> >
-> > > Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:
-> > > > On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:
-> > > > > Tested using:
-> > > >
-> > > > Hi Nir,
-> > > > This looks like a good candidate for the qemu-iotests test suite.
-> Adding
-> > > > it to the automated tests will protect against future regressions.
-> > > >
-> > > > Please add the script and the expected output to
-> > > > tests/qemu-iotests/test/write-zeroes-unmap and run it using
-> > > > `(cd build && tests/qemu-iotests/check write-zeroes-unmap)`.
-> > > >
-> > > > See the existing test cases in tests/qemu-iotests/ and
-> > > > tests/qemu-iotests/tests/ for examples. Some are shell scripts and
-> > > > others are Python. I think shell makes sense for this test case. Yo=
-u
-> > > > can copy the test framework boilerplate from an existing test case.
+> On Mon, Jun 24, 2024 at 06:08:26PM +0200, Kevin Wolf wrote:
+> > Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:
+> > > On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:
+> > > > Tested using:
 > > >
-> > > 'du' can't be used like this in qemu-iotests because it makes
-> > > assumptions that depend on the filesystem. A test case replicating wh=
-at
-> > > Nir did manually would likely fail on XFS with its preallocation.
+> > > Hi Nir,
+> > > This looks like a good candidate for the qemu-iotests test suite.
+> Adding
+> > > it to the automated tests will protect against future regressions.
+> > >
+> > > Please add the script and the expected output to
+> > > tests/qemu-iotests/test/write-zeroes-unmap and run it using
+> > > `(cd build && tests/qemu-iotests/check write-zeroes-unmap)`.
+> > >
+> > > See the existing test cases in tests/qemu-iotests/ and
+> > > tests/qemu-iotests/tests/ for examples. Some are shell scripts and
+> > > others are Python. I think shell makes sense for this test case. You
+> > > can copy the test framework boilerplate from an existing test case.
 > >
-> > This is why I did not try to add a new qemu-iotest yet.
+> > 'du' can't be used like this in qemu-iotests because it makes
+> > assumptions that depend on the filesystem. A test case replicating what
+> > Nir did manually would likely fail on XFS with its preallocation.
 > >
-> > > Maybe we could operate on a file exposed by the FUSE export that is
-> > > backed by qcow2, and then you can use 'qemu-img map' on that qcow2
-> image
-> > > to verify the allocation status. Somewhat complicated, but I think it
-> > > could work.
-> >
-> > Do we have examples of using the FUSE export? It sounds complicated but
-> > being able to test on any file system is awesome. The complexity can be
-> > hidden behind simple test helpers.
+> > Maybe we could operate on a file exposed by the FUSE export that is
+> > backed by qcow2, and then you can use 'qemu-img map' on that qcow2 imag=
+e
+> > to verify the allocation status. Somewhat complicated, but I think it
+> > could work.
 >
-> We seem to have a few tests that use it, and then the fuse protocol
-> implementation, too. 308 and file-io-error look relevant.
+> A simpler option would be to use 'du' but with a fuzzy range test,
+> rather than an exact equality test.
 >
-> > Another option is to use a specific file system created for the tests,
-> > for example on a loop device. We used userstorage[1] in ovirt to test
-> > on specific file systems with known sector size.
->
-> Creating loop devices requires root privileges. If I understand
-> correctly, userstorage solved that by having a setup phase as root
-> before running the tests as a normal user? We don't really have that in
-> qemu-iotests.
->
-> Some tests require passwordless sudo and are skipped otherwise, but this
-> means that in practice they are almost always skipped.
+> For the tests which write 1 MB, check the 'du' usage is "at least 1MB",
+> for the tests which expect to unmap blocks, check that the 'du' usage
+> is "less than 256kb". This should be within bounds of xfs speculative
+> allocation.
 >
 
-Yes, this is the assumption the storage is being created before running the
-tests,
-for example when setting up a development or CI environment, and the tests
-can run with unprivileged user.
+This should work, I'll start with this approach.
 
-> But more important, are you ok with the change?
-> >
-> > I'm not sure about not creating sparse images by default - this is not
-> > consistent with qemu-img convert and qemu-nbd, which do sparsify by
-> > default. The old behavior seems better.
->
-> Well, your patches make it do what we always claimed it would do, so
-> that consistency is certainly a good thing. Unmapping on write_zeroes
-> and ignoring truncate is a weird combination anyway that doesn't really
-> make any sense to me, so I don't think it's worth preserving. The other
-> way around could have been more defensible, but that's not how our bug
-> works.
->
-> Now, if ignoring all discard requests is a good default these days is a
-> separate question and I'm not sure really. Maybe discard=3Dunmap should
-> be the default (and apply to both discard are write_zeroes, of course).
->
-
-OK, lets limit the scope to fix the code to match the current docs. We can
-tweak
-the defaults later.
-
---000000000000e2df17061bcd76cb
+--000000000000bb7ba0061bcd7d55
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">On Wed, Jun 26, 2024 at 11:42=E2=80=AFAM =
-Kevin Wolf &lt;<a href=3D"mailto:kwolf@redhat.com">kwolf@redhat.com</a>&gt;=
- wrote:<br></div><div class=3D"gmail_quote"><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">Am 24.06.2024 um 23:12 hat Nir Soffer geschrieben:<br>
-&gt; On Mon, Jun 24, 2024 at 7:08=E2=80=AFPM Kevin Wolf &lt;<a href=3D"mail=
-to:kwolf@redhat.com" target=3D"_blank">kwolf@redhat.com</a>&gt; wrote:<br>
+<div dir=3D"ltr"><div dir=3D"ltr">On Wed, Jun 26, 2024 at 12:17=E2=80=AFPM =
+Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrange=
+@redhat.com</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex">On Mon, Jun 24, 2024 at 06:08:26PM +0=
+200, Kevin Wolf wrote:<br>
+&gt; Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:<br>
+&gt; &gt; On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:<br>
+&gt; &gt; &gt; Tested using:<br>
+&gt; &gt; <br>
+&gt; &gt; Hi Nir,<br>
+&gt; &gt; This looks like a good candidate for the qemu-iotests test suite.=
+ Adding<br>
+&gt; &gt; it to the automated tests will protect against future regressions=
+.<br>
+&gt; &gt; <br>
+&gt; &gt; Please add the script and the expected output to<br>
+&gt; &gt; tests/qemu-iotests/test/write-zeroes-unmap and run it using<br>
+&gt; &gt; `(cd build &amp;&amp; tests/qemu-iotests/check write-zeroes-unmap=
+)`.<br>
+&gt; &gt; <br>
+&gt; &gt; See the existing test cases in tests/qemu-iotests/ and<br>
+&gt; &gt; tests/qemu-iotests/tests/ for examples. Some are shell scripts an=
+d<br>
+&gt; &gt; others are Python. I think shell makes sense for this test case. =
+You<br>
+&gt; &gt; can copy the test framework boilerplate from an existing test cas=
+e.<br>
 &gt; <br>
-&gt; &gt; Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:<br>
-&gt; &gt; &gt; On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:<=
-br>
-&gt; &gt; &gt; &gt; Tested using:<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Hi Nir,<br>
-&gt; &gt; &gt; This looks like a good candidate for the qemu-iotests test s=
-uite. Adding<br>
-&gt; &gt; &gt; it to the automated tests will protect against future regres=
-sions.<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Please add the script and the expected output to<br>
-&gt; &gt; &gt; tests/qemu-iotests/test/write-zeroes-unmap and run it using<=
-br>
-&gt; &gt; &gt; `(cd build &amp;&amp; tests/qemu-iotests/check write-zeroes-=
-unmap)`.<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; See the existing test cases in tests/qemu-iotests/ and<br>
-&gt; &gt; &gt; tests/qemu-iotests/tests/ for examples. Some are shell scrip=
-ts and<br>
-&gt; &gt; &gt; others are Python. I think shell makes sense for this test c=
-ase. You<br>
-&gt; &gt; &gt; can copy the test framework boilerplate from an existing tes=
-t case.<br>
-&gt; &gt;<br>
-&gt; &gt; &#39;du&#39; can&#39;t be used like this in qemu-iotests because =
-it makes<br>
-&gt; &gt; assumptions that depend on the filesystem. A test case replicatin=
-g what<br>
-&gt; &gt; Nir did manually would likely fail on XFS with its preallocation.=
-<br>
-&gt; <br>
-&gt; This is why I did not try to add a new qemu-iotest yet.<br>
-&gt; <br>
-&gt; &gt; Maybe we could operate on a file exposed by the FUSE export that =
-is<br>
-&gt; &gt; backed by qcow2, and then you can use &#39;qemu-img map&#39; on t=
-hat qcow2 image<br>
-&gt; &gt; to verify the allocation status. Somewhat complicated, but I thin=
-k it<br>
-&gt; &gt; could work.<br>
-&gt; <br>
-&gt; Do we have examples of using the FUSE export? It sounds complicated bu=
+&gt; &#39;du&#39; can&#39;t be used like this in qemu-iotests because it ma=
+kes<br>
+&gt; assumptions that depend on the filesystem. A test case replicating wha=
 t<br>
-&gt; being able to test on any file system is awesome. The complexity can b=
-e<br>
-&gt; hidden behind simple test helpers.<br>
-<br>
-We seem to have a few tests that use it, and then the fuse protocol<br>
-implementation, too. 308 and file-io-error look relevant.<br>
-<br>
-&gt; Another option is to use a specific file system created for the tests,=
-<br>
-&gt; for example on a loop device. We used userstorage[1] in ovirt to test<=
-br>
-&gt; on specific file systems with known sector size.<br>
-<br>
-Creating loop devices requires root privileges. If I understand<br>
-correctly, userstorage solved that by having a setup phase as root<br>
-before running the tests as a normal user? We don&#39;t really have that in=
-<br>
-qemu-iotests.<br>
-<br>
-Some tests require passwordless sudo and are skipped otherwise, but this<br=
->
-means that in practice they are almost always skipped.<br></blockquote><div=
-><br></div><div>Yes, this is the assumption the storage is being created be=
-fore running the tests,</div><div>for example when setting up a development=
- or CI environment, and the tests</div><div>can run with unprivileged user.=
-</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
-0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; But more important, are you ok with the change?<br>
+&gt; Nir did manually would likely fail on XFS with its preallocation.<br>
 &gt; <br>
-&gt; I&#39;m not sure about not creating sparse images by default - this is=
- not<br>
-&gt; consistent with qemu-img convert and qemu-nbd, which do sparsify by<br=
+&gt; Maybe we could operate on a file exposed by the FUSE export that is<br=
 >
-&gt; default. The old behavior seems better.<br>
-<br>
-Well, your patches make it do what we always claimed it would do, so<br>
-that consistency is certainly a good thing. Unmapping on write_zeroes<br>
-and ignoring truncate is a weird combination anyway that doesn&#39;t really=
-<br>
-make any sense to me, so I don&#39;t think it&#39;s worth preserving. The o=
-ther<br>
-way around could have been more defensible, but that&#39;s not how our bug<=
+&gt; backed by qcow2, and then you can use &#39;qemu-img map&#39; on that q=
+cow2 image<br>
+&gt; to verify the allocation status. Somewhat complicated, but I think it<=
 br>
-works.<br>
+&gt; could work.<br>
 <br>
-Now, if ignoring all discard requests is a good default these days is a<br>
-separate question and I&#39;m not sure really. Maybe discard=3Dunmap should=
+A simpler option would be to use &#39;du&#39; but with a fuzzy range test,<=
+br>
+rather than an exact equality test.<br>
 <br>
-be the default (and apply to both discard are write_zeroes, of course).<br>=
-</blockquote><div><br></div><div>OK, lets limit the scope to fix the code t=
-o match the current docs. We can tweak</div><div>the defaults later.=C2=A0<=
-/div></div></div>
+For the tests which write 1 MB, check the &#39;du&#39; usage is &quot;at le=
+ast 1MB&quot;,<br>
+for the tests which expect to unmap blocks, check that the &#39;du&#39; usa=
+ge<br>
+is &quot;less than 256kb&quot;. This should be within bounds of xfs specula=
+tive<br>
+allocation.<br></blockquote><div><br></div><div>This should work, I&#39;ll =
+start with this approach.=C2=A0<br></div></div></div>
 
---000000000000e2df17061bcd76cb--
+--000000000000bb7ba0061bcd7d55--
 
 
