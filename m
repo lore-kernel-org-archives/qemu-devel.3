@@ -4,87 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D3DEC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 08:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38C1AC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 08:24:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMNjd-0008Dd-Q3; Wed, 26 Jun 2024 04:10:33 -0400
+	id 1sMNwS-00058k-RP; Wed, 26 Jun 2024 04:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sMNjb-0008At-Un
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 04:10:31 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sMNwR-00058Z-I1
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 04:23:47 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sMNjV-0003YB-De
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 04:10:31 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1fa1a542466so2839645ad.0
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 01:10:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1719389422; x=1719994222; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=56al8rfmz+IISTG36GjDVUAQaugM4D5TdUAuCV0KTPA=;
- b=bZ5KQ2V304EmiYLwyFIDMyOHlvoz0HFp7uVvOkn5BpQb1tKuZlT/hyHnO0wpxi84yG
- DRhWVgr9A2r1eyIXVmx7xjRtEEA+9eCtzybVjH4bl56/Sz9g0CNcdvfbrFhXKIQmZj1s
- 3kWMccz/QtPXeEkNtbzCMQ/PW0hiNA7UYBhOXJbw2wMEIZgYRfpwqW7cblSsUHldoq0K
- 8JLG6S19npxW/dYqPtRbbSL1yqpZ92HCsgAK8E4AAI+I4LrRU0d/iIGyWoRNJA1gdMFP
- DvDGPz7yl0eqS7WvYcpVQKPrL3lVlqxtDJzrr+gbKrwWO917LudPLzIXer8N7G8/0h41
- VKcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719389422; x=1719994222;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=56al8rfmz+IISTG36GjDVUAQaugM4D5TdUAuCV0KTPA=;
- b=RbwQlshzVDBDpswpAeTdVcrRnsncCiPjep5ChVZ1UixDhCw+KvXemmSZHPUEgpxxZk
- QhYc0N76c4RIp2Vk7bwSbW3sOrQqSEh37twqmPoBUAvfQPjKG6nf7XVDlaanODboADE0
- vqN76x9OvprVdIvSXFrdQ68HTxes1CfDJdi0T2m0JWVV4awK4pEWRD1FPza+vQhQArKG
- newjXYLjwDlgc2QeeiH36ThY8S2llKNwIKd30ZvPgqkqsnPDncKq0JlGZG4MX42nrNRB
- FQZLj536++i0BpIqBrY2MMy+LKAlzQb/e05JoGUsRwzyOWsexcKT6QGU6fzI5nuBvo9N
- oFNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLlUcMpDz4a34YOxQ1MjyGXB6HMhOWXze5MVWtIfB5g7dZ6ua+PgA9hOZ+Csh3/tg/kbssF0MLew/2L0r3YHxqZaqbwSU=
-X-Gm-Message-State: AOJu0Yx5K6dcICcB1e6I0obPf/dHs3480ihdrHTm/j2hJAnZu5tQ7Afj
- +gIAvfKCerOpIJs0WPiuKUpBmtnf8disu7G/PFen2Ta53DN7seQKgwVzM4iIOYQ=
-X-Google-Smtp-Source: AGHT+IEcQ36vivM4+eFA7xoLwLD+c5Uif/zqXZpL1Zz8LfZxfT3DlvZJME+eahB5L5UYQyWWQFbkeg==
-X-Received: by 2002:a17:902:da8e:b0:1fa:918e:ec7 with SMTP id
- d9443c01a7336-1fa918e10a2mr11935875ad.62.1719389421692; 
- Wed, 26 Jun 2024 01:10:21 -0700 (PDT)
-Received: from [192.168.100.252] (59-124-168-89.hinet-ip.hinet.net.
- [59.124.168.89]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fa3229f936sm57293235ad.85.2024.06.26.01.10.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 01:10:21 -0700 (PDT)
-Message-ID: <a702ee19-16d9-4619-8e89-0af525059de3@sifive.com>
-Date: Wed, 26 Jun 2024 16:10:16 +0800
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sMNwP-00069o-Qv
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 04:23:47 -0400
+Received: from hawking.nue2.suse.org (unknown
+ [IPv6:2a07:de40:a101:3:10:168:4:11])
+ by smtp-out1.suse.de (Postfix) with ESMTP id EEA0321A42;
+ Wed, 26 Jun 2024 08:23:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1719390223; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gn8tI82BQm0FF9gt7xmG0UIgmsVsEWtVGNeSWmc1Q3k=;
+ b=bzvyNJJViUPscQcQAH0NT8jfREVaGm44JhOy0r0/0aB0NBzRzJFRrFPRz2Ha54kwnw4C2j
+ vaeyFPsGjRTbPoKR2WnBqO1Y1twAadR4Kv1aWW1Qw8DkaOorbR3XXrUqmwwSl07fKCfZQt
+ X2pEbG5iEeDRY1S3JbWcxO5o/Fn2rdE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1719390223;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gn8tI82BQm0FF9gt7xmG0UIgmsVsEWtVGNeSWmc1Q3k=;
+ b=6N5cWksDEeFVAqcXXz9K7rMYEzpkN7CTAv1b7m4tlHHsFPrSpXJr8u/BoPiHIaClLLk+7B
+ YOh/EIJ7fChvqgCA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=VioOpHv7;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=AwQrjAVr
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1719390222; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gn8tI82BQm0FF9gt7xmG0UIgmsVsEWtVGNeSWmc1Q3k=;
+ b=VioOpHv7qBEodDFug4Qov9aPM6ednnfB86JC28SZyx4GEr4MkZdqbNv4566GOeyKnFxyPS
+ umYlPlhyvzzCGvGVE4+8hi5L2WcyTp412/RvGOUEtKEFLFPpxWPy5//oHgP3xuVi2vuqg7
+ kGgkRiFlXN3eUguLkyrKPW6vDY+j9OY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1719390222;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gn8tI82BQm0FF9gt7xmG0UIgmsVsEWtVGNeSWmc1Q3k=;
+ b=AwQrjAVrSjXpniqAgmTSDo8yDs26xEg+GOGwe/XVoq9OzhPR9J0X14e+PBG2MPcW+f6yVZ
+ sAPa09eqzBdWR4Cg==
+Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
+ id 79DCC4A050D; Wed, 26 Jun 2024 10:23:42 +0200 (CEST)
+From: Andreas Schwab <schwab@suse.de>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: linux-user cannot allocate stack memory on riscv64 host due to
+ non-zero guest_base
+In-Reply-To: <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org> (Richard
+ Henderson's message of "Tue, 25 Jun 2024 08:47:32 -0700")
+References: <mvm8qytp828.fsf@suse.de>
+ <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org>
+X-Yow: Everybody gets free BORSCHT!
+Date: Wed, 26 Jun 2024 10:23:42 +0200
+Message-ID: <mvm4j9gp0xd.fsf@suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/14] exec/memtxattr: add process identifier to the
- transaction attributes
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- ajones@ventanamicro.com, tjeznach@rivosinc.com, frank.chang@sifive.com
-References: <20240624201825.1054980-1-dbarboza@ventanamicro.com>
- <20240624201825.1054980-2-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: Jason Chien <jason.chien@sifive.com>
-In-Reply-To: <20240624201825.1054980-2-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=jason.chien@sifive.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [3.50 / 50.00]; BAYES_HAM(-2.99)[99.97%];
+ HFILTER_HOSTNAME_UNKNOWN(2.50)[];
+ NEURAL_SPAM_SHORT(1.70)[0.568]; ONCE_RECEIVED(1.20)[];
+ RDNS_NONE(1.00)[];
+ HFILTER_HELO_IP_A(1.00)[hawking.nue2.suse.org];
+ NEURAL_HAM_LONG(-1.00)[-0.999];
+ HFILTER_HELO_NORES_A_OR_MX(0.30)[hawking.nue2.suse.org];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_NO_TLS_LAST(0.10)[]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ DIRECT_TO_MX(0.00)[Gnus/5.13 (Gnus v5.13)]; ARC_NA(0.00)[];
+ FROM_HAS_DN(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:a101:3:10:168:4:11:from];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_ONE(0.00)[1];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim]
+X-Spamd-Bar: +++
+X-Rspamd-Queue-Id: EEA0321A42
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=schwab@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,35 +124,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Jason Chien <jason.chien@sifive.com>
+On Jun 25 2024, Richard Henderson wrote:
 
-On 2024/6/25 上午 04:18, Daniel Henrique Barboza wrote:
-> From: Tomasz Jeznach <tjeznach@rivosinc.com>
->
-> Extend memory transaction attributes with process identifier to allow
-> per-request address translation logic to use requester_id / process_id
-> to identify memory mapping (e.g. enabling IOMMU w/ PASID translations).
->
-> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> ---
->   include/exec/memattrs.h | 5 +++++
->   1 file changed, 5 insertions(+)
->
-> diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-> index 14cdd8d582..46d0725416 100644
-> --- a/include/exec/memattrs.h
-> +++ b/include/exec/memattrs.h
-> @@ -52,6 +52,11 @@ typedef struct MemTxAttrs {
->       unsigned int memory:1;
->       /* Requester ID (for MSI for example) */
->       unsigned int requester_id:16;
-> +
-> +    /*
-> +     * PCI PASID support: Limited to 8 bits process identifier.
-> +     */
-> +    unsigned int pasid:8;
->   } MemTxAttrs;
->   
->   /* Bus masters which don't specify any attributes will get this,
+> can always force the use of a non-zero base with -B or -R.
+
+$ qemu-riscv64 -d page -B 0x3ee000 hello.riscv64
+host mmap_min_addr=0x1000 (fallback)
+qemu-riscv64: /daten/src/test/hello.riscv64: requires virtual address space that is in use (omit the -B option or choose a different value)
+
+-- 
+Andreas Schwab, SUSE Labs, schwab@suse.de
+GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
+"And now for something completely different."
 
