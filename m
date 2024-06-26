@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F189FC30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 22:24:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61362C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 22:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMb2d-0005aD-Q5; Wed, 26 Jun 2024 18:23:03 -0400
+	id 1sMb26-0005K4-3x; Wed, 26 Jun 2024 18:22:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb2c-0005Zy-W5
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:23:03 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb24-0005Jg-72
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:22:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb2b-0002R5-Gq
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:23:02 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb20-0002FV-5N
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:22:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719440581;
+ s=mimecast20190719; t=1719440541;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ntco9XKg1YGcMgwjmqQMyPlUNz2VGEsxV0WcpJDl1/c=;
- b=PnA/d/EyS5+WFat/ZyqLkf0RdWC1FqaqEm+QClMLQHDXC5w+L5GD7d5Pa65KobslJPE5aL
- 2qdnkHLfAO2rZqDwkJZtrMg9blzPJYSgl7DF+22cOeNqPtBFYXzmG3HG2yzqL5Q8wqkvvr
- ELsofNasMnCDwTF88e7RXk3o3i0wE/U=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=40Jkk9T4NLXoqGA0Sq3Xpgv5JbbXzJOjnsqot6HsL1s=;
+ b=iKifWNcslRJGgoFOAxxLENL2RAU7ZX2UqRlEyTT4+DMDI4HOnt3GWRILGEP9gLiEbnhxxV
+ g4VwhkM19VO/htk5rWSHtKCzHWTkZV9TrWewR0QgnqJwmyhbACr/KwyZylcRP+wsf79fEH
+ qn5xGq8VZ+I2XjYpngNPJImpnN7mADQ=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-PdmJ7Rk1MJSzfqNgmI8-yA-1; Wed,
- 26 Jun 2024 18:22:57 -0400
-X-MC-Unique: PdmJ7Rk1MJSzfqNgmI8-yA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-vNRKxOZ-PKufFZDqzJvacA-1; Wed,
+ 26 Jun 2024 18:22:18 -0400
+X-MC-Unique: vNRKxOZ-PKufFZDqzJvacA-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E28DA19560B0; Wed, 26 Jun 2024 22:22:55 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 301601956096; Wed, 26 Jun 2024 22:22:15 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.8.67])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 95D4119560BF; Wed, 26 Jun 2024 22:22:48 +0000 (UTC)
+ id 4B73619560BF; Wed, 26 Jun 2024 22:22:04 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mads Ynddal <mads@ynddal.dk>, Jiri Pirko <jiri@resnulli.us>,
@@ -68,10 +68,9 @@ Cc: Mads Ynddal <mads@ynddal.dk>, Jiri Pirko <jiri@resnulli.us>,
  Jason Wang <jasowang@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  Hanna Reitz <hreitz@redhat.com>, Konstantin Kostiuk <kkostiuk@redhat.com>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 09/21] qapi: nail down convention that Errors sections are
- lists
-Date: Wed, 26 Jun 2024 18:21:15 -0400
-Message-ID: <20240626222128.406106-10-jsnow@redhat.com>
+Subject: [PATCH v2 04/21] docs/qapidoc: delint a tiny portion of the module
+Date: Wed, 26 Jun 2024 18:21:10 -0400
+Message-ID: <20240626222128.406106-5-jsnow@redhat.com>
 In-Reply-To: <20240626222128.406106-1-jsnow@redhat.com>
 References: <20240626222128.406106-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -101,47 +100,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By unstated convention, Errors sections are rST lists.  Document the
-convention, and make the one exception conform.
+In a forthcoming series that adds a new QMP documentation generator, it
+will be helpful to have a linting baseline. However, there's no need to
+shuffle around the deck chairs too much, because most of this code will
+be removed once that new qapidoc generator (the "transmogrifier") is in
+place.
+
+To ease my pain: just turn off the black auto-formatter for most, but
+not all, of qapidoc.py. This will help ensure that *new* code follows a
+coding standard without bothering too much with cleaning up the existing
+code.
+
+Code that I intend to keep is still subject to the delinting beam.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/devel/qapi-code-gen.rst | 7 +++++++
- qapi/transaction.json        | 2 +-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ docs/sphinx/qapidoc.py | 62 +++++++++++++++++++++++++-----------------
+ 1 file changed, 37 insertions(+), 25 deletions(-)
 
-diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
-index f453bd35465..cee43222f19 100644
---- a/docs/devel/qapi-code-gen.rst
-+++ b/docs/devel/qapi-code-gen.rst
-@@ -1011,6 +1011,13 @@ like this::
- "Returns" and "Errors" sections are only valid for commands.  They
- document the success and the error response, respectively.
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index 3c0565d0ceb..659e507353a 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -28,26 +28,33 @@
+ import re
  
-+"Errors" sections should be formatted as an rST list, each entry
-+detailing a relevant error condition. For example::
-+
-+ # Errors:
-+ #     - If @device does not exist, DeviceNotFound
-+ #     - Any other error returns a GenericError.
-+
- A "Since: x.y.z" tagged section lists the release that introduced the
- definition.
+ from docutils import nodes
++from docutils.parsers.rst import Directive, directives
+ from docutils.statemachine import ViewList
+-from docutils.parsers.rst import directives, Directive
+-from sphinx.errors import ExtensionError
+-from sphinx.util.nodes import nested_parse_with_titles
+-import sphinx
+-from qapi.gen import QAPISchemaVisitor
+ from qapi.error import QAPIError, QAPISemError
++from qapi.gen import QAPISchemaVisitor
+ from qapi.schema import QAPISchema
  
-diff --git a/qapi/transaction.json b/qapi/transaction.json
-index 5749c133d4a..07afc269d54 100644
---- a/qapi/transaction.json
-+++ b/qapi/transaction.json
-@@ -235,7 +235,7 @@
- #     additional detail.
- #
- # Errors:
--#     Any errors from commands in the transaction
-+#     - Any errors from commands in the transaction
- #
- # Note: The transaction aborts on the first failure.  Therefore, there
- #     will be information on only one failed operation returned in an
++import sphinx
++from sphinx.errors import ExtensionError
++from sphinx.util.nodes import nested_parse_with_titles
++
+ 
+ # Sphinx up to 1.6 uses AutodocReporter; 1.7 and later
+ # use switch_source_input. Check borrowed from kerneldoc.py.
+-Use_SSI = sphinx.__version__[:3] >= '1.7'
+-if Use_SSI:
++USE_SSI = sphinx.__version__[:3] >= "1.7"
++if USE_SSI:
+     from sphinx.util.docutils import switch_source_input
+ else:
+-    from sphinx.ext.autodoc import AutodocReporter
++    from sphinx.ext.autodoc import (  # pylint: disable=no-name-in-module
++        AutodocReporter,
++    )
+ 
+ 
+-__version__ = '1.0'
++__version__ = "1.0"
++
++
++# Disable black auto-formatter until re-enabled:
++# fmt: off
+ 
+ 
+ class QAPISchemaGenRSTVisitor(QAPISchemaVisitor):
+@@ -441,6 +448,10 @@ def get_document_nodes(self):
+         return self._top_node.children
+ 
+ 
++# Turn the black formatter on for the rest of the file.
++# fmt: on
++
++
+ class QAPISchemaGenDepVisitor(QAPISchemaVisitor):
+     """A QAPI schema visitor which adds Sphinx dependencies each module
+ 
+@@ -448,34 +459,34 @@ class QAPISchemaGenDepVisitor(QAPISchemaVisitor):
+     that the generated documentation output depends on the input
+     schema file associated with each module in the QAPI input.
+     """
++
+     def __init__(self, env, qapidir):
+         self._env = env
+         self._qapidir = qapidir
+ 
+     def visit_module(self, name):
+         if name != "./builtin":
+-            qapifile = self._qapidir + '/' + name
++            qapifile = self._qapidir + "/" + name
+             self._env.note_dependency(os.path.abspath(qapifile))
+         super().visit_module(name)
+ 
+ 
+ class QAPIDocDirective(Directive):
+     """Extract documentation from the specified QAPI .json file"""
++
+     required_argument = 1
+     optional_arguments = 1
+-    option_spec = {
+-        'qapifile': directives.unchanged_required
+-    }
++    option_spec = {"qapifile": directives.unchanged_required}
+     has_content = False
+ 
+     def new_serialno(self):
+         """Return a unique new ID string suitable for use as a node's ID"""
+         env = self.state.document.settings.env
+-        return 'qapidoc-%d' % env.new_serialno('qapidoc')
++        return "qapidoc-%d" % env.new_serialno("qapidoc")
+ 
+     def run(self):
+         env = self.state.document.settings.env
+-        qapifile = env.config.qapidoc_srctree + '/' + self.arguments[0]
++        qapifile = env.config.qapidoc_srctree + "/" + self.arguments[0]
+         qapidir = os.path.dirname(qapifile)
+ 
+         try:
+@@ -513,13 +524,14 @@ def do_parse(self, rstlist, node):
+         # plain self.state.nested_parse(), and so we can drop the saving
+         # of title_styles and section_level that kerneldoc.py does,
+         # because nested_parse_with_titles() does that for us.
+-        if Use_SSI:
++        if USE_SSI:
+             with switch_source_input(self.state, rstlist):
+                 nested_parse_with_titles(self.state, rstlist, node)
+         else:
+             save = self.state.memo.reporter
+             self.state.memo.reporter = AutodocReporter(
+-                rstlist, self.state.memo.reporter)
++                rstlist, self.state.memo.reporter
++            )
+             try:
+                 nested_parse_with_titles(self.state, rstlist, node)
+             finally:
+@@ -527,12 +539,12 @@ def do_parse(self, rstlist, node):
+ 
+ 
+ def setup(app):
+-    """ Register qapi-doc directive with Sphinx"""
+-    app.add_config_value('qapidoc_srctree', None, 'env')
+-    app.add_directive('qapi-doc', QAPIDocDirective)
++    """Register qapi-doc directive with Sphinx"""
++    app.add_config_value("qapidoc_srctree", None, "env")
++    app.add_directive("qapi-doc", QAPIDocDirective)
+ 
+-    return dict(
+-        version=__version__,
+-        parallel_read_safe=True,
+-        parallel_write_safe=True
+-    )
++    return {
++        "version": __version__,
++        "parallel_read_safe": True,
++        "parallel_write_safe": True,
++    }
 -- 
 2.45.0
 
