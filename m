@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEEAC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 17:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1A1C30658
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 17:08:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMW65-0006qA-R3; Wed, 26 Jun 2024 13:06:17 -0400
+	id 1sMW7E-0007Rj-4W; Wed, 26 Jun 2024 13:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMW64-0006pw-J3
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 13:06:16 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMW7C-0007RT-RZ
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 13:07:26 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMW63-00079o-0U
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 13:06:16 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-366de090da9so3197340f8f.1
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 10:06:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMW7B-0007DM-6g
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 13:07:26 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-42122ac2f38so5862655e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 10:07:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719421573; x=1720026373; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719421643; x=1720026443; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=inE83XdkTpfJZ2qFl+V3HYw0FLo/roOl5wWMzFlDjEI=;
- b=a9hdTHvMb7u1nGzOI/cfLfqkhYYiIFXv8bZs9f69SBQRdl5sT4sNYLOtAqY3UM0yvD
- y5HQqIfNrUlfzdBYGyIEUavxFp7rPDKU67OMD/bHxW4uPmu/Zgm5oBlrhnWVtWUKgVT2
- sLdI98IKgFKPhwgROCNTDDLMHvaMnzMVXIIOVA0NYDxZHXvwBS+n5EGhFbtHOFluFpuN
- ywM7bbeaNv+Bpn9xPPIP0VGXm83aOq+laY6MiGJs7DtJoWIP+XxmLrPRk6gUt6nR5arp
- JqKW7Xuyerauk0Vrx6c6cyQItyBec8NpSrIPFzMAJ3PYSfJ7JB03tq1eqMA39lQMlEAl
- c8Yw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ujgvp9qy9kh4XNanVSe8dOExLRTgaDQ/D5cPA5rx/og=;
+ b=XiLP7FjRpssPfoCRNiPxLhGjGEa5Ix5bjpfLFj5r31yvSCc3/u+wCrVW79ZvVzUfb8
+ QNv7EujSIaZarY1ichIqG+GvV7S6tzyUsRrxR0AdPYQ0azae1tKkoNyTJEnBmrrOxNSa
+ sQoqQPGN3yGg0xJfrMGx5Nmu9TaTj0oORipxUn4c4ZzE1NhbgsPVuGYFX5pjEm/xHdZr
+ /wEIHTVtsBlVDFNPII6heOy3duoimSacZW2e+rt9e8acSZL81WVhQ7x9/rDaZYVBFZMG
+ eSGi7ti6GetMFzjUKcd+o6IbLoySHJjvREEZ4X0BhMZmBE46FzzxUIHGdjVqzgqZFfzT
+ dE9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719421573; x=1720026373;
+ d=1e100.net; s=20230601; t=1719421643; x=1720026443;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=inE83XdkTpfJZ2qFl+V3HYw0FLo/roOl5wWMzFlDjEI=;
- b=Ltji32ljMLf7BOCpWCl+NeHg0hVEm/9HTLmuJnPOwt1gKW0/EWGq1uW+gx3Th2u0rr
- Z2ZngKxnIJjP+jk91LwgM+4WzIOZGL5NsZdN2fRbDweTUv194Ry2spNWxSdH1d+NONSb
- gqISShE9X0PqufekL9j/QG5rzWUlrKT9ya2Qf5N5dx+BcQULUSQr0xJRvwEwQ1NayVlB
- AXvaGJBjKOqPOzFX8X1GxNNYbaXiV6j60b2wUBtGdFmVMnFfx+ljj6iPdWoi3Zkt+6yu
- 9CFMKPRoIeMt40kPlAq9RJnM1y4XT1084Enu30Wc46A43Wb1uht8aDixPExccB5DXIsp
- CI+A==
+ bh=ujgvp9qy9kh4XNanVSe8dOExLRTgaDQ/D5cPA5rx/og=;
+ b=TekfzW86LYubg0kGW1fmg7V89BwpxHMPuCIANcmsytGO0tvAMClBcKgmGzIiV2Slh3
+ +msMvFBU4zkG7GfUTkGJzV4LIfAMtqAkVMfW8NyjGcSkJZq1EooIu0Lv2i0A3wMwntGz
+ qy4LzLPQh7TTFAHRM+2w6EvM4NYa4nkhFBlljJBEp4MA8BJvduoS4dqYc9gJEK1gp7T5
+ OrkSPtnUW+qATFuaiZoIk9tF0f/K3RjFwwg4MNOARL0nGKZBUOwSNoQvwalM9zHD43wg
+ chz4ke+JHgvo/67A8ol8b4Norl7JHAlqQDKxNP6PwKXQaKSID6qDwfsOk2HwKVHfRinQ
+ Bu/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX6J0YB09Jr/2VTPKo7YfsPi/O4KmF96wd2Hezz1azCqz7yDvlO3xPa9M5svuEHvr3D76BXUCEUTZXM+YsXxSA2cgjYNho=
-X-Gm-Message-State: AOJu0YypxGhqTWy3LoTATNbhjnvXIMzZZb04AN/wSlkNEhJE7yOMfjUC
- 0xmV1WDF0X/ePwtfL3Igk6GxqydZ6JQhAw8OZ7hkB57tpN/alsxCMI+Wkfs386lxftxv2sVA8kI
- O
-X-Google-Smtp-Source: AGHT+IGJFn802s0OWlIomec24jvR+as30k2gnZuYERilV7TldOV/QAtO9g1ia1hYXKNCWm+L0WSDqQ==
-X-Received: by 2002:adf:f083:0:b0:363:74a4:2ac4 with SMTP id
- ffacd0b85a97d-366e94d5ac7mr6157105f8f.40.1719421572922; 
- Wed, 26 Jun 2024 10:06:12 -0700 (PDT)
+ AJvYcCVIreGCqRFHe0AdfEOvq+Nqvl8vfH7Fl2yj/Uvhu+yH+hnlO8eebbOl3yMdxH0rqbaVV6+aRzShcHxQ0JbzcP95HePanao=
+X-Gm-Message-State: AOJu0YxOvJimR7r5DiLeBZoulTnHZ8DUUDUIgzmBnAdLcWMohjqOSICz
+ qKah0pOC2GjT1JeQtCWx+II2UdanwfTxacXii5pOgXelUWpFbAKyc7+BpxitSHg=
+X-Google-Smtp-Source: AGHT+IEGKR6unT757x9SBaW08pNFQd8M+J7xs8S4DH4YwHzKdblKgfzIhuNXWLg53uNjCMh4TGtkJA==
+X-Received: by 2002:a05:600c:68c6:b0:424:7443:e6d8 with SMTP id
+ 5b1f17b1804b1-425630fcde1mr2831885e9.9.1719421643603; 
+ Wed, 26 Jun 2024 10:07:23 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.234])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36730236a59sm1522499f8f.45.2024.06.26.10.06.12
+ 5b1f17b1804b1-424c8266ae7sm31920535e9.20.2024.06.26.10.07.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 10:06:12 -0700 (PDT)
-Message-ID: <0399c37b-e4cc-441d-874b-ba3feb537dc4@linaro.org>
-Date: Wed, 26 Jun 2024 19:06:11 +0200
+ Wed, 26 Jun 2024 10:07:22 -0700 (PDT)
+Message-ID: <ae8ae1e3-746d-4a38-9478-f765cbb3e2bb@linaro.org>
+Date: Wed, 26 Jun 2024 19:07:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ui/gtk: Negative Page number is not valid
-To: dongwon.kim@intel.com, qemu-devel@nongnu.org
-References: <20240626000835.248538-1-dongwon.kim@intel.com>
+Subject: Re: [PATCH 0/3] vl.c: select_machine(): improve error message
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, qemu-trivial@nongnu.org, armbru@redhat.com
+References: <20240626134305.432627-1-vsementsov@yandex-team.ru>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240626000835.248538-1-dongwon.kim@intel.com>
+In-Reply-To: <20240626134305.432627-1-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,69 +96,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dongwon,
+On 26/6/24 15:43, Vladimir Sementsov-Ogievskiy wrote:
 
-On 26/6/24 02:08, dongwon.kim@intel.com wrote:
-> From: Dongwon Kim <dongwon.kim@intel.com>
-> 
-> Negative page number means the page with that number does not
-> belong to the notebook so it shouldn't be used as a valid page
-> number in gd_vc_find_by_page. This function should just return
-> null in such case.
-> 
-> This change, however, will cause a segfault during detaching
-> /untabifying process in gtk_release_modifiers because the
-> current VC's page number suddenly becomes '-1' as soon as
-> the VC is detached, which makes gd_vc_find_by_page return
-> null. So gtk_release_modifiers should do the null check on
-> VC returned from gd_vc_find_by_page.
-> 
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-> ---
->   ui/gtk.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/ui/gtk.c b/ui/gtk.c
-> index 93b13b7a30..1f8523fd81 100644
-> --- a/ui/gtk.c
-> +++ b/ui/gtk.c
-> @@ -164,7 +164,7 @@ static VirtualConsole *gd_vc_find_by_page(GtkDisplayState *s, gint page)
+> Vladimir Sementsov-Ogievskiy (3):
+>    vl.c: select_machine(): use ERRP_GUARD instead of error propagation
+>    vl.c: select_machine(): use g_autoptr
+>    vl.c: select_machine(): add selected machine type to error message
 
-The caller should check gtk_notebook_get_current_page() != -1.
-
-We might assert(page >= 0) here.
-
->       for (i = 0; i < s->nb_vcs; i++) {
->           vc = &s->vc[i];
->           p = gtk_notebook_page_num(GTK_NOTEBOOK(s->notebook), vc->tab_item);
-> -        if (p == page) {
-> +        if (p > -1 && p == page) {
-
-Then this is not necessary.
-
->               return vc;
->           }
->       }
-         return NULL;
-
-I wonder about returning NULL, maybe just
-
-        g_assert_not_reached();
-
-> @@ -357,7 +357,7 @@ static void gtk_release_modifiers(GtkDisplayState *s)
->   {
->       VirtualConsole *vc = gd_vc_find_current(s);
->   
-> -    if (vc->type != GD_VC_GFX ||
-> +    if (!vc || vc->type != GD_VC_GFX ||
-
-Then this is not necessary.
-
->           !qemu_console_is_graphic(vc->gfx.dcl.con)) {
->           return;
->       }
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
