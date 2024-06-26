@@ -4,88 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40986C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092BEC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 11:10:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMQVK-0007eE-Sb; Wed, 26 Jun 2024 07:07:59 -0400
+	id 1sMQXG-0005k0-SO; Wed, 26 Jun 2024 07:09:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQVH-0007Vs-3s
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:07:56 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1sMQXA-0005WJ-Da
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:09:52 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMQVE-0004wa-Fa
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:07:54 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-70683d96d0eso2313960b3a.0
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:07:52 -0700 (PDT)
+ id 1sMQX7-0005IB-VJ
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 07:09:51 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1f6da06ba24so48171825ad.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 04:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719400070; x=1720004870;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719400188; x=1720004988;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IDtmLd4DIh+2XRkZ57QtXjyzkDOakOx1Ds4rKdXYuOE=;
- b=MmUcDohBTSvlo2NHH7APomDrwVolYb3Z3vp23AkMn2GWrmuomUSlqUufc+wRx5WM12
- SA0dhfZESVCBGOlnk87nanuXx3KtgT/8Kz3IAFs7oatxKFArO2oIRPeXlJ2GWDdJCcXn
- GWsxDNTk+hpiDHnMfnraAiMIG0fLr9nqHdyJsFyI5KNcElqCdHxlK6HWr8S/xjONmZ3m
- +0JCUMoCZsLQWKpfZEHc5QcdCVMZST0sfk15w43ppTJMFeg/yHFdFeEpcBtlxbZXB73j
- 5bZeV2/SnqPJUs6a+VadeyaO5pX8ji25Sd/fmLrGDwGXS4+QNRY9sIPgeCeBvuKhkBgU
- e7DA==
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=imzyvSBElsn5CvDFjciPKcWXkdE1van1cg6iWIofoSY=;
+ b=chhqXDHXyP2pPn0/POUtfPEzgQ5gTyH/tzMXAr7E1x1lhA0pgP9R2Uy1ENnQb6HMJ7
+ VulGjhHvixvnJhJepD+VrmwET6A/WgwhpNIp7mUtyvc9hgwZPr3mwVnxG3tZnoVxSPii
+ eVXna3voxfGXfS9SKsG8hJ9Ufiw8ixgIzedx9pZkFWp9/a67wTFPT3f6jxKlW5+icj5g
+ eCOU1JA8jFXFt6G+uOD+JxPVdC58L9/IzCeNBbFEHduJ0UgZphbWIABJQPN9RnzuUqhD
+ bi56xrXbbD7Ocvq9uV4D2DL54ji84aBl0MhmoysPyJhhN/NhPhw2Q0m45eRNffoLsmhF
+ JOdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719400070; x=1720004870;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IDtmLd4DIh+2XRkZ57QtXjyzkDOakOx1Ds4rKdXYuOE=;
- b=SmX7VXkpTzwecPd6yRJeOy2r6GM1bd307tUttXfnKUZfhK8HHfVSWPP+a2NS1dVd9/
- cYi6qch9RVwwkVLLfNDx3x7KUJH/g96+BDH2xJVh7/vBiN59uHsB3hhBGT++2g8sUVBY
- eSiZNkpXihgWlbzxfl8H78tuTk0UMoz9F3cwucVdvxplK+StVDqw5k7spriWm8pZ+ckJ
- dW4CVx8r6KK58uZmDFBNAmCcEkKj10K08udacSAtAjVtOMESxG7sudUHHAMF0oE/Uc4w
- dtLJb1OzAD6jbLSUfQABoslHTsjUby2Ij2f3Rpw53UiXEVzo/uD0VyCgl/9dRa62NSQ0
- j+Dw==
-X-Gm-Message-State: AOJu0Yyvz87bXMzGx7rmVha04OiO4RMfBbn20nupYLWQszU0SQMKgG7n
- 4hHMSrlYMML+HPjRDb4M5+vUtw9eyudPg+GvMJWqKxCOpxOpM6TTRa5E/OYUJz8=
-X-Google-Smtp-Source: AGHT+IEtTUgO/yYQ0iY6MlOqVPv57FtOgSJbQp3S4MxOFQ5jPw6w5cGtdccBLo9897IO/nsxIpFxsw==
-X-Received: by 2002:a05:6a00:22cc:b0:705:ddbf:5c05 with SMTP id
- d2e1a72fcca58-7066e52a7cbmr12746690b3a.11.1719400070579; 
- Wed, 26 Jun 2024 04:07:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719400188; x=1720004988;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=imzyvSBElsn5CvDFjciPKcWXkdE1van1cg6iWIofoSY=;
+ b=uUljoMaEpi5RaJoMCreJD3sO9mRsZRhurakGA7rBB8ooJhIWEDM7y+m1zTk2E+cUge
+ /2wdLq5I8tIB9OE9FsVrw/0yjVy0lszrYaznoO0GWPrPvoYY3gkyQqvlDG1RNsjAOZRo
+ 8DJu2ORsfEIcCsoH4Au88IE2IVaWUEjXJNjgnFcC2p+r2yxqOTZ1p+qlhUgGRqMWrizw
+ 2zwZKg8AATijK0iKAg+lYwxFVt+eNYvPEg7B0eD2KZSzL0Da24Cp8r4MYvmf9OXBBGiU
+ vWdykH6ERPURZrZIZ+sqVqiGfjPohgJ3Q2m70Y2LNM0J+g8jzST87uIYbDiRSEzuPQrp
+ xvFQ==
+X-Gm-Message-State: AOJu0YyMDIkBT9KU3qiCAO3cmGWDOurfcMoB1mihop0mD3Q57/exw8io
+ 2pp0edxturZQURAj64bYo+RTVuMFu4pi0Dsud+qbZFKNOq+e7S6J25XAYe3Kmzw=
+X-Google-Smtp-Source: AGHT+IEzOjaTkLaT2BqKu5ac11FPDXhoZ8h59+mSvzVI0ejWggv54XHCljgeWJnS79TqD9o9pDrCNg==
+X-Received: by 2002:a17:902:d4d2:b0:1f6:ef4f:19c3 with SMTP id
+ d9443c01a7336-1fa23f0716cmr120609735ad.1.1719400187870; 
+ Wed, 26 Jun 2024 04:09:47 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-7069d65dfc7sm2664394b3a.133.2024.06.26.04.07.45
+ d9443c01a7336-1f9eb2f0318sm97495165ad.2.2024.06.26.04.09.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 04:07:50 -0700 (PDT)
+ Wed, 26 Jun 2024 04:09:47 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Wed, 26 Jun 2024 20:06:35 +0900
-Subject: [PATCH 12/14] tests/qtest: Delete previous boot file
+Date: Wed, 26 Jun 2024 20:09:37 +0900
+Subject: [PATCH] tests/docker: Specify --userns keep-id for Podman
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240626-san-v1-12-f3cc42302189@daynix.com>
-References: <20240626-san-v1-0-f3cc42302189@daynix.com>
-In-Reply-To: <20240626-san-v1-0-f3cc42302189@daynix.com>
-To: Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+Message-Id: <20240626-podman-v1-1-f8c8daf2bb0a@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAPD2e2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDMyMD3YL8lNzEPF1LyxRT0xTjRDNDgyQloOKCotS0zAqwQdGxtbUAQbx
+ hTVgAAAA=
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
+ Thomas Huth <thuth@redhat.com>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, 
+ Beraldo Leal <bleal@redhat.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::633;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,58 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A test run may create boot files several times. Delete the previous boot
-file before creating a new one.
+Previously we are always specifying -u $(UID) to match the UID in the
+container with one outside. This causes a problem with rootless Podman.
+
+Rootless Podman remaps user IDs in the container to ones controllable
+for the current user outside. The -u option instructs Podman to use
+a specified UID in the container but does not affect the UID remapping.
+Therefore, the UID in the container can be remapped to some other UID
+outside the container. This can make the access to bind-mounted volumes
+fail because the remapped UID mismatches with the owner of the
+directories.
+
+Replace -u $(UID) with --userns keep-id, which fixes the UID remapping.
+This change is limited to Podman because Docker does not support
+--userns keep-id.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- tests/qtest/migration-test.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ tests/docker/Makefile.include | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index b7e3406471a6..5c0d669b6df3 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -129,12 +129,23 @@ static char *bootpath;
- #include "tests/migration/aarch64/a-b-kernel.h"
- #include "tests/migration/s390x/a-b-bios.h"
- 
-+static void bootfile_delete(void)
-+{
-+    unlink(bootpath);
-+    g_free(bootpath);
-+    bootpath = NULL;
-+}
-+
- static void bootfile_create(char *dir, bool suspend_me)
- {
-     const char *arch = qtest_get_arch();
-     unsigned char *content;
-     size_t len;
- 
-+    if (bootpath) {
-+        bootfile_delete();
-+    }
-+
-     bootpath = g_strdup_printf("%s/bootsect", dir);
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-         /* the assembled x86 boot sector should be exactly one sector large */
-@@ -164,13 +175,6 @@ static void bootfile_create(char *dir, bool suspend_me)
-     fclose(bootfile);
- }
- 
--static void bootfile_delete(void)
--{
--    unlink(bootpath);
--    g_free(bootpath);
--    bootpath = NULL;
--}
--
- /*
-  * Wait for some output in the serial output file,
-  * we get an 'A' followed by an endless string of 'B's
+diff --git a/tests/docker/Makefile.include b/tests/docker/Makefile.include
+index 8df50a0ca06f..708e3a72fb8a 100644
+--- a/tests/docker/Makefile.include
++++ b/tests/docker/Makefile.include
+@@ -207,7 +207,12 @@ docker-run: docker-qemu-src
+ 	$(call quiet-command,						\
+ 		$(RUNC) run 						\
+ 			--rm						\
+-			$(if $(NOUSER),,-u $(UID)) 			\
++			$(if $(NOUSER),,				\
++				$(if $(filter docker,$(RUNC)),		\
++					-u $(UID),			\
++					--userns keep-id		\
++				)					\
++			) 						\
+ 			--security-opt seccomp=unconfined		\
+ 			$(if $(DEBUG),-ti,)				\
+ 			$(if $(NETWORK),$(if $(subst $(NETWORK),,1),--net=$(NETWORK)),--net=none) \
 
+---
+base-commit: 74abb45dac6979e7ff76172b7f0a24e869405184
+change-id: 20240620-podman-99d55d3a610b
+
+Best regards,
 -- 
-2.45.2
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
