@@ -4,59 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D144C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 14:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E1AC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 15:19:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMTzF-0000qB-24; Wed, 26 Jun 2024 10:51:05 -0400
+	id 1sMUQ3-0004JZ-PR; Wed, 26 Jun 2024 11:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sMTzD-0000p8-8P; Wed, 26 Jun 2024 10:51:03 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sMTz9-0005UF-NT; Wed, 26 Jun 2024 10:51:03 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c16:1680:0:640:d42f:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A513260D92;
- Wed, 26 Jun 2024 17:50:54 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b645::1:29])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id eoRt0i0IXKo0-ps725Jpk; Wed, 26 Jun 2024 17:50:53 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1719413453;
- bh=6YFkVEVHcdtg+ey8WHEMcbq0FjjptYTHFhCj9XTAgY4=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=ndXFqpfOQCzCcHp48F6hRTm5gqRg/95XpfOcLm7MLjdusk2OYp4saQc6/1cAGEosE
- 3o1PWHb9fWwWXdeLREi7GIMSTH8j/66IlOjsHh5lPJr2kwhNbxARdPnFXKgrwGEwaF
- HBoGXFk3uc2miMA/4ngxLCWBdVe0AEVH6QnrgMcE=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- vsementsov@yandex-team.ru, jsnow@redhat.com, den@openvz.org,
- f.ebner@proxmox.com
-Subject: [PATCH v2 1/3] block/commit: implement final flush
-Date: Wed, 26 Jun 2024 17:50:36 +0300
-Message-Id: <20240626145038.458709-2-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240626145038.458709-1-vsementsov@yandex-team.ru>
-References: <20240626145038.458709-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sMUQ1-0004HC-0M
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 11:18:45 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sMUPy-0003BT-8z
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 11:18:44 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-362f62ae4c5so476108f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 08:18:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1719415119; x=1720019919; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=8OZ5fCpRab4CVaAsZUgtYKdZgyzyEBByCV3sPW01Tpo=;
+ b=CArr69MTCQO5mZG+JF06iZ1jblWM//y6KriZBIjbyfdI/rG1231Cd8Xvw3LEPmlcXy
+ 6sTp1ZrNe1zHHJOCWA8mNz5qNK7/CGcc4ogIpgMc10fqMn4i2x6wyHNo12B5Gakhhwar
+ 2R2burtgiMS21QhaDC2COCpPZDgzkRBkjUf7Y4GN6e0c4cMjjv+5Pwqsd4PYaiHGjS2B
+ 8GFOTg9gBh6pxPLgL9EXO6Gc4F8dYe45a2XHTUeQxTQ7NnDGxg3F1H6fQ5TCK4q3UJcd
+ oRXeAfAg6cLHjPmsq6nCM70G6LifDPTlmOl6N8TOsadCC4XcqHND8qahCCZT6tu5cN4G
+ ucwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719415119; x=1720019919;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8OZ5fCpRab4CVaAsZUgtYKdZgyzyEBByCV3sPW01Tpo=;
+ b=hgmbqmzYTfuFbJBrx+VFzz9HUeSdDE30+oInt9oNFiXSoazjlEy+pYShc51mQzqBOy
+ UVHueWFqP2984kpydwxpImLY2iTbW4tqn52gL3Pv93PoJfwCcMHUtZjra6lx2GM6pQgi
+ xOHmahKUOKXf2FzuQkvHvPyRIRI63f60pQctbUZU7t4eK3x2Bah/8hxsVc/qjTc4XLb6
+ w+lycUgLeMgNW59NRSx8N2qYjl+t/jOYE63tTvDmaMCwwFwSHAgP+pjqLEyqS8HdNs0v
+ rzVz2g/CmL2D09rZj6Igq3dvQHvWYL+kHoUWytWTY7MUvwZ5z/hp4gZxripce3U8p6bk
+ cvBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTifOPKYe0La2YSBtr1EPDcYeo2M7syfrJAYd8BeRtmGGYpoPOAIO5Qw+r+rF7b2Qxh5ZZjPaS363hr4FIZBaYP/jFPyw=
+X-Gm-Message-State: AOJu0Yz2SuVmsd+sK+diCyd9BtYuLGxwUzpJBEz8jp+lE5qM7fRYyATB
+ PzHpMqmLZOo2oiJMLqp/3Lu3Cizaeg+AqdIZ8OMscPfzPHWhF+f91QJKc/U9FW8=
+X-Google-Smtp-Source: AGHT+IETDOjl4Gfjsk3waV8J9p4ASVJWCZNyj9GDrDIRyPTX3Ettn79833csYhPp1DHZCyLgY93kEQ==
+X-Received: by 2002:a05:6000:1f8c:b0:366:df58:1fd9 with SMTP id
+ ffacd0b85a97d-366e32f6c66mr13243830f8f.24.1719415119365; 
+ Wed, 26 Jun 2024 08:18:39 -0700 (PDT)
+Received: from localhost ([194.25.246.6]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-424c8251dc1sm29592905e9.17.2024.06.26.08.18.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Jun 2024 08:18:38 -0700 (PDT)
+Date: Wed, 26 Jun 2024 17:18:38 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Alexei Filippov <alexei.filippov@syntacore.com>
+Cc: alistair.francis@wdc.com, alistair23@gmail.com, 
+ apatel@ventanamicro.com, bin.meng@windriver.com, dbarboza@ventanamicro.com, 
+ liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com
+Subject: Re: [PATCH v8] target/riscv/kvm/kvm-cpu.c: kvm_riscv_handle_sbi()
+ fail with vendor-specific SBI
+Message-ID: <20240626-1420003b7d88d892be22a719@orel>
+References: <20240527-3510206a25da720148c06a43@orel>
+ <20240625150254.38790-1-alexei.filippov@syntacore.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240625150254.38790-1-alexei.filippov@syntacore.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=ajones@ventanamicro.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,91 +98,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Actually block job is not completed without the final flush. It's
-rather unexpected to have broken target when job was successfully
-completed long ago and now we fail to flush or process just
-crashed/killed.
+On Tue, Jun 25, 2024 at 06:02:54PM GMT, Alexei Filippov wrote:
+> kvm_riscv_handle_sbi() may return not supported return code to not
+> trigger qemu abort with vendor-specific sbi.
+> 
+> Add new error path to provide proper error in case of
+> qemu_chr_fe_read_all() may not return sizeof(ch), because exactly zero
+> just means we failed to read input, which can happen, so
+> telling the SBI caller we failed to read, but telling the caller of this
+> function that we successfully emulated the SBI call, is correct. However,
+> anything else, other than sizeof(ch), means something unexpected happened,
+> so we should return an error.
+> 
+> Added SBI related return code's defines.
+> 
+> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
+> Fixes: 4eb47125 ("target/riscv: Handle KVM_EXIT_RISCV_SBI exit")
+> ---
+> Changes since v7:
+> 		- Fix error handling according to Andrew Jones suggestion.
+>  target/riscv/kvm/kvm-cpu.c         |  9 +++++----
+>  target/riscv/sbi_ecall_interface.h | 12 ++++++++++++
+>  2 files changed, 17 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 235e2cdaca..1afbabe19f 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -1515,19 +1515,20 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+>          ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
+>          if (ret == sizeof(ch)) {
+>              run->riscv_sbi.ret[0] = ch;
+> +        } else if (ret == 0) {
+> +            run->riscv_sbi.ret[0] = SBI_ERR_FAILURE;
+>          } else {
+> -            run->riscv_sbi.ret[0] = -1;
+> +            ret = -1;
+>          }
+> -        ret = 0;
 
-Mirror job already has mirror_flush() for this. So, it's OK.
+It should be
 
-Do this for commit job too.
-
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- block/commit.c | 41 +++++++++++++++++++++++++++--------------
- 1 file changed, 27 insertions(+), 14 deletions(-)
-
-diff --git a/block/commit.c b/block/commit.c
-index 7c3fdcb0ca..81971692a2 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -134,6 +134,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-     int64_t n = 0; /* bytes */
-     QEMU_AUTO_VFREE void *buf = NULL;
-     int64_t len, base_len;
-+    bool need_final_flush = true;
- 
-     len = blk_co_getlength(s->top);
-     if (len < 0) {
-@@ -155,8 +156,8 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
- 
-     buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
- 
--    for (offset = 0; offset < len; offset += n) {
--        bool copy;
-+    for (offset = 0; offset < len || need_final_flush; offset += n) {
-+        bool copy = false;
-         bool error_in_source = true;
- 
-         /* Note that even when no rate limit is applied we need to yield
-@@ -166,22 +167,34 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-         if (job_is_cancelled(&s->common.job)) {
-             break;
-         }
--        /* Copy if allocated above the base */
--        ret = blk_co_is_allocated_above(s->top, s->base_overlay, true,
--                                        offset, COMMIT_BUFFER_SIZE, &n);
--        copy = (ret > 0);
--        trace_commit_one_iteration(s, offset, n, ret);
--        if (copy) {
--            assert(n < SIZE_MAX);
- 
--            ret = blk_co_pread(s->top, offset, n, buf, 0);
--            if (ret >= 0) {
--                ret = blk_co_pwrite(s->base, offset, n, buf, 0);
--                if (ret < 0) {
--                    error_in_source = false;
-+        if (offset < len) {
-+            /* Copy if allocated above the base */
-+            ret = blk_co_is_allocated_above(s->top, s->base_overlay, true,
-+                                            offset, COMMIT_BUFFER_SIZE, &n);
-+            copy = (ret > 0);
-+            trace_commit_one_iteration(s, offset, n, ret);
-+            if (copy) {
-+                assert(n < SIZE_MAX);
-+
-+                ret = blk_co_pread(s->top, offset, n, buf, 0);
-+                if (ret >= 0) {
-+                    ret = blk_co_pwrite(s->base, offset, n, buf, 0);
-+                    if (ret < 0) {
-+                        error_in_source = false;
-+                    }
-                 }
-             }
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 235e2cdaca1a..9946afb4eade 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1515,10 +1515,12 @@ static int kvm_riscv_handle_sbi(CPUState *cs, struct kvm_run *run)
+         ret = qemu_chr_fe_read_all(serial_hd(0)->be, &ch, sizeof(ch));
+         if (ret == sizeof(ch)) {
+             run->riscv_sbi.ret[0] = ch;
+-        } else {
++            ret = 0;
++        } else if (ret == 0) {
+             run->riscv_sbi.ret[0] = -1;
 +        } else {
-+            assert(need_final_flush);
-+            ret = blk_co_flush(s->base);
-+            if (ret < 0) {
-+                error_in_source = false;
-+            } else {
-+                need_final_flush = false;
-+            }
++            ret = -1;
          }
-+
-         if (ret < 0) {
-             BlockErrorAction action =
-                 block_job_error_action(&s->common, s->on_error,
--- 
-2.34.1
+-        ret = 0;
+         break;
+     case SBI_EXT_DBCN:
+         kvm_riscv_handle_sbi_dbcn(cs, run);
 
+I misled you on that first 'ret = 0' addition, we need that, but I've
+pointed out a few times that we should use '-1' instead of SBI_ERR_FAILURE
+and why.
+
+Thanks,
+drew
+
+>          break;
+>      case SBI_EXT_DBCN:
+>          kvm_riscv_handle_sbi_dbcn(cs, run);
+>          break;
+>      default:
+>          qemu_log_mask(LOG_UNIMP,
+> -                      "%s: un-handled SBI EXIT, specific reasons is %lu\n",
+> +                      "%s: Unhandled SBI exit with extension-id %lu\n",
+>                        __func__, run->riscv_sbi.extension_id);
+> -        ret = -1;
+> +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
+>          break;
+>      }
+>      return ret;
+> diff --git a/target/riscv/sbi_ecall_interface.h b/target/riscv/sbi_ecall_interface.h
+> index 7dfe5f72c6..4df0accd78 100644
+> --- a/target/riscv/sbi_ecall_interface.h
+> +++ b/target/riscv/sbi_ecall_interface.h
+> @@ -86,4 +86,16 @@
+>  #define SBI_EXT_VENDOR_END              0x09FFFFFF
+>  /* clang-format on */
+>  
+> +/* SBI return error codes */
+> +#define SBI_SUCCESS                  0
+> +#define SBI_ERR_FAILURE             -1
+> +#define SBI_ERR_NOT_SUPPORTED       -2
+> +#define SBI_ERR_INVALID_PARAM       -3
+> +#define SBI_ERR_DENIED              -4
+> +#define SBI_ERR_INVALID_ADDRESS     -5
+> +#define SBI_ERR_ALREADY_AVAILABLE   -6
+> +#define SBI_ERR_ALREADY_STARTED     -7
+> +#define SBI_ERR_ALREADY_STOPPED     -8
+> +#define SBI_ERR_NO_SHMEM            -9
+> +
+>  #endif
+> -- 
+> 2.34.1
+> 
 
