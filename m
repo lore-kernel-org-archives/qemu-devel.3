@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C43EC30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 23:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD49C27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 23:59:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMcWO-0007q4-KN; Wed, 26 Jun 2024 19:57:52 -0400
+	id 1sMcWH-0007ku-2f; Wed, 26 Jun 2024 19:57:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sMcWL-0007na-JH
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 19:57:49 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1sMcWF-0007kQ-OO
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 19:57:43 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sMcWJ-0005Xp-Bh
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 19:57:49 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-7182a634815so4022090a12.3
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 16:57:46 -0700 (PDT)
+ id 1sMcWB-0005WJ-Uc
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 19:57:42 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7065a2f4573so4282563b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 16:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1719446266; x=1720051066;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1719446258; x=1720051058;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WsjwmkKnlLSq/GJgOTR86moFb+I/3C1xyyIh/oZffps=;
- b=0bTmu71FcVJBlFbFXXdyFr0/PM4zlxzHKtP4k77ZG1s5m8DwoYha5KLM7gZ7BxxSwU
- zozmXPuzES7r2kofxKGO5NewToYKWjl5P/ZpzOBDGIMgki3o2TjQUyNbEw0HTyIQ741R
- y+F6/Ap6Lu/FteaW3g4bDGo5VGv9AGBK8q9CdiM6HCWB2QlCQHhcf3HKUJK3nz9XMjRB
- 2V1F1XjDddsNYBI96i0A8JoHxiOl54bNjSrARkp31vXx3kd8d3yUKp2DOai2Kl5O4dYw
- E8JVQLRhenmVPy6QuW6bnxkMoXrALB9lnZU6pwUpdWY6RWgeB/RZGWw4kueKmEzXx+Li
- mwHA==
+ :reply-to; bh=yfA8kZLlWPSq5Lhmc8PIv081g1iqyyY7M5czamR1zeA=;
+ b=1GcHd0vfAhQm+6jFWNQ95zBhKgGwlI23eLzP0/EDZZ+UwS7plcc3DqBEQgb9GolHd5
+ ZB5X/wAYC1Nn4uSL0V1OAzR64HbKYKLGp8Ck6cZFbQsAPBRh2BAynOYssTdSvOwe/rQi
+ 9ZB4aswCsITzzyMrWgXrGJzNQ4Mn1lrhDAaxTr5MsaD0mXBUtFinSP88xskalEry8NTQ
+ loPlYf3/3lFRCL/iscIw5C2RP4LxwwcW+Z2d2p0kCEHAgyWL8diMLGaxzc2MjpdstXHw
+ JlMT8u58GlY64TUPXZsoOmp3AfN6buVXl1D0bhvb+2olB4iNwNvndWlikzskF0Fckcuz
+ K85g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719446266; x=1720051066;
+ d=1e100.net; s=20230601; t=1719446258; x=1720051058;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WsjwmkKnlLSq/GJgOTR86moFb+I/3C1xyyIh/oZffps=;
- b=udZjEDhhGdRhXAgW4X0xNw5/Nl8vfmoOxV2SAUHbaEbKlpdXv3T5wE/n+DU4JFV2H5
- hBriTF95npr6ZY9yI8gXXPyIWghegByYe0vvTHvRRt2lYrgwESBwElAnxWpRhguRvq8p
- EOwbh/GiN7ZOpY/ki98JB0s8BGnyDe11jdW5fixEmCfMSVlcd3jSJsUyon7nU0eGOU4/
- dZGyXrVTtNqJlgY5cpajgxkg0exFpzYKLKN/aYXElh/pWvPrpcjcTECzSKk2PRsMcEq+
- POqQ3NiEgg7r/+8tMh0Qacy0lvAT6/Vwo78wiRM1psWUsxkfCWSFZNVowfNeuhImoHiO
- WKFA==
+ bh=yfA8kZLlWPSq5Lhmc8PIv081g1iqyyY7M5czamR1zeA=;
+ b=Xe5GmerTt1sPRxB8gjuMMKsiIl8fyYhqfAojs/wWmncb3Fg3IPiWZR/wyoM52tIejw
+ /rTECAFSZcC/YHynn0Y47x1HQcKf21SBQo3DR7+03winimglE3fDFI12PlgThfAzx5Ur
+ r2TB7RHaSBRlzYf42Jb1ooFDQN6Fzte97owlr6TbE+KXsWcAWpiMBsrYruh81l9UpHLH
+ DofHWkg612Kkei0um8I36r7gF+DvAPb9lZhR0wMPu7g9CuaNBFFr4wiE1kxSW8qgv8h3
+ 8jOFz0p3stMoP5RveWVE3V87lzL/iDXzY9/JC7yVmQj2kubUXO0YRgyqVyVE/ZPX55gC
+ DM4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3qfAOFimnnMOaBIRtxMgReJTlmbuP9O6RqeUmGoB38AZlcMDwZcRd2qcnFt/NHp2UE0AXOjvsEnQOBjTjjG+/CteF8NM=
-X-Gm-Message-State: AOJu0YwIbHmVzVpKBcz6gkC5Y9+swG8FHAdCaeAIGz5OV9QqZ54ZukwX
- drFyY7YBtvCHqIE+31TpIpR1+FOdGx/XowSfFMXus9gJ56magkgv3xw6newUDNY=
-X-Google-Smtp-Source: AGHT+IHurjPf1NI+J9uvgCxuFXA100/cWQaaewfkhz9NvRYDi+IxTvWp98DwyzYg/nGGJv48GcY0yQ==
-X-Received: by 2002:a05:6a20:7a97:b0:1bd:22b6:121d with SMTP id
- adf61e73a8af0-1bd22b61306mr5671931637.52.1719446265845; 
- Wed, 26 Jun 2024 16:57:45 -0700 (PDT)
+ AJvYcCV+bmKsgqQ5G3ffxE5eP9HVJ2CKXYyysn8CiKDDFGKuoj9SnZWpN31Nr0q1EBSpfYEX3WUAZgj5Boysc4FTMOIfm45xdcw=
+X-Gm-Message-State: AOJu0YwozUrzCzugK+WUio3CekpCJuZtzDrAow3hiP+5r4KkAvcfQnJt
+ XLkqcb/OFV361HyiQ+PmC9/VgCbTRaaG65sN/PeNE0+h6zl3Bt8F9owIHBs/L44=
+X-Google-Smtp-Source: AGHT+IEI0UGaUstHNn6efoVnqxG7CxRjYut0FhkLoArJx7zzyiJtzp6cgVw4oMYSYOh3pQrJUUfzow==
+X-Received: by 2002:a05:6a21:183:b0:1be:d032:f002 with SMTP id
+ adf61e73a8af0-1bed032f1demr213644637.55.1719446258620; 
+ Wed, 26 Jun 2024 16:57:38 -0700 (PDT)
 Received: from atishp.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1faac998398sm630965ad.225.2024.06.26.16.57.44
+ d9443c01a7336-1faac998398sm630965ad.225.2024.06.26.16.57.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Jun 2024 16:57:45 -0700 (PDT)
+ Wed, 26 Jun 2024 16:57:37 -0700 (PDT)
 From: Atish Patra <atishp@rivosinc.com>
-Date: Wed, 26 Jun 2024 16:57:28 -0700
-Subject: [PATCH v7 08/11] target/riscv: Enforce WARL behavior for
- scounteren/hcounteren
+Date: Wed, 26 Jun 2024 16:57:24 -0700
+Subject: [PATCH v7 04/11] target/riscv: Add cycle & instret privilege mode
+ filtering definitions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240626-smcntrpmf_v7-v7-8-bb0f10af7fa9@rivosinc.com>
+Message-Id: <20240626-smcntrpmf_v7-v7-4-bb0f10af7fa9@rivosinc.com>
 References: <20240626-smcntrpmf_v7-v7-0-bb0f10af7fa9@rivosinc.com>
 In-Reply-To: <20240626-smcntrpmf_v7-v7-0-bb0f10af7fa9@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Cc: Rajnesh Kanwal <rkanwal@rivosinc.com>, 
  Atish Patra <atishp@rivosinc.com>, palmer@dabbelt.com, liwei1518@gmail.com, 
  zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- dbarboza@ventanamicro.com, alistair.francis@wdc.com
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ Kaiwen Xue <kaiwenx@rivosinc.com>
 X-Mailer: b4 0.15-dev-13183
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=atishp@rivosinc.com; helo=mail-pg1-x52f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=atishp@rivosinc.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,47 +100,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-scounteren/hcountern are also WARL registers similar to mcountern.
-Only set the bits for the available counters during the write to
-preserve the WARL behavior.
+From: Kaiwen Xue <kaiwenx@rivosinc.com>
 
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
+This adds the definitions for ISA extension smcntrpmf.
+
+Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
 ---
- target/riscv/csr.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ target/riscv/cpu.h      |  6 ++++++
+ target/riscv/cpu_bits.h | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index e4adfa324efe..6c1a884eec82 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2994,7 +2994,11 @@ static RISCVException read_scounteren(CPURISCVState *env, int csrno,
- static RISCVException write_scounteren(CPURISCVState *env, int csrno,
-                                        target_ulong val)
- {
--    env->scounteren = val;
-+    RISCVCPU *cpu = env_archcpu(env);
-+
-+    /* WARL register - disable unavailable counters */
-+    env->scounteren = val & (cpu->pmu_avail_ctrs | COUNTEREN_CY | COUNTEREN_TM |
-+                             COUNTEREN_IR);
-     return RISCV_EXCP_NONE;
- }
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 46faefd24e09..c5d289e5f4b9 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -339,6 +339,12 @@ struct CPUArchState {
  
-@@ -3653,7 +3657,11 @@ static RISCVException read_hcounteren(CPURISCVState *env, int csrno,
- static RISCVException write_hcounteren(CPURISCVState *env, int csrno,
-                                        target_ulong val)
- {
--    env->hcounteren = val;
-+    RISCVCPU *cpu = env_archcpu(env);
-+
-+    /* WARL register - disable unavailable counters */
-+    env->hcounteren = val & (cpu->pmu_avail_ctrs | COUNTEREN_CY | COUNTEREN_TM |
-+                             COUNTEREN_IR);
-     return RISCV_EXCP_NONE;
- }
+     uint32_t mcountinhibit;
  
++    /* PMU cycle & instret privilege mode filtering */
++    target_ulong mcyclecfg;
++    target_ulong mcyclecfgh;
++    target_ulong minstretcfg;
++    target_ulong minstretcfgh;
++
+     /* PMU counter state */
+     PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
+ 
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index c257c5ed7dc9..5faa817453bb 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -397,6 +397,10 @@
+ /* Machine counter-inhibit register */
+ #define CSR_MCOUNTINHIBIT   0x320
+ 
++/* Machine counter configuration registers */
++#define CSR_MCYCLECFG       0x321
++#define CSR_MINSTRETCFG     0x322
++
+ #define CSR_MHPMEVENT3      0x323
+ #define CSR_MHPMEVENT4      0x324
+ #define CSR_MHPMEVENT5      0x325
+@@ -427,6 +431,9 @@
+ #define CSR_MHPMEVENT30     0x33e
+ #define CSR_MHPMEVENT31     0x33f
+ 
++#define CSR_MCYCLECFGH      0x721
++#define CSR_MINSTRETCFGH    0x722
++
+ #define CSR_MHPMEVENT3H     0x723
+ #define CSR_MHPMEVENT4H     0x724
+ #define CSR_MHPMEVENT5H     0x725
+@@ -884,6 +891,28 @@ typedef enum RISCVException {
+ /* PMU related bits */
+ #define MIE_LCOFIE                         (1 << IRQ_PMU_OVF)
+ 
++#define MCYCLECFG_BIT_MINH                 BIT_ULL(62)
++#define MCYCLECFGH_BIT_MINH                BIT(30)
++#define MCYCLECFG_BIT_SINH                 BIT_ULL(61)
++#define MCYCLECFGH_BIT_SINH                BIT(29)
++#define MCYCLECFG_BIT_UINH                 BIT_ULL(60)
++#define MCYCLECFGH_BIT_UINH                BIT(28)
++#define MCYCLECFG_BIT_VSINH                BIT_ULL(59)
++#define MCYCLECFGH_BIT_VSINH               BIT(27)
++#define MCYCLECFG_BIT_VUINH                BIT_ULL(58)
++#define MCYCLECFGH_BIT_VUINH               BIT(26)
++
++#define MINSTRETCFG_BIT_MINH               BIT_ULL(62)
++#define MINSTRETCFGH_BIT_MINH              BIT(30)
++#define MINSTRETCFG_BIT_SINH               BIT_ULL(61)
++#define MINSTRETCFGH_BIT_SINH              BIT(29)
++#define MINSTRETCFG_BIT_UINH               BIT_ULL(60)
++#define MINSTRETCFGH_BIT_UINH              BIT(28)
++#define MINSTRETCFG_BIT_VSINH              BIT_ULL(59)
++#define MINSTRETCFGH_BIT_VSINH             BIT(27)
++#define MINSTRETCFG_BIT_VUINH              BIT_ULL(58)
++#define MINSTRETCFGH_BIT_VUINH             BIT(26)
++
+ #define MHPMEVENT_BIT_OF                   BIT_ULL(63)
+ #define MHPMEVENTH_BIT_OF                  BIT(31)
+ #define MHPMEVENT_BIT_MINH                 BIT_ULL(62)
 
 -- 
 2.34.1
