@@ -4,84 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5583C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC35C30653
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 12:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMRdg-0003dc-J2; Wed, 26 Jun 2024 08:20:40 -0400
+	id 1sMRze-0002Zn-It; Wed, 26 Jun 2024 08:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sMRde-0003d9-CD
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:20:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sMRzb-0002ZG-AK
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:43:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sMRdb-0004qn-D7
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:20:38 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sMRzW-0000aC-GV
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 08:43:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719404433;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1719405793;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9fUBakjLTQPkSGn5Z6zK8SbfgIplgj1ZAGjc7ngQQ3Q=;
- b=IygizeZl4cCpplOVEhjsGEAwNkOaCFOsoVpZZLddc/8Lewp5o/jbJobU76lc6WipFRFxx2
- /iJB3uomgSFS+K/KX520qnnwQv+4Syk+Gx28jtCpElxpHAjDtHt/jhPBT9e7U5OCBG0NeG
- 8/fc0ybv198m98rDwYsJLAIFDfWeX1I=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-76-GQIs5U0XMM6ZuHAO4nlUZA-1; Wed,
- 26 Jun 2024 08:20:28 -0400
-X-MC-Unique: GQIs5U0XMM6ZuHAO4nlUZA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6E8C31956094; Wed, 26 Jun 2024 12:20:26 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.50])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A38B1956051; Wed, 26 Jun 2024 12:20:22 +0000 (UTC)
-Date: Wed, 26 Jun 2024 13:20:18 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Joao Martins <joao.m.martins@oracle.com>
-Cc: Peter Xu <peterx@redhat.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>, qemu-devel@nongnu.org,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, farosas@suse.de, eblake@redhat.com,
- armbru@redhat.com
-Subject: Re: [PATCH RFC 2/2] migration: abort on destination if switchover
- limit exceeded
-Message-ID: <ZnwHgi0i6vqdrXfT@redhat.com>
-References: <20240621143221.198784-1-elena.ufimtseva@oracle.com>
- <20240621143221.198784-3-elena.ufimtseva@oracle.com>
- <ZnnL42_iDip3hfUh@x1n>
- <9eeea2a9-b3ef-4791-94de-fb06ad2bd9b4@oracle.com>
- <ZnrZ9W6WpvmDBpgv@x1n> <ZnsOdiHACtL90f3J@redhat.com>
- <9b6c50d2-5c42-48b2-8e0b-b6304f225679@oracle.com>
- <Znv81nAGJRb85wBs@redhat.com>
- <32366d3f-453e-4f34-98e6-70cbf83f0490@oracle.com>
+ bh=OOfnJ7jDzdU/A2Gk7+8IYysr5m9GuHyFj+n1x5ffO1s=;
+ b=Ab8U91/N91yoM/Z/FV+P1kSW272KNoNlgoVEC8diSQ9IvPwmpFIPvRq3Jj+KzshYVG00Ex
+ rnyP18XeoIifRUmcUe2z/TTKEmIC4/N3C6+slntqB4x2hiHGwb32d3WXAalmZsSnn7DyXc
+ 5l9Qi5rN3lNxbB8Gl2Q3kZEKBNdMi1c=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-447-v_GfFGNvMDKdWabADbcdHA-1; Wed, 26 Jun 2024 08:43:12 -0400
+X-MC-Unique: v_GfFGNvMDKdWabADbcdHA-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-444c70c9171so101802201cf.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 05:43:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719405792; x=1720010592;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OOfnJ7jDzdU/A2Gk7+8IYysr5m9GuHyFj+n1x5ffO1s=;
+ b=nhibUOvFyjg6jFw+x1FF2VI65x9jD/AJbHU0+LW8nJ4W2oX47xY9bG+c21Fbqkj146
+ 4qMWPC4NDZC9cA0qGa2NB+TH1+kK/YP4btWfum6aGyOokOcigwNzVquXF0vrEAddXjVC
+ ntEys2p08W3OAIWggCuXXNB1dkkXAHhOY75M9cg+TbS8gSgLGngN1wz+qCUnpf5x2DHU
+ X7wlBEqG8zhfqaZJwgbHpmYlBKz2+stjn9PWOFDTUxWLMlJTyDiWLw3xytqGQ8JVE2cK
+ F6KdqZspU/B4GEJJnaewkGuFvdE4NWXS771haO2RunpK53YrQ/alR3AYku6Z2yIROw9q
+ GCsg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3R+nJXiBBZrKZFKj7jM7fNdAMq14SpRVG3g61It4swTUUNfEP7IMkFqWPWm6Ujx4624zGNnlaMQUJD68u/yTPRE8u/Gw=
+X-Gm-Message-State: AOJu0Yy4AUUk5H9dBA9Fufa5cXdFXkBsTHB7ddguPqx37dxHnDj4fiGG
+ jtRYmlEdmpg4arLsm4rskenvd3Vs0/I5dC5MmfqTpRyN2YQzORLKv6O3saJvnMJ1twgykoJeL60
+ ECa1uL7rTYo+JAMcCEq7qXou72H1bx1/zEZ8BZ4kn0gMGpxBFmmY5
+X-Received: by 2002:a05:622a:104:b0:444:f877:18aa with SMTP id
+ d75a77b69052e-444f8771ebamr51492461cf.60.1719405791871; 
+ Wed, 26 Jun 2024 05:43:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGv89OYmc1AoPL//kT0T2CnsBmsrLMFXj4APzCMQHQfgU3xKwvlrzQWncRGeEO4MrJnITyCIQ==
+X-Received: by 2002:a05:622a:104:b0:444:f877:18aa with SMTP id
+ d75a77b69052e-444f8771ebamr51492221cf.60.1719405791498; 
+ Wed, 26 Jun 2024 05:43:11 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-444c2b83fc8sm66951111cf.43.2024.06.26.05.43.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Jun 2024 05:43:11 -0700 (PDT)
+Message-ID: <f4849fe4-1f6a-42a9-96e5-f7179c52d05d@redhat.com>
+Date: Wed, 26 Jun 2024 14:43:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] HostIOMMUDevice : remove Error handle from
+ get_iova_ranges callback
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
+ jean-philippe@linaro.org, peter.maydell@linaro.org, yanghliu@redhat.com,
+ zhenzhong.duan@intel.com, alex.williamson@redhat.com
+References: <20240626082727.1278530-1-eric.auger@redhat.com>
+ <20240626082727.1278530-4-eric.auger@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240626082727.1278530-4-eric.auger@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <32366d3f-453e-4f34-98e6-70cbf83f0490@oracle.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,84 +104,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 26, 2024 at 01:12:15PM +0100, Joao Martins wrote:
-> On 26/06/2024 12:34, Daniel P. Berrangé wrote:
-> > On Wed, Jun 26, 2024 at 12:29:41PM +0100, Joao Martins wrote:
-> >> On 25/06/2024 19:37, Daniel P. Berrangé wrote:
-> >>> On Tue, Jun 25, 2024 at 10:53:41AM -0400, Peter Xu wrote:
-> >>>> Then the question is how should we suggest the user to specify these two
-> >>>> parameters.
-> >>>>
-> >>>> The cover letter used:
-> >>>>
-> >>>>   migrate_set_parameter downtime-limit 300
-> >>>>   migrate_set_parameter switchover-limit 10
-> >>>
-> >>> What this means is that in practice the total downtime limit
-> >>> is 310 ms, however, expressing this as two parameters is
-> >>> incredibly inflexible.
-> >>>
-> >>> If the actual RAM transfer downtime only took 50 ms, then why
-> >>> should the switchover downtime still be limited to 10ms, when
-> >>> we've still got a budget of 250 ms that was unused.
-> >>>
-> >>
-> >> The downtime limit is 300, it's more than you are giving something *extra* 10ms
-> >> when you switchover regardless of where that's spent.
-> >>
-> >> If it makes it easier to understand you could see this parameter as:
-> >>
-> >> 'downtime-limit-max-error' = 10 ms
-> >>
-> >> The name as proposed by the RFC was meant to honor what the error margin was
-> >> meant for: to account for extra time during switchover. Adding this inside
-> >> downtime-limit wouldn't work as it otherwise would be used solely for RAM
-> >> transfer during precopy.
-> >>
-> >>> IOW, if my VM tolerates a downtime of 310ms, then I want that
-> >>> 310ms spread across the RAM transfer downtime and switchover
-> >>> downtime in *any* ratio. ALl that matters is the overall
-> >>> completion time.
-> >>>
-> >> That still happens with this patches, no specific budget is given to each.
-> > 
-> > If no specific budget is given to each, then IMHO adding the second
-> > parameter is pointless & misleading. 
+On 6/26/24 10:26 AM, Eric Auger wrote:
+> The error handle argument is not used anywhere. let's remove it.
 > 
-> That is contradictory with your earlier statement.
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-I don't think it is.
 
-> You redacted the part where I describe how this works in *the worst case* if the
-> entire downtime-limit is used for RAM transfer then the switchover-limit might
-> *implicitly* act as an budget:
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   include/sysemu/host_iommu_device.h | 3 +--
+>   hw/vfio/container.c                | 2 +-
+>   hw/vfio/iommufd.c                  | 2 +-
+>   hw/virtio/virtio-iommu.c           | 2 +-
+>   4 files changed, 4 insertions(+), 5 deletions(-)
 > 
-> | Though implicitly if downtime-limit captures only RAM transfer, then in theory
-> | if you're migrating a busy guest that happens to meet the SLA say
-> | expected-downtime=290, then you have a total of 20 for switchover (thanks to
-> | the extra 10 used in switchover-limit/downtime-limit-max-error 10).
-> 
-> I am confused with what to make here. If budget is bad because any ratio should
-> be used if available, but then the added parameter doesn't care about ratios
-> specifically but *can* act as switchover ratio when RAM dominates
-> downtime-limit. But now no budget is associated is also bad ... then what's your
-> middle ground from your point of view to tackle switchover downtime being
-> somehow accounted?
-
-The pre-existing 'downtime-limit' value should apply to anything that
-happens between src CPUs stopping, and dst CPUs starting. If we were
-not correctly accounting for some parts, we just need to fix that
-accounting, without adding extra time parameters.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+> index ee6c813c8b..05c7324a0d 100644
+> --- a/include/sysemu/host_iommu_device.h
+> +++ b/include/sysemu/host_iommu_device.h
+> @@ -87,9 +87,8 @@ struct HostIOMMUDeviceClass {
+>        * @hiod Host IOMMU device
+>        *
+>        * @hiod: handle to the host IOMMU device
+> -     * @errp: error handle
+>        */
+> -    GList* (*get_iova_ranges)(HostIOMMUDevice *hiod, Error **errp);
+> +    GList* (*get_iova_ranges)(HostIOMMUDevice *hiod);
+>   };
+>   
+>   /*
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 2ad57cd845..adeab1ac89 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -1166,7 +1166,7 @@ static int hiod_legacy_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
+>   }
+>   
+>   static GList *
+> -hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
+> +hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod)
+>   {
+>       VFIODevice *vdev = hiod->agent;
+>   
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 890d8d6a38..211e7223f1 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -644,7 +644,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+>   }
+>   
+>   static GList *
+> -hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
+> +hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod)
+>   {
+>       VFIODevice *vdev = hiod->agent;
+>   
+> diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+> index b708fb96fd..b8f75d2b1a 100644
+> --- a/hw/virtio/virtio-iommu.c
+> +++ b/hw/virtio/virtio-iommu.c
+> @@ -615,7 +615,7 @@ static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>   
+>       if (hiodc->get_iova_ranges) {
+>           int ret;
+> -        host_iova_ranges = hiodc->get_iova_ranges(hiod, errp);
+> +        host_iova_ranges = hiodc->get_iova_ranges(hiod);
+>           if (!host_iova_ranges) {
+>               return true; /* some old kernels may not support that capability */
+>           }
 
 
