@@ -4,99 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42ED0C3064D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 16:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA01DC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 16:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMVQQ-0008F3-R0; Wed, 26 Jun 2024 12:23:14 -0400
+	id 1sMVSr-0000rh-9f; Wed, 26 Jun 2024 12:25:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sMVQP-0008Ep-3C
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:23:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
+ id 1sMVSp-0000qq-Fe
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:25:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sMVQL-0007Fi-IX
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:23:12 -0400
+ (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
+ id 1sMVSn-0007iF-GT
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 12:25:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719418988;
+ s=mimecast20190719; t=1719419139;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=LUvZNXsfrZHmzaVoZ1e0yImJa3pBWlbnOXi6zbW7JgA=;
- b=KWOJy7eHoUGKeSb/DCexR3bnAX0X5fy0odt9JVztUBmdU68xdR9f1TO4WSY1OZKlLy+Jds
- THKjFA40vhlxViM1g9uA3FJq2RsJKrQiKmmuO2woqOQL0FoFEbnCPUAId0T4EXu9hZwZ+l
- buwISW42duhXm0YkiY4lN5SOB9/TJg0=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xQgmATcWRLST385uitgeRxWgQj0Eo5fFKFIoP1kZlYM=;
+ b=VPui9GHrTf2N+Tiv/z7i3ZJ9Ak/xUZPu5CDTgTY/6z5z75it8UfLHLPISryxFaGeJn6TJd
+ NZIrfw2HpBcHKWvdJxeSz9iJhenEtlj/U40SZNBt+Y7odA2vvMyGRZNvTikGj+PsHcvdrm
+ Fj0u4qNbIlPEWo7IR6rVMfLicJjjHg8=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-508-r8iPAebHN3ONwYF1s80QjQ-1; Wed, 26 Jun 2024 12:23:05 -0400
-X-MC-Unique: r8iPAebHN3ONwYF1s80QjQ-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6b501871f8fso13588266d6.2
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 09:23:05 -0700 (PDT)
+ us-mta-595-5qgRO6doNnO_AbGiqcOHkA-1; Wed, 26 Jun 2024 12:25:38 -0400
+X-MC-Unique: 5qgRO6doNnO_AbGiqcOHkA-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6b50b0270d8so104235476d6.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 09:25:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719418985; x=1720023785;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LUvZNXsfrZHmzaVoZ1e0yImJa3pBWlbnOXi6zbW7JgA=;
- b=pkXFJD7DF/QaCTqQ+sbCHfmeuIyGjePngOnkahC1ASuiRTFvZTy9f+1AegiRcpHlLi
- O/F5jDn0x19LyfvkLXlAqrJN8zEMID6mym6gFxtxwwS2DE6khyDc6CeuD23raxv8I5R+
- C8tKkUzb0/XGtvWqGiwxLF/oM0ysNFAOYx4axMJVgYYp/1Qjhj3jPMqbcWrex4JTzdi/
- ObSqaQ+GoBjkFyN7G4F5tXxiN4BT1MGMpGcUp3eh3ifAN8ymyzSssyyzKs9STxPI4fni
- IH/+uThxH5kdlUq8kjdQuoABayMnx/UQkusjmJKwdVXUO2wpzBcHk+vp/SbggkEVtLCt
- lAoA==
+ d=1e100.net; s=20230601; t=1719419137; x=1720023937;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xQgmATcWRLST385uitgeRxWgQj0Eo5fFKFIoP1kZlYM=;
+ b=L96q/X4vzrIjGVRmqA9NaEvpZctI4ynYb8vwizO8KQ2fme2w9krYTJZyIB83TWmHCt
+ m6RkQwHJEwelayqxRfBLTTTVd2OacKhF82epSS8t9wNAhdWa66hJaRWAd9GkKgZ5zBZu
+ y4D3CnuzenyFE5+rYgK+XIcb7zS0/W7UQd2ZiJIwpRUk7QmKMTjHIAKBzkuYtFLCT7we
+ HsVGqtF0WbfSVIhvqGXaIRJ9fik7WJLHw/5mJS9wwGDAVEv+Zq3nDhGWCj6ZziJNtLx+
+ KIFWruYZ7GoxxKnUiZ/ca75hDFpuZwRlsI69VwVt24pfQgg7B43AGYCwrvkO3LaIW/2a
+ e2wA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUaOuIUdL5f6G5YXLlHKnEsODNhkGPelO7WG3XicXhYjD92dsoBeN6EU/IikRgl4I8q1v0G33iXT0EGu4btOyarXo6m/Yw=
-X-Gm-Message-State: AOJu0YyOmBT/ds9zY5xH4RyQsoNpaEreXcFGGFfaIy7DnOxoNr4G29U+
- BBSZAbW1r72wbgFo2XEXyBpN9WKNH/5KhiTNHW8jQVCygF4ETjFp0tJ2fmVhH5KxyUqOUV+7UTM
- SA64l+pnA6JCduWazncLxonM2gQUdRx3jyrxcFyc5qd7pZfRQJEzB
-X-Received: by 2002:a05:6214:2423:b0:6b5:838e:c7f3 with SMTP id
- 6a1803df08f44-6b5838ed4c6mr15210956d6.2.1719418984565; 
- Wed, 26 Jun 2024 09:23:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/3sa5A/f5+wux5Sgxv2azEWDMrimhaChnIijm3J7H1/tQsaR8xF061u9Ikr+d86g0gjJn8A==
-X-Received: by 2002:a05:6214:2423:b0:6b5:838e:c7f3 with SMTP id
- 6a1803df08f44-6b5838ed4c6mr15210416d6.2.1719418983719; 
- Wed, 26 Jun 2024 09:23:03 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b5404a8e29sm38504146d6.52.2024.06.26.09.23.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Jun 2024 09:23:03 -0700 (PDT)
-Date: Wed, 26 Jun 2024 12:23:00 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v1 00/13] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
- device state transfer support with VFIO consumer
-Message-ID: <ZnxAZDcjlZ5oerq-@x1n>
-References: <cover.1718717584.git.maciej.szmigiero@oracle.com>
- <ZniFH14DT6ycjbrL@x1n>
- <b0dc8bc4-742b-474b-a4c4-4e190fd6af37@maciej.szmigiero.name>
- <Znr9mOo_t0DkkLbD@x1n>
- <9e85016e-ac72-4207-8e69-8cba054cefb7@maciej.szmigiero.name>
- <Znt0FQHJEtGxcLxj@x1n>
- <2066bb2e-ccb3-45b8-aaf7-c39303e7f993@maciej.szmigiero.name>
+ AJvYcCXKKtzm3gRUWeVmUa/b9yRXnCQR6NZ/syJtlv37oX2E9jlRC7q+BZGM+sQhhncNI9KMa4Cn4holaXV4/9/3xr0bWrrONjg=
+X-Gm-Message-State: AOJu0YxXG7KEzt4rozSXACfmqw8B6j7eJoGzvfLLUR1Og64XiiwTN/pp
+ CVmibFKpQBmFN07sXxRUdz0CFJBOlxicWMnNsMBYvrau/T7eLbUOiq6s9ifEQyyk18KZzgrsUFE
+ yWpxqDJYLPiAK4npQQ0lTSUt1BVlaUVMYEPk2cekfZBMYNy/lDctFJXpHryrbpmT9PbkJ/SePuC
+ 7/Z5QW/UVLp7iJ5l+Qp5FCQDVLTS593erSf9c=
+X-Received: by 2002:ad4:5d4e:0:b0:6b5:40c:dfcc with SMTP id
+ 6a1803df08f44-6b53bfdc130mr149032356d6.51.1719419137353; 
+ Wed, 26 Jun 2024 09:25:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG3a8U9KD4Nmw6PfFYgbotPlu9YcWhYHcti9fLQPBI7qYWc94d4wTWJ//erCsFDzMfQ5R+gWQsl/1ntKmPn4mc=
+X-Received: by 2002:ad4:5d4e:0:b0:6b5:40c:dfcc with SMTP id
+ 6a1803df08f44-6b53bfdc130mr149032096d6.51.1719419137082; Wed, 26 Jun 2024
+ 09:25:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2066bb2e-ccb3-45b8-aaf7-c39303e7f993@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+References: <20240619174022.1298578-1-nsoffer@redhat.com>
+ <CAMRbyyso9cMFueVS3SGtJ3G=-OGu+ueqqE5u2NYtsydBxf_J3Q@mail.gmail.com>
+ <20240624152302.GA2402845@fedora.redhat.com> <ZnmZ-m38IAHg0UdX@redhat.com>
+ <CAMRbyyv9utXsfXKiPz4fGw+S4JLgsZE2UDxUOxwG1fxZwGMHNQ@mail.gmail.com>
+ <ZnvUcQiXzQW-Mq1s@redhat.com>
+In-Reply-To: <ZnvUcQiXzQW-Mq1s@redhat.com>
+From: Nir Soffer <nsoffer@redhat.com>
+Date: Wed, 26 Jun 2024 19:25:19 +0300
+Message-ID: <CAMRbyys5RLpD+45HXFDoV7KKf8TKwn9i8GDqLC7LtOasUptAuQ@mail.gmail.com>
+Subject: Re: [PATCH v2] Consider discard option when writing zeros
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Fam Zheng <fam@euphon.net>, 
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000e2df17061bcd76cb"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=nsoffer@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,624 +103,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 26, 2024 at 05:47:34PM +0200, Maciej S. Szmigiero wrote:
-> On 26.06.2024 03:51, Peter Xu wrote:
-> > On Wed, Jun 26, 2024 at 12:44:29AM +0200, Maciej S. Szmigiero wrote:
-> > > On 25.06.2024 19:25, Peter Xu wrote:
-> > > > On Mon, Jun 24, 2024 at 09:51:18PM +0200, Maciej S. Szmigiero wrote:
-> > > > > Hi Peter,
-> > > > 
-> > > > Hi, Maciej,
-> > > > 
-> > > > > 
-> > > > > On 23.06.2024 22:27, Peter Xu wrote:
-> > > > > > On Tue, Jun 18, 2024 at 06:12:18PM +0200, Maciej S. Szmigiero wrote:
-> > > > > > > From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-> > > > > > > 
-> > > > > > > This is an updated v1 patch series of the RFC (v0) series located here:
-> > > > > > > https://lore.kernel.org/qemu-devel/cover.1713269378.git.maciej.szmigiero@oracle.com/
-> > > > > > 
-> > > > > > OK I took some hours thinking about this today, and here's some high level
-> > > > > > comments for this series.  I'll start with which are more relevant to what
-> > > > > > Fabiano has already suggested in the other thread, then I'll add some more.
-> > > > > > 
-> > > > > > https://lore.kernel.org/r/20240620212111.29319-1-farosas@suse.de
-> > > > > 
-> > > > > That's a long list, thanks for these comments.
-> > > > > 
-> > > > > I have responded to them inline below.
-> > > > > 
-> > > (..)
-> > > > > 
-> > > > > > 3. load_state_buffer() and VFIODeviceStatePacket protocol
-> > > > > > =========================================================
-> > > > > > 
-> > > > > > VFIODeviceStatePacket is the new protocol you introduced into multifd
-> > > > > > packets, along with the new load_state_buffer() hook for loading such
-> > > > > > buffers.  My question is whether it's needed at all, or.. whether it can be
-> > > > > > more generic (and also easier) to just allow taking any device state in the
-> > > > > > multifd packets, then load it with vmstate load().
-> > > > > > 
-> > > > > > I mean, the vmstate_load() should really have worked on these buffers, if
-> > > > > > after all VFIO is looking for: (1) VFIO_MIG_FLAG_DEV_DATA_STATE as the
-> > > > > > first flag (uint64), size as the 2nd, then (2) load that rest buffer into
-> > > > > > VFIO kernel driver.  That is the same to happen during the blackout window.
-> > > > > > It's not clear to me why load_state_buffer() is needed.
-> > > > > > 
-> > > > > > I also see that you're also using exactly the same chunk size for such
-> > > > > > buffering (VFIOMigration.data_buffer_size).
-> > > > > > 
-> > > > > > I think you have a "reason": VFIODeviceStatePacket and loading of the
-> > > > > > buffer data resolved one major issue that wasn't there before but start to
-> > > > > > have now: multifd allows concurrent arrivals of vfio buffers, even if the
-> > > > > > buffer *must* be sequentially loaded.
-> > > > > > 
-> > > > > > That's a major pain for current VFIO kernel ioctl design, IMHO.  I think I
-> > > > > > used to ask nVidia people on whether the VFIO get_state/set_state interface
-> > > > > > can allow indexing or tagging of buffers but I never get a real response.
-> > > > > > IMHO that'll be extremely helpful for migration purpose on concurrency if
-> > > > > > it can happen, rather than using a serialized buffer.  It means
-> > > > > > concurrently save/load one VFIO device could be extremely hard, if not
-> > > > > > impossible.
-> > > > > 
-> > > > > I am pretty sure that the current kernel VFIO interface requires for the
-> > > > > buffers to be loaded in-order - accidentally providing the out of order
-> > > > > definitely breaks the restore procedure.
-> > > > 
-> > > > Ah, I didn't mean that we need to do it with the current API.  I'm talking
-> > > > about whether it's possible to have a v2 that will support those otherwise
-> > > > we'll need to do "workarounds" like what you're doing with "unlimited
-> > > > buffer these on dest, until we receive continuous chunk of data" tricks.
-> > > 
-> > > Better kernel API might be possible in the long term but for now we have
-> > > to live with what we have right now.
-> > > 
-> > > After all, adding true unordered loading - I mean not just moving the
-> > > reassembly process from QEMU to the kernel but making the device itself
-> > > accept buffers out out order - will likely be pretty complex (requiring
-> > > adding such functionality to the device firmware, etc).
-> > 
-> > I would expect the device will need to be able to provision the device
-> > states so it became smaller objects rather than one binary object, then
-> > either tag-able or address-able on those objects.
-> > 
-> > > 
-> > > > And even with that trick, it'll still need to be serialized on the read()
-> > > > syscall so it won't scale either if the state is huge.  For that issue
-> > > > there's no workaround we can do from userspace.
-> > > 
-> > > The read() calls for multiple VFIO devices can be issued in parallel,
-> > > and in fact they are in my patch set.
-> > 
-> > I was talking about concurrency for one device.
-> 
-> AFAIK with the current hardware the read speed is limited by the device
-> itself, so adding additional reading threads wouldn't help.
+--000000000000e2df17061bcd76cb
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-OK.
+On Wed, Jun 26, 2024 at 11:42=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrot=
+e:
 
-> 
-> Once someone has the hardware which is limited by single reading thread
-> that person can add the necessary kernel API (including unordered
-> loading) and then extend QEMU with such support.
-> 
-> > > 
-> > > (..)
-> > > > > > 4. Risk of OOM on unlimited VFIO buffering
-> > > > > > ==========================================
-> > > > > > 
-> > > > > > This follows with above bullet, but my pure question to ask here is how
-> > > > > > does VFIO guarantees no OOM condition by buffering VFIO state?
-> > > > > > 
-> > > > > > I mean, currently your proposal used vfio_load_bufs_thread() as a separate
-> > > > > > thread to only load the vfio states until sequential data is received,
-> > > > > > however is there an upper limit of how much buffering it could do?  IOW:
-> > > > > > 
-> > > > > > vfio_load_state_buffer():
-> > > > > > 
-> > > > > >      if (packet->idx >= migration->load_bufs->len) {
-> > > > > >          g_array_set_size(migration->load_bufs, packet->idx + 1);
-> > > > > >      }
-> > > > > > 
-> > > > > >      lb = &g_array_index(migration->load_bufs, typeof(*lb), packet->idx);
-> > > > > >      ...
-> > > > > >      lb->data = g_memdup2(&packet->data, data_size - sizeof(*packet));
-> > > > > >      lb->len = data_size - sizeof(*packet);
-> > > > > >      lb->is_present = true;
-> > > > > > 
-> > > > > > What if garray keeps growing with lb->data allocated, which triggers the
-> > > > > > memcg limit of the process (if QEMU is in such process)?  Or just deplete
-> > > > > > host memory and causing OOM kill.
-> > > > > > 
-> > > > > > I think we may need to find a way to throttle max memory usage of such
-> > > > > > buffering.
-> > > > > > 
-> > > > > > So far this will be more of a problem indeed if this will be done during
-> > > > > > VFIO iteration phases, but I still hope a solution can work with both
-> > > > > > iteration phase and the switchover phase, even if you only do that in
-> > > > > > switchover phase
-> > > > > 
-> > > > > Unfortunately, this issue will be hard to fix since the source can
-> > > > > legitimately send the very first buffer (chunk) of data as the last one
-> > > > > (at the very end of the transmission).
-> > > > > 
-> > > > > In this case, the target will need to buffer nearly the whole data.
-> > > > > 
-> > > > > We can't stop the receive on any channel, either, since the next missing
-> > > > > buffer can arrive at that channel.
-> > > > > 
-> > > > > However, I don't think purposely DoSing the target QEMU is a realistic
-> > > > > security concern in the typical live migration scenario.
-> > > > > 
-> > > > > I mean the source can easily force the target QEMU to exit just by
-> > > > > feeding it wrong migration data.
-> > > > > 
-> > > > > In case someone really wants to protect against the impact of
-> > > > > theoretically unbounded QEMU memory allocations during live migration
-> > > > > on the rest of the system they can put the target QEMU process
-> > > > > (temporally) into a memory-limited cgroup.
-> > > > 
-> > > > Note that I'm not worrying about DoS of a malicious src QEMU, and I'm
-> > > > exactly talking about the generic case where QEMU (either src or dest, in
-> > > > that case normally both) is put into the memcg and if QEMU uses too much
-> > > > memory it'll literally get killed even if no DoS issue at all.
-> > > > 
-> > > > In short, we hopefully will have a design that will always work with QEMU
-> > > > running in a container, without 0.5% chance dest qemu being killed, if you
-> > > > see what I meant.
-> > > > 
-> > > > The upper bound of VFIO buffering will be needed so the admin can add that
-> > > > on top of the memcg limit and as long as QEMU keeps its words it'll always
-> > > > work without sudden death.
-> > > > 
-> > > > I think I have some idea about resolving this problem.  That idea can
-> > > > further complicate the protocol a little bit.  But before that let's see
-> > > > whether we can reach an initial consensus on this matter first, on whether
-> > > > this is a sane request.  In short, we'll need to start to have a
-> > > > configurable size to say how much VFIO can buffer, maybe per-device, or
-> > > > globally.  Then based on that we need to have some logic guarantee that
-> > > > over-mem won't happen, also without heavily affecting concurrency (e.g.,
-> > > > single thread is definitely safe and without caching, but it can be
-> > > > slower).
-> > > 
-> > > Here, I think I can add a per-device limit parameter on the number of
-> > > buffers received out-of-order or waiting to be loaded into the device -
-> > > with a reasonable default.
-> > 
-> > Yes that should work.
-> > 
-> > I don't even expect people would change that, but this might be the
-> > information people will need to know before putting it into a container if
-> > it's larger than how qemu dynamically consumes memories here and there.
-> > I'd expect it is still small enough so nobody will notice it (maybe a few
-> > tens of MBs? but just wildly guessing, where tens of MBs could fall into
-> > the "noise" memory allocation window of a VM).
-> 
-> The single buffer size is 8 MiB so I think the safe default should be
-> allowing 2 times the number of multifd channels.
-> 
-> With 5 multifd channels that's 10 buffers * 8 MiB = 80 MiB worst
-> case buffering per device.
-> 
-> But this will need to be determined experimentally once such parameter
-> is added to be sure it's enough.
+> Am 24.06.2024 um 23:12 hat Nir Soffer geschrieben:
+> > On Mon, Jun 24, 2024 at 7:08=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> w=
+rote:
+> >
+> > > Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:
+> > > > On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:
+> > > > > Tested using:
+> > > >
+> > > > Hi Nir,
+> > > > This looks like a good candidate for the qemu-iotests test suite.
+> Adding
+> > > > it to the automated tests will protect against future regressions.
+> > > >
+> > > > Please add the script and the expected output to
+> > > > tests/qemu-iotests/test/write-zeroes-unmap and run it using
+> > > > `(cd build && tests/qemu-iotests/check write-zeroes-unmap)`.
+> > > >
+> > > > See the existing test cases in tests/qemu-iotests/ and
+> > > > tests/qemu-iotests/tests/ for examples. Some are shell scripts and
+> > > > others are Python. I think shell makes sense for this test case. Yo=
+u
+> > > > can copy the test framework boilerplate from an existing test case.
+> > >
+> > > 'du' can't be used like this in qemu-iotests because it makes
+> > > assumptions that depend on the filesystem. A test case replicating wh=
+at
+> > > Nir did manually would likely fail on XFS with its preallocation.
+> >
+> > This is why I did not try to add a new qemu-iotest yet.
+> >
+> > > Maybe we could operate on a file exposed by the FUSE export that is
+> > > backed by qcow2, and then you can use 'qemu-img map' on that qcow2
+> image
+> > > to verify the allocation status. Somewhat complicated, but I think it
+> > > could work.
+> >
+> > Do we have examples of using the FUSE export? It sounds complicated but
+> > being able to test on any file system is awesome. The complexity can be
+> > hidden behind simple test helpers.
+>
+> We seem to have a few tests that use it, and then the fuse protocol
+> implementation, too. 308 and file-io-error look relevant.
+>
+> > Another option is to use a specific file system created for the tests,
+> > for example on a loop device. We used userstorage[1] in ovirt to test
+> > on specific file systems with known sector size.
+>
+> Creating loop devices requires root privileges. If I understand
+> correctly, userstorage solved that by having a setup phase as root
+> before running the tests as a normal user? We don't really have that in
+> qemu-iotests.
+>
+> Some tests require passwordless sudo and are skipped otherwise, but this
+> means that in practice they are almost always skipped.
+>
 
-Yes you may want to test it with a new logic to be able to throttle sending
-on src qemu (because otherwise when dest qemu is very unlucky its buffer is
-full but still the initial index chunk is missing), then making sure it's
-relatively small but hopefully still keep the flow running as much as
-possible.
+Yes, this is the assumption the storage is being created before running the
+tests,
+for example when setting up a development or CI environment, and the tests
+can run with unprivileged user.
 
-> 
-> > > 
-> > > (..)
-> > > > > > 5. Worker thread model
-> > > > > > ======================
-> > > > > > 
-> > > > > > I'm so far not happy with what this proposal suggests on creating the
-> > > > > > threads, also the two new hooks mostly just to create these threads..
-> > > > > 
-> > > > > That VFIO .save_live_complete_precopy_begin handler crates a new
-> > > > > per-device thread is an implementation detail for this particular
-> > > > > driver.
-> > > > > 
-> > > > > The whole idea behind this and save_live_complete_precopy_end hook was
-> > > > > that details how the particular device driver does its own async saving
-> > > > > is abstracted away from the migration core.
-> > > > > 
-> > > > > The device then can do what's best / most efficient for it to do.
-> > > > 
-> > > > Yes, and what I was thinking is whether it does it in form of "enqueue a
-> > > > task to migration worker threads", rather than "creating its own threads in
-> > > > the device hooks, and managing those threads alone".
-> > > > 
-> > > > It's all about whether such threading can be reused by non-VFIO devices.
-> > > > They can't be reused if VFIO is in charge here, and it will make migration
-> > > > less generic.
-> > > > 
-> > > > My current opinion is they can and should be re-usable. Consider if someone
-> > > > starts to teach multifd carry non-vfio data (e.g. a generic VMSD), then we
-> > > > can enqueue a task, do e.g. ioctl(KVM_GET_REGS) in those threads (rather
-> > > > than VFIO read()).
-> > > 
-> > > Theoretically, it's obviously possible to wrap every operation in a request
-> > > to some thread pool.
-> > > 
-> > > 
-> > > But that would bring a lot of complexity, since instead of performing these
-> > > operation directly now the requester will need to:
-> > > 1) Prepare some "Operation" structure with the parameters of the requested
-> > > operation (task).
-> > > In your case this could be QEMU_OP_GET_VCPU_REGS operation using
-> > > "OperationGetVCPURegs" struct containing vCPU number parameter = 1.
-> > 
-> > Why such complexity is needed?
-> 
-> I just gave an example how implementing running a individual task like
-> "ioctl(KVM_GET_REGS)" (that you suggested above) in such thread pool would
-> look like.
-> > Can it be as simple as func(opaque) to be queued, then here
-> > func==vfio_save_complete_precopy_async_thread, opaque=VFIODevice*?
-> 
-> That would be possible, although in both implementations of:
-> 1) adding a new thread pool type and wrapping device reading thread
-> creation around such pool, OR:
-> 2) a direct qemu_thread_create() call.
-> the number of threads actually created would be the same.
+> But more important, are you ok with the change?
+> >
+> > I'm not sure about not creating sparse images by default - this is not
+> > consistent with qemu-img convert and qemu-nbd, which do sparsify by
+> > default. The old behavior seems better.
+>
+> Well, your patches make it do what we always claimed it would do, so
+> that consistency is certainly a good thing. Unmapping on write_zeroes
+> and ignoring truncate is a weird combination anyway that doesn't really
+> make any sense to me, so I don't think it's worth preserving. The other
+> way around could have been more defensible, but that's not how our bug
+> works.
+>
+> Now, if ignoring all discard requests is a good default these days is a
+> separate question and I'm not sure really. Maybe discard=3Dunmap should
+> be the default (and apply to both discard are write_zeroes, of course).
+>
 
-Again, it's not about the number of threads that I worry.
+OK, lets limit the scope to fix the code to match the current docs. We can
+tweak
+the defaults later.
 
-If you create one thread but hard to manage it's the same.
+--000000000000e2df17061bcd76cb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-OTOH if it's a common model I think it's fine if you create 16 or 32,
-especially if when most of them are either idle or doing block IOs, then
-they'll be put to sleep anyway.  That's not a concern at all.
+<div dir=3D"ltr"><div dir=3D"ltr">On Wed, Jun 26, 2024 at 11:42=E2=80=AFAM =
+Kevin Wolf &lt;<a href=3D"mailto:kwolf@redhat.com">kwolf@redhat.com</a>&gt;=
+ wrote:<br></div><div class=3D"gmail_quote"><blockquote class=3D"gmail_quot=
+e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
+;padding-left:1ex">Am 24.06.2024 um 23:12 hat Nir Soffer geschrieben:<br>
+&gt; On Mon, Jun 24, 2024 at 7:08=E2=80=AFPM Kevin Wolf &lt;<a href=3D"mail=
+to:kwolf@redhat.com" target=3D"_blank">kwolf@redhat.com</a>&gt; wrote:<br>
+&gt; <br>
+&gt; &gt; Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:<br>
+&gt; &gt; &gt; On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:<=
+br>
+&gt; &gt; &gt; &gt; Tested using:<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; Hi Nir,<br>
+&gt; &gt; &gt; This looks like a good candidate for the qemu-iotests test s=
+uite. Adding<br>
+&gt; &gt; &gt; it to the automated tests will protect against future regres=
+sions.<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; Please add the script and the expected output to<br>
+&gt; &gt; &gt; tests/qemu-iotests/test/write-zeroes-unmap and run it using<=
+br>
+&gt; &gt; &gt; `(cd build &amp;&amp; tests/qemu-iotests/check write-zeroes-=
+unmap)`.<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; See the existing test cases in tests/qemu-iotests/ and<br>
+&gt; &gt; &gt; tests/qemu-iotests/tests/ for examples. Some are shell scrip=
+ts and<br>
+&gt; &gt; &gt; others are Python. I think shell makes sense for this test c=
+ase. You<br>
+&gt; &gt; &gt; can copy the test framework boilerplate from an existing tes=
+t case.<br>
+&gt; &gt;<br>
+&gt; &gt; &#39;du&#39; can&#39;t be used like this in qemu-iotests because =
+it makes<br>
+&gt; &gt; assumptions that depend on the filesystem. A test case replicatin=
+g what<br>
+&gt; &gt; Nir did manually would likely fail on XFS with its preallocation.=
+<br>
+&gt; <br>
+&gt; This is why I did not try to add a new qemu-iotest yet.<br>
+&gt; <br>
+&gt; &gt; Maybe we could operate on a file exposed by the FUSE export that =
+is<br>
+&gt; &gt; backed by qcow2, and then you can use &#39;qemu-img map&#39; on t=
+hat qcow2 image<br>
+&gt; &gt; to verify the allocation status. Somewhat complicated, but I thin=
+k it<br>
+&gt; &gt; could work.<br>
+&gt; <br>
+&gt; Do we have examples of using the FUSE export? It sounds complicated bu=
+t<br>
+&gt; being able to test on any file system is awesome. The complexity can b=
+e<br>
+&gt; hidden behind simple test helpers.<br>
+<br>
+We seem to have a few tests that use it, and then the fuse protocol<br>
+implementation, too. 308 and file-io-error look relevant.<br>
+<br>
+&gt; Another option is to use a specific file system created for the tests,=
+<br>
+&gt; for example on a loop device. We used userstorage[1] in ovirt to test<=
+br>
+&gt; on specific file systems with known sector size.<br>
+<br>
+Creating loop devices requires root privileges. If I understand<br>
+correctly, userstorage solved that by having a setup phase as root<br>
+before running the tests as a normal user? We don&#39;t really have that in=
+<br>
+qemu-iotests.<br>
+<br>
+Some tests require passwordless sudo and are skipped otherwise, but this<br=
+>
+means that in practice they are almost always skipped.<br></blockquote><div=
+><br></div><div>Yes, this is the assumption the storage is being created be=
+fore running the tests,</div><div>for example when setting up a development=
+ or CI environment, and the tests</div><div>can run with unprivileged user.=
+</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; But more important, are you ok with the change?<br>
+&gt; <br>
+&gt; I&#39;m not sure about not creating sparse images by default - this is=
+ not<br>
+&gt; consistent with qemu-img convert and qemu-nbd, which do sparsify by<br=
+>
+&gt; default. The old behavior seems better.<br>
+<br>
+Well, your patches make it do what we always claimed it would do, so<br>
+that consistency is certainly a good thing. Unmapping on write_zeroes<br>
+and ignoring truncate is a weird combination anyway that doesn&#39;t really=
+<br>
+make any sense to me, so I don&#39;t think it&#39;s worth preserving. The o=
+ther<br>
+way around could have been more defensible, but that&#39;s not how our bug<=
+br>
+works.<br>
+<br>
+Now, if ignoring all discard requests is a good default these days is a<br>
+separate question and I&#39;m not sure really. Maybe discard=3Dunmap should=
+<br>
+be the default (and apply to both discard are write_zeroes, of course).<br>=
+</blockquote><div><br></div><div>OK, lets limit the scope to fix the code t=
+o match the current docs. We can tweak</div><div>the defaults later.=C2=A0<=
+/div></div></div>
 
-> 
-> That's unless someone sets the multifd channel count below the number
-> of VFIO devices - but one might argue that's not really a configuration
-> where good performance is expected anyway.
-> 
-> > > 
-> > > 2) Submit this operation to the thread pool and wait for it to complete,
-> > 
-> > VFIO doesn't need to have its own code waiting.  If this pool is for
-> > migration purpose in general, qemu migration framework will need to wait at
-> > some point for all jobs to finish before moving on.  Perhaps it should be
-> > at the end of the non-iterative session.
-> 
-> So essentially, instead of calling save_live_complete_precopy_end handlers
-> from the migration code you would like to hard-code its current VFIO
-> implementation of calling vfio_save_complete_precopy_async_thread_thread_terminate().
-> 
-> Only it wouldn't be then called VFIO precopy async thread terminate but some
-> generic device state async precopy thread terminate function.
-
-I don't understand what did you mean by "hard code".
-
-What I was saying is if we target the worker thread pool to be used for
-"concurrently dump vmstates", then it'll make sense to make sure all the
-jobs there were flushed after qemu dumps all non-iterables (because this
-should be the last step of the switchover).
-
-I expect it looks like this:
-
-  while (pool->active_threads) {
-      qemu_sem_wait(&pool->job_done);
-  }
-
-> 
-> > > 
-> > > 3) Thread pool needs to check whether it has any free threads in the pool
-> > > available to perform this operation.
-> > > 
-> > > If not, and the count of threads that are CPU-bound (~aren't sleeping on
-> > > some I/O operation) is less than the number of logical CPUs in the system
-> > > the thread pool needs to spawn a new thread since there's some CPU capacity
-> > > available,
-> > 
-> > For this one it can follow what thread-pool.c is doing, and the upper bound
-> > of n-threads can start from simple, e.g. min(n_channels_multifd, 8)?
-> 
-> It needs to be min(n_channels_multifd, n_device_state_devices), because
-> with 9 such devices and 9 multifd channels we need at least 9 threads.
-> 
-> > > 
-> > > 4) The operation needs to be dispatched to the actual execution thread,
-> > > 
-> > > 5) The execution thread needs to figure out which operation it needs to
-> > > actually do, fetch the necessary parameters from the proper "Operation"
-> > > structure, maybe take the necessary locks, before it can actually perform
-> > > the requested operation,
-> > > 
-> > > 6) The execution thread needs to serialize (write) the operation result
-> > > back into some "OperationResult" structure, like "OperationGetVCPURegsResult",
-> > 
-> > I think in this simplest case, the thread should simply run fn(opaque), in
-> > which it should start to call multifd_queue_device_state() and queue
-> > multifd jobs from the worker thread instead of the vfio dedicated threads.
-> > I don't yet expect much to change in your code from that regard inside what
-> > vfio_save_complete_precopy_async_thread() used to do.
-> > 
-> > > 
-> > > 7) The execution thread needs to submit this result back to the requester,
-> > > 
-> > > 8) The thread pool needs to decide whether to keep this (now idle) execution
-> > > thread in the pool as a reserve thread or terminate it immediately,
-> > > 
-> > > 9) The requester needs to be resumed somehow (returned from wait) now that
-> > > the operation it requested is complete,
-> > > 
-> > > 10) The requester needs the fetch the operation results from the proper
-> > > "OperationResult" structure and decode them accordingly.
-> > > 
-> > > 
-> > > As you can see, that's *a lot* of extra code that needs to be maintained
-> > > for just a single operation type.
-> > 
-> > I don't yet know why you designed it so complicated, but if I missed
-> > something above please let me know.
-> 
-> I explained above that's how running your example of "ioctl(KVM_GET_REGS)"
-> in such thread pool would look like.
-> (It wasn't a proposal to be actually implemented to be clear)
-> 
-> > > 
-> > > > > 
-> > > > > > I know I suggested that.. but that's comparing to what I read in the even
-> > > > > > earlier version, and sorry I wasn't able to suggest something better at
-> > > > > > that time because I simply thought less.
-> > > > > > 
-> > > > > > As I mentioned in the other reply elsewhere, I think we should firstly have
-> > > > > > these threads ready to take data at the start of migration, so that it'll
-> > > > > > work when someone wants to add vfio iteration support.  Then the jobs
-> > > > > > (mostly what vfio_save_complete_precopy_async_thread() does now) can be
-> > > > > > enqueued into the thread pools.
-> > > > > 
-> > > > > I'm not sure that we can get way with using fewer threads than devices
-> > > > > as these devices might not support AIO reads from their migration file
-> > > > > descriptor.
-> > > > 
-> > > > It doesn't need to use AIO reads - I'll be happy if the thread model can be
-> > > > generic, VFIO can still enqueue a task that does blocking reads.
-> > > > 
-> > > > It can take a lot of time, but it's fine: others who like to enqueue too
-> > > > and see all threads busy, they should simply block there and waiting for
-> > > > the worker threads to be freed again.  It's the same when there's no
-> > > > migration worker threads as it means the read() will block the main
-> > > > migration thread.
-> > > 
-> > > Oh no, waiting for another device blocking read to complete before
-> > > scheduling another device blocking read is surely going to negatively
-> > > impact the performance.
-> > 
-> > There can be e.g. 8 worker threads.  If you want you can make sure the
-> > worker threads are at least more than vfio threads.  Then it will guarantee
-> > vfio will dump / save() one device per thread concurrently.
-> 
-> Yes, I wrote this requirement above as
-> n_threads = min(n_channels_multifd, n_device_state_devices).
-> 
-> > > 
-> > > For best performance we need to maximize parallelism - that means
-> > > reading (and loading) all the VFIO devices present in parallel.
-> > > 
-> > > The whole point of having per-device threads is for the whole operation
-> > > to be I/O bound but never CPU bound on a reasonably fast machine - and
-> > > especially not number-of-threads-in-pool bound.
-> > > 
-> > > > Now we can have multiple worker threads doing things concurrently if
-> > > > possible (some of them may not, especially when BQL will be required, but
-> > > > that's a separate thing, and many device save()s may not need BQL, and when
-> > > > it needs we can take it in the enqueued tasks).
-> > > > 
-> > > > > 
-> > > > > mlx5 devices, for example, seems to support only poll()ed / non-blocking
-> > > > > reads at best - with unknown performance in comparison with issuing
-> > > > > blocking reads from dedicated threads.
-> > > > > 
-> > > > > On the other hand, handling a single device from multiple threads in
-> > > > > parallel is generally not possible due to difficulty of establishing in
-> > > > > which order the buffers were read.
-> > > > > 
-> > > > > And if we need a per-VFIO device thread anyway then using a thread pool
-> > > > > doesn't help much - but brings extra complexity.
-> > > > > 
-> > > > > In terms of starting the loading thread earlier to load also VM live
-> > > > > phase data it looks like a small change to the code so it shouldn't be
-> > > > > a problem.
-> > > > 
-> > > > That's good to know.  Please still consider a generic thread model and see
-> > > > what that would also work for your VFIO use case.
-> > > > 
-> > > > If you see what thread-pool.c did right now is it'll dynamically create
-> > > > threads on the fly.  I think that's something we can do too but just apply
-> > > > an upper limit to the thread numbers.
-> > > 
-> > > We have an upper limit on the count of saving threads already - it's the
-> > > count of VFIO devices in the VM.
-> > > 
-> > > The API in util/thread-pool.c is very basic and basically only allows
-> > > submitting either AIO operations or generic function call operation
-> > > but still within some AioContext.
-> > 
-> > What I'm saying is a thread pool _without_ aio.  I think it might be called
-> > ThreadPoolRaw and let ThreadPool depend on it, but I didn't further check yet.
-> 
-> So it's not using an existing thread pool implementation from util/thread-pool.c
-> but essentially creating a new one - with probably some code commonality
-> with the existing AIO one.
-> 
-> That's possible but since util/thread-pool.c AFAIK isn't owned by the
-> migration subsystem such new implementation will probably need also review by
-> other QEMU maintainers.
-
-Yes, that's how we normally should do it.  Obviously you still want to push
-that in 9.1, so if you want you can create that pool implementation under
-migration/, and we can try to move it over as a future rework, having block
-people review that later.
-
-> 
-> > > 
-> > > There's almost none of the operation execution logic I described above -
-> > > all of these would need to be written and maintained.
-> > > 
-> > > > > 
-> > > > > > It's better to create the thread pool owned by migration, rather than
-> > > > > > threads owned by VFIO, because it also paves way for non-VFIO device state
-> > > > > > save()s, as I mentioned also above on the multifd packet header.  Maybe we
-> > > > > > can have a flag in the packet header saying "this is device xxx's state,
-> > > > > > just load it".
-> > > > > 
-> > > > > I think the same could be done by simply implementing these hooks in other
-> > > > > device types than VFIO, right?
-> > > > > 
-> > > > > And if we notice that these implementations share a bit of code then we
-> > > > > can think about making a common helper library out of this code.
-> > > > > 
-> > > > > After, all that's just an implementation detail that does not impact
-> > > > > the underlying bit stream protocol.
-> > > > 
-> > > > You're correct.
-> > > > 
-> > > > However, it still affects a few things.
-> > > > 
-> > > > Firstly, it may mean that we may not even need those two extra vmstate
-> > > > hooks: the enqueue can happen already with save_state() if the migration
-> > > > worker model exists.
-> > > > 
-> > > > So instead of this:
-> > > > 
-> > > >           vfio_save_state():
-> > > >           if (migration->multifd_transfer) {
-> > > >                   /* Emit dummy NOP data */
-> > > >                   qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
-> > > >                   return;
-> > > >           }
-> > > > 
-> > > > We can already do:
-> > > > 
-> > > >           if (migration->multifd_transfer) {
-> > > >                   // enqueue task to load state for this vfio device
-> > > >                   ...
-> > > >                   return;
-> > > >           }
-> > > > 
-> > > > IMHO it'll be much cleaner in VFIO code, and much cleaner too for migration
-> > > > code.
-> > > 
-> > > The save_state hook is executed too late - only after all iterable
-> > > hooks have already transferred all their data.
-> > > 
-> > > We want to start saving this device state as early as possible to not
-> > > have to wait for any other device to transfer its data first.
-> > > 
-> > > That's why the code introduces save_live_complete_precopy_begin hook
-> > > that's guaranteed to be the very first hook called during switchover
-> > > phase device state saving.
-> > 
-> > I think I mis-typed.. What I wanted to say is vfio_save_complete_precopy(),
-> > not vfio_save_state().
-> > 
-> > There will be one challenge though where RAM is also an iterable, so RAM's
-> > save_live_complete_precopy() can delay VFIO's, even if it simply only need
-> > to enqueue a job.
-> > 
-> > Two solutions I can think of:
-> > 
-> >    (1) Provide a separate hook, e.g. save_live_complete_precopy_async(),
-> >    when save_live_complete_precopy_async(opaque) is provided, instead of
-> >    calling save_live_complete_precopy(), we inject that job into the worker
-> >    threads.  In that case we can loop over *_precopy_async() before all the
-> >    rest *_precopy() calls.
-> 
-> That's basically the approach the current patch set is using, just not using
-> pool worker threads (yet).
-> 
-> Only the hook was renamed from save_live_complete_precopy_async to
-> save_live_complete_precopy_begin upon your comment on RFC requesting that.
-> 
-> >    (2) Make RAM's save_live_complete_precopy() also does similar enqueue
-> >    when multifd enabled, so RAM will be saved in the worker thread too.
-> > 
-> > However (2) can have other issues to work out.  Do you think (1) is still
-> > doable?
-> > 
-> 
-> Yes, I think (1) is the correct way to do it.
-
-I don't think "correct" is the correct word to put it.. it's really a
-matter of whether you want to push this earlier in-tree.
-
-The 2nd proposal will be more than correct to me, IMHO.  That'll be really
-helpful too also to VFIO when RAM can be saved concurrently, then it means
-these things can be done all concurrently:
-
-  - VFIO, one thread per one device
-  - RAM, one thread
-  - non-iterables
-
-Otherwise 2+3 needs to be serialized.
-
-If you're looking for downtime optimizations that may also relevant, afaiu.
-
-And that's also one of the major points why I want to convince you not to
-use a separate vfio thread, because AFAICT we simply have other users.
-
-> 
-> > > 
-> > > > Another (possibly personal) reason is, I will not dare to touch VFIO code
-> > > > too much to do such a refactoring later.  I simply don't have the VFIO
-> > > > devices around and I won't be able to test.  So comparing to other things,
-> > > > I hope VFIO stuff can land more stable than others because I am not
-> > > > confident at least myself to clean it.
-> > > 
-> > > That's a fair request, will keep this on mind.
-> > > 
-> > > > I simply also don't like random threads floating around, considering that
-> > > > how we already have slightly a mess with migration on other reasons (we can
-> > > > still have random TLS threads floating around, I think... and they can
-> > > > cause very hard to debug issues). I feel shaky to maintain it when any
-> > > > device can also start to create whatever threads they can during migration.
-> > > 
-> > > The threads themselves aren't very expensive as long as their number
-> > > is kept within reasonable bounds.
-> > > 
-> > > 4 additional threads (present only during active migration operation)
-> > > with 4 VFIO devices is really not a lot.
-> > 
-> > It's not about number, it's about management, and when something crashed at
-> > some unwanted point, then we may want to know what happened to those
-> > threads and how to recycle them.
-> 
-> I guess if you are more comfortable with maintaining code written in such
-> way then that's some argument for it too.
-
-It's not about my flavour of maintenance.
-
-We used to work on issues where we see a dangling thread operate on
-migration objects even if it was created in the _previous_ migration,
-cancelled and retried.  And the thread doesn't know that.  It was kind of
-leaked and it causes issues hard to debug.
-
-VFIO can cause similar thing if it can create some threads that migration
-developers may overlook and not easy to manage.  Then it'll be the same
-challenge when a vfio thread dangled for some reason and it'll just make
-things harder to debug when issue happens.
-
-I want to make sure if ever possible migration framework manages threads on
-its own, so no thread will be fiddling around without being noticed.
-
-Not to mention as I mentioned previously, that "having some async model to
-dump vmstate" isn't something special to VFIO, it can easily be extended to
-either RAM, or other normal VMSDs if we can tackle other issues here and
-there.  The general request is the same.  It'll be a chaos if vfio starts
-to create its own threads, then vDPA and others.  It is much saner to make
-it a generic model to me.
-
-Thanks,
-
--- 
-Peter Xu
+--000000000000e2df17061bcd76cb--
 
 
