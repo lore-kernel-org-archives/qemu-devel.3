@@ -4,84 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C79C3064D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 01:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56632C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 01:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMHYT-0003zr-3v; Tue, 25 Jun 2024 21:34:38 -0400
-Received: from eggs.gnu.org ([209.51.188.92])
+	id 1sMHb5-0004ZS-19; Tue, 25 Jun 2024 21:37:20 -0400
+Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMHYG-0003yJ-VG
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 21:34:26 -0400
-Received: from [2607:f8b0:4864:20::736] (helo=mail-qk1-x736.google.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMHXY-0003iS-TV
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 21:34:10 -0400
-Received: by mail-qk1-x736.google.com with SMTP id
- af79cd13be357-79c03dbddb8so132725385a.1
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 18:32:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719365545; x=1719970345; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GYudHtkKWd7Dipm9LqNUjoYl4NM9bNcT1f/3vN7kHU8=;
- b=Iy9VtHcY+x1q6Hme+Bdgd7tFy54FRh7s/VTUAF5cwiSh0JItr7T1C8nOvUn2+m82ws
- tc9+LdBl70vpAinoNYcslQsiL77dzsIM9NZfloGDZyUPRSv0bLwuTOBzdWb65sOLh5rK
- PQS/uMAb/h8Ok6oy+ER6nNnilqrAWDOqR+mcF+uQLRg+jF7vZL3eCfF47LkQ8ejpy2ZL
- Pvjs8pi1oYcJkmr6YJTAi+i9N9RkxMZ42Jl09cHwwXzpC1YJ4zDM6k90PoEjl7NSxJzc
- PoUcIVJSoO5WCbSRqMx6ew5AwLBQy9LRhwA/WxSgikbf3yhJiTTQTCQsKZP0xSTKAldd
- /bBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719365545; x=1719970345;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=GYudHtkKWd7Dipm9LqNUjoYl4NM9bNcT1f/3vN7kHU8=;
- b=b83YhmtqzXQAItWavJSrayKfL4ienX/wHgdnzB9opsudK5RbKFGlIeP+dlgCy9z3lI
- Mqz1X6nMIkV55ajTSaMuFDU9GateyendEDGqZlkz07SXECWnr5Th0ysuzeoY6HBGZigV
- dMdpxvbSQ8cHLzfv1zdoM5FuuJPeoUXSv+4NaZdSH4yHVQLvAfNma6xDToqco7MzLyKs
- xCPSYVhIcvWzQ3uja4oabUaMaGU90ajTWLlfjjd7tKeWIwQEy30C3QwkROmJWmvxaari
- z7mixKjCSy/MocOjXMPcYp51ynVRKHbqMJm+VmBJZrfQdNWk3zo/2h8kBEA3r6amPg2p
- J2Iw==
-X-Gm-Message-State: AOJu0YysBu4MSW2ug8wzz2BiB5wk3ZjjRaQt0c0Y1PjiEYNDjEgjF883
- mQBlHi6D7/CAIEgXkLBTC4ekYHkFg73XpKu3gpakFSdBfU2gISVYkeH9PU31eUpUzEXZmc6ZAxG
- waNKhobsBwiNQSR9fYHsgrSgG1s6aFI6Z
-X-Google-Smtp-Source: AGHT+IFSqNqdowHv7MKvWFf4FWp8oBIyt4CXA75Hy7bUW65jxhL5K4b6RP3ABodGjUD+Iv0GFNlAqU6mXuj83QOQH9g=
-X-Received: by 2002:a05:6102:416:b0:48c:1157:2f58 with SMTP id
- ada2fe7eead31-48f4ef62aa0mr7138762137.17.1719364992573; Tue, 25 Jun 2024
- 18:23:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1sMHYV-00041s-Ix
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 21:36:57 -0400
+Received: from mail-dm6nam04on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2409::601]
+ helo=NAM04-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1sMH8O-0005DY-Il
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 21:08:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ENT7zgplO1Ji/Fh4HXy0ggtPEaraClBUVwBuTNh3MpDBYtsPodE16DeEfYGaE3NpekW/JvSJO81Xl+titNfD3TEUc/T3zwzHhDnrL6KRvYP9lR4uPHkI8qTklLjYMtD9pt5014bYQP+4TztlBUnCVvERwXJcn6Rnj9geUdSGvXvnb/sNlzJNaPSS8TV9bXzInP+Pe44uESm4prNah8cyT7IhrHARc033Qk3gSjSO6QxuEgNnHxjfq+kTTNnovblEZ89VyEnuv4gtxr+TAsh+5fUyO6UWsFXEsTe0uY+HR3/BsDgwW5GXVtbyIOFfRTnwI2y4tVy75bwZk5inESnevw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Pejh5GTymrIgruXb5nqDuJ1Mr+SdU80MfVDak+pNDGc=;
+ b=C8prnXspoBg5aln9P9109iO2e2oV7fatsq8eoREE9m/D/j//Nf2ioQyj1JCroobgEdSGU+U5AqWd5veV/ED+venboR22FJeWjFraBq7q2uheIt2+wPa1cX2NMyqAUhNyax8UKFHrWNoB5nHa61wA0mE07RK/EQBJ1BTM15bjm+6DlOo8nmthJYfW5d9MjRvPu7EuPZbhjh9tkmLXiEW39j65jkWW0121yZWqYPzOcgPncJ+6SFVFAly867c6KRs3P5v9T8u0nAfN7zmquCnCcOgU1/lMOdJW/a2pT5N3vGRSqZWqwM1aI0QkzWelvCYptVwK5+VVSHTXjU28XFekMQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=linaro.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Pejh5GTymrIgruXb5nqDuJ1Mr+SdU80MfVDak+pNDGc=;
+ b=qPDMGD83W9wXBLs51nGkMyxPdjBgBFlORjCBfEQ0u6+4T3HUZ+KU8ZtNx9CY/qBmFVNLwutHgTnhzOHVvgqBlmUmXVYz2BjeWcBmtrfytlXVbqxGGEIMAH5SngDBiOQN1LNyCp8XCNufPE0ugE+X7wfH0EkzfsGKflNEX7ZDHaxpvb9sKQhQgi1CX96/3bJNOD3UBgHyCj1BK7h2yc0VoGyGsn5gVZOuWRf5r8seeb5tuJT9eg8xKdsV/4qIKaGTSeHJOXjJZ1ywLLJxA/rxC27UcU6Eod7bKRVLcMIjUfJq+7gMJL/6RpqVV0aNXlDRXesfHY52Eo9kJ+mCAKatCg==
+Received: from CH2PR15CA0025.namprd15.prod.outlook.com (2603:10b6:610:51::35)
+ by CH2PR12MB4037.namprd12.prod.outlook.com (2603:10b6:610:7a::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.30; Wed, 26 Jun
+ 2024 00:29:43 +0000
+Received: from CH1PEPF0000AD81.namprd04.prod.outlook.com
+ (2603:10b6:610:51:cafe::a2) by CH2PR15CA0025.outlook.office365.com
+ (2603:10b6:610:51::35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7719.22 via Frontend
+ Transport; Wed, 26 Jun 2024 00:29:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ CH1PEPF0000AD81.mail.protection.outlook.com (10.167.244.89) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7677.15 via Frontend Transport; Wed, 26 Jun 2024 00:29:43 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 25 Jun
+ 2024 17:29:33 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 25 Jun 2024 17:29:32 -0700
+Received: from Asurada-Nvidia.nvidia.com (10.127.8.10) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server id 15.2.1544.4 via Frontend
+ Transport; Tue, 25 Jun 2024 17:29:32 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: <peter.maydell@linaro.org>, <shannon.zhaosl@gmail.com>, <mst@redhat.com>, 
+ <imammedo@redhat.com>, <anisinha@redhat.com>, <eric.auger@redhat.com>,
+ <peterx@redhat.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <jgg@nvidia.com>,
+ <shameerali.kolothum.thodi@huawei.com>, <jasowang@redhat.com>
+Subject: [PATCH RFCv1 10/10] hw/arm/virt-acpi-build: Enable ATS for nested
+ SMMUv3
+Date: Tue, 25 Jun 2024 17:28:37 -0700
+Message-ID: <228a33507c1dc46862f61e32a6482aa0b05b4ce8.1719361174.git.nicolinc@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1719361174.git.nicolinc@nvidia.com>
+References: <cover.1719361174.git.nicolinc@nvidia.com>
 MIME-Version: 1.0
-References: <20240612031706.2927602-1-ethan84@andestech.com>
- <20240612031706.2927602-3-ethan84@andestech.com>
- <CAKmqyKM+dSQfGAUcU9w+hHA1SVA-OSLhsfYHh7rV1uutaeppfw@mail.gmail.com>
- <ZnjQCkiR2ikr1Rng@ethan84-VirtualBox>
-In-Reply-To: <ZnjQCkiR2ikr1Rng@ethan84-VirtualBox>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 26 Jun 2024 11:22:46 +1000
-Message-ID: <CAKmqyKMzg0rHj0RfpcGB3Mecy4tVvMQWDhgM8u3=GaRn46q2vg@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] hw/riscv/virt: Add IOPMP support
-To: Ethan Chen <ethan84@andestech.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 2607:f8b0:4864:20::736
- (deferred)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
- envelope-from=alistair23@gmail.com; helo=mail-qk1-x736.google.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD81:EE_|CH2PR12MB4037:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4a0403e9-c344-47a3-a10c-08dc95771313
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230038|36860700011|376012|7416012|1800799022|82310400024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?H0A3BzAy9bv2UWqdV6V9YIfANFD8UPtAVw6wCzGT6LZYlsk/mULwGXOuADEK?=
+ =?us-ascii?Q?2Vk4RFcGdJfIZQyQ8lgdQgyY1K6TZezWS2emJIOPtcZBu16CJNNkTC+O0gSm?=
+ =?us-ascii?Q?Tq1Y0SShsBpXWQ6CN+FzpazPOs+HnkxcQS+k6Wk7nkXMVVrHX+kXQshfMVgL?=
+ =?us-ascii?Q?K42an1/DEM+ex6Cf9xNJts8OfYgpN7I+/nmVaMuhV293CQW9Quw12DYzdGlw?=
+ =?us-ascii?Q?I0HBSHSzoFPEbNclTFK0gKrKk6+vlU428jHKteC1DkI7flDdX5qqeExJ9ec+?=
+ =?us-ascii?Q?AQMyD6Jm55uznsEzqH6QuogiHLc8sFmn0WOBTLwK02yenq3pjZAzfRoBqJqr?=
+ =?us-ascii?Q?/IU+nkEeoPfKI/WZAu2WkH2hyhLttDVNl3vxndx1ifyQNZIG8HAIaom6vXwU?=
+ =?us-ascii?Q?yrrhxT72fg60InwWx8vWdC83NWIVC7+uis3jN8MqYD5+Zp7tmQ3/TCj4J4xy?=
+ =?us-ascii?Q?uSM2ikVIjZ6BU9r6O3USrUY/TKmOFK6booD5og9bYG15p5KiBtDPuLcITxn+?=
+ =?us-ascii?Q?uWGynmODpLinaAMCO1JQ3jxdDBVudJezYCsZqjItetkkz+S7JunJDFcM6+Ld?=
+ =?us-ascii?Q?tm+oSVNsSxPAOumuwRrvPM+uG6Wk5PsU9oZ7svR3X1lUReJ/uPbQYro9NkY7?=
+ =?us-ascii?Q?XdFzn1Ovd/IxPJbbO20C7ScRzdrkEcOLWth9K9EcOYjZizvbrjuV3jNyE4/L?=
+ =?us-ascii?Q?K2m84P4xf68n8sMIfrinZc1DZaIjf8Sr1/RVCYb4hnopVGz9YAHfqHaVncaP?=
+ =?us-ascii?Q?YCSX64nWgE0+DOZZAfsyUfC/E1n1fQor2KjCQigETZeGMn7vb/IUSsIdDhrE?=
+ =?us-ascii?Q?YMBzpOGC5piqL8vCIBeQYaEXaTJqv/QGDZZZf5om2X0wKO65QDcLgLKvM/5o?=
+ =?us-ascii?Q?K5hDes/Cf5pFiJeKYmaQV0/W5HMfhAY/XhTUyL+w3OjpIJDRDIW4metmfMFp?=
+ =?us-ascii?Q?BrfY4tp8M0xH4cQcAbodXmWKB6nT/ONyoh1j0/YzzTtSd3HYTzYbD8YrclL+?=
+ =?us-ascii?Q?asYwit9qjFVZ3ontA1Z0oGlBhhd2NJ8/SBTXY4g8nLmKvwS31zkPlRy7gHRm?=
+ =?us-ascii?Q?Bz1olCuLuC/zJqCQzoisnR6JyIsUrE4PG22NtLCGmEoZhLjyrGVH844Rsw0a?=
+ =?us-ascii?Q?sgKLl5r2kPuvOUR84dAcS4SYyx+y17jRIACcfwVSZpSNUN6x2APIy9crQd3a?=
+ =?us-ascii?Q?WoAWzviqGp92mG0Ezp4lWCpi9E7oMt5169PAwQ70lB5eiRhhvKxzapgzvp/T?=
+ =?us-ascii?Q?dquWcYuJVhF9+oiQLLQJWNvHEALnF7pxP5/tf0ocVqjPrk4wLhwUQ+L+I9Y9?=
+ =?us-ascii?Q?nlGLyjCwPT6XVWPLtKPwUjEIZ1yz2AnMDQAaiiqn5w9qfR5eZdJbZ71B4NIU?=
+ =?us-ascii?Q?Fmov0CVJdkou8dESofLizl8NrNwsYCZx4CIZ7EGVcxHJ0MrV8g=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230038)(36860700011)(376012)(7416012)(1800799022)(82310400024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2024 00:29:43.1905 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4a0403e9-c344-47a3-a10c-08dc95771313
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD81.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4037
+Received-SPF: softfail client-ip=2a01:111:f403:2409::601;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM04-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
 X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, PDS_HP_HELO_NORDNS=0.001,
- RDNS_NONE=0.793, T_SPF_HELO_TEMPERROR=0.01,
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, KHOP_HELO_FCRDNS=0.4, T_SPF_HELO_TEMPERROR=0.01,
  T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,269 +157,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 24, 2024 at 11:47=E2=80=AFAM Ethan Chen <ethan84@andestech.com>=
- wrote:
->
-> Hi Alistair,
->
-> IOPMP can applies all device. In this patch series, PCI devices on the br=
-idge
-> can connect to IOPMP by pci_setup_iommu(), but other devices need change =
-their
-> memory access address space from system memory to IOPMP by themself.
+For a nested SMMUv3, the ATS capaiblity is decided by the underlying HW,
+and then reflected in the IDR0 register of the vSMMU.
 
-We should be really clear about that then. The documentation and the
-flag `iopmp=3D[on|off]` implies that either the IOPMP is on or off.
+The IORT on the other hand could allow it to be always enabled, relying
+on the guest-level SMMU kernel driver to disable ATS feature if the ATS
+bit isn't set in IDR0.
 
-For example, what happens in the future if we extend support to apply
-to all devices? That will be a breaking change for anyone currently
-using `iopmp=3Don`.
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+---
+ hw/arm/virt-acpi-build.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Maybe we should have use something like `iopmp=3D[pci|off]` instead, and
-then be really clear in the docs what is and isn't going through the
-IOPMP.
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 6d8b9aea42..c4cf1caf22 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -485,7 +485,11 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     /* Table 15 Memory Access Flags */
+     build_append_int_noprefix(table_data, 0x3 /* CCA = CPM = DACS = 1 */, 1);
+ 
+-    build_append_int_noprefix(table_data, 0, 4); /* ATS Attribute */
++    if (vms->iommu == VIRT_IOMMU_NESTED_SMMUV3) {
++        build_append_int_noprefix(table_data, 1, 4); /* ATS Attribute */
++    } else {
++        build_append_int_noprefix(table_data, 0, 4); /* ATS Attribute */
++    }
+     /* MCFG pci_segment */
+     build_append_int_noprefix(table_data, 0, 4); /* PCI Segment number */
+ 
+-- 
+2.43.0
 
-Alistair
-
->
-> Thanks,
-> Ethan
->
-> On Fri, Jun 21, 2024 at 03:54:15PM +1000, Alistair Francis wrote:
-> > On Wed, Jun 12, 2024 at 1:25=E2=80=AFPM Ethan Chen via <qemu-devel@nong=
-nu.org> wrote:
-> > >
-> > > If a requestor device is connected to the IOPMP device, its memory ac=
-cess will
-> > > be checked by the IOPMP rule.
-> > >
-> > > - Add 'iopmp=3Don' option to add an iopmp device and make the Generic=
- PCI Express
-> > >   Bridge connect to IOPMP.
-> >
-> > I have only had a chance to have a quick look at this series and the sp=
-ec.
-> >
-> > But the IOPMP spec applies to all devices right, but this series seems
-> > to only work with PCI. Am I missing something?
-> >
-> > Alistair
-> >
-> > >
-> > > Signed-off-by: Ethan Chen <ethan84@andestech.com>
-> > > ---
-> > >  docs/system/riscv/virt.rst |  6 ++++
-> > >  hw/riscv/Kconfig           |  1 +
-> > >  hw/riscv/virt.c            | 57 ++++++++++++++++++++++++++++++++++++=
---
-> > >  include/hw/riscv/virt.h    |  5 +++-
-> > >  4 files changed, 66 insertions(+), 3 deletions(-)
-> > >
-> > > diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-> > > index 9a06f95a34..3b2576f905 100644
-> > > --- a/docs/system/riscv/virt.rst
-> > > +++ b/docs/system/riscv/virt.rst
-> > > @@ -116,6 +116,12 @@ The following machine-specific options are suppo=
-rted:
-> > >    having AIA IMSIC (i.e. "aia=3Daplic-imsic" selected). When not spe=
-cified,
-> > >    the default number of per-HART VS-level AIA IMSIC pages is 0.
-> > >
-> > > +- iopmp=3D[on|off]
-> > > +
-> > > +  When this option is "on", an IOPMP device is added to machine. It =
-checks dma
-> > > +  operations from the generic PCIe host bridge. This option is assum=
-ed to be
-> > > +  "off".
-> > > +
-> > >  Running Linux kernel
-> > >  --------------------
-> > >
-> > > diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> > > index a2030e3a6f..0b45a5ade2 100644
-> > > --- a/hw/riscv/Kconfig
-> > > +++ b/hw/riscv/Kconfig
-> > > @@ -56,6 +56,7 @@ config RISCV_VIRT
-> > >      select PLATFORM_BUS
-> > >      select ACPI
-> > >      select ACPI_PCI
-> > > +    select RISCV_IOPMP
-> > >
-> > >  config SHAKTI_C
-> > >      bool
-> > > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> > > index 4fdb660525..53a1b71c71 100644
-> > > --- a/hw/riscv/virt.c
-> > > +++ b/hw/riscv/virt.c
-> > > @@ -55,6 +55,7 @@
-> > >  #include "hw/acpi/aml-build.h"
-> > >  #include "qapi/qapi-visit-common.h"
-> > >  #include "hw/virtio/virtio-iommu.h"
-> > > +#include "hw/misc/riscv_iopmp.h"
-> > >
-> > >  /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated b=
-y QEMU. */
-> > >  static bool virt_use_kvm_aia(RISCVVirtState *s)
-> > > @@ -82,6 +83,7 @@ static const MemMapEntry virt_memmap[] =3D {
-> > >      [VIRT_UART0] =3D        { 0x10000000,         0x100 },
-> > >      [VIRT_VIRTIO] =3D       { 0x10001000,        0x1000 },
-> > >      [VIRT_FW_CFG] =3D       { 0x10100000,          0x18 },
-> > > +    [VIRT_IOPMP] =3D        { 0x10200000,      0x100000 },
-> > >      [VIRT_FLASH] =3D        { 0x20000000,     0x4000000 },
-> > >      [VIRT_IMSIC_M] =3D      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
-> > >      [VIRT_IMSIC_S] =3D      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
-> > > @@ -1006,6 +1008,24 @@ static void create_fdt_virtio_iommu(RISCVVirtS=
-tate *s, uint16_t bdf)
-> > >                             bdf + 1, iommu_phandle, bdf + 1, 0xffff -=
- bdf);
-> > >  }
-> > >
-> > > +static void create_fdt_iopmp(RISCVVirtState *s, const MemMapEntry *m=
-emmap,
-> > > +                             uint32_t irq_mmio_phandle) {
-> > > +    g_autofree char *name =3D NULL;
-> > > +    MachineState *ms =3D MACHINE(s);
-> > > +
-> > > +    name =3D g_strdup_printf("/soc/iopmp@%lx", (long)memmap[VIRT_IOP=
-MP].base);
-> > > +    qemu_fdt_add_subnode(ms->fdt, name);
-> > > +    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "riscv_iopm=
-p");
-> > > +    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0x0, memmap[VIRT_IO=
-PMP].base,
-> > > +        0x0, memmap[VIRT_IOPMP].size);
-> > > +    qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq_mmi=
-o_phandle);
-> > > +    if (s->aia_type =3D=3D VIRT_AIA_TYPE_NONE) {
-> > > +        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", IOPMP_IRQ=
-);
-> > > +    } else {
-> > > +        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", IOPMP_IR=
-Q, 0x4);
-> > > +    }
-> > > +}
-> > > +
-> > >  static void finalize_fdt(RISCVVirtState *s)
-> > >  {
-> > >      uint32_t phandle =3D 1, irq_mmio_phandle =3D 1, msi_pcie_phandle=
- =3D 1;
-> > > @@ -1024,6 +1044,10 @@ static void finalize_fdt(RISCVVirtState *s)
-> > >      create_fdt_uart(s, virt_memmap, irq_mmio_phandle);
-> > >
-> > >      create_fdt_rtc(s, virt_memmap, irq_mmio_phandle);
-> > > +
-> > > +    if (s->have_iopmp) {
-> > > +        create_fdt_iopmp(s, virt_memmap, irq_mmio_phandle);
-> > > +    }
-> > >  }
-> > >
-> > >  static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
-> > > @@ -1404,7 +1428,7 @@ static void virt_machine_init(MachineState *mac=
-hine)
-> > >      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(machine);
-> > >      MemoryRegion *system_memory =3D get_system_memory();
-> > >      MemoryRegion *mask_rom =3D g_new(MemoryRegion, 1);
-> > > -    DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
-> > > +    DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip, *gpex=
-_dev;
-> > >      int i, base_hartid, hart_count;
-> > >      int socket_count =3D riscv_socket_count(machine);
-> > >
-> > > @@ -1570,7 +1594,7 @@ static void virt_machine_init(MachineState *mac=
-hine)
-> > >              qdev_get_gpio_in(virtio_irqchip, VIRTIO_IRQ + i));
-> > >      }
-> > >
-> > > -    gpex_pcie_init(system_memory, pcie_irqchip, s);
-> > > +    gpex_dev =3D gpex_pcie_init(system_memory, pcie_irqchip, s);
-> > >
-> > >      create_platform_bus(s, mmio_irqchip);
-> > >
-> > > @@ -1581,6 +1605,14 @@ static void virt_machine_init(MachineState *ma=
-chine)
-> > >      sysbus_create_simple("goldfish_rtc", memmap[VIRT_RTC].base,
-> > >          qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
-> > >
-> > > +    if (s->have_iopmp) {
-> > > +        DeviceState *iopmp_dev =3D sysbus_create_simple(TYPE_IOPMP,
-> > > +            memmap[VIRT_IOPMP].base,
-> > > +            qdev_get_gpio_in(DEVICE(mmio_irqchip), IOPMP_IRQ));
-> > > +
-> > > +        iopmp_setup_pci(iopmp_dev, PCI_HOST_BRIDGE(gpex_dev)->bus);
-> > > +    }
-> > > +
-> > >      for (i =3D 0; i < ARRAY_SIZE(s->flash); i++) {
-> > >          /* Map legacy -drive if=3Dpflash to machine properties */
-> > >          pflash_cfi01_legacy_drive(s->flash[i],
-> > > @@ -1684,6 +1716,21 @@ static void virt_set_aclint(Object *obj, bool =
-value, Error **errp)
-> > >      s->have_aclint =3D value;
-> > >  }
-> > >
-> > > +static bool virt_get_iopmp(Object *obj, Error **errp)
-> > > +{
-> > > +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> > > +
-> > > +    return s->have_iopmp;
-> > > +}
-> > > +
-> > > +static void virt_set_iopmp(Object *obj, bool value, Error **errp)
-> > > +{
-> > > +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> > > +
-> > > +    s->have_iopmp =3D value;
-> > > +}
-> > > +
-> > > +
-> > >  bool virt_is_acpi_enabled(RISCVVirtState *s)
-> > >  {
-> > >      return s->acpi !=3D ON_OFF_AUTO_OFF;
-> > > @@ -1794,6 +1841,12 @@ static void virt_machine_class_init(ObjectClas=
-s *oc, void *data)
-> > >                                NULL, NULL);
-> > >      object_class_property_set_description(oc, "acpi",
-> > >                                            "Enable ACPI");
-> > > +
-> > > +    object_class_property_add_bool(oc, "iopmp", virt_get_iopmp,
-> > > +                                   virt_set_iopmp);
-> > > +    object_class_property_set_description(oc, "iopmp",
-> > > +                                          "Set on/off to enable/disa=
-ble "
-> > > +                                          "iopmp device");
-> > >  }
-> > >
-> > >  static const TypeInfo virt_machine_typeinfo =3D {
-> > > diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> > > index 3db839160f..81460e29c4 100644
-> > > --- a/include/hw/riscv/virt.h
-> > > +++ b/include/hw/riscv/virt.h
-> > > @@ -55,6 +55,7 @@ struct RISCVVirtState {
-> > >
-> > >      int fdt_size;
-> > >      bool have_aclint;
-> > > +    bool have_iopmp;
-> > >      RISCVVirtAIAType aia_type;
-> > >      int aia_guests;
-> > >      char *oem_id;
-> > > @@ -84,12 +85,14 @@ enum {
-> > >      VIRT_PCIE_MMIO,
-> > >      VIRT_PCIE_PIO,
-> > >      VIRT_PLATFORM_BUS,
-> > > -    VIRT_PCIE_ECAM
-> > > +    VIRT_PCIE_ECAM,
-> > > +    VIRT_IOPMP,
-> > >  };
-> > >
-> > >  enum {
-> > >      UART0_IRQ =3D 10,
-> > >      RTC_IRQ =3D 11,
-> > > +    IOPMP_IRQ =3D 12,
-> > >      VIRTIO_IRQ =3D 1, /* 1 to 8 */
-> > >      VIRTIO_COUNT =3D 8,
-> > >      PCIE_IRQ =3D 0x20, /* 32 to 35 */
-> > > --
-> > > 2.34.1
-> > >
-> > >
 
