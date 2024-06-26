@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 070D9C30653
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 22:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF8DDC27C4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 22:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMb4M-0000vP-QN; Wed, 26 Jun 2024 18:24:50 -0400
+	id 1sMb49-0000Fp-Q2; Wed, 26 Jun 2024 18:24:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb49-0000Nb-Da
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:24:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb3a-0007d3-8h
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:24:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb44-00030r-NK
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:24:37 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb3X-0002rl-R7
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:24:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719440672;
+ s=mimecast20190719; t=1719440636;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EZKq8NdPRtFQaqOS66UrV4r6O8zGuQk00MpGkJ/TuUc=;
- b=fq1XdAEqC+Y7pUKnaND8lGGKtyJODFFzQalShrKgD4mJzpzT8A+KUullO0jXjJnUNM4CvC
- m9ZjKxwPcp4Pzc4kcHoQPjmbRGsK7WemBtM9BxD/YtNarX1/rPWSh+mTDGgBxAp56xFxGG
- QhzwDypCWANNdXmAfOzzFDP4Sd2Ykw0=
+ bh=GNSWdN9cWTKZDPj5/a/oNtSmKd3EdNCt0RiP98EW2Y4=;
+ b=Ol+U1lOq2VF/jJ4eqW0XUXSF9dP9JJSV/GQDw9JRJu+tj8WL+3jmR4OSSZ9ay4j3b0wjgJ
+ Fd83nYozJ0eoykyCePqvliTI9/da1mfAf9H1F+UV5k9jVbmG2VE5GzhY4Y/56T0FSEmHss
+ iVPilBMbx3Voyru3EOV+/MSUwIQDwUg=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-67O201aBOgyAVyvd_s62Zw-1; Wed,
- 26 Jun 2024 18:24:25 -0400
-X-MC-Unique: 67O201aBOgyAVyvd_s62Zw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-FMFYq9CsOOu1LrRPIbBy2Q-1; Wed,
+ 26 Jun 2024 18:23:52 -0400
+X-MC-Unique: FMFYq9CsOOu1LrRPIbBy2Q-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B7B5C19560AE; Wed, 26 Jun 2024 22:24:23 +0000 (UTC)
+ id 99D8A19560AB; Wed, 26 Jun 2024 22:23:46 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.8.67])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7FE0119560BF; Wed, 26 Jun 2024 22:24:14 +0000 (UTC)
+ id 478BE1955F2D; Wed, 26 Jun 2024 22:23:38 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mads Ynddal <mads@ynddal.dk>, Jiri Pirko <jiri@resnulli.us>,
@@ -68,15 +68,15 @@ Cc: Mads Ynddal <mads@ynddal.dk>, Jiri Pirko <jiri@resnulli.us>,
  Jason Wang <jasowang@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  Hanna Reitz <hreitz@redhat.com>, Konstantin Kostiuk <kkostiuk@redhat.com>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 19/21] qapi: convert "Example" sections with titles
-Date: Wed, 26 Jun 2024 18:21:25 -0400
-Message-ID: <20240626222128.406106-20-jsnow@redhat.com>
+Subject: [PATCH v2 15/21] docs/qapidoc: create qmp-example directive
+Date: Wed, 26 Jun 2024 18:21:21 -0400
+Message-ID: <20240626222128.406106-16-jsnow@redhat.com>
 In-Reply-To: <20240626222128.406106-1-jsnow@redhat.com>
 References: <20240626222128.406106-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -100,328 +100,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When an Example section has a brief explanation, convert it to a
-qmp-example:: section using the :title: option.
+This is a directive that creates a syntactic sugar for creating
+"Example" boxes very similar to the ones already used in the bitmaps.rst
+document, please see e.g.
+https://www.qemu.org/docs/master/interop/bitmaps.html#creation-block-dirty-bitmap-add
 
-Rule of thumb: If the title can fit on a single line and requires no rST
-markup, it's a good candidate for using the :title: option of
-qmp-example.
+In its simplest form, when a custom title is not needed or wanted, and
+the example body is *solely* a QMP example:
 
-In this patch, trailing punctuation is removed from the title section
-for consistent headline aesthetics. In just one case, specifics of the
-example are removed to make the title read better.
+```
+.. qmp-example::
 
-See commit-4: "docs/qapidoc: create qmp-example directive", for a
-              detailed explanation of this custom directive syntax.
+   {body}
+```
 
-See commit+2: "qapi: remove "Example" doc section" for a detailed
-              explanation of why.
+is syntactic sugar for:
+
+```
+.. admonition:: Example:
+
+   .. code-block:: QMP
+
+      {body}
+```
+
+When a custom, plaintext title that describes the example is desired,
+this form:
+
+```
+.. qmp-example::
+   :title: Defrobnification
+
+   {body}
+```
+
+Is syntactic sugar for:
+
+```
+.. admonition:: Example: Defrobnification
+
+   .. code-block:: QMP
+
+      {body}
+```
+
+Lastly, when Examples are multi-step processes that require non-QMP
+exposition, have lengthy titles, or otherwise involve prose with rST
+markup (lists, cross-references, etc), the most complex form:
+
+```
+.. qmp-example::
+   :annotated:
+
+   This example shows how to use `foo-command`::
+
+     {body}
+```
+
+Is desugared to:
+
+```
+.. admonition:: Example:
+
+   This example shows how to use `foo-command`::
+
+     {body}
+
+   For more information, please see `frobnozz`.
+```
+
+The primary benefit here being documentation source consistently using
+the same directive for all forms of examples to ensure consistent visual
+styling, and ensuring all relevant prose is visually grouped alongside
+the code literal block.
+
+Note that as of this commit, the code-block rST syntax "::" does not
+apply QMP highlighting; you would need to use ".. code-block:: QMP". The
+very next commit changes this behavior to assume all "::" code blocks
+within this directive are QMP blocks.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/block-core.json | 24 ++++++++++++------------
- qapi/block.json      | 13 ++++++-------
- qapi/migration.json  | 25 ++++++++++++++-----------
- qapi/qom.json        |  8 ++++----
- qapi/ui.json         | 11 ++++++-----
- qapi/virtio.json     | 19 ++++++++++---------
- 6 files changed, 52 insertions(+), 48 deletions(-)
+ docs/sphinx/qapidoc.py | 60 ++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 58 insertions(+), 2 deletions(-)
 
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 4e0f0395146..a371e3464d2 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -5885,9 +5885,8 @@
- #
- # Since: 2.7
- #
--# Examples:
--#
--#     1. Add a new node to a quorum
-+# .. qmp-example::
-+#    :title: Add a new node to a quorum
- #
- #     -> { "execute": "blockdev-add",
- #          "arguments": {
-@@ -5901,7 +5900,8 @@
- #                         "node": "new_node" } }
- #     <- { "return": {} }
- #
--#     2. Delete a quorum's node
-+# .. qmp-example::
-+#    :title: Delete a quorum's node
- #
- #     -> { "execute": "x-blockdev-change",
- #          "arguments": { "parent": "disk1",
-@@ -5937,16 +5937,16 @@
- #
- # Since: 2.12
- #
--# Examples:
--#
--#     1. Move a node into an IOThread
-+# .. qmp-example::
-+#    :title: Move a node into an IOThread
- #
- #     -> { "execute": "x-blockdev-set-iothread",
- #          "arguments": { "node-name": "disk1",
- #                         "iothread": "iothread0" } }
- #     <- { "return": {} }
- #
--#     2. Move a node into the main loop
-+# .. qmp-example::
-+#    :title: Move a node into the main loop
- #
- #     -> { "execute": "x-blockdev-set-iothread",
- #          "arguments": { "node-name": "disk1",
-@@ -6022,16 +6022,16 @@
- #
- # Since: 2.0
- #
--# Examples:
--#
--#     1. Read operation
-+# .. qmp-example::
-+#    :title: Read operation
- #
- #     <- { "event": "QUORUM_REPORT_BAD",
- #          "data": { "node-name": "node0", "sector-num": 345435, "sectors-count": 5,
- #                    "type": "read" },
- #          "timestamp": { "seconds": 1344522075, "microseconds": 745528 } }
- #
--#     2. Flush operation
-+# .. qmp-example::
-+#    :title: Flush operation
- #
- #     <- { "event": "QUORUM_REPORT_BAD",
- #          "data": { "node-name": "node0", "sector-num": 0, "sectors-count": 2097120,
-diff --git a/qapi/block.json b/qapi/block.json
-index c8e52bc2d29..5ddd061e964 100644
---- a/qapi/block.json
-+++ b/qapi/block.json
-@@ -342,9 +342,8 @@
- #
- # Since: 2.5
- #
--# Examples:
--#
--#     1. Change a removable medium
-+# .. qmp-example::
-+#    :title: Change a removable medium
- #
- #     -> { "execute": "blockdev-change-medium",
- #          "arguments": { "id": "ide0-1-0",
-@@ -352,7 +351,8 @@
- #                         "format": "raw" } }
- #     <- { "return": {} }
- #
--#     2. Load a read-only medium into a writable drive
-+# .. qmp-example::
-+#    :title: Load a read-only medium into a writable drive
- #
- #     -> { "execute": "blockdev-change-medium",
- #          "arguments": { "id": "floppyA",
-@@ -577,9 +577,8 @@
- #                         "boundaries-write": [1000, 5000] } }
- #     <- { "return": {} }
- #
--# Example:
--#
--#     Remove all latency histograms:
-+# .. qmp-example::
-+#    :title: Remove all latency histograms
- #
- #     -> { "execute": "block-latency-histogram-set",
- #          "arguments": { "id": "drive0" } }
-diff --git a/qapi/migration.json b/qapi/migration.json
-index a4391ea7e6f..37ce8afa380 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -287,14 +287,14 @@
- #
- # Since: 0.14
- #
--# Examples:
--#
--#     1. Before the first migration
-+# .. qmp-example::
-+#    :title: Before the first migration
- #
- #     -> { "execute": "query-migrate" }
- #     <- { "return": {} }
- #
--#     2. Migration is done and has succeeded
-+# .. qmp-example::
-+#    :title: Migration is done and has succeeded
- #
- #     -> { "execute": "query-migrate" }
- #     <- { "return": {
-@@ -314,12 +314,14 @@
- #          }
- #        }
- #
--#     3. Migration is done and has failed
-+# .. qmp-example::
-+#    :title: Migration is done and has failed
- #
- #     -> { "execute": "query-migrate" }
- #     <- { "return": { "status": "failed" } }
- #
--#     4. Migration is being performed:
-+# .. qmp-example::
-+#    :title: Migration is being performed
- #
- #     -> { "execute": "query-migrate" }
- #     <- {
-@@ -340,7 +342,8 @@
- #           }
- #        }
- #
--#     5. Migration is being performed and XBZRLE is active:
-+# .. qmp-example::
-+#    :title: Migration is being performed and XBZRLE is active
- #
- #     -> { "execute": "query-migrate" }
- #     <- {
-@@ -2131,15 +2134,15 @@
- #
- # Since: 5.2
- #
--# Examples:
--#
--#     1. Measurement is in progress:
-+# .. qmp-example::
-+#    :title: Measurement is in progress
- #
- #     <- {"status": "measuring", "sample-pages": 512,
- #         "mode": "page-sampling", "start-time": 1693900454, "calc-time": 10,
- #         "calc-time-unit": "second"}
- #
--#     2. Measurement has been completed:
-+# .. qmp-example::
-+#    :title: Measurement has been completed
- #
- #     <- {"status": "measured", "sample-pages": 512, "dirty-rate": 108,
- #         "mode": "page-sampling", "start-time": 1693900454, "calc-time": 10,
-diff --git a/qapi/qom.json b/qapi/qom.json
-index fb365e5ce6b..1b3e6c94b73 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -104,16 +104,16 @@
- #
- # Since: 1.2
- #
--# Examples:
--#
--#     1. Use absolute path
-+# .. qmp-example::
-+#    :title: Use absolute path
- #
- #     -> { "execute": "qom-get",
- #          "arguments": { "path": "/machine/unattached/device[0]",
- #                         "property": "hotplugged" } }
- #     <- { "return": false }
- #
--#     2. Use partial path
-+# .. qmp-example::
-+#    :title: Use partial path
- #
- #     -> { "execute": "qom-get",
- #          "arguments": { "path": "unattached/sysbus",
-diff --git a/qapi/ui.json b/qapi/ui.json
-index c0e94fd0ed0..779b472f064 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -1272,9 +1272,8 @@
- #    property, so it is possible to map which console belongs to which
- #    device and display.
- #
--# Examples:
--#
--#     1. Press left mouse button.
-+# .. qmp-example::
-+#    :title: Press left mouse button
- #
- #     -> { "execute": "input-send-event",
- #         "arguments": { "device": "video0",
-@@ -1288,7 +1287,8 @@
- #                        "data" : { "down": false, "button": "left" } } ] } }
- #     <- { "return": {} }
- #
--#     2. Press ctrl-alt-del.
-+# .. qmp-example::
-+#    :title: Press ctrl-alt-del
- #
- #     -> { "execute": "input-send-event",
- #          "arguments": { "events": [
-@@ -1300,7 +1300,8 @@
- #               "key": {"type": "qcode", "data": "delete" } } } ] } }
- #     <- { "return": {} }
- #
--#     3. Move mouse pointer to absolute coordinates (20000, 400).
-+# .. qmp-example::
-+#    :title: Move mouse pointer to absolute coordinates
- #
- #     -> { "execute": "input-send-event" ,
- #       "arguments": { "events": [
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index f4323cc35e8..d965c98ad2b 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -690,9 +690,8 @@
- #
- # Since: 7.2
- #
--# Examples:
--#
--#     1. Get vhost_virtqueue status for vhost-crypto
-+# .. qmp-example::
-+#    :title: Get vhost_virtqueue status for vhost-crypto
- #
- #     -> { "execute": "x-query-virtio-vhost-queue-status",
- #          "arguments": { "path": "/machine/peripheral/crypto0/virtio-backend",
-@@ -715,7 +714,8 @@
- #          }
- #        }
- #
--#     2. Get vhost_virtqueue status for vhost-vsock
-+# .. qmp-example::
-+#    :title: Get vhost_virtqueue status for vhost-vsock
- #
- #     -> { "execute": "x-query-virtio-vhost-queue-status",
- #          "arguments": { "path": "/machine/peripheral/vsock0/virtio-backend",
-@@ -839,9 +839,8 @@
- #
- # Since: 7.2
- #
--# Examples:
--#
--#     1. Introspect on virtio-net's VirtQueue 0 at index 5
-+# .. qmp-example::
-+#    :title: Introspect on virtio-net's VirtQueue 0 at index 5
- #
- #     -> { "execute": "x-query-virtio-queue-element",
- #          "arguments": { "path": "/machine/peripheral-anon/device[1]/virtio-backend",
-@@ -870,7 +869,8 @@
- #          }
- #        }
- #
--#     2. Introspect on virtio-crypto's VirtQueue 1 at head
-+# .. qmp-example::
-+#    :title: Introspect on virtio-crypto's VirtQueue 1 at head
- #
- #     -> { "execute": "x-query-virtio-queue-element",
- #          "arguments": { "path": "/machine/peripheral/crypto0/virtio-backend",
-@@ -898,7 +898,8 @@
- #          }
- #        }
- #
--#     3. Introspect on virtio-scsi's VirtQueue 2 at head
-+# .. qmp-example::
-+#    :title: Introspect on virtio-scsi's VirtQueue 2 at head
- #
- #     -> { "execute": "x-query-virtio-queue-element",
- #          "arguments": { "path": "/machine/peripheral-anon/device[2]/virtio-backend",
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index 43dd99e21e6..a2fa05fc491 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -27,16 +27,19 @@
+ import os
+ import re
+ import textwrap
++from typing import List
+ 
+ from docutils import nodes
+-from docutils.parsers.rst import Directive, directives
++from docutils.parsers.rst import directives
+ from docutils.statemachine import ViewList
+ from qapi.error import QAPIError, QAPISemError
+ from qapi.gen import QAPISchemaVisitor
+ from qapi.schema import QAPISchema
+ 
+ import sphinx
++from sphinx.directives.code import CodeBlock
+ from sphinx.errors import ExtensionError
++from sphinx.util.docutils import SphinxDirective
+ from sphinx.util.nodes import nested_parse_with_titles
+ 
+ 
+@@ -494,7 +497,7 @@ def visit_module(self, name):
+         super().visit_module(name)
+ 
+ 
+-class NestedDirective(Directive):
++class NestedDirective(SphinxDirective):
+     def run(self):
+         raise NotImplementedError
+ 
+@@ -567,10 +570,63 @@ def run(self):
+             raise ExtensionError(str(err)) from err
+ 
+ 
++class QMPExample(CodeBlock, NestedDirective):
++    """
++    Custom admonition for QMP code examples.
++
++    When the :annotated: option is present, the body of this directive
++    is parsed as normal rST instead. Code blocks must be explicitly
++    written by the user, but this allows for intermingling explanatory
++    paragraphs with arbitrary rST syntax and code blocks for more
++    involved examples.
++
++    When :annotated: is absent, the directive body is treated as a
++    simple standalone QMP code block literal.
++    """
++
++    required_argument = 0
++    optional_arguments = 0
++    has_content = True
++    option_spec = {
++        "annotated": directives.flag,
++        "title": directives.unchanged,
++    }
++
++    def admonition_wrap(self, *content) -> List[nodes.Node]:
++        title = "Example:"
++        if "title" in self.options:
++            title = f"{title} {self.options['title']}"
++
++        admon = nodes.admonition(
++            "",
++            nodes.title("", title),
++            *content,
++            classes=["admonition", "admonition-example"],
++        )
++        return [admon]
++
++    def run_annotated(self) -> List[nodes.Node]:
++        content_node: nodes.Element = nodes.section()
++        self.do_parse(self.content, content_node)
++        return content_node.children
++
++    def run(self) -> List[nodes.Node]:
++        annotated = "annotated" in self.options
++
++        if annotated:
++            content_nodes = self.run_annotated()
++        else:
++            self.arguments = ["QMP"]
++            content_nodes = super().run()
++
++        return self.admonition_wrap(*content_nodes)
++
++
+ def setup(app):
+     """Register qapi-doc directive with Sphinx"""
+     app.add_config_value("qapidoc_srctree", None, "env")
+     app.add_directive("qapi-doc", QAPIDocDirective)
++    app.add_directive("qmp-example", QMPExample)
+ 
+     return {
+         "version": __version__,
 -- 
 2.45.0
 
