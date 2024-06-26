@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FF7C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4B7FC27C4F
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 22:23:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMb2X-0005YE-Su; Wed, 26 Jun 2024 18:22:57 -0400
+	id 1sMb1k-00059i-S8; Wed, 26 Jun 2024 18:22:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb2V-0005XK-Vj
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:22:55 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb1i-00057o-Pw
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:22:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb2U-0002QJ-1w
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:22:55 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sMb1f-0002D0-EH
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 18:22:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719440573;
+ s=mimecast20190719; t=1719440522;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4m+8m4aCMK3iiMr/I4m8T61CS9JXetIeJv88m5hoV5U=;
- b=earOM8bBuVDtORwJNbsXruAduuclkBJzoNH7Bex1eUVhdNKugqJtGeQw7EWIkofGQjuV38
- b5PTWrCbXod3VIQn0ZLx70iKbnDl1k82opLKkyLximhDNgdhG+DrXlg2RHfvb1K7FKiswb
- YEGMIywyzFiY2cgbfp4faM+btClExJg=
+ bh=jhzXOQWJrgjcPajk3Sv0HAVh0PLLPUiAYpwNpnvShJs=;
+ b=B11VwVrnaGD9GGBK9dUsXp0S+GUl6a/3ZjW7sXG6S8DjyQ+Ya878HVV870/TnAyFLvJPiq
+ j8g5SS+SGU1bdjxaXsXShKY62IMn3Qhrh0Mi21S+f9As5kXYwG4aFRyWHwOnCVRGp0+981
+ F+WiC2xJsQJYpVY4Hpsa3exCh0yBc+o=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-1hm229DbOIWWZx5bhW2FTg-1; Wed,
- 26 Jun 2024 18:22:50 -0400
-X-MC-Unique: 1hm229DbOIWWZx5bhW2FTg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-595-0ObLDSbqPHe_C0EBHtYCoA-1; Wed,
+ 26 Jun 2024 18:21:59 -0400
+X-MC-Unique: 0ObLDSbqPHe_C0EBHtYCoA-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A3DD1956095; Wed, 26 Jun 2024 22:22:48 +0000 (UTC)
+ id C83EE1956089; Wed, 26 Jun 2024 22:21:56 +0000 (UTC)
 Received: from scv.redhat.com (unknown [10.22.8.67])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DDC6519560BF; Wed, 26 Jun 2024 22:22:39 +0000 (UTC)
+ id 7E8B919560BF; Wed, 26 Jun 2024 22:21:48 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mads Ynddal <mads@ynddal.dk>, Jiri Pirko <jiri@resnulli.us>,
@@ -68,9 +68,9 @@ Cc: Mads Ynddal <mads@ynddal.dk>, Jiri Pirko <jiri@resnulli.us>,
  Jason Wang <jasowang@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  Hanna Reitz <hreitz@redhat.com>, Konstantin Kostiuk <kkostiuk@redhat.com>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>, John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 08/21] qapi: fix non-compliant JSON examples
-Date: Wed, 26 Jun 2024 18:21:14 -0400
-Message-ID: <20240626222128.406106-9-jsnow@redhat.com>
+Subject: [PATCH v2 02/21] qapi: linter fixups
+Date: Wed, 26 Jun 2024 18:21:08 -0400
+Message-ID: <20240626222128.406106-3-jsnow@redhat.com>
 In-Reply-To: <20240626222128.406106-1-jsnow@redhat.com>
 References: <20240626222128.406106-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -100,132 +100,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The new QMP documentation generator wants to parse all examples as
-"QMP". We have an existing QMP lexer in docs/sphinx/qmp_lexer.py (Seen
-in-use here: https://qemu-project.gitlab.io/qemu/interop/bitmaps.html)
-that allows the use of "->", "<-" and "..." tokens to denote QMP
-protocol flow with elisions, but otherwise defers to the JSON lexer.
+Fix minor irritants to pylint/flake8 et al.
 
-To utilize this lexer for the existing QAPI documentation, we need them
-to conform to a standard so that they lex and render correctly. Once the
-QMP lexer is active for examples, errant QMP/JSON will produce warning
-messages and fail the build.
-
-Fix any invalid JSON found in QAPI documentation (identified by
-attempting to lex all examples as QMP; see subsequent
-commits). Additionally, elisions must be standardized for the QMP lexer;
-they must be represented as the value "...", so three examples have been
-adjusted to support that format here.
+(Yes, these need to be guarded by the Python tests. That's a work in
+progress, a series that's quite likely to follow once I finish this
+Sphinx project. Please pardon the temporary irritation.)
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/control.json   | 3 ++-
- qapi/machine.json   | 2 +-
- qapi/migration.json | 2 +-
- qapi/misc.json      | 3 ++-
- qapi/net.json       | 6 +++---
- qapi/rocker.json    | 2 +-
- qapi/ui.json        | 2 +-
- 7 files changed, 11 insertions(+), 9 deletions(-)
+ scripts/qapi/introspect.py | 8 ++++----
+ scripts/qapi/schema.py     | 6 +++---
+ scripts/qapi/visit.py      | 5 +++--
+ 3 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/qapi/control.json b/qapi/control.json
-index 6bdbf077c2e..10c906fa0e7 100644
---- a/qapi/control.json
-+++ b/qapi/control.json
-@@ -145,7 +145,8 @@
- #             },
- #             {
- #                "name":"system_powerdown"
--#             }
-+#             },
-+#             ...
- #          ]
- #        }
- #
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 2fd3e9c3d5d..a982c945035 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1057,7 +1057,7 @@
- #            "vcpus-count": 1 },
- #          { "props": { "core-id": 0 }, "type": "POWER8-spapr-cpu-core",
- #            "vcpus-count": 1, "qom-path": "/machine/unattached/device[0]"}
--#        ]}'
-+#        ]}
- #
- #     For pc machine type started with -smp 1,maxcpus=2:
- #
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 0f24206bce4..9ec9ef36c47 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -2106,7 +2106,7 @@
- # Example:
- #
- #     -> {"execute": "calc-dirty-rate", "arguments": {"calc-time": 1,
--#                                                     'sample-pages': 512} }
-+#                                                     "sample-pages": 512} }
- #     <- { "return": {} }
- #
- #     Measure dirty rate using dirty bitmap for 500 milliseconds:
-diff --git a/qapi/misc.json b/qapi/misc.json
-index ec30e5c570a..4b41e15dcd4 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -287,7 +287,8 @@
- #
- # Example:
- #
--#     -> { "execute": "get-win32-socket", "arguments": { "info": "abcd123..", fdname": "skclient" } }
-+#     -> { "execute": "get-win32-socket",
-+#          "arguments": { "info": "abcd123..", "fdname": "skclient" } }
- #     <- { "return": {} }
- ##
- { 'command': 'get-win32-socket', 'data': {'info': 'str', 'fdname': 'str'}, 'if': 'CONFIG_WIN32' }
-diff --git a/qapi/net.json b/qapi/net.json
-index 0f5a259475e..c19df435a53 100644
---- a/qapi/net.json
-+++ b/qapi/net.json
-@@ -1003,9 +1003,9 @@
- #
- # Example:
- #
--#     <- { 'event': 'NETDEV_STREAM_DISCONNECTED',
--#          'data': {'netdev-id': 'netdev0'},
--#          'timestamp': {'seconds': 1663330937, 'microseconds': 526695} }
-+#     <- { "event": "NETDEV_STREAM_DISCONNECTED",
-+#          "data": {"netdev-id": "netdev0"},
-+#          "timestamp": {"seconds": 1663330937, "microseconds": 526695} }
- ##
- { 'event': 'NETDEV_STREAM_DISCONNECTED',
-   'data': { 'netdev-id': 'str' } }
-diff --git a/qapi/rocker.json b/qapi/rocker.json
-index 5635cf174fd..f5225eb62cc 100644
---- a/qapi/rocker.json
-+++ b/qapi/rocker.json
-@@ -250,7 +250,7 @@
- #                       "action": {"goto-tbl": 10},
- #                       "mask": {"in-pport": 4294901760}
- #                      },
--#                      {...more...},
-+#                      {...},
- #        ]}
- ##
- { 'command': 'query-rocker-of-dpa-flows',
-diff --git a/qapi/ui.json b/qapi/ui.json
-index f610bce118a..c12f5292571 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -361,7 +361,7 @@
- #                    "channel-id": 0,
- #                    "tls": false
- #                 },
--#                 [ ... more channels follow ... ]
-+#                 ...
- #              ]
- #           }
- #        }
+diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+index 86c075a6ad2..ac14b20f308 100644
+--- a/scripts/qapi/introspect.py
++++ b/scripts/qapi/introspect.py
+@@ -27,8 +27,8 @@
+ from .schema import (
+     QAPISchema,
+     QAPISchemaAlternatives,
+-    QAPISchemaBranches,
+     QAPISchemaArrayType,
++    QAPISchemaBranches,
+     QAPISchemaBuiltinType,
+     QAPISchemaEntity,
+     QAPISchemaEnumMember,
+@@ -233,9 +233,9 @@ def _use_type(self, typ: QAPISchemaType) -> str:
+             typ = type_int
+         elif (isinstance(typ, QAPISchemaArrayType) and
+               typ.element_type.json_type() == 'int'):
+-            type_intList = self._schema.lookup_type('intList')
+-            assert type_intList
+-            typ = type_intList
++            type_intlist = self._schema.lookup_type('intList')
++            assert type_intlist
++            typ = type_intlist
+         # Add type to work queue if new
+         if typ not in self._used_types:
+             self._used_types.append(typ)
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+index 721c470d2b8..d65c35f6ee6 100644
+--- a/scripts/qapi/schema.py
++++ b/scripts/qapi/schema.py
+@@ -730,6 +730,7 @@ def set_defined_in(self, name: str) -> None:
+         for v in self.variants:
+             v.set_defined_in(name)
+ 
++    # pylint: disable=unused-argument
+     def check(
+             self, schema: QAPISchema, seen: Dict[str, QAPISchemaMember]
+     ) -> None:
+@@ -1166,7 +1167,7 @@ def _def_definition(self, defn: QAPISchemaDefinition) -> None:
+                 defn.info, "%s is already defined" % other_defn.describe())
+         self._entity_dict[defn.name] = defn
+ 
+-    def lookup_entity(self,name: str) -> Optional[QAPISchemaEntity]:
++    def lookup_entity(self, name: str) -> Optional[QAPISchemaEntity]:
+         return self._entity_dict.get(name)
+ 
+     def lookup_type(self, name: str) -> Optional[QAPISchemaType]:
+@@ -1302,11 +1303,10 @@ def _make_implicit_object_type(
+         name = 'q_obj_%s-%s' % (name, role)
+         typ = self.lookup_entity(name)
+         if typ:
+-            assert(isinstance(typ, QAPISchemaObjectType))
++            assert isinstance(typ, QAPISchemaObjectType)
+             # The implicit object type has multiple users.  This can
+             # only be a duplicate definition, which will be flagged
+             # later.
+-            pass
+         else:
+             self._def_definition(QAPISchemaObjectType(
+                 name, info, None, ifcond, None, None, members, None))
+diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
+index e766acaac92..12f92e429f6 100644
+--- a/scripts/qapi/visit.py
++++ b/scripts/qapi/visit.py
+@@ -280,8 +280,9 @@ def gen_visit_alternate(name: str,
+         abort();
+     default:
+         assert(visit_is_input(v));
+-        error_setg(errp, "Invalid parameter type for '%%s', expected: %(name)s",
+-                         name ? name : "null");
++        error_setg(errp,
++                   "Invalid parameter type for '%%s', expected: %(name)s",
++                   name ? name : "null");
+         /* Avoid passing invalid *obj to qapi_free_%(c_name)s() */
+         g_free(*obj);
+         *obj = NULL;
 -- 
 2.45.0
 
