@@ -4,65 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80CB6C30658
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 02:45:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7667EC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 02:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMIeZ-0007Kc-9g; Tue, 25 Jun 2024 22:44:59 -0400
-Received: from eggs.gnu.org ([2001:470:142:3::10])
+	id 1sMGaf-00032T-W7; Tue, 25 Jun 2024 20:32:54 -0400
+Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sMIeX-0007HY-K8
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:44:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1sMGaP-0002ym-PW
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 20:32:41 -0400
+Received: from mail-dm6nam12on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2417::601]
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sMIeV-0001wX-4M
- for qemu-devel@nongnu.org; Tue, 25 Jun 2024 22:44:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719369892;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=3HsaTu0rEaLzrUEaPgROf/HqkAPij43XcgXV00m5wDo=;
- b=WyJ0ptGuV0g/mh4bmTyiCcD1QLhf/ymuBENX6HGJcJdxrxoDHKu2SUh/6KQidPeRN3Z5rk
- QjCJZMdBo2NydVMRM5hiDpkULauLAcKpDU4VBb8HEZHIZ8BifXsY8fYeSgl81/1jJ77GVH
- NU3RTE40ec/x/TFNLXRFP2K/jL9ownA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-5q0BYMoxMKeaYOqYW6OEGg-1; Tue,
- 25 Jun 2024 22:44:45 -0400
-X-MC-Unique: 5q0BYMoxMKeaYOqYW6OEGg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DEAE41956095; Wed, 26 Jun 2024 02:44:42 +0000 (UTC)
-Received: from server.redhat.com (unknown [10.72.112.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 961511955F2D; Wed, 26 Jun 2024 02:44:38 +0000 (UTC)
-From: Cindy Lu <lulu@redhat.com>
-To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com,
- qemu-devel@nongnu.org, philmd@linaro.org
-Cc: qemu-stable@nongnu.org
-Subject: [PATCH v3] virtio-pci: Fix the use of an uninitialized irqfd
-Date: Wed, 26 Jun 2024 10:44:31 +0800
-Message-ID: <20240626024434.10523-1-lulu@redhat.com>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1sMGZR-0005AS-Rf
+ for qemu-devel@nongnu.org; Tue, 25 Jun 2024 20:32:18 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AwinHG9r4rMTlQxLRH8Sm8vskCZmMm4jLFhL/1iKVI15q3Jjvk/+V/GKr4OMGiOSfBkNJ0StZPzcw6WShQbbBa1P8NknEI4+TU4D6m4uM4L0I+o+Nr3vm2um82Y3BGetGyO/BMUrgP4P5Rgcy+FZsnFoXJ4CdZ++IIT8SlSOmgqVY8VrcwwhQICJy94BO/3ZfhekqNGPCUBXMVMktXytANv8UjzjE0qxTWHJ+sSUFq/Rh1myAhWeWVHiXjpA/5V2Dzq/z99Q4XfxE/rR3e7X8prTsKdggev021eEsRkpiEVGk55jpGgUsw22+QQKkp2ciomfnXJGfuUe7Vz120mR+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=st6cXlXTtG4KWRzuy7Kgk9SpM3l4nRJKRVnsNJCtIGs=;
+ b=kgSpCjH0pusS3lw3AfxGladS1eKmOfbO+RNuqsIdV5rrTLeHeTP+2NK1sub1l1gLS0pQkIkY6/DtxcQu43gvr5NeGA3bMR8rYrybUSMhDeihWNOgjbuYBszIpco3hAzyp2MKIIWiMUH7w+WGFeJUhjUsJkopn898fVf256U8BUK75pLGKJ7wdiDGijqO+cj6HP07EmPMWYLi3iFWKIdDoPEjb8az3AVWM9SfpyUzcMrAS6NfGd1NboWdrHOIMfgsHYTfHIHe+asqtZ86I8dv7Ka3LAzK68HnIy+ZgQ4GcV7hJ+0XasstL3E0zOyobkyzH5sBl4K51+CmjECNl2c8lQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=linaro.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=st6cXlXTtG4KWRzuy7Kgk9SpM3l4nRJKRVnsNJCtIGs=;
+ b=Tv4PpvP6ahFkQSMl7YXS34j50mQ+f7J3AdFf0k0a/h8cfnT7aKkXUkhLFFZdxaiozVINyXfJhhMFDsPYteVkOKAktSVO92lP2xQj3AWFQ/56kWdSbZqyeRjZw3rwcDFKJ84BHymWGxyqRF53BL7XYw15NgxDDu/aDTFF+DWMtniL713RnBS7V19Ij86fSpEnW+4h1f477JjQwmMQKu6dFM1CUI7gMq8DGm8n2+W6ZbaeS5z2fsM+muj6bF6VssjohKv4vbVqiaesTytJh7BQV2YHkEpxLhR2HjWgjMa5mfKStpjJFAxlxj5oNdbIh8abFInfCwt+zYBLYXvA2+YkvQ==
+Received: from BN9PR03CA0949.namprd03.prod.outlook.com (2603:10b6:408:108::24)
+ by IA1PR12MB7541.namprd12.prod.outlook.com (2603:10b6:208:42f::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.30; Wed, 26 Jun
+ 2024 00:29:40 +0000
+Received: from BN3PEPF0000B075.namprd04.prod.outlook.com
+ (2603:10b6:408:108:cafe::c5) by BN9PR03CA0949.outlook.office365.com
+ (2603:10b6:408:108::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7677.38 via Frontend
+ Transport; Wed, 26 Jun 2024 00:29:40 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ BN3PEPF0000B075.mail.protection.outlook.com (10.167.243.120) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7677.15 via Frontend Transport; Wed, 26 Jun 2024 00:29:39 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 25 Jun
+ 2024 17:29:30 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.4; Tue, 25 Jun 2024 17:29:30 -0700
+Received: from Asurada-Nvidia.nvidia.com (10.127.8.10) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server id 15.2.1544.4 via Frontend
+ Transport; Tue, 25 Jun 2024 17:29:29 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: <peter.maydell@linaro.org>, <shannon.zhaosl@gmail.com>, <mst@redhat.com>, 
+ <imammedo@redhat.com>, <anisinha@redhat.com>, <eric.auger@redhat.com>,
+ <peterx@redhat.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <jgg@nvidia.com>,
+ <shameerali.kolothum.thodi@huawei.com>, <jasowang@redhat.com>
+Subject: [PATCH RFCv1 07/10] hw/arm/virt: Bypass iommu for default PCI bus
+Date: Tue, 25 Jun 2024 17:28:34 -0700
+Message-ID: <27c5765e7a945de1c10269f05ca3347b5d62eedb.1719361174.git.nicolinc@nvidia.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1719361174.git.nicolinc@nvidia.com>
+References: <cover.1719361174.git.nicolinc@nvidia.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.151,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B075:EE_|IA1PR12MB7541:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6453cc0c-adfa-4dab-a3e4-08dc9577111c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230038|36860700011|376012|7416012|1800799022|82310400024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?C8onOuZJcVof3n1G/tZBkqCJMvQgpMjjfp7FIQRJ7wGK8HRFqk7eXLE5fPCu?=
+ =?us-ascii?Q?gKZAC4daPDnX0tIiRqru8pHjyq+WtV5X2DMapd90QreDmIWMErGM+XD1fLA9?=
+ =?us-ascii?Q?F4iee9rfddq3ryZoiIPW+FdPWVW4X5xNnzWaOdIBTzs2idYkI+tM7go6QmqR?=
+ =?us-ascii?Q?dz9W+cZt9kXsJMwApqAVDCBK632RdPqJtrY7Flxbx+dU2ASjKtj1QuHvdX71?=
+ =?us-ascii?Q?FSr/uUkVlAM7Fz0tvuiVnCResHdh8rkoMrCF75j/zhQ2kdXDaApnmS+n8CSP?=
+ =?us-ascii?Q?WZOWkKwy9UxH2VFtanoQ8u3yBLjqfmB5VQbwW0NeA4ColQXzOxgPLAYqa3nY?=
+ =?us-ascii?Q?DAB4ScckUWtuw0Ow8SY6txCahRtYgPyqN6NXrrIpEKsZNAeNBBtF1W5viKg1?=
+ =?us-ascii?Q?aWjhcW9lTiwOCXjUICfjD3xvsgzKlb70Ms83gsWMymuowIKRwgvjkeGqAZYC?=
+ =?us-ascii?Q?/Wpd3En0efJ7Qfm+zjTZfZRFsyBJkqrbj74AZAE0rv3dKLL3x5j/NNmWMC6S?=
+ =?us-ascii?Q?RI/qSqIHSqOwVmwgGEprJ0VNs9IJCrrPQR+ju67xVlNZkF0dH/w0meX5vONZ?=
+ =?us-ascii?Q?44UHClVcXOeO3WUj7y6Mi1AlSJFfgCR4sFTwhxKYIfPS71dfAQ007g3+beZB?=
+ =?us-ascii?Q?cBYZEHGEzenk9Mp/4E34IcABT37QelCN7VG32l4kIe7vtaQ53G3f06UQNkqg?=
+ =?us-ascii?Q?1NXM1iOuZYdwkI6wJUAGSmnHZgn/tt6M2JskbHJ12yMwutsRIId15H2cP1qt?=
+ =?us-ascii?Q?2lJwFpyVdZYhgyebvx0CSlocspzK++T2+6aRTfiEu6lSYH4m/IsJLL1RSafa?=
+ =?us-ascii?Q?DBqtP1En/GU4aaaXrqZMxD9Ih8f3yZRNHI4/OWL6ADnCO+pcoNGU6D1byDSy?=
+ =?us-ascii?Q?Qxj1GYdDikJz5UHwC0AlJYTQb/S84CXeaMiZWofinMiQQ7UiyFj9btUFKpaI?=
+ =?us-ascii?Q?GhRlo7fMBbKN9W4BcVMiOeyYlAn1VcrRPDapV5KvgYUh9qEeyhXzrEa/iitl?=
+ =?us-ascii?Q?eF1V6nzfyqVnKY2gevZyfVJ8QoZD7Oes0ws+9/v5Pn9U5KT4p9TPF+htr9lf?=
+ =?us-ascii?Q?CU0K0DCc6ifcfnuqjev0+15dSWmH9YAhsVNpw8uiTQLMlLheEAqaQeMoMm1N?=
+ =?us-ascii?Q?wAjQ/c1QcuFu+8zdLYHoC755+ilEVeiB7U4MGa/EQbsJyJjKcFpz4f9HhCRo?=
+ =?us-ascii?Q?tJ9bircNto2PtwtXW6vBMqzb8HpsyjuhpPIdYNTZ+UrZVbEqchrJPODDv0st?=
+ =?us-ascii?Q?sEVn9jl7rQu+Z9WO9mkYdooY0ekGpj95yJ91Ip7S3d5Udv5ox5nFEW8u5x/c?=
+ =?us-ascii?Q?9h2l8tye4S//PQ6KdCrGpwgM/uJ62ZiGjfUeVte2LVqP1rf7IBhWx17TtEtw?=
+ =?us-ascii?Q?s0+pS5SdSIIAqGZRzCjIf0DfHtkI/2DXLr7LpulXKgHUe4xjcQ=3D=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230038)(36860700011)(376012)(7416012)(1800799022)(82310400024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jun 2024 00:29:39.8316 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6453cc0c-adfa-4dab-a3e4-08dc9577111c
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B075.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7541
+Received-SPF: softfail client-ip=2a01:111:f403:2417::601;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, KHOP_HELO_FCRDNS=0.4, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,86 +156,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The crash was reported in MAC OS and NixOS, here is the link for this bug
-https://gitlab.com/qemu-project/qemu/-/issues/2334
-https://gitlab.com/qemu-project/qemu/-/issues/2321
+Now, all passthrough devices that should benefit from the nested SMMUv3
+feature are assigned to dedicated pxb buses. So, the default PCI bus can
+be only used by emulated devices.
 
-The root cause is the function virtio_pci_set_guest_notifiers() was not called
-in the virtio_input device.So the vector_irqfd was not initialized
+In theory, these emualted devices can be still attached to an emualted
+SMMUv3 instance, yet there is no gain doing that. Set the default PCI bus
+to bypass iommu, for the maximum performance.
 
-So the fix is add the check for vector_irqfd.
-
-Change in V3
-1) Move the vector_irqfd check to virtio_pci_get_notifier().
-The function virtio_pci_get_notifier() can also be used while vdev->status
-is not VIRTIO_CONFIG_S_DRIVER_OK. In that case, the vector_irqfd could be NULL,
-so also add the status check here.
-2) Add the return value check for kvm_virtio_pci_vector_use_one().
-Since the return value of function virtio_pci_set_vector() is void,
-just add the error message here.
-
-This fix is verified in vyatta,MacOS,NixOS,fedora system.
-
-The bt tree for this bug is:
-Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
-[Switching to Thread 0x7c817be006c0 (LWP 1269146)]
-kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-817         if (irqfd->users == 0) {
-(gdb) thread apply all bt
-...
-Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
-0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
-1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:893
-2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0.0/system/memory.c:497
-3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/system/memory.c:573
-4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0.0/system/memory.c:1528
-5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../qemu-9.0.0/system/physmem.c:2713
-6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/system/physmem.c:2743
-7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
-8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system/physmem.c:2894
-9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/physmem.c:2904
-10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
-11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/kvm/kvm-accel-ops.c:50
-12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qemu-thread-posix.c:541
-13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
-14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
-
-Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
-Cc: qemu-stable@nongnu.org
-
-Signed-off-by: Cindy Lu <lulu@redhat.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 ---
- hw/virtio/virtio-pci.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/arm/virt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index b1d02f4b3d..87307b9061 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -860,6 +860,11 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
-     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-     VirtQueue *vq;
- 
-+    if ((proxy->vector_irqfd == NULL) &&
-+        (vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)) {
-+        return -1;
-+    }
-+
-     if (queue_no == VIRTIO_CONFIG_IRQ_IDX) {
-         *n = virtio_config_get_guest_notifier(vdev);
-         *vector = vdev->config_vector;
-@@ -1452,7 +1457,9 @@ static void virtio_pci_set_vector(VirtIODevice *vdev,
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3610f53304..5e91dc8c3d 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1708,7 +1708,8 @@ static void create_pcie(VirtMachineState *vms)
      }
-     /* If the new vector changed need to set it up. */
-     if (kvm_irqfd && new_vector != VIRTIO_NO_VECTOR) {
--        kvm_virtio_pci_vector_use_one(proxy, queue_no);
-+        if (kvm_virtio_pci_vector_use_one(proxy, queue_no)) {
-+            virtio_error(vdev, "fail to set the vector %d", new_vector);
-+        }
-     }
- }
  
+     pci = PCI_HOST_BRIDGE(dev);
+-    pci->bypass_iommu = vms->default_bus_bypass_iommu;
++    /* Default bus used by emulated devices does not go through nested SMMUs */
++    pci->bypass_iommu = vms->default_bus_bypass_iommu || vms->num_nested_smmus;
+     vms->bus = pci->bus;
+     if (vms->bus) {
+         pci_init_nic_devices(pci->bus, mc->default_nic);
 -- 
-2.45.0
+2.43.0
 
 
