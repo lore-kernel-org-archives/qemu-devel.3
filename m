@@ -4,64 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69EF7C27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 08:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33717C30653
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 08:43:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMO0s-0007al-Bu; Wed, 26 Jun 2024 04:28:22 -0400
+	id 1sMOEh-0008Aa-3U; Wed, 26 Jun 2024 04:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sMO0l-0007PL-Nx
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 04:28:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sMOEf-0008A3-BC
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 04:42:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sMO0j-0007DD-U4
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 04:28:15 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sMOEd-0001aR-KB
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 04:42:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719390493;
+ s=mimecast20190719; t=1719391354;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V8+yh9BO2co7/n68WttUqz+fb/n9Db2ubdRGfHNjNH8=;
- b=SXtra9jZjCtrl9dncteEn4Kzd4Gb7lB5iq3dSQ85Z0DcOXWZYs+mrEsQzdBax/oz5AHJmX
- etztfUyI7Q4+z8QjYt4eehETiZThUfJljiBnLoY/KInQ2ISS42JZcRrsWG5iEBJcmDzLQ4
- Ejm35vrbGap4hVgeEbDegKlEldxqgTU=
+ bh=i1FK0HXF/pUjhJL0NYY+JwgrUFD6QZo2BZwQzQgrgus=;
+ b=QJLj/vzugtZKt/FfJmrvUZSy0ygl3Bthkajmg/gwb3l8kq14gBsm1s7w+uIn7WVOTTUBDk
+ QKbjPBTBsMYCNpzOCL+OrY/sZVO2onkDUa6BghXX6s6CRuTV4HVm+8QjSXjO8sRwWr9QH2
+ hi7jM2FtzlQWtI6QqAwUy2bTSx4UVLQ=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-HcmZaVBSNwysIrtAk5dOvw-1; Wed,
- 26 Jun 2024 04:28:08 -0400
-X-MC-Unique: HcmZaVBSNwysIrtAk5dOvw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-322-aelFG2q5My6JGjRno__c5w-1; Wed,
+ 26 Jun 2024 04:42:32 -0400
+X-MC-Unique: aelFG2q5My6JGjRno__c5w-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E83F195608B; Wed, 26 Jun 2024 08:28:07 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.39.193.191])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 909281956087; Wed, 26 Jun 2024 08:28:03 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
- peter.maydell@linaro.org, clg@redhat.com, yanghliu@redhat.com,
- zhenzhong.duan@intel.com, alex.williamson@redhat.com
-Subject: [PATCH 6/7] memory: remove IOMMU MR iommu_set_page_size_mask()
- callback
-Date: Wed, 26 Jun 2024 10:26:51 +0200
-Message-ID: <20240626082727.1278530-7-eric.auger@redhat.com>
-In-Reply-To: <20240626082727.1278530-1-eric.auger@redhat.com>
-References: <20240626082727.1278530-1-eric.auger@redhat.com>
+ id 2771419560B3; Wed, 26 Jun 2024 08:42:31 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.235])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 984763000225; Wed, 26 Jun 2024 08:42:28 +0000 (UTC)
+Date: Wed, 26 Jun 2024 10:42:25 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Nir Soffer <nsoffer@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ Fam Zheng <fam@euphon.net>, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>
+Subject: Re: [PATCH v2] Consider discard option when writing zeros
+Message-ID: <ZnvUcQiXzQW-Mq1s@redhat.com>
+References: <20240619174022.1298578-1-nsoffer@redhat.com>
+ <CAMRbyyso9cMFueVS3SGtJ3G=-OGu+ueqqE5u2NYtsydBxf_J3Q@mail.gmail.com>
+ <20240624152302.GA2402845@fedora.redhat.com>
+ <ZnmZ-m38IAHg0UdX@redhat.com>
+ <CAMRbyyv9utXsfXKiPz4fGw+S4JLgsZE2UDxUOxwG1fxZwGMHNQ@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <CAMRbyyv9utXsfXKiPz4fGw+S4JLgsZE2UDxUOxwG1fxZwGMHNQ@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 11
 X-Spam_score: 1.1
 X-Spam_bar: +
@@ -85,198 +88,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Everything is now in place to use the Host IOMMU Device callbacks
-to retrieve the page size mask usable with a given assigned device.
-This new method brings the advantage to pass the info much earlier
-to the virtual IOMMU and before the IOMMU MR gets enabled. So let's
-remove the call to memory_region_iommu_set_page_size_mask in
-vfio common.c and remove the single implementation of the IOMMU MR
-callback in the virtio-iommu.c
+Am 24.06.2024 um 23:12 hat Nir Soffer geschrieben:
+> On Mon, Jun 24, 2024 at 7:08 PM Kevin Wolf <kwolf@redhat.com> wrote:
+> 
+> > Am 24.06.2024 um 17:23 hat Stefan Hajnoczi geschrieben:
+> > > On Wed, Jun 19, 2024 at 08:43:25PM +0300, Nir Soffer wrote:
+> > > > Tested using:
+> > >
+> > > Hi Nir,
+> > > This looks like a good candidate for the qemu-iotests test suite. Adding
+> > > it to the automated tests will protect against future regressions.
+> > >
+> > > Please add the script and the expected output to
+> > > tests/qemu-iotests/test/write-zeroes-unmap and run it using
+> > > `(cd build && tests/qemu-iotests/check write-zeroes-unmap)`.
+> > >
+> > > See the existing test cases in tests/qemu-iotests/ and
+> > > tests/qemu-iotests/tests/ for examples. Some are shell scripts and
+> > > others are Python. I think shell makes sense for this test case. You
+> > > can copy the test framework boilerplate from an existing test case.
+> >
+> > 'du' can't be used like this in qemu-iotests because it makes
+> > assumptions that depend on the filesystem. A test case replicating what
+> > Nir did manually would likely fail on XFS with its preallocation.
+> 
+> This is why I did not try to add a new qemu-iotest yet.
+> 
+> > Maybe we could operate on a file exposed by the FUSE export that is
+> > backed by qcow2, and then you can use 'qemu-img map' on that qcow2 image
+> > to verify the allocation status. Somewhat complicated, but I think it
+> > could work.
+> 
+> Do we have examples of using the FUSE export? It sounds complicated but
+> being able to test on any file system is awesome. The complexity can be
+> hidden behind simple test helpers.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- include/exec/memory.h    | 38 ---------------------------------
- hw/vfio/common.c         |  8 -------
- hw/virtio/virtio-iommu.c | 45 ----------------------------------------
- system/memory.c          | 13 ------------
- hw/virtio/trace-events   |  1 -
- 5 files changed, 105 deletions(-)
+We seem to have a few tests that use it, and then the fuse protocol
+implementation, too. 308 and file-io-error look relevant.
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 0903513d13..6f9c78cc14 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -504,32 +504,6 @@ struct IOMMUMemoryRegionClass {
-      * @iommu: the IOMMUMemoryRegion
-      */
-     int (*num_indexes)(IOMMUMemoryRegion *iommu);
--
--    /**
--     * @iommu_set_page_size_mask:
--     *
--     * Restrict the page size mask that can be supported with a given IOMMU
--     * memory region. Used for example to propagate host physical IOMMU page
--     * size mask limitations to the virtual IOMMU.
--     *
--     * Optional method: if this method is not provided, then the default global
--     * page mask is used.
--     *
--     * @iommu: the IOMMUMemoryRegion
--     *
--     * @page_size_mask: a bitmask of supported page sizes. At least one bit,
--     * representing the smallest page size, must be set. Additional set bits
--     * represent supported block sizes. For example a host physical IOMMU that
--     * uses page tables with a page size of 4kB, and supports 2MB and 4GB
--     * blocks, will set mask 0x40201000. A granule of 4kB with indiscriminate
--     * block sizes is specified with mask 0xfffffffffffff000.
--     *
--     * Returns 0 on success, or a negative error. In case of failure, the error
--     * object must be created.
--     */
--     int (*iommu_set_page_size_mask)(IOMMUMemoryRegion *iommu,
--                                     uint64_t page_size_mask,
--                                     Error **errp);
- };
- 
- typedef struct RamDiscardListener RamDiscardListener;
-@@ -1919,18 +1893,6 @@ int memory_region_iommu_attrs_to_index(IOMMUMemoryRegion *iommu_mr,
-  */
- int memory_region_iommu_num_indexes(IOMMUMemoryRegion *iommu_mr);
- 
--/**
-- * memory_region_iommu_set_page_size_mask: set the supported page
-- * sizes for a given IOMMU memory region
-- *
-- * @iommu_mr: IOMMU memory region
-- * @page_size_mask: supported page size mask
-- * @errp: pointer to Error*, to store an error if it happens.
-- */
--int memory_region_iommu_set_page_size_mask(IOMMUMemoryRegion *iommu_mr,
--                                           uint64_t page_size_mask,
--                                           Error **errp);
--
- /**
-  * memory_region_name: get a memory region's name
-  *
-diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 7cdb969fd3..6d15b36e0b 100644
---- a/hw/vfio/common.c
-+++ b/hw/vfio/common.c
-@@ -622,14 +622,6 @@ static void vfio_listener_region_add(MemoryListener *listener,
-                             int128_get64(llend),
-                             iommu_idx);
- 
--        ret = memory_region_iommu_set_page_size_mask(giommu->iommu_mr,
--                                                     bcontainer->pgsizes,
--                                                     &err);
--        if (ret) {
--            g_free(giommu);
--            goto fail;
--        }
--
-         ret = memory_region_register_iommu_notifier(section->mr, &giommu->n,
-                                                     &err);
-         if (ret) {
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index 631589735a..b24e10de81 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -1363,50 +1363,6 @@ static int virtio_iommu_notify_flag_changed(IOMMUMemoryRegion *iommu_mr,
-     return 0;
- }
- 
--/*
-- * The default mask depends on the "granule" property. For example, with
-- * 4k granule, it is -(4 * KiB). When an assigned device has page size
-- * restrictions due to the hardware IOMMU configuration, apply this restriction
-- * to the mask.
-- */
--static int virtio_iommu_set_page_size_mask(IOMMUMemoryRegion *mr,
--                                           uint64_t new_mask,
--                                           Error **errp)
--{
--    IOMMUDevice *sdev = container_of(mr, IOMMUDevice, iommu_mr);
--    VirtIOIOMMU *s = sdev->viommu;
--    uint64_t cur_mask = s->config.page_size_mask;
--
--    trace_virtio_iommu_set_page_size_mask(mr->parent_obj.name, cur_mask,
--                                          new_mask);
--
--    if ((cur_mask & new_mask) == 0) {
--        error_setg(errp, "virtio-iommu %s reports a page size mask 0x%"PRIx64
--                   " incompatible with currently supported mask 0x%"PRIx64,
--                   mr->parent_obj.name, new_mask, cur_mask);
--        return -1;
--    }
--
--    /*
--     * Once the granule is frozen we can't change the mask anymore. If by
--     * chance the hotplugged device supports the same granule, we can still
--     * accept it.
--     */
--    if (s->granule_frozen) {
--        int cur_granule = ctz64(cur_mask);
--
--        if (!(BIT_ULL(cur_granule) & new_mask)) {
--            error_setg(errp, "virtio-iommu %s does not support frozen granule 0x%llx",
--                       mr->parent_obj.name, BIT_ULL(cur_granule));
--            return -1;
--        }
--        return 0;
--    }
--
--    s->config.page_size_mask &= new_mask;
--    return 0;
--}
--
- static void virtio_iommu_system_reset(void *opaque)
- {
-     VirtIOIOMMU *s = opaque;
-@@ -1731,7 +1687,6 @@ static void virtio_iommu_memory_region_class_init(ObjectClass *klass,
-     imrc->translate = virtio_iommu_translate;
-     imrc->replay = virtio_iommu_replay;
-     imrc->notify_flag_changed = virtio_iommu_notify_flag_changed;
--    imrc->iommu_set_page_size_mask = virtio_iommu_set_page_size_mask;
- }
- 
- static const TypeInfo virtio_iommu_info = {
-diff --git a/system/memory.c b/system/memory.c
-index 2d69521360..5e6eb459d5 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1901,19 +1901,6 @@ static int memory_region_update_iommu_notify_flags(IOMMUMemoryRegion *iommu_mr,
-     return ret;
- }
- 
--int memory_region_iommu_set_page_size_mask(IOMMUMemoryRegion *iommu_mr,
--                                           uint64_t page_size_mask,
--                                           Error **errp)
--{
--    IOMMUMemoryRegionClass *imrc = IOMMU_MEMORY_REGION_GET_CLASS(iommu_mr);
--    int ret = 0;
--
--    if (imrc->iommu_set_page_size_mask) {
--        ret = imrc->iommu_set_page_size_mask(iommu_mr, page_size_mask, errp);
--    }
--    return ret;
--}
--
- int memory_region_register_iommu_notifier(MemoryRegion *mr,
-                                           IOMMUNotifier *n, Error **errp)
- {
-diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
-index 599d855ff6..b7c04f0856 100644
---- a/hw/virtio/trace-events
-+++ b/hw/virtio/trace-events
-@@ -131,7 +131,6 @@ virtio_iommu_fill_resv_property(uint32_t devid, uint8_t subtype, uint64_t start,
- virtio_iommu_notify_map(const char *name, uint64_t virt_start, uint64_t virt_end, uint64_t phys_start, uint32_t flags) "mr=%s virt_start=0x%"PRIx64" virt_end=0x%"PRIx64" phys_start=0x%"PRIx64" flags=%d"
- virtio_iommu_notify_unmap(const char *name, uint64_t virt_start, uint64_t virt_end) "mr=%s virt_start=0x%"PRIx64" virt_end=0x%"PRIx64
- virtio_iommu_remap(const char *name, uint64_t virt_start, uint64_t virt_end, uint64_t phys_start) "mr=%s virt_start=0x%"PRIx64" virt_end=0x%"PRIx64" phys_start=0x%"PRIx64
--virtio_iommu_set_page_size_mask(const char *name, uint64_t old, uint64_t new) "mr=%s old_mask=0x%"PRIx64" new_mask=0x%"PRIx64
- virtio_iommu_update_page_size_mask(const char *name, uint64_t old, uint64_t new) "host iommu device=%s old_mask=0x%"PRIx64" new_mask=0x%"PRIx64
- virtio_iommu_notify_flag_add(const char *name) "add notifier to mr %s"
- virtio_iommu_notify_flag_del(const char *name) "del notifier from mr %s"
--- 
-2.41.0
+> Another option is to use a specific file system created for the tests,
+> for example on a loop device. We used userstorage[1] in ovirt to test
+> on specific file systems with known sector size.
+
+Creating loop devices requires root privileges. If I understand
+correctly, userstorage solved that by having a setup phase as root
+before running the tests as a normal user? We don't really have that in
+qemu-iotests.
+
+Some tests require passwordless sudo and are skipped otherwise, but this
+means that in practice they are almost always skipped.
+
+> But more important, are you ok with the change?
+> 
+> I'm not sure about not creating sparse images by default - this is not
+> consistent with qemu-img convert and qemu-nbd, which do sparsify by
+> default. The old behavior seems better.
+
+Well, your patches make it do what we always claimed it would do, so
+that consistency is certainly a good thing. Unmapping on write_zeroes
+and ignoring truncate is a weird combination anyway that doesn't really
+make any sense to me, so I don't think it's worth preserving. The other
+way around could have been more defensible, but that's not how our bug
+works.
+
+Now, if ignoring all discard requests is a good default these days is a
+separate question and I'm not sure really. Maybe discard=unmap should
+be the default (and apply to both discard are write_zeroes, of course).
+
+Kevin
 
 
