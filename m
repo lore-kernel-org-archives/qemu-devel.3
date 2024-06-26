@@ -4,90 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AEECC27C4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 06:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 268BCC3064D
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Jun 2024 06:03:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMLhr-0002lt-08; Wed, 26 Jun 2024 02:00:35 -0400
+	id 1sMLkU-0003sx-1P; Wed, 26 Jun 2024 02:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sMLhp-0002lT-1b
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 02:00:33 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1sMLhm-0007DG-My
- for qemu-devel@nongnu.org; Wed, 26 Jun 2024 02:00:32 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-706a1711ee5so713036b3a.0
- for <qemu-devel@nongnu.org>; Tue, 25 Jun 2024 23:00:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1719381629; x=1719986429; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gzDXvjrewE5wEaK8y3NuO9xksd/BS2FHACDJu8v7xLA=;
- b=YVsCyN/8dt5vtmF2ts4m2R+tQqDA1cBVyjc85BGoE7ZLtMZ1R+G/WkEp6SLq9BSpDK
- X8zw4iSj6ycPpiGg+XpmXlqUyk92OSWfXxcgKgDQc5QchC/99UmTNJg4atqPj4nUI0Z2
- NeaPr6xPFE2pFKRumSeup95nOi9K2+Sel1W65PL3z+omU77qBRNJheTBKBdUQf8m9Je7
- AiEU3cW1toe0P+I+8z3Ju9i37hJRSwSyDNZaYLTmmCcEDq+2OQEOWRVXMcxFU8iVYOCu
- tw9H/0a4jBMOxtzTlZpdpmkZhvkrAbNInkx0zGxImWso3d/TmHeNrf+IRtCD9k4KJIfp
- nbGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719381629; x=1719986429;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=gzDXvjrewE5wEaK8y3NuO9xksd/BS2FHACDJu8v7xLA=;
- b=rmGx+A5stnn/cNzxMmTFwFc9rrNVk8mP9QIP412jX/2xX1YEb+g8S5ecHtDeAEc9f9
- h5+d/MtbACEDVJLN7pYw1Cpt2XVELqTopAdrwhUQuTlo1c3cr9IXT4huuJf9y2x/uee6
- UCLgmuECJCiw09ICpEcbadnuuSa48OIDsYZGrBlnqkf4WXNzsReMp/XnWvgWuNGAFhpX
- HVTxZiRwUYnfFuXc4hYSyLV8JZCUogI6D2uLftjR2/j2s2m7effrdQokIa5RTIQvrbmA
- 7W4ebKheU69G+cBOdC7AsxTIX0MnQYyVloI9CC/wltUdQvCwA0mmUF/Pm66EIEBGIxv6
- AB+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU8fm9K6LMc82tZf8JubLD46rWf+Z8u2kOzMTFg4DLhV0hsv24nSWwXTxovZgtHU6EbsA4ErwNb77n5fqXkGjCo4fRDnok=
-X-Gm-Message-State: AOJu0YyAUsR3Cu85xPphJhyFpOOHCFlN+Dl48/Szg+Fdozwgy/5U515V
- 9Yr1+vS7Y9zPb1TtMYivT17eLQKHhZsOPC28PxnQ1RXmerj/gBlxxRzk3XhETQY=
-X-Google-Smtp-Source: AGHT+IG6Gq76L5Hm2zcw/2fSm2/HH2n/RogzzeA1C1IQStXp6YpObZqFuzbjJS/+UUw0bE1Qs1S4KQ==
-X-Received: by 2002:a05:6a00:1715:b0:706:6af8:e088 with SMTP id
- d2e1a72fcca58-7067459c778mr8814239b3a.3.1719381628456; 
- Tue, 25 Jun 2024 23:00:28 -0700 (PDT)
-Received: from [192.168.100.252] (59-124-168-89.hinet-ip.hinet.net.
- [59.124.168.89]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7068998497esm4583814b3a.15.2024.06.25.23.00.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Jun 2024 23:00:26 -0700 (PDT)
-Message-ID: <96b7ad39-a4ae-427a-b886-d533a1441ca5@sifive.com>
-Date: Wed, 26 Jun 2024 14:00:21 +0800
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sMLkS-0003sb-38
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 02:03:16 -0400
+Received: from esa2.hc1455-7.c3s2.iphmx.com ([207.54.90.48])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
+ id 1sMLkP-0000Nx-RT
+ for qemu-devel@nongnu.org; Wed, 26 Jun 2024 02:03:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1719381794; x=1750917794;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=m8YTY6GpEs3iSnFV8kd7Br7h+HDW2hkTnhnYCYUuL6g=;
+ b=SPqXIPOwI38Sx8XBO8uD5hfZYPTAE4Q1MWA+GaEZkZZQOYRvmIb50iY6
+ oxkJjhre8Q9Tyhhn4W9oWDcRWx1Dx8iJhOr+tBjIQPVNChRmErKOhwIx8
+ InPxHcmod0wWf5bcyZDsS+ZhzXtWT1ZcuLq5pBbC/UN6LnEgzl5ZmFnRf
+ LVlt+JlFD/zxbGrPgc3XZtGbUwhyai4pus9HpPidDQQ+DOaUJZU+L891t
+ biifLYaiUhPkdHqF707Nkuetwm1o+45+B6vtJVeuM8H/w3N0hSDHrh1m7
+ o36b8yigz/2bPIbVv3OVXGe7aH9iYegQFd36S/ZGOgmnniRmQE9GVlhdb g==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11114"; a="165028310"
+X-IronPort-AV: E=Sophos;i="6.08,266,1712588400"; d="scan'208";a="165028310"
+Received: from unknown (HELO oym-r3.gw.nic.fujitsu.com) ([210.162.30.91])
+ by esa2.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jun 2024 15:03:09 +0900
+Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
+ [192.168.87.58])
+ by oym-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id B812BCA1E1
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 15:03:07 +0900 (JST)
+Received: from kws-ab3.gw.nic.fujitsu.com (kws-ab3.gw.nic.fujitsu.com
+ [192.51.206.21])
+ by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 50170D8B6A
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 15:03:06 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab3.gw.nic.fujitsu.com (Postfix) with ESMTP id D3E202007CAA6
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 15:03:05 +0900 (JST)
+Received: from [192.168.50.5] (unknown [10.167.226.114])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 087111A0002;
+ Wed, 26 Jun 2024 14:03:03 +0800 (CST)
+Message-ID: <bc58d99a-785f-4bb3-a9c9-9cf50ea7e06d@fujitsu.com>
+Date: Wed, 26 Jun 2024 14:03:03 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] target/riscv: Add Control Transfer Records CSR
- definitions.
-To: Rajnesh Kanwal <rkanwal@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liweiwei@iscas.ac.cn,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- atishp@rivosinc.com, apatel@ventanamicro.com, beeman@rivosinc.com,
- tech-control-transfer-records@lists.riscv.org
-References: <20240619152708.135991-1-rkanwal@rivosinc.com>
- <20240619152708.135991-3-rkanwal@rivosinc.com>
-Content-Language: en-US
-From: Jason Chien <jason.chien@sifive.com>
-In-Reply-To: <20240619152708.135991-3-rkanwal@rivosinc.com>
+Subject: Re: [RFC PATCH] cxl: avoid duplicating report from MCE & device
+To: "Luck, Tony" <tony.luck@intel.com>,
+ Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
+ "Williams, Dan J" <dan.j.williams@intel.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "dave@stgolabs.net" <dave@stgolabs.net>, "Weiny, Ira" <ira.weiny@intel.com>,
+ "Schofield, Alison" <alison.schofield@intel.com>,
+ "Jiang, Dave" <dave.jiang@intel.com>,
+ "Verma, Vishal L" <vishal.l.verma@intel.com>, Borislav Petkov
+ <bp@alien8.de>, James Morse <james.morse@arm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Robert Richter
+ <rric@kernel.org>, "linux-edac@vger.kernel.org"
+ <linux-edac@vger.kernel.org>, Miaohe Lin <linmiaohe@huawei.com>,
+ Naoya Horiguchi <nao.horiguchi@gmail.com>,
+ "linux-mm@kvack.org" <linux-mm@kvack.org>
+References: <20240618165310.877974-1-ruansy.fnst@fujitsu.com>
+ <20240620180239.00004d41@Huawei.com>
+ <6675bf92116ed_57ac294a@dwillia2-xfh.jf.intel.com.notmuch>
+ <20240621194506.000024aa@Huawei.com>
+ <SJ1PR11MB6083837A8588894E49FEBC7BFCC92@SJ1PR11MB6083.namprd11.prod.outlook.com>
+In-Reply-To: <SJ1PR11MB6083837A8588894E49FEBC7BFCC92@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=jason.chien@sifive.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28482.005
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28482.005
+X-TMASE-Result: 10--14.782900-10.000000
+X-TMASE-MatchedRID: bdIiGNtle6uPvrMjLFD6eKn9fPsu8s0a2q80vLACqaeqvcIF1TcLYPAF
+ 43IXaj2gSY/hjDx7hppvUDqCNlsvKH+zsg6kp2C3Q0Xm0pWWLkroUwvpyt4rucg9ufahCGm1l2i
+ SdQmYgPCf4Zlhm+r+lc5cp47XA8AiC9QTSuTOQRl+J3gtIe0gA8qspZV+lCSLdBaEtWosUzVYTF
+ /5quaSLwftggnq5tKUMTii0wFdgxqOeQ6RXnGCFkX/j4QZJ10NajzNTFMlQCNtfzoljzPXO9F8e
+ 0i2JFlZ371UTvxX45vRKmOlruuzzop+5WdOMDCgv8fLAX0P50B2ZYwNBqM6IlLvEapiw2T1hXAr
+ +h4GfTAIZNHliKo/PSm+XCxBE3RsKgAlgjPhYpaOtWfhyZ77Dn0tCKdnhB581B0Hk1Q1KyIOsEC
+ O9s+GHnQdJ7XfU86eOwBXM346/+z07YdcTiNsP7Uv9Q5rrJhWezfWWH34ZgZxRwXGk1PHIsR47n
+ 50KUDY
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=207.54.90.48;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa2.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,251 +114,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiyang Ruan <ruansy.fnst@fujitsu.com>
+From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Rajnesh,
 
-On 2024/6/19 下午 11:27, Rajnesh Kanwal wrote:
-> The Control Transfer Records (CTR) extension provides a method to
-> record a limited branch history in register-accessible internal chip
-> storage.
->
-> This extension is similar to Arch LBR in x86 and BRBE in ARM.
-> The Extension has been stable and the latest release can be found here
-> https://github.com/riscv/riscv-control-transfer-records/release
->
-> Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
-> ---
->   target/riscv/cpu_bits.h | 154 ++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 154 insertions(+)
->
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index 86e15381c8..71ddccaf1a 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -242,6 +242,17 @@
->   #define CSR_SIEH            0x114
->   #define CSR_SIPH            0x154
->   
-> +/* Machine-Level Control transfer records CSRs */
-> +#define CSR_MCTRCTL         0x34e
-> +
-> +/* Supervisor-Level Control transfer records CSRs */
-> +#define CSR_SCTRCTL         0x14e
-> +#define CSR_SCTRSTATUS      0x14f
-> +#define CSR_SCTRDEPTH       0x15f
-> +
-> +/* VS-Level Control transfer records CSRs */
-> +#define CSR_VSCTRCTL        0x24e
-> +
->   /* Hpervisor CSRs */
->   #define CSR_HSTATUS         0x600
->   #define CSR_HEDELEG         0x602
-> @@ -339,6 +350,7 @@
->   #define SMSTATEEN0_CS       (1ULL << 0)
->   #define SMSTATEEN0_FCSR     (1ULL << 1)
->   #define SMSTATEEN0_JVT      (1ULL << 2)
-> +#define SMSTATEEN0_CTR      (1ULL << 54)
->   #define SMSTATEEN0_HSCONTXT (1ULL << 57)
->   #define SMSTATEEN0_IMSIC    (1ULL << 58)
->   #define SMSTATEEN0_AIA      (1ULL << 59)
-> @@ -854,6 +866,148 @@ typedef enum RISCVException {
->   #define UMTE_U_PM_INSN      U_PM_INSN
->   #define UMTE_MASK     (UMTE_U_PM_ENABLE | MMTE_U_PM_CURRENT | UMTE_U_PM_INSN)
->   
-> +/* mctrctl CSR bits. */
-> +#define MCTRCTL_U_ENABLE        BIT(0)
-> +#define MCTRCTL_S_ENABLE        BIT(1)
-> +#define MCTRCTL_M_ENABLE        BIT(2)
-> +#define MCTRCTL_RASEMU          BIT(7)
-> +#define MCTRCTL_STE             BIT(8)
-> +#define MCTRCTL_MTE             BIT(9)
-> +#define MCTRCTL_BPFRZ           BIT(11)
-> +#define MCTRCTL_LCOFIFRZ        BIT(12)
-> +#define MCTRCTL_EXCINH          BIT(33)
-> +#define MCTRCTL_INTRINH         BIT(34)
-> +#define MCTRCTL_TRETINH         BIT(35)
-> +#define MCTRCTL_NTBREN          BIT(36)
-> +#define MCTRCTL_TKBRINH         BIT(37)
-> +#define MCTRCTL_INDCALL_INH     BIT(40)
-> +#define MCTRCTL_DIRCALL_INH     BIT(41)
-> +#define MCTRCTL_INDJUMP_INH     BIT(42)
-> +#define MCTRCTL_DIRJUMP_INH     BIT(43)
-> +#define MCTRCTL_CORSWAP_INH     BIT(44)
-> +#define MCTRCTL_RET_INH         BIT(45)
-> +#define MCTRCTL_INDOJUMP_INH    BIT(46)
-> +#define MCTRCTL_DIROJUMP_INH    BIT(47)
-> +
-> +#define MCTRCTL_INH_START       32U
-> +
-> +#define MCTRCTL_MASK (MCTRCTL_M_ENABLE | MCTRCTL_S_ENABLE |       \
-> +                      MCTRCTL_U_ENABLE | MCTRCTL_RASEMU |         \
-> +                      MCTRCTL_MTE | MCTRCTL_STE |                 \
-> +                      MCTRCTL_BPFRZ | MCTRCTL_LCOFIFRZ |          \
-> +                      MCTRCTL_EXCINH | MCTRCTL_INTRINH |          \
-> +                      MCTRCTL_TRETINH | MCTRCTL_NTBREN |          \
-> +                      MCTRCTL_TKBRINH | MCTRCTL_INDCALL_INH |     \
-> +                      MCTRCTL_DIRCALL_INH | MCTRCTL_INDJUMP_INH | \
-> +                      MCTRCTL_DIRJUMP_INH | MCTRCTL_CORSWAP_INH | \
-> +                      MCTRCTL_RET_INH | MCTRCTL_INDOJUMP_INH |    \
-> +                      MCTRCTL_DIROJUMP_INH)
-> +
-> +/* sctrctl CSR bits. */
-> +#define SCTRCTL_U_ENABLE          MCTRCTL_U_ENABLE
-> +#define SCTRCTL_S_ENABLE          MCTRCTL_S_ENABLE
-> +#define SCTRCTL_RASEMU            MCTRCTL_RASEMU
-> +#define SCTRCTL_STE               MCTRCTL_STE
-> +#define SCTRCTL_BPFRZ             MCTRCTL_BPFRZ
-> +#define SCTRCTL_LCOFIFRZ          MCTRCTL_LCOFIFRZ
-> +#define SCTRCTL_EXCINH            MCTRCTL_EXCINH
-> +#define SCTRCTL_INTRINH           MCTRCTL_INTRINH
-> +#define SCTRCTL_TRETINH           MCTRCTL_TRETINH
-> +#define SCTRCTL_NTBREN            MCTRCTL_NTBREN
-> +#define SCTRCTL_TKBRINH           MCTRCTL_TKBRINH
-> +#define SCTRCTL_INDCALL_INH       MCTRCTL_INDCALL_INH
-> +#define SCTRCTL_DIRCALL_INH       MCTRCTL_DIRCALL_INH
-> +#define SCTRCTL_INDJUMP_INH       MCTRCTL_INDJUMP_INH
-> +#define SCTRCTL_DIRJUMP_INH       MCTRCTL_DIRJUMP_INH
-> +#define SCTRCTL_CORSWAP_INH       MCTRCTL_CORSWAP_INH
-> +#define SCTRCTL_RET_INH           MCTRCTL_RET_INH
-> +#define SCTRCTL_INDOJUMP_INH      MCTRCTL_INDOJUMP_INH
-> +#define SCTRCTL_DIROJUMP_INH      MCTRCTL_DIROJUMP_INH
-> +
-> +#define SCTRCTL_MASK (SCTRCTL_S_ENABLE | SCTRCTL_U_ENABLE |       \
-> +                      SCTRCTL_RASEMU | SCTRCTL_STE |              \
-> +                      SCTRCTL_BPFRZ | SCTRCTL_LCOFIFRZ |          \
-> +                      SCTRCTL_EXCINH | SCTRCTL_INTRINH |          \
-> +                      SCTRCTL_TRETINH | SCTRCTL_NTBREN |          \
-> +                      SCTRCTL_TKBRINH | SCTRCTL_INDCALL_INH |     \
-> +                      SCTRCTL_DIRCALL_INH | SCTRCTL_INDJUMP_INH | \
-> +                      SCTRCTL_DIRJUMP_INH | SCTRCTL_CORSWAP_INH | \
-> +                      SCTRCTL_RET_INH | SCTRCTL_INDOJUMP_INH |    \
-> +                      SCTRCTL_DIROJUMP_INH)
-> +
-> +/* sctrstatus CSR bits. */
-> +#define SCTRSTATUS_WRPTR_MASK       0xFF
-> +#define SCTRSTATUS_FROZEN           BIT(31)
-> +#define SCTRSTATUS_MASK             (SCTRSTATUS_WRPTR_MASK | SCTRSTATUS_FROZEN)
-> +
-> +/* sctrdepth CSR bits. */
-> +#define SCTRDEPTH_MASK              0x7
-> +#define SCTRDEPTH_MIN               0U  /* 16 Entries. */
-> +#define SCTRDEPTH_MAX               4U  /* 256 Entries. */
-> +
-> +/* vsctrctl CSR bits. */
-> +#define VSCTRCTL_VU_ENABLE         MCTRCTL_U_ENABLE
-> +#define VSCTRCTL_VS_ENABLE         MCTRCTL_S_ENABLE
-> +#define VSCTRCTL_RASEMU            MCTRCTL_RASEMU
-> +#define VSCTRCTL_VSTE              MCTRCTL_STE
-> +#define VSCTRCTL_BPFRZ             MCTRCTL_BPFRZ
-> +#define VSCTRCTL_LCOFIFRZ          MCTRCTL_LCOFIFRZ
-> +#define VSCTRCTL_EXCINH            MCTRCTL_EXCINH
-> +#define VSCTRCTL_INTRINH           MCTRCTL_INTRINH
-> +#define VSCTRCTL_TRETINH           MCTRCTL_TRETINH
-> +#define VSCTRCTL_NTBREN            MCTRCTL_NTBREN
-> +#define VSCTRCTL_TKBRINH           MCTRCTL_TKBRINH
-> +#define VSCTRCTL_INDCALL_INH       MCTRCTL_INDCALL_INH
-> +#define VSCTRCTL_DIRCALL_INH       MCTRCTL_DIRCALL_INH
-> +#define VSCTRCTL_INDJUMP_INH       MCTRCTL_INDJUMP_INH
-> +#define VSCTRCTL_DIRJUMP_INH       MCTRCTL_DIRJUMP_INH
-> +#define VSCTRCTL_CORSWAP_INH       MCTRCTL_CORSWAP_INH
-> +#define VSCTRCTL_RET_INH           MCTRCTL_RET_INH
-> +#define VSCTRCTL_INDOJUMP_INH      MCTRCTL_INDOJUMP_INH
-> +#define VSCTRCTL_DIROJUMP_INH      MCTRCTL_DIROJUMP_INH
-> +
-> +#define VSCTRCTL_MASK (VSCTRCTL_VS_ENABLE | VSCTRCTL_VU_ENABLE |     \
-> +                       VSCTRCTL_RASEMU | VSCTRCTL_VSTE |             \
-> +                       VSCTRCTL_BPFRZ | VSCTRCTL_LCOFIFRZ |          \
-> +                       VSCTRCTL_EXCINH | VSCTRCTL_INTRINH |          \
-> +                       VSCTRCTL_TRETINH | VSCTRCTL_NTBREN |          \
-> +                       VSCTRCTL_TKBRINH | VSCTRCTL_INDCALL_INH |     \
-> +                       VSCTRCTL_DIRCALL_INH | VSCTRCTL_INDJUMP_INH | \
-> +                       VSCTRCTL_DIRJUMP_INH | VSCTRCTL_CORSWAP_INH | \
-> +                       VSCTRCTL_RET_INH | VSCTRCTL_INDOJUMP_INH |    \
-> +                       VSCTRCTL_DIROJUMP_INH)
 
-Do you think it's a good idea to define these macros like below?
+在 2024/6/22 4:44, Luck, Tony 写道:
+>> So who actually cares about recovering poisoned volatile memory?
+>> I'd like to understand more on how significant a use case this is.
+>> Whilst I can conjecture that its an extreme case of wanting to avoid
+>> loosing the ability to create 1GiB or larger pages due to poison
+>> is that a real problem for anyone today?  Note this is just the case
+>> where you've reached an actual uncorrectable error and probably
+>> / possibly killed something, not the more common soft offlining
+>> of memory due to correctable errors being detected.
+> 
+> I guess you really need a reply from someone with a data center
+> with thousands of machines, since that's where this question
+> may be important.
+> 
+> My humble opinion is that, outside of the huge page issue, nobody
+> should try to recover a poisoned page. Systems that can report
+> and recover from poison have tens, hundreds, or more GBytes
+> of memory. Dropping 4K pages will not have any measurable
+> impact on a system (even if there are hundreds of pages dropped).
+> 
+> There's no reliable way to determine whether the poisoned page
+> was due to some transient issue, or a permanent defect. Recovering
+> a poisoned page runs the risk that the poison will re-occur. Perhaps
+> next use of the page will be in some unrecoverable (kernel) context.
+> 
+> So recovery has some risk, but very little upside benefit.
 
-+/* CTR control register commom fields */
-+#define XCTRCTL_U                        BIT_ULL(0)
-+#define XCTRCTL_S                        BIT_ULL(1)
-+#define XCTRCTL_RASEMU           BIT_ULL(7)
-+#define XCTRCTL_STE                    BIT_ULL(8)
-+#define XCTRCTL_BPFRZ               BIT_ULL(11)
-+#define XCTRCTL_LCOFIFRZ         BIT_ULL(12)
-+#define XCTRCTL_EXCINH             BIT_ULL(33)
-+#define XCTRCTL_INTRINH            BIT_ULL(34)
-+#define XCTRCTL_TRETINH           BIT_ULL(35)
-+#define XCTRCTL_NTBREN            BIT_ULL(36)
-+#define XCTRCTL_TKBRINH           BIT_ULL(37)
-+#define XCTRCTL_INDCALLINH     BIT_ULL(40)
-+#define XCTRCTL_DIRCALLINH     BIT_ULL(41)
-+#define XCTRCTL_INDJMPINH       BIT_ULL(42)
-+#define XCTRCTL_DIRJMPINH       BIT_ULL(43)
-+#define XCTRCTL_CORSWAPINH  BIT_ULL(44)
-+#define XCTRCTL_RETINH             BIT_ULL(45)
-+#define XCTRCTL_INDLJMPINH     BIT_ULL(46)
-+#define XCTRCTL_DIRLJMPINH     BIT_ULL(47)
-+
-+#define XCTRCTL_MASK (XCTRCTL_U | XCTRCTL_S | XCTRCTL_RASEMU | 
-XCTRCTL_STE | \
-+                                            XCTRCTL_BPFRZ | 
-XCTRCTL_LCOFIFRZ | XCTRCTL_EXCINH | \
-+                                            XCTRCTL_INTRINH | 
-XCTRCTL_TRETINH | XCTRCTL_NTBREN | \
-+                                            XCTRCTL_TKBRINH | 
-XCTRCTL_INDCALLINH | \
-+                                            XCTRCTL_DIRCALLINH | 
-XCTRCTL_INDJMPINH | \
-+                                            XCTRCTL_DIRJMPINH | 
-XCTRCTL_CORSWAPINH | \
-+                                            XCTRCTL_RETINH | 
-XCTRCTL_INDLJMPINH | XCTRCTL_DIRLJMPINH)
-+
-+/* CTR mctrctl bits */
-+#define MCTRCTL_M                      BIT_ULL(2)
-+#define MCTRCTL_MTE                 BIT_ULL(9)
-+
-+#define MCTRCTL_MASK              (XCTRCTL_MASK | MCTRCTL_M | MCTRCTL_MTE)
-+#define SCTRCTL_MASK                XCTRCTL_MASK
-+#define VSCTRCTL_MASK              XCTRCTL_MASK
+Since the hardware provides the instruction(CPU)/command(CXL) to clear 
+the poison, we could make the function work, at least as an optional 
+feature.  Then users could decide to use it or not after evaluating the 
+risk and benefit.
 
-> +
-> +#define CTR_ENTRIES_FIRST                  0x200
-> +#define CTR_ENTRIES_LAST                   0x2ff
-> +
-> +#define CTRSOURCE_VALID                    BIT(0)
-> +#define CTRTARGET_MISP                     BIT(0)
-> +
-> +#define CTRDATA_TYPE_MASK                   0xF
-> +#define CTRDATA_CCV                         BIT(15)
-> +#define CTRDATA_CCM_MASK                    0xFFF0000
-> +#define CTRDATA_CCE_MASK                    0xF0000000
-> +
-> +#define CTRDATA_MASK            (CTRDATA_TYPE_MASK | CTRDATA_CCV |  \
-> +                                 CTRDATA_CCM_MASK | CTRDATA_CCE_MASK)
-> +
-> +#define CTRDATA_TYPE_NONE                   0
-> +#define CTRDATA_TYPE_EXCEPTION              1
-> +#define CTRDATA_TYPE_INTERRUPT              2
-> +#define CTRDATA_TYPE_EXCEP_INT_RET          3
-> +#define CTRDATA_TYPE_NONTAKEN_BRANCH        4
-> +#define CTRDATA_TYPE_TAKEN_BRANCH           5
-> +#define CTRDATA_TYPE_RESERVED_0             6
-> +#define CTRDATA_TYPE_RESERVED_1             7
-> +#define CTRDATA_TYPE_INDIRECT_CALL          8
-> +#define CTRDATA_TYPE_DIRECT_CALL            9
-> +#define CTRDATA_TYPE_INDIRECT_JUMP          10
-> +#define CTRDATA_TYPE_DIRECT_JUMP            11
-> +#define CTRDATA_TYPE_CO_ROUTINE_SWAP        12
-> +#define CTRDATA_TYPE_RETURN                 13
-> +#define CTRDATA_TYPE_OTHER_INDIRECT_JUMP    14
-> +#define CTRDATA_TYPE_OTHER_DIRECT_JUMP      15
-I prefer using typedef enum {} for the instruction types, since there is 
-type checking for function parameters.
-> +
->   /* MISELECT, SISELECT, and VSISELECT bits (AIA) */
->   #define ISELECT_IPRIO0                     0x30
->   #define ISELECT_IPRIO15                    0x3f
+I think doing recovery is an improvement step, and may need a lot of 
+discussion.  I'm not sure if we could reach a conclusion in this thread. 
+  Just hope more comments on the original problem (duplicate report) to 
+solve in this patch.
+
+
+--
+Thanks,
+Ruan.
+
+> 
+> -Tony
 
