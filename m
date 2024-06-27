@@ -4,98 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957B4C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 12:54:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B83FC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 12:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sModc-00050n-CP; Thu, 27 Jun 2024 08:54:08 -0400
+	id 1sMoet-0005i5-M0; Thu, 27 Jun 2024 08:55:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sModZ-00050a-Rs
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:54:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sModY-0002SR-Az
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:54:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719492843;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SRB3UFqNJiy8Dj+afll5kFpWjgAYthIs3jmHkF6njLU=;
- b=fhDmAzkMzN0gvSfo9i6R4KnMzf6i0v0086o4cfx1WD7FpbY4cy7fR9c/RV50Z00yxih+mJ
- tMZIEXE3Ejf4BLzg1OFFNT3WhepQMXY/jh0KE5vudSEySh3Dt2z3CelqD94bx09S+K0NPC
- zDizw2+a/fd65C9JUSJKEyAKeLxAyg8=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-214-tXbLATeANv6SHT5u7rXqAQ-1; Thu, 27 Jun 2024 08:54:02 -0400
-X-MC-Unique: tXbLATeANv6SHT5u7rXqAQ-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a729da8fbf1so74008466b.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 05:54:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMoeq-0005gy-Td
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:55:25 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMoep-0002mb-3d
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:55:24 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-52cdd03d6aaso5895162e87.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 05:55:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719492921; x=1720097721; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5ZGOJcjQQnv11O06YDrcBPhgE2TlHoTxhTZZZdd1L2E=;
+ b=cLAPHhHsTkdmK4qwp8I0spDRmAL/xl1ngJqq4iDpVHsai2LHDc+nJFpTnoi7QacIgY
+ Svgq+kKBcpJnb8bUo5lCAJ4+kiA0V4QDG9xcBj5QURXn44dSBrNX8O9S0Wb9b4BPaESg
+ 5Pcwl5jdOrv3ZntwZAG3hIpsIKMvI/srxmSR2FrnyjuYRz9nIVjiI1RbJxeXFunbnZWI
+ vSrwoq70CBufabF48D2woAmO+oyY5YdNCIcvkmJQCPhec7X3IeYgw4lpW0LsdNHv+Pos
+ /LOOijijHKH4ncVUoyp8/eQldgt2ZE9kaaHisDnyzz+o3xQg/Gi+8xBz2NZA0eu6Xa5H
+ zHyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719492841; x=1720097641;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SRB3UFqNJiy8Dj+afll5kFpWjgAYthIs3jmHkF6njLU=;
- b=RN5aFpEF2ywAivNeMJAC3DW07w4NFSNhSIXztmUjEJenKymzT8BUL8NtfhwpBEOokR
- YL6VqOWx+GqdmIzwNo1P6DAOuVoGT4MMINXP6FgxXsl5HUSHD7ypybfy2kPSDdbaD1LF
- ZxKiUmtPLj8s9Rrgeuz7ZS597/+D+92qLbOYnxXpHGGLUzFHcyjjxmjCZJHYZwLsGTZ9
- w6qBO9qfl6x59tRTzP+6lkqHECYGVtJayIXz3WqYKqN9s6kmIwjZfatKdkbEwFtHoR+/
- 8C1VZLSKQjE7eaydIwW5CXeLsHdrUlWt63BDSsnOj36VNFbsbSrXBqKD+UV4HDppb6bK
- c13g==
-X-Gm-Message-State: AOJu0Ywo0xDr6RcAv3tzt0ytw6x9H3sSLWbA+K9E2ch6B8RSRfrILXQr
- BeWi5IUkZ8Bq4vEX8qIecRzauZYHioQ2m7/WOlNY9azmK+vOU/tdYoBq58vxCAPcS8YTSenGieT
- KhYp6Ur9mnevMISOuFuT445CDeAVdxchYdytWOlDzdtqSOeCKVedO
-X-Received: by 2002:a17:907:c089:b0:a72:6442:d53a with SMTP id
- a640c23a62f3a-a7296f5b91amr201745766b.9.1719492841010; 
- Thu, 27 Jun 2024 05:54:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEVolaN9PKICdKE/UjcuL176yQTUfnYPuRZS0bWRAM4H0eHW7nz8HYzlin4Kjr25zjPNY7CeQ==
-X-Received: by 2002:a17:907:c089:b0:a72:6442:d53a with SMTP id
- a640c23a62f3a-a7296f5b91amr201742366b.9.1719492840257; 
- Thu, 27 Jun 2024 05:54:00 -0700 (PDT)
-Received: from sgarzare-redhat (83.0.40.93.internetdsl.tpnet.pl. [83.0.40.93])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a729d7b5173sm56977566b.157.2024.06.27.05.53.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 05:53:59 -0700 (PDT)
-Date: Thu, 27 Jun 2024 14:53:54 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Roy Hopkins <roy.hopkins@suse.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>, 
- =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
-Subject: Re: [PATCH v3 10/15] docs/interop/firmware.json: Add igvm to
- FirmwareDevice
-Message-ID: <culz2lmg4fsdugz54vy56f52dgoywt5nfg6aycn7exsb3j3jrv@d75i6hhipkje>
-References: <cover.1718979106.git.roy.hopkins@suse.com>
- <1bcb6bdfe74f96c7c2553ff25fb79f1def381f74.1718979106.git.roy.hopkins@suse.com>
+ d=1e100.net; s=20230601; t=1719492921; x=1720097721;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5ZGOJcjQQnv11O06YDrcBPhgE2TlHoTxhTZZZdd1L2E=;
+ b=apKOVIN/qsBkQMhV6WIgq/kmUN7s2Y74uis7kD9J8lSXM6TOUMa9xU6XbjF+wx8L74
+ iXtTci2VN4Ggdwwp5rZJxZQFhVEmSJOwrGUn87WvWLqNSxkZ7GouTZGnZkIwaBqsmEe/
+ yGvWWuqT5kDvmHI7cUpO5sVfgpEqZIbbOhN/6mh/U3SoT1yiIsziFzvnEna1UYDTo5M7
+ u55sgJBMyIG09ufqtyha0Sz3AEgJNxpuFoFAl6j7u75lVhIR+wPi9rSHeVPr+X8AEYbu
+ f1CpkTN7FyVqo/dsVsnWJZWeEzxxqjm8dAhliC0JW+NqD/lC3uPWr1sZnOdimMR9QFLB
+ qSQQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfy8csThfccwEwPYiiWR3BRngtcSGBoltayynffFMBZNSo9ybbpItscFr8bbSgCTgrlqBrBDc0kjMLlFmou8oBBmYdipk=
+X-Gm-Message-State: AOJu0YwXVAbEyR0nSf/Nmljt/5LCiZvhj8cOcak4gsLExigZLH+bn5cW
+ 4gNgFZ1LVoh5kZf/eL6ssYCazZGGQM5EtyOfi6/PBR8V/rjcj52Klf+H+os84VfaIWH2FX11prG
+ Y7bw=
+X-Google-Smtp-Source: AGHT+IGU0wLJYwq+FfC9Ypm/h2xIulYPEpYZ01lsF7JXwBGHRbcAGyqvAaYRgduWUmOYjUNFc+UNBg==
+X-Received: by 2002:a05:6512:3a8f:b0:52c:dfe0:9b1d with SMTP id
+ 2adb3069b0e04-52ce06734bbmr11445792e87.45.1719492920733; 
+ Thu, 27 Jun 2024 05:55:20 -0700 (PDT)
+Received: from [192.168.23.175] (72.red-95-127-32.staticip.rima-tde.net.
+ [95.127.32.72]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-424c8424554sm64737655e9.37.2024.06.27.05.55.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Jun 2024 05:55:20 -0700 (PDT)
+Message-ID: <c90d62bc-7a48-4cd5-b8fa-42257327eff4@linaro.org>
+Date: Thu, 27 Jun 2024 14:55:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <1bcb6bdfe74f96c7c2553ff25fb79f1def381f74.1718979106.git.roy.hopkins@suse.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] hw/intc/loongson_ipi: Fix for LoongArch
+To: gaosong <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org
+Cc: Huacai Chen <chenhuacai@kernel.org>, maobibo <maobibo@loongson.cn>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20240627-ipi-fixes-v1-0-9b061dc28a3a@flygoat.com>
+ <acc08621-19c1-4ec3-9fc9-acb0eec79121@linaro.org>
+ <0e42f372-26b8-b94a-80bb-6403062d2f1a@loongson.cn>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0e42f372-26b8-b94a-80bb-6403062d2f1a@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,49 +102,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 21, 2024 at 03:29:13PM GMT, Roy Hopkins wrote:
->Create an enum entry within FirmwareDevice for 'igvm' to describe that
->an IGVM file can be used to map firmware into memory as an alternative
->to pre-existing firmware devices.
->
->Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
->---
-> docs/interop/firmware.json | 9 ++++++++-
-> 1 file changed, 8 insertions(+), 1 deletion(-)
->
->diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
->index 54a1fc6c10..9a9178606e 100644
->--- a/docs/interop/firmware.json
->+++ b/docs/interop/firmware.json
->@@ -55,10 +55,17 @@
-> #
-> # @memory: The firmware is to be mapped into memory.
-> #
->+# @igvm: The firmware is defined by a file conforming to the IGVM
->+#        specification and mapped into memory according to directives
->+#        defined in the file. This is similar to @memory but may
->+#        include additional processing defined by the IGVM file
->+#        including initial CPU state or population of metadata into
->+#        the guest address space.
+On 27/6/24 14:13, gaosong wrote:
+> 
+> 
+> 在 2024/6/27 下午2:38, Philippe Mathieu-Daudé 写道:
+>> On 27/6/24 06:13, Jiaxun Yang wrote:
+>>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>> ---
+>>> Jiaxun Yang (2):
+>>>        hw/intc/loongson_ipi: Gate MMIO regions creation with property
+>>>        MAINTAINERS: Add myself as a reviewer of LoongArch virt machine
+>>
+>> Maybe s/has-mmio/use-mmio/? Otherwise series:
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+> Hi,
+> 
+> If we had done a simple test, we should have found the following 
+> problem, but obviously we didn't .
+> 
+> root@loongson-KVM:~/work/code/clean/github/qemu# . /kernel.sh
+> Unexpected error in object_property_find_err() at . /qom/object.c:1357.
+> qemu-system-loongarch64: Property 'loongson_ipi.unnamed-gpio-out[0]' not 
+> found
+> . /kernel.sh: line 16: 117708 Aborted (core dumped) . 
+> /build/qemu-system-loongarch64 -machine virt -m 8G -cpu la464 -smp 8 
+> -kernel ~/vmlinux -initrd ramdisk -serial stdio -monitor 
+> telnet:localhost. 4418,server,nowait -net nic -net user -device 
+> virtio-gpu-pci -device nec-usb-xhci,id=xhci,addr=0x1b -device 
+> usb-tablet,id=tablet,bus=xhci.0, port=1 -device 
+> usb-tablet,id=tablet,bus=xhci.0, -device usb-tablet,id=tablet,bus=xhci. 
+> port=1 -device usb-kbd,id=keyboard,bus=xhci.0,port=2 -append 
+> "root=/dev/ram rdinit=/sbin/init console=ttyS0,115200 
+> earlycon=uart,mmio. 0x1fe001e0" --nographic
 
-Should we add (Since: 9.1) ?
+Works for me squashing:
 
-I'm not sure about that, since I don't see it used much in docs/interop/
+-- >8 --
+diff --git a/hw/intc/loongson_ipi.c b/hw/intc/loongson_ipi.c
+index 6e92a50349..ce845aecda 100644
+--- a/hw/intc/loongson_ipi.c
++++ b/hw/intc/loongson_ipi.c
+@@ -305,18 +305,18 @@ static void loongson_ipi_realize(DeviceState *dev, 
+Error **errp)
+          return;
+      }
 
-Thanks,
-Stefano
+-    if (s->has_mmio) {
+-        for (i = 0; i < s->num_cpu; i++) {
+-            s->cpu[i].ipi = s;
++    for (i = 0; i < s->num_cpu; i++) {
++        s->cpu[i].ipi = s;
++        qdev_init_gpio_out(dev, &s->cpu[i].irq, 1);
++
++        if (s->has_mmio) {
++            g_autofree char *name = 
+g_strdup_printf("loongson_ipi_cpu%d_mmio", i);
+              s->cpu[i].ipi_mmio_mem = g_new0(MemoryRegion, 1);
+-            g_autofree char *name =
+-                        g_strdup_printf("loongson_ipi_cpu%d_mmio", i);
+              memory_region_init_io(s->cpu[i].ipi_mmio_mem, OBJECT(dev),
+                                    &loongson_ipi_core_ops, &s->cpu[i],
+                                    name, 0x48);
+              sysbus_init_mmio(sbd, s->cpu[i].ipi_mmio_mem);
 
->+#
-> # Since: 3.0
-> ##
-> { 'enum' : 'FirmwareDevice',
->-  'data' : [ 'flash', 'kernel', 'memory' ] }
->+  'data' : [ 'flash', 'kernel', 'memory', 'igvm' ] }
->
-> ##
-> # @FirmwareTarget:
->-- 
->2.43.0
->
-
+-            qdev_init_gpio_out(dev, &s->cpu[i].irq, 1);
+          }
+      }
+  }
+---
 
