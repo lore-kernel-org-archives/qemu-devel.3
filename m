@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E5BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 07:55:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BE1AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 07:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMjyN-0002FM-UC; Thu, 27 Jun 2024 03:55:15 -0400
+	id 1sMjyb-0002Q4-KT; Thu, 27 Jun 2024 03:55:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1sMjyM-0002Ex-UN
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:55:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sMjyY-0002OZ-6W
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:55:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1sMjyL-0006H2-IM
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:55:14 -0400
+ id 1sMjyW-0006KK-Jn
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:55:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719474911;
+ s=mimecast20190719; t=1719474924;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/VlPYqLS4nINnru7w86A5+23JSL+m8ddrZiO0AbA6Kc=;
- b=K5kur9KrIzDeL3ICz2sruAf3EsGQ20n4lGKx9dE2IKGPSfHloTPGj78V7odPHnkoW2E7uQ
- Na3ckU7nRJkG44ruigy3DWbQBRRIyecRpX6uKrXuKomAlLpi35FSJ0Y2Bs5N8fk+KWxT7J
- VKTe/vM6swKhx3JpNvnTtENQV7i/3SE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8UFVi7tIqCJqUt6Few8J4eFOWvmS86O+fOV8zgeVLXg=;
+ b=YC2Bd7/NEG7z8v76exJYAnKoiUe97cvrG7WOP4TqS1pe+o/QpMAfEPPux+NeHP+u/FYmP4
+ yXUgLPhpOioLGd/+fJBGlhj1q6AfSUO+sXt8RjKH5Qkjiib5ceIrJ8yoZABYEmGk/ipeXy
+ 0GZQTMdXIHataYQ7IwGW727wwcBzXQ8=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-161-cmhp9f7pMbegyXYl98g6bg-1; Thu, 27 Jun 2024 03:55:09 -0400
-X-MC-Unique: cmhp9f7pMbegyXYl98g6bg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-424a5a5f024so14800325e9.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 00:55:09 -0700 (PDT)
+ us-mta-270-bVikkcAHPYmiPD15UrQY4A-1; Thu, 27 Jun 2024 03:55:17 -0400
+X-MC-Unique: bVikkcAHPYmiPD15UrQY4A-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52cdbeaafcdso4348690e87.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 00:55:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719474907; x=1720079707;
+ d=1e100.net; s=20230601; t=1719474916; x=1720079716;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/VlPYqLS4nINnru7w86A5+23JSL+m8ddrZiO0AbA6Kc=;
- b=bRtrUMJzTWJM1wGCaU+8rI05TTHGC1+J2/3QI+HRVrmecWxztmFP748B+OW9qMPBCd
- HV6GOudwTM2O8IPKNx6izpJUrb7cSJGvwv5boJaHmEhiPEsmHJ6xevW7u375zG0JzB4X
- S8fIyYskvDacAf02J0a9wlkAWs0ezKSMpVhfVz0xROfxNOBXJwHdUO5zvKdu01xSNrH7
- Fn2W0IBsdR5ytMERgqINby9f3alnt4HmRwpqS6r6U1Kpjtt2RK4k2QkoawyRXrCmxJZ8
- mQbKhK7WDxQuJk3u4fDb+hEt8ajLyNOJzeup5Wdo6ruo4cvHuV4dPTW7dgdmtERGLCSs
- 9Pzw==
+ bh=8UFVi7tIqCJqUt6Few8J4eFOWvmS86O+fOV8zgeVLXg=;
+ b=EPvZmj7YyX8Uc/Mbjf6GLDCMUIQSKcXRFsVA97W+j3NFbDgctUrGkqP127zcE75Yzk
+ HV1xnVqwFy9wdsgM2vkeL2ioCrHZC1gDPNFV7QmGolMjyEpwgV7HYdsYiVHoMRdMbPmS
+ eRAg7EC45aooBK3XCazavwebWsGTsfudTxyS1VNZL3QW4BV/maIiXW8yI5SqTbSe2+xn
+ Zwg+/9wswFfYL29e1Vms45y4fR9G0FS4it7Hc8Ajc34XGcr9+Cq7ZNWBETOAMcgggcBY
+ 0E0sJWU9jvxVWvCTzTyDMkkK5WVsdRLfqfq9C1bKt6lB7lJ5LkkvZnCz2936vaQyDXsC
+ AboQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/PZh+Sc5+Oo8H7RMk1QnVrE1m7BuJ/gXumKF67mgn1xgS8P+JTXzuVZ81wCKxeDBjqUmpkut8QaM1/5cnbIRLwVRioVk=
-X-Gm-Message-State: AOJu0YwVFZx6BgC4eHuQVhO3e8t92A3tWrMRjoxb424WHffkmpV1dwHA
- uW8+etp0acX5DcKJpQwitPuJyGj/zMTogQtD6kBybdh4mRU0c+Dn7q8ABSFDLL4KDlQN+vUQObD
- Dlz0JV32872/ZMEMsKDM2WJpFs7UyP0rNHJu1uz27NC4ZF43R+gVB
-X-Received: by 2002:a05:600c:4f0e:b0:425:675a:d52e with SMTP id
- 5b1f17b1804b1-425675ad6f8mr1085705e9.2.1719474906986; 
- Thu, 27 Jun 2024 00:55:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaR3+adqtAimEe6enJChYyn5UgynR5I1VDTINNeZ0kenqIbo2FOGHjmLZ2c+UAIa/pxi/uew==
-X-Received: by 2002:a05:600c:4f0e:b0:425:675a:d52e with SMTP id
- 5b1f17b1804b1-425675ad6f8mr1085525e9.2.1719474906721; 
- Thu, 27 Jun 2024 00:55:06 -0700 (PDT)
+ AJvYcCWpL2G+BJov7iLEZvWE2NranwP/jWYDjexfJ7PUQdyNUMJXsA7ZGqh/u4rBlUqamXyV/yQdKFtOkiOK01xPGRyeHou7iQ8=
+X-Gm-Message-State: AOJu0Yzo94WN6B6vMujhJE91F8ht9A6glJHNyhSCfefcDBJ+WrCbJPR9
+ GFtd2OJl98BCOayddistSttU9PzHA8dAt3yNPpmcLkD012YjY57OoOplIMNElZvwDse/1DWy9Mv
+ OTfWBwHqbT2nJc5yxvfl9Nwis81aT+sxShK/8TTkxALneGzMTwfiG
+X-Received: by 2002:a05:6512:2394:b0:52c:d84c:1182 with SMTP id
+ 2adb3069b0e04-52ce1862c12mr9324588e87.64.1719474916123; 
+ Thu, 27 Jun 2024 00:55:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxRCvwykpGaRMc6oIeC3Flb7jSfbQzZQOJDefdOdbYRFxVZyR4vQTRj9A8ayHFOIfTw4sEOg==
+X-Received: by 2002:a05:6512:2394:b0:52c:d84c:1182 with SMTP id
+ 2adb3069b0e04-52ce1862c12mr9324575e87.64.1719474915798; 
+ Thu, 27 Jun 2024 00:55:15 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-424c8468caesm52702385e9.44.2024.06.27.00.55.05
+ 5b1f17b1804b1-424c8245da9sm52854285e9.1.2024.06.27.00.55.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 00:55:06 -0700 (PDT)
-Message-ID: <c2e4d431-b7b8-4d0b-b0c6-935cd4fba97c@redhat.com>
-Date: Thu, 27 Jun 2024 09:55:05 +0200
+ Thu, 27 Jun 2024 00:55:15 -0700 (PDT)
+Message-ID: <9fde994b-8f1a-44b0-b491-18dcb553c2cf@redhat.com>
+Date: Thu, 27 Jun 2024 09:55:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] hw/sd/sdcard: Deprecate support for spec v1.10
+Subject: Re: [PATCH 2/3] hw/sd/sdcard: Use spec v3.01 by default
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  devel@lists.libvirt.org, Bin Meng <bmeng.cn@gmail.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>
 References: <20240627071040.36190-1-philmd@linaro.org>
- <20240627071040.36190-2-philmd@linaro.org>
+ <20240627071040.36190-3-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
-In-Reply-To: <20240627071040.36190-2-philmd@linaro.org>
+In-Reply-To: <20240627071040.36190-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clegoate@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -110,10 +110,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/27/24 9:10 AM, Philippe Mathieu-Daudé wrote:
-> We use the v2.00 spec by default since commit 2f0939c234
-> ("sdcard: Add a 'spec_version' property, default to Spec v2.00").
-> Time to deprecate the v1.10 which doesn't bring much, and
-> is not tested.
+> Recent SDHCI expect cards to support the v3.01 spec
+> to negociate lower I/O voltage. Select it by default.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
@@ -124,27 +122,23 @@ Thanks,
 
 C.
 
-
+	
 > ---
->   docs/about/deprecated.rst | 6 ++++++
->   1 file changed, 6 insertions(+)
+>   hw/sd/sd.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-> index ff3da68208..02cdef14aa 100644
-> --- a/docs/about/deprecated.rst
-> +++ b/docs/about/deprecated.rst
-> @@ -362,6 +362,12 @@ recommending to switch to their stable counterparts:
->   - "Zve64f" should be replaced with "zve64f"
->   - "Zve64d" should be replaced with "zve64d"
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index a48010cfc1..d0a1d5db18 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -2280,7 +2280,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
 >   
-> +``-device sd-card,spec_version=1`` (since 9.1)
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +SD physical layer specification v2.00 supersedes the v1.10 one.
-> +v2.00 is the default since QEMU 3.0.0.
-> +
->   Block device options
->   ''''''''''''''''''''
->   
+>   static Property sd_properties[] = {
+>       DEFINE_PROP_UINT8("spec_version", SDState,
+> -                      spec_version, SD_PHY_SPECv2_00_VERS),
+> +                      spec_version, SD_PHY_SPECv3_01_VERS),
+>       DEFINE_PROP_DRIVE("drive", SDState, blk),
+>       /* We do not model the chip select pin, so allow the board to select
+>        * whether card should be in SSI or MMC/SD mode.  It is also up to the
 
 
