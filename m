@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B229DC3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 10:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D4BEC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 10:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMlwf-00050y-8r; Thu, 27 Jun 2024 06:01:37 -0400
+	id 1sMlxD-00064W-DW; Thu, 27 Jun 2024 06:02:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlwe-00050E-9l
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:01:36 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1sMlxB-0005pb-47
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:09 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlwc-0001dn-Kk
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:01:35 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-70b2421471aso5492570a12.0
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:01:34 -0700 (PDT)
+ id 1sMlx9-0001iE-C4
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:08 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-706a1711ee5so1722496b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719482492; x=1720087292; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719482526; x=1720087326; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QU4i8l0CHf3BaV0XsBQvH3OwC1graQuHSr1WC6y7TUI=;
- b=VNJhOCWs3rfVj2aY/0IAtddvdu9/mu6qyIA59U0vEP49c93Q5F035nJm3+2O2vnWXw
- B2elf4zpXqXqpr7xpPie2XDYxXQ/ofNzmP4PKdpTc/vn935nB7ZTmwmn2kN70joYAZyk
- oMCYxhEObBKHiwoGsjRgiLD/29pvVDd+I1aEsdqsu9c+yOPvI8JoWCEvU71t/XSx7ra/
- 96oWXkirgVZ6Ssng41ohXKrD+KsfhVv/2w5/vroXfa6bs8oh/Rr7NXI37rxTvi0w9qUi
- aqe90KpZwnd3eweIXOLcu77g0Uuze1zR14UctS9PMFBUC8FLBzq+SXViV60YZ+vINFpF
- EYOA==
+ bh=+2ZtPlx1gfPCtUTgrKOFONw9SOdI5ccx3X/2YcbrFmM=;
+ b=PxIX0gePqbQzku9ZTvlyXJNfiIawfRbpmdybJmzvGgGupKSfsMj4mcUIdbECmgk0fm
+ Y1fbn8Dy5GiwDItTy2eET7f/d80+FwwcQCASpePXDN97Jkj7eXG9kdOGzYZ3N1km3JE0
+ QRQGJaIa4q7FcAzElHhrhSs6NsLLypUrRXCL3LjOiy8Rrj1vVwIpBEbobFvSEZWRqHTy
+ tSc1DmGX8KsOQMCpkdcLZmOuWG8NyBCspexrIBxyEBSaWAZ3tIHehN1n5lGD8V1ySDSx
+ MmcWPTeGlJUazq/G4K/UHnYtWKf5zjI+Bph0PvwrfCt5gUfhgFIbZvblmuzWx0BVpoN7
+ pyiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719482492; x=1720087292;
+ d=1e100.net; s=20230601; t=1719482526; x=1720087326;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QU4i8l0CHf3BaV0XsBQvH3OwC1graQuHSr1WC6y7TUI=;
- b=oHH/SANnfs4+VAlu1Nx3toOmwl4Qn/GKPwyN9zamGEFua829Hhk3/8F807606G54VL
- 6SYBMhRpKHD4j4E1wLkf3VeQ2Ud3rTzMZXyNF3RO1vWJ+c6XXMK9ax5Bwjegw+QGIrpR
- DRCzRELpGOsLEczlmXE97lpimFDtP3tREqDA4W2W/l0pacPa6jUULzII5cA6igIlc4wA
- P/GL/2hyzbkITtAFrFffGB18gZOr/laGxD8FBiTQt8Rc0Bt9gPG7ON33SiI/dwjnYwPZ
- hJXnLRIiTwICVJfG5tWtCXr1RP80MutHuHddYUyFGb4NZKgS98SZAwjc4H9Xvt9mD+kd
- 5GEA==
-X-Gm-Message-State: AOJu0Yxldh9gcHH07upTRNovbV2T5VtkzHYCHgw4z0NahFVmRisMtFH+
- fYzS1VR2fLXBGcVXxJkI8ZP4s/ixvlQBf+sW1OKXyMvr6mks29vzUS0a9AXn
-X-Google-Smtp-Source: AGHT+IEH7XsxyLynGCWLyoMFRpBeoo20IiYHETZrBSFrYKwLLfTyI0H//zfxmdyOyO+D8QNsdWlSew==
-X-Received: by 2002:a05:6a20:6387:b0:1bd:1e0f:efa3 with SMTP id
- adf61e73a8af0-1bd1e0ff0dbmr6675761637.4.1719482492263; 
- Thu, 27 Jun 2024 03:01:32 -0700 (PDT)
+ bh=+2ZtPlx1gfPCtUTgrKOFONw9SOdI5ccx3X/2YcbrFmM=;
+ b=iUWHq7Mia6hp2o8l8NNNt88W9yoPFfFbczrUpy7RfEeixTic4eHoPMt4yzXfhf8Tkn
+ kcLqgZubTBO+nwLoypAzcDKoYjprfyFzjj+k2ZKSMwxEDksUxhCtlbgFF7DNyOYo4Pge
+ y9bdTjoojid6aTeXSnaqht+GOifEcCWPvOayptaaFXKNIdIcds0vzl4DGuj1UFH9qC5M
+ QHhXKcpglIadkLcKTud+j6Z3ToJdBLiUdjJeZFnO53aH11IGCdc0XkKTdkDAZQHFhzcj
+ w3kH5bKwL5/nhBFNfU+YtXnKYvh0zyR+B9UDk75HkludQx85FSFa+1HkXyhthVsHImSS
+ MYxw==
+X-Gm-Message-State: AOJu0YwsxJgbezF06MYVId0Gqd8FAF5fjSOKpVeAeEM2KeewwNrNv6ay
+ Nlf6ZQzkeOLCSW4fXB+rVmJoVnvM0KHEW+KXfBY4r0hlbHMnWoilJaWZACGy
+X-Google-Smtp-Source: AGHT+IFxkBI4qboUzeCkA6q0oEkqA+onz8dJdSXqVVgMOfzOGt2lZhT62kN0qO0pBVgTb+j9kRvwrA==
+X-Received: by 2002:a05:6a00:c8e:b0:704:2811:62 with SMTP id
+ d2e1a72fcca58-706745be4c5mr15284762b3a.13.1719482525517; 
+ Thu, 27 Jun 2024 03:02:05 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.01.29
+ d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.02.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 03:01:31 -0700 (PDT)
+ Thu, 27 Jun 2024 03:02:05 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Conor Dooley <conor@kernel.org>,
+Cc: alistair23@gmail.com, "Fea.Wang" <fea.wang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 09/32] hw/riscv/virt.c: change imsic nodename to
- 'interrupt-controller'
-Date: Thu, 27 Jun 2024 20:00:30 +1000
-Message-ID: <20240627100053.150937-10-alistair.francis@wdc.com>
+Subject: [PULL 19/32] target/riscv: Reserve exception codes for sw-check and
+ hw-err
+Date: Thu, 27 Jun 2024 20:00:40 +1000
+Message-ID: <20240627100053.150937-20-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240627100053.150937-1-alistair.francis@wdc.com>
 References: <20240627100053.150937-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,38 +101,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: "Fea.Wang" <fea.wang@sifive.com>
 
-The Linux DT docs for imsic [1] predicts an 'interrupt-controller@addr'
-node, not 'imsic@addr', given this node inherits the
-'interrupt-controller' node.
+Based on the priv-1.13.0, add the exception codes for Software-check and
+Hardware-error.
 
-[1] Documentation/devicetree/bindings/interrupt-controller/riscv,imsics.yaml
-
-Reported-by: Conor Dooley <conor@kernel.org>
-Fixes: 28d8c281200f ("hw/riscv: virt: Add optional AIA IMSIC support to virt machine")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240531202759.911601-7-dbarboza@ventanamicro.com>
+Message-ID: <20240606135454.119186-6-fea.wang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/virt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/riscv/cpu_bits.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 9c6b39b7df..376e362a68 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -538,7 +538,8 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
-         }
-     }
- 
--    imsic_name = g_strdup_printf("/soc/imsics@%lx", (unsigned long)base_addr);
-+    imsic_name = g_strdup_printf("/soc/interrupt-controller@%lx",
-+                                 (unsigned long)base_addr);
-     qemu_fdt_add_subnode(ms->fdt, imsic_name);
-     qemu_fdt_setprop_string(ms->fdt, imsic_name, "compatible", "riscv,imsics");
-     qemu_fdt_setprop_cell(ms->fdt, imsic_name, "#interrupt-cells",
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index 096a51b331..c257c5ed7d 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -673,6 +673,8 @@ typedef enum RISCVException {
+     RISCV_EXCP_INST_PAGE_FAULT = 0xc, /* since: priv-1.10.0 */
+     RISCV_EXCP_LOAD_PAGE_FAULT = 0xd, /* since: priv-1.10.0 */
+     RISCV_EXCP_STORE_PAGE_FAULT = 0xf, /* since: priv-1.10.0 */
++    RISCV_EXCP_SW_CHECK = 0x12, /* since: priv-1.13.0 */
++    RISCV_EXCP_HW_ERR = 0x13, /* since: priv-1.13.0 */
+     RISCV_EXCP_INST_GUEST_PAGE_FAULT = 0x14,
+     RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT = 0x15,
+     RISCV_EXCP_VIRT_INSTRUCTION_FAULT = 0x16,
 -- 
 2.45.2
 
