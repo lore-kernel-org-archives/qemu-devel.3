@@ -4,89 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398ECC3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF926C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMolw-000193-Ie; Thu, 27 Jun 2024 09:02:44 -0400
+	id 1sMosa-0004U2-1I; Thu, 27 Jun 2024 09:09:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMols-00018u-F6
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:02:41 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMolq-0006K5-CR
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:02:40 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3658197cdbbso4233835f8f.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:02:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719493356; x=1720098156; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nTxJdwZzoCmm5TK5yyHJ7yBR0kvfNA+yBcm6LxQ4jNw=;
- b=ecGUaTA7z8Ai6l3F9pxISQfFsoAkBRPVN1qjDe5djT3mhTQOj91oskforCoRi4lYTi
- Ollw1Gnx1wr9vUGVQxkm2tqWmjIOWAnVh1R05Zi+ZApxeUlBIOfujVu24nb1BYWf6Vsp
- OPbT9IZAsIEQec1votUPQ8bJJHMM+fPOmCfIlJtEyXbSuG3qZu0f7t9/rMP5SB1PD0W4
- gAIMUNnTROhr/Cd9iS8YduEl9pfP57RHXL74Cc2+E6jxnbaGk4UIg30Jhp3NMj9l2+aB
- rLZos6XuYhIIjn2QBrjoUG9ao44nua03EnRgKqpIkrntrE57HXwxp3fAcHXi312e60n5
- FmpA==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sMosU-0004TV-LJ
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:09:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sMosM-0004LC-LQ
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:09:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719493758;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8wcA7ISwGfHt02LqB5va1uV52y1R748xcCylRIffVeI=;
+ b=iRHKRgG/WqR6xlgc1Ja5W/Xz0LfZCPijY8v5akBxVF0/5Xlfa/eqMwuUdnyRKPZLSVzsKV
+ zvX0dGS/L8nQ3d8tUfHSgVuEjphSd0M5VxOxSjtFMhsSyj63gM3l8EjKfMciBXq9vfDFJj
+ G38ZQnVyQPZSc2WagcYHtT1W0vplU4o=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-588-BF9HvUImMaOje0nKSidxxA-1; Thu, 27 Jun 2024 09:09:15 -0400
+X-MC-Unique: BF9HvUImMaOje0nKSidxxA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42568f0cc18so350465e9.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:09:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719493356; x=1720098156;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nTxJdwZzoCmm5TK5yyHJ7yBR0kvfNA+yBcm6LxQ4jNw=;
- b=RYYbph68n/bQH7I7TQ9OGmLoChTu36F1FgbBKtuD4/wYTUgBRfnX5qB29X4c6cWZ2i
- duGGqFEdhJPW11m6gOyWxk9VpeqWdavDBbDrL+BNl+RBZV0s8LURHxODga73hbbrv/2w
- jpvyrJ5LXU7eWUkpOm5b+wPCtWGF2MPHirLV3Byguiwlm9eRxA7ztlFr1+EGKqvISqpb
- NGJEE1TNgahtx8Pj2LtdmULiKPKeFBdU634lApTRqyUhPBeWM9fr7Ya3EaJ59Dt9gKNy
- aeTnHP4ALo+DdMbzkM5x47D5ZdsHr7lo64VJy3fkO0KW63lmZh65PatukMfJ6R+BuVY2
- GKMQ==
+ d=1e100.net; s=20230601; t=1719493754; x=1720098554;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8wcA7ISwGfHt02LqB5va1uV52y1R748xcCylRIffVeI=;
+ b=MvMxc4A6tUsz+Sf10HnHlgrTZE2MZo8dGXiuVGKsgLdNSCfna7Im2O8xvlWU28o89z
+ yRdDBJ6hJm+Fq60v3x3+lvBW4CxZQEurJlaUSjnIqHPbDy7zVtP0+L6GE5NfaTj9XXK9
+ tJg6wjwnyQnrld8wW2CjxSN7v9OV648n3rpQvi76oe+nNzd6pWlx4SY4sunyc92C4zOP
+ bVjCBsafIe+QndRXjRI1SbDHZ0gePxkx0yNKvNoJDyKRZCaExIOcZ+dfXhRA0rs2rOwh
+ Q1+Sbswxh8hOTAbmZ3g44oIV9FpD8NcgvFn0RVbpB5/hp1zdD0sl5tQ3Zj7uKNQSTCqN
+ nOXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWT+7OQgnVystJ8mrWTE7htYY5tLjzIISYOr63/TSlCV6RtZus30u5gO7AGEyQAPuaGJsNfgwfrM/gd1fKI1EHZHdn5UjM=
-X-Gm-Message-State: AOJu0YxgnNgcf13n0jv0URT5dq3456syVcbQgmM9IOEFloFKujFFa/Ku
- LKKMHHI0sM07OrpJfGntL9LmnGdAE2d6tfv4I9TY4GbmjJZeO2/j7B3nliUohTk=
-X-Google-Smtp-Source: AGHT+IGAHFELykuV9NkNMpQL2kwFo6joQxbCsYOMLau8P642ML6JT6159E8tjXFJ4Evu4mjFyqnASA==
-X-Received: by 2002:a05:6000:546:b0:360:7c63:53cf with SMTP id
- ffacd0b85a97d-366e948d09amr10350362f8f.19.1719493356108; 
- Thu, 27 Jun 2024 06:02:36 -0700 (PDT)
-Received: from [192.168.23.175] (72.red-95-127-32.staticip.rima-tde.net.
- [95.127.32.72]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3674357c14fsm1809785f8f.16.2024.06.27.06.02.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 06:02:35 -0700 (PDT)
-Message-ID: <9a0f73c6-33e9-4576-9056-6a5fd0718630@linaro.org>
-Date: Thu, 27 Jun 2024 15:02:32 +0200
+ AJvYcCXTa0MZ2zQtkbz3tWDSA3b8QDj7P6Aek93yiIIWrpKz6FYsM5T3QqDE1wpq9KDaOqlUZ5XJcE96jH9LPaeEnD6bB9xHpGw=
+X-Gm-Message-State: AOJu0YzhEHcAFgtc7cjaniXD8iNW4CdeF0K+4WgAocQXDaQSRZJuv1/H
+ 71jVkcRyEWY5RUi2yPpcbU2t/es1UcZt94OzB1O+rcbWGfgizcUCA0Bp9Agl46mNeP2uKbQN7pH
+ X6FVZLLtLc+fxUigNcWzdaIu+WBVOREiTFuys3XzlSFnVe8zZDh/E
+X-Received: by 2002:a05:6000:154d:b0:366:e508:c7d7 with SMTP id
+ ffacd0b85a97d-366e508c9d5mr11928438f8f.7.1719493754045; 
+ Thu, 27 Jun 2024 06:09:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGRkM81XmKbLAJ5BzgiY5vOkvLGjClh12fRigKHCMVv9dqg8B/z9ZC/Gt5msG3nEsOlgKj6Rg==
+X-Received: by 2002:a05:6000:154d:b0:366:e508:c7d7 with SMTP id
+ ffacd0b85a97d-366e508c9d5mr11928416f8f.7.1719493753625; 
+ Thu, 27 Jun 2024 06:09:13 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36743699b19sm1840140f8f.73.2024.06.27.06.09.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 27 Jun 2024 06:09:13 -0700 (PDT)
+Date: Thu, 27 Jun 2024 15:09:12 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
+ <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
+ <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v3 05/11] hw/pci: Add a bus property to pci_props and
+ use for acpi/gi
+Message-ID: <20240627150912.6ce774b1@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240620160324.109058-6-Jonathan.Cameron@huawei.com>
+References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
+ <20240620160324.109058-6-Jonathan.Cameron@huawei.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/4] hw/intc: Remove loongarch_ipi.c
-To: gaosong <gaosong@loongson.cn>, maobibo <maobibo@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240605-loongson3-ipi-v3-0-ddd2c0e03fa3@flygoat.com>
- <20240605-loongson3-ipi-v3-1-ddd2c0e03fa3@flygoat.com>
- <e1b8bbd8-2a9d-2417-1123-4aabfdedb684@loongson.cn>
- <002f4e7e-682b-479b-9c6c-8971a0e6640a@linaro.org>
- <8d975e9c-c2fd-09c8-7a37-5aebc63656d4@loongson.cn>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8d975e9c-c2fd-09c8-7a37-5aebc63656d4@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,118 +111,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/6/24 04:44, gaosong wrote:
-> 在 2024/6/26 下午8:10, Philippe Mathieu-Daudé 写道:
->> Hi Bibo,
->>
->> On 26/6/24 06:11, maobibo wrote:
->>>
->>>
->>> On 2024/6/5 上午10:15, Jiaxun Yang wrote:
->>>> It was missed out in previous commit.
->>>>
->>>> Fixes: b4a12dfc2132 ("hw/intc/loongarch_ipi: Rename as loongson_ipi")
->>>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
->>>> ---
->>>>   hw/intc/loongarch_ipi.c | 347 
->>>> ------------------------------------------------
->>>>   1 file changed, 347 deletions(-)
->>
->>
->>>> -static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
->>>> -{
->>>> -    LoongArchIPI *s = LOONGARCH_IPI(dev);
->>>> -    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
->>>> -    int i;
->>>> -
->>>> -    if (s->num_cpu == 0) {
->>>> -        error_setg(errp, "num-cpu must be at least 1");
->>>> -        return;
->>>> -    }
->>>> -
->>>> -    memory_region_init_io(&s->ipi_iocsr_mem, OBJECT(dev), 
->>>> &loongarch_ipi_ops,
->>>> -                          s, "loongarch_ipi_iocsr", 0x48);
->>>> -
->>>> -    /* loongarch_ipi_iocsr performs re-entrant IO through ipi_send */
->>>> -    s->ipi_iocsr_mem.disable_reentrancy_guard = true;
->>>> -
->>>> -    sysbus_init_mmio(sbd, &s->ipi_iocsr_mem);
->>>> -
->>>> -    memory_region_init_io(&s->ipi64_iocsr_mem, OBJECT(dev),
->>>> -                          &loongarch_ipi64_ops,
->>>> -                          s, "loongarch_ipi64_iocsr", 0x118);
->>>> -    sysbus_init_mmio(sbd, &s->ipi64_iocsr_mem);
->>> It is different with existing implementation.
->>>
->>> With hw/intc/loongson_ipi.c, every vcpu has one ipi_mmio_mem, however 
->>> on loongarch ipi machine, there is no ipi_mmio_mem memory region.
->>>
->>> So if machine has 256 vcpus, there will be 256 ipi_mmio_mem memory 
->>> regions. In function sysbus_init_mmio(), memory region can not exceed
->>> QDEV_MAX_MMIO (32).  With so many memory regions, it slows down memory
->>> region search speed also.
->>>
->>> void sysbus_init_mmio(SysBusDevice *dev, MemoryRegion *memory)
->>> {
->>>      int n;
->>>
->>>      assert(dev->num_mmio < QDEV_MAX_MMIO);
->>>      n = dev->num_mmio++;
->>>      dev->mmio[n].addr = -1;
->>>      dev->mmio[n].memory = memory;
->>> }
->>>
->>> Can we revert this patch? We want to do production usable by real 
->>> users rather than show pure technology.
->>
->> Since commit b4a12dfc2132 this file is not built/tested anymore:
->>
->> -specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: 
->> files('loongarch_ipi.c'))
->> +specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: 
->> files('loongson_ipi.c'))
->>
->> We don't want to maintain dead code.
->>
-> Hi,  Philippe
+On Thu, 20 Jun 2024 17:03:13 +0100
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+
+> Using a property allows us to hide the internal details of the PCI device
+> from the code to build a SRAT Generic Initiator Affinity Structure with
+> PCI Device Handle.
 > 
-> It is commmit 49eba52a5 that causes Loongarch to fail to start.
+> Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > 
-> What bibao means is that LoongArch and mips do not share "lloongson_ipi.c".
-> This avoids mutual influence.
+> ---
+> V3: New patch
+> ---
+>  hw/acpi/acpi_generic_initiator.c | 11 ++++++-----
+>  hw/pci/pci.c                     | 14 ++++++++++++++
+>  2 files changed, 20 insertions(+), 5 deletions(-)
 > 
-> 
-> My understanding of the next sentence is as follows.
-> 
-> Nowadays, most of the open source operating systems in China use the 
-> latest QEMU.
-> e.g. OpenEuler/OpenAnolis/OpenCloudOS, etc. These operating systems have 
-> a large
->   number of real users. so we need to maintain the stability of the 
-> LoongArch architecture
-> of the QEMU community as much as possible. This will reduce maintenance 
-> costs.
+> diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
+> index 73bafaaaea..34284359f0 100644
+> --- a/hw/acpi/acpi_generic_initiator.c
+> +++ b/hw/acpi/acpi_generic_initiator.c
+> @@ -9,6 +9,7 @@
+>  #include "hw/boards.h"
+>  #include "hw/pci/pci_device.h"
+>  #include "qemu/error-report.h"
+> +#include "qapi/error.h"
+>  
+>  typedef struct AcpiGenericInitiatorClass {
+>      ObjectClass parent_class;
+> @@ -79,7 +80,7 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
+>      MachineState *ms = MACHINE(qdev_get_machine());
+>      AcpiGenericInitiator *gi;
+>      GArray *table_data = opaque;
+> -    PCIDevice *pci_dev;
+> +    uint8_t bus, devfn;
+>      Object *o;
+>  
+>      if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
+> @@ -100,10 +101,10 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
+>          exit(1);
+>      }
+>  
+> -    pci_dev = PCI_DEVICE(o);
+> -    build_srat_pci_generic_initiator(table_data, gi->node, 0,
+> -                                     pci_bus_num(pci_get_bus(pci_dev)),
+> -                                     pci_dev->devfn);
+> +    bus = object_property_get_uint(o, "bus", &error_fatal);
+> +    devfn = object_property_get_uint(o, "addr", &error_fatal);
+> +
+> +    build_srat_pci_generic_initiator(table_data, gi->node, 0, bus, devfn);
+>  
+>      return 0;
+>  }
+> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> index 324c1302d2..b4b499b172 100644
+> --- a/hw/pci/pci.c
+> +++ b/hw/pci/pci.c
+> @@ -67,6 +67,19 @@ static char *pcibus_get_fw_dev_path(DeviceState *dev);
+>  static void pcibus_reset_hold(Object *obj, ResetType type);
+>  static bool pcie_has_upstream_port(PCIDevice *dev);
+>  
+> +static void prop_pci_bus_get(Object *obj, Visitor *v, const char *name,
+> +                             void *opaque, Error **errp)
+> +{
+> +    uint8_t bus = pci_dev_bus_num(PCI_DEVICE(obj));
+> +
+> +    visit_type_uint8(v, name, &bus, errp);
+> +}
+> +
+> +static const PropertyInfo prop_pci_bus = {
+> +    .name = "bus",
 
-I'm glad there is a such large number of users :)
+/me confused,
+didn't we have 'bus' property for PCI devices already?
 
-> Therefore, we would like to restore the 'loongarch_ipi.c' file. what do 
-> you think?
+i.e. I can add PCI device like this
+  -device e1000,bus=pci.0,addr=0x6,...
+  
 
-My preference on "reducing maintenance cost" is code reuse instead of
-duplication.
+> +    .get = prop_pci_bus_get,
+> +};
+> +
+>  static Property pci_props[] = {
+>      DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
+>      DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
+> @@ -85,6 +98,7 @@ static Property pci_props[] = {
+>                      QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
+>      DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
+>                      QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
+> +    { .name = "bus", .info = &prop_pci_bus },
+>      DEFINE_PROP_END_OF_LIST()
+>  };
+>  
 
-Before reverting, lets try to fix the issue. I suggested a v2:
-https://lore.kernel.org/qemu-devel/20240627125819.62779-2-philmd@linaro.org
-
-That said, both current patch and the suggested fix pass our
-Avocado CI test suite (running tests/avocado/machine_loongarch.py).
-
-Is your use case not covered? Could you expand the CI tests so
-we don't hit this problem again? (Also we could reproduce and
-fix more easily).
-
-Thanks,
-
-Phil.
 
