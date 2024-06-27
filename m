@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2902BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 07:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2486AC30658
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 07:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMjHa-0006Cp-4r; Thu, 27 Jun 2024 03:11:02 -0400
+	id 1sMjHQ-0006BI-Kz; Thu, 27 Jun 2024 03:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMjHY-0006CT-NG
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:11:00 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMjHO-0006AQ-Nh
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:10:50 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMjHX-0004qD-1Q
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:11:00 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2ebec2f11b7so84186811fa.2
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 00:10:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMjHN-0004pM-4K
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:10:50 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-421f4d1c057so59086275e9.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 00:10:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719472256; x=1720077056; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VMACaTJ7ceKy98vN0dAl3R2Aaxm14mffc3kVkXfuwRk=;
- b=Lij/UNTtSlk7ZbXqBOQZD8MKtBDg6kTA06hnxVFZ4bHlxtaJvp4O7XaAxrn5sLzncG
- BxaiEEsaCPc+J+ur50+Wr9fUIE2vrSqr4z5wkJB4oXW0mmR5zD1f1NOI9czN2tWYuIOL
- 03YWVFUSZmigBMJBGBoAYKyeTA6fEfFdhrGpzagsCadF8dLQ7GoX7DCmRv3DSVkYLyAa
- A28ly5yONWh8hKhvk1v0wR+QdR+JXWRf+L5HVmn0EIt3yGbLQ/vpm/Z5CCvaZEio9WK3
- uBD7ttJv3KMMvkt+duZiRNWsMmN9Pn4zyT9rvHouyhXLHBnlT3fVGuyf5ZyVvnvDbdoP
- CuQA==
+ d=linaro.org; s=google; t=1719472247; x=1720077047; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ifmD9XolgANBmWmPZz4cr9fVixRp2g7xKqtLOrjpZoI=;
+ b=lkkn+Fp5MUMJAKgSESpQuzcbrB6fBnUvtwE/24zD8pCP7/DEDasUniTKUdxxAXJ++M
+ pYKqoAfiEE854hIhsmR8uTHiZ2SU/x1n+IIdssWFH3GigOmGJLdOA6ylUk/NumDn0Z3z
+ SVKAG7RIz1TG8tunIBm2O/SMzzuKUhtcCR8ciLH30tR8xEPllOjoJE1wXyMBXdfRQXQ6
+ xf0KqjfwDW4icaPDlQ8uJQMfW8Aztsxmk+ew53Y+qaNPNUqjFYXZwknUvISrMhIn6Byn
+ sYt8PKeHbyaW//tKcdv006lnFLWNP2TWxgn5fb9cRS2xDzE7kOIW8j9f1utqcPa6WrYG
+ qSIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719472256; x=1720077056;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VMACaTJ7ceKy98vN0dAl3R2Aaxm14mffc3kVkXfuwRk=;
- b=RBvr835bwK/AXqmt0AQQx/zEM5mWINrlH4k4lmv+/jPATvPacP9yYsIwYqEtb1rzvW
- uE1Z683tEiPD+NmdMNNUCd4kPyMq8YQuSk774R1uP/IknrqLi2Z3YCvwou3xYgnuxFqM
- jeWBOcGo1/3Rv/QWj1EgWcqYOPLb5wdjq/3tGxlwFut1xBJUI1Etu2sb6TaI8X89pQua
- u0CH0lvPdIhqf7SR5XVkt9+XZ9qTCWfYSVOMZHh05NISDTRLlJlCwwmsd5Datho+/FuV
- 5S5FRuq0JBqB/0Rx5E6gzB56+7RLYSI4OCJDC2xdlIFrcEOrvEfGrow2q5GnZpHDaqCu
- j95A==
-X-Gm-Message-State: AOJu0YwN2bJziW6Q2Q98ttdeyQMkyY22s2P64AuNAN34ZgLdZL0pasvN
- OrqwJsW1jUsir3efcwFQyr/grRabedxl9AhnMjRew0FOYFlfopSwHUL8LLSHwZCCaunWmR/NBvE
- btWI=
-X-Google-Smtp-Source: AGHT+IFQaxY7Rzvlk6/HeiEQJyNeUwjWgeSvzwoFLf/+d+DpsR4UxloF/xxwq8NSvyniNK8Wis3S6A==
-X-Received: by 2002:a2e:780a:0:b0:2ec:5a6e:777d with SMTP id
- 38308e7fff4ca-2ec5b39cdbamr66685641fa.51.1719472256315; 
- Thu, 27 Jun 2024 00:10:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719472247; x=1720077047;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ifmD9XolgANBmWmPZz4cr9fVixRp2g7xKqtLOrjpZoI=;
+ b=jKQkhN3IofV0r2/NQLiDTetrs26JjdPO/PNYn3gYY4HETtfrap/q7kHV5p1lRxSV/Q
+ JJNX3J35RtnXq6WuMckMc6/N6ttnAMg/vIN9FVkg27/CJt392TweGIacakz044WNW8J+
+ Bzkdf/mBFKrHrvtM9l7GZdMywdCtlvF1ko8MfcjqW40KaZDYXkPIg6UTZ2Afh+AJu21A
+ 4Sddx+6bV0tN25WVkLQ6eqTj6+IplcPVPB7fet3hoJKKBpgE6P1Uod7b5LrigLwawFku
+ ZCCEm95kojScXrHuXxPr/LGjbYWwfknL/FmmoGTWCfdhIk1xW0R9Td17LobZnjjL43AY
+ dR0Q==
+X-Gm-Message-State: AOJu0YxQMkwYYYdtJLxW/50W46bEp68GExeoz7INjia0H7/gsOwhtJUl
+ tPe6xOeHhOiErVS5Hr10NChoEJnoEL7QmphoBR6C+ASRrRDBwdrrMXb8KiZ4c8XS0BloTM401xB
+ Ajmo=
+X-Google-Smtp-Source: AGHT+IFMuk0FXhQeNP//v7igOful5DTowMC0oSnsVt66D20I4HrVj9pzfJtU6CMc4oUFxoUQKyFhJg==
+X-Received: by 2002:a05:600c:26d5:b0:425:6262:1cc2 with SMTP id
+ 5b1f17b1804b1-42562621d7dmr13384915e9.34.1719472246981; 
+ Thu, 27 Jun 2024 00:10:46 -0700 (PDT)
 Received: from localhost.localdomain (163.red-95-127-40.staticip.rima-tde.net.
  [95.127.40.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-424c82519bdsm52155165e9.13.2024.06.27.00.10.53
+ 5b1f17b1804b1-42564bb6caasm12151685e9.33.2024.06.27.00.10.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 27 Jun 2024 00:10:55 -0700 (PDT)
+ Thu, 27 Jun 2024 00:10:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -64,24 +63,22 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  devel@lists.libvirt.org, Bin Meng <bmeng.cn@gmail.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 1/3] hw/sd/sdcard: Deprecate support for spec v1.10
-Date: Thu, 27 Jun 2024 09:10:37 +0200
-Message-ID: <20240627071040.36190-2-philmd@linaro.org>
+Subject: [PATCH 0/3] hw/sd/sdcard: Deprecate support for spec v1.10
+Date: Thu, 27 Jun 2024 09:10:36 +0200
+Message-ID: <20240627071040.36190-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240627071040.36190-1-philmd@linaro.org>
-References: <20240627071040.36190-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,33 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We use the v2.00 spec by default since commit 2f0939c234
-("sdcard: Add a 'spec_version' property, default to Spec v2.00").
-Time to deprecate the v1.10 which doesn't bring much, and
-is not tested.
+Deprecate SD spec v1.10, use v3.01 as new default.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- docs/about/deprecated.rst | 6 ++++++
- 1 file changed, 6 insertions(+)
+Philippe Mathieu-Daudé (3):
+  hw/sd/sdcard: Deprecate support for spec v1.10
+  hw/sd/sdcard: Use spec v3.01 by default
+  hw/sd/sdcard: Remove support for spec v1.10
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index ff3da68208..02cdef14aa 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -362,6 +362,12 @@ recommending to switch to their stable counterparts:
- - "Zve64f" should be replaced with "zve64f"
- - "Zve64d" should be replaced with "zve64d"
- 
-+``-device sd-card,spec_version=1`` (since 9.1)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+SD physical layer specification v2.00 supersedes the v1.10 one.
-+v2.00 is the default since QEMU 3.0.0.
-+
- Block device options
- ''''''''''''''''''''
- 
+ docs/about/removed-features.rst |  5 +++++
+ include/hw/sd/sd.h              |  1 -
+ hw/sd/sd.c                      | 14 +++-----------
+ 3 files changed, 8 insertions(+), 12 deletions(-)
+
 -- 
 2.41.0
 
