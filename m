@@ -4,98 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADFF3C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 12:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E0B9C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 12:58:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMofr-0006bm-SB; Thu, 27 Jun 2024 08:56:27 -0400
+	id 1sMoht-0007HF-IU; Thu, 27 Jun 2024 08:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sMofm-0006bH-Dx
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:56:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sMofk-0002rk-Sj
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:56:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719492980;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JR5ErMuEbVd1Zz4SFGXEnrGmn4JGl3Pfz9x/6WzCVEw=;
- b=gwL1ajjdS684mNaYt3Jw6q0xn7ntIWBRi3yyeVsT4OmXhHRYspHZVE91KVf9FYvHjegtoN
- rRwApDVwuHaJ8ChG9v90WjOF/OVoSUEzXUiX6iun8ezfctPKZXcwcb1/t4vcQ2Z8Uv0AMA
- 3MCFWf3Tt01Cmouzn8hwtVeBjwQnGco=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645-KuwVHrt2PXekZ7RjHExXKQ-1; Thu, 27 Jun 2024 08:56:18 -0400
-X-MC-Unique: KuwVHrt2PXekZ7RjHExXKQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-422322e4abaso9836005e9.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 05:56:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMohr-0007Gs-RB
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:58:31 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMohn-0004Ci-1N
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:58:31 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4255fc43f1cso11494275e9.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 05:58:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719493104; x=1720097904; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=73SS87dz+l13yid0huWWEEIbazV5CC3N6HBTTrp4qaA=;
+ b=m8HoGYBBavyEAkS8TYkhL5gMc+5bFE+rbsA/CzhSg0jzNA016FmPx/UrAaB08vHeys
+ QZkCDGuOMpcW/E602c/sVrqxcCUV2vkWSGiowS2rA0iZLubm9AucUZp4yTq+EzZZ7Qqy
+ LKVAu4zzbNFHDa70NFCmDC+7L/JMW6gjYiag6rRqezKcdbwQY6fwMlg0GozGC5Aee+Y+
+ Dy3I8ICgpjuYVJvt1ffYkq6EiwNCJCSL2HOZL0mzafZUVWP/1YjatMflSNWRFWH7CYGN
+ ViXEjtC3ae7JeTKU3FR0KorqJg/qMx3NiE999clejLgbR0x+88M0V4efCenV2xehNuWR
+ 2dDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719492977; x=1720097777;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JR5ErMuEbVd1Zz4SFGXEnrGmn4JGl3Pfz9x/6WzCVEw=;
- b=IITIYjfPe846Fh2Y34LkyvhY2FZELXhE2eSJvzgs4+E0/iBHrQqDf/3nvcmtrm9MIT
- T6lx6si4wHwnkTFUduCChkQ8Wz4cWrMSsv6O5QzcjB0OPMw64oFmwMV6/7FMqnraEEsb
- jBMJXrpgXgsQO/l0yo1CxI7VVnQLuijpq0tpzLLXRBEgbqvtloAnF+Z7vJvr5vmZ0qme
- DE9LSAnWnZWude9jej530CTEggX4Hxp9IfPCn6fPRyFWCIkRv2v+09p+c5Itl/rpZsm1
- 1W4zIFm6T6yd7HR6rmDXrkncaaPtJpu4vR/WYBZgt0i8pjSqFmLsvEs0q0rLfFYYUwkb
- 7mgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVY/pPUEBQ1KmINqBpW/ORDZaEJ/9qz5NbBZmR4ryIrpQzUS2cc/lpIZqC9P7iymsJOdEBh7MJK48m1Ffxii8Eem/LoDWA=
-X-Gm-Message-State: AOJu0YwR8D4OzzFvnJcFNUI/eiIkCTvGuRdx4Shh8GzqSCnYsZsXswQN
- /aWoBJh4JRFSXqV3F6qAuSCRYcLu6/RC0oLGr5HIkOxWQhOkuO/jyaVCgdvmKrDMVY+drzCWMYJ
- 7C+497GqiG0CNt4yXtdOoApO9VrRN5EtOggi5v6HTdeuIt1MPW9EL
-X-Received: by 2002:a05:600c:4a06:b0:421:8234:9bb4 with SMTP id
- 5b1f17b1804b1-42563126c2dmr25773015e9.19.1719492977687; 
- Thu, 27 Jun 2024 05:56:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHwpnlf/eRAa07oL95W2YCkf8HrDfbnms0npxB8y9IFXrOozdKcDu3WZq/h9GihKU2aoJJGOQ==
-X-Received: by 2002:a05:600c:4a06:b0:421:8234:9bb4 with SMTP id
- 5b1f17b1804b1-42563126c2dmr25772745e9.19.1719492977344; 
- Thu, 27 Jun 2024 05:56:17 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-424c848353dsm65954585e9.48.2024.06.27.05.56.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 05:56:16 -0700 (PDT)
-Date: Thu, 27 Jun 2024 14:56:14 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
- <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
- <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v3 04/11] hw/acpi: Rename
- build_all_acpi_generic_initiators() to build_acpi_generic_initiator()
-Message-ID: <20240627145614.6c46c1b4@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240620160324.109058-5-Jonathan.Cameron@huawei.com>
-References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
- <20240620160324.109058-5-Jonathan.Cameron@huawei.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1719493104; x=1720097904;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=73SS87dz+l13yid0huWWEEIbazV5CC3N6HBTTrp4qaA=;
+ b=HgxKXl6mLId9PFaX62nkGFyWsSHF7da6POLBVQI2SXz7+dgng3oQYwYKguWlrVVzB3
+ unnu/llu8cRzbz0xt6GKuxB+H7ZC9S1q30l+55WoSKCrmpp8znzSRqSmWoGa1CplahAQ
+ DfAuxxt48d/QW9CoW/A7FJzMY/JjatvbiXLkdOguFQh+9SHLFOaUM/8DCvUXz9I6elet
+ qZ445Vbq2K7WS937NUP/6R+abBOU76FybRhHqusOOZWXBchsmnwcgZPSoF2Stnq+Z/rA
+ XrOhERBzXDMlT/GSlFqar77sJn9AlSJ7sCK+xP1aiMrB04N8v04wFn09hGB0vECLkHd4
+ sJVg==
+X-Gm-Message-State: AOJu0Ywasqpz1WNAyCw3sG1dRj4rc3fe56/K1JOHY/b/RZ51j9LmjOVO
+ QdCz7X96VA1X8dAxFs6AZfXwOvh0ngG4PlktVz9EGB2TFRPbupFqiJxeQnYQmQ3HigsnWc4sqCq
+ NNTo=
+X-Google-Smtp-Source: AGHT+IE4KeGkIz0mDxH+068kWOYQRVFCmDygM8podYD25NhMzKxYXyRYQwF3h7NMHV8Y3WhoIcg/9Q==
+X-Received: by 2002:a05:600c:2257:b0:425:6207:12b4 with SMTP id
+ 5b1f17b1804b1-425620717b9mr23741605e9.24.1719493103942; 
+ Thu, 27 Jun 2024 05:58:23 -0700 (PDT)
+Received: from localhost.localdomain (72.red-95-127-32.staticip.rima-tde.net.
+ [95.127.32.72]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42564bb6ce2sm25580605e9.32.2024.06.27.05.58.21
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 27 Jun 2024 05:58:23 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
+ maobibo <maobibo@loongson.cn>, Huacai Chen <chenhuacai@kernel.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/1] hw/intc/loongson_ipi: Fix for LoongArch
+Date: Thu, 27 Jun 2024 14:58:18 +0200
+Message-ID: <20240627125819.62779-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,44 +92,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Jun 2024 17:03:12 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+v2:
+- Only skip mmio-related code in loongson_ipi_realize()
 
-> Igor noted that this function only builds one instance, so was rather
-> misleadingly named. Fix that.
-> 
-> Suggested-by: Igor Mammedov <imammedo@redhat.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Jiaxun Yang (1):
+  hw/intc/loongson_ipi: Gate MMIO regions creation with property
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+ include/hw/intc/loongson_ipi.h |  1 +
+ hw/intc/loongson_ipi.c         | 16 ++++++++++------
+ hw/mips/loongson3_virt.c       |  1 +
+ 3 files changed, 12 insertions(+), 6 deletions(-)
 
-> 
-> ---
-> v3: New patch
-> ---
->  hw/acpi/acpi_generic_initiator.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-> index 7665b16107..73bafaaaea 100644
-> --- a/hw/acpi/acpi_generic_initiator.c
-> +++ b/hw/acpi/acpi_generic_initiator.c
-> @@ -74,7 +74,7 @@ static void acpi_generic_initiator_class_init(ObjectClass *oc, void *data)
->          acpi_generic_initiator_set_node, NULL, NULL);
->  }
->  
-> -static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
-> +static int build_acpi_generic_initiator(Object *obj, void *opaque)
->  {
->      MachineState *ms = MACHINE(qdev_get_machine());
->      AcpiGenericInitiator *gi;
-> @@ -111,6 +111,6 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
->  void build_srat_generic_pci_initiator(GArray *table_data)
->  {
->      object_child_foreach_recursive(object_get_root(),
-> -                                   build_all_acpi_generic_initiators,
-> +                                   build_acpi_generic_initiator,
->                                     table_data);
->  }
+-- 
+2.41.0
 
 
