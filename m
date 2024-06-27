@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2486AC30658
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 07:11:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B32C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 07:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMjHQ-0006BI-Kz; Thu, 27 Jun 2024 03:10:52 -0400
+	id 1sMjHs-0006JU-Ir; Thu, 27 Jun 2024 03:11:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMjHO-0006AQ-Nh
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:10:50 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMjHn-0006HU-TE
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:11:15 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMjHN-0004pM-4K
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:10:50 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-421f4d1c057so59086275e9.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 00:10:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMjHm-0004qp-6V
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:11:15 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4255fc43f1cso8944855e9.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 00:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719472247; x=1720077047; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ifmD9XolgANBmWmPZz4cr9fVixRp2g7xKqtLOrjpZoI=;
- b=lkkn+Fp5MUMJAKgSESpQuzcbrB6fBnUvtwE/24zD8pCP7/DEDasUniTKUdxxAXJ++M
- pYKqoAfiEE854hIhsmR8uTHiZ2SU/x1n+IIdssWFH3GigOmGJLdOA6ylUk/NumDn0Z3z
- SVKAG7RIz1TG8tunIBm2O/SMzzuKUhtcCR8ciLH30tR8xEPllOjoJE1wXyMBXdfRQXQ6
- xf0KqjfwDW4icaPDlQ8uJQMfW8Aztsxmk+ew53Y+qaNPNUqjFYXZwknUvISrMhIn6Byn
- sYt8PKeHbyaW//tKcdv006lnFLWNP2TWxgn5fb9cRS2xDzE7kOIW8j9f1utqcPa6WrYG
- qSIg==
+ d=linaro.org; s=google; t=1719472266; x=1720077066; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1BvAUzJDJRk95OJML/aybeF+xlz5tOaGkq6qYevEQMg=;
+ b=odl2hVqZAzT4ztk9XKmoSDcebJxiBsFJhuVLEUWdqZXw+jvyFMAHHirsgDf0nTbdSa
+ lI1EPkVEFQFLj42/GamEyhPQOk4B9DzkuTtqLDmpPsuq9sVFdZkyH5xAnv+HCT53VkeF
+ Rr04wQNkgGUxS8LO4weWGvO4S8bQuIWkMzdiu6IM948mp4QV5YcI4E3JevKDjEU7JHVg
+ Stjur+uIeBlReiRDxoLZedtq4mAZ52La3t4KsPAW/nQQEDhMqirg2te/g+uxtESPyEVm
+ Nkm7hduc2TMr3R5TWfQOC0FPLmlH14FUazu/c8lSejXv+HA9rwTLaqoMPm8bm1AMssZ7
+ Yrvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719472247; x=1720077047;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ifmD9XolgANBmWmPZz4cr9fVixRp2g7xKqtLOrjpZoI=;
- b=jKQkhN3IofV0r2/NQLiDTetrs26JjdPO/PNYn3gYY4HETtfrap/q7kHV5p1lRxSV/Q
- JJNX3J35RtnXq6WuMckMc6/N6ttnAMg/vIN9FVkg27/CJt392TweGIacakz044WNW8J+
- Bzkdf/mBFKrHrvtM9l7GZdMywdCtlvF1ko8MfcjqW40KaZDYXkPIg6UTZ2Afh+AJu21A
- 4Sddx+6bV0tN25WVkLQ6eqTj6+IplcPVPB7fet3hoJKKBpgE6P1Uod7b5LrigLwawFku
- ZCCEm95kojScXrHuXxPr/LGjbYWwfknL/FmmoGTWCfdhIk1xW0R9Td17LobZnjjL43AY
- dR0Q==
-X-Gm-Message-State: AOJu0YxQMkwYYYdtJLxW/50W46bEp68GExeoz7INjia0H7/gsOwhtJUl
- tPe6xOeHhOiErVS5Hr10NChoEJnoEL7QmphoBR6C+ASRrRDBwdrrMXb8KiZ4c8XS0BloTM401xB
- Ajmo=
-X-Google-Smtp-Source: AGHT+IFMuk0FXhQeNP//v7igOful5DTowMC0oSnsVt66D20I4HrVj9pzfJtU6CMc4oUFxoUQKyFhJg==
-X-Received: by 2002:a05:600c:26d5:b0:425:6262:1cc2 with SMTP id
- 5b1f17b1804b1-42562621d7dmr13384915e9.34.1719472246981; 
- Thu, 27 Jun 2024 00:10:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719472266; x=1720077066;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1BvAUzJDJRk95OJML/aybeF+xlz5tOaGkq6qYevEQMg=;
+ b=nrTfwlntEvLSnz8ET2vI6s7z79H0GT8hXALnPDj6Hesfd790eNiokRgsuUB58GWtTu
+ lIp1KPf9hh6EEzlYs5UQGprDd8EMelJ2Nn7pKecthLxkinlnCC/oKRsl+qj9VyVJriK+
+ N74JcBljD9f/lqKLSAhoKDyx1vxOMPY0qo+ukBi0pDrJ3qxjrG+AU878G7+uHm8xgdj1
+ 4Iqj2pi6JpjLnLLFI6wVK00YGjyK0t9h0v85GITZblObjutn9VQCAkFjjKlMdMFkDb8+
+ 5pfsl87or1nx7It9djKculUBYDmPUFgvtblhdE/dLFJ7Vvkz8MwSZGBljwrVc1hfxxPb
+ kXJQ==
+X-Gm-Message-State: AOJu0Yy+DZpvwlbMAPQhKYUNVeebVjAiLJWH21dftDIXDARf/lqdEsAD
+ MxPyzrF/FbOcSArUv4t35Rl+sCGMYyhno6RpdKj/UnBou5MNUc3TtjIfKtX7quYhwPUENf2Md21
+ llVs=
+X-Google-Smtp-Source: AGHT+IFuzwL9+Ud6NHoY1okbe19bVu2ehNQ2veeCej8S5qR6kvWCvUQnRFRIybf9+7CfNs1TB8TT7Q==
+X-Received: by 2002:a05:600c:3ac3:b0:424:9593:29e5 with SMTP id
+ 5b1f17b1804b1-42495932ab4mr68789885e9.40.1719472266339; 
+ Thu, 27 Jun 2024 00:11:06 -0700 (PDT)
 Received: from localhost.localdomain (163.red-95-127-40.staticip.rima-tde.net.
  [95.127.40.163]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42564bb6caasm12151685e9.33.2024.06.27.00.10.43
+ 5b1f17b1804b1-42564b7b7a5sm12282925e9.24.2024.06.27.00.11.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 27 Jun 2024 00:10:46 -0700 (PDT)
+ Thu, 27 Jun 2024 00:11:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -63,15 +64,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  devel@lists.libvirt.org, Bin Meng <bmeng.cn@gmail.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 0/3] hw/sd/sdcard: Deprecate support for spec v1.10
-Date: Thu, 27 Jun 2024 09:10:36 +0200
-Message-ID: <20240627071040.36190-1-philmd@linaro.org>
+Subject: [PATCH 2/3] hw/sd/sdcard: Use spec v3.01 by default
+Date: Thu, 27 Jun 2024 09:10:38 +0200
+Message-ID: <20240627071040.36190-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240627071040.36190-1-philmd@linaro.org>
+References: <20240627071040.36190-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,18 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Deprecate SD spec v1.10, use v3.01 as new default.
+Recent SDHCI expect cards to support the v3.01 spec
+to negociate lower I/O voltage. Select it by default.
 
-Philippe Mathieu-Daudé (3):
-  hw/sd/sdcard: Deprecate support for spec v1.10
-  hw/sd/sdcard: Use spec v3.01 by default
-  hw/sd/sdcard: Remove support for spec v1.10
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/sd/sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- docs/about/removed-features.rst |  5 +++++
- include/hw/sd/sd.h              |  1 -
- hw/sd/sd.c                      | 14 +++-----------
- 3 files changed, 8 insertions(+), 12 deletions(-)
-
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index a48010cfc1..d0a1d5db18 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2280,7 +2280,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
+ 
+ static Property sd_properties[] = {
+     DEFINE_PROP_UINT8("spec_version", SDState,
+-                      spec_version, SD_PHY_SPECv2_00_VERS),
++                      spec_version, SD_PHY_SPECv3_01_VERS),
+     DEFINE_PROP_DRIVE("drive", SDState, blk),
+     /* We do not model the chip select pin, so allow the board to select
+      * whether card should be in SSI or MMC/SD mode.  It is also up to the
 -- 
 2.41.0
 
