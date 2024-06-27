@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3718FC3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 17:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B4C5C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 17:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMshS-00083y-Qc; Thu, 27 Jun 2024 13:14:23 -0400
+	id 1sMsiB-0001rd-PT; Thu, 27 Jun 2024 13:15:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMshR-0007iy-4E
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:14:21 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMshm-0001au-Uc
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:14:45 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMshN-0002mX-MX
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:14:20 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-362f62ae4c5so1270283f8f.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 10:14:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMshl-0002oj-7a
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:14:42 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-36701e6c6e8so1814457f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 10:14:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719508456; x=1720113256; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719508479; x=1720113279; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cc2phwHICPbHNDUMxZA6a+9UcWAynLl1hqKHKReAlY0=;
- b=cgOmooimKXeiKlR21K5iyurxBIgV2vY4l/oK1fIpInjlMZwsv+vc2JfI9bEcCskIHJ
- o/wwdklBfUwhyMBPRq3fLxnHQMJ+cPuJJo3osphY1LEsL9DFKzKq5K5rKmSmvX1iEH3b
- x1Enrb07d0z0hVERp7MErBCVrAfP931efbcZiT5EKqdf1EMwNnZJcbwsU3qdMsYQZOej
- TxNwk6uxmPxhsiVz/zEbr/Vp4jOwYfTfkOiZ4/AKIIYJqpeX/xGUU0xBMVfG6oYbpzgj
- nvoVCx7ik96Fk0aTDD42ECj3085sX/gWbdFqGKoCu72Xr+fvVIa99d3CnDXPl+luaohk
- zL+g==
+ bh=wfOV4Z9kH5/WWEkygPAPJDC+UN3xtUZojvL70U9kebo=;
+ b=wxYUtCb2LKDm0pv3eRppVMyfv3yNHgZJoxvKALbw3Kha7ZwjX8qulUYzwHfd/GETc1
+ fJJiawfM6vj0s3lO1L+6IELvh8wjbdl7bVFddmujg5WIH8gZQFsqWI4/q8wHJnbasthI
+ MwYiohoLgDFVLOM6c3pYJ2O3fjVsH28BroGa1ERcGNvfOp5qHch5YCWgKexgl4Qyd66G
+ xX+om+SeH+tLhRxg9dFcP4EO8wTy4zhoJyV+oMENWloHmKD56IM439mPPPKJiFqM8jbz
+ MdmKZ5rwyno2Kx+/++WTVhcDvzgAp/XJlCU4gUU+JR5GYiC3JCOMRHkz1RZXP7gLS7oz
+ 8NtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719508456; x=1720113256;
+ d=1e100.net; s=20230601; t=1719508479; x=1720113279;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cc2phwHICPbHNDUMxZA6a+9UcWAynLl1hqKHKReAlY0=;
- b=ACTBQWmIxVSWlVWRqr4Qiu8EsGS97YFYEe8Jjt7o6VJBvbpA24iKI+YTh2SJVhP/Io
- Q5DTY3Br0Ui1NfcCQkEtVOCKXaBIxHIrtnqpTpk4/+YPmyu0OZ4zOzRRP6ygGrOkLkpL
- jJXiqrYUeb/KTX3a3BQywEcl1azLqcnCE4xZie82R7oRrbQgJMporfhQ8DxNod4bVbJt
- n5ZJKOxeG0KPGluSfIqNQxajWKzfsk90MVMFbKmh31wn2axC9Sg5hJrB55525TlKKudZ
- XDlxnHyWSR+HwaZK2jMNBrOJM9T8oLYq+1tLFoGQ/0xqOSYWhC9Dm4z7HZxc2uAk+XKD
- C2zg==
-X-Gm-Message-State: AOJu0YxtilqMPPJh0jRCyzFyptODvxEvCyqLEkiRN0Q67lupQloQui5I
- S/0cT2CFUw1Vis4BjjPrpYq++NHPGhyYg8x2Deoo6rUUhMkmy65vZBXwzml3TJ+JlfuazqHuisq
- IDwg=
-X-Google-Smtp-Source: AGHT+IEON9Mfx8bpZHv52+OqFWzTyhKnkksL5/carBrrMOrKME57JHRTsJ+jUlZ9LlDiYkkwC7A6fg==
-X-Received: by 2002:a05:6000:b8c:b0:361:94d9:1e9f with SMTP id
- ffacd0b85a97d-3674176d356mr2473353f8f.7.1719508455735; 
- Thu, 27 Jun 2024 10:14:15 -0700 (PDT)
+ bh=wfOV4Z9kH5/WWEkygPAPJDC+UN3xtUZojvL70U9kebo=;
+ b=LwcjtpmsCT3JGBtAU/uKOpAis4a6PzEtddAwwSbMx+t0dp5Pb/VwtgP/HfxilG/xX5
+ WG296fFTYER1Arz4I8+6SfLdr1KwqLg3eheAKuIb7MBIcRzr+CcBZFfN9mnvmjkM2iFl
+ TmlR+DEiWLYXp3SwaZkWH7A7IPJo9zckBgOWGDHJWi3deR2KEsgEGN/GgsEbGE346Cjv
+ Wg/wRzbFqq6YlbXEzdRwaqWMDxbFhufUQW7AnnUELgZn/zEknRBtAdZgPgp5UjuqUFhl
+ X1AeGhewTowa4jR7Sjwd89KSxZwQseummC8EdwnLwTk2wDFGHgHGrj/Cdlb9CaJZC1ai
+ b+EQ==
+X-Gm-Message-State: AOJu0YysxOeZVZI5wPt6dz6/bbPr1t3hXBjatNt0YEoaerhARBGc1Wdj
+ X9wFBhi7azbemA8cJs+ok9KWbKCZJuXM0yq1env0GvBFaWqKCV+vNM4Zxi529+B5DcmoVLJSyoj
+ 1G4g=
+X-Google-Smtp-Source: AGHT+IGmgLLjOxCbmIOh7IHTnXcb5jlPJ0AMY8vhPwh32Uu0Va8H4ERz/2juGFhU+aAkZYKTzo26BQ==
+X-Received: by 2002:adf:e34e:0:b0:35d:ca63:4e74 with SMTP id
+ ffacd0b85a97d-366e7a64642mr10429990f8f.70.1719508479316; 
+ Thu, 27 Jun 2024 10:14:39 -0700 (PDT)
 Received: from localhost.localdomain (33.red-95-127-46.staticip.rima-tde.net.
  [95.127.46.33]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0c1ab2sm538995e9.47.2024.06.27.10.14.10
+ ffacd0b85a97d-3674357fd08sm2514150f8f.27.2024.06.27.10.14.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 27 Jun 2024 10:14:15 -0700 (PDT)
+ Thu, 27 Jun 2024 10:14:38 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Luc Michel <luc.michel@amd.com>,
@@ -65,24 +65,24 @@ Cc: Joel Stanley <joel@jms.id.au>, Luc Michel <luc.michel@amd.com>,
  Vincent Palatin <vpalatin@chromium.org>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [RFC PATCH 17/19] hw/sd/sdcard: Support boot area in emmc image
-Date: Thu, 27 Jun 2024 19:10:57 +0200
-Message-ID: <20240627171059.84349-18-philmd@linaro.org>
+Subject: [RFC PATCH 19/19] hw/sd/sdcard: Add boot config support
+Date: Thu, 27 Jun 2024 19:10:59 +0200
+Message-ID: <20240627171059.84349-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240627171059.84349-1-philmd@linaro.org>
 References: <20240627171059.84349-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,116 +100,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Joel Stanley <joel@jms.id.au>
 
-This assumes a specially constructed image:
+Introduced "boot-config" property to set CSD 179, the boot config
+register.
 
-  dd if=/dev/zero of=mmc-bootarea.img count=2 bs=1M
-  dd if=u-boot-spl.bin of=mmc-bootarea.img conv=notrunc
-  dd if=u-boot.bin of=mmc-bootarea.img conv=notrunc count=64 bs=1K
-  cat mmc-bootarea.img obmc-phosphor-image.wic > mmc.img
-  truncate --size 16GB mmc.img
-  truncate --size 128MB mmc-bootarea.img
-
-For now this still requires a mtd image to load the SPL:
-
-  qemu-system-arm -M tacoma-bmc -nographic \
-   -global driver=sd-card,property=emmc,value=true \
-   -drive file=mmc.img,if=sd,index=2 \
-   -drive file=mmc-bootarea.img,if=mtd,format=raw
+With this correctly set we can use the enable bit to detect if
+partition support is enabled.
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/sd/sd.h |  1 +
- hw/sd/sd.c         | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+ hw/sd/sd.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
-index d35a839f5e..07435d2e17 100644
---- a/include/hw/sd/sd.h
-+++ b/include/hw/sd/sd.h
-@@ -132,6 +132,7 @@ struct SDCardClass {
-     bool (*get_readonly)(SDState *sd);
-     void (*set_cid)(SDState *sd);
-     void (*set_csd)(SDState *sd, uint64_t size);
-+    uint32_t (*bootpart_offset)(SDState *sd);
- 
-     const struct SDProto *proto;
- };
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index e7d8b9c0fb..2d49be61f6 100644
+index bbf054ea1e..b598974bbf 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -783,6 +783,12 @@ static inline uint64_t sd_addr_to_wpnum(uint64_t addr)
-     return addr >> (HWBLOCK_SHIFT + SECTOR_SHIFT + WPGROUP_SHIFT);
+@@ -129,6 +129,7 @@ struct SDState {
+     uint8_t spec_version;
+     BlockBackend *blk;
+     bool aspeed_emmc_kludge;
++    uint8_t boot_config;
+ 
+     const SDProto *proto;
+ 
+@@ -505,6 +506,8 @@ static void mmc_set_ext_csd(SDState *sd, uint64_t size)
+     sd->ext_csd[159] = 0x00; /* Max enhanced area size */
+     sd->ext_csd[158] = 0x00; /* ... */
+     sd->ext_csd[157] = 0xEC; /* ... */
++
++    sd->ext_csd[EXT_CSD_PART_CONFIG] = sd->boot_config;
  }
  
-+
-+static unsigned sd_boot_capacity_bytes(SDState *sd)
-+{
-+    return sd->ext_csd[EXT_CSD_BOOT_MULT] << 17;
-+}
-+
- static void sd_reset(DeviceState *dev)
+ static void sd_emmc_set_csd(SDState *sd, uint64_t size)
+@@ -1004,8 +1007,14 @@ static uint32_t sd_emmc_bootpart_offset(SDState *sd)
  {
-     SDState *sd = SD_CARD(dev);
-@@ -984,9 +990,40 @@ void sd_set_cb(SDState *sd, qemu_irq readonly, qemu_irq insert)
-     qemu_set_irq(insert, sd->blk ? blk_is_inserted(sd->blk) : 0);
- }
+     unsigned int access = sd->ext_csd[EXT_CSD_PART_CONFIG] &
+         EXT_CSD_PART_CONFIG_ACC_MASK;
++    unsigned int enable = sd->ext_csd[EXT_CSD_PART_CONFIG] &
++         EXT_CSD_PART_CONFIG_EN_MASK;
+     unsigned int boot_capacity = sd_boot_capacity_bytes(sd);
  
-+/*
-+ * This requires a disk image that has two boot partitions inserted at the
-+ * beginning of it. The size of the boot partitions are configured in the
-+ * ext_csd structure, which is hardcoded in qemu. They are currently set to
-+ * 1MB each.
-+ */
-+static uint32_t sd_emmc_bootpart_offset(SDState *sd)
-+{
-+    unsigned int access = sd->ext_csd[EXT_CSD_PART_CONFIG] &
-+        EXT_CSD_PART_CONFIG_ACC_MASK;
-+    unsigned int boot_capacity = sd_boot_capacity_bytes(sd);
-+
-+    switch (access) {
-+    case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
-+        return boot_capacity * 2;
-+    case EXT_CSD_PART_CONFIG_ACC_BOOT0:
++    if (!enable) {
 +        return 0;
-+    case EXT_CSD_PART_CONFIG_ACC_BOOT0 + 1:
-+        return boot_capacity * 1;
-+    default:
-+         g_assert_not_reached();
 +    }
-+}
 +
-+static uint32_t sd_bootpart_offset(SDState *sd)
-+{
-+    SDCardClass *sc = SD_CARD_GET_CLASS(sd);
-+    return sc->bootpart_offset ? sc->bootpart_offset(sd) : 0;
-+}
-+
- static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
- {
-     trace_sdcard_read_block(addr, len);
-+    addr += sd_bootpart_offset(sd);
-     if (!sd->blk || blk_pread(sd->blk, addr, len, sd->data, 0) < 0) {
-         fprintf(stderr, "sd_blk_read: read error on host side\n");
-     }
-@@ -995,6 +1032,7 @@ static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
- static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
- {
-     trace_sdcard_write_block(addr, len);
-+    addr += sd_bootpart_offset(sd);
-     if (!sd->blk || blk_pwrite(sd->blk, addr, len, sd->data, 0) < 0) {
-         fprintf(stderr, "sd_blk_write: write error on host side\n");
-     }
-@@ -2833,6 +2871,7 @@ static void emmc_class_init(ObjectClass *klass, void *data)
-     dc->realize = emmc_realize;
-     sc->proto = &sd_proto_emmc;
-     sc->set_csd = sd_emmc_set_csd;
-+    sc->bootpart_offset = sd_emmc_bootpart_offset;
- }
+     switch (access) {
+     case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
+         return boot_capacity * 2;
+@@ -2808,6 +2817,7 @@ static Property sd_properties[] = {
+      * whether card should be in SSI or MMC/SD mode.  It is also up to the
+      * board to ensure that ssi transfers only occur when the chip select
+      * is asserted.  */
++    DEFINE_PROP_UINT8("boot-config", SDState, boot_config, 0x0),
+     DEFINE_PROP_END_OF_LIST()
+ };
  
- static const TypeInfo sd_types[] = {
 -- 
 2.41.0
 
