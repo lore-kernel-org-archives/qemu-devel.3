@@ -4,96 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4C15C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 14:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69DF1C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 14:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMpi2-0000Uv-1n; Thu, 27 Jun 2024 10:02:46 -0400
+	id 1sMplz-000210-Ta; Thu, 27 Jun 2024 10:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMphz-0000Tw-Pj
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:02:43 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMphy-0002mN-6k
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:02:43 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2ec5fad1984so68188961fa.0
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:02:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719496960; x=1720101760; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LAK2MWgc/ykY00o71q7fpH3L0gb+GjbMKTYZI7bbceg=;
- b=kjb3Kp0fPnzH86gbsSMpTLGWSHcL2pev0rCuH0MzTxyXeT83gU15uaVaWWz3QQ1PPI
- iHczYp2oBDah6/iyyrElVMKcch9kX/JDLvHwC795qDdPsbZolWRYQwNYfvLx65Fse+3+
- OVbJ5ciIfhVpNgYFBtJrklyyUPBGb7L8+5kBu7+mnUbO5APeRhapk74RaMv2CFUJumv2
- 7OHzgx/ZXw6zu4e8AdPpVG2f1B6GBWVDUlPRhQHpAdi2aTpBVuHdSAVyi3J9yM7QkuuI
- DWsRRtbCNKmswbeg9pxsgY3pfDU3+v13H4xxG5KuWssJkUUQtrBDG1Lm4Fd3T97yy/YU
- gD8w==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sMplt-0001yV-2S
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:06:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sMplo-0003gH-Cv
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:06:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719497199;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dM6O63wcC2cMMhdnQlAbeBUAGlSZvYq8QRIEZnd0eDU=;
+ b=BAU6OfTxuA5cwF/Q9TJe+A/uU2MOICiq1/+//XkEvyYzUSBq7VlElHzm77ondyooI/OK9R
+ PCGNVT6HnTyIRIUdYBiAIjcXKCPXMMS1aS3ycBCoEdVQfLcT1Twk4n3D9DODgxs4tjBv6F
+ D+sFZB0DIb2qg0jQwcSp40x3wiDgrrE=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-275-ddf_m7o_MnuK1zfLHctLGg-1; Thu, 27 Jun 2024 10:06:37 -0400
+X-MC-Unique: ddf_m7o_MnuK1zfLHctLGg-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-57c93227bbeso1060430a12.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:06:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719496960; x=1720101760;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LAK2MWgc/ykY00o71q7fpH3L0gb+GjbMKTYZI7bbceg=;
- b=qU+6WwRdEdtKui+ZOSFhAzSkL+J6tZ/dGq78q3fDYFIJivI8BIeeaNsQGjncfLwOFP
- wy1Vp1x/GqP9hZhAjJAXFRw3MbCRAhKkrPv7ANqBxC45ZFpBppWGT/K8ENpljkXZmPlf
- AxCwV9yCm0WLSPUiVdD3Om+fa34fgSYrl2+AvPoacLq8WOi5zquFJRWK63hMEx6D9hvE
- o5qJXVO0IqesjPHpjeTYW+rOkU8hRTuMqA3J/ldBFstqko33se78qPvTmf2St1fXj/Az
- Ba4wfXiapaV3C6SKlWeOvmYyIhbTtPrFFG/vvqVN5A+ud27HwSq0UnseMhtoKJnRLNSZ
- wOEQ==
-X-Gm-Message-State: AOJu0YylGzHYQNlKhWKFazJa3WknB81WJ0raZO59XR2MLJ793kje6+uw
- xCl22mEv35Hlzjfem8fpA4/4iVpGe76ibS5yYAD0LlaIfgeUQPHKVdpVAurpXHo=
-X-Google-Smtp-Source: AGHT+IH3xWCTvER4HAhwRdK9XEPdCgyFO8NzgMmoXmMLkpjN11BgH/QgfksjY+F3XHHV93jUSGBriw==
-X-Received: by 2002:a2e:8752:0:b0:2ec:4d91:5156 with SMTP id
- 38308e7fff4ca-2ec5b31d14bmr98275011fa.28.1719496958158; 
- Thu, 27 Jun 2024 07:02:38 -0700 (PDT)
-Received: from [192.168.23.175] (227.red-95-127-45.staticip.rima-tde.net.
- [95.127.45.227]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4249b4233b3sm64536315e9.0.2024.06.27.07.02.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 07:02:37 -0700 (PDT)
-Message-ID: <4b713ad2-1f92-49d1-88b9-6185a1b50062@linaro.org>
-Date: Thu, 27 Jun 2024 16:02:32 +0200
+ d=1e100.net; s=20230601; t=1719497195; x=1720101995;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dM6O63wcC2cMMhdnQlAbeBUAGlSZvYq8QRIEZnd0eDU=;
+ b=f0qNiRLp7pNVDnObYDK8S2n00xidQQu4Fg5WQsD1abXmOAi3KB3kD6GxTmdJTxqPh8
+ kaO1PmO9V0viSy8QxEWJh9qjgMMwqHjdYQmJVmqdeSN/ycqJdhpQ27Um9483QIfBAyf9
+ RkGlyCXtYQzIYEDt1aaj0lYaQwrAX1nAsjl6lH+k74uL99Kd4SOD7CJv3r8p+lu9mQQr
+ a0BSnL5QpAuUQ/jrQ6x99lJaJQfrCcROCqkD34xwrm2ksPHcq7HsP8wDRBlilh4Qp/zH
+ hIVhnCgav+cWil7CGzMLlXTe/cFWiPTKh4JfO1834ZffR5ALtsshfVdA1RvfZYT6RbVn
+ 03vA==
+X-Gm-Message-State: AOJu0YzvKxHBNlauUSCfVB35vsWtIP4HkUYZQYFoi3/jM5FFHcQyK7bT
+ zkfwNPpQV3R49km6R8/kf4h/fC4hx081ZqKsUfI0fwcz0AaQPyfIJdG4m9s8eRHjoHLvPaelsmb
+ 5EDjq+Dg0q28+e72cDhHsugdvKQ6rWY1AtjAjYVFegdfBkwTgUPeM9so1fudId8ZIdYG0JAXm9V
+ f6oSCwiMQ4AqnwuI1NDgvkD83rIQUkdGBtXXW8
+X-Received: by 2002:a50:ab1d:0:b0:57d:4d12:61bd with SMTP id
+ 4fb4d7f45d1cf-57d4d1264b8mr8615784a12.37.1719497194416; 
+ Thu, 27 Jun 2024 07:06:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEu5gxcoCnHti2Yx+Utb4tAhIx1qwVFo88w7kRp3p3VqxlDk0YrMqeQEfTFx6tQbsdWKqLy+A==
+X-Received: by 2002:a50:ab1d:0:b0:57d:4d12:61bd with SMTP id
+ 4fb4d7f45d1cf-57d4d1264b8mr8615746a12.37.1719497193723; 
+ Thu, 27 Jun 2024 07:06:33 -0700 (PDT)
+Received: from avogadro.local ([151.48.235.205])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-584d278167esm922397a12.73.2024.06.27.07.06.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 27 Jun 2024 07:06:32 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+	John Allen <john.allen@amd.com>
+Subject: [PATCH 1/2] target/i386: pass X86CPU to
+ x86_cpu_get_supported_feature_word
+Date: Thu, 27 Jun 2024 16:06:27 +0200
+Message-ID: <20240627140628.1025317-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240627140628.1025317-1-pbonzini@redhat.com>
+References: <20240627140628.1025317-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/14] ppc/vof: Fix unaligned FDT property access
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240626-san-v1-0-f3cc42302189@daynix.com>
- <20240626-san-v1-5-f3cc42302189@daynix.com>
- <efdfa803-775c-4aa2-b7c4-f016dafe9a88@linaro.org>
- <9fdabbde-1ae8-4f78-af20-b4383b7705fc@daynix.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9fdabbde-1ae8-4f78-af20-b4383b7705fc@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,37 +104,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/6/24 15:12, Akihiko Odaki wrote:
-> On 2024/06/26 21:03, Philippe Mathieu-Daudé wrote:
->> On 26/6/24 13:06, Akihiko Odaki wrote:
->>> FDT properties are aligned by 4 bytes, not 8 bytes.
->>>
->>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> ---
->>>   hw/ppc/vof.c | 2 +-
->>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
->>> index e3b430a81f4f..b5b6514d79fc 100644
->>> --- a/hw/ppc/vof.c
->>> +++ b/hw/ppc/vof.c
->>> @@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *fdt, 
->>> GArray *claimed, uint64_t base)
->>>       mem0_reg = fdt_getprop(fdt, offset, "reg", &proplen);
->>>       g_assert(mem0_reg && proplen == sizeof(uint32_t) * (ac + sc));
->>>       if (sc == 2) {
->>> -        mem0_end = be64_to_cpu(*(uint64_t *)(mem0_reg + 
->>> sizeof(uint32_t) * ac));
->>> +        mem0_end = ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
->>>       } else {
->>>           mem0_end = be32_to_cpu(*(uint32_t *)(mem0_reg + 
->>> sizeof(uint32_t) * ac));
->>
->> OK but please keep API uses consistent, so convert other uses please.
-> 
-> This is the only unaligned access.
+This allows modifying the bits in "-cpu max"/"-cpu host" depending on
+the guest CPU vendor (which, at least by default, is the host vendor in
+the case of KVM).
 
-What I mean with consistent API use is either use the be64_to_cpu and
-be32_to_cpu API, or ldq_be_p and ldl_be_p. A mix of both makes review
-more confusing.
+For example, machine check architecture differs between Intel and AMD,
+and bits from AMD should be dropped when configuring the guest for
+an Intel model.
+
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: John Allen <john.allen@amd.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/cpu.h         |  3 +--
+ target/i386/cpu.c         | 13 ++++++-------
+ target/i386/kvm/kvm-cpu.c |  2 +-
+ 3 files changed, 8 insertions(+), 10 deletions(-)
+
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 29daf370485..9bea7142bf4 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -666,8 +666,7 @@ typedef enum FeatureWord {
+ } FeatureWord;
+ 
+ typedef uint64_t FeatureWordArray[FEATURE_WORDS];
+-uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+-                                            bool migratable_only);
++uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ 
+ /* cpuid_features bits */
+ #define CPUID_FP87 (1U << 0)
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 4c2e6f3a71e..deb58670651 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6035,8 +6035,7 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+ 
+ #endif /* !CONFIG_USER_ONLY */
+ 
+-uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+-                                            bool migratable_only)
++uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+ {
+     FeatureWordInfo *wi = &feature_word_info[w];
+     uint64_t r = 0;
+@@ -6076,9 +6075,9 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+             ? CPUID_EXT2_LM & ~CPUID_EXT2_KERNEL_FEATURES
+             : CPUID_EXT2_LM;
+         r &= ~unavail;
+-    }
++        break;
+ #endif
+-    if (migratable_only) {
++    if (cpu && cpu->migratable) {
+         r &= x86_cpu_get_migratable_flags(w);
+     }
+     return r;
+@@ -7371,7 +7370,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+              * by the user.
+              */
+             env->features[w] |=
+-                x86_cpu_get_supported_feature_word(w, cpu->migratable) &
++                x86_cpu_get_supported_feature_word(cpu, w) &
+                 ~env->user_features[w] &
+                 ~feature_word_info[w].no_autoenable_flags;
+         }
+@@ -7497,7 +7496,7 @@ static void x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+ 
+     for (w = 0; w < FEATURE_WORDS; w++) {
+         uint64_t host_feat =
+-            x86_cpu_get_supported_feature_word(w, false);
++            x86_cpu_get_supported_feature_word(NULL, w);
+         uint64_t requested_features = env->features[w];
+         uint64_t unavailable_features = requested_features & ~host_feat;
+         mark_unavailable_features(cpu, w, unavailable_features, prefix);
+@@ -7617,7 +7616,7 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+         env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_LBR_FMT;
+     if (requested_lbr_fmt && kvm_enabled()) {
+         uint64_t host_perf_cap =
+-            x86_cpu_get_supported_feature_word(FEAT_PERF_CAPABILITIES, false);
++            x86_cpu_get_supported_feature_word(NULL, FEAT_PERF_CAPABILITIES);
+         unsigned host_lbr_fmt = host_perf_cap & PERF_CAP_LBR_FMT;
+ 
+         if (!cpu->enable_pmu) {
+diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
+index f9b99b5f50d..b2735d6efee 100644
+--- a/target/i386/kvm/kvm-cpu.c
++++ b/target/i386/kvm/kvm-cpu.c
+@@ -136,7 +136,7 @@ static void kvm_cpu_xsave_init(void)
+         if (!esa->size) {
+             continue;
+         }
+-        if ((x86_cpu_get_supported_feature_word(esa->feature, false) & esa->bits)
++        if ((x86_cpu_get_supported_feature_word(NULL, esa->feature) & esa->bits)
+             != esa->bits) {
+             continue;
+         }
+-- 
+2.45.2
+
 
