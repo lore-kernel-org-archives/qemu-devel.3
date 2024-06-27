@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B4C5C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 17:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7D34C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 17:16:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMsiB-0001rd-PT; Thu, 27 Jun 2024 13:15:08 -0400
+	id 1sMsjH-0003OD-Ux; Thu, 27 Jun 2024 13:16:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMshm-0001au-Uc
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:14:45 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMshl-0002oj-7a
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:14:42 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-36701e6c6e8so1814457f8f.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 10:14:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719508479; x=1720113279; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wfOV4Z9kH5/WWEkygPAPJDC+UN3xtUZojvL70U9kebo=;
- b=wxYUtCb2LKDm0pv3eRppVMyfv3yNHgZJoxvKALbw3Kha7ZwjX8qulUYzwHfd/GETc1
- fJJiawfM6vj0s3lO1L+6IELvh8wjbdl7bVFddmujg5WIH8gZQFsqWI4/q8wHJnbasthI
- MwYiohoLgDFVLOM6c3pYJ2O3fjVsH28BroGa1ERcGNvfOp5qHch5YCWgKexgl4Qyd66G
- xX+om+SeH+tLhRxg9dFcP4EO8wTy4zhoJyV+oMENWloHmKD56IM439mPPPKJiFqM8jbz
- MdmKZ5rwyno2Kx+/++WTVhcDvzgAp/XJlCU4gUU+JR5GYiC3JCOMRHkz1RZXP7gLS7oz
- 8NtQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sMsjF-0003Lz-Ri
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:16:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sMsjA-00039s-SK
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:16:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719508567;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=64uZB/zO7pjgcAyDtcIrLSMXEOiaMktvmXG18MrG3ys=;
+ b=I2GkTtvLInXFEF6ervNPtlkPK4Jc6e/DwEbBBpsxMgwFJZNvgS68ALvZhxnYVA6AEOaKpU
+ a1iINAaqQUAxH+6yqnSa4Pee13JzVH//CpihfBRD17hO4xG1Xfyd/tvUJNDkEajy0sz1u6
+ jr1VFvjN2Kw2v4qqB2A3ehN3iI3uWOw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-147-6_nZlrx4NIOoOA72MthHYQ-1; Thu, 27 Jun 2024 13:16:03 -0400
+X-MC-Unique: 6_nZlrx4NIOoOA72MthHYQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3634a25a7beso4739525f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 10:16:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719508479; x=1720113279;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1719508561; x=1720113361;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wfOV4Z9kH5/WWEkygPAPJDC+UN3xtUZojvL70U9kebo=;
- b=LwcjtpmsCT3JGBtAU/uKOpAis4a6PzEtddAwwSbMx+t0dp5Pb/VwtgP/HfxilG/xX5
- WG296fFTYER1Arz4I8+6SfLdr1KwqLg3eheAKuIb7MBIcRzr+CcBZFfN9mnvmjkM2iFl
- TmlR+DEiWLYXp3SwaZkWH7A7IPJo9zckBgOWGDHJWi3deR2KEsgEGN/GgsEbGE346Cjv
- Wg/wRzbFqq6YlbXEzdRwaqWMDxbFhufUQW7AnnUELgZn/zEknRBtAdZgPgp5UjuqUFhl
- X1AeGhewTowa4jR7Sjwd89KSxZwQseummC8EdwnLwTk2wDFGHgHGrj/Cdlb9CaJZC1ai
- b+EQ==
-X-Gm-Message-State: AOJu0YysxOeZVZI5wPt6dz6/bbPr1t3hXBjatNt0YEoaerhARBGc1Wdj
- X9wFBhi7azbemA8cJs+ok9KWbKCZJuXM0yq1env0GvBFaWqKCV+vNM4Zxi529+B5DcmoVLJSyoj
- 1G4g=
-X-Google-Smtp-Source: AGHT+IGmgLLjOxCbmIOh7IHTnXcb5jlPJ0AMY8vhPwh32Uu0Va8H4ERz/2juGFhU+aAkZYKTzo26BQ==
-X-Received: by 2002:adf:e34e:0:b0:35d:ca63:4e74 with SMTP id
- ffacd0b85a97d-366e7a64642mr10429990f8f.70.1719508479316; 
- Thu, 27 Jun 2024 10:14:39 -0700 (PDT)
-Received: from localhost.localdomain (33.red-95-127-46.staticip.rima-tde.net.
- [95.127.46.33]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3674357fd08sm2514150f8f.27.2024.06.27.10.14.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 27 Jun 2024 10:14:38 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>, Luc Michel <luc.michel@amd.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>, qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Vincent Palatin <vpalatin@chromium.org>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Bin Meng <bmeng.cn@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [RFC PATCH 19/19] hw/sd/sdcard: Add boot config support
-Date: Thu, 27 Jun 2024 19:10:59 +0200
-Message-ID: <20240627171059.84349-20-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240627171059.84349-1-philmd@linaro.org>
-References: <20240627171059.84349-1-philmd@linaro.org>
+ bh=64uZB/zO7pjgcAyDtcIrLSMXEOiaMktvmXG18MrG3ys=;
+ b=Vs96Wz5Ldhx6/Fr81hGA49luuZ/HG8cApnlSTdOklXUH24P9iV2vI1oMVerIq1iTO0
+ 8Wi68KlqCzGLCYECyl0muqCOK9HbyCypYXlhGeHF5kcRQg7wTCwY0b0Rxij9bVTNsYzN
+ jQZxEHlLpuTjCY+tm8ncYKoKXBkubTrNTjLPMw8s+XKtJXuWJ8PB6yka2NfZtSO8o1Vm
+ xn8AsiNpHUy5OSdoft8qz6oCIMK0lReT3ebrnvzj+QlXzzKsKW0g6ry/ymCN9D6gPRXT
+ hzAkpYG8jhLtqLnq9v7zrVOx4lw3kOOvx3HGSNKDVkVoF8gFj/m012rZyBV5dkScNQg6
+ QHUw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXMJv1f8pWyH2PS+wSyJgahjNB/WKi/HeitkkEB6naEQIBWsYYLXH5bLg/pLPOhAntrtbFV2z7b6701VJR1tKCCy6SrB5o=
+X-Gm-Message-State: AOJu0YzYHvOgiRawK5f0OtXlZA6ppm5jkWP0ZbloBdV3JY9NUuOi1vaD
+ d4RI45GkD0OJULte077WhOHFXsV83PsONFWxu/hfgl+dIRNxiVjVi3GVVWXgs2x6RqMV+WDcysm
+ 6WHcJMdEJMpjqN8ud6F0MV6VWrBiPkZ/AM69S6zg2Y3HiTtbNT5GbVkTKPb5tfAaezOfed7FmW7
+ bDw1j+kAegWXRCOSGNvB+iAqF6UUZWK2B6DfK02A==
+X-Received: by 2002:a05:6000:144b:b0:366:f8e7:d898 with SMTP id
+ ffacd0b85a97d-366f8e7d95dmr9437828f8f.50.1719508561109; 
+ Thu, 27 Jun 2024 10:16:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5/7+zA9E7Yv93W2aG8Ez5ULkcmbIyKBQ8AAcIV4MjVhkSCgj6cAO5zWwFpS//lsCA4Z8/uQQXpYxZK97wQ24=
+X-Received: by 2002:a05:6000:144b:b0:366:f8e7:d898 with SMTP id
+ ffacd0b85a97d-366f8e7d95dmr9437816f8f.50.1719508560769; Thu, 27 Jun 2024
+ 10:16:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <ad0740c5-9bc2-443c-9caa-a243b3a29108@redhat.com>
+ <20240627003134.3447175-1-rkir@google.com>
+ <CABgObfajkBU9-aGQcDGf6taUGwZOG=O5sewzc1HjCWTb5cVA1A@mail.gmail.com>
+ <CAOGAQepLGTY-92So1arNZWjg9m+HZ8AjZ28Gsscm2ai5sj1AMQ@mail.gmail.com>
+In-Reply-To: <CAOGAQepLGTY-92So1arNZWjg9m+HZ8AjZ28Gsscm2ai5sj1AMQ@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 27 Jun 2024 19:15:49 +0200
+Message-ID: <CABgObfaBjneGy__o_aABdm+60wsg=rxLmgZLthwCoezwnH34ZQ@mail.gmail.com>
+Subject: Re: [PATCH v3] timer: Fix a race condition between timer's callback
+ and destroying code
+To: Roman Kiryanov <rkir@google.com>
+Cc: jansene@google.com, jpcottin@google.com, mett@google.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,66 +103,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+On Thu, Jun 27, 2024 at 6:12=E2=80=AFPM Roman Kiryanov <rkir@google.com> wr=
+ote:
+>
+> On Thu, Jun 27, 2024 at 6:27=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.co=
+m> wrote:
+> >
+> > On Thu, Jun 27, 2024 at 2:32=E2=80=AFAM Roman Kiryanov <rkir@google.com=
+> wrote:
+> > > +        if (qatomic_read(&ts->cb_running)) {
+> > > +            qemu_event_wait(&timer_list->timers_done_ev);
+> > > +        }
+> >
+> > qemu_event_wait() already has the right atomic magic, and
+> > ts->cb_running is both redundant (in general), and I think racy (as
+> > implemented in this patch).
+>
+> I added cb_running to avoid waiting for timers_done_ev if we know our
+> cb is done.
 
-Introduced "boot-config" property to set CSD 179, the boot config
-register.
+Yes, but it's very tricky. Assuming we want to fix it in the timer
+core, the QemuEvent should be enough, no need to optimize it. On the
+other hand, I'm still worried about deadlocks (more below).
 
-With this correctly set we can use the enable bit to detect if
-partition support is enabled.
+> > But especially, you haven't justified in the commit message _why_ you
+> > need this.
+>
+> I mentioned the problem of cleanup racing with the timer's callback funct=
+ion
+> in the current shape of QEMU.
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/sd/sd.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Yes, but it was not clear what are the involved threads. It is clear
+now that you have a function in a separate thread, creating a timer in
+the main QEMU event loop.
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index bbf054ea1e..b598974bbf 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -129,6 +129,7 @@ struct SDState {
-     uint8_t spec_version;
-     BlockBackend *blk;
-     bool aspeed_emmc_kludge;
-+    uint8_t boot_config;
- 
-     const SDProto *proto;
- 
-@@ -505,6 +506,8 @@ static void mmc_set_ext_csd(SDState *sd, uint64_t size)
-     sd->ext_csd[159] = 0x00; /* Max enhanced area size */
-     sd->ext_csd[158] = 0x00; /* ... */
-     sd->ext_csd[157] = 0xEC; /* ... */
-+
-+    sd->ext_csd[EXT_CSD_PART_CONFIG] = sd->boot_config;
- }
- 
- static void sd_emmc_set_csd(SDState *sd, uint64_t size)
-@@ -1004,8 +1007,14 @@ static uint32_t sd_emmc_bootpart_offset(SDState *sd)
- {
-     unsigned int access = sd->ext_csd[EXT_CSD_PART_CONFIG] &
-         EXT_CSD_PART_CONFIG_ACC_MASK;
-+    unsigned int enable = sd->ext_csd[EXT_CSD_PART_CONFIG] &
-+         EXT_CSD_PART_CONFIG_EN_MASK;
-     unsigned int boot_capacity = sd_boot_capacity_bytes(sd);
- 
-+    if (!enable) {
-+        return 0;
-+    }
-+
-     switch (access) {
-     case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
-         return boot_capacity * 2;
-@@ -2808,6 +2817,7 @@ static Property sd_properties[] = {
-      * whether card should be in SSI or MMC/SD mode.  It is also up to the
-      * board to ensure that ssi transfers only occur when the chip select
-      * is asserted.  */
-+    DEFINE_PROP_UINT8("boot-config", SDState, boot_config, 0x0),
-     DEFINE_PROP_END_OF_LIST()
- };
- 
--- 
-2.41.0
+> > using
+> > aio_bh_schedule_oneshot() or aio_wait_bh_oneshot() to synchronize
+> > everything with the AioContext thread seems like a superior solution
+> > to me.
+>
+> Could you please elaborate? The problem we want to solve is this:
+>
+> void myThreadFunc() {
+>     CallbackState callbackState;
+>     QEMUTimer timer;
+>
+>     timer_init(&timer, myClockType, myScale, &myTimerCallbackFunc,
+> &callbackState);
+>     ...
+>     timer_del(&timer);
+> }
+>
+> Currently, myTimerCallbackFunc could fire after myThreadFunc exits
+> (if timer_del runs between qemu_mutex_unlock and cb(opaque) in
+> timerlist_run_timers) and callbackState gets destroyed.
+
+Ok, got it now. I agree that qemu_event_wait() is safe for you here
+because you are in a completely separate thread. But I'm worried that
+it causes deadlocks in QEMU where the timer callback and the timer_del
+run in the same thread.
+
+I think the easiest options would be:
+
+1) if possible, allocate the timer and the callbackState statically in
+the device.
+
+2) use "aio_wait_bh_oneshot(qemu_get_aio_context(), [](void
+*opaque){}, NULL);" after timer_del(). You can also put the timer and
+the callbackState in a RAII wrapper, so that aio_wait_bh_oneshot() is
+executed when the RAII wrapper is destructed
+
+Another thing that you could do is to use a shared_ptr<> for the
+timer+callbackState combo, and pass a weak_ptr<> to the timer. Then:
+
+- at the beginning of the timer, you upgrade the weak_ptr with lock()
+and if it fails, return
+
+- at the end of myThreadfunc, you destruct the shared_ptr before
+deleting the timer.
+
+I'm not sure how you'd pass the weak_ptr/shared_ptr to a callback
+(Rust has Weak::into_raw/Weak::from_raw, but I don't know C++ well
+enough). That may be overkill.
+
+Paolo
 
 
