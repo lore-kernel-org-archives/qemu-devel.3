@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D57DC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A06C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMpdy-0002T5-D4; Thu, 27 Jun 2024 09:58:34 -0400
+	id 1sMpds-0002LW-6l; Thu, 27 Jun 2024 09:58:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpdx-0002Rs-AS
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:58:33 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sMpdp-0002J3-DO
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:58:25 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpds-0007sq-PW
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:58:33 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1f480624d0fso62760185ad.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:58:28 -0700 (PDT)
+ id 1sMpdm-0007py-6A
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:58:24 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1faad409ca7so4349265ad.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:58:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719496707; x=1720101507;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719496701; x=1720101501;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=heud5oPL9PguF+0Dl89or/td6O7yLCDZcvUAaJnUzns=;
- b=I1WQV2Z7/+iHdYpOmWF4r/sowSnXcCTZakDB7UKyj36IIPDZJ7zLPZS0aYZS8pV5y/
- sNQW1QuyLT3ENNuRme/oE1EvzdDOWr8o75Du0ZEcK/dx+SJYb6+NY4WmH0Zc6oTvQnw0
- 7duVc7p+UDn3v9YHCNsiM/BRxfsQOQvRjZu2T4OeApODY5j5oGVbNOIqVV60QtW98vEF
- o1sW+mHgTXk28qjvuy02oJ5QSrpjQXkB0bcivEt3er/LYjFyOQDCI71nqgv9+2QhnGC+
- A6Il6Bop288gW44fS/qZu4JQiNGFhvgGj2JcLt285D6QnFBX7w0TZnpUJWglkUrVLTsQ
- 6jlw==
+ :reply-to; bh=tmHLAd4iwYsP/x6+8JTBgWg+UXfKosXtWEII2F/7Uyk=;
+ b=HkazcU3LoSurnnBG5f+arNn5SW9rNbM4LT1qx0ibDrAxMekdQE2RueAaVxt8tw7X76
+ J9c2euN8tvxaV19SAUFMoYnzKyj2td/WqGOH8g8Q7nr7uz9f10pwmf6CGbLoQhUyJtYA
+ HpTwjHqyIxVXnQikGR8h0Dk4NEhVbmIYvZAEeC23GJ+G42pUcKoFv2pTnHwk9o8SAQdl
+ EL8OiedkLlvMHf5yP1MGiUVR2A/LcLnX9v7seLsVroYNsgYDQVeZqCzqOgxhfySKlDJL
+ TQ4a8fOWb9CPtzWofYUUspRISR0jMZWarqbge9pe2jW4K/TtXli4RukYzEK/AorlcDpg
+ ZdvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719496707; x=1720101507;
+ d=1e100.net; s=20230601; t=1719496701; x=1720101501;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=heud5oPL9PguF+0Dl89or/td6O7yLCDZcvUAaJnUzns=;
- b=F9IbtfgtnKOwafFKwpt8F9erFpHXXV8ha6e6LgMNTeCmdFsCWODRRmzl+Gm3noFRBL
- k9cw4m2gEFUK+6GtBXb/eeV72MQV3AT8La8KGgehQSHucr2UZ/iKS6/eq2d/EvEIkW0T
- pQ8gMrDT+yhBScfnk9nuMc9nqqze0hzxP55ujgsIKz74p/lhWlG9BcioauuSXvhTQIpF
- OZUu5KBgFrDiKmqe0/O3R3fEqk7UOUheucMqb8AfPbThwpI3Ux+ttTas80+Fnr5eH0dn
- la4rgEHeU9RjYLdMK1EDFScPYTS/k8FAg5LFRy0LcC7EeVfua3f/ukW367BpUqySTLL3
- +AIA==
+ bh=tmHLAd4iwYsP/x6+8JTBgWg+UXfKosXtWEII2F/7Uyk=;
+ b=f0WuSU6hHhIB5VOe/TEXPBVHqLq4URz09iWJdE678vuu7L56jgaPOVp1anRoD/k4Pe
+ rPpdRNLScUCjMTaPeaKX5vnxwLyxspfXDcGBIuG9iLLofDxp2VwXedPXBNNPXdkonozq
+ aexBVT0xJiq1q3skzZk3BdiYP1oxai4q2LWmvoz1TQyQX7EB+jOB8EneeXpcHOgk6dPb
+ eMB0YmqVZyC0AtCyfpxsiwPUokAl2ofIuREUwBPZHvufOFWfsrcIik0q8ynyBCg3jdBC
+ KbeqX2hD5sj0DyYIuHdvMf1cvZd/3g+W5HxzKZmnGHzQl7F5OcQ5J8j7URop2kD3qukF
+ 8pZA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU8BkvsAFmc8sok+zIliEP4bQVPfQYaKybeka7mPaYMpa2aaBAeSxbbj2KxwQHnxRj15wYONJWsaBppTwmaxwHPkMMZiVk=
-X-Gm-Message-State: AOJu0YxphL4MaTcu0ZVloigwMpFq7dvQ4SfGxWHN55Aep22oE1/rnYeF
- 1YYJwCBZVcXg4Fzktu5VMVoutzbyD8IYq7B++93mOpyOoYo3fU2Van/P+hPr49c=
-X-Google-Smtp-Source: AGHT+IGon+Kh3oEuD1ex29QX/ojEPrLpLRJrh9wy0wfsAUnKEz9YFU2FzV3on1LO4wXqU1vRQAiMJQ==
-X-Received: by 2002:a17:902:d505:b0:1fa:ac73:ca2d with SMTP id
- d9443c01a7336-1faac73cb78mr15108605ad.11.1719496707334; 
- Thu, 27 Jun 2024 06:58:27 -0700 (PDT)
+ AJvYcCUfT565JOJecdYjl7JXpKXvMD7OAEKVf+HasjiCeRptyyrgCjj07RDAZPoox9F2OKQvZe4pZcjwtAu/19wGUX9nmJ82/b0=
+X-Gm-Message-State: AOJu0YwQ8a8KAypg5qyJJoXV++74AoWKwP7+8Vd6/3b8yChnec4v1Rup
+ /bAagjEEttZARY0O3WJoPTYSHw2+Y+SPNYRSHUeNnzU7CEfCmy85iU3+Y0Kb2Ww=
+X-Google-Smtp-Source: AGHT+IGeURGVHdKCNIAuCEg1i4vW6FoDiAihGtDvnSSRW1/TKoF3Fw3lq6S6cNqJp7BXjwkGaQ6Rtw==
+X-Received: by 2002:a17:903:1110:b0:1fa:918e:ec2 with SMTP id
+ d9443c01a7336-1fa918e10f4mr64242515ad.57.1719496700795; 
+ Thu, 27 Jun 2024 06:58:20 -0700 (PDT)
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1faac8f25a1sm13532155ad.73.2024.06.27.06.58.25
+ d9443c01a7336-1faac997f0dsm13461055ad.219.2024.06.27.06.58.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 06:58:27 -0700 (PDT)
+ Thu, 27 Jun 2024 06:58:20 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 27 Jun 2024 22:58:05 +0900
-Subject: [PATCH v2 4/6] tests/tcg/aarch64: Fix irg operand type
+Date: Thu, 27 Jun 2024 22:58:03 +0900
+Subject: [PATCH v2 2/6] tests/tcg/aarch64: Fix test architecture specification
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240627-tcg-v2-4-1690a813348e@daynix.com>
+Message-Id: <20240627-tcg-v2-2-1690a813348e@daynix.com>
 References: <20240627-tcg-v2-0-1690a813348e@daynix.com>
 In-Reply-To: <20240627-tcg-v2-0-1690a813348e@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
@@ -75,8 +75,8 @@ To: Peter Maydell <peter.maydell@linaro.org>,
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62b.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,27 +98,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-irg expects 64-bit integers. Passing a 32-bit integer results in
-compilation failure with clang version 18.1.6.
+sme-smopa-2.c requires sme-i16i64 but the compiler option used not to
+specify it. Instead, the extension was specified with the inline
+assembly, resulting in mixing assembly code targeting sme-i1664 and C
+code that does not target sme-i1664.
+
+clang version 18.1.6 does not support such mixing so properly specify
+the extension with the compiler option instead.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- tests/tcg/aarch64/mte-1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/tcg/aarch64/sme-smopa-2.c   |  2 +-
+ tests/tcg/aarch64/Makefile.target | 11 +++++++++--
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/tests/tcg/aarch64/mte-1.c b/tests/tcg/aarch64/mte-1.c
-index 88dcd617addc..146cad4a0499 100644
---- a/tests/tcg/aarch64/mte-1.c
-+++ b/tests/tcg/aarch64/mte-1.c
-@@ -15,7 +15,7 @@ int main(int ac, char **av)
-     enable_mte(PR_MTE_TCF_NONE);
-     p0 = alloc_mte_mem(sizeof(*p0));
+diff --git a/tests/tcg/aarch64/sme-smopa-2.c b/tests/tcg/aarch64/sme-smopa-2.c
+index c9f48c3bfca2..2c9707065992 100644
+--- a/tests/tcg/aarch64/sme-smopa-2.c
++++ b/tests/tcg/aarch64/sme-smopa-2.c
+@@ -14,7 +14,7 @@ int main()
+     long svl;
  
--    asm("irg %0,%1,%2" : "=r"(p1) : "r"(p0), "r"(1));
-+    asm("irg %0,%1,%2" : "=r"(p1) : "r"(p0), "r"(1l));
-     assert(p1 != p0);
-     asm("subp %0,%1,%2" : "=r"(c) : "r"(p0), "r"(p1));
-     assert(c == 0);
+     /* Validate that we have a wide enough vector for 4 elements. */
+-    asm(".arch armv8-r+sme-i64\n\trdsvl %0, #1" : "=r"(svl));
++    asm("rdsvl %0, #1" : "=r"(svl));
+     if (svl < 32) {
+         return 0;
+     }
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 70d728ae9af7..ad99e0e3b198 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -27,7 +27,8 @@ config-cc.mak: Makefile
+ 	    $(call cc-option,-march=armv8.5-a,              CROSS_CC_HAS_ARMV8_5); \
+ 	    $(call cc-option,-mbranch-protection=standard,  CROSS_CC_HAS_ARMV8_BTI); \
+ 	    $(call cc-option,-march=armv8.5-a+memtag,       CROSS_CC_HAS_ARMV8_MTE); \
+-	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme, CROSS_AS_HAS_ARMV9_SME)) 3> config-cc.mak
++	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme, CROSS_AS_HAS_ARMV9_SME); \
++	    $(call cc-option,-march=armv9-a+sme-i16i64,     CROSS_AS_HAS_ARMV9_SME_I1664)) 3> config-cc.mak
+ -include config-cc.mak
+ 
+ ifneq ($(CROSS_CC_HAS_ARMV8_2),)
+@@ -68,7 +69,13 @@ endif
+ 
+ # SME Tests
+ ifneq ($(CROSS_AS_HAS_ARMV9_SME),)
+-AARCH64_TESTS += sme-outprod1 sme-smopa-1 sme-smopa-2
++AARCH64_TESTS += sme-outprod1 sme-smopa-1
++endif
++
++# SME I16I64 Tests
++ifneq ($(CROSS_AS_HAS_ARMV9_SME_I1664),)
++AARCH64_TESTS += sme-smopa-2
++sme-smopa-2: CFLAGS += -march=armv9-a+sme-i16i64
+ endif
+ 
+ # System Registers Tests
 
 -- 
 2.45.2
