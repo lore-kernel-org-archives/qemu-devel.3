@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB543C3064D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D1BC41513
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 10:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMlxp-00088n-Sw; Thu, 27 Jun 2024 06:02:49 -0400
+	id 1sMlwj-00052g-4S; Thu, 27 Jun 2024 06:01:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlxk-0007O4-9Z
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:44 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1sMlwg-00052A-OB
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:01:38 -0400
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlxh-0002db-RF
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:43 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-70679845d69so3371292b3a.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:02:41 -0700 (PDT)
+ id 1sMlwf-0001eP-6V
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:01:38 -0400
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-5c21ef72be3so1036457eaf.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:01:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719482560; x=1720087360; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719482495; x=1720087295; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0CiGEo1Y49vMlYu6YFDvaSALmsVarL7E0mLlpzBDHLw=;
- b=FbJaKiMjqLyaey+EdcDA4+XNQdcjaYrOdJ2OJQa4HNy8UAIiqSxcOD5khsA6z3kbGR
- gDeLUb/wCNFZWBDEYx6IXaVIF/ppqhDU4Ww1ay6vSl4IN7kAz3usynEnXFAd7vh52nQz
- t5ebzI2SqQX6gt/ykQAvaMroUPKRpChRNFMJQkFtZDzsI4mADR/9xvY51Cjz9p8Kaihh
- AD+UeQrzyRdvj5E3wSYjbtK808z8uQq19feap0/jPokAOJkjw5QGkkkQn+O8TEfuP1YR
- eilXGrFQ0fBOONY39RzJ+vAOIkV/maAgjsy8w4ytC895zp9IXVb1Oho88Jh7zh6rGAgj
- s8Sw==
+ bh=7jZvBLMTasb9eS7DfRHEia3PyJ7fRL3eXKnFZzLUWrg=;
+ b=AmPNSxYAouIOWVMAIpmDhG3NyZ0jFczMvMQ/SiKSUSLlyQiduAsZd+BheODN6UaHfy
+ 8+5xnd7NgJbIeBXfIN+8c1yvL5vCW1CvOxfyTRoNuz5nkPCwmjA0UlsZWV6zck7XjehZ
+ Xr9t6D7z2cCvMnVdykK37lBHmpIFefOTyZJ6LZgYAKPVJEwLRmjrxcMud2RpQIo93Jn/
+ hMJ1aQutOh3AOe/nxGrqPX697NnLJLUbhnOq7ajbSKbtGs6yjGSZvw615Yr2dbV4NwUc
+ 4zxt1yJ5xlj81QsQVqaDgrY2mSd050g/1DNr5S6Aue5ptY/u1Iuks+YMl+XJFxSfeymA
+ p3mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719482560; x=1720087360;
+ d=1e100.net; s=20230601; t=1719482495; x=1720087295;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0CiGEo1Y49vMlYu6YFDvaSALmsVarL7E0mLlpzBDHLw=;
- b=diumcG1wc+1PwudRjYCibok1cXz+OetoyJLQjw2anR7X3ATiqIL7bMiV5hIBQvYyYU
- GsAljMuL5LAyDsjjKsiySVQKaSZbcp5g5wMsRDRnXY5I7+QiCPn9yRH6hSTTo4hUbK+E
- HDUq6bO6QZvza7Dps8RPDLz+fIjeKOJATiUjSNOFzeLzsnsqWodIKFXpWWW4aL6vCiHj
- LIoWv3pI2QZnbQAWahzBuNCtOdrqOd5hInr+NhnFxBQHji5sdtaKJtGNtFMBMqUGPAYu
- yYz09CxyEnjmyb7MA9s5EuChbkuoErXF5Qn8w9z7GBywTsqZ6WkenZLY3rXW/EMYd5JU
- PFhg==
-X-Gm-Message-State: AOJu0YzDcolouThSUvPUQ0F38MyoYhHB+K4Mgkcdm+Q4bOucIfhHqbFg
- iun3CsGGkkAA77vG5LgkoW9qT4kD6M5DA0m+uH9j39ppEFiBUiXphSTwfb7m
-X-Google-Smtp-Source: AGHT+IFxyeVOxvHAWK/I6aiu5y9meVreMlZTjABEQSxjEWxsqA9EhRjkOMNoYZTzdDrTCqG6xW8z8w==
-X-Received: by 2002:a05:6a00:cd0:b0:706:348a:528a with SMTP id
- d2e1a72fcca58-7067459a758mr16330700b3a.10.1719482560004; 
- Thu, 27 Jun 2024 03:02:40 -0700 (PDT)
+ bh=7jZvBLMTasb9eS7DfRHEia3PyJ7fRL3eXKnFZzLUWrg=;
+ b=TvrpdX3yRrae6VSplIzF7Kjrr431YfYl1BL9zp0xjOYTqcR8nq82a8XME9fuMBHOdd
+ 9cFkatsnFB3ETkuxJ7skX2VSI5rAFNeISBsnzWqSXECN3/5NhnBFCz2WtFR0WpmGNIUV
+ t9VvDMUvLiJh6+Z+si+Nt30wfmU15FcanU/cuJz4kp+Tt0ysdZeLfGtKEg1oMpB9BqSt
+ +DG/53FrEibXQTA56bJ22vFK5lEZtgwcCfba0OoY6XxZz9DjXr1530Mc7SYQ55+jViaG
+ 3zKhyBYmPgs6JEnTl+yPTv4wY8LyMCRHz0as2GMrBDwfugHfcyN2ZEI0MPtquaTCv7TU
+ ChaA==
+X-Gm-Message-State: AOJu0YwJ0EbD9GmpHxgv9Eq9tSL0e2FvisSeiI1RFvLvfbxG7/JP5dr4
+ sOxBsn1HCrX3ieDAHuwcnwVDNMA8vUfGuHpQWSIt6zYLsXXVP+Kr2QZ2p2EW
+X-Google-Smtp-Source: AGHT+IEHV26eGqKyh6Lu7Ts7gc/X3NzhEHoElKQAVXolVRBvMjC+mdR8tnAdZSfiXIq0LvVnFNdq0A==
+X-Received: by 2002:a05:6870:158d:b0:24f:dc76:f6d2 with SMTP id
+ 586e51a60fabf-25d06e2890emr14257687fac.45.1719482495537; 
+ Thu, 27 Jun 2024 03:01:35 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.02.36
+ d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.01.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 03:02:39 -0700 (PDT)
+ Thu, 27 Jun 2024 03:01:35 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Frank Chang <frank.chang@sifive.com>,
- Jerry Zhang Jian <jerry.zhangjian@sifive.com>,
- Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Conor Dooley <conor@kernel.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 29/32] target/riscv: Remove extension auto-update check
- statements
-Date: Thu, 27 Jun 2024 20:00:50 +1000
-Message-ID: <20240627100053.150937-30-alistair.francis@wdc.com>
+Subject: [PULL 10/32] hw/riscv/virt.c: imsics DT: add 'qemu,
+ imsics' to 'compatible'
+Date: Thu, 27 Jun 2024 20:00:31 +1000
+Message-ID: <20240627100053.150937-11-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240627100053.150937-1-alistair.francis@wdc.com>
 References: <20240627100053.150937-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=alistair23@gmail.com; helo=mail-oo1-xc31.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,200 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Remove the old-fashioned extension auto-update check statements as
-they are replaced by the extension implied rules.
+The DT docs for riscv,imsics [1] predicts a 'qemu,imsics' enum in the
+'compatible' property.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
-Tested-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20240625114629.27793-7-frank.chang@sifive.com>
+[1] Documentation/devicetree/bindings/interrupt-controller/riscv,imsics.yaml
+
+Reported-by: Conor Dooley <conor@kernel.org>
+Fixes: 28d8c281200f ("hw/riscv: virt: Add optional AIA IMSIC support to virt machine")
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240531202759.911601-8-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/tcg-cpu.c | 119 -------------------------------------
- 1 file changed, 119 deletions(-)
+ hw/riscv/virt.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index ccca9037ed..ae25686824 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -471,10 +471,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 376e362a68..e1ecf79551 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -515,6 +515,9 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
+     uint32_t imsic_max_hart_per_socket, imsic_addr, imsic_size;
+     g_autofree uint32_t *imsic_cells = NULL;
+     g_autofree uint32_t *imsic_regs = NULL;
++    static const char * const imsic_compat[2] = {
++        "qemu,imsics", "riscv,imsics"
++    };
  
--    if (cpu->cfg.ext_zfh) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zfhmin), true);
--    }
--
-     if (cpu->cfg.ext_zfhmin && !riscv_has_ext(env, RVF)) {
-         error_setg(errp, "Zfh/Zfhmin extensions require F extension");
-         return;
-@@ -496,9 +492,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-             error_propagate(errp, local_err);
-             return;
-         }
--
--        /* The V vector extension depends on the Zve64d extension */
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64d), true);
-     }
- 
-     /* The Zve64d extension depends on the Zve64f extension */
-@@ -507,18 +500,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-             error_setg(errp, "Zve64d/V extensions require D extension");
-             return;
-         }
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64f), true);
--    }
--
--    /* The Zve64f extension depends on the Zve64x and Zve32f extensions */
--    if (cpu->cfg.ext_zve64f) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve64x), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32f), true);
--    }
--
--    /* The Zve64x extension depends on the Zve32x extension */
--    if (cpu->cfg.ext_zve64x) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32x), true);
-     }
- 
-     /* The Zve32f extension depends on the Zve32x extension */
-@@ -527,11 +508,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-             error_setg(errp, "Zve32f/Zve64f extensions require F extension");
-             return;
-         }
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zve32x), true);
--    }
--
--    if (cpu->cfg.ext_zvfh) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvfhmin), true);
-     }
- 
-     if (cpu->cfg.ext_zvfhmin && !cpu->cfg.ext_zve32f) {
-@@ -554,11 +530,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
--    /* Set the ISA extensions, checks should have happened above */
--    if (cpu->cfg.ext_zhinx) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
--    }
--
-     if ((cpu->cfg.ext_zdinx || cpu->cfg.ext_zhinxmin) && !cpu->cfg.ext_zfinx) {
-         error_setg(errp, "Zdinx/Zhinx/Zhinxmin extensions require Zfinx");
-         return;
-@@ -576,27 +547,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         }
-     }
- 
--    if (cpu->cfg.ext_zce) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcmp), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcmt), true);
--        if (riscv_has_ext(env, RVF) && mcc->misa_mxl_max == MXL_RV32) {
--            cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcf), true);
--        }
--    }
--
--    /* zca, zcd and zcf has a PRIV 1.12.0 restriction */
--    if (riscv_has_ext(env, RVC) && env->priv_ver >= PRIV_VERSION_1_12_0) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
--        if (riscv_has_ext(env, RVF) && mcc->misa_mxl_max == MXL_RV32) {
--            cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcf), true);
--        }
--        if (riscv_has_ext(env, RVD)) {
--            cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zcd), true);
--        }
--    }
--
-     if (mcc->misa_mxl_max != MXL_RV32 && cpu->cfg.ext_zcf) {
-         error_setg(errp, "Zcf extension is only relevant to RV32");
-         return;
-@@ -630,52 +580,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
--    /*
--     * Shorthand vector crypto extensions
--     */
--    if (cpu->cfg.ext_zvknc) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkn), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvbc), true);
--    }
--
--    if (cpu->cfg.ext_zvkng) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkn), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkg), true);
--    }
--
--    if (cpu->cfg.ext_zvkn) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkned), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvknhb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkt), true);
--    }
--
--    if (cpu->cfg.ext_zvksc) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvks), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvbc), true);
--    }
--
--    if (cpu->cfg.ext_zvksg) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvks), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkg), true);
--    }
--
--    if (cpu->cfg.ext_zvks) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvksed), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvksh), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkt), true);
--    }
--
--    if (cpu->cfg.ext_zvkt) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvbb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvbc), true);
--    }
--
--    if (cpu->cfg.ext_zvbb) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zvkb), true);
--    }
--
-     if ((cpu->cfg.ext_zvbb || cpu->cfg.ext_zvkb || cpu->cfg.ext_zvkg ||
-          cpu->cfg.ext_zvkned || cpu->cfg.ext_zvknha || cpu->cfg.ext_zvksed ||
-          cpu->cfg.ext_zvksh) && !cpu->cfg.ext_zve32x) {
-@@ -691,29 +595,6 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
--    if (cpu->cfg.ext_zk) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zkn), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zkr), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zkt), true);
--    }
--
--    if (cpu->cfg.ext_zkn) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkc), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkx), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zkne), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zknd), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zknh), true);
--    }
--
--    if (cpu->cfg.ext_zks) {
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkb), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkc), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zbkx), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zksed), true);
--        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zksh), true);
--    }
--
-     if (cpu->cfg.ext_zicntr && !cpu->cfg.ext_zicsr) {
-         if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zicntr))) {
-             error_setg(errp, "zicntr requires zicsr");
+     imsic_cells = g_new0(uint32_t, ms->smp.cpus * 2);
+     imsic_regs = g_new0(uint32_t, socket_count * 4);
+@@ -541,7 +544,10 @@ static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
+     imsic_name = g_strdup_printf("/soc/interrupt-controller@%lx",
+                                  (unsigned long)base_addr);
+     qemu_fdt_add_subnode(ms->fdt, imsic_name);
+-    qemu_fdt_setprop_string(ms->fdt, imsic_name, "compatible", "riscv,imsics");
++    qemu_fdt_setprop_string_array(ms->fdt, imsic_name, "compatible",
++                                  (char **)&imsic_compat,
++                                  ARRAY_SIZE(imsic_compat));
++
+     qemu_fdt_setprop_cell(ms->fdt, imsic_name, "#interrupt-cells",
+                           FDT_IMSIC_INT_CELLS);
+     qemu_fdt_setprop(ms->fdt, imsic_name, "interrupt-controller", NULL, 0);
 -- 
 2.45.2
 
