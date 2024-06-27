@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DFAC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 09:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DCE5C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 09:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMkyq-00023D-D8; Thu, 27 Jun 2024 04:59:48 -0400
+	id 1sMl5s-0003yh-Ty; Thu, 27 Jun 2024 05:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sMkyp-000234-1c
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 04:59:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <quic_asalama@quicinc.com>)
+ id 1sMl5p-0003xu-CO; Thu, 27 Jun 2024 05:07:01 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sMkyn-0000bI-Au
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 04:59:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719478784;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TQvSGgpEvhPJcNEwTpRwdp8KyvZM8/DnsczMr1jL3TI=;
- b=HZFjpH7v1wzKq0eBWHHoMrU58dlV7R+jZx/h7b9DYu7c7UFhpxttbgjnPM9OGe5/AIlGqj
- oYP+O9uZAeXcyoRcJKxcyWoTigAc0+u14+hVaylFSuqG+gyMzmSqUTOIy42I+++p/VVzF7
- +ihyqaHveRf5zGSKVtZQZ4dHx3BpdHM=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-125-KvYAuVeuPYeJwMNAn5TSyw-1; Thu, 27 Jun 2024 04:59:39 -0400
-X-MC-Unique: KvYAuVeuPYeJwMNAn5TSyw-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6b551a62a5eso76651036d6.2
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 01:59:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719478779; x=1720083579;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TQvSGgpEvhPJcNEwTpRwdp8KyvZM8/DnsczMr1jL3TI=;
- b=eTfkatYT/tbC4GVrIhFO1Eh3JRKMHUPRwEJcJvsCb990k4U0dXrrJIjBaEVUZJkXjh
- GF672qr3QoEoNJXWIHkOHLatY1N7k3ML0gn2stH4XhKNX9ALXENkUH+0TnsLmV96ysZh
- uQXNLrOP0OyPDv5p9GaP9xPTOKAWt8i3UQgCBV8nt5HeItfLrVNqy3ZCcwO4k61Snsds
- nDtlJMmlvjii0qsjfV9g3H8rDTPokoGDGYN12Yrl2/VTuVR7JwYR0O3+yJ8IJHiTyiO1
- 9T3x+RbhLlSSk8U4DSoTZ/i7PrlWapQoCh9MKuCGRsznpOOQnpIxZrLMEq4sK3CmBsiQ
- QPCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW1haX2Q2bsb03RNeoKlRqZqZzGqNz4F32vnwBnRnbyfHdPXu9fVfMKB43RCldP0d4AszpiusszU7dtE3TcHnIwPHl4uxg=
-X-Gm-Message-State: AOJu0YxNEqXOIls6wN5N8c+gxO6lSsIfuKN7SO6lQy8kyIGv2TJNDcV9
- DmMbXe6tB2f+rN9vUtIawCyek2H9rCtPsVLqI8qF0f44kAhq0miTiWsDb6BKQSJEdz03CHMKEg9
- U30L/do56JuSsNoc3WCP9r3NmA8BXAc2xgGC18DoSBbVMWoVZ0sLA
-X-Received: by 2002:ad4:5409:0:b0:6b5:b29:82cf with SMTP id
- 6a1803df08f44-6b540aa802fmr115187316d6.48.1719478779438; 
- Thu, 27 Jun 2024 01:59:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7Hp2AfJvCHKLVzRPsapYZYFnu65LpgzYkY0dGpRL/QrOTlgzIt2kvgJjq6/vP7EUvmrovqA==
-X-Received: by 2002:ad4:5409:0:b0:6b5:b29:82cf with SMTP id
- 6a1803df08f44-6b540aa802fmr115187206d6.48.1719478779110; 
- Thu, 27 Jun 2024 01:59:39 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b59241b67dsm3523876d6.4.2024.06.27.01.59.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 01:59:38 -0700 (PDT)
-Message-ID: <ca01fa7e-4218-48b5-8c85-e8f7e9e353c9@redhat.com>
-Date: Thu, 27 Jun 2024 10:59:34 +0200
+ (Exim 4.90_1) (envelope-from <quic_asalama@quicinc.com>)
+ id 1sMl5b-0004kt-JY; Thu, 27 Jun 2024 05:07:00 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45R25NO7025879;
+ Thu, 27 Jun 2024 09:06:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ g4vvZ/upJfzVZask2zMZl2y6PmzO5N8Z7fGEUkIWy94=; b=pM6zsNiTSlozFRtJ
+ OGByLRAV9AqwTXjmxwmcN9qHXqhoxV44BdqHigMq9iRiPOvCy2hn54szq0+t2pdj
+ erdND3ZJMrWZWeOxWJpz+jaPm+tZL56NtIyG9dcOUHFeZDEGBLbRVbQLziNLYctf
+ SYg/qsZ8xLgptTdQSssSKVskfKflxkSrWk/F2YLUZ2RGOTrQRO9Ce/1AXpk/ABUl
+ r10canhZRpUSic1srIdq5Hhhp6la6HUbXMNvlVc8RkOLLxhFWFyrxnaTqybInTIC
+ PNVq1QIXzWPSfNuF12tpK5QNQxPbiwd5+oEguMUCs1vfJwTU8mzTRjgTTfcm1fU3
+ qpbI/g==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3ywnjs3ddc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Jun 2024 09:06:07 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA02.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
+ 45R9663a012972
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Jun 2024 09:06:06 GMT
+Received: from [10.251.40.202] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 27 Jun
+ 2024 02:06:00 -0700
+Message-ID: <db8cee6c-319f-416d-bf72-072d0f52bab6@quicinc.com>
+Date: Thu, 27 Jun 2024 11:05:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] HostIOMMUDevice: Introduce get_page_size_mask()
- callback
+Subject: Re: [PATCH v2 08/12] plugins: add time control API
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ <qemu-devel@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, <kvm@vger.kernel.org>,
+ <qemu-ppc@nongnu.org>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jamie Iles <quic_jiles@quicinc.com>,
+ David Hildenbrand <david@redhat.com>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, Mark Burton <mburton@qti.qualcomm.com>,
+ "Daniel Henrique Barboza" <danielhb413@gmail.com>,
+ <qemu-arm@nongnu.org>, "Laurent Vivier" <lvivier@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, "Ilya Leoshkevich" <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marco Liebel <mliebel@qti.qualcomm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ <qemu-s390x@nongnu.org>, Cameron Esfahani <dirty@apple.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Nicholas Piggin <npiggin@gmail.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>, "Marcelo
+ Tosatti" <mtosatti@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240620152220.2192768-1-alex.bennee@linaro.org>
+ <20240620152220.2192768-9-alex.bennee@linaro.org>
 Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
- <mst@redhat.com>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "clg@redhat.com" <clg@redhat.com>, "yanghliu@redhat.com"
- <yanghliu@redhat.com>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>
-References: <20240626082727.1278530-1-eric.auger@redhat.com>
- <20240626082727.1278530-5-eric.auger@redhat.com>
- <SJ0PR11MB6744E5DF82073F17F2FC31D192D72@SJ0PR11MB6744.namprd11.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <SJ0PR11MB6744E5DF82073F17F2FC31D192D72@SJ0PR11MB6744.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+From: Alwalid Salama <quic_asalama@quicinc.com>
+In-Reply-To: <20240620152220.2192768-9-alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: 5Qkt0HKQLvqvOis08rbwoyG0n0a4iuZl
+X-Proofpoint-ORIG-GUID: 5Qkt0HKQLvqvOis08rbwoyG0n0a4iuZl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-27_05,2024-06-25_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ clxscore=1011 mlxscore=0 suspectscore=0 adultscore=0 mlxlogscore=999
+ impostorscore=0 bulkscore=0 malwarescore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406270069
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_asalama@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,146 +114,138 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+Reviewed-by: Alwalid Salama <quic_asalama@qualcomm.com>
 
-On 6/27/24 05:06, Duan, Zhenzhong wrote:
-> Hi Eric,
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Subject: [PATCH 4/7] HostIOMMUDevice: Introduce get_page_size_mask()
->> callback
->>
->> This callback will be used to retrieve the page size mask supported
->> along a given Host IOMMU device.
->>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> ---
->> include/hw/vfio/vfio-container-base.h |  7 +++++++
->> include/sysemu/host_iommu_device.h    |  8 ++++++++
->> hw/vfio/container.c                   | 10 ++++++++++
->> hw/vfio/iommufd.c                     | 11 +++++++++++
->> 4 files changed, 36 insertions(+)
->>
->> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-
->> container-base.h
->> index 45d7c40fce..62a8b60d87 100644
->> --- a/include/hw/vfio/vfio-container-base.h
->> +++ b/include/hw/vfio/vfio-container-base.h
->> @@ -88,6 +88,13 @@ int vfio_container_query_dirty_bitmap(const
->> VFIOContainerBase *bcontainer,
->>
->> GList *vfio_container_get_iova_ranges(const VFIOContainerBase
->> *bcontainer);
->>
->> +static inline uint64_t
->> +vfio_container_get_page_size_mask(const VFIOContainerBase *bcontainer)
->> +{
->> +    assert(bcontainer);
->> +    return bcontainer->pgsizes;
->> +}
->> +
->> #define TYPE_VFIO_IOMMU "vfio-iommu"
->> #define TYPE_VFIO_IOMMU_LEGACY TYPE_VFIO_IOMMU "-legacy"
->> #define TYPE_VFIO_IOMMU_SPAPR TYPE_VFIO_IOMMU "-spapr"
->> diff --git a/include/sysemu/host_iommu_device.h
->> b/include/sysemu/host_iommu_device.h
->> index 05c7324a0d..c1bf74ae2c 100644
->> --- a/include/sysemu/host_iommu_device.h
->> +++ b/include/sysemu/host_iommu_device.h
->> @@ -89,6 +89,14 @@ struct HostIOMMUDeviceClass {
->>      * @hiod: handle to the host IOMMU device
->>      */
->>     GList* (*get_iova_ranges)(HostIOMMUDevice *hiod);
->> +    /**
->> +     *
->> +     * @get_page_size_mask: Return the page size mask supported along
->> this
->> +     * @hiod Host IOMMU device
->> +     *
->> +     * @hiod: handle to the host IOMMU device
->> +     */
->> +    uint64_t (*get_page_size_mask)(HostIOMMUDevice *hiod);
-> Not sure if it's simpler to utilize existing .get_cap() to get pgsizes.
-I chose to introduce a new callback because the page_mask can be U64_MAX
-and get_cap is likely to return a negative value. So we could not
-distinguish between an error and a full mask.
-
-Thanks
-
-Eric
-
->
-> Thanks
-> Zhenzhong
->
->> };
->>
->> /*
->> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
->> index adeab1ac89..b5ce559a0d 100644
->> --- a/hw/vfio/container.c
->> +++ b/hw/vfio/container.c
->> @@ -1174,6 +1174,15 @@
->> hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod)
->>     return vfio_container_get_iova_ranges(vdev->bcontainer);
->> }
->>
->> +static uint64_t
->> +hiod_legacy_vfio_get_page_size_mask(HostIOMMUDevice *hiod)
->> +{
->> +    VFIODevice *vdev = hiod->agent;
->> +
->> +    g_assert(vdev);
->> +    return vfio_container_get_page_size_mask(vdev->bcontainer);
->> +}
->> +
->> static void vfio_iommu_legacy_instance_init(Object *obj)
->> {
->>     VFIOContainer *container = VFIO_IOMMU_LEGACY(obj);
->> @@ -1188,6 +1197,7 @@ static void
->> hiod_legacy_vfio_class_init(ObjectClass *oc, void *data)
->>     hioc->realize = hiod_legacy_vfio_realize;
->>     hioc->get_cap = hiod_legacy_vfio_get_cap;
->>     hioc->get_iova_ranges = hiod_legacy_vfio_get_iova_ranges;
->> +    hioc->get_page_size_mask = hiod_legacy_vfio_get_page_size_mask;
->> };
->>
->> static const TypeInfo types[] = {
->> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
->> index 211e7223f1..7b5f87a148 100644
->> --- a/hw/vfio/iommufd.c
->> +++ b/hw/vfio/iommufd.c
->> @@ -652,12 +652,23 @@
->> hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod)
->>     return vfio_container_get_iova_ranges(vdev->bcontainer);
->> }
->>
->> +static uint64_t
->> +hiod_iommufd_vfio_get_page_size_mask(HostIOMMUDevice *hiod)
->> +{
->> +    VFIODevice *vdev = hiod->agent;
->> +
->> +    g_assert(vdev);
->> +    return vfio_container_get_page_size_mask(vdev->bcontainer);
->> +}
->> +
->> +
->> static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
->> {
->>     HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_CLASS(oc);
->>
->>     hiodc->realize = hiod_iommufd_vfio_realize;
->>     hiodc->get_iova_ranges = hiod_iommufd_vfio_get_iova_ranges;
->> +    hiodc->get_page_size_mask = hiod_iommufd_vfio_get_page_size_mask;
->> };
->>
->> static const TypeInfo types[] = {
->> --
->> 2.41.0
-
+On 6/20/2024 5:22 PM, Alex Bennée wrote:
+> Expose the ability to control time through the plugin API. Only one
+> plugin can control time so it has to request control when loaded.
+> There are probably more corner cases to catch here.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> [AJB: tweaked user-mode handling, merged QEMU_PLUGIN_API fix]
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Message-Id: <20240530220610.1245424-6-pierrick.bouvier@linaro.org>
+> 
+> ---
+> plugins/next
+>    - make qemu_plugin_update_ns a NOP in user-mode
+> v2
+>    - remove From: header
+>    - merged in plugins: missing QEMU_PLUGIN_API for time control
+> ---
+>   include/qemu/qemu-plugin.h   | 27 +++++++++++++++++++++++++++
+>   plugins/api.c                | 35 +++++++++++++++++++++++++++++++++++
+>   plugins/qemu-plugins.symbols |  2 ++
+>   3 files changed, 64 insertions(+)
+> 
+> diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+> index 95703d8fec..c71c705b69 100644
+> --- a/include/qemu/qemu-plugin.h
+> +++ b/include/qemu/qemu-plugin.h
+> @@ -661,6 +661,33 @@ void qemu_plugin_register_vcpu_mem_inline_per_vcpu(
+>       qemu_plugin_u64 entry,
+>       uint64_t imm);
+>   
+> +/**
+> + * qemu_plugin_request_time_control() - request the ability to control time
+> + *
+> + * This grants the plugin the ability to control system time. Only one
+> + * plugin can control time so if multiple plugins request the ability
+> + * all but the first will fail.
+> + *
+> + * Returns an opaque handle or NULL if fails
+> + */
+> +QEMU_PLUGIN_API
+> +const void *qemu_plugin_request_time_control(void);
+> +
+> +/**
+> + * qemu_plugin_update_ns() - update system emulation time
+> + * @handle: opaque handle returned by qemu_plugin_request_time_control()
+> + * @time: time in nanoseconds
+> + *
+> + * This allows an appropriately authorised plugin (i.e. holding the
+> + * time control handle) to move system time forward to @time. For
+> + * user-mode emulation the time is not changed by this as all reported
+> + * time comes from the host kernel.
+> + *
+> + * Start time is 0.
+> + */
+> +QEMU_PLUGIN_API
+> +void qemu_plugin_update_ns(const void *handle, int64_t time);
+> +
+>   typedef void
+>   (*qemu_plugin_vcpu_syscall_cb_t)(qemu_plugin_id_t id, unsigned int vcpu_index,
+>                                    int64_t num, uint64_t a1, uint64_t a2,
+> diff --git a/plugins/api.c b/plugins/api.c
+> index 6bdb26bbe3..4431a0ea7e 100644
+> --- a/plugins/api.c
+> +++ b/plugins/api.c
+> @@ -39,6 +39,7 @@
+>   #include "qemu/main-loop.h"
+>   #include "qemu/plugin.h"
+>   #include "qemu/log.h"
+> +#include "qemu/timer.h"
+>   #include "tcg/tcg.h"
+>   #include "exec/exec-all.h"
+>   #include "exec/gdbstub.h"
+> @@ -583,3 +584,37 @@ uint64_t qemu_plugin_u64_sum(qemu_plugin_u64 entry)
+>       }
+>       return total;
+>   }
+> +
+> +/*
+> + * Time control
+> + */
+> +static bool has_control;
+> +
+> +const void *qemu_plugin_request_time_control(void)
+> +{
+> +    if (!has_control) {
+> +        has_control = true;
+> +        return &has_control;
+> +    }
+> +    return NULL;
+> +}
+> +
+> +#ifdef CONFIG_SOFTMMU
+> +static void advance_virtual_time__async(CPUState *cpu, run_on_cpu_data data)
+> +{
+> +    int64_t new_time = data.host_ulong;
+> +    qemu_clock_advance_virtual_time(new_time);
+> +}
+> +#endif
+> +
+> +void qemu_plugin_update_ns(const void *handle, int64_t new_time)
+> +{
+> +#ifdef CONFIG_SOFTMMU
+> +    if (handle == &has_control) {
+> +        /* Need to execute out of cpu_exec, so bql can be locked. */
+> +        async_run_on_cpu(current_cpu,
+> +                         advance_virtual_time__async,
+> +                         RUN_ON_CPU_HOST_ULONG(new_time));
+> +    }
+> +#endif
+> +}
+> diff --git a/plugins/qemu-plugins.symbols b/plugins/qemu-plugins.symbols
+> index aa0a77a319..ca773d8d9f 100644
+> --- a/plugins/qemu-plugins.symbols
+> +++ b/plugins/qemu-plugins.symbols
+> @@ -38,6 +38,7 @@
+>     qemu_plugin_register_vcpu_tb_exec_cond_cb;
+>     qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu;
+>     qemu_plugin_register_vcpu_tb_trans_cb;
+> +  qemu_plugin_request_time_control;
+>     qemu_plugin_reset;
+>     qemu_plugin_scoreboard_free;
+>     qemu_plugin_scoreboard_find;
+> @@ -51,5 +52,6 @@
+>     qemu_plugin_u64_set;
+>     qemu_plugin_u64_sum;
+>     qemu_plugin_uninstall;
+> +  qemu_plugin_update_ns;
+>     qemu_plugin_vcpu_for_each;
+>   };
 
