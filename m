@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50AD9C3064D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A36C41513
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:41:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMpKK-0000wP-3o; Thu, 27 Jun 2024 09:38:16 -0400
+	id 1sMpLN-0001cr-7U; Thu, 27 Jun 2024 09:39:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpKF-0000u0-Vg
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:38:13 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1sMpLI-0001af-CE
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:16 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpKD-0006K5-Th
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:38:11 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-70698bcd19eso2357529b3a.0
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:38:08 -0700 (PDT)
+ id 1sMpLG-0006WH-LX
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:16 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-7182a634815so4429106a12.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:39:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719495487; x=1720100287;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719495551; x=1720100351;
  darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=R7xdJXPQ/0h5i2oefmhppGMlFOw41XX+zUeXH5357TE=;
- b=RLU4ZjHTJ/lDAqzkVnqCB7ldV98yxbN5XPfBoCnJoyv+v2H3E4AP65QT2RCrPZdXVo
- DTw+Zf6XYAFJ0bCHCPWi1BSFhlLEqpnszg50lyHY7rNrRkY8qtIbe/ZwJw4/xqMFMvr/
- P66pdTPMb3Byr+khfw7wq9bsq4Puo3GkW/GET/B+osr5AEBZuSbdebY76dP2bgtqrVSz
- G3jHvwNtto7bMK67tYK3VbzkrfWXcfdL/YcIJcpfyFR1+kMwrsFDl5MHNo0nceraopTy
- JtInjf1YmCFjUfPcy8p87tDOEi6SROGRcQfA/6DeJxdsOnO/yGt1a0VfRIRrIPBet8iQ
- szGg==
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Yvl4pAdGzIA/y7zkDQtF9iZK7ptxPpuy1nIWlUirby4=;
+ b=uaF7zszFj+kz80phxfb8lk1Ot7je7a0Yr3pvZry3QyHavtrSngDzdm41+eZIv469fw
+ Ay8TA826kLpRlqmQP5XbY8ZxQSfuFCWcllxD1aFf9CPfwREnX04rt3BcYUekDP03HV4g
+ zV2QzWwxSQRfY2cwGs8E+EvunT4q2BsKRoyHN4+jJ9YTw/N2ahjP4oTZdK+LWs/UFnQu
+ rpeLmkuMFzLErtn3dPJ0qccx/gUeTVI9QLTPzfxUGkB88i82CkXVJxQnNZSlsig7+7QS
+ 0RN4olyKeat03LnZdY7tGSbvqlXWizIZsfq/kVl8q3ia3PBrQq3pAQ8SOvT8EeuNCdtl
+ bRNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719495487; x=1720100287;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=R7xdJXPQ/0h5i2oefmhppGMlFOw41XX+zUeXH5357TE=;
- b=txzLqU2dPtQi4speqLGqvHYS/hvD+ERXruzR5nsgjlcmb6vsB6NHNB5weYQeKDBg0s
- P+wX7NaEA5xwKf9ENFm9Vl/OD5/Lhpn6/f47/J/TCEvXrcq+dexi0X3t2zV5dpU18TzT
- tphBwnD25hwAw3Exj3ojNcFZWY7E05NIn+epAUlzoexj7Eu85boabWtF5HC0fSy00siK
- fZIOKfMs1q43zs1sdQ94ObJSsbP9vOxs5oR6ZlDm3cgL2880cisbvj2Wyx+pI7hto+Q3
- TkJP73FLlSNsIYz5XEMHLT8nsgPJMYD1bs+3t1iuH1g95fYDblByeQ2zo84LpgJ+GqlB
- 8GzA==
-X-Gm-Message-State: AOJu0Yw7gvpTpqsHkjpXRz3ylr3dlJmxAnamHsI9OREfMVEPYM1n8cTh
- BZd1FAyw3ktJc/BXKSiQKQ6iUs2zmxLNXviiZRODUS4q5GmVX3Q1l1bZPrxHBoE=
-X-Google-Smtp-Source: AGHT+IGwTrPdvWef3J4iAXhB+zx8QCinKcVnw3a3AwZKpx32cS5pjuRoAHRckaAb07ZY39+jtK2d/A==
-X-Received: by 2002:a05:6a20:4e18:b0:1bd:2520:c595 with SMTP id
- adf61e73a8af0-1bd2520cc54mr6173708637.31.1719495487456; 
- Thu, 27 Jun 2024 06:38:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719495551; x=1720100351;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Yvl4pAdGzIA/y7zkDQtF9iZK7ptxPpuy1nIWlUirby4=;
+ b=k+VAIeG7VYnUpJ5JohNmNhYmjC+LPmDLqbXs0dYR5hkWSGMtNV8ZBtHBQheHiT7krF
+ y49bJyQoKraqtlZRSzSJTd8Hb/psqQbY3hq6t02meSmUcb/loFBDVczgPjAjweflzL2H
+ M+YtOi+YEtmqIjAS12yBNMN/zEk3VZHHgrG5tl/zRcBDAofhVCgtQixEYNHNhDjY9137
+ FNVW/4lWlF2rMRYpK6LgjW+BRKPBFpootLrHWfxH+j1NHBLatPqZPk+rAJvd4e+QSO5O
+ ww+LNVWJD/GFog3bquWfoSP/drF8G+z5rtTTFIJP0b8RdKyn8YzPW1z096qHfMDqeiwP
+ mEPA==
+X-Gm-Message-State: AOJu0Yy5Cy2rF5WGhSBWB6QdhDnIXzIsYzO3a4rs3IKtNB+Ih+QizhA1
+ 5OOxRJYotnShMPvVfWK2r1S2bOTcyIGBGNYMeTH5peJJb7ev29UIWpQS1PLRAzc=
+X-Google-Smtp-Source: AGHT+IFlBGhq8j7ZQMV5qMOOdFsofTqP+NF+lT2o/+u4EH2nCOdF15FzOTWiA/9TuXR60cGyfzX9NA==
+X-Received: by 2002:a05:6a20:12c3:b0:1be:cbe9:f765 with SMTP id
+ adf61e73a8af0-1becbe9f89amr3175993637.18.1719495551639; 
+ Thu, 27 Jun 2024 06:39:11 -0700 (PDT)
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-706b491bf0fsm1337964b3a.76.2024.06.27.06.38.02
+ d9443c01a7336-1faac9a73fcsm13434485ad.252.2024.06.27.06.39.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 06:38:07 -0700 (PDT)
+ Thu, 27 Jun 2024 06:39:11 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v2 00/15] Fix check-qtest-ppc64 sanitizer errors
-Date: Thu, 27 Jun 2024 22:37:43 +0900
-Message-Id: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+Date: Thu, 27 Jun 2024 22:37:53 +0900
+Subject: [PATCH v2 10/15] tests/qtest: Use qtest_add_data_func_full()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIACdrfWYC/zWMQQ7CIBBFr9LMWgxMsdquvIfpglCwsxAMY0ibh
- ruLJC7fz3/vAHaJHMPUHZBcJqYYKuCpA7ua8HSClsqAErUc8CLYBCHHq/HGa68sQn2+k/O0tcp
- jrrwSf2LaWzSr3/r3h+ZnJaTwvbUae4nqNt4Xswfazja+YC6lfAGYbqKRlwAAAA==
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240627-san-v2-10-750bb0946dbd@daynix.com>
+References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+In-Reply-To: <20240627-san-v2-0-750bb0946dbd@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -85,8 +84,8 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::435;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x435.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::530;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,69 +107,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based-on: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
-("[PATCH] cpu: fix memleak of 'halt_cond' and 'thread'")
-
-I saw various sanitizer errors when running check-qtest-ppc64. While
-I could just turn off sanitizers, I decided to tackle them this time.
-
-Unfortunately, GLib does not free test data in some cases so some
-sanitizer errors remain. All sanitizer errors will be gone with this
-patch series combined with the following change for GLib:
-https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4120
+A test function may not be executed depending on the test command line
+so it is wrong to free data with a test function. Use
+qtest_add_data_func_full() to register a function to free data.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
-Changes in v2:
-- Rebased to "[PATCH] cpu: fix memleak of 'halt_cond' and 'thread'".
-  (Philippe Mathieu-Daudé)
-- Converted IRQs into GPIO lines and removed one qemu_irq usage.
-  (Peter Maydell)
-- s/suppresses/fixes/ (Michael S. Tsirkin)
-- Corrected title of patch "hw/virtio: Free vqs after vhost_dev_cleanup()"
-  (was "hw/virtio: Free vqs before vhost_dev_cleanup()")
-- Link to v1: https://lore.kernel.org/r/20240626-san-v1-0-f3cc42302189@daynix.com
+ tests/qtest/device-introspect-test.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
----
-Akihiko Odaki (15):
-      cpu: Free cpu_ases
-      hw/ide: Convert macio ide_irq into GPIO line
-      hw/ide: Remove internal DMA qemu_irq
-      hw/isa/vt82c686: Define a GPIO line between vt82c686 and i8259
-      spapr: Free stdout path
-      ppc/vof: Fix unaligned FDT property access
-      hw/virtio: Free vqs after vhost_dev_cleanup()
-      migration: Free removed SaveStateEntry
-      memory: Do not create circular reference with subregion
-      tests/qtest: Use qtest_add_data_func_full()
-      tests/qtest: Free unused QMP response
-      tests/qtest: Free old machine variable name
-      tests/qtest: Delete previous boot file
-      tests/qtest: Free paths
-      tests/qtest: Free GThread
+diff --git a/tests/qtest/device-introspect-test.c b/tests/qtest/device-introspect-test.c
+index 5b0ffe43f5f4..587da59623dc 100644
+--- a/tests/qtest/device-introspect-test.c
++++ b/tests/qtest/device-introspect-test.c
+@@ -266,7 +266,6 @@ static void test_device_intro_concrete(const void *args)
+ 
+     qobject_unref(types);
+     qtest_quit(qts);
+-    g_free((void *)args);
+ }
+ 
+ static void test_abstract_interfaces(void)
+@@ -310,12 +309,12 @@ static void add_machine_test_case(const char *mname)
+ 
+     path = g_strdup_printf("device/introspect/concrete/defaults/%s", mname);
+     args = g_strdup_printf("-M %s", mname);
+-    qtest_add_data_func(path, args, test_device_intro_concrete);
++    qtest_add_data_func_full(path, args, test_device_intro_concrete, g_free);
+     g_free(path);
+ 
+     path = g_strdup_printf("device/introspect/concrete/nodefaults/%s", mname);
+     args = g_strdup_printf("-nodefaults -M %s", mname);
+-    qtest_add_data_func(path, args, test_device_intro_concrete);
++    qtest_add_data_func_full(path, args, test_device_intro_concrete, g_free);
+     g_free(path);
+ }
+ 
+@@ -330,7 +329,7 @@ int main(int argc, char **argv)
+     qtest_add_func("device/introspect/abstract-interfaces", test_abstract_interfaces);
+     if (g_test_quick()) {
+         qtest_add_data_func("device/introspect/concrete/defaults/none",
+-                            g_strdup(common_args), test_device_intro_concrete);
++                            common_args, test_device_intro_concrete);
+     } else {
+         qtest_cb_for_every_machine(add_machine_test_case, true);
+     }
 
- include/hw/ppc/mac_dbdma.h           |  5 +++--
- hw/core/cpu-common.c                 |  1 +
- hw/ide/macio.c                       | 18 +++++++++++++-----
- hw/isa/vt82c686.c                    |  7 ++++---
- hw/misc/macio/mac_dbdma.c            | 10 +++++-----
- hw/ppc/spapr_vof.c                   |  2 +-
- hw/ppc/vof.c                         |  2 +-
- hw/virtio/vhost-user-base.c          |  2 ++
- migration/savevm.c                   |  2 ++
- system/memory.c                      | 11 +++++++++--
- tests/qtest/device-introspect-test.c |  7 +++----
- tests/qtest/libqtest.c               |  3 +++
- tests/qtest/migration-test.c         | 18 +++++++++++-------
- tests/qtest/qos-test.c               | 16 ++++++++++++----
- tests/qtest/vhost-user-test.c        |  6 +++---
- 15 files changed, 73 insertions(+), 37 deletions(-)
----
-base-commit: af799a2337c3e39994411f90631905d809a41da4
-change-id: 20240625-san-097afaf4f1c2
-
-Best regards,
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.45.2
 
 
