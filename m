@@ -4,102 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71685C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 07:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6E5BC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 07:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMjxh-0002AP-Gp; Thu, 27 Jun 2024 03:54:33 -0400
+	id 1sMjyN-0002FM-UC; Thu, 27 Jun 2024 03:55:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sMjxf-0002A9-Ay
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:54:31 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sMjxb-0005zM-Ck
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:54:30 -0400
-Received: from hawking.nue2.suse.org (unknown [10.168.4.11])
- by smtp-out2.suse.de (Postfix) with ESMTP id 04AB81FBAB;
- Thu, 27 Jun 2024 07:54:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1719474863; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1sMjyM-0002Ex-UN
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:55:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1sMjyL-0006H2-IM
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 03:55:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719474911;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sWOhstAmNkS2JPmTmH2ksRJAV2+dUojT8OW3aOKZbNA=;
- b=fsfQOWSIEmfdn4NMPAm9J0cEjv+FSxhW1ZiziVKrxCfTiI96Z/dV7BxjDE1/3UY4DT47Ne
- LlGD3mzgU9esRnuuNmifG97O7q89T0ckpi1sYqhy30d0ILtyn0vcwSSWSX64FlweL9JHeV
- 66+eItZnBKP0iC/Tp5RfyrWyGLjzbBM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1719474863;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sWOhstAmNkS2JPmTmH2ksRJAV2+dUojT8OW3aOKZbNA=;
- b=qdUHET1OiR5idhr3XPpbsd7iFqygzcQxJOqa9hKWGL8eJuUqdA53es4QNQXdfzZU/yWhcM
- qk/tPLkFks4tAwBw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1719474863; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sWOhstAmNkS2JPmTmH2ksRJAV2+dUojT8OW3aOKZbNA=;
- b=fsfQOWSIEmfdn4NMPAm9J0cEjv+FSxhW1ZiziVKrxCfTiI96Z/dV7BxjDE1/3UY4DT47Ne
- LlGD3mzgU9esRnuuNmifG97O7q89T0ckpi1sYqhy30d0ILtyn0vcwSSWSX64FlweL9JHeV
- 66+eItZnBKP0iC/Tp5RfyrWyGLjzbBM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1719474863;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sWOhstAmNkS2JPmTmH2ksRJAV2+dUojT8OW3aOKZbNA=;
- b=qdUHET1OiR5idhr3XPpbsd7iFqygzcQxJOqa9hKWGL8eJuUqdA53es4QNQXdfzZU/yWhcM
- qk/tPLkFks4tAwBw==
-Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
- id E53A14A050D; Thu, 27 Jun 2024 09:54:22 +0200 (CEST)
-From: Andreas Schwab <schwab@suse.de>
-To: Warner Losh <imp@bsdimp.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
-Subject: Re: linux-user cannot allocate stack memory on riscv64 host due to
- non-zero guest_base
-In-Reply-To: <CANCZdfq4=s=g8GoeCKY4576xgJs4-X+fXh7m5ZOJ1UeBXwWdCQ@mail.gmail.com>
- (Warner Losh's message of "Wed, 26 Jun 2024 09:54:06 -0600")
-References: <mvm8qytp828.fsf@suse.de>
- <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org>
- <mvm4j9gp0xd.fsf@suse.de>
- <34fed985-6a6a-4458-95f9-aa651744ef1a@linaro.org>
- <CANCZdfq4=s=g8GoeCKY4576xgJs4-X+fXh7m5ZOJ1UeBXwWdCQ@mail.gmail.com>
-X-Yow: I'm dressing up in an ill-fitting IVY-LEAGUE SUIT!!  Too late...
-Date: Thu, 27 Jun 2024 09:54:22 +0200
-Message-ID: <mvmv81un7m9.fsf@suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=/VlPYqLS4nINnru7w86A5+23JSL+m8ddrZiO0AbA6Kc=;
+ b=K5kur9KrIzDeL3ICz2sruAf3EsGQ20n4lGKx9dE2IKGPSfHloTPGj78V7odPHnkoW2E7uQ
+ Na3ckU7nRJkG44ruigy3DWbQBRRIyecRpX6uKrXuKomAlLpi35FSJ0Y2Bs5N8fk+KWxT7J
+ VKTe/vM6swKhx3JpNvnTtENQV7i/3SE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-161-cmhp9f7pMbegyXYl98g6bg-1; Thu, 27 Jun 2024 03:55:09 -0400
+X-MC-Unique: cmhp9f7pMbegyXYl98g6bg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-424a5a5f024so14800325e9.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 00:55:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719474907; x=1720079707;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/VlPYqLS4nINnru7w86A5+23JSL+m8ddrZiO0AbA6Kc=;
+ b=bRtrUMJzTWJM1wGCaU+8rI05TTHGC1+J2/3QI+HRVrmecWxztmFP748B+OW9qMPBCd
+ HV6GOudwTM2O8IPKNx6izpJUrb7cSJGvwv5boJaHmEhiPEsmHJ6xevW7u375zG0JzB4X
+ S8fIyYskvDacAf02J0a9wlkAWs0ezKSMpVhfVz0xROfxNOBXJwHdUO5zvKdu01xSNrH7
+ Fn2W0IBsdR5ytMERgqINby9f3alnt4HmRwpqS6r6U1Kpjtt2RK4k2QkoawyRXrCmxJZ8
+ mQbKhK7WDxQuJk3u4fDb+hEt8ajLyNOJzeup5Wdo6ruo4cvHuV4dPTW7dgdmtERGLCSs
+ 9Pzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX/PZh+Sc5+Oo8H7RMk1QnVrE1m7BuJ/gXumKF67mgn1xgS8P+JTXzuVZ81wCKxeDBjqUmpkut8QaM1/5cnbIRLwVRioVk=
+X-Gm-Message-State: AOJu0YwVFZx6BgC4eHuQVhO3e8t92A3tWrMRjoxb424WHffkmpV1dwHA
+ uW8+etp0acX5DcKJpQwitPuJyGj/zMTogQtD6kBybdh4mRU0c+Dn7q8ABSFDLL4KDlQN+vUQObD
+ Dlz0JV32872/ZMEMsKDM2WJpFs7UyP0rNHJu1uz27NC4ZF43R+gVB
+X-Received: by 2002:a05:600c:4f0e:b0:425:675a:d52e with SMTP id
+ 5b1f17b1804b1-425675ad6f8mr1085705e9.2.1719474906986; 
+ Thu, 27 Jun 2024 00:55:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGaR3+adqtAimEe6enJChYyn5UgynR5I1VDTINNeZ0kenqIbo2FOGHjmLZ2c+UAIa/pxi/uew==
+X-Received: by 2002:a05:600c:4f0e:b0:425:675a:d52e with SMTP id
+ 5b1f17b1804b1-425675ad6f8mr1085525e9.2.1719474906721; 
+ Thu, 27 Jun 2024 00:55:06 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-424c8468caesm52702385e9.44.2024.06.27.00.55.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Jun 2024 00:55:06 -0700 (PDT)
+Message-ID: <c2e4d431-b7b8-4d0b-b0c6-935cd4fba97c@redhat.com>
+Date: Thu, 27 Jun 2024 09:55:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] hw/sd/sdcard: Deprecate support for spec v1.10
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ devel@lists.libvirt.org, Bin Meng <bmeng.cn@gmail.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>
+References: <20240627071040.36190-1-philmd@linaro.org>
+ <20240627071040.36190-2-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+In-Reply-To: <20240627071040.36190-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-4.12 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.12)[-0.584]; RCVD_NO_TLS_LAST(0.10)[];
- MIME_GOOD(-0.10)[text/plain]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- RCVD_COUNT_ONE(0.00)[1]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,linaro.org:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=schwab@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,34 +109,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Jun 26 2024, Warner Losh wrote:
+On 6/27/24 9:10 AM, Philippe Mathieu-Daudé wrote:
+> We use the v2.00 spec by default since commit 2f0939c234
+> ("sdcard: Add a 'spec_version' property, default to Spec v2.00").
+> Time to deprecate the v1.10 which doesn't bring much, and
+> is not tested.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> On Wed, Jun 26, 2024 at 9:48 AM Richard Henderson <
-> richard.henderson@linaro.org> wrote:
->
->> On 6/26/24 01:23, Andreas Schwab wrote:
->> > On Jun 25 2024, Richard Henderson wrote:
->> >
->> >> can always force the use of a non-zero base with -B or -R.
->> >
->> > $ qemu-riscv64 -d page -B 0x3ee000 hello.riscv64
->> > host mmap_min_addr=0x1000 (fallback)
->> > qemu-riscv64: /daten/src/test/hello.riscv64: requires virtual address
->> space that is in use (omit the -B option or choose a different value)
->> >
->>
->> Well, sure, but that obviously is where qemu-riscv64 itself is located.
->> Still not a valid test case.
->>
->
-> Yea, what happens if you say -B 0x3ee000000 or something else that won't
-> conflict?
 
-I didn't chose that number, qemu did.  If it doesn't work then qemu must
-be fixed.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
--- 
-Andreas Schwab, SUSE Labs, schwab@suse.de
-GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
-"And now for something completely different."
+Thanks,
+
+C.
+
+
+> ---
+>   docs/about/deprecated.rst | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index ff3da68208..02cdef14aa 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -362,6 +362,12 @@ recommending to switch to their stable counterparts:
+>   - "Zve64f" should be replaced with "zve64f"
+>   - "Zve64d" should be replaced with "zve64d"
+>   
+> +``-device sd-card,spec_version=1`` (since 9.1)
+> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> +
+> +SD physical layer specification v2.00 supersedes the v1.10 one.
+> +v2.00 is the default since QEMU 3.0.0.
+> +
+>   Block device options
+>   ''''''''''''''''''''
+>   
+
 
