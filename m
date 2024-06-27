@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427CBC3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 17:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B2EC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 18:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMtJr-0006sx-MB; Thu, 27 Jun 2024 13:54:03 -0400
+	id 1sMtTl-0001B5-Oq; Thu, 27 Jun 2024 14:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sMtJq-0006si-LO
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:54:02 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sMtTf-0001AB-9f
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 14:04:12 -0400
+Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sMtJp-0006QZ-1Z
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:54:02 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1fa4b332645so10865ad.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 10:54:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sMtTP-0001MF-Tr
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 14:04:10 -0400
+Received: by mail-io1-xd2d.google.com with SMTP id
+ ca18e2360f4ac-7eb5dd9f994so292552139f.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 11:03:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1719510839; x=1720115639; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1719511434; x=1720116234; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hMmGk62sx2SvVBa9SQ9ZhkKPy2q0qJnYom/nToZiU9s=;
- b=n3SFr6+7XfW/bSa7R9le+mCNLBq2HTlP33bnXRUKpWhpgx/8PWKNl6/ZUNX5+TJIkI
- n71hgaVEyYxiXhht7ygraAyrkgOXfKO01KkgIC0kHy6D6P28lOkoop9NT/jOdxR24TMP
- uvQT5U85qO5tKicJnxGx6y9mrJJH1jH1sgeZXEGEO+yE51JHjaSFKQqPsAbRXqP4SgQv
- oHL344GM9vixeShshQd0Jmg1gsbGHu8XZmGAS14a9QE4w5vdnW6YS17N/FVVJmWzEyI/
- cyYsfH+X87IGptGTpG2eJCsPxlhnlG1n8DHZJWmdFy5oZO5RcmGCEgjtrixMmBNSdOhD
- +4Dw==
+ bh=S0iy7OmdnIv4vhHrmSzHh4pajG0G9qYEbVVtDoAkstk=;
+ b=ZaugFMYcZ7claEq9OHpyKX+bjT48BmPQLLfq0DN8n3zBtGzw9dOQGLbJN3S+8a5G2k
+ auBHqLBPgl983D/zaSh7+En+D1NddLtmz/8fWTcb0aZhXSLKV3rPb4FDavZSo2JULwmT
+ dK/0Niv53hWues1fFLDXyq8e1sPV0A4r6z/ZOZ4JF8u8DWGX/virs1m+H9uv6LbDwDjA
+ TRyHbweLoAYuDNkER3tmsZTCfeXX9BPT7c/08MVFZcfKPXTUJ2XO5Wy91LeUm4WHLzoz
+ Cc6yWy61s+0R9bG35HbULfdv1vshB2MZyrrnAccbHGI4EyNjVZlYv2QSLGte80sBBXf6
+ tUWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719510839; x=1720115639;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1719511434; x=1720116234;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hMmGk62sx2SvVBa9SQ9ZhkKPy2q0qJnYom/nToZiU9s=;
- b=F7rukgDck8GHzgqnZUvhyO/dKGHaVP11Sksm6bgTUAO6Q32PEUOfbDIALdJq8f2J2B
- f/ceHjRQVM+RWcC2WQInDow30qa46zRtYHrkUiwlqII60U+Tyd2atU8lLRoTjOUQAX6a
- MBLgKKIYZae+McMrrZ5GqEcDw7n5dCwafx+/oLoEgQdnd8TuAF+vaNFNAPgHD2wJjtyx
- v978bsCGIWjQPuWSe7BuMfhfKrJhFxIrTXJ9iONxjnBYR8D8FohY20UunOr41lcHUWO6
- DB/HmSuzn49LFBydOE+DMBVVBU96AxPtX+DS8kiyRA1D8fjzIvBCxGv4dGEf94Kag95Y
- JR+g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCULakAJK2OyUC5zFiiN4yxQc6IPbuB+zr/sKhPyan5Zw71zBSQF6F4/7Mc1rlIFe84Xg6LY5FiYZWZFbzqiZTc3OWC9WVU=
-X-Gm-Message-State: AOJu0YwXhDDO+1gLpmsILvLpQ8RFDKtAlpbP3ZK9yPRT9XCxewgFqrJh
- fNGbOXPbIRCGj3AuEi+fxRv8rqTVu4NmcyuasrWIrkKGDLszlXrC+dOzKq7n4KG/JLB4jdpbURo
- b7aL2tKhbv1st/qHopvlpPA+TVq+QdT9NaA4CezMeCMUUt1e8eiMw
-X-Google-Smtp-Source: AGHT+IGkLLMvXNYB41tu79vl95vkF6GwgT6QdfIPAhDOXvNCKgS+CrDLs/4VOeqJAccBvCo9n1Ny8CxJKKdG7FWPaag=
-X-Received: by 2002:a17:902:768b:b0:1f9:a79b:59fd with SMTP id
- d9443c01a7336-1fac181b803mr118925ad.22.1719510838305; Thu, 27 Jun 2024
- 10:53:58 -0700 (PDT)
+ bh=S0iy7OmdnIv4vhHrmSzHh4pajG0G9qYEbVVtDoAkstk=;
+ b=ZgdNsfOjDC6IjE8gyfJGWz2DRwv3eif0mvbU9Hc4WofivH/xe29S4CZ1Vvm8bs1ErA
+ TAwrk76zbIp9rlCqDIaAOmNtw3CVXtkIBH5YkewNA7MbSFFns+GiQG3UZBEATbuvd1db
+ tThh/Juu4g9YlJ9C83JKvmz6W3V56+rXsOvd9zXfCBbhNQJbjhIeZu0BGwQVjsWypCRE
+ esu6agCouvMsFql3vnY6q7hGTLYfSYmOXUYAlHiZKy8AhGQv0VU13kxTXwHnTrGGL++T
+ sicHSUoHLsNeAOSGrEqrqBUgdOF/IDz4XCJVQ1x4lBhRXXgvZwJujJACTa4DKZ9v8Yin
+ z6lw==
+X-Gm-Message-State: AOJu0YyoDf+Lx6ARjhB5IhWlFstme8tYn3LzrudYrLBOjxkfOYEvS7Zs
+ CX09/dRI0+c8p8eIj/IdyOp5JfUCKl0fjBcU6C2gwQ2Pr1Lj7mYY/n1kxOvjPkneVWuqPILP180
+ S
+X-Google-Smtp-Source: AGHT+IGbIDolrQN49fa5zQh9Z+vDvESl7Nr5+6iTsVqxbdzA59oot616d/eEA+1D9pZUI8qHSo83nA==
+X-Received: by 2002:a05:6602:3f8a:b0:7f1:3ad1:2341 with SMTP id
+ ca18e2360f4ac-7f3a13db517mr1966042139f.7.1719511434499; 
+ Thu, 27 Jun 2024 11:03:54 -0700 (PDT)
+Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70803ecf764sm2170b3a.106.2024.06.27.11.03.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 27 Jun 2024 11:03:54 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: brad@comstyle.com, Alistair.Francis@wdc.com, palmer@dabbelt.com,
+ qemu-riscv@nongnu.org
+Subject: [PATCH 3/3] util/cpuinfo-riscv: Use linux __riscv_hwprobe syscall
+Date: Thu, 27 Jun 2024 11:03:50 -0700
+Message-Id: <20240627180350.128575-4-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240627180350.128575-1-richard.henderson@linaro.org>
+References: <20240627180350.128575-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <ad0740c5-9bc2-443c-9caa-a243b3a29108@redhat.com>
- <20240627003134.3447175-1-rkir@google.com>
- <CABgObfajkBU9-aGQcDGf6taUGwZOG=O5sewzc1HjCWTb5cVA1A@mail.gmail.com>
- <CAOGAQepLGTY-92So1arNZWjg9m+HZ8AjZ28Gsscm2ai5sj1AMQ@mail.gmail.com>
- <CABgObfaBjneGy__o_aABdm+60wsg=rxLmgZLthwCoezwnH34ZQ@mail.gmail.com>
-In-Reply-To: <CABgObfaBjneGy__o_aABdm+60wsg=rxLmgZLthwCoezwnH34ZQ@mail.gmail.com>
-From: Roman Kiryanov <rkir@google.com>
-Date: Thu, 27 Jun 2024 10:53:47 -0700
-Message-ID: <CAOGAQeo+DZpE=6xEeUWUEkqSwYgturQ9QzXyzNNt7QfrFqea-Q@mail.gmail.com>
-Subject: Re: [PATCH v3] timer: Fix a race condition between timer's callback
- and destroying code
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: jansene@google.com, jpcottin@google.com, mett@google.com, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=rkir@google.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -180
-X-Spam_score: -18.1
-X-Spam_bar: ------------------
-X-Spam_report: (-18.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.454,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-io1-xd2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,38 +95,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo, thank you for your comments.
+With recent linux kernels, there is a syscall to probe for various
+ISA extensions.  These bits were phased in over several kernel
+releases, so we still require checks for symbol availability.
 
-On Thu, Jun 27, 2024 at 10:16=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
-> I think the easiest options would be:
->
-> 1) if possible, allocate the timer and the callbackState statically in
-> the device.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ meson.build          |  6 ++++++
+ util/cpuinfo-riscv.c | 26 ++++++++++++++++++++++++++
+ 2 files changed, 32 insertions(+)
 
-I think this assumption is not good for both QEMU and us.
+diff --git a/meson.build b/meson.build
+index 97e00d6f59..58afd0125d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2837,6 +2837,12 @@ have_cpuid_h = cc.links('''
+   }''')
+ config_host_data.set('CONFIG_CPUID_H', have_cpuid_h)
+ 
++# Don't bother to advertise asm/hwprobe.h for old versions that do
++# not contain RISCV_HWPROBE_EXT_ZBA.
++config_host_data.set('CONFIG_ASM_HWPROBE_H',
++                     cc.has_header_symbol('asm/hwprobe.h',
++                                          'RISCV_HWPROBE_EXT_ZBA'))
++
+ config_host_data.set('CONFIG_AVX2_OPT', get_option('avx2') \
+   .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot enable AVX2') \
+   .require(cc.links('''
+diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
+index abf799794f..cf59ce83a3 100644
+--- a/util/cpuinfo-riscv.c
++++ b/util/cpuinfo-riscv.c
+@@ -6,6 +6,11 @@
+ #include "qemu/osdep.h"
+ #include "host/cpuinfo.h"
+ 
++#ifdef CONFIG_ASM_HWPROBE_H
++#include <asm/hwprobe.h>
++#include <sys/syscall.h>
++#endif
++
+ unsigned cpuinfo;
+ static volatile sig_atomic_t got_sigill;
+ 
+@@ -47,6 +52,27 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+ #endif
+     left &= ~info;
+ 
++#ifdef CONFIG_ASM_HWPROBE_H
++    if (left) {
++        /*
++         * TODO: glibc 2.40 will introduce <sys/hwprobe.h>, which
++         * provides __riscv_hwprobe and __riscv_hwprobe_one,
++         * which is a slightly cleaner interface.
++         */
++        struct riscv_hwprobe pair = { .key = RISCV_HWPROBE_KEY_IMA_EXT_0 };
++        if (syscall(__NR_riscv_hwprobe, &pair, 1, 0, NULL, 0) == 0
++            && pair.key >= 0) {
++            info |= pair.value & RISCV_HWPROBE_EXT_ZBA ? CPUINFO_ZBA : 0;
++            info |= pair.value & RISCV_HWPROBE_EXT_ZBB ? CPUINFO_ZBB : 0;
++            left &= ~(CPUINFO_ZBA | CPUINFO_ZBB);
++#ifdef RISCV_HWPROBE_EXT_ZICOND
++            info |= pair.value & RISCV_HWPROBE_EXT_ZICOND ? CPUINFO_ZICOND : 0;
++            left &= ~CPUINFO_ZICOND;
++#endif
++        }
++    }
++#endif /* CONFIG_ASM_HWPROBE_H */
++
+     if (left) {
+         struct sigaction sa_old, sa_new;
+ 
+-- 
+2.34.1
 
-> 2) use "aio_wait_bh_oneshot(qemu_get_aio_context(), [](void
-> *opaque){}, NULL);" after timer_del(). You can also put the timer and
-> the callbackState in a RAII wrapper, so that aio_wait_bh_oneshot() is
-> executed when the RAII wrapper is destructed
-
-My understanding is that this will work as a fence waiting for all
-timers to finish. If so, maybe there is a value to put it into QEMU
-(as times_joins() or even as timer_join(QEMUTimer *ts)) if one day
-you decide to implement it in a more efficient way?
-
-> Another thing that you could do is to use a shared_ptr<> for the
-> timer+callbackState combo, and pass a weak_ptr<> to the timer. Then:
->
-> - at the beginning of the timer, you upgrade the weak_ptr with lock()
-> and if it fails, return
->
-> I'm not sure how you'd pass the weak_ptr/shared_ptr to a callback
-
-I suspect this is not possible in plain C++ without modifying QEMU or
-code generating at runtime.
-
-I would go with your aio_wait_bh_oneshot suggestion. Please consider
-adding it to QEMU as I pointed above. I can send a patch.
 
