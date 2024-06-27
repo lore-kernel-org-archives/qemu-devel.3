@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B301DC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 10:04:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 217CEC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 10:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMlxj-000753-Q1; Thu, 27 Jun 2024 06:02:43 -0400
+	id 1sMlx9-0005e4-8X; Thu, 27 Jun 2024 06:02:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlxP-0006m0-19
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:23 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1sMlx4-0005Np-E5
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:04 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlxM-0001sU-5X
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:22 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7065a2f4573so4560719b3a.2
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:02:19 -0700 (PDT)
+ id 1sMlwz-0001gs-Uu
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:01 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-706627ff48dso4166230b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:01:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719482538; x=1720087338; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719482515; x=1720087315; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3PBJYVBwlZcM3vrZPZTYGjjElJE2GDldPlxWfqT4Lng=;
- b=VOp8qkKXUWdRmjQJ8EuZ/k0Q+H/gpH0K2WssbFr4ET9e6FZoowmfhxxsEOZkIP04ND
- JRXVH8VzACFgDadg/c6ZFs8PtSYUuL/xIptrxvq55XzVtYGuzoEII/CS3Ll+wl9aEiUU
- DYMfB1O99tx8L9CE3C9WYjhAqTjDRthTQlNq69YGW3LkesUjZmI+TPlRweeakqXwnY/X
- WtsUtO2DHLU3LE8e91SBxCMU5lxMY8kTj4mt9U7gy7S3ZxZR1OaiFuZL0fblZ+sPDNc4
- ZkU/Dca4eGWnWLL/gzhh9R1TKN9dOqbSWirNwOsTC8B4w3ox9J7YMdBDUGvkgfNxWg+8
- V9MQ==
+ bh=9aUCnalnUbISmCX7rnd1hepHfDNLqfkxy2lbhGVkz3Q=;
+ b=QBw05HWo76t7Mcq4WaakuBCVs2IMnNTG+50nnqaqY0XH4aKHnkz1gO2VHQzWXNzsm9
+ 2fy6EnsFj3Ro8tnM4MxBzh6l5rXjn15MaSC+V+51uBbH648XTrkCa3JoyVve4bG2dEdI
+ 1ZMs13m+720/JvQqc2W+RSsuEkTP5e29fVoZdby9gvl9x8suqN3IDK1WRZsSVPdoz9fH
+ EeZ+0EcE8XaxEmcAo7ncfPUXnktw3TopmK6ZmtLgD3bPLG/ZnyHZsNE+5dcP+PHqP17f
+ K+lhiNj8SmTuYYZ2kAy+00/sO/ynj9v0SIw8qmC//GKtxPKoonu0n2LS3jRlW3U6GErs
+ yRZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719482538; x=1720087338;
+ d=1e100.net; s=20230601; t=1719482515; x=1720087315;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3PBJYVBwlZcM3vrZPZTYGjjElJE2GDldPlxWfqT4Lng=;
- b=KlPkRdvkfTw6ogqgsbltpllPwV+iqyWUFFb3ZGLnCtiJCejd2zplbUZWxm3ofdmxrN
- cykiOJSlMlv4hD8Q/b4U48KZvMOvIhT7L9F9ecupc+Bm2ojLz4i1M1BTjlF+eoTWfbTS
- cCXk58t5zfQoDbh9y27jzjPqlCxH+oSUa+SdSEqmZ3T5Bo6237bAGWbPH/E97+hU/dub
- FUYvFQ7/bjBCrzCyaTWN85LUFch02YulgTUElXoweM5ou9k9rhDR2/dh42Xmp5aI6oRs
- LOvBMeMQd0kYMcZ9DovSH9YMf90ITayZ+35JVe5dcMbQ+B4g3dWCFVG/LJjZqxgnMEhA
- 6m1Q==
-X-Gm-Message-State: AOJu0YyL1ch/Ihph3rm2QN9hd5EvZE3YPK8ZsV7iFVlHZrgtO2ZgDxkJ
- TTqbQOlOJDT2gGwBKpdmUEFvHyFthx+7DrYJqA/EArR7SImRsrZ3Fo84Vu9R
-X-Google-Smtp-Source: AGHT+IEJQM4eKkM4nv7oVkK3yujEJlkyul5WTiFcWAod+14xI0UFGni0M/8MtptwtINoDCwLVzUDgA==
-X-Received: by 2002:a05:6a00:a06:b0:706:9073:45ee with SMTP id
- d2e1a72fcca58-70690734663mr10959698b3a.25.1719482538319; 
- Thu, 27 Jun 2024 03:02:18 -0700 (PDT)
+ bh=9aUCnalnUbISmCX7rnd1hepHfDNLqfkxy2lbhGVkz3Q=;
+ b=JrK4CrssR0YHx/Vab+u6/1NFpp0X8IpFYMxTa1gxHmjvS9gLqOn8hfcjjmgOxEwovY
+ a+A//ykbPzvWVP0DveUxK8VNLI8yu/j3Rr0mZaeMJaKhv2pBl70uCHSCF4kvSsSDYqS7
+ fCYwceOc6vyjlJz3Yc6R8B7SalVrzu50s219vCqwsmF2lEvCzTT5DFzccyBFa7QTJpA0
+ EqyW7XdglHBWJrEcQYsrhAW9tIu9aQE3q8mk7FLewlLIWg+6lE2mmAca+yX1jKP0DxDU
+ UAkm5y5+3HG9cAMJEJTmXkzYoftqyMp61NrhEousHzsSplOZauHei9M7rdyun7V3Dqc3
+ YJ7Q==
+X-Gm-Message-State: AOJu0YxoxejxQC5Yn1Hh6ANDR/qE4GX6xBLXO5kqyEOPIRoD3xk5q6T1
+ ODDl8zqYB4b5QbHTtA47C14rNYaTUXQIhhenVYiKU/o8MaVWEIopaBTOxJQH
+X-Google-Smtp-Source: AGHT+IGInls2vv1jQdzTlwg9kn3sxblXT56o/xLZlxbKYxUsJWCMiMOQYlfHt2Kbjq2JsuOaAAOOKg==
+X-Received: by 2002:aa7:9d11:0:b0:706:6525:611f with SMTP id
+ d2e1a72fcca58-70674751f13mr14066320b3a.31.1719482515558; 
+ Thu, 27 Jun 2024 03:01:55 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.02.15
+ d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.01.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 03:02:17 -0700 (PDT)
+ Thu, 27 Jun 2024 03:01:55 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
- Atish Patra <atishp@rivosinc.com>,
+Cc: alistair23@gmail.com, "Fea.Wang" <fea.wang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>, Weiwei Li <liwei1518@gmail.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 23/32] target/riscv: fix instructions count handling in icount
- mode
-Date: Thu, 27 Jun 2024 20:00:44 +1000
-Message-ID: <20240627100053.150937-24-alistair.francis@wdc.com>
+Subject: [PULL 16/32] target/riscv: Define macros and variables for ss1p13
+Date: Thu, 27 Jun 2024 20:00:37 +1000
+Message-ID: <20240627100053.150937-17-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240627100053.150937-1-alistair.francis@wdc.com>
 References: <20240627100053.150937-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,117 +100,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Léger <cleger@rivosinc.com>
+From: "Fea.Wang" <fea.wang@sifive.com>
 
-When icount is enabled, rather than returning the virtual CPU time, we
-should return the instruction count itself. Add an instructions bool
-parameter to get_ticks() to correctly return icount_get_raw() when
-icount_enabled() == 1 and instruction count is queried. This will modify
-the existing behavior which was returning an instructions count close to
-the number of cycles (CPI ~= 1).
+Add macros and variables for RISC-V privilege 1.13 support.
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Message-ID: <20240618112649.76683-1-cleger@rivosinc.com>
+Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Weiwei Li <liwei1518@gmail.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240606135454.119186-3-fea.wang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.c | 30 +++++++++++++++++-------------
- 1 file changed, 17 insertions(+), 13 deletions(-)
+ target/riscv/cpu.h     | 4 +++-
+ target/riscv/cpu_cfg.h | 1 +
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 6f15612e76..432c59dc66 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -762,14 +762,18 @@ static RISCVException write_vcsr(CPURISCVState *env, int csrno,
- }
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index b4c9e13774..90b8f1b08f 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -96,12 +96,14 @@ extern RISCVCPUProfile *riscv_profiles[];
+ #define PRIV_VER_1_10_0_STR "v1.10.0"
+ #define PRIV_VER_1_11_0_STR "v1.11.0"
+ #define PRIV_VER_1_12_0_STR "v1.12.0"
++#define PRIV_VER_1_13_0_STR "v1.13.0"
+ enum {
+     PRIV_VERSION_1_10_0 = 0,
+     PRIV_VERSION_1_11_0,
+     PRIV_VERSION_1_12_0,
++    PRIV_VERSION_1_13_0,
  
- /* User Timers and Counters */
--static target_ulong get_ticks(bool shift)
-+static target_ulong get_ticks(bool shift, bool instructions)
- {
-     int64_t val;
-     target_ulong result;
+-    PRIV_VERSION_LATEST = PRIV_VERSION_1_12_0,
++    PRIV_VERSION_LATEST = PRIV_VERSION_1_13_0,
+ };
  
- #if !defined(CONFIG_USER_ONLY)
-     if (icount_enabled()) {
--        val = icount_get();
-+        if (instructions) {
-+            val = icount_get_raw();
-+        } else {
-+            val = icount_get();
-+        }
-     } else {
-         val = cpu_get_host_ticks();
-     }
-@@ -804,14 +808,14 @@ static RISCVException read_timeh(CPURISCVState *env, int csrno,
- static RISCVException read_hpmcounter(CPURISCVState *env, int csrno,
-                                       target_ulong *val)
- {
--    *val = get_ticks(false);
-+    *val = get_ticks(false, (csrno == CSR_INSTRET));
-     return RISCV_EXCP_NONE;
- }
- 
- static RISCVException read_hpmcounterh(CPURISCVState *env, int csrno,
-                                        target_ulong *val)
- {
--    *val = get_ticks(true);
-+    *val = get_ticks(true, (csrno == CSR_INSTRETH));
-     return RISCV_EXCP_NONE;
- }
- 
-@@ -875,11 +879,11 @@ static RISCVException write_mhpmcounter(CPURISCVState *env, int csrno,
-     int ctr_idx = csrno - CSR_MCYCLE;
-     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-     uint64_t mhpmctr_val = val;
-+    bool instr = riscv_pmu_ctr_monitor_instructions(env, ctr_idx);
- 
-     counter->mhpmcounter_val = val;
--    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
--        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
--        counter->mhpmcounter_prev = get_ticks(false);
-+    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) || instr) {
-+        counter->mhpmcounter_prev = get_ticks(false, instr);
-         if (ctr_idx > 2) {
-             if (riscv_cpu_mxl(env) == MXL_RV32) {
-                 mhpmctr_val = mhpmctr_val |
-@@ -902,12 +906,12 @@ static RISCVException write_mhpmcounterh(CPURISCVState *env, int csrno,
-     PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
-     uint64_t mhpmctr_val = counter->mhpmcounter_val;
-     uint64_t mhpmctrh_val = val;
-+    bool instr = riscv_pmu_ctr_monitor_instructions(env, ctr_idx);
- 
-     counter->mhpmcounterh_val = val;
-     mhpmctr_val = mhpmctr_val | (mhpmctrh_val << 32);
--    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
--        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
--        counter->mhpmcounterh_prev = get_ticks(true);
-+    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) || instr) {
-+        counter->mhpmcounterh_prev = get_ticks(true, instr);
-         if (ctr_idx > 2) {
-             riscv_pmu_setup_timer(env, mhpmctr_val, ctr_idx);
-         }
-@@ -926,6 +930,7 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-                                          counter->mhpmcounter_prev;
-     target_ulong ctr_val = upper_half ? counter->mhpmcounterh_val :
-                                         counter->mhpmcounter_val;
-+    bool instr = riscv_pmu_ctr_monitor_instructions(env, ctr_idx);
- 
-     if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
-         /*
-@@ -946,9 +951,8 @@ static RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-      * The kernel computes the perf delta by subtracting the current value from
-      * the value it initialized previously (ctr_val).
+ #define VEXT_VERSION_1_00_0 0x00010000
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index e1e4f32698..fb7eebde52 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -136,6 +136,7 @@ struct RISCVCPUConfig {
+      * TCG always implement/can't be user disabled,
+      * based on spec version.
       */
--    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
--        riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
--        *val = get_ticks(upper_half) - ctr_prev + ctr_val;
-+    if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) || instr) {
-+        *val = get_ticks(upper_half, instr) - ctr_prev + ctr_val;
-     } else {
-         *val = ctr_val;
-     }
++    bool has_priv_1_13;
+     bool has_priv_1_12;
+     bool has_priv_1_11;
+ 
 -- 
 2.45.2
 
