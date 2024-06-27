@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F199EC3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 16:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F664C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 16:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMs9V-0001Ak-C9; Thu, 27 Jun 2024 12:39:17 -0400
+	id 1sMsA9-00024O-GX; Thu, 27 Jun 2024 12:39:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMs9U-00018M-Hk
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:39:16 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMsA3-0001mg-Bo
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:39:52 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMs9S-0006sv-R2
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:39:16 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-354b722fe81so5420883f8f.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 09:39:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMs9w-0006vW-PE
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:39:51 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-36733f09305so943456f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 09:39:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719506352; x=1720111152; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719506383; x=1720111183; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0hugKoDWkNwghwH1h1z7n8tbSuuJya6Cw/1S35GizWg=;
- b=IZkqlfHn2xRbZiTMTpxadh8ibDKPx4JoyV7me9WQwHciw729I9kPF+N3LSSpOS4VTt
- rNE61ayGllO1s+yEDEJi4dGx8vm3H55L0np98B29mkwOLlEXwsoN8ieyuc/jyx/z7Uz+
- bYY5XAUeVnLMtm1D0QRo2Y3mgYeb+q2f/qc9NSJ4eRay+o2X7qtC4Eue9jANfH8+V1Gs
- l/RFfwnGffPFUStRjHUrtXXnvUFc2ABk9OONnySjidFDiQt4HNs5bUkbf9+MR8cBffuo
- qH9E97YjsOkTu+n1HBrwuPAt0z8Hv7mNurp5UxghlyC1stFoSJ+PsZ+WnIN315JrHVSu
- 5LKw==
+ bh=FQYmSrnXt5mY866BTgrOijDYx76JFvHs12wH0ygKj7I=;
+ b=Qlb2GJxXRJ97tVKLuaQka19908qnT7nwtxqhPCOvAsRgOiN19IqBHpQLE3dFgr9+Sd
+ sPSfIL9Ys8lGjIPRsDdawuSiv8HWgggTq3kBfI4RMkEihnZQ1hU1pj0umKyUbPP/qbCi
+ mK+lQYv7KS0mmVuhqfZDhCAQlletdK+oOVEMjqsKp6Z6BoCUOvtb9MTcGI7cw7zaeCHr
+ CMXK0AJiGlAeCpjZtGBYfoyLUyjpE0uuB3wMfSBlNWoUttoDG8D7NKWEGaTuEEaobBJc
+ YaT7DcTr0gJpSjRsJvM/rbiMQGxdBjAXvxp5Q1p0eLPy5V1mGEzEEnAk1UOVBQLzezDZ
+ 0vZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719506352; x=1720111152;
+ d=1e100.net; s=20230601; t=1719506383; x=1720111183;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0hugKoDWkNwghwH1h1z7n8tbSuuJya6Cw/1S35GizWg=;
- b=cI71m+tdvBaToZloEDNcHcAgTzUQSnDO1p96oUR0vYOOgirbt8pyCrw00Ncxxirq9R
- Za/f7hOdBWrvtr5XuujxmmsAelxQ9GVqVfo+IVRMUCRtoAL3KHkqZALm6IjzyjURVHiv
- Q29vy4M5Q8w2h1NDqT5ZUb6DouBk13/UN3kF3L3IBwrgr52CgbRYu8rrLoN7SD76la1i
- 0u3ckrFEXFAZxl0bkuzSAjT0/QW1ZAuMxhEQVbwOPZ0ykRmrGqnYcruDVn8thwZ962wD
- cyChElKk0WoF2AehxxseuMFDVgfGqEKSjOH9ondymZ6htHXQ2QHObNr+O+9w3vjoSpCD
- ALXQ==
-X-Gm-Message-State: AOJu0YxO1/o1cC/9q7XlPDhc+RtkaDw2lRRCor7ZObPbUkEOpIC48ZX+
- YlU3uYR3riPyTV/Mpei02S8YIdJ+C5/J6FjEegA/yuH/IOSS9paspaX+pAjQTSCuxjpByKWYzIc
- 14U8=
-X-Google-Smtp-Source: AGHT+IHiRvZE5umc0s9ZHDgHFXiV7jcjsQQkSpQ9P4dX0L5s2m/JtYZUx896sYCUBp9zHhiuzqfbjg==
-X-Received: by 2002:a05:6000:d0a:b0:362:80af:1adc with SMTP id
- ffacd0b85a97d-366e4f00a9fmr9077082f8f.53.1719506352181; 
- Thu, 27 Jun 2024 09:39:12 -0700 (PDT)
+ bh=FQYmSrnXt5mY866BTgrOijDYx76JFvHs12wH0ygKj7I=;
+ b=OlngTSKO/1fZtpEIJ8vgeyf/gm4AznuIxDCmGOS9aA9RX8CFFJzAZEKDEQ3BwK1XsW
+ 5JBJ4/ZPJq3iWv3+Pyiam/l7oMJg7pcHRstQvCNfskBYOKUqES3qEufNWWLDn+EhPROX
+ roygS8jqNsyY8HbZ0XCr6v7D+603lo6JVP5kjhJR296ox04evJjQrJI65mQndbS++ag0
+ bUTW+CpDQQMCPBA03u9St0ZS977VajLLEwnlH0WmZehDOtikPrr9RGaLBgX+sJB95wG9
+ VQI677oKZ7znVb/8aQ6gshWmYLzntdJFfTwxxwl5BhKJJC/mCZH3D7Prw+L93eK/vq1/
+ FWDA==
+X-Gm-Message-State: AOJu0YzcxrPwLK1MHwPNOlmnb1aRAryQOhoK2JP7jAjzrBwOjff4VBKF
+ 6WvqtJCaYHx1uwRCnBaM+NnunYuAeMrwqhRJVStZ2UIP1wgdTVqtPgnvk9Y7UGmTedfHkuh+OAG
+ BsEo=
+X-Google-Smtp-Source: AGHT+IHQbmsC0HWVvuB1JR5LM4eXxNJkSJgXyyXasmZf2+ytQyFcgNKpcceNRUPLeAX3r+AyAtphdQ==
+X-Received: by 2002:a5d:6487:0:b0:362:5a6e:2649 with SMTP id
+ ffacd0b85a97d-366e7a56dedmr13977062f8f.56.1719506383178; 
+ Thu, 27 Jun 2024 09:39:43 -0700 (PDT)
 Received: from localhost.localdomain (33.red-95-127-46.staticip.rima-tde.net.
  [95.127.46.33]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3674369ed92sm2384487f8f.105.2024.06.27.09.39.09
+ ffacd0b85a97d-3674357c089sm2442223f8f.7.2024.06.27.09.39.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 27 Jun 2024 09:39:11 -0700 (PDT)
+ Thu, 27 Jun 2024 09:39:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>,
@@ -65,18 +65,17 @@ Cc: Joel Stanley <joel@jms.id.au>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Bin Meng <bmeng.cn@gmail.com>, Luc Michel <luc.michel@amd.com>
-Subject: [PATCH 02/11] hw/sd/sdcard: Pass SDState as argument to
- sd_[a]cmd_name()
-Date: Thu, 27 Jun 2024 18:38:34 +0200
-Message-ID: <20240627163843.81592-3-philmd@linaro.org>
+Subject: [PATCH 05/11] hw/sd/sdcard: Store command type in SDProto
+Date: Thu, 27 Jun 2024 18:38:37 +0200
+Message-ID: <20240627163843.81592-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240627163843.81592-1-philmd@linaro.org>
 References: <20240627163843.81592-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +98,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to access SDState::SDProto from sd_[a]cmd_name(),
-pass SDState as argument.
+Store the command type altogether with the command handler and name.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/hw/sd/sd.h |  5 +++--
+ hw/sd/sd.c         | 44 ++++++++++++++++++++------------------------
+ 2 files changed, 23 insertions(+), 26 deletions(-)
 
+diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
+index 2c8748fb9b..29c76935a0 100644
+--- a/include/hw/sd/sd.h
++++ b/include/hw/sd/sd.h
+@@ -76,8 +76,9 @@ typedef enum  {
+ } sd_uhs_mode_t;
+ 
+ typedef enum {
+-    sd_none = -1,
+-    sd_bc = 0, /* broadcast -- no response */
++    sd_none = 0,
++    sd_spi,
++    sd_bc,     /* broadcast -- no response */
+     sd_bcr,    /* broadcast with response */
+     sd_ac,     /* addressed -- no data transfer */
+     sd_adtc,   /* addressed with data transfer */
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 93a4a4e1b4..f4bdd12b26 100644
+index 97fb3785ee..c4cc48926d 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -233,7 +233,7 @@ static const char *sd_response_name(sd_rsp_type_t rsp)
-     return response_name[rsp];
+@@ -95,6 +95,7 @@ typedef sd_rsp_type_t (*sd_cmd_handler)(SDState *sd, SDRequest req);
+ typedef struct SDProto {
+     const char *name;
+     struct {
++        const sd_cmd_type_t type;
+         const char *name;
+         sd_cmd_handler handler;
+     } cmd[SDMMC_CMD_MAX], acmd[SDMMC_CMD_MAX];
+@@ -351,20 +352,6 @@ static void sd_set_mode(SDState *sd)
+     }
  }
  
--static const char *sd_cmd_name(uint8_t cmd)
-+static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
+-static const sd_cmd_type_t sd_cmd_type[SDMMC_CMD_MAX] = {
+-    sd_bc,   sd_none, sd_bcr,  sd_bcr,  sd_none, sd_none, sd_none, sd_ac,
+-    sd_bcr,  sd_ac,   sd_ac,   sd_adtc, sd_ac,   sd_ac,   sd_none, sd_ac,
+-    /* 16 */
+-    sd_ac,   sd_adtc, sd_adtc, sd_none, sd_none, sd_none, sd_none, sd_none,
+-    sd_adtc, sd_adtc, sd_adtc, sd_adtc, sd_ac,   sd_ac,   sd_adtc, sd_none,
+-    /* 32 */
+-    sd_ac,   sd_ac,   sd_none, sd_none, sd_none, sd_none, sd_ac,   sd_none,
+-    sd_none, sd_none, sd_bc,   sd_none, sd_none, sd_none, sd_none, sd_none,
+-    /* 48 */
+-    sd_none, sd_none, sd_none, sd_none, sd_none, sd_none, sd_none, sd_ac,
+-    sd_adtc, sd_none, sd_none, sd_none, sd_none, sd_none, sd_none, sd_none,
+-};
+-
+ static const int sd_cmd_class[SDMMC_CMD_MAX] = {
+     0,  0,  0,  0,  0,  9, 10,  0,  0,  0,  0,  1,  0,  0,  0,  0,
+     2,  2,  2,  2,  3,  3,  3,  3,  4,  4,  4,  4,  6,  6,  6,  6,
+@@ -571,10 +558,19 @@ static void sd_set_rca(SDState *sd, uint16_t value)
+ 
+ static uint16_t sd_req_get_rca(SDState *s, SDRequest req)
  {
-     static const char *cmd_abbrev[SDMMC_CMD_MAX] = {
-          [0]    = "GO_IDLE_STATE",           [1]    = "SEND_OP_COND",
-@@ -272,7 +272,7 @@ static const char *sd_cmd_name(uint8_t cmd)
-     return cmd_abbrev[cmd] ? cmd_abbrev[cmd] : "UNKNOWN_CMD";
+-    if (sd_cmd_type[req.cmd] == sd_ac || sd_cmd_type[req.cmd] == sd_adtc) {
++    switch (s->proto->cmd[req.cmd].type) {
++    case sd_none:
++        /* Called from legacy code not ported to SDProto array */
++        assert(!s->proto->cmd[req.cmd].handler);
++        /* fall-through */
++    case sd_ac:
++    case sd_adtc:
+         return req.arg >> 16;
++    case sd_spi:
++        g_assert_not_reached();
++    default:
++        return 0;
+     }
+-    return 0;
  }
  
--static const char *sd_acmd_name(uint8_t cmd)
-+static const char *sd_acmd_name(SDState *sd, uint8_t cmd)
- {
-     static const char *acmd_abbrev[SDMMC_CMD_MAX] = {
-          [6] = "SET_BUS_WIDTH",
-@@ -1281,7 +1281,7 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
-     uint64_t addr;
-     uint32_t data;
+ /* Card Status register */
+@@ -2277,22 +2273,22 @@ void sd_enable(SDState *sd, bool enable)
+ static const SDProto sd_proto_spi = {
+     .name = "SPI",
+     .cmd = {
+-        [0]  = {            "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
+-        [1]  = {            "SEND_OP_COND", spi_cmd_SEND_OP_COND},
++        [0]  = {    sd_spi, "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
++        [1]  = {    sd_spi, "SEND_OP_COND", spi_cmd_SEND_OP_COND},
+     },
+     .acmd = {
+-        [41] = {            "SEND_OP_COND", spi_cmd_SEND_OP_COND},
++        [41] = {    sd_spi, "SEND_OP_COND", spi_cmd_SEND_OP_COND},
+     },
+ };
  
--    sd->last_cmd_name = sd_cmd_name(req.cmd);
-+    sd->last_cmd_name = sd_cmd_name(sd, req.cmd);
-     /* CMD55 precedes an ACMD, so we are not interested in tracing it.
-      * However there is no ACMD55, so we want to trace this particular case.
-      */
-@@ -1748,7 +1748,7 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
- static sd_rsp_type_t sd_app_command(SDState *sd,
-                                     SDRequest req)
- {
--    sd->last_cmd_name = sd_acmd_name(req.cmd);
-+    sd->last_cmd_name = sd_acmd_name(sd, req.cmd);
-     trace_sdcard_app_command(sd->proto->name, sd->last_cmd_name,
-                              req.cmd, req.arg, sd_state_name(sd->state));
-     sd->card_status |= APP_CMD;
+ static const SDProto sd_proto_sd = {
+     .name = "SD",
+     .cmd = {
+-        [0]  = {             "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
+-        [2]  = {             "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
+-        [3]  = {             "SEND_RELATIVE_ADDR", sd_cmd_SEND_RELATIVE_ADDR},
+-        [19] = {             "SEND_TUNING_BLOCK", sd_cmd_SEND_TUNING_BLOCK},
+-        [23] = {             "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
++        [0]  = {    sd_bc,   "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
++        [2]  = {    sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
++        [3]  = {    sd_bcr,  "SEND_RELATIVE_ADDR", sd_cmd_SEND_RELATIVE_ADDR},
++        [19] = {    sd_adtc, "SEND_TUNING_BLOCK", sd_cmd_SEND_TUNING_BLOCK},
++        [23] = {    sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
+     },
+ };
+ 
 -- 
 2.41.0
 
