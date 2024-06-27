@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2889CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 12:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AFF2C3064D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 12:48:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMoW0-0000F7-Q3; Thu, 27 Jun 2024 08:46:16 -0400
+	id 1sMoY6-0001wJ-NY; Thu, 27 Jun 2024 08:48:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sMoVp-0000CR-GQ
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:46:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sMoY4-0001wB-S2
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:48:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sMoVm-0000le-BF
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:46:04 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sMoY2-0001Bg-V3
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:48:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719492361;
+ s=mimecast20190719; t=1719492501;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PEyXyjrz0uT0L56DM07tTAES+eOWE4OCv7rGSKUOWNM=;
- b=dD0kmReF62kfq0sEMlsRulWSSr3RU7StWwZlYb4AUjeCfGrrF9aXYC/ekjDe0kiAgYerIa
- ARRIhNOY353Drv/HTSDEx+XVoHmZ7ERhFkY5ugpWJrS7bSXfm2QNXj6hGO563o1fvAzWd5
- rAFs9/BonOmb1Cs6zFqfqrZNAI6njnA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=N0uiEn3o+B6SVZl38Y2WCys9sSApz2THSbMXnoBBN4U=;
+ b=NCQuYF7wFvFwaUVgtNd0iAOL+nqyXCcnq3EDv+vR3U14teFm4GaFr+hlvNFJZSdDASDj7d
+ YpIQEdvZ+/7tk3GXKFZwQjFWb4+DQqMcXzWvG9ZXy6a2WqNMyo6jlUy+WRqgxf9eXeDYp9
+ WOeij1D2Qx9KYuEecbz9gm0308sQrJg=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-561-bgfAeF8KN8iLE5L7Rmk2Ww-1; Thu, 27 Jun 2024 08:45:59 -0400
-X-MC-Unique: bgfAeF8KN8iLE5L7Rmk2Ww-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-36740a84ad8so699322f8f.0
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 05:45:59 -0700 (PDT)
+ us-mta-82-jAsn8WdWMkeM4sKPEUGFvA-1; Thu, 27 Jun 2024 08:48:17 -0400
+X-MC-Unique: jAsn8WdWMkeM4sKPEUGFvA-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-57c6e28b151so895595a12.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 05:48:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719492359; x=1720097159;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PEyXyjrz0uT0L56DM07tTAES+eOWE4OCv7rGSKUOWNM=;
- b=q7rMIzxnXBbf4GZ8kZUS5h7RzX/kNPxI0Zb3XphlOvZfJ4BjCngSH0yYqoeS2sbT6y
- nPw+bNAps/fh8ch3jo9vAw14SKNtiAzrScVHM0zUbH3McP41AHAzwWK+oLU6Pw49rUwN
- FwxMx0xmZ4Rhjv8dWGidE70FrFj2WpaVINHAJ8RJHst2hhc976LGaDZVcWVcZMUJ/h0T
- urJAd/H5GGE98+f7lQd1NoV1ZhUU7cdf0aGZqOi8x2T58yrfjD4jp8h0xndB55InbaQc
- 18aPpGJak4cd5Hm6Fahiy3mgETCF71J5WrDqIU+jM9+CxuH+ejfur/U/rhJZ62ubrsHt
- Zmrw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/AtzCeGJqyQzTn0HZH0cOgGWSGDXw+qdbIFBa1FhU1pMwsVLiiZxUkzFDQfp2BVUu0nHFPRCUD/Hs+0NOBz4QD+sLFYU=
-X-Gm-Message-State: AOJu0Yxs/dwns5pWqWoE1r3WxAWbYkxPYmuNFiI4LmkrdOsHZWc3uXWv
- uj8t7JLiJzFNOCBRhRNBd1wrAPr/Rbxox9nI5N4cSkrwcLMe2JJ1C47Gl0t/mzNHyxj3DlnrX5y
- 8PjsON+8bvm094VuBOD7hir1a4aaj1m8VrSweBk7DCSiG2x+IEUzo
-X-Received: by 2002:adf:f1c8:0:b0:367:42c1:516 with SMTP id
- ffacd0b85a97d-36742c10599mr1706655f8f.18.1719492358876; 
- Thu, 27 Jun 2024 05:45:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEYnJOYQggJiXKXxSMzsFo4hr4SuN8taJsLKh778dY6XPRmMVE7b1+mR57fG/XpIGlW9KYXiA==
-X-Received: by 2002:adf:f1c8:0:b0:367:42c1:516 with SMTP id
- ffacd0b85a97d-36742c10599mr1706633f8f.18.1719492358497; 
- Thu, 27 Jun 2024 05:45:58 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3674369ec7asm1741891f8f.112.2024.06.27.05.45.57
+ d=1e100.net; s=20230601; t=1719492495; x=1720097295;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N0uiEn3o+B6SVZl38Y2WCys9sSApz2THSbMXnoBBN4U=;
+ b=cJLW2T2vtCegEbPnR+HYtu7brQqx8CgOt3hHFnD3Bw2tfQQzH4qoSWhzGwFsSjIPTl
+ BFFFAYRAxbZvc9POPZx2b6lRe8YdD1NWNc4sIne/TKTBx8j711lyDq67OPr6FhipWdfY
+ WWv3yQaobCj3CcCFlsIZcFwXoiDs7dJkhiOQcaZ3gQb+VN1F1afq7GEngmA/4pfC8qqZ
+ 8PyvJFHMk/AMrt++ff1beXpzaPIAZeoF/3KVzN6swr8ypIa7EsGeoUr96g7V9s9BBkGH
+ KO9oENNXniv7pp4nFgcF4IeGpkiDKxW9d8KdFZqZ6xRn1Oxyrpnl6rKTDdtoFpqH1VWH
+ 106Q==
+X-Gm-Message-State: AOJu0Yzvootg970Gp88MBo5VRoTJZ1EEV+/kDatxyQmbGn+Iq9Np3004
+ yjP+uFPENUbMAoje4hgwWmrxwu0AUR5CqHKyh6FzPN5kYUY9LbDY1L6uotGoEtxiEgc4ZgR378P
+ MLW7mAZV5Qmc+j98TTVdaMTM0sExOO2aAvqtK190cG0UQ23mg3q2Q
+X-Received: by 2002:a50:9555:0:b0:57d:4cbc:cb59 with SMTP id
+ 4fb4d7f45d1cf-57d4cbccbf9mr9504884a12.25.1719492494757; 
+ Thu, 27 Jun 2024 05:48:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGlo2vEJVbsp8Jn6sqkl/k5/AeuTvTSeEzt1pRxu5HIc5mYyE92BXUZ/wU2WCuKLzoiROd2JQ==
+X-Received: by 2002:a50:9555:0:b0:57d:4cbc:cb59 with SMTP id
+ 4fb4d7f45d1cf-57d4cbccbf9mr9504854a12.25.1719492494084; 
+ Thu, 27 Jun 2024 05:48:14 -0700 (PDT)
+Received: from sgarzare-redhat (83.0.40.93.internetdsl.tpnet.pl. [83.0.40.93])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-584d0c9dbf1sm833687a12.19.2024.06.27.05.48.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 05:45:58 -0700 (PDT)
-Date: Thu, 27 Jun 2024 14:45:57 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Markus Armbruster
- <armbru@redhat.com>, qemu-devel@nongnu.org, ankita@nvidia.com,
- marcel.apfelbaum@gmail.com, philmd@linaro.org, Richard Henderson
- <richard.henderson@linaro.org>, linuxarm@huawei.com, Dave Jiang
- <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>, Paolo Bonzini
- <pbonzini@redhat.com>, eduardo@habkost.net, linux-cxl@vger.kernel.org,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v3 03/11] hw/acpi: Move AML building code for Generic
- Initiators to aml_build.c
-Message-ID: <20240627144557.237e3ab7@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240627084356-mutt-send-email-mst@kernel.org>
-References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
- <20240620160324.109058-4-Jonathan.Cameron@huawei.com>
- <20240627144244.27473a32@imammedo.users.ipa.redhat.com>
- <20240627084356-mutt-send-email-mst@kernel.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ Thu, 27 Jun 2024 05:48:13 -0700 (PDT)
+Date: Thu, 27 Jun 2024 14:48:07 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, 
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>, 
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v3 06/15] sev: Update launch_update_data functions to use
+ Error handling
+Message-ID: <bzb476tm3o7wtv6onru7uvhgs4y53yx3minxsbrgkwnflkfjn2@5avs7xnn5no5>
+References: <cover.1718979106.git.roy.hopkins@suse.com>
+ <cac4ababee3bfed7658a501d5d5810379ac90512.1718979106.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <cac4ababee3bfed7658a501d5d5810379ac90512.1718979106.git.roy.hopkins@suse.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -113,36 +111,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Jun 2024 08:44:14 -0400
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
+On Fri, Jun 21, 2024 at 03:29:09PM GMT, Roy Hopkins wrote:
+>The class function and implementations for updating launch data return
+>a code in case of error. In some cases an error message is generated and
+>in other cases, just the error return value is used.
+>
+>This small refactor adds an 'Error **errp' parameter to all functions
+>which consistently set an error condition if a non-zero value is
+>returned.
+>
+>Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+>---
+> target/i386/sev.c | 67 +++++++++++++++++++++++++----------------------
+> 1 file changed, 35 insertions(+), 32 deletions(-)
+>
+>diff --git a/target/i386/sev.c b/target/i386/sev.c
+>index 30b83f1d77..1900c3d9b4 100644
+>--- a/target/i386/sev.c
+>+++ b/target/i386/sev.c
+>@@ -121,7 +121,8 @@ struct SevCommonStateClass {
+>                                        Error **errp);
+>     int (*launch_start)(SevCommonState *sev_common);
+>     void (*launch_finish)(SevCommonState *sev_common);
+>-    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa, uint8_t *ptr, uint64_t len);
+>+    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa,
+>+                              uint8_t *ptr, uint64_t len, Error **errp);
+>     int (*kvm_init)(ConfidentialGuestSupport *cgs, Error **errp);
+> };
+>
+>@@ -942,14 +943,17 @@ out:
+>     return ret;
+> }
+>
+>-static int
+>-sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa, uint8_t *addr, uint64_t len)
+>+static int sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
+>+                                  uint8_t *addr, uint64_t len, Error **errp)
+> {
+>     int ret, fw_error;
+>     struct kvm_sev_launch_update_data update;
+>
+>     if (!addr || !len) {
+>-        return 1;
 
-> On Thu, Jun 27, 2024 at 02:42:44PM +0200, Igor Mammedov wrote:
-> > On Thu, 20 Jun 2024 17:03:11 +0100
-> > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-> >   
-> > > Rather than attempting to create a generic function with mess of the two
-> > > different device handle types, use a PCI handle specific variant.  If the
-> > > ACPI handle form is needed then that can be introduced alongside this
-> > > with little duplicated code.
-> > > 
-> > > Drop the PCIDeviceHandle in favor of just passing the bus, devfn
-> > > and segment directly.  devfn kept as a single byte because ARI means
-> > > that in cases this is just an 8 bit function number.
-> > > 
-> > > Suggested-by: Igor Mammedov <imammedo@redhat.com>
-> > > Link: https://lore.kernel.org/qemu-devel/20240618142333.102be976@imammedo.users.ipa.redhat.com/
-> > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>  
-> > 
-> > with typo fixed  
-> 
-> typo being "in cases"?
-> 
-> > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> >   
-> 
+Why were we returning 1 before? Was that a mistake?
+Maybe we should mention it in the patch or fix it in another patch.
 
-nope, I highlighted it the patch
-  > +void build_srat_pci_generic_initiator(GArray * table_date, int node,  
-  s/table_date/table_data/
+>+        error_setg(errp,
+>+                   "%s: Invalid parameters provided for updating 
+>launch data.",
+>+                   __func__);
+>+        return -1;
+>     }
+>
+>     update.uaddr = (uintptr_t)addr;
+>@@ -958,8 +962,8 @@ sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa, uint8_t *addr, ui
+>     ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_LAUNCH_UPDATE_DATA,
+>                     &update, &fw_error);
+>     if (ret) {
+>-        error_report("%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'",
+>-                __func__, ret, fw_error, fw_error_to_str(fw_error));
+>+        error_setg(errp, "%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'", __func__,
+>+                   ret, fw_error, fw_error_to_str(fw_error));
+>     }
+>
+>     return ret;
+>@@ -1087,9 +1091,8 @@ sev_launch_finish(SevCommonState *sev_common)
+>     migrate_add_blocker(&sev_mig_blocker, &error_fatal);
+> }
+>
+>-static int
+>-snp_launch_update_data(uint64_t gpa, void *hva,
+>-                       uint32_t len, int type)
+>+static int snp_launch_update_data(uint64_t gpa, void *hva, uint32_t len,
+>+                                  int type, Error **errp)
+> {
+>     SevLaunchUpdateData *data;
+>
+>@@ -1104,13 +1107,12 @@ snp_launch_update_data(uint64_t gpa, void *hva,
+>     return 0;
+> }
+>
+>-static int
+>-sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
+>-                           uint8_t *ptr, uint64_t len)
+>+static int sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
+>+                                      uint8_t *ptr, uint64_t len, Error **errp)
+> {
+>-       int ret = snp_launch_update_data(gpa, ptr, len,
+>-                                         KVM_SEV_SNP_PAGE_TYPE_NORMAL);
+>-       return ret;
+>+    int ret = snp_launch_update_data(gpa, ptr, len,
+>+                                     KVM_SEV_SNP_PAGE_TYPE_NORMAL, errp);
+>+    return ret;
+
+Pre-existing, but while we're at it maybe we can remove ret.
+
+> }
+>
+> static int
+>@@ -1162,8 +1164,8 @@ sev_snp_cpuid_info_fill(SnpCpuidInfo *snp_cpuid_info,
+>     return 0;
+> }
+>
+>-static int
+>-snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, uint32_t cpuid_len)
+>+static int snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva,
+>+                                   uint32_t cpuid_len, Error **errp)
+> {
+>     KvmCpuidInfo kvm_cpuid_info = {0};
+>     SnpCpuidInfo snp_cpuid_info;
+>@@ -1180,26 +1182,26 @@ snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, uint32_t cpuid_len)
+>     } while (ret == -E2BIG);
+>
+>     if (ret) {
+>-        error_report("SEV-SNP: unable to query CPUID values for CPU: '%s'",
+>-                     strerror(-ret));
+>-        return 1;
+>+        error_setg(errp, "SEV-SNP: unable to query CPUID values for CPU: '%s'",
+>+                   strerror(-ret));
+>+        return -1;
+>     }
+>
+>     ret = sev_snp_cpuid_info_fill(&snp_cpuid_info, &kvm_cpuid_info);
+>     if (ret) {
+>-        error_report("SEV-SNP: failed to generate CPUID table information");
+>-        return 1;
+>+        error_setg(errp, "SEV-SNP: failed to generate CPUID table information");
+>+        return -1;
+
+Ditto for the 2 changes, although IIUC we never check the return value 
+of snp_launch_update_cpuid().
+
+>     }
+>
+>     memcpy(hva, &snp_cpuid_info, sizeof(snp_cpuid_info));
+>
+>     return snp_launch_update_data(cpuid_addr, hva, cpuid_len,
+>-                                  KVM_SEV_SNP_PAGE_TYPE_CPUID);
+>+                                  KVM_SEV_SNP_PAGE_TYPE_CPUID, errp);
+> }
+>
+>-static int
+>-snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
+>-                                void *hva, uint32_t len)
+>+static int snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp,
+>+                                           uint32_t addr, void *hva,
+>+                                           uint32_t len, Error **errp)
+> {
+>     int type = KVM_SEV_SNP_PAGE_TYPE_ZERO;
+>     if (sev_snp->parent_obj.kernel_hashes) {
+>@@ -1211,7 +1213,7 @@ snp_launch_update_kernel_hashes(SevSnpGuestState 
+>*sev_snp, uint32_t addr,
+>                sizeof(*sev_snp->kernel_hashes_data));
+>         type = KVM_SEV_SNP_PAGE_TYPE_NORMAL;
+>     }
+>-    return snp_launch_update_data(addr, hva, len, type);
+>+    return snp_launch_update_data(addr, hva, len, type, errp);
+> }
+>
+> static int
+>@@ -1249,12 +1251,14 @@ snp_populate_metadata_pages(SevSnpGuestState 
+>*sev_snp,
+>         }
+>
+>         if (type == KVM_SEV_SNP_PAGE_TYPE_CPUID) {
+>-            ret = snp_launch_update_cpuid(desc->base, hva, desc->len);
+>+            ret = snp_launch_update_cpuid(desc->base, hva, desc->len,
+>+                                          &error_fatal);
+>         } else if (desc->type == SEV_DESC_TYPE_SNP_KERNEL_HASHES) {
+>             ret = snp_launch_update_kernel_hashes(sev_snp, desc->base, hva,
+>-                                                  desc->len);
+>+                                                  desc->len, &error_fatal);
+>         } else {
+>-            ret = snp_launch_update_data(desc->base, hva, desc->len, type);
+>+            ret = snp_launch_update_data(desc->base, hva, desc->len, type,
+>+                                         &error_fatal);
+>         }
+>
+>         if (ret) {
+>@@ -1541,9 +1545,8 @@ sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+>     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
+>         int ret;
+>
+>-        ret = klass->launch_update_data(sev_common, gpa, ptr, len);
+>+        ret = klass->launch_update_data(sev_common, gpa, ptr, len, errp);
+>         if (ret < 0) {
+>-            error_setg(errp, "SEV: Failed to encrypt pflash rom");
+>             return ret;
+>         }
+>     }
+>-- 
+>2.43.0
+>
 
 
