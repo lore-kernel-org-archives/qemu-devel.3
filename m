@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3613FC3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82CEC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:41:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMpLu-0002hl-HK; Thu, 27 Jun 2024 09:39:54 -0400
+	id 1sMpKt-00019R-1D; Thu, 27 Jun 2024 09:38:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpLZ-0001nL-2r
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:34 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1sMpKe-00015R-0X
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:38:38 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpLX-0006ZT-D1
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:32 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1f70c457823so54392185ad.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:39:30 -0700 (PDT)
+ id 1sMpKW-0006MV-53
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:38:35 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1fa75f53f42so18712395ad.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:38:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719495570; x=1720100370;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719495507; x=1720100307;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IDtmLd4DIh+2XRkZ57QtXjyzkDOakOx1Ds4rKdXYuOE=;
- b=biy81hPqEVeom0tS62rhmoWFdc4gY0m71tzlpx6Ckby30aFmqMysTmlzrqKFn941PK
- kWpPIAU8DNXPFWTilUyfLdflVpF7aw0Bs0m0YcdYk0pkTY3lCvA3VQIkEtVkQd4QROcI
- +h28A3U6YpvvwgnO/56ZJBMDOOG/+6v53nv+FA2cZMDPNeCJDtqrgdi1T/v6Y8VbgbVc
- lMxD/pex0bMBr8tEhswoMEqaaROwHjxaGAqSGtcBPxH/S+MDtYA9pb4wpuheb/tZfMFd
- GastiCS36BCO2/WM1nrCWbxNZg6oDRloBAF43DwT33nEO226OWIWJC98WJXETRrt/mrB
- yfwg==
+ :reply-to; bh=H1Ud2sffuzrWRWcIEMkaft+gSFV/vM2qExG+yzsFHsg=;
+ b=tOKzzI5S818bX1RcOKyIwWKZVxz8/r54xTNsQwNydWljGZga1ugk+/vcE+78DbdDKK
+ zSzw2n2nBLUaMVn0QE+P/H0IGdr0xwEBfgF/fehCGtU7u7A3s3WXOSm3rc1TEFSHesDB
+ qs8IA1Ecl8v3KHGWubjuQKgJUhEGOPd5r1/sUfHGmygbfJ0IGebPRLNOTa0qZKkQkNBn
+ FmFN5MR1s0vKWP3YFmnYKSYQ71xMA5kqiBa+Xcz1ejOV24q75wIdm6l/YoJgVMBpWbIw
+ uk0Ykm96GLf762CYZmZkxxTBT6GCa2UludZMzh2i5xkHyOBhWV/IVOD5gLlSvQ2rsxrN
+ cWWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719495570; x=1720100370;
+ d=1e100.net; s=20230601; t=1719495507; x=1720100307;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IDtmLd4DIh+2XRkZ57QtXjyzkDOakOx1Ds4rKdXYuOE=;
- b=K4dwbD9R7BvyhTDsLCR5IM8+v1SZksHkfp/Ht3i8EH1KvX+l2MLu+rqBqwWDief1sD
- 0SM53xJsXItEtOJFfH9lsIV06BhPSCLZIBPTOIon6uXcZ/GLciETNZX6W1vcCPEgGlKQ
- DLO7M/h0LXwrmfFXtzOvE/HkzR1BDKilyyL4M2gPMs/OhOGamVK3yx6GjZqW7HJgEBj2
- EX5pYWD1aiCROtgLx1X6g8evz6Fsc4IAZiU3Tg3r4lwMMDme3g8lAoAA5PN/Niqb8OCw
- LfhBC9jZHW4hy7HKdJg3rakQPKam2J1X3DKA9eXihu6HMoCkWTXMw3WeX/VAXUWx3awI
- lCYA==
-X-Gm-Message-State: AOJu0YxIyVjd2hmXvdM0nifvoz7/x5Ao+4igsyEv3sKzw4STd6eX9XGe
- VX3+H9JVFCWUSMrgoWlkNe9dtwspiqpT8qqsFLQxSUPhI6krdbg3IkI6+mSu/nE=
-X-Google-Smtp-Source: AGHT+IFzIGW+nsnWdJPHEbiNrp488hVRGEdrshmaBw10w7xHcEQJxXBh3T4EQrvFSPo6JhGmFg7hsQ==
-X-Received: by 2002:a17:902:e846:b0:1f6:502d:ca88 with SMTP id
- d9443c01a7336-1fa23f15aa5mr134051625ad.49.1719495570044; 
- Thu, 27 Jun 2024 06:39:30 -0700 (PDT)
+ bh=H1Ud2sffuzrWRWcIEMkaft+gSFV/vM2qExG+yzsFHsg=;
+ b=MiYy2R+bDs9twW36BjacCO/+unOT8Y+mspQse8LK+qB7w7yZ4CYM4Lq4bktsVj7zxL
+ gFqBTYMCQle7rybWhxJ3ods3dQiZZaKSJai1Y34yY3MpnriejpUmXKGUHORhPXy7gbpa
+ Icqy91AD1FjJWMoiBGG52f/wvoO+lcAf52oyxzpv9chcDvCzfBNUG6voMTt96vrOoiiF
+ DYhapWGhioAfSgFztN7hmHWD/T6RYarzMFo95xNtoyCdpRwNJeiEXEn1V/s5iHCc1am4
+ Atf67GLNN88cwMy9vTqaQBEeo25q+Ew9JgFP7fdm//Can/xYvJu7venNgmpx9vCJanbx
+ wGgg==
+X-Gm-Message-State: AOJu0YwiMpEkpYBv9ZI2oWati/DPRC59BZ8YYb6CvrFdPD8ed5LmMAYL
+ GiC8Bs6yT12QvxzwbJh+cavB1H1cGv4/wQQTrKEPez0KJFgyOMNdGhPhofuVfHc=
+X-Google-Smtp-Source: AGHT+IGlthtRlIAOrErKWBa0d4JJXHENu4FzsbU9EBlxzWOmvVmo/stPsHEbzaIw8JmTtJTtru3wgw==
+X-Received: by 2002:a17:902:ec8e:b0:1f9:f559:d8c7 with SMTP id
+ d9443c01a7336-1fa240c5353mr166234385ad.57.1719495506752; 
+ Thu, 27 Jun 2024 06:38:26 -0700 (PDT)
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1faac9c5266sm13108905ad.307.2024.06.27.06.39.25
+ d9443c01a7336-1faac979f54sm13182435ad.153.2024.06.27.06.38.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 06:39:29 -0700 (PDT)
+ Thu, 27 Jun 2024 06:38:26 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 27 Jun 2024 22:37:56 +0900
-Subject: [PATCH v2 13/15] tests/qtest: Delete previous boot file
+Date: Thu, 27 Jun 2024 22:37:46 +0900
+Subject: [PATCH v2 03/15] hw/ide: Remove internal DMA qemu_irq
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240627-san-v2-13-750bb0946dbd@daynix.com>
+Message-Id: <20240627-san-v2-3-750bb0946dbd@daynix.com>
 References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
 In-Reply-To: <20240627-san-v2-0-750bb0946dbd@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
@@ -84,14 +84,14 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62d.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::631;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,56 +107,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A test run may create boot files several times. Delete the previous boot
-file before creating a new one.
+A function pointer is sufficient for internal usage. Replacing qemu_irq
+with one fixes the leak of qemu_irq.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- tests/qtest/migration-test.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ include/hw/ppc/mac_dbdma.h |  5 +++--
+ hw/ide/macio.c             | 11 +++++++----
+ hw/misc/macio/mac_dbdma.c  | 10 +++++-----
+ 3 files changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index b7e3406471a6..5c0d669b6df3 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -129,12 +129,23 @@ static char *bootpath;
- #include "tests/migration/aarch64/a-b-kernel.h"
- #include "tests/migration/s390x/a-b-bios.h"
+diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
+index 4a3f644516b3..1e1973c39580 100644
+--- a/include/hw/ppc/mac_dbdma.h
++++ b/include/hw/ppc/mac_dbdma.h
+@@ -32,6 +32,7 @@
+ typedef struct DBDMA_io DBDMA_io;
  
-+static void bootfile_delete(void)
-+{
-+    unlink(bootpath);
-+    g_free(bootpath);
-+    bootpath = NULL;
-+}
-+
- static void bootfile_create(char *dir, bool suspend_me)
- {
-     const char *arch = qtest_get_arch();
-     unsigned char *content;
-     size_t len;
+ typedef void (*DBDMA_flush)(DBDMA_io *io);
++typedef void (*DBDMA_irq)(DBDMA_io *io);
+ typedef void (*DBDMA_rw)(DBDMA_io *io);
+ typedef void (*DBDMA_end)(DBDMA_io *io);
+ struct DBDMA_io {
+@@ -154,7 +155,7 @@ typedef struct dbdma_cmd {
+ typedef struct DBDMA_channel {
+     int channel;
+     uint32_t regs[DBDMA_REGS];
+-    qemu_irq irq;
++    DBDMA_irq irq;
+     DBDMA_io io;
+     DBDMA_rw rw;
+     DBDMA_flush flush;
+@@ -172,7 +173,7 @@ typedef struct DBDMAState DBDMAState;
  
-+    if (bootpath) {
-+        bootfile_delete();
-+    }
-+
-     bootpath = g_strdup_printf("%s/bootsect", dir);
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-         /* the assembled x86 boot sector should be exactly one sector large */
-@@ -164,13 +175,6 @@ static void bootfile_create(char *dir, bool suspend_me)
-     fclose(bootfile);
+ /* Externally callable functions */
+ 
+-void DBDMA_register_channel(void *dbdma, int nchan, qemu_irq irq,
++void DBDMA_register_channel(void *dbdma, int nchan, DBDMA_irq irq,
+                             DBDMA_rw rw, DBDMA_flush flush,
+                             void *opaque);
+ void DBDMA_kick(DBDMAState *dbdma);
+diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+index 9c96a857a7c1..425b670a52a9 100644
+--- a/hw/ide/macio.c
++++ b/hw/ide/macio.c
+@@ -427,9 +427,8 @@ static void macio_ide_realizefn(DeviceState *dev, Error **errp)
+     s->bus.dma = &s->dma;
  }
  
--static void bootfile_delete(void)
--{
--    unlink(bootpath);
--    g_free(bootpath);
--    bootpath = NULL;
--}
--
- /*
-  * Wait for some output in the serial output file,
-  * we get an 'A' followed by an endless string of 'B's
+-static void pmac_irq(void *opaque, int n, int level)
++static void pmac_irq(MACIOIDEState *s, int n, int level)
+ {
+-    MACIOIDEState *s = opaque;
+     uint32_t mask = 0x80000000u >> n;
+ 
+     /* We need to reflect the IRQ state in the irq register */
+@@ -446,6 +445,11 @@ static void pmac_irq(void *opaque, int n, int level)
+     }
+ }
+ 
++static void pmac_dma_irq(DBDMA_io *io)
++{
++    pmac_irq(io->opaque, 0, 1);
++}
++
+ static void pmac_ide_irq(void *opaque, int n, int level)
+ {
+     pmac_irq(opaque, 1, level);
+@@ -461,7 +465,6 @@ static void macio_ide_initfn(Object *obj)
+     sysbus_init_mmio(d, &s->mem);
+     sysbus_init_irq(d, &s->real_ide_irq);
+     sysbus_init_irq(d, &s->real_dma_irq);
+-    s->dma_irq = qemu_allocate_irq(pmac_irq, s, 0);
+     qdev_init_gpio_in_named_with_opaque(DEVICE(obj), pmac_ide_irq, s, NULL, 1);
+ 
+     object_property_add_link(obj, "dbdma", TYPE_MAC_DBDMA,
+@@ -513,7 +516,7 @@ void macio_ide_init_drives(MACIOIDEState *s, DriveInfo **hd_table)
+ 
+ void macio_ide_register_dma(MACIOIDEState *s)
+ {
+-    DBDMA_register_channel(s->dbdma, s->channel, s->dma_irq,
++    DBDMA_register_channel(s->dbdma, s->channel, pmac_dma_irq,
+                            pmac_ide_transfer, pmac_ide_flush, s);
+ }
+ 
+diff --git a/hw/misc/macio/mac_dbdma.c b/hw/misc/macio/mac_dbdma.c
+index 2a528ea08caf..3450105ad851 100644
+--- a/hw/misc/macio/mac_dbdma.c
++++ b/hw/misc/macio/mac_dbdma.c
+@@ -114,7 +114,7 @@ static void kill_channel(DBDMA_channel *ch)
+     ch->regs[DBDMA_STATUS] |= DEAD;
+     ch->regs[DBDMA_STATUS] &= ~ACTIVE;
+ 
+-    qemu_irq_raise(ch->irq);
++    ch->irq(&ch->io);
+ }
+ 
+ static void conditional_interrupt(DBDMA_channel *ch)
+@@ -133,7 +133,7 @@ static void conditional_interrupt(DBDMA_channel *ch)
+     case INTR_NEVER:  /* don't interrupt */
+         return;
+     case INTR_ALWAYS: /* always interrupt */
+-        qemu_irq_raise(ch->irq);
++            ch->irq(&ch->io);
+         DBDMA_DPRINTFCH(ch, "%s: raise\n", __func__);
+         return;
+     }
+@@ -148,13 +148,13 @@ static void conditional_interrupt(DBDMA_channel *ch)
+     switch(intr) {
+     case INTR_IFSET:  /* intr if condition bit is 1 */
+         if (cond) {
+-            qemu_irq_raise(ch->irq);
++            ch->irq(&ch->io);
+             DBDMA_DPRINTFCH(ch, "%s: raise\n", __func__);
+         }
+         return;
+     case INTR_IFCLR:  /* intr if condition bit is 0 */
+         if (!cond) {
+-            qemu_irq_raise(ch->irq);
++            ch->irq(&ch->io);
+             DBDMA_DPRINTFCH(ch, "%s: raise\n", __func__);
+         }
+         return;
+@@ -562,7 +562,7 @@ void DBDMA_kick(DBDMAState *dbdma)
+     qemu_bh_schedule(dbdma->bh);
+ }
+ 
+-void DBDMA_register_channel(void *dbdma, int nchan, qemu_irq irq,
++void DBDMA_register_channel(void *dbdma, int nchan, DBDMA_irq irq,
+                             DBDMA_rw rw, DBDMA_flush flush,
+                             void *opaque)
+ {
 
 -- 
 2.45.2
