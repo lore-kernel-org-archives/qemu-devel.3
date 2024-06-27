@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AFF2C3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 12:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27021C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 12:52:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMoY6-0001wJ-NY; Thu, 27 Jun 2024 08:48:26 -0400
+	id 1sMobh-0004IR-2Z; Thu, 27 Jun 2024 08:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sMoY4-0001wB-S2
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:48:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sMobc-0004Gs-0x
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:52:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sMoY2-0001Bg-V3
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:48:24 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sMoba-0001pD-BU
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 08:52:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719492501;
+ s=mimecast20190719; t=1719492720;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N0uiEn3o+B6SVZl38Y2WCys9sSApz2THSbMXnoBBN4U=;
- b=NCQuYF7wFvFwaUVgtNd0iAOL+nqyXCcnq3EDv+vR3U14teFm4GaFr+hlvNFJZSdDASDj7d
- YpIQEdvZ+/7tk3GXKFZwQjFWb4+DQqMcXzWvG9ZXy6a2WqNMyo6jlUy+WRqgxf9eXeDYp9
- WOeij1D2Qx9KYuEecbz9gm0308sQrJg=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hGvNYGjLjM8OIwTle51VFi9dejDE14SsqCvTH3GKYcM=;
+ b=D4DZwomXkWtXYdey7nZs0Ds6DHrOZlKc30uYu7Azttc2eFAqgeALGENvPTfCs9S+T5bdUY
+ 3P186Q5UeAlK2ukIUS0MdjgpNUm4ZV+qRy8K/eAfURLY+UiN0EUxJyMjD2UgwB0lc88823
+ bmH1astZYYyqToXWCCC6THtXuvDe5Qg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-82-jAsn8WdWMkeM4sKPEUGFvA-1; Thu, 27 Jun 2024 08:48:17 -0400
-X-MC-Unique: jAsn8WdWMkeM4sKPEUGFvA-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-57c6e28b151so895595a12.2
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 05:48:15 -0700 (PDT)
+ us-mta-549-A06-wNhHPBeVfRyOkeAlvA-1; Thu, 27 Jun 2024 08:51:58 -0400
+X-MC-Unique: A06-wNhHPBeVfRyOkeAlvA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-421805fadadso54387115e9.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 05:51:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719492495; x=1720097295;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N0uiEn3o+B6SVZl38Y2WCys9sSApz2THSbMXnoBBN4U=;
- b=cJLW2T2vtCegEbPnR+HYtu7brQqx8CgOt3hHFnD3Bw2tfQQzH4qoSWhzGwFsSjIPTl
- BFFFAYRAxbZvc9POPZx2b6lRe8YdD1NWNc4sIne/TKTBx8j711lyDq67OPr6FhipWdfY
- WWv3yQaobCj3CcCFlsIZcFwXoiDs7dJkhiOQcaZ3gQb+VN1F1afq7GEngmA/4pfC8qqZ
- 8PyvJFHMk/AMrt++ff1beXpzaPIAZeoF/3KVzN6swr8ypIa7EsGeoUr96g7V9s9BBkGH
- KO9oENNXniv7pp4nFgcF4IeGpkiDKxW9d8KdFZqZ6xRn1Oxyrpnl6rKTDdtoFpqH1VWH
- 106Q==
-X-Gm-Message-State: AOJu0Yzvootg970Gp88MBo5VRoTJZ1EEV+/kDatxyQmbGn+Iq9Np3004
- yjP+uFPENUbMAoje4hgwWmrxwu0AUR5CqHKyh6FzPN5kYUY9LbDY1L6uotGoEtxiEgc4ZgR378P
- MLW7mAZV5Qmc+j98TTVdaMTM0sExOO2aAvqtK190cG0UQ23mg3q2Q
-X-Received: by 2002:a50:9555:0:b0:57d:4cbc:cb59 with SMTP id
- 4fb4d7f45d1cf-57d4cbccbf9mr9504884a12.25.1719492494757; 
- Thu, 27 Jun 2024 05:48:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGlo2vEJVbsp8Jn6sqkl/k5/AeuTvTSeEzt1pRxu5HIc5mYyE92BXUZ/wU2WCuKLzoiROd2JQ==
-X-Received: by 2002:a50:9555:0:b0:57d:4cbc:cb59 with SMTP id
- 4fb4d7f45d1cf-57d4cbccbf9mr9504854a12.25.1719492494084; 
- Thu, 27 Jun 2024 05:48:14 -0700 (PDT)
-Received: from sgarzare-redhat (83.0.40.93.internetdsl.tpnet.pl. [83.0.40.93])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-584d0c9dbf1sm833687a12.19.2024.06.27.05.48.11
+ d=1e100.net; s=20230601; t=1719492717; x=1720097517;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hGvNYGjLjM8OIwTle51VFi9dejDE14SsqCvTH3GKYcM=;
+ b=bbFVAnIBjoHuNXfaOSTTTKOi4B6foVA5wk0Rn6zHg+qx2Ch8myyelp1Bl9Wl1/23QC
+ Kyqt3eO84Ux91KqqnyrKsSDtjWShflg0xVbIsmZH6hL2uMUQBl03OfWM6m0NWqgKIWbR
+ YeZW4aqW6MtvuN95tMh7AJxb4RTUUxtCu/igvWwftIeHXoTIX2dETIqKy0ptn13a/fhK
+ Z6gdLANTeoMyBBFL+cxmpPXZTMmvOIYg3oVNJtf2NTnYK7GwGPKEVN0Pp/qo5xUZJM/K
+ lqJO0DmIETy7KyGjrVW/mfEPRbSOn/ozK+t3HmWgUe314+ufDGOksZvFU39vFnFbNztc
+ oH9w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUY9/s7Yzw+2qcg/VaU8zFTPSyu5B+D/b751k8RO2RJ/jFVn3j18U5XmO+ulnoTxyz78oZvlBZ/m0IUQTzLzolrkrNAWMY=
+X-Gm-Message-State: AOJu0Yz8/X3ZVi/qHseqRSsVEQY3nbgQpCKo331xr0FMm5T2LWpcPGLp
+ u+zysvuMsR8KUvwS2C0bqhEdWSvP0/i1tKtZaVFQtgE50gSqmmg7q3QTkChzg0Er8X9F5HmgK5Z
+ jjgS0KCI6fTQShLkITE7vP93WPvDuS775NSiOQzILRNYMyhJcZNxe
+X-Received: by 2002:a05:600c:4251:b0:424:a655:c8b with SMTP id
+ 5b1f17b1804b1-424a6550d34mr46974545e9.19.1719492717316; 
+ Thu, 27 Jun 2024 05:51:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH3wtb7WPTnXwlztmFUbhY/EtSnUr2q1igQo2dwg2StxvIw1KRqBrc/SahmxFxNVuSK23r/OQ==
+X-Received: by 2002:a05:600c:4251:b0:424:a655:c8b with SMTP id
+ 5b1f17b1804b1-424a6550d34mr46974345e9.19.1719492716898; 
+ Thu, 27 Jun 2024 05:51:56 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-424c84248afsm63616395e9.31.2024.06.27.05.51.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 05:48:13 -0700 (PDT)
-Date: Thu, 27 Jun 2024 14:48:07 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Roy Hopkins <roy.hopkins@suse.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio Lopez <slp@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, 
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Tom Lendacky <thomas.lendacky@amd.com>, 
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>, 
- =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
-Subject: Re: [PATCH v3 06/15] sev: Update launch_update_data functions to use
- Error handling
-Message-ID: <bzb476tm3o7wtv6onru7uvhgs4y53yx3minxsbrgkwnflkfjn2@5avs7xnn5no5>
-References: <cover.1718979106.git.roy.hopkins@suse.com>
- <cac4ababee3bfed7658a501d5d5810379ac90512.1718979106.git.roy.hopkins@suse.com>
+ Thu, 27 Jun 2024 05:51:56 -0700 (PDT)
+Date: Thu, 27 Jun 2024 14:51:55 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
+ <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
+ <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v3 09/11] bios-tables-test: Allow for new
+ acpihmat-generic-x test data.
+Message-ID: <20240627145155.2c3d3709@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240620160324.109058-10-Jonathan.Cameron@huawei.com>
+References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
+ <20240620160324.109058-10-Jonathan.Cameron@huawei.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <cac4ababee3bfed7658a501d5d5810379ac90512.1718979106.git.roy.hopkins@suse.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -111,198 +111,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 21, 2024 at 03:29:09PM GMT, Roy Hopkins wrote:
->The class function and implementations for updating launch data return
->a code in case of error. In some cases an error message is generated and
->in other cases, just the error return value is used.
->
->This small refactor adds an 'Error **errp' parameter to all functions
->which consistently set an error condition if a non-zero value is
->returned.
->
->Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
->---
-> target/i386/sev.c | 67 +++++++++++++++++++++++++----------------------
-> 1 file changed, 35 insertions(+), 32 deletions(-)
->
->diff --git a/target/i386/sev.c b/target/i386/sev.c
->index 30b83f1d77..1900c3d9b4 100644
->--- a/target/i386/sev.c
->+++ b/target/i386/sev.c
->@@ -121,7 +121,8 @@ struct SevCommonStateClass {
->                                        Error **errp);
->     int (*launch_start)(SevCommonState *sev_common);
->     void (*launch_finish)(SevCommonState *sev_common);
->-    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa, uint8_t *ptr, uint64_t len);
->+    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa,
->+                              uint8_t *ptr, uint64_t len, Error **errp);
->     int (*kvm_init)(ConfidentialGuestSupport *cgs, Error **errp);
-> };
->
->@@ -942,14 +943,17 @@ out:
->     return ret;
-> }
->
->-static int
->-sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa, uint8_t *addr, uint64_t len)
->+static int sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
->+                                  uint8_t *addr, uint64_t len, Error **errp)
-> {
->     int ret, fw_error;
->     struct kvm_sev_launch_update_data update;
->
->     if (!addr || !len) {
->-        return 1;
+On Thu, 20 Jun 2024 17:03:17 +0100
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
-Why were we returning 1 before? Was that a mistake?
-Maybe we should mention it in the patch or fix it in another patch.
-
->+        error_setg(errp,
->+                   "%s: Invalid parameters provided for updating 
->launch data.",
->+                   __func__);
->+        return -1;
->     }
->
->     update.uaddr = (uintptr_t)addr;
->@@ -958,8 +962,8 @@ sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa, uint8_t *addr, ui
->     ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_LAUNCH_UPDATE_DATA,
->                     &update, &fw_error);
->     if (ret) {
->-        error_report("%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'",
->-                __func__, ret, fw_error, fw_error_to_str(fw_error));
->+        error_setg(errp, "%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'", __func__,
->+                   ret, fw_error, fw_error_to_str(fw_error));
->     }
->
->     return ret;
->@@ -1087,9 +1091,8 @@ sev_launch_finish(SevCommonState *sev_common)
->     migrate_add_blocker(&sev_mig_blocker, &error_fatal);
-> }
->
->-static int
->-snp_launch_update_data(uint64_t gpa, void *hva,
->-                       uint32_t len, int type)
->+static int snp_launch_update_data(uint64_t gpa, void *hva, uint32_t len,
->+                                  int type, Error **errp)
-> {
->     SevLaunchUpdateData *data;
->
->@@ -1104,13 +1107,12 @@ snp_launch_update_data(uint64_t gpa, void *hva,
->     return 0;
-> }
->
->-static int
->-sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
->-                           uint8_t *ptr, uint64_t len)
->+static int sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
->+                                      uint8_t *ptr, uint64_t len, Error **errp)
-> {
->-       int ret = snp_launch_update_data(gpa, ptr, len,
->-                                         KVM_SEV_SNP_PAGE_TYPE_NORMAL);
->-       return ret;
->+    int ret = snp_launch_update_data(gpa, ptr, len,
->+                                     KVM_SEV_SNP_PAGE_TYPE_NORMAL, errp);
->+    return ret;
-
-Pre-existing, but while we're at it maybe we can remove ret.
-
-> }
->
-> static int
->@@ -1162,8 +1164,8 @@ sev_snp_cpuid_info_fill(SnpCpuidInfo *snp_cpuid_info,
->     return 0;
-> }
->
->-static int
->-snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, uint32_t cpuid_len)
->+static int snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva,
->+                                   uint32_t cpuid_len, Error **errp)
-> {
->     KvmCpuidInfo kvm_cpuid_info = {0};
->     SnpCpuidInfo snp_cpuid_info;
->@@ -1180,26 +1182,26 @@ snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, uint32_t cpuid_len)
->     } while (ret == -E2BIG);
->
->     if (ret) {
->-        error_report("SEV-SNP: unable to query CPUID values for CPU: '%s'",
->-                     strerror(-ret));
->-        return 1;
->+        error_setg(errp, "SEV-SNP: unable to query CPUID values for CPU: '%s'",
->+                   strerror(-ret));
->+        return -1;
->     }
->
->     ret = sev_snp_cpuid_info_fill(&snp_cpuid_info, &kvm_cpuid_info);
->     if (ret) {
->-        error_report("SEV-SNP: failed to generate CPUID table information");
->-        return 1;
->+        error_setg(errp, "SEV-SNP: failed to generate CPUID table information");
->+        return -1;
-
-Ditto for the 2 changes, although IIUC we never check the return value 
-of snp_launch_update_cpuid().
-
->     }
->
->     memcpy(hva, &snp_cpuid_info, sizeof(snp_cpuid_info));
->
->     return snp_launch_update_data(cpuid_addr, hva, cpuid_len,
->-                                  KVM_SEV_SNP_PAGE_TYPE_CPUID);
->+                                  KVM_SEV_SNP_PAGE_TYPE_CPUID, errp);
-> }
->
->-static int
->-snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
->-                                void *hva, uint32_t len)
->+static int snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp,
->+                                           uint32_t addr, void *hva,
->+                                           uint32_t len, Error **errp)
-> {
->     int type = KVM_SEV_SNP_PAGE_TYPE_ZERO;
->     if (sev_snp->parent_obj.kernel_hashes) {
->@@ -1211,7 +1213,7 @@ snp_launch_update_kernel_hashes(SevSnpGuestState 
->*sev_snp, uint32_t addr,
->                sizeof(*sev_snp->kernel_hashes_data));
->         type = KVM_SEV_SNP_PAGE_TYPE_NORMAL;
->     }
->-    return snp_launch_update_data(addr, hva, len, type);
->+    return snp_launch_update_data(addr, hva, len, type, errp);
-> }
->
-> static int
->@@ -1249,12 +1251,14 @@ snp_populate_metadata_pages(SevSnpGuestState 
->*sev_snp,
->         }
->
->         if (type == KVM_SEV_SNP_PAGE_TYPE_CPUID) {
->-            ret = snp_launch_update_cpuid(desc->base, hva, desc->len);
->+            ret = snp_launch_update_cpuid(desc->base, hva, desc->len,
->+                                          &error_fatal);
->         } else if (desc->type == SEV_DESC_TYPE_SNP_KERNEL_HASHES) {
->             ret = snp_launch_update_kernel_hashes(sev_snp, desc->base, hva,
->-                                                  desc->len);
->+                                                  desc->len, &error_fatal);
->         } else {
->-            ret = snp_launch_update_data(desc->base, hva, desc->len, type);
->+            ret = snp_launch_update_data(desc->base, hva, desc->len, type,
->+                                         &error_fatal);
->         }
->
->         if (ret) {
->@@ -1541,9 +1545,8 @@ sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
->     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
->         int ret;
->
->-        ret = klass->launch_update_data(sev_common, gpa, ptr, len);
->+        ret = klass->launch_update_data(sev_common, gpa, ptr, len, errp);
->         if (ret < 0) {
->-            error_setg(errp, "SEV: Failed to encrypt pflash rom");
->             return ret;
->         }
->     }
->-- 
->2.43.0
->
+> The test to be added exercises many corners of the SRAT and HMAT table
+                                      ^^^^ did you mean 'corner cases"?
+> generation.
+> 
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+> v3: No change
+> ---
+>  tests/qtest/bios-tables-test-allowed-diff.h | 5 +++++
+>  tests/data/acpi/q35/APIC.acpihmat-generic-x | 0
+>  tests/data/acpi/q35/CEDT.acpihmat-generic-x | 0
+>  tests/data/acpi/q35/DSDT.acpihmat-generic-x | 0
+>  tests/data/acpi/q35/HMAT.acpihmat-generic-x | 0
+>  tests/data/acpi/q35/SRAT.acpihmat-generic-x | 0
+>  6 files changed, 5 insertions(+)
+> 
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> index dfb8523c8b..a5aa801c99 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1 +1,6 @@
+>  /* List of comma-separated changed AML files to ignore */
+> +"tests/data/acpi/q35/APIC.acpihmat-generic-x",
+> +"tests/data/acpi/q35/CEDT.acpihmat-generic-x",
+> +"tests/data/acpi/q35/DSDT.acpihmat-generic-x",
+> +"tests/data/acpi/q35/HMAT.acpihmat-generic-x",
+> +"tests/data/acpi/q35/SRAT.acpihmat-generic-x",
+> diff --git a/tests/data/acpi/q35/APIC.acpihmat-generic-x b/tests/data/acpi/q35/APIC.acpihmat-generic-x
+> new file mode 100644
+> index 0000000000..e69de29bb2
+> diff --git a/tests/data/acpi/q35/CEDT.acpihmat-generic-x b/tests/data/acpi/q35/CEDT.acpihmat-generic-x
+> new file mode 100644
+> index 0000000000..e69de29bb2
+> diff --git a/tests/data/acpi/q35/DSDT.acpihmat-generic-x b/tests/data/acpi/q35/DSDT.acpihmat-generic-x
+> new file mode 100644
+> index 0000000000..e69de29bb2
+> diff --git a/tests/data/acpi/q35/HMAT.acpihmat-generic-x b/tests/data/acpi/q35/HMAT.acpihmat-generic-x
+> new file mode 100644
+> index 0000000000..e69de29bb2
+> diff --git a/tests/data/acpi/q35/SRAT.acpihmat-generic-x b/tests/data/acpi/q35/SRAT.acpihmat-generic-x
+> new file mode 100644
+> index 0000000000..e69de29bb2
 
 
