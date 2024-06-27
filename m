@@ -4,101 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65BB3C3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 15:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DD3EC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 15:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMqkW-0001rv-K2; Thu, 27 Jun 2024 11:09:24 -0400
+	id 1sMqnp-0003Ep-65; Thu, 27 Jun 2024 11:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sMqkR-0001qN-6i
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 11:09:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sMqnj-0003DY-0D
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 11:12:44 -0400
+Received: from fout8-smtp.messagingengine.com ([103.168.172.151])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sMqkO-0002SV-Nk
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 11:09:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719500955;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lb3h0BLq0GjHlVSf7XQSVcbxxzmp/EiPvZxWVOiY1kE=;
- b=cG1wSthM306WvbtIhmlV9neSb8oCisZe+9jAtYBXwtkTQxGtuHrn8DIlPbrgMiXyOVvYdz
- FKA1TNX1JxLOqUWQIM1WtfhrdMYPQMRKHAepKg2hxhNvK91wRHNgwnR/p6gpUdbj+Y2v2M
- 90/kpvOEOonZ4gS1x8sVsBSkiLCqhBg=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-PgLVQWBLMTuvIO5JrOUU8w-1; Thu, 27 Jun 2024 11:09:12 -0400
-X-MC-Unique: PgLVQWBLMTuvIO5JrOUU8w-1
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6b501871f8fso16199256d6.2
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 08:09:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719500952; x=1720105752;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lb3h0BLq0GjHlVSf7XQSVcbxxzmp/EiPvZxWVOiY1kE=;
- b=FAnWL4uu6vUR25woxGM0xaAI7bZL5kyHVRkYwIPM/z6DUUWAQkfy3hnOy4G2ZMbEbC
- FLFK+eNLtNFiOdvwb2lTczK0z7Q2kwVZcsB1wBZL8VCOYURjfVdZ+1Lggr5JMFU6OMRx
- QNVGbe3xSv1NtyOST4htpnUpNrQMKLXmkcMyi6yNVsD2DwMGKU/Tptr+WfxTnijKe+r0
- pD/SOH7teJ2wwkgmcRb0gPT7ZAasTMBQqH4a5pyUE1vnr2c5vUbjisTlbiA3eB0PCoHR
- 3RCKzKq1m5jL7I1g9550MQb+FWTy+Ha1zcSWZToVyeoddl6KNBMAIqyDe/FXLiViXqhq
- sGgQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXeObuGiZTBzX6Q+LnXJ6AONQRQxJXy1nAT7JjOf5I+5Qn5WE58MdyV/h9zEpKlPzkqoLhkCDL7pa5cesTf1QXJ73Z1/dg=
-X-Gm-Message-State: AOJu0YzjciDuBxiBsIUpJLkpWKwD98T7Dp5760RRelUswN7IkGPGMo2X
- LVThElApIAnOwzO/vB3H4dJ1E7qeH+ZL16XI2LudxTbDh1fzVTHVRALJIgKMP0NJOGkXPSICLIc
- 7ZWZXpnbb6W7xZKZKPY1wjwDgtpAkuOz3WiJ1bWs3OWTqVQSyUNI/
-X-Received: by 2002:a05:6214:2423:b0:6b5:838e:c7f3 with SMTP id
- 6a1803df08f44-6b5838ed4c6mr44879786d6.2.1719500952093; 
- Thu, 27 Jun 2024 08:09:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfczyMk/KbTLjuXGu33IdbXR5x4NxB8Qoxs3rVZjEwd/+PTX3LPtSP63OW1mSl6wNby/1KCw==
-X-Received: by 2002:a05:6214:2423:b0:6b5:838e:c7f3 with SMTP id
- 6a1803df08f44-6b5838ed4c6mr44879446d6.2.1719500951608; 
- Thu, 27 Jun 2024 08:09:11 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b59241b67dsm5882016d6.4.2024.06.27.08.09.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 08:09:11 -0700 (PDT)
-Date: Thu, 27 Jun 2024 11:09:08 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Fabiano Rosas <farosas@suse.de>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v1 00/13] =?utf-8?Q?Multifd_?= =?utf-8?B?8J+UgA==?=
- device state transfer support with VFIO consumer
-Message-ID: <Zn2AlMbRVCQoypg8@x1n>
-References: <cover.1718717584.git.maciej.szmigiero@oracle.com>
- <ZniFH14DT6ycjbrL@x1n>
- <b0dc8bc4-742b-474b-a4c4-4e190fd6af37@maciej.szmigiero.name>
- <Znr9mOo_t0DkkLbD@x1n>
- <9e85016e-ac72-4207-8e69-8cba054cefb7@maciej.szmigiero.name>
- <Znt0FQHJEtGxcLxj@x1n>
- <2066bb2e-ccb3-45b8-aaf7-c39303e7f993@maciej.szmigiero.name>
- <ZnxAZDcjlZ5oerq-@x1n>
- <73630858-3b65-4fc5-8f5f-a1f494c5c111@maciej.szmigiero.name>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sMqnb-0003rF-Fi
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 11:12:42 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailfout.nyi.internal (Postfix) with ESMTP id 7FA521380164;
+ Thu, 27 Jun 2024 11:12:29 -0400 (EDT)
+Received: from imap44 ([10.202.2.94])
+ by compute3.internal (MEProxy); Thu, 27 Jun 2024 11:12:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1719501149;
+ x=1719587549; bh=Nih6KHrF2FQRonAiIB647Lub+TcrnZzq0J2fYLfcFMQ=; b=
+ qgd8ZPsSq06iggsvBd6E/WeOp1kgdg/6SJb6BQ7qlYoOqLEVdta94kyZQZ7FrWQY
+ PIDGCSErigU4DPsgnQ1eV+6aGQBLKPLEiRnW0KMAFdP26ySX3PKPIn4MjLNzGJI9
+ TwdAtDHlFWK84gAnt3XeJLChUI9odg+MgmVGUey9pTnVKlIj2R4jRniUscq2O/wY
+ klfVdPKRrCbIhWdaXtNjU8uOw1WShJ7DdqoL2QjpaHY3r4h5Bb0xS0kyM9T6SA0U
+ cmFfUuXe3XCXaGt5M26X/j/QaS3yS90O94Bm9O8DGQEiL/I7CM59hozl3PSUzRfe
+ gLIdHdRjkRyrhsidrKVkPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1719501149; x=
+ 1719587549; bh=Nih6KHrF2FQRonAiIB647Lub+TcrnZzq0J2fYLfcFMQ=; b=L
+ cWMFKmkKMIQbpsNyAw3zfUAxQqI2JnM3h/qI97FMqtZTLlb+VWkyd8JQXVrF/PA5
+ PcR8y8TSux036+Wpi0oRNTmVChCFY74tgQ8ZmbaRey3I/K3YreaorlFho5G9cxs+
+ H+bcVCldR9NsLGiH8AE+xpDegNSK/CokQBcpASb/6O1INZherTjjX3VTtZ/jtduX
+ ao8Q8/0m4J7dpWa9NUpyXjc12GLGkbwg6BqjMEd3iJwjfHO3xJSl517efBB7Jb/z
+ OYBhPvmeoYfg7+s2ghJCGd4bUAuw794lxvrenIfksw/rZzVU0L92VHSX5KuQ+PWN
+ K2TTZPMYXe5Hhe7UCGkCg==
+X-ME-Sender: <xms:XIF9Zq2NIxc5QUck-u-JjFrTC77aD1ToOsrAIi0lCl8gk6Y3iKbqUA>
+ <xme:XIF9ZtHc3rRMrLjuINYapf8_x1anDlwVtGDVF6Hg5VlqRqVQ4jAZYCc7304awHAGI
+ jWLVjRZ4fJYB9MNk-8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrtdeggdekiecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedflfhi
+ rgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
+ eqnecuggftrfgrthhtvghrnhepffeulefhheetfeffgfevudekkeelleduiedvvdektddu
+ gfeiieffjeeivefghfevnecuffhomhgrihhnpeguuhhmphgvugdrsghuihhlugenucevlh
+ hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjihgrgihunhdr
+ higrnhhgsehflhihghhorghtrdgtohhm
+X-ME-Proxy: <xmx:XIF9Zi4jVAOSDx4CGIq4_RbU0zgbes49ZK5r0UUyx74oCXNxLv5U8Q>
+ <xmx:XIF9Zr26uZl9fEr_gq5m1ItURncK9ZfS8KOeiuH2Wb3VVEQ-ZAZsWg>
+ <xmx:XIF9ZtEUWpoNZcDArwg92A4kLVIKCoONL-fSEdASwRGt91NTpz4HBg>
+ <xmx:XIF9Zk8_oZZ82nxAJ3PI8eBgS_fb42n9IVb-Zh1Jvrt-Iqdiv6n2lA>
+ <xmx:XYF9ZjYzKulih-JjK7uYhlJLhH1niE59i9n514RCsCf3arxGRWLS9bWa>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id B1CAD36A0075; Thu, 27 Jun 2024 11:12:28 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-538-g1508afaa2-fm-20240616.001-g1508afaa
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <73630858-3b65-4fc5-8f5f-a1f494c5c111@maciej.szmigiero.name>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Message-Id: <b21bca1e-6644-4dab-90d9-a7a5165ad5fa@app.fastmail.com>
+In-Reply-To: <0e42f372-26b8-b94a-80bb-6403062d2f1a@loongson.cn>
+References: <20240627-ipi-fixes-v1-0-9b061dc28a3a@flygoat.com>
+ <acc08621-19c1-4ec3-9fc9-acb0eec79121@linaro.org>
+ <0e42f372-26b8-b94a-80bb-6403062d2f1a@loongson.cn>
+Date: Thu, 27 Jun 2024 19:12:08 +0400
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: gaosong <gaosong@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "QEMU devel" <qemu-devel@nongnu.org>
+Cc: "Huacai Chen" <chenhuacai@kernel.org>, "Bibo Mao" <maobibo@loongson.cn>,
+ "Richard Henderson" <richard.henderson@linaro.org>,
+ "Peter Maydell" <peter.maydell@linaro.org>,
+ "Paolo Bonzini" <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH 0/2] hw/intc/loongson_ipi: Fix for LoongArch
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.151;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,26 +114,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 27, 2024 at 11:14:28AM +0200, Maciej S. Szmigiero wrote:
-> Having RAM sent in parallel with non-iterables would make sense to me,
-> but I am not 100% sure this is a safe thing to do - after all, currently
-> non-iterables can rely on the whole RAM being already transferred.
 
-And I forgot to comment on this one.. but that's a good point.
 
-I think we need further investigation indeed on this one.  Some devices may
-need special dependency like what you said either on memory fully loaded,
-or something else like BQL, so at least concurrent load() won't work for
-the latter.  What I was hoping is that we can start to collect some
-time-consuming objects into async-model if they do not have such
-dependencies.  The thing in my mind is still vcpus so far: that's what I
-observed a major uncertainty on causing major downtimes as well.  I
-remember vcpu only needs a loaded memory until KVM_RUN triggering loading
-of CR3 so _maybe_ that'll be fine, but that needs some double checks.
+=E5=9C=A82024=E5=B9=B46=E6=9C=8827=E6=97=A5=E5=85=AD=E6=9C=88 =E4=B8=8B=E5=
+=8D=884:13=EF=BC=8Cgaosong=E5=86=99=E9=81=93=EF=BC=9A
+> =E5=9C=A8 2024/6/27 =E4=B8=8B=E5=8D=882:38, Philippe Mathieu-Daud=C3=A9=
+ =E5=86=99=E9=81=93:
+>> On 27/6/24 06:13, Jiaxun Yang wrote:
+>>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>> ---
+>>> Jiaxun Yang (2):
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hw/intc/loongson_ipi: Gate MMIO=
+ regions creation with property
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 MAINTAINERS: Add myself as a re=
+viewer of LoongArch virt machine
+>>
+>> Maybe s/has-mmio/use-mmio/? Otherwise series:
+>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>
+> Hi,
+>
+> If we had done a simple test, we should have found the following=20
+> problem, but obviously we didn't .
 
-Thanks,
+My bad, I=E2=80=99m currently traveling and sent that in rush.
 
--- 
-Peter Xu
+I do boot tested with CI and I trust CI can catch those issues.
 
+
+>
+> root@loongson-KVM:~/work/code/clean/github/qemu# . /kernel.sh
+> Unexpected error in object_property_find_err() at . /qom/object.c:1357.
+> qemu-system-loongarch64: Property 'loongson_ipi.unnamed-gpio-out[0]' n=
+ot=20
+> found
+> . /kernel.sh: line 16: 117708 Aborted (core dumped) .=20
+> /build/qemu-system-loongarch64 -machine virt -m 8G -cpu la464 -smp 8=20
+> -kernel ~/vmlinux -initrd ramdisk -serial stdio -monitor=20
+> telnet:localhost. 4418,server,nowait -net nic -net user -device=20
+> virtio-gpu-pci -device nec-usb-xhci,id=3Dxhci,addr=3D0x1b -device=20
+> usb-tablet,id=3Dtablet,bus=3Dxhci.0, port=3D1 -device=20
+> usb-tablet,id=3Dtablet,bus=3Dxhci.0, -device usb-tablet,id=3Dtablet,bu=
+s=3Dxhci.=20
+> port=3D1 -device usb-kbd,id=3Dkeyboard,bus=3Dxhci.0,port=3D2 -append=20
+> "root=3D/dev/ram rdinit=3D/sbin/init console=3DttyS0,115200=20
+> earlycon=3Duart,mmio. 0x1fe001e0" --nographic
+>
+>
+> So to minimize interactions with the MIPS architecture, I'll submit a=20
+> patch to restore loongarch_ipi for LoongArch.
+>
+> Thanks.
+> Song Gao
+
+--=20
+- Jiaxun
 
