@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A14EC3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 04:16:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2010DC3064D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 04:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMgWV-0006Cx-Ls; Thu, 27 Jun 2024 00:14:15 -0400
+	id 1sMgX8-0006di-Ey; Thu, 27 Jun 2024 00:14:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sMgWT-0006Ch-GF
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 00:14:13 -0400
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ id 1sMgWk-0006Hw-GZ
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 00:14:34 -0400
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sMgWQ-00007m-V3
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 00:14:12 -0400
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-25c9ef2701fso4163226fac.1
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 21:14:09 -0700 (PDT)
+ id 1sMgWh-0000Ar-N0
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 00:14:30 -0400
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3d5666a4860so256457b6e.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 21:14:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719461648; x=1720066448; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZSeOzfkYDlIJW2pScs5aQr5R1YLYoQV0rtpLul9xrBM=;
- b=j8exl/Azdvg21qK44WMdtEzzLasq68lMN/qjJQ+2feoGHRiK2t5aFWk31onePINQQo
- twcbTO9BiyKJZq4u37qfylu6xysJc8Gdb5L+6P2fghplpfq/TJwvx9yPjNyvMChvr4bf
- +jO4HCm2P1M2WzIeC73N3RC9/iXWb0csziSXLVanUntpaNaA3d0Gupz9WIK877pv06fb
- tzehRXH7gmz9w9pX4JdlBSrd6PVkoKQ5g6L7XZKBiiu9++LqMc3kHZGdDRpHAy8OvMBG
- dMFHbS7Fw3ClNjXttcz10HG4AK7ElfwGyHUwmDhCzzUI1/vhtwR+at4S8Y8Bpw18I/+p
- +d5Q==
+ d=linaro.org; s=google; t=1719461666; x=1720066466; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wwLPKvfEsT814DRwG9Ogl9FVhlLvakaUgV980nIKtT0=;
+ b=ocsoLMF7j8VQ/pmW7TPqjKhSB97y2LOq4teJDgJxBfaqcaJTAYBHCuz5rZDlO6tcLc
+ zGLyFFPSisi5TYxTtbSbaEthYbYkynKg9BFausanBTYt4EEaE1Y51nF6wblud7JXKlND
+ HocKsGs+9CwUU0n1oiNO/KmgoqP2xeBvvRhCunajpFuGgxsE0+DsEP8Htq8IimdCHBfc
+ UFheA7pI5ltPMduLv1ITMjM9gDK3t0orhTlR1HriCPuDc3ickPaHB87N/PS4E4fwbIYg
+ XJxvlD+53U5V2s8JedHDosHy/BlbczdNKZrHP+rSrUKA2BQcrGciv8ty37/uid/RJrI2
+ gkNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719461648; x=1720066448;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZSeOzfkYDlIJW2pScs5aQr5R1YLYoQV0rtpLul9xrBM=;
- b=J1+fLI2URnTan5j8mIZ+N5svOA3zRRsHOoAL/dZhReUZ+kXLG9SzKSQM12WrJD7z/m
- UXpmWJ533tjqjikRHF6p4sCu44+V+TAs7o+NmvFvNvS3vODZyx7MV0ygNct5UtN49ipb
- bkEshkcEAXiDV5sEjVlLa+nju1XkDI3Woh+8wP+qxAcTQNUiKt2WsQWKJvIT7IZxdPFL
- WTEEcTEviNrrPEOJeUHvUcJBBl+2SdjCqG1EwgRXXD8PvgNm6SwNelweD0glgK0U4ASf
- 50VXczdjewuk5aQL1gh4DCZCHoS6heXboH40W7JYaRzgbQTRqRDdysLtLUVaRrANDGMF
- 9flA==
-X-Gm-Message-State: AOJu0YzjnvGHdKtVLa8fYmz0neOt1GFOejvE8Ev5Vo9dj5U15xzeHSvW
- i5UYs6+uFLRxVHyEOAhW3mU6vD6dqTSU4107IRgzYYKijes3N+M7pD9o8QVD6lzCl3/8w7ijgqt
- fhk0=
-X-Google-Smtp-Source: AGHT+IEiVDTEoJIDk/xGqaaqrQM1BoxfZqiFCKTz2E5YClrA+nN7em3tFjFwWsx1LEuAFcrcVY15Og==
-X-Received: by 2002:a05:6870:d611:b0:25c:c73a:dce3 with SMTP id
- 586e51a60fabf-25d06ebbc04mr13131406fac.54.1719461648549; 
- Wed, 26 Jun 2024 21:14:08 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719461666; x=1720066466;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wwLPKvfEsT814DRwG9Ogl9FVhlLvakaUgV980nIKtT0=;
+ b=SaKsz217AYP4kMzYuvpVWiEHR0ekrWtxYM1eQvRZU5I/5BzvZAsndWRsZ1Kp2EUpNb
+ 9YwhKRx/5mIdttyNib52sNRO4baVt7jR4LyLUTrKUuqoesxUdpfUiWeKI5WyRUS702Xd
+ 3aSPdlQD6USCKjpomDE6he/6mFoOB0JvcufSH2L1RmDK8ov/LZQ34sWnBtzGKP3+mRv4
+ fm00RVrqbSL6GIcsGsa8/QqnB9t29F4j8M/F+ufc2o8ytIIBVz2S/RqhxotV0EratTgF
+ EQDXMrSvjr4/Gp9RhxjnytcuLvnTTImIJbNVqA+ph2zsXGfkwJG3FkRxlbXIfZztK2yK
+ WK1g==
+X-Gm-Message-State: AOJu0Yy+dAw4mBWxfZanw5WocRSXOFk4FC4bEeW7yczNpqslWT0Kz6By
+ dM7mRAx2JaS0lp01U6nh4QO7kohTuuAzOfx3CGapR9d9SLZczD57plXHYRtM4mDIBVwiZYm0/G0
+ 8TrQ=
+X-Google-Smtp-Source: AGHT+IHXBJ+VgI3egCZYhCfuNTI7h77pRRSf1bGcGvfnK/Wd96ySDKQaBIzmWimjsfzM6YDN59x24w==
+X-Received: by 2002:a05:6808:114f:b0:3d5:658b:be39 with SMTP id
+ 5614622812f47-3d5658bc079mr2930892b6e.38.1719461665890; 
+ Wed, 26 Jun 2024 21:14:25 -0700 (PDT)
 Received: from amd.. ([2804:7f0:b401:391e:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-72748e8539fsm273045a12.66.2024.06.26.21.14.05
+ 41be03b00d2f7-72748e8539fsm273045a12.66.2024.06.26.21.14.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Jun 2024 21:14:07 -0700 (PDT)
+ Wed, 26 Jun 2024 21:14:25 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
  richard.henderson@linaro.org
 Cc: peter.maydell@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v5 0/9] Add MTE stubs for aarch64 user mode
-Date: Thu, 27 Jun 2024 04:13:40 +0000
-Message-Id: <20240627041349.356704-1-gustavo.romero@linaro.org>
+Subject: [PATCH v5 7/9] gdbstub: Make get cpu and hex conversion functions
+ non-internal
+Date: Thu, 27 Jun 2024 04:13:47 +0000
+Message-Id: <20240627041349.356704-8-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240627041349.356704-1-gustavo.romero@linaro.org>
+References: <20240627041349.356704-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=gustavo.romero@linaro.org; helo=mail-oa1-x2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-oi1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,110 +97,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset adds the stubs necessary to support GDB memory tagging
-commands on QEMU aarch64 user mode.
+Make the gdb_first_attached_cpu and gdb_hextomem non-internal so they
+are not confined to use only in gdbstub.c.
 
-These new stubs handle the qIsAddressTagged, qMemTag, and QMemTag
-packets, which allow GDB memory tagging subcommands 'check',
-'print-allocation-tag', and 'set-allocation-tag' to work. The remaining
-memory tagging commands ('print-logical-tag' and 'with-logical-tag')
-will also work, but they don't rely on any stub because they perform
-local operations.
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ gdbstub/internals.h        | 2 --
+ include/exec/gdbstub.h     | 5 +++++
+ include/gdbstub/commands.h | 6 ++++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-Since the memory tagging stubs are not common to all architectures, this
-patchset also introduces three functions: gdb_extend_qsupported_features,
-gdb_extend_query_table, and gdb_extend_set_table. These functions can be
-used to extend the target-specific 'qSupported' feature string and the
-handlers for the 'q' (query) and 'Q' (set) packets. These new functions
-are used to add the MTE stubs for the aarch64 gdbstub.
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index 34121dc61a..81875abf5f 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -107,7 +107,6 @@ static inline int tohex(int v)
  
-Note that this patchset requires a GDB that supports the
-qIsAddressTagged packet (recently added to GDB), so the gdbstub MTE
-tests introduced by it must be run using GDB's master branch, since the
-GDB in the distros hasn't picked up the change yet.
-
-Once GDB is built and installed locally, the tests can be exercised, for
-example, this way:
-
-make GDB=~/.local/bin/gdb run-tcg-tests-aarch64-linux-user -j 32
-
-v2:
- - Addressed comments from Richard, Phil, and Alex
- - Made the series more granular by splitting it into more patches
- - Moved gdbstub command-specific structs and functions into a new header, gdbstub/commands.h
- - Fixed exception in allocation_tag_mem_probe()
- - Used MTE helpers ({store,load}_tag1 and allocation_tag_mem_probe) in the MTE stubs
- - Factored out MTE code to set TCF0, avoiding duplication (both prctl and gdbstub code use it)
- - Hoisted sscanf() out of loop in handle_Q_memtag stub and use gdb_hextomem instead
- - Rebased this series on Alex's gdb/next branch
+ void gdb_put_strbuf(void);
+ int gdb_put_packet_binary(const char *buf, int len, bool dump);
+-void gdb_hextomem(GByteArray *mem, const char *buf, int len);
+ void gdb_memtohex(GString *buf, const uint8_t *mem, int len);
+ void gdb_memtox(GString *buf, const char *mem, int len);
+ void gdb_read_byte(uint8_t ch);
+@@ -130,7 +129,6 @@ bool gdb_got_immediate_ack(void);
+ /* utility helpers */
+ GDBProcess *gdb_get_process(uint32_t pid);
+ CPUState *gdb_get_first_cpu_in_process(GDBProcess *process);
+-CPUState *gdb_first_attached_cpu(void);
+ void gdb_append_thread_id(CPUState *cpu, GString *buf);
+ int gdb_get_cpu_index(CPUState *cpu);
+ unsigned int gdb_get_max_cpus(void); /* both */
+diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+index 1bd2c4ec2a..77e5ec9a5b 100644
+--- a/include/exec/gdbstub.h
++++ b/include/exec/gdbstub.h
+@@ -135,4 +135,9 @@ void gdb_set_stop_cpu(CPUState *cpu);
+ /* in gdbstub-xml.c, generated by scripts/feature_to_c.py */
+ extern const GDBFeature gdb_static_features[];
  
-v3:
- - Moved stubs to gdbstub64.c
- - Fixed build for BSD target
- - Fixed license tags in the new header files
- - Use of only function prototypes in mte_helpers.h
- - Added prefix to arm_set_mte_tcf0 and marked it inline
- - Moved target/arm/mte.h -> target/arm/tcg/mte_user_helper.h
- - Cleaned up leftover in mte-8 test
++/**
++ * Return the first attached CPU
++ */
++CPUState *gdb_first_attached_cpu(void);
++
+ #endif /* GDBSTUB_H */
+diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
+index 2204c3ddbe..914b6d7313 100644
+--- a/include/gdbstub/commands.h
++++ b/include/gdbstub/commands.h
+@@ -93,4 +93,10 @@ void gdb_extend_set_table(GdbCmdParseEntry *table, int size);
+  */
+ void gdb_extend_qsupported_features(char *qsupported_features);
  
-v4:
- - Don't run tests when GDB < 15 (i.e., lacks most recent MTE changes) (Alex's review)
- - Added g_assert()s in new gdb_extend_* API functions to ensure all CPUs have the same features/query/set tables (Alex's review)
- - Move load_tag1 and store_tag1 to mte_helpers.h marking them as "static inline" (Richard's review)
- - Move mte_user_helper.h to linux-user/aarch64/ and include it from gdbstub64.c (Richard's review)
-
-v5:
- - Made load_tag1, store_tag1, and arm_set_mte_tcf0 non-inlined for code modularity (Phil's review)
- - MTE tests: GDB_HAS_MTE is now only set for aarch64 targets (Alex's suggestion)
- 
- 
- Cheers,
- Gustavo
-
-Gustavo Romero (9):
-  gdbstub: Clean up process_string_cmd
-  gdbstub: Move GdbCmdParseEntry into a new header file
-  gdbstub: Add support for target-specific stubs
-  target/arm: Fix exception case in allocation_tag_mem_probe
-  target/arm: Make some MTE helpers widely available
-  target/arm: Factor out code for setting MTE TCF0 field
-  gdbstub: Make get cpu and hex conversion functions non-internal
-  gdbstub: Add support for MTE in user mode
-  tests/tcg/aarch64: Add MTE gdbstub tests
-
- configs/targets/aarch64-linux-user.mak |   2 +-
- configure                              |   4 +
- gdb-xml/aarch64-mte.xml                |  11 ++
- gdbstub/gdbstub.c                      | 254 +++++++++++++++----------
- gdbstub/internals.h                    |  24 ---
- gdbstub/syscalls.c                     |   7 +-
- gdbstub/system.c                       |   7 +-
- gdbstub/user-target.c                  |  25 +--
- gdbstub/user.c                         |   7 +-
- include/exec/gdbstub.h                 |   5 +
- include/gdbstub/commands.h             | 102 ++++++++++
- linux-user/aarch64/meson.build         |   2 +
- linux-user/aarch64/mte_user_helper.c   |  34 ++++
- linux-user/aarch64/mte_user_helper.h   |  25 +++
- linux-user/aarch64/target_prctl.h      |  22 +--
- target/arm/cpu.c                       |   1 +
- target/arm/gdbstub.c                   |  46 +++++
- target/arm/gdbstub64.c                 | 220 +++++++++++++++++++++
- target/arm/internals.h                 |   6 +
- target/arm/tcg/mte_helper.c            |  48 +----
- target/arm/tcg/mte_helper.h            |  66 +++++++
- tests/tcg/aarch64/Makefile.target      |  14 +-
- tests/tcg/aarch64/gdbstub/test-mte.py  |  86 +++++++++
- tests/tcg/aarch64/mte-8.c              |  98 ++++++++++
- 24 files changed, 911 insertions(+), 205 deletions(-)
- create mode 100644 gdb-xml/aarch64-mte.xml
- create mode 100644 include/gdbstub/commands.h
- create mode 100644 linux-user/aarch64/mte_user_helper.c
- create mode 100644 linux-user/aarch64/mte_user_helper.h
- create mode 100644 target/arm/tcg/mte_helper.h
- create mode 100644 tests/tcg/aarch64/gdbstub/test-mte.py
- create mode 100644 tests/tcg/aarch64/mte-8.c
-
++/**
++ * Convert a hex string to bytes. Conversion is done per byte, so 2 hex digits
++ * are converted to 1 byte. Invalid hex digits are treated as 0 digits.
++ */
++void gdb_hextomem(GByteArray *mem, const char *buf, int len);
++
+ #endif /* GDBSTUB_COMMANDS_H */
 -- 
 2.34.1
 
