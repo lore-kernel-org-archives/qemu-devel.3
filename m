@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69DF1C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 467F7C2BD09
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 14:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMplz-000210-Ta; Thu, 27 Jun 2024 10:06:52 -0400
+	id 1sMplw-0001z6-7u; Thu, 27 Jun 2024 10:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sMplt-0001yV-2S
+ id 1sMplt-0001yU-2E
  for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:06:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sMplo-0003gH-Cv
+ id 1sMplp-0003gM-OZ
  for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:06:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719497199;
+ s=mimecast20190719; t=1719497200;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dM6O63wcC2cMMhdnQlAbeBUAGlSZvYq8QRIEZnd0eDU=;
- b=BAU6OfTxuA5cwF/Q9TJe+A/uU2MOICiq1/+//XkEvyYzUSBq7VlElHzm77ondyooI/OK9R
- PCGNVT6HnTyIRIUdYBiAIjcXKCPXMMS1aS3ycBCoEdVQfLcT1Twk4n3D9DODgxs4tjBv6F
- D+sFZB0DIb2qg0jQwcSp40x3wiDgrrE=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=omeEP+EChxLrWKFVAw/fyi3wTf+uHg0OC6QMr9MwfXE=;
+ b=Rnl78sHExA3x095E2zjAiq7+fmHQ6wy8JwGce2zI/67e2YIOGwA35BPa2AJ6HgPRzOmRqQ
+ aB0eNr9Er5JLGQnWqI8AFEf6hiFOArAcADBURazqMZ77DPeZWhY2pIzWJkfTzKpQhYQKmj
+ PQcOe2GhS3pWSQLYHtAlBYfTKXsoUTk=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-275-ddf_m7o_MnuK1zfLHctLGg-1; Thu, 27 Jun 2024 10:06:37 -0400
-X-MC-Unique: ddf_m7o_MnuK1zfLHctLGg-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57c93227bbeso1060430a12.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:06:36 -0700 (PDT)
+ us-mta-241-po5dssx8P_iw_M6lOTZb0w-1; Thu, 27 Jun 2024 10:06:39 -0400
+X-MC-Unique: po5dssx8P_iw_M6lOTZb0w-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a7194d0fd53so339423466b.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:06:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719497195; x=1720101995;
+ d=1e100.net; s=20230601; t=1719497197; x=1720101997;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dM6O63wcC2cMMhdnQlAbeBUAGlSZvYq8QRIEZnd0eDU=;
- b=f0qNiRLp7pNVDnObYDK8S2n00xidQQu4Fg5WQsD1abXmOAi3KB3kD6GxTmdJTxqPh8
- kaO1PmO9V0viSy8QxEWJh9qjgMMwqHjdYQmJVmqdeSN/ycqJdhpQ27Um9483QIfBAyf9
- RkGlyCXtYQzIYEDt1aaj0lYaQwrAX1nAsjl6lH+k74uL99Kd4SOD7CJv3r8p+lu9mQQr
- a0BSnL5QpAuUQ/jrQ6x99lJaJQfrCcROCqkD34xwrm2ksPHcq7HsP8wDRBlilh4Qp/zH
- hIVhnCgav+cWil7CGzMLlXTe/cFWiPTKh4JfO1834ZffR5ALtsshfVdA1RvfZYT6RbVn
- 03vA==
-X-Gm-Message-State: AOJu0YzvKxHBNlauUSCfVB35vsWtIP4HkUYZQYFoi3/jM5FFHcQyK7bT
- zkfwNPpQV3R49km6R8/kf4h/fC4hx081ZqKsUfI0fwcz0AaQPyfIJdG4m9s8eRHjoHLvPaelsmb
- 5EDjq+Dg0q28+e72cDhHsugdvKQ6rWY1AtjAjYVFegdfBkwTgUPeM9so1fudId8ZIdYG0JAXm9V
- f6oSCwiMQ4AqnwuI1NDgvkD83rIQUkdGBtXXW8
-X-Received: by 2002:a50:ab1d:0:b0:57d:4d12:61bd with SMTP id
- 4fb4d7f45d1cf-57d4d1264b8mr8615784a12.37.1719497194416; 
- Thu, 27 Jun 2024 07:06:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEu5gxcoCnHti2Yx+Utb4tAhIx1qwVFo88w7kRp3p3VqxlDk0YrMqeQEfTFx6tQbsdWKqLy+A==
-X-Received: by 2002:a50:ab1d:0:b0:57d:4d12:61bd with SMTP id
- 4fb4d7f45d1cf-57d4d1264b8mr8615746a12.37.1719497193723; 
- Thu, 27 Jun 2024 07:06:33 -0700 (PDT)
+ bh=omeEP+EChxLrWKFVAw/fyi3wTf+uHg0OC6QMr9MwfXE=;
+ b=s+rpn+Ek8cACVEIcl3pHnk/g8t0YmsrvN3fS0mpA6Ijl022xMt2azaZrq27+eyEnbH
+ pmg4E4eMYvDW+9MyYDtj1d4eV2CecfYP9ux3D8mNSNxAVOJ6Uqzunlyy2BJfmxPoeAKt
+ GWC5OoN/EbvW6vSy9Ks57uF9AxmOguWjsVcppSMuh/xY0ly1YcZCW4T19czMXe+AQHMg
+ buyXB5PuOJOpt9vzdnNckCMkc+Cn6F5ygpg4oWJgpbYfnKH9Hpm8Ef2FH5cd0fuHUKvO
+ ec3pzYWWT9NAlCga0RRcmQyw3Lipt0rPGZoAtPCouY2/JvuYlVKjsSEDjzegOq3IN/mu
+ /BmA==
+X-Gm-Message-State: AOJu0YzSiQFJUnyvzigU8nkK/2TUJcKptQ+D4uDfyZpAFR741H3vyqO7
+ 0UBs9ZSbN84n9s+9v4bCKKSZHYadohZt8TUSSnkMHQTKWH1O2BILvTyLgawTjU2yOdaHYArvybt
+ zGWr7y2yNhZCHf9e/qI3AsH7XNc//oBGfZVcgyinj/CAhtJNPWUp2LRSSEFV08rtXEO3+l1ZQRs
+ tf/ixViRyUISa8NRZnDZOJqztjxTpiYOXvJzl4
+X-Received: by 2002:a17:907:a80e:b0:a72:7e1e:62e6 with SMTP id
+ a640c23a62f3a-a727e1e65cemr588647166b.63.1719497197496; 
+ Thu, 27 Jun 2024 07:06:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXINIDstjLifrWxu81EqWugJsfQepKF8HP2z4IC1V66fe5A8OwrMmsGOzzEXfxqy8bG82MrA==
+X-Received: by 2002:a17:907:a80e:b0:a72:7e1e:62e6 with SMTP id
+ a640c23a62f3a-a727e1e65cemr588643866b.63.1719497196893; 
+ Thu, 27 Jun 2024 07:06:36 -0700 (PDT)
 Received: from avogadro.local ([151.48.235.205])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-584d278167esm922397a12.73.2024.06.27.07.06.32
+ a640c23a62f3a-a72a66fc8d2sm2224866b.53.2024.06.27.07.06.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 07:06:32 -0700 (PDT)
+ Thu, 27 Jun 2024 07:06:35 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
 	John Allen <john.allen@amd.com>
-Subject: [PATCH 1/2] target/i386: pass X86CPU to
- x86_cpu_get_supported_feature_word
-Date: Thu, 27 Jun 2024 16:06:27 +0200
-Message-ID: <20240627140628.1025317-2-pbonzini@redhat.com>
+Subject: [PATCH 2/2] target/i386: drop AMD machine check bits from Intel CPUID
+Date: Thu, 27 Jun 2024 16:06:28 +0200
+Message-ID: <20240627140628.1025317-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240627140628.1025317-1-pbonzini@redhat.com>
 References: <20240627140628.1025317-1-pbonzini@redhat.com>
@@ -104,103 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows modifying the bits in "-cpu max"/"-cpu host" depending on
-the guest CPU vendor (which, at least by default, is the host vendor in
-the case of KVM).
+The recent addition of the SUCCOR bit to kvm_arch_get_supported_cpuid()
+causes the bit to be visible when "-cpu host" VMs are started on Intel
+processors.
 
-For example, machine check architecture differs between Intel and AMD,
-and bits from AMD should be dropped when configuring the guest for
-an Intel model.
+While this should in principle be harmless, it's not tidy and we don't
+even know for sure that it doesn't cause any guest OS to take unexpected
+paths.  Since x86_cpu_get_supported_feature_word() can return different
+different values depending on the guest, adjust it to hide the SUCCOR
+bit if the guest has non-AMD vendor.
 
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Cc: John Allen <john.allen@amd.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h         |  3 +--
- target/i386/cpu.c         | 13 ++++++-------
- target/i386/kvm/kvm-cpu.c |  2 +-
- 3 files changed, 8 insertions(+), 10 deletions(-)
+ target/i386/cpu.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 29daf370485..9bea7142bf4 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -666,8 +666,7 @@ typedef enum FeatureWord {
- } FeatureWord;
- 
- typedef uint64_t FeatureWordArray[FEATURE_WORDS];
--uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
--                                            bool migratable_only);
-+uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- 
- /* cpuid_features bits */
- #define CPUID_FP87 (1U << 0)
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 4c2e6f3a71e..deb58670651 100644
+index deb58670651..f3e9b543682 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6035,8 +6035,7 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
- 
- #endif /* !CONFIG_USER_ONLY */
- 
--uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
--                                            bool migratable_only)
-+uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
- {
-     FeatureWordInfo *wi = &feature_word_info[w];
-     uint64_t r = 0;
-@@ -6076,9 +6075,9 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
-             ? CPUID_EXT2_LM & ~CPUID_EXT2_KERNEL_FEATURES
-             : CPUID_EXT2_LM;
+@@ -6064,8 +6064,10 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+     } else {
+         return ~0;
+     }
++
++    switch (w) {
+ #ifndef TARGET_X86_64
+-    if (w == FEAT_8000_0001_EDX) {
++    case FEAT_8000_0001_EDX:
+         /*
+          * 32-bit TCG can emulate 64-bit compatibility mode.  If there is no
+          * way for userspace to get out of its 32-bit jail, we can leave
+@@ -6077,6 +6079,18 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
          r &= ~unavail;
--    }
-+        break;
+         break;
  #endif
--    if (migratable_only) {
-+    if (cpu && cpu->migratable) {
++
++    case FEAT_8000_0007_EBX:
++        if (cpu && !IS_AMD_CPU(&cpu->env)) {
++            /* Disable AMD machine check architecture for Intel CPU.  */
++            r = 0;
++        }
++        break;
++
++    default:
++        break;
++    }
++
+     if (cpu && cpu->migratable) {
          r &= x86_cpu_get_migratable_flags(w);
      }
-     return r;
-@@ -7371,7 +7370,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-              * by the user.
-              */
-             env->features[w] |=
--                x86_cpu_get_supported_feature_word(w, cpu->migratable) &
-+                x86_cpu_get_supported_feature_word(cpu, w) &
-                 ~env->user_features[w] &
-                 ~feature_word_info[w].no_autoenable_flags;
-         }
-@@ -7497,7 +7496,7 @@ static void x86_cpu_filter_features(X86CPU *cpu, bool verbose)
- 
-     for (w = 0; w < FEATURE_WORDS; w++) {
-         uint64_t host_feat =
--            x86_cpu_get_supported_feature_word(w, false);
-+            x86_cpu_get_supported_feature_word(NULL, w);
-         uint64_t requested_features = env->features[w];
-         uint64_t unavailable_features = requested_features & ~host_feat;
-         mark_unavailable_features(cpu, w, unavailable_features, prefix);
-@@ -7617,7 +7616,7 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-         env->features[FEAT_PERF_CAPABILITIES] & PERF_CAP_LBR_FMT;
-     if (requested_lbr_fmt && kvm_enabled()) {
-         uint64_t host_perf_cap =
--            x86_cpu_get_supported_feature_word(FEAT_PERF_CAPABILITIES, false);
-+            x86_cpu_get_supported_feature_word(NULL, FEAT_PERF_CAPABILITIES);
-         unsigned host_lbr_fmt = host_perf_cap & PERF_CAP_LBR_FMT;
- 
-         if (!cpu->enable_pmu) {
-diff --git a/target/i386/kvm/kvm-cpu.c b/target/i386/kvm/kvm-cpu.c
-index f9b99b5f50d..b2735d6efee 100644
---- a/target/i386/kvm/kvm-cpu.c
-+++ b/target/i386/kvm/kvm-cpu.c
-@@ -136,7 +136,7 @@ static void kvm_cpu_xsave_init(void)
-         if (!esa->size) {
-             continue;
-         }
--        if ((x86_cpu_get_supported_feature_word(esa->feature, false) & esa->bits)
-+        if ((x86_cpu_get_supported_feature_word(NULL, esa->feature) & esa->bits)
-             != esa->bits) {
-             continue;
-         }
 -- 
 2.45.2
 
