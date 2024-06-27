@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 046BBC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 11:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77254C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 11:50:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMnci-00070X-IG; Thu, 27 Jun 2024 07:49:08 -0400
+	id 1sMne5-0007gi-P8; Thu, 27 Jun 2024 07:50:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMnce-000705-MJ
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 07:49:06 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1sMne3-0007fo-OX
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 07:50:31 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMncc-0003R5-HD
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 07:49:04 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1fa07e4f44eso46401615ad.2
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 04:49:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1sMndw-0004al-7G
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 07:50:31 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4255f915611so47565e9.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 04:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719488941; x=1720093741;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=5cJLWURiQFo5D95r5D1PrYms1E5NQD/eO7a7HLsxZXY=;
- b=rLxyuzI1V+s/O0afqyMZP9gdxSJxnxkTI1KhkrLtdVZkvzIqk8ZCi5rodXhMlEVuyu
- NpbHcPd+OnPIbZxJJwJwp9DDVLVvTFSfjt9VTFwNxjGoQRWeVdRBP24fOkleTzc0vAgK
- Rp72ndHYqY1oqhlUzTIzLjCykABVJYdVUL5iYrwq1ZI9qWA66UxRx/9IlA0DlfMALVde
- pzPZaiTAq++RbaVApcR/yrk3y5R1UWhJV/4m6COcA69ZugHD8WKtPJFPeUKMjoA9uj/L
- OncSaP35E+FazX7KpK6+ctnWSP+L0ieg80o5pXWq89sBCaSFNH7GTtou+OVYNZJgioCK
- unZw==
+ d=google.com; s=20230601; t=1719489022; x=1720093822; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=e9P6rSk8vf64hp/l6OI3SI/PjxibwZs4WejYppaOX6Q=;
+ b=YyRnTNfDTJHiu1jUrMVqbIKrDLCwazlh3m8pf/vfqd6D8VSiewnwoNKne5PJ8/lEwV
+ GVCYgtBrqEn/ImRO7wxGgFH59fad7FJcKxh2+Oe1XulNHs6OhJLCDB1QiYSN2ZQ05cLa
+ 1U+XVkuxgGaUN34m+z3K1ki9cfNm3MvMaDQOEh/cvMQ4G2n0oB9Tb6vlyOH69Ox+Yk2m
+ i7HxhnIp3wNJ+xE4LdiUvsK4hP8lZ78it5EB1/aZG66dljIPqVzk+PVsUG1Xlqdfh8Pe
+ TGRb8qKp+VAC4d3Cil7FZm8Zad3P5PR6yfbjtlFUic4hpf+BtB30vmMqUnyI0ubTKD1T
+ lfKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719488941; x=1720093741;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:subject:from:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5cJLWURiQFo5D95r5D1PrYms1E5NQD/eO7a7HLsxZXY=;
- b=Zf/Eg+2BiF3yoNRyDjnQOKfGuNtYNLC/++NkpAqolXGSbuxNa+YVkg5pauDrZgQ9aL
- U4O48buD6tw8kahxFPFJsIfAMWXOykYl8IozCWsKMomtGp/wu9zrgJGmrNXaiBanTAcg
- GK3jkEiiN7EMTWZNhdNrWCpobpgSse8AoLKBYww/aVmmJQtu3KFUz4qxk3gETw/+klSd
- 1SUZu73ZDrR0g8kK34PB8oZMEAE9fsJGsSZxy8i+cUet0ltBiJn/6iCRuIatdTQmuv9+
- /Gr6TabAM1lWgH7pyq8hy6+dq9rqXIjZ1f5QtXXGCpSKuDvtU0nXsNRlEm0bznSoXepr
- PEiA==
+ d=1e100.net; s=20230601; t=1719489022; x=1720093822;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e9P6rSk8vf64hp/l6OI3SI/PjxibwZs4WejYppaOX6Q=;
+ b=sGGJGvMuYmiZ472DiBdp0c46xio9d7l57oO/RVj7HEpSKq7kyc0YC8qqvvTcDelppj
+ EsAcz1cqFV+802BqU+so9HfqzA5OmVhCVbHhmBeYuDGyMdUJy6nV7jfkkTULLipRqgFK
+ xkA/JdTRaNQHNTMM3yrUVzmb4XAsTAOZltm1C9l3AINNvcH9i9RGHeM+w1IOP0y3PYTf
+ RdIICmS55aY2MAdmiSAy4jUjB6+tDRssdiI6Rk9VBywQsg1dnltnFbmnGodgZywq7jqS
+ Yxx6HTqXzt9ehXO8T7WXlUMIglhoYZTebzmvpJUnAH0k1SJy1aGQOfBEdrx+Gz+SJ6s8
+ q6lw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUdxsGq7V69/l4bS7VxacMAOcKPSlDfwSox4VGv2QiU7F45269nUxc9y6wIMVtqXPr/dsv0rEHxpmHjOhKMSMEWoMQxafU=
-X-Gm-Message-State: AOJu0YwIJd81Hyjq8C2+GWXtRiKBC4wAeJJimpa41BuzAVh5Zqsgyj5L
- Ygl4/rToRGLMisnfoJKZ/7ASjJ0eXhdeqsgqxmJjdQkv412o9vkNWQfRpPeafMw=
-X-Google-Smtp-Source: AGHT+IF31sitNWbS82Tlh8I/YgWC5lM6bval8FrWycPLksXPxHCXI45odLjEqczDgAWEy7BstuVOfQ==
-X-Received: by 2002:a17:902:d509:b0:1f7:c56:58a3 with SMTP id
- d9443c01a7336-1fa23dce430mr147384585ad.26.1719488940872; 
- Thu, 27 Jun 2024 04:49:00 -0700 (PDT)
-Received: from [157.82.204.135] ([157.82.204.135])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1faac8df8c6sm11515235ad.54.2024.06.27.04.48.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 04:48:59 -0700 (PDT)
-Message-ID: <bbcfe4f8-0c65-45f2-a0ba-050aa3cbd51b@daynix.com>
-Date: Thu, 27 Jun 2024 20:48:56 +0900
+ AJvYcCVuSZydwtcn01/TQ/yXbRCfw9MR3B9DDXfOxfq+swQieN+R6tzqzkWJ7tZ9fmzz5MPcA/i5G21bcMbheN4fcxJ0ltGNe9I=
+X-Gm-Message-State: AOJu0Yw+MXzsX80AtPB3CmHzZzlkLPED77lx41EN6ZRwB1ctGFqAaQyL
+ KlD6byIZm7brqOAXcOuCw7vY+clXOnb5x4bKc0s8UyHTNsx+5bkXNZOEUC/PtA==
+X-Google-Smtp-Source: AGHT+IHF2+OWLkDVOlVs+eamxkFdARYG2bMOTEh+jiXREdWWJJJgTOLPwU4rS5i1HLRx+QKS9xzVFw==
+X-Received: by 2002:a05:600c:3ba9:b0:424:891e:a9fe with SMTP id
+ 5b1f17b1804b1-425641c24c3mr1459555e9.1.1719489021028; 
+ Thu, 27 Jun 2024 04:50:21 -0700 (PDT)
+Received: from google.com (205.215.190.35.bc.googleusercontent.com.
+ [35.190.215.205]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-424c82462a2sm63024555e9.2.2024.06.27.04.50.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 27 Jun 2024 04:50:20 -0700 (PDT)
+Date: Thu, 27 Jun 2024 11:50:16 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
+ marcin.juszkiewicz@linaro.org
+Subject: Re: [RFC PATCH v3 17/18] hw/arm/smmuv3: Add property for OAS
+Message-ID: <Zn1R-BwOnSRpstw2@google.com>
+References: <20240429032403.74910-1-smostafa@google.com>
+ <20240429032403.74910-18-smostafa@google.com>
+ <689f6ac7-86ce-482f-a59a-fd17f8a5216d@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH v2 2/2] ui/cocoa: Adds NSCursor absolute pointer support
-To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, philmd@linaro.org, marcandre.lureau@redhat.com, 
- lists@philjordan.eu
-References: <20240625134931.92279-1-phil@philjordan.eu>
- <20240625134931.92279-3-phil@philjordan.eu>
-Content-Language: en-US
-In-Reply-To: <20240625134931.92279-3-phil@philjordan.eu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <689f6ac7-86ce-482f-a59a-fd17f8a5216d@redhat.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -180
+X-Spam_score: -18.1
+X-Spam_bar: ------------------
+X-Spam_report: (-18.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,169 +100,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Eric,
 
-Thanks for fixing my patch and adding this follow-up.
-
-I incorporated your fix with some change with v2 so please review it and 
-rebase this patch to it.
-
-On 2024/06/25 22:49, Phil Dennis-Jordan wrote:
-> When pointer input is absolute, use the native macOS host’s Cocoa
-> NSCursor to render the guest’s cursor. The rendered cursor is no longer
-> cropped to the guest viewport, and the correct cursor image is passed to
-> anything tapping into the host system’s native cursor. (such as remote
-> access)
+On Tue, May 21, 2024 at 11:32:48AM +0200, Eric Auger wrote:
+> Hi Mostafa,
 > 
-> The CALayer is retained for rendering the cursor in relative pointer
-> input mode. Cropping the cursor here gives a visual indication of the
-> captured pointer (the mouse must be explicitly ungrabbed before allowing
-> the cursor to leave the Qemu window), and teleporting the host cursor
-> when its position is changed by the guest causes a feedback loop in
-> input events. >
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> ---
->   ui/cocoa.m | 82 +++++++++++++++++++++++++++++++++++++++++++-----------
->   1 file changed, 65 insertions(+), 17 deletions(-)
+> On 4/29/24 05:24, Mostafa Saleh wrote:
+> > Add property that sets the OAS of the SMMU, this in not used in this
+> > patch.
+> >
+> > Signed-off-by: Mostafa Saleh <smostafa@google.com>
+> > ---
+> >  hw/arm/smmuv3-internal.h |  3 ++-
+> >  hw/arm/smmuv3.c          | 29 ++++++++++++++++++++++++++++-
+> >  include/hw/arm/smmuv3.h  |  1 +
+> >  3 files changed, 31 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
+> > index 0ebf2eebcf..dd91807624 100644
+> > --- a/hw/arm/smmuv3-internal.h
+> > +++ b/hw/arm/smmuv3-internal.h
+> > @@ -111,7 +111,8 @@ REG32(IDR5,                0x14)
+> >       FIELD(IDR5, VAX,        10, 2);
+> >       FIELD(IDR5, STALL_MAX,  16, 16);
+> >  
+> > -#define SMMU_IDR5_OAS 4
+> > +#define SMMU_IDR5_OAS_DEF 4 /* 44 bits. */
+> > +#define SMMU_IDR5_OAS_MAX 5 /* 48 bits. */
+> >  
+> >  REG32(IIDR,                0x18)
+> >  REG32(AIDR,                0x1c)
+> > diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> > index 4ac818cf7a..39d03e7e24 100644
+> > --- a/hw/arm/smmuv3.c
+> > +++ b/hw/arm/smmuv3.c
+> > @@ -299,7 +299,9 @@ static void smmuv3_init_regs(SMMUv3State *s)
+> >      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 1);
+> >      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, BBML, 2);
+> >  
+> > -    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS); /* 44 bits */
+> > +    /* PTW doesn't support 52 bits. */
+> remove the point
+> > +    s->oas = MIN(s->oas, SMMU_IDR5_OAS_MAX);
+> > +    s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, s->oas);
+> >      /* 4K, 16K and 64K granule support */
+> >      s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN4K, 1);
+> >      s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, 1);
+> > @@ -1901,11 +1903,34 @@ static const VMStateDescription vmstate_gbpa = {
+> >      }
+> >  };
+> >  
+> > +static const VMStateDescription vmstate_oas = {
+> > +    .name = "smmuv3/oas",
+> > +    .version_id = 1,
+> > +    .minimum_version_id = 1,
+> don't you need a .needed function?
 > 
-> diff --git a/ui/cocoa.m b/ui/cocoa.m
-> index cca987eac7..131c442e16 100644
-> --- a/ui/cocoa.m
-> +++ b/ui/cocoa.m
-> @@ -314,6 +314,7 @@ @interface QemuCocoaView : NSView
->       CFMachPortRef eventsTap;
->       CALayer *cursorLayer;
->       QEMUCursor *cursor;
-> +    NSCursor *cocoaCursor;
->       int mouseX;
->       int mouseY;
->       int mouseOn;
-> @@ -402,6 +403,9 @@ - (void) dealloc
->   
->       [cursorLayer release];
->       cursorLayer = nil;
-> +    [cocoaCursor release];
-> +    cocoaCursor = nil;
-> +
->       [super dealloc];
->   }
->   
-> @@ -460,27 +464,14 @@ - (void)setMouseX:(int)x y:(int)y on:(int)on
->       [CATransaction begin];
->       [CATransaction setDisableActions:YES];
->       [cursorLayer setPosition:position];
-> -    [cursorLayer setHidden:!mouseOn];
-> +    [cursorLayer setHidden:!mouseOn || isAbsoluteEnabled];
->       [CATransaction commit];
->   }
->   
-> -- (void)setCursor:(QEMUCursor *)given_cursor
-> +static CGImageRef cursor_cgimage_create(QEMUCursor *cursor)
+> I tested backward migration and this fails
+> qemu-system-aarch64: error while loading state for instance 0x0 of
+> device 'smmuv3'
+> qemu-system-aarch64: load of migration failed: No such file or directory
+> post-processing ...
 
-Don't add C functions in middle of Objective-C definition.
+Yes, I think we need a .needed which returns if oas is not as default,
+that should be backward compatiable (at least for this patch) and would
+break when oas changes.
 
->   {
->       CGDataProviderRef provider;
->       CGImageRef image;
-> -    CGRect bounds = CGRectZero;
-> -
-> -    cursor_unref(cursor);
-> -    cursor = given_cursor;
-> -
-> -    if (!cursor) {
-> -        return;
-> -    }
-> -
-> -    cursor_ref(cursor);
-> -
-> -    bounds.size.width = cursor->width;
-> -    bounds.size.height = cursor->height;
->       CGColorSpaceRef color_space = CGColorSpaceCreateWithName(kCGColorSpaceSRGB);
->   
->       provider = CGDataProviderCreateWithData(
-> @@ -506,6 +497,43 @@ - (void)setCursor:(QEMUCursor *)given_cursor
->   
->       CGDataProviderRelease(provider);
->       CGColorSpaceRelease(color_space);
-> +    return image;
-> +}
-> +
-> +static NSCursor *cocoa_cursor_create(QEMUCursor *cursor, CGImageRef image)
-> +{
-> +    NSPoint hotspot = { cursor->hot_x, cursor->hot_y };
-
-Use NSMakePoint() for the consistency with the next line (among other 
-similar constructs).
-
-> +    NSSize size = NSMakeSize(cursor->width, cursor->height);
-> +    NSImage *cursor_image = [[NSImage alloc] initWithCGImage:image size:size];
-> +    NSCursor *cocoa_cursor =
-> +        [[NSCursor alloc] initWithImage:cursor_image hotSpot:hotspot];
-> +    [cursor_image release];
-> +    return cocoa_cursor;
-> +}
-> +
-> +- (void)setCursor:(QEMUCursor *)given_cursor
-> +{
-> +    CGImageRef image;
-> +    NSImage *cursor_nsimage = nil;
-> +    CGRect bounds = CGRectZero;
-> +
-> +    cursor_unref(cursor);
-> +    cursor = given_cursor;
-> +
-> +    if (!cursor) {
-> +        return;
-> +    }
-> +
-> +    cursor_ref(cursor);
-> +
-> +    bounds.size.width = cursor->width;
-> +    bounds.size.height = cursor->height;
-> +
-> +    image = cursor_cgimage_create(cursor);
-> +    [cocoaCursor release];
-> +    cocoaCursor = cocoa_cursor_create(cursor, image);
-> +    [self.window invalidateCursorRectsForView:self];
-> +
->       [CATransaction begin];
->       [CATransaction setDisableActions:YES];
->       [cursorLayer setBounds:bounds];
-> @@ -514,6 +542,16 @@ - (void)setCursor:(QEMUCursor *)given_cursor
->       CGImageRelease(image);
->   }
->   
-> +- (void) resetCursorRects
-> +{
-> +    if (self->cocoaCursor == nil) {
-
-For consistency, just do: if (!cocoaCursor)
-
-> +        [super resetCursorRects];
-> +    } else {
-> +        NSRect guest_area = {{ 0.0, 0.0 }, { screen.width, screen.height }};
-> +        [self addCursorRect:guest_area cursor:cocoaCursor];
-> +    }
-> +}
-> +
->   - (void) drawRect:(NSRect) rect
->   {
->       COCOA_DEBUG("QemuCocoaView: drawRect\n");
-> @@ -1181,7 +1219,12 @@ - (void) grabMouse
->           [[self window] setTitle:[NSString stringWithFormat:@"QEMU %s - (Press  " UC_CTRL_KEY " " UC_ALT_KEY " G  to release Mouse)", qemu_name]];
->       else
->           [[self window] setTitle:@"QEMU - (Press  " UC_CTRL_KEY " " UC_ALT_KEY " G  to release Mouse)"];
-> -    [self hideCursor];
-> +
-> +    [cursorLayer setHidden:!mouseOn || isAbsoluteEnabled];
-> +    if (!isAbsoluteEnabled) {
-> +        [self hideCursor];
-> +    }
-
-[self hideCursor] should also be called for an absolute pointer device 
-if the guest does not set the cursor. See ui/gtk.c and ui/sdl2.c to know 
-how the show-cursor option should behave.
-
-Regards,
-Akihiko Odaki
+Thanks,
+Mostafa
+> 
+> Thanks
+> 
+> Eric
+> > +    .fields = (const VMStateField[]) {
+> > +        VMSTATE_INT32(oas, SMMUv3State),
+> > +        VMSTATE_END_OF_LIST()
+> > +    }
+> > +};
+> > +
+> > +static int smmuv3_preload(void *opaque)
+> > +{
+> > +    SMMUv3State *s = opaque;
+> > +
+> > +    /*
+> > +     * In case it wasn't migrated, use the value used
+> > +     * by older QEMU.
+> > +     */
+> > +    s->oas = SMMU_IDR5_OAS_DEF;
+> > +    return 0;
+> > +}
+> > +
+> >  static const VMStateDescription vmstate_smmuv3 = {
+> >      .name = "smmuv3",
+> >      .version_id = 1,
+> >      .minimum_version_id = 1,
+> >      .priority = MIG_PRI_IOMMU,
+> > +    .pre_load = smmuv3_preload,
+> >      .fields = (const VMStateField[]) {
+> >          VMSTATE_UINT32(features, SMMUv3State),
+> >          VMSTATE_UINT8(sid_size, SMMUv3State),
+> > @@ -1933,6 +1958,7 @@ static const VMStateDescription vmstate_smmuv3 = {
+> >      },
+> >      .subsections = (const VMStateDescription * const []) {
+> >          &vmstate_gbpa,
+> > +        &vmstate_oas,
+> >          NULL
+> >      }
+> >  };
+> > @@ -1945,6 +1971,7 @@ static Property smmuv3_properties[] = {
+> >       * Defaults to stage 1
+> >       */
+> >      DEFINE_PROP_STRING("stage", SMMUv3State, stage),
+> > +    DEFINE_PROP_INT32("oas", SMMUv3State, oas, SMMU_IDR5_OAS_DEF),
+> >      DEFINE_PROP_END_OF_LIST()
+> >  };
+> >  
+> > diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> > index d183a62766..00a9eb4467 100644
+> > --- a/include/hw/arm/smmuv3.h
+> > +++ b/include/hw/arm/smmuv3.h
+> > @@ -63,6 +63,7 @@ struct SMMUv3State {
+> >      qemu_irq     irq[4];
+> >      QemuMutex mutex;
+> >      char *stage;
+> > +    int32_t oas;
+> >  };
+> >  
+> >  typedef enum {
+> 
 
