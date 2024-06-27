@@ -4,67 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73ED8C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 18:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D5CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 18:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMtck-0005Yb-FE; Thu, 27 Jun 2024 14:13:34 -0400
+	id 1sMttr-0000qD-2M; Thu, 27 Jun 2024 14:31:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sMtca-0005W6-KV
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 14:13:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sMtcO-0006pa-Lh
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 14:13:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719511991;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rKJuPVFNNYUhZQVtic//1vSOUoT+wo03xwqaa+7Rb3c=;
- b=DHJntvkJy/+dyKokqqw4UdX2v9nsb9dMsSbEJbmOHBvdiInvkqYYXWirHib6P7YI39rdBO
- ehufHKFBmh8kFXEt1M/0AqvXTvfv8uvYGrPCgVn8deD72wsxRvISvB+29R9Dn9efVtB8VO
- PEYnXb/n04FPCh32V2pw0NQ/ltTRIuY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-214-VRjYTbKJMP6jLCjaRubL4Q-1; Thu,
- 27 Jun 2024 14:13:10 -0400
-X-MC-Unique: VRjYTbKJMP6jLCjaRubL4Q-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79B30195608F; Thu, 27 Jun 2024 18:13:07 +0000 (UTC)
-Received: from merkur.redhat.com (unknown [10.39.192.213])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3411519773D9; Thu, 27 Jun 2024 18:13:04 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com, stefanha@redhat.com, eblake@redhat.com,
- pbonzini@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH 2/2] block/graph-lock: Make WITH_GRAPH_RDLOCK_GUARD() fully
- checked
-Date: Thu, 27 Jun 2024 20:12:45 +0200
-Message-ID: <20240627181245.281403-3-kwolf@redhat.com>
-In-Reply-To: <20240627181245.281403-1-kwolf@redhat.com>
-References: <20240627181245.281403-1-kwolf@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sMttm-0000pu-2U
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 14:31:12 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sMttj-0004lu-N3
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 14:31:09 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-706680d3a25so4258717b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 11:31:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719513065; x=1720117865; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ofZSilqbUyy+OIqI1oyQtcKbXn2k1YsSLYdrzc/ULWc=;
+ b=OVozFBotjxIrZPS3b88qCK7f2VWERPQ6VbfVcd9Hbuthc1sNwF0Zd7RRqsYFquUazX
+ w5MY2OPib5ONoGh/NPClkTBFcho7ergkPANOcarfU+Fowxtq6vnquNjcnX73W7yVKi2v
+ YIju9fz0uU5XlUSgpjLHuwVLlPF/B/DYWQWltw/OyeXFFxg6bCeSiYsQDlUu39I748Cj
+ UD/R3+i2H+PwGbPooHmRmw9LYSI84rfGaf689vuXWGjf6U8lwtcomR2Hdi5aUXmHG6fz
+ VMpx94NcNbYPHNnGC2/L0uai6aUcjQYjVDBP1HWKExYzEB4fyirtnkMX/E+jgwPo90Bw
+ 3y6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719513065; x=1720117865;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ofZSilqbUyy+OIqI1oyQtcKbXn2k1YsSLYdrzc/ULWc=;
+ b=EiyksJOG2oZPWjppl20W+uTytYbIG/5ejc0z3TlUiz9ZEKcttwSFIoEHys02Nh8kEY
+ 86sRTlTmMN2LTuGBPmnEe3cJmg1fSeHdWhYFlUM7KnvbFrrTgMbrkC5jB/xlaHih/ODo
+ QIkLCfDRKPXgpKEaVFO8pecW7aDrK7ofwYsEHV/g6+5J24THIkXYTc2r0A+MMP+FSmij
+ xjsSRvikFttEMubY34zmM3I/JYGlbUwn7Rn3f+mDyG5BADi2NNUgR7vADUH7izrF3+tb
+ NHwiOCCJ0ltP54Lql7Tl7wvM8dQhUQVm8EUbMMDjdAMpNsHj/OoOTvmgSwgiibj8QW3l
+ 6iww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV27PLQsK2rYlTiH7nq2GPEe4eYX3Eox6omLdF1t3AMe4Vq00070arBqywFmk3vmW5qs+Q3HbSwUcHS7biTCq+N6Ovrdr0=
+X-Gm-Message-State: AOJu0YzjTld/I28+coMeQvArFCYJxuLvABMyKBlCyEY5u+vp4J7qsQMo
+ Vvr0LkAFkUZlXwjt0lRGT+YPRi7cLKVw3HAtiALlEqbvhkN9J6gDZJQ0nBIVcKA=
+X-Google-Smtp-Source: AGHT+IFsMl68KoRl/giqBvRqfdqIxC7o3jrIjAWBkZItbr31xGGSLF7+O7Cx4eIAKD79j4f1mbOHUA==
+X-Received: by 2002:a05:6a00:b21:b0:704:32dc:c4e4 with SMTP id
+ d2e1a72fcca58-70670e7a958mr13165160b3a.1.1719513064931; 
+ Thu, 27 Jun 2024 11:31:04 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70803ed3a64sm27972b3a.119.2024.06.27.11.31.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Jun 2024 11:31:04 -0700 (PDT)
+Message-ID: <5ea158f6-4ff1-4d48-b2bf-ee9d393b7a5c@linaro.org>
+Date: Thu, 27 Jun 2024 11:31:03 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 6/7] tests/plugin/mem: add option to print memory
+ accesses
+To: "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20240626233757.375083-1-pierrick.bouvier@linaro.org>
+ <20240626233757.375083-7-pierrick.bouvier@linaro.org>
+ <OSZPR01MB6453C257EED6AFD784FFFCDB8DD72@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+ <b34d0699-42cc-405c-a511-e58445bc362d@linaro.org>
+ <OSZPR01MB645303F9F5E92FD3384D4E8A8DD72@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <OSZPR01MB645303F9F5E92FD3384D4E8A8DD72@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,105 +108,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Upstream clang 18 (and backports to clang 17 in Fedora and RHEL)
-implemented support for __attribute__((cleanup())) in its Thread Safety
-Analysis, so we can now actually have a proper implementation of
-WITH_GRAPH_RDLOCK_GUARD() that understands when we acquire and when we
-release the lock.
-
--Wthread-safety is now only enabled if the compiler is new enough to
-understand this pattern. In theory, we could have used some #ifdefs to
-keep the existing basic checks on old compilers, but as long as someone
-runs a newer compiler (and our CI does), we will catch locking problems,
-so it's probably not worth keeping multiple implementations for this.
-
-The implementation can't use g_autoptr any more because the glib macros
-define wrapper functions that don't have the right TSA attributes, so
-the compiler would complain about them. Just use the cleanup attribute
-directly instead.
-
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- include/block/graph-lock.h | 21 ++++++++++++++-------
- meson.build                | 14 +++++++++++++-
- 2 files changed, 27 insertions(+), 8 deletions(-)
-
-diff --git a/include/block/graph-lock.h b/include/block/graph-lock.h
-index d7545e82d0..dc8d949184 100644
---- a/include/block/graph-lock.h
-+++ b/include/block/graph-lock.h
-@@ -209,31 +209,38 @@ typedef struct GraphLockable { } GraphLockable;
-  * unlocked. TSA_ASSERT_SHARED() makes sure that the following calls know that
-  * we hold the lock while unlocking is left unchecked.
-  */
--static inline GraphLockable * TSA_ASSERT_SHARED(graph_lock) TSA_NO_TSA coroutine_fn
-+static inline GraphLockable * TSA_ACQUIRE_SHARED(graph_lock) coroutine_fn
- graph_lockable_auto_lock(GraphLockable *x)
- {
-     bdrv_graph_co_rdlock();
-     return x;
- }
- 
--static inline void TSA_NO_TSA coroutine_fn
--graph_lockable_auto_unlock(GraphLockable *x)
-+static inline void TSA_RELEASE_SHARED(graph_lock) coroutine_fn
-+graph_lockable_auto_unlock(GraphLockable **x)
- {
-     bdrv_graph_co_rdunlock();
- }
- 
--G_DEFINE_AUTOPTR_CLEANUP_FUNC(GraphLockable, graph_lockable_auto_unlock)
-+#define GRAPH_AUTO_UNLOCK __attribute__((cleanup(graph_lockable_auto_unlock)))
- 
-+/*
-+ * @var is only used to break the loop after the first iteration.
-+ * @unlock_var can't be unlocked and then set to NULL because TSA wants the lock
-+ * to be held at the start of every iteration of the loop.
-+ */
- #define WITH_GRAPH_RDLOCK_GUARD_(var)                                         \
--    for (g_autoptr(GraphLockable) var = graph_lockable_auto_lock(GML_OBJ_()); \
-+    for (GraphLockable *unlock_var GRAPH_AUTO_UNLOCK =                        \
-+            graph_lockable_auto_lock(GML_OBJ_()),                             \
-+            *var = unlock_var;                                                \
-          var;                                                                 \
--         graph_lockable_auto_unlock(var), var = NULL)
-+         var = NULL)
- 
- #define WITH_GRAPH_RDLOCK_GUARD() \
-     WITH_GRAPH_RDLOCK_GUARD_(glue(graph_lockable_auto, __COUNTER__))
- 
- #define GRAPH_RDLOCK_GUARD(x)                                       \
--    g_autoptr(GraphLockable)                                        \
-+    GraphLockable * GRAPH_AUTO_UNLOCK                               \
-     glue(graph_lockable_auto, __COUNTER__) G_GNUC_UNUSED =          \
-             graph_lockable_auto_lock(GML_OBJ_())
- 
-diff --git a/meson.build b/meson.build
-index 97e00d6f59..b1d5ce5f1d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -624,7 +624,19 @@ warn_flags = [
- ]
- 
- if host_os != 'darwin'
--  warn_flags += ['-Wthread-safety']
-+  tsa_has_cleanup = cc.compiles('''
-+    struct __attribute__((capability("mutex"))) mutex {};
-+    void lock(struct mutex *m) __attribute__((acquire_capability(m)));
-+    void unlock(struct mutex *m) __attribute__((release_capability(m)));
-+
-+    void test(void) {
-+      struct mutex __attribute__((cleanup(unlock))) m;
-+      lock(&m);
-+    }
-+  ''', args: ['-Wthread-safety', '-Werror'])
-+  if tsa_has_cleanup
-+    warn_flags += ['-Wthread-safety']
-+  endif
- endif
- 
- # Set up C++ compiler flags
--- 
-2.45.2
-
+T24gNi8yNi8yNCAyMzowNCwgWGluZ3RhbyBZYW8gKEZ1aml0c3UpIHdyb3RlOg0KPiANCj4g
+DQo+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPj4gRnJvbTogUGllcnJpY2sgQm91
+dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4gU2VudDogVGh1cnNkYXks
+IEp1bmUgMjcsIDIwMjQgMToyOSBQTQ0KPj4gVG86IFlhbywgWGluZ3Rhby/lp5og5bm45rab
+IDx5YW94dC5mbnN0QGZ1aml0c3UuY29tPjsgcWVtdS1kZXZlbEBub25nbnUub3JnDQo+PiBD
+YzogQWxleGFuZHJlIElvb3NzIDxlcmRuYXhlQGNyYW5zLm9yZz47IFBoaWxpcHBlIE1hdGhp
+ZXUtRGF1ZMOpDQo+PiA8cGhpbG1kQGxpbmFyby5vcmc+OyBNYWhtb3VkIE1hbmRvdXIgPG1h
+Lm1hbmRvdXJyQGdtYWlsLmNvbT47IFBhb2xvDQo+PiBCb256aW5pIDxwYm9uemluaUByZWRo
+YXQuY29tPjsgRWR1YXJkbyBIYWJrb3N0IDxlZHVhcmRvQGhhYmtvc3QubmV0PjsNCj4+IFJp
+Y2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3JnPjsgQWxleCBC
+ZW5uw6llDQo+PiA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz4NCj4+IFN1YmplY3Q6IFJlOiBb
+UEFUQ0ggdjIgNi83XSB0ZXN0cy9wbHVnaW4vbWVtOiBhZGQgb3B0aW9uIHRvIHByaW50IG1l
+bW9yeQ0KPj4gYWNjZXNzZXMNCj4+DQo+PiBIaSBYaW5ndGFvLA0KPj4NCj4+IE9uIDYvMjYv
+MjQgMjA6MTcsIFhpbmd0YW8gWWFvIChGdWppdHN1KSB3cm90ZToNCj4+PiBIaSwgUGllcnJp
+Y2sNCj4+Pg0KPj4+PiArc3RhdGljIHZvaWQgcHJpbnRfYWNjZXNzKHVuc2lnbmVkIGludCBj
+cHVfaW5kZXgsIHFlbXVfcGx1Z2luX21lbWluZm9fdA0KPj4+PiBtZW1pbmZvLA0KPj4+PiAr
+ICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnQ2NF90IHZhZGRyLCB2b2lkICp1ZGF0YSkN
+Cj4+Pj4gK3sNCj4+Pj4gKyAgICB1bnNpZ25lZCBzaXplID0gOCA8PCBxZW11X3BsdWdpbl9t
+ZW1fc2l6ZV9zaGlmdChtZW1pbmZvKTsNCj4+Pj4gKyAgICBjb25zdCBjaGFyICp0eXBlID0g
+cWVtdV9wbHVnaW5fbWVtX2lzX3N0b3JlKG1lbWluZm8pID8gInN0b3JlIiA6DQo+PiAibG9h
+ZCI7DQo+Pj4+ICsgICAgdWludDY0X3QgdXBwZXIgPSBxZW11X3BsdWdpbl9tZW1fZ2V0X3Zh
+bHVlX3VwcGVyX2JpdHMobWVtaW5mbyk7DQo+Pj4+ICsgICAgdWludDY0X3QgbG93ZXIgPSBx
+ZW11X3BsdWdpbl9tZW1fZ2V0X3ZhbHVlX2xvd2VyX2JpdHMobWVtaW5mbyk7DQo+Pj4+ICsg
+ICAgY29uc3QgY2hhciAqc3ltID0gdWRhdGEgPyB1ZGF0YSA6ICIiOw0KPj4+PiArICAgIGdf
+YXV0b3B0cihHU3RyaW5nKSBvdXQgPSBnX3N0cmluZ19uZXcoIiIpOw0KPj4+PiArICAgIGdf
+c3RyaW5nX3ByaW50ZihvdXQsICJhY2Nlc3M6IDB4JS4wIlBSSXg2NCIlIlBSSXg2NCIsJWQs
+JXMsJXNcbiIsDQo+Pj4+ICsgICAgICAgICAgICAgICAgICAgIHVwcGVyLCBsb3dlciwgc2l6
+ZSwgdHlwZSwgc3ltKTsNCj4+Pj4gKyAgICBxZW11X3BsdWdpbl9vdXRzKG91dC0+c3RyKTsN
+Cj4+Pj4gK30NCj4+PiBJIHRoaW5rIGl0IG1heSBiZSBoZWxwZnVsIHRvIG91dHB1dCB0aGUg
+R1ZBIGFuZCBHUEEsIGNhbiB5b3UgYXBwZW5kIHRoZXNlDQo+PiBpbmZvcm1hdGlvbj8NCj4+
+Pg0KPj4NCj4+IFlvdSBtZWFuIHZpcnR1YWwgYW5kIHBoeXNpY2FsIGFkZHJlc3Nlcz8NCj4g
+WWVzLiBjdXJyZW50bHkgd2Ugb25seSBrbm93biB0aGUgbWVtb3J5IHZhbHVlLCBhcHBlbmRp
+bmcgdGhlc2UgaW5mbyBtYXkgaGVscCB1cyB0byB0cmFjZSB0aGUNCj4gbWVtb3J5IGFjY2Vz
+cy4NCj4gDQoNClNvdW5kcyBnb29kLCBJJ2xsIGFkZCB0aGlzIGluIHYzLg0KDQo+Pg0KPj4+
+DQo+Pj4gVGhhbmtzDQo+Pj4gWGluZ3Rhbw0K
 
