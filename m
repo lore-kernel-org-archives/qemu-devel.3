@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D5CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 18:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF46DC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 19:11:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMttr-0000qD-2M; Thu, 27 Jun 2024 14:31:16 -0400
+	id 1sMuW7-0000nD-7n; Thu, 27 Jun 2024 15:10:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sMttm-0000pu-2U
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 14:31:12 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sMuW6-0000n4-4l
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 15:10:46 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sMttj-0004lu-N3
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 14:31:09 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-706680d3a25so4258717b3a.0
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 11:31:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sMuW4-0002o6-Bz
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 15:10:45 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7066c799382so5553530b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 12:10:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719513065; x=1720117865; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719515443; x=1720120243; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ofZSilqbUyy+OIqI1oyQtcKbXn2k1YsSLYdrzc/ULWc=;
- b=OVozFBotjxIrZPS3b88qCK7f2VWERPQ6VbfVcd9Hbuthc1sNwF0Zd7RRqsYFquUazX
- w5MY2OPib5ONoGh/NPClkTBFcho7ergkPANOcarfU+Fowxtq6vnquNjcnX73W7yVKi2v
- YIju9fz0uU5XlUSgpjLHuwVLlPF/B/DYWQWltw/OyeXFFxg6bCeSiYsQDlUu39I748Cj
- UD/R3+i2H+PwGbPooHmRmw9LYSI84rfGaf689vuXWGjf6U8lwtcomR2Hdi5aUXmHG6fz
- VMpx94NcNbYPHNnGC2/L0uai6aUcjQYjVDBP1HWKExYzEB4fyirtnkMX/E+jgwPo90Bw
- 3y6A==
+ bh=xM8nG+05CocUsnyh9fTD6U9Q0WFu0rxPUPxppyzyHtI=;
+ b=ZdGawpJ1mR1bziWqfp+VXPMKVuz2AkCWfja1zWKKro9t4sRnHjOegZZUyff/Zz3uEF
+ AJbcbuiCkBHgcb/ht9OYtF6N8NWMCfSUJu7gqXRc7oBoDGFU6b6cOp8j9v/LNX4jJGpr
+ p3hUitE/573ltGBeKm+Wa3JqXRqDuBwrDSBqN6bD4t2eLLYNy1iAb1raZV3Elx+AROAp
+ U9EOUgBIJtQ+BxqJNp8EWVC3JAerg4r4IjVOCjVkFV7G+u3e++DMjqzgUSBvd0UNHK6l
+ 3ZrRqWYcWHnAVsX6vmuikOUQFEe+8CF9gLz4Blf/pAX077S2yhy5m8ga6WpjiXDfhYB0
+ AzPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719513065; x=1720117865;
+ d=1e100.net; s=20230601; t=1719515443; x=1720120243;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ofZSilqbUyy+OIqI1oyQtcKbXn2k1YsSLYdrzc/ULWc=;
- b=EiyksJOG2oZPWjppl20W+uTytYbIG/5ejc0z3TlUiz9ZEKcttwSFIoEHys02Nh8kEY
- 86sRTlTmMN2LTuGBPmnEe3cJmg1fSeHdWhYFlUM7KnvbFrrTgMbrkC5jB/xlaHih/ODo
- QIkLCfDRKPXgpKEaVFO8pecW7aDrK7ofwYsEHV/g6+5J24THIkXYTc2r0A+MMP+FSmij
- xjsSRvikFttEMubY34zmM3I/JYGlbUwn7Rn3f+mDyG5BADi2NNUgR7vADUH7izrF3+tb
- NHwiOCCJ0ltP54Lql7Tl7wvM8dQhUQVm8EUbMMDjdAMpNsHj/OoOTvmgSwgiibj8QW3l
- 6iww==
+ bh=xM8nG+05CocUsnyh9fTD6U9Q0WFu0rxPUPxppyzyHtI=;
+ b=DFzT2E5EKVmmxIy6rkXoqufRGYu+13ojBc0RaTq+8zyaOasMU6Z2QyC0k6pW0wkfJ5
+ ZGw0sG0mJF4UQxRcJe4tDaVKCFJZVGGg8acaH1tc6J+6i3hdBMI1qUWH5EFrgO51aUog
+ CDFD3ophhfv0Npu2a0EfI1lUhIggq4W/rMEnASVZ6yKviIN9DdhlRyBq9LGf9CkXYxHr
+ M4jMNPM4hUd3csjFIRwFu41utJEba98wzcYXygWIluiknlk/YzW3Pa59HOvQnqr1pZsm
+ s5Jze5b8whJTgpSP7OWzSG5WDh4J5tzzvqHPA7PCUNCRcuDkXQy5J6Iebr7qI+QQDEcK
+ SvpQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV27PLQsK2rYlTiH7nq2GPEe4eYX3Eox6omLdF1t3AMe4Vq00070arBqywFmk3vmW5qs+Q3HbSwUcHS7biTCq+N6Ovrdr0=
-X-Gm-Message-State: AOJu0YzjTld/I28+coMeQvArFCYJxuLvABMyKBlCyEY5u+vp4J7qsQMo
- Vvr0LkAFkUZlXwjt0lRGT+YPRi7cLKVw3HAtiALlEqbvhkN9J6gDZJQ0nBIVcKA=
-X-Google-Smtp-Source: AGHT+IFsMl68KoRl/giqBvRqfdqIxC7o3jrIjAWBkZItbr31xGGSLF7+O7Cx4eIAKD79j4f1mbOHUA==
-X-Received: by 2002:a05:6a00:b21:b0:704:32dc:c4e4 with SMTP id
- d2e1a72fcca58-70670e7a958mr13165160b3a.1.1719513064931; 
- Thu, 27 Jun 2024 11:31:04 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
+ AJvYcCVmsudw2LwRiYXFS5J6d0pvbmKveU1k9lEhs21ELXzc9d5fIMAck+n1xvUP6tQp7J2Ff+jNYqjM/QxmXaXNk1ZpRjGlUrI=
+X-Gm-Message-State: AOJu0YzEqfHFU2xHufQWlYN2HTgdln320MEb1sHDVWtzm42ymVKivWA0
+ d82Jj8JW875VSMSnV+mgTo9sdwwtBhj3/JQ7jmsam48f1L2eYiHVqgfMeeKsKwU=
+X-Google-Smtp-Source: AGHT+IHYAXe2EbTqFz3E7tkTyCu7vB2xMTSnR1UuxP/VGXxWA4+QrytySd/ID+8GLa22EY0ZenBufA==
+X-Received: by 2002:a05:6a21:3289:b0:1be:cea5:c781 with SMTP id
+ adf61e73a8af0-1becea5cfb2mr3543953637.16.1719515442581; 
+ Thu, 27 Jun 2024 12:10:42 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70803ed3a64sm27972b3a.119.2024.06.27.11.31.03
+ d2e1a72fcca58-70803fc8b67sm64007b3a.128.2024.06.27.12.10.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 11:31:04 -0700 (PDT)
-Message-ID: <5ea158f6-4ff1-4d48-b2bf-ee9d393b7a5c@linaro.org>
-Date: Thu, 27 Jun 2024 11:31:03 -0700
+ Thu, 27 Jun 2024 12:10:42 -0700 (PDT)
+Message-ID: <1fecfba7-6a42-405c-a32a-e82164539650@linaro.org>
+Date: Thu, 27 Jun 2024 12:10:40 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/7] tests/plugin/mem: add option to print memory
- accesses
-To: "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 2/7] plugins: save value during memory accesses
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Alexandre Iooss <erdnaxe@crans.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
  <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20240626233757.375083-1-pierrick.bouvier@linaro.org>
- <20240626233757.375083-7-pierrick.bouvier@linaro.org>
- <OSZPR01MB6453C257EED6AFD784FFFCDB8DD72@OSZPR01MB6453.jpnprd01.prod.outlook.com>
- <b34d0699-42cc-405c-a511-e58445bc362d@linaro.org>
- <OSZPR01MB645303F9F5E92FD3384D4E8A8DD72@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+ <20240626233757.375083-3-pierrick.bouvier@linaro.org>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <OSZPR01MB645303F9F5E92FD3384D4E8A8DD72@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240626233757.375083-3-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,39 +102,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gNi8yNi8yNCAyMzowNCwgWGluZ3RhbyBZYW8gKEZ1aml0c3UpIHdyb3RlOg0KPiANCj4g
-DQo+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPj4gRnJvbTogUGllcnJpY2sgQm91
-dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4gU2VudDogVGh1cnNkYXks
-IEp1bmUgMjcsIDIwMjQgMToyOSBQTQ0KPj4gVG86IFlhbywgWGluZ3Rhby/lp5og5bm45rab
-IDx5YW94dC5mbnN0QGZ1aml0c3UuY29tPjsgcWVtdS1kZXZlbEBub25nbnUub3JnDQo+PiBD
-YzogQWxleGFuZHJlIElvb3NzIDxlcmRuYXhlQGNyYW5zLm9yZz47IFBoaWxpcHBlIE1hdGhp
-ZXUtRGF1ZMOpDQo+PiA8cGhpbG1kQGxpbmFyby5vcmc+OyBNYWhtb3VkIE1hbmRvdXIgPG1h
-Lm1hbmRvdXJyQGdtYWlsLmNvbT47IFBhb2xvDQo+PiBCb256aW5pIDxwYm9uemluaUByZWRo
-YXQuY29tPjsgRWR1YXJkbyBIYWJrb3N0IDxlZHVhcmRvQGhhYmtvc3QubmV0PjsNCj4+IFJp
-Y2hhcmQgSGVuZGVyc29uIDxyaWNoYXJkLmhlbmRlcnNvbkBsaW5hcm8ub3JnPjsgQWxleCBC
-ZW5uw6llDQo+PiA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz4NCj4+IFN1YmplY3Q6IFJlOiBb
-UEFUQ0ggdjIgNi83XSB0ZXN0cy9wbHVnaW4vbWVtOiBhZGQgb3B0aW9uIHRvIHByaW50IG1l
-bW9yeQ0KPj4gYWNjZXNzZXMNCj4+DQo+PiBIaSBYaW5ndGFvLA0KPj4NCj4+IE9uIDYvMjYv
-MjQgMjA6MTcsIFhpbmd0YW8gWWFvIChGdWppdHN1KSB3cm90ZToNCj4+PiBIaSwgUGllcnJp
-Y2sNCj4+Pg0KPj4+PiArc3RhdGljIHZvaWQgcHJpbnRfYWNjZXNzKHVuc2lnbmVkIGludCBj
-cHVfaW5kZXgsIHFlbXVfcGx1Z2luX21lbWluZm9fdA0KPj4+PiBtZW1pbmZvLA0KPj4+PiAr
-ICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnQ2NF90IHZhZGRyLCB2b2lkICp1ZGF0YSkN
-Cj4+Pj4gK3sNCj4+Pj4gKyAgICB1bnNpZ25lZCBzaXplID0gOCA8PCBxZW11X3BsdWdpbl9t
-ZW1fc2l6ZV9zaGlmdChtZW1pbmZvKTsNCj4+Pj4gKyAgICBjb25zdCBjaGFyICp0eXBlID0g
-cWVtdV9wbHVnaW5fbWVtX2lzX3N0b3JlKG1lbWluZm8pID8gInN0b3JlIiA6DQo+PiAibG9h
-ZCI7DQo+Pj4+ICsgICAgdWludDY0X3QgdXBwZXIgPSBxZW11X3BsdWdpbl9tZW1fZ2V0X3Zh
-bHVlX3VwcGVyX2JpdHMobWVtaW5mbyk7DQo+Pj4+ICsgICAgdWludDY0X3QgbG93ZXIgPSBx
-ZW11X3BsdWdpbl9tZW1fZ2V0X3ZhbHVlX2xvd2VyX2JpdHMobWVtaW5mbyk7DQo+Pj4+ICsg
-ICAgY29uc3QgY2hhciAqc3ltID0gdWRhdGEgPyB1ZGF0YSA6ICIiOw0KPj4+PiArICAgIGdf
-YXV0b3B0cihHU3RyaW5nKSBvdXQgPSBnX3N0cmluZ19uZXcoIiIpOw0KPj4+PiArICAgIGdf
-c3RyaW5nX3ByaW50ZihvdXQsICJhY2Nlc3M6IDB4JS4wIlBSSXg2NCIlIlBSSXg2NCIsJWQs
-JXMsJXNcbiIsDQo+Pj4+ICsgICAgICAgICAgICAgICAgICAgIHVwcGVyLCBsb3dlciwgc2l6
-ZSwgdHlwZSwgc3ltKTsNCj4+Pj4gKyAgICBxZW11X3BsdWdpbl9vdXRzKG91dC0+c3RyKTsN
-Cj4+Pj4gK30NCj4+PiBJIHRoaW5rIGl0IG1heSBiZSBoZWxwZnVsIHRvIG91dHB1dCB0aGUg
-R1ZBIGFuZCBHUEEsIGNhbiB5b3UgYXBwZW5kIHRoZXNlDQo+PiBpbmZvcm1hdGlvbj8NCj4+
-Pg0KPj4NCj4+IFlvdSBtZWFuIHZpcnR1YWwgYW5kIHBoeXNpY2FsIGFkZHJlc3Nlcz8NCj4g
-WWVzLiBjdXJyZW50bHkgd2Ugb25seSBrbm93biB0aGUgbWVtb3J5IHZhbHVlLCBhcHBlbmRp
-bmcgdGhlc2UgaW5mbyBtYXkgaGVscCB1cyB0byB0cmFjZSB0aGUNCj4gbWVtb3J5IGFjY2Vz
-cy4NCj4gDQoNClNvdW5kcyBnb29kLCBJJ2xsIGFkZCB0aGlzIGluIHYzLg0KDQo+Pg0KPj4+
-DQo+Pj4gVGhhbmtzDQo+Pj4gWGluZ3Rhbw0K
+On 6/26/24 16:37, Pierrick Bouvier wrote:
+> Different code paths handle memory accesses:
+> - tcg generated code
+> - load/store helpers
+> - atomic helpers
+> 
+> This value is saved in cpu->plugin_state.
+> 
+> Atomic operations are doing read/write at the same time, so we generate
+> two memory callbacks instead of one, to allow plugins to access distinct
+> values.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   accel/tcg/atomic_template.h   | 66 ++++++++++++++++++++++++++++----
+>   include/qemu/plugin.h         |  8 ++++
+>   plugins/core.c                |  7 ++++
+>   tcg/tcg-op-ldst.c             | 72 +++++++++++++++++++++++++++++++----
+>   accel/tcg/atomic_common.c.inc | 13 ++++++-
+>   accel/tcg/ldst_common.c.inc   | 38 +++++++++++-------
+>   6 files changed, 173 insertions(+), 31 deletions(-)
+> 
+> diff --git a/accel/tcg/atomic_template.h b/accel/tcg/atomic_template.h
+> index 1dc2151dafd..830e4f16069 100644
+> --- a/accel/tcg/atomic_template.h
+> +++ b/accel/tcg/atomic_template.h
+> @@ -53,6 +53,14 @@
+>   # error unsupported data size
+>   #endif
+>   
+> +#if DATA_SIZE == 16
+> +# define UPPER_MEMORY_VALUE(val) int128_gethi(val)
+> +# define LOWER_MEMORY_VALUE(val) int128_getlo(val)
+> +#else
+> +# define UPPER_MEMORY_VALUE(val) 0
+> +# define LOWER_MEMORY_VALUE(val) val
+> +#endif
+> +
+>   #if DATA_SIZE >= 4
+>   # define ABI_TYPE  DATA_TYPE
+>   #else
+> @@ -83,7 +91,12 @@ ABI_TYPE ATOMIC_NAME(cmpxchg)(CPUArchState *env, abi_ptr addr,
+>       ret = qatomic_cmpxchg__nocheck(haddr, cmpv, newv);
+>   #endif
+>       ATOMIC_MMU_CLEANUP;
+> -    atomic_trace_rmw_post(env, addr, oi);
+> +    atomic_trace_rmw_post(env, addr,
+> +                          UPPER_MEMORY_VALUE(ret),
+> +                          LOWER_MEMORY_VALUE(ret),
+> +                          UPPER_MEMORY_VALUE(newv),
+> +                          LOWER_MEMORY_VALUE(newv),
+> +                          oi);
+
+Just a nit, but tcg is consistent in using little-endian argument ordering for values 
+passed by parts.  I would prefer we continue with that.
+
+
+> @@ -142,9 +142,13 @@ struct qemu_plugin_tb {
+>   /**
+>    * struct CPUPluginState - per-CPU state for plugins
+>    * @event_mask: plugin event bitmap. Modified only via async work.
+> + * @mem_value_upper_bits: 64 upper bits of latest accessed mem value.
+> + * @mem_value_lower_bits: 64 lower bits of latest accessed mem value.
+>    */
+>   struct CPUPluginState {
+>       DECLARE_BITMAP(event_mask, QEMU_PLUGIN_EV_MAX);
+> +    uint64_t mem_value_upper_bits;
+> +    uint64_t mem_value_lower_bits;
+>   };
+
+At some point we may well support 32 byte acceses, for better guest vector support.  Do we 
+have a plan for this beyond "add more fields here"?
+
+
+r~
 
