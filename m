@@ -4,106 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E30C3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 09:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19D4CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 09:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMl86-0007Me-3Z; Thu, 27 Jun 2024 05:09:22 -0400
+	id 1sMlDG-0000Oh-In; Thu, 27 Jun 2024 05:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_asalama@quicinc.com>)
- id 1sMl81-0007Ln-VO; Thu, 27 Jun 2024 05:09:17 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sMlDB-0000O6-R4
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 05:14:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_asalama@quicinc.com>)
- id 1sMl80-0005Xk-5p; Thu, 27 Jun 2024 05:09:17 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45R1AYe2019664;
- Thu, 27 Jun 2024 09:08:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- WYAZCJTlNRD1YH3Teohr6tMxl7+IcOW1+PZf/Vf4C48=; b=pFHdE9Y8ZKviNaX9
- t5yyH28iNieUxGBGGtjmQDtEi75xFIFey61FDSdMzIoIw59f/vMZtrxID5+hmpN0
- kYNQF+tB1x2Pui6nzrq5/wLEAzs0LRaLJgx92eAMk/ZCYM5M8LLHJRSjiCs3uoMT
- Dgz5BY3O/Lb56n6Kjpv7e6bTzo0cfbRZLrZn4KHfDV+abWTe2NZ027+8EVXENomv
- YxfQxJOlursBTYXDTqZ6+BRA8zVRK86VNVn66jdxkNmbONtTHU543+UY7x01D8Ek
- mO2WAM3SViqKNZw0rA4BohpbRsYWk7MBpqr9lVqxMFKOuhevgOlOfZ0zKwVsK9ln
- ttmGyw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 400f90k2qy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Jun 2024 09:08:33 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
- [10.47.97.35])
- by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
- 45R98WI0006373
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 27 Jun 2024 09:08:32 GMT
-Received: from [10.251.40.202] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 27 Jun
- 2024 02:08:26 -0700
-Message-ID: <9239d8b8-2b22-47a7-b3c2-0699bab603f3@quicinc.com>
-Date: Thu, 27 Jun 2024 11:08:24 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sMlD9-0007Sm-VA
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 05:14:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719479674;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=TZM2C7Bu+3h6O1W7k9XuzFQ2gjmFwO5uohT8V00BBQ4=;
+ b=ORcFoIEtWQponVc3QUOT4fthtmDxU6Z4ttqPLNMyPxhfPlYe7wdc/MbTI3qzgBy+4LRrum
+ 3/CZsYG7HBnVvYa3li6bgZic9pfeYnpxUSs8K8cInAw9r8L72XPBPVc2rQPb9KC4HGhg/N
+ RJLhnj24s3iw4arc6VTtN87gpDKInc8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-WCoG-1gnMJWozpz6CETn_A-1; Thu,
+ 27 Jun 2024 05:14:31 -0400
+X-MC-Unique: WCoG-1gnMJWozpz6CETn_A-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C0BA61955E7E; Thu, 27 Jun 2024 09:14:28 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.49])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B1BEA19560AA; Thu, 27 Jun 2024 09:14:21 +0000 (UTC)
+Date: Thu, 27 Jun 2024 10:14:17 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: Roy Hopkins <roy.hopkins@suse.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v3 03/15] backends/igvm: Add IGVM loader and configuration
+Message-ID: <Zn0taV-uq0MlSalm@redhat.com>
+References: <cover.1718979106.git.roy.hopkins@suse.com>
+ <31e19ee36bdbf0ba91d95bc2d71865d7d0007ff1.1718979106.git.roy.hopkins@suse.com>
+ <jyfhkynory4jydxrlx7cfvbrnibq2klk5lekn656gcob4kls6m@3u7qugxmxjsq>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/12] accel/tcg: Avoid unnecessary call overhead from
- qemu_plugin_vcpu_mem_cb
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- <qemu-devel@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>, <kvm@vger.kernel.org>,
- <qemu-ppc@nongnu.org>, Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Jamie Iles <quic_jiles@quicinc.com>,
- David Hildenbrand <david@redhat.com>, Pierrick Bouvier
- <pierrick.bouvier@linaro.org>, Mark Burton <mburton@qti.qualcomm.com>,
- "Daniel Henrique Barboza" <danielhb413@gmail.com>,
- <qemu-arm@nongnu.org>, "Laurent Vivier" <lvivier@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, "Ilya Leoshkevich" <iii@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marco Liebel <mliebel@qti.qualcomm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- <qemu-s390x@nongnu.org>, Cameron Esfahani <dirty@apple.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Nicholas Piggin <npiggin@gmail.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, "Marcelo
- Tosatti" <mtosatti@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Max Chou
- <max.chou@sifive.com>, Frank Chang <frank.chang@sifive.com>
-References: <20240620152220.2192768-1-alex.bennee@linaro.org>
- <20240620152220.2192768-13-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Alwalid Salama <quic_asalama@quicinc.com>
-In-Reply-To: <20240620152220.2192768-13-alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-ORIG-GUID: fkXsrTe-vAZj3ikkYfqToUSMaguTzvi4
-X-Proofpoint-GUID: fkXsrTe-vAZj3ikkYfqToUSMaguTzvi4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-06-27_05,2024-06-25_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 suspectscore=0
- spamscore=0 malwarescore=0 mlxlogscore=806 mlxscore=0 adultscore=0
- impostorscore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2406140001 definitions=main-2406270069
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_asalama@quicinc.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <jyfhkynory4jydxrlx7cfvbrnibq2klk5lekn656gcob4kls6m@3u7qugxmxjsq>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.207,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,50 +91,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Alwalid Salama <quic_asalama@qualcomm.com>
+On Thu, Jun 27, 2024 at 11:06:50AM +0200, Stefano Garzarella wrote:
+> On Fri, Jun 21, 2024 at 03:29:06PM GMT, Roy Hopkins wrote:
+> > Adds an IGVM loader to QEMU which processes a given IGVM file and
+> > applies the directives within the file to the current guest
+> > configuration.
+> > 
+> > The IGVM loader can be used to configure both confidential and
+> > non-confidential guests. For confidential guests, the
+> > ConfidentialGuestSupport object for the system is used to encrypt
+> > memory, apply the initial CPU state and perform other confidential guest
+> > operations.
+> > 
+> > The loader is configured via a new IgvmCfg QOM object which allows the
+> > user to provide a path to the IGVM file to process.
+> > 
+> > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> > ---
+> > qapi/qom.json             |  16 +
+> > backends/igvm.h           |  37 ++
+> > include/sysemu/igvm-cfg.h |  54 +++
+> > backends/igvm-cfg.c       |  66 ++++
+> > backends/igvm.c           | 791 ++++++++++++++++++++++++++++++++++++++
+> > backends/meson.build      |   2 +
+> > 6 files changed, 966 insertions(+)
+> > create mode 100644 backends/igvm.h
+> > create mode 100644 include/sysemu/igvm-cfg.h
+> > create mode 100644 backends/igvm-cfg.c
+> > create mode 100644 backends/igvm.c
+> > 
+> > diff --git a/qapi/qom.json b/qapi/qom.json
+> > index 8bd299265e..e586707c4c 100644
+> > --- a/qapi/qom.json
+> > +++ b/qapi/qom.json
+> > @@ -874,6 +874,18 @@
+> >   'base': 'RngProperties',
+> >   'data': { '*filename': 'str' } }
+> > 
+> > +##
+> > +# @IgvmCfgProperties:
+> > +#
+> > +# Properties common to objects that handle IGVM files.
+> > +#
+> > +# @file: IGVM file to use to configure guest (default: none)
+> > +#
+> > +# Since: 9.1
+> > +##
+> > +{ 'struct': 'IgvmCfgProperties',
+> > +  'data': { '*file': 'str' } }
+> 
+>     'if': 'CONFIG_IGVM'
+> 
+> I recently did a similar modification to QAPIs and Markus suggested to add
+> the if here as well, see
+> https://lore.kernel.org/qemu-devel/87zfs2z7jo.fsf@pond.sub.org/
 
-On 6/20/2024 5:22 PM, Alex Bennée wrote:
-> From: Max Chou <max.chou@sifive.com>
-> 
-> If there are not any QEMU plugin memory callback functions, checking
-> before calling the qemu_plugin_vcpu_mem_cb function can reduce the
-> function call overhead.
-> 
-> Signed-off-by: Max Chou <max.chou@sifive.com>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> Message-Id: <20240613175122.1299212-2-max.chou@sifive.com>
-> ---
->   accel/tcg/ldst_common.c.inc | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/accel/tcg/ldst_common.c.inc b/accel/tcg/ldst_common.c.inc
-> index c82048e377..87ceb95487 100644
-> --- a/accel/tcg/ldst_common.c.inc
-> +++ b/accel/tcg/ldst_common.c.inc
-> @@ -125,7 +125,9 @@ void helper_st_i128(CPUArchState *env, uint64_t addr, Int128 val, MemOpIdx oi)
->   
->   static void plugin_load_cb(CPUArchState *env, abi_ptr addr, MemOpIdx oi)
->   {
-> -    qemu_plugin_vcpu_mem_cb(env_cpu(env), addr, oi, QEMU_PLUGIN_MEM_R);
-> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
-> +        qemu_plugin_vcpu_mem_cb(env_cpu(env), addr, oi, QEMU_PLUGIN_MEM_R);
-> +    }
->   }
->   
->   uint8_t cpu_ldb_mmu(CPUArchState *env, abi_ptr addr, MemOpIdx oi, uintptr_t ra)
-> @@ -188,7 +190,9 @@ Int128 cpu_ld16_mmu(CPUArchState *env, abi_ptr addr,
->   
->   static void plugin_store_cb(CPUArchState *env, abi_ptr addr, MemOpIdx oi)
->   {
-> -    qemu_plugin_vcpu_mem_cb(env_cpu(env), addr, oi, QEMU_PLUGIN_MEM_W);
-> +    if (cpu_plugin_mem_cbs_enabled(env_cpu(env))) {
-> +        qemu_plugin_vcpu_mem_cb(env_cpu(env), addr, oi, QEMU_PLUGIN_MEM_W);
-> +    }
->   }
->   
->   void cpu_stb_mmu(CPUArchState *env, abi_ptr addr, uint8_t val,
+Yes, it avoids the code generator emitting an otherwise unusd
+struct when CONFIG_IGVM is unset.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
