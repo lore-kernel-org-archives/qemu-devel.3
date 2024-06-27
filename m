@@ -4,83 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2010DC3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 04:17:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78080C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 04:17:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMgX8-0006di-Ey; Thu, 27 Jun 2024 00:14:54 -0400
+	id 1sMgW7-00069J-0B; Thu, 27 Jun 2024 00:13:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sMgWk-0006Hw-GZ
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 00:14:34 -0400
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sMgWh-0000Ar-N0
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 00:14:30 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-3d5666a4860so256457b6e.2
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 21:14:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719461666; x=1720066466; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wwLPKvfEsT814DRwG9Ogl9FVhlLvakaUgV980nIKtT0=;
- b=ocsoLMF7j8VQ/pmW7TPqjKhSB97y2LOq4teJDgJxBfaqcaJTAYBHCuz5rZDlO6tcLc
- zGLyFFPSisi5TYxTtbSbaEthYbYkynKg9BFausanBTYt4EEaE1Y51nF6wblud7JXKlND
- HocKsGs+9CwUU0n1oiNO/KmgoqP2xeBvvRhCunajpFuGgxsE0+DsEP8Htq8IimdCHBfc
- UFheA7pI5ltPMduLv1ITMjM9gDK3t0orhTlR1HriCPuDc3ickPaHB87N/PS4E4fwbIYg
- XJxvlD+53U5V2s8JedHDosHy/BlbczdNKZrHP+rSrUKA2BQcrGciv8ty37/uid/RJrI2
- gkNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719461666; x=1720066466;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wwLPKvfEsT814DRwG9Ogl9FVhlLvakaUgV980nIKtT0=;
- b=SaKsz217AYP4kMzYuvpVWiEHR0ekrWtxYM1eQvRZU5I/5BzvZAsndWRsZ1Kp2EUpNb
- 9YwhKRx/5mIdttyNib52sNRO4baVt7jR4LyLUTrKUuqoesxUdpfUiWeKI5WyRUS702Xd
- 3aSPdlQD6USCKjpomDE6he/6mFoOB0JvcufSH2L1RmDK8ov/LZQ34sWnBtzGKP3+mRv4
- fm00RVrqbSL6GIcsGsa8/QqnB9t29F4j8M/F+ufc2o8ytIIBVz2S/RqhxotV0EratTgF
- EQDXMrSvjr4/Gp9RhxjnytcuLvnTTImIJbNVqA+ph2zsXGfkwJG3FkRxlbXIfZztK2yK
- WK1g==
-X-Gm-Message-State: AOJu0Yy+dAw4mBWxfZanw5WocRSXOFk4FC4bEeW7yczNpqslWT0Kz6By
- dM7mRAx2JaS0lp01U6nh4QO7kohTuuAzOfx3CGapR9d9SLZczD57plXHYRtM4mDIBVwiZYm0/G0
- 8TrQ=
-X-Google-Smtp-Source: AGHT+IHXBJ+VgI3egCZYhCfuNTI7h77pRRSf1bGcGvfnK/Wd96ySDKQaBIzmWimjsfzM6YDN59x24w==
-X-Received: by 2002:a05:6808:114f:b0:3d5:658b:be39 with SMTP id
- 5614622812f47-3d5658bc079mr2930892b6e.38.1719461665890; 
- Wed, 26 Jun 2024 21:14:25 -0700 (PDT)
-Received: from amd.. ([2804:7f0:b401:391e:3e7c:3fff:fe7a:e83b])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-72748e8539fsm273045a12.66.2024.06.26.21.14.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Jun 2024 21:14:25 -0700 (PDT)
-From: Gustavo Romero <gustavo.romero@linaro.org>
-To: qemu-devel@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
- richard.henderson@linaro.org
-Cc: peter.maydell@linaro.org,
-	gustavo.romero@linaro.org
-Subject: [PATCH v5 7/9] gdbstub: Make get cpu and hex conversion functions
- non-internal
-Date: Thu, 27 Jun 2024 04:13:47 +0000
-Message-Id: <20240627041349.356704-8-gustavo.romero@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240627041349.356704-1-gustavo.romero@linaro.org>
-References: <20240627041349.356704-1-gustavo.romero@linaro.org>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sMgW4-000696-K1
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 00:13:48 -0400
+Received: from wfout6-smtp.messagingengine.com ([64.147.123.149])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sMgW2-00006J-1U
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 00:13:47 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+ by mailfout.west.internal (Postfix) with ESMTP id 60F0E1C0007C;
+ Thu, 27 Jun 2024 00:13:42 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute6.internal (MEProxy); Thu, 27 Jun 2024 00:13:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:message-id:mime-version:reply-to
+ :subject:subject:to:to; s=fm3; t=1719461622; x=1719548022; bh=Ue
+ hycH934eNIEenSua7udXYbxzD4oQLZBn10XfORSww=; b=tb+nUeCArQCafGTkcU
+ EV3NPUZu9beb/aASdIvTN4gLsmWgq9YoFsY5SIIz2r3sbhSMVfppP3NYiSJ65PII
+ hdqV33aCAXszVCZv+CeSyBL97jLg790c3ohubX3H2gEexp5/dUxKmwXwfukrxe0W
+ aXkRC3ouTVCxFEKiyrFOizLTPIG8aW+/A/x1jdKcZd8GOJaH0hpc5j5q4G2q+J5L
+ LFGbWMwnkGfIxI5dT8DvIBFaiK4GZVY/mVxomZ9jrjkqgJ9QYPEj0bo3BROqVPB1
+ 6MbBGx1WF2l7K+E4x04WSrktrZgxoD0g9XpqWvX/9BHxsYvsWwi3FBnX/rPlKral
+ 4UBg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+ :x-sasl-enc; s=fm2; t=1719461622; x=1719548022; bh=UehycH934eNIE
+ enSua7udXYbxzD4oQLZBn10XfORSww=; b=L3Kwcs9oh2659K8owX5NzybxY+bwy
+ ATFxw9v3fUAthqP8i3HpboZmWa03vqW9ySc3IA8M8OW9HJXvWdNq0tMMXDUanlBj
+ ZYEyHWDHr1Ec9/ZswHKY0hEfSdMHK37OLdQUaS8XIpxO2cgCG5sx4QUCRJg7ui2n
+ OimC2KVuWI6KaUIf1yiy8IBYvp7NPPgLfxKfJGUBQgMBjVucYmFw0CTcfi+jODQD
+ VxSCnA5BaW8LUg6lYJRg21A/bQJzxTm6tB6jQsD79bSrwYGg5VnN2TL4DACaYif6
+ zru43T/RPm5JffzgrMgPwUbIcQGSyxWj1+GGhXa5gCzPeQoF+BFz2DZyw==
+X-ME-Sender: <xms:9eZ8ZhvunFpxRfLw6m4duvX9np491ma_oO_DAEfPnkHe0yMwazkRUw>
+ <xme:9eZ8Zqe_l8XckBzh_whg6aK5PgmFGWsOrFvflnLqaiTkEO5VPzbAfZ9X3AZpA5NlA
+ nMix-tfUQjWwNpvTDM>
+X-ME-Received: <xmr:9eZ8Zkz8IO_cXWd_DNHNGeY2a7mZ_ugM8kEpphN8aW7vwru8yURhGSB1MZ-I1jjHFPV1hmz-ggkXoWUtm9MGrasZxQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrtdefgdekudcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheplfhirgiguhhn
+ ucgjrghnghcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmqeenucggtf
+ frrghtthgvrhhnpedufffffffhueehvefhgfelveekueegteefgeeiieejheefkeehkeev
+ udevieegueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+ hmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
+X-ME-Proxy: <xmx:9eZ8ZoMgqzYoGSaIqTN5V3-QNwbxxMEKbC6kWqlENXYHtHeTlvGUUw>
+ <xmx:9eZ8Zh9OGtWBApKu2sLrFepdGWCiUXNxwhxQQ5eWE2JcgpnU_TDhHA>
+ <xmx:9eZ8ZoW53cUYu1vWsXjAzi56UabNHpHM_8-l9wd_LGvfkY86IEolJA>
+ <xmx:9eZ8ZicNT0PxcCRvCMLUYzGelgK5YhRl1LhYyD_7jK3zVAvjJnpNmQ>
+ <xmx:9uZ8ZhwQXutjV1nAly_ajJ2lB1uGz4dAZ10iuakwwh1ESBCDWPmek4nN>
+Feedback-ID: ifd894703:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Jun 2024 00:13:38 -0400 (EDT)
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 0/2] hw/intc/loongson_ipi: Fix for LoongArch
+Date: Thu, 27 Jun 2024 05:13:26 +0100
+Message-Id: <20240627-ipi-fixes-v1-0-9b061dc28a3a@flygoat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
- envelope-from=gustavo.romero@linaro.org; helo=mail-oi1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAObmfGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDMyNz3cyCTN20zIrUYl1D49TENMMkCwtD00QloPqColSwBFB5dGxtLQD
+ 4ukboWwAAAA==
+To: qemu-devel@nongnu.org
+Cc: Huacai Chen <chenhuacai@kernel.org>, Song Gao <gaosong@loongson.cn>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, maobibo <maobibo@loongson.cn>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=619;
+ i=jiaxun.yang@flygoat.com; h=from:subject:message-id;
+ bh=RTN0CR0Oas/OuE+6CkVZ2YaLKCDYlQvcDw8tJ1UW6bw=;
+ b=owGbwMvMwCXmXMhTe71c8zDjabUkhrSaZ5/zjwQ93vPaZUPbzpVPOl2Vd/9POny74VN+094pe
+ r0P/n9+0FHKwiDGxSArpsgSIqDUt6Hx4oLrD7L+wMxhZQIZwsDFKQATSfzMyDC74KjvG7U/4lH3
+ lT5wT9xpu8CBafHjZ1V5lhOmR/L/tKxhZJjw+6PjS63LUax7P3kr8EyZOv3Y606X1fapP6dUO53
+ hlWMGAA==
+X-Developer-Key: i=jiaxun.yang@flygoat.com; a=openpgp;
+ fpr=980379BEFEBFBF477EA04EF9C111949073FC0F67
+Received-SPF: pass client-ip=64.147.123.149;
+ envelope-from=jiaxun.yang@flygoat.com; helo=wfout6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,67 +116,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the gdb_first_attached_cpu and gdb_hextomem non-internal so they
-are not confined to use only in gdbstub.c.
-
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 ---
- gdbstub/internals.h        | 2 --
- include/exec/gdbstub.h     | 5 +++++
- include/gdbstub/commands.h | 6 ++++++
- 3 files changed, 11 insertions(+), 2 deletions(-)
+Jiaxun Yang (2):
+      hw/intc/loongson_ipi: Gate MMIO regions creation with property
+      MAINTAINERS: Add myself as a reviewer of LoongArch virt machine
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index 34121dc61a..81875abf5f 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -107,7 +107,6 @@ static inline int tohex(int v)
- 
- void gdb_put_strbuf(void);
- int gdb_put_packet_binary(const char *buf, int len, bool dump);
--void gdb_hextomem(GByteArray *mem, const char *buf, int len);
- void gdb_memtohex(GString *buf, const uint8_t *mem, int len);
- void gdb_memtox(GString *buf, const char *mem, int len);
- void gdb_read_byte(uint8_t ch);
-@@ -130,7 +129,6 @@ bool gdb_got_immediate_ack(void);
- /* utility helpers */
- GDBProcess *gdb_get_process(uint32_t pid);
- CPUState *gdb_get_first_cpu_in_process(GDBProcess *process);
--CPUState *gdb_first_attached_cpu(void);
- void gdb_append_thread_id(CPUState *cpu, GString *buf);
- int gdb_get_cpu_index(CPUState *cpu);
- unsigned int gdb_get_max_cpus(void); /* both */
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index 1bd2c4ec2a..77e5ec9a5b 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -135,4 +135,9 @@ void gdb_set_stop_cpu(CPUState *cpu);
- /* in gdbstub-xml.c, generated by scripts/feature_to_c.py */
- extern const GDBFeature gdb_static_features[];
- 
-+/**
-+ * Return the first attached CPU
-+ */
-+CPUState *gdb_first_attached_cpu(void);
-+
- #endif /* GDBSTUB_H */
-diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-index 2204c3ddbe..914b6d7313 100644
---- a/include/gdbstub/commands.h
-+++ b/include/gdbstub/commands.h
-@@ -93,4 +93,10 @@ void gdb_extend_set_table(GdbCmdParseEntry *table, int size);
-  */
- void gdb_extend_qsupported_features(char *qsupported_features);
- 
-+/**
-+ * Convert a hex string to bytes. Conversion is done per byte, so 2 hex digits
-+ * are converted to 1 byte. Invalid hex digits are treated as 0 digits.
-+ */
-+void gdb_hextomem(GByteArray *mem, const char *buf, int len);
-+
- #endif /* GDBSTUB_COMMANDS_H */
+ MAINTAINERS                    |  1 +
+ hw/intc/loongson_ipi.c         | 23 ++++++++++++++---------
+ hw/mips/loongson3_virt.c       |  1 +
+ include/hw/intc/loongson_ipi.h |  1 +
+ 4 files changed, 17 insertions(+), 9 deletions(-)
+---
+base-commit: 3f044554b94fc0756d5b3cdbf84501e0eea0e629
+change-id: 20240627-ipi-fixes-13eaf1b8815a
+
+Best regards,
 -- 
-2.34.1
+Jiaxun Yang <jiaxun.yang@flygoat.com>
 
 
