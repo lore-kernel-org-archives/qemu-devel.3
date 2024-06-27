@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37C01C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 10:05:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9AE4C3064D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 10:05:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMlxM-0006lK-DM; Thu, 27 Jun 2024 06:02:20 -0400
+	id 1sMlxA-0005oj-QZ; Thu, 27 Jun 2024 06:02:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlxL-0006iZ-DW
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:19 -0400
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ id 1sMlx4-0005Ns-Eh
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:04 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlxI-0001kx-OK
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:18 -0400
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-3d55e2e0327so1343303b6e.0
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:02:16 -0700 (PDT)
+ id 1sMlwv-0001gc-JT
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:02:01 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-6fa11ac8695so4553853a34.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:01:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719482535; x=1720087335; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719482512; x=1720087312; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8hc3Rw3zZB7nBLeNjAJQMLk441yVfIEAPDQCPVGgw7E=;
- b=BAlzntdeuFh3kWd5WQCIoOIdU4j/5p0jwh28UHfMOqpW2oaQe2pYxP9UFWspJUwLYh
- K8jOjd8JNWZnV/zhNt4Bf0/FX6oiKhMHjhldsKkh+wMTP6d5ocwn7L+bSYiWfxMZVEag
- 3uVg3HyuiVUTAoPGTYMXTK6Ua5HJd16kJZe9RlPDwCjZJQalMypQ6Hu1RE4RuM0l34Wz
- nTXUxIMDgiDQcqrteHOAfiIVb6wPrXwVtMM22gI9juWqXjxjhyfXk4ixJ0fybTYlwZ5v
- VLwbcfxnvR4sIdfxyy0rC4WW1BDbVd9BcjUBG5GIWnHHfUxLu86ShPq80KS65VfLaizi
- /qqg==
+ bh=4VavWRGjlSUvFItRJ7LlymYt3dfzs/4J/YRywHyYUT4=;
+ b=HdsAfD/tfAgt9gJZRpkeGxVh0VewjVAwVwO0AQy8wsqAvXQMKSqMq4vidgKRqwxqy+
+ AMRqAMqOqJ9f2qwfjusMcDNyFJ0DBdD2Fu11kL7GuBjxcNmFULlXG5DoNMv6ZL6SeHM+
+ 9MXkrQvqp35uSLmuaIdwFBgpkcFOVr2Vh68rY4PFMzpH7urm5+uwi0dXtf2MQEunF/Wm
+ GL6gtYmyZykGJd26bI/qeLV6cWz3349pFv3+4zg6fsqjOCS16xO3qIzN8aYzfNfMP1Kw
+ CA1Pp/RTO9U53u9fpPlyxe1tkFZ9MXYmmufjR3SNNejv7L0whCBQ+t0ubIgKREui/HPE
+ +QdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719482535; x=1720087335;
+ d=1e100.net; s=20230601; t=1719482512; x=1720087312;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8hc3Rw3zZB7nBLeNjAJQMLk441yVfIEAPDQCPVGgw7E=;
- b=o6qrhd70PSe6kAaSpqvHVpzDvJUcUSNHgNreDbRVoRIf9owZWw2PKMJIvQwmYVs/is
- GbDvWyNo59mqHjDIhEBfz6oFaUF4R2cJ5WnZHEp2rNqMInLsrpUIF/8RFqPsqiGvAybF
- YL4RYliVZNkwUIccCGg0o8qZt2oZ1Nl1v+pEMDzBe/wkdUeJ6l/2pknhUBl/Zh01mht0
- CGCzMjdEFlgOjVrBYusLpv9qbIHUAfGCE7vtE0q+1mEFP8wpojtcKhM7oYRlz9ZxuEp8
- AsOkDbxfqXUo0Q5Phz40sbXzE1I4sKWn0W0PaLwIiQPD1tqbI8etny9ISPVuwRRme51v
- ZbVg==
-X-Gm-Message-State: AOJu0YyQutngg0mCeKeuCCaLr/CNJooyaYXwlTbKeR4PTO/gCQvQqfPG
- TRQwfGzaXk8zvYRcDFLkPSgw4vrkp14m0w59YoiAYpqO0pgPQJXQh9YVfwtI
-X-Google-Smtp-Source: AGHT+IEmGd736Qq7Y4LelCYcKP5+YlZHytq2n78dnsUYA90un5EXbsXat4u9vpDAhM7Q1eGqoJi8Fw==
-X-Received: by 2002:a05:6808:1412:b0:3d5:6575:6fe4 with SMTP id
- 5614622812f47-3d56575710dmr3285784b6e.26.1719482535270; 
- Thu, 27 Jun 2024 03:02:15 -0700 (PDT)
+ bh=4VavWRGjlSUvFItRJ7LlymYt3dfzs/4J/YRywHyYUT4=;
+ b=M3GCQbUp185TICG7G8KYJa0LVmW+jQdLrJvwhUoSOAU90H8NOsVm9mufIoPemasGXQ
+ 10gvwTn7nMC6kAn95tU2Xe2pBkADzR+4HASDTg6ZgafdysRbXbAM1WNqJA70lysbkzu9
+ +pBSgr++9sMkCB6SI1NKqeFrNJOuHottZquETWaWspEL7muMOZWck/wcpEc1eTx3jegi
+ hxsBIGV7xIkw6EL6v1piamkKobk6mSRXjgN+9UYqBCXTvwpdTiMfkJpylF/eB71FBdlH
+ 5jEdlVfegtqSqyOgelTHfHH3MumB9chZo5Ghqtu7FnxECgew/Iiv0ZVFvzQxsCelhVk1
+ iqbg==
+X-Gm-Message-State: AOJu0YxWtU5miCdTUtJo7vuq32vZZtj1Uw+XCdHnWhBi3gDbYeyUIHp7
+ 5HGuFglUsTvGNiD0wE20KJo8XWGrF+5uzWedp9jsaj8Y0ej21yDryyTuvGc5
+X-Google-Smtp-Source: AGHT+IGCJ3gvtZPhr+7l5Ak6zzh/8JpdZXn298Nr0iWrnT8sforOauQ/Ug94EeZ+xh+NFPjj8+/sJw==
+X-Received: by 2002:a05:6870:8a24:b0:25c:ba98:27e with SMTP id
+ 586e51a60fabf-25d06c6e4acmr14064728fac.32.1719482511967; 
+ Thu, 27 Jun 2024 03:01:51 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.02.12
+ d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.01.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 03:02:14 -0700 (PDT)
+ Thu, 27 Jun 2024 03:01:51 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Branislav Brzak <brzakbranislav@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 22/32] target/riscv: Fix froundnx.h nanbox check
-Date: Thu, 27 Jun 2024 20:00:43 +1000
-Message-ID: <20240627100053.150937-23-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ "Fea . Wang" <fea.wang@sifive.com>, Frank Chang <frank.chang@sifive.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 15/32] target/riscv: Reuse the conversion function of priv_spec
+Date: Thu, 27 Jun 2024 20:00:36 +1000
+Message-ID: <20240627100053.150937-16-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240627100053.150937-1-alistair.francis@wdc.com>
 References: <20240627100053.150937-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=alistair23@gmail.com; helo=mail-oi1-x233.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=alistair23@gmail.com; helo=mail-ot1-x329.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,33 +100,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Branislav Brzak <brzakbranislav@gmail.com>
+From: Jim Shu <jim.shu@sifive.com>
 
-helper_froundnx_h function mistakenly uses single percision nanbox
-check instead of the half percision one. This patch fixes the issue.
+Public the conversion function of priv_spec in cpu.h, so that tcg-cpu.c
+could also use it.
 
-Signed-off-by: Branislav Brzak <brzakbranislav@gmail.com>
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20240608214546.226963-1-brzakbranislav@gmail.com>
+Message-ID: <20240606135454.119186-2-fea.wang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/fpu_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/cpu.h         |  1 +
+ target/riscv/cpu.c         |  2 +-
+ target/riscv/tcg/tcg-cpu.c | 13 ++++---------
+ 3 files changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
-index 871a70a316..91b1a56d10 100644
---- a/target/riscv/fpu_helper.c
-+++ b/target/riscv/fpu_helper.c
-@@ -676,7 +676,7 @@ uint64_t helper_fround_h(CPURISCVState *env, uint64_t rs1)
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 6fe0d712b4..b4c9e13774 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -830,4 +830,5 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
+ /* Implemented in th_csr.c */
+ void th_register_custom_csrs(RISCVCPU *cpu);
  
- uint64_t helper_froundnx_h(CPURISCVState *env, uint64_t rs1)
- {
--    float16 frs1 = check_nanbox_s(env, rs1);
-+    float16 frs1 = check_nanbox_h(env, rs1);
-     frs1 = float16_round_to_int(frs1, &env->fp_status);
-     return nanbox_h(env, frs1);
++const char *priv_spec_to_str(int priv_version);
+ #endif /* RISCV_CPU_H */
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 69a08e8c2c..fd0f09c468 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1790,7 +1790,7 @@ static int priv_spec_from_str(const char *priv_spec_str)
+     return priv_version;
  }
+ 
+-static const char *priv_spec_to_str(int priv_version)
++const char *priv_spec_to_str(int priv_version)
+ {
+     switch (priv_version) {
+     case PRIV_VERSION_1_10_0:
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index fa8a17cc60..4c6141f947 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -76,16 +76,11 @@ static void riscv_cpu_write_misa_bit(RISCVCPU *cpu, uint32_t bit,
+ 
+ static const char *cpu_priv_ver_to_str(int priv_ver)
+ {
+-    switch (priv_ver) {
+-    case PRIV_VERSION_1_10_0:
+-        return "v1.10.0";
+-    case PRIV_VERSION_1_11_0:
+-        return "v1.11.0";
+-    case PRIV_VERSION_1_12_0:
+-        return "v1.12.0";
+-    }
++    const char *priv_spec_str = priv_spec_to_str(priv_ver);
+ 
+-    g_assert_not_reached();
++    g_assert(priv_spec_str);
++
++    return priv_spec_str;
+ }
+ 
+ static void riscv_cpu_synchronize_from_tb(CPUState *cs,
 -- 
 2.45.2
 
