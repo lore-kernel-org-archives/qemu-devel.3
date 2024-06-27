@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB5AC3064D
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 16:37:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6576C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 16:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMs82-0000Ed-Ul; Thu, 27 Jun 2024 12:37:46 -0400
+	id 1sMs9A-0000xX-En; Thu, 27 Jun 2024 12:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMs80-0000DJ-M7
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:37:44 -0400
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMs99-0000x2-Bs
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:38:55 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMs7z-0006Mp-7m
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:37:44 -0400
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-3c9d70d93dbso5406938b6e.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 09:37:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMs97-0006iA-LZ
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:38:55 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4256742f67fso5207105e9.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 09:38:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719506262; x=1720111062; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wBlrQ94xJqAcZtiA94krCBhAAA7GHABH3WP5W9oUbUU=;
- b=kcGcb/thXniNedfd0cvis92rci6q1u4FBSPotGUpvBLiUjHcG2Wj/kXm+6tPYDesth
- oMv58EZE75Zr5Kjn16C5h8bBwUTeXnmf+yzW9l0IcQNF5X7GCQEKW5k3rnGcQ5oUaU+f
- CEeLFbNJwo3oa3anMhLPoYoJRKemaEdVt5T9ras7aLJ/6ik6/Cz66WxkG/15iySEP0By
- 4oCL2oKcXok38j/CIw8A/cxHHh/q7BpdmKn9VIKU3JooUdlqc7uCnV4fKRkczaHMROsS
- gVjg12jPs0QFtvwLPyQep8QBsmWNIHLSJc7ZgGrmC4PA68+iHpnF82vQhywKi0JrMY3a
- Fuqw==
+ d=linaro.org; s=google; t=1719506332; x=1720111132; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ElTFXrWk1t5GFFl/PEOUB6AD+AcjxlfHmcfeuSqI9GI=;
+ b=S34anmV3H/d5LD516RqlN2k+Q8Ek3CoHI0fEr9X5AjfRVwNdQdn9UtdWXEUTLS+tE+
+ sgW/25mz+DQFojZMtvcL9f9hDI95u5wDmnHIo0NC/3pXhXw2HQLeD1MB/96nv5bZLxFS
+ rW0BNCWZaRiWl7b5Xp/eXpSMJaLaFzOrI1xWOkGTCT7LUavScdYOc9t+KngEp05OZgf1
+ eZRkQ4kVdCuy0o2UkzNVIWSKwueIQCqaS4IrOxmT7y1h668GDS4WN+N9yYNtVT/aNSAQ
+ TRtIkQgxViZ7xqajlX95JRn+yVjJ1i3FdulteOTQHlzK/LLXHzOiYyYxRgZO+GVUbn59
+ wrkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719506262; x=1720111062;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wBlrQ94xJqAcZtiA94krCBhAAA7GHABH3WP5W9oUbUU=;
- b=FqVlRXWPBgSzOPylBZihLNeeLyv0BXvNFByf3b+Kvk3phNef6tJE3Lu1htPQ7XqI02
- WKzYBjh+yDdTGjpGGV8j6Ph4/q7Np3Ggfjq4Z4MVSnp3M4G8jbdEMjIwJycOF/dKZZGD
- YdpIqnA2ISe9VhIhVrQj6tsfyK/Ci3esKNFVSs1NrGbYHuU4hNlwTqWZ6xIGCV1gTIkh
- BH2vMx6eJuPlpihsDkKaiUnBo0KJW2VOKPfgP9NsXEOWkGkE4Zn9l5qYqdu5IBzBcTUR
- bisHnCQhvNCyB/TO2+phym8LiAKIWcLA881BBvl7l6dR1TRk5/pZAJXlIgwXgQX0rH6t
- BGXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVPTPea1FXHMjqRv8iAnzfA/xIHVjCeszdS5Vzf5dSqQMm2Ack6+SyT8l0Kbok/yrs4J8gZF0HjkQgeiNwcImYolmlkOl0=
-X-Gm-Message-State: AOJu0YzQMNAhTQGtwndI2DilKID0MPhl+sM3pLnWPe0WKQIlzhPjJeX9
- nnGAbgoNX9wcms9RQ8MoVKCbG6wZAigjDeli7p24fbAtpuyJgAa1O6D7Iup00dlnHaizCqmX8yO
- +
-X-Google-Smtp-Source: AGHT+IFvh4SmahK2TjiUk+ehTFV17Bz44sbhWrW172mDgN0l5/HqwEuLwX4KJ3D3zLkDELWql92t4A==
-X-Received: by 2002:a05:6808:21a6:b0:3d2:27ef:264f with SMTP id
- 5614622812f47-3d54595d9e5mr16748139b6e.10.1719506261928; 
- Thu, 27 Jun 2024 09:37:41 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-706b491035dsm1576917b3a.67.2024.06.27.09.37.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 09:37:41 -0700 (PDT)
-Message-ID: <e1cdf0ce-43f5-443a-a28b-3d1a8e54944f@linaro.org>
-Date: Thu, 27 Jun 2024 09:37:39 -0700
+ d=1e100.net; s=20230601; t=1719506332; x=1720111132;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ElTFXrWk1t5GFFl/PEOUB6AD+AcjxlfHmcfeuSqI9GI=;
+ b=PmISaaEdkVw4VAYvclWQTgpMzJGWbjLktx1F0VLf1u54dTm4Qw2Ga0SIceZQqTZv0b
+ G3Ow2xj+OjhRIuye0YBMBtcH8QCQUU1FmeF0Bf4qMbDsm3EQEVkqBWUHfdvo17YGHTXM
+ uU/2Uq/5nL2dienGQ/iHqMF0auTdw9youdM6U2mTW7scR/JvsD1DbyDiQxtChCe+oYoP
+ 6S67/V3yQ1POaSXCBSbuU7LT8v6sb5u6n4WUr5Q2LN6m6R+7r0DjYqfRy7uzsnz9XXi3
+ DvS+9kmTFIUuWvmh0WMn56e8kFVcFxjhSa9zEJzLwfI/NGqKAtU6CSqxBO2R9WPqEo5L
+ MJbQ==
+X-Gm-Message-State: AOJu0YxXCf79/blMq+M1u6VtQWUdOwaDx9Rxw6ndHdjGMifFom18mSDM
+ yg2LXe58mt7wLCwUXg0zVQBnkW+rvqgQeuV3TKF95iysGyMFBRSwYMrxzcgg/kDD5s2a2/AfbUL
+ gEi0=
+X-Google-Smtp-Source: AGHT+IG9nfF0tPZhnt3WuKOnPoEzAAnQP1wFJnO1LyO3oOxnER+0yQH6LJ9aSxhgQr8f7KsXQIYFUA==
+X-Received: by 2002:a05:600c:5118:b0:424:a56d:83a with SMTP id
+ 5b1f17b1804b1-424a56d08fbmr59252955e9.0.1719506330723; 
+ Thu, 27 Jun 2024 09:38:50 -0700 (PDT)
+Received: from localhost.localdomain (33.red-95-127-46.staticip.rima-tde.net.
+ [95.127.46.33]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42564bc59f5sm35960875e9.42.2024.06.27.09.38.46
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 27 Jun 2024 09:38:50 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Francisco Iglesias <francisco.iglesias@amd.com>, qemu-block@nongnu.org,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, Luc Michel <luc.michel@amd.com>
+Subject: [PATCH 00/11] hw/sd/sdcard: Consolidate SDProto::cmd[] arrays
+Date: Thu, 27 Jun 2024 18:38:32 +0200
+Message-ID: <20240627163843.81592-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] target/i386: SEV: store pointer to decoded id_auth in
- SevSnpGuest
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: berrange@redhat.com, alex.bennee@linaro.org
-References: <20240627145357.1038664-1-pbonzini@redhat.com>
- <20240627145357.1038664-5-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240627145357.1038664-5-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x229.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,16 +95,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/27/24 07:53, Paolo Bonzini wrote:
-> Do not rely on finish->id_auth_uaddr, so that there are no casts from
-> pointer to uint64_t.  They break on 32-bit hosts.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/sev.c | 13 ++++++++-----
->   1 file changed, 8 insertions(+), 5 deletions(-)
+Use the SDProto structure to handle command properties
+such name, type, class and handler.
+Add stubs for optional commands to ease tracing.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Based-on: <20240627163403.81220-1-philmd@linaro.org>
 
-r~
+Full series for testing:
+https://gitlab.com/philmd/qemu/-/tags/emmc-v4
+
+Philippe Mathieu-Daudé (11):
+  hw/sd/sdcard: Move sd_[a]cmd_name() methods to sd.c
+  hw/sd/sdcard: Pass SDState as argument to sd_[a]cmd_name()
+  hw/sd/sdcard: Prepare SDProto to contain more fields
+  hw/sd/sdcard: Store command name in SDProto
+  hw/sd/sdcard: Store command type in SDProto
+  hw/sd/sdcard: Store command class in SDProto
+  hw/sd/sdcard: Remove SEND_DSR dead case (CMD4)
+  hw/sd/sdcard: Register generic optional handlers (CMD11 and CMD20)
+  hw/sd/sdcard: Register optional handlers from spec v6.00
+  hw/sd/sdcard: Register SDIO optional handlers
+  hw/sd/sdcard: Register Security Extension optional handlers
+
+ hw/sd/sdmmc-internal.h |  26 ------
+ include/hw/sd/sd.h     |   5 +-
+ hw/sd/sd.c             | 192 ++++++++++++++++++++++++++++++-----------
+ hw/sd/sdmmc-internal.c |  72 ----------------
+ hw/sd/meson.build      |   2 +-
+ 5 files changed, 144 insertions(+), 153 deletions(-)
+ delete mode 100644 hw/sd/sdmmc-internal.c
+
+-- 
+2.41.0
+
 
