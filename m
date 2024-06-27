@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7129EC30653
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B374C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:40:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMpLG-0001Zc-GH; Thu, 27 Jun 2024 09:39:14 -0400
+	id 1sMpLw-0003AJ-QG; Thu, 27 Jun 2024 09:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpLC-0001VV-7S
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:11 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1sMpLf-000266-81
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:39 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpL9-0006Uz-H0
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:09 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1faad409ca7so4181175ad.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:39:06 -0700 (PDT)
+ id 1sMpLd-0006aO-Jr
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:38 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-7187e6b3584so3721709a12.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719495545; x=1720100345;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719495576; x=1720100376;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6MgmHQG/2ylhpi7rbXo5VyylZZdoY/6uUXCCV6pKunI=;
- b=3YEktQY4Cf9mZ6ojcJDmxaq+/SRt+RI0N6N1Vsn4KC9bV+AObK7oZWXsZoPohCBynS
- B474C4l4Gm4uFKO8qjb941adW3fuD4TNFGUq4BKrO3mMwtO8TPIBuQs2k87RpeWes9c/
- HNRmpoL3bEec3/Q0D8EkADytvqC646u2UQ9nyzDKqxMlC71sZ9Q9iJyDwAxscxpnjLSA
- wqh+94UWPrOBNfS+492EmEtqWrgu0QVN2snPVx8dGFC/MwJZdmLZTRStjMnLO+dhTmCB
- R3+ZAd0s8QuBZbyh9F1b6ykYQ4uxwAi2/SHmKE5IX86qYGm9kGJaHddVeoe8q/c/hl9W
- YqWg==
+ :reply-to; bh=66SWenAU4qt0HqdzzgzjopUq88LncGGPdZoRZN6MJBw=;
+ b=U5OFeVL/gbCE8SrtacwXOVTRXmxTxtukIofmUMDrS+SNrQZZG5xO08Glno18CGwJTo
+ AEnH+XgTCDKqHhodC3sfShgdniXD6b+rxJRoBBhAZnH2oxxcXhn4f3TS2clq4l4DMvPb
+ ZH87Te4FMbvjdY1ADHstvzqTT8+wgVgBeHX94jiYTitFQOoLQN5f2m+fl/dsbSqt5hZP
+ RjnH6w0Gnjf3EfIxkSVU1sq56WuzQs8PEhF2AsOpHjsEbjO6qggA2nPUb4ZdriNw0rx0
+ AgzCqneLz9msmAK86WPIn1xUHkDFYipSMdxr/e2RCZNgzHAzqM36f8f2DyxPF0XL/o68
+ q4gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719495545; x=1720100345;
+ d=1e100.net; s=20230601; t=1719495576; x=1720100376;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6MgmHQG/2ylhpi7rbXo5VyylZZdoY/6uUXCCV6pKunI=;
- b=a7cibJZBiq30t8nrzDYf2jgftOT4amw00UOHNiTKHDOTXMMSNClrIH9QOSq8v59FcP
- pHX7m/S4NQecHWu+Zu9kDgxL9mQDD7WmPsFSV4q/JkBxVZxZyJdW0HNri7CT+mb+X2qA
- qIuSCkF1UuHaLOstzh3wnCMq2VYU14SQ8GC/6VfQb+wXqJxWue2a0Wa5vs4k7TRJsEbT
- 6G4B8VigR5rczWt1Sn+mhrkN1YWQrFqzVNObLQIkZLiEsLZWjNZ4jCmWSgiPmEcIfG39
- M39xYNBhBUOmdqy+O3f75Hh0JXOJQ+S82QcSJCR39WjWl2zmhsQomLWcRIcwjIrqVXDx
- CNzw==
-X-Gm-Message-State: AOJu0Ywh96dCoBP8gXXM1/nxCP2NrqTW36JCIBIC/vbjE6bH+AakFSz1
- Bt5aOPl7pQUAxAByKLNcNdJwkFbNfizJfE2W0g1SXgKGIbmQzmyBDCn+NlYcSr8=
-X-Google-Smtp-Source: AGHT+IEOQ/m6W0EaVrS87L9pcyV7z7eXSKdvdlz5a1XfK+ZrnOVnl6VAIXcrZ4tj5pOxawKYTrGRaA==
-X-Received: by 2002:a17:903:228a:b0:1f6:dccd:c6db with SMTP id
- d9443c01a7336-1faac2df4b0mr24948755ad.30.1719495545496; 
- Thu, 27 Jun 2024 06:39:05 -0700 (PDT)
+ bh=66SWenAU4qt0HqdzzgzjopUq88LncGGPdZoRZN6MJBw=;
+ b=jSzU+it3/GzPbpWCKZoWY9oi1D2uRVijSTwaAsx+AgsVGI18qu8mjLH4z/iXfcun1o
+ Vok6klRjmaSxFbshAaflvPkXZIoUZTrzfH2qUXFi6WatGb0jWVf6KNg+JDcseCu06Jjc
+ vgEP9NuZFsUNSISICIXKXEUjCkDDRQdKYHhRdD5NEVUMkVDJmbpWlIyF20k0DA0J76Lq
+ 2CYNbv06nlvJhGMAnQeU5Dw4UEAL2CJwCDW5QmYTSS8I73dFItkqkAF7Lghexv3MXU0D
+ dzouMV8kp8EQYd5+SDMWbdaBqdC0zsT5/wlqTOydQupHflm+HOdjmIPMhMyBRjBJ0jsa
+ d8EA==
+X-Gm-Message-State: AOJu0YymWoBLL5dn0ntvr54P3x9FkzOB0MMnMOjGJ2BQKuCkN/g1OiCR
+ vlnUyMpyN1N9CTiDW1sG/jXOqigsQ3ACCWJerFIc9TzIGxMMJBw8XTNYLEMiIcU=
+X-Google-Smtp-Source: AGHT+IGK3IeNA1PsDdEds/reaHYwgDV95tDqPpf6AdGiFC4ZsLRZj1HBdWm8l3UiekhYxiotaysaqg==
+X-Received: by 2002:a05:6a20:1e58:b0:1be:c753:dc65 with SMTP id
+ adf61e73a8af0-1bec753dd0cmr3363255637.18.1719495576216; 
+ Thu, 27 Jun 2024 06:39:36 -0700 (PDT)
 Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1faac9791fdsm13201035ad.127.2024.06.27.06.39.00
+ d9443c01a7336-1faac8df617sm13243105ad.31.2024.06.27.06.39.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 06:39:05 -0700 (PDT)
+ Thu, 27 Jun 2024 06:39:36 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 27 Jun 2024 22:37:52 +0900
-Subject: [PATCH v2 09/15] memory: Do not create circular reference with
- subregion
+Date: Thu, 27 Jun 2024 22:37:57 +0900
+Subject: [PATCH v2 14/15] tests/qtest: Free paths
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240627-san-v2-9-750bb0946dbd@daynix.com>
+Message-Id: <20240627-san-v2-14-750bb0946dbd@daynix.com>
 References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
 In-Reply-To: <20240627-san-v2-0-750bb0946dbd@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
@@ -85,8 +84,8 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::535;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,47 +107,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A memory region does not use their own reference counters, but instead
-piggybacks on another QOM object, "owner" (unless the owner is not the
-memory region itself). When creating a subregion, a new reference to the
-owner of the container must be created. However, if the subregion is
-owned by the same QOM object, this result in a self-reference, and make
-the owner immortal. Avoid such a self-reference.
+This fixes LeakSanitizer warnings.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- system/memory.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ tests/qtest/qos-test.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/system/memory.c b/system/memory.c
-index 74cd73ebc78b..949f5016a68d 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2638,7 +2638,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
+diff --git a/tests/qtest/qos-test.c b/tests/qtest/qos-test.c
+index 5da4091ec32b..114f6bef273a 100644
+--- a/tests/qtest/qos-test.c
++++ b/tests/qtest/qos-test.c
+@@ -33,7 +33,6 @@
+ static char *old_path;
  
-     memory_region_transaction_begin();
  
--    memory_region_ref(subregion);
-+    if (mr->owner != subregion->owner) {
-+        memory_region_ref(subregion);
-+    }
-+
-     QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
-         if (subregion->priority >= other->priority) {
-             QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
-@@ -2696,7 +2699,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
-         assert(alias->mapped_via_alias >= 0);
-     }
-     QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
--    memory_region_unref(subregion);
-+
-+    if (mr->owner != subregion->owner) {
-+        memory_region_unref(subregion);
-+    }
-+
-     memory_region_update_pending |= mr->enabled && subregion->enabled;
-     memory_region_transaction_commit();
+-
+ /**
+  * qos_set_machines_devices_available(): sets availability of qgraph
+  * machines and devices.
+@@ -191,6 +190,12 @@ static void subprocess_run_one_test(const void *arg)
+     g_test_trap_assert_passed();
  }
+ 
++static void destroy_pathv(void *arg)
++{
++    g_free(((char **)arg)[0]);
++    g_free(arg);
++}
++
+ /*
+  * in this function, 2 path will be built:
+  * path_str, a one-string path (ex "pc/i440FX-pcihost/...")
+@@ -295,10 +300,13 @@ static void walk_path(QOSGraphNode *orig_path, int len)
+     if (path->u.test.subprocess) {
+         gchar *subprocess_path = g_strdup_printf("/%s/%s/subprocess",
+                                                  qtest_get_arch(), path_str);
+-        qtest_add_data_func(path_str, subprocess_path, subprocess_run_one_test);
+-        g_test_add_data_func(subprocess_path, path_vec, run_one_test);
++        qtest_add_data_func_full(path_str, subprocess_path,
++                                 subprocess_run_one_test, g_free);
++        g_test_add_data_func_full(subprocess_path, path_vec,
++                                  run_one_test, destroy_pathv);
+     } else {
+-        qtest_add_data_func(path_str, path_vec, run_one_test);
++        qtest_add_data_func_full(path_str, path_vec,
++                                 run_one_test, destroy_pathv);
+     }
+ 
+     g_free(path_str);
 
 -- 
 2.45.2
