@@ -4,91 +4,193 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93B49C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 06:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B106C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 06:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMiJu-0005f2-L6; Thu, 27 Jun 2024 02:09:22 -0400
+	id 1sMiLs-0005Tj-F7; Thu, 27 Jun 2024 02:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMiJp-0005Z7-Kx
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 02:09:18 -0400
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMiJm-0003hs-B3
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 02:09:16 -0400
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-3d562b35fb6so814721b6e.3
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 23:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719468553; x=1720073353;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hZORRF7AHkfvizNX/JiMd4VZxYpzY240RGFm7m/axg8=;
- b=V4rWKI7TP3KgLPr+3k9YSubFiNnFclLb1FohqxGPejMAdEzkejgkyIRDUFJenFkm9M
- nAo1423oE+8HcCAI/e9RqcM6e0ECmoCuCofqhNnJXtKHgSVtebI2tLXYbUowi205b/zK
- qYt4aUjeCmd5OpJ9S1D1feHMUijwYMiKpiaSp87oImc0MCoWv3coaiudvK/aqxo+ZZ03
- VrXK9/K4zZFf3ao1rR8qOuH7lqU9Sh2Vcq0sPKkxembQC/rg21SDken2GQPAi/8mo2G+
- WYYdwAyWMrpvnMT2Nsp6UL+jtk8n4JWli8r5+0/FGexJxyzZsek9G0kwFW+gvsy9LL0B
- h9cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719468553; x=1720073353;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hZORRF7AHkfvizNX/JiMd4VZxYpzY240RGFm7m/axg8=;
- b=EzDq1Jn4AB0qFBIHnTcMt9mqZBqWzwbDrGx6b7fncQVV4bTuzoJc1TwMS0RVm823nz
- UmgvP7lPI9+q7igxCpSaum832FP4M1DvkCV2jYxFhEACjkJC5SblRBbD1IHpjowtCHus
- 5/ZOWqpCs4say51HppVGP5CWt/wYX7JsFhS9w+WtftwgRYYIwWYrVlsC3GYSHwAdOsYA
- kvIsEBmUSOqwdAtiPgHb4l7dadNQqrWCa0VyiodcGyNdZDNRDuQDVYYNiz7sHAU96Kpa
- 7vr/0BKyoBz8BMK2NH+Jugl7ZMcpLHPQp1razFuxnYvR9UO2CC/D1lBMSPrwaSrYy1JM
- gmnQ==
-X-Gm-Message-State: AOJu0YxDQflImALyWVxKlJ2E9oVWoH0b3A0/OojRyOWxNao80KnDuSEp
- a0qdhh7m1wT8kTod9R2Ecn8Bss80PIa5cdtRlVGio0hgx/5aZRaApmImvIK5pXA=
-X-Google-Smtp-Source: AGHT+IGZEocEQSSHEWuSe4lQmhZIIfyIcy5eeHcapIedN+7uvGpbexTdBe/YjMOzAqqBTARuVEgJlw==
-X-Received: by 2002:a05:6808:1992:b0:3d5:467a:21b1 with SMTP id
- 5614622812f47-3d5467a22efmr14694524b6e.47.1719468553206; 
- Wed, 26 Jun 2024 23:09:13 -0700 (PDT)
-Received: from localhost ([157.82.204.135])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-706b4910077sm496931b3a.52.2024.06.26.23.09.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 23:09:12 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 27 Jun 2024 15:08:00 +0900
-Subject: [PATCH v10 11/12] hw/pci: Convert rom_bar into OnOffAuto
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sMiLq-0005TS-3Z
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 02:11:22 -0400
+Received: from esa9.fujitsucc.c3s2.iphmx.com ([68.232.159.90])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
+ id 1sMiLn-0004KB-J0
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 02:11:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
+ t=1719468679; x=1751004679;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=AxFEq5I646bhFJwuJnGnETpvRj6/4MI0x7frjZve+tI=;
+ b=QF0rrUGz03lG5RECq3Wl96lfXv0Ln75dTsc0A2+UdvJzGwI2tm5xkAhK
+ zBQr2JkGdkjvexOIahkaKZC0BJfo0H/c24UhWZD5z2ob1qrsyBu8I+XZ4
+ /V/udzTT2sNEpLvWLcTVkcL5q9L8YkkYjVJqYkODw5Hz83l9+Nsy3FaNu
+ flmk+W7U610A5zChys7eRYZ2CQ2gUN8wm022PFfHDNqes6B5bW0msAOHT
+ K2nUX83P8QUg06KlB/KM56w8BgDzoHAZbJZjVUeIBF7zDrlZtFVThBRkW
+ wOtTB1RDtsUnCv8TWuJYt9kBoC91ZwxPXs7XBAJQuw6Mpvl7B4bnOv3nY Q==;
+X-IronPort-AV: E=McAfee;i="6700,10204,11115"; a="123666293"
+X-IronPort-AV: E=Sophos;i="6.08,269,1712588400"; d="scan'208";a="123666293"
+Received: from mail-tycjpn01lp2169.outbound.protection.outlook.com (HELO
+ JPN01-TYC-obe.outbound.protection.outlook.com) ([104.47.23.169])
+ by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Jun 2024 15:11:15 +0900
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=cu0dnuaNxlkt8OlH8TFas2fI58XHzZjHS1ww/gktaMxd3FOr1KBDjr1EKb6ilGAhEJTpOW1kAahFEne8MuZVQRvZnUgEWMI4TNUaskuCLIRdBXnN7Xm92IH/FRJbMe+i1Wa48YQ0hZzO0ntpInOqrfwrBRUe4VYCzvf6dFRfaTEyBwGI4BmzNggtNQ2uEZOY/gf0w6WxgnkpSxOLzG3WPBaC+/44q+RqRFE5XnMjN9SD8y15MhGXAECZA6JxSrYMZTx7VEqV/cUDPPIG/nQcxaPT9BTCMQcjv0rRL63xTDkoFxE+2DHFrIbC12WbzeRDdMnPoGjTGvtg6lV3rILtWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AxFEq5I646bhFJwuJnGnETpvRj6/4MI0x7frjZve+tI=;
+ b=L/+N4gNPtbTZ2hfdEI3T39TvkkvTqbfRBPNLDEOssi1prkFFeRV+/NTVH6jl/15dxIamidege8MwlsmeIsnsEr3qf+q9yTwcnmQLJ6pQkp5rAafrTPloNRFcVymdxunGZr4b2yhhH2lsbIBkbtiwnyHolgAD4mukQchrlQiC5QQZv7X9rD6amSHipL46CaUCvyN6AP4/CEXA0jdCl30gxuaCQKJc2S75j3xBI1h0LHN1Zy/DIB5jh0mdWHo6M5MxSSJc4elqD9XMnbnBzlZ+2ja5dobN2VaTPy6mllgPug4UWpnQBUGWtd34h9IRc4NMtUlBZq5baYBYrtEGyMyh+g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+Received: from OSZPR01MB6453.jpnprd01.prod.outlook.com (2603:1096:604:ed::14)
+ by TYBPR01MB5342.jpnprd01.prod.outlook.com (2603:1096:404:802e::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7698.32; Thu, 27 Jun
+ 2024 06:11:11 +0000
+Received: from OSZPR01MB6453.jpnprd01.prod.outlook.com
+ ([fe80::9ef5:e83:9047:de11]) by OSZPR01MB6453.jpnprd01.prod.outlook.com
+ ([fe80::9ef5:e83:9047:de11%6]) with mapi id 15.20.7698.033; Thu, 27 Jun 2024
+ 06:11:11 +0000
+To: Gregor Haas <gregorhaas1997@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "philmd@linaro.org" <philmd@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>
+Subject: RE: [PATCH] hw/core/loader: allow loading larger ROMs
+Thread-Topic: [PATCH] hw/core/loader: allow loading larger ROMs
+Thread-Index: AQHayEqI1jDVIa5FlEWiy9YcZkPkkrHbIHag
+Date: Thu, 27 Jun 2024 06:11:11 +0000
+Message-ID: <OSZPR01MB64532802F85690BB7C8BAA998DD72@OSZPR01MB6453.jpnprd01.prod.outlook.com>
+References: <20240627020207.630125-1-gregorhaas1997@gmail.com>
+In-Reply-To: <20240627020207.630125-1-gregorhaas1997@gmail.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_ActionId=deb18a2a-2aa8-4458-8acf-2c04ecfec823;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_ContentBits=0;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_Enabled=true;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_Method=Privileged;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_Name=FUJITSU-PUBLIC?;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_SetDate=2024-06-27T06:09:15Z;
+ MSIP_Label_1e92ef73-0ad1-40c5-ad55-46de3396802f_SiteId=a19f121d-81e1-4858-a9d8-736e267fd4c7;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: OSZPR01MB6453:EE_|TYBPR01MB5342:EE_
+x-ms-office365-filtering-correlation-id: 0c640a21-ff98-49bb-3141-08dc966ff184
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|1800799024|1580799027|38070700018; 
+x-microsoft-antispam-message-info: =?iso-2022-jp?B?NTRhTWtBYmhuUVE3MzdpeDJlSk5xSEpYSktHWmVGYVlXR2xmdkFSVkFv?=
+ =?iso-2022-jp?B?QmVGekV0MGN1bGc5ditNWklFczFaUjg1NVdoZHZRMHRoTjFyby9ISFlp?=
+ =?iso-2022-jp?B?UTBPTWp0SVFSVVpNZkR3TzkraVplbXA3T1paSVBzRzMzYjk1T3hndnNo?=
+ =?iso-2022-jp?B?RXFLWFhmUjkxdUV6VWkzNjFKQytIVWVSaWthM0p6WnQwV014V3BydnYz?=
+ =?iso-2022-jp?B?QkFxeko2ZUhCYkwxT05sTi92UlBXYWN5VzFyRXZzN21QSDhWa3ZJSkVy?=
+ =?iso-2022-jp?B?dXlhT0J5YjZhOHkva1psRStWODRSY2ltQTkrL1BmTjB6YnlpcWFvbXRs?=
+ =?iso-2022-jp?B?ZENzK2YvWGF0K3NTQS9BNWpvZ3hsTS9yR1lvR29uMUJiendQUWVwdmtY?=
+ =?iso-2022-jp?B?VGNJeTI0di9LcVdBdm9JbjBsWW5Yb2xPRDhzeGkzSmNMR3dBRnR5MUo3?=
+ =?iso-2022-jp?B?QWlMR2hGVjRDZ0JnTEp4TTA3TzdhZS9POXBpTm4wSHBIblpCazRSWktC?=
+ =?iso-2022-jp?B?UVpPTmV1dHpaZXRzczI0Y01DbWdtbERzZmY1WlZHWHUxVHJ5aGJYNFJs?=
+ =?iso-2022-jp?B?U2d0a0syeEhZZ2RUcG9Bb2xUOW5QUkwrTEcwZXpPUkJFaWE3VTI3SnJq?=
+ =?iso-2022-jp?B?S0FUbVlyKzFBL1QyMlduNG8rWWdQLzdlMkdvcEFuWHlvd1cxeEU4MkY0?=
+ =?iso-2022-jp?B?aHdqSjdOK21USnNVeUludVpBYnZhM0orMzlNcTZYbm9HcjQ3MytrY05X?=
+ =?iso-2022-jp?B?dlhjbUMwNGpWRFIzKzlnMGpiNWs4N01ISGs2L291RGgveXBtUTVyT3Fs?=
+ =?iso-2022-jp?B?QU9STXhCWEhkaXdzZGFPZXkra0xtVnFpRHRodXhORnJ3cUYrOEs1d21a?=
+ =?iso-2022-jp?B?KzN1REE0RXp3Z3VVazQyMWw3dEFyOTNsQkR4TkpQQmY5UHRCSklISzRx?=
+ =?iso-2022-jp?B?b2U1TnhOcGhzRENUYWhHYUdxbUY5bzFweTZFcFBhTzVuaGd6MU1TcDVB?=
+ =?iso-2022-jp?B?ZWNjdStUUTdZRDU2UjRRK0tsYkloOUZZQ3JmY3U4K3RzWHVjdHlBUkJl?=
+ =?iso-2022-jp?B?Qmx0STd6azlldytiWHFaQ1ZXb1NPdTBZZFZORW00TUR2S2NyRnllYVVH?=
+ =?iso-2022-jp?B?aFlBbCtlcDg2QXI5NmlvQnBTb3pQb3RUV2p4TzVpQUt3RFYxWjgwQThX?=
+ =?iso-2022-jp?B?bWVJSWRZOVR2NmJodTdoMzB4MWZUd29IUzhxRGpib3RTMGVXRTVQdUJa?=
+ =?iso-2022-jp?B?QVZ6MHoycFlyVlVoSnZHMlF1dnB1V0YrdS83OXhOY0VGVUVFdHplbG5X?=
+ =?iso-2022-jp?B?L1hoZVJDVTN2bHYxRk5KaUR4SFZxa0lKc2JBeDhLTlhhNlBIMHVrcjNw?=
+ =?iso-2022-jp?B?cGY5Rmp1eHJhYXZqcFA3TVVKaGxJMEVJOWVTMFhoU3A4ZGRkV25UMUMv?=
+ =?iso-2022-jp?B?NjU3REsremxaNDFVL3MrcmQwQUorV093NVhBWnErWDRkZ2VUMmVHN2hD?=
+ =?iso-2022-jp?B?aXVCb0ViTWxEeWwzSFB0TGRrcldYZkIzYm9pa1JjODNZc3FZRzJhejhF?=
+ =?iso-2022-jp?B?T3k2VStPTU1DSjV2WDN0SlFSdmlDVmtqaUllTjVMRExoQ3FqcEZHbVp0?=
+ =?iso-2022-jp?B?Y2FwaHZmSi9lQkdmSFBmQWZrQk9zR205WklEVzAwcVlMdXpLenRxaEZ3?=
+ =?iso-2022-jp?B?VzkxQmVzWTlYc01Kb1BvdXM2Y3FvVWZZUi9WRkdtSnBENkJFMlpqNDQv?=
+ =?iso-2022-jp?B?N3BsUElZZUZpUmNSL0pnRW1iZFVUOENudEp5bi96Zk8yNjllMm5lYXZ1?=
+ =?iso-2022-jp?B?MFAveElrMExRRG52ek1FZW1TK2U2NW16Q1JRWWgyd2VoSDFXdTkwaXVx?=
+ =?iso-2022-jp?B?WC95QnQ1Nk9pb2FWU1pwQnhUN0drMVpyRlBsY3lHR2hlRXljU2hXUnN4?=
+ =?iso-2022-jp?B?WjNpYnJZSEpkZWp6VDdyQTQvcElPaDdINzNUWlliRzZiUGpFdGlGTlpr?=
+ =?iso-2022-jp?B?YkZwQ3N0dnM3UGUzWGlvNlZBc216MlRBL3ZoaHkwU3ZNSVFrNFhhNnk3?=
+ =?iso-2022-jp?B?Q0YyREZCZDRreGtBUy9tMVg1RmQyOTg9?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-cn; SCL:1;
+ SRV:; IPV:NLI; SFV:NSPM; H:OSZPR01MB6453.jpnprd01.prod.outlook.com; PTR:;
+ CAT:NONE; SFS:(13230040)(366016)(376014)(1800799024)(1580799027)(38070700018);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-2022-jp?B?Q2N2TkYxcUZLZ05Zd0ZTRWJpK0YvZ0FpSnpNNHlRbWo4dGMrRGkrK2VI?=
+ =?iso-2022-jp?B?NjZ2S2RCRXFDY2hnTUV4cFl6UjZiVEF5NFNGdXNCdlZkaHlVNUxvajcz?=
+ =?iso-2022-jp?B?NG9Sc3hMVlU4VlhueU90Ty82N2RQNFRzenFRNHVLSWdRNEFKVzMxaVQ1?=
+ =?iso-2022-jp?B?Q21nblpwNm9hbVFWTEtWcmY4UGk5MjFtQk55TmE2dXU2LzhYM1kzQ0tl?=
+ =?iso-2022-jp?B?Tm1lSlR6ZmVDYkt2WFVSMHEvMWcxUGw0UkljU1Q5R1hjMTh4ckUrWHpL?=
+ =?iso-2022-jp?B?Z3M0bmdXdWZJNlhoVlRFb09vTkRlUlVWc005eFI4WW9SWUwwUzduOEY3?=
+ =?iso-2022-jp?B?MVZvMDBtWmkySEdJeWxhTDdUWm9KcGgwcFdjcGQvVnNpL0VINHJEdnZj?=
+ =?iso-2022-jp?B?R0tvSHFwOWtScVlzU2J4bmdKWjVyLzJIRjhLTDVwVnErMWFXcGxDVjNt?=
+ =?iso-2022-jp?B?SDdvcHEzSTZaTHEwS0loU0hSMWxKV05mWjR3Ry9xVzNWaG5jVlF5Tmp5?=
+ =?iso-2022-jp?B?WWxUYWpRVU02S21lNGlRTVAwRElDTDhtU3lBeHVWQm96UkxvVm1ENHpQ?=
+ =?iso-2022-jp?B?Y0ZQK0pBWTdNaGQzV0JmM0NkQ292WmZ6TThrdVBCcFp0NXlmL253elN1?=
+ =?iso-2022-jp?B?L3E3UHo5ZUxTMGpZL2pENG5TZWJFbEV2Znh4NHg0ZVZnck1TVkdGYWxV?=
+ =?iso-2022-jp?B?QU44TEh5M2xTbHdzSE5LNEdZamdmUGJ2dnFwOXZzZFBxQ2ROZDVBazdN?=
+ =?iso-2022-jp?B?R0Rta0ladml0c1JWSkx2VG5uN3RYZENOUzMwYkt2cXRVRkFMUVdUb0xN?=
+ =?iso-2022-jp?B?WUZqR0hPdUZRSDFxZXRWbDZnTjZpNkMzZUNQTytqbVRyekE5aVUwUTl0?=
+ =?iso-2022-jp?B?MlFnVjBmd09sY0hHL1JrTFBXckJvNFpZdWhieU1mNTBHamhGZTJOS0do?=
+ =?iso-2022-jp?B?Q3plM2VLcnFaTStMaFAzYTM1TGY1bHQxVG9pYWpFQy80S0pGUCtGelh2?=
+ =?iso-2022-jp?B?eTJBWWlMd01VQlZBcjhZZExFSWU3aUVZaUdKcnU3WGhuR24rK3lDem53?=
+ =?iso-2022-jp?B?dVJMWm00RE1jckR1NjFaT1FPQzU1dUErZ3lVR0dVMVBVdnZWd3l2d1pL?=
+ =?iso-2022-jp?B?emNqVmd5dVBzRWZQNGhiV1V1bHVMK0RDYm1XU0RtTU8wTDVoNWFuZXp0?=
+ =?iso-2022-jp?B?T1ZiMjM1aFoyVm9nRm1vV3NCaExkSFlhbHVPN3FnSFd2UktVeERUWFNC?=
+ =?iso-2022-jp?B?ZGhnN1FkR0pYUTRaM1dOdm5YOWQ1YXNpVHdYZkt2aWpJUHVua3g0cDQ3?=
+ =?iso-2022-jp?B?eVhaWW1KVi9MWjhVMHlKZys5dHJVaG9QSWI1MWY0N1REeHBsY2p6QzN0?=
+ =?iso-2022-jp?B?TU9wMXBMZHdtK0pURXZmY2Z1dFNaN0txTm5idENwOXp6K1ZYeTZzN3ZL?=
+ =?iso-2022-jp?B?WGgyT2ducUpSRzRueXRkdGxRK3N4UVYzeEFNbzJ0LzhaT09YWEpKVTRu?=
+ =?iso-2022-jp?B?akg1YjdMKzZCOVVmcnpaTDloNHlrcHlmcldFdHFSMDdwS2VvRWpMQzNy?=
+ =?iso-2022-jp?B?MWNSQ0VjcDVLNnQ2ZGhuZlllM1FmTHlrM3loYUpmSFlsdVdnQlhQV1pL?=
+ =?iso-2022-jp?B?N0lFbkNxbFFuU0lrVzQxbTRJbEREYkNhV2xQSW5vRVk5Y3BpWHhyeWtU?=
+ =?iso-2022-jp?B?dU1BQTc0a1ZvcnFZcDh0WnN2dXlPVkNBc1l0b3RZaVo3WnlWYWJhTDVR?=
+ =?iso-2022-jp?B?MW1Ock90ejZjc1NsK1dvVTFua1dMZnNlQWtZYzZMZG1NS3R5d29YSGox?=
+ =?iso-2022-jp?B?TGdVSGtzbndWQlhOa2s4ZC9kbXRsdk5ZS1pUZnRtWUZwZjBCTzBrK1l0?=
+ =?iso-2022-jp?B?bFlIUTJvbEE1V1ZsRzgvT1JTY3lpYVlqaEx3WVdXcFhBT1MrMVlqTmlu?=
+ =?iso-2022-jp?B?ZmxSdFltb1YwSU1pa2ZIczZ0OXFzRS9rcjEwa2Y0UFRIUWZtdDZhWmtS?=
+ =?iso-2022-jp?B?R0ZBSlFtc3BGZWZkWGFnTkpEazhnd3RUcURUN3VuYzhRSG1ReHpqWGNO?=
+ =?iso-2022-jp?B?U1AwZlRMdkRFNjFVaElsRFl6eGIxWFdJNTZXL3g0ZW5vU2sxZWVxUzZC?=
+ =?iso-2022-jp?B?YkhtN0YwS2dWa1djdUZEWHFidTRSN2JENWhOK0N1akdDVDhmUXFyd2V6?=
+ =?iso-2022-jp?B?RjZxL25NL0pMQlpLaVZBUjFDa2o2QW5tYmFTV3d4VGlKdHhEU3YvSzMw?=
+ =?iso-2022-jp?B?YVFRc0huOVhjdFhZbXBON1ZwcmRiaERxc1o3N1NKdEJTQWFML2lnS09Q?=
+ =?iso-2022-jp?B?RHhSMQ==?=
+Content-Type: text/plain; charset="iso-2022-jp"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240627-reuse-v10-11-7ca0b8ed3d9f@daynix.com>
-References: <20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com>
-In-Reply-To: <20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::229;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x229.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: pru0o1ECyXtn9Vd/VlEzTTRBTT27eUONctmNbfyVg00zWVt+QCJQrM/bCeKWYmcDOlIe5+i7zer8pLQ1iBpxyANMfWe2mOVsenp8zak+v7VsjhgXYutlsA0wMJhzaWS/Wdwjh+RnocTRDuaszllrnidCB+FjhZjPIPnpwDiWzGHRLlfGagIkxFPlXJwTX0pm7TJYDkOwlwM5ZDXF8sKgSYQ/6VrqXCxzVtkE7lC0nHAYELLjpYVwpOSqKehTTjrVpl1PHrdKh6DUS3UqqlWru9WCaK1KqI95jzHJPPDacteMQUFxzZP+bXSRwEG9Nnt5GamHFgXf5FAEZGDFGsxzruWXFfKmEgisxixAk0N8zichpthNUu2SNObciZ0TjwIknWbHl6UOBjN0sTE5xwrGloqcdixjKc5H5dSrNqY6znVSCzrpK9HW2O3bCo0tOHm6WlMoCK6ZqH7vF+UCnHEGAvfSbYOfqR3Tm6j5mIIQNN64pnCspaRWBGD9X9U3dhqzWN7Wmq21AESc3S1bvHDdvzD9ecM5R8k/764/AlIO23YwJAFswwrL3d6A5lP9kUPlrXV0/qrcbWWRUZ5w1sPOhgcWGcG1iABLajlap+IJi1uyEDDKnubOzN6TLs5uQf55
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: OSZPR01MB6453.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0c640a21-ff98-49bb-3141-08dc966ff184
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Jun 2024 06:11:11.7205 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xuD/bZj6HpW5yigpisQIL88N/ocFmuWSdW8jEkvsSp352XIVHyAEq9monJlma8rfFWDeukJznSCmlk5GE9KATQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYBPR01MB5342
+Received-SPF: pass client-ip=68.232.159.90;
+ envelope-from=yaoxt.fnst@fujitsu.com; helo=esa9.fujitsucc.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,303 +203,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>
+From:  "Xingtao Yao (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rom_bar is tristate but was defined as uint32_t so convert it into
-OnOffAuto.
+Hi, Gregor
+>=20
+> The read() syscall is not guaranteed to return all data from a file. The
+> default ROM loader implementation currently does not take this into accou=
+nt,
+> instead failing if all bytes are not read at once. This change wraps the
+> read() syscall in a do/while loop to ensure all bytes of the ROM are read=
+.
+Can you reproduce this issue?=20
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- docs/igd-assign.txt               |  2 +-
- include/hw/pci/pci_device.h       |  2 +-
- hw/pci/pci.c                      |  4 ++--
- hw/vfio/pci-quirks.c              |  2 +-
- hw/vfio/pci.c                     | 11 +++++------
- hw/xen/xen_pt_load_rom.c          |  4 ++--
- tests/qtest/virtio-net-failover.c | 32 ++++++++++++++++----------------
- 7 files changed, 28 insertions(+), 29 deletions(-)
-
-diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
-index e17bb50789ad..35c6c8e28493 100644
---- a/docs/igd-assign.txt
-+++ b/docs/igd-assign.txt
-@@ -35,7 +35,7 @@ IGD has two different modes for assignment using vfio-pci:
-       ISA/LPC bridge device (vfio-pci-igd-lpc-bridge) on the root bus at
-       PCI address 1f.0.
-     * The IGD device must have a VGA ROM, either provided via the romfile
--      option or loaded automatically through vfio (standard).  rombar=0
-+      option or loaded automatically through vfio (standard).  rombar=off
-       will disable legacy mode support.
-     * Hotplug of the IGD device is not supported.
-     * The IGD device must be a SandyBridge or newer model device.
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index ca151325085d..49b341ce2e27 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -147,7 +147,7 @@ struct PCIDevice {
-     uint32_t romsize;
-     bool has_rom;
-     MemoryRegion rom;
--    uint32_t rom_bar;
-+    OnOffAuto rom_bar;
- 
-     /* INTx routing notifier */
-     PCIINTxRoutingNotifier intx_routing_notifier;
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 1eb6abf534ca..901f5460d774 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -71,7 +71,7 @@ static Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-     DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
--    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-+    DEFINE_PROP_ON_OFF_AUTO("rombar",  PCIDevice, rom_bar, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
-@@ -2334,7 +2334,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
-         return;
-     }
- 
--    if (!pdev->rom_bar) {
-+    if (pdev->rom_bar == ON_OFF_AUTO_OFF) {
-         /*
-          * Load rom via fw_cfg instead of creating a rom bar,
-          * for 0.11 compatibility.
-diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-index 39dae72497e0..0e920ed0691a 100644
---- a/hw/vfio/pci-quirks.c
-+++ b/hw/vfio/pci-quirks.c
-@@ -33,7 +33,7 @@
-  * execution as noticed with the BCM 57810 card for lack of a
-  * more better way to handle such issues.
-  * The  user can still override by specifying a romfile or
-- * rombar=1.
-+ * rombar=on.
-  * Please see https://bugs.launchpad.net/qemu/+bug/1284874
-  * for an analysis of the 57810 card hang. When adding
-  * a new vendor id/device id combination below, please also add
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 74a79bdf61f9..4c4d9dc81efb 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -902,7 +902,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-         error_report("vfio-pci: Cannot read device rom at "
-                     "%s", vdev->vbasedev.name);
-         error_printf("Device option ROM contents are probably invalid "
--                    "(check dmesg).\nSkip option ROM probe with rombar=0, "
-+                    "(check dmesg).\nSkip option ROM probe with rombar=off, "
-                     "or load from file with romfile=\n");
-         return;
-     }
-@@ -1012,11 +1012,10 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
- {
-     uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
-     off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
--    DeviceState *dev = DEVICE(vdev);
-     char *name;
-     int fd = vdev->vbasedev.fd;
- 
--    if (vdev->pdev.romfile || !vdev->pdev.rom_bar) {
-+    if (vdev->pdev.romfile || vdev->pdev.rom_bar == ON_OFF_AUTO_OFF) {
-         /* Since pci handles romfile, just print a message and return */
-         if (vfio_opt_rom_in_denylist(vdev) && vdev->pdev.romfile) {
-             warn_report("Device at %s is known to cause system instability"
-@@ -1046,17 +1045,17 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
-     }
- 
-     if (vfio_opt_rom_in_denylist(vdev)) {
--        if (dev->opts && qdict_haskey(dev->opts, "rombar")) {
-+        if (vdev->pdev.rom_bar == ON_OFF_AUTO_ON) {
-             warn_report("Device at %s is known to cause system instability"
-                         " issues during option rom execution",
-                         vdev->vbasedev.name);
-             error_printf("Proceeding anyway since user specified"
--                         " non zero value for rombar\n");
-+                         " on for rombar\n");
-         } else {
-             warn_report("Rom loading for device at %s has been disabled"
-                         " due to system instability issues",
-                         vdev->vbasedev.name);
--            error_printf("Specify rombar=1 or romfile to force\n");
-+            error_printf("Specify rombar=on or romfile to force\n");
-             return;
-         }
-     }
-diff --git a/hw/xen/xen_pt_load_rom.c b/hw/xen/xen_pt_load_rom.c
-index 6bc64acd3352..025a6b25a916 100644
---- a/hw/xen/xen_pt_load_rom.c
-+++ b/hw/xen/xen_pt_load_rom.c
-@@ -26,7 +26,7 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-     Object *owner = OBJECT(dev);
- 
-     /* If loading ROM from file, pci handles it */
--    if (dev->romfile || !dev->rom_bar) {
-+    if (dev->romfile || dev->rom_bar == ON_OFF_AUTO_OFF) {
-         return NULL;
-     }
- 
-@@ -71,7 +71,7 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-     if (!fread(ptr, 1, st.st_size, fp)) {
-         error_report("pci-assign: Cannot read from host %s", rom_file);
-         error_printf("Device option ROM contents are probably invalid "
--                     "(check dmesg).\nSkip option ROM probe with rombar=0, "
-+                     "(check dmesg).\nSkip option ROM probe with rombar=off, "
-                      "or load from file with romfile=\n");
-         goto close_rom;
-     }
-diff --git a/tests/qtest/virtio-net-failover.c b/tests/qtest/virtio-net-failover.c
-index 73dfabc2728b..f65b97683fb6 100644
---- a/tests/qtest/virtio-net-failover.c
-+++ b/tests/qtest/virtio-net-failover.c
-@@ -568,7 +568,7 @@ static void test_hotplug_2_reverse(void)
-                          "{'bus': 'root0',"
-                          "'failover': true,"
-                          "'netdev': 'hs0',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_STANDBY0"'}");
- 
-@@ -655,7 +655,7 @@ static void test_migrate_out(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -765,7 +765,7 @@ static void test_migrate_in(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -819,7 +819,7 @@ static void test_off_migrate_out(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -887,7 +887,7 @@ static void test_off_migrate_in(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -938,7 +938,7 @@ static void test_guest_off_migrate_out(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1014,7 +1014,7 @@ static void test_guest_off_migrate_in(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1065,7 +1065,7 @@ static void test_migrate_guest_off_abort(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1170,7 +1170,7 @@ static void test_migrate_abort_wait_unplug(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1259,7 +1259,7 @@ static void test_migrate_abort_active(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1358,7 +1358,7 @@ static void test_migrate_off_abort(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1450,7 +1450,7 @@ static void test_migrate_abort_timeout(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1543,7 +1543,7 @@ static void test_multi_out(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1574,7 +1574,7 @@ static void test_multi_out(gconstpointer opaque)
-                          "{'bus': 'root3',"
-                          "'failover_pair_id': 'standby1',"
-                          "'netdev': 'hs3',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY1"'}");
- 
-@@ -1713,7 +1713,7 @@ static void test_multi_in(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1737,7 +1737,7 @@ static void test_multi_in(gconstpointer opaque)
-                          "{'bus': 'root3',"
-                          "'failover_pair_id': 'standby1',"
-                          "'netdev': 'hs3',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY1"'}");
- 
-
--- 
-2.45.2
-
+Thanks
+Xingtao
 
