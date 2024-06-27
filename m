@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0BC4C30658
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D711C2BD09
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 06:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMiJx-0005hK-2O; Thu, 27 Jun 2024 02:09:25 -0400
+	id 1sMiJL-00045i-HN; Thu, 27 Jun 2024 02:08:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMiJu-0005fO-Er
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 02:09:22 -0400
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ id 1sMiJI-00044n-ER
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 02:08:44 -0400
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMiJs-0003kG-Qv
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 02:09:22 -0400
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3d561d685e7so910881b6e.1
- for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 23:09:20 -0700 (PDT)
+ id 1sMiJG-0003dq-PV
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 02:08:44 -0400
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3d55c0fadd2so1482719b6e.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Jun 2024 23:08:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719468559; x=1720073359;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719468521; x=1720073321;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0VSYKVQCF4c9EWbUkbZPOSynuO1Ww6rZL2afZDm8mb0=;
- b=irLZ/xYtoMe/0O/Il4yssRobLUdLGV2nWS+dmWnGmN2zv/NgRb4MwtAGEbhA8uMol5
- Xf9uA/XQ6fnmy9Hmgo9T1mAx2H7YoHxRgc8PoycMLXwR6PhMm+DdXoTAtMIFpDPOcOHu
- vj7taG14V7c7BZVSCnugZ+XGq0JZq9DOU0xuBzDXM3pnsfC2Rj+4IWhM253kPnf9vM/d
- LR8jqy+4uLlZvcSdMAs4W9BzJLFHUieyi9S0Rgu8m8tQptycIkJmMZSvzEjEgYo7jbwM
- hcTHf4WGpO15+JEcX6+u+31UOhE1o0ASClMY6Gwkm8kmSCGD5DdBa97LmLDmgsVX51Co
- rkeQ==
+ :reply-to; bh=6pj7voFdpvDIUOvpvd+fwHnMb3qifigzmv4NFCmazBg=;
+ b=GBPahay5N+0cEnaMMKTL1mkAQYl1KIcerhn3iNctyDd/CLj2iv04GTAWOwbfGkt8ee
+ bnt/EH5Rc9kBF8B6TAgxzHfwXIAGAjYyWKC4ZReOIHTFmEuzcZKtQwmWfRQ7SmynBBsW
+ V0C7r33kpSGoDxbwGj6lUAoKv7oj25ublEbJTlfhtSJ3tJZ7avo5LwpFlW6N/GK2n7hB
+ Xkapz3JKIswrT4pbprfC/arU9Cr/BJhDaWU1sxLo1Yg8QRgoL8GmcxPqA1G3uRwDfVE5
+ 7Vw0wvB8AiNs+mHvMuLLTWl12AhoyRWv4zmvMe9S1A74EhOnTq8Cwp0arIjeR5k+hptX
+ N5RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719468559; x=1720073359;
+ d=1e100.net; s=20230601; t=1719468521; x=1720073321;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0VSYKVQCF4c9EWbUkbZPOSynuO1Ww6rZL2afZDm8mb0=;
- b=Jz48RQho/+qTypHvZjuxPbBzSbLHCu61AHqar7LUO/YM1S+yXsKTBMqtTxINb3aOiZ
- m5cBCtTOgVthtEcbN6r3+a6s83qnx3oqJ4JJ3LWAxwk6dDP3SkvJsli3ttZ7udeaIRCk
- wKbzWICOSh2oSxz5pm92LXPcwrwn6zLk7nUuwgsSYSVLjubJ4xdIW8hM8T8b845Bfahu
- 1XYEj7QMTYAVnZkYBZa2B/T0MjZCOHNF0T0+pm1GOdODl+mePPn98CwLidgkfwkGnhf4
- iN8Z4vJaszsBQvyHoHkPhibPg8KV1NJhQTH/unhbiN2tezug4uUW0vjiioBwYI1MbxtI
- uk6g==
-X-Gm-Message-State: AOJu0YwrxLQtzHiYGZYFYb2BLg04O0tEy7RU8jx886ieKzpSEfAFeFqR
- CRCRfqhlZZtig9UuOeZ4Vs9I3n5cxg8gYWnxzPMeSl4iHZf7IxzTaG0gGV/WsW4=
-X-Google-Smtp-Source: AGHT+IEeQY+jsXzOPIdCnxY1tErK2YCzaKS6CHxT6+8fsnHv+js7MzGaDJkAVsZ7lo86ns+jMWFUlQ==
-X-Received: by 2002:a05:6808:3089:b0:3d6:2b12:7dc0 with SMTP id
- 5614622812f47-3d62b127f21mr315710b6e.20.1719468558621; 
- Wed, 26 Jun 2024 23:09:18 -0700 (PDT)
+ bh=6pj7voFdpvDIUOvpvd+fwHnMb3qifigzmv4NFCmazBg=;
+ b=VoLrJ00avZFJfucxUYRxiNjh1mFbKcCch6o9DJIyehMWkiI5jP9TKAsh7x45DySbe1
+ w+krkz7QQb9H7WXxcoFclZu4kFliOC+sbt5RefS7LrlvPd2rsx0wSnksc0IndGTzjqZ3
+ D1vM7MfYGUFjfEw21L+g882vHTiDV4xqWErlIOVny2W+OZ4KdscWeFuoiKu6LpTz+tfS
+ ToVneHXI+74/8Vht7G+pW+Mut7CiSvjoMzJ1ZN4e3KtNxmbXqHcwheP3/wSdnIFFBkAd
+ vqwb3JhqtFyTrkb9Ym/hq6Xsa+CdoYQ2ciu8URHaoj5sXIDhw2D6dkwnAz9jdK3DzTpp
+ m1EA==
+X-Gm-Message-State: AOJu0Yx5MSs/PZFELMbXWNzieEaLgmC7SVBaBuT737XAp2t+8Yt1CbAz
+ kY204wc7B+b3tVUT5iLgoSrR+hUAl40EZYr8WnYnCh7o0gqecuCQ/Sny+XG+bqc=
+X-Google-Smtp-Source: AGHT+IGHTNkbMAnsGKaEcfUvLBPoC8/tM9CYcLokDq7HoOhoFCxf2KgYIUNM8OCu+dCJaRIGz7I+zg==
+X-Received: by 2002:a05:6808:1824:b0:3d5:1f50:188b with SMTP id
+ 5614622812f47-3d543adb0e9mr16184276b6e.23.1719468521161; 
+ Wed, 26 Jun 2024 23:08:41 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-706b4a5889bsm494556b3a.188.2024.06.26.23.09.15
+ d2e1a72fcca58-706b4a3538asm511599b3a.175.2024.06.26.23.08.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Jun 2024 23:09:18 -0700 (PDT)
+ Wed, 26 Jun 2024 23:08:40 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 27 Jun 2024 15:08:01 +0900
-Subject: [PATCH v10 12/12] hw/qdev: Remove opts member
+Date: Thu, 27 Jun 2024 15:07:54 +0900
+Subject: [PATCH v10 05/12] pcie_sriov: Ensure VF function number does not
+ overflow
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240627-reuse-v10-12-7ca0b8ed3d9f@daynix.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240627-reuse-v10-5-7ca0b8ed3d9f@daynix.com>
 References: <20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com>
 In-Reply-To: <20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -81,14 +82,14 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::22e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22e.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,76 +105,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer used.
+pci_new() aborts when creating a VF with a function number equals to or
+is greater than PCI_DEVFN_MAX.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/hw/qdev-core.h |  4 ----
- hw/core/qdev.c         |  1 -
- system/qdev-monitor.c  | 12 +++++++-----
- 3 files changed, 7 insertions(+), 10 deletions(-)
+ docs/pcie_sriov.txt         |  8 +++++---
+ include/hw/pci/pcie_sriov.h |  5 +++--
+ hw/net/igb.c                | 13 ++++++++++---
+ hw/nvme/ctrl.c              | 24 ++++++++++++++++--------
+ hw/pci/pcie_sriov.c         | 19 +++++++++++++++++--
+ 5 files changed, 51 insertions(+), 18 deletions(-)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 5336728a23f6..40f2d185f17c 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -237,10 +237,6 @@ struct DeviceState {
-      * @pending_deleted_expires_ms: optional timeout for deletion events
-      */
-     int64_t pending_deleted_expires_ms;
--    /**
--     * @opts: QDict of options for the device
--     */
--    QDict *opts;
-     /**
-      * @hotplugged: was device added after PHASE_MACHINE_READY?
-      */
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index f3a996f57dee..2fc84699d432 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
-         dev->canonical_path = NULL;
-     }
+diff --git a/docs/pcie_sriov.txt b/docs/pcie_sriov.txt
+index a47aad0bfab0..ab2142807f79 100644
+--- a/docs/pcie_sriov.txt
++++ b/docs/pcie_sriov.txt
+@@ -52,9 +52,11 @@ setting up a BAR for a VF.
+       ...
  
--    qobject_unref(dev->opts);
-     g_free(dev->id);
+       /* Add and initialize the SR/IOV capability */
+-      pcie_sriov_pf_init(d, 0x200, "your_virtual_dev",
+-                       vf_devid, initial_vfs, total_vfs,
+-                       fun_offset, stride);
++      if (!pcie_sriov_pf_init(d, 0x200, "your_virtual_dev",
++                              vf_devid, initial_vfs, total_vfs,
++                              fun_offset, stride, errp)) {
++         return;
++      }
+ 
+       /* Set up individual VF BARs (parameters as for normal BARs) */
+       pcie_sriov_pf_init_vf_bar( ... )
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index 450cbef6c201..aa704e8f9d9f 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -27,10 +27,11 @@ typedef struct PCIESriovVF {
+     uint16_t vf_number; /* Logical VF number of this function */
+ } PCIESriovVF;
+ 
+-void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
++bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+                         const char *vfname, uint16_t vf_dev_id,
+                         uint16_t init_vfs, uint16_t total_vfs,
+-                        uint16_t vf_offset, uint16_t vf_stride);
++                        uint16_t vf_offset, uint16_t vf_stride,
++                        Error **errp);
+ void pcie_sriov_pf_exit(PCIDevice *dev);
+ 
+ /* Set up a VF bar in the SR/IOV bar area */
+diff --git a/hw/net/igb.c b/hw/net/igb.c
+index 1ef6170465f1..4a19fca1c638 100644
+--- a/hw/net/igb.c
++++ b/hw/net/igb.c
+@@ -447,9 +447,16 @@ static void igb_pci_realize(PCIDevice *pci_dev, Error **errp)
+ 
+     pcie_ari_init(pci_dev, 0x150);
+ 
+-    pcie_sriov_pf_init(pci_dev, IGB_CAP_SRIOV_OFFSET, TYPE_IGBVF,
+-        IGB_82576_VF_DEV_ID, IGB_MAX_VF_FUNCTIONS, IGB_MAX_VF_FUNCTIONS,
+-        IGB_VF_OFFSET, IGB_VF_STRIDE);
++    if (!pcie_sriov_pf_init(pci_dev, IGB_CAP_SRIOV_OFFSET,
++                            TYPE_IGBVF, IGB_82576_VF_DEV_ID,
++                            IGB_MAX_VF_FUNCTIONS, IGB_MAX_VF_FUNCTIONS,
++                            IGB_VF_OFFSET, IGB_VF_STRIDE,
++                            errp)) {
++        pcie_cap_exit(pci_dev);
++        igb_cleanup_msix(s);
++        msi_uninit(pci_dev);
++        return;
++    }
+ 
+     pcie_sriov_pf_init_vf_bar(pci_dev, IGBVF_MMIO_BAR_IDX,
+         PCI_BASE_ADDRESS_MEM_TYPE_64 | PCI_BASE_ADDRESS_MEM_PREFETCH,
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 127c3d238346..066389e391b6 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8048,7 +8048,8 @@ out:
+     return pow2ceil(bar_size);
  }
  
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 6af6ef7d667f..3551989d5153 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -624,6 +624,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     char *id;
-     DeviceState *dev = NULL;
-     BusState *bus = NULL;
-+    QDict *properties;
+-static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
++static bool nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset,
++                            Error **errp)
+ {
+     uint16_t vf_dev_id = n->params.use_intel_id ?
+                          PCI_DEVICE_ID_INTEL_NVME : PCI_DEVICE_ID_REDHAT_NVME;
+@@ -8057,12 +8058,17 @@ static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
+                                       le16_to_cpu(cap->vifrsm),
+                                       NULL, NULL);
  
-     driver = qdict_get_try_str(opts, "driver");
-     if (!driver) {
-@@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+-    pcie_sriov_pf_init(pci_dev, offset, "nvme", vf_dev_id,
+-                       n->params.sriov_max_vfs, n->params.sriov_max_vfs,
+-                       NVME_VF_OFFSET, NVME_VF_STRIDE);
++    if (!pcie_sriov_pf_init(pci_dev, offset, "nvme", vf_dev_id,
++                            n->params.sriov_max_vfs, n->params.sriov_max_vfs,
++                            NVME_VF_OFFSET, NVME_VF_STRIDE,
++                            errp)) {
++        return false;
++    }
+ 
+     pcie_sriov_pf_init_vf_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
+                               PCI_BASE_ADDRESS_MEM_TYPE_64, bar_size);
++
++    return true;
+ }
+ 
+ static int nvme_add_pm_capability(PCIDevice *pci_dev, uint8_t offset)
+@@ -8155,6 +8161,12 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+         return false;
      }
  
-     /* set properties */
--    dev->opts = qdict_clone_shallow(opts);
--    qdict_del(dev->opts, "driver");
--    qdict_del(dev->opts, "bus");
--    qdict_del(dev->opts, "id");
-+    properties = qdict_clone_shallow(opts);
-+    qdict_del(properties, "driver");
-+    qdict_del(properties, "bus");
-+    qdict_del(properties, "id");
++    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs &&
++        !nvme_init_sriov(n, pci_dev, 0x120, errp)) {
++        msix_uninit(pci_dev, &n->bar0, &n->bar0);
++        return false;
++    }
++
+     nvme_update_msixcap_ts(pci_dev, n->conf_msix_qsize);
  
--    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_json,
-+    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
-                                       errp);
-+    qobject_unref(properties);
-     if (*errp) {
-         goto err_del_dev;
+     if (n->params.cmb_size_mb) {
+@@ -8165,10 +8177,6 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+         nvme_init_pmr(n, pci_dev);
      }
+ 
+-    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
+-        nvme_init_sriov(n, pci_dev, 0x120);
+-    }
+-
+     return true;
+ }
+ 
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 499becd5273f..f0bde0d3fc79 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -24,14 +24,27 @@ static PCIDevice *register_vf(PCIDevice *pf, int devfn,
+                               const char *name, uint16_t vf_num);
+ static void unregister_vfs(PCIDevice *dev);
+ 
+-void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
++bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+                         const char *vfname, uint16_t vf_dev_id,
+                         uint16_t init_vfs, uint16_t total_vfs,
+-                        uint16_t vf_offset, uint16_t vf_stride)
++                        uint16_t vf_offset, uint16_t vf_stride,
++                        Error **errp)
+ {
+     uint8_t *cfg = dev->config + offset;
+     uint8_t *wmask;
+ 
++    if (total_vfs) {
++        uint16_t ari_cap = pcie_find_capability(dev, PCI_EXT_CAP_ID_ARI);
++        uint16_t first_vf_devfn = dev->devfn + vf_offset;
++        uint16_t last_vf_devfn = first_vf_devfn + vf_stride * (total_vfs - 1);
++
++        if ((!ari_cap && PCI_SLOT(dev->devfn) != PCI_SLOT(last_vf_devfn)) ||
++            last_vf_devfn >= PCI_DEVFN_MAX) {
++            error_setg(errp, "VF function number overflows");
++            return false;
++        }
++    }
++
+     pcie_add_capability(dev, PCI_EXT_CAP_ID_SRIOV, 1,
+                         offset, PCI_EXT_CAP_SRIOV_SIZEOF);
+     dev->exp.sriov_cap = offset;
+@@ -69,6 +82,8 @@ void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+     pci_set_word(wmask + PCI_SRIOV_SYS_PGSIZE, 0x553);
+ 
+     qdev_prop_set_bit(&dev->qdev, "multifunction", true);
++
++    return true;
+ }
+ 
+ void pcie_sriov_pf_exit(PCIDevice *dev)
 
 -- 
 2.45.2
