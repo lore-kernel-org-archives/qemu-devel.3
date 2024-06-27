@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47A20C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 14:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E381C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 14:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMqVu-0007uA-7f; Thu, 27 Jun 2024 10:54:18 -0400
+	id 1sMqX5-0002dF-43; Thu, 27 Jun 2024 10:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sMqVr-0007th-TJ
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:54:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sMqVq-0007I3-1F
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:54:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719500053;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wOVf84lwfgLrYogRC0LnY4gOavX8fM5mQLjh40mAI/o=;
- b=cDZcIwHH92svQWBFLxnW+WCmfaBkNbuHW+vE5xYICkkE38wlHFTeKJGc5PGM0gYZxcAhvx
- 2QCArDaankLxaF3JmihOcy1cULYuP91bgdh5D6opkrvPC2yo3U/fu3jGJrsj14RqPmV/r0
- lfv39UfpjIOwL5sS0EeF2925R1ej984=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-qP0CTMArOnC_51Qfr6kl_A-1; Thu, 27 Jun 2024 10:54:10 -0400
-X-MC-Unique: qP0CTMArOnC_51Qfr6kl_A-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-52ce42bb0efso4174390e87.2
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:54:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sMqX2-0002Pr-55
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:55:28 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sMqX0-0007ZV-9N
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:55:27 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-57d1d614049so2068679a12.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:55:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719500122; x=1720104922; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=VfZrO24J1ywPn2M+YNZ4MZv1e6mCkcevNQGBQQTbeEg=;
+ b=efbdMaPVfrFWD9FyQ4+15/tC9tCyCfk5x20Meh0N2AENOFehi2v7ueE5tRuw2wJyEh
+ 3ckmewxXnMMJZEHyvMgCHlmMR2+OqvpA7jnF1iLWuzpawd7Ph6kafTsR4cBOqUYWR9dc
+ ih45Oelw/KpPmWvdZCL8P2B7ZHsaWY1/a+W/j52TztOSPAXBffgZ5HQVaO4xBYcFpXag
+ ouXRmqBCbP1ySZj9NakZmpuLk58m5L6rrkLGiwjwTCtYAU19Tgh/yhkZD21+/tlI2Ykt
+ VaKmOHkMQv3zuBiiAPtaYrCzEG2tUsLwD2CV82qyD4qo/+xb7ZnSZq7znte9q4+hBVPH
+ zEbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719500048; x=1720104848;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wOVf84lwfgLrYogRC0LnY4gOavX8fM5mQLjh40mAI/o=;
- b=spGUj+KNxDH9y5UCO6uWj1+ku32qobxGHbWjGZELfKqt9JNzMIrQUjBcgK57dm3MnF
- /cqKrWgx67P7PbLUxR2XMI3O3X9UgHD+HiEpBREhsZiwYlwEjhsrJXxBm0AXCG9sAal/
- QxwUXw2unq/hVGJZVNuL0e7l33MxabtgXjf8bEkkXmpTqkuVGrcsEeqeIdbLto/5p9q5
- aNkN3XJpIOFCyUIGUULPzzRQFeXrOYVNUe7QDMmzlImEiKDpg096lvtpa7AKEDZiS/A7
- n8ySnfN7ReurDUdouO3AtVrkaKOOQF3ssJRdNxEr4+oeGKrdJCI1lSS6/hC7CZEoAqj6
- BPMQ==
-X-Gm-Message-State: AOJu0YxVBVzMS9ZU6Jt2pP737VIixUIhH9vJbH6klv66xaniPtTm4eBs
- cFALe1nrREgbzmcdsFQR5TSjkSPnaQM7HaZt1y/HdUIgWy6QSaEeelv0lNk1P2fha/vPAnGB3cJ
- auwuk7RyBdlc/iJkb8TsqqYf+oSaa75xtjARkmhmNNEZnQOidD2fL0DyDmFkBO2JjdtlbLjbELQ
- XUCoOOmFKPaTXErduUKWkoOV+0ArL/MjCGQsx/
-X-Received: by 2002:a19:641c:0:b0:52c:dca7:c9bd with SMTP id
- 2adb3069b0e04-52ce064e3e3mr9346250e87.30.1719500048758; 
- Thu, 27 Jun 2024 07:54:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFu+quy5kOlRS3maCOD9ORsX83Tg3m+qBYsrmJnWvy1RC6X55dBngXKbu8/BMCN2vnmpOmvgw==
-X-Received: by 2002:a19:641c:0:b0:52c:dca7:c9bd with SMTP id
- 2adb3069b0e04-52ce064e3e3mr9346235e87.30.1719500048277; 
- Thu, 27 Jun 2024 07:54:08 -0700 (PDT)
-Received: from avogadro.local ([151.48.235.205])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a729d6fdc8esm66440566b.22.2024.06.27.07.54.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 07:54:07 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
-	alex.bennee@linaro.org
-Subject: [PATCH 3/5] target/i386: SEV: rename sev_snp_guest->id_auth
-Date: Thu, 27 Jun 2024 16:53:55 +0200
-Message-ID: <20240627145357.1038664-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240627145357.1038664-1-pbonzini@redhat.com>
-References: <20240627145357.1038664-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1719500122; x=1720104922;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VfZrO24J1ywPn2M+YNZ4MZv1e6mCkcevNQGBQQTbeEg=;
+ b=hJxwndx1ilaxvZHDHp8JoCW4mVI4DNo57FPjeq1gNdwYK7gf2hpPn6c7bT/lkOotyM
+ I/JLRRBcVLEPlGxBiNbHMEHS4FHwRYZHXKq3cHnO2DQV5wKYY1ekusVQuvg7R12e/L+Y
+ Zihx+Fe2f/NSrZZtSwW0Qlj0nkpk+BYNSwT3JzyFDvCb+X3awSPkdv/tntwkkKvrZGcR
+ 2opXvZB1fs45JKXiNJbTRKIjDB+JUtGmAgBXGuT9/IPNHQJOdF3YJJHXx33f6MSoKty+
+ XiXi9/0UkOqNL1pjRDdpLguJQ9Txsv0qkvNPxDJfir/K4Y4WMCPz5fldwGSscHVLAx6t
+ V6eQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCty2qeF2irUtFLhShWPGTzCrkXj/l2QGE5dHyToWbRC3+bWo/0SYE+sUA0L7BaN82jZ6brxBJy44B0d+akZx2qpTJjm0=
+X-Gm-Message-State: AOJu0Yw8NEAmachy2V910x2pPc4LHqpafhUL+Y9QWz/4lyTRRhOQR9Fz
+ iAMCl4juI37Kf3kNduneGlFNfRPpyryUxn8TBSCJJO/TeOUWVU7PDB84rwn4BuZYMY0sR1A50rY
+ T+pG2PKGtp3TWEblqDqokJnKbaUHMh0r4UGdKhQ==
+X-Google-Smtp-Source: AGHT+IEcr/wG5HaM9W2p0PTYMVQPLhqeAf3k+QGQPxmFlG7+ngmDACS/89T9me9mwUMFhkKVqpENL9AbRAdrqKmShrk=
+X-Received: by 2002:a50:c30f:0:b0:57c:a422:677b with SMTP id
+ 4fb4d7f45d1cf-57d4bd537fbmr11491502a12.8.1719500122133; Thu, 27 Jun 2024
+ 07:55:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <mvm8qytp828.fsf@suse.de>
+ <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org>
+ <mvm4j9gp0xd.fsf@suse.de> <34fed985-6a6a-4458-95f9-aa651744ef1a@linaro.org>
+ <CANCZdfq4=s=g8GoeCKY4576xgJs4-X+fXh7m5ZOJ1UeBXwWdCQ@mail.gmail.com>
+ <mvmv81un7m9.fsf@suse.de>
+ <CANCZdfpW+G54v3oeKZ6QYuovOga93D5hou9Ajeo838Y9bDNsUA@mail.gmail.com>
+ <mvmmsn6lawv.fsf@suse.de>
+In-Reply-To: <mvmmsn6lawv.fsf@suse.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 27 Jun 2024 15:55:10 +0100
+Message-ID: <CAFEAcA-dbLncCmY8zyZAz8e+AWeoGC437B=nV3wPznER+RmhbA@mail.gmail.com>
+Subject: Re: linux-user cannot allocate stack memory on riscv64 host due to
+ non-zero guest_base
+To: Andreas Schwab <schwab@suse.de>
+Cc: Warner Losh <imp@bsdimp.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,63 +98,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Free the "id_auth" name for the binary version of the data.
+On Thu, 27 Jun 2024 at 15:27, Andreas Schwab <schwab@suse.de> wrote:
+> Perhaps you should refrain from attacking the volunteers that report
+> bugs.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/sev.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+I think the tone of your previous email was extremely
+terse and didn't actually answer the question, which is
+quite easy to misinterpret as hostility.
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 2d4cfd41e83..a6b063b762c 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -154,7 +154,7 @@ struct SevSnpGuestState {
-     char *guest_visible_workarounds;
-     char *id_block_base64;
-     uint8_t *id_block;
--    char *id_auth;
-+    char *id_auth_base64;
-     char *host_data;
- 
-     struct kvm_sev_snp_launch_start kvm_start_conf;
-@@ -1297,7 +1297,7 @@ sev_snp_launch_finish(SevCommonState *sev_common)
-         }
-     }
- 
--    trace_kvm_sev_snp_launch_finish(sev_snp->id_block_base64, sev_snp->id_auth,
-+    trace_kvm_sev_snp_launch_finish(sev_snp->id_block_base64, sev_snp->id_auth_base64,
-                                     sev_snp->host_data);
-     ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_SNP_LAUNCH_FINISH,
-                     finish, &error);
-@@ -2198,7 +2198,7 @@ sev_snp_guest_get_id_auth(Object *obj, Error **errp)
- {
-     SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(obj);
- 
--    return g_strdup(sev_snp_guest->id_auth);
-+    return g_strdup(sev_snp_guest->id_auth_base64);
- }
- 
- static void
-@@ -2208,14 +2208,14 @@ sev_snp_guest_set_id_auth(Object *obj, const char *value, Error **errp)
-     struct kvm_sev_snp_launch_finish *finish = &sev_snp_guest->kvm_finish_conf;
-     gsize len;
- 
--    g_free(sev_snp_guest->id_auth);
-+    g_free(sev_snp_guest->id_auth_base64);
-     g_free((guchar *)finish->id_auth_uaddr);
- 
-     /* store the base64 str so we don't need to re-encode in getter */
--    sev_snp_guest->id_auth = g_strdup(value);
-+    sev_snp_guest->id_auth_base64 = g_strdup(value);
- 
-     finish->id_auth_uaddr =
--        (uint64_t)qbase64_decode(sev_snp_guest->id_auth, -1, &len, errp);
-+        (uint64_t)qbase64_decode(sev_snp_guest->id_auth_base64, -1, &len, errp);
- 
-     if (!finish->id_auth_uaddr) {
-         return;
--- 
-2.45.2
+We're all trying to achieve the same thing here, and the underlying
+problem is that we can't reproduce the fault you're seeing.
+So to help us with that, you need to provide more precise
+instructions on exactly how we can get the result you see,
+or else provide the answers to the questions we're asking
+to try to get more diagnostic information.
 
+For instance, this might help:
+ * how exactly did you build the binary (what source, what
+   compiler version, what OS, etc)
+ * a repro built binary
+ * exact QEMU command line
+
+Clearly something is different between your setup and
+Richard's and Warner's, so we need more detail to narrow
+down what that is. Warner's questions are trying to find
+out more about what's going on.
+
+thanks
+-- PMM
 
