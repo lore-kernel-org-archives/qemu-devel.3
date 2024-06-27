@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EAE7C2BD09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2240EC30653
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 10:01:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMlwE-0004wP-VZ; Thu, 27 Jun 2024 06:01:10 -0400
+	id 1sMlwH-0004wh-3I; Thu, 27 Jun 2024 06:01:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlwD-0004vz-Pc
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:01:09 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1sMlwF-0004wT-UD
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:01:11 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sMlwB-0001Yz-PE
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:01:09 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-711b1512aeaso5991947a12.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:01:07 -0700 (PDT)
+ id 1sMlwE-0001ZC-B3
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 06:01:11 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7067a2e9607so3839391b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 03:01:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719482466; x=1720087266; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=EQMM3dJNYgiJ/LuYfS4K3d1zvGG58kQZ/cnQ3svCEaM=;
- b=GJR2leb4XqtCFHluLYwTvHJXc5EI4LGoIwdtpfQQB6wIV8pg2A3nDcBMEYRe8GGAlj
- o71WMdu304rM7HqPGgZw6wf7JJU1AfKws/jRSE0mW9bHpW7LFm7W72e5E/sln3+ybIdn
- LqYoGrbmORBOzjcI+YIYU8eWHoyhapCNGbNKultvGXw+Tse8asMo0YT4Xh0lvs87sBNC
- O4ZnmAa8E5c8xO84EmugIA4dlxjiXAawT3+CtoPrTme21tAyWYdjd0GUQzEqBpwv/zB+
- gVJjWuVIhhKxro5GQHhpYygdiKVBoNON+UlYJUb3DyrrxwRe0e5v6HdxDSxo8ZlsJkeX
- 9e4w==
+ d=gmail.com; s=20230601; t=1719482469; x=1720087269; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9SbOXMdD9Afo9G+k2c8nKcFprRWncVmzYgA0dcpIFRM=;
+ b=fl9UINKxO0NLuqqzyo8BT2fq5WyQXDQZRQdWHakguc15GULVtHUO4hCbOhFLN62IMd
+ ZB2sl//WkbQv7ZnnK+BXlFe7i6KyVrvoKFM5KBlQ0VaVR+vvL6NO1hqN/l7bddbX7WXW
+ a47+XXXmkyKWvqID1ScGQ2JUeWh3dTw+UEzm4nEY1lCsmmK7B4Fm4BvAW1CLUHXoazK/
+ lQoBjsb/A2PYCQft7JeQHaM5+Ohy6Bi4f8VDjaSE35W7klCoQZLqjhHQPm80jl8M1hu6
+ Ev3rC0ztXYjFLIMRhT0OsVABu6IC2kkAn291LZLpe8czZCPr7Ny3LqXux6AnkoFrL38V
+ PMew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719482466; x=1720087266;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EQMM3dJNYgiJ/LuYfS4K3d1zvGG58kQZ/cnQ3svCEaM=;
- b=kFe+aeQESCLa6mzB6cpgYx1OHj5oUIN4a361zvq6sr1ROzp9f/Hh4t2sOEazX0IMS7
- CSsKOyeDvN7vf6Q8SRurOGmgNLs2e5mUNFquXwh6rLdg9SzbdDMW2GOfzKTyM+ApcUHh
- y11AdygWlCSQ95is/O62Mpt+UH4/NQHQCaCQE7ACoVhuesYsoXaz2swMDQTFG+fXN599
- hgXYX6aA1cbwZxgwEL476W/oAVtsSII6ai4jq1tR2wG5K5e+X24hoY/doI+XzU36YEdh
- PLo4VKChNogJF6O8IxHz6+DAI9xcL3YTENchjce+D0bj2o/Xzhm5H3fBp7EFNQiAuXtn
- 9zsQ==
-X-Gm-Message-State: AOJu0YwIK7rz7S6cb7p4N4fJcTVxSLQO9g+a8oQ5qGTJCkDTArCsQibQ
- ga6Xl7kQ28+UqzC8NXmChHlvIPxD2PoWiQZBPceV2TXzbAbrJp27K+tDmmz+
-X-Google-Smtp-Source: AGHT+IH0mu14DFAD+qbD9danpKu6QYZNRVmBhRE6re161O/oYtT5cNv3NGa0hOHofbOOimhjuLNKng==
-X-Received: by 2002:a05:6a20:b128:b0:1be:c3ca:bc30 with SMTP id
- adf61e73a8af0-1bec3cad395mr3217237637.2.1719482465574; 
- Thu, 27 Jun 2024 03:01:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719482469; x=1720087269;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9SbOXMdD9Afo9G+k2c8nKcFprRWncVmzYgA0dcpIFRM=;
+ b=mcO+jj6sUVQOxHKV+tsCN+NBg7eD16OtwUjb4NOl3wbP/QuC5S6lkwPsV6x3WZxYpR
+ FT+4SS/UCaKawc9ZCPfdBQRK62akJuWLuboPfQ5AujdQbwgreSS1joQMXsa2pYvkft5u
+ D+WhIzOyeOba6pGRaewGcgZnGbruYLVMpTcUQCbKxCwCF+/GaNrB/h9vxtu2I0kESQ8Q
+ MtJf4iewcxX+VtJFL5F2DJRNUURNekmAuPVgrNQ7aeWAN67C98dMhOp89KXz3cnpLXbd
+ QjcSXqYZK8zjAJH2igvVct61H4sP0T9rdAafI507e6j8lj/Gay4tecMKv1Sgg1ElTNwK
+ cRsg==
+X-Gm-Message-State: AOJu0YwzmGfmr29ml32dqenShQNM8eFhSemW+ESSTUrydNtVElm7VRed
+ 8siZL0PreN0kNDVRCbTYb+4WkKEiDl+GvqZdG9GvsSXcUGB1IDRkn/EOP8pE
+X-Google-Smtp-Source: AGHT+IF3MUcSMi3w/Up7qCoJNqQKwduv5II7kpoB4syDjuHb27AzrelLTkCBjZsYc8HV4bQwjwBOhw==
+X-Received: by 2002:a05:6a00:18a3:b0:704:3a0f:1d88 with SMTP id
+ d2e1a72fcca58-70670ffc05dmr19409067b3a.21.1719482468559; 
+ Thu, 27 Jun 2024 03:01:08 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.01.03
+ d2e1a72fcca58-706b4a07326sm932431b3a.111.2024.06.27.03.01.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 03:01:05 -0700 (PDT)
+ Thu, 27 Jun 2024 03:01:08 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 00/32] riscv-to-apply queue
-Date: Thu, 27 Jun 2024 20:00:21 +1000
-Message-ID: <20240627100053.150937-1-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Rajnesh Kanwal <rkanwal@rivosinc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 01/32] target/riscv: Extend virtual irq csrs masks to be 64 bit
+ wide.
+Date: Thu, 27 Jun 2024 20:00:22 +1000
+Message-ID: <20240627100053.150937-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240627100053.150937-1-alistair.francis@wdc.com>
+References: <20240627100053.150937-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,103 +100,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 3f044554b94fc0756d5b3cdbf84501e0eea0e629:
+From: Rajnesh Kanwal <rkanwal@rivosinc.com>
 
-  Merge tag 'pull-vfio-20240624' of https://github.com/legoater/qemu into staging (2024-06-24 21:30:34 -0700)
+AIA extends the width of all IRQ CSRs to 64bit even
+in 32bit systems by adding missing half CSRs.
 
-are available in the Git repository at:
+This seems to be missed while adding support for
+virtual IRQs. The whole logic seems to be correct
+except the width of the masks.
 
-  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20240627-1
+Fixes: 1697837ed9 ("target/riscv: Add M-mode virtual interrupt and IRQ filtering support.")
+Fixes: 40336d5b1d ("target/riscv: Add HS-mode virtual interrupt and IRQ filtering support.")
 
-for you to fetch changes up to 2f5a2315b84a9b1f089ecfc3f31b29813609a7b7:
+Signed-off-by: Rajnesh Kanwal <rkanwal@rivosinc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20240520125157.311503-2-rkanwal@rivosinc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/csr.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-  target/riscv: Apply modularized matching conditions for icount trigger (2024-06-27 13:09:16 +1000)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 58ef7079dc..dd89edb06a 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1197,18 +1197,18 @@ static const target_ulong sstatus_v1_10_mask = SSTATUS_SIE | SSTATUS_SPIE |
+  */
+ 
+ /* Bit STIP can be an alias of mip.STIP that's why it's writable in mvip. */
+-static const target_ulong mvip_writable_mask = MIP_SSIP | MIP_STIP | MIP_SEIP |
++static const uint64_t mvip_writable_mask = MIP_SSIP | MIP_STIP | MIP_SEIP |
+                                     LOCAL_INTERRUPTS;
+-static const target_ulong mvien_writable_mask = MIP_SSIP | MIP_SEIP |
++static const uint64_t mvien_writable_mask = MIP_SSIP | MIP_SEIP |
+                                     LOCAL_INTERRUPTS;
+ 
+-static const target_ulong sip_writable_mask = SIP_SSIP | LOCAL_INTERRUPTS;
+-static const target_ulong hip_writable_mask = MIP_VSSIP;
+-static const target_ulong hvip_writable_mask = MIP_VSSIP | MIP_VSTIP |
++static const uint64_t sip_writable_mask = SIP_SSIP | LOCAL_INTERRUPTS;
++static const uint64_t hip_writable_mask = MIP_VSSIP;
++static const uint64_t hvip_writable_mask = MIP_VSSIP | MIP_VSTIP |
+                                     MIP_VSEIP | LOCAL_INTERRUPTS;
+-static const target_ulong hvien_writable_mask = LOCAL_INTERRUPTS;
++static const uint64_t hvien_writable_mask = LOCAL_INTERRUPTS;
+ 
+-static const target_ulong vsip_writable_mask = MIP_VSSIP | LOCAL_INTERRUPTS;
++static const uint64_t vsip_writable_mask = MIP_VSSIP | LOCAL_INTERRUPTS;
+ 
+ const bool valid_vm_1_10_32[16] = {
+     [VM_1_10_MBARE] = true,
+-- 
+2.45.2
 
-----------------------------------------------------------------
-RISC-V PR for 9.1
-
-* Extend virtual irq csrs masks to be 64 bit wide
-* Move Guest irqs out of the core local irqs range
-* zvbb implies zvkb
-* virt: add address-cells in create_fdt_one_aplic()
-* virt: add aplic nodename helper
-* virt: rename aplic nodename to 'interrupt-controller'
-* virt: aplic DT: add 'qemu, aplic' to 'compatible'
-* virt: aplic DT: rename prop to 'riscv, delegation'
-* virt: change imsic nodename to 'interrupt-controller'
-* virt: imsics DT: add 'qemu, imsics' to 'compatible'
-* virt: imsics DT: add '#msi-cells'
-* QEMU support for KVM Guest Debug on RISC-V
-* Support RISC-V privilege 1.13 spec
-* Add support for RISC-V ACPI tests
-* Modularize common match conditions for trigger
-
-----------------------------------------------------------------
-Alvin Chang (3):
-      target/riscv: Add functions for common matching conditions of trigger
-      target/riscv: Apply modularized matching conditions for watchpoint
-      target/riscv: Apply modularized matching conditions for icount trigger
-
-Branislav Brzak (1):
-      target/riscv: Fix froundnx.h nanbox check
-
-Chao Du (3):
-      target/riscv/kvm: add software breakpoints support
-      target/riscv/kvm: handle the exit with debug reason
-      target/riscv/kvm: define TARGET_KVM_HAVE_GUEST_DEBUG
-
-Clément Léger (1):
-      target/riscv: fix instructions count handling in icount mode
-
-Daniel Henrique Barboza (8):
-      hw/riscv/virt.c: add address-cells in create_fdt_one_aplic()
-      hw/riscv/virt.c: add aplic nodename helper
-      hw/riscv/virt.c: rename aplic nodename to 'interrupt-controller'
-      hw/riscv/virt.c: aplic DT: add 'qemu, aplic' to 'compatible'
-      hw/riscv/virt.c: aplic DT: rename prop to 'riscv, delegation'
-      hw/riscv/virt.c: change imsic nodename to 'interrupt-controller'
-      hw/riscv/virt.c: imsics DT: add 'qemu, imsics' to 'compatible'
-      hw/riscv/virt.c: imsics DT: add '#msi-cells'
-
-Fea.Wang (5):
-      target/riscv: Define macros and variables for ss1p13
-      target/riscv: Add 'P1P13' bit in SMSTATEEN0
-      target/riscv: Add MEDELEGH, HEDELEGH csrs for RV32
-      target/riscv: Reserve exception codes for sw-check and hw-err
-      target/riscv: Support the version for ss1p13
-
-Frank Chang (6):
-      target/riscv: Introduce extension implied rules definition
-      target/riscv: Introduce extension implied rule helpers
-      target/riscv: Add MISA extension implied rules
-      target/riscv: Add multi extension implied rules
-      target/riscv: Add Zc extension implied rule
-      target/riscv: Remove extension auto-update check statements
-
-Jerry Zhang Jian (1):
-      target/riscv: zvbb implies zvkb
-
-Jim Shu (1):
-      target/riscv: Reuse the conversion function of priv_spec
-
-Rajnesh Kanwal (2):
-      target/riscv: Extend virtual irq csrs masks to be 64 bit wide.
-      target/riscv: Move Guest irqs out of the core local irqs range.
-
-Sunil V L (1):
-      hw/riscv/virt.c: Make block devices default to virtio
-
- configs/targets/riscv64-softmmu.mak |   1 +
- include/hw/riscv/virt.h             |   1 +
- target/riscv/cpu.h                  |  28 ++-
- target/riscv/cpu_bits.h             |   8 +-
- target/riscv/cpu_cfg.h              |   1 +
- hw/riscv/virt.c                     |  38 +++-
- target/riscv/cpu.c                  | 404 +++++++++++++++++++++++++++++++++++-
- target/riscv/csr.c                  |  92 ++++++--
- target/riscv/debug.c                | 129 ++++++++----
- target/riscv/fpu_helper.c           |   2 +-
- target/riscv/kvm/kvm-cpu.c          |  89 ++++++++
- target/riscv/tcg/tcg-cpu.c          | 287 ++++++++++++++-----------
- 12 files changed, 877 insertions(+), 203 deletions(-)
 
