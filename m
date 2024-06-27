@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A54C3064D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBF5EC41513
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 17:13:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMsgH-0003Rx-3D; Thu, 27 Jun 2024 13:13:09 -0400
+	id 1sMsfu-0001X4-ND; Thu, 27 Jun 2024 13:12:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMsgE-0003G5-BN
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:13:06 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMsfs-0001Mb-Su
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:12:44 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMsgC-0002Na-MY
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:13:06 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42562e4b5d1so11170925e9.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 10:13:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMsfr-0002KL-5g
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:12:44 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3636c572257so6588110f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 10:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719508383; x=1720113183; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719508361; x=1720113161; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v3emiqbeR1uOJll/QBrY7vV5cW8ivGXHg4omZJGkoiU=;
- b=X3gA2FEqoIiqf/6sogkO646PfmZnu4YhlbFdXDAQFGGI2tRoxRMU/UFWB80F4qp1uS
- OZIs/YQD/n33kHNilI1gLpvx8Rg11nPWQVUXb8LIPRWvAOaasiEbrnBxjaZcp82bEaKy
- 7TPf6C7JZmT16XFHj8gPvAAlYsPUNfVwdSu+l11tUz/xxjmIqIcFFJnIItye2eeRrrvV
- DFGixO8S0bwL+UtrVaX/5i3XaB8AoXI2iwAnyO0f6S3TOqBsRJsdkpd7WqqmFGO1NH26
- vPiqj9MYoBE51OS9IivE7OnOXeJok/eiVC7tEGiw0RCw37iePpfFNvPryAGxwZd19GE0
- 5cVw==
+ bh=CppPyHBGnGyh+KeMhLUUfKK62hbBIjgp+PC1jB0KmHY=;
+ b=Unozw+WbqFhAtxGSCVcjHM2f4ppAu4pQhNXLSiN915fkY4m8t4Zla8HEOWFwUXNScz
+ jjIh84omHzKMeZIXFIxCtlPc4B23Ta/n4uygMVlFD86fvKJcELvJoDVkgVBac0he8Vek
+ gBkFF6rEUuGQ6nvvOynVYP8rv6v46JGCl/BFX5fFF5qKDVACREWkXqv2vH045EyIvXoP
+ DIKCJnU4IWNKTDVUBa3nhbjfrZ5R3wQFeDD0/+YpY4NjSkozlocCzFCuk3LOCNYInMox
+ i0SqLkV9X9ZqZNny3VDXLuMPmCvK6d6QxKxibVIY+xeyDOCSPpHbD8GiN+I3ZQ6hrfW6
+ i4yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719508383; x=1720113183;
+ d=1e100.net; s=20230601; t=1719508361; x=1720113161;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=v3emiqbeR1uOJll/QBrY7vV5cW8ivGXHg4omZJGkoiU=;
- b=guLpbkcOCAU6ZufSxrXq6I39z0NMUd/2SoZL/fGqerCm9cao4jkvDBaIMR+kKv/BT0
- 67gVnGRQgVXmsKzNLm138ePWXoFobzkjVa1KnVo5k3z4lpfVwdq5tfygoZaumGDtFgMU
- 4Hx4PI1kMz95v6LTGB5uEmu15f82OcJFh3+T9BK5Z8LHGh4YCh6jCAHn/lMRacF+h3v1
- DBOagZ46RD9GynbSe62hNrotuYYRl12VC/6iSvafM20t6zMyI0YGOq/j/GYS01+OUbLV
- /SArmD3ymmAbuK1Z5D9iqCxjUdQzabTES5d8APqc7xZYQfHydRjwTSom2UiBMZUlFrh3
- 18bQ==
-X-Gm-Message-State: AOJu0YyUumpqL6JiT4YRqIWeRHNDHZbZe9kuwZ5jHyBjWm92JkdCkIH4
- pUflbH7Ewokpp8S+0wa/zsV+D11PDWepV4jD2Qw7cChOBt+79NuB7mDWiIqMJzsV9ZXkLyDfwc2
- Uwu0=
-X-Google-Smtp-Source: AGHT+IFNU45auTJRyUA+s5bP25FEgBmHPgM8yfwvljy+QAXUT+NyJ7KeDTE3ysMa5uWZKvA9A9eB4Q==
-X-Received: by 2002:a05:600c:3782:b0:425:64c5:5750 with SMTP id
- 5b1f17b1804b1-42564c558f6mr15758255e9.7.1719508382842; 
- Thu, 27 Jun 2024 10:13:02 -0700 (PDT)
+ bh=CppPyHBGnGyh+KeMhLUUfKK62hbBIjgp+PC1jB0KmHY=;
+ b=rXfq5QRW50F5BQdUZZbiEuj8YtqD0Z2741uPH0wGKoRcfyfQujBixWbYlqxKCHItrm
+ gvxricdeXj6La/aS+BkGFvDFGFLx23/ZZ1s96BasS/G2x/4PDBkEcSs2ZWhPiKOtxJHy
+ fltUIoHKY//8ppmeRFfoCSc9zn7EkIyoKuP9rogXSj7UqXHVQhP4P2hXRDSapcEVraFh
+ FuI7TWsw1CJRmJJWvn+tmFsBge9i4D1zQ/AaPdK7W4Id8Pbuvkw/U2IIrfq1JkdqFyev
+ GL8hKfwBXTJ8XhXcZRsDNl1xS2dluaEiBz46qSw0tw1YtZInlfjdGu0iytnbZqfkVkWH
+ Xcdw==
+X-Gm-Message-State: AOJu0YwT1i82JZkRnVknlItcuSSXSQyXjLLjmIzvy64Ejk7SmLOXLx78
+ IdPF/wZLmqLn+oFRPeaCJ2ozn3Pl4fby8FF/1qLObyhhYgcoO/7V13LTkt01Tp2Go2f41sGNuUF
+ 12hA=
+X-Google-Smtp-Source: AGHT+IFQedm5omyTJ3NlxjIwSTS0PK3a3Imi4i98PIvZJcL2L9K/BjXrna/LklFVxehY7cJuVO1GcA==
+X-Received: by 2002:adf:b1d1:0:b0:362:ff67:272f with SMTP id
+ ffacd0b85a97d-366e94db3e5mr11678812f8f.41.1719508361364; 
+ Thu, 27 Jun 2024 10:12:41 -0700 (PDT)
 Received: from localhost.localdomain (33.red-95-127-46.staticip.rima-tde.net.
  [95.127.46.33]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0c15f8sm550105e9.47.2024.06.27.10.12.59
+ ffacd0b85a97d-3674369ebaesm2489133f8f.91.2024.06.27.10.12.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 27 Jun 2024 10:13:02 -0700 (PDT)
+ Thu, 27 Jun 2024 10:12:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Luc Michel <luc.michel@amd.com>,
@@ -65,25 +65,24 @@ Cc: Joel Stanley <joel@jms.id.au>, Luc Michel <luc.michel@amd.com>,
  Vincent Palatin <vpalatin@chromium.org>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [RFC PATCH 11/19] hw/sd/sdcard: Add experimental
- 'x-aspeed-emmc-kludge' property
-Date: Thu, 27 Jun 2024 19:10:51 +0200
-Message-ID: <20240627171059.84349-12-philmd@linaro.org>
+Subject: [PATCH 09/19] hw/sd/sdcard: Add mmc_cmd_PROGRAM_CID handler (CMD26)
+Date: Thu, 27 Jun 2024 19:10:49 +0200
+Message-ID: <20240627171059.84349-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240627171059.84349-1-philmd@linaro.org>
 References: <20240627171059.84349-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,38 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When booting U-boot/Linux on Aspeed boards via eMMC,
-some commands don't behave as expected from the spec.
-
-Add the 'x-aspeed-emmc-kludge' property to allow non
-standard uses until we figure out the reasons.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/sd/sd.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index bd77853419..dc692fe1fa 100644
+index 7c6f5ccc72..0f9bab105e 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -127,6 +127,7 @@ struct SDState {
+@@ -1520,6 +1520,12 @@ static sd_rsp_type_t sd_cmd_WRITE_SINGLE_BLOCK(SDState *sd, SDRequest req)
+     return sd_cmd_to_receivingdata(sd, req, addr, sd->blk_len);
+ }
  
-     uint8_t spec_version;
-     BlockBackend *blk;
-+    bool aspeed_emmc_kludge;
++/* CMD26 */
++static sd_rsp_type_t mmc_cmd_PROGRAM_CID(SDState *sd, SDRequest req)
++{
++    return sd_cmd_to_receivingdata(sd, req, 0, sizeof(sd->cid));
++}
++
+ /* CMD27 */
+ static sd_rsp_type_t sd_cmd_PROGRAM_CSD(SDState *sd, SDRequest req)
+ {
+@@ -1868,9 +1874,6 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+         }
+         break;
  
-     const SDProto *proto;
- 
-@@ -2567,6 +2568,8 @@ static Property sd_properties[] = {
-     DEFINE_PROP_UINT8("spec_version", SDState,
-                       spec_version, SD_PHY_SPECv3_01_VERS),
-     DEFINE_PROP_DRIVE("drive", SDState, blk),
-+    DEFINE_PROP_BOOL("x-aspeed-emmc-kludge", SDState,
-+                     aspeed_emmc_kludge, false),
-     /* We do not model the chip select pin, so allow the board to select
-      * whether card should be in SSI or MMC/SD mode.  It is also up to the
-      * board to ensure that ssi transfers only occur when the chip select
+-    case 26:  /* CMD26:  PROGRAM_CID */
+-        return sd_cmd_to_receivingdata(sd, req, 0, sizeof(sd->cid));
+-
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR, "SD: Unknown CMD%i\n", req.cmd);
+         return sd_illegal;
+@@ -2429,6 +2432,7 @@ static const SDProto sd_proto_emmc = {
+         [19] = {0,  sd_adtc, "BUSTEST_W", sd_cmd_unimplemented},
+         [23] = {2,  sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
+         [24] = {4,  sd_adtc, "WRITE_SINGLE_BLOCK", sd_cmd_WRITE_SINGLE_BLOCK},
++        [26] = {4,  sd_adtc, "PROGRAM_CID", mmc_cmd_PROGRAM_CID},
+         [27] = {4,  sd_adtc, "PROGRAM_CSD", sd_cmd_PROGRAM_CSD},
+         [28] = {6,  sd_ac,   "SET_WRITE_PROT", sd_cmd_SET_WRITE_PROT},
+         [29] = {6,  sd_ac,   "CLR_WRITE_PROT", sd_cmd_CLR_WRITE_PROT},
 -- 
 2.41.0
 
