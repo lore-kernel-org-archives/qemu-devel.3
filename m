@@ -4,100 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA7FC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 14:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53708C3064D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 14:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMpmR-00024U-GL; Thu, 27 Jun 2024 10:07:19 -0400
+	id 1sMpuL-0005jj-Ha; Thu, 27 Jun 2024 10:15:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpmP-00024I-DL
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:07:17 -0400
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sMpu3-0005jF-2t
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:15:11 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpm8-0003j0-Vw
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:07:17 -0400
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-5c21ba58227so1331943eaf.0
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:07:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sMptt-00067z-Cs
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:15:09 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2c1a4192d55so6061826a91.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:14:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719497220; x=1720102020;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1719497698; x=1720102498;
  darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Nuo3oGa7sW4ew3IXvrB1WXnfJy174fcdEXZL3iqFbso=;
- b=aV6umN4A6/0W/e1aJKP/KTUKaZnRibs/bMYnsm/slJVuIVNKNWC/fwojJU/hg2sA8O
- ULWQuzZSzE9T9dhw/x8dhwbvhTEn5+qTD1GLybIn+ITMyybDyIs0ImHhdPEoDXH6u7vK
- K6na6gkzjvDrXQ8aWZH6oOTDrgtcMbGigbuTDAqxKx5Hg3/cx6r+qgJR4+7ljgEGZPTu
- Mpwu2zULwRhMqwrMPeD4k3QHIBI8J/mzsNT55CcbqeVzdYFO1Qp3cU/It/iX1uGYOjzA
- oCUIBy6rwQCSc7lQR0fwsydZC6yttCRYhD24QOrLL3Uajv7TKhoVmSoM0mLJJZXGG+C9
- K+Aw==
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=v8dLCQbGGaNygF2l3kbb4xVDsdt4jEl0YzVu5MDdb00=;
+ b=Zj1D3ln1JlzSxnIkoNokbp1hfBFPpkH4tg/sBzBiAaZ5PXNc4YnaPZ/9c64EE4qDmg
+ k+CCZoBRzG8QTVcDfd6WLTvDBzPL8E1UsvSI3l1QkapmF9SikucLgz4f4sKQhcZ5wW5S
+ nXpGoZXxWq9Dw2czKPXaxOQvzVbjF+bq7Q6l8qZME6tbahE23665/27oxJNxCneiPazN
+ D+gD49soe+4LmnWd2ZcWb0p2BJZGI9wdK3HZlsNwErfnEWC1WkDnqjrrb8UCgxi/W4z4
+ UMcoHJuX7pPOzOyAy9pF8hVYtNRUHhq/2LbCfPv3J8RrkXIl0enRsD9r/qEeBkkWgYHU
+ FOvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719497220; x=1720102020;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Nuo3oGa7sW4ew3IXvrB1WXnfJy174fcdEXZL3iqFbso=;
- b=Nxah7Rm3/sB2bbhEU3AHQuWrU0w68fTNFo0YNKj9uMosXpgILUWipSjKFsFax1Vax7
- 4WsRpmy48d2k/uuRKbVKzbdc5CGnLuKPe9kIDri+9zRga/p4jqrKy53OjT34xFVmm2Zr
- G4PJRzTKSqvOYQkq3qoM7dWVQVAi92l3RzoNpb91+P6klV7j/YlIWISzOUmBOb81FvFo
- mhReZJItEW5Spngc7cQpwxhXA/eG0zRAykmcKzn2cU/t1UHkZKIFY+qJ7wK0uYauHYMC
- udv4bH2Zcu78A0fvcgcN4f9FEocVOL1R9Cs/WBcvEs3XYI1BfyyqrQsnxrTaqZRM1WJE
- mZGQ==
-X-Gm-Message-State: AOJu0YxyEpmo9UfNAmImcvNbVHtt3eGeUvsHAzcuy4lNmW9K/w1z3kfa
- 4mczVyDDbR7WNYdRVQsDEEPNrqGzw52IafvEUIBZ17znmHMQ4ZYRH+sBnjz0DZk=
-X-Google-Smtp-Source: AGHT+IGL6WXwMwwBnuhg+DhKcuAXKgHHur/2uAVncPYfMkEpNNJt4zsReHeOhnDUaPjmRRfXJWZ/4g==
-X-Received: by 2002:a05:6358:5921:b0:1a6:3b1f:799 with SMTP id
- e5c5f4694b2df-1a63b1f12c0mr368479355d.27.1719497219820; 
- Thu, 27 Jun 2024 07:06:59 -0700 (PDT)
-Received: from ?IPV6:2400:4050:a840:1e00:9ac7:6d57:2b16:6932?
- ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-72745d074adsm977559a12.36.2024.06.27.07.06.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 07:06:59 -0700 (PDT)
-Message-ID: <6fb59b79-88d4-44d9-bf57-127d6eada90a@daynix.com>
-Date: Thu, 27 Jun 2024 23:06:54 +0900
+ d=1e100.net; s=20230601; t=1719497698; x=1720102498;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=v8dLCQbGGaNygF2l3kbb4xVDsdt4jEl0YzVu5MDdb00=;
+ b=fHn18yLcmggNzZj3EQxzhvcA2WdgkHLUck1pX0HUccoqM53tRdYyeBHCo5kJcGiIJX
+ BY276FqtuTvzyr7j8FymLfMJU/nwMT9qEoTleFCDrKzaVshpHLDnbWMhhPJ8JtllDS7B
+ GER9kTdOHiZJXNQ9NpNATI4f/d6M/uudxo260JlO5e2ZO051gTJeFLxUnxpUYGJDBSYU
+ LAOSez5e06lISLiJxmF8m4GEvanfJvhl6a2Xs4tf/4aLmrR6Im9JPoN5FmgM4QiAAKbs
+ 5FaXrOc+tbP0vSSp/BYcq24JAuvCAuFdZKT7t7zqxBFIJFg9gVbIlI1T6y7jX9HGebff
+ pugQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWCrQFGh9Rs8EDD9vP7gozvvc2jeYmsEpMdrBn+prqa6IXFUhbETBMNNnsbJXHQJX2GdV4MYnVonxl6ZQKx3FMp8EaHyew=
+X-Gm-Message-State: AOJu0YzKZpsWdB9YTGISzwK0tLAjhiKm1DbNbtIIm7YUbgNTDpqDmfPb
+ LKRpr0uQ/aV4cSYVPOVuxU7mC8UQgTQRDL68Uq1/ZSWufeWgen8G8AkHm1SEMYm4g+fRKsOSUd3
+ N6Gd4/Qs5DIpzgZ/fuskTHJ+wG15C+Jp4PoAthQ==
+X-Google-Smtp-Source: AGHT+IHQqeSh1qUY+NiZxZ8TMI0XbALYXda9aiBo0VPyTYrNshXy74MXWKlcOM0/ewTyg8KmYx/U8ZKY7RdEXPD4qj0=
+X-Received: by 2002:a17:90a:db91:b0:2c8:5ca0:70a5 with SMTP id
+ 98e67ed59e1d1-2c85ca070c4mr12059086a91.20.1719497698260; Thu, 27 Jun 2024
+ 07:14:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/14] ppc/vof: Fix unaligned FDT property access
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240626-san-v1-0-f3cc42302189@daynix.com>
- <20240626-san-v1-5-f3cc42302189@daynix.com>
- <efdfa803-775c-4aa2-b7c4-f016dafe9a88@linaro.org>
- <9fdabbde-1ae8-4f78-af20-b4383b7705fc@daynix.com>
- <4b713ad2-1f92-49d1-88b9-6185a1b50062@linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <4b713ad2-1f92-49d1-88b9-6185a1b50062@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc2a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+References: <mvm8qytp828.fsf@suse.de>
+ <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org>
+ <mvm4j9gp0xd.fsf@suse.de> <34fed985-6a6a-4458-95f9-aa651744ef1a@linaro.org>
+ <CANCZdfq4=s=g8GoeCKY4576xgJs4-X+fXh7m5ZOJ1UeBXwWdCQ@mail.gmail.com>
+ <mvmv81un7m9.fsf@suse.de>
+In-Reply-To: <mvmv81un7m9.fsf@suse.de>
+From: Warner Losh <imp@bsdimp.com>
+Date: Thu, 27 Jun 2024 08:14:46 -0600
+Message-ID: <CANCZdfpW+G54v3oeKZ6QYuovOga93D5hou9Ajeo838Y9bDNsUA@mail.gmail.com>
+Subject: Re: linux-user cannot allocate stack memory on riscv64 host due to
+ non-zero guest_base
+To: Andreas Schwab <schwab@suse.de>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000007f54e1061bdfc13f"
+Received-SPF: none client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,42 +93,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/06/27 23:02, Philippe Mathieu-Daudé wrote:
-> On 27/6/24 15:12, Akihiko Odaki wrote:
->> On 2024/06/26 21:03, Philippe Mathieu-Daudé wrote:
->>> On 26/6/24 13:06, Akihiko Odaki wrote:
->>>> FDT properties are aligned by 4 bytes, not 8 bytes.
->>>>
->>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>> ---
->>>>   hw/ppc/vof.c | 2 +-
->>>>   1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
->>>> index e3b430a81f4f..b5b6514d79fc 100644
->>>> --- a/hw/ppc/vof.c
->>>> +++ b/hw/ppc/vof.c
->>>> @@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *fdt, 
->>>> GArray *claimed, uint64_t base)
->>>>       mem0_reg = fdt_getprop(fdt, offset, "reg", &proplen);
->>>>       g_assert(mem0_reg && proplen == sizeof(uint32_t) * (ac + sc));
->>>>       if (sc == 2) {
->>>> -        mem0_end = be64_to_cpu(*(uint64_t *)(mem0_reg + 
->>>> sizeof(uint32_t) * ac));
->>>> +        mem0_end = ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
->>>>       } else {
->>>>           mem0_end = be32_to_cpu(*(uint32_t *)(mem0_reg + 
->>>> sizeof(uint32_t) * ac));
->>>
->>> OK but please keep API uses consistent, so convert other uses please.
->>
->> This is the only unaligned access.
-> 
-> What I mean with consistent API use is either use the be64_to_cpu and
-> be32_to_cpu API, or ldq_be_p and ldl_be_p. A mix of both makes review
-> more confusing.
+--0000000000007f54e1061bdfc13f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The desired semantics are different in these two cases so I believe it 
-is natural to use different APIs; ldq_be_p() for an unaligned 64-bit 
-access and be32_to_cpu(*(uint32_t *)) for an aligned 32-bit access.
+On Thu, Jun 27, 2024, 1:54=E2=80=AFAM Andreas Schwab <schwab@suse.de> wrote=
+:
+
+> On Jun 26 2024, Warner Losh wrote:
+>
+> > On Wed, Jun 26, 2024 at 9:48=E2=80=AFAM Richard Henderson <
+> > richard.henderson@linaro.org> wrote:
+> >
+> >> On 6/26/24 01:23, Andreas Schwab wrote:
+> >> > On Jun 25 2024, Richard Henderson wrote:
+> >> >
+> >> >> can always force the use of a non-zero base with -B or -R.
+> >> >
+> >> > $ qemu-riscv64 -d page -B 0x3ee000 hello.riscv64
+> >> > host mmap_min_addr=3D0x1000 (fallback)
+> >> > qemu-riscv64: /daten/src/test/hello.riscv64: requires virtual addres=
+s
+> >> space that is in use (omit the -B option or choose a different value)
+> >> >
+> >>
+> >> Well, sure, but that obviously is where qemu-riscv64 itself is located=
+.
+> >> Still not a valid test case.
+> >>
+> >
+> > Yea, what happens if you say -B 0x3ee000000 or something else that won'=
+t
+> > conflict?
+>
+> I didn't chose that number, qemu did.  If it doesn't work then qemu must
+> be fixed.
+>
+
+And when you are diagnosing the root cause of the bug, the submitter of the
+bug sometimes needs to do diagnostic tests when requested, not attack the
+volunteers who are trying to help. If that's all you do, there will be no
+fix. You can't talk to me like that and expect any reaction but "I have
+better things to do with my time than deal with this jerk" regardless of
+the merits of the original complaint.
+
+Warner
+
+--=20
+> Andreas Schwab, SUSE Labs, schwab@suse.de
+> GPG Key fingerprint =3D 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D=
+7
+> "And now for something completely different."
+>
+
+--0000000000007f54e1061bdfc13f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Thu, Jun 27, 2024, 1:54=E2=80=AFAM Andreas Schwab &=
+lt;<a href=3D"mailto:schwab@suse.de">schwab@suse.de</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1=
+px #ccc solid;padding-left:1ex">On Jun 26 2024, Warner Losh wrote:<br>
+<br>
+&gt; On Wed, Jun 26, 2024 at 9:48=E2=80=AFAM Richard Henderson &lt;<br>
+&gt; <a href=3D"mailto:richard.henderson@linaro.org" target=3D"_blank" rel=
+=3D"noreferrer">richard.henderson@linaro.org</a>&gt; wrote:<br>
+&gt;<br>
+&gt;&gt; On 6/26/24 01:23, Andreas Schwab wrote:<br>
+&gt;&gt; &gt; On Jun 25 2024, Richard Henderson wrote:<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;&gt; can always force the use of a non-zero base with -B or -R=
+.<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt; $ qemu-riscv64 -d page -B 0x3ee000 hello.riscv64<br>
+&gt;&gt; &gt; host mmap_min_addr=3D0x1000 (fallback)<br>
+&gt;&gt; &gt; qemu-riscv64: /daten/src/test/hello.riscv64: requires virtual=
+ address<br>
+&gt;&gt; space that is in use (omit the -B option or choose a different val=
+ue)<br>
+&gt;&gt; &gt;<br>
+&gt;&gt;<br>
+&gt;&gt; Well, sure, but that obviously is where qemu-riscv64 itself is loc=
+ated.<br>
+&gt;&gt; Still not a valid test case.<br>
+&gt;&gt;<br>
+&gt;<br>
+&gt; Yea, what happens if you say -B 0x3ee000000 or something else that won=
+&#39;t<br>
+&gt; conflict?<br>
+<br>
+I didn&#39;t chose that number, qemu did.=C2=A0 If it doesn&#39;t work then=
+ qemu must<br>
+be fixed.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">And when you are diagnosing the root cause of the bug, the submit=
+ter of the bug sometimes needs to do diagnostic tests when requested, not a=
+ttack the volunteers who are trying to help. If that&#39;s all you do, ther=
+e will be no fix. You can&#39;t talk to me like that and expect any reactio=
+n but &quot;I have better things to do with my time than deal with this jer=
+k&quot; regardless of the merits of the original complaint.</div><div dir=
+=3D"auto"><br></div><div dir=3D"auto">Warner</div><div dir=3D"auto"><br></d=
+iv><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_=
+quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1=
+ex">
+-- <br>
+Andreas Schwab, SUSE Labs, <a href=3D"mailto:schwab@suse.de" target=3D"_bla=
+nk" rel=3D"noreferrer">schwab@suse.de</a><br>
+GPG Key fingerprint =3D 0196 BAD8 1CE9 1970 F4BE=C2=A0 1748 E4D4 88E3 0EEA =
+B9D7<br>
+&quot;And now for something completely different.&quot;<br>
+</blockquote></div></div></div>
+
+--0000000000007f54e1061bdfc13f--
 
