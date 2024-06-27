@@ -4,82 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 467F7C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 14:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278BAC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 14:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMplw-0001z6-7u; Thu, 27 Jun 2024 10:06:48 -0400
+	id 1sMplq-0001xz-EY; Thu, 27 Jun 2024 10:06:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sMplt-0001yU-2E
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:06:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sMplm-0001xo-HM
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:06:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sMplp-0003gM-OZ
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:06:44 -0400
+ id 1sMpll-0003fv-0c
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 10:06:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719497200;
+ s=mimecast20190719; t=1719497195;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=omeEP+EChxLrWKFVAw/fyi3wTf+uHg0OC6QMr9MwfXE=;
- b=Rnl78sHExA3x095E2zjAiq7+fmHQ6wy8JwGce2zI/67e2YIOGwA35BPa2AJ6HgPRzOmRqQ
- aB0eNr9Er5JLGQnWqI8AFEf6hiFOArAcADBURazqMZ77DPeZWhY2pIzWJkfTzKpQhYQKmj
- PQcOe2GhS3pWSQLYHtAlBYfTKXsoUTk=
+ content-transfer-encoding:content-transfer-encoding;
+ bh=RN13PerZa5guBC8xzoBDY7B4coHs5esmjYRJAP9x94M=;
+ b=WMB4082bI4LgmEfXiPROAIrTbUmaBKbGFUwQa6v3IvPRcSoCMVAtq8arH01O93uDtHH7eC
+ mwHT+OjNzezNDrH61y7GBZfXS3ulzd5xYqDyFxKXxXylckA/WRQ/MQIeTS0JHCEwN3uHME
+ ORbEUIaG2ryRNVLZBKUhJGK4rlZfYV8=
 Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
  [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-241-po5dssx8P_iw_M6lOTZb0w-1; Thu, 27 Jun 2024 10:06:39 -0400
-X-MC-Unique: po5dssx8P_iw_M6lOTZb0w-1
+ us-mta-548-8PyKEjpuPzytAxaS1ZYL8Q-1; Thu, 27 Jun 2024 10:06:34 -0400
+X-MC-Unique: 8PyKEjpuPzytAxaS1ZYL8Q-1
 Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a7194d0fd53so339423466b.0
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:06:39 -0700 (PDT)
+ a640c23a62f3a-a727d1e7e9aso184676166b.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 07:06:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719497197; x=1720101997;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=omeEP+EChxLrWKFVAw/fyi3wTf+uHg0OC6QMr9MwfXE=;
- b=s+rpn+Ek8cACVEIcl3pHnk/g8t0YmsrvN3fS0mpA6Ijl022xMt2azaZrq27+eyEnbH
- pmg4E4eMYvDW+9MyYDtj1d4eV2CecfYP9ux3D8mNSNxAVOJ6Uqzunlyy2BJfmxPoeAKt
- GWC5OoN/EbvW6vSy9Ks57uF9AxmOguWjsVcppSMuh/xY0ly1YcZCW4T19czMXe+AQHMg
- buyXB5PuOJOpt9vzdnNckCMkc+Cn6F5ygpg4oWJgpbYfnKH9Hpm8Ef2FH5cd0fuHUKvO
- ec3pzYWWT9NAlCga0RRcmQyw3Lipt0rPGZoAtPCouY2/JvuYlVKjsSEDjzegOq3IN/mu
- /BmA==
-X-Gm-Message-State: AOJu0YzSiQFJUnyvzigU8nkK/2TUJcKptQ+D4uDfyZpAFR741H3vyqO7
- 0UBs9ZSbN84n9s+9v4bCKKSZHYadohZt8TUSSnkMHQTKWH1O2BILvTyLgawTjU2yOdaHYArvybt
- zGWr7y2yNhZCHf9e/qI3AsH7XNc//oBGfZVcgyinj/CAhtJNPWUp2LRSSEFV08rtXEO3+l1ZQRs
- tf/ixViRyUISa8NRZnDZOJqztjxTpiYOXvJzl4
-X-Received: by 2002:a17:907:a80e:b0:a72:7e1e:62e6 with SMTP id
- a640c23a62f3a-a727e1e65cemr588647166b.63.1719497197496; 
- Thu, 27 Jun 2024 07:06:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFXINIDstjLifrWxu81EqWugJsfQepKF8HP2z4IC1V66fe5A8OwrMmsGOzzEXfxqy8bG82MrA==
-X-Received: by 2002:a17:907:a80e:b0:a72:7e1e:62e6 with SMTP id
- a640c23a62f3a-a727e1e65cemr588643866b.63.1719497196893; 
- Thu, 27 Jun 2024 07:06:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719497191; x=1720101991;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RN13PerZa5guBC8xzoBDY7B4coHs5esmjYRJAP9x94M=;
+ b=owzbaW4bujDtVr0gkCGbGijYkp2e0dZwoJiRGqdpDe9LuoSz5D03FJTdGmNpCEwwhJ
+ ZSjQEIShwPN+zQYtj3f7OQz3SNQwbFl802afMfA6AQVhGTWec015lCwJO5YEPU1PjJs2
+ GAC3VEsPqZeWMaa+tbnJjXx9TTlQlF0AzF5ju4l6uRCey0uYi8ja4U3iN9qKnbKa8lJP
+ BymIN+qki3DWqH7KZ5BgVPbewOnoqzD8wSPER8bzVL9+fWjpYvspJNuNYy1hrF7f/FLg
+ nCpJ68HD24zodZ8Z6r1oTJOeUEAR3pVEodMUY1weUICtKeTAK3jc6iBhdkDt7764h/Yi
+ 7sGg==
+X-Gm-Message-State: AOJu0Yw8tYTTCZokdHCe3jTgiOHVK5WNZx8mTR7D69jRWPNk9bqzKgXb
+ wJvgHybDGXASIqpiIPj53oFRWw8VZnZrlZfnKAYRewU1v1JUczJDuu+WUGeGr9ctsmZeBYzy8Sg
+ QO3vSuGo4t968o6lK0J7wgXUvrorddhri/C0jcBcpidTNVmQjP/615E5MqiNgUCXPyDDd7t/UKu
+ G+9ImgUOwfwPJZF1AURZuZKGmMvASWGNB/xVA/
+X-Received: by 2002:a17:907:c306:b0:a72:6055:7886 with SMTP id
+ a640c23a62f3a-a7260557953mr931639866b.24.1719497191518; 
+ Thu, 27 Jun 2024 07:06:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHi+lK2VdJAZfAn23TwjoLEbsjYVdd/XjEblNr0E7WD8Z8OwDGMtyOASOi9Pa4mLM5jTadbeg==
+X-Received: by 2002:a17:907:c306:b0:a72:6055:7886 with SMTP id
+ a640c23a62f3a-a7260557953mr931629266b.24.1719497190051; 
+ Thu, 27 Jun 2024 07:06:30 -0700 (PDT)
 Received: from avogadro.local ([151.48.235.205])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72a66fc8d2sm2224866b.53.2024.06.27.07.06.35
+ a640c23a62f3a-a729d71f6f9sm63082466b.74.2024.06.27.07.06.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 07:06:35 -0700 (PDT)
+ Thu, 27 Jun 2024 07:06:29 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
 	John Allen <john.allen@amd.com>
-Subject: [PATCH 2/2] target/i386: drop AMD machine check bits from Intel CPUID
-Date: Thu, 27 Jun 2024 16:06:28 +0200
-Message-ID: <20240627140628.1025317-3-pbonzini@redhat.com>
+Subject: [PATCH 0/2] target/i386: drop AMD machine check bits from Intel CPUID
+Date: Thu, 27 Jun 2024 16:06:26 +0200
+Message-ID: <20240627140628.1025317-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240627140628.1025317-1-pbonzini@redhat.com>
-References: <20240627140628.1025317-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -109,52 +106,20 @@ processors.
 
 While this should in principle be harmless, it's not tidy and we don't
 even know for sure that it doesn't cause any guest OS to take unexpected
-paths.  Since x86_cpu_get_supported_feature_word() can return different
-different values depending on the guest, adjust it to hide the SUCCOR
-bit if the guest has non-AMD vendor.
+paths.  So plumb in a mechanism for x86_cpu_get_supported_feature_word()
+to return different values depending on the *guest* CPU vendor (which,
+for KVM, is by default the same as the host vendor); and then use it
+to hide the SUCCOR bit if the guest has non-AMD vendor.
 
-Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: John Allen <john.allen@amd.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/cpu.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+Paolo Bonzini (2):
+  target/i386: pass X86CPU to x86_cpu_get_supported_feature_word
+  target/i386: drop AMD machine check bits from Intel CPUID
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index deb58670651..f3e9b543682 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6064,8 +6064,10 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
-     } else {
-         return ~0;
-     }
-+
-+    switch (w) {
- #ifndef TARGET_X86_64
--    if (w == FEAT_8000_0001_EDX) {
-+    case FEAT_8000_0001_EDX:
-         /*
-          * 32-bit TCG can emulate 64-bit compatibility mode.  If there is no
-          * way for userspace to get out of its 32-bit jail, we can leave
-@@ -6077,6 +6079,18 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
-         r &= ~unavail;
-         break;
- #endif
-+
-+    case FEAT_8000_0007_EBX:
-+        if (cpu && !IS_AMD_CPU(&cpu->env)) {
-+            /* Disable AMD machine check architecture for Intel CPU.  */
-+            r = 0;
-+        }
-+        break;
-+
-+    default:
-+        break;
-+    }
-+
-     if (cpu && cpu->migratable) {
-         r &= x86_cpu_get_migratable_flags(w);
-     }
+ target/i386/cpu.h         |  3 +--
+ target/i386/cpu.c         | 29 +++++++++++++++++++++--------
+ target/i386/kvm/kvm-cpu.c |  2 +-
+ 3 files changed, 23 insertions(+), 11 deletions(-)
+
 -- 
 2.45.2
 
