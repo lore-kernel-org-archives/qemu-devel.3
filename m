@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D17DC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 22:36:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94543C2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 23:49:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMxhh-0004Me-17; Thu, 27 Jun 2024 18:34:57 -0400
+	id 1sMyqY-0001PD-IK; Thu, 27 Jun 2024 19:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1sMxhe-0004MD-Kw
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 18:34:54 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sMyqU-0001Om-Jl
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 19:48:06 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1sMxhc-0001hX-4g
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 18:34:54 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-710437d0affso6331380a12.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 15:34:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sMyqR-000561-RZ
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 19:48:05 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1faad409ca7so8071275ad.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 16:48:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1719527688; x=1720132488; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=p1T+JVQndCN5dKb6323wg5da+4Fct5AN2FP4EzSrPrQ=;
- b=ikd+J9Hwi9xN+gssWipvq7IHsgxefDtqFdAeetcMn4E4tlfQq0a0/IQGBHGtanG9hC
- MQPHE8/JTjQsrZe5VLugYGHqzAsKrqdhUQXnWmDZt/l3AGhg8GpTpv2VmLF4Y18LnSvI
- loLyoQeBrGb7oN3YIPceenql7ldFsgHYggNxnoFXEqx37hKCpRPLy5qaaPotxhHeFD10
- pW4CN8+S0MI/RFXu5G74+byV537Qq+tnzQw6nmzQYPk2QVFMkKKV81ynIVJdXX4LDa5Z
- 1mTrBP9DnIFSyUyYPEcPuQn7Em6QUPEfRMHi0fBStvCS1+kabOrU0QQ0ckaGWFysYPO4
- 8yfQ==
+ d=linaro.org; s=google; t=1719532082; x=1720136882; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wspjGS4vNcVE5+Oa4YDof+PVrkfk49Stlxbws3ah7ss=;
+ b=Mvkq5tb1bzTK8ksW9nj3n4WmaXzrdWB8bnXcssHQcdPrRG6G9/rqOgcUN2Q+t48Q9l
+ rQ53cm8vbT51lLgc8TFHRWaNpjfNt1xF+qjASQ0HeEJ11P1AYJSw+jr9PPHzjHmjea13
+ M5i6VUTLoy+JohJ9Qx6pynYvnbSYCZgwfkHgfj2pTfSC2VXeZ2Y5hrLs0M6WJDChk34I
+ g73KpD436FqDpDZJUmNfsZIE2pqj7gmrf5h5BdNIxdZiwWU3tXN5jBasylM8+pV6DWik
+ aBtg7tpEU4W5cXcW6OnLo978khqBq9EcAG2v+r4mR+hMrkPcnE1IrTAZX3svu0H5mirL
+ t5+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719527688; x=1720132488;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=p1T+JVQndCN5dKb6323wg5da+4Fct5AN2FP4EzSrPrQ=;
- b=DXGwjmLtWyP6VyriuevM1Q1OpBPaQ5SnS08U7lkWF/UJMYr6+ilcSBjjj6qJxsyycv
- v5TG+rD8edvjuIexGxsdmTo4nU8fwV6LzoYvN/VsYOzZ/+n6w0iFSLVLVoLFs5ruXPxO
- KbVbNnjIzd2M/csI2X3hpvetaTM2ZhkCPXQCw77W0UCtM5Uw3SgY1BDUxX3T1Qx0/zhB
- K4LJ0GtLiv/ZV/V/wBCCGJ++Mr2fNe2i2BX/i7YO93cXFeh7kqt+FDUMAx1zigVilWyx
- glzAiXTwMHCMnLFLIntimT+Rbz5kjJ5Yw2TL7wn3aCTz6gXQ+5IGUlgYTH9TWG2W5sYg
- Av7w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlDmKWPQmwiLC8VENTZKW659ZKoqHMgTtdOe8sddPWYHj1OUtW1gIbbVsa7bnlOxbnZHPRmuYoffaa1QGSn4aysRyrBBU=
-X-Gm-Message-State: AOJu0YzQXxlF8vkAZ+J6YCeeaL0PONzkJO7TcOriqnspscmeDZXF9x76
- Wb22Wv2TLeXkw1tI3baHsGoZfzUg+CfJtQHWOCKZNWY+R/QbDhbiQMWe0+QV6S0=
-X-Google-Smtp-Source: AGHT+IGYS23n4tpK0VC7aVx2O47fEZv7Bl1Vj/Z2VfbMB8Kln8ksHak+9IqW+8V2dRsalnWf75o/aw==
-X-Received: by 2002:a05:6a20:3caa:b0:1bd:248d:990d with SMTP id
- adf61e73a8af0-1bd248d99cfmr9787230637.25.1719527687909; 
- Thu, 27 Jun 2024 15:34:47 -0700 (PDT)
-Received: from DY4X0N7X05.bytedance.net ([72.29.204.230])
+ d=1e100.net; s=20230601; t=1719532082; x=1720136882;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wspjGS4vNcVE5+Oa4YDof+PVrkfk49Stlxbws3ah7ss=;
+ b=iYdrV1VhF4V2KXT5KUK6c4fS8RFTpWv3NbbZ1GNQMUOqUg1AfDvFhKgVgCxtVjq13Z
+ g9FL8vW2za5wtQbCE3/uauem5S4NsDbasiX0ICSRhQRvf/fQsbSz1uellJkgqhoY54sE
+ YYMsVppKV0kqIgqy0lWInmqrP2LUF8deL3y7tHDRKJcz+f5eqtBiY0L1HjG4vrDDBiFq
+ 0+TbOhNDBD+rcQrQovB+EgaTp3x35HUPOaqCFZQG2RdTyPzb74j8mCb9LPGk9loftvX3
+ Ymsbx85NN0yvJasxAl2kdbTDgk36Jfa8QokX3rFi0e5d1M0SGw4PTdgMDY92gL3V3xY1
+ L0ng==
+X-Gm-Message-State: AOJu0YzBU0Dlb3f2qAscv2dfhgeQ2CrCt9QKTn2iR+vKQtndQDFnVnZp
+ cRfouv+hA02RB8JBRUw/WMk9WxGI84ZmpY8AipLCgat1dKHPNDpn6FO6k+macmo=
+X-Google-Smtp-Source: AGHT+IH/BzxqpxeLfJuqg/ujUUoeWp7H9qh2X0ruaVvYrciihdHOerQOjoNC0hdRd+sTsbRM5+q9fw==
+X-Received: by 2002:a17:902:d509:b0:1fa:918e:ec5 with SMTP id
+ d9443c01a7336-1fa918e1080mr68955315ad.60.1719532081699; 
+ Thu, 27 Jun 2024 16:48:01 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7080498a02csm226900b3a.199.2024.06.27.15.34.46
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 27 Jun 2024 15:34:47 -0700 (PDT)
-From: Yichen Wang <yichen.wang@bytedance.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org
-Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- "Zou, Nanhai" <nanhai.zou@intel.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- Yichen Wang <yichen.wang@bytedance.com>
-Subject: [PATCH v3 0/4] Implement using Intel QAT to offload ZLIB
-Date: Thu, 27 Jun 2024 15:34:41 -0700
-Message-Id: <20240627223445.95096-1-yichen.wang@bytedance.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+ d9443c01a7336-1fac1535cfbsm3262335ad.173.2024.06.27.16.48.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Jun 2024 16:48:01 -0700 (PDT)
+Message-ID: <27f52dce-b659-446d-8358-50b6001f7307@linaro.org>
+Date: Thu, 27 Jun 2024 16:47:59 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=yichen.wang@bytedance.com; helo=mail-pg1-x52a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 2/5] rust: add bindgen step as a meson dependency
+Content-Language: en-US
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr_=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
+ <6bf311a35e6d3bfa8b3bfd10d8f896a9e655fa30.1718827153.git.manos.pitsidianakis@linaro.org>
+ <ZnlGlOGORQkOsoO5@intel.com> <fl60u.ry7sk6d8fv39@linaro.org>
+ <ZnrpgW+CopiJAGZF@intel.com> <fnew7.3urdmuxnhe3l@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <fnew7.3urdmuxnhe3l@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,139 +109,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v3:
-- Rebase changes on top of master
-- Merge two patches per Fabiano Rosas's comment
-- Add versions into comments and documentations
+On 6/25/24 11:08, Manos Pitsidianakis wrote:
+> On Tue, 25 Jun 2024 19:00, Zhao Liu <zhao1.liu@intel.com> wrote:
+>> [snip]
+>>> This is for future-proofing the Rust integration in general. I
+>>> haven't been
+>>> able to compile under macos yet because bindgen cannot find the system clang
+>>> header. I also don't have a windows pc to test it on. But it should work
+>>> theoretically under all three.
+>>
+>> Yes, they should work. EMM, but there is no particular need for them at
+>> the moment, so just to be safe, we can put these two platforms on hold
+>> for now, and they can be easily added when the tests are covered.
+>>
+>> A TODO can remind support for them.
+> 
+> I'm still trying to figure out why bindgen doesn't find the /Library/***
+> include paths.. it's frustrating! I will remove them if I don't succeed
+> and also no one volunteers to attempt a windows build. :)
+> 
 
-v2:
-- Rebase changes on top of recent multifd code changes.
-- Use QATzip API 'qzMalloc' and 'qzFree' to allocate QAT buffers.
-- Remove parameter tuning and use QATzip's defaults for better
-  performance.
-- Add parameter to enable QAT software fallback.
+I'm currently doing it, and managed to run until bindgen step. Same 
+problem that you found on MacOS, it can't locate some headers 
+(strings.h, included from osdep.h). I'll try to dig into this, but if 
+you found a solution already, you're welcome to share it.
 
-v1:
-https://lists.nongnu.org/archive/html/qemu-devel/2023-12/msg03761.html
+'gcc | grep' command you used should work, but should be adapted because 
+windows paths start with C:/ instead of /.
 
-* Performance
-
-We present updated performance results. For circumstantial reasons, v1
-presented performance on a low-bandwidth (1Gbps) network.
-
-Here, we present updated results with a similar setup as before but with
-two main differences:
-
-1. Our machines have a ~50Gbps connection, tested using 'iperf3'.
-2. We had a bug in our memory allocation causing us to only use ~1/2 of
-the VM's RAM. Now we properly allocate and fill nearly all of the VM's
-RAM.
-
-Thus, the test setup is as follows:
-
-We perform multifd live migration over TCP using a VM with 64GB memory.
-We prepare the machine's memory by powering it on, allocating a large
-amount of memory (60GB) as a single buffer, and filling the buffer with
-the repeated contents of the Silesia corpus[0]. This is in lieu of a more
-realistic memory snapshot, which proved troublesome to acquire.
-
-We analyze CPU usage by averaging the output of 'top' every second
-during migration. This is admittedly imprecise, but we feel that it
-accurately portrays the different degrees of CPU usage of varying
-compression methods.
-
-We present the latency, throughput, and CPU usage results for all of the
-compression methods, with varying numbers of multifd threads (4, 8, and
-16).
-
-[0] The Silesia corpus can be accessed here:
-https://sun.aei.polsl.pl//~sdeor/index.php?page=silesia
-
-** Results
-
-4 multifd threads:
-
-    |---------------|---------------|----------------|---------|---------|
-    |method         |time(sec)      |throughput(mbps)|send cpu%|recv cpu%|
-    |---------------|---------------|----------------|---------|---------|
-    |qatzip         | 23.13         | 8749.94        |117.50   |186.49   |
-    |---------------|---------------|----------------|---------|---------|
-    |zlib           |254.35         |  771.87        |388.20   |144.40   |
-    |---------------|---------------|----------------|---------|---------|
-    |zstd           | 54.52         | 3442.59        |414.59   |149.77   |
-    |---------------|---------------|----------------|---------|---------|
-    |none           | 12.45         |43739.60        |159.71   |204.96   |
-    |---------------|---------------|----------------|---------|---------|
-
-8 multifd threads:
-
-    |---------------|---------------|----------------|---------|---------|
-    |method         |time(sec)      |throughput(mbps)|send cpu%|recv cpu%|
-    |---------------|---------------|----------------|---------|---------|
-    |qatzip         | 16.91         |12306.52        |186.37   |391.84   |
-    |---------------|---------------|----------------|---------|---------|
-    |zlib           |130.11         | 1508.89        |753.86   |289.35   |
-    |---------------|---------------|----------------|---------|---------|
-    |zstd           | 27.57         | 6823.23        |786.83   |303.80   |
-    |---------------|---------------|----------------|---------|---------|
-    |none           | 11.82         |46072.63        |163.74   |238.56   |
-    |---------------|---------------|----------------|---------|---------|
-
-16 multifd threads:
-
-    |---------------|---------------|----------------|---------|---------|
-    |method         |time(sec)      |throughput(mbps)|send cpu%|recv cpu%|
-    |---------------|---------------|----------------|---------|---------|
-    |qatzip         |18.64          |11044.52        | 573.61  |437.65   |
-    |---------------|---------------|----------------|---------|---------|
-    |zlib           |66.43          | 2955.79        |1469.68  |567.47   |
-    |---------------|---------------|----------------|---------|---------|
-    |zstd           |14.17          |13290.66        |1504.08  |615.33   |
-    |---------------|---------------|----------------|---------|---------|
-    |none           |16.82          |32363.26        | 180.74  |217.17   |
-    |---------------|---------------|----------------|---------|---------|
-
-** Observations
-
-- In general, not using compression outperforms using compression in a
-  non-network-bound environment.
-- 'qatzip' outperforms other compression workers with 4 and 8 workers,
-  achieving a ~91% latency reduction over 'zlib' with 4 workers, and a
-~58% latency reduction over 'zstd' with 4 workers.
-- 'qatzip' maintains comparable performance with 'zstd' at 16 workers,
-  showing a ~32% increase in latency. This performance difference
-becomes more noticeable with more workers, as CPU compression is highly
-parallelizable.
-- 'qatzip' compression uses considerably less CPU than other compression
-  methods. At 8 workers, 'qatzip' demonstrates a ~75% reduction in
-compression CPU usage compared to 'zstd' and 'zlib'.
-- 'qatzip' decompression CPU usage is less impressive, and is even
-  slightly worse than 'zstd' and 'zlib' CPU usage at 4 and 16 workers.
-
-
-Bryan Zhang (4):
-  meson: Introduce 'qatzip' feature to the build system
-  migration: Add migration parameters for QATzip
-  migration: Introduce 'qatzip' compression method
-  tests/migration: Add integration test for 'qatzip' compression method
-
- hw/core/qdev-properties-system.c |   6 +-
- meson.build                      |  10 +
- meson_options.txt                |   2 +
- migration/meson.build            |   1 +
- migration/migration-hmp-cmds.c   |   8 +
- migration/multifd-qatzip.c       | 382 +++++++++++++++++++++++++++++++
- migration/multifd.h              |   1 +
- migration/options.c              |  57 +++++
- migration/options.h              |   2 +
- qapi/migration.json              |  38 +++
- scripts/meson-buildoptions.sh    |   6 +
- tests/qtest/meson.build          |   4 +
- tests/qtest/migration-test.c     |  35 +++
- 13 files changed, 551 insertions(+), 1 deletion(-)
- create mode 100644 migration/multifd-qatzip.c
-
--- 
-Yichen Wang
-
+>> [snip]
+>>>>
+>>>> Could we decouple 'optimization' with cargo's opt-level (maybe in the future)?
+>>>>
+>>>> Or we could add new option to specify custom rust opt-level, which will
+>>>> set the environment varialbe CARGO_PROFILE_<profile_name>_OPT_LEVEL and
+>>>> override the default opt-level in Cargo.toml.
+>>>
+>>> optimization here refers to LLVM's opt flags directly, so I think it makes
+>>> sense to follow the project-wide compiler settings?
+>>
+>> Oh, yes. But I think the choice of debug or release is best based on the
+>> debug info. What about this?
+>>
+>> if get_option('debug')
+>>     rs_build_type = 'debug'
+>> else
+>>     rs_build_type = 'release'
+>> endif
+>>
+>> get_option('debug') would apply -g flag, and that flag is mapped to debuginfo=2,
+>> which is the default debuginfo level for debug version.
+> 
+> But wait, I just noticed rs_build_type should be 'dev' not 'debug'. You
+> can build with optimizations and keep debuginfo if you override the
+> 'release' profile or use a different profile altogether.
+> 
+> I will correct the optimization and debuginfo mappings in the next
+> version.
+> 
+>> It's a totally new file, and it is used to derive other files. These
+>> are
+>> all significant changes. At least for 2024, I think you can declare
+>> copyright here. :-)
+> 
+> Heh yes :)
+> 
+>>
+>> Thanks,
+>> Zhao
+>>
 
