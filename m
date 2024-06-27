@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE334C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 17:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427CBC3064D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 17:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMtCN-0005GE-Ul; Thu, 27 Jun 2024 13:46:19 -0400
+	id 1sMtJr-0006sx-MB; Thu, 27 Jun 2024 13:54:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMtCM-0005F4-Ix
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:46:18 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sMtJq-0006si-LO
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:54:02 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sMtCK-0004p8-Rw
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:46:18 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-725a7b0fc55so1365813a12.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 10:46:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sMtJp-0006QZ-1Z
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 13:54:02 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1fa4b332645so10865ad.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 10:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719510375; x=1720115175; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zy9+2Y5z+E/jcgEQDJIKFs1CFOQ7j8fTTrfraUdvMS8=;
- b=UEC4O693l046M5JzlrFDec+fbjz4NTtWMf5n6Ae2hOx5/VX68q+GfGEUAgrcGCRjhR
- Afcjl5Gpel9wtKid5gCqhwE5giRN1JYn7zqA/3FrFIXNC5OQdN0KDZDwcQKtyIUn7oFC
- w3VamPivWzRPWj6TvdnE0m9/fl4TpIBBvzfYy9yNssMu1S5vTIfBGzs4nMw4IQNCfkY9
- Bs0BvtFLg2rcyNa+st+EjTYqghgqziKMkvcajCu07lIYVN8YPqqHd5F2a40eMzhpljiO
- 0w7jrQqisMsjqEYsSbtQOEDRi5UIxyOF8Fa0wWfSEkI7ZuN2ZqtNxdl/E4W1pJEYYwv8
- BRcQ==
+ d=google.com; s=20230601; t=1719510839; x=1720115639; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hMmGk62sx2SvVBa9SQ9ZhkKPy2q0qJnYom/nToZiU9s=;
+ b=n3SFr6+7XfW/bSa7R9le+mCNLBq2HTlP33bnXRUKpWhpgx/8PWKNl6/ZUNX5+TJIkI
+ n71hgaVEyYxiXhht7ygraAyrkgOXfKO01KkgIC0kHy6D6P28lOkoop9NT/jOdxR24TMP
+ uvQT5U85qO5tKicJnxGx6y9mrJJH1jH1sgeZXEGEO+yE51JHjaSFKQqPsAbRXqP4SgQv
+ oHL344GM9vixeShshQd0Jmg1gsbGHu8XZmGAS14a9QE4w5vdnW6YS17N/FVVJmWzEyI/
+ cyYsfH+X87IGptGTpG2eJCsPxlhnlG1n8DHZJWmdFy5oZO5RcmGCEgjtrixMmBNSdOhD
+ +4Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719510375; x=1720115175;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zy9+2Y5z+E/jcgEQDJIKFs1CFOQ7j8fTTrfraUdvMS8=;
- b=GqPpP8vFVYGJsN3rCgRXbPnSc/lerFf3QpnSoMXyMaPcKCN4MfexvoQ8yZOtleMKyC
- hDmQnchLSfnf/p+Bru+WktobZ+BuHcE6OFJqwDUvertuvPJowTBmFUaQq35yMq55wFP6
- 39W9OwQz0gvO2xrIoDXECBhlmLM1XgPDSMEvXTowZD2sXgqPIG4kdg1Kl63Nt2yz5uzk
- R5eKudR2dLBMcOtzN9+NjspL2fxFWWU0WdrrYAK0GjKyCHNSDgH8bGj6uCAlp3HB2LQq
- 3EmrnLn0zTLsP9e7z8XeFzgdJw+nF2K5PRyf//GsNr3zSP5By+BeWKspi7O92NaZWAy/
- pivA==
+ d=1e100.net; s=20230601; t=1719510839; x=1720115639;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=hMmGk62sx2SvVBa9SQ9ZhkKPy2q0qJnYom/nToZiU9s=;
+ b=F7rukgDck8GHzgqnZUvhyO/dKGHaVP11Sksm6bgTUAO6Q32PEUOfbDIALdJq8f2J2B
+ f/ceHjRQVM+RWcC2WQInDow30qa46zRtYHrkUiwlqII60U+Tyd2atU8lLRoTjOUQAX6a
+ MBLgKKIYZae+McMrrZ5GqEcDw7n5dCwafx+/oLoEgQdnd8TuAF+vaNFNAPgHD2wJjtyx
+ v978bsCGIWjQPuWSe7BuMfhfKrJhFxIrTXJ9iONxjnBYR8D8FohY20UunOr41lcHUWO6
+ DB/HmSuzn49LFBydOE+DMBVVBU96AxPtX+DS8kiyRA1D8fjzIvBCxGv4dGEf94Kag95Y
+ JR+g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXPaLEQxURcuCIffVETfNk7Eo8oYHZa2ZLrZ1BSBL7A3SqQ8n1cyxS+oeS0W4C4fSKu576WxJ1S6YLSap10b8q46aHb/0=
-X-Gm-Message-State: AOJu0Yw5QhqCTP/fT2AoOS8Bq8n60D4V4R25rxHv+P6DQYVg4ggm5DI0
- dwnzqt4vniMw7tbxOmL2FZtWWxbklTMQlRKIQxsYqdIYb2NPXsEpm/90oBoedpc=
-X-Google-Smtp-Source: AGHT+IFP87fC/BK50bK/ixIusZOpeuMd5DyLFCSAZ6H/Supki/SbGVeedgEwNtYeoZGrq1SJXrFDWg==
-X-Received: by 2002:a05:6a20:4a11:b0:1bd:28bc:b047 with SMTP id
- adf61e73a8af0-1bd28bcb828mr6514710637.0.1719510375017; 
- Thu, 27 Jun 2024 10:46:15 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac11d88e6sm275645ad.95.2024.06.27.10.46.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 10:46:14 -0700 (PDT)
-Message-ID: <a9f9fb1d-81e1-471e-bc41-fddb98561d03@linaro.org>
-Date: Thu, 27 Jun 2024 10:46:13 -0700
+ AJvYcCULakAJK2OyUC5zFiiN4yxQc6IPbuB+zr/sKhPyan5Zw71zBSQF6F4/7Mc1rlIFe84Xg6LY5FiYZWZFbzqiZTc3OWC9WVU=
+X-Gm-Message-State: AOJu0YwXhDDO+1gLpmsILvLpQ8RFDKtAlpbP3ZK9yPRT9XCxewgFqrJh
+ fNGbOXPbIRCGj3AuEi+fxRv8rqTVu4NmcyuasrWIrkKGDLszlXrC+dOzKq7n4KG/JLB4jdpbURo
+ b7aL2tKhbv1st/qHopvlpPA+TVq+QdT9NaA4CezMeCMUUt1e8eiMw
+X-Google-Smtp-Source: AGHT+IGkLLMvXNYB41tu79vl95vkF6GwgT6QdfIPAhDOXvNCKgS+CrDLs/4VOeqJAccBvCo9n1Ny8CxJKKdG7FWPaag=
+X-Received: by 2002:a17:902:768b:b0:1f9:a79b:59fd with SMTP id
+ d9443c01a7336-1fac181b803mr118925ad.22.1719510838305; Thu, 27 Jun 2024
+ 10:53:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/32] riscv-to-apply queue
-To: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>
-References: <20240627100053.150937-1-alistair.francis@wdc.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240627100053.150937-1-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <ad0740c5-9bc2-443c-9caa-a243b3a29108@redhat.com>
+ <20240627003134.3447175-1-rkir@google.com>
+ <CABgObfajkBU9-aGQcDGf6taUGwZOG=O5sewzc1HjCWTb5cVA1A@mail.gmail.com>
+ <CAOGAQepLGTY-92So1arNZWjg9m+HZ8AjZ28Gsscm2ai5sj1AMQ@mail.gmail.com>
+ <CABgObfaBjneGy__o_aABdm+60wsg=rxLmgZLthwCoezwnH34ZQ@mail.gmail.com>
+In-Reply-To: <CABgObfaBjneGy__o_aABdm+60wsg=rxLmgZLthwCoezwnH34ZQ@mail.gmail.com>
+From: Roman Kiryanov <rkir@google.com>
+Date: Thu, 27 Jun 2024 10:53:47 -0700
+Message-ID: <CAOGAQeo+DZpE=6xEeUWUEkqSwYgturQ9QzXyzNNt7QfrFqea-Q@mail.gmail.com>
+Subject: Re: [PATCH v3] timer: Fix a race condition between timer's callback
+ and destroying code
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: jansene@google.com, jpcottin@google.com, mett@google.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=rkir@google.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -180
+X-Spam_score: -18.1
+X-Spam_bar: ------------------
+X-Spam_report: (-18.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.454,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,41 +96,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/27/24 03:00, Alistair Francis wrote:
-> The following changes since commit 3f044554b94fc0756d5b3cdbf84501e0eea0e629:
-> 
->    Merge tag 'pull-vfio-20240624' ofhttps://github.com/legoater/qemu  into staging (2024-06-24 21:30:34 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/alistair23/qemu.git  tags/pull-riscv-to-apply-20240627-1
-> 
-> for you to fetch changes up to 2f5a2315b84a9b1f089ecfc3f31b29813609a7b7:
-> 
->    target/riscv: Apply modularized matching conditions for icount trigger (2024-06-27 13:09:16 +1000)
-> 
-> ----------------------------------------------------------------
-> RISC-V PR for 9.1
-> 
-> * Extend virtual irq csrs masks to be 64 bit wide
-> * Move Guest irqs out of the core local irqs range
-> * zvbb implies zvkb
-> * virt: add address-cells in create_fdt_one_aplic()
-> * virt: add aplic nodename helper
-> * virt: rename aplic nodename to 'interrupt-controller'
-> * virt: aplic DT: add 'qemu, aplic' to 'compatible'
-> * virt: aplic DT: rename prop to 'riscv, delegation'
-> * virt: change imsic nodename to 'interrupt-controller'
-> * virt: imsics DT: add 'qemu, imsics' to 'compatible'
-> * virt: imsics DT: add '#msi-cells'
-> * QEMU support for KVM Guest Debug on RISC-V
-> * Support RISC-V privilege 1.13 spec
-> * Add support for RISC-V ACPI tests
-> * Modularize common match conditions for trigger
+Paolo, thank you for your comments.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+On Thu, Jun 27, 2024 at 10:16=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+> I think the easiest options would be:
+>
+> 1) if possible, allocate the timer and the callbackState statically in
+> the device.
 
+I think this assumption is not good for both QEMU and us.
 
-r~
+> 2) use "aio_wait_bh_oneshot(qemu_get_aio_context(), [](void
+> *opaque){}, NULL);" after timer_del(). You can also put the timer and
+> the callbackState in a RAII wrapper, so that aio_wait_bh_oneshot() is
+> executed when the RAII wrapper is destructed
 
+My understanding is that this will work as a fence waiting for all
+timers to finish. If so, maybe there is a value to put it into QEMU
+(as times_joins() or even as timer_join(QEMUTimer *ts)) if one day
+you decide to implement it in a more efficient way?
+
+> Another thing that you could do is to use a shared_ptr<> for the
+> timer+callbackState combo, and pass a weak_ptr<> to the timer. Then:
+>
+> - at the beginning of the timer, you upgrade the weak_ptr with lock()
+> and if it fails, return
+>
+> I'm not sure how you'd pass the weak_ptr/shared_ptr to a callback
+
+I suspect this is not possible in plain C++ without modifying QEMU or
+code generating at runtime.
+
+I would go with your aio_wait_bh_oneshot suggestion. Please consider
+adding it to QEMU as I pointed above. I can send a patch.
 
