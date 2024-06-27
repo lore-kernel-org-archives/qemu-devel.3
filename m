@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A5F3C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C17C2C3064D
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 13:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMpMN-0003wd-5N; Thu, 27 Jun 2024 09:40:26 -0400
+	id 1sMpS3-0005TU-K9; Thu, 27 Jun 2024 09:46:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpLm-0002Qv-22
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:46 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sMpLj-0006cq-Tj
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:39:45 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-70673c32118so3808609b3a.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:39:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719495582; x=1720100382;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tYtFORlnbJN2+36DGKZvH4uH8NkkbHJaO5uVtPxgJZE=;
- b=rSJK99kK5W6uCphpWOC+v4YGxL8ZILNdhrJa5Va5ybMNK7R0Qnvy0bH8YL1I5VXEns
- gKF7E6jt2tjJxiKL/rJlbgeEIHtRTNsLnvAY6uFiyRygRJ0cvJ9AkP2Gk7nsGZph64JM
- cJnZolehVFqZDDoWhPWY2AJzejjJ8M9+vyUjaKJ258WmFgg6A32c9BGk0j8c/vKWSOpu
- uaPLyxQPygIwae78oEemGZGoBZR12hPXM/+GEaD/sNRBe5jgfZpN33vXmxotihhPnIUM
- DYWvBf4Y1qVQ5bwoQ9AMsuiw8ruXKJTdnpOkvUPLg17qPXMOGmK9bdrNGcLInb+shwnw
- jR2Q==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sMpRp-0005R7-LN
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:46:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sMpRk-0000HA-SS
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 09:46:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719495955;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oDoTEGLBYOeYliJMueazKuemGf4R1qHdni1KwR4A890=;
+ b=Amc5UKaerDfmYOsCQh+CqZXUY+wYB2a73bE/e7e39d8JhOzgFz1Cn1kii4MsQZfjDsQ7K7
+ HAkPd7Nmf5PhoJdzQSi37wLEaD6uLVwUh/IVuW53iDr5AdNQj+zbJuSzKxBdfhDbLUSGY2
+ pz3W0I5I0LaxOWsNHOWJk5jyYPf7ZbQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-178-l_DKuTQ4MNmX4YwsB4GjWg-1; Thu, 27 Jun 2024 09:45:51 -0400
+X-MC-Unique: l_DKuTQ4MNmX4YwsB4GjWg-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3643d0e3831so5285168f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 06:45:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719495582; x=1720100382;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1719495950; x=1720100750;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tYtFORlnbJN2+36DGKZvH4uH8NkkbHJaO5uVtPxgJZE=;
- b=M9BJwgbGu9QtLPkxMk8jCZDbNVoPLGqk3a1ThxZXNZNiTEEmZejZR/vpi3ieUgmMzv
- +QRzufSGP2tnp3ItDtkXhQU26nytxA2CbIThurlEhd1NL4ez4etuUuS5P2JwZygB54Xc
- 4XvZ+Qqd539qUfiDuHkEWLk2QaKY5B+eNlCUlJKK75kJzoa8cjc+GgcL+JXYN0P4yPny
- udzO/tt63fIhz31/KcAy0J0IAD/N1JjhMxY043VntnG5Rgsuh0QOcLwUraJn6oN0FGut
- QBERvTUylnYxMY2IhGscnRFoizxKSjxan4bB+07KUKARnaYfOmBlL2WreyBMiVJUgRGH
- m24A==
-X-Gm-Message-State: AOJu0YwBjmq5cS8pxdLnr4wEYo+OmJEMSYrz58GwhHtnJJkXzol3tm1F
- 2kOdAN3RfMV4oo2EsqQ64pY+ODme/SV2w02yTBzk2IKPAI5AeGjOdpZT3snBSTY=
-X-Google-Smtp-Source: AGHT+IFXFWZxtxNetDL0x3QR81Q4NSGV4KUcXaVakXLBlruN2EYupN0blY/9gL/zVeN/j6uHx6EZmA==
-X-Received: by 2002:a05:6a00:1d1d:b0:706:6cb2:ed17 with SMTP id
- d2e1a72fcca58-7067455be23mr14036044b3a.2.1719495582624; 
- Thu, 27 Jun 2024 06:39:42 -0700 (PDT)
-Received: from localhost ([2400:4050:a840:1e00:9ac7:6d57:2b16:6932])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-706b491008dsm1338261b3a.57.2024.06.27.06.39.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 06:39:42 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 27 Jun 2024 22:37:58 +0900
-Subject: [PATCH v2 15/15] tests/qtest: Free GThread
+ bh=oDoTEGLBYOeYliJMueazKuemGf4R1qHdni1KwR4A890=;
+ b=jOqbSCLCVddBTG216zdggi0V4gAdZiRK10h4vFrSSXvfS3CdF00UqM0U9jqOHpdUIr
+ I45JfKTWjgg8oxXPjwvwwNiaT04bpQIwgm0IoE+j3UBbijaOiCeB5uRhgXWYZBFF1g9R
+ tUJ6VRQlsQOnBOaeY+VivETtUiAkFzsY38FBgybO3XpKNZ0cg03u0df2F7Dmz6OYItFb
+ fRrlhRDWkdm5Acs2TqXaVtbZA/cN0CHYdskfPgUsffq2kPTWYAti29H3XQnsVqMIRA07
+ yCUu8PiAlVjqPNpd+5uMzQBiLq2jrpb/Yc4jrgRgRO5fCdaal1vSmvCj2caNdbhutscB
+ 7Ogw==
+X-Gm-Message-State: AOJu0Yx+4c1kLr2OAd2DhmYSqQgKAbpNuMerFsZWgU67Je4TPcfxDmT4
+ r5aScTO5dsPbWLKND28G65W4yChhaKXjFN1NWviJts6VvKkuSaF8aAn7K23RQsWi4RXm8cZzMtX
+ ot633lYvqqMbWgB6M2icX+q3jBYECTPdN9IZURMXbFqdkO6jjb2HtW0UjKnMt
+X-Received: by 2002:a5d:640a:0:b0:360:791c:aff2 with SMTP id
+ ffacd0b85a97d-366e95dc73emr8569578f8f.47.1719495950160; 
+ Thu, 27 Jun 2024 06:45:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKYZWklZztbRMWLZSFQ+hiVpyB0tieSxMnaMy9YkJY76qCCmpplwf1/6nr7t/ZZsy3UYVyEQ==
+X-Received: by 2002:a5d:640a:0:b0:360:791c:aff2 with SMTP id
+ ffacd0b85a97d-366e95dc73emr8569568f8f.47.1719495949802; 
+ Thu, 27 Jun 2024 06:45:49 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3674357fed2sm1931180f8f.48.2024.06.27.06.45.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 27 Jun 2024 06:45:49 -0700 (PDT)
+Date: Thu, 27 Jun 2024 15:45:48 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Shiyuan Gao <gaoshiyuan@baidu.com>
+Cc: <qemu-devel@nongnu.org>, <mst@redhat.com>
+Subject: Re: [v2 1/1] hw/i386/acpi-build: add OSHP method support for SHPC
+ driver load
+Message-ID: <20240627154548.74a969c2@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240625035224.13019-1-gaoshiyuan@baidu.com>
+References: <20240625035224.13019-1-gaoshiyuan@baidu.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240627-san-v2-15-750bb0946dbd@daynix.com>
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
-In-Reply-To: <20240627-san-v2-0-750bb0946dbd@daynix.com>
-To: Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::42c;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,46 +102,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These GThreads are never referenced.
+On Tue, 25 Jun 2024 11:52:24 +0800
+Shiyuan Gao <gaoshiyuan@baidu.com> wrote:
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- tests/qtest/vhost-user-test.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> SHPC driver will be loaded fail in i440fx machine, the dmesg shows
+> that OS cannot get control of SHPC hotplug and hotplug device to
+> the PCI bridge will fail when we use SHPC Native type:
+> 
+>   [3.336059] shpchp 0000:00:03.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0.S28_)
+>   [3.337408] shpchp 0000:00:03.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0)
+>   [3.338710] shpchp 0000:00:03.0: Cannot get control of SHPC hotplug
+> 
+> Add OSHP method support for transfer control to the operating system,
+> after this SHPC driver will be loaded success and the hotplug device to
+> the PCI bridge will success when we use SHPC Native type.
+> 
+>   [1.703975] shpchp 0000:00:03.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0.S18_)
+>   [1.704934] shpchp 0000:00:03.0: Requesting control of SHPC hotplug via OSHP (\_SB_.PCI0)
+>   [1.705855] shpchp 0000:00:03.0: Gained control of SHPC hotplug (\_SB_.PCI0)
+>   [1.707054] shpchp 0000:00:03.0: HPC vendor_id 1b36 device_id 1 ss_vid 0 ss_did 0
 
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index d4e437265f66..929af5c183ce 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -928,7 +928,7 @@ static void *vhost_user_test_setup_reconnect(GString *cmd_line, void *arg)
- {
-     TestServer *s = test_server_new("reconnect", arg);
- 
--    g_thread_new("connect", connect_thread, s);
-+    g_thread_unref(g_thread_new("connect", connect_thread, s));
-     append_mem_opts(s, cmd_line, 256, TEST_MEMFD_AUTO);
-     s->vu_ops->append_opts(s, cmd_line, ",server=on");
- 
-@@ -965,7 +965,7 @@ static void *vhost_user_test_setup_connect_fail(GString *cmd_line, void *arg)
- 
-     s->test_fail = true;
- 
--    g_thread_new("connect", connect_thread, s);
-+    g_thread_unref(g_thread_new("connect", connect_thread, s));
-     append_mem_opts(s, cmd_line, 256, TEST_MEMFD_AUTO);
-     s->vu_ops->append_opts(s, cmd_line, ",server=on");
- 
-@@ -980,7 +980,7 @@ static void *vhost_user_test_setup_flags_mismatch(GString *cmd_line, void *arg)
- 
-     s->test_flags = TEST_FLAGS_DISCONNECT;
- 
--    g_thread_new("connect", connect_thread, s);
-+    g_thread_unref(g_thread_new("connect", connect_thread, s));
-     append_mem_opts(s, cmd_line, 256, TEST_MEMFD_AUTO);
-     s->vu_ops->append_opts(s, cmd_line, ",server=on");
- 
+please describe in commit message reproducer
+(aka QEMU CLI and guest OS and if necessary other details)
 
--- 
-2.45.2
+
+> Signed-off-by: Shiyuan Gao <gaoshiyuan@baidu.com>
+> ---
+> v1 -> v2:
+> * add quote PCI firmware spec 3.0
+> * explain why an empty method is enough
+> ---
+> 
+>  hw/i386/acpi-build.c | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index f4e366f64f..00f8abedf6 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -1412,6 +1412,23 @@ static void build_acpi0017(Aml *table)
+>      aml_append(table, scope);
+>  }
+>  
+> +/*
+> + * PCI Firmware Specification 3.0
+> + * 4.8. The OSHP Control Method
+> + */
+> +static Aml *build_oshp_method(void)
+> +{
+> +    Aml *method;
+> +
+> +    /*
+> +     * We don't use ACPI to control the SHPC, so just return
+> +     * success is enough.
+> +     */
+> +    method = aml_method("OSHP", 0, AML_NOTSERIALIZED);
+> +    aml_append(method, aml_return(aml_int(0x0)));
+> +    return method;
+> +}
+> +
+>  static void
+>  build_dsdt(GArray *table_data, BIOSLinker *linker,
+>             AcpiPmInfo *pm, AcpiMiscInfo *misc,
+> @@ -1452,6 +1469,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>          aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A03")));
+>          aml_append(dev, aml_name_decl("_UID", aml_int(pcmc->pci_root_uid)));
+>          aml_append(dev, aml_pci_edsm());
+> +        aml_append(dev, build_oshp_method());
+
+it's global and what will happen if we have ACPI PCI hotplug enabled
+and guest calls this NOP method?
+
+>          aml_append(sb_scope, dev);
+>          aml_append(dsdt, sb_scope);
+>  
+> @@ -1586,6 +1604,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>                  aml_append(dev, build_q35_osc_method(true));
+>              } else {
+>                  aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0A03")));
+> +                aml_append(dev, build_oshp_method());
+>              }
+>  
+>              if (numa_node != NUMA_NODE_UNASSIGNED) {
 
 
