@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC29BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 16:13:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40233C41513
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Jun 2024 16:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sMrjv-00016A-Tx; Thu, 27 Jun 2024 12:12:52 -0400
+	id 1sMrtn-0003Tb-Lu; Thu, 27 Jun 2024 12:23:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sMrju-00015o-8l
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:12:50 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMrtj-0003SJ-4n
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:22:59 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1sMrjs-0003A7-Kc
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:12:50 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1fa4b332645so214615ad.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 09:12:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sMrth-00076G-LJ
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 12:22:58 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-354b722fe81so5411588f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 09:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1719504767; x=1720109567; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1719505376; x=1720110176; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5KXMUu0UdCwUlKRX4qSoKUN9A0yZ162CmwMZuZE9gwE=;
- b=4bTGPyGIj1x0TWzYhHIPl4eXZDwSUEsNUpczEjuMMhozaObAoUCFwQzmAxsuqajo6c
- /LdI5raOA17X8vbLcHX6HZL5uIE7NL6G5rY192BeDAugOT3/PQhoRiupSCj7aTt2JQoQ
- uqB0iS1tFDDW+Y7E8F91TfeWLaCmTP5IGPbTujEZBPzq2dyilxwmOM54meMGbOPwmX5B
- cBAyzrN+op3XwPSmKo6f+fSu+emfd9Gf0m42ExINYGPC7wlkcr2ZuhyhnIP/Ryr2Dt6G
- LG6oQHvmV5AmleOLbTRarnzDXXQrzCPaGJ7BIWxZb1vWdxx7A29spEH9HWD8o5AWsLcd
- LLRg==
+ bh=FehxPMt54YZs4mKlk2O0dDcvxQwBqAiau0Ry18uuTzM=;
+ b=tDFYtmbWqkrkRQSj7AT/JOWFHicHmCzy7N04rbm154RPu6cFhptTVevzdysOCGGshJ
+ ircp88kDwVFM3b+X7MG0UhWwp89iv15ZVmtzO6ZcUvmpVDAFxyOe3ImPdL5c7rC+V2st
+ 8rOd+M+BeQbM53UkeNtv2oj8ttiHNNm2Um+MypHhc5VmkBbyDfM3QhZ9LoDHWKFcHs4d
+ +1W5DGLIcwo7kMhObEGvopmkQO3I1gpmwyA3lP43nEcT8ojWJ/q3Oi/qJ3eKiAcrfQgn
+ Bl95HJSxWVgmsVN1Y6pcbJKE5CD1TVaNByAge0z5wwCNO5/rwkMArVw9fyBK1DjyXybs
+ Ok1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719504767; x=1720109567;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1719505376; x=1720110176;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5KXMUu0UdCwUlKRX4qSoKUN9A0yZ162CmwMZuZE9gwE=;
- b=SaOk2UZiBBGsp2Ei18ksui9Jc8pWBMjPRoDGTks0cu0tXQWoy99DiT18y/ZyD2vmPJ
- zwXzxMsOvQSFrQk815dqgNtCwtS1J53AEs+sM+aCq8Twfnfbla4MA4Yfevptfsy4Fsg0
- eZMpzd/pSYxqRevnhl++inyslpTrZjBQ5bhOfCANS+PIdzbyhl9/4aCRNVueTck3R2xF
- UbBE7AAo92jRAJoC0HMPCjNIq0+2ZcTdNWaFEsPJndLg5u58xdnDQBp699mEHBQuBKJC
- TA1B0Cne+AMDv+qX/PT8UTQscbLKfMt2eClO4IzKoDzzxK3vaxpcW9JDXjU/Wm/Vf2uP
- k7FA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXNzava1rPZJGIrE5Ih1KGLIYM7h1JVIoy2TATHtdB89ytWGzJD2SX9kLwgBQdGJp5ruH2l8h7kk7SNOvkKcPTHNXkWjRM=
-X-Gm-Message-State: AOJu0YyRgJFB9Y8PJJagDenroJdL6Y/LYtMwOpLcG2k7PgQp/5Fc0NQ9
- xndChCJxxu9I7ii7N17M/zGVHbhpM0sWBU7M2QkoYQg1HV7SqbO2Gw5x47LQaBncstxpKEbmbOM
- 6/DQiO5xC6pdcu77zFQS9waolJ1MNBpR6Corw
-X-Google-Smtp-Source: AGHT+IEGl1yk/WgMMrRhA5dhRJg3Fxm9sU1Py0YXF+scvyPY+3JT0sIZJ2IkzTsSByAzWgIo4trkhL22ZUtLnrocFoo=
-X-Received: by 2002:a17:902:d0ca:b0:1f6:3a2e:f6c6 with SMTP id
- d9443c01a7336-1faab58f037mr3467305ad.21.1719504766561; Thu, 27 Jun 2024
- 09:12:46 -0700 (PDT)
+ bh=FehxPMt54YZs4mKlk2O0dDcvxQwBqAiau0Ry18uuTzM=;
+ b=eOnNe8qm5bp5a1YEQYLgcbUdksxVOtW9TjsJlw39hcJW+Ux6f/1HW/cnKxcsa5XkOj
+ 2/BlurJiQEYkw+IyvW6yFY0uCIaZFq4OdZsvh5Hh9SlDTm1YtiAsetG2zAswxfn0elkS
+ 1+GiXGQYPJEbicQlMDPZZSqklk1k5i54isXknU8Cq6rllUrxQZIXylTT7CG7as9h91d8
+ UuIcpnzr4V9mEqIwitzP6AGq04ihm5lSPl/ewjpUCRnX6mtrFWvej1D4dgF6RWz2d5WW
+ im46Xnr8+Y2FEHsjY5WAqvGjoOE+HnPXc3vqY4WGMja6UlVq/k+FS4jjWu+wJGHx6CiE
+ r/gw==
+X-Gm-Message-State: AOJu0YzzekxuNfWmCyOkM9HJEJ/PCRBBu9oSYUYFCfGHixfhep9ezIJv
+ 1G4cUGgxNxMNsmZVsCbZMqm8tdF+FkB64D+uJPYaLUeu65sB0B1dUa62i2D4ilwarf+KEF63tzW
+ qNPg=
+X-Google-Smtp-Source: AGHT+IH18bbY1784vwnyJimBUwrB0LfuvZaWWzWLuq5M+w4p+pGq2ctXLO3iDhzmIIWclM3IqtZXDw==
+X-Received: by 2002:a5d:4047:0:b0:362:590c:84cf with SMTP id
+ ffacd0b85a97d-366e4ed3b67mr8850061f8f.24.1719505375971; 
+ Thu, 27 Jun 2024 09:22:55 -0700 (PDT)
+Received: from localhost.localdomain (33.red-95-127-46.staticip.rima-tde.net.
+ [95.127.46.33]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3674357fc35sm2384182f8f.25.2024.06.27.09.22.49
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 27 Jun 2024 09:22:55 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Tyrone Ting <kfting@nuvoton.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Bin Meng <bmeng.cn@gmail.com>, Hao Wu <wuhaotsh@google.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, qemu-arm@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ devel@lists.libvirt.org, Luc Michel <luc.michel@amd.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 01/17] hw/sd/sdcard: Deprecate support for spec v1.10
+Date: Thu, 27 Jun 2024 18:22:16 +0200
+Message-ID: <20240627162232.80428-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240627162232.80428-1-philmd@linaro.org>
+References: <20240627162232.80428-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <ad0740c5-9bc2-443c-9caa-a243b3a29108@redhat.com>
- <20240627003134.3447175-1-rkir@google.com>
- <CABgObfajkBU9-aGQcDGf6taUGwZOG=O5sewzc1HjCWTb5cVA1A@mail.gmail.com>
-In-Reply-To: <CABgObfajkBU9-aGQcDGf6taUGwZOG=O5sewzc1HjCWTb5cVA1A@mail.gmail.com>
-From: Roman Kiryanov <rkir@google.com>
-Date: Thu, 27 Jun 2024 09:12:34 -0700
-Message-ID: <CAOGAQepLGTY-92So1arNZWjg9m+HZ8AjZ28Gsscm2ai5sj1AMQ@mail.gmail.com>
-Subject: Re: [PATCH v3] timer: Fix a race condition between timer's callback
- and destroying code
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: jansene@google.com, jpcottin@google.com, mett@google.com, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=rkir@google.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -180
-X-Spam_score: -18.1
-X-Spam_bar: ------------------
-X-Spam_report: (-18.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.454,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,51 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 27, 2024 at 6:27=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
-> On Thu, Jun 27, 2024 at 2:32=E2=80=AFAM Roman Kiryanov <rkir@google.com> =
-wrote:
-> > +        if (qatomic_read(&ts->cb_running)) {
-> > +            qemu_event_wait(&timer_list->timers_done_ev);
-> > +        }
->
-> qemu_event_wait() already has the right atomic magic, and
-> ts->cb_running is both redundant (in general), and I think racy (as
-> implemented in this patch).
+We use the v2.00 spec by default since commit 2f0939c234
+("sdcard: Add a 'spec_version' property, default to Spec v2.00").
+Time to deprecate the v1.10 which doesn't bring much, and
+is not tested.
 
-I added cb_running to avoid waiting for timers_done_ev if we know our
-cb is done.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ docs/about/deprecated.rst | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-> But especially, you haven't justified in the commit message _why_ you
-> need this.
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index ff3da68208..02cdef14aa 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -362,6 +362,12 @@ recommending to switch to their stable counterparts:
+ - "Zve64f" should be replaced with "zve64f"
+ - "Zve64d" should be replaced with "zve64d"
+ 
++``-device sd-card,spec_version=1`` (since 9.1)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++SD physical layer specification v2.00 supersedes the v1.10 one.
++v2.00 is the default since QEMU 3.0.0.
++
+ Block device options
+ ''''''''''''''''''''
+ 
+-- 
+2.41.0
 
-I mentioned the problem of cleanup racing with the timer's callback functio=
-n
-in the current shape of QEMU.
-
-> Since this problem is not timer-specific,
-
-It would be nice to fix all the places then.
-
-> using
-> aio_bh_schedule_oneshot() or aio_wait_bh_oneshot() to synchronize
-> everything with the AioContext thread seems like a superior solution
-> to me.
-
-Could you please elaborate? The problem we want to solve is this:
-
-void myThreadFunc() {
-    CallbackState callbackState;
-    QEMUTimer timer;
-
-    timer_init(&timer, myClockType, myScale, &myTimerCallbackFunc,
-&callbackState);
-    ...
-    timer_del(&timer);
-}
-
-Currently, myTimerCallbackFunc could fire after myThreadFunc exits
-(if timer_del runs between qemu_mutex_unlock and cb(opaque) in
-timerlist_run_timers) and callbackState gets destroyed.
 
