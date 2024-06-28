@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0850C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 15:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4397CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 16:02:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNE0C-00041U-4E; Fri, 28 Jun 2024 11:59:08 -0400
+	id 1sNE33-0006BP-VA; Fri, 28 Jun 2024 12:02:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sNE0B-00040v-3w; Fri, 28 Jun 2024 11:59:07 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sNE09-00008Y-EF; Fri, 28 Jun 2024 11:59:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=88q6QsvzK8snkGC9N98GoCO3COc/YBXSMlIIp23Hx0E=; b=HRCqdCu7JXq+PScTcyTNOfCh2k
- nvs89eWF9sKLv+GuzYgFKvQvRaHEk6Itrz6HoRGfU+/ySFL8MVoRIRM8Uq7OHI1Dxr66S3Uuo9aji
- ZfjXj3jgCUJdgmcajnsQjwLdsEO7IoBFb5MPe+PoP4P7vn+nCHDLuhyvgDA36acTHL6OAYJsegrkq
- i/4Q9ZGE/8bs4MmrUQ+2p9AISmuoc0dXhzisIcB1kF4TGFPcJlX2CAsP8JDGAy7Kh3AE+xXgiiMTK
- JlXHJ/eRp546Yg2JYzAsP0oUEjveydCt4Qk1K+swZ3oZ9UxlulS1ItRooARQc/L6CXINdMwIkDpQv
- P9/oH8RGgJYVw1NHke8z1WDwCaZDyl1QGNaeeyfITlfgj79R+Gfptl6VF82kelIXmWr3mC/zzdudF
- JVBJFPSx8hY0pWDcSFkoOYGqz2/KLny7s6LsSe+52ppXUWKuLHkoLPJ+1aq0eOoSPncVIUtPhj76+
- 8onWa99hRWE+WmFIjp8e6Lr92GBDU9TBes4wz79eC9/kyt3R7AjfMtCPdt7+BdsFAVKran8pM1bMO
- uboKyhMSZyT5HDdr2QIJLrbp3aIyoRiUseMlHg9QSf7Au7Lh4GyTn03DLLSPVXsOvZBW36yx33ebk
- 7xX0DQwzslgezT3vnf/eUJcU6wVcdxe7aF4u4QHOY=;
-Received: from [2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sNDyh-000Cj2-AS; Fri, 28 Jun 2024 16:57:39 +0100
-Message-ID: <afa03da5-d02d-4a90-839c-b03d41b7b74d@ilande.co.uk>
-Date: Fri, 28 Jun 2024 16:58:57 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sNE31-0006Ab-8J
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 12:02:03 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sNE2z-0003Gd-89
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 12:02:02 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f4c7b022f8so5180395ad.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 09:02:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719590519; x=1720195319; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=u1zBg2dSlMJBfyzgYydD9HYz4rygSlRXEQ+WL6SO1+M=;
+ b=JWLVTEboONZoRmphKES9e1VgKbpTs7pUWIGjJzQUmEchdSs0fVh7gxAQPLpfWg/WBk
+ 36mRRes9vM4EJlmvqGJ4SVH53Q96/YWkSBZVEEu7PuZDTQ9jJIVXZ7xl9mRzmPgPmawW
+ Rt8K5ZiomCFh/aDhDFbQhF26tXDbTNI+zAwElgMR6/2D5ezts6NJevUdS7zBhmFta9V0
+ fQfx4QUUxR4gIq/qKOHpVLCyuJ/D0sBZfK6GjAs5/4zni4fTfVnsljYqq5qG39ibTisw
+ dDMPUGqidMizD+kdw8wIO24AkKrfENZQQctRZbGKtMHI8ZM0B51I0o1s6JU2+KOSyF6l
+ zwSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719590519; x=1720195319;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=u1zBg2dSlMJBfyzgYydD9HYz4rygSlRXEQ+WL6SO1+M=;
+ b=YWy8bNBa/RVFgiNOFmKcAMF+YiqYfq7N2KTB0c6MsA547qXqiLquuv3pQ9WW1TkdoM
+ RfdZcVA6K9qMEacRJdevP/Xu3w6lkumE0dKN5aIkXPdeBsqOg1EPn5WV7knY5JXHSvBO
+ TdjyKtnlSRFB/HTxjzG5O/xfYQeCbFQJhaPlqe+R87E2mtdusOdztb6uVfx9D5mkR28Y
+ Hg/Ta8Wi51+P8kY3nsxEzbk/4bEbqZnOEzS2myJ9/MxC1gs2IlujndNvG/Nx4ckifnpD
+ o9tZB5+9jrmki42Fq13eNkzBAUtUN3cbEGRazCSuk42iga9Lc/58QH5Pxu4NZz7hSlwr
+ XqBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXwg/xBG4JZcG+DI2yr2oidfPLKFfAU47aWzPL2sTg2K/uIjuMG+xMb2k9WduOdyALSdIsc1ijzPQUFeKeScj6Zx8xhggw=
+X-Gm-Message-State: AOJu0YxfEQuR2whxjoUV4Nzp98U0XnATHrP85g6NSduzv0yHeEtPC4/C
+ 0amHyuqC5R8Yv3yDOJP5sTHoIinXhCwdz7RRg5GOmFRKSSDqddWUucPJZdDwu5c=
+X-Google-Smtp-Source: AGHT+IGHY7z7pDh/dMHWgKIDwsFha8ICFDnUneIbnvUvKpE5WluTVOis/+njPLOr8jarUq2X6ySxyQ==
+X-Received: by 2002:a17:902:f64f:b0:1fa:292f:cb20 with SMTP id
+ d9443c01a7336-1fa292fcdabmr186282475ad.58.1719590518715; 
+ Fri, 28 Jun 2024 09:01:58 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fac10d1ccesm17400135ad.20.2024.06.28.09.01.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Jun 2024 09:01:58 -0700 (PDT)
+Message-ID: <ea780763-ffb8-4a97-8a60-5128f1ed017e@linaro.org>
+Date: Fri, 28 Jun 2024 09:01:56 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
- akihiko.odaki@daynix.com
-References: <20240628105437.635079-1-mark.cave-ayland@ilande.co.uk>
- <CAFEAcA9A67=qkLfwZgg1DgzQA9+fW34Uv7+pYcmGY4Yz=3xzPw@mail.gmail.com>
+Subject: Re: [PATCH 4/9] target/arm: Support migration when FPSR/FPCR won't
+ fit in the FPSCR
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240628142347.1283015-1-peter.maydell@linaro.org>
+ <20240628142347.1283015-5-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CAFEAcA9A67=qkLfwZgg1DgzQA9+fW34Uv7+pYcmGY4Yz=3xzPw@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240628142347.1283015-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] hw/ide/macio.c: switch from using qemu_allocate_irq() to
- qdev input GPIOs
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,81 +99,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/06/2024 16:28, Peter Maydell wrote:
-
-> On Fri, 28 Jun 2024 at 11:55, Mark Cave-Ayland
-> <mark.cave-ayland@ilande.co.uk> wrote:
->>
->> This prevents the IRQs from being leaked when the macio IDE device is used.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> ---
->>   hw/ide/macio.c                | 10 ++++++----
->>   include/hw/misc/macio/macio.h |  5 +++++
->>   2 files changed, 11 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
->> index aca90d04f0..e84bf2c9f6 100644
->> --- a/hw/ide/macio.c
->> +++ b/hw/ide/macio.c
->> @@ -420,7 +420,8 @@ static void macio_ide_realizefn(DeviceState *dev, Error **errp)
->>   {
->>       MACIOIDEState *s = MACIO_IDE(dev);
->>
->> -    ide_bus_init_output_irq(&s->bus, s->ide_irq);
->> +    ide_bus_init_output_irq(&s->bus,
->> +                            qdev_get_gpio_in(dev, MACIO_IDE_PMAC_IDE_IRQ));
->>
->>       /* Register DMA callbacks */
->>       s->dma.ops = &dbdma_ops;
->> @@ -456,8 +457,8 @@ static void macio_ide_initfn(Object *obj)
->>       sysbus_init_mmio(d, &s->mem);
->>       sysbus_init_irq(d, &s->real_ide_irq);
->>       sysbus_init_irq(d, &s->real_dma_irq);
->> -    s->dma_irq = qemu_allocate_irq(pmac_ide_irq, s, 0);
->> -    s->ide_irq = qemu_allocate_irq(pmac_ide_irq, s, 1);
->> +
->> +    qdev_init_gpio_in(DEVICE(obj), pmac_ide_irq, MACIO_IDE_PMAC_NIRQS);
->>
->>       object_property_add_link(obj, "dbdma", TYPE_MAC_DBDMA,
->>                                (Object **) &s->dbdma,
->> @@ -508,7 +509,8 @@ void macio_ide_init_drives(MACIOIDEState *s, DriveInfo **hd_table)
->>
->>   void macio_ide_register_dma(MACIOIDEState *s)
->>   {
->> -    DBDMA_register_channel(s->dbdma, s->channel, s->dma_irq,
->> +    DBDMA_register_channel(s->dbdma, s->channel,
->> +                           qdev_get_gpio_in(DEVICE(s), MACIO_IDE_PMAC_DMA_IRQ),
->>                              pmac_ide_transfer, pmac_ide_flush, s);
->>   }
->>
->> diff --git a/include/hw/misc/macio/macio.h b/include/hw/misc/macio/macio.h
->> index 2b54da6b31..869b66055b 100644
->> --- a/include/hw/misc/macio/macio.h
->> +++ b/include/hw/misc/macio/macio.h
->> @@ -92,6 +92,11 @@ struct MACIOIDEState {
->>       uint32_t irq_reg;
->>   };
->>
->> +#define MACIO_IDE_PMAC_NIRQS 2
->> +
->> +#define MACIO_IDE_PMAC_DMA_IRQ 0
->> +#define MACIO_IDE_PMAC_IDE_IRQ 1
->> +
->>   void macio_ide_init_drives(MACIOIDEState *ide, DriveInfo **hd_table);
->>   void macio_ide_register_dma(MACIOIDEState *ide);
+On 6/28/24 07:23, Peter Maydell wrote:
+> To support FPSR and FPCR bits that don't exist in the AArch32 FPSCR
+> view of floating point control and status (such as the FEAT_AFP ones),
+> we need to make sure those bits can be migrated. This commit allows
+> that, whilst maintaining backwards and forwards migration compatibility
+> for CPUs where there are no such bits:
 > 
-> Can we also now delete the dma_irq and ide_irq fields from the
-> MACIOIDEState struct?
+> On sending:
+>   * If either the FPCR or the FPSR include set bits that are not
+>     visible in the AArch32 FPSCR view of floating point control/status
+>     then we send the FPCR and FPSR as two separate fields in a new
+>     cpu/vfp/fpcr_fpsr subsection, and we send a 0 for the old
+>     FPSCR field in cpu/vfp
+>   * Otherwise, we don't send the fpcr_fpsr subsection, and we send
+>     an FPSCR-format value in cpu/vfp as we did previously
 > 
-> Otherwise
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> On receiving:
+>   * if we see a non-zero FPSCR field, that is the right information
+>   * if we see a fpcr_fpsr subsection then that has the information
+>   * if we see neither, then FPSCR/FPCR/FPSR are all zero on the source;
+>     cpu_pre_load() ensures the CPU state defaults to that
+>   * if we see both, then the migration source is buggy or malicious;
+>     either the fpcr_fpsr or the FPSCR will "win" depending which
+>     is first in the migration stream; we don't care which that is
+> 
+> We make the new FPCR and FPSR on-the-wire data be 64 bits, because
+> architecturally these registers are that wide, and this avoids the
+> need to engage in further migration-compatibility contortions in
+> future if some new architecture revision defines bits in the high
+> half of either register.
+> 
+> (We won't ever send the new migration subsection until we add support
+> for a CPU feature which enables setting overlapping FPCR bits, like
+> FEAT_AFP.)
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   target/arm/machine.c | 134 ++++++++++++++++++++++++++++++++++++++++++-
+>   1 file changed, 132 insertions(+), 2 deletions(-)
 
-Ooops, yes. I'll update and send a v2 including your Reviewed-by tag.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+Not ideal, as vfp_get_{fpcr,fpsr} are called 3 or 4 times during migration.  But unless we 
+have separate 'fp*r_migrate' fields in cpu state, initialized in pre_save, there's no 
+getting around it.  And I suppose migration isn't exactly performance critical.
 
 
-ATB,
-
-Mark.
-
+r~
 
