@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70451C3064D
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D943DC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6Or-0001OE-D0; Fri, 28 Jun 2024 03:52:05 -0400
+	id 1sN6OX-0008LS-Dy; Fri, 28 Jun 2024 03:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6Oq-0001KH-Ak
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:52:04 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1sN6OV-0008HH-8q
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:51:43 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6Oo-0007LT-Me
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:52:04 -0400
+ id 1sN6OT-0007IM-IZ
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:51:42 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SM44hVxz4w2K;
- Fri, 28 Jun 2024 17:52:00 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SLg4GLcz4w2K;
+ Fri, 28 Jun 2024 17:51:39 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SM34kWdz4w2H;
- Fri, 28 Jun 2024 17:51:59 +1000 (AEST)
-Message-ID: <e067cdb4-e1fa-40d2-968a-4a44eab3ca64@kaod.org>
-Date: Fri, 28 Jun 2024 09:51:57 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SLf47YYz4w2H;
+ Fri, 28 Jun 2024 17:51:38 +1000 (AEST)
+Message-ID: <8a7b1331-ff31-43a2-869e-4d82949d228a@kaod.org>
+Date: Fri, 28 Jun 2024 09:51:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 35/98] hw/sd/sdcard: Convert GEN_CMD to
- generic_write_byte (CMD56)
+Subject: Re: [PATCH v42 34/98] hw/sd/sdcard: Convert LOCK_UNLOCK to
+ generic_write_byte (CMD42)
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-36-philmd@linaro.org>
+ <20240628070216.92609-35-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240628070216.92609-36-philmd@linaro.org>
+In-Reply-To: <20240628070216.92609-35-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=GU6n=N6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -79,40 +79,41 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 9 +++------
->   1 file changed, 3 insertions(+), 6 deletions(-)
+>   hw/sd/sd.c | 15 ++-------------
+>   1 file changed, 2 insertions(+), 13 deletions(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 0cb528b0b2..f9708064d0 100644
+> index bdd5f3486a..0cb528b0b2 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -1657,14 +1657,12 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
->       case 56:  /* CMD56:  GEN_CMD */
->           switch (sd->state) {
->           case sd_transfer_state:
-> -            sd->data_offset = 0;
->               if (req.arg & 1) {
->                   return sd_cmd_to_sendingdata(sd, req, 0,
->                                                sd->vendor_data,
->                                                sizeof(sd->vendor_data));
->               }
+> @@ -1628,17 +1628,7 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+>   
+>       /* Lock card commands (Class 7) */
+>       case 42:  /* CMD42:  LOCK_UNLOCK */
+> -        switch (sd->state) {
+> -        case sd_transfer_state:
 > -            sd->state = sd_receivingdata_state;
+> -            sd->data_start = 0;
+> -            sd->data_offset = 0;
 > -            return sd_r1;
-> +            return sd_cmd_to_receivingdata(sd, req, 0, sizeof(sd->vendor_data));
+> -
+> -        default:
+> -            break;
+> -        }
+> -        break;
+> +        return sd_cmd_to_receivingdata(sd, req, 0, 0);
 >   
->           default:
->               break;
-> @@ -2109,9 +2107,8 @@ void sd_write_byte(SDState *sd, uint8_t value)
+>       /* Application specific commands (Class 8) */
+>       case 55:  /* CMD55:  APP_CMD */
+> @@ -2109,8 +2099,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
 >           break;
 >   
->       case 56:  /* CMD56:  GEN_CMD */
-> -        sd->vendor_data[sd->data_offset ++] = value;
-> -        if (sd->data_offset >= sizeof(sd->vendor_data)) {
-> -            sd->state = sd_transfer_state;
+>       case 42:  /* CMD42:  LOCK_UNLOCK */
+> -        sd->data[sd->data_offset ++] = value;
+> -        if (sd->data_offset >= sd->blk_len) {
 > +        if (sd_generic_write_byte(sd, value)) {
-> +            memcpy(sd->vendor_data, sd->data, sizeof(sd->vendor_data));
->           }
->           break;
->   
+>               /* TODO: Check CRC before committing */
+>               sd->state = sd_programming_state;
+>               sd_lock_command(sd);
 
 
