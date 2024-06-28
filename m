@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E68C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B311C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:17:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5hu-0002AY-DI; Fri, 28 Jun 2024 03:07:42 -0400
+	id 1sN5lc-0003hD-EZ; Fri, 28 Jun 2024 03:11:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5hs-0001pY-7D
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:07:40 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5lV-0003KN-Jz
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:11:26 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5hq-0003Nc-7N
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:07:39 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4255fa23f7bso2459845e9.2
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:07:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5lT-0004tJ-CF
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:11:25 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-36733f09305so157204f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:11:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719558456; x=1720163256; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719558681; x=1720163481; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XRCv4iSMQzY9gbLa0i76FE3UzK8b0j6S+r+3bKGRI48=;
- b=ZL8cUdtz33+OwEurvP/8DR4sgSPT3BTHrDQSd2nYVhaLa7uqK51daucDwKEj7JgoJb
- n8w0MpikwlwCdGp1aVs+q46U6PauhZHNhYZt1XqKkNbwbz8DnHGOnALKZ7qAXdhuafo8
- NHOT58HTk3Zn+qKDuossDfcItwA99fVjm9DdAfKmENerQ4Qa8HqLqweT3nptXiyRk8P5
- a12LVAyyKkptevfF2YIUUZ6pAfHj/Tetp1ICPqwZ2migJRgfKD2E7fvsn1Xpi64pnFQc
- x7wTG3ptMaiSPLGyMJdBtxFmU9Vp0tBcJSnvrSYkQZlXR78edA+JR2VMDk1PkTOSxRvO
- UU7A==
+ :reply-to; bh=SnL/FPFYEQkll60HqwiRh6fnqmVJNFRbyEObo/B5eRw=;
+ b=ujEncbw9XmjkuHZ7xGVWWM6IaX6oL7YVGHu89ayP473fgitrueG2tYjTWiWgxl6YBo
+ kUjXiuGvP3iNZyIWF4lPGwT5xIREnvrnr3rSgreJfRuwE6dghvSn3ZftXujfGlETeof2
+ dW1AMxnovWm0OsEmlq8ck2LSlS0+HvarSPSCZA5f+f02mjSELC6Zs6tjy+YmvI2ViQiO
+ JJK7J109YVRWkf72P12vXGBt+gvZefkgO1QdZYtfxAU6POasDvccwsV/qYac+rf25+UE
+ ce46ngnKk2dSDlNyNIdTsbroosLMbbLpWcjMLTMwzt+6yQ8F+2zUoBdBlKhvi/THiemU
+ qWtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719558456; x=1720163256;
+ d=1e100.net; s=20230601; t=1719558681; x=1720163481;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XRCv4iSMQzY9gbLa0i76FE3UzK8b0j6S+r+3bKGRI48=;
- b=ZPer5+47r+r/31SYWTr0Rg/5CxQIsWoHamcNzqnSoeBULMFz4aJlVrdCHJEaNFd4Jq
- KcQwKCaaLvsJrolipCfEDRdld9HYB0A5o79MRBV980zp2kl/lzTGsc5u+wfTWG9johD0
- tdV3gsIPbXDRAbIaFj8c1gfrSKV5QqSBqiGIgfad6TgAvOG5UIMlxgzJlr5AT6ixWLx4
- atNFRiynQ6EmvMtjmM8U34P8bkZTCqDAL+V92611uPvBpy0+mTyLJqMQio4ums8Zm503
- HIFTqjHRKni8DnUC0WkLey689mtg0UoEpA4s7ILztI5KbIl3dZ9SPx7l+ikqoP9sDo2s
- WMDg==
-X-Gm-Message-State: AOJu0YxC/qPlUEf646OB6AJmc4b83W5MJ5GosM38RsEnba5ooF6ZCSdV
- /eJxCPiKST8b58VdlS4s54TOZ53BF5fnGmj6ExapsN+SJkSVQ1NLtrJ69RLfcOvtb61TWxjOLWi
- FLmI=
-X-Google-Smtp-Source: AGHT+IGI9WenqsVuYx2a0/zzArYjwDmH9wF0nfm3gIMUh3XiG5o5ZT/09zWjyJm3PxCBSD+PLvWSOw==
-X-Received: by 2002:a05:600c:16c4:b0:425:5ec3:570b with SMTP id
- 5b1f17b1804b1-4255ec35786mr42332155e9.35.1719558456450; 
- Fri, 28 Jun 2024 00:07:36 -0700 (PDT)
+ bh=SnL/FPFYEQkll60HqwiRh6fnqmVJNFRbyEObo/B5eRw=;
+ b=hhOF5rTJvAxeifH8GOb9+VyK1pNhKAyRsJbdta/rsws51Vsp0Ok36dNbvxJeYfgmTv
+ t2Ejh6s1HA9RkkRYxVXGbE5cP1NtCXgEQ/1BG1k87OhG4yssiLH3iy1PtUTEXYr3h1ru
+ qGOJiQVnuur6jBM9qiwjXWDD5PjK7RmgmnbA7xfxOTwPpICsaFvzIQ49m+gqczZA5cT9
+ fB7y2q2Ij0FgmR7GVuJ07ZVKKo5H2O7OLGQ82sCX2B5IUSBHd3pcdrbgFFf7tNX8tkHw
+ oNwX+HSZTF/tLWtQ7Ub9d6dEVV6XSeA2IrpkPTAVucNTKcPH2l0R51ie4y/d3YEpHd5I
+ /fyg==
+X-Gm-Message-State: AOJu0YzAcUWrXZMoz/tbzAtLeA3sQ0tSVMAFkB1npV2F7DHVty/OpLOl
+ /QrLW26X1sI4a7HgxGbQl4/yd06KBPEkukGZPx930bcPu1ifwmAJz/EjPYw2mXDuxiZCcoenpvb
+ I2sw=
+X-Google-Smtp-Source: AGHT+IEdPfQtzHT3SW1bNTnrLeXlaKdEbOnvrUcXQ1V/JIg1OWzVcsNfQja1jqbKTl8VZJAjj1PKxw==
+X-Received: by 2002:a05:6000:154d:b0:366:e7b5:3b49 with SMTP id
+ ffacd0b85a97d-366e7b540a8mr15072878f8f.54.1719558681726; 
+ Fri, 28 Jun 2024 00:11:21 -0700 (PDT)
 Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
  [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b099c72sm21095405e9.37.2024.06.28.00.07.35
+ ffacd0b85a97d-3675a0cd6e5sm1352576f8f.4.2024.06.28.00.11.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 28 Jun 2024 00:07:36 -0700 (PDT)
+ Fri, 28 Jun 2024 00:11:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v42 50/98] hw/sd/sdcard: Add sd_cmd_SEND_CSD/CID handlers
- (CMD9 & CMD10)
-Date: Fri, 28 Jun 2024 09:01:26 +0200
-Message-ID: <20240628070216.92609-51-philmd@linaro.org>
+Subject: [PATCH v42 94/98] hw/sd/sdcard: add emmc_cmd_SEND_TUNING_BLOCK
+ handler (CMD21)
+Date: Fri, 28 Jun 2024 09:02:10 +0200
+Message-ID: <20240628070216.92609-95-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
 References: <20240628070216.92609-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,86 +92,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
+
+MMC cards support different tuning sequence for entering HS200 mode.
+
+Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@xilinx.com>
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 36 ++++++++++++++++++++++--------------
- 1 file changed, 22 insertions(+), 14 deletions(-)
+ hw/sd/sdmmc-internal.h |  3 +++
+ hw/sd/sd.c             | 41 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 44 insertions(+)
 
+diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
+index 20d85aea6d..a2769a80aa 100644
+--- a/hw/sd/sdmmc-internal.h
++++ b/hw/sd/sdmmc-internal.h
+@@ -108,4 +108,7 @@
+ #define EXT_CSD_PART_CONFIG_EN_BOOT0    (0x1 << 3)
+ #define EXT_CSD_PART_CONFIG_EN_USER     (0x7 << 3)
+ 
++#define EXT_CSD_BUS_WIDTH_8_MASK        0x4
++#define EXT_CSD_BUS_WIDTH_4_MASK        0x2
++
+ #endif
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index e2f7e99ea2..bd7c7cf518 100644
+index 0561079eff..ae5e73175e 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -240,8 +240,6 @@ static const char *sd_response_name(sd_rsp_type_t rsp)
- static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
+@@ -698,6 +698,25 @@ static const uint8_t sd_tuning_block_pattern4[64] = {
+     0xbb, 0xff, 0xf7, 0xff,     0xf7, 0x7f, 0x7b, 0xde
+ };
+ 
++static const uint8_t mmc_tuning_block_pattern8[128] = {
++    0xff, 0xff, 0x00, 0xff, 0xff, 0xff, 0x00, 0x00,
++    0xff, 0xff, 0xcc, 0xcc, 0xcc, 0x33, 0xcc, 0xcc,
++    0xcc, 0x33, 0x33, 0xcc, 0xcc, 0xcc, 0xff, 0xff,
++    0xff, 0xee, 0xff, 0xff, 0xff, 0xee, 0xee, 0xff,
++    0xff, 0xff, 0xdd, 0xff, 0xff, 0xff, 0xdd, 0xdd,
++    0xff, 0xff, 0xff, 0xbb, 0xff, 0xff, 0xff, 0xbb,
++    0xbb, 0xff, 0xff, 0xff, 0x77, 0xff, 0xff, 0xff,
++    0x77, 0x77, 0xff, 0x77, 0xbb, 0xdd, 0xee, 0xff,
++    0xff, 0xff, 0xff, 0x00, 0xff, 0xff, 0xff, 0x00,
++    0x00, 0xff, 0xff, 0xcc, 0xcc, 0xcc, 0x33, 0xcc,
++    0xcc, 0xcc, 0x33, 0x33, 0xcc, 0xcc, 0xcc, 0xff,
++    0xff, 0xff, 0xee, 0xff, 0xff, 0xff, 0xee, 0xee,
++    0xff, 0xff, 0xff, 0xdd, 0xff, 0xff, 0xff, 0xdd,
++    0xdd, 0xff, 0xff, 0xff, 0xbb, 0xff, 0xff, 0xff,
++    0xbb, 0xbb, 0xff, 0xff, 0xff, 0x77, 0xff, 0xff,
++    0xff, 0x77, 0x77, 0xff, 0x77, 0xbb, 0xdd, 0xee
++};
++
+ static int sd_req_crc_validate(SDRequest *req)
  {
-     static const char *cmd_abbrev[SDMMC_CMD_MAX] = {
--                                             [9]    = "SEND_CSD",
--        [10]    = "SEND_CID",
-         [12]    = "STOP_TRANSMISSION",      [13]    = "SEND_STATUS",
-                                             [15]    = "GO_INACTIVE_STATE",
-         [16]    = "SET_BLOCKLEN",           [17]    = "READ_SINGLE_BLOCK",
-@@ -1324,6 +1322,26 @@ static sd_rsp_type_t sd_cmd_SEND_IF_COND(SDState *sd, SDRequest req)
-     return sd_r7;
+     uint8_t buffer[5];
+@@ -1603,6 +1622,26 @@ static sd_rsp_type_t sd_cmd_SEND_TUNING_BLOCK(SDState *sd, SDRequest req)
+                                  sizeof(sd_tuning_block_pattern4));
  }
  
-+/* CMD9 */
-+static sd_rsp_type_t sd_cmd_SEND_CSD(SDState *sd, SDRequest req)
++/* CMD21 */
++static sd_rsp_type_t emmc_cmd_SEND_TUNING_BLOCK(SDState *sd, SDRequest req)
 +{
-+    if (sd->state != sd_standby_state) {
-+        return sd_invalid_state_for_cmd(sd, req);
++    const uint8_t *buf;
++    size_t size;
++
++    if (sd->state != sd_transfer_state) {
++        sd_invalid_state_for_cmd(sd, req);
 +    }
 +
-+    return sd_req_rca_same(sd, req) ? sd_r2_s : sd_r0;
-+}
-+
-+/* CMD10 */
-+static sd_rsp_type_t sd_cmd_SEND_CID(SDState *sd, SDRequest req)
-+{
-+    if (sd->state != sd_standby_state) {
-+        return sd_invalid_state_for_cmd(sd, req);
++    if (sd->ext_csd[EXT_CSD_BUS_WIDTH] & EXT_CSD_BUS_WIDTH_8_MASK) {
++        buf = mmc_tuning_block_pattern8;
++        size = sizeof(mmc_tuning_block_pattern8);
++    } else {
++        buf = sd_tuning_block_pattern4;
++        size = sizeof(sd_tuning_block_pattern4);
 +    }
-+
-+    return sd_req_rca_same(sd, req) ? sd_r2_i : sd_r0;
++    return sd_cmd_to_sendingdata(sd, req, 0, buf, size);
 +}
 +
- /* CMD19 */
- static sd_rsp_type_t sd_cmd_SEND_TUNING_BLOCK(SDState *sd, SDRequest req)
+ /* CMD23 */
+ static sd_rsp_type_t sd_cmd_SET_BLOCK_COUNT(SDState *sd, SDRequest req)
  {
-@@ -1393,12 +1411,6 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
-     case 9:  /* CMD9:   SEND_CSD */
-         rca = sd_req_get_rca(sd, req);
-         switch (sd->state) {
--        case sd_standby_state:
--            if (sd->rca != rca)
--                return sd_r0;
--
--            return sd_r2_s;
--
-         case sd_transfer_state:
-             if (!sd_is_spi(sd)) {
-                 break;
-@@ -1414,12 +1426,6 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
-     case 10:  /* CMD10:  SEND_CID */
-         rca = sd_req_get_rca(sd, req);
-         switch (sd->state) {
--        case sd_standby_state:
--            if (sd->rca != rca)
--                return sd_r0;
--
--            return sd_r2_i;
--
-         case sd_transfer_state:
-             if (!sd_is_spi(sd)) {
-                 break;
-@@ -2307,6 +2313,8 @@ static const SDProto sd_proto_sd = {
-         [6]  = {10, sd_adtc, "SWITCH_FUNCTION", sd_cmd_SWITCH_FUNCTION},
-         [7]  = {0,  sd_ac,   "(DE)SELECT_CARD", sd_cmd_DE_SELECT_CARD},
-         [8]  = {0,  sd_bcr,  "SEND_IF_COND", sd_cmd_SEND_IF_COND},
-+        [9]  = {0,  sd_ac,   "SEND_CSD", sd_cmd_SEND_CSD},
-+        [10] = {0,  sd_ac,   "SEND_CID", sd_cmd_SEND_CID},
-         [11] = {0,  sd_ac,   "VOLTAGE_SWITCH", sd_cmd_optional},
-         [19] = {2,  sd_adtc, "SEND_TUNING_BLOCK", sd_cmd_SEND_TUNING_BLOCK},
-         [20] = {2,  sd_ac,   "SPEED_CLASS_CONTROL", sd_cmd_optional},
+@@ -2391,6 +2430,7 @@ uint8_t sd_read_byte(SDState *sd)
+     case 13: /* ACMD13: SD_STATUS */
+     case 17: /* CMD17:  READ_SINGLE_BLOCK */
+     case 19: /* CMD19:  SEND_TUNING_BLOCK (SD) */
++    case 21: /* CMD21:  SEND_TUNING_BLOCK (MMC) */
+     case 22: /* ACMD22: SEND_NUM_WR_BLOCKS */
+     case 30: /* CMD30:  SEND_WRITE_PROT */
+     case 51: /* ACMD51: SEND_SCR */
+@@ -2573,6 +2613,7 @@ static const SDProto sd_proto_emmc = {
+         [16] = {2,  sd_ac,   "SET_BLOCKLEN", sd_cmd_SET_BLOCKLEN},
+         [17] = {2,  sd_adtc, "READ_SINGLE_BLOCK", sd_cmd_READ_SINGLE_BLOCK},
+         [19] = {0,  sd_adtc, "BUSTEST_W", sd_cmd_unimplemented},
++        [21] = {2,  sd_adtc, "SEND_TUNING_BLOCK", emmc_cmd_SEND_TUNING_BLOCK},
+         [23] = {2,  sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
+         [24] = {4,  sd_adtc, "WRITE_SINGLE_BLOCK", sd_cmd_WRITE_SINGLE_BLOCK},
+         [26] = {4,  sd_adtc, "PROGRAM_CID", mmc_cmd_PROGRAM_CID},
 -- 
 2.41.0
 
