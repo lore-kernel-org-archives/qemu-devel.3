@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A10CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE7CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNCyf-0005SF-6p; Fri, 28 Jun 2024 10:53:29 -0400
+	id 1sND0x-0006Gj-VU; Fri, 28 Jun 2024 10:55:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNCyb-0005S1-Kn
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:53:25 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sND0w-0006GW-Qn
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:55:50 -0400
+Received: from mail-io1-xd36.google.com ([2607:f8b0:4864:20::d36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNCyZ-0002aJ-1X
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:53:24 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a732cb4ea31so494366b.0
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:53:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sND0v-0002zM-6S
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:55:50 -0400
+Received: by mail-io1-xd36.google.com with SMTP id
+ ca18e2360f4ac-7f615d04a32so36650639f.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:55:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719586401; x=1720191201; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bcAZy8tYKfGDn0hWs6mgRnqTgWc70bznUgpnA5wQpkI=;
- b=lCudYaLmeDfnYNeQLY5sru+jxfUNf8pPiiJvB1Jx14c+ulMfA295hA3FKZETW8aJ5f
- pWxuIB4a/JkSell5P0RhaaqP3L924hH2SJWcGtxmnm9XzBIPHcIaoOo21zAOUiCet4gR
- /47bfwyBTrU4JO4ym76mxoTc/vPImthZI69Nc892eWv8R1XiLAoIPKjsoCvd70UjSiBm
- 4a0ZchzBTqbAr2JVDrZ42n8fA4jyOMb2c04JUNRGPiXV4sFGTDydGVWWHH8YgfumdU2N
- aB3aCE4FhCYzPEeNtEo7S7N97MdLI5lB+1eKEzXQ1FdzFfIhk3Cjk3qi+KyDhlOOBlem
- YAdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719586401; x=1720191201;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=linaro.org; s=google; t=1719586548; x=1720191348; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bcAZy8tYKfGDn0hWs6mgRnqTgWc70bznUgpnA5wQpkI=;
- b=ZAWONYCas9BxaqYpXlWaMAXRbsvzWQC+/u5XpuR3xkadMRXDQFW5Pkd6ojiNCgpPXX
- ylbeeG9xrN/MLBXI5XLGuy0dOUDH07TYeZwg/FH9uwpj8kYXaW5glJI0x+IW9SbCXdjE
- Hs8uq2eAMZbA93+kt50Sos8c9RY016afH7qRRkVignDWfvlmS8mdAXv9BdVkynLtyG//
- E6cA8IX+0ztM9Zdps+yauZNmS/WrR3lHm+VdEyzBTPFjFHi5Q6+SMkv9WMShRTF5n9W5
- tTrSeDgy1DElc9dofepbp7iw5g6K+iqnfGPFxh2VS/7Ker0Nsy9mb/Q8GshjTx3YzljV
- A91Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjVosM2Qk0DbidahHVtkAqGrcvYBfvlJIJC/vbtYCzeugV994mK8/3us5MD++TDlZ9vtPbN/+O1TXCvA5XXb6kUT6IsVY=
-X-Gm-Message-State: AOJu0YxwAZ2fs4nc5DL3CNfTZsDizFAHBXCL4vQcbcueXc4dJFqSlwRw
- tLRo0vAvsUH0+5b9HSaA5z7Ucs1m/GzJB4fFDrqd+DAzezrEPgt1M1G5+UqlY/B3mjyHc6B5UOG
- M1MdMt8mXJKZz5NXVrFuPchJ4F7ogcigsZnf4fw==
-X-Google-Smtp-Source: AGHT+IFg0cnGEfREzZdVu7Gdxch1OvfId1g7xDcafrG3AU34gkmqiZn/g0OAA8NZi2TSa1RsbLWol/i8oAtsAODId0s=
-X-Received: by 2002:a17:906:fb8e:b0:a6f:7902:7516 with SMTP id
- a640c23a62f3a-a72aee66f5emr145067166b.14.1719586401083; Fri, 28 Jun 2024
- 07:53:21 -0700 (PDT)
+ bh=ZTrPQ7yE+Qqexf1Etg+iaLBPPpCp419mlmCi5xZYCts=;
+ b=o2NzDPGHYuhJrIXMMVI3hmts8UUDjwebeJ/OVnk4CqPuiVb71aYtGNXH53US4nu1J8
+ MqMvcPc33xo6esakVw7vBC/746vOjBxltFVY3hj3gtTZrF1QKb1GulW6nrSc7q+magsd
+ 8xaZeqBXy6yMYjxZUCpfs1xDfcvsYeASN/zEqACRiJCK0rReYmNHIlpbmK202VKXQPRr
+ JcGGXUBNkSuh7R60Jx2Sxu0hyZfyqbOOwgnThPv3H89KVMynWlXskv10YIvt5ofwMa4U
+ atfvVFs+aBYXHw7tCNOhZK/XseNSaCDK3smuERqGzQxhtZDKaPDWHDJUhsj3CTz8bflv
+ OkJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719586548; x=1720191348;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZTrPQ7yE+Qqexf1Etg+iaLBPPpCp419mlmCi5xZYCts=;
+ b=NyYe7hv3FlQMDgmXjTTXO8we5KZwEddjbpe5eeSndBiOPwkW+qMpAMG8wArUwdFtUr
+ Yc9+P7zLlnyZsO5RCDelrJPG2XoK5eaMpVFI28fkexn9yCyJ9soXEUH9Pjri9g/kCvUv
+ 47h2wRnajFnEBmwNtkQuPXFRBQ9uDLVJPuCgNHBsheEz3pC7lBZlReK6H9Uvze8NtEu8
+ FE2R9lja1ACW1qzPdyHp6qve9q7l0Gt6iOqlg9JdZJ5LC+zEWVVf2uzuXo/tjQ697ReX
+ 6gPizpJYKj7MfGHC5WoJ2/XobaEGaXWG8Qg4WhtyqqLTlyOiLQwbnqwHwW0FVc99P2m+
+ IWfw==
+X-Gm-Message-State: AOJu0YxAPmdmyT2DSHcLGTvwT1Juzpy1YTWtxKuqeX7PheRDt55sLfbR
+ mIAFw4wdAO4WuErAshrOrhqeYAlmuA5I0VK0MSwEY8dsZ41Hppu70aJWMAXLagk=
+X-Google-Smtp-Source: AGHT+IG55lVOHQ6SOlw198nXB1Hp2XEOhUdfVVLJVqPgqKTRm7pxVBBTyk4BpjAh+UNnAifXqp/oeA==
+X-Received: by 2002:a5e:9411:0:b0:7f6:1da5:98a1 with SMTP id
+ ca18e2360f4ac-7f61da599bdmr253291139f.21.1719586547847; 
+ Fri, 28 Jun 2024 07:55:47 -0700 (PDT)
+Received: from [192.168.0.102] ([191.205.218.108])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-708043b7100sm1738137b3a.142.2024.06.28.07.55.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Jun 2024 07:55:47 -0700 (PDT)
+Subject: Re: [PATCH v6 06/11] target/arm: Factor out code for setting MTE TCF0
+ field
+To: =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org,
+ peter.maydell@linaro.org
+References: <20240628050850.536447-1-gustavo.romero@linaro.org>
+ <20240628050850.536447-7-gustavo.romero@linaro.org>
+ <87zfr5nu0z.fsf@draig.linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <be8b6f51-300e-3ae8-b2c3-f85f70b0ad46@linaro.org>
+Date: Fri, 28 Jun 2024 11:55:44 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-References: <CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com>
- <CAGxU2F4Q5ewt442zGvUhfMuXYcRENEingFQVuu5VK_wQBizE3Q@mail.gmail.com>
- <CAFEAcA9hdkZU0GF=v9Fj3GrYha=kgFr3GaKjd8kvsPHDdVCfRQ@mail.gmail.com>
- <2ktqnpqfb7lh3vip2rulobxrobyycjomaxfucdz3bhzbtfjkia@ibml6lv475un>
-In-Reply-To: <2ktqnpqfb7lh3vip2rulobxrobyycjomaxfucdz3bhzbtfjkia@ibml6lv475un>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 28 Jun 2024 15:53:09 +0100
-Message-ID: <CAFEAcA-cvU5RudZdokD+tHMGEHtUcoxowNwS4HxLWz5nvXqC9w@mail.gmail.com>
-Subject: Re: [Bug Report] Possible Missing Endianness Conversion
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Xoykie <xoykie@gmail.com>, qemu-devel@nongnu.org, 
- Eugenio Perez Martin <eperezma@redhat.com>, thuth@redhat.com, cohuck@redhat.com,
- Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+In-Reply-To: <87zfr5nu0z.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d36;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-io1-xd36.google.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-1.965,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,80 +100,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 25 Jun 2024 at 08:18, Stefano Garzarella <sgarzare@redhat.com> wrot=
-e:
->
-> On Mon, Jun 24, 2024 at 04:19:52PM GMT, Peter Maydell wrote:
-> >On Mon, 24 Jun 2024 at 16:11, Stefano Garzarella <sgarzare@redhat.com> w=
-rote:
-> >>
-> >> CCing Jason.
-> >>
-> >> On Mon, Jun 24, 2024 at 4:30=E2=80=AFPM Xoykie <xoykie@gmail.com> wrot=
-e:
-> >> >
-> >> > The virtio packed virtqueue support patch[1] suggests converting
-> >> > endianness by lines:
-> >> >
-> >> > virtio_tswap16s(vdev, &e->off_wrap);
-> >> > virtio_tswap16s(vdev, &e->flags);
-> >> >
-> >> > Though both of these conversion statements aren't present in the
-> >> > latest qemu code here[2]
-> >> >
-> >> > Is this intentional?
-> >>
-> >> Good catch!
-> >>
-> >> It looks like it was removed (maybe by mistake) by commit
-> >> d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-> >
-> >That commit changes from:
-> >
-> >-    address_space_read_cached(cache, off_off, &e->off_wrap,
-> >-                              sizeof(e->off_wrap));
-> >-    virtio_tswap16s(vdev, &e->off_wrap);
-> >
-> >which does a byte read of 2 bytes and then swaps the bytes
-> >depending on the host endianness and the value of
-> >virtio_access_is_big_endian()
-> >
-> >to this:
-> >
-> >+    e->off_wrap =3D virtio_lduw_phys_cached(vdev, cache, off_off);
-> >
-> >virtio_lduw_phys_cached() is a small function which calls
-> >either lduw_be_phys_cached() or lduw_le_phys_cached()
-> >depending on the value of virtio_access_is_big_endian().
-> >(And lduw_be_phys_cached() and lduw_le_phys_cached() do
-> >the right thing for the host-endianness to do a "load
-> >a specifically big or little endian 16-bit value".)
-> >
-> >Which is to say that because we use a load/store function that's
-> >explicit about the size of the data type it is accessing, the
-> >function itself can handle doing the load as big or little
-> >endian, rather than the calling code having to do a manual swap after
-> >it has done a load-as-bag-of-bytes. This is generally preferable
-> >as it's less error-prone.
->
-> Thanks for the details!
->
-> So, should we also remove `virtio_tswap16s(vdev, &e->flags);` ?
->
-> I mean:
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 893a072c9d..2e5e67bdb9 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -323,7 +323,6 @@ static void vring_packed_event_read(VirtIODevice *vde=
-v,
->       /* Make sure flags is seen before off_wrap */
->       smp_rmb();
->       e->off_wrap =3D virtio_lduw_phys_cached(vdev, cache, off_off);
-> -    virtio_tswap16s(vdev, &e->flags);
->   }
+Hi Alex,
 
-That definitely looks like it's probably not correct...
+On 6/28/24 9:14 AM, Alex Bennée wrote:
+> Gustavo Romero <gustavo.romero@linaro.org> writes:
+> 
+>> Factor out the code used for setting the MTE TCF0 field from the prctl
+>> code into a convenient function. Other subsystems, like gdbstub, need to
+>> set this field as well, so keep it as a separate function to avoid
+>> duplication and ensure consistency in how this field is set across the
+>> board.
+>>
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> ---
+>>   linux-user/aarch64/meson.build       |  2 ++
+>>   linux-user/aarch64/mte_user_helper.c | 34 ++++++++++++++++++++++++++++
+>>   linux-user/aarch64/mte_user_helper.h | 25 ++++++++++++++++++++
+>>   linux-user/aarch64/target_prctl.h    | 22 ++----------------
+>>   4 files changed, 63 insertions(+), 20 deletions(-)
+>>   create mode 100644 linux-user/aarch64/mte_user_helper.c
+>>   create mode 100644 linux-user/aarch64/mte_user_helper.h
+>>
+>> diff --git a/linux-user/aarch64/meson.build b/linux-user/aarch64/meson.build
+>> index 248c578d15..f75bb3cd75 100644
+>> --- a/linux-user/aarch64/meson.build
+>> +++ b/linux-user/aarch64/meson.build
+>> @@ -9,3 +9,5 @@ vdso_le_inc = gen_vdso.process('vdso-le.so',
+>>                                  extra_args: ['-r', '__kernel_rt_sigreturn'])
+>>   
+>>   linux_user_ss.add(when: 'TARGET_AARCH64', if_true: [vdso_be_inc, vdso_le_inc])
+>> +
+>> +linux_user_ss.add(when: 'TARGET_AARCH64', if_true: [files('mte_user_helper.c')])
+>> diff --git a/linux-user/aarch64/mte_user_helper.c b/linux-user/aarch64/mte_user_helper.c
+>> new file mode 100644
+>> index 0000000000..8be6deaf03
+>> --- /dev/null
+>> +++ b/linux-user/aarch64/mte_user_helper.c
+>> @@ -0,0 +1,34 @@
+>> +/*
+>> + * ARM MemTag convenience functions.
+>> + *
+>> + * This code is licensed under the GNU GPL v2 or later.
+>> + *
+>> + * SPDX-License-Identifier: LGPL-2.1-or-later
+>> + */
+>> +
+>> +#include <sys/prctl.h>
+> 
+> Aside from missing the osdep Phillipe pointed out including prctl.h here
+> is very suspect as its a system header. I assume if we need
+> PR_MTE_TCF_SYNC we should hoist the definition that linux-user uses into
+> a common header.
+Other .c files include <sys/prctl.h> for other PR_ definitions. For example,
+syscall.c and elfload.c. Is this really a problem? I see that would be a
+problem when trying to build, for instance, aarch64-linux-user target on a
+BSD host, but we don't support it. Building *-linux-user target is only
+supported on Linux host, no?
 
--- PMM
+
+Cheers,
+Gustavo
 
