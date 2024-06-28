@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D7FFC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 15:50:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0850C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 15:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNDrs-0007tR-K3; Fri, 28 Jun 2024 11:50:32 -0400
+	id 1sNE0C-00041U-4E; Fri, 28 Jun 2024 11:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNDrk-0007o2-TJ
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 11:50:26 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNDrj-0007D1-3c
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 11:50:24 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-70698bcd19eso593876b3a.0
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 08:50:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719589818; x=1720194618; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tF1N5TvFlgbPuhz7UsAWhJ0PkEpXSXYCOi0u3u9GVDA=;
- b=fq16tDlxwr3tb9Lzm9ggxtBmecIvJIWuVsNr17rr0QTG59p6L5+IkyMEN43I9107yq
- ydc0Il1y0FZjrqq0swYjjOJRO6YGxzR+dmFizWZNuudrbDxnSovxPf5chcxd2eq4NBIM
- lx52kYuEw7ad6t+IJVulF+R3L3H/bXoH6PLzkUPtDM1LusZvO7Yps6EyMFZgtlqa15eS
- XSRuebxntQYWlImwljMktnuoOK0FU7VdnmEfUhfDo+OjhfgnFBJY2XmzqAghXHzcRjzw
- G1iaA+15XNB0/I8KX7ghuf1ORyvwO5kPjUdwZzFtfHK7vsrMsGLJg+YBAP+NNjreTz0j
- aeTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719589818; x=1720194618;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tF1N5TvFlgbPuhz7UsAWhJ0PkEpXSXYCOi0u3u9GVDA=;
- b=W0GXtEOh3YskFGcRlDqHHBSQDCrs2htWgKggJbe+XvjNgOI3k/8sQUr4Ntd4QcbAuI
- xjnlNu7c1ZwQqRZwNl+fbBW/KSOsFFLgIi03XhrAiQkemMWGnIYj72UAsZk5vnHyHHrZ
- a2zZ/FHhLAhYw3OAem4cUtpZL2zQssrizn/7t8holUz5KZBarokp3tXZTE4hvEhoJ888
- q8AcPN3r1daVinAMMLsJgUgQLfFd6jQFpQUbZJMDS7BkYD/x7wBxTbs0avki0RWptGHp
- ZYZoDhugPLQ/3kExJ85PhodvwwTsL/H52p1ulfUcqBqP+bmwznWmIIjRjtE5M7J0D4Q4
- nxbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzD7sCguIBVIa+EHE2z86comZuNJ4L325iRScN2LsN84KfhVCiZc6sKKyOW1D0nb2zZeWEO8csPFDz3TMBrjbQIVE9JJc=
-X-Gm-Message-State: AOJu0YxmCB6wmsN+firNMYmOT4ITt51NPj7aJl5X96JYQlKrubvaG8/Z
- 6HE56vRUwErZRiihxoWRp7Vr2R/6gMWvGOae1TnWykNGdPZ4JP0Am6I111SldHU=
-X-Google-Smtp-Source: AGHT+IFrvnm5MUCHLPYwZc3Hn0k4Y4PwAKl0SW8mvnfj4YbVGjfIpALHwdLH6VyEsdccGBo73TpKMg==
-X-Received: by 2002:a05:6a20:da82:b0:1be:bf38:7b18 with SMTP id
- adf61e73a8af0-1bebf387cabmr10347066637.60.1719589818233; 
- Fri, 28 Jun 2024 08:50:18 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac1549f2esm17322235ad.164.2024.06.28.08.50.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 08:50:17 -0700 (PDT)
-Message-ID: <9c16d849-cccf-4637-858b-e556ddf0869e@linaro.org>
-Date: Fri, 28 Jun 2024 08:50:16 -0700
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sNE0B-00040v-3w; Fri, 28 Jun 2024 11:59:07 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sNE09-00008Y-EF; Fri, 28 Jun 2024 11:59:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=88q6QsvzK8snkGC9N98GoCO3COc/YBXSMlIIp23Hx0E=; b=HRCqdCu7JXq+PScTcyTNOfCh2k
+ nvs89eWF9sKLv+GuzYgFKvQvRaHEk6Itrz6HoRGfU+/ySFL8MVoRIRM8Uq7OHI1Dxr66S3Uuo9aji
+ ZfjXj3jgCUJdgmcajnsQjwLdsEO7IoBFb5MPe+PoP4P7vn+nCHDLuhyvgDA36acTHL6OAYJsegrkq
+ i/4Q9ZGE/8bs4MmrUQ+2p9AISmuoc0dXhzisIcB1kF4TGFPcJlX2CAsP8JDGAy7Kh3AE+xXgiiMTK
+ JlXHJ/eRp546Yg2JYzAsP0oUEjveydCt4Qk1K+swZ3oZ9UxlulS1ItRooARQc/L6CXINdMwIkDpQv
+ P9/oH8RGgJYVw1NHke8z1WDwCaZDyl1QGNaeeyfITlfgj79R+Gfptl6VF82kelIXmWr3mC/zzdudF
+ JVBJFPSx8hY0pWDcSFkoOYGqz2/KLny7s6LsSe+52ppXUWKuLHkoLPJ+1aq0eOoSPncVIUtPhj76+
+ 8onWa99hRWE+WmFIjp8e6Lr92GBDU9TBes4wz79eC9/kyt3R7AjfMtCPdt7+BdsFAVKran8pM1bMO
+ uboKyhMSZyT5HDdr2QIJLrbp3aIyoRiUseMlHg9QSf7Au7Lh4GyTn03DLLSPVXsOvZBW36yx33ebk
+ 7xX0DQwzslgezT3vnf/eUJcU6wVcdxe7aF4u4QHOY=;
+Received: from [2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sNDyh-000Cj2-AS; Fri, 28 Jun 2024 16:57:39 +0100
+Message-ID: <afa03da5-d02d-4a90-839c-b03d41b7b74d@ilande.co.uk>
+Date: Fri, 28 Jun 2024 16:58:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] target/arm: Make vfp_set_fpscr() call vfp_set_{fpcr, 
- fpsr}
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240628142347.1283015-1-peter.maydell@linaro.org>
- <20240628142347.1283015-4-peter.maydell@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
+ akihiko.odaki@daynix.com
+References: <20240628105437.635079-1-mark.cave-ayland@ilande.co.uk>
+ <CAFEAcA9A67=qkLfwZgg1DgzQA9+fW34Uv7+pYcmGY4Yz=3xzPw@mail.gmail.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240628142347.1283015-4-peter.maydell@linaro.org>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <CAFEAcA9A67=qkLfwZgg1DgzQA9+fW34Uv7+pYcmGY4Yz=3xzPw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] hw/ide/macio.c: switch from using qemu_allocate_irq() to
+ qdev input GPIOs
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,27 +104,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/28/24 07:23, Peter Maydell wrote:
-> +void vfp_set_fpsr(CPUARMState *env, uint32_t val)
-> +{
-> +    ARMCPU *cpu = env_archcpu(env);
-> +
-> +    vfp_set_fpsr_to_host(env, val);
-> +
-> +    if (arm_feature(env, ARM_FEATURE_NEON) ||
-> +        cpu_isar_feature(aa32_mve, cpu)) {
-> +        /*
-> +         * The bit we set within fpscr_q is arbitrary; the register as a
-> +         * whole being zero/non-zero is what counts.
-> +         */
-> +        env->vfp.qc[0] = val & FPCR_QC;
+On 28/06/2024 16:28, Peter Maydell wrote:
 
-While it's code movement, the comment is out of date.
-Update s/fpscr_q/vfp.qc[]/, possibly as a follow-up.
+> On Fri, 28 Jun 2024 at 11:55, Mark Cave-Ayland
+> <mark.cave-ayland@ilande.co.uk> wrote:
+>>
+>> This prevents the IRQs from being leaked when the macio IDE device is used.
+>>
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> ---
+>>   hw/ide/macio.c                | 10 ++++++----
+>>   include/hw/misc/macio/macio.h |  5 +++++
+>>   2 files changed, 11 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+>> index aca90d04f0..e84bf2c9f6 100644
+>> --- a/hw/ide/macio.c
+>> +++ b/hw/ide/macio.c
+>> @@ -420,7 +420,8 @@ static void macio_ide_realizefn(DeviceState *dev, Error **errp)
+>>   {
+>>       MACIOIDEState *s = MACIO_IDE(dev);
+>>
+>> -    ide_bus_init_output_irq(&s->bus, s->ide_irq);
+>> +    ide_bus_init_output_irq(&s->bus,
+>> +                            qdev_get_gpio_in(dev, MACIO_IDE_PMAC_IDE_IRQ));
+>>
+>>       /* Register DMA callbacks */
+>>       s->dma.ops = &dbdma_ops;
+>> @@ -456,8 +457,8 @@ static void macio_ide_initfn(Object *obj)
+>>       sysbus_init_mmio(d, &s->mem);
+>>       sysbus_init_irq(d, &s->real_ide_irq);
+>>       sysbus_init_irq(d, &s->real_dma_irq);
+>> -    s->dma_irq = qemu_allocate_irq(pmac_ide_irq, s, 0);
+>> -    s->ide_irq = qemu_allocate_irq(pmac_ide_irq, s, 1);
+>> +
+>> +    qdev_init_gpio_in(DEVICE(obj), pmac_ide_irq, MACIO_IDE_PMAC_NIRQS);
+>>
+>>       object_property_add_link(obj, "dbdma", TYPE_MAC_DBDMA,
+>>                                (Object **) &s->dbdma,
+>> @@ -508,7 +509,8 @@ void macio_ide_init_drives(MACIOIDEState *s, DriveInfo **hd_table)
+>>
+>>   void macio_ide_register_dma(MACIOIDEState *s)
+>>   {
+>> -    DBDMA_register_channel(s->dbdma, s->channel, s->dma_irq,
+>> +    DBDMA_register_channel(s->dbdma, s->channel,
+>> +                           qdev_get_gpio_in(DEVICE(s), MACIO_IDE_PMAC_DMA_IRQ),
+>>                              pmac_ide_transfer, pmac_ide_flush, s);
+>>   }
+>>
+>> diff --git a/include/hw/misc/macio/macio.h b/include/hw/misc/macio/macio.h
+>> index 2b54da6b31..869b66055b 100644
+>> --- a/include/hw/misc/macio/macio.h
+>> +++ b/include/hw/misc/macio/macio.h
+>> @@ -92,6 +92,11 @@ struct MACIOIDEState {
+>>       uint32_t irq_reg;
+>>   };
+>>
+>> +#define MACIO_IDE_PMAC_NIRQS 2
+>> +
+>> +#define MACIO_IDE_PMAC_DMA_IRQ 0
+>> +#define MACIO_IDE_PMAC_IDE_IRQ 1
+>> +
+>>   void macio_ide_init_drives(MACIOIDEState *ide, DriveInfo **hd_table);
+>>   void macio_ide_register_dma(MACIOIDEState *ide);
+> 
+> Can we also now delete the dma_irq and ide_irq fields from the
+> MACIOIDEState struct?
+> 
+> Otherwise
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Ooops, yes. I'll update and send a v2 including your Reviewed-by tag.
 
 
-r~
+ATB,
+
+Mark.
+
 
