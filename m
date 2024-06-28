@@ -4,84 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA9D8C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 06:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9097EC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 06:48:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN4x9-0008JB-07; Fri, 28 Jun 2024 02:19:23 -0400
+	id 1sN5OG-0005Li-6z; Fri, 28 Jun 2024 02:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN4x7-0008Ie-Mv
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 02:19:21 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN4x5-0001KR-9S
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 02:19:21 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2ec002caf3eso3310811fa.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 23:19:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719555557; x=1720160357; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nac15weJy2n70ADaWLadboiJpUDMd0DFCULHo4IUwtY=;
- b=a1i6grq0E7fWnGmWWsXy0131T/XWbDyIhQKuZn/mXQOfGfQlsOGlw2ZTNGo11cMJ2z
- ris0N233yDE9iLEkL/0KEZUkpZcdxtm7LUnxY8nPjgY6prIQ7PK/4/Dt+wNgWINcl0Zc
- V4aKvrbG/tC4oCilsPpYzAlfVpQ6pUm0LroqoIH2JYhO2Uhcd+ZQ0fVGkuke9QhIbBww
- afJ8NhQvfQsAjcIk06g7Gz1PPY7FC2JM9LTNJZEJZB0JPda/64Cn2lZGLwHFo/iCZBXR
- RGuYMd+berqWrD+ROoVCTp5yRBjvAJD93QBnoCXIBaAzJv63shUnMxsjvTFQUDZiJ4OC
- kTQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719555557; x=1720160357;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nac15weJy2n70ADaWLadboiJpUDMd0DFCULHo4IUwtY=;
- b=bSrfoy+qLOUP4LwO0iJyUX/jtl1gEmB/nq2QJDKkl63XjYiFDYD/qSnftgMOakSy+C
- OsA5B5RyTyWFkZ+iM27Oh8o0/K/Xsk28K/Bblqo7OJ08+k8kEkcjgrv9p6vrKcVIEcBq
- eZgN7MM1EAse7flTr9Ad4l5MAwcL+Mtgb6QnxvARepqMVwGEud6VenDv5C5R8JpqLBlV
- JykGVrGt2kKws7ddi1F3XD8EJfRF9RkTP8ja37qH0Y1b4zgO5YELjA2sVLqQahZexp3m
- B9/54kKI8geyGHHGScbxAAQtImLAa9fIk88M/jjnrSSXBthe7OJmOrZliosLSt77YGCl
- TsUQ==
-X-Gm-Message-State: AOJu0YyOkPuCCGEfWD58459GAs2eKUnKmuOewtzD6tbs5aDVgZisHKxd
- qbAQBb97ikz6BUkCnaesWbRoMunxLosfdlpLshhBH2IeMul1TWNHekvGtA0ci8nv98OLe6dEFSp
- oWd0=
-X-Google-Smtp-Source: AGHT+IHxI7vYp/W95VNs2Nsrxirhsuqtph4rJzieiWISuhOGqN5Qzcxn5gitUdQB9TCRn9FNj1FmKA==
-X-Received: by 2002:a2e:8242:0:b0:2ec:597f:664 with SMTP id
- 38308e7fff4ca-2ec5b2c4fa1mr111251491fa.2.1719555556846; 
- Thu, 27 Jun 2024 23:19:16 -0700 (PDT)
-Received: from [192.168.69.100] (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
- [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0fbbd4sm1228880f8f.84.2024.06.27.23.19.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 23:19:16 -0700 (PDT)
-Message-ID: <ce55f409-a343-4cdd-8a34-ba8a87b95c9b@linaro.org>
-Date: Fri, 28 Jun 2024 08:19:13 +0200
+ (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
+ id 1sN5OA-0005Kl-NW; Fri, 28 Jun 2024 02:47:21 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
+ id 1sN5O8-0007aI-HF; Fri, 28 Jun 2024 02:47:18 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Qw72x2Wz4wcg;
+ Fri, 28 Jun 2024 16:47:03 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Qw30XvCz4w2K;
+ Fri, 28 Jun 2024 16:46:58 +1000 (AEST)
+Message-ID: <fcd13412-906d-49c3-b892-33ca49fc0f5e@kaod.org>
+Date: Fri, 28 Jun 2024 08:46:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] target/arm: Always build Aarch64 gdbstub helpers
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-References: <20240619124903.56898-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240619124903.56898-1-philmd@linaro.org>
+Subject: Re: [PATCH 00/19] hw/sd: Add support for eMMC cards
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Joel Stanley <joel@jms.id.au>, Luc Michel <luc.michel@amd.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>, qemu-block@nongnu.org,
+ Vincent Palatin <vpalatin@chromium.org>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
+References: <20240627171059.84349-1-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240627171059.84349-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=GU6n=N6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,24 +68,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping?
+On 6/27/24 7:10 PM, Philippe Mathieu-Daudé wrote:
+> Trying to land what Vincent Palatin started 13 years ago!
+> https://lore.kernel.org/qemu-devel/1311635951-11047-5-git-send-email-vpalatin@chromium.org/
+> with fixes from Sai, Joel and Cédric.
+> 
+> I reviewed Cédric patches but still plan to review the EXT_CSD
+> layout and Joel "boot config" patches.
+> 
+> In order to avoid deviation with the spec, the experimental
+> 'x-aspeed-emmc-kludge' property is used.
 
-On 19/6/24 14:49, Philippe Mathieu-Daudé wrote:
-> Merge gdbstub64.c in gdbstub.c and remove uses of
-> target specific TARGET_AARCH64 definition.
-> Small step toward single ARM/Aarch64 binary.
+Adding Aspeed people for feedback.
+
+
+Thanks,
+
+C.
+
+
+
 > 
-> Philippe Mathieu-Daudé (2):
->    target/arm: Merge gdbstub64.c within gdbstub.c
->    target/arm: Always build Aarch64 gdbstub helpers
+> Based-on: <20240627164815.82606-1-philmd@linaro.org>
 > 
->   target/arm/cpu.h       |   8 +-
->   target/arm/internals.h |   2 -
->   target/arm/gdbstub.c   | 363 +++++++++++++++++++++++++++++++++++++-
->   target/arm/gdbstub64.c | 383 -----------------------------------------
->   target/arm/meson.build |   1 -
->   5 files changed, 364 insertions(+), 393 deletions(-)
->   delete mode 100644 target/arm/gdbstub64.c
+> Full series for testing:
+> https://gitlab.com/philmd/qemu/-/tags/emmc-v4
+> 
+> Including Aspeed branch from Cédric on top (aspeed-9.1):
+> https://gitlab.com/philmd/qemu/-/tags/aspeed_emmc-v4
+> 
+> Cédric Le Goater (5):
+>    hw/sd/sdcard: Basis for eMMC support
+>    hw/sd/sdcard: Add emmc_cmd_SET_RELATIVE_ADDR() handler
+>    hw/sd/sdcard: Fix SET_BLOCK_COUNT command argument on eMMC (CMD23)
+>    hw/sd/sdcard: Adapt sd_cmd_ALL_SEND_CID handler for eMMC (CMD2)
+>    hw/sd/sdcard: Adapt sd_cmd_APP_CMD handler for eMMC (CMD55)
+> 
+> Joel Stanley (3):
+>    hw/sd/sdcard: Support boot area in emmc image
+>    hw/sd/sdcard: Subtract bootarea size from blk
+>    hw/sd/sdcard: Add boot config support
+> 
+> Luc Michel (1):
+>    hw/sd/sdcard: Implement eMMC sleep state (CMD5)
+> 
+> Philippe Mathieu-Daudé (6):
+>    hw/sd/sdcard: Introduce set_csd/set_cid handlers
+>    hw/sd/sdcard: Cover more SDCardStates
+>    hw/sd/sdcard: Register generic command handlers
+>    hw/sd/sdcard: Register unimplemented command handlers
+>    hw/sd/sdcard: Add mmc_cmd_PROGRAM_CID handler (CMD26)
+>    hw/sd/sdcard: Add experimental 'x-aspeed-emmc-kludge' property
+> 
+> Sai Pavan Boddu (3):
+>    hw/sd/sdcard: Add emmc_cmd_SEND_OP_COND handler (CMD1)
+>    hw/sd/sdcard: add emmc_cmd_SEND_TUNING_BLOCK handler (CMD21)
+>    hw/sd/sdcard: Add mmc SWITCH function support (CMD6)
+> 
+> Vincent Palatin (1):
+>    hw/sd/sdcard: Add emmc_cmd_SEND_EXT_CSD handler (CMD8)
+> 
+>   hw/sd/sdmmc-internal.h |   3 +
+>   include/hw/sd/sd.h     |   6 +
+>   hw/sd/sd.c             | 419 ++++++++++++++++++++++++++++++++++++++++-
+>   3 files changed, 420 insertions(+), 8 deletions(-)
 > 
 
 
