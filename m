@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2623C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 17:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4702CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 17:20:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNFFp-0001y4-Qo; Fri, 28 Jun 2024 13:19:21 -0400
+	id 1sNFGM-0002pE-LT; Fri, 28 Jun 2024 13:19:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNFFm-0001x1-1B
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:19:18 -0400
-Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
+ id 1sNFGK-0002ns-SU
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:19:52 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNFFj-00023C-K6
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:19:16 -0400
-Received: by mail-il1-x130.google.com with SMTP id
- e9e14a558f8ab-3738690172eso4063535ab.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 10:19:13 -0700 (PDT)
+ id 1sNFGJ-0002FX-F2
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:19:52 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7067435d376so643591b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 10:19:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719595153; x=1720199953; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719595190; x=1720199990; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=V35V4xy/avSp93x6rrBNSgluMeGbfDaOeyRAKmwsNLo=;
- b=XUxESFWjWoPfT6jJo4giferHLFuwJ3d4mgmj1UpTxiVM3nzIAo4mYvSIf5e93dji7f
- glR/xAs6Jqi9I8lgE1T62WuywCC4XZVwsubcx/cqQYrcJ/bzf3BEkLZsv7fknmuhr1GP
- cGl/edT7tkj7TanHOym2E07myNsynlOAj2hJC95fpb40f6TuwO59CtGOW+TB7xLCxKeN
- oxqlm4hrLjU5qzN2T9mE2qnf0ZknDwGFfdTmN+z/pz81sIjK4ZRzzGUwxpvm3BrYEFtc
- gyhjQXLkYDGTO6V+UAXhbj1lo/bxYFMEXYLChZkjeJb+cMOJ84pTKDqdkCunB5+GflLp
- Kcyw==
+ bh=ow+PDn7mkRF4AdRK1scat+5Q9cS9ze13R92X6OIjh24=;
+ b=pOQ3MQGh1F/kwRfBTPit/kjWo2jWk1yMQCNXl2C+gFHRI1u57hz1LscjFDZXSNFEG8
+ igfH3Gs5gBQDSXvspDyfSJhTK+dJhZF1awX3zeZ9qHCiZ2yUoJMwQQkoCq3BzExgwGOH
+ axbb+Gth64OtWIu3QnzXwy1So7KoXHxUCUXMA6zvKJbZFPBZOrcSLLtvJxK1/RQliXPC
+ i6Um6lS40mUTnfjY1KD4aYYXkda8qypmB6C+InrLdyF/8GAonhGsz2exQ54URZAg0IA2
+ BNPV5kEX0+DjfSxF/OL0jsLONnOqHfmefmwj6kThmiaHhtGTZezYZaZXistGTQbeAY6O
+ 1hTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719595153; x=1720199953;
+ d=1e100.net; s=20230601; t=1719595190; x=1720199990;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=V35V4xy/avSp93x6rrBNSgluMeGbfDaOeyRAKmwsNLo=;
- b=jNc9uYuJI/Dl21CIlmUtXwMowlydP98+bCx4EU4oDnlbr9weS0FgvLQdKu/WR1hup8
- 5SfgcIF6VrYI4D11ULORO5r5Nv48drIGpXQ5Vz7UOEsAYYo5yliqVCej0YNTmD5HIbAW
- HtRe+iUcIO2gcM/AbeRDjZvivzy54/DbLnM1za9uEoHfTJlmxzu2/ZH+YZa5d7VVhfrl
- tz45kEgdFsh9LwbOY+7FkrToNJcOklnikvF6ugUsHJmOwS7Vmb15JPo2vWr1Z8MgwpZQ
- MUWdYat2ew6MAKDGPbgAb3vnvAmdQ973UArAzf6TxLsgOSwTtDvvi/Y8FYxw+yIq6Ber
- eLgQ==
+ bh=ow+PDn7mkRF4AdRK1scat+5Q9cS9ze13R92X6OIjh24=;
+ b=JQ87U50q6vmfVVcyhVMtqy9VxFXzXw4qrPeQ0cpbpLe8B3puVpE/9/bAye02ZJgowr
+ l6rLzFTKw8u518j3l1bY/7QGPmm69z6AcqMfeR4LVIvDyJE2RLWBLl8mkAOwI2mQGupr
+ +4I/Mmlg2rOsXgSqs/5OqVNtlvbpPo/ebRnBq/ljoeNQE2o4/F7SWFmqEdmkqFnqy2ZL
+ aw+CxAUlVlU9nQOZ4HSh7Xj4nc/I9UTT/9AZQxf91wnDaZK/u9wgCpY3IPP1E522fToT
+ JGRPFJrG7Nl97Y99OvH1DkU6HQtj0j1G7kyopNFuk3F1amS9LNwGLePg412oou2a/XNj
+ C5Og==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLmULWuUVIAYPvNm0Tn7PgnJ1rg1c1s4xsGgqqWIG/B7y2wF4JPOHilFwdJeFI1T7cIPNLwljFode0rJp8cfPAQwJ3Oa0=
-X-Gm-Message-State: AOJu0YxHgdXnULSNoQSsyhibUa8K/KcwZ92G9r+Mopm8t1Mdgw0FVAmx
- JLwz+OtQlpDsjaAlxAkAC7Em8y6Oc2wishxFnJf9Vgdg2mxf2T8LF7tvThurkqw=
-X-Google-Smtp-Source: AGHT+IF1OSAY+8F7kV7n7oDrfcKXQ9STM/c+975JkjXEXqUClz3ahiBdjV/lzIwAvW8EjXe79Xs9Gg==
-X-Received: by 2002:a05:6e02:12c2:b0:376:40f2:9b25 with SMTP id
- e9e14a558f8ab-37640f29fb4mr228440515ab.0.1719595152612; 
- Fri, 28 Jun 2024 10:19:12 -0700 (PDT)
+ AJvYcCURCug0Cy10rpLvwMJ5n9rb0FcoLI+1v6gSzMNWuOGkSdP7zPxdb0Eoau4JsnFmze7KQnR5XwI3VWR+UQGbbMvC/fwcifg=
+X-Gm-Message-State: AOJu0YwEaGMcI/stHuOlwrbDmo2YK9ErVC58CT9KUHyVW8rqTpk9SbEn
+ MbaeQn0rRnOpi0a7mVAdc/Vyte6rA1bICJMNhtijjMMJgCp06YizZGL3mqPfrK0=
+X-Google-Smtp-Source: AGHT+IHDQwkjOReF/ty3GORa9FQyGfcCMWql7IqhJtChdNj9/HKTtRHyNfbt04TUB3hEBSMjrQEFqw==
+X-Received: by 2002:a05:6a00:1706:b0:6f6:76c8:122c with SMTP id
+ d2e1a72fcca58-70852e0d7f8mr3719972b3a.16.1719595189851; 
+ Fri, 28 Jun 2024 10:19:49 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-72c6b2a1b1csm1537515a12.48.2024.06.28.10.19.11
+ d2e1a72fcca58-70804893d4csm1867794b3a.185.2024.06.28.10.19.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 10:19:12 -0700 (PDT)
-Message-ID: <2438d654-dd76-4555-98a8-52d0fa006d08@linaro.org>
-Date: Fri, 28 Jun 2024 10:19:10 -0700
+ Fri, 28 Jun 2024 10:19:49 -0700 (PDT)
+Message-ID: <b7a23f47-e363-46a1-a542-2e796c99309e@linaro.org>
+Date: Fri, 28 Jun 2024 10:19:47 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] tests/tcg/aarch64: Explicitly specify register
- width
+Subject: Re: [PATCH v2 4/6] tests/tcg/aarch64: Fix irg operand type
 To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 References: <20240627-tcg-v2-0-1690a813348e@daynix.com>
- <20240627-tcg-v2-3-1690a813348e@daynix.com>
+ <20240627-tcg-v2-4-1690a813348e@daynix.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240627-tcg-v2-3-1690a813348e@daynix.com>
+In-Reply-To: <20240627-tcg-v2-4-1690a813348e@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x130.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,21 +102,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/27/24 06:58, Akihiko Odaki wrote:
-> clang version 18.1.6 assumes a register is 64-bit by default and
-> complains if a 32-bit value is given. Explicitly specify register width
-> when passing a 32-bit value.
+> irg expects 64-bit integers. Passing a 32-bit integer results in
+> compilation failure with clang version 18.1.6.
 > 
 > Signed-off-by: Akihiko Odaki<akihiko.odaki@daynix.com>
-> Reviewed-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   tests/tcg/aarch64/bti-1.c | 6 +++---
->   tests/tcg/aarch64/bti-3.c | 6 +++---
->   2 files changed, 6 insertions(+), 6 deletions(-)
-
-This is true of clang 14 as well, so perhaps remove the version statement entirely.
+>   tests/tcg/aarch64/mte-1.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
