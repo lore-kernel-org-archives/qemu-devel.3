@@ -4,86 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 555A7C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 09:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5948C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 09:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN7oi-0002hk-AO; Fri, 28 Jun 2024 05:22:52 -0400
+	id 1sN7wa-0005og-EG; Fri, 28 Jun 2024 05:31:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN7og-0002hY-Gi
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:22:50 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN7oe-0007RA-N6
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:22:50 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-52cdd893e5cso422653e87.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 02:22:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719566566; x=1720171366; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w/NlnKRYgzxj0ZFweSPW1uMicGo4UxLM9L4T9n0hNA0=;
- b=REKlh+wjJW+stadO0Oauy3Hmis72HDErkFHZaAqW8cUeiGcqGXS24E66ymLMKbNN7S
- w0P2K6KtUVVY8rP/klfNw4/QUrqy12Rk09Wcy6v5obK2RxixoBDIsdD7DE6vD92daf/B
- GLSaFzcQL8QBvVqbH7yLr4YCyMH7UO2/NjDcTutH4r0xcuQEN5siK2v/9G5BB4ePv5tV
- nRMEySxN2SKqWL8H+6Zagdl29W+SgDsOtRiq2hVo/Aza7dUgIC7509gyVJhEjTJEYKy2
- vWesapCGU/B996Vkb2JzN7HnEq3RMi1NdtWnzb9sGpbbRET+5the/M/F438WCU+hwG/2
- tHYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719566566; x=1720171366;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w/NlnKRYgzxj0ZFweSPW1uMicGo4UxLM9L4T9n0hNA0=;
- b=oINukXgmg+BXBZNj7ZKVekIurK5nOfLACdnEO+vKc9Jmf1ZD1Tn6rGeiWzlTIHR90Z
- PeD8aHIw1QQa0+I+7GY+yyeMYIGvqQpHkehLreJEKbdO8s/VrCDbxi7/zwg1/ahPUZ4P
- w7FWdIEsQ+ZuO4obqoEqFX5uNEMuajrQtVU82UWk2SqcUon8m5MuKAhobslha+l3iC/8
- 0+F5VvTHTBNIm79B3RDorjT8MK2JKcRpMtWhaAHBh3D/qqegMUxMBUIAsK/rc2BeWCz0
- 0dWEjUyx6tePKnOCIlol027RUeOWW1IeqZ5CVot21/hdCXNBvtuyXLuhsKLDkhHw0GHp
- WMeg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVGzfx0PgT/G+v5i/XOKgrTZk5qfZYesqAjR9x2AQNlFfGEfQJ4mtnFjS3ifxnnzP4WCVtfQo9EiiTaASI7Dn9aJnNKy/c=
-X-Gm-Message-State: AOJu0YzIyg73YCHQrSXmLzr95zJ09O7FmJyqlpDuNconE7Swt0iS/tou
- nnr54muMCGPQsLZNjRzC1wY1gGecjg1l7V3jnU/bJQoAjUYMcgJs38U66M1dvKk=
-X-Google-Smtp-Source: AGHT+IFn/8RWHDCuiESiubMBB/gufpkS47gjb2IpZtVRvhsUN3peWssjrHqX5d+Tn/Edi57szg0I8Q==
-X-Received: by 2002:ac2:5f8b:0:b0:52c:df2c:65fe with SMTP id
- 2adb3069b0e04-52ce18350bemr11539015e87.15.1719566566466; 
- Fri, 28 Jun 2024 02:22:46 -0700 (PDT)
-Received: from [192.168.69.100] (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
- [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0c0f99sm25970865e9.41.2024.06.28.02.22.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 02:22:46 -0700 (PDT)
-Message-ID: <ec6e89ee-1a8a-4900-b9d0-9d5769d855cc@linaro.org>
-Date: Fri, 28 Jun 2024 11:22:44 +0200
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sN7wX-0005nM-JM
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:30:57 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sN7wV-0005Yz-I8
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:30:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1719567056; x=1751103056;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=lA2zuINPzZoggNMavj+h2yI5orhGU69Td9Lm5CUad9w=;
+ b=Ho5dG2BMa1MhX/hnwtW6wql3B4OKqzODiAwkRKO2cy/U/2p0YIRf8Epv
+ VuNsAZcK9yJgll77OeCMA1MVmYkF5D7QXC0UYMIMrxvUW7SscY8Rdyr6O
+ VDBMK8luda2BXuw70Bgm5XmrbotrbWyxELQbs3aXp0eVwtnOa++qhAxNm
+ wVLiIfrLsTe66bMiqacZY5uPCgk2DGXnpX33JcVDeXmaIZfInSoPG3nlh
+ QE3wVRZoTHoSH6ba3qyDxjkTQ91qxHxlPTPPi+ju8/t1hfrYXHZxRnXbd
+ Ooc+GLjPQSCje7syqHvna5wIIaJaopODsTarKO7au9VxCZz+Ys+kBz9Zg g==;
+X-CSE-ConnectionGUID: n85z96lOQw2PuY+0ikBlSQ==
+X-CSE-MsgGUID: 3Ebk7kuZTjuTQ/sxbctznw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11116"; a="28136022"
+X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; d="scan'208";a="28136022"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jun 2024 02:30:52 -0700
+X-CSE-ConnectionGUID: IvJqDkC3SaCYGJQcXlxh+Q==
+X-CSE-MsgGUID: pmD5I61ARPy+l7mXDTbkYg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; d="scan'208";a="44677906"
+Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.127])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 28 Jun 2024 02:30:49 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, kraxel@redhat.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH 1/2] vfio/display: Fix potential memleak of edid info
+Date: Fri, 28 Jun 2024 17:28:14 +0800
+Message-Id: <20240628092815.164423-2-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240628092815.164423-1-zhenzhong.duan@intel.com>
+References: <20240628092815.164423-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 6/9] target/arm: Factor out code for setting MTE TCF0
- field
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, richard.henderson@linaro.org
-Cc: peter.maydell@linaro.org
-References: <20240627041349.356704-1-gustavo.romero@linaro.org>
- <20240627041349.356704-7-gustavo.romero@linaro.org>
- <50ff9c9e-39a6-4be1-b6d5-42ff0dee7232@linaro.org>
- <8406f36b-0324-54c5-5949-0cad6193eca8@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8406f36b-0324-54c5-5949-0cad6193eca8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=198.175.65.12;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -45
+X-Spam_score: -4.6
+X-Spam_bar: ----
+X-Spam_report: (-4.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,60 +82,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/6/24 07:20, Gustavo Romero wrote:
-> Hi Phil,
-> 
-> On 6/27/24 3:05 AM, Philippe Mathieu-Daudé wrote:
->> On 27/6/24 06:13, Gustavo Romero wrote:
->>> Factor out the code used for setting the MTE TCF0 field from the prctl
->>> code into a convenient function. Other subsystems, like gdbstub, need to
->>> set this field as well, so keep it as a separate function to avoid
->>> duplication and ensure consistency in how this field is set across the
->>> board.
->>>
->>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->>> ---
->>>   linux-user/aarch64/meson.build       |  2 ++
->>>   linux-user/aarch64/mte_user_helper.c | 34 ++++++++++++++++++++++++++++
->>>   linux-user/aarch64/mte_user_helper.h | 25 ++++++++++++++++++++
->>>   linux-user/aarch64/target_prctl.h    | 22 ++----------------
->>>   4 files changed, 63 insertions(+), 20 deletions(-)
->>>   create mode 100644 linux-user/aarch64/mte_user_helper.c
->>>   create mode 100644 linux-user/aarch64/mte_user_helper.h
->>
->>
->>> diff --git a/linux-user/aarch64/mte_user_helper.h 
->>> b/linux-user/aarch64/mte_user_helper.h
->>> new file mode 100644
->>> index 0000000000..ee3f6b190a
->>> --- /dev/null
->>> +++ b/linux-user/aarch64/mte_user_helper.h
->>> @@ -0,0 +1,25 @@
->>> +/*
->>> + * ARM MemTag convenience functions.
->>> + *
->>> + * This code is licensed under the GNU GPL v2 or later.
->>> + *
->>> + * SPDX-License-Identifier: LGPL-2.1-or-later
->>> + */
->>> +
->>> +#ifndef AARCH64_MTE_USER_HELPER_H
->>> +#define AARCH64_MTE USER_HELPER_H
->>> +
->>> +#include "qemu/osdep.h"
->>
->> https://www.qemu.org/docs/master/devel/style.html#include-directives
->>
->>    Do not include “qemu/osdep.h” from header files since the .c file
->>    will have already included it.
->>
->>> +#include "qemu.h"
->>
->> "qemu.h" shouldn't be required neither.
-> 
-> If I remove qemu/osdep.h CPUArchState can't resolved. If I remove qemu.h
-> then abi_long can't be resolved. I'm in a tight corner here.
+EDID related device region info is leaked in three paths:
+1. In vfio_get_dev_region_info(), when edid info isn't find, the last
+device region info is leaked.
+2. In vfio_display_edid_init() error path, edid info is leaked.
+3. In VFIODisplay destroying path, edid info is leaked.
 
-Does it work with "exec/cpu-all.h"?
+Fixes: 08479114b0de ("vfio/display: add edid support.")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/vfio/display.c | 2 ++
+ hw/vfio/helpers.c | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/hw/vfio/display.c b/hw/vfio/display.c
+index 661e921616..5926bd6628 100644
+--- a/hw/vfio/display.c
++++ b/hw/vfio/display.c
+@@ -171,6 +171,7 @@ static void vfio_display_edid_init(VFIOPCIDevice *vdev)
+ 
+ err:
+     trace_vfio_display_edid_write_error();
++    g_free(dpy->edid_info);
+     g_free(dpy->edid_regs);
+     dpy->edid_regs = NULL;
+     return;
+@@ -182,6 +183,7 @@ static void vfio_display_edid_exit(VFIODisplay *dpy)
+         return;
+     }
+ 
++    g_free(dpy->edid_info);
+     g_free(dpy->edid_regs);
+     g_free(dpy->edid_blob);
+     timer_free(dpy->edid_link_timer);
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index b14edd46ed..3dd32b26a4 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -586,6 +586,7 @@ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
+         g_free(*info);
+     }
+ 
++    g_free(*info);
+     *info = NULL;
+     return -ENODEV;
+ }
+-- 
+2.34.1
 
 
