@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13BCAC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 04:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483F7C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 04:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN2sM-0000Pj-4C; Fri, 28 Jun 2024 00:06:18 -0400
+	id 1sN3dJ-0000NZ-8q; Fri, 28 Jun 2024 00:54:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sN2sE-0000Lg-QR
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 00:06:10 -0400
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN3cz-0008TU-Ge
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 00:54:30 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sN2s8-00036F-5g
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 00:06:09 -0400
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3d562882f4cso124719b6e.3
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 21:06:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN3cn-00012A-Hu
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 00:54:24 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42562a984d3so1762645e9.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 21:54:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719547562; x=1720152362;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QEi5+8U8YJj7uqGzkrc9EazSHbd0EQel3t1dgAbMB7k=;
- b=IQs4RwUtCxB6NQa7xJoi4uScTCDQeRN67lZ0ZLHrYirDiCEgUTbK+5uPNS3eCExM2q
- UkMKO1JwtnAuxmPy/J06e9dnVsEVLAiM/kgwqDLvgoOzuuu5LBwlQGWWhOG8MR/vIAwO
- PZAhiyJpZ85lnxx4olTjvXW1i5ZALB3sjsMMXlwosg+fQUzxa0Vv63Rd842GnBOxpA6I
- CjD/5MxnxNNoUSFuaNb7BQ5bPVktMb6TbXu3ij1uCQEyhAMBgLriLLU2M3s7xVvChGl+
- zgk/eEhvpZ1HzK/YwZZzrExhUyWAL5lZTSD6uAqTJ7RStLp86kriEynchFRUlP+Q4grd
- WFFA==
+ d=linaro.org; s=google; t=1719550454; x=1720155254; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KLGQaIGJKgcmO8Q0mlDn8rOb//ZdpOwWSY8cFandEdQ=;
+ b=Y3CaqbJeXpnIB3ilJxyv90CVkxVjqwYgcy5Rh90JkMcU0zpHXvWu9vplkFrvsyaSHU
+ KoxJ8Nt0dIGpWryr+KgQWkM/TXKBD1NfC8VdCzMziJ4ZRTsDcR7/pe07n0OCYJENPdON
+ JIrfBg7fOivjDXmylZ7JSlsHNBDhVBmYez14zDn4U6e1NXJo1bzfqsLWrLRpKvyMdDnP
+ z/JLqiBrWW/kpI9QZq1MragMWxh7fb+uu37W+6iyKt8cWOghHYXRi7vCpv9fZFtdQCe4
+ YItczNC/zpMUL2iCJTMM56N4viiKniB58ked3dOrSZhbS1cqLSMxkKjVzLphJ5cEaodQ
+ KvAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719547562; x=1720152362;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QEi5+8U8YJj7uqGzkrc9EazSHbd0EQel3t1dgAbMB7k=;
- b=QqbqFiyUkEQwgRub8BOHwlxPMWmwzOrrIKZZ/fglkFcNKgs7SPzP80Pz5aIxo+OHCP
- +e0/IyN5kt44k0N3Owis3SP4wgRFUuwgqOmXvTQpTCPU5T5NbtAGm9whZKm0JeARdveU
- O1cxuDHhFRtqSueok/yD2SCzMAjM0XrE+yLHVUXsctQFeE/S9eMIwDR81phHPxt6g2BY
- sj9VqksM1Km9bR6JrmZyGlfPjRtRtsVKkMD2ojWgOLT64r+EV+hjraxXTOhc2wlK//v7
- +aOJ3cRKiGm+Zgd9XFfjLrPljk/Uad1+JF1WryDzsCqKHt7TuX8KjRXLYWxACi9Ee/SL
- Abyw==
-X-Gm-Message-State: AOJu0YzuBlGu2AZ/h1NyJJRlCmR48AgCjRzGI0RyMXkqyiNj38BWey0Z
- qud7BOd1nAAKl+2iw06WV8IsE68FzJ9Ku6ZvNoRfaZ1cYDBmixen6fkSp3ULgvw=
-X-Google-Smtp-Source: AGHT+IGQ/E6Xdv9+Ri5o8NdQkZ51QP2DRnMOm8QBpbiIHgWo3GK6KOoS1RZFnRbifTDRUAJezJUeBQ==
-X-Received: by 2002:a05:6808:1b0d:b0:3d2:1d67:13e4 with SMTP id
- 5614622812f47-3d545a52de2mr19554551b6e.36.1719547562396; 
- Thu, 27 Jun 2024 21:06:02 -0700 (PDT)
-Received: from localhost ([157.82.204.135])
- by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-7080246c8edsm533428b3a.58.2024.06.27.21.06.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Jun 2024 21:06:01 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 28 Jun 2024 13:05:52 +0900
-Subject: [PATCH] system/physmem: Fix reference to dump-guest-core
+ d=1e100.net; s=20230601; t=1719550454; x=1720155254;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KLGQaIGJKgcmO8Q0mlDn8rOb//ZdpOwWSY8cFandEdQ=;
+ b=mQm1j2y6xJ41h9lZanpQ4ZKV/zgVQhS8p8N2jOtTdIVkfGZyKPYnkZ52L5kBbjsXxz
+ DWieY2RDFgi0X0rjlegn9FbnTCsUevt3IkQGGBMfuExxxZAT4P5PXQplREXykEiTr1Ig
+ 2sZVayIM4UB14ZqPlvjtpHQt9ypGa3nLYlSWpUmcJi6Gwb+mcAlgUiuget02Rxpg7El2
+ XDEHx04X4OckCE9L8XMiU4zbinI5cPtluP0pcZuIuwJSqnURDYY0/llh7uBqfr02ocqm
+ pEFfJbLFIi362qkwMIIWs2DC3kxIaSfGHBoycxhVhxcjaZk//y9YquHrwgEEu8KcxPBf
+ vSVA==
+X-Gm-Message-State: AOJu0YxjxnjqkW4rTg66ZjS723EUJEcMSZGT4Mf7Mhcr/pWYDv16q9Qm
+ zhvq3oaO2YYC6zmflInhLC5L/0wYdbn/5PLhu2ZWKcU7od17AoElbT3d0TXZvC4CyYMuxFapsEa
+ mRf01Gg==
+X-Google-Smtp-Source: AGHT+IEzs4V1l7GJ0ciXSMktqi9UN+/b0nixvcq6WFqPsklpgTETUzMjmjeH/by1vNmbqk+DnsR+Vw==
+X-Received: by 2002:a05:600c:929:b0:425:65c5:79b4 with SMTP id
+ 5b1f17b1804b1-42565c57b9amr26202885e9.26.1719550454028; 
+ Thu, 27 Jun 2024 21:54:14 -0700 (PDT)
+Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
+ [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256af5ba67sm17879975e9.19.2024.06.27.21.54.11
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 27 Jun 2024 21:54:13 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Luc Michel <luc.michel@amd.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 09/12] hw/sd/sdcard: Remove noise from sd_acmd_name()
+Date: Fri, 28 Jun 2024 06:53:20 +0200
+Message-ID: <20240628045323.86308-8-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240627164815.82606-1-philmd@linaro.org>
+References: <20240627164815.82606-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240628-dump-v1-1-c581d10f3646@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAJ82fmYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDM0MT3ZTS3AJd8yRz48QkQ4tkY8NEJaDSgqLUtMwKsDHRsbW1AM+uwLB
- WAAAA
-To: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::22a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,33 +98,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-dump_guest_core is exposed as dump-guest-core with QOM.
+These ACMD names weren't really useful, "UNKNOWN_ACMD" is simpler.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- system/physmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/sd/sd.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/system/physmem.c b/system/physmem.c
-index b7847db1a2c5..effa97184f25 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1521,7 +1521,7 @@ static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
-         if (ret) {
-             perror("qemu_madvise");
-             fprintf(stderr, "madvise doesn't support MADV_DONTDUMP, "
--                            "but dump_guest_core=off specified\n");
-+                            "but dump-guest-core=off specified\n");
-         }
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 7f93d363c7..19322c558f 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -259,23 +259,13 @@ static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
+ 
+ static const char *sd_acmd_name(SDState *sd, uint8_t cmd)
+ {
+-    static const char *acmd_abbrev[SDMMC_CMD_MAX] = {
+-        [14] = "DPS_spec",                  [15] = "DPS_spec",
+-        [16] = "DPS_spec",
+-        [18] = "SECU_spec",
+-        [52] = "SECU_spec",                 [53] = "SECU_spec",
+-        [54] = "SECU_spec",
+-        [56] = "SECU_spec",                 [57] = "SECU_spec",
+-        [58] = "SECU_spec",                 [59] = "SECU_spec",
+-    };
+     const SDProto *sdp = sd->proto;
+ 
+     if (sdp->acmd[cmd].handler) {
+-        assert(!acmd_abbrev[cmd]);
+         return sdp->acmd[cmd].name;
      }
+ 
+-    return acmd_abbrev[cmd] ? acmd_abbrev[cmd] : "UNKNOWN_ACMD";
++    return "UNKNOWN_ACMD";
  }
-
----
-base-commit: 046a64b9801343e2e89eef10c7a48eec8d8c0d4f
-change-id: 20240614-dump-7b73ab18c31a
-
-Best regards,
+ 
+ static uint8_t sd_get_dat_lines(SDState *sd)
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+2.41.0
 
 
