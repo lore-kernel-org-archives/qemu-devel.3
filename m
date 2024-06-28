@@ -4,55 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297E3C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 05:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D00C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 05:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN4GR-0004n1-Pi; Fri, 28 Jun 2024 01:35:15 -0400
+	id 1sN4VD-00079W-OB; Fri, 28 Jun 2024 01:50:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sN4GN-0004ly-Ga; Fri, 28 Jun 2024 01:35:12 -0400
+ id 1sN4V6-00078I-GT; Fri, 28 Jun 2024 01:50:27 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sN4GK-0006nE-Gb; Fri, 28 Jun 2024 01:35:11 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c16:1680:0:640:d42f:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0EDD160E34;
- Fri, 28 Jun 2024 08:35:01 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b511::1:0] (unknown
- [2a02:6b8:b081:b511::1:0])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id xYKMtY01NuQ0-IlIXMf4f; Fri, 28 Jun 2024 08:35:00 +0300
+ id 1sN4Ur-0006ZM-Nb; Fri, 28 Jun 2024 01:50:15 -0400
+Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:2799:0:640:ddd6:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id B1AEF60911;
+ Fri, 28 Jun 2024 08:50:02 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b511::1:0])
+ by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id rnK0hT0IYuQ0-XL9II4mD; Fri, 28 Jun 2024 08:50:01 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1719552900;
- bh=rug9sgwWPNNsVCj+k/2zbWP79s3VI/39i5UYYa3Qh04=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=yrDoi3zt+7xxtILhC0rtCJ/SxEKloO/+fxqsDNs+rrFpMSgd2mCoLhqILepf+jNmP
- 8UiqQwbrrNC3zf9eNpJu1dlUwHqj0NeD4cQkSy5qHrkRmAYBYlvaB3ay6xVLzdjKKi
- +jOg4WRhfG8w4IVGKgYJL/ncj/TS9QEbkDGt0RLU=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ s=default; t=1719553802;
+ bh=mKswfzNM7v5XXbJew6aV2d2JRhC7ll06sDQUOrQFTzE=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=Qerxdp4+/RByewkmm8BSse9BlsGUx61yFaoGv0j573IM6cQestLyMHHNt5XBXdDmY
+ R86+03YmT79IZJA+xIGIucGgfCbZiYiMKxikwqrtknLqele7sSvMUhpKkMzMHBakhp
+ Rje6N/Y7oRtLG2QoBoHdzLIVcJYVHaHqx/SpECuo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <faa585ef-b1f9-48e7-9d49-b362ad26e69e@yandex-team.ru>
-Date: Fri, 28 Jun 2024 08:34:59 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block/curl: explicitly assert that strchr returns
- non-NULL value
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
- qemu-trivial@nongnu.org
-References: <20240627153059.589070-1-vsementsov@yandex-team.ru>
- <Zn2p4v8jmkGB1on-@redhat.com>
-Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <Zn2p4v8jmkGB1on-@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
+ vsementsov@yandex-team.ru, qemu-trivial@nongnu.org
+Subject: [PATCH] block/curl: use strlen instead of strchr
+Date: Fri, 28 Jun 2024 08:49:42 +0300
+Message-Id: <20240628054942.657397-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
@@ -77,53 +70,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.06.24 21:05, Kevin Wolf wrote:
-> Am 27.06.2024 um 17:30 hat Vladimir Sementsov-Ogievskiy geschrieben:
->> strchr may return NULL if colon is not found. It seems clearer to
->> assert explicitly that we don't expect it here, than dereference 1 in
->> the next line.
->>
->> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->> ---
->>   block/curl.c | 4 +++-
->>   1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/block/curl.c b/block/curl.c
->> index 419f7c89ef..ccfffd6c12 100644
->> --- a/block/curl.c
->> +++ b/block/curl.c
->> @@ -219,7 +219,9 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
->>           && g_ascii_strncasecmp(header, accept_ranges,
->>                                  strlen(accept_ranges)) == 0) {
->>   
->> -        char *p = strchr(header, ':') + 1;
->> +        char *p = strchr(header, ':');
->> +        assert(p != NULL);
->> +        p += 1;
-> 
-> I'm not sure if this is actually much clearer because it doesn't say why
-> we don't expect NULL here. If you don't look at the context, it almost
-> looks like an assert() where proper error handling is needed. If you do,
-> then the original line is clear enough.
-> 
-> My first thought was that maybe what we want is a comment, but we
-> actually already know where the colon is. So how about this instead:
-> 
->      char *p = header + strlen(accept_ranges);
-> 
+We already know where colon is, so no reason to search for it. Also,
+avoid a code, which looks like we forget to check return value of
+strchr() to NULL.
 
-Oh, right. That's better.
+Suggested-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
 
-> 
->>           /* Skip whitespace between the header name and value. */
->>           while (p < end && *p && g_ascii_isspace(*p)) {
->> -- 
->> 2.34.1
->>
-> 
+This replaces my patch
+  [PATCH] block/curl: explicitly assert that strchr returns non-NULL value
+Supersedes: <20240627153059.589070-1-vsementsov@yandex-team.ru>
 
+ block/curl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/block/curl.c b/block/curl.c
+index 419f7c89ef..d03bfe4817 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -219,7 +219,7 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+         && g_ascii_strncasecmp(header, accept_ranges,
+                                strlen(accept_ranges)) == 0) {
+ 
+-        char *p = strchr(header, ':') + 1;
++        char *p = header + strlen(accept_ranges);
+ 
+         /* Skip whitespace between the header name and value. */
+         while (p < end && *p && g_ascii_isspace(*p)) {
 -- 
-Best regards,
-Vladimir
+2.34.1
 
 
