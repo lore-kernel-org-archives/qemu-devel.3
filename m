@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12300C30659
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E080C3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6JX-0000XO-3i; Fri, 28 Jun 2024 03:46:35 -0400
+	id 1sN6Ja-0001Jh-UZ; Fri, 28 Jun 2024 03:46:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6J9-0000Ro-Lr
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:46:11 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1sN6JZ-00015H-KP
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:46:37 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6J7-0004og-Rz
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:46:11 -0400
+ id 1sN6JX-0004qm-PV
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:46:37 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SDH5WBjz4wb7;
- Fri, 28 Jun 2024 17:46:07 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SDn5GQYz4w2N;
+ Fri, 28 Jun 2024 17:46:33 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SDG5Lm7z4w2K;
- Fri, 28 Jun 2024 17:46:06 +1000 (AEST)
-Message-ID: <e4ea32c7-a6d5-465d-b3df-71cacddc9457@kaod.org>
-Date: Fri, 28 Jun 2024 09:46:04 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SDm588wz4w2K;
+ Fri, 28 Jun 2024 17:46:32 +1000 (AEST)
+Message-ID: <a00dc8c6-5016-4f8c-888b-6760fec5ecd2@kaod.org>
+Date: Fri, 28 Jun 2024 09:46:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 21/98] hw/sd/sdcard: Duplicate READ_SINGLE_BLOCK /
- READ_MULTIPLE_BLOCK cases
+Subject: Re: [PATCH v42 22/98] hw/sd/sdcard: Convert READ_SINGLE_BLOCK to
+ generic_read_byte (CMD17)
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-22-philmd@linaro.org>
+ <20240628070216.92609-23-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240628070216.92609-22-philmd@linaro.org>
+In-Reply-To: <20240628070216.92609-23-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=GU6n=N6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -68,9 +68,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/28/24 9:00 AM, Philippe Mathieu-Daudé wrote:
-> In order to modify the READ_SINGLE_BLOCK case in the
-> next commit, duplicate it first.
+> From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 > 
+> Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
@@ -82,37 +82,51 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
+>   hw/sd/sd.c | 18 +++---------------
+>   1 file changed, 3 insertions(+), 15 deletions(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 8201f3245c..dfcb213aa9 100644
+> index dfcb213aa9..605269163d 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -1398,6 +1398,24 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+> @@ -1405,11 +1405,8 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+>               if (!address_in_range(sd, "READ_SINGLE_BLOCK", addr, sd->blk_len)) {
+>                   return sd_r1;
+>               }
+> -
+> -            sd->state = sd_sendingdata_state;
+> -            sd->data_start = addr;
+> -            sd->data_offset = 0;
+> -            return sd_r1;
+> +            sd_blk_read(sd, addr, sd->blk_len);
+> +            return sd_cmd_to_sendingdata(sd, req, addr, NULL, sd->blk_len);
+>   
+>           default:
+>               break;
+> @@ -2144,6 +2141,7 @@ uint8_t sd_read_byte(SDState *sd)
+>       case 6:  /* CMD6:   SWITCH_FUNCTION */
+>       case 9:  /* CMD9:   SEND_CSD */
+>       case 10: /* CMD10:  SEND_CID */
+> +    case 17: /* CMD17:  READ_SINGLE_BLOCK */
+>           sd_generic_read_byte(sd, &ret);
 >           break;
 >   
->       case 17:  /* CMD17:  READ_SINGLE_BLOCK */
-> +        addr = sd_req_get_address(sd, req);
-> +        switch (sd->state) {
-> +        case sd_transfer_state:
-> +
-> +            if (!address_in_range(sd, "READ_SINGLE_BLOCK", addr, sd->blk_len)) {
-> +                return sd_r1;
-> +            }
-> +
-> +            sd->state = sd_sendingdata_state;
-> +            sd->data_start = addr;
-> +            sd->data_offset = 0;
-> +            return sd_r1;
-> +
-> +        default:
-> +            break;
-> +        }
-> +        break;
-> +
+> @@ -2154,16 +2152,6 @@ uint8_t sd_read_byte(SDState *sd)
+>               sd->state = sd_transfer_state;
+>           break;
+>   
+> -    case 17:  /* CMD17:  READ_SINGLE_BLOCK */
+> -        if (sd->data_offset == 0) {
+> -            sd_blk_read(sd, sd->data_start, io_len);
+> -        }
+> -        ret = sd->data[sd->data_offset ++];
+> -
+> -        if (sd->data_offset >= io_len)
+> -            sd->state = sd_transfer_state;
+> -        break;
+> -
 >       case 18:  /* CMD18:  READ_MULTIPLE_BLOCK */
->           addr = sd_req_get_address(sd, req);
->           switch (sd->state) {
+>           if (sd->data_offset == 0) {
+>               if (!address_in_range(sd, "READ_MULTIPLE_BLOCK",
 
 
