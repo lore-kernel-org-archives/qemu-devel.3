@@ -4,88 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504DDC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 11:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 668F4C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 11:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN9hk-0007n8-9x; Fri, 28 Jun 2024 07:23:48 -0400
+	id 1sN9i7-0007wZ-Sj; Fri, 28 Jun 2024 07:24:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sN9hf-0007ly-Px
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 07:23:43 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sN9i7-0007wL-BG
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 07:24:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sN9hd-0007Qx-A8
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 07:23:43 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sN9i5-0007e7-GI
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 07:24:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719573819;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1719573848;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KNt7eLtY7ecstqNxk78TJ+szfD2wbEdl29MARsU7D2Y=;
- b=jNUDcFragScJC+WhMzIC6pcpsKZJiw6DpcFazyAdRx0Ins8ZOgbinWfz9rqqgJ9TEmU2ma
- aogWW0FsyY87rnxLUKvq5I+BtlwxjUAiVVwWfawQDl7l6WwBDt3HejQJGJWsA4JG03jojd
- ri3BO3/cgqFwiJLcHFL6FCVvyx26vZI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-wkKnxqUhMzyf60BawSEPSA-1; Fri, 28 Jun 2024 07:23:38 -0400
-X-MC-Unique: wkKnxqUhMzyf60BawSEPSA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-367380659a3so372714f8f.2
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 04:23:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719573816; x=1720178616;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KNt7eLtY7ecstqNxk78TJ+szfD2wbEdl29MARsU7D2Y=;
- b=BjdQURhdJ9jd+LtCEljTlaT8fU1+5aIU0CJAdQFI1TzUO3ZFEc3krZ9O4Z05UFcs1S
- 3wYqR+PSoNpE5gDN8FvIbdtR6+vjwCtEdLbm/EnzSKpuOWyQO5KiC067j45OO8Q51yOC
- yztmoiTfzkXujwjmlO+0L8DB7zyhSh14jPk58nw0x/40r9mhvxkIN3UK306wBfXRklfx
- t9clPevvsKKwWSbC+KqFJQWn/V+V5w7pt36rPLO4xc3J02LjZj1RjkXDpfNmzrxiJ2G1
- 2qrSVjhLmyiwjvH+ziZSpPMehDGMlHYAv6o7BzL8bzbYxeUKSppn/qzDHv7Ueerv41wW
- Kz5w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUTyEY95SirE57XjJ2oV8vHmmmOou/ltQhlX6fe/8jBPlX6IduDhcw924h/HpOx7z2RO3MSIt6bzwVbeZAjU8uRucOgOEQ=
-X-Gm-Message-State: AOJu0YyoUhKukWE/gsHdrQ930UMC3KZHMqtjagJr2eEQI1rAYy9MdjeI
- k+9fVvYpTCkNzE5wlbMtRam349sotYdXta4t7ijIVFR1dLj3HRwMMh/i0mL01cPBqYVWhsCOWnc
- idcs1EnDY0wyzkSDoFUIR61XEVM8Yj0g+eb7z7C/wlGNyElrW/MEYlmLFchj4
-X-Received: by 2002:a5d:64c6:0:b0:366:e935:61cb with SMTP id
- ffacd0b85a97d-366e93562ebmr14060245f8f.56.1719573816118; 
- Fri, 28 Jun 2024 04:23:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcynFjWrEl/13pzpDRG7vF7iJWLS/5dKYZUZyXyr3ZTvZxuEabvjN9q6kO4NZkLQU0AtiQ+Q==
-X-Received: by 2002:a5d:64c6:0:b0:366:e935:61cb with SMTP id
- ffacd0b85a97d-366e93562ebmr14060226f8f.56.1719573815756; 
- Fri, 28 Jun 2024 04:23:35 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0fb836sm2002980f8f.81.2024.06.28.04.23.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Jun 2024 04:23:34 -0700 (PDT)
-Date: Fri, 28 Jun 2024 13:23:34 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Ricardo Ribalda <ribalda@chromium.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org, Andrea Righi
- <andrea.righi@canonical.com>
-Subject: Re: [PATCH v3 2/3] hw/i386/acpi-build: Return a pre-computed _PRT
- table
-Message-ID: <20240628132334.50d14f85@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240607141809.1637137-3-ribalda@chromium.org>
-References: <20240607141809.1637137-1-ribalda@chromium.org>
- <20240607141809.1637137-3-ribalda@chromium.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ bh=pWJku2JMz2ui+sxKLTOGxC7iW5eKu7vV1hR7tyySopA=;
+ b=dH+IFmpwtPFxTRC0pzSnMPAlYz/rtVaCNpYJXqkqR7AVgxPAimJDK/lDWZORlp6lzvWuxv
+ 2W4SBrhe22ffyBpKouw+LUyEj2NAPPhOQTljMoIjD/7LsnHCMGhqtINxSexNxmGJJmNrKC
+ w8U/pfySPauGfqAnsgZu4DSOikJ4+d4=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-aZFkDRyENeyOEpDSDAWxJg-1; Fri,
+ 28 Jun 2024 07:24:05 -0400
+X-MC-Unique: aZFkDRyENeyOEpDSDAWxJg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 03463197731D; Fri, 28 Jun 2024 11:24:04 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.106])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 87FAA300021A; Fri, 28 Jun 2024 11:23:56 +0000 (UTC)
+Date: Fri, 28 Jun 2024 12:23:53 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Roy Hopkins <roy.hopkins@suse.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?utf-8?B?SsO2cmc=?= Roedel <jroedel@suse.com>
+Subject: Re: [PATCH v3 04/15] hw/core/machine: Add igvm-cfg object and
+ processing for IGVM files
+Message-ID: <Zn6dSd6NiZl0_NeK@redhat.com>
+References: <cover.1718979106.git.roy.hopkins@suse.com>
+ <1b2fe6b03cba51f2f64c899163b9a0b7eea35b47.1718979106.git.roy.hopkins@suse.com>
+ <Znl74gNWUQQxR_oE@redhat.com>
+ <2171f08dc6630e20201d04cd96f84366111fae20.camel@suse.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2171f08dc6630e20201d04cd96f84366111fae20.camel@suse.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -106,245 +97,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri,  7 Jun 2024 14:17:25 +0000
-Ricardo Ribalda <ribalda@chromium.org> wrote:
+On Fri, Jun 28, 2024 at 12:09:59PM +0100, Roy Hopkins wrote:
+> On Mon, 2024-06-24 at 15:00 +0100, Daniel P. Berrangé wrote:
+> > On Fri, Jun 21, 2024 at 03:29:07PM +0100, Roy Hopkins wrote:
+> > > An IGVM file contains configuration of guest state that should be
+> > > applied during configuration of the guest, before the guest is started.
+> > > 
+> > > This patch allows the user to add an igvm-cfg object to the machine
+> > > configuration that allows an IGVM file to be configured that will be
+> > > applied to the guest before it is started.
+> > > 
+> > > If an IGVM configuration is provided then the IGVM file is processed at
+> > > the end of the board initialization, before the state transition to
+> > > PHASE_MACHINE_INITIALIZED.
+> > > 
+> > > Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+> > > ---
+> > >  include/hw/boards.h |  2 ++
+> > >  hw/core/machine.c   | 20 ++++++++++++++++++++
+> > >  qemu-options.hx     | 25 +++++++++++++++++++++++++
+> > >  3 files changed, 47 insertions(+)
 
-> When qemu runs without kvm acceleration the ACPI executions take a great
-> amount of time. If they take more than the default time (30sec), the
-> ACPI calls fail and the system might not behave correctly.
-> 
-> Now the _PRT table is computed on the fly. We can drastically reduce the
-> execution of the _PRT method if we return a pre-computed table.
-> 
-> Without this patch:
-> [   51.343484] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-> [   51.527032] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-> [   51.530049] virtio-pci 0000:00:02.0: can't derive routing for PCI INT A
-> [   51.530797] virtio-pci 0000:00:02.0: PCI INT A: no GSI
-> [   81.922901] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-> [   82.103534] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-> [   82.106088] virtio-pci 0000:00:04.0: can't derive routing for PCI INT A
-> [   82.106761] virtio-pci 0000:00:04.0: PCI INT A: no GSI
-> [  112.192568] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-> [  112.486687] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-> [  112.489554] virtio-pci 0000:00:05.0: can't derive routing for PCI INT A
-> [  112.490027] virtio-pci 0000:00:05.0: PCI INT A: no GSI
-> [  142.559448] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-> [  142.718596] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-> [  142.722889] virtio-pci 0000:00:06.0: can't derive routing for PCI INT A
-> [  142.724578] virtio-pci 0000:00:06.0: PCI INT A: no GSI
-> 
-> With this patch:
-> [   22.938076] ACPI: \_SB_.LNKB: Enabled at IRQ 10
-> [   24.214002] ACPI: \_SB_.LNKD: Enabled at IRQ 11
-> [   25.465170] ACPI: \_SB_.LNKA: Enabled at IRQ 10
-> [   27.944920] ACPI: \_SB_.LNKC: Enabled at IRQ 11
-> 
-> ACPI disassembly:
->         Scope (PCI0)
->         {
->             Method (_PRT, 0, NotSerialized)  // _PRT: PCI Routing Table
->             {
->                 Return (Package (0x80)
->                 {
->                     Package (0x04)
->                     {
->                         0xFFFF,
->                         Zero,
->                         LNKD,
->                         Zero
->                     },
-> 
->                     Package (0x04)
->                     {
->                         0xFFFF,
->                         One,
->                         LNKA,
->                         Zero
->                     },
-> 
->                     Package (0x04)
->                     {
->                         0xFFFF,
->                         0x02,
->                         LNKB,
->                         Zero
->                     },
-> 
->                     Package (0x04)
->                     {
->                         0xFFFF,
->                         0x03,
->                         LNKC,
->                         Zero
->                     },
-> 
->                     Package (0x04)
->                     {
->                         0x0001FFFF,
->                         Zero,
->                         LNKS,
->                         Zero
->                     },
-> Context: https://lore.kernel.org/virtualization/20240417145544.38d7b482@imammedo.users.ipa.redhat.com/T/#t
-> 
-> Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+snip
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
->  hw/i386/acpi-build.c | 120 ++++++++-----------------------------------
->  1 file changed, 22 insertions(+), 98 deletions(-)
+> > This adds igvm-cfg for all machines, regardless of architecture target.
+> > 
+> > Are igvm files fully cross-platform portable, or should we just put
+> > this into the TYPE_X86_MACHINE base class to limit it ?
+> > 
+> > It at least reports errors if I try to load an IGVM file with
+> > qemu-system-aarch64 + virt type
+> > 
+> > $ ./build/qemu-system-aarch64 -object igvm-cfg,file=../buildigvm/ovmf-
+> > sev.igvm,id=igvm -machine virt,igvm-cfg=igvm
+> > qemu-system-aarch64: IGVM file does not describe a compatible supported
+> > platform
+> > 
+> > so that's good.
 > 
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index 53f804ac16..03216a6f29 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -725,120 +725,44 @@ static Aml *aml_pci_pdsm(void)
->      return method;
->  }
->  
-> -/**
-> - * build_prt_entry:
-> - * @link_name: link name for PCI route entry
-> - *
-> - * build AML package containing a PCI route entry for @link_name
-> - */
-> -static Aml *build_prt_entry(const char *link_name)
-> -{
-> -    Aml *a_zero = aml_int(0);
-> -    Aml *pkg = aml_package(4);
-> -    aml_append(pkg, a_zero);
-> -    aml_append(pkg, a_zero);
-> -    aml_append(pkg, aml_name("%s", link_name));
-> -    aml_append(pkg, a_zero);
-> -    return pkg;
-> -}
-> -
->  /*
-> - * initialize_route - Initialize the interrupt routing rule
-> - * through a specific LINK:
-> - *  if (lnk_idx == idx)
-> - *      route using link 'link_name'
-> - */
-> -static Aml *initialize_route(Aml *route, const char *link_name,
-> -                             Aml *lnk_idx, int idx)
-> -{
-> -    Aml *if_ctx = aml_if(aml_equal(lnk_idx, aml_int(idx)));
-> -    Aml *pkg = build_prt_entry(link_name);
-> -
-> -    aml_append(if_ctx, aml_store(pkg, route));
-> -
-> -    return if_ctx;
-> -}
-> -
-> -/*
-> - * build_prt - Define interrupt rounting rules
-> + * build_prt - Define interrupt routing rules
->   *
->   * Returns an array of 128 routes, one for each device,
->   * based on device location.
->   * The main goal is to equally distribute the interrupts
->   * over the 4 existing ACPI links (works only for i440fx).
-> - * The hash function is  (slot + pin) & 3 -> "LNK[D|A|B|C]".
-> + * The hash function is: (slot + pin) & 3 -> "LNK[D|A|B|C]".
->   *
->   */
->  static Aml *build_prt(bool is_pci0_prt)
->  {
-> -    Aml *method, *while_ctx, *pin, *res;
-> +    const int nroutes = 128;
-> +    Aml *rt_pkg, *method;
-> +    int pin;
->  
->      method = aml_method("_PRT", 0, AML_NOTSERIALIZED);
-> -    res = aml_local(0);
-> -    pin = aml_local(1);
-> -    aml_append(method, aml_store(aml_package(128), res));
-> -    aml_append(method, aml_store(aml_int(0), pin));
-> +    rt_pkg = aml_varpackage(nroutes);
->  
-> -    /* while (pin < 128) */
-> -    while_ctx = aml_while(aml_lless(pin, aml_int(128)));
-> -    {
-> -        Aml *slot = aml_local(2);
-> -        Aml *lnk_idx = aml_local(3);
-> -        Aml *route = aml_local(4);
-> -
-> -        /* slot = pin >> 2 */
-> -        aml_append(while_ctx,
-> -                   aml_store(aml_shiftright(pin, aml_int(2), NULL), slot));
-> -        /* lnk_idx = (slot + pin) & 3 */
-> -        aml_append(while_ctx,
-> -            aml_store(aml_and(aml_add(pin, slot, NULL), aml_int(3), NULL),
-> -                      lnk_idx));
-> -
-> -        /* route[2] = "LNK[D|A|B|C]", selection based on pin % 3  */
-> -        aml_append(while_ctx, initialize_route(route, "LNKD", lnk_idx, 0));
-> -        if (is_pci0_prt) {
-> -            Aml *if_device_1, *if_pin_4, *else_pin_4;
-> -
-> -            /* device 1 is the power-management device, needs SCI */
-> -            if_device_1 = aml_if(aml_equal(lnk_idx, aml_int(1)));
-> -            {
-> -                if_pin_4 = aml_if(aml_equal(pin, aml_int(4)));
-> -                {
-> -                    aml_append(if_pin_4,
-> -                        aml_store(build_prt_entry("LNKS"), route));
-> -                }
-> -                aml_append(if_device_1, if_pin_4);
-> -                else_pin_4 = aml_else();
-> -                {
-> -                    aml_append(else_pin_4,
-> -                        aml_store(build_prt_entry("LNKA"), route));
-> -                }
-> -                aml_append(if_device_1, else_pin_4);
-> -            }
-> -            aml_append(while_ctx, if_device_1);
-> +    for (pin = 0; pin < nroutes; pin++) {
-> +        Aml *pkg = aml_package(4);
-> +        int slot = pin >> 2;
-> +
-> +        aml_append(pkg, aml_int((slot << 16) | 0xFFFF));
-> +        aml_append(pkg, aml_int(pin & 3));
-> +        /* device 1 is the power-management device, needs SCI */
-> +        if (is_pci0_prt && pin == 4) {
-> +            aml_append(pkg, aml_name("%s", "LNKS"));
->          } else {
-> -            aml_append(while_ctx, initialize_route(route, "LNKA", lnk_idx, 1));
-> +            const char link_name[][5] = {"LNKD", "LNKA", "LNKB", "LNKC"};
-> +            int hash = (slot + pin) & 3;
-> +            aml_append(pkg, aml_name("%s", link_name[hash]));
->          }
-> -        aml_append(while_ctx, initialize_route(route, "LNKB", lnk_idx, 2));
-> -        aml_append(while_ctx, initialize_route(route, "LNKC", lnk_idx, 3));
-> -
-> -        /* route[0] = 0x[slot]FFFF */
-> -        aml_append(while_ctx,
-> -            aml_store(aml_or(aml_shiftleft(slot, aml_int(16)), aml_int(0xFFFF),
-> -                             NULL),
-> -                      aml_index(route, aml_int(0))));
-> -        /* route[1] = pin & 3 */
-> -        aml_append(while_ctx,
-> -            aml_store(aml_and(pin, aml_int(3), NULL),
-> -                      aml_index(route, aml_int(1))));
-> -        /* res[pin] = route */
-> -        aml_append(while_ctx, aml_store(route, aml_index(res, pin)));
-> -        /* pin++ */
-> -        aml_append(while_ctx, aml_increment(pin));
-> +        aml_append(pkg, aml_int(0));
-> +        aml_append(rt_pkg, pkg);
->      }
-> -    aml_append(method, while_ctx);
-> -    /* return res*/
-> -    aml_append(method, aml_return(res));
-> +
-> +    aml_append(method, aml_return(rt_pkg));
->  
->      return method;
->  }
+> The IGVM specification is designed to support non X86 platforms, hence its
+> inclusion for all machines. Support for non-X86 is likely to result in changes
+> to the specification though that will impact the library we depend on.
+> 
+> There would obviously need to be some further implementation to support non-X86
+> machines in QEMU, in the same way that further implementation is required to
+> support other X86 confidential computing platforms such as TDX.
+> 
+> So, this poses the question: should we move it to TYPE_X86_MACHINE as the
+> current supported platforms are all on X86? Or should we leave it where it is
+> with a view to adding non X86 platform support with less impact later? I'd
+> appreciate your views on this.
+
+The pro of putting it in the base machine class is that we don't need to
+repeat the property creation in each machine as we broaden support to other
+arches, I presume aarch64 is probably most likely future candidate.
+
+The downside of putting it in the base machine class is that it limits
+mgmt app ability to probe QEMU for support. ie it wouldn't be possible
+to probe whether individual machines support it or not, as we broaden
+QEMU support.
+
+Then again, we will already face that limited ability to probe even on
+x86, as we won't be able to query whether IGVM is SNP only, or has been
+extended to TDX too.
+
+With my libvirt hat on, probing is still probably the more important
+factor, so would push towards putting the property just to individual
+machine classes that definitely have been wired up to be able to use
+it.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
