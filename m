@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B152C3064D
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC24C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNCpI-0001cD-PY; Fri, 28 Jun 2024 10:43:48 -0400
+	id 1sNCuV-0004EK-Af; Fri, 28 Jun 2024 10:49:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNCpH-0001c5-Aw
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:43:47 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1sNCuT-0004DT-1H
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:49:09 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNCpD-0008Bq-Dj
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:43:46 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a6fe7a0cb58so35029866b.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:43:43 -0700 (PDT)
+ id 1sNCuR-0000Hu-G3
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:49:08 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-57d2fc03740so911826a12.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:49:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719585822; x=1720190622; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719586146; x=1720190946; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=q5kkp9Ko6ZNcq0+Spd9RzS8aaAAfUlw3qjDLQ2OSKm4=;
- b=iQYJIQJPHe1RQrh8WYBs0RoU+k9tqT1Ti0cgc6umsxgSCGse7fkAA5MpAoYk09AYqi
- CEJBM7TCBeTsBOcoZLnEBiBi4p37u6bHR6WXEgvV7yMdNHKqpXpQ3TexKF14GA7uSg9p
- kTeEaUk1hiwIKt8vh36rMjUhgm92YQreFcQYvRw+tl4AIlDih3ZH6TPES43IN/vVHosL
- N207BSyjGkAm18roa5nN8x6FeFQ5KdtPB9beXIFlvd6i/hDGj4qVylx2PyVlMyHKMopD
- Ke+L7JfpCcMRcu6WUQMTQUY4/SyLvRydGGID5PNxNUYtIDme1sbg9nKOYDU2Hv7ccPYX
- O+Qg==
+ bh=97DAXS2tfG8ccBKooFzNy0yi9pdqTX24aMCecatGfio=;
+ b=vVXnyGjgiEY+s4wKQfnWaK6bAMYNE4kFyx5zLs2zKjhQ/ejwcbd+nB/YsZEfJj6mwk
+ wD1cJssvSW7Ks2KoMqwEPuZ5FSZqF2QIi+kcAzaKjdI1cVa2kr8Gx6NAZiuGWhKfZ5Zq
+ /W+YU8FrocRLmMiL+aOLu+8kkpFHhY4kWYlWBbbH7STgTP/DeEVWYSO9UMpxGDDkLVkY
+ X/S7B5x+3/mRVKsnl+7gZqA3JIhrHZU2tUwkG/OG/lq+Vn9gNL/ASA9nTVYKz4g3Trbc
+ SU2WcQLVntGwLfA3fUqEY96GHM3TtQ3RkGLbFiXSANiq6AN0VXKPCt1MoJllD/BOgXua
+ pZRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719585822; x=1720190622;
+ d=1e100.net; s=20230601; t=1719586146; x=1720190946;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=q5kkp9Ko6ZNcq0+Spd9RzS8aaAAfUlw3qjDLQ2OSKm4=;
- b=GdofU0o7ze7BBZlalw6PJdTJNEcDwa970hBSZBVTmCc5Ob6TyEOhlR3TZmwWfnZDhv
- y4TpZs3KqUTao9nNKbInQDrfQMR2rLASfAgiye3e2eKxYx+MsBm2jJGERkKlLv2qwykK
- MlL0nfqL4oZxjsRfgQN9FchDmKxEAcQcWTes4SnDjwdl0+988oPxrq8VRK+tGvyGDOkM
- xZ/OaxCFjZ1nYBCNzqfM6JXEaD2S2hlVKaVW8jMe/2eeLwHtw/fQYeAsUR+I93KUKyx9
- wC9Q+4BEpuSKQvU+mrupQtjQ37SX71Iu/mtTTFGqkE0eii287BNBeKD8kwrnBoQFFvIg
- 7GRg==
-X-Gm-Message-State: AOJu0Yxe8S8Yum7tinftUDCUh3GryGjGG875B2CkaVRtBUMTv5DCPCM/
- i8ukzWyuFtORZOrOgYKlcsSU8vWSwW+W3AKLsNZozLZyiyGDXWpx36kiHKH4DFuyD6XKz5ySDn5
- DMWdwXeGrBUCv8t8s9KBvVWc2JaAFhJ+t2nloDBdQ+c51IIgy
-X-Google-Smtp-Source: AGHT+IHWiPXQKo3q4vwwc/ep8Kmx9+/urxljFl9V/hZhoSzUU0eXyw6833Hah9JC2YI9rary5ewvrRQWjpeVihCfIWE=
-X-Received: by 2002:a50:d653:0:b0:57d:3b8:85e6 with SMTP id
- 4fb4d7f45d1cf-57d4bddfba2mr14062484a12.39.1719585821767; Fri, 28 Jun 2024
- 07:43:41 -0700 (PDT)
+ bh=97DAXS2tfG8ccBKooFzNy0yi9pdqTX24aMCecatGfio=;
+ b=vynb5l9L6PnukZQbtlEVpAS8I5SZDQiN7hhXnhUljHobBTgd0aSoETYBLTcTRkrExh
+ dTJIBhCPGz33FHMxouPPFD9n+gX3ID5+a9GqWXq72ZguiRaTkHUqL2T8sGbvjc1RTl41
+ Dv9m3qiB4WpOpcDALT0+L9jnjiI9HwpgLypnThoOaAuSp7vxKkxoKEjfyQgB9zf8OXqg
+ 3c/JIVXFenJfLQdoy5j2zUMnnlR9lt3n6VIIoHlgDpwEwPuJlTWhoWuOUvFWKBOvR/KS
+ JSeN/hF/V2NOhhtVgzq5gYVkCafq4Q5CYw480lqTe8CtZQo88hvcZudm08nG5DndhV/Z
+ FZjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVIaF+CsptjiPRRifVYKjJhZ9HegeeMzyPN+bwMhe4OV8E4oifFDpFVy+XTR+0dDcYz4BHygvHDORPL5nyfV9jbJbTHW+0=
+X-Gm-Message-State: AOJu0YzyjnZdZ+6J4aKGlPlGlDWWBs0fahUgHxmOsSkbp0QCbP4KYrA9
+ R7NDqRoGm1PQubLUrcGn9W5ks3CsMmCvERviP2G2I2UjdvmvR8wk9ypoaQi8kowWddQGITytCH+
+ d1QNELtpNbwYhKBthta2bibwYlY53oBnGFUAzNA==
+X-Google-Smtp-Source: AGHT+IFqqsg73jHltvmZI/pdX1a85V/fZnxtGPAMNcP2UPxtF3zkF+e5kXtMNzzcsW4s73+De36sy1qtvt7JTQ1kK0w=
+X-Received: by 2002:a05:6402:34ce:b0:586:1517:872c with SMTP id
+ 4fb4d7f45d1cf-58615178745mr2011348a12.15.1719586145812; Fri, 28 Jun 2024
+ 07:49:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240626211623.3510701-1-venture@google.com>
-In-Reply-To: <20240626211623.3510701-1-venture@google.com>
+References: <20240621125906.1300995-1-sai.pavan.boddu@amd.com>
+In-Reply-To: <20240621125906.1300995-1-sai.pavan.boddu@amd.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 28 Jun 2024 15:43:31 +0100
-Message-ID: <CAFEAcA_0Q8YN3juTCXPJL0C7YxiqyiWhS2XDEnTpd-U9kG092A@mail.gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: Update my family name
-To: Patrick Leis <venture@google.com>
-Cc: qemu-devel@nongnu.org
+Date: Fri, 28 Jun 2024 15:48:55 +0100
+Message-ID: <CAFEAcA9tMf5oQGtX51NvX04abyfNJCpaEbvSjYtfg-FdprjieQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/3] Add boot-mode property for zynq
+To: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ "Edgar E . Iglesias" <edgar.iglesias@gmail.com>, francisco.iglesias@amd.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,31 +90,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 26 Jun 2024 at 22:16, Patrick Leis <venture@google.com> wrote:
+On Fri, 21 Jun 2024 at 13:59, Sai Pavan Boddu <sai.pavan.boddu@amd.com> wrote:
 >
-> Signed-off-by: Patrick Leis <venture@google.com>
-> ---
->  MAINTAINERS | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Add a way to update the boot-mode via machine properties.
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 19f67dc5d2..13255d4a3b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2496,7 +2496,7 @@ F: hw/net/tulip.c
->  F: hw/net/tulip.h
+> Changes for V2:
+>     Make boot-mode property work with string,
+>     Fixed few code style issues,
+>     Added zynq board doc.
+> Changes for V3:
+>     Mentioned about zynq doc in MAINTAINERS file,
+>     Stick to small case for mentioning boot modes in doc,
+>     fixed commit message to mention right property name.
+> Changes for V4:
+>     Use strncasecmp,
+>     Fix boot mode names to use small case in few other places,
+>     Fix code indentation.
 >
->  pca954x
-> -M: Patrick Venture <venture@google.com>
-> +M: Patrick Leis <venture@google.com>
->  S: Maintained
->  F: hw/i2c/i2c_mux_pca954x.c
->  F: include/hw/i2c/i2c_mux_pca954x.h
-> --
-> 2.45.2.741.gdbec12cfda-goog
+> Sai Pavan Boddu (3):
+>   hw/misc/zynq_slcr: Add boot-mode property
+>   hw/arm/xilinx_zynq: Add boot-mode property
+>   docs/system/arm: Add a doc for zynq board
 
 
-Applied to target-arm.next (since I'm doing a pullreq anyway), thanks.
+
+Applied to target-arm.next, thanks.
 
 -- PMM
 
