@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E3B4C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9051EC3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6bd-0002eC-CN; Fri, 28 Jun 2024 04:05:17 -0400
+	id 1sN6c2-0004cR-SA; Fri, 28 Jun 2024 04:05:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6ba-0002E1-AU
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:05:14 -0400
+ id 1sN6c0-0004JC-5M
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:05:40 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6bY-0007Kf-KE
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:05:14 -0400
+ id 1sN6by-0007Sc-5r
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:05:39 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SfG2rbzz4w2N;
- Fri, 28 Jun 2024 18:05:10 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Sfm1MSXz4w2Q;
+ Fri, 28 Jun 2024 18:05:36 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SfF2SGLz4w2Q;
- Fri, 28 Jun 2024 18:05:09 +1000 (AEST)
-Message-ID: <7056f84b-bcfc-4238-8a73-847ab40edbfb@kaod.org>
-Date: Fri, 28 Jun 2024 10:05:08 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Sfl1Gtxz4w2N;
+ Fri, 28 Jun 2024 18:05:34 +1000 (AEST)
+Message-ID: <dcf7a7dd-4334-4fc8-95df-3e03435918d4@kaod.org>
+Date: Fri, 28 Jun 2024 10:05:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 77/98] hw/sd/sdcard: Remove noise from sd_cmd_name()
+Subject: Re: [SPAM] [PATCH v42 78/98] hw/sd/sdcard: Remove default case in
+ read/write on DAT lines
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-78-philmd@linaro.org>
+ <20240628070216.92609-79-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240628070216.92609-78-philmd@linaro.org>
+In-Reply-To: <20240628070216.92609-79-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -67,7 +68,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/28/24 9:01 AM, Philippe Mathieu-Daudé wrote:
-> These CMD names weren't really useful, "UNKNOWN_CMD" is simpler.
+> All read/write on DAT lines are explicitly handled.
+> Reaching this point would be a programming error:
+> replace by an assertion.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
@@ -80,25 +83,49 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 5 -----
->   1 file changed, 5 deletions(-)
+>   hw/sd/sd.c | 9 ++++-----
+>   1 file changed, 4 insertions(+), 5 deletions(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 19322c558f..0a7b422b2c 100644
+> index 0a7b422b2c..64621d4340 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -241,12 +241,7 @@ static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
->   {
->       static const char *cmd_abbrev[SDMMC_CMD_MAX] = {
->           [18]    = "READ_MULTIPLE_BLOCK",
-> -                                            [21]    = "DPS_spec",
->                                               [25]    = "WRITE_MULTIPLE_BLOCK",
-> -        [26]    = "MANUF_RSVD",
-> -        [40]    = "DPS_spec",
-> -        [60]    = "MANUF_RSVD",             [61]    = "MANUF_RSVD",
-> -        [62]    = "MANUF_RSVD",             [63]    = "MANUF_RSVD",
->       };
->       const SDProto *sdp = sd->proto;
+> @@ -1951,7 +1951,6 @@ int sd_do_command(SDState *sd, SDRequest *req,
+>           /* Valid command, we can update the 'state before command' bits.
+>            * (Do this now so they appear in r1 responses.)
+>            */
+> -        sd->current_cmd = req->cmd;
+>           sd->card_status = FIELD_DP32(sd->card_status, CSR,
+>                                        CURRENT_STATE, last_state);
+>       }
+> @@ -2016,6 +2015,8 @@ send_response:
+>       qemu_hexdump(stderr, "Response", response, rsplen);
+>   #endif
 >   
+> +    sd->current_cmd = rtype == sd_illegal ? 0 : req->cmd;
+> +
+>       return rsplen;
+>   }
+>   
+> @@ -2171,8 +2172,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
+>           break;
+>   
+>       default:
+> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: unknown command\n", __func__);
+> -        break;
+> +        g_assert_not_reached();
+>       }
+>   }
+>   
+> @@ -2238,8 +2238,7 @@ uint8_t sd_read_byte(SDState *sd)
+>           break;
+>   
+>       default:
+> -        qemu_log_mask(LOG_GUEST_ERROR, "%s: unknown command\n", __func__);
+> -        return 0x00;
+> +        g_assert_not_reached();
+>       }
+>   
+>       return ret;
 
 
