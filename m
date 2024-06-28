@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D9BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 01:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B24C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 02:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN0nn-0005Or-NX; Thu, 27 Jun 2024 21:53:27 -0400
+	id 1sN0uH-0006c3-5O; Thu, 27 Jun 2024 22:00:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sN0nl-0005Oc-Vt
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 21:53:25 -0400
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sN0uE-0006aW-M8
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 22:00:06 -0400
 Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
  helo=mail.comstyle.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sN0nk-0008Ny-Hq
- for qemu-devel@nongnu.org; Thu, 27 Jun 2024 21:53:25 -0400
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sN0uC-0002D6-RB
+ for qemu-devel@nongnu.org; Thu, 27 Jun 2024 22:00:06 -0400
 Received: from mail.comstyle.com (localhost [127.0.0.1])
- by mail.comstyle.com (Postfix) with ESMTP id 4W9JP81Vmtz8PbP;
- Thu, 27 Jun 2024 21:53:16 -0400 (EDT)
+ by mail.comstyle.com (Postfix) with ESMTP id 4W9JXz0yqsz8PbP;
+ Thu, 27 Jun 2024 22:00:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
  :from:to:cc:subject:message-id:mime-version:content-type; s=
- default; bh=RerCnXeuqCG2cXWQLSB0LviMs1Y2HmwkEQuXTgpgS7w=; b=Pti1
- xhqhWNWsudG6OiNR86CckE9AP8f73tMym8ZYSUdOUUC+1tSE4xPEGzUnXG/UxW3L
- S6qqxR6l2QnoUlFVMOrJLe3KJAcyO/VehScJmgRxNrXzL82Ers7oZJbxibFFXf+h
- 5rCgEpG2Dk2MLH2umlMksnbML+fms99DJdNfF9E=
+ default; bh=57jHEWmlqqEUsR4+CPDJ7U+k3iF/7oQZQKKS6mmDZuY=; b=JcXn
+ Ri4fLPDOzSQL74oZCOH75CgjUH6IRKmkao3ixOSNPdR7L5S1Mo+0JfVGpyzIlXZf
+ OO3UY06P4AmVjgXOmGPyWV0GQntRNGWCFi1YqLBpxEHVqpqQne1QBHPPdKBS3+yn
+ Z9wKKy8NDHZROuPHx4ZHbeUB0Fjlqg0qJ/h8VA8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
  :cc:subject:message-id:mime-version:content-type; q=dns; s=
- default; b=GPlPnMGia4hy+QGTFGjsnFGpwsQqTaWnIYdcC7xZmm7FbCcAiATrS
- xv9vSqa2UaxtRdelh8hLk6Fyal8hYzTkACgr2tye9SLfvp7foT4jLdU6IC+CrrzM
- 0dRz+dS7X8eMSwQb09152tlSlXRDrOX13fTUieZQRJq1CfRBct4Wv4=
+ default; b=fE/yAyHWzni2C/3WjNglWPYm9erVFRZ1PTkCYsUDWlBdEpzRhAJt6
+ LEd86GA6wO68U4usN2XLmG0rtT0lx8oUuuFw2YH8eyrHusFgrEB27KcCTDxQrdyi
+ Of09edatdDrRFaEecKbMSUMJWl6DIiYFcdW+4IlBIzn8P06EleB7ck=
 Received: from humpty.home.comstyle.com (unknown
  [IPv6:2001:470:b050:3:6892:e4ed:172c:18e4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
  (No client certificate requested) (Authenticated sender: brad)
- by mail.comstyle.com (Postfix) with ESMTPSA id 4W9JP76HjFz8PbN;
- Thu, 27 Jun 2024 21:53:15 -0400 (EDT)
-Date: Thu, 27 Jun 2024 21:53:14 -0400
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4W9JXz09qPz8PbN;
+ Thu, 27 Jun 2024 22:00:03 -0400 (EDT)
+Date: Thu, 27 Jun 2024 22:00:01 -0400
 From: Brad Smith <brad@comstyle.com>
 To: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org
 Subject: [PATCH] util/cpuinfo-ppc: Add FreeBSD support
-Message-ID: <Zn4Xir2ADAxq3GNI@humpty.home.comstyle.com>
+Message-ID: <Zn4ZIYX0uxwHf3I-@humpty.home.comstyle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -75,8 +75,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 util/cpuinfo-ppc: Add FreeBSD support
 
-Signed-off-by: default avatarBrad Smith <brad@comstyle.com>
+Signed-off-by: Brad Smith <brad@comstyle.com>
 ---
+With corrected sign-off.
+
+Also this was based on the tcg-next branch.
+
  util/cpuinfo-ppc.c | 7 ++++++-
  1 file changed, 6 insertions(+), 1 deletion(-)
 
