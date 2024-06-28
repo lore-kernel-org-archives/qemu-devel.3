@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBBAC3064D
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A32B9C3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:32:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN64X-00080O-6E; Fri, 28 Jun 2024 03:31:05 -0400
+	id 1sN65G-0008Jj-Sj; Fri, 28 Jun 2024 03:31:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN64R-0007yE-2y
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:30:59 -0400
+ id 1sN64m-00084z-Oy
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:31:24 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN64M-0007YM-35
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:30:58 -0400
+ id 1sN64h-0007bm-Lo
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:31:17 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Rth0HPmz4wcC;
- Fri, 28 Jun 2024 17:30:52 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Rv12nQzz4wcg;
+ Fri, 28 Jun 2024 17:31:09 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Rtg0Bcyz4wc8;
- Fri, 28 Jun 2024 17:30:50 +1000 (AEST)
-Message-ID: <4e026c16-4f08-46fa-a3ca-4a43591c81b9@kaod.org>
-Date: Fri, 28 Jun 2024 09:30:48 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Rv02c0jz4wcC;
+ Fri, 28 Jun 2024 17:31:08 +1000 (AEST)
+Message-ID: <cf64829c-f010-452c-9a39-7c5034b0d348@kaod.org>
+Date: Fri, 28 Jun 2024 09:31:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 03/98] hw/sd/sdcard: Track last command used to help
- logging
+Subject: Re: [PATCH v42 04/98] hw/sd/sdcard: Trace block offset in READ/WRITE
+ data accesses
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-4-philmd@linaro.org>
+ <20240628070216.92609-5-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240628070216.92609-4-philmd@linaro.org>
+In-Reply-To: <20240628070216.92609-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=150.107.74.76;
@@ -68,16 +68,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/28/24 9:00 AM, Philippe Mathieu-Daudé wrote:
-> The command is selected on the I/O lines, and further
-> processing might be done on the DAT lines via the
-> sd_read_byte() and sd_write_byte() handlers. Since
-> these methods can't distinct between normal and APP
-> commands, keep the name of the current command in
-> the SDState and use it in the DAT handlers. This
-> fixes a bug that all normal commands were displayed
-> as APP commands.
+> Useful to detect out of bound accesses.
 > 
-> Fixes: 2ed61fb57b ("sdcard: Display command name when tracing CMD/ACMD")
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Tested-by: Cédric Le Goater <clg@redhat.com>
 
@@ -90,71 +82,46 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 12 ++++++++----
->   1 file changed, 8 insertions(+), 4 deletions(-)
+>   hw/sd/sd.c         | 4 ++--
+>   hw/sd/trace-events | 4 ++--
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index d0a1d5db18..bc87807793 100644
+> index bc87807793..090a6fdcdb 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -133,6 +133,7 @@ struct SDState {
->       uint32_t pwd_len;
->       uint8_t function_group[6];
->       uint8_t current_cmd;
-> +    const char *last_cmd_name;
->       /* True if we will handle the next command as an ACMD. Note that this does
->        * *not* track the APP_CMD status bit!
->        */
-> @@ -1154,12 +1155,13 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
->       uint16_t rca;
->       uint64_t addr;
->   
-> +    sd->last_cmd_name = sd_cmd_name(req.cmd);
->       /* CMD55 precedes an ACMD, so we are not interested in tracing it.
->        * However there is no ACMD55, so we want to trace this particular case.
->        */
->       if (req.cmd != 55 || sd->expecting_acmd) {
->           trace_sdcard_normal_command(sd_proto(sd)->name,
-> -                                    sd_cmd_name(req.cmd), req.cmd,
-> +                                    sd->last_cmd_name, req.cmd,
->                                       req.arg, sd_state_name(sd->state));
->       }
->   
-> @@ -1620,7 +1622,8 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
->   static sd_rsp_type_t sd_app_command(SDState *sd,
->                                       SDRequest req)
->   {
-> -    trace_sdcard_app_command(sd_proto(sd)->name, sd_acmd_name(req.cmd),
-> +    sd->last_cmd_name = sd_acmd_name(req.cmd);
-> +    trace_sdcard_app_command(sd_proto(sd)->name, sd->last_cmd_name,
->                                req.cmd, req.arg, sd_state_name(sd->state));
->       sd->card_status |= APP_CMD;
->   
-> @@ -1913,7 +1916,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
->           return;
+> @@ -1917,7 +1917,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
 >   
 >       trace_sdcard_write_data(sd_proto(sd)->name,
-> -                            sd_acmd_name(sd->current_cmd),
-> +                            sd->last_cmd_name,
->                               sd->current_cmd, value);
+>                               sd->last_cmd_name,
+> -                            sd->current_cmd, value);
+> +                            sd->current_cmd, sd->data_offset, value);
 >       switch (sd->current_cmd) {
 >       case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
-> @@ -2069,7 +2072,7 @@ uint8_t sd_read_byte(SDState *sd)
->       io_len = (sd->ocr & (1 << 30)) ? 512 : sd->blk_len;
+>           sd->data[sd->data_offset ++] = value;
+> @@ -2073,7 +2073,7 @@ uint8_t sd_read_byte(SDState *sd)
 >   
 >       trace_sdcard_read_data(sd_proto(sd)->name,
-> -                           sd_acmd_name(sd->current_cmd),
-> +                           sd->last_cmd_name,
->                              sd->current_cmd, io_len);
+>                              sd->last_cmd_name,
+> -                           sd->current_cmd, io_len);
+> +                           sd->current_cmd, sd->data_offset, io_len);
 >       switch (sd->current_cmd) {
 >       case 6:  /* CMD6:   SWITCH_FUNCTION */
-> @@ -2214,6 +2217,7 @@ static void sd_instance_init(Object *obj)
->   {
->       SDState *sd = SD_CARD(obj);
+>           ret = sd->data[sd->data_offset ++];
+> diff --git a/hw/sd/trace-events b/hw/sd/trace-events
+> index 724365efc3..0eee98a646 100644
+> --- a/hw/sd/trace-events
+> +++ b/hw/sd/trace-events
+> @@ -52,8 +52,8 @@ sdcard_lock(void) ""
+>   sdcard_unlock(void) ""
+>   sdcard_read_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
+>   sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
+> -sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint8_t value) "%s %20s/ CMD%02d value 0x%02x"
+> -sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t length) "%s %20s/ CMD%02d len %" PRIu32
+> +sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
+> +sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint32_t length) "%s %20s/ CMD%02d ofs %"PRIu32" len %" PRIu32
+>   sdcard_set_voltage(uint16_t millivolts) "%u mV"
 >   
-> +    sd->last_cmd_name = "UNSET";
->       sd->enable = true;
->       sd->ocr_power_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, sd_ocr_powerup, sd);
->   }
+>   # pxa2xx_mmci.c
 
 
