@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B275AC3064D
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A90EC41513
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNB36-0001rd-M2; Fri, 28 Jun 2024 08:49:56 -0400
+	id 1sNB58-0002nC-Ry; Fri, 28 Jun 2024 08:52:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sNB34-0001pl-6t
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:49:54 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sNB55-0002kD-Cn
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:51:59 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sNB32-0007E8-D8
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:49:53 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-356c4e926a3so371313f8f.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 05:49:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sNB52-0007iW-Nl
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:51:59 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a725d756d41so100770266b.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 05:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719578990; x=1720183790; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=P8BaP+7nqFlH03qBMhxvA4z+lqmB3hanzM6OJ+o95CE=;
- b=c5AzK5YlvefANH2HgkHfeun7ic5zADo7y+9KjdRDRpkkrm4bgTsbgEUByHQZB3BbKG
- a6pABEjNQZ+iK6vwIIUoTUA6jXsV2N19gT0JNQgjn87rvlkjuC0ebIH6Z3fmGnycEBP5
- D8mr9GDXMDKGsS3S9HaV5nuSEGYUxa8THM2e/zCuK8IU66PFaAQgurH84C8MQkFSsBvv
- Dn4Skyj+Qa4d2yQ4vbWzvaK0ZCFJ0rDPPdPNLXO3n3p3HMqCmPDsAaqGTERgJ6hK52+j
- qGeGuJITfFK5sodA3eSNH59nHvyU3f2OMG+jfNvBCSMcqXXHo4Gvi7tGMFCKdqWG9KBX
- wvrw==
+ d=linaro.org; s=google; t=1719579115; x=1720183915; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=c35p0EHMCoCLYEMGnOn9tq4Soi160srZXlRjxT2HPQE=;
+ b=p5/uAKPlYEte6D1WnYaBRboF+ZsFSljWUkZhxjKE87pVPuX43gfntla0Qgz52Dlzbf
+ UG3zi9bKPjE8aXNVxLCBdouc4U3szMeTyWg8LaaoPRMy7h0jLt6+JwxQBSVO5qRJEA6I
+ yGBBvvXUDaB0fwHL6ynYzgetMrUL+ACN2V1y5eC+Ty49ggXoZ9VmDtWkUw/ScwqW6wrE
+ C+TTONg32lqGREZYqbV4on/NZqhz6IG756MDaVaAHITpfvK8mE3HhwSoFArrBtKFXqLX
+ FO2OP0vFQk16zIZV4LlSLXOvG2WJy1WjHPvc5obk0k81szcOMY7ky5ngGRCqm/eEEyum
+ caRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719578990; x=1720183790;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P8BaP+7nqFlH03qBMhxvA4z+lqmB3hanzM6OJ+o95CE=;
- b=afZRAwhZn0VEgzHzseUg6zneqG7ZJd6Jx/PP+0s+qCbKpnkYr/jXzPHRRJGLbYBhiD
- wtObvpvXzwXfkt5vgCVawY2NwI9ByXqyaeZrtB0ntWLxOUN/mj1WivYN4J3S4Xk4U8x3
- fZbVFzWEPCrgHLnT2jTBI5/bjNsThLfuPuTYyjZtLaSgqINfgieu2L5HVCdoH5DxuRuR
- eQx7u3SkdBlqnRqO6qJirU8f4QUxtHFcI/iEiPvMeZdCXKBjL6Bd5rvUegQmzNFth5Ch
- DbQWLwdgzyGsxJVZFR2toMGAxxWYz1z5G0Sbm02kbfNofSZ/RqA/xWIbxw4Y1Zz0jrA5
- eIGA==
-X-Gm-Message-State: AOJu0YxT1EVNiwixvdWR4+Kljp87cwiucI6xV4PbFxUWxf57c/oMHB13
- VKBdUiZEiNoT1IfWY0PhmATiwPW3xx9WupsUXr4ebRzmb5atCsBnmOSMLv2hgZE=
-X-Google-Smtp-Source: AGHT+IH/MRKjifK+NeO79sc2aDl/u+O+BTfGN+K2sKo4PcHeAXDfbDWjIsgGCnPJPPok12q11OKSog==
-X-Received: by 2002:a5d:5f8f:0:b0:366:f41f:8cc7 with SMTP id
- ffacd0b85a97d-366f41f8d56mr13028392f8f.46.1719578990436; 
- Fri, 28 Jun 2024 05:49:50 -0700 (PDT)
-Received: from [192.168.69.100] (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
- [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e12fcsm2226535f8f.48.2024.06.28.05.49.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 05:49:50 -0700 (PDT)
-Message-ID: <5d469a3e-bd09-4f8b-bea9-55dd6d07cb0b@linaro.org>
-Date: Fri, 28 Jun 2024 14:49:48 +0200
+ d=1e100.net; s=20230601; t=1719579115; x=1720183915;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=c35p0EHMCoCLYEMGnOn9tq4Soi160srZXlRjxT2HPQE=;
+ b=E7SuhGkY88M29WpKHzemek4vrK4QG5XrUDg0iKMUnPwujoPpos4bxEO8fiG77vycMa
+ q2sFCrABOa+HfXIlK9irkpc/20qWsyoIpNsoD+04wHxnoA+ezBDxAlGQgomuI2MoSbeH
+ ElCZI01eDACHuJucUfEx1fBJZl4cFfkqAo/TPJwS9SjYQCmHNqxZXmWXKWQ0iv6v5GBS
+ Pg4Ai9QEnEa9xxbk9xlZlrXtIra8F2qJlaeYFoZRXPIiNPde/yCPffco/CHq8AYfrSiw
+ 8qTuDHyqghbiUUmYDE5G+5BCJjvpTPS+Ni5ksLcddof1VTRcSAAG7NrGU9Bqne2Ovq7+
+ n06g==
+X-Gm-Message-State: AOJu0YxgOzKxF6b6RH8KxlQrGrMubyYiPK0/zaYYgd/g9rcy8un52O+T
+ 7ArPoSOwsrTPbUK8Q/wKDvBuyQxM0O0vy2pto7uJWgayQD9sIF+bEkN6u/i1qUw=
+X-Google-Smtp-Source: AGHT+IEpeM4IdhKauGov4YWvAD9pZODFP2WK6SysP3Gy7kw4k4sEekrrOs9aZigL1kPQ8zS+ztaeyg==
+X-Received: by 2002:a17:907:94ca:b0:a72:b1ee:72a4 with SMTP id
+ a640c23a62f3a-a72b1ee7854mr110442066b.11.1719579114649; 
+ Fri, 28 Jun 2024 05:51:54 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a72aaf18b15sm79069466b.19.2024.06.28.05.51.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Jun 2024 05:51:53 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CCC8B5F929;
+ Fri, 28 Jun 2024 13:43:00 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org,
+ Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH 19/23] gdbstub: Make hex conversion function non-internal
+Date: Fri, 28 Jun 2024 13:42:54 +0100
+Message-Id: <20240628124258.832466-20-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240628124258.832466-1-alex.bennee@linaro.org>
+References: <20240628124258.832466-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 02/98] hw/sd/sdcard: Use spec v3.01 by default
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-3-philmd@linaro.org> <Zn5w6A20UVkrP3ca@redhat.com>
- <6908ca71-6df8-4aff-b1d0-39e35aad7a1e@linaro.org>
- <Zn6EQ39Q57KtmKPU@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Zn6EQ39Q57KtmKPU@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,62 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/6/24 11:37, Daniel P. Berrangé wrote:
-> On Fri, Jun 28, 2024 at 11:19:52AM +0200, Philippe Mathieu-Daudé wrote:
->> On 28/6/24 10:14, Daniel P. Berrangé wrote:
->>> On Fri, Jun 28, 2024 at 09:00:38AM +0200, Philippe Mathieu-Daudé wrote:
->>>> Recent SDHCI expect cards to support the v3.01 spec
->>>> to negociate lower I/O voltage. Select it by default.
->>>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->>>> ---
->>>>    hw/sd/sd.c | 2 +-
->>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->>>> index a48010cfc1..d0a1d5db18 100644
->>>> --- a/hw/sd/sd.c
->>>> +++ b/hw/sd/sd.c
->>>> @@ -2280,7 +2280,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
->>>>    static Property sd_properties[] = {
->>>>        DEFINE_PROP_UINT8("spec_version", SDState,
->>>> -                      spec_version, SD_PHY_SPECv2_00_VERS),
->>>> +                      spec_version, SD_PHY_SPECv3_01_VERS),
->>>
->>> Shouldn't such a change be tied to machine type versions ?
->>
->> I don't think so, SD cards are external to machines (like
->> CDROM you can use any brand). IOW machines only provide a
->> SD card reader, user can insert any card there.
-> 
-> Consider we release this in QEMU 9.1.0, and the user starts a VM with the
-> 8.0 machine type. The guest will see an SD card supporting v3.
-> 
-> Now live migrate that guest to a host with QEMU 9.0.0, still using the 8.0
-> machine type. The guest will expect the SD card to still be v3, but QEMU
-> will internally be set to v2, and will return illegal cmd errors if the
-> guest tries to run v3 only cmds. Versioned machine types exist to prevent
-> this kind of problem.
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-I guess I get it. So (besides rewording the commit description)
-what is missing is:
+Make gdb_hextomem non-internal so it's not confined to use only in
+gdbstub.c.
 
--- >8 --
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 655d75c21f..4377f943d5 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -37,7 +37,8 @@
-  GlobalProperty hw_compat_9_0[] = {
-      {"arm-cpu", "backcompat-cntfrq", "true" },
-      {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
-      {"vfio-pci", "skip-vsc-check", "false" },
-+    {"sd-card", "spec_version", "2" },
-  };
-  const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240628050850.536447-8-gustavo.romero@linaro.org>
 ---
+ gdbstub/internals.h        | 1 -
+ include/gdbstub/commands.h | 6 ++++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-?
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index 34121dc61a..bf5a5c6302 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -107,7 +107,6 @@ static inline int tohex(int v)
+ 
+ void gdb_put_strbuf(void);
+ int gdb_put_packet_binary(const char *buf, int len, bool dump);
+-void gdb_hextomem(GByteArray *mem, const char *buf, int len);
+ void gdb_memtohex(GString *buf, const uint8_t *mem, int len);
+ void gdb_memtox(GString *buf, const char *mem, int len);
+ void gdb_read_byte(uint8_t ch);
+diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
+index 306dfdef97..e51f276b40 100644
+--- a/include/gdbstub/commands.h
++++ b/include/gdbstub/commands.h
+@@ -91,4 +91,10 @@ void gdb_extend_set_table(GdbCmdParseEntry *table, int size);
+  */
+ void gdb_extend_qsupported_features(char *qsupported_features);
+ 
++/**
++ * Convert a hex string to bytes. Conversion is done per byte, so 2 hex digits
++ * are converted to 1 byte. Invalid hex digits are treated as 0 digits.
++ */
++void gdb_hextomem(GByteArray *mem, const char *buf, int len);
++
+ #endif /* GDBSTUB_COMMANDS_H */
+-- 
+2.39.2
 
 
