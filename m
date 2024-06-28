@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF9EC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C28C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:09:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5iS-0003ib-Av; Fri, 28 Jun 2024 03:08:16 -0400
+	id 1sN5g2-0006S3-Gv; Fri, 28 Jun 2024 03:05:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5iJ-0003VY-D1
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:08:07 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5fg-0005yp-Nv
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:05:26 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5iG-0003fI-JP
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:08:06 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-52ce6a9fd5cso265548e87.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:08:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5fe-0001gH-Iq
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:05:24 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2ebe40673d8so2882421fa.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:05:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719558481; x=1720163281; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719558320; x=1720163120; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/x47xZoGwEv6OAz6MBmyY9zpVBzbWRJPcmwD+bMVYlw=;
- b=sa1JGniaYicBLzcik/xnkD/uQGKIq1omdDeL1GJXblgsrJ3qgRE2RalbUsFOqgnTVm
- caQPRxfkXogr+rAlV4KPuC5xoWhidev89536ffebAtF3efnK9HoNNPXNQdtoZ191NkXw
- hRWns0bLi4LpagK+jehz1QfLq5jI/6gUT1sXuaw7Rq8YeycKzuGv1xRRLPB7C52QRilr
- hblir5XPJPzpYcBRGYPKbm7w0SXZuMfSV9EBEv0rBsgt5rqOz3YmBJmEr0gf2IJR1+Rj
- TFF87ReYnJdvW5FSiYUf7GnUfeFW13uUoSqUsZihmohNm9nehpaglHsoRQ6ydkDmaKwh
- sFWA==
+ :reply-to; bh=dnn8g/1r/IDbgXO0nM+fG6kuhQufIGWzDGBB4WRk/v4=;
+ b=PsvxjtiPrNH0Onp7y7vWtIG6aDN/0h4oyHnMTVPNEnuOwOqBspjX8LnQN/TrjD3rQt
+ aWfvEXo1MnB0zEt5KyjNCOMz8nmC5aRKHCE8C54x/enAvWYGmOWAz5afZYborj0CN5Pj
+ 9W6mAZV5Vwb9eumVPgely/VmQqxshbOU3GEMXyJBiGDpcAcnT06svSAvXuTXEBNIjeQz
+ kdVofZ6YD4WJsBPEM0IDSTEw+wyw9N9YpYmJF4d92yQqPfeYVyMXGrPmYeJRjQEYDyhV
+ G6g48mEVVRb7FWp0D/S332VzBAilVOp/5o+5AK0n7JRgIa2+AJsLNW4nksl9Hz4K4DUA
+ mhfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719558481; x=1720163281;
+ d=1e100.net; s=20230601; t=1719558320; x=1720163120;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/x47xZoGwEv6OAz6MBmyY9zpVBzbWRJPcmwD+bMVYlw=;
- b=eiAaTusgzE3kDAF0iEQpH2Sj1rz2A5gFuLP8PB5LKt+JscoTjehlFbZDvYCSpy/KWQ
- r8vVQnRy04DkHuDSDmTiyesWK3MTr0RGmu16ksl1DHDBEvospnsUIX4vlaJGCedRzY9e
- 80EGNNhJSPJyusol5vMK3I/6NHklDwDzGGfbrVvWW4c4KQCpozbGGUirItwdUG6ftFC2
- OFh4PBuOSoO+Z1u3iIny7s2AV8RT0J0zFtkXXyOIqp90AoggODcNtSWNf6ZUl2FqvM4A
- vuBDSR6JdM9YprNBv1Srlpz5ydMgwqJRvfTKvzdTf0rZqcUPnIqzrLMFMbsNUB7Jwz3n
- 1ufA==
-X-Gm-Message-State: AOJu0YzoybJynZeNy/E4YNQ+wSWRDQKAW2fVc2sxyslhqrdDT2u34Mnv
- gVBs0OsxQkAhxZHsqxte9dQ2ZhWDEg3BMhGVpg3et57Y6TgLv3h9Q0vB8igNTcaJgjQ2fu2eWNX
- S21Y=
-X-Google-Smtp-Source: AGHT+IHIffP3eoDK3lp+Dsk1EVAr7+ayiVMUPIvMaNU+oG2qF71kpRxETFsxr3lXcr12NedK+Ixwlg==
-X-Received: by 2002:a19:6b03:0:b0:52c:8339:d09b with SMTP id
- 2adb3069b0e04-52ce18327b5mr9879299e87.1.1719558481672; 
- Fri, 28 Jun 2024 00:08:01 -0700 (PDT)
+ bh=dnn8g/1r/IDbgXO0nM+fG6kuhQufIGWzDGBB4WRk/v4=;
+ b=ckVRDOEBheUyzlpyXg7ZZo6Akqr0KpKeGMJjUggFLvzH8NnaBQC6rTo0/D5Riuteb5
+ AVZ9fpxZqrJQC8AUH323D/0HW2OxnXKH+ZpOfb4QYHr3cppFyYjhr4M9mtmZpnSvr5Wr
+ FQ428WmB4/fhkSPptHLd1J1BGoxsRQwodq4WynAQG0juhdjuXcwjrOTQsNQe+8A+ZnVx
+ F0IVwGDueW6769/f6pNDHr+znjmpZEanMcYyRmkwCGd57pRKL2vwsj6sRCogJS5yrCAA
+ +tLGI1dfvWG4FGAoxpeCaq3++7+Ox3P254jAd6FVZJRoPvUUkvXJ72bGZqNirTAVqa6Z
+ FmfQ==
+X-Gm-Message-State: AOJu0YybLAmFFPXJjTg5LilXBQHahWt7N9vckNrjJ2JcvtJm75sK+a8d
+ duTEBKZZnSszKiO7T798rTmSFcqwgM6FgbbXWynNDzAHQcV71Y/rbVfLLMv8aWTGux0jHrFi+KX
+ sbx8=
+X-Google-Smtp-Source: AGHT+IGZb0VvpY2I07c6luZbJ1Vdeh+Lcly1MGCUMGW31qnfMw2/bUKsM+JdYROp3640943K3afZkA==
+X-Received: by 2002:a2e:97c7:0:b0:2eb:e787:47ea with SMTP id
+ 38308e7fff4ca-2ec5b333198mr90628471fa.12.1719558320484; 
+ Fri, 28 Jun 2024 00:05:20 -0700 (PDT)
 Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
  [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0cd778sm1355702f8f.5.2024.06.28.00.08.00
+ ffacd0b85a97d-3675a1108b0sm1313092f8f.114.2024.06.28.00.05.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 28 Jun 2024 00:08:01 -0700 (PDT)
+ Fri, 28 Jun 2024 00:05:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v42 55/98] hw/sd/sdcard: Add sd_cmd_SET_BLOCKLEN handler
- (CMD16)
-Date: Fri, 28 Jun 2024 09:01:31 +0200
-Message-ID: <20240628070216.92609-56-philmd@linaro.org>
+Subject: [PATCH v42 29/98] hw/sd/sdcard: Introduce sd_cmd_to_receivingdata /
+ sd_generic_write_byte
+Date: Fri, 28 Jun 2024 09:01:05 +0200
+Message-ID: <20240628070216.92609-30-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
 References: <20240628070216.92609-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,87 +92,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+All commands switching from TRANSFER state to (receiving)DATA
+do the same: receive stream of data from the DAT lines. Instead
+of duplicating the same code many times, introduce 2 helpers:
+- sd_cmd_to_receivingdata() on the I/O line setup the data to
+  be received on the data[] buffer,
+- sd_generic_write_byte() on the DAT lines to push the data.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 37 +++++++++++++++++++------------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ hw/sd/sd.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index d7ed8aee73..d731c3df58 100644
+index cd308e9a89..690a3f275e 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -240,7 +240,7 @@ static const char *sd_response_name(sd_rsp_type_t rsp)
- static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
- {
-     static const char *cmd_abbrev[SDMMC_CMD_MAX] = {
--        [16]    = "SET_BLOCKLEN",           [17]    = "READ_SINGLE_BLOCK",
-+                                            [17]    = "READ_SINGLE_BLOCK",
-         [18]    = "READ_MULTIPLE_BLOCK",
-                                             [21]    = "DPS_spec",
-         [24]    = "WRITE_BLOCK",            [25]    = "WRITE_MULTIPLE_BLOCK",
-@@ -1425,6 +1425,22 @@ static sd_rsp_type_t sd_cmd_GO_INACTIVE_STATE(SDState *sd, SDRequest req)
-     return sd_r0;
+@@ -1100,6 +1100,22 @@ static sd_rsp_type_t sd_cmd_unimplemented(SDState *sd, SDRequest req)
+     return sd_illegal;
  }
  
-+/* CMD16 */
-+static sd_rsp_type_t sd_cmd_SET_BLOCKLEN(SDState *sd, SDRequest req)
++/* Configure fields for following sd_generic_write_byte() calls */
++__attribute__((unused))
++static sd_rsp_type_t sd_cmd_to_receivingdata(SDState *sd, SDRequest req,
++                                             uint64_t start, size_t size)
 +{
 +    if (sd->state != sd_transfer_state) {
 +        return sd_invalid_state_for_cmd(sd, req);
 +    }
-+    if (req.arg > (1 << HWBLOCK_SHIFT)) {
-+        sd->card_status |= BLOCK_LEN_ERROR;
-+    } else {
-+        trace_sdcard_set_blocklen(req.arg);
-+        sd->blk_len = req.arg;
-+    }
-+
++    sd->state = sd_receivingdata_state;
++    sd->data_start = start;
++    sd->data_offset = 0;
++    /* sd->data[] used as receive buffer */
++    sd->data_size = size ?: sizeof(sd->data);
 +    return sd_r1;
 +}
 +
- /* CMD19 */
- static sd_rsp_type_t sd_cmd_SEND_TUNING_BLOCK(SDState *sd, SDRequest req)
- {
-@@ -1491,23 +1507,6 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+ /* Configure fields for following sd_generic_read_byte() calls */
+ static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
+                                            uint64_t start,
+@@ -1953,6 +1969,19 @@ send_response:
+     return rsplen;
+ }
  
-     switch (req.cmd) {
-     /* Block read commands (Class 2) */
--    case 16:  /* CMD16:  SET_BLOCKLEN */
--        switch (sd->state) {
--        case sd_transfer_state:
--            if (req.arg > (1 << HWBLOCK_SHIFT)) {
--                sd->card_status |= BLOCK_LEN_ERROR;
--            } else {
--                trace_sdcard_set_blocklen(req.arg);
--                sd->blk_len = req.arg;
--            }
--
--            return sd_r1;
--
--        default:
--            break;
--        }
--        break;
--
-     case 17:  /* CMD17:  READ_SINGLE_BLOCK */
-         addr = sd_req_get_address(sd, req);
-         switch (sd->state) {
-@@ -2306,6 +2305,7 @@ static const SDProto sd_proto_spi = {
-         [10] = {0,  sd_spi, "SEND_CID", spi_cmd_SEND_CID},
-         [12] = {0,  sd_spi, "STOP_TRANSMISSION", sd_cmd_STOP_TRANSMISSION},
-         [13] = {0,  sd_spi, "SEND_STATUS", sd_cmd_SEND_STATUS},
-+        [16] = {2,  sd_spi, "SET_BLOCKLEN", sd_cmd_SET_BLOCKLEN},
-         [34] = {10, sd_spi, "READ_SEC_CMD", sd_cmd_optional},
-         [35] = {10, sd_spi, "WRITE_SEC_CMD", sd_cmd_optional},
-         [36] = {10, sd_spi, "SEND_PSI", sd_cmd_optional},
-@@ -2337,6 +2337,7 @@ static const SDProto sd_proto_sd = {
-         [12] = {0,  sd_ac,   "STOP_TRANSMISSION", sd_cmd_STOP_TRANSMISSION},
-         [13] = {0,  sd_ac,   "SEND_STATUS", sd_cmd_SEND_STATUS},
-         [15] = {0,  sd_ac,   "GO_INACTIVE_STATE", sd_cmd_GO_INACTIVE_STATE},
-+        [16] = {2,  sd_ac,   "SET_BLOCKLEN", sd_cmd_SET_BLOCKLEN},
-         [19] = {2,  sd_adtc, "SEND_TUNING_BLOCK", sd_cmd_SEND_TUNING_BLOCK},
-         [20] = {2,  sd_ac,   "SPEED_CLASS_CONTROL", sd_cmd_optional},
-         [23] = {2,  sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
++/* Return true if buffer is consumed. Configured by sd_cmd_to_receivingdata() */
++__attribute__((unused))
++static bool sd_generic_write_byte(SDState *sd, uint8_t value)
++{
++    sd->data[sd->data_offset] = value;
++
++    if (++sd->data_offset >= sd->data_size) {
++        sd->state = sd_transfer_state;
++        return true;
++    }
++    return false;
++}
++
+ /* Return true when buffer is consumed. Configured by sd_cmd_to_sendingdata() */
+ static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
+ {
 -- 
 2.41.0
 
