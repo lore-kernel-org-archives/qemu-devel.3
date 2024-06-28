@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3C4C30659
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93FBBC2BBCA
 	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5dP-0008W4-Mj; Fri, 28 Jun 2024 03:03:03 -0400
+	id 1sN5cr-0008PJ-Jo; Fri, 28 Jun 2024 03:02:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5dN-0008Va-6P
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:03:01 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5cq-0008P9-AA
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:02:28 -0400
+Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5dK-0006gL-ND
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:03:00 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-366e70d0330so222888f8f.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:02:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5co-0006b0-Lw
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:02:28 -0400
+Received: by mail-lf1-x12e.google.com with SMTP id
+ 2adb3069b0e04-52cd717ec07so323065e87.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:02:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719558176; x=1720162976; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719558144; x=1720162944; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+otp2F30HYnVaW0wjGWSRpaE6+qcbVlZ832snl2PQg0=;
- b=wCkloADm0pPloudzt7dnxonITj/Qg2stcHTytdguwXTnu9LMzcW9WGERZE4B0cdIm/
- Ln12+/S5tZwINLDPri2awlQn5yb0stpZSZ4ZDq30x1dLGy7OPP7zsh3ar/gkc8rcmbL7
- KQxReWQlanf6HNeE7ixlfL4fdHAGDIJfafUHkV+AwaFBaOMIxPuXB11zGq7upa2bDkyJ
- Z0PjZy4hVaRNqBk1HGbq2IpP02tkRnzsknU8opRHa2ZXAvECJaDZuOWD+N9tMUAB+lcg
- plu9sBJNqQ/zLXCrzQHmIsCnaURqU1AKlAcTv+CPZKAOpniJqGN19KgEk9QX8DhVWQpH
- tJJw==
+ :reply-to; bh=FehxPMt54YZs4mKlk2O0dDcvxQwBqAiau0Ry18uuTzM=;
+ b=YkdUKSZvBxlzCL2FhxtSNN1rZURbqWmgiKM6w2CnlmdIEiWBz5wg/FPY9/eUEZO9aI
+ ilVUequ2ML/u42GoPc9uXGYJpOSr0AZWsdUY+Kdx+rIEQyC2C9G1UOnHdTUFzz7sZYZy
+ BwIRHZJ75pwd6+hBulZbpowuD6bRNkq8aSJC67c8InhZGSW3oX5LeEOSKeOv+e2RuXm4
+ M9M3C1wSEaxVrzyHEXhDkhbzFrik0Ml0MOVQXQM+DVHsr2C7eKmbEa3iLCIpUVPAXqSx
+ zbaP4hCNFZPAV5u27XfsU8uqKshSJy46ow7aWW7DtiFzRdzUynY4kbUhy9ilcm7R8W5K
+ gTBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719558176; x=1720162976;
+ d=1e100.net; s=20230601; t=1719558144; x=1720162944;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+otp2F30HYnVaW0wjGWSRpaE6+qcbVlZ832snl2PQg0=;
- b=j2sn1V4X2ogNPOlnpw8pfQFEHSxHnKfTZSJezFhyvKkkx14szO0eU3Qq/ZfuVkCtOw
- Vw+uvKnykKQl7vvLfY66WcgQNMb+EsaSuerlflNABCFRVHK/x3P7sUmyuVDsaeafVx76
- VIg7LLsfVH35q2ZCzlP20YF/GUk4vUDGd7t1BynB6qXbLTmwnGVycDFZlQkfJ/ccBK8V
- juvJs4HSrFiV1RkzHkDtDH/bjQUPudPCo1UV6aKZXKXf4yUrs9R1HgSMM/URt7u9AAcx
- f/6kROmFceUBY18eYD2Zb/M1lLPU0k5iAVSHq0yU5+PK0LLA8SoKWdnwSoHEgQU3DYP1
- 3Tng==
-X-Gm-Message-State: AOJu0YynXzqHzM/4C2RNPpbo7c59MDfiJzZfjkeLfKceX6R1NcHRNm5t
- H4Rl7mxxGK1Mb1sezr5XEBWL95GSzvhrx/nCNXKPDj7TZkhKVPD2JRHYLWiLvBvhYTOwVBdTFgR
- OsQU=
-X-Google-Smtp-Source: AGHT+IFQ9JZ71myrGQ6ba6tD9LBYXLP/xfp05Svcs8cDsVtVJGQtXEtHefy+uSOEsd/KGtjCmFQDzA==
-X-Received: by 2002:a5d:6dd0:0:b0:367:43af:5b8c with SMTP id
- ffacd0b85a97d-36743af5d8fmr2506909f8f.53.1719558176379; 
- Fri, 28 Jun 2024 00:02:56 -0700 (PDT)
+ bh=FehxPMt54YZs4mKlk2O0dDcvxQwBqAiau0Ry18uuTzM=;
+ b=m085V92FtKpdiqv0acxqdp17zUCvCPTUFdsvoM/Be/G2y5MJ88iU/FK+CcoU3+zNX9
+ uzunD26FsdAWF963GYlmmEiNlCoDcCn9v0dq8j6pOuAfyMoEUqhbdElj17K0QmWKJF+V
+ DcdIgkXLour+G/Ic/U3PNpEMkzfPZHCCL7x5qUB7iit/nc3w82rUxV/RKkNbIna+kVXm
+ 8XjrP8NiPvJLVJVD3jDyp23iBJOcTicqHKghecrTf4iq+9O5Y8SUoyGfzdB2Kz4wcz81
+ lQzLp2Hv6za5uWrBD/u3alSzoz3Nb2Pgm+FxNZF4GiIaQ+6Q3fzTJiLAD5L3lKnJqu2C
+ x4FA==
+X-Gm-Message-State: AOJu0YwFzbXj1Kfsw5geQ+BOSw1ljrN8HyAc/lihGQurM6/rjpMdH4aX
+ iqqCcx2cKGNb+XhnFB8B7PaDf9bTsSCDwduk+X8Tq2QsX21lTSm5ssjl9GfymnAemGviWwp0WNO
+ tR5g=
+X-Google-Smtp-Source: AGHT+IG3J/+xtSr5xFPRTNnze0Hl9nrQ88+TXxJPB9lrroo7a9QDZBPeqNISxPQAF1omr52k6u6cGQ==
+X-Received: by 2002:a05:6512:a8c:b0:52e:7496:596f with SMTP id
+ 2adb3069b0e04-52e74965ac0mr1875211e87.60.1719558144165; 
+ Fri, 28 Jun 2024 00:02:24 -0700 (PDT)
 Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
  [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0fb973sm1317253f8f.67.2024.06.28.00.02.55
+ 5b1f17b1804b1-4256b097bcbsm21297625e9.35.2024.06.28.00.02.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 28 Jun 2024 00:02:55 -0700 (PDT)
+ Fri, 28 Jun 2024 00:02:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v42 07/98] hw/sd/sdcard: Send WRITE_PROT bits MSB first (CMD30)
-Date: Fri, 28 Jun 2024 09:00:43 +0200
-Message-ID: <20240628070216.92609-8-philmd@linaro.org>
+Subject: [PATCH v42 01/98] hw/sd/sdcard: Deprecate support for spec v1.10
+Date: Fri, 28 Jun 2024 09:00:37 +0200
+Message-ID: <20240628070216.92609-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
 References: <20240628070216.92609-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,36 +91,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Per sections 3.6.1 (SD Bus Protocol) and 7.3.2 (Responses):
-
-  In the CMD line the Most Significant Bit is transmitted first.
-
-Use the stl_be_p() helper to store the value in big-endian.
+We use the v2.00 spec by default since commit 2f0939c234
+("sdcard: Add a 'spec_version' property, default to Spec v2.00").
+Time to deprecate the v1.10 which doesn't bring much, and
+is not tested.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
-RFC because I'm surprised this has been unnoticed for 17 years
-(commit a1bb27b1e9 "initial SD card emulation", April 2007).
+ docs/about/deprecated.rst | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Cc: Peter Maydell <peter.maydell@linaro.org>
----
- hw/sd/sd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 1f3eea6e84..4e09640852 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1507,7 +1507,7 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
-             }
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index ff3da68208..02cdef14aa 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -362,6 +362,12 @@ recommending to switch to their stable counterparts:
+ - "Zve64f" should be replaced with "zve64f"
+ - "Zve64d" should be replaced with "zve64d"
  
-             sd->state = sd_sendingdata_state;
--            *(uint32_t *) sd->data = sd_wpbits(sd, req.arg);
-+            stl_be_p(sd->data, sd_wpbits(sd, req.arg));
-             sd->data_start = addr;
-             sd->data_offset = 0;
-             return sd_r1;
++``-device sd-card,spec_version=1`` (since 9.1)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++SD physical layer specification v2.00 supersedes the v1.10 one.
++v2.00 is the default since QEMU 3.0.0.
++
+ Block device options
+ ''''''''''''''''''''
+ 
 -- 
 2.41.0
 
