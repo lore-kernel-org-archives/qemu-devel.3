@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5948C2BBCA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E20C41513
 	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 09:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN7wa-0005og-EG; Fri, 28 Jun 2024 05:31:00 -0400
+	id 1sN7wc-0005oy-5K; Fri, 28 Jun 2024 05:31:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sN7wX-0005nM-JM
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:30:57 -0400
+ id 1sN7wY-0005nv-Ug
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:30:58 -0400
 Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sN7wV-0005Yz-I8
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:30:57 -0400
+ id 1sN7wV-0005ZE-Ko
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:30:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1719567056; x=1751103056;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=lA2zuINPzZoggNMavj+h2yI5orhGU69Td9Lm5CUad9w=;
- b=Ho5dG2BMa1MhX/hnwtW6wql3B4OKqzODiAwkRKO2cy/U/2p0YIRf8Epv
- VuNsAZcK9yJgll77OeCMA1MVmYkF5D7QXC0UYMIMrxvUW7SscY8Rdyr6O
- VDBMK8luda2BXuw70Bgm5XmrbotrbWyxELQbs3aXp0eVwtnOa++qhAxNm
- wVLiIfrLsTe66bMiqacZY5uPCgk2DGXnpX33JcVDeXmaIZfInSoPG3nlh
- QE3wVRZoTHoSH6ba3qyDxjkTQ91qxHxlPTPPi+ju8/t1hfrYXHZxRnXbd
- Ooc+GLjPQSCje7syqHvna5wIIaJaopODsTarKO7au9VxCZz+Ys+kBz9Zg g==;
-X-CSE-ConnectionGUID: n85z96lOQw2PuY+0ikBlSQ==
-X-CSE-MsgGUID: 3Ebk7kuZTjuTQ/sxbctznw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11116"; a="28136022"
-X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; d="scan'208";a="28136022"
+ bh=/76VxKHdez8Q9AtArS2MWAWO4b7JCMBzxTeaXLLoAlU=;
+ b=nWMBMSEK71VqS3MGQQmJ027Uo7mF6RchFC7w2hKVM2hvApVfK0HL8k3Y
+ YM1+oVl3jRg/evyh9YwYMJwug0eVpxxXd/kRL26a7HLzgpWv64x2mvJpp
+ 2VlzPfrZ+EfBWhMAexNx9qz9OoRbrpa5T7TCfpkS+oc3Q1eOGwGssurtc
+ QMvl+Y/mDSRGZRgLmLAwqVpAHwfmrQeEX1PFCrv5ux68XAE/zkUtgMozZ
+ YJSV5JTpXupnx5hQ3DTj1amp/88CNfYvYHHWfWeSw8PaGAU8FeiJ1NNEh
+ KBGI66IWTb01srEv23UwnJbOx9UxyFrw8XyWbnK84fI2Ay4wLjufovSe4 A==;
+X-CSE-ConnectionGUID: qar2CjOHTDSrhXRv1e3Yhg==
+X-CSE-MsgGUID: G3PLLvb9S5+CAEX1lJfNPQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11116"; a="28136028"
+X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; d="scan'208";a="28136028"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jun 2024 02:30:52 -0700
-X-CSE-ConnectionGUID: IvJqDkC3SaCYGJQcXlxh+Q==
-X-CSE-MsgGUID: pmD5I61ARPy+l7mXDTbkYg==
+ 28 Jun 2024 02:30:54 -0700
+X-CSE-ConnectionGUID: KAfSqj9zTXmuqzZ0BEAaMQ==
+X-CSE-MsgGUID: WuR/3kG5TKe8/oV7rucDJA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; d="scan'208";a="44677906"
+X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; d="scan'208";a="44677920"
 Received: from unknown (HELO SPR-S2600BT.bj.intel.com) ([10.240.192.127])
  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jun 2024 02:30:49 -0700
+ 28 Jun 2024 02:30:51 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, kraxel@redhat.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH 1/2] vfio/display: Fix potential memleak of edid info
-Date: Fri, 28 Jun 2024 17:28:14 +0800
-Message-Id: <20240628092815.164423-2-zhenzhong.duan@intel.com>
+Subject: [PATCH 2/2] vfio/display: Fix vfio_display_edid_init() error path
+Date: Fri, 28 Jun 2024 17:28:15 +0800
+Message-Id: <20240628092815.164423-3-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240628092815.164423-1-zhenzhong.duan@intel.com>
 References: <20240628092815.164423-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.12;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -82,51 +83,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-EDID related device region info is leaked in three paths:
-1. In vfio_get_dev_region_info(), when edid info isn't find, the last
-device region info is leaked.
-2. In vfio_display_edid_init() error path, edid info is leaked.
-3. In VFIODisplay destroying path, edid info is leaked.
+vfio_display_edid_init() can fail for many reasons and return silently.
+It would be good to report the error.
+
+Old mdev driver may not support vfio edid region and we allow to go
+through in this case.
+
+vfio_display_edid_update() isn't changed because it can be called at
+runtime when UI changes (i.e. window resize).
 
 Fixes: 08479114b0de ("vfio/display: add edid support.")
+Suggested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/vfio/display.c | 2 ++
- hw/vfio/helpers.c | 1 +
- 2 files changed, 3 insertions(+)
+ hw/vfio/display.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-index 661e921616..5926bd6628 100644
+index 5926bd6628..462845ce69 100644
 --- a/hw/vfio/display.c
 +++ b/hw/vfio/display.c
-@@ -171,6 +171,7 @@ static void vfio_display_edid_init(VFIOPCIDevice *vdev)
+@@ -124,7 +124,7 @@ static void vfio_display_edid_ui_info(void *opaque, uint32_t idx,
+     }
+ }
+ 
+-static void vfio_display_edid_init(VFIOPCIDevice *vdev)
++static bool vfio_display_edid_init(VFIOPCIDevice *vdev, Error **errp)
+ {
+     VFIODisplay *dpy = vdev->dpy;
+     int fd = vdev->vbasedev.fd;
+@@ -135,7 +135,8 @@ static void vfio_display_edid_init(VFIOPCIDevice *vdev)
+                                    VFIO_REGION_SUBTYPE_GFX_EDID,
+                                    &dpy->edid_info);
+     if (ret) {
+-        return;
++        /* Failed to get GFX edid info, allow to go through without edid. */
++        return true;
+     }
+ 
+     trace_vfio_display_edid_available();
+@@ -167,14 +168,15 @@ static void vfio_display_edid_init(VFIOPCIDevice *vdev)
+                                         vfio_display_edid_link_up, vdev);
+ 
+     vfio_display_edid_update(vdev, true, 0, 0);
+-    return;
++    return true;
  
  err:
++    error_setg(errp, "vfio: failed to read GFX edid field");
      trace_vfio_display_edid_write_error();
-+    g_free(dpy->edid_info);
+     g_free(dpy->edid_info);
      g_free(dpy->edid_regs);
      dpy->edid_regs = NULL;
-     return;
-@@ -182,6 +183,7 @@ static void vfio_display_edid_exit(VFIODisplay *dpy)
-         return;
-     }
- 
-+    g_free(dpy->edid_info);
-     g_free(dpy->edid_regs);
-     g_free(dpy->edid_blob);
-     timer_free(dpy->edid_link_timer);
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index b14edd46ed..3dd32b26a4 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -586,6 +586,7 @@ int vfio_get_dev_region_info(VFIODevice *vbasedev, uint32_t type,
-         g_free(*info);
-     }
- 
-+    g_free(*info);
-     *info = NULL;
-     return -ENODEV;
+-    return;
++    return false;
  }
+ 
+ static void vfio_display_edid_exit(VFIODisplay *dpy)
+@@ -367,8 +369,7 @@ static bool vfio_display_dmabuf_init(VFIOPCIDevice *vdev, Error **errp)
+             return false;
+         }
+     }
+-    vfio_display_edid_init(vdev);
+-    return true;
++    return vfio_display_edid_init(vdev, errp);
+ }
+ 
+ static void vfio_display_dmabuf_exit(VFIODisplay *dpy)
 -- 
 2.34.1
 
