@@ -4,55 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9097EC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 06:48:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B076CC3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:03:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5OG-0005Li-6z; Fri, 28 Jun 2024 02:47:24 -0400
+	id 1sN5cw-0008QU-BQ; Fri, 28 Jun 2024 03:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN5OA-0005Kl-NW; Fri, 28 Jun 2024 02:47:21 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN5O8-0007aI-HF; Fri, 28 Jun 2024 02:47:18 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Qw72x2Wz4wcg;
- Fri, 28 Jun 2024 16:47:03 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Qw30XvCz4w2K;
- Fri, 28 Jun 2024 16:46:58 +1000 (AEST)
-Message-ID: <fcd13412-906d-49c3-b892-33ca49fc0f5e@kaod.org>
-Date: Fri, 28 Jun 2024 08:46:51 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5cu-0008QC-PY
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:02:32 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5ct-0006ba-7D
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:02:32 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4255fc43f1cso1816605e9.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719558149; x=1720162949; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=q0dLi7LJeAuLomgAe/dqexun4vtTcne+GTOKHsnzMSk=;
+ b=tttvOkKkM0YNKxITtkKYISKHX3E3Pi2s6ZpEMes4nr6WsuEDNHAmcXZY41JRAEk/d8
+ JhM9g+JGdV0ULkGnR/+doLG5/ab8uwrdHeNkCfA0r+9hg1NP2FANSn1lPmSmk94edSaG
+ 3OkzHlD24wkWNL+CGb1LMcq4xqkc6PsjzM8A2MoL48XYgbSZbYQnynduGIk8sCsrkSbJ
+ pFR+R9ARKUyjOJUKw1BRa4moWfkJQ4V597TwdsjO8FFRLr1OvN8H7+DalUbyuc8YR1SZ
+ FrLLHYfo9ycr6q/mdPK+U8X8hMYdFvcVn6ayGjP+dt1KyxSwgbMhUSokvYUK8TvfKTot
+ 5U9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719558149; x=1720162949;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=q0dLi7LJeAuLomgAe/dqexun4vtTcne+GTOKHsnzMSk=;
+ b=A7lJuPUf9cTcEIlsi6s1xbG9HSHitVtyRhS9hXrYVwNleBEIU0wkVE69uVObBSsl9u
+ Blzzdf8M1bwOibuvBzxzjfr1+Kr7lp5k1tqVvWQN44s8Smv1UkZF3Ke5SFBumCqB9rx5
+ R+qIEnTv4BiMQ14M71GHdrWYo1Hr49wRWwLnLL094ThWGxP988EowrcjMycMOWHCBxDk
+ FhcLYChRCsRrrTe7wXLMIcP01FSm3clXX43ut0mt0tKqLaTEO5qWv1DZ6jgUSdF+IV6u
+ jUZ/oh6Udtkj//EHtwP3Xh40Js0++0azoUsWMqYdSHuIRwGH2fcYmmh0nqwasGet2dXN
+ ta/w==
+X-Gm-Message-State: AOJu0YwJiEreABIAjxGa/ed8762yBKHh/SjVEfSKLvcKC7jFyhDqBWBX
+ e03FLoyQjKe4v9WcLIQll0Y22QaICvXl9OtWiykX/e952bMJUjgDWwXeoEXM75GZGyq8isG/cFV
+ XROc=
+X-Google-Smtp-Source: AGHT+IGXD9OZuz5w3RKMFasHKcwLJb01Q46GuqbG/ClsnEsogeNt9Dsc6powhrgUxoxW9tn5owf5gQ==
+X-Received: by 2002:a05:600c:470d:b0:422:7eca:db41 with SMTP id
+ 5b1f17b1804b1-4248cc18101mr123481815e9.2.1719558149429; 
+ Fri, 28 Jun 2024 00:02:29 -0700 (PDT)
+Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
+ [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-424a2abc2desm95968775e9.1.2024.06.28.00.02.28
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 28 Jun 2024 00:02:29 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PATCH v42 02/98] hw/sd/sdcard: Use spec v3.01 by default
+Date: Fri, 28 Jun 2024 09:00:38 +0200
+Message-ID: <20240628070216.92609-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
+References: <20240628070216.92609-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/19] hw/sd: Add support for eMMC cards
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>, Luc Michel <luc.michel@amd.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>, qemu-block@nongnu.org,
- Vincent Palatin <vpalatin@chromium.org>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Bin Meng <bmeng.cn@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>
-References: <20240627171059.84349-1-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240627171059.84349-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=GU6n=N6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,70 +91,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/27/24 7:10 PM, Philippe Mathieu-Daudé wrote:
-> Trying to land what Vincent Palatin started 13 years ago!
-> https://lore.kernel.org/qemu-devel/1311635951-11047-5-git-send-email-vpalatin@chromium.org/
-> with fixes from Sai, Joel and Cédric.
-> 
-> I reviewed Cédric patches but still plan to review the EXT_CSD
-> layout and Joel "boot config" patches.
-> 
-> In order to avoid deviation with the spec, the experimental
-> 'x-aspeed-emmc-kludge' property is used.
+Recent SDHCI expect cards to support the v3.01 spec
+to negociate lower I/O voltage. Select it by default.
 
-Adding Aspeed people for feedback.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/sd/sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-Thanks,
-
-C.
-
-
-
-> 
-> Based-on: <20240627164815.82606-1-philmd@linaro.org>
-> 
-> Full series for testing:
-> https://gitlab.com/philmd/qemu/-/tags/emmc-v4
-> 
-> Including Aspeed branch from Cédric on top (aspeed-9.1):
-> https://gitlab.com/philmd/qemu/-/tags/aspeed_emmc-v4
-> 
-> Cédric Le Goater (5):
->    hw/sd/sdcard: Basis for eMMC support
->    hw/sd/sdcard: Add emmc_cmd_SET_RELATIVE_ADDR() handler
->    hw/sd/sdcard: Fix SET_BLOCK_COUNT command argument on eMMC (CMD23)
->    hw/sd/sdcard: Adapt sd_cmd_ALL_SEND_CID handler for eMMC (CMD2)
->    hw/sd/sdcard: Adapt sd_cmd_APP_CMD handler for eMMC (CMD55)
-> 
-> Joel Stanley (3):
->    hw/sd/sdcard: Support boot area in emmc image
->    hw/sd/sdcard: Subtract bootarea size from blk
->    hw/sd/sdcard: Add boot config support
-> 
-> Luc Michel (1):
->    hw/sd/sdcard: Implement eMMC sleep state (CMD5)
-> 
-> Philippe Mathieu-Daudé (6):
->    hw/sd/sdcard: Introduce set_csd/set_cid handlers
->    hw/sd/sdcard: Cover more SDCardStates
->    hw/sd/sdcard: Register generic command handlers
->    hw/sd/sdcard: Register unimplemented command handlers
->    hw/sd/sdcard: Add mmc_cmd_PROGRAM_CID handler (CMD26)
->    hw/sd/sdcard: Add experimental 'x-aspeed-emmc-kludge' property
-> 
-> Sai Pavan Boddu (3):
->    hw/sd/sdcard: Add emmc_cmd_SEND_OP_COND handler (CMD1)
->    hw/sd/sdcard: add emmc_cmd_SEND_TUNING_BLOCK handler (CMD21)
->    hw/sd/sdcard: Add mmc SWITCH function support (CMD6)
-> 
-> Vincent Palatin (1):
->    hw/sd/sdcard: Add emmc_cmd_SEND_EXT_CSD handler (CMD8)
-> 
->   hw/sd/sdmmc-internal.h |   3 +
->   include/hw/sd/sd.h     |   6 +
->   hw/sd/sd.c             | 419 ++++++++++++++++++++++++++++++++++++++++-
->   3 files changed, 420 insertions(+), 8 deletions(-)
-> 
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index a48010cfc1..d0a1d5db18 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2280,7 +2280,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
+ 
+ static Property sd_properties[] = {
+     DEFINE_PROP_UINT8("spec_version", SDState,
+-                      spec_version, SD_PHY_SPECv2_00_VERS),
++                      spec_version, SD_PHY_SPECv3_01_VERS),
+     DEFINE_PROP_DRIVE("drive", SDState, blk),
+     /* We do not model the chip select pin, so allow the board to select
+      * whether card should be in SSI or MMC/SD mode.  It is also up to the
+-- 
+2.41.0
 
 
