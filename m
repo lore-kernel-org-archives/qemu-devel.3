@@ -4,92 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7B1C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 15:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 533A6C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 15:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNDHM-0000ji-72; Fri, 28 Jun 2024 11:12:48 -0400
+	id 1sNDKR-0001wI-67; Fri, 28 Jun 2024 11:15:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNDHL-0000jM-8T
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 11:12:47 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sNDKP-0001vs-Ow
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 11:15:57 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNDHH-0004It-Uc
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 11:12:46 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-57d106e69a2so57066a12.0
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 08:12:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sNDKN-0007Bm-PD
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 11:15:57 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a729da840a8so303999166b.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 08:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719587561; x=1720192361; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QnvPowgGiAWWtSA4bzF0jcFz38pdgKphlufuxWJN+d0=;
- b=j6G40K2wrY0UeCqEclJTCWl3Xvjxy1qqOxfUquhAd903M6TiHKlCJmf0GzAUBf9u/6
- BBKIX+wzlTXyHyx1sEYMG0kyJYY0bPZcPzqGaz4AFNGvvqhv7RXKDvaTBKBnbO52JSoD
- mypEjeKe0K5YSAr9BXUOfzE5R4Q/QqFNvaAOv8Hx84Mi8HhktwD9APfKbARC3NB1ZRx7
- xjSrV67PfiKfZCbFjYfBtosKjj5U2taGnYoG/RhzQ2YvcQoeTb+NwUi/3C03puYn5+nT
- RQjHvzE4D+XqhuNcJG/Z/c4sPKZ3f9yEcYEVMymS3WDTK60otSuSoCdRu78oosNCrtaN
- uxGA==
+ d=linaro.org; s=google; t=1719587754; x=1720192554; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=QEeZ8SJ0ctZoKPpOjo6vvO42BxsIkxrX7QSRp3KFdwM=;
+ b=hWOrTKW/QEyAkYKxbjmjNau/JYBBPMwmoO5C0mF/4FvYCsqnVkgmxClePuWdib2I9d
+ juYP6boQ0nZRhOg9oWrsWUMSTDFMe5nOMnsfGVLWR/qtfd6uxKkNCApYUHjxsAn9ZSdX
+ rhrKwEDPrU1QSUwEb02wkT6OHesvzuAGHZWpojDbcCRb16ehnnbpgf1cQlgdA5VNgIpw
+ +1RGYXY49H6jpIbfpzY0G9t2RWQ9IDP7+OnaXs1RlY7wy/FpNbqiTELhXAXwDHUJIDQh
+ 74u55guorydIcTitgCUP6HQZVrtVFx8SmcmFn3oEqY4YkbBhiufLEaPU1Ho2kzvMRR7W
+ MMwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719587561; x=1720192361;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QnvPowgGiAWWtSA4bzF0jcFz38pdgKphlufuxWJN+d0=;
- b=YyI5odwer4zz5IzMj4XndOgZ6PH3Knoz1G7jVNP4ioyb1qCywvXSy3Eou1sVobq/9r
- i5HUncoSE7AbbhMgyYyICvTxORfqA9dcnp7IFVAoOqS/LTvQB7n9eLgwLzDFcD94IwGH
- eMV8r1NEZh3oon6eGyoBg4dA9yGpNmtP2DUv/gyZofXFxlSN9WFcsTTPPom1qcE+sJNm
- QHH0qJS2/WUtbVMCgkDzcarub/au8tEmZHmIlWvKTbYXbp2KwhlIDAtLnrgHN7uj1ZRl
- edOQN/XcIIrRawoWyvv3maZbJ74HUpQwj6TSP+OkRa6mb5RRlOO4rmCoUT6HwHtclyya
- L/Fw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUePRCGuy4+61cUKvCe3pJUchn0hm0vMguPw5YDZfdMad1VfLpehFTvXGlmdE0xD44EzfAxjGT9o2WKlf3OT8l5TO+Z+d0=
-X-Gm-Message-State: AOJu0YxdDTStJ0JIWgIBbJWyWIP6nUo4nhhLewmkTLKs/q9uHXCIikjq
- N3O384rKD7UVgGxMbIhwYTUpO4nAPcF0LmRFWzyYW45w+GNanDsbLnmZBKp9RiFEqsP79o8wsuk
- /JoYBneG5Eg0PwzD3wcD25/TXPT66RA2zWJlYhA==
-X-Google-Smtp-Source: AGHT+IFzbNTKlgI/HWMd4tfPx/D2j96WFcO3eAA1kmmMVw8e1EwrKEOBQdJD395ozGQGtM9cuJRMre32JvnQgE7ThHc=
-X-Received: by 2002:a05:6402:c99:b0:57d:4b12:71de with SMTP id
- 4fb4d7f45d1cf-5865c1f6e42mr1443988a12.10.1719587561271; Fri, 28 Jun 2024
- 08:12:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719587754; x=1720192554;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QEeZ8SJ0ctZoKPpOjo6vvO42BxsIkxrX7QSRp3KFdwM=;
+ b=mP5XaR9bdYnUWQdbnkE47edrUMOYr0QVhDKujJzGeDbcMbidEvVjt8hooe82iDQoK1
+ EfL9HG8A/xRi7Ilh5CNOjAr2HVvjUjU6RxBGIuRoRNpws52WHQhNJtKMxrCdF/WSxQIf
+ 6vr7h1+EgVNmcU8GaTL/s8P1neJ5U0WGPY2Kvk4bSBy2/037/1IzYeZ8DqEzZ0C4tR/H
+ wIljM6wxllJlgrARZtAnSPEbNGLLZsGI9onGA7NDTX/hoydM7chx0h+NMJrFOx0LWgnZ
+ 3Yv6i6M9VMCyyAeGdT9b+v/P+1V4kHjeJN4bjihUpxnOpYG+E5qfEJj1JZq7s3OeXvOw
+ SjPQ==
+X-Gm-Message-State: AOJu0Yw29SywaqdS0X6iK+AKILfeCgO2L9dUsff9lDO0o4kDsMsUXgPq
+ xS2nRRWlzqEg5y3oWT6uYdqYzKQaibcfDlc2uZWmZwLyQpupq1RTu05JBm4Y5Dg=
+X-Google-Smtp-Source: AGHT+IH6M1U6P+5oyuyPQQbY0xrg71Swgf8ARTdq01MF2sR/XLt6wO0F0O+UodndFx66Lff/pjVI0g==
+X-Received: by 2002:a17:907:2d1f:b0:a72:634d:d843 with SMTP id
+ a640c23a62f3a-a72aef66f40mr198713566b.34.1719587753628; 
+ Fri, 28 Jun 2024 08:15:53 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a72aaf633desm87892066b.73.2024.06.28.08.15.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Jun 2024 08:15:53 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 36AFF5F7A1;
+ Fri, 28 Jun 2024 16:15:52 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org,  philmd@linaro.org,
+ richard.henderson@linaro.org,  peter.maydell@linaro.org
+Subject: Re: [PATCH v6 06/11] target/arm: Factor out code for setting MTE
+ TCF0 field
+In-Reply-To: <be8b6f51-300e-3ae8-b2c3-f85f70b0ad46@linaro.org> (Gustavo
+ Romero's message of "Fri, 28 Jun 2024 11:55:44 -0300")
+References: <20240628050850.536447-1-gustavo.romero@linaro.org>
+ <20240628050850.536447-7-gustavo.romero@linaro.org>
+ <87zfr5nu0z.fsf@draig.linaro.org>
+ <be8b6f51-300e-3ae8-b2c3-f85f70b0ad46@linaro.org>
+Date: Fri, 28 Jun 2024 16:15:52 +0100
+Message-ID: <87a5j5nlnb.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-1-750bb0946dbd@daynix.com>
-In-Reply-To: <20240627-san-v2-1-750bb0946dbd@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 28 Jun 2024 16:12:29 +0100
-Message-ID: <CAFEAcA-m6iQL4gGE4jSdz1O4P-BA+KC1uXO+kqV5y5oXJKE31Q@mail.gmail.com>
-Subject: Re: [PATCH v2 01/15] cpu: Free cpu_ases
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, 
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,38 +100,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Jun 2024 at 14:39, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+Gustavo Romero <gustavo.romero@linaro.org> writes:
+
+> Hi Alex,
 >
-> This fixes LeakSanitizer warnings.
+> On 6/28/24 9:14 AM, Alex Benn=C3=A9e wrote:
+>> Gustavo Romero <gustavo.romero@linaro.org> writes:
+>>=20
+>>> Factor out the code used for setting the MTE TCF0 field from the prctl
+>>> code into a convenient function. Other subsystems, like gdbstub, need to
+>>> set this field as well, so keep it as a separate function to avoid
+>>> duplication and ensure consistency in how this field is set across the
+>>> board.
+>>>
+>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>> ---
+>>>   linux-user/aarch64/meson.build       |  2 ++
+>>>   linux-user/aarch64/mte_user_helper.c | 34 ++++++++++++++++++++++++++++
+>>>   linux-user/aarch64/mte_user_helper.h | 25 ++++++++++++++++++++
+>>>   linux-user/aarch64/target_prctl.h    | 22 ++----------------
+>>>   4 files changed, 63 insertions(+), 20 deletions(-)
+>>>   create mode 100644 linux-user/aarch64/mte_user_helper.c
+>>>   create mode 100644 linux-user/aarch64/mte_user_helper.h
+>>>
+>>> diff --git a/linux-user/aarch64/meson.build b/linux-user/aarch64/meson.=
+build
+>>> index 248c578d15..f75bb3cd75 100644
+>>> --- a/linux-user/aarch64/meson.build
+>>> +++ b/linux-user/aarch64/meson.build
+>>> @@ -9,3 +9,5 @@ vdso_le_inc =3D gen_vdso.process('vdso-le.so',
+>>>                                  extra_args: ['-r', '__kernel_rt_sigret=
+urn'])
+>>>     linux_user_ss.add(when: 'TARGET_AARCH64', if_true:
+>>> [vdso_be_inc, vdso_le_inc])
+>>> +
+>>> +linux_user_ss.add(when: 'TARGET_AARCH64', if_true: [files('mte_user_he=
+lper.c')])
+>>> diff --git a/linux-user/aarch64/mte_user_helper.c b/linux-user/aarch64/=
+mte_user_helper.c
+>>> new file mode 100644
+>>> index 0000000000..8be6deaf03
+>>> --- /dev/null
+>>> +++ b/linux-user/aarch64/mte_user_helper.c
+>>> @@ -0,0 +1,34 @@
+>>> +/*
+>>> + * ARM MemTag convenience functions.
+>>> + *
+>>> + * This code is licensed under the GNU GPL v2 or later.
+>>> + *
+>>> + * SPDX-License-Identifier: LGPL-2.1-or-later
+>>> + */
+>>> +
+>>> +#include <sys/prctl.h>
+>> Aside from missing the osdep Phillipe pointed out including prctl.h
+>> here
+>> is very suspect as its a system header. I assume if we need
+>> PR_MTE_TCF_SYNC we should hoist the definition that linux-user uses into
+>> a common header.
+> Other .c files include <sys/prctl.h> for other PR_ definitions. For examp=
+le,
+> syscall.c and elfload.c. Is this really a problem?
+
+If your building on an arch that doesn't natively have MTE but you'll
+run an aarch64 linux-user guest.
+
+> I see that would be a
+> problem when trying to build, for instance, aarch64-linux-user target on a
+> BSD host, but we don't support it. Building *-linux-user target is only
+> supported on Linux host, no?
+
+True, but multiple libcs. Anyway I've fixed up and posted the maintainer
+tree.
+
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->  hw/core/cpu-common.c | 1 +
->  1 file changed, 1 insertion(+)
 >
-> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-> index f131cde2c038..a3073c17d098 100644
-> --- a/hw/core/cpu-common.c
-> +++ b/hw/core/cpu-common.c
-> @@ -289,6 +289,7 @@ static void cpu_common_finalize(Object *obj)
->      qemu_cond_destroy(cpu->halt_cond);
->      g_free(cpu->halt_cond);
->      g_free(cpu->thread);
-> +    g_free(cpu->cpu_ases);
+> Cheers,
+> Gustavo
 
-I think this is likely not sufficient. There's a patch lurking
-in the vcpu-hotplug series:
-
-https://lore.kernel.org/qemu-devel/20240607115649.214622-7-salil.mehta@huawei.com/
-
-which adds a cpu_address_space_destroy() function, which is
-probably what we need to have happen on CPU unrealize.
-
-NB that that patch isn't actually sufficient, though:
-see discussion here on previous version of patchset
-https://lore.kernel.org/qemu-devel/CAFEAcA92nCPPk0Qa6XjRqRGTq_XDyRSVVaz67WgJBEZcxoEtOQ@mail.gmail.com/
-and the link from there to a different earlier patch from Philippe.
-
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
