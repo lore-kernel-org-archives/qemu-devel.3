@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E67EAC30659
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77F3EC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5eM-0001JI-29; Fri, 28 Jun 2024 03:04:02 -0400
+	id 1sN5fR-0004Wa-9d; Fri, 28 Jun 2024 03:05:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5dy-0000mQ-0Z
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:03:42 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5fB-0004BD-J6
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:04:53 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5dv-0006kM-FI
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:03:36 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4256eec963eso1420405e9.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:03:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5f9-0008Ab-NC
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:04:53 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2ec5fad1984so3505941fa.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:04:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719558213; x=1720163013; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719558290; x=1720163090; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DSF5Ro3NaUsJXtCUAFWLr+3NgzU6nFSUILhMkj2n5D4=;
- b=gnMPtFqf3o5nkRflbjUo1euMOFrmj+D9XYpfzacDrLZOjAIKWLFnYcV/80AIHO7sTb
- nT/8TE8DTUf0ANoNGuFUDA2jHMcltKJeKXJr8HMreYzozef1zqUc11hF9UV79tJElnom
- MpWaTzDrw6Rdfa35wxpmqgRm1HVPL6xtQEXsXw66xJIap8HzT13J0O2jLFKgiOM/7HnI
- hRDvK7ko01dZwRk9ncEPL0FGcz7XtFhqJBzQRSBCj4Be/GlWR2kSt81Y0NYvuHRoOo0D
- pkTBkt/+HTwRa9STXskvtZkVRkH7qxpQESlsk9i0wyMI9XeGD3X6icDqEsXcUmvFAYKC
- ECug==
+ :reply-to; bh=tJt3SUxGAHgfMAGlqAtpQu/ZRYvhhIYidzvQ2esYug0=;
+ b=rzKX9ozaCM2NqD9Rn1NPODQq519fzx3uZmVeQ+heO0cFeztr8zKpaoKnyhf5tQ5OBo
+ peWvGp7cIeyXFVBJ1cD0WXrK6818h/DPmQDWkiAdHcH/W6+9ft0JXvfaLOuoZSZGOOF7
+ wfzxa72xeFvPigGAleOssbGvf+jCtg+s353IwQBO1kLxLjRQ+qhYG8IkL2aWPNDABwTW
+ f/S1vF1bazYIxv70BwnbfHEiH7MvN1TDbTtzKNVTfC2llr/vB2KN2wi3GpExkT2G280Y
+ fCHPHqzPLZ6fm4XGZFsbb5bh1gfoFFg8EeyVer4jP4gTN/7+jYeX2sNErV4brXsl0IWb
+ T6mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719558213; x=1720163013;
+ d=1e100.net; s=20230601; t=1719558290; x=1720163090;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DSF5Ro3NaUsJXtCUAFWLr+3NgzU6nFSUILhMkj2n5D4=;
- b=qPpqs/KzoAJjunE44wQNH7/3T2HnANkAP/LPfU8vTFLw1JRhm9QkNdNxmCvQ529cVS
- +hbCxc6lE/qoDf05f9uHtqoz4V15ipLwIaymBzOUCqlABhCcBeQgN2aBEMRtvdhwz+KV
- x+Oe7IFvmP/vATxXNAEaznRsM4WhleDaCRXry0vLBOsjLnrh8kJeSMBSF5BWvhkto9hY
- pcqCoA5nMLmMOB0c+ZgBxE24yFs2tLhUMn6UA+KshPYtB4i/Q0yyV9GSFjIW9aZsNrg1
- m3AUBd9IFLWFerZLmjQgPZHYjJQG9cVqTg6h5hfg4Kc2UO4nbmzy5nZ+MlHQfw7tL5Hi
- eYTw==
-X-Gm-Message-State: AOJu0Yz9f2HOVUo+sVtzIVB/PjExQT2ddMBZctNl586FTF4e4jBXbI2u
- fhuqYctyb4W7It9UDzY67SYKw3fbX5BaNa0RsIIWXTF/u5jw0Z76WpKJpLDUPCOvU9YLVRiGRwk
- ttzY=
-X-Google-Smtp-Source: AGHT+IHI9MVOPf96q0rjvuBflkUyd61zl/oAfLRBkhpIWbWG0W+64tOZdGxfV1tdexkhXEEWHcA3vw==
-X-Received: by 2002:a05:600c:4889:b0:425:5a26:a12c with SMTP id
- 5b1f17b1804b1-42564510fffmr26402755e9.13.1719558212877; 
- Fri, 28 Jun 2024 00:03:32 -0700 (PDT)
+ bh=tJt3SUxGAHgfMAGlqAtpQu/ZRYvhhIYidzvQ2esYug0=;
+ b=Qnin1uyajq8X/QnDa2yk2+nwHvVTyGfQHWpJOc6OVK1moxUcQghtcnUf4/oiBNyRiF
+ Z4jANCsjFOUPMS/UzHXkUhFbG3fB81L9/J002dcBjQRn3SQu+rycT+sP48ZUjkMCJkep
+ Q3mOt4wCh/OmVboulLkCZnfDyPadz41vcNB2Ki4YKQA1SsA606NwHqYPOJT0KTPAETGs
+ Vdo4UvncPQ9hjPouVhfdKH6LKlfcmJ92riNcu6YJGUby1bDyHs2J2TygmEMH+FkmdJyj
+ T6hCChGGfOhW5u9+uHlObD8PJPYGmox07s4lJb40pNO8nyl8YXE5EDhQSIdo1opruYjO
+ NQOg==
+X-Gm-Message-State: AOJu0Yyr/et330P+GsEAJ2FOq3WrUh7oJo+Tw1V2rrt77ecXJSHubr8f
+ nq5WflzRp8zIS7pRx9dQLXpBH7ppBvnjmkCJqFtc1oWTLiD3xW0u1ZF3h2UGIiQ4wLAg+dSH/nx
+ hzJs=
+X-Google-Smtp-Source: AGHT+IEC+gTlQXplZZiqhnwSrwBLl+MeRiKMnuBE1NYESpJPRrvtT3n2JUpdwTrRLVIIXtO5q0G5oA==
+X-Received: by 2002:a2e:7c07:0:b0:2ec:4e99:92 with SMTP id
+ 38308e7fff4ca-2ec5b31d156mr120127401fa.29.1719558289688; 
+ Fri, 28 Jun 2024 00:04:49 -0700 (PDT)
 Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
  [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0fc58esm1333986f8f.72.2024.06.28.00.03.32
+ 5b1f17b1804b1-4256b0c0f99sm21193455e9.41.2024.06.28.00.04.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 28 Jun 2024 00:03:32 -0700 (PDT)
+ Fri, 28 Jun 2024 00:04:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v42 14/98] hw/sd/sdcard: Extract sd_blk_len() helper
-Date: Fri, 28 Jun 2024 09:00:50 +0200
-Message-ID: <20240628070216.92609-15-philmd@linaro.org>
+Subject: [PATCH v42 23/98] hw/sd/sdcard: Convert SEND_TUNING_BLOCK to
+ generic_read_byte (CMD19)
+Date: Fri, 28 Jun 2024 09:00:59 +0200
+Message-ID: <20240628070216.92609-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
 References: <20240628070216.92609-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,43 +94,99 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <f4bug@amsat.org>
 
-Extract sd_blk_len() helper, use definitions instead
-of magic values.
-
 Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ hw/sd/sd.c | 48 +++++++++++++++++++-----------------------------
+ 1 file changed, 19 insertions(+), 29 deletions(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index aaa50ab2c5..5997e13107 100644
+index 605269163d..eece33194a 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -603,6 +603,14 @@ static void sd_response_r7_make(SDState *sd, uint8_t *response)
-     stl_be_p(response, sd->vhs);
+@@ -568,6 +568,21 @@ static void sd_set_sdstatus(SDState *sd)
+     memset(sd->sd_status, 0, 64);
  }
  
-+static uint32_t sd_blk_len(SDState *sd)
-+{
-+    if (FIELD_EX32(sd->ocr, OCR, CARD_CAPACITY)) {
-+        return 1 << HWBLOCK_SHIFT;
-+    }
-+    return sd->blk_len;
-+}
++static const uint8_t sd_tuning_block_pattern4[64] = {
++    /*
++     * See: Physical Layer Simplified Specification Version 3.01,
++     * Table 4-2.
++     */
++    0xff, 0x0f, 0xff, 0x00,     0x0f, 0xfc, 0xc3, 0xcc,
++    0xc3, 0x3c, 0xcc, 0xff,     0xfe, 0xff, 0xfe, 0xef,
++    0xff, 0xdf, 0xff, 0xdd,     0xff, 0xfb, 0xff, 0xfb,
++    0xbf, 0xff, 0x7f, 0xff,     0x77, 0xf7, 0xbd, 0xef,
++    0xff, 0xf0, 0xff, 0xf0,     0x0f, 0xfc, 0xcc, 0x3c,
++    0xcc, 0x33, 0xcc, 0xcf,     0xff, 0xef, 0xff, 0xee,
++    0xff, 0xfd, 0xff, 0xfd,     0xdf, 0xff, 0xbf, 0xff,
++    0xbb, 0xff, 0xf7, 0xff,     0xf7, 0x7f, 0x7b, 0xde
++};
 +
- static uint64_t sd_req_get_address(SDState *sd, SDRequest req)
+ static int sd_req_crc_validate(SDRequest *req)
  {
-     uint64_t addr;
-@@ -2076,7 +2084,7 @@ uint8_t sd_read_byte(SDState *sd)
-     if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
-         return 0x00;
+     uint8_t buffer[5];
+@@ -1161,14 +1176,9 @@ static sd_rsp_type_t sd_cmd_SEND_TUNING_BLOCK(SDState *sd, SDRequest req)
+         return sd_cmd_illegal(sd, req);
+     }
  
--    io_len = (sd->ocr & (1 << 30)) ? 512 : sd->blk_len;
-+    io_len = sd_blk_len(sd);
+-    if (sd->state != sd_transfer_state) {
+-        return sd_invalid_state_for_cmd(sd, req);
+-    }
+-
+-    sd->state = sd_sendingdata_state;
+-    sd->data_offset = 0;
+-
+-    return sd_r1;
++    return sd_cmd_to_sendingdata(sd, req, 0,
++                                 sd_tuning_block_pattern4,
++                                 sizeof(sd_tuning_block_pattern4));
+ }
  
-     trace_sdcard_read_data(sd->proto->name,
-                            sd->last_cmd_name,
+ /* CMD23 */
+@@ -2100,20 +2110,6 @@ void sd_write_byte(SDState *sd, uint8_t value)
+     }
+ }
+ 
+-#define SD_TUNING_BLOCK_SIZE    64
+-
+-static const uint8_t sd_tuning_block_pattern[SD_TUNING_BLOCK_SIZE] = {
+-    /* See: Physical Layer Simplified Specification Version 3.01, Table 4-2 */
+-    0xff, 0x0f, 0xff, 0x00,         0x0f, 0xfc, 0xc3, 0xcc,
+-    0xc3, 0x3c, 0xcc, 0xff,         0xfe, 0xff, 0xfe, 0xef,
+-    0xff, 0xdf, 0xff, 0xdd,         0xff, 0xfb, 0xff, 0xfb,
+-    0xbf, 0xff, 0x7f, 0xff,         0x77, 0xf7, 0xbd, 0xef,
+-    0xff, 0xf0, 0xff, 0xf0,         0x0f, 0xfc, 0xcc, 0x3c,
+-    0xcc, 0x33, 0xcc, 0xcf,         0xff, 0xef, 0xff, 0xee,
+-    0xff, 0xfd, 0xff, 0xfd,         0xdf, 0xff, 0xbf, 0xff,
+-    0xbb, 0xff, 0xf7, 0xff,         0xf7, 0x7f, 0x7b, 0xde,
+-};
+-
+ uint8_t sd_read_byte(SDState *sd)
+ {
+     /* TODO: Append CRCs */
+@@ -2142,6 +2138,7 @@ uint8_t sd_read_byte(SDState *sd)
+     case 9:  /* CMD9:   SEND_CSD */
+     case 10: /* CMD10:  SEND_CID */
+     case 17: /* CMD17:  READ_SINGLE_BLOCK */
++    case 19: /* CMD19:  SEND_TUNING_BLOCK (SD) */
+         sd_generic_read_byte(sd, &ret);
+         break;
+ 
+@@ -2176,13 +2173,6 @@ uint8_t sd_read_byte(SDState *sd)
+         }
+         break;
+ 
+-    case 19:    /* CMD19:  SEND_TUNING_BLOCK (SD) */
+-        if (sd->data_offset >= SD_TUNING_BLOCK_SIZE - 1) {
+-            sd->state = sd_transfer_state;
+-        }
+-        ret = sd_tuning_block_pattern[sd->data_offset++];
+-        break;
+-
+     case 22:  /* ACMD22: SEND_NUM_WR_BLOCKS */
+         ret = sd->data[sd->data_offset ++];
+ 
 -- 
 2.41.0
 
