@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD330C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 05:22:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C801DC3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 05:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN42x-0003Ir-H1; Fri, 28 Jun 2024 01:21:19 -0400
+	id 1sN42p-0003GH-H7; Fri, 28 Jun 2024 01:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sN42v-0003IX-Pj
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 01:21:17 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1sN42o-0003G5-Rv
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 01:21:10 -0400
+Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sN42u-0008En-7b
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 01:21:17 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-706b53ee183so985082b3a.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 22:21:15 -0700 (PDT)
+ id 1sN42l-0008D7-He
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 01:21:10 -0400
+Received: by mail-il1-x130.google.com with SMTP id
+ e9e14a558f8ab-375f5c3ddb1so1121485ab.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 22:21:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719552074; x=1720156874; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719552065; x=1720156865; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i7+5Sk6k3Qdhdd1bPl+/zET47DgJiYeK1rga8DTRerY=;
- b=YNDYs3y8fjqsDlhEnDOdiPGD2r9jC4MZ1fFsDmri/kR0Rr3pPww+jIhS0IXT2zSB7h
- yIhaCvaaGr47YZZjkeZstnAfOfcqITw7ficzMW+mu89+D7XJob8Hm26Djml8VIn4SWXd
- xRdimOIvBNFZm2rynHVr5aXGjPt9gxf1TCvBeR1r0KcpnBOW2ukWiT/EHt4y1dufbwfi
- Uc8tZK9UCUTTOg0WsAeAkOH+9fG4mczaBdlyxIHWfqWA7J9/ezFuMCcmPXfdl0OCxorJ
- CSbEpg8zq8L5M4pZgKChQbO4T9MJkAc40sLHdAsnPWut6eg2kfMEPa8XKZqlxZFi4EP+
- rEJA==
+ bh=4TUFa5RFEE0mlvWgiU9FcmbW/faCfrest43wgdD9lPk=;
+ b=VNQHBiuON1gUNpJRthIe+yg9Qt0QjasWUew7+7eGsGOssBNzF8IDHCF/Gam3GtzlIs
+ 1zQWm8EEh0DKTh7MsB588YwZ56fuTAWMdYuQV4xCKXnq9ln8A6ncRZ0qQo0GxEjyxTnZ
+ MyqCliQiMcnp1ODcrEVtB/GdYU0CWqKFXa8jx2OiUvsWj8G665GxlpOTLnHgavPHr5GJ
+ OJnhAYhDwYYcbVsJEDataLzZm7medSjn7SfPJqZt/2JZWsHiwUUduI1iYiH4eMX+otO0
+ 3FbBE0rDd8VZcFUP+dUIa36AGgquqGZgNyTZuNBAcKBvWZhTEWMr1cJzm4WR6bpgDKtY
+ nFSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719552074; x=1720156874;
+ d=1e100.net; s=20230601; t=1719552065; x=1720156865;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i7+5Sk6k3Qdhdd1bPl+/zET47DgJiYeK1rga8DTRerY=;
- b=fG6S4IAZKqS3zB83XG13Z9/+UlGZuFQgXhaPdqFWCUILofaST9cc2PoGz8L2TItNcu
- t3DokVdooBrO1PRCdqkzt4cGE79uXKHTA9JbBm2XzjJf1Rmwtm6nylgUiQtu/uSe9eR7
- Gc/KgYIrrrpAshRJX8gDwow5qyeJjELgSBoTTOBw9mSOV0Jl1VmcH7bEzlac0fuuTp/u
- TSeFahEGWt/aWCuLhFZvV9jJpy4sKEX1/VGHcGQ2uTv0cbSE/8oT3W3L+m0vOYQYh51X
- JMOj2diblfi69hUsdxUDEOGwFBn9F1hY4Lpjase5r3WKhIBob3sCTs9otxcB8KoHYWxQ
- IpsQ==
-X-Gm-Message-State: AOJu0YzHV7+U0/cLUL9QBrg229b18pL3Ulh9b0jbRaeaUCWrVGG2LSr4
- F+iPkaYr5WY77zgYZppvp5Mz4pxwv0bBNE69XbdSqoluLg9diN8piLP1UTK4RPS1+YBYnXTdbyt
- +
-X-Google-Smtp-Source: AGHT+IHEjHD/Ea2vSOOYlS/c5GY8gJci2bY8gPJcHu8Fs83LIx0vC/o2icRWynl9XXYzUlUA2fNuIQ==
-X-Received: by 2002:a05:6a20:a10f:b0:1bc:bd60:e7fa with SMTP id
- adf61e73a8af0-1bee48ff465mr1158861637.2.1719552074375; 
- Thu, 27 Jun 2024 22:21:14 -0700 (PDT)
+ bh=4TUFa5RFEE0mlvWgiU9FcmbW/faCfrest43wgdD9lPk=;
+ b=HDtE8iNYIfxEt48KHTaoQRAzzeSWsH2XMmdFKSfqCI084iji5IlgXBx9esK9lcydT7
+ kJiSB1ARg8G4K91adJnLhM6k8GgSmxVt4Sihv0sLfqVacBIbH1tiMOxeLxLqYNGmGoVi
+ gnyhpiw09/kcVyF8hMWKLb0xVXxEHNBT8TAKEcFkATT6bvxk4gxvN6PDZgTd+i1OCxSp
+ mncGlzlJZVhWrjOkccHCSk9+YDDcmAOzH7aj3nkfeYGAQIzG3SEevIXkNTZOx8GAuBVU
+ SJhNwxzUT0uYoMCkyYpPP9pAISbQ34N7rJG+PZ1RR9qGzQw5DPnaMhP8Ih5pjhNvaEDi
+ RZ5A==
+X-Gm-Message-State: AOJu0Yx43gXeeJKBTZVw8hzEhDZ5V+l0dNO08cFfvAlda7q1j1D/OHS3
+ nmuvrgqjIPjMfe6YnKU7QZyubjAUO61JHk4PXHbjWwuGLhgvuONJTr1nRUqgTavhor9mEqbmMsv
+ t
+X-Google-Smtp-Source: AGHT+IHHohAaRvLevTIU6/cePEw518cQy/YAEQTTIZEzqIR70ZQRu12gAwy0Nd7hiLazaipBsMfOHQ==
+X-Received: by 2002:a92:c54c:0:b0:379:86a8:e42e with SMTP id
+ e9e14a558f8ab-37986a8e56amr51904945ab.0.1719552065546; 
+ Thu, 27 Jun 2024 22:21:05 -0700 (PDT)
 Received: from amd.. ([2804:7f0:b401:391e:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-72c6b2a16cdsm423932a12.46.2024.06.27.22.21.11
+ 41be03b00d2f7-72c6b2a16cdsm423932a12.46.2024.06.27.22.21.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 22:21:13 -0700 (PDT)
+ Thu, 27 Jun 2024 22:21:05 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
  richard.henderson@linaro.org
 Cc: peter.maydell@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v6 07/11] gdbstub: Make hex conversion function non-internal
-Date: Fri, 28 Jun 2024 05:08:46 +0000
-Message-Id: <20240628050850.536447-8-gustavo.romero@linaro.org>
+Subject: [PATCH v6 04/11] target/arm: Fix exception case in
+ allocation_tag_mem_probe
+Date: Fri, 28 Jun 2024 05:08:43 +0000
+Message-Id: <20240628050850.536447-5-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240628050850.536447-1-gustavo.romero@linaro.org>
 References: <20240628050850.536447-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-il1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,43 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make gdb_hextomem non-internal so it's not confined to use only in
-gdbstub.c.
+If page in 'ptr_access' is inaccessible and probe is 'true'
+allocation_tag_mem_probe should not throw an exception, but currently it
+does, so fix it.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- gdbstub/internals.h        | 1 -
- include/gdbstub/commands.h | 6 ++++++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ target/arm/tcg/mte_helper.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/gdbstub/internals.h b/gdbstub/internals.h
-index 34121dc61a..bf5a5c6302 100644
---- a/gdbstub/internals.h
-+++ b/gdbstub/internals.h
-@@ -107,7 +107,6 @@ static inline int tohex(int v)
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index 037ac6dd60..a50d576294 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -96,6 +96,9 @@ static uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
+     assert(!(probe && ra));
  
- void gdb_put_strbuf(void);
- int gdb_put_packet_binary(const char *buf, int len, bool dump);
--void gdb_hextomem(GByteArray *mem, const char *buf, int len);
- void gdb_memtohex(GString *buf, const uint8_t *mem, int len);
- void gdb_memtox(GString *buf, const char *mem, int len);
- void gdb_read_byte(uint8_t ch);
-diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-index 306dfdef97..e51f276b40 100644
---- a/include/gdbstub/commands.h
-+++ b/include/gdbstub/commands.h
-@@ -91,4 +91,10 @@ void gdb_extend_set_table(GdbCmdParseEntry *table, int size);
-  */
- void gdb_extend_qsupported_features(char *qsupported_features);
- 
-+/**
-+ * Convert a hex string to bytes. Conversion is done per byte, so 2 hex digits
-+ * are converted to 1 byte. Invalid hex digits are treated as 0 digits.
-+ */
-+void gdb_hextomem(GByteArray *mem, const char *buf, int len);
-+
- #endif /* GDBSTUB_COMMANDS_H */
+     if (!(flags & (ptr_access == MMU_DATA_STORE ? PAGE_WRITE_ORG : PAGE_READ))) {
++        if (probe) {
++            return NULL;
++        }
+         cpu_loop_exit_sigsegv(env_cpu(env), ptr, ptr_access,
+                               !(flags & PAGE_VALID), ra);
+     }
 -- 
 2.34.1
 
