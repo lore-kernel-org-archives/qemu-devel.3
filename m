@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51A54C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4826BC3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:43:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNAwT-0004mV-Mn; Fri, 28 Jun 2024 08:43:05 -0400
+	id 1sNAwb-0004qa-Q1; Fri, 28 Jun 2024 08:43:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNAwS-0004mB-Hv
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:04 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1sNAwV-0004oB-QC
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:07 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNAwQ-0005ej-RK
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:04 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-57d1d45ba34so761479a12.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 05:43:01 -0700 (PDT)
+ id 1sNAwT-0005fX-AM
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:07 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-57d07f07a27so703178a12.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 05:43:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719578581; x=1720183381; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719578584; x=1720183384; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=896nhI4YHOq1vJSOrCodsrbn34tjrTqeFeUAOFAZbLo=;
- b=NUmOoihGwvMDtbpkJ6Wluu8fUtMdcmx2LxyEfiCpITnybtExwf+TAy5kk3kPq/cOF4
- MQiq1CruMPOaAXajXS60mIf5GAuMVlOphoe0Oj4D84Xq5YzOoP0qvO0JgMNjAm9c8ngg
- ATHz4qjSf3PngC/fPxvMnN+meDhZimfBoNqZXIzn5nB7wXhcjjDIdj7lbU8LBz2Dbteh
- BC8/KSsryBVUaYtIcVFK/e5T7/EdIOKTLNQhjzaoP/FeYE0UqSWxwdHQfFA//LAbeInZ
- w0K2927bBx3wmNc39KUnidCY0EG2r3UbMny6BHAPGYLopombZZQZ8H2S+teINHXZDW+d
- dLTw==
+ bh=WHuZmnhAdWHG3UIOg5pOVL+PmE5Wzgi3P02hFFcB2fk=;
+ b=OeBHdPtRwtgq0VJkvuv6b1btbC83mdHxaGT/XsPcS1fVToTe0km/az7/BnUXuaFe5I
+ wfZ88GjqN+toKzo1dvRe1RA9QtV0G/OZErezHCtjsyKKQ02DJU174USGrv7/OQN2ecLF
+ FoZuSb9q9cPiBot14qTs64B+3MfVbxk2Ak56zr9N5zsHQi2bCjfMboitNMNspcdkgNH0
+ /wg88X558gVlw5+0/nXciFbG12YxTpgGqbCGmK/MkTlZ6f3AkNoIp7JnILW6YNU2vFx6
+ GPGYn7VL8kJVOGozsMk12f1KJQ/mUSFJsSBLFfMrWKfMWr6VyLsNKQwQL71UK/Z6ZEtD
+ 1pVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719578581; x=1720183381;
+ d=1e100.net; s=20230601; t=1719578584; x=1720183384;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=896nhI4YHOq1vJSOrCodsrbn34tjrTqeFeUAOFAZbLo=;
- b=VWKKckyUb2clm3jmfWdJn1mzWDFglQuvOR7MF+wfxAWRAza2V95+55pNxgFizndsPI
- GgXHjTNJUE5pKN3WMT/V0i0ltTVoJjYnR7fLVPTZ3tAZ8h4xon50wUTmF2ekBO7g5WK1
- Ttbu53tIOo5TdRW90TIStB4mzLj2sXASqMyg/4DAWR1vQz3kdsMCDgwNJ5HyJVWkjIGk
- fnYLQmt9/c8CH5gQMYyiHD0bex2NTeQK88d/EBiref03S1seGCyf1jAj3ovL1mcYlVmE
- xTEa4mRv4GjwZEAji7keFI3Pb0o5uFcwYsBkwbUhGISHwljdjVpFFP18XfNkQE3EDUqL
- vwgg==
-X-Gm-Message-State: AOJu0YzqXeJ7ZOGflA7eO+LQOm/s8vaAmytH6kJomD6wdxV3PppA5zly
- KwDOqzhFDl4gg/osA1RMAQXNfK+P/bH9rEWqWR+hjKqnMMdNYirYm5JRKALVQPA=
-X-Google-Smtp-Source: AGHT+IGtP9VjO3Aq3HA9bPMyEV9olo6yxLzW3r16rkqlIU/FqowM4XslRzFKoddNNniPIByRm6xCSQ==
-X-Received: by 2002:a05:6402:26c5:b0:582:5195:3a75 with SMTP id
- 4fb4d7f45d1cf-58251957824mr10014980a12.39.1719578580690; 
- Fri, 28 Jun 2024 05:43:00 -0700 (PDT)
+ bh=WHuZmnhAdWHG3UIOg5pOVL+PmE5Wzgi3P02hFFcB2fk=;
+ b=HnpIqizLLETnw3U4CIw5KYck9rsNN5lB4GrKa0/5AqXfVJihXasnAr2GCawx6OwIP+
+ tuVkNI8/2PpKYk5GOr/QO0eWfMNy+JJUv2W2Y8NjWAc5iUL8Ee7DWJn5s4v0vwQ9SpkC
+ jCgFeOSROXDz3mftCfopCwU5wdQPARGkPzmY9GSBdklTe4M+mgdHoWiA+Mk3mxov9gDy
+ fKq/7Sl094F60vRvFcp11vkIlFaOJUZus34xuyDGAkQYLtEOpJjC1R6mWH5In6e1RHMP
+ WOjDdd8U1Q9hOW22tWJ/aL8SuC22AbmEuK5eGzjp24d2wgpVm2myx9i1H5/zl1ZQf0Ri
+ 8inA==
+X-Gm-Message-State: AOJu0YwMy41Wb3MPCW9sxtiLw/pjZRRIUKlS8ydZzPxwROwyBmTagStO
+ IWFRSw+QNlHhgFMQn/xeIXTS8fdVNlMVKlReQB3NbxnhSPNcTk3eaSqEVG9itX8=
+X-Google-Smtp-Source: AGHT+IFe6RsSVULiEZ9TSzaDNcxNpoCit9aWaibpEZa+IWOdNprR2gR92o9RMSSsrQoXiPMK2L7NvQ==
+X-Received: by 2002:a05:6402:5216:b0:584:8fcd:260d with SMTP id
+ 4fb4d7f45d1cf-5848fcd26cfmr4530730a12.3.1719578583395; 
+ Fri, 28 Jun 2024 05:43:03 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-586138164a2sm985159a12.51.2024.06.28.05.42.59
+ 4fb4d7f45d1cf-58612c834ecsm984261a12.12.2024.06.28.05.42.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Jun 2024 05:42:59 -0700 (PDT)
+ Fri, 28 Jun 2024 05:43:00 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 158F75F929;
+ by draig.lan (Postfix) with ESMTP id 577735F9F9;
  Fri, 28 Jun 2024 13:42:59 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -75,17 +75,17 @@ Cc: David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 01/23] tests/lcitool: fix debian-i686-cross toolchain prefix
-Date: Fri, 28 Jun 2024 13:42:36 +0100
-Message-Id: <20240628124258.832466-2-alex.bennee@linaro.org>
+Subject: [PATCH 04/23] tracepoints: move physmem trace points
+Date: Fri, 28 Jun 2024 13:42:39 +0100
+Message-Id: <20240628124258.832466-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240628124258.832466-1-alex.bennee@linaro.org>
 References: <20240628124258.832466-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,41 +108,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I guess we never noticed and tried to build with this cross image. Fix
-the toolchain prefix so we actually build 32 bit images.
+They don't need to be in the global trace-events file and can have a
+local trace header. Also add address_space_map tracepoint for tracking
+mapping behaviour.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/docker/dockerfiles/debian-i686-cross.docker | 2 +-
- tests/lcitool/refresh                             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ system/physmem.c    | 6 ++++--
+ system/trace-events | 6 ++++++
+ trace-events        | 5 -----
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index f1e5b0b877..f4ef054a2e 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -169,7 +169,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/i686-linux-gnu && \
+diff --git a/system/physmem.c b/system/physmem.c
+index 33d09f7571..17c9c70f97 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -53,7 +53,7 @@
+ #include "sysemu/hostmem.h"
+ #include "sysemu/hw_accel.h"
+ #include "sysemu/xen-mapcache.h"
+-#include "trace/trace-root.h"
++#include "trace.h"
  
- ENV ABI "i686-linux-gnu"
- ENV MESON_OPTS "--cross-file=i686-linux-gnu"
--ENV QEMU_CONFIGURE_OPTS --cross-prefix=x86_64-linux-gnu-
-+ENV QEMU_CONFIGURE_OPTS --cross-prefix=i686-linux-gnu-
- ENV DEF_TARGET_LIST x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user
- # As a final step configure the user (if env is defined)
- ARG USER
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index b25e3ac4dd..ac803e34f1 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -167,7 +167,7 @@ try:
+ #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
+ #include <linux/falloc.h>
+@@ -1885,7 +1885,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
+     } else { /* list is empty */
+         QLIST_INSERT_HEAD_RCU(&ram_list.blocks, new_block, next);
+     }
+-    ram_list.mru_block = NULL;
++    qatomic_rcu_set(&ram_list.mru_block, NULL);
  
-     generate_dockerfile("debian-i686-cross", "debian-11",
-                         cross="i686",
--                        trailer=cross_build("x86_64-linux-gnu-",
-+                        trailer=cross_build("i686-linux-gnu-",
-                                             "x86_64-softmmu,"
-                                             "x86_64-linux-user,"
-                                             "i386-softmmu,i386-linux-user"))
+     /* Write list before version */
+     smp_wmb();
+@@ -3193,6 +3193,8 @@ void *address_space_map(AddressSpace *as,
+     MemoryRegion *mr;
+     FlatView *fv;
+ 
++    trace_address_space_map(as, addr, len, is_write, *(uint32_t *) &attrs);
++
+     if (len == 0) {
+         return NULL;
+     }
+diff --git a/system/trace-events b/system/trace-events
+index 69c9044151..2ed1d59b1f 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -21,6 +21,12 @@ flatview_destroy(void *view, void *root) "%p (root %p)"
+ flatview_destroy_rcu(void *view, void *root) "%p (root %p)"
+ global_dirty_changed(unsigned int bitmask) "bitmask 0x%"PRIx32
+ 
++# physmem.c
++address_space_map(void *as, uint64_t addr, uint64_t len, bool is_write, uint32_t attrs) "as:%p addr 0x%"PRIx64":%"PRIx64" write:%d attrs:0x%x"
++find_ram_offset(uint64_t size, uint64_t offset) "size: 0x%" PRIx64 " @ 0x%" PRIx64
++find_ram_offset_loop(uint64_t size, uint64_t candidate, uint64_t offset, uint64_t next, uint64_t mingap) "trying size: 0x%" PRIx64 " @ 0x%" PRIx64 ", offset: 0x%" PRIx64" next: 0x%" PRIx64 " mingap: 0x%" PRIx64
++ram_block_discard_range(const char *rbname, void *hva, size_t length, bool need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d fallocate: %d ret: %d"
++
+ # cpus.c
+ vm_stop_flush_all(int ret) "ret %d"
+ 
+diff --git a/trace-events b/trace-events
+index dd318ed1af..9cb96f64c4 100644
+--- a/trace-events
++++ b/trace-events
+@@ -37,11 +37,6 @@ dma_complete(void *dbs, int ret, void *cb) "dbs=%p ret=%d cb=%p"
+ dma_blk_cb(void *dbs, int ret) "dbs=%p ret=%d"
+ dma_map_wait(void *dbs) "dbs=%p"
+ 
+-# exec.c
+-find_ram_offset(uint64_t size, uint64_t offset) "size: 0x%" PRIx64 " @ 0x%" PRIx64
+-find_ram_offset_loop(uint64_t size, uint64_t candidate, uint64_t offset, uint64_t next, uint64_t mingap) "trying size: 0x%" PRIx64 " @ 0x%" PRIx64 ", offset: 0x%" PRIx64" next: 0x%" PRIx64 " mingap: 0x%" PRIx64
+-ram_block_discard_range(const char *rbname, void *hva, size_t length, bool need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d fallocate: %d ret: %d"
+-
+ # job.c
+ job_state_transition(void *job,  int ret, const char *legal, const char *s0, const char *s1) "job %p (ret: %d) attempting %s transition (%s-->%s)"
+ job_apply_verb(void *job, const char *state, const char *verb, const char *legal) "job %p in state %s; applying verb %s (%s)"
 -- 
 2.39.2
 
