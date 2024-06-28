@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D56BFC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F28C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6Ii-00082s-MF; Fri, 28 Jun 2024 03:45:44 -0400
+	id 1sN6Ic-0007xc-EM; Fri, 28 Jun 2024 03:45:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6Ig-00082F-BY
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:45:42 -0400
+ id 1sN6IS-0007uh-Dd
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:45:28 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6Ie-0004kP-KE
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:45:41 -0400
+ id 1sN6IQ-0004fB-Ol
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:45:28 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SCk35WBz4wb7;
- Fri, 28 Jun 2024 17:45:38 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SCQ220tz4w2N;
+ Fri, 28 Jun 2024 17:45:22 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SCj29tRz4w2N;
- Fri, 28 Jun 2024 17:45:36 +1000 (AEST)
-Message-ID: <c141edd7-6083-43a8-8362-c4117fc18d19@kaod.org>
-Date: Fri, 28 Jun 2024 09:45:34 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SCP1hKZz4w2K;
+ Fri, 28 Jun 2024 17:45:20 +1000 (AEST)
+Message-ID: <ca0121c8-d465-4922-a395-95e71ad58fc0@kaod.org>
+Date: Fri, 28 Jun 2024 09:45:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v42 19/98] hw/sd/sdcard: Convert SWITCH_FUNCTION to
