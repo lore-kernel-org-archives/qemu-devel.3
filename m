@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48090C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1D43C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6Xc-0006N3-Ae; Fri, 28 Jun 2024 04:01:08 -0400
+	id 1sN6YC-00008w-Vg; Fri, 28 Jun 2024 04:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6XY-00069W-Nt
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:01:06 -0400
+ id 1sN6YB-00006T-DL
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:01:43 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6XW-0004h0-6B
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:01:03 -0400
+ id 1sN6Y9-0004l3-8h
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:01:43 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SYR5Nrtz4wb7;
- Fri, 28 Jun 2024 18:00:59 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SZC19p2z4w2Q;
+ Fri, 28 Jun 2024 18:01:39 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SYQ5Cr0z4w2Q;
- Fri, 28 Jun 2024 18:00:58 +1000 (AEST)
-Message-ID: <3c465610-0b4d-4bbb-9a12-661c4ea65133@kaod.org>
-Date: Fri, 28 Jun 2024 10:00:56 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SZB12Jgz4w2N;
+ Fri, 28 Jun 2024 18:01:37 +1000 (AEST)
+Message-ID: <5d8add9d-f5b0-4f6a-9d69-b187c2c7471b@kaod.org>
+Date: Fri, 28 Jun 2024 10:01:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 54/98] hw/sd/sdcard: Add sd_cmd_GO_INACTIVE_STATE
- handler (CMD15)
+Subject: Re: [PATCH v42 57/98] hw/sd/sdcard: Add sd_cmd_WRITE_SINGLE_BLOCK
+ handler (CMD24)
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-55-philmd@linaro.org>
+ <20240628070216.92609-58-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240628070216.92609-55-philmd@linaro.org>
+In-Reply-To: <20240628070216.92609-58-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -79,77 +79,104 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 37 +++++++++++++++++++++++++------------
->   1 file changed, 25 insertions(+), 12 deletions(-)
+>   hw/sd/sd.c | 57 ++++++++++++++++++++++++++++--------------------------
+>   1 file changed, 30 insertions(+), 27 deletions(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index bb80d11f87..d7ed8aee73 100644
+> index e2a7ed8b45..4650d20ee7 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -240,7 +240,6 @@ static const char *sd_response_name(sd_rsp_type_t rsp)
->   static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
->   {
+> @@ -242,7 +242,7 @@ static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
 >       static const char *cmd_abbrev[SDMMC_CMD_MAX] = {
-> -                                            [15]    = "GO_INACTIVE_STATE",
->           [16]    = "SET_BLOCKLEN",           [17]    = "READ_SINGLE_BLOCK",
 >           [18]    = "READ_MULTIPLE_BLOCK",
 >                                               [21]    = "DPS_spec",
-> @@ -1402,6 +1401,30 @@ static sd_rsp_type_t sd_cmd_SEND_STATUS(SDState *sd, SDRequest req)
->       return sd_req_rca_same(sd, req) ? sd_r1 : sd_r0;
+> -        [24]    = "WRITE_BLOCK",            [25]    = "WRITE_MULTIPLE_BLOCK",
+> +                                            [25]    = "WRITE_MULTIPLE_BLOCK",
+>           [26]    = "MANUF_RSVD",             [27]    = "PROGRAM_CSD",
+>           [28]    = "SET_WRITE_PROT",         [29]    = "CLR_WRITE_PROT",
+>           [30]    = "SEND_WRITE_PROT",
+> @@ -1487,6 +1487,33 @@ static sd_rsp_type_t sd_cmd_SET_BLOCK_COUNT(SDState *sd, SDRequest req)
+>       return sd_r1;
 >   }
 >   
-> +/* CMD15 */
-> +static sd_rsp_type_t sd_cmd_GO_INACTIVE_STATE(SDState *sd, SDRequest req)
+> +/* CMD24 */
+> +static sd_rsp_type_t sd_cmd_WRITE_SINGLE_BLOCK(SDState *sd, SDRequest req)
 > +{
-> +    if (sd->mode != sd_data_transfer_mode) {
-> +        return sd_invalid_mode_for_cmd(sd, req);
-> +    }
-> +    switch (sd->state) {
-> +    case sd_standby_state:
-> +    case sd_transfer_state:
-> +    case sd_sendingdata_state:
-> +    case sd_receivingdata_state:
-> +    case sd_programming_state:
-> +    case sd_disconnect_state:
-> +        break;
-> +    default:
+> +    uint64_t addr;
+> +
+> +    if (sd->state != sd_transfer_state) {
 > +        return sd_invalid_state_for_cmd(sd, req);
 > +    }
-> +    if (sd_req_rca_same(sd, req)) {
-> +        sd->state = sd_inactive_state;
+> +
+> +    addr = sd_req_get_address(sd, req);
+> +    if (!address_in_range(sd, "WRITE_SINGLE_BLOCK", addr, sd->blk_len)) {
+> +        return sd_r1;
 > +    }
 > +
-> +    return sd_r0;
+> +    if (sd->size <= SDSC_MAX_CAPACITY) {
+> +        if (sd_wp_addr(sd, addr)) {
+> +            sd->card_status |= WP_VIOLATION;
+> +        }
+> +    }
+> +    if (sd->csd[14] & 0x30) {
+> +        sd->card_status |= WP_VIOLATION;
+> +    }
+> +
+> +    sd->blk_written = 0;
+> +    return sd_cmd_to_receivingdata(sd, req, addr, sd->blk_len);
 > +}
 > +
->   /* CMD19 */
->   static sd_rsp_type_t sd_cmd_SEND_TUNING_BLOCK(SDState *sd, SDRequest req)
+>   static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
 >   {
-> @@ -1467,17 +1490,6 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
->       }
+>       uint16_t rca;
+> @@ -1544,32 +1571,6 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+>           break;
 >   
->       switch (req.cmd) {
-> -    /* Basic commands (Class 0 and Class 1) */
-> -    case 15:  /* CMD15:  GO_INACTIVE_STATE */
-> -        if (sd->mode != sd_data_transfer_mode) {
-> -            return sd_invalid_mode_for_cmd(sd, req);
-> -        }
-> -        rca = sd_req_get_rca(sd, req);
-> -        if (sd->rca == rca) {
-> -            sd->state = sd_inactive_state;
-> -        }
-> -        return sd_r0;
+>       /* Block write commands (Class 4) */
+> -    case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
+> -        addr = sd_req_get_address(sd, req);
+> -        switch (sd->state) {
+> -        case sd_transfer_state:
 > -
->       /* Block read commands (Class 2) */
->       case 16:  /* CMD16:  SET_BLOCKLEN */
+> -            if (!address_in_range(sd, "WRITE_SINGLE_BLOCK", addr,
+> -                                  sd->blk_len)) {
+> -                return sd_r1;
+> -            }
+> -
+> -            if (sd->size <= SDSC_MAX_CAPACITY) {
+> -                if (sd_wp_addr(sd, sd->data_start)) {
+> -                    sd->card_status |= WP_VIOLATION;
+> -                }
+> -            }
+> -            if (sd->csd[14] & 0x30) {
+> -                sd->card_status |= WP_VIOLATION;
+> -            }
+> -            sd->blk_written = 0;
+> -            return sd_cmd_to_receivingdata(sd, req, addr, sd->blk_len);
+> -
+> -        default:
+> -            break;
+> -        }
+> -        break;
+> -
+>       case 25:  /* CMD25:  WRITE_MULTIPLE_BLOCK */
+>           addr = sd_req_get_address(sd, req);
 >           switch (sd->state) {
-> @@ -2324,6 +2336,7 @@ static const SDProto sd_proto_sd = {
->           [11] = {0,  sd_ac,   "VOLTAGE_SWITCH", sd_cmd_optional},
->           [12] = {0,  sd_ac,   "STOP_TRANSMISSION", sd_cmd_STOP_TRANSMISSION},
->           [13] = {0,  sd_ac,   "SEND_STATUS", sd_cmd_SEND_STATUS},
-> +        [15] = {0,  sd_ac,   "GO_INACTIVE_STATE", sd_cmd_GO_INACTIVE_STATE},
+> @@ -2308,6 +2309,7 @@ static const SDProto sd_proto_spi = {
+>           [13] = {0,  sd_spi, "SEND_STATUS", sd_cmd_SEND_STATUS},
+>           [16] = {2,  sd_spi, "SET_BLOCKLEN", sd_cmd_SET_BLOCKLEN},
+>           [17] = {2,  sd_spi, "READ_SINGLE_BLOCK", sd_cmd_READ_SINGLE_BLOCK},
+> +        [24] = {4,  sd_spi, "WRITE_SINGLE_BLOCK", sd_cmd_WRITE_SINGLE_BLOCK},
+>           [34] = {10, sd_spi, "READ_SEC_CMD", sd_cmd_optional},
+>           [35] = {10, sd_spi, "WRITE_SEC_CMD", sd_cmd_optional},
+>           [36] = {10, sd_spi, "SEND_PSI", sd_cmd_optional},
+> @@ -2344,6 +2346,7 @@ static const SDProto sd_proto_sd = {
 >           [19] = {2,  sd_adtc, "SEND_TUNING_BLOCK", sd_cmd_SEND_TUNING_BLOCK},
 >           [20] = {2,  sd_ac,   "SPEED_CLASS_CONTROL", sd_cmd_optional},
 >           [23] = {2,  sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
+> +        [24] = {4,  sd_adtc, "WRITE_SINGLE_BLOCK", sd_cmd_WRITE_SINGLE_BLOCK},
+>           [34] = {10, sd_adtc, "READ_SEC_CMD", sd_cmd_optional},
+>           [35] = {10, sd_adtc, "WRITE_SEC_CMD", sd_cmd_optional},
+>           [36] = {10, sd_adtc, "SEND_PSI", sd_cmd_optional},
 
 
