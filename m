@@ -4,54 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40B19C3064D
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EA53C3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:12:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6h0-0001sQ-Qn; Fri, 28 Jun 2024 04:10:50 -0400
+	id 1sN6if-0002sZ-VR; Fri, 28 Jun 2024 04:12:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6gz-0001rh-AS
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:10:49 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sN6ie-0002s4-FD
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:12:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6gx-00010X-CL
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:10:49 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Smj36Lbz4wcr;
- Fri, 28 Jun 2024 18:10:45 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sN6ic-00057t-Im
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:12:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719562349;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=IS+Yz4+qV2Bgsf/Pp17U4lhZGBAGViAT+TUtb8f80GQ=;
+ b=isMddxEbKL3rdJca/983fkW42eVFcxmdX4OhgA59+9oOly/S6rfGfAwMqu6Lq/kCqDym6b
+ wkPfAzQMIc8vvMwWHr3aaDD4+6B2adFB5r64LXhZ0Sl3tocI1SZ7iHiCHkTr7u7MWlE7Kg
+ iQCx9i9Y8xX6e7hY8eats6K9hlpXWZM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-s_DQXfbVNnWnWxdq0lmfAg-1; Fri,
+ 28 Jun 2024 04:12:25 -0400
+X-MC-Unique: s_DQXfbVNnWnWxdq0lmfAg-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Smh32kvz4wcg;
- Fri, 28 Jun 2024 18:10:44 +1000 (AEST)
-Message-ID: <d91f53b8-40bc-48bc-bd30-32627eeb1213@kaod.org>
-Date: Fri, 28 Jun 2024 10:10:42 +0200
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 292201944DDB; Fri, 28 Jun 2024 08:12:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.106])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BFE6F300021A; Fri, 28 Jun 2024 08:12:22 +0000 (UTC)
+Date: Fri, 28 Jun 2024 09:12:19 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Gregor Haas <gregorhaas1997@gmail.com>
+Cc: qemu-devel@nongnu.org, yaoxt.fnst@fujitsu.com
+Subject: Re: [PATCH v2] hw/core/loader: allow loading larger ROMs
+Message-ID: <Zn5wUyy2qWpUAtZo@redhat.com>
+References: <20240628005817.1672298-1-gregorhaas1997@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v42 89/98] hw/sd/sdcard: Implement eMMC sleep state
- (CMD5)
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-90-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240628070216.92609-90-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=GU6n=N6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240628005817.1672298-1-gregorhaas1997@gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,117 +79,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/28/24 9:02 AM, Philippe Mathieu-Daudé wrote:
-> From: Luc Michel <luc.michel@amd.com>
+On Thu, Jun 27, 2024 at 05:58:17PM -0700, Gregor Haas wrote:
+> The read() syscall is not guaranteed to return all data from a file. The
+> default ROM loader implementation currently does not take this into account,
+> instead failing if all bytes are not read at once. This change loads the ROM
+> using load_image_size() instead, which correctly reads all data using
+> multiple calls to read().
 > 
-> The JEDEC standards specifies a sleep state where the eMMC won't answer
-> any command appart from RESET and WAKEUP and go to low power state.
-> Implement this state and the corresponding command number 5.
-> 
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-> Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+> Signed-off-by: Gregor Haas <gregorhaas1997@gmail.com>
 > ---
->   hw/sd/sd.c | 47 +++++++++++++++++++++++++++++++++++++++++++++--
->   1 file changed, 45 insertions(+), 2 deletions(-)
+>  hw/core/loader.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 > 
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 0f9bab105e..bd77853419 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -1182,8 +1182,19 @@ static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
->   /* CMD0 */
->   static sd_rsp_type_t sd_cmd_GO_IDLE_STATE(SDState *sd, SDRequest req)
->   {
-> -    sd->state = sd_idle_state;
-> -    sd_reset(DEVICE(sd));
-> +    if (sd->state == sd_sleep_state) {
-> +        switch (req.arg) {
-> +        case 0x00000000:
-> +        case 0xf0f0f0f0:
-> +            break;
-> +        default:
-> +            return sd_r0;
-> +        }
-> +    }
-> +    if (sd->state != sd_inactive_state) {
-> +        sd->state = sd_idle_state;
-> +        sd_reset(DEVICE(sd));
-> +    }
->   
->       return sd_is_spi(sd) ? sd_r1 : sd_r0;
->   }
-> @@ -1246,6 +1257,30 @@ static sd_rsp_type_t emmc_cmd_SET_RELATIVE_ADDR(SDState *sd, SDRequest req)
->       }
->   }
->   
-> +/* CMD5 */
-> +static sd_rsp_type_t emmc_cmd_sleep_awake(SDState *sd, SDRequest req)
-> +{
-> +    bool do_sleep = extract32(req.arg, 15, 1);
-> +
-> +    switch (sd->state) {
-> +    case sd_sleep_state:
-> +        if (!do_sleep) {
-> +            /* Awake */
-> +            sd->state = sd_standby_state;
-> +        }
-> +        return sd_r1b;
-> +
-> +    case sd_standby_state:
-> +        if (do_sleep) {
-> +            sd->state = sd_sleep_state;
-> +        }
-> +        return sd_r1b;
-> +
-> +    default:
-> +        return sd_invalid_state_for_cmd(sd, req);
-> +    }
-> +}
-> +
->   /* CMD6 */
->   static sd_rsp_type_t sd_cmd_SWITCH_FUNCTION(SDState *sd, SDRequest req)
->   {
-> @@ -1648,6 +1683,7 @@ static sd_rsp_type_t sd_cmd_APP_CMD(SDState *sd, SDRequest req)
->       case sd_ready_state:
->       case sd_identification_state:
->       case sd_inactive_state:
-> +    case sd_sleep_state:
->           return sd_invalid_state_for_cmd(sd, req);
->       case sd_idle_state:
->           if (!sd_is_spi(sd) && sd_req_get_rca(sd, req) != 0x0000) {
-> @@ -1969,6 +2005,12 @@ int sd_do_command(SDState *sd, SDRequest *req,
->           req->cmd &= 0x3f;
->       }
->   
-> +    if (sd->state == sd_sleep_state && req->cmd) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "SD: Card is sleeping\n");
-> +        rtype = sd_r0;
-> +        goto send_response;
-> +    }
-> +
->       if (sd->card_status & CARD_IS_LOCKED) {
->           if (!cmd_valid_while_locked(sd, req->cmd)) {
->               sd->card_status |= ILLEGAL_COMMAND;
-> @@ -2420,6 +2462,7 @@ static const SDProto sd_proto_emmc = {
->           [2]  = {0,  sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
->           [3]  = {0,  sd_ac,   "SET_RELATIVE_ADDR", emmc_cmd_SET_RELATIVE_ADDR},
->           [4]  = {0,  sd_bc,   "SEND_DSR", sd_cmd_unimplemented},
-> +        [5]  = {0,  sd_ac,   "SLEEP/AWAKE", emmc_cmd_sleep_awake},
->           [7]  = {0,  sd_ac,   "(DE)SELECT_CARD", sd_cmd_DE_SELECT_CARD},
->           [9]  = {0,  sd_ac,   "SEND_CSD", sd_cmd_SEND_CSD},
->           [10] = {0,  sd_ac,   "SEND_CID", sd_cmd_SEND_CID},
+> diff --git a/hw/core/loader.c b/hw/core/loader.c
+> index 2f8105d7de..8216781a75 100644
+> --- a/hw/core/loader.c
+> +++ b/hw/core/loader.c
+> @@ -1115,14 +1115,13 @@ ssize_t rom_add_file(const char *file, const char *fw_dir,
+>  
+>      rom->datasize = rom->romsize;
+>      rom->data     = g_malloc0(rom->datasize);
+> -    lseek(fd, 0, SEEK_SET);
+> -    rc = read(fd, rom->data, rom->datasize);
+> +    close(fd);
+> +    rc = load_image_size(rom->path, rom->data, rom->datasize);
+>      if (rc != rom->datasize) {
+>          fprintf(stderr, "rom: file %-20s: read error: rc=%zd (expected %zd)\n",
+>                  rom->name, rc, rom->datasize);
+>          goto err;
+>      }
+> -    close(fd);
+
+This method can be simplified much more.
+All of the original 'open', lseek, g_malloc0, read & close, can be
+replaced by something approximately like this (untested):
+
+   g_autoptr(GError) gerr = NULL;
+   if (!g_file_get_contents(file, &rom->data, &rom->datasize, &gerr)) {
+       fprintf(stderr, "unable to load ROM '%s': %s", file, gerr->message);
+       goto err;
+   }
+   
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
