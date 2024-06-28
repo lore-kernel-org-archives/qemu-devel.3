@@ -4,73 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17DC0C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8535C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 09:07:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN71c-0007lN-1L; Fri, 28 Jun 2024 04:32:08 -0400
+	id 1sN7Yw-0004kQ-J7; Fri, 28 Jun 2024 05:06:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sN71Z-0007jZ-Ad
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:32:05 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1sN7Yu-0004ip-G0
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:06:32 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sN71X-0000qm-Ey
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:32:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719563523; x=1751099523;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=xQbgmLOiUzMotqn7K6RalAxrTaCb1Ai/St6yAhJtgJ0=;
- b=n4OGcd6mFeqbr8IilPBGsF9s1yeZB+kxOLvavgWQPZJAjFwvE92JjDmW
- QD1SKoFdfQeHjI8UBnVCbhiN0l9cf4nbxejxV+ktTrPh6nNUpEN6vq2ui
- 560+TPgwyXETrD7aekM4NAkrLpzrURmka6AXFFFOdevZDr9eGuxr2/d6g
- iOGdV+eAceNCDcy1dlBGg87XGwXgPg1dm9mdKuM4L/CKF0rhP44U1fhtL
- Pp6ibh8+TxWOQsKyFqwxPkLAf9yEmyoPMTBpFbsd3cM2kDHOnWgcewGre
- Xxzd+tAn/48uGUtH4zsMXPBBm+uYRxt3/d5Nk8wjIcfXNKVLnJr0BDs1y Q==;
-X-CSE-ConnectionGUID: U6PRp7T0TsKzlIK8yhqy5A==
-X-CSE-MsgGUID: ePi3tcZfQZ+WZRu9ao/GgQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11116"; a="16692995"
-X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; d="scan'208";a="16692995"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jun 2024 01:32:00 -0700
-X-CSE-ConnectionGUID: X7IopqwjQiqSx3gRJlTy+A==
-X-CSE-MsgGUID: TWXryn/CSxSdfOXYVOEklw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,168,1716274800"; d="scan'208";a="75406415"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.242.48])
- ([10.124.242.48])
- by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Jun 2024 01:31:59 -0700
-Message-ID: <a8f5d517-7037-4146-824e-3f985774c780@intel.com>
-Date: Fri, 28 Jun 2024 16:31:56 +0800
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1sN7Yq-0005k2-VV
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 05:06:32 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4W9Tyj2zc4z6K8wN;
+ Fri, 28 Jun 2024 17:04:29 +0800 (CST)
+Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
+ by mail.maildlp.com (Postfix) with ESMTPS id 2130D1400CA;
+ Fri, 28 Jun 2024 17:06:14 +0800 (CST)
+Received: from P_UKIT01-A7bmah.china.huawei.com (10.48.147.160) by
+ lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 28 Jun 2024 10:06:13 +0100
+To: <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>,
+ <linux-edac@vger.kernel.org>
+CC: <jonathan.cameron@huawei.com>, <mchehab+huawei@kernel.org>,
+ <tanxiaofei@huawei.com>, <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>,
+ <shiju.jose@huawei.com>
+Subject: [RFC PATCH 0/3 qemu] arm/acpi: ACPI based FW First error injection
+Date: Fri, 28 Jun 2024 10:06:01 +0100
+Message-ID: <20240628090605.529-1-shiju.jose@huawei.com>
+X-Mailer: git-send-email 2.43.0.windows.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/i386: drop AMD machine check bits from Intel
- CPUID
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: John Allen <john.allen@amd.com>
-References: <20240627140628.1025317-1-pbonzini@redhat.com>
- <20240627140628.1025317-3-pbonzini@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20240627140628.1025317-3-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.505, HK_RANDOM_FROM=0.457, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.48.147.160]
+X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
+ lhrpeml500006.china.huawei.com (7.191.161.198)
+Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,69 +65,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  <shiju.jose@huawei.com>
+From: shiju.jose--- via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/27/2024 10:06 PM, Paolo Bonzini wrote:
-> The recent addition of the SUCCOR bit to kvm_arch_get_supported_cpuid()
-> causes the bit to be visible when "-cpu host" VMs are started on Intel
-> processors.
-> 
-> While this should in principle be harmless, it's not tidy and we don't
-> even know for sure that it doesn't cause any guest OS to take unexpected
-> paths.  Since x86_cpu_get_supported_feature_word() can return different
-> different values depending on the guest, adjust it to hide the SUCCOR
+From: Shiju Jose <shiju.jose@huawei.com>
 
-superfluous different
+Series adds,
+1. ACPI based FW First error injection and
+2. Support for injecting ARM processor errors.
 
-> bit if the guest has non-AMD vendor.
+This qemu based error injection mechanism found very useful for testing and
+upstream the RAS FW-first related changes in the kernel
+as well as in the user space tools when hardware is not available. 
 
-It seems to adjust it based on vendor in kvm_arch_get_supported_cpuid() 
-is better than in x86_cpu_get_supported_feature_word(). Otherwise 
-kvm_arch_get_supported_cpuid() still returns "risky" value for Intel VMs.
+What is this?
+- ACPI + UEFI specs define a means of notifying the OS of errors that
+  firmware has handled (gathered up data etc, reset the relevant error tracking
+  units etc) in a set of standard formats (UEFI spec appendix N).
+- ARM virt already supports standard HEST ACPI table description of Synchronous
+  External Abort (SEA) for memory errors. This series builds on this to
+  add a GHESv2 / Generic Error Device / GPIO interrupt path for asynchronous
+  error reporting.
 
-> 
-> Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Cc: John Allen <john.allen@amd.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/cpu.c | 16 +++++++++++++++-
->   1 file changed, 15 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index deb58670651..f3e9b543682 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -6064,8 +6064,10 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
->       } else {
->           return ~0;
->       }
-> +
-> +    switch (w) {
->   #ifndef TARGET_X86_64
-> -    if (w == FEAT_8000_0001_EDX) {
-> +    case FEAT_8000_0001_EDX:
->           /*
->            * 32-bit TCG can emulate 64-bit compatibility mode.  If there is no
->            * way for userspace to get out of its 32-bit jail, we can leave
-> @@ -6077,6 +6079,18 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
->           r &= ~unavail;
->           break;
->   #endif
-> +
-> +    case FEAT_8000_0007_EBX:
-> +        if (cpu && !IS_AMD_CPU(&cpu->env)) {
-> +            /* Disable AMD machine check architecture for Intel CPU.  */
-> +            r = 0;
-> +        }
-> +        break;
-> +
-> +    default:
-> +        break;
-> +    }
-> +
->       if (cpu && cpu->migratable) {
->           r &= x86_cpu_get_migratable_flags(w);
->       }
+- The OS normally negotiates for control of error registers via _OSC.
+  Previously QEMU unconditionally granted control of these registers.
+  This series includes a machine parameter to allow the 'FW' to not let the
+  OS take control and tracks whether the OS has asked for control or not.
+  Note this code relies on the standard handshake - it's not remotely
+  correct if the OS does follow that flow - this can be hardened with some
+  more AML magic.
+
+Alternatives:
+- In theory we could emulate a management controller running appropriate firmware
+  and have that actually handle the errors. It's much easier to instead intercept
+  them before the error reporting messages are sent and result logged in the root
+  ports error registers. As far as the guest is concerned it doesn't matter if
+  these registers are handled via the firmware or never got written in the first
+  place (the guest isn't allowed to touch these registers anyway!)
+  This is sort of same argument for why we build ACPI tables in general in QEMU
+  rather than making that an EDK2 problem.
+
+Why?
+- The kernel supports both firmware first and native RAS.
+  As only some vendors have adopted a FW first model and hardware
+  availability is limited this code has proven challenging to test.
+
+Why an RFC?
+- Assuming adding this support to QEMU will be controversial.
+- Probably figure out how to do this for x86 as apparently people
+  also want to use that architecture.
+
+Reference to the previous series.
+https://patchew.org/QEMU/20240205141940.31111-1-Jonathan.Cameron@huawei.com/
+
+Mauro Carvalho had added instructions in wiki about how to inject ARM
+procssor errors:
+https://github.com/mchehab/rasdaemon/wiki/error-injection
+
+Series is avaiable here:
+https://gitlab.com/shiju.jose/qemu/-/commits/arm-error-inject
+
+Jonathan Cameron (3):
+  arm/virt: Wire up GPIO error source for ACPI / GHES
+  acpi/ghes: Support GPIO error source.
+  acpi/ghes: Add a logic to handle block addresses and FW first ARM
+    processor error injection
+
+ configs/targets/aarch64-softmmu.mak |   1 +
+ hw/acpi/ghes.c                      | 266 ++++++++++++++++++++++++++--
+ hw/arm/Kconfig                      |   4 +
+ hw/arm/arm_error_inject.c           |  35 ++++
+ hw/arm/arm_error_inject_stubs.c     |  18 ++
+ hw/arm/meson.build                  |   3 +
+ hw/arm/virt-acpi-build.c            |  29 ++-
+ hw/arm/virt.c                       |  12 +-
+ include/hw/acpi/ghes.h              |   3 +
+ include/hw/boards.h                 |   1 +
+ qapi/arm-error-inject.json          |  49 +++++
+ qapi/meson.build                    |   1 +
+ qapi/qapi-schema.json               |   1 +
+ 13 files changed, 405 insertions(+), 18 deletions(-)
+ create mode 100644 hw/arm/arm_error_inject.c
+ create mode 100644 hw/arm/arm_error_inject_stubs.c
+ create mode 100644 qapi/arm-error-inject.json
+
+-- 
+2.34.1
 
 
