@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E27B5C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 505D3C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:56:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6Sv-0007MH-At; Fri, 28 Jun 2024 03:56:17 -0400
+	id 1sN6TK-0000VK-0h; Fri, 28 Jun 2024 03:56:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6St-0007JV-Lc
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:56:15 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1sN6TE-0000Sw-7F
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:56:36 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6Sr-0001mB-Vc
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:56:15 -0400
+ id 1sN6TC-0002R2-I9
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:56:35 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SRv6x2Bz4wb7;
- Fri, 28 Jun 2024 17:56:11 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9SSJ4CSbz4wb7;
+ Fri, 28 Jun 2024 17:56:32 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SRt6kwcz4w2K;
- Fri, 28 Jun 2024 17:56:10 +1000 (AEST)
-Message-ID: <09e7116c-fd50-4bb9-a23e-5283f7e6fd6f@kaod.org>
-Date: Fri, 28 Jun 2024 09:56:08 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9SSH41m2z4w2Q;
+ Fri, 28 Jun 2024 17:56:31 +1000 (AEST)
+Message-ID: <eee3b148-ab87-428d-bd76-f403d05eca96@kaod.org>
+Date: Fri, 28 Jun 2024 09:56:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 43/98] hw/sd/sdcard: Register generic optional
- handlers (CMD11 and CMD20)
+Subject: Re: [PATCH v42 44/98] hw/sd/sdcard: Register optional handlers from
+ spec v6.00
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-44-philmd@linaro.org>
+ <20240628070216.92609-45-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240628070216.92609-44-philmd@linaro.org>
+In-Reply-To: <20240628070216.92609-45-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=GU6n=N6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -79,52 +79,45 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 14 ++++++++++++--
->   1 file changed, 12 insertions(+), 2 deletions(-)
+>   hw/sd/sd.c | 15 ++++++++++-----
+>   1 file changed, 10 insertions(+), 5 deletions(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 097cb0f2e2..74aa38a442 100644
+> index 74aa38a442..406fadb3b4 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -243,12 +243,12 @@ static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
->                                                [5]    = "IO_SEND_OP_COND",
->            [6]    = "SWITCH_FUNC",             [7]    = "SELECT/DESELECT_CARD",
->            [8]    = "SEND_IF_COND",            [9]    = "SEND_CSD",
-> -        [10]    = "SEND_CID",               [11]    = "VOLTAGE_SWITCH",
-> +        [10]    = "SEND_CID",
->           [12]    = "STOP_TRANSMISSION",      [13]    = "SEND_STATUS",
->                                               [15]    = "GO_INACTIVE_STATE",
->           [16]    = "SET_BLOCKLEN",           [17]    = "READ_SINGLE_BLOCK",
->           [18]    = "READ_MULTIPLE_BLOCK",
-> -        [20]    = "SPEED_CLASS_CONTROL",    [21]    = "DPS_spec",
-> +                                            [21]    = "DPS_spec",
->           [24]    = "WRITE_BLOCK",            [25]    = "WRITE_MULTIPLE_BLOCK",
->           [26]    = "MANUF_RSVD",             [27]    = "PROGRAM_CSD",
->           [28]    = "SET_WRITE_PROT",         [29]    = "CLR_WRITE_PROT",
-> @@ -1161,6 +1161,14 @@ static sd_rsp_type_t sd_cmd_unimplemented(SDState *sd, SDRequest req)
->       return sd_illegal;
->   }
->   
-> +static sd_rsp_type_t sd_cmd_optional(SDState *sd, SDRequest req)
-> +{
-> +    qemu_log_mask(LOG_UNIMP, "%s: Optional CMD%i not implemented\n",
-> +                  sd->proto->name, req.cmd);
-> +
-> +    return sd_illegal;
-> +}
-> +
->   /* Configure fields for following sd_generic_write_byte() calls */
->   static sd_rsp_type_t sd_cmd_to_receivingdata(SDState *sd, SDRequest req,
->                                                uint64_t start, size_t size)
-> @@ -2279,7 +2287,9 @@ static const SDProto sd_proto_sd = {
->           [2]  = {0,  sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
->           [3]  = {0,  sd_bcr,  "SEND_RELATIVE_ADDR", sd_cmd_SEND_RELATIVE_ADDR},
->           [4]  = {0,  sd_bc,   "SEND_DSR", sd_cmd_unimplemented},
-> +        [11] = {0,  sd_ac,   "VOLTAGE_SWITCH", sd_cmd_optional},
+> @@ -258,15 +258,11 @@ static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
+>           [36]    = "SW_FUNC_RSVD",           [37]    = "SW_FUNC_RSVD",
+>           [38]    = "ERASE",
+>           [40]    = "DPS_spec",
+> -        [42]    = "LOCK_UNLOCK",            [43]    = "Q_MANAGEMENT",
+> -        [44]    = "Q_TASK_INFO_A",          [45]    = "Q_TASK_INFO_B",
+> -        [46]    = "Q_RD_TASK",              [47]    = "Q_WR_TASK",
+> -        [48]    = "READ_EXTR_SINGLE",       [49]    = "WRITE_EXTR_SINGLE",
+> +        [42]    = "LOCK_UNLOCK",
+>           [50]    = "SW_FUNC_RSVD",
+>           [52]    = "IO_RW_DIRECT",           [53]    = "IO_RW_EXTENDED",
+>           [54]    = "SDIO_RSVD",              [55]    = "APP_CMD",
+>           [56]    = "GEN_CMD",                [57]    = "SW_FUNC_RSVD",
+> -        [58]    = "READ_EXTR_MULTI",        [59]    = "WRITE_EXTR_MULTI",
+>           [60]    = "MANUF_RSVD",             [61]    = "MANUF_RSVD",
+>           [62]    = "MANUF_RSVD",             [63]    = "MANUF_RSVD",
+>       };
+> @@ -2291,6 +2287,15 @@ static const SDProto sd_proto_sd = {
 >           [19] = {2,  sd_adtc, "SEND_TUNING_BLOCK", sd_cmd_SEND_TUNING_BLOCK},
-> +        [20] = {2,  sd_ac,   "SPEED_CLASS_CONTROL", sd_cmd_optional},
+>           [20] = {2,  sd_ac,   "SPEED_CLASS_CONTROL", sd_cmd_optional},
 >           [23] = {2,  sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
+> +        [43] = {1,  sd_ac,   "Q_MANAGEMENT", sd_cmd_optional},
+> +        [44] = {1,  sd_ac,   "Q_TASK_INFO_A", sd_cmd_optional},
+> +        [45] = {1,  sd_ac,   "Q_TASK_INFO_B", sd_cmd_optional},
+> +        [46] = {1,  sd_adtc, "Q_RD_TASK", sd_cmd_optional},
+> +        [47] = {1,  sd_adtc, "Q_WR_TASK", sd_cmd_optional},
+> +        [48] = {1,  sd_adtc, "READ_EXTR_SINGLE", sd_cmd_optional},
+> +        [49] = {1,  sd_adtc, "WRITE_EXTR_SINGLE", sd_cmd_optional},
+> +        [58] = {11, sd_adtc, "READ_EXTR_MULTI", sd_cmd_optional},
+> +        [59] = {11, sd_adtc, "WRITE_EXTR_MULTI", sd_cmd_optional},
 >       },
 >   };
+>   
 
 
