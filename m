@@ -4,103 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BFB9C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82A7C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5xF-0001iL-1I; Fri, 28 Jun 2024 03:23:33 -0400
+	id 1sN61F-0003Qi-0Z; Fri, 28 Jun 2024 03:27:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sN5xC-0001hy-Sg; Fri, 28 Jun 2024 03:23:31 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
+ id 1sN61C-0003Ph-SP
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:27:39 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sN5xA-0002wR-Tt; Fri, 28 Jun 2024 03:23:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=eyavoEpXXCf6EvIoElMLvzoWuSWF0UmGAnjZ5OVYZkk=; b=ugqWMU2mdI64IEDSLC5II00xSj
- v88gJnIO71kg4N/kbmta75kj7sGPETRGX3UNtUw05JjmdEkF65F5Oo2RQOGeGBOc4ws5n+KLTpoXE
- hr1aEvmb0d5uUjtgvs6k/FBxjk/7+zAKuf2ClhCyfpPJIlxy2rBNdr9SaUkmskzi7c9ECTAu0rrBu
- fJRwFwC6qgftZ2+eqBbL4B+jgq2d5c4y/adVlWhqqQ9fU3vBHfT632wipUW4gInD3+aQNyymVvGIg
- UyWYMzmoGgFM8SY356L/GJDthHRqcQ+C4jQDUy3wMXxQQjz1GK093QBzW1Qzj2LY8z/b16oU5Wdr6
- FHQDJ2BFIHg4iVU+bVZOtvoP46y25s+VIEUxLzRXhEWL3ihkDyif5QgsACVfteCJXoALrFaVe6wAG
- J9ZP+MhYYVyE7JWA24GiSDcfii6RdVVGEFWbotb7Y5Chye1af1qIMKoXxNNIOnmxS18BqWaGEiNhD
- obLEOoAK5y5PCyFKU0GUQbJyDsSQ+Djl9YLPlvh9K8w5hBbZ8hYdOcP/QWgOsF1qCvgTQzXNFDFuE
- 1wclvu3HuKH8m6cW/8/5VQhWlt6R2g0D4t4jvcrqLhfo+4l4jVaGme37DE33pKVL8QkZa9iFp1EZO
- LiCp4DdPE/TkdG3npDm3Kyq9e3Z5p7Azvg7/r2POw=;
-Received: from [2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sN5vV-0008Qc-6N; Fri, 28 Jun 2024 08:21:49 +0100
-Message-ID: <eb4e91b6-14da-46dd-a572-c07cb51afada@ilande.co.uk>
-Date: Fri, 28 Jun 2024 08:23:06 +0100
+ (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
+ id 1sN61A-0006oK-AK
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:27:38 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Rpq1vHTz4w2N;
+ Fri, 28 Jun 2024 17:27:31 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Rpn3qTMz4w2K;
+ Fri, 28 Jun 2024 17:27:29 +1000 (AEST)
+Message-ID: <35ffa9c7-a553-41b9-acbd-e4c833b6b2dd@kaod.org>
+Date: Fri, 28 Jun 2024 09:27:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-3-750bb0946dbd@daynix.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20240627-san-v2-3-750bb0946dbd@daynix.com>
+Subject: Re: [PATCH v42 00/98] hw/sd/sdcard: Add eMMC support
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Troy Lee <troy_lee@aspeedtech.com>
+References: <20240628070216.92609-1-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 03/15] hw/ide: Remove internal DMA qemu_irq
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=GU6n=N6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,149 +66,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/06/2024 14:37, Akihiko Odaki wrote:
+On 6/28/24 9:00 AM, Philippe Mathieu-Daudé wrote:
+> Cédric asked for one big series to review instead of
+> various tiny ones...
 
-> A function pointer is sufficient for internal usage. Replacing qemu_irq
-> with one fixes the leak of qemu_irq.
+Thanks for all this work !
+
+> I plan to send a pull request before v9.1 soft freeze
+> with at least patches 1-81 (prerequisistes before the
+> "Basis for eMMC support" patch) except qtest patch #15.
+
+I will scheme through the series for obvious flaws.
+
+Unfortunately, I can not review for 82-98 adding the eMMC part, we will
+need someone else for that. Adding Aspeed engineers.
+
+Anyhow,
+
+   Tested-by: Cédric Le Goater <clg@redhat.com>
+
+> Also available as:
+> https://gitlab.com/philmd/qemu/-/commits/emmc-testing/
+Thanks,
+
+C.
+
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   include/hw/ppc/mac_dbdma.h |  5 +++--
->   hw/ide/macio.c             | 11 +++++++----
->   hw/misc/macio/mac_dbdma.c  | 10 +++++-----
->   3 files changed, 15 insertions(+), 11 deletions(-)
+> Cédric Le Goater (5):
+>    hw/sd/sdcard: Introduce definitions for EXT_CSD register
+>    hw/sd/sdcard: Add emmc_cmd_SET_RELATIVE_ADDR() handler
+>    hw/sd/sdcard: Fix SET_BLOCK_COUNT command argument on eMMC (CMD23)
+>    hw/sd/sdcard: Adapt sd_cmd_ALL_SEND_CID handler for eMMC (CMD2)
+>    hw/sd/sdcard: Adapt sd_cmd_APP_CMD handler for eMMC (CMD55)
 > 
-> diff --git a/include/hw/ppc/mac_dbdma.h b/include/hw/ppc/mac_dbdma.h
-> index 4a3f644516b3..1e1973c39580 100644
-> --- a/include/hw/ppc/mac_dbdma.h
-> +++ b/include/hw/ppc/mac_dbdma.h
-> @@ -32,6 +32,7 @@
->   typedef struct DBDMA_io DBDMA_io;
->   
->   typedef void (*DBDMA_flush)(DBDMA_io *io);
-> +typedef void (*DBDMA_irq)(DBDMA_io *io);
->   typedef void (*DBDMA_rw)(DBDMA_io *io);
->   typedef void (*DBDMA_end)(DBDMA_io *io);
->   struct DBDMA_io {
-> @@ -154,7 +155,7 @@ typedef struct dbdma_cmd {
->   typedef struct DBDMA_channel {
->       int channel;
->       uint32_t regs[DBDMA_REGS];
-> -    qemu_irq irq;
-> +    DBDMA_irq irq;
->       DBDMA_io io;
->       DBDMA_rw rw;
->       DBDMA_flush flush;
-> @@ -172,7 +173,7 @@ typedef struct DBDMAState DBDMAState;
->   
->   /* Externally callable functions */
->   
-> -void DBDMA_register_channel(void *dbdma, int nchan, qemu_irq irq,
-> +void DBDMA_register_channel(void *dbdma, int nchan, DBDMA_irq irq,
->                               DBDMA_rw rw, DBDMA_flush flush,
->                               void *opaque);
->   void DBDMA_kick(DBDMAState *dbdma);
-> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-> index 9c96a857a7c1..425b670a52a9 100644
-> --- a/hw/ide/macio.c
-> +++ b/hw/ide/macio.c
-> @@ -427,9 +427,8 @@ static void macio_ide_realizefn(DeviceState *dev, Error **errp)
->       s->bus.dma = &s->dma;
->   }
->   
-> -static void pmac_irq(void *opaque, int n, int level)
-> +static void pmac_irq(MACIOIDEState *s, int n, int level)
->   {
-> -    MACIOIDEState *s = opaque;
->       uint32_t mask = 0x80000000u >> n;
->   
->       /* We need to reflect the IRQ state in the irq register */
-> @@ -446,6 +445,11 @@ static void pmac_irq(void *opaque, int n, int level)
->       }
->   }
->   
-> +static void pmac_dma_irq(DBDMA_io *io)
-> +{
-> +    pmac_irq(io->opaque, 0, 1);
-> +}
-> +
->   static void pmac_ide_irq(void *opaque, int n, int level)
->   {
->       pmac_irq(opaque, 1, level);
-> @@ -461,7 +465,6 @@ static void macio_ide_initfn(Object *obj)
->       sysbus_init_mmio(d, &s->mem);
->       sysbus_init_irq(d, &s->real_ide_irq);
->       sysbus_init_irq(d, &s->real_dma_irq);
-> -    s->dma_irq = qemu_allocate_irq(pmac_irq, s, 0);
->       qdev_init_gpio_in_named_with_opaque(DEVICE(obj), pmac_ide_irq, s, NULL, 1);
->   
->       object_property_add_link(obj, "dbdma", TYPE_MAC_DBDMA,
-> @@ -513,7 +516,7 @@ void macio_ide_init_drives(MACIOIDEState *s, DriveInfo **hd_table)
->   
->   void macio_ide_register_dma(MACIOIDEState *s)
->   {
-> -    DBDMA_register_channel(s->dbdma, s->channel, s->dma_irq,
-> +    DBDMA_register_channel(s->dbdma, s->channel, pmac_dma_irq,
->                              pmac_ide_transfer, pmac_ide_flush, s);
->   }
->   
-> diff --git a/hw/misc/macio/mac_dbdma.c b/hw/misc/macio/mac_dbdma.c
-> index 2a528ea08caf..3450105ad851 100644
-> --- a/hw/misc/macio/mac_dbdma.c
-> +++ b/hw/misc/macio/mac_dbdma.c
-> @@ -114,7 +114,7 @@ static void kill_channel(DBDMA_channel *ch)
->       ch->regs[DBDMA_STATUS] |= DEAD;
->       ch->regs[DBDMA_STATUS] &= ~ACTIVE;
->   
-> -    qemu_irq_raise(ch->irq);
-> +    ch->irq(&ch->io);
->   }
->   
->   static void conditional_interrupt(DBDMA_channel *ch)
-> @@ -133,7 +133,7 @@ static void conditional_interrupt(DBDMA_channel *ch)
->       case INTR_NEVER:  /* don't interrupt */
->           return;
->       case INTR_ALWAYS: /* always interrupt */
-> -        qemu_irq_raise(ch->irq);
-> +            ch->irq(&ch->io);
->           DBDMA_DPRINTFCH(ch, "%s: raise\n", __func__);
->           return;
->       }
-> @@ -148,13 +148,13 @@ static void conditional_interrupt(DBDMA_channel *ch)
->       switch(intr) {
->       case INTR_IFSET:  /* intr if condition bit is 1 */
->           if (cond) {
-> -            qemu_irq_raise(ch->irq);
-> +            ch->irq(&ch->io);
->               DBDMA_DPRINTFCH(ch, "%s: raise\n", __func__);
->           }
->           return;
->       case INTR_IFCLR:  /* intr if condition bit is 0 */
->           if (!cond) {
-> -            qemu_irq_raise(ch->irq);
-> +            ch->irq(&ch->io);
->               DBDMA_DPRINTFCH(ch, "%s: raise\n", __func__);
->           }
->           return;
-> @@ -562,7 +562,7 @@ void DBDMA_kick(DBDMAState *dbdma)
->       qemu_bh_schedule(dbdma->bh);
->   }
->   
-> -void DBDMA_register_channel(void *dbdma, int nchan, qemu_irq irq,
-> +void DBDMA_register_channel(void *dbdma, int nchan, DBDMA_irq irq,
->                               DBDMA_rw rw, DBDMA_flush flush,
->                               void *opaque)
->   {
-
-At first glance I can't say I'm keen on this: in general we should be moving towards 
-standardising on QEMU irqs or qdev gpios rather than introducing a custom function.
-
-As per my previous email I suspect this is another symptom that something is wrong 
-with the modelling, so I will take a look.
-
-
-ATB,
-
-Mark.
+> Joel Stanley (3):
+>    hw/sd/sdcard: Support boot area in emmc image
+>    hw/sd/sdcard: Subtract bootarea size from blk
+>    hw/sd/sdcard: Add boot config support
+> 
+> Luc Michel (1):
+>    hw/sd/sdcard: Implement eMMC sleep state (CMD5)
+> 
+> Philippe Mathieu-Daudé (85):
+>    hw/sd/sdcard: Deprecate support for spec v1.10
+>    hw/sd/sdcard: Use spec v3.01 by default
+>    hw/sd/sdcard: Track last command used to help logging
+>    hw/sd/sdcard: Trace block offset in READ/WRITE data accesses
+>    hw/sd/sdcard: Trace requested address computed by sd_req_get_address()
+>    hw/sd/sdcard: Do not store vendor data on block drive (CMD56)
+>    hw/sd/sdcard: Send WRITE_PROT bits MSB first (CMD30)
+>    hw/sd/sdcard: Send NUM_WR_BLOCKS bits MSB first (ACMD22)
+>    hw/sd/sdcard: Use READY_FOR_DATA definition instead of magic value
+>    hw/sd/sdcard: Assign SDCardStates enum values
+>    hw/sd/sdcard: Simplify sd_inactive_state handling
+>    hw/sd/sdcard: Restrict SWITCH_FUNCTION to sd_transfer_state (CMD6)
+>    hw/sd/sdcard: Add direct reference to SDProto in SDState
+>    hw/sd/sdcard: Extract sd_blk_len() helper
+>    tests/qtest: Disable npcm7xx_sdhci tests using hardcoded RCA
+>    hw/sd/sdcard: Generate random RCA value
+>    hw/sd/sdcard: Introduce sd_cmd_to_sendingdata and sd_generic_read_byte
+>    hw/sd/sdcard: Convert SWITCH_FUNCTION to generic_read_byte (CMD6)
+>    hw/sd/sdcard: Convert SEND_CSD/SEND_CID to generic_read_byte (CMD9 &
+>      10)
+>    hw/sd/sdcard: Duplicate READ_SINGLE_BLOCK / READ_MULTIPLE_BLOCK cases
+>    hw/sd/sdcard: Convert READ_SINGLE_BLOCK to generic_read_byte (CMD17)
+>    hw/sd/sdcard: Convert SEND_TUNING_BLOCK to generic_read_byte (CMD19)
+>    hw/sd/sdcard: Convert SEND_WRITE_PROT to generic_read_byte (CMD30)
+>    hw/sd/sdcard: Convert GEN_CMD to generic_read_byte (CMD56)
+>    hw/sd/sdcard: Convert SD_STATUS to generic_read_byte (ACMD13)
+>    hw/sd/sdcard: Convert SEND_NUM_WR_BLOCKS to generic_read_byte (ACMD22)
+>    hw/sd/sdcard: Convert SEND_SCR to generic_read_byte (ACMD51)
+>    hw/sd/sdcard: Introduce sd_cmd_to_receivingdata /
+>      sd_generic_write_byte
+>    hw/sd/sdcard: Duplicate WRITE_SINGLE_BLOCK / WRITE_MULTIPLE_BLOCK
+>      cases
+>    hw/sd/sdcard: Convert WRITE_SINGLE_BLOCK to generic_write_byte (CMD24)
+>    hw/sd/sdcard: Convert PROGRAM_CID to generic_write_byte (CMD26)
+>    hw/sd/sdcard: Convert PROGRAM_CSD to generic_write_byte (CMD27)
+>    hw/sd/sdcard: Convert LOCK_UNLOCK to generic_write_byte (CMD42)
+>    hw/sd/sdcard: Convert GEN_CMD to generic_write_byte (CMD56)
+>    hw/sd/sdcard: Move sd_[a]cmd_name() methods to sd.c
+>    hw/sd/sdcard: Pass SDState as argument to sd_[a]cmd_name()
+>    hw/sd/sdcard: Prepare SDProto to contain more fields
+>    hw/sd/sdcard: Store command name in SDProto
+>    hw/sd/sdcard: Store command type in SDProto
+>    hw/sd/sdcard: Store command class in SDProto
+>    hw/sd/sdcard: Remove SEND_DSR dead case (CMD4)
+>    hw/sd/sdcard: Register generic optional handlers (CMD11 and CMD20)
+>    hw/sd/sdcard: Register optional handlers from spec v6.00
+>    hw/sd/sdcard: Register SDIO optional handlers
+>    hw/sd/sdcard: Register Security Extension optional handlers
+>    hw/sd/sdcard: Add sd_cmd_SWITCH_FUNCTION handler (CMD6)
+>    hw/sd/sdcard: Add sd_cmd_DE/SELECT_CARD handler (CMD7)
+>    hw/sd/sdcard: Add sd_cmd_SEND_IF_COND handler (CMD8)
+>    hw/sd/sdcard: Add sd_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)
+>    hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)
+>    hw/sd/sdcard: Add sd_cmd_STOP_TRANSMISSION handler (CMD12)
+>    hw/sd/sdcard: Add sd_cmd_SEND_STATUS handler (CMD13)
+>    hw/sd/sdcard: Add sd_cmd_GO_INACTIVE_STATE handler (CMD15)
+>    hw/sd/sdcard: Add sd_cmd_SET_BLOCKLEN handler (CMD16)
+>    hw/sd/sdcard: Add sd_cmd_READ_SINGLE_BLOCK handler (CMD17)
+>    hw/sd/sdcard: Add sd_cmd_WRITE_SINGLE_BLOCK handler (CMD24)
+>    hw/sd/sdcard: Add sd_cmd_PROGRAM_CSD handler (CMD27)
+>    hw/sd/sdcard: Add sd_cmd_SET/CLR_WRITE_PROT handler (CMD28 & CMD29)
+>    hw/sd/sdcard: Add sd_cmd_SEND_WRITE_PROT handler (CMD30)
+>    hw/sd/sdcard: Add sd_cmd_ERASE_WR_BLK_START/END handlers (CMD32 &
+>      CMD33)
+>    hw/sd/sdcard: Add sd_cmd_ERASE handler (CMD38)
+>    hw/sd/sdcard: Add sd_cmd_LOCK_UNLOCK handler (CMD42)
+>    hw/sd/sdcard: Add sd_cmd_APP_CMD handler (CMD55)
+>    hw/sd/sdcard: Add sd_cmd_GEN_CMD handler (CMD56)
+>    hw/sd/sdcard: Add spi_cmd_READ_OCR handler (CMD58)
+>    hw/sd/sdcard: Add spi_cmd_CRC_ON_OFF handler (CMD59)
+>    hw/sd/sdcard: Add sd_acmd_SET_BUS_WIDTH handler (ACMD6)
+>    hw/sd/sdcard: Add sd_acmd_SD_STATUS handler (ACMD13)
+>    hw/sd/sdcard: Add sd_acmd_SEND_NUM_WR_BLOCKS handler (ACMD22)
+>    hw/sd/sdcard: Add sd_acmd_SET_WR_BLK_ERASE_COUNT handler (ACMD23)
+>    hw/sd/sdcard: Add sd_acmd_SD_APP_OP_COND handler (ACMD41)
+>    hw/sd/sdcard: Add sd_acmd_SET_CLR_CARD_DETECT handler (ACMD42)
+>    hw/sd/sdcard: Add sd_acmd_SEND_SCR handler (ACMD51)
+>    hw/sd/sdcard: Remove sd_none enum from sd_cmd_type_t
+>    hw/sd/sdcard: Remove noise from sd_acmd_name()
+>    hw/sd/sdcard: Remove noise from sd_cmd_name()
+>    hw/sd/sdcard: Remove default case in read/write on DAT lines
+>    hw/sd/sdcard: Trace length of data read on DAT lines
+>    hw/sd/sdcard: Introduce set_csd/set_cid handlers
+>    hw/sd/sdcard: Cover more SDCardStates
+>    hw/sd/sdcard: Basis for eMMC support
+>    hw/sd/sdcard: Register generic command handlers
+>    hw/sd/sdcard: Register unimplemented command handlers
+>    hw/sd/sdcard: Add mmc_cmd_PROGRAM_CID handler (CMD26)
+>    hw/sd/sdcard: Add experimental 'x-aspeed-emmc-kludge' property
+> 
+> Sai Pavan Boddu (3):
+>    hw/sd/sdcard: Add emmc_cmd_SEND_OP_COND handler (CMD1)
+>    hw/sd/sdcard: add emmc_cmd_SEND_TUNING_BLOCK handler (CMD21)
+>    hw/sd/sdcard: Add mmc SWITCH function support (CMD6)
+> 
+> Vincent Palatin (1):
+>    hw/sd/sdcard: Add emmc_cmd_SEND_EXT_CSD handler (CMD8)
+> 
+>   docs/about/deprecated.rst        |    6 +
+>   hw/sd/sdmmc-internal.h           |  118 +-
+>   include/hw/sd/sd.h               |   10 +-
+>   hw/sd/sd.c                       | 1917 +++++++++++++++++++-----------
+>   hw/sd/sdmmc-internal.c           |   72 --
+>   tests/qtest/npcm7xx_sdhci-test.c |    7 +
+>   hw/sd/meson.build                |    2 +-
+>   hw/sd/trace-events               |    6 +-
+>   8 files changed, 1362 insertions(+), 776 deletions(-)
+>   delete mode 100644 hw/sd/sdmmc-internal.c
+> 
 
 
