@@ -4,99 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B384C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 10:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C636EC2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 10:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN8yy-0004Zd-8K; Fri, 28 Jun 2024 06:37:32 -0400
+	id 1sN9Fm-00072E-Aa; Fri, 28 Jun 2024 06:54:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sN8yw-0004XZ-KR
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 06:37:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sN9Fh-00071x-Fy; Fri, 28 Jun 2024 06:54:50 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sN8yi-0003U4-Nm
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 06:37:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719571035;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6a7p2lMcpr5hgfMMs9jrdVHm4yfMOb4mDY+LbmbEIhc=;
- b=CVVkNk+//IMXtHEckyL/oT1aFMmsi0XgRSGiYj1DggWtCkZ8ZW4MC8UhQhPaXKmBWqjgIQ
- Skmg19bM5Ae5xAEsGL3g4oSf3Z6I4agIZ5aMism6DZGgiVhuEVq5qDOn4ZETi1jHIJGiYH
- FlbcXLhjzcujk9OR1UvxZ0U9Qf0roys=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-pYn0zgsrPKWsXsnVJfs8Xg-1; Fri, 28 Jun 2024 06:37:12 -0400
-X-MC-Unique: pYn0zgsrPKWsXsnVJfs8Xg-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2ec584f36bfso4318901fa.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 03:37:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719571030; x=1720175830;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6a7p2lMcpr5hgfMMs9jrdVHm4yfMOb4mDY+LbmbEIhc=;
- b=pIOGcn6FqA2JEi8W+Tk05krBZNRASJIPZJcxfVNl8JWD9Yg6r22jNBzjXFsLfsw/wU
- BMRjNcBK1OjoE8wU+xYv3UUTa+3dvA+mQHQhywNfHeUyvrhPvM7YwGVdxNYbV16BwSA1
- XMXEb/5SNf30ebGQa80Ej+Pe5JfloZuN3cNvRHmNQEPpZD5WJmXCauui4vgl0PTYzv+0
- qujeGJEm3yyUJ8EYlyBfCVnkUKxknxXwLkOM6+ZVLQPpRv49Kva73vJMFVj9vunJQl+R
- mC61PfAC2j/n+3NMAGDj9dxtO93xcd7i1hSB3M0u7JkAbwyUwTk39wZGmPUVr9aQzkYK
- fO3A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCULKNw6xMwd7bw6sPqcqpQlbgRX7qK6sxEToZ161SH2tDteAlWJpiWgG98z/yq3M6W7QUrcPulfHyK5574w0eziYgRQJTg=
-X-Gm-Message-State: AOJu0YyRxzT1v0hd5rqbraj/vdyB37kuz8rqI9LkgseGAB1UiAIdKJh2
- 0jEN3sTq8CS912InmBZWb9lqG2NvIk7ak7XZn0UN4ihhDpuHFdPHzkJAK5ebI1dSg5Had9dISPI
- vNF4ofzEu/z6SOHyM2Y9VQdUk0XuwszwynQGK69zzoyR5i3fXt3sM
-X-Received: by 2002:a2e:320d:0:b0:2ee:4da7:3937 with SMTP id
- 38308e7fff4ca-2ee4da73a9fmr21350731fa.29.1719571030662; 
- Fri, 28 Jun 2024 03:37:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHC/l50KLTq/2He3iGs930z5rhNbl2YuJvq1QG6K5fnMuF7ysyk5GsgjqRdI3FPlY5/NYT9xA==
-X-Received: by 2002:a2e:320d:0:b0:2ee:4da7:3937 with SMTP id
- 38308e7fff4ca-2ee4da73a9fmr21350521fa.29.1719571030086; 
- Fri, 28 Jun 2024 03:37:10 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0c1ab2sm28029915e9.47.2024.06.28.03.37.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 03:37:09 -0700 (PDT)
-Message-ID: <8ba04617-f18d-4c84-8bed-d3ddfa87d5b7@redhat.com>
-Date: Fri, 28 Jun 2024 12:37:08 +0200
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sN9Ff-0005uG-Vl; Fri, 28 Jun 2024 06:54:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:To:From:Sender:Reply-To:Cc:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=kVXhtFyhJrNRrD4tql75VP5OGfFfqIT0QqfJX3olO6I=; b=zqo6jeA4nllblFdzhi9JOB1c9t
+ Imeb2fBYMEbKq5VKL6YbhamB4Wr3DuZXO5Rn9SI4wylWZ6KM8Cku28k4rOVDBHPz6VGUOtfy3w8gE
+ syYwq2wUtox0y08MUvpCvrq9ODsDMY+b7c70oSQHYoq0viTciX8Xkd5uSnm8TXDsVW20ffUlHXr+u
+ BlaHSoo2zEsxv5hrQdGWEK/MCVRhpwCwLdHBCuUbnuU2AEIYJNfGY1KHXZ8Mu2Wd8XVANezytM501
+ La4dIaYH1lRxCUHGuYkMoDVKIxoL5votCLmc9bH/7km6Pc4ss8vT/Ki56Z+E1NSKX6zJYIsDaNHSW
+ fDa9YP3Ittn/1gMZAXyzE8W7HDYTarn79MTEY5Tch84zlJQ1urlX33mv6+4DMzgxebZpHP3DbO1ZZ
+ Pb28Bx41AJT2DE5axTf3oUzUcAzCq4EEpfSSAj44W/5b0alHUdWL8fy+fjNQCPlE25XF6JSwV3mCs
+ avRSDymPopZTfbtERBngoZZ8p7+6NfdsCyaOnrtaG5YwBy1FCFl6lnV6XafJK3/rU8U6aruRWfV5Y
+ 4pNbvaYqQjzZoY7gvmfss5BTbxk0IOKT8F50DmvgghpIleA59d8wtWymj3hIw09Cq6c1Py5xNEcd9
+ MzjNUZUvO/nYrOTW9LMMBDT0cSJRgK0c4DIOEjYc4=;
+Received: from [2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf]
+ (helo=localhost.localdomain)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sN9EE-000ARC-9L; Fri, 28 Jun 2024 11:53:22 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
+ akihiko.odaki@daynix.com
+Date: Fri, 28 Jun 2024 11:54:37 +0100
+Message-Id: <20240628105437.635079-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio: container: Fix missing allocation of
- VFIOSpaprContainer
-To: Shivaprasad G Bhat <sbhat@linux.ibm.com>, harshpb@linux.ibm.com,
- npiggin@gmail.com
-Cc: danielhb413@gmail.com, david@gibson.dropbear.id.au,
- alex.williamson@redhat.com, qemu-ppc@nongnu.org, zhenzhong.duan@intel.com,
- qemu-devel@nongnu.org
-References: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
- <11578ca8-2bb3-4504-b7b9-022c1df65942@redhat.com>
- <cef472a4-da2c-449e-8f76-0b3e9105e194@linux.ibm.com>
- <ba376f81-2175-4e3d-bda0-4b08b2ae5158@redhat.com>
- <7b553db9-4d29-4cfe-8874-3c87ad862c74@linux.ibm.com>
- <449a8a0a-6149-45af-bfa0-bf7fb29e27c6@redhat.com>
- <65126343-344e-47a0-bf63-7df43b0051ca@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <65126343-344e-47a0-bf63-7df43b0051ca@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH] hw/ide/macio.c: switch from using qemu_allocate_irq() to qdev
+ input GPIOs
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.206,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,35 +75,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-...
+This prevents the IRQs from being leaked when the macio IDE device is used.
 
-> Could you clarify which tree you are referring to ? I see his tree
-> 
-> https://github.com/awilliam/tests is bit old and updated recently, however
-> 
-> I have been using those tests for my unit testing.
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+---
+ hw/ide/macio.c                | 10 ++++++----
+ include/hw/misc/macio/macio.h |  5 +++++
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-Yes, this tree.
-
-...
-
-> This went through cycles of breakage and fixes. It worked on 5.18(not sure
-> 
-> about older ones before that), and broke afterwards. Recently fixed
-> 
-> and working from 6.4, broken on 6.7. Fixed and working in 6.8
-> 
-> onwards now.
-
-Good. It should be fixed in the next debian.
-
-
-> Yes, TCG too works, missed to mention.
-
-and a TCG guest under an intel host ? This used to work.
-
-Thanks,
-
-C.
+diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+index aca90d04f0..e84bf2c9f6 100644
+--- a/hw/ide/macio.c
++++ b/hw/ide/macio.c
+@@ -420,7 +420,8 @@ static void macio_ide_realizefn(DeviceState *dev, Error **errp)
+ {
+     MACIOIDEState *s = MACIO_IDE(dev);
+ 
+-    ide_bus_init_output_irq(&s->bus, s->ide_irq);
++    ide_bus_init_output_irq(&s->bus,
++                            qdev_get_gpio_in(dev, MACIO_IDE_PMAC_IDE_IRQ));
+ 
+     /* Register DMA callbacks */
+     s->dma.ops = &dbdma_ops;
+@@ -456,8 +457,8 @@ static void macio_ide_initfn(Object *obj)
+     sysbus_init_mmio(d, &s->mem);
+     sysbus_init_irq(d, &s->real_ide_irq);
+     sysbus_init_irq(d, &s->real_dma_irq);
+-    s->dma_irq = qemu_allocate_irq(pmac_ide_irq, s, 0);
+-    s->ide_irq = qemu_allocate_irq(pmac_ide_irq, s, 1);
++
++    qdev_init_gpio_in(DEVICE(obj), pmac_ide_irq, MACIO_IDE_PMAC_NIRQS);
+ 
+     object_property_add_link(obj, "dbdma", TYPE_MAC_DBDMA,
+                              (Object **) &s->dbdma,
+@@ -508,7 +509,8 @@ void macio_ide_init_drives(MACIOIDEState *s, DriveInfo **hd_table)
+ 
+ void macio_ide_register_dma(MACIOIDEState *s)
+ {
+-    DBDMA_register_channel(s->dbdma, s->channel, s->dma_irq,
++    DBDMA_register_channel(s->dbdma, s->channel,
++                           qdev_get_gpio_in(DEVICE(s), MACIO_IDE_PMAC_DMA_IRQ),
+                            pmac_ide_transfer, pmac_ide_flush, s);
+ }
+ 
+diff --git a/include/hw/misc/macio/macio.h b/include/hw/misc/macio/macio.h
+index 2b54da6b31..869b66055b 100644
+--- a/include/hw/misc/macio/macio.h
++++ b/include/hw/misc/macio/macio.h
+@@ -92,6 +92,11 @@ struct MACIOIDEState {
+     uint32_t irq_reg;
+ };
+ 
++#define MACIO_IDE_PMAC_NIRQS 2
++
++#define MACIO_IDE_PMAC_DMA_IRQ 0
++#define MACIO_IDE_PMAC_IDE_IRQ 1
++
+ void macio_ide_init_drives(MACIOIDEState *ide, DriveInfo **hd_table);
+ void macio_ide_register_dma(MACIOIDEState *ide);
+ 
+-- 
+2.39.2
 
 
