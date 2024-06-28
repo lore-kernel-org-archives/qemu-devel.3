@@ -4,104 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BB66C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F8FC3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5rV-000396-Vq; Fri, 28 Jun 2024 03:17:38 -0400
+	id 1sN5lt-0004Kg-AW; Fri, 28 Jun 2024 03:11:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sN5rI-0002rb-BA; Fri, 28 Jun 2024 03:17:32 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sN5rF-00087M-OM; Fri, 28 Jun 2024 03:17:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=cF+qyKhKg5T5d1hfo16Tc9vECZbCvl+/c0GWoQ5g1Ug=; b=UnhUz+tsbffXpIMCYTeCkgOEcD
- 6rFY9i7bh2Lj5WCUO8X0YAIoGix1Zok+szsH4+oy94rD4zcGvbDfWqXFwh6Omm2VH75R3A5zw9kGj
- nkEhsrZGtLjf2xSdD/rW506nCm04u/cTovXwCZpG2kYbsJ6wn2e0wDNyMXhXNJlb77FoZIOWsruq5
- y4KNv9UgohfFlw0cqpyetzxktirEIp5uLo227x/s46KnvhGU7gADhXuAyLLAkMUEUD+nvEF8jOa90
- 4ETS5yb6wFSigzuGygdVLJH4n4x/pWWyvvjPZV9oCmc5f2DRax3G0BoDbC65QyovVMMLIQAYzuJIi
- yVwzqufqeFN/voOi0X7vPxEWwXPSIky586fnNghdfhfqxme4aLAVbKQDBn/7maDdu6uoC1yAxdgVR
- 8nb5V5Q8eivTvo0o0MyJvY9oVam9GCG9Bpa6cI28My2DTOGx4GrbO2uGJhVU7kftHbiR4rjoy8LEB
- uxOOkRwRCdGQ8KHT7CC87R1Zkt7R8Ed+wwtCB+GYPXylfk7YK6Abn88EL6Qz0nKRdAQPp5S+5kxqQ
- LWH4A1mfbqmMn9ediT7wLVUuZw2rrosmd0nr2nowL748mQlg/Cd2N5C8WkrgK+NEIUpUHZQ1pMNi7
- CQwQwyYmRJZPZ0M3CIR2quU+jJsH8oC9pa2EcOETU=;
-Received: from [2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sN5pJ-0008JS-EJ; Fri, 28 Jun 2024 08:15:25 +0100
-Message-ID: <55e1f4c7-f140-42b4-80bb-21a7674625e9@ilande.co.uk>
-Date: Fri, 28 Jun 2024 08:16:40 +0100
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5lq-0004G3-Qz
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:11:46 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5lp-0005ZH-0N
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:11:46 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3651ee582cfso132782f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:11:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719558703; x=1720163503; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=wfOV4Z9kH5/WWEkygPAPJDC+UN3xtUZojvL70U9kebo=;
+ b=qH6m3otIN1V6wX6W7FwmY3sfY1CQQGM9vlwq5Cb32jAuHifqm5jIzkiZEi1Izys/Dd
+ Bj7eMv3KYmGFerZ97l1tWcQRMcK18YtMBkOjfs7GUzj8V8ladw6cnwRv5gNTrD8E0kZn
+ R97iTQOobh7FupgchJ0aT0irJwqr4Z02nriNcVjrS1Eb6mvHi7WYoYbgbR5CniTzJ/U8
+ s71pzHG6p2d/lxYMn6Z/gO+CGCw9UFD40e7thjZByTIqNPQcn1YBi4z8MtVwFAUiGqQi
+ Z6luuMAIMrajAnnCJ/Vv6l5X+Uckv3AabzZfrYzdFJZU7sxmza+Z36Ctz/OesJXrItfe
+ zE+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719558703; x=1720163503;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wfOV4Z9kH5/WWEkygPAPJDC+UN3xtUZojvL70U9kebo=;
+ b=G84hP2lmQK2wirL75tH3tq1CNbwim1CWPGLxiv5ORA5/JGHJ3fne4pEzGDeH7Cg3t9
+ eSjtiSOp1U+TljIKw94XD932mvyM8owspPNDpz0cgIWwxCcR5jwGi8l22vbi2VRkGDyN
+ KXIJiVtmMX5IN3D3S3BIr9EyKQn+UnEkfpWutQ4cp55Y6unqdoEhuCdK9spiiEtlzWnC
+ aMpvQ5uTbXDXsb4yVj9tjvQmYBxsF+J1PAWASay8IoQGX4mYsoY/RX1a5LvbkpQ0XHLL
+ gpARnHJy4KAJfx0dk5NiYsn8wnymUKRq1cwU7fcVUTr6fZUBatym5Rl2rqZ7sKeHeev0
+ Dd4Q==
+X-Gm-Message-State: AOJu0YxLyCr9xN/vHG4/T2DtnYjNNliMEMNrTt7X+YUY4HCCSLC//4d4
+ T1IW6Ul08Vge4qalhNpLxcj1d3qRQaEXa10dR8qfZQDT432ZjY+nL9C0RDve3utd/76kQOg0wmc
+ DreM=
+X-Google-Smtp-Source: AGHT+IGxCRUaIt89HGbZR0qm5r0gsfFsm0u6blNX8GnSmzVKX/TUgxLs70CgV0/ZJFay3VRLYSAhiw==
+X-Received: by 2002:adf:e811:0:b0:35f:fa0:cf82 with SMTP id
+ ffacd0b85a97d-366e9632621mr9952233f8f.68.1719558703350; 
+ Fri, 28 Jun 2024 00:11:43 -0700 (PDT)
+Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
+ [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0cd562sm1350541f8f.15.2024.06.28.00.11.42
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 28 Jun 2024 00:11:42 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [RFC PATCH v42 98/98] hw/sd/sdcard: Add boot config support
+Date: Fri, 28 Jun 2024 09:02:14 +0200
+Message-ID: <20240628070216.92609-99-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
+References: <20240628070216.92609-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240626-san-v1-0-f3cc42302189@daynix.com>
- <20240626-san-v1-2-f3cc42302189@daynix.com>
- <CAFEAcA-DNieFTV7VbM1MBTbEr9zd5kJ4oaWcsUrsPxCzQki+_g@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CAFEAcA-DNieFTV7VbM1MBTbEr9zd5kJ4oaWcsUrsPxCzQki+_g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:71e:fc91:de8e:dcdf
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 02/14] hw/ide: Free macio-ide IRQs
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,57 +91,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/2024 13:59, Peter Maydell wrote:
+From: Joel Stanley <joel@jms.id.au>
 
-> On Wed, 26 Jun 2024 at 12:09, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> This suppresses LeakSanitizer warnings.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   hw/ide/macio.c | 9 +++++++++
->>   1 file changed, 9 insertions(+)
->>
->> diff --git a/hw/ide/macio.c b/hw/ide/macio.c
->> index aca90d04f0e8..d8fbc1a17ba6 100644
->> --- a/hw/ide/macio.c
->> +++ b/hw/ide/macio.c
->> @@ -464,6 +464,14 @@ static void macio_ide_initfn(Object *obj)
->>                                qdev_prop_allow_set_link_before_realize, 0);
->>   }
->>
->> +static void macio_ide_finalize(Object *obj)
->> +{
->> +    MACIOIDEState *s = MACIO_IDE(obj);
->> +
->> +    qemu_free_irq(s->dma_irq);
->> +    qemu_free_irq(s->ide_irq);
->> +}
->> +
->>   static Property macio_ide_properties[] = {
->>       DEFINE_PROP_UINT32("channel", MACIOIDEState, channel, 0),
->>       DEFINE_PROP_UINT32("addr", MACIOIDEState, addr, -1),
->> @@ -486,6 +494,7 @@ static const TypeInfo macio_ide_type_info = {
->>       .parent = TYPE_SYS_BUS_DEVICE,
->>       .instance_size = sizeof(MACIOIDEState),
->>       .instance_init = macio_ide_initfn,
->> +    .instance_finalize = macio_ide_finalize,
->>       .class_init = macio_ide_class_init,
->>   };
-> 
-> Rather than this, I suspect macio_ide_initfn() should not
-> be using qemu_allocate_irq() in the first place. Looks like
-> maybe a QOM conversion that left a loose end un-tidied-up.
+Introduced "boot-config" property to set CSD 179, the boot config
+register.
 
-This is definitely old code: there used to be problems interfacing the IDE code with 
-qdev due to the hard-coded bus IRQs but I think this may is now possible with the 
-advent of ide_bus_init_output_irq().
+With this correctly set we can use the enable bit to detect if
+partition support is enabled.
 
-I'll have a quick look and see what has changed in this area.
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/sd/sd.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-
-ATB,
-
-Mark.
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index bbf054ea1e..b598974bbf 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -129,6 +129,7 @@ struct SDState {
+     uint8_t spec_version;
+     BlockBackend *blk;
+     bool aspeed_emmc_kludge;
++    uint8_t boot_config;
+ 
+     const SDProto *proto;
+ 
+@@ -505,6 +506,8 @@ static void mmc_set_ext_csd(SDState *sd, uint64_t size)
+     sd->ext_csd[159] = 0x00; /* Max enhanced area size */
+     sd->ext_csd[158] = 0x00; /* ... */
+     sd->ext_csd[157] = 0xEC; /* ... */
++
++    sd->ext_csd[EXT_CSD_PART_CONFIG] = sd->boot_config;
+ }
+ 
+ static void sd_emmc_set_csd(SDState *sd, uint64_t size)
+@@ -1004,8 +1007,14 @@ static uint32_t sd_emmc_bootpart_offset(SDState *sd)
+ {
+     unsigned int access = sd->ext_csd[EXT_CSD_PART_CONFIG] &
+         EXT_CSD_PART_CONFIG_ACC_MASK;
++    unsigned int enable = sd->ext_csd[EXT_CSD_PART_CONFIG] &
++         EXT_CSD_PART_CONFIG_EN_MASK;
+     unsigned int boot_capacity = sd_boot_capacity_bytes(sd);
+ 
++    if (!enable) {
++        return 0;
++    }
++
+     switch (access) {
+     case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
+         return boot_capacity * 2;
+@@ -2808,6 +2817,7 @@ static Property sd_properties[] = {
+      * whether card should be in SSI or MMC/SD mode.  It is also up to the
+      * board to ensure that ssi transfers only occur when the chip select
+      * is asserted.  */
++    DEFINE_PROP_UINT8("boot-config", SDState, boot_config, 0x0),
+     DEFINE_PROP_END_OF_LIST()
+ };
+ 
+-- 
+2.41.0
 
 
