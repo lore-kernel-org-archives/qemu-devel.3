@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E68C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:25:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2891C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:25:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNCWn-0002k8-Sa; Fri, 28 Jun 2024 10:24:41 -0400
+	id 1sNCWn-0002kJ-VP; Fri, 28 Jun 2024 10:24:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNCWW-0002ar-HU
+ id 1sNCWW-0002as-Hj
  for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:24:28 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNCW7-0004VM-TN
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:24:18 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-52e764bb3fbso855234e87.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:23:56 -0700 (PDT)
+ id 1sNCWA-0004WR-C8
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:24:21 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4248ea53493so4679265e9.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:23:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719584634; x=1720189434; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719584637; x=1720189437; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=w7xsCqJG+GOkokM323EFwKmfjonAJNK39VxKpZVtgHA=;
- b=cNOE/Wd8+lVDqhVzzDKZ7yP15aH5GyxLkyHQo7El6nThpNnHYlsf8sNPMQx8x5tx05
- qIyxmsUF2WpkNfJwSoRYvkpkMzyP7vO4TwCwgvprp+f8KSiXVs0FzJFVxzztVypfxLB4
- Cf//JSB81yFgBA1lRbq4d6L9kzH+gcogSn/FybojZTi5X9CsyXq/RD1uXgULs693E/vs
- 56u2f83yOd8wBPxzERNamejCUZvPfMNGj/J12rGmdXZOzn5Yn/edMhUupDG/pC8jUB8u
- qfU47ub67M2IgS48+J9BpCX4DVftWNMB8lWx7TSseL5SLuslr01M9MbnTacjlFYH3X5H
- o16Q==
+ :reply-to; bh=qFKbjEQVvGqbAWXZ08SAtjIV2lRpxC1k2dabDVF9NgU=;
+ b=jMyR9njlQHt5OafUUxiWqfRAIlBgz89X5vrys98gxbDogYG65uOv1ThaZC4cOgujun
+ Oe0A+0OXnhEZhAvGzga5AYTv4TKGE+79+LcSsBq37lTNly6f0WFc3HgtBr51br6Va0ng
+ SQ8s4u2m7BvKxWELlPtQyCZD1y3qvk1OT3d4dM5GTw5dnY5jQv+p6uvApDWzfKx/MvCf
+ lCy++1F/HEeToRMToX5CAMOg1M5GLcBMDEcyKFqIzQ0o1gpEQOVFDSCHOVP9WnwL0uLr
+ tNjwI2/u4BMASJCNHJjdVCYmAHlsw9RTHcpQ4XWbh7qe1LL71RxGXyH/3t9MDzd+vCEL
+ MMOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719584634; x=1720189434;
+ d=1e100.net; s=20230601; t=1719584637; x=1720189437;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w7xsCqJG+GOkokM323EFwKmfjonAJNK39VxKpZVtgHA=;
- b=r/wKumLSJSC5Qg0zrMZmaFdmh9s6TtGZNtG2gnoz7A2hs/ATafn7uluwF1bbYGrqkc
- 52A3qAsDe1uFsgcJGPDKRP2lNPE7OvN7iqocTZIoE+0FMo8EuNSnhY/owoM+EoPcEZkV
- Tl/sB3wAZmhwxfjRYnW910hbNJW4r9cluZV5y+Q3yKSXVAl5LLk6xs8sbhyhUGojy5IQ
- mYo9WPX7B2LOT+glIT2C+J0nmTTklHpSme5hxLt0nVhQF6DHkk1+b6LIk02CEYgDUndF
- vaz/btG/AspfQoaSus17XWIpA6ez9CMpsOfSideL421r6P+hRa05te/akpAAOTKK0e8R
- 9I9w==
+ bh=qFKbjEQVvGqbAWXZ08SAtjIV2lRpxC1k2dabDVF9NgU=;
+ b=tuUKot8swhKvGt9Rp0EXpV00X5sI2GsT6+2sFW3llkxAQfnOFywt4pl2iIuEeL0VUx
+ 2ymBxzQJZeWmaYs7F75YHRAEY6j+i3T7aXJjfzjPSoSaixmC3mkj6heQwTcfjbx1gTwz
+ nk3N0NpXkIicuE8DEkpbH1HoFrbvHosbDk2xN87A4nZLkUbtQjNMMGNii3qoMEzBY8RI
+ 9MT2aFdYHF2huQegf3HY8oWPhUxephSpI/NwlYNsiP7o7ylnlYVOa7QCubde2mTlHeBJ
+ Fo9eYHYfo7Jvq+jeWlmzhaN4ASE8h6OAEIHnc96se4zcthIKaTIKOhaJLu29Em+rtx4e
+ mcTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpnafNS6AltMts3FIqccBZJHAx15BPi3BJqLkLWnmwUDdJatRjBsSX/GfDAvP+cttLjIwroiW2pup6zdSQXuA4bCQvhLs=
-X-Gm-Message-State: AOJu0YyEv9XQDK35j7+iw0KuqafnrrplgIhVb6UBYbnC63w+X3DGsRJn
- urTaO4aaCvtln1futxW3xa6NwFWVBz+WGlYcO3BmrWaVITxdlgzP8ZuNXNs2XPmTBZOOi1GOTiY
- Dc8I=
-X-Google-Smtp-Source: AGHT+IGGXj7PLrUym61VI8FobdhCeCebYTtR1FCy5FVVyWZGMH+qgDWcLnp0f8kqaTFq5k4oisf1zw==
-X-Received: by 2002:a05:6512:3caa:b0:52c:cccf:85e1 with SMTP id
- 2adb3069b0e04-52ce1865a49mr14550208e87.65.1719584634295; 
- Fri, 28 Jun 2024 07:23:54 -0700 (PDT)
+ AJvYcCWdnExHk9rdSsJ9XotaX52jSglwwISbLUyxSFq1/MGK1qQ0EYVygIggHw/5tTxUnFU3Vq7/Lm/Mgu93i3PS6Zbw0vYYVUU=
+X-Gm-Message-State: AOJu0YwhlscBq2a7GdpN4dmH88ECMBpEqG3UAFjO+01rFazqbywR6cAx
+ Ci0UuLl4fp/nMqC5duPamtcjFWFSXS9LpYjZ3Mcptv7jAHNMKXnkCCjXMsopHf0=
+X-Google-Smtp-Source: AGHT+IExRphxE5MFH8rVRiyMwWAh3HHoD65qzCiQZQDUsxEPCErcLw0YerzC+LiPcbgRCcntM8ABXQ==
+X-Received: by 2002:a05:600c:8a2:b0:424:a400:21cf with SMTP id
+ 5b1f17b1804b1-424a4002337mr77568375e9.23.1719584637603; 
+ Fri, 28 Jun 2024 07:23:57 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af55c0asm37180945e9.15.2024.06.28.07.23.53
+ 5b1f17b1804b1-4256af55c0asm37180945e9.15.2024.06.28.07.23.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Jun 2024 07:23:54 -0700 (PDT)
+ Fri, 28 Jun 2024 07:23:56 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 3/9] target/arm: Make vfp_set_fpscr() call vfp_set_{fpcr, fpsr}
-Date: Fri, 28 Jun 2024 15:23:41 +0100
-Message-Id: <20240628142347.1283015-4-peter.maydell@linaro.org>
+Subject: [PATCH 8/9] target/arm: Rename FPSR_MASK and FPCR_MASK and define
+ them symbolically
+Date: Fri, 28 Jun 2024 15:23:46 +0100
+Message-Id: <20240628142347.1283015-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240628142347.1283015-1-peter.maydell@linaro.org>
 References: <20240628142347.1283015-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,207 +95,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make vfp_set_fpscr() call vfp_set_fpsr() and vfp_set_fpcr()
-instead of the other way around.
-
-The masking we do when getting and setting vfp.xregs[ARM_VFP_FPSCR]
-is a little awkward, but we are going to change where we store the
-underlying FPSR and FPCR information in a later commit, so it will
-go away then.
+Now that we store FPSR and FPCR separately, the FPSR_MASK and
+FPCR_MASK macros are slightly confusingly named and the comment
+describing them is out of date.  Rename them to FPSCR_FPSR_MASK and
+FPSCR_FPCR_MASK, document that they are the mask of which FPSCR bits
+are architecturally mapped to which AArch64 register, and define them
+symbolically rather than as hex values.  (This latter requires
+defining some extra macros for bits which we haven't previously
+defined.)
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.h        |  22 +++++----
- target/arm/vfp_helper.c | 100 ++++++++++++++++++++++++++--------------
- 2 files changed, 78 insertions(+), 44 deletions(-)
+ target/arm/cpu.h        | 41 ++++++++++++++++++++++++++++++++++-------
+ target/arm/machine.c    |  3 ++-
+ target/arm/vfp_helper.c |  7 ++++---
+ 3 files changed, 40 insertions(+), 11 deletions(-)
 
 diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 68a9922f88e..0a570afcab4 100644
+index 9d226c474d2..f6339bde216 100644
 --- a/target/arm/cpu.h
 +++ b/target/arm/cpu.h
-@@ -1730,17 +1730,19 @@ uint32_t vfp_get_fpsr(CPUARMState *env);
+@@ -1687,15 +1687,19 @@ static inline void xpsr_write(CPUARMState *env, uint32_t val, uint32_t mask)
+ uint32_t vfp_get_fpscr(CPUARMState *env);
+ void vfp_set_fpscr(CPUARMState *env, uint32_t val);
+ 
+-/* FPCR, Floating Point Control Register
+- * FPSR, Floating Poiht Status Register
++/*
++ * FPCR, Floating Point Control Register
++ * FPSR, Floating Point Status Register
+  *
+- * For A64 the FPSCR is split into two logically distinct registers,
+- * FPCR and FPSR. However since they still use non-overlapping bits
+- * we store the underlying state in fpscr and just mask on read/write.
++ * For A64 floating point control and status bits are stored in
++ * two logically distinct registers, FPCR and FPSR. We store these
++ * in QEMU in vfp.fpcr and vfp.fpsr.
++ * For A32 there was only one register, FPSCR. The bits are arranged
++ * such that FPSCR bits map to FPCR or FPSR bits in the same bit positions,
++ * so we can use appropriate masking to handle FPSCR reads and writes.
++ * Note that the FPCR has some bits which are not visible in the
++ * AArch32 view (for FEAT_AFP). Writing the FPSCR leaves these unchanged.
   */
- uint32_t vfp_get_fpcr(CPUARMState *env);
+-#define FPSR_MASK 0xf800009f
+-#define FPCR_MASK 0x07ff9f00
  
--static inline void vfp_set_fpsr(CPUARMState *env, uint32_t val)
--{
--    uint32_t new_fpscr = (vfp_get_fpscr(env) & ~FPSR_MASK) | (val & FPSR_MASK);
--    vfp_set_fpscr(env, new_fpscr);
--}
-+/**
-+ * vfp_set_fpsr: write the AArch64 FPSR
-+ * @env: CPU context
-+ * @value: new value
-+ */
-+void vfp_set_fpsr(CPUARMState *env, uint32_t value);
+ /* FPCR bits */
+ #define FPCR_IOE    (1 << 8)    /* Invalid Operation exception trap enable */
+@@ -1704,7 +1708,9 @@ void vfp_set_fpscr(CPUARMState *env, uint32_t val);
+ #define FPCR_UFE    (1 << 11)   /* Underflow exception trap enable */
+ #define FPCR_IXE    (1 << 12)   /* Inexact exception trap enable */
+ #define FPCR_IDE    (1 << 15)   /* Input Denormal exception trap enable */
++#define FPCR_LEN_MASK (7 << 16) /* LEN, A-profile only */
+ #define FPCR_FZ16   (1 << 19)   /* ARMv8.2+, FP16 flush-to-zero */
++#define FPCR_STRIDE_MASK (3 << 20) /* Stride */
+ #define FPCR_RMODE_MASK (3 << 22) /* Rounding mode */
+ #define FPCR_FZ     (1 << 24)   /* Flush-to-zero enable bit */
+ #define FPCR_DN     (1 << 25)   /* Default NaN enable bit */
+@@ -1714,16 +1720,37 @@ void vfp_set_fpscr(CPUARMState *env, uint32_t val);
+ #define FPCR_LTPSIZE_MASK (7 << FPCR_LTPSIZE_SHIFT)
+ #define FPCR_LTPSIZE_LENGTH 3
  
--static inline void vfp_set_fpcr(CPUARMState *env, uint32_t val)
--{
--    uint32_t new_fpscr = (vfp_get_fpscr(env) & ~FPCR_MASK) | (val & FPCR_MASK);
--    vfp_set_fpscr(env, new_fpscr);
--}
-+/**
-+ * vfp_set_fpcr: write the AArch64 FPCR
-+ * @env: CPU context
-+ * @value: new value
-+ */
-+void vfp_set_fpcr(CPUARMState *env, uint32_t value);
++/* Cumulative exception trap enable bits */
++#define FPCR_EEXC_MASK (FPCR_IOE | FPCR_DZE | FPCR_OFE | FPCR_UFE | FPCR_IXE | FPCR_IDE)
++
+ /* FPSR bits */
++#define FPSR_IOC    (1 << 0)    /* Invalid Operation cumulative exception */
++#define FPSR_DZC    (1 << 1)    /* Divide by Zero cumulative exception */
++#define FPSR_OFC    (1 << 2)    /* Overflow cumulative exception */
++#define FPSR_UFC    (1 << 3)    /* Underflow cumulative exception */
++#define FPSR_IXC    (1 << 4)    /* Inexact cumulative exception */
++#define FPSR_IDC    (1 << 7)    /* Input Denormal cumulative exception */
+ #define FPSR_QC     (1 << 27)   /* Cumulative saturation bit */
+ #define FPSR_V      (1 << 28)   /* FP overflow flag */
+ #define FPSR_C      (1 << 29)   /* FP carry flag */
+ #define FPSR_Z      (1 << 30)   /* FP zero flag */
+ #define FPSR_N      (1 << 31)   /* FP negative flag */
  
- enum arm_cpu_mode {
-   ARM_CPU_MODE_USR = 0x10,
++/* Cumulative exception status bits */
++#define FPSR_CEXC_MASK (FPSR_IOC | FPSR_DZC | FPSR_OFC | FPSR_UFC | FPSR_IXC | FPSR_IDC)
++
+ #define FPSR_NZCV_MASK (FPSR_N | FPSR_Z | FPSR_C | FPSR_V)
+ #define FPSR_NZCVQC_MASK (FPSR_NZCV_MASK | FPSR_QC)
+ 
++/* A32 FPSCR bits which architecturally map to FPSR bits */
++#define FPSCR_FPSR_MASK (FPSR_NZCVQC_MASK | FPSR_CEXC_MASK)
++/* A32 FPSCR bits which architecturally map to FPCR bits */
++#define FPSCR_FPCR_MASK (FPCR_EEXC_MASK | FPCR_LEN_MASK | FPCR_FZ16 | \
++                         FPCR_STRIDE_MASK | FPCR_RMODE_MASK | \
++                         FPCR_FZ | FPCR_DN | FPCR_AHP)
++/* These masks don't overlap: each bit lives in only one place */
++QEMU_BUILD_BUG_ON(FPSCR_FPSR_MASK & FPSCR_FPCR_MASK);
++
+ /**
+  * vfp_get_fpsr: read the AArch64 FPSR
+  * @env: CPU context
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 8c820955d95..a3c1e05e65d 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -43,7 +43,8 @@ static bool vfp_fpcr_fpsr_needed(void *opaque)
+     ARMCPU *cpu = opaque;
+     CPUARMState *env = &cpu->env;
+ 
+-    return (vfp_get_fpcr(env) & ~FPCR_MASK) || (vfp_get_fpsr(env) & ~FPSR_MASK);
++    return (vfp_get_fpcr(env) & ~FPSCR_FPCR_MASK) ||
++        (vfp_get_fpsr(env) & ~FPSCR_FPSR_MASK);
+ }
+ 
+ static int get_fpscr(QEMUFile *f, void *opaque, size_t size,
 diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index a87d39e4d9b..38c8aadf9b4 100644
+index 1ac0142e10f..586c33e9460 100644
 --- a/target/arm/vfp_helper.c
 +++ b/target/arm/vfp_helper.c
-@@ -99,14 +99,27 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
-     return vfp_exceptbits_from_host(i);
- }
+@@ -202,7 +202,8 @@ uint32_t vfp_get_fpsr(CPUARMState *env)
  
--static void vfp_set_fpscr_to_host(CPUARMState *env, uint32_t val)
-+static void vfp_set_fpsr_to_host(CPUARMState *env, uint32_t val)
-+{
-+    /*
-+     * The exception flags are ORed together when we read fpscr so we
-+     * only need to preserve the current state in one of our
-+     * float_status values.
-+     */
-+    int i = vfp_exceptbits_to_host(val);
-+    set_float_exception_flags(i, &env->vfp.fp_status);
-+    set_float_exception_flags(0, &env->vfp.fp_status_f16);
-+    set_float_exception_flags(0, &env->vfp.standard_fp_status);
-+    set_float_exception_flags(0, &env->vfp.standard_fp_status_f16);
-+}
-+
-+static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val)
+ uint32_t HELPER(vfp_get_fpscr)(CPUARMState *env)
  {
--    int i;
-     uint32_t changed = env->vfp.xregs[ARM_VFP_FPSCR];
- 
-     changed ^= val;
-     if (changed & (3 << 22)) {
--        i = (val >> 22) & 3;
-+        int i = (val >> 22) & 3;
-         switch (i) {
-         case FPROUNDING_TIEEVEN:
-             i = float_round_nearest_even;
-@@ -141,17 +154,6 @@ static void vfp_set_fpscr_to_host(CPUARMState *env, uint32_t val)
-         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status);
-         set_default_nan_mode(dnan_enabled, &env->vfp.fp_status_f16);
-     }
--
--    /*
--     * The exception flags are ORed together when we read fpscr so we
--     * only need to preserve the current state in one of our
--     * float_status values.
--     */
--    i = vfp_exceptbits_to_host(val);
--    set_float_exception_flags(i, &env->vfp.fp_status);
--    set_float_exception_flags(0, &env->vfp.fp_status_f16);
--    set_float_exception_flags(0, &env->vfp.standard_fp_status);
--    set_float_exception_flags(0, &env->vfp.standard_fp_status_f16);
+-    return (vfp_get_fpcr(env) & FPCR_MASK) | (vfp_get_fpsr(env) & FPSR_MASK);
++    return (vfp_get_fpcr(env) & FPSCR_FPCR_MASK) |
++        (vfp_get_fpsr(env) & FPSCR_FPSR_MASK);
  }
  
- #else
-@@ -161,7 +163,11 @@ static uint32_t vfp_get_fpsr_from_host(CPUARMState *env)
-     return 0;
- }
+ uint32_t vfp_get_fpscr(CPUARMState *env)
+@@ -280,8 +281,8 @@ void vfp_set_fpcr(CPUARMState *env, uint32_t val)
  
--static void vfp_set_fpscr_to_host(CPUARMState *env, uint32_t val)
-+static void vfp_set_fpsr_to_host(CPUARMState *env, uint32_t val)
-+{
-+}
-+
-+static void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val)
+ void HELPER(vfp_set_fpscr)(CPUARMState *env, uint32_t val)
  {
- }
- 
-@@ -204,7 +210,37 @@ uint32_t vfp_get_fpscr(CPUARMState *env)
-     return HELPER(vfp_get_fpscr)(env);
- }
- 
--void HELPER(vfp_set_fpscr)(CPUARMState *env, uint32_t val)
-+void vfp_set_fpsr(CPUARMState *env, uint32_t val)
-+{
-+    ARMCPU *cpu = env_archcpu(env);
-+
-+    vfp_set_fpsr_to_host(env, val);
-+
-+    if (arm_feature(env, ARM_FEATURE_NEON) ||
-+        cpu_isar_feature(aa32_mve, cpu)) {
-+        /*
-+         * The bit we set within fpscr_q is arbitrary; the register as a
-+         * whole being zero/non-zero is what counts.
-+         */
-+        env->vfp.qc[0] = val & FPCR_QC;
-+        env->vfp.qc[1] = 0;
-+        env->vfp.qc[2] = 0;
-+        env->vfp.qc[3] = 0;
-+    }
-+
-+    /*
-+     * The only FPSR bits we keep in vfp.xregs[FPSCR] are NZCV:
-+     * the exception flags IOC|DZC|OFC|UFC|IXC|IDC are stored in
-+     * fp_status, and QC is in vfp.qc[]. Store the NZCV bits there,
-+     * and zero any of the other FPSR bits (but preserve the FPCR
-+     * bits).
-+     */
-+    val &= FPCR_NZCV_MASK;
-+    env->vfp.xregs[ARM_VFP_FPSCR] &= ~FPSR_MASK;
-+    env->vfp.xregs[ARM_VFP_FPSCR] |= val;
-+}
-+
-+void vfp_set_fpcr(CPUARMState *env, uint32_t val)
- {
-     ARMCPU *cpu = env_archcpu(env);
- 
-@@ -213,7 +249,7 @@ void HELPER(vfp_set_fpscr)(CPUARMState *env, uint32_t val)
-         val &= ~FPCR_FZ16;
-     }
- 
--    vfp_set_fpscr_to_host(env, val);
-+    vfp_set_fpcr_to_host(env, val);
- 
-     if (!arm_feature(env, ARM_FEATURE_M)) {
-         /*
-@@ -231,28 +267,24 @@ void HELPER(vfp_set_fpscr)(CPUARMState *env, uint32_t val)
-                                      FPCR_LTPSIZE_LENGTH);
-     }
- 
--    if (arm_feature(env, ARM_FEATURE_NEON) ||
--        cpu_isar_feature(aa32_mve, cpu)) {
--        /*
--         * The bit we set within fpscr_q is arbitrary; the register as a
--         * whole being zero/non-zero is what counts.
--         */
--        env->vfp.qc[0] = val & FPCR_QC;
--        env->vfp.qc[1] = 0;
--        env->vfp.qc[2] = 0;
--        env->vfp.qc[3] = 0;
--    }
--
-     /*
-      * We don't implement trapped exception handling, so the
-      * trap enable bits, IDE|IXE|UFE|OFE|DZE|IOE are all RAZ/WI (not RES0!)
-      *
--     * The exception flags IOC|DZC|OFC|UFC|IXC|IDC are stored in
--     * fp_status; QC, Len and Stride are stored separately earlier.
--     * Clear out all of those and the RES0 bits: only NZCV, AHP, DN,
--     * FZ, RMode and FZ16 are kept in vfp.xregs[FPSCR].
-+     * The FPCR bits we keep in vfp.xregs[FPSCR] are AHP, DN, FZ, RMode
-+     * and FZ16. Len, Stride and LTPSIZE we just handled. Store those bits
-+     * there, and zero any of the other FPCR bits and the RES0 and RAZ/WI
-+     * bits.
-      */
--    env->vfp.xregs[ARM_VFP_FPSCR] = val & 0xf7c80000;
-+    val &= FPCR_AHP | FPCR_DN | FPCR_FZ | FPCR_RMODE_MASK | FPCR_FZ16;
-+    env->vfp.xregs[ARM_VFP_FPSCR] &= ~FPCR_MASK;
-+    env->vfp.xregs[ARM_VFP_FPSCR] |= val;
-+}
-+
-+void HELPER(vfp_set_fpscr)(CPUARMState *env, uint32_t val)
-+{
-+    vfp_set_fpcr(env, val & FPCR_MASK);
-+    vfp_set_fpsr(env, val & FPSR_MASK);
+-    vfp_set_fpcr(env, val & FPCR_MASK);
+-    vfp_set_fpsr(env, val & FPSR_MASK);
++    vfp_set_fpcr(env, val & FPSCR_FPCR_MASK);
++    vfp_set_fpsr(env, val & FPSCR_FPSR_MASK);
  }
  
  void vfp_set_fpscr(CPUARMState *env, uint32_t val)
