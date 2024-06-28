@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9562BC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E64C3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6al-0008NL-EW; Fri, 28 Jun 2024 04:04:23 -0400
+	id 1sN6a3-0006A0-JI; Fri, 28 Jun 2024 04:03:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6af-0008JT-PI
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:04:17 -0400
+ id 1sN6a1-000690-D1
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:03:37 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6ad-0005y9-Pj
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:04:17 -0400
+ id 1sN6Zy-0005tB-Vc
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:03:37 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Sd95HM9z4wb7;
- Fri, 28 Jun 2024 18:04:13 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9ScP07t9z4wb7;
+ Fri, 28 Jun 2024 18:03:33 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Sd85HdGz4w2Q;
- Fri, 28 Jun 2024 18:04:12 +1000 (AEST)
-Message-ID: <daf7cd0a-3839-4e52-bdb1-6c75c294fe71@kaod.org>
-Date: Fri, 28 Jun 2024 10:04:12 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9ScM705Dz4w2Q;
+ Fri, 28 Jun 2024 18:03:31 +1000 (AEST)
+Message-ID: <ab2c0a82-de23-4223-a064-a33a5f027f90@kaod.org>
+Date: Fri, 28 Jun 2024 10:03:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 74/98] hw/sd/sdcard: Add sd_acmd_SEND_SCR handler
- (ACMD51)
+Subject: Re: [PATCH v42 70/98] hw/sd/sdcard: Add sd_acmd_SEND_NUM_WR_BLOCKS
+ handler (ACMD22)
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-75-philmd@linaro.org>
+ <20240628070216.92609-71-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240628070216.92609-75-philmd@linaro.org>
+In-Reply-To: <20240628070216.92609-71-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
@@ -79,64 +79,68 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 19 ++++++++-----------
->   1 file changed, 8 insertions(+), 11 deletions(-)
+>   hw/sd/sd.c | 23 ++++++++++-------------
+>   1 file changed, 10 insertions(+), 13 deletions(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index a27a7e0f24..6a9d611429 100644
+> index 5323a42df2..9d66c3715a 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -263,7 +263,6 @@ static const char *sd_acmd_name(SDState *sd, uint8_t cmd)
+> @@ -263,7 +263,7 @@ static const char *sd_acmd_name(SDState *sd, uint8_t cmd)
 >           [14] = "DPS_spec",                  [15] = "DPS_spec",
 >           [16] = "DPS_spec",
 >           [18] = "SECU_spec",
-> -        [51] = "SEND_SCR",
+> -        [22] = "SEND_NUM_WR_BLOCKS",        [23] = "SET_WR_BLK_ERASE_COUNT",
+> +                                            [23] = "SET_WR_BLK_ERASE_COUNT",
+>           [42] = "SET_CLR_CARD_DETECT",
+>           [51] = "SEND_SCR",
 >           [52] = "SECU_spec",                 [53] = "SECU_spec",
->           [54] = "SECU_spec",
->           [56] = "SECU_spec",                 [57] = "SECU_spec",
-> @@ -1758,6 +1757,12 @@ static sd_rsp_type_t sd_acmd_SET_CLR_CARD_DETECT(SDState *sd, SDRequest req)
->       return sd_r1;
+> @@ -1689,6 +1689,13 @@ static sd_rsp_type_t sd_acmd_SD_STATUS(SDState *sd, SDRequest req)
+>                                    sd->sd_status, sizeof(sd->sd_status));
 >   }
 >   
-> +/* ACMD51 */
-> +static sd_rsp_type_t sd_acmd_SEND_SCR(SDState *sd, SDRequest req)
+> +/* ACMD22 */
+> +static sd_rsp_type_t sd_acmd_SEND_NUM_WR_BLOCKS(SDState *sd, SDRequest req)
 > +{
-> +    return sd_cmd_to_sendingdata(sd, req, 0, sd->scr, sizeof(sd->scr));
+> +    return sd_cmd_to_sendingdata(sd, req, 0,
+> +                                 &sd->blk_written, sizeof(sd->blk_written));
 > +}
 > +
 >   static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
 >   {
 >       uint64_t addr;
-> @@ -1866,16 +1871,6 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
+> @@ -1797,18 +1804,6 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
 >       }
 >   
 >       switch (req.cmd) {
-> -    case 51:  /* ACMD51: SEND_SCR */
+> -    case 22:  /* ACMD22: SEND_NUM_WR_BLOCKS */
 > -        switch (sd->state) {
 > -        case sd_transfer_state:
-> -            return sd_cmd_to_sendingdata(sd, req, 0, sd->scr, sizeof(sd->scr));
+> -            return sd_cmd_to_sendingdata(sd, req, 0,
+> -                                         &sd->blk_written,
+> -                                         sizeof(sd->blk_written));
 > -
 > -        default:
 > -            break;
 > -        }
 > -        break;
 > -
->       case 18:    /* Reserved for SD security applications */
->       case 25:
->       case 26:
-> @@ -2327,6 +2322,7 @@ static const SDProto sd_proto_spi = {
->           [23] = {8,  sd_spi, "SET_WR_BLK_ERASE_COUNT", sd_acmd_SET_WR_BLK_ERASE_COUNT},
+>       case 23:  /* ACMD23: SET_WR_BLK_ERASE_COUNT */
+>           switch (sd->state) {
+>           case sd_transfer_state:
+> @@ -2324,6 +2319,7 @@ static const SDProto sd_proto_spi = {
+>       },
+>       .acmd = {
+>           [13] = {8,  sd_spi, "SD_STATUS", sd_acmd_SD_STATUS},
+> +        [22] = {8,  sd_spi, "SEND_NUM_WR_BLOCKS", sd_acmd_SEND_NUM_WR_BLOCKS},
 >           [41] = {8,  sd_spi, "SEND_OP_COND", spi_cmd_SEND_OP_COND},
->           [42] = {8,  sd_spi, "SET_CLR_CARD_DETECT", sd_acmd_SET_CLR_CARD_DETECT},
-> +        [51] = {8,  sd_spi, "SEND_SCR", sd_acmd_SEND_SCR},
 >       },
 >   };
->   
-> @@ -2388,6 +2384,7 @@ static const SDProto sd_proto_sd = {
->           [23] = {8,  sd_ac,   "SET_WR_BLK_ERASE_COUNT", sd_acmd_SET_WR_BLK_ERASE_COUNT},
->           [41] = {8,  sd_bcr,  "SD_APP_OP_COND", sd_acmd_SD_APP_OP_COND},
->           [42] = {8,  sd_ac,   "SET_CLR_CARD_DETECT", sd_acmd_SET_CLR_CARD_DETECT},
-> +        [51] = {8,  sd_adtc, "SEND_SCR", sd_acmd_SEND_SCR},
+> @@ -2382,6 +2378,7 @@ static const SDProto sd_proto_sd = {
+>       .acmd = {
+>           [6]  = {8,  sd_ac,   "SET_BUS_WIDTH", sd_acmd_SET_BUS_WIDTH},
+>           [13] = {8,  sd_adtc, "SD_STATUS", sd_acmd_SD_STATUS},
+> +        [22] = {8,  sd_adtc, "SEND_NUM_WR_BLOCKS", sd_acmd_SEND_NUM_WR_BLOCKS},
 >       },
 >   };
 >   
