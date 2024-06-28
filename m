@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A871C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 17:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53F30C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 17:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNF8J-00082A-VD; Fri, 28 Jun 2024 13:11:35 -0400
+	id 1sNFEw-0001Yp-9Y; Fri, 28 Jun 2024 13:18:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNF8G-00081i-Qs
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:11:33 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1sNFEt-0001Xi-5W
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:18:23 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNF8F-0006nY-6f
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:11:32 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1f9fb3ca81bso5592515ad.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 10:11:30 -0700 (PDT)
+ id 1sNFEp-0001y2-Kf
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:18:22 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f4a5344ec7so6777475ad.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 10:18:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719594689; x=1720199489; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719595098; x=1720199898; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UEnv1Xe7Ey4m/cyKdLC8yf5wfk0oVg6dQ6fUguTxPjs=;
- b=BMiwChykhm4f5tv3AAG+jpMkiT3JUdzoGlpuYIWgIWxGrxWi+kXuNW3Ulh/Aw6w+CO
- PTsOqC9/V1J6U/FYAAPK1YcNBxsQfOjydiUEr66ecO4nMNPe/F+qhNJx1drh1KnZwJIi
- K2O+hMD8VsGQUeeKULhpHdgrcg7qbVbjHf+Ic31P4T23l9oyvc3kWGDDoJxP8e7+U2X3
- HpR2j8iyYKIrg87MpOKnpPmrMwphstCKp7GcV7ZlFv2MCZN8qwv8KgekomzVKYUNuTZJ
- a7olqvmswZDCXPGMo+UBrIXA/yo7L3DU8NQUSq2zCZdgW+L0A0LAQaRLw66D52bjAg1c
- aQAA==
+ bh=B06FeOC/VxpOr7DtLjpCDl47O7wMugTmDtSiZ9we2i0=;
+ b=nXI1P92FEdTIMfd2LlRbYBqkXdup25S2Tez4Uknz9fEnr7/laCOuKThbHF81wVPK3k
+ Hj2QgzkEEUDqeDs55VDXxlHjrMHPxbjLJJ7wEoMYiOFYBcqO8jmXvrvPy8hijq3BVuGF
+ KpUAnCZxLXGqfg9jVvl5Fk0fcSi28EeXx+wIyg0VItddR1frCQXB0otLinaD52L+iim1
+ eSjy82rGWyC5ROPKIq39YxnMwSNG+YPF/NUwpQbz02J8UizxwKbR+qkkoYQsl2O16fHj
+ Obrsfgc51+1/hlA/PHxXQNEZOFLXbP/pvHALM1+dfqB2G9nEKwcUGtp1LYwrjNVsGhx8
+ tkSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719594689; x=1720199489;
+ d=1e100.net; s=20230601; t=1719595098; x=1720199898;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=UEnv1Xe7Ey4m/cyKdLC8yf5wfk0oVg6dQ6fUguTxPjs=;
- b=av/IZri1KCSMUk+iqfkyFMQbeF/FM7/5OgrEcoW4/duLNqU0xJxvL3nBasKV2TQu8/
- 6xKzYMVyq6a7MgwqjmYxzJkNHOUK0W+ULkJHCjcnTQHVFrCoH6a2cETnUjbymtLGgMI3
- HBiCmQyIz+jFz9pIjnEHBw0aFm9qnjyhN3LGfTUyjF2l71dGWrGXsfwwqsNNS3Ki4mCl
- l9ydHq2f+Fv3/4k2GWp5aE5zBd7+YiAAlgjPeoLLs8v4mqPCTYyEs8Y9A7RnpS7+MoCj
- dnf0F1yEZhJJLQhE8enUupVvD2HsCrr15ywm3x4UasuZgv8RKnXlanLQYOd6dLv/WOkP
- B9Ug==
+ bh=B06FeOC/VxpOr7DtLjpCDl47O7wMugTmDtSiZ9we2i0=;
+ b=jFu4vL8BHzdzFnL+7gvdxExRQVxudzsaDBm7Qf7dZ2IacJ6g7PKqNVO/HCNZXtWkzI
+ xtGgI0idbwTtAs+ZCAwHTqs8Kj8s8+eXaufRqkqhhNamYOe3vRWl4DYpISY90uy1Wl0w
+ MN0UVRt0M6+T12LUWkWJdr9N3M5JPv8oPziqY4K/fEJn7Le4gHTymfw+UZ3nnZaKRL/c
+ QdpuzJGoLkxRUCd6P4Kiqmkf4cdZV7Cp9iYbEGmliOtvSc/iTE+DHs2JL5Y8okJ+v6za
+ 2oeiuDS7+TvuErm5Mj1IFcBF0l3qf1sLh2W0KuBTV8pNeoFmDjUEo2nVhi5TWuXHZ8Fy
+ wnBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVODCGdjevILNlrZAexpss6JO2W/RBBfGHAoE0Gc66aNURzke7XHUY5MYg7M/lFI93Xdb7n3y8qCb/77LNByLZ+QMy99yk=
-X-Gm-Message-State: AOJu0YyGcGWoIaJhuIPyK9k7OWLSijqHq3NLOQmxztrN/cQX2Z/guGsK
- xYl3GEyzJmjRKFyZ2YMGtKZbvG6oV/THAufDbP2BdP7oGgfMA1lbEsxigcX+8fo=
-X-Google-Smtp-Source: AGHT+IHr4FXYFeYOW7zhzGEBHJbw9iVu0CVpzcGsecNfIlSeiWYB0XtB/kzXXHc1glCYIY86V+WoHA==
-X-Received: by 2002:a17:902:ce81:b0:1f9:c3b3:d8f0 with SMTP id
- d9443c01a7336-1fa2401c255mr178196505ad.39.1719594688985; 
- Fri, 28 Jun 2024 10:11:28 -0700 (PDT)
+ AJvYcCU5x9NNCj+dL8LLnS0n/ArVsIfC2Pq01M3xjS1Mn4xZVJinwX9czEJP4CyaBahxhxRMnmudPaY51/1wGpGrtiEASbgywe0=
+X-Gm-Message-State: AOJu0YySbP8RmC9p+II8Yf+wQTakCfZvCCJvygUQZEUkFSEde0AZOiWy
+ a/V44dePhP1Q46J5R+kmzkbpJHMNaTRGKEm9qpmvqRsqdVTlIxwJTELF7OOnFzo=
+X-Google-Smtp-Source: AGHT+IHDXd6sAjQB6nmHBa7xZ/g0j0zzb9rxCrNRHrtdWBTY/ynYDmROpdSjKrIc7WbdMBl+icB0XA==
+X-Received: by 2002:a17:902:ccca:b0:1f9:f6a7:9330 with SMTP id
+ d9443c01a7336-1fac7e4c1c5mr36783135ad.9.1719595097822; 
+ Fri, 28 Jun 2024 10:18:17 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac1594eb0sm17681165ad.246.2024.06.28.10.11.28
+ d9443c01a7336-1faceb78d02sm10370765ad.136.2024.06.28.10.18.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 10:11:28 -0700 (PDT)
-Message-ID: <afa54739-ce19-4b3f-84f9-696c1c28ddbd@linaro.org>
-Date: Fri, 28 Jun 2024 10:11:26 -0700
+ Fri, 28 Jun 2024 10:18:17 -0700 (PDT)
+Message-ID: <993fe6b3-1823-4aff-8598-11ea69ac6213@linaro.org>
+Date: Fri, 28 Jun 2024 10:18:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] tests/tcg/arm: Fix fcvt result messages
+Subject: Re: [PATCH v2 2/6] tests/tcg/aarch64: Fix test architecture
+ specification
 To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 References: <20240627-tcg-v2-0-1690a813348e@daynix.com>
- <20240627-tcg-v2-1-1690a813348e@daynix.com>
+ <20240627-tcg-v2-2-1690a813348e@daynix.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240627-tcg-v2-1-1690a813348e@daynix.com>
+In-Reply-To: <20240627-tcg-v2-2-1690a813348e@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,18 +103,72 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/27/24 06:58, Akihiko Odaki wrote:
-> The test cases for "converting double-precision to single-precision"
-> emits float but the result variable was typed as uint32_t and corrupted
-> the printed values. Propertly type it as float.
+> sme-smopa-2.c requires sme-i16i64 but the compiler option used not to
+> specify it. Instead, the extension was specified with the inline
+> assembly, resulting in mixing assembly code targeting sme-i1664 and C
+> code that does not target sme-i1664.
 > 
-> Signed-off-by: Akihiko Odaki<akihiko.odaki@daynix.com>
-> Fixes: 8ec8a55e3fc9 ("tests/tcg/arm: add fcvt test cases for AArch32/64")
+> clang version 18.1.6 does not support such mixing so properly specify
+> the extension with the compiler option instead.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 > ---
->   tests/tcg/arm/fcvt.c       |   2 +-
->   tests/tcg/aarch64/fcvt.ref | 604 ++++++++++++++++++++++-----------------------
->   2 files changed, 303 insertions(+), 303 deletions(-)
+>   tests/tcg/aarch64/sme-smopa-2.c   |  2 +-
+>   tests/tcg/aarch64/Makefile.target | 11 +++++++++--
+>   2 files changed, 10 insertions(+), 3 deletions(-)
+> 
+> diff --git a/tests/tcg/aarch64/sme-smopa-2.c b/tests/tcg/aarch64/sme-smopa-2.c
+> index c9f48c3bfca2..2c9707065992 100644
+> --- a/tests/tcg/aarch64/sme-smopa-2.c
+> +++ b/tests/tcg/aarch64/sme-smopa-2.c
+> @@ -14,7 +14,7 @@ int main()
+>       long svl;
+>   
+>       /* Validate that we have a wide enough vector for 4 elements. */
+> -    asm(".arch armv8-r+sme-i64\n\trdsvl %0, #1" : "=r"(svl));
+> +    asm("rdsvl %0, #1" : "=r"(svl));
+>       if (svl < 32) {
+>           return 0;
+>       }
+> diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+> index 70d728ae9af7..ad99e0e3b198 100644
+> --- a/tests/tcg/aarch64/Makefile.target
+> +++ b/tests/tcg/aarch64/Makefile.target
+> @@ -27,7 +27,8 @@ config-cc.mak: Makefile
+>   	    $(call cc-option,-march=armv8.5-a,              CROSS_CC_HAS_ARMV8_5); \
+>   	    $(call cc-option,-mbranch-protection=standard,  CROSS_CC_HAS_ARMV8_BTI); \
+>   	    $(call cc-option,-march=armv8.5-a+memtag,       CROSS_CC_HAS_ARMV8_MTE); \
+> -	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme, CROSS_AS_HAS_ARMV9_SME)) 3> config-cc.mak
+> +	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme, CROSS_AS_HAS_ARMV9_SME); \
+> +	    $(call cc-option,-march=armv9-a+sme-i16i64,     CROSS_AS_HAS_ARMV9_SME_I1664)) 3> config-cc.mak
+>   -include config-cc.mak
+>   
+>   ifneq ($(CROSS_CC_HAS_ARMV8_2),)
+> @@ -68,7 +69,13 @@ endif
+>   
+>   # SME Tests
+>   ifneq ($(CROSS_AS_HAS_ARMV9_SME),)
+> -AARCH64_TESTS += sme-outprod1 sme-smopa-1 sme-smopa-2
+> +AARCH64_TESTS += sme-outprod1 sme-smopa-1
+> +endif
+> +
+> +# SME I16I64 Tests
+> +ifneq ($(CROSS_AS_HAS_ARMV9_SME_I1664),)
+> +AARCH64_TESTS += sme-smopa-2
+> +sme-smopa-2: CFLAGS += -march=armv9-a+sme-i16i64
+>   endif
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+How interesting.  We were not actually passing -march=armv9-a+sme to the assembler 
+previously.  Lack of this is what is causing sme-outprod1 to fail to build, as reported by 
+Alex.
+
+That said, if we use compiler directives we must have gcc-14 or newer to test this, 
+whereas binutils supported sme (and extensions) much earlier.  Given that this is all 
+inline assembly, we do not really need compiler support.
+
+I think we should continue to pass assembler options (-Wa,...) and detect and use clang's 
+-no-integrated-as option as well, at least for the SME tests.
+
 
 r~
 
