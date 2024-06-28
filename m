@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B849DC3064D
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 05:22:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33AD8C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 05:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN42s-0003Hl-H5; Fri, 28 Jun 2024 01:21:14 -0400
+	id 1sN42p-0003GG-Dd; Fri, 28 Jun 2024 01:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sN42q-0003HB-Td
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 01:21:12 -0400
-Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ id 1sN42n-0003Fn-KS
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 01:21:09 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sN42o-0008DW-Tf
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 01:21:12 -0400
-Received: by mail-ot1-x330.google.com with SMTP id
- 46e09a7af769-701f9fb9483so140353a34.1
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 22:21:10 -0700 (PDT)
+ id 1sN42h-0008Cj-Ta
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 01:21:08 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7067a2e9607so196671b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 22:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719552069; x=1720156869; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719552060; x=1720156860; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iNGHLZ6SUmkXQCpzg0N2HSo1zlyebo9gy5r+WIIkQrU=;
- b=WLqVvAUD6sBfoVE7YMegGq8BsoFUW11o0aW9w1WdPXnrrj1QHfHE9Lea8gfnxiosKu
- AYB98uy3GUV/KyUDQRlmgumSePeh78NAByGQYIkh5H9Ddb9bgqQR6cqacFiu0hOf3s9I
- RzwtLh5WbT7eVIQewTbCBS5L1vhQ02BvNEfCkICVhEpczc4gM/oykQ1kHb5xbbhfFZES
- ubdRB01/taIgpdU6+yGXkVP+gYQJCNAI5lEnWLlaHhh+dNimaIvbjuX4qk64oYpo7NI/
- 99oI5MYnjzLxj4Di5b9HsuaQdVXlNCc7ZieU5bRLqHgYnvBKNdTQGZAELMnwu3Ot7Vit
- +uuA==
+ bh=vGtlSativWuALTsAtF8iqUXP3Q4aaI+FbaPsTHzhTaY=;
+ b=LcV15F05d91h+t9uEfbAy0kL0t1D5g5G13iRRVj52jl18WHxCGKXWL6gPsN2DyVAQr
+ OSmLT3MjnVpZ8eImqHnK43a9mQyn40o9A5LBcCxeL1sla7pOTgZEiKi2vEyv6pMAFP6G
+ w4FYKu8EWvPSHQwfNnPHr89BVbnSDsV+0EydawW21a186wyq0X7uY4KigDnm1mO9D+Dz
+ cNXOZPUXHhvCknYWWfyjnP09Df82tcZTlRLyvp0xD6/B6a7snzeHEru+ZFaGrVF67r1C
+ j+f5c6+ZKNpG7uL1oFXhk0Xorf8z4M4SWvRr64L7KaSp3NpZZCSTQrMZxdBULsDOqdWE
+ ZaYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719552069; x=1720156869;
+ d=1e100.net; s=20230601; t=1719552060; x=1720156860;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iNGHLZ6SUmkXQCpzg0N2HSo1zlyebo9gy5r+WIIkQrU=;
- b=UbrOZ9pf2GEfOzvRpzkLE521p7eBUUwGlwC4fdpnr+GSdSXH0qUF2EVcbJwmFZnr2d
- mMeG28UF5aultIbr5j9AhsMBfwAQQ70yf25gFK5NhCrJAbkoHA0dyK5vvaK/JgX6VCd5
- pMh5xKuzCpPtnuzHJ4RrIS62OHRo1Sx9of6EidIAYUkwobSuxCUGYI/Lp45prJq8lPbv
- WQA7Ky5x9YHAaeIlsXlwXof96XDCfr6Yk3vnk0QMZPyJBJiO/2TdZFFPDwomox57dOhP
- 3pU3/FR5idhkxubEE0t7HZ/iPU6d0iCBLPeE4b4gd3gO3AM/ZEgZCEPoHwgk9LiQ3PkJ
- Jr+g==
-X-Gm-Message-State: AOJu0YwIXuvTuRH9nKF6Ur6lTVJCeS1bvjWKP1fqmqp0Pmq/Vn1s2KVQ
- xzvSAOV5+BJjOYjq0mKdtBnfgTOXfYUokTIIXZ+d6/vTziaEfOoyEiUd0GiT1snvscQ97IjA2hx
- 9
-X-Google-Smtp-Source: AGHT+IGl7B2C5M3TIVp6fCWHXjk6PMBdWhepYrHRI2A8nCAsrhhToN6T3mBhUlhkvtboWDhvhZQEjQ==
-X-Received: by 2002:a05:6870:c1d2:b0:254:a8ec:306f with SMTP id
- 586e51a60fabf-25d0191bef2mr15450620fac.43.1719552068490; 
- Thu, 27 Jun 2024 22:21:08 -0700 (PDT)
+ bh=vGtlSativWuALTsAtF8iqUXP3Q4aaI+FbaPsTHzhTaY=;
+ b=FNgYnVP9eAI55zWDHNLcWgOqkOxo5axLcZevQUxnosoTs9xXIdjLqzIJVzLun8iro6
+ TmzRLNMnr76tX3lMJ2Z1agO6ZUSXC5fmWa9O6iiCQjjH4d1v0zlK5iylGaQPqft5wJGA
+ 17s25/VHa0X0rTAdPScVuGYr+0owK1KJgL8mqF0ZvU1L82vQnZmtKBXo9qJAlUWsZqrE
+ lA6yiw19XNCyySj3vQQGjSmK0ezCTVeroxD0O4xBm8s/nIwh+7zKND2lrSUcwT+k3RAZ
+ tkQqiv2OwqQKHrprFhRneXGSeD26mFvLs5SxvH3CC3F4d5z1Og/ymTIwQYm3ZddbWRfs
+ GbIg==
+X-Gm-Message-State: AOJu0YzPDtlkbth73d5IJtPXJkmxaN2/mphYK8CMvoxkWtD9ki9iKMgz
+ AJio46nIdMqRJSPA1BJze4T4pVwbZHyhwaOLEGQ7tL8pAXSeWD5r2X89sWVfxNMhgGgWDYKN78I
+ V
+X-Google-Smtp-Source: AGHT+IElM0mJhHteiEVQ+64NY+8xYAc6vFmINmR69dcrPbVrpTpB15ZX59hjQLT8vjIPnqDBW+p4LQ==
+X-Received: by 2002:a62:b609:0:b0:706:4889:960d with SMTP id
+ d2e1a72fcca58-70670ee7812mr16064325b3a.16.1719552060271; 
+ Thu, 27 Jun 2024 22:21:00 -0700 (PDT)
 Received: from amd.. ([2804:7f0:b401:391e:3e7c:3fff:fe7a:e83b])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-72c6b2a16cdsm423932a12.46.2024.06.27.22.21.05
+ 41be03b00d2f7-72c6b2a16cdsm423932a12.46.2024.06.27.22.20.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Jun 2024 22:21:07 -0700 (PDT)
+ Thu, 27 Jun 2024 22:20:59 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, philmd@linaro.org, alex.bennee@linaro.org,
  richard.henderson@linaro.org
 Cc: peter.maydell@linaro.org,
 	gustavo.romero@linaro.org
-Subject: [PATCH v6 05/11] target/arm: Make some MTE helpers widely available
-Date: Fri, 28 Jun 2024 05:08:44 +0000
-Message-Id: <20240628050850.536447-6-gustavo.romero@linaro.org>
+Subject: [PATCH v6 02/11] gdbstub: Move GdbCmdParseEntry into a new header file
+Date: Fri, 28 Jun 2024 05:08:41 +0000
+Message-Id: <20240628050850.536447-3-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240628050850.536447-1-gustavo.romero@linaro.org>
 References: <20240628050850.536447-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
- envelope-from=gustavo.romero@linaro.org; helo=mail-ot1-x330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,167 +97,694 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the MTE helpers allocation_tag_mem_probe, load_tag1, and store_tag1
-available to other subsystems.
+Move GdbCmdParseEntry and its associated types into a separate header
+file to allow the use of GdbCmdParseEntry and other gdbstub command
+functions outside of gdbstub.c.
+
+Since GdbCmdParseEntry and get_param are now public, kdoc
+GdbCmdParseEntry and rename get_param to gdb_get_cmd_param.
+
+This commit also makes gdb_put_packet public since is used in gdbstub
+command handling.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/arm/tcg/mte_helper.c | 45 ++++---------------------
- target/arm/tcg/mte_helper.h | 66 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 73 insertions(+), 38 deletions(-)
- create mode 100644 target/arm/tcg/mte_helper.h
+ gdbstub/gdbstub.c          | 134 ++++++++++++++-----------------------
+ gdbstub/internals.h        |  22 ------
+ gdbstub/syscalls.c         |   7 +-
+ gdbstub/system.c           |   7 +-
+ gdbstub/user-target.c      |  25 +++----
+ gdbstub/user.c             |   7 +-
+ include/gdbstub/commands.h |  72 ++++++++++++++++++++
+ 7 files changed, 146 insertions(+), 128 deletions(-)
+ create mode 100644 include/gdbstub/commands.h
 
-diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index a50d576294..9d2ba287ee 100644
---- a/target/arm/tcg/mte_helper.c
-+++ b/target/arm/tcg/mte_helper.c
-@@ -29,6 +29,7 @@
- #include "hw/core/tcg-cpu-ops.h"
- #include "qapi/error.h"
- #include "qemu/guest-random.h"
-+#include "mte_helper.h"
- 
- 
- static int choose_nonexcluded_tag(int tag, int offset, uint16_t exclude)
-@@ -50,42 +51,10 @@ static int choose_nonexcluded_tag(int tag, int offset, uint16_t exclude)
-     return tag;
- }
- 
--/**
-- * allocation_tag_mem_probe:
-- * @env: the cpu environment
-- * @ptr_mmu_idx: the addressing regime to use for the virtual address
-- * @ptr: the virtual address for which to look up tag memory
-- * @ptr_access: the access to use for the virtual address
-- * @ptr_size: the number of bytes in the normal memory access
-- * @tag_access: the access to use for the tag memory
-- * @probe: true to merely probe, never taking an exception
-- * @ra: the return address for exception handling
-- *
-- * Our tag memory is formatted as a sequence of little-endian nibbles.
-- * That is, the byte at (addr >> (LOG2_TAG_GRANULE + 1)) contains two
-- * tags, with the tag at [3:0] for the lower addr and the tag at [7:4]
-- * for the higher addr.
-- *
-- * Here, resolve the physical address from the virtual address, and return
-- * a pointer to the corresponding tag byte.
-- *
-- * If there is no tag storage corresponding to @ptr, return NULL.
-- *
-- * If the page is inaccessible for @ptr_access, or has a watchpoint, there are
-- * three options:
-- * (1) probe = true, ra = 0 : pure probe -- we return NULL if the page is not
-- *     accessible, and do not take watchpoint traps. The calling code must
-- *     handle those cases in the right priority compared to MTE traps.
-- * (2) probe = false, ra = 0 : probe, no fault expected -- the caller guarantees
-- *     that the page is going to be accessible. We will take watchpoint traps.
-- * (3) probe = false, ra != 0 : non-probe -- we will take both memory access
-- *     traps and watchpoint traps.
-- * (probe = true, ra != 0 is invalid and will assert.)
-- */
--static uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
--                                         uint64_t ptr, MMUAccessType ptr_access,
--                                         int ptr_size, MMUAccessType tag_access,
--                                         bool probe, uintptr_t ra)
-+uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-+                                  uint64_t ptr, MMUAccessType ptr_access,
-+                                  int ptr_size, MMUAccessType tag_access,
-+                                  bool probe, uintptr_t ra)
- {
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 37314b92e5..9ff2f4177d 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -30,6 +30,7 @@
+ #include "qemu/error-report.h"
+ #include "trace.h"
+ #include "exec/gdbstub.h"
++#include "gdbstub/commands.h"
+ #include "gdbstub/syscalls.h"
  #ifdef CONFIG_USER_ONLY
-     uint64_t clean_ptr = useronly_clean_ptr(ptr);
-@@ -287,7 +256,7 @@ uint64_t HELPER(addsubg)(CPUARMState *env, uint64_t ptr,
-     return address_with_allocation_tag(ptr + offset, rtag);
+ #include "accel/tcg/vcpu-state.h"
+@@ -920,43 +921,6 @@ static int cmd_parse_params(const char *data, const char *schema,
+     return 0;
  }
  
--static int load_tag1(uint64_t ptr, uint8_t *mem)
-+int load_tag1(uint64_t ptr, uint8_t *mem)
+-typedef void (*GdbCmdHandler)(GArray *params, void *user_ctx);
+-
+-/*
+- * cmd_startswith -> cmd is compared using startswith
+- *
+- * allow_stop_reply -> true iff the gdbstub can respond to this command with a
+- *   "stop reply" packet. The list of commands that accept such response is
+- *   defined at the GDB Remote Serial Protocol documentation. see:
+- *   https://sourceware.org/gdb/onlinedocs/gdb/Stop-Reply-Packets.html#Stop-Reply-Packets.
+- *
+- * schema definitions:
+- * Each schema parameter entry consists of 2 chars,
+- * the first char represents the parameter type handling
+- * the second char represents the delimiter for the next parameter
+- *
+- * Currently supported schema types:
+- * 'l' -> unsigned long (stored in .val_ul)
+- * 'L' -> unsigned long long (stored in .val_ull)
+- * 's' -> string (stored in .data)
+- * 'o' -> single char (stored in .opcode)
+- * 't' -> thread id (stored in .thread_id)
+- * '?' -> skip according to delimiter
+- *
+- * Currently supported delimiters:
+- * '?' -> Stop at any delimiter (",;:=\0")
+- * '0' -> Stop at "\0"
+- * '.' -> Skip 1 char unless reached "\0"
+- * Any other value is treated as the delimiter value itself
+- */
+-typedef struct GdbCmdParseEntry {
+-    GdbCmdHandler handler;
+-    const char *cmd;
+-    bool cmd_startswith;
+-    const char *schema;
+-    bool allow_stop_reply;
+-} GdbCmdParseEntry;
+-
+ static inline int startswith(const char *string, const char *pattern)
  {
-     int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
-     return extract32(*mem, ofs, 4);
-@@ -321,7 +290,7 @@ static void check_tag_aligned(CPUARMState *env, uint64_t ptr, uintptr_t ra)
+   return !strncmp(string, pattern, strlen(pattern));
+@@ -1023,7 +987,7 @@ static void handle_detach(GArray *params, void *user_ctx)
+             return;
+         }
+ 
+-        pid = get_param(params, 0)->val_ul;
++        pid = gdb_get_cmd_param(params, 0)->val_ul;
+     }
+ 
+ #ifdef CONFIG_USER_ONLY
+@@ -1061,13 +1025,13 @@ static void handle_thread_alive(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    if (get_param(params, 0)->thread_id.kind == GDB_READ_THREAD_ERR) {
++    if (gdb_get_cmd_param(params, 0)->thread_id.kind == GDB_READ_THREAD_ERR) {
+         gdb_put_packet("E22");
+         return;
+     }
+ 
+-    cpu = gdb_get_cpu(get_param(params, 0)->thread_id.pid,
+-                      get_param(params, 0)->thread_id.tid);
++    cpu = gdb_get_cpu(gdb_get_cmd_param(params, 0)->thread_id.pid,
++                      gdb_get_cmd_param(params, 0)->thread_id.tid);
+     if (!cpu) {
+         gdb_put_packet("E22");
+         return;
+@@ -1079,7 +1043,7 @@ static void handle_thread_alive(GArray *params, void *user_ctx)
+ static void handle_continue(GArray *params, void *user_ctx)
+ {
+     if (params->len) {
+-        gdb_set_cpu_pc(get_param(params, 0)->val_ull);
++        gdb_set_cpu_pc(gdb_get_cmd_param(params, 0)->val_ull);
+     }
+ 
+     gdbserver_state.signal = 0;
+@@ -1095,7 +1059,7 @@ static void handle_cont_with_sig(GArray *params, void *user_ctx)
+      *       omit the addr parameter
+      */
+     if (params->len) {
+-        signal = get_param(params, 0)->val_ul;
++        signal = gdb_get_cmd_param(params, 0)->val_ul;
+     }
+ 
+     gdbserver_state.signal = gdb_signal_to_target(signal);
+@@ -1115,18 +1079,18 @@ static void handle_set_thread(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    if (get_param(params, 1)->thread_id.kind == GDB_READ_THREAD_ERR) {
++    if (gdb_get_cmd_param(params, 1)->thread_id.kind == GDB_READ_THREAD_ERR) {
+         gdb_put_packet("E22");
+         return;
+     }
+ 
+-    if (get_param(params, 1)->thread_id.kind != GDB_ONE_THREAD) {
++    if (gdb_get_cmd_param(params, 1)->thread_id.kind != GDB_ONE_THREAD) {
+         gdb_put_packet("OK");
+         return;
+     }
+ 
+-    pid = get_param(params, 1)->thread_id.pid;
+-    tid = get_param(params, 1)->thread_id.tid;
++    pid = gdb_get_cmd_param(params, 1)->thread_id.pid;
++    tid = gdb_get_cmd_param(params, 1)->thread_id.tid;
+ #ifdef CONFIG_USER_ONLY
+     if (gdb_handle_set_thread_user(pid, tid)) {
+         return;
+@@ -1142,7 +1106,7 @@ static void handle_set_thread(GArray *params, void *user_ctx)
+      * Note: This command is deprecated and modern gdb's will be using the
+      *       vCont command instead.
+      */
+-    switch (get_param(params, 0)->opcode) {
++    switch (gdb_get_cmd_param(params, 0)->opcode) {
+     case 'c':
+         gdbserver_state.c_cpu = cpu;
+         gdb_put_packet("OK");
+@@ -1167,9 +1131,9 @@ static void handle_insert_bp(GArray *params, void *user_ctx)
+     }
+ 
+     res = gdb_breakpoint_insert(gdbserver_state.c_cpu,
+-                                get_param(params, 0)->val_ul,
+-                                get_param(params, 1)->val_ull,
+-                                get_param(params, 2)->val_ull);
++                                gdb_get_cmd_param(params, 0)->val_ul,
++                                gdb_get_cmd_param(params, 1)->val_ull,
++                                gdb_get_cmd_param(params, 2)->val_ull);
+     if (res >= 0) {
+         gdb_put_packet("OK");
+         return;
+@@ -1191,9 +1155,9 @@ static void handle_remove_bp(GArray *params, void *user_ctx)
+     }
+ 
+     res = gdb_breakpoint_remove(gdbserver_state.c_cpu,
+-                                get_param(params, 0)->val_ul,
+-                                get_param(params, 1)->val_ull,
+-                                get_param(params, 2)->val_ull);
++                                gdb_get_cmd_param(params, 0)->val_ul,
++                                gdb_get_cmd_param(params, 1)->val_ull,
++                                gdb_get_cmd_param(params, 2)->val_ull);
+     if (res >= 0) {
+         gdb_put_packet("OK");
+         return;
+@@ -1225,10 +1189,10 @@ static void handle_set_reg(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    reg_size = strlen(get_param(params, 1)->data) / 2;
+-    gdb_hextomem(gdbserver_state.mem_buf, get_param(params, 1)->data, reg_size);
++    reg_size = strlen(gdb_get_cmd_param(params, 1)->data) / 2;
++    gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 1)->data, reg_size);
+     gdb_write_register(gdbserver_state.g_cpu, gdbserver_state.mem_buf->data,
+-                       get_param(params, 0)->val_ull);
++                       gdb_get_cmd_param(params, 0)->val_ull);
+     gdb_put_packet("OK");
  }
  
- /* For use in a non-parallel context, store to the given nibble.  */
--static void store_tag1(uint64_t ptr, uint8_t *mem, int tag)
-+void store_tag1(uint64_t ptr, uint8_t *mem, int tag)
+@@ -1243,7 +1207,7 @@ static void handle_get_reg(GArray *params, void *user_ctx)
+ 
+     reg_size = gdb_read_register(gdbserver_state.g_cpu,
+                                  gdbserver_state.mem_buf,
+-                                 get_param(params, 0)->val_ull);
++                                 gdb_get_cmd_param(params, 0)->val_ull);
+     if (!reg_size) {
+         gdb_put_packet("E14");
+         return;
+@@ -1264,16 +1228,16 @@ static void handle_write_mem(GArray *params, void *user_ctx)
+     }
+ 
+     /* gdb_hextomem() reads 2*len bytes */
+-    if (get_param(params, 1)->val_ull >
+-        strlen(get_param(params, 2)->data) / 2) {
++    if (gdb_get_cmd_param(params, 1)->val_ull >
++        strlen(gdb_get_cmd_param(params, 2)->data) / 2) {
+         gdb_put_packet("E22");
+         return;
+     }
+ 
+-    gdb_hextomem(gdbserver_state.mem_buf, get_param(params, 2)->data,
+-                 get_param(params, 1)->val_ull);
++    gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 2)->data,
++                 gdb_get_cmd_param(params, 1)->val_ull);
+     if (gdb_target_memory_rw_debug(gdbserver_state.g_cpu,
+-                                   get_param(params, 0)->val_ull,
++                                   gdb_get_cmd_param(params, 0)->val_ull,
+                                    gdbserver_state.mem_buf->data,
+                                    gdbserver_state.mem_buf->len, true)) {
+         gdb_put_packet("E14");
+@@ -1291,16 +1255,16 @@ static void handle_read_mem(GArray *params, void *user_ctx)
+     }
+ 
+     /* gdb_memtohex() doubles the required space */
+-    if (get_param(params, 1)->val_ull > MAX_PACKET_LENGTH / 2) {
++    if (gdb_get_cmd_param(params, 1)->val_ull > MAX_PACKET_LENGTH / 2) {
+         gdb_put_packet("E22");
+         return;
+     }
+ 
+     g_byte_array_set_size(gdbserver_state.mem_buf,
+-                          get_param(params, 1)->val_ull);
++                          gdb_get_cmd_param(params, 1)->val_ull);
+ 
+     if (gdb_target_memory_rw_debug(gdbserver_state.g_cpu,
+-                                   get_param(params, 0)->val_ull,
++                                   gdb_get_cmd_param(params, 0)->val_ull,
+                                    gdbserver_state.mem_buf->data,
+                                    gdbserver_state.mem_buf->len, false)) {
+         gdb_put_packet("E14");
+@@ -1324,8 +1288,8 @@ static void handle_write_all_regs(GArray *params, void *user_ctx)
+     }
+ 
+     cpu_synchronize_state(gdbserver_state.g_cpu);
+-    len = strlen(get_param(params, 0)->data) / 2;
+-    gdb_hextomem(gdbserver_state.mem_buf, get_param(params, 0)->data, len);
++    len = strlen(gdb_get_cmd_param(params, 0)->data) / 2;
++    gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 0)->data, len);
+     registers = gdbserver_state.mem_buf->data;
+     for (reg_id = 0;
+          reg_id < gdbserver_state.g_cpu->gdb_num_g_regs && len > 0;
+@@ -1360,7 +1324,7 @@ static void handle_read_all_regs(GArray *params, void *user_ctx)
+ static void handle_step(GArray *params, void *user_ctx)
  {
-     int ofs = extract32(ptr, LOG2_TAG_GRANULE, 1) * 4;
-     *mem = deposit32(*mem, ofs, 4, tag);
-diff --git a/target/arm/tcg/mte_helper.h b/target/arm/tcg/mte_helper.h
+     if (params->len) {
+-        gdb_set_cpu_pc(get_param(params, 0)->val_ull);
++        gdb_set_cpu_pc(gdb_get_cmd_param(params, 0)->val_ull);
+     }
+ 
+     cpu_single_step(gdbserver_state.c_cpu, gdbserver_state.sstep_flags);
+@@ -1373,7 +1337,7 @@ static void handle_backward(GArray *params, void *user_ctx)
+         gdb_put_packet("E22");
+     }
+     if (params->len == 1) {
+-        switch (get_param(params, 0)->opcode) {
++        switch (gdb_get_cmd_param(params, 0)->opcode) {
+         case 's':
+             if (replay_reverse_step()) {
+                 gdb_continue();
+@@ -1408,7 +1372,7 @@ static void handle_v_cont(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    res = gdb_handle_vcont(get_param(params, 0)->data);
++    res = gdb_handle_vcont(gdb_get_cmd_param(params, 0)->data);
+     if ((res == -EINVAL) || (res == -ERANGE)) {
+         gdb_put_packet("E22");
+     } else if (res) {
+@@ -1426,7 +1390,7 @@ static void handle_v_attach(GArray *params, void *user_ctx)
+         goto cleanup;
+     }
+ 
+-    process = gdb_get_process(get_param(params, 0)->val_ul);
++    process = gdb_get_process(gdb_get_cmd_param(params, 0)->val_ul);
+     if (!process) {
+         goto cleanup;
+     }
+@@ -1523,7 +1487,7 @@ static void handle_v_commands(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    if (!process_string_cmd(get_param(params, 0)->data,
++    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
+                             gdb_v_commands_table,
+                             ARRAY_SIZE(gdb_v_commands_table))) {
+         gdb_put_packet("");
+@@ -1555,7 +1519,7 @@ static void handle_set_qemu_sstep(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    new_sstep_flags = get_param(params, 0)->val_ul;
++    new_sstep_flags = gdb_get_cmd_param(params, 0)->val_ul;
+ 
+     if (new_sstep_flags  & ~gdbserver_state.supported_sstep_flags) {
+         gdb_put_packet("E22");
+@@ -1615,13 +1579,13 @@ static void handle_query_thread_extra(GArray *params, void *user_ctx)
+     CPUState *cpu;
+ 
+     if (!params->len ||
+-        get_param(params, 0)->thread_id.kind == GDB_READ_THREAD_ERR) {
++        gdb_get_cmd_param(params, 0)->thread_id.kind == GDB_READ_THREAD_ERR) {
+         gdb_put_packet("E22");
+         return;
+     }
+ 
+-    cpu = gdb_get_cpu(get_param(params, 0)->thread_id.pid,
+-                      get_param(params, 0)->thread_id.tid);
++    cpu = gdb_get_cpu(gdb_get_cmd_param(params, 0)->thread_id.pid,
++                      gdb_get_cmd_param(params, 0)->thread_id.tid);
+     if (!cpu) {
+         return;
+     }
+@@ -1673,7 +1637,7 @@ static void handle_query_supported(GArray *params, void *user_ctx)
+ #endif
+ 
+     if (params->len) {
+-        const char *gdb_supported = get_param(params, 0)->data;
++        const char *gdb_supported = gdb_get_cmd_param(params, 0)->data;
+ 
+         if (strstr(gdb_supported, "multiprocess+")) {
+             gdbserver_state.multiprocess = true;
+@@ -1707,15 +1671,15 @@ static void handle_query_xfer_features(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    p = get_param(params, 0)->data;
++    p = gdb_get_cmd_param(params, 0)->data;
+     xml = get_feature_xml(p, &p, process);
+     if (!xml) {
+         gdb_put_packet("E00");
+         return;
+     }
+ 
+-    addr = get_param(params, 1)->val_ul;
+-    len = get_param(params, 2)->val_ul;
++    addr = gdb_get_cmd_param(params, 1)->val_ul;
++    len = gdb_get_cmd_param(params, 2)->val_ul;
+     total_len = strlen(xml);
+     if (addr > total_len) {
+         gdb_put_packet("E00");
+@@ -1889,13 +1853,13 @@ static void handle_gen_query(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    if (process_string_cmd(get_param(params, 0)->data,
++    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
+                            gdb_gen_query_set_common_table,
+                            ARRAY_SIZE(gdb_gen_query_set_common_table))) {
+         return;
+     }
+ 
+-    if (!process_string_cmd(get_param(params, 0)->data,
++    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
+                             gdb_gen_query_table,
+                             ARRAY_SIZE(gdb_gen_query_table))) {
+         gdb_put_packet("");
+@@ -1908,13 +1872,13 @@ static void handle_gen_set(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    if (process_string_cmd(get_param(params, 0)->data,
++    if (process_string_cmd(gdb_get_cmd_param(params, 0)->data,
+                            gdb_gen_query_set_common_table,
+                            ARRAY_SIZE(gdb_gen_query_set_common_table))) {
+         return;
+     }
+ 
+-    if (!process_string_cmd(get_param(params, 0)->data,
++    if (!process_string_cmd(gdb_get_cmd_param(params, 0)->data,
+                            gdb_gen_set_table,
+                            ARRAY_SIZE(gdb_gen_set_table))) {
+         gdb_put_packet("");
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index 32f9f63297..34121dc61a 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -106,7 +106,6 @@ static inline int tohex(int v)
+  */
+ 
+ void gdb_put_strbuf(void);
+-int gdb_put_packet(const char *buf);
+ int gdb_put_packet_binary(const char *buf, int len, bool dump);
+ void gdb_hextomem(GByteArray *mem, const char *buf, int len);
+ void gdb_memtohex(GString *buf, const uint8_t *mem, int len);
+@@ -166,27 +165,6 @@ void gdb_put_buffer(const uint8_t *buf, int len);
+  */
+ void gdb_init_gdbserver_state(void);
+ 
+-typedef enum GDBThreadIdKind {
+-    GDB_ONE_THREAD = 0,
+-    GDB_ALL_THREADS,     /* One process, all threads */
+-    GDB_ALL_PROCESSES,
+-    GDB_READ_THREAD_ERR
+-} GDBThreadIdKind;
+-
+-typedef union GdbCmdVariant {
+-    const char *data;
+-    uint8_t opcode;
+-    unsigned long val_ul;
+-    unsigned long long val_ull;
+-    struct {
+-        GDBThreadIdKind kind;
+-        uint32_t pid;
+-        uint32_t tid;
+-    } thread_id;
+-} GdbCmdVariant;
+-
+-#define get_param(p, i)    (&g_array_index(p, GdbCmdVariant, i))
+-
+ void gdb_handle_query_rcmd(GArray *params, void *ctx); /* system */
+ void gdb_handle_query_offsets(GArray *params, void *user_ctx); /* user */
+ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx); /*user */
+diff --git a/gdbstub/syscalls.c b/gdbstub/syscalls.c
+index 02e3a8f74c..4e1295b782 100644
+--- a/gdbstub/syscalls.c
++++ b/gdbstub/syscalls.c
+@@ -16,6 +16,7 @@
+ #include "sysemu/runstate.h"
+ #include "gdbstub/user.h"
+ #include "gdbstub/syscalls.h"
++#include "gdbstub/commands.h"
+ #include "trace.h"
+ #include "internals.h"
+ 
+@@ -154,9 +155,9 @@ void gdb_handle_file_io(GArray *params, void *user_ctx)
+         uint64_t ret;
+         int err;
+ 
+-        ret = get_param(params, 0)->val_ull;
++        ret = gdb_get_cmd_param(params, 0)->val_ull;
+         if (params->len >= 2) {
+-            err = get_param(params, 1)->val_ull;
++            err = gdb_get_cmd_param(params, 1)->val_ull;
+         } else {
+             err = 0;
+         }
+@@ -196,7 +197,7 @@ void gdb_handle_file_io(GArray *params, void *user_ctx)
+         gdbserver_syscall_state.current_syscall_cb = NULL;
+     }
+ 
+-    if (params->len >= 3 && get_param(params, 2)->opcode == (uint8_t)'C') {
++    if (params->len >= 3 && gdb_get_cmd_param(params, 2)->opcode == (uint8_t)'C') {
+         gdb_put_packet("T02");
+         return;
+     }
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index d235403855..1ad87fe7fd 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -16,6 +16,7 @@
+ #include "qemu/cutils.h"
+ #include "exec/gdbstub.h"
+ #include "gdbstub/syscalls.h"
++#include "gdbstub/commands.h"
+ #include "exec/hwaddr.h"
+ #include "exec/tb-flush.h"
+ #include "sysemu/cpus.h"
+@@ -501,7 +502,7 @@ void gdb_handle_set_qemu_phy_mem_mode(GArray *params, void *ctx)
+         return;
+     }
+ 
+-    if (!get_param(params, 0)->val_ul) {
++    if (!gdb_get_cmd_param(params, 0)->val_ul) {
+         phy_memory_mode = 0;
+     } else {
+         phy_memory_mode = 1;
+@@ -519,7 +520,7 @@ void gdb_handle_query_rcmd(GArray *params, void *ctx)
+         return;
+     }
+ 
+-    len = strlen(get_param(params, 0)->data);
++    len = strlen(gdb_get_cmd_param(params, 0)->data);
+     if (len % 2) {
+         gdb_put_packet("E01");
+         return;
+@@ -527,7 +528,7 @@ void gdb_handle_query_rcmd(GArray *params, void *ctx)
+ 
+     g_assert(gdbserver_state.mem_buf->len == 0);
+     len = len / 2;
+-    gdb_hextomem(gdbserver_state.mem_buf, get_param(params, 0)->data, len);
++    gdb_hextomem(gdbserver_state.mem_buf, gdb_get_cmd_param(params, 0)->data, len);
+     g_byte_array_append(gdbserver_state.mem_buf, &zero, 1);
+     qemu_chr_be_write(gdbserver_system_state.mon_chr,
+                       gdbserver_state.mem_buf->data,
+diff --git a/gdbstub/user-target.c b/gdbstub/user-target.c
+index a9c6c64512..b5e01fd8b0 100644
+--- a/gdbstub/user-target.c
++++ b/gdbstub/user-target.c
+@@ -9,6 +9,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "exec/gdbstub.h"
++#include "gdbstub/commands.h"
+ #include "qemu.h"
+ #include "internals.h"
+ #ifdef CONFIG_LINUX
+@@ -250,8 +251,8 @@ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx)
+         return;
+     }
+ 
+-    offset = get_param(params, 0)->val_ul;
+-    len = get_param(params, 1)->val_ul;
++    offset = gdb_get_cmd_param(params, 0)->val_ul;
++    len = gdb_get_cmd_param(params, 1)->val_ul;
+     ts = get_task_state(gdbserver_state.c_cpu);
+     saved_auxv = ts->info->saved_auxv;
+     auxv_len = ts->info->auxv_len;
+@@ -288,7 +289,7 @@ void gdb_handle_query_xfer_auxv(GArray *params, void *user_ctx)
+ 
+ static const char *get_filename_param(GArray *params, int i)
+ {
+-    const char *hex_filename = get_param(params, i)->data;
++    const char *hex_filename = gdb_get_cmd_param(params, i)->data;
+     gdb_hextomem(gdbserver_state.mem_buf, hex_filename,
+                  strlen(hex_filename) / 2);
+     g_byte_array_append(gdbserver_state.mem_buf, (const guint8 *)"", 1);
+@@ -306,8 +307,8 @@ static void hostio_reply_with_data(const void *buf, size_t n)
+ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
+ {
+     const char *filename = get_filename_param(params, 0);
+-    uint64_t flags = get_param(params, 1)->val_ull;
+-    uint64_t mode = get_param(params, 2)->val_ull;
++    uint64_t flags = gdb_get_cmd_param(params, 1)->val_ull;
++    uint64_t mode = gdb_get_cmd_param(params, 2)->val_ull;
+ 
+ #ifdef CONFIG_LINUX
+     int fd = do_guest_openat(cpu_env(gdbserver_state.g_cpu), 0, filename,
+@@ -325,7 +326,7 @@ void gdb_handle_v_file_open(GArray *params, void *user_ctx)
+ 
+ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
+ {
+-    int fd = get_param(params, 0)->val_ul;
++    int fd = gdb_get_cmd_param(params, 0)->val_ul;
+ 
+     if (close(fd) == -1) {
+         g_string_printf(gdbserver_state.str_buf, "F-1,%d", errno);
+@@ -338,9 +339,9 @@ void gdb_handle_v_file_close(GArray *params, void *user_ctx)
+ 
+ void gdb_handle_v_file_pread(GArray *params, void *user_ctx)
+ {
+-    int fd = get_param(params, 0)->val_ul;
+-    size_t count = get_param(params, 1)->val_ull;
+-    off_t offset = get_param(params, 2)->val_ull;
++    int fd = gdb_get_cmd_param(params, 0)->val_ul;
++    size_t count = gdb_get_cmd_param(params, 1)->val_ull;
++    off_t offset = gdb_get_cmd_param(params, 2)->val_ull;
+ 
+     size_t bufsiz = MIN(count, BUFSIZ);
+     g_autofree char *buf = g_try_malloc(bufsiz);
+@@ -383,9 +384,9 @@ void gdb_handle_v_file_readlink(GArray *params, void *user_ctx)
+ 
+ void gdb_handle_query_xfer_exec_file(GArray *params, void *user_ctx)
+ {
+-    uint32_t pid = get_param(params, 0)->val_ul;
+-    uint32_t offset = get_param(params, 1)->val_ul;
+-    uint32_t length = get_param(params, 2)->val_ul;
++    uint32_t pid = gdb_get_cmd_param(params, 0)->val_ul;
++    uint32_t offset = gdb_get_cmd_param(params, 1)->val_ul;
++    uint32_t length = gdb_get_cmd_param(params, 2)->val_ul;
+ 
+     GDBProcess *process = gdb_get_process(pid);
+     if (!process) {
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index e34b58b407..b36033bc7a 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -16,6 +16,7 @@
+ #include "exec/hwaddr.h"
+ #include "exec/tb-flush.h"
+ #include "exec/gdbstub.h"
++#include "gdbstub/commands.h"
+ #include "gdbstub/syscalls.h"
+ #include "gdbstub/user.h"
+ #include "gdbstub/enums.h"
+@@ -793,7 +794,7 @@ void gdb_syscall_return(CPUState *cs, int num)
+ 
+ void gdb_handle_set_catch_syscalls(GArray *params, void *user_ctx)
+ {
+-    const char *param = get_param(params, 0)->data;
++    const char *param = gdb_get_cmd_param(params, 0)->data;
+     GDBSyscallsMask catch_syscalls_mask;
+     bool catch_all_syscalls;
+     unsigned int num;
+@@ -858,8 +859,8 @@ void gdb_handle_query_xfer_siginfo(GArray *params, void *user_ctx)
+     unsigned long offset, len;
+     uint8_t *siginfo_offset;
+ 
+-    offset = get_param(params, 0)->val_ul;
+-    len = get_param(params, 1)->val_ul;
++    offset = gdb_get_cmd_param(params, 0)->val_ul;
++    len = gdb_get_cmd_param(params, 1)->val_ul;
+ 
+     if (offset + len > gdbserver_user_state.siginfo_len) {
+         /* Invalid offset and/or requested length. */
+diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
 new file mode 100644
-index 0000000000..1f471fb69b
+index 0000000000..639257493e
 --- /dev/null
-+++ b/target/arm/tcg/mte_helper.h
-@@ -0,0 +1,66 @@
-+/*
-+ * ARM MemTag operation helpers.
-+ *
-+ * This code is licensed under the GNU GPL v2 or later.
-+ *
-+ * SPDX-License-Identifier: LGPL-2.1-or-later
-+ */
++++ b/include/gdbstub/commands.h
+@@ -0,0 +1,72 @@
++#ifndef GDBSTUB_COMMANDS_H
++#define GDBSTUB
 +
-+#ifndef TARGET_ARM_MTE_H
-+#define TARGET_ARM_MTE_H
++typedef void (*GdbCmdHandler)(GArray *params, void *user_ctx);
 +
-+#include "exec/mmu-access-type.h"
++typedef enum GDBThreadIdKind {
++    GDB_ONE_THREAD = 0,
++    GDB_ALL_THREADS,     /* One process, all threads */
++    GDB_ALL_PROCESSES,
++    GDB_READ_THREAD_ERR
++} GDBThreadIdKind;
 +
-+/**
-+ * allocation_tag_mem_probe:
-+ * @env: the cpu environment
-+ * @ptr_mmu_idx: the addressing regime to use for the virtual address
-+ * @ptr: the virtual address for which to look up tag memory
-+ * @ptr_access: the access to use for the virtual address
-+ * @ptr_size: the number of bytes in the normal memory access
-+ * @tag_access: the access to use for the tag memory
-+ * @probe: true to merely probe, never taking an exception
-+ * @ra: the return address for exception handling
-+ *
-+ * Our tag memory is formatted as a sequence of little-endian nibbles.
-+ * That is, the byte at (addr >> (LOG2_TAG_GRANULE + 1)) contains two
-+ * tags, with the tag at [3:0] for the lower addr and the tag at [7:4]
-+ * for the higher addr.
-+ *
-+ * Here, resolve the physical address from the virtual address, and return
-+ * a pointer to the corresponding tag byte.
-+ *
-+ * If there is no tag storage corresponding to @ptr, return NULL.
-+ *
-+ * If the page is inaccessible for @ptr_access, or has a watchpoint, there are
-+ * three options:
-+ * (1) probe = true, ra = 0 : pure probe -- we return NULL if the page is not
-+ *     accessible, and do not take watchpoint traps. The calling code must
-+ *     handle those cases in the right priority compared to MTE traps.
-+ * (2) probe = false, ra = 0 : probe, no fault expected -- the caller guarantees
-+ *     that the page is going to be accessible. We will take watchpoint traps.
-+ * (3) probe = false, ra != 0 : non-probe -- we will take both memory access
-+ *     traps and watchpoint traps.
-+ * (probe = true, ra != 0 is invalid and will assert.)
-+ */
-+uint8_t *allocation_tag_mem_probe(CPUARMState *env, int ptr_mmu_idx,
-+                                  uint64_t ptr, MMUAccessType ptr_access,
-+                                  int ptr_size, MMUAccessType tag_access,
-+                                  bool probe, uintptr_t ra);
++typedef union GdbCmdVariant {
++    const char *data;
++    uint8_t opcode;
++    unsigned long val_ul;
++    unsigned long long val_ull;
++    struct {
++        GDBThreadIdKind kind;
++        uint32_t pid;
++        uint32_t tid;
++    } thread_id;
++} GdbCmdVariant;
++
++#define gdb_get_cmd_param(p, i)    (&g_array_index(p, GdbCmdVariant, i))
 +
 +/**
-+ * load_tag1 - Load 1 tag (nibble) from byte
-+ * @ptr: The tagged address
-+ * @mem: The tag address (packed, 2 tags in byte)
++ * typedef GdbCmdParseEntry - gdb command parser
++ *
++ * This structure keeps the information necessary to match a gdb command,
++ * parse it (extract its parameters), and select the correct handler for it.
++ *
++ * @cmd: The command to be matched
++ * @cmd_startswith: If true, @cmd is compared using startswith
++ * @schema: Each schema for the command parameter entry consists of 2 chars,
++ * the first char represents the parameter type handling the second char
++ * represents the delimiter for the next parameter.
++ *
++ * Currently supported schema types:
++ * 'l' -> unsigned long (stored in .val_ul)
++ * 'L' -> unsigned long long (stored in .val_ull)
++ * 's' -> string (stored in .data)
++ * 'o' -> single char (stored in .opcode)
++ * 't' -> thread id (stored in .thread_id)
++ * '?' -> skip according to delimiter
++ *
++ * Currently supported delimiters:
++ * '?' -> Stop at any delimiter (",;:=\0")
++ * '0' -> Stop at "\0"
++ * '.' -> Skip 1 char unless reached "\0"
++ * Any other value is treated as the delimiter value itself
++ *
++ * @allow_stop_reply: True iff the gdbstub can respond to this command with a
++ * "stop reply" packet. The list of commands that accept such response is
++ * defined at the GDB Remote Serial Protocol documentation. See:
++ * https://sourceware.org/gdb/onlinedocs/gdb/Stop-Reply-Packets.html#Stop-Reply-Packets.
 + */
-+int load_tag1(uint64_t ptr, uint8_t *mem);
++typedef struct GdbCmdParseEntry {
++    GdbCmdHandler handler;
++    const char *cmd;
++    bool cmd_startswith;
++    const char *schema;
++    bool allow_stop_reply;
++} GdbCmdParseEntry;
 +
 +/**
-+ * store_tag1 - Store 1 tag (nibble) into byte
-+ * @ptr: The tagged address
-+ * @mem: The tag address (packed, 2 tags in byte)
-+ * @tag: The tag to be stored in the nibble
++ * gdb_put_packet() - put string into gdb server's buffer so it is sent
++ * to the client
 + */
-+void store_tag1(uint64_t ptr, uint8_t *mem, int tag);
++int gdb_put_packet(const char *buf);
 +
-+#endif /* TARGET_ARM_MTE_H */
++#endif /* GDBSTUB_COMMANDS_H */
 -- 
 2.34.1
 
