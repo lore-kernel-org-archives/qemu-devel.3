@@ -4,100 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08F92C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 06:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA9D8C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 06:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN4ny-00043a-9h; Fri, 28 Jun 2024 02:09:54 -0400
+	id 1sN4x9-0008JB-07; Fri, 28 Jun 2024 02:19:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <horen.chuang@linux.dev>)
- id 1sN4nt-000435-Dp
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 02:09:49 -0400
-Received: from out-170.mta1.migadu.com ([2001:41d0:203:375::aa])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <horen.chuang@linux.dev>)
- id 1sN4nr-00012v-22
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 02:09:49 -0400
-X-Envelope-To: jonathan.cameron@huawei.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1719554982;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=o/wXQWGav/NessrnFMRHKMQL87wUrpOC9eqQBIItt68=;
- b=ozNmNKLx7zHsfjGoKtTomX6lQR3xt4PbhMXFd8+/mQLV7/CTmKoDozleczUMPTB7/2URCA
- bJoZ4hvC8inLmZOIMrtIoltwu3L3JUXgkNLZaOV5fWa5q8EAkQizAhl00ojXGtM0CK/tnT
- KnuB2zFDjyF2eMZLo9Y6cbO0VB3/Eo0=
-X-Envelope-To: ying.huang@intel.com
-X-Envelope-To: gourry.memverge@gmail.com
-X-Envelope-To: aneesh.kumar@linux.ibm.com
-X-Envelope-To: mhocko@suse.com
-X-Envelope-To: tj@kernel.org
-X-Envelope-To: john@jagalactic.com
-X-Envelope-To: emirakhur@micron.com
-X-Envelope-To: vtavarespetr@micron.com
-X-Envelope-To: ravis.opensrc@micron.com
-X-Envelope-To: apopple@nvidia.com
-X-Envelope-To: sthanneeru@micron.com
-X-Envelope-To: sj@kernel.org
-X-Envelope-To: rafael@kernel.org
-X-Envelope-To: lenb@kernel.org
-X-Envelope-To: akpm@linux-foundation.org
-X-Envelope-To: dave.jiang@intel.com
-X-Envelope-To: dan.j.williams@intel.com
-X-Envelope-To: jonathan.cameron@huawei.com
-X-Envelope-To: horen.chuang@linux.dev
-X-Envelope-To: linux-acpi@vger.kernel.org
-X-Envelope-To: linux-kernel@vger.kernel.org
-X-Envelope-To: linux-mm@kvack.org
-X-Envelope-To: horenc@vt.edu
-X-Envelope-To: horenchuang@bytedance.com
-X-Envelope-To: horenchuang@gmail.com
-X-Envelope-To: linux-cxl@vger.kernel.org
-X-Envelope-To: qemu-devel@nongnu.org
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>
-To: "Jonathan Cameron" <Jonathan.Cameron@Huawei.com>,
- "Huang, Ying" <ying.huang@intel.com>,
- "Gregory Price" <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com,
- mhocko@suse.com, tj@kernel.org, john@jagalactic.com,
- "Eishan Mirakhur" <emirakhur@micron.com>,
- "Vinicius Tavares Petrucci" <vtavarespetr@micron.com>,
- "Ravis OpenSrc" <Ravis.OpenSrc@micron.com>,
- "Alistair Popple" <apopple@nvidia.com>,
- "Srinivasulu Thanneeru" <sthanneeru@micron.com>,
- "SeongJae Park" <sj@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Len Brown <lenb@kernel.org>, Andrew Morton <akpm@linux-foundation.org>,
- Dave Jiang <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>,
- linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org
-Cc: "Ho-Ren (Jack) Chuang" <horenc@vt.edu>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>, linux-cxl@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v2 1/1] memory tier: consolidate the initialization of memory
- tiers
-Date: Fri, 28 Jun 2024 06:09:23 +0000
-Message-Id: <20240628060925.303309-2-horen.chuang@linux.dev>
-In-Reply-To: <20240628060925.303309-1-horen.chuang@linux.dev>
-References: <20240628060925.303309-1-horen.chuang@linux.dev>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN4x7-0008Ie-Mv
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 02:19:21 -0400
+Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN4x5-0001KR-9S
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 02:19:21 -0400
+Received: by mail-lj1-x233.google.com with SMTP id
+ 38308e7fff4ca-2ec002caf3eso3310811fa.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 23:19:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719555557; x=1720160357; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nac15weJy2n70ADaWLadboiJpUDMd0DFCULHo4IUwtY=;
+ b=a1i6grq0E7fWnGmWWsXy0131T/XWbDyIhQKuZn/mXQOfGfQlsOGlw2ZTNGo11cMJ2z
+ ris0N233yDE9iLEkL/0KEZUkpZcdxtm7LUnxY8nPjgY6prIQ7PK/4/Dt+wNgWINcl0Zc
+ V4aKvrbG/tC4oCilsPpYzAlfVpQ6pUm0LroqoIH2JYhO2Uhcd+ZQ0fVGkuke9QhIbBww
+ afJ8NhQvfQsAjcIk06g7Gz1PPY7FC2JM9LTNJZEJZB0JPda/64Cn2lZGLwHFo/iCZBXR
+ RGuYMd+berqWrD+ROoVCTp5yRBjvAJD93QBnoCXIBaAzJv63shUnMxsjvTFQUDZiJ4OC
+ kTQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719555557; x=1720160357;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nac15weJy2n70ADaWLadboiJpUDMd0DFCULHo4IUwtY=;
+ b=bSrfoy+qLOUP4LwO0iJyUX/jtl1gEmB/nq2QJDKkl63XjYiFDYD/qSnftgMOakSy+C
+ OsA5B5RyTyWFkZ+iM27Oh8o0/K/Xsk28K/Bblqo7OJ08+k8kEkcjgrv9p6vrKcVIEcBq
+ eZgN7MM1EAse7flTr9Ad4l5MAwcL+Mtgb6QnxvARepqMVwGEud6VenDv5C5R8JpqLBlV
+ JykGVrGt2kKws7ddi1F3XD8EJfRF9RkTP8ja37qH0Y1b4zgO5YELjA2sVLqQahZexp3m
+ B9/54kKI8geyGHHGScbxAAQtImLAa9fIk88M/jjnrSSXBthe7OJmOrZliosLSt77YGCl
+ TsUQ==
+X-Gm-Message-State: AOJu0YyOkPuCCGEfWD58459GAs2eKUnKmuOewtzD6tbs5aDVgZisHKxd
+ qbAQBb97ikz6BUkCnaesWbRoMunxLosfdlpLshhBH2IeMul1TWNHekvGtA0ci8nv98OLe6dEFSp
+ oWd0=
+X-Google-Smtp-Source: AGHT+IHxI7vYp/W95VNs2Nsrxirhsuqtph4rJzieiWISuhOGqN5Qzcxn5gitUdQB9TCRn9FNj1FmKA==
+X-Received: by 2002:a2e:8242:0:b0:2ec:597f:664 with SMTP id
+ 38308e7fff4ca-2ec5b2c4fa1mr111251491fa.2.1719555556846; 
+ Thu, 27 Jun 2024 23:19:16 -0700 (PDT)
+Received: from [192.168.69.100] (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
+ [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0fbbd4sm1228880f8f.84.2024.06.27.23.19.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Jun 2024 23:19:16 -0700 (PDT)
+Message-ID: <ce55f409-a343-4cdd-8a34-ba8a87b95c9b@linaro.org>
+Date: Fri, 28 Jun 2024 08:19:13 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] target/arm: Always build Aarch64 gdbstub helpers
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
+ Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20240619124903.56898-1-philmd@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240619124903.56898-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::aa;
- envelope-from=horen.chuang@linux.dev; helo=out-170.mta1.migadu.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::233;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,181 +97,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If we simply move the set_node_memory_tier() from memory_tier_init()
-to late_initcall(), it will result in HMAT not registering
-the mt_adistance_algorithm callback function, because
-set_node_memory_tier() is not performed during the memory tiering
-initialization phase, leading to a lack of correct default_dram
-information.
+ping?
 
-Therefore, we introduced a nodemask to pass the information of the
-default DRAM nodes. The reason for not choosing to reuse
-default_dram_type->nodes is that it is not clean enough. So in the end,
-we use a __initdata variable, which is a variable that is released once
-initialization is complete, including both CPU and memory nodes for HMAT
-to iterate through.
-
-Besides, since default_dram_type may be checked/used during the
-initialization process of HMAT and drivers, it is better to keep the
-allocation of default_dram_type in memory_tier_init().
-
-Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
----
- drivers/acpi/numa/hmat.c     |  5 +--
- include/linux/memory-tiers.h |  2 ++
- mm/memory-tiers.c            | 59 +++++++++++++++---------------------
- 3 files changed, 28 insertions(+), 38 deletions(-)
-
-diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-index 2c8ccc91ebe6..a2f9e7a4b479 100644
---- a/drivers/acpi/numa/hmat.c
-+++ b/drivers/acpi/numa/hmat.c
-@@ -940,10 +940,7 @@ static int hmat_set_default_dram_perf(void)
- 	struct memory_target *target;
- 	struct access_coordinate *attrs;
- 
--	if (!default_dram_type)
--		return -EIO;
--
--	for_each_node_mask(nid, default_dram_type->nodes) {
-+	for_each_node_mask(nid, default_dram_nodes) {
- 		pxm = node_to_pxm(nid);
- 		target = find_mem_target(pxm);
- 		if (!target)
-diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
-index 0d70788558f4..fa61ad9c4d75 100644
---- a/include/linux/memory-tiers.h
-+++ b/include/linux/memory-tiers.h
-@@ -38,6 +38,7 @@ struct access_coordinate;
- #ifdef CONFIG_NUMA
- extern bool numa_demotion_enabled;
- extern struct memory_dev_type *default_dram_type;
-+extern nodemask_t default_dram_nodes __initdata;
- struct memory_dev_type *alloc_memory_type(int adistance);
- void put_memory_type(struct memory_dev_type *memtype);
- void init_node_memory_type(int node, struct memory_dev_type *default_type);
-@@ -76,6 +77,7 @@ static inline bool node_is_toptier(int node)
- 
- #define numa_demotion_enabled	false
- #define default_dram_type	NULL
-+#define default_dram_nodes NODE_MASK_NONE
- /*
-  * CONFIG_NUMA implementation returns non NULL error.
-  */
-diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-index 6632102bd5c9..a19a90c3ad36 100644
---- a/mm/memory-tiers.c
-+++ b/mm/memory-tiers.c
-@@ -43,6 +43,7 @@ static LIST_HEAD(memory_tiers);
- static LIST_HEAD(default_memory_types);
- static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
- struct memory_dev_type *default_dram_type;
-+nodemask_t default_dram_nodes __initdata = NODE_MASK_NONE;
- 
- static const struct bus_type memory_tier_subsys = {
- 	.name = "memory_tiering",
-@@ -671,28 +672,38 @@ EXPORT_SYMBOL_GPL(mt_put_memory_types);
- 
- /*
-  * This is invoked via `late_initcall()` to initialize memory tiers for
-- * CPU-less memory nodes after driver initialization, which is
-- * expected to provide `adistance` algorithms.
-+ * memory nodes, both with and without CPUs. After the initialization of
-+ * firmware and devices, adistance algorithms are expected to be provided.
-  */
- static int __init memory_tier_late_init(void)
- {
- 	int nid;
-+	struct memory_tier *memtier;
- 
-+	get_online_mems();
- 	guard(mutex)(&memory_tier_lock);
-+	/*
-+	 * Look at all the existing and uninitialized N_MEMORY nodes and
-+	 * add them to default memory tier or to a tier if we already have
-+	 * memory types assigned.
-+	 */
- 	for_each_node_state(nid, N_MEMORY) {
- 		/*
--		 * Some device drivers may have initialized memory tiers
--		 * between `memory_tier_init()` and `memory_tier_late_init()`,
--		 * potentially bringing online memory nodes and
--		 * configuring memory tiers. Exclude them here.
-+		 * Some device drivers may have initialized
-+		 * memory tiers, potentially bringing memory nodes
-+		 * online and configuring memory tiers.
-+		 * Exclude them here.
- 		 */
- 		if (node_memory_types[nid].memtype)
- 			continue;
- 
--		set_node_memory_tier(nid);
-+		memtier = set_node_memory_tier(nid);
-+		if (IS_ERR(memtier))
-+			/* Continue with memtiers we are able to setup. */
-+			break;
- 	}
--
- 	establish_demotion_targets();
-+	put_online_mems();
- 
- 	return 0;
- }
-@@ -875,8 +886,7 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
- 
- static int __init memory_tier_init(void)
- {
--	int ret, node;
--	struct memory_tier *memtier;
-+	int ret;
- 
- 	ret = subsys_virtual_register(&memory_tier_subsys, NULL);
- 	if (ret)
-@@ -887,7 +897,8 @@ static int __init memory_tier_init(void)
- 				GFP_KERNEL);
- 	WARN_ON(!node_demotion);
- #endif
--	mutex_lock(&memory_tier_lock);
-+
-+	guard(mutex)(&memory_tier_lock);
- 	/*
- 	 * For now we can have 4 faster memory tiers with smaller adistance
- 	 * than default DRAM tier.
-@@ -897,29 +908,9 @@ static int __init memory_tier_init(void)
- 	if (IS_ERR(default_dram_type))
- 		panic("%s() failed to allocate default DRAM tier\n", __func__);
- 
--	/*
--	 * Look at all the existing N_MEMORY nodes and add them to
--	 * default memory tier or to a tier if we already have memory
--	 * types assigned.
--	 */
--	for_each_node_state(node, N_MEMORY) {
--		if (!node_state(node, N_CPU))
--			/*
--			 * Defer memory tier initialization on
--			 * CPUless numa nodes. These will be initialized
--			 * after firmware and devices are initialized.
--			 */
--			continue;
--
--		memtier = set_node_memory_tier(node);
--		if (IS_ERR(memtier))
--			/*
--			 * Continue with memtiers we are able to setup
--			 */
--			break;
--	}
--	establish_demotion_targets();
--	mutex_unlock(&memory_tier_lock);
-+	/* Record nodes with memory and CPU to set default DRAM performance. */
-+	nodes_and(default_dram_nodes, node_states[N_MEMORY],
-+		  node_states[N_CPU]);
- 
- 	hotplug_memory_notifier(memtier_hotplug_callback, MEMTIER_HOTPLUG_PRI);
- 	return 0;
--- 
-Ho-Ren (Jack) Chuang
+On 19/6/24 14:49, Philippe Mathieu-Daudé wrote:
+> Merge gdbstub64.c in gdbstub.c and remove uses of
+> target specific TARGET_AARCH64 definition.
+> Small step toward single ARM/Aarch64 binary.
+> 
+> Philippe Mathieu-Daudé (2):
+>    target/arm: Merge gdbstub64.c within gdbstub.c
+>    target/arm: Always build Aarch64 gdbstub helpers
+> 
+>   target/arm/cpu.h       |   8 +-
+>   target/arm/internals.h |   2 -
+>   target/arm/gdbstub.c   | 363 +++++++++++++++++++++++++++++++++++++-
+>   target/arm/gdbstub64.c | 383 -----------------------------------------
+>   target/arm/meson.build |   1 -
+>   5 files changed, 364 insertions(+), 393 deletions(-)
+>   delete mode 100644 target/arm/gdbstub64.c
+> 
 
 
