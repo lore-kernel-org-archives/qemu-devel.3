@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE479C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C6BC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:44:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNAx8-0005JU-DT; Fri, 28 Jun 2024 08:43:46 -0400
+	id 1sNAx8-0005Iu-D0; Fri, 28 Jun 2024 08:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNAwa-0004qb-0k
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:13 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1sNAwh-0004tW-OJ
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:24 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNAwX-0005i0-Cf
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:10 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-57cc1c00ba6so804009a12.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 05:43:08 -0700 (PDT)
+ id 1sNAwZ-0005jD-Oq
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:14 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5854ac817afso716466a12.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 05:43:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719578587; x=1720183387; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719578589; x=1720183389; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3DQ61RwLoSVOVHG6QMt3R+zEIysd/qF4AyFLX7PuacQ=;
- b=JOJ3zBO9t2biOzQayGUbVnjUF+veRAHqJ8NYy5Yh64rB4MKzXV3wyly5bNMx508sVp
- RcUzjbPrE47ledquJk+BowuEeSRBtWs2FJg/XYmg8/oSFmyGT30RrvkYo+1PaE/OgXC0
- zoDnJ8h+YTjcBhjDFbqYxVlVHp5o+WfU5dbG0Yx5SxZlEw03YADYpIi21y53ntNgcZCP
- 3iGr30T9NkDY+G/QjrbQb9ivJXfZFNIFESurlxasMp8zoFPDEw98wRAGKLKSX/0jpe2V
- FBZne0EDR6S2EF703izzCO7o1d2vYoAyf/MErTNMpHqFhE1u2J7JULwV9zgPihiUqqcy
- xTRA==
+ bh=MXuTP0GCGD1U2EC0jCbVCWmWTWrrWZHqHe3306YwCaE=;
+ b=NLhOCkB2EwBfJWKws9yOnq3qir34Ojujpgjc3ab33esJcobTb6HC+x71VgCSZvwzMW
+ fa4nMw9t+qhiDvonVYJh1NpNhGmYefj0KPVoPHJxQyC9YFxKK8v1arwemADznvQ93OGY
+ mKN5O0JmeXRxii+rwZhp/dOWgWUkK5H47SHaACHuesagNiVyj/bJycSF6jWoFEHKaRD2
+ NtRnEVEszFjVj7Yju05KACho4yaI0XzlTdLA8D/yZ3vXe9FYYPRCdyxa5ksobfIY4cdg
+ 0suhl2F5BBDof4WC8aU8nn1mIvlBQGpOAkyO+xkdKUa6az1EZuk31QsHHRSpIwJqIPyl
+ 1upw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719578587; x=1720183387;
+ d=1e100.net; s=20230601; t=1719578589; x=1720183389;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3DQ61RwLoSVOVHG6QMt3R+zEIysd/qF4AyFLX7PuacQ=;
- b=j6DPS38J0QA5gJzVLNU7qCPf0+CVV84hpr0eY/cKZYj7hyoocDzj0gdNkm748vpJwb
- 3CPyFkz6sdbT1hLhGca5Esg5D6QOtB4X7EdbN7UqQbCuaTPnGkFFEIpTi+KnvNP8gfwN
- mGO3qiw6GGdav9H3sn2uiBiz92UWGrRtiE9slDzhkzs1lDHmpcAXu4p3Dke7DE0Qf9hk
- V+QG8fOlAAs61j5YKt5V9ip4ZVZwnvlsmDkv4SZ34EjgRA6c2EE1/LXSzA6JXSp3QzGc
- kFM40LeM7yTTwG7tjkrbK0SJsGf809fm5U9PbFHkhBtzPwE5orwJAN8rAHBMTtE8f5jL
- ZNOQ==
-X-Gm-Message-State: AOJu0Yw65POfzee4V4R4QltEFJx6DTxx896102NfDTnobyN2+2j69FUB
- MFEJxWGEfcT3eDO9GGS/kRXueaPq4ULsWLyByarGFjDmE+3J20DeVM4RzhDSUdQ=
-X-Google-Smtp-Source: AGHT+IE/8csk/xO/MRYnaLNzQmnsiJuX+9poWWVIPomu9QcaVkLrD85zr0uNiuFfwH3O2tH660bY8Q==
-X-Received: by 2002:a17:907:268e:b0:a72:ae79:8350 with SMTP id
- a640c23a62f3a-a72ae798498mr127887066b.29.1719578586413; 
- Fri, 28 Jun 2024 05:43:06 -0700 (PDT)
+ bh=MXuTP0GCGD1U2EC0jCbVCWmWTWrrWZHqHe3306YwCaE=;
+ b=LBnexLpYpESCnbNvvJGK8krjardjKHz6ckgEZP740MdDuL4HeXL9UN6rdtyvQHRuIg
+ z3z61Chsx7kd0pK/HB7NFMVwpsmXosJMJBVBCk7KBzzmEDVa0Tvq0dpoR1GzTAXe34n5
+ jTI6+kQqQ1wRphuiI/5qKJzMMQVrkbqlXs8pxRcPmxKph4wTx3FOqBjxiJEvQmtVcqYS
+ WnmpT+o27eMM26gqcrpuhyELdsDrB4AmTfTY50lZMpvJC4Nxox1pK9T9isldMq6qrFUq
+ OXlsIAHoHyxi8S7CmoDhDOkDIQ1M4pMuMkBTz9vA8tj/2znTZxNd4kOu/7TpbGj6ybE4
+ SuWw==
+X-Gm-Message-State: AOJu0YyPqz1HQAjqeSz6dFPBALafhzWrqO09vw2K+DDE9ftEedvkkZaz
+ ll2sut73U0S8y7qIDTMXSlg3d+ApQBRonzFe7QqOWGJwZuTqed2+9j+vssz0CFM=
+X-Google-Smtp-Source: AGHT+IFHf0vSbzs8VZ3LvmyqdlEDv7/sSys89Do03bGPWfowgmT1MGAW+NVV+Onr6HnELLwmC6+l4w==
+X-Received: by 2002:a50:d503:0:b0:57d:4d7:4c06 with SMTP id
+ 4fb4d7f45d1cf-57d4a2815b1mr13889247a12.13.1719578589284; 
+ Fri, 28 Jun 2024 05:43:09 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aaf6295csm76398266b.72.2024.06.28.05.43.01
+ 4fb4d7f45d1cf-58615038a86sm978580a12.95.2024.06.28.05.43.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 28 Jun 2024 05:43:03 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E64D55FA37;
- Fri, 28 Jun 2024 13:42:59 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 1EFFE5FA39;
+ Fri, 28 Jun 2024 13:43:00 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
@@ -75,17 +75,17 @@ Cc: David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 10/23] plugins/lockstep: make mixed-mode safe
-Date: Fri, 28 Jun 2024 13:42:45 +0100
-Message-Id: <20240628124258.832466-11-alex.bennee@linaro.org>
+Subject: [PATCH 12/23] plugins/lockstep: clean-up output
+Date: Fri, 28 Jun 2024 13:42:47 +0100
+Message-Id: <20240628124258.832466-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240628124258.832466-1-alex.bennee@linaro.org>
 References: <20240628124258.832466-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,37 +108,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ExecState is shared across the socket and if we want to compare
-say 64 bit and 32 bit binaries we need the two to use the same sizes
-for things.
+We were repeating information which wasn't super clear. As we already
+will have dumped the last failing PC just note the divergence and dump
+the previous instruction log.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- contrib/plugins/lockstep.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ contrib/plugins/lockstep.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
-index 111ec3fa27..761bcdf363 100644
+index 353bf12dfb..5b7dfc9c06 100644
 --- a/contrib/plugins/lockstep.c
 +++ b/contrib/plugins/lockstep.c
-@@ -57,7 +57,7 @@ typedef struct {
- /* The execution state we compare */
- typedef struct {
-     uint64_t pc;
--    unsigned long insn_count;
-+    uint64_t insn_count;
- } ExecState;
+@@ -135,10 +135,13 @@ static void report_divergance(ExecState *us, ExecState *them)
  
- typedef struct {
-@@ -148,7 +148,7 @@ static void report_divergance(ExecState *us, ExecState *them)
+     /* Output short log entry of going out of sync... */
+     if (verbose || divrec.distance == 1 || diverged) {
+-        g_string_printf(out,
+-                        "@ 0x%016" PRIx64 " vs 0x%016" PRIx64
++        g_string_printf(out, "@ "
++                        "0x%016" PRIx64 " (%" PRId64 ") vs "
++                        "0x%016" PRIx64 " (%" PRId64 ")"
+                         " (%d/%d since last)\n",
+-                        us->pc, them->pc, g_slist_length(divergence_log),
++                        us->pc, us->insn_count,
++                        them->pc, them->insn_count,
++                        g_slist_length(divergence_log),
+                         divrec.distance);
+         qemu_plugin_outs(out->str);
+     }
+@@ -147,10 +150,7 @@ static void report_divergance(ExecState *us, ExecState *them)
+         int i;
+         GSList *entry;
  
-         g_string_printf(out,
-                         "Δ insn_count @ 0x%016" PRIx64
--                        " (%ld) vs 0x%016" PRIx64 " (%ld)\n",
-+                        " (%"PRId64") vs 0x%016" PRIx64 " (%"PRId64")\n",
-                         us->pc, us->insn_count, them->pc, them->insn_count);
+-        g_string_printf(out,
+-                        "Δ insn_count @ 0x%016" PRIx64
+-                        " (%"PRId64") vs 0x%016" PRIx64 " (%"PRId64")\n",
+-                        us->pc, us->insn_count, them->pc, them->insn_count);
++        g_string_printf(out, "Δ too high, we have diverged, previous insns\n");
  
          for (entry = log, i = 0;
+              g_slist_next(entry) && i < 5;
+@@ -163,7 +163,7 @@ static void report_divergance(ExecState *us, ExecState *them)
+                                    prev->insn_count);
+         }
+         qemu_plugin_outs(out->str);
+-        qemu_plugin_outs("too much divergence... giving up.");
++        qemu_plugin_outs("giving up\n");
+         qemu_plugin_uninstall(our_id, plugin_cleanup);
+     }
+ }
 -- 
 2.39.2
 
