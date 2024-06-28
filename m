@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6759C41513
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 17:30:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AC0C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 17:30:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNFPi-0005fQ-0X; Fri, 28 Jun 2024 13:29:34 -0400
+	id 1sNFQA-0006OL-Px; Fri, 28 Jun 2024 13:30:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sNFPd-0005e3-Qx
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:29:30 -0400
+ id 1sNFQ9-0006MD-2l
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:30:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sNFPc-0002CF-6W
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:29:29 -0400
+ id 1sNFQ3-0002Gl-Lq
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:30:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719595766;
+ s=mimecast20190719; t=1719595795;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version: content-type:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dTQLDy7fzv4IlAQ52PKIL6tgs655OTYs6Ror3JKC4ro=;
- b=WbPUcB/9DL3ZQ8XZEx6Vfj5Bdu7RkPMkfII2mQ5Mo6UxsWtASF3L7jCj50lZGDaVPsorYt
- D256zvfRLUEDvYhWODLLyGkDrR+tpf4KoE/F9gGFMCi49Au7Qz135GYiHAeIg1RRFuEFn8
- iPe0pHu59MQkhz286HYwYDkFYNUqtg4=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qo4iq+TZlgWKFhoxHuIKDhYlvc+TuqqUn66pvomGcWk=;
+ b=i2WAKshHKQAiNKUkLPdy55mv7LKHQ42XEcZD/yjIRJChCwYt5KZMlhOlU5NNHRNozasiTA
+ qvSYp84fQ7CaYM2rS0dBJGoG/Ns3Oru3T6Xj4sJXWEJ1YuNSAKJKH9ADNpjem7KZL7X1i/
+ KbZG8+wtanchovDiarx8dneq6q8bILM=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-346-IJ4nIiYdOfWsz3TLFR41hg-1; Fri, 28 Jun 2024 13:29:22 -0400
-X-MC-Unique: IJ4nIiYdOfWsz3TLFR41hg-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-57d22ea3e71so606634a12.2
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 10:29:22 -0700 (PDT)
+ us-mta-82-LqKosx9PPFyq0fkDn0gGkw-1; Fri, 28 Jun 2024 13:29:53 -0400
+X-MC-Unique: LqKosx9PPFyq0fkDn0gGkw-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-57a524f1f7eso587748a12.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 10:29:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719595761; x=1720200561;
+ d=1e100.net; s=20230601; t=1719595792; x=1720200592;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dTQLDy7fzv4IlAQ52PKIL6tgs655OTYs6Ror3JKC4ro=;
- b=qAyLtziqWHijKb2779bI/Vk1t462vj4HZ1iltkR8ZsxCaK8QJsNHThqa1IUOrJgDnv
- P37d+IAZ+s5vOQ6aZQdBkXkXA6LczILt2y91I+m2r6F/QWuvBZDog4PXoGJXMd+ClJvB
- FmB09s6VHQKJbrHIRR6ed8Zzwngzd+3lOSnmpCsdLsXkRDu2JYZ4OnuGP7ux3tes+uOf
- HImhBUdi6i0BAKpspmUXK1pdbqbIMLP7U6Zmg1u51PV0AgNoPcyIootSNCKalU9i6d+u
- EYR+FFDqcAj9FoZJTYi8UwaCcmLnXiyViMnXUrhJSev6fei4xj1dG2V4eTBBt4a98Mvs
- lnHQ==
-X-Gm-Message-State: AOJu0YxFtIrANgG55110FPM2zJWAorQpKFAp/BZ/yo2umijlXltv+fz8
- 466XzCPs3xnE1TRywvNhnfLURQ+6yrbywYSpoOV8sx4qVyL3QVgFqfKCL41JAddNvi9vyyk2eK7
- JOqlca6rOBCfFPzx5Fl8kA+yAZXtngzugWofPRXGypVbAOgyqOI2dgD0dVsjM1T7nY9CFl/ulJO
- 4LRMagPr+0SZirm7EIs09pCAUx63zHt4X26/rO
-X-Received: by 2002:a17:907:a649:b0:a72:8135:2d4f with SMTP id
- a640c23a62f3a-a7281352e3cmr873131466b.48.1719595761469; 
- Fri, 28 Jun 2024 10:29:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJxjjt9duRZgzcJ9F/23lxvLZauhMr7tyELJiQ742ajIcajjFwLUagkTIWED2gUoTH57P5fg==
-X-Received: by 2002:a17:907:a649:b0:a72:8135:2d4f with SMTP id
- a640c23a62f3a-a7281352e3cmr873130266b.48.1719595761141; 
- Fri, 28 Jun 2024 10:29:21 -0700 (PDT)
+ bh=qo4iq+TZlgWKFhoxHuIKDhYlvc+TuqqUn66pvomGcWk=;
+ b=psCeIX7L67zCo6lqG56x4hSehpDNVLm7BYfjDhUT1rjHCPftK4NZcUMKIeELl9A+ZM
+ af07viAZUGgpBrhlxv1ha4GmHNKHZUoJjBDUSzO8M4Kvo0DYFVaH0oiuoaEhBdsVoeNO
+ DR6ieT7NK+jMSVRcA4sfNZb0ysnm2hidbQisZUFPjz1TeVQq+ZiVefSl5Y79xllpxwLt
+ gGgATVX2roo6iKoy552SgMwAOkQnV7VCt0bbZ4Fj3qNZ6FV80ml3B8wC6/wgoB/p1h4J
+ aFPqJjWhEWy3aSuo9r2OxrUtx5AKJdWKOY700xQV/AXQ+jX9N66AIXEbuV/18BAMDs7J
+ U6lQ==
+X-Gm-Message-State: AOJu0YzZiZi3YCi5+HAhRwi8sQ15KhyPbMmz2MxSLGBNaQ2uzFYe/Y96
+ 9Sf4pkm/D6D8rlG5xI3gP+4klp6XHdajJ5hrDpyUU8BitVKQCkAi/qWf+p9ut62HlrCTD7cF5XO
+ znY1DIAJ53bgPw6N7h7tNgpomcLf6W8t0K8+/O3xtZqY1+Zmxd67SYVLD/yn6H2QqBKqCrpSTE6
+ 4DPjj24Zj0CQsLsqRhir+OZzf+omBvDKTEnbTE
+X-Received: by 2002:a05:6402:358c:b0:587:2e28:deb6 with SMTP id
+ 4fb4d7f45d1cf-5872e28e17fmr279896a12.41.1719595791705; 
+ Fri, 28 Jun 2024 10:29:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENIIbfMiXwLufWcsM3nBI5wJswICyLXb0ZJtVHbOnv1GDCYh7+e+7ZP/GWB26agnJBCAILAw==
+X-Received: by 2002:a05:6402:358c:b0:587:2e28:deb6 with SMTP id
+ 4fb4d7f45d1cf-5872e28e17fmr279880a12.41.1719595791302; 
+ Fri, 28 Jun 2024 10:29:51 -0700 (PDT)
 Received: from avogadro.local ([151.62.196.71])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aaf18486sm96789466b.8.2024.06.28.10.29.19
+ 4fb4d7f45d1cf-5861324f069sm1305553a12.33.2024.06.28.10.29.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Jun 2024 10:29:19 -0700 (PDT)
+ Fri, 28 Jun 2024 10:29:50 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Roman Kiryanov <rkir@google.com>
-Subject: [PULL 11/23] exec: avoid using C++ keywords in function parameters
-Date: Fri, 28 Jun 2024 19:28:43 +0200
-Message-ID: <20240628172855.1147598-12-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 23/23] target/i386/sev: Fix printf formats
+Date: Fri, 28 Jun 2024 19:28:55 +0200
+Message-ID: <20240628172855.1147598-24-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240628172855.1147598-1-pbonzini@redhat.com>
 References: <20240628172855.1147598-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -102,39 +104,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Roman Kiryanov <rkir@google.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-to use the QEMU headers with a C++ compiler.
+hwaddr uses HWADDR_PRIx, sizeof yields size_t so uses %zu,
+and gsize uses G_GSIZE_FORMAT.
 
-Signed-off-by: Roman Kiryanov <rkir@google.com>
-Link: https://lore.kernel.org/r/20240618224553.878869-1-rkir@google.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20240626194950.1725800-4-richard.henderson@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/exec/memory.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/i386/sev.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 0903513d132..154626f9ad2 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -925,7 +925,7 @@ struct MemoryListener {
-      * the current transaction.
-      */
-     void (*log_start)(MemoryListener *listener, MemoryRegionSection *section,
--                      int old, int new);
-+                      int old_val, int new_val);
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 0ffdf8952c3..3ab8b3c28b7 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -934,8 +934,9 @@ sev_snp_launch_update(SevSnpGuestState *sev_snp_guest,
  
-     /**
-      * @log_stop:
-@@ -944,7 +944,7 @@ struct MemoryListener {
-      * the current transaction.
-      */
-     void (*log_stop)(MemoryListener *listener, MemoryRegionSection *section,
--                     int old, int new);
-+                     int old_val, int new_val);
+ out:
+     if (!ret && update.gfn_start << TARGET_PAGE_BITS != data->gpa + data->len) {
+-        error_report("SEV-SNP: expected update of GPA range %lx-%lx,"
+-                     "got GPA range %lx-%llx",
++        error_report("SEV-SNP: expected update of GPA range %"
++                     HWADDR_PRIx "-%" HWADDR_PRIx ","
++                     "got GPA range %" HWADDR_PRIx "-%llx",
+                      data->gpa, data->gpa + data->len, data->gpa,
+                      update.gfn_start << TARGET_PAGE_BITS);
+         ret = -EIO;
+@@ -2148,7 +2149,8 @@ sev_snp_guest_set_guest_visible_workarounds(Object *obj, const char *value,
+     }
  
-     /**
-      * @log_sync:
+     if (len != sizeof(start->gosvw)) {
+-        error_setg(errp, "parameter length of %lu exceeds max of %lu",
++        error_setg(errp, "parameter length of %" G_GSIZE_FORMAT
++                   " exceeds max of %zu",
+                    len, sizeof(start->gosvw));
+         return;
+     }
+@@ -2185,7 +2187,8 @@ sev_snp_guest_set_id_block(Object *obj, const char *value, Error **errp)
+     }
+ 
+     if (len != KVM_SEV_SNP_ID_BLOCK_SIZE) {
+-        error_setg(errp, "parameter length of %lu not equal to %u",
++        error_setg(errp, "parameter length of %" G_GSIZE_FORMAT
++                   " not equal to %u",
+                    len, KVM_SEV_SNP_ID_BLOCK_SIZE);
+         return;
+     }
+@@ -2223,7 +2226,8 @@ sev_snp_guest_set_id_auth(Object *obj, const char *value, Error **errp)
+     }
+ 
+     if (len > KVM_SEV_SNP_ID_AUTH_SIZE) {
+-        error_setg(errp, "parameter length:ID_AUTH %lu exceeds max of %u",
++        error_setg(errp, "parameter length:ID_AUTH %" G_GSIZE_FORMAT
++                   " exceeds max of %u",
+                    len, KVM_SEV_SNP_ID_AUTH_SIZE);
+         return;
+     }
+@@ -2291,7 +2295,8 @@ sev_snp_guest_set_host_data(Object *obj, const char *value, Error **errp)
+     }
+ 
+     if (len != sizeof(finish->host_data)) {
+-        error_setg(errp, "parameter length of %lu not equal to %lu",
++        error_setg(errp, "parameter length of %" G_GSIZE_FORMAT
++                   " not equal to %zu",
+                    len, sizeof(finish->host_data));
+         return;
+     }
 -- 
 2.45.2
 
