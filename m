@@ -4,60 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCF0C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 11:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC395C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 11:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN9ly-0001vz-Kn; Fri, 28 Jun 2024 07:28:10 -0400
+	id 1sNACX-0008Qn-L9; Fri, 28 Jun 2024 07:55:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sN9lw-0001vT-Kn
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 07:28:08 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sNACT-0008LM-EI
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 07:55:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sN9ls-0000tg-Le
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 07:28:08 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sNACR-0001I8-MO
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 07:55:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719574083;
+ s=mimecast20190719; t=1719575730;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=N5XBEASOX2lBEMucV6etf6OdUwdUen5IBmNa7sQaWRA=;
- b=OeQwBzX/n8rId9BfzMi8F43W9cfI6qAUy6CniA6sgbnjuQkOYQyqWUM1GIAuE40fctUo6l
- OhgtYjE1X+7uws+bx11nDlV+8vInWE/sEbsmPFjEOXMGyNKY3sHPmHRy8h04WxWs5SJoj/
- hLyTGjDbX6pQBEjCxbVqry5t9nKOYnI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-249-nCj9Ngj2MN-KIBgAZYwouA-1; Fri,
- 28 Jun 2024 07:28:01 -0400
-X-MC-Unique: nCj9Ngj2MN-KIBgAZYwouA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AEE4F196CDE1; Fri, 28 Jun 2024 11:27:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0E95219560B2; Fri, 28 Jun 2024 11:27:58 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 08E4621E5A5E; Fri, 28 Jun 2024 13:27:56 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: jsnow@redhat.com, peter.maydell@linaro.org, michael.roth@amd.com,
- qemu-stable@nongnu.org
-Subject: [PATCH] sphinx/qapidoc: Fix to generate doc for explicit,
- unboxed arguments
-Date: Fri, 28 Jun 2024 13:27:56 +0200
-Message-ID: <20240628112756.794237-1-armbru@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MIdgxHEBhDpm1AmrQ07hyskJ/f/Dw+Jr6uTrIO5O4XI=;
+ b=BsCmVsgS5j2obTyIqtgc05P7cg/cVyqJ5/UI3XwExRJ8LqepcLT9UtxgVE1Bbdds7l5h/H
+ 9xtEmoR+gi5x5O76xKnOIkVJ1IxN8Y1Zw2F0LfWCu6f9dF6gGso0VrcIwNv2a9sSiAWRSo
+ T1CrOXOMs9BJXt+NtLqew1276LOQWBI=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-225-mbP0IZMRNEiVVqlKJ1Kl7Q-1; Fri, 28 Jun 2024 07:55:28 -0400
+X-MC-Unique: mbP0IZMRNEiVVqlKJ1Kl7Q-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52d58307b43so665816e87.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 04:55:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719575727; x=1720180527;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MIdgxHEBhDpm1AmrQ07hyskJ/f/Dw+Jr6uTrIO5O4XI=;
+ b=sEZKnLyddvmTzY73On1AXl4SdAgpDGIBjiNFFafRpA0+B88lHI03PX3Vj3qctqeyn0
+ gvyS39wmnewYpYTpuf+EqA3gjXtChty4/qkntYKE5bU5Wu3xUvCZxPQy4z8O9hK/0fPR
+ fTc/2o6TpYyMmNl/cMluaMm9k5qSw7BaS1Tek8Nw/kx/gA8j/FQi60zG++d7b4vOgzSn
+ Jhvqvl2ySQq2LlaIx6hbQRQfxYyfOoFpKnA2N1h6EJ9XXL2Y4ECmyWXp5msr9H9Z0/ew
+ 29sWBWVRlrOCePAxcVjPef0oQubwLTM+l1pj0dI2gpB9sUjnzUd2jbkjHjTM1k7IxhUb
+ tJ0A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXabyZTwo+vlLHTzGzFXDDBmWe7xnDPciRoXJos2kXmFUb0JkOc8+Ozoc+NJ4YT2y+n9R4gqZV2CBiS8ICseAXK3DxlPPU=
+X-Gm-Message-State: AOJu0Yw804GRp1mXOu0objut2lA+lj7a/k+o9hs73gKowHZ6OrEzglM1
+ 01y7HEETWANsYZIG6anr5IE8kDv6Pp6kNsFSgxKD3LngHdg5EexpmiZCpKB5Aqi4gHkKrHg0liY
+ 14p+84yVUiWZLwSmUsUbNr5uALI4H3IIve461kfA3YnTSNHTikCim
+X-Received: by 2002:ac2:58c3:0:b0:52c:ec68:6165 with SMTP id
+ 2adb3069b0e04-52cec6861e8mr8380588e87.33.1719575727335; 
+ Fri, 28 Jun 2024 04:55:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFR4g586qIFOLmfhPhJ17znzEeUJZNpf05zPTnVrdOudzmojqCKmDvtnj2d7cZUyaUjvC6Rig==
+X-Received: by 2002:ac2:58c3:0:b0:52c:ec68:6165 with SMTP id
+ 2adb3069b0e04-52cec6861e8mr8380561e87.33.1719575726892; 
+ Fri, 28 Jun 2024 04:55:26 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0da004sm2094482f8f.45.2024.06.28.04.55.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Jun 2024 04:55:26 -0700 (PDT)
+Date: Fri, 28 Jun 2024 13:55:25 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
+ <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
+ <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v3 07/11] hw/pci-bridge: Add acpi_uid property to CXL PXB
+Message-ID: <20240628135525.0c131846@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240627144614.00004358@Huawei.com>
+References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
+ <20240620160324.109058-8-Jonathan.Cameron@huawei.com>
+ <20240627152758.5eafb402@imammedo.users.ipa.redhat.com>
+ <20240627144614.00004358@Huawei.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -81,150 +112,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a command's arguments are specified as an explicit type T,
-generated documentation points to the members of T.
+On Thu, 27 Jun 2024 14:46:14 +0100
+Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
 
-Example:
+> On Thu, 27 Jun 2024 15:27:58 +0200
+> Igor Mammedov <imammedo@redhat.com> wrote:
+> 
+> > On Thu, 20 Jun 2024 17:03:15 +0100
+> > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+> >   
+> > > This allows the ACPI SRAT Generic Port Affinity Structure
+> > > creation to be independent of PCI internals. Note that
+> > > the UID is currently the PCI bus number.
+> > > 
+> > > Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > > 
+> > > ---
+> > > v3: New patch
+> > > ---
+> > >  hw/pci-bridge/pci_expander_bridge.c | 17 ++++++++++++++++-
+> > >  1 file changed, 16 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+> > > index 0411ad31ea..92d39b917a 100644
+> > > --- a/hw/pci-bridge/pci_expander_bridge.c
+> > > +++ b/hw/pci-bridge/pci_expander_bridge.c
+> > > @@ -93,6 +93,21 @@ static void pxb_bus_class_init(ObjectClass *class, void *data)
+> > >      pbc->numa_node = pxb_bus_numa_node;
+> > >  }
+> > >  
+> > > +static void prop_pxb_cxl_uid_get(Object *obj, Visitor *v, const char *name,
+> > > +                             void *opaque, Error **errp)
+> > > +{
+> > > +    uint32_t uid = pci_bus_num(PCI_BUS(obj));
+> > > +
+> > > +    visit_type_uint32(v, name, &uid, errp);
+> > > +}
+> > > +
+> > > +static void pxb_cxl_bus_class_init(ObjectClass *class, void *data)
+> > > +{
+> > > +    pxb_bus_class_init(class, data);
+> > > +    object_class_property_add(class, "acpi_uid", "uint32",
+> > > +                              prop_pxb_cxl_uid_get, NULL, NULL, NULL);
+> > > +}
+> > > +
+> > >  static const TypeInfo pxb_bus_info = {
+> > >      .name          = TYPE_PXB_BUS,
+> > >      .parent        = TYPE_PCI_BUS,
+> > > @@ -111,7 +126,7 @@ static const TypeInfo pxb_cxl_bus_info = {
+> > >      .name          = TYPE_PXB_CXL_BUS,
+> > >      .parent        = TYPE_CXL_BUS,
+> > >      .instance_size = sizeof(PXBBus),
+> > > -    .class_init    = pxb_bus_class_init,
+> > > +    .class_init    = pxb_cxl_bus_class_init,    
+> > 
+> > why it's CXL only, doesn't the same UID rules apply to other PCI buses?  
+> 
+> In principle, yes.  My nervousness is that we can only test anything
+> using this infrastructure today with CXL root bridges.
+> 
+> So I was thinking we should keep it limited and broaden the scope
+> if anyone ever cares.  I don't mind broadening it from the start though.
 
-    ##
-    # @announce-self:
-    #
-    # Trigger generation of broadcast RARP frames to update network
-    [...]
-    ##
-    { 'command': 'announce-self', 'boxed': true,
-      'data' : 'AnnounceParameters'}
-
-generates
-
-    "announce-self" (Command)
-    -------------------------
-
-    Trigger generation of broadcast RARP frames to update network
-    [...]
-
-    Arguments
-    ~~~~~~~~~
-
-    The members of "AnnounceParameters"
-
-Except when the command takes its arguments unboxed , i.e. it doesn't
-have 'boxed': true, we generate *nothing*.  A few commands have a
-reference in their doc comment to compensate, but most don't.
-
-Example:
-
-    ##
-    # @blockdev-snapshot-sync:
-    #
-    # Takes a synchronous snapshot of a block device.
-    #
-    # For the arguments, see the documentation of BlockdevSnapshotSync.
-    [...]
-    ##
-    { 'command': 'blockdev-snapshot-sync',
-      'data': 'BlockdevSnapshotSync',
-      'allow-preconfig': true }
-
-generates
-
-    "blockdev-snapshot-sync" (Command)
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    Takes a synchronous snapshot of a block device.
-
-    For the arguments, see the documentation of BlockdevSnapshotSync.
-    [...]
-
-Same for event data.
-
-Fix qapidoc.py to generate the reference regardless of boxing.  Delete
-now redundant references in the doc comments.
-
-Fixes: 4078ee5469e5 (docs/sphinx: Add new qapi-doc Sphinx extension)
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- docs/sphinx/qapidoc.py | 12 +++++-------
- qapi/block-core.json   |  7 -------
- 2 files changed, 5 insertions(+), 14 deletions(-)
-
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index f270b494f0..aacb2cd721 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -219,15 +219,15 @@ def _nodes_for_enum_values(self, doc):
-         section += dlnode
-         return [section]
+Then I'd use it everywhere and cleanup ACPI code to use it as well
+just to be consistent.
  
--    def _nodes_for_arguments(self, doc, boxed_arg_type):
-+    def _nodes_for_arguments(self, doc, arg_type):
-         """Return list of doctree nodes for the arguments section"""
--        if boxed_arg_type:
-+        if arg_type and not arg_type.is_implicit():
-             assert not doc.args
-             section = self._make_section('Arguments')
-             dlnode = nodes.definition_list()
-             dlnode += self._make_dlitem(
-                 [nodes.Text('The members of '),
--                 nodes.literal('', boxed_arg_type.name)],
-+                 nodes.literal('', arg_type.name)],
-                 None)
-             section += dlnode
-             return [section]
-@@ -332,8 +332,7 @@ def visit_command(self, name, info, ifcond, features, arg_type,
-                       allow_preconfig, coroutine):
-         doc = self._cur_doc
-         self._add_doc('Command',
--                      self._nodes_for_arguments(doc,
--                                                arg_type if boxed else None)
-+                      self._nodes_for_arguments(doc, arg_type)
-                       + self._nodes_for_features(doc)
-                       + self._nodes_for_sections(doc)
-                       + self._nodes_for_if_section(ifcond))
-@@ -341,8 +340,7 @@ def visit_command(self, name, info, ifcond, features, arg_type,
-     def visit_event(self, name, info, ifcond, features, arg_type, boxed):
-         doc = self._cur_doc
-         self._add_doc('Event',
--                      self._nodes_for_arguments(doc,
--                                                arg_type if boxed else None)
-+                      self._nodes_for_arguments(doc, arg_type)
-                       + self._nodes_for_features(doc)
-                       + self._nodes_for_sections(doc)
-                       + self._nodes_for_if_section(ifcond))
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index df5e07debd..c5cb0c5d56 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -1675,8 +1675,6 @@
- #
- # Takes a synchronous snapshot of a block device.
- #
--# For the arguments, see the documentation of BlockdevSnapshotSync.
--#
- # Errors:
- #     - If @device is not a valid block device, DeviceNotFound
- #
-@@ -1705,8 +1703,6 @@
- # device, the block device changes to using 'overlay' as its new
- # active image.
- #
--# For the arguments, see the documentation of BlockdevSnapshot.
--#
- # Features:
- #
- # @allow-write-only-overlay: If present, the check whether this
-@@ -6065,9 +6061,6 @@
- # string, or a snapshot with name already exists, the operation will
- # fail.
- #
--# For the arguments, see the documentation of
--# BlockdevSnapshotInternal.
--#
- # Errors:
- #     - If @device is not a valid block device, GenericError
- #     - If any snapshot matching @name exists, or @name is empty,
--- 
-2.45.0
+> Jonathan
+> 
+> 
+> > >  };
+> > >  
+> > >  static const char *pxb_host_root_bus_path(PCIHostState *host_bridge,    
+> > 
+> >   
+> 
 
 
