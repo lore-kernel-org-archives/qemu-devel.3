@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29F4BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 18:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9655AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 18:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNG0j-0000Jp-Bl; Fri, 28 Jun 2024 14:07:49 -0400
+	id 1sNG6X-0001hk-Gv; Fri, 28 Jun 2024 14:13:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNG0f-0000J6-Gu
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:07:45 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sNG6R-0001hD-Cj
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:13:43 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNG0e-0004Xx-1B
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:07:45 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-725a7b0fc55so647105a12.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 11:07:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1sNG6P-0002XI-O4
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:13:43 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-70699b6afddso757992b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 11:13:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719598062; x=1720202862; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/Nk10LBvRwVzClQUrIggh8lHC5OD3VbB1upClmsGveU=;
- b=b2E+hVLPl+hYJb7p90qcE+J8MQAmk1nZTHjx0Y313T7bJu7i3Cm9otn5bGRAuSB+xP
- 0h63cPvIL6aHor/sxwUqM5i5JTPyPgrlir+V93alguKydZ1mhMCQHh+Zh6HNVbFbaYYd
- fYFWnbuY1p9iWJdD465XcByHz1ly9cuqiwrMAb0ZmF87OKKyN9dWkOtYLrRZxyHwyAop
- oc1XijPg2mEIhlZgA2nSOMXcX6KVO84+90pVf0yCbPwxx1SwEzlzvqt8LkgQuj1zQBCF
- R/bbOxaG75NlI8fXDqZU+IJPc/yeb2KEp+xMHgR+m87bZYfwezRNKvuTwH+StW+U4Khx
- 7QkQ==
+ d=linaro.org; s=google; t=1719598417; x=1720203217; darn=nongnu.org;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=a6TxPGn1+CCKIDi3YOB3bw7ZE7fThuAwAX/M5uGuDM0=;
+ b=Bh/1FYMjoMib/QAbTuBqu4SJ0eDrdOC7PDuQTrqDrKmZZhMpJ0vCFTINFFf95W5tkw
+ 3zKNgOiQiELDf8iaGU1XCkvOOHAC3ju6k133sXKLiMhIHFK6cDup1CFKiGxFXlZjQMd3
+ hbtYCANggJ4jbGPW0nH1K3EkYLnG+0QloCe4N0N9rn/RPXbHEoktOiSVmkOZ4h5fRK6U
+ oJg/d9CLWdw2LZRXu74liB8ln4+zrA+o7UdUMwJzC46JNxIZod30z0YmNFeTtBdtvtpT
+ y5LtUCyR/Ewjoq85lWB0o3XhlbyxfCJQ0zmj3Kks55bB8P1RICsZefHvCdRzsGVBGTqk
+ 0A7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719598062; x=1720202862;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1719598417; x=1720203217;
+ h=content-transfer-encoding:content-language:in-reply-to:mime-version
+ :user-agent:date:message-id:from:references:cc:to:subject
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/Nk10LBvRwVzClQUrIggh8lHC5OD3VbB1upClmsGveU=;
- b=d1TbTibZO7KkZQoJM4KskFScZCcqiiI+UGJq+45gOORVGBvo3/gUuW175zbKyJ7SdF
- ArJbFnqu5GAySgEEuCqc6IcD1T2qDiJkqfESBCASJiXMHQMaodsJY0xFskhGZb5VTbC5
- puHvZfQlugatssMzHkBcheYgfHtlGbYjqYUMWnpKG/L3/iM4I9t9/5dDbexq2OvUCyws
- pSttuCm72kkV3l0VUSUSF1Ba7g45w3+gQvywzFaqZ6uvu+JHtDd+MIMwViWtZarbgWbn
- Chpeo/spe0KTipkrbhZQt0Wm+IzO7UXRNlRxvCqianUhHZDxRI+fQkcwNs7VimKDQm5d
- YpPQ==
+ bh=a6TxPGn1+CCKIDi3YOB3bw7ZE7fThuAwAX/M5uGuDM0=;
+ b=Cqs1P60L37ex+nn1oZq+DzlHbDwlmp6Vf95HlY9n7IP9u9lWLGfiOys+3QpXI/Udoh
+ +V6v+Bi2EG9pNpqZjBb70YuReF6O6zt2d9jSCA3eRoo7u0Oc0JINjlyy/oNfe9U9+fBI
+ hoxghjWce45wWk2eL6q94NwdgQV8EWDh9zxJOpeenLIX/PZzbkdRevvql836/g9dF/o4
+ 1ZrlhI1fKmc6oINAU3enPzN4HaEk7It+3Wi9YYPX4u+FwtzsQHjherBPiMooomWBQHF/
+ 5Ie2+SmTn6vM7q2zmOornrwXclridoCql3USaYleym8NanHMApqZ71bOaKkTichMmNIv
+ YUOQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxB794TS3ctGW1N4rTNrS7WnUTeJFDu0pV5Yc9OEoySK+0nQAeXa74UliB56iqG8RJ78jUezuN72Gzxes3O6Of1Q11u5U=
-X-Gm-Message-State: AOJu0Yy0dyAN1jdaI8Z8GawYiY2jxMvjOHxRyZvCUb+HtH5QRjY6Qke7
- cXIjDVOx5i5WwDDuiJPuZiWCKvZLQASWeukclSnTLev4HAPvtppLVcyeX1KJVIOckixWVIjxKjg
- r
-X-Google-Smtp-Source: AGHT+IFUIJQAlc0v25gWdaNOYyWUQ95hrb23HLgqwXMWpFL90pDELSo00ccC8RncRUvUqnDIov/jbw==
-X-Received: by 2002:a05:6a20:728c:b0:1be:cdce:9fb7 with SMTP id
- adf61e73a8af0-1becdcea170mr8206893637.19.1719598062314; 
- Fri, 28 Jun 2024 11:07:42 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ AJvYcCXDJm2+vjisn8B2Kt8Db/yKgoFAsjgZ5Trcw0P4Yl4JjI5WR+uSoelaup0XqBKPFzUoSAkh81o8g4eLyn/lnb0rCB5R+ow=
+X-Gm-Message-State: AOJu0YxkniFRAWEt/bDewuN5xtonNHkVtcitAH431Rx76gP2bUST7b9X
+ /SzcJVTkofd6kX6/gHIO1F8ElKVP7YSnoj+zo/KHk+SnxtqeJNAFKIZOXiBI2hw=
+X-Google-Smtp-Source: AGHT+IGPWdpvR9aitv1uy5uKFjn34ekIL1qWKc1R0DWpX67wZh1nlGDc9mk+nIHoAKlTcEzcCJSu7w==
+X-Received: by 2002:a05:6a20:3257:b0:1be:bfee:87b6 with SMTP id
+ adf61e73a8af0-1bebfee8e74mr8766862637.45.1719598417182; 
+ Fri, 28 Jun 2024 11:13:37 -0700 (PDT)
+Received: from [192.168.0.102] ([191.205.218.108])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c91ce7414esm1941950a91.34.2024.06.28.11.07.41
+ d2e1a72fcca58-708044adb21sm1977634b3a.141.2024.06.28.11.13.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 11:07:41 -0700 (PDT)
-Message-ID: <3e93d04f-74af-46ea-a05f-7841f0b4a3b6@linaro.org>
-Date: Fri, 28 Jun 2024 11:07:40 -0700
+ Fri, 28 Jun 2024 11:13:36 -0700 (PDT)
+Subject: Re: [PATCH v6 06/11] target/arm: Factor out code for setting MTE TCF0
+ field
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, alex.bennee@linaro.org
+Cc: peter.maydell@linaro.org
+References: <20240628050850.536447-1-gustavo.romero@linaro.org>
+ <20240628050850.536447-7-gustavo.romero@linaro.org>
+ <18343152-c677-4075-8c55-9a2802742a79@linaro.org>
+ <790bf46c-bf01-b8db-2030-af669cd98c49@linaro.org>
+ <ea688598-b4a5-40f4-a749-c155ecc0988c@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
+Message-ID: <d9812dd0-6f72-56ef-f52c-2f879bf2bf36@linaro.org>
+Date: Fri, 28 Jun 2024 15:13:34 -0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/23] tracepoints: move physmem trace points
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240628124258.832466-1-alex.bennee@linaro.org>
- <20240628124258.832466-5-alex.bennee@linaro.org>
+In-Reply-To: <ea688598-b4a5-40f4-a749-c155ecc0988c@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240628124258.832466-5-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-1.965,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,22 +105,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/28/24 05:42, Alex Bennée wrote:
-> @@ -1885,7 +1885,7 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
->       } else { /* list is empty */
->           QLIST_INSERT_HEAD_RCU(&ram_list.blocks, new_block, next);
->       }
-> -    ram_list.mru_block = NULL;
-> +    qatomic_rcu_set(&ram_list.mru_block, NULL);
->   
->       /* Write list before version */
->       smp_wmb();
+Hi Richard,
 
-This is unrelated to tracepoints.
+On 6/28/24 2:00 PM, Richard Henderson wrote:
+> On 6/28/24 08:49, Gustavo Romero wrote:
+>> I thought you meant osdep.h should not be included _at all_ in my case, either
+>> in mte_user_helper.h or in mte_user_helper.c. Maybe the wording in the docs
+>> should be "Do not include "qemu/osdep.h" from header files. Include it from .c
+>> files, when necessary.".
+> 
+> Not "when necessary", always, and always first.
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Got it!
 
 
-r~
+> See the "Include directives" section of docs/devel/style.rst, which does explicitly say 'Do not include "qemu/osdep.h" from header files'.
+
+Yep, Phil pointed out this doc when we were discussing it in v5.
+I was actually referring to it about the wording. Maybe then it should
+be more explicitly that osdep.h _always_ has to be present.
+
+Re-reading it after your clarifications makes it clear, but the first time
+Phil pointed it out the phrases:
+
+"[...] since the .c file will have already included it." and
+"Headers should normally include everything they need beyond osdep.h."
+
+weren't enough to me to make it clear that osdep.h must always be included
+(present) in the .c files. "will have already included" sounded ambiguous to
+me, more like, if necessary it would have already be included in .c (but not
+always). But, well, that can be a falt in my interpretation..
+
+Thanks a lot for the clarification.
+
+
+> 
+>> I think we agree osdep.h is necessary and must be put in mte_user_helper.c. But
+>> that left me wondering how it would work for sources including mte_user_helper.h,
+>> because it can be the case they don't have the declarations for the types used in
+>> the function prototypes, in this case, for CPUArchState and abi_long types in
+>> arm_set_mte_tcf0.
+> 
+> CPUArchState will come from qemu/typedefs.h via osdep.h.
+> 
+> For this particular function, 'int' would have been enough,
+> since we only care about the low two bits.
+
+hmm, right. I'll send a follow up patch to improve it since Alex already picked up
+the series to gdbstub/next. Thanks!
+
+
+Cheers,
+Gustavo
 
