@@ -4,90 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9655AC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 18:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD6BDC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 18:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNG6X-0001hk-Gv; Fri, 28 Jun 2024 14:13:49 -0400
+	id 1sNGK7-0004qh-Cz; Fri, 28 Jun 2024 14:27:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sNG6R-0001hD-Cj
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:13:43 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
+ id 1sNGK5-0004pg-Ci
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:27:49 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sNG6P-0002XI-O4
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:13:43 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70699b6afddso757992b3a.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 11:13:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
+ id 1sNGK3-0001If-SX
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:27:49 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1f480624d10so6494535ad.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 11:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719598417; x=1720203217; darn=nongnu.org;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
- :subject:date:message-id:reply-to;
- bh=a6TxPGn1+CCKIDi3YOB3bw7ZE7fThuAwAX/M5uGuDM0=;
- b=Bh/1FYMjoMib/QAbTuBqu4SJ0eDrdOC7PDuQTrqDrKmZZhMpJ0vCFTINFFf95W5tkw
- 3zKNgOiQiELDf8iaGU1XCkvOOHAC3ju6k133sXKLiMhIHFK6cDup1CFKiGxFXlZjQMd3
- hbtYCANggJ4jbGPW0nH1K3EkYLnG+0QloCe4N0N9rn/RPXbHEoktOiSVmkOZ4h5fRK6U
- oJg/d9CLWdw2LZRXu74liB8ln4+zrA+o7UdUMwJzC46JNxIZod30z0YmNFeTtBdtvtpT
- y5LtUCyR/Ewjoq85lWB0o3XhlbyxfCJQ0zmj3Kks55bB8P1RICsZefHvCdRzsGVBGTqk
- 0A7A==
+ d=gmail.com; s=20230601; t=1719599265; x=1720204065; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ll/QqfYOXnmYqKu32rIS7F8RQ9Ulu9HE3aVWNiR5uao=;
+ b=bNwU1f3uZy7DxcATigx+HJ6n8QAo6lVyA8/6bMnwMmIxbEq+hEtJ47Xzz4aAkz8Wnr
+ P35hQKNsfmUUgEMEzq/WUI6Htb6WbOxDkVyX5XclsiOBu6+x/wZkrPzRMccgE+9Qf2K3
+ NrbyE99Ne56XOTRo4VywYdvkxpizp5x0+KfQ1khT7Yktl7RYKfM7KJDYEaeyb7y7euAv
+ T5eByRCUO3Gkkbrv9IwjI4GpBoDw3wPmWkO8II3dD5OQx14C4qUpJLefX1oklr2CpY3X
+ 6GyvUWAQZ7mZZOV4CT0hkdOff8b29Xrg7zFQdVCBgD2OIgxz8FNfCKjxen8YncJc6s79
+ 8OyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719598417; x=1720203217;
- h=content-transfer-encoding:content-language:in-reply-to:mime-version
- :user-agent:date:message-id:from:references:cc:to:subject
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a6TxPGn1+CCKIDi3YOB3bw7ZE7fThuAwAX/M5uGuDM0=;
- b=Cqs1P60L37ex+nn1oZq+DzlHbDwlmp6Vf95HlY9n7IP9u9lWLGfiOys+3QpXI/Udoh
- +V6v+Bi2EG9pNpqZjBb70YuReF6O6zt2d9jSCA3eRoo7u0Oc0JINjlyy/oNfe9U9+fBI
- hoxghjWce45wWk2eL6q94NwdgQV8EWDh9zxJOpeenLIX/PZzbkdRevvql836/g9dF/o4
- 1ZrlhI1fKmc6oINAU3enPzN4HaEk7It+3Wi9YYPX4u+FwtzsQHjherBPiMooomWBQHF/
- 5Ie2+SmTn6vM7q2zmOornrwXclridoCql3USaYleym8NanHMApqZ71bOaKkTichMmNIv
- YUOQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDJm2+vjisn8B2Kt8Db/yKgoFAsjgZ5Trcw0P4Yl4JjI5WR+uSoelaup0XqBKPFzUoSAkh81o8g4eLyn/lnb0rCB5R+ow=
-X-Gm-Message-State: AOJu0YxkniFRAWEt/bDewuN5xtonNHkVtcitAH431Rx76gP2bUST7b9X
- /SzcJVTkofd6kX6/gHIO1F8ElKVP7YSnoj+zo/KHk+SnxtqeJNAFKIZOXiBI2hw=
-X-Google-Smtp-Source: AGHT+IGPWdpvR9aitv1uy5uKFjn34ekIL1qWKc1R0DWpX67wZh1nlGDc9mk+nIHoAKlTcEzcCJSu7w==
-X-Received: by 2002:a05:6a20:3257:b0:1be:bfee:87b6 with SMTP id
- adf61e73a8af0-1bebfee8e74mr8766862637.45.1719598417182; 
- Fri, 28 Jun 2024 11:13:37 -0700 (PDT)
-Received: from [192.168.0.102] ([191.205.218.108])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-708044adb21sm1977634b3a.141.2024.06.28.11.13.35
+ d=1e100.net; s=20230601; t=1719599265; x=1720204065;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ll/QqfYOXnmYqKu32rIS7F8RQ9Ulu9HE3aVWNiR5uao=;
+ b=CJMJGGFa8qI3MAsH3cBZcXefmtaSll1BfYU3xTSGM9qpI7WZLDCS1FXNxfEvzCqQrA
+ ZYgKu7CjMD5c175UIqmz1SsRm0G6a+itgZKV87tPdfWk4gKHuAuQwwe8ih7HiUkJrXkd
+ OAY89E+TIcADtcOG/mXH2RVUSRfDP3D+jfP5+opQBfVoNVI3QsjBlF83uFYjugRSPQQ1
+ bLSyq3yZvtqDXvVoh8wNPsiKI5EsDqGNnF8qACWqy6r96SSdKWoxwWbAs0mGfc0qxzF/
+ nZPBV0nm8X3fiHN4YQLaBkb5qDdljPeixAAdh2CgYAnTBXge4xmo4hrgxeue4TkezLjO
+ /6Qg==
+X-Gm-Message-State: AOJu0Yw+fCuW8g1c453MuXZo8hs+F9zSLkUf9tsPHaH8RdWHl+60avjP
+ tYoEaBEEMOvah5GLe0/of9NM72XKE9F6Ai25H6EuwDHoQEejWTDe9CCHMJzz
+X-Google-Smtp-Source: AGHT+IEfQO2T3T0BhSE22Ir2w1rpOFhdxAR29BRgsQZrc5iJUSdyr+SKGSGnihJmVlKJ+dgsu9p5Dw==
+X-Received: by 2002:a17:902:bb97:b0:1f6:6426:8da4 with SMTP id
+ d9443c01a7336-1fa1d6aa3b3mr129770105ad.66.1719599264817; 
+ Fri, 28 Jun 2024 11:27:44 -0700 (PDT)
+Received: from localhost ([136.27.11.53]) by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-1fac1599d9dsm18443975ad.292.2024.06.28.11.27.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 11:13:36 -0700 (PDT)
-Subject: Re: [PATCH v6 06/11] target/arm: Factor out code for setting MTE TCF0
- field
-To: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, alex.bennee@linaro.org
-Cc: peter.maydell@linaro.org
-References: <20240628050850.536447-1-gustavo.romero@linaro.org>
- <20240628050850.536447-7-gustavo.romero@linaro.org>
- <18343152-c677-4075-8c55-9a2802742a79@linaro.org>
- <790bf46c-bf01-b8db-2030-af669cd98c49@linaro.org>
- <ea688598-b4a5-40f4-a749-c155ecc0988c@linaro.org>
-From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <d9812dd0-6f72-56ef-f52c-2f879bf2bf36@linaro.org>
-Date: Fri, 28 Jun 2024 15:13:34 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.0
+ Fri, 28 Jun 2024 11:27:44 -0700 (PDT)
+From: Gregor Haas <gregorhaas1997@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: berrange@redhat.com, yaoxt.fnst@fujitsu.com,
+ Gregor Haas <gregorhaas1997@gmail.com>
+Subject: [PATCH v4] hw/core/loader: allow loading larger ROMs
+Date: Fri, 28 Jun 2024 11:27:06 -0700
+Message-ID: <20240628182706.99525-1-gregorhaas1997@gmail.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-In-Reply-To: <ea688598-b4a5-40f4-a749-c155ecc0988c@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, NICE_REPLY_A=-1.965,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=gregorhaas1997@gmail.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,56 +91,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+The read() syscall is not guaranteed to return all data from a file. The
+default ROM loader implementation currently does not take this into account,
+instead failing if all bytes are not read at once. This change loads the ROM
+using g_file_get_contents() instead, which correctly reads all data using
+multiple calls to read() while also returning the loaded ROM size.
 
-On 6/28/24 2:00 PM, Richard Henderson wrote:
-> On 6/28/24 08:49, Gustavo Romero wrote:
->> I thought you meant osdep.h should not be included _at all_ in my case, either
->> in mte_user_helper.h or in mte_user_helper.c. Maybe the wording in the docs
->> should be "Do not include "qemu/osdep.h" from header files. Include it from .c
->> files, when necessary.".
-> 
-> Not "when necessary", always, and always first.
+Signed-off-by: Gregor Haas <gregorhaas1997@gmail.com>
+---
+ hw/core/loader.c | 30 +++++-------------------------
+ 1 file changed, 5 insertions(+), 25 deletions(-)
 
-Got it!
+diff --git a/hw/core/loader.c b/hw/core/loader.c
+index 2f8105d7de..44444a5714 100644
+--- a/hw/core/loader.c
++++ b/hw/core/loader.c
+@@ -1075,8 +1075,7 @@ ssize_t rom_add_file(const char *file, const char *fw_dir,
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+     Rom *rom;
+-    ssize_t rc;
+-    int fd = -1;
++    g_autoptr(GError) gerr = NULL;
+     char devpath[100];
+ 
+     if (as && mr) {
+@@ -1094,35 +1093,19 @@ ssize_t rom_add_file(const char *file, const char *fw_dir,
+         rom->path = g_strdup(file);
+     }
+ 
+-    fd = open(rom->path, O_RDONLY | O_BINARY);
+-    if (fd == -1) {
+-        fprintf(stderr, "Could not open option rom '%s': %s\n",
+-                rom->path, strerror(errno));
+-        goto err;
+-    }
+-
+     if (fw_dir) {
+         rom->fw_dir  = g_strdup(fw_dir);
+         rom->fw_file = g_strdup(file);
+     }
+     rom->addr     = addr;
+-    rom->romsize  = lseek(fd, 0, SEEK_END);
+-    if (rom->romsize == -1) {
+-        fprintf(stderr, "rom: file %-20s: get size error: %s\n",
+-                rom->name, strerror(errno));
++    if (!g_file_get_contents(rom->path, (gchar **) &rom->data,
++                             &rom->romsize, &gerr)) {
++        fprintf(stderr, "rom: file %-20s: error %s\n",
++                rom->name, gerr->message);
+         goto err;
+     }
+ 
+     rom->datasize = rom->romsize;
+-    rom->data     = g_malloc0(rom->datasize);
+-    lseek(fd, 0, SEEK_SET);
+-    rc = read(fd, rom->data, rom->datasize);
+-    if (rc != rom->datasize) {
+-        fprintf(stderr, "rom: file %-20s: read error: rc=%zd (expected %zd)\n",
+-                rom->name, rc, rom->datasize);
+-        goto err;
+-    }
+-    close(fd);
+     rom_insert(rom);
+     if (rom->fw_file && fw_cfg) {
+         const char *basename;
+@@ -1159,9 +1142,6 @@ ssize_t rom_add_file(const char *file, const char *fw_dir,
+     return 0;
+ 
+ err:
+-    if (fd != -1)
+-        close(fd);
+-
+     rom_free(rom);
+     return -1;
+ }
+-- 
+2.45.2
 
-
-> See the "Include directives" section of docs/devel/style.rst, which does explicitly say 'Do not include "qemu/osdep.h" from header files'.
-
-Yep, Phil pointed out this doc when we were discussing it in v5.
-I was actually referring to it about the wording. Maybe then it should
-be more explicitly that osdep.h _always_ has to be present.
-
-Re-reading it after your clarifications makes it clear, but the first time
-Phil pointed it out the phrases:
-
-"[...] since the .c file will have already included it." and
-"Headers should normally include everything they need beyond osdep.h."
-
-weren't enough to me to make it clear that osdep.h must always be included
-(present) in the .c files. "will have already included" sounded ambiguous to
-me, more like, if necessary it would have already be included in .c (but not
-always). But, well, that can be a falt in my interpretation..
-
-Thanks a lot for the clarification.
-
-
-> 
->> I think we agree osdep.h is necessary and must be put in mte_user_helper.c. But
->> that left me wondering how it would work for sources including mte_user_helper.h,
->> because it can be the case they don't have the declarations for the types used in
->> the function prototypes, in this case, for CPUArchState and abi_long types in
->> arm_set_mte_tcf0.
-> 
-> CPUArchState will come from qemu/typedefs.h via osdep.h.
-> 
-> For this particular function, 'int' would have been enough,
-> since we only care about the low two bits.
-
-hmm, right. I'll send a follow up patch to improve it since Alex already picked up
-the series to gdbstub/next. Thanks!
-
-
-Cheers,
-Gustavo
 
