@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D209EC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB94C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:45:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNAx6-0005GK-Ka; Fri, 28 Jun 2024 08:43:44 -0400
+	id 1sNAxZ-00069G-PP; Fri, 28 Jun 2024 08:44:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNAwV-0004oO-T0
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:08 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1sNAwh-0004tV-OF
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:23 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNAwU-0005fs-6W
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:07 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-584ee8da49aso3089524a12.0
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 05:43:05 -0700 (PDT)
+ id 1sNAwY-0005ip-Ez
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:13 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-57d2fc03740so698949a12.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 05:43:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719578584; x=1720183384; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719578589; x=1720183389; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rvGmIc/IqaQmuLkCI/kfZ02beHV2np9KXDzigOomwVY=;
- b=LQ2i+wzo/qi5MzmYH5uZWE7RY2FTOZzYPF2qAltQjgnVzLLQnM2jYS4mhXUUzlSizY
- u8pg2LESNTV/pdACZILIaf9I57ltdkhyQZiyluUTrb5IpQKtoHwO3pTxWUa0zbPY2UKO
- F3BclslVtRW7YCIeEygP6xQB0U1GekLBbiP2M5cfXnp2LJKq1Urx4jadjM2CgpHiAx32
- OD65MUJ0sflErC0p4QvxDaHvsKWe6J9iKgZIdjtylmyOpZWuLvdG/mF50ZIeb9pZYOr+
- YJJ6QlnFB5OD0AhSChOMs0gqVDG0vdtxzHOJbdr+BYvVXqIyxqERGTu4mUjK1rcl1bv4
- TXmw==
+ bh=/lQrpNj9Yq6e2VZHJs41tWCzx2SCmT2FMLZDJQM+poI=;
+ b=aDSVYpI6TDULZNdIwdKhalEMtN8zslvehkhc7LL62xAXMcCXO+gIMRYYHKQzhc9+lV
+ hsVXCgjcv01V0OlphTo6ENmcB+M15Fclgzc8e4TzvxNEF0Xqp0gqsooAW4Ljnvxrh7Bp
+ Ri7i0Qv++oWx3DrVQHC22owXLHRW0DN6gpBCNFeBK0FXCGTcwDtdOjfANB7z70zppGRG
+ 48i/Mof+bnksWoH3L6Aplyrqi4CAunL+lNZS38yL/Hyi3Pw6oAG4wEBjUjt6HDmR1e9t
+ BdmmyL8w8bbEskFIWM+Qm+4Rwf2DcD/Ylwy5r7/NLSXxwhMHJxLDuLLjokw2917zBCFz
+ kulw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719578584; x=1720183384;
+ d=1e100.net; s=20230601; t=1719578589; x=1720183389;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rvGmIc/IqaQmuLkCI/kfZ02beHV2np9KXDzigOomwVY=;
- b=nknmRAEkrFXRZh7dkR1XXJpLdKEfkNKEgtXBK6SI/PQyjaWC6r9MZAnvkWqT/VQuRb
- b0D4BWkODXT1ZPz3GcQ3Qettd2VKZZLljFkSv+7XhYx5VS/UPTs/GJwVWS6U27bdqHlA
- YjSmCHLPKmsREg/DsV8qRb2xBjqhd1ysmFcFfKV/GYY174EOLdUwpI//2Dvg/2BduPyX
- yHfh0rQixpN0TbCKdgm2XkPzsIbhYZjt9jwwl25AEF9YBpl07BAwxEk2Xs+kD/ZmuTi0
- X7LFAiuweK3K267QAfTcz1bVA33j+30hkVkziPQ+Imxh7Op3IJmHifuTsDH63UGhOdhK
- Re2A==
-X-Gm-Message-State: AOJu0Yw76eWvNw/R3IEUsCCMz5q8zXZL6roPKzZsbSdktmOkLjYtSAlq
- W/xNjibMjxPbGgBNIbemXyK4t/bABusvuKwzBRcUE9g6anwsabKn/B9m8B+7f4k=
-X-Google-Smtp-Source: AGHT+IEYYV3YJQeizporoofEsJYAFW1V8ZfOcmyW0NWTINkOfBKyfZgVbjC3k1twcoJS4y9EGymywg==
-X-Received: by 2002:a05:6402:440a:b0:57d:1d9e:d1fe with SMTP id
- 4fb4d7f45d1cf-5865c1f6e88mr1438298a12.9.1719578584324; 
- Fri, 28 Jun 2024 05:43:04 -0700 (PDT)
+ bh=/lQrpNj9Yq6e2VZHJs41tWCzx2SCmT2FMLZDJQM+poI=;
+ b=KRfixRe4hRrrX4GhW+UFkTOLOHG20IS5HX9ypOBKfpq4jPqVoFLs9x8qnvO138rYvE
+ joSHn9zQEgoxPjvqp1cifY+rOodIstihLZJ6jwaT9rXduV+Z795x+sQUgxbif79J70G6
+ hVMvQvXncPYaJWDMYSMfsI9iH4rr6qn763rMJJcJbm6wCPKCzUNN3r7gz9NdWMRxrJcD
+ CZUp9JP7kOYcjOldzZFZIdlTeAnZRJXOXpOwimYsfHdYyX695mi6aQhastV3aMY0j+DB
+ DXc84Rdpx9gxQBm3MtFsZ9kvEIUKWmzc9K6Yl/UDwcDdkfj59PbZ8Ca7nljnb3yRqBgu
+ wA2w==
+X-Gm-Message-State: AOJu0YwVKRWcgWDHj3zBGZbW5NsKDpj14nFeI63lMPw4zORqdvFRH0to
+ vSd10omxSENCKAWbze9z1+zd74XU6ARy46qHArXs895uSODWcQ0QoZ8WgONCIT8=
+X-Google-Smtp-Source: AGHT+IGMunC04TdtPY6LkRLCf0WZt9814RwPekLOjvRi1GtNFOE3UfHThvaqo1gknzXR9el/Nzk8RA==
+X-Received: by 2002:a50:9e84:0:b0:57c:60f0:98bc with SMTP id
+ 4fb4d7f45d1cf-57d4bd69fa4mr11371811a12.11.1719578588583; 
+ Fri, 28 Jun 2024 05:43:08 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5861381756esm988562a12.56.2024.06.28.05.43.01
+ 4fb4d7f45d1cf-58613816055sm980993a12.46.2024.06.28.05.43.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 28 Jun 2024 05:43:03 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A04135FA12;
- Fri, 28 Jun 2024 13:42:59 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 08A0A5FA38;
+ Fri, 28 Jun 2024 13:43:00 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
@@ -75,17 +75,17 @@ Cc: David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 07/23] test/plugin: make insn plugin less noisy by default
-Date: Fri, 28 Jun 2024 13:42:42 +0100
-Message-Id: <20240628124258.832466-8-alex.bennee@linaro.org>
+Subject: [PATCH 11/23] plugins/lockstep: mention the one-insn-per-tb option
+Date: Fri, 28 Jun 2024 13:42:46 +0100
+Message-Id: <20240628124258.832466-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240628124258.832466-1-alex.bennee@linaro.org>
 References: <20240628124258.832466-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,84 +108,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the match functionality is useful lets make the verbosity
-optional while we are actually running.
+This really helps with lockstep although its super slow on big jobs.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/plugin/insn.c | 36 +++++++++++++++++++++---------------
- 1 file changed, 21 insertions(+), 15 deletions(-)
+ contrib/plugins/lockstep.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tests/plugin/insn.c b/tests/plugin/insn.c
-index 5e0aa03223..524f9ddde8 100644
---- a/tests/plugin/insn.c
-+++ b/tests/plugin/insn.c
-@@ -20,6 +20,7 @@ static qemu_plugin_u64 insn_count;
- 
- static bool do_inline;
- static bool do_size;
-+static bool do_trace;
- static GArray *sizes;
- 
- typedef struct {
-@@ -73,30 +74,30 @@ static void vcpu_insn_matched_exec_before(unsigned int cpu_index, void *udata)
-     MatchCount *match = qemu_plugin_scoreboard_find(insn_match->counts,
-                                                     cpu_index);
- 
--    g_autoptr(GString) ts = g_string_new("");
--
-     insn->hits++;
--    g_string_append_printf(ts, "0x%" PRIx64 ", '%s', %"PRId64 " hits",
--                           insn->vaddr, insn->disas, insn->hits);
- 
-     uint64_t icount = qemu_plugin_u64_get(insn_count, cpu_index);
-     uint64_t delta = icount - match->last_hit;
- 
-     match->hits++;
-     match->total_delta += delta;
--
--    g_string_append_printf(ts,
--                           " , cpu %u,"
--                           " %"PRId64" match hits,"
--                           " Δ+%"PRId64 " since last match,"
--                           " %"PRId64 " avg insns/match\n",
--                           cpu_index,
--                           match->hits, delta,
--                           match->total_delta / match->hits);
--
-     match->last_hit = icount;
- 
--    qemu_plugin_outs(ts->str);
-+    if (do_trace) {
-+        g_autoptr(GString) ts = g_string_new("");
-+        g_string_append_printf(ts, "0x%" PRIx64 ", '%s', %"PRId64 " hits",
-+                               insn->vaddr, insn->disas, insn->hits);
-+        g_string_append_printf(ts,
-+                               " , cpu %u,"
-+                               " %"PRId64" match hits,"
-+                               " Δ+%"PRId64 " since last match,"
-+                               " %"PRId64 " avg insns/match\n",
-+                               cpu_index,
-+                               match->hits, delta,
-+                               match->total_delta / match->hits);
-+
-+        qemu_plugin_outs(ts->str);
-+    }
- }
- 
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-@@ -216,6 +217,11 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-             }
-         } else if (g_strcmp0(tokens[0], "match") == 0) {
-             parse_match(tokens[1]);
-+        } else if (g_strcmp0(tokens[0], "trace") == 0) {
-+            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &do_trace)) {
-+                fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-+                return -1;
-+            }
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
-             return -1;
+diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
+index 761bcdf363..353bf12dfb 100644
+--- a/contrib/plugins/lockstep.c
++++ b/contrib/plugins/lockstep.c
+@@ -14,7 +14,8 @@
+  * particular run may execute the exact same sequence of blocks. An
+  * asynchronous event (for example X11 graphics update) may cause a
+  * block to end early and a new partial block to start. This means
+- * serial only test cases are a better bet. -d nochain may also help.
++ * serial only test cases are a better bet. -d nochain may also help
++ * as well as -accel tcg,one-insn-per-tb=on
+  *
+  * This code is not thread safe!
+  *
 -- 
 2.39.2
 
