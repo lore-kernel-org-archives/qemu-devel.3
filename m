@@ -4,96 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8D2C30658
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:35:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD98DC3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNCgs-0004ks-4I; Fri, 28 Jun 2024 10:35:06 -0400
+	id 1sNCiY-000666-BC; Fri, 28 Jun 2024 10:36:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNCgq-0004kD-Oq
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:35:04 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNCgo-0000Ls-T3
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:35:04 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a72af03ebdfso95691066b.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:35:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719585301; x=1720190101; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+uAk3bFfID7pkNPPadj5fvdu8UK8/lHck3KEK8Z2W6E=;
- b=pUFGm74FetAp9AirNDn/Irw/AbHhULL84RQ0z54si+tTdRjiF5C8C52bAnYK92Cr3I
- XgvqfihP+GmdWNGf62ynqZoOh/Wnxlf239C0gyU8JAIax96r8jTrTflCYlSigP36ZaMV
- 9IzKPem2kN57gFOlIV9zv4qvI+frj7blCWp8JZdAa1leBTBjdCI8ZcH+8gE3fr4C+f4A
- 8q79TGTEnsWdvpAPKQcxFqgi3Qf15U4/lgKJXthGE/p+ccpaXgzvKT7e9hiFXOVQWjGq
- YyIvCZ8C4KtC4iKxj5XYuFeWH54zW+2xAwYd4AO0YIszHOgCRj81fpvmknGkG8zBoTDD
- 9nlA==
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sNCiX-00065T-0V
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:36:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sNCiV-0003uP-D5
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:36:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719585405;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QM7eQrwLC79kjpAR0BXKRomvhlSBINXfF7dfvlkf+tA=;
+ b=czQwO3wKH5O3sCrB3yXsC+8+ITYDRfY8XMjCiZ120tiVER3xTytdXLXyNgTvAZmjWpKOvQ
+ Y7EoT9DizYw6Brh1FUtv9BG5YAqwTvJmeXxBaqQNyzFyxTbgj+13/b5aoFKzEw0sQKY19P
+ eLKn1/LDfUdKdoris7BpQWFfodvG4HE=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-66-sc5Lc1JuPVaGv6xuaimSPQ-1; Fri, 28 Jun 2024 10:36:42 -0400
+X-MC-Unique: sc5Lc1JuPVaGv6xuaimSPQ-1
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-72268cc4453so553642a12.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:36:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719585301; x=1720190101;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+uAk3bFfID7pkNPPadj5fvdu8UK8/lHck3KEK8Z2W6E=;
- b=RJRO2vrjOBgiMrM2aqNCcN7HrA7pJ39yUIQ2gSfsM+fYQifVRc2ze4PKA601o7x/Qu
- brdEdIkj9+OiagpOcEZojeS2aZfrR3IpuAqJgj675iOdcAOS0e+tdc3dVClWzU065mEe
- fUu2AWbGXircul7FX9DRzbTL+n+QpOK26e+yuBeMPTgPBIwA+wLcaUaORn+qxFWtUulJ
- /B/XkNcYYXdmQhm/26g1d8dhYRbTHXWnwMM4sV03atDx0JkEMCGeb0jic/EHru6VL1WO
- PQAT/p3QB96I0KL584P8rH16of6MBKnd29wTeX03GioMQvleJA/787G0UExG+mJK48YQ
- emag==
-X-Gm-Message-State: AOJu0Yyci1d3BWonK/USQpm1zcdSDlB8cVkA7xltDlr7KS8k9c0qlbYg
- 8n1GsDad4zQ9/guLeuWOzdBi0ehBTYA2QfaVfweCO8Qzsib0WrjZ40OOkGqCUw0=
-X-Google-Smtp-Source: AGHT+IG6VfqNA3syidWs0r6o9lNgdgF0gsLfYuJc04SrnoAC9y5alnejD8iE7HcuQETr2vGT5naycQ==
-X-Received: by 2002:a17:907:9706:b0:a72:65e5:3e7 with SMTP id
- a640c23a62f3a-a7265e50623mr1054135366b.55.1719585300039; 
- Fri, 28 Jun 2024 07:35:00 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aaf62058sm85144466b.56.2024.06.28.07.34.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Jun 2024 07:34:59 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8909A5F7A1;
- Fri, 28 Jun 2024 15:34:58 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>,  Beraldo Leal <bleal@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Wainer dos Santos Moschetta
- <wainersm@redhat.com>,  qemu-arm@nongnu.org,  Peter Xu
- <peterx@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Mahmoud Mandour
- <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,  Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Alexandre
- Iooss <erdnaxe@crans.org>,  Stefan Hajnoczi <stefanha@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Mark
- Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Michael S. Tsirkin
- <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>, Fabiano Rosas
- <farosas@suse.de>
-Subject: Re: [PATCH 02/23] target/i386: fix gen_prepare_size_nz condition
-In-Reply-To: <20240628124258.832466-3-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?=
- message of "Fri, 28 Jun 2024 13:42:37 +0100")
-References: <20240628124258.832466-1-alex.bennee@linaro.org>
- <20240628124258.832466-3-alex.bennee@linaro.org>
-Date: Fri, 28 Jun 2024 15:34:58 +0100
-Message-ID: <87ikxtnnjh.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1719585402; x=1720190202;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QM7eQrwLC79kjpAR0BXKRomvhlSBINXfF7dfvlkf+tA=;
+ b=N1yzQGhbsbRwEFIDkWqq4m7F083OTs8d2ZLB/Szd2SNsFcaX2SzAtGjLxZ8f37b56l
+ WonQhgsT22Ga9W3ttJoBodMRu3nF10N9Pm0ivr6NRjvnVjnnjpJNFNnZaiQ6Etb7gVkH
+ euuz0mNWtll+4K/71HrxjuH8XtbKhWvfCMMQiR+eDJD+wooHbiEbiPoFMx+pFYxZIjoy
+ SwHRe3F8IhaBToX5R74veA/Y1HArYIKoDhmjOU1/U3dwlOvLgL/Tsotv83TlcEmt6NgU
+ jlvysbD9UV1KDQEyYr4rO4tScw/7ix7/abFW8XHCo0y5Z/94NWXrp/znpEK9IzFgw3q5
+ W72g==
+X-Gm-Message-State: AOJu0YyA/F2yXE2opOt1FwmsAOHszm0bVqGVSlWePN4K8sGCB+7gvoOD
+ maX/2Ju0Sd4MWGdmdWKDIpkMzgj0+7P8xaYuQBYPUZKxi31N+VoNQD/9dIQpbdk2JUiKfxIJJsz
+ T/3l3kRGgBWNsa+8hKtGq4bQ+ijaOLRDyezR2pqoQHxTB8KPpQ4y+CcLV7UfLKCbrFmFNt+YeBT
+ XFIG0KKEpJ5YOMmFHF/Kx/0NEk3O8=
+X-Received: by 2002:a05:6a20:6d83:b0:1bd:2d4e:53e1 with SMTP id
+ adf61e73a8af0-1bd2d4e556amr7544635637.46.1719585401698; 
+ Fri, 28 Jun 2024 07:36:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHRhGlDtwizJdIFH5jGVPkJPW/PFNo1Sh4BqvsVFXDPYKiHimapkmcPPhbe03/gP0tPsbeGN8aYEMryb/WVrzg=
+X-Received: by 2002:a05:6a20:6d83:b0:1bd:2d4e:53e1 with SMTP id
+ adf61e73a8af0-1bd2d4e556amr7544590637.46.1719585401221; Fri, 28 Jun 2024
+ 07:36:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240626222128.406106-1-jsnow@redhat.com>
+ <20240626222128.406106-5-jsnow@redhat.com>
+ <874j9d1q61.fsf@pond.sub.org>
+In-Reply-To: <874j9d1q61.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Fri, 28 Jun 2024 10:36:29 -0400
+Message-ID: <CAFn=p-YKYXZk5TGDb016vMkPm7qLyHOeHGiFeddURzzVmbS2cA@mail.gmail.com>
+Subject: Re: [PATCH v2 04/21] docs/qapidoc: delint a tiny portion of the module
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Mads Ynddal <mads@ynddal.dk>,
+ Jiri Pirko <jiri@resnulli.us>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Michael Roth <michael.roth@amd.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>, 
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Victor Toso de Carvalho <victortoso@redhat.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Qemu-block <qemu-block@nongnu.org>, Ani Sinha <anisinha@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Lukas Straub <lukasstraub2@web.de>, Igor Mammedov <imammedo@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ Hanna Reitz <hreitz@redhat.com>, Konstantin Kostiuk <kkostiuk@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000005685061bf42dae"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.206,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,42 +114,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+--000000000000005685061bf42dae
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Incorrect brace positions causes an unintended overflow on 32 bit
-> builds and shenanigans result.
+On Fri, Jun 28, 2024, 3:29=E2=80=AFAM Markus Armbruster <armbru@redhat.com>=
+ wrote:
+
+> John Snow <jsnow@redhat.com> writes:
 >
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2413
-> Suggested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-This seems to trigger regressions in:
-
-  qtest-x86_64/bios-tables-test
-  qtest-x86_64/pxe-test
-  qtest-x86_64/vmgenid-test
-
-Could that be down to generated test data?
-
-> ---
->  target/i386/tcg/translate.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> > In a forthcoming series that adds a new QMP documentation generator, it
+> > will be helpful to have a linting baseline. However, there's no need to
+> > shuffle around the deck chairs too much, because most of this code will
+> > be removed once that new qapidoc generator (the "transmogrifier") is in
+> > place.
+> >
+> > To ease my pain: just turn off the black auto-formatter for most, but
+> > not all, of qapidoc.py. This will help ensure that *new* code follows a
+> > coding standard without bothering too much with cleaning up the existin=
+g
+> > code.
+> >
+> > Code that I intend to keep is still subject to the delinting beam.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > Reviewed-by: Markus Armbruster <armbru@redhat.com>
 >
-> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-> index ad1819815a..94f13541c3 100644
-> --- a/target/i386/tcg/translate.c
-> +++ b/target/i386/tcg/translate.c
-> @@ -877,7 +877,7 @@ static CCPrepare gen_prepare_sign_nz(TCGv src, MemOp =
-size)
->          return (CCPrepare) { .cond =3D TCG_COND_LT, .reg =3D src };
->      } else {
->          return (CCPrepare) { .cond =3D TCG_COND_TSTNE, .reg =3D src,
-> -                             .imm =3D 1ull << ((8 << size) - 1) };
-> +                             .imm =3D (1ull << (8 << size)) - 1 };
->      }
->  }
+> Not an objection, just so you know: I still see a few C0411 like 'third
+> party import "import sphinx" should be placed before ...'
+>
+> R-by stands.
+>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Yeah, I think it depends on precisely where you run the script. I think
+because the folder is named "sphinx" that it confuses the tools in certain
+contexts.
+
+I'm not worried about it because we don't have an enforcement paradigm yet
+- I stick to my little self-test script just to make sure I'm being
+self-consistent, but I figured I'd worry about broader compatibility later
+when I reshuffle the deck chairs for qapi.
+
+--000000000000005685061bf42dae
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Fri, Jun 28, 2024, 3:29=E2=80=AFAM Markus Armbruste=
+r &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&gt; wrote:=
+<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bord=
+er-left:1px #ccc solid;padding-left:1ex">John Snow &lt;<a href=3D"mailto:js=
+now@redhat.com" target=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&g=
+t; writes:<br>
+<br>
+&gt; In a forthcoming series that adds a new QMP documentation generator, i=
+t<br>
+&gt; will be helpful to have a linting baseline. However, there&#39;s no ne=
+ed to<br>
+&gt; shuffle around the deck chairs too much, because most of this code wil=
+l<br>
+&gt; be removed once that new qapidoc generator (the &quot;transmogrifier&q=
+uot;) is in<br>
+&gt; place.<br>
+&gt;<br>
+&gt; To ease my pain: just turn off the black auto-formatter for most, but<=
+br>
+&gt; not all, of qapidoc.py. This will help ensure that *new* code follows =
+a<br>
+&gt; coding standard without bothering too much with cleaning up the existi=
+ng<br>
+&gt; code.<br>
+&gt;<br>
+&gt; Code that I intend to keep is still subject to the delinting beam.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a>&gt;<br>
+&gt; Reviewed-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com=
+" target=3D"_blank" rel=3D"noreferrer">armbru@redhat.com</a>&gt;<br>
+<br>
+Not an objection, just so you know: I still see a few C0411 like &#39;third=
+<br>
+party import &quot;import sphinx&quot; should be placed before ...&#39;<br>
+<br>
+R-by stands.<br></blockquote></div></div><div dir=3D"auto"><br></div><div d=
+ir=3D"auto">Yeah, I think it depends on precisely where you run the script.=
+ I think because the folder is named &quot;sphinx&quot; that it confuses th=
+e tools in certain contexts.</div><div dir=3D"auto"><br></div><div dir=3D"a=
+uto">I&#39;m not worried about it because we don&#39;t have an enforcement =
+paradigm yet - I stick to my little self-test script just to make sure I&#3=
+9;m being self-consistent, but I figured I&#39;d worry about broader compat=
+ibility later when I reshuffle the deck chairs for qapi.</div><div dir=3D"a=
+uto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"=
+gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;b=
+order-left:1px #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
+
+--000000000000005685061bf42dae--
+
 
