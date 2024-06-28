@@ -4,89 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19FAC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D624EC3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:29:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN62v-0005aa-Rj; Fri, 28 Jun 2024 03:29:25 -0400
+	id 1sN62r-0005YO-3Z; Fri, 28 Jun 2024 03:29:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sN62t-0005Zm-Gu
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:29:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
+ id 1sN62p-0005VE-T2
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:29:19 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sN62s-00077v-1t
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:29:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719559761;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XaZp+qf9Ch0F66gaOgCwqAlzlxA/UDti2sNPn3rWDN4=;
- b=PnIOW+EaK+QCdQ4crUV2+7wBcUWWWZPUMsDVJ7bWEr0hnpDVE1J4IV2PKqEVtMFoJCjov+
- X15Jqlk6gG0RqJx2FA/PH/t10kWNhxLsZ2UQ6yjYj0XGhTDvAsslDVEnk2RURu+kIff3PD
- X2Te8wHdZvCKvoZRTr3msOrBs0bQFrU=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-202-mH2Zg9eVPBWn4Hm8Tem5AQ-1; Fri,
- 28 Jun 2024 03:29:17 -0400
-X-MC-Unique: mH2Zg9eVPBWn4Hm8Tem5AQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
+ id 1sN62n-00077h-Ny
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:29:19 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Rrq59M5z4wcg;
+ Fri, 28 Jun 2024 17:29:15 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 656121945117; Fri, 28 Jun 2024 07:29:14 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.114])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF0E719560B2; Fri, 28 Jun 2024 07:29:12 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9946521E6757; Fri, 28 Jun 2024 09:29:10 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Mads Ynddal <mads@ynddal.dk>,  Jiri Pirko
- <jiri@resnulli.us>,  Stefan Hajnoczi <stefanha@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Michael
- Roth <michael.roth@amd.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Alex
- Williamson <alex.williamson@redhat.com>,  Pavel Dovgalyuk
- <pavel.dovgaluk@ispras.ru>,  Victor Toso de Carvalho
- <victortoso@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  qemu-block@nongnu.org,
- Ani Sinha
- <anisinha@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Peter Xu
- <peterx@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Lukas Straub
- <lukasstraub2@web.de>,
- Igor Mammedov <imammedo@redhat.com>,  Jason Wang <jasowang@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz <hreitz@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: Re: [PATCH v2 04/21] docs/qapidoc: delint a tiny portion of the module
-In-Reply-To: <20240626222128.406106-5-jsnow@redhat.com> (John Snow's message
- of "Wed, 26 Jun 2024 18:21:10 -0400")
-References: <20240626222128.406106-1-jsnow@redhat.com>
- <20240626222128.406106-5-jsnow@redhat.com>
-Date: Fri, 28 Jun 2024 09:29:10 +0200
-Message-ID: <874j9d1q61.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Rrp55Xpz4wc8;
+ Fri, 28 Jun 2024 17:29:14 +1000 (AEST)
+Message-ID: <a11f1b60-fc26-4d38-88be-e334987436a8@kaod.org>
+Date: Fri, 28 Jun 2024 09:29:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.212,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v42 13/98] hw/sd/sdcard: Add direct reference to SDProto
+ in SDState
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240628070216.92609-1-philmd@linaro.org>
+ <20240628070216.92609-14-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240628070216.92609-14-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=GU6n=N6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,27 +67,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On 6/28/24 9:00 AM, Philippe Mathieu-Daudé wrote:
+> Keep direct reference to SDProto in SDState,
+> remove then unnecessary sd_proto().
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Cédric Le Goater <clg@redhat.com>
 
-> In a forthcoming series that adds a new QMP documentation generator, it
-> will be helpful to have a linting baseline. However, there's no need to
-> shuffle around the deck chairs too much, because most of this code will
-> be removed once that new qapidoc generator (the "transmogrifier") is in
-> place.
->
-> To ease my pain: just turn off the black auto-formatter for most, but
-> not all, of qapidoc.py. This will help ensure that *new* code follows a
-> coding standard without bothering too much with cleaning up the existing
-> code.
->
-> Code that I intend to keep is still subject to the delinting beam.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
-Not an objection, just so you know: I still see a few C0411 like 'third
-party import "import sphinx" should be placed before ...'
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-R-by stands.
+Thanks,
+
+C.
+
+
+> ---
+>   hw/sd/sd.c | 37 +++++++++++++++++--------------------
+>   1 file changed, 17 insertions(+), 20 deletions(-)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index 8f441e418c..aaa50ab2c5 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -116,6 +116,8 @@ struct SDState {
+>       uint8_t spec_version;
+>       BlockBackend *blk;
+>   
+> +    const SDProto *proto;
+> +
+>       /* Runtime changeables */
+>   
+>       uint32_t mode;    /* current card mode, one of SDCardModes */
+> @@ -154,18 +156,11 @@ struct SDState {
+>   
+>   static void sd_realize(DeviceState *dev, Error **errp);
+>   
+> -static const struct SDProto *sd_proto(SDState *sd)
+> -{
+> -    SDCardClass *sc = SD_CARD_GET_CLASS(sd);
+> -
+> -    return sc->proto;
+> -}
+> -
+>   static const SDProto sd_proto_spi;
+>   
+>   static bool sd_is_spi(SDState *sd)
+>   {
+> -    return sd_proto(sd) == &sd_proto_spi;
+> +    return sd->proto == &sd_proto_spi;
+>   }
+>   
+>   static const char *sd_version_str(enum SDPhySpecificationVersion version)
+> @@ -1044,7 +1039,7 @@ static bool address_in_range(SDState *sd, const char *desc,
+>   static sd_rsp_type_t sd_invalid_state_for_cmd(SDState *sd, SDRequest req)
+>   {
+>       qemu_log_mask(LOG_GUEST_ERROR, "%s: CMD%i in a wrong state: %s (spec %s)\n",
+> -                  sd_proto(sd)->name, req.cmd, sd_state_name(sd->state),
+> +                  sd->proto->name, req.cmd, sd_state_name(sd->state),
+>                     sd_version_str(sd->spec_version));
+>   
+>       return sd_illegal;
+> @@ -1053,7 +1048,7 @@ static sd_rsp_type_t sd_invalid_state_for_cmd(SDState *sd, SDRequest req)
+>   static sd_rsp_type_t sd_invalid_mode_for_cmd(SDState *sd, SDRequest req)
+>   {
+>       qemu_log_mask(LOG_GUEST_ERROR, "%s: CMD%i in a wrong mode: %s (spec %s)\n",
+> -                  sd_proto(sd)->name, req.cmd, sd_mode_name(sd->mode),
+> +                  sd->proto->name, req.cmd, sd_mode_name(sd->mode),
+>                     sd_version_str(sd->spec_version));
+>   
+>       return sd_illegal;
+> @@ -1062,7 +1057,7 @@ static sd_rsp_type_t sd_invalid_mode_for_cmd(SDState *sd, SDRequest req)
+>   static sd_rsp_type_t sd_cmd_illegal(SDState *sd, SDRequest req)
+>   {
+>       qemu_log_mask(LOG_GUEST_ERROR, "%s: Unknown CMD%i for spec %s\n",
+> -                  sd_proto(sd)->name, req.cmd,
+> +                  sd->proto->name, req.cmd,
+>                     sd_version_str(sd->spec_version));
+>   
+>       return sd_illegal;
+> @@ -1073,7 +1068,7 @@ __attribute__((unused))
+>   static sd_rsp_type_t sd_cmd_unimplemented(SDState *sd, SDRequest req)
+>   {
+>       qemu_log_mask(LOG_UNIMP, "%s: CMD%i not implemented\n",
+> -                  sd_proto(sd)->name, req.cmd);
+> +                  sd->proto->name, req.cmd);
+>   
+>       return sd_illegal;
+>   }
+> @@ -1166,7 +1161,7 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+>        * However there is no ACMD55, so we want to trace this particular case.
+>        */
+>       if (req.cmd != 55 || sd->expecting_acmd) {
+> -        trace_sdcard_normal_command(sd_proto(sd)->name,
+> +        trace_sdcard_normal_command(sd->proto->name,
+>                                       sd->last_cmd_name, req.cmd,
+>                                       req.arg, sd_state_name(sd->state));
+>       }
+> @@ -1185,8 +1180,8 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+>           return sd_illegal;
+>       }
+>   
+> -    if (sd_proto(sd)->cmd[req.cmd]) {
+> -        return sd_proto(sd)->cmd[req.cmd](sd, req);
+> +    if (sd->proto->cmd[req.cmd]) {
+> +        return sd->proto->cmd[req.cmd](sd, req);
+>       }
+>   
+>       switch (req.cmd) {
+> @@ -1632,12 +1627,12 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
+>                                       SDRequest req)
+>   {
+>       sd->last_cmd_name = sd_acmd_name(req.cmd);
+> -    trace_sdcard_app_command(sd_proto(sd)->name, sd->last_cmd_name,
+> +    trace_sdcard_app_command(sd->proto->name, sd->last_cmd_name,
+>                                req.cmd, req.arg, sd_state_name(sd->state));
+>       sd->card_status |= APP_CMD;
+>   
+> -    if (sd_proto(sd)->acmd[req.cmd]) {
+> -        return sd_proto(sd)->acmd[req.cmd](sd, req);
+> +    if (sd->proto->acmd[req.cmd]) {
+> +        return sd->proto->acmd[req.cmd](sd, req);
+>       }
+>   
+>       switch (req.cmd) {
+> @@ -1928,7 +1923,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
+>       if (sd->card_status & (ADDRESS_ERROR | WP_VIOLATION))
+>           return;
+>   
+> -    trace_sdcard_write_data(sd_proto(sd)->name,
+> +    trace_sdcard_write_data(sd->proto->name,
+>                               sd->last_cmd_name,
+>                               sd->current_cmd, sd->data_offset, value);
+>       switch (sd->current_cmd) {
+> @@ -2083,7 +2078,7 @@ uint8_t sd_read_byte(SDState *sd)
+>   
+>       io_len = (sd->ocr & (1 << 30)) ? 512 : sd->blk_len;
+>   
+> -    trace_sdcard_read_data(sd_proto(sd)->name,
+> +    trace_sdcard_read_data(sd->proto->name,
+>                              sd->last_cmd_name,
+>                              sd->current_cmd, sd->data_offset, io_len);
+>       switch (sd->current_cmd) {
+> @@ -2227,7 +2222,9 @@ static const SDProto sd_proto_sd = {
+>   static void sd_instance_init(Object *obj)
+>   {
+>       SDState *sd = SD_CARD(obj);
+> +    SDCardClass *sc = SD_CARD_GET_CLASS(sd);
+>   
+> +    sd->proto = sc->proto;
+>       sd->last_cmd_name = "UNSET";
+>       sd->enable = true;
+>       sd->ocr_power_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, sd_ocr_powerup, sd);
 
 
