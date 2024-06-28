@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DB94C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44E75C3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 12:45:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNAxZ-00069G-PP; Fri, 28 Jun 2024 08:44:13 -0400
+	id 1sNAxu-0006YN-OE; Fri, 28 Jun 2024 08:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNAwh-0004tV-OF
+ id 1sNAwh-0004tS-NS
  for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:23 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sNAwY-0005ip-Ez
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:13 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-57d2fc03740so698949a12.0
+ id 1sNAwY-0005j6-It
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 08:43:14 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a70c0349b64so74688766b.1
  for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 05:43:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1719578589; x=1720183389; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/lQrpNj9Yq6e2VZHJs41tWCzx2SCmT2FMLZDJQM+poI=;
- b=aDSVYpI6TDULZNdIwdKhalEMtN8zslvehkhc7LL62xAXMcCXO+gIMRYYHKQzhc9+lV
- hsVXCgjcv01V0OlphTo6ENmcB+M15Fclgzc8e4TzvxNEF0Xqp0gqsooAW4Ljnvxrh7Bp
- Ri7i0Qv++oWx3DrVQHC22owXLHRW0DN6gpBCNFeBK0FXCGTcwDtdOjfANB7z70zppGRG
- 48i/Mof+bnksWoH3L6Aplyrqi4CAunL+lNZS38yL/Hyi3Pw6oAG4wEBjUjt6HDmR1e9t
- BdmmyL8w8bbEskFIWM+Qm+4Rwf2DcD/Ylwy5r7/NLSXxwhMHJxLDuLLjokw2917zBCFz
- kulw==
+ bh=ho2Bfe7yXa5eu8lKetJ/WAF5D27mUTaA0a7vXnXcLIs=;
+ b=UiA3wMdDi9azzqANHOWxpBFdUIGqoYCn6onDTaSQohjFr5LzBnLnsnvxr5xxdzb+P8
+ amdf8MDjFypgaTwKoZrmglvHySqszm14HaCvUAlbZtL8wNNG62sIRPPD5uLnNPZff4YY
+ mGk8773BJPx9LTgE3UZyLTOg9bnA5YboV3krgxTX2VKJoUPT2fYp/yvq2xmYTirGvvCJ
+ ZiuU53MCpnAYi+YH+YDclGYyzWSokTMfmD3yXFDXwDxRythWnNiCksqPXu8xG3jRW0Dy
+ D4xkR/rwlPjhMoar55nRWL1ZKcjAZNvOTlNtfwT/agqD0yWsUONBQqwh6ij2HhBNHB6r
+ ewYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1719578589; x=1720183389;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/lQrpNj9Yq6e2VZHJs41tWCzx2SCmT2FMLZDJQM+poI=;
- b=KRfixRe4hRrrX4GhW+UFkTOLOHG20IS5HX9ypOBKfpq4jPqVoFLs9x8qnvO138rYvE
- joSHn9zQEgoxPjvqp1cifY+rOodIstihLZJ6jwaT9rXduV+Z795x+sQUgxbif79J70G6
- hVMvQvXncPYaJWDMYSMfsI9iH4rr6qn763rMJJcJbm6wCPKCzUNN3r7gz9NdWMRxrJcD
- CZUp9JP7kOYcjOldzZFZIdlTeAnZRJXOXpOwimYsfHdYyX695mi6aQhastV3aMY0j+DB
- DXc84Rdpx9gxQBm3MtFsZ9kvEIUKWmzc9K6Yl/UDwcDdkfj59PbZ8Ca7nljnb3yRqBgu
- wA2w==
-X-Gm-Message-State: AOJu0YwVKRWcgWDHj3zBGZbW5NsKDpj14nFeI63lMPw4zORqdvFRH0to
- vSd10omxSENCKAWbze9z1+zd74XU6ARy46qHArXs895uSODWcQ0QoZ8WgONCIT8=
-X-Google-Smtp-Source: AGHT+IGMunC04TdtPY6LkRLCf0WZt9814RwPekLOjvRi1GtNFOE3UfHThvaqo1gknzXR9el/Nzk8RA==
-X-Received: by 2002:a50:9e84:0:b0:57c:60f0:98bc with SMTP id
- 4fb4d7f45d1cf-57d4bd69fa4mr11371811a12.11.1719578588583; 
+ bh=ho2Bfe7yXa5eu8lKetJ/WAF5D27mUTaA0a7vXnXcLIs=;
+ b=hlveH9aaZPy5sK6zv74i7n429y2mfTrTuytCNdMvTDL6LsgVzqB53wwwFdpT2PLKJJ
+ ijZbzWpkyt/DOT+WrkvUhDq6p5fzosd0pe4+t+PvMfo0lrqCWVRAP7HrNWONBgENJbuH
+ 4CV87vctqfTjxY7CwaLLPzZXEEsAvPYB//iZL8Wq7eieVbqc2w4N9pPwPYg9JE+95otS
+ QIRTBZyI9oxzLxtWcnrFGCV2QxnaruPBqIgLYL3eaihRj40qaVcM1vmKgDEMAV7T5Mq7
+ omJesKDi7H0OVSHlg3+5AAQHrYkm98CoQhC8Yc2JKmprYrAtOiQnFo4BxNu3k/7EfgRU
+ lnIg==
+X-Gm-Message-State: AOJu0YzOjU+3EJrgbr7Gd1shqYl69wNGXPyyhuMB2bN0O/IlzMghtWde
+ Vzc7QozA7Qw2+KPi7pO3obVP6xkRXIhrvXE7UkKsFykd+bgNd1eGgRRlDIMLm1s=
+X-Google-Smtp-Source: AGHT+IF4G8patYBExv+hrLhLi4FytMuhVq1PzZO7m0o0XKrHJ63Ng1gMHJxbe4YfWmLRAqEMyKouOA==
+X-Received: by 2002:a17:906:b20b:b0:a72:8d40:52b8 with SMTP id
+ a640c23a62f3a-a728d405f59mr429715766b.3.1719578588974; 
  Fri, 28 Jun 2024 05:43:08 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58613816055sm980993a12.46.2024.06.28.05.43.01
+ a640c23a62f3a-a72b4125807sm34634166b.86.2024.06.28.05.43.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 28 Jun 2024 05:43:03 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 08A0A5FA38;
- Fri, 28 Jun 2024 13:43:00 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id CE9505FA36;
+ Fri, 28 Jun 2024 13:42:59 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
@@ -75,24 +75,24 @@ Cc: David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 11/23] plugins/lockstep: mention the one-insn-per-tb option
-Date: Fri, 28 Jun 2024 13:42:46 +0100
-Message-Id: <20240628124258.832466-12-alex.bennee@linaro.org>
+Subject: [PATCH 09/23] plugins/lockstep: preserve sock_path
+Date: Fri, 28 Jun 2024 13:42:44 +0100
+Message-Id: <20240628124258.832466-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240628124258.832466-1-alex.bennee@linaro.org>
 References: <20240628124258.832466-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,27 +108,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This really helps with lockstep although its super slow on big jobs.
+We can't assign sock_path directly from the autofree'd GStrv, take a
+copy.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- contrib/plugins/lockstep.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ contrib/plugins/lockstep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
-index 761bcdf363..353bf12dfb 100644
+index 237543b43a..111ec3fa27 100644
 --- a/contrib/plugins/lockstep.c
 +++ b/contrib/plugins/lockstep.c
-@@ -14,7 +14,8 @@
-  * particular run may execute the exact same sequence of blocks. An
-  * asynchronous event (for example X11 graphics update) may cause a
-  * block to end early and a new partial block to start. This means
-- * serial only test cases are a better bet. -d nochain may also help.
-+ * serial only test cases are a better bet. -d nochain may also help
-+ * as well as -accel tcg,one-insn-per-tb=on
-  *
-  * This code is not thread safe!
-  *
+@@ -347,7 +347,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                 return -1;
+             }
+         } else if (g_strcmp0(tokens[0], "sockpath") == 0) {
+-            sock_path = tokens[1];
++            sock_path = strdup(tokens[1]);
+         } else {
+             fprintf(stderr, "option parsing failed: %s\n", p);
+             return -1;
 -- 
 2.39.2
 
