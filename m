@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 676A6C30658
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 18:02:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 156ECC2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 18:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNFvL-00047s-0B; Fri, 28 Jun 2024 14:02:15 -0400
+	id 1sNFvQ-0004D9-TX; Fri, 28 Jun 2024 14:02:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sNFvG-00047T-FY
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:02:10 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1sNFvN-0004A9-CC
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:02:18 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sNFvE-0001y2-Gb
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:02:10 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7067435d376so674225b3a.0
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 11:02:07 -0700 (PDT)
+ id 1sNFvG-0001yN-Ss
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 14:02:16 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7067a2e9607so774114b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 11:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1719597726; x=1720202526;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1719597729; x=1720202529;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4UNuLrnsqrqpceV4ps+gzasQN/xbW2gCCwaF7vdPSQE=;
- b=Frx+mgg60F8pQZfc58qDOvmzY9IkV4/sLWMMxQ1OOhNd5BBU0ahS6+985iB2yHcCiu
- 85av1NeKArD1G6rOMB5JWiC5JytMsqZ6v1V0bp3fzEKT+SqduosrwSaRw0uHrRiGLgW0
- hw0elFZTQv5iLbpkaJ2M2OuWMvcitRtLBcwft37slXh9qn3qcg3flo+kK8EDYv9Tvo/p
- fd7CPeaVtPYA7UcCGQKevAZzBJNDTiT/3zGEvo8czfrYD55zitURXzTkLAj0MDWECr6a
- 3X0R17J2xgmCV4ye7g6IEKOffy5ax/0KkIfbD6ZDFbsEKR88Omz7RyI98rZF42eRMEmo
- 2dIA==
+ bh=6sXjClItUxAXVfz2ZiNHNCRQGNFtkjV4JIRz09fn8z8=;
+ b=fNxJkTY9hVOAxFKAxAkhzojTjmJ6p7wJp8uMu/1uuKPzumYF4B8u4y4emu89pNozQE
+ XHsOkupF8CmaSTfHCl/9Zhg9F66msAwd4ghXBCLlpv1TmcwQIjEYQqxXTwWusZJEyuI4
+ bwI5zJ4dBWefWyvtFMDcrBE8+kzqG49ZdJMmF9tcxuPfK0hCiSI4Gw+PZvMEyGzV++jU
+ 7L4Xhr6uBULwFLBwsUO6f7glXEftF8VtbHJ/gsBCaNJJacS78VUj3FJjLPP7k681zv/y
+ WM7LHihYzq4B6NdkuM1d8XqL4mB+Yy2qFauBRAeny58Ed78wSdGV77GqBrfwmmeW4EAM
+ gugg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719597726; x=1720202526;
+ d=1e100.net; s=20230601; t=1719597729; x=1720202529;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4UNuLrnsqrqpceV4ps+gzasQN/xbW2gCCwaF7vdPSQE=;
- b=M/GRnI30iI+kQt1/NZNJKA/XRg6sTFi31d6zD5zMVsWHzRzk70/5FoUmoZSQl1b+eg
- dYIDRR4qGIn/RrC2en5uUzdtQmhZ39eGI+UApyTJgKJDQttIeDWsFLj7Qt3o6t4gGvSn
- o5G+mYt5wzIWRjgbWhBLRyjinNib+Al2Paigg7ojszqShtt12zFNLkD6/DAXtE86SmdA
- thNI404F9cuzO5qit32OqyqtLPBO5jW5Yytk95mEMHChoaq9uCluZbg081n8Ss0C6xfb
- MDkRGH11z6MNsqdfUcvzBRqYWfimC3CPsSJbAoXPhWdb6CrIEKt/EbZsyxDm53DyrEJX
- begQ==
-X-Gm-Message-State: AOJu0YwAZ4FR+trpk1MbW1P2v4chqBeOrHhmTKzqGVbmhQ6YtkXPObA6
- X9zeSiLVXlvR2ZPNIK6ViodHWpzpKN57D/6Ulx4vDDm7YYSHQXAtoz+3SR6HYRD0qKYo+oZ0tdh
- w
-X-Google-Smtp-Source: AGHT+IGmw0vs8ADXXSdmG+ZXSSRdptWXJo+l+SNlyiRYlyMPAExughHuPA35xxj8sA9sWSPBP3ZjgQ==
-X-Received: by 2002:a05:6a21:10f:b0:1bd:2216:eafe with SMTP id
- adf61e73a8af0-1bee497c50dmr3014556637.24.1719597726105; 
- Fri, 28 Jun 2024 11:02:06 -0700 (PDT)
+ bh=6sXjClItUxAXVfz2ZiNHNCRQGNFtkjV4JIRz09fn8z8=;
+ b=HzPXvottVshT3wjf/MWG3JPXL9rXPn9lpWraUYt3Do4s0/bmjOF4uDOHlb5w5tLc+l
+ CBUoiuRZBvk4I+UmR9BVhTTkGuEkUEqjEWWb+D4cre+4dVNboTqG29AxnCv2nYVeaUgX
+ tc7p/IRHs+hysQJffdbItyW2+8PNpnsci+wbV8XhVWvIDv7ZbSd2spRj82MfrBzxu7/f
+ 42ry1IxIKtiPGMo6dmMAAOiGYR1hNY3alod7vLYX0wyVXNzg7yghJhdbUrz7kxZ0cd+t
+ 99ICfC2mz8qFTAUXJYz1x8+mQtxb5uZSBF6CXlPCUYuzi2VRq9r/8UEQ/qcc3Zcc9oAn
+ zYVg==
+X-Gm-Message-State: AOJu0YxhNVX3DDL8rs6Pz5WdrThzDfS01MNoq+zI7EgY3D6LO2Ym0bRx
+ jwv7L5fYOuUMbLiiXbI4ZcgNQU6KAKZxaGZhWs/pPtroEX19vFvgKFYAMyPpbsH2HTwOzydS8nA
+ q
+X-Google-Smtp-Source: AGHT+IF86C6t2Acs/PeklWQKlCcbrI50nIgtbtfojCPJ0sBO2z96TZ+bHKZRZXjAGIlajMCPhET2eg==
+X-Received: by 2002:a05:6a00:1750:b0:704:3aca:7845 with SMTP id
+ d2e1a72fcca58-70670ffabb7mr16897133b3a.22.1719597729259; 
+ Fri, 28 Jun 2024 11:02:09 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70842036d13sm1752053b3a.98.2024.06.28.11.02.05
+ d2e1a72fcca58-70842036d13sm1752053b3a.98.2024.06.28.11.02.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 28 Jun 2024 11:02:05 -0700 (PDT)
+ Fri, 28 Jun 2024 11:02:08 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-devel@nongnu.org
 Cc: Deepak Gupta <debug@rivosinc.com>, Palmer Dabbelt <palmer@dabbelt.com>,
@@ -68,18 +68,17 @@ Cc: Deepak Gupta <debug@rivosinc.com>, Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [PATCH 2/3] target/riscv: zimop instruction encoding and its
- implementation
-Date: Fri, 28 Jun 2024 11:01:53 -0700
-Message-Id: <20240628180154.597919-2-debug@rivosinc.com>
+Subject: [PATCH 3/3] target/riscv: Introduce `compressed zimop` aka `zcmop`
+Date: Fri, 28 Jun 2024 11:01:54 -0700
+Message-Id: <20240628180154.597919-3-debug@rivosinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240628180154.597919-1-debug@rivosinc.com>
 References: <qemu-riscv@nongnu.org>
  <20240628180154.597919-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=debug@rivosinc.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=debug@rivosinc.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,114 +100,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds assigned codepoints for decoder for 32bit instructions
-and provide implementation for instruction. If extension is present,
-then moves 0 to `rd`.
+Analogous to zimop, there are 8 encodings carved out of illegal space
+encodings (c.lui xn, 0) in compressed instructions which are defined
+to be zcmops short for compressed may be operations.
+
+Unlike zimops (which write 0 to rd), zcmops don't actually write anything
+to any register. Their encodings allow future extensions to define them to
+read register x[n].
 
 Signed-off-by: Deepak Gupta <debug@rivosinc.com>
 ---
- target/riscv/insn32.decode                 | 15 +++++++
- target/riscv/insn_trans/trans_zimops.c.inc | 50 ++++++++++++++++++++++
- target/riscv/translate.c                   |  3 ++
- 3 files changed, 68 insertions(+)
- create mode 100644 target/riscv/insn_trans/trans_zimops.c.inc
+ target/riscv/insn16.decode                 |  6 ++++++
+ target/riscv/insn_trans/trans_zimops.c.inc | 11 +++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index f22df04cfd..fca3838a9f 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -167,6 +167,21 @@ csrrwi   ............     ..... 101 ..... 1110011 @csr
- csrrsi   ............     ..... 110 ..... 1110011 @csr
- csrrci   ............     ..... 111 ..... 1110011 @csr
+diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
+index b96c534e73..d24b54d319 100644
+--- a/target/riscv/insn16.decode
++++ b/target/riscv/insn16.decode
+@@ -32,6 +32,7 @@
+ %uimm_cl_w     5:1 10:3 6:1       !function=ex_shift_2
+ %imm_cb        12:s1 5:2 2:1 10:2 3:2 !function=ex_shift_1
+ %imm_cj        12:s1 8:1 9:2 6:1 7:1 2:1 11:1 3:3 !function=ex_shift_1
++%zcmop_n       8:3
  
-+# zimops (unpriv integer may be operations) instructions with system opcode
-+# zimops_r and zimops_rr are two code points assigned to zimops
-+# Any new extension that claims zimops encoding should be placed above mop.r
-+# and mop.rr
+ %shlimm_6bit  12:1 2:5               !function=ex_rvc_shiftli
+ %shrimm_6bit  12:1 2:5               !function=ex_rvc_shiftri
+@@ -66,6 +67,8 @@
+ &cmpp      urlist spimm
+ &cmjt      index
+ 
++&cmop      zcmop_n
 +
-+# mop.r
-+{
-+  zimops_r   1-00--0 111--     ----- 100 ..... 1110011 %rd
-+}
+ # Formats 16:
+ @cr        ....  ..... .....  .. &r      rs2=%rs2_5       rs1=%rd     %rd
+ @ci        ... . ..... .....  .. &i      imm=%imm_ci      rs1=%rd     %rd
+@@ -109,6 +112,8 @@
+ @cm_mv        ... ...  ... .. ... ..  &r2_s  rs2=%r2s     rs1=%r1s
+ @cm_jt        ... ...  ........   ..  &cmjt  %index
+ 
++@c_mop        ... . .....  ..... ..  &cmop %zcmop_n
 +
-+# mop.rr
-+{
-+  zimops_rr  1-00--1 -----     ----- 100 ..... 1110011 %rd
-+}
-+
- # *** RV64I Base Instruction Set (in addition to RV32I) ***
- lwu      ............   ..... 110 ..... 0000011 @i
- ld       ............   ..... 011 ..... 0000011 @i
+ # *** RV32/64C Standard Extension (Quadrant 0) ***
+ {
+   # Opcode of all zeros is illegal; rd != 0, nzuimm == 0 is reserved.
+@@ -140,6 +145,7 @@ sw                110  ... ... .. ... 00 @cs_w
+ addi              000 .  .....  ..... 01 @ci
+ addi              010 .  .....  ..... 01 @c_li
+ {
++  zcmops          011 0  0...1  00000 01 @c_mop # zcmop carving out of illegal c.lui xn,0 space
+   illegal         011 0  -----  00000 01 # c.addi16sp and c.lui, RES nzimm=0
+   addi            011 .  00010  ..... 01 @c_addi16sp
+   lui             011 .  .....  ..... 01 @c_lui
 diff --git a/target/riscv/insn_trans/trans_zimops.c.inc b/target/riscv/insn_trans/trans_zimops.c.inc
-new file mode 100644
-index 0000000000..b5ad7bded8
---- /dev/null
+index b5ad7bded8..99f25bd9ea 100644
+--- a/target/riscv/insn_trans/trans_zimops.c.inc
 +++ b/target/riscv/insn_trans/trans_zimops.c.inc
-@@ -0,0 +1,50 @@
-+/*
-+ * RISC-V translation routines for the Control-Flow Integrity Extension
-+ *
-+ * Copyright (c) 2024 Rivos Inc.
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+static bool trans_zimops_r(DisasContext *ctx, arg_zimops_r * a)
+@@ -48,3 +48,14 @@ static bool trans_zimops_rr(DisasContext *ctx, arg_zimops_r * a)
+     gen_set_gpr(ctx, a->rd, dest);
+     return true;
+ }
++
++static bool trans_zcmops(DisasContext *ctx, arg_zcmops * a)
 +{
-+    /* zimops not implemented, raise illegal instruction & return true */
++    /* zimops not implemented, return false */
 +    if (!ctx->cfg_ptr->ext_zimops) {
 +        gen_exception_illegal(ctx);
-+        return true;
++        return false;
 +    }
-+    /*
-+     * zimops implemented, simply grab destination and mov zero.
-+     * return true
-+     */
-+    TCGv dest = dest_gpr(ctx, a->rd);
-+    dest = tcg_constant_tl(0);
-+    gen_set_gpr(ctx, a->rd, dest);
++
 +    return true;
 +}
-+
-+static bool trans_zimops_rr(DisasContext *ctx, arg_zimops_r * a)
-+{
-+    /* zimops not implemented, raise illegal instruction & return true */
-+    if (!ctx->cfg_ptr->ext_zimops) {
-+        gen_exception_illegal(ctx);
-+        return true;
-+    }
-+    /*
-+     * zimops implemented, simply grab destination and mov zero.
-+     * return true
-+     */
-+    TCGv dest = dest_gpr(ctx, a->rd);
-+    dest = tcg_constant_tl(0);
-+    gen_set_gpr(ctx, a->rd, dest);
-+    return true;
-+}
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 2c27fd4ce1..b7fd3456c8 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1115,6 +1115,9 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
- /* Include decoders for factored-out extensions */
- #include "decode-XVentanaCondOps.c.inc"
- 
-+/* Include decoder for zimop */
-+#include "insn_trans/trans_zimops.c.inc"
-+
- /* The specification allows for longer insns, but not supported by qemu. */
- #define MAX_INSN_LEN  4
- 
 -- 
 2.34.1
 
