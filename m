@@ -4,78 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB8EC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B05AC2BBCA
 	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5iu-0005Rk-M3; Fri, 28 Jun 2024 03:08:45 -0400
+	id 1sN5kU-0001EQ-G5; Fri, 28 Jun 2024 03:10:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5ia-0004rb-H6
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:08:25 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5kM-0000yd-0g
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:10:16 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5iY-0004Ov-44
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:08:24 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2ec52fbb50cso2291951fa.2
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:08:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5kK-0004md-B1
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:10:13 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-363826fbcdeso217155f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719558500; x=1720163300; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+rsesIuhtBSUnVsKBhHCEih6zsr/jqTHDocjiLfN9Uk=;
- b=KtbZr7Ic/VrENL0t8JNga1G3/kJXa8g4zxNoj35jAl+JVk51gRXuMzlu59oiJv/DRS
- 1mBlUKUs9hUZwRskQYr7o8L8/g8Zxx7KI8rnwIWO+O3O2/zJf+feSkjS2HnxsF2qT9YH
- VIFHjL5HjOCYfKZj28tLjKoyiEdpndFFjQ+vil1b69rFF9yao7eAmlauROiVSvEausrF
- upkfvRCNhSLsmjBVIwiDAIyRRkyfbfcFFv1agjznS7OLgGNa2Jlx85j56+I2QFL0J9zx
- bAkGNdb/TmLgbq1LJCK51h9tFBS1uZnkq7q3uttGlfWPaepcDKjwzhfcmwUOfIWidYLH
- iISg==
+ d=linaro.org; s=google; t=1719558610; x=1720163410; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=DS5w/rOHX5RjJWkmyFPsFftFPu5c4nwaKlj59xhrXaU=;
+ b=CDSj3NT6P+VVs/CY9mPoepzDmo/l6jZpeMcjrJX62Sw2ZWOr9/wCmS4BAJCjVq/crV
+ wIqgbY2n0OXemiypjPuk7GzKJ1JtdW1K6VUqUaSts91LqWCJ3N3nwWJ//LoTZRwO8nx0
+ o+vagoML+KfEU7nIzvlyICenWWsmWLlSTAEncDlKDrzIwyGYlXGBR6Vx9jnimkZCfj3w
+ lvInTp0UKVzEz8QiK7pxVVnqaul44hF7qBBu2iO3pwFnm6UpcfpNQ18+aNy0LI0hxJXb
+ gl1jp9Ts843C7HTR6/v8JYkbrdaTj3SLO6TYAmbUfT9HE5bcxCKsFvAX6gsB7rrPjM9r
+ /76g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719558500; x=1720163300;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+rsesIuhtBSUnVsKBhHCEih6zsr/jqTHDocjiLfN9Uk=;
- b=rD3HDCX+cMcKOl6TeU3RRSdtIHBTZ5rCJAxQO0OPXeuPY4ChFfgSipsVJozkfzBNXr
- +tY9QFwEryTSquRQiJI/PJ0Y/Pj6J9FXpRhQvRLNkOTSAYc+I+G+EzE8cQfKQc/58K+8
- uLO4vl99+xwNlbXWbvqfGHJzTB6vUMc1RHv93dVmabALdM9IXSg84Yg6mqdAQIdOzhFN
- l6D/QP0jBJV8l2LiO1KCxx9hy3lbbbrFNNYTzi0UMiGRGXkQjf7ZhzguhvYMTQ3iwu3D
- ZSo6eKe2xKSHKalg9xl2C9w5eVtB5VLtCnYDW1lZBYlaq5e7kfgCo4/np0L+jHcZK7OF
- bdVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVN0q+O06Yc+sCMlREq2IF1cab4gvRSVF0AqPC+fdLmWgWRgWxYxZ++BT9h2+vJuzD2vvKrF/nFzUeALTfdfL6YmdpjvwU=
-X-Gm-Message-State: AOJu0YxdiDeclDsRRD/cYu4S+3N+abBZrShQz3BCFZ07Hs2ANMvQWVwA
- I+muF+5CS9nKSGhRzvBSbUnKHUvcQ/cvJ2Nn2AMKtaAup6TINp4lL0rKtEqt1WA=
-X-Google-Smtp-Source: AGHT+IH5x9/wDPHsFJ2zKyxqnaONq5wPgF+OReZxl0StuSIxW1nO4VStu4UfBp9BBRmaaJfhSNviuA==
-X-Received: by 2002:a05:651c:154b:b0:2ec:61b5:2162 with SMTP id
- 38308e7fff4ca-2ec61b521d6mr104658061fa.25.1719558499924; 
- Fri, 28 Jun 2024 00:08:19 -0700 (PDT)
-Received: from [192.168.69.100] (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
+ d=1e100.net; s=20230601; t=1719558610; x=1720163410;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DS5w/rOHX5RjJWkmyFPsFftFPu5c4nwaKlj59xhrXaU=;
+ b=ilNQnru5nhWPfChdhzIXZlepLlTFuTKfdoG53jnX0pbd4STXPp0FFHPFaA2LzH9cws
+ 3ibC5+TBsSEEyzccqSfKp6eHROqCcDFOY4tcPnZxeIMTde/YrcsAfY+X83SVmY0AlXk2
+ o8cYSA8rk+euY1kh/p2utNZ1IOs1+6iG5klK2C1XNaz3jFgfQpPFEuM+uRkJuJVFj2QU
+ /l0n/JK6U6mIEjRld5vC5aeyQiUBj8JzNDb79w/UEPKJRUoTjYW4mtjL4BA1Kye6JTlD
+ 6Sl+VQymt9FzIuvFfZ+iVKQhx6/YWBsoQqjd2BOSR1aJTEr8DVX5/0I37IFrUK2RELg0
+ JK1A==
+X-Gm-Message-State: AOJu0YzfnsIynYoYS+bFBSvqDlU07zjuXxKg4DSbrOs9LLxsNP9GuYh8
+ 6hGM29ej7tSIiyA0FraRZgQ5Gb/hLEL7h8ipWwdBHeFXzEqCAEERVwIDWcbblgTzCfXnzzgveas
+ iNWo=
+X-Google-Smtp-Source: AGHT+IGJck/Kxzj1SLwgB+78hbRNbWahwbyuTPMv49QxYHdJWhUGRUpdxj928fPf5QGLDuOvihYCjQ==
+X-Received: by 2002:a05:6000:178f:b0:366:ee52:28bf with SMTP id
+ ffacd0b85a97d-366ee522954mr12776879f8f.59.1719558609677; 
+ Fri, 28 Jun 2024 00:10:09 -0700 (PDT)
+Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
  [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256aed2263sm22874775e9.0.2024.06.28.00.08.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 00:08:19 -0700 (PDT)
-Message-ID: <18343152-c677-4075-8c55-9a2802742a79@linaro.org>
-Date: Fri, 28 Jun 2024 09:08:15 +0200
+ ffacd0b85a97d-3675a0e143csm1340442f8f.59.2024.06.28.00.10.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 28 Jun 2024 00:10:09 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PATCH v42 80/98] hw/sd/sdcard: Introduce set_csd/set_cid handlers
+Date: Fri, 28 Jun 2024 09:01:56 +0200
+Message-ID: <20240628070216.92609-81-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
+References: <20240628070216.92609-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 06/11] target/arm: Factor out code for setting MTE TCF0
- field
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, richard.henderson@linaro.org
-Cc: peter.maydell@linaro.org
-References: <20240628050850.536447-1-gustavo.romero@linaro.org>
- <20240628050850.536447-7-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240628050850.536447-7-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,97 +91,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/6/24 07:08, Gustavo Romero wrote:
-> Factor out the code used for setting the MTE TCF0 field from the prctl
-> code into a convenient function. Other subsystems, like gdbstub, need to
-> set this field as well, so keep it as a separate function to avoid
-> duplication and ensure consistency in how this field is set across the
-> board.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> ---
->   linux-user/aarch64/meson.build       |  2 ++
->   linux-user/aarch64/mte_user_helper.c | 34 ++++++++++++++++++++++++++++
->   linux-user/aarch64/mte_user_helper.h | 25 ++++++++++++++++++++
->   linux-user/aarch64/target_prctl.h    | 22 ++----------------
->   4 files changed, 63 insertions(+), 20 deletions(-)
->   create mode 100644 linux-user/aarch64/mte_user_helper.c
->   create mode 100644 linux-user/aarch64/mte_user_helper.h
-> 
-> diff --git a/linux-user/aarch64/meson.build b/linux-user/aarch64/meson.build
-> index 248c578d15..f75bb3cd75 100644
-> --- a/linux-user/aarch64/meson.build
-> +++ b/linux-user/aarch64/meson.build
-> @@ -9,3 +9,5 @@ vdso_le_inc = gen_vdso.process('vdso-le.so',
->                                  extra_args: ['-r', '__kernel_rt_sigreturn'])
->   
->   linux_user_ss.add(when: 'TARGET_AARCH64', if_true: [vdso_be_inc, vdso_le_inc])
-> +
-> +linux_user_ss.add(when: 'TARGET_AARCH64', if_true: [files('mte_user_helper.c')])
-> diff --git a/linux-user/aarch64/mte_user_helper.c b/linux-user/aarch64/mte_user_helper.c
-> new file mode 100644
-> index 0000000000..8be6deaf03
-> --- /dev/null
-> +++ b/linux-user/aarch64/mte_user_helper.c
-> @@ -0,0 +1,34 @@
-> +/*
-> + * ARM MemTag convenience functions.
-> + *
-> + * This code is licensed under the GNU GPL v2 or later.
-> + *
-> + * SPDX-License-Identifier: LGPL-2.1-or-later
-> + */
-> +
+In preparation of introducing eMMC support which have
+different CSD/CID structures, introduce a pair of handlers
+in SDCardClass.
 
-   #include "qemu/osdep.h"
-   #include "qemu.h"
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/sd/sd.h | 2 ++
+ hw/sd/sd.c         | 7 +++++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-> +#include <sys/prctl.h>
-> +#include "mte_user_helper.h"
-> +
-> +void arm_set_mte_tcf0(CPUArchState *env, abi_long value)
-> +{
-> +    /*
-> +     * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
-> +     *
-> +     * The kernel has a per-cpu configuration for the sysadmin,
-> +     * /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred,
-> +     * which qemu does not implement.
-> +     *
-> +     * Because there is no performance difference between the modes, and
-> +     * because SYNC is most useful for debugging MTE errors, choose SYNC
-> +     * as the preferred mode.  With this preference, and the way the API
-> +     * uses only two bits, there is no way for the program to select
-> +     * ASYMM mode.
-> +     */
-> +    unsigned tcf = 0;
-> +    if (value & PR_MTE_TCF_SYNC) {
-> +        tcf = 1;
-> +    } else if (value & PR_MTE_TCF_ASYNC) {
-> +        tcf = 2;
-> +    }
-> +    env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
-> +}
-> diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
-> new file mode 100644
-> index 0000000000..ee3f6b190a
-> --- /dev/null
-> +++ b/linux-user/aarch64/mte_user_helper.h
-> @@ -0,0 +1,25 @@
-> +/*
-> + * ARM MemTag convenience functions.
-> + *
-> + * This code is licensed under the GNU GPL v2 or later.
-> + *
-> + * SPDX-License-Identifier: LGPL-2.1-or-later
-> + */
-> +
-> +#ifndef AARCH64_MTE_USER_HELPER_H
-> +#define AARCH64_MTE USER_HELPER_H
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu.h"
-
-NACK. See my comment on v5.
+diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
+index c1a35ab420..0d6d9e452b 100644
+--- a/include/hw/sd/sd.h
++++ b/include/hw/sd/sd.h
+@@ -127,6 +127,8 @@ struct SDCardClass {
+     void (*enable)(SDState *sd, bool enable);
+     bool (*get_inserted)(SDState *sd);
+     bool (*get_readonly)(SDState *sd);
++    void (*set_cid)(SDState *sd);
++    void (*set_csd)(SDState *sd, uint64_t size);
+ 
+     const struct SDProto *proto;
+ };
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index a0da06e017..b0ef252001 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -671,6 +671,7 @@ static inline uint64_t sd_addr_to_wpnum(uint64_t addr)
+ static void sd_reset(DeviceState *dev)
+ {
+     SDState *sd = SD_CARD(dev);
++    SDCardClass *sc = SD_CARD_GET_CLASS(sd);
+     uint64_t size;
+     uint64_t sect;
+ 
+@@ -691,8 +692,8 @@ static void sd_reset(DeviceState *dev)
+     sd->size = size;
+     sd_set_ocr(sd);
+     sd_set_scr(sd);
+-    sd_set_cid(sd);
+-    sd_set_csd(sd, size);
++    sc->set_cid(sd);
++    sc->set_csd(sd, size);
+     sd_set_cardstatus(sd);
+     sd_set_sdstatus(sd);
+ 
+@@ -2472,6 +2473,8 @@ static void sd_class_init(ObjectClass *klass, void *data)
+     sc->enable = sd_enable;
+     sc->get_inserted = sd_get_inserted;
+     sc->get_readonly = sd_get_readonly;
++    sc->set_cid = sd_set_cid;
++    sc->set_csd = sd_set_csd;
+     sc->proto = &sd_proto_sd;
+ }
+ 
+-- 
+2.41.0
 
 
