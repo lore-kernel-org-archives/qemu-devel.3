@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4397CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 16:02:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7547C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 16:02:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNE33-0006BP-VA; Fri, 28 Jun 2024 12:02:06 -0400
+	id 1sNE3Z-00074e-Ep; Fri, 28 Jun 2024 12:02:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNE31-0006Ab-8J
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 12:02:03 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1sNE3X-00072Y-7I
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 12:02:35 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNE2z-0003Gd-89
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 12:02:02 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1f4c7b022f8so5180395ad.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 09:02:00 -0700 (PDT)
+ id 1sNE3V-0003Mq-Bx
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 12:02:34 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-1fa75f53f42so4395865ad.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 09:02:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719590519; x=1720195319; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719590552; x=1720195352; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=u1zBg2dSlMJBfyzgYydD9HYz4rygSlRXEQ+WL6SO1+M=;
- b=JWLVTEboONZoRmphKES9e1VgKbpTs7pUWIGjJzQUmEchdSs0fVh7gxAQPLpfWg/WBk
- 36mRRes9vM4EJlmvqGJ4SVH53Q96/YWkSBZVEEu7PuZDTQ9jJIVXZ7xl9mRzmPgPmawW
- Rt8K5ZiomCFh/aDhDFbQhF26tXDbTNI+zAwElgMR6/2D5ezts6NJevUdS7zBhmFta9V0
- fQfx4QUUxR4gIq/qKOHpVLCyuJ/D0sBZfK6GjAs5/4zni4fTfVnsljYqq5qG39ibTisw
- dDMPUGqidMizD+kdw8wIO24AkKrfENZQQctRZbGKtMHI8ZM0B51I0o1s6JU2+KOSyF6l
- zwSQ==
+ bh=PcscZ4C0HsYscMyQSfmVuPsZtBmqdTuyKlPKREymHEY=;
+ b=nTWHuHxVYIjlPIi4qKnxaa8XRuQ6eNjjLfpMSLSU2lFuBmrXE6QraXCo+PU0fkMdgj
+ LNC+Yc6OciUO1xLAWBlnWJrrx+GqWU+itkgKnZ1Lw9M/2ETYxUYlYdmNkKwnLm5cm8oz
+ KykN04QY7CYrYjLytFKJt/Vv33Q4tJSVA5+bTL6DeoKCZ+dCF4YvkwU6JOwfYj6X1YRj
+ 9lun9LeVBliqx6WZM/dWg6aGzVfqszl8iG7OdaC9pO9ik/bAVjHN0+dKwa+lQ9vvsNop
+ weMOJY5Ng2LSEGmAHT2QGXnusQqAJM+jrV6aIlbey11bovWTCuEtx96dapIyBVIRovD4
+ hXww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719590519; x=1720195319;
+ d=1e100.net; s=20230601; t=1719590552; x=1720195352;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=u1zBg2dSlMJBfyzgYydD9HYz4rygSlRXEQ+WL6SO1+M=;
- b=YWy8bNBa/RVFgiNOFmKcAMF+YiqYfq7N2KTB0c6MsA547qXqiLquuv3pQ9WW1TkdoM
- RfdZcVA6K9qMEacRJdevP/Xu3w6lkumE0dKN5aIkXPdeBsqOg1EPn5WV7knY5JXHSvBO
- TdjyKtnlSRFB/HTxjzG5O/xfYQeCbFQJhaPlqe+R87E2mtdusOdztb6uVfx9D5mkR28Y
- Hg/Ta8Wi51+P8kY3nsxEzbk/4bEbqZnOEzS2myJ9/MxC1gs2IlujndNvG/Nx4ckifnpD
- o9tZB5+9jrmki42Fq13eNkzBAUtUN3cbEGRazCSuk42iga9Lc/58QH5Pxu4NZz7hSlwr
- XqBg==
+ bh=PcscZ4C0HsYscMyQSfmVuPsZtBmqdTuyKlPKREymHEY=;
+ b=ApYb8GE6gUMbRwQR6YFriIHYNSNhoyCYJnTO/WNjlp0qp8i+6AeRE0r4JwTyBAOSkl
+ fCOJBi+lO8XuD+NnfbtjRyi9KAzBODTef8yN3JO01kAj7/NEBYNjOlX/7EZy7v76+cjS
+ VHWoO7Xu4UAUE+xt/2sxKbrW0DCl/HStu6T7Mao4Dnj0WFK/8WMA68lfzWe2+9PpRWAF
+ pqpSsjjh6W6OZhDssvzKUw0koefik3BK1dCzGkGeS5YhXOesWa25NDlF/HYV+76tTd2l
+ REoemiHg9Ex/SXwuF/JdAwQKhyqCJBzAgUM2iCR8msYxhBEw0YjqA40bgEQSckPL5WJB
+ PmPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwg/xBG4JZcG+DI2yr2oidfPLKFfAU47aWzPL2sTg2K/uIjuMG+xMb2k9WduOdyALSdIsc1ijzPQUFeKeScj6Zx8xhggw=
-X-Gm-Message-State: AOJu0YxfEQuR2whxjoUV4Nzp98U0XnATHrP85g6NSduzv0yHeEtPC4/C
- 0amHyuqC5R8Yv3yDOJP5sTHoIinXhCwdz7RRg5GOmFRKSSDqddWUucPJZdDwu5c=
-X-Google-Smtp-Source: AGHT+IGHY7z7pDh/dMHWgKIDwsFha8ICFDnUneIbnvUvKpE5WluTVOis/+njPLOr8jarUq2X6ySxyQ==
-X-Received: by 2002:a17:902:f64f:b0:1fa:292f:cb20 with SMTP id
- d9443c01a7336-1fa292fcdabmr186282475ad.58.1719590518715; 
- Fri, 28 Jun 2024 09:01:58 -0700 (PDT)
+ AJvYcCWf9FmxFgNVbywI7ZEWMwcOJUw4jc4W1pZ/TUIPipxH7nOufFJcOHHx5JydOndQDD5ax9XV5z6//fyooe3iEQLoHtvwzS8=
+X-Gm-Message-State: AOJu0Yw0j1VKPyvLogk2WF8ICbSeiU7pW24ipe39jNGl8RgedfJHPSne
+ 1lQcN1KWQYzAOGfHnQFjd4yj3l2BhXxF1MUKAOzNCFOZbecLCT4/BCjkCUd3RtBr9dUrBomTWpF
+ f
+X-Google-Smtp-Source: AGHT+IHljVR6MnSBsN8KykA123Tbmcwwp92YWNgbob8xMxm5eRjtCSKRSc4CpT3vAtWqoyk5p2Yr9w==
+X-Received: by 2002:a17:902:f685:b0:1f6:ed89:6bca with SMTP id
+ d9443c01a7336-1fa23fb2970mr171922935ad.39.1719590551580; 
+ Fri, 28 Jun 2024 09:02:31 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac10d1ccesm17400135ad.20.2024.06.28.09.01.58
+ d9443c01a7336-1fac15b892bsm16902395ad.303.2024.06.28.09.02.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 09:01:58 -0700 (PDT)
-Message-ID: <ea780763-ffb8-4a97-8a60-5128f1ed017e@linaro.org>
-Date: Fri, 28 Jun 2024 09:01:56 -0700
+ Fri, 28 Jun 2024 09:02:31 -0700 (PDT)
+Message-ID: <6f45f5c1-787d-4ca2-b93a-170b1eaa673d@linaro.org>
+Date: Fri, 28 Jun 2024 09:02:29 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] target/arm: Support migration when FPSR/FPCR won't
- fit in the FPSCR
+Subject: Re: [PATCH 5/9] target/arm: Implement store_cpu_field_low32() macro
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240628142347.1283015-1-peter.maydell@linaro.org>
- <20240628142347.1283015-5-peter.maydell@linaro.org>
+ <20240628142347.1283015-6-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240628142347.1283015-5-peter.maydell@linaro.org>
+In-Reply-To: <20240628142347.1283015-6-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,51 +100,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/28/24 07:23, Peter Maydell wrote:
-> To support FPSR and FPCR bits that don't exist in the AArch32 FPSCR
-> view of floating point control and status (such as the FEAT_AFP ones),
-> we need to make sure those bits can be migrated. This commit allows
-> that, whilst maintaining backwards and forwards migration compatibility
-> for CPUs where there are no such bits:
-> 
-> On sending:
->   * If either the FPCR or the FPSR include set bits that are not
->     visible in the AArch32 FPSCR view of floating point control/status
->     then we send the FPCR and FPSR as two separate fields in a new
->     cpu/vfp/fpcr_fpsr subsection, and we send a 0 for the old
->     FPSCR field in cpu/vfp
->   * Otherwise, we don't send the fpcr_fpsr subsection, and we send
->     an FPSCR-format value in cpu/vfp as we did previously
-> 
-> On receiving:
->   * if we see a non-zero FPSCR field, that is the right information
->   * if we see a fpcr_fpsr subsection then that has the information
->   * if we see neither, then FPSCR/FPCR/FPSR are all zero on the source;
->     cpu_pre_load() ensures the CPU state defaults to that
->   * if we see both, then the migration source is buggy or malicious;
->     either the fpcr_fpsr or the FPSCR will "win" depending which
->     is first in the migration stream; we don't care which that is
-> 
-> We make the new FPCR and FPSR on-the-wire data be 64 bits, because
-> architecturally these registers are that wide, and this avoids the
-> need to engage in further migration-compatibility contortions in
-> future if some new architecture revision defines bits in the high
-> half of either register.
-> 
-> (We won't ever send the new migration subsection until we add support
-> for a CPU feature which enables setting overlapping FPCR bits, like
-> FEAT_AFP.)
+> We already have a load_cpu_field_low32() to load the low half of a
+> 64-bit CPU struct field to a TCGv_i32; however we haven't yet needed
+> the store equivalent.  We'll want that in the next patch, so
+> implement it.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/machine.c | 134 ++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 132 insertions(+), 2 deletions(-)
+>   target/arm/tcg/translate-a32.h | 7 +++++++
+>   1 file changed, 7 insertions(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-Not ideal, as vfp_get_{fpcr,fpsr} are called 3 or 4 times during migration.  But unless we 
-have separate 'fp*r_migrate' fields in cpu state, initialized in pre_save, there's no 
-getting around it.  And I suppose migration isn't exactly performance critical.
-
 
 r~
 
