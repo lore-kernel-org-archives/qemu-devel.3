@@ -4,71 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F10D1C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:04:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 993CBC30659
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:04:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5dm-0000Lc-Jb; Fri, 28 Jun 2024 03:03:27 -0400
+	id 1sN5dj-0000L4-SJ; Fri, 28 Jun 2024 03:03:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5dd-0000Hf-Aa
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:03:18 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5dZ-0000G9-IG
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:03:15 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5da-0006ik-Eu
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:03:16 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2eaea28868dso3184441fa.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:03:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5dV-0006hK-AK
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:03:11 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2ec4eefbaf1so2272381fa.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:03:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719558192; x=1720162992; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719558187; x=1720162987; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JpVotoHspFlZ3BpKrTY/FaOKVvxynyJagKJZJS+6h3k=;
- b=dbO0HjE7Lo7Xo1HZggB4F7WgZIaNFTWwD/bPtr+sK+PD6MNwMGeQYsnCUXR0vBzgLm
- qImMVpyGIPJlz32DblgajCObsSxg1utkrGPyV/eQPIUuj/Vn44yhQMZSk0ID9+DBDkdm
- 8pIK/Z5JtzE8F5+W2OQmZB2HI1uiDlu3/QW0cF5yDyd20ZAkqcB2IWohuopwUUlbe90Q
- d6gpSHa0JkeF915lNzVTUM598LZwtE0ehmLi8z6z0WhDNB5BlzPIIvrB8HbQKXdXUzrV
- 0LxATLCxSXHS/QYw2Pt6apXfDwZGUOwG+4V5XiQr49APUrgUL+jKDGAyvMk3j0tsFYCP
- q8NQ==
+ :reply-to; bh=yFkcsEXV8tTNgx1V48/Rdkr/iwnE0vz/gcdrAU/mSc4=;
+ b=xhlO9C06MKTW9dRT4RdhV0lzKi0PIF/EsR9aKVt1zCtS5isFp8wZ7l50SwAlZhGG3E
+ WMnnKvPRtkJ+JYL8mQ2H84e5lCLTxKIHPP+90m7C/TT+lxcZjsm63MXy0f+hf4PjVMZo
+ UTxmAcPYlTTDmxIhAiUTK9cbi2xvCAXMf66wkh1uEK1T7ZkxRirCt++38FHcOlipbQw2
+ OzpkMqqGnq4prCLM4dybWy/CufuEdyuBBjIczIychabw3alI6Fqq6lgPnAVONPTdGMJj
+ SnhfNi7D4ZNERrjXqvEsrQgq3fJQnZf6Qel3P18a1Vcf9Uk/paoA/ls0T9Jd0ji/nHAh
+ 1RpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719558192; x=1720162992;
+ d=1e100.net; s=20230601; t=1719558187; x=1720162987;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JpVotoHspFlZ3BpKrTY/FaOKVvxynyJagKJZJS+6h3k=;
- b=QNRWi6TX+gz4i1s65seKg449iCUKiN3E/s2CcwUN0Yf3OUYnWOMf/IYskLHXvGyqTq
- utmmOHq6j4dODKqrogM0824GRzH2pWu6dAWAarGWz+5KrkxrPBb0uyMiQmoH9A7wyvur
- 5rLDIO54+E25TZGRuMx2SY9TFFA1RySuLDgELmMyr70iptkB8tiBBuhUIykJDOWEEcnJ
- jzmPzCgeSL4f+4sj6m1dEveiQZoSE64KJAumyDpRbCk767kyqBjkPI080OEpCgkEAkvU
- NQvJC9R0UnZIjtWalFX34EVl/kJ1lgQxFCSbP9Taowoa+OCATCu9a4OLVI39OE2gQWvP
- bJUg==
-X-Gm-Message-State: AOJu0YzRfwlDXd/nUno4Y8ecsyOUBP+cKyYO1OUfjdIjVqGJFGI1gIUH
- v05INdeL8vOSp4+PdI3zECqvzA1Qcu4taMYW0/Cvgna0SG/4RIGNV26C5VxW6cWevoGjbMJOlW8
- 4Sq0=
-X-Google-Smtp-Source: AGHT+IG4uitz8ZON4/9qKI7gHG5vv1fiAu2SHtAGAqC3kSP8gR0G2+5fFfTkAAD9aolaWJRmeiLKcw==
-X-Received: by 2002:a2e:8746:0:b0:2ec:5685:f061 with SMTP id
- 38308e7fff4ca-2ec5b2d6313mr123829411fa.21.1719558192057; 
- Fri, 28 Jun 2024 00:03:12 -0700 (PDT)
+ bh=yFkcsEXV8tTNgx1V48/Rdkr/iwnE0vz/gcdrAU/mSc4=;
+ b=jwKJM+hFpQ9/egA6+9e/QP/fmkRNk0L9pt6jU5vTmti2o0nq/N5TqHRZR5raYCRO9N
+ 6iX6X7d2c7rzb3L7pNvnm0yg6rBZSS6RBlSDUuAQw9dUt4IwnupwkxiLObv3XAl5AfZc
+ zfKowlut3ZAk1Y9VX0sYQ8RdnIHrYrNV16Wdw1NuxQbE2D9zVv89oEXTXTvBlGGm0gJn
+ l2uKIdWnGvNh+Hx1L5u54kI1YdDAHFTP+ozyXcsR5aBYo8s4FhXu8hxwMAD5FiIAQKvr
+ RQWZ3xaMJU5ZqfCAf3FLS90RD2OuUkhvIxkMXTEKuP9GU/9Mz/2XAuojdV9ki99hekMV
+ Ix2w==
+X-Gm-Message-State: AOJu0YxYUf0C/dxEo+8aHNWOsLWaJ6fz/aPv8xfxIFlFRse8gcv2P2ju
+ pwWh+nl7U4NP8fYrYEOOicACOBuK+YVfA3p+o39jlec1B296yL+PyEK9pIVfGziBlBehJT2/q3n
+ LZrI=
+X-Google-Smtp-Source: AGHT+IGf21oj2fjTbjdCyDm+PxGdNgVgWx9/teGqOSreVc2xC7Vz2kjCF9uSclrQdfV9vpONnpp6Wg==
+X-Received: by 2002:a05:651c:220e:b0:2ec:5e2e:39a8 with SMTP id
+ 38308e7fff4ca-2ec5e2e3aaamr112507221fa.3.1719558186886; 
+ Fri, 28 Jun 2024 00:03:06 -0700 (PDT)
 Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
  [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0c19eesm21186555e9.45.2024.06.28.00.03.11
+ 5b1f17b1804b1-4256d664052sm10481355e9.27.2024.06.28.00.03.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 28 Jun 2024 00:03:11 -0700 (PDT)
+ Fri, 28 Jun 2024 00:03:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v42 10/98] hw/sd/sdcard: Assign SDCardStates enum values
-Date: Fri, 28 Jun 2024 09:00:46 +0200
-Message-ID: <20240628070216.92609-11-philmd@linaro.org>
+Subject: [PATCH v42 09/98] hw/sd/sdcard: Use READY_FOR_DATA definition instead
+ of magic value
+Date: Fri, 28 Jun 2024 09:00:45 +0200
+Message-ID: <20240628070216.92609-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
 References: <20240628070216.92609-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,49 +92,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SDCardStates enum values are specified, so assign them
-correspondingly. It will be useful later when we add
-states from later specs, which might not be continuous.
-
-See CURRENT_STATE bits in section 4.10.1 "Card Status".
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/sd/sd.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ hw/sd/sd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 135b7d2e23..fbdfafa3a6 100644
+index 1f37d9c93a..135b7d2e23 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -75,16 +75,16 @@ enum SDCardModes {
- };
+@@ -561,7 +561,7 @@ FIELD(CSR, OUT_OF_RANGE,               31,  1)
  
- enum SDCardStates {
--    sd_inactive_state = -1,
--    sd_idle_state = 0,
--    sd_ready_state,
--    sd_identification_state,
--    sd_standby_state,
--    sd_transfer_state,
--    sd_sendingdata_state,
--    sd_receivingdata_state,
--    sd_programming_state,
--    sd_disconnect_state,
-+    sd_inactive_state       = -1,
-+    sd_idle_state           = 0,
-+    sd_ready_state          = 1,
-+    sd_identification_state = 2,
-+    sd_standby_state        = 3,
-+    sd_transfer_state       = 4,
-+    sd_sendingdata_state    = 5,
-+    sd_receivingdata_state  = 6,
-+    sd_programming_state    = 7,
-+    sd_disconnect_state     = 8,
- };
+ static void sd_set_cardstatus(SDState *sd)
+ {
+-    sd->card_status = 0x00000100;
++    sd->card_status = READY_FOR_DATA;
+ }
  
- typedef sd_rsp_type_t (*sd_cmd_handler)(SDState *sd, SDRequest req);
+ static void sd_set_sdstatus(SDState *sd)
 -- 
 2.41.0
 
