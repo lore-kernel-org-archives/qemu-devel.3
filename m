@@ -4,60 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EA53C3064D
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09DF8C3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6if-0002sZ-VR; Fri, 28 Jun 2024 04:12:33 -0400
+	id 1sN6kp-0003jw-NH; Fri, 28 Jun 2024 04:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sN6ie-0002s4-FD
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:12:32 -0400
+ id 1sN6ko-0003jm-DL
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:14:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sN6ic-00057t-Im
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:12:32 -0400
+ id 1sN6km-0005zX-51
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:14:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719562349;
+ s=mimecast20190719; t=1719562483;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=IS+Yz4+qV2Bgsf/Pp17U4lhZGBAGViAT+TUtb8f80GQ=;
- b=isMddxEbKL3rdJca/983fkW42eVFcxmdX4OhgA59+9oOly/S6rfGfAwMqu6Lq/kCqDym6b
- wkPfAzQMIc8vvMwWHr3aaDD4+6B2adFB5r64LXhZ0Sl3tocI1SZ7iHiCHkTr7u7MWlE7Kg
- iQCx9i9Y8xX6e7hY8eats6K9hlpXWZM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WsR99nGN5yUX84wJpoLNW1HCP+TwIGtGgeFVOw7TdZM=;
+ b=chq4rCHUPmAFL8Av6SeZi8RH+zdulX36idSyIarSFmoyppn0Vud/US2zZc6pS2W8ZvMoym
+ 0OelV6YBy+gyJZ+7534Dmj8i7L90cesTD12Y8dU51d+vCg4a+0SKNhccRgAmj9wgtMbHgG
+ CmHy4Kl3mGWPpmcop4mxFdB/fgBozaM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-s_DQXfbVNnWnWxdq0lmfAg-1; Fri,
- 28 Jun 2024 04:12:25 -0400
-X-MC-Unique: s_DQXfbVNnWnWxdq0lmfAg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-asAGoSRiOkO0XJXmjAaZxQ-1; Fri,
+ 28 Jun 2024 04:14:38 -0400
+X-MC-Unique: asAGoSRiOkO0XJXmjAaZxQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 292201944DDB; Fri, 28 Jun 2024 08:12:24 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 612C219560AB; Fri, 28 Jun 2024 08:14:37 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.106])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BFE6F300021A; Fri, 28 Jun 2024 08:12:22 +0000 (UTC)
-Date: Fri, 28 Jun 2024 09:12:19 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AC24419560AA; Fri, 28 Jun 2024 08:14:35 +0000 (UTC)
+Date: Fri, 28 Jun 2024 09:14:32 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gregor Haas <gregorhaas1997@gmail.com>
-Cc: qemu-devel@nongnu.org, yaoxt.fnst@fujitsu.com
-Subject: Re: [PATCH v2] hw/core/loader: allow loading larger ROMs
-Message-ID: <Zn5wUyy2qWpUAtZo@redhat.com>
-References: <20240628005817.1672298-1-gregorhaas1997@gmail.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Subject: Re: [PATCH v42 02/98] hw/sd/sdcard: Use spec v3.01 by default
+Message-ID: <Zn5w6A20UVkrP3ca@redhat.com>
+References: <20240628070216.92609-1-philmd@linaro.org>
+ <20240628070216.92609-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240628005817.1672298-1-gregorhaas1997@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240628070216.92609-3-philmd@linaro.org>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
@@ -83,47 +87,29 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 27, 2024 at 05:58:17PM -0700, Gregor Haas wrote:
-> The read() syscall is not guaranteed to return all data from a file. The
-> default ROM loader implementation currently does not take this into account,
-> instead failing if all bytes are not read at once. This change loads the ROM
-> using load_image_size() instead, which correctly reads all data using
-> multiple calls to read().
+On Fri, Jun 28, 2024 at 09:00:38AM +0200, Philippe Mathieu-Daudé wrote:
+> Recent SDHCI expect cards to support the v3.01 spec
+> to negociate lower I/O voltage. Select it by default.
 > 
-> Signed-off-by: Gregor Haas <gregorhaas1997@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
 > ---
->  hw/core/loader.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
+>  hw/sd/sd.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/core/loader.c b/hw/core/loader.c
-> index 2f8105d7de..8216781a75 100644
-> --- a/hw/core/loader.c
-> +++ b/hw/core/loader.c
-> @@ -1115,14 +1115,13 @@ ssize_t rom_add_file(const char *file, const char *fw_dir,
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index a48010cfc1..d0a1d5db18 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -2280,7 +2280,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
 >  
->      rom->datasize = rom->romsize;
->      rom->data     = g_malloc0(rom->datasize);
-> -    lseek(fd, 0, SEEK_SET);
-> -    rc = read(fd, rom->data, rom->datasize);
-> +    close(fd);
-> +    rc = load_image_size(rom->path, rom->data, rom->datasize);
->      if (rc != rom->datasize) {
->          fprintf(stderr, "rom: file %-20s: read error: rc=%zd (expected %zd)\n",
->                  rom->name, rc, rom->datasize);
->          goto err;
->      }
-> -    close(fd);
+>  static Property sd_properties[] = {
+>      DEFINE_PROP_UINT8("spec_version", SDState,
+> -                      spec_version, SD_PHY_SPECv2_00_VERS),
+> +                      spec_version, SD_PHY_SPECv3_01_VERS),
 
-This method can be simplified much more.
-All of the original 'open', lseek, g_malloc0, read & close, can be
-replaced by something approximately like this (untested):
+Shouldn't such a change be tied to machine type versions ?
 
-   g_autoptr(GError) gerr = NULL;
-   if (!g_file_get_contents(file, &rom->data, &rom->datasize, &gerr)) {
-       fprintf(stderr, "unable to load ROM '%s': %s", file, gerr->message);
-       goto err;
-   }
-   
 
 With regards,
 Daniel
