@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57460C3064D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54324C41513
 	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 04:55:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN3cf-0008Hu-1E; Fri, 28 Jun 2024 00:54:11 -0400
+	id 1sN3cU-0008Ge-JH; Fri, 28 Jun 2024 00:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN3cV-0008Gt-52
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 00:53:59 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN3cG-0008Di-0D
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 00:53:44 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN3cL-0000yR-Jp
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 00:53:51 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-424ad289949so1693045e9.2
- for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 21:53:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN3cE-0000Wq-EC
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 00:53:43 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-424a3ccd0c0so2035135e9.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Jun 2024 21:53:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719550427; x=1720155227; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719550420; x=1720155220; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bYEYJ2Wwx71dNKsAcy31SFsnrP/uSxrEAbuXlnudJVY=;
- b=NvKkGR4dZX69TRUprAurmT7zjgRF6itDIG4N8cZ6Fdb7fj/nmB7WmjWK5Qcf3GueMr
- TPKisfaQDmPcTI9IncGWzZhsDDpjhisWfhdFWGTjYPVcjZPe5tIO1OfPSFPB8bQGPH8h
- 4KmF8SvYAdrvCjtUhfbYCJ+2MQPVKjoNBvcm1sEnzBAVLAbFRN+SpAvDoFqY3sVQkRBM
- N9dT5NvzThcD4Ssleif91C3O9/hGM6DbxWVcqDicaiUS5rw2edgvAUtTj1F3ybeEwCuE
- wLVHJJOoEUG/yry7oudRVg+EI54AQYyt0G+qIj07lpIcaqsEm2xBi/8+7Iiz6J9muwIA
- AGSg==
+ bh=if+k3pC7/tUCTUn2xmGg3zarIgu5LY5GHs2T467fbqI=;
+ b=rfxyJ8Wd1lYrO0/S+FMK/iNcQa28OsAdX7QZIpR/NaMFUKaXAoe9Bf5F/aIKuMHOiO
+ D1/Qk89vLQGyZbxyfdgPFWFVZ0dz+yT90JHsRxMnTQYKAPdsSh2yXpn9X4deMWhFN0DG
+ 4NAZk0T3GmxcPuhErZQO6lSVn25P3hHaz/f98xkPgm2YOJErwKoVt8uCRdaH7qc6FsPc
+ yS8MjwrqvlW2wvCagin5XcNQ7t5G+/Q9U5M9hwOcWgu7P9QPPw53+xicOvB+xqzQPQLv
+ 55BP4atz4faUSHGDhcykHcggmsI1f+35T/M5iz616RayWOB6i3Nh5jqKk56Mn0U5+jos
+ 5DBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719550427; x=1720155227;
+ d=1e100.net; s=20230601; t=1719550420; x=1720155220;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bYEYJ2Wwx71dNKsAcy31SFsnrP/uSxrEAbuXlnudJVY=;
- b=vOOQvWFvDQyA75KxdiMQTy69OAzVnyijTvqAzvguzTy9rjDlhNzx+/Dm2TVyC75X/B
- qFwNBtVmKxDrg0GMjZnMHrzzs9a3sixrsUJ7oCvivk2w2N6u4qur272EnNKU/UfYp3U+
- TVk43w++9CdmEh5Se6U79yqGeZ6gRjFhu9/x3H6ezXrV5tQvS3zFTPHCVo6B082uQAzp
- Ci0iQMgbjUb8xBgPk3lz1Ypl0m8FoaSVMH0bneSqNlRp2jV3ZrNgFFvpdDmzmbBpYfj+
- Ockr/G/4meCVG4CCYfYsNpVVGuUa0IIeCwsnChQzSYKvAySYyiRotd+jyXbG9GNo8Woc
- u/kQ==
-X-Gm-Message-State: AOJu0YzuFilUbyx/SSE59d2G4rSNOBLcVzXVYvSylii2TR0RuaVF3yaO
- exadjFANEMB0NkBLykcpUiHK6SNXdlfY/dvGfb/SnJQYPwyeWRgOLxzw+79RbUKkrYQGlrxC0SM
- 90xZAEA==
-X-Google-Smtp-Source: AGHT+IF2wuR/EsTUKhqwrXuCXID6JTSa05iGcVduS3p6PIItAp+gB+5A9DPsB9AKT/9iM3ekks4VEQ==
-X-Received: by 2002:a05:600c:1c90:b0:424:eeca:6bd0 with SMTP id
- 5b1f17b1804b1-424eeca6c69mr42766655e9.13.1719550427208; 
- Thu, 27 Jun 2024 21:53:47 -0700 (PDT)
+ bh=if+k3pC7/tUCTUn2xmGg3zarIgu5LY5GHs2T467fbqI=;
+ b=s275s4KpcoZ2pmgpmjT52/ve9RP3aV8iFZvLNcAYWfSN4SpfL2tGrGRlsR5acFRGzw
+ QvgbZfZk1wmh4JZCMYb1pkUcGSPEWra6JR5Xv8BBbs1Q+U7tKonhix9uUh0K/CxG/1KA
+ xd2YKBDicloB7qz1HubsPKMbxPyci+mxt7W0zGllPogG4hpeyI40RP7bB+FhMgnAHcJm
+ oRpRH6mR197FCmcvjNj1yB+SzTrRQW3Yr8suRiWKGX/ssSFd5fWDYrhewA16wBkxG6Ui
+ fLLcAbCKCXRiIj/bHr6hFePQdOkqG2xrTtGICMElKK41pZBy6qRCu9PLKG7g8X/WDsMT
+ 6U4A==
+X-Gm-Message-State: AOJu0YzKk4m77TfRw4IgwC04qPk5ESem2gTGsGdzOSlWHq58RtdN1oX+
+ O1T+Ma4Gi9VGqvCtgnws1+zmnFYZd8V9vUbz/OufM+6KaFg2PVDTb3jV08W14OYCErU+IX//ebg
+ qp/gtBw==
+X-Google-Smtp-Source: AGHT+IGDmXtiWX2jJDTWU+jla3epsGjUJndSoFrVb5uDaux98SHygVlvGjOldNv8xum+ZAWzmKhoUQ==
+X-Received: by 2002:a05:600c:3b8b:b0:425:69b7:3361 with SMTP id
+ 5b1f17b1804b1-42569b7352bmr10751715e9.18.1719550420364; 
+ Thu, 27 Jun 2024 21:53:40 -0700 (PDT)
 Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
  [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0676a3sm17725975e9.28.2024.06.27.21.53.45
+ 5b1f17b1804b1-4256af54ecasm17849165e9.12.2024.06.27.21.53.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 27 Jun 2024 21:53:46 -0700 (PDT)
+ Thu, 27 Jun 2024 21:53:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Luc Michel <luc.michel@amd.com>,
@@ -65,18 +65,18 @@ Cc: Luc Michel <luc.michel@amd.com>,
  Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Joel Stanley <joel@jms.id.au>,
  Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 05/12] hw/sd/sdcard: Add sd_acmd_SD_APP_OP_COND handler
- (ACMD41)
-Date: Fri, 28 Jun 2024 06:53:16 +0200
-Message-ID: <20240628045323.86308-4-philmd@linaro.org>
+Subject: [PATCH 04/12] hw/sd/sdcard: Add sd_acmd_SET_WR_BLK_ERASE_COUNT
+ handler (ACMD23)
+Date: Fri, 28 Jun 2024 06:53:15 +0200
+Message-ID: <20240628045323.86308-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240627164815.82606-1-philmd@linaro.org>
 References: <20240627164815.82606-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,113 +101,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c | 82 ++++++++++++++++++++++++++++++------------------------
- 1 file changed, 45 insertions(+), 37 deletions(-)
+ hw/sd/sd.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index cd207a3090..167e1c517a 100644
+index 9d66c3715a..cd207a3090 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -1704,6 +1704,50 @@ static sd_rsp_type_t sd_acmd_SET_WR_BLK_ERASE_COUNT(SDState *sd, SDRequest req)
-     return sd_r1;
+@@ -263,7 +263,6 @@ static const char *sd_acmd_name(SDState *sd, uint8_t cmd)
+         [14] = "DPS_spec",                  [15] = "DPS_spec",
+         [16] = "DPS_spec",
+         [18] = "SECU_spec",
+-                                            [23] = "SET_WR_BLK_ERASE_COUNT",
+         [42] = "SET_CLR_CARD_DETECT",
+         [51] = "SEND_SCR",
+         [52] = "SECU_spec",                 [53] = "SECU_spec",
+@@ -1696,6 +1695,15 @@ static sd_rsp_type_t sd_acmd_SEND_NUM_WR_BLOCKS(SDState *sd, SDRequest req)
+                                  &sd->blk_written, sizeof(sd->blk_written));
  }
  
-+/* ACMD41 */
-+static sd_rsp_type_t sd_acmd_SD_APP_OP_COND(SDState *sd, SDRequest req)
++/* ACMD23 */
++static sd_rsp_type_t sd_acmd_SET_WR_BLK_ERASE_COUNT(SDState *sd, SDRequest req)
 +{
-+    if (sd->state != sd_idle_state) {
++    if (sd->state != sd_transfer_state) {
 +        return sd_invalid_state_for_cmd(sd, req);
 +    }
-+
-+    /*
-+     * If it's the first ACMD41 since reset, we need to decide
-+     * whether to power up. If this is not an enquiry ACMD41,
-+     * we immediately report power on and proceed below to the
-+     * ready state, but if it is, we set a timer to model a
-+     * delay for power up. This works around a bug in EDK2
-+     * UEFI, which sends an initial enquiry ACMD41, but
-+     * assumes that the card is in ready state as soon as it
-+     * sees the power up bit set.
-+     */
-+    if (!FIELD_EX32(sd->ocr, OCR, CARD_POWER_UP)) {
-+        if ((req.arg & ACMD41_ENQUIRY_MASK) != 0) {
-+            timer_del(sd->ocr_power_timer);
-+            sd_ocr_powerup(sd);
-+        } else {
-+            trace_sdcard_inquiry_cmd41();
-+            if (!timer_pending(sd->ocr_power_timer)) {
-+                timer_mod_ns(sd->ocr_power_timer,
-+                             (qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)
-+                              + OCR_POWER_DELAY_NS));
-+            }
-+        }
-+    }
-+
-+    if (FIELD_EX32(sd->ocr & req.arg, OCR, VDD_VOLTAGE_WINDOW)) {
-+        /*
-+         * We accept any voltage.  10000 V is nothing.
-+         *
-+         * Once we're powered up, we advance straight to ready state
-+         * unless it's an enquiry ACMD41 (bits 23:0 == 0).
-+         */
-+        sd->state = sd_ready_state;
-+    }
-+
-+    return sd_r3;
++    return sd_r1;
 +}
 +
  static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
  {
      uint64_t addr;
-@@ -1812,43 +1856,6 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
+@@ -1804,16 +1812,6 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
      }
  
      switch (req.cmd) {
--    case 41:  /* ACMD41: SD_APP_OP_COND */
--        if (sd->state != sd_idle_state) {
+-    case 23:  /* ACMD23: SET_WR_BLK_ERASE_COUNT */
+-        switch (sd->state) {
+-        case sd_transfer_state:
+-            return sd_r1;
+-
+-        default:
 -            break;
 -        }
--        /* If it's the first ACMD41 since reset, we need to decide
--         * whether to power up. If this is not an enquiry ACMD41,
--         * we immediately report power on and proceed below to the
--         * ready state, but if it is, we set a timer to model a
--         * delay for power up. This works around a bug in EDK2
--         * UEFI, which sends an initial enquiry ACMD41, but
--         * assumes that the card is in ready state as soon as it
--         * sees the power up bit set. */
--        if (!FIELD_EX32(sd->ocr, OCR, CARD_POWER_UP)) {
--            if ((req.arg & ACMD41_ENQUIRY_MASK) != 0) {
--                timer_del(sd->ocr_power_timer);
--                sd_ocr_powerup(sd);
--            } else {
--                trace_sdcard_inquiry_cmd41();
--                if (!timer_pending(sd->ocr_power_timer)) {
--                    timer_mod_ns(sd->ocr_power_timer,
--                                 (qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL)
--                                  + OCR_POWER_DELAY_NS));
--                }
--            }
--        }
+-        break;
 -
--        if (FIELD_EX32(sd->ocr & req.arg, OCR, VDD_VOLTAGE_WINDOW)) {
--            /* We accept any voltage.  10000 V is nothing.
--             *
--             * Once we're powered up, we advance straight to ready state
--             * unless it's an enquiry ACMD41 (bits 23:0 == 0).
--             */
--            sd->state = sd_ready_state;
--        }
--
--        return sd_r3;
--
-     case 42:  /* ACMD42: SET_CLR_CARD_DETECT */
-         switch (sd->state) {
-         case sd_transfer_state:
-@@ -2379,6 +2386,7 @@ static const SDProto sd_proto_sd = {
+     case 41:  /* ACMD41: SD_APP_OP_COND */
+         if (sd->state != sd_idle_state) {
+             break;
+@@ -2320,6 +2318,7 @@ static const SDProto sd_proto_spi = {
+     .acmd = {
+         [13] = {8,  sd_spi, "SD_STATUS", sd_acmd_SD_STATUS},
+         [22] = {8,  sd_spi, "SEND_NUM_WR_BLOCKS", sd_acmd_SEND_NUM_WR_BLOCKS},
++        [23] = {8,  sd_spi, "SET_WR_BLK_ERASE_COUNT", sd_acmd_SET_WR_BLK_ERASE_COUNT},
+         [41] = {8,  sd_spi, "SEND_OP_COND", spi_cmd_SEND_OP_COND},
+     },
+ };
+@@ -2379,6 +2378,7 @@ static const SDProto sd_proto_sd = {
+         [6]  = {8,  sd_ac,   "SET_BUS_WIDTH", sd_acmd_SET_BUS_WIDTH},
          [13] = {8,  sd_adtc, "SD_STATUS", sd_acmd_SD_STATUS},
          [22] = {8,  sd_adtc, "SEND_NUM_WR_BLOCKS", sd_acmd_SEND_NUM_WR_BLOCKS},
-         [23] = {8,  sd_ac,   "SET_WR_BLK_ERASE_COUNT", sd_acmd_SET_WR_BLK_ERASE_COUNT},
-+        [41] = {8,  sd_bcr,  "SD_APP_OP_COND", sd_acmd_SD_APP_OP_COND},
++        [23] = {8,  sd_ac,   "SET_WR_BLK_ERASE_COUNT", sd_acmd_SET_WR_BLK_ERASE_COUNT},
      },
  };
  
