@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A767C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B8EDC3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 07:08:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN5dA-0008Tq-BM; Fri, 28 Jun 2024 03:02:48 -0400
+	id 1sN5gq-0002sX-4V; Fri, 28 Jun 2024 03:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5d9-0008Th-MO
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:02:47 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5ge-0002RQ-JN
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:06:28 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5d6-0006eI-Ro
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:02:47 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2ec50d4e47bso2313581fa.2
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:02:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sN5gc-0003G5-QW
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 03:06:24 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-42565cdf99cso3113145e9.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 00:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719558160; x=1720162960; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719558381; x=1720163181; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=C+gseryQhO5/sKrfElbobPrg2sCJZha7vmxA4CmxEms=;
- b=mprTAIf5AvZXiCUS4sCmLIp78IfjXn3/0OUo+Zq/CXgQVSTMF2Kez/CtkNojkdMyXi
- 3Ff8+XpPWif2Lh7w1ygJUXgkbXhWrUgB/4ibR5DYb1QTvk/qeqK3HIv/UT+fdvnLYRIA
- 56Vfw/7LHUJZ5FNT0ymxuL8gks9mfTH7bi+z2uCVcMpY4O7vjU5gXh2wrk8AT+qHJMPG
- LKu6Orf3wZpRHfpMUm+5jNl2Bxl2k/zbYfEnW47OAJ9QN+M7TSAPPJNB+aOqAt+GZOEI
- qcaq7uezGHHCxYh3Mz5HU6bR3fCnn0yOzXWTez5obvxpTGnGw9RCTvpwSsv2PT0K77Eq
- 71IA==
+ :reply-to; bh=O7w8iWHuHLj1qqdMh1OWVQD6LygpPO88gA0me6KT8+s=;
+ b=n0eXICH0enTkWnUWUIxa9zf1R6DYYIqtxcqFUSyR+JiE1Oq8eozcXW1XxhPyRbRpJ3
+ KOPzlWr7HkhFur1EGdly2s0dWVf6EezoquLpYI1RJgo2gQPAbTh9T6z1Cz4+nCiTJw+v
+ s4Cwg26LO8fEtYcrw9ISFmcfqWOcL+wc0MqYteImW+Ib5gFvleuE1m9saNYFB95ziD3+
+ hSfHRdS9oo5TBUpupdlk3PLgGCs4lSOeuMzX6OVLlUY2RqbPKDTFST0cfiwl6A0ti6Ax
+ 5nxtNr+49uLegYjqkvomscqIsSbkNoNYVEgOFeEIrEw9ZgTib4k37a0Z67oBN4LA70j7
+ dJpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719558160; x=1720162960;
+ d=1e100.net; s=20230601; t=1719558381; x=1720163181;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C+gseryQhO5/sKrfElbobPrg2sCJZha7vmxA4CmxEms=;
- b=nKY8j0zyju65iHKrK1TBGXyrkKIhFHWFceL6cfOAdl/iH5f8V7xQGubyEct2p3ZEFJ
- Fct3EZlDRU+2Yguqxbn+loTQ5ls1x/O3GK3R0DH1iAZnEIMZEmMaB+JQiMXlA9UMzr3K
- 1OdId2b7W58BB2K4XCGiaGphhsgZovgT+jFbjgrR8tAgZgR/p+aFHO/xxNZ7cSsU8L25
- urasZoR5V13cFAyyIQX1TfkuDNVABlQtaKUe3tieUxxUikgR+TWxeQsaMLCE+UM0tAA6
- 2Qi7Z458QIV3ctYqJgDzsPbgvMDuLc4cAEtVniSb7ygIzgb8vEU/YvA+gDrocYwXBy8K
- 8dDA==
-X-Gm-Message-State: AOJu0YzrA66anlXrW5XdLYRaVoKV5PZdA+tRS0OH8Zba+KliUW7Sxae6
- FWtRg+S0Xs1b9T1WER52GnV58ZDf+ZlKRqFvj+ov3ES8V+wbpc5dOb7e5ncAY76FBftjLKOa+zB
- RyOQ=
-X-Google-Smtp-Source: AGHT+IHTh+JurOqT5w5B7XxzkWNxt53ukhqjoDa471RTZkrukFgbxbBzM6t2MNwqICATVArLsEVsOQ==
-X-Received: by 2002:a2e:7c0a:0:b0:2ed:136b:755b with SMTP id
- 38308e7fff4ca-2ed136b79d4mr44953791fa.53.1719558160027; 
- Fri, 28 Jun 2024 00:02:40 -0700 (PDT)
+ bh=O7w8iWHuHLj1qqdMh1OWVQD6LygpPO88gA0me6KT8+s=;
+ b=irkfeqAoGQM+Eq0VI6Ne7Kw4saIBeFmACPDhHhZ9uHAfEK4f6jMrdWewhdHIKfSk9I
+ tGArufWOGlyIpZkLvq0vzZBkWYrbG1mUlm6KHicaGhisE7cwHPrIlrwDSZFh0VM1bDFi
+ sGrq2l0SDiqJ9AQHl4OsIjBVRbrMex4aJoyJZWln9LJ3PaLIQfh3AjS+NPBG2qL7qSe8
+ 1Kt+9feHVZYWRmEapqwDYJjiM91t05SfIPn4PkVan3KamZutxBPzKuc1d1Lz1WkhhtMh
+ Y4nZlbwAHsGfplznMEu9mSCpZe5fZZcqFIga9+5GkLJexTI9akDUG49ZX8FCLGRAI4vN
+ vOBA==
+X-Gm-Message-State: AOJu0YyveYxksYzt9uwGAfKS6jbB+e5Cs/k4YORU9Kl0dmbj//U8yU8u
+ x4/pdm6c3g/tcTnhQOlbs9Pi11rAkzBgWS+Rbb0TT313sGoQws6BygO/7pDkzLCQo70zwKjd2AE
+ 2wRI=
+X-Google-Smtp-Source: AGHT+IECg2eALxMcRI6vn/4t4YWFvTzNSWmjfQdkMymFLExzWlx8Eg0Xpi2xbIWd8ygqJGhD6plxZg==
+X-Received: by 2002:a05:600c:5713:b0:421:29cd:5c95 with SMTP id
+ 5b1f17b1804b1-4248cc27143mr136281765e9.10.1719558381026; 
+ Fri, 28 Jun 2024 00:06:21 -0700 (PDT)
 Received: from m1x-phil.lan (cho94-h02-176-184-4-239.dsl.sta.abo.bbox.fr.
  [176.184.4.239]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0676a3sm21176865e9.28.2024.06.28.00.02.39
+ 5b1f17b1804b1-4256af376f5sm21696125e9.6.2024.06.28.00.06.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 28 Jun 2024 00:02:39 -0700 (PDT)
+ Fri, 28 Jun 2024 00:06:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v42 04/98] hw/sd/sdcard: Trace block offset in READ/WRITE data
- accesses
-Date: Fri, 28 Jun 2024 09:00:40 +0200
-Message-ID: <20240628070216.92609-5-philmd@linaro.org>
+Subject: [PATCH v42 41/98] hw/sd/sdcard: Store command class in SDProto
+Date: Fri, 28 Jun 2024 09:01:17 +0200
+Message-ID: <20240628070216.92609-42-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240628070216.92609-1-philmd@linaro.org>
 References: <20240628070216.92609-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,52 +91,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Useful to detect out of bound accesses.
+Store the command class altogether with the other command
+fields (handler, name and type).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/sd/sd.c         | 4 ++--
- hw/sd/trace-events | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ hw/sd/sd.c | 36 +++++++++++++++++++-----------------
+ 1 file changed, 19 insertions(+), 17 deletions(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index bc87807793..090a6fdcdb 100644
+index c4cc48926d..a816493d37 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -1917,7 +1917,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
+@@ -95,6 +95,7 @@ typedef sd_rsp_type_t (*sd_cmd_handler)(SDState *sd, SDRequest req);
+ typedef struct SDProto {
+     const char *name;
+     struct {
++        const unsigned class;
+         const sd_cmd_type_t type;
+         const char *name;
+         sd_cmd_handler handler;
+@@ -352,13 +353,6 @@ static void sd_set_mode(SDState *sd)
+     }
+ }
  
-     trace_sdcard_write_data(sd_proto(sd)->name,
-                             sd->last_cmd_name,
--                            sd->current_cmd, value);
-+                            sd->current_cmd, sd->data_offset, value);
-     switch (sd->current_cmd) {
-     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
-         sd->data[sd->data_offset ++] = value;
-@@ -2073,7 +2073,7 @@ uint8_t sd_read_byte(SDState *sd)
+-static const int sd_cmd_class[SDMMC_CMD_MAX] = {
+-    0,  0,  0,  0,  0,  9, 10,  0,  0,  0,  0,  1,  0,  0,  0,  0,
+-    2,  2,  2,  2,  3,  3,  3,  3,  4,  4,  4,  4,  6,  6,  6,  6,
+-    5,  5, 10, 10, 10, 10,  5,  9,  9,  9,  7,  7,  7,  7,  7,  7,
+-    7,  7, 10,  7,  9,  9,  9,  8,  8, 10,  8,  8,  8,  8,  8,  8,
+-};
+-
+ static uint8_t sd_crc7(const void *message, size_t width)
+ {
+     int i, bit;
+@@ -1306,7 +1300,8 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+         sd->multi_blk_cnt = 0;
+     }
  
-     trace_sdcard_read_data(sd_proto(sd)->name,
-                            sd->last_cmd_name,
--                           sd->current_cmd, io_len);
-+                           sd->current_cmd, sd->data_offset, io_len);
-     switch (sd->current_cmd) {
-     case 6:  /* CMD6:   SWITCH_FUNCTION */
-         ret = sd->data[sd->data_offset ++];
-diff --git a/hw/sd/trace-events b/hw/sd/trace-events
-index 724365efc3..0eee98a646 100644
---- a/hw/sd/trace-events
-+++ b/hw/sd/trace-events
-@@ -52,8 +52,8 @@ sdcard_lock(void) ""
- sdcard_unlock(void) ""
- sdcard_read_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
- sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
--sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint8_t value) "%s %20s/ CMD%02d value 0x%02x"
--sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t length) "%s %20s/ CMD%02d len %" PRIu32
-+sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
-+sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint32_t length) "%s %20s/ CMD%02d ofs %"PRIu32" len %" PRIu32
- sdcard_set_voltage(uint16_t millivolts) "%u mV"
+-    if (sd_cmd_class[req.cmd] == 6 && FIELD_EX32(sd->ocr, OCR, CARD_CAPACITY)) {
++    if (sd->proto->cmd[req.cmd].class == 6 && FIELD_EX32(sd->ocr, OCR,
++                                                         CARD_CAPACITY)) {
+         /* Only Standard Capacity cards support class 6 commands */
+         return sd_illegal;
+     }
+@@ -1891,6 +1886,8 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
  
- # pxa2xx_mmci.c
+ static bool cmd_valid_while_locked(SDState *sd, unsigned cmd)
+ {
++    unsigned cmd_class;
++
+     /* Valid commands in locked state:
+      * basic class (0)
+      * lock card class (7)
+@@ -1905,7 +1902,12 @@ static bool cmd_valid_while_locked(SDState *sd, unsigned cmd)
+     if (cmd == 16 || cmd == 55) {
+         return true;
+     }
+-    return sd_cmd_class[cmd] == 0 || sd_cmd_class[cmd] == 7;
++    if (!sd->proto->cmd[cmd].handler) {
++        return false;
++    }
++    cmd_class = sd->proto->cmd[cmd].class;
++
++    return cmd_class == 0 || cmd_class == 7;
+ }
+ 
+ int sd_do_command(SDState *sd, SDRequest *req,
+@@ -2273,22 +2275,22 @@ void sd_enable(SDState *sd, bool enable)
+ static const SDProto sd_proto_spi = {
+     .name = "SPI",
+     .cmd = {
+-        [0]  = {    sd_spi, "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
+-        [1]  = {    sd_spi, "SEND_OP_COND", spi_cmd_SEND_OP_COND},
++        [0]  = {0,  sd_spi, "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
++        [1]  = {0,  sd_spi, "SEND_OP_COND", spi_cmd_SEND_OP_COND},
+     },
+     .acmd = {
+-        [41] = {    sd_spi, "SEND_OP_COND", spi_cmd_SEND_OP_COND},
++        [41] = {8,  sd_spi, "SEND_OP_COND", spi_cmd_SEND_OP_COND},
+     },
+ };
+ 
+ static const SDProto sd_proto_sd = {
+     .name = "SD",
+     .cmd = {
+-        [0]  = {    sd_bc,   "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
+-        [2]  = {    sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
+-        [3]  = {    sd_bcr,  "SEND_RELATIVE_ADDR", sd_cmd_SEND_RELATIVE_ADDR},
+-        [19] = {    sd_adtc, "SEND_TUNING_BLOCK", sd_cmd_SEND_TUNING_BLOCK},
+-        [23] = {    sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
++        [0]  = {0,  sd_bc,   "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
++        [2]  = {0,  sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
++        [3]  = {0,  sd_bcr,  "SEND_RELATIVE_ADDR", sd_cmd_SEND_RELATIVE_ADDR},
++        [19] = {2,  sd_adtc, "SEND_TUNING_BLOCK", sd_cmd_SEND_TUNING_BLOCK},
++        [23] = {2,  sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
+     },
+ };
+ 
 -- 
 2.41.0
 
