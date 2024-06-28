@@ -4,57 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9B71C2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 10:32:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B384C2BBCA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 10:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN8sT-0002zN-G9; Fri, 28 Jun 2024 06:30:50 -0400
+	id 1sN8yy-0004Zd-8K; Fri, 28 Jun 2024 06:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tugy@chinatelecom.cn>)
- id 1sN8sC-0002v5-Tr
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 06:30:44 -0400
-Received: from smtpnm6-11.21cn.com ([182.42.117.141] helo=chinatelecom.cn)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tugy@chinatelecom.cn>) id 1sN8sA-0007r3-1K
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 06:30:32 -0400
-HMM_SOURCE_IP: 192.168.138.117:0.1711007340
-HMM_ATTACHE_NUM: 0000
-HMM_SOURCE_TYPE: SMTP
-Received: from clientip-36.111.64.85 (unknown [192.168.138.117])
- by chinatelecom.cn (HERMES) with SMTP id 0E80FE010B47;
- Fri, 28 Jun 2024 18:22:50 +0800 (CST)
-X-189-SAVE-TO-SEND: +tugy@chinatelecom.cn
-Received: from  ([36.111.64.85])
- by gateway-ssl-dep-67bdc54df-qz2qs with ESMTP id
- 5a3f1502136d484ba9f43cb2e8a5217f for dave@treblig.org; 
- Fri, 28 Jun 2024 18:22:57 CST
-X-Transaction-ID: 5a3f1502136d484ba9f43cb2e8a5217f
-X-Real-From: tugy@chinatelecom.cn
-X-Receive-IP: 36.111.64.85
-X-MEDUSA-Status: 0
-Message-ID: <0370576b-0660-4fb0-ac70-5b31ad6e3dbf@chinatelecom.cn>
-Date: Fri, 28 Jun 2024 18:22:48 +0800
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sN8yw-0004XZ-KR
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 06:37:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sN8yi-0003U4-Nm
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 06:37:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719571035;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6a7p2lMcpr5hgfMMs9jrdVHm4yfMOb4mDY+LbmbEIhc=;
+ b=CVVkNk+//IMXtHEckyL/oT1aFMmsi0XgRSGiYj1DggWtCkZ8ZW4MC8UhQhPaXKmBWqjgIQ
+ Skmg19bM5Ae5xAEsGL3g4oSf3Z6I4agIZ5aMism6DZGgiVhuEVq5qDOn4ZETi1jHIJGiYH
+ FlbcXLhjzcujk9OR1UvxZ0U9Qf0roys=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-677-pYn0zgsrPKWsXsnVJfs8Xg-1; Fri, 28 Jun 2024 06:37:12 -0400
+X-MC-Unique: pYn0zgsrPKWsXsnVJfs8Xg-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2ec584f36bfso4318901fa.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 03:37:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719571030; x=1720175830;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6a7p2lMcpr5hgfMMs9jrdVHm4yfMOb4mDY+LbmbEIhc=;
+ b=pIOGcn6FqA2JEi8W+Tk05krBZNRASJIPZJcxfVNl8JWD9Yg6r22jNBzjXFsLfsw/wU
+ BMRjNcBK1OjoE8wU+xYv3UUTa+3dvA+mQHQhywNfHeUyvrhPvM7YwGVdxNYbV16BwSA1
+ XMXEb/5SNf30ebGQa80Ej+Pe5JfloZuN3cNvRHmNQEPpZD5WJmXCauui4vgl0PTYzv+0
+ qujeGJEm3yyUJ8EYlyBfCVnkUKxknxXwLkOM6+ZVLQPpRv49Kva73vJMFVj9vunJQl+R
+ mC61PfAC2j/n+3NMAGDj9dxtO93xcd7i1hSB3M0u7JkAbwyUwTk39wZGmPUVr9aQzkYK
+ fO3A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCULKNw6xMwd7bw6sPqcqpQlbgRX7qK6sxEToZ161SH2tDteAlWJpiWgG98z/yq3M6W7QUrcPulfHyK5574w0eziYgRQJTg=
+X-Gm-Message-State: AOJu0YyRxzT1v0hd5rqbraj/vdyB37kuz8rqI9LkgseGAB1UiAIdKJh2
+ 0jEN3sTq8CS912InmBZWb9lqG2NvIk7ak7XZn0UN4ihhDpuHFdPHzkJAK5ebI1dSg5Had9dISPI
+ vNF4ofzEu/z6SOHyM2Y9VQdUk0XuwszwynQGK69zzoyR5i3fXt3sM
+X-Received: by 2002:a2e:320d:0:b0:2ee:4da7:3937 with SMTP id
+ 38308e7fff4ca-2ee4da73a9fmr21350731fa.29.1719571030662; 
+ Fri, 28 Jun 2024 03:37:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHC/l50KLTq/2He3iGs930z5rhNbl2YuJvq1QG6K5fnMuF7ysyk5GsgjqRdI3FPlY5/NYT9xA==
+X-Received: by 2002:a2e:320d:0:b0:2ee:4da7:3937 with SMTP id
+ 38308e7fff4ca-2ee4da73a9fmr21350521fa.29.1719571030086; 
+ Fri, 28 Jun 2024 03:37:10 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256b0c1ab2sm28029915e9.47.2024.06.28.03.37.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Jun 2024 03:37:09 -0700 (PDT)
+Message-ID: <8ba04617-f18d-4c84-8bed-d3ddfa87d5b7@redhat.com>
+Date: Fri, 28 Jun 2024 12:37:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: tugy@chinatelecom.cn, qemu-devel@nongnu.org, dengpc12@chinatelecom.cn,
- zhangl161@chinatelecom.cn
-Content-Language: en-US
-From: Guoyi Tu <tugy@chinatelecom.cn>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: [PATCH] misc: introduce strim-memory qapi to support free memory
- trimming
+Subject: Re: [PATCH] vfio: container: Fix missing allocation of
+ VFIOSpaprContainer
+To: Shivaprasad G Bhat <sbhat@linux.ibm.com>, harshpb@linux.ibm.com,
+ npiggin@gmail.com
+Cc: danielhb413@gmail.com, david@gibson.dropbear.id.au,
+ alex.williamson@redhat.com, qemu-ppc@nongnu.org, zhenzhong.duan@intel.com,
+ qemu-devel@nongnu.org
+References: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
+ <11578ca8-2bb3-4504-b7b9-022c1df65942@redhat.com>
+ <cef472a4-da2c-449e-8f76-0b3e9105e194@linux.ibm.com>
+ <ba376f81-2175-4e3d-bda0-4b08b2ae5158@redhat.com>
+ <7b553db9-4d29-4cfe-8874-3c87ad862c74@linux.ibm.com>
+ <449a8a0a-6149-45af-bfa0-bf7fb29e27c6@redhat.com>
+ <65126343-344e-47a0-bf63-7df43b0051ca@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <65126343-344e-47a0-bf63-7df43b0051ca@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=182.42.117.141; envelope-from=tugy@chinatelecom.cn;
- helo=chinatelecom.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.206,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,163 +112,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the test environment, we conducted IO stress tests on all storage disks
-within a virtual machine that had five storage devices mounted.During 
-testing,
-we found that the qemu process allocated a large amount of memory (~800MB)
-to handle these IO operations.
+...
 
-When the test ended, although qemu called free() to release the allocated
-memory, the memory was not actually returned to the operating system, as
-observed via the top command.
+> Could you clarify which tree you are referring to ? I see his tree
+> 
+> https://github.com/awilliam/tests is bit old and updated recently, however
+> 
+> I have been using those tests for my unit testing.
 
-Upon researching the glibc memory management mechanism, we found that when
-small chunks of memory are allocated in user space and then released with
-free(),  the glibc memory management mechanism does not necessarily return
-this memory to the operating system. Instead, it retains the memory until
-certain conditions are met for release.
+Yes, this tree.
 
-For virtual machines that only have business operations during specific
-periods,  they remain idle most of the time. However, the qemu process
-still occupies a large amount of memory resources, leading to significant
-memory resource waste.
+...
 
-To address this issue, this patch introduces an API to actively reclaim
-idle memory within the qemu process. This API effectively calls 
-malloc_trim()
-to notify glibc to trim free memory. With this api, the management tool
-can monitor the virtual machine's state and call this API during idle times
-to free up the memory occupied by the virtual machine, thereby allowing more
-virtual machines to be provisioned.
+> This went through cycles of breakage and fixes. It worked on 5.18(not sure
+> 
+> about older ones before that), and broke afterwards. Recently fixed
+> 
+> and working from 6.4, broken on 6.7. Fixed and working in 6.8
+> 
+> onwards now.
 
-Signed-off-by: Guoyi Tu <tugy@chinatelecom.cn>
-Signed-off-by: dengpengcheng <dengpc12@chinatelecom.cn>
----
-  hmp-commands.hx       | 13 +++++++++++++
-  include/monitor/hmp.h |  1 +
-  monitor/hmp-cmds.c    | 14 ++++++++++++++
-  monitor/qmp-cmds.c    | 18 ++++++++++++++++++
-  qapi/misc.json        | 13 +++++++++++++
-  5 files changed, 59 insertions(+)
+Good. It should be fixed in the next debian.
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 06746f0afc..0fde22fc71 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -1858,4 +1858,17 @@ SRST
-  ``xen-event-list``
-    List event channels in the guest
-  ERST
-+
-+    {
-+        .name       = "trim-memory",
-+        .args_type  = "reserved:l?",
-+        .params     = "[reserved]",
-+        .help       = "trim momory",
-+        .cmd        = hmp_trim_memory,
-+    },
-+
-+SRST
-+``trim-memory`` *reserved*
-+  try to release free memory and keep reserved bytes of free memory 
-untrimmed
-+ERST
-  #endif
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 954f3c83ad..547cde0056 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -181,5 +181,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
-  void hmp_info_mtree(Monitor *mon, const QDict *qdict);
-  void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
-  void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
-+void hmp_trim_memory(Monitor *mon, const QDict *qdict);
 
-  #endif
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index ea79148ee8..f842e43315 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -460,3 +460,17 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
-      monitor_printf(mon, "dtb dumped to %s", filename);
-  }
-  #endif
-+
-+void hmp_trim_memory(Monitor *mon, const QDict *qdict)
-+{
-+    int64_t reserved;
-+    bool has_reserved = qdict_haskey(qdict, "reserved");
-+    Error *err = NULL;
-+
-+    if (has_reserved) {
-+        reserved = qdict_get_int(qdict, "reserved");
-+    }
-+
-+    qmp_trim_memory(has_reserved, reserved, &err);
-+    hmp_handle_error(mon, err);
-+}
-diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-index f84a0dc523..878a7a646a 100644
---- a/monitor/qmp-cmds.c
-+++ b/monitor/qmp-cmds.c
-@@ -31,6 +31,7 @@
-  #include "qapi/type-helpers.h"
-  #include "hw/mem/memory-device.h"
-  #include "hw/intc/intc.h"
-+#include <malloc.h>
+> Yes, TCG too works, missed to mention.
 
-  NameInfo *qmp_query_name(Error **errp)
-  {
-@@ -161,6 +162,23 @@ void qmp_add_client(const char *protocol, const 
-char *fdname,
-      }
-  }
+and a TCG guest under an intel host ? This used to work.
 
-+void qmp_trim_memory(bool has_reserved, int64_t reserved, Error **errp)
-+{
-+#if defined(CONFIG_MALLOC_TRIM)
-+    if (!has_reserved) {
-+        reserved = 1024 * 1024;
-+    }
-+    if (reserved < 0) {
-+        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
-+                   "reserved", "a >0 reserved");
-+        return;
-+    }
-+    malloc_trim(reserved);
-+#else
-+    error_setg(errp, "malloc_trim feature not configured");
-+#endif
-+}
-+
-  char *qmp_human_monitor_command(const char *command_line, bool 
-has_cpu_index,
-                                  int64_t cpu_index, Error **errp)
-  {
-diff --git a/qapi/misc.json b/qapi/misc.json
-index ec30e5c570..00e6f2f650 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -605,3 +605,16 @@
-  { 'event': 'VFU_CLIENT_HANGUP',
-    'data': { 'vfu-id': 'str', 'vfu-qom-path': 'str',
-              'dev-id': 'str', 'dev-qom-path': 'str' } }
-+
-+##
-+# @trim-memory:
-+#
-+# try to release free memory
-+#
-+# @reserved: specifies the amount of free space to leave untrimmed.
-+#            default to 1MB if not specified.
-+#
-+# Since: 9.0
-+##
-+{'command': 'trim-memory',
-+ 'data': {'*reserved': 'int'} }
--- 
-2.17.1
+Thanks,
 
-----
-Guoyi
+C.
+
 
