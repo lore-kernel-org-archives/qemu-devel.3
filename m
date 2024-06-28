@@ -4,85 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42CE8C30658
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 17:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2B5C2BD09
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 18:02:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNFo3-0000kJ-Ij; Fri, 28 Jun 2024 13:54:43 -0400
+	id 1sNFun-0003zE-DN; Fri, 28 Jun 2024 14:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNFnx-0000k2-HJ
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:54:37 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNFnu-0005oE-Ls
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 13:54:37 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1f9fb3ca81bso5887855ad.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 10:54:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719597273; x=1720202073; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=pjjqyjZ8J34sht009LlJRNPgghPkN+NXbRwyTaCgcRE=;
- b=O+gX/fGP8tfO6Fg4lVHurewH5JZx8u7ST4XUuBMkLTI5COJ6wgF9JHL7+kTTWuy/qw
- atKQxLO28er1RGUxw1QOoMbyj4dzCStkJ12oYI7MbXNC1B4Xh4hQU0yQrfLDIijdLStT
- /i9sdZuodbJxSbHT7AMXTcqdGzqX1KBAYpqWNrbLqkRVmRorkL/sSVamx19WL99C1MXO
- M5pOVyKLeFR00tmiLehH4HQB4o1ziDMPTpESB4Hn+CLwg//luZZjaEMu9QzYsOj4UmOd
- YSIPi/imuhDW973zrssMZcy0+C09c6/AJRjy+kmRQH0ld7UpBsZkcgLJ65rvO3Tfxzir
- fvBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719597273; x=1720202073;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pjjqyjZ8J34sht009LlJRNPgghPkN+NXbRwyTaCgcRE=;
- b=eoXi0/Pi5gnozDZbPm8HWYHi/UFG+YCCyQQr0px+QDr4OIXXdAU2qsX/qdM89C/ZK9
- /+Oev/oY7H6fgJNDE1beQJnB8STLVjzW9DKt9mOXk2GB3STPXP93HumGMhF1Ea0uYled
- RS54G8J8aPc1v0zw2hJEm7cogK9kMZPJHucEVhoZgfEb7WI0emVt6F2DVvMmscQu8V7L
- FXPbpRl6jnTyww85k+Kb/uVfs4XqtUE8AuJeldtuRuRp1kmGJxz08rjS7hLrXvRLZO00
- SeU24oD7QJLbiWoW7viGhlOEgPCgmB6gPwZNVsO3TDkO+xubNG60o87w+xnRlw6/D8GQ
- L2aw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW+SySTfKjJYolSR0S0+gABBMEQ4o1XI9rm8axwAjXK2nkvqMacdnBbMVlKRjJuHw38LRg2qXwU1tUknf3rC1iNeHk9KM4=
-X-Gm-Message-State: AOJu0YzOFLUe8sgjtr42fLCJL6EyKayCIJjqmSSpKgyczM7mNKf8t0L4
- KY3/0q31QKPvOLtV2Ig9RbPJvGQ7P1lsgB1VGfnWGNWU3FTeTP/3pxzCxXh8cgfQusBb0oopnq/
- 6
-X-Google-Smtp-Source: AGHT+IGJzVDp2UOv9vNQ+XyFNYGSUD6c2HaqBGUA4nrlVmJjN5wrqOcSzSLaLvWAj/ZgsC2NsMn1Rw==
-X-Received: by 2002:a17:903:32ce:b0:1f6:fe05:30e4 with SMTP id
- d9443c01a7336-1fa23fbf6c6mr176738085ad.27.1719597272697; 
- Fri, 28 Jun 2024 10:54:32 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac15693e8sm18108665ad.217.2024.06.28.10.54.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 10:54:32 -0700 (PDT)
-Message-ID: <627f05b5-7abe-423f-829e-4215bcf1bccd@linaro.org>
-Date: Fri, 28 Jun 2024 10:54:30 -0700
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sNFuX-0003x2-Sj; Fri, 28 Jun 2024 14:01:26 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1sNFuV-0001Vc-QW; Fri, 28 Jun 2024 14:01:25 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45SHuvNe005730;
+ Fri, 28 Jun 2024 18:01:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=7
+ pWhTPkFR9dJnrmfCHgtJIYyrCUwVWBI+oSWQVviDJg=; b=azNSqaWYKxlCNLMmF
+ iYiU21bZNKAgu97v9Nj0zoC07pK/31XdcyrN/x3D8rLGftJ5vllO0YKsyqUNxlSw
+ b8nh9Lk6Ybh1GNlH0MDhHzjJfnRvTHbD/ckMjgV/37QnzmkBM1Yp3t0f2TJdzHf3
+ NmLN+iLjMdk1T7lGbFiwGDqxcPgNgb2b4mnRTLM25n9F/ZpkY7dWwbbZ+miMsBjo
+ tO2bjdjKdVmQ+uqY+Hdl3tk+CeBylWPVrXTXb6oc0NtduNknT4y7pdU27WYNmHax
+ HGnFSHWNhgQKOoYI/sk0oEyPQv0rOF8DtO8+d3lD+alT0ujvvSokAF+R7RA9rK2d
+ 2gocQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 401wn7ruf0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 28 Jun 2024 18:01:20 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45SI1JjR014475;
+ Fri, 28 Jun 2024 18:01:19 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 401wn7ruex-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 28 Jun 2024 18:01:19 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45SFdhwe000428; Fri, 28 Jun 2024 18:01:18 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3yxbn3s8rq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 28 Jun 2024 18:01:18 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45SI1FpJ27525654
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 28 Jun 2024 18:01:18 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C16A05803F;
+ Fri, 28 Jun 2024 18:01:15 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 232805804E;
+ Fri, 28 Jun 2024 18:01:14 +0000 (GMT)
+Received: from [9.67.146.29] (unknown [9.67.146.29])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 28 Jun 2024 18:01:13 +0000 (GMT)
+Message-ID: <d10e77d9-5905-4102-81b6-9cce6bdaae5c@linux.ibm.com>
+Date: Fri, 28 Jun 2024 14:01:12 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/23] target/i386: fix gen_prepare_size_nz condition
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20240628124258.832466-1-alex.bennee@linaro.org>
- <20240628124258.832466-3-alex.bennee@linaro.org>
+Subject: Re: [PATCH 0/7] pc-bios/s390-ccw: Merge the netboot loader into
+ s390-ccw.img
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org
+Cc: qemu-devel@nongnu.org, Claudio Imbrenda <imbrenda@linux.ibm.com>,
+ "Collin L . Walling" <walling@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>,
+ "Jason J . Herne" <jjherne@linux.ibm.com>,
+ Marc Hartmayer <mhartmay@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+References: <20240621082422.136217-1-thuth@redhat.com>
+ <a3531d21082e3abf3132a4c95d6c54e8973dd27e.camel@linux.ibm.com>
+ <77f2550a-fbb7-4bcf-a6b7-b9b31934daf1@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240628124258.832466-3-alex.bennee@linaro.org>
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <77f2550a-fbb7-4bcf-a6b7-b9b31934daf1@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: N-PE0PgTCVdsX6QOk8fRbfMW9fv-93Wx
+X-Proofpoint-ORIG-GUID: u0zNGLdbHOwvxCUzmF-cWgREAlECe4N1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-28_13,2024-06-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0
+ malwarescore=0 mlxlogscore=999 bulkscore=0 phishscore=0 clxscore=1011
+ spamscore=0 impostorscore=0 lowpriorityscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406280133
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,33 +123,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/28/24 05:42, Alex Bennée wrote:
-> Incorrect brace positions causes an unintended overflow on 32 bit
-> builds and shenanigans result.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2413
-> Suggested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   target/i386/tcg/translate.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-> index ad1819815a..94f13541c3 100644
-> --- a/target/i386/tcg/translate.c
-> +++ b/target/i386/tcg/translate.c
-> @@ -877,7 +877,7 @@ static CCPrepare gen_prepare_sign_nz(TCGv src, MemOp size)
->           return (CCPrepare) { .cond = TCG_COND_LT, .reg = src };
->       } else {
->           return (CCPrepare) { .cond = TCG_COND_TSTNE, .reg = src,
-> -                             .imm = 1ull << ((8 << size) - 1) };
-> +                             .imm = (1ull << (8 << size)) - 1 };
-
-This is incorrect -- we want only to test the sign bit.
-Perhaps MAKE_64BIT_MASK((8 << size) - 1, 1) would make this more explicit?
-
-I'll have a quick look at the issue and see if I can reproduce.
 
 
-r~
+On 6/24/24 1:55 AM, Thomas Huth wrote:
+> [...]
+>
+> I think it should be fine, both functions are basically just a wrapper 
+> around the write() function in sclp.c, with sclp_print() being rather 
+> dumb while printf() is doing the usual string formatting before 
+> writing it out. I think in the long run, it would be nice to get rid 
+> of sclp_print() and replace it by puts() or printf() in the whole 
+> code, but doing that right now would likely cause quite some conflicts 
+> for Jared with his patch series, so I'd rather postpone that to a 
+> later point in time.
+
+Hi Thomas,
+
+Converting the panics to returns will require me to modify/move some of 
+the sclp_print() calls.  Shall I go ahead and change them to printf() 
+and puts() while I'm at it, or would you rather preserve the 
+sclp_print() for now and then have a dedicated patch for the all 
+replacements later?  I'm not sure if we want to try to maintain some 
+amount of consistency until we do a total conversion, or if you are OK 
+with a mix of sclp_print() and printf() throughout in the meantime.
+
+Regards,
+
+Jared Rossi
 
