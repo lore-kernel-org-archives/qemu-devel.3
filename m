@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9BEDC2BBCA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED38DC3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 08:03:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sN6Za-0004Yv-G4; Fri, 28 Jun 2024 04:03:10 -0400
+	id 1sN6a7-0006Jb-VZ; Fri, 28 Jun 2024 04:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6ZU-0004JH-VZ
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:03:06 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ id 1sN6a6-0006Iv-Tz
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:03:42 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=GU6n=N6=kaod.org=clg@ozlabs.org>)
- id 1sN6ZS-0005qK-LE
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:03:04 -0400
+ id 1sN6a5-0005u4-1i
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 04:03:42 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9Sbl4MZcz4wc8;
- Fri, 28 Jun 2024 18:02:59 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4W9ScW0Tbkz4w2Q;
+ Fri, 28 Jun 2024 18:03:39 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9Sbk30HYz4w2Q;
- Fri, 28 Jun 2024 18:02:58 +1000 (AEST)
-Message-ID: <f81139ab-3e0b-4bef-83f9-401d2dc69288@kaod.org>
-Date: Fri, 28 Jun 2024 10:02:56 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4W9ScV0X8Xz4wb7;
+ Fri, 28 Jun 2024 18:03:37 +1000 (AEST)
+Message-ID: <b1ab3349-efdb-41fd-aff5-441675987d0e@kaod.org>
+Date: Fri, 28 Jun 2024 10:03:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 66/98] hw/sd/sdcard: Add spi_cmd_READ_OCR handler
- (CMD58)
+Subject: Re: [PATCH v42 71/98] hw/sd/sdcard: Add
+ sd_acmd_SET_WR_BLK_ERASE_COUNT handler (ACMD23)
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-67-philmd@linaro.org>
+ <20240628070216.92609-72-philmd@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240628070216.92609-67-philmd@linaro.org>
+In-Reply-To: <20240628070216.92609-72-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=GU6n=N6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -79,43 +79,69 @@ C.
 
 
 > ---
->   hw/sd/sd.c | 10 +++++++---
->   1 file changed, 7 insertions(+), 3 deletions(-)
+>   hw/sd/sd.c | 22 +++++++++++-----------
+>   1 file changed, 11 insertions(+), 11 deletions(-)
 > 
 > diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index 50cee5ac40..b3b4cd5a3a 100644
+> index 9d66c3715a..cd207a3090 100644
 > --- a/hw/sd/sd.c
 > +++ b/hw/sd/sd.c
-> @@ -1660,6 +1660,12 @@ static sd_rsp_type_t sd_cmd_GEN_CMD(SDState *sd, SDRequest req)
->       }
+> @@ -263,7 +263,6 @@ static const char *sd_acmd_name(SDState *sd, uint8_t cmd)
+>           [14] = "DPS_spec",                  [15] = "DPS_spec",
+>           [16] = "DPS_spec",
+>           [18] = "SECU_spec",
+> -                                            [23] = "SET_WR_BLK_ERASE_COUNT",
+>           [42] = "SET_CLR_CARD_DETECT",
+>           [51] = "SEND_SCR",
+>           [52] = "SECU_spec",                 [53] = "SECU_spec",
+> @@ -1696,6 +1695,15 @@ static sd_rsp_type_t sd_acmd_SEND_NUM_WR_BLOCKS(SDState *sd, SDRequest req)
+>                                    &sd->blk_written, sizeof(sd->blk_written));
 >   }
 >   
-> +/* CMD58 */
-> +static sd_rsp_type_t spi_cmd_READ_OCR(SDState *sd, SDRequest req)
+> +/* ACMD23 */
+> +static sd_rsp_type_t sd_acmd_SET_WR_BLK_ERASE_COUNT(SDState *sd, SDRequest req)
 > +{
-> +    return sd_r3;
+> +    if (sd->state != sd_transfer_state) {
+> +        return sd_invalid_state_for_cmd(sd, req);
+> +    }
+> +    return sd_r1;
 > +}
 > +
 >   static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
 >   {
 >       uint64_t addr;
-> @@ -1748,9 +1754,6 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
->           return sd_cmd_to_receivingdata(sd, req, 0, sizeof(sd->cid));
+> @@ -1804,16 +1812,6 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
+>       }
 >   
->       /* Application specific commands (Class 8) */
-> -    case 58:    /* CMD58:   READ_OCR (SPI) */
-> -        return sd_r3;
+>       switch (req.cmd) {
+> -    case 23:  /* ACMD23: SET_WR_BLK_ERASE_COUNT */
+> -        switch (sd->state) {
+> -        case sd_transfer_state:
+> -            return sd_r1;
 > -
->       case 59:    /* CMD59:   CRC_ON_OFF (SPI) */
->           return sd_r1;
->   
-> @@ -2321,6 +2324,7 @@ static const SDProto sd_proto_spi = {
->           [55] = {8,  sd_spi, "APP_CMD", sd_cmd_APP_CMD},
->           [56] = {8,  sd_spi, "GEN_CMD", sd_cmd_GEN_CMD},
->           [57] = {10, sd_spi, "DIRECT_SECURE_WRITE", sd_cmd_optional},
-> +        [58] = {0,  sd_spi, "READ_OCR", spi_cmd_READ_OCR},
->       },
+> -        default:
+> -            break;
+> -        }
+> -        break;
+> -
+>       case 41:  /* ACMD41: SD_APP_OP_COND */
+>           if (sd->state != sd_idle_state) {
+>               break;
+> @@ -2320,6 +2318,7 @@ static const SDProto sd_proto_spi = {
 >       .acmd = {
+>           [13] = {8,  sd_spi, "SD_STATUS", sd_acmd_SD_STATUS},
+>           [22] = {8,  sd_spi, "SEND_NUM_WR_BLOCKS", sd_acmd_SEND_NUM_WR_BLOCKS},
+> +        [23] = {8,  sd_spi, "SET_WR_BLK_ERASE_COUNT", sd_acmd_SET_WR_BLK_ERASE_COUNT},
 >           [41] = {8,  sd_spi, "SEND_OP_COND", spi_cmd_SEND_OP_COND},
+>       },
+>   };
+> @@ -2379,6 +2378,7 @@ static const SDProto sd_proto_sd = {
+>           [6]  = {8,  sd_ac,   "SET_BUS_WIDTH", sd_acmd_SET_BUS_WIDTH},
+>           [13] = {8,  sd_adtc, "SD_STATUS", sd_acmd_SD_STATUS},
+>           [22] = {8,  sd_adtc, "SEND_NUM_WR_BLOCKS", sd_acmd_SEND_NUM_WR_BLOCKS},
+> +        [23] = {8,  sd_ac,   "SET_WR_BLK_ERASE_COUNT", sd_acmd_SET_WR_BLK_ERASE_COUNT},
+>       },
+>   };
+>   
 
 
