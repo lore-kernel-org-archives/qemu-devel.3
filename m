@@ -4,80 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D2A0C2BD09
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A8D2C30658
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNCdo-0002q6-Hi; Fri, 28 Jun 2024 10:31:56 -0400
+	id 1sNCgs-0004ks-4I; Fri, 28 Jun 2024 10:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNCdl-0002oI-Ez
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:31:53 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sNCgq-0004kD-Oq
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:35:04 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNCdj-0007Fe-TG
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:31:53 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1fab50496f0so4578545ad.2
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:31:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sNCgo-0000Ls-T3
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:35:04 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a72af03ebdfso95691066b.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:35:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719585109; x=1720189909; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rglGY1YG+gk25H+wVT+J71pIwe8RBjgWCFs3wbXCF8g=;
- b=LxsOXTpgoTHlrxQ+SEBxL3YNmyyR2ESv3i914mrJOTDZQvOK9YeKj5aC4dr6MAoLPP
- YfPPSvwKoBUPtB4aNwOZfhhnpozLJgu9/kPjEcPsjYT4F3yyGQTuKsS1Kl19yJQyBfwc
- xLsqZJ5wuCA984ZgFOKdcT5H4qV6aJ69+VyP7WtyJg0zdx03zoPOr/RwPNnX84PEJxn8
- zHdzpFFV/wtd7CgeIOhXu8axSl5Er4vhN9e3TR7Ne7jjSDPiZA4JlDCYACRKMkTyHiEJ
- 3L4EcLOGEJatvUbq6+ZDwg73Qj4NEG8OMXp3DaEh+FJcXcORyfBzhaRUUrhd31seuS3o
- Juow==
+ d=linaro.org; s=google; t=1719585301; x=1720190101; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=+uAk3bFfID7pkNPPadj5fvdu8UK8/lHck3KEK8Z2W6E=;
+ b=pUFGm74FetAp9AirNDn/Irw/AbHhULL84RQ0z54si+tTdRjiF5C8C52bAnYK92Cr3I
+ XgvqfihP+GmdWNGf62ynqZoOh/Wnxlf239C0gyU8JAIax96r8jTrTflCYlSigP36ZaMV
+ 9IzKPem2kN57gFOlIV9zv4qvI+frj7blCWp8JZdAa1leBTBjdCI8ZcH+8gE3fr4C+f4A
+ 8q79TGTEnsWdvpAPKQcxFqgi3Qf15U4/lgKJXthGE/p+ccpaXgzvKT7e9hiFXOVQWjGq
+ YyIvCZ8C4KtC4iKxj5XYuFeWH54zW+2xAwYd4AO0YIszHOgCRj81fpvmknGkG8zBoTDD
+ 9nlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719585109; x=1720189909;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rglGY1YG+gk25H+wVT+J71pIwe8RBjgWCFs3wbXCF8g=;
- b=soTmUBaWctA+AiLkiNwpDenXp2QSPc4y7b7Mvr28Kfe/V30uKPSYUCXMeevGl00kr7
- R8teN8/q+CjwCbHuKu6ejT3CCBjyegAhi5MYPxSVymDnPc3vXWy9hlbSQ4OMO38aoqIu
- h4uBjUzA9PpScm0LQiDES6xsYsCrscbbvc9mzDev0No+QfRM1NQeyeYM5uc+41uykB8l
- 369of51MUyye/Ibkn0wiV1UD4vBSejS4jA3bnBYtACCm4JB0yxTaoB7s+r7usIw7gx85
- 9BGtybMOf3DpQRj3T/9+W9GP+eD7f0ak6luwnp/9SPC89mepOX2wlC9w2EEYIHS9aLTT
- sZaw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIXXmaeM7NgeqQ9mRrT5/hyGnx2X0bbjDxy/xgkPcOsWNcYfY8K85vUr4M2EUvaSyjn1NeAz//ItBcydJYuWKhIhP8lUI=
-X-Gm-Message-State: AOJu0YyO3IbMLgXM5kU4d1Xu+3rvRyFNtCehlecGSxZt8PfAe9MXZ8ia
- aaRESaoNlJ2Gqd5Z5xArgP1abBwRkmrxqdQu4r/VnhpLmTp/0FQfZZi1yX8lKNw=
-X-Google-Smtp-Source: AGHT+IHwAI1PT/N4HSmLUpFzMZ2lfgQ92zD/I+ql3HIyL0/oniGzyu7f6uEK6KU0AGwk2Io0nxotsQ==
-X-Received: by 2002:a17:902:e74d:b0:1f7:124:b820 with SMTP id
- d9443c01a7336-1fa24082256mr158330225ad.50.1719585109409; 
- Fri, 28 Jun 2024 07:31:49 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac1535ea5sm15867735ad.147.2024.06.28.07.31.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 07:31:48 -0700 (PDT)
-Message-ID: <42de8f25-3624-4e7c-b38c-ad8e3b8e61a4@linaro.org>
-Date: Fri, 28 Jun 2024 07:31:46 -0700
+ d=1e100.net; s=20230601; t=1719585301; x=1720190101;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+uAk3bFfID7pkNPPadj5fvdu8UK8/lHck3KEK8Z2W6E=;
+ b=RJRO2vrjOBgiMrM2aqNCcN7HrA7pJ39yUIQ2gSfsM+fYQifVRc2ze4PKA601o7x/Qu
+ brdEdIkj9+OiagpOcEZojeS2aZfrR3IpuAqJgj675iOdcAOS0e+tdc3dVClWzU065mEe
+ fUu2AWbGXircul7FX9DRzbTL+n+QpOK26e+yuBeMPTgPBIwA+wLcaUaORn+qxFWtUulJ
+ /B/XkNcYYXdmQhm/26g1d8dhYRbTHXWnwMM4sV03atDx0JkEMCGeb0jic/EHru6VL1WO
+ PQAT/p3QB96I0KL584P8rH16of6MBKnd29wTeX03GioMQvleJA/787G0UExG+mJK48YQ
+ emag==
+X-Gm-Message-State: AOJu0Yyci1d3BWonK/USQpm1zcdSDlB8cVkA7xltDlr7KS8k9c0qlbYg
+ 8n1GsDad4zQ9/guLeuWOzdBi0ehBTYA2QfaVfweCO8Qzsib0WrjZ40OOkGqCUw0=
+X-Google-Smtp-Source: AGHT+IG6VfqNA3syidWs0r6o9lNgdgF0gsLfYuJc04SrnoAC9y5alnejD8iE7HcuQETr2vGT5naycQ==
+X-Received: by 2002:a17:907:9706:b0:a72:65e5:3e7 with SMTP id
+ a640c23a62f3a-a7265e50623mr1054135366b.55.1719585300039; 
+ Fri, 28 Jun 2024 07:35:00 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a72aaf62058sm85144466b.56.2024.06.28.07.34.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Jun 2024 07:34:59 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8909A5F7A1;
+ Fri, 28 Jun 2024 15:34:58 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>,  Beraldo Leal <bleal@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,  Wainer dos Santos Moschetta
+ <wainersm@redhat.com>,  qemu-arm@nongnu.org,  Peter Xu
+ <peterx@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Mahmoud Mandour
+ <ma.mandourr@gmail.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Alexandre
+ Iooss <erdnaxe@crans.org>,  Stefan Hajnoczi <stefanha@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Mark
+ Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Michael S. Tsirkin
+ <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, Peter Xu <peterx@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>
+Subject: Re: [PATCH 02/23] target/i386: fix gen_prepare_size_nz condition
+In-Reply-To: <20240628124258.832466-3-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?=
+ message of "Fri, 28 Jun 2024 13:42:37 +0100")
+References: <20240628124258.832466-1-alex.bennee@linaro.org>
+ <20240628124258.832466-3-alex.bennee@linaro.org>
+Date: Fri, 28 Jun 2024 15:34:58 +0100
+Message-ID: <87ikxtnnjh.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] target/arm: Always build Aarch64 gdbstub helpers
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- Anton Johansson <anjo@rev.ng>
-References: <20240619124903.56898-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240619124903.56898-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,26 +110,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/19/24 05:49, Philippe Mathieu-Daudé wrote:
-> Merge gdbstub64.c in gdbstub.c and remove uses of
-> target specific TARGET_AARCH64 definition.
-> Small step toward single ARM/Aarch64 binary.
-> 
-> Philippe Mathieu-Daudé (2):
->    target/arm: Merge gdbstub64.c within gdbstub.c
->    target/arm: Always build Aarch64 gdbstub helpers
-> 
->   target/arm/cpu.h       |   8 +-
->   target/arm/internals.h |   2 -
->   target/arm/gdbstub.c   | 363 +++++++++++++++++++++++++++++++++++++-
->   target/arm/gdbstub64.c | 383 -----------------------------------------
->   target/arm/meson.build |   1 -
->   5 files changed, 364 insertions(+), 393 deletions(-)
->   delete mode 100644 target/arm/gdbstub64.c
-> 
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-Are we attempting a single binary for user-only as well?
+> Incorrect brace positions causes an unintended overflow on 32 bit
+> builds and shenanigans result.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2413
+> Suggested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+This seems to trigger regressions in:
 
-r~
+  qtest-x86_64/bios-tables-test
+  qtest-x86_64/pxe-test
+  qtest-x86_64/vmgenid-test
+
+Could that be down to generated test data?
+
+> ---
+>  target/i386/tcg/translate.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index ad1819815a..94f13541c3 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -877,7 +877,7 @@ static CCPrepare gen_prepare_sign_nz(TCGv src, MemOp =
+size)
+>          return (CCPrepare) { .cond =3D TCG_COND_LT, .reg =3D src };
+>      } else {
+>          return (CCPrepare) { .cond =3D TCG_COND_TSTNE, .reg =3D src,
+> -                             .imm =3D 1ull << ((8 << size) - 1) };
+> +                             .imm =3D (1ull << (8 << size)) - 1 };
+>      }
+>  }
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
