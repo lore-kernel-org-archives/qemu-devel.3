@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FC0C3064D
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B152C3064D
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Jun 2024 14:44:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNCoJ-0000n0-0q; Fri, 28 Jun 2024 10:42:47 -0400
+	id 1sNCpI-0001cD-PY; Fri, 28 Jun 2024 10:43:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNCoH-0000lt-O6
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:42:45 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1sNCpH-0001c5-Aw
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:43:47 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sNCoG-0007sm-74
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:42:45 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-57d20d89748so888646a12.0
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:42:43 -0700 (PDT)
+ id 1sNCpD-0008Bq-Dj
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 10:43:46 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a6fe7a0cb58so35029866b.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 07:43:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719585762; x=1720190562; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719585822; x=1720190622; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/GIjPQKS9gmuxGPPQ/3teACt5nE1uvfPCy5lFVVL2YA=;
- b=rls4SJrafzKe3v0c9n9ddapKCOR6v4XbFqbgziFCW8cN4xSha2mvAA7h2hOSxaPabv
- dlWBmbMz/84/WTeFIz3VbB06LbqiSAKr9xQ/tRuiyDABIMDWSKL5raEvDz26ckk+DLCr
- x6vbWtSOHQt2YAkMWrQWMZdPhH9J2QhK/lQ6D4rIiKlwKovbUoWPK6jwOZbYNZ0cRSh0
- VqYZHu1FviiSFjX0j9wlv6kqPxNvltZCMeFL2ruMPtKID9LiIh2IB82aKWlNPAUJWh6e
- fpigYlXs/0no/Ps00KIpKe5VL04UgfrecXYe1Kp4Ye6CEZicXa+UQfmZAtsuWcqnYWzu
- n43w==
+ bh=q5kkp9Ko6ZNcq0+Spd9RzS8aaAAfUlw3qjDLQ2OSKm4=;
+ b=iQYJIQJPHe1RQrh8WYBs0RoU+k9tqT1Ti0cgc6umsxgSCGse7fkAA5MpAoYk09AYqi
+ CEJBM7TCBeTsBOcoZLnEBiBi4p37u6bHR6WXEgvV7yMdNHKqpXpQ3TexKF14GA7uSg9p
+ kTeEaUk1hiwIKt8vh36rMjUhgm92YQreFcQYvRw+tl4AIlDih3ZH6TPES43IN/vVHosL
+ N207BSyjGkAm18roa5nN8x6FeFQ5KdtPB9beXIFlvd6i/hDGj4qVylx2PyVlMyHKMopD
+ Ke+L7JfpCcMRcu6WUQMTQUY4/SyLvRydGGID5PNxNUYtIDme1sbg9nKOYDU2Hv7ccPYX
+ O+Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719585762; x=1720190562;
+ d=1e100.net; s=20230601; t=1719585822; x=1720190622;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=/GIjPQKS9gmuxGPPQ/3teACt5nE1uvfPCy5lFVVL2YA=;
- b=IYbbm68zqRGik4jP+pjHUUd8wqBoiJSqtIYqNavsQKN6QVnQ0FjdBL5YLotJYCwzJm
- z+Ckl9JuPz8zAeXkcr/goJL8DVXWhrTxLZvUIB3XHmMOPLR64AU/KJJin3Q2X6TLv6vf
- WxnGY0ZlbHN3M3w+xfsuGVVigx0iIPVCgGnPgCVis+s1swGK2j2OO7imniCsjO7+3R/R
- HHquvZZV9hJhPlA+d4+ShkxKf7p3WjqEF4ga6q88C4CvAbebL5WYpX0omAAjrsT0LZYu
- PkPucO77me3I0lYNn0/JYGktkjYBso+7UxhczFII0EG9majCEgt3QhXsk/pRHVwPQpwV
- SrOA==
-X-Gm-Message-State: AOJu0YxEavra615skDf/xyzcc/UcGdqhATR+m5AG4FipFIZh3ioqFDNl
- vXxpKxWyndXBjI0Bqx70CXRj6O3BW0Uao1/Fcr4bqT9h/sKqkJbO2OxDasaZLK1uxUPWtGpjIDA
- uCDudxWFi7MvhUb9ew37QvzsNFvB6AFILZ6NkgQ==
-X-Google-Smtp-Source: AGHT+IHXTtgF4j+pk0tWTjJdpt7ugMdWga7cR8HCMa9tYJ/doyHgLqK3HMaqCNI0SoknJQOHIKuss78SgKLQ5JqUs9w=
-X-Received: by 2002:a05:6402:27d4:b0:585:3a33:9de0 with SMTP id
- 4fb4d7f45d1cf-5853a339f39mr3791734a12.26.1719585762211; Fri, 28 Jun 2024
- 07:42:42 -0700 (PDT)
+ bh=q5kkp9Ko6ZNcq0+Spd9RzS8aaAAfUlw3qjDLQ2OSKm4=;
+ b=GdofU0o7ze7BBZlalw6PJdTJNEcDwa970hBSZBVTmCc5Ob6TyEOhlR3TZmwWfnZDhv
+ y4TpZs3KqUTao9nNKbInQDrfQMR2rLASfAgiye3e2eKxYx+MsBm2jJGERkKlLv2qwykK
+ MlL0nfqL4oZxjsRfgQN9FchDmKxEAcQcWTes4SnDjwdl0+988oPxrq8VRK+tGvyGDOkM
+ xZ/OaxCFjZ1nYBCNzqfM6JXEaD2S2hlVKaVW8jMe/2eeLwHtw/fQYeAsUR+I93KUKyx9
+ wC9Q+4BEpuSKQvU+mrupQtjQ37SX71Iu/mtTTFGqkE0eii287BNBeKD8kwrnBoQFFvIg
+ 7GRg==
+X-Gm-Message-State: AOJu0Yxe8S8Yum7tinftUDCUh3GryGjGG875B2CkaVRtBUMTv5DCPCM/
+ i8ukzWyuFtORZOrOgYKlcsSU8vWSwW+W3AKLsNZozLZyiyGDXWpx36kiHKH4DFuyD6XKz5ySDn5
+ DMWdwXeGrBUCv8t8s9KBvVWc2JaAFhJ+t2nloDBdQ+c51IIgy
+X-Google-Smtp-Source: AGHT+IHWiPXQKo3q4vwwc/ep8Kmx9+/urxljFl9V/hZhoSzUU0eXyw6833Hah9JC2YI9rary5ewvrRQWjpeVihCfIWE=
+X-Received: by 2002:a50:d653:0:b0:57d:3b8:85e6 with SMTP id
+ 4fb4d7f45d1cf-57d4bddfba2mr14062484a12.39.1719585821767; Fri, 28 Jun 2024
+ 07:43:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240624180915.4528-1-gustavo.romero@linaro.org>
-In-Reply-To: <20240624180915.4528-1-gustavo.romero@linaro.org>
+References: <20240626211623.3510701-1-venture@google.com>
+In-Reply-To: <20240626211623.3510701-1-venture@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 28 Jun 2024 15:42:31 +0100
-Message-ID: <CAFEAcA_gvZSDYZge+uAFV8Ka0cmdCTbtJZ+hYaXmczfqw9nNag@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] target/arm: Enable FEAT_Debugv8p8 for -cpu max
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org, 
- alex.bennee@linaro.org
+Date: Fri, 28 Jun 2024 15:43:31 +0100
+Message-ID: <CAFEAcA_0Q8YN3juTCXPJL0C7YxiqyiWhS2XDEnTpd-U9kG092A@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Update my family name
+To: Patrick Leis <venture@google.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,21 +87,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 24 Jun 2024 at 19:09, Gustavo Romero <gustavo.romero@linaro.org> wrote:
+On Wed, 26 Jun 2024 at 22:16, Patrick Leis <venture@google.com> wrote:
 >
-> Enable FEAT_Debugv8p8 on Arm max CPU.
+> Signed-off-by: Patrick Leis <venture@google.com>
+> ---
+>  MAINTAINERS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> v2:
->  - Revert to the original comment above call to aa32_max_features()
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 19f67dc5d2..13255d4a3b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2496,7 +2496,7 @@ F: hw/net/tulip.c
+>  F: hw/net/tulip.h
 >
-> v3:
->  - Added feature entry to docs/system/arm/emulation.rst
->  - Explicitly set t=0 before using it to set DBGDEVID reg.
->  - Put indent fix in a separate patch
+>  pca954x
+> -M: Patrick Venture <venture@google.com>
+> +M: Patrick Leis <venture@google.com>
+>  S: Maintained
+>  F: hw/i2c/i2c_mux_pca954x.c
+>  F: include/hw/i2c/i2c_mux_pca954x.h
+> --
+> 2.45.2.741.gdbec12cfda-goog
 
 
-
-Applied to target-arm.next, thanks.
+Applied to target-arm.next (since I'm doing a pullreq anyway), thanks.
 
 -- PMM
 
