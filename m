@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBC26C3065A
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 20:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68CA7C30653
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 20:03:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNeGo-0000Dj-49; Sat, 29 Jun 2024 16:02:02 -0400
+	id 1sNeGn-0000D4-D9; Sat, 29 Jun 2024 16:02:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sNeGm-0000BV-5t
- for qemu-devel@nongnu.org; Sat, 29 Jun 2024 16:02:00 -0400
+ id 1sNeGl-0000BG-JJ
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 16:01:59 -0400
 Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sNeGk-0004fo-2t
+ id 1sNeGj-0004fe-Vn
  for qemu-devel@nongnu.org; Sat, 29 Jun 2024 16:01:59 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1B2614E600F;
- Sat, 29 Jun 2024 22:01:56 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0F7E94E6000;
+ Sat, 29 Jun 2024 22:01:55 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id Dbt-uUYqderj; Sat, 29 Jun 2024 22:01:54 +0200 (CEST)
+ with ESMTP id sfk6lJkrpk-t; Sat, 29 Jun 2024 22:01:53 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 24F7A4E6005; Sat, 29 Jun 2024 22:01:54 +0200 (CEST)
-Message-Id: <b70b9e72063b4dd4005bf4bc040b84f2bb617bf4.1719690591.git.balaton@eik.bme.hu>
+ id 1C3B34E6001; Sat, 29 Jun 2024 22:01:53 +0200 (CEST)
+Message-Id: <e3ffd0f6ef8845d0f7247c9b6ff33f7ee8b432cf.1719690591.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1719690591.git.balaton@eik.bme.hu>
 References: <cover.1719690591.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 2/2] hw/isa/vt82c686.c: Embed i8259 irq in device state
- instead of allocating
+Subject: [PATCH 1/2] hw: Move declaration of IRQState to header and add init
+ function
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>,
  Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 29 Jun 2024 22:01:54 +0200 (CEST)
+Date: Sat, 29 Jun 2024 22:01:53 +0200 (CEST)
 Received-SPF: pass client-ip=2001:738:2001:2001::2001;
  envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
@@ -62,51 +62,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To avoid a warning about unfreed qemu_irq embed the i8259 irq in the
-device state instead of allocating it.
+To allow embedding a qemu_irq in a struct move its definition to the
+header and add a function to init it in place without allocating it.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/isa/vt82c686.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ hw/core/irq.c    | 25 +++++++++++--------------
+ include/hw/irq.h | 18 ++++++++++++++++++
+ 2 files changed, 29 insertions(+), 14 deletions(-)
 
-diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-index 8582ac0322..834051abeb 100644
---- a/hw/isa/vt82c686.c
-+++ b/hw/isa/vt82c686.c
-@@ -592,6 +592,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ViaISAState, VIA_ISA)
+diff --git a/hw/core/irq.c b/hw/core/irq.c
+index 3f14e2dda7..db95ffc18f 100644
+--- a/hw/core/irq.c
++++ b/hw/core/irq.c
+@@ -26,16 +26,6 @@
+ #include "hw/irq.h"
+ #include "qom/object.h"
  
- struct ViaISAState {
-     PCIDevice dev;
+-OBJECT_DECLARE_SIMPLE_TYPE(IRQState, IRQ)
+-
+-struct IRQState {
+-    Object parent_obj;
+-
+-    qemu_irq_handler handler;
+-    void *opaque;
+-    int n;
+-};
+-
+ void qemu_set_irq(qemu_irq irq, int level)
+ {
+     if (!irq)
+@@ -44,6 +34,15 @@ void qemu_set_irq(qemu_irq irq, int level)
+     irq->handler(irq->opaque, irq->n, level);
+ }
+ 
++void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
++                   int n)
++{
++    object_initialize(irq, sizeof(*irq), TYPE_IRQ);
++    irq->handler = handler;
++    irq->opaque = opaque;
++    irq->n = n;
++}
 +
-+    IRQState i8259_irq;
-     qemu_irq cpu_intr;
-     qemu_irq *isa_irqs_in;
-     uint16_t irq_state[ISA_NUM_IRQS];
-@@ -715,13 +717,12 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
-     ViaISAState *s = VIA_ISA(d);
-     DeviceState *dev = DEVICE(d);
-     PCIBus *pci_bus = pci_get_bus(d);
--    qemu_irq *isa_irq;
-     ISABus *isa_bus;
-     int i;
+ qemu_irq *qemu_extend_irqs(qemu_irq *old, int n_old, qemu_irq_handler handler,
+                            void *opaque, int n)
+ {
+@@ -69,10 +68,8 @@ qemu_irq qemu_allocate_irq(qemu_irq_handler handler, void *opaque, int n)
+ {
+     IRQState *irq;
  
-     qdev_init_gpio_out(dev, &s->cpu_intr, 1);
-     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
--    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
-+    qemu_init_irq(&s->i8259_irq, via_isa_request_i8259_irq, s, 0);
-     isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
-                           errp);
+-    irq = IRQ(object_new(TYPE_IRQ));
+-    irq->handler = handler;
+-    irq->opaque = opaque;
+-    irq->n = n;
++    irq = g_new(IRQState, 1);
++    qemu_init_irq(irq, handler, opaque, n);
  
-@@ -729,7 +730,7 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
-         return;
-     }
+     return irq;
+ }
+diff --git a/include/hw/irq.h b/include/hw/irq.h
+index 645b73d251..c861c1debd 100644
+--- a/include/hw/irq.h
++++ b/include/hw/irq.h
+@@ -1,9 +1,20 @@
+ #ifndef QEMU_IRQ_H
+ #define QEMU_IRQ_H
  
--    s->isa_irqs_in = i8259_init(isa_bus, *isa_irq);
-+    s->isa_irqs_in = i8259_init(isa_bus, &s->i8259_irq);
-     isa_bus_register_input_irqs(isa_bus, s->isa_irqs_in);
-     i8254_pit_init(isa_bus, 0x40, 0, NULL);
-     i8257_dma_init(OBJECT(d), isa_bus, 0);
++#include "qom/object.h"
++
+ /* Generic IRQ/GPIO pin infrastructure.  */
+ 
+ #define TYPE_IRQ "irq"
++OBJECT_DECLARE_SIMPLE_TYPE(IRQState, IRQ)
++
++struct IRQState {
++    Object parent_obj;
++
++    qemu_irq_handler handler;
++    void *opaque;
++    int n;
++};
+ 
+ void qemu_set_irq(qemu_irq irq, int level);
+ 
+@@ -23,6 +34,13 @@ static inline void qemu_irq_pulse(qemu_irq irq)
+     qemu_set_irq(irq, 0);
+ }
+ 
++/*
++ * Init a single IRQ. The irq is assigned with a handler, an opaque data
++ * and the interrupt number.
++ */
++void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
++                   int n);
++
+ /* Returns an array of N IRQs. Each IRQ is assigned the argument handler and
+  * opaque data.
+  */
 -- 
 2.30.9
 
