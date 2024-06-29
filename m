@@ -4,87 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A9BC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 06:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76894C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 06:37:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNRW8-0001Ao-Tf; Sat, 29 Jun 2024 02:25:00 -0400
+	id 1sNRhr-0006Ie-G0; Sat, 29 Jun 2024 02:37:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sNRW6-0001AT-2R
- for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:24:58 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sNRW4-00006c-AL
- for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:24:57 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1f65a3abd01so9714185ad.3
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 23:24:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719642294; x=1720247094;
- darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fRjUgTd51th/h0XNgf29yfxHYHLJ7O7+iS3b4QJilnc=;
- b=VUqY8cAuZXu1YXSpIai5vtqeZm+UkUDQl6RamhlHqlsiST9rWIo4LDavFkhGUj135k
- cMiYqS4Vu8dDr864bc8uabtcp9GmF8DJwjZfVVXEGohm8q26eBJXWIkA991rkDD4pft9
- Rm6fGHmfcfR6HulEPYUatDARYY0Lzscr2gkNwtg+E8ZX/sH8TrvYfRqBJEBfKpitRqnV
- VuSZL49VST8WM3dWcQDiKeZwqAk+nMfjv5n9XrFmqFLHAW27LhiKIPGkVK4mlUJs/IRo
- qp4LJOilWVk7B35YyhA3fU+s9wGFpL3v0TaM/HMgKCkQRTqJeQGTrB+yPxh4XjCBdSU2
- 32/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719642294; x=1720247094;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fRjUgTd51th/h0XNgf29yfxHYHLJ7O7+iS3b4QJilnc=;
- b=Vd0VW/R/IZz7d1T+vtBa8uu2qa0iMf8QhsaAZyfkE6L1p+g2ZUl2urlmfxhpa1ms1L
- 6SIRc2eDuThU5+HViKKvlT14gtDPhanCsRuwhWuwHMHsX786fhk6yURN9MnBzzcFdblr
- jCozs7v73XtjfoDyI64Z4t494VVVnrDt2aNRKD7J7vZLygQ36Usn/8P0nENDLf3O0SIR
- oUSFfOdN4kddmIADzHCuCYuALj0leyItj+ItgDHNEo+8AJbnUB/Y5FE5z3xRXO7bhVOp
- e9V0QROjRMbNe5be20pqm2+Tw0jYz82oFF9amtTGP2HqaW1fWio1yvX8wFsKHsNbmtQk
- aE5g==
-X-Gm-Message-State: AOJu0YwSylqittOPJ2qZpwRgtTsvWGiyBaZy1lRUVw+dJfqrnzyo36Ef
- MVVazOEwXC/HhTih1Ssu4W/EWARxN2+/EMdodKioX3kGGfKmU2ixvqmF4EFKEq8=
-X-Google-Smtp-Source: AGHT+IGTTXE7WVmsvWnPktZecUjpXHSBvr0YDZuv7MUCVvwJBgzP9gVokeBTwbdMKzHFSjVArn/1rQ==
-X-Received: by 2002:a17:902:e892:b0:1f6:e4ab:a1f4 with SMTP id
- d9443c01a7336-1fadbc5c269mr1938825ad.12.1719642293992; 
- Fri, 28 Jun 2024 23:24:53 -0700 (PDT)
-Received: from localhost ([157.82.204.135])
- by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1face441a1dsm18442735ad.39.2024.06.28.23.24.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 23:24:53 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH 0/4] Drop ifdef for macOS versions older than 12.0
-Date: Sat, 29 Jun 2024 15:24:43 +0900
-Message-Id: <20240629-macos-v1-0-6e70a6b700a0@daynix.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sNRhp-0006Hg-3O; Sat, 29 Jun 2024 02:37:05 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sNRhm-0002GM-Qp; Sat, 29 Jun 2024 02:37:04 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id DA1D27539F;
+ Sat, 29 Jun 2024 09:36:52 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8D22DF9A4A;
+ Sat, 29 Jun 2024 09:36:57 +0300 (MSK)
+Message-ID: <4fa12c78-98f7-4f38-ba5d-fe7eebc4a2d8@tls.msk.ru>
+Date: Sat, 29 Jun 2024 09:36:57 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAKuof2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDMyML3dzE5Pxi3RRDS5MUEyODNAPDRCWg2oKi1LTMCrA50bG1tQBp/5u
- pVwAAAA==
-To: Cameron Esfahani <dirty@apple.com>, 
- Roman Bolshakov <rbolshakov@ddn.com>, Gerd Hoffmann <kraxel@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block/curl: use strlen instead of strchr
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
+ qemu-trivial@nongnu.org
+References: <20240628054942.657397-1-vsementsov@yandex-team.ru>
+ <03e1eb96-49ce-48bb-adc7-6ea3fb843b48@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <03e1eb96-49ce-48bb-adc7-6ea3fb843b48@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,39 +86,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-macOS versions older than 12.0 are no longer supported.
+On 6/29/24 09:20, Michael Tokarev wrote:
+> On 6/28/24 08:49, Vladimir Sementsov-Ogievskiy wrote:
+>> We already know where colon is, so no reason to search for it. Also,
+>> avoid a code, which looks like we forget to check return value of
+>> strchr() to NULL.
+>>
+>> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>
+>> This replaces my patch
+>>    [PATCH] block/curl: explicitly assert that strchr returns non-NULL value
+>> Supersedes: <20240627153059.589070-1-vsementsov@yandex-team.ru>
+>>
+>>   block/curl.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/block/curl.c b/block/curl.c
+>> index 419f7c89ef..d03bfe4817 100644
+>> --- a/block/curl.c
+>> +++ b/block/curl.c
+>> @@ -219,7 +219,7 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+>>           && g_ascii_strncasecmp(header, accept_ranges,
+>>                                  strlen(accept_ranges)) == 0) {
+>> -        char *p = strchr(header, ':') + 1;
+>> +        char *p = header + strlen(accept_ranges);
+>>           /* Skip whitespace between the header name and value. */
+>>           while (p < end && *p && g_ascii_isspace(*p)) {
+> 
+> Heck.  All these strlen()s look ugly, especially in the
+> loop iterations..  To my taste anyway.
+> 
+> How about this instead:
 
-docs/about/build-platforms.rst says:
-> Support for the previous major version will be dropped 2 years after
-> the new major version is released or when the vendor itself drops
-> support, whichever comes first.
+Or even this:
 
-macOS 12.0 was released 2021:
-https://www.apple.com/newsroom/2021/10/macos-monterey-is-now-available/
+diff --git a/block/curl.c b/block/curl.c
+index 419f7c89ef..982597ea7f 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -210,37 +210,28 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+  {
+      BDRVCURLState *s = opaque;
+      size_t realsize = size * nmemb;
+-    const char *header = (char *)ptr;
+-    const char *end = header + realsize;
+-    const char *accept_ranges = "accept-ranges:";
+-    const char *bytes = "bytes";
+-
+-    if (realsize >= strlen(accept_ranges)
+-        && g_ascii_strncasecmp(header, accept_ranges,
+-                               strlen(accept_ranges)) == 0) {
+-
+-        char *p = strchr(header, ':') + 1;
+-
+-        /* Skip whitespace between the header name and value. */
+-        while (p < end && *p && g_ascii_isspace(*p)) {
+-            p++;
+-        }
+-
+-        if (end - p >= strlen(bytes)
+-            && strncmp(p, bytes, strlen(bytes)) == 0) {
+-
+-            /* Check that there is nothing but whitespace after the value. */
+-            p += strlen(bytes);
+-            while (p < end && *p && g_ascii_isspace(*p)) {
+-                p++;
+-            }
+-
+-            if (p == end || !*p) {
+-                s->accept_range = true;
++    const char *p = (char *)ptr;
++    const char *end = p + realsize;
++    const char *t = "accept-ranges : bytes ";
++
++    while (p < end && *t) {
++        if (*t == ' ') {
++            if (g_ascii_isspace(*p)) {
++                ++p;
++            } else {
++                ++t;
+              }
++        } else if (*t == g_ascii_tolower(*p)) {
++            ++p, ++t;
++        } else {
++            break;
+          }
+      }
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
-Akihiko Odaki (4):
-      hvf: Drop ifdef for macOS versions older than 12.0
-      audio: Drop ifdef for macOS versions older than 12.0
-      block/file-posix: Drop ifdef for macOS versions older than 12.0
-      net/vmnet: Drop ifdef for macOS versions older than 12.0
++    if (p == end || !*p) {
++        s->accept_range = true;
++    }
++
+      return realsize;
+  }
 
- accel/hvf/hvf-all.c   |  3 ---
- block/file-posix.c    |  5 -----
- net/vmnet-host.c      | 24 +-----------------------
- net/vmnet-shared.c    | 13 -------------
- target/i386/hvf/hvf.c | 23 +----------------------
- audio/coreaudio.m     |  5 -----
- net/vmnet-bridged.m   | 13 +------------
- net/vmnet-common.m    |  3 ---
- 8 files changed, 3 insertions(+), 86 deletions(-)
----
-base-commit: 046a64b9801343e2e89eef10c7a48eec8d8c0d4f
-change-id: 20240628-macos-d194d420f01a
+Whole thing:
 
-Best regards,
+static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+{
+     BDRVCURLState *s = opaque;
+     size_t realsize = size * nmemb;
+     const char *p = (char *)ptr;
+     const char *end = p + realsize;
+     const char *t = "accept-ranges : bytes ";
+
+     while (p < end && *t) {
+         if (*t == ' ') {
+             if (g_ascii_isspace(*p)) {
+                 ++p;
+             } else {
+                 ++t;
+             }
+         } else if (*t == g_ascii_tolower(*p)) {
+             ++p, ++t;
+         } else {
+             break;
+         }
+     }
+
+     if (p == end || !*p) {
+         s->accept_range = true;
+     }
+
+     return realsize;
+}
+
+/mjt
+
 -- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
