@@ -4,74 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08CCAC30658
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 06:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 179CFC27C4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 06:48:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNRk0-0007Xg-Gg; Sat, 29 Jun 2024 02:39:20 -0400
+	id 1sNRsG-0000mu-M9; Sat, 29 Jun 2024 02:47:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNRjp-0007WJ-FR; Sat, 29 Jun 2024 02:39:09 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNRjn-0003TV-QZ; Sat, 29 Jun 2024 02:39:09 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 96672753A2;
- Sat, 29 Jun 2024 09:39:00 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4B142F9A4B;
- Sat, 29 Jun 2024 09:39:05 +0300 (MSK)
-Message-ID: <aa83f3d8-4177-4cfe-ae1d-7670432d55cc@tls.msk.ru>
-Date: Sat, 29 Jun 2024 09:39:05 +0300
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sNRsF-0000lP-6g
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:47:51 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sNRs0-0006KN-Ls
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:47:50 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-7182a634815so870428a12.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 23:47:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719643654; x=1720248454;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=S+MjRKno85sIkJEQn9pPUmsZtOmoROXmN6hpyFbxuhg=;
+ b=IWxs94ITdlba1UBufLnAZVvO45aKATAJMA71f9M/2kXaGUdY7/A4cOg4yfT16dqWie
+ pSAdUtlyk54NgEOW4h3nAqRRd+YTkNo8KPKah/9C6kRn3PgzoQnDLcJtp2qY4b+s4Um/
+ Ret9OqiAJxLDY2CxN0rlNN4NFmTTnWrGn4IOXdoFrMJqMMQh1HlCbn5TLQW15bKGPa4u
+ xjRqyH9Jmglj84U5xDUV/404K2i+B0YZxBV/PEv0twthdNoUSVQFeZZMgt0hg7Z/FwRW
+ iJVxpzzYyY83VhNYfm+Wo3jWf9TwMB4+LKV2PC+Ia3Hb0ZNr8LHZDeun4hy86O9rsK15
+ LSzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719643654; x=1720248454;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=S+MjRKno85sIkJEQn9pPUmsZtOmoROXmN6hpyFbxuhg=;
+ b=ibx0Ye8FGgkFvrffYJF7bWy8g5usgjpBrcpLOdniNjzQdbTYETQoQQdtl1KggsrvIC
+ XSZUv2lTgBlIppny/PIQyHk4qAlJCylqC/U6E1RLb58m2w682bzrISv2syDxfEBIa816
+ W7LiI6N9t6SkPqlKz3PUzRtNo/IRkU6Rh8OFNM94JZSKxN9brKiOcZ8Xfyl2ANYC41LL
+ kNimFlB0S4rpGLVlRo6RBlFboGP2b5eDadDI3MfugURr27BAWyAwyBDOUx8uwV72S/o5
+ Bkrv4zfvT0wwodpGPpM4PqhqvnjRcmtesiXMebr7m0nX7wltvUqlnSvCcnTcd/Xx2tqI
+ GaBA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXhCw5507FK3TF+upiWBeogP0QWw+Hag0+2Cjw4KKSCNwS4lRCtVQHG/zmI+20xioSa2ZB0ZVU0+0UMm/J9M3BIrcqnpU=
+X-Gm-Message-State: AOJu0YxqX/S+SS+gCiBkOmOsHdBr6gJAt78/GBqn6yvmLYQ1qbW6Zn20
+ tneIwGON1o3WX3ui11KUtt0WFfMRovMeUlQ6XAE0wilLepmIf+4tm0+4eOufmKM=
+X-Google-Smtp-Source: AGHT+IF5jjBWdZ55Xa7YFZE9u145VhgEDp0vRT7X9ehmenPanU9bcuRQjIfHahwWRgXL8ytlRAD2aw==
+X-Received: by 2002:a05:6a20:6a09:b0:1b5:d063:339e with SMTP id
+ adf61e73a8af0-1bef60fad03mr452632637.23.1719643654061; 
+ Fri, 28 Jun 2024 23:47:34 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fac10d23edsm25881385ad.58.2024.06.28.23.47.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Jun 2024 23:47:33 -0700 (PDT)
+Message-ID: <31395fd2-74ab-42c8-b70f-9af9b879cabd@daynix.com>
+Date: Sat, 29 Jun 2024 15:47:30 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block/curl: use strlen instead of strchr
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- qemu-trivial@nongnu.org
-References: <20240628054942.657397-1-vsementsov@yandex-team.ru>
- <03e1eb96-49ce-48bb-adc7-6ea3fb843b48@tls.msk.ru>
- <4fa12c78-98f7-4f38-ba5d-fe7eebc4a2d8@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <4fa12c78-98f7-4f38-ba5d-fe7eebc4a2d8@tls.msk.ru>
+Subject: Re: [PATCH v2] hw/ide/macio.c: switch from using qemu_allocate_irq()
+ to qdev input GPIOs
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, qemu-block@nongnu.org
+References: <20240628160334.653168-1-mark.cave-ayland@ilande.co.uk>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240628160334.653168-1-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::531;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x531.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,25 +98,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/29/24 09:36, Michael Tokarev wrote:
-..
-> +    while (p < end && *t) {
-> +        if (*t == ' ') {
-> +            if (g_ascii_isspace(*p)) {
-> +                ++p;
-> +            } else {
-> +                ++t;
->               }
-> +        } else if (*t == g_ascii_tolower(*p)) {
-> +            ++p, ++t;
-> +        } else {
-> +            break;
->           }
->       }
+On 2024/06/29 1:03, Mark Cave-Ayland wrote:
+> This prevents the IRQs from being leaked when the macio IDE device is used.
 > 
-> +    if (p == end || !*p) {
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-        if (!*t && p == end)  ofc.
-
-/mjt
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
