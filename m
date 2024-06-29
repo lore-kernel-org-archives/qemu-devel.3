@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 589C4C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 06:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D1BC3065A
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 06:26:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNRWA-0001Bi-NX; Sat, 29 Jun 2024 02:25:02 -0400
+	id 1sNRWK-0001Dh-Lp; Sat, 29 Jun 2024 02:25:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sNRW9-0001As-1D
- for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:25:01 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1sNRWJ-0001Cq-8N
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:25:11 -0400
+Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sNRW7-00007b-45
- for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:25:00 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1f64ecb1766so8538015ad.1
- for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 23:24:58 -0700 (PDT)
+ id 1sNRWB-0000BA-IS
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:25:10 -0400
+Received: by mail-oo1-xc29.google.com with SMTP id
+ 006d021491bc7-5c21c5eb371so639446eaf.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 23:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719642298; x=1720247098;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719642302; x=1720247102;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Vo26IrThPfuGb/nchx9eA6X0lLnZnVTJoMHfHfP7SzQ=;
- b=fAHPk5HminvPP+zadRqRMiehkG5mao84jC7/TUHSJf9CQhtZ9k+ik9x09etVFQn1kP
- W1fTayt2dmoinL1Pai7kVi2+vZ1Tn4pwy2eAUBKhCJzp4tuY0+gc0zZ3NC3y1yiXwUCz
- ZadykZ7gCfUIkzG4P8hC+7BAbABxdy+J2qsG1VwNyjm9/ZY2N4N1t3lUnbAMkIvs35gb
- eeyF7n9fXffTmJzoNRUqymE91XLzNm7uvYJydiyaxpQd0738aFluDoaeLImkPQBxEpp9
- zHAzIldw51JfKQ30QG2o8f9y+ylzAbnMyeCgWivfwFas8kayVOglmJk+JsnPWMoWXY8V
- 4B0Q==
+ :reply-to; bh=kvp08yfJRIidgp/95v01Xb3aU8UlxI7ZGQZzFfMbDV8=;
+ b=2/1tv3RTy7Zev+EY2Dzo339+GmF0dqDJKfjK/bNArJdCJXbS7257+SZjaZYTsBZyha
+ UvhN+fOOnR/sdv0BhWawKCN+OAmvtzGXaAR9gulN3qvctibvusPG9G3a8cuoF7N6kTK1
+ 6X+N9fQhf9B09DKRXF841Ft5iqeorWZSXIE538E9SoVvavA4HzntumwYYyIooJiwnFpO
+ 0v2XsdfFJpOVo/HcS6Arbo/DlP8r1iVcg7SXHbf8RusEBon2MC5WoHzzF78WQhGHvzv0
+ PbvF+QActDZpd4IZvm7kBNIPnhkZcECkcPlKm546KUuUB/X7CLGk8tdpBN7UOdxsb3/1
+ 1kIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719642298; x=1720247098;
+ d=1e100.net; s=20230601; t=1719642302; x=1720247102;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Vo26IrThPfuGb/nchx9eA6X0lLnZnVTJoMHfHfP7SzQ=;
- b=Qfvbadjk544JvsLjNr5CcRFUDpdIY0X+krS4oRZDuOh8sOxh7pc0XbrJS+MxX3204l
- pdVf2GpJt34z0/dyzjMPGJcyF1GaLwa4oW+LmegODCzsEtVlR6ZDTCl9UgSOaLid4nDX
- gnFbuiFbcYPKu3fxZ+8qhRDN4eJBRlxY99SaGD3bmPtttyRPzVw9DMiIrQQfP7Ymqo+2
- RWD5534I4J08l+goAJ2WelGhhSMacu4TjpQmgDcpHABnfk7I2z5buhsd6a+WsIBEAZGc
- or6kThIw/wB6T9Twuym5Frf2de9kxcK27bZPK5h2yx/dWORZgulwbf80amA3znbmyilJ
- zoPA==
-X-Gm-Message-State: AOJu0YwgYvI8+xrZXObw3vFF5ppQ7HhlLr2nQM/3eAb5PcnU9ogECDxa
- ppB0WxWhW5yJXdqGY/CWNyL3J4ZXUqILQ7M3wyF4qRnb4rUJeSYZtmWYYIdkoSU=
-X-Google-Smtp-Source: AGHT+IF+WBuJaBRtam+e2QoBIdSw5sLol3x/crGxDWkttwqFlXt2yWwdBKGnNhk2s2/IMd/4CsbdzQ==
-X-Received: by 2002:a17:902:6841:b0:1fa:304a:ac35 with SMTP id
- d9443c01a7336-1fadbce650emr937145ad.50.1719642297974; 
- Fri, 28 Jun 2024 23:24:57 -0700 (PDT)
+ bh=kvp08yfJRIidgp/95v01Xb3aU8UlxI7ZGQZzFfMbDV8=;
+ b=eIZ2xCTLmF7GtgtwQD2vp6/Nb37IfgfyhOmtnErFVyxFNLC8QpW1CYyjPO5CFd2DhL
+ GlLWulBR0vNEAmXXfBWSTcmcvYOfcjfQNY2qDBStXShcOptgZCVuc0WOUi6upiLN7+bB
+ StkACqP/MAzd8+hpU5f1jlrQFfiPUSxbvMUwsVuVHozT2eXmwJayOSTt1DtsUQBB5F2a
+ N6LSVtCPoY2zddZO1QTGIHZd8YUwEz6m3UEoDpuDfz/qvxrgCte+sTexOo4aRfsecCxh
+ j+kpWxFHxowyjpMvbrlAkCPnRZ0EX82uMl4lZfPOZ9/MX7WdO3euMX6NubU670gXXRB9
+ H6gw==
+X-Gm-Message-State: AOJu0YwJwY59k0L8g+QsdLqbTUkAKOE+8cL1h/z9Jngm+/UFq+S1rCCw
+ lI6s6BKDMza9sY4m+p9r8QhejP8wyRC6+b9C/YPAATz7qVLzKeOy2Q8B1ZtTw7I=
+X-Google-Smtp-Source: AGHT+IELSIRqOfzZdviFOFtuk6xHyiEg/4OilNtkUmE2+uUG5s/PZvB7ic6z+4/MgTGCOnDcXm81Kg==
+X-Received: by 2002:a05:6358:3402:b0:1a2:5caa:1482 with SMTP id
+ e5c5f4694b2df-1a6acf43ed4mr28471555d.32.1719642302156; 
+ Fri, 28 Jun 2024 23:25:02 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1fac15991d1sm25237425ad.269.2024.06.28.23.24.55
+ 98e67ed59e1d1-2c91ce42667sm2647181a91.16.2024.06.28.23.24.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Jun 2024 23:24:57 -0700 (PDT)
+ Fri, 28 Jun 2024 23:25:01 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 29 Jun 2024 15:24:44 +0900
-Subject: [PATCH 1/4] hvf: Drop ifdef for macOS versions older than 12.0
+Date: Sat, 29 Jun 2024 15:24:45 +0900
+Subject: [PATCH 2/4] audio: Drop ifdef for macOS versions older than 12.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240629-macos-v1-1-6e70a6b700a0@daynix.com>
+Message-Id: <20240629-macos-v1-2-6e70a6b700a0@daynix.com>
 References: <20240629-macos-v1-0-6e70a6b700a0@daynix.com>
 In-Reply-To: <20240629-macos-v1-0-6e70a6b700a0@daynix.com>
 To: Cameron Esfahani <dirty@apple.com>, 
@@ -76,14 +76,14 @@ To: Cameron Esfahani <dirty@apple.com>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::632;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Received-SPF: none client-ip=2607:f8b0:4864:20::c29;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc29.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,66 +111,25 @@ https://www.apple.com/newsroom/2021/10/macos-monterey-is-now-available/
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- accel/hvf/hvf-all.c   |  3 ---
- target/i386/hvf/hvf.c | 23 +----------------------
- 2 files changed, 1 insertion(+), 25 deletions(-)
+ audio/coreaudio.m | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index c008dc2f1ea6..6ca0850b20ed 100644
---- a/accel/hvf/hvf-all.c
-+++ b/accel/hvf/hvf-all.c
-@@ -23,10 +23,7 @@ const char *hvf_return_string(hv_return_t ret)
-     case HV_NO_RESOURCES: return "HV_NO_RESOURCES";
-     case HV_NO_DEVICE:    return "HV_NO_DEVICE";
-     case HV_UNSUPPORTED:  return "HV_UNSUPPORTED";
--#if defined(MAC_OS_VERSION_11_0) && \
--    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
-     case HV_DENIED:       return "HV_DENIED";
--#endif
-     default:              return "[unknown hv_return value]";
-     }
- }
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 2d0eef6cd977..c9c64e29781d 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -427,27 +427,6 @@ static void hvf_cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-     }
- }
+diff --git a/audio/coreaudio.m b/audio/coreaudio.m
+index ab632b9bbbbd..cadd729d5053 100644
+--- a/audio/coreaudio.m
++++ b/audio/coreaudio.m
+@@ -44,11 +44,6 @@
+     bool enabled;
+ } coreaudioVoiceOut;
  
--static hv_return_t hvf_vcpu_run(hv_vcpuid_t vcpu_id)
--{
--    /*
--     * hv_vcpu_run_until is available and recommended from macOS 10.15+,
--     * HV_DEADLINE_FOREVER from 11.0. Test for availability at runtime and fall
--     * back to hv_vcpu_run() only where necessary.
--     */
--#ifndef MAC_OS_VERSION_11_0
--    return hv_vcpu_run(vcpu_id);
--#elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
--    return hv_vcpu_run_until(vcpu_id, HV_DEADLINE_FOREVER);
--#else /* MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_VERSION_11_0 */
--    /* 11.0 SDK or newer, but could be < 11 at runtime */
--    if (__builtin_available(macOS 11.0, *)) {
--        return hv_vcpu_run_until(vcpu_id, HV_DEADLINE_FOREVER);
--    } else {
--        return hv_vcpu_run(vcpu_id);
--    }
+-#if !defined(MAC_OS_VERSION_12_0) \
+-    || (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_VERSION_12_0)
+-#define kAudioObjectPropertyElementMain kAudioObjectPropertyElementMaster
 -#endif
--}
 -
- int hvf_vcpu_exec(CPUState *cpu)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-@@ -476,7 +455,7 @@ int hvf_vcpu_exec(CPUState *cpu)
-             return EXCP_HLT;
-         }
- 
--        hv_return_t r = hvf_vcpu_run(cpu->accel->fd);
-+        hv_return_t r = hv_vcpu_run_until(cpu->accel->fd, HV_DEADLINE_FOREVER);
-         assert_hvf_ok(r);
- 
-         /* handle VMEXIT */
+ static const AudioObjectPropertyAddress voice_addr = {
+     kAudioHardwarePropertyDefaultOutputDevice,
+     kAudioObjectPropertyScopeGlobal,
 
 -- 
 2.45.2
