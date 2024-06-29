@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5D2C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 03:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2648BC27C4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 06:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNOaW-0005yC-Mk; Fri, 28 Jun 2024 23:17:22 -0400
+	id 1sNRSJ-0000D8-JD; Sat, 29 Jun 2024 02:21:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1sNOaS-0005xh-Dl; Fri, 28 Jun 2024 23:17:16 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sNRSF-0000AI-0T; Sat, 29 Jun 2024 02:20:59 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dgibson@gandalf.ozlabs.org>)
- id 1sNOaP-0000SE-4a; Fri, 28 Jun 2024 23:17:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gibson.dropbear.id.au; s=202312; t=1719631022;
- bh=svsz9t9l6BV8IaHz/hbrUKKdWyTODCgzFcZwMdPR3NM=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=nGzrmb4Y8eKyI3J97FCeyqE4Trqh/zZ5zBUdKmw8A+kF1XxkCCZp5O/D5YdO3apjr
- UcuRYwmwJIliX+jFxArkzpjzFHw/oeH+zXr2LNQLrG38DmDw9FhelwljY0fIDLffO7
- MGYOKsE72WKdAAXEz3WsT9oi0BTFlVpJWCLtPe11TvHBaVHUmzTT0t1tZW29bLhXSm
- ar8j6rGRiwSB6niB3pPXH49L/Rbk8+ZQMu/GAKc7WFKnyykcBdYqGfANShFF00cHEK
- 7oEZ11zEmRJ7VGchnE14JkhzBSwz9hKVfA5awaD9IyHaHYoXU1YdhXhhAX4rcfw+vL
- IPMHXCSKRNCEw==
-Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
- id 4W9yCL4PbJz4wcp; Sat, 29 Jun 2024 13:17:02 +1000 (AEST)
-Date: Sat, 29 Jun 2024 13:16:55 +1000
-From: David Gibson <david@gibson.dropbear.id.au>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v2 06/15] ppc/vof: Fix unaligned FDT property access
-Message-ID: <Zn98p6CUV0KnIo50@zatzit>
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-6-750bb0946dbd@daynix.com>
- <CAFEAcA-Zmc0BQgUiqEgzCvVGWyiPt9bo+Xt90n4wxhJ3_D91fA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sNRSB-0006iq-Jb; Sat, 29 Jun 2024 02:20:58 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8E6A775393;
+ Sat, 29 Jun 2024 09:20:33 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3D2DEF9A3D;
+ Sat, 29 Jun 2024 09:20:38 +0300 (MSK)
+Message-ID: <03e1eb96-49ce-48bb-adc7-6ea3fb843b48@tls.msk.ru>
+Date: Sat, 29 Jun 2024 09:20:38 +0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="uByDBBz2VfSWi6Io"
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-Zmc0BQgUiqEgzCvVGWyiPt9bo+Xt90n4wxhJ3_D91fA@mail.gmail.com>
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=dgibson@gandalf.ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block/curl: use strlen instead of strchr
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
+ qemu-trivial@nongnu.org
+References: <20240628054942.657397-1-vsementsov@yandex-team.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240628054942.657397-1-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,72 +85,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 6/28/24 08:49, Vladimir Sementsov-Ogievskiy wrote:
+> We already know where colon is, so no reason to search for it. Also,
+> avoid a code, which looks like we forget to check return value of
+> strchr() to NULL.
+> 
+> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> ---
+> 
+> This replaces my patch
+>    [PATCH] block/curl: explicitly assert that strchr returns non-NULL value
+> Supersedes: <20240627153059.589070-1-vsementsov@yandex-team.ru>
+> 
+>   block/curl.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/block/curl.c b/block/curl.c
+> index 419f7c89ef..d03bfe4817 100644
+> --- a/block/curl.c
+> +++ b/block/curl.c
+> @@ -219,7 +219,7 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+>           && g_ascii_strncasecmp(header, accept_ranges,
+>                                  strlen(accept_ranges)) == 0) {
+>   
+> -        char *p = strchr(header, ':') + 1;
+> +        char *p = header + strlen(accept_ranges);
+>   
+>           /* Skip whitespace between the header name and value. */
+>           while (p < end && *p && g_ascii_isspace(*p)) {
 
---uByDBBz2VfSWi6Io
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Heck.  All these strlen()s look ugly, especially in the
+loop iterations..  To my taste anyway.
 
-On Fri, Jun 28, 2024 at 04:20:02PM +0100, Peter Maydell wrote:
-> On Thu, 27 Jun 2024 at 14:39, Akihiko Odaki <akihiko.odaki@daynix.com> wr=
-ote:
-> >
-> > FDT properties are aligned by 4 bytes, not 8 bytes.
-> >
-> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > ---
-> >  hw/ppc/vof.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-> > index e3b430a81f4f..b5b6514d79fc 100644
-> > --- a/hw/ppc/vof.c
-> > +++ b/hw/ppc/vof.c
-> > @@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *fdt, GArr=
-ay *claimed, uint64_t base)
-> >      mem0_reg =3D fdt_getprop(fdt, offset, "reg", &proplen);
-> >      g_assert(mem0_reg && proplen =3D=3D sizeof(uint32_t) * (ac + sc));
-> >      if (sc =3D=3D 2) {
-> > -        mem0_end =3D be64_to_cpu(*(uint64_t *)(mem0_reg + sizeof(uint3=
-2_t) * ac));
-> > +        mem0_end =3D ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
-> >      } else {
-> >          mem0_end =3D be32_to_cpu(*(uint32_t *)(mem0_reg + sizeof(uint3=
-2_t) * ac));
-> >      }
->=20
-> I did wonder if there was a better way to do what this is doing,
-> but neither we (in system/device_tree.c) nor libfdt seem to
-> provide one.
+How about this instead:
 
-libfdt does provide unaligned access helpers (fdt32_ld() etc.), but
-not an automatic aligned-or-unaligned helper.   Maybe we should add that?
+diff --git a/block/curl.c b/block/curl.c
+index 419f7c89ef..5e91807115 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -210,35 +210,34 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+  {
+      BDRVCURLState *s = opaque;
+      size_t realsize = size * nmemb;
+-    const char *header = (char *)ptr;
+-    const char *end = header + realsize;
+-    const char *accept_ranges = "accept-ranges:";
+-    const char *bytes = "bytes";
++    const char *p = (char *)ptr;
++    const char *end = p + realsize;
++    const char *t;
 
---=20
-David Gibson (he or they)	| I'll have my music baroque, and my code
-david AT gibson.dropbear.id.au	| minimalist, thank you, not the other way
-				| around.
-http://www.ozlabs.org/~dgibson
+-    if (realsize >= strlen(accept_ranges)
+-        && g_ascii_strncasecmp(header, accept_ranges,
+-                               strlen(accept_ranges)) == 0) {
++    for (t = "accept-ranges:"; p < end && *t; ++p, ++t) {
++        if (g_ascii_tolower(*p) != *t) {
++            return realsize;
++        }
++    }
 
---uByDBBz2VfSWi6Io
-Content-Type: application/pgp-signature; name="signature.asc"
+-        char *p = strchr(header, ':') + 1;
++    /* Skip whitespace between the header name and value. */
++    while (p < end && *p && g_ascii_isspace(*p)) {
++        p++;
++    }
 
------BEGIN PGP SIGNATURE-----
+-        /* Skip whitespace between the header name and value. */
+-        while (p < end && *p && g_ascii_isspace(*p)) {
+-            p++;
++    for (t = "bytes"; p < end && *t; ++p, ++t) {
++        if (g_ascii_tolower(*p) != *t) {
++            return realsize;
+          }
++    }
 
-iQIzBAEBCAAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmZ/fKEACgkQzQJF27ox
-2Gf9tQ/+Ojar9AtFdH8w3RzmJOKc9vULAiIp89cew+c/GVW836yu1WO52ER00aca
-9xoVPSSytcpcUnp35kjR2LC2nrihUvU7ZqZL+U/VkaoR9hE+BGArv2GsxzrIhOZk
-C3cl4+5wd5OI0EfGqiR+FQRY70uLHxEqAdIlafltavle+uWBFhcRViLqXopFwCn6
-KmF+wShrFmYAxrv16CMFKZq+cdT/8y/PptO+GyIxwwAHEO9/8Wm14dKDIX4sOWmU
-qDUA76v5TRy7TX6EEP26YsfQMEtVHWNYtBplQRvjfHXMckR4E0zAYPoyWYKkE4Ah
-Sr0vVdKUgx3Jhnv17h6lhcizhPB5HRvbgoUBnAvbkT1nzWU3a/q1Ccyf+8/Xn+eY
-5+0kpNdYVk5XRbLHutsQcw1ZVMI8wSHUMoeBsRip35M46cVM7/m/RbKBN4HDQNcu
-tMUL9YFbf1tzwb9jgIGw/+MX5z+iatj7oVJ9oJvCaVkJ/rh6IHvzoWtnucJ+Ipej
-wP/Ih3DFMFyFfewZDo51XlEqRiwoFidoc/fuDUTvvqoCcNOqhqzOBtvvAEKKk06t
-VMUQmBbB6O9SeAL3jBeltfZ/tHM0TDUW0o04QUUsVe9UjGI+koqippjB54kRQTTE
-ALpGdZkOmglWg306F/G3/lbdmmqv7yHH216yhzAeTm3vi+no8eM=
-=dqPa
------END PGP SIGNATURE-----
+-        if (end - p >= strlen(bytes)
+-            && strncmp(p, bytes, strlen(bytes)) == 0) {
+-
+-            /* Check that there is nothing but whitespace after the value. */
+-            p += strlen(bytes);
+-            while (p < end && *p && g_ascii_isspace(*p)) {
+-                p++;
+-            }
++    /* Check that there is nothing but whitespace after the value. */
++    while (p < end && *p && g_ascii_isspace(*p)) {
++        p++;
++    }
 
---uByDBBz2VfSWi6Io--
+-            if (p == end || !*p) {
+-                s->accept_range = true;
+-            }
+-        }
++    if (p == end || !*p) {
++        s->accept_range = true;
+      }
+
+      return realsize;
+
+
+Whole function for easy read:
+
+
+/* Called from curl_multi_do_locked, with s->mutex held.  */
+static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+{
+     BDRVCURLState *s = opaque;
+     size_t realsize = size * nmemb;
+     const char *p = (char *)ptr;
+     const char *end = p + realsize;
+     const char *t;
+
+     for (t = "accept-ranges:"; p < end && *t; ++p, ++t) {
+         if (g_ascii_tolower(*p) != *t) {
+             return realsize;
+         }
+     }
+
+     /* Skip whitespace between the header name and value. */
+     while (p < end && *p && g_ascii_isspace(*p)) {
+         p++;
+     }
+
+     for (t = "bytes"; p < end && *t; ++p, ++t) {
+         if (g_ascii_tolower(*p) != *t) {
+             return realsize;
+         }
+     }
+
+     /* Check that there is nothing but whitespace after the value. */
+     while (p < end && *p && g_ascii_isspace(*p)) {
+         p++;
+     }
+
+     if (p == end || !*p) {
+         s->accept_range = true;
+     }
+
+     return realsize;
+}
+
+Dunno why it also checks for *p being !=0 in the last part, but ok.
+
+Sorry for the noise.  But I dislike usage of strlen() etc like this :)
+
+/mjt
+
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+
 
