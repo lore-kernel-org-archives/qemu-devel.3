@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C6FC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 08:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E87C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 08:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNTt2-0006zC-6e; Sat, 29 Jun 2024 04:56:48 -0400
+	id 1sNTti-0007dI-Ay; Sat, 29 Jun 2024 04:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sNTt0-0006yr-7b
- for qemu-devel@nongnu.org; Sat, 29 Jun 2024 04:56:46 -0400
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ id 1sNTtJ-0007Ag-N1
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 04:57:08 -0400
+Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sNTsy-0008Gp-J9
- for qemu-devel@nongnu.org; Sat, 29 Jun 2024 04:56:45 -0400
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-5b53bb4bebaso709112eaf.0
- for <qemu-devel@nongnu.org>; Sat, 29 Jun 2024 01:56:44 -0700 (PDT)
+ id 1sNTt8-0008Hw-SE
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 04:57:05 -0400
+Received: by mail-oa1-x2e.google.com with SMTP id
+ 586e51a60fabf-24c9f892aeaso676157fac.2
+ for <qemu-devel@nongnu.org>; Sat, 29 Jun 2024 01:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719651403; x=1720256203;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719651413; x=1720256213;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JoZEFutlkhBaaeS7Srf3QSHs/2P96eJP2zssQxT6y9M=;
- b=iuQ+8l99aDyPQ/d6H6/nOT7+wp6LkFxiESGBI6p9QZxLfI93M7B7U+wKxBxrUYkpj1
- q2F0mKaQa2ldO2pG1AY7YfseJp3RCFOK/N6Db002/SvFIclOzmfJMosFV8Z5KuMu1zO1
- gKhDKT5tO1ZyXPW4QIpjRF7xpp6GucRLWmTMzbqhpxe0BeFBM3zJg2CY6yoKVsxOwJht
- tjAILeoAPa9v2dhWYfwP0lgr65xuvwpPVJ0fPnhyyh2EJNjAT/k6/YefXRIZbbhOO8GV
- vWhmL0aNwKBVUUlBbbfdkLqXazvFXFp4//1lE2BEV5X5lUx2cpozJXc/d62Vx4TCVcir
- umZw==
+ :reply-to; bh=z8HgGEOBQa+ts6D6zeqb5tjF5rvOazu3EqyYr1aPQyY=;
+ b=NFkf5I5hBqFqdse84FHgzsUrSN0Hp2UzdxfOrCsOEBmthlNoVaC1+VqWnHgXkRF3aA
+ xr/eT1AO7TWAlSO+Ske7JiOd7fdUqQZ43/SewQ0AD3A/JMKq8R7Gty+YEb4Y3wLP2p0w
+ YAcht11CigDpps4rbB+rIjSk1vBdHlRcEnBxKElTF8XrTG+ZAs55Ar0+PGhDm4CuvBxl
+ wUgrtsndj4lkINoYfI/VgXxxMxYlcTM7wm0ikds3LiSjphXlLCHk+/YZKEhyyzMz+PSE
+ mEIdtkOPqK+bPCJFQiD53u6G9+FwVXxMpkeIal8KqfCYN23MrsdZjKTH+IScHOy5FRXZ
+ ot+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719651403; x=1720256203;
+ d=1e100.net; s=20230601; t=1719651413; x=1720256213;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JoZEFutlkhBaaeS7Srf3QSHs/2P96eJP2zssQxT6y9M=;
- b=lUdZ76WLCJLRfdvoe+HyjX4NCtHWNxx0fRWMkNQWMJx7+P1H8vfdibFbSowNrdTH83
- 4dkrIRek56a+B811BrY1VFM3VBtO2U5vruQu/GUYzFPXS/yqrrRukdgaMBKqOJ3k11bi
- 6Co+aqrZKeeVz71aN8tTAiVP5LcJGAMdtf1FqU+cUwpddFBjGVtp0nGPrN2yRz91D6wN
- LoEoS4OHGZEdfeb7Gdyzr8DtgAhkgH2s4MvnOiQwtiITUTl/SLI6XaSAajmwPGF5RZ9N
- gRHB/ANadPkhhVJfCJX0MgVWTirDWYXKknC6fPy8KqribCdmVToBBABRd/E8hsYfq5ux
- 6lEA==
+ bh=z8HgGEOBQa+ts6D6zeqb5tjF5rvOazu3EqyYr1aPQyY=;
+ b=jWjuUhFfyn+1r9m3vmueYTAxPDSIzbSdDJwKGeFUrjs88taphubtjw0RTmr0QnDlcT
+ G+FPhQg2WC5iFZH5CnY11Hxz7+kF3nB+NE90CjOdrJ1vuNpGVufcsaI8geBVJTt25ce1
+ zfYLE9+fL+lbgbbjYij6EgVGn7+BnFIKyQLLWMIogz7/lgiV5/hek8CR+FJScymc/p0X
+ dbqV67cvxG1Yw4doG+aMPW/w6kJpvYHWmzACvgWDWIYUYCHjuunrnOpdP4qb2aQNcA0W
+ S+JkqrgPMiWsdeEyRuvFYKAL+qZYCzhuejA4Cb0/4WVULxnJIXABhqupIe5iX3/ManO6
+ rXmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXKHpwOvW4Tk4b66QHB3+BCIBNt5c77JJgawATqSndmrawk75WD98+wUJALtd5HTR5HGLmQ5ZTrKGPfD302vKDt7GH+GcQ=
-X-Gm-Message-State: AOJu0Yy+U8hCqlvvexuPcVJ49r4EaXU7OiuHQ7IODgwmFc4pxR4tR+Fl
- DO5a8e0DTj6SDuqfCzZOOzd8UZHXfr0jYKcvfofBse8VSWA7xcqMJ+nek2YsF04cvOvJUk8yPZ4
- qHnk=
-X-Google-Smtp-Source: AGHT+IH7uod4cU1nnorN+UBUAj/YL5C6Ev6xxDPF4aWcN+NPMfKNyg68J4qXvy2EA8xjqzjdXYcLHg==
-X-Received: by 2002:a05:6358:4327:b0:19f:4ca6:86c2 with SMTP id
- e5c5f4694b2df-1a6acf39c25mr59803755d.25.1719651403110; 
- Sat, 29 Jun 2024 01:56:43 -0700 (PDT)
+ AJvYcCUwvq78nr+8jy8wSH1/p7vppa92Mf/JLBWJ0g8Uiu6PBdx0/HFKKZ9w2bCW6mxwt+ceTCjiK8gPCnellppNTtroTsgum1E=
+X-Gm-Message-State: AOJu0YzVhCp6LHh+Uc6/F71cQXhzC8N0tKmCYB0TYonICifeXPTgYJnI
+ Zjfn7SCpN6YvGNCMRQzRJnQD5d8qgNTi1RWrKawqB176JfhsU+vg+CbkHliYLUjYcQR6hqDjifG
+ /V+M=
+X-Google-Smtp-Source: AGHT+IG8ZwO6MrrDO7Z72RbL3yoQXd7KyuMYXHm1G0w3fOjKBz5jjYNFdokqBupgz4xk2mjkg/x+YQ==
+X-Received: by 2002:a05:6870:1654:b0:25c:b7f4:39ad with SMTP id
+ 586e51a60fabf-25db362fdc4mr361788fac.58.1719651413378; 
+ Sat, 29 Jun 2024 01:56:53 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2c91d3eb9bbsm2882725a91.57.2024.06.29.01.56.41
+ d2e1a72fcca58-70802567926sm2864444b3a.54.2024.06.29.01.56.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 29 Jun 2024 01:56:42 -0700 (PDT)
+ Sat, 29 Jun 2024 01:56:53 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 29 Jun 2024 17:56:29 +0900
-Subject: [PATCH v3 3/7] tests/tcg/aarch64: Fix test architecture specification
+Date: Sat, 29 Jun 2024 17:56:32 +0900
+Subject: [PATCH v3 6/7] tests/tcg/aarch64: Do not use x constraint
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240629-tcg-v3-3-fa57918bdf09@daynix.com>
+Message-Id: <20240629-tcg-v3-6-fa57918bdf09@daynix.com>
 References: <20240629-tcg-v3-0-fa57918bdf09@daynix.com>
 In-Reply-To: <20240629-tcg-v3-0-fa57918bdf09@daynix.com>
 To: Peter Maydell <peter.maydell@linaro.org>, 
  =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::c30;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oo1-xc30.google.com
+Received-SPF: none client-ip=2001:4860:4864:20::2e;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x2e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
  SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,70 +100,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sme-smopa-2.c requires sme-i16i64 but the compiler option used not to
-specify it. Instead, the extension was specified with the inline
-assembly, resulting in mixing assembly code targeting sme-i1664 and C
-code that does not target sme-i1664.
-
-clang version 18.1.6 does not support such mixing so properly specify
-the extension with the compiler option instead.
+clang version 18.1.6 does not support x constraint for AArch64.
+Use w instead.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/tcg/aarch64/sme-smopa-2.c   |  2 +-
- tests/tcg/aarch64/Makefile.target | 18 ++++++++++++++----
- 2 files changed, 15 insertions(+), 5 deletions(-)
+ tests/tcg/arm/fcvt.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tests/tcg/aarch64/sme-smopa-2.c b/tests/tcg/aarch64/sme-smopa-2.c
-index c9f48c3bfca2..2c9707065992 100644
---- a/tests/tcg/aarch64/sme-smopa-2.c
-+++ b/tests/tcg/aarch64/sme-smopa-2.c
-@@ -14,7 +14,7 @@ int main()
-     long svl;
- 
-     /* Validate that we have a wide enough vector for 4 elements. */
--    asm(".arch armv8-r+sme-i64\n\trdsvl %0, #1" : "=r"(svl));
-+    asm("rdsvl %0, #1" : "=r"(svl));
-     if (svl < 32) {
-         return 0;
+diff --git a/tests/tcg/arm/fcvt.c b/tests/tcg/arm/fcvt.c
+index 7ac47b564e24..f631197287a1 100644
+--- a/tests/tcg/arm/fcvt.c
++++ b/tests/tcg/arm/fcvt.c
+@@ -126,7 +126,7 @@ static void convert_single_to_half(void)
+         asm("vcvtb.f16.f32 %0, %1" : "=t" (output) : "x" (input));
+ #else
+         uint16_t output;
+-        asm("fcvt %h0, %s1" : "=w" (output) : "x" (input));
++        asm("fcvt %h0, %s1" : "=w" (output) : "w" (input));
+ #endif
+         print_half_number(i, output);
      }
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index d3e739b566d9..0a527a9821c2 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -30,7 +30,8 @@ config-cc.mak: Makefile
- 	    $(call cc-option,-march=armv8.5-a,              CROSS_CC_HAS_ARMV8_5); \
- 	    $(call cc-option,-mbranch-protection=standard,  CROSS_CC_HAS_ARMV8_BTI); \
- 	    $(call cc-option,-march=armv8.5-a+memtag,       CROSS_CC_HAS_ARMV8_MTE); \
--	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme $$fno_integrated_as, CROSS_AS_HAS_ARMV9_SME)) 3> config-cc.mak
-+	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme $$fno_integrated_as, CROSS_AS_HAS_ARMV9_SME); \
-+	    $(call cc-option,-march=armv9-a+sme-i16i64 $$fno_integrated_as,     CROSS_AS_HAS_ARMV9_SME_I1664)) 3> config-cc.mak
- -include config-cc.mak
+@@ -149,7 +149,7 @@ static void convert_single_to_double(void)
+ #if defined(__arm__)
+         asm("vcvt.f64.f32 %P0, %1" : "=w" (output) : "t" (input));
+ #else
+-        asm("fcvt %d0, %s1" : "=w" (output) : "x" (input));
++        asm("fcvt %d0, %s1" : "=w" (output) : "w" (input));
+ #endif
+         print_double_number(i, output);
+     }
+@@ -244,7 +244,7 @@ static void convert_double_to_half(void)
+         /* asm("vcvtb.f16.f64 %0, %P1" : "=t" (output) : "x" (input)); */
+         output = input;
+ #else
+-        asm("fcvt %h0, %d1" : "=w" (output) : "x" (input));
++        asm("fcvt %h0, %d1" : "=w" (output) : "w" (input));
+ #endif
+         print_half_number(i, output);
+     }
+@@ -267,7 +267,7 @@ static void convert_double_to_single(void)
+ #if defined(__arm__)
+         asm("vcvt.f32.f64 %0, %P1" : "=w" (output) : "x" (input));
+ #else
+-        asm("fcvt %s0, %d1" : "=w" (output) : "x" (input));
++        asm("fcvt %s0, %d1" : "=w" (output) : "w" (input));
+ #endif
  
- ifneq ($(CROSS_CC_HAS_ARMV8_2),)
-@@ -71,10 +72,19 @@ endif
- 
- # SME Tests
- ifneq ($(CROSS_AS_HAS_ARMV9_SME),)
--AARCH64_TESTS += sme-outprod1 sme-smopa-1 sme-smopa-2
--sme-%: CFLAGS += -Wa,-march=armv9-a+sme
-+AARCH64_TESTS += sme-outprod1 sme-smopa-1
-+sme-outprod1 sme-smopa-1: CFLAGS += -Wa,-march=armv9-a+sme
- ifneq ($(CROSS_CC_HAS_FNO_INTEGRATED_AS),)
--sme-%: CFLAGS += -fno-integrated-as
-+sme-outprod1 sme-smopa-1: CFLAGS += -fno-integrated-as
-+endif
-+endif
-+
-+# SME I16I64 Tests
-+ifneq ($(CROSS_AS_HAS_ARMV9_SME_I1664),)
-+AARCH64_TESTS += sme-smopa-2
-+sme-smopa-2: CFLAGS += -march=armv9-a+sme-i16i64
-+ifneq ($(CROSS_CC_HAS_FNO_INTEGRATED_AS),)
-+sme-smopa-2: CFLAGS += -fno-integrated-as
- endif
- endif
- 
+         print_single_number(i, output);
+@@ -335,7 +335,7 @@ static void convert_half_to_double(void)
+         /* asm("vcvtb.f64.f16 %P0, %1" : "=w" (output) : "t" (input)); */
+         output = input;
+ #else
+-        asm("fcvt %d0, %h1" : "=w" (output) : "x" (input));
++        asm("fcvt %d0, %h1" : "=w" (output) : "w" (input));
+ #endif
+         print_double_number(i, output);
+     }
+@@ -357,7 +357,7 @@ static void convert_half_to_single(void)
+ #if defined(__arm__)
+         asm("vcvtb.f32.f16 %0, %1" : "=w" (output) : "x" ((uint32_t)input));
+ #else
+-        asm("fcvt %s0, %h1" : "=w" (output) : "x" (input));
++        asm("fcvt %s0, %h1" : "=w" (output) : "w" (input));
+ #endif
+         print_single_number(i, output);
+     }
+@@ -380,7 +380,7 @@ static void convert_half_to_integer(void)
+         /* asm("vcvt.s32.f16 %0, %1" : "=t" (output) : "t" (input)); v8.2*/
+         output = input;
+ #else
+-        asm("fcvt %s0, %h1" : "=w" (output) : "x" (input));
++        asm("fcvt %s0, %h1" : "=w" (output) : "w" (input));
+ #endif
+         print_int64(i, output);
+     }
 
 -- 
 2.45.2
