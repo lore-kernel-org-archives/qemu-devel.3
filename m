@@ -4,72 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2648BC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 06:22:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B8A1C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 06:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNRSJ-0000D8-JD; Sat, 29 Jun 2024 02:21:03 -0400
+	id 1sNRWN-0001F5-UO; Sat, 29 Jun 2024 02:25:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNRSF-0000AI-0T; Sat, 29 Jun 2024 02:20:59 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNRSB-0006iq-Jb; Sat, 29 Jun 2024 02:20:58 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8E6A775393;
- Sat, 29 Jun 2024 09:20:33 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3D2DEF9A3D;
- Sat, 29 Jun 2024 09:20:38 +0300 (MSK)
-Message-ID: <03e1eb96-49ce-48bb-adc7-6ea3fb843b48@tls.msk.ru>
-Date: Sat, 29 Jun 2024 09:20:38 +0300
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sNRWL-0001EK-O2
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:25:13 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sNRWJ-0000Kx-SD
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 02:25:13 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1f9b364faddso8789835ad.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Jun 2024 23:25:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719642311; x=1720247111;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=MnJaU0cjPc61Uq6zYp8Z9ZfUP3zCOPt1Iu/1t/nlpCY=;
+ b=2o1hy5isoZPQG/zE+M6jLEIUmiVQXdc0iyPTdW6e/W4FJQwmD4xTHP+WrRXqp+TPxs
+ 5vpKpL7s4AvwGncT1ltRq55xv4iAv4s6WxYrFLwCkYGRUv6v/gpXX3OtRTrj4IEY90le
+ sd+IknxUOILMH0UL6DRJpezkbdhwjJLn+2zLDrFawb01vwa1bzXk+afAE2N/ifGk9nt9
+ n34DbT9kgY3gIs7QAPGYgA+3XlgnbP4pi/9pzWEBn7vlpgjc7ak4NCPoqG9oPuK6T+Bj
+ 0XZkYSekKQlTYHemq4gZC2/QNzlCxWC9DdaLnMvHIX0NnshbpdUtzJQFs5r49UaZMVz0
+ Wj6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719642311; x=1720247111;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MnJaU0cjPc61Uq6zYp8Z9ZfUP3zCOPt1Iu/1t/nlpCY=;
+ b=kRoZ5CUHr/++fjn2X3cYPX5xyJ+x+/U7DJkyTNTtoHIV/jDCj+QKHgQM5v1dkEWtpu
+ hpZ59qEwVKGD7ZhsQ5uMb2+ivRxuh1cOw+Cu4P5NMuR9EeFCsl9CziYFEvVdmuhl+0PN
+ 1PK3/GnqcpNmIWZquZXDOL/ViICSUmIhUz3DGTdVwrWQavZRUc9rY4gBjgo6FIQo2BSd
+ TVBluZ/QvB0msZho/wXFjnDH4FpPL0Vpt1mMJLa3fBYFQxHKMiA8JK+Do5SHdae7qDnr
+ HkkvKJY5SDLLiOop31iKkPAXEQighAaGwRbKXW0TZgOJq0BnI54W7IsBQqyAikZ/pu3J
+ Cilg==
+X-Gm-Message-State: AOJu0YxcJFto/2MKe1pHycFRPLLwF6JWllrH0Km1AMe3DmPjPuYlOKwE
+ Sh3AsQHNzRFnMrClhsRiXJVtOSAj6b7AzRWjTdarVyinVMO5Q9+qaVphkFEGYKo=
+X-Google-Smtp-Source: AGHT+IGHhKo9c5AtTpQKNTjkcrFJNI2zewmyKWVlCUKLlnEWNciGV9FDNNLleEjBiTNlHslmazkOwQ==
+X-Received: by 2002:a17:902:e5c1:b0:1f9:d7f9:aac4 with SMTP id
+ d9443c01a7336-1fadbc748f7mr1171095ad.23.1719642310632; 
+ Fri, 28 Jun 2024 23:25:10 -0700 (PDT)
+Received: from localhost ([157.82.204.135])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-1fac1539438sm25967315ad.161.2024.06.28.23.25.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Jun 2024 23:25:10 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Sat, 29 Jun 2024 15:24:47 +0900
+Subject: [PATCH 4/4] net/vmnet: Drop ifdef for macOS versions older than 12.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block/curl: use strlen instead of strchr
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- qemu-trivial@nongnu.org
-References: <20240628054942.657397-1-vsementsov@yandex-team.ru>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240628054942.657397-1-vsementsov@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20240629-macos-v1-4-6e70a6b700a0@daynix.com>
+References: <20240629-macos-v1-0-6e70a6b700a0@daynix.com>
+In-Reply-To: <20240629-macos-v1-0-6e70a6b700a0@daynix.com>
+To: Cameron Esfahani <dirty@apple.com>, 
+ Roman Bolshakov <rbolshakov@ddn.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::634;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,156 +99,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/28/24 08:49, Vladimir Sementsov-Ogievskiy wrote:
-> We already know where colon is, so no reason to search for it. Also,
-> avoid a code, which looks like we forget to check return value of
-> strchr() to NULL.
-> 
-> Suggested-by: Kevin Wolf <kwolf@redhat.com>
-> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> ---
-> 
-> This replaces my patch
->    [PATCH] block/curl: explicitly assert that strchr returns non-NULL value
-> Supersedes: <20240627153059.589070-1-vsementsov@yandex-team.ru>
-> 
->   block/curl.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/block/curl.c b/block/curl.c
-> index 419f7c89ef..d03bfe4817 100644
-> --- a/block/curl.c
-> +++ b/block/curl.c
-> @@ -219,7 +219,7 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
->           && g_ascii_strncasecmp(header, accept_ranges,
->                                  strlen(accept_ranges)) == 0) {
->   
-> -        char *p = strchr(header, ':') + 1;
-> +        char *p = header + strlen(accept_ranges);
->   
->           /* Skip whitespace between the header name and value. */
->           while (p < end && *p && g_ascii_isspace(*p)) {
+macOS versions older than 12.0 are no longer supported.
 
-Heck.  All these strlen()s look ugly, especially in the
-loop iterations..  To my taste anyway.
+docs/about/build-platforms.rst says:
+> Support for the previous major version will be dropped 2 years after
+> the new major version is released or when the vendor itself drops
+> support, whichever comes first.
 
-How about this instead:
+macOS 12.0 was released 2021:
+https://www.apple.com/newsroom/2021/10/macos-monterey-is-now-available/
 
-diff --git a/block/curl.c b/block/curl.c
-index 419f7c89ef..5e91807115 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -210,35 +210,34 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
-  {
-      BDRVCURLState *s = opaque;
-      size_t realsize = size * nmemb;
--    const char *header = (char *)ptr;
--    const char *end = header + realsize;
--    const char *accept_ranges = "accept-ranges:";
--    const char *bytes = "bytes";
-+    const char *p = (char *)ptr;
-+    const char *end = p + realsize;
-+    const char *t;
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ net/vmnet-host.c    | 24 +-----------------------
+ net/vmnet-shared.c  | 13 -------------
+ net/vmnet-bridged.m | 13 +------------
+ net/vmnet-common.m  |  3 ---
+ 4 files changed, 2 insertions(+), 51 deletions(-)
 
--    if (realsize >= strlen(accept_ranges)
--        && g_ascii_strncasecmp(header, accept_ranges,
--                               strlen(accept_ranges)) == 0) {
-+    for (t = "accept-ranges:"; p < end && *t; ++p, ++t) {
-+        if (g_ascii_tolower(*p) != *t) {
-+            return realsize;
-+        }
-+    }
-
--        char *p = strchr(header, ':') + 1;
-+    /* Skip whitespace between the header name and value. */
-+    while (p < end && *p && g_ascii_isspace(*p)) {
-+        p++;
-+    }
-
--        /* Skip whitespace between the header name and value. */
--        while (p < end && *p && g_ascii_isspace(*p)) {
--            p++;
-+    for (t = "bytes"; p < end && *t; ++p, ++t) {
-+        if (g_ascii_tolower(*p) != *t) {
-+            return realsize;
-          }
-+    }
-
--        if (end - p >= strlen(bytes)
--            && strncmp(p, bytes, strlen(bytes)) == 0) {
+diff --git a/net/vmnet-host.c b/net/vmnet-host.c
+index 1f95f7343a12..49fb25c224e4 100644
+--- a/net/vmnet-host.c
++++ b/net/vmnet-host.c
+@@ -21,31 +21,13 @@
+ static bool validate_options(const Netdev *netdev, Error **errp)
+ {
+     const NetdevVmnetHostOptions *options = &(netdev->u.vmnet_host);
 -
--            /* Check that there is nothing but whitespace after the value. */
--            p += strlen(bytes);
--            while (p < end && *p && g_ascii_isspace(*p)) {
--                p++;
--            }
-+    /* Check that there is nothing but whitespace after the value. */
-+    while (p < end && *p && g_ascii_isspace(*p)) {
-+        p++;
-+    }
-
--            if (p == end || !*p) {
--                s->accept_range = true;
--            }
--        }
-+    if (p == end || !*p) {
-+        s->accept_range = true;
-      }
-
-      return realsize;
-
-
-Whole function for easy read:
-
-
-/* Called from curl_multi_do_locked, with s->mutex held.  */
-static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
-{
-     BDRVCURLState *s = opaque;
-     size_t realsize = size * nmemb;
-     const char *p = (char *)ptr;
-     const char *end = p + realsize;
-     const char *t;
-
-     for (t = "accept-ranges:"; p < end && *t; ++p, ++t) {
-         if (g_ascii_tolower(*p) != *t) {
-             return realsize;
-         }
+-#if defined(MAC_OS_VERSION_11_0) && \
+-    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
+-
+     QemuUUID net_uuid;
++
+     if (options->net_uuid &&
+         qemu_uuid_parse(options->net_uuid, &net_uuid) < 0) {
+         error_setg(errp, "Invalid UUID provided in 'net-uuid'");
+         return false;
      }
-
-     /* Skip whitespace between the header name and value. */
-     while (p < end && *p && g_ascii_isspace(*p)) {
-         p++;
+-#else
+-    if (options->has_isolated) {
+-        error_setg(errp,
+-                   "vmnet-host.isolated feature is "
+-                   "unavailable: outdated vmnet.framework API");
+-        return false;
+-    }
+-
+-    if (options->net_uuid) {
+-        error_setg(errp,
+-                   "vmnet-host.net-uuid feature is "
+-                   "unavailable: outdated vmnet.framework API");
+-        return false;
+-    }
+-#endif
+ 
+     if ((options->start_address ||
+          options->end_address ||
+@@ -71,9 +53,6 @@ static xpc_object_t build_if_desc(const Netdev *netdev)
+                               vmnet_operation_mode_key,
+                               VMNET_HOST_MODE);
+ 
+-#if defined(MAC_OS_VERSION_11_0) && \
+-    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
+-
+     xpc_dictionary_set_bool(if_desc,
+                             vmnet_enable_isolation_key,
+                             options->isolated);
+@@ -85,7 +64,6 @@ static xpc_object_t build_if_desc(const Netdev *netdev)
+                                 vmnet_network_identifier_key,
+                                 net_uuid.data);
      }
-
-     for (t = "bytes"; p < end && *t; ++p, ++t) {
-         if (g_ascii_tolower(*p) != *t) {
-             return realsize;
-         }
+-#endif
+ 
+     if (options->start_address) {
+         xpc_dictionary_set_string(if_desc,
+diff --git a/net/vmnet-shared.c b/net/vmnet-shared.c
+index 40c7306a758a..4726b072536f 100644
+--- a/net/vmnet-shared.c
++++ b/net/vmnet-shared.c
+@@ -21,16 +21,6 @@ static bool validate_options(const Netdev *netdev, Error **errp)
+ {
+     const NetdevVmnetSharedOptions *options = &(netdev->u.vmnet_shared);
+ 
+-#if !defined(MAC_OS_VERSION_11_0) || \
+-    MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_VERSION_11_0
+-    if (options->has_isolated) {
+-        error_setg(errp,
+-                   "vmnet-shared.isolated feature is "
+-                   "unavailable: outdated vmnet.framework API");
+-        return false;
+-    }
+-#endif
+-
+     if ((options->start_address ||
+          options->end_address ||
+          options->subnet_mask) &&
+@@ -76,14 +66,11 @@ static xpc_object_t build_if_desc(const Netdev *netdev)
+                                   options->subnet_mask);
      }
-
-     /* Check that there is nothing but whitespace after the value. */
-     while (p < end && *p && g_ascii_isspace(*p)) {
-         p++;
+ 
+-#if defined(MAC_OS_VERSION_11_0) && \
+-    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
+     xpc_dictionary_set_bool(
+         if_desc,
+         vmnet_enable_isolation_key,
+         options->isolated
+     );
+-#endif
+ 
+     return if_desc;
+ }
+diff --git a/net/vmnet-bridged.m b/net/vmnet-bridged.m
+index 76a28abe793c..a04a14fa11e4 100644
+--- a/net/vmnet-bridged.m
++++ b/net/vmnet-bridged.m
+@@ -88,15 +88,6 @@ static bool validate_options(const Netdev *netdev, Error **errp)
+         return false;
      }
-
-     if (p == end || !*p) {
-         s->accept_range = true;
+ 
+-#if !defined(MAC_OS_VERSION_11_0) || \
+-    MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_VERSION_11_0
+-    if (options->has_isolated) {
+-        error_setg(errp,
+-                   "vmnet-bridged.isolated feature is "
+-                   "unavailable: outdated vmnet.framework API");
+-        return false;
+-    }
+-#endif
+     return true;
+ }
+ 
+@@ -115,12 +106,10 @@ static xpc_object_t build_if_desc(const Netdev *netdev)
+                               vmnet_shared_interface_name_key,
+                               options->ifname);
+ 
+-#if defined(MAC_OS_VERSION_11_0) && \
+-    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
+     xpc_dictionary_set_bool(if_desc,
+                             vmnet_enable_isolation_key,
+                             options->isolated);
+-#endif
++
+     return if_desc;
+ }
+ 
+diff --git a/net/vmnet-common.m b/net/vmnet-common.m
+index 295828348501..30c4e53c1368 100644
+--- a/net/vmnet-common.m
++++ b/net/vmnet-common.m
+@@ -47,11 +47,8 @@
+         return "buffers exhausted in kernel";
+     case VMNET_TOO_MANY_PACKETS:
+         return "packet count exceeds limit";
+-#if defined(MAC_OS_VERSION_11_0) && \
+-    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
+     case VMNET_SHARING_SERVICE_BUSY:
+         return "conflict, sharing service is in use";
+-#endif
+     default:
+         return "unknown vmnet error";
      }
-
-     return realsize;
-}
-
-Dunno why it also checks for *p being !=0 in the last part, but ok.
-
-Sorry for the noise.  But I dislike usage of strlen() etc like this :)
-
-/mjt
 
 -- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+2.45.2
 
 
