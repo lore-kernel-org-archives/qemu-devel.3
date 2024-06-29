@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20A97C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 17:28:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA56AC27C4F
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 18:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNbrP-0005xl-Iw; Sat, 29 Jun 2024 13:27:39 -0400
+	id 1sNcyM-0004pU-6N; Sat, 29 Jun 2024 14:38:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNbrO-0005xS-5a
- for qemu-devel@nongnu.org; Sat, 29 Jun 2024 13:27:38 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sNcyL-0004pD-AC
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 14:38:53 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNbrM-00043o-LY
- for qemu-devel@nongnu.org; Sat, 29 Jun 2024 13:27:37 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2c901185d73so1956984a91.0
- for <qemu-devel@nongnu.org>; Sat, 29 Jun 2024 10:27:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sNcyJ-0007LZ-DB
+ for qemu-devel@nongnu.org; Sat, 29 Jun 2024 14:38:53 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a725041ad74so61672066b.3
+ for <qemu-devel@nongnu.org>; Sat, 29 Jun 2024 11:38:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719682055; x=1720286855; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3kWmdhjmCZKSz2j5dEsN40l/UWaacFCAkC7GnSoRnPc=;
- b=Pl58Tbne8yEJFK+ovgqYlwzDCCdr3SSO8WMSOoEpTZHU8i0RUPN6Gs6SQHnobDg9Nl
- x6JdbI2ez5WOqbbmoNW8E/75z+s4bvWyu7IJM/7ToLFMipJzR8/XDpnMIcfnuD/EoLiB
- n8H+KhOZI8o+E0HChCGUdEBfayj5KyX2Ndyea/qgmL00b27DSZvFyADo2xTLt0vqkV2l
- HAUyfMQ05XOmCo0UY1TsMX+vVX9SQW5+BE9uAke5ZJ7kFHZrRsN8OyU9NTqWa2h7Oiaz
- bR/n2iw+YwuBlxA8LKnNvVJVxI5ymUho8ByvrlqIrKLCvu91ZYRQSqRcH+kn2SeSjMen
- MpSQ==
+ d=linaro.org; s=google; t=1719686328; x=1720291128; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=PMfWb+SuD8rX+YnsKREBeoqYHOO2JoreXSbotUxxnHM=;
+ b=vt++UPrjAeW5z64aHEof3zgnQNWRFrgd0Mh9NyPbs7DqIbOVVaN4oafw6H1XJi5Sif
+ XgAiG7yY7lujN9v+wt08C60zHAUimi5lAXOw/TnNgnSVbTxlW8oL+RNdra3Eux7ZeONN
+ 9zUAQyDFfXx3HXVaI96zeTpppnJ4XrfKXZR9DqqC09I2eRGRFqOy27Pc8ijyj+rNGUEZ
+ cLBsdIumf4V97gQe2KN2HsDb4DNaBfS5NXlQRuzcGxW6L5nc/V8MRpJ6rBQlTN6l4zuY
+ epBPyUHvje8exxnPCAxTN5YNUPQ/WQnKQj8uzqYyw/fIi5yMZ/IQB1WSIKS0wJbd0KTQ
+ ivLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719682055; x=1720286855;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3kWmdhjmCZKSz2j5dEsN40l/UWaacFCAkC7GnSoRnPc=;
- b=JevwO5PA0g1iLLE+cqFGz7AaCqiD8/JOff3OTc7qzLIPQLw/KZdmqaaKFmgnbTgh7+
- VBxC3Hpmp44BKoSTOUtnaXN6ayEQOwZIwMdF5pj91r78TCld6IghEzo5WzxzfmxtUTJd
- qCKwC6abIBSQ4sqpKwN6fnXkyAIKYboHTX/GAiGQJz0BM13E6XfOa+1PTX8c90ynUXxA
- 6GB2zzLEwijk+37s2tzyRu97Cf60S/zGl1bE8dV5bAidRuKIX3MMb9GQs6KB2mXfuTo4
- jJ1XdgyO8+vPQjtSD/pjpAYAytabyCdmRE2EsFUzAUlVaBozPUreZ7/jWWEVKKP6V1zG
- yCNw==
+ d=1e100.net; s=20230601; t=1719686328; x=1720291128;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PMfWb+SuD8rX+YnsKREBeoqYHOO2JoreXSbotUxxnHM=;
+ b=hYyfQQu23rRuVJ/+fIo66yhv0E0CLZrUoDxE0YMu3qSFSQ0Igvy/buB5hDJ+TvWBG5
+ W0/Fg6tDAKNSPaahkJVKLdLbZV9HiSLP21WUqDPBrZhY0d1EmOm77FQ4UikDCAH8lpBz
+ h9n3GayijiG0rL3bDvmfvfW6zt+I2rqFrj+PJ5a3ED08gTceLF8XJY/hUBY2/yJvE4Km
+ RdCJvCyatV4zMkdvBLPCfQp7P4sUtkCs9FZ5qq/v0jmXKV3yJURtxQCEQEToJlV8KDPM
+ COH80f3nm9Xaogtb0ryzpHiO71L9t7TICXeVzr8N1jYz5UMaC9R2f4tjuojr0n+awXfl
+ YCgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqJjuKGPPjQIOmhyNwgO0yMqJNZsMAijQTvquJh3gRPU5Xa3s2Nt3UKZy2ODmsef+CJGGnQsJRgiLVysSSnR/2gaCCfZ0=
-X-Gm-Message-State: AOJu0YxQX+JzVnasiWqqwb+anttnVpskWSpE8EedICEUu7LKIyU5OiRG
- 0gbrU1C8ilEwzV78Nh4t8AiwrOPKAjeI3H2NoV2sdUocC4mNcrvRHPSxT/oqP/E=
-X-Google-Smtp-Source: AGHT+IGI5fJJSxK6v/RRVQHDcDvnhYC5HWfKBkxbBPQm9NPLA9ktgzdF+ZNmf39tUsGfV+xPiW3Bcw==
-X-Received: by 2002:a17:90b:4a0f:b0:2c3:2f5a:17d4 with SMTP id
- 98e67ed59e1d1-2c93d185e2cmr2330333a91.4.1719682055007; 
- Sat, 29 Jun 2024 10:27:35 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c91ce433c0sm3643452a91.16.2024.06.29.10.27.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 29 Jun 2024 10:27:34 -0700 (PDT)
-Message-ID: <c9fd8ce7-6c88-495f-8f43-917fc675743e@linaro.org>
-Date: Sat, 29 Jun 2024 10:27:31 -0700
+ AJvYcCVVMhKR8GWEYaNv4uPkYAt4T70HFa1SC9nMByc5cNMKw2Q/WX76AJwDIsQt/x/XWxJVoI0QSiYDusL18+Zq0nu6XWD+ttc=
+X-Gm-Message-State: AOJu0YyIiETXhjBi/XELXg+zKVbCu4XE96gudeHOzGUxJym472f9bCj+
+ 1uo7pmiQ5f5eYKOiLYE4MCJteCdi3N9kaaLAO7JlNUW1wQsGcfO3b/E5fcznNl0J7oUFENtbzaf
+ sY/iCMw5GAcysYyHHLEeLnAwTbWxeLqACDdX0zGK0EABik+Cf
+X-Google-Smtp-Source: AGHT+IGkS0xfXEV6RmY141qa0jIL4DQKRS7ae2eWB/L0SS+VtpTyiRESF1D7FLmlj3DfdKrob69cOaDkReff3tyL5ts=
+X-Received: by 2002:a05:6402:358a:b0:582:8746:6534 with SMTP id
+ 4fb4d7f45d1cf-587a0822baemr1295572a12.28.1719686327959; Sat, 29 Jun 2024
+ 11:38:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] target/arm/kvm: Report PMU unavailability
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20240629-pmu-v1-0-7269123b88a4@daynix.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240629-pmu-v1-0-7269123b88a4@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+References: <20240628050850.536447-1-gustavo.romero@linaro.org>
+ <20240628050850.536447-7-gustavo.romero@linaro.org>
+ <18343152-c677-4075-8c55-9a2802742a79@linaro.org>
+ <790bf46c-bf01-b8db-2030-af669cd98c49@linaro.org>
+ <ea688598-b4a5-40f4-a749-c155ecc0988c@linaro.org>
+ <d9812dd0-6f72-56ef-f52c-2f879bf2bf36@linaro.org>
+In-Reply-To: <d9812dd0-6f72-56ef-f52c-2f879bf2bf36@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Sat, 29 Jun 2024 19:38:36 +0100
+Message-ID: <CAFEAcA9FYvPzOfb5VfuERtzirWT478fvGMp75BQg+tdKNHAJ9A@mail.gmail.com>
+Subject: Re: [PATCH v6 06/11] target/arm: Factor out code for setting MTE TCF0
+ field
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,13 +97,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/29/24 05:50, Akihiko Odaki wrote:
-> Akihiko Odaki (3):
->        tests/arm-cpu-features: Do not assume PMU availability
->        target/arm: Always add pmu property
->        target/arm/kvm: Report PMU unavailability
+On Fri, 28 Jun 2024 at 19:13, Gustavo Romero <gustavo.romero@linaro.org> wrote:
+> Re-reading it after your clarifications makes it clear, but the first time
+> Phil pointed it out the phrases:
+>
+> "[...] since the .c file will have already included it." and
+> "Headers should normally include everything they need beyond osdep.h."
+>
+> weren't enough to me to make it clear that osdep.h must always be included
+> (present) in the .c files. "will have already included" sounded ambiguous to
+> me, more like, if necessary it would have already be included in .c (but not
+> always). But, well, that can be a falt in my interpretation.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Yeah, the rule is simple:
+ * .c files always include osdep.h, and it comes first
+ * .h files never include osdep.h
 
-r~
+but the wording in the developer docs doesn't manage to
+state that exactly.
+
+-- PMM
 
