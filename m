@@ -4,59 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C48C3064D
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 00:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED35EC2BD09
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Jun 2024 00:59:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNMIf-0000Y4-P4; Fri, 28 Jun 2024 20:50:45 -0400
+	id 1sNMQ2-000205-3B; Fri, 28 Jun 2024 20:58:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sNMIZ-0000UE-Fh
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 20:50:39 -0400
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sNMPz-0001y2-FZ
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 20:58:19 -0400
 Received: from speedy.comstyle.com ([2607:f938:3000:8::2]
  helo=mail.comstyle.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sNMIX-0000VA-9f
- for qemu-devel@nongnu.org; Fri, 28 Jun 2024 20:50:38 -0400
+ (Exim 4.90_1) (envelope-from <brad@comstyle.com>) id 1sNMPy-0007xh-1k
+ for qemu-devel@nongnu.org; Fri, 28 Jun 2024 20:58:19 -0400
 Received: from mail.comstyle.com (localhost [127.0.0.1])
- by mail.comstyle.com (Postfix) with ESMTP id 4W9tyF1Vygz8PbP;
- Fri, 28 Jun 2024 20:50:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=default;
- bh=QWOTMyDBlxLLx0N7xzi/1rXhKtENvw1UMkQmgCQLGFQ=; b=RKrP92iWy7ck
- dl2WwiiQCLsZ3fjpcJ3/QbE6rluHQnwg6jGb/XlFDAS2I3CZHupM4q8Vo1chnm3i
- 2IVom0o3KRowF8+sAPKhMI7qV2d5t8z+KfZOh6Q+1UKU3a7Yb7BgACfqdX1A79yH
- 0qF/il9gMjb6MFIwHI/d/ImWryiO3DU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
- :date:mime-version:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding; q=dns; s=default; b=Li6
- E6kUxE0LVncbSz9MlbtZKra+DyMxoDsbSjZQeM+uhWeag1Hf7OUXhgt5wcApSxeH
- +ELxkXTaMAOOvROMWuxFk1lKxms2kGQCbHVz6bE8XMORR0TRYzg7jYbz1rhscFWf
- GmUFvMkzC5+F71k9H+ugluvZj42icGB4TgJa2G/I=
-Received: from [IPV6:2001:470:b050:6:6dcd:d541:499:92d2] (unknown
- [IPv6:2001:470:b050:6:6dcd:d541:499:92d2])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ by mail.comstyle.com (Postfix) with ESMTP id 4W9v7D6G9Zz8PbP;
+ Fri, 28 Jun 2024 20:58:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+ :from:to:cc:subject:message-id:mime-version:content-type; s=
+ default; bh=JFBjRBK3uOlULHptD3OMzPVoJGAG4trB/umVydVdRs8=; b=ZmQT
+ eKrNajZjStVwmFWjGlmu1hPR+cSXx4c8bhFj0waImrVR8CqZ/cvhrworSi7JTIN0
+ IjNaDTrsssPHgAcnBcHSy0ixyh7sXncHl71TuL1kFcU9mcsLz46urq7SVjwfCxFJ
+ bAlCcakn2lpE+gABOGvYD4hs3nebYY4sEWX7Rlc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+ :cc:subject:message-id:mime-version:content-type; q=dns; s=
+ default; b=DJxIcjkTmkFfOFtkHLALZlQrRjVQgMrJVogFaFGcQ8gVW7dt6hgxw
+ zvda7fjKT60Cvk4PUlxHILGqVkKhdi1TSEG3A7n4v4rGuFRP7fsQkk4cOQ5tGLMV
+ NJYk6Xj/mRwxEpFUkmAM0QSwyPjxiFeTTiT54ilCWt0gp5mhoFh+WU=
+Received: from humpty.home.comstyle.com (unknown
+ [IPv6:2001:470:b050:3:75e:71e:78f5:b377])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
  (No client certificate requested) (Authenticated sender: brad)
- by mail.comstyle.com (Postfix) with ESMTPSA id 4W9tyD5mQWz8PbN;
- Fri, 28 Jun 2024 20:50:28 -0400 (EDT)
-Message-ID: <8ffa5c64-477f-4efb-92a0-5ca4864a5d8d@comstyle.com>
-Date: Fri, 28 Jun 2024 20:50:27 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] util/cpuinfo-ppc: Add FreeBSD support
+ by mail.comstyle.com (Postfix) with ESMTPSA id 4W9v7D4J1sz8PbN;
+ Fri, 28 Jun 2024 20:58:16 -0400 (EDT)
+Date: Fri, 28 Jun 2024 20:58:15 -0400
+From: Brad Smith <brad@comstyle.com>
 To: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Warner Losh <imp@bsdimp.com>
-References: <Zn4ZIYX0uxwHf3I-@humpty.home.comstyle.com>
- <352a9155-206e-400b-a907-50d275f90a05@linaro.org>
-Content-Language: en-US
-From: Brad Smith <brad@comstyle.com>
-In-Reply-To: <352a9155-206e-400b-a907-50d275f90a05@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v2] util/cpuinfo-ppc: Add FreeBSD support
+Message-ID: <Zn9cJ3puWr5lIgsg@humpty.home.comstyle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Received-SPF: pass client-ip=2607:f938:3000:8::2;
  envelope-from=brad@comstyle.com; helo=mail.comstyle.com
 X-Spam_score_int: -20
@@ -80,55 +73,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-06-28 12:19 p.m., Richard Henderson wrote:
-> On 6/27/24 19:00, Brad Smith wrote:
->> util/cpuinfo-ppc: Add FreeBSD support
->>
->> Signed-off-by: Brad Smith <brad@comstyle.com>
->> ---
->> With corrected sign-off.
->>
->> Also this was based on the tcg-next branch.
->>
->> =C2=A0 util/cpuinfo-ppc.c | 7 ++++++-
->> =C2=A0 1 file changed, 6 insertions(+), 1 deletion(-)
->>
->> diff --git a/util/cpuinfo-ppc.c b/util/cpuinfo-ppc.c
->> index 47af55aa0c..0ad634b46f 100644
->> --- a/util/cpuinfo-ppc.c
->> +++ b/util/cpuinfo-ppc.c
->> @@ -14,6 +14,11 @@
->> =C2=A0 #=C2=A0 include "elf.h"
->> =C2=A0 # endif
->> =C2=A0 #endif
->> +#ifdef __FreeBSD__
->> +# include <machine/cpu.h>
->> +# define PPC_FEATURE2_ARCH_3_1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 0
->
-> I assume freebsd will eventually add this bit.
+util/cpuinfo-ppc: Add FreeBSD support
 
-Possibly. The other flags are mostly in sync with the Linux flags.
-There is no Power 10 support so far.
+Signed-off-by: Brad Smith <brad@comstyle.com>
+---
+v2: Use ifndef with PPC_FEATURE2_ARCH_3_1
 
-> Perhaps better with ifndef?
-I'll do so just in case.
->
->
-> r~
->
->> +# define PPC_FEATURE2_VEC_CRYPTO PPC_FEATURE2_HAS_VEC_CRYPTO
->> +#endif
->> =C2=A0 =C2=A0 unsigned cpuinfo;
->> =C2=A0 @@ -28,7 +33,7 @@ unsigned __attribute__((constructor))=20
->> cpuinfo_init(void)
->> =C2=A0 =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 info =3D CPUINFO_ALWAYS;
->> =C2=A0 -#ifdef CONFIG_LINUX
->> +#if defined(CONFIG_LINUX) || defined(__FreeBSD__)
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsigned long hwcap =3D qemu_getauxval(=
-AT_HWCAP);
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsigned long hwcap2 =3D qemu_getauxval=
-(AT_HWCAP2);
->
->
+ util/cpuinfo-ppc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/util/cpuinfo-ppc.c b/util/cpuinfo-ppc.c
+index 47af55aa0c..f0b9b895f1 100644
+--- a/util/cpuinfo-ppc.c
++++ b/util/cpuinfo-ppc.c
+@@ -14,6 +14,13 @@
+ #  include "elf.h"
+ # endif
+ #endif
++#ifdef __FreeBSD__
++# include <machine/cpu.h>
++# ifndef PPC_FEATURE2_ARCH_3_1
++#  define PPC_FEATURE2_ARCH_3_1		0
++# endif
++# define PPC_FEATURE2_VEC_CRYPTO	PPC_FEATURE2_HAS_VEC_CRYPTO
++#endif
+ 
+ unsigned cpuinfo;
+ 
+@@ -28,7 +35,7 @@ unsigned __attribute__((constructor)) cpuinfo_init(void)
+ 
+     info = CPUINFO_ALWAYS;
+ 
+-#ifdef CONFIG_LINUX
++#if defined(CONFIG_LINUX) || defined(__FreeBSD__)
+     unsigned long hwcap = qemu_getauxval(AT_HWCAP);
+     unsigned long hwcap2 = qemu_getauxval(AT_HWCAP2);
+ 
+-- 
+2.45.2
+
 
