@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD444C3064D
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 14:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825D1C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 15:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNvgf-0000w2-WE; Sun, 30 Jun 2024 10:37:54 -0400
+	id 1sNwGS-0007BK-1s; Sun, 30 Jun 2024 11:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1sNvga-0000vO-4a; Sun, 30 Jun 2024 10:37:48 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ardb@kernel.org>)
- id 1sNvgX-0003Nk-Ab; Sun, 30 Jun 2024 10:37:47 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id BF74DCE097C;
- Sun, 30 Jun 2024 14:37:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09BDC32786;
- Sun, 30 Jun 2024 14:37:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1719758251;
- bh=RUlD5V3GMh260Zrkcqd8C6QU9LyipyBCh0FBuRULMeM=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=XkH8vdzheYXAwQD28fEPGy4zHhIRWjhxj2FVwTDNKojmRmbfSgbCXw0MTnQO4LKbT
- wpfooHCjA73qdVJU13FWzddhBHYbLDbvamqJfqIK3/Ff9Y7Sn3c2UNA8oeMv1wp06I
- 82oU3GkJBmddeRKEt6i6PZxA3yYv0zvKx8Xzyo8MCfo+faMPqXBIVeWqal8iG9Kjxz
- qB11guanRnvvijaXZltu7DAiEtEhEKuDcdn488+oNsMMZoTe6igCZGo8wowi7bYyLp
- 1k5ZOt/7d6RdR7B9iwjY0Y5MKsK7h3azfzi19/0U3Vz2XBlnfVAxJ//iY/p6UFDzzd
- uOh4RjH/WJDdw==
-Received: by mail-lj1-f170.google.com with SMTP id
- 38308e7fff4ca-2ee4ab4076bso27843281fa.0; 
- Sun, 30 Jun 2024 07:37:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sNwGP-0007Ak-A8; Sun, 30 Jun 2024 11:14:49 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sNwGN-0001LA-Pm; Sun, 30 Jun 2024 11:14:49 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-42561c16ffeso17125795e9.3; 
+ Sun, 30 Jun 2024 08:14:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719760486; x=1720365286; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5jJBrCwi9LW9SaBXFdF0UyfUcbT/SptHMronpgvYm3I=;
+ b=F9Hz80X6l2o0kgGNqGGw6YrAczafKsWmTI6p3fMbZDUFXB5uRH9fOMvCCBK3GMgfBk
+ ICleKRq4fdqNWJVnvl2C/usKfA82WmP66QQXvNZWNx4ER/TBjbwfZEYdUNNXcleoSKA1
+ kXViNz4KDmGfA1L4ggx+6UZ3N0pXePbGV9SLI9dypcg4OnORnEn6BnHDZCAT9uRFZtHQ
+ x+fjUsiZC/osEQSUIqtIFZRmjERb+naWuw426FHrpsiIwOdGA3R2S9GepBi0uTDMSb0p
+ /9rrmdGrB7CKRSHFYFZcjjzqt4LvtqmOadM8yD76vU96j+Mwn/JFG9h7c/Y28/GjxKd9
+ Mt7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719760486; x=1720365286;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5jJBrCwi9LW9SaBXFdF0UyfUcbT/SptHMronpgvYm3I=;
+ b=L1EK2M4o7SjQ/SsjmF7gOS33mUzi6XeQhu+du7GwstNU8gqTYDsKJXdaAR/px34cBO
+ kXTaDE3BhopcGKcsb5BDGU9bxHnBTBsZ7pgAMT5KpKbRggqg/BJ/y2gKtd2TwUtFvi6H
+ hTq8FXo8rk9QaJniKERMZ+dyX4lXa6BCuEKbyjEb7HMH6X+iBHBp56iBJ+Eil3UXhLdW
+ g04V/o4LhvR1Xd9c2hNfxwNcBu6dOBEXXYZth3DwlWn/NGi0Q+vXq+AKIk6QLxLNJga/
+ BMp+HT7bExTk7dnlXRC0SpPPR+I7WvWDdHPhJhpfk6ECX/13ggOTkUa9O3W9+p+4GAhX
+ vQBA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVL++31JYEFcGxouQOXY9bVwjE3L0YGc8RpS1MpMoVKpliU71xVWpz/JAPCcbRRlaTQZhNqewc9AI9gacgBtHAelgZr
-X-Gm-Message-State: AOJu0YwSTyitk7Ex9GgjsBg2S2W2kxZIfxtMIAi5B4trJXIRsUlYS318
- B/lrBvckkj7eUrE/WsKZAFo0laFor6/mWrue0p+eZMnR3PpUdd/gKetDy7pg331vtC41dynsOGU
- hWXq4QZm2D+ta5/1/hJXA8novmAk=
-X-Google-Smtp-Source: AGHT+IFpT01RfKl888dAnfjvbNa+5oaoqyd6bhqQ+9T/n5hVG0x30fa2NMQs3HswGp6hPBLEmCZE8FPOfSdbuGqFE24=
-X-Received: by 2002:a05:6512:39d3:b0:52c:dba9:55ff with SMTP id
- 2adb3069b0e04-52e7b9113b3mr2461039e87.25.1719758250136; Sun, 30 Jun 2024
- 07:37:30 -0700 (PDT)
+ AJvYcCW3qk9ggZmzWT+6A+4TkVYFgRzdyGc5nMZxCIXZkc1M75dKim63gVZ2thsHPD1LVd/sQJE56EQ2rl/MU9UM1lfQrnpMDdTfqEiyHDcl23P3wEXtxmvzMSlKuqs=
+X-Gm-Message-State: AOJu0Yx8VCNOFVkUWVW82xX+15aWzjPWXLpeo+82Wdkj6uRh6jpOjCNS
+ IuX6C7CfCiEhCzRHYJbO866Za76VgDd60keru5dUMxHXGOPTBoI=
+X-Google-Smtp-Source: AGHT+IFrsLQ+BRuFJNdSUwydg1GV8IqODCWeGNw0ReRei3uge0nJxUb7aWjTx0DV3kcRNQQw2KRsqw==
+X-Received: by 2002:a05:600c:1d1a:b0:424:a578:fc1 with SMTP id
+ 5b1f17b1804b1-4257a05c0a3mr22235175e9.25.1719760485499; 
+ Sun, 30 Jun 2024 08:14:45 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256af5b91bsm114901515e9.20.2024.06.30.08.14.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 30 Jun 2024 08:14:45 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH] hw/misc/bcm2835_thermal: Handle invalid address accesses
+ gracefully
+Date: Sun, 30 Jun 2024 17:14:14 +0200
+Message-Id: <20240630151414.2969772-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240620-b4-new-firmware-v3-0-29a3a2f1be1e@linaro.org>
- <20240620-b4-new-firmware-v3-1-29a3a2f1be1e@linaro.org>
-In-Reply-To: <20240620-b4-new-firmware-v3-1-29a3a2f1be1e@linaro.org>
-From: Ard Biesheuvel <ardb@kernel.org>
-Date: Sun, 30 Jun 2024 16:37:18 +0200
-X-Gmail-Original-Message-ID: <CAMj1kXGb9xVQ5E3oK_QX+3hKkMfCoA9jF5jkEeG6Eq9+zbHPHA@mail.gmail.com>
-Message-ID: <CAMj1kXGb9xVQ5E3oK_QX+3hKkMfCoA9jF5jkEeG6Eq9+zbHPHA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] tests/avocado: update firmware for sbsa-ref
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>, 
- Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, 
- Ard Biesheuvel <ardb+tianocore@kernel.org>, Rebecca Cran <rebecca@bsdio.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=ardb@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=zheyuma97@gmail.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,86 +93,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Jun 2024 at 12:20, Marcin Juszkiewicz
-<marcin.juszkiewicz@linaro.org> wrote:
->
-> Update firmware to have graphics card memory fix from EDK2 commit
-> c1d1910be6e04a8b1a73090cf2881fb698947a6e:
->
->     OvmfPkg/QemuVideoDxe: add feature PCD to remap framebuffer W/C
->
->     Some platforms (such as SBSA-QEMU on recent builds of the emulator) only
->     tolerate misaligned accesses to normal memory, and raise alignment
->     faults on such accesses to device memory, which is the default for PCIe
->     MMIO BARs.
->
->     When emulating a PCIe graphics controller, the framebuffer is typically
->     exposed via a MMIO BAR, while the disposition of the region is closer to
->     memory (no side effects on reads or writes, except for the changing
->     picture on the screen; direct random access to any pixel in the image).
->
->     In order to permit the use of such controllers on platforms that only
->     tolerate these types of accesses for normal memory, it is necessary to
->     remap the memory. Use the DXE services to set the desired capabilities
->     and attributes.
->
->     Hide this behavior under a feature PCD so only platforms that really
->     need it can enable it. (OVMF on x86 has no need for this)
->
-> With this fix enabled we can boot sbsa-ref with more than one cpu core.
->
+This commit handles invalid address accesses gracefully in both read and write
+functions. Instead of asserting and aborting, it logs an error message and returns
+a neutral value for read operations and does nothing for write operations.
 
-This requires an explanation: what does the number of CPU cores have
-to do with the memory attributes used for the framebuffer?
+Error log:
+ERROR:hw/misc/bcm2835_thermal.c:55:bcm2835_thermal_read: code should not be reached
+Bail out! ERROR:hw/misc/bcm2835_thermal.c:55:bcm2835_thermal_read: code should not be reached
+Aborted
 
+Reproducer:
+cat << EOF | qemu-system-aarch64 -display \
+none -machine accel=qtest, -m 512M -machine raspi3b -m 1G -qtest stdio
+readw 0x3f212003
+EOF
 
-> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-> ---
->  tests/avocado/machine_aarch64_sbsaref.py | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
-> index 6bb82f2a03..e854ec6a1a 100644
-> --- a/tests/avocado/machine_aarch64_sbsaref.py
-> +++ b/tests/avocado/machine_aarch64_sbsaref.py
-> @@ -37,18 +37,18 @@ def fetch_firmware(self):
->
->          Used components:
->
-> -        - Trusted Firmware 2.11.0
-> -        - Tianocore EDK2 stable202405
-> -        - Tianocore EDK2-platforms commit 4bbd0ed
-> +        - Trusted Firmware         v2.11.0
-> +        - Tianocore EDK2           4d4f569924
-> +        - Tianocore EDK2-platforms 3f08401
->
->          """
->
->          # Secure BootRom (TF-A code)
->          fs0_xz_url = (
->              "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
-> -            "20240528-140808/edk2/SBSA_FLASH0.fd.xz"
-> +            "20240619-148232/edk2/SBSA_FLASH0.fd.xz"
->          )
-> -        fs0_xz_hash = "fa6004900b67172914c908b78557fec4d36a5f784f4c3dd08f49adb75e1892a9"
-> +        fs0_xz_hash = "0c954842a590988f526984de22e21ae0ab9cb351a0c99a8a58e928f0c7359cf7"
->          tar_xz_path = self.fetch_asset(fs0_xz_url, asset_hash=fs0_xz_hash,
->                                        algorithm='sha256')
->          archive.extract(tar_xz_path, self.workdir)
-> @@ -57,9 +57,9 @@ def fetch_firmware(self):
->          # Non-secure rom (UEFI and EFI variables)
->          fs1_xz_url = (
->              "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
-> -            "20240528-140808/edk2/SBSA_FLASH1.fd.xz"
-> +            "20240619-148232/edk2/SBSA_FLASH1.fd.xz"
->          )
-> -        fs1_xz_hash = "5f3747d4000bc416d9641e33ff4ac60c3cc8cb74ca51b6e932e58531c62eb6f7"
-> +        fs1_xz_hash = "c6ec39374c4d79bb9e9cdeeb6db44732d90bb4a334cec92002b3f4b9cac4b5ee"
->          tar_xz_path = self.fetch_asset(fs1_xz_url, asset_hash=fs1_xz_hash,
->                                        algorithm='sha256')
->          archive.extract(tar_xz_path, self.workdir)
->
-> --
-> 2.45.1
->
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+ hw/misc/bcm2835_thermal.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/hw/misc/bcm2835_thermal.c b/hw/misc/bcm2835_thermal.c
+index ee7816b8a5..5c2a429d58 100644
+--- a/hw/misc/bcm2835_thermal.c
++++ b/hw/misc/bcm2835_thermal.c
+@@ -51,8 +51,10 @@ static uint64_t bcm2835_thermal_read(void *opaque, hwaddr addr, unsigned size)
+         val = FIELD_DP32(bcm2835_thermal_temp2adc(25), STAT, VALID, true);
+         break;
+     default:
+-        /* MemoryRegionOps are aligned, so this can not happen. */
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "bcm2835_thermal_read: invalid address 0x%"
++                      HWADDR_PRIx "\n", addr);
++        val = 0;
+     }
+     return val;
+ }
+@@ -72,8 +74,10 @@ static void bcm2835_thermal_write(void *opaque, hwaddr addr,
+                        __func__, value, addr);
+         break;
+     default:
+-        /* MemoryRegionOps are aligned, so this can not happen. */
+-        g_assert_not_reached();
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "bcm2835_thermal_write: invalid address 0x%"
++                      HWADDR_PRIx "\n", addr);
++        break;
+     }
+ }
+ 
+-- 
+2.34.1
+
 
