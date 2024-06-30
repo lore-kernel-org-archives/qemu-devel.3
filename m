@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC298C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 12:03:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550C5C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 12:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNtHB-0000du-5P; Sun, 30 Jun 2024 08:03:25 -0400
+	id 1sNtGI-0000La-It; Sun, 30 Jun 2024 08:02:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1sNtGX-0000OZ-VG; Sun, 30 Jun 2024 08:02:46 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1sNtGG-0000KU-Ih; Sun, 30 Jun 2024 08:02:28 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1sNtGJ-00058Z-Ky; Sun, 30 Jun 2024 08:02:42 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45UBvZAn011698;
- Sun, 30 Jun 2024 12:02:28 GMT
+ id 1sNtGE-00053I-N0; Sun, 30 Jun 2024 08:02:28 -0400
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45UBxZDJ002756;
+ Sun, 30 Jun 2024 12:02:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=L2Ni7+s4AHsWc
- 9XyWKiN5DFMYSLwN0/qpGzf42g/yc4=; b=H0TQi3hYGdhQtbGKMrb7CD8TOSnUf
- sU8MwaCC8kIbKA2fkLwWnMI03pruYhj6UYLKy0Pkqo/jFfx7oV/LadCpzfrYicWq
- 1OGlQoCO5ClqO3+feE2qEnVUEpF1inPeXeWd8gu0MuyxhFrgbgR2eKWn7xeAchBU
- 3VHBbiny8dSCwhkHWpD9yOT429sSB5OV+zNOf8EDzTo9otMEcq6ff8VZ+pDVdpCF
- 6IDxHVXePiTZQi1fJji67Pba99EJ8FW8AvmPsbXNgBnyiKufo2GiS2cZlat09nCP
- g0er1UoWqK4DOejb8MhZZ5PKZjZFYVieuvWjNmf8RgSpSYTGYiqoU9yYg==
+ :mime-version:content-transfer-encoding; s=pp1; bh=KKKdeG9z56wPF
+ h65BgP+t1XvOWpsaQfeAtkwY/JRDxQ=; b=BYSNNpBRqT+gGBmQhRkQXku1+yel/
+ Zs3RV/cKzWzoLCPMruf1srr26WW0ln7rtkISZJK7cmJdHasuqP6qQwubOk85jTdg
+ LS2o4bg4XkV/CMB+G+IS/yUOmm+nD+ZTvmyRHpTT75BhwbgomynY/pmmgdi+caBn
+ B7ROdCwtc9+iTTDWLeY+wEvSOSGb/NRsUGLEwxWFv1hKrsFuRmEsJAQWKFcI8HsV
+ VkJa/YKHGfkvP17ha5KQmIZmgUPC5dzGyDYaXFq5gIhnofnjCyyaZciNWLcEhyJy
+ J2PQfnsh+KRPLYsMyD7azRP+S4CbyCUCmiqxguooYi1prG/N+Y2j+ls/g==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4035mx04f0-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4036ydr04s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 30 Jun 2024 12:02:28 +0000 (GMT)
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45UC2S6u020105;
- Sun, 30 Jun 2024 12:02:28 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4035mx04ey-1
+ Sun, 30 Jun 2024 12:02:23 +0000 (GMT)
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45UC2NAb007799;
+ Sun, 30 Jun 2024 12:02:23 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4036ydr04p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 30 Jun 2024 12:02:28 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 45U7sfOT024077; Sun, 30 Jun 2024 12:02:27 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 402ya31nxt-1
+ Sun, 30 Jun 2024 12:02:23 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45U9XmEW009129; Sun, 30 Jun 2024 12:02:21 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 402w00a700-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 30 Jun 2024 12:02:27 +0000
+ Sun, 30 Jun 2024 12:02:21 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 45UC2NR942598906
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45UC2HDu56688934
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 30 Jun 2024 12:02:25 GMT
+ Sun, 30 Jun 2024 12:02:19 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B2C012004E;
- Sun, 30 Jun 2024 12:02:23 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B85DF2004E;
+ Sun, 30 Jun 2024 12:02:17 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 833832005A;
- Sun, 30 Jun 2024 12:02:21 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 32B0B20040;
+ Sun, 30 Jun 2024 12:02:15 +0000 (GMT)
 Received: from localhost.localdomain.com (unknown [9.171.58.130])
  by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sun, 30 Jun 2024 12:02:21 +0000 (GMT)
+ Sun, 30 Jun 2024 12:02:14 +0000 (GMT)
 From: Chinmay Rath <rathc@linux.ibm.com>
 To: qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
  richard.henderson@linaro.org, harshpb@linux.ibm.com
-Subject: [PATCH v2 3/3] target/ppc : Update VSX storage access insns to use
- tcg_gen_qemu _ld/st_i128.
-Date: Sun, 30 Jun 2024 17:31:57 +0530
-Message-Id: <20240630120157.259233-4-rathc@linux.ibm.com>
+Subject: [PATCH v2 1/3] target/ppc: Move get/set_avr64 functions to
+ vmx-impl.c.inc.
+Date: Sun, 30 Jun 2024 17:31:55 +0530
+Message-Id: <20240630120157.259233-2-rathc@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240630120157.259233-1-rathc@linux.ibm.com>
 References: <20240630120157.259233-1-rathc@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ii-rird4qtU4mh36x48o505YI-P3d-el
-X-Proofpoint-GUID: 0MYvyk7GWAmvabRg5XOTKwRZut3g-9ll
+X-Proofpoint-GUID: 6fWrQN5e2pl5jV7PaPD-ZhX5SHk6JE6x
+X-Proofpoint-ORIG-GUID: OK630g4PYf9SxXq1jj6F3VgUVCAgh9TK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-06-30_10,2024-06-28_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- adultscore=0 suspectscore=0 impostorscore=0 malwarescore=0 phishscore=0
- mlxlogscore=754 mlxscore=0 bulkscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ priorityscore=1501
+ bulkscore=0 clxscore=1015 adultscore=0 mlxscore=0 suspectscore=0
+ spamscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0 phishscore=0
+ mlxlogscore=832 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2406140001 definitions=main-2406300094
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
 X-Spam_bar: --
@@ -113,147 +113,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Updated many VSX instructions to use tcg_gen_qemu_ld/st_i128, instead of using
-tcg_gen_qemu_ld/st_i64 consecutively.
-Introduced functions {get,set}_vsr_full to facilitate the above & for future use.
+Those functions are used to ld/st data to and from Altivec registers,
+in 64 bits chunks, and are only used in vmx-impl.c.inc file,
+hence the clean-up movement.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
 ---
- target/ppc/translate/vsx-impl.c.inc | 70 +++++++++++++----------------
- 1 file changed, 31 insertions(+), 39 deletions(-)
+ target/ppc/translate.c              | 10 ----------
+ target/ppc/translate/vmx-impl.c.inc | 10 ++++++++++
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
-index 26ebf3fedf..b622831a73 100644
---- a/target/ppc/translate/vsx-impl.c.inc
-+++ b/target/ppc/translate/vsx-impl.c.inc
-@@ -10,6 +10,16 @@ static inline void set_cpu_vsr(int n, TCGv_i64 src, bool high)
-     tcg_gen_st_i64(src, tcg_env, vsr64_offset(n, high));
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index ad512e1922..f7f2c2db9e 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -6200,16 +6200,6 @@ static inline void set_fpr(int regno, TCGv_i64 src)
+     tcg_gen_st_i64(tcg_constant_i64(0), tcg_env, vsr64_offset(regno, false));
  }
  
-+static inline void get_vsr_full(TCGv_i128 dst, int reg)
+-static inline void get_avr64(TCGv_i64 dst, int regno, bool high)
+-{
+-    tcg_gen_ld_i64(dst, tcg_env, avr64_offset(regno, high));
+-}
+-
+-static inline void set_avr64(int regno, TCGv_i64 src, bool high)
+-{
+-    tcg_gen_st_i64(src, tcg_env, avr64_offset(regno, high));
+-}
+-
+ /*
+  * Helpers for decodetree used by !function for decoding arguments.
+  */
+diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
+index 152bcde0e3..a182d2cf81 100644
+--- a/target/ppc/translate/vmx-impl.c.inc
++++ b/target/ppc/translate/vmx-impl.c.inc
+@@ -14,6 +14,16 @@ static inline TCGv_ptr gen_avr_ptr(int reg)
+     return r;
+ }
+ 
++static inline void get_avr64(TCGv_i64 dst, int regno, bool high)
 +{
-+    tcg_gen_ld_i128(dst, tcg_env, vsr_full_offset(reg));
++    tcg_gen_ld_i64(dst, tcg_env, avr64_offset(regno, high));
 +}
 +
-+static inline void set_vsr_full(int reg, TCGv_i128 src)
++static inline void set_avr64(int regno, TCGv_i64 src, bool high)
 +{
-+    tcg_gen_st_i128(src, tcg_env, vsr_full_offset(reg));
++    tcg_gen_st_i64(src, tcg_env, avr64_offset(regno, high));
 +}
 +
- static inline TCGv_ptr gen_vsr_ptr(int reg)
- {
-     TCGv_ptr r = tcg_temp_new_ptr();
-@@ -196,20 +206,17 @@ static bool trans_LXVH8X(DisasContext *ctx, arg_LXVH8X *a)
- static bool trans_LXVB16X(DisasContext *ctx, arg_LXVB16X *a)
+ static bool trans_LVX(DisasContext *ctx, arg_X *a)
  {
      TCGv EA;
--    TCGv_i64 xth, xtl;
-+    TCGv_i128 data;
- 
-     REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
- 
--    xth = tcg_temp_new_i64();
--    xtl = tcg_temp_new_i64();
-+    data = tcg_temp_new_i128();
-     gen_set_access_type(ctx, ACCESS_INT);
-     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
--    tcg_gen_qemu_ld_i64(xth, EA, ctx->mem_idx, MO_BEUQ);
--    tcg_gen_addi_tl(EA, EA, 8);
--    tcg_gen_qemu_ld_i64(xtl, EA, ctx->mem_idx, MO_BEUQ);
--    set_cpu_vsr(a->rt, xth, true);
--    set_cpu_vsr(a->rt, xtl, false);
-+    tcg_gen_qemu_ld_i128(data, EA, ctx->mem_idx,
-+                         MO_BE | MO_128 | MO_ATOM_IFALIGN_PAIR);
-+    set_vsr_full(a->rt, data);
-     return true;
- }
- 
-@@ -385,20 +392,17 @@ static bool trans_STXVH8X(DisasContext *ctx, arg_STXVH8X *a)
- static bool trans_STXVB16X(DisasContext *ctx, arg_STXVB16X *a)
- {
-     TCGv EA;
--    TCGv_i64 xsh, xsl;
-+    TCGv_i128 data;
- 
-     REQUIRE_VSX(ctx);
-     REQUIRE_INSNS_FLAGS2(ctx, ISA300);
- 
--    xsh = tcg_temp_new_i64();
--    xsl = tcg_temp_new_i64();
--    get_cpu_vsr(xsh, a->rt, true);
--    get_cpu_vsr(xsl, a->rt, false);
-+    data = tcg_temp_new_i128();
-     gen_set_access_type(ctx, ACCESS_INT);
-     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
--    tcg_gen_qemu_st_i64(xsh, EA, ctx->mem_idx, MO_BEUQ);
--    tcg_gen_addi_tl(EA, EA, 8);
--    tcg_gen_qemu_st_i64(xsl, EA, ctx->mem_idx, MO_BEUQ);
-+    get_vsr_full(data, a->rt);
-+    tcg_gen_qemu_st_i128(data, EA, ctx->mem_idx,
-+                         MO_BE | MO_128 | MO_ATOM_IFALIGN_PAIR);
-     return true;
- }
- 
-@@ -2175,13 +2179,13 @@ static bool do_lstxv(DisasContext *ctx, int ra, TCGv displ,
-                      int rt, bool store, bool paired)
- {
-     TCGv ea;
--    TCGv_i64 xt;
-+    TCGv_i128 data;
-     MemOp mop;
-     int rt1, rt2;
- 
--    xt = tcg_temp_new_i64();
-+    data = tcg_temp_new_i128();
- 
--    mop = DEF_MEMOP(MO_UQ);
-+    mop = DEF_MEMOP(MO_128 | MO_ATOM_IFALIGN_PAIR);
- 
-     gen_set_access_type(ctx, ACCESS_INT);
-     ea = do_ea_calc(ctx, ra, displ);
-@@ -2195,32 +2199,20 @@ static bool do_lstxv(DisasContext *ctx, int ra, TCGv displ,
-     }
- 
-     if (store) {
--        get_cpu_vsr(xt, rt1, !ctx->le_mode);
--        tcg_gen_qemu_st_i64(xt, ea, ctx->mem_idx, mop);
--        gen_addr_add(ctx, ea, ea, 8);
--        get_cpu_vsr(xt, rt1, ctx->le_mode);
--        tcg_gen_qemu_st_i64(xt, ea, ctx->mem_idx, mop);
-+        get_vsr_full(data, rt1);
-+        tcg_gen_qemu_st_i128(data, ea, ctx->mem_idx, mop);
-         if (paired) {
-             gen_addr_add(ctx, ea, ea, 8);
--            get_cpu_vsr(xt, rt2, !ctx->le_mode);
--            tcg_gen_qemu_st_i64(xt, ea, ctx->mem_idx, mop);
--            gen_addr_add(ctx, ea, ea, 8);
--            get_cpu_vsr(xt, rt2, ctx->le_mode);
--            tcg_gen_qemu_st_i64(xt, ea, ctx->mem_idx, mop);
-+            get_vsr_full(data, rt2);
-+            tcg_gen_qemu_st_i128(data, ea, ctx->mem_idx, mop);
-         }
-     } else {
--        tcg_gen_qemu_ld_i64(xt, ea, ctx->mem_idx, mop);
--        set_cpu_vsr(rt1, xt, !ctx->le_mode);
--        gen_addr_add(ctx, ea, ea, 8);
--        tcg_gen_qemu_ld_i64(xt, ea, ctx->mem_idx, mop);
--        set_cpu_vsr(rt1, xt, ctx->le_mode);
-+        tcg_gen_qemu_ld_i128(data, ea, ctx->mem_idx, mop);
-+        set_vsr_full(rt1, data);
-         if (paired) {
-             gen_addr_add(ctx, ea, ea, 8);
--            tcg_gen_qemu_ld_i64(xt, ea, ctx->mem_idx, mop);
--            set_cpu_vsr(rt2, xt, !ctx->le_mode);
--            gen_addr_add(ctx, ea, ea, 8);
--            tcg_gen_qemu_ld_i64(xt, ea, ctx->mem_idx, mop);
--            set_cpu_vsr(rt2, xt, ctx->le_mode);
-+            tcg_gen_qemu_ld_i128(data, ea, ctx->mem_idx, mop);
-+            set_vsr_full(rt2, data);
-         }
-     }
-     return true;
 -- 
 2.39.3
 
