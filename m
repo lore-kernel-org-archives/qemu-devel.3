@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D744C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAF44C3065B
 	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 16:55:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNxoJ-0005gP-I2; Sun, 30 Jun 2024 12:53:55 -0400
+	id 1sNxoN-0005hU-7T; Sun, 30 Jun 2024 12:53:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNxoF-0005ds-Ro; Sun, 30 Jun 2024 12:53:51 -0400
+ id 1sNxoK-0005gU-1S; Sun, 30 Jun 2024 12:53:56 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNxoE-0005JU-AX; Sun, 30 Jun 2024 12:53:51 -0400
+ id 1sNxoI-0005K9-A7; Sun, 30 Jun 2024 12:53:55 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 99AF275763;
+ by isrv.corpit.ru (Postfix) with ESMTP id C3AB675766;
  Sun, 30 Jun 2024 19:53:20 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6EDACFAD60;
+ by tsrv.corpit.ru (Postfix) with SMTP id 98C68FAD63;
  Sun, 30 Jun 2024 19:53:27 +0300 (MSK)
-Received: (nullmailer pid 38218 invoked by uid 1000);
+Received: (nullmailer pid 38227 invoked by uid 1000);
  Sun, 30 Jun 2024 16:53:27 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 06/16] linux-user: cris: Remove unused struct 'rt_signal_frame'
-Date: Sun, 30 Jun 2024 19:53:16 +0300
-Message-Id: <20240630165327.38153-7-mjt@tls.msk.ru>
+Subject: [PULL 09/16] net/can: Remove unused struct 'CanBusState'
+Date: Sun, 30 Jun 2024 19:53:19 +0300
+Message-Id: <20240630165327.38153-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240630165327.38153-1-mjt@tls.msk.ru>
 References: <20240630165327.38153-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,36 +63,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Since 'setup_rt_frame' has never been implemented, this struct
-is unused.
+As far as I can tell this struct has never been used in this
+file (it is used in can_core.c).
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- linux-user/cris/signal.c | 8 --------
- 1 file changed, 8 deletions(-)
+ net/can/can_host.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/linux-user/cris/signal.c b/linux-user/cris/signal.c
-index 4f532b2903..10948bcf30 100644
---- a/linux-user/cris/signal.c
-+++ b/linux-user/cris/signal.c
-@@ -35,14 +35,6 @@ struct target_signal_frame {
-     uint16_t retcode[4];      /* Trampoline code. */
- };
+diff --git a/net/can/can_host.c b/net/can/can_host.c
+index a3c84028c6..b2fe553f91 100644
+--- a/net/can/can_host.c
++++ b/net/can/can_host.c
+@@ -34,12 +34,6 @@
+ #include "net/can_emu.h"
+ #include "net/can_host.h"
  
--struct rt_signal_frame {
--    siginfo_t *pinfo;
--    void *puc;
--    siginfo_t info;
--    ucontext_t uc;
--    uint16_t retcode[4];      /* Trampoline code. */
+-struct CanBusState {
+-    Object object;
+-
+-    QTAILQ_HEAD(, CanBusClientState) clients;
 -};
 -
- static void setup_sigcontext(struct target_sigcontext *sc, CPUCRISState *env)
+ static void can_host_disconnect(CanHostState *ch)
  {
-     __put_user(env->regs[0], &sc->regs.r0);
+     CanHostClass *chc = CAN_HOST_GET_CLASS(ch);
 -- 
 2.39.2
 
