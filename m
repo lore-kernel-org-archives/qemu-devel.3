@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B522BC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 03:12:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6A5C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 03:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNkzX-00041z-3r; Sat, 29 Jun 2024 23:12:39 -0400
+	id 1sNl05-0004hp-7p; Sat, 29 Jun 2024 23:13:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sNkzV-0003xJ-5L; Sat, 29 Jun 2024 23:12:37 -0400
-Received: from out30-124.freemail.mail.aliyun.com ([115.124.30.124])
+ id 1sNl03-0004ha-AA; Sat, 29 Jun 2024 23:13:11 -0400
+Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sNkzT-0006Ti-2C; Sat, 29 Jun 2024 23:12:36 -0400
+ id 1sNl01-0008MM-1q; Sat, 29 Jun 2024 23:13:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1719717150; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=lb8nPC3guShQriWC6z1jk+f/5hN4YT+Hh7z+UKZLabI=;
- b=BelLaQ5vrALOgdxmp9AlJsCoK/RsXxoGLd1ENW8oMoHtgmCd7xfjHgMmU/J+c5zRmC5hCn8iuNC5tD2cMKS8uPdUr0hFCoGIOmKJd4H+gBI636FyI0DimjD3d6F44QMwFu8n1NWivKGiCHN9v+5BtgNN/ELj/CkK6idbpJAf8lM=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045046011;
+ t=1719717181; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=SLlvMmCqMrYsAOyxrCfd7RrhgcNpuTMY1eTelXBZzyY=;
+ b=MNrjAs3FSVUn4d2hdfU29k1cFChVEnmmDJKI2AUuFsg5gkjTnRQs8hjQrbVb5LRFtKPi9Q4aCnXouNxOCnqgcnm3c2ubjDSYCjEiXHs8cWDMgCRBZGHzds5PtBi1d9XtIKPCFQVhFzotoTdtRn/QFLDPhW0/0FEnVlHjmKx0V0Y=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R161e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067110;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0W9UUi57_1719717148; 
+ TI=SMTPD_---0W9UUiGe_1719717179; 
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W9UUi57_1719717148) by smtp.aliyun-inc.com;
- Sun, 30 Jun 2024 11:12:29 +0800
+ fp:SMTPD_---0W9UUiGe_1719717179) by smtp.aliyun-inc.com;
+ Sun, 30 Jun 2024 11:13:00 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
  LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH v2 09/11] target/riscv: Add amocas.[b|h] for Zabha
-Date: Sun, 30 Jun 2024 11:05:57 +0800
-Message-Id: <20240630030559.877-10-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v2 10/11] target/riscv: Enable zabha for max cpu
+Date: Sun, 30 Jun 2024 11:05:58 +0800
+Message-Id: <20240630030559.877-11-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20240630030559.877-1-zhiwei_liu@linux.alibaba.com>
 References: <20240630030559.877-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.124;
+Received-SPF: pass client-ip=115.124.30.112;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-124.freemail.mail.aliyun.com
+ helo=out30-112.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -70,44 +70,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/insn32.decode                  |  2 ++
- target/riscv/insn_trans/trans_rvzabha.c.inc | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+ target/riscv/cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index 8a4801d442..eee48f92d3 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -1041,3 +1041,5 @@ amomin_h   10000 . . ..... ..... 001 ..... 0101111 @atom_st
- amomax_h   10100 . . ..... ..... 001 ..... 0101111 @atom_st
- amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
- amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
-+amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
-+amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
-diff --git a/target/riscv/insn_trans/trans_rvzabha.c.inc b/target/riscv/insn_trans/trans_rvzabha.c.inc
-index 9093a1cfc1..ce8edcba62 100644
---- a/target/riscv/insn_trans/trans_rvzabha.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzabha.c.inc
-@@ -129,3 +129,17 @@ static bool trans_amomaxu_h(DisasContext *ctx, arg_amomaxu_h *a)
-     REQUIRE_ZABHA(ctx);
-     return gen_amo(ctx, a, &tcg_gen_atomic_fetch_umax_tl, MO_TESW);
- }
-+
-+static bool trans_amocas_b(DisasContext *ctx, arg_amocas_b *a)
-+{
-+    REQUIRE_ZACAS(ctx);
-+    REQUIRE_ZABHA(ctx);
-+    return gen_cmpxchg(ctx, a, MO_SB);
-+}
-+
-+static bool trans_amocas_h(DisasContext *ctx, arg_amocas_h *a)
-+{
-+    REQUIRE_ZACAS(ctx);
-+    REQUIRE_ZABHA(ctx);
-+    return gen_cmpxchg(ctx, a, MO_ALIGN | MO_TESW);
-+}
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 5219b44176..8cd52e6801 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -117,6 +117,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+     ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_11),
+     ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
++    ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
+     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+     ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
+     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
+@@ -1478,6 +1479,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
+     MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
+     MULTI_EXT_CFG_BOOL("zama16b", ext_zama16b, false),
++    MULTI_EXT_CFG_BOOL("zabha", ext_zabha, false),
+     MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
+     MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
+     MULTI_EXT_CFG_BOOL("zawrs", ext_zawrs, true),
 -- 
 2.25.1
 
