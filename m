@@ -4,143 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E81B4C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 13:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A10C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 13:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNuDs-00017q-Dm; Sun, 30 Jun 2024 09:04:04 -0400
+	id 1sNuFX-0001pC-Pr; Sun, 30 Jun 2024 09:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peng.fan@nxp.com>) id 1sNuDp-00017Y-GY
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 09:04:02 -0400
-Received: from mail-am6eur05on2041.outbound.protection.outlook.com
- ([40.107.22.41] helo=EUR05-AM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peng.fan@nxp.com>) id 1sNuDm-0001AN-Qh
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 09:04:01 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=K67OslUj1PHceXHb3iYsgDi0KI9bswlwloV6cY5oqBqtmeHsn4KQzM2d8Zy09D85lGaFHOwBVzEjymGHEIfJJ73PPkYlnae8tJaw9h9rwf+1n8lD52sopisOFk021d9GaQU5UP43tckZr8mKnxBLuR6NoNMrd7AT2SmpzdajqesQtVlvWbz/dmW6fJk7ZZ9K2z+5A97GZJQYDFosq7AvLxrvC/VcrNllrj3xz+Fmai30yjjfvEK+2TEo+6vHIaoMAD3jDAmSlD3K4iHockIL+050C5xegRU7Z7egrgs/m1x/Z6SCvtMaX8RbioLji2XzEhulWVcsLeLoNC5ppuLjpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LevxgQALKoyX7I4IsIHT/q6K6uuqfAWoIbxrhrubsC0=;
- b=S0BcRjx9wWMloD1nxVRrInKYQdstx4wkYCW9OSkJnlVZfTNtkhVHx/grONpc8ctEzbKYuAJfrylPyppzgmkLsoHOrXsfyblhPJx9gSX7E8diGTWU8OASCFYpBjQCq4uCEmGeruBx/+xP7RkGHcRq5d5ums5XfiqfLhxRdydCIu0mx5D2kCfVEat2vwTWRfZAA/A37OZs9xa66ikvMDwUBhGapSxxbp6Vom5zBLLMBb3xMd7D0U+8SJDUHUJdrTGfoR792ClRkauUZKZv6b9VuFPxdq60+LAPN1GWoYocxloSIyCDSoOFMG2eYSv/+usk6exD56Oq7DauTjXUgAGDWg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=LevxgQALKoyX7I4IsIHT/q6K6uuqfAWoIbxrhrubsC0=;
- b=b9Vn83CleT75Qy2h5tIcfuLI9w8Pm10orWuIwzR017NEPt+Z7bjlwuwyuNY9+zwQV7UMqnwWzzs3wXquGGd0iDG1bhqIXl7QxjiT+hlSILqXSF17PO7eU0FoeXydiQftm6CaQRJMAAuPb3mkOoViUMJDkM5N+EgGB1tIkmgZDNQ=
-Received: from AM6PR04MB5941.eurprd04.prod.outlook.com (2603:10a6:20b:9e::16)
- by DBAPR04MB7256.eurprd04.prod.outlook.com (2603:10a6:10:1a3::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7719.29; Sun, 30 Jun
- 2024 12:58:50 +0000
-Received: from AM6PR04MB5941.eurprd04.prod.outlook.com
- ([fe80::9f4e:b695:f5f0:5256]) by AM6PR04MB5941.eurprd04.prod.outlook.com
- ([fe80::9f4e:b695:f5f0:5256%4]) with mapi id 15.20.7719.028; Sun, 30 Jun 2024
- 12:58:48 +0000
-From: Peng Fan <peng.fan@nxp.com>
-To: "stefano.stabellini@amd.com" <stefano.stabellini@amd.com>, Viresh Kumar
- <viresh.kumar@linaro.org>, Julien Grall <julien@xen.org>,
- "oleksandr_tyshchenko@epam.com" <oleksandr_tyshchenko@epam.com>
-CC: "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Question: xen + vhost user
-Thread-Topic: Question: xen + vhost user
-Thread-Index: AdrK7E1vVcASzE7XRqm0wkYJXBBDZg==
-Date: Sun, 30 Jun 2024 12:58:48 +0000
-Message-ID: <AM6PR04MB59412237BA10A23EB79D5C0E88D22@AM6PR04MB5941.eurprd04.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM6PR04MB5941:EE_|DBAPR04MB7256:EE_
-x-ms-office365-filtering-correlation-id: fd5c4f59-6209-4a24-9739-08dc99046260
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info: =?us-ascii?Q?5gqq+dv/8L3N8athVe6Qg3atZpo6g5toG6WyQX7eUrZP15sg5qJyK9I1zWuQ?=
- =?us-ascii?Q?4k55qv1u8JfMvazbwcqx/t/LE1WkhN55KrQV017uutQHqAzsEsr8ZThJrw/z?=
- =?us-ascii?Q?W09KXuNsVfY3frH/I9joLXVCI4Mwh1JwxxsnZJlorxRI5qAdGnScLosmVjfo?=
- =?us-ascii?Q?+kL41Qe9XxdTvItuicXaJRboIBGrUCSdQus4dGkGl1+C1V1iN5Heq704RQNX?=
- =?us-ascii?Q?v2uskCrAl5IxUf3y3G+/onGzzaGACbFjmVkiNU7r6qwv9xxWbVWXx5E96+U7?=
- =?us-ascii?Q?qm8a8FiMAgyR7Ret7eGu0MMDcNVEN0K6625VTLFv8GLvfGA357q4qdnJkuLO?=
- =?us-ascii?Q?d30GAry3Gb7PiXdx2WzylhEW4MwCjlxy8I2+GWUMBPE9Y+CDBcYW0NjyT3sK?=
- =?us-ascii?Q?zLFJ3avm7MNMXG2oKyxrS1kDU86zdFos8CrewZs356i1534qkgr7siFDIZId?=
- =?us-ascii?Q?9zyUep/E+1gPsZHUFbjKANZTQ2D4yGfTyHVSSWfDD+RFR84cLaLmf4criKtO?=
- =?us-ascii?Q?X1MiCYUVRsQk73MFfgCUkuxVGdwuienY0WUgWNSHOw7nwByPFyjjWJUT5i3Z?=
- =?us-ascii?Q?NqBms8pcjpWgsNf4KroNbTiI6gOuG9ZuXazwoG0yiFhEwjBpvmjOcHwr7hmg?=
- =?us-ascii?Q?14KaYkjLSccUfFJ7XXooEfzPjjzrdmh5iVrMQ3OFQIABW54b83S/2lH/PPWH?=
- =?us-ascii?Q?Vm9czfaR2Fi/9HCeAKTXGxkm55a5VfKmVe3QkYh5krgp2H4rfSPRhU/UIrKh?=
- =?us-ascii?Q?vNJ1Gy0yfVhMlKk0nArCvDhjnjT00yRNUAcqxAWNkYxEP7BQO1GCfpU0UP1+?=
- =?us-ascii?Q?AEZOgo72pVYiKxrGNICW2B9fMfkLj2ejR+iHju4h6ihq6jlM8QRaBvIXPxkA?=
- =?us-ascii?Q?YjTcPoIATIRyoOebLbAYDN3jqRYonFLzwhBEeRTF6OJOgl4WBAb9cJIabaZc?=
- =?us-ascii?Q?hVKNDfpZooqQhShKg/D//xzHv8UchlbsZgF/98TzDFUWDapyIbcooV0enaYy?=
- =?us-ascii?Q?j57rRDfchEDgVwGuT54AQNayXcWPe0HVYmSQaQTr7GIv/UFyVVHP1zGRLoue?=
- =?us-ascii?Q?LfprA0Nf8BQ4xQVud4uRv1YJukwgE6mfqYssBexwa6rULxIDzrgajt7J4sh8?=
- =?us-ascii?Q?q0zdbC07iRQ7QgMPK9QQ1LgDFwRDm+KuqznPCbpK0BptKAN2M+TVwdqQxj4A?=
- =?us-ascii?Q?5xkXRNMQLyNtsAzfdYey2sNFLtTaQj2HptQ58rb3FXbVpfQ8n9aYhtG8qtb0?=
- =?us-ascii?Q?6UFDGWf6j3PZznqK94PcGtCiL1KNtz50X5KPSdkcSY8rGcFD+wksZBOpMe06?=
- =?us-ascii?Q?OJ7CprzSweAiDb7vpjqXKp0yf2HqHSmoqRj+YuIzFdm8fteHmKQcOTgne5Uw?=
- =?us-ascii?Q?7yuiqTjyrh/S3vCUkU7NbxBK0QtJZ4phum4jfXyJJIp2E1bGyg=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM6PR04MB5941.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?WrVTpbZMB56FpDrpWEcJF8ehcpfdkXiIM22qpqT1sH38qIBTgQEfEKmRUvDQ?=
- =?us-ascii?Q?5KYV5ITGAqo0Gv0dCdNkYLhiYkOyQpMLpTcI14uFv97IHQ2ZBr/PzNYgeesX?=
- =?us-ascii?Q?k1qeq5r5EwCDOzT6CXPKEmEZXiAoKLH+sCgTU7jxTnAgmUTZYu3tGnbXgxuE?=
- =?us-ascii?Q?pUZj9+4pAxSzW3oA/3XyD1PUn5DJE2UBQibVsv3WJ+mhtiYDmAMLdAtpo9H+?=
- =?us-ascii?Q?2LtatjfhUDjVPVFwa/ArI7tEOsWYbodVx+cd1NTs0yRgHh6ORNXqyLopxs7F?=
- =?us-ascii?Q?t28D13LFY6iuw/+GU7Ggy1IbJgnex6Ggmuya+Hjx2QUxrGoF4xcFRKe96P8Z?=
- =?us-ascii?Q?goErq07Y0KD/HG9ftQEAsHVGG6f/RZZwNqMNMhDaH8j+zMLt5nDzUzBBucWY?=
- =?us-ascii?Q?4seMw6DeFSY6GNdR1AsugYuOaOBSmSfkofnfC6Ddi1ht7gYzElVImzHhp1XB?=
- =?us-ascii?Q?F2Nihz088Pldn1mZMcOIHF5t2KXn3YkEH9JPLBMsmn3heNEX44TYmAl05mC+?=
- =?us-ascii?Q?HP5EGBFzZ0/wo4/vVvu7cFrY6KnOB8MGNaCsXmVvziWJLYT1pLhYhJtpzBP0?=
- =?us-ascii?Q?943oNHj7wESFgeHFfmKkxFmQmF0dAeGx2IgMFFmvCaFXAtShP5ntcIO/0A/y?=
- =?us-ascii?Q?dppPRlwm7UiihhgPS1qDrRcTV6G2r+HlUorEY8b1+Dc4jMy5wqdItpQd9lBz?=
- =?us-ascii?Q?KZxvQwjxb2sqd7qnFx+JH44qC/yf1/KTWO6liKDSMi8H7Hg/iFB9NzkSzCxy?=
- =?us-ascii?Q?INtqZl7TkwP4Gmuv2DSeO3d1/W8OCt3dxQIFv66i9YURlarDSqfgNqw9J23o?=
- =?us-ascii?Q?WfaF7isVIenseMeYBaiBZla9J9IUMtGUUlWtG2sa9t9Tlt1tl+bO3cjULwH9?=
- =?us-ascii?Q?Z+R/FMBq86DUdH3fJ227Gu6hywEdmYr014nBT/zHFfLUaZ4AD8iyBY3hxjnC?=
- =?us-ascii?Q?2ZF/KMh6m3SkcyMZ4AYOUL5Wa/R4ZLzpDFvpqOu5Yf7ObMwF1mN6SzodNOfn?=
- =?us-ascii?Q?5Imoi95L0rtrvzRUq9eZZwlBN0DBo3kgZ+tzphlJx/W4xlN42Cx9EnJQKUta?=
- =?us-ascii?Q?CV1NQ8vngbo/M3tqzD+fFfdWJ6dcAVxHmtmrgl6QUeEPSRaS6aenyAkTo2+f?=
- =?us-ascii?Q?5OUA+wQ/XKo6WrKg6LEp8iPPpZQqNx4ddLiZ+VjFN0uIvT9ELMNB+cdvf7XI?=
- =?us-ascii?Q?k6FblJO/riiu4M6c0BLxK6GxRLyXbAkfvOwl5sd3HVNwc15KP3dPX/lFn8rh?=
- =?us-ascii?Q?TV9ToR46l1YO37xZXAGzO/beM1sUUepijk3CUVBvVPSpBnQo3XKyHE1ADwqc?=
- =?us-ascii?Q?0b91FHo7OC8fFsZFIuoa99PVG7sG9wNuMWvgkFLgM/wulI41J6osX0acT3tR?=
- =?us-ascii?Q?9g5BVJOf+6QqkTQnWkMvoOBPKAfm7uCOd+NizzUyzuK0lJJXokz4qFM7Y8hY?=
- =?us-ascii?Q?4nAfq1xrTocdGMsM93JlxjdUagFXZeZfFYJrEBSFA6RcA1L1AELhBGAc+Vts?=
- =?us-ascii?Q?y1/cwR00OpR6So/tvgtrsAvCYWdW+0jdaR9LSaUExDMwe29PXbe9zRGao/b8?=
- =?us-ascii?Q?23PauuqOmG+h2Gf5xLg=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sNuFF-0001dV-AQ
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 09:05:29 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sNuFD-0001RS-Fz
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 09:05:28 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2ebe785b234so20666251fa.1
+ for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 06:05:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719752723; x=1720357523; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Gy5d4VUG3S8RkYYMDPIsNSyoTOz3cAQeT+yHpyAGU/U=;
+ b=j2WzyCCTZRnV0K5zYbfeDhbQgByCIIS92uxGxRYwiN4aPdWS+uwUYAq/XcNB1Ahb/T
+ t7ae85H9hNMLgvfPWOlr+B6HNV6fr2grH74+6x0iW1K8vaXoz4/+vhWpE8+cPKbOtix6
+ ZhU/HBw8NUzqgkeDwI3c+y/DYuz4pE2KpzsR8TweKt9SpkjKH+2zQ1zVqTPXyMS5d5qN
+ pYG0Y4ZK9VIO/5mc+C6ZcG0q62VjNsp6au1UHGEbz3DJRCgtoyjrvjEp3bdfxcy3wzBJ
+ +NVPE96wtgic2ZG+AH5qoifdLWknzsHQcke6/UM5rNYQ/YIJAWbEFRGzv1oE3wt6OOWa
+ i1yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719752723; x=1720357523;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Gy5d4VUG3S8RkYYMDPIsNSyoTOz3cAQeT+yHpyAGU/U=;
+ b=O/ZsgwY0Ws4PGV9BP6G2VIA3qKoRhyypSE4LTyMHbH2Zar7eLLAmMpZ6Jk8Utky7+K
+ TAREVkPsatZF05oUI30efgMPZMeTG8IX5apJb20tadN29XONQvD3VRI9daQOlaioR/f5
+ yV9HtQ+cF+DaqQmHZrBkYaxbSA0yFG8un9UuEXFTbuDp7rR770c7eUQj7KVfEpAI9vQs
+ qWcXSHyoFTikn6kCjzW4DJG4FZWZ4jWnmt+pNYXHn/dwW0o1gUh/YYVtR0/vv9BOVfX5
+ b8usOyWJZSAv278dIGuikdol+yFLnK83bxrBRIjI6c7b165e00Fif2et7//NhbTc47+m
+ Zuvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1+WwvR/OoH73IXUC/B/o1XOOldYpO/5NK8q2Fc85ZPvy3M+C0jBh8V3/i+zzBcDZlNfNKeRUPN1zO8vOwreQ7+h44u/s=
+X-Gm-Message-State: AOJu0YyR9wNKn9d/PX6laKeEl2T7sqOhb9mLqhx4gyCus6rno0s2BocO
+ 64kUNmFOHkRpJLgY6UctZQiviS5ES6Ce7foET0Tvwr//GPqVFpM=
+X-Google-Smtp-Source: AGHT+IGfWJhSgJiDSaD7ks9TS4TzToEEMpWgkl+w6k6rFaFxytFQtj3W+oKoPzUCpU5l+tuOrJ2yqA==
+X-Received: by 2002:a2e:9e98:0:b0:2eb:eb7c:ec1b with SMTP id
+ 38308e7fff4ca-2ee5e4c3824mr19148161fa.25.1719752722824; 
+ Sun, 30 Jun 2024 06:05:22 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0d9b1dsm7458264f8f.42.2024.06.30.06.05.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 30 Jun 2024 06:05:22 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: Zheyu Ma <zheyuma97@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] hw/display/tcx: Fix out-of-bounds access in tcx_blit_writel
+Date: Sun, 30 Jun 2024 15:04:26 +0200
+Message-Id: <20240630130426.2966539-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM6PR04MB5941.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fd5c4f59-6209-4a24-9739-08dc99046260
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jun 2024 12:58:48.8735 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: /icqyzxgA3aDq9mrRSRsfrQStKH6IjyLpQpy5tEht+TTd/c6BOTm6NQoPy4FKijcOP5zyqXN2CO4YVvr02LZFw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DBAPR04MB7256
-Received-SPF: pass client-ip=40.107.22.41; envelope-from=peng.fan@nxp.com;
- helo=EUR05-AM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=zheyuma97@gmail.com; helo=mail-lj1-x22b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,710 +94,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi All,
+This patch addresses a potential out-of-bounds memory access issue in the
+tcx_blit_writel function. It adds bounds checking to ensure that memory
+accesses do not exceed the allocated VRAM size. If an out-of-bounds access
+is detected, an error is logged using qemu_log_mask.
 
-I am trying to enable vhost user input with xen hypervisor on i.MX95, using=
- qemu
-vhost-user-input. But meet " Invalid vring_addr message ". My xen domu cfg:
+ASAN log:
+==2960379==ERROR: AddressSanitizer: SEGV on unknown address 0x7f524752fd01 (pc 0x7f525c2c4881 bp 0x7ffdaf87bfd0 sp 0x7ffdaf87b788 T0)
+==2960379==The signal is caused by a READ memory access.
+    #0 0x7f525c2c4881 in memcpy string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:222
+    #1 0x55aa782bd5b1 in __asan_memcpy llvm/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cpp:22:3
+    #2 0x55aa7854dedd in tcx_blit_writel hw/display/tcx.c:590:13
 
-'-chardev', 'socket,path=3D/tmp/input.sock,id=3Dmouse0',
-'-device', 'vhost-user-input-pci,chardev=3Dmouse0',
+Reproducer:
+cat << EOF | qemu-system-sparc -display none \
+-machine accel=qtest, -m 512M -machine LX -m 256 -qtest stdio
+writel 0x562e98c4 0x3d92fd01
+EOF
 
-Anyone knows what missing?
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+ hw/display/tcx.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Partial error log:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_VRING_ADDR (9)
-Flags:   0x1
-Size:    40
-vhost_vring_addr:
-    index:  0
-    flags:  0
-    desc_user_addr:   0x0000ffff889b0000
-    used_user_addr:   0x0000ffff889b04c0
-    avail_user_addr:  0x0000ffff889b0400
-    log_guest_addr:   0x00000000444714c0
-Setting virtq addresses:
-    vring_desc  at (nil)
-    vring_used  at (nil)
-    vring_avail at (nil)
+diff --git a/hw/display/tcx.c b/hw/display/tcx.c
+index 99507e7638..af43bea7f2 100644
+--- a/hw/display/tcx.c
++++ b/hw/display/tcx.c
+@@ -33,6 +33,7 @@
+ #include "migration/vmstate.h"
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
++#include "qemu/log.h"
+ #include "qom/object.h"
+ 
+ #define TCX_ROM_FILE "QEMU,tcx.bin"
+@@ -577,6 +578,14 @@ static void tcx_blit_writel(void *opaque, hwaddr addr,
+         addr = (addr >> 3) & 0xfffff;
+         adsr = val & 0xffffff;
+         len = ((val >> 24) & 0x1f) + 1;
++
++        if (addr + len > s->vram_size || adsr + len > s->vram_size) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: VRAM access out of bounds. addr: 0x%lx, adsr: 0x%x, len: %u\n",
++                          __func__, addr, adsr, len);
++            return;
++        }
++
+         if (adsr == 0xffffff) {
+             memset(&s->vram[addr], s->tmpblit, len);
+             if (s->depth == 24) {
+-- 
+2.34.1
 
-** (vhost-user-input:1816): CRITICAL **: 07:20:46.077: Invalid vring_addr m=
-essage
-
-Thanks,
-Peng.
-
-The full vhost user debug log:
-./vhost-user-input --socket-path=3D/tmp/input.sock --evdev-path=3D/d
--path=3D/dev/input/event1 ./vhost-user-input --socket-path=3D/tmp/input.soc=
-k --evdev-
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_FEATURES (1)
-Flags:   0x1
-Size:    0
-Sending back to guest u64: 0x0000000175000000
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_PROTOCOL_FEATURES (15)
-Flags:   0x1
-Size:    0
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_PROTOCOL_FEATURES (16)
-Flags:   0x1
-Size:    8
-u64: 0x0000000000008e2b
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_QUEUE_NUM (17)
-Flags:   0x1
-Size:    0
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_MAX_MEM_SLOTS (36)
-Flags:   0x1
-Size:    0
-u64: 0x0000000000000020
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_BACKEND_REQ_FD (21)
-Flags:   0x9
-Size:    0
-Fds: 6
-Got backend_fd: 6
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_OWNER (3)
-Flags:   0x1
-Size:    0
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_FEATURES (1)
-Flags:   0x1
-Size:    0
-Sending back to guest u64: 0x0000000175000000
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_VRING_CALL (13)
-Flags:   0x1
-Size:    8
-Fds: 7
-u64: 0x0000000000000000
-Got call_fd: 7 for vq: 0
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_VRING_ERR (14)
-Flags:   0x1
-Size:    8
-Fds: 8
-u64: 0x0000000000000000
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_VRING_CALL (13)
-Flags:   0x1
-Size:    8
-Fds: 9
-u64: 0x0000000000000001
-Got call_fd: 9 for vq: 1
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_VRING_ERR (14)
-Flags:   0x1
-Size:    8
-Fds: 10
-u64: 0x0000000000000001
-(XEN) d2v0 Unhandled SMC/HVC: 0x84000050
-(XEN) d2v0 Unhandled SMC/HVC: 0x8600ff01
-(XEN) d2v0: vGICD: RAZ on reserved register offset 0x00000c
-(XEN) d2v0: vGICD: unhandled word write 0x000000ffffffff to ICACTIVER4
-(XEN) d2v0: vGICR: SGI: unhandled word write 0x000000ffffffff to ICACTIVER0
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_CONFIG (25)
-Flags:   0x9
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_GET_CONFIG (24)
-Flags:   0x1
-Size:    148
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_FEATURES (2)
-Flags:   0x1
-Size:    8
-u64: 0x0000010170000000
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_VRING_NUM (8)
-Flags:   0x1
-Size:    8
-State.index: 0
-State.num:   64
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_VRING_BASE (10)
-Flags:   0x1
-Size:    8
-State.index: 0
-State.num:   0
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Vhost user message =3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-Request: VHOST_USER_SET_VRING_ADDR (9)
-Flags:   0x1
-Size:    40
-vhost_vring_addr:
-    index:  0
-    flags:  0
-    desc_user_addr:   0x0000ffff889b0000
-    used_user_addr:   0x0000ffff889b04c0
-    avail_user_addr:  0x0000ffff889b0400
-    log_guest_addr:   0x00000000444714c0
-Setting virtq addresses:
-    vring_desc  at (nil)
-    vring_used  at (nil)
-    vring_avail at (nil)
-
-** (vhost-user-input:1816): CRITICAL **: 07:20:46.077: Invalid vring_addr m=
-essage
-
-root@imx95evk:~#
 
