@@ -4,78 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D2EC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 06:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC0F4C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 12:03:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNoC1-0003VQ-77; Sun, 30 Jun 2024 02:37:45 -0400
+	id 1sNtGG-0000KQ-5t; Sun, 30 Jun 2024 08:02:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
- id 1sNoBz-0003Ui-7j; Sun, 30 Jun 2024 02:37:43 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
- id 1sNoBx-0005Ub-0z; Sun, 30 Jun 2024 02:37:43 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70a078edb8aso783964b3a.1; 
- Sat, 29 Jun 2024 23:37:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719729458; x=1720334258; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+CixoDnuUr/mcrOIB7/UOGVwU+r8awsMmjqN2BBdB08=;
- b=BEq+TQa+aM5GfGmNFd4H2/ruuCKM6QSQlgZNpxsxVsCS55VApVDtJRTsOMSJu5Tj/C
- r3qXYnaBwNIvHBzUa7n5apsSbAT3XUQFKfblaYMn+pN9jkcUHXZXsIWgb6etyt80aADc
- toBeLcFXz6Sfekt9toWE02ZrlV531b6qKjn78xQM9VqVQbFHXdd9DDen8sQZOBHg1weA
- W0BM/L9pHVChA/qIqYtAXfqQzBmNgwrWCDbyCXKHZ7ExQ9bkKSs2FC/dID1UhOiIX+wY
- qZT3R4rH/t/2Fd8EQVHGk2sTjCD+ulOZfttjE5010+WXcuAwvSKmb8gQqntsW5jVypUh
- ATMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719729458; x=1720334258;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+CixoDnuUr/mcrOIB7/UOGVwU+r8awsMmjqN2BBdB08=;
- b=T8Bmh+ItGP33ebUJH/QoepgrhrdjFsW4ZKcDYIeLuwYQ7Qtp8akMn6ZJYzcCyq456W
- Nt7/DHo9Kx4OpuIri//lRid2OZqOHl2JVG1ov0QuoBIEZggPez1BsKsw3msUlQlSdTAx
- bN0W38s9XTQe07WYaSZ2kWvrcB3AWukY+tMj1BT70/eXv3756ePn9SOzRcb8RO+7lb6J
- XMbqOjlFSlmrpB4gueyWTg533ZsiMQp9ClaCuRhOpcSkGTTjqPe6DQ+CZ9B3+n07Xpzc
- g0XFGgnV038SI9nJ2qV+t0i1pWT82PMTkhHVI0AHTUoqFAJFa0fjJj4LcLoZMg9VWUzK
- cblg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXW56PNPT42ZDnx5hU4C+7QhTcZzLWuRemlXNvkkc6gI9Hlhr6i6NlUK583IpAZgjESl3v7xUKmtVKXwJR6Af6W4p826OZE
-X-Gm-Message-State: AOJu0Yxadpg4lV5GogF+4hIsf7GyL0nHJyUhiyiGvcCAhciMVChXZA1B
- ClsP8CLFwi04hsbc8rP+XU7lS3zx2X5rnE4cMF8d+EAxjzdGlOr7b7aa6VVa7sw=
-X-Google-Smtp-Source: AGHT+IH2J5nbxDeRGOM11u7Btv+6asNwR2WcyWFmwzHsg/UwBuPZZ4C4KZzNYx9hikzUdkjzR4Gs6w==
-X-Received: by 2002:a05:6a00:4fcc:b0:706:738b:2c3 with SMTP id
- d2e1a72fcca58-70aaaaf30bemr4089716b3a.2.1719729457469; 
- Sat, 29 Jun 2024 23:37:37 -0700 (PDT)
-Received: from localhost.localdomain ([118.242.3.34])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7080256c9dcsm4155419b3a.74.2024.06.29.23.37.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 29 Jun 2024 23:37:36 -0700 (PDT)
-From: Wencheng Yang <east.moutain.yang@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, jasowang@redhat.com, qemu-stable@nongnu.org,
- thomas <east.moutain.yang@gmail.com>
-Subject: [PATCH v6] virtio-net: Fix network stall at the host side waiting for
- kick
-Date: Sun, 30 Jun 2024 14:36:15 +0800
-Message-Id: <20240630063615.40467-1-east.moutain.yang@gmail.com>
-X-Mailer: git-send-email 2.39.0
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1sNtGD-0000Fb-Ro; Sun, 30 Jun 2024 08:02:25 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1sNtGA-0004tc-0Q; Sun, 30 Jun 2024 08:02:25 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 45UBurW3001445;
+ Sun, 30 Jun 2024 12:02:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:content-transfer-encoding
+ :mime-version; s=pp1; bh=DUwfdPv3f1KkjNiQxub9dWZFb2wyEzfrAXjmmdy
+ 6aG8=; b=eVZiWdrCG22KFRHfBMf5valdJ63eTjAcOg5hH1j0XxJJ1pSDIHn2Wl6
+ MZepGc35Otfbk4YJ79liQMYPs0AxzC5KG59T3b35mhDx3KV4lRv7uk5x/HgpSGtP
+ EPbGbUHP9CbsrdinJOnAll5ZuMYICA2Nm4N0Dm6qp9nWEfsZrC22+kO4EG3gQQqG
+ hK+yzXf2Ah8q4OBREuusHnzYRM5qofOWzvybjDbYjNBGGqdL37afrq9G0odSW8MM
+ i9po8E5iSQr4icFQXakthjjWVaaqh/lJpCIa+bhhPiuvlPLr2if7OGYkc6j9NZQb
+ 1ifl4lMJ/48Uii2ov5fU73hi2hioeXA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4033vm8b9d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 30 Jun 2024 12:02:16 +0000 (GMT)
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 45UC2G2Q009939;
+ Sun, 30 Jun 2024 12:02:16 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4033vm8b9b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 30 Jun 2024 12:02:15 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 45U7sN9X024085; Sun, 30 Jun 2024 12:02:15 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 402ya31nwu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 30 Jun 2024 12:02:15 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 45UC2BOA21365222
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sun, 30 Jun 2024 12:02:13 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 65D5B20049;
+ Sun, 30 Jun 2024 12:02:11 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ED6E920040;
+ Sun, 30 Jun 2024 12:02:08 +0000 (GMT)
+Received: from localhost.localdomain.com (unknown [9.171.58.130])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Sun, 30 Jun 2024 12:02:08 +0000 (GMT)
+From: Chinmay Rath <rathc@linux.ibm.com>
+To: qemu-ppc@nongnu.org
+Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
+ richard.henderson@linaro.org, harshpb@linux.ibm.com
+Subject: [PATCH v2 0/3] target/ppc: Update vector insns to use 128 bit
+Date: Sun, 30 Jun 2024 17:31:54 +0530
+Message-Id: <20240630120157.259233-1-rathc@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: HhlWim2JYEWLmEVxFPy-HBXOUuG3SUO1
+X-Proofpoint-ORIG-GUID: NP2HfRooztdJwgKdVHUwjVBlvFwiVTez
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=east.moutain.yang@gmail.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-06-30_10,2024-06-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0
+ priorityscore=1501 mlxlogscore=765 impostorscore=0 clxscore=1015
+ bulkscore=0 suspectscore=0 phishscore=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2406300094
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,391 +111,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: thomas <east.moutain.yang@gmail.com>
+Updating a bunch of VMX and VSX storage access instructions to use
+tcg_gen_qemu_ld/st_i128 instead of using tcg_gen_qemu_ld/st_i64 in
+succession; as suggested by Richard, in my decodetree patches.
+Plus some minor clean-ups to facilitate the above in case of VMX insns.
 
-Patch 06b12970174 ("virtio-net: fix network stall under load")
-added double-check to test whether the available buffer size
-can satisfy the request or not, in case the guest has added
-some buffers to the avail ring simultaneously after the first
-check. It will be lucky if the available buffer size becomes
-okay after the double-check, then the host can send the packet
-to the guest. If the buffer size still can't satisfy the request,
-even if the guest has added some buffers, viritio-net would
-stall at the host side forever.
+Change log:
 
-The patch checks whether the guest has added some buffers
-after last check of avail idx when the available buffers are
-not sufficient, if so then recheck the available buffers
-in the loop.
+v2 : Applied IFALIGN_PAIR memop changes in patches 2/3 and 3/3,
+based on review comments by Richard in v1.
 
-The patch also reverts patch "06b12970174".
+v1 : https://lore.kernel.org/qemu-devel/20240621114604.868415-1-rathc@linux.ibm.com/
 
-The case below can reproduce the stall.
+Chinmay Rath (3):
+  target/ppc: Move get/set_avr64 functions to vmx-impl.c.inc.
+  target/ppc: Update VMX storage access insns to use
+    tcg_gen_qemu_ld/st_i128.
+  target/ppc : Update VSX storage access insns to use tcg_gen_qemu
+    _ld/st_i128.
 
-                                       Guest 0
-                                     +--------+
-                                     | iperf  |
-                    ---------------> | server |
-         Host       |                +--------+
-       +--------+   |                    ...
-       | iperf  |----
-       | client |----                  Guest n
-       +--------+   |                +--------+
-                    |                | iperf  |
-                    ---------------> | server |
-                                     +--------+
+ target/ppc/translate.c              | 10 -----
+ target/ppc/translate/vmx-impl.c.inc | 52 ++++++++++++---------
+ target/ppc/translate/vsx-impl.c.inc | 70 +++++++++++++----------------
+ 3 files changed, 61 insertions(+), 71 deletions(-)
 
-Boot many guests from qemu with virtio network:
- qemu ... -netdev tap,id=net_x \
-    -device virtio-net-pci-non-transitional,\
-    iommu_platform=on,mac=xx:xx:xx:xx:xx:xx,netdev=net_x
-
-Each guest acts as iperf server with commands below:
- iperf3 -s -D -i 10 -p 8001
- iperf3 -s -D -i 10 -p 8002
-
-The host as iperf client:
- iperf3 -c guest_IP -p 8001 -i 30 -w 256k -P 20 -t 40000
- iperf3 -c guest_IP -p 8002 -i 30 -w 256k -P 20 -t 40000
-
-After some time, the host loses connection to the guest,
-the guest can send packet to the host, but can't receive
-packet from host.
-
-It's more likely to happen if SWIOTLB is enabled in the guest,
-allocating and freeing bounce buffer takes some CPU ticks,
-copying from/to bounce buffer takes more CPU ticks, compared
-with that there is no bounce buffer in the guest.
-Once the rate of producing packets from the host approximates
-the rate of receiveing packets in the guest, the guest would
-loop in NAPI.
-
-         receive packets    ---
-               |             |
-               v             |
-           free buf      virtnet_poll
-               |             |
-               v             |
-     add buf to avail ring  ---
-               |
-               |  need kick the host?
-               |  NAPI continues
-               v
-         receive packets    ---
-               |             |
-               v             |
-           free buf      virtnet_poll
-               |             |
-               v             |
-     add buf to avail ring  ---
-               |
-               v
-              ...           ...
-
-On the other hand, the host fetches free buf from avail
-ring, if the buf in the avail ring is not enough, the
-host notifies the guest the event by writing the avail
-idx read from avail ring to the event idx of used ring,
-then the host goes to sleep, waiting for the kick signal
-from the guest.
-
-Once the guest finds the host is waiting for kick singal
-(in virtqueue_kick_prepare_split()), it kicks the host.
-
-The host may stall forever at the sequences below:
-
-         Host                        Guest
-     ------------                 -----------
- fetch buf, send packet           receive packet ---
-         ...                          ...         |
- fetch buf, send packet             add buf       |
-         ...                        add buf   virtnet_poll
-    buf not enough      avail idx-> add buf       |
-    read avail idx                  add buf       |
-                                    add buf      ---
-                                  receive packet ---
-    write event idx                   ...         |
-    waiting for kick                 add buf   virtnet_poll
-                                      ...         |
-                                                 ---
-                                 no more packet, exit NAPI
-
-In the first loop of NAPI above, indicated in the range of
-virtnet_poll above, the host is sending packets while the
-guest is receiving packets and adding buf.
- step 1: The buf is not enough, for example, a big packet
-         needs 5 buf, but the available buf count is 3.
-         The host read current avail idx.
- step 2: The guest adds some buf, then checks whether the
-         host is waiting for kick signal, not at this time.
-         The used ring is not empty, the guest continues
-         the second loop of NAPI.
- step 3: The host writes the avail idx read from avail
-         ring to used ring as event idx via
-         virtio_queue_set_notification(q->rx_vq, 1).
- step 4: At the end of the second loop of NAPI, recheck
-         whether kick is needed, as the event idx in the
-         used ring written by the host is beyound the
-         range of kick condition, the guest will not
-         send kick signal to the host.
-
-Changelog:
-v6:
-- Take packed queue into cosideration
-- Adjust function sequence to fix compilation issue
-
-v5:
-- Modify return type of virtio_queue_set_notification() to
-  bool to indicate whether the guest has added some buffers
-  after last check of avail idx
-- Loop in virtio_net_has_buffers() if the available buffers
-  are not sufficient and the guest has added some buffers.
-- Revert patch "06b12970174"
-- Update the subject
-
-v4:
-- Correct spelling mistake in the subject
-- Describe the issue that virtio-net is blocked at host side
-
-v3:
-- Add virtio-net tag in the subject
-- Refine commit log
-
-v2:
-- Add SOB tag at the end of the commit message
-- Place Fixes tag at the end of the commit message
-
-v1:
-- Initial patch
-
-Fixes: 06b12970174 ("virtio-net: fix network stall under load")
-Signed-off-by: Wencheng Yang <east.moutain.yang@gmail.com>
----
- hw/net/virtio-net.c        |  19 ++---
- hw/virtio/virtio.c         | 157 ++++++++++++++++++++-----------------
- include/hw/virtio/virtio.h |   2 +-
- 3 files changed, 96 insertions(+), 82 deletions(-)
-
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9c7e85caea..13affc1f35 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -1642,18 +1642,15 @@ static bool virtio_net_can_receive(NetClientState *nc)
- static int virtio_net_has_buffers(VirtIONetQueue *q, int bufsize)
- {
-     VirtIONet *n = q->n;
--    if (virtio_queue_empty(q->rx_vq) ||
--        (n->mergeable_rx_bufs &&
--         !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
--        virtio_queue_set_notification(q->rx_vq, 1);
--
--        /* To avoid a race condition where the guest has made some buffers
--         * available after the above check but before notification was
--         * enabled, check for available buffers again.
--         */
--        if (virtio_queue_empty(q->rx_vq) ||
-+
-+    while (virtio_queue_empty(q->rx_vq) ||
-             (n->mergeable_rx_bufs &&
--             !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
-+            !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
-+        /* guest may have made some buf, try again */
-+        if (virtio_queue_set_notification(q->rx_vq, 1)) {
-+            virtio_queue_set_notification(q->rx_vq, 0);
-+            continue;
-+        } else {
-             return 0;
-         }
-     }
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 893a072c9d..24eaf4d88d 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -507,76 +507,6 @@ static inline void vring_set_avail_event(VirtQueue *vq, uint16_t val)
-     address_space_cache_invalidate(&caches->used, pa, sizeof(val));
- }
- 
--static void virtio_queue_split_set_notification(VirtQueue *vq, int enable)
--{
--    RCU_READ_LOCK_GUARD();
--
--    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
--        vring_set_avail_event(vq, vring_avail_idx(vq));
--    } else if (enable) {
--        vring_used_flags_unset_bit(vq, VRING_USED_F_NO_NOTIFY);
--    } else {
--        vring_used_flags_set_bit(vq, VRING_USED_F_NO_NOTIFY);
--    }
--    if (enable) {
--        /* Expose avail event/used flags before caller checks the avail idx. */
--        smp_mb();
--    }
--}
--
--static void virtio_queue_packed_set_notification(VirtQueue *vq, int enable)
--{
--    uint16_t off_wrap;
--    VRingPackedDescEvent e;
--    VRingMemoryRegionCaches *caches;
--
--    RCU_READ_LOCK_GUARD();
--    caches = vring_get_region_caches(vq);
--    if (!caches) {
--        return;
--    }
--
--    vring_packed_event_read(vq->vdev, &caches->used, &e);
--
--    if (!enable) {
--        e.flags = VRING_PACKED_EVENT_FLAG_DISABLE;
--    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
--        off_wrap = vq->shadow_avail_idx | vq->shadow_avail_wrap_counter << 15;
--        vring_packed_off_wrap_write(vq->vdev, &caches->used, off_wrap);
--        /* Make sure off_wrap is wrote before flags */
--        smp_wmb();
--        e.flags = VRING_PACKED_EVENT_FLAG_DESC;
--    } else {
--        e.flags = VRING_PACKED_EVENT_FLAG_ENABLE;
--    }
--
--    vring_packed_flags_write(vq->vdev, &caches->used, e.flags);
--    if (enable) {
--        /* Expose avail event/used flags before caller checks the avail idx. */
--        smp_mb();
--    }
--}
--
--bool virtio_queue_get_notification(VirtQueue *vq)
--{
--    return vq->notification;
--}
--
--void virtio_queue_set_notification(VirtQueue *vq, int enable)
--{
--    vq->notification = enable;
--
--    if (!vq->vring.desc) {
--        return;
--    }
--
--    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
--        virtio_queue_packed_set_notification(vq, enable);
--    } else {
--        virtio_queue_split_set_notification(vq, enable);
--    }
--}
--
- int virtio_queue_ready(VirtQueue *vq)
- {
-     return vq->vring.avail != 0;
-@@ -668,6 +598,93 @@ static inline bool is_desc_avail(uint16_t flags, bool wrap_counter)
-     return (avail != used) && (avail == wrap_counter);
- }
- 
-+static bool virtio_queue_split_set_notification(VirtQueue *vq, int enable)
-+{
-+    uint16_t shadow_idx;
-+
-+    RCU_READ_LOCK_GUARD();
-+
-+    shadow_idx = vq->shadow_avail_idx;
-+    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
-+        vring_set_avail_event(vq, vring_avail_idx(vq));
-+    } else if (enable) {
-+        vring_used_flags_unset_bit(vq, VRING_USED_F_NO_NOTIFY);
-+    } else {
-+        vring_used_flags_set_bit(vq, VRING_USED_F_NO_NOTIFY);
-+    }
-+    if (enable) {
-+        /* Expose avail event/used flags before caller checks the avail idx. */
-+        smp_mb();
-+
-+        /* If shadow_avail_idx is changed, guest has added some bufs */
-+        return shadow_idx != vring_avail_idx(vq);
-+    }
-+
-+    return false;
-+}
-+
-+static bool virtio_queue_packed_set_notification(VirtQueue *vq, int enable)
-+{
-+    uint16_t off_wrap;
-+    VRingPackedDesc desc;
-+    VRingPackedDescEvent e;
-+    VRingMemoryRegionCaches *caches;
-+
-+    RCU_READ_LOCK_GUARD();
-+    caches = vring_get_region_caches(vq);
-+    if (!caches) {
-+        return false;
-+    }
-+
-+    vring_packed_event_read(vq->vdev, &caches->used, &e);
-+
-+    if (!enable) {
-+        e.flags = VRING_PACKED_EVENT_FLAG_DISABLE;
-+    } else if (virtio_vdev_has_feature(vq->vdev, VIRTIO_RING_F_EVENT_IDX)) {
-+        off_wrap = vq->shadow_avail_idx | vq->shadow_avail_wrap_counter << 15;
-+        vring_packed_off_wrap_write(vq->vdev, &caches->used, off_wrap);
-+        /* Make sure off_wrap is wrote before flags */
-+        smp_wmb();
-+        e.flags = VRING_PACKED_EVENT_FLAG_DESC;
-+    } else {
-+        e.flags = VRING_PACKED_EVENT_FLAG_ENABLE;
-+    }
-+
-+    vring_packed_flags_write(vq->vdev, &caches->used, e.flags);
-+    if (enable) {
-+        /* Expose avail event/used flags before caller checks the avail idx. */
-+        smp_mb();
-+
-+        /* If shadow_avail_idx becomes available, guest has added some bufs */
-+        vring_packed_desc_read(vq->vdev, &desc, &caches->desc,
-+                               vq->shadow_avail_idx, true);
-+        if (is_desc_avail(desc.flags, vq->shadow_avail_wrap_counter))
-+            return true;
-+    }
-+
-+    return false;
-+}
-+
-+bool virtio_queue_get_notification(VirtQueue *vq)
-+{
-+    return vq->notification;
-+}
-+
-+bool virtio_queue_set_notification(VirtQueue *vq, int enable)
-+{
-+    vq->notification = enable;
-+
-+    if (!vq->vring.desc) {
-+        return false;
-+    }
-+
-+    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
-+        return virtio_queue_packed_set_notification(vq, enable);
-+    } else {
-+        return virtio_queue_split_set_notification(vq, enable);
-+    }
-+}
-+
- /* Fetch avail_idx from VQ memory only when we really need to know if
-  * guest has added some buffers.
-  * Called within rcu_read_lock().  */
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 7d5ffdc145..e1a1621e2d 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -301,7 +301,7 @@ int virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id);
- void virtio_notify_config(VirtIODevice *vdev);
- 
- bool virtio_queue_get_notification(VirtQueue *vq);
--void virtio_queue_set_notification(VirtQueue *vq, int enable);
-+bool virtio_queue_set_notification(VirtQueue *vq, int enable);
- 
- int virtio_queue_ready(VirtQueue *vq);
- 
 -- 
-2.39.0
+2.39.3
 
 
