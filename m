@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FBFC3064D
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 19:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB6FC27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 19:04:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNzoA-0005Vq-Ry; Sun, 30 Jun 2024 15:01:54 -0400
+	id 1sNznv-0005B9-0N; Sun, 30 Jun 2024 15:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNznU-0004yM-SL
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 15:01:13 -0400
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+ id 1sNznP-0004sY-TL
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 15:01:07 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sNznP-0007ZR-BY
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 15:01:12 -0400
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-5c21ba58227so1235578eaf.0
- for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 12:01:06 -0700 (PDT)
+ id 1sNznG-0007V2-0N
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 15:01:07 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-72ed1fbc5d9so1491061a12.0
+ for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 12:00:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719774066; x=1720378866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719774055; x=1720378855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6nLIZwPhlbR4+HoVwsyjSvgsNERsQEppTTQuHndlMMQ=;
- b=h/ZNHLch0dyNl5zWh2TNdikIiN4kcISbg2oLf+24PurDXUo2EcZm1HrP9L9k4JJ85c
- pC33smzyUpILqXDoSqTEylfZTbTkAYuSnKLpuZlFsfj3QijX1njzYc/2VQ3ivGcxd4mQ
- pOeva/XUEoxHQe1zmGoPmzIHVcX2QK5hhTIsCuIj+hxqUJSrR1q+xyM+HYfqXaZ3Pu5e
- C7coelTQdnWaXBXPce3WBQFHvy2lcjhEMB0FNE4+VsRRI5ZBGlac7rG3b5CK8FvglkPg
- YvJO5HsBBmwCY49QF5wd37g4sL7P5kxZXbbzbnMzWPcK4lycdxrlapfNrjIc6w96b17K
- zP4Q==
+ bh=M+1cYfmSMutOrFAkzzUKLrm39z58ASnq++T0AOOpk6g=;
+ b=U7aX3bfDwAghZZN2+vPibkGoFG8GBHOolcFthgzMF8C532qz1i4HGfnylp1EmSpmEG
+ Z10cARe0nhNqPBT8TsO+WWjmofXStuNNR8KS8SeCPYemHJMG79JShWvvRksBl0UGRl1J
+ YwILhgTt107uNz2sMt6V8jVi7ieS5sxXFT+3TbJirpqBeK4qANF5s3LZRuaVjDd5hk1Q
+ Os72wyLGtMq8F35H/H7BfYhwGW5lj/8+hS+s1CNY54Z9+G2P6RPkx9Nvi7ihJDmfuCMp
+ ybNWfXTwqSGCiPCe5po0W6Hta+qPbE4JcLwJMk4P2BTYqB6eO4x0SdYXN5Ek5ffLZMKf
+ Xemw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719774066; x=1720378866;
+ d=1e100.net; s=20230601; t=1719774055; x=1720378855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6nLIZwPhlbR4+HoVwsyjSvgsNERsQEppTTQuHndlMMQ=;
- b=eA+jEtsgHd+ZV5jYnSbl/5+qJja/6Mjgxq5sPLOhjiAnk8pVK93OEiy1/CtfKHLw4n
- 7zZaoU8vd0x8l2su0jQYwVpEpvnImRUSoLQRK5qSGd/0G8vYx2e59UMN2YJaaH0W5cn+
- tWzl5gTfD6f6det/77B2I/pUFSd++V/ywZ5OxC39QPqYYm026D8NtZsvtNnEOu8SE9H5
- L3Km8ZJBo7eAQrFsa2pNLrYO9EJNNazLqonbh/C1SBGmff3VA75WZLVf0/Cuhd+KxSfO
- if9wC0zSEsN0J5JXxZWTU+01VImAO9545n8/1iK0amWy41mU4HOcEf/IqblB2PxRqi/7
- x/hA==
-X-Gm-Message-State: AOJu0YxjxJUBiphqepLKiOK/zn7Qbcm7aLyMh/YDyZGJyJ7cJiT5AlZT
- 1u4tLFDmxzklYtp2EcrvhJ+7OqTaklUIkrTXPT/wGkQfQPlTJIeWxE2/uyRBN4NpJo99UVYp0Ea
- b
-X-Google-Smtp-Source: AGHT+IEqWP513l7m3XZokZvK4CqxnJ96fkduIxaMkV40JqrLQBySIAhHrU1eNkTdPS+LPu2XPqX4CQ==
-X-Received: by 2002:a05:6358:6f93:b0:19f:509e:ae38 with SMTP id
- e5c5f4694b2df-1a6acccd1a7mr476425455d.5.1719774065617; 
- Sun, 30 Jun 2024 12:01:05 -0700 (PDT)
+ bh=M+1cYfmSMutOrFAkzzUKLrm39z58ASnq++T0AOOpk6g=;
+ b=TDbIrce6EB+iSnPC2l+Vlb5W6iAmY1ChqDIHE8H70XQvKXtSWuck54+08N7uxTSYJk
+ K7+gZ7tiGWD6eT+63hl9T1OIjYGmrEizzXy81Tat34+AMt9A7AE7YAwVnaIh5acr9m97
+ XYrHls4cn3inyXb5u9B6UOb8K6E1ky3pLqu0HEByINznoOp2IyFbbMX1dpne65jOxHoe
+ 58/xjtWFgaRAon9tWatJrGEymgb3xK7JepZ72+QTcb2KRJZZ0hTrNR4QRBSVMIAZ2Lf7
+ bnQzlCbNCXgeIEfL2daJzNZo7jlEzvZfKcioQDZL19jCCX5npoQh0qvTzXenv6MBwbvn
+ qwjw==
+X-Gm-Message-State: AOJu0Yw+bvPBeH4bI5uDH9oTz7+HGjhUZ3RKltU+gkui7Kh/q9fW66jb
+ 946zj+dF8wI0gTT12k3tZeD3OgUkj5aPbzMh02UQlLPGlv/tJBfSK+AmmE8yAzKShMAMQDdafXc
+ /
+X-Google-Smtp-Source: AGHT+IG2B4Je/WhspfUwDslB/opXv1xJ49qrKfJXLO5CtdGqAD+mtkJz5qsM7LVb9pZmHN0VcDgv8Q==
+X-Received: by 2002:a17:90a:7185:b0:2c8:1f30:4e04 with SMTP id
+ 98e67ed59e1d1-2c93d775c0cmr3473732a91.36.1719774055501; 
+ Sun, 30 Jun 2024 12:00:55 -0700 (PDT)
 Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c91d3e7e4bsm5115641a91.52.2024.06.30.12.01.04
+ 98e67ed59e1d1-2c91d3e7e4bsm5115641a91.52.2024.06.30.12.00.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 30 Jun 2024 12:01:05 -0700 (PDT)
+ Sun, 30 Jun 2024 12:00:55 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: akihiko.odaki@daynix.com,
 	alex.bennee@linaro.org,
 	qemu-arm@nongnu.org
-Subject: [PATCH v4 14/14] linux-user/main: Suppress out-of-range comparison
- warning for clang
-Date: Sun, 30 Jun 2024 12:00:50 -0700
-Message-Id: <20240630190050.160642-15-richard.henderson@linaro.org>
+Subject: [PATCH v4 03/14] tests/tcg/aarch64: Drop
+ -fno-tree-loop-distribute-patterns
+Date: Sun, 30 Jun 2024 12:00:39 -0700
+Message-Id: <20240630190050.160642-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240630190050.160642-1-richard.henderson@linaro.org>
 References: <20240630190050.160642-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,33 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For arm32 host and arm64 guest we get
-
-.../main.c:851:32: error: result of comparison of constant 70368744177664 with expression of type 'unsigned long' is always false [-Werror,-Wtautological-constant-out-of-range-compare]
-        if (TASK_UNMAPPED_BASE < reserved_va) {
-            ~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~
-
-We already disable -Wtype-limits here, for this exact comparison, but
-that is not enough for clang.  Disable -Wtautological-compare as well,
-which is a superset.  GCC ignores the unknown warning flag.
+This option is not supported by clang, and is not required
+in order to get sve code generation with gcc 12.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/main.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/tcg/aarch64/Makefile.softmmu-target | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 94c99a1366..7d3cf45fa9 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -843,6 +843,7 @@ int main(int argc, char **argv, char **envp)
-      */
- #pragma GCC diagnostic push
- #pragma GCC diagnostic ignored "-Wtype-limits"
-+#pragma GCC diagnostic ignored "-Wtautological-compare"
+diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
+index 39d3f961c5..dd6d595830 100644
+--- a/tests/tcg/aarch64/Makefile.softmmu-target
++++ b/tests/tcg/aarch64/Makefile.softmmu-target
+@@ -39,7 +39,7 @@ memory: CFLAGS+=-DCHECK_UNALIGNED=1
+ memory-sve: memory.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
  
-     /*
-      * Select an initial value for task_unmapped_base that is in range.
+-memory-sve: CFLAGS+=-DCHECK_UNALIGNED=1 -march=armv8.1-a+sve -O3 -fno-tree-loop-distribute-patterns
++memory-sve: CFLAGS+=-DCHECK_UNALIGNED=1 -march=armv8.1-a+sve -O3
+ 
+ TESTS+=memory-sve
+ 
 -- 
 2.34.1
 
