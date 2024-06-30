@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53483C3DA42
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D744C41513
 	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 16:55:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNxoO-0005ih-Vq; Sun, 30 Jun 2024 12:54:01 -0400
+	id 1sNxoJ-0005gP-I2; Sun, 30 Jun 2024 12:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNxoM-0005i2-RV; Sun, 30 Jun 2024 12:53:58 -0400
+ id 1sNxoF-0005ds-Ro; Sun, 30 Jun 2024 12:53:51 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNxoK-0005L8-9u; Sun, 30 Jun 2024 12:53:58 -0400
+ id 1sNxoE-0005JU-AX; Sun, 30 Jun 2024 12:53:51 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D10D275767;
+ by isrv.corpit.ru (Postfix) with ESMTP id 99AF275763;
  Sun, 30 Jun 2024 19:53:20 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A604EFAD64;
+ by tsrv.corpit.ru (Postfix) with SMTP id 6EDACFAD60;
  Sun, 30 Jun 2024 19:53:27 +0300 (MSK)
-Received: (nullmailer pid 38231 invoked by uid 1000);
+Received: (nullmailer pid 38218 invoked by uid 1000);
  Sun, 30 Jun 2024 16:53:27 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Trent Huber <trentmhuber@gmail.com>, qemu-trivial@nongnu.org,
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 10/16] os-posix: Expand setrlimit() syscall compatibility
-Date: Sun, 30 Jun 2024 19:53:20 +0300
-Message-Id: <20240630165327.38153-11-mjt@tls.msk.ru>
+Subject: [PULL 06/16] linux-user: cris: Remove unused struct 'rt_signal_frame'
+Date: Sun, 30 Jun 2024 19:53:16 +0300
+Message-Id: <20240630165327.38153-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240630165327.38153-1-mjt@tls.msk.ru>
 References: <20240630165327.38153-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,38 +60,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Trent Huber <trentmhuber@gmail.com>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Darwin uses a subtly different version of the setrlimit() syscall as
-described in the COMPATIBILITY section of the macOS man page. The value
-of the rlim_cur member has been adjusted accordingly for Darwin-based
-systems.
+Since 'setup_rt_frame' has never been implemented, this struct
+is unused.
 
-Signed-off-by: Trent Huber <trentmhuber@gmail.com>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- os-posix.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ linux-user/cris/signal.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/os-posix.c b/os-posix.c
-index a4284e2c07..43f9a43f3f 100644
---- a/os-posix.c
-+++ b/os-posix.c
-@@ -270,7 +270,11 @@ void os_setup_limits(void)
-         return;
-     }
+diff --git a/linux-user/cris/signal.c b/linux-user/cris/signal.c
+index 4f532b2903..10948bcf30 100644
+--- a/linux-user/cris/signal.c
++++ b/linux-user/cris/signal.c
+@@ -35,14 +35,6 @@ struct target_signal_frame {
+     uint16_t retcode[4];      /* Trampoline code. */
+ };
  
-+#ifdef CONFIG_DARWIN
-+    nofile.rlim_cur = OPEN_MAX < nofile.rlim_max ? OPEN_MAX : nofile.rlim_max;
-+#else
-     nofile.rlim_cur = nofile.rlim_max;
-+#endif
- 
-     if (setrlimit(RLIMIT_NOFILE, &nofile) < 0) {
-         warn_report("unable to set NOFILE limit: %s", strerror(errno));
+-struct rt_signal_frame {
+-    siginfo_t *pinfo;
+-    void *puc;
+-    siginfo_t info;
+-    ucontext_t uc;
+-    uint16_t retcode[4];      /* Trampoline code. */
+-};
+-
+ static void setup_sigcontext(struct target_sigcontext *sc, CPUCRISState *env)
+ {
+     __put_user(env->regs[0], &sc->regs.r0);
 -- 
 2.39.2
 
