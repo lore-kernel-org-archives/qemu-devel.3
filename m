@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C251EC27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 16:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D554DC3064D
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 16:57:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNxon-0005zV-Q4; Sun, 30 Jun 2024 12:54:25 -0400
+	id 1sNxop-00068m-6W; Sun, 30 Jun 2024 12:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNxom-0005xW-NA; Sun, 30 Jun 2024 12:54:24 -0400
+ id 1sNxom-0005xk-U0; Sun, 30 Jun 2024 12:54:24 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sNxol-0005Px-6N; Sun, 30 Jun 2024 12:54:24 -0400
+ id 1sNxol-0005Q3-Bc; Sun, 30 Jun 2024 12:54:24 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 139DF7576B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2112C7576C;
  Sun, 30 Jun 2024 19:53:21 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id DCF78FAD68;
+ by tsrv.corpit.ru (Postfix) with SMTP id EA56EFAD69;
  Sun, 30 Jun 2024 19:53:27 +0300 (MSK)
-Received: (nullmailer pid 38243 invoked by uid 1000);
+Received: (nullmailer pid 38246 invoked by uid 1000);
  Sun, 30 Jun 2024 16:53:27 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  qemu-trivial@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 14/16] vl.c: select_machine(): use g_autoptr
-Date: Sun, 30 Jun 2024 19:53:24 +0300
-Message-Id: <20240630165327.38153-15-mjt@tls.msk.ru>
+Subject: [PULL 15/16] vl.c: select_machine(): add selected machine type to
+ error message
+Date: Sun, 30 Jun 2024 19:53:25 +0300
+Message-Id: <20240630165327.38153-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240630165327.38153-1-mjt@tls.msk.ru>
 References: <20240630165327.38153-1-mjt@tls.msk.ru>
@@ -68,30 +69,22 @@ Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- system/vl.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ system/vl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/system/vl.c b/system/vl.c
-index fda93d150c..92fc29c193 100644
+index 92fc29c193..bdd2f6ecf6 100644
 --- a/system/vl.c
 +++ b/system/vl.c
-@@ -1667,7 +1667,7 @@ static MachineClass *select_machine(QDict *qdict, Error **errp)
- {
-     ERRP_GUARD();
-     const char *machine_type = qdict_get_try_str(qdict, "type");
--    GSList *machines = object_class_get_list(TYPE_MACHINE, false);
-+    g_autoptr(GSList) machines = object_class_get_list(TYPE_MACHINE, false);
-     MachineClass *machine_class = NULL;
- 
-     if (machine_type) {
-@@ -1683,7 +1683,6 @@ static MachineClass *select_machine(QDict *qdict, Error **errp)
+@@ -1674,7 +1674,7 @@ static MachineClass *select_machine(QDict *qdict, Error **errp)
+         machine_class = find_machine(machine_type, machines);
+         qdict_del(qdict, "type");
+         if (!machine_class) {
+-            error_setg(errp, "unsupported machine type");
++            error_setg(errp, "unsupported machine type: \"%s\"", optarg);
          }
-     }
- 
--    g_slist_free(machines);
-     if (!machine_class) {
-         error_append_hint(errp,
-                           "Use -machine help to list supported machines\n");
+     } else {
+         machine_class = find_default_machine(machines);
 -- 
 2.39.2
 
