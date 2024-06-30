@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7A10C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 13:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8F6C27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 13:47:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNuFX-0001pC-Pr; Sun, 30 Jun 2024 09:05:48 -0400
+	id 1sNusn-0001Uu-0u; Sun, 30 Jun 2024 09:46:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sNuFF-0001dV-AQ
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 09:05:29 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
+ id 1sNurP-0001AF-PL; Sun, 30 Jun 2024 09:44:55 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sNuFD-0001RS-Fz
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 09:05:28 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2ebe785b234so20666251fa.1
- for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 06:05:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
+ id 1sNurN-0004T4-Fq; Sun, 30 Jun 2024 09:44:55 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-5295e488248so2696279e87.2; 
+ Sun, 30 Jun 2024 06:44:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719752723; x=1720357523; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719755090; x=1720359890; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Gy5d4VUG3S8RkYYMDPIsNSyoTOz3cAQeT+yHpyAGU/U=;
- b=j2WzyCCTZRnV0K5zYbfeDhbQgByCIIS92uxGxRYwiN4aPdWS+uwUYAq/XcNB1Ahb/T
- t7ae85H9hNMLgvfPWOlr+B6HNV6fr2grH74+6x0iW1K8vaXoz4/+vhWpE8+cPKbOtix6
- ZhU/HBw8NUzqgkeDwI3c+y/DYuz4pE2KpzsR8TweKt9SpkjKH+2zQ1zVqTPXyMS5d5qN
- pYG0Y4ZK9VIO/5mc+C6ZcG0q62VjNsp6au1UHGEbz3DJRCgtoyjrvjEp3bdfxcy3wzBJ
- +NVPE96wtgic2ZG+AH5qoifdLWknzsHQcke6/UM5rNYQ/YIJAWbEFRGzv1oE3wt6OOWa
- i1yg==
+ bh=FJa1Ma+dODk5xsVH6lB2g/ozZS8NzbwKs7dUywicz+k=;
+ b=HfhbUGrOlVNwF8w4idiB3MG0PojxGo+XsYFVDNKD+cFHfqO29/8bfKHXNv3vAksnSQ
+ hGQ6zGRPmv7xXTuEyvc8kNY8xxNHxf+qLM042ojPiVBvuNUdWR77SUZj1wDmh2/PglqG
+ ocf1mXS63dPV3QsylvtcJh4GI+HFmWkpEBHaCXP1naBD+sZQvC8JwGXg5WeZ8tFHmsNw
+ FwMomJ3C4Ar0aw+J944EuIYU4tDVgUzD8xCGGxwJt1E0W6NN19daV+ZgsuLJ2T7mwfZS
+ 9a7STCO39skqczf4qyl8AZ74yE/X4uYDkY0qFazXQLdUf224BnzmPSI2lB1kZrWjSXh6
+ fmvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719752723; x=1720357523;
+ d=1e100.net; s=20230601; t=1719755090; x=1720359890;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Gy5d4VUG3S8RkYYMDPIsNSyoTOz3cAQeT+yHpyAGU/U=;
- b=O/ZsgwY0Ws4PGV9BP6G2VIA3qKoRhyypSE4LTyMHbH2Zar7eLLAmMpZ6Jk8Utky7+K
- TAREVkPsatZF05oUI30efgMPZMeTG8IX5apJb20tadN29XONQvD3VRI9daQOlaioR/f5
- yV9HtQ+cF+DaqQmHZrBkYaxbSA0yFG8un9UuEXFTbuDp7rR770c7eUQj7KVfEpAI9vQs
- qWcXSHyoFTikn6kCjzW4DJG4FZWZ4jWnmt+pNYXHn/dwW0o1gUh/YYVtR0/vv9BOVfX5
- b8usOyWJZSAv278dIGuikdol+yFLnK83bxrBRIjI6c7b165e00Fif2et7//NhbTc47+m
- Zuvg==
+ bh=FJa1Ma+dODk5xsVH6lB2g/ozZS8NzbwKs7dUywicz+k=;
+ b=cpqnpPsjY6i09vj15BTFRO7vFHvmJMB3YDS7nRHN+CD7FbMvSLJpWoMMA9DwFxtkaT
+ cvMbXewqxyFzbc558xGO6QioWEnhZAEj/EfFz96yCRYumG8HqcgZs6uPXNTQk3mr9BCU
+ McYrm9jSZEr/npKN9SMUco6BgLyW3oaLUweNbHmY8ldleYh8cu5CrafgvMm3RQ6rhG9k
+ xuJipsvRGXyEt5C8Q6cw/nQVDm4G2oJsnUv/dzV86ZyQv4E9PDcQx3f3wR5b3WsQ0Awv
+ kV6+WGNTfkyP5X4jbHHhRzPxAuWKudLLaYCWxk3v71804ccEyMjVpPG8sXijPzLG3txq
+ bYqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1+WwvR/OoH73IXUC/B/o1XOOldYpO/5NK8q2Fc85ZPvy3M+C0jBh8V3/i+zzBcDZlNfNKeRUPN1zO8vOwreQ7+h44u/s=
-X-Gm-Message-State: AOJu0YyR9wNKn9d/PX6laKeEl2T7sqOhb9mLqhx4gyCus6rno0s2BocO
- 64kUNmFOHkRpJLgY6UctZQiviS5ES6Ce7foET0Tvwr//GPqVFpM=
-X-Google-Smtp-Source: AGHT+IGfWJhSgJiDSaD7ks9TS4TzToEEMpWgkl+w6k6rFaFxytFQtj3W+oKoPzUCpU5l+tuOrJ2yqA==
-X-Received: by 2002:a2e:9e98:0:b0:2eb:eb7c:ec1b with SMTP id
- 38308e7fff4ca-2ee5e4c3824mr19148161fa.25.1719752722824; 
- Sun, 30 Jun 2024 06:05:22 -0700 (PDT)
-Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ AJvYcCU1NJ+njY21F5VqiR02I8gPLhVIIyMsqjfTHNxTrJr3c9ns1Ft8tQJYWI6/WxlsyruCZdVnyqby2hbeTJ6bqwHAwCYPcOs=
+X-Gm-Message-State: AOJu0Yw5G6cJzNkhyd9ZVOmDx2nU8mJXMLVPmvg9R+lYBxZlXlRwFYT5
+ HNanelJs6/yOlnrW74CXuNoz4xTrP2MiO1Cbkn8pI5gj5KyyA8/iADKc74U6j+k=
+X-Google-Smtp-Source: AGHT+IFE/7Z8B3lT/G6jsA0iW7SYPO22Bn2KjIClf6WGTp6wnr6pZnZ6H1lATV5KvQxIWG2cZo3lLQ==
+X-Received: by 2002:a05:6512:3194:b0:52e:717c:d8d2 with SMTP id
+ 2adb3069b0e04-52e8273f721mr2082127e87.63.1719755089664; 
+ Sun, 30 Jun 2024 06:44:49 -0700 (PDT)
+Received: from localhost.localdomain ([176.194.243.4])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0d9b1dsm7458264f8f.42.2024.06.30.06.05.22
+ 2adb3069b0e04-52e7ab3b3b2sm957861e87.276.2024.06.30.06.44.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 30 Jun 2024 06:05:22 -0700 (PDT)
-From: Zheyu Ma <zheyuma97@gmail.com>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: Zheyu Ma <zheyuma97@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH] hw/display/tcx: Fix out-of-bounds access in tcx_blit_writel
-Date: Sun, 30 Jun 2024 15:04:26 +0200
-Message-Id: <20240630130426.2966539-1-zheyuma97@gmail.com>
+ Sun, 30 Jun 2024 06:44:49 -0700 (PDT)
+From: Mikhail Krasheninnikov <krashmisha@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Mikhail Krasheninnikov <krashmisha@gmail.com>,
+ Matwey Kornilov <matwey.kornilov@gmail.com>, qemu-block@nongnu.org,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PATCH] virtio: Implement Virtio Backend for SD/MMC in QEMU
+Date: Sun, 30 Jun 2024 13:43:48 +0000
+Message-Id: <20240630134348.16830-1-krashmisha@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=zheyuma97@gmail.com; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=krashmisha@gmail.com; helo=mail-lf1-x129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 30 Jun 2024 09:46:15 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,56 +93,374 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch addresses a potential out-of-bounds memory access issue in the
-tcx_blit_writel function. It adds bounds checking to ensure that memory
-accesses do not exceed the allocated VRAM size. If an out-of-bounds access
-is detected, an error is logged using qemu_log_mask.
+Add a Virtio backend for SD/MMC devices. Confirmed interoperability with
+Linux.
 
-ASAN log:
-==2960379==ERROR: AddressSanitizer: SEGV on unknown address 0x7f524752fd01 (pc 0x7f525c2c4881 bp 0x7ffdaf87bfd0 sp 0x7ffdaf87b788 T0)
-==2960379==The signal is caused by a READ memory access.
-    #0 0x7f525c2c4881 in memcpy string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:222
-    #1 0x55aa782bd5b1 in __asan_memcpy llvm/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cpp:22:3
-    #2 0x55aa7854dedd in tcx_blit_writel hw/display/tcx.c:590:13
-
-Reproducer:
-cat << EOF | qemu-system-sparc -display none \
--machine accel=qtest, -m 512M -machine LX -m 256 -qtest stdio
-writel 0x562e98c4 0x3d92fd01
-EOF
-
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Signed-off-by: Mikhail Krasheninnikov <krashmisha@gmail.com>
+CC: Matwey Kornilov <matwey.kornilov@gmail.com>
+CC: qemu-block@nongnu.org
+CC: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/display/tcx.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ hw/virtio/Kconfig                           |   5 +
+ hw/virtio/meson.build                       |   2 +
+ hw/virtio/virtio-mmc-pci.c                  |  85 ++++++++++
+ hw/virtio/virtio-mmc.c                      | 165 ++++++++++++++++++++
+ hw/virtio/virtio.c                          |   3 +-
+ include/hw/virtio/virtio-mmc.h              |  20 +++
+ include/standard-headers/linux/virtio_ids.h |   1 +
+ 7 files changed, 280 insertions(+), 1 deletion(-)
+ create mode 100644 hw/virtio/virtio-mmc-pci.c
+ create mode 100644 hw/virtio/virtio-mmc.c
+ create mode 100644 include/hw/virtio/virtio-mmc.h
 
-diff --git a/hw/display/tcx.c b/hw/display/tcx.c
-index 99507e7638..af43bea7f2 100644
---- a/hw/display/tcx.c
-+++ b/hw/display/tcx.c
-@@ -33,6 +33,7 @@
- #include "migration/vmstate.h"
- #include "qemu/error-report.h"
- #include "qemu/module.h"
-+#include "qemu/log.h"
- #include "qom/object.h"
+diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
+index 92c9cf6c96..e5fa7607c4 100644
+--- a/hw/virtio/Kconfig
++++ b/hw/virtio/Kconfig
+@@ -105,3 +105,8 @@ config VHOST_USER_SCMI
+     bool
+     default y
+     depends on VIRTIO && VHOST_USER
++
++config VIRTIO_MMC
++    bool
++    default y
++    depends on VIRTIO
+\ No newline at end of file
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index 47baf00366..1ff095c5bc 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -41,6 +41,7 @@ specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_GPIO', if_true: files('vhost-use
+ specific_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_GPIO'], if_true: files('vhost-user-gpio-pci.c'))
+ specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_SCMI', if_true: files('vhost-user-scmi.c'))
+ specific_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SCMI'], if_true: files('vhost-user-scmi-pci.c'))
++specific_virtio_ss.add(when: 'CONFIG_VIRTIO_MMC', if_true: files('virtio-mmc.c'))
  
- #define TCX_ROM_FILE "QEMU,tcx.bin"
-@@ -577,6 +578,14 @@ static void tcx_blit_writel(void *opaque, hwaddr addr,
-         addr = (addr >> 3) & 0xfffff;
-         adsr = val & 0xffffff;
-         len = ((val >> 24) & 0x1f) + 1;
+ virtio_pci_ss = ss.source_set()
+ virtio_pci_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock-pci.c'))
+@@ -68,6 +69,7 @@ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_IOMMU', if_true: files('virtio-iommu-pci.
+ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem-pci.c'))
+ virtio_pci_ss.add(when: 'CONFIG_VHOST_VDPA_DEV', if_true: files('vdpa-dev-pci.c'))
+ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_MD', if_true: files('virtio-md-pci.c'))
++virtio_pci_ss.add(when: 'CONFIG_VIRTIO_MMC', if_true: files('virtio-mmc-pci.c'))
+ 
+ specific_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
+ 
+diff --git a/hw/virtio/virtio-mmc-pci.c b/hw/virtio/virtio-mmc-pci.c
+new file mode 100644
+index 0000000000..f0ed17d03b
+--- /dev/null
++++ b/hw/virtio/virtio-mmc-pci.c
+@@ -0,0 +1,85 @@
++#include "qemu/osdep.h"
 +
-+        if (addr + len > s->vram_size || adsr + len > s->vram_size) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: VRAM access out of bounds. addr: 0x%lx, adsr: 0x%x, len: %u\n",
-+                          __func__, addr, adsr, len);
-+            return;
++#include "hw/virtio/virtio-pci.h"
++#include "hw/virtio/virtio-mmc.h"
++#include "hw/qdev-properties-system.h"
++#include "qemu/typedefs.h"
++#include "qapi/error.h"
++#include "sysemu/block-backend-global-state.h"
++
++typedef struct VirtIOMMCPCI VirtIOMMCPCI;
++
++/*
++ * virtio-mmc-pci: This extends VirtioPCIProxy.
++ */
++#define TYPE_VIRTIO_MMC_PCI "virtio-mmc-pci-base"
++DECLARE_INSTANCE_CHECKER(VirtIOMMCPCI, VIRTIO_MMC_PCI,
++                         TYPE_VIRTIO_MMC_PCI)
++
++struct VirtIOMMCPCI {
++    VirtIOPCIProxy parent_obj;
++    VirtIOMMC vdev;
++    BlockBackend *blk;
++};
++
++static void virtio_mmc_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
++{
++    VirtIOMMCPCI *vmmc = VIRTIO_MMC_PCI(vpci_dev);
++    DeviceState *dev = DEVICE(&vmmc->vdev);
++
++    if (!vmmc->blk) {
++        error_setg(errp, "Drive property not set");
++        return;
++    }
++    VirtIOMMC *vmmc_dev = &vmmc->vdev;
++    vmmc_dev->blk = vmmc->blk;
++    blk_detach_dev(vmmc->blk, DEVICE(vpci_dev));
++
++    qdev_set_parent_bus(dev, BUS(&vpci_dev->bus), errp);
++
++    virtio_pci_force_virtio_1(vpci_dev);
++    object_property_set_bool(OBJECT(dev), "realized", true, errp);
++}
++
++static Property virtio_mmc_properties[] = {
++    DEFINE_PROP_DRIVE("drive", VirtIOMMCPCI, blk),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void virtio_mmc_pci_class_init(ObjectClass *oc, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    VirtioPCIClass *virtio_pci_class = VIRTIO_PCI_CLASS(oc);
++    PCIDeviceClass *pci_device_class = PCI_DEVICE_CLASS(oc);
++
++    device_class_set_props(dc, virtio_mmc_properties);
++    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
++
++    virtio_pci_class->realize = virtio_mmc_pci_realize;
++
++    pci_device_class->revision = VIRTIO_PCI_ABI_VERSION;
++    pci_device_class->class_id = PCI_CLASS_MEMORY_FLASH;
++}
++
++static void virtio_mmc_pci_instance_init(Object *obj)
++{
++    VirtIOMMCPCI *dev = VIRTIO_MMC_PCI(obj);
++
++    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
++                                TYPE_VIRTIO_MMC);
++}
++
++static const VirtioPCIDeviceTypeInfo virtio_mmc_pci_info = {
++    .base_name     = TYPE_VIRTIO_MMC_PCI,
++    .generic_name  = "virtio-mmc-pci",
++    .instance_size = sizeof(VirtIOMMCPCI),
++    .class_init    = virtio_mmc_pci_class_init,
++    .instance_init = virtio_mmc_pci_instance_init,
++};
++
++static void virtio_mmc_pci_register(void)
++{
++    virtio_pci_types_register(&virtio_mmc_pci_info);
++}
++
++type_init(virtio_mmc_pci_register)
+diff --git a/hw/virtio/virtio-mmc.c b/hw/virtio/virtio-mmc.c
+new file mode 100644
+index 0000000000..50bd7113c5
+--- /dev/null
++++ b/hw/virtio/virtio-mmc.c
+@@ -0,0 +1,165 @@
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++
++#include "hw/virtio/virtio.h"
++#include "hw/virtio/virtio-mmc.h"
++#include "qemu/typedefs.h"
++#include "sysemu/blockdev.h"
++
++typedef struct mmc_req {
++    uint32_t opcode;
++    uint32_t arg;
++} mmc_req;
++
++typedef struct virtio_mmc_req {
++    uint8_t flags;
++
++#define VIRTIO_MMC_REQUEST_DATA BIT(1)
++#define VIRTIO_MMC_REQUEST_WRITE BIT(2)
++#define VIRTIO_MMC_REQUEST_STOP BIT(3)
++#define VIRTIO_MMC_REQUEST_SBC BIT(4)
++
++    mmc_req request;
++
++    uint8_t buf[4096];
++    size_t buf_len;
++
++    mmc_req stop_req;
++    mmc_req sbc_req;
++} virtio_mmc_req;
++
++typedef struct virtio_mmc_resp {
++    uint32_t response[4];
++    int resp_len;
++    uint8_t buf[4096];
++} virtio_mmc_resp;
++
++static void send_command(SDBus *sdbus, mmc_req *mmc_request, uint8_t *response,
++                         virtio_mmc_resp *virtio_resp)
++{
++    SDRequest sdreq;
++    sdreq.cmd = (uint8_t)mmc_request->opcode;
++    sdreq.arg = mmc_request->arg;
++    int resp_len = sdbus_do_command(sdbus, &sdreq, response);
++    virtio_resp->resp_len = resp_len;
++
++    for (int i = 0; i < resp_len / sizeof(uint32_t); i++) {
++        virtio_resp->response[i] = ldl_be_p(&virtio_resp->response[i]);
++    }
++}
++
++static void send_command_without_response(SDBus *sdbus, mmc_req *mmc_request)
++{
++    SDRequest sdreq;
++    sdreq.cmd = (uint8_t)mmc_request->opcode;
++    sdreq.arg = mmc_request->arg;
++    uint8_t response[4];
++    sdbus_do_command(sdbus, &sdreq, response);
++}
++
++static void handle_mmc_request(VirtIODevice *vdev, virtio_mmc_req *virtio_req,
++                               virtio_mmc_resp *virtio_resp)
++{
++    VirtIOMMC *vmmc = VIRTIO_MMC(vdev);
++    SDBus *sdbus = &vmmc->sdbus;
++
++    if (virtio_req->flags & VIRTIO_MMC_REQUEST_SBC) {
++        send_command_without_response(sdbus, &virtio_req->sbc_req);
++    }
++
++    send_command(sdbus, &virtio_req->request,
++    (uint8_t *)virtio_resp->response, virtio_resp);
++
++    if (virtio_req->flags & VIRTIO_MMC_REQUEST_DATA) {
++        if (virtio_req->flags & VIRTIO_MMC_REQUEST_WRITE) {
++            sdbus_write_data(sdbus, virtio_req->buf, virtio_req->buf_len);
++        } else {
++            sdbus_read_data(sdbus, virtio_resp->buf, virtio_req->buf_len);
 +        }
++    }
 +
-         if (adsr == 0xffffff) {
-             memset(&s->vram[addr], s->tmpblit, len);
-             if (s->depth == 24) {
++    if (virtio_req->flags & VIRTIO_MMC_REQUEST_STOP) {
++        send_command_without_response(sdbus, &virtio_req->stop_req);
++    }
++}
++
++static void handle_request(VirtIODevice *vdev, VirtQueue *vq)
++{
++    VirtQueueElement *elem;
++    virtio_mmc_req virtio_req;
++    virtio_mmc_resp virtio_resp;
++
++    elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
++
++    iov_to_buf(elem->out_sg, elem->out_num, 0,
++    &virtio_req, sizeof(virtio_mmc_req));
++
++    handle_mmc_request(vdev, &virtio_req, &virtio_resp);
++
++    iov_from_buf(elem->in_sg, elem->in_num, 0,
++    &virtio_resp, sizeof(virtio_mmc_resp));
++
++    virtqueue_push(vq, elem, 1);
++
++    virtio_notify(vdev, vq);
++}
++
++static void virtio_mmc_realize(DeviceState *dev, Error **errp)
++{
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++    VirtIOMMC *vmmc = VIRTIO_MMC(dev);
++
++    virtio_init(vdev, VIRTIO_ID_MMC, 0);
++
++    vmmc->vq = virtio_add_queue(vdev, 1, handle_request);
++
++    BlockBackend *blk = vmmc->blk;
++    if (!blk) {
++        error_setg(errp, "Block backend not found");
++        return;
++    }
++
++    qbus_init(&vmmc->sdbus, sizeof(vmmc->sdbus), TYPE_SD_BUS, dev, "sd-bus");
++    DeviceState *card = qdev_new(TYPE_SD_CARD);
++    qdev_prop_set_drive_err(card, "drive", blk, &error_fatal);
++    qdev_realize_and_unref(card,
++    qdev_get_child_bus(dev, "sd-bus"), &error_fatal);
++}
++
++static void virtio_mmc_unrealize(DeviceState *dev)
++{
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++    virtio_cleanup(vdev);
++}
++
++static uint64_t virtio_mmc_get_features(VirtIODevice *vdev,
++                                        uint64_t features, Error **errp)
++{
++    return features;
++}
++
++static void virtio_mmc_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    VirtioDeviceClass *k = VIRTIO_DEVICE_CLASS(klass);
++
++    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
++
++    k->realize = virtio_mmc_realize;
++    k->unrealize = virtio_mmc_unrealize;
++    k->get_features = virtio_mmc_get_features;
++}
++
++static const TypeInfo virtio_mmc_info = {
++    .name = TYPE_VIRTIO_MMC,
++    .parent = TYPE_VIRTIO_DEVICE,
++    .instance_size = sizeof(VirtIOMMC),
++    .class_init = virtio_mmc_class_init,
++};
++
++static void virtio_register_types(void)
++{
++    type_register_static(&virtio_mmc_info);
++}
++
++type_init(virtio_register_types)
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 7549094154..35f00f06aa 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -193,7 +193,8 @@ const char *virtio_device_names[] = {
+     [VIRTIO_ID_PARAM_SERV] = "virtio-param-serv",
+     [VIRTIO_ID_AUDIO_POLICY] = "virtio-audio-pol",
+     [VIRTIO_ID_BT] = "virtio-bluetooth",
+-    [VIRTIO_ID_GPIO] = "virtio-gpio"
++    [VIRTIO_ID_GPIO] = "virtio-gpio",
++    [VIRTIO_ID_MMC] = "virtio-mmc",
+ };
+ 
+ static const char *virtio_id_to_name(uint16_t device_id)
+diff --git a/include/hw/virtio/virtio-mmc.h b/include/hw/virtio/virtio-mmc.h
+new file mode 100644
+index 0000000000..a68f45d7cb
+--- /dev/null
++++ b/include/hw/virtio/virtio-mmc.h
+@@ -0,0 +1,20 @@
++#pragma once
++
++#include "hw/virtio/virtio.h"
++#include "hw/sd/sd.h"
++#include "qemu/typedefs.h"
++
++#define VIRTIO_ID_MMC 42
++
++#define TYPE_VIRTIO_MMC "virtio-mmc-device"
++#define VIRTIO_MMC(obj) \
++    OBJECT_CHECK(VirtIOMMC, (obj), TYPE_VIRTIO_MMC)
++#define VIRTIO_MMC_GET_PARENT_CLASS(obj) \
++    OBJECT_GET_PARENT_CLASS(VIRTIO_MMC(obj), TYPE_VIRTIO_MMC)
++
++typedef struct VirtIOMMC {
++    VirtIODevice parent_obj;
++    VirtQueue *vq;
++    SDBus sdbus;
++    BlockBackend *blk;
++} VirtIOMMC;
+diff --git a/include/standard-headers/linux/virtio_ids.h b/include/standard-headers/linux/virtio_ids.h
+index 7aa2eb7662..0c67fbf709 100644
+--- a/include/standard-headers/linux/virtio_ids.h
++++ b/include/standard-headers/linux/virtio_ids.h
+@@ -68,6 +68,7 @@
+ #define VIRTIO_ID_AUDIO_POLICY		39 /* virtio audio policy */
+ #define VIRTIO_ID_BT			40 /* virtio bluetooth */
+ #define VIRTIO_ID_GPIO			41 /* virtio gpio */
++#define VIRTIO_ID_MMC			42 /* virtio mmc */
+ 
+ /*
+  * Virtio Transitional IDs
 -- 
 2.34.1
 
