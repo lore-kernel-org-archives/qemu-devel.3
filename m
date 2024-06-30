@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825D1C27C4F
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 15:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80FDC27C4F
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Jun 2024 16:33:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sNwGS-0007BK-1s; Sun, 30 Jun 2024 11:14:52 -0400
+	id 1sNxTq-0000Al-3K; Sun, 30 Jun 2024 12:32:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sNwGP-0007Ak-A8; Sun, 30 Jun 2024 11:14:49 -0400
+ id 1sNxTp-0000Aa-3Z
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 12:32:45 -0400
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sNwGN-0001LA-Pm; Sun, 30 Jun 2024 11:14:49 -0400
+ id 1sNxTn-0000ts-G8
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 12:32:44 -0400
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42561c16ffeso17125795e9.3; 
- Sun, 30 Jun 2024 08:14:46 -0700 (PDT)
+ 5b1f17b1804b1-42138eadf64so16397195e9.3
+ for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 09:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719760486; x=1720365286; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719765162; x=1720369962; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5jJBrCwi9LW9SaBXFdF0UyfUcbT/SptHMronpgvYm3I=;
- b=F9Hz80X6l2o0kgGNqGGw6YrAczafKsWmTI6p3fMbZDUFXB5uRH9fOMvCCBK3GMgfBk
- ICleKRq4fdqNWJVnvl2C/usKfA82WmP66QQXvNZWNx4ER/TBjbwfZEYdUNNXcleoSKA1
- kXViNz4KDmGfA1L4ggx+6UZ3N0pXePbGV9SLI9dypcg4OnORnEn6BnHDZCAT9uRFZtHQ
- x+fjUsiZC/osEQSUIqtIFZRmjERb+naWuw426FHrpsiIwOdGA3R2S9GepBi0uTDMSb0p
- /9rrmdGrB7CKRSHFYFZcjjzqt4LvtqmOadM8yD76vU96j+Mwn/JFG9h7c/Y28/GjxKd9
- Mt7Q==
+ bh=EqaaM/Sv9Uo6r3LoZtnPlrYzJjGkg2VlcLUfxeLqSEs=;
+ b=mHNPIAQndjZX1m029/EpVxIS0n/XHx1MIWrKYL89oW2YNF3PuUTtjINwM6Cy0h14HC
+ uIu3p0m/3aDc3j2F9LbkSIzdf0b8/FscBSW16V3Xl9jJU7hzW2rlBue19Rzje1JLDU5U
+ 5rCSvDZmdEQibS7uojX0VqNDh+cWn+lrnvsWdv8GdG4tinTcJDmm0vN1vvRgc/2+9btS
+ TgQ6hnBCx07kVB70rYPu9xHw+W/FUblu9DUZQk3o8zAywa7B6OpXVuKwSSOmRwXpv9an
+ 0E6oMSOsnt58aqTSi2vtRWhrgCeMLcYITMJ8UbRk8WtfQ2a6kcaWtEf7fERDQMUAZlRb
+ QYUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719760486; x=1720365286;
+ d=1e100.net; s=20230601; t=1719765162; x=1720369962;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5jJBrCwi9LW9SaBXFdF0UyfUcbT/SptHMronpgvYm3I=;
- b=L1EK2M4o7SjQ/SsjmF7gOS33mUzi6XeQhu+du7GwstNU8gqTYDsKJXdaAR/px34cBO
- kXTaDE3BhopcGKcsb5BDGU9bxHnBTBsZ7pgAMT5KpKbRggqg/BJ/y2gKtd2TwUtFvi6H
- hTq8FXo8rk9QaJniKERMZ+dyX4lXa6BCuEKbyjEb7HMH6X+iBHBp56iBJ+Eil3UXhLdW
- g04V/o4LhvR1Xd9c2hNfxwNcBu6dOBEXXYZth3DwlWn/NGi0Q+vXq+AKIk6QLxLNJga/
- BMp+HT7bExTk7dnlXRC0SpPPR+I7WvWDdHPhJhpfk6ECX/13ggOTkUa9O3W9+p+4GAhX
- vQBA==
+ bh=EqaaM/Sv9Uo6r3LoZtnPlrYzJjGkg2VlcLUfxeLqSEs=;
+ b=Nuqc1XEFpBfZqIxYxdhZ9bSqC3z5dUbQFwUNyQHJvvVAUoa3VOzrdS4dUNPWm+r/Fc
+ TSRgIHZNS8VhSYxLv8TjRoiUb7yLOiswYPQhSetPPBy6S1zKFq+l7siCR6IH9ojwwop7
+ 3/kMbZrV/Hfbo9z583uiaq9Vk6hsDH4Lxd46JVkYdHXV8HiSknMKWXpmIfZIV7ZWR0q5
+ QDvYw0x4JEnUXXu0qpKYwD545m6HIHe0CxulFcB5L/x6brwOugn8r18GrIsBnhMcx31E
+ YLbgNmOb+ihQmbGFRF0wqGAN0AKD6OOg80S73c+W9p+KJgTd3r3Z2UixeITvH4ni2K3n
+ STQg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW3qk9ggZmzWT+6A+4TkVYFgRzdyGc5nMZxCIXZkc1M75dKim63gVZ2thsHPD1LVd/sQJE56EQ2rl/MU9UM1lfQrnpMDdTfqEiyHDcl23P3wEXtxmvzMSlKuqs=
-X-Gm-Message-State: AOJu0Yx8VCNOFVkUWVW82xX+15aWzjPWXLpeo+82Wdkj6uRh6jpOjCNS
- IuX6C7CfCiEhCzRHYJbO866Za76VgDd60keru5dUMxHXGOPTBoI=
-X-Google-Smtp-Source: AGHT+IFrsLQ+BRuFJNdSUwydg1GV8IqODCWeGNw0ReRei3uge0nJxUb7aWjTx0DV3kcRNQQw2KRsqw==
-X-Received: by 2002:a05:600c:1d1a:b0:424:a578:fc1 with SMTP id
- 5b1f17b1804b1-4257a05c0a3mr22235175e9.25.1719760485499; 
- Sun, 30 Jun 2024 08:14:45 -0700 (PDT)
+ AJvYcCWWzvsP1oAlqS240QtdVSe7ZNg1zG8y5TwZjqIsaex+gkjOyuypqohj4cCJWqidACasPhvLIbNrTk2iJJ7FDdD0xKtGjUA=
+X-Gm-Message-State: AOJu0YwzsrSlF8OLlwi6JWFeVjeMU5XkYCNp7HIYWAnEdj1wDjhiH4wW
+ 9o5QgUU5t59YA5sIlkSqLv9WBnVyPvamz9uXlqdJG/PhEk4aTKNU0nO8VvM=
+X-Google-Smtp-Source: AGHT+IE4OFj4lXj+WhG83c/P1f6mHcKvtBRjbmglS8SwuM8k0pgZsnbkQdkhyXDzX7qv8sYSCuZloQ==
+X-Received: by 2002:a05:600c:1d1e:b0:424:a2be:c161 with SMTP id
+ 5b1f17b1804b1-4257a03a00bmr24025305e9.20.1719765161359; 
+ Sun, 30 Jun 2024 09:32:41 -0700 (PDT)
 Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af5b91bsm114901515e9.20.2024.06.30.08.14.44
+ 5b1f17b1804b1-4257dee5f2asm27714015e9.22.2024.06.30.09.32.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 30 Jun 2024 08:14:45 -0700 (PDT)
+ Sun, 30 Jun 2024 09:32:40 -0700 (PDT)
 From: Zheyu Ma <zheyuma97@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH] hw/misc/bcm2835_thermal: Handle invalid address accesses
- gracefully
-Date: Sun, 30 Jun 2024 17:14:14 +0200
-Message-Id: <20240630151414.2969772-1-zheyuma97@gmail.com>
+To: 
+Cc: Zheyu Ma <zheyuma97@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] hw/usb: Fix memory leak in musb_reset()
+Date: Sun, 30 Jun 2024 18:32:25 +0200
+Message-Id: <20240630163225.2973081-1-zheyuma97@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -93,56 +94,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit handles invalid address accesses gracefully in both read and write
-functions. Instead of asserting and aborting, it logs an error message and returns
-a neutral value for read operations and does nothing for write operations.
+The musb_reset function was causing a memory leak by not properly freeing
+the memory associated with USBPacket instances before reinitializing them.
+This commit addresses the memory leak by adding calls to usb_packet_cleanup
+for each USBPacket instance before reinitializing them with usb_packet_init.
 
-Error log:
-ERROR:hw/misc/bcm2835_thermal.c:55:bcm2835_thermal_read: code should not be reached
-Bail out! ERROR:hw/misc/bcm2835_thermal.c:55:bcm2835_thermal_read: code should not be reached
-Aborted
+Asan log:
 
-Reproducer:
-cat << EOF | qemu-system-aarch64 -display \
-none -machine accel=qtest, -m 512M -machine raspi3b -m 1G -qtest stdio
-readw 0x3f212003
-EOF
+=2970623==ERROR: LeakSanitizer: detected memory leaks
+Direct leak of 256 byte(s) in 16 object(s) allocated from:
+    #0 0x561e20629c3d in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
+    #1 0x7fee91885738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
+    #2 0x561e21b4d0e1 in usb_packet_init hw/usb/core.c:531:5
+    #3 0x561e21c5016b in musb_reset hw/usb/hcd-musb.c:372:9
+    #4 0x561e21c502a9 in musb_init hw/usb/hcd-musb.c:385:5
+    #5 0x561e21c893ef in tusb6010_realize hw/usb/tusb6010.c:827:15
+    #6 0x561e23443355 in device_set_realized hw/core/qdev.c:510:13
+    #7 0x561e2346ac1b in property_set_bool qom/object.c:2354:5
+    #8 0x561e23463895 in object_property_set qom/object.c:1463:5
+    #9 0x561e23477909 in object_property_set_qobject qom/qom-qobject.c:28:10
+    #10 0x561e234645ed in object_property_set_bool qom/object.c:1533:15
+    #11 0x561e2343c830 in qdev_realize hw/core/qdev.c:291:12
+    #12 0x561e2343c874 in qdev_realize_and_unref hw/core/qdev.c:298:11
+    #13 0x561e20ad5091 in sysbus_realize_and_unref hw/core/sysbus.c:261:12
+    #14 0x561e22553283 in n8x0_usb_setup hw/arm/nseries.c:800:5
+    #15 0x561e2254e99b in n8x0_init hw/arm/nseries.c:1356:5
+    #16 0x561e22561170 in n810_init hw/arm/nseries.c:1418:5
 
 Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 ---
- hw/misc/bcm2835_thermal.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ hw/usb/hcd-musb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/misc/bcm2835_thermal.c b/hw/misc/bcm2835_thermal.c
-index ee7816b8a5..5c2a429d58 100644
---- a/hw/misc/bcm2835_thermal.c
-+++ b/hw/misc/bcm2835_thermal.c
-@@ -51,8 +51,10 @@ static uint64_t bcm2835_thermal_read(void *opaque, hwaddr addr, unsigned size)
-         val = FIELD_DP32(bcm2835_thermal_temp2adc(25), STAT, VALID, true);
-         break;
-     default:
--        /* MemoryRegionOps are aligned, so this can not happen. */
--        g_assert_not_reached();
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "bcm2835_thermal_read: invalid address 0x%"
-+                      HWADDR_PRIx "\n", addr);
-+        val = 0;
+diff --git a/hw/usb/hcd-musb.c b/hw/usb/hcd-musb.c
+index 6dca373cb1..0300aeaec6 100644
+--- a/hw/usb/hcd-musb.c
++++ b/hw/usb/hcd-musb.c
+@@ -368,6 +368,8 @@ void musb_reset(MUSBState *s)
+         s->ep[i].maxp[1] = 0x40;
+         s->ep[i].musb = s;
+         s->ep[i].epnum = i;
++        usb_packet_cleanup(&s->ep[i].packey[0].p);
++        usb_packet_cleanup(&s->ep[i].packey[1].p);
+         usb_packet_init(&s->ep[i].packey[0].p);
+         usb_packet_init(&s->ep[i].packey[1].p);
      }
-     return val;
- }
-@@ -72,8 +74,10 @@ static void bcm2835_thermal_write(void *opaque, hwaddr addr,
-                        __func__, value, addr);
-         break;
-     default:
--        /* MemoryRegionOps are aligned, so this can not happen. */
--        g_assert_not_reached();
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "bcm2835_thermal_write: invalid address 0x%"
-+                      HWADDR_PRIx "\n", addr);
-+        break;
-     }
- }
- 
 -- 
 2.34.1
 
