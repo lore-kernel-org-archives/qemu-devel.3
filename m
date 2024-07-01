@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0062C3065A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEF35C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:06:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOIY9-00009i-G2; Mon, 01 Jul 2024 11:02:37 -0400
+	id 1sOIbM-00086T-U8; Mon, 01 Jul 2024 11:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOIY1-0008Kv-Hp
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:02:30 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOIXz-0002JD-MZ
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:02:29 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a729d9d7086so668808666b.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 08:02:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719846146; x=1720450946; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dxc67L0Wz50+CSwhbiqJJUNkuFwEkB8Pr9ZDPtyhMSY=;
- b=mCCR8GiOa1YZkoI4wJBR6Ee8bf7qnFoQf908VHlbWLb9KxGCq9AFCMicnSzxZbmsL2
- a/hjmpm2FHZvjmBN9X+Cvo5k+5iZ/OLf/LGYMUq1a4d61yYFEdRIB8FDmFhe9T8wpDsJ
- spkKv+kZvoEqVB8nznGwwh8EJ06whtRIOOtTi9EivUIPu9x81GXQErJxjFWbarI1Nw6n
- MKhATmiCsLZWUXcBboSvurVGUKk8oxBPjPI+TPKs1u1FSic+MgJ4RxLQjj2fl/LqioEL
- iy5hqMMiKNYk95+4afhzKI9k6U3byyixGiCBodhCdf61tYj8+sxspUIU60jt4BSmGVJL
- mzQg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOIbL-00083w-39
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:05:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOIbI-0002y2-Qh
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:05:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719846351;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UCFKGTjyGzH1yB11pItitgP9hgvzMFjW6AIon4oZDiE=;
+ b=Zz0rBHHYRncPqRx7bJkTLyKLpUJFF0HtwZbVwL8LrBjWbJz31qvRrLV7JmttqDMo4Zd9pk
+ dMzJKo5vN0rUrhIPcDn+UqfGsvcu4Rcv64c/wJvz2ErUWouHBV9zr+pFBVrLyzJ6Ve7GQ0
+ lRMKehF5kgydb37eu5LbZizWgy6QtWg=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-635-ou_adOR8NqirrC-kjx8OvQ-1; Mon, 01 Jul 2024 11:05:50 -0400
+X-MC-Unique: ou_adOR8NqirrC-kjx8OvQ-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2ee49ce152eso29406211fa.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 08:05:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719846146; x=1720450946;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dxc67L0Wz50+CSwhbiqJJUNkuFwEkB8Pr9ZDPtyhMSY=;
- b=IBcqxBUeg1nnfuzU+C3b/NqAoC/2TLTc1b34M5E/QjSCQuaXZM8eun66vpkceS3Oxp
- ImV0AVThUw9rIWk/DVKymKKvxifILHo5v/CtbFT/xXunncb6sbuMvpd4mf2US804MezS
- KVx8suAtd95q7v3PwzT4/YUYBpMvknlsMCaXY/ixwVR256XDWjFKGThGHGocgK2qUiyt
- rZuDHZmFftv1/qjHxI5jkU8FdtchZzGH064xm7LWnWR55n3Teo32Pbfo8SYtT99tBKXB
- G7ma821h/FcsYrZVsucAJ8/Sv2lGWU2kUFV00gfB3jTm06LF1nl4EAWYrtmq/2wkibC8
- 9srg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV2IjKX8orOJ1Q0W5Eqi+kFyHkOzigXZv1YymofAYH8Dl6sXc4tWEAvq/QJU/WTX1gc62HV3kGboxLmTXPpQT7sLfvxB6E=
-X-Gm-Message-State: AOJu0YwHDDHQwyzUV9Swv8gih6fvv+nU5DVgyWAr8/5bZeyvEQhyqT18
- U6Zxv+zEP0nmoMmDgEzGmytcJqShcw6DoMpAtWNT1wi3lfEqR0R8nBlm1bdunuM=
-X-Google-Smtp-Source: AGHT+IEr9jvqHJZUaru02Q1xRzAm06qY+fIx36o2T93tCvVEOhyreaTJ7BCmr3PCnl9loujCqsx88g==
-X-Received: by 2002:a17:906:6d92:b0:a6f:2835:be95 with SMTP id
- a640c23a62f3a-a7513953cfbmr368147966b.37.1719846145977; 
- Mon, 01 Jul 2024 08:02:25 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.159])
+ d=1e100.net; s=20230601; t=1719846349; x=1720451149;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UCFKGTjyGzH1yB11pItitgP9hgvzMFjW6AIon4oZDiE=;
+ b=HUb1QAmPVWYXGWoNDxa5nY0MpTZT9/5D1OjnDQTPMShdwxgYRoOuCI8A3IlWtTkT15
+ BGm+QWj/qT+STlD45e0jo/6u1iVYmxkVZYv7eRuImCR6ObJtz+XrdBaApC2pSOeR5dlV
+ RHMikCLDOj44rDibDu4PRxR6rij9CvTvyJZVwiEIvLFoa8bD+uBg8tsSVg2LyLvyGBK3
+ yAKTbiji4WAlTgb5ZUCpaohv2/liGzggx0jUgwZNdgPj1oNibG/3KSO6BD7GIMjtPcY6
+ JSmO2it81uTG/x8OuZWqxb2Ywf+s/uF7B+A2cnLKvfT++iHUcsr7iBl0uovj5q/CrC2M
+ Jl8w==
+X-Gm-Message-State: AOJu0Yz+bMamzAfG9WVg1wbbhdI5Y75vNugVmkfiKBadrk0hXyz+6Xqk
+ xaEO+37in0NPI9kiWYqXt04PG4+qY8piZ1Ah0fcrfd8HSF2iXyjA3DoxZc6+DBoen4V8FWxPw75
+ WXlodRB4+cRKPnUy7V9qhFdcB8QAw9ZQpRovYswkJF24/5GTpFUVX
+X-Received: by 2002:a2e:8687:0:b0:2ec:4d48:75f3 with SMTP id
+ 38308e7fff4ca-2ee5e6f4bb6mr35107171fa.45.1719846348870; 
+ Mon, 01 Jul 2024 08:05:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFAlFAE2gzfo/RoF3PP0plroGdyaDCgmcyfJCW/d4M4bu69J2z43vAVRxffkAPr+4IIKFLXvQ==
+X-Received: by 2002:a2e:8687:0:b0:2ec:4d48:75f3 with SMTP id
+ 38308e7fff4ca-2ee5e6f4bb6mr35106811fa.45.1719846347996; 
+ Mon, 01 Jul 2024 08:05:47 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:55d:614d:9fb:6fdd:72a4:f3d])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a752008272esm141442466b.175.2024.07.01.08.02.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jul 2024 08:02:25 -0700 (PDT)
-Message-ID: <73a64211-0fc0-45e4-bf11-083497d32c40@linaro.org>
-Date: Mon, 1 Jul 2024 17:02:23 +0200
+ 5b1f17b1804b1-4256b09a073sm156554575e9.32.2024.07.01.08.05.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Jul 2024 08:05:47 -0700 (PDT)
+Date: Mon, 1 Jul 2024 11:05:43 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Wencheng Yang <east.moutain.yang@gmail.com>
+Cc: qemu-devel@nongnu.org, jasowang@redhat.com, stefanha@redhat.com,
+ kwolf@redhat.com, hreitz@redhat.com, qemu-stable@nongnu.org
+Subject: Re: [PATCH v7] virtio-net: Fix network stall at the host side
+ waiting for kick
+Message-ID: <20240701105110-mutt-send-email-mst@kernel.org>
+References: <20240701140017.49223-1-east.moutain.yang@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/net: prevent potential NULL dereference
-To: Oleg Sviridov <oleg.sviridov@red-soft.ru>,
- Nicholas Piggin <npiggin@gmail.com>
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Jason Wang
- <jasowang@redhat.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <20240531073636.3779559-1-oleg.sviridov@red-soft.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240531073636.3779559-1-oleg.sviridov@red-soft.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240701140017.49223-1-east.moutain.yang@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,34 +99,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/5/24 09:36, Oleg Sviridov wrote:
-> Pointer, returned from function 'spapr_vio_find_by_reg', may be NULL and is dereferenced immediately after.
+On Mon, Jul 01, 2024 at 10:00:17PM +0800, Wencheng Yang wrote:
+> From: thomas <east.moutain.yang@gmail.com>
 > 
-> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> Patch 06b12970174 ("virtio-net: fix network stall under load")
+> added double-check to test whether the available buffer size
+> can satisfy the request or not, in case the guest has added
+> some buffers to the avail ring simultaneously after the first
+> check. It will be lucky if the available buffer size becomes
+> okay after the double-check, then the host can send the packet
+> to the guest. If the buffer size still can't satisfy the request,
+> even if the guest has added some buffers, viritio-net would
+> stall at the host side forever.
 > 
-> Signed-off-by: Oleg Sviridov <oleg.sviridov@red-soft.ru>
+> The patch checks whether the guest has added some buffers
+> after last check of avail idx when the available buffers are
+> not sufficient, if so then recheck the available buffers
+> in the loop.
+> 
+> The patch also reverts patch "06b12970174".
+> 
+> The case below can reproduce the stall.
+> 
+>                                        Guest 0
+>                                      +--------+
+>                                      | iperf  |
+>                     ---------------> | server |
+>          Host       |                +--------+
+>        +--------+   |                    ...
+>        | iperf  |----
+>        | client |----                  Guest n
+>        +--------+   |                +--------+
+>                     |                | iperf  |
+>                     ---------------> | server |
+>                                      +--------+
+> 
+> Boot many guests from qemu with virtio network:
+>  qemu ... -netdev tap,id=net_x \
+>     -device virtio-net-pci-non-transitional,\
+>     iommu_platform=on,mac=xx:xx:xx:xx:xx:xx,netdev=net_x
+> 
+> Each guest acts as iperf server with commands below:
+>  iperf3 -s -D -i 10 -p 8001
+>  iperf3 -s -D -i 10 -p 8002
+> 
+> The host as iperf client:
+>  iperf3 -c guest_IP -p 8001 -i 30 -w 256k -P 20 -t 40000
+>  iperf3 -c guest_IP -p 8002 -i 30 -w 256k -P 20 -t 40000
+> 
+> After some time, the host loses connection to the guest,
+> the guest can send packet to the host, but can't receive
+> packet from host.
+> 
+> It's more likely to happen if SWIOTLB is enabled in the guest,
+> allocating and freeing bounce buffer takes some CPU ticks,
+> copying from/to bounce buffer takes more CPU ticks, compared
+> with that there is no bounce buffer in the guest.
+> Once the rate of producing packets from the host approximates
+> the rate of receiveing packets in the guest, the guest would
+> loop in NAPI.
+> 
+>          receive packets    ---
+>                |             |
+>                v             |
+>            free buf      virtnet_poll
+>                |             |
+>                v             |
+>      add buf to avail ring  ---
+>                |
+>                |  need kick the host?
+>                |  NAPI continues
+>                v
+>          receive packets    ---
+>                |             |
+>                v             |
+>            free buf      virtnet_poll
+>                |             |
+>                v             |
+>      add buf to avail ring  ---
+>                |
+>                v
+>               ...           ...
+> 
+> On the other hand, the host fetches free buf from avail
+> ring, if the buf in the avail ring is not enough, the
+> host notifies the guest the event by writing the avail
+> idx read from avail ring to the event idx of used ring,
+> then the host goes to sleep, waiting for the kick signal
+> from the guest.
+> 
+> Once the guest finds the host is waiting for kick singal
+> (in virtqueue_kick_prepare_split()), it kicks the host.
+> 
+> The host may stall forever at the sequences below:
+> 
+>          Host                        Guest
+>      ------------                 -----------
+>  fetch buf, send packet           receive packet ---
+>          ...                          ...         |
+>  fetch buf, send packet             add buf       |
+>          ...                        add buf   virtnet_poll
+>     buf not enough      avail idx-> add buf       |
+>     read avail idx                  add buf       |
+>                                     add buf      ---
+>                                   receive packet ---
+>     write event idx                   ...         |
+>     wait for kick                   add buf   virtnet_poll
+>                                       ...         |
+>                                                  ---
+>                                  no more packet, exit NAPI
+> 
+> In the first loop of NAPI above, indicated in the range of
+> virtnet_poll above, the host is sending packets while the
+> guest is receiving packets and adding buffers.
+>  step 1: The buf is not enough, for example, a big packet
+>          needs 5 buf, but the available buf count is 3.
+>          The host read current avail idx.
+>  step 2: The guest adds some buf, then checks whether the
+>          host is waiting for kick signal, not at this time.
+>          The used ring is not empty, the guest continues
+>          the second loop of NAPI.
+>  step 3: The host writes the avail idx read from avail
+>          ring to used ring as event idx via
+>          virtio_queue_set_notification(q->rx_vq, 1).
+>  step 4: At the end of the second loop of NAPI, recheck
+>          whether kick is needed, as the event idx in the
+>          used ring written by the host is beyound the
+>          range of kick condition, the guest will not
+>          send kick signal to the host.
+> 
+> Fixes: 06b12970174 ("virtio-net: fix network stall under load")
+> Signed-off-by: Wencheng Yang <east.moutain.yang@gmail.com>
 > ---
-> v2: Debug message added
->   hw/net/spapr_llan.c | 6 ++++++
->   1 file changed, 6 insertions(+)
 > 
-> diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
-> index ecb30b7c76..8af33d91b6 100644
-> --- a/hw/net/spapr_llan.c
-> +++ b/hw/net/spapr_llan.c
-> @@ -770,6 +770,12 @@ static target_ulong h_change_logical_lan_mac(PowerPCCPU *cpu,
->       SpaprVioVlan *dev = VIO_SPAPR_VLAN_DEVICE(sdev);
->       int i;
->   
-> +    if (!dev) {
-> +        hcall_dprintf("H_CHANGE_LOGICAL_LAN_MAC called when "
-> +                      "no NIC is present\n");
-> +        return H_PARAMETER;
+> Changelog:
+> v7:
+> - Add function virtio_queue_set_notification_and_check()
+> - Restore the function sequence introduce in v6
+> 
+> v6:
+> - Take packed packed queue into cosideration
+> - Adjust function sequence to fix compilation issue
+> 
+> v5:
+> - Modify return type of virtio_queue_set_notification() to
+>   bool to indicate whether the guest has added some buffers
+>   after last check of avail idx
+> - Loop in virtio_net_has_buffers() if the available buffers
+>   are not sufficient and the guest has added some buffers.
+> - Revert patch "06b12970174"
+> - Update the subject
+> 
+> v4:
+> - Correct spelling mistake in the subject
+> - Describe the issue that virtio-net is blocked at host side
+> 
+> v3:
+> - Add virtio-net tag in the subject
+> - Refine commit log
+> 
+> v2:
+> - Add SOB tag at the end of the commit message
+> - Place Fixes tag at the end of the commit message
+> 
+> v1:
+> - Initial patch
+> 
+>  hw/net/virtio-net.c        | 19 ++++++++-----------
+>  hw/virtio/virtio.c         | 39 ++++++++++++++++++++++++++++++++++++++
+>  include/hw/virtio/virtio.h |  1 +
+>  3 files changed, 48 insertions(+), 11 deletions(-)
+> 
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 9c7e85caea..357c651d9b 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -1642,18 +1642,15 @@ static bool virtio_net_can_receive(NetClientState *nc)
+>  static int virtio_net_has_buffers(VirtIONetQueue *q, int bufsize)
+>  {
+>      VirtIONet *n = q->n;
+> -    if (virtio_queue_empty(q->rx_vq) ||
+> -        (n->mergeable_rx_bufs &&
+> -         !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
+> -        virtio_queue_set_notification(q->rx_vq, 1);
+> -
+> -        /* To avoid a race condition where the guest has made some buffers
+> -         * available after the above check but before notification was
+> -         * enabled, check for available buffers again.
+> -         */
+> -        if (virtio_queue_empty(q->rx_vq) ||
+> +
+> +    while (virtio_queue_empty(q->rx_vq) ||
+>              (n->mergeable_rx_bufs &&
+> -             !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
+> +            !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
+> +        /* guest may have made some buf, try again */
+> +        if (virtio_queue_set_notification_and_check(q->rx_vq, 1)) {
+> +            virtio_queue_set_notification(q->rx_vq, 0);
+> +            continue;
+> +        } else {
+>              return 0;
+>          }
+>      }
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 893a072c9d..b165764017 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -668,6 +668,45 @@ static inline bool is_desc_avail(uint16_t flags, bool wrap_counter)
+>      return (avail != used) && (avail == wrap_counter);
+>  }
+>  
+> +bool virtio_queue_set_notification_and_check(VirtQueue *vq, int enable)
+> +{
+> +    uint16_t shadow_idx;
+> +    VRingPackedDesc desc;
+> +    VRingMemoryRegionCaches *caches;
+> +
+> +    vq->notification = enable;
+> +
+> +    if (!vq->vring.desc) {
+> +        return false;
 > +    }
 > +
->       for (i = 0; i < ETH_ALEN; i++) {
->           dev->nicconf.macaddr.a[ETH_ALEN - i - 1] = macaddr & 0xff;
->           macaddr >>= 8;
+> +    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
+> +        virtio_queue_packed_set_notification(vq, enable);
+> +
+> +        if (enable) {
+> +            caches = vring_get_region_caches(vq);
+> +            if (!caches) {
+> +                return false;
+> +            }
+> +
+> +            vring_packed_desc_read(vq->vdev, &desc, &caches->desc,
+> +                                   vq->shadow_avail_idx, true);
+> +            if (is_desc_avail(desc.flags, vq->shadow_avail_wrap_counter)) {
+> +                return true;
+> +            }
+> +        }
+> +    } else {
+> +        shadow_idx = vq->shadow_avail_idx;
+> +        virtio_queue_split_set_notification(vq, enable);
+> +
+> +        if (enable) {
+> +            return shadow_idx != vring_avail_idx(vq);
+> +        }
+> +    }
+> +
+> +    return false;
+> +}
 
-Thanks, patch queued.
+Please document what this does.
+So this will return false if ring has any availabe buffers?
+Equivalent to:
+
+bool virtio_queue_set_notification_and_check(VirtQueue *vq, int enable)
+{
+        virtio_queue_packed_set_notification(vq, enable);
+	return virtio_queue_empty(vq);
+}
+
+
+or am I missing something?
+
+> +
+>  /* Fetch avail_idx from VQ memory only when we really need to know if
+>   * guest has added some buffers.
+>   * Called within rcu_read_lock().  */
+> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+> index 7d5ffdc145..ed85023b87 100644
+> --- a/include/hw/virtio/virtio.h
+> +++ b/include/hw/virtio/virtio.h
+> @@ -302,6 +302,7 @@ void virtio_notify_config(VirtIODevice *vdev);
+>  
+>  bool virtio_queue_get_notification(VirtQueue *vq);
+>  void virtio_queue_set_notification(VirtQueue *vq, int enable);
+> +bool virtio_queue_set_notification_and_check(VirtQueue *vq, int enable);
+>  
+>  int virtio_queue_ready(VirtQueue *vq);
+>  
+> -- 
+> 2.39.0
+
 
