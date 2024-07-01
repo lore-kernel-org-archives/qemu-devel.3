@@ -4,129 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD156C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D53C3065A
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:07:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOJYJ-0007v9-MC; Mon, 01 Jul 2024 12:06:51 -0400
+	id 1sOJYK-0007xw-GG; Mon, 01 Jul 2024 12:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sOJYF-0007ov-5U
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:06:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOJYJ-0007sW-4V
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:06:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sOJYD-0005Ek-I5
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:06:46 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOJYH-0005FA-Cj
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:06:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719850003;
+ s=mimecast20190719; t=1719850008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Kd9V+h25Y1yVMIMTEwQeiS03O/gd5Zl4A4zdflfpSFQ=;
- b=ENlY0XE1KsAQ+CjFWyTQ/f3/bmZFMmOQDRN07QCB+8AwOuSMMKlSgWlApEwEZK0AP7UhJo
- sXJydaoj3nAlfERd0Ymgf4kZgkcFdLEquUAUAdo4v5wqNSOnJo0OsIpV1254paoulmKVh0
- 78cPyocoQztDSqaP4lO/jz0HkpIep40=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9Piz3+qHphNrxZ+h/Hz+XsQ6a4ATI0+MFcQHX0PEdc8=;
+ b=VU/0IDFCM9O54vpsPoW+ls1J/0ZFHYbjnrzQlWDbEjypIi/tLx+Puh0vRB1wc6eflOVgoP
+ gXGa8QqlKpGntOJcHvqFod+2Y6v2xXmK+2VpOUn5TsCszLQmkeQExyBZWGgvyQSQKKK99A
+ rChuXBzDZBoSY8dzQbbFNIkxE9b1NGs=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-201-drmyptIsPmmNx_nayZWcBw-1; Mon, 01 Jul 2024 12:06:42 -0400
-X-MC-Unique: drmyptIsPmmNx_nayZWcBw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4246cf4c87dso21367475e9.2
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:06:42 -0700 (PDT)
+ us-mta-184-A4Yk9e8pNAWaBHYRAE5H6A-1; Mon, 01 Jul 2024 12:06:46 -0400
+X-MC-Unique: A4Yk9e8pNAWaBHYRAE5H6A-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-425739141c2so20654615e9.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:06:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719850001; x=1720454801;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Kd9V+h25Y1yVMIMTEwQeiS03O/gd5Zl4A4zdflfpSFQ=;
- b=o/brXuDYxMbB+Yg9T7iQhnKAhgAihXTZZCyqMKyh8oKe/AajP9O/awfiLmbA5HbMJK
- DN7byruexGLYcIWpGDBkEo6gNWJ8Bs+eHWWMiZQu+h/Ttr9ebOQIuVuvjIo8Se9w8tqM
- toIRaBhmEVgX6gv4YDcMEsdc+Kugi2x1+dgVI1O/n+Y3iBxyQLpZ1g7KEhmUc68K/CVe
- jq+9oj31W+OwXPIxkBcb1XAVg9UvqooG9QKh7LUrRZ3r9AqEXdh03r+wPg0xfyWoflkG
- 2hoSw9D2DurioCgBplroSgPuWq2viY43QgJ4pr9VTA74TUnpWjYOnVybcoMShzQLn6hb
- 1gkg==
-X-Gm-Message-State: AOJu0Yz3R4hwrlANoz+xdXmf/VtjRSa51a6L8D136/XWBAi6YJwcNJID
- an3Hg8ezI3Z9Dm5OUKtTrimzkOp/iOECinvw1WXfAHYNrY68OGiwiE+VRc0iBwd7J/CbvmupN0v
- m41Rxyc8+DzC/m8Fqsgz9AA+KRwotzkXfv1kC9tUTMgeoV27wagEo
-X-Received: by 2002:a05:6000:1566:b0:362:3b56:dbda with SMTP id
- ffacd0b85a97d-367756997a4mr4045100f8f.9.1719850001507; 
- Mon, 01 Jul 2024 09:06:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFHnq3pK4SmawMcXlYzWNFkd+QzMOtecZCVvD2Xe81lMiwBDBfBL20VKQKMWUHoBV9Y2xtqQA==
-X-Received: by 2002:a05:6000:1566:b0:362:3b56:dbda with SMTP id
- ffacd0b85a97d-367756997a4mr4045084f8f.9.1719850001116; 
- Mon, 01 Jul 2024 09:06:41 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c72e:2200:7ed7:c239:d423:3b31?
- (p200300cbc72e22007ed7c239d4233b31.dip0.t-ipconnect.de.
- [2003:cb:c72e:2200:7ed7:c239:d423:3b31])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e12e2sm10407803f8f.50.2024.07.01.09.06.40
+ d=1e100.net; s=20230601; t=1719850005; x=1720454805;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9Piz3+qHphNrxZ+h/Hz+XsQ6a4ATI0+MFcQHX0PEdc8=;
+ b=ZsF9mAbabqtcxQZrGG1Em5/ipqUlr7k8tfOZpom66CLzvzfUeJTdATShjuTfIaH05t
+ 7RZuxQkaOeu02utqDMUwtVmEj1htKOQr4oDW/Pk9xru+fCmFYOiZnerWs29e9MmKXJEv
+ jqzfKslH6QRfusAtEdOTM+FbEKHh248zzD2abtj/1NqW07xZcA/4h0IDOC618VOBSRru
+ Fu4bOFJUMjI4k0AIe4y10oC8uIvzk7noWjWLMtx+LUWl80atN7rQF9PL9dXhxrLpuy4D
+ k8rSs9Pc8dnmmY0s9fFgbLxWAfvzXCcmsaCZXbFubAZTaR6QDhzkr3kSWUEu1VpEbcUY
+ 4GUg==
+X-Gm-Message-State: AOJu0Yy5I9m72pUeUKWtqsnrE6O/a3Tls0Wmtghqp/h9hL+vI708ouak
+ 59n2WoILKbHM2bw2f5IIBm9vVQLFdNFESup3+82cDMjg14efDAhbY7vH9EClMmyUl4FaoYY876M
+ vKYDICy0B/fgfdysXIOdTV6YQAH8e7CwpT+RW2/dfMW8AlWPpftlAkWdYyouD
+X-Received: by 2002:a05:600c:1989:b0:425:6bc4:977b with SMTP id
+ 5b1f17b1804b1-4257a06df09mr52499225e9.26.1719850004883; 
+ Mon, 01 Jul 2024 09:06:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFTCtIhHkByP493rReFRMKP/jclafE4KlieRZ0Td224GzClIWzYU636Yj6acW3I6iUYNwUXg==
+X-Received: by 2002:a05:600c:1989:b0:425:6bc4:977b with SMTP id
+ 5b1f17b1804b1-4257a06df09mr52499005e9.26.1719850004523; 
+ Mon, 01 Jul 2024 09:06:44 -0700 (PDT)
+Received: from [192.168.0.4] (ip-109-43-177-66.web.vodafone.de.
+ [109.43.177.66]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0d9286sm10382944f8f.35.2024.07.01.09.06.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jul 2024 09:06:40 -0700 (PDT)
-Message-ID: <567005b5-2805-44db-a455-587566f6bd8f@redhat.com>
-Date: Mon, 1 Jul 2024 18:06:39 +0200
+ Mon, 01 Jul 2024 09:06:44 -0700 (PDT)
+Message-ID: <1ce5bce5-2659-4da8-81ac-34838768f04d@redhat.com>
+Date: Mon, 1 Jul 2024 18:06:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/physmem: Fix reference to dump-guest-core
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-References: <20240628-dump-v1-1-c581d10f3646@daynix.com>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH] hw/virtio: Fix the de-initialization of vhost-user devices
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, qemu-stable@nongnu.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20240618121958.88673-1-thuth@redhat.com>
+ <3f96e237-d367-4f8e-b96d-f51d4ba33ab1@redhat.com>
+ <20240701110607-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20240628-dump-v1-1-c581d10f3646@daynix.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240701110607-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -134,7 +132,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,39 +148,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.06.24 06:05, Akihiko Odaki wrote:
-> dump_guest_core is exposed as dump-guest-core with QOM.
+On 01/07/2024 17.06, Michael S. Tsirkin wrote:
+> On Mon, Jul 01, 2024 at 04:07:56PM +0200, Thomas Huth wrote:
+>> On 18/06/2024 14.19, Thomas Huth wrote:
+>>> The unrealize functions of the various vhost-user devices are
+>>> calling the corresponding vhost_*_set_status() functions with a
+>>> status of 0 to shut down the device correctly.
+>>>
+>>> Now these vhost_*_set_status() functions all follow this scheme:
+>>>
+>>>       bool should_start = virtio_device_should_start(vdev, status);
+>>>
+>>>       if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
+>>>           return;
+>>>       }
+>>>
+>>>       if (should_start) {
+>>>           /* ... do the initialization stuff ... */
+>>>       } else {
+>>>           /* ... do the cleanup stuff ... */
+>>>       }
+>>>
+>>> The problem here is virtio_device_should_start(vdev, 0) currently
+>>> always returns "true" since it internally only looks at vdev->started
+>>> instead of looking at the "status" parameter. Thus once the device
+>>> got started once, virtio_device_should_start() always returns true
+>>> and thus the vhost_*_set_status() functions return early, without
+>>> ever doing any clean-up when being called with status == 0. This
+>>> causes e.g. problems when trying to hot-plug and hot-unplug a vhost
+>>> user devices multiple times since the de-initialization step is
+>>> completely skipped during the unplug operation.
+>>>
+>>> This bug has been introduced in commit 9f6bcfd99f ("hw/virtio: move
+>>> vm_running check to virtio_device_started") which replaced
+>>>
+>>>    should_start = status & VIRTIO_CONFIG_S_DRIVER_OK;
+>>>
+>>> with
+>>>
+>>>    should_start = virtio_device_started(vdev, status);
+>>>
+>>> which later got replaced by virtio_device_should_start(). This blocked
+>>> the possibility to set should_start to false in case the status flag
+>>> VIRTIO_CONFIG_S_DRIVER_OK was not set.
+>>>
+>>> Fix it by adjusting the virtio_device_should_start() function to
+>>> only consider the status flag instead of vdev->started. Since this
+>>> function is only used in the various vhost_*_set_status() functions
+>>> for exactly the same purpose, it should be fine to fix it in this
+>>> central place there without any risk to change the behavior of other
+>>> code.
+>>>
+>>> Fixes: 9f6bcfd99f ("hw/virtio: move vm_running check to virtio_device_started")
+>>> Buglink: https://issues.redhat.com/browse/RHEL-40708
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>    include/hw/virtio/virtio.h | 8 ++++----
+>>>    1 file changed, 4 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+>>> index 7d5ffdc145..2eafad17b8 100644
+>>> --- a/include/hw/virtio/virtio.h
+>>> +++ b/include/hw/virtio/virtio.h
+>>> @@ -470,9 +470,9 @@ static inline bool virtio_device_started(VirtIODevice *vdev, uint8_t status)
+>>>     * @vdev - the VirtIO device
+>>>     * @status - the devices status bits
+>>>     *
+>>> - * This is similar to virtio_device_started() but also encapsulates a
+>>> - * check on the VM status which would prevent a device starting
+>>> - * anyway.
+>>> + * This is similar to virtio_device_started() but ignores vdev->started
+>>> + * and also encapsulates a check on the VM status which would prevent a
+>>> + * device from starting anyway.
+>>>     */
+>>>    static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status)
+>>>    {
+>>> @@ -480,7 +480,7 @@ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status
+>>>            return false;
+>>>        }
+>>> -    return virtio_device_started(vdev, status);
+>>> +    return status & VIRTIO_CONFIG_S_DRIVER_OK;
+>>>    }
+>>
+>> Michael, any concerns or comments about this patch?
+>>
+>> If not, I could also take it via my s390x tree since this fixes vhost-ccw
+>> devices on s390x.
+>>
+>>   Thomas
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   system/physmem.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index b7847db1a2c5..effa97184f25 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -1521,7 +1521,7 @@ static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
->           if (ret) {
->               perror("qemu_madvise");
->               fprintf(stderr, "madvise doesn't support MADV_DONTDUMP, "
-> -                            "but dump_guest_core=off specified\n");
-> +                            "but dump-guest-core=off specified\n");
->           }
->       }
->   }
-> 
-> ---
-> base-commit: 046a64b9801343e2e89eef10c7a48eec8d8c0d4f
-> change-id: 20240614-dump-7b73ab18c31a
-> 
-> Best regards,
+> I'm working on a pull request with this today.
+> I can drop it if you prefer ...
 
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Ah, perfect, please include it in your PR then!
 
--- 
-Cheers,
-
-David / dhildenb
+  Thanks,
+   Thomas
 
 
