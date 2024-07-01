@@ -4,73 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D765C41513
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 07:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBD5C41513
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 07:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOBB4-0007Cj-Iz; Mon, 01 Jul 2024 03:10:19 -0400
+	id 1sOBNF-0000mz-Nj; Mon, 01 Jul 2024 03:22:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sOBB2-0007CT-Mr; Mon, 01 Jul 2024 03:10:16 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sOBB0-0004vi-JL; Mon, 01 Jul 2024 03:10:16 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B217475A72;
- Mon,  1 Jul 2024 10:10:00 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 639FBFB1D6;
- Mon,  1 Jul 2024 10:10:08 +0300 (MSK)
-Message-ID: <793df53e-337c-46b0-be32-ced550002daf@tls.msk.ru>
-Date: Mon, 1 Jul 2024 10:10:08 +0300
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sOBN4-0000jU-E3
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:22:42 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sOBN2-0002DU-6H
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:22:42 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Ax3eo6WYJmBNILAA--.45252S3;
+ Mon, 01 Jul 2024 15:22:34 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxmsY3WYJmbjg3AA--.63342S3; 
+ Mon, 01 Jul 2024 15:22:33 +0800 (CST)
+Subject: Re: [PATCH v3 1/4] hw/intc: Remove loongarch_ipi.c
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ gaosong <gaosong@loongson.cn>, QEMU devel <qemu-devel@nongnu.org>
+Cc: Huacai Chen <chenhuacai@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240605-loongson3-ipi-v3-0-ddd2c0e03fa3@flygoat.com>
+ <20240605-loongson3-ipi-v3-1-ddd2c0e03fa3@flygoat.com>
+ <e1b8bbd8-2a9d-2417-1123-4aabfdedb684@loongson.cn>
+ <002f4e7e-682b-479b-9c6c-8971a0e6640a@linaro.org>
+ <8d975e9c-c2fd-09c8-7a37-5aebc63656d4@loongson.cn>
+ <9a0f73c6-33e9-4576-9056-6a5fd0718630@linaro.org>
+ <ceebb4ea-a417-0985-d45e-3988d76e2086@loongson.cn>
+ <3544da40-d680-20f2-d7af-cf304d07bc8d@loongson.cn>
+ <74a9606c-3b3b-4af3-8242-944619f898c9@app.fastmail.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <c817c31b-3f22-da1a-c110-4873e1a36eab@loongson.cn>
+Date: Mon, 1 Jul 2024 15:22:31 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] spapr: Migrate ail-mode-3 spapr cap
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-References: <20240506115607.13405-1-npiggin@gmail.com>
- <0ab5211c-f947-4a7c-b878-f48d1748a972@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <0ab5211c-f947-4a7c-b878-f48d1748a972@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <74a9606c-3b3b-4af3-8242-944619f898c9@app.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+X-CM-TRANSID: AQAAf8BxmsY3WYJmbjg3AA--.63342S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7CFWDZryfXw47Xw17Xr45XFc_yoW8Gr18pF
+ WfCa1SkF1UtrWjkws2qryIqF1j9r48Ww1DX345KFyDur98tr1xAFWkKryYkr9Fvan3K3W2
+ vr43K3WxXF4jyFcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
+ 67AKxVWUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
+ 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
+ CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+ 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
+ daVFxhVjvjDU0xZFpf9x07j5WrAUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.587,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,34 +93,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-06.06.2024 14:26, Michael Tokarev wrote:
-> 06.05.2024 14:56, Nicholas Piggin wrote:
->> This cap did not add the migration code when it was introduced. This
->> results in migration failure when changing the default using the
->> command line.
+
+
+On 2024/7/1 下午3:01, Jiaxun Yang wrote:
+> 
+> 
+> 在2024年7月1日七月 上午7:44，maobibo写道：
+>> Also this patch is problematic on LoongArch.
 >>
->> Cc: qemu-stable@nongnu.org
->> Fixes: ccc5a4c5e10 ("spapr: Add SPAPR_CAP_AIL_MODE_3 for AIL mode 3 support for H_SET_MODE hcall")
->> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->> ---
->>   include/hw/ppc/spapr.h | 1 +
->>   hw/ppc/spapr.c         | 1 +
->>   hw/ppc/spapr_caps.c    | 1 +
->>   3 files changed, 3 insertions(+)
+>> The original patch is to search physical cpuid rather than logic cpuid.
+>>
+>> We want to make ipi module better and better, however now it comes back
+>> to initial state at the beginning :(
 > 
-> Hi!
+> Isn't arch_id the "physical id" you want? "cs->cpu_index" is the logical ID
+> for QEMU.
 > 
-> Has this change been forgotten?  It's aimed at -stable, so must be
-> fixing a real issue.
+> arch_id is setup by arch code, like APIC ID for x86.
+> 
+> I had come across the old ipi_getcpu  implementation, and I'm sure we were
+> looking at arch_id as well.
+So, where is implementation code for function get_arch_id() looking for 
+vcpu with physical index?
 
-Ping #2 ? :)
+Regards
+Bibo Mao
 
-/mjt
-
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+> 
+> Thanks
+> - Jiaxun
+>>
+>> commit 03ca348b6b9038ce284916b36c19f700ac0ce7a6
+>> Author: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>> Date:   Wed Jun 5 10:04:27 2024
+>>
+>>       hw/intc/loongson_ipi: Replace ipi_getcpu with cpu_by_arch_id
+>>
+>>       cpu_by_arch_id is doing the same thing as our ipi_getcpu logic.
+>>
+>>       Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>       Reviewed-by: Song Gao <gaosong@loongson.cn>
+>>       Message-ID: <20240605-loongson3-ipi-v3-4-ddd2c0e03fa3@flygoat.com>
+>>       Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+>>
+>> Regards
+>> Bibo Mao
+>>
 
 
