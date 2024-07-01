@@ -4,102 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 754C5C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 07:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D765C41513
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 07:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOB9L-0006TU-TU; Mon, 01 Jul 2024 03:08:31 -0400
+	id 1sOBB4-0007Cj-Iz; Mon, 01 Jul 2024 03:10:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sOB9I-0006T3-Pl
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:08:28 -0400
-Received: from fout6-smtp.messagingengine.com ([103.168.172.149])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sOBB2-0007CT-Mr; Mon, 01 Jul 2024 03:10:16 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
- id 1sOB9H-0004V3-2H
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:08:28 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailfout.nyi.internal (Postfix) with ESMTP id 5B513138009C;
- Mon,  1 Jul 2024 03:08:26 -0400 (EDT)
-Received: from imap44 ([10.202.2.94])
- by compute3.internal (MEProxy); Mon, 01 Jul 2024 03:08:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1719817706;
- x=1719904106; bh=UqxxtnQtceqMgq5KZIyTdgd+UFrOtzcbmIMPzw6KfKI=; b=
- U8bBWZcIIT//vBHlblv7XTYWz8c8786olszMC58JPwX8W+SHM0PnD63ccNtdOW/J
- sY8sIjW67ere0T47mg0aD3zKXMHmbmBCjJmYGUlF8v/vQI4MVRAEI91IqG/5Zwth
- h5KXinGXkqBy0Ntkj7UDZW4mXPPtfjYsNbT+U6MmJsWxGjRwgtrnwhADHGKiARwi
- yQvUyW3CDMHURQ/frskYBLc8Ey4haobpHun6mrmBF20YULRdN2ipwWG5+l2DSoHC
- TlHqdEgnMmeAYT5sDkbDKqSWFpO1Ifcv8UoLEfdRFy2JKCyjMNXoc+BxvBWioT+G
- NZWk51WuvgogXJ9iRi2N0A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1719817706; x=
- 1719904106; bh=UqxxtnQtceqMgq5KZIyTdgd+UFrOtzcbmIMPzw6KfKI=; b=F
- ZFq0MNX1TjIUwz47ufkLj0kGxRZa/qbQifbehbQi0D+Y/m+rpvr9+nR6ULnVovOd
- tKGWeYp/3bKcz8zlnlD9uUAwqjxA3Axp9GAJZL4dS9MDUOje8LU/tU+NXCqg1xnN
- 0vRI+KqzRQzC7tHNGr0tH3iwEhQPdIHcCpjh7QeqeKhcRMZr5TO18ktUwFZAbCf1
- 6/YDABUhyct+ZtfSCO6TRZ9QUCoVHzMqROP5GXOJGiZrcZdUq73uI8BU1ML4Sq8v
- qbLByM5VQazrPzohgMvRqnCcuHl34IaMuxrp7+SGma+SzdijiO5GGMAp9ULkEHMq
- r3U0GroCY9zVFQrg7ne0w==
-X-ME-Sender: <xms:6VWCZqBo-XnplsbqH1tXrLd-l_19UBWhy4qO35GaSKagt5JrAkQCHw>
- <xme:6VWCZkhop36vYeTjIkGYNI-V1Tr2HjrMhbOlBiZCvX38G6w6qPpuU1AbH32a3BgOc
- oSczX4DFol9QJ6DP2I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvgdduudehucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfl
- ihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtoh
- hmqeenucggtffrrghtthgvrhhnpedufeegfeetudeghefftdehfefgveffleefgfehhfej
- ueegveethfduuddvieehgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
- grihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
-X-ME-Proxy: <xmx:6VWCZtluuN5_VnHxfcbEqRBS6nx_WjVlKp_vjFzKNwHCpopLKuNFvg>
- <xmx:6VWCZoyUDSvv0pyW06JyffVZSBi6ONV_MkOCEV14QsK8sb7168xhmA>
- <xmx:6VWCZvTLkR13LZsOs4Jw2lfxa2ICzsEx9x_n65k4j5Rd347xKPLMpw>
- <xmx:6VWCZjarJ7KF-H23rQA-ts1yLeOyY7v6Oh22sPSkhmJfZ6e77De8Og>
- <xmx:6lWCZuE1Ev8zhIDiOsmLErA4G2b2fENzncmghMBN1893vrtPTwytnvAs>
-Feedback-ID: ifd894703:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 9CCF336A0074; Mon,  1 Jul 2024 03:08:25 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-566-g3812ddbbc-fm-20240627.001-g3812ddbb
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sOBB0-0004vi-JL; Mon, 01 Jul 2024 03:10:16 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B217475A72;
+ Mon,  1 Jul 2024 10:10:00 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 639FBFB1D6;
+ Mon,  1 Jul 2024 10:10:08 +0300 (MSK)
+Message-ID: <793df53e-337c-46b0-be32-ced550002daf@tls.msk.ru>
+Date: Mon, 1 Jul 2024 10:10:08 +0300
 MIME-Version: 1.0
-Message-Id: <2b73d23a-4c36-4f0e-9d30-1d1af4c472fd@app.fastmail.com>
-In-Reply-To: <ceebb4ea-a417-0985-d45e-3988d76e2086@loongson.cn>
-References: <20240605-loongson3-ipi-v3-0-ddd2c0e03fa3@flygoat.com>
- <20240605-loongson3-ipi-v3-1-ddd2c0e03fa3@flygoat.com>
- <e1b8bbd8-2a9d-2417-1123-4aabfdedb684@loongson.cn>
- <002f4e7e-682b-479b-9c6c-8971a0e6640a@linaro.org>
- <8d975e9c-c2fd-09c8-7a37-5aebc63656d4@loongson.cn>
- <9a0f73c6-33e9-4576-9056-6a5fd0718630@linaro.org>
- <ceebb4ea-a417-0985-d45e-3988d76e2086@loongson.cn>
-Date: Mon, 01 Jul 2024 08:08:11 +0100
-From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
-To: "Bibo Mao" <maobibo@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- gaosong <gaosong@loongson.cn>, "QEMU devel" <qemu-devel@nongnu.org>
-Cc: "Huacai Chen" <chenhuacai@kernel.org>,
- "Richard Henderson" <richard.henderson@linaro.org>,
- "Peter Maydell" <peter.maydell@linaro.org>
-Subject: Re: [PATCH v3 1/4] hw/intc: Remove loongarch_ipi.c
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=103.168.172.149;
- envelope-from=jiaxun.yang@flygoat.com; helo=fout6-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] spapr: Migrate ail-mode-3 spapr cap
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+References: <20240506115607.13405-1-npiggin@gmail.com>
+ <0ab5211c-f947-4a7c-b878-f48d1748a972@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <0ab5211c-f947-4a7c-b878-f48d1748a972@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,35 +87,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+06.06.2024 14:26, Michael Tokarev wrote:
+> 06.05.2024 14:56, Nicholas Piggin wrote:
+>> This cap did not add the migration code when it was introduced. This
+>> results in migration failure when changing the default using the
+>> command line.
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: ccc5a4c5e10 ("spapr: Add SPAPR_CAP_AIL_MODE_3 for AIL mode 3 support for H_SET_MODE hcall")
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>   include/hw/ppc/spapr.h | 1 +
+>>   hw/ppc/spapr.c         | 1 +
+>>   hw/ppc/spapr_caps.c    | 1 +
+>>   3 files changed, 3 insertions(+)
+> 
+> Hi!
+> 
+> Has this change been forgotten?  It's aimed at -stable, so must be
+> fixing a real issue.
 
+Ping #2 ? :)
 
-=E5=9C=A82024=E5=B9=B47=E6=9C=881=E6=97=A5=E4=B8=83=E6=9C=88 =E4=B8=8A=E5=
-=8D=882:35=EF=BC=8Cmaobibo=E5=86=99=E9=81=93=EF=BC=9A
-[...]
->
-> How about split loongson_ipi.c into=20
-> loongson_ipi_base.c/loongson_ipi_loongson.c/loongson_ipi_loongarch.c,
->
-> File loongson_ipi_base.c contains the common code, loongson_ipi_xxx.c=20
-> contains arch specific. Soon we will submit irqchip in kernel function,
-> it will be much different for architectures, since ioctl command is=20
-> different for two architectures to save/restore ipi registers.
+/mjt
 
-MIPS's in kernel IPI IOCTL interface is non-existent so far, so if you a=
-re going
-to design something, I think it will be adopted by MIPS if necessary. Th=
-ere is still
-no need to create divergence in between.
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
-That being said, You are more than welcomed to draft a patch so we can d=
-iscuss based
-on that.
-
-Thanks
->
-> Regards
-> Bibo Mao
-
---=20
-- Jiaxun
 
