@@ -4,107 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9601C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 20:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CD09C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 20:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sONum-0005Jx-VP; Mon, 01 Jul 2024 16:46:20 -0400
+	id 1sONxs-0007ct-7V; Mon, 01 Jul 2024 16:49:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sONuW-0005BE-8j
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:46:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sONxn-0007cX-15
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:49:27 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sONuH-0006dS-QY
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:46:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719866747;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rE7Nh2RwFWYYPTVTBY7qqJUGJKqVIjesBvN7AjtRE0M=;
- b=cjYnQd/P5QMETLzRJLLkisJAOLnvJwGMNPnRZm+ms60rQIHaCbSjVDdtM6SN/c8gBi9jIJ
- EgQKYeLN/DQ62LhU/eu2d9G2jlI2O0e3ezeiGaMMN+xB8CWUPwabrJ6zuwujMGnIUJS4ZY
- t1GEfmGJocfZ+H4pMGfMO5Ec+vug0T0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-281-oh6euqpYPMuqc7INGUBOeA-1; Mon, 01 Jul 2024 16:45:45 -0400
-X-MC-Unique: oh6euqpYPMuqc7INGUBOeA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4255e9f5897so23984965e9.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 13:45:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719866745; x=1720471545;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rE7Nh2RwFWYYPTVTBY7qqJUGJKqVIjesBvN7AjtRE0M=;
- b=w0x46gNEyoiq/ypuRhWniO0lni6v3rKbCTsaRupsu+otCFPyY0mVHRq59nntVRktsN
- FtfWkKfBxXVpIzqKNtyLybJ68jFXKfjiGIkSI78pV4AD9nN36dLb7l2SOajvAjs5bWla
- dHrPfHjDNwiBOO7JXo1X2i2KZqfbV3qSxNgpZ26AsGxuPrkLyWOSnu8O6Y1394o/t+gq
- nBcuJHtr0eXF1DEjuj8XyE/ltf5JAQm+pqv3Dy0zBp0s39ChtYyvmMOM7CBQwd1CRU0a
- dx1XQVA8+bplWpnoFI1nxXkyPGtjlvj4fKdOFT1/8+Uz4+rGCF6MDPVX5A7C9lU9FEAd
- UBow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU403+yK/fmcZCChPgPmWErIz8kaQTkOraeQ/EMcmAfhyAiuHU3TMDOaqU73/digYHfg6E2HaTW5AJ/M3ea6yvNtQznGNI=
-X-Gm-Message-State: AOJu0YzmS/hi/k3G+D8vcUSnxmy/tvbbv4g7mYJlWzKrz970C7EVyKTw
- Pz/64RCnx84qQV3uhtqbVnpP2e2BPHGY3CYOZL/CayBF4IITGjibFoqZt4TMwf5Lqv4lLi+VMrb
- bY70VyHYd+ca5pmIE1IH6SaAmxJgtbdf2LmAEg60GeJk1gxz4tDzj
-X-Received: by 2002:a05:600c:4e8f:b0:425:6d00:356a with SMTP id
- 5b1f17b1804b1-42579ff9c69mr62974315e9.0.1719866744767; 
- Mon, 01 Jul 2024 13:45:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZZv5lgn+gkiWCHZh2wP3rh3ZYzCE3a+18c0919sDoeLnycMn5rgcToNkWQRI/2VhpaYBRGA==
-X-Received: by 2002:a05:600c:4e8f:b0:425:6d00:356a with SMTP id
- 5b1f17b1804b1-42579ff9c69mr62973875e9.0.1719866744037; 
- Mon, 01 Jul 2024 13:45:44 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b09a32asm169744705e9.31.2024.07.01.13.45.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 13:45:43 -0700 (PDT)
-Date: Mon, 1 Jul 2024 16:45:39 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Huang Rui <ray.huang@amd.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Antonio Caggiano <quic_acaggian@quicinc.com>,
- "Dr . David Alan Gilbert" <dgilbert@redhat.com>,
- Robert Beckett <bob.beckett@collabora.com>,
- Gert Wollny <gert.wollny@collabora.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, ernunes@redhat.com,
- Alyssa Ross <hi@alyssa.is>,
- Roger Pau =?iso-8859-1?Q?Monn=E9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Yiwei Zhang <zzyiwei@chromium.org>
-Subject: Re: [PATCH v16 00/13] Support blob memory and venus on qemu
-Message-ID: <20240701164449-mutt-send-email-mst@kernel.org>
-References: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sONxl-00084K-3i
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:49:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=zUAWeZFdRjb5vEOyCQB7solSdNTkQvfQGG7LSUisZQE=; b=nMHP0ch7VHsby8WJh3vaSLBUKn
+ ECN2JdWEeTrKJBEmpG9sdTRjWX8s14/pfabOajRd6l8cWfESpm12dk9jT297dLjDcBkThHjKUYUw7
+ 66+o0LTF8uD7EdpNwIQDu64MELgyUbcEMcZbNoNP8tCTi35yLYTVWIrG8lNR0ISiW0l9WKJO0SnvK
+ ZWCXEFcCDE7HIAIRma8D4ayDExxMoJZ/MvQiuxw9p2GMeqb06qyrYrqNwC/fi/pnJqnaT0pmfDfB6
+ CCaxloy2Xn5qebajBmMWi9qxJi0+P9TwxuAJxtWPP6Wr/PudHzc3sfXT1Ute0HIHi2vx6VwgFD4rs
+ pNU6ustSBvS2eQcPf6hSScfBa5X0fu7dHL0D1njdmdZAvP6V4HrVQrbIs4nJ0xhEVv8rzSPj0Xl/h
+ pOeAMgn6K+wqSktQlGj2uWC8qwiLTXo4b0bWZm1lnhu1hCRnfEty7kAUcsUSna+9PmOzX980o7UOx
+ yLtDwl3l1Vf6Veyu2Y5hBcD6Ok8ovtFdUplMZpqqdruE2vzBCliEuY41+1bB+8q2z3wpsooRH3VZ+
+ +Q0cgDhmWub0XIIidrRSYpmgPgZvJ6qlzO8NsAFKLZ4XXkEPMnwVcw5NqTjlL5UiOqUTr8wFSIJOC
+ 1CiVsh4x7ma+w8iaoobFGXMEYn0krktnBf8Y9iubM=;
+Received: from [2a00:23c4:8bb4:4000:a4da:be8a:f5f6:663]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1sONwK-0005zo-PB; Mon, 01 Jul 2024 21:47:57 +0100
+Message-ID: <e9072d75-06e2-4439-bc47-668d921e3202@ilande.co.uk>
+Date: Mon, 1 Jul 2024 21:49:16 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240623152343.328436-1-dmitry.osipenko@collabora.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+To: Zheyu Ma <zheyuma97@gmail.com>
+Cc: qemu-devel@nongnu.org
+References: <20240630130426.2966539-1-zheyuma97@gmail.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20240630130426.2966539-1-zheyuma97@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:a4da:be8a:f5f6:663
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] hw/display/tcx: Fix out-of-bounds access in
+ tcx_blit_writel
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,381 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jun 23, 2024 at 06:23:30PM +0300, Dmitry Osipenko wrote:
-> Hello,
+On 30/06/2024 14:04, Zheyu Ma wrote:
+
+> This patch addresses a potential out-of-bounds memory access issue in the
+> tcx_blit_writel function. It adds bounds checking to ensure that memory
+> accesses do not exceed the allocated VRAM size. If an out-of-bounds access
+> is detected, an error is logged using qemu_log_mask.
 > 
-> This series enables Vulkan Venus context support on virtio-gpu.
+> ASAN log:
+> ==2960379==ERROR: AddressSanitizer: SEGV on unknown address 0x7f524752fd01 (pc 0x7f525c2c4881 bp 0x7ffdaf87bfd0 sp 0x7ffdaf87b788 T0)
+> ==2960379==The signal is caused by a READ memory access.
+>      #0 0x7f525c2c4881 in memcpy string/../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:222
+>      #1 0x55aa782bd5b1 in __asan_memcpy llvm/compiler-rt/lib/asan/asan_interceptors_memintrinsics.cpp:22:3
+>      #2 0x55aa7854dedd in tcx_blit_writel hw/display/tcx.c:590:13
 > 
-> All virglrender and almost all Linux kernel prerequisite changes
-> needed by Venus are already in upstream. For kernel there is a pending
-> KVM patchset that fixes mapping of compound pages needed for DRM drivers
-> using TTM [1], othewrwise hostmem blob mapping will fail with a KVM error
-> from Qemu.
+> Reproducer:
+> cat << EOF | qemu-system-sparc -display none \
+> -machine accel=qtest, -m 512M -machine LX -m 256 -qtest stdio
+> writel 0x562e98c4 0x3d92fd01
+> EOF
+> 
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> ---
+>   hw/display/tcx.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/hw/display/tcx.c b/hw/display/tcx.c
+> index 99507e7638..af43bea7f2 100644
+> --- a/hw/display/tcx.c
+> +++ b/hw/display/tcx.c
+> @@ -33,6 +33,7 @@
+>   #include "migration/vmstate.h"
+>   #include "qemu/error-report.h"
+>   #include "qemu/module.h"
+> +#include "qemu/log.h"
+>   #include "qom/object.h"
+>   
+>   #define TCX_ROM_FILE "QEMU,tcx.bin"
+> @@ -577,6 +578,14 @@ static void tcx_blit_writel(void *opaque, hwaddr addr,
+>           addr = (addr >> 3) & 0xfffff;
+>           adsr = val & 0xffffff;
+>           len = ((val >> 24) & 0x1f) + 1;
+> +
+> +        if (addr + len > s->vram_size || adsr + len > s->vram_size) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: VRAM access out of bounds. addr: 0x%lx, adsr: 0x%x, len: %u\n",
+> +                          __func__, addr, adsr, len);
+> +            return;
+> +        }
+> +
+>           if (adsr == 0xffffff) {
+>               memset(&s->vram[addr], s->tmpblit, len);
+>               if (s->depth == 24) {
+
+What would happen if the source data plus length goes beyond the end of the 
+framebuffer but the destination lies completely within it? Presumably the length of 
+the data copy should be restricted to the length of the source data rather than the 
+entire copy being ignored?
 
 
-I'd like to see a Tested-by from Alex Bennée for this -
-he's been testing v14 last as far as I could see.
+ATB,
 
-
-> [1] https://lore.kernel.org/kvm/20240229025759.1187910-1-stevensd@google.com/
-> 
-> You'll need to use recent Mesa version containing patch that removes
-> dependency on cross-device feature from Venus that isn't supported by
-> Qemu [2].
-> 
-> [2] https://gitlab.freedesktop.org/mesa/mesa/-/commit/087e9a96d13155e26987befae78b6ccbb7ae242b
-> 
-> Example Qemu cmdline that enables Venus:
-> 
->   qemu-system-x86_64 -device virtio-vga-gl,hostmem=4G,blob=true,venus=true \
->       -machine q35,accel=kvm,memory-backend=mem1 \
->       -object memory-backend-memfd,id=mem1,size=8G -m 8G
-> 
-> 
-> Changes from V15 to V16
-> 
-> - Fixed resource_get_info() change made in v15 that was squshed into a
->   wrong patch. Squashed set_scanout_blob patch into the blob-commands patch,
->   otherwise we'll need to revert back ordering of blob patches to older v7
->   variant.
-> 
-> - Changed hostmem mapping state to boolean, suggested by Akihiko Odaki.
-> 
-> - Documented Venus in virtio-gpu doc. Amended "Support Venus context" patch
->   with the doc addition. Suggested by Akihiko Odaki.
-> 
-> Changes from V14 to V15
-> 
-> - Dropped hostmem mapping state that got unused in v14, suggested by
->   Akihiko Odaki.
-> 
-> - Moved resource_get_info() from set_scanout_blob() to create_blob(),
->   suggested by Akihiko Odaki.
-> 
-> - Fixed unitilized variable in create_blob(), spotted by Alex Bennée.
-> 
-> Changes from V13 to V14
-> 
-> - Fixed erronous fall-through in renderer_state's switch-case that was
->   spotted by Marc-André Lureau.
-> 
-> - Reworked HOSTMEM_MR_FINISH_UNMAPPING handling as was suggested by
->   Akihiko Odaki. Now it shares the same code path with HOSTMEM_MR_MAPPED.
-> 
-> - Made use of g_autofree in virgl_cmd_resource_create_blob() as was
->   suggested by Akihiko Odaki.
-> 
-> - Removed virtio_gpu_virgl_deinit() and moved all deinit code to
->   virtio_gpu_gl_device_unrealize() as was suggested by Marc-André Lureau.
-> 
-> - Replaced HAVE_FEATURE in mseon.build with virglrenderer's VERSION_MAJOR
->   check as was suggested by Marc-André Lureau.
-> 
-> - Added trace event for cmd-suspension as was suggested by Marc-André Lureau.
-> 
-> - Added patch to replace in-flight printf's with trace events as was
->   suggested by Marc-André Lureau
-> 
-> Changes from V12 to V13
-> 
-> - Replaced `res->async_unmap_in_progress` flag with a mapping state,
->   moved it to the virtio_gpu_virgl_hostmem_region like was suggested
->   by Akihiko Odaki.
-> 
-> - Renamed blob_unmap function and added back cmd_suspended argument
->   to it. Suggested by Akihiko Odaki.
-> 
-> - Reordered VirtIOGPUGL refactoring patches to minimize code changes
->   like was suggested by Akihiko Odaki.
-> 
-> - Replaced gl->renderer_inited with gl->renderer_state, like was suggested
->   by Alex Bennée.
-> 
-> - Added gl->renderer state resetting to gl_device_unrealize(), for
->   consistency. Suggested by Alex Bennée.
-> 
-> - Added rb's from Alex and Manos.
-> 
-> - Fixed compiling with !HAVE_VIRGL_RESOURCE_BLOB.
-> 
-> Changes from V11 to V12
-> 
-> - Fixed virgl_cmd_resource_create_blob() error handling. Now it doesn't
->   corrupt resource list and releases resource properly on error. Thanks
->   to Akihiko Odaki for spotting the bug.
-> 
-> - Added new patch that handles virtio_gpu_virgl_init() failure gracefully,
->   fixing Qemu crash. Besides fixing the crash, it allows to implement
->   a cleaner virtio_gpu_virgl_deinit().
-> 
-> - virtio_gpu_virgl_deinit() now assumes that previously virgl was
->   initialized successfully when it was inited at all. Suggested by
->   Akihiko Odaki.
-> 
-> - Fixed missed freeing of print_stats timer in virtio_gpu_virgl_deinit()
-> 
-> - Added back blob unmapping or RESOURCE_UNREF that was requested
->   by Akihiko Odaki. Added comment to the code explaining how
->   async unmapping works. Added back `res->async_unmap_in_progress`
->   flag and added comment telling why it's needed.
-> 
-> - Moved cmdq_resume_bh to VirtIOGPUGL and made coding style changes
->   suggested by Akihiko Odaki.
-> 
-> - Added patches that move fence_poll and print_stats timers to VirtIOGPUGL
->   for consistency with cmdq_resume_bh.
-> 
-> Changes from V10 to V11
-> 
-> - Replaced cmd_resume bool in struct ctrl_command with
->   "cmd->finished + !VIRTIO_GPU_FLAG_FENCE" checking as was requested
->   by Akihiko Odaki.
-> 
-> - Reworked virgl_cmd_resource_unmap/unref_blob() to avoid re-adding
->   the 'async_unmap_in_progress' flag that was dropped in v9:
-> 
->     1. virgl_cmd_resource_[un]map_blob() now doesn't check itself whether
->        resource was previously mapped and lets virglrenderer to do the
->        checking.
-> 
->     2. error returned by virgl_renderer_resource_unmap() is now handled
->        and reported properly, previously the error wasn't checked. The
->        virgl_renderer_resource_unmap() fails if resource wasn't mapped.
-> 
->     3. virgl_cmd_resource_unref_blob() now doesn't allow to unref resource
->        that is mapped, it's a error condition if guest didn't unmap resource
->        before doing the unref. Previously unref was implicitly unmapping
->        resource.
-> 
-> Changes from V9 to V10
-> 
-> - Dropped 'async_unmap_in_progress' variable and switched to use
->   aio_bh_new() isntead of oneshot variant in the "blob commands" patch.
-> 
-> - Further improved error messages by printing error code when actual error
->   occurrs and using ERR_UNSPEC instead of ERR_ENOMEM when we don't really
->   know if it was ENOMEM for sure.
-> 
-> - Added vdc->unrealize for the virtio GL device and freed virgl data.
-> 
-> - Dropped UUID and doc/migration patches. UUID feature isn't needed
->   anymore, instead we changed Mesa Venus driver to not require UUID.
-> 
-> - Renamed virtio-gpu-gl "vulkan" property name back to "venus".
-> 
-> Changes from V8 to V9
-> 
-> - Added resuming of cmdq processing when hostmem MR is freed,
->   as was suggested by Akihiko Odaki.
-> 
-> - Added more error messages, suggested by Akihiko Odaki
-> 
-> - Dropped superfluous 'res->async_unmap_completed', suggested
->   by Akihiko Odaki.
-> 
-> - Kept using cmd->suspended flag. Akihiko Odaki suggested to make
->   virtio_gpu_virgl_process_cmd() return false if cmd processing is
->   suspended, but it's not easy to implement due to ubiquitous
->   VIRTIO_GPU_FILL_CMD() macros that returns void, requiring to change
->   all the virtio-gpu processing code.
-> 
-> - Added back virtio_gpu_virgl_resource as was requested by Akihiko Odaki,
->   though I'm not convinced it's really needed.
-> 
-> - Switched to use GArray, renamed capset2_max_ver/size vars and moved
->   "vulkan" property definition to the virtio-gpu-gl device in the Venus
->   patch, like was suggested by Akihiko Odaki.
-> 
-> - Moved UUID to virtio_gpu_virgl_resource and dropped UUID save/restore
->   since it will require bumping VM version and virgl device isn't miratable
->   anyways.
-> 
-> - Fixed exposing UUID feature with Rutabaga
-> 
-> - Dropped linux-headers update patch because headers were already updated
->   in Qemu/staging.
-> 
-> - Added patch that updates virtio migration doc with a note about virtio-gpu
->   migration specifics, suggested by Akihiko Odaki.
-> 
-> - Addressed coding style issue noticed by Akihiko Odaki
-> 
-> Changes from V7 to V8
-> 
-> - Supported suspension of virtio-gpu commands processing and made
->   unmapping of hostmem region asynchronous by blocking/suspending
->   cmd processing until region is unmapped. Suggested by Akihiko Odaki.
-> 
-> - Fixed arm64 building of x86 targets using updated linux-headers.
->   Corrected the update script. Thanks to Rob Clark for reporting
->   the issue.
-> 
-> - Added new patch that makes registration of virgl capsets dynamic.
->   Requested by Antonio Caggiano and Pierre-Eric Pelloux-Prayer.
-> 
-> - Venus capset now isn't advertised if Vulkan is disabled with vulkan=false
-> 
-> Changes from V6 to V7
-> 
-> - Used scripts/update-linux-headers.sh to update Qemu headers based
->   on Linux v6.8-rc3 that adds Venus capset definition to virtio-gpu
->   protocol, was requested by Peter Maydel
-> 
-> - Added r-bs that were given to v6 patches. Corrected missing s-o-bs
-> 
-> - Dropped context_init Qemu's virtio-gpu device configuration flag,
->   was suggested by Marc-André Lureau
-> 
-> - Added missing error condition checks spotted by Marc-André Lureau
->   and Akihiko Odaki, and few more
-> 
-> - Returned back res->mr referencing to memory_region_init_ram_ptr() like
->   was suggested by Akihiko Odaki. Incorporated fix suggested by Pierre-Eric
->   to specify the MR name
-> 
-> - Dropped the virgl_gpu_resource wrapper, cleaned up and simplified
->   patch that adds blob-cmd support
-> 
-> - Fixed improper blob resource removal from resource list on resource_unref
->   that was spotted by Akihiko Odaki
-> 
-> - Change order of the blob patches, was suggested by Akihiko Odaki.
->   The cmd_set_scanout_blob support is enabled first
-> 
-> - Factored out patch that adds resource management support to virtio-gpu-gl,
->   was requested by Marc-André Lureau
-> 
-> - Simplified and improved the UUID support patch, dropped the hash table
->   as we don't need it for now. Moved QemuUUID to virtio_gpu_simple_resource.
->   This all was suggested by Akihiko Odaki and Marc-André Lureau
-> 
-> - Dropped console_has_gl() check, suggested by Akihiko Odaki
-> 
-> - Reworked Meson cheking of libvirglrender features, made new features
->   available based on virglrender pkgconfig version instead of checking
->   symbols in header. This should fix build error using older virglrender
->   version, reported by Alex Bennée
-> 
-> - Made enabling of Venus context configrable via new virtio-gpu device
->   "vulkan=true" flag, suggested by Marc-André Lureau. The flag is disabled
->   by default because it requires blob and hostmem options to be enabled
->   and configured
-> 
-> Changes from V5 to V6
-> 
-> - Move macros configurations under virgl.found() and rename
->   HAVE_VIRGL_CONTEXT_CREATE_WITH_FLAGS.
-> 
-> - Handle the case while context_init is disabled.
-> 
-> - Enable context_init by default.
-> 
-> - Move virtio_gpu_virgl_resource_unmap() into
->   virgl_cmd_resource_unmap_blob().
-> 
-> - Introduce new struct virgl_gpu_resource to store virgl specific members.
-> 
-> - Remove erro handling of g_new0, because glib will abort() on OOM.
-> 
-> - Set resource uuid as option.
-> 
-> - Implement optional subsection of vmstate_virtio_gpu_resource_uuid_state
->   for virtio live migration.
-> 
-> - Use g_int_hash/g_int_equal instead of the default
-> 
-> - Add scanout_blob function for virtio-gpu-virgl
-> 
-> - Resolve the memory leak on virtio-gpu-virgl
-> 
-> - Remove the unstable API flags check because virglrenderer is already 1.0
-> 
-> - Squash the render server flag support into "Initialize Venus"
-> 
-> Changes from V4 (virtio gpu V4) to V5
-> 
-> - Inverted patch 5 and 6 because we should configure
->   HAVE_VIRGL_CONTEXT_INIT firstly.
-> 
-> - Validate owner of memory region to avoid slowing down DMA.
-> 
-> - Use memory_region_init_ram_ptr() instead of
->   memory_region_init_ram_device_ptr().
-> 
-> - Adjust sequence to allocate gpu resource before virglrender resource
->   creation
-> 
-> - Add virtio migration handling for uuid.
-> 
-> - Send kernel patch to define VIRTIO_GPU_CAPSET_VENUS.
->   https://lore.kernel.org/lkml/20230915105918.3763061-1-ray.huang@amd.com/
-> 
-> - Add meson check to make sure unstable APIs defined from 0.9.0.
-> 
-> Changes from V1 to V2 (virtio gpu V4)
-> 
-> - Remove unused #include "hw/virtio/virtio-iommu.h"
-> 
-> - Add a local function, called virgl_resource_destroy(), that is used
->   to release a vgpu resource on error paths and in resource_unref.
-> 
-> - Remove virtio_gpu_virgl_resource_unmap from
->   virtio_gpu_cleanup_mapping(),
->   since this function won't be called on blob resources and also because
->   blob resources are unmapped via virgl_cmd_resource_unmap_blob().
-> 
-> - In virgl_cmd_resource_create_blob(), do proper cleanup in error paths
->   and move QTAILQ_INSERT_HEAD(&g->reslist, res, next) after the resource
->   has been fully initialized.
-> 
-> - Memory region has a different life-cycle from virtio gpu resources
->   i.e. cannot be released synchronously along with the vgpu resource.
->   So, here the field "region" was changed to a pointer and is allocated
->   dynamically when the blob is mapped.
->   Also, since the pointer can be used to indicate whether the blob
->   is mapped, the explicite field "mapped" was removed.
-> 
-> - In virgl_cmd_resource_map_blob(), add check on the value of
->   res->region, to prevent beeing called twice on the same resource.
-> 
-> - Add a patch to enable automatic deallocation of memory regions to resolve
->   use-after-free memory corruption with a reference.
-> 
-> 
-> Antonio Caggiano (1):
->   virtio-gpu: Support Venus context
-> 
-> Dmitry Osipenko (8):
->   virtio-gpu: Use trace events for tracking number of in-flight fences
->   virtio-gpu: Move fence_poll timer to VirtIOGPUGL
->   virtio-gpu: Move print_stats timer to VirtIOGPUGL
->   virtio-gpu: Handle virtio_gpu_virgl_init() failure
->   virtio-gpu: Unrealize GL device
->   virtio-gpu: Use pkgconfig version to decide which virgl features are
->     available
->   virtio-gpu: Don't require udmabuf when blobs and virgl are enabled
->   virtio-gpu: Support suspension of commands processing
-> 
-> Huang Rui (2):
->   virtio-gpu: Support context-init feature with virglrenderer
->   virtio-gpu: Add virgl resource management
-> 
-> Pierre-Eric Pelloux-Prayer (1):
->   virtio-gpu: Register capsets dynamically
-> 
-> Robert Beckett (1):
->   virtio-gpu: Handle resource blob commands
-> 
->  docs/system/devices/virtio-gpu.rst |  11 +
->  hw/display/trace-events            |   3 +
->  hw/display/virtio-gpu-gl.c         |  62 ++-
->  hw/display/virtio-gpu-virgl.c      | 585 +++++++++++++++++++++++++++--
->  hw/display/virtio-gpu.c            |  44 ++-
->  include/hw/virtio/virtio-gpu.h     |  32 +-
->  meson.build                        |   5 +-
->  7 files changed, 685 insertions(+), 57 deletions(-)
-> 
-> -- 
-> 2.45.2
+Mark.
 
 
