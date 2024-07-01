@@ -4,65 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3EACC30653
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B5A9C41513
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:07:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOCrF-0004jO-Iv; Mon, 01 Jul 2024 04:57:57 -0400
+	id 1sOCwL-0007vB-KO; Mon, 01 Jul 2024 05:03:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1sOCqC-0004M6-JH; Mon, 01 Jul 2024 04:56:53 -0400
-Received: from fanzine.igalia.com ([178.60.130.6] helo=fanzine2.igalia.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1sOCq6-0006XT-9q; Mon, 01 Jul 2024 04:56:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
- s=20170329;
- h=Content-Type:MIME-Version:Message-ID:Date:References:
- In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:Content-Transfer-Encoding:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=073QRSIAljNanot71WKMUobh9NY8CTxpm8fYzTNnETI=; b=IAGZwfzSAGCnv6eig9Rk1EIa1A
- sHknzLgyC/jfGArWZ3bWm+yJ2vSgnnoDrSWbgGF7qY8bB9eqByvFIr790WKhVtoT5pJBnoIz0j3d/
- 8fnrztwxfbqoZg1qMO2JtTHVLr/x7YGhZznzu4JMwGNc16MH7mzQu3U5hNu1ktVcXKu18DH3E0u7h
- SQJfytJcMNt9WWXnCZFjrPWhUmMwWfa1MTEOLQEnneErJ4r3R8BvEH69RAlgsGPjXPudQMXVupQsk
- /Up7XWk4K15rucGOLHpW3ZgCWJb/7TUXd8a6cpy90U2rpd5Hx8lstX51gcir0viVowG/e0NBC+SnJ
- aD5+Pbyg==;
-Received: from maestria.local.igalia.com ([192.168.10.14] helo=mail.igalia.com)
- by fanzine2.igalia.com with esmtps 
- (Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
- id 1sOCpt-009m7w-D4; Mon, 01 Jul 2024 10:56:33 +0200
-Received: from gate.service.igalia.com ([192.168.21.52])
- by mail.igalia.com with esmtp (Exim)
- id 1sOCpr-00EQSH-3s; Mon, 01 Jul 2024 10:56:33 +0200
-Received: from berto by gate.service.igalia.com with local (Exim 4.96)
- (envelope-from <berto@igalia.com>) id 1sOCpq-00G78q-36;
- Mon, 01 Jul 2024 08:56:30 +0000
-From: Alberto Garcia <berto@igalia.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>, Hanna
- Czenczek <hreitz@redhat.com>, Madeeha Javed <javed@igalia.com>
-Subject: Re: [PATCH] scripts/qcow2-to-stdout.py: Add script to write qcow2
- images to stdout
-In-Reply-To: <eyt18.e0s2rty6vd9y@linaro.org>
-References: <20240610144708.81351-1-berto@igalia.com>
- <eyt18.e0s2rty6vd9y@linaro.org>
-Date: Mon, 01 Jul 2024 10:56:30 +0200
-Message-ID: <w51sewtpk1t.fsf@igalia.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sOCsI-0005au-Ho
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:59:02 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sOCsF-00077t-5s
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:59:00 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5854ac8168fso2979431a12.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 01:58:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719824337; x=1720429137; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=l2lyDssl4G6ryHXDn9OaZUeP+3jqeJ+ldt2WC0u/TIc=;
+ b=g+g6FKYpBUseHADFeRDDnnA441CSwUjmx103fjxJyhK9e3OXhhp9qwavP//P2Yb59c
+ D8EflJV7o6mvIFDBeqbV7sRmTdGUAzz6DCbbgp24yDS60GGOZshb+TEH0Y0bFqFKnwWU
+ ob3YHs+bTRjpj41u8fzivGmjXDtQnY8NjmAdLHkt/drHh3ZSKgw2pSQfWuioGridq7F7
+ x7sGBeF4R2KG++I3tyZkjbkAKXe4n7pFZpkjhZJ+AOCS0GM4+T+l7K2Nk6y6BrSVXWFc
+ xEgd1r5e1YS5WYzVRxmdUtRmzeOw8Qt6AvAz2tEjpcMjU9yBwI3Xk+IgV9Pr5W1Su5+l
+ isNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719824337; x=1720429137;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=l2lyDssl4G6ryHXDn9OaZUeP+3jqeJ+ldt2WC0u/TIc=;
+ b=GYGlXnao/xKddk8QuwTLdsz3uCUGaZdlaUEzf4v0fio3YzdLtkgQk2F/u6dnoM8cMa
+ cNyqR5hZ4f0uLzeyKyjd7BQl5gQuPDJ9dOgJgMRVliC9R8IgHW5ts4bxwH7VgjcIxoIk
+ pzWDEaupbj7nc0xrLbSBTNvJkfnYdD2+O301sAKTe5N1D6S4/DJeKlErMaORyxyBWe3O
+ +hmmeDcxdBhfw1pFv47u87p4s2FapRr5cdHFnOSueCJx4+C3OsKesvGTzo2FN3/8KhTZ
+ 5N4lMX4f7pO2E9bPGVcfhEqJLcbXjg/84etIhXwUBpZafAXpCxzJ8yrmiBIeJlijPzoq
+ RFtw==
+X-Gm-Message-State: AOJu0YwF41XFGxGYw51JVSb0d4S16xzLF82s1YPTyIDIbQBCHEW9hg5S
+ XCjP+wj5opIrZNWKvckghSi0t7cW5UezoxnfKvQ8zygRFC076rB5SYE+nyoIztzO2W1HYsPMXw5
+ qx77+WzG93RT+PWlQaomKDoyxTKX7Rkbg0PI1ZG+pfYhkV2mO
+X-Google-Smtp-Source: AGHT+IHjh+YTvsjchGNVXEubpw9/qk3HiRdxy9sCou4DoLJphbXRFLcRXoP2EFm557mIMkot27H3XU5CrpJiI+ma5YI=
+X-Received: by 2002:a05:6402:2786:b0:582:7e6d:6816 with SMTP id
+ 4fb4d7f45d1cf-5879f0c6348mr3753181a12.8.1719824336839; Mon, 01 Jul 2024
+ 01:58:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=178.60.130.6; envelope-from=berto@igalia.com;
- helo=fanzine2.igalia.com
+References: <20240701075208.19634-1-sgarzare@redhat.com>
+In-Reply-To: <20240701075208.19634-1-sgarzare@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 1 Jul 2024 09:58:46 +0100
+Message-ID: <CAFEAcA_y-o40H7fytjC_uzHoWeyq-oNU_k-s98GbsRnLbyT7GQ@mail.gmail.com>
+Subject: Re: [PATCH] virtio: remove virtio_tswap16s() call in
+ vring_packed_event_read()
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, Eugenio Perez Martin <eperezma@redhat.com>,
+ jasowang@redhat.com, 
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-stable@nongnu.org,
+ Xoykie <xoykie@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,121 +91,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed 12 Jun 2024 02:00:19 PM +03, Manos Pitsidianakis wrote:
-
-Hi, thanks for the review and sorry for taking so long to reply, I was
-on vacation.
-
->> scripts/qcow2-to-stdout.py | 330 +++++++++++++++++++++++++++++++++++++
->> 1 file changed, 330 insertions(+)
->> create mode 100755 scripts/qcow2-to-stdout.py
+On Mon, 1 Jul 2024 at 08:52, Stefano Garzarella <sgarzare@redhat.com> wrote:
 >
-> I recommend running the `black` formatter on this script, it makes the
-> code more diff-friendly and uniform. Also it has become the de-facto
-> python style.
-
-Hmmm, I don't like how it reformats some of the lines. However other
-changes do make sense, so I'll apply those.
-
-> Also, it's more pythonic to name constants in uppercase, like
-> allocated_l2_tables. You can check such lints with pylint
-> scripts/qcow2-to-stdout.py
-
-allocated_l2_tables is not a constant :-?
-
->>+    struct.pack_into('>I', header, 0x70, 0x6803f857)
->>+    struct.pack_into('>I', header, 0x74, len(qcow2_features) * 48)
->>+    cur_offset = 0x78
+> Commit d152cdd6f6 ("virtio: use virtio accessor to access packed event")
+> switched using of address_space_read_cached() to virito_lduw_phys_cached()
+> to access packed descriptor event.
 >
-> Minor comment: extract magic values/offsets into constant globals with
-> descriptive names, it'd help the code be more readable and easier to
-> maintain if ported in the future to other formats.
-
-Good idea, will do.
-
->>+    for (feature_type, feature_bit, feature_name) in qcow2_features:
->>+        struct.pack_into('>BB46s', header, cur_offset,
->>+                         feature_type, feature_bit, feature_name.encode('ascii'))
->>+        cur_offset += 48
->>+
+> When we used address_space_read_cached(), we needed to call
+> virtio_tswap16s() to handle the endianess of the field, but
+> virito_lduw_phys_cached() already handles it internally, so we no longer
+> need to call virtio_tswap16s() (as the commit had done for `off_wrap`,
+> but forgot for `flags`).
 >
->>From here onwards put everything under a main block like so:
-
-Ok.
-
->>+# Command-line arguments
->>+parser = argparse.ArgumentParser(description='This program converts a QEMU disk image to qcow2 '
->>+                                 'and writes it to the standard output')
->>+parser.add_argument('input_file', help='name of the input file')
+> Fixes: d152cdd6f6 ("virtio: use virtio accessor to access packed event")
+> Cc: jasowang@redhat.com
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Xoykie <xoykie@gmail.com>
+> Link: https://lore.kernel.org/qemu-devel/CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com
+> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+> ---
+>  hw/virtio/virtio.c | 1 -
+>  1 file changed, 1 deletion(-)
 >
-> Suggestion:
->
-> -parser.add_argument('input_file', help='name of the input file')
-> +parser.add_argument('input_file', help='name of the input file', type=pathlib.Path, required=True)
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 893a072c9d..2e5e67bdb9 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -323,7 +323,6 @@ static void vring_packed_event_read(VirtIODevice *vdev,
+>      /* Make sure flags is seen before off_wrap */
+>      smp_rmb();
+>      e->off_wrap = virtio_lduw_phys_cached(vdev, cache, off_off);
+> -    virtio_tswap16s(vdev, &e->flags);
+>  }
 
-'required' is not valid in positional arguments, and I'm not sure what
-benefits using pathlib brings in this case.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
->>+parser.add_argument('-v', dest='qcow2_version', metavar='qcow2_version',
->
-> Maybe -q instead of -v? No strong feelings on this one, it's just that 
-> -v is usually version. -q is also usually --quiet so not sure...
-
-Yeah, I thought the same but I didn't want to complicate this too much,
-this is just a helper script.
-
->>+# If the input file is not in raw format we can use
->>+# qemu-storage-daemon to make it appear as such
->>+if input_format != 'raw':
->>+    temp_dir = tempfile.mkdtemp()
->
-> Consider using the tempfile.TemporaryDirectory as with... context 
-> manager so that the temp dir cleanup is performed automatically
-
-I don't think I can do that directly here because the temp dir has to
-live until the very end (qemu-storage-daemon needs it).
-
->>+    pid_file = temp_dir + "/pid"
->>+    raw_file = temp_dir + "/raw"
->>+    open(raw_file, 'wb').close()
->
-> Consider using a with open(...) open manager for opening the file
-
-How would that be? Like this?
-
-    with open(raw_file, 'wb'):
-        pass
-
-If so I don't see the benefit, I just need to create an empty file and
-close it immediately.
-
->>+    atexit.register(kill_storage_daemon, pid_file, raw_file, temp_dir)
->
-> Hm, this too could be a context manager. Seems very C-like to use
-> atexit here.
-
-Yeah it is, but I think that using the context manager would require me
-to split the main function in two, and I'm not sure that it's worth it
-for this case. Other Python scripts in the QEMU repo use atexit already.
-
->>+    ret = subprocess.run(["qemu-storage-daemon", "--daemonize", "--pidfile", pid_file,
->>+                          "--blockdev", f"driver=file,node-name=file0,driver=file,filename={input_file},read-only=on",
->>+                          "--blockdev", f"driver={input_format},node-name=disk0,file=file0,read-only=on",
->>+                          "--export", f"type=fuse,id=export0,node-name=disk0,mountpoint={raw_file},writable=off"])
->
-> You can add shell=True, check=False arguments to subprocess.run() so 
-> that it captures the outputs. (check=False is the default behavior, but 
-> better make it explicit)
-
-I'm not sure that I understand, why would I need to use a shell here?
-
->>+sys.stdout.buffer.write(cluster)
->
-> Would it be a good idea to check if stdout is a tty and not a
-> pipe/redirection? You can check it with isatty() and error out to
-> prevent printing binary to the terminal.
-
-Yeah this is a good idea, thanks.
-
-Berto
+thanks
+-- PMM
 
