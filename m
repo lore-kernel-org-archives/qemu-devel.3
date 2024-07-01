@@ -4,142 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23BB2C30653
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B780C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:16:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOD4t-0004zN-0l; Mon, 01 Jul 2024 05:12:03 -0400
+	id 1sOD4u-00052P-7G; Mon, 01 Jul 2024 05:12:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOD4q-0004v3-Ae
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:12:00 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOD4p-0004uN-2Q
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:11:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOD4m-00082N-WA
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:11:59 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOD4m-00082M-Vu
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:11:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1719825115;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=l9nPlifQxAJAPXjflz6SlB0mkVAD2ofRBOUMpsubJ+w=;
- b=UrqEXguig+Bk2Q736T1CgBkemcHOUc00LmFdioXJg8iz3SGXYcJPRKcK7dIx4AFFfaKc1c
- 0Hr0QHrZkXEPD7TtTkgcQgBxEE+eYbdCxNe/npEKfTYCVkiz1TuWNGCsie3zIIkAAGQ2uV
- 8YLo5N9Fo+7ekKHuH6uRypC3EMf1kVg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-aP1pFqrDOhSithSjIbQQWA-1; Mon, 01 Jul 2024 05:11:53 -0400
-X-MC-Unique: aP1pFqrDOhSithSjIbQQWA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4257f95ffc6so6256125e9.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 02:11:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719825112; x=1720429912;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=l9nPlifQxAJAPXjflz6SlB0mkVAD2ofRBOUMpsubJ+w=;
- b=EsKj0nzZ0DdImdXORWsZEoF11DynoRVcr2+hFV3djM0+E2mn67Vj9qfTGMy/QATm+9
- JpeK56fhbNogNQja05w5hgQ5GbksmsVMkAYlub0ZxgBeg7T365osYQkIawBRtGptjd01
- aGT8ZC5SP0s2svCZHXHBiUgiKJ81WYP288P/3tteKqgB/jOqJ3eQFq1z221pvet9gCwn
- L4/znvZcBkTRPNbdRekyYLMEuCa+QiuxV9bPyLlAJ4pbDNIMsW3XhZgX4z1njuRWRCSm
- JhwI7RzqDEWR07T3x8D/xLusfJdup3wNoS8UIj/UgZJ6waMWA0xGXLNa5TGmOO52QYHL
- rOQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXxLQulEsIiCER2QgNXv63iI+wBzuFUaVZ26IKuCkQXWM1zrMKmm6MfVg9Serk502mf9dTNXAaKrHYGZVvTs9ZgTGY8kyo=
-X-Gm-Message-State: AOJu0YxwXfT6mpXuiXuCIqYTrMORubSGl93dq9Il/fWN7v+xJleYULqG
- Z1d+twbjB//fU167DC6P4SdJVTWahys1DU1iH9xRGe3OdimeTHB+osGhxeEz1vxuvPdK+7QJmWQ
- 4F15/1wqYb8UTWQB31SHoxAnyTVO95whOKshL2HCdyAspkF46z1mG
-X-Received: by 2002:a05:600c:3204:b0:421:f4da:f4b with SMTP id
- 5b1f17b1804b1-4257a0282b9mr24079775e9.40.1719825112149; 
- Mon, 01 Jul 2024 02:11:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgYomRSYAT4CiPg2EkQ1R0rkgMF3djmlxurOHxFwiooakRLobr9o60P0nkS+Pe5WNPYHrOvw==
-X-Received: by 2002:a05:600c:3204:b0:421:f4da:f4b with SMTP id
- 5b1f17b1804b1-4257a0282b9mr24079605e9.40.1719825111740; 
- Mon, 01 Jul 2024 02:11:51 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-177-66.web.vodafone.de.
- [109.43.177.66]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0cd6d9sm9417605f8f.12.2024.07.01.02.11.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jul 2024 02:11:51 -0700 (PDT)
-Message-ID: <b38d3f31-fad2-47b1-bb9a-6393456fe979@redhat.com>
-Date: Mon, 1 Jul 2024 11:11:49 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=S7hT4n6ISKxZUyUm4JpCd0/MZTDDpRW1JeMoxr8sEd0=;
+ b=IBR5X79jYr8lt2DQAlhxp1uOnK/264/o1cdsSAzxh61h6t7BF0HUH4BwyLrlk+3D4UBAtV
+ +WXnj2uEQeL6UBBfTrFadthFFM8JXd0yXuj/AbQxFCY7XRIukiyLUxxHG7OPn3SqdXxTiG
+ koIAukM3xy7CChVXV5eXEYDcLP38fPM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-CBMwClAlMR2rnxNujOo_Cg-1; Mon,
+ 01 Jul 2024 05:11:50 -0400
+X-MC-Unique: CBMwClAlMR2rnxNujOo_Cg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 966A91955F36; Mon,  1 Jul 2024 09:11:42 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.4])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 370BD19560A3; Mon,  1 Jul 2024 09:11:36 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E2C7C21E668B; Mon,  1 Jul 2024 11:11:32 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel
+ <qemu-devel@nongnu.org>,  Mads Ynddal <mads@ynddal.dk>,  Jiri Pirko
+ <jiri@resnulli.us>,  Stefan Hajnoczi <stefanha@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Michael
+ Roth <michael.roth@amd.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Alex
+ Williamson <alex.williamson@redhat.com>,  Pavel Dovgalyuk
+ <pavel.dovgaluk@ispras.ru>,  Victor Toso de Carvalho
+ <victortoso@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Qemu-block
+ <qemu-block@nongnu.org>,  Ani
+ Sinha <anisinha@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Peter Xu
+ <peterx@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Lukas Straub
+ <lukasstraub2@web.de>,
+ Igor Mammedov <imammedo@redhat.com>,  Jason Wang <jasowang@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz <hreitz@redhat.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: Re: [PATCH v2 07/21] docs/qapidoc: fix nested parsing under
+ untagged sections
+In-Reply-To: <CAFn=p-aPJact6oMq_yMqDwUhY2vmsAtPe4jt5U1FW300MrMEuQ@mail.gmail.com>
+ (John Snow's message of "Fri, 28 Jun 2024 11:10:11 -0400")
+References: <20240626222128.406106-1-jsnow@redhat.com>
+ <20240626222128.406106-8-jsnow@redhat.com>
+ <87r0chzelz.fsf@pond.sub.org>
+ <CAFn=p-aPJact6oMq_yMqDwUhY2vmsAtPe4jt5U1FW300MrMEuQ@mail.gmail.com>
+Date: Mon, 01 Jul 2024 11:11:32 +0200
+Message-ID: <87bk3htr23.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/14] hw/i386: convert 'i440fx' machine definitions to
- use new macros
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Halil Pasic <pasic@linux.ibm.com>, devel@lists.libvirt.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- David Gibson <david@gibson.dropbear.id.au>, qemu-arm@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
- Peter Maydell <peter.maydell@linaro.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org
-References: <20240620165742.1711389-1-berrange@redhat.com>
- <20240620165742.1711389-7-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240620165742.1711389-7-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -163,22 +108,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/06/2024 18.57, Daniel P. Berrangé wrote:
-> This changes the DEFINE_I440FX_MACHINE macro to use the common
-> helpers for constructing versioned symbol names and strings,
-> bringing greater consistency across targets.
-> 
-> The added benefit is that it avoids the need to repeat the
-> version number thrice in three different formats in the calls
-> to DEFINE_I440FX_MACHINE.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   hw/i386/pc_piix.c    | 219 +++++++++++++++++++------------------------
->   include/hw/i386/pc.h |  26 +++++
->   2 files changed, 122 insertions(+), 123 deletions(-)
+John Snow <jsnow@redhat.com> writes:
 
+> On Fri, Jun 28, 2024, 3:55=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > Sphinx does not like sections without titles, because it wants to
+>> > convert every section into a reference. When there is no title, it
+>> > struggles to do this and transforms the tree inproperly.
+>> >
+>> > Depending on the rST used, this may result in an assertion error deep =
+in
+>> > the docutils HTMLWriter.
+>> >
+>> > (Observed when using ".. admonition:: Notes" under such a section - Wh=
+en
+>> > this is transformed with its own <title> element, Sphinx is fooled into
+>> > believing this title belongs to the section and incorrect mutates the
+>> > docutils tree, leading to errors during rendering time.)
+>> >
+>> > When parsing an untagged section (free paragraphs), skip making a holl=
+ow
+>> > section and instead append the parse results to the prior section.
+>> >
+>> > Many Bothans died to bring us this information.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>> > Acked-by: Markus Armbruster <armbru@redhat.com>
+>>
+>> Generated HTML changes, but the diff is hard to review due to id
+>> attribute changes all over the place.
+>>
+>> Generated qemu-ga-ref.7 also changes:
+>>
+>>     diff -rup old/qemu-ga-ref.7 new/qemu-ga-ref.7
+>>     --- old/qemu-ga-ref.7       2024-06-27 10:42:21.466096276 +0200
+>>     +++ new/qemu-ga-ref.7       2024-06-27 10:45:36.502414099 +0200
+>>     @@ -397,6 +397,7 @@ shutdown request, with no guarantee of s
+>>      .B \fBmode\fP: \fBstring\fP (optional)
+>>      \(dqhalt\(dq, \(dqpowerdown\(dq (default), or \(dqreboot\(dq
+>>      .UNINDENT
+>>     +.sp
+>>      This command does NOT return a response on success.  Success
+>>      condition is indicated by the VM exiting with a zero exit status or,
+>>      when running with \-\-no\-shutdown, by issuing the query\-status QMP
+>>     @@ -1348,6 +1349,7 @@ the new password entry string, base64 en
+>>      .B \fBcrypted\fP: \fBboolean\fP
+>>      true if password is already crypt()d, false if raw
+>>      .UNINDENT
+>>     +.sp
+>>      If the \fBcrypted\fP flag is true, it is the caller\(aqs
+>> responsibility to
+>>      ensure the correct crypt() encryption scheme is used.  This command
+>>      does not attempt to interpret or report on the encryption scheme.
+>>
+>> We add vertical space.  Visible when viewed with man.  Looks like an
+>> improvement to me.
+>>
+>> Here's the first of these two spots in HTML:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+[...]
+
+>> The id changes muddy the waters.  With them manually removed:
+
+[...]
+
+>> Makes no visual difference in my browser.
+>>
+>> Do these differences match your expectations?
+>>
+>
+> Yep!
+>
+> It does change the output just a little, but Sphinx really doesn't like
+> title-less sections.
+>
+> I thought the change looked fine, and I'm still planning on removing this
+> old generator anyway, so...
+
+I'll add to the commit message
+
+    The resulting output changes are basically invisible.
+
+Thanks!
 
 
