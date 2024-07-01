@@ -4,70 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC873C3065A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:56:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04FE4C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:58:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOAxE-0001DB-6V; Mon, 01 Jul 2024 02:56:00 -0400
+	id 1sOAz3-0002fw-C9; Mon, 01 Jul 2024 02:57:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sOAxB-0001Cd-GT; Mon, 01 Jul 2024 02:55:57 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sOAz0-0002fZ-Rx
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:57:50 -0400
+Received: from fout6-smtp.messagingengine.com ([103.168.172.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sOAwv-00020P-DM; Mon, 01 Jul 2024 02:55:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719816942; x=1751352942;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=t4QGXPCNfoQQarKhlZB0PhL8oxy9LjS1x3CCEtIAdZo=;
- b=Tu0f4+2YXDFEn/cQiMR+PF4AN4JV4BjB1dydVO+63x+qTnFAGY7bu5IK
- nMAhF6nbLyVLRKDJ3F2T8L2muvGU96rogF0NTP1bAXUGKPZ1EiZ++z5ib
- lSzSJJeB7NfRzdFKjvIX5Eg1bmqrGxGwU8aYrlUllns+bCLhW5DCoswAh
- sw2iTfRTwmdUZWK/wk5MIxs8AiNVLAl0+k+aYatqm7mIqm2AvmmFhbzIV
- bcyVwOKYNYWjgoL45SHRJkE+GWwLehaHgXPg2uWPlAS5NtV6OpY5ipZ9e
- ENvF2AsrhR68gpculLh0Dns0o2ABe4rhkeRE8xvHlF2TV3rIdCEw08mDA w==;
-X-CSE-ConnectionGUID: J9JRN7agQ+qC6lStyzUa1Q==
-X-CSE-MsgGUID: x+qCxm+eRQOC7KQVUpq0tA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11119"; a="16745593"
-X-IronPort-AV: E=Sophos;i="6.09,175,1716274800"; d="scan'208";a="16745593"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jun 2024 23:55:38 -0700
-X-CSE-ConnectionGUID: UG1I6birQnaRf7DtXW0Gfw==
-X-CSE-MsgGUID: AMPwadPZQGyNryIAibD0WQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,175,1716274800"; d="scan'208";a="45384940"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 30 Jun 2024 23:55:35 -0700
-Date: Mon, 1 Jul 2024 15:11:11 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org,
- pbonzini@redhat.com, xieyongji@bytedance.com, imammedo@redhat.com,
- qemu-stable@nongnu.org, Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>
-Subject: Re: [PATCH v3] i386/cpu: fixup number of addressable IDs for
- processor cores in the physical package
-Message-ID: <ZoJWjwavmFpMxQC4@intel.com>
-References: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
- <3394a8f2-0bab-4842-bf94-c15b2fa67a2f@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sOAyz-0002Eu-51
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:57:50 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailfout.nyi.internal (Postfix) with ESMTP id 698C213802A4;
+ Mon,  1 Jul 2024 02:57:46 -0400 (EDT)
+Received: from imap44 ([10.202.2.94])
+ by compute3.internal (MEProxy); Mon, 01 Jul 2024 02:57:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1719817066;
+ x=1719903466; bh=PCZD+ZCwgI4oZeQPR59nzeQE/yjPZCP6vkk0m0ProPk=; b=
+ Sh9fCU1znbHIzWrwX0Kc57lvnVhWPDIlFBkD7aspz3Hj9SrOJNvRycc3TI9Rb1a2
+ OtmkCh+lDOBp4bYw3IcVpmWTbxwnWQgQJCoi1h3kLmduEqXvFXTqULY9e1aqqDRS
+ TszfUiu9VpzWcLDzwG0kq5djmnO0yTRcbquvm2BFZ/rMKWVU+NDAsiwYtIowm4zc
+ 4MZTgytVLZEFmGirmZ7KwVQm4NvSHxW946mYntwMYGtGxy9Gxg4AgQDV1Vo94mA3
+ BCVxE38xWkFn48CoUFXP6kUtTJljPxmNZJBfoa2lQ+XEY7OAcDe6qzd3l0a6kedM
+ YWDn6PJ3WLaxFJDpxvwKqw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1719817066; x=
+ 1719903466; bh=PCZD+ZCwgI4oZeQPR59nzeQE/yjPZCP6vkk0m0ProPk=; b=W
+ 5jairg9M88ip3JZ28yFQjBlRKIRe/4v8taX+nNPjKEtqUrS8dKzistXtBo7wXtnR
+ 2uSvQ7zuu/fPCyJr5qXrkjZJV0giDoW1aI0XFMhK5UoBbuBt692Gsj6Oom5oDoaR
+ HcMKKt2A138kXmMaAK8mdBsXLueor3nIelamRu87bv7grsb+5Qa4F1Z5C/UEMzyf
+ 0CYzof0BXTUzOJY8BZRzHsLooDd3ExAq2R6B5zCFARlKkI0EMd7P0dzqOYLe9RfO
+ mpzxJdFxC6pVnf/rcz//beSfUNjtagcmb0P0yit+YdWZYhgsTK7BROMN+Vms1Loo
+ U2jk+BV3Xq4rH2O7dGQmg==
+X-ME-Sender: <xms:alOCZtUCVTNphIxVD1tHb4EtRCboPOiQ70n42vFzAhgl3Rm8P6OBvQ>
+ <xme:alOCZtmuD9ZZXk5R-M-BnGx_SdrL0_YAoEg4_aQhEQUp2IUHvuQ7KXdxvi6Wk6bB3
+ ConZ6TMLbP4CRHtSGc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddvgdduudefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfl
+ ihgrgihunhcujggrnhhgfdcuoehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtoh
+ hmqeenucggtffrrghtthgvrhhnpedufeegfeetudeghefftdehfefgveffleefgfehhfej
+ ueegveethfduuddvieehgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+ grihhlfhhrohhmpehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhm
+X-ME-Proxy: <xmx:alOCZpbAMJFxi910kGMcIKsnMLYp3nTks964JvOsaLmBhVp-ihf8Mw>
+ <xmx:alOCZgUw9IFGI0pdd475sue-wzX7CEUicAGVD6G-XDhg168NrSm7Qg>
+ <xmx:alOCZnm0_I5tVKHQXFvBPsiRrO9ke4prT0ABIzLJW16z0NK84Na89w>
+ <xmx:alOCZtcpMLoWRlgke8T9D15EzznJwtm3j8IX5zSmwFJXA92vQWLpUQ>
+ <xmx:alOCZlhT7WQJSHc3NvEGwj5qZcuczZQFrqD82yN9JJ4h0la27gwH59rm>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id E83DB36A0074; Mon,  1 Jul 2024 02:57:45 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-566-g3812ddbbc-fm-20240627.001-g3812ddbb
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3394a8f2-0bab-4842-bf94-c15b2fa67a2f@tls.msk.ru>
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Message-Id: <db19ed93-027c-4e29-aac5-e3a1edcd760b@app.fastmail.com>
+In-Reply-To: <20240530064941.1289573-2-maobibo@loongson.cn>
+References: <20240530064941.1289573-1-maobibo@loongson.cn>
+ <20240530064941.1289573-2-maobibo@loongson.cn>
+Date: Mon, 01 Jul 2024 07:57:31 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "Bibo Mao" <maobibo@loongson.cn>, "Song Gao" <gaosong@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: "QEMU devel" <qemu-devel@nongnu.org>
+Subject: Re: [RFC v3 1/2] target/loongarch: Add loongson binary translation
+ feature
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.149;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,93 +108,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 01, 2024 at 09:48:02AM +0300, Michael Tokarev wrote:
-> Date: Mon, 1 Jul 2024 09:48:02 +0300
-> From: Michael Tokarev <mjt@tls.msk.ru>
-> Subject: Re: [PATCH v3] i386/cpu: fixup number of addressable IDs for
->  processor cores in the physical package
-> 
-> 11.06.2024 06:23, Chuang Xu wrote:
-> > When QEMU is started with:
-> > -cpu host,host-cache-info=on,l3-cache=off \
-> > -smp 2,sockets=1,dies=1,cores=1,threads=2
-> > Guest can't acquire maximum number of addressable IDs for processor cores in
-> > the physical package from CPUID[04H].
-> > 
-> > When creating a CPU topology of 1 core per package, host-cache-info only
-> > uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
-> > resulting in a conflict (on the multicore Host) between the Guest core
-> > topology information in this field and the Guest's actual cores number.
-> > 
-> > Fix it by removing the unnecessary condition to cover 1 core per package
-> > case. This is safe because cores_per_pkg will not be 0 and will be at
-> > least 1.
-> > 
-> > Fixes: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
-> > Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-> > Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
-> > Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
-> > ---
-> >   target/i386/cpu.c | 6 ++----
-> >   1 file changed, 2 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> > index bc2dceb647..b68f7460db 100644
-> > --- a/target/i386/cpu.c
-> > +++ b/target/i386/cpu.c
-> > @@ -6426,10 +6426,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-> >               if (*eax & 31) {
-> >                   int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
-> > -                if (cores_per_pkg > 1) {
-> > -                    *eax &= ~0xFC000000;
-> > -                    *eax |= max_core_ids_in_package(&topo_info) << 26;
-> > -                }
-> > +                *eax &= ~0xFC000000;
-> > +                *eax |= max_core_ids_in_package(&topo_info) << 26;
-> >                   if (host_vcpus_per_cache > threads_per_pkg) {
-> >                       *eax &= ~0x3FFC000;
-> 
-> In qemu 9.0, the context is a bit different here:
-> 
-> 
->             if (*eax & 31) {
->                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
->                 int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
->                 if (cs->nr_cores > 1) {
->                     *eax &= ~0xFC000000;
->                     *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
->                 }
->                 if (host_vcpus_per_cache > vcpus_per_socket) {
-> 
-> Ie, no max_core_ids_in_package(), cores_per_pkg etc, introduced in
-> v9.0.0-790-gf602eb925a "i386/cpu: Use CPUCacheInfo.share_level to encode
-> CPUID[4]" and nearby.
-> 
-> Am I right the above change becomes
-> 
->              if (*eax & 31) {
->                  int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
->                  int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
-> -                if (cs->nr_cores > 1) {
-> -                    *eax &= ~0xFC000000;
-> -                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
-> -                }
-> +                *eax &= ~0xFC000000;
-> +                *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
->                  if (host_vcpus_per_cache > vcpus_per_socket) {
->                      *eax &= ~0x3FFC000;
->                      *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
-> 
-> in 9.0 -- in other words, just remove the nr_cores condition check
-> and do the *eax assignment unconditionally ?
-> 
-> From the patch description it seems like it is, but I thought I'd
-> ask anyway :)
 
-Hi Michael,
 
-I can help confirm your changes are correct.
+=E5=9C=A82024=E5=B9=B45=E6=9C=8830=E6=97=A5=E4=BA=94=E6=9C=88 =E4=B8=8A=E5=
+=8D=887:49=EF=BC=8CBibo Mao=E5=86=99=E9=81=93=EF=BC=9A
+> Loongson Binary Translation (LBT) is used to accelerate binary
+> translation, which contains 4 scratch registers (scr0 to scr3), x86/ARM
+> eflags (eflags) and x87 fpu stack pointer (ftop).
+>
+> Now LBT feature is added in kvm mode, not supported in TCG mode since
+> it is not emulated. Feature variable lbt is added with OnOffAuto type,
+> If lbt feature is not supported with KVM host, it reports error if the=
+re
+> is lbt=3Don command line.
+>
+> If there is no any command line about lbt parameter, it checks whether
+> KVM host supports lbt feature and set the corresponding value in cpucf=
+g.
+>
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Hi Bibo,
 
--Zhao
+I was going across recent LoongArch changes and this comes into my atten=
+tion:=20
 
+> ---
+>  target/loongarch/cpu.c                | 53 +++++++++++++++++++++++++++
+>  target/loongarch/cpu.h                |  6 +++
+>  target/loongarch/kvm/kvm.c            | 26 +++++++++++++
+>  target/loongarch/kvm/kvm_loongarch.h  | 16 ++++++++
+>  target/loongarch/loongarch-qmp-cmds.c |  2 +-
+>  5 files changed, 102 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index b5c1ec94af..14265b6667 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -571,6 +571,30 @@ static void loongarch_cpu_disas_set_info(CPUState=20
+> *s, disassemble_info *info)
+>      info->print_insn =3D print_insn_loongarch;
+>  }
+>=20
+> +static void loongarch_cpu_check_lbt(CPUState *cs, Error **errp)
+> +{
+> +    CPULoongArchState *env =3D cpu_env(cs);
+> +    LoongArchCPU *cpu =3D LOONGARCH_CPU(cs);
+> +    bool kvm_supported;
+> +
+> +    kvm_supported =3D kvm_feature_supported(cs, LOONGARCH_FEATURE_LBT=
+);
+
+IMHO if there is no global states that should be saved/restored VM wise,
+this should be handled at per CPU level, preferably with CPUCFG flags hi=
+nt.
+
+We should minimize non-privilege KVM feature bits to prevent hindering
+asymmetry ISA system.
+
+Thanks
+- Jiaxun
+
+--=20
+- Jiaxun
 
