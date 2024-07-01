@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E4E0C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC345C3065A
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOJZR-0001LB-A2; Mon, 01 Jul 2024 12:08:02 -0400
+	id 1sOJZk-0001rE-2M; Mon, 01 Jul 2024 12:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOJZ2-0000eB-Qm
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:37 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1sOJZI-0000wj-5U
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:54 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOJZ0-0005Pf-2k
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:36 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-42565697036so25316405e9.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:07:33 -0700 (PDT)
+ id 1sOJZE-0005V6-DM
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:51 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-424a3ccd0c0so23522725e9.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:07:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719850052; x=1720454852; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719850067; x=1720454867; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=n2HEIr2aWh0/VnzuRGuJ20MxeoVg0gSXyflQZjqPsQI=;
- b=ei9uNi0rMElC3vF+McJqdu1xBFGRADIvLgpiWBzr1txfJsExNjhfTrb36n68ceclJl
- DpzClZMMrddQNCMxTwxoWk6AJFD2gmilH+6UKi9lFrfXmwrIDA3583P338+7XxFl05cX
- 450vSMsV6I7+xGGcECodyimjLZtnm9ByceRhOL0GH/suLQFhW+UI0MSIBHSATihEdYH3
- tugqEI2lFAy+TAofP6OD6zOEugH5T68kg6ahHurvWNLwoipMcEz4sZ9h4k/wke1WqOu/
- P0aZb8xkTGosQkNU1CX2zLxuHlD1E1tAbqNQc83++J7sg2JxS0bBOH8wNCFd1QjPxRIU
- cvEQ==
+ :reply-to; bh=jDxsxwb6wke90AJTR7bX+v27HwUxef5Wp/hVnhRyzbY=;
+ b=WVRt26Jwrr5RVBjnVcHP0r2HRnMgK2xzX66Hw+dlMB3IGXxebtC86e7NVjudUe7nP/
+ DBBgSvCsE7GBCOM3r8q1er3p7KkMzLeeHOUH1VImAo2eNVGvd40Uyt416Cz7+DMCbOZR
+ i0yrJNBpnMsuPCTdZVtfqKDy5hKBNnojlrNwoqNaww0C/TIyV4jZxW58QpTZa1anXalj
+ njdiLfGAwh58q/ymBobhuw7DefXyvZ7tvhHh4Igd+1RnYu6KT4fC8VDcQiZXb2Oi8LhI
+ NTaMVYWw66OwhfPcrOAVcOAK/bOhTn5renqIzfdIPiOJCHzotAxbTvyWF4vi1MOQsBYn
+ 3tWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719850052; x=1720454852;
+ d=1e100.net; s=20230601; t=1719850067; x=1720454867;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n2HEIr2aWh0/VnzuRGuJ20MxeoVg0gSXyflQZjqPsQI=;
- b=RHK1DMYOYdubesGYlJLYHBdHcOImKwIumbDR7YHOS009H8Ke8sMk5GBwmzWuUKLieH
- Zhxtsk5O9eK68qV6pkvgyFURd44HcMAyVXEGw0WTGHMBjVFxuIAVbItTbLVnA4cy/E5B
- +b0HBwy23S8f7D5lUSJ0ScBEoZjG6IWXXdJvCIu1ARRp1OzBMRr8BftsiryRPchYJBad
- Zq7BlqcefW+mhRX5ZZFt/TgWsaJI/k2CXvWaJyA1SypRClh/Y4PyusnrzB6ezhlNVh79
- mzn1BcT4Ce//+b6NgxNjeMphSy5qPQgVVbsAosD/zZRxjNeV1V3UQqyTsQZuYNAxgJhf
- LKnw==
-X-Gm-Message-State: AOJu0YyoY+lLRBe1CSNJNmUgdExJJh31vj5alSmm5yqElLYAdu2FAuw0
- 6kSZIaxyv879tctqhMoRVx37OpI6YRWkIiXuuGWhnS4tEuoVC1jKP1QB3QqyaC6hZo+8lyc9IQh
- s8uE=
-X-Google-Smtp-Source: AGHT+IFoZGZ2xOn6DoNX48Cyob/sCWMqhmcOmKkrPwzRqng0EGHIwXNsWlrU9iXNFHY4U7Ugdg9AJw==
-X-Received: by 2002:a05:600c:1d14:b0:424:a401:f012 with SMTP id
- 5b1f17b1804b1-4257984c6cfmr55374295e9.3.1719850052223; 
- Mon, 01 Jul 2024 09:07:32 -0700 (PDT)
+ bh=jDxsxwb6wke90AJTR7bX+v27HwUxef5Wp/hVnhRyzbY=;
+ b=bcR8am2+50IGCXHVGnNfgEwFODTBu4hlR43cReDAqAgbqSfypPaD2aomcrxceGoKr+
+ XPCRa03vkL4g1xvcWLfvewxLclGxAtk7BzNV9vGh41KlgaavSvdkt//m93tgluXPb8qB
+ cmoSGukTjq93UiCp02w94qXbfH4pYO/9mvGef2AyomDaRvk4nT9JYKYlq9GTqfkW9/BK
+ itRKEQjNuKJ1TpDWP0Ty5vyLKZ3SRKyQozzX2p/5JS/TaY7W3c27ykS9vro6Sg4Il6ij
+ G6vp4tNw5149jXoPwz4Eu7NViCC0IyK2XF5l2f5NHCef0aSWlowGw3D4fx8iz0QmTTYQ
+ 7H2g==
+X-Gm-Message-State: AOJu0Yz8McT3TIXNe+DEgqgV3Sr++6QObkqlb3Fd2BwdNjXIx9vPIN2c
+ qG5TGm3Ywfx1hcyeyLxwGJo21PjTfb1MOAN9yONDdoG2zAAIXIh+xey2Yy5HGmije4LQCD5F0KR
+ gL9E=
+X-Google-Smtp-Source: AGHT+IGsuKXI3YaXResEN87ED5WxbotncR7N7Zq1ktyaNgcBXHIXtK2IWJ9jKerW5exS0q3GhioWyQ==
+X-Received: by 2002:a05:600c:6a8d:b0:425:77b4:366d with SMTP id
+ 5b1f17b1804b1-4257a02f3f6mr41316475e9.11.1719850067025; 
+ Mon, 01 Jul 2024 09:07:47 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af557fesm161952135e9.11.2024.07.01.09.07.31
+ 5b1f17b1804b1-4256af557fesm161952135e9.11.2024.07.01.09.07.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 09:07:32 -0700 (PDT)
+ Mon, 01 Jul 2024 09:07:46 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/29] tests/avocado: update firmware for sbsa-ref
-Date: Mon,  1 Jul 2024 17:07:04 +0100
-Message-Id: <20240701160729.1910763-5-peter.maydell@linaro.org>
+Subject: [PULL 29/29] tests/qtest: Ensure STM32L4x5 EXTI state is correct at
+ the end of QTests
+Date: Mon,  1 Jul 2024 17:07:29 +0100
+Message-Id: <20240701160729.1910763-30-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240701160729.1910763-1-peter.maydell@linaro.org>
 References: <20240701160729.1910763-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,82 +95,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+From: Inès Varhol <ines.varhol@telecom-paris.fr>
 
-Update firmware to have graphics card memory fix from EDK2 commit
-c1d1910be6e04a8b1a73090cf2881fb698947a6e:
+EXTI's new field `irq_levels` tracks irq levels between tests when using
+`global_qtest`.
+This happens in `stm32l4x5_exti-test.c`, `stm32l4x5_syscfg-test.c` and
+`stm32l4x5_gpio-test.c` (`dm163.c` doesn't use `global_qtest`).
 
-    OvmfPkg/QemuVideoDxe: add feature PCD to remap framebuffer W/C
+To ensure that `irq_levels` has the same value before and after each
+QTest, this commit toggles back the irq lines that were changed at the
+end of each problematic test. Most QTests were already doing this.
 
-    Some platforms (such as SBSA-QEMU on recent builds of the emulator) only
-    tolerate misaligned accesses to normal memory, and raise alignment
-    faults on such accesses to device memory, which is the default for PCIe
-    MMIO BARs.
-
-    When emulating a PCIe graphics controller, the framebuffer is typically
-    exposed via a MMIO BAR, while the disposition of the region is closer to
-    memory (no side effects on reads or writes, except for the changing
-    picture on the screen; direct random access to any pixel in the image).
-
-    In order to permit the use of such controllers on platforms that only
-    tolerate these types of accesses for normal memory, it is necessary to
-    remap the memory. Use the DXE services to set the desired capabilities
-    and attributes.
-
-    Hide this behavior under a feature PCD so only platforms that really
-    need it can enable it. (OVMF on x86 has no need for this)
-
-With this fix enabled we can boot sbsa-ref with more than one cpu core.
-
-Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240620-b4-new-firmware-v3-1-29a3a2f1be1e@linaro.org
+Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+Message-id: 20240629110800.539969-3-ines.varhol@telecom-paris.fr
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/avocado/machine_aarch64_sbsaref.py | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ tests/qtest/stm32l4x5_exti-test.c   | 8 ++++++++
+ tests/qtest/stm32l4x5_syscfg-test.c | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
-index 6bb82f2a03c..e854ec6a1af 100644
---- a/tests/avocado/machine_aarch64_sbsaref.py
-+++ b/tests/avocado/machine_aarch64_sbsaref.py
-@@ -37,18 +37,18 @@ def fetch_firmware(self):
+diff --git a/tests/qtest/stm32l4x5_exti-test.c b/tests/qtest/stm32l4x5_exti-test.c
+index 7092860b9b7..7e39c992fd3 100644
+--- a/tests/qtest/stm32l4x5_exti-test.c
++++ b/tests/qtest/stm32l4x5_exti-test.c
+@@ -448,6 +448,9 @@ static void test_masked_interrupt(void)
+     g_assert_cmphex(exti_readl(EXTI_PR1), ==, 0x00000000);
+     /* Check that the interrupt isn't pending in NVIC */
+     g_assert_false(check_nvic_pending(EXTI1_IRQ));
++
++    /* Clean EXTI */
++    exti_set_irq(1, 0);
+ }
  
-         Used components:
+ static void test_interrupt(void)
+@@ -498,6 +501,9 @@ static void test_interrupt(void)
+     /* Clean NVIC */
+     unpend_nvic_irq(EXTI1_IRQ);
+     g_assert_false(check_nvic_pending(EXTI1_IRQ));
++
++    /* Clean EXTI */
++    exti_set_irq(1, 0);
+ }
  
--        - Trusted Firmware 2.11.0
--        - Tianocore EDK2 stable202405
--        - Tianocore EDK2-platforms commit 4bbd0ed
-+        - Trusted Firmware         v2.11.0
-+        - Tianocore EDK2           4d4f569924
-+        - Tianocore EDK2-platforms 3f08401
+ static void test_orred_interrupts(void)
+@@ -531,6 +537,8 @@ static void test_orred_interrupts(void)
  
-         """
+         unpend_nvic_irq(EXTI5_9_IRQ);
+         g_assert_false(check_nvic_pending(EXTI5_9_IRQ));
++
++        exti_set_irq(i, 0);
+     }
+ }
  
-         # Secure BootRom (TF-A code)
-         fs0_xz_url = (
-             "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
--            "20240528-140808/edk2/SBSA_FLASH0.fd.xz"
-+            "20240619-148232/edk2/SBSA_FLASH0.fd.xz"
-         )
--        fs0_xz_hash = "fa6004900b67172914c908b78557fec4d36a5f784f4c3dd08f49adb75e1892a9"
-+        fs0_xz_hash = "0c954842a590988f526984de22e21ae0ab9cb351a0c99a8a58e928f0c7359cf7"
-         tar_xz_path = self.fetch_asset(fs0_xz_url, asset_hash=fs0_xz_hash,
-                                       algorithm='sha256')
-         archive.extract(tar_xz_path, self.workdir)
-@@ -57,9 +57,9 @@ def fetch_firmware(self):
-         # Non-secure rom (UEFI and EFI variables)
-         fs1_xz_url = (
-             "https://artifacts.codelinaro.org/artifactory/linaro-419-sbsa-ref/"
--            "20240528-140808/edk2/SBSA_FLASH1.fd.xz"
-+            "20240619-148232/edk2/SBSA_FLASH1.fd.xz"
-         )
--        fs1_xz_hash = "5f3747d4000bc416d9641e33ff4ac60c3cc8cb74ca51b6e932e58531c62eb6f7"
-+        fs1_xz_hash = "c6ec39374c4d79bb9e9cdeeb6db44732d90bb4a334cec92002b3f4b9cac4b5ee"
-         tar_xz_path = self.fetch_asset(fs1_xz_url, asset_hash=fs1_xz_hash,
-                                       algorithm='sha256')
-         archive.extract(tar_xz_path, self.workdir)
+diff --git a/tests/qtest/stm32l4x5_syscfg-test.c b/tests/qtest/stm32l4x5_syscfg-test.c
+index 1cdf8f05c80..258417cd889 100644
+--- a/tests/qtest/stm32l4x5_syscfg-test.c
++++ b/tests/qtest/stm32l4x5_syscfg-test.c
+@@ -221,10 +221,10 @@ static void test_interrupt(void)
+     g_assert_true(get_irq(1));
+ 
+     /* Clean the test */
+-    syscfg_writel(SYSCFG_EXTICR1, 0x00000000);
+     syscfg_set_irq(0, 0);
+     /* irq 15 is high at reset because GPIOA15 is high at reset */
+     syscfg_set_irq(17, 0);
++    syscfg_writel(SYSCFG_EXTICR1, 0x00000000);
+ }
+ 
+ static void test_irq_pin_multiplexer(void)
 -- 
 2.34.1
 
