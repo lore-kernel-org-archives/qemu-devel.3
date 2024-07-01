@@ -4,55 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A978C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8841C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sODVc-0006vC-1L; Mon, 01 Jul 2024 05:39:41 -0400
+	id 1sODbj-0000HG-6r; Mon, 01 Jul 2024 05:45:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1sODVW-0006us-9A
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:39:34 -0400
-Received: from mx22.baidu.com ([220.181.50.185] helo=baidu.com)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sODbb-0000H1-NI; Mon, 01 Jul 2024 05:45:51 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1sODVS-0006C8-8E
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:39:33 -0400
-To: Igor Mammedov <imammedo@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "mst@redhat.com"
- <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, "Gao,Shiyuan"
- <gaoshiyuan@baidu.com>
-Subject: Re: [v2 1/1] hw/i386/acpi-build: add OSHP method support for SHPC
- driver load
-Thread-Topic: [v2 1/1] hw/i386/acpi-build: add OSHP method support for SHPC
- driver load
-Thread-Index: AQHay5qKRSBFVf/99E2HttGMe0hbxg==
-Date: Mon, 1 Jul 2024 09:39:16 +0000
-Message-ID: <02403c2f69574128a1700d8b3db37381@baidu.com>
-References: <20240625035224.13019-1-gaoshiyuan@baidu.com>
- <20240627154548.74a969c2@imammedo.users.ipa.redhat.com>
- <6d033738d79d4b9a83fe216679f8e587@baidu.com>,
- <20240701104000.52df4854@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240701104000.52df4854@imammedo.users.ipa.redhat.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sODbY-0007LM-2I; Mon, 01 Jul 2024 05:45:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1719827148; x=1751363148;
+ h=from:to:subject:date:message-id:references:in-reply-to:
+ content-transfer-encoding:mime-version;
+ bh=lemxPrPeIpzRi7FbiUnFMGNXfE2Z+hZjBK98pHFnb/4=;
+ b=jRJib4ZbpSTDFHNqgVx1GKH9oy3cLC3Eu1GeAOtkMAO8vehnw96cHmMd
+ 5YBUd06cJsiUzJZJ8rROWaPg/QzkqbsnP3HQkcULfPT2iqlMdxtUPPvqx
+ HiLkfqxj+EyLywHThKxdh4LxaInlZhdihCGTXZXd+yigwnX2WQcLpQ5Il
+ 4B37YXBZ6/uhMIDAeBZW5QbFQJw3TyWLwa3Nw72jalb2Tn+95Ix/saEex
+ SpWntpUAq4YbIfhTEiK5AKtoV1hSpi5UiD2AVt8jJVWVSyoS7As0yyiTr
+ 9CkgeBPwhQmAKXKcsf2oWmrOFDYljJWaGF9JKKoxc8UbWYnaybyH3bmzk A==;
+X-CSE-ConnectionGUID: KcMXHYNHTZy+4CHrMUUo0w==
+X-CSE-MsgGUID: w6J3v7maSsuU8anfg3FjSA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11119"; a="20757119"
+X-IronPort-AV: E=Sophos;i="6.09,175,1716274800"; d="scan'208";a="20757119"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Jul 2024 02:45:45 -0700
+X-CSE-ConnectionGUID: vBjfs8g3RJioOrGmDXi7Iw==
+X-CSE-MsgGUID: JT64uID5RMyF2eLm7ERqzQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,175,1716274800"; d="scan'208";a="49789919"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by fmviesa003.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 01 Jul 2024 02:45:43 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Mon, 1 Jul 2024 02:45:43 -0700
+Received: from orsmsx602.amr.corp.intel.com (10.22.229.15) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Mon, 1 Jul 2024 02:45:42 -0700
+Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
+ orsmsx602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Mon, 1 Jul 2024 02:45:42 -0700
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (104.47.73.175)
+ by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 1 Jul 2024 02:45:42 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=UTMrShKJW+S5x6kITcZXlSq2zgo6wIyW6YYvh88lUX5lmJ2mpicjC1Liin09BQeZUZRgtrFEBGUHlFuRKhzFBhOS3c3j/fA12mkRM131lpeTDmi0wKVc/jceRiPfCdrrTSCpwkXIijAMmTUjL88PiicFvH9kC03ysSR7bqr6bnBJ2iMCwsgDOanmpoq9RYReG4IZgG+e0YN1cm/UN27qlRhWtbr7dglS3+4wpUHGb9IRHdvECUD13xoWSm0eHQcno/X1fDQQYgzVQZzGucpFuJSuYAUYiM9JG6SWh9bMMoC+2wVKKQ+coFsM6UPVD0RuMnPXKffGKH3YXpFb8yomwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lfeaPaZQaUjsoBcOGpAV+8zbj6lZMOE/RueONZl1plw=;
+ b=V2HV4eTO1T85oQ57dNIyVWZUmSSb75PoBMbUec89W+Brj7nN4qO+o2+6GpANeSLLHNBF//ZjtjoGbsBoNBngVdhrWI3my/8cQzuGti/etrbiNmOMfj/D2119O/VxXAv/MKV5hbwHS8FZyFAzHEqV9ZnscYueYDfhodphabAG/1BC7J3YqfYbZSz3LB4MCQJ4Nx+1WxpjlX3Mz4nL+obqGEhINjjjBf49Wq7CIaXWnaZCT/zGlrMeb9LP1FXGCXa2g5n+y+rAA8kZ9J3Lfvi0KNyDeFatrcQijHpU3wxiW6Z6nYzetpg/LvMlCN4gBwcg5caHYxpaTD+R9YiOzVA8ZQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
+ by IA0PR11MB7789.namprd11.prod.outlook.com (2603:10b6:208:400::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7719.29; Mon, 1 Jul
+ 2024 09:45:35 +0000
+Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
+ ([fe80::fe49:d628:48b1:6091%7]) with mapi id 15.20.7719.022; Mon, 1 Jul 2024
+ 09:45:35 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
+ <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
+ <mst@redhat.com>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
+ <clg@redhat.com>, "yanghliu@redhat.com" <yanghliu@redhat.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>
+Subject: RE: [PATCH v2 5/7] virtio-iommu : Retrieve page size mask on
+ virtio_iommu_set_iommu_device()
+Thread-Topic: [PATCH v2 5/7] virtio-iommu : Retrieve page size mask on
+ virtio_iommu_set_iommu_device()
+Thread-Index: AQHay5PDClnD+Hs7ZEOHhx+qPzrtCrHhne6g
+Date: Mon, 1 Jul 2024 09:45:35 +0000
+Message-ID: <SJ0PR11MB6744A5C0B3D89B04C30B636092D32@SJ0PR11MB6744.namprd11.prod.outlook.com>
+References: <20240701084957.1567641-1-eric.auger@redhat.com>
+ <20240701084957.1567641-6-eric.auger@redhat.com>
+In-Reply-To: <20240701084957.1567641-6-eric.auger@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [172.22.200.163]
-Content-Type: text/plain; charset="iso-8859-1"
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|IA0PR11MB7789:EE_
+x-ms-office365-filtering-correlation-id: b2b5cffb-72e9-4a04-7e79-08dc99b28e62
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|7416014|376014|38070700018|921020; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?vQls/+nFY/X7ksqkQzlZfegLRMZI6S8PJssgZSOMSxWLQBzxVvNvdSgUlDhg?=
+ =?us-ascii?Q?552N9+K9hqVfE5QSZVnvj6H3aVcenLJk7gW8p6r5q6iGwxf4mycZg45p3Ioe?=
+ =?us-ascii?Q?/WHIaS8RiYrjVp6QJD/AF1d/F2/IUrbvgWFO6KrOBiD/egLPu5GPCelk7scI?=
+ =?us-ascii?Q?rRbShOpS6/4xjc8eoiJbcxB35MyQI0MIFdBHRJZ5V7t7Ow4TFkjkzz15O/6G?=
+ =?us-ascii?Q?B/NGxkaO+iIqdh3dor2r9IhAWb+IEaBtZjnv8raEAYNYH6Hjy/wTQUp04R6q?=
+ =?us-ascii?Q?YoKuvcAQv7UKR/Z1C73AwebJsBH/SMmSBVM0jP+4+1AaxR71QBB/svhvSByG?=
+ =?us-ascii?Q?essbXss0j86k09P6ZGTaWYlrqlJ+vD6Y4EGEOZc2f0ZpMuTH2EAwW9n5wD6K?=
+ =?us-ascii?Q?jl4yZwQUZ7qPc9UOWzMedB11Xu18mcvLSFXLvaAo9Psro6qQIsrk91zdNsEu?=
+ =?us-ascii?Q?drWVLklHxiMLgK5/Yu9lCERVpYJxsid8gXL2k1m0h2mTOuq8PKuW22VPbEU1?=
+ =?us-ascii?Q?LWcCVFwg0LfysETElXLtzFl5yycNy2q+YMjuzz0noUTB2C8cdGYARWxZep9e?=
+ =?us-ascii?Q?m6rhCuVKr1L3Jol4Pis1zbvBaHs3nBhDWiTXaHJ01yTOIaHCYEEiMyQRxrqx?=
+ =?us-ascii?Q?jR1bHYdGC2By3zaNChCUOJtE018Ow9OXq6jRFR6iXKtpfBR/at19VFcZQtH1?=
+ =?us-ascii?Q?1pqvXO0eBuuaTAlwRZ6qNQgswinYuvCHffcR1bnSBSzouToausnPAOtz6CjA?=
+ =?us-ascii?Q?xMTweCQ22r9JuXo7GkjC5Am7znx6LSseeQ8sUnXEnFdikAs3APrLklk6gvrx?=
+ =?us-ascii?Q?Gvwmyt6bNsQQR0Qlp+RJU6Fr77OHGRavsQYX6mBlwlBHoF/C1JChXrwq1vDm?=
+ =?us-ascii?Q?bCioRDwMxVKTxB5Uud1/SV4pt7JnlQ+gNosH9ln3tT+9GkHwogKkNQ+o2+JJ?=
+ =?us-ascii?Q?wYDLAHyeuGEW2SiqxbDxZk42y+DLQbxiJmbTJT0RIvrBwHLb+bwISUhL91yb?=
+ =?us-ascii?Q?0YeNuQy+rdCB9aghUzcInZdybSruPAERmnBYZxH5yww7JTFs7EYo1M0Mcyjp?=
+ =?us-ascii?Q?MpCWXuVOR5vv8+VMewb+UIY59WCgfwDn+8iiu8jgQZ25YRGy/D220KGg27hb?=
+ =?us-ascii?Q?y9xpAEn3KfK5MJGjxha7DQSy2aI3euggA/aSwSObNwaY/Gp3J+2elE9ipvT8?=
+ =?us-ascii?Q?Ba099GnD5HhQDDjrGQjCJ63UWibCaXYp5jVEfVQEgzPWiyv3ittKzppDqa9f?=
+ =?us-ascii?Q?EksD5mvPxLnXIG9xCdv2t1xcAXOhCho3gu7f/xn5IDa9XUvSUN1kaYdp7B+4?=
+ =?us-ascii?Q?TegTvuHiKczcETtouvAZ/CuQh/4QOWAXI9Yx3j5GHZl4CxGYlzSsgq76zOIA?=
+ =?us-ascii?Q?0YMBm5Xo3z3JBnQrNsC4K/DDId4LoTI4AyyPTuaNnInXN/NeLsdg4MpM5IqI?=
+ =?us-ascii?Q?nhXJLqtjNQk=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(38070700018)(921020);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?8r4/mrF+GsseUqpITHbiFyGTbf9jMNX7xxegNGRoBcRfOOq+FepfT36veqSc?=
+ =?us-ascii?Q?1MNLZb7OJmcsjIgH+OkDiLDB7ny43U+jVTYKWnOnWApHgOtk1NpXeqfHNZap?=
+ =?us-ascii?Q?FRthYSu3jp8VAWuzyHpf2UHEWeJosIPAIgc+OtVoZ55lVb/Od0QVG8K5TcuB?=
+ =?us-ascii?Q?nFadpWFuJwnhxaBHzfswkI5904rTUKTxzR74khQbVQXE0QZ83hlgX3+bP32C?=
+ =?us-ascii?Q?LGQXtl8WYlL2ncfeG1aWJ3cTKwkkZO8iCTn1lXb9x58UDMmAPPOtRTbMvJWP?=
+ =?us-ascii?Q?R50OALAlnbqa03+qbd5UBPzLWIlHREj4DNQ0Gj9e86RdSj9BZc0mdEacQcNK?=
+ =?us-ascii?Q?ZRvHBwZ/Xw9lSSCvj7mz1W1+MIowKgY6TjIgAdds107DcW1h1O1dpYkCxf4h?=
+ =?us-ascii?Q?/F2w9KVR5SQXN45CBnWlxp6kfm5li9/8jYTO52XlBHK8YaXTgovCBU8NOKG0?=
+ =?us-ascii?Q?+uygRamOtVsxXtDdTX6KB7YqwOlvgoRdQx3KqGYWTRf7aYCs86ukrN52gCXK?=
+ =?us-ascii?Q?KYt1euPgNLoGLR0uT7yuzc/8MbH4TebeKRwO+BgNJ51m7DGlsxnKNpqv37GI?=
+ =?us-ascii?Q?mKnytc8Aqitqp1ZkRWOA4ydSoIPORT8fqFXNoyFLpadaIsQeiHR4YlYTibn1?=
+ =?us-ascii?Q?F/qoOlaJ0PqT1UfVz5qC/u13kaNAxmhfVeHgbL5jPD+VkSPh0j/Hb4kgi7a/?=
+ =?us-ascii?Q?+u8pIQ7kqVWUOTjJpFulKdWY2zTXoO/xjSVQjGwsWpaUK16ReazMNkSOp2wL?=
+ =?us-ascii?Q?yf/GpjLS1QyHuVjS7vncrVLZxyeXeferNSE1MNU6hjTznfsL93G0fR4BzkCI?=
+ =?us-ascii?Q?L0nrpEyoANylAy9TDFzWdI1DzyQk2cpzj7a4rmYsxaJq+54uveuZvXSSL6zq?=
+ =?us-ascii?Q?6ddjWW3Wk5RlnL+j4T5DgSAxYLMkbVfWiFVWmDybcDe5SQqEupKcILo2Fdpc?=
+ =?us-ascii?Q?/Y6qvHWgaeOTOHGDOpazp8fz48CReY0agiCd0XLw+NkG9P8qwgIX1SYCrAK1?=
+ =?us-ascii?Q?nMucEZ/i4SDJkiLAtZvGu2c9/H4Qm71e8BmlVeXRFV/5WulQ03g/P3dEmoS0?=
+ =?us-ascii?Q?YSmoNBwEqGdom9ZjMc5InU9FoOyXuFw1o3wsxBLTOrgQdOjMkmMW6zvfFbCo?=
+ =?us-ascii?Q?raXd75r+g4PXk2ZX1TkNncKrGBK5ODqJbN+n9fDCZ8ayekmzPwiBIO1gT+cx?=
+ =?us-ascii?Q?agM3IVz1q8PhnvTcu0LTb76MABkMVbuMQcPd0xpJwyI/IIz5wik77C/QKm3N?=
+ =?us-ascii?Q?bWvO+CIOoaGhu4w6MDAZZbfSX7nSt/C6qdmSUi1F6YekcfCqsnDqZeaGqJp9?=
+ =?us-ascii?Q?40Hq//YS8SXpE3Wr/n4IhjePN5cFkhwNYE69/pHsapT48+Ue38GRQ4SZsID3?=
+ =?us-ascii?Q?489G7TUon4GBK7ggq17WduYQJQ8cP5ZLxF4DLBUWFZ7Um8VxzbBUwY26jc7/?=
+ =?us-ascii?Q?2U3vUcuHdRhrVuLVzgsasfWF7o3oSmhUQllzGEoBHnI754/AlcnlzxLVTLly?=
+ =?us-ascii?Q?thmZ29bwAzQzq8mQBQIc0+R85bBNnMfSNKqsEBxZM/KwDVLMRFOT46GnOcVq?=
+ =?us-ascii?Q?IPMmqcY+7fZoUBlERi2M/q8YzcT5Bh6ksffEOrkg?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-FEAS-Client-IP: 172.31.51.51
-X-FE-Last-Public-Client-IP: 100.100.100.60
-X-FE-Policy-ID: 52:10:53:SYSTEM
-Received-SPF: pass client-ip=220.181.50.185; envelope-from=gaoshiyuan@baidu.com;
- helo=baidu.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b2b5cffb-72e9-4a04-7e79-08dc99b28e62
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Jul 2024 09:45:35.1642 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: hklm6bdGljh4DZ5FZZEjnr9ToyEcKllth2KmDk5ynIqfTetu/XGxoXY4wkweZmi71AyOu1faN4iEnI5mgrcwPC9GWAzq7V3F5SmAZVB33kY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR11MB7789
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.14;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,176 +201,166 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-From:  "Gao,Shiyuan" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > > > the PCI bridge will fail when we use SHPC Native type:
-> > > >
-> > > >=A0=A0 [3.336059] shpchp 0000:00:03.0: Requesting control of SHPC ho=
-tplug via OSHP (\_SB_.PCI0.S28_)
-> > > >=A0=A0 [3.337408] shpchp 0000:00:03.0: Requesting control of SHPC ho=
-tplug via OSHP (\_SB_.PCI0)
-> > > >=A0=A0 [3.338710] shpchp 0000:00:03.0: Cannot get control of SHPC ho=
-tplug
-> > > >
-> > > > Add OSHP method support for transfer control to the operating syste=
-m,
-> > > > after this SHPC driver will be loaded success and the hotplug devic=
-e to
-> > > > the PCI bridge will success when we use SHPC Native type.
-> > > >
-> > > >=A0=A0 [1.703975] shpchp 0000:00:03.0: Requesting control of SHPC ho=
-tplug via OSHP (\_SB_.PCI0.S18_)
-> > > >=A0=A0 [1.704934] shpchp 0000:00:03.0: Requesting control of SHPC ho=
-tplug via OSHP (\_SB_.PCI0)
-> > > >=A0=A0 [1.705855] shpchp 0000:00:03.0: Gained control of SHPC hotplu=
-g (\_SB_.PCI0)
-> > > >=A0=A0 [1.707054] shpchp 0000:00:03.0: HPC vendor_id 1b36 device_id =
-1 ss_vid 0 ss_did 0
-> > >
-> > > please describe in commit message reproducer
-> > > (aka QEMU CLI and guest OS and if necessary other details)
-> >
-> > qemu-system-x86_64 -machine pc-q35-9.0
-> >=A0=A0=A0=A0 ...
-> >=A0=A0=A0=A0 -global PIIX4_PM.acpi-pci-hotplug-with-bridge-support=3Doff
->
-> please use full QEMU CLI and follow up steps to trigger the issue.
->
-> From above it's not obvious what and where you are trying to hotplug
 
-Nothing needs to be done when you start a i440fx VM, this issue will be tri=
-ggered.
-PIIX4_PM.acpi-pci-hotplug-with-bridge-support=3Doff is used to verify shpc =
-driver load sucess.
+
+>-----Original Message-----
+>From: Eric Auger <eric.auger@redhat.com>
+>Subject: [PATCH v2 5/7] virtio-iommu : Retrieve page size mask on
+>virtio_iommu_set_iommu_device()
+>
+>Retrieve the Host IOMMU Device page size mask when this latter is set.
+>This allows to get the information much sooner than when relying on
+>IOMMU MR set_page_size_mask() call, whcih happens when the IOMMU
+s/whcih/which
+Sorry, I missed it in last review.
+>MR
+>gets enabled. We introduce check_page_size_mask() helper whose code
+>is inherited from current virtio_iommu_set_page_size_mask()
+>implementation. This callback will be removed in a subsequent patch.
+>
+>Signed-off-by: Eric Auger <eric.auger@redhat.com>
+
+Otherwise,
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+
+Thanks
+Zhenzhong
 
 >
-> > guest OS: centos7/ubuntu22.04
-> >
-> > I will add it in the next version.
-> >
-> > > > +/*
-> > > > + * PCI Firmware Specification 3.0
-> > > > + * 4.8. The OSHP Control Method
-> > > > + */
-> > > > +static Aml *build_oshp_method(void)
-> > > > +{
-> > > > +=A0=A0=A0 Aml *method;
-> > > > +
-> > > > +=A0=A0=A0 /*
-> > > > +=A0=A0=A0=A0 * We don't use ACPI to control the SHPC, so just retu=
-rn
-> > > > +=A0=A0=A0=A0 * success is enough.
-> > > > +=A0=A0=A0=A0 */
-> > > > +=A0=A0=A0 method =3D aml_method("OSHP", 0, AML_NOTSERIALIZED);
-> > > > +=A0=A0=A0 aml_append(method, aml_return(aml_int(0x0)));
-> > > > +=A0=A0=A0 return method;
-> > > > +}
-> > > > +
-> > > >=A0 static void
-> > > >=A0 build_dsdt(GArray *table_data, BIOSLinker *linker,
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 AcpiPmInfo *pm, AcpiMiscInfo *m=
-isc,
-> > > > @@ -1452,6 +1469,7 @@ build_dsdt(GArray *table_data, BIOSLinker *li=
-nker,
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0 aml_append(dev, aml_name_decl("_HID", am=
-l_eisaid("PNP0A03")));
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0 aml_append(dev, aml_name_decl("_UID", am=
-l_int(pcmc->pci_root_uid)));
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0 aml_append(dev, aml_pci_edsm());
-> > > > +=A0=A0=A0=A0=A0=A0=A0 aml_append(dev, build_oshp_method());
-> > >
-> > > it's global and what will happen if we have ACPI PCI hotplug enabled
-> > > and guest calls this NOP method?
-> >
-> > ths OS get the control of SHPC hotplug and SHPC driver load fail later.
-> >
-> > [=A0=A0=A0 6.170345] shpchp 0000:00:03.0: Requesting control of SHPC ho=
-tplug via OSHP (\_SB_.PCI0.S18_)
-> > [=A0=A0=A0 6.171962] shpchp 0000:00:03.0: Requesting control of SHPC ho=
-tplug via OSHP (\_SB_.PCI0)
-> > [=A0=A0=A0 6.173556] shpchp 0000:00:03.0: Gained control of SHPC hotplu=
-g (\_SB_.PCI0)
-> > [=A0=A0=A0 6.175144] shpchp 0000:00:03.0: HPC vendor_id 1b36 device_id =
-1 ss_vid 0 ss_did 0
-> > [=A0=A0=A0 6.196153] shpchp 0000:00:03.0: irq 24 for MSI/MSI-X
-> > [=A0=A0=A0 6.197211] shpchp 0000:00:03.0: pci_hp_register failed with e=
-rror -16
-> > [=A0=A0=A0 6.198272] shpchp 0000:00:03.0: Slot initialization failed
-> >
-> > this looks more suitable.
-> >
-> > +=A0=A0=A0 if (!pm->pcihp_bridge_en) {
-> > +=A0=A0=A0=A0=A0=A0=A0 aml_append(dev, build_i440fx_oshp_method());
-> > +=A0=A0=A0 }
+>---
 >
-> we also have
-> =A0PIIX4_PM.acpi-root-pci-hotplug (default true)
-> though it seems that ACPI hotplug takes precedence of SHPC if both are en=
-abled.
-> So I'd take it and OSHP approach seems simpler than adding _OSC to do the=
- same.
+>v1 -> v2:
+>- do not update the mask if the granule is frozen (Zhenzhong)
+>---
+> hw/virtio/virtio-iommu.c | 57
+>++++++++++++++++++++++++++++++++++++++--
+> hw/virtio/trace-events   |  1 +
+> 2 files changed, 56 insertions(+), 2 deletions(-)
+>
+>diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+>index b8f75d2b1a..7d5db554af 100644
+>--- a/hw/virtio/virtio-iommu.c
+>+++ b/hw/virtio/virtio-iommu.c
+>@@ -598,9 +598,39 @@ out:
+>     return ret;
+> }
+>
+>+static bool check_page_size_mask(VirtIOIOMMU *viommu, uint64_t
+>new_mask,
+>+                                 Error **errp)
+>+{
+>+    uint64_t cur_mask =3D viommu->config.page_size_mask;
+>+
+>+    if ((cur_mask & new_mask) =3D=3D 0) {
+>+        error_setg(errp, "virtio-iommu reports a page size mask 0x%"PRIx6=
+4
+>+                   " incompatible with currently supported mask 0x%"PRIx6=
+4,
+>+                   new_mask, cur_mask);
+>+        return false;
+>+    }
+>+    /*
+>+     * Once the granule is frozen we can't change the mask anymore. If by
+>+     * chance the hotplugged device supports the same granule, we can sti=
+ll
+>+     * accept it.
+>+     */
+>+    if (viommu->granule_frozen) {
+>+        int cur_granule =3D ctz64(cur_mask);
+>+
+>+        if (!(BIT_ULL(cur_granule) & new_mask)) {
+>+            error_setg(errp,
+>+                       "virtio-iommu does not support frozen granule 0x%l=
+lx",
+>+                       BIT_ULL(cur_granule));
+>+            return false;
+>+        }
+>+    }
+>+    return true;
+>+}
+>+
+> static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque,
+>int devfn,
+>                                           HostIOMMUDevice *hiod, Error **=
+errp)
+> {
+>+    ERRP_GUARD();
+>     VirtIOIOMMU *viommu =3D opaque;
+>     HostIOMMUDeviceClass *hiodc =3D
+>HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+>     struct hiod_key *new_key;
+>@@ -623,8 +653,28 @@ static bool
+>virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>                                                 hiod->aliased_devfn,
+>                                                 host_iova_ranges, errp);
+>         if (ret) {
+>-            g_list_free_full(host_iova_ranges, g_free);
+>-            return false;
+>+            goto error;
+>+        }
+>+    }
+>+    if (hiodc->get_page_size_mask) {
+>+        uint64_t new_mask =3D hiodc->get_page_size_mask(hiod);
+>+
+>+        if (check_page_size_mask(viommu, new_mask, errp)) {
+>+            /*
+>+             * The default mask depends on the "granule" property. For ex=
+ample,
+>+             * with 4k granule, it is -(4 * KiB). When an assigned device=
+ has
+>+             * page size restrictions due to the hardware IOMMU configura=
+tion,
+>+             * apply this restriction to the mask.
+>+             */
+>+            trace_virtio_iommu_update_page_size_mask(hiod->name,
+>+                                                     viommu->config.page_=
+size_mask,
+>+                                                     new_mask);
+>+            if (!viommu->granule_frozen) {
+>+                viommu->config.page_size_mask &=3D new_mask;
+>+            }
+>+        } else {
+>+            error_prepend(errp, "%s: ", hiod->name);
+>+            goto error;
+>         }
+>     }
+>
+>@@ -637,6 +687,9 @@ static bool
+>virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+>     g_list_free_full(host_iova_ranges, g_free);
+>
+>     return true;
+>+error:
+>+    g_list_free_full(host_iova_ranges, g_free);
+>+    return false;
+> }
+>
+> static void
+>diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+>index 3cf84e04a7..599d855ff6 100644
+>--- a/hw/virtio/trace-events
+>+++ b/hw/virtio/trace-events
+>@@ -132,6 +132,7 @@ virtio_iommu_notify_map(const char *name,
+>uint64_t virt_start, uint64_t virt_end
+> virtio_iommu_notify_unmap(const char *name, uint64_t virt_start,
+>uint64_t virt_end) "mr=3D%s virt_start=3D0x%"PRIx64" virt_end=3D0x%"PRIx64
+> virtio_iommu_remap(const char *name, uint64_t virt_start, uint64_t
+>virt_end, uint64_t phys_start) "mr=3D%s virt_start=3D0x%"PRIx64"
+>virt_end=3D0x%"PRIx64" phys_start=3D0x%"PRIx64
+> virtio_iommu_set_page_size_mask(const char *name, uint64_t old,
+>uint64_t new) "mr=3D%s old_mask=3D0x%"PRIx64" new_mask=3D0x%"PRIx64
+>+virtio_iommu_update_page_size_mask(const char *name, uint64_t old,
+>uint64_t new) "host iommu device=3D%s old_mask=3D0x%"PRIx64"
+>new_mask=3D0x%"PRIx64
+> virtio_iommu_notify_flag_add(const char *name) "add notifier to mr %s"
+> virtio_iommu_notify_flag_del(const char *name) "del notifier from mr %s"
+> virtio_iommu_switch_address_space(uint8_t bus, uint8_t slot, uint8_t fn,
+>bool on) "Device %02x:%02x.%x switching address space (iommu
+>enabled=3D%d)"
+>--
+>2.41.0
 
-yes, I tried to add an OSC method, but the OS and the firmware failed to ne=
-gotiate in the guest, dmesg as follow.
-Through analyzing the code, I found that this process relies on pci_ext_cfg=
-_avail in negotiate_os_control. On i440fx,
-pci_ext_cfg_avail is false.
-
-[    0.631156] acpi PNP0A03:00: _OSC: OS supports [ASPM ClockPM Segments MS=
-I EDR HPX-Type3]
-[    0.632184] acpi PNP0A03:00: _OSC: not requesting OS control; OS require=
-s [ExtendedConfig ASPM ClockPM MSI]
-[    0.633160] acpi PNP0A03:00: fail to add MMCONFIG information, can't acc=
-ess extended PCI configuration space under this bridge.
-
-Therefore, I chose the OSHP method.
->
-> >
-> > >
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0 aml_append(sb_scope, dev);
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0 aml_append(dsdt, sb_scope);
-> > > >
-> > > > @@ -1586,6 +1604,7 @@ build_dsdt(GArray *table_data, BIOSLinker *li=
-nker,
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 aml_append(dev, =
-build_q35_osc_method(true));
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 } else {
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 aml_append(dev, =
-aml_name_decl("_HID", aml_eisaid("PNP0A03")));
-> > > > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 aml_append(dev, buil=
-d_oshp_method());
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 }
-> > > >
-> > > >=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 if (numa_node !=3D NUMA_NODE=
-_UNASSIGNED) {
-> >
-> > Hot plug/unplug a device using SHPC will take more time than ACPI PCI h=
-otplug, because
-> > after pressing the button, it can be cancelled within 5 seconds in SHPC=
- driver.
->
-> for SHPC on PXB see,
-> commit d10dda2d60 hw/pci-bridge: disable SHPC in PXB
->
-> it seems that enabling SHPC on PXB in QEMU is not enough,
-> UEFI needs to support that as well
-> (CCing Gerd to check whether it is possible at all)
->
-> > If I want to use ACPI PCI hotplug in the pxb bridge, what else need to =
-be done?
->
-> does it have to be hotplug directly into pxb or
-> would be it be sufficient to have hotplug support
-> on pci-bridge attached to a pxb?
-
-It's sufficient to hotplug support on pci-bridge attached to a pxb.
-
->
-> I particularly do not like spreading ACPI hotplug
-> to any host bridges, as it's quite complicated
-> code.
->=
 
