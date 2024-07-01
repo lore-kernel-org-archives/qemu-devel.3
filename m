@@ -4,86 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8467AC30653
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:26:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A14C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:30:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOCLd-00054N-5Q; Mon, 01 Jul 2024 04:25:17 -0400
+	id 1sOCQM-00068X-GD; Mon, 01 Jul 2024 04:30:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sOCIw-0004jO-Tf
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:22:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sOCQ1-000664-IF
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:29:49 -0400
+Received: from fout7-smtp.messagingengine.com ([103.168.172.150])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sOCIv-0000za-88
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:22:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719822148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=t/JSP8j/zvkme/NWxYyLbMp1RYWPCaM/K8E7GZhHnwo=;
- b=HVG18PG2jaAneV+Z/HhLti51CPzucirhlYm82OXBAOD4dcY8h9gNJHVO01KKOZc5o7ucNa
- C06bJ457W6gyh9ECCDfSSqwYzXiFafoYdt/2Iu0VuXAs6uGQw2x1TMKZ+CXlM49QPmgB3E
- h/m78dxEd20waSLsnyL2q/hHRPTWvBM=
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
- [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-347-pPFMrYvDOZqV9GLBmVZ9qQ-1; Mon, 01 Jul 2024 04:22:26 -0400
-X-MC-Unique: pPFMrYvDOZqV9GLBmVZ9qQ-1
-Received: by mail-pf1-f197.google.com with SMTP id
- d2e1a72fcca58-7065ba27265so2700949b3a.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 01:22:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719822145; x=1720426945;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=t/JSP8j/zvkme/NWxYyLbMp1RYWPCaM/K8E7GZhHnwo=;
- b=xA503803pFvlYzTiGmdywy6tsuaTbUH2ivHFGyk6w+vNfKuPnbMWgAk+t/z/gGcY32
- dtFtC3TtR3zhdeGS+OSQafzbZKL53aKSMG2ML2Pa3uCzjeHpqabm5e+x1rj+tcpKCu82
- KyyHuJO2s9sbIY+FjP0sepZNmFUFs0FmgHhuLyuqIbEHqaS8ZSgWm8tDjtebqxGyYR3y
- 1owoblaCfRBolNAt77+6n89LvS2aeeAEhChVUVR8M0jr+v9W8FNlJcO9qW6F/GHSOWwF
- bZm2LYbezH3MO6C12UYfWZZVHgX0Fzy/DUkZshgyeY4XMEWGlbT9gQDer18gBhzG6dUO
- bcRw==
-X-Gm-Message-State: AOJu0YyWiBZR7pCSPprw1FCGkSBtYDlt113dtjhMB3mYb0N3W+shKr+b
- F3ughMxMWe6CDnvV5bXuFTAwk9HAMWbAbHgnOCw+1uCZAcMGxSeswfpFL5jb0HosdR+8AsNa8He
- ajkjXsnGXSA8f9j8v2wg5/6tro/er+nX/83O/UWfpaPu3qLDfwYxmxR88oUaPSpDmNred5Aru6s
- MSHvXfR/MVlOPjM0ATujrjd3BIE4o=
-X-Received: by 2002:a05:6a00:1812:b0:706:9030:8960 with SMTP id
- d2e1a72fcca58-70aaad2a08cmr7874869b3a.4.1719822144985; 
- Mon, 01 Jul 2024 01:22:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFq06POL0waE0r/n8hsCoLLoMn+31A0A+3PhYKspw9SQAkd/5d7rr0uYiwnh5QqO3iQOY0Yq5uPq1uKb6jlgLc=
-X-Received: by 2002:a05:6a00:1812:b0:706:9030:8960 with SMTP id
- d2e1a72fcca58-70aaad2a08cmr7874850b3a.4.1719822144656; Mon, 01 Jul 2024
- 01:22:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sOCPz-0002sL-Pc
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:29:49 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailfout.nyi.internal (Postfix) with ESMTP id B1C1213802D5;
+ Mon,  1 Jul 2024 04:29:46 -0400 (EDT)
+Received: from imap44 ([10.202.2.94])
+ by compute3.internal (MEProxy); Mon, 01 Jul 2024 04:29:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1719822586;
+ x=1719908986; bh=u1O9mJ7L1LNKG6nph+UiwGm/XtnWbdsxHsT5UUGvze0=; b=
+ PDknan5nwBZOaGYKWlofVO+45RMqTGoD/mXtjk9pHPm7VmHBIUhsiMeDjFZ0O6fy
+ DY/jhwovfi1FaVthZRJM2LoyhsJ4EZcPeZoVTGjVOrGxU0iokWLl0mINCKcLHiZ0
+ VUuOrZiGzA/7g1mOthWPXTpWaU81hSOcFIK9WUtPovo0VCn4/Hl7FYON8drBZMRH
+ GfYEr68KLB0anx5MJPXNTUCSp7++rZlalBRpopUxQu6tnvVpCC0+QS/txfVQbVTx
+ YfaCd/3BSTVSVEFBasSnucdj5Bww9rpMMb9Ypcchh3hMElLLs21oJ9rFUpi+GMp/
+ XBQQHqgWRQB/Sgjq0uaVkQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1719822586; x=
+ 1719908986; bh=u1O9mJ7L1LNKG6nph+UiwGm/XtnWbdsxHsT5UUGvze0=; b=q
+ 3FyuNXIdZLeCnYx7dtqc9NAg6MsAvaR9NWKElOnssloOktbaGLZuwofUwpU8wYav
+ uMddBsl5qqUPeP0kLAostyBmGmdNhYBy31OfqzP/y875rMLjz8/VtvckGkNLM3Kg
+ PeutJbdovMaWMhhuIkw9gVKNBU13NnTwjNzsM3gZioJmfpAIbY2gITRWRbxLrttz
+ P3tRBRqxytxfPPXvhHxbshLJX3BYnzrhT84dD60rw0ok3AmJ8rKcX2tP7ZtoMx6T
+ HLvNhm8/VzV0kwd6QuBKUw35awADXbKuCBXbEdWptxGnuE/wo5g2HAMN+uOPIZsY
+ Ev1wfcn8vJQKMJVVeJ1ng==
+X-ME-Sender: <xms:-miCZp7LgFvNhEe1g2EmDLAJEuZxG53VXK8wNYW19qaF9XzmQGvSXw>
+ <xme:-miCZm7CZK5a3AFFTArSpaGCQsatMBtP5VHdC316yro-rSp6A2Y9OBPRRiXkwkST_
+ UICzZ0VoCfBwuHVy6Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudefgddtgecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+ fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedflfhi
+ rgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
+ eqnecuggftrfgrthhtvghrnhepudefgeeftedugeehffdtheefgfevffelfefghefhjeeu
+ geevtefhudduvdeihefgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+ hilhhfrhhomhepjhhirgiguhhnrdihrghnghesfhhlhihgohgrthdrtghomh
+X-ME-Proxy: <xmx:-miCZgf1XWB12HL4OYs15y2d_CdGS7CLTT-R2oQTfR8_RDI3kQ5dPQ>
+ <xmx:-miCZiIKfaucjL72-_Bt-EUEgQL6DJSyzx_EFMWBBL5Ev6V51W10Zg>
+ <xmx:-miCZtKg82rSMZ_W4EyIDFHUGFLPUyuZXB0Ux1YJ86XlBEl9qFKq6g>
+ <xmx:-miCZrzBtkrVPOyuKMl6Esw1NYr1i3YZqeRaoaPMqy475AmEvAP3Lg>
+ <xmx:-miCZl9UUGxoR3r2-gArxDzYxJ4qv54dm8jUPmkKW16U01iOeEElF4mQ>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id F1CE936A0074; Mon,  1 Jul 2024 04:29:45 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-566-g3812ddbbc-fm-20240627.001-g3812ddbb
 MIME-Version: 1.0
-References: <20240701075208.19634-1-sgarzare@redhat.com>
-In-Reply-To: <20240701075208.19634-1-sgarzare@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 1 Jul 2024 16:22:13 +0800
-Message-ID: <CACGkMEu4u5js7L5Yp+-6o8D6hv=JDP4wFyn+t2WPPZSQVhH4EQ@mail.gmail.com>
-Subject: Re: [PATCH] virtio: remove virtio_tswap16s() call in
- vring_packed_event_read()
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, Eugenio Perez Martin <eperezma@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-stable@nongnu.org, Xoykie <xoykie@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <dd0754c2-2a42-4cf4-8c23-eb7a1ca100b5@app.fastmail.com>
+In-Reply-To: <c817c31b-3f22-da1a-c110-4873e1a36eab@loongson.cn>
+References: <20240605-loongson3-ipi-v3-0-ddd2c0e03fa3@flygoat.com>
+ <20240605-loongson3-ipi-v3-1-ddd2c0e03fa3@flygoat.com>
+ <e1b8bbd8-2a9d-2417-1123-4aabfdedb684@loongson.cn>
+ <002f4e7e-682b-479b-9c6c-8971a0e6640a@linaro.org>
+ <8d975e9c-c2fd-09c8-7a37-5aebc63656d4@loongson.cn>
+ <9a0f73c6-33e9-4576-9056-6a5fd0718630@linaro.org>
+ <ceebb4ea-a417-0985-d45e-3988d76e2086@loongson.cn>
+ <3544da40-d680-20f2-d7af-cf304d07bc8d@loongson.cn>
+ <74a9606c-3b3b-4af3-8242-944619f898c9@app.fastmail.com>
+ <c817c31b-3f22-da1a-c110-4873e1a36eab@loongson.cn>
+Date: Mon, 01 Jul 2024 09:29:30 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: "Bibo Mao" <maobibo@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ gaosong <gaosong@loongson.cn>, "QEMU devel" <qemu-devel@nongnu.org>
+Cc: "Huacai Chen" <chenhuacai@kernel.org>,
+ "Richard Henderson" <richard.henderson@linaro.org>,
+ "Peter Maydell" <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 1/4] hw/intc: Remove loongarch_ipi.c
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=103.168.172.150;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout7-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,51 +118,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 1, 2024 at 3:52=E2=80=AFPM Stefano Garzarella <sgarzare@redhat.=
-com> wrote:
->
-> Commit d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-> switched using of address_space_read_cached() to virito_lduw_phys_cached(=
-)
-> to access packed descriptor event.
->
-> When we used address_space_read_cached(), we needed to call
-> virtio_tswap16s() to handle the endianess of the field, but
-> virito_lduw_phys_cached() already handles it internally, so we no longer
-> need to call virtio_tswap16s() (as the commit had done for `off_wrap`,
-> but forgot for `flags`).
->
-> Fixes: d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-> Cc: jasowang@redhat.com
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Xoykie <xoykie@gmail.com>
-> Link: https://lore.kernel.org/qemu-devel/CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--=
-Tjr49F_eX32ZBc5o2zQ@mail.gmail.com
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 
-Acked-by: Jason Wang <jasowang@redhat.com>
+
+=E5=9C=A82024=E5=B9=B47=E6=9C=881=E6=97=A5=E4=B8=83=E6=9C=88 =E4=B8=8A=E5=
+=8D=888:22=EF=BC=8Cmaobibo=E5=86=99=E9=81=93=EF=BC=9A
+> On 2024/7/1 =E4=B8=8B=E5=8D=883:01, Jiaxun Yang wrote:
+>>=20
+>>=20
+>> =E5=9C=A82024=E5=B9=B47=E6=9C=881=E6=97=A5=E4=B8=83=E6=9C=88 =E4=B8=8A=
+=E5=8D=887:44=EF=BC=8Cmaobibo=E5=86=99=E9=81=93=EF=BC=9A
+>>> Also this patch is problematic on LoongArch.
+>>>
+>>> The original patch is to search physical cpuid rather than logic cpu=
+id.
+>>>
+>>> We want to make ipi module better and better, however now it comes b=
+ack
+>>> to initial state at the beginning :(
+>>=20
+>> Isn't arch_id the "physical id" you want? "cs->cpu_index" is the logi=
+cal ID
+>> for QEMU.
+>>=20
+>> arch_id is setup by arch code, like APIC ID for x86.
+>>=20
+>> I had come across the old ipi_getcpu  implementation, and I'm sure we=
+ were
+>> looking at arch_id as well.
+> So, where is implementation code for function get_arch_id() looking fo=
+r=20
+> vcpu with physical index?
+
+Hi Bibo,
+
+cpu_by_arch_id will be redirected to:
+
+```
+CPUState *cpu_by_arch_id(int64_t id)
+{
+    CPUState *cpu;
+
+    CPU_FOREACH(cpu) {
+        CPUClass *cc =3D CPU_GET_CLASS(cpu);
+
+        if (cc->get_arch_id(cpu) =3D=3D id) {
+            return cpu;
+        }
+    }
+    return NULL;
+}
+```
+
+It iterates over all vcpus and return CPUStates with corresponding arch_=
+id.
+
+Whereas, for LoongArch's get_arch_id implementation:
+```
+static int64_t loongarch_cpu_get_arch_id(CPUState *cs)
+{
+    LoongArchCPU *cpu =3D LOONGARCH_CPU(cs);
+
+    return cpu->phy_id;
+}
+```
+I believe it matches our intension here.
 
 Thanks
 
-> ---
->  hw/virtio/virtio.c | 1 -
->  1 file changed, 1 deletion(-)
 >
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 893a072c9d..2e5e67bdb9 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -323,7 +323,6 @@ static void vring_packed_event_read(VirtIODevice *vde=
-v,
->      /* Make sure flags is seen before off_wrap */
->      smp_rmb();
->      e->off_wrap =3D virtio_lduw_phys_cached(vdev, cache, off_off);
-> -    virtio_tswap16s(vdev, &e->flags);
->  }
+> Regards
+> Bibo Mao
 >
->  static void vring_packed_off_wrap_write(VirtIODevice *vdev,
-> --
-> 2.45.2
->
+>>=20
+>> Thanks
+>> - Jiaxun
+>>>
+>>> commit 03ca348b6b9038ce284916b36c19f700ac0ce7a6
+>>> Author: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>> Date:   Wed Jun 5 10:04:27 2024
+>>>
+>>>       hw/intc/loongson_ipi: Replace ipi_getcpu with cpu_by_arch_id
+>>>
+>>>       cpu_by_arch_id is doing the same thing as our ipi_getcpu logic.
+>>>
+>>>       Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>>       Reviewed-by: Song Gao <gaosong@loongson.cn>
+>>>       Message-ID: <20240605-loongson3-ipi-v3-4-ddd2c0e03fa3@flygoat.=
+com>
+>>>       Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>>
+>>>
+>>> Regards
+>>> Bibo Mao
+>>>
 
+--=20
+- Jiaxun
 
