@@ -4,52 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219FFC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 07:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35EE5C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 07:52:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOBoK-00068I-De; Mon, 01 Jul 2024 03:50:52 -0400
+	id 1sOBpm-00071g-Mi; Mon, 01 Jul 2024 03:52:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
- id 1sOBoI-00067r-Aw
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:50:50 -0400
-Received: from va-2-31.ptr.blmpb.com ([209.127.231.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
- id 1sOBo4-0002Rb-Rq
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:50:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=dayudpu-com.20200927.dkim.feishu.cn; t=1719820222;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=1/Ze1u4kyrVuPk6cv1pCNFIs/JqnXbo8nqVQBK5oDK8=;
- b=1cfOTHqZRF0pqwEeeHAPOvJaCl2Acgk6Zu02u+JE4U08dQ6P8zGW7PwYDu8J7mrn+vzu/d
- xzshfJr55EvAAaT89/Fj8BGn4vTWTd2ksnskr/P03XVw0g0BDjcF+OhKCHgFZeKILO2p15
- tD0nt6q5rOTt8m4q5VaZzLaOhiLGZWtmYDtq7Tcoo6Ztyc0+jnHodTaU6wZYt0KXJn695V
- aSldwzsnVuLE9mXh6WGX+swqNEeee3zH78WWjrfOXNBPhuBodzP2F/2jNVNAyYteZ+x8bH
- J8m7tDKbFU7U4/jb+pWyghv/ik3hd+kbKPg68WHaKRfJMuyyCMsiLwK1lJZCRg==
-References: <20240613065150.3100-1-xiangwencheng@dayudpu.com>
-In-Reply-To: <20240613065150.3100-1-xiangwencheng@dayudpu.com>
-Date: Mon, 01 Jul 2024 15:50:20 +0800
-Message-Id: <fba0cfc406f202976ef5ac5d129e08524ce06bbf.d523eb81.5114.418c.9508.dac5306b3eb8@feishu.cn>
-To: <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] vhost-user: Skip unnecessary duplicated
- VHOST_USER_SET_LOG_BASE requests
-From: "BillXiang" <xiangwencheng@dayudpu.com>
-X-Lms-Return-Path: <lba+166825fbd+1972e0+nongnu.org+xiangwencheng@dayudpu.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0
-Received-SPF: pass client-ip=209.127.231.31;
- envelope-from=xiangwencheng@dayudpu.com; helo=va-2-31.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sOBpk-00070N-DF
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:52:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sOBpi-0002bN-MO
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:52:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719820336;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=C6KjqZo2dGPXK3fwibmQdJffp9L7VdqU4H/Eg13+QyU=;
+ b=OQh4mAovZ1Pl95weBTHNcIX202nhZb8pvPkFWndBvGwB81e5TMSAzgvlpEEcvq++x44hOI
+ 2t9urJiO5FcHkkcPiVwnP6oGk9fF4uNwH6BVcSDSYqPD6SrYZ4h9bvO6Zjyymp3Wdd3BkU
+ GPlkMNyxpAhx0iuJgSn4DrVnv6EBMMA=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-226-5cZIT_jMO7u4A0PSiYijfw-1; Mon, 01 Jul 2024 03:52:14 -0400
+X-MC-Unique: 5cZIT_jMO7u4A0PSiYijfw-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2ec507c1b59so32723061fa.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 00:52:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719820332; x=1720425132;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=C6KjqZo2dGPXK3fwibmQdJffp9L7VdqU4H/Eg13+QyU=;
+ b=bAZ3AXhsExPUNUl2Hc3C/D9N0ZO7JQYNQGI2JENMTK2Y2OabfSyI4lkDuowEVDzXBh
+ 3eWMK/PP4/TZB76x43SHOeZMDqPTBslvr2nMJdssurvLgam6IyVVoyZijSwBiRUofOfi
+ qs1r9Xwm3MLO/sqx52ChWoY4W+T60odSSbC9i1lSgo11CZD3jJbAcMH46RnwwTST+x8t
+ A/dKpw4pVq+fGrfVfMEKlD583dAuTlB3gNtb384pU92W65IQyFrLm90Q4dLHo5qTyhrN
+ To4ROWQXvU9dfo4x+E7kN02pClGINrxqXR5cmFbzklbp08amp+XB7YO8vhq5OeDTMDzS
+ pr1A==
+X-Gm-Message-State: AOJu0YxqETe7EPBPR4TWJPx/JQx8RMuoSk/70lMep5Vc3NX+p2wuYTC5
+ MUbdyv3mrIYgE+9jWGBBC72iRRk23x1mn36gr1y6gM3Q096P8ofCdJu+dcgjSaqwCaZi64I43tM
+ 4Wvn7gxYFlKph+U/qy7VNJqrlmdjO4Xe3Y0wx37UyBw0vAvTYqja01g3OvZhZTaF0q5CLS+kyTh
+ kO5gZvxQmE+1V/Nz43D4q7ztrtWWI5h/x+w8af6Go=
+X-Received: by 2002:a2e:3018:0:b0:2ec:5f85:61c0 with SMTP id
+ 38308e7fff4ca-2ee5e707c21mr38515371fa.48.1719820332696; 
+ Mon, 01 Jul 2024 00:52:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFtNkMHM41IGfok5s9q9V4/7ncNpNf6FDJAjyVaxGyMpSBrgG8xqWauc8SM4x1LwhxAlN7YXA==
+X-Received: by 2002:a2e:3018:0:b0:2ec:5f85:61c0 with SMTP id
+ 38308e7fff4ca-2ee5e707c21mr38515041fa.48.1719820331932; 
+ Mon, 01 Jul 2024 00:52:11 -0700 (PDT)
+Received: from step1.redhat.com ([193.207.222.121])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0cd778sm9423789f8f.5.2024.07.01.00.52.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Jul 2024 00:52:10 -0700 (PDT)
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Eugenio Perez Martin <eperezma@redhat.com>, jasowang@redhat.com,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-stable@nongnu.org,
+ Stefano Garzarella <sgarzare@redhat.com>, Xoykie <xoykie@gmail.com>
+Subject: [PATCH] virtio: remove virtio_tswap16s() call in
+ vring_packed_event_read()
+Date: Mon,  1 Jul 2024 09:52:08 +0200
+Message-ID: <20240701075208.19634-1-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.45.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,39 +102,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Commit d152cdd6f6 ("virtio: use virtio accessor to access packed event")
+switched using of address_space_read_cached() to virito_lduw_phys_cached()
+to access packed descriptor event.
 
-> From: "=E9=A1=B9=E6=96=87=E6=88=90"<xiangwencheng@dayudpu.com>
-> Date:=C2=A0 Thu, Jun 13, 2024, 14:51
-> Subject:=C2=A0 [PATCH] vhost-user: Skip unnecessary duplicated VHOST_USER=
-_SET_LOG_BASE requests
-> To: <qemu-devel@nongnu.org>
-> Cc: <mst@redhat.com>, "BillXiang"<xiangwencheng@dayudpu.com>
-> From: BillXiang <xiangwencheng@dayudpu.com>
->=C2=A0
-> The VHOST_USER_SET_LOG_BASE requests should be categorized into
-> non-vring specific messages, and should be sent only once.
-> If send more than once, dpdk will munmap old log_addr which may has been =
-used and cause segmentation fault.
->=C2=A0
-> Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
-> ---
->=C2=A0 hw/virtio/vhost-user.c | 1 +
->=C2=A0 1 file changed, 1 insertion(+)
->=C2=A0
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index cdf9af4a4b..41e34edd49 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -371,6 +371,7 @@ static bool vhost_user_per_device_request(VhostUserRe=
-quest request)
-> =C2=A0 =C2=A0=C2=A0 case VHOST_USER_RESET_DEVICE:
-> =C2=A0 =C2=A0=C2=A0 case VHOST_USER_ADD_MEM_REG:
-> =C2=A0 =C2=A0=C2=A0 case VHOST_USER_REM_MEM_REG:
-> + =C2=A0=C2=A0 case VHOST_USER_SET_LOG_BASE:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return true;
-> =C2=A0 =C2=A0=C2=A0 default:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return false;
-> --=C2=A0
-> 2.30.0
-ping
+When we used address_space_read_cached(), we needed to call
+virtio_tswap16s() to handle the endianess of the field, but
+virito_lduw_phys_cached() already handles it internally, so we no longer
+need to call virtio_tswap16s() (as the commit had done for `off_wrap`,
+but forgot for `flags`).
+
+Fixes: d152cdd6f6 ("virtio: use virtio accessor to access packed event")
+Cc: jasowang@redhat.com
+Cc: qemu-stable@nongnu.org
+Reported-by: Xoykie <xoykie@gmail.com>
+Link: https://lore.kernel.org/qemu-devel/CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+---
+ hw/virtio/virtio.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 893a072c9d..2e5e67bdb9 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -323,7 +323,6 @@ static void vring_packed_event_read(VirtIODevice *vdev,
+     /* Make sure flags is seen before off_wrap */
+     smp_rmb();
+     e->off_wrap = virtio_lduw_phys_cached(vdev, cache, off_off);
+-    virtio_tswap16s(vdev, &e->flags);
+ }
+ 
+ static void vring_packed_off_wrap_write(VirtIODevice *vdev,
+-- 
+2.45.2
+
 
