@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB05C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 13:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E560FC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 13:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOH7f-0008EI-Lm; Mon, 01 Jul 2024 09:31:12 -0400
+	id 1sOH86-0008Pq-Gx; Mon, 01 Jul 2024 09:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sOH7a-0008Cg-IN
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 09:31:06 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1sOH7q-0008I6-6O
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 09:31:22 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sOH7O-00059S-Pw
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 09:31:03 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2c8e7553c9eso2155182a91.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 06:30:51 -0700 (PDT)
+ id 1sOH7o-0005O3-GT
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 09:31:21 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2c86e3fb6e7so1744260a91.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 06:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1719840649; x=1720445449; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ACjYCACcN+OWc47eXAmrxeH7/7W3zi9H8TmCFf0Y8Ck=;
- b=l6ZKYwgbE1jxnFQhKL7MfszGxthqdLLAf8M1nOmU/5wFWuIoPf3AwAjyROfmhkAJ8B
- EOM0oAVJVmSYt+eXQgEToyoS4bMVOLXiftttkba0YpNeZRUf8jMspSepDFEgxvv+4GiW
- VjBFzFK0lp9Um+HU0FJg0SFXXdzeFDWMfiPUptVX+pfFDwonQbEVns8CKRsJ5AOksm7o
- rdV55+gDrV7nNPqAlO15WTOGRk6WcICOtF2S18jjj16kzAguV2Nqyql6wPozj2u69vCQ
- 7vc5hFbaA/C08kWmBaPIZnC+CHq981MckJA0hb/b6od7Csve9uYNaIrUIPUuTMm6qSO6
- 0sBA==
+ d=ventanamicro.com; s=google; t=1719840679; x=1720445479; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t1RryP+60mMhkO8WnO7FIMUxhiFZxnyyH7/OPgo3rZg=;
+ b=V6P7FiAhJM39OZUOFKjcmBxysuuAtLzBLNm3ghqcHHP3qg6YSj6OF+XHz8kwE4tr2t
+ EYWiJljwr1Hu0yEPoQ+yPOQHlG8uH+OmD3PutB4X8GpqxPmZVEBeFA1291btvrdkJD+c
+ Bt6o3QJNxltZyHTgrjNc9oq90Y4HnHx0sGuKdyaK9brA+0LthRAHrdik4Z3sYr3OiMIZ
+ 59sP0/7i9bOi+wEy3J02ogp6IraLHDGnv/mQ9gJmBpLYDxVNrIFwWQ4oN8FYRDWeozsH
+ 6abJHIxzwcUNsarK84U9X0ziypOBdAumGkYn/t/pbJfKjN0aE2MjpbPSsubxUTDYhF5m
+ 6Enw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719840649; x=1720445449;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ACjYCACcN+OWc47eXAmrxeH7/7W3zi9H8TmCFf0Y8Ck=;
- b=Y1uv4kCaEEGeXrvzH/OK7AtTWemc8yWCIfGNWS2Kz1ADcu8UjLRtSwcenga1F/4NUV
- fS+GtPPorJAFcF6BqRk+PcznVnlyFGvKmf17NWoDkXEp+ojOj2uD/4MI4XqbzUyUSeg/
- 3OOvPNrM2QhywaWAou3HwjynhY64rnbuwPwXVXOgS8+XUPi6rfg5IW54dvzrmNmcMuz9
- KWeXw6rcVh23fRzPjRimpkiCSBG0dgxVPKsowNiY0hTLths9q16QQV5X9GzI8rLEC5Pw
- UYo3lD1ICWYIOVUxzMSRH/MlYCg9Km9o4nR8h8CfP+Y+0HdOHDRprpOU/6lhTLZXMkF2
- U9jw==
-X-Gm-Message-State: AOJu0Ywkgw8R5lRErCNx7/zpFYXHUcDJ2i7Lr9RvD18V4bwJiZ0epD1Y
- 4oWW6rBmGE+i+BmV7ev3ZLa88YDXOFOJsQcI4BoxtRNq8Exj6vu46pVECACOznHok1FbypTKuMQ
- L
-X-Google-Smtp-Source: AGHT+IEsEH0syE5I5eIq0bNcuc/4kdWvvN/EjpqarenQEf1WTCeU95Cg+G2deP6nky2vYBpYZVAY1A==
-X-Received: by 2002:a17:90b:4d8d:b0:2c8:ac1:d8c3 with SMTP id
- 98e67ed59e1d1-2c93d732b8fmr4730670a91.29.1719840649163; 
- Mon, 01 Jul 2024 06:30:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719840679; x=1720445479;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=t1RryP+60mMhkO8WnO7FIMUxhiFZxnyyH7/OPgo3rZg=;
+ b=NPlLozpBR0Y5EHkgOjz/sIedxnt5dvw56nHtZ/JEUGYiWyQcdCrTFJ21gxHgRWBNpO
+ +Iuw5RaC9322UIxoJV9n7unkLttxoSYtb6Hi65ctD2kidM4Z9K2EyHuNySmRdnmEEUxu
+ brGppQv6sKXJ7EZxK5ANHy4qqUKzfxBj8pfrnQRwpJIjkGjJ2Xb6HMUerY2ZitZ9omkc
+ KpGrw3S61mXiamDTXfOO7PHWGFEInsJC0MQbeakg5faMegh5OSiP3NEL3urexOTBUkN6
+ Rvt24ptFeVFGVRrhAiaVziO5P2C7XIUU8EnsQFIgyXWsWeYjjMVr9K2JRnNv4R+mhvz9
+ 5Xag==
+X-Gm-Message-State: AOJu0YxAdOaLCezWzFt8c6UZbgRAAb4bAX6RmJDI9ILozQeL5ijuGQDS
+ W6av3dpOEtXgUiyLLp3guYcMUtFlKoTpTYVL4wIv2rEpeCqITWj21+lFBhYl/6xQtOjhe/tDYhE
+ j
+X-Google-Smtp-Source: AGHT+IH1R72NCHWtyvT6cjF3994QPDwvLOpV5wTHL4TprLIAx7QRrwQpRwu4I+azK0yqLdUKiuo5OA==
+X-Received: by 2002:a17:90a:bd86:b0:2c8:7564:7fab with SMTP id
+ 98e67ed59e1d1-2c93d72e239mr2543406a91.27.1719840678414; 
+ Mon, 01 Jul 2024 06:31:18 -0700 (PDT)
 Received: from grind.. ([179.193.8.43]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c91d3eb34bsm6736935a91.56.2024.07.01.06.30.46
+ 98e67ed59e1d1-2c91d3eb34bsm6736935a91.56.2024.07.01.06.31.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 06:30:48 -0700 (PDT)
+ Mon, 01 Jul 2024 06:31:18 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: ajones@ventanamicro.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 0/2] system/vl.c: parse all '-accel' opts 
-Date: Mon,  1 Jul 2024 10:30:36 -0300
-Message-ID: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
+Subject: [PATCH 2/2] system/vl.c: parse all -accel options
+Date: Mon,  1 Jul 2024 10:30:38 -0300
+Message-ID: <20240701133038.1489043-3-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
+References: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,45 +95,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+We're not honouring KVM options that are provided by any -accel option
+aside from the first. In this example:
 
-In the current handling of  '-accel' only the first instance is parsed.
-All other instances (aside from a 'helper' command that triggers the
-help text and exits) is ignored.
+qemu-system-riscv64 -accel kvm,riscv-aia=emul (...) \ -accel
+kvm,riscv-aia=hwaccel
 
-This also means that we can mix different accelerators in the same
-command line. In fact we can do whatever we want as long as the first
-instance of '-accel' is valid. E.g. this command line will boot a x86_64
-KVM guest without problems:
+'riscv-aia' will be set to 'emul', ignoring the last occurrence of the
+option that set 'riscv-aia' to 'hwaccel'.
 
-qemu-system-x86_64 -accel kvm -accel tcg -accel not_an_accel (...)
+The previous change guarantees that we'll not have mixed accelerators in
+the command line, and now it's safe to activate 'merge_lists' for
+'qemu_accel_opts'. This will merge all accel options in the same list,
+allowing the 'qemu_opt_foreach()' callback in do_configure_accelerator()
+to apply each one of them in the Accel class.
 
-And this will boot a KVM guest with kernel-irqchip=off because it will
-ignore the second '-accel' that sets its back to 'on':
-
-qemu-system-x86_64 -accel kvm,kernel-irqchip=off \
-    -accel kvm,kernel-irqchip=on (...)
-
-My initial intention was to fix a problem we're having with libvirt and
-RISC-V where we can't set 'riscv-aia' by appending '-accel kvm,riscv-aia=val'
-via <qemu:cmdline> in the domain XML. libvirt will add a leading
-'-accel kvm' in the regular command line and ignore the second. But to
-fix that (patch 2) we must first guarantee that we're not mixing different
-accelerators.
-
-Both patches can be squashed in a single patch if preferrable. I'm
-sending in separate because I'm not fully confident in patch 1.
-
+Reported-by: Andrew Jones <ajones@ventanamicro.com>
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ system/vl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Daniel Henrique Barboza (2):
-  system/vl.c: do not allow mixed -accel opts
-  system/vl.c: parse all -accel options
-
- system/vl.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
-
+diff --git a/system/vl.c b/system/vl.c
+index 32602e68b7..5ed9a9229f 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -259,6 +259,7 @@ static QemuOptsList qemu_accel_opts = {
+     .name = "accel",
+     .implied_opt_name = "accel",
+     .head = QTAILQ_HEAD_INITIALIZER(qemu_accel_opts.head),
++    .merge_lists = true,
+     .desc = {
+         /*
+          * no elements => accept any
 -- 
 2.45.2
 
