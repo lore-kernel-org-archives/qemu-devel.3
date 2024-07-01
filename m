@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A68F5C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 20:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1A4DC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 20:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sONQ8-0003Bi-Iw; Mon, 01 Jul 2024 16:14:40 -0400
+	id 1sONVT-0004dM-CQ; Mon, 01 Jul 2024 16:20:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sONQ5-0003BR-Uy
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:14:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sONQ4-0001Ae-Az
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:14:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719864875;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=lOvFdcz7K52N6SM7IUW/pf2PVkY0VVtHQdaVBHVrw18=;
- b=R3SL9KWCmzVSdI43ZLdSJBVVjs5y9NvMQ7nVqew6FYj6X/d29sfwSlNy71sE7ff1MYtg8V
- uwGhW9Ohjh/1yWVKI4aYO4fu/mNr1qGOlJZkhYjUNirrzOeh7bv7LRbpJzAXEsu/GaS6gQ
- N6kp3/zmha0cvE/NJiqdrLKuqB1tOwo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-ohyjGHoSOXG6ibbGT4bIjg-1; Mon, 01 Jul 2024 16:14:31 -0400
-X-MC-Unique: ohyjGHoSOXG6ibbGT4bIjg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-36743ab5fb3so2210521f8f.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 13:14:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sONVL-0004ce-9C
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:20:03 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sONVJ-0003HN-72
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:20:03 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4255fa23f7bso24441765e9.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 13:20:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719865199; x=1720469999; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=AR9qrNaWoWQK2s7XEXDWY9RmVsa4ook45PiyXKdO23E=;
+ b=kqYi7syALal2mKwU8qOkdPI5XK+jC2rT+jugk6aObkBUnF8hhEsZ/9q5Lz7y3VvsuX
+ CXXMeCA8mfaHnBk5KlgYKb6qlljZgFUdf79Fn03CP4mr+CkZp4LqtPosHqr1CQ9idIUX
+ TPxnGpo5hP2J9Ks6akRQNJGOVmb1e2k4FaeRVtV/N2SGw+MfXUULPaO6K+jMabF3sbpk
+ hUqzhOJfZQm4zAZYJAKwjM+hVVRGIkG06RJcOySmKax4eYkQhwks9N4wWR97ihm3ff7b
+ Ks9luymaZH0ReALvFnXJSY6JHwBBWQ8d/TGbexZzySm6reLG/07uFhGqs/5Wi54lFK2R
+ U8JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719864870; x=1720469670;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lOvFdcz7K52N6SM7IUW/pf2PVkY0VVtHQdaVBHVrw18=;
- b=CZ/MInPBdhKbWnrsAPwJ+l5HGT8I8Xhq+iWH7c7GIrSht+NQCXMzw8VRQqHM3+XcwL
- EFyrx9MkwAMiMfXC6ogfNYLTus0A8C2oNGTvLkHFBKPkTk8i4kppf/Qa0p7Z0kqc46uT
- 5ZtVHK3bJaQ9BmkEBfbfA8WEgObxPiwlWaikwVlncQYqfwWbou4RZDVu6yxoMggcNyXl
- O81N+aEWC25bjyWFflwM7x/4DvLRGyDl9C9F/9mVSj+ZFoU2j/+fa1w8NXDY1yQ4XtQK
- 8CU3i6PNE4tlCPvCxoMPtqHbIki0/wqY8RXzjQJ1w6hfmiYjCG+VdmZg/w6eSy2gNK/1
- JbCw==
+ d=1e100.net; s=20230601; t=1719865199; x=1720469999;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AR9qrNaWoWQK2s7XEXDWY9RmVsa4ook45PiyXKdO23E=;
+ b=NiOphiAyBKK/Pm35EZaOphPiv88MH9UEevOmJyfKPJ33pQBJwgafJWBXHGVLbb6zTD
+ NJxjK8WIXvpt4izSXHe22XaWcYtfG+AHjRId3TeECUBFd+PIwk1Wfc/1wUZ9NrBcsyPX
+ QqlDC3UgR5FoinmbCKKwVM4vVo2eJ+hyRxlModzqvjjKdTAmawrhxghTjNpG86r7rahS
+ 3te8xfijmbpelFQi1KdVZQqedbGZsz1ZPx7yM9ofhO0hLYs14aruZhpiKEocvPfyMhaE
+ Q8toHf3Tf9z30795Z73j/kW19KNA2yo3d/03NAnsewu+OgwW4cRMz2McAnyfRWIWUZwC
+ YUcA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAlfOiotcpsM5CUJRaIHZ8heYfOjhhoMXof8jH+VgijF2jQ4fVpiYoo4HB0lIqrY9ozUM8dUxCqEhRJRUVMupwmh+P/S0=
-X-Gm-Message-State: AOJu0YzAfWSW7V8UHP+bYYwdbYi8w0thEXA1IpxR5qE8iAnLapreJPkn
- NzIJhM6bDOkixjY7S9/AugMFAs169qpLTuKW0xOMbd508EDu2X0pme3SwnFOCtRXfb5ra7C89Fb
- RT15VMn00j3zSnIphCX/syov2zPjmZ8dWdFI1j25NdeGXK/V0GcgsrsgjhNVf
-X-Received: by 2002:a5d:554b:0:b0:362:e874:54e8 with SMTP id
- ffacd0b85a97d-36760ab6165mr7808191f8f.30.1719864869749; 
- Mon, 01 Jul 2024 13:14:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFUx3AqI/TY5MwKB64a6GOsGKmsZNNu2CoWIWxgOwo3i8gmzx0mvqEyh5yZicvjw8bfviv43Q==
-X-Received: by 2002:a5d:554b:0:b0:362:e874:54e8 with SMTP id
- ffacd0b85a97d-36760ab6165mr7808183f8f.30.1719864869194; 
- Mon, 01 Jul 2024 13:14:29 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
+ AJvYcCUYUZRwX2TUnbes2Jv4HG7owPOHV7hJ0wVhuzqTvb7yjJCsULE8ND2xK/qWUKbAkq3Yli5SD1R6AWE7GZAuIlZo7Y64MIU=
+X-Gm-Message-State: AOJu0Yy5Ea4YDvmBGrCeYE5tLLGBwjNeSsnqEU9DtAsUxXnZruYL5tMi
+ Xwcvmwy1UyNFt2bgy949cjA1uI53lB+JmmJv8uL4XfchetRm/nx7W2MHm7U9pNQ=
+X-Google-Smtp-Source: AGHT+IEWKhxnFseU3x9YEclWlrbkhNhcLGfBZYH+qm+qqBrgN4j0h2sXqPRroSAIqcPSKxOzpDEJaA==
+X-Received: by 2002:a05:6000:1045:b0:367:13a:5276 with SMTP id
+ ffacd0b85a97d-367756ad617mr4468152f8f.20.1719865199160; 
+ Mon, 01 Jul 2024 13:19:59 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b097fd4sm166665475e9.29.2024.07.01.13.14.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 13:14:28 -0700 (PDT)
-Date: Mon, 1 Jul 2024 16:14:25 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Dmitry Frolov <frolov@swemel.ru>
-Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3] hw/net/virtio-net.c: fix crash in iov_copy()
-Message-ID: <20240701161404-mutt-send-email-mst@kernel.org>
-References: <20240613143529.602591-2-frolov@swemel.ru>
+ ffacd0b85a97d-3675a0fb97esm10993410f8f.89.2024.07.01.13.19.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Jul 2024 13:19:58 -0700 (PDT)
+Message-ID: <4c9f7f51-83ee-421a-8690-9af2e80b134b@linaro.org>
+Date: Mon, 1 Jul 2024 22:19:57 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240613143529.602591-2-frolov@swemel.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v42 18/98] hw/sd/sdcard: Introduce sd_cmd_to_sendingdata
+ and sd_generic_read_byte
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
+ Luc Michel <luc.michel@amd.com>
+References: <20240628070216.92609-1-philmd@linaro.org>
+ <20240628070216.92609-19-philmd@linaro.org>
+ <1e5806db-d4e6-410f-b856-53c6a3f62999@kaod.org>
+ <8d6d673e-2b89-42be-bfa7-aa3678fd697d@linaro.org>
+ <6af8fd8d-9724-4c4f-9956-c19ff463d3c5@kaod.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <6af8fd8d-9724-4c4f-9956-c19ff463d3c5@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,41 +100,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 13, 2024 at 05:35:30PM +0300, Dmitry Frolov wrote:
-> A crash found while fuzzing device virtio-net-socket-check-used.
-> Assertion "offset == 0" in iov_copy() fails if less than guest_hdr_len bytes
-> were transmited.
+On 1/7/24 18:54, Cédric Le Goater wrote:
+> On 7/1/24 6:40 PM, Philippe Mathieu-Daudé wrote:
+>> On 28/6/24 09:44, Cédric Le Goater wrote:
+>>> On 6/28/24 9:00 AM, Philippe Mathieu-Daudé wrote:
+>>>> All commands switching from TRANSFER state to (sending)DATA
+>>>> do the same: send stream of data on the DAT lines. Instead
+>>>> of duplicating the same code many times, introduce 2 helpers:
+>>>> - sd_cmd_to_sendingdata() on the I/O line setup the data to
+>>>>    be transferred,
+>>>> - sd_generic_read_byte() on the DAT lines to fetch the data.
+>>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>>   hw/sd/sd.c | 39 +++++++++++++++++++++++++++++++++++++++
+>>>>   1 file changed, 39 insertions(+)
+
+>>> Shouldn't we check for buffer overrun ? sizeof(sd->data)
+>>
+>> OK if I squash this?
+>>
+>> -- >8 --
+>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+>> index d292e0adb5..f2d069c2da 100644
+>> --- a/hw/sd/sd.c
+>> +++ b/hw/sd/sd.c
+>> @@ -1123,7 +1123,7 @@ static sd_rsp_type_t 
+>> sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
+>>       sd->data_start = start;
+>>       sd->data_offset = 0;
+>>       if (data) {
+>> -        assert(size);
+>> +        assert(size > 0 && size <= sizeof(sd->data));
+>>           memcpy(sd->data, data, size);
+>>       }
+>> ---
 > 
-> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+> sure.
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Great. Can I get your R-b tag? The final patch is:
 
-Jason, are you merging this?
+-- >8 --
+Author: Philippe Mathieu-Daudé <philmd@linaro.org>
+Date:   Thu Jun 13 16:21:12 2024 +0200
 
-> ---
-> v1: https://patchew.org/QEMU/20240527133140.218300-2-frolov@swemel.ru/
-> v2: broken
-> v3: goto instead of repeating code
-> ---
->  hw/net/virtio-net.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 9c7e85caea..8f30972708 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -2735,6 +2735,10 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
->           */
->          assert(n->host_hdr_len <= n->guest_hdr_len);
->          if (n->host_hdr_len != n->guest_hdr_len) {
-> +            if (iov_size(out_sg, out_num) < n->guest_hdr_len) {
-> +                virtio_error(vdev, "virtio-net header is invalid");
-> +                goto detach;
-> +            }
->              unsigned sg_num = iov_copy(sg, ARRAY_SIZE(sg),
->                                         out_sg, out_num,
->                                         0, n->host_hdr_len);
-> -- 
-> 2.43.0
+     hw/sd/sdcard: Introduce sd_cmd_to_sendingdata and sd_generic_read_byte
+
+     All commands switching from TRANSFER state to (sending)DATA
+     do the same: send stream of data on the DAT lines. Instead
+     of duplicating the same code many times, introduce 2 helpers:
+     - sd_cmd_to_sendingdata() on the I/O line setup the data to
+       be transferred,
+     - sd_generic_read_byte() on the DAT lines to fetch the data.
+
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 18bb2f9fd8..60235d3898 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -143,4 +143,6 @@ struct SDState {
+      uint32_t blk_written;
++
+      uint64_t data_start;
+      uint32_t data_offset;
++    size_t data_size;
+      uint8_t data[512];
+@@ -1080,2 +1082,25 @@ static sd_rsp_type_t sd_cmd_unimplemented(SDState 
+*sd, SDRequest req)
+
++/* Configure fields for following sd_generic_read_byte() calls */
++__attribute__((unused))
++static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
++                                           uint64_t start,
++                                           const void *data, size_t size)
++{
++    if (sd->state != sd_transfer_state) {
++        sd_invalid_state_for_cmd(sd, req);
++    }
++
++    sd->state = sd_sendingdata_state;
++    sd->data_start = start;
++    sd->data_offset = 0;
++    if (data) {
++        assert(size > 0 && size <= sizeof(sd->data));
++        memcpy(sd->data, data, size);
++    }
++    if (size) {
++        sd->data_size = size;
++    }
++    return sd_r1;
++}
++
+  /* CMD0 */
+@@ -1914,2 +1939,16 @@ send_response:
+
++/* Return true when buffer is consumed. Configured by 
+sd_cmd_to_sendingdata() */
++__attribute__((unused))
++static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
++{
++    *value = sd->data[sd->data_offset];
++
++    if (++sd->data_offset >= sd->data_size) {
++        sd->state = sd_transfer_state;
++        return true;
++    }
++
++    return false;
++}
++
+  void sd_write_byte(SDState *sd, uint8_t value)
+---
 
 
