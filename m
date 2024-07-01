@@ -4,56 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9741C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69754C3065B
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:56:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOKIy-0003eJ-Vf; Mon, 01 Jul 2024 12:55:05 -0400
+	id 1sOKK3-0004OP-Ou; Mon, 01 Jul 2024 12:56:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ArqK=OB=kaod.org=clg@ozlabs.org>)
- id 1sOKIw-0003do-5C
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:55:02 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=ArqK=OB=kaod.org=clg@ozlabs.org>)
- id 1sOKIt-00049c-SN
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:55:01 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WCXFz2Hg5z4wc1;
- Tue,  2 Jul 2024 02:54:47 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WCXFx70SDz4wZx;
- Tue,  2 Jul 2024 02:54:45 +1000 (AEST)
-Message-ID: <6af8fd8d-9724-4c4f-9956-c19ff463d3c5@kaod.org>
-Date: Mon, 1 Jul 2024 18:54:40 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOKK2-0004Mn-G5
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:56:10 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOKJy-0004Vv-Eh
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:56:10 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3629c517da9so2635985f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:56:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719852964; x=1720457764; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uZojCX/M8iEGUl41QWmDniRskrkbd5b/r5DSD8KpT4M=;
+ b=LszwQ5A3GP+NDAD4H/evlHNlLDSa6KpbYApbUBFtaZGLpGVbMe0ONbFurBcWLEdzV/
+ PwyuGoRhkJXghdBPbwB7pEe0mRLvGCNKow+/zvJuEOYJVnQEkYtU8P5ky4iN8l8j414u
+ 07JQRe5PbE3oMiuFqLLZcwpOh/cEiqRYVX77YaAerGAmwytz63+JtyVpkL+VS/x6Lzaa
+ mWn9QK7S52o++0Z+ItaLgSKu9RH3xAZx3vhK+0Kfp08cj6o7McHvATua3wj9fhwF4Ekw
+ 7ZwzhhKMoU3NCYVPVsKpLw3v2hd+rA4H0GprZKYm+sh8ZU0yGKQ7YL84ZwGwsYA3nRnW
+ rwQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719852964; x=1720457764;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uZojCX/M8iEGUl41QWmDniRskrkbd5b/r5DSD8KpT4M=;
+ b=gyeLpClH+Fo4p+ruxHtIC3/DzKwHFoNlreQd5kB4O/mtSqGkS/9GuyLjukvbhPXH2c
+ I0Nm+Y6A4tncBId3h3rb4u3T26Jz3OExMu6Q0oRUffL6pC5Y+fpbPmQ8+oanyue3Ywoa
+ Zd2y12+L1ApLGu/ZW5JYRrEEgtVvXYhK29/O+JWkhscPKkRrIRTeAnl4D/t/hSktZMD3
+ b36E/zVhFapPt0AzF+hJMVZMu6Vdc1Uds1bVC1ptHGRwlAS+BGYa9DgZNKJOgwDqSlja
+ FpKZF+lS4sjsTsWDsiJgEf+YHDjnRGMLbOqYYGW8JSnftr7t8SYwfqKW+2LGe25HlCn1
+ jn8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVxYBMROi+iwCO1dbHoqxbOm6ht9t5I9AGoEYCKXSBgILy4iHCSbhWx7q8EOXwFnOqsRS8zwend4+BrQOHIp9OB2WiIwho=
+X-Gm-Message-State: AOJu0Yz6IJKClnLNSmny6wiMEvmmPIKWbpictskmb4h2PqJv3FCjeVZ7
+ onQscVCNkB2LBuyxhN584VtWtUsPsgMb7HxI8BDyum1YjlIvWXzGR3IX3/kjBenR/RhAfWdTDWb
+ 2
+X-Google-Smtp-Source: AGHT+IEN/qAAQMBm6Pc6lpO8RJk/5IVX7+vYL2S0N7eea/f8azsThOoJNiLL/+GWK+KltIUW2eAMPA==
+X-Received: by 2002:a5d:648c:0:b0:367:4ddc:fc40 with SMTP id
+ ffacd0b85a97d-36775699458mr5443837f8f.6.1719852964048; 
+ Mon, 01 Jul 2024 09:56:04 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.159])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0cd778sm10731646f8f.5.2024.07.01.09.56.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Jul 2024 09:56:03 -0700 (PDT)
+Message-ID: <0bb8926e-65cb-4a64-b792-96bc5544b965@linaro.org>
+Date: Mon, 1 Jul 2024 18:56:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 18/98] hw/sd/sdcard: Introduce sd_cmd_to_sendingdata
- and sd_generic_read_byte
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Luc Michel <luc.michel@amd.com>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-19-philmd@linaro.org>
- <1e5806db-d4e6-410f-b856-53c6a3f62999@kaod.org>
- <8d6d673e-2b89-42be-bfa7-aa3678fd697d@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <8d6d673e-2b89-42be-bfa7-aa3678fd697d@linaro.org>
+Subject: Re: [PATCH] hw/core/loader: gunzip(): fix memory leak on error path
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20240627162507.598352-1-vsementsov@yandex-team.ru>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240627162507.598352-1-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=ArqK=OB=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,76 +97,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/1/24 6:40 PM, Philippe Mathieu-Daudé wrote:
-> On 28/6/24 09:44, Cédric Le Goater wrote:
->> On 6/28/24 9:00 AM, Philippe Mathieu-Daudé wrote:
->>> All commands switching from TRANSFER state to (sending)DATA
->>> do the same: send stream of data on the DAT lines. Instead
->>> of duplicating the same code many times, introduce 2 helpers:
->>> - sd_cmd_to_sendingdata() on the I/O line setup the data to
->>>    be transferred,
->>> - sd_generic_read_byte() on the DAT lines to fetch the data.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   hw/sd/sd.c | 39 +++++++++++++++++++++++++++++++++++++++
->>>   1 file changed, 39 insertions(+)
->>>
->>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->>> index d85b2906f4..1a8d06804d 100644
->>> --- a/hw/sd/sd.c
->>> +++ b/hw/sd/sd.c
->>> @@ -142,8 +142,10 @@ struct SDState {
->>>        */
->>>       bool expecting_acmd;
->>>       uint32_t blk_written;
->>> +
->>>       uint64_t data_start;
->>>       uint32_t data_offset;
->>> +    size_t data_size;
->>>       uint8_t data[512];
->>>       uint8_t vendor_data[512];
->>> @@ -1083,6 +1085,29 @@ static sd_rsp_type_t sd_cmd_unimplemented(SDState *sd, SDRequest req)
->>>       return sd_illegal;
->>>   }
->>> +/* Configure fields for following sd_generic_read_byte() calls */
->>> +__attribute__((unused))
->>> +static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
->>> +                                           uint64_t start,
->>> +                                           const void *data, size_t size)
->>> +{
->>> +    if (sd->state != sd_transfer_state) {
->>> +        sd_invalid_state_for_cmd(sd, req);
->>> +    }
->>> +
->>> +    sd->state = sd_sendingdata_state;
->>> +    sd->data_start = start;
->>> +    sd->data_offset = 0;
->>> +    if (data) {
->>> +        assert(size);
->>
->> Shouldn't we check for buffer overrun ? sizeof(sd->data)
+On 27/6/24 18:25, Vladimir Sementsov-Ogievskiy wrote:
+> We should call inflateEnd() like on success path to cleanup state in s
+> variable.
 > 
-> OK if I squash this?
-> 
-> -- >8 --
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index d292e0adb5..f2d069c2da 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -1123,7 +1123,7 @@ static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
->       sd->data_start = start;
->       sd->data_offset = 0;
->       if (data) {
-> -        assert(size);
-> +        assert(size > 0 && size <= sizeof(sd->data));
->           memcpy(sd->data, data, size);
->       }
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
+>   hw/core/loader.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-sure.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Thanks,
-
-C.
 
