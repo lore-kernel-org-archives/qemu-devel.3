@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75C9C30653
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69AB5C3065C
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOClZ-0005hw-Cz; Mon, 01 Jul 2024 04:52:06 -0400
+	id 1sOCll-00060F-8C; Mon, 01 Jul 2024 04:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sOCjs-00037s-Dc
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:21 -0400
+ id 1sOCk3-0003iv-E3
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sOCjq-0005La-0l
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:19 -0400
+ id 1sOCk1-0005Oe-LI
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719823817;
+ s=mimecast20190719; t=1719823828;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NFFaBa9+OudvDsG6jDu0J1ABcu3A6sayO2az7SCsvqs=;
- b=Vl4Qn2og8xP+AJTHZudn1g21adbybUxObWq4vbhgAyNtj0x61Y3YSvH9z4CW+GA1+0NJf1
- 1EPrRf6jdc6yr2K/hZupwqHFwBCjDg2IkvvgacAa8j9NWW4HZypQMtBwxT2mGwhlr7WfPr
- 5Xb7ypdKZttAhq0dM34e55iJIVpvlQ8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0IFJ+FqzJAi+xdGYd3QywewnLxLIyH2pgLmSnMH5+zk=;
+ b=aoKb0XIIa8s/ZW4hD6mfImaBLl5tnQG2YH97zZ9A/gHKuGxjgJzKyuiinsNtQ4MR8QGfF/
+ N3Qp5+cWaBkQgd7XgX/VxlLqO2NUez07NSkN9eY622m+8VMycIHfllZ0fWIixo/8lert/Y
+ uQ10FbWOsI1viyEZhd+qrAra5AIW50Y=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-nok7mDnpPimma0MmeQAeqw-1; Mon,
- 01 Jul 2024 04:50:14 -0400
-X-MC-Unique: nok7mDnpPimma0MmeQAeqw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-fjr5hWfROZKxv4oLRVvBAA-1; Mon,
+ 01 Jul 2024 04:50:27 -0400
+X-MC-Unique: fjr5hWfROZKxv4oLRVvBAA-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B32719560A7; Mon,  1 Jul 2024 08:50:13 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B155197907C; Mon,  1 Jul 2024 08:50:26 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.22.9.3])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DC9FF1956089; Mon,  1 Jul 2024 08:50:09 +0000 (UTC)
+ id ECC9D1955E80; Mon,  1 Jul 2024 08:50:22 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
  peter.maydell@linaro.org, clg@redhat.com, yanghliu@redhat.com,
  zhenzhong.duan@intel.com, alex.williamson@redhat.com
-Subject: [PATCH v2 2/7] vfio-container-base: Introduce
- vfio_container_get_iova_ranges() helper
-Date: Mon,  1 Jul 2024 10:48:54 +0200
-Message-ID: <20240701084957.1567641-3-eric.auger@redhat.com>
+Subject: [PATCH v2 5/7] virtio-iommu : Retrieve page size mask on
+ virtio_iommu_set_iommu_device()
+Date: Mon,  1 Jul 2024 10:48:57 +0200
+Message-ID: <20240701084957.1567641-6-eric.auger@redhat.com>
 In-Reply-To: <20240701084957.1567641-1-eric.auger@redhat.com>
 References: <20240701084957.1567641-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.129.124;
@@ -85,108 +84,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce vfio_container_get_iova_ranges() to retrieve the usable
-IOVA regions of the base container and use it in the Host IOMMU
-device implementations of get_iova_ranges() callback.
+Retrieve the Host IOMMU Device page size mask when this latter is set.
+This allows to get the information much sooner than when relying on
+IOMMU MR set_page_size_mask() call, whcih happens when the IOMMU MR
+gets enabled. We introduce check_page_size_mask() helper whose code
+is inherited from current virtio_iommu_set_page_size_mask()
+implementation. This callback will be removed in a subsequent patch.
 
-We also fix a UAF bug as the list was shallow copied while
-g_list_free_full() was used both on the single call site, in
-virtio_iommu_set_iommu_device() but also in
-vfio_container_instance_finalize(). Instead use g_list_copy_deep.
-
-Fixes: cf2647a76e ("virtio-iommu: Compute host reserved regions")
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- include/hw/vfio/vfio-container-base.h |  2 ++
- hw/vfio/container-base.c              | 15 +++++++++++++++
- hw/vfio/container.c                   |  8 +-------
- hw/vfio/iommufd.c                     |  8 +-------
- 4 files changed, 19 insertions(+), 14 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index 419e45ee7a..45d7c40fce 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -86,6 +86,8 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
- int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
- 
-+GList *vfio_container_get_iova_ranges(const VFIOContainerBase *bcontainer);
-+
- #define TYPE_VFIO_IOMMU "vfio-iommu"
- #define TYPE_VFIO_IOMMU_LEGACY TYPE_VFIO_IOMMU "-legacy"
- #define TYPE_VFIO_IOMMU_SPAPR TYPE_VFIO_IOMMU "-spapr"
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index 50b1664f89..809b157674 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -83,6 +83,21 @@ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-                                                errp);
+---
+
+v1 -> v2:
+- do not update the mask if the granule is frozen (Zhenzhong)
+---
+ hw/virtio/virtio-iommu.c | 57 ++++++++++++++++++++++++++++++++++++++--
+ hw/virtio/trace-events   |  1 +
+ 2 files changed, 56 insertions(+), 2 deletions(-)
+
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index b8f75d2b1a..7d5db554af 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -598,9 +598,39 @@ out:
+     return ret;
  }
  
-+static gpointer copy_iova_range(gconstpointer src, gpointer data)
++static bool check_page_size_mask(VirtIOIOMMU *viommu, uint64_t new_mask,
++                                 Error **errp)
 +{
-+     Range *source = (Range *)src;
-+     Range *dest = g_new(Range, 1);
++    uint64_t cur_mask = viommu->config.page_size_mask;
 +
-+     range_set_bounds(dest, range_lob(source), range_upb(source));
-+     return dest;
++    if ((cur_mask & new_mask) == 0) {
++        error_setg(errp, "virtio-iommu reports a page size mask 0x%"PRIx64
++                   " incompatible with currently supported mask 0x%"PRIx64,
++                   new_mask, cur_mask);
++        return false;
++    }
++    /*
++     * Once the granule is frozen we can't change the mask anymore. If by
++     * chance the hotplugged device supports the same granule, we can still
++     * accept it.
++     */
++    if (viommu->granule_frozen) {
++        int cur_granule = ctz64(cur_mask);
++
++        if (!(BIT_ULL(cur_granule) & new_mask)) {
++            error_setg(errp,
++                       "virtio-iommu does not support frozen granule 0x%llx",
++                       BIT_ULL(cur_granule));
++            return false;
++        }
++    }
++    return true;
 +}
 +
-+GList *vfio_container_get_iova_ranges(const VFIOContainerBase *bcontainer)
-+{
-+    assert(bcontainer);
-+    return g_list_copy_deep(bcontainer->iova_ranges, copy_iova_range, NULL);
-+}
+ static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+                                           HostIOMMUDevice *hiod, Error **errp)
+ {
++    ERRP_GUARD();
+     VirtIOIOMMU *viommu = opaque;
+     HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+     struct hiod_key *new_key;
+@@ -623,8 +653,28 @@ static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+                                                 hiod->aliased_devfn,
+                                                 host_iova_ranges, errp);
+         if (ret) {
+-            g_list_free_full(host_iova_ranges, g_free);
+-            return false;
++            goto error;
++        }
++    }
++    if (hiodc->get_page_size_mask) {
++        uint64_t new_mask = hiodc->get_page_size_mask(hiod);
 +
- static void vfio_container_instance_finalize(Object *obj)
- {
-     VFIOContainerBase *bcontainer = VFIO_IOMMU(obj);
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 2e7ecdf10e..2ad57cd845 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -1169,15 +1169,9 @@ static GList *
- hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
- {
-     VFIODevice *vdev = hiod->agent;
--    GList *l = NULL;
++        if (check_page_size_mask(viommu, new_mask, errp)) {
++            /*
++             * The default mask depends on the "granule" property. For example,
++             * with 4k granule, it is -(4 * KiB). When an assigned device has
++             * page size restrictions due to the hardware IOMMU configuration,
++             * apply this restriction to the mask.
++             */
++            trace_virtio_iommu_update_page_size_mask(hiod->name,
++                                                     viommu->config.page_size_mask,
++                                                     new_mask);
++            if (!viommu->granule_frozen) {
++                viommu->config.page_size_mask &= new_mask;
++            }
++        } else {
++            error_prepend(errp, "%s: ", hiod->name);
++            goto error;
+         }
+     }
  
-     g_assert(vdev);
--
--    if (vdev->bcontainer) {
--        l = g_list_copy(vdev->bcontainer->iova_ranges);
--    }
--
--    return l;
-+    return vfio_container_get_iova_ranges(vdev->bcontainer);
+@@ -637,6 +687,9 @@ static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+     g_list_free_full(host_iova_ranges, g_free);
+ 
+     return true;
++error:
++    g_list_free_full(host_iova_ranges, g_free);
++    return false;
  }
  
- static void vfio_iommu_legacy_instance_init(Object *obj)
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index c2f158e603..890d8d6a38 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -647,15 +647,9 @@ static GList *
- hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
- {
-     VFIODevice *vdev = hiod->agent;
--    GList *l = NULL;
- 
-     g_assert(vdev);
--
--    if (vdev->bcontainer) {
--        l = g_list_copy(vdev->bcontainer->iova_ranges);
--    }
--
--    return l;
-+    return vfio_container_get_iova_ranges(vdev->bcontainer);
- }
- 
- static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
+ static void
+diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+index 3cf84e04a7..599d855ff6 100644
+--- a/hw/virtio/trace-events
++++ b/hw/virtio/trace-events
+@@ -132,6 +132,7 @@ virtio_iommu_notify_map(const char *name, uint64_t virt_start, uint64_t virt_end
+ virtio_iommu_notify_unmap(const char *name, uint64_t virt_start, uint64_t virt_end) "mr=%s virt_start=0x%"PRIx64" virt_end=0x%"PRIx64
+ virtio_iommu_remap(const char *name, uint64_t virt_start, uint64_t virt_end, uint64_t phys_start) "mr=%s virt_start=0x%"PRIx64" virt_end=0x%"PRIx64" phys_start=0x%"PRIx64
+ virtio_iommu_set_page_size_mask(const char *name, uint64_t old, uint64_t new) "mr=%s old_mask=0x%"PRIx64" new_mask=0x%"PRIx64
++virtio_iommu_update_page_size_mask(const char *name, uint64_t old, uint64_t new) "host iommu device=%s old_mask=0x%"PRIx64" new_mask=0x%"PRIx64
+ virtio_iommu_notify_flag_add(const char *name) "add notifier to mr %s"
+ virtio_iommu_notify_flag_del(const char *name) "del notifier from mr %s"
+ virtio_iommu_switch_address_space(uint8_t bus, uint8_t slot, uint8_t fn, bool on) "Device %02x:%02x.%x switching address space (iommu enabled=%d)"
 -- 
 2.41.0
 
