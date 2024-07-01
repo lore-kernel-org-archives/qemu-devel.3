@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 149DDC27C4F
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 02:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC089C27C4F
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 02:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sO78W-000304-6i; Sun, 30 Jun 2024 22:51:25 -0400
+	id 1sO78V-0002xn-1R; Sun, 30 Jun 2024 22:51:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sO78V-0002yS-7w
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:51:23 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1sO78T-0002tw-An
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:51:21 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sO78T-0000DQ-LB
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:51:22 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2c8e7553c9eso1794296a91.3
- for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 19:51:21 -0700 (PDT)
+ id 1sO78R-0008Vn-EK
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:51:21 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7066f68e22cso1474730b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 19:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719802280; x=1720407080; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719802278; x=1720407078; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M3N6rPlpvzYKdcGfQuTrjYcbyNAlpYXYp9ucQoujl0c=;
- b=MBMM8ZAQ/LynmXoslz7vX4zIJjv7/3x/6x4CHIgo1bYTDREuXGwTVqftSDsBLck1BS
- 4jIqrL/fsVsaKUK6T4r6vmko274QBcSvG4/T0keJPdNv5JcSdZwtlCm0zFesTG7GymDT
- nydsCGLE9ce/Pu1HQgZqaNBhSAGzk08H/6X9zQnZ6W/HKEt5OjzhbClqi0InB8cfCkaM
- O97HBXhuljL9dcymQMSOpPfXpf0EpvoWwjYt8Ydm1ML3gyxmtZe+gcvUzeEkubnGt2p4
- 8W6E/6eTUuNsnvpzHAqsNYYmLX0puJ2/bEtQqUEtCyd6XPhCCVj88+G+mhVbNYWYhaad
- JM8w==
+ bh=mPMDVI+D07uyiyyk8Iq5xR3y1Ye6RQN5Bs9ydJnDyA0=;
+ b=Az0Twaeh5w2XSbykktmKCOSS43tx9AFv10//13yy3pktqNsOUwUDGE/4iygAuK5+gu
+ CDroVflXbZzxsni9I//OoEJANSS9ndItebNECqLM+OcSzCrk1E4NQRUznwwPeR0ZNld4
+ 0Lt6Sei0iyNy7hcwEr2Ia6/HF4C5RKitxsihM6DI/N6GfJJZGIW/KLBlNybGA6iKvPEI
+ +siVbGDdDS9Yx+1BQL/O5oQYMOY2/ossUoF4p0Kp0ZgV73cy7vewwE/wJTPA0VPuFa2M
+ ugsnKH+cZbrxJxVe08YN23AdUpKB/ygt4HHG3zISJaayJdJ6HVDpOYS5fW7LEumCloHb
+ EOxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719802280; x=1720407080;
+ d=1e100.net; s=20230601; t=1719802278; x=1720407078;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=M3N6rPlpvzYKdcGfQuTrjYcbyNAlpYXYp9ucQoujl0c=;
- b=AjC4VBDKq3kwOtbra5Jgntv3I3DY9n1bBNSaftofqFDd2rJgdMgirnFtK2lukHVdEs
- TZSkz077aeG+LDf3QHK413Shjn+mIk+qlJMc99DoMLcn3S3sRsu4ot30hlbL85FRj6aw
- 8vIA8nloKHJnOXiEZj/QSgnBaWvgECgcGH+dGXrSPbstogf2QrZfLpYYwF+z064d77JX
- RBIlirRFxqY6yHibT53dH2cx93+H+6uYXHEeNzvvS7n1ABf1o8CYhWx7luFuV8TKNUAy
- 2aGpZ2rrv35AbBshAP49Fz5Dokn0PpTVsJclEWNWUPZHHTLN4lhg2O+bmfex3Gt428NO
- iLMg==
-X-Gm-Message-State: AOJu0YzRfEYe3l+WfNhq1YuAxYulYiWNlCZJQNUum1sHMkf4l8HjDNdL
- vTPKwPiGwOC6hfZd+CA7Lhi6BB2Ej5Ym3wbLSl3q8/nLOODMCuQJ58SmvrS8+CQUleKB+ggRtSF
- z
-X-Google-Smtp-Source: AGHT+IHPZokYVk3/63oBakFeipGmzM7Rak8PpTpgOviYTVmG8EuKuUj+QkvZW6Py2tfoA9HvDc67aQ==
-X-Received: by 2002:a17:90a:c084:b0:2c7:c6a1:42c9 with SMTP id
- 98e67ed59e1d1-2c93d6f22ffmr3648624a91.10.1719802280206; 
- Sun, 30 Jun 2024 19:51:20 -0700 (PDT)
+ bh=mPMDVI+D07uyiyyk8Iq5xR3y1Ye6RQN5Bs9ydJnDyA0=;
+ b=V9mIqYOJGzG/Fc6LLkOGqCwHjiTct1JbFbMOLQH4D3JKFY+EAD4oJQD3lmmqr6Aktp
+ LPquhBNKmOhD9I+Bf9ogOeMgZNB71qkaXs0RHWrY8XGJFrvsuQE2QkKVs61CTVjEZSvm
+ HNROP4uSCYABuKb9VTGI75u4Ykq6fVpXjtfwClmJeVZixuI78BN2hMEZQOPQXgiiJsQo
+ 08H0Se5IlANvZ3PkpRz68PHVc0Dl7NvLMO8/r5fxAEo/wUX61zF0bFZ6CIE2MuGQJclq
+ qa5eMO03/GRnhk5GRT0j3kEMOt6PSqCYjvk8117k3k+GJ4Nc5D6qbf2kSkWqekO7zY1I
+ tr2Q==
+X-Gm-Message-State: AOJu0YxA4inUURr14lorGRrrXIUKPbS8HvCrBtmTEurKtbFG8IrKsrA2
+ xgpVkqK4yjJBKdwTPebO8U3DTjiSs6kzD3OI+fi85Bi1VDZDjYZDhSeG8Qrkgs78AxZv7qfJdMh
+ F
+X-Google-Smtp-Source: AGHT+IFBMU+AcKDU/8esAshINhmce7uSp6vOsLD8OT/pjWRYbcsND7ZA/6+ii/ac2/Ii68phtKJctw==
+X-Received: by 2002:a05:6a20:7fa9:b0:1bd:253e:28e with SMTP id
+ adf61e73a8af0-1bef61398b1mr3590112637.16.1719802277424; 
+ Sun, 30 Jun 2024 19:51:17 -0700 (PDT)
 Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c91d3b9349sm5531698a91.37.2024.06.30.19.51.19
+ 98e67ed59e1d1-2c91d3b9349sm5531698a91.37.2024.06.30.19.51.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 30 Jun 2024 19:51:19 -0700 (PDT)
+ Sun, 30 Jun 2024 19:51:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com
-Subject: [PATCH 4/5] target/i386: Remove default in cc_op_live
-Date: Sun, 30 Jun 2024 19:51:14 -0700
-Message-Id: <20240701025115.1265117-5-richard.henderson@linaro.org>
+Subject: [PATCH 1/5] target/i386: Tidy cc_op_str usage
+Date: Sun, 30 Jun 2024 19:51:11 -0700
+Message-Id: <20240701025115.1265117-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240701025115.1265117-1-richard.henderson@linaro.org>
 References: <20240701025115.1265117-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,29 +94,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that CC_OP_NB is gone, push the assert after the switch.
-This will allow -Wswitch to diagnose missing entries.
+Make const.  Use the read-only strings directly; do not copy
+them into an on-stack buffer with snprintf.  Allow for holes
+in the cc_op_str array, now present with CC_OP_POPCNT.
 
+Fixes: 460231ad369 ("target/i386: give CC_OP_POPCNT low bits corresponding to MO_TL")
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/tcg/translate.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ target/i386/cpu-dump.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index e5a8aaf793..e675afca47 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -318,9 +318,8 @@ static uint8_t cc_op_live(CCOp op)
-     case CC_OP_SBBB ... CC_OP_SBBQ:
-     case CC_OP_ADCOX:
-         return USES_CC_DST | USES_CC_SRC | USES_CC_SRC2;
--    default:
--        g_assert_not_reached();
-     }
-+    g_assert_not_reached();
- }
+diff --git a/target/i386/cpu-dump.c b/target/i386/cpu-dump.c
+index 3bb8e44091..dc6723aede 100644
+--- a/target/i386/cpu-dump.c
++++ b/target/i386/cpu-dump.c
+@@ -27,7 +27,7 @@
+ /***********************************************************/
+ /* x86 debug */
  
- static void set_cc_op_1(DisasContext *s, CCOp op, bool dirty)
+-static const char *cc_op_str[CC_OP_NB] = {
++static const char * const cc_op_str[] = {
+     [CC_OP_DYNAMIC] = "DYNAMIC",
+ 
+     [CC_OP_EFLAGS] = "EFLAGS",
+@@ -347,7 +347,6 @@ void x86_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     X86CPU *cpu = X86_CPU(cs);
+     CPUX86State *env = &cpu->env;
+     int eflags, i, nb;
+-    char cc_op_name[32];
+     static const char *seg_name[6] = { "ES", "CS", "SS", "DS", "FS", "GS" };
+ 
+     eflags = cpu_compute_eflags(env);
+@@ -456,10 +455,16 @@ void x86_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+                      env->dr[6], env->dr[7]);
+     }
+     if (flags & CPU_DUMP_CCOP) {
+-        if ((unsigned)env->cc_op < CC_OP_NB)
+-            snprintf(cc_op_name, sizeof(cc_op_name), "%s", cc_op_str[env->cc_op]);
+-        else
+-            snprintf(cc_op_name, sizeof(cc_op_name), "[%d]", env->cc_op);
++        const char *cc_op_name = NULL;
++        char cc_op_buf[32];
++
++        if ((unsigned)env->cc_op < ARRAY_SIZE(cc_op_str)) {
++            cc_op_name = cc_op_str[env->cc_op];
++        }
++        if (cc_op_name == NULL) {
++            snprintf(cc_op_buf, sizeof(cc_op_buf), "[%d]", env->cc_op);
++            cc_op_name = cc_op_buf;
++        }
+ #ifdef TARGET_X86_64
+         if (env->hflags & HF_CS64_MASK) {
+             qemu_fprintf(f, "CCS=%016" PRIx64 " CCD=%016" PRIx64 " CCO=%s\n",
 -- 
 2.34.1
 
