@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6ACBC3065A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86484C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOJZx-0002Uf-7p; Mon, 01 Jul 2024 12:08:33 -0400
+	id 1sOJa5-0003DZ-Ml; Mon, 01 Jul 2024 12:08:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOJZI-0000wl-92
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:53 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ id 1sOJZ7-0000iQ-Nu
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:43 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOJZE-0005Uz-Cn
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:52 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-52cd717ec07so4066287e87.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:07:47 -0700 (PDT)
+ id 1sOJZ3-0005R2-VO
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:41 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-425680b1d3aso22213235e9.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:07:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719850066; x=1720454866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719850056; x=1720454856; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XF99cI8EMXtHQdN2r/6udNjoGMUqreNEU/+MKGXXDD0=;
- b=HDcBAjceT7QOlkkAtv3vioO0BsUdkIB6V3BSWImhX5sNSyf2u5YkIp6Jj4Gz6FWjG8
- Bf8MQrgUx1VDNekXsEoMNY0TWw1zTc6XHCZfZ8sq2KMQ6mNcJEOE8fkhhG6RXyODllVK
- DWsJfHs0CvL8KDhsJQ6Be4ABtjEp1zISaJ9Q02tmxJpwl0rxwhvh1kfee9bUYBSs2Obg
- HtAXPTm0y1UvgGIjxbRXseXXjAxYtTq9p18lgV3Sr2xQ9g05GmT4iQEAsFyIlb/RlU8/
- Eal2yz3wBImy7DvfwitMljCQms2wctLgt0ic2uSSo9sznSjPPNraOgPixIXiTNm8afrV
- 6p+w==
+ :reply-to; bh=CgRYVkIIweHtjr+ZTjlTznMU791NJv4qRCbRXJ37zVc=;
+ b=ldZU8eScDCM4Kj7jTLlhWVylDMjzxRFuCja9WnVHF+zWWpmB3AOYQIVbBa9nMUxXg+
+ zPoWREWLBpC4DBPAYd+Jtz3T2dld10RnEpP3gfmExHnIVEH51yIFHP4JXgoVadzEv+5b
+ bl4PVy7QsUIrBfVKYSQw/si8FTlf00A/6FnqvWuer6NN+nYX39q6+ct7c2WLcE3LsBGt
+ MDc9JS9e7sZ1w8SA8S1beWArpl5pddHiXt0P4lrLLuPD78vfvjzMyx88piQ5MLcOKbwJ
+ 4oAyFo5fFtNStn75McmaP282S9V7EnOCSfO+II6kbKGssOfnFvSeB0lTQehUmBbMAEET
+ LTSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719850066; x=1720454866;
+ d=1e100.net; s=20230601; t=1719850056; x=1720454856;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XF99cI8EMXtHQdN2r/6udNjoGMUqreNEU/+MKGXXDD0=;
- b=gdw7bR6QmHbygVZmHdLw0Ux4WeTN/4v2o5AgA3su/EagUOYPP/XHbMTAyjF49F2h/N
- SE6Tm9SOjPeeKc0ltPwkreVLYX+eWc8izC/7Qg0/lqWFZ2AoEhkbk0h8bKg9MjUyc/iy
- hQqdCBblykpNIvYwDp4/HKxhp9+o7F7l2BZBAwW3HPJc3fVzxbq7yRWOy+8+lrjYHUIO
- iIHLSyS1qYkdKZoCWEB3HXpu03EwtVFn6ScPry5Ixpi8OxHg3bu2ZxIuyHRZNp8lxjj8
- ep41u8vC00WZmStUqVWFq0xj5drLXtZ/VjXsOcPdJcZexLzP0yrjv6qRwaylQ0bRTtwJ
- TQ2g==
-X-Gm-Message-State: AOJu0Yy6MAt90lJTfbEXWU3wJufbMxPICSQP9Tm5JG4q5cxhOYIAKMpz
- Co5FDgYeIpmE0enOdetspaXZPzlpBQywkD3ysGu5aj4No3iTDzH22GB7hc13FCmuO5HshE7F5WG
- +2lU=
-X-Google-Smtp-Source: AGHT+IHXTWJOtnXmoULvk3S4KH6gxBbh7JUWQuQXA+RAAUlQ45ONdVcN8rPuFwRpTzp3k8WsmtovuA==
-X-Received: by 2002:a05:6512:3c9f:b0:52e:7a8c:35a0 with SMTP id
- 2adb3069b0e04-52e82651c44mr5297140e87.7.1719850066523; 
- Mon, 01 Jul 2024 09:07:46 -0700 (PDT)
+ bh=CgRYVkIIweHtjr+ZTjlTznMU791NJv4qRCbRXJ37zVc=;
+ b=E/XE2MtL3M6HYKu07vxw0ftWDScm5HFA7kDl8QoVAO2P8t7Nh6X1JOCufQGnwNAeBx
+ RfumWVqEwrry5A1AwwE6cvlCejQ9iT6MHagsqjb6KlF0sufCIu+/RRvj4Myp1bqqFXju
+ HToFFWzVQEKmI7R6P0xYV7iAQELJbo5d9q4ma7v3sCj9Adu/TlBxkaFN1DDkaIyZ/Ki3
+ DNiep8Gl8ffHrfNkwwmYcGKTo4hqbMyZ14yvp/HlgpUo8riM1mLbY4DY+Deowqb2ukcA
+ 7hMvR286QMNkjcyanW8rWRo4HpDOsYHkpJbpYPSEHVsCgRJ9Mko0QHAetTkUWY2thwU8
+ cKqg==
+X-Gm-Message-State: AOJu0YyIqwbN/ZA/OoDdiy0PZHPfVjbn2TkwVsfq1Ih47X4I2qDLOxHA
+ kGJXTFHgCI2Py6AP/EjdXh0iuCXf/+hID3eSW2eozI8ilvQW3YE+n9+n9d514J011AlVIcUray6
+ 8Y+c=
+X-Google-Smtp-Source: AGHT+IEKBu085hkcqznFYDLd6HZpSPW35USDKxVidq97J6lpV41qFSGxiPE1KVBgAwVcNFKFr4m1Nw==
+X-Received: by 2002:a05:600c:1793:b0:425:7ac6:9709 with SMTP id
+ 5b1f17b1804b1-4257ac698c2mr43048445e9.3.1719850056396; 
+ Mon, 01 Jul 2024 09:07:36 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af557fesm161952135e9.11.2024.07.01.09.07.46
+ 5b1f17b1804b1-4256af557fesm161952135e9.11.2024.07.01.09.07.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 09:07:46 -0700 (PDT)
+ Mon, 01 Jul 2024 09:07:36 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/29] hw/misc: In STM32L4x5 EXTI,
- correct configurable interrupts
-Date: Mon,  1 Jul 2024 17:07:28 +0100
-Message-Id: <20240701160729.1910763-29-peter.maydell@linaro.org>
+Subject: [PULL 13/29] target/arm: Convert BFDOT to decodetree
+Date: Mon,  1 Jul 2024 17:07:13 +0100
+Message-Id: <20240701160729.1910763-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240701160729.1910763-1-peter.maydell@linaro.org>
 References: <20240701160729.1910763-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,103 +93,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Inès Varhol <ines.varhol@telecom-paris.fr>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The implementation of configurable interrupts (interrupts supporting
-edge selection) was incorrectly expecting alternating input levels :
-this commits adds a new status field `irq_levels` to actually detect
-edges.
-
-Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
-Message-id: 20240629110800.539969-2-ines.varhol@telecom-paris.fr
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240625183536.1672454-8-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/misc/stm32l4x5_exti.h |  2 ++
- hw/misc/stm32l4x5_exti.c         | 28 +++++++++++++---------------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+ target/arm/tcg/a64.decode      |  2 ++
+ target/arm/tcg/translate-a64.c | 20 +++++---------------
+ 2 files changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/include/hw/misc/stm32l4x5_exti.h b/include/hw/misc/stm32l4x5_exti.h
-index be961d2f01f..55f763fa376 100644
---- a/include/hw/misc/stm32l4x5_exti.h
-+++ b/include/hw/misc/stm32l4x5_exti.h
-@@ -45,6 +45,8 @@ struct Stm32l4x5ExtiState {
-     uint32_t swier[EXTI_NUM_REGISTER];
-     uint32_t pr[EXTI_NUM_REGISTER];
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 8a0251f83cf..6819fd25873 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -950,6 +950,7 @@ SQRDMLSH_v      0.10 1110 ..0 ..... 10001 1 ..... ..... @qrrr_e
+ SDOT_v          0.00 1110 100 ..... 10010 1 ..... ..... @qrrr_s
+ UDOT_v          0.10 1110 100 ..... 10010 1 ..... ..... @qrrr_s
+ USDOT_v         0.00 1110 100 ..... 10011 1 ..... ..... @qrrr_s
++BFDOT_v         0.10 1110 010 ..... 11111 1 ..... ..... @qrrr_s
  
-+    /* used for edge detection */
-+    uint32_t irq_levels[EXTI_NUM_REGISTER];
-     qemu_irq irq[EXTI_NUM_INTERRUPT_OUT_LINES];
- };
+ ### Advanced SIMD scalar x indexed element
  
-diff --git a/hw/misc/stm32l4x5_exti.c b/hw/misc/stm32l4x5_exti.c
-index 495a0004ab4..6a2ec62d785 100644
---- a/hw/misc/stm32l4x5_exti.c
-+++ b/hw/misc/stm32l4x5_exti.c
-@@ -88,6 +88,7 @@ static void stm32l4x5_exti_reset_hold(Object *obj, ResetType type)
-         s->ftsr[bank] = 0x00000000;
-         s->swier[bank] = 0x00000000;
-         s->pr[bank] = 0x00000000;
-+        s->irq_levels[bank] = 0x00000000;
-     }
- }
+@@ -1029,6 +1030,7 @@ SDOT_vi         0.00 1111 10 .. .... 1110 . 0 ..... .....   @qrrx_s
+ UDOT_vi         0.10 1111 10 .. .... 1110 . 0 ..... .....   @qrrx_s
+ SUDOT_vi        0.00 1111 00 .. .... 1111 . 0 ..... .....   @qrrx_s
+ USDOT_vi        0.00 1111 10 .. .... 1111 . 0 ..... .....   @qrrx_s
++BFDOT_vi        0.00 1111 01 .. .... 1111 . 0 ..... .....   @qrrx_s
  
-@@ -102,27 +103,23 @@ static void stm32l4x5_exti_set_irq(void *opaque, int irq, int level)
-     /* Shift the value to enable access in x2 registers. */
-     irq %= EXTI_MAX_IRQ_PER_BANK;
+ # Floating-point conditional select
  
-+    if (level == extract32(s->irq_levels[bank], irq, 1)) {
-+        /* No change in IRQ line state: do nothing */
-+        return;
-+    }
-+    s->irq_levels[bank] = deposit32(s->irq_levels[bank], irq, 1, level);
-+
-     /* If the interrupt is masked, pr won't be raised */
-     if (!extract32(s->imr[bank], irq, 1)) {
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 9a658ca8769..0f44cd5aee5 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -5604,6 +5604,7 @@ static bool do_dot_vector(DisasContext *s, arg_qrrr_e *a,
+ TRANS_FEAT(SDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_sdot_b)
+ TRANS_FEAT(UDOT_v, aa64_dp, do_dot_vector, a, gen_helper_gvec_udot_b)
+ TRANS_FEAT(USDOT_v, aa64_i8mm, do_dot_vector, a, gen_helper_gvec_usdot_b)
++TRANS_FEAT(BFDOT_v, aa64_bf16, do_dot_vector, a, gen_helper_gvec_bfdot)
+ 
+ /*
+  * Advanced SIMD scalar/vector x indexed element
+@@ -5942,6 +5943,8 @@ TRANS_FEAT(SUDOT_vi, aa64_i8mm, do_dot_vector_idx, a,
+            gen_helper_gvec_sudot_idx_b)
+ TRANS_FEAT(USDOT_vi, aa64_i8mm, do_dot_vector_idx, a,
+            gen_helper_gvec_usdot_idx_b)
++TRANS_FEAT(BFDOT_vi, aa64_bf16, do_dot_vector_idx, a,
++           gen_helper_gvec_bfdot_idx)
+ 
+ /*
+  * Advanced SIMD scalar pairwise
+@@ -10951,11 +10954,11 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+         break;
+     case 0x1f:
+         switch (size) {
+-        case 1: /* BFDOT */
+         case 3: /* BFMLAL{B,T} */
+             feature = dc_isar_feature(aa64_bf16, s);
+             break;
+         default:
++        case 1: /* BFDOT */
+             unallocated_encoding(s);
+             return;
+         }
+@@ -11036,9 +11039,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
          return;
-     }
- 
--    if (((1 << irq) & s->rtsr[bank]) && level) {
--        /* Rising Edge */
--        s->pr[bank] |= 1 << irq;
--        qemu_irq_pulse(s->irq[oirq]);
--    } else if (((1 << irq) & s->ftsr[bank]) && !level) {
--        /* Falling Edge */
-+    if ((level && extract32(s->rtsr[bank], irq, 1)) ||
-+        (!level && extract32(s->ftsr[bank], irq, 1))) {
-+
-         s->pr[bank] |= 1 << irq;
-         qemu_irq_pulse(s->irq[oirq]);
-     }
--    /*
--     * In the following situations :
--     * - falling edge but rising trigger selected
--     * - rising edge but falling trigger selected
--     * - no trigger selected
--     * No action is required
--     */
- }
- 
- static uint64_t stm32l4x5_exti_read(void *opaque, hwaddr addr,
-@@ -255,8 +252,8 @@ static void stm32l4x5_exti_init(Object *obj)
- 
- static const VMStateDescription vmstate_stm32l4x5_exti = {
-     .name = TYPE_STM32L4X5_EXTI,
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(imr, Stm32l4x5ExtiState, EXTI_NUM_REGISTER),
-         VMSTATE_UINT32_ARRAY(emr, Stm32l4x5ExtiState, EXTI_NUM_REGISTER),
-@@ -264,6 +261,7 @@ static const VMStateDescription vmstate_stm32l4x5_exti = {
-         VMSTATE_UINT32_ARRAY(ftsr, Stm32l4x5ExtiState, EXTI_NUM_REGISTER),
-         VMSTATE_UINT32_ARRAY(swier, Stm32l4x5ExtiState, EXTI_NUM_REGISTER),
-         VMSTATE_UINT32_ARRAY(pr, Stm32l4x5ExtiState, EXTI_NUM_REGISTER),
-+        VMSTATE_UINT32_ARRAY(irq_levels, Stm32l4x5ExtiState, EXTI_NUM_REGISTER),
-         VMSTATE_END_OF_LIST()
-     }
- };
+     case 0xf:
+         switch (size) {
+-        case 1: /* BFDOT */
+-            gen_gvec_op4_ool(s, is_q, rd, rn, rm, rd, 0, gen_helper_gvec_bfdot);
+-            break;
+         case 3: /* BFMLAL{B,T} */
+             gen_gvec_op4_fpst(s, 1, rd, rn, rm, rd, false, is_q,
+                               gen_helper_gvec_bfmlal);
+@@ -12053,13 +12053,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+         break;
+     case 0x0f:
+         switch (size) {
+-        case 1: /* BFDOT */
+-            if (is_scalar || !dc_isar_feature(aa64_bf16, s)) {
+-                unallocated_encoding(s);
+-                return;
+-            }
+-            size = MO_32;
+-            break;
+         case 3: /* BFMLAL{B,T} */
+             if (is_scalar || !dc_isar_feature(aa64_bf16, s)) {
+                 unallocated_encoding(s);
+@@ -12070,6 +12063,7 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+             break;
+         default:
+         case 0: /* SUDOT */
++        case 1: /* BFDOT */
+         case 2: /* USDOT */
+             unallocated_encoding(s);
+             return;
+@@ -12179,10 +12173,6 @@ static void disas_simd_indexed(DisasContext *s, uint32_t insn)
+     switch (16 * u + opcode) {
+     case 0x0f:
+         switch (extract32(insn, 22, 2)) {
+-        case 1: /* BFDOT */
+-            gen_gvec_op4_ool(s, is_q, rd, rn, rm, rd, index,
+-                             gen_helper_gvec_bfdot_idx);
+-            return;
+         case 3: /* BFMLAL{B,T} */
+             gen_gvec_op4_fpst(s, 1, rd, rn, rm, rd, 0, (index << 1) | is_q,
+                               gen_helper_gvec_bfmlal_idx);
 -- 
 2.34.1
 
