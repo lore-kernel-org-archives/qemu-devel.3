@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25394C3065A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45414C3065B
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOJZL-00012B-Jd; Mon, 01 Jul 2024 12:07:55 -0400
+	id 1sOJaB-000409-3R; Mon, 01 Jul 2024 12:08:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOJZ4-0000fV-Au
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:41 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ id 1sOJZI-0000wk-7x
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:54 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOJZ0-0005Pe-4E
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:37 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2ebed33cb65so34368941fa.2
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:07:33 -0700 (PDT)
+ id 1sOJZ8-0005T5-EL
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:52 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-52ce6c8db7bso4772868e87.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:07:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719850052; x=1720454852; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719850061; x=1720454861; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=v4q4C3V/5/Br3sgQcvb/M3Jy91TsPgVVMFf55olF/G8=;
- b=cQkVIHzAFfZYHIbtnxgnBEWvlfvpsqwFZDjsgzKE0MCvAhmF18bDafKcfzS4Im6Bi1
- 16g1+41mzoiEarkTIWC8DPr7UtTfAuuBvo7lrtuA7HVn9dxaLtJvAObC9VbVd2UuuwXZ
- no1liUXKBrkR0qLcFefKla8R+sVo12BDbzMVYHqeLmunnreVUcgBencK+N48mwF3WzwH
- Xx7sbxlV4G5w55wFQ3XzQ+XP6S9NcoJdbdN9TLks9JuRunkTu0wSS/I00IfRIKRPvzby
- 52QxcYcbE16eH70qn4OQ5o0MzXuJGSbbMPIlfeGGSq1Ycjk36UoHma3jUZse08+EfwWT
- Cbbw==
+ :reply-to; bh=eMCn7R56dlpxU36g7EBOXlmw6Q3/lgJjMgb1HwXwFHw=;
+ b=eieo9hiKPkts0+XYtDSSLz8F5S0erwB6VsJS/Nvwm29HXGHKc5Qdns3BMw237N34tZ
+ TBKV9BR6xBRUuPMMIwmO2pVMUW7EUWLhaaTh3C49805tFYQ3cZ963tvZyKXTRhE97MT9
+ L0EOaS+G26R9bXHqYhFlbYiYkc0f8Q7/Z0TZBblM0yYjP0IDmnmWo6GTT4rY7IsqHbAR
+ uSMkP5QZlo/k5MiUsdIFBoA97mryjAO1TvPZIroGihQEPVHTTSiGQZVm8kNWJmgO5tz0
+ pJbqSM2qJE6c7+2NYm/wzOhav7KS/o2KDU1ANBXASXJP2LF3AGpnDufO2AtmghSJtcbX
+ vpaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719850052; x=1720454852;
+ d=1e100.net; s=20230601; t=1719850061; x=1720454861;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=v4q4C3V/5/Br3sgQcvb/M3Jy91TsPgVVMFf55olF/G8=;
- b=Hxcl8dCgn8P2+4FxCGaRNFd0OM+UistWMOTnI3LuM5zRAwnn77IJEZuvuY6RMwiYFj
- JhXKSONQoX8LbYqyO6wGZeFlBNsvwPag3iOFMAWUu2URkKMihxHGR0kYefrCRN1VXjm/
- /+MnwarWcJxJwkofccJfyQYVRiwppz6b4XwLbWymmJVc89EGCs2N14OqWpu6WZQqDAhA
- T3CY6zSI21nTzq2ATjzfDAjeFan0FRBd6tXfB157ELmbXfulajJqyj/yZVkh4Vjpw7WS
- jBxT05sN2sZvyIt1TUaCzbxp1PXjcVXsOJa2987meoBwuyAsWjHa10fyOWAmuZ5b9PZD
- DmpA==
-X-Gm-Message-State: AOJu0YyyfjXGniUiJlGileHQAjz7eVa13AVo4t5a1VI/6nR9rGdhqd5S
- spbhl1FStAqK6J4EhnOqsYBm+gxmUMs/cjrx5lRUBpF9s+QWVAgQD3hRrxrLVuEQsCqlTOdpITu
- 6m3g=
-X-Google-Smtp-Source: AGHT+IE0oFsxKRuBP2C5z0aA/d7lRQ4IhcwM+RRTfrljJTAy+9ZCD57/CsrMRkSBjYo2nxXo2cAKdw==
-X-Received: by 2002:a2e:bc0d:0:b0:2ec:18e5:e686 with SMTP id
- 38308e7fff4ca-2ee5e6f2727mr50981591fa.33.1719850051757; 
- Mon, 01 Jul 2024 09:07:31 -0700 (PDT)
+ bh=eMCn7R56dlpxU36g7EBOXlmw6Q3/lgJjMgb1HwXwFHw=;
+ b=EFQe7R0n4RXhFkgkc1CvFdQNVuTZ5cawdidhhrlsG3t12W8tIu5A24ijjZ46fakZ3n
+ wVFlY8sp5tt+XsbCb14TEVuMofswAvnTO3oOrTrgmhtgejHTfr1rE5ck0G7PiriAUGK+
+ +TWt4Kd6cT+vGUcsz4RoL2Bkg8HU+T0DMx0YhOGs57H8q0JI0JKuoIM0VC061M3d4aZj
+ RqxM3i9JV/82YL6v8YEbBP7dia4ewVO/fLLj/eDpn3kOb5oLZjVEgnsT3H5nXIcpea3t
+ /W4rxSKcYSmtFt5XLfJh7KHptTKo0VR8l8mm9W2Kv8lAulfM19Qe/hqySt4CDY3CnP7K
+ TtTQ==
+X-Gm-Message-State: AOJu0Ywb0luevCaeZJKpmAul9IwzjYPYrS6ATf2uPvKmxWJjMpGDk3XF
+ 0fNt45dc+t5ykZYNSRH4YDG3QrAy+ygJ8ySgOFZS+X9AnTp/J+do6/5obkoqFYpWdAFfE8+20pO
+ 2fHg=
+X-Google-Smtp-Source: AGHT+IHTnkMuT26AOTfnpyip9SYuPjo/CXAz360EUNdMV4Ui0cjLnDmd3Z0mYVIQ6QO0sXr+9bw+Zg==
+X-Received: by 2002:a05:6512:1251:b0:52c:deba:7e6e with SMTP id
+ 2adb3069b0e04-52e82691371mr5086850e87.29.1719850060812; 
+ Mon, 01 Jul 2024 09:07:40 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af557fesm161952135e9.11.2024.07.01.09.07.31
+ 5b1f17b1804b1-4256af557fesm161952135e9.11.2024.07.01.09.07.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 09:07:31 -0700 (PDT)
+ Mon, 01 Jul 2024 09:07:40 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/29] hw/misc: Implement mailbox properties for customer OTP
- and device specific private keys
-Date: Mon,  1 Jul 2024 17:07:03 +0100
-Message-Id: <20240701160729.1910763-4-peter.maydell@linaro.org>
+Subject: [PULL 20/29] target/arm: Fix indentation
+Date: Mon,  1 Jul 2024 17:07:20 +0100
+Message-Id: <20240701160729.1910763-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240701160729.1910763-1-peter.maydell@linaro.org>
 References: <20240701160729.1910763-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,195 +93,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rayhan Faizel <rayhan.faizel@gmail.com>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Four mailbox properties are implemented as follows:
-1. Customer OTP: GET_CUSTOMER_OTP and SET_CUSTOMER_OTP
-2. Device-specific private key: GET_PRIVATE_KEY and
-SET_PRIVATE_KEY.
+Fix comment indentation adding a missing space.
 
-The customer OTP is located in the rows 36-43. The device-specific private key
-is located in the rows 56-63.
-
-The customer OTP can be locked with the magic numbers 0xffffffff 0xaffe0000
-when running the SET_CUSTOMER_OTP mailbox command. Bit 6 of row 32 indicates
-this lock, which is undocumented. The lock also applies to the device-specific
-private key.
-
-Signed-off-by: Rayhan Faizel <rayhan.faizel@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240624180915.4528-2-gustavo.romero@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/arm/raspberrypi-fw-defs.h |  2 +
- include/hw/misc/bcm2835_property.h   |  2 +
- hw/arm/bcm2835_peripherals.c         |  2 +
- hw/misc/bcm2835_property.c           | 87 ++++++++++++++++++++++++++++
- 4 files changed, 93 insertions(+)
+ target/arm/tcg/cpu64.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/arm/raspberrypi-fw-defs.h b/include/hw/arm/raspberrypi-fw-defs.h
-index 8b404e05336..60b8e5b4513 100644
---- a/include/hw/arm/raspberrypi-fw-defs.h
-+++ b/include/hw/arm/raspberrypi-fw-defs.h
-@@ -56,6 +56,7 @@ enum rpi_firmware_property_tag {
-     RPI_FWREQ_GET_THROTTLED =                          0x00030046,
-     RPI_FWREQ_GET_CLOCK_MEASURED =                     0x00030047,
-     RPI_FWREQ_NOTIFY_REBOOT =                          0x00030048,
-+    RPI_FWREQ_GET_PRIVATE_KEY =                        0x00030081,
-     RPI_FWREQ_SET_CLOCK_STATE =                        0x00038001,
-     RPI_FWREQ_SET_CLOCK_RATE =                         0x00038002,
-     RPI_FWREQ_SET_VOLTAGE =                            0x00038003,
-@@ -73,6 +74,7 @@ enum rpi_firmware_property_tag {
-     RPI_FWREQ_SET_PERIPH_REG =                         0x00038045,
-     RPI_FWREQ_GET_POE_HAT_VAL =                        0x00030049,
-     RPI_FWREQ_SET_POE_HAT_VAL =                        0x00038049,
-+    RPI_FWREQ_SET_PRIVATE_KEY =                        0x00038081,
-     RPI_FWREQ_SET_POE_HAT_VAL_OLD =                    0x00030050,
-     RPI_FWREQ_NOTIFY_XHCI_RESET =                      0x00030058,
-     RPI_FWREQ_GET_REBOOT_FLAGS =                       0x00030064,
-diff --git a/include/hw/misc/bcm2835_property.h b/include/hw/misc/bcm2835_property.h
-index ba8896610cc..2f93fd0c757 100644
---- a/include/hw/misc/bcm2835_property.h
-+++ b/include/hw/misc/bcm2835_property.h
-@@ -11,6 +11,7 @@
- #include "hw/sysbus.h"
- #include "net/net.h"
- #include "hw/display/bcm2835_fb.h"
-+#include "hw/nvram/bcm2835_otp.h"
- #include "qom/object.h"
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 0899251eef4..71e1bfcd4ee 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -1167,7 +1167,7 @@ void aarch64_max_tcg_initfn(Object *obj)
  
- #define TYPE_BCM2835_PROPERTY "bcm2835-property"
-@@ -26,6 +27,7 @@ struct BCM2835PropertyState {
-     MemoryRegion iomem;
-     qemu_irq mbox_irq;
-     BCM2835FBState *fbdev;
-+    BCM2835OTPState *otp;
- 
-     MACAddr macaddr;
-     uint32_t board_rev;
-diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
-index 7d735bb56cf..ac153a96b9a 100644
---- a/hw/arm/bcm2835_peripherals.c
-+++ b/hw/arm/bcm2835_peripherals.c
-@@ -132,6 +132,8 @@ static void raspi_peripherals_base_init(Object *obj)
-                                    OBJECT(&s->fb));
-     object_property_add_const_link(OBJECT(&s->property), "dma-mr",
-                                    OBJECT(&s->gpu_bus_mr));
-+    object_property_add_const_link(OBJECT(&s->property), "otp",
-+                                   OBJECT(&s->otp));
- 
-     /* Extended Mass Media Controller */
-     object_initialize_child(obj, "sdhci", &s->sdhci, TYPE_SYSBUS_SDHCI);
-diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
-index bdd9a6bbcec..63de3db6215 100644
---- a/hw/misc/bcm2835_property.c
-+++ b/hw/misc/bcm2835_property.c
-@@ -32,6 +32,7 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-     uint32_t tmp;
-     int n;
-     uint32_t offset, length, color;
-+    uint32_t start_num, number, otp_row;
- 
-     /*
-      * Copy the current state of the framebuffer config; we will update
-@@ -322,6 +323,89 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-                         0);
-             resplen = VCHI_BUSADDR_SIZE;
-             break;
-+
-+        /* Customer OTP */
-+
-+        case RPI_FWREQ_GET_CUSTOMER_OTP:
-+            start_num = ldl_le_phys(&s->dma_as, value + 12);
-+            number = ldl_le_phys(&s->dma_as, value + 16);
-+
-+            resplen = 8 + 4 * number;
-+
-+            for (n = start_num; n < start_num + number &&
-+                 n < BCM2835_OTP_CUSTOMER_OTP_LEN; n++) {
-+                otp_row = bcm2835_otp_get_row(s->otp,
-+                                              BCM2835_OTP_CUSTOMER_OTP + n);
-+                stl_le_phys(&s->dma_as,
-+                            value + 20 + ((n - start_num) << 2), otp_row);
-+            }
-+            break;
-+        case RPI_FWREQ_SET_CUSTOMER_OTP:
-+            start_num = ldl_le_phys(&s->dma_as, value + 12);
-+            number = ldl_le_phys(&s->dma_as, value + 16);
-+
-+            resplen = 4;
-+
-+            /* Magic numbers to permanently lock customer OTP */
-+            if (start_num == BCM2835_OTP_LOCK_NUM1 &&
-+                number == BCM2835_OTP_LOCK_NUM2) {
-+                bcm2835_otp_set_row(s->otp,
-+                                    BCM2835_OTP_ROW_32,
-+                                    BCM2835_OTP_ROW_32_LOCK);
-+                break;
-+            }
-+
-+            /* If row 32 has the lock bit, don't allow further writes */
-+            if (bcm2835_otp_get_row(s->otp, BCM2835_OTP_ROW_32) &
-+                                    BCM2835_OTP_ROW_32_LOCK) {
-+                break;
-+            }
-+
-+            for (n = start_num; n < start_num + number &&
-+                 n < BCM2835_OTP_CUSTOMER_OTP_LEN; n++) {
-+                otp_row = ldl_le_phys(&s->dma_as,
-+                                      value + 20 + ((n - start_num) << 2));
-+                bcm2835_otp_set_row(s->otp,
-+                                    BCM2835_OTP_CUSTOMER_OTP + n, otp_row);
-+            }
-+            break;
-+
-+        /* Device-specific private key */
-+
-+        case RPI_FWREQ_GET_PRIVATE_KEY:
-+            start_num = ldl_le_phys(&s->dma_as, value + 12);
-+            number = ldl_le_phys(&s->dma_as, value + 16);
-+
-+            resplen = 8 + 4 * number;
-+
-+            for (n = start_num; n < start_num + number &&
-+                 n < BCM2835_OTP_PRIVATE_KEY_LEN; n++) {
-+                otp_row = bcm2835_otp_get_row(s->otp,
-+                                              BCM2835_OTP_PRIVATE_KEY + n);
-+                stl_le_phys(&s->dma_as,
-+                            value + 20 + ((n - start_num) << 2), otp_row);
-+            }
-+            break;
-+        case RPI_FWREQ_SET_PRIVATE_KEY:
-+            start_num = ldl_le_phys(&s->dma_as, value + 12);
-+            number = ldl_le_phys(&s->dma_as, value + 16);
-+
-+            resplen = 4;
-+
-+            /* If row 32 has the lock bit, don't allow further writes */
-+            if (bcm2835_otp_get_row(s->otp, BCM2835_OTP_ROW_32) &
-+                                    BCM2835_OTP_ROW_32_LOCK) {
-+                break;
-+            }
-+
-+            for (n = start_num; n < start_num + number &&
-+                 n < BCM2835_OTP_PRIVATE_KEY_LEN; n++) {
-+                otp_row = ldl_le_phys(&s->dma_as,
-+                                      value + 20 + ((n - start_num) << 2));
-+                bcm2835_otp_set_row(s->otp,
-+                                    BCM2835_OTP_PRIVATE_KEY + n, otp_row);
-+            }
-+            break;
-         default:
-             qemu_log_mask(LOG_UNIMP,
-                           "bcm2835_property: unhandled tag 0x%08x\n", tag);
-@@ -449,6 +533,9 @@ static void bcm2835_property_realize(DeviceState *dev, Error **errp)
-     s->dma_mr = MEMORY_REGION(obj);
-     address_space_init(&s->dma_as, s->dma_mr, TYPE_BCM2835_PROPERTY "-memory");
- 
-+    obj = object_property_get_link(OBJECT(dev), "otp", &error_abort);
-+    s->otp = BCM2835_OTP(obj);
-+
-     /* TODO: connect to MAC address of USB NIC device, once we emulate it */
-     qemu_macaddr_default_if_unset(&s->macaddr);
+     t = cpu->isar.id_aa64isar2;
+     t = FIELD_DP64(t, ID_AA64ISAR2, MOPS, 1);     /* FEAT_MOPS */
+-    t = FIELD_DP64(t, ID_AA64ISAR2, BC, 1);      /* FEAT_HBC */
++    t = FIELD_DP64(t, ID_AA64ISAR2, BC, 1);       /* FEAT_HBC */
+     t = FIELD_DP64(t, ID_AA64ISAR2, WFXT, 2);     /* FEAT_WFxT */
+     cpu->isar.id_aa64isar2 = t;
  
 -- 
 2.34.1
