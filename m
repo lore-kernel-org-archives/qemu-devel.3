@@ -4,94 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B4DC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 20:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A68F5C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 20:15:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sONNC-00028H-9I; Mon, 01 Jul 2024 16:11:38 -0400
+	id 1sONQ8-0003Bi-Iw; Mon, 01 Jul 2024 16:14:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sONN9-00027R-KZ
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:11:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sONQ5-0003BR-Uy
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:14:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sONN6-0007Nf-HD
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:11:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sONQ4-0001Ae-Az
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 16:14:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719864691;
+ s=mimecast20190719; t=1719864875;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=H1Bmzf18tqA72WYbutfrlaRNAV4g4BhMr+FLGFrkLyg=;
- b=Q94d4rK2nlNPozJ5Ba4gwaCKBQw1EDJ2gk1s9A10eRmh+mJ4XCoSsjhMqq1ECLus40rTwT
- XGMDDPoKsIln1SQZVywyNqSoYYuuS2aC613QGwHkm0cfWxCLZ8FmLQXfnRqUMX520xz373
- dbHxIROyM5vhO4q65SeG/iXaRraZgi8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lOvFdcz7K52N6SM7IUW/pf2PVkY0VVtHQdaVBHVrw18=;
+ b=R3SL9KWCmzVSdI43ZLdSJBVVjs5y9NvMQ7nVqew6FYj6X/d29sfwSlNy71sE7ff1MYtg8V
+ uwGhW9Ohjh/1yWVKI4aYO4fu/mNr1qGOlJZkhYjUNirrzOeh7bv7LRbpJzAXEsu/GaS6gQ
+ N6kp3/zmha0cvE/NJiqdrLKuqB1tOwo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-gwfrjqF4Naqr08OA7_ZgZA-1; Mon, 01 Jul 2024 16:11:28 -0400
-X-MC-Unique: gwfrjqF4Naqr08OA7_ZgZA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4257a75193aso13504695e9.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 13:11:28 -0700 (PDT)
+ us-mta-489-ohyjGHoSOXG6ibbGT4bIjg-1; Mon, 01 Jul 2024 16:14:31 -0400
+X-MC-Unique: ohyjGHoSOXG6ibbGT4bIjg-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-36743ab5fb3so2210521f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 13:14:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719864685; x=1720469485;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H1Bmzf18tqA72WYbutfrlaRNAV4g4BhMr+FLGFrkLyg=;
- b=Fc5Z+sF/jBl2lvOM+c/SemZuaMXn4nQhNNuBKYb/D3PsIFD1RcBB2YpjuhFuxq8uUp
- YxUxBDWzJBqVlwPeWcV0K0mZLxl/8lOfIsd/l987LKewKB5h7Gm4MIywXEkS12R05S6F
- oOxMEyH7ZXZ+Dg4zzpcCdI1Qzh2iF6pVJKuxTE/StYAsoSh9xIQhRY/LiZTyIok2tR/v
- 17imQl6TwK++i2sy4KMrdAnfnHgxzk0Vmprul2zcYpYN7oEeOs5pig0bYVyLtzUxioPg
- GXkDh/lBJXYnvMDxLzLfDSj2Js+M0tsebqEB5ix+zLotFnXIknSeuG84XLNMVlOqdXXz
- LaYg==
+ d=1e100.net; s=20230601; t=1719864870; x=1720469670;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lOvFdcz7K52N6SM7IUW/pf2PVkY0VVtHQdaVBHVrw18=;
+ b=CZ/MInPBdhKbWnrsAPwJ+l5HGT8I8Xhq+iWH7c7GIrSht+NQCXMzw8VRQqHM3+XcwL
+ EFyrx9MkwAMiMfXC6ogfNYLTus0A8C2oNGTvLkHFBKPkTk8i4kppf/Qa0p7Z0kqc46uT
+ 5ZtVHK3bJaQ9BmkEBfbfA8WEgObxPiwlWaikwVlncQYqfwWbou4RZDVu6yxoMggcNyXl
+ O81N+aEWC25bjyWFflwM7x/4DvLRGyDl9C9F/9mVSj+ZFoU2j/+fa1w8NXDY1yQ4XtQK
+ 8CU3i6PNE4tlCPvCxoMPtqHbIki0/wqY8RXzjQJ1w6hfmiYjCG+VdmZg/w6eSy2gNK/1
+ JbCw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBapWXwPvc7QhB+dx7eE5KcdjAF+kqf/Asqm6P96gbKSN3ltPL6G2bb6QS21KcGHZQenLdJ3wlRrZyl/GTk0St1hQdgs8=
-X-Gm-Message-State: AOJu0YxO5fo5VdN43UG5VFhMghURIzKiStkXNyHZfz4YwB8lIMjMoCqm
- Le5kYvP/D+pBkn3QEc6MmFDENWnQLz80SP+2aCe3Pc0EZ9U7ADQBT0Q+hc7yD5hB6tlqDPYkoHn
- 4arR+XWV6b0QecCsXIJAH5OSU9MnRaV1LnDkWXSXAownstChxE0u0
-X-Received: by 2002:a05:600c:364c:b0:425:678b:901d with SMTP id
- 5b1f17b1804b1-4257a010da5mr42271625e9.21.1719864685324; 
- Mon, 01 Jul 2024 13:11:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUgUuvV6FrRFQEwsr6edMpyTZpJKfLGPRFv9EXYQyPfllVDFeiAt+fAMNjxQMOPtUjXb7+1A==
-X-Received: by 2002:a05:600c:364c:b0:425:678b:901d with SMTP id
- 5b1f17b1804b1-4257a010da5mr42271465e9.21.1719864684666; 
- Mon, 01 Jul 2024 13:11:24 -0700 (PDT)
+ AJvYcCWAlfOiotcpsM5CUJRaIHZ8heYfOjhhoMXof8jH+VgijF2jQ4fVpiYoo4HB0lIqrY9ozUM8dUxCqEhRJRUVMupwmh+P/S0=
+X-Gm-Message-State: AOJu0YzAfWSW7V8UHP+bYYwdbYi8w0thEXA1IpxR5qE8iAnLapreJPkn
+ NzIJhM6bDOkixjY7S9/AugMFAs169qpLTuKW0xOMbd508EDu2X0pme3SwnFOCtRXfb5ra7C89Fb
+ RT15VMn00j3zSnIphCX/syov2zPjmZ8dWdFI1j25NdeGXK/V0GcgsrsgjhNVf
+X-Received: by 2002:a5d:554b:0:b0:362:e874:54e8 with SMTP id
+ ffacd0b85a97d-36760ab6165mr7808191f8f.30.1719864869749; 
+ Mon, 01 Jul 2024 13:14:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUx3AqI/TY5MwKB64a6GOsGKmsZNNu2CoWIWxgOwo3i8gmzx0mvqEyh5yZicvjw8bfviv43Q==
+X-Received: by 2002:a5d:554b:0:b0:362:e874:54e8 with SMTP id
+ ffacd0b85a97d-36760ab6165mr7808183f8f.30.1719864869194; 
+ Mon, 01 Jul 2024 13:14:29 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b063485sm163616315e9.21.2024.07.01.13.11.19
+ 5b1f17b1804b1-4256b097fd4sm166665475e9.29.2024.07.01.13.14.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 13:11:24 -0700 (PDT)
-Date: Mon, 1 Jul 2024 16:11:17 -0400
+ Mon, 01 Jul 2024 13:14:28 -0700 (PDT)
+Date: Mon, 1 Jul 2024 16:14:25 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v2 00/15] Fix check-qtest-ppc64 sanitizer errors
-Message-ID: <20240701161033-mutt-send-email-mst@kernel.org>
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+To: Dmitry Frolov <frolov@swemel.ru>
+Cc: sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] hw/net/virtio-net.c: fix crash in iov_copy()
+Message-ID: <20240701161404-mutt-send-email-mst@kernel.org>
+References: <20240613143529.602591-2-frolov@swemel.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240627-san-v2-0-750bb0946dbd@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20240613143529.602591-2-frolov@swemel.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -99,7 +83,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,76 +99,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 27, 2024 at 10:37:43PM +0900, Akihiko Odaki wrote:
-> Based-on: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
-> ("[PATCH] cpu: fix memleak of 'halt_cond' and 'thread'")
+On Thu, Jun 13, 2024 at 05:35:30PM +0300, Dmitry Frolov wrote:
+> A crash found while fuzzing device virtio-net-socket-check-used.
+> Assertion "offset == 0" in iov_copy() fails if less than guest_hdr_len bytes
+> were transmited.
 > 
-> I saw various sanitizer errors when running check-qtest-ppc64. While
-> I could just turn off sanitizers, I decided to tackle them this time.
-> 
-> Unfortunately, GLib does not free test data in some cases so some
-> sanitizer errors remain. All sanitizer errors will be gone with this
-> patch series combined with the following change for GLib:
-> https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4120
-> 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-
+> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
 
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
-who's merging all this?
+Jason, are you merging this?
 
 > ---
-> Changes in v2:
-> - Rebased to "[PATCH] cpu: fix memleak of 'halt_cond' and 'thread'".
->   (Philippe Mathieu-Daudé)
-> - Converted IRQs into GPIO lines and removed one qemu_irq usage.
->   (Peter Maydell)
-> - s/suppresses/fixes/ (Michael S. Tsirkin)
-> - Corrected title of patch "hw/virtio: Free vqs after vhost_dev_cleanup()"
->   (was "hw/virtio: Free vqs before vhost_dev_cleanup()")
-> - Link to v1: https://lore.kernel.org/r/20240626-san-v1-0-f3cc42302189@daynix.com
-> 
+> v1: https://patchew.org/QEMU/20240527133140.218300-2-frolov@swemel.ru/
+> v2: broken
+> v3: goto instead of repeating code
 > ---
-> Akihiko Odaki (15):
->       cpu: Free cpu_ases
->       hw/ide: Convert macio ide_irq into GPIO line
->       hw/ide: Remove internal DMA qemu_irq
->       hw/isa/vt82c686: Define a GPIO line between vt82c686 and i8259
->       spapr: Free stdout path
->       ppc/vof: Fix unaligned FDT property access
->       hw/virtio: Free vqs after vhost_dev_cleanup()
->       migration: Free removed SaveStateEntry
->       memory: Do not create circular reference with subregion
->       tests/qtest: Use qtest_add_data_func_full()
->       tests/qtest: Free unused QMP response
->       tests/qtest: Free old machine variable name
->       tests/qtest: Delete previous boot file
->       tests/qtest: Free paths
->       tests/qtest: Free GThread
+>  hw/net/virtio-net.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
->  include/hw/ppc/mac_dbdma.h           |  5 +++--
->  hw/core/cpu-common.c                 |  1 +
->  hw/ide/macio.c                       | 18 +++++++++++++-----
->  hw/isa/vt82c686.c                    |  7 ++++---
->  hw/misc/macio/mac_dbdma.c            | 10 +++++-----
->  hw/ppc/spapr_vof.c                   |  2 +-
->  hw/ppc/vof.c                         |  2 +-
->  hw/virtio/vhost-user-base.c          |  2 ++
->  migration/savevm.c                   |  2 ++
->  system/memory.c                      | 11 +++++++++--
->  tests/qtest/device-introspect-test.c |  7 +++----
->  tests/qtest/libqtest.c               |  3 +++
->  tests/qtest/migration-test.c         | 18 +++++++++++-------
->  tests/qtest/qos-test.c               | 16 ++++++++++++----
->  tests/qtest/vhost-user-test.c        |  6 +++---
->  15 files changed, 73 insertions(+), 37 deletions(-)
-> ---
-> base-commit: af799a2337c3e39994411f90631905d809a41da4
-> change-id: 20240625-san-097afaf4f1c2
-> 
-> Best regards,
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 9c7e85caea..8f30972708 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -2735,6 +2735,10 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+>           */
+>          assert(n->host_hdr_len <= n->guest_hdr_len);
+>          if (n->host_hdr_len != n->guest_hdr_len) {
+> +            if (iov_size(out_sg, out_num) < n->guest_hdr_len) {
+> +                virtio_error(vdev, "virtio-net header is invalid");
+> +                goto detach;
+> +            }
+>              unsigned sg_num = iov_copy(sg, ARRAY_SIZE(sg),
+>                                         out_sg, out_num,
+>                                         0, n->host_hdr_len);
 > -- 
-> Akihiko Odaki <akihiko.odaki@daynix.com>
+> 2.43.0
 
 
