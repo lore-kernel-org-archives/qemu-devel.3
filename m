@@ -4,65 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC6F4C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 04:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3542C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 05:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sO8L3-0004zB-Ba; Mon, 01 Jul 2024 00:08:25 -0400
+	id 1sO9ON-0005wZ-TI; Mon, 01 Jul 2024 01:15:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sO8Kx-0004yy-BV
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 00:08:19 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1sO9OM-0005wO-2a
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 01:15:54 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sO8Ku-0004u8-P4
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 00:08:19 -0400
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1sO9OJ-0001Kj-4S
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 01:15:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719806896; x=1751342896;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=I78+8o4y5TO/43sNey+piGJbq6eN+6lk2q0DLezIb5A=;
- b=ZCxYDK6dk0nXf05cDv50nAyGL7xSC5PVTjyaMH1U0za+eyBtT8qjE4jf
- oS7WDFPZINkFn8YQM3m4EDG8rY9lRU2+Asbm91MdOD7+zkaOD3X7SFusX
- 6VYrvrhRtnvz6ToonbBilF+iOd33zcmTk+ZQcC2mH/0fPQ8Tl+r3Y5P0b
- 5OE2vCLGe5F6kLX1qZx024ZPZJSG7OwK2aHeXVowaTtd4JT9YrSvHwaVg
- jwKjUkaPC4KRNWpqw+Y0pVO1OeYs9d1lD1aRIE5krHOLA6GOy+RTI8ZVO
- YYgzxuTeCP+wOM1/mUhn7fSzYUoKjqfDyFneLyDL8u8SVCySblnukuxC3 A==;
-X-CSE-ConnectionGUID: Mt75o2f1Qq+XhuHD1N75DQ==
-X-CSE-MsgGUID: krduxK+GSqGyOSkTD4mMqQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11119"; a="17128006"
-X-IronPort-AV: E=Sophos;i="6.09,175,1716274800"; d="scan'208";a="17128006"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jun 2024 21:08:11 -0700
-X-CSE-ConnectionGUID: VzCKJDD4Q/SCgmtEWvVBEw==
-X-CSE-MsgGUID: 2dgP7byzR3GxMdsw541gEA==
+ t=1719810952; x=1751346952;
+ h=from:to:cc:subject:in-reply-to:references:date:
+ message-id:mime-version;
+ bh=33LnhJ7+BqQZikbci+g6bJ6dGM6/pya/Tnvx+wHf3/o=;
+ b=HqCAKMXXarXEK+5heQUwkfpMj5mPW8FCRkL46gSloJM96+L604e738yV
+ TReF0zt5zb03Xty7gAVEqob//tr04e9yQSbw8FdQHUb1dcLZtKlfD9Qlv
+ UTISjjqVuLGv//xguDcd0HWnibSkYQhkjKluReVt2c+ldw4IBBiNT7Obw
+ 8viyDYD40TjBkvI2XwmaRwAsxirDQyElML7POpPvALK2+75AHfU3KqQui
+ 4CsLrGSUlwSZTQ7WeYK+oR1S74cDJ2E2YtxggAp3mhG7ZgkO6HN9JZRJ0
+ d1NthKYbD0rrqxHcAfG+8yfcu1B0kSj5xbXKtvumvXhB/moPI4TlleRy+ A==;
+X-CSE-ConnectionGUID: /VAgXj9xTi+WmR77WUQmBA==
+X-CSE-MsgGUID: csP/54PqRdKem2hVYpPXRA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11119"; a="17051624"
+X-IronPort-AV: E=Sophos;i="6.09,175,1716274800"; d="scan'208";a="17051624"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jun 2024 22:15:47 -0700
+X-CSE-ConnectionGUID: tRBL+MYsRYyKY5Q3fRDiVA==
+X-CSE-MsgGUID: yXSuGEvLRIqOj0oi+miQLQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,175,1716274800"; d="scan'208";a="45352101"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 30 Jun 2024 21:08:11 -0700
-Date: Mon, 1 Jul 2024 12:23:46 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel <qemu-devel@nongnu.org>,
- John Allen <john.allen@amd.com>
-Subject: Re: [PATCH 2/2] target/i386: drop AMD machine check bits from Intel
- CPUID
-Message-ID: <ZoIvUtVOgK91UuvF@intel.com>
-References: <20240627140628.1025317-1-pbonzini@redhat.com>
- <20240627140628.1025317-3-pbonzini@redhat.com>
- <a8f5d517-7037-4146-824e-3f985774c780@intel.com>
- <CABgObfa24iTNt7V_VjsKYRhLyD3pt6oGDHEUFxe1A_A-4HF7MA@mail.gmail.com>
+X-IronPort-AV: E=Sophos;i="6.09,175,1716274800"; d="scan'208";a="45803392"
+Received: from unknown (HELO yhuang6-desk2.ccr.corp.intel.com)
+ ([10.238.208.55])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jun 2024 22:15:40 -0700
+From: "Huang, Ying" <ying.huang@intel.com>
+To: "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>
+Cc: "Jonathan Cameron" <Jonathan.Cameron@Huawei.com>,  "Gregory Price"
+ <gourry.memverge@gmail.com>,  aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com,  tj@kernel.org,  john@jagalactic.com,  "Eishan Mirakhur"
+ <emirakhur@micron.com>,  "Vinicius Tavares Petrucci"
+ <vtavarespetr@micron.com>,  "Ravis OpenSrc" <Ravis.OpenSrc@micron.com>,
+ "Alistair Popple" <apopple@nvidia.com>,  "Srinivasulu Thanneeru"
+ <sthanneeru@micron.com>,  "SeongJae Park" <sj@kernel.org>,  "Rafael J.
+ Wysocki" <rafael@kernel.org>,  Len Brown <lenb@kernel.org>,  Andrew Morton
+ <akpm@linux-foundation.org>,  Dave Jiang <dave.jiang@intel.com>,  Dan
+ Williams <dan.j.williams@intel.com>,  linux-acpi@vger.kernel.org,
+ linux-kernel@vger.kernel.org,  linux-mm@kvack.org,  "Ho-Ren (Jack)
+ Chuang" <horenc@vt.edu>,  "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>,  "Ho-Ren (Jack) Chuang"
+ <horenchuang@gmail.com>,  linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 1/1] memory tier: consolidate the initialization of
+ memory tiers
+In-Reply-To: <20240628060925.303309-2-horen.chuang@linux.dev> (Ho-Ren Chuang's
+ message of "Fri, 28 Jun 2024 06:09:23 +0000")
+References: <20240628060925.303309-1-horen.chuang@linux.dev>
+ <20240628060925.303309-2-horen.chuang@linux.dev>
+Date: Mon, 01 Jul 2024 13:13:49 +0800
+Message-ID: <87tth9ofsi.fsf@yhuang6-desk2.ccr.corp.intel.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABgObfa24iTNt7V_VjsKYRhLyD3pt6oGDHEUFxe1A_A-4HF7MA@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
+Content-Type: text/plain; charset=ascii
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=ying.huang@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -86,56 +98,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 28, 2024 at 03:23:11PM +0200, Paolo Bonzini wrote:
-> Date: Fri, 28 Jun 2024 15:23:11 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH 2/2] target/i386: drop AMD machine check bits from
->  Intel CPUID
-> 
-> Il ven 28 giu 2024, 10:32 Xiaoyao Li <xiaoyao.li@intel.com> ha scritto:
-> 
-> > On 6/27/2024 10:06 PM, Paolo Bonzini wrote:
-> > > The recent addition of the SUCCOR bit to kvm_arch_get_supported_cpuid()
-> > > causes the bit to be visible when "-cpu host" VMs are started on Intel
-> > > processors.
-> > >
-> > > While this should in principle be harmless, it's not tidy and we don't
-> > > even know for sure that it doesn't cause any guest OS to take unexpected
-> > > paths.  Since x86_cpu_get_supported_feature_word() can return different
-> > > different values depending on the guest, adjust it to hide the SUCCOR
-> >
-> > superfluous different
-> >
-> > > bit if the guest has non-AMD vendor.
-> >
-> > It seems to adjust it based on vendor in kvm_arch_get_supported_cpuid()
-> > is better than in x86_cpu_get_supported_feature_word(). Otherwise
-> > kvm_arch_get_supported_cpuid() still returns "risky" value for Intel VMs.
-> >
-> 
-> But the cpuid bit is only invalid for Intel *guest* vendor, not host. It is
-> not a problem to have it if you run on Intel host but have a guest model
-> with AMD vendor.
-> 
-> I will check if there are other callers of kvm_arch_get_supported_cpuid(),
-> or callers of x86_cpu_get_supported_feature_word() with NULL cpu, that
-> might care about the difference.
+Hi, Jack,
 
-Another example is CPUID_EXT3_TOPOEXT, though it's a no_autoenable_flags,
-it can be set by "-cpu host,+topoext" on Intel platforms.
+"Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev> writes:
 
-For this case, we have recognized that that the host/max CPU should only
-contain vender specific features, and I think it would be hard to expand
-such a rule afterwards, especially since there's other x86 vender like
-zhaoxin who implement a subset of Intel/AMD:
+I suggest you to merge the [0/1] with the change log here.  [0/1]
+describes why do we need the patch.  The below text describes some
+details.  Just don't use "---" to separate them.  We need both parts in
+the final commit message.
 
-https://lore.kernel.org/qemu-devel/d4c0dae5-b9d5-4deb-b300-78492ab11ed8@zhaoxin.com/#t
+> If we simply move the set_node_memory_tier() from memory_tier_init()
+> to late_initcall(), it will result in HMAT not registering
+> the mt_adistance_algorithm callback function, because
+> set_node_memory_tier() is not performed during the memory tiering
+> initialization phase, leading to a lack of correct default_dram
+> information.
+>
+> Therefore, we introduced a nodemask to pass the information of the
+> default DRAM nodes. The reason for not choosing to reuse
+> default_dram_type->nodes is that it is not clean enough. So in the end,
+> we use a __initdata variable, which is a variable that is released once
+> initialization is complete, including both CPU and memory nodes for HMAT
+> to iterate through.
+>
+> Besides, since default_dram_type may be checked/used during the
+> initialization process of HMAT and drivers, it is better to keep the
+> allocation of default_dram_type in memory_tier_init().
 
-What about a new flag "host_bare_metal_check" in FeatureWordInfo? Then
-if a feature is marked as "host_bare_metal_check", in addition to the
-current checks in x86_cpu_get_supported_feature_word(), bare-metal CPUID
-check is also needed (by host_cpuid()) for "host" CPU.
+Why do we need it?  IIRC, we have deleted its usage in hmat.c.
 
--Zhao
+> Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> ---
+>  drivers/acpi/numa/hmat.c     |  5 +--
+>  include/linux/memory-tiers.h |  2 ++
+>  mm/memory-tiers.c            | 59 +++++++++++++++---------------------
+>  3 files changed, 28 insertions(+), 38 deletions(-)
+>
+> diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+> index 2c8ccc91ebe6..a2f9e7a4b479 100644
+> --- a/drivers/acpi/numa/hmat.c
+> +++ b/drivers/acpi/numa/hmat.c
+> @@ -940,10 +940,7 @@ static int hmat_set_default_dram_perf(void)
+>  	struct memory_target *target;
+>  	struct access_coordinate *attrs;
+>  
+> -	if (!default_dram_type)
+> -		return -EIO;
+> -
+> -	for_each_node_mask(nid, default_dram_type->nodes) {
+> +	for_each_node_mask(nid, default_dram_nodes) {
+>  		pxm = node_to_pxm(nid);
+>  		target = find_mem_target(pxm);
+>  		if (!target)
+> diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
+> index 0d70788558f4..fa61ad9c4d75 100644
+> --- a/include/linux/memory-tiers.h
+> +++ b/include/linux/memory-tiers.h
+> @@ -38,6 +38,7 @@ struct access_coordinate;
+>  #ifdef CONFIG_NUMA
+>  extern bool numa_demotion_enabled;
+>  extern struct memory_dev_type *default_dram_type;
 
+Can we remove the above line?
+
+> +extern nodemask_t default_dram_nodes __initdata;
+
+We don't need to use __initdata in variable declaration.
+
+>  struct memory_dev_type *alloc_memory_type(int adistance);
+>  void put_memory_type(struct memory_dev_type *memtype);
+>  void init_node_memory_type(int node, struct memory_dev_type *default_type);
+> @@ -76,6 +77,7 @@ static inline bool node_is_toptier(int node)
+>  
+>  #define numa_demotion_enabled	false
+>  #define default_dram_type	NULL
+> +#define default_dram_nodes NODE_MASK_NONE
+
+Should we use <tab> after "default_dram_nodes"?
+
+>  /*
+>   * CONFIG_NUMA implementation returns non NULL error.
+>   */
+> diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+> index 6632102bd5c9..a19a90c3ad36 100644
+> --- a/mm/memory-tiers.c
+> +++ b/mm/memory-tiers.c
+> @@ -43,6 +43,7 @@ static LIST_HEAD(memory_tiers);
+>  static LIST_HEAD(default_memory_types);
+>  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
+>  struct memory_dev_type *default_dram_type;
+> +nodemask_t default_dram_nodes __initdata = NODE_MASK_NONE;
+>  
+>  static const struct bus_type memory_tier_subsys = {
+>  	.name = "memory_tiering",
+> @@ -671,28 +672,38 @@ EXPORT_SYMBOL_GPL(mt_put_memory_types);
+>  
+>  /*
+>   * This is invoked via `late_initcall()` to initialize memory tiers for
+> - * CPU-less memory nodes after driver initialization, which is
+> - * expected to provide `adistance` algorithms.
+> + * memory nodes, both with and without CPUs. After the initialization of
+> + * firmware and devices, adistance algorithms are expected to be provided.
+>   */
+>  static int __init memory_tier_late_init(void)
+>  {
+>  	int nid;
+> +	struct memory_tier *memtier;
+>  
+> +	get_online_mems();
+>  	guard(mutex)(&memory_tier_lock);
+> +	/*
+> +	 * Look at all the existing and uninitialized N_MEMORY nodes and
+> +	 * add them to default memory tier or to a tier if we already have
+> +	 * memory types assigned.
+> +	 */
+
+If the memory type of the node has been assigned, we will skip it in the
+following code.  So, I think that we need to revise the comments.
+
+>  	for_each_node_state(nid, N_MEMORY) {
+>  		/*
+> -		 * Some device drivers may have initialized memory tiers
+> -		 * between `memory_tier_init()` and `memory_tier_late_init()`,
+> -		 * potentially bringing online memory nodes and
+> -		 * configuring memory tiers. Exclude them here.
+> +		 * Some device drivers may have initialized
+> +		 * memory tiers, potentially bringing memory nodes
+> +		 * online and configuring memory tiers.
+> +		 * Exclude them here.
+>  		 */
+>  		if (node_memory_types[nid].memtype)
+>  			continue;
+>  
+> -		set_node_memory_tier(nid);
+> +		memtier = set_node_memory_tier(nid);
+> +		if (IS_ERR(memtier))
+> +			/* Continue with memtiers we are able to setup. */
+> +			break;
+>  	}
+> -
+>  	establish_demotion_targets();
+> +	put_online_mems();
+>  
+>  	return 0;
+>  }
+> @@ -875,8 +886,7 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
+>  
+>  static int __init memory_tier_init(void)
+>  {
+> -	int ret, node;
+> -	struct memory_tier *memtier;
+> +	int ret;
+>  
+>  	ret = subsys_virtual_register(&memory_tier_subsys, NULL);
+>  	if (ret)
+> @@ -887,7 +897,8 @@ static int __init memory_tier_init(void)
+>  				GFP_KERNEL);
+>  	WARN_ON(!node_demotion);
+>  #endif
+> -	mutex_lock(&memory_tier_lock);
+> +
+> +	guard(mutex)(&memory_tier_lock);
+>  	/*
+>  	 * For now we can have 4 faster memory tiers with smaller adistance
+>  	 * than default DRAM tier.
+> @@ -897,29 +908,9 @@ static int __init memory_tier_init(void)
+>  	if (IS_ERR(default_dram_type))
+>  		panic("%s() failed to allocate default DRAM tier\n", __func__);
+>  
+> -	/*
+> -	 * Look at all the existing N_MEMORY nodes and add them to
+> -	 * default memory tier or to a tier if we already have memory
+> -	 * types assigned.
+> -	 */
+> -	for_each_node_state(node, N_MEMORY) {
+> -		if (!node_state(node, N_CPU))
+> -			/*
+> -			 * Defer memory tier initialization on
+> -			 * CPUless numa nodes. These will be initialized
+> -			 * after firmware and devices are initialized.
+> -			 */
+> -			continue;
+> -
+> -		memtier = set_node_memory_tier(node);
+> -		if (IS_ERR(memtier))
+> -			/*
+> -			 * Continue with memtiers we are able to setup
+> -			 */
+> -			break;
+> -	}
+> -	establish_demotion_targets();
+> -	mutex_unlock(&memory_tier_lock);
+> +	/* Record nodes with memory and CPU to set default DRAM performance. */
+> +	nodes_and(default_dram_nodes, node_states[N_MEMORY],
+> +		  node_states[N_CPU]);
+>  
+>  	hotplug_memory_notifier(memtier_hotplug_callback, MEMTIER_HOTPLUG_PRI);
+>  	return 0;
+
+--
+Best Regards,
+Huang, Ying
 
