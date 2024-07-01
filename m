@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC96EC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84FEBC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:44:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOK4e-0006iS-KM; Mon, 01 Jul 2024 12:40:16 -0400
+	id 1sOK8I-000818-Hz; Mon, 01 Jul 2024 12:44:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOK4d-0006i0-Fj
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:40:15 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOK4Y-00049o-SO
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:40:15 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2ec52fbb50aso38014311fa.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:40:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719852008; x=1720456808; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/vppvP8skrgjJebq7oiDhjhYkIvm7ho28q3tdDR9vek=;
- b=ijPbXPdVnCuSGSNjF/Mb5d+OiAe/nv7nF/auKIqg90/wNjT/rUuFcF1wNNxh2nkUCM
- Ea5Gidx/ZGCcIq1Jwi3qL3vhqxYNaZtKtIwQmtNl3WM4qLXcRy1gu7ETPjuGnW5tcQn9
- P+JWF5bMbqvewkAyT20T3SF6P066AB6UkXMwIWLua2FnGTMf1ijMHw1EThT372F6Y+sC
- N8x5biW6WjXS+/hV0FhXjcaW+SdRmsCI+aP201Z8PGaEIHIkr7ECQVCxhcBAFCH0VLYo
- xz9/BJoVCNraVrKIgaEiBdZIfQeJfzn/zZB0LlTV0DdKHBk8uKASue/NdSMmzz5s+gmG
- 1NzA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sOK8H-00080d-GL
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:44:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sOK8E-00054E-Nj
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:44:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719852237;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3jSOc6PQBpFbAYlwylphH9Vs1PNer/u93oLMOfaIelU=;
+ b=Cfqk6cX6UIH6iIOPdYTtBevAppFx3zd6HRrGhL5GzzrE9XZ07dh1I4F9GygjhiCEGBoaEO
+ QZ9pAKbnu7YDSV/NT/ErBxd8FPrRwIMiowOTckg7T+9M/U4e0BqQD9+nUFKs/YabkH2WT4
+ /rRUcym+d3e+vqNSnbmnhI/f/k0YtVI=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-364--EvAQW13PhqF8tbJ20RcKQ-1; Mon, 01 Jul 2024 12:43:55 -0400
+X-MC-Unique: -EvAQW13PhqF8tbJ20RcKQ-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-36743ab5fb3so2136655f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:43:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719852008; x=1720456808;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/vppvP8skrgjJebq7oiDhjhYkIvm7ho28q3tdDR9vek=;
- b=Mi0wkm4RXd6p/ExyszfryV3QlCAH4uF5F02j5fRKWJribM4JeCfA0lMj3eLxkOrEdS
- kYgNmnt2+VBufXCQAC0DaFwAlOAVm1KMjTn6TvDCv8osStHefndxzOOs0IuFCz6JmoAq
- yJxIK43E80XYv8yWKli+5OLW3Vfqipk334AcIIHKVN76PwgeRpFysR6YZq6iGdSJ0yK9
- lijwb+cj+eoVH7C6f0SLgIhVLREa7fe7eBOVtIaG+2tuH4CKtSeEFDVb2Rl/9SHS09fP
- 0NSseB4p5y6rkwFYOB5qnSFt13H/uQHx+4jyDXtgl5payDKUclACGdrv/+iQVIXDFawg
- +qwQ==
+ d=1e100.net; s=20230601; t=1719852233; x=1720457033;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3jSOc6PQBpFbAYlwylphH9Vs1PNer/u93oLMOfaIelU=;
+ b=ixPRTbOD69GHxOAgbNdp44+NXluZLIQXBOHZzS2rwLY/gveLH2hLv3LNyfTlydp+dQ
+ zwLONm8tZpHBMdo8FrXZZBivh1cX7TJ2bWdtfzhYhxYWcx0yaTnMdpJygQA7799RdJi0
+ TE7ODBSaWXYDg3FCyPQm9nzsco0VE2+Jl1DWCwnZnw4k7uoQrTb5VD4gNKHsx4qJaiTc
+ LopjgrfboxUpliI7tGtiwTGjxggI6qneSOtrW5LUFxDLu5DPc4j46oHaI9mCWrYr+NWT
+ /DwyR/DZ6/Jo3/PhUTx4s9aYbDuspwbMJuA6Db8B03Tn+lWoFH3fjiiMw+I+L41EPnHX
+ P2MQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1bkVMqRxgwnxIZY6bZKsqA2nbCpdkTqMLotQRYit40ndXQg3ZA+gwLGfPFQDHxKeN/msItGwFmkbvzekLG8wSVvrcd8E=
-X-Gm-Message-State: AOJu0YxzZixOlXGBI5Qi+AlDbLf14WPrtfUtYWDtk2Lzw5r5+XirJOmc
- V6roSTM3vwv8ndJ6rXtAi92E0VEG7rqAaFuEe8F2t+UKXCzxebJgN9QkRxDcJko=
-X-Google-Smtp-Source: AGHT+IFzDLpZIPcU5cPHxcdR6l/gmeihjo5CZsX/7ae6m1tJmHrXcIvD1s4gXwsF9FN1K39+ggJKTg==
-X-Received: by 2002:a05:6512:3d86:b0:52c:e086:7953 with SMTP id
- 2adb3069b0e04-52e8264df6amr4850802e87.4.1719852008311; 
- Mon, 01 Jul 2024 09:40:08 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.159])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b061eedsm154150045e9.26.2024.07.01.09.40.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jul 2024 09:40:07 -0700 (PDT)
-Message-ID: <8d6d673e-2b89-42be-bfa7-aa3678fd697d@linaro.org>
-Date: Mon, 1 Jul 2024 18:40:06 +0200
+ AJvYcCXf/YaNc1PDwrR1qz/Zx8bL5My+jlMo9XUIDQNaWwzl3Q8HHoV4Q8pJlPyMLVwkRR5Uszmm5f9lf1VcXDoQ5Uos7VLONAk=
+X-Gm-Message-State: AOJu0YwJBahOe3y5+2IRY5WoAc4Z2LZD0+XRGBd8JhbNRhMiD2uiXfOY
+ BCqqfGSqbyratv/AfW3xy1mmGDWXktDQtLB+vGie7JqkDs9Dy0Tv6MBT5nJrkb8aHJFjp1fHCy1
+ 9BoeIlnx/AncQ0gSYe4S1r1yx4J+acYeige3FNO6uOYJMEXkaB0nLk+97x+Jn0Gcz65mdXKvo0V
+ P8ka2KGCzV9+iw/UQFnASpm2QjbQE=
+X-Received: by 2002:a05:6000:18a1:b0:366:e9f5:781b with SMTP id
+ ffacd0b85a97d-36774f6cf3fmr5737508f8f.21.1719852232999; 
+ Mon, 01 Jul 2024 09:43:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGc9OKrBHzF23y4yRH9eLsv+7iyjJw4J8O7AevKgtEznZuoqZV8QBm99/hXhDkszWu5vw61H3qDUErAXv+lk54=
+X-Received: by 2002:a05:6000:18a1:b0:366:e9f5:781b with SMTP id
+ ffacd0b85a97d-36774f6cf3fmr5737493f8f.21.1719852232674; Mon, 01 Jul 2024
+ 09:43:52 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 18/98] hw/sd/sdcard: Introduce sd_cmd_to_sendingdata
- and sd_generic_read_byte
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
- Luc Michel <luc.michel@amd.com>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-19-philmd@linaro.org>
- <1e5806db-d4e6-410f-b856-53c6a3f62999@kaod.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1e5806db-d4e6-410f-b856-53c6a3f62999@kaod.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+References: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
+ <20240701133038.1489043-3-dbarboza@ventanamicro.com>
+ <5e0c57ef-d06d-4cdc-8d5b-3adec8263c5f@linaro.org>
+In-Reply-To: <5e0c57ef-d06d-4cdc-8d5b-3adec8263c5f@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 1 Jul 2024 18:43:40 +0200
+Message-ID: <CABgObfZzVN+CuCpYOpLqYERht_ipk4Xv_oydWi59WytyQtddsA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] system/vl.c: parse all -accel options
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
+ ajones@ventanamicro.com, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,114 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/6/24 09:44, Cédric Le Goater wrote:
-> On 6/28/24 9:00 AM, Philippe Mathieu-Daudé wrote:
->> All commands switching from TRANSFER state to (sending)DATA
->> do the same: send stream of data on the DAT lines. Instead
->> of duplicating the same code many times, introduce 2 helpers:
->> - sd_cmd_to_sendingdata() on the I/O line setup the data to
->>    be transferred,
->> - sd_generic_read_byte() on the DAT lines to fetch the data.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/sd/sd.c | 39 +++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 39 insertions(+)
->>
->> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
->> index d85b2906f4..1a8d06804d 100644
->> --- a/hw/sd/sd.c
->> +++ b/hw/sd/sd.c
->> @@ -142,8 +142,10 @@ struct SDState {
->>        */
->>       bool expecting_acmd;
->>       uint32_t blk_written;
->> +
->>       uint64_t data_start;
->>       uint32_t data_offset;
->> +    size_t data_size;
->>       uint8_t data[512];
->>       uint8_t vendor_data[512];
->> @@ -1083,6 +1085,29 @@ static sd_rsp_type_t 
->> sd_cmd_unimplemented(SDState *sd, SDRequest req)
->>       return sd_illegal;
->>   }
->> +/* Configure fields for following sd_generic_read_byte() calls */
->> +__attribute__((unused))
->> +static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
->> +                                           uint64_t start,
->> +                                           const void *data, size_t 
->> size)
->> +{
->> +    if (sd->state != sd_transfer_state) {
->> +        sd_invalid_state_for_cmd(sd, req);
->> +    }
->> +
->> +    sd->state = sd_sendingdata_state;
->> +    sd->data_start = start;
->> +    sd->data_offset = 0;
->> +    if (data) {
->> +        assert(size);
-> 
-> Shouldn't we check for buffer overrun ? sizeof(sd->data)
+On Mon, Jul 1, 2024 at 4:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-OK if I squash this?
+In principle, a Reviewed-by tag is just stating that you don't know of
+any issues that would prevent the patch being included. However, as a
+frequent participant to the project, your Reviewed-by tag carries some
+weight and, to some extent, it is also a statement that you understand
+the area being modified.  A Reviewed-by from an experienced
+contributor may even imply that you could take the patch in one of
+your pull requests. (*) That makes it even more important to
+understand the area.
 
--- >8 --
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index d292e0adb5..f2d069c2da 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1123,7 +1123,7 @@ static sd_rsp_type_t sd_cmd_to_sendingdata(SDState 
-*sd, SDRequest req,
-      sd->data_start = start;
-      sd->data_offset = 0;
-      if (data) {
--        assert(size);
-+        assert(size > 0 && size <= sizeof(sd->data));
-          memcpy(sd->data, data, size);
-      }
----
+I would expect that anyone with an understanding of command line
+parsing would know 1) what -accel kvm -accel tcg does, and 2) what
+.merge_lists does; and this would be enough to flag an issue
+preventing the patch from being included.
 
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-> 
->> +        memcpy(sd->data, data, size);
->> +    }
->> +    if (size) {
->> +        sd->data_size = size;
->> +    }
->> +    return sd_r1;
->> +}
->> +
->>   /* CMD0 */
->>   static sd_rsp_type_t sd_cmd_GO_IDLE_STATE(SDState *sd, SDRequest req)
->>   {
->> @@ -1920,6 +1945,20 @@ send_response:
->>       return rsplen;
->>   }
->> +/* Return true when buffer is consumed. Configured by 
->> sd_cmd_to_sendingdata() */
->> +__attribute__((unused))
->> +static bool sd_generic_read_byte(SDState *sd, uint8_t *value)
->> +{
->> +    *value = sd->data[sd->data_offset];
->> +
->> +    if (++sd->data_offset >= sd->data_size) {
->> +        sd->state = sd_transfer_state;
->> +        return true;
->> +    }
->> +
->> +    return false;
->> +}
->> +
->>   void sd_write_byte(SDState *sd, uint8_t value)
->>   {
->>       int i;
-> 
+To be clear, I don't expect reviews to be perfect. But in this case
+I'm speaking up because the patch is literally a one line declarative
+change, and the only way to say "I've reviewed it" is by understanding
+the deeper effects of that line.
+
+Also, I think it's fair that the submitter didn't spot the problem;
+it's okay to send out broken patches, that's part of the learning
+experience. :)
+
+Paolo
+
+(*) as opposed to Acked-by, where your review probably has been more
+conceptual than technical, and that you don't really want to take the
+patch in a pull request.
+
+
+Paolo
 
 
