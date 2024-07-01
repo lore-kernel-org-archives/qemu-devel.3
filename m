@@ -4,92 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44FC7C3065A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82FC7C3065A
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOAra-0006pv-Ib; Mon, 01 Jul 2024 02:50:10 -0400
+	id 1sOAsJ-0007Dg-6Z; Mon, 01 Jul 2024 02:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1sOArW-0006pI-Ia
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:50:09 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1sOArG-0000Km-FX
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:50:05 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a72459d8d6aso243645666b.0
- for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 23:49:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719816588; x=1720421388; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=aLFY5bTO8hv207XcrxqvpaVU3KIVeCAECo1Unqifq+s=;
- b=M5h528g9k0dV0aoW2r3907h05b1iEF73QzzTnm4R9zZIyeGJTZW6PnKLZ9nI2M4/fQ
- krAMypE9PzYFCEP2JGJ2a37n/iXelQ5b6vBdGWUeeppKdgXi2HE1i/8EFe+UY+6PX65X
- 0n3CaQScTl8ZWK5layMlRXTBILpRGynkEJPoCTVw/1myOErLwYvklmlDV7yev72Bg0K8
- VbdV3c+otvOO217CIats9cXfuMraHTeYgSJfSS8zvqO76J203KZoO0SBSoso4ytQc/f+
- +eQV0lL/PVNolh0werBKnybTDPpe30XVix4ZuN4nyLHxdXwGAVWi4OgFzJLcqTtFPwRV
- D+ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719816588; x=1720421388;
- h=content-transfer-encoding:in-reply-to:organization:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aLFY5bTO8hv207XcrxqvpaVU3KIVeCAECo1Unqifq+s=;
- b=om6mFKhsrRqItAC2nPHrnkL0DYC1zpsnD8NxZmc0e1a0Q02CSBeNGJT9uaVcjuRF0i
- 08klYBd4P6CfHk6al+gixMcGBzHo/t43q2Ns1BDY0Yjx4Q9TFUEhn27L5UW9dG4soGjb
- 8d/BUXbe+y2xNOuQUMG4WL2UJNmfGQWy6XnkNSkcGJXhUvk7AM9vkyW7S+GwQPZDMPAp
- UMAAYd21nNXdNpmVg0ihu1DdPAr3B63k13p0Vsy36AYqGxjwCvhSbipwKJrOKBTK+Vv4
- 3nnLDPA3l72yme6wcqL9LwNOwcOr00KMg/oHEBlamPLA967X4ulcR6R9jTiaxkPfRJeZ
- 9PfA==
-X-Gm-Message-State: AOJu0YxS5U34dpdrEYbqrgj98Dz7UNdtxdKRIBnInbG9fCmCQ1WHNzMN
- ePcVqZSSGP6csnLJeadtT/Dzgi2ZNtZ05y8XUP921AXw4I8v4qyJUpdWc9HhhA4=
-X-Google-Smtp-Source: AGHT+IFhhPMaV5vdiDzICpOE9oOD7878IZ7dpyu29bSzUax/VjmdRl7UuNJmlT5w0dsAudm4iWM4VQ==
-X-Received: by 2002:a17:906:db0b:b0:a6f:e819:da9c with SMTP id
- a640c23a62f3a-a751444dab8mr380195766b.43.1719816587964; 
- Sun, 30 Jun 2024 23:49:47 -0700 (PDT)
-Received: from [192.168.200.106] (83.8.74.165.ipv4.supernova.orange.pl.
- [83.8.74.165]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aafb3c2esm304873366b.91.2024.06.30.23.49.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 30 Jun 2024 23:49:47 -0700 (PDT)
-Message-ID: <ca463afe-486f-4590-acb5-a61265cbbd37@linaro.org>
-Date: Mon, 1 Jul 2024 08:49:46 +0200
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sOAsH-0007Cv-Jq; Mon, 01 Jul 2024 02:50:53 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sOAsE-0000lB-EX; Mon, 01 Jul 2024 02:50:53 -0400
+Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:2799:0:640:ddd6:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 82D8660D1A;
+ Mon,  1 Jul 2024 09:50:43 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:6415::1:19] (unknown
+ [2a02:6b8:b081:6415::1:19])
+ by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id goOPgW1IbOs0-rBQQjRHA; Mon, 01 Jul 2024 09:50:42 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1719816642;
+ bh=tx1NkXJw/PRcstcBCXYVPyag3VtBuH6FFquqH9SCiFI=;
+ h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
+ b=rBUHgiUKZ8jhNKh/T0QjUBsgQP1AEoCFAruaO4TrarKGsW2I8whWlpqcQAeDyXq5L
+ IBELVZTWkdmOXrEG71zmtm8AxZdVUcWrBNLXF4kkaA5rEFfAB2CQxGo+y7rx5HJCU4
+ /Wte41p0N/A+T2Ec6F1MdFBE7tjNHgSjKqXtGthw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <c6cb63ae-75e0-44c3-922a-bc11ef7390c2@yandex-team.ru>
+Date: Mon, 1 Jul 2024 09:50:41 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] tests/avocado: update firmware for sbsa-ref
-To: Ard Biesheuvel <ardb@kernel.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Ard Biesheuvel <ardb+tianocore@kernel.org>,
- Rebecca Cran <rebecca@bsdio.com>
-References: <20240620-b4-new-firmware-v3-0-29a3a2f1be1e@linaro.org>
- <20240620-b4-new-firmware-v3-1-29a3a2f1be1e@linaro.org>
- <CAMj1kXGb9xVQ5E3oK_QX+3hKkMfCoA9jF5jkEeG6Eq9+zbHPHA@mail.gmail.com>
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Content-Language: pl-PL, en-GB, en-HK
-Organization: Linaro
-In-Reply-To: <CAMj1kXGb9xVQ5E3oK_QX+3hKkMfCoA9jF5jkEeG6Eq9+zbHPHA@mail.gmail.com>
+Subject: Re: [PATCH] block/curl: use strlen instead of strchr
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
+ qemu-trivial@nongnu.org
+References: <20240628054942.657397-1-vsementsov@yandex-team.ru>
+ <03e1eb96-49ce-48bb-adc7-6ea3fb843b48@tls.msk.ru>
+ <1eb734b7-73a3-40d7-9e3d-7352b7be3940@yandex-team.ru>
+Content-Language: en-US
+In-Reply-To: <1eb734b7-73a3-40d7-9e3d-7352b7be3940@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,48 +77,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 30.06.2024 o 16:37, Ard Biesheuvel pisze:
-> On Thu, 20 Jun 2024 at 12:20, Marcin Juszkiewicz
-> <marcin.juszkiewicz@linaro.org> wrote:
+On 01.07.24 09:34, Vladimir Sementsov-Ogievskiy wrote:
+> On 29.06.24 09:20, Michael Tokarev wrote:
+>> On 6/28/24 08:49, Vladimir Sementsov-Ogievskiy wrote:
+>>> We already know where colon is, so no reason to search for it. Also,
+>>> avoid a code, which looks like we forget to check return value of
+>>> strchr() to NULL.
+>>>
+>>> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>> ---
+>>>
+>>> This replaces my patch
+>>>    [PATCH] block/curl: explicitly assert that strchr returns non-NULL value
+>>> Supersedes: <20240627153059.589070-1-vsementsov@yandex-team.ru>
+>>>
+>>>   block/curl.c | 2 +-
+>>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/block/curl.c b/block/curl.c
+>>> index 419f7c89ef..d03bfe4817 100644
+>>> --- a/block/curl.c
+>>> +++ b/block/curl.c
+>>> @@ -219,7 +219,7 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+>>>           && g_ascii_strncasecmp(header, accept_ranges,
+>>>                                  strlen(accept_ranges)) == 0) {
+>>> -        char *p = strchr(header, ':') + 1;
+>>> +        char *p = header + strlen(accept_ranges);
+>>>           /* Skip whitespace between the header name and value. */
+>>>           while (p < end && *p && g_ascii_isspace(*p)) {
 >>
->> Update firmware to have graphics card memory fix from EDK2 commit
->> c1d1910be6e04a8b1a73090cf2881fb698947a6e:
->>
->>      OvmfPkg/QemuVideoDxe: add feature PCD to remap framebuffer W/C
->>
->>      Some platforms (such as SBSA-QEMU on recent builds of the emulator) only
->>      tolerate misaligned accesses to normal memory, and raise alignment
->>      faults on such accesses to device memory, which is the default for PCIe
->>      MMIO BARs.
->>
->>      When emulating a PCIe graphics controller, the framebuffer is typically
->>      exposed via a MMIO BAR, while the disposition of the region is closer to
->>      memory (no side effects on reads or writes, except for the changing
->>      picture on the screen; direct random access to any pixel in the image).
->>
->>      In order to permit the use of such controllers on platforms that only
->>      tolerate these types of accesses for normal memory, it is necessary to
->>      remap the memory. Use the DXE services to set the desired capabilities
->>      and attributes.
->>
->>      Hide this behavior under a feature PCD so only platforms that really
->>      need it can enable it. (OVMF on x86 has no need for this)
->>
->> With this fix enabled we can boot sbsa-ref with more than one cpu core.
->>
+>> Heck.  All these strlen()s look ugly, especially in the
+>> loop iterations..
 > 
-> This requires an explanation: what does the number of CPU cores have
-> to do with the memory attributes used for the framebuffer?
+> I expect that strlen of string constant is calculated in compilation time.
+> 
+> My aim was to fix Coverity complain (I don't see this complain in public qemu coverity project, that's why I don't specify CID in commit message), not to rewrite the whole function. So I'd prefer Kevein's suggesting which is both minimal and makes the code obviously correct.. The only simpler thing is to mark the problem false-positive in Coverity.
+> 
 
-I have no idea. Older firmware was hanging on several systems but was 
-passing in QEMU tests. After closer looking I noticed that Avocado tests 
-run with "-smp 1" and pass.
 
-Checked failing system with "-smp 1" and it worked. In meantime you have 
-fixed problem in EDK2.
+Upd: I missed that you sent a patch, this changes things. Of course, you code looks nicer than old one.
 
-So yes, updating firmware may look like hiding a bug. Which I do not 
-know how to track (I can build and test QEMU, but going into its 
-internals is something I never done).
+-- 
+Best regards,
+Vladimir
 
 
