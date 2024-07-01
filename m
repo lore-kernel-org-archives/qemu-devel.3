@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A28DEC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92C46C3065A
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:11:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOIeS-0001Vo-SV; Mon, 01 Jul 2024 11:09:08 -0400
+	id 1sOIfp-0002JR-GL; Mon, 01 Jul 2024 11:10:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOIeL-0001Ue-02
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:09:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOIeJ-0003Jf-1S
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:09:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719846537;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Rj510I1/Cx8uJl6Z2EnPVJviYpchSyZH64IrkZ3LZVE=;
- b=hRsqdQzbslh22wHy3IdEvz/dhmzKtXC7WCdT7f55rf9UfTy9pv7mcEv/P1e/Wm0Wq/NSAs
- SDS/jzWopkfWDenkwDXwn7ITjmuZzaYLu8KB7sKQx2PwbvuhAJ8RgNd24CkY/rLrvf1mUb
- Xn25QXg9c9elLBPcyD2wEqJplivYr3U=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-mXQQs-ywNnGekRVbsga8xg-1; Mon,
- 01 Jul 2024 11:08:54 -0400
-X-MC-Unique: mXQQs-ywNnGekRVbsga8xg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D08A41944EBF; Mon,  1 Jul 2024 15:08:50 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.4])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58BD919560AE; Mon,  1 Jul 2024 15:08:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1C7FD21E66AB; Mon,  1 Jul 2024 17:08:46 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Mads Ynddal <mads@ynddal.dk>,  Jiri Pirko
- <jiri@resnulli.us>,  Stefan Hajnoczi <stefanha@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Michael
- Roth <michael.roth@amd.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Alex
- Williamson <alex.williamson@redhat.com>,  Pavel Dovgalyuk
- <pavel.dovgaluk@ispras.ru>,  Victor Toso de Carvalho
- <victortoso@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  qemu-block@nongnu.org,
- Ani Sinha
- <anisinha@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Peter Xu
- <peterx@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Lukas Straub
- <lukasstraub2@web.de>,
- Igor Mammedov <imammedo@redhat.com>,  Jason Wang <jasowang@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz <hreitz@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: Re: [PATCH v2 10/21] qapi: convert "Note" sections to plain rST
-In-Reply-To: <20240626222128.406106-11-jsnow@redhat.com> (John Snow's message
- of "Wed, 26 Jun 2024 18:21:16 -0400")
-References: <20240626222128.406106-1-jsnow@redhat.com>
- <20240626222128.406106-11-jsnow@redhat.com>
-Date: Mon, 01 Jul 2024 17:08:45 +0200
-Message-ID: <87tth9qhdu.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOIfa-0002EN-3X
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:10:19 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOIfY-0003fC-3l
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:10:17 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42564a0d3ceso20002245e9.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 08:10:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719846614; x=1720451414; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=F24z2j7x81l81dJYDR6KuJGiOKJMeNP+dVkqB+tPkfs=;
+ b=Nl941wM8ffGj07F4Mm2MWbGg524RTQrhT7/x6E5gGU/boN6GgV9+JIGm4GdNCx6/fy
+ wCMBnCc/wAR5GgtXzgwarQte9wcUpbqk2dY4cYqV2MaBOylABd7GI/lMg3w2R12gvniS
+ zzQypu/9kK9g4N2eK54z02ngr25jcci8uSWVjoQGcKNVww5m5ke3H5iNGO9cOfKu7ekZ
+ TDK8z9yqBA4J4WVlF7K7pEkUpaECqnIMK+fsVYKDJhKKlCyv77YalToSfCZcCheXCqBq
+ OKQI4IF87300rBxsHRAczUIjAUpBS7YSXygBh/zTNYKjY2UYi4KwbHkui+fknQDfET3u
+ wVNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719846614; x=1720451414;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=F24z2j7x81l81dJYDR6KuJGiOKJMeNP+dVkqB+tPkfs=;
+ b=DJM4HDhfZwzg0c8N1jvcUicTR6t0t2W5odY6zvWum1zA9DUtaqbSRsKnxfWNiQMQ4+
+ pug3g3sr7p8If3l/WZ/+SXBCZY1yLW2EgwtH3PWJR5Nstb02bpd3u/X881oHKhrkVQq3
+ bFT/YYNNhSOrOOKbtgabF8ckk+0qipstxYba+5O9fDs7YqAGrzvcPRqAHuBkZuG6qUii
+ OJO6mFaHji8z1x4eV9nDGlkcE/3+klH2GUAjCctWJo5/2vHb60+9e6VBTCi1A/EciRAh
+ hdaqVVDZT/QSicSBT2aq9EY+w75bZmQTOzbh5zLK0lNePTzhJyxddh70Npr90qOARte3
+ j/dw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2nTCKlYdUSpK0cqV3hBR+FNWx2x0lQah2lmUOYSYUOW/C1sWkYl6LIpnjrJsMaDEew7xZrg/ubJIJfbEGn310pry/rqU=
+X-Gm-Message-State: AOJu0Yx9WDteCy8jR9zj9PathfgWg2hyp9m1QR8b1/Fp4mwOXQbeY/53
+ Vh7mBADwkNBLJNMSTc7nKiEZJkNT5DCq81ess/l8Korh/z6GFflo7Piw8kfiCmY=
+X-Google-Smtp-Source: AGHT+IFkNPQxKvjIlXFhaAf3iRfC8iv6NY+viWqwdK7ZWnVOB5yrgVTUPsNrFVKBLXaojOs+QLAfIQ==
+X-Received: by 2002:a05:600c:1604:b0:425:5f0e:bb69 with SMTP id
+ 5b1f17b1804b1-4257a05f0a6mr37350135e9.38.1719846614385; 
+ Mon, 01 Jul 2024 08:10:14 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.177.159])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0fba0bsm10256194f8f.69.2024.07.01.08.10.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Jul 2024 08:10:13 -0700 (PDT)
+Message-ID: <2ea8672a-cf36-45c3-850b-f7513e9052a6@linaro.org>
+Date: Mon, 1 Jul 2024 17:10:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/6] target/riscv: Correct SXL return value for RV32 in
+ RV64 QEMU
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240701033722.954-1-zhiwei_liu@linux.alibaba.com>
+ <20240701033722.954-4-zhiwei_liu@linux.alibaba.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240701033722.954-4-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,129 +99,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Hi Tiancheng, Zhiwei,
 
-> We do not need a dedicated section for notes. By eliminating a specially
-> parsed section, these notes can be treated as normal rST paragraphs in
-> the new QMP reference manual, and can be placed and styled much more
-> flexibly.
->
-> Convert all existing "Note" and "Notes" sections to pure rST. As part of
-> the conversion, capitalize the first letter of each sentence and add
-> trailing punctuation where appropriate to ensure notes look sensible and
-> consistent in rendered HTML documentation. Markup is also re-aligned to
-> the de-facto standard of 3 spaces for directives.
->
-> Update docs/devel/qapi-code-gen.rst to reflect the new paradigm, and
-> update the QAPI parser to prohibit "Note" sections while suggesting a
-> new syntax. The exact formatting to use is a matter of taste, but a good
-> candidate is simply:
->
-> .. note:: lorem ipsum ...
->    ... dolor sit amet ...
->    ... consectetur adipiscing elit ...
->
-> ... but there are other choices, too. The Sphinx readthedocs theme
-> offers theming for the following forms (capitalization unimportant); all
-> are adorned with a (!) symbol (=EF=81=AA) in the title bar for rendered H=
-TML
-> docs.
->
-> See
-> https://sphinx-rtd-theme.readthedocs.io/en/stable/demo/demo.html#admoniti=
-ons
-> for examples of each directive/admonition in use.
->
-> These are rendered in orange:
->
-> .. Attention:: ...
-> .. Caution:: ...
-> .. WARNING:: ...
->
-> These are rendered in red:
->
-> .. DANGER:: ...
-> .. Error:: ...
->
-> These are rendered in green:
->
-> .. Hint:: ...
-> .. Important:: ...
-> .. Tip:: ...
->
-> These are rendered in blue:
->
-> .. Note:: ...
-> .. admonition:: custom title
->
->    admonition body text
->
-> This patch uses ".. note::" almost everywhere, with just two "caution"
-> directives. Several instances of "Notes:" have been converted to merely
-> ".. note::" where appropriate, but ".. admonition:: notes" is used in a
-> few places where we had an ordered list of multiple notes that would not
-> make sense as standalone/separate admonitions.
->
-> NOTE: Because qapidoc.py does not attempt to preserve source ordering of
-> sections, the conversion of Notes from a "tagged section" to an
-> "untagged section" means that rendering order for some notes *may
-> change* as a result of this patch. The forthcoming qapidoc.py rewrite
-> strictly preserves source ordering in the rendered documentation, so
-> this issue will be rectified in the new generator.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> Acked-by: Stefan Hajnoczi <stefanha@redhat.com> [for block*.json]
+On 1/7/24 05:37, LIU Zhiwei wrote:
+> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> 
+> Ensure that riscv_cpu_sxl returns MXL_RV32 when runningRV32 in an
+> RV64 QEMU.
+> 
+> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> Fixes: 05e6ca5e156 ("target/riscv: Ignore reserved bits in PTE for RV64")
+> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+> ---
+>   target/riscv/cpu.h | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 6fe0d712b4..36a712044a 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -668,8 +668,11 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *env)
+>   #ifdef CONFIG_USER_ONLY
+>       return env->misa_mxl;
+>   #else
+> -    return get_field(env->mstatus, MSTATUS64_SXL);
+> +    if (env->misa_mxl != MXL_RV32) {
+> +        return get_field(env->mstatus, MSTATUS64_SXL);
+> +    }
+>   #endif
+> +    return MXL_RV32;
 
-[...]
+Can we simplify the previous TARGET_RISCV32 ifdef'ry?
 
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 9ec9ef36c47..26ad5e5e7a3 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -1456,8 +1456,8 @@
->  #
->  # Cancel the current executing migration process.
->  #
-> -# Notes: This command succeeds even if there is no migration process
-> -#     running.
-> +# .. note:: This command succeeds even if there is no migration process
-> +#    running.
->  #
->  # Since: 0.14
->  #
-> @@ -1589,16 +1589,16 @@
->  #
->  # Since: 0.14
->  #
-> -# Notes:
-> +# .. admonition:: Notes
->  #
->  #     1. The 'query-migrate' command should be used to check
->  #        migration's progress and final result (this information is
->  #        provided by the 'status' member)
-
-Missing period, will touch up in my tree.
-
->  #
-> -#     2. All boolean arguments default to false
-> +#     2. All boolean arguments default to false.
->  #
->  #     3. The user Monitor's "detach" argument is invalid in QMP and
-> -#        should not be used
-> +#        should not be used.
->  #
->  #     4. The uri argument should have the Uniform Resource Identifier
->  #        of default destination VM. This connection will be bound to
-> @@ -1672,7 +1672,7 @@
->  #
->  # Since: 2.3
->  #
-> -# Notes:
-> +# .. admonition:: Notes
->  #
->  #     1. It's a bad idea to use a string for the uri, but it needs to
->  #        stay compatible with -incoming and the format of the uri is
-
-[...]
+>   }
+>   #endif
+>   
 
 
