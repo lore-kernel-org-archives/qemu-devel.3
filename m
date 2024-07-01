@@ -4,77 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 189CFC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 12:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA777C30653
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 12:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOG9h-0006ek-Ek; Mon, 01 Jul 2024 08:29:13 -0400
+	id 1sOGMx-00022b-5M; Mon, 01 Jul 2024 08:42:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOG9f-0006dq-NN
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 08:29:11 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <raphael@enfabrica.net>)
+ id 1sOGMv-00022B-2o
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 08:42:53 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOG9b-0004y1-IY
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 08:29:10 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5854ac8168fso205992a12.2
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 05:29:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <raphael@enfabrica.net>)
+ id 1sOGMt-0002Jb-FI
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 08:42:52 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-444fdb6c1cfso19752571cf.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 05:42:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719836946; x=1720441746; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MzDh3WELYAqnPjOgFol2sHjG+aIvVmLDwXGfVlwOuAI=;
- b=JkkVm9YxO0ppwvwAQrki3s6u0v6yZJyVqS4mRMFEShBp9TRjmqgS2vdAU46L+ks0AE
- QMDtRrotolEb4OO3E/AGK+30fKflxlkyYhRKdfXB1SVQ/5JtDg0+T01AIST8bnBGv/6N
- 9qMJ4QD9P95hbFGthEkWpIR48gVABrlRhNvFdw0PzmmrO0qap/5+QFXMtjT0XpoMSrl6
- 68EeSaFSDK+K1/J79doPKZ/vaPKJMdgQwbuDdlfSuxKgTT6qj/htEh2NwjjlwRyb7roZ
- 6952lijMCofmPOEI19/nWRLVQ7tuj+TjvzX9nZXq8D8rI3lAjusHmjwvPn6uRVkPMLt1
- mOJQ==
+ d=enfabrica.net; s=google; t=1719837770; x=1720442570; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bJ0IhviA2vf7Trus2oxOClKim1qYAetPJxNjLf49Z1w=;
+ b=QWtidk3WAduXPJs80bAN40Nly17CcfFQr0WT+Hfnqcn1xI7x9+Pr+82bno2fQ9Mwlk
+ 2hJGwsB06z/ic954AXNamdI0cFDQaFacjQt2u5TwHccsQysLe++8na+J1d0X/oiucfQv
+ iI405Lzq/KCX3fZdtcBD1U02i23voZx2VxcpVBZmCDqeXY56aiBbObN6j5q8ZOovmd9p
+ +ZQlcao0QjTZzWSpf4Fcp+K1H49z/+7qxDaF8iNOmNhgFCOFi70xJTGD7WmiOryXAXMK
+ SLwtKnpI558PGqKYL4hOXsKmiFTJn2PG9Qu1H5b/yiKwTsdQf21LvoKFNDkDar3THZ3E
+ tslQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719836946; x=1720441746;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MzDh3WELYAqnPjOgFol2sHjG+aIvVmLDwXGfVlwOuAI=;
- b=SgplKWpaS0jYvLgoyOkdtfGxQahMa6MSJlBF2BmzIZZZPn2W2re6t2TTjGKxp6vah3
- TZDF9UGpdwKTWoqGO4/KkibfW3u9tUAokRckMRv/4l3BF7/XUBKKuGzVILtETDzB2lCA
- 90b63Dp0OeOt5UpDJvtRA9uo2E2D1RFlStH6giepdzkPFIm5LC33CrN+dj9HG+5W2OyA
- bpYrViNQUBQ6PMwOoMoP86xV81AaJdQAzPqOt0effe2YCjvC/vMUObfwY6Hvv+YqWXME
- wCEEr9LLoGVQff6886U7+WP6hT+GfPru5YalfpKfYfVEgdfI3iFiLkdsfzXDBJYCVkRo
- TzUA==
+ d=1e100.net; s=20230601; t=1719837770; x=1720442570;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bJ0IhviA2vf7Trus2oxOClKim1qYAetPJxNjLf49Z1w=;
+ b=kQxefwq2x7Vf6g6GqIouQzzk0rFdzhXLpoIWw8Dtn/suZpw/q4LBD6UiIT89C4H0KE
+ aSZKspPdStjnbmZAXnSRgckSZKGNJvuw8UuS8MmJ6sDOqeYH+VTvnAEGBg16+s/o0CvI
+ 0ShIC27R64RhnjON/ALNBZmM5zYbsBlLhA/BnSzCuBeqHM7ATBm/I2B+B+hthth7zwZX
+ nvYUci7jB1YJ2XAZ7mfTBHSsiJzd2vif5TMgilG/dUGvv/IJjIS6W2O9PcAmEdzYpMJ+
+ 1Tz/vqqkuK3iudXpsNgrg+Wsr8r/2eyxpK8J91N7zSTjWVopN71INoqMw1YVgmjPO0XZ
+ 0G9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXacSEPNAqSDXzeUVZ5A5LGfvROxQRkcXaCyA9dtVGRwdClPulZ/rAp9Uwik2kPHeF5+QvRtnAdWV8AjJxvGSyd9qnukiw=
-X-Gm-Message-State: AOJu0Yxq3cHl489iPhZcOtVhfMw0jcOaT7IGj9mwyu5IW29zDt+g38+K
- TpXRZAX1pc53ALrP7qV4bp8GpC4xGFOtt01SwvQPluT1MynZWmMTTLahMKJ/npqk8kOHRms8I6y
- GYfUQPkUJzFPDn7k7C6mROh6bCxn/4Hk2EKxNHg==
-X-Google-Smtp-Source: AGHT+IF/dnVnzUIrVGb88AliCqTv7eMCVSRiKn3Fbgsc/mS5JWNUZi36LPr2jVPUSwMZojBF9inu/4BCbGvFn+t6D/c=
-X-Received: by 2002:aa7:cd78:0:b0:57d:10d2:23ef with SMTP id
- 4fb4d7f45d1cf-587a0fdc8c9mr2855001a12.42.1719836945796; Mon, 01 Jul 2024
- 05:29:05 -0700 (PDT)
+ AJvYcCU84+ssutvba2pyh8iWfit5UDh1HWdfLv95rGsu/aO6iHW2cR7BGbmKe0Q46mrg97DJfAJeIyH/V4jib5q+avPERuD8Xc4=
+X-Gm-Message-State: AOJu0Yzlek/v01uJDy9+QtfOpSoA0F/yiaj2Krjw86DXsNgyhpkm0J1L
+ fbmMJmZM+VjQcHhApALnMc8ibjfXNhhdocjF7udkMHr0hOet/0NgVhpgNFrTRNDpbrCQ0iZXScU
+ fDcsJ4hnp1M6EJL6jEDia0qx3pvstGZABIyAW8g==
+X-Google-Smtp-Source: AGHT+IHk1eU4/diMbTbKpj2wfV2fEqMgAti/d9yMlURU3sn7Y9TFWYkpHRVAri6n0jljjKoml0CdOSaU27IRGuZNvvo=
+X-Received: by 2002:a05:6214:242c:b0:6b0:8222:ba49 with SMTP id
+ 6a1803df08f44-6b5b709a9e4mr76718226d6.16.1719837769959; Mon, 01 Jul 2024
+ 05:42:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240630165947.2975457-1-zheyuma97@gmail.com>
-In-Reply-To: <20240630165947.2975457-1-zheyuma97@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Jul 2024 13:28:54 +0100
-Message-ID: <CAFEAcA8Osq0g2=0LriqA4P6V6TYK5dQTVumxakBRYkJjMyB9Vw@mail.gmail.com>
-Subject: Re: [PATCH] hw/char/pl011: ensure UARTIBRD register is 16-bit
-To: Zheyu Ma <zheyuma97@gmail.com>
-Cc: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20240625121843.120035-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20240625121843.120035-1-vsementsov@yandex-team.ru>
+From: Raphael Norwitz <raphael@enfabrica.net>
+Date: Mon, 1 Jul 2024 08:42:39 -0400
+Message-ID: <CAMDpr=cyULZmtaodbmET_NEfYMhfXT2ndQ8S8vjDrapG6PUsRg@mail.gmail.com>
+Subject: Re: [PATCH v5 0/3] vhost-user-blk: live resize additional APIs
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-block@nongnu.org, mst@redhat.com, qemu-devel@nongnu.org, 
+ armbru@redhat.com, eblake@redhat.com, eduardo@habkost.net, 
+ berrange@redhat.com, pbonzini@redhat.com, hreitz@redhat.com, kwolf@redhat.com, 
+ yc-core@yandex-team.ru
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=raphael@enfabrica.net; helo=mail-qt1-x82e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,81 +94,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 30 Jun 2024 at 18:00, Zheyu Ma <zheyuma97@gmail.com> wrote:
+I have no issues with these APIs, but I'm not a QMP expert so others
+should review those bits.
+
+For the vhost-user-blk code:
+
+Acked-by: Raphael Norwitz <raphael@enfabrica.net>
+
+On Tue, Jun 25, 2024 at 8:19=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
 >
-> The PL011 TRM says that "The 16-bit integer is written to the Integer Baud Rate
-> Register, UARTIBRD". Updated the handling of the UARTIBRD register to ensure
-> only 16-bit values are written to it.
-
-Thanks for this patch.
-
-I think we could improve the patch commit message:
-Have the subject state the problem we're fixing rather than
-the solution:
- hw/char/pl011: Avoid division-by-zero in pl011_get_baudrate()
-
-and then have the commit message say why this happens
-and why we make the change we do:
-
- In pl011_get_baudrate(), when we calculate the baudrate
- we can accidentally divide by zero. This happens because
- although (as the specification requires) we treat UARTIBRD = 0
- as invalid, we aren't correctly limiting UARTIBRD and UARTFBRD
- values to the 16-bit and 5-bit ranges the hardware allows,
- and so some non-zero values of UARTIBRD can result in
- a zero divisor.
-
- Enforce the correct register field widths on guest writes
- and on inbound migration to avoid the division by zero.
-
-(I mention here a few things which I'm about to comment on below.)
-
-> ASAN log:
-> ==2973125==ERROR: AddressSanitizer: FPE on unknown address 0x55f72629b348 (pc 0x55f72629b348 bp 0x7fffa24d0e00 sp 0x7fffa24d0d60 T0)
->     #0 0x55f72629b348 in pl011_get_baudrate hw/char/pl011.c:255:17
->     #1 0x55f726298d94 in pl011_trace_baudrate_change hw/char/pl011.c:260:33
->     #2 0x55f726296fc8 in pl011_write hw/char/pl011.c:378:9
+> v5:
+> 03: drop extra check on is is runstate running
 >
-> Reproducer:
-> cat << EOF | qemu-system-aarch64 -display \
-> none -machine accel=qtest, -m 512M -machine realview-pb-a8 -qtest stdio
-> writeq 0x1000b024 0xf8000000
-> EOF
 >
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-> ---
->  hw/char/pl011.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> Vladimir Sementsov-Ogievskiy (3):
+>   qdev-monitor: add option to report GenericError from find_device_state
+>   vhost-user-blk: split vhost_user_blk_sync_config()
+>   qapi: introduce device-sync-config
 >
-> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-> index 8753b84a84..f962786e2a 100644
-> --- a/hw/char/pl011.c
-> +++ b/hw/char/pl011.c
-> @@ -374,7 +374,7 @@ static void pl011_write(void *opaque, hwaddr offset,
->          s->ilpr = value;
->          break;
->      case 9: /* UARTIBRD */
-> -        s->ibrd = value;
-> +        s->ibrd = value & 0xFFFF;
-
-This is necessary but not sufficient:
- * we also need to mask the write to s->fbrd (which is 6 bits);
-   otherwise you can arrange a combination of s->ibrd
-   and s->fbrd such that the addition in the divisor
-   exactly overflows to 0
- * we should mask these also in pl011_post_load(), to prevent
-   the division-by-zero in the "malicious inbound migration
-   state" case.
-
-Also, this source file (like most in QEMU) uses lower case
-in hex numbers, i.e. 0xffff .
-
->          pl011_trace_baudrate_change(s);
->          break;
->      case 10: /* UARTFBRD */
+>  hw/block/vhost-user-blk.c | 27 ++++++++++++++------
+>  hw/virtio/virtio-pci.c    |  9 +++++++
+>  include/hw/qdev-core.h    |  3 +++
+>  qapi/qdev.json            | 24 ++++++++++++++++++
+>  system/qdev-monitor.c     | 53 ++++++++++++++++++++++++++++++++++++---
+>  5 files changed, 105 insertions(+), 11 deletions(-)
+>
 > --
 > 2.34.1
-
-thanks
--- PMM
+>
 
