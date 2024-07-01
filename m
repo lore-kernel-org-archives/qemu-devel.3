@@ -4,135 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D53C3065A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F65FC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:07:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOJYK-0007xw-GG; Mon, 01 Jul 2024 12:06:52 -0400
+	id 1sOJZ7-0000fy-H8; Mon, 01 Jul 2024 12:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOJYJ-0007sW-4V
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:06:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOJYH-0005FA-Cj
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:06:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719850008;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9Piz3+qHphNrxZ+h/Hz+XsQ6a4ATI0+MFcQHX0PEdc8=;
- b=VU/0IDFCM9O54vpsPoW+ls1J/0ZFHYbjnrzQlWDbEjypIi/tLx+Puh0vRB1wc6eflOVgoP
- gXGa8QqlKpGntOJcHvqFod+2Y6v2xXmK+2VpOUn5TsCszLQmkeQExyBZWGgvyQSQKKK99A
- rChuXBzDZBoSY8dzQbbFNIkxE9b1NGs=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-184-A4Yk9e8pNAWaBHYRAE5H6A-1; Mon, 01 Jul 2024 12:06:46 -0400
-X-MC-Unique: A4Yk9e8pNAWaBHYRAE5H6A-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-425739141c2so20654615e9.2
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:06:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sOJZ0-0000a6-Im
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:34 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sOJYy-0005PQ-1X
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:34 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-424acfff613so29037745e9.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:07:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719850050; x=1720454850; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kJ+J4fPu+4PLLX6tZwve3g6gm3xWsxK0W9L+bZia37s=;
+ b=ElRVyFuwMGZIRCy597mtdjMSrkMK32JUyYnHobYm0IkwStyeNgElndCHMYmubC1Rl2
+ jHQZ0zH/uU9jN20YjnKN+qB7r1mzuM2BYQiFn/AowY3APTGx1w9kqAwmg6uK04HP6RMZ
+ bebTb/h8OfvaHaTMlR7sgBbK96wDKQ/VVPBliw5YDdQwO2r7npibj3BJiaF0Yp4DP65Q
+ MqEIOX3rVqjDkEXXpDGTne41wYm2SsAGRRsbVnSt3XoBRicVN9itonDUUUkXyETd4fNp
+ 6umUxtHK1mMfsxCBSx9n1DANbWFpF1bZA5DuHmHn/14U9ZRvrkSDqHNicQ9wyuj+VsG+
+ yr3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719850005; x=1720454805;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9Piz3+qHphNrxZ+h/Hz+XsQ6a4ATI0+MFcQHX0PEdc8=;
- b=ZsF9mAbabqtcxQZrGG1Em5/ipqUlr7k8tfOZpom66CLzvzfUeJTdATShjuTfIaH05t
- 7RZuxQkaOeu02utqDMUwtVmEj1htKOQr4oDW/Pk9xru+fCmFYOiZnerWs29e9MmKXJEv
- jqzfKslH6QRfusAtEdOTM+FbEKHh248zzD2abtj/1NqW07xZcA/4h0IDOC618VOBSRru
- Fu4bOFJUMjI4k0AIe4y10oC8uIvzk7noWjWLMtx+LUWl80atN7rQF9PL9dXhxrLpuy4D
- k8rSs9Pc8dnmmY0s9fFgbLxWAfvzXCcmsaCZXbFubAZTaR6QDhzkr3kSWUEu1VpEbcUY
- 4GUg==
-X-Gm-Message-State: AOJu0Yy5I9m72pUeUKWtqsnrE6O/a3Tls0Wmtghqp/h9hL+vI708ouak
- 59n2WoILKbHM2bw2f5IIBm9vVQLFdNFESup3+82cDMjg14efDAhbY7vH9EClMmyUl4FaoYY876M
- vKYDICy0B/fgfdysXIOdTV6YQAH8e7CwpT+RW2/dfMW8AlWPpftlAkWdYyouD
-X-Received: by 2002:a05:600c:1989:b0:425:6bc4:977b with SMTP id
- 5b1f17b1804b1-4257a06df09mr52499225e9.26.1719850004883; 
- Mon, 01 Jul 2024 09:06:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFTCtIhHkByP493rReFRMKP/jclafE4KlieRZ0Td224GzClIWzYU636Yj6acW3I6iUYNwUXg==
-X-Received: by 2002:a05:600c:1989:b0:425:6bc4:977b with SMTP id
- 5b1f17b1804b1-4257a06df09mr52499005e9.26.1719850004523; 
- Mon, 01 Jul 2024 09:06:44 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-43-177-66.web.vodafone.de.
- [109.43.177.66]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0d9286sm10382944f8f.35.2024.07.01.09.06.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jul 2024 09:06:44 -0700 (PDT)
-Message-ID: <1ce5bce5-2659-4da8-81ac-34838768f04d@redhat.com>
-Date: Mon, 1 Jul 2024 18:06:42 +0200
+ d=1e100.net; s=20230601; t=1719850050; x=1720454850;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kJ+J4fPu+4PLLX6tZwve3g6gm3xWsxK0W9L+bZia37s=;
+ b=oYeNH2Gk8qDNq+MHzcXVOlu9FEeCkIr6p+zSjTAFdhd7WGLO4xxKtD40po7FgS0iNT
+ gl7IUsA3/6ZJX7oyFXGwJ51lfWncPE08RsGG71HNTCPNFz/Ax3z5FRHdYIABFxkU01fv
+ FWdAyIADBl1tuEOCbCAKxmVuq6ymTENSJex/02nc/ts5DkYvsFF5h1VRS4JGG21BWS6b
+ ro85HOVTZIqVq2fnnfS6pX6oJMhLKX6nIo0yIwSONI2rSiTHsyGprN7Vq9TSo/IbYvh2
+ 9eVH//N34Q+izxLKKQBKFT22ZADeh8+oK8+ZlxzpN+Ua6q2VBeiD6pPeBehjDtgFFWHy
+ G+ww==
+X-Gm-Message-State: AOJu0YxTFHGHUE8tRvRJKiuG2d8JdoQv2MziOgkAmTvt4pl393l7ArnL
+ TjbG6XQh1IRaF8u4CAk6PHl6eUvhZpsGOZwQbdzFsnKVms5pEC8hhOx3UIC5wg3LnM+WVeuBR6R
+ S32k=
+X-Google-Smtp-Source: AGHT+IF/mzxkltx45WdscRam8z5KeOEDMJjjGhnNGN5PgOALhvlgY4zNaIDibGBJMB6uC2hvybG6Qw==
+X-Received: by 2002:a05:600c:41d2:b0:425:657a:518d with SMTP id
+ 5b1f17b1804b1-4257a0079a8mr48626785e9.14.1719850050251; 
+ Mon, 01 Jul 2024 09:07:30 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256af557fesm161952135e9.11.2024.07.01.09.07.29
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Jul 2024 09:07:30 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/29] target-arm queue
+Date: Mon,  1 Jul 2024 17:07:00 +0100
+Message-Id: <20240701160729.1910763-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/virtio: Fix the de-initialization of vhost-user devices
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-stable@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Stefan Hajnoczi <stefanha@redhat.com>
-References: <20240618121958.88673-1-thuth@redhat.com>
- <3f96e237-d367-4f8e-b96d-f51d4ba33ab1@redhat.com>
- <20240701110607-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240701110607-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,101 +91,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/07/2024 17.06, Michael S. Tsirkin wrote:
-> On Mon, Jul 01, 2024 at 04:07:56PM +0200, Thomas Huth wrote:
->> On 18/06/2024 14.19, Thomas Huth wrote:
->>> The unrealize functions of the various vhost-user devices are
->>> calling the corresponding vhost_*_set_status() functions with a
->>> status of 0 to shut down the device correctly.
->>>
->>> Now these vhost_*_set_status() functions all follow this scheme:
->>>
->>>       bool should_start = virtio_device_should_start(vdev, status);
->>>
->>>       if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
->>>           return;
->>>       }
->>>
->>>       if (should_start) {
->>>           /* ... do the initialization stuff ... */
->>>       } else {
->>>           /* ... do the cleanup stuff ... */
->>>       }
->>>
->>> The problem here is virtio_device_should_start(vdev, 0) currently
->>> always returns "true" since it internally only looks at vdev->started
->>> instead of looking at the "status" parameter. Thus once the device
->>> got started once, virtio_device_should_start() always returns true
->>> and thus the vhost_*_set_status() functions return early, without
->>> ever doing any clean-up when being called with status == 0. This
->>> causes e.g. problems when trying to hot-plug and hot-unplug a vhost
->>> user devices multiple times since the de-initialization step is
->>> completely skipped during the unplug operation.
->>>
->>> This bug has been introduced in commit 9f6bcfd99f ("hw/virtio: move
->>> vm_running check to virtio_device_started") which replaced
->>>
->>>    should_start = status & VIRTIO_CONFIG_S_DRIVER_OK;
->>>
->>> with
->>>
->>>    should_start = virtio_device_started(vdev, status);
->>>
->>> which later got replaced by virtio_device_should_start(). This blocked
->>> the possibility to set should_start to false in case the status flag
->>> VIRTIO_CONFIG_S_DRIVER_OK was not set.
->>>
->>> Fix it by adjusting the virtio_device_should_start() function to
->>> only consider the status flag instead of vdev->started. Since this
->>> function is only used in the various vhost_*_set_status() functions
->>> for exactly the same purpose, it should be fine to fix it in this
->>> central place there without any risk to change the behavior of other
->>> code.
->>>
->>> Fixes: 9f6bcfd99f ("hw/virtio: move vm_running check to virtio_device_started")
->>> Buglink: https://issues.redhat.com/browse/RHEL-40708
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>    include/hw/virtio/virtio.h | 8 ++++----
->>>    1 file changed, 4 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
->>> index 7d5ffdc145..2eafad17b8 100644
->>> --- a/include/hw/virtio/virtio.h
->>> +++ b/include/hw/virtio/virtio.h
->>> @@ -470,9 +470,9 @@ static inline bool virtio_device_started(VirtIODevice *vdev, uint8_t status)
->>>     * @vdev - the VirtIO device
->>>     * @status - the devices status bits
->>>     *
->>> - * This is similar to virtio_device_started() but also encapsulates a
->>> - * check on the VM status which would prevent a device starting
->>> - * anyway.
->>> + * This is similar to virtio_device_started() but ignores vdev->started
->>> + * and also encapsulates a check on the VM status which would prevent a
->>> + * device from starting anyway.
->>>     */
->>>    static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status)
->>>    {
->>> @@ -480,7 +480,7 @@ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status
->>>            return false;
->>>        }
->>> -    return virtio_device_started(vdev, status);
->>> +    return status & VIRTIO_CONFIG_S_DRIVER_OK;
->>>    }
->>
->> Michael, any concerns or comments about this patch?
->>
->> If not, I could also take it via my s390x tree since this fixes vhost-ccw
->> devices on s390x.
->>
->>   Thomas
-> 
-> I'm working on a pull request with this today.
-> I can drop it if you prefer ...
+The following changes since commit b6d32a06fc0984e537091cba08f2e1ed9f775d74:
 
-Ah, perfect, please include it in your PR then!
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2024-06-30 16:12:24 -0700)
 
-  Thanks,
-   Thomas
+are available in the Git repository at:
 
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240701
+
+for you to fetch changes up to 58c782de557beb496bfb4c5ade721bbbd2480c72:
+
+  tests/qtest: Ensure STM32L4x5 EXTI state is correct at the end of QTests (2024-07-01 15:40:54 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * tests/avocado: update firmware for sbsa-ref and use all cores
+ * hw/arm/smmu-common: Replace smmu_iommu_mr with smmu_find_sdev
+ * arm: Fix VCMLA Dd, Dn, Dm[idx]
+ * arm: Fix SQDMULH (by element) with Q=0
+ * arm: Fix FJCVTZS vs flush-to-zero
+ * arm: More conversion of A64 AdvSIMD to decodetree
+ * arm: Enable FEAT_Debugv8p8 for -cpu max
+ * MAINTAINERS: Update family name for Patrick Leis
+ * hw/arm/xilinx_zynq: Add boot-mode property
+ * docs/system/arm: Add a doc for zynq board
+ * hw/misc: In STM32L4x5 EXTI, correct configurable interrupts
+ * tests/qtest: fix minor issues in STM32L4x5 tests
+
+----------------------------------------------------------------
+Gustavo Romero (3):
+      target/arm: Fix indentation
+      target/arm: Move initialization of debug ID registers
+      target/arm: Enable FEAT_Debugv8p8 for -cpu max
+
+Inès Varhol (3):
+      tests/qtest: Fix STM32L4x5 SYSCFG irq line 15 state assumption
+      hw/misc: In STM32L4x5 EXTI, correct configurable interrupts
+      tests/qtest: Ensure STM32L4x5 EXTI state is correct at the end of QTests
+
+Marcin Juszkiewicz (2):
+      tests/avocado: update firmware for sbsa-ref
+      tests/avocado: use default amount of cores on sbsa-ref
+
+Nicolin Chen (1):
+      hw/arm/smmu-common: Replace smmu_iommu_mr with smmu_find_sdev
+
+Patrick Leis (1):
+      MAINTAINERS: Update my family name
+
+Rayhan Faizel (3):
+      hw/nvram: Add BCM2835 OTP device
+      hw/arm: Connect OTP device to BCM2835
+      hw/misc: Implement mailbox properties for customer OTP and device specific private keys
+
+Richard Henderson (13):
+      target/arm: Fix VCMLA Dd, Dn, Dm[idx]
+      target/arm: Fix SQDMULH (by element) with Q=0
+      target/arm: Fix FJCVTZS vs flush-to-zero
+      target/arm: Convert SQRDMLAH, SQRDMLSH to decodetree
+      target/arm: Convert SDOT, UDOT to decodetree
+      target/arm: Convert SUDOT, USDOT to decodetree
+      target/arm: Convert BFDOT to decodetree
+      target/arm: Convert BFMLALB, BFMLALT to decodetree
+      target/arm: Convert BFMMLA, SMMLA, UMMLA, USMMLA to decodetree
+      target/arm: Add data argument to do_fp3_vector
+      target/arm: Convert FCADD to decodetree
+      target/arm: Convert FCMLA to decodetree
+      target/arm: Delete dead code from disas_simd_indexed
+
+Sai Pavan Boddu (3):
+      hw/misc/zynq_slcr: Add boot-mode property
+      hw/arm/xilinx_zynq: Add boot-mode property
+      docs/system/arm: Add a doc for zynq board
+
+ MAINTAINERS                              |   3 +-
+ docs/system/arm/emulation.rst            |   1 +
+ docs/system/arm/xlnx-zynq.rst            |  47 ++
+ docs/system/target-arm.rst               |   1 +
+ include/hw/arm/bcm2835_peripherals.h     |   3 +-
+ include/hw/arm/raspberrypi-fw-defs.h     |   2 +
+ include/hw/arm/smmu-common.h             |   4 +-
+ include/hw/misc/bcm2835_property.h       |   2 +
+ include/hw/misc/stm32l4x5_exti.h         |   2 +
+ include/hw/nvram/bcm2835_otp.h           |  68 +++
+ target/arm/cpu.h                         |   2 +
+ target/arm/helper.h                      |  10 +
+ target/arm/tcg/a64.decode                |  43 ++
+ hw/arm/bcm2835_peripherals.c             |  15 +-
+ hw/arm/smmu-common.c                     |   8 +-
+ hw/arm/smmuv3.c                          |  12 +-
+ hw/arm/xilinx_zynq.c                     |  31 ++
+ hw/misc/bcm2835_property.c               |  87 ++++
+ hw/misc/stm32l4x5_exti.c                 |  28 +-
+ hw/misc/zynq_slcr.c                      |  22 +-
+ hw/nvram/bcm2835_otp.c                   | 187 +++++++
+ target/arm/tcg/cpu32.c                   |  35 +-
+ target/arm/tcg/cpu64.c                   |   4 +-
+ target/arm/tcg/translate-a64.c           | 808 ++++++++++---------------------
+ target/arm/tcg/vec_helper.c              | 100 +++-
+ target/arm/vfp_helper.c                  |  18 +-
+ tests/qtest/stm32l4x5_exti-test.c        |   8 +
+ tests/qtest/stm32l4x5_syscfg-test.c      |  16 +-
+ tests/tcg/aarch64/test-2375.c            |  21 +
+ hw/nvram/meson.build                     |   1 +
+ tests/avocado/machine_aarch64_sbsaref.py |  16 +-
+ tests/tcg/aarch64/Makefile.target        |   3 +-
+ 32 files changed, 967 insertions(+), 641 deletions(-)
+ create mode 100644 docs/system/arm/xlnx-zynq.rst
+ create mode 100644 include/hw/nvram/bcm2835_otp.h
+ create mode 100644 hw/nvram/bcm2835_otp.c
+ create mode 100644 tests/tcg/aarch64/test-2375.c
 
