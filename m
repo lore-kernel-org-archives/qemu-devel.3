@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D5BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 21:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5975CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 21:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOOKy-0006ZQ-T5; Mon, 01 Jul 2024 17:13:24 -0400
+	id 1sOOMP-0007FC-0r; Mon, 01 Jul 2024 17:14:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sOOKw-0006ZC-GJ
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 17:13:22 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOOMM-0007EO-Pb
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 17:14:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sOOKu-0005Rs-Rr
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 17:13:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=luwaS2VJ74gp1JKBj2IYkay/2cvM1hmmKr5TTgN7A7U=; b=OXEkAVxZXTmT73WAgakeThVCy9
- wKKLlD8+mZF2E7WDO2T/TAG64WpliyAv5XG5oUHJr+sJSIJHyH28j1fmQpclCWtOQ8fwLu/iV/Vcd
- FODcq1DBy0QD7S7kD/tJKnsI7IJ1dPtC/cNxMKsdYmw9Houn89mEgXcKjuk4rP5gxEvwHB6J7DVjp
- XihfxQs6rD7tajE5kWMeBq2w1JJsIXGNeV26m6kNY/rx3EigYp1GXtHk1y/nCnlMcXeA8yHEWEWNe
- +XFJL08zlQ0V0gt50j+rxOU11Ozr1IslkiK0soEcTYCc2zGipdCX0RzZ7Qo14oBXtWu5n6KDzGZnS
- XnYxdpB4WSx3MIaBSovfzzKDQ/6wtaM0vn6smEb/LPqCQfy0nOP8TjAUZnsEzbETmP8eINdx0BKtt
- lzEHedhLKBkpYSurcNz4tfwYgwkaHUsdbEHboIpvgPEBbAKB19n1IDZ7v6amoZjeuRKUG2iX6eAiL
- oaVhyPf1wkt9gbW6heRZVOwOpDzAbd2/qeQuOb/WbpvmrkzZLjak/35TDaFRP0SHxjZcqzBGKDLMA
- dscsC2/PSyNkWDGQk01n3hGHTA2j4pQHg7OMNPQZY7uqGbsb5/NuW09cmXubh96fSU+zd/0aWjxPo
- hZRmkvjtdEXQue2Zqv+hMHHAHXSuIAmR7ASlLIono=;
-Received: from [2a00:23c4:8bb4:4000:a4da:be8a:f5f6:663]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1sOOJR-0006Nv-Lr; Mon, 01 Jul 2024 22:11:53 +0100
-Message-ID: <1981f4ab-ea0b-4e14-bd57-fd95f5fb9a67@ilande.co.uk>
-Date: Mon, 1 Jul 2024 22:13:12 +0100
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOOML-0007cb-77
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 17:14:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719868488;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3fY9NGJXUfh+G8Fe4Rnm80jIH0RR/F/rmrmGUiwg7dk=;
+ b=aaUDD1ekX8jQSmfvqjpgIL+K9xGiKuiUu5GaFAjbnsJK3xuUqQaRtBjzhLwfHiaUYHvcX5
+ pLkH0DvKHZBt6CIcWbojyqz3hpg20VKG/XI9Gcogo+PQRyT4lJrotiW2WWOXIkkmhUWZzA
+ vCVVLdrFt3bMBMkloS/ZdtIDEBufcuU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-150-NYoYfs5bM4SOFL6puAtEvw-1; Mon, 01 Jul 2024 17:14:46 -0400
+X-MC-Unique: NYoYfs5bM4SOFL6puAtEvw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4257dd7d40dso9553535e9.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 14:14:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719868483; x=1720473283;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3fY9NGJXUfh+G8Fe4Rnm80jIH0RR/F/rmrmGUiwg7dk=;
+ b=VXg2lv6ntSEeA9+egvcAm1FAKpjKiS9GJkJXcNCQ0vKT/SoLrNWXs3LB08Z9V4Rv6D
+ u+K8QKvJf8WdId6Bzh94sQAE5xXgt0VO/IjDVGDk8WgXGpGWXbkdC01DvuEYWZzxr7cD
+ 1/5tibrc6NC//WuakuTemHz47cZiYNR88yhhtfeaaXWCqtG0TrhQ3b31Fuv1sn7V9hS7
+ elkti2CyGHnGunk6Dq0DLysMba6TGnoKnotefxUiXXW0bO/12srEq8Op9bENoJnFWr2c
+ 9P+PSndaFkZq9bTyZ9MiWiyRHqm2AAfHE5uJHdhrG++twCyxFgfvJLPFImE2ANkvIXrz
+ bN4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUuL9UfY4en6NILRzzilCn9wcn9TSyeGo6uSt0OweOhnCJ0MYPPrAwVJ/QimsWH9Kq9oxyPmZ7B2SQ22LmWjEsEq74zK0=
+X-Gm-Message-State: AOJu0Yx1SIlUeyK7iIt9lK9SxuuZ9fV9SFVlt8Wa+cO9AwLcLzKnQgt4
+ mPFkQF9AkjdeCaTBj/3dmgq2/DsVd1Kmd7zFg1GrNsNtVUjuD1DG54eiFsokLYRxnGv29zgk9WP
+ T7aD01FrO3/BG7SVS90GlnY/UYtpiJBNyn5ONVdRCheRSSiy8FlRa
+X-Received: by 2002:a05:600c:1c21:b0:424:8be4:f2c with SMTP id
+ 5b1f17b1804b1-4257984de8fmr59809475e9.2.1719868483724; 
+ Mon, 01 Jul 2024 14:14:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFTPQ+fw3ONtxgOJ/bJuHDBXmkSZQpGZLzyd2pHO5LdL5BArfHueyhpDgMQigs4ieYiCQC/cg==
+X-Received: by 2002:a05:600c:1c21:b0:424:8be4:f2c with SMTP id
+ 5b1f17b1804b1-4257984de8fmr59809275e9.2.1719868483153; 
+ Mon, 01 Jul 2024 14:14:43 -0700 (PDT)
+Received: from redhat.com ([176.12.141.208]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256b068e93sm169796125e9.24.2024.07.01.14.14.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Jul 2024 14:14:42 -0700 (PDT)
+Date: Mon, 1 Jul 2024 17:14:39 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ jean-philippe@linaro.org, peter.maydell@linaro.org, clg@redhat.com,
+ yanghliu@redhat.com, zhenzhong.duan@intel.com, alex.williamson@redhat.com
+Subject: Re: [PATCH v2 0/7] VIRTIO-IOMMU/HostIOMMUDevice: Fixes and page size
+ mask rework
+Message-ID: <20240701171314-mutt-send-email-mst@kernel.org>
+References: <20240701084957.1567641-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <cover.1719690591.git.balaton@eik.bme.hu>
- <b70b9e72063b4dd4005bf4bc040b84f2bb617bf4.1719690591.git.balaton@eik.bme.hu>
- <CAFEAcA_tBjQrJMpjbzVUVcrTWghr4v=MHB0qpWx=xjML6ek9mg@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CAFEAcA_tBjQrJMpjbzVUVcrTWghr4v=MHB0qpWx=xjML6ek9mg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a00:23c4:8bb4:4000:a4da:be8a:f5f6:663
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 2/2] hw/isa/vt82c686.c: Embed i8259 irq in device state
- instead of allocating
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240701084957.1567641-1-eric.auger@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,67 +103,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/07/2024 13:58, Peter Maydell wrote:
-
-> On Sat, 29 Jun 2024 at 21:01, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>
->> To avoid a warning about unfreed qemu_irq embed the i8259 irq in the
->> device state instead of allocating it.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/isa/vt82c686.c | 7 ++++---
->>   1 file changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
->> index 8582ac0322..834051abeb 100644
->> --- a/hw/isa/vt82c686.c
->> +++ b/hw/isa/vt82c686.c
->> @@ -592,6 +592,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ViaISAState, VIA_ISA)
->>
->>   struct ViaISAState {
->>       PCIDevice dev;
->> +
->> +    IRQState i8259_irq;
->>       qemu_irq cpu_intr;
->>       qemu_irq *isa_irqs_in;
->>       uint16_t irq_state[ISA_NUM_IRQS];
->> @@ -715,13 +717,12 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
->>       ViaISAState *s = VIA_ISA(d);
->>       DeviceState *dev = DEVICE(d);
->>       PCIBus *pci_bus = pci_get_bus(d);
->> -    qemu_irq *isa_irq;
->>       ISABus *isa_bus;
->>       int i;
->>
->>       qdev_init_gpio_out(dev, &s->cpu_intr, 1);
->>       qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
->> -    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
->> +    qemu_init_irq(&s->i8259_irq, via_isa_request_i8259_irq, s, 0);
->>       isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
->>                             errp);
+On Mon, Jul 01, 2024 at 10:48:52AM +0200, Eric Auger wrote:
+> The 2 first patches are fixes of
+> cf2647a76e ("virtio-iommu: Compute host reserved regions")
+> They can be taken separately of the rest.
 > 
-> So if I understand correctly, this IRQ line isn't visible
-> from outside this chip, we're just trying to wire together
-> two internal components of the chip? If so, I agree that
-> this seems a better way than creating a named GPIO that
-> we then have to document as a "not really an external
-> connection, don't try to use this" line. (We've done that
-> before I think in other devices, and it works but it's
-> a bit odd-looking.)
+> Then the series uses the HostIOMMUDevice interface to fetch
+> information about the page size mask supported along the assigned
+> device and propagate it to the virtio-iommu. This is a similar
+> work as what was done in
+> 
+> VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling series
+> 
+> but this time for the page size mask. Using this new
+> infrastructure allows to handle page size mask conflicts
+> earlier on device hotplug as opposed to current QEMU
+> abort:
+> 
+> qemu-system-aarch64: virtio-iommu virtio-iommu-memory-region-8-0
+> does not support frozen granule 0x10000
+> qemu: hardware error: vfio: DMA mapping failed, unable to continue
+> 
+> With this series the hotplug nicely fails.
+> 
+> Also this allows to remove hacks consisting in transiently enabling
+> IOMMU MRs to collect coldplugged device page size mask before machine
+> init. Those hacks were introduced by
+> 
+> 94df5b2180d6 ("virtio-iommu: Fix 64kB host page size VFIO device
+> assignment")
+> 
+> The series can be found at:
+> https://github.com/eauger/qemu/tree/virtio-iommu-psmask-rework-v2
 
-It's basically wiring up the 8259 PIC (ISA) IRQs which aren't implemented using qdev 
-gpios to an internal IRQ handler.
 
-If the 8259 PIC (ISA) IRQs were already converted to qdev gpios, then presumably 
-using a qdev gpio would be the correct solution for this? I'm conscious that if we do 
-decide to introduce another method for wiring IRQs then there should be clear 
-criteria for developers and reviewers as to which method is appropriate for each use 
-case.
+So presumably will be merged with rest of host iommu stuff.
+For virtio bits:
+
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
 
-ATB,
 
-Mark.
+> ---
+> v1 -> v2:
+> - Don't update mask if the granule is frozen (Zhenzhong)
+> - Collected Zhenzhong's and Cédric's R-bs
+> 
+> Eric Auger (7):
+>   virtio-iommu: Fix error handling in
+>     virtio_iommu_set_host_iova_ranges()
+>   vfio-container-base: Introduce vfio_container_get_iova_ranges() helper
+>   HostIOMMUDevice : remove Error handle from get_iova_ranges callback
+>   HostIOMMUDevice: Introduce get_page_size_mask() callback
+>   virtio-iommu : Retrieve page size mask on
+>     virtio_iommu_set_iommu_device()
+>   memory: remove IOMMU MR iommu_set_page_size_mask() callback
+>   virtio-iommu: Revert transient enablement of IOMMU MR in bypass mode
+> 
+>  include/exec/memory.h                 |  38 --------
+>  include/hw/vfio/vfio-container-base.h |   9 ++
+>  include/sysemu/host_iommu_device.h    |  11 ++-
+>  hw/vfio/common.c                      |   8 --
+>  hw/vfio/container-base.c              |  15 ++++
+>  hw/vfio/container.c                   |  16 ++--
+>  hw/vfio/iommufd.c                     |  21 +++--
+>  hw/virtio/virtio-iommu.c              | 123 +++++++++++++-------------
+>  system/memory.c                       |  13 ---
+>  hw/virtio/trace-events                |   2 +-
+>  10 files changed, 119 insertions(+), 137 deletions(-)
+> 
+> -- 
+> 2.41.0
 
 
