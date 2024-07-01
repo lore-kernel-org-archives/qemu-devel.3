@@ -4,73 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A62C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 07:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 777D7C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 07:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOBOw-0001i7-4A; Mon, 01 Jul 2024 03:24:38 -0400
+	id 1sOBWG-000365-Pl; Mon, 01 Jul 2024 03:32:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sOBOq-0001hV-G0
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:24:32 -0400
+ id 1sOBWF-00035s-3z
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:32:11 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sOBOo-0002vV-HN
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:24:32 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1sOBWC-0000JS-Hp
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 03:32:10 -0400
 Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Bx7bqsWYJmHNILAA--.1864S3;
- Mon, 01 Jul 2024 15:24:28 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxrOpzW4JmdNILAA--.45489S3;
+ Mon, 01 Jul 2024 15:32:03 +0800 (CST)
 Received: from [10.20.42.62] (unknown [10.20.42.62])
  by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxZcWrWYJmwjg3AA--.52801S3; 
- Mon, 01 Jul 2024 15:24:27 +0800 (CST)
-Subject: Re: [PATCH v3 1/4] hw/intc: Remove loongarch_ipi.c
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- gaosong <gaosong@loongson.cn>, QEMU devel <qemu-devel@nongnu.org>
-Cc: Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240605-loongson3-ipi-v3-0-ddd2c0e03fa3@flygoat.com>
- <20240605-loongson3-ipi-v3-1-ddd2c0e03fa3@flygoat.com>
- <e1b8bbd8-2a9d-2417-1123-4aabfdedb684@loongson.cn>
- <002f4e7e-682b-479b-9c6c-8971a0e6640a@linaro.org>
- <8d975e9c-c2fd-09c8-7a37-5aebc63656d4@loongson.cn>
- <9a0f73c6-33e9-4576-9056-6a5fd0718630@linaro.org>
- <ceebb4ea-a417-0985-d45e-3988d76e2086@loongson.cn>
- <2b73d23a-4c36-4f0e-9d30-1d1af4c472fd@app.fastmail.com>
+ AQAAf8DxMMRxW4JmKDo3AA--.26876S3; 
+ Mon, 01 Jul 2024 15:32:03 +0800 (CST)
+Subject: Re: [RFC v3 1/2] target/loongarch: Add loongson binary translation
+ feature
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+Cc: QEMU devel <qemu-devel@nongnu.org>
+References: <20240530064941.1289573-1-maobibo@loongson.cn>
+ <20240530064941.1289573-2-maobibo@loongson.cn>
+ <db19ed93-027c-4e29-aac5-e3a1edcd760b@app.fastmail.com>
 From: maobibo <maobibo@loongson.cn>
-Message-ID: <4c2d0fcf-065b-2e7b-4dcb-496417dd1f96@loongson.cn>
-Date: Mon, 1 Jul 2024 15:24:27 +0800
+Message-ID: <bba3338b-4c28-fc38-fc5e-f4691bfa28b1@loongson.cn>
+Date: Mon, 1 Jul 2024 15:32:01 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <2b73d23a-4c36-4f0e-9d30-1d1af4c472fd@app.fastmail.com>
+In-Reply-To: <db19ed93-027c-4e29-aac5-e3a1edcd760b@app.fastmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxZcWrWYJmwjg3AA--.52801S3
+X-CM-TRANSID: AQAAf8DxMMRxW4JmKDo3AA--.26876S3
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9xXoW7JF17uw17AFyrGF47tFyxZwc_yoWfZFg_uF
- ySkFyrCFWUXFZ7Wa98ury3ZF9xu347K3ZxurZFgr40qw1akFs5Xr4kuFnag3W3GasrArnx
- ur4kWrn3ZF13uosvyTuYvTs0mTUanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvT
- s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
- cSsGvfJTRUUUbqkYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
- vaj40_Wr0E3s1l1IIY67AEw4v_JrI_Jryl8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
- w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
- W8JVWxJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1ln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
- xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r12
- 6r1DMcIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
- 1lc7I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxG
- rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxVWUtVW8ZwC20s026c02F40E14
- v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkG
- c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
- MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jzE_NUUU
- UU=
+X-Coremail-Antispam: 1Uk129KBj93XoW7tw1UZF48ZFWUZF43Xry3WrX_yoW8Kryxp3
+ 47uFy5KFWUJrZ2y3Z3Zw15Xrn8ZrWxKrW29a13try8Cwn8tF1xXry0ka9I9F1DZ34rWryI
+ qF15C34UuF4DAacCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1q6rW5McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jO
+ db8UUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -34
@@ -95,35 +87,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2024/7/1 下午3:08, Jiaxun Yang wrote:
+On 2024/7/1 下午2:57, Jiaxun Yang wrote:
 > 
 > 
-> 在2024年7月1日七月 上午2:35，maobibo写道：
-> [...]
+> 在2024年5月30日五月 上午7:49，Bibo Mao写道：
+>> Loongson Binary Translation (LBT) is used to accelerate binary
+>> translation, which contains 4 scratch registers (scr0 to scr3), x86/ARM
+>> eflags (eflags) and x87 fpu stack pointer (ftop).
 >>
->> How about split loongson_ipi.c into
->> loongson_ipi_base.c/loongson_ipi_loongson.c/loongson_ipi_loongarch.c,
+>> Now LBT feature is added in kvm mode, not supported in TCG mode since
+>> it is not emulated. Feature variable lbt is added with OnOffAuto type,
+>> If lbt feature is not supported with KVM host, it reports error if there
+>> is lbt=on command line.
 >>
->> File loongson_ipi_base.c contains the common code, loongson_ipi_xxx.c
->> contains arch specific. Soon we will submit irqchip in kernel function,
->> it will be much different for architectures, since ioctl command is
->> different for two architectures to save/restore ipi registers.
+>> If there is no any command line about lbt parameter, it checks whether
+>> KVM host supports lbt feature and set the corresponding value in cpucfg.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> Hi Bibo,
 > 
-> MIPS's in kernel IPI IOCTL interface is non-existent so far, so if you are going
-> to design something, I think it will be adopted by MIPS if necessary. There is still
-> no need to create divergence in between.
+> I was going across recent LoongArch changes and this comes into my attention:
 > 
-> That being said, You are more than welcomed to draft a patch so we can discuss based
-> on that.
-Sure, will do.
+>> ---
+>>   target/loongarch/cpu.c                | 53 +++++++++++++++++++++++++++
+>>   target/loongarch/cpu.h                |  6 +++
+>>   target/loongarch/kvm/kvm.c            | 26 +++++++++++++
+>>   target/loongarch/kvm/kvm_loongarch.h  | 16 ++++++++
+>>   target/loongarch/loongarch-qmp-cmds.c |  2 +-
+>>   5 files changed, 102 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>> index b5c1ec94af..14265b6667 100644
+>> --- a/target/loongarch/cpu.c
+>> +++ b/target/loongarch/cpu.c
+>> @@ -571,6 +571,30 @@ static void loongarch_cpu_disas_set_info(CPUState
+>> *s, disassemble_info *info)
+>>       info->print_insn = print_insn_loongarch;
+>>   }
+>>
+>> +static void loongarch_cpu_check_lbt(CPUState *cs, Error **errp)
+>> +{
+>> +    CPULoongArchState *env = cpu_env(cs);
+>> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+>> +    bool kvm_supported;
+>> +
+>> +    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LBT);
+> 
+> IMHO if there is no global states that should be saved/restored VM wise,
+> this should be handled at per CPU level, preferably with CPUCFG flags hint.
+> 
+> We should minimize non-privilege KVM feature bits to prevent hindering
+> asymmetry ISA system.
+For "asymmetry ISA system", do you meaning some vcpus have LBT feature, 
+however some vcpus does have LBT features? That does not exists at all.
+
+It will be big disaster for such products, how does application use this?
 
 Regards
-Bibo Mao
+Bibo
 > 
 > Thanks
->>
->> Regards
->> Bibo Mao
+> - Jiaxun
 > 
 
 
