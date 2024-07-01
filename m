@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14306C3065A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3323C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:12:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOJZx-0002Uh-8B; Mon, 01 Jul 2024 12:08:33 -0400
+	id 1sOJa3-0002tX-43; Mon, 01 Jul 2024 12:08:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOJZ9-0000jt-LO
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:44 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1sOJZ9-0000jF-8t
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:43 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOJZ7-0005SN-GQ
+ id 1sOJZ7-0005SS-F9
  for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:07:43 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2eaea28868dso45173311fa.3
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42563a9fa58so23271845e9.0
  for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:07:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719850058; x=1720454858; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719850059; x=1720454859; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0DUSrmAchhl9dxnhXDfumSKasw+WhgPIfpoDjJK7jzk=;
- b=wPPNzpyNG7sL6sMpxW/WB8M77DbgkWKpykFJMrrfttV6/FTGoLr1yBISlSGoNExr2h
- RXICnnpvKuGzay1aLb+m++JuVy4ppUyxvN+Ca+/YYT3VGyIjudHia2tqZsocAkwIvWoQ
- wOLBKMV2wQkzgxRjITxEaP9JwJyUj1nSvaZJBtV156W6+Y0l1JXEJLu5RL4XO+co/+MS
- 9w4L7QtjWCoSpEdbLUVRmiriqueP8pogR6Bbvj3vook7Ud2yvSNAo0yHTYeYdsGFpMoE
- zfCv426NXTSvUE1sE3qYSh90Y2dzphCCjz3FV6GLLtUgNhB3TCgxZC+bqHpf4rFiQAXT
- W5mQ==
+ :reply-to; bh=umdxzDnNtxvX2vzuW8yZcnHx92cHpebXW3DiyrvU1yg=;
+ b=C+cfErdmnIzMV6ooNwOFhD4BwkkwOCTsmaEed5nzlKMoGDMvKaHc4cE9dDFLB80jPj
+ 8ZWvYts1kuhy8+BMGptp2/P4TM7Nm23zLVXi09HPbz5mULpeot52sYCdH0cUvKLSwZw3
+ wHlo7/90jGqKtRxCkUSQPy5PqNHP3uUWEDfz0yYL+AvOp5hia/BeEx10xO88hl0ETQBr
+ oUGuXzodazyhSPRoVeQBqI0fg5uO/YoCJA0qUyRJTF8tdrtgolRGlFgVpZYTeOUP0zcz
+ jC4QHIYw2Rbug4uoTf6blliROeJ3pF1vTF4Iv0MvCDg2Zv1tyqaquffF+d+UslaHYQgA
+ cpAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719850058; x=1720454858;
+ d=1e100.net; s=20230601; t=1719850059; x=1720454859;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0DUSrmAchhl9dxnhXDfumSKasw+WhgPIfpoDjJK7jzk=;
- b=sjvL9/sp9oadouztUF60IcJ27bzZ/Ku/XCJzQd9LsNElMlDbbiUpe9P0EQOioEUKSC
- 32PsR3d84I8202iBz21YuH+AAVIlHO+Ox0uNeowRdcDXvcb7OpdDxOqiyhIb7EmmX6IZ
- MMg7T9VTqo+QRd3u9rOhbN6Vd0cdbUmoABlw7XMOPd7FzW0L573uoReXFbzhyHxBZNn/
- Fok9YBxxioDQUiWp3W30N3WoR85jPpandECdNbq2bRxBZY/tPRxq8tYM1cDEUdA0UN5D
- P8Fa3q9T4Y4Q+z74eDy0Oq5cGriL+TFWTobkcFT//wNAjUiuigZ6xmCv325TRFYqgNMx
- 4bUA==
-X-Gm-Message-State: AOJu0Yw0LQXs2Rl4Ubt5VHvDSCLzFq2vXbrbxTC6ktvRnmqrx2ivl6u4
- xnHXSt8ecWWDyclEfG6dlsTOpZhW6/uP24pU8BG506pKSm1n4pHppkqAPWNc6Lw/NvOjRY+oO6I
- /Cec=
-X-Google-Smtp-Source: AGHT+IGsXlTGVaxvT3gzL/1r4v3b4CSIqj6iktSGVtnoQoVmUoTwuegI3LDEq2zDTaUjxz0wRdh6VQ==
-X-Received: by 2002:a2e:9997:0:b0:2ec:5430:7f7c with SMTP id
- 38308e7fff4ca-2ee5e707c8fmr43763071fa.53.1719850058594; 
- Mon, 01 Jul 2024 09:07:38 -0700 (PDT)
+ bh=umdxzDnNtxvX2vzuW8yZcnHx92cHpebXW3DiyrvU1yg=;
+ b=tWTMj6roZ6RtsxQqN7Nwir7BfYHY1+pV5vaLZD49FTLKGjLZlsJTDkgbOGztuY10H4
+ 81kgUy4G1ZGFmDRPCnhsM/OpIUh0mRrjMqNDkSA1BtgJietP5dlXXxxLBjrxbkq9MAi1
+ kHlGmrrO2vlC0FNsAuELlzN5a0HYAb9DwpjjXU3OyFp9CYE/sCtiRnOhz813ketnacW/
+ zDMpT+jZ5bBVWEOW7JVyiGszz/yCJtiJbKwzNVlqSuwcPPy2ieIULtqt1XHq0s9qZlZt
+ hOjI7TEE5Ey82lom1NQ6kq5xjvhcVgTxFD4eu071BikPsl3Q/YakyQEq1boyDbUV17Po
+ RTYg==
+X-Gm-Message-State: AOJu0Yyz+DInx/Ix1ITniIiqUYyzLC39db+L8dpl4pCz3EeHMPFc8u5g
+ koOOhq57w2KEUYwwGpMNroBBP80LmJ0eVLhUl/yHkCTo49vqcSPUVct+KH/JX4Dst+Yzw1BrQdz
+ DRis=
+X-Google-Smtp-Source: AGHT+IHV413vlYQW00WafvXq9mqtPHHCCMD7HeGdB9dujRQ0qiqWHw8yN7qrkxddytJakpxFOPkYJQ==
+X-Received: by 2002:a05:600c:2157:b0:425:5eff:7182 with SMTP id
+ 5b1f17b1804b1-4257a02ce71mr42028755e9.31.1719850059075; 
+ Mon, 01 Jul 2024 09:07:39 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af557fesm161952135e9.11.2024.07.01.09.07.37
+ 5b1f17b1804b1-4256af557fesm161952135e9.11.2024.07.01.09.07.38
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 09:07:37 -0700 (PDT)
+ Mon, 01 Jul 2024 09:07:38 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/29] target/arm: Add data argument to do_fp3_vector
-Date: Mon,  1 Jul 2024 17:07:16 +0100
-Message-Id: <20240701160729.1910763-17-peter.maydell@linaro.org>
+Subject: [PULL 17/29] target/arm: Convert FCADD to decodetree
+Date: Mon,  1 Jul 2024 17:07:17 +0100
+Message-Id: <20240701160729.1910763-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240701160729.1910763-1-peter.maydell@linaro.org>
 References: <20240701160729.1910763-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,227 +97,93 @@ From: Richard Henderson <richard.henderson@linaro.org>
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240625183536.1672454-11-richard.henderson@linaro.org
+Message-id: 20240625183536.1672454-12-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 52 +++++++++++++++++-----------------
- 1 file changed, 26 insertions(+), 26 deletions(-)
+ target/arm/tcg/a64.decode      |  3 +++
+ target/arm/tcg/translate-a64.c | 33 ++++++++++-----------------------
+ 2 files changed, 13 insertions(+), 23 deletions(-)
 
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index b2c7e36969e..f330919851b 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -957,6 +957,9 @@ SMMLA           0100 1110 100 ..... 10100 1 ..... ..... @rrr_q1e0
+ UMMLA           0110 1110 100 ..... 10100 1 ..... ..... @rrr_q1e0
+ USMMLA          0100 1110 100 ..... 10101 1 ..... ..... @rrr_q1e0
+ 
++FCADD_90        0.10 1110 ..0 ..... 11100 1 ..... ..... @qrrr_e
++FCADD_270       0.10 1110 ..0 ..... 11110 1 ..... ..... @qrrr_e
++
+ ### Advanced SIMD scalar x indexed element
+ 
+ FMUL_si         0101 1111 00 .. .... 1001 . 0 ..... .....   @rrx_h
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 2697c4b305b..57cdde008ef 100644
+index 57cdde008ef..a1b338263ff 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -5290,7 +5290,7 @@ TRANS(CMHS_s, do_cmop_d, a, TCG_COND_GEU)
- TRANS(CMEQ_s, do_cmop_d, a, TCG_COND_EQ)
- TRANS(CMTST_s, do_cmop_d, a, TCG_COND_TSTNE)
- 
--static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a,
-+static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a, int data,
-                           gen_helper_gvec_3_ptr * const fns[3])
- {
-     MemOp esz = a->esz;
-@@ -5313,7 +5313,7 @@ static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a,
-     }
-     if (fp_access_check(s)) {
-         gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
--                          esz == MO_16, 0, fns[esz - 1]);
-+                          esz == MO_16, data, fns[esz - 1]);
-     }
+@@ -5623,6 +5623,14 @@ static bool trans_BFMLAL_v(DisasContext *s, arg_qrrr_e *a)
      return true;
  }
-@@ -5323,168 +5323,168 @@ static gen_helper_gvec_3_ptr * const f_vector_fadd[3] = {
-     gen_helper_gvec_fadd_s,
-     gen_helper_gvec_fadd_d,
- };
--TRANS(FADD_v, do_fp3_vector, a, f_vector_fadd)
-+TRANS(FADD_v, do_fp3_vector, a, 0, f_vector_fadd)
  
- static gen_helper_gvec_3_ptr * const f_vector_fsub[3] = {
-     gen_helper_gvec_fsub_h,
-     gen_helper_gvec_fsub_s,
-     gen_helper_gvec_fsub_d,
- };
--TRANS(FSUB_v, do_fp3_vector, a, f_vector_fsub)
-+TRANS(FSUB_v, do_fp3_vector, a, 0, f_vector_fsub)
++static gen_helper_gvec_3_ptr * const f_vector_fcadd[3] = {
++    gen_helper_gvec_fcaddh,
++    gen_helper_gvec_fcadds,
++    gen_helper_gvec_fcaddd,
++};
++TRANS_FEAT(FCADD_90, aa64_fcma, do_fp3_vector, a, 0, f_vector_fcadd)
++TRANS_FEAT(FCADD_270, aa64_fcma, do_fp3_vector, a, 1, f_vector_fcadd)
++
+ /*
+  * Advanced SIMD scalar/vector x indexed element
+  */
+@@ -10957,8 +10965,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+     case 0x19: /* FCMLA, #90 */
+     case 0x1a: /* FCMLA, #180 */
+     case 0x1b: /* FCMLA, #270 */
+-    case 0x1c: /* FCADD, #90 */
+-    case 0x1e: /* FCADD, #270 */
+         if (size == 0
+             || (size == 1 && !dc_isar_feature(aa64_fp16, s))
+             || (size == 3 && !is_q)) {
+@@ -10976,7 +10982,9 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+     case 0x11: /* SQRDMLSH (vector) */
+     case 0x12: /* UDOT (vector) */
+     case 0x14: /* UMMLA */
++    case 0x1c: /* FCADD, #90 */
+     case 0x1d: /* BFMMLA */
++    case 0x1e: /* FCADD, #270 */
+     case 0x1f: /* BFDOT / BFMLAL */
+         unallocated_encoding(s);
+         return;
+@@ -11013,27 +11021,6 @@ static void disas_simd_three_reg_same_extra(DisasContext *s, uint32_t insn)
+         }
+         return;
  
- static gen_helper_gvec_3_ptr * const f_vector_fdiv[3] = {
-     gen_helper_gvec_fdiv_h,
-     gen_helper_gvec_fdiv_s,
-     gen_helper_gvec_fdiv_d,
- };
--TRANS(FDIV_v, do_fp3_vector, a, f_vector_fdiv)
-+TRANS(FDIV_v, do_fp3_vector, a, 0, f_vector_fdiv)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmul[3] = {
-     gen_helper_gvec_fmul_h,
-     gen_helper_gvec_fmul_s,
-     gen_helper_gvec_fmul_d,
- };
--TRANS(FMUL_v, do_fp3_vector, a, f_vector_fmul)
-+TRANS(FMUL_v, do_fp3_vector, a, 0, f_vector_fmul)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmax[3] = {
-     gen_helper_gvec_fmax_h,
-     gen_helper_gvec_fmax_s,
-     gen_helper_gvec_fmax_d,
- };
--TRANS(FMAX_v, do_fp3_vector, a, f_vector_fmax)
-+TRANS(FMAX_v, do_fp3_vector, a, 0, f_vector_fmax)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmin[3] = {
-     gen_helper_gvec_fmin_h,
-     gen_helper_gvec_fmin_s,
-     gen_helper_gvec_fmin_d,
- };
--TRANS(FMIN_v, do_fp3_vector, a, f_vector_fmin)
-+TRANS(FMIN_v, do_fp3_vector, a, 0, f_vector_fmin)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmaxnm[3] = {
-     gen_helper_gvec_fmaxnum_h,
-     gen_helper_gvec_fmaxnum_s,
-     gen_helper_gvec_fmaxnum_d,
- };
--TRANS(FMAXNM_v, do_fp3_vector, a, f_vector_fmaxnm)
-+TRANS(FMAXNM_v, do_fp3_vector, a, 0, f_vector_fmaxnm)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fminnm[3] = {
-     gen_helper_gvec_fminnum_h,
-     gen_helper_gvec_fminnum_s,
-     gen_helper_gvec_fminnum_d,
- };
--TRANS(FMINNM_v, do_fp3_vector, a, f_vector_fminnm)
-+TRANS(FMINNM_v, do_fp3_vector, a, 0, f_vector_fminnm)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmulx[3] = {
-     gen_helper_gvec_fmulx_h,
-     gen_helper_gvec_fmulx_s,
-     gen_helper_gvec_fmulx_d,
- };
--TRANS(FMULX_v, do_fp3_vector, a, f_vector_fmulx)
-+TRANS(FMULX_v, do_fp3_vector, a, 0, f_vector_fmulx)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmla[3] = {
-     gen_helper_gvec_vfma_h,
-     gen_helper_gvec_vfma_s,
-     gen_helper_gvec_vfma_d,
- };
--TRANS(FMLA_v, do_fp3_vector, a, f_vector_fmla)
-+TRANS(FMLA_v, do_fp3_vector, a, 0, f_vector_fmla)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmls[3] = {
-     gen_helper_gvec_vfms_h,
-     gen_helper_gvec_vfms_s,
-     gen_helper_gvec_vfms_d,
- };
--TRANS(FMLS_v, do_fp3_vector, a, f_vector_fmls)
-+TRANS(FMLS_v, do_fp3_vector, a, 0, f_vector_fmls)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fcmeq[3] = {
-     gen_helper_gvec_fceq_h,
-     gen_helper_gvec_fceq_s,
-     gen_helper_gvec_fceq_d,
- };
--TRANS(FCMEQ_v, do_fp3_vector, a, f_vector_fcmeq)
-+TRANS(FCMEQ_v, do_fp3_vector, a, 0, f_vector_fcmeq)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fcmge[3] = {
-     gen_helper_gvec_fcge_h,
-     gen_helper_gvec_fcge_s,
-     gen_helper_gvec_fcge_d,
- };
--TRANS(FCMGE_v, do_fp3_vector, a, f_vector_fcmge)
-+TRANS(FCMGE_v, do_fp3_vector, a, 0, f_vector_fcmge)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fcmgt[3] = {
-     gen_helper_gvec_fcgt_h,
-     gen_helper_gvec_fcgt_s,
-     gen_helper_gvec_fcgt_d,
- };
--TRANS(FCMGT_v, do_fp3_vector, a, f_vector_fcmgt)
-+TRANS(FCMGT_v, do_fp3_vector, a, 0, f_vector_fcmgt)
- 
- static gen_helper_gvec_3_ptr * const f_vector_facge[3] = {
-     gen_helper_gvec_facge_h,
-     gen_helper_gvec_facge_s,
-     gen_helper_gvec_facge_d,
- };
--TRANS(FACGE_v, do_fp3_vector, a, f_vector_facge)
-+TRANS(FACGE_v, do_fp3_vector, a, 0, f_vector_facge)
- 
- static gen_helper_gvec_3_ptr * const f_vector_facgt[3] = {
-     gen_helper_gvec_facgt_h,
-     gen_helper_gvec_facgt_s,
-     gen_helper_gvec_facgt_d,
- };
--TRANS(FACGT_v, do_fp3_vector, a, f_vector_facgt)
-+TRANS(FACGT_v, do_fp3_vector, a, 0, f_vector_facgt)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fabd[3] = {
-     gen_helper_gvec_fabd_h,
-     gen_helper_gvec_fabd_s,
-     gen_helper_gvec_fabd_d,
- };
--TRANS(FABD_v, do_fp3_vector, a, f_vector_fabd)
-+TRANS(FABD_v, do_fp3_vector, a, 0, f_vector_fabd)
- 
- static gen_helper_gvec_3_ptr * const f_vector_frecps[3] = {
-     gen_helper_gvec_recps_h,
-     gen_helper_gvec_recps_s,
-     gen_helper_gvec_recps_d,
- };
--TRANS(FRECPS_v, do_fp3_vector, a, f_vector_frecps)
-+TRANS(FRECPS_v, do_fp3_vector, a, 0, f_vector_frecps)
- 
- static gen_helper_gvec_3_ptr * const f_vector_frsqrts[3] = {
-     gen_helper_gvec_rsqrts_h,
-     gen_helper_gvec_rsqrts_s,
-     gen_helper_gvec_rsqrts_d,
- };
--TRANS(FRSQRTS_v, do_fp3_vector, a, f_vector_frsqrts)
-+TRANS(FRSQRTS_v, do_fp3_vector, a, 0, f_vector_frsqrts)
- 
- static gen_helper_gvec_3_ptr * const f_vector_faddp[3] = {
-     gen_helper_gvec_faddp_h,
-     gen_helper_gvec_faddp_s,
-     gen_helper_gvec_faddp_d,
- };
--TRANS(FADDP_v, do_fp3_vector, a, f_vector_faddp)
-+TRANS(FADDP_v, do_fp3_vector, a, 0, f_vector_faddp)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmaxp[3] = {
-     gen_helper_gvec_fmaxp_h,
-     gen_helper_gvec_fmaxp_s,
-     gen_helper_gvec_fmaxp_d,
- };
--TRANS(FMAXP_v, do_fp3_vector, a, f_vector_fmaxp)
-+TRANS(FMAXP_v, do_fp3_vector, a, 0, f_vector_fmaxp)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fminp[3] = {
-     gen_helper_gvec_fminp_h,
-     gen_helper_gvec_fminp_s,
-     gen_helper_gvec_fminp_d,
- };
--TRANS(FMINP_v, do_fp3_vector, a, f_vector_fminp)
-+TRANS(FMINP_v, do_fp3_vector, a, 0, f_vector_fminp)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fmaxnmp[3] = {
-     gen_helper_gvec_fmaxnump_h,
-     gen_helper_gvec_fmaxnump_s,
-     gen_helper_gvec_fmaxnump_d,
- };
--TRANS(FMAXNMP_v, do_fp3_vector, a, f_vector_fmaxnmp)
-+TRANS(FMAXNMP_v, do_fp3_vector, a, 0, f_vector_fmaxnmp)
- 
- static gen_helper_gvec_3_ptr * const f_vector_fminnmp[3] = {
-     gen_helper_gvec_fminnump_h,
-     gen_helper_gvec_fminnump_s,
-     gen_helper_gvec_fminnump_d,
- };
--TRANS(FMINNMP_v, do_fp3_vector, a, f_vector_fminnmp)
-+TRANS(FMINNMP_v, do_fp3_vector, a, 0, f_vector_fminnmp)
- 
- static bool do_fmlal(DisasContext *s, arg_qrrr_e *a, bool is_s, bool is_2)
- {
+-    case 0xc: /* FCADD, #90 */
+-    case 0xe: /* FCADD, #270 */
+-        rot = extract32(opcode, 1, 1);
+-        switch (size) {
+-        case 1:
+-            gen_gvec_op3_fpst(s, is_q, rd, rn, rm, size == 1, rot,
+-                              gen_helper_gvec_fcaddh);
+-            break;
+-        case 2:
+-            gen_gvec_op3_fpst(s, is_q, rd, rn, rm, size == 1, rot,
+-                              gen_helper_gvec_fcadds);
+-            break;
+-        case 3:
+-            gen_gvec_op3_fpst(s, is_q, rd, rn, rm, size == 1, rot,
+-                              gen_helper_gvec_fcaddd);
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+-        return;
+-
+     default:
+         g_assert_not_reached();
+     }
 -- 
 2.34.1
 
