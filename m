@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBBA4C3065B
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:02:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3D4AC3065A
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOIUz-0003xR-31; Mon, 01 Jul 2024 10:59:21 -0400
+	id 1sOIVN-00046Z-Fl; Mon, 01 Jul 2024 10:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOIUx-0003um-6n
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sOIVL-00045A-ER
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOIUs-0005Ap-1G
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:18 -0400
+ id 1sOIVF-0005NO-P6
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719845953;
+ s=mimecast20190719; t=1719845976;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dOb7lPpCZJz3JV8h1vR7Nm7ptbAZTCJyioTDRRfbz+U=;
- b=SG7YenCXIv9adhCTuAOznvomUhQFrV0nafvSnN+cDK8bOh3s6e9TXf3NjmmHxljDFHwnzR
- tBOXAv0s2kAZglxaBRYfFdoIYMafmrXwRAhm1O5ughcA7V/tSbyZgAMW/6Se8uk2VW5pCJ
- sWPxISPQQHJLgwxy8zDioo4YvDF1fdA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=S6tUQLMOUhCwh40f/djXK9f9MtwQXr/0BnjScvVQiDg=;
+ b=BZP9CGBNzbz2UhvtSwaNrkKRnyxJuGzBHPd1LbXfC2ACOP7l9xzQtxgx7OAfiZXLOdbeM7
+ eJKtgK+LaVypiu7sHRz4ahb6osFH+zMQ6UzmCWiik/X5oHItIjHBIQGwlxxNVVdSi1wPnB
+ RURMK7MEp1lAgqmXPxcEu9lBXJBs94Q=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-27-kJmnEonkN86oPV_C0k4w2g-1; Mon, 01 Jul 2024 10:59:08 -0400
-X-MC-Unique: kJmnEonkN86oPV_C0k4w2g-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4255f94080bso22338945e9.2
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 07:59:08 -0700 (PDT)
+ us-mta-516-pPjkiIKAOgKSLHsSNLI_5A-1; Mon, 01 Jul 2024 10:59:34 -0400
+X-MC-Unique: pPjkiIKAOgKSLHsSNLI_5A-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-36725ec0f7dso1789636f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 07:59:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719845946; x=1720450746;
+ d=1e100.net; s=20230601; t=1719845972; x=1720450772;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dOb7lPpCZJz3JV8h1vR7Nm7ptbAZTCJyioTDRRfbz+U=;
- b=A+O1uWXIzTMs6sp9yq8espKfcHn+Z77JQQd7BBpLti8akCjJiAZKQNvXa72Mb6kMIc
- Q/G3FI34UtwP/bTKpDo+opCB2p7LPCzJyBo1VhXmI9zUU+YJ9SobIqJVp6dv4R/dbkp4
- 86Oyu17f44zySD0WqySgSCrRYTT/04mQeM2LInVGAEkXaMEOjtrZ4oOu7V99cTpUZ29C
- GKZbLsBAIMaX3yS9tJBptOHoITMesPvOmqzUh5VCWuzsqp1hj0S70+Zja8pIlCzcoDne
- KWWWGGXQsaGZWarzvqYC7Zaknfy181loisTSEWDh5CF4ZDdAUUag81hM/CncVkiHFMUC
- Pwmw==
-X-Gm-Message-State: AOJu0YzNmJ4Y9uY0ZsmS43s8aTDT5PjSAlBK+m72Dc5bBErLFb9DjnPY
- eHx+Gxx0Hn5ukURtQLGkJE5hDCG7Ria9C0BzIyvWUj/PvqQOtZi/deQlRiGJK/uIY4WIbtpyHZw
- u2aor6N2WL84bliGHzLeQROXJs24okhw6MOjs/+ok5b7vQovsnjxXgXcfisY9K/2mzhtxuBlanC
- DsPkTMx0wTxS9JKTih9bS4AN/PUuvhotmPMHVU
-X-Received: by 2002:a05:600c:3b09:b0:424:7bcf:2486 with SMTP id
- 5b1f17b1804b1-4257a00aadamr34948445e9.4.1719845946398; 
- Mon, 01 Jul 2024 07:59:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxYzDZk7aajFO2Hj5/wZoBbox9nvdOZOlzMaYILjTLvsNdMm0i2/Axrh27hLn+vIFESdNz9g==
-X-Received: by 2002:a05:600c:3b09:b0:424:7bcf:2486 with SMTP id
- 5b1f17b1804b1-4257a00aadamr34948265e9.4.1719845945943; 
- Mon, 01 Jul 2024 07:59:05 -0700 (PDT)
+ bh=S6tUQLMOUhCwh40f/djXK9f9MtwQXr/0BnjScvVQiDg=;
+ b=aF+tJXeLA/vCbGeePaSJ6jm9aqyJG32b+aL1DFTJWABcPA6p1bgSFX5TwhgpePiEJM
+ ywYecaqmH4HDqIvzyUV/lgifoOWUlsBCi3yLCT9mSwMP2q2ey/1/tGPp+Ai/yJqBgw1G
+ iMdrMHt1eR9fhKg9dTcMnlEyWjgTZz3sd/8/JUft2XxBeBZCes4Piafm2f78yzx9u4mQ
+ MLRXZIwE4B/BVqvS4XjBjvYGg4aqH4wkMYyzxTwmxVq+ZCHvuKTcuyq9Gy2nEwf92jnq
+ NF2VuXkQkY697ttSeUh1R7AxjZD+pFsf04yBj1PlX1jiwyxaF9aO902neQBnFRFDN3i6
+ Y5hA==
+X-Gm-Message-State: AOJu0Yw9hnKw2QeTTr7BLgWRpn1CpjB/HShhiHvLsfT5PTJdc7wXEDe0
+ bcUxKx0FZZSh1ngOdG3I8q0dl2C0rIMRSDDuiFaZdYvtDhA0hYgW6QR/3mIbdZDXqagtb+2y13v
+ WSyzEeWQFxeZx6u3xfRJtIvtuDopuMVUJN0xdSeLQAQNDZqmj9Z9nss01NME1ndLsi1MN5lDDlM
+ OGAucJLWanXV86RL68E5g0QCSiGoU1A98lYebe
+X-Received: by 2002:a05:6000:cc1:b0:35f:1f28:2ec9 with SMTP id
+ ffacd0b85a97d-367757309b3mr4591235f8f.70.1719845972471; 
+ Mon, 01 Jul 2024 07:59:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHUs8iJiZlS9gIYM6LIQ8vGya0LH7I8sevS5ByHUq2hKrw+Xtip4wuC3ch865IK6PTZOxjwVQ==
+X-Received: by 2002:a05:6000:cc1:b0:35f:1f28:2ec9 with SMTP id
+ ffacd0b85a97d-367757309b3mr4591205f8f.70.1719845972000; 
+ Mon, 01 Jul 2024 07:59:32 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af3cf90sm156221475e9.5.2024.07.01.07.59.05
+ ffacd0b85a97d-3675a0e1412sm10232820f8f.53.2024.07.01.07.59.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 07:59:05 -0700 (PDT)
+ Mon, 01 Jul 2024 07:59:31 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -75,17 +75,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 03/14] rust: define traits and pointer wrappers to convert
- from/to C representations
-Date: Mon,  1 Jul 2024 16:58:35 +0200
-Message-ID: <20240701145853.1394967-4-pbonzini@redhat.com>
+Subject: [PATCH 12/14] rust: replace c"" literals with cstr crate
+Date: Mon,  1 Jul 2024 16:58:44 +0200
+Message-ID: <20240701145853.1394967-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240701145853.1394967-1-pbonzini@redhat.com>
 References: <20240701145853.1394967-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,306 +108,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qemu::util::foreign module provides:
-
-- A trait for structs that can be converted to a C ("foreign") representation
-  (CloneToForeign)
-
-- A trait for structs that can be built from a C ("foreign") representation
-  (FromForeign), and the utility IntoNative that can be used with less typing
-  (similar to the standard library's From and Into pair)
-
-- Automatic implementations of the above traits for Option<>, supporting NULL
-  pointers
-
-- A wrapper for a pointer that automatically frees the contained data.  If
-  a struct XYZ implements CloneToForeign, you can build an OwnedPointer<XYZ>
-  and it will free the contents automatically unless you retrieve it with
-  owned_ptr.into_inner()
+Part of what's needed to work with Rust versions prior to 1.77.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qemu/src/lib.rs          |   6 +
- qemu/src/util/foreign.rs | 247 +++++++++++++++++++++++++++++++++++++++
- qemu/src/util/mod.rs     |   1 +
- 3 files changed, 254 insertions(+)
- create mode 100644 qemu/src/util/foreign.rs
- create mode 100644 qemu/src/util/mod.rs
+ qemu/Cargo.toml            |  3 +++
+ qemu/qom-rust.txt          |  2 +-
+ qemu/src/hw/core/device.rs |  4 +++-
+ qemu/src/qom/object.rs     |  4 +++-
+ qemu/src/util/error.rs     |  4 +++-
+ qemu/src/util/foreign.rs   | 20 +++++++++++---------
+ qemu/tests/main.rs         |  7 ++++---
+ 8 files changed, 39 insertions(+), 16 deletions(-)
 
-diff --git a/qemu/src/lib.rs b/qemu/src/lib.rs
-index fce21d7..c48edcf 100644
---- a/qemu/src/lib.rs
-+++ b/qemu/src/lib.rs
-@@ -2,3 +2,9 @@
- #![allow(dead_code)]
+diff --git a/qemu/Cargo.toml b/qemu/Cargo.toml
+index 1100725..a07a449 100644
+--- a/qemu/Cargo.toml
++++ b/qemu/Cargo.toml
+@@ -7,5 +7,8 @@ edition = "2021"
+ const-default = { version = "~1", features = ["derive"] }
+ libc = "^0"
  
- pub mod bindings;
++# pick older version in order to support Rust 1.63
++cstr = { version = "=0.2.10" }
 +
-+pub mod util;
-+pub use util::foreign::CloneToForeign;
-+pub use util::foreign::FromForeign;
-+pub use util::foreign::IntoNative;
-+pub use util::foreign::OwnedPointer;
+ [dev-dependencies]
+ matches = ">=0"
+diff --git a/qemu/qom-rust.txt b/qemu/qom-rust.txt
+index 1588445..ef4bd06 100644
+--- a/qemu/qom-rust.txt
++++ b/qemu/qom-rust.txt
+@@ -48,7 +48,7 @@ Bindings for C classes
+ struct must implement ObjectType
+ 
+     unsafe impl ObjectType for Object {
+-        const TYPE: &'static CStr = c"object";
++        const TYPE: &'static CStr = cstr!("object");
+     }
+ 
+ struct must implement IsA<T> for all superclasses T
+diff --git a/qemu/src/hw/core/device.rs b/qemu/src/hw/core/device.rs
+index 294251e..4edf61d 100644
+--- a/qemu/src/hw/core/device.rs
++++ b/qemu/src/hw/core/device.rs
+@@ -17,12 +17,14 @@ use crate::qom_isa;
+ 
+ use crate::Result;
+ 
++use cstr::cstr;
++
+ use std::ffi::CStr;
+ use std::ops::Deref;
+ use std::ptr::null_mut;
+ 
+ unsafe impl ObjectType for DeviceState {
+-    const TYPE: &'static CStr = c"device";
++    const TYPE: &'static CStr = cstr!("device");
+ }
+ 
+ qom_isa!(DeviceState, Object);
+diff --git a/qemu/src/qom/object.rs b/qemu/src/qom/object.rs
+index 4e84e29..9f6c078 100644
+--- a/qemu/src/qom/object.rs
++++ b/qemu/src/qom/object.rs
+@@ -7,6 +7,8 @@ use std::ffi::CStr;
+ use std::fmt;
+ use std::ops::Deref;
+ 
++use cstr::cstr;
++
+ use crate::bindings::object_get_typename;
+ use crate::bindings::object_property_add_child;
+ use crate::bindings::object_new;
+@@ -42,7 +44,7 @@ pub unsafe trait ObjectType: Sized {
+ }
+ 
+ unsafe impl ObjectType for Object {
+-    const TYPE: &'static CStr = c"object";
++    const TYPE: &'static CStr = cstr!("object");
+ }
+ 
+ // ------------------------------
+diff --git a/qemu/src/util/error.rs b/qemu/src/util/error.rs
+index e7e6f2e..79c3c81 100644
+--- a/qemu/src/util/error.rs
++++ b/qemu/src/util/error.rs
+@@ -7,6 +7,8 @@ use crate::bindings::error_free;
+ use crate::bindings::error_get_pretty;
+ use crate::bindings::error_setg_internal;
+ 
++use cstr::cstr;
++
+ use std::ffi::CStr;
+ use std::fmt::{self, Display};
+ use std::ptr;
+@@ -215,7 +217,7 @@ impl CloneToForeign for Error {
+                 ptr::null_mut(), // FIXME
+                 0,
+                 ptr::null_mut(), // FIXME
+-                c"%s".as_ptr(),
++                cstr!("%s").as_ptr(),
+                 format!("{}", self),
+             );
+             OwnedPointer::new(x)
 diff --git a/qemu/src/util/foreign.rs b/qemu/src/util/foreign.rs
-new file mode 100644
-index 0000000..a591925
---- /dev/null
+index 464400a..7a663cc 100644
+--- a/qemu/src/util/foreign.rs
 +++ b/qemu/src/util/foreign.rs
-@@ -0,0 +1,247 @@
-+// TODO: change to use .cast() etc.
-+#![allow(clippy::ptr_as_ptr)]
-+
-+/// Traits to map between C structs and native Rust types.
-+/// Similar to glib-rs but a bit simpler and possibly more
-+/// idiomatic.
-+use std::borrow::Cow;
-+use std::fmt;
-+use std::fmt::Debug;
-+use std::mem;
-+use std::ptr;
-+
-+/// A type for which there is a canonical representation as a C datum.
-+pub trait CloneToForeign {
-+    /// The representation of `Self` as a C datum.  Typically a
-+    /// `struct`, though there are exceptions for example `c_char`
-+    /// for strings, since C strings are of `char *` type).
-+    type Foreign;
-+
-+    /// Free the C datum pointed to by `p`.
-+    ///
-+    /// # Safety
-+    ///
-+    /// `p` must be `NULL` or point to valid data.
-+    unsafe fn free_foreign(p: *mut Self::Foreign);
-+
-+    /// Convert a native Rust object to a foreign C struct, copying
-+    /// everything pointed to by `self` (same as `to_glib_full` in `glib-rs`)
-+    fn clone_to_foreign(&self) -> OwnedPointer<Self>;
-+
-+    /// Convert a native Rust object to a foreign C pointer, copying
-+    /// everything pointed to by `self`.  The returned pointer must
-+    /// be freed with the `free_foreign` associated function.
-+    fn clone_to_foreign_ptr(&self) -> *mut Self::Foreign {
-+        self.clone_to_foreign().into_inner()
-+    }
-+}
-+
-+impl<T> CloneToForeign for Option<T>
-+where
-+    T: CloneToForeign,
-+{
-+    type Foreign = <T as CloneToForeign>::Foreign;
-+
-+    unsafe fn free_foreign(x: *mut Self::Foreign) {
-+        T::free_foreign(x)
-+    }
-+
-+    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
-+        // Same as the underlying implementation, but also convert `None`
-+        // to a `NULL` pointer.
-+        self.as_ref()
-+            .map(CloneToForeign::clone_to_foreign)
-+            .map(OwnedPointer::into)
-+            .unwrap_or_default()
-+    }
-+}
-+
-+impl<T> FromForeign for Option<T>
-+where
-+    T: FromForeign,
-+{
-+    unsafe fn cloned_from_foreign(p: *const Self::Foreign) -> Self {
-+        // Same as the underlying implementation, but also accept a `NULL` pointer.
-+        if p.is_null() {
-+            None
-+        } else {
-+            Some(T::cloned_from_foreign(p))
-+        }
-+    }
-+}
-+
-+impl<T> CloneToForeign for Box<T>
-+where
-+    T: CloneToForeign,
-+{
-+    type Foreign = <T as CloneToForeign>::Foreign;
-+
-+    unsafe fn free_foreign(x: *mut Self::Foreign) {
-+        T::free_foreign(x)
-+    }
-+
-+    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
-+        self.as_ref().clone_to_foreign().into()
-+    }
-+}
-+
-+impl<T> FromForeign for Box<T>
-+where
-+    T: FromForeign,
-+{
-+    unsafe fn cloned_from_foreign(p: *const Self::Foreign) -> Self {
-+        Box::new(T::cloned_from_foreign(p))
-+    }
-+}
-+
-+impl<'a, B> CloneToForeign for Cow<'a, B>
-+    where B: 'a + ToOwned + ?Sized + CloneToForeign,
-+{
-+    type Foreign = B::Foreign;
-+
-+    unsafe fn free_foreign(ptr: *mut B::Foreign) {
-+        B::free_foreign(ptr);
-+    }
-+
-+    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
-+        self.as_ref().clone_to_foreign().into()
-+    }
-+}
-+
-+/// Convert a C datum into a native Rust object, taking ownership of
-+/// the C datum.  You should not need to implement this trait
-+/// as long as Rust types implement `FromForeign`.
-+pub trait IntoNative<T> {
-+    /// Convert a C datum to a native Rust object, taking ownership of
-+    /// the pointer or Rust object (same as `from_glib_full` in `glib-rs`)
-+    ///
-+    /// # Safety
-+    ///
-+    /// `p` must point to valid data, or can be `NULL` if Self is an
-+    /// `Option` type.  It becomes invalid after the function returns.
-+    unsafe fn into_native(self) -> T;
-+}
-+
-+impl<T, U> IntoNative<U> for *mut T
-+where
-+    U: FromForeign<Foreign = T>,
-+{
-+    unsafe fn into_native(self) -> U {
-+        U::from_foreign(self)
-+    }
-+}
-+
-+/// A type which can be constructed from a canonical representation as a
-+/// C datum.
-+pub trait FromForeign: CloneToForeign + Sized {
-+    /// Convert a C datum to a native Rust object, copying everything
-+    /// pointed to by `p` (same as `from_glib_none` in `glib-rs`)
-+    ///
-+    /// # Safety
-+    ///
-+    /// `p` must point to valid data, or can be `NULL` is `Self` is an
-+    /// `Option` type.
-+    unsafe fn cloned_from_foreign(p: *const Self::Foreign) -> Self;
-+
-+    /// Convert a C datum to a native Rust object, taking ownership of
-+    /// the pointer or Rust object (same as `from_glib_full` in `glib-rs`)
-+    ///
-+    /// The default implementation calls `cloned_from_foreign` and frees `p`.
-+    ///
-+    /// # Safety
-+    ///
-+    /// `p` must point to valid data, or can be `NULL` is `Self` is an
-+    /// `Option` type.  `p` becomes invalid after the function returns.
-+    unsafe fn from_foreign(p: *mut Self::Foreign) -> Self {
-+        let result = Self::cloned_from_foreign(p);
-+        Self::free_foreign(p);
-+        result
-+    }
-+}
-+
-+pub struct OwnedPointer<T: CloneToForeign + ?Sized> {
-+    ptr: *mut <T as CloneToForeign>::Foreign,
-+}
-+
-+impl<T: CloneToForeign + ?Sized> OwnedPointer<T> {
-+    /// Return a new `OwnedPointer` that wraps the pointer `ptr`.
-+    ///
-+    /// # Safety
-+    ///
-+    /// The pointer must be valid and live until the returned `OwnedPointer`
-+    /// is dropped.
-+    pub unsafe fn new(ptr: *mut <T as CloneToForeign>::Foreign) -> Self {
-+        OwnedPointer { ptr }
-+    }
-+
-+    /// Safely create an `OwnedPointer` from one that has the same
-+    /// freeing function.
-+    pub fn from<U>(x: OwnedPointer<U>) -> Self
-+    where
-+        U: CloneToForeign<Foreign = <T as CloneToForeign>::Foreign> + ?Sized,
-+    {
-+        unsafe {
-+            // SAFETY: the pointer type and free function are the same,
-+            // only the type changes
-+            OwnedPointer::new(x.into_inner())
-+        }
-+    }
-+
-+    /// Safely convert an `OwnedPointer` into one that has the same
-+    /// freeing function.
-+    pub fn into<U>(self) -> OwnedPointer<U>
-+    where
-+        U: CloneToForeign<Foreign = <T as CloneToForeign>::Foreign>,
-+    {
-+        OwnedPointer::from(self)
-+    }
-+
-+    /// Return the pointer that is stored in the `OwnedPointer`.  The
-+    /// pointer is valid for as long as the `OwnedPointer` itself.
-+    pub fn as_ptr(&self) -> *const <T as CloneToForeign>::Foreign {
-+        self.ptr
-+    }
-+
-+    pub fn as_mut_ptr(&self) -> *mut <T as CloneToForeign>::Foreign {
-+        self.ptr
-+    }
-+
-+    /// Return the pointer that is stored in the `OwnedPointer`,
-+    /// consuming the `OwnedPointer` but not freeing the pointer.
-+    pub fn into_inner(mut self) -> *mut <T as CloneToForeign>::Foreign {
-+        let result = mem::replace(&mut self.ptr, ptr::null_mut());
-+        mem::forget(self);
-+        result
-+    }
-+}
-+
-+impl<T: FromForeign + ?Sized> OwnedPointer<T> {
-+    /// Convert a C datum to a native Rust object, taking ownership of
-+    /// the pointer or Rust object (same as `from_glib_full` in `glib-rs`)
-+    pub fn into_native(self) -> T {
-+        // SAFETY: the pointer was passed to the unsafe constructor OwnedPointer::new
-+        unsafe { T::from_foreign(self.into_inner()) }
-+    }
-+}
-+
-+impl<T: CloneToForeign + ?Sized> Debug for OwnedPointer<T> {
-+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-+        let name = std::any::type_name::<T>();
-+        let name = format!("OwnedPointer<{}>", name);
-+        f.debug_tuple(&name).field(&self.as_ptr()).finish()
-+    }
-+}
-+
-+impl<T: CloneToForeign + Default + ?Sized> Default for OwnedPointer<T> {
-+    fn default() -> Self {
-+        <T as Default>::default().clone_to_foreign()
-+    }
-+}
-+
-+impl<T: CloneToForeign + ?Sized> Drop for OwnedPointer<T> {
-+    fn drop(&mut self) {
-+        let p = mem::replace(&mut self.ptr, ptr::null_mut());
-+        // SAFETY: the pointer was passed to the unsafe constructor OwnedPointer::new
-+        unsafe { T::free_foreign(p) }
-+    }
-+}
-diff --git a/qemu/src/util/mod.rs b/qemu/src/util/mod.rs
-new file mode 100644
-index 0000000..be00d0c
---- /dev/null
-+++ b/qemu/src/util/mod.rs
-@@ -0,0 +1 @@
-+pub mod foreign;
+@@ -167,7 +167,8 @@ pub trait FromForeign: CloneToForeign + Sized {
+     ///
+     /// ```
+     /// # use qemu::FromForeign;
+-    /// let p = c"Hello, world!".as_ptr();
++    /// # use cstr::cstr;
++    /// let p = cstr!("Hello, world!").as_ptr();
+     /// let s = unsafe {
+     ///     String::cloned_from_foreign(p as *const libc::c_char)
+     /// };
+@@ -476,6 +477,7 @@ mod tests {
+     #![allow(clippy::shadow_unrelated)]
+ 
+     use super::*;
++    use cstr::cstr;
+     use matches::assert_matches;
+     use std::ffi::c_void;
+ 
+@@ -498,7 +500,7 @@ mod tests {
+     #[test]
+     fn test_cloned_from_foreign_string_cow() {
+         let s = "Hello, world!".to_string();
+-        let cstr = c"Hello, world!";
++        let cstr = cstr!("Hello, world!");
+         let cloned = unsafe { Cow::cloned_from_foreign(cstr.as_ptr()) };
+         assert_eq!(s, cloned);
+     }
+@@ -506,7 +508,7 @@ mod tests {
+     #[test]
+     fn test_cloned_from_foreign_string() {
+         let s = "Hello, world!".to_string();
+-        let cstr = c"Hello, world!";
++        let cstr = cstr!("Hello, world!");
+         let cloned = unsafe { String::cloned_from_foreign(cstr.as_ptr()) };
+         assert_eq!(s, cloned);
+     }
+@@ -570,7 +572,7 @@ mod tests {
+     #[test]
+     fn test_clone_to_foreign_str() {
+         let s = "Hello, world!";
+-        let p = c"Hello, world!".as_ptr();
++        let p = cstr!("Hello, world!").as_ptr();
+         let cloned = s.clone_to_foreign();
+         unsafe {
+             let len = libc::strlen(cloned.as_ptr());
+@@ -588,7 +590,7 @@ mod tests {
+ 
+     #[test]
+     fn test_clone_to_foreign_cstr() {
+-        let s: &CStr = c"Hello, world!";
++        let s: &CStr = cstr!("Hello, world!");
+         let cloned = s.clone_to_foreign();
+         unsafe {
+             let len = libc::strlen(cloned.as_ptr());
+@@ -606,7 +608,7 @@ mod tests {
+ 
+     #[test]
+     fn test_clone_to_foreign_string_cow() {
+-        let p = c"Hello, world!".as_ptr();
++        let p = cstr!("Hello, world!").as_ptr();
+         for s in vec![
+             Into::<Cow<str>>::into("Hello, world!"),
+             Into::<Cow<str>>::into("Hello, world!".to_string())] {
+@@ -663,7 +665,7 @@ mod tests {
+     #[test]
+     fn test_clone_to_foreign_string() {
+         let s = "Hello, world!".to_string();
+-        let cstr = c"Hello, world!";
++        let cstr = cstr!("Hello, world!");
+         let cloned = s.clone_to_foreign();
+         unsafe {
+             let len = libc::strlen(cloned.as_ptr());
+@@ -683,7 +685,7 @@ mod tests {
+     fn test_option() {
+         // An Option can be used to produce or convert NULL pointers
+         let s = Some("Hello, world!".to_string());
+-        let cstr = c"Hello, world!";
++        let cstr = cstr!("Hello, world!");
+         unsafe {
+             assert_eq!(Option::<String>::cloned_from_foreign(cstr.as_ptr()), s);
+             assert_matches!(Option::<String>::cloned_from_foreign(ptr::null()), None);
+@@ -695,7 +697,7 @@ mod tests {
+     fn test_box() {
+         // A box can be produced if the inner type has the capability.
+         let s = Box::new("Hello, world!".to_string());
+-        let cstr = c"Hello, world!";
++        let cstr = cstr!("Hello, world!");
+         let cloned = unsafe { Box::<String>::cloned_from_foreign(cstr.as_ptr()) };
+         assert_eq!(s, cloned);
+ 
+diff --git a/qemu/tests/main.rs b/qemu/tests/main.rs
+index e499c14..601e92b 100644
+--- a/qemu/tests/main.rs
++++ b/qemu/tests/main.rs
+@@ -1,4 +1,5 @@
+ use const_default::ConstDefault;
++use cstr::cstr;
+ 
+ use qemu::qom_define_type;
+ use qemu::Object;
+@@ -27,7 +28,7 @@ struct TestState {
+ }
+ 
+ qom_define_type!(
+-    c"test-object",
++    cstr!("test-object"),
+     TestObject,
+     TestConf,
+     ();
+@@ -37,12 +38,12 @@ qom_define_type!(
+ impl ObjectImpl for TestObject {}
+ 
+ qdev_define_type!(
+-    c"test-device",
++    cstr!("test-device"),
+     TestDevice,
+     TestConf,
+     RefCell<TestState>;
+     @extends DeviceState;
+-    @properties [qdev_prop!(bool, c"foo", TestDevice, true, foo)]
++    @properties [qdev_prop!(bool, cstr!("foo"), TestDevice, true, foo)]
+ );
+ 
+ impl TestDevice {
 -- 
 2.45.2
 
