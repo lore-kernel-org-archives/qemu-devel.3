@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E560FC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 13:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 231DAC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 13:32:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOH86-0008Pq-Gx; Mon, 01 Jul 2024 09:31:38 -0400
+	id 1sOH7w-0008Ih-Ko; Mon, 01 Jul 2024 09:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sOH7q-0008I6-6O
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 09:31:22 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1sOH7n-0008HR-TQ
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 09:31:20 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sOH7o-0005O3-GT
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 09:31:21 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2c86e3fb6e7so1744260a91.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 06:31:20 -0700 (PDT)
+ id 1sOH7l-0005Na-Ke
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 09:31:19 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-713fa1aea36so965400a12.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 06:31:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1719840679; x=1720445479; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1719840675; x=1720445475; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=t1RryP+60mMhkO8WnO7FIMUxhiFZxnyyH7/OPgo3rZg=;
- b=V6P7FiAhJM39OZUOFKjcmBxysuuAtLzBLNm3ghqcHHP3qg6YSj6OF+XHz8kwE4tr2t
- EYWiJljwr1Hu0yEPoQ+yPOQHlG8uH+OmD3PutB4X8GpqxPmZVEBeFA1291btvrdkJD+c
- Bt6o3QJNxltZyHTgrjNc9oq90Y4HnHx0sGuKdyaK9brA+0LthRAHrdik4Z3sYr3OiMIZ
- 59sP0/7i9bOi+wEy3J02ogp6IraLHDGnv/mQ9gJmBpLYDxVNrIFwWQ4oN8FYRDWeozsH
- 6abJHIxzwcUNsarK84U9X0ziypOBdAumGkYn/t/pbJfKjN0aE2MjpbPSsubxUTDYhF5m
- 6Enw==
+ bh=6TUzEiTYDYxtoBN8a40dqDmyHQkViHYBXJaMnTel9nE=;
+ b=WtQ5EsllbhugFLS8ZniB2sQG3owiA3gnZkk46tXBHz17P3OBVQCURbUGeAKzkQSKp5
+ QTONWFzv2sayT+o3z9x878vkfF66j/1do8T+Rv/eMEpigCM+P22awpvXM/WGgNfQpJHP
+ GCmpIgRafKfyFHN1WSHX1hByzOsmcB/L0VVlICaVSXDaR14Y3mAhoAkCDDk7ZQ5bbNix
+ KYZot3aO5BqvrkEu/K2jZ5IQNcFc/yX/u0wz9avRIupzJfYUt/YLTLnXCCIcbKglKO4i
+ lgnHndrbrDoMdGGuOrDB+CGvr1NFkE/u0FWRXhxmVODUVlMGXC/OUjOnviitG2ZESWTT
+ OYZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719840679; x=1720445479;
+ d=1e100.net; s=20230601; t=1719840675; x=1720445475;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=t1RryP+60mMhkO8WnO7FIMUxhiFZxnyyH7/OPgo3rZg=;
- b=NPlLozpBR0Y5EHkgOjz/sIedxnt5dvw56nHtZ/JEUGYiWyQcdCrTFJ21gxHgRWBNpO
- +Iuw5RaC9322UIxoJV9n7unkLttxoSYtb6Hi65ctD2kidM4Z9K2EyHuNySmRdnmEEUxu
- brGppQv6sKXJ7EZxK5ANHy4qqUKzfxBj8pfrnQRwpJIjkGjJ2Xb6HMUerY2ZitZ9omkc
- KpGrw3S61mXiamDTXfOO7PHWGFEInsJC0MQbeakg5faMegh5OSiP3NEL3urexOTBUkN6
- Rvt24ptFeVFGVRrhAiaVziO5P2C7XIUU8EnsQFIgyXWsWeYjjMVr9K2JRnNv4R+mhvz9
- 5Xag==
-X-Gm-Message-State: AOJu0YxAdOaLCezWzFt8c6UZbgRAAb4bAX6RmJDI9ILozQeL5ijuGQDS
- W6av3dpOEtXgUiyLLp3guYcMUtFlKoTpTYVL4wIv2rEpeCqITWj21+lFBhYl/6xQtOjhe/tDYhE
- j
-X-Google-Smtp-Source: AGHT+IH1R72NCHWtyvT6cjF3994QPDwvLOpV5wTHL4TprLIAx7QRrwQpRwu4I+azK0yqLdUKiuo5OA==
-X-Received: by 2002:a17:90a:bd86:b0:2c8:7564:7fab with SMTP id
- 98e67ed59e1d1-2c93d72e239mr2543406a91.27.1719840678414; 
- Mon, 01 Jul 2024 06:31:18 -0700 (PDT)
+ bh=6TUzEiTYDYxtoBN8a40dqDmyHQkViHYBXJaMnTel9nE=;
+ b=UzhDEj5l4rgo6JiIpabSk9rqklBOShv2UurKmXFh9NzQXRMB14pCkkdFjbluxAtHS5
+ x8PjfvXU4txXP4cozdjaaYfsJ95hm9RpywIDLUktN7Mb9MYCp1YB82OgPKBXx/KoqSaQ
+ oE64KG9KC7I5FG2m2GocVh2W8du8JxZI6Tm2XvNaH+68cG/XorVlENoAPHrDYPJVmn9L
+ e+AW+DpX0a6yPH13MCrF9CZi8XQixiV8GVOugy8jCD8sDgtG8eSlG0/nlr//WHBNjC7f
+ hDFvqrZ0ts7V3GKitt9YZlcg0AoKUPN21S8xe1IQlp8f0pHIAqwDjX0oAIu96KLxFcZm
+ h61w==
+X-Gm-Message-State: AOJu0YzCIIZS+OV+GpH4rk6c9/on2Q6GWIQFVRIA1ZHItGAEtGGZW3fF
+ FTZLYRaJ1feO08qhH8gtv6GRCHTsTlBXvkZ0jyXpZUdF6X7HmGfU3DkgZkwT/WJm8tidpUoBccP
+ 9
+X-Google-Smtp-Source: AGHT+IEibPnWg6v0pK2ZYjMH2dhvG2gANOz+c4zEmlVhpqdeWggaPjihKJCPJBLGPhK7fSPIzzmV3w==
+X-Received: by 2002:a17:90b:4c8f:b0:2c8:820:71c4 with SMTP id
+ 98e67ed59e1d1-2c93d71f424mr2787188a91.29.1719840651800; 
+ Mon, 01 Jul 2024 06:30:51 -0700 (PDT)
 Received: from grind.. ([179.193.8.43]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c91d3eb34bsm6736935a91.56.2024.07.01.06.31.15
+ 98e67ed59e1d1-2c91d3eb34bsm6736935a91.56.2024.07.01.06.30.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 06:31:18 -0700 (PDT)
+ Mon, 01 Jul 2024 06:30:51 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: ajones@ventanamicro.com,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 2/2] system/vl.c: parse all -accel options
-Date: Mon,  1 Jul 2024 10:30:38 -0300
-Message-ID: <20240701133038.1489043-3-dbarboza@ventanamicro.com>
+Subject: [PATCH 1/2] system/vl.c: do not allow mixed -accel opts
+Date: Mon,  1 Jul 2024 10:30:37 -0300
+Message-ID: <20240701133038.1489043-2-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
 References: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,41 +95,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're not honouring KVM options that are provided by any -accel option
-aside from the first. In this example:
+We're allowing multiple -accel options to be used with different
+accelerators, even though we don't have any machine that supports mixed
+acceleration.
 
-qemu-system-riscv64 -accel kvm,riscv-aia=emul (...) \ -accel
-kvm,riscv-aia=hwaccel
+In fact, it will only parse the first occurence of -accel and, aside
+from a help option (e.g. -accel help) that will always cause the process
+to print the help text, it will accept every other accel option
+regardless of being correct or not. E.g. this:
 
-'riscv-aia' will be set to 'emul', ignoring the last occurrence of the
-option that set 'riscv-aia' to 'hwaccel'.
+qemu-system-x86_64 -accel kvm -accel tcg -accel IamNotAnAccel (...)
 
-The previous change guarantees that we'll not have mixed accelerators in
-the command line, and now it's safe to activate 'merge_lists' for
-'qemu_accel_opts'. This will merge all accel options in the same list,
-allowing the 'qemu_opt_foreach()' callback in do_configure_accelerator()
-to apply each one of them in the Accel class.
+will happily boot a x86_64 KVM guest.
 
-Reported-by: Andrew Jones <ajones@ventanamicro.com>
+Do not allow for different accelerators to be used when multiple
+instances of -accel are present.
+
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 ---
- system/vl.c | 1 +
- 1 file changed, 1 insertion(+)
+ system/vl.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/system/vl.c b/system/vl.c
-index 32602e68b7..5ed9a9229f 100644
+index bdd2f6ecf6..32602e68b7 100644
 --- a/system/vl.c
 +++ b/system/vl.c
-@@ -259,6 +259,7 @@ static QemuOptsList qemu_accel_opts = {
-     .name = "accel",
-     .implied_opt_name = "accel",
-     .head = QTAILQ_HEAD_INITIALIZER(qemu_accel_opts.head),
-+    .merge_lists = true,
-     .desc = {
-         /*
-          * no elements => accept any
+@@ -3318,10 +3318,22 @@ void qemu_init(int argc, char **argv)
+                     }
+                     break;
+                 }
+-            case QEMU_OPTION_accel:
++            case QEMU_OPTION_accel: {
++                QemuOptsList *list = qemu_find_opts("accel");
++                const char *prev_accel = qemu_opt_get(QTAILQ_LAST(&list->head),
++                                                      "accel");
++
+                 accel_opts = qemu_opts_parse_noisily(qemu_find_opts("accel"),
+                                                      optarg, true);
+                 optarg = qemu_opt_get(accel_opts, "accel");
++
++                if (prev_accel && optarg && strcmp(prev_accel, optarg)) {
++                    printf("Unable to mix accelerators with multiple "
++                           "-accel options (have: '%s' and '%s')\n",
++                           prev_accel, optarg);
++                    exit(1);
++                }
++
+                 if (!optarg || is_help_option(optarg)) {
+                     printf("Accelerators supported in QEMU binary:\n");
+                     GSList *el, *accel_list = object_class_get_list(TYPE_ACCEL,
+@@ -3343,6 +3355,7 @@ void qemu_init(int argc, char **argv)
+                     exit(0);
+                 }
+                 break;
++            }
+             case QEMU_OPTION_usb:
+                 qdict_put_str(machine_opts_dict, "usb", "on");
+                 break;
 -- 
 2.45.2
 
