@@ -4,55 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3033C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 18:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1C4C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 18:44:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOLkL-0000W5-On; Mon, 01 Jul 2024 14:27:25 -0400
+	id 1sOM0O-0005ST-VW; Mon, 01 Jul 2024 14:44:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sOLkE-0000V9-EP
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 14:27:19 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <luc@lmichel.fr>)
+ id 1sOM0D-0005OM-GG; Mon, 01 Jul 2024 14:43:51 -0400
+Received: from pharaoh.lmichel.fr ([149.202.28.74])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sOLkC-0002P3-AN
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 14:27:18 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2DE5B4E6000;
- Mon, 01 Jul 2024 20:27:14 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ECeOGDawXO_I; Mon,  1 Jul 2024 20:27:11 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 7772D4E6001; Mon, 01 Jul 2024 20:27:11 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 752D9746E3B;
- Mon, 01 Jul 2024 20:27:11 +0200 (CEST)
-Date: Mon, 1 Jul 2024 20:27:11 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: qemu-devel@nongnu.org, philmd@linaro.org, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH 2/2] hw/isa/vt82c686.c: Embed i8259 irq in device state
- instead of allocating
-In-Reply-To: <CAFEAcA_tBjQrJMpjbzVUVcrTWghr4v=MHB0qpWx=xjML6ek9mg@mail.gmail.com>
-Message-ID: <4274c325-bfb9-f8f3-6801-f82ef3caa124@eik.bme.hu>
-References: <cover.1719690591.git.balaton@eik.bme.hu>
- <b70b9e72063b4dd4005bf4bc040b84f2bb617bf4.1719690591.git.balaton@eik.bme.hu>
- <CAFEAcA_tBjQrJMpjbzVUVcrTWghr4v=MHB0qpWx=xjML6ek9mg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <luc@lmichel.fr>)
+ id 1sOM0B-0001hJ-Mu; Mon, 01 Jul 2024 14:43:49 -0400
+Received: from localhost (sekoia-laptop.home.lmichel.fr [192.168.61.102])
+ by pharaoh.lmichel.fr (Postfix) with ESMTPSA id E6FFDC602A4;
+ Mon,  1 Jul 2024 20:43:43 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lmichel.fr; s=pharaoh; 
+ t=1719859424;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/t08kRa44q9W+ptTF51auBXzrEFnH8rCANtuh2eLx3c=;
+ b=Ag0hLRKTOxwRFUjsso0s7BZkHFomoTxYvOK8EFlH0r9gWatsJt13RWhkllphe5LIuOUQTa
+ M7ZA0px/4XydmOzPSAg1dp8R/6lQwhyFmOU5B+xxkd6/mO3BJPGtQcEGQ874jNnl0Rx9VG
+ i6G2bH4QGLUlICKpN5erILzUeoWGJWcPIUK/qeARZVkwbNnlZWB9uMZOiv0UyJ/qyu4hNH
+ 0tXf4Jzp8JQEbHAaA6WZ9dXX0du14Rs7xRhrCMQ9BJEAetMvvfNGBaxyPVOD6+g39gmtmV
+ YxZH8rRFycwl016bY1De2ykFXqoFGo9wITTD2faaHE8doPbaR9iRxLv25ctXHw==
+Date: Mon, 1 Jul 2024 20:43:43 +0200
+From: Luc Michel <luc@lmichel.fr>
+To: =?utf-8?B?SW7DqHM=?= Varhol <ines.varhol@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, qemu-arm@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, Damien Hedde <damien.hedde@dahe.fr>
+Subject: Re: [PATCH v4 1/3] hw/misc: Create STM32L4x5 SYSCFG clock
+Message-ID: <ZoL43zSdOE0qQ9pv@michell-laptop.localdomain>
+References: <20240622094402.244604-1-ines.varhol@telecom-paris.fr>
+ <20240622094402.244604-2-ines.varhol@telecom-paris.fr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240622094402.244604-2-ines.varhol@telecom-paris.fr>
+Received-SPF: pass client-ip=149.202.28.74; envelope-from=luc@lmichel.fr;
+ helo=pharaoh.lmichel.fr
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,65 +75,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 1 Jul 2024, Peter Maydell wrote:
-> On Sat, 29 Jun 2024 at 21:01, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>
->> To avoid a warning about unfreed qemu_irq embed the i8259 irq in the
->> device state instead of allocating it.
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>  hw/isa/vt82c686.c | 7 ++++---
->>  1 file changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
->> index 8582ac0322..834051abeb 100644
->> --- a/hw/isa/vt82c686.c
->> +++ b/hw/isa/vt82c686.c
->> @@ -592,6 +592,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ViaISAState, VIA_ISA)
->>
->>  struct ViaISAState {
->>      PCIDevice dev;
->> +
->> +    IRQState i8259_irq;
->>      qemu_irq cpu_intr;
->>      qemu_irq *isa_irqs_in;
->>      uint16_t irq_state[ISA_NUM_IRQS];
->> @@ -715,13 +717,12 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
->>      ViaISAState *s = VIA_ISA(d);
->>      DeviceState *dev = DEVICE(d);
->>      PCIBus *pci_bus = pci_get_bus(d);
->> -    qemu_irq *isa_irq;
->>      ISABus *isa_bus;
->>      int i;
->>
->>      qdev_init_gpio_out(dev, &s->cpu_intr, 1);
->>      qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
->> -    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
->> +    qemu_init_irq(&s->i8259_irq, via_isa_request_i8259_irq, s, 0);
->>      isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
->>                            errp);
->
-> So if I understand correctly, this IRQ line isn't visible
-> from outside this chip, we're just trying to wire together
-> two internal components of the chip? If so, I agree that
-> this seems a better way than creating a named GPIO that
-> we then have to document as a "not really an external
-> connection, don't try to use this" line. (We've done that
-> before I think in other devices, and it works but it's
-> a bit odd-looking.)
->
-> That said, I do notice that the via_isa_request_i8259_irq()
-> function doesn't do anything except pass the level onto
-> another qemu_irq, so I think the theoretical ideal would be
-> if we could arrange to plumb things directly through rather
-> than needing this extra qemu_irq and function. There's
-> probably a reason (order of device creation/connection?)
-> that doesn't work though.
+On 11:43 Sat 22 Jun     , Inès Varhol wrote:
+> This commit creates a clock in STM32L4x5 SYSCFG and wires it up to the
+> corresponding clock from STM32L4x5 RCC.
+> 
+> Signed-off-by: Inès Varhol <ines.varhol@telecom-paris.fr>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Philippe tried that before but was found not working. There's some history 
-that I don't remember aby more in commit 38200011319b58.
+Reviewed-by: Luc Michel <luc@lmichel.fr>
 
-Regards,
-BALATON Zoltan
+> ---
+>  include/hw/misc/stm32l4x5_syscfg.h |  1 +
+>  hw/arm/stm32l4x5_soc.c             |  2 ++
+>  hw/misc/stm32l4x5_syscfg.c         | 19 +++++++++++++++++--
+>  3 files changed, 20 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/hw/misc/stm32l4x5_syscfg.h b/include/hw/misc/stm32l4x5_syscfg.h
+> index 23bb564150..c450df2b9e 100644
+> --- a/include/hw/misc/stm32l4x5_syscfg.h
+> +++ b/include/hw/misc/stm32l4x5_syscfg.h
+> @@ -48,6 +48,7 @@ struct Stm32l4x5SyscfgState {
+>      uint32_t swpr2;
+>  
+>      qemu_irq gpio_out[GPIO_NUM_PINS];
+> +    Clock *clk;
+>  };
+>  
+>  #endif
+> diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+> index 38f7a2d5d9..fb2afa6cfe 100644
+> --- a/hw/arm/stm32l4x5_soc.c
+> +++ b/hw/arm/stm32l4x5_soc.c
+> @@ -236,6 +236,8 @@ static void stm32l4x5_soc_realize(DeviceState *dev_soc, Error **errp)
+>  
+>      /* System configuration controller */
+>      busdev = SYS_BUS_DEVICE(&s->syscfg);
+> +    qdev_connect_clock_in(DEVICE(&s->syscfg), "clk",
+> +        qdev_get_clock_out(DEVICE(&(s->rcc)), "syscfg-out"));
+>      if (!sysbus_realize(busdev, errp)) {
+>          return;
+>      }
+> diff --git a/hw/misc/stm32l4x5_syscfg.c b/hw/misc/stm32l4x5_syscfg.c
+> index a5a1ce2680..a947a9e036 100644
+> --- a/hw/misc/stm32l4x5_syscfg.c
+> +++ b/hw/misc/stm32l4x5_syscfg.c
+> @@ -26,6 +26,9 @@
+>  #include "trace.h"
+>  #include "hw/irq.h"
+>  #include "migration/vmstate.h"
+> +#include "hw/clock.h"
+> +#include "hw/qdev-clock.h"
+> +#include "qapi/error.h"
+>  #include "hw/misc/stm32l4x5_syscfg.h"
+>  #include "hw/gpio/stm32l4x5_gpio.h"
+>  
+> @@ -225,12 +228,22 @@ static void stm32l4x5_syscfg_init(Object *obj)
+>      qdev_init_gpio_in(DEVICE(obj), stm32l4x5_syscfg_set_irq,
+>                        GPIO_NUM_PINS * NUM_GPIOS);
+>      qdev_init_gpio_out(DEVICE(obj), s->gpio_out, GPIO_NUM_PINS);
+> +    s->clk = qdev_init_clock_in(DEVICE(s), "clk", NULL, s, 0);
+> +}
+> +
+> +static void stm32l4x5_syscfg_realize(DeviceState *dev, Error **errp)
+> +{
+> +    Stm32l4x5SyscfgState *s = STM32L4X5_SYSCFG(dev);
+> +    if (!clock_has_source(s->clk)) {
+> +        error_setg(errp, "SYSCFG: clk input must be connected");
+> +        return;
+> +    }
+>  }
+>  
+>  static const VMStateDescription vmstate_stm32l4x5_syscfg = {
+>      .name = TYPE_STM32L4X5_SYSCFG,
+> -    .version_id = 1,
+> -    .minimum_version_id = 1,
+> +    .version_id = 2,
+> +    .minimum_version_id = 2,
+>      .fields = (VMStateField[]) {
+>          VMSTATE_UINT32(memrmp, Stm32l4x5SyscfgState),
+>          VMSTATE_UINT32(cfgr1, Stm32l4x5SyscfgState),
+> @@ -241,6 +254,7 @@ static const VMStateDescription vmstate_stm32l4x5_syscfg = {
+>          VMSTATE_UINT32(swpr, Stm32l4x5SyscfgState),
+>          VMSTATE_UINT32(skr, Stm32l4x5SyscfgState),
+>          VMSTATE_UINT32(swpr2, Stm32l4x5SyscfgState),
+> +        VMSTATE_CLOCK(clk, Stm32l4x5SyscfgState),
+>          VMSTATE_END_OF_LIST()
+>      }
+>  };
+> @@ -251,6 +265,7 @@ static void stm32l4x5_syscfg_class_init(ObjectClass *klass, void *data)
+>      ResettableClass *rc = RESETTABLE_CLASS(klass);
+>  
+>      dc->vmsd = &vmstate_stm32l4x5_syscfg;
+> +    dc->realize = stm32l4x5_syscfg_realize;
+>      rc->phases.hold = stm32l4x5_syscfg_hold_reset;
+>  }
+>  
+> -- 
+> 2.43.2
+> 
+
+-- 
 
