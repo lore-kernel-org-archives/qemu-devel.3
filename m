@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220D4C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 03:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB96C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 03:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sO7uU-0007k4-RF; Sun, 30 Jun 2024 23:40:58 -0400
+	id 1sO7v3-0008Pr-Jh; Sun, 30 Jun 2024 23:41:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sO7uT-0007jd-H7; Sun, 30 Jun 2024 23:40:57 -0400
-Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
+ id 1sO7v2-0008Ne-09; Sun, 30 Jun 2024 23:41:32 -0400
+Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sO7uR-0006fF-Hs; Sun, 30 Jun 2024 23:40:57 -0400
+ id 1sO7uz-000803-G9; Sun, 30 Jun 2024 23:41:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1719805250; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=KNIJwiicLcM/7Wiog+PY/1oIh+MFNQW3RRxWUQTZVr4=;
- b=nIHJ72WNkfLSIjFo9Ku1YeQ3k1p0eV8J50t5lv6pCVheWlSsyvUTNnfcjB3Bme5FV6jQWwLlylUeHLPKKOORRpT+E2G9WY9hPrG2AfVA9MgeR87YX6gHppAiXBITMJvvh5JptFgTMhGE9Xn5345ExpWRE9UJVKfqoptRRP9Plog=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
+ t=1719805284; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=ijeFQ1uu3AqezMrH1y+XoG5ccQ0r77dd1yj2hPGKvOY=;
+ b=aM5NuDiB9zsqs6vmoYuPaRSjdUgGUJA58bAXAdjEzklywqEJ9R13drCkAx4o7zPmeEiiDAD9d22+DeQiaSbz8FnRLhPxJ1+NmnJLH0pLG5UaLHsxYbWlGcz/IFWSA5f2qww7CCDFP92sAb/R88sZeizsUlFSXt3Wl0SopXWFlTo=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
  DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067110;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W9YH8Qb_1719805249; 
+ TI=SMTPD_---0W9YR0Ak_1719805280; 
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W9YH8Qb_1719805249) by smtp.aliyun-inc.com;
- Mon, 01 Jul 2024 11:40:50 +0800
+ fp:SMTPD_---0W9YR0Ak_1719805280) by smtp.aliyun-inc.com;
+ Mon, 01 Jul 2024 11:41:21 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH 4/6] target/riscv: Detect sxl to set bit width for RV32 in RV64
-Date: Mon,  1 Jul 2024 11:37:20 +0800
-Message-Id: <20240701033722.954-5-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH 5/6] target/riscv: Correct mcause/scause bit width for RV32 in
+ RV64 QEMU
+Date: Mon,  1 Jul 2024 11:37:21 +0800
+Message-Id: <20240701033722.954-6-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20240701033722.954-1-zhiwei_liu@linux.alibaba.com>
 References: <20240701033722.954-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.133;
+Received-SPF: pass client-ip=115.124.30.132;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-133.freemail.mail.aliyun.com
+ helo=out30-132.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -72,66 +73,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
-Ensure correct bit width based on sxl when running RV32 on RV64 QEMU.
-This is required as MMU address translations run in S-mode.
+Ensure mcause high bit is correctly set by using 32-bit width for RV32
+mode and 64-bit width for RV64 mode.
 
 Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 ---
- target/riscv/cpu_helper.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ target/riscv/cpu_helper.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 6709622dd3..1af83a0a36 100644
+index 1af83a0a36..88a187c10a 100644
 --- a/target/riscv/cpu_helper.c
 +++ b/target/riscv/cpu_helper.c
-@@ -887,12 +887,14 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+@@ -1673,6 +1673,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+     target_ulong tinst = 0;
+     target_ulong htval = 0;
+     target_ulong mtval2 = 0;
++    int sxlen = 0;
++    int mxlen = 0;
  
-     CPUState *cs = env_cpu(env);
-     int va_bits = PGSHIFT + levels * ptidxbits + widened;
-+    int sxlen = 16UL << riscv_cpu_sxl(env);
-+    int sxlen_bytes = sxlen / 8;
- 
-     if (first_stage == true) {
-         target_ulong mask, masked_msbs;
- 
--        if (TARGET_LONG_BITS > (va_bits - 1)) {
--            mask = (1L << (TARGET_LONG_BITS - (va_bits - 1))) - 1;
-+        if (sxlen > (va_bits - 1)) {
-+            mask = (1L << (sxlen - (va_bits - 1))) - 1;
-         } else {
-             mask = 0;
-         }
-@@ -961,7 +963,7 @@ restart:
- 
-         int pmp_prot;
-         int pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
--                                               sizeof(target_ulong),
-+                                               sxlen_bytes,
-                                                MMU_DATA_LOAD, PRV_S);
-         if (pmp_ret != TRANSLATE_SUCCESS) {
-             return TRANSLATE_PMP_FAIL;
-@@ -1113,7 +1115,7 @@ restart:
-          *   it is no longer valid and we must re-walk the page table.
-          */
-         MemoryRegion *mr;
--        hwaddr l = sizeof(target_ulong), addr1;
-+        hwaddr l = sxlen_bytes, addr1;
-         mr = address_space_translate(cs->as, pte_addr, &addr1, &l,
-                                      false, MEMTXATTRS_UNSPECIFIED);
-         if (memory_region_is_ram(mr)) {
-@@ -1126,6 +1128,11 @@ restart:
-             *pte_pa = pte = updated_pte;
- #else
-             target_ulong old_pte = qatomic_cmpxchg(pte_pa, pte, updated_pte);
-+            if (riscv_cpu_sxl(env) == MXL_RV32) {
-+                old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, pte, updated_pte);
-+            } else {
-+                old_pte = qatomic_cmpxchg(pte_pa, pte, updated_pte);
-+            }
-             if (old_pte != pte) {
-                 goto restart;
-             }
+     if (!async) {
+         /* set tval to badaddr for traps with address information */
+@@ -1799,7 +1801,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         s = set_field(s, MSTATUS_SPP, env->priv);
+         s = set_field(s, MSTATUS_SIE, 0);
+         env->mstatus = s;
+-        env->scause = cause | ((target_ulong)async << (TARGET_LONG_BITS - 1));
++        sxlen = 16UL << riscv_cpu_sxl(env);
++        env->scause = cause | ((target_ulong)async << (sxlen - 1));
+         env->sepc = env->pc;
+         env->stval = tval;
+         env->htval = htval;
+@@ -1830,7 +1833,8 @@ void riscv_cpu_do_interrupt(CPUState *cs)
+         s = set_field(s, MSTATUS_MPP, env->priv);
+         s = set_field(s, MSTATUS_MIE, 0);
+         env->mstatus = s;
+-        env->mcause = cause | ~(((target_ulong)-1) >> async);
++        mxlen = 16UL << riscv_cpu_mxl(env);
++        env->mcause = cause | ((target_ulong)async << (mxlen - 1));
+         env->mepc = env->pc;
+         env->mtval = tval;
+         env->mtval2 = mtval2;
 -- 
 2.43.0
 
