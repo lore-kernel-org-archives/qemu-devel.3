@@ -4,88 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84FEBC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15A8EC3065A
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 16:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOK8I-000818-Hz; Mon, 01 Jul 2024 12:44:02 -0400
+	id 1sOKEC-0001Bp-C7; Mon, 01 Jul 2024 12:50:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOK8H-00080d-GL
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:44:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1sOKE7-0001BA-CW; Mon, 01 Jul 2024 12:50:03 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOK8E-00054E-Nj
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 12:44:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719852237;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3jSOc6PQBpFbAYlwylphH9Vs1PNer/u93oLMOfaIelU=;
- b=Cfqk6cX6UIH6iIOPdYTtBevAppFx3zd6HRrGhL5GzzrE9XZ07dh1I4F9GygjhiCEGBoaEO
- QZ9pAKbnu7YDSV/NT/ErBxd8FPrRwIMiowOTckg7T+9M/U4e0BqQD9+nUFKs/YabkH2WT4
- /rRUcym+d3e+vqNSnbmnhI/f/k0YtVI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-364--EvAQW13PhqF8tbJ20RcKQ-1; Mon, 01 Jul 2024 12:43:55 -0400
-X-MC-Unique: -EvAQW13PhqF8tbJ20RcKQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-36743ab5fb3so2136655f8f.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 09:43:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719852233; x=1720457033;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3jSOc6PQBpFbAYlwylphH9Vs1PNer/u93oLMOfaIelU=;
- b=ixPRTbOD69GHxOAgbNdp44+NXluZLIQXBOHZzS2rwLY/gveLH2hLv3LNyfTlydp+dQ
- zwLONm8tZpHBMdo8FrXZZBivh1cX7TJ2bWdtfzhYhxYWcx0yaTnMdpJygQA7799RdJi0
- TE7ODBSaWXYDg3FCyPQm9nzsco0VE2+Jl1DWCwnZnw4k7uoQrTb5VD4gNKHsx4qJaiTc
- LopjgrfboxUpliI7tGtiwTGjxggI6qneSOtrW5LUFxDLu5DPc4j46oHaI9mCWrYr+NWT
- /DwyR/DZ6/Jo3/PhUTx4s9aYbDuspwbMJuA6Db8B03Tn+lWoFH3fjiiMw+I+L41EPnHX
- P2MQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXf/YaNc1PDwrR1qz/Zx8bL5My+jlMo9XUIDQNaWwzl3Q8HHoV4Q8pJlPyMLVwkRR5Uszmm5f9lf1VcXDoQ5Uos7VLONAk=
-X-Gm-Message-State: AOJu0YwJBahOe3y5+2IRY5WoAc4Z2LZD0+XRGBd8JhbNRhMiD2uiXfOY
- BCqqfGSqbyratv/AfW3xy1mmGDWXktDQtLB+vGie7JqkDs9Dy0Tv6MBT5nJrkb8aHJFjp1fHCy1
- 9BoeIlnx/AncQ0gSYe4S1r1yx4J+acYeige3FNO6uOYJMEXkaB0nLk+97x+Jn0Gcz65mdXKvo0V
- P8ka2KGCzV9+iw/UQFnASpm2QjbQE=
-X-Received: by 2002:a05:6000:18a1:b0:366:e9f5:781b with SMTP id
- ffacd0b85a97d-36774f6cf3fmr5737508f8f.21.1719852232999; 
- Mon, 01 Jul 2024 09:43:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGc9OKrBHzF23y4yRH9eLsv+7iyjJw4J8O7AevKgtEznZuoqZV8QBm99/hXhDkszWu5vw61H3qDUErAXv+lk54=
-X-Received: by 2002:a05:6000:18a1:b0:366:e9f5:781b with SMTP id
- ffacd0b85a97d-36774f6cf3fmr5737493f8f.21.1719852232674; Mon, 01 Jul 2024
- 09:43:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sbhat@linux.ibm.com>)
+ id 1sOKE5-00073t-6f; Mon, 01 Jul 2024 12:50:03 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 461G0twG014419;
+ Mon, 1 Jul 2024 16:49:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ Juct1V7VXjoUMB3eviy6VtLHMnRw3VBBqFFdi3Wc+rw=; b=oe89fTh48ey0quej
+ e8EZaHmeY2G72KlYN11c80s7eL2u9pkj1aWzX5lIKDC5gwOGohH+l/cYEQe1Lkal
+ yzto6b8gy1Gr7++w+/SX7mgYF3mc7KlaPpVEu/ZayBoSUVGfMoZOS1yJcMxdDPXa
+ gHevZnqrOCZCD3d6/kLKJvhf3sUhLF03cBSehLVXpoOeHdb84TAwlcHKD7Mb3oWS
+ E6JnK0D5n03p4bZsx7P8bjuvCA6pDPeBsKCox/NpIwRyb2E81jIDJhKdwA5Q9dx5
+ 6uDcfjA1KdQz3Y+vOL/sqks1oglNzz/Xx9EX2wsKXeg+teNcQXgUvy0+eRERY8a+
+ wUw5zg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 403yjjr421-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Jul 2024 16:49:18 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 461GnHDK007617;
+ Mon, 1 Jul 2024 16:49:17 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 403yjjr41w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Jul 2024 16:49:17 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 461FofjL030030; Mon, 1 Jul 2024 16:49:16 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 402x3mr615-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 01 Jul 2024 16:49:16 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 461GnCJe56557830
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 1 Jul 2024 16:49:14 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 121E42004B;
+ Mon,  1 Jul 2024 16:49:12 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD35220040;
+ Mon,  1 Jul 2024 16:49:09 +0000 (GMT)
+Received: from [9.43.17.204] (unknown [9.43.17.204])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  1 Jul 2024 16:49:09 +0000 (GMT)
+Message-ID: <922a1782-8530-459c-80ba-b376c6a859e5@linux.ibm.com>
+Date: Mon, 1 Jul 2024 22:19:08 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio: container: Fix missing allocation of
+ VFIOSpaprContainer
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, harshpb@linux.ibm.com, 
+ npiggin@gmail.com
+Cc: danielhb413@gmail.com, david@gibson.dropbear.id.au,
+ alex.williamson@redhat.com, qemu-ppc@nongnu.org,
+ zhenzhong.duan@intel.com, qemu-devel@nongnu.org
+References: <171528203026.8420.10620440513237875837.stgit@ltcd48-lp2.aus.stglabs.ibm.com>
+ <11578ca8-2bb3-4504-b7b9-022c1df65942@redhat.com>
+ <cef472a4-da2c-449e-8f76-0b3e9105e194@linux.ibm.com>
+ <ba376f81-2175-4e3d-bda0-4b08b2ae5158@redhat.com>
+ <7b553db9-4d29-4cfe-8874-3c87ad862c74@linux.ibm.com>
+ <449a8a0a-6149-45af-bfa0-bf7fb29e27c6@redhat.com>
+ <65126343-344e-47a0-bf63-7df43b0051ca@linux.ibm.com>
+ <8ba04617-f18d-4c84-8bed-d3ddfa87d5b7@redhat.com>
+Content-Language: en-US
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+In-Reply-To: <8ba04617-f18d-4c84-8bed-d3ddfa87d5b7@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Sh9dOQofPtw9fWHt05CMQ5bVIFgVNKjB
+X-Proofpoint-ORIG-GUID: 2sXqiKUk7sqRtXN5_firVHVCx-O9AWd-
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
- <20240701133038.1489043-3-dbarboza@ventanamicro.com>
- <5e0c57ef-d06d-4cdc-8d5b-3adec8263c5f@linaro.org>
-In-Reply-To: <5e0c57ef-d06d-4cdc-8d5b-3adec8263c5f@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 1 Jul 2024 18:43:40 +0200
-Message-ID: <CABgObfZzVN+CuCpYOpLqYERht_ipk4Xv_oydWi59WytyQtddsA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] system/vl.c: parse all -accel options
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org,
- ajones@ventanamicro.com, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-01_16,2024-07-01_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0
+ impostorscore=0 adultscore=0 priorityscore=1501 suspectscore=0 mlxscore=0
+ spamscore=0 mlxlogscore=999 lowpriorityscore=0 phishscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
+ definitions=main-2407010124
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=sbhat@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,40 +126,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 1, 2024 at 4:34=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On 6/28/24 4:07 PM, Cédric Le Goater wrote:
+> ...
+>
+>> Could you clarify which tree you are referring to ? I see his tree
+>>
+>> https://github.com/awilliam/tests is bit old and updated recently, 
+>> however
+>>
+>> I have been using those tests for my unit testing.
+>
+> Yes, this tree.
+>
+Thanks!
+> ...
+>
+>> This went through cycles of breakage and fixes. It worked on 5.18(not 
+>> sure
+>>
+>> about older ones before that), and broke afterwards. Recently fixed
+>>
+>> and working from 6.4, broken on 6.7. Fixed and working in 6.8
+>>
+>> onwards now.
+>
+> Good. It should be fixed in the next debian.
+>
+>
+>> Yes, TCG too works, missed to mention.
+>
+> and a TCG guest under an intel host ? This used to work.
+>
 
-In principle, a Reviewed-by tag is just stating that you don't know of
-any issues that would prevent the patch being included. However, as a
-frequent participant to the project, your Reviewed-by tag carries some
-weight and, to some extent, it is also a statement that you understand
-the area being modified.  A Reviewed-by from an experienced
-contributor may even imply that you could take the patch in one of
-your pull requests. (*) That makes it even more important to
-understand the area.
-
-I would expect that anyone with an understanding of command line
-parsing would know 1) what -accel kvm -accel tcg does, and 2) what
-.merge_lists does; and this would be enough to flag an issue
-preventing the patch from being included.
-
-To be clear, I don't expect reviews to be perfect. But in this case
-I'm speaking up because the patch is literally a one line declarative
-change, and the only way to say "I've reviewed it" is by understanding
-the deeper effects of that line.
-
-Also, I think it's fair that the submitter didn't spot the problem;
-it's okay to send out broken patches, that's part of the learning
-experience. :)
-
-Paolo
-
-(*) as opposed to Acked-by, where your review probably has been more
-conceptual than technical, and that you don't really want to take the
-patch in a pull request.
+Yes. pSeries TCG guest on intel host works too.
 
 
-Paolo
+Regards,
+
+Shivaprasad
+
 
 
