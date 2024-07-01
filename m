@@ -4,93 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2979AC41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D9CC2BD09
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 10:33:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOEL8-0002Oq-1N; Mon, 01 Jul 2024 06:32:54 -0400
+	id 1sOEKf-0002Ie-Jo; Mon, 01 Jul 2024 06:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOEL6-0002OJ-86
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 06:32:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOEL3-0004VD-I3
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 06:32:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719829967;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=x4BqsedlPzbO6bxocv2wV9TtkbK+PMbaG7L4xZpMHBk=;
- b=OKy9C6ijMJ8eyjmnUNKm6ws1xckYC+gAhn9ZT27b5Tt6PYej0QaiBizqVjIk34gsuQJQPA
- 7mk3TE1tMXzf/DNnytGEXs0tDlT1fF/fTTlkxEJFURHzibfOvvsX8rsNiuMPnlKcn63qrK
- 38qgCEveFD3RDB1rQYs8qAOr9L4wZj0=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-388-xSqFsi6gNLSXTRF5_-lWxg-1; Mon, 01 Jul 2024 06:32:45 -0400
-X-MC-Unique: xSqFsi6gNLSXTRF5_-lWxg-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2ee5a98e5fdso23703031fa.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 03:32:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sOEKZ-0002Fw-R9
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 06:32:21 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sOEKY-0004PJ-3y
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 06:32:19 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1f9b364faddso14557305ad.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 03:32:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1719829936; x=1720434736;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LaKMDmSJyDBeKwe5zEq/XIaHPyFkoDGd40m3meJj5V8=;
+ b=cdbzZySKiqD9BD/b7Fv57S0Zq68RkXRRtRy5gyq3YAhzx08J2nLnPjTL1XqlCrncy0
+ nqv/wBtlmsfuM8MEErhfUuanfcPgCANdJ+5sMG/ZQloRchdcReos9k3adZm8pyBZrDb/
+ ZaS0TVT73LiKdNmgIixOzucMIN7TupR6wJTskt7A+dS2mh7F7oDImWT9qG4793GWqgoY
+ nDMqepT8hGaLciywbvIOz4Emsl2YEluGuPtq79zKRbSe7ThhCmr8O0+5Gk33AeCkWI3G
+ SZYgXlf1aENNIfkoFBmUCGtJndCE69Be3XRrPXtKzGxZ49tZ7+tobqisQ+fFX3CaP0Ve
+ b7QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719829963; x=1720434763;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1719829936; x=1720434736;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x4BqsedlPzbO6bxocv2wV9TtkbK+PMbaG7L4xZpMHBk=;
- b=eFvLA+XVYu2PWxqJsYeghvoY/J6VEV5VFa+p5FV3OGh8O0DbTuvbkL2MDoDe48dMTQ
- UJeZ6Yz8K0QeONrNIeXxThCcJmnlRipytb4I2adVPHTAiQbV+DiKhma0+aBAbZTini5C
- RdgQJjZ4kRwiwrEoB0SXJcxe3J8OgwfRz/Gdq7kIwIViBXNME0AvJ7oG+/ISqmjXcsR4
- XY5oQfhcWzFW+XnQQl6cm1v0zuyQZB0j2nTXPekraeJPFrnb5AuhfAGOOJLZRjNt3lHR
- Kf/gfdF1NdTn2BsJ+vFEEgxD+wf0x7OdZwlhmFY5hZhSen5Onlb+PtdL3xxGtI5sB7GZ
- Geyg==
+ bh=LaKMDmSJyDBeKwe5zEq/XIaHPyFkoDGd40m3meJj5V8=;
+ b=v8XcFMC2mUQHMIQfUa86sfWiEK2dYXBGaqDv/CeihcCwl4cSXBmqQiawIbbY/3cH+i
+ 1/kwkAK0fpptiJ1wxZ+VLOOGxvM3zMCQIJIwFqi8gZ1ILoNB4r5l5g4FY90pqvw0Jqha
+ 4P2EmjtT+fEGoZyuGYYPEXDJMN+nHZryPnMsCIk8qc07wwgxOqSfPT9OFp2Ib4GNFhg9
+ 36afsY81GCsl+PMfyudDLjD+QflfkBtlO6jLtTL332gyJNcfRW27p1+etpipagw7+f68
+ 7aY63VTlHKBr+Ca+GWUPD3OL3t/Wwdgs0voYPXmwhcb9zK3syqLsIJLG058bnYONnv6x
+ YG8w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWwA9ppRNEJjFnHMjd1eNJTiWddVCBiFqNBP+yO76qVHzu7IfQz802IHZtb8gIz1AL4NAmEFzxiurUnXC4xdGfHPvxVhco=
-X-Gm-Message-State: AOJu0YxbkQqVnp5w8HJZ9GHvOp6nXAPCirLupz5oRL+PpnaDJtxV1AcF
- 6dWuFHQBORl0ELowxxrRQiUhEleG5VjrZH2qhASogYq/Ez854qEW5bfb4xe0VH9/eAErbeJIYbs
- +hMZxtgp2RHM9FJjWB0dyXDXPZ/m1VVjEEYCBqjqkzt5exo9Cp5fSLjZTOien
-X-Received: by 2002:a2e:8684:0:b0:2ec:522f:6443 with SMTP id
- 38308e7fff4ca-2ee5e6ba578mr29788261fa.33.1719829963668; 
- Mon, 01 Jul 2024 03:32:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHrAs0j/XF0GfSBRu28VMGm3p8/McIQc61OSL1xcFXMiWRtJQNex0sDJgYClDsxL9gReUYKZw==
-X-Received: by 2002:a2e:8684:0:b0:2ec:522f:6443 with SMTP id
- 38308e7fff4ca-2ee5e6ba578mr29788061fa.33.1719829962761; 
- Mon, 01 Jul 2024 03:32:42 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1fc:1777:cc97:5c98:fa23:6d8a])
+ AJvYcCVINRtBHurmUfjP64T+05Hfw8z+ukXj+tgwa3trO6pwI7Vgim48k+digqjETMuEqicPTtcvLd1i5+K/OSVP+992TkxF0WA=
+X-Gm-Message-State: AOJu0YwgAZs6ut+RuBDcHKsmxCadw6/rsCuO9j+iYyZPLaMPZp4gv4eE
+ si8kAXLu7yK+wIpJr4lvu6e940nJUsDmty2DPoeREh6/WGFhicd3ZIdjKCtQHdk=
+X-Google-Smtp-Source: AGHT+IEKmVqkY2e8wsen9HhuYMx8+Mym0zdEZOfbKZBz/hhr4wDZgrMJTesTt5cSS4dIaQpKY4F2aw==
+X-Received: by 2002:a17:90b:3787:b0:2c7:f3de:27ef with SMTP id
+ 98e67ed59e1d1-2c93d7b13a6mr2604313a91.42.1719829936172; 
+ Mon, 01 Jul 2024 03:32:16 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e0b7csm9623615f8f.49.2024.07.01.03.32.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 03:32:42 -0700 (PDT)
-Date: Mon, 1 Jul 2024 06:32:38 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org,
- jasowang@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- qemu-stable@nongnu.org, Xoykie <xoykie@gmail.com>,
- Lei Yang <leiyang@redhat.com>
-Subject: Re: [PATCH] virtio: remove virtio_tswap16s() call in
- vring_packed_event_read()
-Message-ID: <20240701063129-mutt-send-email-mst@kernel.org>
-References: <20240701075208.19634-1-sgarzare@redhat.com>
- <CAJaqyWffdg6jz-+_1_tZApLTWs362KQYAMkPHttP51s7v07tEw@mail.gmail.com>
+ 98e67ed59e1d1-2c91d3d6179sm6415163a91.48.2024.07.01.03.32.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Jul 2024 03:32:15 -0700 (PDT)
+Message-ID: <a2bc1690-c539-4f85-abaf-7284047acc94@daynix.com>
+Date: Mon, 1 Jul 2024 19:32:10 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 04/15] hw/isa/vt82c686: Define a GPIO line between
+ vt82c686 and i8259
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
+References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+ <20240627-san-v2-4-750bb0946dbd@daynix.com>
+ <1e00690f-5c1e-671f-3ba4-57f16eaa9fc4@eik.bme.hu>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <1e00690f-5c1e-671f-3ba4-57f16eaa9fc4@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJaqyWffdg6jz-+_1_tZApLTWs362KQYAMkPHttP51s7v07tEw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,55 +113,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 01, 2024 at 11:53:34AM +0200, Eugenio Perez Martin wrote:
-> On Mon, Jul 1, 2024 at 9:52 AM Stefano Garzarella <sgarzare@redhat.com> wrote:
-> >
-> > Commit d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-> > switched using of address_space_read_cached() to virito_lduw_phys_cached()
-> > to access packed descriptor event.
-> >
-> > When we used address_space_read_cached(), we needed to call
-> > virtio_tswap16s() to handle the endianess of the field, but
-> > virito_lduw_phys_cached() already handles it internally, so we no longer
-> > need to call virtio_tswap16s() (as the commit had done for `off_wrap`,
-> > but forgot for `flags`).
-> >
-> > Fixes: d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-> > Cc: jasowang@redhat.com
-> > Cc: qemu-stable@nongnu.org
-> > Reported-by: Xoykie <xoykie@gmail.com>
-> > Link: https://lore.kernel.org/qemu-devel/CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com
-> > Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+On 2024/06/29 22:08, BALATON Zoltan wrote:
+> On Thu, 27 Jun 2024, Akihiko Odaki wrote:
+>> This fixes qemu_irq array leak.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>> hw/isa/vt82c686.c | 7 ++++---
+>> 1 file changed, 4 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+>> index 8582ac0322eb..629d2d568137 100644
+>> --- a/hw/isa/vt82c686.c
+>> +++ b/hw/isa/vt82c686.c
+>> @@ -715,13 +715,14 @@ static void via_isa_realize(PCIDevice *d, Error 
+>> **errp)
+>>     ViaISAState *s = VIA_ISA(d);
+>>     DeviceState *dev = DEVICE(d);
+>>     PCIBus *pci_bus = pci_get_bus(d);
+>> -    qemu_irq *isa_irq;
+>> +    qemu_irq isa_irq;
+>>     ISABus *isa_bus;
+>>     int i;
+>>
+>>     qdev_init_gpio_out(dev, &s->cpu_intr, 1);
+>>     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
+>> -    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
+>> +    qdev_init_gpio_in_named(dev, via_isa_request_i8259_irq, "i8259", 1);
 > 
-> Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-> 
-> I think it would be great to test the patches using a big endian host
-> just in case.
-> 
-> Thanks!
+> The chip has no such pin so this is a QEMU internal connection that I 
+> think should not be modelled with a named gpio. I think we really need a 
+> function to init a qemu_irq (for now we only have one that also 
+> allocares it) so then we can put this in ViaISAState and init in place. 
+> I'll make a patch.
 
-I think we really should move to using sparse tags for endian-ness,
-like Linux does, and away from swap calls.
+According to qdev_pass_gpios(), it is valid to have a GPIO line even if 
+a QOM device to be connected with the GPIO line is actually included in 
+one chip package. I didn't use qdev_pass_gpios() because it cannot 
+expose a subset of the GPIO array.
 
-
-> > ---
-> >  hw/virtio/virtio.c | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> > index 893a072c9d..2e5e67bdb9 100644
-> > --- a/hw/virtio/virtio.c
-> > +++ b/hw/virtio/virtio.c
-> > @@ -323,7 +323,6 @@ static void vring_packed_event_read(VirtIODevice *vdev,
-> >      /* Make sure flags is seen before off_wrap */
-> >      smp_rmb();
-> >      e->off_wrap = virtio_lduw_phys_cached(vdev, cache, off_off);
-> > -    virtio_tswap16s(vdev, &e->flags);
-> >  }
-> >
-> >  static void vring_packed_off_wrap_write(VirtIODevice *vdev,
-> > --
-> > 2.45.2
-> >
-
+Regards,
+Akihiko Odaki
 
