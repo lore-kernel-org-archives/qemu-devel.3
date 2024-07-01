@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC95C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44FC7C3065A
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOApe-00061k-4Y; Mon, 01 Jul 2024 02:48:10 -0400
+	id 1sOAra-0006pv-Ib; Mon, 01 Jul 2024 02:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sOApb-00061V-9B; Mon, 01 Jul 2024 02:48:08 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sOApZ-0005f1-5r; Mon, 01 Jul 2024 02:48:07 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F162875A39;
- Mon,  1 Jul 2024 09:47:54 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9A413FB19E;
- Mon,  1 Jul 2024 09:48:02 +0300 (MSK)
-Message-ID: <3394a8f2-0bab-4842-bf94-c15b2fa67a2f@tls.msk.ru>
-Date: Mon, 1 Jul 2024 09:48:02 +0300
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sOArW-0006pI-Ia
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:50:09 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1sOArG-0000Km-FX
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:50:05 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a72459d8d6aso243645666b.0
+ for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 23:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719816588; x=1720421388; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=aLFY5bTO8hv207XcrxqvpaVU3KIVeCAECo1Unqifq+s=;
+ b=M5h528g9k0dV0aoW2r3907h05b1iEF73QzzTnm4R9zZIyeGJTZW6PnKLZ9nI2M4/fQ
+ krAMypE9PzYFCEP2JGJ2a37n/iXelQ5b6vBdGWUeeppKdgXi2HE1i/8EFe+UY+6PX65X
+ 0n3CaQScTl8ZWK5layMlRXTBILpRGynkEJPoCTVw/1myOErLwYvklmlDV7yev72Bg0K8
+ VbdV3c+otvOO217CIats9cXfuMraHTeYgSJfSS8zvqO76J203KZoO0SBSoso4ytQc/f+
+ +eQV0lL/PVNolh0werBKnybTDPpe30XVix4ZuN4nyLHxdXwGAVWi4OgFzJLcqTtFPwRV
+ D+ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719816588; x=1720421388;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aLFY5bTO8hv207XcrxqvpaVU3KIVeCAECo1Unqifq+s=;
+ b=om6mFKhsrRqItAC2nPHrnkL0DYC1zpsnD8NxZmc0e1a0Q02CSBeNGJT9uaVcjuRF0i
+ 08klYBd4P6CfHk6al+gixMcGBzHo/t43q2Ns1BDY0Yjx4Q9TFUEhn27L5UW9dG4soGjb
+ 8d/BUXbe+y2xNOuQUMG4WL2UJNmfGQWy6XnkNSkcGJXhUvk7AM9vkyW7S+GwQPZDMPAp
+ UMAAYd21nNXdNpmVg0ihu1DdPAr3B63k13p0Vsy36AYqGxjwCvhSbipwKJrOKBTK+Vv4
+ 3nnLDPA3l72yme6wcqL9LwNOwcOr00KMg/oHEBlamPLA967X4ulcR6R9jTiaxkPfRJeZ
+ 9PfA==
+X-Gm-Message-State: AOJu0YxS5U34dpdrEYbqrgj98Dz7UNdtxdKRIBnInbG9fCmCQ1WHNzMN
+ ePcVqZSSGP6csnLJeadtT/Dzgi2ZNtZ05y8XUP921AXw4I8v4qyJUpdWc9HhhA4=
+X-Google-Smtp-Source: AGHT+IFhhPMaV5vdiDzICpOE9oOD7878IZ7dpyu29bSzUax/VjmdRl7UuNJmlT5w0dsAudm4iWM4VQ==
+X-Received: by 2002:a17:906:db0b:b0:a6f:e819:da9c with SMTP id
+ a640c23a62f3a-a751444dab8mr380195766b.43.1719816587964; 
+ Sun, 30 Jun 2024 23:49:47 -0700 (PDT)
+Received: from [192.168.200.106] (83.8.74.165.ipv4.supernova.orange.pl.
+ [83.8.74.165]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a72aafb3c2esm304873366b.91.2024.06.30.23.49.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 30 Jun 2024 23:49:47 -0700 (PDT)
+Message-ID: <ca463afe-486f-4590-acb5-a61265cbbd37@linaro.org>
+Date: Mon, 1 Jul 2024 08:49:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] i386/cpu: fixup number of addressable IDs for
- processor cores in the physical package
-To: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, xieyongji@bytedance.com, imammedo@redhat.com,
- zhao1.liu@intel.com, qemu-stable@nongnu.org,
- Guixiong Wei <weiguixiong@bytedance.com>,
- Yipeng Yin <yinyipeng@bytedance.com>
-References: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
+Subject: Re: [PATCH v3 1/2] tests/avocado: update firmware for sbsa-ref
+To: Ard Biesheuvel <ardb@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Ard Biesheuvel <ardb+tianocore@kernel.org>,
+ Rebecca Cran <rebecca@bsdio.com>
+References: <20240620-b4-new-firmware-v3-0-29a3a2f1be1e@linaro.org>
+ <20240620-b4-new-firmware-v3-1-29a3a2f1be1e@linaro.org>
+ <CAMj1kXGb9xVQ5E3oK_QX+3hKkMfCoA9jF5jkEeG6Eq9+zbHPHA@mail.gmail.com>
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Content-Language: pl-PL, en-GB, en-HK
+Organization: Linaro
+In-Reply-To: <CAMj1kXGb9xVQ5E3oK_QX+3hKkMfCoA9jF5jkEeG6Eq9+zbHPHA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,93 +105,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-11.06.2024 06:23, Chuang Xu wrote:
-> When QEMU is started with:
-> -cpu host,host-cache-info=on,l3-cache=off \
-> -smp 2,sockets=1,dies=1,cores=1,threads=2
-> Guest can't acquire maximum number of addressable IDs for processor cores in
-> the physical package from CPUID[04H].
+W dniu 30.06.2024 o 16:37, Ard Biesheuvel pisze:
+> On Thu, 20 Jun 2024 at 12:20, Marcin Juszkiewicz
+> <marcin.juszkiewicz@linaro.org> wrote:
+>>
+>> Update firmware to have graphics card memory fix from EDK2 commit
+>> c1d1910be6e04a8b1a73090cf2881fb698947a6e:
+>>
+>>      OvmfPkg/QemuVideoDxe: add feature PCD to remap framebuffer W/C
+>>
+>>      Some platforms (such as SBSA-QEMU on recent builds of the emulator) only
+>>      tolerate misaligned accesses to normal memory, and raise alignment
+>>      faults on such accesses to device memory, which is the default for PCIe
+>>      MMIO BARs.
+>>
+>>      When emulating a PCIe graphics controller, the framebuffer is typically
+>>      exposed via a MMIO BAR, while the disposition of the region is closer to
+>>      memory (no side effects on reads or writes, except for the changing
+>>      picture on the screen; direct random access to any pixel in the image).
+>>
+>>      In order to permit the use of such controllers on platforms that only
+>>      tolerate these types of accesses for normal memory, it is necessary to
+>>      remap the memory. Use the DXE services to set the desired capabilities
+>>      and attributes.
+>>
+>>      Hide this behavior under a feature PCD so only platforms that really
+>>      need it can enable it. (OVMF on x86 has no need for this)
+>>
+>> With this fix enabled we can boot sbsa-ref with more than one cpu core.
+>>
 > 
-> When creating a CPU topology of 1 core per package, host-cache-info only
-> uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
-> resulting in a conflict (on the multicore Host) between the Guest core
-> topology information in this field and the Guest's actual cores number.
-> 
-> Fix it by removing the unnecessary condition to cover 1 core per package
-> case. This is safe because cores_per_pkg will not be 0 and will be at
-> least 1.
-> 
-> Fixes: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
-> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
-> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
-> ---
->   target/i386/cpu.c | 6 ++----
->   1 file changed, 2 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index bc2dceb647..b68f7460db 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -6426,10 +6426,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->               if (*eax & 31) {
->                   int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
->   
-> -                if (cores_per_pkg > 1) {
-> -                    *eax &= ~0xFC000000;
-> -                    *eax |= max_core_ids_in_package(&topo_info) << 26;
-> -                }
-> +                *eax &= ~0xFC000000;
-> +                *eax |= max_core_ids_in_package(&topo_info) << 26;
->                   if (host_vcpus_per_cache > threads_per_pkg) {
->                       *eax &= ~0x3FFC000;
->   
+> This requires an explanation: what does the number of CPU cores have
+> to do with the memory attributes used for the framebuffer?
 
-In qemu 9.0, the context is a bit different here:
+I have no idea. Older firmware was hanging on several systems but was 
+passing in QEMU tests. After closer looking I noticed that Avocado tests 
+run with "-smp 1" and pass.
 
+Checked failing system with "-smp 1" and it worked. In meantime you have 
+fixed problem in EDK2.
 
-             if (*eax & 31) {
-                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
-                 int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
-                 if (cs->nr_cores > 1) {
-                     *eax &= ~0xFC000000;
-                     *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
-                 }
-                 if (host_vcpus_per_cache > vcpus_per_socket) {
-
-Ie, no max_core_ids_in_package(), cores_per_pkg etc, introduced in
-v9.0.0-790-gf602eb925a "i386/cpu: Use CPUCacheInfo.share_level to encode
-CPUID[4]" and nearby.
-
-Am I right the above change becomes
-
-              if (*eax & 31) {
-                  int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
-                  int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
--                if (cs->nr_cores > 1) {
--                    *eax &= ~0xFC000000;
--                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
--                }
-+                *eax &= ~0xFC000000;
-+                *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
-                  if (host_vcpus_per_cache > vcpus_per_socket) {
-                      *eax &= ~0x3FFC000;
-                      *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
-
-in 9.0 -- in other words, just remove the nr_cores condition check
-and do the *eax assignment unconditionally ?
-
- From the patch description it seems like it is, but I thought I'd
-ask anyway :)
-
-Thanks,
-
-/mjt
-
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+So yes, updating firmware may look like hiding a bug. Which I do not 
+know how to track (I can build and test QEMU, but going into its 
+internals is something I never done).
 
 
