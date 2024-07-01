@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CD6C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 764B7C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOIq6-0005mU-KS; Mon, 01 Jul 2024 11:21:10 -0400
+	id 1sOIsL-0006cj-Rv; Mon, 01 Jul 2024 11:23:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOIq4-0005mJ-CO
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:21:09 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sOIsK-0006ca-0L
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:23:28 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOIq1-0001Ya-OH
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:21:08 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2ec5fad1984so43545241fa.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 08:21:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sOIsI-0001oG-75
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:23:27 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-7041053c0fdso1478452b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 08:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719847263; x=1720452063; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719847404; x=1720452204; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=R97xohoH3K3kQGY1LMsX6+rQpWApjYKOmYEihReXYNY=;
- b=M0mpjoyXvYMxFf7f3g6PQP8ul5hvah8lhLROEsTf1cH1wD5yg5KE3C4VCnoT3fT7+l
- bmsCfvANIuZTb16kKr+G8I60LkU+ALfiX1ZIn2O0bl9ioVN/O2QRFVR49IogAqB5r7oN
- d4Osz7NdsAsXkREqY1ak/OaJGY21DaoTCHj70bkFit1Zh5iXvxsvjmT5pIvf9Q9Z55Ss
- fgQjaCgIrYxyqvivhJj20drdGToZ/IUR5+C8ye5W567A3nZQc8OWZzv+92LY/iqUOgLq
- IqeIvm31+r8KIkvSP1nMj+w1d86usDvWo+FkiJGExzGqi6BeKGBxm5/EP+v/VtvilFtG
- WQxA==
+ bh=9f0RYb7pS1bHCtmNp9F9Zj9h6sC3NgYnmgD0fd62l7g=;
+ b=Ti6eJ5tZsCYG2yrYRRYyNce6CNmrgUd1JWygJKNZymejjMOnLgd8gR/fTnIfn8jR7t
+ pPngYkNooY1nkoAk7gvuFJAtDNTc+4XsHvfOufL6/0npiOBf1ZFONp455LqaDc+pFFyU
+ qbrHuUwUG2m5bExe5Y+Iowqwtf9fnMi7FeFa0ZIyNy56czGErjBAm41mDDmEB83mQjB7
+ xnifmEzJn3aznWNHcTftJNwM3ryMp/KHU5i84PpjBOrtmCOF/izNiU+ZBG+Uz2bXpZEG
+ bOmdykJGYndHgZXWFwlNSHKRsIecPHWusM6VbAzNWMVQob9bIQE9CgnlQbjdTT3NdJr3
+ UEIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719847263; x=1720452063;
+ d=1e100.net; s=20230601; t=1719847404; x=1720452204;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R97xohoH3K3kQGY1LMsX6+rQpWApjYKOmYEihReXYNY=;
- b=wMV1cHO3dwIE9JfeDQEiIiNsI945nWOSDYH0wdTCEIETtRA/eVHeSOUWG6+fVZzImX
- nt0ekTioKeK98lJkrz2YfO/UvMQGGlH7nqTgbdawFXqxEjAUGbRoeXMfVLMI6ggCMMvp
- iLEwN6ly+2suTSzYh30mpnG1iwnOQinFrjaLLmFuSvCucUABmaGx/XgDTAgXChX90LPZ
- EiZIoypZkrcC9zPbGTc8txErSjakQkASqtBcEw3p90jva+U8PqXBfhlGT2XgmY851QnO
- d3xjyhsel9C1Kwz7aJ3ZLixZpGF09cstiY1UEKgEGk88BGbz+6sOyMBEBbZ5Vk9QPkK1
- fwzA==
-X-Gm-Message-State: AOJu0YzheiFiWa2hnD9ucsJmptWcyoJOhGn2VH1KN/ISPoLCJaBeHwz3
- nIHyud15WiugmdoIoSoZddfUlfe2Q2lmwHWXmfGaqnxufETRhj95jI+4vkEqFhs=
-X-Google-Smtp-Source: AGHT+IGio2hipHzpGIecEqxYlggK0QAJLEtCRVSxKEtXT7BYb/c6Of8HLpF1Ah9+LCjEriDZiQFUtw==
-X-Received: by 2002:a05:6512:ad2:b0:52c:df4e:3343 with SMTP id
- 2adb3069b0e04-52e8266ee75mr3730528e87.16.1719847263063; 
- Mon, 01 Jul 2024 08:21:03 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.177.159])
+ bh=9f0RYb7pS1bHCtmNp9F9Zj9h6sC3NgYnmgD0fd62l7g=;
+ b=MulOMhPMwrtqfEEwgvsXZUhuYRyjkO7ADUe3Fpv82N5vIzVgw5DrQB7ieINMsZ3GWL
+ WKyBiWw6NiuPlTk2tAjsrcoCRhUtrxQjQD4prXc5o12AWfmy/Dckn1phEf2kswlDc8x3
+ goQUaJ7X+zsl6M2Z7yDGdlOZAv6UiV82RyonWG9U+bqRjYumBSjfPz/8rUVqDHz5r/No
+ CBMjnBLCw/+v3ln/qgNxkYZnTdQHFXAYYTisqNTQp9eBTH52a7Dg1VevWzSIGqzQqj9h
+ AjN7COBhCjYp1X1fY/KgVJqdMizOLhTMNFrGkFXQkXjjlX/Rim+JyVfL5Zh+WYhJ8Zk9
+ 1J9w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWV9FKr4DVKSJbiN6pP0gLt5lDkYLUiuBWyi7FXJcNX7rrh83EWb1zE0gxbogv6htRF2OpCEzPV3zAvDo8e9i9iKm+j7cE=
+X-Gm-Message-State: AOJu0Yzi/vYAdJhiy8QGVAgWT1ubsu4Z/tHZzaBLmExWQAnkI/EGPKYM
+ LcciT9vUjERMbBVxkj1nc9ozxX0N5cYeVfwFUYuS1gPOHd2LaRzshkbhW+BIwpdmA5KRx7Vq8ad
+ h
+X-Google-Smtp-Source: AGHT+IFFvscRH6ufDksHuqGrQFQQ2Rs0daSzVIAUNWEMO5PGG603Bvy1nEV5R0qsBLtlA+0n+6KAsw==
+X-Received: by 2002:a05:6a00:10c8:b0:708:944:2316 with SMTP id
+ d2e1a72fcca58-70aaaf350f7mr4862563b3a.34.1719847404138; 
+ Mon, 01 Jul 2024 08:23:24 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b09a073sm157222725e9.32.2024.07.01.08.21.01
+ d2e1a72fcca58-708044ac424sm6617040b3a.161.2024.07.01.08.23.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jul 2024 08:21:02 -0700 (PDT)
-Message-ID: <68aedaef-407b-40cf-9da3-6c139df47805@linaro.org>
-Date: Mon, 1 Jul 2024 17:21:00 +0200
+ Mon, 01 Jul 2024 08:23:23 -0700 (PDT)
+Message-ID: <522ccd9b-8551-49a9-ac01-0c26776a3d57@linaro.org>
+Date: Mon, 1 Jul 2024 08:23:21 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hvf: Drop ifdef for macOS versions older than 12.0
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240629-macos-v1-0-6e70a6b700a0@daynix.com>
- <20240629-macos-v1-1-6e70a6b700a0@daynix.com>
+Subject: Re: [PATCH 1/2] system/vl.c: do not allow mixed -accel opts
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: ajones@ventanamicro.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
+ <20240701133038.1489043-2-dbarboza@ventanamicro.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240629-macos-v1-1-6e70a6b700a0@daynix.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240701133038.1489043-2-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,23 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/6/24 08:24, Akihiko Odaki wrote:
-> macOS versions older than 12.0 are no longer supported.
+On 7/1/24 06:30, Daniel Henrique Barboza wrote:
+> We're allowing multiple -accel options to be used with different
+> accelerators, even though we don't have any machine that supports mixed
+> acceleration.
 > 
-> docs/about/build-platforms.rst says:
->> Support for the previous major version will be dropped 2 years after
->> the new major version is released or when the vendor itself drops
->> support, whichever comes first.
+> In fact, it will only parse the first occurence of -accel and, aside
+> from a help option (e.g. -accel help) that will always cause the process
+> to print the help text, it will accept every other accel option
+> regardless of being correct or not. E.g. this:
 > 
-> macOS 12.0 was released 2021:
-> https://www.apple.com/newsroom/2021/10/macos-monterey-is-now-available/
+> qemu-system-x86_64 -accel kvm -accel tcg -accel IamNotAnAccel (...)
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> will happily boot a x86_64 KVM guest.
+> 
+> Do not allow for different accelerators to be used when multiple
+> instances of -accel are present.
+> 
+> Cc: Paolo Bonzini<pbonzini@redhat.com>
+> Cc: Thomas Huth<thuth@redhat.com>
+> Signed-off-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
 > ---
->   accel/hvf/hvf-all.c   |  3 ---
->   target/i386/hvf/hvf.c | 23 +----------------------
->   2 files changed, 1 insertion(+), 25 deletions(-)
+>   system/vl.c | 15 ++++++++++++++-
+>   1 file changed, 14 insertions(+), 1 deletion(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+We use '-accel kvm -accel tcg' to allow kvm to fail (e.g. no /dev/kvm permission) and 
+proceed with tcg.
 
+This patch will cause testsuite failures.
+
+
+r~
 
