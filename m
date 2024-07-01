@@ -4,71 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B5A9C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33AE2C2BD09
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:07:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOCwL-0007vB-KO; Mon, 01 Jul 2024 05:03:13 -0400
+	id 1sOCwJ-0007uP-CV; Mon, 01 Jul 2024 05:03:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOCsI-0005au-Ho
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:59:02 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1sOCrd-0004xV-BZ
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:58:23 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOCsF-00077t-5s
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:59:00 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5854ac8168fso2979431a12.2
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 01:58:58 -0700 (PDT)
+ id 1sOCra-0006j8-DS
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:58:20 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-57d20d89748so2989727a12.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 01:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719824337; x=1720429137; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719824296; x=1720429096; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=l2lyDssl4G6ryHXDn9OaZUeP+3jqeJ+ldt2WC0u/TIc=;
- b=g+g6FKYpBUseHADFeRDDnnA441CSwUjmx103fjxJyhK9e3OXhhp9qwavP//P2Yb59c
- D8EflJV7o6mvIFDBeqbV7sRmTdGUAzz6DCbbgp24yDS60GGOZshb+TEH0Y0bFqFKnwWU
- ob3YHs+bTRjpj41u8fzivGmjXDtQnY8NjmAdLHkt/drHh3ZSKgw2pSQfWuioGridq7F7
- x7sGBeF4R2KG++I3tyZkjbkAKXe4n7pFZpkjhZJ+AOCS0GM4+T+l7K2Nk6y6BrSVXWFc
- xEgd1r5e1YS5WYzVRxmdUtRmzeOw8Qt6AvAz2tEjpcMjU9yBwI3Xk+IgV9Pr5W1Su5+l
- isNQ==
+ bh=kXXH3LOqJxGPAXdIJxcNmav/alDjOGq1U7fctTEu8io=;
+ b=Fxl7SlJC2Vsru/qVVW0PtNRr3DV6NIflB1E9ZZ93IoE46MqMh+shCJ1+YEo0wdlcxX
+ p7yuDgwEnIVZE9VuAKj/MhE17TGRNybD/EbaDFbMcbyCZ7GD5xScCgHp1ePMDF5GXrXF
+ yPLAwX2hLX+NtEvBbrl3EnUAA8NxoWsarNIAg90OkS/BsnBK1i84lw8BFXCG02PR/R1r
+ qebAlpayKfqEugb+OQUlSkbxYNeIu987eWbdGc4k45oEfznZ3jfdqYULRgmUDC4fIdZc
+ eU4Y4R7hEzmExYI+inQ8/M2ObWmgSc4jzb/dQeSHL8LL6DTcp9NB3vl01tKRiG/cICFk
+ FtEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719824337; x=1720429137;
+ d=1e100.net; s=20230601; t=1719824296; x=1720429096;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=l2lyDssl4G6ryHXDn9OaZUeP+3jqeJ+ldt2WC0u/TIc=;
- b=GYGlXnao/xKddk8QuwTLdsz3uCUGaZdlaUEzf4v0fio3YzdLtkgQk2F/u6dnoM8cMa
- cNyqR5hZ4f0uLzeyKyjd7BQl5gQuPDJ9dOgJgMRVliC9R8IgHW5ts4bxwH7VgjcIxoIk
- pzWDEaupbj7nc0xrLbSBTNvJkfnYdD2+O301sAKTe5N1D6S4/DJeKlErMaORyxyBWe3O
- +hmmeDcxdBhfw1pFv47u87p4s2FapRr5cdHFnOSueCJx4+C3OsKesvGTzo2FN3/8KhTZ
- 5N4lMX4f7pO2E9bPGVcfhEqJLcbXjg/84etIhXwUBpZafAXpCxzJ8yrmiBIeJlijPzoq
- RFtw==
-X-Gm-Message-State: AOJu0YwF41XFGxGYw51JVSb0d4S16xzLF82s1YPTyIDIbQBCHEW9hg5S
- XCjP+wj5opIrZNWKvckghSi0t7cW5UezoxnfKvQ8zygRFC076rB5SYE+nyoIztzO2W1HYsPMXw5
- qx77+WzG93RT+PWlQaomKDoyxTKX7Rkbg0PI1ZG+pfYhkV2mO
-X-Google-Smtp-Source: AGHT+IHjh+YTvsjchGNVXEubpw9/qk3HiRdxy9sCou4DoLJphbXRFLcRXoP2EFm557mIMkot27H3XU5CrpJiI+ma5YI=
-X-Received: by 2002:a05:6402:2786:b0:582:7e6d:6816 with SMTP id
- 4fb4d7f45d1cf-5879f0c6348mr3753181a12.8.1719824336839; Mon, 01 Jul 2024
- 01:58:56 -0700 (PDT)
+ bh=kXXH3LOqJxGPAXdIJxcNmav/alDjOGq1U7fctTEu8io=;
+ b=sxlyhYG1W/3Oj9Xd0bWk8GT63aVi92MQXawgLiOeODWdqQG4RVkjFlKS1YykTjeZWu
+ 0pDY+ipWX2bNY+wxbzxtTi1wc5s0drtssyAU19MZ1PwaHBGyN57oYxR4lL74sTKm8jlW
+ 2E8e8Fz+xq6kfOkkMuuOmpFScBxFp0o8p6noERyKMMXD+Yyk4dKHMVJpg6ahvyTT+HTs
+ KkB+Pk9yixLrf5lh4e1WhCkUWrMdi4kqZOexI0yc/RUkCtIvezkgIYnVuDT5U3yLAlEV
+ vreQv/sY1NzHgRKY7XSEg3J0GibXRkiphhlbrdvV6lRihMLB8W9eTJ//MexjZnGtQJ4b
+ FMSg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWi369Jqr0tpy37mRbNtssYtOpOPAVA0Nomo5wXde7xdORE887rnJgoDnPDNOs0gdOnUHec3+eJdHDcLie6BLBg5uYB1c=
+X-Gm-Message-State: AOJu0YysD6tomzp9q4GHI3AX/sJXATTcxoM/OynO1lFG5SSxsQRSh8nw
+ F9nerRAtzLNQZNUapwn+PGJT1Jkqkpw8CnfRqoDl1LXWl2glXs7F2jLZqqNKXsavy6lQTXAtLNN
+ QtC4j67zs7u4PmQ/sI69Izf7XiCh/4+8dHm6Kvg==
+X-Google-Smtp-Source: AGHT+IGLyyJzA5YKsF0kiK3YiDtBQO7yVJhfNvDWooPKTxZJtfhQmpK3tNoi/52BJOb8DEm3ddiRgcdOay1l/SW3hGQ=
+X-Received: by 2002:a05:6402:1751:b0:57c:749f:f5ef with SMTP id
+ 4fb4d7f45d1cf-587a0bfc733mr2734717a12.34.1719824296410; Mon, 01 Jul 2024
+ 01:58:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240701075208.19634-1-sgarzare@redhat.com>
-In-Reply-To: <20240701075208.19634-1-sgarzare@redhat.com>
+References: <20240620-b4-new-firmware-v3-0-29a3a2f1be1e@linaro.org>
+ <20240620-b4-new-firmware-v3-1-29a3a2f1be1e@linaro.org>
+ <CAMj1kXGb9xVQ5E3oK_QX+3hKkMfCoA9jF5jkEeG6Eq9+zbHPHA@mail.gmail.com>
+ <ca463afe-486f-4590-acb5-a61265cbbd37@linaro.org>
+In-Reply-To: <ca463afe-486f-4590-acb5-a61265cbbd37@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Jul 2024 09:58:46 +0100
-Message-ID: <CAFEAcA_y-o40H7fytjC_uzHoWeyq-oNU_k-s98GbsRnLbyT7GQ@mail.gmail.com>
-Subject: Re: [PATCH] virtio: remove virtio_tswap16s() call in
- vring_packed_event_read()
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: qemu-devel@nongnu.org, Eugenio Perez Martin <eperezma@redhat.com>,
- jasowang@redhat.com, 
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-stable@nongnu.org,
- Xoykie <xoykie@gmail.com>
+Date: Mon, 1 Jul 2024 09:58:04 +0100
+Message-ID: <CAFEAcA_RUK53BZ7oiFgnt0HgcghACTc+XXC1h2340GAR8xHUEw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] tests/avocado: update firmware for sbsa-ref
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
+ Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, 
+ Ard Biesheuvel <ardb+tianocore@kernel.org>, Rebecca Cran <rebecca@bsdio.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,41 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 1 Jul 2024 at 08:52, Stefano Garzarella <sgarzare@redhat.com> wrote:
+On Mon, 1 Jul 2024 at 07:49, Marcin Juszkiewicz
+<marcin.juszkiewicz@linaro.org> wrote:
 >
-> Commit d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-> switched using of address_space_read_cached() to virito_lduw_phys_cached()
-> to access packed descriptor event.
+> W dniu 30.06.2024 o 16:37, Ard Biesheuvel pisze:
+> > On Thu, 20 Jun 2024 at 12:20, Marcin Juszkiewicz
+> > <marcin.juszkiewicz@linaro.org> wrote:
+> >>
+> >> Update firmware to have graphics card memory fix from EDK2 commit
+> >> c1d1910be6e04a8b1a73090cf2881fb698947a6e:
+> >>
+> >>      OvmfPkg/QemuVideoDxe: add feature PCD to remap framebuffer W/C
+> >>
+> >>      Some platforms (such as SBSA-QEMU on recent builds of the emulator) only
+> >>      tolerate misaligned accesses to normal memory, and raise alignment
+> >>      faults on such accesses to device memory, which is the default for PCIe
+> >>      MMIO BARs.
+> >>
+> >>      When emulating a PCIe graphics controller, the framebuffer is typically
+> >>      exposed via a MMIO BAR, while the disposition of the region is closer to
+> >>      memory (no side effects on reads or writes, except for the changing
+> >>      picture on the screen; direct random access to any pixel in the image).
+> >>
+> >>      In order to permit the use of such controllers on platforms that only
+> >>      tolerate these types of accesses for normal memory, it is necessary to
+> >>      remap the memory. Use the DXE services to set the desired capabilities
+> >>      and attributes.
+> >>
+> >>      Hide this behavior under a feature PCD so only platforms that really
+> >>      need it can enable it. (OVMF on x86 has no need for this)
+> >>
+> >> With this fix enabled we can boot sbsa-ref with more than one cpu core.
+> >>
+> >
+> > This requires an explanation: what does the number of CPU cores have
+> > to do with the memory attributes used for the framebuffer?
 >
-> When we used address_space_read_cached(), we needed to call
-> virtio_tswap16s() to handle the endianess of the field, but
-> virito_lduw_phys_cached() already handles it internally, so we no longer
-> need to call virtio_tswap16s() (as the commit had done for `off_wrap`,
-> but forgot for `flags`).
+> I have no idea. Older firmware was hanging on several systems but was
+> passing in QEMU tests. After closer looking I noticed that Avocado tests
+> run with "-smp 1" and pass.
 >
-> Fixes: d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-> Cc: jasowang@redhat.com
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Xoykie <xoykie@gmail.com>
-> Link: https://lore.kernel.org/qemu-devel/CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com
-> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-> ---
->  hw/virtio/virtio.c | 1 -
->  1 file changed, 1 deletion(-)
+> Checked failing system with "-smp 1" and it worked. In meantime you have
+> fixed problem in EDK2.
 >
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 893a072c9d..2e5e67bdb9 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -323,7 +323,6 @@ static void vring_packed_event_read(VirtIODevice *vdev,
->      /* Make sure flags is seen before off_wrap */
->      smp_rmb();
->      e->off_wrap = virtio_lduw_phys_cached(vdev, cache, off_off);
-> -    virtio_tswap16s(vdev, &e->flags);
->  }
+> So yes, updating firmware may look like hiding a bug. Which I do not
+> know how to track (I can build and test QEMU, but going into its
+> internals is something I never done).
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+My assumption was that random chance meant that TF-A when
+only dealing with one CPU meant that its memory layout etc
+was such that it didn't do the unaligned access. I don't think
+this is likely to be a QEMU side question.
 
-thanks
 -- PMM
 
