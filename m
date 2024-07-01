@@ -4,62 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE90C3065A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03B3C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:54:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOJG9-0005gw-Eg; Mon, 01 Jul 2024 11:48:05 -0400
+	id 1sOJL9-0006n1-TE; Mon, 01 Jul 2024 11:53:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sOJG8-0005gf-34
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:48:04 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sOJG4-0005od-TE
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:48:03 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WCVlg4f2Rz6K71W;
- Mon,  1 Jul 2024 23:46:55 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 5F69C140CB1;
- Mon,  1 Jul 2024 23:47:53 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 1 Jul
- 2024 16:47:52 +0100
-Date: Mon, 1 Jul 2024 16:47:51 +0100
-To: Igor Mammedov <imammedo@redhat.com>
-CC: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
- <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
- <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v3 08/11] hw/acpi: Generic Port Affinity Structure support
-Message-ID: <20240701164751.000000a9@Huawei.com>
-In-Reply-To: <20240701105219.09f2b1fd@imammedo.users.ipa.redhat.com>
-References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
- <20240620160324.109058-9-Jonathan.Cameron@huawei.com>
- <20240701105219.09f2b1fd@imammedo.users.ipa.redhat.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sOJL8-0006mb-1i
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:53:14 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sOJL6-00010m-A6
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 11:53:13 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7067435d376so2296513b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 08:53:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1719849191; x=1720453991; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uzu0ulmSb0VkwKIzHQbyj8CiJcovL3I1+1nR72hgyKI=;
+ b=IE2iNjPt4r2P4WRXCgTrXJoTxzB3WW2PMiNlM++PKnMKI/IYJiDIztN1QJYwFcHZxE
+ WwLAJSLMNVW+sqm4lYqSxYpHXZ/N66z3v3uJ8ctlqeTsan9IVGKTylu3kCQzn6/8efft
+ wtR5cNWDapygfr6YdSmK/pqNVy6XNNRNtLEaair1F88S/Gko1xblf4DXw2UksWCDOcgH
+ PG2UnUrbbjNJUX8A5rOUSgjyAUsWSzX4YFGpkLQkkr2BNXC9kMq/iTylPUQTUedLkaN2
+ 2nNN5I9WGyojCF+5xb8ADgZKncC0j9J3Y97X9VkI634Nl5n2s4yB/ChJRq8pkM4EBlop
+ Z3Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719849191; x=1720453991;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uzu0ulmSb0VkwKIzHQbyj8CiJcovL3I1+1nR72hgyKI=;
+ b=DjFbwRjS62azfjQxGyBVu7yIWmEmAESxeBN3FRMX1l/wYG6kv3yoHdywxx8BsR6aAj
+ k63SP3fhAonV3uwhQbb7KWtRX9uC6cJl1ZPrkPg/FUoNE02gArR06DXvyLG8UueP6A/A
+ R3SVp8osCfDBePEW0Av+kFdqzcIrW3pGG3zr7cHf+UVsUqq8DIVOKhWmkCMUOZ5nq0To
+ 2+xSUPW7e7cic36HsR2YtTcw67MpyGqXL80+NOo6wUVATef7lBEDOSvT79TTLFyS0Tbr
+ IasSO9G3iv0q8OWbyPWgPQJaytnaNdkSjRAyLiHHV4KijiU0JY+EyBLiGCm48LtZstcS
+ jspw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWWHHOyHS7Z+WLLZoExwur7ZqO7VXM2RWYbIHJAFNhaA563euIDO/jR1+zm5JRl8PtE5U8NWMl64ecttczMPNgHIYg/YPM=
+X-Gm-Message-State: AOJu0YwmmI5J7nJV0MpdYAvUVKMlWm12q/TYeFW8iTQgvHSOkgsyhhRC
+ w67C3NZ4fqxFMDDB5z3LPITkXCP2TgIhiA9scSFixQgbg5/70/MvsoTV5amqYOA=
+X-Google-Smtp-Source: AGHT+IGPnCTy77lRtkcqt9NNeQ2HC7FiVtA+uJxKiFoDSOGu8MEKYRKTeuPzZtgE0d0QR/MX81HZKQ==
+X-Received: by 2002:a05:6a00:22d2:b0:706:1f67:64d3 with SMTP id
+ d2e1a72fcca58-70aaaba8fc5mr9749714b3a.14.1719849190542; 
+ Mon, 01 Jul 2024 08:53:10 -0700 (PDT)
+Received: from [192.168.68.109] ([179.193.8.43])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7080256d3c5sm6686075b3a.83.2024.07.01.08.53.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Jul 2024 08:53:10 -0700 (PDT)
+Message-ID: <8c356054-0921-4437-b64a-8bbf68751ce6@ventanamicro.com>
+Date: Mon, 1 Jul 2024 12:53:06 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] system/vl.c: do not allow mixed -accel opts
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: ajones@ventanamicro.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
+ <20240701133038.1489043-2-dbarboza@ventanamicro.com>
+ <522ccd9b-8551-49a9-ac01-0c26776a3d57@linaro.org>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <522ccd9b-8551-49a9-ac01-0c26776a3d57@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,58 +97,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 1 Jul 2024 10:52:19 +0200
-Igor Mammedov <imammedo@redhat.com> wrote:
 
-> On Thu, 20 Jun 2024 17:03:16 +0100
-> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+
+On 7/1/24 12:23 PM, Richard Henderson wrote:
+> On 7/1/24 06:30, Daniel Henrique Barboza wrote:
+>> We're allowing multiple -accel options to be used with different
+>> accelerators, even though we don't have any machine that supports mixed
+>> acceleration.
+>>
+>> In fact, it will only parse the first occurence of -accel and, aside
+>> from a help option (e.g. -accel help) that will always cause the process
+>> to print the help text, it will accept every other accel option
+>> regardless of being correct or not. E.g. this:
+>>
+>> qemu-system-x86_64 -accel kvm -accel tcg -accel IamNotAnAccel (...)
+>>
+>> will happily boot a x86_64 KVM guest.
+>>
+>> Do not allow for different accelerators to be used when multiple
+>> instances of -accel are present.
+>>
+>> Cc: Paolo Bonzini<pbonzini@redhat.com>
+>> Cc: Thomas Huth<thuth@redhat.com>
+>> Signed-off-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
+>> ---
+>>   system/vl.c | 15 ++++++++++++++-
+>>   1 file changed, 14 insertions(+), 1 deletion(-)
 > 
-> > These are very similar to the recently added Generic Initiators
-> > but instead of representing an initiator of memory traffic they
-> > represent an edge point beyond which may lie either targets or
-> > initiators.  Here we add these ports such that they may
-> > be targets of hmat_lb records to describe the latency and
-> > bandwidth from host side initiators to the port.  A discoverable
-> > mechanism such as UEFI CDAT read from CXL devices and switches
-> > is used to discover the remainder of the path, and the OS can build
-> > up full latency and bandwidth numbers as need for work and data
-> > placement decisions.
-> > 
-> > Acked-by: Markus Armbruster <armbru@redhat.com>
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > ---
-> > v3: Move to hw/acpi/pci.c
-> >     Rename the funciton to actually registers both types
-> >     of generic nodes to reflect it isn't GI only.
-> >     Note that the qom part is unchanged and other changes are mostly
-> >     code movement so I've kept Markus' Ack.
-> > ---
-> >  qapi/qom.json                            |  34 ++++
-> >  include/hw/acpi/acpi_generic_initiator.h |  35 ++++
-> >  include/hw/acpi/aml-build.h              |   4 +
-> >  include/hw/acpi/pci.h                    |   3 +-
-> >  include/hw/pci/pci_bridge.h              |   1 +
-> >  hw/acpi/acpi_generic_initiator.c         | 216 +++++++++++++++++++++++
-> >  hw/acpi/aml-build.c                      |  40 +++++
-> >  hw/acpi/pci.c                            | 110 +++++++++++-
-> >  hw/arm/virt-acpi-build.c                 |   2 +-
-> >  hw/i386/acpi-build.c                     |   2 +-
-> >  hw/pci-bridge/pci_expander_bridge.c      |   1 -
-> >  11 files changed, 443 insertions(+), 5 deletions(-)  
+> We use '-accel kvm -accel tcg' to allow kvm to fail (e.g. no /dev/kvm permission) and proceed with tcg.
 > 
-> this is quite large patch, is it possible to split into
-> a set of smaller patches?
+> This patch will cause testsuite failures.
 
-Oops.
+For the issue I want to fix patch 2 alone is enough. I'll re-send.
 
-It's bigger that it should due to a messed up rebase.
-The acpi_generic_initator.c/.h shouldn't exist!
 
-With those gone will be much more manageable.
+Thanks,
 
+Daniel
+
+
+> 
+> 
+> r~
 
