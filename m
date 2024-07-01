@@ -4,74 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691AEC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A98BC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sODFt-0002hb-6q; Mon, 01 Jul 2024 05:23:25 -0400
+	id 1sODSU-0005wR-11; Mon, 01 Jul 2024 05:36:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sODFq-0002hF-AQ
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:23:22 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sODFn-0005r4-KW
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:23:22 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxHuuAdYJmN9kLAA--.45294S3;
- Mon, 01 Jul 2024 17:23:12 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8AxRcV8dYJmUFU3AA--.52129S3; 
- Mon, 01 Jul 2024 17:23:10 +0800 (CST)
-Subject: Re: [RFC v3 1/2] target/loongarch: Add loongson binary translation
- feature
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
-Cc: QEMU devel <qemu-devel@nongnu.org>
-References: <20240530064941.1289573-1-maobibo@loongson.cn>
- <20240530064941.1289573-2-maobibo@loongson.cn>
- <db19ed93-027c-4e29-aac5-e3a1edcd760b@app.fastmail.com>
- <bba3338b-4c28-fc38-fc5e-f4691bfa28b1@loongson.cn>
- <cdc0d448-8e3b-44f7-89ca-a15ea48acd2b@app.fastmail.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <fc3829c2-4164-f11a-8158-498198b8a677@loongson.cn>
-Date: Mon, 1 Jul 2024 17:23:08 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <cdc0d448-8e3b-44f7-89ca-a15ea48acd2b@app.fastmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8AxRcV8dYJmUFU3AA--.52129S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7uryfXFy8ury7Wr4kJr4xAFc_yoW8CrWDpa
- y2vFWF9ry7tr4Iy3s2g3ZrJFsYyrWIyw47Zry5Gry7A3Z0gF1DJr93AFZY9a93Zr1fXF4I
- vrsrK347uFyUZacCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
- daVFxhVjvjDU0xZFpf9x07j5WrAUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.587,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
+ id 1sODSQ-0005w8-Oj
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:36:22 -0400
+Received: from va-1-13.ptr.blmpb.com ([209.127.230.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
+ id 1sODSJ-0005vO-Nv
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:36:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=dayudpu-com.20200927.dkim.feishu.cn; t=1719826564;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=cxHOtjcW6sqfps+SSm+oRjdTsTsSsn4No3jB6StxyOA=;
+ b=o5IeqtF9kYjrnxXfdIVwm8+9YcvipB2RNRvu4CWUJ8M9Qn+5n/JLVRYbovdS6nMz4DBxs2
+ NOWgIp0aJD5Si5p0ztPYSj4oTysjI7W+vBCweByKaUjcJq1K0l14vk7f4SP7BBH8OfdnRa
+ d/uL7ji8IAZvsHw3nb03lyYJJmmpvrkhMsIPgjpgJhwFWdPqfDjW4q14KB/T8cy8c/fod4
+ Q8FT+2XiJsgqvGoJhXLbuqBNm8YVwfy7YBH7rZeS7b2qg5wwtJunrG4dasdrZQ2rV578p+
+ dBM6160NRRCPltVSotln2I7ks+GKqQsi7gt7oIN2S1mC3GjBsn4tMwNhuWjm7Q==
+In-Reply-To: <87zfr1qyyi.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: <qemu-devel@nongnu.org>, <mst@redhat.com>
+From: "BillXiang" <xiangwencheng@dayudpu.com>
+Mime-Version: 1.0
+References: <20240613065150.3100-1-xiangwencheng@dayudpu.com>
+ <87zfr1qyyi.fsf@draig.linaro.org>
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 01 Jul 2024 17:36:02 +0800
+Message-Id: <fba0cfc406f202976ef5ac5d129e08524ce06bbf.8eed26c3.aba1.4d51.9976.281bbad0a8e6@feishu.cn>
+Subject: Re: [PATCH] vhost-user: Skip unnecessary duplicated
+ VHOST_USER_SET_LOG_BASE requests
+X-Lms-Return-Path: <lba+166827883+dbd367+nongnu.org+xiangwencheng@dayudpu.com>
+Received-SPF: pass client-ip=209.127.230.13;
+ envelope-from=xiangwencheng@dayudpu.com; helo=va-1-13.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,66 +68,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-
-On 2024/7/1 下午4:42, Jiaxun Yang wrote:
-> 
-> 
-> 在2024年7月1日七月 上午8:32，maobibo写道：
-> [...]
->>>>
->>>> +static void loongarch_cpu_check_lbt(CPUState *cs, Error **errp)
->>>> +{
->>>> +    CPULoongArchState *env = cpu_env(cs);
->>>> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
->>>> +    bool kvm_supported;
->>>> +
->>>> +    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LBT);
->>>
->>> IMHO if there is no global states that should be saved/restored VM wise,
->>> this should be handled at per CPU level, preferably with CPUCFG flags hint.
->>>
->>> We should minimize non-privilege KVM feature bits to prevent hindering
->>> asymmetry ISA system.
->> For "asymmetry ISA system", do you meaning some vcpus have LBT feature,
->> however some vcpus does have LBT features? That does not exists at all.
-> 
-> Yes, we should always prepare for the future :-)
-> 
->  From Weiwu's presentations, I believe LASX asymmetry product is already on the
-> roadmap. So for LBT it's also a possibility.
-I never hear such product plan with different LASX/LSX capability even 
-for the future big-little product.
-
-> 
-> Even if such product won't land in near future, we should still try our best
-> to bound to vCPU creation, not to the system.
-> 
->>
->> It will be big disaster for such products, how does application use this?
-> 
-> Affinity placement etc, there are many possibilities.
-> 
-> On Arm side, there are already systems with Big.Little asymmetry CPU that
-> some of the processor equipped 32 bit EL0 mode while others doesn't. They
-> managed that well with affinity.
-> 
-> See: arm64: Allow mismatched 32-bit EL0 support
-Is it only 32 bit EL0 mode or 32bit compatible mode and 64 bit also?
-
-What is the detailed product name and how does Linux/KVM support this 
-product?
-
-Regards
-Bibo Mao
-> 
-> Thanks
->>
->> Regards
->> Bibo
->>>
->>> Thanks
->>> - Jiaxun
->>>
-> 
-
+> From: "Alex Benn=C3=A9e"<alex.bennee@linaro.org>
+> Date:=C2=A0 Mon, Jul 1, 2024, 16:49
+> Subject:=C2=A0 Re: [PATCH] vhost-user: Skip unnecessary duplicated VHOST_=
+USER_SET_LOG_BASE requests
+> To: "=E9=A1=B9=E6=96=87=E6=88=90"<xiangwencheng@dayudpu.com>
+> Cc: <qemu-devel@nongnu.org>, <mst@redhat.com>
+> =E9=A1=B9=E6=96=87=E6=88=90 <xiangwencheng@dayudpu.com> writes:
+>=C2=A0
+> > From: BillXiang <xiangwencheng@dayudpu.com>
+> >
+> > The VHOST_USER_SET_LOG_BASE requests should be categorized into
+> > non-vring specific messages, and should be sent only once.
+> > If send more than once, dpdk will munmap old log_addr which may has
+> > been used and cause segmentation fault.
+>=C2=A0
+> This looks fine to me but looking at the vhost-user.rst we don't seem to
+> make any explicit statements about how many times given messages should
+> be sent.
+>=C2=A0
+There is indeed no explicit statements about how many times given messages
+=C2=A0should be sent in vhost-user.rst but already have some discussions su=
+ch as=C2=A0
+https://lore.kernel.org/qemu-devel/20230127083027-mutt-send-email-mst@kerne=
+l.org/.
+> >
+> > Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
+> > ---
+> >=C2=A0 hw/virtio/vhost-user.c | 1 +
+> >=C2=A0 1 file changed, 1 insertion(+)
+> >
+> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > index cdf9af4a4b..41e34edd49 100644
+> > --- a/hw/virtio/vhost-user.c
+> > +++ b/hw/virtio/vhost-user.c
+> > @@ -371,6 +371,7 @@ static bool vhost_user_per_device_request(VhostUser=
+Request request)
+> > =C2=A0 =C2=A0=C2=A0 case VHOST_USER_RESET_DEVICE:
+> > =C2=A0 =C2=A0=C2=A0 case VHOST_USER_ADD_MEM_REG:
+> > =C2=A0 =C2=A0=C2=A0 case VHOST_USER_REM_MEM_REG:
+> > + =C2=A0=C2=A0 case VHOST_USER_SET_LOG_BASE:
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return true;
+> > =C2=A0 =C2=A0=C2=A0 default:
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return false;
+>=C2=A0
+> --=C2=A0
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 
