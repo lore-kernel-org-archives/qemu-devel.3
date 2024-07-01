@@ -4,97 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D917C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:54:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C8F1C30653
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOCnt-0002TP-9L; Mon, 01 Jul 2024 04:54:29 -0400
+	id 1sOCpV-0003t0-4e; Mon, 01 Jul 2024 04:56:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sOCly-0006Fi-Bq
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:52:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sOClv-0005nV-Gh
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:52:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719823945;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YRVEDXTdNlFKmz4YCovzLKk9fuFunRyAXDljDw8v6w0=;
- b=Y3RTu3ZMUZXntPe6bejBU7y2ePV99xubor9gXX6HwizK7UipqjrUUd1KFHqCzFaibwHbNN
- JZatXeIq06IMA3hXEddtDBLkbIrT2iYEoCdhemYBDRIREc3BdmUcAQ7FVpoGjZnJeZGSE5
- /Z1iltZezLhKpn8yTFj7NmM5wB6Ngy8=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-5WruIP9IND6vnxTSGZK08Q-1; Mon, 01 Jul 2024 04:52:23 -0400
-X-MC-Unique: 5WruIP9IND6vnxTSGZK08Q-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52ce8969cf1so2641444e87.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 01:52:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sOCp9-0003Wu-KF
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:55:48 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sOCp7-0006DN-9e
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:55:46 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-585e774fd3dso3295820a12.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 01:55:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719824142; x=1720428942; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=kDVUi2EGUfUyzo6yp0OUfg0RKoJ41ci/1qDOi6uLZCM=;
+ b=iNF9kfhC67vy5bRn7TXo0rrKyYieY8N5fqjYqw82INwXFGCJ2Ud2MGhxucsS061+1x
+ 8H7nPIPvJALN5hPd4PeWd9XA8EASw9/lpkpcy4jDZbISq1fI5Y9y6d88XXot1sR1kREi
+ DxkX5g031GKLuroBX53E1TmYLshYUvSJSRZudL/EEznaNwY9hfM3vK4JwzISbPGMjdFA
+ hu+9iQAmuTeriAxhLaXWjSSR+ncnIS2R1KImxxRiBniKUoBFA4Zadlpenp9KpCZ0fdvh
+ ErpKvGDPrXvrFVfugKtY5bx0g5RtG46sFXoni6o2KSzXbsL5cyCG8nSviu/1v6E0JCBE
+ 9yqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719823941; x=1720428741;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1719824142; x=1720428942;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YRVEDXTdNlFKmz4YCovzLKk9fuFunRyAXDljDw8v6w0=;
- b=uRUpgclZ2722M+MKHbSQ/zS8szTFXEuw8u6lRwSeSzyXY2EMyJTEoRgxAZuS/QKs7L
- 0nY1Io7DkmUIXXbU9GtiLPG69WuzarNLLSXB2NtL1oHXVgpwF/UMbjEATn2pgPjzs6ze
- vwPUEfMhQ8R+ASZ5aGsXeStkuC4wWhhXqThvcnJFhWP2FMPEurq9xDPOeOYn/PyWHKLS
- KsvgunX6z/kf/dm5FxyHQj27nNeOIJel1myR+hbbl5QE1fLx5iBXN+hIHzagvPsytEpg
- umBsHFMWaI48iBj9vLzNL5ks0AcGtAz3rQ08yipPR06dMy58puULtJ8UXnrOeWFM8oOD
- JDcw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUHpxja83gsMiMM/QnCsFLYbqW9qJQIbZ8mI5nBhICHMEvHuubsORbxnAqSX2JeHApTpygt8v20O1Demh0ffXsmt9tiFR8=
-X-Gm-Message-State: AOJu0YxgFCWxwSvrMKx/Gs948RHNEW8GW73BiErl+A1IZKLG6OcQH0/2
- SrJUrGn4MevpGeKELke8NR+dF7sIAjvVnMK8432+CF7mvNonPKqC2kTgTOYbh5Ou24Hps8vvZqL
- zzVRhepSwwmBYl2ckrvK6snBVhNgWwM2Q7o2H465vsk2qZB+Wg8wn
-X-Received: by 2002:a05:6512:2203:b0:52c:dbd9:45e7 with SMTP id
- 2adb3069b0e04-52e82733f0emr2984135e87.57.1719823941543; 
- Mon, 01 Jul 2024 01:52:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmKCiyhziEd0xSgbRZFS60ruI6lPbmiK/Gnw6f0eVwYH4U9u4JUF4X8S0UoKuI3DY82Jhcnw==
-X-Received: by 2002:a05:6512:2203:b0:52c:dbd9:45e7 with SMTP id
- 2adb3069b0e04-52e82733f0emr2984121e87.57.1719823941075; 
- Mon, 01 Jul 2024 01:52:21 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0d8df0sm9449780f8f.29.2024.07.01.01.52.20
+ bh=kDVUi2EGUfUyzo6yp0OUfg0RKoJ41ci/1qDOi6uLZCM=;
+ b=BOald6dQuCAhLvEp2GF8xYzcA+SHlVEkcI7tBFIXkHgIMUhypvDen5ZOyC4zdwzeC+
+ gjh3U8RxfKAI+Me9/IE0Op9Zx6SwBnKVHen5Ud2s46b8YRASaL3WR9OoiSKcQZGxTkV4
+ kqaueis5u8y5L3UIfiYKFTGxWBdCeZMmYevVqPTqbbeS0z6GBP7ukCGyLqUItv3Y+UHR
+ EVNFIi7Am0XzlwCmxtXwqq2jHZkrP55zrReCaRhtvGuJy8XjDx4/HolgAem/6KUfjXdp
+ FWRVWShYTWyTvsOgn10uZ5bCdh7K1Q0ITsCED3AOVfjOjdvSEwYr701xqAJ15T9n4tjE
+ f/3A==
+X-Gm-Message-State: AOJu0YzHQ5VxlMB6RN6NO80UwAdEZgs8lu8H014nESc5ohTffdFP+M1M
+ +/OST5FfygbE1bgxct7aGcEcav++/wcRJqaTcaDLdQfuLNsqMv71PSma54bJDk0=
+X-Google-Smtp-Source: AGHT+IE/C6bKK/uRY16/TE67PgoMmLdRES8kKcbkZbOIwKeZzLLT7/oKkzNhiYHRErtnRTHqYiCQSg==
+X-Received: by 2002:a17:906:8883:b0:a72:9059:6cc9 with SMTP id
+ a640c23a62f3a-a7514451ab7mr287696266b.33.1719824141515; 
+ Mon, 01 Jul 2024 01:55:41 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a72ab0657a6sm312593866b.129.2024.07.01.01.55.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 01:52:20 -0700 (PDT)
-Date: Mon, 1 Jul 2024 10:52:19 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
- <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
- <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
- <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: Re: [PATCH v3 08/11] hw/acpi: Generic Port Affinity Structure support
-Message-ID: <20240701105219.09f2b1fd@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240620160324.109058-9-Jonathan.Cameron@huawei.com>
-References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
- <20240620160324.109058-9-Jonathan.Cameron@huawei.com>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ Mon, 01 Jul 2024 01:55:41 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 20E5B5F877;
+ Mon,  1 Jul 2024 09:55:40 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  mark.cave-ayland@ilande.co.uk,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH] tcg/optimize: Fix TCG_COND_TST* simplification of setcond2
+In-Reply-To: <20240701024623.1265028-1-richard.henderson@linaro.org> (Richard
+ Henderson's message of "Sun, 30 Jun 2024 19:46:23 -0700")
+References: <20240701024623.1265028-1-richard.henderson@linaro.org>
+Date: Mon, 01 Jul 2024 09:55:40 +0100
+Message-ID: <87v81pqynn.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,633 +96,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Jun 2024 17:03:16 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> These are very similar to the recently added Generic Initiators
-> but instead of representing an initiator of memory traffic they
-> represent an edge point beyond which may lie either targets or
-> initiators.  Here we add these ports such that they may
-> be targets of hmat_lb records to describe the latency and
-> bandwidth from host side initiators to the port.  A discoverable
-> mechanism such as UEFI CDAT read from CXL devices and switches
-> is used to discover the remainder of the path, and the OS can build
-> up full latency and bandwidth numbers as need for work and data
-> placement decisions.
-> 
-> Acked-by: Markus Armbruster <armbru@redhat.com>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Fix a typo in the argument movement.
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: ceb9ee06b71 ("tcg/optimize: Handle TCG_COND_TST{EQ,NE}")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2413
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
-> v3: Move to hw/acpi/pci.c
->     Rename the funciton to actually registers both types
->     of generic nodes to reflect it isn't GI only.
->     Note that the qom part is unchanged and other changes are mostly
->     code movement so I've kept Markus' Ack.
-> ---
->  qapi/qom.json                            |  34 ++++
->  include/hw/acpi/acpi_generic_initiator.h |  35 ++++
->  include/hw/acpi/aml-build.h              |   4 +
->  include/hw/acpi/pci.h                    |   3 +-
->  include/hw/pci/pci_bridge.h              |   1 +
->  hw/acpi/acpi_generic_initiator.c         | 216 +++++++++++++++++++++++
->  hw/acpi/aml-build.c                      |  40 +++++
->  hw/acpi/pci.c                            | 110 +++++++++++-
->  hw/arm/virt-acpi-build.c                 |   2 +-
->  hw/i386/acpi-build.c                     |   2 +-
->  hw/pci-bridge/pci_expander_bridge.c      |   1 -
->  11 files changed, 443 insertions(+), 5 deletions(-)
-
-this is quite large patch, is it possible to split into
-a set of smaller patches?
-
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 8bd299265e..8fa6bbd9a7 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -826,6 +826,38 @@
->    'data': { 'pci-dev': 'str',
->              'node': 'uint32' } }
->  
-> +##
-> +# @AcpiGenericPortProperties:
-> +#
-> +# Properties for acpi-generic-port objects.
-> +#
-> +# @pci-bus: QOM path of the PCI bus of the hostbridge associated with
-> +#     this SRAT Generic Port Affinity Structure.  This is the same as
-> +#     the bus parameter for the root ports attached to this host
-> +#     bridge.  The resulting SRAT Generic Port Affinity Structure will
-> +#     refer to the ACPI object in DSDT that represents the host bridge
-> +#     (e.g.  ACPI0016 for CXL host bridges).  See ACPI 6.5 Section
-> +#     5.2.16.7 for more information.
-> +#
-> +# @node: Similar to a NUMA node ID, but instead of providing a
-> +#     reference point used for defining NUMA distances and access
-> +#     characteristics to memory or from an initiator (e.g. CPU), this
-> +#     node defines the boundary point between non-discoverable system
-> +#     buses which must be described by firmware, and a discoverable
-> +#     bus.  NUMA distances and access characteristics are defined to
-> +#     and from that point.  For system software to establish full
-> +#     initiator to target characteristics this information must be
-> +#     combined with information retrieved from the discoverable part
-> +#     of the path.  An example would use CDAT (see UEFI.org)
-> +#     information read from devices and switches in conjunction with
-> +#     link characteristics read from PCIe Configuration space.
-> +#
-> +# Since: 9.1
-> +##
-> +{ 'struct': 'AcpiGenericPortProperties',
-> +  'data': { 'pci-bus': 'str',
-> +            'node': 'uint32' } }
-> +
->  ##
->  # @RngProperties:
->  #
-> @@ -1019,6 +1051,7 @@
->  { 'enum': 'ObjectType',
->    'data': [
->      'acpi-generic-initiator',
-> +    'acpi-generic-port',
->      'authz-list',
->      'authz-listfile',
->      'authz-pam',
-> @@ -1092,6 +1125,7 @@
->    'discriminator': 'qom-type',
->    'data': {
->        'acpi-generic-initiator':     'AcpiGenericInitiatorProperties',
-> +      'acpi-generic-port':          'AcpiGenericPortProperties',
->        'authz-list':                 'AuthZListProperties',
->        'authz-listfile':             'AuthZListFileProperties',
->        'authz-pam':                  'AuthZPAMProperties',
-> diff --git a/include/hw/acpi/acpi_generic_initiator.h b/include/hw/acpi/acpi_generic_initiator.h
-> new file mode 100644
-> index 0000000000..92a39ad303
-> --- /dev/null
-> +++ b/include/hw/acpi/acpi_generic_initiator.h
-> @@ -0,0 +1,35 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2024, NVIDIA CORPORATION & AFFILIATES. All rights reserved
-> + */
-> +
-> +#ifndef ACPI_GENERIC_INITIATOR_H
-> +#define ACPI_GENERIC_INITIATOR_H
-> +
-> +#include "qom/object_interfaces.h"
-> +
-> +#define TYPE_ACPI_GENERIC_INITIATOR "acpi-generic-initiator"
-> +
-> +typedef struct AcpiGenericInitiator {
-> +    /* private */
-> +    Object parent;
-> +
-> +    /* public */
-> +    char *pci_dev;
-> +    uint16_t node;
-> +} AcpiGenericInitiator;
-> +
-> +#define TYPE_ACPI_GENERIC_PORT "acpi-generic-port"
-> +
-> +typedef struct AcpiGenericPort {
-> +    /* private */
-> +    Object parent;
-> +
-> +    /* public */
-> +    char *pci_bus;
-> +    uint16_t node;
-> +} AcpiGenericPort;
-> +
-> +void build_srat_generic_pci_initiator(GArray *table_data);
-> +
-> +#endif
-> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-> index 9ba3a21c13..fb8cf6c415 100644
-> --- a/include/hw/acpi/aml-build.h
-> +++ b/include/hw/acpi/aml-build.h
-> @@ -490,6 +490,10 @@ void build_srat_pci_generic_initiator(GArray *table_date, int node,
->                                        uint16_t segment, uint8_t bus,
->                                        uint8_t devfn);
->  
-> +void build_srat_acpi_generic_port(GArray *table_data, int node,
-> +                                  const char *hid,
-> +                                  uint32_t uid);
-> +
->  void build_slit(GArray *table_data, BIOSLinker *linker, MachineState *ms,
->                  const char *oem_id, const char *oem_table_id);
->  
-> diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
-> index 9adf1887da..182095d104 100644
-> --- a/include/hw/acpi/pci.h
-> +++ b/include/hw/acpi/pci.h
-> @@ -43,7 +43,8 @@ void build_append_pci_bus_devices(Aml *parent_scope, PCIBus *bus);
->  void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
->  
->  #define TYPE_ACPI_GENERIC_INITIATOR "acpi-generic-initiator"
-> +#define TYPE_ACPI_GENERIC_PORT "acpi-generic-port"
->  
-> -void build_srat_generic_pci_initiator(GArray *table_data);
-> +void build_srat_generic_affinity_structures(GArray *table_data);
->  
->  #endif
-> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
-> index 5cd452115a..5456e24883 100644
-> --- a/include/hw/pci/pci_bridge.h
-> +++ b/include/hw/pci/pci_bridge.h
-> @@ -102,6 +102,7 @@ typedef struct PXBPCIEDev {
->      PXBDev parent_obj;
->  } PXBPCIEDev;
->  
-> +#define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
->  #define TYPE_PXB_DEV "pxb"
->  OBJECT_DECLARE_SIMPLE_TYPE(PXBDev, PXB_DEV)
->  
-> diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-> new file mode 100644
-> index 0000000000..8491aaf5ec
-> --- /dev/null
-> +++ b/hw/acpi/acpi_generic_initiator.c
-> @@ -0,0 +1,216 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2024, NVIDIA CORPORATION & AFFILIATES. All rights reserved
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/acpi/acpi_generic_initiator.h"
-> +#include "hw/acpi/aml-build.h"
-> +#include "hw/boards.h"
-> +#include "hw/pci/pci_bridge.h"
-> +#include "hw/pci/pci_device.h"
-> +#include "qemu/error-report.h"
-> +#include "qapi/error.h"
-> +
-> +typedef struct AcpiGenericInitiatorClass {
-> +    ObjectClass parent_class;
-> +} AcpiGenericInitiatorClass;
-> +
-> +OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericInitiator, acpi_generic_initiator,
-> +                   ACPI_GENERIC_INITIATOR, OBJECT,
-> +                   { TYPE_USER_CREATABLE },
-> +                   { NULL })
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericInitiator, ACPI_GENERIC_INITIATOR)
-> +
-> +static void acpi_generic_initiator_init(Object *obj)
-> +{
-> +    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-> +
-> +    gi->node = MAX_NODES;
-> +    gi->pci_dev = NULL;
-> +}
-> +
-> +static void acpi_generic_initiator_finalize(Object *obj)
-> +{
-> +    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-> +
-> +    g_free(gi->pci_dev);
-> +}
-> +
-> +static void acpi_generic_initiator_set_pci_device(Object *obj, const char *val,
-> +                                                  Error **errp)
-> +{
-> +    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-> +
-> +    gi->pci_dev = g_strdup(val);
-> +}
-> +
-> +static void acpi_generic_initiator_set_node(Object *obj, Visitor *v,
-> +                                            const char *name, void *opaque,
-> +                                            Error **errp)
-> +{
-> +    AcpiGenericInitiator *gi = ACPI_GENERIC_INITIATOR(obj);
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    uint32_t value;
-> +
-> +    if (!visit_type_uint32(v, name, &value, errp)) {
-> +        return;
-> +    }
-> +
-> +    if (value >= MAX_NODES) {
-> +        error_printf("%s: Invalid NUMA node specified\n",
-> +                     TYPE_ACPI_GENERIC_INITIATOR);
-> +        exit(1);
-> +    }
-> +
-> +    gi->node = value;
-> +    ms->numa_state->nodes[gi->node].has_gi = true;
-> +}
-> +
-> +static void acpi_generic_initiator_class_init(ObjectClass *oc, void *data)
-> +{
-> +    object_class_property_add_str(oc, "pci-dev", NULL,
-> +        acpi_generic_initiator_set_pci_device);
-> +    object_class_property_add(oc, "node", "int", NULL,
-> +        acpi_generic_initiator_set_node, NULL, NULL);
-> +}
-> +
-> +typedef struct AcpiGenericPortClass {
-> +    ObjectClass parent_class;
-> +} AcpiGenericPortClass;
-> +
-> +OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericPort, acpi_generic_port,
-> +                   ACPI_GENERIC_PORT, OBJECT,
-> +                   { TYPE_USER_CREATABLE },
-> +                   { NULL })
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericPort, ACPI_GENERIC_PORT)
-> +
-> +static void acpi_generic_port_init(Object *obj)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    gp->node = MAX_NODES;
-> +    gp->pci_bus = NULL;
-> +}
-> +
-> +static void acpi_generic_port_finalize(Object *obj)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    g_free(gp->pci_bus);
-> +}
-> +
-> +static void acpi_generic_port_set_pci_bus(Object *obj, const char *val,
-> +                                          Error **errp)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    gp->pci_bus = g_strdup(val);
-> +}
-> +
-> +static void acpi_generic_port_set_node(Object *obj, Visitor *v,
-> +                                       const char *name, void *opaque,
-> +                                       Error **errp)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +    uint32_t value;
-> +
-> +    if (!visit_type_uint32(v, name, &value, errp)) {
-> +        return;
-> +    }
-> +
-> +    if (value >= MAX_NODES) {
-> +        error_printf("%s: Invalid NUMA node specified\n",
-> +                     TYPE_ACPI_GENERIC_INITIATOR);
-> +        exit(1);
-> +    }
-> +
-> +    gp->node = value;
-> +}
-> +
-> +static void acpi_generic_port_class_init(ObjectClass *oc, void *data)
-> +{
-> +    object_class_property_add_str(oc, "pci-bus", NULL,
-> +        acpi_generic_port_set_pci_bus);
-> +    object_class_property_add(oc, "node", "int", NULL,
-> +        acpi_generic_port_set_node, NULL, NULL);
-> +}
-> +
-> +static int build_acpi_generic_initiator(Object *obj, void *opaque)
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    AcpiGenericInitiator *gi;
-> +    GArray *table_data = opaque;
-> +    uint8_t bus, devfn;
-> +    Object *o;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_INITIATOR)) {
-> +        return 0;
-> +    }
-> +
-> +    gi = ACPI_GENERIC_INITIATOR(obj);
-> +    if (gi->node >= ms->numa_state->num_nodes) {
-> +        error_printf("%s: Specified node %d is invalid.\n",
-> +                     TYPE_ACPI_GENERIC_INITIATOR, gi->node);
-> +        exit(1);
-> +    }
-> +
-> +    o = object_resolve_path_type(gi->pci_dev, TYPE_PCI_DEVICE, NULL);
-> +    if (!o) {
-> +        error_printf("%s: Specified device must be a PCI device.\n",
-> +                     TYPE_ACPI_GENERIC_INITIATOR);
-> +        exit(1);
-> +    }
-> +
-> +    bus = object_property_get_uint(o, "bus", &error_fatal);
-> +    devfn = object_property_get_uint(o, "addr", &error_fatal);
-> +
-> +    build_srat_pci_generic_initiator(table_data, gi->node, 0, bus, devfn);
-> +
-> +    return 0;
-> +}
-> +
-> +static int build_acpi_generic_port(Object *obj, void *opaque)
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    const char *hid = "ACPI0016";
-> +    GArray *table_data = opaque;
-> +    AcpiGenericPort *gp;
-> +    uint32_t uid;
-> +    Object *o;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_PORT)) {
-> +        return 0;
-> +    }
-> +
-> +    gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    if (gp->node >= ms->numa_state->num_nodes) {
-> +        error_printf("%s: node %d is invalid.\n",
-> +                     TYPE_ACPI_GENERIC_PORT, gp->node);
-> +        exit(1);
-> +    }
-> +
-> +    o = object_resolve_path_type(gp->pci_bus, TYPE_PXB_CXL_BUS, NULL);
-> +    if (!o) {
-> +        error_printf("%s: device must be a CXL host bridge.\n",
-> +                     TYPE_ACPI_GENERIC_PORT);
-> +        exit(1);
-> +    }
-> +
-> +    uid = object_property_get_uint(o, "acpi_uid", &error_fatal);
-> +    build_srat_acpi_generic_port(table_data, gp->node, hid, uid);
-> +
-> +    return 0;
-> +}
-> +
-> +void build_srat_generic_pci_initiator(GArray *table_data)
-> +{
-> +    object_child_foreach_recursive(object_get_root(),
-> +                                   build_acpi_generic_initiator,
-> +                                   table_data);
-> +    object_child_foreach_recursive(object_get_root(), build_acpi_generic_port,
-> +                                   table_data);
-> +}
-> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> index 968b654e58..4067100dd6 100644
-> --- a/hw/acpi/aml-build.c
-> +++ b/hw/acpi/aml-build.c
-> @@ -1955,6 +1955,19 @@ static void build_append_srat_pci_device_handle(GArray *table_data,
->      build_append_int_noprefix(table_data, 0, 12);
->  }
->  
-> +static void build_append_srat_acpi_device_handle(GArray *table_data,
-> +                                                 const char *hid,
-> +                                                 uint32_t uid)
-> +{
-> +    assert(strlen(hid) == 8);
-> +    /* Device Handle - ACPI */
-> +    for (int i = 0; i < sizeof(hid); i++) {
-> +        build_append_int_noprefix(table_data, hid[i], 1);
-> +    }
-> +    build_append_int_noprefix(table_data, uid, 4);
-> +    build_append_int_noprefix(table_data, 0, 4);
-> +}
-> +
->  /*
->   * ACPI spec, Revision 6.3
->   * 5.2.16.6 Generic Initiator Affinity Structure
-> @@ -1982,6 +1995,33 @@ void build_srat_pci_generic_initiator(GArray *table_data, int node,
->      build_append_int_noprefix(table_data, 0, 4);
->  }
->  
-> +/*
-> + * ACPI spec, Revision 6.5
-> + * 5.2.16.7 Generic Port Affinity Structure
-> + *   With ACPI Device Handle.
-> + */
-> +void build_srat_acpi_generic_port(GArray *table_data, int node,
-> +                                  const char *hid,
-> +                                  uint32_t uid)
-> +{
-> +    /* Type */
-> +    build_append_int_noprefix(table_data, 6, 1);
-> +    /* Length */
-> +    build_append_int_noprefix(table_data, 32, 1);
-> +    /* Reserved */
-> +    build_append_int_noprefix(table_data, 0, 1);
-> +    /* Device Handle Type: ACPI */
-> +    build_append_int_noprefix(table_data, 0, 1);
-> +    /* Proximity Domain */
-> +    build_append_int_noprefix(table_data, node, 4);
-> +    /* Device Handle */
-> +    build_append_srat_acpi_device_handle(table_data, hid, uid);
-> +    /* Flags - GP Enabled */
-> +    build_append_int_noprefix(table_data, 1, 4);
-> +    /* Reserved */
-> +    build_append_int_noprefix(table_data, 0, 4);
-> +}
-> +
->  /*
->   * ACPI spec 5.2.17 System Locality Distance Information Table
->   * (Revision 2.0 or later)
-> diff --git a/hw/acpi/pci.c b/hw/acpi/pci.c
-> index f68be9ea17..b9e2776966 100644
-> --- a/hw/acpi/pci.c
-> +++ b/hw/acpi/pci.c
-> @@ -29,6 +29,7 @@
->  #include "hw/boards.h"
->  #include "hw/acpi/aml-build.h"
->  #include "hw/acpi/pci.h"
-> +#include "hw/pci/pci_bridge.h"
->  #include "hw/pci/pci_device.h"
->  #include "hw/pci/pcie_host.h"
->  
-> @@ -171,9 +172,116 @@ static int build_acpi_generic_initiator(Object *obj, void *opaque)
->      return 0;
->  }
->  
-> -void build_srat_generic_pci_initiator(GArray *table_data)
-> +typedef struct AcpiGenericPort {
-> +    /* private */
-> +    Object parent;
-> +
-> +    /* public */
-> +    char *pci_bus;
-> +    uint16_t node;
-> +} AcpiGenericPort;
-> +
-> +typedef struct AcpiGenericPortClass {
-> +    ObjectClass parent_class;
-> +} AcpiGenericPortClass;
-> +
-> +OBJECT_DEFINE_TYPE_WITH_INTERFACES(AcpiGenericPort, acpi_generic_port,
-> +                   ACPI_GENERIC_PORT, OBJECT,
-> +                   { TYPE_USER_CREATABLE },
-> +                   { NULL })
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(AcpiGenericPort, ACPI_GENERIC_PORT)
-> +
-> +static void acpi_generic_port_init(Object *obj)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    gp->node = MAX_NODES;
-> +    gp->pci_bus = NULL;
-> +}
-> +
-> +static void acpi_generic_port_finalize(Object *obj)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    g_free(gp->pci_bus);
-> +}
-> +
-> +static void acpi_generic_port_set_pci_bus(Object *obj, const char *val,
-> +                                          Error **errp)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    gp->pci_bus = g_strdup(val);
-> +}
-> +
-> +static void acpi_generic_port_set_node(Object *obj, Visitor *v,
-> +                                       const char *name, void *opaque,
-> +                                       Error **errp)
-> +{
-> +    AcpiGenericPort *gp = ACPI_GENERIC_PORT(obj);
-> +    uint32_t value;
-> +
-> +    if (!visit_type_uint32(v, name, &value, errp)) {
-> +        return;
-> +    }
-> +
-> +    if (value >= MAX_NODES) {
-> +        error_printf("%s: Invalid NUMA node specified\n",
-> +                     TYPE_ACPI_GENERIC_INITIATOR);
-> +        exit(1);
-> +    }
-> +
-> +    gp->node = value;
-> +}
-> +
-> +static void acpi_generic_port_class_init(ObjectClass *oc, void *data)
-> +{
-> +    object_class_property_add_str(oc, "pci-bus", NULL,
-> +        acpi_generic_port_set_pci_bus);
-> +    object_class_property_add(oc, "node", "int", NULL,
-> +        acpi_generic_port_set_node, NULL, NULL);
-> +}
-> +
-> +static int build_acpi_generic_port(Object *obj, void *opaque)
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    const char *hid = "ACPI0016";
-> +    GArray *table_data = opaque;
-> +    AcpiGenericPort *gp;
-> +    uint32_t uid;
-> +    Object *o;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_ACPI_GENERIC_PORT)) {
-> +        return 0;
-> +    }
-> +
-> +    gp = ACPI_GENERIC_PORT(obj);
-> +
-> +    if (gp->node >= ms->numa_state->num_nodes) {
-> +        error_printf("%s: node %d is invalid.\n",
-> +                     TYPE_ACPI_GENERIC_PORT, gp->node);
-> +        exit(1);
-> +    }
-> +
-> +    o = object_resolve_path_type(gp->pci_bus, TYPE_PXB_CXL_BUS, NULL);
-> +    if (!o) {
-> +        error_printf("%s: device must be a CXL host bridge.\n",
-> +                     TYPE_ACPI_GENERIC_PORT);
-> +       exit(1);
-> +    }
-> +
-> +    uid = object_property_get_uint(o, "acpi_uid", &error_fatal);
-> +    build_srat_acpi_generic_port(table_data, gp->node, hid, uid);
-> +
-> +    return 0;
-> +}
-> +
-> +void build_srat_generic_affinity_structures(GArray *table_data)
->  {
->      object_child_foreach_recursive(object_get_root(),
->                                     build_acpi_generic_initiator,
->                                     table_data);
-> +    object_child_foreach_recursive(object_get_root(), build_acpi_generic_port,
-> +                                   table_data);
->  }
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 1a5aa0d55d..31956410ed 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -504,7 +504,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>  tcg/optimize.c               |  2 +-
+>  tests/tcg/x86_64/test-2413.c | 30 ++++++++++++++++++++++++++++++
+>  2 files changed, 31 insertions(+), 1 deletion(-)
+>  create mode 100644 tests/tcg/x86_64/test-2413.c
+>
+> diff --git a/tcg/optimize.c b/tcg/optimize.c
+> index 8886f7037a..ba16ec27e2 100644
+> --- a/tcg/optimize.c
+> +++ b/tcg/optimize.c
+> @@ -2384,7 +2384,7 @@ static bool fold_setcond2(OptContext *ctx, TCGOp *o=
+p)
+>=20=20
+>      case TCG_COND_TSTEQ:
+>      case TCG_COND_TSTNE:
+> -        if (arg_is_const_val(op->args[2], 0)) {
+> +        if (arg_is_const_val(op->args[3], 0)) {
+>              goto do_setcond_high;
 >          }
->      }
->  
-> -    build_srat_generic_pci_initiator(table_data);
-> +    build_srat_generic_affinity_structures(table_data);
->  
->      if (ms->nvdimms_state->is_enabled) {
->          nvdimm_build_srat(table_data);
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index 0d37b9238a..446adcc602 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -2046,7 +2046,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
->          build_srat_memory(table_data, 0, 0, 0, MEM_AFFINITY_NOFLAGS);
->      }
->  
-> -    build_srat_generic_pci_initiator(table_data);
-> +    build_srat_generic_affinity_structures(table_data);
->  
->      /*
->       * Entry is required for Windows to enable memory hotplug in OS
-> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-> index 92d39b917a..1c51f3f5b6 100644
-> --- a/hw/pci-bridge/pci_expander_bridge.c
-> +++ b/hw/pci-bridge/pci_expander_bridge.c
-> @@ -38,7 +38,6 @@ DECLARE_INSTANCE_CHECKER(PXBBus, PXB_BUS,
->  DECLARE_INSTANCE_CHECKER(PXBBus, PXB_PCIE_BUS,
->                           TYPE_PXB_PCIE_BUS)
->  
-> -#define TYPE_PXB_CXL_BUS "pxb-cxl-bus"
->  DECLARE_INSTANCE_CHECKER(PXBBus, PXB_CXL_BUS,
->                           TYPE_PXB_CXL_BUS)
->  
+>          if (arg_is_const_val(op->args[4], 0)) {
+> diff --git a/tests/tcg/x86_64/test-2413.c b/tests/tcg/x86_64/test-2413.c
+> new file mode 100644
+> index 0000000000..a0e4d25093
+> --- /dev/null
+> +++ b/tests/tcg/x86_64/test-2413.c
+> @@ -0,0 +1,30 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/* Copyright 2024 Linaro, Ltd. */
+> +/* See https://gitlab.com/qemu-project/qemu/-/issues/2413 */
+> +
+> +#include <assert.h>
 
+This also needs:
+
+X86_64_TESTS +=3D test-2413
+
+in the Makefile.
+
+> +
+> +void test(unsigned long *a, unsigned long *d, unsigned long c)
+> +{
+> +    asm("xorl %%eax, %%eax\n\t"
+> +        "xorl %%edx, %%edx\n\t"
+> +        "testb $0x20, %%cl\n\t"
+> +        "sete %%al\n\t"
+> +        "setne %%dl\n\t"
+> +        "shll %%cl, %%eax\n\t"
+> +        "shll %%cl, %%edx\n\t"
+> +        : "=3Da"(*a), "=3Dd"(*d)
+> +        : "c"(c));
+> +}
+> +
+> +int main(void)
+> +{
+> +    long a, c, d;
+> +
+> +    for (c =3D 0; c < 64; c++) {
+> +        test(&a, &d, c);
+> +        assert(a =3D=3D (c & 0x20 ? 0 : 1u << (c & 0x1f)));
+> +        assert(d =3D=3D (c & 0x20 ? 1u << (c & 0x1f) : 0));
+> +    }
+> +    return 0;
+> +}
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
