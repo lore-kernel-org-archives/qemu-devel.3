@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6897CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5292BC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOClj-0005p4-Dv; Mon, 01 Jul 2024 04:52:15 -0400
+	id 1sOClm-00061D-Fh; Mon, 01 Jul 2024 04:52:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sOCjq-00036a-TR
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:19 -0400
+ id 1sOCkG-0003oT-KY
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sOCjp-0005LR-8Z
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:18 -0400
+ id 1sOCkD-0005ak-Rt
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719823816;
+ s=mimecast20190719; t=1719823840;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=KvaElzgdc5LUZDt5B9HkTKyPwMmB6JE1O0fZPWrvisU=;
- b=Bc6iwmLmZpTht2QVM7w8AUsbeBLnm+oJbnvv3xhTsbMWHN9J/SPvHCCF0qINwLfES3RYIA
- 7COlD8ZAjHr/kARn45A4mgfQ1F6hhHDQuBUWpM2eVGg2AlTAzWIKcDgcEN7vLWMx0MBOf1
- 3wUiQgC0MpskYGCpRPbKDe6yX/fBNQY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=FLOs2MLWeFfGVRFiNyOnYfkh03vw78pTCpOtytRgy10=;
+ b=IXjY1dSJcWDTHUzc+IcrjktsmkOKWl5ZHpe6o4NdUjgEGVXYLZ4UfjAO7fiwrx/uNepsgu
+ Hdl/M4hz4WmKMpesMeF4qUcIFCPzZV+EaT2WQ70KoCd1owhQTE++PdpWdV8DkpiqMV+8r1
+ FiMbRYEUGZaNbcMYdLkbiR5j8inWrcs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-VUUO-PPuObq3G5EDmQaIRg-1; Mon,
- 01 Jul 2024 04:50:11 -0400
-X-MC-Unique: VUUO-PPuObq3G5EDmQaIRg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-pGNGqp9TO1CkJC1Yzj2Yow-1; Mon,
+ 01 Jul 2024 04:50:37 -0400
+X-MC-Unique: pGNGqp9TO1CkJC1Yzj2Yow-1
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 786E0193318E; Mon,  1 Jul 2024 08:50:09 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70105196CDCA; Mon,  1 Jul 2024 08:50:34 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.22.9.3])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B36EC1955E80; Mon,  1 Jul 2024 08:50:05 +0000 (UTC)
+ id 48F951956089; Mon,  1 Jul 2024 08:50:30 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
  peter.maydell@linaro.org, clg@redhat.com, yanghliu@redhat.com,
  zhenzhong.duan@intel.com, alex.williamson@redhat.com
-Subject: [PATCH v2 1/7] virtio-iommu: Fix error handling in
- virtio_iommu_set_host_iova_ranges()
-Date: Mon,  1 Jul 2024 10:48:53 +0200
-Message-ID: <20240701084957.1567641-2-eric.auger@redhat.com>
+Subject: [PATCH v2 7/7] virtio-iommu: Revert transient enablement of IOMMU MR
+ in bypass mode
+Date: Mon,  1 Jul 2024 10:48:59 +0200
+Message-ID: <20240701084957.1567641-8-eric.auger@redhat.com>
 In-Reply-To: <20240701084957.1567641-1-eric.auger@redhat.com>
 References: <20240701084957.1567641-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -85,39 +85,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In case no IOMMUPciBus/IOMMUDevice are found we need to properly
-set the error handle and return.
+In 94df5b2180d6 ("virtio-iommu: Fix 64kB host page size VFIO device
+assignment"), in case of bypass mode, we transiently enabled the
+IOMMU MR to allow the set_page_size_mask() to be called and pass
+information about the page size mask constraint of cold plugged
+VFIO devices. Now we do not use the IOMMU MR callback anymore, we
+can just get rid of this hack.
 
-Fixes : Coverity CID 1549006
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Fixes: cf2647a76e ("virtio-iommu: Compute host reserved regions")
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/virtio/virtio-iommu.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ hw/virtio/virtio-iommu.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
 diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index b9a7ddcd14..b708fb96fd 100644
+index dc337a6805..72011d2d11 100644
 --- a/hw/virtio/virtio-iommu.c
 +++ b/hw/virtio/virtio-iommu.c
-@@ -543,10 +543,15 @@ static int virtio_iommu_set_host_iova_ranges(VirtIOIOMMU *s, PCIBus *bus,
-     int ret = -EINVAL;
+@@ -1387,18 +1387,6 @@ static void virtio_iommu_freeze_granule(Notifier *notifier, void *data)
+     VirtIOIOMMU *s = container_of(notifier, VirtIOIOMMU, machine_done);
+     int granule;
  
-     if (!sbus) {
--        error_report("%s no sbus", __func__);
-+        error_setg(errp, "%s: no IOMMUPciBus found!", __func__);
-+        return ret;
-     }
- 
-     sdev = sbus->pbdev[devfn];
-+    if (!sdev) {
-+        error_setg(errp, "%s: no IOMMUDevice found!", __func__);
-+        return ret;
-+    }
- 
-     current_ranges = sdev->host_resv_ranges;
- 
+-    if (likely(s->config.bypass)) {
+-        /*
+-         * Transient IOMMU MR enable to collect page_size_mask requirements
+-         * through memory_region_iommu_set_page_size_mask() called by
+-         * VFIO region_add() callback
+-         */
+-         s->config.bypass = false;
+-         virtio_iommu_switch_address_space_all(s);
+-         /* restore default */
+-         s->config.bypass = true;
+-         virtio_iommu_switch_address_space_all(s);
+-    }
+     s->granule_frozen = true;
+     granule = ctz64(s->config.page_size_mask);
+     trace_virtio_iommu_freeze_granule(BIT_ULL(granule));
 -- 
 2.41.0
 
