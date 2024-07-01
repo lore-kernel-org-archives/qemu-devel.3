@@ -4,90 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCADAC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EBF5C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:45:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOAiD-000439-Uk; Mon, 01 Jul 2024 02:40:30 -0400
+	id 1sOAmQ-00054x-J3; Mon, 01 Jul 2024 02:44:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOAi9-00042t-7j
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:40:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOAhr-0007LV-LK
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:40:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719816003;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oZpa2KWD7NKndd3EVYpX3X1HFtoEsIx4+BlZntlngcc=;
- b=cwaddkS+wk//LVQGOh2Lxnf8u6QzSy1eLM94XRAdcWlvMQ2eef7UmJfqv324nK2n+FbMcl
- XQwF4d/cfxWpZA8bcGvnujdMB4HGPKsfjfyMs1fVUOu728XIJbjDIBlzzRESjNOk0ikhRZ
- 5iZ8n5B/HdAZWqvyeC4y2xxrC/RlZmM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-571-jPWuRj-6NjaCTqhqkXX7zw-1; Mon, 01 Jul 2024 02:39:57 -0400
-X-MC-Unique: jPWuRj-6NjaCTqhqkXX7zw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4257dd7d40dso4845985e9.0
- for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 23:39:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719815996; x=1720420796;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oZpa2KWD7NKndd3EVYpX3X1HFtoEsIx4+BlZntlngcc=;
- b=dDvqiFQ6JhqkK4gjOALxE0KZQ64/4hPs5mIbb6FgUk2PlFTLGKo9fo2o0LFOGWo2Rf
- nlOT3R7+R8IYmeRPBbhK4o0GaNvhT3dqTkfJYRzm4hcn7VFb7/Y2wcy1XPhNJJs3Jl7C
- 7WPnnvvCKrAiAb0CEQa8U0smAURUki4MiWmP372WdETAcnNFf8m7Y/BOjWALFGbw32e9
- sAh4XVnwG48zRKr6RlQlmBn0xQ9n/UqfF6melf2ctXUv6vWcY2JpN8A52qMo5zaE0XS2
- bpQ/24BO0d5noAuJUQGF3nSuITIRz/eIl22bRYCw6Bi1+V5cVaBr8VUAKzjdyxszcxi7
- lxcg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXP9K9mAcVS6a5LF+uUv2OR+H/BVqJ3KFqbcbd/xRTkd9W2Mc2uMnxQq5sA6mDLvumHNBybi/wHtz4eNv785HJ21QJPlSA=
-X-Gm-Message-State: AOJu0YwgHdmQJtTppmvgOGvGl5tY1Nl3oQchHlRBlk+pIgqI7n29f9oY
- x7Nh7QpdqN2k2S3fLvr5tR1MRQp2q+290FnsRNWK3NNOBgJCr890GmcV3WN/GgfHjhBmh9EWpoA
- PiT3xQD68Cu39q6Oe4TqWyBrJncny5scpEMLCRLRl37hGnqNnqEUWUh9adVnPsw5NMF1x6hb2P4
- C+yrg3PwM0j9rEWiuAscSwGMA3G4Y=
-X-Received: by 2002:a05:600c:1c96:b0:421:811b:b83e with SMTP id
- 5b1f17b1804b1-4256d56407amr70771545e9.13.1719815996785; 
- Sun, 30 Jun 2024 23:39:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLduekItFEDdyhOKfE8d1vQflnPdfkpDp6POvZtQ1P6zeH2SZI+ePVJUcUJHSelevhGtunVEdqkVT0OHYVIDc=
-X-Received: by 2002:a05:600c:1c96:b0:421:811b:b83e with SMTP id
- 5b1f17b1804b1-4256d56407amr70771445e9.13.1719815996464; Sun, 30 Jun 2024
- 23:39:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sOAmO-00054H-Va
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:44:48 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sOAmL-0003l5-O9
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:44:48 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxF+hWUIJmBtALAA--.1886S3;
+ Mon, 01 Jul 2024 14:44:39 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8Cx68ZSUIJmdTE3AA--.62799S3; 
+ Mon, 01 Jul 2024 14:44:36 +0800 (CST)
+Subject: Re: [PATCH v3 1/4] hw/intc: Remove loongarch_ipi.c
+From: maobibo <maobibo@loongson.cn>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
+ gaosong <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ qemu-devel@nongnu.org
+Cc: Huacai Chen <chenhuacai@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20240605-loongson3-ipi-v3-0-ddd2c0e03fa3@flygoat.com>
+ <20240605-loongson3-ipi-v3-1-ddd2c0e03fa3@flygoat.com>
+ <e1b8bbd8-2a9d-2417-1123-4aabfdedb684@loongson.cn>
+ <002f4e7e-682b-479b-9c6c-8971a0e6640a@linaro.org>
+ <8d975e9c-c2fd-09c8-7a37-5aebc63656d4@loongson.cn>
+ <9a0f73c6-33e9-4576-9056-6a5fd0718630@linaro.org>
+ <ceebb4ea-a417-0985-d45e-3988d76e2086@loongson.cn>
+Message-ID: <3544da40-d680-20f2-d7af-cf304d07bc8d@loongson.cn>
+Date: Mon, 1 Jul 2024 14:44:34 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20240627140628.1025317-1-pbonzini@redhat.com>
- <20240627140628.1025317-3-pbonzini@redhat.com>
- <a8f5d517-7037-4146-824e-3f985774c780@intel.com>
- <CABgObfa24iTNt7V_VjsKYRhLyD3pt6oGDHEUFxe1A_A-4HF7MA@mail.gmail.com>
- <ZoIvUtVOgK91UuvF@intel.com>
-In-Reply-To: <ZoIvUtVOgK91UuvF@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 1 Jul 2024 08:39:44 +0200
-Message-ID: <CABgObfa_OESgS6uAP8NoFvGAXVW_z=XWi5TA2tVudyfQi7d_rQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] target/i386: drop AMD machine check bits from Intel
- CPUID
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel <qemu-devel@nongnu.org>, 
- John Allen <john.allen@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <ceebb4ea-a417-0985-d45e-3988d76e2086@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8Cx68ZSUIJmdTE3AA--.62799S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxuFWftr4kKr43Gr45XFy5GFX_yoW7tr4rpF
+ WfAF1aqFW8Jr1rJr10qr1UXryqyr1Ut3W8XF13AF18Gr4qvr1qgF18Xr109FyUArW8Cr10
+ vr1UGFy7ZFyUAFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j0
+ sjUUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.587,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,48 +91,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 1, 2024 at 6:08=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrote=
-:
-> > > It seems to adjust it based on vendor in kvm_arch_get_supported_cpuid=
-()
-> > > is better than in x86_cpu_get_supported_feature_word(). Otherwise
-> > > kvm_arch_get_supported_cpuid() still returns "risky" value for Intel =
-VMs.
-> >
-> > But the cpuid bit is only invalid for Intel *guest* vendor, not host. I=
-t is
-> > not a problem to have it if you run on Intel host but have a guest mode=
-l
-> > with AMD vendor.
-> >
-> > I will check if there are other callers of kvm_arch_get_supported_cpuid=
-(),
-> > or callers of x86_cpu_get_supported_feature_word() with NULL cpu, that
-> > might care about the difference.
->
-> Another example is CPUID_EXT3_TOPOEXT, though it's a no_autoenable_flags,
-> it can be set by "-cpu host,+topoext" on Intel platforms.
+Also this patch is problematic on LoongArch.
 
-That was done by commit 7210a02c585 ("i386: Disable TOPOEXT by default
-on "-cpu host"", 2018-08-16) which however does not explain what the
-bug was. It talks about missing or inconsistent cache topology
-information, but that's not precise enough to decide what the problem
-was.
+The original patch is to search physical cpuid rather than logic cpuid.
 
-> For this case, we have recognized that that the host/max CPU should only
-> contain vender specific features, and I think it would be hard to expand
-> such a rule afterwards, especially since there's other x86 vender like
-> zhaoxin who implement a subset of Intel/AMD:
->
-> What about a new flag "host_bare_metal_check" in FeatureWordInfo? Then
-> if a feature is marked as "host_bare_metal_check", in addition to the
-> current checks in x86_cpu_get_supported_feature_word(), bare-metal CPUID
-> check is also needed (by host_cpuid()) for "host" CPU.
+We want to make ipi module better and better, however now it comes back 
+to initial state at the beginning :(
 
-I don't see why it's needed. The bare metal vendor is not visible to
-the guest, therefore it should have no bearing on whether a bit is
-included in CPUID.
+commit 03ca348b6b9038ce284916b36c19f700ac0ce7a6
+Author: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Date:   Wed Jun 5 10:04:27 2024
 
-Paolo
+     hw/intc/loongson_ipi: Replace ipi_getcpu with cpu_by_arch_id
+
+     cpu_by_arch_id is doing the same thing as our ipi_getcpu logic.
+
+     Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+     Reviewed-by: Song Gao <gaosong@loongson.cn>
+     Message-ID: <20240605-loongson3-ipi-v3-4-ddd2c0e03fa3@flygoat.com>
+     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+
+Regards
+Bibo Mao
+
+On 2024/7/1 上午9:35, maobibo wrote:
+> Hi Philippe,
+> 
+> On 2024/6/27 下午9:02, Philippe Mathieu-Daudé wrote:
+>> On 27/6/24 04:44, gaosong wrote:
+>>> 在 2024/6/26 下午8:10, Philippe Mathieu-Daudé 写道:
+>>>> Hi Bibo,
+>>>>
+>>>> On 26/6/24 06:11, maobibo wrote:
+>>>>>
+>>>>>
+>>>>> On 2024/6/5 上午10:15, Jiaxun Yang wrote:
+>>>>>> It was missed out in previous commit.
+>>>>>>
+>>>>>> Fixes: b4a12dfc2132 ("hw/intc/loongarch_ipi: Rename as loongson_ipi")
+>>>>>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>>>>> ---
+>>>>>>   hw/intc/loongarch_ipi.c | 347 
+>>>>>> ------------------------------------------------
+>>>>>>   1 file changed, 347 deletions(-)
+>>>>
+>>>>
+>>>>>> -static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
+>>>>>> -{
+>>>>>> -    LoongArchIPI *s = LOONGARCH_IPI(dev);
+>>>>>> -    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+>>>>>> -    int i;
+>>>>>> -
+>>>>>> -    if (s->num_cpu == 0) {
+>>>>>> -        error_setg(errp, "num-cpu must be at least 1");
+>>>>>> -        return;
+>>>>>> -    }
+>>>>>> -
+>>>>>> -    memory_region_init_io(&s->ipi_iocsr_mem, OBJECT(dev), 
+>>>>>> &loongarch_ipi_ops,
+>>>>>> -                          s, "loongarch_ipi_iocsr", 0x48);
+>>>>>> -
+>>>>>> -    /* loongarch_ipi_iocsr performs re-entrant IO through 
+>>>>>> ipi_send */
+>>>>>> -    s->ipi_iocsr_mem.disable_reentrancy_guard = true;
+>>>>>> -
+>>>>>> -    sysbus_init_mmio(sbd, &s->ipi_iocsr_mem);
+>>>>>> -
+>>>>>> -    memory_region_init_io(&s->ipi64_iocsr_mem, OBJECT(dev),
+>>>>>> -                          &loongarch_ipi64_ops,
+>>>>>> -                          s, "loongarch_ipi64_iocsr", 0x118);
+>>>>>> -    sysbus_init_mmio(sbd, &s->ipi64_iocsr_mem);
+>>>>> It is different with existing implementation.
+>>>>>
+>>>>> With hw/intc/loongson_ipi.c, every vcpu has one ipi_mmio_mem, 
+>>>>> however on loongarch ipi machine, there is no ipi_mmio_mem memory 
+>>>>> region.
+>>>>>
+>>>>> So if machine has 256 vcpus, there will be 256 ipi_mmio_mem memory 
+>>>>> regions. In function sysbus_init_mmio(), memory region can not exceed
+>>>>> QDEV_MAX_MMIO (32).  With so many memory regions, it slows down memory
+>>>>> region search speed also.
+>>>>>
+>>>>> void sysbus_init_mmio(SysBusDevice *dev, MemoryRegion *memory)
+>>>>> {
+>>>>>      int n;
+>>>>>
+>>>>>      assert(dev->num_mmio < QDEV_MAX_MMIO);
+>>>>>      n = dev->num_mmio++;
+>>>>>      dev->mmio[n].addr = -1;
+>>>>>      dev->mmio[n].memory = memory;
+>>>>> }
+>>>>>
+>>>>> Can we revert this patch? We want to do production usable by real 
+>>>>> users rather than show pure technology.
+>>>>
+>>>> Since commit b4a12dfc2132 this file is not built/tested anymore:
+>>>>
+>>>> -specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: 
+>>>> files('loongarch_ipi.c'))
+>>>> +specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: 
+>>>> files('loongson_ipi.c'))
+>>>>
+>>>> We don't want to maintain dead code.
+>>>>
+>>> Hi,  Philippe
+>>>
+>>> It is commmit 49eba52a5 that causes Loongarch to fail to start.
+>>>
+>>> What bibao means is that LoongArch and mips do not share 
+>>> "lloongson_ipi.c".
+>>> This avoids mutual influence.
+>>>
+>>>
+>>> My understanding of the next sentence is as follows.
+>>>
+>>> Nowadays, most of the open source operating systems in China use the 
+>>> latest QEMU.
+>>> e.g. OpenEuler/OpenAnolis/OpenCloudOS, etc. These operating systems 
+>>> have a large
+>>>   number of real users. so we need to maintain the stability of the 
+>>> LoongArch architecture
+>>> of the QEMU community as much as possible. This will reduce 
+>>> maintenance costs.
+>>
+>> I'm glad there is a such large number of users :)
+>>
+>>> Therefore, we would like to restore the 'loongarch_ipi.c' file. what 
+>>> do you think?
+>>
+>> My preference on "reducing maintenance cost" is code reuse instead of
+>> duplication.
+>>
+>> Before reverting, lets try to fix the issue. I suggested a v2:
+>> https://lore.kernel.org/qemu-devel/20240627125819.62779-2-philmd@linaro.org 
+>>
+> Sorry for late reply.
+> 
+> How about split loongson_ipi.c into 
+> loongson_ipi_base.c/loongson_ipi_loongson.c/loongson_ipi_loongarch.c,
+> 
+> File loongson_ipi_base.c contains the common code, loongson_ipi_xxx.c 
+> contains arch specific. Soon we will submit irqchip in kernel function,
+> it will be much different for architectures, since ioctl command is 
+> different for two architectures to save/restore ipi registers.
+> 
+> Regards
+> Bibo Mao
+> 
+>>
+>> That said, both current patch and the suggested fix pass our
+>> Avocado CI test suite (running tests/avocado/machine_loongarch.py).
+>>
+>> Is your use case not covered? Could you expand the CI tests so
+>> we don't hit this problem again? (Also we could reproduce and
+>> fix more easily).
+>>
+>> Thanks,
+>>
+>> Phil.
+> 
 
 
