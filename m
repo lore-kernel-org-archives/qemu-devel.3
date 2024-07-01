@@ -4,64 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D77DC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 22:23:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCB92C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 22:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOPQY-0000UB-Pu; Mon, 01 Jul 2024 18:23:14 -0400
+	id 1sOPlE-0005Vj-0Y; Mon, 01 Jul 2024 18:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sOPQS-0000TA-HM; Mon, 01 Jul 2024 18:23:08 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sOPQQ-00078l-2h; Mon, 01 Jul 2024 18:23:08 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 362F54E6004;
- Tue, 02 Jul 2024 00:23:03 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id ycLgBc1TjxI8; Tue,  2 Jul 2024 00:23:00 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id DA1EB4E6001; Tue, 02 Jul 2024 00:23:00 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D7B1B746E3B;
- Tue, 02 Jul 2024 00:23:00 +0200 (CEST)
-Date: Tue, 2 Jul 2024 00:23:00 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-cc: Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- David Gibson <david@gibson.dropbear.id.au>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Alexey Kardashevskiy <aik@ozlabs.ru>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v2 00/15] Fix check-qtest-ppc64 sanitizer errors
-In-Reply-To: <20240701161033-mutt-send-email-mst@kernel.org>
-Message-ID: <c7ee820a-20e6-2891-1059-643e68053647@eik.bme.hu>
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240701161033-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sOPlC-0005VX-Mc
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 18:44:34 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sOPlA-00032J-7D
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 18:44:34 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52caebc6137so2912202e87.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 15:44:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719873869; x=1720478669; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sf82CyGT2KHh8k/j9sWHzVKPUD8ck5NskBySCFiD0JQ=;
+ b=ZwZYyXMuZJyECHZZQHJkyx+TxTRaLB3tyYswD4Zi9CS49hcYPMOiXieV1salitprpY
+ 9tT8lC1L1EtQAAKRrQvhPaPvihxDRxy+RSPnjIKWp0+JcC9OAZrmvjoUftFBGrdQzUHc
+ +MulOrTo10rnVu+NuDy2a5a40Zq542pjk5gkrqeZI02Hi/M7B/TUd/ZTNtu99E64RPNZ
+ YK8zuRCHtrY/QzPF8gfqNEtsBOO35A5WJIg92TL+fkclde0dW/zkfHqjhSFEJCZkuf6h
+ g/1KZb8jdg57SalIDM6OG1EzlIrj417E0bASWi/aVUeHXC+VK3F7u3/ehj8zTBgQtO9+
+ 2OWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719873869; x=1720478669;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sf82CyGT2KHh8k/j9sWHzVKPUD8ck5NskBySCFiD0JQ=;
+ b=vsN6HpfpGGAw6Hu6Bnt1MNGyhwp/1zSsTEk+3Vm0utP7hv1FHk2/QGP+NxUAVsC/pf
+ Ue5TyseydybnEkyPfotugXF/7dl2sLHvN8zE3pqVq2CjGNhAyuqD4ILghFHhZWSrZRVX
+ ZTrxqGM9dmFpLyJHhYa4VoyfA4ovN9tjJavBsEfGytJhB/rT55W1vkVHubsKnkC6ytLp
+ 4tYN4UiR6zjUlEeyYjtCpqJXJhpjYOIeqY9AueeEJbllY+xZ2mCkeoWVprqoAyJ+I8Be
+ 1Ho9q4Nlo29X8Gce+fNqVXQ1oVaxsquy7A6G0XlodqIraFJdv2PLwDg4ilwEaVcSZXuX
+ f2zQ==
+X-Gm-Message-State: AOJu0YyiLyJeWTbVFG6h0cPOB1hA+usnYdmyq0Yt3odX6hmuUf3lEyYd
+ aXom3ows5BHW27m+Hoek+JRIxL1/+Za1SLbNoCAsS6qPwU7XmW7At6hmBQWY
+X-Google-Smtp-Source: AGHT+IHWKetgrLPhxdzv9x0e7HCZWLzAzA+Cb1d+CG0m2IxNg7Q00FAe96b6YrkGhExYpUzmQX4I4Q==
+X-Received: by 2002:a05:6512:3b2c:b0:52e:7f16:96b6 with SMTP id
+ 2adb3069b0e04-52e82687e16mr4837805e87.37.1719873867477; 
+ Mon, 01 Jul 2024 15:44:27 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-52e7ab27b8csm1586825e87.139.2024.07.01.15.44.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Jul 2024 15:44:25 -0700 (PDT)
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ edgar.iglesias@amd.com, xen-devel@lists.xenproject.org,
+ Anthony PERARD <anthony.perard@vates.tech>
+Subject: [PATCH v1 2/2] xen: mapcache: Fix unmapping of first entries in
+ buckets
+Date: Tue,  2 Jul 2024 00:44:21 +0200
+Message-ID: <20240701224421.1432654-3-edgar.iglesias@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240701224421.1432654-1-edgar.iglesias@gmail.com>
+References: <20240701224421.1432654-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1296861569-1719872580=:89103"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,97 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
---3866299591-1296861569-1719872580=:89103
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+This fixes the clobbering of the entry->next pointer when
+unmapping the first entry in a bucket of a mapcache.
 
-On Mon, 1 Jul 2024, Michael S. Tsirkin wrote:
-> On Thu, Jun 27, 2024 at 10:37:43PM +0900, Akihiko Odaki wrote:
->> Based-on: <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
->> ("[PATCH] cpu: fix memleak of 'halt_cond' and 'thread'")
->>
->> I saw various sanitizer errors when running check-qtest-ppc64. While
->> I could just turn off sanitizers, I decided to tackle them this time.
->>
->> Unfortunately, GLib does not free test data in some cases so some
->> sanitizer errors remain. All sanitizer errors will be gone with this
->> patch series combined with the following change for GLib:
->> https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4120
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->
->
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
->
-> who's merging all this?
+Fixes: 123acd816d ("xen: mapcache: Unmap first entries in buckets")
+Reported-by: Anthony PERARD <anthony.perard@vates.tech>
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+---
+ hw/xen/xen-mapcache.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-Maybe needs to be split. Mark had an alternative for macio which was 
-picked up by Philippe if I'm not mistaken. I've sent an alternative for 
-vt82c686 which is still discussed but could belong to Philippe as well. 
-PPC parts could be taken by the PPC maintainers if there were any active 
-at the moment and I don't know who maintains tests normally or other misc 
-areas.
+diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+index 5f23b0adbe..18ba7b1d8f 100644
+--- a/hw/xen/xen-mapcache.c
++++ b/hw/xen/xen-mapcache.c
+@@ -597,7 +597,17 @@ static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
+         pentry->next = entry->next;
+         g_free(entry);
+     } else {
+-        memset(entry, 0, sizeof *entry);
++        /*
++         * Invalidate mapping but keep entry->next pointing to the rest
++         * of the list.
++         *
++         * Note that lock is already zero here, otherwise we don't unmap.
++         */
++        entry->paddr_index = 0;
++        entry->vaddr_base = NULL;
++        entry->valid_mapping = NULL;
++        entry->flags = 0;
++        entry->size = 0;
+     }
+ }
+ 
+-- 
+2.43.0
 
-Regards,
-BALATON Zoltan
-
->> ---
->> Changes in v2:
->> - Rebased to "[PATCH] cpu: fix memleak of 'halt_cond' and 'thread'".
->>   (Philippe Mathieu-Daudé)
->> - Converted IRQs into GPIO lines and removed one qemu_irq usage.
->>   (Peter Maydell)
->> - s/suppresses/fixes/ (Michael S. Tsirkin)
->> - Corrected title of patch "hw/virtio: Free vqs after vhost_dev_cleanup()"
->>   (was "hw/virtio: Free vqs before vhost_dev_cleanup()")
->> - Link to v1: https://lore.kernel.org/r/20240626-san-v1-0-f3cc42302189@daynix.com
->>
->> ---
->> Akihiko Odaki (15):
->>       cpu: Free cpu_ases
->>       hw/ide: Convert macio ide_irq into GPIO line
->>       hw/ide: Remove internal DMA qemu_irq
->>       hw/isa/vt82c686: Define a GPIO line between vt82c686 and i8259
->>       spapr: Free stdout path
->>       ppc/vof: Fix unaligned FDT property access
->>       hw/virtio: Free vqs after vhost_dev_cleanup()
->>       migration: Free removed SaveStateEntry
->>       memory: Do not create circular reference with subregion
->>       tests/qtest: Use qtest_add_data_func_full()
->>       tests/qtest: Free unused QMP response
->>       tests/qtest: Free old machine variable name
->>       tests/qtest: Delete previous boot file
->>       tests/qtest: Free paths
->>       tests/qtest: Free GThread
->>
->>  include/hw/ppc/mac_dbdma.h           |  5 +++--
->>  hw/core/cpu-common.c                 |  1 +
->>  hw/ide/macio.c                       | 18 +++++++++++++-----
->>  hw/isa/vt82c686.c                    |  7 ++++---
->>  hw/misc/macio/mac_dbdma.c            | 10 +++++-----
->>  hw/ppc/spapr_vof.c                   |  2 +-
->>  hw/ppc/vof.c                         |  2 +-
->>  hw/virtio/vhost-user-base.c          |  2 ++
->>  migration/savevm.c                   |  2 ++
->>  system/memory.c                      | 11 +++++++++--
->>  tests/qtest/device-introspect-test.c |  7 +++----
->>  tests/qtest/libqtest.c               |  3 +++
->>  tests/qtest/migration-test.c         | 18 +++++++++++-------
->>  tests/qtest/qos-test.c               | 16 ++++++++++++----
->>  tests/qtest/vhost-user-test.c        |  6 +++---
->>  15 files changed, 73 insertions(+), 37 deletions(-)
->> ---
->> base-commit: af799a2337c3e39994411f90631905d809a41da4
->> change-id: 20240625-san-097afaf4f1c2
->>
->> Best regards,
->> --
->> Akihiko Odaki <akihiko.odaki@daynix.com>
->
->
->
---3866299591-1296861569-1719872580=:89103--
 
