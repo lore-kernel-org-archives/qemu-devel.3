@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B593C3065A
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77AF3C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOIVP-0004GD-9t; Mon, 01 Jul 2024 10:59:47 -0400
+	id 1sOIUy-0003wD-5a; Mon, 01 Jul 2024 10:59:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOIVN-00047L-Kv
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sOIUw-0003t3-FQ
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOIVH-0005Uz-9G
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:45 -0400
+ id 1sOIUt-0005Ea-Tw
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719845978;
+ s=mimecast20190719; t=1719845955;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=L1+NBzK4iA++gxlMtSNv140MQlgSKu48htjyD75ufEs=;
- b=Se2ibSAeyu2xxxxKMR1oikZg66mpj+dMsc11RAqDwQZTEZFfIihyr7uiDOkG4O1W3ho5mh
- HR1u5hYjTOjVKg4ZZcadGJdO6Uj8PsP4zHe1gzyQu81sPDNcVzRbsEZO6UWKFDhioae1s8
- RdY8YZNKfW3sHvI05I48+ghYj76kfWA=
+ bh=ZZE6DVkDuQcxnlYAIOtl14LqCPg3/XUa+gT7zaaHeP4=;
+ b=gs75Wxy7fnFHMJJlWyGhIUQOnbBC4+t6ZX8k6wTEnlZVLkKvo/fiz+/hAQeF14qm8YdCTo
+ wvcbihFGCxGPgTdeGSwHCB26GarE3Yo4QT55kmnSg1SO7Pjo/i5MkVSLyu+0X+cpwyIx/4
+ uqC+/j1Rv0Kq9+Xpdx0I7RAYl7XQm70=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-p9dS2SUYOtWrIOMcy1owPA-1; Mon, 01 Jul 2024 10:59:37 -0400
-X-MC-Unique: p9dS2SUYOtWrIOMcy1owPA-1
+ us-mta-73-5Z3Vlh5VNW20Q9C7n4Jwvw-1; Mon, 01 Jul 2024 10:59:13 -0400
+X-MC-Unique: 5Z3Vlh5VNW20Q9C7n4Jwvw-1
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4258675a531so4696995e9.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 07:59:37 -0700 (PDT)
+ 5b1f17b1804b1-42490ae735dso29810615e9.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 07:59:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719845975; x=1720450775;
+ d=1e100.net; s=20230601; t=1719845952; x=1720450752;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=L1+NBzK4iA++gxlMtSNv140MQlgSKu48htjyD75ufEs=;
- b=Vhuhg3vQ94rrPLrbkRn0xLUTiMRaC7Q5KCozUgTPyWV1aRTqkfw0yPNr0P6JakQmyu
- of6cc2zNKNVErpImfdFr9rOi36PkPaN86VccysUJ22cOHLEbcbpuYfzEitAPQYrLWPqU
- LB/aJDXIocvZTTePG1ICN8n69ffO8igMCcE/g5v5FEajcCd9sJqbbESxUVlLtYVIpzxy
- TkLb+PYYUR+pxkMjScdYQBq0kHVjBexguCcUs1me++T4Xk2//O1Op84fllDKEWmVUQQL
- 5DeEPmy5TusYPH63lWPeKOTTi7gNkFwy9DzRK/63SWIYgElSQq3eKhSsMGFkDo0r5OCO
- I8cA==
-X-Gm-Message-State: AOJu0YyfG0JwIyHILbXZAjEXGvdkr/CrvEHPJe7+9LzM3By7VW0IsBU8
- IvfBuC24cuxb9+GK/7Me3cU7sYfOsegVZTG82o8orsWK3j5LFJ/+10AAw2fGqaFMfE7Bozo3k1o
- /hUIc/DTkxvMjC17U0zy8YT0IF1+WhJK83mU2PkrlDk+FWCXGo3+dhA74vUxGNXGG2SVPHP12Dw
- cRZrq5i93NaCCS4WpJbd+zKIfHeGGZwFdFyM+2
-X-Received: by 2002:a05:6000:136f:b0:367:1da6:e419 with SMTP id
- ffacd0b85a97d-3677571c211mr5077508f8f.46.1719845975210; 
- Mon, 01 Jul 2024 07:59:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOqL7Nm7rykTZQM85jvkNjOHlSRggswDFFctiJZAELgEEO0Z37teVQhYg2YQBb0MCbP0LWLA==
-X-Received: by 2002:a05:6000:136f:b0:367:1da6:e419 with SMTP id
- ffacd0b85a97d-3677571c211mr5077485f8f.46.1719845974774; 
- Mon, 01 Jul 2024 07:59:34 -0700 (PDT)
+ bh=ZZE6DVkDuQcxnlYAIOtl14LqCPg3/XUa+gT7zaaHeP4=;
+ b=PNqmJ45qGwe4k6XvIyytHTOXif0Mgj/4WJTeHk9l3gFf7AO4BgyQWgzdL/OFAKxOKi
+ F20LNxMfPC2GOJoaKL0VTou/Uah/p4iysMXhoLi3pkcv9MBSD8I0ytBR4RQBGyWohDWA
+ qpWBw6F/8tszFi1sPLS3nvh44f8qRAcos2VHS6cWyMSE7k1Xh6kx9FotjrJAucvqjXS0
+ d6Te7v5TB106AVzNgrJRsTXSDibu/5g1Exal6zJcmPnYuNUpMZY9HHehiEeFvF3N9QZg
+ ZnG9AlrNCf7iDBPseGICCOZl1VwtsUULFOysPpwisGD5rwctAakDCn5gHyXrAj9z6jP2
+ ZxNA==
+X-Gm-Message-State: AOJu0YxIZZdkRaNlahaoAVCHhIlISAyPJy70s836jIGz8w3ziQINb54D
+ EwvpjPQfDAkqRfeNWfaof/Vs0VN49CT1TZFpICOb/Z65Z/3LgTCHoTKARm441zckPbhy2tEBxkR
+ 5iPJkxPJ5RRPaIgC7ipOgms6RZEqxW1fGOye63YPIo3a4I5hhsbYbGGmEpLUHH9NWaoi1+PKTks
+ IbC9T22pvxYqgfoeZ6g/+R6Bgn4MC6sxC+rGCj
+X-Received: by 2002:a05:600c:5129:b0:425:63b9:ae2c with SMTP id
+ 5b1f17b1804b1-4257a02008fmr51352905e9.27.1719845951773; 
+ Mon, 01 Jul 2024 07:59:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEyfqBCnafqIIFZ+4imKiXRlHo8ocrMrnhO9bcec/S2pttQQ3WOh4sF1xTFfPsNuQ4Dn/Nldw==
+X-Received: by 2002:a05:600c:5129:b0:425:63b9:ae2c with SMTP id
+ 5b1f17b1804b1-4257a02008fmr51352685e9.27.1719845951384; 
+ Mon, 01 Jul 2024 07:59:11 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0d8ed0sm10291911f8f.28.2024.07.01.07.59.33
+ 5b1f17b1804b1-42577a0c286sm76291075e9.0.2024.07.01.07.59.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 07:59:34 -0700 (PDT)
+ Mon, 01 Jul 2024 07:59:10 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -75,16 +75,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 13/14] rust: introduce alternative to offset_of!
-Date: Mon,  1 Jul 2024 16:58:45 +0200
-Message-ID: <20240701145853.1394967-14-pbonzini@redhat.com>
+Subject: [PATCH 05/14] rust: define wrappers for Error
+Date: Mon,  1 Jul 2024 16:58:37 +0200
+Message-ID: <20240701145853.1394967-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240701145853.1394967-1-pbonzini@redhat.com>
 References: <20240701145853.1394967-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,242 +108,297 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow working with Rust versions prior to 1.77.  The code was
-taken from Rust's Discourse platform and is used with permission of
-the author.
+The wrappers for Error provide the following functionality:
+
+- a struct that implements std::error::Error and can be filled with
+  information similar to what would go into a C Error* (location, message).
+
+- functionality similar to error_prepend() via the "cause()"
+  member of std::error::Error.
+
+- converting a Result<> into a value that can be returned to C,
+  filling in an Error** (like error_propagate() would do) if the
+  Result<> contains an error; useful for callbacks written in Rust
+
+- converting a C Error* into a Result that can be returned to Rust,
+  useful for Rust wrappers of C functions
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qemu/Cargo.toml                 |  3 +
- qemu/build.rs                   |  5 ++
- qemu/src/hw/core/device_impl.rs |  4 +-
- qemu/src/lib.rs                 |  4 ++
- qemu/src/qom/object_impl.rs     | 13 +++--
- qemu/src/util/mod.rs            |  1 +
- qemu/src/util/offset_of.rs      | 99 +++++++++++++++++++++++++++++++++
- qemu/tests/main.rs              | 11 +++-
- 9 files changed, 137 insertions(+), 10 deletions(-)
- create mode 100644 qemu/build.rs
- create mode 100644 qemu/src/util/offset_of.rs
+ qemu/src/lib.rs        |   2 +
+ qemu/src/util/error.rs | 241 +++++++++++++++++++++++++++++++++++++++++
+ qemu/src/util/mod.rs   |   1 +
+ 3 files changed, 244 insertions(+)
+ create mode 100644 qemu/src/util/error.rs
 
-diff --git a/qemu/Cargo.toml b/qemu/Cargo.toml
-index a07a449..93808a5 100644
---- a/qemu/Cargo.toml
-+++ b/qemu/Cargo.toml
-@@ -12,3 +12,6 @@ cstr = { version = "=0.2.10" }
- 
- [dev-dependencies]
- matches = ">=0"
-+
-+[build-dependencies]
-+version_check = { version = "~0.9" }
-diff --git a/qemu/build.rs b/qemu/build.rs
-new file mode 100644
-index 0000000..34f7b49
---- /dev/null
-+++ b/qemu/build.rs
-@@ -0,0 +1,5 @@
-+fn main() {
-+    if let Some(true) = version_check::is_min_version("1.77.0") {
-+        println!("cargo:rustc-cfg=has_offset_of");
-+    }
-+}
-diff --git a/qemu/src/hw/core/device_impl.rs b/qemu/src/hw/core/device_impl.rs
-index 80b0e5e..b1d2f04 100644
---- a/qemu/src/hw/core/device_impl.rs
-+++ b/qemu/src/hw/core/device_impl.rs
-@@ -111,7 +111,7 @@ macro_rules! qdev_prop {
-             $kind,
-             $name,
-             (<$crate::conf_type!($type) as ConstDefault>::DEFAULT).$field,
--            <$type as $crate::DeviceTypeImpl>::CONF_OFFSET + std::mem::offset_of!($crate::conf_type!($type), $field)
-+            <$type as $crate::DeviceTypeImpl>::CONF_OFFSET + $crate::offset_of!($crate::conf_type!($type), $field)
-         )
-     };
- }
-@@ -126,7 +126,7 @@ macro_rules! qdev_define_type {
-             @extends $super $(,$supers)*, $crate::Object);
- 
-         unsafe impl $crate::DeviceTypeImpl for $struct {
--            const CONF_OFFSET: usize = std::mem::offset_of!($struct, conf);
-+            const CONF_OFFSET: usize = $crate::offset_of!($struct, conf);
- 
-             fn properties() -> *const $crate::Property {
-                 static mut PROPERTIES: &'static [$crate::Property] = &[$($props),+];
 diff --git a/qemu/src/lib.rs b/qemu/src/lib.rs
-index 3f0491c..2d43a25 100644
+index c48edcf..5f926b8 100644
 --- a/qemu/src/lib.rs
 +++ b/qemu/src/lib.rs
-@@ -31,3 +31,7 @@ pub use util::foreign::IntoNative;
- pub use util::foreign::OwnedPointer;
- pub use util::zeroed::Zeroed;
- pub type Result<T> = std::result::Result<T, Error>;
-+
-+// with_offsets is exported directly from util::offset_of
-+#[cfg(has_offset_of)]
-+pub use std::mem::offset_of;
-diff --git a/qemu/src/qom/object_impl.rs b/qemu/src/qom/object_impl.rs
-index 61546b6..b1768b9 100644
---- a/qemu/src/qom/object_impl.rs
-+++ b/qemu/src/qom/object_impl.rs
-@@ -95,11 +95,14 @@ unsafe fn rust_type_register<T: TypeImpl + ObjectImpl>() {
- #[macro_export]
- macro_rules! qom_define_type {
-     ($name:expr, $struct:ident, $conf_ty:ty, $state_ty:ty; @extends $super:ty $(,$supers:ty)*) => {
--        struct $struct {
--            // self.base dropped by call to superclass instance_finalize
--            base: std::mem::ManuallyDrop<$super>,
--            conf: $conf_ty,
--            state: $state_ty,
-+        $crate::with_offsets! {
-+            #[repr(C)]
-+            struct $struct {
-+                // self.base dropped by call to superclass instance_finalize
-+                base: std::mem::ManuallyDrop<$super>,
-+                conf: $conf_ty,
-+                state: $state_ty,
-+            }
-         }
+@@ -4,7 +4,9 @@
+ pub mod bindings;
  
-         // Define IsA markers for the struct itself and all the superclasses
+ pub mod util;
++pub use util::error::Error;
+ pub use util::foreign::CloneToForeign;
+ pub use util::foreign::FromForeign;
+ pub use util::foreign::IntoNative;
+ pub use util::foreign::OwnedPointer;
++pub type Result<T> = std::result::Result<T, Error>;
+diff --git a/qemu/src/util/error.rs b/qemu/src/util/error.rs
+new file mode 100644
+index 0000000..e7e6f2e
+--- /dev/null
++++ b/qemu/src/util/error.rs
+@@ -0,0 +1,241 @@
++//! Error class for QEMU Rust code
++//!
++//! @author Paolo Bonzini
++
++use crate::bindings;
++use crate::bindings::error_free;
++use crate::bindings::error_get_pretty;
++use crate::bindings::error_setg_internal;
++
++use std::ffi::CStr;
++use std::fmt::{self, Display};
++use std::ptr;
++
++use crate::util::foreign::{CloneToForeign, FromForeign, OwnedPointer};
++
++#[derive(Debug, Default)]
++pub struct Error {
++    msg: Option<String>,
++    /// Appends the print string of the error to the msg if not None
++    cause: Option<Box<dyn std::error::Error>>,
++    location: Option<(String, u32)>,
++}
++
++impl std::error::Error for Error {
++    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
++        self.cause.as_deref()
++    }
++
++    #[allow(deprecated)]
++    fn description(&self) -> &str {
++        self.msg
++            .as_deref()
++            .or_else(|| self.cause.as_deref().map(std::error::Error::description))
++            .unwrap_or("error")
++    }
++}
++
++impl Display for Error {
++    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
++        let mut prefix = "";
++        if let Some((ref file, line)) = self.location {
++            write!(f, "{}:{}", file, line)?;
++            prefix = ": ";
++        }
++        if let Some(ref msg) = self.msg {
++            write!(f, "{}{}", prefix, msg)?;
++            prefix = ": ";
++        }
++        if let Some(ref cause) = self.cause {
++            write!(f, "{}{}", prefix, cause)?;
++        } else if prefix.is_empty() {
++            f.write_str("unknown error")?;
++        }
++        Ok(())
++    }
++}
++
++impl From<&str> for Error {
++    fn from(msg: &str) -> Self {
++        Error {
++            msg: Some(String::from(msg)),
++            cause: None,
++            location: None,
++        }
++    }
++}
++
++impl From<std::io::Error> for Error {
++    fn from(error: std::io::Error) -> Self {
++        Error {
++            msg: None,
++            cause: Some(Box::new(error)),
++            location: None,
++        }
++    }
++}
++
++impl Error {
++    /// Create a new error, prepending `msg` to the
++    /// description of `cause`
++    pub fn with_error<E: std::error::Error + 'static>(msg: &str, cause: E) -> Self {
++        Error {
++            msg: Some(String::from(msg)),
++            cause: Some(Box::new(cause)),
++            location: None,
++        }
++    }
++
++    /// Create a new error, prepending `file:line: msg` to the
++    /// description of `cause`
++    pub fn with_error_file_line<E: std::error::Error + 'static>(
++        msg: &str,
++        cause: E,
++        file: &str,
++        line: u32,
++    ) -> Self {
++        Error {
++            msg: Some(String::from(msg)),
++            cause: Some(Box::new(cause)),
++            location: Some((String::from(file), line)),
++        }
++    }
++
++    /// Create a new error with format `file:line: msg`
++    pub fn with_file_line(msg: &str, file: &str, line: u32) -> Self {
++        Error {
++            msg: Some(String::from(msg)),
++            cause: None,
++            location: Some((String::from(file), line)),
++        }
++    }
++
++    /// Consume a result, returning false if it is an error and
++    /// true if it is successful.  The error is propagated into
++    /// `errp` like the C API `error_propagate` would do.
++    ///
++    /// # Safety
++    ///
++    /// `errp` must be valid; typically it is received from C code
++    pub unsafe fn bool_or_propagate<T>(
++        result: Result<(), Self>,
++        errp: *mut *mut bindings::Error,
++    ) -> bool {
++        Self::ok_or_propagate(result, errp).is_some()
++    }
++
++    /// Consume a result, returning a `NULL` pointer if it is an
++    /// error and a C representation of the contents if it is
++    /// successful.  The error is propagated into `errp` like
++    /// the C API `error_propagate` would do.
++    ///
++    /// # Safety
++    ///
++    /// `errp` must be valid; typically it is received from C code
++    pub unsafe fn ptr_or_propagate<T: CloneToForeign>(
++        result: Result<T, Self>,
++        errp: *mut *mut bindings::Error,
++    ) -> *mut T::Foreign {
++        Self::ok_or_propagate(result, errp).map_or(ptr::null_mut(), |ref x| {
++            CloneToForeign::clone_to_foreign_ptr(x)
++        })
++    }
++
++    /// Consume a result and return `self.ok()`, but also propagate a
++    /// possible error into `errp`, like the C API `error_propagate`
++    /// would do.
++    ///
++    /// # Safety
++    ///
++    /// `errp` must be valid; typically it is received from C code
++    pub unsafe fn ok_or_propagate<T>(
++        result: Result<T, Self>,
++        errp: *mut *mut bindings::Error,
++    ) -> Option<T> {
++        match result {
++            Ok(ok) => Some(ok),
++            Err(err) => {
++                err.propagate(errp);
++                None
++            }
++        }
++    }
++
++    /// Equivalent of the C function `error_propagate`.  Fill `*errp`
++    /// with the information container in `self` if `errp` is not NULL;
++    /// then consume it.
++    ///
++    /// # Safety
++    ///
++    /// `errp` must be valid; typically it is received from C code
++    pub unsafe fn propagate(self, errp: *mut *mut bindings::Error) {
++        if errp.is_null() {
++            return;
++        }
++        errp.write(self.clone_to_foreign_ptr());
++    }
++
++    /// Convert a C `Error*` into a Rust `Result`, using `Ok(Default::default())`
++    /// if `c_error` is NULL.
++    ///
++    /// # Safety
++    ///
++    /// `c_error` must be valid; typically it has been filled by a C
++    /// function.
++    pub unsafe fn err_or_default<T: Default>(c_error: *mut bindings::Error) -> Result<T, Self> {
++        Self::err_or_else(c_error, Default::default)
++    }
++
++    /// Convert a C `Error*` into a Rust `Result`, calling `f()` to
++    /// obtain an `Ok` value if `c_error` is NULL.
++    ///
++    /// # Safety
++    ///
++    /// `c_error` must be valid; typically it has been filled by a C
++    /// function.
++    pub unsafe fn err_or_else<T, F: FnOnce() -> T>(
++        c_error: *mut bindings::Error,
++        f: F,
++    ) -> Result<T, Self> {
++        match Option::<Self>::from_foreign(c_error) {
++            None => Ok(f()),
++            Some(err) => Err(err),
++        }
++    }
++}
++
++impl CloneToForeign for Error {
++    type Foreign = bindings::Error;
++
++    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
++        let mut x: *mut bindings::Error = ptr::null_mut();
++        unsafe {
++            error_setg_internal(
++                &mut x,
++                ptr::null_mut(), // FIXME
++                0,
++                ptr::null_mut(), // FIXME
++                c"%s".as_ptr(),
++                format!("{}", self),
++            );
++            OwnedPointer::new(x)
++        }
++    }
++
++    unsafe fn free_foreign(p: *mut bindings::Error) {
++        unsafe {
++            error_free(p);
++        }
++    }
++}
++
++impl FromForeign for Error {
++    unsafe fn cloned_from_foreign(c_error: *const bindings::Error) -> Self {
++        let c_str = unsafe { CStr::from_ptr(error_get_pretty(c_error)) };
++        Error {
++            msg: Some(c_str.to_string_lossy().into_owned()),
++            cause: None,
++            location: None,
++        }
++    }
++}
 diff --git a/qemu/src/util/mod.rs b/qemu/src/util/mod.rs
-index 9c081b6..e4df7c9 100644
+index be00d0c..e6078ac 100644
 --- a/qemu/src/util/mod.rs
 +++ b/qemu/src/util/mod.rs
-@@ -1,3 +1,4 @@
- pub mod error;
+@@ -1 +1,2 @@
++pub mod error;
  pub mod foreign;
-+pub mod offset_of;
- pub mod zeroed;
-diff --git a/qemu/src/util/offset_of.rs b/qemu/src/util/offset_of.rs
-new file mode 100644
-index 0000000..4ce5188
---- /dev/null
-+++ b/qemu/src/util/offset_of.rs
-@@ -0,0 +1,99 @@
-+#[cfg(not(has_offset_of))]
-+#[macro_export]
-+macro_rules! offset_of {
-+    ($Container:ty, $field:ident) => {
-+        <$Container>::offset_to.$field
-+    };
-+}
-+
-+/// A wrapper for struct declarations, that allows using `offset_of!` in
-+/// versions of Rust prior to 1.77
-+#[macro_export]
-+macro_rules! with_offsets {
-+    // source: https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=10a22a9b8393abd7b541d8fc844bc0df
-+    // used under MIT license with permission of Yandros aka Daniel Henry-Mantilla
-+    (
-+        #[repr(C)]
-+        $(#[$struct_meta:meta])*
-+        $struct_vis:vis
-+        struct $StructName:ident {
-+            $(
-+                $(#[$field_meta:meta])*
-+                $field_vis:vis
-+                $field_name:ident : $field_ty:ty
-+            ),*
-+            $(,)?
-+        }
-+    ) => (
-+        #[repr(C)]
-+        $(#[$struct_meta])*
-+        $struct_vis
-+        struct $StructName {
-+            $(
-+                $(#[$field_meta])*
-+                $field_vis
-+                $field_name : $field_ty ,
-+            )*
-+        }
-+
-+        #[cfg(not(has_offset_of))]
-+        #[allow(nonstandard_style)]
-+        const _: () = {
-+            pub
-+            struct StructOffsets {
-+                $(
-+                    $field_vis
-+                    $field_name: usize,
-+                )*
-+            }
-+            struct Helper;
-+            impl $StructName {
-+                pub
-+                const offset_to: StructOffsets = StructOffsets {
-+                    $(
-+                        $field_name: Helper::$field_name,
-+                    )*
-+                };
-+            }
-+            const END_OF_PREV_FIELD: usize = 0;
-+            $crate::with_offsets! {
-+                @names [ $($field_name)* ]
-+                @tys [ $($field_ty ,)*]
-+            }
-+        };
-+    );
-+
-+    (
-+        @names []
-+        @tys []
-+    ) => ();
-+
-+    (
-+        @names [$field_name:ident $($other_names:tt)*]
-+        @tys [$field_ty:ty , $($other_tys:tt)*]
-+    ) => (
-+        impl Helper {
-+            const $field_name: usize = {
-+                let align =
-+                    std::mem::align_of::<$field_ty>()
-+                ;
-+                let trail =
-+                    END_OF_PREV_FIELD % align
-+                ;
-+                0   + END_OF_PREV_FIELD
-+                    + (align - trail)
-+                        * [1, 0][(trail == 0) as usize]
-+            };
-+        }
-+        const _: () = {
-+            const END_OF_PREV_FIELD: usize =
-+                Helper::$field_name +
-+                std::mem::size_of::<$field_ty>()
-+            ;
-+            $crate::with_offsets! {
-+                @names [$($other_names)*]
-+                @tys [$($other_tys)*]
-+            }
-+        };
-+    );
-+}
-diff --git a/qemu/tests/main.rs b/qemu/tests/main.rs
-index 601e92b..854c626 100644
---- a/qemu/tests/main.rs
-+++ b/qemu/tests/main.rs
-@@ -14,11 +14,16 @@ use qemu::DeviceState;
- 
- use qemu::Result;
- 
-+use qemu::with_offsets;
-+
- use std::cell::RefCell;
- 
--#[derive(Default, ConstDefault)]
--struct TestConf {
--    foo: bool,
-+with_offsets! {
-+    #[repr(C)]
-+    #[derive(Default, ConstDefault)]
-+    struct TestConf {
-+        foo: bool,
-+    }
- }
- 
- #[derive(Default)]
 -- 
 2.45.2
 
