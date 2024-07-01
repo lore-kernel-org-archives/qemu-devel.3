@@ -4,84 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 536EAC2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 205CCC30653
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 08:51:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOCjW-0002yo-Hc; Mon, 01 Jul 2024 04:49:59 -0400
+	id 1sOCkI-0003or-E3; Mon, 01 Jul 2024 04:50:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sOCis-0002u9-RU
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:49:19 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sOCir-00050r-1d
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:49:18 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-585e6ad9dbcso2969741a12.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 01:49:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719823751; x=1720428551; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=d47GClQWTKYuZpPkQTNk8v60KFq323k3GhJ96sEsSp8=;
- b=toulnVX6eZAj5A8pv5ABhbgeFWzLNqMl+OeuTOnPKSTRQdSgfuXFSIUchbA48p+ptQ
- 3A9u8TiiFyTYtBZiS+YYgk40eW+kvkOslB3ksTu+0qS1ZygCh+XCcXCZOZ2mhdspCYw7
- 7B8lvr2JJMC1ZjHkhTgNTlgZCzj0Wc9ouBfjkhV+vF8sZvYmvTy2K/QtwDisn2KK970X
- /VDrFyzPyClozbDbweUghomzMNzxyb85EU94z3eZyaJ4WgOVni7YRYMXunYkO3pJq19h
- PqBN/dBdyWcAvYut+xnxqSxw17gyjEfWk6WiQk55DpIalS4vcKBuqTzm6GJwCFjl00PJ
- 0E7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719823751; x=1720428551;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=d47GClQWTKYuZpPkQTNk8v60KFq323k3GhJ96sEsSp8=;
- b=Y9XgqcvDzO3k/Wgpf7HKbbx0u46OnGGEFH15cqwJvlI7B+B5VHZxWJfTPGIDvE1dAt
- Ulz1oHCYgcVTxVhLqvKkUCoCkuGiX6pzLIJ9iJu5m+trJ8596JHtELQC9ik8l7zGn1Mn
- BqZtHOCyFreNOoMGP2OlwD55YXxFa1hrstdANI4JMsO5D4CbeY0LdPuc+LTCmcy83MyZ
- hfAZ3+iQUznvDrDFCpmY9uJBrAordmjSgsVJ7KZAP3jmElsNSurm8xMpUbYpUXbscpjL
- 7/jlIzpgdHfoTZVw2YopyNz14lAsp3+YMSXR+FEbrhtLxkY2RIn1TOQ7R6DFR5Y8whaD
- 9m0A==
-X-Gm-Message-State: AOJu0YxoZiDYEavH8f/sf7tgdaKuoGplWToVs7Ahv1x66OfcWRmxLMzr
- BII6yKTK2C+kXN2LtXTyES489EK5qZK+/ovISguTmRsVSJ3GGTV1B0VSvZK7Gsw=
-X-Google-Smtp-Source: AGHT+IGuWg/18eBk95/Il++5Bi3s4PuX1mPXDAG+n48WKNbf+g05dtr7J5P85DSPiGEsejnwm6jYpw==
-X-Received: by 2002:a17:906:adb:b0:a6f:878e:d6f8 with SMTP id
- a640c23a62f3a-a75144deb8dmr290146966b.70.1719823751021; 
- Mon, 01 Jul 2024 01:49:11 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72ab0b7ddasm310363966b.207.2024.07.01.01.49.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 01:49:10 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5CD035F877;
- Mon,  1 Jul 2024 09:49:09 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: =?utf-8?B?6aG55paH5oiQ?= <xiangwencheng@dayudpu.com>
-Cc: <qemu-devel@nongnu.org>,  <mst@redhat.com>
-Subject: Re: [PATCH] vhost-user: Skip unnecessary duplicated
- VHOST_USER_SET_LOG_BASE requests
-In-Reply-To: <20240613065150.3100-1-xiangwencheng@dayudpu.com>
- (=?utf-8?B?IumhueaWh+aIkCIncw==?=
- message of "Thu, 13 Jun 2024 14:51:50 +0800")
-References: <20240613065150.3100-1-xiangwencheng@dayudpu.com>
-Date: Mon, 01 Jul 2024 09:49:09 +0100
-Message-ID: <87zfr1qyyi.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sOCjk-00033q-So
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sOCji-0005K0-2p
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:50:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719823808;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=cgJfWjCJSsqWY8stLMqK0V9ndyG+mMup/arO83wAq2o=;
+ b=c8V/DD+uTV/bQNFhSWbcS8fB2/YZclm6yHKDz6ak6eYzrTAXBCtCM7e9NW7kY+ASyYum/l
+ sc4llWFZ/yR54OXhFqsZcyfqzeCLJMRE3F6rqpo6PUHpnFihx+n0nEHwFSssFBrTxOXwKA
+ sT4Co/8ud7BEizJTxpwK7St5URDjomI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-DKkEpFk_N-OclL7wr9YSkQ-1; Mon,
+ 01 Jul 2024 04:50:06 -0400
+X-MC-Unique: DKkEpFk_N-OclL7wr9YSkQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F05619560B1; Mon,  1 Jul 2024 08:50:05 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.22.9.3])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 45D781956089; Mon,  1 Jul 2024 08:50:00 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, mst@redhat.com, jean-philippe@linaro.org,
+ peter.maydell@linaro.org, clg@redhat.com, yanghliu@redhat.com,
+ zhenzhong.duan@intel.com, alex.williamson@redhat.com
+Subject: [PATCH v2 0/7] VIRTIO-IOMMU/HostIOMMUDevice: Fixes and page size mask
+ rework
+Date: Mon,  1 Jul 2024 10:48:52 +0200
+Message-ID: <20240701084957.1567641-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,40 +82,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-=E9=A1=B9=E6=96=87=E6=88=90 <xiangwencheng@dayudpu.com> writes:
+The 2 first patches are fixes of
+cf2647a76e ("virtio-iommu: Compute host reserved regions")
+They can be taken separately of the rest.
 
-> From: BillXiang <xiangwencheng@dayudpu.com>
->
-> The VHOST_USER_SET_LOG_BASE requests should be categorized into
-> non-vring specific messages, and should be sent only once.
-> If send more than once, dpdk will munmap old log_addr which may has
-> been used and cause segmentation fault.
+Then the series uses the HostIOMMUDevice interface to fetch
+information about the page size mask supported along the assigned
+device and propagate it to the virtio-iommu. This is a similar
+work as what was done in
 
-This looks fine to me but looking at the vhost-user.rst we don't seem to
-make any explicit statements about how many times given messages should
-be sent.
+VIRTIO-IOMMU/VFIO: Fix host iommu geometry handling series
 
->
-> Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
-> ---
->  hw/virtio/vhost-user.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> index cdf9af4a4b..41e34edd49 100644
-> --- a/hw/virtio/vhost-user.c
-> +++ b/hw/virtio/vhost-user.c
-> @@ -371,6 +371,7 @@ static bool vhost_user_per_device_request(VhostUserRe=
-quest request)
->      case VHOST_USER_RESET_DEVICE:
->      case VHOST_USER_ADD_MEM_REG:
->      case VHOST_USER_REM_MEM_REG:
-> +    case VHOST_USER_SET_LOG_BASE:
->          return true;
->      default:
->          return false;
+but this time for the page size mask. Using this new
+infrastructure allows to handle page size mask conflicts
+earlier on device hotplug as opposed to current QEMU
+abort:
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+qemu-system-aarch64: virtio-iommu virtio-iommu-memory-region-8-0
+does not support frozen granule 0x10000
+qemu: hardware error: vfio: DMA mapping failed, unable to continue
+
+With this series the hotplug nicely fails.
+
+Also this allows to remove hacks consisting in transiently enabling
+IOMMU MRs to collect coldplugged device page size mask before machine
+init. Those hacks were introduced by
+
+94df5b2180d6 ("virtio-iommu: Fix 64kB host page size VFIO device
+assignment")
+
+The series can be found at:
+https://github.com/eauger/qemu/tree/virtio-iommu-psmask-rework-v2
+
+---
+v1 -> v2:
+- Don't update mask if the granule is frozen (Zhenzhong)
+- Collected Zhenzhong's and Cédric's R-bs
+
+Eric Auger (7):
+  virtio-iommu: Fix error handling in
+    virtio_iommu_set_host_iova_ranges()
+  vfio-container-base: Introduce vfio_container_get_iova_ranges() helper
+  HostIOMMUDevice : remove Error handle from get_iova_ranges callback
+  HostIOMMUDevice: Introduce get_page_size_mask() callback
+  virtio-iommu : Retrieve page size mask on
+    virtio_iommu_set_iommu_device()
+  memory: remove IOMMU MR iommu_set_page_size_mask() callback
+  virtio-iommu: Revert transient enablement of IOMMU MR in bypass mode
+
+ include/exec/memory.h                 |  38 --------
+ include/hw/vfio/vfio-container-base.h |   9 ++
+ include/sysemu/host_iommu_device.h    |  11 ++-
+ hw/vfio/common.c                      |   8 --
+ hw/vfio/container-base.c              |  15 ++++
+ hw/vfio/container.c                   |  16 ++--
+ hw/vfio/iommufd.c                     |  21 +++--
+ hw/virtio/virtio-iommu.c              | 123 +++++++++++++-------------
+ system/memory.c                       |  13 ---
+ hw/virtio/trace-events                |   2 +-
+ 10 files changed, 119 insertions(+), 137 deletions(-)
+
+-- 
+2.41.0
+
 
