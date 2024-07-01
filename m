@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE05C27C4F
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 02:52:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDBBAC3064D
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 02:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sO78T-0002tv-Du; Sun, 30 Jun 2024 22:51:21 -0400
+	id 1sO78X-00030h-Ac; Sun, 30 Jun 2024 22:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sO78R-0002s8-I1
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:51:19 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1sO78U-0002xL-Qg
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:51:22 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sO78P-0008Va-VX
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:51:19 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7066a3229f4so1371936b3a.2
- for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 19:51:17 -0700 (PDT)
+ id 1sO78S-00007m-TZ
+ for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:51:22 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2c84df0e2f4so1601400a91.1
+ for <qemu-devel@nongnu.org>; Sun, 30 Jun 2024 19:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719802277; x=1720407077; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=WnwSoeUV3cwlH1+3n2f06XV+qKm4+k7po4qjUIY9IEI=;
- b=GU6aJmSfjO5OPAnmZRKAvdkp1XHKINbasEPBG8zvq1kx/zWBNKvJ0c8x+2s++XK7xC
- 9/VHiY1i6wFKbIjyc+mwwtkDUTcSEijjBlbwCt80WeYCWszregz3haI+idlxtOeWfeLN
- Ol7tpLnuDe7X2F2lVI4G1f4l4ZD/ZbjN+t1J6mTzyf/bIcBUcV77GEzYF9muzHxo36EZ
- /kTai/xQ9Id2V2ZVbS0RtGl0L5TUEurFDM1J9mdfpDPrFZufsM+wB4U3bs/DGUf4c0g1
- 5jioqk4i0CJuzRmpKK31Tll9/wL0XgQYFAAdTfhtQDYG7FQAu6Fje5OOPNHdGrxzvAG5
- 2zRQ==
+ d=linaro.org; s=google; t=1719802279; x=1720407079; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+mPvMUbmRUW5qOg66PJMTfVpv43K7IU1VZRf6V6fQ1Q=;
+ b=V5/JjILYl8P0sxw3n2cUbZh/sMn5dztL6nI3t28zgPpENiEMoeQlsj9yaQ2OjshKoi
+ WJdZhW1WDprayRfjLCXoduGM5wweEafs+aZFS5D42nEGxUA5Ti4Of6FNLNdL2/V7qQWl
+ mag/oO0c7IGP+BQS9TKc9pBlpxBe7y1LKaiEL4B1M8ykI0P6Ee4nPNzQ6FRzhzCETqow
+ D+d500UDnQja70WlBwYrGxmJtZ2pcdrcGLL9gqC0B1R2cS2Spzee0qw1ICcYQRUyG+Tn
+ 89xF6c0QoMiq3tKGilB8W3mo0POR0Ob2c2+LP5sJNpocJmoifO7OaBab2jW53hPcfrjC
+ sVlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719802277; x=1720407077;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WnwSoeUV3cwlH1+3n2f06XV+qKm4+k7po4qjUIY9IEI=;
- b=im8NpAEhp+/ylIX2IR7YBbJ14qQgVQJwWjVbtb3OiL1DfCW+uWg5XCiAmPBOqhOjcS
- 8mw72uUpr36NVwckTm5l+n+YkEHfjlUY0ItTJN9px8imhIsqefvfOyCFYeFiWaOdJ93X
- u51k1pssloAp2aM+kCuYULnpZy7lbWYEqUBUQFxtVr0zrTCsTqLGNjJeH2DbwNVcss98
- x8s7iIVmbv6NmtlFCZUMI9QzQWvhQ+r5ba26qmUdWVD6RKCUFZ8pk3XdniqAJN3w2sdj
- wZQbvoTmVxd128EcytABu0bWrY7m/m0yDZUny6qVkTQrd2Raurge2J2Nt9RQDwi+UTZC
- oKqw==
-X-Gm-Message-State: AOJu0Yy3Vi3wEWKOWz+PCquuTJMAbgs3AmkHKoLKuoLBXMC+P4Xnx/y1
- xpXC0IGGb/4/6IxSy2lVFplSPiQ5CAnnpnXUghI6cUYzIyfX28O+oF1eq8lGuCb2IqKvlGuW1yP
- S
-X-Google-Smtp-Source: AGHT+IFjJ37anIm7yAEdIEqQi+d2Fp76TRr/IW9BRyUDOntV6ZD+eiHwbDhz3r05ZdSboCJWbneG9w==
-X-Received: by 2002:a05:6a20:ce4d:b0:1be:c65c:1e32 with SMTP id
- adf61e73a8af0-1bef621edadmr3134198637.51.1719802276453; 
- Sun, 30 Jun 2024 19:51:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719802279; x=1720407079;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+mPvMUbmRUW5qOg66PJMTfVpv43K7IU1VZRf6V6fQ1Q=;
+ b=TrUzLUe6EFrngqAUweg7jwOOdOjxE6DbjzUfJbcIGAwQj54CZpbWMeco3trXRRBWax
+ njrJEwrga/wGYcFrXmT+eoT4bIIn62/8q+RNeh/wByLH4l37tjaNqt4ARPWjX0pld6Dz
+ 9fFURDrMrEQKYaF1SMC4zdbImTcKhOXpi28jy4txJTmGq0E48Pz2aSg8bEjRP0NYpGtl
+ Qz1HSVb7bQRdbbt64OWzRzRx2y49LQ+RTVHcnB51qy9gU8/IdFhqJ0CMmH0mq0Q9bGBo
+ BTyemmX1IgP0OkmMYcGP+9fMj28wFzBi3UMHLURWZMx54Xf/eQAWWA33l4Z3k/gKFgZo
+ wmMw==
+X-Gm-Message-State: AOJu0Yz63QAjsm+nyk8GwosIR+9efDEabDBXXCPIfgGu+5jQUxj5yROg
+ XzpXxXbNDutDvlV4gz/bMfS0axrnrM9a1nSwPrb0UVcpnoaTC9pKgloGs7ZdxP7gSFr/OElRLXH
+ 3
+X-Google-Smtp-Source: AGHT+IF6pDvzWK0bOiycY1uCErclF6JZrL67rAeQrWa2qa13XrLBXJUAFjg0jzFdzW4tc1aedpn0og==
+X-Received: by 2002:a17:90a:5b0e:b0:2c8:946b:eea2 with SMTP id
+ 98e67ed59e1d1-2c93d1b9307mr7041641a91.7.1719802279273; 
+ Sun, 30 Jun 2024 19:51:19 -0700 (PDT)
 Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c91d3b9349sm5531698a91.37.2024.06.30.19.51.15
+ 98e67ed59e1d1-2c91d3b9349sm5531698a91.37.2024.06.30.19.51.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 30 Jun 2024 19:51:16 -0700 (PDT)
+ Sun, 30 Jun 2024 19:51:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com
-Subject: [PATCH 0/5] target/i386: CCOp cleanups
-Date: Sun, 30 Jun 2024 19:51:10 -0700
-Message-Id: <20240701025115.1265117-1-richard.henderson@linaro.org>
+Subject: [PATCH 3/5] target/i386: Rearrange CCOp
+Date: Sun, 30 Jun 2024 19:51:13 -0700
+Message-Id: <20240701025115.1265117-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240701025115.1265117-1-richard.henderson@linaro.org>
+References: <20240701025115.1265117-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,28 +94,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While debugging #2413, I spent quite a bit of time trying to work
-out if the CCOp value was incorrect.  I think the following is a
-worthwhile cleanup, isolating potential problems to asserts.
+Define CC_OP_{FIRST,LAST}_BWLQ.  Remove CC_OP_NB.
+Give the first few enumerators explicit integer constants.
+Move CC_OP_POPCNT up in the enumeration; remove unused
+CC_OP_POPCNT*__ placeholders.  Align the BWLQ enumerators.
 
+This will be used to simplify ((op - CC_OP_*B) & 3).
 
-r~
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/i386/cpu.h | 44 ++++++++++++++++++++++++--------------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
-
-Richard Henderson (5):
-  target/i386: Tidy cc_op_str usage
-  target/i386: Convert cc_op_live to a function
-  target/i386: Rearrange CCOp
-  target/i386: Remove default in cc_op_live
-  target/i386: Introduce cc_op_size
-
- target/i386/cpu.h                | 44 +++++++++--------
- target/i386/cpu-dump.c           | 17 ++++---
- target/i386/tcg/translate.c      | 84 +++++++++++++++++++-------------
- target/i386/tcg/decode-new.c.inc |  2 +-
- target/i386/tcg/emit.c.inc       |  9 ++--
- 5 files changed, 93 insertions(+), 63 deletions(-)
-
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 29daf37048..df4272fdae 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1270,14 +1270,27 @@ uint64_t x86_cpu_get_supported_feature_word(FeatureWord w,
+  * are only needed for conditional branches.
+  */
+ typedef enum {
+-    CC_OP_DYNAMIC, /* must use dynamic code to get cc_op */
+-    CC_OP_EFLAGS,  /* all cc are explicitly computed, CC_SRC = flags */
+-    CC_OP_ADCX, /* CC_DST = C, CC_SRC = rest.  */
+-    CC_OP_ADOX, /* CC_SRC2 = O, CC_SRC = rest.  */
+-    CC_OP_ADCOX, /* CC_DST = C, CC_SRC2 = O, CC_SRC = rest.  */
+-    CC_OP_CLR, /* Z and P set, all other flags clear.  */
++    CC_OP_DYNAMIC = 0, /* must use dynamic code to get cc_op */
++    CC_OP_EFLAGS = 1,  /* all cc are explicitly computed, CC_SRC = flags */
++    CC_OP_ADCX = 2,    /* CC_DST = C, CC_SRC = rest.  */
++    CC_OP_ADOX = 3,    /* CC_SRC2 = O, CC_SRC = rest.  */
++    CC_OP_ADCOX = 4,   /* CC_DST = C, CC_SRC2 = O, CC_SRC = rest.  */
++    CC_OP_CLR = 5,     /* Z and P set, all other flags clear.  */
+ 
+-    CC_OP_MULB, /* modify all flags, C, O = (CC_SRC != 0) */
++    /*
++     * Z via CC_DST, all other flags clear.
++     * Treat CC_OP_POPCNT like the other BWLQ ops in making the low bits
++     * equal MO_TL; this gives a value of either 6 or 7.
++     */
++#ifdef TARGET_X86_64
++    CC_OP_POPCNT = 7,
++#else
++    CC_OP_POPCNT = 6,
++#endif
++
++#define CC_OP_FIRST_BWLQ  CC_OP_POPCNT
++
++    CC_OP_MULB = 8, /* modify all flags, C, O = (CC_SRC != 0) */
+     CC_OP_MULW,
+     CC_OP_MULL,
+     CC_OP_MULQ,
+@@ -1332,20 +1345,11 @@ typedef enum {
+     CC_OP_BMILGL,
+     CC_OP_BMILGQ,
+ 
+-    /*
+-     * Note that only CC_OP_POPCNT (i.e. the one with MO_TL size)
+-     * is used or implemented, because the translation needs
+-     * to zero-extend CC_DST anyway.
+-     */
+-    CC_OP_POPCNTB__, /* Z via CC_DST, all other flags clear.  */
+-    CC_OP_POPCNTW__,
+-    CC_OP_POPCNTL__,
+-    CC_OP_POPCNTQ__,
+-    CC_OP_POPCNT = sizeof(target_ulong) == 8 ? CC_OP_POPCNTQ__ : CC_OP_POPCNTL__,
+-
+-    CC_OP_NB,
++#define CC_OP_LAST_BWLQ CC_OP_BMILGQ
+ } CCOp;
+-QEMU_BUILD_BUG_ON(CC_OP_NB >= 128);
++
++/* See X86DecodedInsn.cc_op, using int8_t. */
++QEMU_BUILD_BUG_ON(CC_OP_LAST_BWLQ > INT8_MAX);
+ 
+ typedef struct SegmentCache {
+     uint32_t selector;
 -- 
 2.34.1
 
