@@ -4,83 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B913C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 21:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37B2C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 21:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOOUO-0001rL-5V; Mon, 01 Jul 2024 17:23:08 -0400
+	id 1sOOVx-0002ig-TM; Mon, 01 Jul 2024 17:24:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <osandov@osandov.com>)
- id 1sOOUN-0001r2-8F
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 17:23:07 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <osandov@osandov.com>)
- id 1sOOUL-0000s3-38
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 17:23:07 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2c7c61f7ee3so2109935a91.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 14:23:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=osandov-com.20230601.gappssmtp.com; s=20230601; t=1719868983; x=1720473783;
- darn=nongnu.org; 
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=nPKbPueoYk62vc4MpTTFzo3VrSpoT49HVPv50uqcuOY=;
- b=rRwvNoHN3IezxN8JxqQxy1pd5P20h9BHaWzYiObqk43YetYhH5rCU9GWWSweeiYxUl
- YmwRtGuAckN6AKaO4B/2yfv+SLJ++4yYeeyOC/t6ucUBLOlEP8ErK/CuMBSeqm2WcjZw
- PmpNoENBVZpFgtgvre7A7YdPfcqKGGrSUx48uB4/0hT1u4nEZGAkAv9ZviNnwQA7cPuf
- CbhhBWV6sWWIhooEBnkt9jBduvhFYsQisR9qe9l7fbwiHsrRSxUluWFsBE6/xiinmxrG
- yd/D2GHEk7KaHdZTurfFJkPd+J6PNkp3uqGa6T0lloa8HXwODLFgJ8rNlIGkhXrlB16u
- oIZA==
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1sOOVr-0002hN-Ni
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 17:24:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1sOOVp-0002T5-VI
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 17:24:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719869075;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gQW9Ia7RjGtdMeiWJ76GopRkoefFrjplnElxFmbP0dE=;
+ b=eae25G0GiuQkfBnHvT6ZjLMUTlc/5jlykLV0Oc3Q2+a/CbnTLuI+tCco7a+btKv4LqSdS3
+ 7u8GhxaIKXfO8EidjhK4N+xAhkAcdA0F5dqdNg6L1xrf97s/JdHrzW7kPpxx28hcCrSJcR
+ +JELjOU2yuUuAhPcJDWSGZub+Fxp4Dg=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-663-AyVV01j7N1K31V9Jdjg24Q-1; Mon, 01 Jul 2024 17:24:34 -0400
+X-MC-Unique: AyVV01j7N1K31V9Jdjg24Q-1
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-62f8a1b2969so63090597b3.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 14:24:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719868983; x=1720473783;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nPKbPueoYk62vc4MpTTFzo3VrSpoT49HVPv50uqcuOY=;
- b=U4vHSIfjxMsJ/NI7REoBFuPz78cp0EjOZchk81eFFCsDJjAcGV4bHwtqEsivejFSrB
- fE4OzuKDZdJBN194oGD5u79Nrllu1ZGPeDEM6NFC/ecXnfxLXPUuDEe3tAe7pee32HrQ
- 0PvAfy0moEouISKU54Ay37rEYHsceZichbqApMFUnrQnZAJj1Whv2R+wL4SOWB8ZSmL2
- q9reoCALtdNp2rKU2R8Dp62hF1qPiLlhmL2IZ63B3zN5JmKLkbbMT5uSxfQIhAlSsSlt
- IF+g0Tk4ZfMI4I0oh4CFZ8MZwIa4Nt8QubLWK6q1+1ksfm40n7ZCsUJkFDKYbcy2RlPT
- hwfw==
+ d=1e100.net; s=20230601; t=1719869074; x=1720473874;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gQW9Ia7RjGtdMeiWJ76GopRkoefFrjplnElxFmbP0dE=;
+ b=glU+AVx1yKGz3CLk3+KELbfAAU2phN5c1DsH0497342IhzvgqlrxyTbV+Dh46gWFS+
+ BidqCss+4PdHKYFKq5FG9O283bISoQi6req7DVs2hIXTWvpha8Bf3povAX1Rh1wjtbcL
+ 3coJQ7wMbcJPDuCMp3aGxv1ZUYYlR9R0pwWyy4dTr8hWK1R4vHrm0xggwUAfRg0JIEDW
+ DKqeRXP9v+ITr/Bdyw8fyiSJNxpDfcRbL2omK7t5H274GHQPOFOkyxTeaiwi6O5SLff8
+ 6+blof32HXACUdyybOIG5YKaJWeCqKUNKyDjDy719pmZTdO+mJ57HAjMiyA86bHildyl
+ w+dQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU56NhEt67a+EagefcsnlVDRv6tC+LdCns5Ovt8aBcVKBrV9bzAZMN8B2+bKN/MN4YgI9DvrIWhyC4RHqy+PhDVmQKxCGc=
-X-Gm-Message-State: AOJu0YzA4vygH3g03ycR7foTnlTQePzUXBvsjfe5DRJAdHQ6OIQH2jav
- 2jIuBr4RRgSdDn43mCe0QIyQqWlpnSLvNixyufsrADK7lLbCND4JRKu/+7Ggs5V3vhdlGmwIjHo
- 0
-X-Google-Smtp-Source: AGHT+IFi10TcWB9AJHIA7MCZWopRH2eTvDjB0HyQTRnGmPTODGKHG4fLrZYxYYzxBWCDQQ3qb7CsrA==
-X-Received: by 2002:a17:90a:d716:b0:2c2:f704:5278 with SMTP id
- 98e67ed59e1d1-2c93d771fb3mr4078211a91.42.1719868983538; 
- Mon, 01 Jul 2024 14:23:03 -0700 (PDT)
-Received: from telecaster.dhcp.thefacebook.com ([2620:10d:c090:500::7:a5d])
+ AJvYcCVxjutV4joKRHX4BR143oQaY7eZ6Jd098Rl6seodK0FnXbB3PxTdOC9wA5zbRgFOm7a1Fd6EGHQCvufoNf5uODLLM2arNg=
+X-Gm-Message-State: AOJu0YxEtofJgJqM0Zv+uwxpiBhLLF8qned0wtTxgBZ00e7Ly7KWmT6Z
+ ipr8jAoXnHgsUZJkrzzDhVTDOlbca5YYzo87XajyYlH8MMsSTHai1tm1CZA9D2KzTBMdinv+Bw/
+ ueqn2763MnwKzcrSnSHt10AL5XmNbZxoRPdVQY7F+vY/K3zqk1ppy
+X-Received: by 2002:a25:a2c5:0:b0:e03:55a6:e867 with SMTP id
+ 3f1490d57ef6-e036ec4ae6dmr8525714276.42.1719869074210; 
+ Mon, 01 Jul 2024 14:24:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFly7wmO22ThWMYrDLz1+GzEUmqY4wHf1V27GIhMP0yFNtGGywRzkPk7sNxx0v9ZVAcoI7faA==
+X-Received: by 2002:a25:a2c5:0:b0:e03:55a6:e867 with SMTP id
+ 3f1490d57ef6-e036ec4ae6dmr8525620276.42.1719869071939; 
+ Mon, 01 Jul 2024 14:24:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c91ce1f198sm7295202a91.2.2024.07.01.14.23.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 14:23:03 -0700 (PDT)
-Date: Mon, 1 Jul 2024 14:23:01 -0700
-From: Omar Sandoval <osandov@osandov.com>
-To: qemu-ppc@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] target/ppc/arch_dump: set prstatus pid to cpuid
-Message-ID: <ZoMeNacKzEu1PzuW@telecaster.dhcp.thefacebook.com>
-References: <3c3dd56b4e88b6863e971d72daae7c0324499712.1719852483.git.osandov@osandov.com>
+ d75a77b69052e-4465149bad4sm34565181cf.65.2024.07.01.14.24.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Jul 2024 14:24:31 -0700 (PDT)
+Message-ID: <41d6d6ca-e434-488b-81a8-5db158ecf81d@redhat.com>
+Date: Mon, 1 Jul 2024 23:24:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3c3dd56b4e88b6863e971d72daae7c0324499712.1719852483.git.osandov@osandov.com>
-Received-SPF: none client-ip=2607:f8b0:4864:20::102c;
- envelope-from=osandov@osandov.com; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/s390x: Attach default virtio-net devices to the
+ /machine/virtual-css-bridge
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
+References: <20240701200108.154271-1-thuth@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+In-Reply-To: <20240701200108.154271-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,15 +110,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 01, 2024 at 09:51:35AM -0700, Omar Sandoval wrote:
-> Every other architecture does this, and debuggers need it to be able to
-> identify which prstatus note corresponds to which CPU.
+On 7/1/24 10:01 PM, Thomas Huth wrote:
+> The initial virtio-net-ccw devices currently do not have a proper parent
+> in the QOM tree, so they show up under /machine/unattached - which is
+> somewhat ugly. Let's attach them to /machine/virtual-css-bridge/virtual-css
+> instead.
 > 
-> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Oops, I forgot to copy Thomas's reviewed-by from v1:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-> Signed-off-by: Omar Sandoval <osandov@osandov.com>
+Thanks,
+
+C.
+
+
+> ---
+>   hw/s390x/s390-virtio-ccw.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index cd063f8b64..0d58e5ab75 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -216,8 +216,11 @@ static void s390_init_ipl_dev(const char *kernel_filename,
+>   static void s390_create_virtio_net(BusState *bus, const char *name)
+>   {
+>       DeviceState *dev;
+> +    int cnt = 0;
+>   
+>       while ((dev = qemu_create_nic_device(name, true, "virtio"))) {
+> +        g_autofree char *childname = g_strdup_printf("%s[%d]", name, cnt++);
+> +        object_property_add_child(OBJECT(bus), childname, OBJECT(dev));
+>           qdev_realize_and_unref(dev, bus, &error_fatal);
+>       }
+>   }
+
 
