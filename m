@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D4EC41513
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:00:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A815C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOIUm-0003M7-Nv; Mon, 01 Jul 2024 10:59:08 -0400
+	id 1sOIUq-0003YY-Gv; Mon, 01 Jul 2024 10:59:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOIUl-0003Ki-3J
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sOIUo-0003TH-H0
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOIUj-00052e-8O
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:06 -0400
+ id 1sOIUm-00057H-RU
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719845943;
+ s=mimecast20190719; t=1719845947;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RHpEuKlw8QJPXOpD78MMN+7/lIJQeedbl+21kFAu6RE=;
- b=V3/8weawR4JSvZ2ANh/dLkipo1X3Qg8pxIXyR0vPBt9KQ1ZUjFizv6PsU1wTiG+vgppCZs
- qE3dP9Mu+U3RCYrefNlNK3xXnZgK21fgmp46phi9FVnmlxgsL75Pj/ghKe22AfiWnbHodP
- nDCAJ1KmASi3KK3GHbKx0YPHnVlrwOU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/AQLjBJD+DdaeIr+SrmTNPomxj+lI0aBHtLoGiVChLk=;
+ b=XmYYOcxzqJTEtmQH++Cj0utjV7XtktjbzilLmyCR0Xi0+RHC71hl0FsVH2cJaUIv6kChtl
+ Ur9s+mPa33YLGwnL1HCW6xfeGGp2sUPqgSC4y+oRR/Vh9pi9AUVCMU2KoP03O+CawL3RIg
+ qUo+gQU5f4Ta2QW/Rza2YKAjypSmwEI=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-sWmV8dvEPlWZrndKNfmUyQ-1; Mon, 01 Jul 2024 10:59:02 -0400
-X-MC-Unique: sWmV8dvEPlWZrndKNfmUyQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4258675a6easo5779695e9.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 07:59:02 -0700 (PDT)
+ us-mta-489-mePTAs07PyO14i9bB1Qomg-1; Mon, 01 Jul 2024 10:59:05 -0400
+X-MC-Unique: mePTAs07PyO14i9bB1Qomg-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-52ce324c204so3707239e87.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 07:59:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719845941; x=1720450741;
+ d=1e100.net; s=20230601; t=1719845943; x=1720450743;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RHpEuKlw8QJPXOpD78MMN+7/lIJQeedbl+21kFAu6RE=;
- b=Rx5hcVpbkSMm0IHNs+OKZ9te6y552X9zhSQkS3iosStxkcp/spr6V5+09HIWwl2g/U
- ZA5DPDtGv4n8UMBxhM/Gdu8OFNFJiaJyUpAmcH2wzbozqeJF4/1OO0THDjsSLLqoJzOq
- IseyEljVQS6ESljWVm4ef3Q8JbSIdkyWyiCoOPsC9e2nlPkXb4tJqoKj5aj2SVMutN/t
- eQu+I+VOX80spLhGz44iHPWCpZW0iPZSH1YaXshH/a7oBVwtZ7LHN0Eu9vJ/TYg1RFoT
- 11pgrDkpTfYsfU6zrEyM7bWgSojxcAYaN6UmI4Xa8lsfqjSHdl1dzcwYdZia0xIeCk4/
- NoEQ==
-X-Gm-Message-State: AOJu0YytxnSHI81xcs2J89P5PAT/SoK4hZs9PnL4zkKmO2BMzmh2+rM3
- 3du/Kfw89m843HOVsbuLG1HjJNJbJ4dCSrERan2tf/n0z6BzFE4VKvmg4IbkD1FtPEq/ByNl7IL
- dt/kMap2gOLX3ccwyYd2xs/Q1QtYzqt4h/6C7XE8cYERgVQpMRgFaioCzsVVDRv72AW/Gaw/g54
- 8EmyRw0qdQx1y5ehQ0e0vddFGogsK9QAh79bJ3
-X-Received: by 2002:a05:6000:2a7:b0:366:e9f9:99c1 with SMTP id
- ffacd0b85a97d-36775724482mr3998914f8f.53.1719845940936; 
- Mon, 01 Jul 2024 07:59:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEpHuqT08prYZNxP+XKtb0LrSfZbWdvY+x4yOUMzPNbG+HRAJihzeEYXDUjNvYEPueTbtXkYA==
-X-Received: by 2002:a05:6000:2a7:b0:366:e9f9:99c1 with SMTP id
- ffacd0b85a97d-36775724482mr3998888f8f.53.1719845940525; 
- Mon, 01 Jul 2024 07:59:00 -0700 (PDT)
+ bh=/AQLjBJD+DdaeIr+SrmTNPomxj+lI0aBHtLoGiVChLk=;
+ b=XZBArWiTxdH+5OGYZJOMReg4oOyf5t4BOqMcilpJGS9ZIDK3PK6ANjAwli0EIdpwF+
+ I1EX2orwl5jc9KjgdipszV7slF3MHDfasE9azBMQOU1IY3BuUaGiqw3z/jrGhBF3zX1D
+ MwEMSTVNPzBwt7XLdD76iBzz5+C/pT1Jub/e3YP/V6LZeNwIyDz/zHYPw2a+gZIwmU/x
+ mp48E85jdQ5RLpwG675eXzKDW7KCtf/016U7gYlbW6r3qUfntlhj4V6IOr+h1PhRJKph
+ Ww0lOtHk0jWNKnUr3JoD0TdUcgUdGyPVU3WMI38O8n6O5PCFi1kbgaYPFdAVX951wk+3
+ xwbA==
+X-Gm-Message-State: AOJu0YwnW3dxuYsMy8CK7ZZxfnH5QtApyJdnJ9cvPN37KBHi8urj02zL
+ Am3jX4KpWZzur+1XieiYlwYS4/EKsE6R38Xl4AOGxCLiEtmFlipCDrN9szlZMhSXzUr3WO4e4R9
+ Z2+B27nlKlo13nb4xlag1ibpmyorbf1pOJn0fGJ8zJjdzfagvca3U/E/zwiuFax5nkVIr4bHD81
+ +wA7z34/QNus1YO0BlTpJ66Aj2bqZWDIzIeisJ
+X-Received: by 2002:a19:7503:0:b0:52c:e07d:229c with SMTP id
+ 2adb3069b0e04-52e826664d2mr3250984e87.22.1719845943668; 
+ Mon, 01 Jul 2024 07:59:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5p8ijT5qhqXZTDOkO+cIGKrbcGDOCq0CVzpKFgEeQ98pu11elnT9puovdOVNkAzN99/lZ4g==
+X-Received: by 2002:a19:7503:0:b0:52c:e07d:229c with SMTP id
+ 2adb3069b0e04-52e826664d2mr3250970e87.22.1719845943319; 
+ Mon, 01 Jul 2024 07:59:03 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e169dsm10218914f8f.65.2024.07.01.07.58.58
+ 5b1f17b1804b1-4257a4d4cd1sm94550475e9.28.2024.07.01.07.59.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 07:58:58 -0700 (PDT)
+ Mon, 01 Jul 2024 07:59:02 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -75,16 +75,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 01/14] add skeleton
-Date: Mon,  1 Jul 2024 16:58:33 +0200
-Message-ID: <20240701145853.1394967-2-pbonzini@redhat.com>
+Subject: [PATCH 02/14] set expectations
+Date: Mon,  1 Jul 2024 16:58:34 +0200
+Message-ID: <20240701145853.1394967-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240701145853.1394967-1-pbonzini@redhat.com>
 References: <20240701145853.1394967-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,190 +108,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu/ is where target-independent code goes.  This code should
-not use constructors and will be brought in as needed.
-
-qemu-hw/ is where the target-dependent code goes, which is going
-to be built depending on Kconfig symbols.
-
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- .gitignore               |   2 +
- Cargo.toml               |   3 +
- qemu-hw/Cargo.toml       |   6 ++
- qemu-hw/src/lib.rs       |   0
- qemu-hw/src/main.rs      |   3 +
- qemu/Cargo.toml          |   7 ++
- qemu/src/bindings/mod.rs |  88 +++++++++++++++++++++++++
- qemu/src/lib.rs          |   4 ++
- 9 files changed, 249 insertions(+)
- create mode 100644 .gitignore
- create mode 100644 Cargo.toml
- create mode 100644 qemu-hw/Cargo.toml
- create mode 100644 qemu-hw/src/lib.rs
- create mode 100644 qemu-hw/src/main.rs
- create mode 100644 qemu/Cargo.toml
- create mode 100644 qemu/src/bindings/mod.rs
- create mode 100644 qemu/src/lib.rs
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
 
-diff --git a/.gitignore b/.gitignore
+diff --git a/README.md b/README.md
 new file mode 100644
-index 0000000..3fbfc34
+index 0000000..5ef6f0d
 --- /dev/null
-+++ b/.gitignore
-@@ -0,0 +1,2 @@
-+/target
-+/.git-old
-diff --git a/Cargo.toml b/Cargo.toml
-new file mode 100644
-index 0000000..f66a80e
---- /dev/null
-+++ b/Cargo.toml
-@@ -0,0 +1,3 @@
-+[workspace]
-+members = ["qemu"]
-+resolver = "2"
-diff --git a/qemu-hw/Cargo.toml b/qemu-hw/Cargo.toml
-new file mode 100644
-index 0000000..9bd6930
---- /dev/null
-+++ b/qemu-hw/Cargo.toml
-@@ -0,0 +1,6 @@
-+[package]
-+name = "qemu-hw"
-+version = "0.1.0"
-+edition = "2021"
-+
-+[dependencies]
-diff --git a/qemu-hw/src/lib.rs b/qemu-hw/src/lib.rs
-new file mode 100644
-index 0000000..e69de29
-diff --git a/qemu-hw/src/main.rs b/qemu-hw/src/main.rs
-new file mode 100644
-index 0000000..e7a11a9
---- /dev/null
-+++ b/qemu-hw/src/main.rs
-@@ -0,0 +1,3 @@
-+fn main() {
-+    println!("Hello, world!");
-+}
-diff --git a/qemu/Cargo.toml b/qemu/Cargo.toml
-new file mode 100644
-index 0000000..18d0fa4
---- /dev/null
-+++ b/qemu/Cargo.toml
-@@ -0,0 +1,7 @@
-+[package]
-+name = "qemu"
-+version = "0.1.0"
-+edition = "2021"
-+
-+[dependencies]
-+const-default = { version = "~1", features = ["derive"] }
-diff --git a/qemu/src/bindings/mod.rs b/qemu/src/bindings/mod.rs
-new file mode 100644
-index 0000000..a49447b
---- /dev/null
-+++ b/qemu/src/bindings/mod.rs
-@@ -0,0 +1,88 @@
-+use std::ffi::{c_char, c_void};
-+
-+#[repr(C)]
-+pub struct Object {
-+    pub klass: *mut c_void,
-+    pub free: extern "C" fn(c: *mut c_void),
-+    pub properties: *mut c_void,
-+    pub r#ref: u32,
-+    pub parent: *mut Object,
-+}
-+
-+#[repr(C)]
-+pub struct ObjectClass {
-+    pub unparent: Option<unsafe extern "C" fn(*mut Object)>,
-+}
-+
-+#[repr(C)]
-+pub struct DeviceState {
-+    pub base: Object,
-+}
-+
-+#[repr(C)]
-+#[allow(non_camel_case_types)]
-+pub struct PropertyInfo {
-+    pub name: *const c_char,
-+    pub description: *const c_char,
-+    // ...
-+}
-+#[repr(C)]
-+pub struct Property {
-+    pub name: *const c_char,
-+    pub offset: usize,
-+    pub default: u64,
-+    pub info: *const PropertyInfo,
-+}
-+
-+pub struct DeviceClass {
-+    pub oc: ObjectClass,
-+
-+    pub realize: Option<unsafe extern "C" fn(*mut DeviceState, *mut *mut Error)>,
-+    pub unrealize: Option<unsafe extern "C" fn(*mut DeviceState)>,
-+    pub cold_reset: Option<unsafe extern "C" fn(*mut DeviceState)>,
-+    pub properties: *const Property,
-+}
-+
-+#[repr(C)]
-+pub struct TypeInfo {
-+    pub name: *const c_char,
-+    pub parent: *const c_char,
-+    pub instance_mem_init: Option<unsafe extern "C" fn(*mut c_void)>,
-+    pub instance_init: Option<unsafe extern "C" fn(*mut c_void)>,
-+    pub instance_finalize: Option<unsafe extern "C" fn(*mut c_void)>,
-+    pub class_init: Option<unsafe extern "C" fn(*mut c_void, *mut c_void)>,
-+    pub instance_size: usize,
-+}
-+
-+#[repr(C)]
-+pub struct Error {
-+    _unused: c_char,
-+}
-+
-+extern "C" {
-+    pub fn error_setg_internal(
-+        errp: *mut *mut Error,
-+        src: *mut c_char,
-+        line: u32,
-+        func: *mut c_char,
-+        fmt: *const c_char,
-+        ...
-+    );
-+    pub fn error_get_pretty(errp: *const Error) -> *mut c_char;
-+    pub fn error_free(errp: *mut Error);
-+
-+    pub fn object_dynamic_cast(obj: *mut Object, typ: *const c_char) -> *mut c_void;
-+    pub fn object_property_add_child(obj: *mut Object, typ: *const c_char,
-+        child: *mut Object);
-+    pub fn object_get_typename(obj: *const Object) -> *const c_char;
-+    pub fn object_ref(obj: *mut Object);
-+    pub fn object_new(typ: *const c_char) -> *const Object;
-+    pub fn object_unref(obj: *mut Object);
-+    pub fn object_unparent(obj: *mut Object);
-+
-+    pub fn device_cold_reset(obj: *mut DeviceState);
-+    pub fn device_realize(obj: *mut DeviceState, err: *mut *mut Error) -> bool;
-+    pub fn type_register(obj: *const TypeInfo);
-+
-+    pub static qdev_prop_bool: PropertyInfo;
-+}
-diff --git a/qemu/src/lib.rs b/qemu/src/lib.rs
-new file mode 100644
-index 0000000..fce21d7
---- /dev/null
-+++ b/qemu/src/lib.rs
-@@ -0,0 +1,4 @@
-+#![allow(unused_macros)]
-+#![allow(dead_code)]
-+
-+pub mod bindings;
++++ b/README.md
+@@ -0,0 +1 @@
++This is very experimental and barely compiles
 -- 
 2.45.2
 
