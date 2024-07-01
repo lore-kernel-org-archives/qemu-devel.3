@@ -4,85 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33AE2C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:07:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B26AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOCwJ-0007uP-CV; Mon, 01 Jul 2024 05:03:11 -0400
+	id 1sOCyO-0000Vn-4A; Mon, 01 Jul 2024 05:05:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOCrd-0004xV-BZ
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:58:23 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOCra-0006j8-DS
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 04:58:20 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-57d20d89748so2989727a12.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 01:58:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719824296; x=1720429096; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kXXH3LOqJxGPAXdIJxcNmav/alDjOGq1U7fctTEu8io=;
- b=Fxl7SlJC2Vsru/qVVW0PtNRr3DV6NIflB1E9ZZ93IoE46MqMh+shCJ1+YEo0wdlcxX
- p7yuDgwEnIVZE9VuAKj/MhE17TGRNybD/EbaDFbMcbyCZ7GD5xScCgHp1ePMDF5GXrXF
- yPLAwX2hLX+NtEvBbrl3EnUAA8NxoWsarNIAg90OkS/BsnBK1i84lw8BFXCG02PR/R1r
- qebAlpayKfqEugb+OQUlSkbxYNeIu987eWbdGc4k45oEfznZ3jfdqYULRgmUDC4fIdZc
- eU4Y4R7hEzmExYI+inQ8/M2ObWmgSc4jzb/dQeSHL8LL6DTcp9NB3vl01tKRiG/cICFk
- FtEQ==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sOCuu-00079d-UT
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:01:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sOCut-0002jO-9T
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:01:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719824501;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oEBDYAQdGZzD+ww+OiJTTgxS9CQV9GMVKaDk3lRKAtA=;
+ b=Tw5kr+c6IKCbajkaRabg5Zqqj1+OvYMfEw7OsUR2MXEUSp33KOwkSal4LzP8HiixFnQndF
+ LheJfsr+An03k2ogUJ3EnCe5JPixh7faXJHC49n7k6gJpwtV2n7UYB8RkyKQPNCsOQu7RS
+ bFy46x95A3wJLxQ6Zxkf7PkVIdDhUv4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-125-VkSo6UMFP8-j-1OJW6FAKQ-1; Mon, 01 Jul 2024 05:01:40 -0400
+X-MC-Unique: VkSo6UMFP8-j-1OJW6FAKQ-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4210d151c5bso19924395e9.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 02:01:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719824296; x=1720429096;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kXXH3LOqJxGPAXdIJxcNmav/alDjOGq1U7fctTEu8io=;
- b=sxlyhYG1W/3Oj9Xd0bWk8GT63aVi92MQXawgLiOeODWdqQG4RVkjFlKS1YykTjeZWu
- 0pDY+ipWX2bNY+wxbzxtTi1wc5s0drtssyAU19MZ1PwaHBGyN57oYxR4lL74sTKm8jlW
- 2E8e8Fz+xq6kfOkkMuuOmpFScBxFp0o8p6noERyKMMXD+Yyk4dKHMVJpg6ahvyTT+HTs
- KkB+Pk9yixLrf5lh4e1WhCkUWrMdi4kqZOexI0yc/RUkCtIvezkgIYnVuDT5U3yLAlEV
- vreQv/sY1NzHgRKY7XSEg3J0GibXRkiphhlbrdvV6lRihMLB8W9eTJ//MexjZnGtQJ4b
- FMSg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWi369Jqr0tpy37mRbNtssYtOpOPAVA0Nomo5wXde7xdORE887rnJgoDnPDNOs0gdOnUHec3+eJdHDcLie6BLBg5uYB1c=
-X-Gm-Message-State: AOJu0YysD6tomzp9q4GHI3AX/sJXATTcxoM/OynO1lFG5SSxsQRSh8nw
- F9nerRAtzLNQZNUapwn+PGJT1Jkqkpw8CnfRqoDl1LXWl2glXs7F2jLZqqNKXsavy6lQTXAtLNN
- QtC4j67zs7u4PmQ/sI69Izf7XiCh/4+8dHm6Kvg==
-X-Google-Smtp-Source: AGHT+IGLyyJzA5YKsF0kiK3YiDtBQO7yVJhfNvDWooPKTxZJtfhQmpK3tNoi/52BJOb8DEm3ddiRgcdOay1l/SW3hGQ=
-X-Received: by 2002:a05:6402:1751:b0:57c:749f:f5ef with SMTP id
- 4fb4d7f45d1cf-587a0bfc733mr2734717a12.34.1719824296410; Mon, 01 Jul 2024
- 01:58:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719824499; x=1720429299;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oEBDYAQdGZzD+ww+OiJTTgxS9CQV9GMVKaDk3lRKAtA=;
+ b=hJ02rfVL7+kOpRPqUEjh7JjY4i+uBRgv3LYQwZGyiL3XWfERFJnfYG9TW4gnwSvqcB
+ 5acjPTuHeiWVeqYEI+Wwxnjj5b1a4E2yeqws8wQyN4Prcfd3g1DakZupswf+F4E8UxSt
+ a+92KQ7R1VPBqhLzKdfg4oqRtvjLxDLOCB12DkfQtZMX9tkErxNeAGoSrtQgM7loC0+J
+ 8zTQApH8Xe1C1inItIK5Gq6uEXrm3JDCPZSNji/YeK7LBVSVtiqFI8/k09ww2AhEkjdI
+ +wo3nhtznw0u5ys9om78kliH3FX7y3jktLXrQxzi30o+IXIRXyjsbo5xfPYbOcELstTO
+ Oc2A==
+X-Gm-Message-State: AOJu0YxGpNgtl/k6+24R7ygmQoAkK3/GSNieC7SxXeK8Pk0e9ZZ8uSmE
+ y/DOL3Zw8iHhe7nbZvlsAQz2/+hb13pUsm24WPJy1L7CN6lJQ4aHPKv25NMA3ZSfEDY9q3UsL1/
+ QT4KxTXr887UGsbBS+a3N/R7lh3FOP2q1P4QINpoQ1KGQd5P0HO52
+X-Received: by 2002:a7b:c458:0:b0:424:a655:c8b with SMTP id
+ 5b1f17b1804b1-4257a010ab5mr32799845e9.19.1719824498992; 
+ Mon, 01 Jul 2024 02:01:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGek2GHD933LRneG78XPG7FHYSOuQtjZWToFudFgCXQ+YjfCag1kHhC5nBK77W/OehMizIE5A==
+X-Received: by 2002:a7b:c458:0:b0:424:a655:c8b with SMTP id
+ 5b1f17b1804b1-4257a010ab5mr32799715e9.19.1719824498651; 
+ Mon, 01 Jul 2024 02:01:38 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4258014f8b7sm47322965e9.41.2024.07.01.02.01.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Jul 2024 02:01:38 -0700 (PDT)
+Date: Mon, 1 Jul 2024 11:01:36 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>, Beraldo
+ Leal <bleal@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Wainer dos
+ Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org, Peter Xu
+ <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Alexandre
+ Iooss <erdnaxe@crans.org>, Stefan Hajnoczi <stefanha@redhat.com>, Peter
+ Maydell <peter.maydell@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Thomas Huth <thuth@redhat.com>, Mark
+ Cave-Ayland <mark.cave-ayland@ilande.co.uk>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>
+Subject: Re: [PATCH 02/23] target/i386: fix gen_prepare_size_nz condition
+Message-ID: <20240701110136.6829422c@imammedo.users.ipa.redhat.com>
+In-Reply-To: <87ikxtnnjh.fsf@draig.linaro.org>
+References: <20240628124258.832466-1-alex.bennee@linaro.org>
+ <20240628124258.832466-3-alex.bennee@linaro.org>
+ <87ikxtnnjh.fsf@draig.linaro.org>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20240620-b4-new-firmware-v3-0-29a3a2f1be1e@linaro.org>
- <20240620-b4-new-firmware-v3-1-29a3a2f1be1e@linaro.org>
- <CAMj1kXGb9xVQ5E3oK_QX+3hKkMfCoA9jF5jkEeG6Eq9+zbHPHA@mail.gmail.com>
- <ca463afe-486f-4590-acb5-a61265cbbd37@linaro.org>
-In-Reply-To: <ca463afe-486f-4590-acb5-a61265cbbd37@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Jul 2024 09:58:04 +0100
-Message-ID: <CAFEAcA_RUK53BZ7oiFgnt0HgcghACTc+XXC1h2340GAR8xHUEw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] tests/avocado: update firmware for sbsa-ref
-To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Cc: Ard Biesheuvel <ardb@kernel.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
- Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, 
- Ard Biesheuvel <ardb+tianocore@kernel.org>, Rebecca Cran <rebecca@bsdio.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,57 +115,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 1 Jul 2024 at 07:49, Marcin Juszkiewicz
-<marcin.juszkiewicz@linaro.org> wrote:
->
-> W dniu 30.06.2024 o 16:37, Ard Biesheuvel pisze:
-> > On Thu, 20 Jun 2024 at 12:20, Marcin Juszkiewicz
-> > <marcin.juszkiewicz@linaro.org> wrote:
-> >>
-> >> Update firmware to have graphics card memory fix from EDK2 commit
-> >> c1d1910be6e04a8b1a73090cf2881fb698947a6e:
-> >>
-> >>      OvmfPkg/QemuVideoDxe: add feature PCD to remap framebuffer W/C
-> >>
-> >>      Some platforms (such as SBSA-QEMU on recent builds of the emulator) only
-> >>      tolerate misaligned accesses to normal memory, and raise alignment
-> >>      faults on such accesses to device memory, which is the default for PCIe
-> >>      MMIO BARs.
-> >>
-> >>      When emulating a PCIe graphics controller, the framebuffer is typically
-> >>      exposed via a MMIO BAR, while the disposition of the region is closer to
-> >>      memory (no side effects on reads or writes, except for the changing
-> >>      picture on the screen; direct random access to any pixel in the image).
-> >>
-> >>      In order to permit the use of such controllers on platforms that only
-> >>      tolerate these types of accesses for normal memory, it is necessary to
-> >>      remap the memory. Use the DXE services to set the desired capabilities
-> >>      and attributes.
-> >>
-> >>      Hide this behavior under a feature PCD so only platforms that really
-> >>      need it can enable it. (OVMF on x86 has no need for this)
-> >>
-> >> With this fix enabled we can boot sbsa-ref with more than one cpu core.
-> >>
+On Fri, 28 Jun 2024 15:34:58 +0100
+Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
+
+> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+>=20
+> > Incorrect brace positions causes an unintended overflow on 32 bit
+> > builds and shenanigans result.
 > >
-> > This requires an explanation: what does the number of CPU cores have
-> > to do with the memory attributes used for the framebuffer?
->
-> I have no idea. Older firmware was hanging on several systems but was
-> passing in QEMU tests. After closer looking I noticed that Avocado tests
-> run with "-smp 1" and pass.
->
-> Checked failing system with "-smp 1" and it worked. In meantime you have
-> fixed problem in EDK2.
->
-> So yes, updating firmware may look like hiding a bug. Which I do not
-> know how to track (I can build and test QEMU, but going into its
-> internals is something I never done).
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2413
+> > Suggested-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org> =20
+>=20
+> This seems to trigger regressions in:
+>=20
+>   qtest-x86_64/bios-tables-test
+>   qtest-x86_64/pxe-test
+>   qtest-x86_64/vmgenid-test
+>=20
+> Could that be down to generated test data?
 
-My assumption was that random chance meant that TF-A when
-only dealing with one CPU meant that its memory layout etc
-was such that it didn't do the unaligned access. I don't think
-this is likely to be a QEMU side question.
+Without context, I'd guess, that
+guest doesn't boot/get to randevu point that tests are waiting for
+and then it just timeouts =3D> fails.
 
--- PMM
+>=20
+> > ---
+> >  target/i386/tcg/translate.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> > index ad1819815a..94f13541c3 100644
+> > --- a/target/i386/tcg/translate.c
+> > +++ b/target/i386/tcg/translate.c
+> > @@ -877,7 +877,7 @@ static CCPrepare gen_prepare_sign_nz(TCGv src, MemO=
+p size)
+> >          return (CCPrepare) { .cond =3D TCG_COND_LT, .reg =3D src };
+> >      } else {
+> >          return (CCPrepare) { .cond =3D TCG_COND_TSTNE, .reg =3D src,
+> > -                             .imm =3D 1ull << ((8 << size) - 1) };
+> > +                             .imm =3D (1ull << (8 << size)) - 1 };
+> >      }
+> >  } =20
+>=20
+
 
