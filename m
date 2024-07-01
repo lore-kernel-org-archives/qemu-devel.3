@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EBF5C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC95C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:49:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOAmQ-00054x-J3; Mon, 01 Jul 2024 02:44:50 -0400
+	id 1sOApe-00061k-4Y; Mon, 01 Jul 2024 02:48:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sOAmO-00054H-Va
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:44:48 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sOAmL-0003l5-O9
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 02:44:48 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxF+hWUIJmBtALAA--.1886S3;
- Mon, 01 Jul 2024 14:44:39 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Cx68ZSUIJmdTE3AA--.62799S3; 
- Mon, 01 Jul 2024 14:44:36 +0800 (CST)
-Subject: Re: [PATCH v3 1/4] hw/intc: Remove loongarch_ipi.c
-From: maobibo <maobibo@loongson.cn>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- gaosong <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- qemu-devel@nongnu.org
-Cc: Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240605-loongson3-ipi-v3-0-ddd2c0e03fa3@flygoat.com>
- <20240605-loongson3-ipi-v3-1-ddd2c0e03fa3@flygoat.com>
- <e1b8bbd8-2a9d-2417-1123-4aabfdedb684@loongson.cn>
- <002f4e7e-682b-479b-9c6c-8971a0e6640a@linaro.org>
- <8d975e9c-c2fd-09c8-7a37-5aebc63656d4@loongson.cn>
- <9a0f73c6-33e9-4576-9056-6a5fd0718630@linaro.org>
- <ceebb4ea-a417-0985-d45e-3988d76e2086@loongson.cn>
-Message-ID: <3544da40-d680-20f2-d7af-cf304d07bc8d@loongson.cn>
-Date: Mon, 1 Jul 2024 14:44:34 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sOApb-00061V-9B; Mon, 01 Jul 2024 02:48:08 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sOApZ-0005f1-5r; Mon, 01 Jul 2024 02:48:07 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id F162875A39;
+ Mon,  1 Jul 2024 09:47:54 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9A413FB19E;
+ Mon,  1 Jul 2024 09:48:02 +0300 (MSK)
+Message-ID: <3394a8f2-0bab-4842-bf94-c15b2fa67a2f@tls.msk.ru>
+Date: Mon, 1 Jul 2024 09:48:02 +0300
 MIME-Version: 1.0
-In-Reply-To: <ceebb4ea-a417-0985-d45e-3988d76e2086@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Cx68ZSUIJmdTE3AA--.62799S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuFWftr4kKr43Gr45XFy5GFX_yoW7tr4rpF
- WfAF1aqFW8Jr1rJr10qr1UXryqyr1Ut3W8XF13AF18Gr4qvr1qgF18Xr109FyUArW8Cr10
- vr1UGFy7ZFyUAFXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j0
- sjUUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.587,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] i386/cpu: fixup number of addressable IDs for
+ processor cores in the physical package
+To: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, xieyongji@bytedance.com, imammedo@redhat.com,
+ zhao1.liu@intel.com, qemu-stable@nongnu.org,
+ Guixiong Wei <weiguixiong@bytedance.com>,
+ Yipeng Yin <yinyipeng@bytedance.com>
+References: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,165 +87,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Also this patch is problematic on LoongArch.
-
-The original patch is to search physical cpuid rather than logic cpuid.
-
-We want to make ipi module better and better, however now it comes back 
-to initial state at the beginning :(
-
-commit 03ca348b6b9038ce284916b36c19f700ac0ce7a6
-Author: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Date:   Wed Jun 5 10:04:27 2024
-
-     hw/intc/loongson_ipi: Replace ipi_getcpu with cpu_by_arch_id
-
-     cpu_by_arch_id is doing the same thing as our ipi_getcpu logic.
-
-     Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-     Reviewed-by: Song Gao <gaosong@loongson.cn>
-     Message-ID: <20240605-loongson3-ipi-v3-4-ddd2c0e03fa3@flygoat.com>
-     Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-
-Regards
-Bibo Mao
-
-On 2024/7/1 上午9:35, maobibo wrote:
-> Hi Philippe,
+11.06.2024 06:23, Chuang Xu wrote:
+> When QEMU is started with:
+> -cpu host,host-cache-info=on,l3-cache=off \
+> -smp 2,sockets=1,dies=1,cores=1,threads=2
+> Guest can't acquire maximum number of addressable IDs for processor cores in
+> the physical package from CPUID[04H].
 > 
-> On 2024/6/27 下午9:02, Philippe Mathieu-Daudé wrote:
->> On 27/6/24 04:44, gaosong wrote:
->>> 在 2024/6/26 下午8:10, Philippe Mathieu-Daudé 写道:
->>>> Hi Bibo,
->>>>
->>>> On 26/6/24 06:11, maobibo wrote:
->>>>>
->>>>>
->>>>> On 2024/6/5 上午10:15, Jiaxun Yang wrote:
->>>>>> It was missed out in previous commit.
->>>>>>
->>>>>> Fixes: b4a12dfc2132 ("hw/intc/loongarch_ipi: Rename as loongson_ipi")
->>>>>> Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
->>>>>> ---
->>>>>>   hw/intc/loongarch_ipi.c | 347 
->>>>>> ------------------------------------------------
->>>>>>   1 file changed, 347 deletions(-)
->>>>
->>>>
->>>>>> -static void loongarch_ipi_realize(DeviceState *dev, Error **errp)
->>>>>> -{
->>>>>> -    LoongArchIPI *s = LOONGARCH_IPI(dev);
->>>>>> -    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
->>>>>> -    int i;
->>>>>> -
->>>>>> -    if (s->num_cpu == 0) {
->>>>>> -        error_setg(errp, "num-cpu must be at least 1");
->>>>>> -        return;
->>>>>> -    }
->>>>>> -
->>>>>> -    memory_region_init_io(&s->ipi_iocsr_mem, OBJECT(dev), 
->>>>>> &loongarch_ipi_ops,
->>>>>> -                          s, "loongarch_ipi_iocsr", 0x48);
->>>>>> -
->>>>>> -    /* loongarch_ipi_iocsr performs re-entrant IO through 
->>>>>> ipi_send */
->>>>>> -    s->ipi_iocsr_mem.disable_reentrancy_guard = true;
->>>>>> -
->>>>>> -    sysbus_init_mmio(sbd, &s->ipi_iocsr_mem);
->>>>>> -
->>>>>> -    memory_region_init_io(&s->ipi64_iocsr_mem, OBJECT(dev),
->>>>>> -                          &loongarch_ipi64_ops,
->>>>>> -                          s, "loongarch_ipi64_iocsr", 0x118);
->>>>>> -    sysbus_init_mmio(sbd, &s->ipi64_iocsr_mem);
->>>>> It is different with existing implementation.
->>>>>
->>>>> With hw/intc/loongson_ipi.c, every vcpu has one ipi_mmio_mem, 
->>>>> however on loongarch ipi machine, there is no ipi_mmio_mem memory 
->>>>> region.
->>>>>
->>>>> So if machine has 256 vcpus, there will be 256 ipi_mmio_mem memory 
->>>>> regions. In function sysbus_init_mmio(), memory region can not exceed
->>>>> QDEV_MAX_MMIO (32).  With so many memory regions, it slows down memory
->>>>> region search speed also.
->>>>>
->>>>> void sysbus_init_mmio(SysBusDevice *dev, MemoryRegion *memory)
->>>>> {
->>>>>      int n;
->>>>>
->>>>>      assert(dev->num_mmio < QDEV_MAX_MMIO);
->>>>>      n = dev->num_mmio++;
->>>>>      dev->mmio[n].addr = -1;
->>>>>      dev->mmio[n].memory = memory;
->>>>> }
->>>>>
->>>>> Can we revert this patch? We want to do production usable by real 
->>>>> users rather than show pure technology.
->>>>
->>>> Since commit b4a12dfc2132 this file is not built/tested anymore:
->>>>
->>>> -specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: 
->>>> files('loongarch_ipi.c'))
->>>> +specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: 
->>>> files('loongson_ipi.c'))
->>>>
->>>> We don't want to maintain dead code.
->>>>
->>> Hi,  Philippe
->>>
->>> It is commmit 49eba52a5 that causes Loongarch to fail to start.
->>>
->>> What bibao means is that LoongArch and mips do not share 
->>> "lloongson_ipi.c".
->>> This avoids mutual influence.
->>>
->>>
->>> My understanding of the next sentence is as follows.
->>>
->>> Nowadays, most of the open source operating systems in China use the 
->>> latest QEMU.
->>> e.g. OpenEuler/OpenAnolis/OpenCloudOS, etc. These operating systems 
->>> have a large
->>>   number of real users. so we need to maintain the stability of the 
->>> LoongArch architecture
->>> of the QEMU community as much as possible. This will reduce 
->>> maintenance costs.
->>
->> I'm glad there is a such large number of users :)
->>
->>> Therefore, we would like to restore the 'loongarch_ipi.c' file. what 
->>> do you think?
->>
->> My preference on "reducing maintenance cost" is code reuse instead of
->> duplication.
->>
->> Before reverting, lets try to fix the issue. I suggested a v2:
->> https://lore.kernel.org/qemu-devel/20240627125819.62779-2-philmd@linaro.org 
->>
-> Sorry for late reply.
+> When creating a CPU topology of 1 core per package, host-cache-info only
+> uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
+> resulting in a conflict (on the multicore Host) between the Guest core
+> topology information in this field and the Guest's actual cores number.
 > 
-> How about split loongson_ipi.c into 
-> loongson_ipi_base.c/loongson_ipi_loongson.c/loongson_ipi_loongarch.c,
+> Fix it by removing the unnecessary condition to cover 1 core per package
+> case. This is safe because cores_per_pkg will not be 0 and will be at
+> least 1.
 > 
-> File loongson_ipi_base.c contains the common code, loongson_ipi_xxx.c 
-> contains arch specific. Soon we will submit irqchip in kernel function,
-> it will be much different for architectures, since ioctl command is 
-> different for two architectures to save/restore ipi registers.
+> Fixes: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
+> Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+> Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> ---
+>   target/i386/cpu.c | 6 ++----
+>   1 file changed, 2 insertions(+), 4 deletions(-)
 > 
-> Regards
-> Bibo Mao
-> 
->>
->> That said, both current patch and the suggested fix pass our
->> Avocado CI test suite (running tests/avocado/machine_loongarch.py).
->>
->> Is your use case not covered? Could you expand the CI tests so
->> we don't hit this problem again? (Also we could reproduce and
->> fix more easily).
->>
->> Thanks,
->>
->> Phil.
-> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index bc2dceb647..b68f7460db 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -6426,10 +6426,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+>               if (*eax & 31) {
+>                   int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+>   
+> -                if (cores_per_pkg > 1) {
+> -                    *eax &= ~0xFC000000;
+> -                    *eax |= max_core_ids_in_package(&topo_info) << 26;
+> -                }
+> +                *eax &= ~0xFC000000;
+> +                *eax |= max_core_ids_in_package(&topo_info) << 26;
+>                   if (host_vcpus_per_cache > threads_per_pkg) {
+>                       *eax &= ~0x3FFC000;
+>   
+
+In qemu 9.0, the context is a bit different here:
+
+
+             if (*eax & 31) {
+                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+                 int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
+                 if (cs->nr_cores > 1) {
+                     *eax &= ~0xFC000000;
+                     *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
+                 }
+                 if (host_vcpus_per_cache > vcpus_per_socket) {
+
+Ie, no max_core_ids_in_package(), cores_per_pkg etc, introduced in
+v9.0.0-790-gf602eb925a "i386/cpu: Use CPUCacheInfo.share_level to encode
+CPUID[4]" and nearby.
+
+Am I right the above change becomes
+
+              if (*eax & 31) {
+                  int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+                  int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
+-                if (cs->nr_cores > 1) {
+-                    *eax &= ~0xFC000000;
+-                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
+-                }
++                *eax &= ~0xFC000000;
++                *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
+                  if (host_vcpus_per_cache > vcpus_per_socket) {
+                      *eax &= ~0x3FFC000;
+                      *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
+
+in 9.0 -- in other words, just remove the nr_cores condition check
+and do the *eax assignment unconditionally ?
+
+ From the patch description it seems like it is, but I thought I'd
+ask anyway :)
+
+Thanks,
+
+/mjt
+
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
 
