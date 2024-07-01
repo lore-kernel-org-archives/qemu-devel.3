@@ -4,95 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B780C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691AEC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 09:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOD4u-00052P-7G; Mon, 01 Jul 2024 05:12:04 -0400
+	id 1sODFt-0002hb-6q; Mon, 01 Jul 2024 05:23:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOD4p-0004uN-2Q
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:11:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOD4m-00082M-Vu
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:11:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719825115;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S7hT4n6ISKxZUyUm4JpCd0/MZTDDpRW1JeMoxr8sEd0=;
- b=IBR5X79jYr8lt2DQAlhxp1uOnK/264/o1cdsSAzxh61h6t7BF0HUH4BwyLrlk+3D4UBAtV
- +WXnj2uEQeL6UBBfTrFadthFFM8JXd0yXuj/AbQxFCY7XRIukiyLUxxHG7OPn3SqdXxTiG
- koIAukM3xy7CChVXV5eXEYDcLP38fPM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-CBMwClAlMR2rnxNujOo_Cg-1; Mon,
- 01 Jul 2024 05:11:50 -0400
-X-MC-Unique: CBMwClAlMR2rnxNujOo_Cg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 966A91955F36; Mon,  1 Jul 2024 09:11:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.4])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 370BD19560A3; Mon,  1 Jul 2024 09:11:36 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E2C7C21E668B; Mon,  1 Jul 2024 11:11:32 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel
- <qemu-devel@nongnu.org>,  Mads Ynddal <mads@ynddal.dk>,  Jiri Pirko
- <jiri@resnulli.us>,  Stefan Hajnoczi <stefanha@redhat.com>,  Eric Blake
- <eblake@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Michael
- Roth <michael.roth@amd.com>,  "Michael S. Tsirkin" <mst@redhat.com>,  Alex
- Williamson <alex.williamson@redhat.com>,  Pavel Dovgalyuk
- <pavel.dovgaluk@ispras.ru>,  Victor Toso de Carvalho
- <victortoso@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Qemu-block
- <qemu-block@nongnu.org>,  Ani
- Sinha <anisinha@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Peter Xu
- <peterx@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Lukas Straub
- <lukasstraub2@web.de>,
- Igor Mammedov <imammedo@redhat.com>,  Jason Wang <jasowang@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,  Hanna Reitz <hreitz@redhat.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: Re: [PATCH v2 07/21] docs/qapidoc: fix nested parsing under
- untagged sections
-In-Reply-To: <CAFn=p-aPJact6oMq_yMqDwUhY2vmsAtPe4jt5U1FW300MrMEuQ@mail.gmail.com>
- (John Snow's message of "Fri, 28 Jun 2024 11:10:11 -0400")
-References: <20240626222128.406106-1-jsnow@redhat.com>
- <20240626222128.406106-8-jsnow@redhat.com>
- <87r0chzelz.fsf@pond.sub.org>
- <CAFn=p-aPJact6oMq_yMqDwUhY2vmsAtPe4jt5U1FW300MrMEuQ@mail.gmail.com>
-Date: Mon, 01 Jul 2024 11:11:32 +0200
-Message-ID: <87bk3htr23.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sODFq-0002hF-AQ
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:23:22 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sODFn-0005r4-KW
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 05:23:22 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxHuuAdYJmN9kLAA--.45294S3;
+ Mon, 01 Jul 2024 17:23:12 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8AxRcV8dYJmUFU3AA--.52129S3; 
+ Mon, 01 Jul 2024 17:23:10 +0800 (CST)
+Subject: Re: [RFC v3 1/2] target/loongarch: Add loongson binary translation
+ feature
+To: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>
+Cc: QEMU devel <qemu-devel@nongnu.org>
+References: <20240530064941.1289573-1-maobibo@loongson.cn>
+ <20240530064941.1289573-2-maobibo@loongson.cn>
+ <db19ed93-027c-4e29-aac5-e3a1edcd760b@app.fastmail.com>
+ <bba3338b-4c28-fc38-fc5e-f4691bfa28b1@loongson.cn>
+ <cdc0d448-8e3b-44f7-89ca-a15ea48acd2b@app.fastmail.com>
+From: maobibo <maobibo@loongson.cn>
+Message-ID: <fc3829c2-4164-f11a-8158-498198b8a677@loongson.cn>
+Date: Mon, 1 Jul 2024 17:23:08 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <cdc0d448-8e3b-44f7-89ca-a15ea48acd2b@app.fastmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAf8AxRcV8dYJmUFU3AA--.52129S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uryfXFy8ury7Wr4kJr4xAFc_yoW8CrWDpa
+ y2vFWF9ry7tr4Iy3s2g3ZrJFsYyrWIyw47Zry5Gry7A3Z0gF1DJr93AFZY9a93Zr1fXF4I
+ vrsrK347uFyUZacCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
+ 67AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
+ 8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
+ CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+ 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
+ daVFxhVjvjDU0xZFpf9x07j5WrAUUUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.587,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,90 +87,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
 
-> On Fri, Jun 28, 2024, 3:55=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
->> John Snow <jsnow@redhat.com> writes:
->>
->> > Sphinx does not like sections without titles, because it wants to
->> > convert every section into a reference. When there is no title, it
->> > struggles to do this and transforms the tree inproperly.
->> >
->> > Depending on the rST used, this may result in an assertion error deep =
-in
->> > the docutils HTMLWriter.
->> >
->> > (Observed when using ".. admonition:: Notes" under such a section - Wh=
-en
->> > this is transformed with its own <title> element, Sphinx is fooled into
->> > believing this title belongs to the section and incorrect mutates the
->> > docutils tree, leading to errors during rendering time.)
->> >
->> > When parsing an untagged section (free paragraphs), skip making a holl=
-ow
->> > section and instead append the parse results to the prior section.
->> >
->> > Many Bothans died to bring us this information.
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
->> > Acked-by: Markus Armbruster <armbru@redhat.com>
->>
->> Generated HTML changes, but the diff is hard to review due to id
->> attribute changes all over the place.
->>
->> Generated qemu-ga-ref.7 also changes:
->>
->>     diff -rup old/qemu-ga-ref.7 new/qemu-ga-ref.7
->>     --- old/qemu-ga-ref.7       2024-06-27 10:42:21.466096276 +0200
->>     +++ new/qemu-ga-ref.7       2024-06-27 10:45:36.502414099 +0200
->>     @@ -397,6 +397,7 @@ shutdown request, with no guarantee of s
->>      .B \fBmode\fP: \fBstring\fP (optional)
->>      \(dqhalt\(dq, \(dqpowerdown\(dq (default), or \(dqreboot\(dq
->>      .UNINDENT
->>     +.sp
->>      This command does NOT return a response on success.  Success
->>      condition is indicated by the VM exiting with a zero exit status or,
->>      when running with \-\-no\-shutdown, by issuing the query\-status QMP
->>     @@ -1348,6 +1349,7 @@ the new password entry string, base64 en
->>      .B \fBcrypted\fP: \fBboolean\fP
->>      true if password is already crypt()d, false if raw
->>      .UNINDENT
->>     +.sp
->>      If the \fBcrypted\fP flag is true, it is the caller\(aqs
->> responsibility to
->>      ensure the correct crypt() encryption scheme is used.  This command
->>      does not attempt to interpret or report on the encryption scheme.
->>
->> We add vertical space.  Visible when viewed with man.  Looks like an
->> improvement to me.
->>
->> Here's the first of these two spots in HTML:
 
-[...]
+On 2024/7/1 下午4:42, Jiaxun Yang wrote:
+> 
+> 
+> 在2024年7月1日七月 上午8:32，maobibo写道：
+> [...]
+>>>>
+>>>> +static void loongarch_cpu_check_lbt(CPUState *cs, Error **errp)
+>>>> +{
+>>>> +    CPULoongArchState *env = cpu_env(cs);
+>>>> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
+>>>> +    bool kvm_supported;
+>>>> +
+>>>> +    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LBT);
+>>>
+>>> IMHO if there is no global states that should be saved/restored VM wise,
+>>> this should be handled at per CPU level, preferably with CPUCFG flags hint.
+>>>
+>>> We should minimize non-privilege KVM feature bits to prevent hindering
+>>> asymmetry ISA system.
+>> For "asymmetry ISA system", do you meaning some vcpus have LBT feature,
+>> however some vcpus does have LBT features? That does not exists at all.
+> 
+> Yes, we should always prepare for the future :-)
+> 
+>  From Weiwu's presentations, I believe LASX asymmetry product is already on the
+> roadmap. So for LBT it's also a possibility.
+I never hear such product plan with different LASX/LSX capability even 
+for the future big-little product.
 
->> The id changes muddy the waters.  With them manually removed:
-
-[...]
-
->> Makes no visual difference in my browser.
+> 
+> Even if such product won't land in near future, we should still try our best
+> to bound to vCPU creation, not to the system.
+> 
 >>
->> Do these differences match your expectations?
+>> It will be big disaster for such products, how does application use this?
+> 
+> Affinity placement etc, there are many possibilities.
+> 
+> On Arm side, there are already systems with Big.Little asymmetry CPU that
+> some of the processor equipped 32 bit EL0 mode while others doesn't. They
+> managed that well with affinity.
+> 
+> See: arm64: Allow mismatched 32-bit EL0 support
+Is it only 32 bit EL0 mode or 32bit compatible mode and 64 bit also?
+
+What is the detailed product name and how does Linux/KVM support this 
+product?
+
+Regards
+Bibo Mao
+> 
+> Thanks
 >>
->
-> Yep!
->
-> It does change the output just a little, but Sphinx really doesn't like
-> title-less sections.
->
-> I thought the change looked fine, and I'm still planning on removing this
-> old generator anyway, so...
-
-I'll add to the commit message
-
-    The resulting output changes are basically invisible.
-
-Thanks!
+>> Regards
+>> Bibo
+>>>
+>>> Thanks
+>>> - Jiaxun
+>>>
+> 
 
 
