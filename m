@@ -4,50 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D538AC3065A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1683C2BD09
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 03:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sO7t8-00058S-JC; Sun, 30 Jun 2024 23:39:38 -0400
+	id 1sO7se-00055P-GB; Sun, 30 Jun 2024 23:39:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sO7sy-00057v-Q1; Sun, 30 Jun 2024 23:39:25 -0400
-Received: from out30-113.freemail.mail.aliyun.com ([115.124.30.113])
+ id 1sO7sc-00054w-7g; Sun, 30 Jun 2024 23:39:02 -0400
+Received: from out30-110.freemail.mail.aliyun.com ([115.124.30.110])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sO7sw-0005It-EU; Sun, 30 Jun 2024 23:39:24 -0400
+ id 1sO7sZ-0005HV-DW; Sun, 30 Jun 2024 23:39:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1719805157; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=+nj4z4XX2OniPNZ6pErqx6+3KAsX5YmQvKH4GZ49Gt0=;
- b=LHp0ZzBxrwfQzoNM6kSi66WCL5NmOzIpwJlCB5OYxB9P8z6Fld1dZovAFzgpuSi359xKmZ6tj+4/KGpslHAG5ISv0V29xsmOf6YEmyPJOaHI8YYY5MZV5GPHsd3xbK/YR9hNf+nM0Eldf3N5zLxLOO+2OPEG+gT2+1ZSW+LkN0Q=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R991e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067110;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W9YPsIt_1719805155; 
+ t=1719805127; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=fv0330CMgYf+cwa0a7U4PQFK68rmk5XY9FRKRR4A34Q=;
+ b=id5s4VhhZhH8xIeMdf9OzPm3UOZGJSXkQlSDoKs+klbrqMFP7iBk4DlUnRJ6ahFmleTMQUAa70tbG8nRFo4/0k5jHIuLAKnfNmaTaM8mbXWi9KMe05nKEmShIld+X9RA+s98t3ry3m7jTIwdRfzqSUpcdTnKPfQQ1FpQxMgoTrM=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
+ TI=SMTPD_---0W9YPs85_1719805124; 
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W9YPsIt_1719805155) by smtp.aliyun-inc.com;
- Mon, 01 Jul 2024 11:39:16 +0800
+ fp:SMTPD_---0W9YPs85_1719805124) by smtp.aliyun-inc.com;
+ Mon, 01 Jul 2024 11:38:45 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH 1/6] target/riscv: Add fw_dynamic_info32 for booting RV32
- OpenSBI
-Date: Mon,  1 Jul 2024 11:37:17 +0800
-Message-Id: <20240701033722.954-2-zhiwei_liu@linux.alibaba.com>
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Subject: [PATCH 0/6] target/riscv: Expose RV32 cpu to RV64 QEMU
+Date: Mon,  1 Jul 2024 11:37:16 +0800
+Message-Id: <20240701033722.954-1-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20240701033722.954-1-zhiwei_liu@linux.alibaba.com>
-References: <20240701033722.954-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.113;
+Received-SPF: pass client-ip=115.124.30.110;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-113.freemail.mail.aliyun.com
+ helo=out30-110.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -73,159 +69,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
-RV32 OpenSBI need a fw_dynamic_info parameter with 32-bit fields instead
-of target_ulong.
+This patch set aims to expose 32-bit RISC-V cpu to RV64 QEMU. Thus
+qemu-system-riscv64 can directly boot a RV32 Linux.
 
-In RV64 QEMU, target_ulong is 64. So it is not right for booting RV32 OpenSBI.
-We create a fw_dynmaic_info32 struct for this purpose.
+This patch set has been tested with 6.9.0 Linux Image.
 
-Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
----
- hw/riscv/boot.c                 | 35 ++++++++++++++++++++++-----------
- hw/riscv/sifive_u.c             |  3 ++-
- include/hw/riscv/boot.h         |  4 +++-
- include/hw/riscv/boot_opensbi.h | 29 +++++++++++++++++++++++++++
- 4 files changed, 57 insertions(+), 14 deletions(-)
+- Run RV64 QEMU with RV32 CPU
+qemu-system-riscv64 -cpu rv32 -M virt -nographic \
+    -kernel Image \
+    -append "root=/dev/vda ro console=ttyS0" \
+    -drive file=rootfs.ext2,format=raw,id=hd0 \
+    -device virtio-blk-device,drive=hd0 -netdev user,id=net0 \
+    -device virtio-net-device,netdev=net0
 
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index 47281ca853..1a2c1ff9e0 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -342,27 +342,33 @@ void riscv_load_fdt(hwaddr fdt_addr, void *fdt)
-                         rom_ptr_for_as(&address_space_memory, fdt_addr, fdtsize));
- }
- 
--void riscv_rom_copy_firmware_info(MachineState *machine, hwaddr rom_base,
--                                  hwaddr rom_size, uint32_t reset_vec_size,
-+void riscv_rom_copy_firmware_info(MachineState *machine,
-+                                  RISCVHartArrayState *harts,
-+                                  hwaddr rom_base, hwaddr rom_size,
-+                                  uint32_t reset_vec_size,
-                                   uint64_t kernel_entry)
- {
-+    struct fw_dynamic_info32 dinfo32;
-     struct fw_dynamic_info dinfo;
-     size_t dinfo_len;
- 
--    if (sizeof(dinfo.magic) == 4) {
--        dinfo.magic = cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
--        dinfo.version = cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
--        dinfo.next_mode = cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
--        dinfo.next_addr = cpu_to_le32(kernel_entry);
-+    if (riscv_is_32bit(harts)) {
-+        dinfo32.magic = cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
-+        dinfo32.version = cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
-+        dinfo32.next_mode = cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
-+        dinfo32.next_addr = cpu_to_le32(kernel_entry);
-+        dinfo32.options = 0;
-+        dinfo32.boot_hart = 0;
-+        dinfo_len = sizeof(dinfo32);
-     } else {
-         dinfo.magic = cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
-         dinfo.version = cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
-         dinfo.next_mode = cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
-         dinfo.next_addr = cpu_to_le64(kernel_entry);
-+        dinfo.options = 0;
-+        dinfo.boot_hart = 0;
-+        dinfo_len = sizeof(dinfo);
-     }
--    dinfo.options = 0;
--    dinfo.boot_hart = 0;
--    dinfo_len = sizeof(dinfo);
- 
-     /**
-      * copy the dynamic firmware info. This information is specific to
-@@ -374,7 +380,10 @@ void riscv_rom_copy_firmware_info(MachineState *machine, hwaddr rom_base,
-         exit(1);
-     }
- 
--    rom_add_blob_fixed_as("mrom.finfo", &dinfo, dinfo_len,
-+    rom_add_blob_fixed_as("mrom.finfo",
-+                           riscv_is_32bit(harts) ?
-+                           (void *)&dinfo32 : (void *)&dinfo,
-+                           dinfo_len,
-                            rom_base + reset_vec_size,
-                            &address_space_memory);
- }
-@@ -430,7 +439,9 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
-     }
-     rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
-                           rom_base, &address_space_memory);
--    riscv_rom_copy_firmware_info(machine, rom_base, rom_size, sizeof(reset_vec),
-+    riscv_rom_copy_firmware_info(machine, harts,
-+                                 rom_base, rom_size,
-+                                 sizeof(reset_vec),
-                                  kernel_entry);
- }
- 
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index af5f923f54..5010c3eadb 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -646,7 +646,8 @@ static void sifive_u_machine_init(MachineState *machine)
-     rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
-                           memmap[SIFIVE_U_DEV_MROM].base, &address_space_memory);
- 
--    riscv_rom_copy_firmware_info(machine, memmap[SIFIVE_U_DEV_MROM].base,
-+    riscv_rom_copy_firmware_info(machine, &s->soc.u_cpus,
-+                                 memmap[SIFIVE_U_DEV_MROM].base,
-                                  memmap[SIFIVE_U_DEV_MROM].size,
-                                  sizeof(reset_vec), kernel_entry);
- 
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index a2e4ae9cb0..806256d23f 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -56,7 +56,9 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
-                                hwaddr rom_base, hwaddr rom_size,
-                                uint64_t kernel_entry,
-                                uint64_t fdt_load_addr);
--void riscv_rom_copy_firmware_info(MachineState *machine, hwaddr rom_base,
-+void riscv_rom_copy_firmware_info(MachineState *machine,
-+                                  RISCVHartArrayState *harts,
-+                                  hwaddr rom_base,
-                                   hwaddr rom_size,
-                                   uint32_t reset_vec_size,
-                                   uint64_t kernel_entry);
-diff --git a/include/hw/riscv/boot_opensbi.h b/include/hw/riscv/boot_opensbi.h
-index 1b749663dc..18664a174b 100644
---- a/include/hw/riscv/boot_opensbi.h
-+++ b/include/hw/riscv/boot_opensbi.h
-@@ -58,4 +58,33 @@ struct fw_dynamic_info {
-     target_long boot_hart;
- };
- 
-+/** Representation dynamic info passed by previous booting stage */
-+struct fw_dynamic_info32 {
-+    /** Info magic */
-+    int32_t magic;
-+    /** Info version */
-+    int32_t version;
-+    /** Next booting stage address */
-+    int32_t next_addr;
-+    /** Next booting stage mode */
-+    int32_t next_mode;
-+    /** Options for OpenSBI library */
-+    int32_t options;
-+    /**
-+     * Preferred boot HART id
-+     *
-+     * It is possible that the previous booting stage uses same link
-+     * address as the FW_DYNAMIC firmware. In this case, the relocation
-+     * lottery mechanism can potentially overwrite the previous booting
-+     * stage while other HARTs are still running in the previous booting
-+     * stage leading to boot-time crash. To avoid this boot-time crash,
-+     * the previous booting stage can specify last HART that will jump
-+     * to the FW_DYNAMIC firmware as the preferred boot HART.
-+     *
-+     * To avoid specifying a preferred boot HART, the previous booting
-+     * stage can set it to -1UL which will force the FW_DYNAMIC firmware
-+     * to use the relocation lottery mechanism.
-+     */
-+    int32_t boot_hart;
-+};
- #endif
+OpenSBI v1.4
+QEMU emulator version 9.0.50 (v9.0.0-1132-g7799dc2e3b)
+[    0.000000] Linux version 6.9.0 (developer@11109ca35736) (riscv32-unknown-linux-gnu-gcc (gc891d8dc23e-dirty) 13.2.0, GNU ld (GNU Binutils) 2.42) #3 SMP Fri May 31 08:42:15 UTC 2024
+[    0.000000] random: crng init done
+[    0.000000] OF: fdt: Ignoring memory range 0x80000000 - 0x80400000
+[    0.000000] Machine model: riscv-virtio,qemu
+[    0.000000] SBI specification v2.0 detected
+[    0.000000] SBI implementation ID=0x1 Version=0x10004
+[    0.000000] SBI TIME extension detected
+[    0.000000] SBI IPI extension detected
+[    0.000000] SBI RFENCE extension detected
+[    0.000000] SBI SRST extension detected
+[    0.000000] SBI DBCN extension detected
+[    0.000000] efi: UEFI not found.
+[    0.000000] OF: reserved mem: 0x80000000..0x8003ffff (256 KiB) nomap non-reusable mmode_resv1@80000000
+[    0.000000] OF: reserved mem: 0x80040000..0x8004ffff (64 KiB) nomap non-reusable mmode_resv0@80040000
+[    0.000000] Zone ranges:
+[    0.000000]   Normal   [mem 0x0000000080400000-0x0000000087ffffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000080400000-0x0000000087ffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000080400000-0x0000000087ffffff]
+[    0.000000] On node 0, zone Normal: 1024 pages in unavailable ranges
+[    0.000000] SBI HSM extension detected
+[    0.000000] riscv: base ISA extensions acdfhim
+[    0.000000] riscv: ELF capabilities acdfim
+[    0.000000] percpu: Embedded 17 pages/cpu s37728 r8192 d23712 u69632
+[    0.000000] Kernel command line: root=/dev/vda ro console=ttyS0
+[    0.000000] Dentry cache hash table entries: 16384 (order: 4, 65536 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 8192 (order: 3, 32768 bytes, linear)
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 31465
+[    0.000000] mem auto-init: stack:all(zero), heap alloc:off, heap free:off
+[    0.000000] Virtual kernel memory layout:
+[    0.000000]       fixmap : 0x9c800000 - 0x9d000000   (8192 kB)
+[    0.000000]       pci io : 0x9d000000 - 0x9e000000   (  16 MB)
+[    0.000000]      vmemmap : 0x9e000000 - 0xa0000000   (  32 MB)
+[    0.000000]      vmalloc : 0xa0000000 - 0xc0000000   ( 512 MB)
+[    0.000000]       lowmem : 0xc0000000 - 0xc7c00000   ( 124 MB)
+[    0.000000] Memory: 95700K/126976K available (9090K kernel code, 8845K rwdata, 4096K rodata, 4231K init, 341K bss, 31276K reserved, 0K cma-reserved)
+...
+Welcome to Buildroot
+buildroot login: root
+# cat /proc/cpuinfo
+processor       : 0
+hart            : 0
+isa             : rv32imafdch_zicbom_zicboz_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zfa_zba_zbb_zbc_zbs_sstc
+mmu             : sv32
+
+TANG Tiancheng (6):
+  target/riscv: Add fw_dynamic_info32 for booting RV32 OpenSBI
+  target/riscv: Adjust PMP size for no-MMU RV64 QEMU running RV32
+  target/riscv: Correct SXL return value for RV32 in RV64 QEMU
+  target/riscv: Detect sxl to set bit width for RV32 in RV64
+  target/riscv: Correct mcause/scause bit width for RV32 in RV64 QEMU
+  target/riscv: Enable RV32 CPU support in RV64 QEMU
+
+ configs/targets/riscv64-softmmu.mak |  2 +-
+ hw/riscv/boot.c                     | 35 +++++++++++++++++++----------
+ hw/riscv/sifive_u.c                 |  3 ++-
+ include/hw/riscv/boot.h             |  4 +++-
+ include/hw/riscv/boot_opensbi.h     | 29 ++++++++++++++++++++++++
+ target/riscv/cpu.c                  | 17 ++++++++++----
+ target/riscv/cpu.h                  |  5 ++++-
+ target/riscv/cpu_helper.c           | 23 ++++++++++++++-----
+ target/riscv/pmp.c                  |  2 +-
+ 9 files changed, 93 insertions(+), 27 deletions(-)
+
 -- 
 2.43.0
 
