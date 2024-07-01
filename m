@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48CC2C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 19:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D74C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 19:49:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOMrr-0001Gl-4G; Mon, 01 Jul 2024 15:39:15 -0400
+	id 1sON0M-0003gw-4b; Mon, 01 Jul 2024 15:48:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sOMro-0001GN-TY
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 15:39:12 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sON0J-0003gi-JY
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 15:47:59 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sOMrm-0000xn-7j
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 15:39:11 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1f6fabe9da3so19804345ad.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 12:39:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sON0H-0003pn-7i
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 15:47:58 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-424adaa6ceeso21482435e9.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 12:47:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1719862748; x=1720467548; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719863274; x=1720468074; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TDSiGneJCdNw4uwBfJMM5U8FSM7QwZWIIwYTIEskkRk=;
- b=ouWOnSFJfa4bJkX9vo4Ugok82kbNCutoM1o8Xrq/chgCcGQJ+TTV3jEEeVyHE+guR3
- F8L3eEltyfrh6/WIi3aozqwH27Ju8wXzZcsViEp9qby3DtZHbtEdpbuAY82AlU9Uh2yd
- wo8s3HvGKLhyeB6O/CpFw7RYIgitzryH9ywcd9QICllfvvhxGNHJdW7neFTCatq96Qkb
- KkYZOINGI+X345/wgWfg6u3hyhMMJqxVEDseUEEHGZ153pcSyjLLsdfvlQ3ImO09qEhX
- XkGf0jGISklMFjWDLCDuwZnfQ83ryM+tbKHaqgiiUy7E8dfFxNdUOU+79KSaLkgJS8dC
- aGiQ==
+ bh=D9xZjbh34W8VeIbCWIb6xKE5KF/7biAnGtRGhPnlVWA=;
+ b=k79sHY9Uu/HNyJCRbKHad2Gs1gEAfVzPNCWk9EsTmaWql69MSrXEAWIxZM4zYuzzw6
+ UNn1lObH65RADYf2G7mx088O2fwfVToo5AXNKCcIkc8gWtIo4iUZT3Q7YBs9LyhTsGtq
+ kWLsyArcG1wTm88pXND004nfZTSJL4/7ZguJ4rPpcTlwzSDuOJTCl3mi4QBBnzrtoedc
+ N20EGusXc8Wocu95kdj+HXGrdD+Qx0uX/2Vx5CLt0DrZ+axnlsBXvZNn9eP9lrJ6SSzM
+ iGe2pCVzb7GQYsvyHEbRAE0FSo+aO322vtbNL7TQ+vXh9b7V8oMqA3tfwg4d9JGIreH9
+ uYkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719862748; x=1720467548;
+ d=1e100.net; s=20230601; t=1719863274; x=1720468074;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TDSiGneJCdNw4uwBfJMM5U8FSM7QwZWIIwYTIEskkRk=;
- b=gPDQGzQfIiIhXagc29TfPFyQ8wQ/DbmzTb23f+6uT4VVAQcuGyBpugcR8WuV9KfOWb
- QZqhUYgn85T/1XTtdr6t3wbbB9jHxWA0VqtXUt7raLpUsvuXFJepKmBNnHbKGiunAplb
- AzyjMwkgY+iDxJQqJhrxHuEJ3BFVt0HDYrn853985Rx5DQycSvtA+K7Y+d37jWJtqJDw
- Zi1aiddaL5IPwOQYKwlzsXS456r/rD41ZP52D27o6n3dMiRQoN88BcG1xdWfmgIjETsS
- dty1ZZb1sKPX+gvdb8pVlD23RKU6dnA5ibceJYLcyaRZKUVDvOxRVXiVrcY6TwcD/LF8
- zTcQ==
+ bh=D9xZjbh34W8VeIbCWIb6xKE5KF/7biAnGtRGhPnlVWA=;
+ b=EDU6wT3/d+wCyHQ8A2l1AdelmlIYPV4QwcTmrgRoSfu4xFrhdedgh0/xCS6elq7FVh
+ +O5Ml0xiPANgIBwc/6O0afYAEnXBlN0gFoDnKyDllU1zfKk7vmDJGZBf4M5FIVC+0uVE
+ INlHXZvb7no0d0Ib4VM+2E8siXAoiRkYs3VnVO9l0LbrxsJRvs5A82Od+7ArVxPri4mT
+ dfyWw69hct9Gr8fRXt8M3j3empq/CcH8dagBuUFcCBClBnrsTVbwZQqfrLvegiJGOYvf
+ 2REi1aNWZqMn1bOQ32xLjqI9H7zEOGhQNo1LjYPaREh4n+fVrJwfvPqQxCJ7slEQdiUr
+ BGlg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXePZ66W3td9GbcChUNy92cm8sV8VGGE5AB0BbffRE9AwhDOHnRTFWSQ56EHnAIAmZ8WhXHbBtJiqmRp1REYikOQiMxXCM=
-X-Gm-Message-State: AOJu0YzoDIuR68nt0rsbc5j4x5D2bUvjDMGocfWRiKMfGAwi2Q9wDTL0
- dNXrYsyRsRw5Bjn+TPaIBKcMSoBEzLIkIG6CPM0NWCu7tVY2PPoiZlVZY9W/egk=
-X-Google-Smtp-Source: AGHT+IH80gw73lAnSFqf9aG+p4dTATR8kw5QwATlnI5nXq8PkMwCQ51ODN2gIO/eJdizUCmIDShspA==
-X-Received: by 2002:a17:903:22c5:b0:1fa:a89:fd1a with SMTP id
- d9443c01a7336-1fadbc73843mr40889635ad.10.1719862747763; 
- Mon, 01 Jul 2024 12:39:07 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bcc0:1aea:63a7:288e:eb77:fe54?
- ([2804:7f0:bcc0:1aea:63a7:288e:eb77:fe54])
+ AJvYcCWtKbIeiTkypQT43zarpoWroBI5butPqtoUf5wdz0ssJ4AmTYLYTXQ+fdMoTbtleHyJIvG/zVRiOL3Svzqluxf+aoNBP+M=
+X-Gm-Message-State: AOJu0YwSHLz5IIW0tHe6y6kz3EolEE1ehPF98f4zFet+bQ9a6rItfN9U
+ GAiYyEvMLpiu6nVD+ZYPEWd0GM2VQQcW9TGJvdoqd/HKe6uYYfkhjTX/1GUin2U=
+X-Google-Smtp-Source: AGHT+IFRzlX20gz+1JJThZGCa2ODHG3w2xSB0vlScz+BiaCRNfYMwL89BUomc1YbQoUJZGx2wnSOZg==
+X-Received: by 2002:a05:600c:230d:b0:425:6510:d8ec with SMTP id
+ 5b1f17b1804b1-4257a02fcb3mr45215245e9.23.1719863274131; 
+ Mon, 01 Jul 2024 12:47:54 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac1599c23sm68441335ad.280.2024.07.01.12.39.04
+ 5b1f17b1804b1-4258014f8b7sm71621655e9.41.2024.07.01.12.47.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jul 2024 12:39:07 -0700 (PDT)
-Message-ID: <8faf9cd8-571d-4fd9-b553-cfdfd46d5b0f@ventanamicro.com>
-Date: Mon, 1 Jul 2024 16:39:03 -0300
+ Mon, 01 Jul 2024 12:47:53 -0700 (PDT)
+Message-ID: <c64583da-71a9-4a0c-8e0d-269899d1e116@linaro.org>
+Date: Mon, 1 Jul 2024 21:47:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 11/11] target/riscv: Do not setup pmu timer if OF is
- disabled
-To: Atish Patra <atishp@rivosinc.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Rajnesh Kanwal <rkanwal@rivosinc.com>, palmer@dabbelt.com,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com,
- alistair.francis@wdc.com
-References: <20240626-smcntrpmf_v7-v7-0-bb0f10af7fa9@rivosinc.com>
- <20240626-smcntrpmf_v7-v7-11-bb0f10af7fa9@rivosinc.com>
+Subject: Re: [PATCH 2/2] system/vl.c: parse all -accel options
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-devel@nongnu.org, ajones@ventanamicro.com,
+ Thomas Huth <thuth@redhat.com>
+References: <20240701133038.1489043-1-dbarboza@ventanamicro.com>
+ <20240701133038.1489043-3-dbarboza@ventanamicro.com>
+ <5e0c57ef-d06d-4cdc-8d5b-3adec8263c5f@linaro.org>
+ <CABgObfZzVN+CuCpYOpLqYERht_ipk4Xv_oydWi59WytyQtddsA@mail.gmail.com>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240626-smcntrpmf_v7-v7-11-bb0f10af7fa9@rivosinc.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfZzVN+CuCpYOpLqYERht_ipk4Xv_oydWi59WytyQtddsA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,116 +100,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/26/24 8:57 PM, Atish Patra wrote:
-> The timer is setup function is invoked in both hpmcounter
-> write and mcountinhibit write path. If the OF bit set, the
-> LCOFI interrupt is disabled. There is no benefitting in
-> setting up the qemu timer until LCOFI is cleared to indicate
-> that interrupts can be fired again.
+On 1/7/24 18:43, Paolo Bonzini wrote:
+> On Mon, Jul 1, 2024 at 4:34 PM Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   target/riscv/pmu.c | 56 ++++++++++++++++++++++++++++++++++++++++++------------
->   1 file changed, 44 insertions(+), 12 deletions(-)
+> In principle, a Reviewed-by tag is just stating that you don't know of
+> any issues that would prevent the patch being included. However, as a
+> frequent participant to the project, your Reviewed-by tag carries some
+> weight and, to some extent, it is also a statement that you understand
+> the area being modified.  A Reviewed-by from an experienced
+> contributor may even imply that you could take the patch in one of
+> your pull requests. (*) That makes it even more important to
+> understand the area.
 > 
-> diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-> index a4729f6c53bb..3cc0b3648cad 100644
-> --- a/target/riscv/pmu.c
-> +++ b/target/riscv/pmu.c
-> @@ -416,14 +416,49 @@ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
->       return 0;
->   }
->   
-> +static bool pmu_hpmevent_is_of_set(CPURISCVState *env, uint32_t ctr_idx)
-> +{
-> +    target_ulong mhpmevent_val;
-> +    uint64_t of_bit_mask;
-> +
-> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
-> +        mhpmevent_val = env->mhpmeventh_val[ctr_idx];
-> +        of_bit_mask = MHPMEVENTH_BIT_OF;
-> +     } else {
-> +        mhpmevent_val = env->mhpmevent_val[ctr_idx];
-> +        of_bit_mask = MHPMEVENT_BIT_OF;
-> +    }
-> +
-> +    return get_field(mhpmevent_val, of_bit_mask);
-> +}
-> +
-> +static bool pmu_hpmevent_set_of_if_clear(CPURISCVState *env, uint32_t ctr_idx)
-> +{
-> +    target_ulong *mhpmevent_val;
-> +    uint64_t of_bit_mask;
-> +
-> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
-> +        mhpmevent_val = &env->mhpmeventh_val[ctr_idx];
-> +        of_bit_mask = MHPMEVENTH_BIT_OF;
-> +     } else {
-> +        mhpmevent_val = &env->mhpmevent_val[ctr_idx];
-> +        of_bit_mask = MHPMEVENT_BIT_OF;
-> +    }
-> +
-> +    if (!get_field(*mhpmevent_val, of_bit_mask)) {
-> +        *mhpmevent_val |= of_bit_mask;
-> +        return true;
-> +    }
-> +
-> +    return false;
-> +}
-> +
->   static void pmu_timer_trigger_irq(RISCVCPU *cpu,
->                                     enum riscv_pmu_event_idx evt_idx)
->   {
->       uint32_t ctr_idx;
->       CPURISCVState *env = &cpu->env;
->       PMUCTRState *counter;
-> -    target_ulong *mhpmevent_val;
-> -    uint64_t of_bit_mask;
->       int64_t irq_trigger_at;
->       uint64_t curr_ctr_val, curr_ctrh_val;
->       uint64_t ctr_val;
-> @@ -439,12 +474,9 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
->           return;
->       }
->   
-> -    if (riscv_cpu_mxl(env) == MXL_RV32) {
-> -        mhpmevent_val = &env->mhpmeventh_val[ctr_idx];
-> -        of_bit_mask = MHPMEVENTH_BIT_OF;
-> -     } else {
-> -        mhpmevent_val = &env->mhpmevent_val[ctr_idx];
-> -        of_bit_mask = MHPMEVENT_BIT_OF;
-> +    /* Generate interrupt only if OF bit is clear */
-> +    if (pmu_hpmevent_is_of_set(env, ctr_idx)) {
-> +        return;
->       }
->   
->       counter = &env->pmu_ctrs[ctr_idx];
-> @@ -477,9 +509,7 @@ static void pmu_timer_trigger_irq(RISCVCPU *cpu,
->       }
->   
->       if (cpu->pmu_avail_ctrs & BIT(ctr_idx)) {
-> -        /* Generate interrupt only if OF bit is clear */
-> -        if (!(*mhpmevent_val & of_bit_mask)) {
-> -            *mhpmevent_val |= of_bit_mask;
-> +        if (pmu_hpmevent_set_of_if_clear(env, ctr_idx)) {
->               riscv_cpu_update_mip(env, MIP_LCOFIP, BOOL_TO_MASK(1));
->           }
->       }
-> @@ -502,7 +532,9 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value, uint32_t ctr_idx)
->       RISCVCPU *cpu = env_archcpu(env);
->       PMUCTRState *counter = &env->pmu_ctrs[ctr_idx];
->   
-> -    if (!riscv_pmu_counter_valid(cpu, ctr_idx) || !cpu->cfg.ext_sscofpmf) {
-> +    /* No need to setup a timer if LCOFI is disabled when OF is set */
-> +    if (!riscv_pmu_counter_valid(cpu, ctr_idx) || !cpu->cfg.ext_sscofpmf ||
-> +        pmu_hpmevent_is_of_set(env, ctr_idx)) {
->           return -1;
->       }
->   
+> I would expect that anyone with an understanding of command line
+> parsing would know 1) what -accel kvm -accel tcg does, and 2) what
+> .merge_lists does; and this would be enough to flag an issue
+> preventing the patch from being included.
+
+I admit I haven't reviewed what .merge_lists does but went to look
+at its use cases (I see 'git grep -wW merge_lists' in my history)
+and mis-read:
+
+util/keyval.c-370- * - lists are concatenated
+util/keyval.c-371- *
+util/keyval.c-372- * - dictionaries are merged recursively
+util/keyval.c-373- *
+util/keyval.c-374- * - for scalar values, @merged wins
+util/keyval.c-375- *
+util/keyval.c-376- * In case an error is reported, @dest may already 
+have been modified.
+util/keyval.c-377- *
+util/keyval.c-378- * This function can be used to implement semantics 
+analogous to QemuOpts's
+util/keyval.c:379: * .merge_lists = true case, or to implement -set for 
+options backed by QDicts.
+
+which made me confident enough with the patch description:
+
+  > and now it's safe to activate 'merge_lists' for 'qemu_accel_opts'.
+  > This will merge all accel options in the same list
+
+OTOH I wasn't clear about the first patch and knew this one depends
+on it, so if the first is wrong, this one is automatically discarded.
+
+> To be clear, I don't expect reviews to be perfect. But in this case
+> I'm speaking up because the patch is literally a one line declarative
+> change, and the only way to say "I've reviewed it" is by understanding
+> the deeper effects of that line.
+
+Don't blame the review but the reviewer :) Reviews aim to be
+perfect, unfortunately the human beings sending them aren't
+(at least I am not, as I just proved).
+
+Thankfully maintainers are gatekeepers on their areas and can
+catch issues like that. I duly noted "my Reviewed-by tag carries
+some weigh" and could confuse other maintainers, and will think
+it twice before posting it on topics I'm unsure. Thanks for
+taking the time to warn me.
+
+Regards,
+
+Phil.
+
+> Also, I think it's fair that the submitter didn't spot the problem;
+> it's okay to send out broken patches, that's part of the learning
+> experience. :)
 > 
+> Paolo
+> 
+> (*) as opposed to Acked-by, where your review probably has been more
+> conceptual than technical, and that you don't really want to take the
+> patch in a pull request.
+
+
+
 
