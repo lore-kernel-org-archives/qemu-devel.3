@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A815C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6271DC2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 15:00:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOIUq-0003YY-Gv; Mon, 01 Jul 2024 10:59:12 -0400
+	id 1sOIV4-00040W-QE; Mon, 01 Jul 2024 10:59:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOIUo-0003TH-H0
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:10 -0400
+ id 1sOIV3-00040F-6y
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOIUm-00057H-RU
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:10 -0400
+ id 1sOIV1-0005J7-BK
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 10:59:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719845947;
+ s=mimecast20190719; t=1719845962;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/AQLjBJD+DdaeIr+SrmTNPomxj+lI0aBHtLoGiVChLk=;
- b=XmYYOcxzqJTEtmQH++Cj0utjV7XtktjbzilLmyCR0Xi0+RHC71hl0FsVH2cJaUIv6kChtl
- Ur9s+mPa33YLGwnL1HCW6xfeGGp2sUPqgSC4y+oRR/Vh9pi9AUVCMU2KoP03O+CawL3RIg
- qUo+gQU5f4Ta2QW/Rza2YKAjypSmwEI=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ItGWoIXbmG8BtrqUqVyvFsub+0df4Uw051wHIRwFpYQ=;
+ b=Vz5P1xNJFfocxSWg6BFpuV3hLzFDTq4S1NL4yOyeQCUdz6SMhNr9jrT2RNp8oh67pM3Dgs
+ uT5JmbhZkxkGmoEEIs18+otWCg7PsJWQS3wiXQNI0y8hhY0VME/s66B2NtieJXvL/CZ9hl
+ DquiQ6fXX2Lj+MtgENxbZkjMcGPIFRA=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-mePTAs07PyO14i9bB1Qomg-1; Mon, 01 Jul 2024 10:59:05 -0400
-X-MC-Unique: mePTAs07PyO14i9bB1Qomg-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-52ce324c204so3707239e87.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 07:59:05 -0700 (PDT)
+ us-mta-637-C33Z-AxVO5--EY7C0qhI0A-1; Mon, 01 Jul 2024 10:59:21 -0400
+X-MC-Unique: C33Z-AxVO5--EY7C0qhI0A-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2ee4a63e95cso31683741fa.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 07:59:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719845943; x=1720450743;
+ d=1e100.net; s=20230601; t=1719845958; x=1720450758;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/AQLjBJD+DdaeIr+SrmTNPomxj+lI0aBHtLoGiVChLk=;
- b=XZBArWiTxdH+5OGYZJOMReg4oOyf5t4BOqMcilpJGS9ZIDK3PK6ANjAwli0EIdpwF+
- I1EX2orwl5jc9KjgdipszV7slF3MHDfasE9azBMQOU1IY3BuUaGiqw3z/jrGhBF3zX1D
- MwEMSTVNPzBwt7XLdD76iBzz5+C/pT1Jub/e3YP/V6LZeNwIyDz/zHYPw2a+gZIwmU/x
- mp48E85jdQ5RLpwG675eXzKDW7KCtf/016U7gYlbW6r3qUfntlhj4V6IOr+h1PhRJKph
- Ww0lOtHk0jWNKnUr3JoD0TdUcgUdGyPVU3WMI38O8n6O5PCFi1kbgaYPFdAVX951wk+3
- xwbA==
-X-Gm-Message-State: AOJu0YwnW3dxuYsMy8CK7ZZxfnH5QtApyJdnJ9cvPN37KBHi8urj02zL
- Am3jX4KpWZzur+1XieiYlwYS4/EKsE6R38Xl4AOGxCLiEtmFlipCDrN9szlZMhSXzUr3WO4e4R9
- Z2+B27nlKlo13nb4xlag1ibpmyorbf1pOJn0fGJ8zJjdzfagvca3U/E/zwiuFax5nkVIr4bHD81
- +wA7z34/QNus1YO0BlTpJ66Aj2bqZWDIzIeisJ
-X-Received: by 2002:a19:7503:0:b0:52c:e07d:229c with SMTP id
- 2adb3069b0e04-52e826664d2mr3250984e87.22.1719845943668; 
- Mon, 01 Jul 2024 07:59:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE5p8ijT5qhqXZTDOkO+cIGKrbcGDOCq0CVzpKFgEeQ98pu11elnT9puovdOVNkAzN99/lZ4g==
-X-Received: by 2002:a19:7503:0:b0:52c:e07d:229c with SMTP id
- 2adb3069b0e04-52e826664d2mr3250970e87.22.1719845943319; 
- Mon, 01 Jul 2024 07:59:03 -0700 (PDT)
+ bh=ItGWoIXbmG8BtrqUqVyvFsub+0df4Uw051wHIRwFpYQ=;
+ b=D6mx4rjIokBajljUj3RUD4dM/3OAJmWgmQilMNjQHT/EAyiEWFjWmWQR+84VGCs6rE
+ l/ieSwrmpeq107Y2rvk1ptmKMkEG8FoaAvFc4NfzyBPgOq3s+9eMhwvCLvbGSqa3SRGx
+ tZcfoWo8YSbcd5n1SmxNal3AuWXdG/6k4QBf2egPhnR2Kbma5Cka1QkqAWOioJ3XVLr3
+ h9Z3ipXTSxfeFQj/w1fHwmaF9i6umg/oQVwz+51EgU1ug+hY2w2uhSQ7JiVT2MkihdNW
+ 1LTle3SHnlJntF7Ip5G0atPBnpfz8+kRaXSnvmTIXW5eN1646NIjXvAEI2HbhGfXVw6D
+ uimw==
+X-Gm-Message-State: AOJu0YyfAR+NxErlAOI1Jcw0V47eM5ip1QoRJuM/AzxUx4Rk9tlWDGWp
+ UrI/NIlSzfqb1TkqshTjcpGJHnu0bwuHo1QNF26Wex48TEEGlTGsbDkKIFWVyUGqKqdQAofX7ga
+ X+hhVm9yCpfBR9d1HtdeCF/piHaig8+n5gLq1hKty5SJ2AqTRQQW30XA6mcp6/zmOpq2M11AH8v
+ h6V77Xw3x5xGAo0kEqTz4iNWFoQ/aU8W6yZols
+X-Received: by 2002:a05:6512:23a5:b0:52c:c9e9:7dc1 with SMTP id
+ 2adb3069b0e04-52e82685af7mr4560246e87.32.1719845958302; 
+ Mon, 01 Jul 2024 07:59:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHrq4CQpqRSQh7VeAd2458ighSxU+mbTpCqs5YqpXlLzux0ViL0UX3tC1CM1gF0qK7GU+tlgA==
+X-Received: by 2002:a05:6512:23a5:b0:52c:c9e9:7dc1 with SMTP id
+ 2adb3069b0e04-52e82685af7mr4560217e87.32.1719845957878; 
+ Mon, 01 Jul 2024 07:59:17 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4257a4d4cd1sm94550475e9.28.2024.07.01.07.59.02
+ 5b1f17b1804b1-4256b064f16sm157833445e9.27.2024.07.01.07.59.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Jul 2024 07:59:02 -0700 (PDT)
+ Mon, 01 Jul 2024 07:59:16 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -75,9 +75,10 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 02/14] set expectations
-Date: Mon,  1 Jul 2024 16:58:34 +0200
-Message-ID: <20240701145853.1394967-3-pbonzini@redhat.com>
+Subject: [PATCH 07/14] rust: define wrappers for methods of the QOM Object
+ class
+Date: Mon,  1 Jul 2024 16:58:39 +0200
+Message-ID: <20240701145853.1394967-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240701145853.1394967-1-pbonzini@redhat.com>
 References: <20240701145853.1394967-1-pbonzini@redhat.com>
@@ -108,19 +109,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Provide a trait that can be used to invoke methods of the QOM object
+class.  The trait extends Deref and has a blanket implementation for any
+type that dereferences to IsA<Object>.  This way, it can be used on any
+struct that dereferences to Object or a subclass.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- README.md | 1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 README.md
+ qemu/src/lib.rs        |  2 +
+ qemu/src/qom/object.rs | 92 ++++++++++++++++++++++++++++++++++++++++++
+ qemu/src/qom/refs.rs   |  8 ++++
+ 3 files changed, 102 insertions(+)
 
-diff --git a/README.md b/README.md
-new file mode 100644
-index 0000000..5ef6f0d
---- /dev/null
-+++ b/README.md
-@@ -0,0 +1 @@
-+This is very experimental and barely compiles
+diff --git a/qemu/src/lib.rs b/qemu/src/lib.rs
+index 0d91623..a6e7b17 100644
+--- a/qemu/src/lib.rs
++++ b/qemu/src/lib.rs
+@@ -5,6 +5,8 @@ pub mod bindings;
+ pub use bindings::Object;
+ 
+ pub mod qom;
++pub use qom::object::ObjectClassMethods;
++pub use qom::object::ObjectMethods;
+ pub use qom::object::ObjectType;
+ pub use qom::refs::ObjectCast;
+ pub use qom::refs::Owned;
+diff --git a/qemu/src/qom/object.rs b/qemu/src/qom/object.rs
+index bd6b957..4e84e29 100644
+--- a/qemu/src/qom/object.rs
++++ b/qemu/src/qom/object.rs
+@@ -2,12 +2,26 @@
+ //!
+ //! @author Paolo Bonzini
+ 
++use std::borrow::Cow;
+ use std::ffi::CStr;
++use std::fmt;
++use std::ops::Deref;
+ 
++use crate::bindings::object_get_typename;
++use crate::bindings::object_property_add_child;
++use crate::bindings::object_new;
++use crate::bindings::object_unparent;
+ use crate::bindings::Object;
+ 
+ use crate::qom_isa;
+ 
++use crate::qom::refs::IsA;
++use crate::qom::refs::ObjectCast;
++use crate::qom::refs::Owned;
++
++use crate::util::foreign::CloneToForeign;
++use crate::util::foreign::FromForeign;
++
+ /// Trait exposed by all structs corresponding to QOM objects.
+ /// Defines "class methods" for the class.  Usually these can be
+ /// implemented on the class itself; here, using a trait allows
+@@ -31,4 +45,82 @@ unsafe impl ObjectType for Object {
+     const TYPE: &'static CStr = c"object";
+ }
+ 
++// ------------------------------
++// Object class
++
+ qom_isa!(Object);
++
++/// Trait for class methods exposed by the Object class.  The methods can be
++/// called on all objects that have the trait `IsA<Object>`.
++///
++/// The trait should only be used through the blanket implementation,
++/// which guarantees safety via `IsA`
++
++pub trait ObjectClassMethods: IsA<Object> {
++    /// Return a new reference counted instance of this class
++    fn new() -> Owned<Self> {
++        // SAFETY: the object created by object_new is allocated on
++        // the heap and has a reference count of 1
++        unsafe {
++            let obj = &*object_new(Self::TYPE.as_ptr());
++            Owned::from_raw(obj.unsafe_cast::<Self>())
++        }
++    }
++}
++
++/// Trait for methods exposed by the Object class.  The methods can be
++/// called on all objects that have the trait `IsA<Object>`.
++///
++/// The trait should only be used through the blanket implementation,
++/// which guarantees safety via `IsA`
++pub trait ObjectMethods: Deref
++where
++    Self::Target: IsA<Object>,
++{
++    /// Return the name of the type of `self`
++    fn typename(&self) -> Cow<'_, str> {
++        let obj = self.upcast::<Object>();
++        // SAFETY: safety of this is the requirement for implementing IsA
++        // The result of the C API has static lifetime
++        unsafe {
++            Cow::cloned_from_foreign(object_get_typename(obj.as_mut_ptr()))
++        }
++    }
++
++    /// Add an object as a child of the receiver.
++    fn property_add_child<T: ObjectType>(&self, name: &str, child: Owned<T>)
++    {
++        let obj = self.upcast::<Object>();
++        let name = name.clone_to_foreign();
++        unsafe {
++            // SAFETY: casting to object is always safe even if `child`'s
++            // target type is an interface type
++            let child = child.unsafe_cast::<Object>();
++            object_property_add_child(obj.as_mut_ptr(),
++                                      name.as_ptr(),
++                                      child.as_mut_ptr());
++
++            // object_property_add_child() added a reference of its own;
++            // dropping the one in `child` is the common case.
++        }
++    }
++
++    /// Remove the object from the QOM tree
++    fn unparent(&self) {
++        let obj = self.upcast::<Object>();
++        // SAFETY: safety of this is the requirement for implementing IsA
++        unsafe {
++            object_unparent(obj.as_mut_ptr());
++        }
++    }
++
++    /// Convenience function for implementing the Debug trait
++    fn debug_fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
++        f.debug_tuple(&self.typename())
++            .field(&(self as *const Self))
++            .finish()
++    }
++}
++
++impl<R> ObjectClassMethods for R where R: IsA<Object> {}
++impl<R: Deref> ObjectMethods for R where R::Target: IsA<Object> {}
+diff --git a/qemu/src/qom/refs.rs b/qemu/src/qom/refs.rs
+index a319bde..431ef0a 100644
+--- a/qemu/src/qom/refs.rs
++++ b/qemu/src/qom/refs.rs
+@@ -6,9 +6,11 @@ use crate::bindings::object_dynamic_cast;
+ use crate::bindings::Object;
+ use crate::bindings::{object_ref, object_unref};
+ 
++use crate::qom::object::ObjectMethods;
+ use crate::qom::object::ObjectType;
+ 
+ use std::borrow::Borrow;
++use std::fmt::{self, Debug};
+ use std::mem::ManuallyDrop;
+ use std::ops::Deref;
+ use std::ptr::NonNull;
+@@ -272,3 +274,9 @@ impl<T: ObjectType> Drop for Owned<T> {
+         }
+     }
+ }
++
++impl<T: IsA<Object>> Debug for Owned<T> {
++    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
++        self.deref().debug_fmt(f)
++    }
++}
 -- 
 2.45.2
 
