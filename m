@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A1E0C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 12:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A1C7C30659
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 12:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOGYD-0006vk-Cc; Mon, 01 Jul 2024 08:54:33 -0400
+	id 1sOGZD-00087C-7d; Mon, 01 Jul 2024 08:55:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOGYB-0006uQ-5S
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 08:54:31 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOGZA-0007vw-Gd
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 08:55:32 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOGY9-0004dT-Jd
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 08:54:30 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-42565670e20so23736815e9.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 05:54:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOGZ5-0005e6-JQ
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 08:55:31 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4257a390a4eso12510915e9.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 05:55:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719838468; x=1720443268; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719838525; x=1720443325; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kzeyjvgQpG4r7VOdxEXPvtwdkTnrdxZEbwn5+b9xlKI=;
- b=HAdmjd/zertB7E+XdRZtdlBQUBf/BUe9/Jo4AOmpC3TV9Vi/bpm6C0traQHEkLBbtO
- dj/X8w2S7QH2zX5IEI+UYw+MKczaG7q6VLyJ7u9z8pu1fgRP2/Mj9tRjtpfuIqnuIa/S
- NIG4tjUtdizkfRtO4wKghLjKfcfrWQ8BFrvrLjN55Lcum0MK/KukikJDwayCbvcodFOr
- g3ne9HypXoSxbTc9KiXGstwTIoL4j3xKmA+E/ok+imETU3QJyJIDtGaJ/IjoEvl24PdX
- uPzrPvlzG9J5cj7n7Hr+NIKJWoB9NzmGS/TvwBlUMkIAo5PjsBJIOMMHWEwmJHexw4ZT
- EaWQ==
+ bh=xAZY3KwQVvcIInlMOR/b8oGpaTozUJdYUcKYuEK8xMw=;
+ b=eV/6nCsAhv6ocCmAPTzF8MSsvT+or+QywaKcseG7Y6fwH1+RGSo2AF8ApM2+heeXnA
+ 7e+Z32uiDTs08+hgcOf0valUuJWRiruvJB06+W8RTaRkJxokG27siijvKLsbMoJpqKyP
+ XY/6cu3MuxH6dbEDOd2alU+lxVVSk+75WrUgiONAo3NX8ujyCMaQ3DJYSgxQgxmvadxa
+ UiT3eCUlciCsa0M2DqLnedhtMvvpjGlQyVqLvmncZwynVh7qA7rDr8GKJ/4SC/kMtgW9
+ 4k4Unbvu95sX+i7/I1a17rbyjX1lEFvOh3ggX+yKnORsI7+6omqF3lwkaF6xqI5+zN31
+ Y2hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719838468; x=1720443268;
+ d=1e100.net; s=20230601; t=1719838525; x=1720443325;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kzeyjvgQpG4r7VOdxEXPvtwdkTnrdxZEbwn5+b9xlKI=;
- b=oh56W5QBmVAHb5INLVJXWmZuJlwClZpK9uu2zCRyaFYNGTXQ1pCmqgg0Xux2R6kt+e
- hYhvi3PioQqWtaTgUuaVSvsFOEWDyPG8tej3NxyeMRfkrY3ny78zciLPBNoMPfUNy6uI
- 1ItJPXScctnagCjiFN4m7wCmPn+knCpgBsRG9TONWqXW3BImQs8Bas44o70ShU+ize5O
- 4PVI6rJ+ClyfwguOSlMAowyuQ4Sgm1sFAtel1EVVjHHYxyCCvVWT9a1oLJLsCKlGiIPL
- fZQU237VAGvTymrXy77aRfRF9hohj9JqTp9GrNe7BRXXw5TQOU4Xh8dRI1xEe85hB9ab
- x2YA==
+ bh=xAZY3KwQVvcIInlMOR/b8oGpaTozUJdYUcKYuEK8xMw=;
+ b=JnSinxxsMHg0VcESNzF3bUKQP+gu3lhuqsdN35rlbMJYuJmJfX2Xbmh/h7D9GgPEZo
+ HwfxVnjYxVLx65h1TZHH7Cd7eQRUboqy2SaOcLZLbzCapmFLuA09XvwBoHj93TlVaiZp
+ s/pYlX2Lg7wP3xR3hjMsdoD9GcfBDhMow4TqFQY19UY3WEJ0uOqO6K5PkgR3KzlBbjtG
+ 2rpJpplZqk/8i+tQ4a4mme0/6VVcr3AJuDUtSsW7I+44cr1oiYZOw1Fb1R0+J7eaB0+w
+ GPQD3Vvx4TsmAyA+WPWCvI9ssqgGsM5CNz6LscTEwoCW1CTpq9YusTSBxgN95S8URR5Y
+ oqnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9ZomFHcjOYRrHEq1PORL7E7KcQq+iqi7/mdjSsORbmSWhDX5lYSeKxbk/D0PQrtzcBC7f54xJdPcRikTsWwTItqZbneY=
-X-Gm-Message-State: AOJu0YxT3mgKZYRP4H7dsmelr7VfODlf00Fh9lSg8b4hiE2D4tz1kWeU
- l+HhDwcY4ukO026wri3GDCGbjSIhTFuD9/Ww2QkMwOATSNvaicKeqmBKnle+AKs=
-X-Google-Smtp-Source: AGHT+IGoFNqRjVgdspUfrGpF/fiX/Cra8cOtBtiGRxoCOzMSXQ4ih77Ggh5z8fzXXUFz4KKGgRRVFg==
-X-Received: by 2002:a05:6000:2c5:b0:367:3404:1c06 with SMTP id
- ffacd0b85a97d-3677acb5d0amr3192123f8f.20.1719838468088; 
- Mon, 01 Jul 2024 05:54:28 -0700 (PDT)
+ AJvYcCUIIFOdYTxHJvvp0SYzYy1/+y2NWICS7qTdugSZdesDWflrTd1x95D7muFCJUGwtLnaQXChed2pdIanvmTZuZmqyAAWSjY=
+X-Gm-Message-State: AOJu0Yx5smZPvwPZKXsKLKMiPd2KfQCeSscF3KdDdYFJvBZ6SMHap4Zk
+ 3CPUx2FsYP+JoAvu2LhJP3kMBfypGkszXuALnwVdV5PtrEKPlo4jGs3CLhRKcXE=
+X-Google-Smtp-Source: AGHT+IFLAe9UNwKPMtbujWGkKRDPAafVnTFJSxfViUbtpX0Tm22pbytFj6AmFDKNAHKtbrriI60DlA==
+X-Received: by 2002:a05:600c:3b09:b0:424:a721:1d0f with SMTP id
+ 5b1f17b1804b1-4257a020eeemr36572665e9.29.1719838524673; 
+ Mon, 01 Jul 2024 05:55:24 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.177.159])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e1430sm10009025f8f.52.2024.07.01.05.54.25
+ 5b1f17b1804b1-4257dee5f2asm63843755e9.22.2024.07.01.05.55.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jul 2024 05:54:27 -0700 (PDT)
-Message-ID: <e0691cd4-283e-4a31-a8bb-37615bb139d0@linaro.org>
-Date: Mon, 1 Jul 2024 14:54:24 +0200
+ Mon, 01 Jul 2024 05:55:24 -0700 (PDT)
+Message-ID: <ddb08424-4211-4202-aa73-ef5fc7c11404@linaro.org>
+Date: Mon, 1 Jul 2024 14:55:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/14] hw/m68k: convert 'virt' machine definitions to
+Subject: Re: [PATCH v2 02/14] hw/arm: convert 'virt' machine definitions to
  use new macros
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
@@ -82,21 +82,21 @@ Cc: Halil Pasic <pasic@linux.ibm.com>, devel@lists.libvirt.org,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Laurent Vivier <laurent@vivier.eu>, qemu-ppc@nongnu.org
 References: <20240620165742.1711389-1-berrange@redhat.com>
- <20240620165742.1711389-6-berrange@redhat.com>
+ <20240620165742.1711389-3-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240620165742.1711389-6-berrange@redhat.com>
+In-Reply-To: <20240620165742.1711389-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,15 +117,11 @@ On 20/6/24 18:57, Daniel P. Berrangé wrote:
 > helpers for constructing versioned symbol names and strings,
 > bringing greater consistency across targets.
 > 
-> A DEFINE_VIRT_MACHINE_AS_LATEST helper is added so that it
-> is not required to pass 'false' for every single historical
-> machine type.
-> 
 > Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/m68k/virt.c | 51 ++++++++++++++++++++++++++++----------------------
->   1 file changed, 29 insertions(+), 22 deletions(-)
+>   hw/arm/virt.c | 28 +++++++++++++++-------------
+>   1 file changed, 15 insertions(+), 13 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
