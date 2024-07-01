@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B17C2BD09
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 05:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3798C2BD09
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Jul 2024 06:36:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sO9mj-0001CL-3H; Mon, 01 Jul 2024 01:41:05 -0400
+	id 1sOAdB-0002ii-SV; Mon, 01 Jul 2024 02:35:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lijiayi@eswincomputing.com>)
- id 1sO6kA-0006ar-Qf
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:26:14 -0400
-Received: from azure-sdnproxy.icoremail.net ([20.231.56.155])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lijiayi@eswincomputing.com>) id 1sO6k8-00032h-TR
- for qemu-devel@nongnu.org; Sun, 30 Jun 2024 22:26:14 -0400
-Received: from E0005096DT.eswin.cn (unknown [10.64.112.173])
- by app1 (Coremail) with SMTP id TAJkCgDHWuK3E4JmOcQSAA--.23755S4;
- Mon, 01 Jul 2024 10:26:02 +0800 (CST)
-From: Jiayi Li <lijiayi@eswincomputing.com>
-To: qemu-devel@nongnu.org, bmeng.cn@gmail.com, dbarboza@ventanamicro.com,
- luweu1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Cc: lijiayi@eswincomputing.com
-Subject: [PATCH] target/riscv: Validate the mode in write_vstvec
-Date: Mon,  1 Jul 2024 10:25:53 +0800
-Message-Id: <20240701022553.1982-1-lijiayi@eswincomputing.com>
-X-Mailer: git-send-email 2.39.2.windows.1
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sOAd4-0002gK-I1; Mon, 01 Jul 2024 02:35:10 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sOAd0-0004Ze-5Z; Mon, 01 Jul 2024 02:35:09 -0400
+Received: from mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:2799:0:640:ddd6:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 48EBE60BB8;
+ Mon,  1 Jul 2024 09:34:58 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:6415::1:19] (unknown
+ [2a02:6b8:b081:6415::1:19])
+ by mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id uYOLSW1IbKo0-4LuUi9te; Mon, 01 Jul 2024 09:34:57 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1719815697;
+ bh=gj+zo5adn8X0xiQfZxolRyKGEFbUsDoSpXXesN027kE=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=q+aAyoH/ajeefe4ob+c+tRUqF4n5x8o7YBtX5oLBYy6ggT9jXnBpe95eV2pVTv3cm
+ 3jaC9NgCyoloYl5OmTUgq9Rk/G28TJX3fb/bR8I9VFLNU95J653qNokQwgPesqsgXs
+ eE32ossjHlUs4vIslsWT/zR2m/ye+0ygpvqYovyw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-62.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <1eb734b7-73a3-40d7-9e3d-7352b7be3940@yandex-team.ru>
+Date: Mon, 1 Jul 2024 09:34:55 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block/curl: use strlen instead of strchr
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
+ qemu-trivial@nongnu.org
+References: <20240628054942.657397-1-vsementsov@yandex-team.ru>
+ <03e1eb96-49ce-48bb-adc7-6ea3fb843b48@tls.msk.ru>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <03e1eb96-49ce-48bb-adc7-6ea3fb843b48@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: TAJkCgDHWuK3E4JmOcQSAA--.23755S4
-X-Coremail-Antispam: 1UD129KBjvdXoWrur48tr1kZr1kAF47tF1DJrb_yoWfWFX_Gr
- 1SgFyF93yDW3ZavFWjywn0yFyFkry0grn3ta13Cr98KrWqg3s8Ja1qvF9xXryrurW7Jwn3
- u3srXa17GF4a9jkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUIcSsGvfJTRUUUb28FF20E14v26r4j6ryUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
- 6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
- A2z4x0Y4vE2Ix0cI8IcVAFwI0_tr0E3s1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr1j
- 6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oV
- Cq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
- 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY02Avz4vE-syl42xK
- 82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGw
- C20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIYrxkI7VAKI48J
- MIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMI
- IF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E
- 87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x0JUdHUDUUUUU=
-X-CM-SenderInfo: 5olmxt11l6v25zlqu0xpsx3x1qjou0bp/
-Received-SPF: pass client-ip=20.231.56.155;
- envelope-from=lijiayi@eswincomputing.com; helo=azure-sdnproxy.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 01 Jul 2024 01:41:02 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,33 +76,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Base on the riscv-privileged spec, vstvec substitutes for the usual stvec.
-Therefore, the encoding of the MODE should also be restricted to 0 and 1.
+On 29.06.24 09:20, Michael Tokarev wrote:
+> On 6/28/24 08:49, Vladimir Sementsov-Ogievskiy wrote:
+>> We already know where colon is, so no reason to search for it. Also,
+>> avoid a code, which looks like we forget to check return value of
+>> strchr() to NULL.
+>>
+>> Suggested-by: Kevin Wolf <kwolf@redhat.com>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> ---
+>>
+>> This replaces my patch
+>>    [PATCH] block/curl: explicitly assert that strchr returns non-NULL value
+>> Supersedes: <20240627153059.589070-1-vsementsov@yandex-team.ru>
+>>
+>>   block/curl.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/block/curl.c b/block/curl.c
+>> index 419f7c89ef..d03bfe4817 100644
+>> --- a/block/curl.c
+>> +++ b/block/curl.c
+>> @@ -219,7 +219,7 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
+>>           && g_ascii_strncasecmp(header, accept_ranges,
+>>                                  strlen(accept_ranges)) == 0) {
+>> -        char *p = strchr(header, ':') + 1;
+>> +        char *p = header + strlen(accept_ranges);
+>>           /* Skip whitespace between the header name and value. */
+>>           while (p < end && *p && g_ascii_isspace(*p)) {
+> 
+> Heck.  All these strlen()s look ugly, especially in the
+> loop iterations..
 
-Signed-off-by: Jiayi Li <lijiayi@eswincomputing.com>
----
- target/riscv/csr.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+I expect that strlen of string constant is calculated in compilation time.
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 432c59dc66..f9229d92ab 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -3791,7 +3791,12 @@ static RISCVException read_vstvec(CPURISCVState *env, int csrno,
- static RISCVException write_vstvec(CPURISCVState *env, int csrno,
-                                    target_ulong val)
- {
--    env->vstvec = val;
-+    /* bits [1:0] encode mode; 0 = direct, 1 = vectored, 2 >= reserved */
-+    if ((val & 3) < 2) {
-+        env->vstvec = val;
-+    } else {
-+        qemu_log_mask(LOG_UNIMP, "CSR_VSTVEC: reserved mode not supported\n");
-+    }
-     return RISCV_EXCP_NONE;
- }
- 
+My aim was to fix Coverity complain (I don't see this complain in public qemu coverity project, that's why I don't specify CID in commit message), not to rewrite the whole function. So I'd prefer Kevein's suggesting which is both minimal and makes the code obviously correct.. The only simpler thing is to mark the problem false-positive in Coverity.
+
 -- 
-2.25.1
+Best regards,
+Vladimir
 
 
