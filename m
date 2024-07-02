@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8310DC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3F41C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:23:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeCL-0007NH-2i; Tue, 02 Jul 2024 10:09:33 -0400
+	id 1sOeEb-0008UQ-SW; Tue, 02 Jul 2024 10:11:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeBu-0005Tf-5T
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeEZ-0008NB-OD
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeBi-0008F3-1Z
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:04 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeET-000166-06
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929329;
+ s=mimecast20190719; t=1719929504;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YhLUD4bgFXykNLby5YqUbG3vAr/0cDl4XOSKHnOq4eQ=;
- b=SWNkcraKwU+33j8Fgk90fQ1vdE7xjwVKNwuqn4TIaDBeLLLFrIjw4folk3SDHnnGcgRzTQ
- /R3eiFUab5jhuoqIFbKl4Jhvdu97mt14LZO3v52qES2IEwH3iP5cF5TWEJnkAlVMYP82Ba
- Vt0Pp0Wj91PrSBM+YjKtQACh6SdIDJc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=H7aKbBLrPfQyo8uVQsyzpZUHAgZT+25N0abSYuF1Pc4=;
+ b=Y9YcmC2ah/Hj8+KpJGxBKp+N3Lr06vZapcXG6AcOTEYnuJw3xn1QnuFVtkVFRo1XHGSRpC
+ Mb/qoTUJlgh54KLsvNlwg+dcpEZMFlTE5C7e4I7zBwnbfmMtco7R0hb5VjnhLXTQh1TMz0
+ ENSyNjP/OV+X9gv8RrP7aawQ4Gjz6Io=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-434-xFZh1DHaNxec_NAuDZacHQ-1; Tue, 02 Jul 2024 10:08:47 -0400
-X-MC-Unique: xFZh1DHaNxec_NAuDZacHQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-36248c176c4so2741921f8f.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:08:47 -0700 (PDT)
+ us-mta-133-2D-uLXTLOPmdAc_6wl1mhw-1; Tue, 02 Jul 2024 10:11:42 -0400
+X-MC-Unique: 2D-uLXTLOPmdAc_6wl1mhw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3642cc54bbfso2565048f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929326; x=1720534126;
+ d=1e100.net; s=20230601; t=1719929500; x=1720534300;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YhLUD4bgFXykNLby5YqUbG3vAr/0cDl4XOSKHnOq4eQ=;
- b=F5GsLF8QGVgqUX/z/FTAdu7BR/km9MPJo00M4wNB2CSNwJoCc9da9oBcy1sgJIumDd
- okBESnRZsoTSPAeJtsxECoNwtG/pdYKc3cIobRJ6TaLZfNYWTBzw/3AlKKQFiGt7EENy
- sku/ex0mD5YELGrQnyx3r4W1DVSSoVEEINWQlrtvbLTZtycECcN8j1Z4ICZ/5n4jl3pF
- iRDyhyqckNsyripYYQFWDSKd/AArjb2xvzarLdOcEaiSvDTrw+lZMPIo/mX4hjIcFWTI
- kT3cET/x4eiFsc7yfgLLqt/v4hulkf93BUsa6VSNA16vezcvtz1uIJSywGkXhispic2s
- dWag==
-X-Gm-Message-State: AOJu0YwHlH7W/NjBqpALgGGQ84PpCE6rvja5DPciPsqLZ4wbzXHO0rG7
- lDIWO9rCOrGSasvCQGVWkiMROiSdDUuNWVa6LVdmIWt6BRV0hCIBTMVeZ/GjhL0r2lv20QFvGFd
- 2TVtPPzfVnpgMEolAi0Fhabm1OEBFY51BrNwjAcpjizjEofPJ2pHIJ1Fv6fwTaDfFTzQ3LAhtgx
- FU+y3Sbu/cSfk/n84443elaU2QoLFNYA==
-X-Received: by 2002:a05:6000:400d:b0:366:e685:d0cb with SMTP id
- ffacd0b85a97d-3677569762bmr5969476f8f.6.1719929325921; 
- Tue, 02 Jul 2024 07:08:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFlI1QbSiDmh8c9mM8CHdiAhR8Qlw9actoZSffLipZLpZ5KSZcQDn3VxWE9L5My8VJlIfJPFw==
-X-Received: by 2002:a05:6000:400d:b0:366:e685:d0cb with SMTP id
- ffacd0b85a97d-3677569762bmr5969447f8f.6.1719929325317; 
- Tue, 02 Jul 2024 07:08:45 -0700 (PDT)
+ bh=H7aKbBLrPfQyo8uVQsyzpZUHAgZT+25N0abSYuF1Pc4=;
+ b=cZ3PzAjDB/TDECRxSpkEo1JloyqEqAWYiC9h7FYahZUK/n/uFAp692a5oQXtobUCLi
+ wvkY5x45DCYKQcCLjb1KDCK81HYDUYB9Z4IdzsLC/ZGBvAw3ZTIn3s0IJpEEaWUrpZVH
+ r7py7qjSDS3MsWb4pEnb1jMfKFvyiRvl2DwOjhdM88vDs1CG3IQd6cdPwjXrLCy2fByQ
+ J8jKwteTcdTE8UGx7mDX10ypCc0iRvPuw5B2xRKY/QXE8CfH8CQHymI61BSJID2gqw4p
+ CpAdqIc0UreN1NhSiMzr8rpyYtNs6oSk3dTCSquLbAq0ZenX4cVVskYP/RwReyM2IltH
+ bAgA==
+X-Gm-Message-State: AOJu0Yz4NpDomb3S0F9b5Hf5563wYVb5ODW17Czz80NUIOcKJL/D1c4D
+ wqbwdF4dAsBzYgZxxc66jcMTTg4nHbIAO/t2GR79sFLAK4AKrdUjHZgbqirOOT5ziLxs20sL4+6
+ 4cXwcAJ8+Nj9N89GovSg1j3kfj+3r0RlIQBYigYFIr5CueLhOl4f6Uinr/DnaZnJNgQjJB/jZdS
+ u+pvSutg/aftCksz6ewhpBTBX6Cjcm/w==
+X-Received: by 2002:a5d:470b:0:b0:366:efab:2fb1 with SMTP id
+ ffacd0b85a97d-367756c0143mr5616184f8f.38.1719929500631; 
+ Tue, 02 Jul 2024 07:11:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGDhsBPrbd+prKf0adDwinBYTnA0MySGgPStU0vXDOCe6tBZ+UOxLHLkkjtazwY+/qD0hJP+g==
+X-Received: by 2002:a5d:470b:0:b0:366:efab:2fb1 with SMTP id
+ ffacd0b85a97d-367756c0143mr5616165f8f.38.1719929500038; 
+ Tue, 02 Jul 2024 07:11:40 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36789fd7a0esm1532692f8f.104.2024.07.02.07.08.43
+ ffacd0b85a97d-3675a0cd687sm13405124f8f.14.2024.07.02.07.11.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:08:44 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:08:42 -0400
+ Tue, 02 Jul 2024 07:11:39 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:11:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 34/91] pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic
- shutdown signal
-Message-ID: <8db1f7be788b23f8eca189fe4546298ed387e9cb.1719929191.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 90/91] pcie_sriov: Register VFs after migration
+Message-ID: <525d3951082842984945c8baff5b447279565fca.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -80,7 +78,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1719929191.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,61 +102,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Emit a QMP event on receiving a PVPANIC_SHUTDOWN event. Even though a typical
-SHUTDOWN event will be sent, it will be indistinguishable from a shutdown
-originating from other cases (e.g. KVM exit due to KVM_SYSTEM_EVENT_SHUTDOWN)
-that also issue the guest-shutdown cause.
-A management layer application can detect the new GUEST_PVSHUTDOWN event to
-determine if the guest is using the pvpanic interface to request shutdowns.
+pcie_sriov doesn't have code to restore its state after migration, but
+igb, which uses pcie_sriov, naively claimed its migration capability.
 
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Message-Id: <20240527-pvpanic-shutdown-v8-6-5a28ec02558b@t-8ch.de>
+Add code to register VFs after migration and fix igb migration.
+
+Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-reuse-v10-9-7ca0b8ed3d9f@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- qapi/run-state.json | 14 ++++++++++++++
- system/runstate.c   |  1 +
- 2 files changed, 15 insertions(+)
+ include/hw/pci/pcie_sriov.h | 2 ++
+ hw/pci/pci.c                | 7 +++++++
+ hw/pci/pcie_sriov.c         | 7 +++++++
+ 3 files changed, 16 insertions(+)
 
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index f8773f23b2..5ac0fec852 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -462,6 +462,20 @@
- { 'event': 'GUEST_CRASHLOADED',
-   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index 5148c5b77d..c5d2d318d3 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -57,6 +57,8 @@ void pcie_sriov_pf_add_sup_pgsize(PCIDevice *dev, uint16_t opt_sup_pgsize);
+ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+                              uint32_t val, int len);
  
-+##
-+# @GUEST_PVSHUTDOWN:
-+#
-+# Emitted when guest submits a shutdown request via pvpanic interface
-+#
-+# Since: 9.1
-+#
-+# Example:
-+#
-+#     <- { "event": "GUEST_PVSHUTDOWN",
-+#          "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
-+##
-+{ 'event': 'GUEST_PVSHUTDOWN' }
++void pcie_sriov_pf_post_load(PCIDevice *dev);
 +
- ##
- # @GuestPanicAction:
- #
-diff --git a/system/runstate.c b/system/runstate.c
-index fc49fd3e61..c833316f6d 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -586,6 +586,7 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+ /* Reset SR/IOV */
+ void pcie_sriov_pf_reset(PCIDevice *dev);
  
- void qemu_system_guest_pvshutdown(void)
- {
-+    qapi_event_send_guest_pvshutdown();
-     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index e32a69f3fa..fa85f87b1c 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -733,10 +733,17 @@ static bool migrate_is_not_pcie(void *opaque, int version_id)
+     return !pci_is_express((PCIDevice *)opaque);
  }
  
++static int pci_post_load(void *opaque, int version_id)
++{
++    pcie_sriov_pf_post_load(opaque);
++    return 0;
++}
++
+ const VMStateDescription vmstate_pci_device = {
+     .name = "PCIDevice",
+     .version_id = 2,
+     .minimum_version_id = 1,
++    .post_load = pci_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_INT32_POSITIVE_LE(version_id, PCIDevice),
+         VMSTATE_BUFFER_UNSAFE_INFO_TEST(config, PCIDevice,
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index fae6acea4a..56523ab4e8 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -252,6 +252,13 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+     }
+ }
+ 
++void pcie_sriov_pf_post_load(PCIDevice *dev)
++{
++    if (dev->exp.sriov_cap) {
++        register_vfs(dev);
++    }
++}
++
+ 
+ /* Reset SR/IOV */
+ void pcie_sriov_pf_reset(PCIDevice *dev)
 -- 
 MST
 
