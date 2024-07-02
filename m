@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D70C41513
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E375C41513
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjte-0002RV-84; Tue, 02 Jul 2024 16:14:38 -0400
+	id 1sOjvd-0006q1-RV; Tue, 02 Jul 2024 16:16:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjtc-0002Cc-JQ
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:14:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjuu-0005jc-2p
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjtb-0007bm-0t
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:14:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjur-00087K-Uy
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:15:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951274;
+ s=mimecast20190719; t=1719951353;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Hq1ZdMUpXgQO0jHpQkHjtkURKxmq/FjBLx45BW2ity0=;
- b=KuqoQOd1lPhEL56Bqe5uLZ9VNWUKg5i8BRklNb+HR+NfPCyPd8EshPomreXdZ5Z2DCQPXY
- Fm1prAl4ct09kXroQfOqvMImk7koXvarYQXuhkvElLdTTJmIpw7cCqM+5ML5HvQiu/c7Nc
- iFlQWobmJsjIREZCM1808HCk2LF27E8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QKgBtghpdntZCNxsubdg5dbN8fdbQsXq4OpajtHNP9c=;
+ b=EhKKmxQ7CgBGSmMwa8WLxm9FuwYI2VxHqaTofWoQOPxssCOSx3k6MY3tvbgZ4FwHDIS2p3
+ bcXsSnkNasaOS1UtGipXxaN7gIaRjhowGP6Jle2c0ZdGoPJNMBEQ8PlT8aHvfvYj6b9V42
+ jYVCdH77ucV++JGzY6ayRoxC4hqP00I=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-117-5b1mqgrtMiOB70NQtx1_OA-1; Tue, 02 Jul 2024 16:14:33 -0400
-X-MC-Unique: 5b1mqgrtMiOB70NQtx1_OA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4257f95ffc6so19690965e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:14:33 -0700 (PDT)
+ us-mta-470-w0HZz0bhOBuvwaL5pa_sYA-1; Tue, 02 Jul 2024 16:15:51 -0400
+X-MC-Unique: w0HZz0bhOBuvwaL5pa_sYA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42566c4aa0fso37108825e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:15:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951271; x=1720556071;
+ d=1e100.net; s=20230601; t=1719951350; x=1720556150;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hq1ZdMUpXgQO0jHpQkHjtkURKxmq/FjBLx45BW2ity0=;
- b=VrRTmKjFB36GV5u53VrBoCt6+PZoi6ddKODoNmS3xIqDw/hYLbOlsjue/nfGblFda8
- JS+sP5pLP/c/hbuiKR9UXEdnfAf+8Fkmu4PcesBH0viYK/gYG92DO7Vmw5YMydFvUiBV
- m3swvYqcTlRuCVZW+55nzH4wa/+6dovg5ehYlzNUELZMBFjWQOpdAGowmbLVyzmHeYM5
- Hm1DkWK4k1TsYR26tN/BDWVeoCFCUnOzzCwIk1PHA0M9l1bKbQsetSVv3Nb97VNLmPWy
- Z2tzGPqZ0ktzGPWcn3gyxG1TqEQ58IyJLngfAKnFB8BqnrpEn7TlZ5F8tXJjbvEsZy6J
- vZPw==
-X-Gm-Message-State: AOJu0Yx9owTMo1q06Vs1sI/w5lm9YrxoAhzmNnDGcynVX08R8IUxqB2o
- Rp+Z2YoS3t0n0NOc7yaZBbCp+K37KIG07/xIECs1W52WlPf9YNlCXIqWHSdEzkSgVOlt2ssdB4l
- GFzhbUC3wh9ZKHT7w+PPW2+QFQBqyq+eHSCMoG171AevWkdnYcGcMRQVWAXd2SBDxmfYOVAqqBn
- a3+1fgUd7/WIl0TOrp9hdPb9WTpvLyyQ==
-X-Received: by 2002:a05:600c:3b09:b0:424:a721:1d0f with SMTP id
- 5b1f17b1804b1-4257a020eeemr62966035e9.29.1719951271367; 
- Tue, 02 Jul 2024 13:14:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHF5NifnjEM7pOIcbG0FbD0SBlaYpfCpFm068A60biJnDoZCAPxzefvX60afDOkcxl8CwJTPQ==
-X-Received: by 2002:a05:600c:3b09:b0:424:a721:1d0f with SMTP id
- 5b1f17b1804b1-4257a020eeemr62965865e9.29.1719951270768; 
- Tue, 02 Jul 2024 13:14:30 -0700 (PDT)
+ bh=QKgBtghpdntZCNxsubdg5dbN8fdbQsXq4OpajtHNP9c=;
+ b=QUCT6k78cEpULt0+ibQ740VCpzPXV7qX2zJbCcgGc9JW3kIVydTsxiO3V+0z5AXLvD
+ RVdnjMcTaIWyxY3MSredOTQAETRF/fn8s4aejUjy/1hx6MU0m6VeLMhjR/oa2KeUF6T1
+ FrohiYwoO/tnahpvuHIDW8m6EAKh0VeV7c+wplxARUV60uPHEVOVOgKOHOCzV9P39aCJ
+ nix+F2hmVhYAZZjPJ6Xn05G5HIUkAK5/wgxA3jE8ibD+PuyTdXGWbYOYuj4jLDUc149v
+ TA0+Gb9SDCKAJ5kTVIW7DkXr6zgqQDTI1oXnTopBvP13N5nlZ38xva7W34F+WkfRQGvc
+ uzyA==
+X-Gm-Message-State: AOJu0Yy7KFCpu9eTzneOSfwUoCj22diwNua0EE1gNuUQj2YqDR6kQhao
+ PiUWp5mA9OuM+3vLGDpB4zlxz/LZkRxIbDKkwSExyjBNay+91YtrvO8MToKWJty8wf8vopcIVwm
+ DhL5v1n6/HJ8A62q6u9uwf/WAkJIHtTo57nPxLCqrmC5HyhC4JwzvDD8CdV3gprWO6kxxCsNAT6
+ kHEPVXidMQ1UCt/8c84w8EnelODq/jRg==
+X-Received: by 2002:a7b:c452:0:b0:423:6957:89bd with SMTP id
+ 5b1f17b1804b1-4257a02f401mr64134845e9.12.1719951350236; 
+ Tue, 02 Jul 2024 13:15:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBb5FxWYCHwylsBrsnglts8slYFMiP/OWWBAEeSFF0+AXdNfWPEykds0gJTJutdpGj53OSSQ==
+X-Received: by 2002:a7b:c452:0:b0:423:6957:89bd with SMTP id
+ 5b1f17b1804b1-4257a02f401mr64134705e9.12.1719951349729; 
+ Tue, 02 Jul 2024 13:15:49 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0c0f26sm207952565e9.39.2024.07.02.13.14.29
+ ffacd0b85a97d-3675a0fc623sm14156551f8f.87.2024.07.02.13.15.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:14:30 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:14:27 -0400
+ Tue, 02 Jul 2024 13:15:49 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:15:46 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Jiqian Chen <Jiqian.Chen@amd.com>
-Subject: [PULL v2 12/91] virtio-pci: only reset pm state during resetting
-Message-ID: <84b58169e40f5c7428db6f0b229e01213068aa21.1719951026.git.mst@redhat.com>
-References: <cover.1719951026.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, Marc Hartmayer <mhartmay@linux.ibm.com>
+Subject: [PULL v2 10/88] vhost-vsock: add VIRTIO_F_RING_PACKED to feature_bits
+Message-ID: <a0eebd790ca4f90fc1e3662cb38542ccc21963bf.1719951168.git.mst@redhat.com>
+References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1719951026.git.mst@redhat.com>
+In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -100,49 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiqian Chen <Jiqian.Chen@amd.com>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-Fix bug imported by 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-After this change, observe that QEMU may erroneously clear the power status of the device,
-or may erroneously clear non writable registers, such as NO_SOFT_RESET, etc.
+Not having VIRTIO_F_RING_PACKED in feature_bits[] is a problem when the
+vhost-vsock device does not offer the feature bit VIRTIO_F_RING_PACKED
+but the in QEMU device is configured to try to use the packed layout
+(the virtio property "packed" is on).
 
-Only state of PM_CTRL is writable.
-Only when flag VIRTIO_PCI_FLAG_INIT_PM is set, need to reset state.
+As of today, the  Linux kernel vhost-vsock device does not support the
+packed queue layout (as vhost does not support packed), and does not
+offer VIRTIO_F_RING_PACKED. Thus when for example a vhost-vsock-ccw is
+used with packed=on, VIRTIO_F_RING_PACKED ends up being negotiated,
+despite the fact that the device does not actually support it, and
+one gets to keep the pieces.
 
-Fixes: 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-Message-Id: <20240515073526.17297-2-Jiqian.Chen@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 74b3e46630 ("virtio: add property to enable packed virtqueue")
+Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Message-Id: <20240429113334.2454197-1-pasic@linux.ibm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-pci.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ hw/virtio/vhost-vsock-common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index cffc7efcae..7d62e92365 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2306,10 +2306,16 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
-     virtio_pci_reset(qdev);
- 
-     if (pci_is_express(dev)) {
-+        VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
-+
-         pcie_cap_deverr_reset(dev);
-         pcie_cap_lnkctl_reset(dev);
- 
--        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
-+        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
-+            pci_word_test_and_clear_mask(
-+                dev->config + dev->exp.pm_cap + PCI_PM_CTRL,
-+                PCI_PM_CTRL_STATE_MASK);
-+        }
-     }
- }
+diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-common.c
+index 12ea87d7a7..fd88df2560 100644
+--- a/hw/virtio/vhost-vsock-common.c
++++ b/hw/virtio/vhost-vsock-common.c
+@@ -22,6 +22,7 @@
+ const int feature_bits[] = {
+     VIRTIO_VSOCK_F_SEQPACKET,
+     VIRTIO_F_RING_RESET,
++    VIRTIO_F_RING_PACKED,
+     VHOST_INVALID_FEATURE_BIT
+ };
  
 -- 
 MST
