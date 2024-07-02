@@ -4,49 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B16D0C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 800B7C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:57:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOWVN-000572-In; Tue, 02 Jul 2024 01:56:41 -0400
+	id 1sOWVg-0005aW-2B; Tue, 02 Jul 2024 01:57:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=fXIt=OC=kaod.org=clg@ozlabs.org>)
- id 1sOWVL-00056W-Mn; Tue, 02 Jul 2024 01:56:39 -0400
+ id 1sOWVd-0005RJ-VQ; Tue, 02 Jul 2024 01:56:57 -0400
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=fXIt=OC=kaod.org=clg@ozlabs.org>)
- id 1sOWVI-0007Jb-He; Tue, 02 Jul 2024 01:56:39 -0400
+ id 1sOWVc-0007Ot-5y; Tue, 02 Jul 2024 01:56:57 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WCsbt2KBsz4wny;
- Tue,  2 Jul 2024 15:56:26 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WCscN6Vkdz4x0C;
+ Tue,  2 Jul 2024 15:56:52 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WCsbn5sjnz4wcr;
- Tue,  2 Jul 2024 15:56:21 +1000 (AEST)
-Message-ID: <11cbc79b-d2a8-4c04-b5ea-cb612124d493@kaod.org>
-Date: Tue, 2 Jul 2024 07:56:13 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WCscL1CKfz4wnr;
+ Tue,  2 Jul 2024 15:56:49 +1000 (AEST)
+Message-ID: <ebc70620-1793-472d-8d37-c9f0225cdd1e@kaod.org>
+Date: Tue, 2 Jul 2024 07:56:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] hw/net:ftgmac100: fix coding style
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Jason Wang <jasowang@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240619100102.3137941-1-jamin_lin@aspeedtech.com>
- <20240619100102.3137941-2-jamin_lin@aspeedtech.com>
+Subject: Re: [PATCH v2] aspeed: Deprecate the tacoma-bmc machine
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240625070830.492251-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240619100102.3137941-2-jamin_lin@aspeedtech.com>
+In-Reply-To: <20240625070830.492251-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=fXIt=OC=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -41
@@ -70,13 +66,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/19/24 12:01 PM, Jamin Lin wrote:
-> Fix coding style issues from checkpatch.pl
+On 6/25/24 9:08 AM, Cédric Le Goater wrote:
+> The tacoma-bmc machine was a board including an AST2600 SoC based BMC
+> and a witherspoon like OpenPOWER system. It was used for bring up of
+> the AST2600 SoC in labs. It can be easily replaced by the rainier-bmc
+> machine which is part of a real product offering.
 > 
-> Test command:
-> ./scripts/checkpatch.pl --no-tree -f hw/net/ftgmac100.c
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 
 
 Applied to aspeed-next.
@@ -86,48 +82,47 @@ Thanks,
 C.
 
 
-
-
 > ---
->   hw/net/ftgmac100.c | 12 ++++++++----
->   1 file changed, 8 insertions(+), 4 deletions(-)
 > 
-> diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-> index 74b6c3d9a7..25e4c0cd5b 100644
-> --- a/hw/net/ftgmac100.c
-> +++ b/hw/net/ftgmac100.c
-> @@ -238,7 +238,8 @@ typedef struct {
->    */
->   #define FTGMAC100_MAX_FRAME_SIZE    9220
+>   Changes since v2:
+>   - rephrased deprecation reason
+>   - remove extra line in docs
 >   
-> -/* Limits depending on the type of the frame
-> +/*
-> + * Limits depending on the type of the frame
->    *
->    *   9216 for Jumbo frames (+ 4 for VLAN)
->    *   1518 for other frames (+ 4 for VLAN)
-> @@ -533,8 +534,10 @@ static void ftgmac100_do_tx(FTGMAC100State *s, uint32_t tx_ring,
->               break;
->           }
+>   docs/about/deprecated.rst | 8 ++++++++
+>   hw/arm/aspeed.c           | 2 ++
+>   2 files changed, 10 insertions(+)
+> 
+> diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+> index ff3da68208ac..5d9e4d8de725 100644
+> --- a/docs/about/deprecated.rst
+> +++ b/docs/about/deprecated.rst
+> @@ -256,6 +256,14 @@ images are not available, OpenWRT dropped support in 2019, U-Boot in
+>   2017, Linux also is dropping support in 2024. It is time to let go of
+>   this ancient hardware and focus on newer CPUs and platforms.
 >   
-> -        /* record transmit flags as they are valid only on the first
-> -         * segment */
-> +        /*
-> +         * record transmit flags as they are valid only on the first
-> +         * segment
-> +         */
->           if (bd.des0 & FTGMAC100_TXDES0_FTS) {
->               flags = bd.des1;
->           }
-> @@ -639,7 +642,8 @@ static bool ftgmac100_can_receive(NetClientState *nc)
->    */
->   static uint32_t ftgmac100_rxpoll(FTGMAC100State *s)
->   {
-> -    /* Polling times :
-> +    /*
-> +     * Polling times :
->        *
->        * Speed      TIME_SEL=0    TIME_SEL=1
->        *
+> +Arm ``tacoma-bmc`` machine (since 9.1)
+> +''''''''''''''''''''''''''''''''''''''''
+> +
+> +The ``tacoma-bmc`` machine was a board including an AST2600 SoC based
+> +BMC and a witherspoon like OpenPOWER system. It was used for bring up
+> +of the AST2600 SoC in labs.  It can be easily replaced by the
+> +``rainier-bmc`` machine which is a real product.
+> +
+>   Backend options
+>   ---------------
+>   
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 40dc0e4c76db..53a4f665d0d0 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -1379,6 +1379,8 @@ static void aspeed_machine_tacoma_class_init(ObjectClass *oc, void *data)
+>       amc->i2c_init  = witherspoon_bmc_i2c_init; /* Same board layout */
+>       mc->default_ram_size = 1 * GiB;
+>       aspeed_machine_class_init_cpus_defaults(mc);
+> +
+> +    mc->deprecation_reason = "Please use the similar 'rainier-bmc' machine";
+>   };
+>   
+>   static void aspeed_machine_g220a_class_init(ObjectClass *oc, void *data)
 
 
