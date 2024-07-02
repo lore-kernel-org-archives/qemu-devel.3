@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0091DC3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 16:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2881C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 16:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOg5e-0006gf-BW; Tue, 02 Jul 2024 12:10:46 -0400
+	id 1sOgA8-0002Nk-0o; Tue, 02 Jul 2024 12:15:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOg5c-0006fV-1q
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:10:44 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOgA6-0002MP-8g
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:15:22 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sOg5Q-0008Kb-4l
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:10:42 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-57ccd1111b0so1207951a12.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 09:10:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOgA4-0006ds-4p
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:15:21 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-367601ca463so2544778f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 09:15:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719936628; x=1720541428; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F+i7ACyt1A0jbEbq7uoJN/YZ4dYpl40dS0lxWrdwFWE=;
- b=ouQuq5kWS+cU9DJkxi+MZVaBQ4Wkll3LkIZu57jdfUkQJlYRPOatNiFtU4+sOoma4Q
- C3Goj+hatIILKYeVUWif3ZJUv4kAiH4k1MNQ3UHKJ25qlnT01yW44lyWG0VGIdZf2Z+U
- vLM4yoGIb3ndiwMOY8LAnSxZrRTVGZSNIIe4x7nBnXY2X5GzaFCO3tebRjZkjOZiVwZQ
- u4GbU0nXNSVwcZUoptqAhx6VdKLzymTIVOad197dfpAGp199hNjiC0eDhi5CpRPH0c8f
- fvILuXHW92dxSqaAUX9zYinE3uGzXEXcjBkTPiL/Zk1tsF9cfazHM5n+4QX06y/AYCWt
- 5ubw==
+ d=linaro.org; s=google; t=1719936913; x=1720541713; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kafpZzNPikCVXSY6I6GTZ3uNoei0so0bS6AO9UIGwCE=;
+ b=qndOUNDvbTVVR2LBWAa2iyX2x13Vdorp8Z0DV/nk9c89Z0heCmr10QKeLYPno/dNOj
+ R2YB2ON40VNoRls61usTI5pYB/8sRcjGkiiakExVKo/U6aUoi838NzXDpotdruCPMV7D
+ lxD1Cc8YUzLnYFr/GBOPUOJkZzIYFEqvZ9+vjniBvrDxYZMGS6AGP3X+070dpzGoBVLA
+ ftLFUCArB/SWswhzLY+7X3iA93HjQ2y1zBDAs+qybmgTywvL3eqdZsgp9UCxQ/TRBJ2+
+ JAfNW6ah+ddPgmmga1VOoc1DBDHgGPq9zCd+/Hg5pwXka2V7nMlDJOapHv0cSRIqNKT8
+ EXLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719936628; x=1720541428;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=F+i7ACyt1A0jbEbq7uoJN/YZ4dYpl40dS0lxWrdwFWE=;
- b=YFnz9bacgbXutkCmNKNt5fEbbAsvZESW2rJY1dI8/0NQlIpkf3nWjvkKglDTvbeLDf
- PzWMFaVt4Jq7MoW4O8+P9dmPdmlABWrc3ag/bHQRraiN827cio6sE+efkyLrCc3TlWRc
- EtRnWbfiAFbQ9tXeN5tWcmrtl2klhd4a+YayoBw6Wsm8jvw5V98mMscd83F6zbna+crL
- leMzjtueccA7zkHVubDzaOGfUJaU+f+mL15SL4hPIIs7u5yYPILqZQGQj0zrJ5+epq8s
- XHnChA8OuC7kZs8/7oRpJQTbLMcNBh28z/7EtuTMwrWRBbgAxCU+sWQjyfH9KoHNOo4P
- JOvw==
+ d=1e100.net; s=20230601; t=1719936913; x=1720541713;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kafpZzNPikCVXSY6I6GTZ3uNoei0so0bS6AO9UIGwCE=;
+ b=JZFLfJEb39Ijp3WTB2SzsdGFdvKB8Y+33jtIDmkLQHDCli87BthYdwQURl+Uy8dvP4
+ nSEU264pPlHq4x+XVvDpmKtQhDigTlcivCUShYyzho+Hr3LxKXTtsHgS9fX59wkbYo8D
+ Hl+YDGwhS37s0aeBfST7f3RmNJ1J/d+PM8+LeUpG6B7wz5N1v06ucqmCy60FJdGpeKKo
+ RY9Ns/vBOek15fLqGHIDDtwVD+Q66xjhIMR+PiEVap7nZKRe9kb6rMIF43s4m+x6HcNL
+ HPx7afq2+PbBlW6aMVQSojGT8GNPwCdnRu7cz0ijRrvgVtPRWLhvLnGYoMAeyt2ATvZu
+ UyPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7M7PAloQsKxwttlWjTxECEGvK+KpOFTfzErfS0ljx6W56XXQ3p7i/8KgOXimmL7F6Idi4y1DXLWFmr6YEMP9+/1LaaUo=
-X-Gm-Message-State: AOJu0YzqRfdvCsjFaulEBd7zEyZYDSZajctfYU1KaF9hKX9Uclm6L6F5
- jO5Oh9AL51zMpBrOomWPXg0UMlVqTMBtF8MdnnJyMG5235aLAz9hK+IQF6HbFdYIZPrv8xwDY5L
- QIZCR8nIPmjXf33og9uLjXOE7XPSoQzUh0/6/KQ==
-X-Google-Smtp-Source: AGHT+IEnuT1Rv5cWYuGuBaO46pzlv+m+rP5BeTSbSwFLaatEozTSQSd0KgaV6os3ECnMB4yoFOT35gJZs/MA93a5UOs=
-X-Received: by 2002:a05:6402:2549:b0:57d:42f6:63fe with SMTP id
- 4fb4d7f45d1cf-5879f69b504mr8401197a12.22.1719936628594; Tue, 02 Jul 2024
- 09:10:28 -0700 (PDT)
+ AJvYcCXBIbZnjbZ7pYBE3RUfCGrrfAg1dsAV4uWWRKk0YTOpqeSUMskyoadSkUooO5GpTqjaEtSf76ti1clUjHXpN1mUxntaTTs=
+X-Gm-Message-State: AOJu0YwDuSB7yhqgtkURL09VeQOD+xOW2Z2G2dCCmoG9arAjadPTUa4d
+ Txib9371mXRPJ68AoJG495NQMDJnsX/8GQKYeOmZDS5Z6CbLz4Y1XJxc3hThPWM=
+X-Google-Smtp-Source: AGHT+IH3PfoX74QtSJdXP+gN0MitSovc6zNGLv59u7CnU/hLCsxFGuuJc1dgIe10tJvMUK6igVJtxg==
+X-Received: by 2002:a5d:6483:0:b0:366:e89c:342e with SMTP id
+ ffacd0b85a97d-3677571b6bcmr6624066f8f.53.1719936913238; 
+ Tue, 02 Jul 2024 09:15:13 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.209.58])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0d8daasm13559315f8f.30.2024.07.02.09.15.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 09:15:12 -0700 (PDT)
+Message-ID: <2b425f32-41de-4057-a8d0-79411f2519b4@linaro.org>
+Date: Tue, 2 Jul 2024 18:15:10 +0200
 MIME-Version: 1.0
-References: <20240702154042.3018932-1-zheyuma97@gmail.com>
- <3bdd7747-316d-4b58-a9c3-2320864e6cf8@linaro.org>
-In-Reply-To: <3bdd7747-316d-4b58-a9c3-2320864e6cf8@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Jul 2024 17:10:17 +0100
-Message-ID: <CAFEAcA9iGeUc75tfPPOh2K2QMjVVjsE6s4owmrsO62+-9=Go2Q@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/misc/bcm2835_thermal: Fix access size handling in
- bcm2835_thermal_ops
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [RFC PATCH v42 90/98] hw/sd/sdcard: Add experimental
+ 'x-aspeed-emmc-kludge' property
+To: Andrew Jeffery <andrew@codeconstruct.com.au>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Troy Lee <troy_lee@aspeedtech.com>
+References: <20240628070216.92609-1-philmd@linaro.org>
+ <20240628070216.92609-91-philmd@linaro.org>
+ <4b55f817-0e29-45c0-8f56-f997f34e0e97@kaod.org>
+ <e1a6b93038e67271fc0bd9efcc7d40802cbbede7.camel@codeconstruct.com.au>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <e1a6b93038e67271fc0bd9efcc7d40802cbbede7.camel@codeconstruct.com.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,32 +101,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Jul 2024 at 16:50, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
-> Personally I consider accepting access of
->
->    .valid.min_access_size > .impl.min_access_size
->
-> as a bug in the memory core layer, whether being
-> unaligned or not.
+On 2/7/24 07:06, Andrew Jeffery wrote:
+> On Fri, 2024-06-28 at 11:16 +0200, Cédric Le Goater wrote:
+>> On 6/28/24 9:02 AM, Philippe Mathieu-Daudé wrote:
+>>> When booting U-boot/Linux on Aspeed boards via eMMC,
+>>> some commands don't behave as expected from the spec.
+>>>
+>>> Add the 'x-aspeed-emmc-kludge' property to allow non
+>>> standard uses until we figure out the reasons.
+>>
+>> I am not aware of any singularity in the eMMC logic provided by Aspeed.
+>> U-Boot and Linux drivers seem very generic. May be others can tell.
+> 
+> I'm not aware of any command kludges. The main problem I had when I
+> wrote the Linux driver for the Aspeed controller was the phase tuning,
+> but that doesn't sound related.
 
-Mmm. You could make an argument for
-  .valid: min_access_size =3D 4, unaligned =3D true
-  .impl.min_access_size =3D 1, unaligned =3D false
+Yeah I don't think anything Aspeed nor U-boot related, we
+model CSD/CID registers per the SD spec, not MMC. Various
+fields are identical, but few differ, this might be the
+problem.
 
-meaning "accesses must be 32 bits, and if the guest
-makes an unaligned 32 bit access then you can
-synthesize it with 4 byte reads/writes", I guess.
-But whether we (a) get that right (b) use it anywhere
-(c) use it anywhere intentionally is not something
-I'd be very confident in asserting :-)
-
-I definitely think that our "synthesize accesses
-where valid and impl mismatch" code could use a
-going-over, so we either get it right or assert if
-the MemoryRegionOps ask for something we don't handle.
-Maybe someday...
-
-thanks
--- PMM
+I rather respect the spec by default, so until we figure
+the issue, are you OK to use a 'x-emmc-kludge' property
+and set it on the Aspeed boards?
 
