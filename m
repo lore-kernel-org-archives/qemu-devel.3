@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFB2C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:34:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B363C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:34:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOapK-00046b-SL; Tue, 02 Jul 2024 06:33:34 -0400
+	id 1sOapb-0004DS-IW; Tue, 02 Jul 2024 06:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapH-00045G-FW
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapa-0004Cg-DX
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapF-00073o-GA
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapY-00076n-US
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719916406;
+ s=mimecast20190719; t=1719916428;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7A/I+wCPgV2xnskxgg6ZJcwzn6CrSqHFr9xSr85Rrzo=;
- b=UwL6CgWqCgNM+t2M10RrAH5je+RR1qI0RLKvhm/lOQyrvSa9Ac27MOD9jiswq037/qdLgR
- 2MX+HE3MkmN9vVkLxsBpS3TjUnPqYHto7juiR4kPsEWRQ8vXmpN1X/g06I8hJCJ7T76IKC
- Txka4e+OuIOliRHLftcAXvbb78uHeEg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=2v7y+Szx7I0PFjj7v8I/JWtqzU8QM9nTaUE9ATLXoTE=;
+ b=MhondXAj0gcQO4tYTR44mAd5qG/c/jegF5xPPT4/mOlQey02iE0rUsGHp38L4Vna30BJBa
+ oT1ujuYOp+YF9ZebTTEVxyuAj6k2x/zJ38NMvwRW80vANSGGmwBHYfBXkYKb1CNLEiyybq
+ VgHzdqMRc9b2FafTsbln4WM3BcZwozI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-A0Uryo9MOGCJcionAjqbeQ-1; Tue,
- 02 Jul 2024 06:33:21 -0400
-X-MC-Unique: A0Uryo9MOGCJcionAjqbeQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-s6dEpXTCOZae74KrdY_9Ow-1; Tue,
+ 02 Jul 2024 06:33:45 -0400
+X-MC-Unique: s6dEpXTCOZae74KrdY_9Ow-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00C86195609D; Tue,  2 Jul 2024 10:33:20 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F1E519560AB; Tue,  2 Jul 2024 10:33:43 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3470419560AA; Tue,  2 Jul 2024 10:33:16 +0000 (UTC)
+ id 647811955D89; Tue,  2 Jul 2024 10:33:39 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>, Prasad Pandit <pjp@fedoraproject.org>
-Subject: [PULL 02/12] tests/qtest/migration-test: enable on s390x with TCG
-Date: Tue,  2 Jul 2024 12:33:00 +0200
-Message-ID: <20240702103310.347201-3-thuth@redhat.com>
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 08/12] docs: add precision about capstone for execlog plugin
+Date: Tue,  2 Jul 2024 12:33:06 +0200
+Message-ID: <20240702103310.347201-9-thuth@redhat.com>
 In-Reply-To: <20240702103310.347201-1-thuth@redhat.com>
 References: <20240702103310.347201-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -80,49 +81,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Alexandre Iooss <erdnaxe@crans.org>
 
-s390x with TCG is more stable now. Enable it.
+Some people are wondering why they get an empty string as disassembly.
+Most of the time, they configured QEMU without Capstone support.
+Let's document this behaviour to help users.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Message-Id: <20240525131241.378473-3-npiggin@gmail.com>
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-[thuth: Added "with TCG" to the commit message]
+Signed-off-by: Alexandre Iooss <erdnaxe@crans.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20240620135731.977377-1-erdnaxe@crans.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qtest/migration-test.c | 12 ------------
- 1 file changed, 12 deletions(-)
+ docs/devel/tcg-plugins.rst | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 571fc1334c..70b606b888 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -3823,16 +3823,6 @@ int main(int argc, char **argv)
-                        test_vmstate_checker_script);
- #endif
+diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
+index 9cc09d8c3d..f7d7b9e3a4 100644
+--- a/docs/devel/tcg-plugins.rst
++++ b/docs/devel/tcg-plugins.rst
+@@ -539,7 +539,9 @@ which will output an execution trace following this structure::
+   0, 0xd34, 0xf9c8f000, "bl #0x10c8"
+   0, 0x10c8, 0xfff96c43, "ldr r3, [r0, #0x44]", load, 0x200000e4, RAM
  
--    /*
--     * On s390x with TCG, migration is observed to hang due to the 'pending'
--     * state of the flic interrupt controller not being migrated or
--     * reconstructed post-migration. Disable it until the problem is resolved.
--     */
--    if (g_str_equal(arch, "s390x") && !has_kvm) {
--        g_test_message("Skipping tests: s390x host with KVM is required");
--        goto test_add_done;
--    }
--
-     if (is_x86) {
-         migration_test_add("/migration/precopy/unix/suspend/live",
-                            test_precopy_unix_suspend_live);
-@@ -4036,8 +4026,6 @@ int main(int argc, char **argv)
-                            test_vcpu_dirty_limit);
-     }
+-the output can be filtered to only track certain instructions or
++Please note that you need to configure QEMU with Capstone support to get disassembly.
++
++The output can be filtered to only track certain instructions or
+ addresses using the ``ifilter`` or ``afilter`` options. You can stack the
+ arguments if required::
  
--test_add_done:
--
-     ret = g_test_run();
- 
-     g_assert_cmpint(ret, ==, 0);
 -- 
 2.45.2
 
