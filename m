@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23CAAC3065C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A319C41513
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:21:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjxw-0006OL-4F; Tue, 02 Jul 2024 16:19:04 -0400
+	id 1sOjta-0001yU-Iy; Tue, 02 Jul 2024 16:14:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjxT-0005MF-Tn
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjtZ-0001tI-Jp
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:14:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjxR-0000bk-7c
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjtY-0007bU-1h
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:14:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951512;
+ s=mimecast20190719; t=1719951271;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QrTyYgO+P/l4LBdE4jQm9EUMOljixFZgw03WGI4si6s=;
- b=EjNHgTOoJgovvjsp/NLt+6+s/3QhNM0KroLhhHqJN+SSbvbk183IT3owJ/H4yek/l/TBQL
- s5lgYqLu4qUrIn8dZYirWt5Kc/+pz0d9R3U7MrUN+tJAufUtjnmXPJ7VVSXmAZlhf1vh5G
- 0k11CM97mfpnVNHenkmqC3iomW+T82k=
+ bh=Bf3inGfH3C1OrX/KdJFaqQvDHDePnfUDWhDjBaZ52tk=;
+ b=PoA7wVDbQjNMPKaUm1saLTclwd1D6aUd4HzO50fIC0UeMu3o3T88sKRKM6YvPMpHJXy3jJ
+ fOnixuz90StSVlkNbPILKUWrY1jUxvuGngoAfmgHEHO9atxa0w2aI+yRChSx0v+7Zh6aHK
+ 9hrLww4fKpHi9o11FRjwGanzRGNQYVc=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-173-3FPNjn0-OI6Sz62kkHXeVQ-1; Tue, 02 Jul 2024 16:18:31 -0400
-X-MC-Unique: 3FPNjn0-OI6Sz62kkHXeVQ-1
+ us-mta-394-TnU8WdSWM9SLpvxZQJjqjg-1; Tue, 02 Jul 2024 16:14:29 -0400
+X-MC-Unique: TnU8WdSWM9SLpvxZQJjqjg-1
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42568f0cc18so32353905e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:18:31 -0700 (PDT)
+ 5b1f17b1804b1-4258675a531so14497775e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:14:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951510; x=1720556310;
+ d=1e100.net; s=20230601; t=1719951268; x=1720556068;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QrTyYgO+P/l4LBdE4jQm9EUMOljixFZgw03WGI4si6s=;
- b=dT0zE5OBi724dGOrjsa9gY7qQ4cDYeUKjKvXOIsCdl3Jhr7oIybKeMPAXdIKTBdzpc
- ukTNa4fAdIQViAzhrCQrxtfjIGYLF48tSn7ZUHJQklo9AJ+amtWnA6iqYCePcKbH3ZLr
- ci2+wun0O/K2DEJZ2F61uOkkH7N7dr6awY7kadSaj9dNqlNHH6L1MtGOZ3wfl8eAYVKp
- PI3BR0lRSGCbtq3iCru1BtZ0lFVw3zTi9T/Ib/xinUox+e6fU+61WYvnEXdFAd7mT5Ka
- qeN4w1wL/FkESkmP73SDWJfrLcKiv2oDVVrtJbzSz1YtJNkljK50wVabErCTOuh7/kfk
- zJww==
-X-Gm-Message-State: AOJu0Yz2uKNBQGhRoRDIzkLwMWyqqIUaj5dz5Uq1D44gonULpqMwUyJM
- DTkiz4zbIavJZxp7KmAKyswxTEz6+295CAaFS+ygGVOakWZjlDu7H1/fKKNQdZgbQb4pUANlsKU
- 1j323Z2UJg3OwEQ7HnIlRWF/m0m5IH1Dck0qj1VDskSfc4Ra9O0NtAUucdo0NLFB/na/+XmzTLk
- DgaZhh4RMK/6wK1EH9tm0xQwJ41Vi1PQ==
-X-Received: by 2002:a05:600c:2e09:b0:424:acab:b84a with SMTP id
- 5b1f17b1804b1-4257a0348c9mr59084525e9.38.1719951509798; 
- Tue, 02 Jul 2024 13:18:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFcusRkEeWOutYCdGSKbobfYGWvWy8OISFqby7+2gQ7zMwI7FV5RtmvktMwUgYLua5QeRQ8A==
-X-Received: by 2002:a05:600c:2e09:b0:424:acab:b84a with SMTP id
- 5b1f17b1804b1-4257a0348c9mr59084165e9.38.1719951508841; 
- Tue, 02 Jul 2024 13:18:28 -0700 (PDT)
+ bh=Bf3inGfH3C1OrX/KdJFaqQvDHDePnfUDWhDjBaZ52tk=;
+ b=Vd9SEypN9hdBwGi6DrUUmU2WWdLpHjlX6+GLBY+YThsDFJA/zsq9yUhRAmguMHh5qB
+ tCzRC4zRkNPt1R6AferuK05QUKeuGZYxNkZcED8XJKdJzt/QkyRovvTrkZoOhFe9ow+B
+ 8FHzvryZyvt/OGecNpROTfu0+bCc8Mp0IfRT/IW0pJUgec0Ig2kAhCbr69H4L4KIuKzW
+ Zu7YMrxrPrDnepezk9qLBCko5bGcMAGt+F2nHDqTjHVPFl2up/3o+ZIqGTZV4q2SNQc8
+ p+4nXbWgLGd7UGJzqACe8kFdBHDhnXf/t7IyAf3aBsT9E5KnAM4dCDOh7ScsbBWQb/DM
+ iaRQ==
+X-Gm-Message-State: AOJu0Yys15UKerJHrQTqSqaYNlH1FmhYxif0+rJqGseLe5F7Akjkxk1V
+ j1bOfHbaSTGcWlU1bcrWWRmfi/fOZUPFFjBazhI0APb25gi/MfQ5zj1xi9oKQgoA/skmcAVw29G
+ jQTw6MeQoQGp5FXFZtjt8JpffDytArNlu/1cA3TVJiJI5YVqtxXIpu5yKc4ToDka6MNN4jgdHY4
+ yJaPQ7pA3g3yQyhjPI8wo1vrqjmk6kuA==
+X-Received: by 2002:a05:600c:3594:b0:425:602f:d62c with SMTP id
+ 5b1f17b1804b1-4257a00d420mr63548645e9.9.1719951267787; 
+ Tue, 02 Jul 2024 13:14:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzUclVT4OZq71sYTIPH5j84XeLCN9z+SyLrD66TIoypUsUPfB2mXm7rGt14XXkS9Iz2c+Kzg==
+X-Received: by 2002:a05:600c:3594:b0:425:602f:d62c with SMTP id
+ 5b1f17b1804b1-4257a00d420mr63548475e9.9.1719951267269; 
+ Tue, 02 Jul 2024 13:14:27 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4257c4e10d6sm138940045e9.30.2024.07.02.13.18.27
+ ffacd0b85a97d-3675a104727sm14085938f8f.111.2024.07.02.13.14.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:18:28 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:18:25 -0400
+ Tue, 02 Jul 2024 13:14:26 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:14:23 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, David Hildenbrand <david@redhat.com>
-Subject: [PULL v2 49/88] libvhost-user: mask F_INFLIGHT_SHMFD if memfd is not
- supported
-Message-ID: <ebdede644bbf5744f91dbe0d39742f17b03c4e10.1719951168.git.mst@redhat.com>
-References: <cover.1719951168.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Wafer <wafer@jaguarmicro.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL v2 11/91] hw/virtio: Fix obtain the buffer id from the last
+ descriptor
+Message-ID: <33abfea239592a706e98269b01c0096249612ea4.1719951026.git.mst@redhat.com>
+References: <cover.1719951026.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1719951168.git.mst@redhat.com>
+In-Reply-To: <cover.1719951026.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,51 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Wafer <wafer@jaguarmicro.com>
 
-libvhost-user will panic when receiving VHOST_USER_GET_INFLIGHT_FD
-message if MFD_ALLOW_SEALING is not defined, since it's not able
-to create a memfd.
+The virtio-1.3 specification
+<https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html> writes:
+2.8.6 Next Flag: Descriptor Chaining
+      Buffer ID is included in the last descriptor in the list.
 
-VHOST_USER_GET_INFLIGHT_FD is used only if
-VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD is negotiated. So, let's mask
-that feature if the backend is not able to properly handle these
-messages.
+If the feature (_F_INDIRECT_DESC) has been negotiated, install only
+one descriptor in the virtqueue.
+Therefor the buffer id should be obtained from the first descriptor.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240618100043.144657-5-sgarzare@redhat.com>
+In descriptor chaining scenarios, the buffer id should be obtained
+from the last descriptor.
+
+Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
+
+Signed-off-by: Wafer <wafer@jaguarmicro.com>
+Reviewed-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20240510072753.26158-2-wafer@jaguarmicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ hw/virtio/virtio.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index ea27683dac..9c630c2170 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -1674,6 +1674,17 @@ vu_get_protocol_features_exec(VuDev *dev, VhostUserMsg *vmsg)
-         features |= dev->iface->get_protocol_features(dev);
-     }
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 28cd406e16..3678ec2f88 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -1745,6 +1745,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+                                              &indirect_desc_cache);
+     } while (rc == VIRTQUEUE_READ_DESC_MORE);
  
-+#ifndef MFD_ALLOW_SEALING
-+    /*
-+     * If MFD_ALLOW_SEALING is not defined, we are not able to handle
-+     * VHOST_USER_GET_INFLIGHT_FD messages, since we can't create a memfd.
-+     * Those messages are used only if VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD
-+     * is negotiated. A device implementation can enable it, so let's mask
-+     * it to avoid a runtime panic.
-+     */
-+    features &= ~(1ULL << VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD);
-+#endif
++    if (desc_cache != &indirect_desc_cache) {
++        /* Buffer ID is included in the last descriptor in the list. */
++        id = desc.id;
++    }
 +
-     vmsg_set_reply_u64(vmsg, features);
-     return true;
- }
+     /* Now copy what we have collected and mapped */
+     elem = virtqueue_alloc_element(sz, out_num, in_num);
+     for (i = 0; i < out_num; i++) {
 -- 
 MST
 
