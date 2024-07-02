@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 293CAC41513
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 09:26:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE4BEC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 09:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOZiM-0001eU-Hw; Tue, 02 Jul 2024 05:22:19 -0400
+	id 1sOZmM-0002Gj-Ck; Tue, 02 Jul 2024 05:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZiJ-0001QQ-0z
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:22:16 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZmK-0001we-8m
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:26:24 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZiH-0006UE-4b
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:22:14 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-362f62ae4c5so2250208f8f.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 02:22:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZmG-0001O5-7q
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:26:23 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-52ce6c8db7bso5943074e87.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 02:26:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719912130; x=1720516930; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719912378; x=1720517178; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XqX6iaUQgzL1offrhP+HrFxeqPqsVcUC+AhsVlpqm/g=;
- b=p1t6KJV70eZsL15wNHuZpbnL3b11zlNsYJEATh/eGjHZcv04hEFe/sumsaFSwvNr78
- UxVQv8YYeCSyhrHhvSK+Mt+7nmxUVIICOPvje7rgkaDisa7c7sjuJcIx3ICiRaKclN4/
- dMhQW/g5YzSkwBET2pNqfvMteZh9jKuLRhwO0W5RYfDgboeYX84UWTp5c3fRhFCHOAAU
- OpjP2dR10LoROusD5U/9hgz9T5R73S85fWwix98CbrjLSNgVZqNgNAtPHTC4JvgDZrDH
- RkHHqsuOQ5bmmI3W0Qxjju+521XWxveQVOZTYv17LfKUsdW3uj4rpIxZjACaCnwEBxFT
- qZ6Q==
+ bh=VWCogmQ5YMxblD7fAdd5ouQjKmXVnhB0D5NSysNvar4=;
+ b=RIezjv6RM1IZqEjzuCMphhg/sy+W2SOU1yWGDabTf8XrDUa2RPsdnIBrkLJOSfwxD1
+ MMqJiMUfr1N3AlSjlbn6BIPk7FnI0QZ5g48u5IY7YR0WPKUh3ur/fDwvFlzK2HpH++OE
+ WypMMXyYq9G1yA8C0X3FzAfAYW79QecBTzFbvJsCfihk8wufWgrsdE3WbHYnR4CqF9GJ
+ S66tZz3Lk5OQcgdsaq+fX/6gZPWLJnUbUVjEfaWoX4r/zUqntsK//xqT7Evo6NkgsfnQ
+ 0JIlY1sapYrVKIJWLCUvX+gQwRC6a9vPIL2SuM1HbMHPXersTCzTajhl8ic8d1rqIH52
+ RByg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719912130; x=1720516930;
+ d=1e100.net; s=20230601; t=1719912378; x=1720517178;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XqX6iaUQgzL1offrhP+HrFxeqPqsVcUC+AhsVlpqm/g=;
- b=FntdBzXJTFVLP+hL69Mb19ZTjahzEuvsaC008n6Ch+edJpbfh2Fzz+40Ta4cgygEvD
- qbo0vpyROgAH/a+aoYrtofAFLfoeA+u72PypwUjZm8Rdlz/zAxVRO84ZYKC9rf3Pj6fJ
- ng78PQGjUBJBiL2Gtois8l81VYHnIwUic+/ViYsKwrCtyGLlTGZpOBh+cenO4ajsXvxx
- hBebOj7yZoCJCZCMa/6jB+LYBQLOnAP2PxTziC87XYYNEWmGxGqiUX3BX82pJ0gT4gU1
- Qc5kboHpkwRvp9dVSSXwzbfIMrZwoFlKcSZm7OWi7EKOU+i3TplbIOxF3ElA8aTxXFYC
- 96tA==
-X-Gm-Message-State: AOJu0YxCc/wfAFQwd9cTOkNeNZ/r382sIj6TlIUYpVSah7dYDBbJjKCl
- b3dFzviEL+DMgbnFaSOtOkWt/dzvAHRQ5QeeLAIalNR3FN2921AJSs6PMmpBpx2sNePX+xpGXc3
- b
-X-Google-Smtp-Source: AGHT+IH/Y9BwftBzWc3gClvIqL5hK62V0hzPkVAdId21uR+VecvKVtyAi/xBI3OOdHofyZUB1v4yMQ==
-X-Received: by 2002:a05:6000:b01:b0:363:ac4d:c44f with SMTP id
- ffacd0b85a97d-36774f6cabdmr7104281f8f.17.1719912130181; 
- Tue, 02 Jul 2024 02:22:10 -0700 (PDT)
+ bh=VWCogmQ5YMxblD7fAdd5ouQjKmXVnhB0D5NSysNvar4=;
+ b=nv4sWFYs9XJiwHftNBVKDVYIYKkZL5ZEBgCD1AeC9nJ/GJYYsPofgs3555t9z15sNb
+ fMS8MO/Yc4G4kj0yzC4+9N0AwI6HGyXpidqedopDIUOXPJpbm0bcZ8NJ3QWKY3qlntFT
+ 9n2xBuKFMZGVIFp9/xCWJM2a3CkF8jWzT+inXaoym4bAxzlE3oH3LF4LwXin44BPtN1r
+ wP3ygPswlX8d6Ih0fLaFimUyg770QNgxs5Z8+h1hsU68ljJFDM544RDcki+eY5zleLx9
+ xsGbkxoeWgBJXLl19s+U/kDdFoH07yFTSum+evJghm475r4w76RJJ9FLTB2i8j3TijtC
+ 7S/g==
+X-Gm-Message-State: AOJu0YyNvQ80u04Pwpa0rLNVahjByPbIoT/IJiWsZLO+EKVkTcdb8lv6
+ J+esn1SL0pBImRMCkV77RbPNf/wsqtei49mL0o4YODJRdoFw/1VM6UM71Bmsrp9MwSxYt8vJSU6
+ j
+X-Google-Smtp-Source: AGHT+IFvsQ9ePYgRzx/8fGAtfF/c/Ts5j5G5g6hHzxPKixkFgeq0OgRfAt55wxEw+h7YTDZWCS2tDg==
+X-Received: by 2002:a05:6512:3e28:b0:52c:d905:9645 with SMTP id
+ 2adb3069b0e04-52e8265184bmr6522600e87.13.1719912378233; 
+ Tue, 02 Jul 2024 02:26:18 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a103d00sm12665190f8f.99.2024.07.02.02.22.08
+ 5b1f17b1804b1-4256b09abbfsm189020845e9.35.2024.07.02.02.26.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Jul 2024 02:22:09 -0700 (PDT)
+ Tue, 02 Jul 2024 02:26:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 13/67] hw/sd/sdcard: Introduce definitions for EXT_CSD register
-Date: Tue,  2 Jul 2024 11:19:56 +0200
-Message-ID: <20240702092051.45754-14-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 55/67] hw/sd/sdcard: Add sd_cmd_ERASE_WR_BLK_START/END handlers
+ (CMD32 & CMD33)
+Date: Tue,  2 Jul 2024 11:20:38 +0200
+Message-ID: <20240702092051.45754-56-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240702092051.45754-1-philmd@linaro.org>
 References: <20240702092051.45754-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,137 +95,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@kaod.org>
-
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Co-Developed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240628070216.92609-18-philmd@linaro.org>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-Id: <20240628070216.92609-62-philmd@linaro.org>
 ---
- hw/sd/sdmmc-internal.h | 108 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 108 insertions(+)
+ hw/sd/sd.c | 47 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
-diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
-index d8bf17d204..936c75cace 100644
---- a/hw/sd/sdmmc-internal.h
-+++ b/hw/sd/sdmmc-internal.h
-@@ -11,6 +11,114 @@
- #ifndef SDMMC_INTERNAL_H
- #define SDMMC_INTERNAL_H
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index b205cc4692..d517a00ee1 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -241,7 +241,6 @@ static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
+                                             [21]    = "DPS_spec",
+                                             [25]    = "WRITE_MULTIPLE_BLOCK",
+         [26]    = "MANUF_RSVD",
+-        [32]    = "ERASE_WR_BLK_START",     [33]    = "ERASE_WR_BLK_END",
+         [38]    = "ERASE",
+         [40]    = "DPS_spec",
+         [42]    = "LOCK_UNLOCK",
+@@ -1575,6 +1574,26 @@ static sd_rsp_type_t sd_cmd_SEND_WRITE_PROT(SDState *sd, SDRequest req)
+     return sd_cmd_to_sendingdata(sd, req, addr, &data, sizeof(data));
+ }
  
-+/*
-+ * EXT_CSD Modes segment
-+ *
-+ * Define the configuration the Device is working in.
-+ * These modes can be changed by the host by means of the SWITCH command.
-+ */
-+#define EXT_CSD_CMDQ_MODE_EN            15      /* R/W */
-+#define EXT_CSD_FLUSH_CACHE             32      /* W */
-+#define EXT_CSD_CACHE_CTRL              33      /* R/W */
-+#define EXT_CSD_POWER_OFF_NOTIFICATION  34      /* R/W */
-+#define EXT_CSD_PACKED_FAILURE_INDEX    35      /* RO */
-+#define EXT_CSD_PACKED_CMD_STATUS       36      /* RO */
-+#define EXT_CSD_EXP_EVENTS_STATUS       54      /* RO, 2 bytes */
-+#define EXT_CSD_EXP_EVENTS_CTRL         56      /* R/W, 2 bytes */
-+#define EXT_CSD_CLASS_6_CTRL            59
-+#define EXT_CSD_INI_TIMEOUT_EMU         60
-+#define EXT_CSD_DATA_SECTOR_SIZE        61      /* R */
-+#define EXT_CSD_USE_NATIVE_SECTOR       62
-+#define EXT_CSD_NATIVE_SECTOR_SIZE      63
-+#define EXT_CSD_VENDOR_SPECIFIC_FIELD   64      /* 64 bytes */
-+#define EXT_CSD_PROGRAM_CID_CSD_DDR_SUPPORT 130
-+#define EXT_CSD_PERIODIC_WAKEUP         131
-+#define EXT_CSD_TCASE_SUPPORT           132
-+#define EXT_CSD_SEC_BAD_BLK_MGMNT       134
-+#define EXT_CSD_GP_SIZE_MULT            143     /* R/W */
-+#define EXT_CSD_PARTITION_SETTING_COMPLETED 155 /* R/W */
-+#define EXT_CSD_PARTITION_ATTRIBUTE     156     /* R/W */
-+#define EXT_CSD_MAX_ENH_SIZE_MULT       157     /* RO, 3 bytes */
-+#define EXT_CSD_PARTITION_SUPPORT       160     /* RO */
-+#define EXT_CSD_HPI_MGMT                161     /* R/W */
-+#define EXT_CSD_RST_N_FUNCTION          162     /* R/W */
-+#define EXT_CSD_BKOPS_EN                163     /* R/W */
-+#define EXT_CSD_BKOPS_START             164     /* W */
-+#define EXT_CSD_SANITIZE_START          165     /* W */
-+#define EXT_CSD_WR_REL_PARAM            166     /* RO */
-+#define EXT_CSD_WR_REL_SET              167
-+#define EXT_CSD_RPMB_MULT               168     /* RO */
-+#define EXT_CSD_FW_CONFIG               169     /* R/W */
-+#define EXT_CSD_USER_WP                 171
-+#define EXT_CSD_BOOT_WP                 173     /* R/W */
-+#define EXT_CSD_BOOT_WP_STATUS          174
-+#define EXT_CSD_ERASE_GROUP_DEF         175     /* R/W */
-+#define EXT_CSD_BOOT_BUS_CONDITIONS     177
-+#define EXT_CSD_BOOT_CONFIG_PROT        178
-+#define EXT_CSD_PART_CONFIG             179     /* R/W */
-+#define EXT_CSD_ERASED_MEM_CONT         181     /* RO */
-+#define EXT_CSD_BUS_WIDTH               183     /* R/W */
-+#define EXT_CSD_STROBE_SUPPORT          184     /* RO */
-+#define EXT_CSD_HS_TIMING               185     /* R/W */
-+#define EXT_CSD_POWER_CLASS             187     /* R/W */
-+#define EXT_CSD_CMD_SET_REV             189
-+#define EXT_CSD_CMD_SET                 191
-+/*
-+ * EXT_CSD Properties segment
-+ *
-+ * Define the Device capabilities, cannot be modified by the host.
-+ */
-+#define EXT_CSD_REV                     192
-+#define EXT_CSD_STRUCTURE               194
-+#define EXT_CSD_CARD_TYPE               196
-+#define EXT_CSD_DRIVER_STRENGTH         197
-+#define EXT_CSD_OUT_OF_INTERRUPT_TIME   198
-+#define EXT_CSD_PART_SWITCH_TIME        199
-+#define EXT_CSD_PWR_CL_52_195           200
-+#define EXT_CSD_PWR_CL_26_195           201
-+#define EXT_CSD_PWR_CL_52_360           202
-+#define EXT_CSD_PWR_CL_26_360           203
-+#define EXT_CSD_SEC_CNT                 212     /* 4 bytes */
-+#define EXT_CSD_S_A_TIMEOUT             217
-+#define EXT_CSD_S_C_VCCQ                219
-+#define EXT_CSD_S_C_VCC                 220
-+#define EXT_CSD_REL_WR_SEC_C            222
-+#define EXT_CSD_HC_WP_GRP_SIZE          221
-+#define EXT_CSD_ERASE_TIMEOUT_MULT      223
-+#define EXT_CSD_HC_ERASE_GRP_SIZE       224
-+#define EXT_CSD_ACC_SIZE                225
-+#define EXT_CSD_BOOT_MULT               226
-+#define EXT_CSD_BOOT_INFO               228
-+#define EXT_CSD_SEC_FEATURE_SUPPORT     231
-+#define EXT_CSD_TRIM_MULT               232
-+#define EXT_CSD_INI_TIMEOUT_PA          241
-+#define EXT_CSD_BKOPS_STATUS            246
-+#define EXT_CSD_POWER_OFF_LONG_TIME     247
-+#define EXT_CSD_GENERIC_CMD6_TIME       248
-+#define EXT_CSD_CACHE_SIZE              249     /* 4 bytes */
-+#define EXT_CSD_EXT_SUPPORT             494
-+#define EXT_CSD_LARGE_UNIT_SIZE_M1      495
-+#define EXT_CSD_CONTEXT_CAPABILITIES    496
-+#define EXT_CSD_TAG_RES_SIZE            497
-+#define EXT_CSD_TAG_UNIT_SIZE           498
-+#define EXT_CSD_DATA_TAG_SUPPORT        499
-+#define EXT_CSD_MAX_PACKED_WRITES       500
-+#define EXT_CSD_MAX_PACKED_READS        501
-+#define EXT_CSD_BKOPS_SUPPORT           502
-+#define EXT_CSD_HPI_FEATURES            503
-+#define EXT_CSD_S_CMD_SET               504
++/* CMD32 */
++static sd_rsp_type_t sd_cmd_ERASE_WR_BLK_START(SDState *sd, SDRequest req)
++{
++    if (sd->state != sd_transfer_state) {
++        return sd_invalid_state_for_cmd(sd, req);
++    }
++    sd->erase_start = req.arg;
++    return sd_r1;
++}
 +
-+#define EXT_CSD_WR_REL_PARAM_EN                 (1 << 2)
-+#define EXT_CSD_WR_REL_PARAM_EN_RPMB_REL_WR     (1 << 4)
++/* CMD33 */
++static sd_rsp_type_t sd_cmd_ERASE_WR_BLK_END(SDState *sd, SDRequest req)
++{
++    if (sd->state != sd_transfer_state) {
++        return sd_invalid_state_for_cmd(sd, req);
++    }
++    sd->erase_end = req.arg;
++    return sd_r1;
++}
 +
-+#define EXT_CSD_PART_CONFIG_ACC_MASK            (0x7)
-+#define EXT_CSD_PART_CONFIG_ACC_DEFAULT         (0x0)
-+#define EXT_CSD_PART_CONFIG_ACC_BOOT0           (0x1)
-+
-+#define EXT_CSD_PART_CONFIG_EN_MASK             (0x7 << 3)
-+#define EXT_CSD_PART_CONFIG_EN_BOOT0            (0x1 << 3)
-+#define EXT_CSD_PART_CONFIG_EN_USER             (0x7 << 3)
-+
- #define SDMMC_CMD_MAX 64
+ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+ {
+     uint16_t rca;
+@@ -1664,28 +1683,6 @@ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
+         return sd_cmd_to_receivingdata(sd, req, 0, sizeof(sd->cid));
  
- /**
+     /* Erase commands (Class 5) */
+-    case 32:  /* CMD32:  ERASE_WR_BLK_START */
+-        switch (sd->state) {
+-        case sd_transfer_state:
+-            sd->erase_start = req.arg;
+-            return sd_r1;
+-
+-        default:
+-            break;
+-        }
+-        break;
+-
+-    case 33:  /* CMD33:  ERASE_WR_BLK_END */
+-        switch (sd->state) {
+-        case sd_transfer_state:
+-            sd->erase_end = req.arg;
+-            return sd_r1;
+-
+-        default:
+-            break;
+-        }
+-        break;
+-
+     case 38:  /* CMD38:  ERASE */
+         switch (sd->state) {
+         case sd_transfer_state:
+@@ -2317,6 +2314,8 @@ static const SDProto sd_proto_spi = {
+         [28] = {6,  sd_spi, "SET_WRITE_PROT", sd_cmd_SET_WRITE_PROT},
+         [29] = {6,  sd_spi, "CLR_WRITE_PROT", sd_cmd_CLR_WRITE_PROT},
+         [30] = {6,  sd_spi, "SEND_WRITE_PROT", sd_cmd_SEND_WRITE_PROT},
++        [32] = {5,  sd_spi, "ERASE_WR_BLK_START", sd_cmd_ERASE_WR_BLK_START},
++        [33] = {5,  sd_spi, "ERASE_WR_BLK_END", sd_cmd_ERASE_WR_BLK_END},
+         [34] = {10, sd_spi, "READ_SEC_CMD", sd_cmd_optional},
+         [35] = {10, sd_spi, "WRITE_SEC_CMD", sd_cmd_optional},
+         [36] = {10, sd_spi, "SEND_PSI", sd_cmd_optional},
+@@ -2358,6 +2357,8 @@ static const SDProto sd_proto_sd = {
+         [28] = {6,  sd_ac,   "SET_WRITE_PROT", sd_cmd_SET_WRITE_PROT},
+         [29] = {6,  sd_ac,   "CLR_WRITE_PROT", sd_cmd_CLR_WRITE_PROT},
+         [30] = {6,  sd_adtc, "SEND_WRITE_PROT", sd_cmd_SEND_WRITE_PROT},
++        [32] = {5,  sd_ac,   "ERASE_WR_BLK_START", sd_cmd_ERASE_WR_BLK_START},
++        [33] = {5,  sd_ac,   "ERASE_WR_BLK_END", sd_cmd_ERASE_WR_BLK_END},
+         [34] = {10, sd_adtc, "READ_SEC_CMD", sd_cmd_optional},
+         [35] = {10, sd_adtc, "WRITE_SEC_CMD", sd_cmd_optional},
+         [36] = {10, sd_adtc, "SEND_PSI", sd_cmd_optional},
 -- 
 2.41.0
 
