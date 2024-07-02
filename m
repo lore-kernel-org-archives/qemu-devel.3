@@ -4,75 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A11EEC2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 03:08:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F8BFC2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 03:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOTrm-0007be-Po; Mon, 01 Jul 2024 23:07:38 -0400
+	id 1sOU60-0000xT-Go; Mon, 01 Jul 2024 23:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sOTrk-0007bH-Hl
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 23:07:36 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sOTrh-0003xA-F6
- for qemu-devel@nongnu.org; Mon, 01 Jul 2024 23:07:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719889654; x=1751425654;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=m1TOvZROTBz/LcdC1Wgh7F6ey+p+v19zzSHQdL7htbE=;
- b=EjiTI5YP1WAbeP0C5dTIdsKvT0DuH936rhCn19aatYjJwolDc1lGVGPk
- sYrYJO5fEU2LM+I3VUWtT8oQhP/sXUMhWYV9wNSWbHMim2WOfY4L3gyCj
- Lp4gYdwirEO3xlTstzJhOGb1gJDrqcIqJ8eSrkxq36u/GamJfExGoI0N0
- IrTXpbz7a6/4qXb8PPVYruLlNbyLtSUTqNovrVU4L5dFZsBwzM3iDZgsj
- INn8pqvyW6inBaKAsJ6H4W/FBXe5OunRbWhLqfWCS2AZ4WIH3sTsw6hF6
- xoqhbeS+v9v/Q4rJdyb+w/ViL3M6ID8ry6kzBJJTLCgqMzxDFEV+IEksq A==;
-X-CSE-ConnectionGUID: E62KktTnSDa+td6qwFWunw==
-X-CSE-MsgGUID: iKiq8xw9TN+Zon5QhOHEEg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11120"; a="17182585"
-X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; d="scan'208";a="17182585"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2024 20:07:25 -0700
-X-CSE-ConnectionGUID: qGt3Wjr4STqlbzg6bBTehA==
-X-CSE-MsgGUID: rutYRsDMRH6/Xxlkw3KM1w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; d="scan'208";a="45708043"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.26])
- ([10.124.240.26])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jul 2024 20:07:21 -0700
-Message-ID: <ce80850a-fbd1-4e14-8107-47c7423fa204@intel.com>
-Date: Tue, 2 Jul 2024 11:07:18 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 20/31] i386/sev: Add support for SNP CPUID validation
-To: Pankaj Gupta <pankaj.gupta@amd.com>, qemu-devel@nongnu.org
-Cc: brijesh.singh@amd.com, dovmurik@linux.ibm.com, armbru@redhat.com,
- michael.roth@amd.com, pbonzini@redhat.com, thomas.lendacky@amd.com,
- isaku.yamahata@intel.com, berrange@redhat.com, kvm@vger.kernel.org,
- anisinha@redhat.com
-References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
- <20240530111643.1091816-21-pankaj.gupta@amd.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20240530111643.1091816-21-pankaj.gupta@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
+ id 1sOU5w-0000x4-4F
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 23:22:16 -0400
+Received: from va-2-31.ptr.blmpb.com ([209.127.231.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
+ id 1sOU5q-0000zy-E7
+ for qemu-devel@nongnu.org; Mon, 01 Jul 2024 23:22:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=dayudpu-com.20200927.dkim.feishu.cn; t=1719890521;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=+SknTLPJVuQi9xZV/4d+xkEdL76Z4dRMYlyZs7Xw1SA=;
+ b=2Jdv7Gg6oPDLFw4S1cm0JI3nftx5AqRStQcUgdJI+5Yrxq0Mm/PfQcTQ3SKXgW1G7y27GU
+ lvEe0pYtDbO2nMmlnenlNIa+VKj1yR+KYiAU4D3cQI5i5eROU9ZEwt3yhnJpMEElRjKTuZ
+ NbMTPkWVDqqZxC8EzfHLY4e/g8rv3OAjjHqBjJX5ZgV4NS2gN5nkhdpewOfMnBDGDA+QXp
+ hJMxNJt8uWnd98Ve4PCkeh83FumE9fQUZHUNICrgWgHEa4i/zKNeGCFyCO54aQn0ZZ1n6O
+ 7So+fx5G7UM1Dz5kAoC3rpUeDVnXAL8ISzwtGLjHlWQ+EPDWs4+9whEgkGv0IA==
+References: <20240613065150.3100-1-xiangwencheng@dayudpu.com>
+ <87zfr1qyyi.fsf@draig.linaro.org>
+ <fba0cfc406f202976ef5ac5d129e08524ce06bbf.8eed26c3.aba1.4d51.9976.281bbad0a8e6@feishu.cn>
+ <87msn1qh44.fsf@draig.linaro.org>
+ <20240701111531-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240701111531-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 02 Jul 2024 11:22:00 +0800
+Cc: "qemu-devel" <qemu-devel@nongnu.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>
+Mime-Version: 1.0
+From: "BillXiang" <xiangwencheng@dayudpu.com>
+X-Lms-Return-Path: <lba+166837259+94e97d+nongnu.org+xiangwencheng@dayudpu.com>
+Message-Id: <fba0cfc406f202976ef5ac5d129e08524ce06bbf.99dff509.6d6b.4f87.8578.07e0e577b0c1@feishu.cn>
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] vhost-user: Skip unnecessary duplicated
+ VHOST_USER_SET_LOG_BASE requests
+Received-SPF: pass client-ip=209.127.231.31;
+ envelope-from=xiangwencheng@dayudpu.com; helo=va-2-31.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,25 +71,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/30/2024 7:16 PM, Pankaj Gupta wrote:
-> From: Michael Roth <michael.roth@amd.com>
-> 
-> SEV-SNP firmware allows a special guest page to be populated with a
-> table of guest CPUID values so that they can be validated through
-> firmware before being loaded into encrypted guest memory where they can
-> be used in place of hypervisor-provided values[1].
-> 
-> As part of SEV-SNP guest initialization, use this interface to validate
-> the CPUID entries reported by KVM_GET_CPUID2 prior to initial guest
-> start and populate the CPUID page reserved by OVMF with the resulting
-> encrypted data.
 
-How is KVM CPUIDs (leaf 0x40000001) validated?
+> From: "Michael S. Tsirkin"<mst@redhat.com>
+> Date:=C2=A0 Mon, Jul 1, 2024, 23:17
+> Subject:=C2=A0 Re: [PATCH] vhost-user: Skip unnecessary duplicated VHOST_=
+USER_SET_LOG_BASE requests
+> To: "Alex Benn=C3=A9e"<alex.bennee@linaro.org>
+> Cc: "BillXiang"<xiangwencheng@dayudpu.com>, <qemu-devel@nongnu.org>
+> On Mon, Jul 01, 2024 at 04:14:35PM +0100, Alex Benn=C3=A9e wrote:
+> > "BillXiang" <xiangwencheng@dayudpu.com> writes:
+> >=C2=A0
+> > >> From: "Alex Benn=C3=A9e"<alex.bennee@linaro.org>
+> > >> Date:=C2=A0 Mon, Jul 1, 2024, 16:49
+> > >> Subject:=C2=A0 Re: [PATCH] vhost-user: Skip unnecessary duplicated V=
+HOST_USER_SET_LOG_BASE requests
+> > >> To: "=E9=A1=B9=E6=96=87=E6=88=90"<xiangwencheng@dayudpu.com>
+> > >> Cc: <qemu-devel@nongnu.org>, <mst@redhat.com>
+> > >> =E9=A1=B9=E6=96=87=E6=88=90 <xiangwencheng@dayudpu.com> writes:
+> > >>=C2=A0
+> > >> > From: BillXiang <xiangwencheng@dayudpu.com>
+> > >> >
+> > >> > The VHOST_USER_SET_LOG_BASE requests should be categorized into
+> > >> > non-vring specific messages, and should be sent only once.
+> > >> > If send more than once, dpdk will munmap old log_addr which may ha=
+s
+> > >> > been used and cause segmentation fault.
+> > >>=C2=A0
+> > >> This looks fine to me but looking at the vhost-user.rst we don't see=
+m to
+> > >> make any explicit statements about how many times given messages sho=
+uld
+> > >> be sent.
+> > >>=C2=A0
+> > > There is indeed no explicit statements about how many times given mes=
+sages
+> > > =C2=A0should be sent in vhost-user.rst but already have some discussi=
+ons such as=C2=A0
+> > > https://lore.kernel.org/qemu-devel/20230127083027-mutt-send-email-mst=
+@kernel.org/.
+> >=C2=A0
+> > Right, but I think we should then update the specification if this is
+> > the way we want things to work. Otherwise we are putting a backend
+> > specific hack that another backend might be able to tolerate.
 
-I suppose not all KVM_FEATURE_XXX are supported for SNP guest. And SNP 
-firmware doesn't validate such CPUID range. So how does them get validated?
+I agree with you that we should then update the specification and maybe for=
+ vhost_user_per_device_request.
 
-> [1] SEV SNP Firmware ABI Specification, Rev. 0.8, 8.13.2.6
-> 
+>=C2=A0
+> I think it's a dpdk bug, we *allow* resending same message many times.
+> However, less messages is better, I don't see a reason to
+> repeat the same message many times.
+>=C2=A0
 
+Of course these repeated VHOST_USER_SET_LOG_BASE can be handled by dpdk=C2=
+=A0
+and it's what I did now. When live migration started, I have some extra-cod=
+e to wait=C2=A0
+for the final log_base but I think it's ugly.=C2=A0
+AFAIK it's better to resolve this by vhost_user_per_device_request and it's=
+ what "per_device"
+really mean.
+
+> > >> >
+> > >> > Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
+> > >> > ---
+> > >> >=C2=A0 hw/virtio/vhost-user.c | 1 +
+> > >> >=C2=A0 1 file changed, 1 insertion(+)
+> > >> >
+> > >> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > >> > index cdf9af4a4b..41e34edd49 100644
+> > >> > --- a/hw/virtio/vhost-user.c
+> > >> > +++ b/hw/virtio/vhost-user.c
+> > >> > @@ -371,6 +371,7 @@ static bool vhost_user_per_device_request(Vhos=
+tUserRequest request)
+> > >> > =C2=A0 =C2=A0=C2=A0 case VHOST_USER_RESET_DEVICE:
+> > >> > =C2=A0 =C2=A0=C2=A0 case VHOST_USER_ADD_MEM_REG:
+> > >> > =C2=A0 =C2=A0=C2=A0 case VHOST_USER_REM_MEM_REG:
+> > >> > + =C2=A0=C2=A0 case VHOST_USER_SET_LOG_BASE:
+> > >> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return true;
+> > >> > =C2=A0 =C2=A0=C2=A0 default:
+> > >> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return false;
+> > >>=C2=A0
+> > >> --=C2=A0
+> > >> Alex Benn=C3=A9e
+> > >> Virtualisation Tech Lead @ Linaro
+> >=C2=A0
+> > --=C2=A0
+> > Alex Benn=C3=A9e
+> > Virtualisation Tech Lead @ Linaro
 
