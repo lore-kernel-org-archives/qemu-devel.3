@@ -4,84 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A394FC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 19:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F20C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 19:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjeN-0007R1-7x; Tue, 02 Jul 2024 15:58:51 -0400
+	id 1sOjer-0007W9-9T; Tue, 02 Jul 2024 15:59:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjeL-0007Qf-JM
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:58:49 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjeJ-0008JD-Oa
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:58:49 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42567ddf099so32446735e9.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 12:58:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719950326; x=1720555126; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HdfM3AJgLCAm/n1O+Ehmm95l9bagbbT1YMOamZ+0NSQ=;
- b=I2f+HFeXWey+mxLXIUy9I8v5twKRA3hzEzBw3rquOLYWiODdID7x1ZIk9Jvn4qkjBl
- OR5cAGbNWzfOHRcWy+c7BShtQpzQPYMNIPmoAmzMu1xATkipmt24TyxYScQluyWHAIzv
- YxVklYch/4ZBzhInVikLi9OwOC246JZ8dfyRrHlG94nMk/12Ja8qyYPVgfrTlLfHCgTM
- 49ZLCrGmD9T7wtpKcdISC0MJBSc4NSEE9bIGu+pBa0ZpeeA0tvU6B3B+os3cJbcy+0aU
- 25jOL3QT3jSewvCzxtCmVlN9t1jy1rULPKguioy4T9ANj9S5iK5cUICKNkut29sERkvN
- TX9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719950326; x=1720555126;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HdfM3AJgLCAm/n1O+Ehmm95l9bagbbT1YMOamZ+0NSQ=;
- b=qN/l6Fx6NIJ31K6YROSTQoh6xSJdj7BPpNrtwRxi0GBdCgzLF/UNAFOUHxdcfIrFD3
- mjNmbDp+T3r+KQXNbn7TZEe5d+bqJtotnEGCTMjjQziAizZE3QVrT9i6W9icB6y/vLA9
- 4zeWnIjZaR2+uSGjH5L5m1UPSbjNHsDoLoNFNcu5OgkPHh6n0i7/yYOQNzlaLsu+3eWx
- 5DGe7p5omZWTXm9QhNsVpkJPkQbs3qlWEz82fHCUF0Jc52BWAe8k6YRTwmlHltQNZS0J
- tPwThearl6zqMgVY9acokQgMqRFOMQQ35Yaeptrvuvr828uwcx0PNYtRvrf4iKMfc7cn
- 3QFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXjp/HARzYBzYr95Bjmjcjcy4tXMq7zpNeHlNjGbOiJhHy4blq3V+nAwe7C8AL8wVVEZQSMG/a95NUuNEuV1lm40JqlzMk=
-X-Gm-Message-State: AOJu0YxFRk6IKuYarsS/YpnUs/HyWBEYWB+sUGd/JGfnR29HvpIIWiDh
- z4A8etQy3xVWZFHaHDXA24I5MG7pFVCo5aapIIoEyRsNkhunOew/Lo6K2+LaCRM=
-X-Google-Smtp-Source: AGHT+IGJpUTBcc0MKIXyR6J0VE89pXsDulSDB8+dvxKkDMOmJT5GeasJ3y3A2neSn/8ePUlLqTXtNQ==
-X-Received: by 2002:adf:f5c4:0:b0:365:ebb6:35e4 with SMTP id
- ffacd0b85a97d-367756a836amr7137150f8f.23.1719950326127; 
- Tue, 02 Jul 2024 12:58:46 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.220.97])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-425787f37casm76802355e9.1.2024.07.02.12.58.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jul 2024 12:58:45 -0700 (PDT)
-Message-ID: <b527cfe4-c982-46c5-bb9b-db368e6bb758@linaro.org>
-Date: Tue, 2 Jul 2024 21:58:44 +0200
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sOjeq-0007Ve-26
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:59:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sOjem-0008N0-07
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:59:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719950351;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=6Hep9nFblgyR1Zs27iKwK8gqXTSkEmzF+TeJwQNkWF0=;
+ b=DAYHVVn5xaNRtkVfDcy8PDrTv3MpF781rXE6+syQ/fNdRzo3EHyVvob6lKHliN1YFII9c0
+ 0LkHiaUvPh6JkRZeNVFWY1WYJQ9aCLduWJO5a3jGPq+ndGXVn/Eec91eoWd8corbi1hVte
+ BzC7lsvTz7QF4mYqs0xjYZoAYhmYZWw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-455-sdPxN1vtNpeen6YxAH6zyA-1; Tue,
+ 02 Jul 2024 15:59:08 -0400
+X-MC-Unique: sdPxN1vtNpeen6YxAH6zyA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 182C519560A6; Tue,  2 Jul 2024 19:59:07 +0000 (UTC)
+Received: from scv.redhat.com (unknown [10.22.32.28])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AA2C53000221; Tue,  2 Jul 2024 19:59:04 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ John Snow <jsnow@redhat.com>
+Subject: [PATCH 0/2] docs/python: bump minimum Sphinx version
+Date: Tue,  2 Jul 2024 15:59:01 -0400
+Message-ID: <20240702195903.204007-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] util/cpuinfo-riscv: Support OpenBSD signal frame
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: brad@comstyle.com, Alistair.Francis@wdc.com, palmer@dabbelt.com,
- qemu-riscv@nongnu.org
-References: <20240627180350.128575-1-richard.henderson@linaro.org>
- <20240627180350.128575-3-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240627180350.128575-3-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,36 +79,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/6/24 20:03, Richard Henderson wrote:
-> Reported-by: Brad Smith <brad@comstyle.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   util/cpuinfo-riscv.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
-> index 6b97100620..abf799794f 100644
-> --- a/util/cpuinfo-riscv.c
-> +++ b/util/cpuinfo-riscv.c
-> @@ -13,7 +13,14 @@ static void sigill_handler(int signo, siginfo_t *si, void *data)
->   {
->       /* Skip the faulty instruction */
->       ucontext_t *uc = (ucontext_t *)data;
-> +
-> +#ifdef __linux__
->       uc->uc_mcontext.__gregs[REG_PC] += 4;
-> +#elif defined(__OpenBSD__)
-> +    uc->sc_sepc += 4;
-
-To the best of my non-existent OpenBSD knowledge reviewing corresponding
-https://github.com/openbsd/src/blob/master/sys/arch/riscv64/riscv64/sig_machdep.c,
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +#else
-> +# error Unsupported OS
-> +#endif
->   
->       got_sigill = 1;
->   }
+With recent deprecations, we can advance our minimum sphinx version=0D
+safely. This is heavily motivated by new qapidoc work which is much=0D
+easier to maintain cross-version compatibility for - see difficulties in=0D
+our dbus documentation which only works on sphinx >=3D 4.=0D
+=0D
+We can only guarantee >=3D 3.4.3 now, but that's still vastly easier than=0D
+maintaining compatibility all the way back to 1.x.=0D
+=0D
+GitLab: https://gitlab.com/jsnow/qemu/-/pipelines/1357902509=0D
+=0D
+(failures appear to be unrelated to the series.)=0D
+=0D
+John Snow (2):=0D
+  Python: bump minimum sphinx version to 3.4.3=0D
+  docs: remove Sphinx 1.x compatibility code=0D
+=0D
+ docs/conf.py             |  7 +++----=0D
+ docs/sphinx/hxtool.py    | 21 ++++-----------------=0D
+ docs/sphinx/kerneldoc.py | 38 ++++++++++++--------------------------=0D
+ docs/sphinx/kernellog.py | 28 ----------------------------=0D
+ docs/sphinx/qapidoc.py   | 29 +++--------------------------=0D
+ pythondeps.toml          |  2 +-=0D
+ 6 files changed, 23 insertions(+), 102 deletions(-)=0D
+ delete mode 100644 docs/sphinx/kernellog.py=0D
+=0D
+-- =0D
+2.45.0=0D
+=0D
 
 
