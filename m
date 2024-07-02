@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA64C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 11:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D364BC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 12:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOc9i-00006U-Oq; Tue, 02 Jul 2024 07:58:42 -0400
+	id 1sOcBd-0001Yx-Rs; Tue, 02 Jul 2024 08:00:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sOc9g-0008Qc-Ks
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:58:40 -0400
-Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
+ id 1sOcBR-0001V0-6U
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 08:00:30 -0400
+Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sOc9d-0004rH-TN
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:58:40 -0400
-Received: by mail-ua1-x932.google.com with SMTP id
- a1e0cc1a2514c-8100bee5735so180122241.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 04:58:36 -0700 (PDT)
+ id 1sOcBM-0006e8-Jo
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 08:00:26 -0400
+Received: by mail-vk1-xa32.google.com with SMTP id
+ 71dfb90a1353d-4ef5a2f4e6cso1443190e0c.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 05:00:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719921516; x=1720526316;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719921623; x=1720526423;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=OdBeSRi4c4pSdkMqTRd9+J44UgUeAg/wq006TwLBMM8=;
- b=0nqm+Sqblar2wxgG43OGRsJDtngfWwONoJZ482qTYJLdiOQisckf2tmopHJUTBPCTR
- knChVcD6Z/ME9fPWEq3TUxZez+GS320pgm6gJS62D4dfGa6+98773aD5lJ594RLJQWY0
- oGLqWZCdqnQWK9JcNhZ2S+7tlGHtVjT31ZaqJJzJFdsSS75vnuNBx0NolKcRTth+jixx
- Ihz2BFJjQdLEqvMXaLYdUUrbDFZAEYv5EJTtyiHRezboLJBVoXcyBDgERK6VmWofU1l/
- SgYcR5gjo4MW+CKtgsgUMvXs4NBFC9HR7jX8K2+X/5jXV1n9EB6kVQQJtUyIeAWcOpcj
- XC/A==
+ bh=dhauxnpLX5uvw2o7CLD8HXQv0pBl5P0T6Z0UC43nbpE=;
+ b=MERy1c6n6pgQs9EMJSoN2OTgmSQkT8BXVBH1aCukPdw4J+8WkZROLWyaHYePjaTvO2
+ N/fWJZ515bHwpCn/tDr3gy/yUo3yyLNYFagDACVcNNhEpOrubNedsts11lgCdXQjfYoq
+ 0EQkNyL/T/N3LAJ5HoqgmqnxiF9KHN74skkFg7qmFYnxH1C5MRyJJZYMnjkxepW0pv1G
+ uzZukzzbNS2vUQgSp5gGuvC70x5KDVHuwdVbwB+VKfSTRpAY0bBTiFv4AMRgPBsCw892
+ ahY/MxVlL2IQlp4b83utVljnK+w43o2Y3B6qHmmgaDO8J1504v3D7flpEMcKo+Pq+OzY
+ MsjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719921516; x=1720526316;
+ d=1e100.net; s=20230601; t=1719921623; x=1720526423;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=OdBeSRi4c4pSdkMqTRd9+J44UgUeAg/wq006TwLBMM8=;
- b=mlC5kLmzFDhji/VPy2ttSuvfM67edT1s4RYfHB7dIJx72D6XOTG3IfJOs3CHzjLY1i
- zulGrAmOZyZxTSHXHAG15oNkaIdzVvvokrAfKjXMIr/pW62VT4YlvYHz9/E3xK+UF/Tx
- HEcw3+2EppDNwFI2cJgjSOZOAd5GNEqiyj9ZroTljESYeDKhkQQAxfmCCwinS5FRUAdf
- KfqNUeKr4wlGBAlbm4ajgUpTbOJ2RFNBPLQxyIF+7t9m9Ekh56bnuWmjTQHUStpmTFxX
- rafbGZ0UTGvBVDEPBL9Bg4g/hCfE2x3o3cHeVWyY427Uz0eXOKSstwRvYmXTCcHk2FeM
- WqIw==
+ bh=dhauxnpLX5uvw2o7CLD8HXQv0pBl5P0T6Z0UC43nbpE=;
+ b=leLxeh+EM+KzU7q5A36WjnyFV+DAfnYa+20+BB0q1VZtEgSkWm9FbFo3vS6jHgW0UR
+ mFbAOUc+CG4k7SJBSZKqJ3kcXCWN416LeuwvoUbIUaTlwaLdLwzAK1cbkv3e/HdkgivK
+ xAq5zjuU2VzcI0Y5l4+I7enfJZQ2gbXejI4CoW9JCEOf8eWHLGIonklZOgjPay/Hgu3Q
+ glRx/XzEx6yvLEtcAliToYHyEcwxYpu5pEDV6Z9Ee8lg18bv7NuXqIBYDi+YlRL/MExG
+ gJiIOaHE25JWPvCL+t2vU5KYpEVmV8cC9V/zRSdn+RjWBki/Ewj9V9HfSB0lG/A/w1PF
+ o32Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUoRx0GiipdeiYATl8O1DY1qOvlGlDmAagIC2juYSYS1kZ1xyxxY9Bioj3ORJWNkDvRZePfJzCl4QAc2//L/KO8nE+/0ec=
-X-Gm-Message-State: AOJu0YyrO2dyOoYZJZ0wEjVv030DpVaiRm6JmxHBD9eYIICLMni9Yu9m
- EZWOarkDmYTQHoDWpkCQjkhKNr3XxEH661D2uIxm6IJI/KzY5oGw/5HD+oPRGc5+gwM6ZZkALLi
- 5HPXB6vuCBgpm9esyksMSZ4TNUsySXc5XVVfW
-X-Google-Smtp-Source: AGHT+IHb1S4UbPAypBoJF2EX2oynAG5/QHuYCc1rc4vrIlALlCeKOmo6AhFcYlE8Md0QsMdI0B1nHmMjtvolV3iFJP0=
-X-Received: by 2002:a67:f1d6:0:b0:48f:5ad3:32df with SMTP id
- ada2fe7eead31-48faf0618f4mr6006442137.3.1719921516063; Tue, 02 Jul 2024
- 04:58:36 -0700 (PDT)
+ AJvYcCXDsm7pXYW1t2eKT/SlYJDXm9aSjfHRcWZeWP0rkS4TNPZhDOSPaCiYphyBQVUYMfWOeAj43XV8WWd37ho5GR7t1oVOiBo=
+X-Gm-Message-State: AOJu0Yz4PS0jNiO9fT/qVTBxnHXoPy3QZg2llXY1VKos8oMKIc8kV6Ys
+ 4JJJX2Z2t3zg4ugZILM8eSFc/qi3BKlv3VnVeb2lwCAHr7VfL8LlWNtnzGM775g1itrjQiQSoCO
+ VjYuUk8Ulacz2gR2JybzaNaHWpcshhVNN8kIH
+X-Google-Smtp-Source: AGHT+IFn+5U6Wwc3vE7ie90vXODv314MNu0nmYZDvBdZTkduQ/LEPDZBEbfwBeEkh+hLG9SsMCnU9iwn/GZlZzs9UG4=
+X-Received: by 2002:a05:6122:3224:b0:4ef:27dc:7a9 with SMTP id
+ 71dfb90a1353d-4f2a5318a94mr9981006e0c.0.1719921623209; Tue, 02 Jul 2024
+ 05:00:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240627-cursor-v2-0-c3cd3ee35616@daynix.com>
- <20240627-cursor-v2-1-c3cd3ee35616@daynix.com>
-In-Reply-To: <20240627-cursor-v2-1-c3cd3ee35616@daynix.com>
+ <20240627-cursor-v2-2-c3cd3ee35616@daynix.com>
+ <CAJ+F1CK7vghZRL3Uqw6eS_zvdAqQwzqS_MfDqzK2CwzsRMucOg@mail.gmail.com>
+In-Reply-To: <CAJ+F1CK7vghZRL3Uqw6eS_zvdAqQwzqS_MfDqzK2CwzsRMucOg@mail.gmail.com>
 From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Tue, 2 Jul 2024 13:58:25 +0200
-Message-ID: <CAAibmn1YzRJGHwKNu_QGFqqrNVWz1gJrALbz6C0uS3aqBAYtHw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] ui/cocoa: Release CGColorSpace
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+Date: Tue, 2 Jul 2024 14:00:12 +0200
+Message-ID: <CAAibmn1fGgFJTsFNzQ-WspNWmPBq=cHxgu+DTeKJ2UgmDQiX1A@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] ui/console: Convert mouse visibility parameter
+ into bool
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
  Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000001cf53061c426f55"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::932;
- envelope-from=phil@philjordan.eu; helo=mail-ua1-x932.google.com
+Content-Type: multipart/alternative; boundary="00000000000064b82f061c42753f"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::a32;
+ envelope-from=phil@philjordan.eu; helo=mail-vk1-xa32.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -96,44 +98,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000001cf53061c426f55
+--00000000000064b82f061c42753f
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Good catch! I hadn't spotted the existing, shipping instance of this issue.
-
-On Thu, 27 Jun 2024 at 13:17, Akihiko Odaki <akihiko.odaki@daynix.com>
+On Sat, 29 Jun 2024 at 14:18, Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmai=
+l.com>
 wrote:
 
-> CGImageCreate | Apple Developer Documentation
 >
-> https://developer.apple.com/documentation/coregraphics/1455149-cgimagecreate
-> > The color space is retained; on return, you may safely release it.
+> On Thu, Jun 27, 2024 at 3:19=E2=80=AFPM Akihiko Odaki <akihiko.odaki@dayn=
+ix.com>
+> wrote:
 >
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+>
 
 Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
 
---00000000000001cf53061c426f55
+--00000000000064b82f061c42753f
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr">Good catch! I hadn&#39;t spotted the exis=
-ting, shipping instance of this issue.<br></div><br><div class=3D"gmail_quo=
-te"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, 27 Jun 2024 at 13:17, Aki=
-hiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com">akihiko.odaki@da=
-ynix.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">CGImageCreate | Apple Developer Documentation<br>
-<a href=3D"https://developer.apple.com/documentation/coregraphics/1455149-c=
-gimagecreate" rel=3D"noreferrer" target=3D"_blank">https://developer.apple.=
-com/documentation/coregraphics/1455149-cgimagecreate</a><br>
-&gt; The color space is retained; on return, you may safely release it.<br>
-<br>
-Signed-off-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com=
-" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;</blockquote><div>=C2=
-=A0</div><div>Reviewed-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@ph=
-iljordan.eu">phil@philjordan.eu</a>&gt;</div><div><br></div></div></div>
+<div dir=3D"ltr"><div dir=3D"ltr"></div><br><div class=3D"gmail_quote"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Sat, 29 Jun 2024 at 14:18, Marc-Andr=
+=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@gmail.com">marcandre.l=
+ureau@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
+ding-left:1ex"><div dir=3D"ltr"><br><div class=3D"gmail_quote"><div dir=3D"=
+ltr" class=3D"gmail_attr">On Thu, Jun 27, 2024 at 3:19=E2=80=AFPM Akihiko O=
+daki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com" target=3D"_blank">akih=
+iko.odaki@daynix.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex">Signed-off-by: Akihiko Odaki &lt;<a href=3D"mailto:akih=
+iko.odaki@daynix.com" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;<br=
+></blockquote><div><br></div><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<=
+a href=3D"mailto:marcandre.lureau@redhat.com" target=3D"_blank">marcandre.l=
+ureau@redhat.com</a>&gt;</div><div>=C2=A0</div></div></div></blockquote><di=
+v><br></div><div>Reviewed-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil=
+@philjordan.eu">phil@philjordan.eu</a>&gt; <br></div></div></div>
 
---00000000000001cf53061c426f55--
+--00000000000064b82f061c42753f--
 
