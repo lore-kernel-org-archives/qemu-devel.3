@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A76FCC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 23:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8C4C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 23:43:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOmgo-0004Fg-Mf; Tue, 02 Jul 2024 19:13:34 -0400
+	id 1sOn8g-0007q0-0N; Tue, 02 Jul 2024 19:42:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sOmgn-0004Ee-9H; Tue, 02 Jul 2024 19:13:33 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sOn8V-0007mc-Rp
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 19:42:13 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sOmgj-0004Yr-LX; Tue, 02 Jul 2024 19:13:32 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4256788e13bso34330535e9.2; 
- Tue, 02 Jul 2024 16:13:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sOn8L-0006N1-8d
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 19:42:11 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1f6a837e9a3so20790785ad.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 16:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719962008; x=1720566808; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xHkUt+eV1l1vcITX4D9Ydky+EZIHXltfyBlVfjJmleE=;
- b=ZurYSll86zmnwmSfBA3dn0Vgxgg/3mrx3b43iJ6JCwuAiDIyf1JnPi9d+NaRFRVkBS
- aZOHaDSc+0F8TG1ydL1X8PVn5TK2CM5XZ18Yaf3Tf8IxFnC3GnvNkwjVb1PZjmd0nndG
- aCb50M1nj8ulCuZUKtFt6qhIHnWspeYejqPx+ucUy5d0Okq1hKyHK6TsQHtTFK53DVG7
- TtnKBt7WZjpw8JN/38Hk3mOmXt7lvrA9gFu5nl31jLzs1O6Kxb4NXr5c2T6I3R+JHwcd
- /BvlxdQ3qiFXhkyvNe4IIEQufL5NJ5mAMR8bkAf2KvX+Ij9PCnggUMO4mtfhLXYNJPri
- yqag==
+ d=linaro.org; s=google; t=1719963719; x=1720568519; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GwtkDEQSe1rF7ol2hwOawpAhY63WerL1vNoE65OHhNw=;
+ b=ysXTxB4bkgw0sR27syT0Hz/gco+NJBS3zOKv0hTKunkISc6Qqa7PLnrq8eG8TDJfY+
+ dYekmK0/u7GTpif7C1tIVRIC931mZ/8i/idZDPYDDZ06ox46+FE81hyjzsII79yeyXLw
+ Z25lKm6Py1BHWyVRYwzYldXODh+rstujVWyYIBMggwgnKeLdzJK+EKfWCMNZYa4O39fT
+ MNVfUgwCWdariqVwmhYugDZgfNPKi2g87joqnOi7L16OY5MNChx1ly+V+8trvoyeoieR
+ 4Se3lmdNpm51wNpP9SbyQSZvtiOr+ZLbuQ+5tf1G1zu2PKgNFPg+7WFbgiufAK+uTZlG
+ miLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719962008; x=1720566808;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xHkUt+eV1l1vcITX4D9Ydky+EZIHXltfyBlVfjJmleE=;
- b=GmTThs6jAJvhoJ8hDNETs8L0tkvYFQONnsYc6JISghmf6OZkm312p8PidKsU345H9K
- 39LF5GfKvTiq0vyBPyWDe3XUCpM44Om0ldgFvaqi7JPjUKeskJusDgsfN6Y1bqr6B4Dd
- v7aTam4K/E4OrEK05rcK8RmypXKWejHuRGv5pwxjHMsfCLZs/s/GbFnCnZUMWnCpJd9s
- LY/AAJ5yHaGOQDw5ibGLpz1ZDtgzSXf3tzaAZkJrgkLCVi+rBF6pvETXWxQWshUeD108
- 7eyv6GRde9Yuw58+8bLq9EnIH9NYh2WbdeopGcTRtc8S5rLXh72P7xuGaQagN7biP/gl
- 5WkA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjSEYJmtGHXGjS+AXepGwtpMiy0H2FYpH/RPNYoiZlihOgFVyTxfbIcJbX+ik9cH36kpSQdjOsn+buhxdA8wQk98ALCoEdEHQqNUT5GERD9pC15llJkQ+ZXq1wTg==
-X-Gm-Message-State: AOJu0YygYMp8brp5JptO2WuOjLxGzfL7Fi7RMdzC96v5AX+EavVflSgg
- Ae98888nPvNch/g8UudWE3Xg4WvJqKvnv0Fl+wQ6gqWAOwOMBMA=
-X-Google-Smtp-Source: AGHT+IGtFVRHmAqvedEr19BSPe093sL6u3BELbRkEnCM0ScA4c1ZDPrgFkJIiz8RwNtW0IGfGfUjKg==
-X-Received: by 2002:a05:600c:2157:b0:425:3084:c99 with SMTP id
- 5b1f17b1804b1-4257a0642ecmr72431645e9.31.1719962007498; 
- Tue, 02 Jul 2024 16:13:27 -0700 (PDT)
-Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ d=1e100.net; s=20230601; t=1719963719; x=1720568519;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GwtkDEQSe1rF7ol2hwOawpAhY63WerL1vNoE65OHhNw=;
+ b=KbZrGMjGGxStiRsssNJ3N0jldFDrpiZpEH8X6n21E0AhvYwGbbgbeaJysLoPEkvtFG
+ tKaR1RhTzHylBTyxGWtxeGV5jirN0wz7hib10x6rtIXL2LFGcCOBhU8axoWun9OeH/m7
+ 6MIJf1yqVOr5CWeIAGhOYuouM5BXWaNDxBGC/OUODiti/TGCIkQWP9iShd6N1VIakfJ8
+ UjZVhZhjl4A7NXLgX0W6MB2dnq7AQ7JnKgLZsaZZJA/YPPyAa0VImiblrBv1wEYXwzsA
+ Z2JLKNZCwDtLp0rEJ79amXIKol6YRqjQL2lCwb0zpfDhfyj812pP2J8DecOgL1cfk9DX
+ iq1Q==
+X-Gm-Message-State: AOJu0YwoOQ8j0FPTVAVGvlVA5nuS2+p2D2hzNIvGc0MOt3aFVekP8ppE
+ l326OXc7AmP+TmYviqT13DXfYuC5h0JLzoKFVwnHK9V7v4ZCUbYrZBOlzNFTquGfrDVxlpv0gvq
+ 4
+X-Google-Smtp-Source: AGHT+IHOYRSUiaHVo/dZPtbFSp3GKRAwXQYonDt1x2/3DGColNSHvgpGjcmugaZfvgZw3ES0YOvZmg==
+X-Received: by 2002:a17:902:e54f:b0:1f7:1655:825c with SMTP id
+ d9443c01a7336-1fadbca1794mr82220985ad.36.1719963718703; 
+ Tue, 02 Jul 2024 16:41:58 -0700 (PDT)
+Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0c0f99sm219690105e9.41.2024.07.02.16.13.26
+ d9443c01a7336-1fac15993c5sm90403755ad.244.2024.07.02.16.41.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 16:13:27 -0700 (PDT)
-From: Zheyu Ma <zheyuma97@gmail.com>
-To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- Jesper Devantier <foss@defmacro.it>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH] hw/nvme: Fix memory leak in nvme_dsm
-Date: Wed,  3 Jul 2024 01:13:03 +0200
-Message-Id: <20240702231303.3077584-1-zheyuma97@gmail.com>
+ Tue, 02 Jul 2024 16:41:58 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, iii@linux.ibm.com,
+ david@redhat.com, balaton@eik.bme.hu
+Subject: [PATCH 1/2] accel/tcg: Introduce memset_ra, memmove_ra
+Date: Tue,  2 Jul 2024 16:41:54 -0700
+Message-Id: <20240702234155.2106399-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240702234155.2106399-1-richard.henderson@linaro.org>
+References: <20240702234155.2106399-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=zheyuma97@gmail.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,40 +94,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The allocated memory to hold LBA ranges leaks in the nvme_dsm function. This
-happens because the allocated memory for iocb->range is not freed in all
-error handling paths.
+Add wrappers that set and clear helper_retaddr around the
+host memory operation.  This cannot fail for system mode,
+but might raise SIGSEGV for user mode.
 
-Fix this by adding a free to ensure that the allocated memory is properly freed.
-
-ASAN log:
-==3075137==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 480 byte(s) in 6 object(s) allocated from:
-    #0 0x55f1f8a0eddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
-    #1 0x7f531e0f6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
-    #2 0x55f1faf1f091 in blk_aio_get block/block-backend.c:2583:12
-    #3 0x55f1f945c74b in nvme_dsm hw/nvme/ctrl.c:2609:30
-    #4 0x55f1f945831b in nvme_io_cmd hw/nvme/ctrl.c:4470:16
-    #5 0x55f1f94561b7 in nvme_process_sq hw/nvme/ctrl.c:7039:29
-
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/nvme/ctrl.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/exec/cpu_ldst.h | 40 ++++++++++++++++++++++++++++++++++++++++
+ accel/tcg/user-exec.c   | 22 ++++++++++++++++++++++
+ 2 files changed, 62 insertions(+)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 127c3d2383..cf610eab21 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -2592,6 +2592,7 @@ next:
- done:
-     iocb->aiocb = NULL;
-     iocb->common.cb(iocb->common.opaque, iocb->ret);
-+    g_free(iocb->range);
-     qemu_aio_unref(iocb);
- }
+diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+index 71009f84f5..baf4f9367d 100644
+--- a/include/exec/cpu_ldst.h
++++ b/include/exec/cpu_ldst.h
+@@ -379,4 +379,44 @@ void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
+                         MMUAccessType access_type, int mmu_idx);
+ #endif
  
++/**
++ * memset_ra:
++ * @p: host pointer
++ * @c: data
++ * @n: length
++ * @ra: unwind return address
++ *
++ * Like system memset(p,c,n), except manages @ra for the calling
++ * helper in the event of a signal.  To be used with the result
++ * of tlb_vaddr_to_host to resolve the host pointer.
++ */
++#ifdef CONFIG_USER_ONLY
++void *memset_ra(void *p, int c, size_t n, uintptr_t ra);
++#else
++static inline void *memset_ra(void *p, int c, size_t n, uintptr_t ra)
++{
++    return memset(p, c, n);
++}
++#endif
++
++/**
++ * memmove_ra:
++ * @d: host destination pointer
++ * @s: host source pointer
++ * @n: length
++ * @ra: unwind return address
++ *
++ * Like system memmove(d,s,n), except manages @ra for the calling
++ * helper in the event of a signal.  To be used with the result of
++ * tlb_vaddr_to_host to resolve the host pointer.
++ */
++#ifdef CONFIG_USER_ONLY
++void *memmove_ra(void *d, const void *s, size_t n, uintptr_t ra);
++#else
++static inline void *memmove_ra(void *d, const void *s, size_t n, uintptr_t ra)
++{
++    return memmove(d, s, n);
++}
++#endif
++
+ #endif /* CPU_LDST_H */
+diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
+index 80d24540ed..a73da42e3a 100644
+--- a/accel/tcg/user-exec.c
++++ b/accel/tcg/user-exec.c
+@@ -1289,3 +1289,25 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
+ #define DATA_SIZE 16
+ #include "atomic_template.h"
+ #endif
++
++void *memset_ra(void *p, int c, size_t n, uintptr_t ra)
++{
++    void *r;
++
++    set_helper_retaddr(ra);
++    r = memset(p, c, n);
++    clear_helper_retaddr();
++
++    return r;
++}
++
++void *memmove_ra(void *d, const void *s, size_t n, uintptr_t ra)
++{
++    void *r;
++
++    set_helper_retaddr(ra);
++    r = memmove(d, s, n);
++    clear_helper_retaddr();
++
++    return r;
++}
 -- 
 2.34.1
 
