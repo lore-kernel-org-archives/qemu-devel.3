@@ -4,50 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1569C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 09:13:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D274EC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 09:22:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOZYs-0007GL-N3; Tue, 02 Jul 2024 05:12:30 -0400
+	id 1sOZhe-00015k-Uz; Tue, 02 Jul 2024 05:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1sOZYr-0007Fy-9V
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:12:29 -0400
-Received: from forward100b.mail.yandex.net ([178.154.239.147])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1sOZYk-0004Me-3Q
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:12:29 -0400
-Received: from mail-nwsmtp-smtp-production-main-92.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-production-main-92.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c12:2ea0:0:640:8aad:0])
- by forward100b.mail.yandex.net (Yandex) with ESMTPS id B44736095E;
- Tue,  2 Jul 2024 12:12:12 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-92.myt.yp-c.yandex.net
- (smtp/Yandex) with ESMTPSA id BCSxku0OgSw0-t4I099Fd; 
- Tue, 02 Jul 2024 12:12:11 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
- t=1719911532; bh=Ul+OcXjzEDBuihZosoHD0rgKHe4uAh8KO4TUhtoQ5/E=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=QrU5++QOSee9XOeWWMymEQ888qFkp3WijzvwqCSqTHPQIMxqMgjuT0xhY5yK3tYEY
- s6vQraspDMgTWpZrfKODLUH2iFWTZj4G2F83wCLGX3Ybbxn90HHhXxYmKicUxIc1ug
- zdBv1YdaqZ6f1CBb1SW8odhGijAtgumyVhFIns8Q=
-Authentication-Results: mail-nwsmtp-smtp-production-main-92.myt.yp-c.yandex.net;
- dkim=pass header.i=@maquefel.me
-From: Nikita Shubin <nikita.shubin@maquefel.me>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, linux@yadro.com, Nikita Shubin <n.shubin@yadro.com>
-Subject: [PATCH] hw/dma: Add Intel I/OAT DMA controller emulation
-Date: Tue,  2 Jul 2024 12:12:10 +0300
-Message-ID: <20240702091210.22657-1-nikita.shubin@maquefel.me>
-X-Mailer: git-send-email 2.43.2
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZhR-00014Q-GR
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:21:21 -0400
+Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZhP-0006PP-PQ
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:21:21 -0400
+Received: by mail-lf1-x12a.google.com with SMTP id
+ 2adb3069b0e04-52e8cdc6a89so1784596e87.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 02:21:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719912077; x=1720516877; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iQfrPXIVuGN0oE79GXpdgy4bI5RsbRBBNBkn9X4U1bk=;
+ b=FNKx9hpylo872ESTWUhp+xvNhIA53R05exbCosIliovQ3FRqVF4MCkjOoxSV9zHjlH
+ 60gd2er+5KuilRgvYxAAtHB3JC2Wgp+RgkKWK2pYVtLI7pARleawAEoiaKgUPRI1y1v1
+ LAwv30CBFBdZi5K4DWUIzzGXPEWP7XO4SSvGsTA2BEoyhdBRxPQPp/DwjLWwHi6s12YO
+ rSxqSQB7IkQngiRzISFbcQB9U5btQhsUhl1qXd5wm4n8DY3/n1JRPx3f2nFYNvSJL86e
+ zmLqKL4Kf6x9fMvbR6t9MCVq04GxSCf8fDWSatFFPdvUy2du/lDPHCwShqU9TMA7BRbr
+ rFBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719912077; x=1720516877;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iQfrPXIVuGN0oE79GXpdgy4bI5RsbRBBNBkn9X4U1bk=;
+ b=T66nwAErTHEZ3gCEaJbLIIrqsJzJEyNtDd7ZgsPG7CmZjFhQoA+Cc6yomjJW3HN7cm
+ bbJ+m5yBzfOHhSwMSg7s51zcpcggE0pqJQnRRWGxI773NuOfsB3xyTxa16nyza0BOluD
+ IqhyTbYkjuKJnzDebz6JodWtDLgV7YqcvhK0cA52JywYTCZuK7N1u5MJt1J7W7e3lgqQ
+ Iax0JX7LIMHccEr6QsrJnyCFCKM2KSePzUCZCi4pAZ3EJqwyHlFLaGntKlg6Aru0dpaT
+ Vt2gRZytqT9UH1jm3hZESh/gp/d2iWBmwvPK0vX6ClUsDAb/4+NO5DPYeKos6iLWxVhH
+ DpgA==
+X-Gm-Message-State: AOJu0YyEMMoahrOIs0fK13FH02CfCqWEt91S2SNvPC+c2M4I9mVJMfq5
+ M/NloFrStegPOi9h3DCUl3Cx9+8WK7uWi0jqdT95zxlNcqM5CJ5oF72OoqDoYfBi5aJUgoF9RYt
+ y
+X-Google-Smtp-Source: AGHT+IGOxIw7ouZ79tIYf9ewE5M1amNlwXiC6EHNhyETStwMt9tPgTM3Q64Bm56JtxyOkAa4BBikrg==
+X-Received: by 2002:a05:6512:3d1d:b0:52e:767a:ada3 with SMTP id
+ 2adb3069b0e04-52e8270ea83mr6302268e87.47.1719912077534; 
+ Tue, 02 Jul 2024 02:21:17 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.209.58])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256b065316sm186926295e9.26.2024.07.02.02.21.16
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 02 Jul 2024 02:21:17 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Luc Michel <luc.michel@amd.com>
+Subject: [PULL 04/67] hw/sd/sdcard: Trace requested address computed by
+ sd_req_get_address()
+Date: Tue,  2 Jul 2024 11:19:47 +0200
+Message-ID: <20240702092051.45754-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240702092051.45754-1-philmd@linaro.org>
+References: <20240702092051.45754-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.147;
- envelope-from=nikita.shubin@maquefel.me; helo=forward100b.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,919 +96,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nikita Shubin <n.shubin@yadro.com>
-
-Add a memcpy only model of I/OAT DMA found on some Xeon based
-motherboards.
-
-Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Luc Michel <luc.michel@amd.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-Id: <20240628070216.92609-6-philmd@linaro.org>
 ---
-Changes from RFC:
-- replaced all read()/write() with pci_dma_read/write()
+ hw/sd/sd.c         | 9 +++++++--
+ hw/sd/trace-events | 1 +
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-Link: https://patchwork.kernel.org/project/qemu-devel/patch/20240524114547.28801-1-nikita.shubin@maquefel.me
----
- hw/dma/Kconfig      |   4 +
- hw/dma/ioatdma.c    | 845 ++++++++++++++++++++++++++++++++++++++++++++
- hw/dma/meson.build  |   1 +
- hw/dma/trace-events |  12 +
- 4 files changed, 862 insertions(+)
- create mode 100644 hw/dma/ioatdma.c
-
-diff --git a/hw/dma/Kconfig b/hw/dma/Kconfig
-index 98fbb1bb04..a5e266085d 100644
---- a/hw/dma/Kconfig
-+++ b/hw/dma/Kconfig
-@@ -30,3 +30,7 @@ config SIFIVE_PDMA
- config XLNX_CSU_DMA
-     bool
-     select REGISTER
-+
-+config INTEL_IOATDMA
-+    default y if PCI_DEVICES
-+    depends on PCI && MSI_NONBROKEN
-\ No newline at end of file
-diff --git a/hw/dma/ioatdma.c b/hw/dma/ioatdma.c
-new file mode 100644
-index 0000000000..a89cf39014
---- /dev/null
-+++ b/hw/dma/ioatdma.c
-@@ -0,0 +1,845 @@
-+/*
-+ * Intel(R) I/OAT DMA engine emulation
-+ *
-+ * Copyright (c) 2024 Nikita Shubin <nshubin@yadro.com>
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+#include "qemu/osdep.h"
-+
-+#include "chardev/char-fe.h"
-+#include "chardev/char-socket.h"
-+#include "hw/hw.h"
-+#include "hw/pci/msi.h"
-+#include "hw/pci/msix.h"
-+#include "hw/pci/pci.h"
-+#include "hw/qdev-properties-system.h"
-+#include "hw/qdev-properties.h"
-+#include "migration/blocker.h"
-+#include "migration/vmstate.h"
-+#include "qapi/error.h"
-+#include "qapi/visitor.h"
-+#include "qemu/cutils.h"
-+#include "qemu/error-report.h"
-+#include "qemu/event_notifier.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "qemu/sockets.h"
-+#include "qemu/units.h"
-+#include "qom/object_interfaces.h"
-+#include "sysemu/hostmem.h"
-+#include "sysemu/kvm.h"
-+#include "sysemu/qtest.h"
-+
-+#include "trace.h"
-+
-+#define PCI_VENDOR_ID_INTEL                 0x8086
-+#define PCI_DEVICE_ID_INTEL_IOAT_SKX        0x2021
-+
-+#define IOATDMA_BAR0_SIZE                   (16 * KiB)
-+#define IOATDMA_MSIX_SIZE                   (16 * KiB)
-+#define IOATDMA_MSIX_TABLE                  (0x2000)
-+#define IOATDMA_MSIX_PBA                    (0x3000)
-+
-+/*  8-bit */
-+#define IOAT_CHANCNT_OFFSET                 0x00
-+/*  8-bit */
-+#define IOAT_XFERCAP_OFFSET                 0x01
-+/*  8-bit */
-+#define IOAT_XFERCAP_MASK                   0x1f
-+
-+/*  8-bit, unused */
-+#define IOAT_GENCTRL_OFFSET                 0x02
-+#define IOAT_GENCTRL_DEBUG_EN               0x01
-+
-+/*  8-bit */
-+#define IOAT_INTRCTRL_OFFSET                0x03
-+/* Master Interrupt Enable */
-+#define IOAT_INTRCTRL_MASTER_INT_EN         0x01
-+/* ATTNSTATUS -or- Channel Int */
-+#define IOAT_INTRCTRL_INT_STATUS            0x02
-+/* INT_STATUS -and- MASTER_INT_EN */
-+#define IOAT_INTRCTRL_INT                   0x04
-+/* Enable all MSI-X vectors */
-+#define IOAT_INTRCTRL_MSIX_VECTOR_CONTROL   0x08
-+
-+/* Each bit is a channel */
-+#define IOAT_ATTNSTATUS_OFFSET              0x04
-+
-+/*  8-bit */
-+#define IOAT_VER_OFFSET                     0x08
-+
-+/* 16-bit */
-+#define IOAT_PERPORTOFFSET_OFFSET           0x0A
-+
-+/* 16-bit */
-+#define IOAT_INTRDELAY_OFFSET               0x0C
-+/* Interrupt Delay Time */
-+#define IOAT_INTRDELAY_MASK                 0x3FFF
-+/* Interrupt Coalescing Supported */
-+#define IOAT_INTRDELAY_COALESE_SUPPORT      0x8000
-+
-+/* 16-bit */
-+#define IOAT_DEVICE_STATUS_OFFSET           0x0E
-+#define IOAT_DEVICE_STATUS_DEGRADED_MODE    0x0001
-+#define IOAT_DEVICE_MMIO_RESTRICTED         0x0002
-+#define IOAT_DEVICE_MEMORY_BYPASS           0x0004
-+#define IOAT_DEVICE_ADDRESS_REMAPPING       0x0008
-+
-+/* 32-bit */
-+#define IOAT_DMA_CAP_OFFSET                 0x10
-+#define IOAT_CAP_PAGE_BREAK                 0x00000001
-+#define IOAT_CAP_CRC                        0x00000002
-+#define IOAT_CAP_SKIP_MARKER                0x00000004
-+#define IOAT_CAP_DCA                        0x00000010
-+#define IOAT_CAP_CRC_MOVE                   0x00000020
-+#define IOAT_CAP_FILL_BLOCK                 0x00000040
-+#define IOAT_CAP_APIC                       0x00000080
-+#define IOAT_CAP_XOR                        0x00000100
-+#define IOAT_CAP_PQ                         0x00000200
-+#define IOAT_CAP_DWBES                      0x00002000
-+#define IOAT_CAP_RAID16SS                   0x00020000
-+#define IOAT_CAP_DPS                        0x00800000
-+
-+/* CHWPREFLMT */
-+#define IOAT_PREFETCH_LIMIT_OFFSET          0x4C
-+
-+#define IOATDMA_CHAN_CNT        4
-+#define IOATDMA_CHAN_STRIDE     0x80
-+#define IOATDMA_CHAN_OFFSET     IOATDMA_CHAN_STRIDE
-+#define IOATDMA_CHAN_END        ((IOATDMA_CHAN_CNT + 1) * IOATDMA_CHAN_STRIDE)
-+
-+/* DMA Channel Registers */
-+/* 16-bit Channel Control Register */
-+#define IOAT_CHANCTRL_OFFSET                            0x00
-+#define IOAT_CHANCTRL_CHANNEL_PRIORITY_MASK             0xF000
-+#define IOAT3_CHANCTRL_COMPL_DCA_EN                     BIT(9)
-+#define IOAT_CHANCTRL_CHANNEL_IN_USE                    BIT(8)
-+#define IOAT_CHANCTRL_DESCRIPTOR_ADDR_SNOOP_CONTROL     BIT(5)
-+#define IOAT_CHANCTRL_ERR_INT_EN                        BIT(4)
-+#define IOAT_CHANCTRL_ANY_ERR_ABORT_EN                  BIT(3)
-+#define IOAT_CHANCTRL_ERR_COMPLETION_EN                 BIT(2)
-+#define IOAT_CHANCTRL_INT_REARM                         BIT(0)
-+#define IOAT_CHANCTRL_RUN \
-+    (IOAT_CHANCTRL_INT_REARM \
-+     | IOAT_CHANCTRL_ERR_INT_EN \
-+     | IOAT_CHANCTRL_ERR_COMPLETION_EN \
-+     | IOAT_CHANCTRL_ANY_ERR_ABORT_EN)
-+
-+/* 16-bit DMA channel compatibility */
-+#define IOAT_DMA_COMP_OFFSET                0x02
-+/* Compatibility with DMA version 1 */
-+#define IOAT_DMA_COMP_V1                    0x0001
-+/* Compatibility with DMA version 2 */
-+#define IOAT_DMA_COMP_V2                    0x0002
-+
-+/*  8-bit DMA Channel Command Register */
-+#define IOAT_CHANCMD_OFFSET                 0x04
-+#define IOAT_CHANCMD_RESET                  0x20
-+#define IOAT_CHANCMD_RESUME                 0x10
-+#define IOAT_CHANCMD_ABORT                  0x08
-+#define IOAT_CHANCMD_SUSPEND                0x04
-+#define IOAT_CHANCMD_APPEND                 0x02
-+#define IOAT_CHANCMD_START                  0x01
-+
-+/* 16-bit DMA Count register */
-+#define IOAT_CHAN_DMACOUNT_OFFSET           0x06
-+
-+/* 64-bit Channel Status Register */
-+#define IOAT_CHANSTS_OFFSET                     0x08
-+#define IOAT_CHANSTS_COMPLETED_DESCRIPTOR_ADDR  (~0x3fULL)
-+#define IOAT_CHANSTS_SOFT_ERR                   0x10ULL
-+#define IOAT_CHANSTS_UNAFFILIATED_ERR           0x8ULL
-+#define IOAT_CHANSTS_STATUS                     0x7ULL
-+#define IOAT_CHANSTS_ACTIVE                     0x0
-+#define IOAT_CHANSTS_DONE                       0x1
-+#define IOAT_CHANSTS_SUSPENDED                  0x2
-+#define IOAT_CHANSTS_HALTED                     0x3
-+
-+#define IOAT_CHAINADDR_OFFSET_LOW           0x10
-+#define IOAT_CHAINADDR_OFFSET_HIGH          0x14
-+
-+#define IOAT_CHANCMP_OFFSET_LOW             0x18
-+#define IOAT_CHANCMP_OFFSET_HIGH            0x1C
-+
-+/* 32-bit Channel Error Register */
-+#define IOAT_CHANERR_OFFSET                 0x28
-+#define IOAT_CHANERR_SRC_ADDR_ERR           0x0001
-+#define IOAT_CHANERR_DEST_ADDR_ERR          0x0002
-+#define IOAT_CHANERR_NEXT_ADDR_ERR          0x0004
-+#define IOAT_CHANERR_NEXT_DESC_ALIGN_ERR    0x0008
-+#define IOAT_CHANERR_CHAIN_ADDR_VALUE_ERR   0x0010
-+#define IOAT_CHANERR_CHANCMD_ERR            0x0020
-+#define IOAT_CHANERR_CHIPSET_UNCORRECTABLE_DATA_INTEGRITY_ERR   0x0040
-+#define IOAT_CHANERR_DMA_UNCORRECTABLE_DATA_INTEGRITY_ERR       0x0080
-+#define IOAT_CHANERR_READ_DATA_ERR          0x0100
-+#define IOAT_CHANERR_WRITE_DATA_ERR         0x0200
-+#define IOAT_CHANERR_CONTROL_ERR            0x0400
-+#define IOAT_CHANERR_LENGTH_ERR             0x0800
-+#define IOAT_CHANERR_COMPLETION_ADDR_ERR    0x1000
-+#define IOAT_CHANERR_INT_CONFIGURATION_ERR  0x2000
-+#define IOAT_CHANERR_SOFT_ERR               0x4000
-+#define IOAT_CHANERR_UNAFFILIATED_ERR       0x8000
-+#define IOAT_CHANERR_XOR_P_OR_CRC_ERR       0x10000
-+#define IOAT_CHANERR_XOR_Q_ERR              0x20000
-+#define IOAT_CHANERR_DESCRIPTOR_COUNT_ERR   0x40000
-+
-+/* 32 bit Direct Cache Access Control Register */
-+#define IOAT_DCACTRL_OFFSET                 0x30
-+
-+#define IOAT_VER_3_4                        0x34    /* Version 3.4 */
-+
-+#define IOAT_DESC_SZ                        64
-+
-+typedef struct ioat_dma_descriptor {
-+    uint32_t size;
-+    union {
-+        uint32_t ctl;
-+        struct {
-+            unsigned int int_en:1;
-+            unsigned int src_snoop_dis:1;
-+            unsigned int dest_snoop_dis:1;
-+            unsigned int compl_write:1;
-+            unsigned int fence:1;
-+            unsigned int null:1;
-+            unsigned int src_brk:1;
-+            unsigned int dest_brk:1;
-+            unsigned int bundle:1;
-+            unsigned int dest_dca:1;
-+            unsigned int hint:1;
-+            unsigned int rsvd2:13;
-+            #define IOAT_OP_COPY 0x00
-+            unsigned int op:8;
-+        } ctl_f;
-+    };
-+    uint64_t    src_addr;
-+    uint64_t    dst_addr;
-+    uint64_t    next;
-+    uint64_t    rsv1;
-+    uint64_t    rsv2;
-+    /* store some driver data in an unused portion of the descriptor */
-+    union {
-+        uint64_t    user1;
-+        uint64_t    tx_cnt;
-+    };
-+    uint64_t    user2;
-+} ioat_dma_descriptor;
-+
-+typedef struct IoatDmaDescriptorState {
-+    ioat_dma_descriptor desc;
-+    hwaddr addr;
-+    QSIMPLEQ_ENTRY(IoatDmaDescriptorState) desc_list;
-+} IoatDmaDescriptorState;
-+
-+typedef struct IoatdmaState IoatdmaState;
-+
-+typedef struct IoatdmaChanState {
-+    IoatdmaState *parent;
-+
-+    uint8_t idx;
-+
-+    uint16_t dma_count;
-+
-+    uint32_t offset_low;
-+    uint32_t offset_high;
-+
-+    uint32_t chancomp_low;
-+    uint32_t chancomp_high;
-+
-+    uint16_t ctrl;
-+    uint64_t status;
-+
-+    uint32_t chanerr;
-+
-+    uint32_t dcactrl;
-+
-+    QEMUBH *bh;
-+    uint16_t dma_idx;
-+    hwaddr next;
-+    QSIMPLEQ_HEAD(, IoatDmaDescriptorState) list;
-+} IoatdmaChanState;
-+
-+typedef struct IoatdmaState {
-+    /*< private >*/
-+    PCIDevice parent_obj;
-+
-+    /*< public >*/
-+    MemoryRegion mmio;         /* BAR 0 (registers) */
-+    MemoryRegion msix;         /* MSIX */
-+
-+    uint8_t intrctrl;
-+    uint8_t intrdelay;
-+    uint8_t prefetch_limit;
-+
-+    uint32_t dmacap;
-+    uint32_t attnsts;
-+
-+    uint8_t chancnt;
-+    uint8_t xfercap_log;
-+    IoatdmaChanState chans[IOATDMA_CHAN_CNT];
-+} IoatdmaState;
-+
-+#define TYPE_INTEL_IOATDMA "intel-ioatdma"
-+DECLARE_INSTANCE_CHECKER(IoatdmaState, INTEL_IOATDMA,
-+                         TYPE_INTEL_IOATDMA)
-+
-+static const char *ioatdma_reg_to_str(hwaddr addr)
-+{
-+    switch (addr) {
-+    case IOAT_CHANCTRL_OFFSET:
-+        return "IOAT_CHANCTRL_OFFSET";
-+    case IOAT_DMA_COMP_OFFSET:
-+        return "IOAT_DMA_COMP_OFFSET";
-+    case IOAT_CHANCMD_OFFSET:
-+        return "IOAT_CHANCMD_OFFSET";
-+    case IOAT_CHAN_DMACOUNT_OFFSET:
-+        return "IOAT_CHAN_DMACOUNT_OFFSET";
-+    case IOAT_CHANSTS_OFFSET:
-+        return "IOAT_CHANSTS_OFFSET";
-+    case IOAT_CHAINADDR_OFFSET_LOW:
-+        return "IOAT_CHAINADDR_OFFSET_LOW";
-+    case IOAT_CHAINADDR_OFFSET_HIGH:
-+        return "IOAT_CHAINADDR_OFFSET_HIGH";
-+    case IOAT_CHANCMP_OFFSET_LOW:
-+        return "IOAT_CHANCMP_OFFSET_LOW";
-+    case IOAT_CHANCMP_OFFSET_HIGH:
-+        return "IOAT_CHANCMP_OFFSET_HIGH";
-+    case IOAT_CHANERR_OFFSET:
-+        return "IOAT_CHANERR_OFFSET";
-+    case IOAT_DCACTRL_OFFSET:
-+        return "IOAT_DCACTRL_OFFSET";
-+    default:
-+        return "(unknown)";
-+    };
-+}
-+
-+static uint32_t ioatdma_chan_read(IoatdmaState *s, hwaddr addr, unsigned size)
-+{
-+    uint8_t idx = (addr - IOATDMA_CHAN_OFFSET) / IOATDMA_CHAN_STRIDE;
-+    hwaddr reg = (addr - IOATDMA_CHAN_OFFSET) % IOATDMA_CHAN_STRIDE;
-+    IoatdmaChanState *chan;
-+    uint32_t val32 = 0;
-+
-+    if (idx > IOATDMA_CHAN_CNT) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: (%d) exceeds max supported channels (%d)\n",
-+                      __func__, idx, IOATDMA_CHAN_CNT);
-+        return 0;
-+    }
-+
-+    chan = &s->chans[idx];
-+
-+    switch (reg) {
-+    case IOAT_CHANCTRL_OFFSET:
-+        break;
-+    case IOAT_DMA_COMP_OFFSET:
-+        break;
-+    case IOAT_CHANCMD_OFFSET:
-+        val32 = chan->status;
-+        break;
-+    case IOAT_CHAINADDR_OFFSET_LOW:
-+        val32 = chan->offset_low;
-+        break;
-+    case IOAT_CHAINADDR_OFFSET_HIGH:
-+        val32 = chan->offset_high;
-+        break;
-+    case IOAT_CHANCMP_OFFSET_LOW:
-+        val32 = chan->chancomp_low;
-+        break;
-+    case IOAT_CHANCMP_OFFSET_HIGH:
-+        val32 = chan->chancomp_high;
-+        break;
-+    case IOAT_CHANSTS_OFFSET:
-+        val32 = chan->status;
-+        break;
-+    case IOAT_CHANERR_OFFSET:
-+        val32 = chan->chanerr;
-+        break;
-+    case IOAT_DCACTRL_OFFSET:
-+        val32 = chan->dcactrl;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: read to unimplemented chan[%d] register " \
-+                      "at address: 0x%" PRIx64 " size %d\n",
-+                      __func__, idx, reg, size);
-+        break;
-+    }
-+
-+    trace_ioatdma_chan_read(ioatdma_reg_to_str(reg), idx, addr,
-+                            reg, val32, size);
-+
-+    return val32;
-+}
-+
-+static MemTxResult ioatdma_io_read(void *opaque,
-+                                   hwaddr addr,
-+                                   uint64_t *data,
-+                                   unsigned size,
-+                                   MemTxAttrs attrs)
-+{
-+    IoatdmaState *s = INTEL_IOATDMA(opaque);
-+    uint32_t val32 = 0;
-+
-+    switch (addr) {
-+    case IOAT_CHANCNT_OFFSET:
-+        val32 = IOATDMA_CHAN_CNT;
-+        break;
-+    case IOAT_XFERCAP_OFFSET:
-+        val32 = s->xfercap_log;
-+        break;
-+    case IOAT_INTRCTRL_OFFSET:
-+        val32 = s->intrctrl;
-+        break;
-+    case IOAT_ATTNSTATUS_OFFSET: /* 32-bit */
-+        val32 = s->attnsts;
-+        break;
-+    case IOAT_VER_OFFSET:
-+        val32 = IOAT_VER_3_4;
-+        break;
-+    case IOAT_INTRDELAY_OFFSET:
-+        val32 = s->intrdelay;
-+        break;
-+    case IOAT_DMA_CAP_OFFSET:
-+        val32 = s->dmacap;
-+        break;
-+    case IOAT_PREFETCH_LIMIT_OFFSET:
-+        val32 = s->prefetch_limit;
-+        break;
-+    case IOATDMA_CHAN_OFFSET ... IOATDMA_CHAN_END:
-+        val32 = ioatdma_chan_read(s, addr, size);
-+        *data = val32;
-+        return MEMTX_OK;
-+    case IOAT_GENCTRL_OFFSET: /* unused*/
-+    case IOAT_PERPORTOFFSET_OFFSET: /* unused*/
-+    case IOAT_DEVICE_STATUS_OFFSET: /* unused*/
-+    default: /* unimplemented */
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s:  read to unimplemented register " \
-+                          "at address: 0x%" PRIx64 " size %d\n",
-+                          __func__, addr, size);
-+        break;
-+    }
-+
-+    trace_ioatdma_io_read(addr, val32, size);
-+    *data = val32;
-+
-+    return MEMTX_OK;
-+}
-+
-+static void ioatdma_reset_chainaddr(IoatdmaChanState *chan)
-+{
-+    chan->next = chan->offset_low | ((hwaddr)chan->offset_high << 32);
-+    chan->dma_idx = 0;
-+}
-+
-+static void ioatdma_set_completion(IoatdmaChanState *chan, uint64_t status)
-+{
-+    PCIDevice *dev = PCI_DEVICE(chan->parent);
-+    dma_addr_t compaddr;
-+
-+    compaddr = chan->chancomp_low;
-+    compaddr |= (dma_addr_t)chan->chancomp_high << 32;
-+    pci_dma_write(dev, compaddr, &status, 8);
-+    trace_ioatdma_write_completion(chan->idx, compaddr, status);
-+}
-+
-+static hwaddr ioatdma_transfer_one(IoatdmaChanState *chan, hwaddr chanaddr,
-+                                   uint8_t *data, uint32_t transfer_size,
-+                                   ioat_dma_descriptor *desc)
-+{
-+    PCIDevice *dev = PCI_DEVICE(chan->parent);
-+    MemTxResult result = MEMTX_ERROR;
-+    uint64_t n = 0, tail;
-+
-+    trace_ioatdma_transfer_one(chanaddr, desc->next, desc->size,
-+                               desc->src_addr, desc->dst_addr, desc->ctl,
-+                               desc->ctl_f.int_en, desc->ctl_f.compl_write);
-+
-+    if (desc->ctl_f.null) {
-+        return MEMTX_OK;
-+    }
-+
-+    /* check if src addr is valid */
-+    if (!address_space_access_valid(pci_get_address_space(dev), desc->src_addr,
-+                                    desc->size, true, MEMTXATTRS_UNSPECIFIED)) {
-+        chan->status = IOAT_CHANSTS_SOFT_ERR;
-+        chan->chanerr = IOAT_CHANERR_SRC_ADDR_ERR;
-+        goto err;
-+    }
-+
-+    /* check if dst addr is valid */
-+    if (!address_space_access_valid(pci_get_address_space(dev), desc->dst_addr,
-+                                    desc->size, true, MEMTXATTRS_UNSPECIFIED)) {
-+        chan->status = IOAT_CHANSTS_SOFT_ERR;
-+        chan->chanerr = IOAT_CHANERR_DEST_ADDR_ERR;
-+        goto err;
-+    }
-+
-+    tail = desc->size % transfer_size;
-+
-+    while (n < (desc->size - tail)) {
-+        pci_dma_read(dev, (dma_addr_t)desc->src_addr,
-+                     data, (dma_addr_t)transfer_size);
-+        pci_dma_write(dev, (dma_addr_t)desc->dst_addr,
-+                      data, (dma_addr_t)transfer_size);
-+        desc->src_addr += transfer_size;
-+        desc->dst_addr += transfer_size;
-+
-+        n += transfer_size;
-+    }
-+
-+    if (tail) {
-+        pci_dma_read(dev, (dma_addr_t)desc->src_addr, data, (dma_addr_t)tail);
-+        pci_dma_write(dev, (dma_addr_t)desc->dst_addr, data, (dma_addr_t)tail);
-+    }
-+
-+    result = MEMTX_OK;
-+
-+err:
-+    return result;
-+}
-+
-+static MemTxResult ioatdma_transfer_batch(IoatdmaState *s,
-+                                          IoatdmaChanState *chan)
-+{
-+    PCIDevice *dev = PCI_DEVICE(s);
-+    MemTxResult result = MEMTX_OK;
-+    uint16_t dma_count = chan->dma_count;
-+    uint16_t idx = chan->dma_idx;
-+    ioat_dma_descriptor desc;
-+    hwaddr next = chan->next;
-+    uint32_t transfer_size = (1 << s->xfercap_log);
-+    uint64_t status;
-+    uint8_t *data = g_malloc(transfer_size);
-+
-+    trace_ioatdma_transfer_batch(next, transfer_size, idx, dma_count);
-+
-+    chan->status = IOAT_CHANSTS_ACTIVE;
-+    while (idx != dma_count) {
-+        result = pci_dma_read(dev, next, &desc, IOAT_DESC_SZ);
-+        if (result != MEMTX_OK) {
-+            chan->status = IOAT_CHANSTS_SOFT_ERR;
-+            chan->chanerr = IOAT_CHANERR_CHAIN_ADDR_VALUE_ERR;
-+            goto err;
-+        }
-+
-+        result = ioatdma_transfer_one(chan, next, data, transfer_size, &desc);
-+        if (result != MEMTX_OK) {
-+            goto err;
-+        }
-+
-+        if (desc.ctl_f.compl_write) {
-+            status = next & ~0x3fULL;
-+            ioatdma_set_completion(chan, status);
-+        }
-+
-+        if (desc.ctl_f.int_en) {
-+            msix_notify(dev, chan->idx);
-+        }
-+
-+        next = desc.next;
-+        idx++;
-+    }
-+
-+    if (result == MEMTX_OK) {
-+        chan->status = IOAT_CHANSTS_DONE;
-+    }
-+
-+err:
-+    g_free(data);
-+    chan->next = next;
-+    chan->dma_idx = idx;
-+    return result;
-+}
-+
-+static void ioatdma_transfer_bh(void *opaque)
-+{
-+    IoatdmaChanState *chan = opaque;
-+    IoatdmaState *s = chan->parent;
-+    PCIDevice *dev = PCI_DEVICE(s);
-+    MemTxResult result = ioatdma_transfer_batch(s, chan);
-+
-+    /* check if any errors */
-+    if (result != MEMTX_OK) {
-+        if (chan->ctrl & IOAT_CHANCTRL_ERR_INT_EN) {
-+            msix_notify(dev, chan->idx);
-+        }
-+    }
-+}
-+
-+static void ioatdma_chan_write(IoatdmaState *s, hwaddr addr,
-+                               uint64_t data, unsigned size)
-+{
-+    uint8_t idx = (addr - IOATDMA_CHAN_OFFSET) / IOATDMA_CHAN_STRIDE;
-+    hwaddr reg = (addr - IOATDMA_CHAN_OFFSET) % IOATDMA_CHAN_STRIDE;
-+    IoatdmaChanState *chan;
-+
-+    if (idx > IOATDMA_CHAN_CNT) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: (%d) exceeds max supported channels (%d)\n",
-+                      __func__, idx, IOATDMA_CHAN_CNT);
-+        return;
-+    }
-+
-+    chan = &s->chans[idx];
-+    trace_ioatdma_chan_write(ioatdma_reg_to_str(reg), idx, addr,
-+                             reg, data, size);
-+
-+    switch (reg) {
-+    case IOAT_CHANCTRL_OFFSET:
-+        if (chan->dma_count && (data & IOAT_CHANCTRL_RUN)) {
-+            /* qemu_bh_schedule(chan->bh); */
-+        }
-+        chan->ctrl = data;
-+        break;
-+    case IOAT_DMA_COMP_OFFSET:
-+        break;
-+    case IOAT_CHANCMD_OFFSET:
-+        if (data & IOAT_CHANCMD_SUSPEND) {
-+            chan->status = IOAT_CHANSTS_SUSPENDED;
-+        }
-+
-+        if (data & IOAT_CHANCMD_RESET) {
-+            chan->dma_count = 0;
-+        }
-+        break;
-+    case IOAT_CHAN_DMACOUNT_OFFSET:
-+        chan->dma_count = data;
-+        qemu_bh_schedule(chan->bh);
-+        break;
-+    case IOAT_CHAINADDR_OFFSET_LOW:
-+        chan->offset_low = data;
-+        ioatdma_reset_chainaddr(chan);
-+        break;
-+    case IOAT_CHAINADDR_OFFSET_HIGH:
-+        chan->offset_high = data;
-+        ioatdma_reset_chainaddr(chan);
-+        break;
-+    case IOAT_CHANCMP_OFFSET_LOW:
-+        chan->chancomp_low = data;
-+        break;
-+    case IOAT_CHANCMP_OFFSET_HIGH:
-+        chan->chancomp_high = data;
-+        break;
-+    case IOAT_CHANSTS_OFFSET:
-+        chan->status = data;
-+        break;
-+    case IOAT_CHANERR_OFFSET:
-+        chan->chanerr = data;
-+        /* TODO: clear interrupts ? */
-+        break;
-+    case IOAT_DCACTRL_OFFSET:
-+        chan->dcactrl = data;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: write to unimplemented chan[%d] register " \
-+                      "at address: 0x%" PRIx64 " val 0x%" PRIx64 " size %d\n",
-+                      __func__, idx, reg, data, size);
-+        break;
-+    }
-+}
-+
-+static MemTxResult ioatdma_io_write(void *opaque,
-+                                    hwaddr addr,
-+                                    uint64_t data,
-+                                    unsigned size,
-+                                    MemTxAttrs attrs)
-+{
-+    IoatdmaState *s = INTEL_IOATDMA(opaque);
-+
-+    switch (addr) {
-+    case IOAT_INTRCTRL_OFFSET:
-+        s->intrctrl = data;
-+        break;
-+    case IOAT_ATTNSTATUS_OFFSET: /* 32-bit */
-+        s->attnsts = data;
-+        break;
-+    case IOAT_INTRDELAY_OFFSET:
-+        s->intrdelay = data;
-+        break;
-+    case IOAT_PREFETCH_LIMIT_OFFSET:
-+        s->prefetch_limit = data;
-+        break;
-+    case IOATDMA_CHAN_OFFSET ... IOATDMA_CHAN_END:
-+        ioatdma_chan_write(s, addr, data, size);
-+        return MEMTX_OK;
-+    case IOAT_DMA_CAP_OFFSET:
-+    case IOAT_CHANCNT_OFFSET:
-+    case IOAT_XFERCAP_OFFSET:
-+    case IOAT_VER_OFFSET:
-+    case IOAT_GENCTRL_OFFSET: /* unused*/
-+    case IOAT_PERPORTOFFSET_OFFSET: /* unused*/
-+    case IOAT_DEVICE_STATUS_OFFSET: /* unused*/
-+    default: /* unimplemented */
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s:  read to unimplemented register " \
-+                          "at address: 0x%" PRIx64 " size %d\n",
-+                          __func__, addr, size);
-+        break;
-+    }
-+
-+    trace_ioatdma_io_write(addr, data, size);
-+
-+    return MEMTX_OK;
-+}
-+
-+static const MemoryRegionOps ioatdma_mmio_ops = {
-+    .read_with_attrs = ioatdma_io_read,
-+    .write_with_attrs = ioatdma_io_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+    .impl = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
-+static void ioatdma_realize(PCIDevice *dev, Error **errp)
-+{
-+    IoatdmaState *s = INTEL_IOATDMA(dev);
-+    IoatdmaChanState *chan;
-+    uint8_t *pci_conf;
-+    int res, i;
-+
-+    if (s->chancnt > IOATDMA_CHAN_CNT) {
-+        error_setg(errp, "maximum %d chancnt supported", IOATDMA_CHAN_CNT);
-+        return;
-+    }
-+
-+    if (s->xfercap_log & ~IOAT_XFERCAP_MASK) {
-+        error_setg(errp, "maximum %d xfercap_log supported", IOAT_XFERCAP_MASK);
-+        return;
-+    }
-+
-+    pci_conf = dev->config;
-+    pci_conf[PCI_COMMAND] = PCI_COMMAND_IO | PCI_COMMAND_MEMORY;
-+
-+    memory_region_init_io(&s->mmio, OBJECT(s), &ioatdma_mmio_ops, s,
-+                          "intel-ioatdma.mmio", IOATDMA_BAR0_SIZE);
-+
-+    pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
-+                     PCI_BASE_ADDRESS_MEM_TYPE_64,
-+                     &s->mmio);
-+
-+    res = msix_init(PCI_DEVICE(s), IOATDMA_CHAN_CNT,
-+                    &s->mmio,
-+                    0, IOATDMA_MSIX_TABLE,
-+                    &s->mmio,
-+                    0, IOATDMA_MSIX_PBA,
-+                    0xA0, NULL);
-+
-+    if (res) {
-+        error_setg(errp, "msix_init failed!");
-+        return;
-+    }
-+
-+    for (i = 0; i < IOATDMA_CHAN_CNT; i++) {
-+        chan = &s->chans[i];
-+        chan->parent = s;
-+        chan->idx = i;
-+        QSIMPLEQ_INIT(&chan->list);
-+
-+        /* TODO: guarded bh */
-+        chan->bh = qemu_bh_new(ioatdma_transfer_bh, chan);
-+        msix_vector_use(dev, i);
-+    }
-+}
-+
-+static uint32_t ioatdma_config_read(PCIDevice *dev,
-+                                    uint32_t addr, int len)
-+{
-+    uint32_t val32;
-+
-+    val32 = pci_default_read_config(dev, addr, len);
-+    trace_ioatdma_config_read(addr, val32, len);
-+
-+    return val32;
-+}
-+
-+static void ioatdma_config_write(PCIDevice *dev, uint32_t addr,
-+                                 uint32_t val, int len)
-+{
-+    pci_default_write_config(dev, addr, val, len);
-+    trace_ioatdma_config_write(addr, val, len);
-+}
-+
-+static void ioatdma_reset(DeviceState *dev)
-+{
-+    IoatdmaState *s = INTEL_IOATDMA(dev);
-+    int i;
-+
-+    for (i = 0; i < IOATDMA_CHAN_CNT; i++) {
-+        s->chans[i].dma_count = 0;
-+        s->chans[i].dma_idx = 0;
-+        s->chans[i].offset_low = 0;
-+        s->chans[i].offset_high = 0;
-+        s->chans[i].chancomp_low = 0;
-+        s->chans[i].chancomp_high = 0;
-+        s->chans[i].status = IOAT_CHANSTS_DONE;
-+    }
-+}
-+
-+static Property ioatdma_properties[] = {
-+    DEFINE_PROP_UINT8("chan_cnt", IoatdmaState, chancnt, IOATDMA_CHAN_CNT),
-+    DEFINE_PROP_UINT8("xfercap_log", IoatdmaState, xfercap_log, 21),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void ioatdma_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+
-+    k->realize = ioatdma_realize;
-+    k->config_read = ioatdma_config_read;
-+    k->config_write = ioatdma_config_write;
-+    dc->reset = ioatdma_reset;
-+
-+    k->vendor_id = PCI_VENDOR_ID_INTEL;
-+    k->device_id = PCI_DEVICE_ID_INTEL_IOAT_SKX;
-+    k->class_id = PCI_CLASS_SYSTEM_DMA;
-+
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    dc->desc = "Intel(R) I/OAT DMA engine";
-+
-+    device_class_set_props(dc, ioatdma_properties);
-+}
-+
-+static const TypeInfo ioatdma_info = {
-+    .name          = TYPE_INTEL_IOATDMA,
-+    .parent        = TYPE_PCI_DEVICE,
-+    .instance_size = sizeof(IoatdmaState),
-+    .class_init    = ioatdma_class_init,
-+    .interfaces = (InterfaceInfo[]) {
-+        { INTERFACE_PCIE_DEVICE },
-+        { },
-+    },
-+};
-+
-+static void ioatdma_register_types(void)
-+{
-+    type_register_static(&ioatdma_info);
-+}
-+
-+type_init(ioatdma_register_types)
-diff --git a/hw/dma/meson.build b/hw/dma/meson.build
-index a96c1be2c8..49ab4bf27c 100644
---- a/hw/dma/meson.build
-+++ b/hw/dma/meson.build
-@@ -14,3 +14,4 @@ system_ss.add(when: 'CONFIG_PXA2XX', if_true: files('pxa2xx_dma.c'))
- system_ss.add(when: 'CONFIG_RASPI', if_true: files('bcm2835_dma.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_PDMA', if_true: files('sifive_pdma.c'))
- system_ss.add(when: 'CONFIG_XLNX_CSU_DMA', if_true: files('xlnx_csu_dma.c'))
-+system_ss.add(when: 'CONFIG_INTEL_IOATDMA', if_true: files('ioatdma.c'))
-diff --git a/hw/dma/trace-events b/hw/dma/trace-events
-index 4c09790f9a..0422d0ba31 100644
---- a/hw/dma/trace-events
-+++ b/hw/dma/trace-events
-@@ -47,3 +47,15 @@ pl330_iomem_read(uint32_t addr, uint32_t data) "addr: 0x%08"PRIx32" data: 0x%08"
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index bed5966ea7..396185f240 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -608,10 +608,15 @@ static void sd_response_r7_make(SDState *sd, uint8_t *response)
  
- # xilinx_axidma.c
- xilinx_axidma_loading_desc_fail(uint32_t res) "error:%u"
+ static uint64_t sd_req_get_address(SDState *sd, SDRequest req)
+ {
++    uint64_t addr;
 +
-+# ioatdma.c
-+ioatdma_io_read(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
-+ioatdma_io_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
-+ioatdma_chan_read(const char *id, int idx, uint64_t addr, int reg, uint64_t value, unsigned int size) "%s: chan[%d] addr=0x%"PRIx64" reg=0x%x value=0x%"PRIx64" size=%u"
-+ioatdma_chan_write(const char *id, int idx, uint64_t addr, int reg, uint64_t value, unsigned int size) "%s: chan[%d] addr=0x%"PRIx64" reg=0x%x value=0x%"PRIx64" size=%u"
-+ioatdma_config_read(uint64_t addr, uint64_t value, unsigned int size) "addr=0x%"PRIx64" value=0x%"PRIx64" size=%u"
-+ioatdma_config_write(uint64_t addr, uint64_t value, unsigned int size) "addr=0x%"PRIx64" value=0x%"PRIx64" size=%u"
-+ioatdma_transfer_batch(uint64_t chanaddr, uint32_t size, uint16_t idx, uint16_t dma_count) "chainaddr=0x%"PRIx64" transfer_size=%u idx=%u dma_count=%u"
-+ioatdma_transfer_one(uint64_t chanaddr, uint64_t next,  uint32_t size, uint64_t saddr, uint64_t daddr, uint32_t ctl, uint8_t int_en, uint8_t compl_write) "[0x%"PRIx64"]: next=0x%"PRIx64" size=%u saddr=0x%"PRIx64" daddr=0x%"PRIx64" ctl=0x%x int_en=%u compl_write=%u"
-+ioatdma_write_completion(uint16_t idx, uint64_t compaddr, uint64_t addr) "[%u] 0x%"PRIx64"=0x%"PRIx64
-+
+     if (FIELD_EX32(sd->ocr, OCR, CARD_CAPACITY)) {
+-        return (uint64_t) req.arg << HWBLOCK_SHIFT;
++        addr = (uint64_t) req.arg << HWBLOCK_SHIFT;
++    } else {
++        addr = req.arg;
+     }
+-    return req.arg;
++    trace_sdcard_req_addr(req.arg, addr);
++    return addr;
+ }
+ 
+ static inline uint64_t sd_addr_to_wpnum(uint64_t addr)
+diff --git a/hw/sd/trace-events b/hw/sd/trace-events
+index 0eee98a646..43eaeba149 100644
+--- a/hw/sd/trace-events
++++ b/hw/sd/trace-events
+@@ -50,6 +50,7 @@ sdcard_ejected(void) ""
+ sdcard_erase(uint32_t first, uint32_t last) "addr first 0x%" PRIx32" last 0x%" PRIx32
+ sdcard_lock(void) ""
+ sdcard_unlock(void) ""
++sdcard_req_addr(uint32_t req_arg, uint64_t addr) "req 0x%" PRIx32 " addr 0x%" PRIx64
+ sdcard_read_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
+ sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
+ sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
 -- 
-2.43.2
+2.41.0
 
 
