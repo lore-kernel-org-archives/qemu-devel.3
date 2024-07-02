@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ACF2C3271E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00566C3814E
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:31:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjy9-0007hl-2n; Tue, 02 Jul 2024 16:19:17 -0400
+	id 1sOjyB-00081l-IH; Tue, 02 Jul 2024 16:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjxS-0005MC-5A
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:46 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjy4-0007D5-PF
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjxB-0000AD-HI
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjy1-0001Dy-Km
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951495;
+ s=mimecast20190719; t=1719951546;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pgJQy7t094Dms9DBv10pUkz+7onKHwqzjJeEHsSRcQk=;
- b=izrG62yMPWT+n3zPBRX0GB0YnXJir4YpiF07XMZAahk7NDdTHqd6VCvM246GRsgs+IjaId
- UVUX2Fw//vzLYRYqYtUK0ZMoes5xXywuh4id0V+q+qI38tFlnqNME3ist54IUCJ+GOyZry
- 7JcQ10uwd9TMh9DkcJJAFybLTBVuE90=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R3m1Xw9Ub15rW4o3esEC0MkiVgr91nuiCfcAKrltL4I=;
+ b=hUZf59tA7XvPYo7ZsWC6R2bvtPfFfNLADjmV0NC93x7SlYGsCeILuiOFTO26Mfmu8OmcW2
+ zq7oPMFdfUZv/qYQhvDB+rVvUSBKUnCIMesdPeIH+d1vpxWKDxeQ6JjDVHvsO3CpEOj9HX
+ xTa1oeeNB7SQ0BB/iW3r9X+N8vokGQg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-306-_PGx2LFyP2yOYOPPQwD4eg-1; Tue, 02 Jul 2024 16:18:14 -0400
-X-MC-Unique: _PGx2LFyP2yOYOPPQwD4eg-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4256569a4faso28960815e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:18:14 -0700 (PDT)
+ us-mta-132--eqf2gIpP0GGsigT-hNSnA-1; Tue, 02 Jul 2024 16:19:04 -0400
+X-MC-Unique: -eqf2gIpP0GGsigT-hNSnA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4256849a9f4so31644215e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:19:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951493; x=1720556293;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pgJQy7t094Dms9DBv10pUkz+7onKHwqzjJeEHsSRcQk=;
- b=HBlsHOPMu5MYyjO4U8yDis+gtStih0MNKUMftWvFZtDYTGma0xHgkCjTQgTbM88lq2
- prLbJzrzgwDB4URjlufgtbwxRZbpeaB4kKPxqL2LXwSNNuVkFx2D3NI7BQAcpxUJOsk5
- Roagqc9v0s+fDDcUEZwTovXuiHcZqb36vOilrAzmNqWvVdl/PnlpYCa8rIF9XgyutPYM
- P6fxiVTGgmaoInxgxxsX2uTqrfv5UqARmWG2ND922MfgE4SV/caMtRoJ00hwjWset2pl
- gw+dJCrGh43dHNaq6A8Xs7ZalGhCAMAJKs/kej9IcHCnWHVkLxDELv8kpMwEH4N3Rax1
- 6JBg==
-X-Gm-Message-State: AOJu0YyKy7ycPlitN4YShcDXLKna4wbLTQYCYoqhC1JysY7uoUZSWsHq
- CdljWvmiCK7w24y/M6iVD15VISDwG9JxhNQJUPV7y1CHWI+hMLNJ5SHufUOTFe0vRTRGy6emjvs
- nc/i7EAOfV9U8hN5zEEq2YuVmFERvb9AR2s1Sxt0HpQ56d3hPBdKER8n1PKu+QLm89ucIIyRVV7
- nFhDUZ/LwdX3luqh2tLbSjNIUp6xYzDA==
-X-Received: by 2002:a05:600c:1604:b0:421:8234:9bb4 with SMTP id
- 5b1f17b1804b1-425798ae183mr92819775e9.19.1719951493035; 
- Tue, 02 Jul 2024 13:18:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyhKS1Xerc3N66kHJXACvab5R3OUf8iLssDvOPHHvBmgIluriRbc0Antgx8I3C6eof+ZqAPg==
-X-Received: by 2002:a05:600c:1604:b0:421:8234:9bb4 with SMTP id
- 5b1f17b1804b1-425798ae183mr92819455e9.19.1719951492265; 
- Tue, 02 Jul 2024 13:18:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719951543; x=1720556343;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=R3m1Xw9Ub15rW4o3esEC0MkiVgr91nuiCfcAKrltL4I=;
+ b=I+kVwHYlbRPj+4Y9rt+ekZMBJGKPXvLit7b/35BjuGMcioqouaDwnMOQODTRVhgVzb
+ J9TCY60Woy+HZ8XOqUcbnFYgEnYJTsylcos3SSlO4eP5Rt34YS7VL4NdfoMHWc8Jj/3J
+ K7H4YXsWE5g928D7w5hX7mOWzpf9K5ivt6MJqvvaHQH186MbAA0tX3Bhv4njxhAafA+0
+ Am2VoM6hrhqTBKZWrXDBnXbOBcAtXiuTzLPAavXSvmODZobPUYl9kkCOm7mxw01hN+Dk
+ k7u5xrzyysbRkcAfewHt9Vs9kfZ53SC1UotWHL5a2bvpp5PudIjDCva+FUAox1nM44Kn
+ iqVg==
+X-Gm-Message-State: AOJu0YwRrCZ1K/pwJ7pbfsAgnzkwR4H5/ElhD0GZfJ3k11cT2jVkfV4K
+ G0CgMkmeg31ni7NDpEl8A8GINohzEWXZlivO3Zy3BDnzYVwurYUOTHcek1IS3xMF/nNc27Hk+xF
+ K7xHy3LUybNxG4kdcD1zhCMGRpRgsz0lH/9mEfitqCKyFZ8BnudJzPWIPWy1lUuAn0LWh1d6O+l
+ NgHRgRv2UJLSPIHCBp12udGZ3akibsvQ==
+X-Received: by 2002:a5d:47aa:0:b0:366:eb00:9dd6 with SMTP id
+ ffacd0b85a97d-367756a3585mr9268055f8f.1.1719951542811; 
+ Tue, 02 Jul 2024 13:19:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmc8wv35Albphvw15+7lvIySsgH4Qv5bMd1dsjSHlW3rCEC2eojB7WdUcyarwn9WLbvTewRQ==
+X-Received: by 2002:a5d:47aa:0:b0:366:eb00:9dd6 with SMTP id
+ ffacd0b85a97d-367756a3585mr9268018f8f.1.1719951542199; 
+ Tue, 02 Jul 2024 13:19:02 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0c19eesm216293895e9.45.2024.07.02.13.18.10
+ ffacd0b85a97d-3678e68a622sm1497656f8f.106.2024.07.02.13.18.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:18:11 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:18:08 -0400
+ Tue, 02 Jul 2024 13:19:01 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:18:58 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Dmitry Frolov <frolov@swemel.ru>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL v2 45/88] hw/net/virtio-net.c: fix crash in iov_copy()
-Message-ID: <d4f471eb7e562c2cc398448a1c1e7ee838ec30bd.1719951168.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Coiby Xu <Coiby.Xu@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL v2 57/88] tests/qtest/vhost-user-blk-test: use
+ memory-backend-shm
+Message-ID: <f8ff4a66d6aca062e01a49095089a3679f421b50.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -84,6 +91,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,35 +108,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Frolov <frolov@swemel.ru>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-A crash found while fuzzing device virtio-net-socket-check-used.
-Assertion "offset == 0" in iov_copy() fails if less than guest_hdr_len bytes
-were transmited.
+`memory-backend-memfd` is available only on Linux while the new
+`memory-backend-shm` can be used on any POSIX-compliant operating
+system. Let's use it so we can run the test in multiple environments.
 
-Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
-Message-Id: <20240613143529.602591-2-frolov@swemel.ru>
+Since we are here, let`s remove `share=on` which is the default for shm
+(and also for memfd).
+
+Acked-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20240618100527.145883-1-sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/net/virtio-net.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tests/qtest/vhost-user-blk-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9c7e85caea..8f30972708 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2735,6 +2735,10 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-          */
-         assert(n->host_hdr_len <= n->guest_hdr_len);
-         if (n->host_hdr_len != n->guest_hdr_len) {
-+            if (iov_size(out_sg, out_num) < n->guest_hdr_len) {
-+                virtio_error(vdev, "virtio-net header is invalid");
-+                goto detach;
-+            }
-             unsigned sg_num = iov_copy(sg, ARRAY_SIZE(sg),
-                                        out_sg, out_num,
-                                        0, n->host_hdr_len);
+diff --git a/tests/qtest/vhost-user-blk-test.c b/tests/qtest/vhost-user-blk-test.c
+index 117b9acd10..ea90d41232 100644
+--- a/tests/qtest/vhost-user-blk-test.c
++++ b/tests/qtest/vhost-user-blk-test.c
+@@ -906,7 +906,7 @@ static void start_vhost_user_blk(GString *cmd_line, int vus_instances,
+                            vhost_user_blk_bin);
+ 
+     g_string_append_printf(cmd_line,
+-            " -object memory-backend-memfd,id=mem,size=256M,share=on "
++            " -object memory-backend-shm,id=mem,size=256M "
+             " -M memory-backend=mem -m 256M ");
+ 
+     for (i = 0; i < vus_instances; i++) {
 -- 
 MST
 
