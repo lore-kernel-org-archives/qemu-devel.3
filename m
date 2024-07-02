@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07AF2C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 09:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC7FFC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 09:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOZjz-00025P-2s; Tue, 02 Jul 2024 05:23:59 -0400
+	id 1sOZn3-0003WE-N9; Tue, 02 Jul 2024 05:27:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZjx-0001mI-5x
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:23:57 -0400
-Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZmt-0003RQ-2M
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:26:59 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZju-0007yC-QX
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:23:56 -0400
-Received: by mail-lf1-x136.google.com with SMTP id
- 2adb3069b0e04-52cf4ca8904so6414717e87.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 02:23:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZmo-0001ab-W6
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:26:58 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52cd87277d8so4045842e87.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 02:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719912232; x=1720517032; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719912413; x=1720517213; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w91m07KsBglNi/fQY95FCrDPhq7oOjLmVtnvRjzEoPE=;
- b=imieRV1jbrifcJYN2OU7wXBnZoFuboPb3i3P9TyQ5IbIuBwl8AASMTpFuiCzqGjYlf
- Z/Auuso9OlOBh4bmKCMkAkFpO3Grhuhoj4NoTXUfJAG4FN9sTezw7TJETQLzo54llij+
- LrY581NTOoM85F7jsr9op7CM3+FzqKVdvkANZjJh8Wbhi2EISCtwQZqpOEiRjEZI2Z9g
- c60tvnAx+PqCiZD8L2XxwoosEFmt28aVD5RCxciBVwxhjkGuxUBJTc0xqheNBu79EUs1
- EnBUJWswI/j5D/uV4aOuMSs8Jbxj1gV/nQFYH8LC3HDqUQRG6QQQ2jRvTRJaXkyltLki
- Q8lw==
+ bh=h18ZtpFi+1EoV+so/iHct3tNt9L7cd1pp1ExoGu8rMs=;
+ b=C2GxE5xuqfGYHJyRLMvWg5Tq0e66WahRs68NIRafEyj3Hx1uLoHjmBQwsKPdC9Qksu
+ +p4VaNYoTCIK/qoyqBOot/roZi2fL/tCMMzcw9IturaXoYSaK3SNX7jMrI/0EBdkNHjp
+ knaqsQfjx61J4dh3koHtZBh1Lgzlhg7+RpmdX6uqhAk1LgeTh6/yD99RHXol0V0AjCDo
+ SJB7mtehNfDfn7nrXCdELyzXU5DDciBcOX2o1w+D08e6nm6UCbOiN3/VMtbsH/gBKxSz
+ keCjXLCtrsdbxm1sDy4pvDgyqM0EmQvWekMnhqcpg+cd8L2M62AnJHqly6SBMQgMPPyt
+ OlLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719912232; x=1720517032;
+ d=1e100.net; s=20230601; t=1719912413; x=1720517213;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w91m07KsBglNi/fQY95FCrDPhq7oOjLmVtnvRjzEoPE=;
- b=uPFNTtVOD45iNrTMBz/TbMhYr7Zi2ktfZJOF8F1RbLyRh6cYm4m1Fy05jEYz74PKhe
- 2G4Oc5XdGjbH6OQ13OBlEid46aLeq3tZFC1w0xbVyh4Nt1nZwAd3PtqnuLN9i0sgNk/o
- RQX+OEBAmtCKUFPo6vSDV3fgyyu8Sq9y7ZkFvI8du94CyY1FftD/jLg4w2e1oCjCSv2X
- yvBdDfoKJS5ess1Y2T9LWXpDvVwgvvKVb4BSDywik5q1JX4bEEMTH6JaLi6qWmJOjpPb
- XddNFb00S86E7nRCr6Yh5tEAd/M5cvA4xhxB8KEaolq7at+CrML12ybQz8gFKfDgxH1e
- sRdA==
-X-Gm-Message-State: AOJu0YzxdByayqqdoZ0uYvq4cj9xz1IR96cxyUGMrdinB0pgnWLYpdNf
- I53k3ETfYxXv6Zk0X7P2YGuONUkyIixbSGeRKI6m7VrU080MWyp82h2f/lOrwErrOxWO/fS7aHm
- U
-X-Google-Smtp-Source: AGHT+IEI+j89+E/nFrXWefQsj2h9iKcgzGM9lfFB33BqWv3BTA2H9n3eH9qLdl3Q5JyZYXKxc/8QZA==
-X-Received: by 2002:a05:6512:3409:b0:52d:6673:11da with SMTP id
- 2adb3069b0e04-52e8273e68amr5309527e87.57.1719912231098; 
- Tue, 02 Jul 2024 02:23:51 -0700 (PDT)
+ bh=h18ZtpFi+1EoV+so/iHct3tNt9L7cd1pp1ExoGu8rMs=;
+ b=L3J5CoqT9kdprcdISIBDQwnRPZtx0qCDNtjY3aZz94lRq9HOAl/dT0/6qdf9ic4UV4
+ remy7i8V6sK2Blu/iv3PM2UJD3aNMT6kIuIF2Cxlvvbltckfqx2zYcNM6f/0sB750sk2
+ LdTC/Uqeu5uADKvZAx5t7SfihJrwht6BnMZHFN/5/k20R4K5QJIRj4t3i4Kw3YBPYLrK
+ GMt263DHjiJ+7SHFc0R+qinISvsCZ31g5buvLGf723NGqj1wQ2hhQqUmckRfzzq6LMka
+ SFZl5z76wXS4XYjXt739nrZoGoKUlUGV4K654JMXgLXXr1xXAmN3OpO421s3RNe9+4ys
+ uDqQ==
+X-Gm-Message-State: AOJu0Yz5EpJ8tT/QvsrBiMPmYI42Ij2LK6Wqw+KkOPWQifSrVobQuXQU
+ kEEs2VokB3nM2s5IlF+WBj56ZPzZsXUb2SovaVJeKqf6bNEL2G9sRIVPGokSIWNUfnLvbULBMuu
+ m
+X-Google-Smtp-Source: AGHT+IH95KeFwQt41rkKiFODOChYMkaC8QROLUSPjYZG8CzeWR5COP9wgNYXHpJc12qPd+0TvJFPxg==
+X-Received: by 2002:a05:6512:6c7:b0:52c:e16e:6033 with SMTP id
+ 2adb3069b0e04-52e826513edmr5820126e87.2.1719912412816; 
+ Tue, 02 Jul 2024 02:26:52 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4257c4e1112sm117583805e9.3.2024.07.02.02.23.50
+ ffacd0b85a97d-3675a0d9b1dsm12716474f8f.42.2024.07.02.02.26.51
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Jul 2024 02:23:50 -0700 (PDT)
+ Tue, 02 Jul 2024 02:26:52 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 30/67] hw/sd/sdcard: Move sd_[a]cmd_name() methods to sd.c
-Date: Tue,  2 Jul 2024 11:20:13 +0200
-Message-ID: <20240702092051.45754-31-philmd@linaro.org>
+Subject: [PULL 61/67] hw/sd/sdcard: Add sd_acmd_SET_BUS_WIDTH handler (ACMD6)
+Date: Tue,  2 Jul 2024 11:20:44 +0200
+Message-ID: <20240702092051.45754-62-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240702092051.45754-1-philmd@linaro.org>
 References: <20240702092051.45754-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::136;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x136.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,226 +94,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Merge sdmmc-internal.c into sd.c by moving
-sd_cmd_name() and sd_acmd_name() and updating
-meson.build.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Message-Id: <20240628070216.92609-37-philmd@linaro.org>
+Message-Id: <20240628070216.92609-69-philmd@linaro.org>
 ---
- hw/sd/sdmmc-internal.h | 26 ---------------
- hw/sd/sd.c             | 62 ++++++++++++++++++++++++++++++++++++
- hw/sd/sdmmc-internal.c | 72 ------------------------------------------
- hw/sd/meson.build      |  2 +-
- 4 files changed, 63 insertions(+), 99 deletions(-)
- delete mode 100644 hw/sd/sdmmc-internal.c
+ hw/sd/sd.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
-index 936c75cace..cc0b69e834 100644
---- a/hw/sd/sdmmc-internal.h
-+++ b/hw/sd/sdmmc-internal.h
-@@ -119,30 +119,4 @@
- #define EXT_CSD_PART_CONFIG_EN_BOOT0            (0x1 << 3)
- #define EXT_CSD_PART_CONFIG_EN_USER             (0x7 << 3)
- 
--#define SDMMC_CMD_MAX 64
--
--/**
-- * sd_cmd_name:
-- * @cmd: A SD "normal" command, up to SDMMC_CMD_MAX.
-- *
-- * Returns a human-readable name describing the command.
-- * The return value is always a static string which does not need
-- * to be freed after use.
-- *
-- * Returns: The command name of @cmd or "UNKNOWN_CMD".
-- */
--const char *sd_cmd_name(uint8_t cmd);
--
--/**
-- * sd_acmd_name:
-- * @cmd: A SD "Application-Specific" command, up to SDMMC_CMD_MAX.
-- *
-- * Returns a human-readable name describing the application command.
-- * The return value is always a static string which does not need
-- * to be freed after use.
-- *
-- * Returns: The application command name of @cmd or "UNKNOWN_ACMD".
-- */
--const char *sd_acmd_name(uint8_t cmd);
--
- #endif
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 822debb28b..90bb47ad26 100644
+index 31cebe609c..fed95563b8 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -87,6 +87,8 @@ enum SDCardStates {
-     sd_disconnect_state     = 8,
- };
- 
-+#define SDMMC_CMD_MAX 64
-+
- typedef sd_rsp_type_t (*sd_cmd_handler)(SDState *sd, SDRequest req);
- 
- typedef struct SDProto {
-@@ -228,6 +230,66 @@ static const char *sd_response_name(sd_rsp_type_t rsp)
-     return response_name[rsp];
+@@ -258,7 +258,6 @@ static const char *sd_cmd_name(SDState *sd, uint8_t cmd)
+ static const char *sd_acmd_name(SDState *sd, uint8_t cmd)
+ {
+     static const char *acmd_abbrev[SDMMC_CMD_MAX] = {
+-         [6] = "SET_BUS_WIDTH",
+         [13] = "SD_STATUS",
+         [14] = "DPS_spec",                  [15] = "DPS_spec",
+         [16] = "DPS_spec",
+@@ -1653,6 +1652,18 @@ static sd_rsp_type_t spi_cmd_CRC_ON_OFF(SDState *sd, SDRequest req)
+     return sd_r1;
  }
  
-+static const char *sd_cmd_name(uint8_t cmd)
++/* ACMD6 */
++static sd_rsp_type_t sd_acmd_SET_BUS_WIDTH(SDState *sd, SDRequest req)
 +{
-+    static const char *cmd_abbrev[SDMMC_CMD_MAX] = {
-+         [0]    = "GO_IDLE_STATE",           [1]    = "SEND_OP_COND",
-+         [2]    = "ALL_SEND_CID",            [3]    = "SEND_RELATIVE_ADDR",
-+         [4]    = "SET_DSR",                 [5]    = "IO_SEND_OP_COND",
-+         [6]    = "SWITCH_FUNC",             [7]    = "SELECT/DESELECT_CARD",
-+         [8]    = "SEND_IF_COND",            [9]    = "SEND_CSD",
-+        [10]    = "SEND_CID",               [11]    = "VOLTAGE_SWITCH",
-+        [12]    = "STOP_TRANSMISSION",      [13]    = "SEND_STATUS",
-+                                            [15]    = "GO_INACTIVE_STATE",
-+        [16]    = "SET_BLOCKLEN",           [17]    = "READ_SINGLE_BLOCK",
-+        [18]    = "READ_MULTIPLE_BLOCK",    [19]    = "SEND_TUNING_BLOCK",
-+        [20]    = "SPEED_CLASS_CONTROL",    [21]    = "DPS_spec",
-+                                            [23]    = "SET_BLOCK_COUNT",
-+        [24]    = "WRITE_BLOCK",            [25]    = "WRITE_MULTIPLE_BLOCK",
-+        [26]    = "MANUF_RSVD",             [27]    = "PROGRAM_CSD",
-+        [28]    = "SET_WRITE_PROT",         [29]    = "CLR_WRITE_PROT",
-+        [30]    = "SEND_WRITE_PROT",
-+        [32]    = "ERASE_WR_BLK_START",     [33]    = "ERASE_WR_BLK_END",
-+        [34]    = "SW_FUNC_RSVD",           [35]    = "SW_FUNC_RSVD",
-+        [36]    = "SW_FUNC_RSVD",           [37]    = "SW_FUNC_RSVD",
-+        [38]    = "ERASE",
-+        [40]    = "DPS_spec",
-+        [42]    = "LOCK_UNLOCK",            [43]    = "Q_MANAGEMENT",
-+        [44]    = "Q_TASK_INFO_A",          [45]    = "Q_TASK_INFO_B",
-+        [46]    = "Q_RD_TASK",              [47]    = "Q_WR_TASK",
-+        [48]    = "READ_EXTR_SINGLE",       [49]    = "WRITE_EXTR_SINGLE",
-+        [50]    = "SW_FUNC_RSVD",
-+        [52]    = "IO_RW_DIRECT",           [53]    = "IO_RW_EXTENDED",
-+        [54]    = "SDIO_RSVD",              [55]    = "APP_CMD",
-+        [56]    = "GEN_CMD",                [57]    = "SW_FUNC_RSVD",
-+        [58]    = "READ_EXTR_MULTI",        [59]    = "WRITE_EXTR_MULTI",
-+        [60]    = "MANUF_RSVD",             [61]    = "MANUF_RSVD",
-+        [62]    = "MANUF_RSVD",             [63]    = "MANUF_RSVD",
-+    };
-+    return cmd_abbrev[cmd] ? cmd_abbrev[cmd] : "UNKNOWN_CMD";
++    if (sd->state != sd_transfer_state) {
++        return sd_invalid_state_for_cmd(sd, req);
++    }
++
++    sd->sd_status[0] &= 0x3f;
++    sd->sd_status[0] |= (req.arg & 0x03) << 6;
++    return sd_r1;
 +}
 +
-+static const char *sd_acmd_name(uint8_t cmd)
-+{
-+    static const char *acmd_abbrev[SDMMC_CMD_MAX] = {
-+         [6] = "SET_BUS_WIDTH",
-+        [13] = "SD_STATUS",
-+        [14] = "DPS_spec",                  [15] = "DPS_spec",
-+        [16] = "DPS_spec",
-+        [18] = "SECU_spec",
-+        [22] = "SEND_NUM_WR_BLOCKS",        [23] = "SET_WR_BLK_ERASE_COUNT",
-+        [41] = "SD_SEND_OP_COND",
-+        [42] = "SET_CLR_CARD_DETECT",
-+        [51] = "SEND_SCR",
-+        [52] = "SECU_spec",                 [53] = "SECU_spec",
-+        [54] = "SECU_spec",
-+        [56] = "SECU_spec",                 [57] = "SECU_spec",
-+        [58] = "SECU_spec",                 [59] = "SECU_spec",
-+    };
-+
-+    return acmd_abbrev[cmd] ? acmd_abbrev[cmd] : "UNKNOWN_ACMD";
-+}
-+
- static uint8_t sd_get_dat_lines(SDState *sd)
+ static sd_rsp_type_t sd_normal_command(SDState *sd, SDRequest req)
  {
-     return sd->enable ? sd->dat_lines : 0;
-diff --git a/hw/sd/sdmmc-internal.c b/hw/sd/sdmmc-internal.c
-deleted file mode 100644
-index c1d5508ae6..0000000000
---- a/hw/sd/sdmmc-internal.c
-+++ /dev/null
-@@ -1,72 +0,0 @@
--/*
-- * SD/MMC cards common helpers
-- *
-- * Copyright (c) 2018  Philippe Mathieu-Daudé <f4bug@amsat.org>
-- *
-- * This work is licensed under the terms of the GNU GPL, version 2 or later.
-- * See the COPYING file in the top-level directory.
-- * SPDX-License-Identifier: GPL-2.0-or-later
-- */
+     uint64_t addr;
+@@ -1777,18 +1788,6 @@ static sd_rsp_type_t sd_app_command(SDState *sd,
+     }
+ 
+     switch (req.cmd) {
+-    case 6:  /* ACMD6:  SET_BUS_WIDTH */
+-        switch (sd->state) {
+-        case sd_transfer_state:
+-            sd->sd_status[0] &= 0x3f;
+-            sd->sd_status[0] |= (req.arg & 0x03) << 6;
+-            return sd_r1;
 -
--#include "qemu/osdep.h"
--#include "sdmmc-internal.h"
+-        default:
+-            break;
+-        }
+-        break;
 -
--const char *sd_cmd_name(uint8_t cmd)
--{
--    static const char *cmd_abbrev[SDMMC_CMD_MAX] = {
--         [0]    = "GO_IDLE_STATE",           [1]    = "SEND_OP_COND",
--         [2]    = "ALL_SEND_CID",            [3]    = "SEND_RELATIVE_ADDR",
--         [4]    = "SET_DSR",                 [5]    = "IO_SEND_OP_COND",
--         [6]    = "SWITCH_FUNC",             [7]    = "SELECT/DESELECT_CARD",
--         [8]    = "SEND_IF_COND",            [9]    = "SEND_CSD",
--        [10]    = "SEND_CID",               [11]    = "VOLTAGE_SWITCH",
--        [12]    = "STOP_TRANSMISSION",      [13]    = "SEND_STATUS",
--                                            [15]    = "GO_INACTIVE_STATE",
--        [16]    = "SET_BLOCKLEN",           [17]    = "READ_SINGLE_BLOCK",
--        [18]    = "READ_MULTIPLE_BLOCK",    [19]    = "SEND_TUNING_BLOCK",
--        [20]    = "SPEED_CLASS_CONTROL",    [21]    = "DPS_spec",
--                                            [23]    = "SET_BLOCK_COUNT",
--        [24]    = "WRITE_BLOCK",            [25]    = "WRITE_MULTIPLE_BLOCK",
--        [26]    = "MANUF_RSVD",             [27]    = "PROGRAM_CSD",
--        [28]    = "SET_WRITE_PROT",         [29]    = "CLR_WRITE_PROT",
--        [30]    = "SEND_WRITE_PROT",
--        [32]    = "ERASE_WR_BLK_START",     [33]    = "ERASE_WR_BLK_END",
--        [34]    = "SW_FUNC_RSVD",           [35]    = "SW_FUNC_RSVD",
--        [36]    = "SW_FUNC_RSVD",           [37]    = "SW_FUNC_RSVD",
--        [38]    = "ERASE",
--        [40]    = "DPS_spec",
--        [42]    = "LOCK_UNLOCK",            [43]    = "Q_MANAGEMENT",
--        [44]    = "Q_TASK_INFO_A",          [45]    = "Q_TASK_INFO_B",
--        [46]    = "Q_RD_TASK",              [47]    = "Q_WR_TASK",
--        [48]    = "READ_EXTR_SINGLE",       [49]    = "WRITE_EXTR_SINGLE",
--        [50]    = "SW_FUNC_RSVD",
--        [52]    = "IO_RW_DIRECT",           [53]    = "IO_RW_EXTENDED",
--        [54]    = "SDIO_RSVD",              [55]    = "APP_CMD",
--        [56]    = "GEN_CMD",                [57]    = "SW_FUNC_RSVD",
--        [58]    = "READ_EXTR_MULTI",        [59]    = "WRITE_EXTR_MULTI",
--        [60]    = "MANUF_RSVD",             [61]    = "MANUF_RSVD",
--        [62]    = "MANUF_RSVD",             [63]    = "MANUF_RSVD",
--    };
--    return cmd_abbrev[cmd] ? cmd_abbrev[cmd] : "UNKNOWN_CMD";
--}
--
--const char *sd_acmd_name(uint8_t cmd)
--{
--    static const char *acmd_abbrev[SDMMC_CMD_MAX] = {
--         [6] = "SET_BUS_WIDTH",
--        [13] = "SD_STATUS",
--        [14] = "DPS_spec",                  [15] = "DPS_spec",
--        [16] = "DPS_spec",
--        [18] = "SECU_spec",
--        [22] = "SEND_NUM_WR_BLOCKS",        [23] = "SET_WR_BLK_ERASE_COUNT",
--        [41] = "SD_SEND_OP_COND",
--        [42] = "SET_CLR_CARD_DETECT",
--        [51] = "SEND_SCR",
--        [52] = "SECU_spec",                 [53] = "SECU_spec",
--        [54] = "SECU_spec",
--        [56] = "SECU_spec",                 [57] = "SECU_spec",
--        [58] = "SECU_spec",                 [59] = "SECU_spec",
--    };
--
--    return acmd_abbrev[cmd] ? acmd_abbrev[cmd] : "UNKNOWN_ACMD";
--}
-diff --git a/hw/sd/meson.build b/hw/sd/meson.build
-index abfac9e461..bbb75af0c9 100644
---- a/hw/sd/meson.build
-+++ b/hw/sd/meson.build
-@@ -1,5 +1,5 @@
- system_ss.add(when: 'CONFIG_PL181', if_true: files('pl181.c'))
--system_ss.add(when: 'CONFIG_SD', if_true: files('sd.c', 'core.c', 'sdmmc-internal.c'))
-+system_ss.add(when: 'CONFIG_SD', if_true: files('sd.c', 'core.c'))
- system_ss.add(when: 'CONFIG_SDHCI', if_true: files('sdhci.c'))
- system_ss.add(when: 'CONFIG_SDHCI_PCI', if_true: files('sdhci-pci.c'))
- system_ss.add(when: 'CONFIG_SSI_SD', if_true: files('ssi-sd.c'))
+     case 13:  /* ACMD13: SD_STATUS */
+         switch (sd->state) {
+         case sd_transfer_state:
+@@ -2390,6 +2389,9 @@ static const SDProto sd_proto_sd = {
+         [58] = {11, sd_adtc, "READ_EXTR_MULTI", sd_cmd_optional},
+         [59] = {11, sd_adtc, "WRITE_EXTR_MULTI", sd_cmd_optional},
+     },
++    .acmd = {
++        [6]  = {8,  sd_ac,   "SET_BUS_WIDTH", sd_acmd_SET_BUS_WIDTH},
++    },
+ };
+ 
+ static void sd_instance_init(Object *obj)
 -- 
 2.41.0
 
