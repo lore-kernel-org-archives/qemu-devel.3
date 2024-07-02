@@ -4,91 +4,185 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0CEC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8336DC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOWDW-0005F9-MY; Tue, 02 Jul 2024 01:38:14 -0400
+	id 1sOWRa-0007xr-Pj; Tue, 02 Jul 2024 01:52:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <horen.chuang@linux.dev>)
- id 1sOWDT-0005ET-32
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:38:11 -0400
-Received: from out-183.mta0.migadu.com ([91.218.175.183])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1sOWRY-0007v3-5P
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:52:44 -0400
+Received: from smarthost2.eviden.com ([80.78.11.83])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <horen.chuang@linux.dev>)
- id 1sOWDK-0004hz-Bz
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:38:07 -0400
-X-Envelope-To: ying.huang@intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1719898673;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=73xYp2UvuuiTqq3Dx4h6CO2Kz6sGNd96n78O6ol2uyA=;
- b=wzkLo0iNP5B95/q8zo3yui0WSwg4gSn0wJwWhEOfkCDJAZx7/Sg1xvt2+Rp1MKooX6Rfym
- tULVAT1RgSHPe71YnGh9mQ3vUmzVjOndjK6u4cSIfT4vdU2L0HDluE68B8y772SQ/Jc8wA
- y80wW74TTj5XFkLKMDZyi0wvp7qin6E=
-X-Envelope-To: jonathan.cameron@huawei.com
-X-Envelope-To: gourry.memverge@gmail.com
-X-Envelope-To: aneesh.kumar@linux.ibm.com
-X-Envelope-To: mhocko@suse.com
-X-Envelope-To: tj@kernel.org
-X-Envelope-To: john@jagalactic.com
-X-Envelope-To: emirakhur@micron.com
-X-Envelope-To: vtavarespetr@micron.com
-X-Envelope-To: ravis.opensrc@micron.com
-X-Envelope-To: apopple@nvidia.com
-X-Envelope-To: sthanneeru@micron.com
-X-Envelope-To: sj@kernel.org
-X-Envelope-To: rafael@kernel.org
-X-Envelope-To: lenb@kernel.org
-X-Envelope-To: akpm@linux-foundation.org
-X-Envelope-To: dave.jiang@intel.com
-X-Envelope-To: dan.j.williams@intel.com
-X-Envelope-To: linux-acpi@vger.kernel.org
-X-Envelope-To: linux-kernel@vger.kernel.org
-X-Envelope-To: linux-mm@kvack.org
-X-Envelope-To: horenc@vt.edu
-X-Envelope-To: horenchuang@bytedance.com
-X-Envelope-To: horenchuang@gmail.com
-X-Envelope-To: linux-cxl@vger.kernel.org
-X-Envelope-To: qemu-devel@nongnu.org
-MIME-Version: 1.0
-Date: Tue, 02 Jul 2024 05:37:47 +0000
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1sOWRV-0006Uc-8E
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:52:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1719899561; x=1751435561;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=ypVe/9XWlbiYY67gHDpjPVysJYf8D8Q3GP6UPMoOP6s=;
+ b=qjDPZ0CN7hNJlTneAfhWD6IGtIf6vu2zTXv/iIsurFLVoaab1WdRDZcV
+ OBor1geSgTE2+sduCGRd7Xum29C0RFoWPizB28It0buCGKKNJjaySxUCt
+ LKZgEaSdtyM5+UiaDJk7VnO6RPE7F1u0B6C+fIvocleHxAU58cRmIwrVY
+ NqnR67EHhcNfelpI5mOB3Grvr3HQZA1R+nh/MwvSlF3/iMC8cjaniUlS8
+ U1cZsky5o982TOgEXcrlQjyp3kJQ3gNXwHXj4iedvziZesAI+zyPNAWJr
+ BrkFl4MMMh+TDavvyFv5QGgZ08vwZsvq/ZAXv2EgFMmFnJMaMagp7F/sY A==;
+X-IronPort-AV: E=Sophos;i="6.09,178,1716242400"; d="scan'208";a="15721514"
+X-MGA-submission: =?us-ascii?q?MDG1dW4DwTKg5X29Mnzgw2RyST+/lIrN+Prd27?=
+ =?us-ascii?q?3oED4kOqyp0zaimp1u2B6tGAvRl3wIC8mo0x+gTNdyOK96utJY8O94gd?=
+ =?us-ascii?q?L8ePPL2XhIc0im1qxsA2bd72nuMWLV9srRfZd78ZCMAWyDarTAecOWz/?=
+ =?us-ascii?q?VZJTjhvr/gmfMsMWiw9DF6ZA=3D=3D?=
+Received: from mail-am6eur05lp2104.outbound.protection.outlook.com (HELO
+ EUR05-AM6-obe.outbound.protection.outlook.com) ([104.47.18.104])
+ by smarthost2.eviden.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2024 07:52:35 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=fLifgvqtK+AkNoVMzhXLSKQ6i/jpQqBsLfgUIS3W7uzYVVBh4W62oSYcXNjqXxcpVKaHHlfsaBaxM1nB16ofw9jpI6ZtP9FtKPtxPyXSiFNgwf18yJpVNPCsbEdEQZWxYo6N1XLc5n2PRd0nUCD8AY02RNg5id+nMNLg6gDLhEMk4X8fe10IpTmMeSvhQTweyJQf5IGn3RUsmF9ZryLHhn3YC07ySlVXvFu8lSCcVbhnByzZFiAKWfYnYRRF3vRMaqW8Yp6QH1aI8tm0RoiSHxo2xiNcOJc/j9IMORbwyEmndnuG8g1shdSDxfm3BsXW2Q61ARWTWhMSbjaKYP4ZKw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ypVe/9XWlbiYY67gHDpjPVysJYf8D8Q3GP6UPMoOP6s=;
+ b=dGb3YdoIbXyxnzPwgQxHQq7dVKFXdglMgPUZxCd+uHsbJ95h0erTwclU0A7EyIOo9gFmFs/LIUPPjGAiagv5//a2mm8GfGEizkIqUq9qf63m+yTohegbffzgcY3ip/cqH1+32mAxAq94n09r/xP+Vrxs9N508sDZn3gBmH0qXrUyF3KZorXXvZ6ZhYKcKtb+zOuZj0WaA6tBIoyptftPR+FxXbFyNsRUlnxbRMfN9HL8zE0RI8NY8Fp1yf98cM77p5oG0pIFc87/16F4GVOQhBVn6U+Y4tYh9gfw8w+GB68wOfzl5V9E+iH/MZdzKx+7Gpt49rvccH0kXeZWY/9x4A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ypVe/9XWlbiYY67gHDpjPVysJYf8D8Q3GP6UPMoOP6s=;
+ b=NDsi1z542F84ln+w1jla/A+ze1gedTDZ4DuS2vnbNHIP4ncn9ZT1KNm/dgStVNx36/eLndLxJM55hk75L08e5AX8aJmS4Of0dYn5DGjg6WQLAa/3UdckQEEKgkQEREY2c8Ch5II72MKhvj+uLHwEPR54nZqNI5GZERcCt5noNmwEt6aMY2dchARegAc8JcoQ3ORI0orX5fPRbtHmDWDBhQbwvsvePktUJ6VDfCrba1CCF/5BbOUVFRvF2rGGa9NAr5sNeE5cXOfJLNllLSWy/kDFZt39gCBv/5GjdGAR07R2MBeR+SN8ApCsmgA/mlH09rGYpwvrCu+NehFsFCPPow==
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by AS8PR07MB7080.eurprd07.prod.outlook.com (2603:10a6:20b:239::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.21; Tue, 2 Jul
+ 2024 05:52:34 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d%4]) with mapi id 15.20.7741.017; Tue, 2 Jul 2024
+ 05:52:34 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, CLEMENT MATHIEU--DRIF
+ <clement.mathieu--drif@eviden.com>
+Subject: [PATCH ats_vtd v5 04/22] intel_iommu: do not consider wait_desc as an
+ invalid descriptor
+Thread-Topic: [PATCH ats_vtd v5 04/22] intel_iommu: do not consider wait_desc
+ as an invalid descriptor
+Thread-Index: AQHazEQIBXXzL7bpek6rQxeDAgf6ew==
+Date: Tue, 2 Jul 2024 05:52:34 +0000
+Message-ID: <20240702055221.1337035-5-clement.mathieu--drif@eviden.com>
+References: <20240702055221.1337035-1-clement.mathieu--drif@eviden.com>
+In-Reply-To: <20240702055221.1337035-1-clement.mathieu--drif@eviden.com>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|AS8PR07MB7080:EE_
+x-ms-office365-filtering-correlation-id: c7d21eea-aa78-43c6-6826-08dc9a5b2b6f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?aVExalNaMm1aQm4vSlRsaXdiVTR2allnR0hYOXZIR2s1bHhYUGo3NVFua0x0?=
+ =?utf-8?B?VXFZanZTUE82eGNXVlJRZ1lYaVhIUGxVck5hSW5kcEthejBLNEdSRjFxSDZv?=
+ =?utf-8?B?MFB6QUhtckhCODN6UDl1OG9IdVU0V25uRFFTcjVZSjJHUllXS0VsVEJEUUI0?=
+ =?utf-8?B?K28zUlJ4Z0ZUZy9yNDJmWENFRmExK2VwMXFVWmc1NDNnT3h6L25qamZDb0JX?=
+ =?utf-8?B?dXlwdGliMUthS0ZpVW5EaW5oRCtlOEtRdkgyK0NRN1ROZ2grSlZhb3paOWlW?=
+ =?utf-8?B?RVMxWjZYRVF0K2h1NGI0aVJJOTlpNXN0dXJlaXB0QVFEUk5sVEVxRHJZYzlE?=
+ =?utf-8?B?WmdYZVpZRzk3SGtheTQwUnAxVjUwSkdpY3E3M2lSdWFYbk1BcmZoYzYzQzds?=
+ =?utf-8?B?WDZzcElPbzh3STQ2ZlBwb05wTUMzUndveStaMXpFNlJmMnRQY1k0UlEzSkgw?=
+ =?utf-8?B?dG5seURFRE0vZUlDRDNLczdUZ1J2ZlczazZ6N1ZPRlVnMEVsTHRyUVdJeU93?=
+ =?utf-8?B?SHhFY1lmMyt6TEhFYW9xaWYvSmllLzRXTmdYeWNPOTh6SCs0YVloZmV0cGpm?=
+ =?utf-8?B?OGlxOVArVlV0VjBaSXFMZkp1ZmpxbVQ2MSt2Z2dHL1lmQ1lTaWpnNHNWbkN6?=
+ =?utf-8?B?azRuRm16S2ZmeWNGanhRODBpQzVKYzcydFdvMVlOSTI4bTQwS09ja01sMzc3?=
+ =?utf-8?B?bldYZjZjRXBLcnBTL1VEdXJWbUUxK0tVUmQwOVRKTy92YVlaeG1QdVEramha?=
+ =?utf-8?B?eEx4WDNPbGJTajE4WGExcTYwWDZqTjVsL3Ewd3J4Qjdnd00za1ZDRG11MzFq?=
+ =?utf-8?B?SFZUdGRqdVZENmZaajZ3SUJsc2xKRWR2dlBuTENDUUt1aUQ0TW1wdDdhbkVh?=
+ =?utf-8?B?WGhjeEo4cEdack15RndleTNtUFVvOUNSK2FMeW0vYlBzSjhYRzRDTmw1bEl6?=
+ =?utf-8?B?S2Z0ci8yN2NQenNMbklsUDZvRlNPam1JcWprUy82Yk9zMDhHM1d4LzlVQi9J?=
+ =?utf-8?B?eE8vSHVPWUxMd3FBN1A5OEVCNTNWQXdmTHY1VUxBL3pBY05WaFE1UVZDRVFp?=
+ =?utf-8?B?UVFUdW9hSlNBMFB2MStubnEzYlJpMGU2TEUxMlAvcmhYeWY4TnVYNVh3ZjNZ?=
+ =?utf-8?B?ajhYZ2lRTzJScVlEVEJzYkxCTU5SNmp1TzkySEJMcnlOVnN1LzJiUU5YM2dv?=
+ =?utf-8?B?Vm9MVGpWL1JIbmJkUmNDQzR5a1d0WE1qN3IySGJBSlF6SE54V2Ixa01lUzR3?=
+ =?utf-8?B?djJPL0ppRURsQkxwWlhXajcvcXBWUUd1Mjc5c3pVUXhXRWgwNStuM2NiaS9S?=
+ =?utf-8?B?Sk5NVkFRSFpDLzZISE5XTS9sdFFsQ2grQWZqUEpINnZpMTNmWmVRazhXTk5E?=
+ =?utf-8?B?REdJYkxNS1BGT1RjeGFtUGlCdkp6MlM5b1JiNjlmSCtacy9Vd1hKNXl1ZnBs?=
+ =?utf-8?B?cTY4RmFCSE5pUFV3UmdMWWZQYUQ1NVNIdDBkd3FTbFRsUW1wRndSRXZSM2N4?=
+ =?utf-8?B?YkxaRUpFVGpBRDlOSlQvWlVNbC82RlJsUEd3aW9EVmRsMmNwL281TTA2RERD?=
+ =?utf-8?B?TmRJbmlzdmh3NG1adE16MEZRWC9zTWVMSFpNK2lvdG81YzBPNWFHR0krVG4w?=
+ =?utf-8?B?bzVLT3JMZUdpMHNpQWRHL3JHeWF3YS94VDF1VmFSUVZha2RGQUtPanEzb3ZU?=
+ =?utf-8?B?N2ViNnJXVjkrNENyei9HSUZFckZmNE5EeUcvRDNZSEtkU0FSTG0rZ2o2TjBU?=
+ =?utf-8?B?QTRXL1RIaU5zN0FYbHBnWTg0RWR5LzJPclFmV1FhQW5zQ1F5aDVSVmw5clZH?=
+ =?utf-8?B?SkwwSGdLSzdBeGJSSnFoMUFScFFPTGI4aDNWQ1FYMUtzYkQrR0V5ZEs4TW9H?=
+ =?utf-8?B?TGsxenlBQkJseVhaVmdwVTRtcExqVVF6Mk8vYnB2K1JuY3c9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?blhwY1M5b3RWRDRra0JEZHlWSE0xSGtqY2w4Vk5OUlpXS25CSVJwdCtQV2ds?=
+ =?utf-8?B?L2dLNExsV1FTZlg4b0JFWm96ejNjTEw0d00wclA2OFYxMDFocytTejg1d3ZH?=
+ =?utf-8?B?OEFscGViNzFXWnR6QmJmM2hEb2x5QlZvU0k1MWJ1QzlLd0hKYnoyKzBtRW1W?=
+ =?utf-8?B?VWNtakRWenJMTEdUTlZ6VzZtbk5VWUlSS1BCM3NSaDFCelpRVW5UOWsxVkZN?=
+ =?utf-8?B?Ull1eTVzQlpyeEkrUUhXM3Y4VEJaek5zWVNRcjN4eU9wTnBMVGd2eDZ3d04w?=
+ =?utf-8?B?MXQxclZxZ0NNWmJUbklMb2NTdFB6V2Z0NDhzNmdaY1F1MlFCTFI4SEhIaThT?=
+ =?utf-8?B?WDlxRGR4ZjZYMUNoVGxJUGNjMHRqNmQvTnJGTVBXSk5tR2VPRWMzSDFzbmVY?=
+ =?utf-8?B?UVlYbUtPYzVUbmYzVGcvS0VydENhdC9RUmZIYUh3d2lRekJHTUtYNDhvWlNV?=
+ =?utf-8?B?amhZc1M5V3FobVA0OXN0VDNxRlhSTWJJNFNxTGxLSXkxZ3VQK1VTc0NsUVo4?=
+ =?utf-8?B?WWxsOVp6R2FSUkJNczFGUTkvZVp3WDQwaTk3WmlaQitYZ3BSbGJ3U04zcjhP?=
+ =?utf-8?B?eVR2T091d0hkMzgvRUxBbFI5RDJTbWxGd3J3bG5jMy96OWlidzI5alVxRXRB?=
+ =?utf-8?B?RmZJMkd5TWpXallSakkrNHhyL1VndDN0cnhrWkhMQk5EcjlNb3lHdEFSUXhS?=
+ =?utf-8?B?VytzWlV6L0FhWm5pQWhpa1J4Y1FKeTVBcHVrMmNhL1laRmZWWjhXOTFyMXFE?=
+ =?utf-8?B?Sm80RWFHVFJnVEFST3hqR1JUY0lsZlhlcThzNkpJeFMyN3lqcURCYXlCM1lr?=
+ =?utf-8?B?RVFTWjZ1NE5MRy9VMWVCQWNOYkJzYkZveDRiSUxPcThOMXpUcHl3TURJYXF6?=
+ =?utf-8?B?TlNYaFpuOFQwaDNNSTM2ajQrMzFRSG9rd2NsS0ZKM2NSckV2d0I1K0JIVWVm?=
+ =?utf-8?B?d2ROSURpd0QzbkZaWk96YWU1aWdKSkFFYVg3TW5qTEhaNkhFSEkwa0pwbmM1?=
+ =?utf-8?B?b25oQ2NROE80NWVJOGZjWlFZSTc1ZVBOdHhKOEExek9WUXNwNUlDTmNHWHd3?=
+ =?utf-8?B?STVKbUdIS3gyK3E2YkZPN3h4TkhwcVAyd1UxYWIzaXlpVVU4UGR6NmoybmhB?=
+ =?utf-8?B?NE15MEgrZmxOLytmZ2NTR1pKMFEvaWFvaWQreEFjRm8xU3BMSjVYS2V0WjBF?=
+ =?utf-8?B?cDlFRW5ibjk3YWlRbEJxZ0gxcEhYZENRdnRsWmdaM09KQzNTZlVWbTJBSFJj?=
+ =?utf-8?B?ZnpRYkpPWUVPUy81aDZPNGk5NUhpSGVheGl3VWVDcnloSWlhMi80OEJIanN6?=
+ =?utf-8?B?THlWcnh4Rmg4anMyVVFXKzgvaUlqcE9FOG9nSU5KbXRySEdhdTc3UERSU0px?=
+ =?utf-8?B?MXA4cS9ESFFSYUttbEF2dGM4ZEhWR2Vzb0RaOXdxSGxOVFFsM21qWHNzc0xv?=
+ =?utf-8?B?eFJndndSVU5LWFFJQ0YwVjd1ZktlUXZ5ajdWdHZGcWk5cWZZTmEwc2FMZXFS?=
+ =?utf-8?B?TG5zZDJzMnp2cWpPV1M3NEQ4WWZJOVlzaFRMK3J2YXNwOTMrMTMvdGZBWjU5?=
+ =?utf-8?B?T29mc1o3Y0t1RDNpU09UUVo3bE1CblZYVUhYdGNyZlBlMG5YSG12UGt2RWYx?=
+ =?utf-8?B?MHVwOXhPK29jemFjVDZZbXRCZFVlakJUbXNQeTI5aytrMGUyK0xIK2dya3d2?=
+ =?utf-8?B?UFdjeXUwamM2LzZHUHhOdTQzS0luRWFtRkFQa2ZDOUpCaS9rY1I5K1VIcUQy?=
+ =?utf-8?B?cWx2YzRIR2IzWmRaU3htRDVySkttQ3F0ZFZjczY4QmVObU1YMWE5a2J1UXFF?=
+ =?utf-8?B?bkMzWDlsc3MxVFg4T2tiRzh4SGJkYVpSd2YwNU9ER3JnS1dzM2tsNVF5ZE8x?=
+ =?utf-8?B?azF3RGU5blBEdzRTcWZUSUxJR3Fha1IyKzh2eS9RUGplbTVIR2U0Z0JVSmdC?=
+ =?utf-8?B?MTY4c01TcHNycEw1SWNyQnBaN1p0bkxWeWZxeTZGd1cvQzZqVHRxVE03VThm?=
+ =?utf-8?B?enBxSEJGVkZiMXJGRDB2TlB0UmF4bStTTGdCTWdjcGl1TWtpK3k0QjUwQmU5?=
+ =?utf-8?B?VGNFdEUrbTZHUXphQTZMRzJSdzd6NFE4STJLUTJVTVhScEdZMlI0cVRCVCtN?=
+ =?utf-8?B?eXBaaGpxWFZONUpwbm5PdWxPaEZ2aDdiNEloTDFQbVFsbkZjWFh0ajBwZ0ZI?=
+ =?utf-8?Q?w1pmFIPIf2nCTX7M1mgRiWo=3D?=
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>
-Message-ID: <970686ea8a7aba6f5daa752a39609f5ab7a48a06@linux.dev>
-TLS-Required: No
-Subject: Re: [PATCH v2 1/1] memory tier: consolidate the initialization of
- memory tiers
-To: "Huang, Ying" <ying.huang@intel.com>
-Cc: "Jonathan Cameron" <Jonathan.Cameron@huawei.com>, "Gregory Price"
- <gourry.memverge@gmail.com>, aneesh.kumar@linux.ibm.com, mhocko@suse.com,
- tj@kernel.org, john@jagalactic.com, "Eishan Mirakhur"
- <emirakhur@micron.com>, "Vinicius Tavares Petrucci"
- <vtavarespetr@micron.com>, "Ravis OpenSrc" <Ravis.OpenSrc@micron.com>,
- "Alistair Popple" <apopple@nvidia.com>, "Srinivasulu Thanneeru"
- <sthanneeru@micron.com>, "SeongJae Park" <sj@kernel.org>, "Rafael J. 
- Wysocki" <rafael@kernel.org>, "Len Brown" <lenb@kernel.org>, "Andrew
- Morton" <akpm@linux-foundation.org>, "Dave Jiang" <dave.jiang@intel.com>,
- "Dan  Williams" <dan.j.williams@intel.com>, linux-acpi@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, "Ho-Ren (Jack)  Chuang"
- <horenc@vt.edu>, "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@gmail.com>,
- linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
-In-Reply-To: <87tth9ofsi.fsf@yhuang6-desk2.ccr.corp.intel.com>
-References: <20240628060925.303309-1-horen.chuang@linux.dev>
- <20240628060925.303309-2-horen.chuang@linux.dev>
- <87tth9ofsi.fsf@yhuang6-desk2.ccr.corp.intel.com>
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=91.218.175.183;
- envelope-from=horen.chuang@linux.dev; helo=out-183.mta0.migadu.com
+Content-ID: <70B36C38F22B714284A3C3B1861D21DF@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c7d21eea-aa78-43c6-6826-08dc9a5b2b6f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jul 2024 05:52:34.0728 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: bzerqBSa0zrt5OVfHLdKsULtrGkWnnYudfzAFi2b4zcnTQN5LtyAHy8IF3+8irtZd2WQLvaAe+khnKWFXTZr1ESEQT2EpkgpD5eRa8ajFOgF0lQ4MFN36LkFtjfNhN3x
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR07MB7080
+Received-SPF: pass client-ip=80.78.11.83;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost2.eviden.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,433 +204,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Huang, Ying,
-
-Thanks for your feedback and helpful suggestions. Replies inlined.
-
-
-June 30, 2024 at 10:13 PM, "Huang, Ying" <ying.huang@intel.com> wrote:
->=20
->=20Hi, Jack,
->=20
->=20"Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev> writes:
->=20
->=20I suggest you to merge the [0/1] with the change log here. [0/1]
->=20
->=20describes why do we need the patch. The below text describes some
->=20
->=20details. Just don't use "---" to separate them. We need both parts in
->=20
->=20the final commit message.
->=20
-
-Sounds=20good! I will merge them into 1 patch in the v3.
-
-> >=20
->=20> If we simply move the set_node_memory_tier() from memory_tier_init(=
-)
-> >=20
->=20>  to late_initcall(), it will result in HMAT not registering
-> >=20
->=20>  the mt_adistance_algorithm callback function, because
-> >=20
->=20>  set_node_memory_tier() is not performed during the memory tiering
-> >=20
->=20>  initialization phase, leading to a lack of correct default_dram
-> >=20
->=20>  information.
-> >=20
->=20>  Therefore, we introduced a nodemask to pass the information of the
-> >=20
->=20>  default DRAM nodes. The reason for not choosing to reuse
-> >=20
->=20>  default_dram_type->nodes is that it is not clean enough. So in the=
- end,
-> >=20
->=20>  we use a __initdata variable, which is a variable that is released=
- once
-> >=20
->=20>  initialization is complete, including both CPU and memory nodes fo=
-r HMAT
-> >=20
->=20>  to iterate through.
-> >=20
->=20>  Besides, since default_dram_type may be checked/used during the
-> >=20
->=20>  initialization process of HMAT and drivers, it is better to keep t=
-he
-> >=20
->=20>  allocation of default_dram_type in memory_tier_init().
-> >=20
->=20
-> Why do we need it? IIRC, we have deleted its usage in hmat.c.
->=20
-
-Although=20default_dram_type is still used in set_node_memory_tier(),
-I can totally remove this description to remove confusion.
-
-> >=20
->=20> Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-> >=20
->=20>  Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> >=20
->=20>  ---
-> >=20
->=20>  drivers/acpi/numa/hmat.c | 5 +--
-> >=20
->=20>  include/linux/memory-tiers.h | 2 ++
-> >=20
->=20>  mm/memory-tiers.c | 59 +++++++++++++++---------------------
-> >=20
->=20>  3 files changed, 28 insertions(+), 38 deletions(-)
-> >=20
->=20>  diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-> >=20
->=20>  index 2c8ccc91ebe6..a2f9e7a4b479 100644
-> >=20
->=20>  --- a/drivers/acpi/numa/hmat.c
-> >=20
->=20>  +++ b/drivers/acpi/numa/hmat.c
-> >=20
->=20>  @@ -940,10 +940,7 @@ static int hmat_set_default_dram_perf(void)
-> >=20
->=20>  struct memory_target *target;
-> >=20
->=20>  struct access_coordinate *attrs;
-> >=20
->=20>=20=20
->=20>=20
->=20>  - if (!default_dram_type)
-> >=20
->=20>  - return -EIO;
-> >=20
->=20>  -
-> >=20
->=20>  - for_each_node_mask(nid, default_dram_type->nodes) {
-> >=20
->=20>  + for_each_node_mask(nid, default_dram_nodes) {
-> >=20
->=20>  pxm =3D node_to_pxm(nid);
-> >=20
->=20>  target =3D find_mem_target(pxm);
-> >=20
->=20>  if (!target)
-> >=20
->=20>  diff --git a/include/linux/memory-tiers.h b/include/linux/memory-t=
-iers.h
-> >=20
->=20>  index 0d70788558f4..fa61ad9c4d75 100644
-> >=20
->=20>  --- a/include/linux/memory-tiers.h
-> >=20
->=20>  +++ b/include/linux/memory-tiers.h
-> >=20
->=20>  @@ -38,6 +38,7 @@ struct access_coordinate;
-> >=20
->=20>  #ifdef CONFIG_NUMA
-> >=20
->=20>  extern bool numa_demotion_enabled;
-> >=20
->=20>  extern struct memory_dev_type *default_dram_type;
-> >=20
->=20
-> Can we remove the above line?
->=20
-
-Yes,=20you are right. Good catch, thanks! Will remove it in the v3.
-
-> >=20
->=20> +extern nodemask_t default_dram_nodes __initdata;
-> >=20
->=20
-> We don't need to use __initdata in variable declaration.
->=20
-
-Thank=20you for your guidance! Will remove __initdata it in the v3.
-
-> >=20
->=20> struct memory_dev_type *alloc_memory_type(int adistance);
-> >=20
->=20>  void put_memory_type(struct memory_dev_type *memtype);
-> >=20
->=20>  void init_node_memory_type(int node, struct memory_dev_type *defau=
-lt_type);
-> >=20
->=20>  @@ -76,6 +77,7 @@ static inline bool node_is_toptier(int node)
-> >=20
->=20>=20=20
->=20>=20
->=20>  #define numa_demotion_enabled false
-> >=20
->=20>  #define default_dram_type NULL
-> >=20
->=20>  +#define default_dram_nodes NODE_MASK_NONE
-> >=20
->=20
-> Should we use <tab> after "default_dram_nodes"?
->=20
-
-Yes,=20thanks for the reminder. Will fix it in the v3.
-
-> >=20
->=20> /*
-> >=20
->=20>  * CONFIG_NUMA implementation returns non NULL error.
-> >=20
->=20>  */
-> >=20
->=20>  diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-> >=20
->=20>  index 6632102bd5c9..a19a90c3ad36 100644
-> >=20
->=20>  --- a/mm/memory-tiers.c
-> >=20
->=20>  +++ b/mm/memory-tiers.c
-> >=20
->=20>  @@ -43,6 +43,7 @@ static LIST_HEAD(memory_tiers);
-> >=20
->=20>  static LIST_HEAD(default_memory_types);
-> >=20
->=20>  static struct node_memory_type_map node_memory_types[MAX_NUMNODES]=
-;
-> >=20
->=20>  struct memory_dev_type *default_dram_type;
-> >=20
->=20>  +nodemask_t default_dram_nodes __initdata =3D NODE_MASK_NONE;
-> >=20
->=20>=20=20
->=20>=20
->=20>  static const struct bus_type memory_tier_subsys =3D {
-> >=20
->=20>  .name =3D "memory_tiering",
-> >=20
->=20>  @@ -671,28 +672,38 @@ EXPORT_SYMBOL_GPL(mt_put_memory_types);
-> >=20
->=20>=20=20
->=20>=20
->=20>  /*
-> >=20
->=20>  * This is invoked via `late_initcall()` to initialize memory tiers=
- for
-> >=20
->=20>  - * CPU-less memory nodes after driver initialization, which is
-> >=20
->=20>  - * expected to provide `adistance` algorithms.
-> >=20
->=20>  + * memory nodes, both with and without CPUs. After the initializa=
-tion of
-> >=20
->=20>  + * firmware and devices, adistance algorithms are expected to be =
-provided.
-> >=20
->=20>  */
-> >=20
->=20>  static int __init memory_tier_late_init(void)
-> >=20
->=20>  {
-> >=20
->=20>  int nid;
-> >=20
->=20>  + struct memory_tier *memtier;
-> >=20
->=20>=20=20
->=20>=20
->=20>  + get_online_mems();
-> >=20
->=20>  guard(mutex)(&memory_tier_lock);
-> >=20
->=20>  + /*
-> >=20
->=20>  + * Look at all the existing and uninitialized N_MEMORY nodes and
-> >=20
->=20>  + * add them to default memory tier or to a tier if we already hav=
-e
-> >=20
->=20>  + * memory types assigned.
-> >=20
->=20>  + */
-> >=20
->=20
-> If the memory type of the node has been assigned, we will skip it in th=
-e
->=20
->=20following code. So, I think that we need to revise the comments.
->=20
-
-You=20are right, the new version in the v3 will be:
-/* Assign each uninitialized N_MEMORY node to a memory tier. */
-
-> >=20
->=20> for_each_node_state(nid, N_MEMORY) {
-> >=20
->=20>  /*
-> >=20
->=20>  - * Some device drivers may have initialized memory tiers
-> >=20
->=20>  - * between `memory_tier_init()` and `memory_tier_late_init()`,
-> >=20
->=20>  - * potentially bringing online memory nodes and
-> >=20
->=20>  - * configuring memory tiers. Exclude them here.
-> >=20
->=20>  + * Some device drivers may have initialized
-> >=20
->=20>  + * memory tiers, potentially bringing memory nodes
-> >=20
->=20>  + * online and configuring memory tiers.
-> >=20
->=20>  + * Exclude them here.
-> >=20
->=20>  */
-> >=20
->=20>  if (node_memory_types[nid].memtype)
-> >=20
->=20>  continue;
-> >=20
->=20>=20=20
->=20>=20
->=20>  - set_node_memory_tier(nid);
-> >=20
->=20>  + memtier =3D set_node_memory_tier(nid);
-> >=20
->=20>  + if (IS_ERR(memtier))
-> >=20
->=20>  + /* Continue with memtiers we are able to setup. */
-> >=20
->=20>  + break;
-> >=20
->=20>  }
-> >=20
->=20>  -
-> >=20
->=20>  establish_demotion_targets();
-> >=20
->=20>  + put_online_mems();
-> >=20
->=20>=20=20
->=20>=20
->=20>  return 0;
-> >=20
->=20>  }
-> >=20
->=20>  @@ -875,8 +886,7 @@ static int __meminit memtier_hotplug_callback(=
-struct notifier_block *self,
-> >=20
->=20>=20=20
->=20>=20
->=20>  static int __init memory_tier_init(void)
-> >=20
->=20>  {
-> >=20
->=20>  - int ret, node;
-> >=20
->=20>  - struct memory_tier *memtier;
-> >=20
->=20>  + int ret;
-> >=20
->=20>=20=20
->=20>=20
->=20>  ret =3D subsys_virtual_register(&memory_tier_subsys, NULL);
-> >=20
->=20>  if (ret)
-> >=20
->=20>  @@ -887,7 +897,8 @@ static int __init memory_tier_init(void)
-> >=20
->=20>  GFP_KERNEL);
-> >=20
->=20>  WARN_ON(!node_demotion);
-> >=20
->=20>  #endif
-> >=20
->=20>  - mutex_lock(&memory_tier_lock);
-> >=20
->=20>  +
-> >=20
->=20>  + guard(mutex)(&memory_tier_lock);
-> >=20
->=20>  /*
-> >=20
->=20>  * For now we can have 4 faster memory tiers with smaller adistance
-> >=20
->=20>  * than default DRAM tier.
-> >=20
->=20>  @@ -897,29 +908,9 @@ static int __init memory_tier_init(void)
-> >=20
->=20>  if (IS_ERR(default_dram_type))
-> >=20
->=20>  panic("%s() failed to allocate default DRAM tier\n", __func__);=0D
-> >=20
->=20>=20=20
->=20>=20
->=20>  - /*
-> >=20
->=20>  - * Look at all the existing N_MEMORY nodes and add them to
-> >=20
->=20>  - * default memory tier or to a tier if we already have memory
-> >=20
->=20>  - * types assigned.
-> >=20
->=20>  - */
-> >=20
->=20>  - for_each_node_state(node, N_MEMORY) {
-> >=20
->=20>  - if (!node_state(node, N_CPU))
-> >=20
->=20>  - /*
-> >=20
->=20>  - * Defer memory tier initialization on
-> >=20
->=20>  - * CPUless numa nodes. These will be initialized
-> >=20
->=20>  - * after firmware and devices are initialized.
-> >=20
->=20>  - */
-> >=20
->=20>  - continue;
-> >=20
->=20>  -
-> >=20
->=20>  - memtier =3D set_node_memory_tier(node);
-> >=20
->=20>  - if (IS_ERR(memtier))
-> >=20
->=20>  - /*
-> >=20
->=20>  - * Continue with memtiers we are able to setup
-> >=20
->=20>  - */
-> >=20
->=20>  - break;
-> >=20
->=20>  - }
-> >=20
->=20>  - establish_demotion_targets();
-> >=20
->=20>  - mutex_unlock(&memory_tier_lock);
-> >=20
->=20>  + /* Record nodes with memory and CPU to set default DRAM performa=
-nce. */
-> >=20
->=20>  + nodes_and(default_dram_nodes, node_states[N_MEMORY],
-> >=20
->=20>  + node_states[N_CPU]);
-> >=20
->=20>=20=20
->=20>=20
->=20>  hotplug_memory_notifier(memtier_hotplug_callback, MEMTIER_HOTPLUG_=
-PRI);
-> >=20
->=20>  return 0;
-> >=20
->=20
-> --
->=20
->=20Best Regards,
->=20
->=20Huang, Ying
->
-
---
-Best Regards,
-Ho-Ren (Jack) Chuang
+RnJvbTogQ2zDqW1lbnQgTWF0aGlldS0tRHJpZiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRl
+bi5jb20+DQoNClNpZ25lZC1vZmYtYnk6IENsw6ltZW50IE1hdGhpZXUtLURyaWYgPGNsZW1lbnQu
+bWF0aGlldS0tZHJpZkBldmlkZW4uY29tPg0KUmV2aWV3ZWQtYnk6IFpoZW56aG9uZyBEdWFuIDx6
+aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+DQotLS0NCiBody9pMzg2L2ludGVsX2lvbW11LmMgfCA1
+ICsrKysrDQogMSBmaWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKQ0KDQpkaWZmIC0tZ2l0IGEv
+aHcvaTM4Ni9pbnRlbF9pb21tdS5jIGIvaHcvaTM4Ni9pbnRlbF9pb21tdS5jDQppbmRleCA5ODk5
+NmVkZWRjLi43MWNlYmUyZmQzIDEwMDY0NA0KLS0tIGEvaHcvaTM4Ni9pbnRlbF9pb21tdS5jDQor
+KysgYi9ody9pMzg2L2ludGVsX2lvbW11LmMNCkBAIC0zNTAwLDYgKzM1MDAsMTEgQEAgc3RhdGlj
+IGJvb2wgdnRkX3Byb2Nlc3Nfd2FpdF9kZXNjKEludGVsSU9NTVVTdGF0ZSAqcywgVlRESW52RGVz
+YyAqaW52X2Rlc2MpDQogICAgIH0gZWxzZSBpZiAoaW52X2Rlc2MtPmxvICYgVlREX0lOVl9ERVND
+X1dBSVRfSUYpIHsNCiAgICAgICAgIC8qIEludGVycnVwdCBmbGFnICovDQogICAgICAgICB2dGRf
+Z2VuZXJhdGVfY29tcGxldGlvbl9ldmVudChzKTsNCisgICAgfSBlbHNlIGlmIChpbnZfZGVzYy0+
+bG8gJiBWVERfSU5WX0RFU0NfV0FJVF9GTikgew0KKyAgICAgICAgLyoNCisgICAgICAgICAqIFNX
+ID0gMCwgSUYgPSAwLCBGTiA9IDENCisgICAgICAgICAqIE5vdGhpbmcgdG8gZG8gYXMgd2UgcHJv
+Y2VzcyB0aGUgZXZlbnRzIHNlcXVlbnRpYWxseQ0KKyAgICAgICAgICovDQogICAgIH0gZWxzZSB7
+DQogICAgICAgICBlcnJvcl9yZXBvcnRfb25jZSgiJXM6IGludmFsaWQgd2FpdCBkZXNjOiBoaT0l
+IlBSSXg2NCIsIGxvPSUiUFJJeDY0DQogICAgICAgICAgICAgICAgICAgICAgICAgICAiICh1bmtu
+b3duIHR5cGUpIiwgX19mdW5jX18sIGludl9kZXNjLT5oaSwNCi0tIA0KMi40NS4y
 
