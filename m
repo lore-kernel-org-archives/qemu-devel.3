@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D541CC3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:23:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E963C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:24:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjyI-0000OH-3A; Tue, 02 Jul 2024 16:19:26 -0400
+	id 1sOk0S-0006KX-TA; Tue, 02 Jul 2024 16:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyC-0008BH-KK
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzV-0004tB-ST
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjy6-0001EK-M2
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzQ-0001ec-TU
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951553;
+ s=mimecast20190719; t=1719951635;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/8Z7JyQo+HEEofucdvOkehCzjauROI/8uJ9hGYzaVe8=;
- b=V3NJ63f5xY2mgT7CT3Uwm7Gl0cwpESicCudmH3whhbSUkp4m9YxwgLzv0xLLIi5nvu/Pv+
- uBfc+ONUdR0rDDOr1xvTrXBHKNhMCDMbrigtzhWgPZn7fm7Y9W6PmChx3J72cCYrdXX8+P
- KBSLJU1oyGcdvFBWp3eE44bHcrAYNXo=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PtAXW6LVwA3P89VkFVi94GjAlNMJ1XHCqV5FMloDGgI=;
+ b=Mcftm4Y6aib0stOJMhNIu9H1LnBd65f5CU6DKACeyTaXNpG3d8FZYYFXKEz1xBAJdUXtMU
+ SPwEHlBhQQHogtoEX+bz5hJRDJvUywsEJzpdK6f7hzrGxH2LezxrQZtsA1VrqY0Jp8LVji
+ fF02+c8x5HyOXhwfG4QO/OoHxBEHIsY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-482-m3P6Irj9M7q2MbkjXQ_2rQ-1; Tue, 02 Jul 2024 16:19:12 -0400
-X-MC-Unique: m3P6Irj9M7q2MbkjXQ_2rQ-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3678fbf4aa7so253334f8f.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:19:12 -0700 (PDT)
+ us-mta-182-D1BXoKXlP_ise2zzhpGPVw-1; Tue, 02 Jul 2024 16:20:31 -0400
+X-MC-Unique: D1BXoKXlP_ise2zzhpGPVw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4257dd7d462so20014995e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:20:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951550; x=1720556350;
+ d=1e100.net; s=20230601; t=1719951629; x=1720556429;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/8Z7JyQo+HEEofucdvOkehCzjauROI/8uJ9hGYzaVe8=;
- b=Fpvh/rsNvTBoia6tB/KIcNR3KjoM2aOh5E17u0NviUlFY/HhYRRylTum8XDSUzFMzK
- 7t7pRW7nzf1umzBdK3SandU7CQOm0J/jq4BTEepCczgMb9A88ZDvLzz1YkeSFIQWnlHi
- 0GMH8iVFopQZVIaBH6fnWQGZEbeJa7tPqBL+vQ3VfryClH4bj+A9leNc/GyAbl5lFasM
- sCXZBlizUfdjPUB6Fb5i6Si83A4v660lqG3V4Z64F5L0ud8H4Wal00tTh29Jo231xfGo
- u+L42W1h8I7W7jhGzOKpaqnmGlW6t3/qUozPw2nXhUOEyqlsOIMOUgftI1LWYut7Xbym
- /VdA==
-X-Gm-Message-State: AOJu0YzunhF9VENRETbKVt0emCUwVQngMJkmtkj0QVOu1mgVx4+EbV1V
- YCiNGrK//l8IRgh6HtFOLdCgE0XYkUrJT3npMOJmK2RRTIhgIebwHVuHA514goH5r/+R2Czqz5H
- MqKlVfOzqo+AJrgzs1LvtbRk5a9blkE+LsgKji+2l5ohnRRp49L/l1N3BZHxDI4aHxKBYYCBK83
- C3W4Y1hNfMD4nd0ZgA0lwcfi8zd++Sdg==
-X-Received: by 2002:a5d:598e:0:b0:366:eedd:afd1 with SMTP id
- ffacd0b85a97d-3677571b6e0mr7083596f8f.45.1719951550421; 
- Tue, 02 Jul 2024 13:19:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFgj9Mf6EskIwUMr5kIVqr++iVyFCn7YxLCGdkKWDqcjZL6zTfAtlkrpo3kUApo3QLqO1EDLA==
-X-Received: by 2002:a5d:598e:0:b0:366:eedd:afd1 with SMTP id
- ffacd0b85a97d-3677571b6e0mr7083575f8f.45.1719951549857; 
- Tue, 02 Jul 2024 13:19:09 -0700 (PDT)
+ bh=PtAXW6LVwA3P89VkFVi94GjAlNMJ1XHCqV5FMloDGgI=;
+ b=WcZlI68EBm4tGtjQFbrBhbl8VS2LEV8ooFLmP3Nk3uhjo09rflIvNhUuE1lWwKNv2n
+ EIvrnk/PCUIoGiAxVyCGdnH6qaQt3MhdmUunu+QgTg2cXiheDmgiEyFMaYAjjBLq04h+
+ L0jfD4GEOXYEaZRFmZWF6jYiVbUg59A1X4ptZsBqeDzulVFn2KrKsoWkD3+EuQIjKd86
+ IWygZLY6CMt1G+ZFotDdrQbIS4qNLkWX54RftB5LHe5IkO+e6PfG3z0vgeM4zY9AKpJq
+ BcGhIB33S7S1cIPo2kZ5UvJk2vZ52cKZ19k5XnPnn3o1ANnMpWnO8oWbQqxuZucacfD2
+ usww==
+X-Gm-Message-State: AOJu0YwUfDQae4FPx0lVt5XjJKh5Dej4awhS6xiQjFGxHPxn6HzTQeh0
+ yB0S0PXuuAEerZLt0msPGJUSaQFBEBTWWz3h76ULDLpp82ScmHlxQXNqJB79ufBmn0OsucO+G2A
+ JhxXvlFPMAFI6cUM07XZJ0T276xx69IiNPiz/n9UssIZMLikAMxyyglHlbLFAMSLtIrUtWuW9qW
+ g/Gtg/BB++zmrtCqLszhrQEhuu8DypKQ==
+X-Received: by 2002:a05:600c:4304:b0:425:6262:1cc2 with SMTP id
+ 5b1f17b1804b1-4257a07569dmr76790535e9.34.1719951629696; 
+ Tue, 02 Jul 2024 13:20:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFTAdDp9TdHeo+Rf8b2nbRjEWWUFic4MKFn5s10EBQQgjK+QcKslq8FSlc6G4l5feJ1s/1frw==
+X-Received: by 2002:a05:600c:4304:b0:425:6262:1cc2 with SMTP id
+ 5b1f17b1804b1-4257a07569dmr76790415e9.34.1719951629197; 
+ Tue, 02 Jul 2024 13:20:29 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36790d523bfsm447717f8f.107.2024.07.02.13.19.08
+ 5b1f17b1804b1-42577a0dda2sm95522585e9.0.2024.07.02.13.20.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:19:09 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:19:06 -0400
+ Tue, 02 Jul 2024 13:20:28 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:20:25 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PULL v2 59/88] hw/virtio: Fix the de-initialization of vhost-user
- devices
-Message-ID: <805a31ea56e26c360361c5f011d5b78eb6e9b66f.1719951168.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL v2 79/88] hw/pci: Rename has_power to enabled
+Message-ID: <bd4f90b8a9449ddec2eeefa0d0a1eb8330d3ce0f.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -102,93 +102,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The unrealize functions of the various vhost-user devices are
-calling the corresponding vhost_*_set_status() functions with a
-status of 0 to shut down the device correctly.
+The renamed state will not only represent powering state of PFs, but
+also represent SR-IOV VF enablement in the future.
 
-Now these vhost_*_set_status() functions all follow this scheme:
-
-    bool should_start = virtio_device_should_start(vdev, status);
-
-    if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
-        return;
-    }
-
-    if (should_start) {
-        /* ... do the initialization stuff ... */
-    } else {
-        /* ... do the cleanup stuff ... */
-    }
-
-The problem here is virtio_device_should_start(vdev, 0) currently
-always returns "true" since it internally only looks at vdev->started
-instead of looking at the "status" parameter. Thus once the device
-got started once, virtio_device_should_start() always returns true
-and thus the vhost_*_set_status() functions return early, without
-ever doing any clean-up when being called with status == 0. This
-causes e.g. problems when trying to hot-plug and hot-unplug a vhost
-user devices multiple times since the de-initialization step is
-completely skipped during the unplug operation.
-
-This bug has been introduced in commit 9f6bcfd99f ("hw/virtio: move
-vm_running check to virtio_device_started") which replaced
-
- should_start = status & VIRTIO_CONFIG_S_DRIVER_OK;
-
-with
-
- should_start = virtio_device_started(vdev, status);
-
-which later got replaced by virtio_device_should_start(). This blocked
-the possibility to set should_start to false in case the status flag
-VIRTIO_CONFIG_S_DRIVER_OK was not set.
-
-Fix it by adjusting the virtio_device_should_start() function to
-only consider the status flag instead of vdev->started. Since this
-function is only used in the various vhost_*_set_status() functions
-for exactly the same purpose, it should be fine to fix it in this
-central place there without any risk to change the behavior of other
-code.
-
-Fixes: 9f6bcfd99f ("hw/virtio: move vm_running check to virtio_device_started")
-Buglink: https://issues.redhat.com/browse/RHEL-40708
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240618121958.88673-1-thuth@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-reuse-v10-1-7ca0b8ed3d9f@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/virtio.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/hw/pci/pci.h        |  7 ++++++-
+ include/hw/pci/pci_device.h |  2 +-
+ hw/pci/pci.c                | 14 +++++++-------
+ hw/pci/pci_host.c           |  4 ++--
+ 4 files changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 1451926a13..7512afbc84 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -472,9 +472,9 @@ static inline bool virtio_device_started(VirtIODevice *vdev, uint8_t status)
-  * @vdev - the VirtIO device
-  * @status - the devices status bits
-  *
-- * This is similar to virtio_device_started() but also encapsulates a
-- * check on the VM status which would prevent a device starting
-- * anyway.
-+ * This is similar to virtio_device_started() but ignores vdev->started
-+ * and also encapsulates a check on the VM status which would prevent a
-+ * device from starting anyway.
-  */
- static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status)
- {
-@@ -482,7 +482,7 @@ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status
-         return false;
-     }
- 
--    return virtio_device_started(vdev, status);
-+    return status & VIRTIO_CONFIG_S_DRIVER_OK;
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index eb26cac810..fe04b4fafd 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -678,6 +678,11 @@ static inline void pci_irq_pulse(PCIDevice *pci_dev)
  }
  
- static inline void virtio_set_started(VirtIODevice *vdev, bool started)
+ MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
+-void pci_set_power(PCIDevice *pci_dev, bool state);
++void pci_set_enabled(PCIDevice *pci_dev, bool state);
++
++static inline void pci_set_power(PCIDevice *pci_dev, bool state)
++{
++    pci_set_enabled(pci_dev, state);
++}
+ 
+ #endif
+diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+index d3dd0f64b2..d57f9ce838 100644
+--- a/include/hw/pci/pci_device.h
++++ b/include/hw/pci/pci_device.h
+@@ -56,7 +56,7 @@ typedef struct PCIReqIDCache PCIReqIDCache;
+ struct PCIDevice {
+     DeviceState qdev;
+     bool partially_hotplugged;
+-    bool has_power;
++    bool enabled;
+ 
+     /* PCI config space */
+     uint8_t *config;
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 50b86d5790..68d30feb86 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -1525,7 +1525,7 @@ static void pci_update_mappings(PCIDevice *d)
+             continue;
+ 
+         new_addr = pci_bar_address(d, i, r->type, r->size);
+-        if (!d->has_power) {
++        if (!d->enabled) {
+             new_addr = PCI_BAR_UNMAPPED;
+         }
+ 
+@@ -1613,7 +1613,7 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
+         pci_update_irq_disabled(d, was_irq_disabled);
+         memory_region_set_enabled(&d->bus_master_enable_region,
+                                   (pci_get_word(d->config + PCI_COMMAND)
+-                                   & PCI_COMMAND_MASTER) && d->has_power);
++                                   & PCI_COMMAND_MASTER) && d->enabled);
+     }
+ 
+     msi_write_config(d, addr, val_in, l);
+@@ -2884,18 +2884,18 @@ MSIMessage pci_get_msi_message(PCIDevice *dev, int vector)
+     return msg;
+ }
+ 
+-void pci_set_power(PCIDevice *d, bool state)
++void pci_set_enabled(PCIDevice *d, bool state)
+ {
+-    if (d->has_power == state) {
++    if (d->enabled == state) {
+         return;
+     }
+ 
+-    d->has_power = state;
++    d->enabled = state;
+     pci_update_mappings(d);
+     memory_region_set_enabled(&d->bus_master_enable_region,
+                               (pci_get_word(d->config + PCI_COMMAND)
+-                               & PCI_COMMAND_MASTER) && d->has_power);
+-    if (!d->has_power) {
++                               & PCI_COMMAND_MASTER) && d->enabled);
++    if (!d->enabled) {
+         pci_device_reset(d);
+     }
+ }
+diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+index dfe6fe6184..0d82727cc9 100644
+--- a/hw/pci/pci_host.c
++++ b/hw/pci/pci_host.c
+@@ -86,7 +86,7 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
+      * allowing direct removal of unexposed functions.
+      */
+     if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
+-        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
++        !pci_dev->enabled || is_pci_dev_ejected(pci_dev)) {
+         return;
+     }
+ 
+@@ -111,7 +111,7 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
+      * allowing direct removal of unexposed functions.
+      */
+     if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
+-        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
++        !pci_dev->enabled || is_pci_dev_ejected(pci_dev)) {
+         return ~0x0;
+     }
+ 
 -- 
 MST
 
