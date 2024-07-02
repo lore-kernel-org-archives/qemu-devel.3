@@ -4,123 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F061C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EEB1C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOei8-0004I4-Hs; Tue, 02 Jul 2024 10:42:24 -0400
+	id 1sOek6-0007s6-PW; Tue, 02 Jul 2024 10:44:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ayush.m55@samsung.com>)
- id 1sOdkI-00081Z-Pw
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:40:36 -0400
-Received: from mailout1.samsung.com ([203.254.224.24])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sOek3-0007k0-3S
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:44:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ayush.m55@samsung.com>)
- id 1sOdkB-0007Mh-2e
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:40:33 -0400
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20240702134017epoutp01b988ede3c87b61a7a4db2054bc99a8d8~eaQ43Jpdt1289012890epoutp01S
- for <qemu-devel@nongnu.org>; Tue,  2 Jul 2024 13:40:17 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20240702134017epoutp01b988ede3c87b61a7a4db2054bc99a8d8~eaQ43Jpdt1289012890epoutp01S
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1719927617;
- bh=Tc04XVLYYScLca5YrloOjmE417jHIdRSu1c6MkC6BYM=;
- h=From:To:Cc:Subject:Date:References:From;
- b=Hh/JChhY+nChIzrG1q33nFHsLfHGQfYhMN04EEEWatpxQ8SMBjIPGu40zVlnqcLfl
- FxUeA27sSo+S5eeu3bIc/f53c9g9PObRbzN+X/2JKNjClJVKiboLDt56GTSweNfu4G
- 1J/ucv6vg6KhL+v43GWVrgBxFd5aJFGnvMdw7ujU=
-Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTP id
- 20240702134017epcas5p4b6d417adaf595c7e28e6cc9a1cd2bfa2~eaQ4pqyol0142801428epcas5p4G;
- Tue,  2 Jul 2024 13:40:17 +0000 (GMT)
-Received: from epsmges5p2new.samsung.com (unknown [182.195.38.180]) by
- epsnrtp2.localdomain (Postfix) with ESMTP id 4WD3v40dVDz4x9Pw; Tue,  2 Jul
- 2024 13:40:16 +0000 (GMT)
-Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
- epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
- 47.B8.09989.F3304866; Tue,  2 Jul 2024 22:40:15 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
- 20240702133144epcas5p22b982613bfbfce0e7ad0c74fd72a7956~eaJbAG7uc1478014780epcas5p2n;
- Tue,  2 Jul 2024 13:31:44 +0000 (GMT)
-Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
- epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
- 20240702133144epsmtrp120509736bfe851d4c537af5097cf305c~eaJa-c6NK2395523955epsmtrp1c;
- Tue,  2 Jul 2024 13:31:44 +0000 (GMT)
-X-AuditID: b6c32a4a-bffff70000002705-9e-6684033fa496
-Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
- epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
- BE.79.07412.04104866; Tue,  2 Jul 2024 22:31:44 +0900 (KST)
-Received: from localhost.sa.corp.samsungelectronics.net (unknown
- [107.99.41.223]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20240702133143epsmtip1658fb420c8b1043b6dbb320b07aa6277~eaJaJXUEF2392523925epsmtip1e;
- Tue,  2 Jul 2024 13:31:43 +0000 (GMT)
-From: Ayush Mishra <ayush.m55@samsung.com>
-To: qemu-devel@nongnu.org
-Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, Ayush Mishra
- <ayush.m55@samsung.com>
-Subject: [PATCH] hw/nvme: actually implement abort
-Date: Tue,  2 Jul 2024 13:32:32 +0530
-Message-ID: <20240702080232.848849-1-ayush.m55@samsung.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sOejy-0006ru-NO
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:44:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719931456;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1a9vvIucL315NhtrEUuzFITeYXQKpYLmLOB4maHst7Y=;
+ b=ZRlGIC9aiVAX1kRXM0zmmrC1ofINNPsXvodQRSSR4tsLIxgpCjvGYoTPeW0PwlzTXLD9pC
+ 2xF8l5PVrutSVtJZSeGmH3/O+Htxd8JReiNMsa7DXwKCOB8C9lXFBotnVWsqSMwOSuWObE
+ vzam8HO9GQkXtzSVxYF10UDXPLpsh9k=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-269-ve_6nmc4N0641yu2fqT8AQ-1; Tue, 02 Jul 2024 10:44:15 -0400
+X-MC-Unique: ve_6nmc4N0641yu2fqT8AQ-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2c7d46d273cso3456523a91.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:44:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719931454; x=1720536254;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1a9vvIucL315NhtrEUuzFITeYXQKpYLmLOB4maHst7Y=;
+ b=Ka+DHFBIN/bqH+0M2UJoUGM4j8NAgypRq7pwFFFn4bEwdz28owqQ7Rkt6ZPTRQKnnO
+ w7l8oyc0X2bZp0HVhgzq/NJ5sXq4USBd7QAEO2kYkrbMWjtRzgXcd5KgHKuIVolrw3SE
+ Q2t22OHQIZ9aPCXoxwYNZvWZhSN/wwHcCdomdZ2+Sy3v1YBpQWefgBYenyBIKYKCgdTo
+ Lg7l+BCb/6CeBbvdMXY7fJyPf9gFZjJbLjmWNonMPxkY0pXqjKBQeOaICiyDQbdyvf9m
+ 5oxU7HiGAUGCPTsvG1KHed82ZwjYKTZFCmvCsOh1a4cXYbhrcM4qJng1jlVYOhZCYfIX
+ fQrg==
+X-Gm-Message-State: AOJu0YyPDHFKcb69aszOMwY3TPP1TbXcUeqZLiHGLQhLjD3isth2gQSJ
+ vyCl5WACrlhbu3ErkRU+3LCrIKg1muW6vMv9Rl2F3zbJoRdYkrC5Vy7P3xYsVamypHiJMBqBphA
+ jcpAZmMK2ArtIoHHpopagSXUFHj1vmhMnTXsEfMBA+qEOy3s5S8xHNG6iPfKAkCqubzbBIPSuP3
+ hXe/4xLWROU8X03UjpbcdbvIHGltA=
+X-Received: by 2002:a17:90b:c11:b0:2c2:c3f5:33c3 with SMTP id
+ 98e67ed59e1d1-2c9276553cbmr19210530a91.6.1719931453892; 
+ Tue, 02 Jul 2024 07:44:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHiRxvM33MOiPKWnVhEAee11M55gWgE281NpaEzL0DO2m+XOQlzYM+f5Zg7h1mmvXS3kEGREek5GClRvJTSTo=
+X-Received: by 2002:a17:90b:c11:b0:2c2:c3f5:33c3 with SMTP id
+ 98e67ed59e1d1-2c9276553cbmr19210503a91.6.1719931453559; Tue, 02 Jul 2024
+ 07:44:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCKsWRmVeSWpSXmKPExsWy7bCmlq49c0uaQdM8IYvbk3ksTkwJs9h/
- 8BurxaRD1xgtjvfuYHFg9Zgy7Rq7x7kd59k9Nq3qZPN4cm0zk0ffllWMAaxR2TYZqYkpqUUK
- qXnJ+SmZeem2St7B8c7xpmYGhrqGlhbmSgp5ibmptkouPgG6bpk5QLuVFMoSc0qBQgGJxcVK
- +nY2RfmlJakKGfnFJbZKqQUpOQUmBXrFibnFpXnpenmpJVaGBgZGpkCFCdkZf9ZfZin4z1+x
- +/MJpgbGNu4uRk4OCQETiUWf/zN2MXJxCAnsZpTYuXkuI0hCSOATo8S3eTwQiW+MEucXbWOC
- 6fi9sZsFIrGXUWJP43uo9jYmibMTvzGDVLEJaEnce3mLBcQWEZCU+N11GijOwcEskCTR9Vkb
- JCwsYCSxcepjsKEsAqoS/R/vgdm8AtYSmzd8ZoNYJi+xeMdyZoi4oMTJmU/ARjIDxZu3zmaG
- qNnFLtHwXhvCdpH48v8NO4QtLPHq+BYoW0riZX8blJ0tMaf1GyOEXSKxdt41FgjbXuLinr9M
- EGdqSqzfpQ8RlpWYemodE8RaPone30+g4cArsWPeE7ByCQFliZ5DBhBhSYknr79AXe8h8X7T
- YVaQEiGBWIkH6w0nMMrPQvLLLCS/zELYu4CReRWjZGpBcW56arFpgVFeajk8UpPzczcxgpOf
- ltcOxocPPugdYmTiYDzEKMHBrCTCK/W+OU2INyWxsiq1KD++qDQntfgQoykwgCcyS4km5wPT
- b15JvKGJpYGJmZmZiaWxmaGSOO/r1rkpQgLpiSWp2ampBalFMH1MHJxSDUyt1zrFTSJ6n93X
- +F0s6Ve2ULLatiCAZ/XhvFiriZ7PGcs4T+pdsubaZOaztXq19J7/6yeInn9ee6QmWO/6s5+7
- flyNvTVBMOut+P4kg+Jeha01ifxXjnAZBaznFZt8KGGHrXjP2q0nU66Ws/xd8OqF0OMN4ac5
- /Pg/Sm+a9HxO8sxMiYmtygVxYZwbgll07kZ+ezr7eMmvMtXr57elKc9MVzyQrfCtecryCLOo
- 7v+P12RIdrM9uZ6dHuDovEw48E/saqW6lzsktlrZGl77t2pyyqsPj+xEzdZeu3j9QNPzD9Ld
- RzRcyzL4JwUfbV2S9V9hak1T14W4ncmyFSyTzql/bF/xQl1j44R5Etw3Wf4qsRRnJBpqMRcV
- JwIA3KN9CAcEAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCLMWRmVeSWpSXmKPExsWy7bCSnK4DY0uawZZNgha3J/NYnJgSZrH/
- 4DdWi0mHrjFaHO/dweLA6jFl2jV2j3M7zrN7bFrVyebx5NpmJo++LasYA1ijuGxSUnMyy1KL
- 9O0SuDL+rL/MUvCfv2L35xNMDYxt3F2MnBwSAiYSvzd2s3QxcnEICexmlHj9bgorREJSYu62
- b1C2sMTKf8/ZIYpamCSmPJkGlmAT0JK49/IWC4gtAtTwu+s0M4jNLJAm8bXlMRuILSxgJLFx
- 6mMmEJtFQFWi/+M9MJtXwFpi84bPbBAL5CUW71jODBEXlDg58wkLxBx5ieats5knMPLNQpKa
- hSS1gJFpFaNkakFxbnpusmGBYV5quV5xYm5xaV66XnJ+7iZGcEBqaexgvDf/n94hRiYOxkOM
- EhzMSiK8Uu+b04R4UxIrq1KL8uOLSnNSiw8xSnOwKInzGs6YnSIkkJ5YkpqdmlqQWgSTZeLg
- lGpgem7RZCY5R+sDI6fIr36Of057ZjFJXky2e8o28/ixLb8Sd+klWMyx3bCiZr7Vt0oPLcVV
- sRbnr/7tvGzxxXO22YNKf82KsOgdf15U9xUXXt/ZlR3l/Pn8wUtSCeKnVq5fsrCpVquvctsj
- 6/IpsRuWMPr71m1ybrlmejjiVNm+myJVZ1j2lKX7pDx0UGGLWrrjoTXL0RlXnlxe/SlZTik5
- teOCi/VcfW4N9z1a2zXXOc9/xjN1ksaLpIYl0WeFHBOXNXsZKKtderrsvOURoQX2Nh4lFxVn
- fr7N19U+z2udaq6ywstvs31517T81Vuhziy68Oop7zhb+2kmMQ8571wQ6Om+ERH58Qu/xT/J
- gl0qSizFGYmGWsxFxYkAnAAEWLcCAAA=
-X-CMS-MailID: 20240702133144epcas5p22b982613bfbfce0e7ad0c74fd72a7956
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240702133144epcas5p22b982613bfbfce0e7ad0c74fd72a7956
-References: <CGME20240702133144epcas5p22b982613bfbfce0e7ad0c74fd72a7956@epcas5p2.samsung.com>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=ayush.m55@samsung.com; helo=mailout1.samsung.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20240626232230.408004-1-jsnow@redhat.com>
+ <20240626232230.408004-4-jsnow@redhat.com>
+ <CAMRbyyuPVcwaLcyW=LeMhAWCRdqDBkNzYwE9q4Wan0Pm0k41GQ@mail.gmail.com>
+In-Reply-To: <CAMRbyyuPVcwaLcyW=LeMhAWCRdqDBkNzYwE9q4Wan0Pm0k41GQ@mail.gmail.com>
+From: John Snow <jsnow@redhat.com>
+Date: Tue, 2 Jul 2024 10:44:00 -0400
+Message-ID: <CAFn=p-Yz58vhQkQABp7uPPFLuuT_bL=Bdjxz+swsaHPzqS+dVA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] iotests: Change imports for Python 3.13
+To: Nir Soffer <nsoffer@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Beraldo Leal <bleal@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>
+Content-Type: multipart/alternative; boundary="00000000000053f0ba061c44bfc0"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 02 Jul 2024 10:42:15 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -135,70 +101,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Abort was not implemented previously, but we can implement it for AERs and asynchrnously for I/O.
+--00000000000053f0ba061c44bfc0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Ayush Mishra <ayush.m55@samsung.com>
----
- hw/nvme/ctrl.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+On Tue, Jul 2, 2024 at 7:52=E2=80=AFAM Nir Soffer <nsoffer@redhat.com> wrot=
+e:
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 127c3d2383..a38037b5f8 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -1759,6 +1759,10 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
-         break;
-     }
- 
-+    if (ret == -ECANCELED) {
-+        status = NVME_CMD_ABORT_REQ;
-+    }
-+
-     trace_pci_nvme_err_aio(nvme_cid(req), strerror(-ret), status);
- 
-     error_setg_errno(&local_err, -ret, "aio failed");
-@@ -5759,12 +5763,40 @@ static uint16_t nvme_identify(NvmeCtrl *n, NvmeRequest *req)
- static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)
- {
-     uint16_t sqid = le32_to_cpu(req->cmd.cdw10) & 0xffff;
-+    uint16_t cid  = (le32_to_cpu(req->cmd.cdw10) >> 16) & 0xffff;
-+    NvmeSQueue *sq = n->sq[sqid];
-+    NvmeRequest *r, *next;
-+    int i;
- 
-     req->cqe.result = 1;
-     if (nvme_check_sqid(n, sqid)) {
-         return NVME_INVALID_FIELD | NVME_DNR;
-     }
- 
-+    if (sqid == 0) {
-+        for (i = 0; i < n->outstanding_aers; i++) {
-+            NvmeRequest *re = n->aer_reqs[i];
-+            if (re->cqe.cid == cid) {
-+                memmove(n->aer_reqs + i, n->aer_reqs + i + 1,
-+                         (n->outstanding_aers - i - 1) * sizeof(NvmeRequest *));
-+                n->outstanding_aers--;
-+                re->status = NVME_CMD_ABORT_REQ;
-+                req->cqe.result = 0;
-+                nvme_enqueue_req_completion(&n->admin_cq, re);
-+                return NVME_SUCCESS;
-+            }
-+        }
-+    }
-+
-+    QTAILQ_FOREACH_SAFE(r, &sq->out_req_list, entry, next) {
-+        if (r->cqe.cid == cid) {
-+            if (r->aiocb) {
-+                blk_aio_cancel_async(r->aiocb);
-+            }
-+            break;
-+        }
-+    }
-+
-     return NVME_SUCCESS;
- }
- 
--- 
-2.43.0
+> On Thu, Jun 27, 2024 at 2:23=E2=80=AFAM John Snow <jsnow@redhat.com> wrot=
+e:
+> >
+> > Python 3.13 isn't out yet, but it's in beta and Fedora is ramping up to
+> > make it the default system interpreter for Fedora 41.
+> >
+> > They moved our cheese for where ContextManager lives; add a conditional
+> > to locate it while we support both pre-3.9 and 3.13+.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >  tests/qemu-iotests/testenv.py    | 7 ++++++-
+> >  tests/qemu-iotests/testrunner.py | 9 ++++++---
+> >  2 files changed, 12 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/tests/qemu-iotests/testenv.py
+> b/tests/qemu-iotests/testenv.py
+> > index 588f30a4f14..96d69e56963 100644
+> > --- a/tests/qemu-iotests/testenv.py
+> > +++ b/tests/qemu-iotests/testenv.py
+> > @@ -25,7 +25,12 @@
+> >  import random
+> >  import subprocess
+> >  import glob
+> > -from typing import List, Dict, Any, Optional, ContextManager
+> > +from typing import List, Dict, Any, Optional
+> > +
+> > +if sys.version_info >=3D (3, 9):
+> > +    from contextlib import AbstractContextManager as ContextManager
+> > +else:
+> > +    from typing import ContextManager
+>
+> It can be cleaner to add a compat module hiding the details so the
+> entire project
+> can have a single instance of this. Other code will just use:
+>
+>     from compat import ContextManager
+>
+
+If there were more than two uses, I'd consider it. As it stands, a
+compat.py module with just one import conditional in it doesn't seem worth
+the hassle. Are there more cases of compatibility goop inside iotests that
+need to be factored out to make it worth it?
+
+--js
+
+--00000000000053f0ba061c44bfc0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jul 2, 2024 at 7:52=E2=80=AFA=
+M Nir Soffer &lt;<a href=3D"mailto:nsoffer@redhat.com">nsoffer@redhat.com</=
+a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On=
+ Thu, Jun 27, 2024 at 2:23=E2=80=AFAM John Snow &lt;<a href=3D"mailto:jsnow=
+@redhat.com" target=3D"_blank">jsnow@redhat.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Python 3.13 isn&#39;t out yet, but it&#39;s in beta and Fedora is ramp=
+ing up to<br>
+&gt; make it the default system interpreter for Fedora 41.<br>
+&gt;<br>
+&gt; They moved our cheese for where ContextManager lives; add a conditiona=
+l<br>
+&gt; to locate it while we support both pre-3.9 and 3.13+.<br>
+&gt;<br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 tests/qemu-iotests/testenv.py=C2=A0 =C2=A0 | 7 ++++++-<br>
+&gt;=C2=A0 tests/qemu-iotests/testrunner.py | 9 ++++++---<br>
+&gt;=C2=A0 2 files changed, 12 insertions(+), 4 deletions(-)<br>
+&gt;<br>
+&gt; diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testen=
+v.py<br>
+&gt; index 588f30a4f14..96d69e56963 100644<br>
+&gt; --- a/tests/qemu-iotests/testenv.py<br>
+&gt; +++ b/tests/qemu-iotests/testenv.py<br>
+&gt; @@ -25,7 +25,12 @@<br>
+&gt;=C2=A0 import random<br>
+&gt;=C2=A0 import subprocess<br>
+&gt;=C2=A0 import glob<br>
+&gt; -from typing import List, Dict, Any, Optional, ContextManager<br>
+&gt; +from typing import List, Dict, Any, Optional<br>
+&gt; +<br>
+&gt; +if sys.version_info &gt;=3D (3, 9):<br>
+&gt; +=C2=A0 =C2=A0 from contextlib import AbstractContextManager as Contex=
+tManager<br>
+&gt; +else:<br>
+&gt; +=C2=A0 =C2=A0 from typing import ContextManager<br>
+<br>
+It can be cleaner to add a compat module hiding the details so the<br>
+entire project<br>
+can have a single instance of this. Other code will just use:<br>
+<br>
+=C2=A0 =C2=A0 from compat import ContextManager<br></blockquote><div><br></=
+div><div>If there were more than two uses, I&#39;d consider it. As it stand=
+s, a compat.py module with just one import conditional in it doesn&#39;t se=
+em worth the hassle. Are there more cases of compatibility goop inside iote=
+sts that need to be factored out to make it worth it?<br></div><div><br></d=
+iv><div>--js<br></div><br></div></div>
+
+--00000000000053f0ba061c44bfc0--
 
 
