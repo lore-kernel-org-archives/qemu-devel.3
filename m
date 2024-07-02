@@ -4,108 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD849C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:39:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F061C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOefR-0002Xo-Kd; Tue, 02 Jul 2024 10:39:37 -0400
+	id 1sOei8-0004I4-Hs; Tue, 02 Jul 2024 10:42:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sOefQ-0002XT-CI
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:39:36 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sOefO-0001p4-Lg
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:39:36 -0400
-Received: from hawking.nue2.suse.org (unknown [10.168.4.11])
- by smtp-out1.suse.de (Postfix) with ESMTP id 5FD0C2192D;
- Tue,  2 Jul 2024 14:39:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1719931170; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hw6KPjxSNwihZ2+cZgt6VpL7W2FBubD6ArgfOA4lcGg=;
- b=cHGgD3u9jR5tNWon3IeKklTKbskjYDK9hmI+GAZ+jgXkoume+Q5AOBhyHwxN9Lm6O4mket
- HGvvXKNcMs+5yrUjkPz3FiSB9+NlsWqu2/nUedKa9NzcS6ak7l94Sdvkf9m/gGWge52gmD
- FIMznXInsijiJUSIse+XpRs2HMzt+BE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1719931170;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hw6KPjxSNwihZ2+cZgt6VpL7W2FBubD6ArgfOA4lcGg=;
- b=NhyfQz9hwCEzn4fp76CVFkXY7IwuN9ojjKEo/3GAuTsHI4Izkh5aD10HD1PWhqvTbIXOjU
- szEkwbErqacTCACA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1719931169; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hw6KPjxSNwihZ2+cZgt6VpL7W2FBubD6ArgfOA4lcGg=;
- b=mabNIkChy35gQ6s3Y8f7jJ5uaehWueLg8n9iRBJdzxit0dCTYeZpnbIw/snNv62jni9JVg
- UxMD+JPMuy8cTbmKGVBe5ZnedqOkeWIMU36EWPhCXqI6UIel27evCgumztaBt2PsEPsaSY
- T6V1sMj5RCcDutOiFbf/RKwXteLkTvs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1719931169;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hw6KPjxSNwihZ2+cZgt6VpL7W2FBubD6ArgfOA4lcGg=;
- b=AQafLEFZjqZC9CiRfU4kuybedq9gkAJtyTc/nDZWI7/oCzGbbVZ5VlSZfjfq0Bp3sYFqGh
- jiqTDkY0TDnmp3DA==
-Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
- id 50D264A054F; Tue,  2 Jul 2024 16:39:29 +0200 (CEST)
-From: Andreas Schwab <schwab@suse.de>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  Warner Losh <imp@bsdimp.com>,
- QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: linux-user cannot allocate stack memory on riscv64 host due to
- non-zero guest_base
-In-Reply-To: <fbe9c88e-677a-4248-9901-76c56e52283b@linaro.org> (Richard
- Henderson's message of "Tue, 2 Jul 2024 07:18:46 -0700")
-References: <mvm8qytp828.fsf@suse.de>
- <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org>
- <mvm4j9gp0xd.fsf@suse.de>
- <34fed985-6a6a-4458-95f9-aa651744ef1a@linaro.org>
- <CANCZdfq4=s=g8GoeCKY4576xgJs4-X+fXh7m5ZOJ1UeBXwWdCQ@mail.gmail.com>
- <mvmv81un7m9.fsf@suse.de>
- <CANCZdfpW+G54v3oeKZ6QYuovOga93D5hou9Ajeo838Y9bDNsUA@mail.gmail.com>
- <mvmmsn6lawv.fsf@suse.de>
- <CAFEAcA-dbLncCmY8zyZAz8e+AWeoGC437B=nV3wPznER+RmhbA@mail.gmail.com>
- <mvmr0cdjjlh.fsf@suse.de>
- <f681575f-1dae-481e-8330-6fe2fc8d0f11@linaro.org>
- <mvm7ce4jjvf.fsf@suse.de>
- <fbe9c88e-677a-4248-9901-76c56e52283b@linaro.org>
-X-Yow: Everywhere I look I see NEGATIVITY and ASPHALT...
-Date: Tue, 02 Jul 2024 16:39:29 +0200
-Message-ID: <mvmtth7j1su.fsf@suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <ayush.m55@samsung.com>)
+ id 1sOdkI-00081Z-Pw
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:40:36 -0400
+Received: from mailout1.samsung.com ([203.254.224.24])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ayush.m55@samsung.com>)
+ id 1sOdkB-0007Mh-2e
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:40:33 -0400
+Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20240702134017epoutp01b988ede3c87b61a7a4db2054bc99a8d8~eaQ43Jpdt1289012890epoutp01S
+ for <qemu-devel@nongnu.org>; Tue,  2 Jul 2024 13:40:17 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20240702134017epoutp01b988ede3c87b61a7a4db2054bc99a8d8~eaQ43Jpdt1289012890epoutp01S
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1719927617;
+ bh=Tc04XVLYYScLca5YrloOjmE417jHIdRSu1c6MkC6BYM=;
+ h=From:To:Cc:Subject:Date:References:From;
+ b=Hh/JChhY+nChIzrG1q33nFHsLfHGQfYhMN04EEEWatpxQ8SMBjIPGu40zVlnqcLfl
+ FxUeA27sSo+S5eeu3bIc/f53c9g9PObRbzN+X/2JKNjClJVKiboLDt56GTSweNfu4G
+ 1J/ucv6vg6KhL+v43GWVrgBxFd5aJFGnvMdw7ujU=
+Received: from epsnrtp2.localdomain (unknown [182.195.42.163]) by
+ epcas5p4.samsung.com (KnoxPortal) with ESMTP id
+ 20240702134017epcas5p4b6d417adaf595c7e28e6cc9a1cd2bfa2~eaQ4pqyol0142801428epcas5p4G;
+ Tue,  2 Jul 2024 13:40:17 +0000 (GMT)
+Received: from epsmges5p2new.samsung.com (unknown [182.195.38.180]) by
+ epsnrtp2.localdomain (Postfix) with ESMTP id 4WD3v40dVDz4x9Pw; Tue,  2 Jul
+ 2024 13:40:16 +0000 (GMT)
+Received: from epcas5p4.samsung.com ( [182.195.41.42]) by
+ epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 47.B8.09989.F3304866; Tue,  2 Jul 2024 22:40:15 +0900 (KST)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+ 20240702133144epcas5p22b982613bfbfce0e7ad0c74fd72a7956~eaJbAG7uc1478014780epcas5p2n;
+ Tue,  2 Jul 2024 13:31:44 +0000 (GMT)
+Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
+ epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+ 20240702133144epsmtrp120509736bfe851d4c537af5097cf305c~eaJa-c6NK2395523955epsmtrp1c;
+ Tue,  2 Jul 2024 13:31:44 +0000 (GMT)
+X-AuditID: b6c32a4a-bffff70000002705-9e-6684033fa496
+Received: from epsmtip1.samsung.com ( [182.195.34.30]) by
+ epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ BE.79.07412.04104866; Tue,  2 Jul 2024 22:31:44 +0900 (KST)
+Received: from localhost.sa.corp.samsungelectronics.net (unknown
+ [107.99.41.223]) by epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
+ 20240702133143epsmtip1658fb420c8b1043b6dbb320b07aa6277~eaJaJXUEF2392523925epsmtip1e;
+ Tue,  2 Jul 2024 13:31:43 +0000 (GMT)
+From: Ayush Mishra <ayush.m55@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, Ayush Mishra
+ <ayush.m55@samsung.com>
+Subject: [PATCH] hw/nvme: actually implement abort
+Date: Tue,  2 Jul 2024 13:32:32 +0530
+Message-ID: <20240702080232.848849-1-ayush.m55@samsung.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.20 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- RCVD_NO_TLS_LAST(0.10)[]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; ARC_NA(0.00)[];
- RCVD_COUNT_ONE(0.00)[1]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- URIBL_BLOCKED(0.00)[suse.de:email,hawking.nue2.suse.org:helo];
- TO_DN_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,hawking.nue2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=schwab@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrCKsWRmVeSWpSXmKPExsWy7bCmlq49c0uaQdM8IYvbk3ksTkwJs9h/
+ 8BurxaRD1xgtjvfuYHFg9Zgy7Rq7x7kd59k9Nq3qZPN4cm0zk0ffllWMAaxR2TYZqYkpqUUK
+ qXnJ+SmZeem2St7B8c7xpmYGhrqGlhbmSgp5ibmptkouPgG6bpk5QLuVFMoSc0qBQgGJxcVK
+ +nY2RfmlJakKGfnFJbZKqQUpOQUmBXrFibnFpXnpenmpJVaGBgZGpkCFCdkZf9ZfZin4z1+x
+ +/MJpgbGNu4uRk4OCQETiUWf/zN2MXJxCAnsZpTYuXkuI0hCSOATo8S3eTwQiW+MEucXbWOC
+ 6fi9sZsFIrGXUWJP43uo9jYmibMTvzGDVLEJaEnce3mLBcQWEZCU+N11GijOwcEskCTR9Vkb
+ JCwsYCSxcepjsKEsAqoS/R/vgdm8AtYSmzd8ZoNYJi+xeMdyZoi4oMTJmU/ARjIDxZu3zmaG
+ qNnFLtHwXhvCdpH48v8NO4QtLPHq+BYoW0riZX8blJ0tMaf1GyOEXSKxdt41FgjbXuLinr9M
+ EGdqSqzfpQ8RlpWYemodE8RaPone30+g4cArsWPeE7ByCQFliZ5DBhBhSYknr79AXe8h8X7T
+ YVaQEiGBWIkH6w0nMMrPQvLLLCS/zELYu4CReRWjZGpBcW56arFpgVFeajk8UpPzczcxgpOf
+ ltcOxocPPugdYmTiYDzEKMHBrCTCK/W+OU2INyWxsiq1KD++qDQntfgQoykwgCcyS4km5wPT
+ b15JvKGJpYGJmZmZiaWxmaGSOO/r1rkpQgLpiSWp2ampBalFMH1MHJxSDUyt1zrFTSJ6n93X
+ +F0s6Ve2ULLatiCAZ/XhvFiriZ7PGcs4T+pdsubaZOaztXq19J7/6yeInn9ee6QmWO/6s5+7
+ flyNvTVBMOut+P4kg+Jeha01ifxXjnAZBaznFZt8KGGHrXjP2q0nU66Ws/xd8OqF0OMN4ac5
+ /Pg/Sm+a9HxO8sxMiYmtygVxYZwbgll07kZ+ezr7eMmvMtXr57elKc9MVzyQrfCtecryCLOo
+ 7v+P12RIdrM9uZ6dHuDovEw48E/saqW6lzsktlrZGl77t2pyyqsPj+xEzdZeu3j9QNPzD9Ld
+ RzRcyzL4JwUfbV2S9V9hak1T14W4ncmyFSyTzql/bF/xQl1j44R5Etw3Wf4qsRRnJBpqMRcV
+ JwIA3KN9CAcEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrCLMWRmVeSWpSXmKPExsWy7bCSnK4DY0uawZZNgha3J/NYnJgSZrH/
+ 4DdWi0mHrjFaHO/dweLA6jFl2jV2j3M7zrN7bFrVyebx5NpmJo++LasYA1ijuGxSUnMyy1KL
+ 9O0SuDL+rL/MUvCfv2L35xNMDYxt3F2MnBwSAiYSvzd2s3QxcnEICexmlHj9bgorREJSYu62
+ b1C2sMTKf8/ZIYpamCSmPJkGlmAT0JK49/IWC4gtAtTwu+s0M4jNLJAm8bXlMRuILSxgJLFx
+ 6mMmEJtFQFWi/+M9MJtXwFpi84bPbBAL5CUW71jODBEXlDg58wkLxBx5ieats5knMPLNQpKa
+ hSS1gJFpFaNkakFxbnpusmGBYV5quV5xYm5xaV66XnJ+7iZGcEBqaexgvDf/n94hRiYOxkOM
+ EhzMSiK8Uu+b04R4UxIrq1KL8uOLSnNSiw8xSnOwKInzGs6YnSIkkJ5YkpqdmlqQWgSTZeLg
+ lGpgem7RZCY5R+sDI6fIr36Of057ZjFJXky2e8o28/ixLb8Sd+klWMyx3bCiZr7Vt0oPLcVV
+ sRbnr/7tvGzxxXO22YNKf82KsOgdf15U9xUXXt/ZlR3l/Pn8wUtSCeKnVq5fsrCpVquvctsj
+ 6/IpsRuWMPr71m1ybrlmejjiVNm+myJVZ1j2lKX7pDx0UGGLWrrjoTXL0RlXnlxe/SlZTik5
+ teOCi/VcfW4N9z1a2zXXOc9/xjN1ksaLpIYl0WeFHBOXNXsZKKtderrsvOURoQX2Nh4lFxVn
+ fr7N19U+z2udaq6ywstvs31517T81Vuhziy68Oop7zhb+2kmMQ8571wQ6Om+ERH58Qu/xT/J
+ gl0qSizFGYmGWsxFxYkAnAAEWLcCAAA=
+X-CMS-MailID: 20240702133144epcas5p22b982613bfbfce0e7ad0c74fd72a7956
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20240702133144epcas5p22b982613bfbfce0e7ad0c74fd72a7956
+References: <CGME20240702133144epcas5p22b982613bfbfce0e7ad0c74fd72a7956@epcas5p2.samsung.com>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=ayush.m55@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 02 Jul 2024 10:42:15 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,14 +135,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Jul 02 2024, Richard Henderson wrote:
+Abort was not implemented previously, but we can implement it for AERs and asynchrnously for I/O.
 
-> Is /proc mounted in your environment?
+Signed-off-by: Ayush Mishra <ayush.m55@samsung.com>
+---
+ hw/nvme/ctrl.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-Sure, it's a fully running system on real hardware.
-
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 127c3d2383..a38037b5f8 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -1759,6 +1759,10 @@ static void nvme_aio_err(NvmeRequest *req, int ret)
+         break;
+     }
+ 
++    if (ret == -ECANCELED) {
++        status = NVME_CMD_ABORT_REQ;
++    }
++
+     trace_pci_nvme_err_aio(nvme_cid(req), strerror(-ret), status);
+ 
+     error_setg_errno(&local_err, -ret, "aio failed");
+@@ -5759,12 +5763,40 @@ static uint16_t nvme_identify(NvmeCtrl *n, NvmeRequest *req)
+ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)
+ {
+     uint16_t sqid = le32_to_cpu(req->cmd.cdw10) & 0xffff;
++    uint16_t cid  = (le32_to_cpu(req->cmd.cdw10) >> 16) & 0xffff;
++    NvmeSQueue *sq = n->sq[sqid];
++    NvmeRequest *r, *next;
++    int i;
+ 
+     req->cqe.result = 1;
+     if (nvme_check_sqid(n, sqid)) {
+         return NVME_INVALID_FIELD | NVME_DNR;
+     }
+ 
++    if (sqid == 0) {
++        for (i = 0; i < n->outstanding_aers; i++) {
++            NvmeRequest *re = n->aer_reqs[i];
++            if (re->cqe.cid == cid) {
++                memmove(n->aer_reqs + i, n->aer_reqs + i + 1,
++                         (n->outstanding_aers - i - 1) * sizeof(NvmeRequest *));
++                n->outstanding_aers--;
++                re->status = NVME_CMD_ABORT_REQ;
++                req->cqe.result = 0;
++                nvme_enqueue_req_completion(&n->admin_cq, re);
++                return NVME_SUCCESS;
++            }
++        }
++    }
++
++    QTAILQ_FOREACH_SAFE(r, &sq->out_req_list, entry, next) {
++        if (r->cqe.cid == cid) {
++            if (r->aiocb) {
++                blk_aio_cancel_async(r->aiocb);
++            }
++            break;
++        }
++    }
++
+     return NVME_SUCCESS;
+ }
+ 
 -- 
-Andreas Schwab, SUSE Labs, schwab@suse.de
-GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
-"And now for something completely different."
+2.43.0
+
 
