@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DD70C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE90C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:18:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeCZ-0000WU-8n; Tue, 02 Jul 2024 10:09:47 -0400
+	id 1sOeCa-0000fj-Ly; Tue, 02 Jul 2024 10:09:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCR-0008Ho-4y
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCB-0008Li-1l
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929362;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pgJQy7t094Dms9DBv10pUkz+7onKHwqzjJeEHsSRcQk=;
- b=b9Jp9lo0hUm++0MuFRzpSoThxRT3VvuxtUSb9sL+bSLKragceM9FT+dvcSrp371Ya8+git
- 9riNXrJk+LsF0YqS/c6dr6/k+BENyCyUwO8r0hj6UPTzgkvrQYSgDHugAIGgpJSRAdmomW
- AiG1Msasuh6vH1XjLQUuUhfGxOAbUaU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-TZL2ob9zNeONuqC2p20Osw-1; Tue, 02 Jul 2024 10:09:20 -0400
-X-MC-Unique: TZL2ob9zNeONuqC2p20Osw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4256569a4faso27263465e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929358; x=1720534158;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOeCV-0000Cg-4O
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:46 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOeC7-0008Ke-88
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:40 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-52cf4ca8904so6958824e87.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719929355; x=1720534155; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pgJQy7t094Dms9DBv10pUkz+7onKHwqzjJeEHsSRcQk=;
- b=KR/Qjt8xLNJGys1fEb0TepYHZp0NmqAqH7dDHppmjr6E2UUopHUBunX16sZtrRADef
- Y7agemK80ceMk8rVVVpzwL5c+jxIAUhujSIpSNTMsjfYlC6HtuZ7QbJ8NylH1QIDdFE+
- MRrqgVs07wIvVV5jZG7FgbR04cuo9NmArisDYhz1ENu7D/ftExtO4aQWwhHJaaa0XVL1
- hq10bemClISBRDDc5cZ2XmSYdQ6T5cWFermywxCP2BVb2tN7FOO8a6pw85Vy/ehhH1JT
- i58zKZ2/92ZmAKQkFEhp/jx6D6pwuCop7t6MPorkB/Mg/5EqG/YNiuq2bYEcG92Xyrgq
- +X+w==
-X-Gm-Message-State: AOJu0YxJcdbl0jtqFFeLHTque/SUBkK6t7qivUNNg0U8py4YNVJOxMIg
- hYidhKZPObF6N5V48+eCZFVQ4yyvdEWDTrfgcIfgOhlWy7DOkYRr4H0ogGyYkEcTMbYshVKCsOe
- JP1kzL3sDsy0CYy+To2j3Pj3zB/Pb/iYyFtULkSd35n/pydStsLS4NOtykCl+4u8oROVil5bTBl
- 8UFNTMalAjVjBrRxwP95ai3M1CoOxNiQ==
-X-Received: by 2002:a05:600c:4f13:b0:425:6290:b11b with SMTP id
- 5b1f17b1804b1-4256d58dc93mr107235165e9.18.1719929358538; 
- Tue, 02 Jul 2024 07:09:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFHbFq1qkUi1fZdglcJIPPyGd1pO8r2TtH/fMhcS06wamh8zkt0pz65ViGTQJUh9rWesjxoPg==
-X-Received: by 2002:a05:600c:4f13:b0:425:6290:b11b with SMTP id
- 5b1f17b1804b1-4256d58dc93mr107234875e9.18.1719929357982; 
- Tue, 02 Jul 2024 07:09:17 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
+ bh=OvsDqyOLxb1We4xAO26ZSKOk+5yWllmPJC+X7Ugk7Rg=;
+ b=gWkO9/D9CN2GiRotl8BjLAwtu/J+BswaAdjFItiGpqxDRxbUSt2rdaAsrCeMIa+1v/
+ qRC/IzWuitgjq31nlDHH9Q/UZrySC+XjBP68SZFVuOSOoPfFG83tziOMHQLUaDMkqX9v
+ TMnaKjaISUzh4NEsW7FNbvxbvIuiFDxTDPTJNyQ4X4e9xLv/zUnlWaIPpHO6a+QW8C0h
+ uX3YuZVVM4ZG1ya11C8dQgcsERYZAwliWEFXCWNqjjYcCoYFwKjFjY75Epf3AeGUtNc5
+ 6xPr5Bfe/sW/1BIQ4glYpzBP3XhwzzMut1sRZlQwBaf2Ar1FZS1ImQUzCFgdOu6kSHy7
+ arrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719929355; x=1720534155;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OvsDqyOLxb1We4xAO26ZSKOk+5yWllmPJC+X7Ugk7Rg=;
+ b=Ovmp3LiRlCPpU7p4bJnv3LmGHM1wanM1FF45ele7Ip2/ytYF3sRxXNpVoyetsaOROL
+ A2rNCnbM/yL4JxliTj6FHrkIIKaCXmkbS9NM16V0fbQGsN6/hbJm6DxwNVDjPbdhKnO5
+ 4TpK2HaTB5luijXISpx5X7OBkwPa6+cid4DuIlXiKPQCwdKAK2422OiLOnDa5PAeNEJE
+ VVC5L/SnJou/CvD8Arq0ec1KfPYEdqMwi2YQA/pXf5+AVvZ0VIrKUTHu7/WJ39bGNCWR
+ 170WKK0wEh/meTenDEYaghNRexnBkR/3eKcEd/cI7uN0w0DjRWV/PBPqKZNOS9Hdmg5t
+ cNoA==
+X-Gm-Message-State: AOJu0YxWzMcuJCjO7NnUJBckdRSIKdlSs9eZvXNnqjFbvpXmSc72mblT
+ zLf4NbkgX3kFjFx9Hj54Ga2hex70qce47KvZzA8paBndrvpQQfs+ulvfpDklIg0pzK25Gyi6I2W
+ v
+X-Google-Smtp-Source: AGHT+IFpqfH5sYVvgaifNTf67R5YPYYOT83w/LYjsVcNsLQWPKl5kgLZ0c3+Y3plNbcfQfYdrL2L9w==
+X-Received: by 2002:a05:6512:2255:b0:52b:c0b1:ab9e with SMTP id
+ 2adb3069b0e04-52e8264bc11mr6428691e87.5.1719929355583; 
+ Tue, 02 Jul 2024 07:09:15 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4257bc89832sm128332435e9.42.2024.07.02.07.09.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:09:17 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:09:15 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ 5b1f17b1804b1-42588492b4fsm59489235e9.4.2024.07.02.07.09.12
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 02 Jul 2024 07:09:15 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Dmitry Frolov <frolov@swemel.ru>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 45/91] hw/net/virtio-net.c: fix crash in iov_copy()
-Message-ID: <7bc77e8972cb30f5278ab1746ea962684b92f4ca.1719929191.git.mst@redhat.com>
-References: <cover.1719929191.git.mst@redhat.com>
+Cc: Tyrone Ting <kfting@nuvoton.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Hao Wu <wuhaotsh@google.com>, Thomas Huth <thuth@redhat.com>,
+ Shengtan Mao <stmao@google.com>, Chris Rauer <crauer@google.com>,
+ Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Laurent Vivier <lvivier@redhat.com>, Luc Michel <luc.michel@amd.com>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Patrick Venture <venture@google.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 4/4] hw/sd/sdcard: Generate random RCA value
+Date: Tue,  2 Jul 2024 16:08:42 +0200
+Message-ID: <20240702140842.54242-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240702140842.54242-1-philmd@linaro.org>
+References: <20240702140842.54242-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1719929191.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,36 +103,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Frolov <frolov@swemel.ru>
+Rather than using the obscure 0x4567 magic value,
+use a real random one.
 
-A crash found while fuzzing device virtio-net-socket-check-used.
-Assertion "offset == 0" in iov_copy() fails if less than guest_hdr_len bytes
-were transmited.
-
-Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
-Message-Id: <20240613143529.602591-2-frolov@swemel.ru>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/net/virtio-net.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/sd/sd.c         | 11 ++++++++---
+ hw/sd/trace-events |  1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9c7e85caea..8f30972708 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2735,6 +2735,10 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-          */
-         assert(n->host_hdr_len <= n->guest_hdr_len);
-         if (n->host_hdr_len != n->guest_hdr_len) {
-+            if (iov_size(out_sg, out_num) < n->guest_hdr_len) {
-+                virtio_error(vdev, "virtio-net header is invalid");
-+                goto detach;
-+            }
-             unsigned sg_num = iov_copy(sg, ARRAY_SIZE(sg),
-                                        out_sg, out_num,
-                                        0, n->host_hdr_len);
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index a48010cfc1..9443a9439d 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -46,6 +46,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/timer.h"
+ #include "qemu/log.h"
++#include "qemu/guest-random.h"
+ #include "qemu/module.h"
+ #include "sdmmc-internal.h"
+ #include "trace.h"
+@@ -490,9 +491,10 @@ static void sd_set_csd(SDState *sd, uint64_t size)
+ 
+ /* Relative Card Address register */
+ 
+-static void sd_set_rca(SDState *sd)
++static void sd_set_rca(SDState *sd, uint16_t value)
+ {
+-    sd->rca += 0x4567;
++    trace_sdcard_set_rca(value);
++    sd->rca = value;
+ }
+ 
+ static uint16_t sd_req_get_rca(SDState *s, SDRequest req)
+@@ -1103,11 +1105,14 @@ static sd_rsp_type_t sd_cmd_ALL_SEND_CID(SDState *sd, SDRequest req)
+ /* CMD3 */
+ static sd_rsp_type_t sd_cmd_SEND_RELATIVE_ADDR(SDState *sd, SDRequest req)
+ {
++    uint16_t random_rca;
++
+     switch (sd->state) {
+     case sd_identification_state:
+     case sd_standby_state:
+         sd->state = sd_standby_state;
+-        sd_set_rca(sd);
++        qemu_guest_getrandom_nofail(&random_rca, sizeof(random_rca));
++        sd_set_rca(sd, random_rca);
+         return sd_r6;
+ 
+     default:
+diff --git a/hw/sd/trace-events b/hw/sd/trace-events
+index 724365efc3..f1281aecd3 100644
+--- a/hw/sd/trace-events
++++ b/hw/sd/trace-events
+@@ -43,6 +43,7 @@ sdcard_response(const char *rspdesc, int rsplen) "%s (sz:%d)"
+ sdcard_powerup(void) ""
+ sdcard_inquiry_cmd41(void) ""
+ sdcard_reset(void) ""
++sdcard_set_rca(uint16_t value) "new RCA: 0x%04x"
+ sdcard_set_blocklen(uint16_t length) "block len 0x%03x"
+ sdcard_set_block_count(uint32_t cnt) "block cnt 0x%"PRIx32
+ sdcard_inserted(bool readonly) "read_only: %u"
 -- 
-MST
+2.41.0
 
 
