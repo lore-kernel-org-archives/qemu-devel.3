@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BC71C41513
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788E2C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:29:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjxq-0005dA-Ro; Tue, 02 Jul 2024 16:18:59 -0400
+	id 1sOjwI-0007Sx-Pc; Tue, 02 Jul 2024 16:17:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjx1-0004Ra-Mr
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjux-0005nU-TO
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjwy-00008j-Gn
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjuw-00089u-6p
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:15:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951483;
+ s=mimecast20190719; t=1719951357;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TisxAqM9JFoRTBzvBR2/yPIkvvWOj6XGjDsm9k9s/20=;
- b=bw1quV9SaKR7SEUMAVsUSQRB6evKSzDQ9ikpmI+lLW1ZOtFjIUu4V7s/sTYr9yQp6zh7Zc
- Tnd6QIXKazp4eXwOqPuWHQiMNGNIEDVYYC5HFpBnO+o7IgcBvPIz00vnWMwZroX+BIXiUv
- xjGf8ry2SV84bSmYww8ROrPtO5IW2s8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Bf3inGfH3C1OrX/KdJFaqQvDHDePnfUDWhDjBaZ52tk=;
+ b=M7O+MS1jSNuDl2WHUT+abSkPRjJzNyWaMZHYQrfB2QSj3AsjpFc4E4LJFHt+8IhigMwvzL
+ 7Nkrzw31GNn8SdxE74CKyH2N3+xb0jhm/Is3WULoCdfcRHZDCrgRlUaUeukKMU2F63y9x2
+ Y1GdSBEjfE5EfPYdiv967hptQ3z/O9A=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-g9d9HbaTMj6PxiZNlYW0Qw-1; Tue, 02 Jul 2024 16:18:02 -0400
-X-MC-Unique: g9d9HbaTMj6PxiZNlYW0Qw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-425657ac234so31672685e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:17:59 -0700 (PDT)
+ us-mta-693-eHB2cmKSOcqF8wSIIvKYLQ-1; Tue, 02 Jul 2024 16:15:56 -0400
+X-MC-Unique: eHB2cmKSOcqF8wSIIvKYLQ-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52ce04ea31cso4981528e87.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:15:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951478; x=1720556278;
+ d=1e100.net; s=20230601; t=1719951354; x=1720556154;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TisxAqM9JFoRTBzvBR2/yPIkvvWOj6XGjDsm9k9s/20=;
- b=AKjCoO6J5bbtgoRxTkzmB2qlfKL4x80CWyJUEW2K/pg7HGTf3xnc+FeHGeM3YE2I7A
- Vh5HLMdUQ2az1MdAJ30J8ux92z22G7DP/GMSqjSXl96mnxVErmmnNDORH5/z3UYpky+1
- kH8ZmtDbiePOae7lWW1aVrOVQ3kHkvc0bad6FmgCL8ifT0i9MjoX9QNJyTp9E3ZTB+DZ
- kyphOG2eXkZdiMWBCZBeJG7burx+pq7aFfLzuTXQnIep3a22jG0LUEK5+CavZPQls7Ub
- Hq0Zu7r5cyaKGJpismqtmwLGVbViAh4Iqryagl8AfzQ7CZP2T5/kAQJeC2ClvFxuH59w
- ip0Q==
-X-Gm-Message-State: AOJu0YyAbJnmdwRgSd7yKOrZe7RTTPxAsAQGa6dRqjaw/5LnLqkcrLu8
- XTH4uqmg2/SOMF+/5y0UFJwmPPZ2PJnBYT/M0Vcz0dICYpZknjDcEkyS9wedbZ0zntKu220G/NV
- EJo5kaxV/HfyTN1qnxrIIjIkuOgYdyY++IPr5jOkFSpT0ZRA46ZFTvPwaqEleaacdKtUCRXEmwb
- 7eyyFi4zjj7pvimx9gEVkRDqfRz81dPw==
-X-Received: by 2002:a05:600c:4792:b0:425:6207:12b4 with SMTP id
- 5b1f17b1804b1-4257a03c80emr76959795e9.24.1719951478122; 
- Tue, 02 Jul 2024 13:17:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHdjkHkLZHE+MMtzOESyd4Jh2NRnguAYQnH3wNhvxr3sQL+rozlZteHwAP7j+YbrSR3x1fFgw==
-X-Received: by 2002:a05:600c:4792:b0:425:6207:12b4 with SMTP id
- 5b1f17b1804b1-4257a03c80emr76959535e9.24.1719951477577; 
- Tue, 02 Jul 2024 13:17:57 -0700 (PDT)
+ bh=Bf3inGfH3C1OrX/KdJFaqQvDHDePnfUDWhDjBaZ52tk=;
+ b=BRspsVZCc+2zDkiSUXTC904DBdFkdnfCo0VNVI11+4AQ7/ug362Ars1tgJQDzCn7YX
+ 5yHsD4gVDOnNRtDQg8hFA5MejWFL/6A24yAod1+t8N8wC7Vzke5XICFGJit+3vVVXQpW
+ xnhSF/i0fS+oxF1oncOWMR0+WmxWNFJ4OmCLXapuwqbC4TivJ+p/5yqYwgt3/P5VQjki
+ +nk74mYSePgjL/dmsrtLLivla9nmBHlPuXItLBoWr3VPCVTykxGuahu5qyTqAbI2zzx8
+ LOvov8T+JQ1BDPD869mB6lOase5UOq7HRBJo8BvnMZPijQayeSn7+oFYO1cbOu182ab/
+ uDkw==
+X-Gm-Message-State: AOJu0YzhALwBSQUHKgcZMew055XXRWmCfGtD9xWZqd/8Qitl6hBcRqF6
+ 63td5gNr6B4KcmfIG7cqWzC2z0B/dTHuAtBE+0x6SRE0QznW9EIMaI+QGM8pMbNwPqlYZvH+6oy
+ acBYG/Ryay2On1ekmj8Pg3eHJt/4nHIC0efk3tDteAIn8Qbu5TLCBJthUiCx4QeGn7+dqJ/KmB1
+ lB355Crj6ucVtZggxav1j2iLcLYtKYVg==
+X-Received: by 2002:a05:6512:3ca9:b0:52e:765b:c00e with SMTP id
+ 2adb3069b0e04-52e8264c2femr6470295e87.7.1719951354496; 
+ Tue, 02 Jul 2024 13:15:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHp91x5VfntW+nGeizM8iVLQtgW8Pd0YhVe1U3xHTQ5oa1gOXS9/jLY8Y4tj2tMPxaoF4swrA==
+X-Received: by 2002:a05:6512:3ca9:b0:52e:765b:c00e with SMTP id
+ 2adb3069b0e04-52e8264c2femr6470275e87.7.1719951353804; 
+ Tue, 02 Jul 2024 13:15:53 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af389efsm212425325e9.7.2024.07.02.13.17.55
+ 5b1f17b1804b1-4256b098426sm208920815e9.32.2024.07.02.13.15.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:17:56 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:17:54 -0400
+ Tue, 02 Jul 2024 13:15:53 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:15:50 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL v2 41/88] i386/apic: Add hint on boot failure because of
- disabling x2APIC
-Message-ID: <e05ee2994a9c188fc49a9ddf70b79ed7f1808e2f.1719951168.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Wafer <wafer@jaguarmicro.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL v2 11/88] hw/virtio: Fix obtain the buffer id from the last
+ descriptor
+Message-ID: <33abfea239592a706e98269b01c0096249612ea4.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -81,7 +81,7 @@ Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,69 +105,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Wafer <wafer@jaguarmicro.com>
 
-Currently, the Q35 supports up to 4096 vCPUs (since v9.0), but for TCG
-cases, if x2APIC is not actively enabled to boot more than 255 vCPUs (
-e.g., qemu-system-i386 -M pc-q35-9.0 -smp 666), the following error is
-reported:
+The virtio-1.3 specification
+<https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html> writes:
+2.8.6 Next Flag: Descriptor Chaining
+      Buffer ID is included in the last descriptor in the list.
 
-Unexpected error in apic_common_set_id() at ../hw/intc/apic_common.c:449:
-qemu-system-i386: APIC ID 255 requires x2APIC feature in CPU
-Aborted (core dumped)
+If the feature (_F_INDIRECT_DESC) has been negotiated, install only
+one descriptor in the virtqueue.
+Therefor the buffer id should be obtained from the first descriptor.
 
-This error can be resolved by setting x2apic=on in -cpu. In order to
-better help users deal with this scenario, add the error hint to
-instruct users on how to enable the x2apic feature. Then, the error
-report becomes the following:
+In descriptor chaining scenarios, the buffer id should be obtained
+from the last descriptor.
 
-Unexpected error in apic_common_set_id() at ../hw/intc/apic_common.c:448:
-qemu-system-i386: APIC ID 255 requires x2APIC feature in CPU
-Try x2apic=on in -cpu.
-Aborted (core dumped)
+Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
 
-Note since @errp is &error_abort, error_append_hint() can't be applied
-on @errp. And in order to separate the exact error message from the
-(perhaps effectively) hint, adding a hint via error_append_hint() is
-also necessary. Therefore, introduce @local_error in
-apic_common_set_id() to handle both the error message and the error
-hint.
-
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20240606140858.2157106-1-zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Wafer <wafer@jaguarmicro.com>
+Reviewed-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20240510072753.26158-2-wafer@jaguarmicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/intc/apic_common.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ hw/virtio/virtio.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-index d8fc1e2815..c13cdd7994 100644
---- a/hw/intc/apic_common.c
-+++ b/hw/intc/apic_common.c
-@@ -433,6 +433,7 @@ static void apic_common_set_id(Object *obj, Visitor *v, const char *name,
-     APICCommonState *s = APIC_COMMON(obj);
-     DeviceState *dev = DEVICE(obj);
-     uint32_t value;
-+    Error *local_err = NULL;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 28cd406e16..3678ec2f88 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -1745,6 +1745,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+                                              &indirect_desc_cache);
+     } while (rc == VIRTQUEUE_READ_DESC_MORE);
  
-     if (dev->realized) {
-         qdev_prop_set_after_realize(dev, name, errp);
-@@ -444,7 +445,11 @@ static void apic_common_set_id(Object *obj, Visitor *v, const char *name,
-     }
- 
-     if (value >= 255 && !cpu_has_x2apic_feature(&s->cpu->env)) {
--        error_setg(errp, "APIC ID %d requires x2APIC feature in CPU", value);
-+        error_setg(&local_err,
-+                   "APIC ID %d requires x2APIC feature in CPU",
-+                   value);
-+        error_append_hint(&local_err, "Try x2apic=on in -cpu.\n");
-+        error_propagate(errp, local_err);
-         return;
-     }
- 
++    if (desc_cache != &indirect_desc_cache) {
++        /* Buffer ID is included in the last descriptor in the list. */
++        id = desc.id;
++    }
++
+     /* Now copy what we have collected and mapped */
+     elem = virtqueue_alloc_element(sz, out_num, in_num);
+     for (i = 0; i < out_num; i++) {
 -- 
 MST
 
