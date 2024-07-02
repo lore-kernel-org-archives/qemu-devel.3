@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC0DAC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9555C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeAo-00027Q-N1; Tue, 02 Jul 2024 10:07:59 -0400
+	id 1sOeAG-0001zR-9w; Tue, 02 Jul 2024 10:07:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeAl-000274-PM
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeAD-0001yX-HM
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeAj-00080C-KQ
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeAB-0007s7-6L
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929272;
+ s=mimecast20190719; t=1719929238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=2dkENUzfzIIIcUTPF2EEwEXmUV3lpfWAm7D6XMdf5LE=;
- b=enU5Gl2GkFrUuF6VkFu6CsxeENM41H9M4y94aoQrAt8K1XYPRvUUEGYEJ5nUUVi21ze3FM
- TDvG+sQNaU0TQtQo6wc7fyvR9eMSJH0Bojcjsv6S4meIGh3veF7UkmPxgpViO2xBWPtfQS
- X0M9kmjnbdPcHcdqYVziu3IxdDEpvPM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=czI6QAqPz2gxBOi54M6w2CiDVJgkcwfGVW3OGis4Be4=;
+ b=FY+5dSWwVwcQiRAW6pbH2Pse05TxzsEBJQ22572uAuOzTY69hcbqHUp1a8eKfjAnX8E/dX
+ g6sdmm5Suzltwg2WYqu3n0ziQdMS5xTgBloUrtNDW+2ktpeU5xd1i0WEEUewdC8IfNSZ1r
+ xPh1+RyqaxdRHRXDVuCJsUmU27IuHX0=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-489-QbgU7H88OUuXFhKA27K9NQ-1; Tue, 02 Jul 2024 10:07:50 -0400
-X-MC-Unique: QbgU7H88OUuXFhKA27K9NQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3625bef4461so2106809f8f.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:07:49 -0700 (PDT)
+ us-mta-57-6Xs-EZmUNT2nXnWLPvb3UA-1; Tue, 02 Jul 2024 10:07:17 -0400
+X-MC-Unique: 6Xs-EZmUNT2nXnWLPvb3UA-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-52cdd05fec8so4374138e87.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:07:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929268; x=1720534068;
+ d=1e100.net; s=20230601; t=1719929235; x=1720534035;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2dkENUzfzIIIcUTPF2EEwEXmUV3lpfWAm7D6XMdf5LE=;
- b=X3a2bplqfbbzfYWUa6Z5zx3O2xO3zC/hFvqMc5BJHpT2SOlCL1v0Gs6bOeHCo+X/JE
- 6Oy/moWo8pybDbsDwbHud1woZauGYuBQ0GLox84jwagNU5iI4F74xA5HhsSYjCQFGwBU
- ZCH/WuxSiLR5jeUCod3tOaMMd2cwcDGtCZ6OOj/qnI9Qs2aUH3MdJrL9cG7F2RTtC6NA
- XKb4LUbcCt4UwyhQ+nWXxldikszqnBU8WK5snfSka5729XXLZx8epd2eqgli6HxhhjQl
- pKISkmK9rWY1wjNDQ5XlqnATwTNEjTsdKCgHwgNTcZfScuZ4puiS1bJZRuKAToXg45HI
- IxFw==
-X-Gm-Message-State: AOJu0YwH/B2Ba7Swcth105lZxohi++RBRG7d7/AJA58USxT7O+nID5xW
- 0BXjwJmOFWMtYW81iEuufWylKSYcGbwP5fKrEPjRFkFZHIS7Xx+Ev3LnQVODaMYuSmWNsFc6O50
- OuAXL2+Q+F6sy9qvl5zJtv4wtN5mg84zeFK26SGISqxohTayNPM4QSwATHHNxJbkbF3DuQJ/Y72
- 3Pr1s4fxwz9V0hq84D1gWMtw9MGfrwBQ==
-X-Received: by 2002:adf:fe89:0:b0:362:23d5:3928 with SMTP id
- ffacd0b85a97d-36760a782dfmr10036522f8f.17.1719929268575; 
- Tue, 02 Jul 2024 07:07:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG57xXCEOvsjg3Z/3qLFCEJnKToPuhkGzSojMGDwiU2OYr+opfvgpPfIXglPzJt7Cti7ieiGQ==
-X-Received: by 2002:adf:fe89:0:b0:362:23d5:3928 with SMTP id
- ffacd0b85a97d-36760a782dfmr10036494f8f.17.1719929268053; 
- Tue, 02 Jul 2024 07:07:48 -0700 (PDT)
+ bh=czI6QAqPz2gxBOi54M6w2CiDVJgkcwfGVW3OGis4Be4=;
+ b=MD0jSQ9QP81mNvcJeJ3z12wGHQv+reVxMAr+M9dWJNdWhFAeY7wsNwgd94N2m4yiOc
+ EcLfSAj6DJpdJwACW2uaLEr9csg+ZE/qPM7Gtpq+hslfjc2L0mMX7+EG/syiKtlwvnTX
+ ydey+g1b+xQRTr0cn72op2XyCBxRGnREcbC7o32WajImt5MV0ecNMDGsVvsvcYlTXey0
+ 5IQvB86xFEiXlYlDv1UVMB2Z+eI4oGmB3yI33aKR+3GX1X+va+CRXYMbFMsQuTd+jjL2
+ UL6IczOUyJw1eZ/F2snYAzBpqr47/yahf+CDXECNQUytizHPh7Hy/m5dB3GnqLCrB/kl
+ kDXw==
+X-Gm-Message-State: AOJu0YzhrLUb2lfN/Xae+JgxH852iVKVhMMPZMNLh2/NP35Yrq+hgbSN
+ meNtd+wMnJT/rDSmj/gN7gBoYpVeLHGDb52IQQohliB19TWWR/qxupAHLmukIsV0e2yK8IYZY5K
+ XXA/nfXiSnQLCkC3rETMGw1nwMFRhQqCqh/lD8YdA6Ki7jor0X6IJpP+nxAZKbeK3mbztZ4X8y9
+ qLjlO+JB12E3Dphym+mQMNLkQNoktdLA==
+X-Received: by 2002:a05:6512:3da3:b0:52e:713e:697c with SMTP id
+ 2adb3069b0e04-52e8267b8d0mr7346553e87.25.1719929234741; 
+ Tue, 02 Jul 2024 07:07:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHIbEIOMOFei5IYQ1lsrlJQKcfWJJgZdgqCYLdwihBAYmZzxlPo+Vqxul3hYAoPQQzezBquJw==
+X-Received: by 2002:a05:6512:3da3:b0:52e:713e:697c with SMTP id
+ 2adb3069b0e04-52e8267b8d0mr7346516e87.25.1719929234065; 
+ Tue, 02 Jul 2024 07:07:14 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b061eedsm191132295e9.26.2024.07.02.07.07.46
+ ffacd0b85a97d-3675a1030dfsm13279767f8f.100.2024.07.02.07.07.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:07:47 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:07:45 -0400
+ Tue, 02 Jul 2024 07:07:13 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:07:11 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gregory Price <gourry.memverge@gmail.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
-Subject: [PULL 16/91] hw/cxl/mailbox: change CCI cmd set structure to be a
- member, not a reference
-Message-ID: <05b70ceba033759d44c6d3d9b24118cd9fc9d616.1719929191.git.mst@redhat.com>
+ Jonah Palmer <jonah.palmer@oracle.com>
+Subject: [PULL 05/91] virtio: Prevent creation of device using
+ notification-data with ioeventfd
+Message-ID: <78378f450a723eed34156259ca2861a0c5ca77cf.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -104,91 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gregory Price <gourry.memverge@gmail.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-This allows devices to have fully customized CCIs, along with complex
-devices where wrapper devices can override or add additional CCI
-commands without having to replicate full command structures or
-pollute a base device with every command that might ever be used.
+Prevent the realization of a virtio device that attempts to use the
+VIRTIO_F_NOTIFICATION_DATA transport feature without disabling
+ioeventfd.
 
-Signed-off-by: Gregory Price <gregory.price@memverge.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-2-nifan.cxl@gmail.com>
+Due to ioeventfd not being able to carry the extra data associated with
+this feature, having both enabled is a functional mismatch and therefore
+Qemu should not continue the device's realization process.
+
+Although the device does not yet know if the feature will be
+successfully negotiated, many devices using this feature wont actually
+work without this extra data and would fail FEATURES_OK anyway.
+
+If ioeventfd is able to work with the extra notification data in the
+future, this compatibility check can be removed.
+
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240315165557.26942-3-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h |  2 +-
- hw/cxl/cxl-mailbox-utils.c  | 19 +++++++++++++++----
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ hw/virtio/virtio.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 279b276bda..ccc4611875 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -164,7 +164,7 @@ typedef struct CXLEventLog {
- } CXLEventLog;
- 
- typedef struct CXLCCI {
--    const struct cxl_cmd (*cxl_cmd_set)[256];
-+    struct cxl_cmd cxl_cmd_set[256][256];
-     struct cel_log {
-         uint16_t opcode;
-         uint16_t effect;
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index e5eb97cb91..2c9f50f0f9 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1447,10 +1447,21 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
-                                  bg_timercb, cci);
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index f7c99e3a96..28cd406e16 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2980,6 +2980,20 @@ int virtio_set_features(VirtIODevice *vdev, uint64_t val)
+     return ret;
  }
  
-+static void cxl_copy_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmds)[256])
++static void virtio_device_check_notification_compatibility(VirtIODevice *vdev,
++                                                           Error **errp)
 +{
-+    for (int set = 0; set < 256; set++) {
-+        for (int cmd = 0; cmd < 256; cmd++) {
-+            if (cxl_cmds[set][cmd].handler) {
-+                cci->cxl_cmd_set[set][cmd] = cxl_cmds[set][cmd];
-+            }
-+        }
++    VirtioBusState *bus = VIRTIO_BUS(qdev_get_parent_bus(DEVICE(vdev)));
++    VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(bus);
++    DeviceState *proxy = DEVICE(BUS(bus)->parent);
++
++    if (virtio_host_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA) &&
++        k->ioeventfd_enabled(proxy)) {
++        error_setg(errp,
++                   "notification_data=on without ioeventfd=off is not supported");
 +    }
 +}
 +
- void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
-                                   DeviceState *d, size_t payload_max)
+ size_t virtio_get_config_size(const VirtIOConfigSizeParams *params,
+                               uint64_t host_features)
  {
--    cci->cxl_cmd_set = cxl_cmd_set_sw;
-+    cxl_copy_cci_commands(cci, cxl_cmd_set_sw);
-     cci->d = d;
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
-@@ -1458,7 +1469,7 @@ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+@@ -3740,6 +3754,14 @@ static void virtio_device_realize(DeviceState *dev, Error **errp)
+         }
+     }
  
- void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
- {
--    cci->cxl_cmd_set = cxl_cmd_set;
-+    cxl_copy_cci_commands(cci, cxl_cmd_set);
-     cci->d = d;
- 
-     /* No separation for PCI MB as protocol handled in PCI device */
-@@ -1476,7 +1487,7 @@ static const struct cxl_cmd cxl_cmd_set_t3_ld[256][256] = {
- void cxl_initialize_t3_ld_cci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
-                                size_t payload_max)
- {
--    cci->cxl_cmd_set = cxl_cmd_set_t3_ld;
-+    cxl_copy_cci_commands(cci, cxl_cmd_set_t3_ld);
-     cci->d = d;
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
-@@ -1496,7 +1507,7 @@ void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
-                                            DeviceState *intf,
-                                            size_t payload_max)
- {
--    cci->cxl_cmd_set = cxl_cmd_set_t3_fm_owned_ld_mctp;
-+    cxl_copy_cci_commands(cci, cxl_cmd_set_t3_fm_owned_ld_mctp);
-     cci->d = d;
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
++    /* Devices should not use both ioeventfd and notification data feature */
++    virtio_device_check_notification_compatibility(vdev, &err);
++    if (err != NULL) {
++        error_propagate(errp, err);
++        vdc->unrealize(dev);
++        return;
++    }
++
+     virtio_bus_device_plugged(vdev, &err);
+     if (err != NULL) {
+         error_propagate(errp, err);
 -- 
 MST
 
