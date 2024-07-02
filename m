@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D743AC3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23EA4C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjmV-00074O-V7; Tue, 02 Jul 2024 16:07:16 -0400
+	id 1sOjsr-000173-6F; Tue, 02 Jul 2024 16:13:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjmT-00070y-Nu
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:07:13 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjmS-0006FH-54
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:07:13 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42563a9fa58so32671055e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:07:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719950830; x=1720555630; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VAauEDfmqRI/Ai4xwtjQ3uCxlyWmwX2oy5GbL30AxZs=;
- b=SycoceAKPul7O9o4qsoIBXnwysdv84hxJxqiw48O9EeknhcLBSfoLZnR4j9K7mKXsl
- yZlkf3Vb8/foXErPE3w5X/bhk2cRvxjDvug8BloN9c/PYkoBQx0BA+BDqFrFMbEy/QKB
- fTbMwjbbolFbHFmDVLUgYeYIO6tUOkUul4vAdW4mQI+CTzwvhOObxdefx6QFfuralDGX
- cBRirctLohIfQszuHlilkgpcd26GBi9v1P+jD2gTMnju2Ek/hjR2zusfQwUa8y19RPKi
- 4Cm3Ey0mvr20IHyPBWY/CI36oRpk8/ZTGNdiGsxevsWVHJ3i3ttBYH4VIIrkWwdDQxvM
- X5sQ==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjsq-00016n-C8
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:13:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjsn-0007DX-TQ
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:13:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719951224;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gfd+vfybB3O3+4pkXHRWr1BbxFsd2M2r8td4r0aSbjQ=;
+ b=TlJrRwX7mjAXFA2xeydacv7GpTM3hmKnhEtvZBrEgYfXzjRg4CGPWZBRzPAzG6PLJBE5D3
+ a12eJnO3ETAOFfyXJPilwlsJb7QdTcejZ5fggVPWGADGcYYNABXGp03kZeHzN6DqxLVMKZ
+ lsVDOBqmTwJcKI6PHP2lb15dEoazenQ=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-258-Zjo4if2iOyOf3lQFNLSoOA-1; Tue, 02 Jul 2024 16:13:42 -0400
+X-MC-Unique: Zjo4if2iOyOf3lQFNLSoOA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4257a75193aso21939415e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:13:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719950830; x=1720555630;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VAauEDfmqRI/Ai4xwtjQ3uCxlyWmwX2oy5GbL30AxZs=;
- b=qjvSTXOm1tDvRQBgFQvmOXdhcQjeJMLKqbFgzpDBB/kVoIDydXgiVMSQm38nXl0Cvm
- Vx99BJUM/Nc1mgcpbd9ZvF7OhoitM5c+90eImg3Eg2DLlt4vVYsShauPwr7/QGxuxIKt
- LfzCMIDdAxM+kx7UEBZ7ILPLjOZB6BFdDT4JCROkuRn7HmmETxryPoPJfQwRgUHxR2rg
- Cj9lsOoEs+TBS5xV+u/BGuSJ/+U4TCjTGbK6kH9XizU1BWbOpYkeiBtju5HppLaQbgn0
- yU06QQNZQ+xiVVGnkVtWW0dOciYtdv+NHK8cPi9xXYfgullrg8+yYwz4YAKFsEqVYGjI
- L0rQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVRgCWTh8bLNMAw1YsSQxwtwnq9zC8jre9VCwZHup2mnoWWUaE8qz8TSvDRDsdH177ZiPHSkHL9b1v4YXSk5rzLTa8JuFo=
-X-Gm-Message-State: AOJu0YzqpsTWSi6ErsP/i6OLA1Kmeca3mSMTP4Zx9lsrdgqud++rg1E9
- zYdNLc0IVnx0BihlD/MYDzZ7DyUF5CH7iySJV6UeRF688FAVnVhXsvwO7N2t9BSmebq/dpVI/Et
- L
-X-Google-Smtp-Source: AGHT+IGUoTBC0z/X+JKEarwr8OFBtd+TV6ZQarjgdGotz2VkReMZyD7VRlmr0Y3rZNpDWV0PUyy5PQ==
-X-Received: by 2002:a5d:456f:0:b0:366:e9f5:7814 with SMTP id
- ffacd0b85a97d-367756bca65mr6065984f8f.42.1719950830095; 
- Tue, 02 Jul 2024 13:07:10 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.220.97])
+ d=1e100.net; s=20230601; t=1719951220; x=1720556020;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gfd+vfybB3O3+4pkXHRWr1BbxFsd2M2r8td4r0aSbjQ=;
+ b=rPONhatwpkj8HyOWAxLoycxmYYgedl5mXSmODK4NcWqj0c0FFE8fJYwxe0B7YFx/Fc
+ nVYzW+gH3ubx9y81JrEFym3ePacBxTZCNXnN+viPmEIA/rOx/lKvjVpMI0Up3Xrt5O7b
+ Ke9OT5izfQ7r42Hdl/zrVZAL7cltLDnzp2gdSYidjBIQ2t8fCJvQPSLAh66TYNHeY/Cj
+ zwX63UHqmQ8knQ2PYF9F+3fezF0TkhmjsPcWd4oXSvKuVefKn4WQTUHdpjKK3+evg6uL
+ HAvuI1iv9gbseywLCsqeo9/IW4JUAvuMzFX7qqb6sin4sQxfPes4+/5iP7wmkiH70+3A
+ 120w==
+X-Gm-Message-State: AOJu0Yzx/7E3PvFoC5kZEqi0yld0lT1emqvxXvzKHQjvA7lxaOJ5uSC8
+ KyeaGICtyaJ24UU8arWxP+kB+iXJsWx0auzGg8XA0C5lKTzkKoGI129H30MAwKuhs3DOgCB/d3q
+ fsClYjZipU3r0v4MFzR8/3BWpPSfp+j63iskQArASATlZp2/sAKIz7gBhXBfS/M6HFqgVJ2fQJy
+ QYfT9kNEmRFM8Wxtm+jmIvd2j7aOaf1Q==
+X-Received: by 2002:a05:600c:44c6:b0:424:a588:ff08 with SMTP id
+ 5b1f17b1804b1-4257a011192mr62727405e9.23.1719951220357; 
+ Tue, 02 Jul 2024 13:13:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEosrHjuMF99Yw+MWLQ0C7KplKNVxJUo/06cGZ3kdyzK7tH6jAmMu7t0yd8MFW5efK69P8MHQ==
+X-Received: by 2002:a05:600c:44c6:b0:424:a588:ff08 with SMTP id
+ 5b1f17b1804b1-4257a011192mr62727195e9.23.1719951219614; 
+ Tue, 02 Jul 2024 13:13:39 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0cd623sm14166696f8f.16.2024.07.02.13.07.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jul 2024 13:07:09 -0700 (PDT)
-Message-ID: <6e1ddf7a-bc0a-4be3-84e0-da8933343c10@linaro.org>
-Date: Tue, 2 Jul 2024 22:07:07 +0200
+ 5b1f17b1804b1-42578800bf1sm102795845e9.1.2024.07.02.13.13.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Jul 2024 13:13:39 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:13:35 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Si-Wei Liu <si-wei.liu@oracle.com>
+Subject: [PULL v2 01/91] vhost: dirty log should be per backend type
+Message-ID: <51d59a64eed6c2cd2d2f991f44ffbe21eb33c733.1719951026.git.mst@redhat.com>
+References: <cover.1719951026.git.mst@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [RFC PATCH v42 90/98] hw/sd/sdcard: Add experimental
- 'x-aspeed-emmc-kludge' property
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-devel@nongnu.org,
- Joel Stanley <joel@jms.id.au>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Troy Lee <troy_lee@aspeedtech.com>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-91-philmd@linaro.org>
- <4b55f817-0e29-45c0-8f56-f997f34e0e97@kaod.org>
- <e1a6b93038e67271fc0bd9efcc7d40802cbbede7.camel@codeconstruct.com.au>
- <2b425f32-41de-4057-a8d0-79411f2519b4@linaro.org>
- <aa9bd7c7-1b4c-4f3a-975d-1ee7931be422@kaod.org>
- <dedc8d45-42cf-4474-ad33-9af44701dcb8@linaro.org>
-Content-Language: en-US
-In-Reply-To: <dedc8d45-42cf-4474-ad33-9af44701dcb8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1719951026.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,52 +101,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/7/24 22:05, Philippe Mathieu-Daudé wrote:
-> On 2/7/24 18:21, Cédric Le Goater wrote:
->> On 7/2/24 6:15 PM, Philippe Mathieu-Daudé wrote:
->>> On 2/7/24 07:06, Andrew Jeffery wrote:
->>>> On Fri, 2024-06-28 at 11:16 +0200, Cédric Le Goater wrote:
->>>>> On 6/28/24 9:02 AM, Philippe Mathieu-Daudé wrote:
->>>>>> When booting U-boot/Linux on Aspeed boards via eMMC,
->>>>>> some commands don't behave as expected from the spec.
->>>>>>
->>>>>> Add the 'x-aspeed-emmc-kludge' property to allow non
->>>>>> standard uses until we figure out the reasons.
->>>>>
->>>>> I am not aware of any singularity in the eMMC logic provided by 
->>>>> Aspeed.
->>>>> U-Boot and Linux drivers seem very generic. May be others can tell.
->>>>
->>>> I'm not aware of any command kludges. The main problem I had when I
->>>> wrote the Linux driver for the Aspeed controller was the phase tuning,
->>>> but that doesn't sound related.
->>>
->>> Yeah I don't think anything Aspeed nor U-boot related, we
->>> model CSD/CID registers per the SD spec, not MMC. Various
->>> fields are identical, but few differ, this might be the
->>> problem.
->>>
->>> I rather respect the spec by default, so until we figure
->>> the issue, are you OK to use a 'x-emmc-kludge' property
->>> and set it on the Aspeed boards?
->>
->> If these differences are eMMC related, why not simply test :
->>
->>      if (sd_is_emmc(sd)) ...
->>
->> in commands ALL_SEND_CID and APP_CMD ? The extra property looks
->> ambiguous to me.
-> 
-> I'd like to keep the sd_is_emmc() check for code respecting
-> the eMMC spec. I believe the commands in sd_proto_emmc[] in
-> this series do respect it, modulo some register field
-> definitions that are SD specific. So 'x-emmc-kludge' would
-> be a property to allow eMMC use -- without delaying it further
-> --, by bypassing a *bug* in our current model. I'm willing to
-> figure out the problem and fix it, but /after/ the 9.1 release.
-> We are too close of the soft freeze and trying to fix that
-> before is too much pressure on my right now.
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-(Similar pressure I'm putting on you to review this huge series...)
+There could be a mix of both vhost-user and vhost-kernel clients
+in the same QEMU process, where separate vhost loggers for the
+specific vhost type have to be used. Make the vhost logger per
+backend type, and have them properly reference counted.
+
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Message-Id: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/virtio/vhost.c | 45 +++++++++++++++++++++++++++++++++------------
+ 1 file changed, 33 insertions(+), 12 deletions(-)
+
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 4acd77e890..a1e8b79e1a 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -43,8 +43,8 @@
+     do { } while (0)
+ #endif
+ 
+-static struct vhost_log *vhost_log;
+-static struct vhost_log *vhost_log_shm;
++static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
++static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
+ 
+ /* Memslots used by backends that support private memslots (without an fd). */
+ static unsigned int used_memslots;
+@@ -287,6 +287,10 @@ static int vhost_set_backend_type(struct vhost_dev *dev,
+         r = -1;
+     }
+ 
++    if (r == 0) {
++        assert(dev->vhost_ops->backend_type == backend_type);
++    }
++
+     return r;
+ }
+ 
+@@ -319,16 +323,22 @@ static struct vhost_log *vhost_log_alloc(uint64_t size, bool share)
+     return log;
+ }
+ 
+-static struct vhost_log *vhost_log_get(uint64_t size, bool share)
++static struct vhost_log *vhost_log_get(VhostBackendType backend_type,
++                                       uint64_t size, bool share)
+ {
+-    struct vhost_log *log = share ? vhost_log_shm : vhost_log;
++    struct vhost_log *log;
++
++    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
++    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
++
++    log = share ? vhost_log_shm[backend_type] : vhost_log[backend_type];
+ 
+     if (!log || log->size != size) {
+         log = vhost_log_alloc(size, share);
+         if (share) {
+-            vhost_log_shm = log;
++            vhost_log_shm[backend_type] = log;
+         } else {
+-            vhost_log = log;
++            vhost_log[backend_type] = log;
+         }
+     } else {
+         ++log->refcnt;
+@@ -340,11 +350,20 @@ static struct vhost_log *vhost_log_get(uint64_t size, bool share)
+ static void vhost_log_put(struct vhost_dev *dev, bool sync)
+ {
+     struct vhost_log *log = dev->log;
++    VhostBackendType backend_type;
+ 
+     if (!log) {
+         return;
+     }
+ 
++    assert(dev->vhost_ops);
++    backend_type = dev->vhost_ops->backend_type;
++
++    if (backend_type == VHOST_BACKEND_TYPE_NONE ||
++        backend_type >= VHOST_BACKEND_TYPE_MAX) {
++        return;
++    }
++
+     --log->refcnt;
+     if (log->refcnt == 0) {
+         /* Sync only the range covered by the old log */
+@@ -352,13 +371,13 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
+             vhost_log_sync_range(dev, 0, dev->log_size * VHOST_LOG_CHUNK - 1);
+         }
+ 
+-        if (vhost_log == log) {
++        if (vhost_log[backend_type] == log) {
+             g_free(log->log);
+-            vhost_log = NULL;
+-        } else if (vhost_log_shm == log) {
++            vhost_log[backend_type] = NULL;
++        } else if (vhost_log_shm[backend_type] == log) {
+             qemu_memfd_free(log->log, log->size * sizeof(*(log->log)),
+                             log->fd);
+-            vhost_log_shm = NULL;
++            vhost_log_shm[backend_type] = NULL;
+         }
+ 
+         g_free(log);
+@@ -376,7 +395,8 @@ static bool vhost_dev_log_is_shared(struct vhost_dev *dev)
+ 
+ static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t size)
+ {
+-    struct vhost_log *log = vhost_log_get(size, vhost_dev_log_is_shared(dev));
++    struct vhost_log *log = vhost_log_get(dev->vhost_ops->backend_type,
++                                          size, vhost_dev_log_is_shared(dev));
+     uint64_t log_base = (uintptr_t)log->log;
+     int r;
+ 
+@@ -2044,7 +2064,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+         uint64_t log_base;
+ 
+         hdev->log_size = vhost_get_log_size(hdev);
+-        hdev->log = vhost_log_get(hdev->log_size,
++        hdev->log = vhost_log_get(hdev->vhost_ops->backend_type,
++                                  hdev->log_size,
+                                   vhost_dev_log_is_shared(hdev));
+         log_base = (uintptr_t)hdev->log->log;
+         r = hdev->vhost_ops->vhost_set_log_base(hdev,
+-- 
+MST
 
 
