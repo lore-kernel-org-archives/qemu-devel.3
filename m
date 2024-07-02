@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92983C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 06:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECDBBC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 06:24:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOWmd-0005hq-MT; Tue, 02 Jul 2024 02:14:31 -0400
+	id 1sOWvn-0000WU-CZ; Tue, 02 Jul 2024 02:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOWmb-0005gc-PH
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 02:14:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOWvm-0000W0-2n
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 02:23:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOWma-00085T-6M
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 02:14:29 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOWvj-0007wC-Na
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 02:23:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719900867;
+ s=mimecast20190719; t=1719901434;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sghusG5dt3jzx6NlDf03iGc36ugl9jGpwco4l/dPIag=;
- b=ChmWzsHSx367vGmfDoW6aVDX7C843Cqj9IHZztjHeYm3wv35CzABp3B6BO3qqjAaJZyyM4
- pfHBL/vXt7/EHjEHH/9UoMavdLboTFl/vD5c+6MktcsUanNGOlVM74CNmkdsu+bOZJ9cWy
- Etel6qYgQ9B+CNCanLW+eSLzUiuSGIA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wbrmvd8Ar/C/excaq+2kuNO21GgXTMjp0+h/T9qAdoY=;
+ b=JmYgycKQpP4VcigDLkx6EvX0kn0zdu+rkGg/1KFgRm2lCtfCX5UtVSsM5xV3TscIsKoVyC
+ 7EfClTCmG44B9Ifvcqg5rScjQFePOsrKzAJoAk4EAzxGCwCPs0npawgR998FQXbIcUugJM
+ wwWx9LKQF5OLmSqHacQk6jT8V+mnUpA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-id4Wurw8NjqWSLtRoot6nw-1; Tue, 02 Jul 2024 02:14:22 -0400
-X-MC-Unique: id4Wurw8NjqWSLtRoot6nw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4257dd7d462so14496935e9.2
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 23:14:22 -0700 (PDT)
+ us-mta-317-S_3OXsriMoKA1-KLLgmYyQ-1; Tue, 02 Jul 2024 02:23:50 -0400
+X-MC-Unique: S_3OXsriMoKA1-KLLgmYyQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4256849a9f4so26455295e9.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 23:23:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719900861; x=1720505661;
+ d=1e100.net; s=20230601; t=1719901429; x=1720506229;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=sghusG5dt3jzx6NlDf03iGc36ugl9jGpwco4l/dPIag=;
- b=TYpm2yKpSYI1E83rv6uOrtsyVyiJqDGtwiu1t4IVX1tjL0m+6FSm8I39LwPTGS3JJh
- XfcBOAKvVnVvo+WzZeNcKOpQthN2Lh1GvpmzNGr3nSdMJoob2jDmt0xPVRntT2V5ZtwL
- VZa9+ockjyQ9C4wsrzOMYHATngDCSaLILsQ+Q/SNxirn8D66t0oCEsY1SRl73u21QYEf
- 3rPOjzgYU/K10+BXInTArYXjdWJYuoIhNjVcgTZRF3t2ej0VpjH1OxzRxm77DxAqyTuM
- Z1oXbVq92ILXxFHzmvOk2QvPpidIrrKnzlDDgP8ro4vUQ8MlFGHcnUPzEmO6P+vHahgr
- wHwg==
-X-Gm-Message-State: AOJu0Yy+hNxZnSHB0U41lcWo7P9MED84VzpVTW+fOKCnDQZUg/hVnkGL
- +bjh9Z0fUzcWa4t1sVHwlLje/J4T0yLRjYUca0vPXKPgQD5WwkNxZP4InncG9YkmosujBE6AcVi
- 0EibK95KKkNLDpSBtMY8ThGYZIpZjIJsgp5QQPQICvP0Z3k64nt++
-X-Received: by 2002:a05:600c:6c5:b0:425:7c29:7480 with SMTP id
- 5b1f17b1804b1-4257c29757emr41759015e9.38.1719900861572; 
- Mon, 01 Jul 2024 23:14:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHjsEPf/YCsn8+RNelVK86aZ7tKevlYIM1aRY6ceyAdtgO1xLnH5G8MrTjRBu/0DqJ8s07JWg==
-X-Received: by 2002:a05:600c:6c5:b0:425:7c29:7480 with SMTP id
- 5b1f17b1804b1-4257c29757emr41758775e9.38.1719900861268; 
- Mon, 01 Jul 2024 23:14:21 -0700 (PDT)
+ bh=wbrmvd8Ar/C/excaq+2kuNO21GgXTMjp0+h/T9qAdoY=;
+ b=MNsvloxz+1fN27lureQI6dIm8UNw69PEYh7QqMmyScHh1U3E1IN/c9z6UycpZMasTR
+ n5Ge8h7PGNwEJeeLaD2vutug7EbpXEUA7P9J8DkzIFFK4iQ5rWCuTMKFPSJQ5Q0LgLaH
+ vvdG9ZqODUt+dPY7MBkbIKXkG3YmDyThlrPWJGr8CSTleyDsMwjcCVSaZDV3ET9GAFPq
+ nNdk2HoNgEv32l+94Ks7jXYLW5Z2rzo/34dpgB0k86i5+L5l62yPfPVas31AitpkM0nZ
+ ujweWdZBjuPb41h7FIwjEoYa3zsOupP8nDHstCKjZiFw7Z7NhUnuz69eSsyOIHBj9/k+
+ +nGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCu2xEttnQvGsRuXC635u1xqgia65TQV6EG92vcEQX6mnP4BAiXpv25cKXtvLx7w99cU1kolHrQoGr4yBmLiKImXmBJXA=
+X-Gm-Message-State: AOJu0YxUFzIvlgwKPCY/ABZa4Es0yg576la2ANgcGEjB4XYbv5znJqCf
+ gUAgJ0vsK0kc5KkuAjQ418YHRY/69zLE88AG13esnJIIcp2jVXskv+kBGkRJTpL+oRhLA9zzmmJ
+ ImY71fkf++mo6KxyzC7X96VQ9mJa7A78VMRH6GXD9lTKhx+ckDIBK
+X-Received: by 2002:a05:6000:18a5:b0:366:e991:b9b7 with SMTP id
+ ffacd0b85a97d-367756cf2e8mr6476851f8f.30.1719901429260; 
+ Mon, 01 Jul 2024 23:23:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFUYiOSd/D30cnpKAYWJh1tqeRKJZ1y/lfwaL6VkPiyOfe9hwF5NWwSCRnwAio5ek4+L00LPg==
+X-Received: by 2002:a05:6000:18a5:b0:366:e991:b9b7 with SMTP id
+ ffacd0b85a97d-367756cf2e8mr6476833f8f.30.1719901428883; 
+ Mon, 01 Jul 2024 23:23:48 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-176-82.web.vodafone.de.
  [109.43.176.82]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b061006sm180985125e9.22.2024.07.01.23.14.19
+ ffacd0b85a97d-3675a0e12e2sm12139635f8f.50.2024.07.01.23.23.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Jul 2024 23:14:20 -0700 (PDT)
-Message-ID: <54ce998a-5630-4dcb-a99c-26c7a9ab52f7@redhat.com>
-Date: Tue, 2 Jul 2024 08:14:18 +0200
+ Mon, 01 Jul 2024 23:23:48 -0700 (PDT)
+Message-ID: <fcf6d258-ae78-4e47-bcf5-edfa68428874@redhat.com>
+Date: Tue, 2 Jul 2024 08:23:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/15] tests/qtest: Use qtest_add_data_func_full()
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+Subject: Re: [PATCH v2 00/15] Fix check-qtest-ppc64 sanitizer errors
+To: BALATON Zoltan <balaton@eik.bme.hu>, "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  David Gibson <david@gibson.dropbear.id.au>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
+ Alexey Kardashevskiy <aik@ozlabs.ru>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
 References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-10-750bb0946dbd@daynix.com>
+ <20240701161033-mutt-send-email-mst@kernel.org>
+ <c7ee820a-20e6-2891-1059-643e68053647@eik.bme.hu>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -131,7 +133,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240627-san-v2-10-750bb0946dbd@daynix.com>
+In-Reply-To: <c7ee820a-20e6-2891-1059-643e68053647@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -158,16 +160,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/06/2024 15.37, Akihiko Odaki wrote:
-> A test function may not be executed depending on the test command line
-> so it is wrong to free data with a test function. Use
-> qtest_add_data_func_full() to register a function to free data.
+On 02/07/2024 00.23, BALATON Zoltan wrote:
+> On Mon, 1 Jul 2024, Michael S. Tsirkin wrote:
+>> On Thu, Jun 27, 2024 at 10:37:43PM +0900, Akihiko Odaki wrote:
+>>> Based-on: 
+>>> <3ad18bc590ef28e1526e8053568086b453e7ffde.1718211878.git.quic_mathbern@quicinc.com>
+>>> ("[PATCH] cpu: fix memleak of 'halt_cond' and 'thread'")
+>>>
+>>> I saw various sanitizer errors when running check-qtest-ppc64. While
+>>> I could just turn off sanitizers, I decided to tackle them this time.
+>>>
+>>> Unfortunately, GLib does not free test data in some cases so some
+>>> sanitizer errors remain. All sanitizer errors will be gone with this
+>>> patch series combined with the following change for GLib:
+>>> https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4120
+>>>
+>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>
+>>
+>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+>>
+>> who's merging all this?
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
->   tests/qtest/device-introspect-test.c | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
+> Maybe needs to be split. Mark had an alternative for macio which was picked 
+> up by Philippe if I'm not mistaken. I've sent an alternative for vt82c686 
+> which is still discussed but could belong to Philippe as well. PPC parts 
+> could be taken by the PPC maintainers if there were any active at the moment 
+> and I don't know who maintains tests normally or other misc areas.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I can take the qtest patches through my tree.
+
+  Thomas
+
 
 
