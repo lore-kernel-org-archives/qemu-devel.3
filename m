@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39E19C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825C6C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:14:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeDQ-0004yK-Ql; Tue, 02 Jul 2024 10:10:41 -0400
+	id 1sOeBh-000575-EI; Tue, 02 Jul 2024 10:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeDH-0004cT-Tv
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:10:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeBf-00055D-8l
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:08:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeDC-0000Jg-JQ
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:10:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeBc-0008EQ-Tg
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:08:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929423;
+ s=mimecast20190719; t=1719929327;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wXu48vkZ7/C+tOxLrIxzTN9h9b+wSo5eOaPVc/4Fs+U=;
- b=DqDKiABuQj17XCJvaDf537MqywMzsGY+U5Pcsp8B8oeOPYGOufF+HU/OrEU2IX3UZTk/4B
- b9VxDwvOaa53a3yTCvjIDW6OaEXc9lPSLQYvA8B1Or0Kmr2ceB933Y4DkjAHPYYJgfsAk3
- W30cwcKqD9lS4epkuN4awu3p/GvKjSE=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kZkfnrsmrcpCA4paPRwjE2CzS2LM1h/03EC8/LUs/AI=;
+ b=WZXMuYhBkGT3sbkZJvMXyGkT9tjDo9r0BwZL1nOwxO5ylAkLOu43ZATtopLNZFN0B08BZS
+ du+0O0Tut+fsU2q0RnBfGyHEyNY2sOViv8Uv5KlbMHfKrpoNgp+8a2AkjXznWD7xhYQbc/
+ 0pjXk22N4FWpjRyzQbBijPaHaCmPt2A=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-aTGA8Zv5O2ai31jmg2Mj6Q-1; Tue, 02 Jul 2024 10:10:22 -0400
-X-MC-Unique: aTGA8Zv5O2ai31jmg2Mj6Q-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52ce8969cf1so4161888e87.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:10:22 -0700 (PDT)
+ us-mta-250-TNUpZdfsP4-TlMjRcVicoA-1; Tue, 02 Jul 2024 10:08:44 -0400
+X-MC-Unique: TNUpZdfsP4-TlMjRcVicoA-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4256667ebf9so29778225e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:08:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929420; x=1720534220;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wXu48vkZ7/C+tOxLrIxzTN9h9b+wSo5eOaPVc/4Fs+U=;
- b=t6kif7eA7wXVKpbe8stbFuLuYChnPwBq2Wxehagr6QIThRRATMkwvZh8ddUQrZkaph
- Hb+0DQgnEzhyB0T6e8y3MwkvGJ32QOuzMxX/VVB98vG768IePF22LNeXfsABQhSlCCVg
- U/OxCz+zLOblK98+H3Gs+eQxDI3AhzE59zly249cCMCvXU/bleyAbY1+01AbOOGuqLtq
- MDTyEDD+f3tRYQ8sTJ2rGwUd2e5MIIS8KYMr+YTfQ2p7MqCw9ePsEe4otcQpsGfCIRBz
- O2GhKcaIvG3mmlWTT2lCb4QW1nFn/gTyvSwJdmrd4RUNK2B9xykA9jjLNEpfNdsoeR+W
- 0xOQ==
-X-Gm-Message-State: AOJu0Yy12CR5vpavzmW60uhs/ny9taMOrJiKwpD6JeR2Wd+Wdxob4GgZ
- DhMQeYQbdjT1MzDQ274EcDaWDnNmJ5xl7910/FQOlakIMglNLaEzpcaacxfAfvzVNyefRflyijr
- nLsGcfADZORJR0utfG8Ah58NGakKMuzUn9zijMgFh15Fqzeoz1XNuzovmZUqYfjmzMyOX8msU/N
- yOPqNPyXRhMcaIiDoIcg+FfJIVv2QYCQ==
-X-Received: by 2002:a05:6512:3da4:b0:52c:c5c4:43d2 with SMTP id
- 2adb3069b0e04-52e826fb074mr6471126e87.47.1719929420428; 
- Tue, 02 Jul 2024 07:10:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHA4D0ZbXfKi20DsLWoHDU17tX15XCF6STsUfIryVz9NfNRFA+AodEo3+eLry67RPFaeHUcnw==
-X-Received: by 2002:a05:6512:3da4:b0:52c:c5c4:43d2 with SMTP id
- 2adb3069b0e04-52e826fb074mr6471076e87.47.1719929419601; 
- Tue, 02 Jul 2024 07:10:19 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719929323; x=1720534123;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kZkfnrsmrcpCA4paPRwjE2CzS2LM1h/03EC8/LUs/AI=;
+ b=RhkXxDxfxwZ4CecIR7rqZowaS3VeZoWieKY/zFo762cdmbz4UDiW1alc3hS7Xv5F5j
+ DNX4HrZWbYbH50whVO8TS+2Dizej5/3ji49/GJQZV/3N2vkWy4X1kLYUHRw2quEgBH6q
+ LC6fZHPhs0REgff4ycFoRIe+YyNowiy63LLq7Q+DUlZ0JF6vwt8D4J+mr8HDVm3W9s92
+ tuLvhpev0/u2jp+q6AYKAq75hbYKwByDcGEuGWG2xzysEnmnsBnEJEZAnXGmgRb06SzW
+ R9JNhwoH/OM51/2p4jc2CRUgGXFg2rN4/HQpxfsNTxUBLzuyK47XC9Om60uQKKT2ty8K
+ wQwg==
+X-Gm-Message-State: AOJu0Yy/qx/kRvDKlbQdKZyMygUwmrAcdkw7SXLNNMRlZKiThI463mop
+ sir8WuIHNSX3Y+ZNN1xXmKOvu3LAvRXSbzyH3Xj0LWRXmGN4TsSU8sMthL93CaHOjiaKPQVhVX/
+ J7DuqR2xwqgFiQIrGPZzBHUWhdstnvqbU6E1g6EZCaVIdQV0tKEBWQafLXz2FEQqGefxdsys39V
+ hOAQq7VNfl9tvydrUIKpv+y9QggcjGZA==
+X-Received: by 2002:a05:600c:480f:b0:425:7ca2:68bc with SMTP id
+ 5b1f17b1804b1-4257ca26afamr61510435e9.34.1719929323129; 
+ Tue, 02 Jul 2024 07:08:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwEwdqqCIGB/U31YgBC3pW0iSqSJSSCcieC0L/ueIKRAE23+V08HPF1gLd8tQ065sP4jEahg==
+X-Received: by 2002:a05:600c:480f:b0:425:7ca2:68bc with SMTP id
+ 5b1f17b1804b1-4257ca26afamr61510085e9.34.1719929322460; 
+ Tue, 02 Jul 2024 07:08:42 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af5b61bsm201473875e9.17.2024.07.02.07.10.17
+ ffacd0b85a97d-3675a0d8df0sm13422689f8f.29.2024.07.02.07.08.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:10:18 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:10:16 -0400
+ Tue, 02 Jul 2024 07:08:42 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:08:40 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sunil V L <sunilvl@ventanamicro.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 64/91] uefi-test-tools: Add support for python based build
- script
-Message-ID: <c334e037c8e490a3ee8e83df21d6edacf206041b.1719929191.git.mst@redhat.com>
+ Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 33/91] hw/misc/pvpanic: add support for normal shutdowns
+Message-ID: <6269086b0179e3d70750672174ed7fbd29ac7eaa.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719929191.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,134 +104,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Thomas Weißschuh <thomas@t-8ch.de>
 
-edk2-funcs.sh which is used in this Makefile, was removed in the commit
-c28a2891f3 ("edk2: update build script"). It is replaced with a python
-based script. So, update the Makefile and add the configuration file as
-required to support the python based build script.
+Shutdown requests are normally hardware dependent.
+By extending pvpanic to also handle shutdown requests, guests can
+submit such requests with an easily implementable and cross-platform
+mechanism.
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240625150839.1358279-4-sunilvl@ventanamicro.com>
+Acked-by: Cornelia Huck <cohuck@redhat.com>
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+Message-Id: <20240527-pvpanic-shutdown-v8-5-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/uefi-test-tools/Makefile               | 19 +++----
- tests/uefi-test-tools/uefi-test-build.config | 52 ++++++++++++++++++++
- 2 files changed, 59 insertions(+), 12 deletions(-)
- create mode 100644 tests/uefi-test-tools/uefi-test-build.config
+ include/hw/misc/pvpanic.h | 4 +++-
+ include/sysemu/runstate.h | 1 +
+ hw/misc/pvpanic.c         | 5 +++++
+ system/runstate.c         | 5 +++++
+ 4 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/tests/uefi-test-tools/Makefile b/tests/uefi-test-tools/Makefile
-index 0c003f2877..f4eaebd8ff 100644
---- a/tests/uefi-test-tools/Makefile
-+++ b/tests/uefi-test-tools/Makefile
-@@ -12,7 +12,7 @@
+diff --git a/include/hw/misc/pvpanic.h b/include/hw/misc/pvpanic.h
+index 1e5b20e4ed..9a71a5ad0d 100644
+--- a/include/hw/misc/pvpanic.h
++++ b/include/hw/misc/pvpanic.h
+@@ -20,7 +20,9 @@
  
- edk2_dir              := ../../roms/edk2
- images_dir            := ../data/uefi-boot-images
--emulation_targets     := arm aarch64 i386 x86_64
-+emulation_targets     := arm aarch64 i386 x86_64 riscv64
- uefi_binaries         := bios-tables-test
- intermediate_suffixes := .efi .fat .iso.raw
+ #include "standard-headers/misc/pvpanic.h"
  
-@@ -56,7 +56,8 @@ Build/%.iso.raw: Build/%.fat
- # stripped from, the argument.
- map_arm_to_uefi     = $(subst arm,ARM,$(1))
- map_aarch64_to_uefi = $(subst aarch64,AA64,$(call map_arm_to_uefi,$(1)))
--map_i386_to_uefi    = $(subst i386,IA32,$(call map_aarch64_to_uefi,$(1)))
-+map_riscv64_to_uefi = $(subst riscv64,RISCV64,$(call map_aarch64_to_uefi,$(1)))
-+map_i386_to_uefi    = $(subst i386,IA32,$(call map_riscv64_to_uefi,$(1)))
- map_x86_64_to_uefi  = $(subst x86_64,X64,$(call map_i386_to_uefi,$(1)))
- map_to_uefi         = $(subst .,,$(call map_x86_64_to_uefi,$(1)))
+-#define PVPANIC_EVENTS (PVPANIC_PANICKED | PVPANIC_CRASH_LOADED)
++#define PVPANIC_EVENTS (PVPANIC_PANICKED | \
++                        PVPANIC_CRASH_LOADED | \
++                        PVPANIC_SHUTDOWN)
  
-@@ -70,7 +71,7 @@ Build/%.fat: Build/%.efi
- 	uefi_bin_b=$$(stat --format=%s -- $<) && \
- 		uefi_fat_kb=$$(( (uefi_bin_b * 11 / 10 + 1023) / 1024 )) && \
- 		uefi_fat_kb=$$(( uefi_fat_kb >= 64 ? uefi_fat_kb : 64 )) && \
--		mkdosfs -C $@ -n $(basename $(@F)) -- $$uefi_fat_kb
-+		mkdosfs -C $@ -n "bios-test" -- $$uefi_fat_kb
- 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI
- 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI/BOOT
- 	MTOOLS_SKIP_CHECK=1 mcopy -i $@ -- $< \
-@@ -95,15 +96,9 @@ Build/%.fat: Build/%.efi
- # we must mark the recipe manually as recursive, by using the "+" indicator.
- # This way, when the inner "make" starts a parallel build of the target edk2
- # module, it can communicate with the outer "make"'s job server.
--Build/bios-tables-test.%.efi: build-edk2-tools
--	+./build.sh $(edk2_dir) BiosTablesTest $* $@
--
--build-edk2-tools:
--	cd $(edk2_dir)/BaseTools && git submodule update --init --force
--	$(MAKE) -C $(edk2_dir)/BaseTools \
--		PYTHON_COMMAND=$${EDK2_PYTHON_COMMAND:-python3} \
--		EXTRA_OPTFLAGS='$(EDK2_BASETOOLS_OPTFLAGS)' \
--		EXTRA_LDFLAGS='$(EDK2_BASETOOLS_LDFLAGS)'
-+Build/bios-tables-test.%.efi:
-+	$(PYTHON) ../../roms/edk2-build.py --config uefi-test-build.config \
-+		--match $*
+ #define TYPE_PVPANIC_ISA_DEVICE "pvpanic"
+ #define TYPE_PVPANIC_PCI_DEVICE "pvpanic-pci"
+diff --git a/include/sysemu/runstate.h b/include/sysemu/runstate.h
+index 0117d243c4..e210a37abf 100644
+--- a/include/sysemu/runstate.h
++++ b/include/sysemu/runstate.h
+@@ -104,6 +104,7 @@ void qemu_system_killed(int signal, pid_t pid);
+ void qemu_system_reset(ShutdownCause reason);
+ void qemu_system_guest_panicked(GuestPanicInformation *info);
+ void qemu_system_guest_crashloaded(GuestPanicInformation *info);
++void qemu_system_guest_pvshutdown(void);
+ bool qemu_system_dump_in_progress(void);
  
- clean:
- 	rm -rf Build Conf log
-diff --git a/tests/uefi-test-tools/uefi-test-build.config b/tests/uefi-test-tools/uefi-test-build.config
-new file mode 100644
-index 0000000000..1f389ae541
---- /dev/null
-+++ b/tests/uefi-test-tools/uefi-test-build.config
-@@ -0,0 +1,52 @@
-+[global]
-+core = ../../roms/edk2
+ #endif
+diff --git a/hw/misc/pvpanic.c b/hw/misc/pvpanic.c
+index 4b2307d2c2..3b893340c0 100644
+--- a/hw/misc/pvpanic.c
++++ b/hw/misc/pvpanic.c
+@@ -41,6 +41,11 @@ static void handle_event(int event)
+         qemu_system_guest_crashloaded(NULL);
+         return;
+     }
 +
-+####################################################################################
-+# arm
++    if (event & PVPANIC_SHUTDOWN) {
++        qemu_system_guest_pvshutdown();
++        return;
++    }
+ }
+ 
+ /* return supported events on read */
+diff --git a/system/runstate.c b/system/runstate.c
+index ec32e270cb..fc49fd3e61 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -584,6 +584,11 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+     qapi_free_GuestPanicInformation(info);
+ }
+ 
++void qemu_system_guest_pvshutdown(void)
++{
++    qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
++}
 +
-+[build.arm]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = ARM
-+cpy1 = ARM/BiosTablesTest.efi  bios-tables-test.arm.efi
-+
-+####################################################################################
-+# aarch64
-+
-+[build.aarch64]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = AARCH64
-+cpy1 = AARCH64/BiosTablesTest.efi  bios-tables-test.aarch64.efi
-+
-+####################################################################################
-+# riscv64
-+
-+[build.riscv]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = RISCV64
-+cpy1 = RISCV64/BiosTablesTest.efi  bios-tables-test.riscv64.efi
-+
-+####################################################################################
-+# ia32
-+
-+[build.ia32]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = IA32
-+cpy1 = IA32/BiosTablesTest.efi  bios-tables-test.i386.efi
-+
-+####################################################################################
-+# x64
-+
-+[build.x64]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = X64
-+cpy1 = X64/BiosTablesTest.efi  bios-tables-test.x86_64.efi
+ void qemu_system_reset_request(ShutdownCause reason)
+ {
+     if (reboot_action == REBOOT_ACTION_SHUTDOWN &&
 -- 
 MST
 
