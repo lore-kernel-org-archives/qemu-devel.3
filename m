@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8071AC41513
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AA2EC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjwo-0002yj-1C; Tue, 02 Jul 2024 16:17:54 -0400
+	id 1sOjxr-0005hT-Rx; Tue, 02 Jul 2024 16:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjwh-0002MF-VW
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:17:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjxD-0004w5-Uu
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjwe-0008V2-4e
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:17:47 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjx8-00009f-CU
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951463;
+ s=mimecast20190719; t=1719951492;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=g4UiaVaJHqFRMzcgj8Lsoa2O3CKB9KU5Hs0p0vn09PA=;
- b=AHc3RaG9XmWjOU54+r2CQCaVCeSuBUt78fNGRb9eroGF5d8I0/qKmne6keKqHTXm5lwC41
- +Ty4qZ2C3PGNsTDS91obR2nI4nmQtlOi/BhzVluQZBKoLPCEPTm5AHNULeomh8IQxImNGz
- DF6Outso0QqarmeHwXqNddZ/XaOjUMc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iKFeowSJAGhilDZfxfLdJ5fHZQGvWfI2BMoyWfTY0Wo=;
+ b=cmFRM+aEm+p7hnM2QQUI7+TqSiLXTJjEpk6Dc/9QzryU/DeqVnM2QyzB1MiFS2Zu8OLxLO
+ wK1bZy9Qkeg3yuEk/LXIVw37GfdWtu5aia/7hJQIZcCtxiLqireYiO6Q3Dn8NVB4u0AF49
+ 5L39WuhhPiNGvm2hN9TU4D+bWlBk5Xg=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-213-6Zu5CjTHNgKW1wunOb3oNg-1; Tue, 02 Jul 2024 16:17:42 -0400
-X-MC-Unique: 6Zu5CjTHNgKW1wunOb3oNg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-363542774e1so4860168f8f.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:17:41 -0700 (PDT)
+ us-mta-592-_F-bNjI6MY-6t6BP1u_J5w-1; Tue, 02 Jul 2024 16:18:11 -0400
+X-MC-Unique: _F-bNjI6MY-6t6BP1u_J5w-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2ec617f8b6fso41921531fa.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:18:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951460; x=1720556260;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=g4UiaVaJHqFRMzcgj8Lsoa2O3CKB9KU5Hs0p0vn09PA=;
- b=j1QbckjddPYxP+X86sjPISyHNQWAO5mTN4hucWsUKV603oR4gu4rnyzovNyVsDx7Gi
- mlUtLln3zE7sy5EsQjr/rBUTTQ2I+zziXolR5GD3NFPjPavVnC2BdSHRP1pu3DRcyGEW
- 2Sy2kId5/9RzHEos5EKCxnzmY8gz+k0zgNzgNRGxQYw2eZ7ASEj+4eQz7SU1B2lZLtR8
- VSLZuD+vwq2sGV5zo6StPAI5Ec6T4iVuDj/mAeqNwXAP3d1tis2kWHajeXUcTz19M+Q7
- Y9knHwvypdtcykXio6R9rE1BrOxW3vioDe3aWW4lZ+iM3+HYTCMn/OcJHz7+2jSYsQu8
- ojBQ==
-X-Gm-Message-State: AOJu0YyAy9lZfpkj4heLCizx9cUp8dQQta0kxDsMomKfREcvQ9XgJo/7
- PG6QOOPZBO2IWc4rP+wXuTwHg+py2o+cx2s4mAZ2Xo0/qK8Dc8bp9g4gly0dZXccNBU9IgCVxVd
- Q34qJE6CqBhmXWQMuUgbxJH4saDYHpekORpcBpQL0co+FGErYFa3Er2vQ15H75+ECoJtunTe17Y
- Mv77Pho15B1NYtAKAzmQnOU0KcDQA/pg==
-X-Received: by 2002:a05:6000:1f88:b0:366:f2c2:61f3 with SMTP id
- ffacd0b85a97d-3677572492dmr9653100f8f.51.1719951460450; 
- Tue, 02 Jul 2024 13:17:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGH+TGxMh99Mc5Ft2lSoxDo4TyJtXrv56JEw1a6jDH3BelwvfUpvmqQXu/kEzPveujoF1PfyQ==
-X-Received: by 2002:a05:6000:1f88:b0:366:f2c2:61f3 with SMTP id
- ffacd0b85a97d-3677572492dmr9653076f8f.51.1719951459963; 
- Tue, 02 Jul 2024 13:17:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719951489; x=1720556289;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iKFeowSJAGhilDZfxfLdJ5fHZQGvWfI2BMoyWfTY0Wo=;
+ b=RH5hGKRvx6vhuFMOCWZ4qPhgJw5fu8IFPtcYphXFu+mKPOqh91gd7PuLsHTgSI+w06
+ 0NK28bwihiY39NdSqcBvtoJnzMOoJDgou9anGUH2yez8yOFaR4jOLostAapsk3qbWotO
+ IsYob/VWP8dR5OuwMb0xWx55UeBP++SUaEdckwi1RGbcEdKfxDiw0V6wNmJ7oFeuR+eB
+ hECj5mMbMIRz169CSC6gQuDzSCHB7RPeVoCakEDad47JS6V/is4u9pSamfUIO7p1iV7O
+ 8vp+bfwMePl8Btr2/rHZYW7Khuy1I7R+Q9T++xp0hUFE/6yTH4tq+1QV6zbFh2o6UkBg
+ xGEA==
+X-Gm-Message-State: AOJu0YzLWMk4+WoGKQ/2QvB9iji9DdnFcXdkAzGhGq9XvKHFvoDoTG2I
+ Fg/VVhulylcCOzIYzGAgCqe+rgUpGKhexQ1wZUcwwAqLoGJjk3hm/Z58RRD3aprxL7Cz2/Q43hE
+ 8qhxgtqlWBeklLp3KF1DpfgXSKXbQIKbS69q63sZjlEFnMOnOESQZN69/zkfrhsFQuTeGvSJprq
+ 2+Go2rnO0q5a2rF1vLKvOXpOXxTxaPkQ==
+X-Received: by 2002:a2e:9e98:0:b0:2eb:eb7c:ec1b with SMTP id
+ 38308e7fff4ca-2ee5e4c3824mr58295621fa.25.1719951489151; 
+ Tue, 02 Jul 2024 13:18:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGtLMbCQtzpcnUvy4pCVc3jirrVzBvjUNxySLJkVco5w4j6MVxcFHJpugV5ehT/3qyTLIVWVg==
+X-Received: by 2002:a2e:9e98:0:b0:2eb:eb7c:ec1b with SMTP id
+ 38308e7fff4ca-2ee5e4c3824mr58295451fa.25.1719951488503; 
+ Tue, 02 Jul 2024 13:18:08 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3678a23b349sm2303124f8f.36.2024.07.02.13.17.38
+ ffacd0b85a97d-3675a0cd687sm14181249f8f.14.2024.07.02.13.18.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:17:39 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:17:37 -0400
+ Tue, 02 Jul 2024 13:18:08 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:18:06 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 36/88] Revert "docs/specs/pvpanic: mark shutdown event as
- not implemented"
-Message-ID: <0c0cc13d319cf7b876f327fa1c5cc1866ad868cc.1719951168.git.mst@redhat.com>
+ BillXiang <xiangwencheng@dayudpu.com>
+Subject: [PULL v2 44/88] vhost-user: Skip unnecessary duplicated
+ VHOST_USER_SET_LOG_BASE requests
+Message-ID: <7c211eb078c42146ee9a441cc028fbc4c378ef5a.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,33 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Weißschuh <thomas@t-8ch.de>
+From: BillXiang <xiangwencheng@dayudpu.com>
 
-The missing functionality has been implemented now.
+The VHOST_USER_SET_LOG_BASE requests should be categorized into
+non-vring specific messages, and should be sent only once.
+If send more than once, dpdk will munmap old log_addr which may has been used and cause segmentation fault.
 
-This reverts commit e739d1935c461d0668057e9dbba9d06f728d29ec.
-
-Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
-Message-Id: <20240527-pvpanic-shutdown-v8-8-5a28ec02558b@t-8ch.de>
+Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
+Message-Id: <20240613065150.3100-1-xiangwencheng@dayudpu.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- docs/specs/pvpanic.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/vhost-user.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/docs/specs/pvpanic.rst b/docs/specs/pvpanic.rst
-index b0f27860ec..61a80480ed 100644
---- a/docs/specs/pvpanic.rst
-+++ b/docs/specs/pvpanic.rst
-@@ -29,7 +29,7 @@ bit 1
-   a guest panic has happened and will be handled by the guest;
-   the host should record it or report it, but should not affect
-   the execution of the guest.
--bit 2 (to be implemented)
-+bit 2
-   a regular guest shutdown has happened and should be processed by the host
- 
- PCI Interface
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index c407ea8939..00561daa06 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -371,6 +371,7 @@ static bool vhost_user_per_device_request(VhostUserRequest request)
+     case VHOST_USER_RESET_DEVICE:
+     case VHOST_USER_ADD_MEM_REG:
+     case VHOST_USER_REM_MEM_REG:
++    case VHOST_USER_SET_LOG_BASE:
+         return true;
+     default:
+         return false;
 -- 
 MST
 
