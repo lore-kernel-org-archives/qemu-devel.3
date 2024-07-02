@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7097C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 21:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDDACC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 21:05:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOkgw-0001WQ-Te; Tue, 02 Jul 2024 17:05:34 -0400
+	id 1sOkh8-0001Zi-HM; Tue, 02 Jul 2024 17:05:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOkgv-0001WA-Dy
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:05:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOkgs-0007jS-QA
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:05:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719954328;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=F4Lib4g++LzAE7jBfMQxUpgflaHVLvSvar6UT0dJREs=;
- b=PNA2G8Cq8FS7CQ8jw/EIK5gTXNjlZCTNoWp71OjBEfk3/l87Bgw1qDk8Y0flPEXE5+9sR2
- +fwbilgYWfudqpecdI1EX0IP99m0gq1ZSGJzzEqcgD5h4y/kDohyAMU97fo2xvbmxGPiLV
- uA9aV6gO2c0Z3X2O4emGZQxHX+57FhU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-L6NcIGHsN7ausY8avlJOEA-1; Tue, 02 Jul 2024 17:05:27 -0400
-X-MC-Unique: L6NcIGHsN7ausY8avlJOEA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3678e549a1eso380412f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 14:05:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sOkh3-0001X8-Cg
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:05:41 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sOkh1-0007k0-Fh
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:05:41 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-52e8037f8a5so4592043e87.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 14:05:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719954338; x=1720559138; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=E2mdgeeKEiy+s4B/PAKsLCcO09jDDi9sxAyEzud5PGw=;
+ b=AOOgmvxPREY+ENVlsYqLX+agQftqtpeE+Wrr4BmddSEntVc11jOFpVGEReTRViw2QN
+ AjnsMDLVhry58qVJn7kl32KhHgG+0QHekCK2ijGlxhBgmWjuXsWXu2MCu1Ya+0ew25XG
+ Wuz+c6eCGpmnb5Lb/Z4u4c2I3gDqLujcxnaVVOcmbsMLYbo3zHshx2oyCOPZrH+xtiqt
+ zY1V7PO6gM806i/PCPSMHELO5nrHOwXZGWPH2beE41Z5DcTiVB5c1qcqkhY4FjSEH7Fb
+ 5Ba7higXw0AlK3MEFaEQqJw+YPuDX4g5itSzWyAQTM1nD+B6mREjaLArRmjIcOL5xwEb
+ Kc1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719954325; x=1720559125;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=F4Lib4g++LzAE7jBfMQxUpgflaHVLvSvar6UT0dJREs=;
- b=IwTidykmLXjQjaaR/CdjLPDlJGO9AjGGHfSwNgTBxsl4FOqN9wv8dcydvhz2neJiK2
- sJovrhtkAsr/wjONU5IFWKS+LmbgzalqZv3HnmA7VIXhCBnkqgSTpJZPH7KQEvAyOF0G
- Xc5vUno2LpnvxSCv/iTDU2X6Wcb6mTKRSgo+2eYDT8UH3+d7cm5wp59F/jQWTs+sVGSj
- oT6l/vfRam9y3WXofQc72XxP1HgI7TKSuZwtvXqNly6L6ca7U92o+Fmz69XJN4JIs4zD
- 6vSVH1WS5WUjhK/0dfCRvaMhPa6TKHYQ04+HSImmHgTUwGj2jQJhlZuQ4YzUf+DBWT09
- bqXg==
+ d=1e100.net; s=20230601; t=1719954338; x=1720559138;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=E2mdgeeKEiy+s4B/PAKsLCcO09jDDi9sxAyEzud5PGw=;
+ b=fCWEH9nWc+hJfKBDlbfUeqG/iKYzAcll7pYS9rNZgrfaVJRsRQTtpdp6rWFJIsKDaM
+ ZSKfMU//wPyyWnJNIUyDr10wdfe437CHC8doDLtVjRhepHZrv0BQBM6fwNKsfFrsdfBd
+ /46Gd61x9YfyWL68oVYWXo7pDs9wb8YrgocUO+8iZcN71jMd+q2FJ+yuIvTrQO6ljZsG
+ GzH7C/b2zHKHtHKxD41JATkoUef3Xdyx7ctR9xl2qDteGeM75UAjgvK0GmcOacrLW5Xv
+ Bx2vZCNUIs3Ab1ZIcVvHZDPzwVc+9bx6DD49Q4MAC8f5nMRuxM5TrUfiUlBBAL+y3o9W
+ 9hlg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoi24rmw8aPvFwvPDpDWFXO32z5sbeZbFCHdTU5G3PI+TIBCz6MviGAoByinZNjPZ4RTBa3SSteYsLl5KO+FYLq8FvxC8=
-X-Gm-Message-State: AOJu0Yw3ZfG9fFjvyFTHGM6SFQj7ZDichj9DviCMsESJz4eVzoju6zVy
- l5YVC9x0QFrJwDhaAFeaKPs4EfERSHKshioRqTD0jOuBn8avCuSSziwCHbIMPFutGIfUOHoq6rC
- nVQ0kQpYvlrSyzvTsIr+0BgYaUi0N5Ca6jd7R04f/kGZZosRavr9vKdYovTRR
-X-Received: by 2002:a5d:524a:0:b0:360:866f:5083 with SMTP id
- ffacd0b85a97d-36774f9375bmr8132893f8f.32.1719954325752; 
- Tue, 02 Jul 2024 14:05:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEh77O4rNExg/juR7RshCk2KhmEi5wv+LuLCisrtcBzhomrb6dxP5VYp01BJAFm3hXXU1e5xg==
-X-Received: by 2002:a5d:524a:0:b0:360:866f:5083 with SMTP id
- ffacd0b85a97d-36774f9375bmr8132869f8f.32.1719954325011; 
- Tue, 02 Jul 2024 14:05:25 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
+ AJvYcCU2Eoc2Vflt+hyhwaZWZ28UNWrw83vbpC0FEC4CNGkMSXIlGo7gorREkjaZNwjpiEgGkCnxihQ9DHohJ1/qW+H4MN+Jvqk=
+X-Gm-Message-State: AOJu0Yy+r85FrZPoWq+3UgT9wWBwYYMXJ2q9Dt2hlO2eQU0DPyMEettu
+ TgmbiUUkaxzyVKWl7hV+t3W6xqmqqO8U+MVDcZ4klTR8L7bo00H+XIoHKAY=
+X-Google-Smtp-Source: AGHT+IH9iAAgCUsNk62sVKzUPLdTVe6gbH9Cx2pDC2vSvXp4p0k+xzJNuBBNMtCMiWQAVrTj3FjcHQ==
+X-Received: by 2002:a05:6512:12cc:b0:52d:a55b:fa9d with SMTP id
+ 2adb3069b0e04-52e8268cf32mr7368896e87.38.1719954335377; 
+ Tue, 02 Jul 2024 14:05:35 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a112a54sm14174980f8f.115.2024.07.02.14.05.22
+ 5b1f17b1804b1-4256b0c1018sm210780175e9.40.2024.07.02.14.05.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 14:05:24 -0700 (PDT)
-Date: Tue, 2 Jul 2024 17:05:19 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Zheyu Ma <zheyuma97@gmail.com>
-Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH]  hw/virtio/virtio-crypto: Fix op_code assignment in
+ Tue, 02 Jul 2024 14:05:35 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Cc: Zheyu Ma <zheyuma97@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2] hw/virtio/virtio-crypto: Fix op_code assignment in
  virtio_crypto_create_asym_session
-Message-ID: <20240702170444-mutt-send-email-mst@kernel.org>
-References: <20240702210227.3059947-1-zheyuma97@gmail.com>
+Date: Tue,  2 Jul 2024 23:05:19 +0200
+Message-Id: <20240702210519.3061098-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240702210227.3059947-1-zheyuma97@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=zheyuma97@gmail.com; helo=mail-lf1-x133.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,58 +96,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 02, 2024 at 11:02:27PM +0200, Zheyu Ma wrote:
-> The assignment of the op_code in the virtio_crypto_create_asym_session
-> function was moved before its usage to ensure it is correctly set.
-> Previously, if the function failed during the key_len check, the op_code
+The assignment of the op_code in the virtio_crypto_create_asym_session
+function was moved before its usage to ensure it is correctly set.
+Previously, if the function failed during the key_len check, the op_code
+did not have a proper value, causing virtio_crypto_free_create_session_req
+to not free the memory correctly, leading to a memory leak.
 
-when you say Previously, you mean "currently"?
+By setting the op_code before performing any checks, we ensure that
+virtio_crypto_free_create_session_req has the correct context to
+perform cleanup operations properly, thus preventing memory leaks.
 
-> did not have a proper value, causing virtio_crypto_free_create_session_req
+ASAN log:
+==3055068==ERROR: LeakSanitizer: detected memory leaks
+Direct leak of 512 byte(s) in 1 object(s) allocated from:
+    #0 0x5586a75e6ddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
+    #1 0x7fb6b63b6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
+    #2 0x5586a864bbde in virtio_crypto_handle_ctrl hw/virtio/virtio-crypto.c:407:19
+    #3 0x5586a94fc84c in virtio_queue_notify_vq hw/virtio/virtio.c:2277:9
+    #4 0x5586a94fc0a2 in virtio_queue_host_notifier_read hw/virtio/virtio.c:3641:9
 
-and here did not -> does not.
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+Changes in v2:
+- Fix the whitespace in title
+---
+ hw/virtio/virtio-crypto.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> to not free the memory correctly, leading to a memory leak.
-> 
-> By setting the op_code before performing any checks, we ensure that
-> virtio_crypto_free_create_session_req has the correct context to
-> perform cleanup operations properly, thus preventing memory leaks.
-> 
-> ASAN log:
-> ==3055068==ERROR: LeakSanitizer: detected memory leaks
-> Direct leak of 512 byte(s) in 1 object(s) allocated from:
->     #0 0x5586a75e6ddd in malloc llvm/compiler-rt/lib/asan/asan_malloc_linux.cpp:129:3
->     #1 0x7fb6b63b6738 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5e738)
->     #2 0x5586a864bbde in virtio_crypto_handle_ctrl hw/virtio/virtio-crypto.c:407:19
->     #3 0x5586a94fc84c in virtio_queue_notify_vq hw/virtio/virtio.c:2277:9
->     #4 0x5586a94fc0a2 in virtio_queue_host_notifier_read hw/virtio/virtio.c:3641:9
-> 
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
-> ---
->  hw/virtio/virtio-crypto.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-> index bbe8aa4b99..5034768bff 100644
-> --- a/hw/virtio/virtio-crypto.c
-> +++ b/hw/virtio/virtio-crypto.c
-> @@ -205,6 +205,7 @@ virtio_crypto_create_asym_session(VirtIOCrypto *vcrypto,
->      int queue_index;
->      uint32_t algo, keytype, keylen;
->  
-> +    sreq->info.op_code = opcode;
->      algo = ldl_le_p(&sess_req->para.algo);
->      keytype = ldl_le_p(&sess_req->para.keytype);
->      keylen = ldl_le_p(&sess_req->para.keylen);
-> @@ -224,7 +225,6 @@ virtio_crypto_create_asym_session(VirtIOCrypto *vcrypto,
->          iov_discard_front(&iov, &out_num, keylen);
->      }
->  
-> -    sreq->info.op_code = opcode;
->      asym_info = &sreq->info.u.asym_sess_info;
->      asym_info->algo = algo;
->      asym_info->keytype = keytype;
-> -- 
-> 2.34.1
+diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
+index bbe8aa4b99..5034768bff 100644
+--- a/hw/virtio/virtio-crypto.c
++++ b/hw/virtio/virtio-crypto.c
+@@ -205,6 +205,7 @@ virtio_crypto_create_asym_session(VirtIOCrypto *vcrypto,
+     int queue_index;
+     uint32_t algo, keytype, keylen;
+ 
++    sreq->info.op_code = opcode;
+     algo = ldl_le_p(&sess_req->para.algo);
+     keytype = ldl_le_p(&sess_req->para.keytype);
+     keylen = ldl_le_p(&sess_req->para.keylen);
+@@ -224,7 +225,6 @@ virtio_crypto_create_asym_session(VirtIOCrypto *vcrypto,
+         iov_discard_front(&iov, &out_num, keylen);
+     }
+ 
+-    sreq->info.op_code = opcode;
+     asym_info = &sreq->info.u.asym_sess_info;
+     asym_info->algo = algo;
+     asym_info->keytype = keytype;
+-- 
+2.34.1
 
 
