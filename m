@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 509CBC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 11:53:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA64C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 11:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOc3l-0006Ef-No; Tue, 02 Jul 2024 07:52:33 -0400
+	id 1sOc9i-00006U-Oq; Tue, 02 Jul 2024 07:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sOc3k-0006EL-5m
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:52:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sOc3i-0003Ar-Bh
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:52:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719921148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Y5AO4Yao+JQQAmdTj05CRTK4SyFyMP/ATbPuEOYXRw8=;
- b=brfG0wnvjHb4nKX04jUspAU/uFtNM6zAUsi/FejRKXQJVjGgtrvRdaWci5U4o53HLhq1KG
- PoDD7klMOjrTVSsgDtS9BS9FKnx1PVFrel3GHQVIVKegMK53VqBO/SXYyE17GrXakuKYgH
- pxAcGnnD/IZzDonv+uuVdcR75SFLn0Q=
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-lEbddqXHNbOtiXPjfESuqQ-1; Tue, 02 Jul 2024 07:52:27 -0400
-X-MC-Unique: lEbddqXHNbOtiXPjfESuqQ-1
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-3d5608530abso3810255b6e.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 04:52:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sOc9g-0008Qc-Ks
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:58:40 -0400
+Received: from mail-ua1-x932.google.com ([2607:f8b0:4864:20::932])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sOc9d-0004rH-TN
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:58:40 -0400
+Received: by mail-ua1-x932.google.com with SMTP id
+ a1e0cc1a2514c-8100bee5735so180122241.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 04:58:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719921516; x=1720526316;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=OdBeSRi4c4pSdkMqTRd9+J44UgUeAg/wq006TwLBMM8=;
+ b=0nqm+Sqblar2wxgG43OGRsJDtngfWwONoJZ482qTYJLdiOQisckf2tmopHJUTBPCTR
+ knChVcD6Z/ME9fPWEq3TUxZez+GS320pgm6gJS62D4dfGa6+98773aD5lJ594RLJQWY0
+ oGLqWZCdqnQWK9JcNhZ2S+7tlGHtVjT31ZaqJJzJFdsSS75vnuNBx0NolKcRTth+jixx
+ Ihz2BFJjQdLEqvMXaLYdUUrbDFZAEYv5EJTtyiHRezboLJBVoXcyBDgERK6VmWofU1l/
+ SgYcR5gjo4MW+CKtgsgUMvXs4NBFC9HR7jX8K2+X/5jXV1n9EB6kVQQJtUyIeAWcOpcj
+ XC/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719921146; x=1720525946;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y5AO4Yao+JQQAmdTj05CRTK4SyFyMP/ATbPuEOYXRw8=;
- b=YyKH5pkMCTxKTgI1E9RN4dlNMGsDINsVBGIXSTY/B5uyT5qV5P33g/G5PJ5IuCt2Mj
- dqHPMws1035VK6o+CqdpQ1k5FV+6S2HIPNKjqrXCN/fn3YCnm0U+iycnhHjTIO7DN3f0
- U1Z6FVljt/CyortYcqNN2rIErV9ymN93RzT9ib0XEL+QI8+yEo6OQiknz2Bzj6aE8nX7
- 7RQfH9xFLf3AK4FhZN42RPHcbasPYUYDI6pDqKJiGCuaxfdisdntSJwdiefv5DjehGP1
- vWFBVNVbA/KXzkHKNKC5dqLwVJDY6LX9jnNTwWOibuZAx0IuJ+u8VXT48Rf9NyKYAoTA
- 8HOg==
-X-Gm-Message-State: AOJu0YwhJs0517PY1byKuhQiIgBpD/Zgxa/L1r3ex29hHuNShVtWxpmU
- qMeN5QOLsqhpMZHsPBwCb01MPwkBngdJysrp678T2WIKSJiW3/2xy+0iGwJSKFRrk0Xpe9hbTQK
- axsRkdmhHf4wLuCCUTZeYLRoPBpUQJc6iB0GzJC0x23k7tAu6pG5d0ZMqe2sSY+lbt5hBhyPmjB
- z+nfU68FHGeC0SWLRk25n9tmH4Mlg=
-X-Received: by 2002:a05:6808:152a:b0:3d6:2d09:8a8c with SMTP id
- 5614622812f47-3d6b5496fe3mr12933665b6e.51.1719921145291; 
- Tue, 02 Jul 2024 04:52:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEU2+mj2+3eo3cCxXAR8c5YlTMc8rXGkNaAw4CBGNem2MrRfyL1iTI+8CEXI3Ay7RLhrJkI5lsJThH38XIUayI=
-X-Received: by 2002:a05:6808:152a:b0:3d6:2d09:8a8c with SMTP id
- 5614622812f47-3d6b5496fe3mr12933638b6e.51.1719921144972; Tue, 02 Jul 2024
- 04:52:24 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719921516; x=1720526316;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=OdBeSRi4c4pSdkMqTRd9+J44UgUeAg/wq006TwLBMM8=;
+ b=mlC5kLmzFDhji/VPy2ttSuvfM67edT1s4RYfHB7dIJx72D6XOTG3IfJOs3CHzjLY1i
+ zulGrAmOZyZxTSHXHAG15oNkaIdzVvvokrAfKjXMIr/pW62VT4YlvYHz9/E3xK+UF/Tx
+ HEcw3+2EppDNwFI2cJgjSOZOAd5GNEqiyj9ZroTljESYeDKhkQQAxfmCCwinS5FRUAdf
+ KfqNUeKr4wlGBAlbm4ajgUpTbOJ2RFNBPLQxyIF+7t9m9Ekh56bnuWmjTQHUStpmTFxX
+ rafbGZ0UTGvBVDEPBL9Bg4g/hCfE2x3o3cHeVWyY427Uz0eXOKSstwRvYmXTCcHk2FeM
+ WqIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUoRx0GiipdeiYATl8O1DY1qOvlGlDmAagIC2juYSYS1kZ1xyxxY9Bioj3ORJWNkDvRZePfJzCl4QAc2//L/KO8nE+/0ec=
+X-Gm-Message-State: AOJu0YyrO2dyOoYZJZ0wEjVv030DpVaiRm6JmxHBD9eYIICLMni9Yu9m
+ EZWOarkDmYTQHoDWpkCQjkhKNr3XxEH661D2uIxm6IJI/KzY5oGw/5HD+oPRGc5+gwM6ZZkALLi
+ 5HPXB6vuCBgpm9esyksMSZ4TNUsySXc5XVVfW
+X-Google-Smtp-Source: AGHT+IHb1S4UbPAypBoJF2EX2oynAG5/QHuYCc1rc4vrIlALlCeKOmo6AhFcYlE8Md0QsMdI0B1nHmMjtvolV3iFJP0=
+X-Received: by 2002:a67:f1d6:0:b0:48f:5ad3:32df with SMTP id
+ ada2fe7eead31-48faf0618f4mr6006442137.3.1719921516063; Tue, 02 Jul 2024
+ 04:58:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240626232230.408004-1-jsnow@redhat.com>
- <20240626232230.408004-4-jsnow@redhat.com>
-In-Reply-To: <20240626232230.408004-4-jsnow@redhat.com>
-From: Nir Soffer <nsoffer@redhat.com>
-Date: Tue, 2 Jul 2024 14:52:08 +0300
-Message-ID: <CAMRbyyuPVcwaLcyW=LeMhAWCRdqDBkNzYwE9q4Wan0Pm0k41GQ@mail.gmail.com>
-Subject: Re: [PATCH 3/4] iotests: Change imports for Python 3.13
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+References: <20240627-cursor-v2-0-c3cd3ee35616@daynix.com>
+ <20240627-cursor-v2-1-c3cd3ee35616@daynix.com>
+In-Reply-To: <20240627-cursor-v2-1-c3cd3ee35616@daynix.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Tue, 2 Jul 2024 13:58:25 +0200
+Message-ID: <CAAibmn1YzRJGHwKNu_QGFqqrNVWz1gJrALbz6C0uS3aqBAYtHw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] ui/cocoa: Release CGColorSpace
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Beraldo Leal <bleal@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=nsoffer@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000001cf53061c426f55"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::932;
+ envelope-from=phil@philjordan.eu; helo=mail-ua1-x932.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,72 +96,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 27, 2024 at 2:23=E2=80=AFAM John Snow <jsnow@redhat.com> wrote:
->
-> Python 3.13 isn't out yet, but it's in beta and Fedora is ramping up to
-> make it the default system interpreter for Fedora 41.
->
-> They moved our cheese for where ContextManager lives; add a conditional
-> to locate it while we support both pre-3.9 and 3.13+.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  tests/qemu-iotests/testenv.py    | 7 ++++++-
->  tests/qemu-iotests/testrunner.py | 9 ++++++---
->  2 files changed, 12 insertions(+), 4 deletions(-)
->
-> diff --git a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.p=
-y
-> index 588f30a4f14..96d69e56963 100644
-> --- a/tests/qemu-iotests/testenv.py
-> +++ b/tests/qemu-iotests/testenv.py
-> @@ -25,7 +25,12 @@
->  import random
->  import subprocess
->  import glob
-> -from typing import List, Dict, Any, Optional, ContextManager
-> +from typing import List, Dict, Any, Optional
-> +
-> +if sys.version_info >=3D (3, 9):
-> +    from contextlib import AbstractContextManager as ContextManager
-> +else:
-> +    from typing import ContextManager
+--00000000000001cf53061c426f55
+Content-Type: text/plain; charset="UTF-8"
 
-It can be cleaner to add a compat module hiding the details so the
-entire project
-can have a single instance of this. Other code will just use:
+Good catch! I hadn't spotted the existing, shipping instance of this issue.
 
-    from compat import ContextManager
+On Thu, 27 Jun 2024 at 13:17, Akihiko Odaki <akihiko.odaki@daynix.com>
+wrote:
 
+> CGImageCreate | Apple Developer Documentation
 >
->  DEF_GDB_OPTIONS =3D 'localhost:12345'
+> https://developer.apple.com/documentation/coregraphics/1455149-cgimagecreate
+> > The color space is retained; on return, you may safely release it.
 >
-> diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testru=
-nner.py
-> index 7b322272e92..2e236c8fa39 100644
-> --- a/tests/qemu-iotests/testrunner.py
-> +++ b/tests/qemu-iotests/testrunner.py
-> @@ -27,11 +27,14 @@
->  import shutil
->  import sys
->  from multiprocessing import Pool
-> -from typing import List, Optional, Any, Sequence, Dict, \
-> -        ContextManager
-> -
-> +from typing import List, Optional, Any, Sequence, Dict
->  from testenv import TestEnv
->
-> +if sys.version_info >=3D (3, 9):
-> +    from contextlib import AbstractContextManager as ContextManager
-> +else:
-> +    from typing import ContextManager
-> +
->
->  def silent_unlink(path: Path) -> None:
->      try:
-> --
-> 2.45.0
->
->
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
+
+Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+
+--00000000000001cf53061c426f55
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Good catch! I hadn&#39;t spotted the exis=
+ting, shipping instance of this issue.<br></div><br><div class=3D"gmail_quo=
+te"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, 27 Jun 2024 at 13:17, Aki=
+hiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com">akihiko.odaki@da=
+ynix.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D=
+"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
+ft:1ex">CGImageCreate | Apple Developer Documentation<br>
+<a href=3D"https://developer.apple.com/documentation/coregraphics/1455149-c=
+gimagecreate" rel=3D"noreferrer" target=3D"_blank">https://developer.apple.=
+com/documentation/coregraphics/1455149-cgimagecreate</a><br>
+&gt; The color space is retained; on return, you may safely release it.<br>
+<br>
+Signed-off-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com=
+" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;</blockquote><div>=C2=
+=A0</div><div>Reviewed-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@ph=
+iljordan.eu">phil@philjordan.eu</a>&gt;</div><div><br></div></div></div>
+
+--00000000000001cf53061c426f55--
 
