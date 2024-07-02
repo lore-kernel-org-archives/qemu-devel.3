@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9F62C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46CB9C31D97
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:19:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjwS-0000KN-Ip; Tue, 02 Jul 2024 16:17:32 -0400
+	id 1sOjuL-0004Ts-CV; Tue, 02 Jul 2024 16:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjvp-0007DR-II
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:17:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjuI-0004Du-1n
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:15:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjvm-0008Ky-Jp
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjuD-0007kI-Po
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:15:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951409;
+ s=mimecast20190719; t=1719951313;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Y6BvONQ3xHQ5Uc0x7v2hZbGWG9V5fJeg5muDy0KhuLY=;
- b=cvbF/7RorY8G1Om6iB2PC4jU496lRLXnQHJZ0cxADUJ6p74Kexd7a/x/ms0858h9QII+Wx
- fVYidQDrSnnIigpx6xsTIX6vc7cAoB4a2DPVwkxb1caGbBWSoodZgbpcza6R0ECWBAAurB
- A/FHJWMFTDdzmZnwiBqykfX+ypTEA0k=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=SvYQhwjnhaEUFwHX/S1UpxcaMW91e9Avda9vTPq2glA=;
+ b=Z/W2ajHPm9SsTYk/mniu0DmtiNhY0w62qt6IuXPGFtRFmygUEQSUl05Q8+7JWMtDfjL+BL
+ Gp3LizHe52GgtDE+UH5QvlDhYoNOIZIDpEPT4DvOyAR+crjCPWUAalNJ1/31fjTMiMWOLr
+ WrpbDze+zDQnfF02CO4nPtNMpBh+iZo=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-8smMLbexMJeEfx-mYj0S8w-1; Tue, 02 Jul 2024 16:16:46 -0400
-X-MC-Unique: 8smMLbexMJeEfx-mYj0S8w-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-363edbfc61dso2462809f8f.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:16:45 -0700 (PDT)
+ us-mta-651-lHOVLtx1N721eAf6CPxAjg-1; Tue, 02 Jul 2024 16:15:10 -0400
+X-MC-Unique: lHOVLtx1N721eAf6CPxAjg-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2ec584f36bfso45522291fa.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:15:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951404; x=1720556204;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Y6BvONQ3xHQ5Uc0x7v2hZbGWG9V5fJeg5muDy0KhuLY=;
- b=XkC2E535q+eCPPps+bvc27VwJl6nOWKaG8brk6zEqFG1aFSPXX5kuWoypb/uVT4Vfi
- 4GtOZ41PSWosHtRTkDTyBT5qhfE6Kp5qVFvClJTvHeZIweK1rzyy86GZsTWUrfJ9ZHDB
- WO3SZ4NWfanECnnopq50pcmjPwFrbTtorAfdZYFZT4mxUy0BYWDvH8X+zz4BwL/BjUQK
- aWlOUydUAsroho30eVHRXBgg3ecgLrs7uhZw0Il6hQx65sy/bUK8XewSHPf9wij1Nv2f
- c/OuLzkaeiTCAmFAJ3Lqs+FGf3d92B0Ao9j41Ju9BmOcT43QF9MCpGrou0b3/4kmNxlo
- G8gQ==
-X-Gm-Message-State: AOJu0Yzw0ue7jrC9ZKpCcoFRrYFjzyfntVZUZ9X++A7Hw8YDr+Pu3avR
- zt9Q97TY9yMV3GgWIm7953tbFfJ9SrFv+Cb82pEZDluprropxQ4Ay0ozlzN95UMExFNYje0CmDD
- PmS/C5N5TKdGAGj8vz6mBMGkIz/2SjugPFq0MAsaOHeEK113wjjj6oStGNAT+1qocsLYS2w1aFq
- ckLxkwMDz7F7SQHVvmDwR42DHN9eDV5g==
-X-Received: by 2002:a5d:43c4:0:b0:367:62a:edb0 with SMTP id
- ffacd0b85a97d-36775725b8cmr6426510f8f.44.1719951403776; 
- Tue, 02 Jul 2024 13:16:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHptFwGNjeFwUs9xw7nNg2IrcQFIRGRFEBDa85VTVv+3w0lm2BswxV6m7eb526aNOotOurLqg==
-X-Received: by 2002:a5d:43c4:0:b0:367:62a:edb0 with SMTP id
- ffacd0b85a97d-36775725b8cmr6426492f8f.44.1719951403195; 
- Tue, 02 Jul 2024 13:16:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719951308; x=1720556108;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SvYQhwjnhaEUFwHX/S1UpxcaMW91e9Avda9vTPq2glA=;
+ b=UXEJQhcLFu+I4myIWcEKhBtTmCHIqbxvmzzOL3xH/5B54NTUlC0V2MAHL4MtYcDhX2
+ GA25lQDMkz5haK4eYFRyKK93NMRIoH3s9CTIjZnvPWborRJh0Ppwx0PZ6HoN9Z2risrS
+ DMiBI1STy1o6kHCCbsNHJ0ZTVorhQXRwcdwzI1bng8BVDZX0TbxJZFefnux+RlGzvIbX
+ fzW4+mnIlnyjOs8hrFPfZenTwWxNyZ2kvz/6OB7B5x3WrsCMqNLxIfnzCEZSvmTgIWZL
+ lqimhMZK8Qn7HU7wRxBG7Uj+RJrQfOnThBhX0rcXPJrW+PK8p9N04VWnCSz3BUNn9nLn
+ eV5Q==
+X-Gm-Message-State: AOJu0YybuHLvdgh3K7MCyjibGeGzX9gjgCnU5CxAYzWVyjoNabsuVez+
+ d5QiutuOfkdUq2vBHjz7kmPeu0Ged90miucU2VLjHAgjMCDlScFNmn7TgN76RsGy4n8ebyPPURe
+ wl0a+77Z+3fzYpj+nw38SOT7WP9KmEomrrrrEH+8Dq3kIumuppXTqWgSOTAio9Y3O4vG6gR/vyK
+ uWOvvkQjoXk2F/cy58VubabVKwEc0oQQ==
+X-Received: by 2002:a2e:8907:0:b0:2ee:7a92:610 with SMTP id
+ 38308e7fff4ca-2ee7a9207a7mr7972881fa.39.1719951307893; 
+ Tue, 02 Jul 2024 13:15:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH44QIU8uDF0zUh1/C179EL39m6twyx18cNmXApkh/B6BHaDyG/HtSp0aJ/YDZ+Fmc9ddWvAg==
+X-Received: by 2002:a2e:8907:0:b0:2ee:7a92:610 with SMTP id
+ 38308e7fff4ca-2ee7a9207a7mr7972371fa.39.1719951305612; 
+ Tue, 02 Jul 2024 13:15:05 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0fba0bsm14087515f8f.69.2024.07.02.13.16.41
+ ffacd0b85a97d-3675a0d9385sm14049550f8f.39.2024.07.02.13.15.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:16:42 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:16:40 -0400
+ Tue, 02 Jul 2024 13:15:05 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:15:02 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Svetly Todorov <svetly.todorov@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL v2 24/88] hw/mem/cxl_type3: Add DC extent list representative
- and get DC extent list mailbox support
-Message-ID: <1c9221f19e62e448a9ca71a2d5c8a369102a0c38.1719951168.git.mst@redhat.com>
-References: <cover.1719951168.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL v2 00/88] virtio: features,fixes
+Message-ID: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1719951168.git.mst@redhat.com>
+Content-Transfer-Encoding: 8bit
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,182 +99,570 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+The following changes since commit 1152a0414944f03231f3177207d379d58125890e:
 
-Add dynamic capacity extent list representative to the definition of
-CXLType3Dev and implement get DC extent list mailbox command per
-CXL.spec.3.1:.8.2.9.9.9.2.
+  Merge tag 'pull-xen-20240701' of https://xenbits.xen.org/git-http/people/aperard/qemu-dm into staging (2024-07-01 09:06:25 -0700)
 
-Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-10-nifan.cxl@gmail.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+
+for you to fetch changes up to 29e45afd8d6abf7a67dab5db0ab1cfbc388daefe:
+
+  hw/pci: Replace -1 with UINT32_MAX for romsize (2024-07-02 11:27:19 -0400)
+
+----------------------------------------------------------------
+virtio: features,fixes
+
+A bunch of improvements:
+- vhost dirty log is now only scanned once, not once per device
+- virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
+- cxl gained DCD emulation support
+- pvpanic gained shutdown support
+- beginning of patchset for Generic Port Affinity Structure
+- s3 support
+- friendlier error messages when boot fails on some illegal configs
+- for vhost-user, VHOST_USER_SET_LOG_BASE is now only sent once
+- vhost-user now works on any POSIX system
+- sr-iov VF setup code has been reworked significantly
+- new tests, particularly for risc-v ACPI
+- bugfixes
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- include/hw/cxl/cxl_device.h | 22 +++++++++++
- hw/cxl/cxl-mailbox-utils.c  | 73 ++++++++++++++++++++++++++++++++++++-
- hw/mem/cxl_type3.c          |  1 +
- 3 files changed, 95 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index c2c3df0d2a..6aec6ac983 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -424,6 +424,25 @@ typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
- 
- #define DCD_MAX_NUM_REGION 8
- 
-+typedef struct CXLDCExtentRaw {
-+    uint64_t start_dpa;
-+    uint64_t len;
-+    uint8_t tag[0x10];
-+    uint16_t shared_seq;
-+    uint8_t rsvd[0x6];
-+} QEMU_PACKED CXLDCExtentRaw;
-+
-+typedef struct CXLDCExtent {
-+    uint64_t start_dpa;
-+    uint64_t len;
-+    uint8_t tag[0x10];
-+    uint16_t shared_seq;
-+    uint8_t rsvd[0x6];
-+
-+    QTAILQ_ENTRY(CXLDCExtent) node;
-+} CXLDCExtent;
-+typedef QTAILQ_HEAD(, CXLDCExtent) CXLDCExtentList;
-+
- typedef struct CXLDCRegion {
-     uint64_t base;       /* aligned to 256*MiB */
-     uint64_t decode_len; /* aligned to 256*MiB */
-@@ -474,6 +493,9 @@ struct CXLType3Dev {
-          * memory region size.
-          */
-         uint64_t total_capacity; /* 256M aligned */
-+        CXLDCExtentList extents;
-+        uint32_t total_extent_count;
-+        uint32_t ext_list_gen_seq;
- 
-         uint8_t num_regions; /* 0-8 regions */
-         CXLDCRegion regions[DCD_MAX_NUM_REGION];
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 6ad227f112..7872d2f3e6 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -84,6 +84,7 @@ enum {
-         #define CLEAR_POISON           0x2
-     DCD_CONFIG  = 0x48,
-         #define GET_DC_CONFIG          0x0
-+        #define GET_DYN_CAP_EXT_LIST   0x1
-     PHYSICAL_SWITCH = 0x51,
-         #define IDENTIFY_SWITCH_DEVICE      0x0
-         #define GET_PHYSICAL_PORT_STATE     0x1
-@@ -1322,7 +1323,8 @@ static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
-      * to use.
-      */
-     stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
--    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED);
-+    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED -
-+             ct3d->dc.total_extent_count);
-     stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
-     stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
- 
-@@ -1330,6 +1332,72 @@ static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/*
-+ * CXL r3.1 section 8.2.9.9.9.2:
-+ * Get Dynamic Capacity Extent List (Opcode 4801h)
-+ */
-+static CXLRetCode cmd_dcd_get_dyn_cap_ext_list(const struct cxl_cmd *cmd,
-+                                               uint8_t *payload_in,
-+                                               size_t len_in,
-+                                               uint8_t *payload_out,
-+                                               size_t *len_out,
-+                                               CXLCCI *cci)
-+{
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    struct {
-+        uint32_t extent_cnt;
-+        uint32_t start_extent_id;
-+    } QEMU_PACKED *in = (void *)payload_in;
-+    struct {
-+        uint32_t count;
-+        uint32_t total_extents;
-+        uint32_t generation_num;
-+        uint8_t rsvd[4];
-+        CXLDCExtentRaw records[];
-+    } QEMU_PACKED *out = (void *)payload_out;
-+    uint32_t start_extent_id = in->start_extent_id;
-+    CXLDCExtentList *extent_list = &ct3d->dc.extents;
-+    uint16_t record_count = 0, i = 0, record_done = 0;
-+    uint16_t out_pl_len, size;
-+    CXLDCExtent *ent;
-+
-+    if (start_extent_id > ct3d->dc.total_extent_count) {
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    record_count = MIN(in->extent_cnt,
-+                       ct3d->dc.total_extent_count - start_extent_id);
-+    size = CXL_MAILBOX_MAX_PAYLOAD_SIZE - sizeof(*out);
-+    record_count = MIN(record_count, size / sizeof(out->records[0]));
-+    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
-+
-+    stl_le_p(&out->count, record_count);
-+    stl_le_p(&out->total_extents, ct3d->dc.total_extent_count);
-+    stl_le_p(&out->generation_num, ct3d->dc.ext_list_gen_seq);
-+
-+    if (record_count > 0) {
-+        CXLDCExtentRaw *out_rec = &out->records[record_done];
-+
-+        QTAILQ_FOREACH(ent, extent_list, node) {
-+            if (i++ < start_extent_id) {
-+                continue;
-+            }
-+            stq_le_p(&out_rec->start_dpa, ent->start_dpa);
-+            stq_le_p(&out_rec->len, ent->len);
-+            memcpy(&out_rec->tag, ent->tag, 0x10);
-+            stw_le_p(&out_rec->shared_seq, ent->shared_seq);
-+
-+            record_done++;
-+            if (record_done == record_count) {
-+                break;
-+            }
-+        }
-+    }
-+
-+    *len_out = out_pl_len;
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- #define IMMEDIATE_CONFIG_CHANGE (1 << 1)
- #define IMMEDIATE_DATA_CHANGE (1 << 2)
- #define IMMEDIATE_POLICY_CHANGE (1 << 3)
-@@ -1377,6 +1445,9 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
- static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
-     [DCD_CONFIG][GET_DC_CONFIG] = { "DCD_GET_DC_CONFIG",
-         cmd_dcd_get_dyn_cap_config, 2, 0 },
-+    [DCD_CONFIG][GET_DYN_CAP_EXT_LIST] = {
-+        "DCD_GET_DYNAMIC_CAPACITY_EXTENT_LIST", cmd_dcd_get_dyn_cap_ext_list,
-+        8, 0 },
- };
- 
- static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 658570aa1a..2075846b1b 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -673,6 +673,7 @@ static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
-         };
-         ct3d->dc.total_capacity += region->len;
-     }
-+    QTAILQ_INIT(&ct3d->dc.extents);
- 
-     return true;
- }
--- 
-MST
+----------------------------------------------------------------
+Akihiko Odaki (11):
+      hw/virtio: Free vqs after vhost_dev_cleanup()
+      hw/pci: Rename has_power to enabled
+      hw/ppc/spapr_pci: Do not create DT for disabled PCI device
+      hw/ppc/spapr_pci: Do not reject VFs created after a PF
+      pcie_sriov: Do not manually unrealize
+      pcie_sriov: Ensure VF function number does not overflow
+      pcie_sriov: Reuse SR-IOV VF device instances
+      pcie_sriov: Release VFs failed to realize
+      pcie_sriov: Remove num_vfs from PCIESriovPF
+      pcie_sriov: Register VFs after migration
+      hw/pci: Replace -1 with UINT32_MAX for romsize
+
+Alejandro Jimenez (1):
+      pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic shutdown signal
+
+BillXiang (1):
+      vhost-user: Skip unnecessary duplicated VHOST_USER_SET_LOG_BASE requests
+
+Christian Pötzsch (1):
+      Fix vhost user assertion when sending more than one fd
+
+Cindy Lu (1):
+      virtio-pci: Fix the failure process in kvm_virtio_pci_vector_use_one()
+
+Cédric Le Goater (1):
+      virtio-iommu: Clear IOMMUDevice when VFIO device is unplugged
+
+David Woodhouse (1):
+      hw/i386/fw_cfg: Add etc/e820 to fw_cfg late
+
+Dmitry Frolov (1):
+      hw/net/virtio-net.c: fix crash in iov_copy()
+
+Fan Ni (12):
+      hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output payload of identify memory device command
+      hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative and mailbox command support
+      include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for type3 memory devices
+      hw/mem/cxl_type3: Add support to create DC regions to type3 memory devices
+      hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr size instead of mr as argument
+      hw/mem/cxl_type3: Add host backend and address space handling for DC regions
+      hw/mem/cxl_type3: Add DC extent list representative and get DC extent list mailbox support
+      hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release dynamic capacity response
+      hw/cxl/events: Add qmp interfaces to add/release dynamic capacity extents
+      hw/mem/cxl_type3: Add DPA range validation for accesses to DC regions
+      hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox support
+      hw/mem/cxl_type3: Allow to release extent superset in QMP interface
+
+Gregory Price (2):
+      hw/cxl/mailbox: change CCI cmd set structure to be a member, not a reference
+      hw/cxl/mailbox: interface to add CCI commands to an existing CCI
+
+Halil Pasic (1):
+      vhost-vsock: add VIRTIO_F_RING_PACKED to feature_bits
+
+Ira Weiny (1):
+      hw/cxl: Fix read from bogus memory
+
+Jiqian Chen (2):
+      virtio-pci: only reset pm state during resetting
+      virtio-pci: implement No_Soft_Reset bit
+
+Jonah Palmer (5):
+      virtio/virtio-pci: Handle extra notification data
+      virtio: Prevent creation of device using notification-data with ioeventfd
+      virtio-mmio: Handle extra notification data
+      virtio-ccw: Handle extra notification data
+      vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature bits
+
+Jonathan Cameron (2):
+      hw/cxl/events: Improve QMP interfaces and documentation for add/release dynamic capacity.
+      hw/cxl/events: Mark cxl-add-dynamic-capacity and cxl-release-dynamic-capcity unstable
+
+Li Feng (2):
+      Revert "vhost-user: fix lost reconnect"
+      vhost-user: fix lost reconnect again
+
+Manos Pitsidianakis (1):
+      virtio-iommu: add error check before assert
+
+Marc-André Lureau (1):
+      vhost-user-gpu: fix import of DMABUF
+
+Nicolin Chen (2):
+      hw/arm/virt-acpi-build: Drop local iort_node_offset
+      hw/arm/virt-acpi-build: Fix id_count in build_iort_id_mapping
+
+Si-Wei Liu (2):
+      vhost: dirty log should be per backend type
+      vhost: Perform memory section dirty scans once per iteration
+
+Stefano Garzarella (15):
+      vhost-vdpa: check vhost_vdpa_set_vring_ready() return value
+      qapi: clarify that the default is backend dependent
+      libvhost-user: set msg.msg_control to NULL when it is empty
+      libvhost-user: fail vu_message_write() if sendmsg() is failing
+      libvhost-user: mask F_INFLIGHT_SHMFD if memfd is not supported
+      vhost-user-server: do not set memory fd non-blocking
+      contrib/vhost-user-blk: fix bind() using the right size of the address
+      contrib/vhost-user-*: use QEMU bswap helper functions
+      vhost-user: enable frontends on any POSIX system
+      libvhost-user: enable it on any POSIX system
+      contrib/vhost-user-blk: enable it on any POSIX system
+      hostmem: add a new memory backend based on POSIX shm_open()
+      tests/qtest/vhost-user-blk-test: use memory-backend-shm
+      tests/qtest/vhost-user-test: add a test case for memory-backend-shm
+      virtio: remove virtio_tswap16s() call in vring_packed_event_read()
+
+Sunil V L (12):
+      uefi-test-tools/UefiTestToolsPkg: Add RISC-V support
+      uefi-test-tools: Add support for python based build script
+      tests/data/uefi-boot-images: Add RISC-V ISO image
+      qtest: bios-tables-test: Rename aarch64 tests with aarch64 in them
+      tests/qtest/bios-tables-test.c: Add support for arch in path
+      tests/qtest/bios-tables-test.c: Set "arch" for aarch64 tests
+      tests/qtest/bios-tables-test.c: Set "arch" for x86 tests
+      tests/data/acpi: Move x86 ACPI tables under x86/${machine} path
+      tests/data/acpi/virt: Move ARM64 ACPI tables under aarch64/${machine} path
+      meson.build: Add RISC-V to the edk2-target list
+      pc-bios/meson.build: Add support for RISC-V in unpack_edk2_blobs
+      tests/data/acpi/rebuild-expected-aml.sh: Add RISC-V
+
+Thomas Huth (1):
+      hw/virtio: Fix the de-initialization of vhost-user devices
+
+Thomas Weißschuh (6):
+      linux-headers: update to 6.10-rc1
+      hw/misc/pvpanic: centralize definition of supported events
+      tests/qtest/pvpanic: use centralized definition of supported events
+      hw/misc/pvpanic: add support for normal shutdowns
+      tests/qtest/pvpanic: add tests for pvshutdown event
+      Revert "docs/specs/pvpanic: mark shutdown event as not implemented"
+
+Wafer (1):
+      hw/virtio: Fix obtain the buffer id from the last descriptor
+
+Yuxue Liu (1):
+      vhost-user-test: no set non-blocking for cal fd less than 0.
+
+Zhao Liu (1):
+      i386/apic: Add hint on boot failure because of disabling x2APIC
+
+ docs/pcie_sriov.txt                                |   8 +-
+ qapi/cxl.json                                      | 189 ++++++
+ qapi/qom.json                                      |  27 +-
+ qapi/run-state.json                                |  14 +
+ hw/i386/e820_memory_layout.h                       |   8 +-
+ hw/i386/fw_cfg.h                                   |   1 +
+ include/hw/cxl/cxl_device.h                        |  85 ++-
+ include/hw/cxl/cxl_events.h                        |  18 +
+ include/hw/misc/pvpanic.h                          |   6 +
+ include/hw/pci/pci.h                               |   2 +-
+ include/hw/pci/pci_device.h                        |  17 +-
+ include/hw/pci/pcie_sriov.h                        |   9 +-
+ include/hw/virtio/vhost-user.h                     |   3 +-
+ include/hw/virtio/vhost.h                          |   1 +
+ include/hw/virtio/virtio-pci.h                     |   5 +
+ include/hw/virtio/virtio.h                         |  10 +-
+ include/standard-headers/linux/ethtool.h           |  55 ++
+ include/standard-headers/linux/pci_regs.h          |   6 +
+ include/standard-headers/linux/virtio_bt.h         |   1 -
+ include/standard-headers/linux/virtio_mem.h        |   2 +
+ include/standard-headers/linux/virtio_net.h        | 143 +++++
+ include/standard-headers/misc/pvpanic.h            |   7 +-
+ include/sysemu/runstate.h                          |   1 +
+ linux-headers/asm-generic/unistd.h                 |   5 +-
+ linux-headers/asm-mips/unistd_n32.h                |   1 +
+ linux-headers/asm-mips/unistd_n64.h                |   1 +
+ linux-headers/asm-mips/unistd_o32.h                |   1 +
+ linux-headers/asm-powerpc/unistd_32.h              |   1 +
+ linux-headers/asm-powerpc/unistd_64.h              |   1 +
+ linux-headers/asm-s390/unistd_32.h                 |   1 +
+ linux-headers/asm-s390/unistd_64.h                 |   1 +
+ linux-headers/asm-x86/unistd_32.h                  |   1 +
+ linux-headers/asm-x86/unistd_64.h                  |   1 +
+ linux-headers/asm-x86/unistd_x32.h                 |   2 +
+ linux-headers/linux/kvm.h                          |   4 +-
+ linux-headers/linux/stddef.h                       |   8 +
+ subprojects/libvhost-user/libvhost-user.h          |   2 +-
+ backends/hostmem-shm.c                             | 123 ++++
+ contrib/vhost-user-blk/vhost-user-blk.c            |  27 +-
+ contrib/vhost-user-input/main.c                    |  16 +-
+ hw/arm/virt-acpi-build.c                           |  22 +-
+ hw/block/vhost-user-blk.c                          |   6 +-
+ hw/core/machine.c                                  |   1 +
+ hw/cxl/cxl-mailbox-utils.c                         | 658 ++++++++++++++++++++-
+ hw/display/vhost-user-gpu.c                        |   5 +-
+ hw/i386/e820_memory_layout.c                       |  17 +-
+ hw/i386/fw_cfg.c                                   |  18 +-
+ hw/i386/microvm.c                                  |   4 +-
+ hw/i386/pc.c                                       |   1 +
+ hw/intc/apic_common.c                              |   7 +-
+ hw/mem/cxl_type3.c                                 | 637 ++++++++++++++++++--
+ hw/mem/cxl_type3_stubs.c                           |  25 +
+ hw/misc/pvpanic-isa.c                              |   3 +-
+ hw/misc/pvpanic-pci.c                              |   2 +-
+ hw/misc/pvpanic.c                                  |   7 +-
+ hw/net/igb.c                                       |  13 +-
+ hw/net/vhost_net.c                                 |   7 +
+ hw/net/virtio-net.c                                |   4 +
+ hw/nvme/ctrl.c                                     |  24 +-
+ hw/pci/pci.c                                       |  29 +-
+ hw/pci/pci_host.c                                  |   4 +-
+ hw/pci/pcie_sriov.c                                | 149 ++---
+ hw/ppc/spapr_pci.c                                 |   8 +-
+ hw/s390x/s390-virtio-ccw.c                         |  17 +-
+ hw/scsi/vhost-scsi.c                               |   1 +
+ hw/scsi/vhost-user-scsi.c                          |   7 +-
+ hw/virtio/vhost-user-base.c                        |   7 +-
+ hw/virtio/vhost-user-fs.c                          |   2 +-
+ hw/virtio/vhost-user-vsock.c                       |   1 +
+ hw/virtio/vhost-user.c                             |  19 +-
+ hw/virtio/vhost-vsock-common.c                     |   1 +
+ hw/virtio/vhost.c                                  | 112 +++-
+ hw/virtio/virtio-iommu.c                           |  43 ++
+ hw/virtio/virtio-mmio.c                            |  11 +-
+ hw/virtio/virtio-pci.c                             |  67 ++-
+ hw/virtio/virtio.c                                 |  46 +-
+ hw/xen/xen_pt_load_rom.c                           |   2 +-
+ net/vhost-vdpa.c                                   |  16 +-
+ subprojects/libvhost-user/libvhost-user.c          |  79 ++-
+ system/runstate.c                                  |   6 +
+ target/i386/kvm/kvm.c                              |   6 +-
+ target/i386/kvm/xen-emu.c                          |   7 +-
+ tests/qtest/bios-tables-test.c                     | 143 ++++-
+ tests/qtest/pvpanic-pci-test.c                     |  44 +-
+ tests/qtest/pvpanic-test.c                         |  34 +-
+ tests/qtest/vhost-user-blk-test.c                  |   2 +-
+ tests/qtest/vhost-user-test.c                      |  28 +-
+ util/vhost-user-server.c                           |  12 +
+ backends/meson.build                               |   1 +
+ docs/specs/pvpanic.rst                             |   2 +-
+ docs/system/devices/vhost-user.rst                 |   5 +-
+ hw/block/Kconfig                                   |   2 +-
+ hw/pci/trace-events                                |   2 +-
+ meson.build                                        |   7 +-
+ pc-bios/meson.build                                |   2 +
+ qemu-options.hx                                    |  16 +
+ tests/data/acpi/{ => aarch64}/virt/APIC            | Bin
+ .../data/acpi/{ => aarch64}/virt/APIC.acpihmatvirt | Bin
+ tests/data/acpi/{ => aarch64}/virt/APIC.topology   | Bin
+ tests/data/acpi/{ => aarch64}/virt/DBG2            | Bin
+ tests/data/acpi/{ => aarch64}/virt/DSDT            | Bin
+ .../data/acpi/{ => aarch64}/virt/DSDT.acpihmatvirt | Bin
+ tests/data/acpi/{ => aarch64}/virt/DSDT.memhp      | Bin
+ tests/data/acpi/{ => aarch64}/virt/DSDT.pxb        | Bin
+ tests/data/acpi/{ => aarch64}/virt/DSDT.topology   | Bin
+ tests/data/acpi/{ => aarch64}/virt/FACP            | Bin
+ tests/data/acpi/{ => aarch64}/virt/GTDT            | Bin
+ .../data/acpi/{ => aarch64}/virt/HMAT.acpihmatvirt | Bin
+ tests/data/acpi/{ => aarch64}/virt/IORT            | Bin
+ tests/data/acpi/{ => aarch64}/virt/MCFG            | Bin
+ tests/data/acpi/{ => aarch64}/virt/NFIT.memhp      | Bin
+ tests/data/acpi/{ => aarch64}/virt/PPTT            | Bin
+ .../data/acpi/{ => aarch64}/virt/PPTT.acpihmatvirt | Bin
+ tests/data/acpi/{ => aarch64}/virt/PPTT.topology   | Bin
+ tests/data/acpi/{pc => aarch64/virt}/SLIT.memhp    | Bin
+ tests/data/acpi/{ => aarch64}/virt/SPCR            | Bin
+ .../data/acpi/{ => aarch64}/virt/SRAT.acpihmatvirt | Bin
+ tests/data/acpi/{ => aarch64}/virt/SRAT.memhp      | Bin
+ tests/data/acpi/{ => aarch64}/virt/SRAT.numamem    | Bin
+ tests/data/acpi/{ => aarch64}/virt/SSDT.memhp      | Bin
+ tests/data/acpi/{ => aarch64}/virt/VIOT            | Bin
+ tests/data/acpi/rebuild-expected-aml.sh            |   5 +-
+ tests/data/acpi/{ => x86}/microvm/APIC             | Bin
+ tests/data/acpi/{ => x86}/microvm/APIC.ioapic2     | Bin
+ tests/data/acpi/{ => x86}/microvm/APIC.pcie        | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT             | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT.ioapic2     | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT.pcie        | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT.rtc         | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT.usb         | Bin
+ tests/data/acpi/{ => x86}/microvm/ERST.pcie        | Bin
+ tests/data/acpi/{ => x86}/microvm/FACP             | Bin
+ tests/data/acpi/{ => x86}/pc/APIC                  | Bin
+ tests/data/acpi/{ => x86}/pc/APIC.acpihmat         | Bin
+ tests/data/acpi/{ => x86}/pc/APIC.cphp             | Bin
+ tests/data/acpi/{ => x86}/pc/APIC.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT                  | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.acpierst         | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.acpihmat         | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.bridge           | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.cphp             | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.hpbridge         | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.hpbrroot         | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.ipmikcs          | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.memhp            | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.nohpet           | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.numamem          | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.roothp           | Bin
+ tests/data/acpi/{ => x86}/pc/ERST.acpierst         | Bin
+ tests/data/acpi/{ => x86}/pc/FACP                  | Bin
+ tests/data/acpi/{ => x86}/pc/FACP.nosmm            | Bin
+ tests/data/acpi/{ => x86}/pc/FACS                  | Bin
+ tests/data/acpi/{ => x86}/pc/HMAT.acpihmat         | Bin
+ tests/data/acpi/{ => x86}/pc/HPET                  | Bin
+ tests/data/acpi/{ => x86}/pc/NFIT.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/pc/SLIT.cphp             | Bin
+ tests/data/acpi/{q35 => x86/pc}/SLIT.memhp         | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.acpihmat         | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.cphp             | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.memhp            | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.numamem          | Bin
+ tests/data/acpi/{ => x86}/pc/SSDT.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/pc/WAET                  | Bin
+ tests/data/acpi/{ => x86}/q35/APIC                 | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.acpihmat        | Bin
+ .../acpi/{ => x86}/q35/APIC.acpihmat-noinitiator   | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.core-count      | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.core-count2     | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.cphp            | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.dimmpxm         | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.thread-count    | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.thread-count2   | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.type4-count     | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.xapic           | Bin
+ tests/data/acpi/{ => x86}/q35/CEDT.cxl             | Bin
+ tests/data/acpi/{ => x86}/q35/DMAR.dmar            | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT                 | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.acpierst        | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.acpihmat        | Bin
+ .../acpi/{ => x86}/q35/DSDT.acpihmat-noinitiator   | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.applesmc        | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.bridge          | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.core-count      | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.core-count2     | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.cphp            | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.cxl             | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.dimmpxm         | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.ipmibt          | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.ipmismbus       | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.ivrs            | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.memhp           | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.mmio64          | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.multi-bridge    | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.noacpihp        | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.nohpet          | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.numamem         | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.pvpanic-isa     | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.thread-count    | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.thread-count2   | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm12       | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm2        | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.type4-count     | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.viot            | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.xapic           | Bin
+ tests/data/acpi/{ => x86}/q35/ERST.acpierst        | Bin
+ tests/data/acpi/{ => x86}/q35/FACP                 | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.core-count      | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.core-count2     | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.nosmm           | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.slic            | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.thread-count    | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.thread-count2   | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.type4-count     | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.xapic           | Bin
+ tests/data/acpi/{ => x86}/q35/FACS                 | Bin
+ tests/data/acpi/{ => x86}/q35/HMAT.acpihmat        | Bin
+ .../acpi/{ => x86}/q35/HMAT.acpihmat-noinitiator   | Bin
+ tests/data/acpi/{ => x86}/q35/HPET                 | Bin
+ tests/data/acpi/{ => x86}/q35/IVRS.ivrs            | Bin
+ tests/data/acpi/{ => x86}/q35/MCFG                 | Bin
+ tests/data/acpi/{ => x86}/q35/NFIT.dimmpxm         | Bin
+ tests/data/acpi/{ => x86}/q35/SLIC.slic            | Bin
+ tests/data/acpi/{ => x86}/q35/SLIT.cphp            | Bin
+ tests/data/acpi/{virt => x86/q35}/SLIT.memhp       | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.acpihmat        | Bin
+ .../acpi/{ => x86}/q35/SRAT.acpihmat-noinitiator   | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.cphp            | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.dimmpxm         | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.memhp           | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.mmio64          | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.numamem         | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.xapic           | Bin
+ tests/data/acpi/{ => x86}/q35/SSDT.dimmpxm         | Bin
+ tests/data/acpi/{ => x86}/q35/TCPA.tis.tpm12       | Bin
+ tests/data/acpi/{ => x86}/q35/TPM2.tis.tpm2        | Bin
+ tests/data/acpi/{ => x86}/q35/VIOT.viot            | Bin
+ tests/data/acpi/{ => x86}/q35/WAET                 | Bin
+ .../bios-tables-test.riscv64.iso.qcow2             | Bin 0 -> 16896 bytes
+ tests/qtest/meson.build                            |   3 +
+ tests/uefi-test-tools/Makefile                     |  19 +-
+ .../UefiTestToolsPkg/UefiTestToolsPkg.dsc          |   6 +-
+ tests/uefi-test-tools/uefi-test-build.config       |  52 ++
+ util/meson.build                                   |   4 +-
+ 245 files changed, 2933 insertions(+), 371 deletions(-)
+ create mode 100644 backends/hostmem-shm.c
+ rename tests/data/acpi/{ => aarch64}/virt/APIC (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/APIC.acpihmatvirt (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/APIC.topology (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/DBG2 (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/DSDT (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/DSDT.acpihmatvirt (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/DSDT.memhp (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/DSDT.pxb (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/DSDT.topology (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/FACP (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/GTDT (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/HMAT.acpihmatvirt (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/IORT (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/MCFG (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/NFIT.memhp (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/PPTT (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/PPTT.acpihmatvirt (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/PPTT.topology (100%)
+ rename tests/data/acpi/{pc => aarch64/virt}/SLIT.memhp (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/SPCR (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/SRAT.acpihmatvirt (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/SRAT.memhp (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/SRAT.numamem (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/SSDT.memhp (100%)
+ rename tests/data/acpi/{ => aarch64}/virt/VIOT (100%)
+ rename tests/data/acpi/{ => x86}/microvm/APIC (100%)
+ rename tests/data/acpi/{ => x86}/microvm/APIC.ioapic2 (100%)
+ rename tests/data/acpi/{ => x86}/microvm/APIC.pcie (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT.ioapic2 (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT.pcie (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT.rtc (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT.usb (100%)
+ rename tests/data/acpi/{ => x86}/microvm/ERST.pcie (100%)
+ rename tests/data/acpi/{ => x86}/microvm/FACP (100%)
+ rename tests/data/acpi/{ => x86}/pc/APIC (100%)
+ rename tests/data/acpi/{ => x86}/pc/APIC.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/pc/APIC.cphp (100%)
+ rename tests/data/acpi/{ => x86}/pc/APIC.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.acpierst (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.bridge (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.hpbridge (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.hpbrroot (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.ipmikcs (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.nohpet (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.numamem (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.roothp (100%)
+ rename tests/data/acpi/{ => x86}/pc/ERST.acpierst (100%)
+ rename tests/data/acpi/{ => x86}/pc/FACP (100%)
+ rename tests/data/acpi/{ => x86}/pc/FACP.nosmm (100%)
+ rename tests/data/acpi/{ => x86}/pc/FACS (100%)
+ rename tests/data/acpi/{ => x86}/pc/HMAT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/pc/HPET (100%)
+ rename tests/data/acpi/{ => x86}/pc/NFIT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/SLIT.cphp (100%)
+ rename tests/data/acpi/{q35 => x86/pc}/SLIT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.numamem (100%)
+ rename tests/data/acpi/{ => x86}/pc/SSDT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/WAET (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.acpihmat-noinitiator (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.core-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.core-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.cphp (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.thread-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.thread-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.type4-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.xapic (100%)
+ rename tests/data/acpi/{ => x86}/q35/CEDT.cxl (100%)
+ rename tests/data/acpi/{ => x86}/q35/DMAR.dmar (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.acpierst (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.acpihmat-noinitiator (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.applesmc (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.bridge (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.core-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.core-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.cxl (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.ipmibt (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.ipmismbus (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.ivrs (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.mmio64 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.multi-bridge (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.noacpihp (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.nohpet (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.numamem (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.pvpanic-isa (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.thread-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.thread-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm12 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.type4-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.viot (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.xapic (100%)
+ rename tests/data/acpi/{ => x86}/q35/ERST.acpierst (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.core-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.core-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.nosmm (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.slic (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.thread-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.thread-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.type4-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.xapic (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACS (100%)
+ rename tests/data/acpi/{ => x86}/q35/HMAT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/q35/HMAT.acpihmat-noinitiator (100%)
+ rename tests/data/acpi/{ => x86}/q35/HPET (100%)
+ rename tests/data/acpi/{ => x86}/q35/IVRS.ivrs (100%)
+ rename tests/data/acpi/{ => x86}/q35/MCFG (100%)
+ rename tests/data/acpi/{ => x86}/q35/NFIT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/SLIC.slic (100%)
+ rename tests/data/acpi/{ => x86}/q35/SLIT.cphp (100%)
+ rename tests/data/acpi/{virt => x86/q35}/SLIT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.acpihmat-noinitiator (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.mmio64 (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.numamem (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.xapic (100%)
+ rename tests/data/acpi/{ => x86}/q35/SSDT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/TCPA.tis.tpm12 (100%)
+ rename tests/data/acpi/{ => x86}/q35/TPM2.tis.tpm2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/VIOT.viot (100%)
+ rename tests/data/acpi/{ => x86}/q35/WAET (100%)
+ create mode 100644 tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2
+ create mode 100644 tests/uefi-test-tools/uefi-test-build.config
 
 
