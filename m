@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71D4AC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4475BC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:45:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOekR-0008IV-5W; Tue, 02 Jul 2024 10:44:47 -0400
+	id 1sOel7-0000gC-Lg; Tue, 02 Jul 2024 10:45:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sOekP-0008Hm-M7
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:44:45 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sOel4-0000Vg-PB
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:45:27 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sOekM-00072k-Hh
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:44:45 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-52cecba8d11so5202813e87.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:44:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sOekz-0007IT-Mx
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:45:24 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1f9e2affc8cso26254015ad.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:45:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719931478; x=1720536278; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=EuHGikV1Xu3ZOawZ3lxMeDpvvmh+YBc4mVHIE954ujA=;
- b=LWGF4n5OGQHuLFmo0GIiK/psxNi/Vlu7gIRc0pCmf4xXuNfFfGnNys3S1HGACQ9NTZ
- LlNI8fz6Bbg/pYz1L3VbrILXUy1ou86RqW9juXi03+H4dLP54SkjcG0MswEO6qnzj6aH
- QnuG1D4mYfQSkDOUq731xpPrpgtO5ALTa/q7UnJnHmax/GCF6cofWWi4DH909wAhoZUo
- Rkx+AexE7k7B7rNIW0NVKxw3VAiQlRytiVFKakjvNADHsuAtrP3ZZubEootpv59mKm/i
- 5Eqa/2/lUJoTQHOQh4Fw8F5heFF7mFqf+hNjdUIBif44HrEr55WJ2x6GsTdoxVy4B/xq
- +McA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719931478; x=1720536278;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ d=linaro.org; s=google; t=1719931520; x=1720536320; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EuHGikV1Xu3ZOawZ3lxMeDpvvmh+YBc4mVHIE954ujA=;
- b=qItRgcnN1zo4ueAqeC52LxnqsB/PW+v3lwFSdr71hcwtG8rVYB4vN/GkI2+EwN8RdI
- 8DKn0nsGMH+E8g8S1qLchqStTaz8D8Tj1FEo0QZk4hL0+yaAG+JoqvtN4HqkN0drA8Lh
- ctmJADfb2gvYB4Zji8UWPROFrQf/HlbuUIoMV5tfDoR/nH8U2RXev/E90GGgR3BZ6i8t
- UuKYt+ckCBJY7J7DGBQKvL7jwcJIN8Q2tJtlbAirAnhvvlFGYQdp3iDTdFNqCln1Y2HU
- +dInr/NvTuxxRN7hiLVyFvsyiywVFOyiWddZaZeaq2xYBoeOq8UJKV5uZXk20OzyKExK
- JfOg==
-X-Gm-Message-State: AOJu0Yz/3ZK9DAh1Zc0PnqdB5ho5F2kUgfuT5zrf2H+x4AK9r/feEq1Q
- OQoacNXF72tNpG+ewANKbGxoVMWMSewFa5lxTgbtgx3DgpVk3XtO9TWs58meNhGfTs/VdUfgZL0
- pJMM=
-X-Google-Smtp-Source: AGHT+IGDVnof08/MHmBWTZvbKV0AL+1D9cfUqg2WT7NDU1C6pEjvMamPFWmipuLGecp5IqtyCt3szA==
-X-Received: by 2002:a05:6512:1246:b0:52c:850b:cfc6 with SMTP id
- 2adb3069b0e04-52e82688110mr6357681e87.38.1719931477729; 
- Tue, 02 Jul 2024 07:44:37 -0700 (PDT)
-Received: from meli-email.org (adsl-193.37.6.1.tellas.gr. [37.6.1.193])
+ bh=YqJzgYV+5bwAuEHrW8O3OpZu8exkLV5WR6dOw81LlmA=;
+ b=lrfol+crPdRGfBZf+XtZXhmPkdUkJ1IIXZ30ZYbogEy29eUWhgKKz3NUI68DfRqQNK
+ RkBLoTxQ6yviZ0aDxLkIuJJ2isuJttczwzo/vb0aoOF7NMy527gvOXoc3PJvjKKY/eP9
+ C60pWHw3wbBhsYUOMpO2QWzrmZF36aY7sdMPfYQVhRu2ht6ss1dqLQwWvWbx+CzIBnqm
+ COrdF03O3/fy3Q3VpfwiW/qv1wGqRFrqbhe2zXGIAUO+fgqcfH8lFi+jvkye+4RVR8rS
+ 2+p+XtxA5NGYxX43z4CAEFCPOtKPyJwnjUaNMqHIBrBjU3ZQtMSUuFo3ZJKqUXTyIwOs
+ udKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719931520; x=1720536320;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YqJzgYV+5bwAuEHrW8O3OpZu8exkLV5WR6dOw81LlmA=;
+ b=VE1aoxvVHE36zcNeKqK/WSpFnrP0KjGUlzDjXteKOtq3KpmHhr5PD/Mk5mwb9Zdveo
+ +cQqx4ZubYgcg7RUohsU2umwqhI0ymJJhtpWWUqoyTBTF/xVokrWeLLHOI2Vwc/Y/HFM
+ G3taMGfN7o78cHKzgitxIuzvR0UyyNTktkaTGsRm6MYRfWgoCJF0CfHZLFFCkUtMg3wj
+ Cb2xBjxVGW+GcISlWE7AaKCQv02WZtMXn6zc4iF2CE6c2kEDbfEvt6YnDB+wUfMbDZG3
+ UZxWPIdFMED+NGmR2Dajy3B9xT/znqyKVjvGJIDGd1aFPwScYTGbiqBGDVxYR9zkmcvV
+ GYKA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXW9uI0uK7fAfC3Za3zhkgUOPvcsGv+snS3gBfeZjeJ5xjLSft75AfTeFj1GwDnETQN7SlU69tKxWE0xoaWJXjR1+RmiC8=
+X-Gm-Message-State: AOJu0YzYjQo2vnT+dsd5HHv+wZkYvv6UokBTPwlJg+JImovufKNr1O5G
+ anTrFtX7PDh7Y0grezgtSS4hsd+9RkR8Tu2TwHygyqWKIgfwUNI38y2+6Qnuq2kROX/DI5dF+6y
+ v
+X-Google-Smtp-Source: AGHT+IHrXgB8PC0elEyt04WUgP+PeBEh9lC0Dq0/5DmS8dFofaWMvqXUopGudCA0FEFoTdjlr0pNjA==
+X-Received: by 2002:a17:902:e54d:b0:1f8:5a64:b466 with SMTP id
+ d9443c01a7336-1fadbc8eb4fmr52312115ad.21.1719931519689; 
+ Tue, 02 Jul 2024 07:45:19 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3678fe13ef4sm193274f8f.117.2024.07.02.07.44.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:44:37 -0700 (PDT)
-Date: Tue, 02 Jul 2024 17:38:12 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
- Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
-Subject: Re: [RFC PATCH v3 1/5] build-sys: Add rust feature option
-User-Agent: meli 0.8.6
-References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
- <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
- <ZnmkN2PL3r-2sxqe@redhat.com>
-In-Reply-To: <ZnmkN2PL3r-2sxqe@redhat.com>
-Message-ID: <g03mb.04m2bqm0mj1q@linaro.org>
+ d9443c01a7336-1fac10e2ea7sm85452175ad.81.2024.07.02.07.45.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 07:45:19 -0700 (PDT)
+Message-ID: <785db67d-be21-48d4-9087-973ace828609@linaro.org>
+Date: Tue, 2 Jul 2024 07:45:17 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x133.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: linux-user cannot allocate stack memory on riscv64 host due to
+ non-zero guest_base
+To: Andreas Schwab <schwab@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Warner Losh <imp@bsdimp.com>,
+ QEMU Developers <qemu-devel@nongnu.org>
+References: <mvm8qytp828.fsf@suse.de>
+ <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org> <mvm4j9gp0xd.fsf@suse.de>
+ <34fed985-6a6a-4458-95f9-aa651744ef1a@linaro.org>
+ <CANCZdfq4=s=g8GoeCKY4576xgJs4-X+fXh7m5ZOJ1UeBXwWdCQ@mail.gmail.com>
+ <mvmv81un7m9.fsf@suse.de>
+ <CANCZdfpW+G54v3oeKZ6QYuovOga93D5hou9Ajeo838Y9bDNsUA@mail.gmail.com>
+ <mvmmsn6lawv.fsf@suse.de>
+ <CAFEAcA-dbLncCmY8zyZAz8e+AWeoGC437B=nV3wPznER+RmhbA@mail.gmail.com>
+ <mvmr0cdjjlh.fsf@suse.de> <f681575f-1dae-481e-8330-6fe2fc8d0f11@linaro.org>
+ <mvm7ce4jjvf.fsf@suse.de> <fbe9c88e-677a-4248-9901-76c56e52283b@linaro.org>
+ <mvmtth7j1su.fsf@suse.de>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <mvmtth7j1su.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,71 +110,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel, I missed one of your questions and I just re-read the thread 
-today,
+On 7/2/24 07:39, Andreas Schwab wrote:
+> On Jul 02 2024, Richard Henderson wrote:
+> 
+>> Is /proc mounted in your environment?
+> 
+> Sure, it's a fully running system on real hardware.
+> 
 
-On Mon, 24 Jun 2024 19:52, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
->On Wed, Jun 19, 2024 at 11:13:58PM +0300, Manos Pitsidianakis wrote:
->> Add options for Rust in meson_options.txt, meson.build, configure to
->> prepare for adding Rust code in the followup commits.
->> 
->> `rust` is a reserved meson name, so we have to use an alternative.
->> `with_rust` was chosen.
->> 
->> A cargo_wrapper.py script is added that is heavily based on the work of
->> Marc-André Lureau from 2021.
->> 
->> https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat.com/
->> 
->> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->> ---
->>  MAINTAINERS                   |   5 +
->>  configure                     |  11 ++
->>  meson.build                   |  11 ++
->>  meson_options.txt             |   4 +
->>  scripts/cargo_wrapper.py      | 279 ++++++++++++++++++++++++++++++++++
->>  scripts/meson-buildoptions.sh |   6 +
->>  6 files changed, 316 insertions(+)
->>  create mode 100644 scripts/cargo_wrapper.py
->
->> diff --git a/configure b/configure
->> index 38ee257701..6894d7c2d1 100755
->> --- a/configure
->> +++ b/configure
->> @@ -302,6 +302,9 @@ else
->>    objcc="${objcc-${cross_prefix}clang}"
->>  fi
->>
->>[..snip..]
->> +with_rust_target_triple=""
->> +
->>  ar="${AR-${cross_prefix}ar}"
->>  as="${AS-${cross_prefix}as}"
->>  ccas="${CCAS-$cc}"
->> @@ -760,6 +763,12 @@ for opt do
->>    ;;
->>    --gdb=*) gdb_bin="$optarg"
->>    ;;
->> +  --enable-with-rust) with_rust=enabled
->> +  ;;
->> +  --disable-with-rust) with_rust=disabled
->> +  ;;
->
->--enable-with-XXX / --disable-with-XXX is pretty unsual naming.
->
->Normally you'd see either --enable-XXX or --with-XXX and their
->corresponding --disable-XXX or --without-XXX.
+I mean, you're not running it in some chroot sandbox without /proc.
 
-True. As the commit message says, `rust` is a reserved meson feature 
-name, so the auto-generated scripts/meson-buildoptions.sh
-has the following args:
 
-  --enable-with-rust
-  --disable-with-rust
-
-I used the same in `configure` even though it's not autogenerated in 
-order to keep the two synced. If there's a way to get around this I'd 
-prefer it.
-
+r~
 
