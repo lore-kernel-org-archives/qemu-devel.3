@@ -4,81 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D04C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 11:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8036C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 11:26:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sObMv-00076c-9v; Tue, 02 Jul 2024 07:08:17 -0400
+	id 1sObda-0003IW-19; Tue, 02 Jul 2024 07:25:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sObMj-00073L-EK
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:08:06 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sObdY-0003I4-4O
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:25:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sObMf-0005sB-L1
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:08:03 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sObdW-0001Vl-9f
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:25:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719918479;
+ s=mimecast20190719; t=1719919523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/kSRGVRDdr1le02ZG9KrHjf+TWvB9bDKFetcTryVnGs=;
- b=Oc7X8RXx8KEK+hVbMyowEgCh0fIeBOWL+BYcH20/Tf/WtMAUxr6DL1y+Ud9GlPZZceJK/6
- bvXw4a4s71WXLybmoBN47cCLoBYmj/NIbQUlzS+Tf4P/LH93MeMTpOg6mV8TqIp6AO5Ygy
- vz8+qkECpL1RDHz63wGr/+k5y1b+KLI=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-19-nGS5zcPbPui3-wl55Ok0mw-1; Tue, 02 Jul 2024 07:07:56 -0400
-X-MC-Unique: nGS5zcPbPui3-wl55Ok0mw-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52ce1688931so3796208e87.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 04:07:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719918475; x=1720523275;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/kSRGVRDdr1le02ZG9KrHjf+TWvB9bDKFetcTryVnGs=;
- b=xTIx5Tt4WQx0X9HkI0GymxLBX2oANer+Tqc5t1NfINP7Y24HVLM6Bx+eHpOGSPsv08
- 5vPl4wOEJUJMZXjIVQ48vdkkAKy18pD+9EEJ0FuJ65fy1abqxD2W6/Z5gSrloyyQFDYd
- PFkqFhHpEmkd6RqHVPfexmg1ghdvaBstf4tD0b7Lz0N8epHtRGybVsGb4vJu+LEY/FWB
- UdcaFyfsZjNHlPUdz3OQvQMkjaYNRPRqNoNeNF47haNtq8mc/qCioYOmi+Lb+CZZ8had
- rvlp6+0LULDU0mCGXi46fdnjkzaSGmviB+pPit20SaCg5m+Byz97dXqSWKTYYVP0FyHK
- +mBg==
-X-Gm-Message-State: AOJu0YyExjrtGGNMUdNWSRQ6XtJtE0rwYqc4ra47xKIq1qB1DTDd3Kz/
- +5lGdAQDTms+YbFVAWmBs+/N0lxUHrHVhdONOCaXw/XUuD8F4OCr2G+kDIDWzfizdt7ND2jMbpQ
- AEabNtpkeIHEVWhLF9T77a2dCPA4lNm+ZuOyvmFOF9LMDmQQP5d1S
-X-Received: by 2002:a05:6512:15a3:b0:52c:e326:f4cf with SMTP id
- 2adb3069b0e04-52e82643b81mr6554391e87.3.1719918475282; 
- Tue, 02 Jul 2024 04:07:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF1zoA2OCel2pr7DS9/8ql46EfIxVDhjq2ALucDKkPjNpTDOPavC6yNld17rZYSHTF1gWvlkQ==
-X-Received: by 2002:a05:6512:15a3:b0:52c:e326:f4cf with SMTP id
- 2adb3069b0e04-52e82643b81mr6554332e87.3.1719918473561; 
- Tue, 02 Jul 2024 04:07:53 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:55d:614d:9fb:6fdd:72a4:f3d])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b0c0f26sm191311055e9.39.2024.07.02.04.07.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 04:07:53 -0700 (PDT)
-Date: Tue, 2 Jul 2024 07:07:49 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Chen, Jiqian" <Jiqian.Chen@amd.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Huang, Ray" <Ray.Huang@amd.com>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v11 2/2] virtio-pci: implement No_Soft_Reset bit
-Message-ID: <20240702070728-mutt-send-email-mst@kernel.org>
-References: <20240606102205.114671-1-Jiqian.Chen@amd.com>
- <20240606102205.114671-3-Jiqian.Chen@amd.com>
- <BL1PR12MB5849BFAF241DE61E6F166861E7C92@BL1PR12MB5849.namprd12.prod.outlook.com>
- <BL1PR12MB5849B84143E04A429E23AB81E7DC2@BL1PR12MB5849.namprd12.prod.outlook.com>
+ bh=4oP6AuWFZ0En5VhRV0SwDNNNVIFdJQwwFqR/YaXw8C4=;
+ b=FHarMRv4uoJmjA+ESKWHZyrEP+qRXHAM0aJenMcM/m6vQHyIaWY9Ceg+sG+3nZSTfDOG1h
+ KU1/9JNuuMSGx8WxU/qTHYNpQmOgsZHWflr6quwALRHPQBnW5E6wTYEHq7pRfWi/jLpnF7
+ UBeVIBbn0Qu+HLPt1TT9N0p/NgpJzN0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-eGh3cfGcPUG6YSiqT5n-oA-1; Tue,
+ 02 Jul 2024 07:25:18 -0400
+X-MC-Unique: eGh3cfGcPUG6YSiqT5n-oA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 506671945110; Tue,  2 Jul 2024 11:25:16 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.192.206])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EB5419560AA; Tue,  2 Jul 2024 11:25:12 +0000 (UTC)
+Date: Tue, 2 Jul 2024 13:25:10 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-block@nongnu.org, pbonzini@redhat.com, kraxel@redhat.com,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] scsi: Don't ignore most usb-storage properties
+Message-ID: <ZoPjloHDVhXR8xtq@redhat.com>
+References: <20240131130607.24117-1-kwolf@redhat.com>
+ <ce81d0ec-688d-4545-b008-123cd01cbd5a@proxmox.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <BL1PR12MB5849B84143E04A429E23AB81E7DC2@BL1PR12MB5849.namprd12.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <ce81d0ec-688d-4545-b008-123cd01cbd5a@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,7 +65,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,133 +81,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 02, 2024 at 02:36:14AM +0000, Chen, Jiqian wrote:
-> On 2024/6/21 17:20, Chen, Jiqian wrote:
-> > Hi MST,
-> > 
-> > On 2024/6/6 18:22, Jiqian Chen wrote:
-> >> In current code, when guest does S3, virtio-gpu are reset due to the
-> >> bit No_Soft_Reset is not set. After resetting, the display resources
-> >> of virtio-gpu are destroyed, then the display can't come back and only
-> >> show blank after resuming.
-> >>
-> >> Implement No_Soft_Reset bit of PCI_PM_CTRL register, then guest can check
-> >> this bit, if this bit is set, the devices resetting will not be done, and
-> >> then the display can work after resuming.
-> >>
-> >> No_Soft_Reset bit is implemented for all virtio devices, and was tested
-> >> only on virtio-gpu device. Set it false by default for safety.
-> >>
-> >> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-> >> ---
-> >>  hw/core/machine.c              |  1 +
-> >>  hw/virtio/virtio-pci.c         | 29 +++++++++++++++++++++++++++++
-> >>  include/hw/virtio/virtio-pci.h |  5 +++++
-> >>  3 files changed, 35 insertions(+)
-> >>
-> >> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> >> index 77a356f232f5..b6af94edcd0a 100644
-> >> --- a/hw/core/machine.c
-> >> +++ b/hw/core/machine.c
-> >> @@ -36,6 +36,7 @@
-> >>  GlobalProperty hw_compat_9_0[] = {
-> >>      {"arm-cpu", "backcompat-cntfrq", "true" },
-> >>      {"vfio-pci", "skip-vsc-check", "false" },
-> >> +    { "virtio-pci", "x-pcie-pm-no-soft-reset", "off" },
-> >>  };
-> >>  const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
-> >>  
-> >> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> >> index 1b63bcb3f15c..c881f853253c 100644
-> >> --- a/hw/virtio/virtio-pci.c
-> >> +++ b/hw/virtio/virtio-pci.c
-> >> @@ -2230,6 +2230,11 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
-> >>              pcie_cap_lnkctl_init(pci_dev);
-> >>          }
-> >>  
-> >> +        if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
-> >> +            pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
-> >> +                         PCI_PM_CTRL_NO_SOFT_RESET);
-> >> +        }
-> >> +
-> >>          if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
-> >>              /* Init Power Management Control Register */
-> >>              pci_set_word(pci_dev->wmask + pos + PCI_PM_CTRL,
-> >> @@ -2292,11 +2297,33 @@ static void virtio_pci_reset(DeviceState *qdev)
-> >>      }
-> >>  }
-> >>  
-> >> +static bool virtio_pci_no_soft_reset(PCIDevice *dev)
-> >> +{
-> >> +    uint16_t pmcsr;
-> >> +
-> >> +    if (!pci_is_express(dev) || !dev->exp.pm_cap) {
-> >> +        return false;
-> >> +    }
-> >> +
-> >> +    pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
-> >> +
-> >> +    /*
-> >> +     * When No_Soft_Reset bit is set and the device
-> >> +     * is in D3hot state, don't reset device
-> >> +     */
-> >> +    return (pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) &&
-> >> +           (pmcsr & PCI_PM_CTRL_STATE_MASK) == 3;
-> >> +}
-> >> +
-> >>  static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
-> >>  {
-> >>      PCIDevice *dev = PCI_DEVICE(obj);
-> >>      DeviceState *qdev = DEVICE(obj);
-> >>  
-> >> +    if (virtio_pci_no_soft_reset(dev)) {
-> >> +        return;
-> >> +    }
-> >> +
-> >>      virtio_pci_reset(qdev);
-> >>  
-> >>      if (pci_is_express(dev)) {
-> >> @@ -2336,6 +2363,8 @@ static Property virtio_pci_properties[] = {
-> >>                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
-> >>      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
-> >>                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
-> >> +    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
-> >> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false),
-> >>      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
-> >>                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
-> >>      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
-> >> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
-> >> index 59d88018c16a..9e67ba38c748 100644
-> >> --- a/include/hw/virtio/virtio-pci.h
-> >> +++ b/include/hw/virtio/virtio-pci.h
-> >> @@ -43,6 +43,7 @@ enum {
-> >>      VIRTIO_PCI_FLAG_INIT_FLR_BIT,
-> >>      VIRTIO_PCI_FLAG_AER_BIT,
-> >>      VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
-> >> +    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT,
-> >>  };
-> >>  
-> >>  /* Need to activate work-arounds for buggy guests at vmstate load. */
-> >> @@ -79,6 +80,10 @@ enum {
-> >>  /* Init Power Management */
-> >>  #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
-> >>  
-> >> +/* Init The No_Soft_Reset bit of Power Management */
-> >> +#define VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET \
-> >> +  (1 << VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT)
-> >> +
-> >>  /* Init Function Level Reset capability */
-> >>  #define VIRTIO_PCI_FLAG_INIT_FLR (1 << VIRTIO_PCI_FLAG_INIT_FLR_BIT)
-> >>  
-> > I have added compatibility for old machine.
-> > Do you have any other concerns about this patch?
-> > 
-> If you don't have other concerns. May I get your Review-by?
+Am 01.07.2024 um 15:08 hat Fiona Ebner geschrieben:
+> Hi,
+> 
+> we got a user report about bootindex for an 'usb-storage' device not
+> working anymore [0] and I reproduced it and bisected it to this patch.
+> 
+> Am 31.01.24 um 14:06 schrieb Kevin Wolf:
+> > @@ -399,11 +397,10 @@ SCSIDevice *scsi_bus_legacy_add_drive(SCSIBus *bus, BlockBackend *blk,
+> >      object_property_add_child(OBJECT(bus), name, OBJECT(dev));
+> >      g_free(name);
+> >  
+> > +    s = SCSI_DEVICE(dev);
+> > +    s->conf = *conf;
+> > +
+> >      qdev_prop_set_uint32(dev, "scsi-id", unit);
+> > -    if (bootindex >= 0) {
+> > -        object_property_set_int(OBJECT(dev), "bootindex", bootindex,
+> > -                                &error_abort);
+> > -    }
+> 
+> The fact that this is not called anymore means that the 'set' method
+> for the property is also not called. Here, that method is
+> device_set_bootindex() (as configured by scsi_dev_instance_init() ->
+> device_add_bootindex_property()). Therefore, the device is never
+> registered via add_boot_device_path() meaning that the bootindex
+> property does not have the desired effect anymore.
 
-I'm testing this, and if ok will include it in the pull request.
+Hmm, yes, seem I missed this side effect.
 
-> -- 
-> Best regards,
-> Jiqian Chen.
+Bringing back this one object_property_set_int() call would be the
+easiest fix, but I wonder if an explicit add_boot_device_path() call
+(and allowing that one to fail gracefully instead of directly calling
+exit()) wouldn't be better than re-setting a property to its current
+value just for the side effect.
+
+> Is it necessary to keep the object_property_set_{bool,int} and
+> qdev_prop_set_enum calls around for these potential side effects? Would
+> it even be necessary to introduce new similar calls for the newly
+> supported properties? Or is there an easy alternative to
+> s->conf = *conf;
+> that does trigger the side effects?
+
+I don't think the other properties whose setter we don't call any more
+have side effects. They are processed during .realize, which is what I
+probably expected for bootindex, too.
+
+And that's really how all properties should be if we ever want to move
+forward with the .instance_config approach for creating QOM objects
+because then we won't call any setters during object creation any more,
+they would only be for runtime changes.
+
+Kevin
 
 
