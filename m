@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2145AC41513
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB06C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjyQ-000157-3L; Tue, 02 Jul 2024 16:19:34 -0400
+	id 1sOjwd-0001jB-KQ; Tue, 02 Jul 2024 16:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyN-0000yd-RN
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyK-0001Fu-W9
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951568;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FXwifnBJIBh3zju1O5LT6q/8nalot/g3k4ePiwaH62E=;
- b=dvQwUY6f/3r3H4UaJyZ0EFPqDcWQm9skiD3DClX75QLfwknoUFCKiqZBLTycPFULK/giOL
- tE8cLLS2aHCwFV/uSgEmvwMB/+OkwA6vQAUAZY2JFc9QMiQnV0E+KksLbkVxGU31yGbzzq
- uyLEoncVaG5yZdcUndVylmQDIofE3ig=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-675-xGNCIbSqN-2t7fHH1gcXZA-1; Tue, 02 Jul 2024 16:19:27 -0400
-X-MC-Unique: xGNCIbSqN-2t7fHH1gcXZA-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2ec72ff8caaso42870571fa.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:19:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjvj-000758-Gv
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:50 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjvZ-0008IK-Ud
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:47 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2ec408c6d94so47112901fa.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:16:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719951396; x=1720556196; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1ZNQWxchbYqRE/ztI0Efzhv51Qe7ss4Fe5+9hHsNJe0=;
+ b=CU3xthDXWcb+aKzV0IjRdbXuq4cC4K7ElBPTQ0Gl/WWmpMVmDBT4x+gJlgYwWxXW7G
+ zWvm8/4lzDDBmwvbrTWflSAD1obR42oZjrzXn704BdnSPq4r+UHONT9OAdNQNtwlOeO1
+ 3ZHAoe/osn2fQQiOkIOUsRKzLfr/OSshGsPyFH1+RRdAQQWlNs9GxCEzEOWKPC1GnhBQ
+ 9DmEYXGsGSKeOqcdNbE8yfz2tJoLv+2irEanim0I3U2GkpwEA6QqpH7XTEn2TUf5vcNz
+ gCRA12LDq6XsbAWJ1oEKJcrJSo0B9DbbN+QJB8fNGupG+8v9rd+ulGBlqt/0kEyuZAj+
+ 6aUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951565; x=1720556365;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FXwifnBJIBh3zju1O5LT6q/8nalot/g3k4ePiwaH62E=;
- b=KlDKgXudqVHtWChT9AeSdJJLWlLneLkmLsrJyXElb1k7By7tfjj7g0mapkDAmdeGYL
- WMtFPxVR24Q3aCdZRx44hJ1LBYyEdWjLTqE3WEKAiCDOb9opEIxYenQMT3vYibGE3GQj
- DPzE39qgQzESYiWmKPao3KyKF9MgLZatwQJ6CiKhBrZ1SVcSL7gPYuOlUshgBQm0n8h1
- UUC/r/0tRuRpZaWUFYkIDRjwGz/VWNGVN31748CDfINf8dwtrE1fx6TE+eMjlrnWfA7V
- 43DLFmphXfUdq4zbmmB7Dho9Yo8a+H8veDL4ovAb5gvCCtJ8Cna1a9P5TVJ5RMtlpz66
- QWCQ==
-X-Gm-Message-State: AOJu0Yyzi1YBH0zLjTfBcpuZx6Q+PqxZWV0gsVvU8ewo/cvzNCNqN66G
- iIYiwBp7Ds7YNtC2nWEkjFjKxb0uh0vS3Y4OytOpw2wNKQELogIGjzMx0mj+0dqkEPFHw+WYtUF
- GJ6pLs/KoEBwj+ec/cetrhQEjwYnE0A4Cyl69mLpfs8JNalddg0So/C2ha+SPD2EUfl/Iu+4Bam
- J+H6/p423bVAJJA80UzZaiO0F3Ls/z7g==
-X-Received: by 2002:a05:6512:110e:b0:52b:839c:78dc with SMTP id
- 2adb3069b0e04-52e82687e37mr7654791e87.29.1719951564825; 
- Tue, 02 Jul 2024 13:19:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHxX/PUIUKHhIEV/Y8vp0BDN0Iu+Yp0hUJWNpPJso6BZmrlmufzLXFZ8/Lwdu3v4JGCqmP0gw==
-X-Received: by 2002:a05:6512:110e:b0:52b:839c:78dc with SMTP id
- 2adb3069b0e04-52e82687e37mr7654763e87.29.1719951563926; 
- Tue, 02 Jul 2024 13:19:23 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
+ d=1e100.net; s=20230601; t=1719951396; x=1720556196;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1ZNQWxchbYqRE/ztI0Efzhv51Qe7ss4Fe5+9hHsNJe0=;
+ b=rFo2xq08nxteqHqNkWBSD7lL7y9cfegGrbb3AKLELhrbH8QIxxL2Zl315htdJ6o6o0
+ +OPSzRYsrcW5rniPsC4M4CsstuPli1OgnDDoDR3xYJ6RuIZDrPw9ZRLFnRxBMuCES0c0
+ XmfL1PpUJk8+tlmxRsP8eWx94ecf9Mr5RCOTfpRVN7+MZxHeTLk8ypRaERiWYCwryVfk
+ VvuWC6RK4AjLXrQHOe5akwRfprIRAwoccFGZDgmHhmHyjGIzhRmFXSuiEmyx0mkeJrkV
+ dkrXYkcQ1AFZtbUbC0L5LnnYwMOGefzqWZHyXoOuBsUK/xznsmHW3MIl7Xxj0ZpEqsMX
+ jhtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXWv7gzK7Pp8c4udxxGaWg322gC33lkWRTOTNHe/rb1gp0RZ1ODtYQ5sxOzpSN0u6wKkPzxE0r6AXB1zcwS2R14mS6rQbQ=
+X-Gm-Message-State: AOJu0Yz+7hdtfr4NDcUpwMCL1ATaOXUIqyx422+f82MBl4xBvJ4a4f6R
+ 2QkCHrYWdJOKBJuL/KWvo9E4etJ6KapiG1oMPrjjklBJUDV1Tn82/L9GvQo9fZ6n/rBcXB54X9m
+ Z
+X-Google-Smtp-Source: AGHT+IGMX6MnZLCe/1fW+tugyANw9Un86MNPq2sjgTHmfF/LiOiIPxPiJlGxbHVST/re+GRx3NFbYg==
+X-Received: by 2002:a05:651c:2115:b0:2eb:fc08:5d83 with SMTP id
+ 38308e7fff4ca-2ee5e704790mr73455611fa.44.1719951395485; 
+ Tue, 02 Jul 2024 13:16:35 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.220.97])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42578800bf1sm102892125e9.1.2024.07.02.13.19.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:19:22 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:19:19 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Nicolin Chen <nicolinc@nvidia.com>, Eric Auger <eric.auger@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org
-Subject: [PULL v2 62/88] hw/arm/virt-acpi-build: Fix id_count in
- build_iort_id_mapping
-Message-ID: <4e517c43d2d6bf8f261b7e2b263209a7f924ac5f.1719951168.git.mst@redhat.com>
-References: <cover.1719951168.git.mst@redhat.com>
+ 5b1f17b1804b1-4256af3c25esm210533775e9.9.2024.07.02.13.16.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 13:16:35 -0700 (PDT)
+Message-ID: <b2866a26-7119-4906-8228-b02698838b23@linaro.org>
+Date: Tue, 2 Jul 2024 22:16:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1719951168.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] virtio: Implement Virtio Backend for SD/MMC in QEMU
+To: Mikhail Krasheninnikov <krashmisha@gmail.com>, qemu-devel@nongnu.org
+Cc: Matwey Kornilov <matwey.kornilov@gmail.com>, qemu-block@nongnu.org,
+ "Michael S . Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+References: <20240702185842.31061-1-krashmisha@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240702185842.31061-1-krashmisha@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,91 +98,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+Hi Mikhail,
 
-It's observed that Linux kernel booting with the VM reports a "conflicting
-mapping for input ID" FW_BUG.
+(mostly style comments)
 
-The IORT doc defines "Number of IDs" to be "the number of IDs in the range
-minus one", while virt-acpi-build.c simply stores the number of IDs in the
-id_count without the "minus one". Meanwhile, some of the callers pass in a
-0xFFFF following the spec. So, this is a mismatch between the function and
-its callers.
+On 2/7/24 20:58, Mikhail Krasheninnikov wrote:
+> From: Mi <krashmisha@gmail.com>
+> 
+> Add a Virtio backend for SD/MMC devices. Confirmed interoperability with
+> Linux.
+> 
+> Signed-off-by: Mikhail Krasheninnikov <krashmisha@gmail.com>
+> CC: Matwey Kornilov <matwey.kornilov@gmail.com>
+> CC: qemu-block@nongnu.org
+> CC: Michael S. Tsirkin <mst@redhat.com>
+> CC: Kevin Wolf <kwolf@redhat.com>
+> CC: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+> 
+> After a feedback, moved virtio.c from virtio core directory to hw/block.
+>  From what I see from the examples of virtio drivers, other files should
+> be where they are now. Correct me if I'm wrong.
 
-Fix build_iort_id_mapping() by internally subtracting one from the pass-in
-@id_count. Accordingly make sure that all existing callers pass in a value
-without the "minus one", i.e. change all 0xFFFFs to 0x10000s.
+Alternative is hw/sd/.
 
-Also, add a few lines of comments to highlight this change along with the
-referencing document for this build_iort_id_mapping().
+> 
+>   hw/block/Kconfig                            |   5 +
+>   hw/block/meson.build                        |   1 +
+>   hw/block/virtio-mmc.c                       | 165 ++++++++++++++++++++
 
-Fixes: 42e0f050e3a5 ("hw/arm/virt-acpi-build: Add IORT support to bypass SMMUv3")
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Message-Id: <20240619201243.936819-1-nicolinc@nvidia.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- hw/arm/virt-acpi-build.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+virtio-sdhci.c could be a better name.
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 102e2da934..e10cad86dd 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -209,12 +209,19 @@ static void acpi_dsdt_add_tpm(Aml *scope, VirtMachineState *vms)
- #define ROOT_COMPLEX_ENTRY_SIZE 36
- #define IORT_NODE_OFFSET 48
- 
-+/*
-+ * Append an ID mapping entry as described by "Table 4 ID mapping format" in
-+ * "IO Remapping Table System Software on ARM Platforms", Chapter 3.
-+ * Document number: ARM DEN 0049E.f, Apr 2024
-+ *
-+ * Note that @id_count gets internally subtracted by one, following the spec.
-+ */
- static void build_iort_id_mapping(GArray *table_data, uint32_t input_base,
-                                   uint32_t id_count, uint32_t out_ref)
- {
--    /* Table 4 ID mapping format */
-     build_append_int_noprefix(table_data, input_base, 4); /* Input base */
--    build_append_int_noprefix(table_data, id_count, 4); /* Number of IDs */
-+    /* Number of IDs - The number of IDs in the range minus one */
-+    build_append_int_noprefix(table_data, id_count - 1, 4);
-     build_append_int_noprefix(table_data, input_base, 4); /* Output base */
-     build_append_int_noprefix(table_data, out_ref, 4); /* Output Reference */
-     /* Flags */
-@@ -305,8 +312,8 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         }
- 
-         /* Append the last RC -> ITS ID mapping */
--        if (next_range.input_base < 0xFFFF) {
--            next_range.id_count = 0xFFFF - next_range.input_base;
-+        if (next_range.input_base < 0x10000) {
-+            next_range.id_count = 0x10000 - next_range.input_base;
-             g_array_append_val(its_idmaps, next_range);
-         }
- 
-@@ -365,7 +372,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         build_append_int_noprefix(table_data, 0, 4);
- 
-         /* output IORT node is the ITS group node (the first node) */
--        build_iort_id_mapping(table_data, 0, 0xFFFF, IORT_NODE_OFFSET);
-+        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-     }
- 
-     /* Table 17 Root Complex Node */
-@@ -418,7 +425,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         }
-     } else {
-         /* output IORT node is the ITS group node (the first node) */
--        build_iort_id_mapping(table_data, 0, 0xFFFF, IORT_NODE_OFFSET);
-+        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-     }
- 
-     acpi_table_end(linker, &table);
--- 
-MST
+>   hw/virtio/meson.build                       |   1 +
+>   hw/virtio/virtio-mmc-pci.c                  |  85 ++++++++++
+>   hw/virtio/virtio.c                          |   3 +-
+>   include/hw/virtio/virtio-mmc.h              |  20 +++
+>   include/standard-headers/linux/virtio_ids.h |   1 +
+>   8 files changed, 280 insertions(+), 1 deletion(-)
+>   create mode 100644 hw/block/virtio-mmc.c
+>   create mode 100644 hw/virtio/virtio-mmc-pci.c
+>   create mode 100644 include/hw/virtio/virtio-mmc.h
+> 
+> diff --git a/hw/block/Kconfig b/hw/block/Kconfig
+> index 9e8f28f982..a3059261fa 100644
+> --- a/hw/block/Kconfig
+> +++ b/hw/block/Kconfig
+> @@ -44,3 +44,8 @@ config VHOST_USER_BLK
+>   
+>   config SWIM
+>       bool
+> +
+> +config VIRTIO_MMC
 
+(config VIRTIO_SDHCI?)
+
+> +    bool
+> +    default y
+
+for SDBus API:
+
+        select SD
+
+> +    depends on VIRTIO
+
+[...]
+
+> diff --git a/hw/block/virtio-mmc.c b/hw/block/virtio-mmc.c
+> new file mode 100644
+> index 0000000000..50bd7113c5
+> --- /dev/null
+> +++ b/hw/block/virtio-mmc.c
+> @@ -0,0 +1,165 @@
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +
+> +#include "hw/virtio/virtio.h"
+> +#include "hw/virtio/virtio-mmc.h"
+> +#include "qemu/typedefs.h"
+> +#include "sysemu/blockdev.h"
+> +
+> +typedef struct mmc_req {
+> +    uint32_t opcode;
+> +    uint32_t arg;
+> +} mmc_req;
+> +
+> +typedef struct virtio_mmc_req {
+> +    uint8_t flags;
+> +
+> +#define VIRTIO_MMC_REQUEST_DATA BIT(1)
+> +#define VIRTIO_MMC_REQUEST_WRITE BIT(2)
+> +#define VIRTIO_MMC_REQUEST_STOP BIT(3)
+> +#define VIRTIO_MMC_REQUEST_SBC BIT(4)
+> +
+> +    mmc_req request;
+> +
+> +    uint8_t buf[4096];
+> +    size_t buf_len;
+> +
+> +    mmc_req stop_req;
+> +    mmc_req sbc_req;
+> +} virtio_mmc_req;
+> +
+> +typedef struct virtio_mmc_resp {
+> +    uint32_t response[4];
+> +    int resp_len;
+> +    uint8_t buf[4096];
+> +} virtio_mmc_resp;
+> +
+> +static void send_command(SDBus *sdbus, mmc_req *mmc_request, uint8_t *response,
+> +                         virtio_mmc_resp *virtio_resp)
+> +{
+> +    SDRequest sdreq;
+
+QEMU style declares variables in function prologue.
+
+> +    sdreq.cmd = (uint8_t)mmc_request->opcode;
+> +    sdreq.arg = mmc_request->arg;
+> +    int resp_len = sdbus_do_command(sdbus, &sdreq, response);
+> +    virtio_resp->resp_len = resp_len;
+> +
+> +    for (int i = 0; i < resp_len / sizeof(uint32_t); i++) {
+> +        virtio_resp->response[i] = ldl_be_p(&virtio_resp->response[i]);
+> +    }
+> +}
+> +
+> +static void send_command_without_response(SDBus *sdbus, mmc_req *mmc_request)
+> +{
+> +    SDRequest sdreq;
+> +    sdreq.cmd = (uint8_t)mmc_request->opcode;
+> +    sdreq.arg = mmc_request->arg;
+> +    uint8_t response[4];
+
+Ditto style (various occurences).
+
+> +    sdbus_do_command(sdbus, &sdreq, response);
+> +}
+
+[...]
+> diff --git a/include/hw/virtio/virtio-mmc.h b/include/hw/virtio/virtio-mmc.h
+> new file mode 100644
+> index 0000000000..a68f45d7cb
+> --- /dev/null
+> +++ b/include/hw/virtio/virtio-mmc.h
+> @@ -0,0 +1,20 @@
+> +#pragma once
+> +
+> +#include "hw/virtio/virtio.h"
+> +#include "hw/sd/sd.h"
+> +#include "qemu/typedefs.h"
+> +
+> +#define VIRTIO_ID_MMC 42
+> +
+> +#define TYPE_VIRTIO_MMC "virtio-mmc-device"
+> +#define VIRTIO_MMC(obj) \
+> +    OBJECT_CHECK(VirtIOMMC, (obj), TYPE_VIRTIO_MMC)
+> +#define VIRTIO_MMC_GET_PARENT_CLASS(obj) \
+> +    OBJECT_GET_PARENT_CLASS(VIRTIO_MMC(obj), TYPE_VIRTIO_MMC)
+> +
+> +typedef struct VirtIOMMC {
+> +    VirtIODevice parent_obj;
+
+Please add a newline here
+
+> +    VirtQueue *vq;
+> +    SDBus sdbus;
+> +    BlockBackend *blk;
+> +} VirtIOMMC;
+
+Otherwise (skipping virtio), for SD/MMC LGTM so far.
+
+Regards,
+
+Phil.
 
