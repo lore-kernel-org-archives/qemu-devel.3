@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0AFBC31D97
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6D70C41513
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjt1-0001SW-KO; Tue, 02 Jul 2024 16:13:59 -0400
+	id 1sOjte-0002RV-84; Tue, 02 Jul 2024 16:14:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjt0-0001NQ-4x
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:13:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjtc-0002Cc-JQ
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:14:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjsy-0007SO-FC
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:13:57 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjtb-0007bm-0t
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:14:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951235;
+ s=mimecast20190719; t=1719951274;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZMYpex8C2s46cF0GfMcoGvUcCxmqXFvGY/Nt+8TTLHo=;
- b=P+05cnoGSNSTARSPjMMHmXrOg/d0JMLS+qIL3VzR1lqI+qznoDUlryW5+PbgTfTxqXrNXr
- eewzxkMA9xX9C+3+TRhanrbOcNulUJE7iNYlHaj7wb9twMOBgj+HFW3WAhivrCvZufxX+O
- 8D/f9WhLkNSZE5osX2CBilNc+P0rM8E=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Hq1ZdMUpXgQO0jHpQkHjtkURKxmq/FjBLx45BW2ity0=;
+ b=KuqoQOd1lPhEL56Bqe5uLZ9VNWUKg5i8BRklNb+HR+NfPCyPd8EshPomreXdZ5Z2DCQPXY
+ Fm1prAl4ct09kXroQfOqvMImk7koXvarYQXuhkvElLdTTJmIpw7cCqM+5ML5HvQiu/c7Nc
+ iFlQWobmJsjIREZCM1808HCk2LF27E8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-446-0Worh_smPzKmyfjfKkwM_Q-1; Tue, 02 Jul 2024 16:13:51 -0400
-X-MC-Unique: 0Worh_smPzKmyfjfKkwM_Q-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-425657ac234so31645925e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:13:51 -0700 (PDT)
+ us-mta-117-5b1mqgrtMiOB70NQtx1_OA-1; Tue, 02 Jul 2024 16:14:33 -0400
+X-MC-Unique: 5b1mqgrtMiOB70NQtx1_OA-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4257f95ffc6so19690965e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:14:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951230; x=1720556030;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZMYpex8C2s46cF0GfMcoGvUcCxmqXFvGY/Nt+8TTLHo=;
- b=YiVUhlmIz6UwKZzugiaVW+iGXSKTSg4c9fKJiPQL/dWj5UdRd9LPsrIFr16TYF6kxD
- lrVHbrJEVrdp2pw1wjZgCohjMJbqx2LMv1nC8w5eqW5tT0lL+5gBZTKUlmZRs1xmWJIV
- pieaHB7BYba7P33KXcxI18grgP/WMn+2bkO9w39X09YotinR64fcVjLZn33byhSHFpBO
- I5lFvx9U937KhgAtZRi9C5QteP+h+clgxfLbEnE0NEIuZj8K5tumyIgbQR/S8AjW6KOx
- Zb38NJI/l/GuG6FyFsoZcsthhVShLt7WNCg1wRPZXNV59oPIGMKS4FbZHe43NMcie7Li
- HwcA==
-X-Gm-Message-State: AOJu0YyzilNVswSLu5BGa3B4v3B6zjIl0V48LInZoQQsfYGmQJfbSiGw
- zuk/m/72a4tqvcl/hM2eAYKk7TW9fgoliBrhFppR9ue+kBFVWiIDwSVbtQafMZ5Bu/rr6ie8j1f
- gE+S3aKrsOgR7wbG586YYpfZnkKaBsMA9FIoTNKQkOR07NrV22kvMFt8zs3mQneGNxxI6NNfbox
- BEWki5b5tk+nLAgQxxMkafBxE6qG0Nnw==
-X-Received: by 2002:a5d:47ac:0:b0:366:eab1:6732 with SMTP id
- ffacd0b85a97d-367756a3828mr9124364f8f.9.1719951230392; 
- Tue, 02 Jul 2024 13:13:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE1x+/ly54QZSyRdqQ54Dg4/T4BJn2meRArs5HD05DYKvPH281kQkeyy07rNdFRlNrcgsq1ig==
-X-Received: by 2002:a5d:47ac:0:b0:366:eab1:6732 with SMTP id
- ffacd0b85a97d-367756a3828mr9124339f8f.9.1719951229863; 
- Tue, 02 Jul 2024 13:13:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719951271; x=1720556071;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hq1ZdMUpXgQO0jHpQkHjtkURKxmq/FjBLx45BW2ity0=;
+ b=VrRTmKjFB36GV5u53VrBoCt6+PZoi6ddKODoNmS3xIqDw/hYLbOlsjue/nfGblFda8
+ JS+sP5pLP/c/hbuiKR9UXEdnfAf+8Fkmu4PcesBH0viYK/gYG92DO7Vmw5YMydFvUiBV
+ m3swvYqcTlRuCVZW+55nzH4wa/+6dovg5ehYlzNUELZMBFjWQOpdAGowmbLVyzmHeYM5
+ Hm1DkWK4k1TsYR26tN/BDWVeoCFCUnOzzCwIk1PHA0M9l1bKbQsetSVv3Nb97VNLmPWy
+ Z2tzGPqZ0ktzGPWcn3gyxG1TqEQ58IyJLngfAKnFB8BqnrpEn7TlZ5F8tXJjbvEsZy6J
+ vZPw==
+X-Gm-Message-State: AOJu0Yx9owTMo1q06Vs1sI/w5lm9YrxoAhzmNnDGcynVX08R8IUxqB2o
+ Rp+Z2YoS3t0n0NOc7yaZBbCp+K37KIG07/xIECs1W52WlPf9YNlCXIqWHSdEzkSgVOlt2ssdB4l
+ GFzhbUC3wh9ZKHT7w+PPW2+QFQBqyq+eHSCMoG171AevWkdnYcGcMRQVWAXd2SBDxmfYOVAqqBn
+ a3+1fgUd7/WIl0TOrp9hdPb9WTpvLyyQ==
+X-Received: by 2002:a05:600c:3b09:b0:424:a721:1d0f with SMTP id
+ 5b1f17b1804b1-4257a020eeemr62966035e9.29.1719951271367; 
+ Tue, 02 Jul 2024 13:14:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHF5NifnjEM7pOIcbG0FbD0SBlaYpfCpFm068A60biJnDoZCAPxzefvX60afDOkcxl8CwJTPQ==
+X-Received: by 2002:a05:600c:3b09:b0:424:a721:1d0f with SMTP id
+ 5b1f17b1804b1-4257a020eeemr62965865e9.29.1719951270768; 
+ Tue, 02 Jul 2024 13:14:30 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0cd6b4sm14052505f8f.17.2024.07.02.13.13.47
+ 5b1f17b1804b1-4256b0c0f26sm207952565e9.39.2024.07.02.13.14.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:13:49 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:13:45 -0400
+ Tue, 02 Jul 2024 13:14:30 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:14:27 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v2 03/91] vhost-vdpa: check vhost_vdpa_set_vring_ready()
- return value
-Message-ID: <9d5a807c4cb56837f11be9a9250f854fab951290.1719951026.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jiqian Chen <Jiqian.Chen@amd.com>
+Subject: [PULL v2 12/91] virtio-pci: only reset pm state during resetting
+Message-ID: <84b58169e40f5c7428db6f0b229e01213068aa21.1719951026.git.mst@redhat.com>
 References: <cover.1719951026.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719951026.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -107,68 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Jiqian Chen <Jiqian.Chen@amd.com>
 
-vhost_vdpa_set_vring_ready() could already fail, but if Linux's
-patch [1] will be merged, it may fail with more chance if
-userspace does not activate virtqueues before DRIVER_OK when
-VHOST_BACKEND_F_ENABLE_AFTER_DRIVER_OK is not negotiated.
+Fix bug imported by 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
+After this change, observe that QEMU may erroneously clear the power status of the device,
+or may erroneously clear non writable registers, such as NO_SOFT_RESET, etc.
 
-So better check its return value anyway.
+Only state of PM_CTRL is writable.
+Only when flag VIRTIO_PCI_FLAG_INIT_PM is set, need to reset state.
 
-[1] https://lore.kernel.org/virtualization/20240206145154.118044-1-sgarzare@redhat.com/T/#u
-
-Acked-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240322092315.31885-1-sgarzare@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+Message-Id: <20240515073526.17297-2-Jiqian.Chen@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- net/vhost-vdpa.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ hw/virtio/virtio-pci.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 85e73dd6a7..eda714d1a4 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -399,7 +399,10 @@ static int vhost_vdpa_net_data_load(NetClientState *nc)
-     }
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index cffc7efcae..7d62e92365 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2306,10 +2306,16 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
+     virtio_pci_reset(qdev);
  
-     for (int i = 0; i < v->dev->nvqs; ++i) {
--        vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
-+        int ret = vhost_vdpa_set_vring_ready(v, i + v->dev->vq_index);
-+        if (ret < 0) {
-+            return ret;
+     if (pci_is_express(dev)) {
++        VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
++
+         pcie_cap_deverr_reset(dev);
+         pcie_cap_lnkctl_reset(dev);
+ 
+-        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
++        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
++            pci_word_test_and_clear_mask(
++                dev->config + dev->exp.pm_cap + PCI_PM_CTRL,
++                PCI_PM_CTRL_STATE_MASK);
 +        }
      }
-     return 0;
  }
-@@ -1238,7 +1241,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
  
-     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
- 
--    vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
-+    r = vhost_vdpa_set_vring_ready(v, v->dev->vq_index);
-+    if (unlikely(r < 0)) {
-+        return r;
-+    }
- 
-     if (v->shadow_vqs_enabled) {
-         n = VIRTIO_NET(v->dev->vdev);
-@@ -1277,7 +1283,10 @@ static int vhost_vdpa_net_cvq_load(NetClientState *nc)
-     }
- 
-     for (int i = 0; i < v->dev->vq_index; ++i) {
--        vhost_vdpa_set_vring_ready(v, i);
-+        r = vhost_vdpa_set_vring_ready(v, i);
-+        if (unlikely(r < 0)) {
-+            return r;
-+        }
-     }
- 
-     return 0;
 -- 
 MST
 
