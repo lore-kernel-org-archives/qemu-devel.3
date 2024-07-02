@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F09C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96531C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOfkt-0003mZ-MX; Tue, 02 Jul 2024 11:49:19 -0400
+	id 1sOfmQ-0004eZ-CE; Tue, 02 Jul 2024 11:50:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sOfkq-0003hd-Lj
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:49:16 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOfmO-0004dw-3L
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:50:52 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sOfkp-0006uF-0G
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:49:16 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1f9b364faddso26792665ad.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 08:49:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOfmM-0000Fv-DG
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:50:51 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-354b722fe81so2941711f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 08:50:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719935353; x=1720540153; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=EYRoGF2stDqYWIzGESxh6OgaaDeyMSanepz7ZjBZqBw=;
- b=cfZtSi6o7ivI9vZDiluwWcWWAaZXNag2+1xbKD+Dt+hWnLDnj4M5LP76nmA3A1ShH0
- 1ds1cqXHxbMcNgo7qkyI5ef2m+xtwKWplMFLtL5EyO268DeQicc6CiKqkc7OBbICUPWS
- 9qhBfKxsdEi/RlsJSvKxGiXNtCzKbVqiqpd1tsDYllZpTvWefE/mNFgYnIxhexsblKko
- aSM2lOGB63Mj3IKHScGFTPJ+H89zwEYLQs7J5MEwHDRGdWOSYKJY6exa8oAozqLHUtcH
- yWcnTEgW6sYqm6qKCSr4wwALPiG8uimYJNXk071GdClH04mxSz1o5aMGIYtx485RKNyY
- OzEg==
+ d=linaro.org; s=google; t=1719935449; x=1720540249; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Jo0LDaNIzWBmbSA/05/26+f0eHFPCI3HFIYSnWb02RI=;
+ b=yIl5WMh9C9ldHO4JudVUv7AuZfINi/OFNzmpfvsyq+SsB1nqIc+cibU/UzlPlz6BB0
+ 3wH428qqUn9z8l80YEtLu/VvanF48+asfHNs+eCjgpmSjA0rZrPmCQRT3IzLZwfwgrnZ
+ Q9CWB+jJB3TJscJ6EwqUpu6UPvhtx183PQDL0/KzCr8oRcVakskbhHi9K1QVyJiQSW0q
+ dRV7bYU+eeGVDhE3TAoUdo12OkmEG/b8ImnWhySY0iC1MDhma+5+wYHTAisiuGVcaCZr
+ 5SbX1AwZDwWJHRmbmwKnSsMnyHjJelKXyi2akBv5JLWfN+FLFG+uQuZokYttgMAvjjPE
+ LGKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719935353; x=1720540153;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EYRoGF2stDqYWIzGESxh6OgaaDeyMSanepz7ZjBZqBw=;
- b=JLyPNnAV+aviavocBr/Zmo/V5+vWN9FPjvMv7COBhnSttHUY8J+d0qGw6B+N0FFOj8
- Qw5AsjtpupaU+kuWUp72t4UX2spVJK9hcE9e3wpauKBSSzRHT7jJd6qHxCOGgFn/13eO
- PN9v+p/tSqzz2RT+V0MAeTbJ5/UkaVT5rdzHIQSg2yFn10owMOztcIiLTrPe7joPsCTl
- FVCEMST4vO4mBIVtEzkW3QylLBvF1anDOspo1e9EgBGJLpRIfAotgw8t75JBZrXT5si8
- Lke2/qPyhqeXhyY8pY4jXEGm2LhoDoUobLe8KGGdP5lpwm31zy1CVLHa7nrtndVe6WOA
- nhTw==
-X-Gm-Message-State: AOJu0YwXT3d96uBUZmm3pBUQfej3NFcV/EdrLc7BQPvZYVJCe4dsO+PL
- KuW/0Jz1PQ4cygmDnHUnEkgbNtBDrcd4f9dplDtfGatSAovleDmd94jEka7melaeP7CtESZV6yZ
- 0
-X-Google-Smtp-Source: AGHT+IEDV4g8N6Mb9ZM26RWlMtPhlOHZkF+TbUfLPRoBI/20oWF6Vk4i69536PFgyC++PyKeKi1z3w==
-X-Received: by 2002:a17:902:ceca:b0:1f9:cbe1:af0 with SMTP id
- d9443c01a7336-1fadbc5b80amr50721595ad.5.1719935353277; 
- Tue, 02 Jul 2024 08:49:13 -0700 (PDT)
-Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ d=1e100.net; s=20230601; t=1719935449; x=1720540249;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Jo0LDaNIzWBmbSA/05/26+f0eHFPCI3HFIYSnWb02RI=;
+ b=wrTZ9SQqye6yXSlXKZZCNZ8jplEASjjCsERibE7imojw0UmjBzhchis4u4Im5GkPp+
+ E/3ifPcxZyadQppoqO2EqFa+btiHjlP6ESWpjEqJndZMbyX+7Zf8rmy7y7untbPhxaJ8
+ W2mKmZT3oLsi69xGZQGwmfDo4xC0+G/TQxgjEnrZk+RLCsDdM6zo6QouvBqi5LGqQsrk
+ pT3+KxjemV/T8LTJAvNNrVdqJpvXljHDnhrKa+I4IAtO2pIr/mPIBNS3qE/cu1PY+Fke
+ UV89DLygtHZpagshMryGo1djE0qRRxD0Gp0zcDo4XkoH6Clx05SMxdtrMRrhkhLeFh2g
+ Czbg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV/38hrWtw6zsDQmyhcU2gYu+Dwd/ZeOnWmBPOotfQLB583IRnEj/9A1Ew8JkjDniKZVNNsnYDYckKsZ3D4jco8qKZKDHs=
+X-Gm-Message-State: AOJu0YydKWutvjv/yQExsevDOYgnV03/3R8ToyRyADeWqWAeEqv4o+DS
+ pfpUbR0wZgSe/jh0f+p2WF++EUhYS0xXbwF2QRmHfZQZRPlXmk17GDw2HBNxx0E=
+X-Google-Smtp-Source: AGHT+IHW4rolXIqRE4jii6TI/7kPL+b36qDQ8YPy5WrLvLR5N2bYw+BnItjP/tfAr8+/4TXpiAJ/nQ==
+X-Received: by 2002:a5d:404f:0:b0:366:e1a6:3386 with SMTP id
+ ffacd0b85a97d-3677571c5a7mr5258083f8f.44.1719935448732; 
+ Tue, 02 Jul 2024 08:50:48 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac1569d28sm86197275ad.230.2024.07.02.08.49.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 08:49:12 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH] target/arm: Use cpu_env in cpu_untagged_addr
-Date: Tue,  2 Jul 2024 08:49:11 -0700
-Message-Id: <20240702154911.1667418-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ ffacd0b85a97d-36789a02631sm1931921f8f.1.2024.07.02.08.50.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 08:50:48 -0700 (PDT)
+Message-ID: <3bdd7747-316d-4b58-a9c3-2320864e6cf8@linaro.org>
+Date: Tue, 2 Jul 2024 17:50:46 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/misc/bcm2835_thermal: Fix access size handling in
+ bcm2835_thermal_ops
+To: Zheyu Ma <zheyuma97@gmail.com>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>
+References: <20240702154042.3018932-1-zheyuma97@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240702154042.3018932-1-zheyuma97@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,31 +97,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In a completely artifical memset benchmark object_dynamic_cast_assert
-dominates the profile, even above guest address resolution and
-the underlying host memset.
+On 2/7/24 17:40, Zheyu Ma wrote:
+> The current implementation of bcm2835_thermal_ops sets
+> impl.max_access_size and valid.min_access_size to 4, but leaves
+> impl.min_access_size and valid.max_access_size unset, defaulting to 1.
+> This causes issues when the memory system is presented with an access
+> of size 2 at an offset of 3, leading to an attempt to synthesize it as
+> a pair of byte accesses at offsets 3 and 4, which trips an assert.
+> 
+> Additionally, the lack of valid.max_access_size setting causes another
+> issue: the memory system tries to synthesize a read using a 4-byte
+> access at offset 3 even though the device doesn't allow unaligned
+> accesses.
+> 
+> This patch addresses these issues by explicitly setting both
+> impl.min_access_size and valid.max_access_size to 4, ensuring proper
+> handling of access sizes.
+> 
+> Error log:
+> ERROR:hw/misc/bcm2835_thermal.c:55:bcm2835_thermal_read: code should not be reached
+> Bail out! ERROR:hw/misc/bcm2835_thermal.c:55:bcm2835_thermal_read: code should not be reached
+> Aborted
+> 
+> Reproducer:
+> cat << EOF | qemu-system-aarch64 -display \
+> none -machine accel=qtest, -m 512M -machine raspi3b -m 1G -qtest stdio
+> readw 0x3f212003
+> EOF
+> 
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/cpu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index d8eb986a04..ccfb9349a3 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -3309,8 +3309,8 @@ extern const uint64_t pred_esz_masks[5];
-  */
- static inline target_ulong cpu_untagged_addr(CPUState *cs, target_ulong x)
- {
--    ARMCPU *cpu = ARM_CPU(cs);
--    if (cpu->env.tagged_addr_enable) {
-+    CPUARMState *env = cpu_env(cs);
-+    if (env->tagged_addr_enable) {
-         /*
-          * TBI is enabled for userspace but not kernelspace addresses.
-          * Only clear the tag if bit 55 is clear.
--- 
-2.34.1
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> ---
+> Changes in v2:
+> - Added .valid.min_access_size and .valid.max_access_size settings
+>    to ensure proper handling of valid access sizes.
+> ---
+>   hw/misc/bcm2835_thermal.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/misc/bcm2835_thermal.c b/hw/misc/bcm2835_thermal.c
+> index ee7816b8a5..0c49c088a7 100644
+> --- a/hw/misc/bcm2835_thermal.c
+> +++ b/hw/misc/bcm2835_thermal.c
+> @@ -80,8 +80,10 @@ static void bcm2835_thermal_write(void *opaque, hwaddr addr,
+>   static const MemoryRegionOps bcm2835_thermal_ops = {
+>       .read = bcm2835_thermal_read,
+>       .write = bcm2835_thermal_write,
+> +    .impl.min_access_size = 4,
+
+Personally I consider accepting access of
+
+   .valid.min_access_size > .impl.min_access_size
+
+as a bug in the memory core layer, whether being
+unaligned or not.
+
+>       .impl.max_access_size = 4,
+>       .valid.min_access_size = 4,
+> +    .valid.max_access_size = 4,
+>       .endianness = DEVICE_NATIVE_ENDIAN,
+>   };
+>   
 
 
