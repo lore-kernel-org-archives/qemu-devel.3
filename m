@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 124C6C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 16:05:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95035C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 16:06:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOfzT-0003N8-Oj; Tue, 02 Jul 2024 12:04:23 -0400
+	id 1sOg1D-0004SM-32; Tue, 02 Jul 2024 12:06:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOfzP-0003Lc-UX
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:04:19 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOfzM-0006RM-6u
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:04:19 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-52cdf9f934fso4588973e87.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 09:04:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719936248; x=1720541048; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IdsF1XEmlCmkej4/bGhPlpa/GRX9nD8oxSkZZm4exzM=;
- b=T/OfLiDf2WbbznDJoQ+nrEZrFmKW6BrhiZJq6cIlMxGdfDeFku6RYVuq0E7huHhy5l
- WxlvkvLbKxPG4/usuqi0x5Ouju/2mAq0sFDgsp0gdvnJ6vRtGXEo8mT/jdPvyTce6gMb
- I0BzBHx8eoN/Ku/jDpOjHcgtPk/F73RvgjOHXwkVVpbZrpCdWj5LFjdOWi6jLxLlPTOj
- mOtOj3RtFYh6IvPryQhdvY/Z2CZw8CooxY0JxSkyPILYYq2tUUzr6zFKb1wbHuiVzYwW
- 14BG2KX8rt7KqRYkgAXdrHNbKrIcDf2sFNkBHduk17hNo+0LOXKm8gp3w73BOSaePxZ6
- tzrA==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sOg1B-0004Rq-00
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:06:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sOg19-0006rb-5y
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:06:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719936366;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=unFyEi5ouy7xaXRXujvrgHxcqRcNuTxVBthd4DmNfi0=;
+ b=Z+XN2LhfnGvV3SNEQkDvawJcyg1ZsGZ0cMjZvu8zU/5CQ/eEqCa30wvsV42GINing+TTRA
+ jsEiSJ15LmIJDwLO4eDYb+Ce9FctDMls2f4bYS15owcpvr5u5+DkYKbw1BiCYe11k3kgD5
+ EKCAkgiYDnQAhj/OzW331A6uxPOS0b4=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-584-irgZAwirO-aSphHDEsb5Ng-1; Tue, 02 Jul 2024 12:06:03 -0400
+X-MC-Unique: irgZAwirO-aSphHDEsb5Ng-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52d174e26baso6009515e87.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 09:06:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719936248; x=1720541048;
+ d=1e100.net; s=20230601; t=1719936362; x=1720541162;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IdsF1XEmlCmkej4/bGhPlpa/GRX9nD8oxSkZZm4exzM=;
- b=dU5M7ftX48I90hcFQttn7momJ+6BVFwO+42d+hZ4T3MOVJIo64C6XK2kOoEfjmJC3E
- hWq86nuwKRS469r1uFB41QCrNk6G3bl9U1G7aqoxEdUAr/uhVBv5NdX3lStioDFs7igJ
- uYcvdvidWOW9DAjF33n319YzcT6LtXbqCJoD/1uv3BEe/pT32tZT/sWycgCVb2NAy3Vv
- 3+6JUHQbvLA7eAtdi1sYcFKfO39ICjcf4AlBthM72gejWI/8+flTp3Dkdtm7TAIaI37c
- tKTGTH1KlOF26RG3tgAPyVE6v6YKqEGPuONQokgHw49eabOGOxrJJg94CNKREOkMMerB
- j7+Q==
-X-Gm-Message-State: AOJu0YxZA1EUYsH5Q3+CxMv/0frMXcQONlIITI9DsUnbJKQFPMX+8ar/
- wrkZO+79V32Y/SPr/zQkwReQJ0GjS5jVLWsl+G8zv94LmHU1g8pouwFKgB9YTi4=
-X-Google-Smtp-Source: AGHT+IGT4qDnOagKjgQ2PIEMU25Iu55suGjmQmkbgqXRGD4t+2L+MPga50PMEOrqqlyv5a4uJNY2pA==
-X-Received: by 2002:a05:6512:3091:b0:52c:d904:d26e with SMTP id
- 2adb3069b0e04-52e82678ceamr6530881e87.21.1719936248115; 
- Tue, 02 Jul 2024 09:04:08 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.209.58])
+ bh=unFyEi5ouy7xaXRXujvrgHxcqRcNuTxVBthd4DmNfi0=;
+ b=lDDjzYIakBwns1TMk8kKF7Qi0pZN2o9CbhA4SnZ1dCBrXegtuhNOQvMEOoirCEuB+L
+ 35lMz+Z51mpM5AkBmbv+L5DNOQOCocZlg2ba1+BWdA0vmRFi65zest2SKyvnAKGlW7Y9
+ mPq2TcE790MaZOrQciyVuY1zpDyO/+DXn8vytQ8wmVA8y7IzULNcVRaSOhW6QPK02F7x
+ Iio2oz4LsidHCaa9+X2m56sCnfdCARmXbpSAT0pTf/TTcN5FOV+dcbHJVHcnQ52dTsjp
+ w5kX9y0+3l/ma05Ba0YlZS2IezrXsUAvx+MjPIlcNrlAH5jNkGoFEfl+/8dcx1bRwoa6
+ 4e2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIFZQQJ9sMi6K1hurfKtDu8H2XP/Cw3kZE1Lr3kIoqfpzwZc5VktdLqU+eGWHuUSs/WdYWfXNVvG99G7FRr/PnS4V2PhA=
+X-Gm-Message-State: AOJu0YzbnVCSyOwy00wut312pXKl9+IG1XUFpVZQahVMAjMcJi0n4Sr/
+ OlCB5MVeCzKYgQkjekeGXL/dwhkTcfuvtPS64g/usXooCnzLujfB/420J2UJ9MlaM32FQLhxNa2
+ nD5P93+b7fCLF3mhMk3Gk4K1e76S4J280LJxAiArl+9+CDYn8rCx3
+X-Received: by 2002:a05:6512:15a3:b0:52c:8fd7:2252 with SMTP id
+ 2adb3069b0e04-52e826467aemr6461462e87.11.1719936361749; 
+ Tue, 02 Jul 2024 09:06:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEFg9gJgxwCsy76XfkEhTu1JhJdKXL+EgouCVskiGkKD2p5rmSyCC74mbExEKIUw72xXmfhQ==
+X-Received: by 2002:a05:6512:15a3:b0:52c:8fd7:2252 with SMTP id
+ 2adb3069b0e04-52e826467aemr6461441e87.11.1719936361154; 
+ Tue, 02 Jul 2024 09:06:01 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4257a4d4cd1sm140824335e9.28.2024.07.02.09.04.07
+ ffacd0b85a97d-36788e37b53sm2152772f8f.45.2024.07.02.09.05.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jul 2024 09:04:07 -0700 (PDT)
-Message-ID: <9be76565-45e5-48dc-a3c6-e0546786fee7@linaro.org>
-Date: Tue, 2 Jul 2024 18:04:05 +0200
+ Tue, 02 Jul 2024 09:06:00 -0700 (PDT)
+Message-ID: <700534b2-0439-4236-be7f-ac75234d57aa@redhat.com>
+Date: Tue, 2 Jul 2024 18:05:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 06/98] hw/sd/sdcard: Do not store vendor data on block
- drive (CMD56)
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-7-philmd@linaro.org>
- <ZoJiTdo0yr6V_rgN@XFR-LUMICHEL-L2.amd.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZoJiTdo0yr6V_rgN@XFR-LUMICHEL-L2.amd.com>
+Subject: Re: [PATCH v2 0/2] Misc fixes on vfio display
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, marcandre.lureau@redhat.com,
+ kraxel@redhat.com, chao.p.peng@intel.com
+References: <20240701014809.255682-1-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240701014809.255682-1-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,51 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/7/24 10:01, Luc Michel wrote:
-> On 09:00 Fri 28 Jun     , Philippe Mathieu-Daudé wrote:
->> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
->>
->>
->> "General command" (GEN_CMD, CMD56) is described as:
->>
->>    GEN_CMD is the same as the single block read or write
->>    commands (CMD24 or CMD17). The difference is that [...]
->>    the data block is not a memory payload data but has a
->>    vendor specific format and meaning.
->>
->> Thus this block must not be stored overwriting data block
->> on underlying storage drive. Keep it in a dedicated
->> 'vendor_data[]' array.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Tested-by: Cédric Le Goater <clg@redhat.com>
->> ---
->> RFC: Is it safe to reuse VMSTATE_UNUSED_V() (which happens
->> to be the same size)?
->>
->> Cc: Peter Xu <peterx@redhat.com>
->> Cc: Fabiano Rosas <farosas@suse.de>
+On 7/1/24 3:48 AM, Zhenzhong Duan wrote:
+> Hi,
 > 
-> I'm not sure about this migration question.
+> This is trying to address an issue Cédric found.
+> See https://www.mail-archive.com/qemu-devel@nongnu.org/msg1043142.html
+> While looking into it, also found a potential memory leak.
 > 
-> But IMHO you can simplify your implementation to avoid having to store
-> and migrate this vendor_data array. After some research on this command,
-> I came to the conclusion that it's used by manufacturers to return
-> device health related vendor-specific data. (E.g.,
-> https://images-na.ssl-images-amazon.com/images/I/91tTtUMDM3L.pdf Section
-> 1.6.1). So I guess you can simply discard writes and return 0s on reads
-> (or "QEMU" in ASCII or... :)).
-
-Thanks, very interesting datasheet! Note the argument filter:
-
-   To query the Health Status register, CMD56 with
-   argument of [00 00 00 01] is used.
-
-Since we can program this array, I'll simply add it as R/W (KISS).
-
+> I'm sorry that I didn't find how to test this fix, because it looks
+> a GFX card is needed. Any idea on how to test or help test are quite
+> appreciated.
 > 
->> ---
->>   hw/sd/sd.c | 17 +++++++++--------
->>   1 file changed, 9 insertions(+), 8 deletions(-)
+> Thanks
+> Zhenzhong
+> 
+> v2:
+> - set dpy->edid_info to NULL in vfio_display_edid_init() err path (Marc-André)
+> - remove a wrongly added g_free(*info) in vfio_get_dev_region_info() (Marc-André)
+> - add R-B on patch2
+> 
+> 
+> Zhenzhong Duan (2):
+>    vfio/display: Fix potential memleak of edid info
+>    vfio/display: Fix vfio_display_edid_init() error path
+> 
+>   hw/vfio/display.c | 16 ++++++++++------
+>   1 file changed, 10 insertions(+), 6 deletions(-)
+> 
+
+
+Applied to vfio-next.
+
+Thanks,
+
+C.
+
 
 
