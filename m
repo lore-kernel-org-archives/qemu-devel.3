@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A2FC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 23:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0230AC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 23:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOnNE-0007Rm-0N; Tue, 02 Jul 2024 19:57:24 -0400
+	id 1sOnPD-0000yS-99; Tue, 02 Jul 2024 19:59:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOnNC-0007RI-A3; Tue, 02 Jul 2024 19:57:22 -0400
-Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ id 1sOnP7-0000xE-2R; Tue, 02 Jul 2024 19:59:21 -0400
+Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOnN7-0007DI-MC; Tue, 02 Jul 2024 19:57:22 -0400
-Received: by mail-vk1-xa30.google.com with SMTP id
- 71dfb90a1353d-4ef2006dcdbso1531611e0c.3; 
- Tue, 02 Jul 2024 16:57:16 -0700 (PDT)
+ id 1sOnP5-0007gG-Gx; Tue, 02 Jul 2024 19:59:20 -0400
+Received: by mail-vs1-xe2b.google.com with SMTP id
+ ada2fe7eead31-48fddbb579dso52402137.3; 
+ Tue, 02 Jul 2024 16:59:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719964635; x=1720569435; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719964758; x=1720569558; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8mmGuU4HcCGcVuevecQuOch9qT0FPUYkZqIv7a4Gq8I=;
- b=L12m0qZ80gxizoLdK5GLDO4NS/Gslf6JO98Rpsc3AfV0aM5c8U6UH5wnLvdPGyjrr/
- C+4jwdikjKm9Nf+TJXx7zuVX/dEeTucjxtGnqhVUL75SEoYV2GaDS7G6J1wt8omaz+JS
- Gkhgz7uQPcwrtDxPPESUeKd0rwfHsGqYlVGdyzB6m+W1L6gJF7TJDhYf9/wSg1JDvkw0
- pxavAZGSGsLHsQ2mbf3WSraO3kkK6ApY8VVDCr2NuVsTREBRoEkCQMboWedXJIxzXfhn
- PToykWzAhJdXWa5ocf2+JH7GrUDpv9QBC0+OIbyEu3eaaa0iPmakgdGv4DX1LarFlIaN
- Mb0A==
+ bh=Xc2aEDgOgEzXvSmnVveht//k4/07WbMFwG5D6w4BLPo=;
+ b=X2GSdn8neNabLrWSVtaQpfiwRQaQcIe/u//VpDBReYkKE92JTjg9mA4mjv0cG7xzPL
+ ffsKpPg1lVBjcJ5gjFiyzrA7CUDVuZTP4l2gHkD+FUCj/1Cuhco/Oq+oHExLItCWEweu
+ GHVs1qGsS2p45YWh5xWM5EvjIbLgOST4RGrUWbRxQD0Ov032Qjj0J4DEKpDYosGbxj7E
+ /SA4upNtnzMRlfk0sFlfa6dcNpp6Dy7rlUED8rhxHVLD6Hdrc0F9lpISMdIxVwmbLTUb
+ jNJV8JOdSBoXybKiuvIuP2GV1h7NbcbU2Nayq1pv9knvEHstN2XzelPXpcMCgx4h1BTl
+ ZIhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719964635; x=1720569435;
+ d=1e100.net; s=20230601; t=1719964758; x=1720569558;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8mmGuU4HcCGcVuevecQuOch9qT0FPUYkZqIv7a4Gq8I=;
- b=GP9/iCO00nJmpVyNPFiVZinVdrn58hhNzGVxPoMaUy3E+qoHDAKpXiSjRHEAZuZLki
- vAvc16NRdVS/WijP6r0WiwQ3aRJR4cTDmrWK1u+UYrOrnT8hFy9MVSvOopipna22ZvU4
- 7h2h68N1kgouIfdG1VJGXEkHYOz1VwpY1S75FjNVQWBwuhqUYam3HqQ4aB20TFlRev3g
- nfeEawx+VwE4vrHdukJWIvY8AUpVu/3PArySB208G4WouB6rePfiuqOs+3hQM93tb8PA
- 4czj0G8u46pYwL4e4U1fDPVvSDcZBvID0oNmi0qqql0tkiIhij5vlCqTP2NdCc6PnRO9
- gK6Q==
+ bh=Xc2aEDgOgEzXvSmnVveht//k4/07WbMFwG5D6w4BLPo=;
+ b=AlBgwDCpr0CA2dYAae1oczZ5XpquWSfnepPTfJ+xIVTfWff/e4i2gma+mmJ6qQMSa3
+ dyIiga3nKcXXMYIebSpI17HEzKYssClXlKTgTjFyKLtn1AgHsPA0c8LQm9IokFtmZwoy
+ moaPR7reDwimoBmziSaCCYEviA5iokHJPDukNOST9Wi9s3eCBfbob+GZxaqWDtFnDexa
+ yJqS9YiazfhsILhR4xC8VKRqAKYz6xHcleMlzaXxN3Wt+O9FsbpN49hSaOYHE7aZSEup
+ XYVjyxplFQHpOcA9Og5aC6SDwwBZJdJjqH2UEvBbGNC2uC82qVOagOaJwWgLYNZ3GlKE
+ A6kg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxOoKeBtuW4pwSR4kXv9jDTw+uZGNNzQkpyeLVUi9MNxVwdDtepDeHrUSjDqZx41pXjAH9vMMjw7sKsu9ruPHzdSceD2w=
-X-Gm-Message-State: AOJu0YwfgREprMpd9QgBnijPJiDvncML4u/h2HPFUKs8O945kHgagZbo
- WCjNEXoprRVECCczzNJBSiA9+tlE59jvUZHGmb1OrrudgE1yqGZ0zqCTWpn4C6AlnOUsKm13Cic
- 8JqZkl/spU24ascG6qxK3g/TFPiOmoOdm
-X-Google-Smtp-Source: AGHT+IHYIanUlBOfwAeR0rumUESVUGQTY/o8/h42TbacMn7mi9YG5nbdzO7Y/eI6r8GWDM0Kn5+cHYOC5IK1M8YqfFE=
-X-Received: by 2002:a05:6122:4b0d:b0:4ef:56d8:9e62 with SMTP id
- 71dfb90a1353d-4f2a565f73dmr12588314e0c.5.1719964635256; Tue, 02 Jul 2024
- 16:57:15 -0700 (PDT)
+ AJvYcCWEvxXqvqsoBWbPJlRR5kALnUSwHvQePSzOyKKw7PoZQb9X9PWr6EZvQczBb4HETS9xEHxzpl5a3/dDI/rxMV71cNMyClA=
+X-Gm-Message-State: AOJu0YzMt7pwibPMS7kPq4E+n2xI6PEYH/aI6OhXaAh515dErHZBrZ0i
+ ZVzVC3kvFaQE81yLzo5AfnC3YF+OeDPTNo9FXx/YKcovssGJgmYqxjWxit/2cKDoZyPO5ZIUVzN
+ YdS/Qvfesnos8wIyS6gfOZ+TGXkA=
+X-Google-Smtp-Source: AGHT+IEmAiPpRRasPJprEYmrM1o132AlePwbOI6dJLPEye4u7rOiiQfrnm+tDCp37nttAo+KsOlk8NpW491tPlA4x5U=
+X-Received: by 2002:a05:6102:241c:b0:48d:706f:a884 with SMTP id
+ ada2fe7eead31-48faf0aa2c2mr9970406137.20.1719964758086; Tue, 02 Jul 2024
+ 16:59:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240627180350.128575-1-richard.henderson@linaro.org>
- <20240627180350.128575-3-richard.henderson@linaro.org>
-In-Reply-To: <20240627180350.128575-3-richard.henderson@linaro.org>
+ <20240627180350.128575-4-richard.henderson@linaro.org>
+In-Reply-To: <20240627180350.128575-4-richard.henderson@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 3 Jul 2024 09:56:49 +1000
-Message-ID: <CAKmqyKPHi5+rYoEfcz3xxc=_-Q=ssxLNaGjbEHUrZCj3qWnR1A@mail.gmail.com>
-Subject: Re: [PATCH 2/3] util/cpuinfo-riscv: Support OpenBSD signal frame
+Date: Wed, 3 Jul 2024 09:58:52 +1000
+Message-ID: <CAKmqyKM28=qGsXTS-50hOkL-o=X0gGHbh7YKDkzeztPy+Mk=Pw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] util/cpuinfo-riscv: Use linux __riscv_hwprobe syscall
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, brad@comstyle.com, Alistair.Francis@wdc.com, 
  palmer@dabbelt.com, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a30;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa30.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -76,7 +76,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,7 +95,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Jun 28, 2024 at 4:06=E2=80=AFAM Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Reported-by: Brad Smith <brad@comstyle.com>
+> With recent linux kernels, there is a syscall to probe for various
+> ISA extensions.  These bits were phased in over several kernel
+> releases, so we still require checks for symbol availability.
+>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
@@ -103,29 +106,77 @@ Acked-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  util/cpuinfo-riscv.c | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  meson.build          |  6 ++++++
+>  util/cpuinfo-riscv.c | 26 ++++++++++++++++++++++++++
+>  2 files changed, 32 insertions(+)
 >
+> diff --git a/meson.build b/meson.build
+> index 97e00d6f59..58afd0125d 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -2837,6 +2837,12 @@ have_cpuid_h =3D cc.links('''
+>    }''')
+>  config_host_data.set('CONFIG_CPUID_H', have_cpuid_h)
+>
+> +# Don't bother to advertise asm/hwprobe.h for old versions that do
+> +# not contain RISCV_HWPROBE_EXT_ZBA.
+> +config_host_data.set('CONFIG_ASM_HWPROBE_H',
+> +                     cc.has_header_symbol('asm/hwprobe.h',
+> +                                          'RISCV_HWPROBE_EXT_ZBA'))
+> +
+>  config_host_data.set('CONFIG_AVX2_OPT', get_option('avx2') \
+>    .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot e=
+nable AVX2') \
+>    .require(cc.links('''
 > diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
-> index 6b97100620..abf799794f 100644
+> index abf799794f..cf59ce83a3 100644
 > --- a/util/cpuinfo-riscv.c
 > +++ b/util/cpuinfo-riscv.c
-> @@ -13,7 +13,14 @@ static void sigill_handler(int signo, siginfo_t *si, v=
-oid *data)
->  {
->      /* Skip the faulty instruction */
->      ucontext_t *uc =3D (ucontext_t *)data;
-> +
-> +#ifdef __linux__
->      uc->uc_mcontext.__gregs[REG_PC] +=3D 4;
-> +#elif defined(__OpenBSD__)
-> +    uc->sc_sepc +=3D 4;
-> +#else
-> +# error Unsupported OS
-> +#endif
+> @@ -6,6 +6,11 @@
+>  #include "qemu/osdep.h"
+>  #include "host/cpuinfo.h"
 >
->      got_sigill =3D 1;
->  }
+> +#ifdef CONFIG_ASM_HWPROBE_H
+> +#include <asm/hwprobe.h>
+> +#include <sys/syscall.h>
+> +#endif
+> +
+>  unsigned cpuinfo;
+>  static volatile sig_atomic_t got_sigill;
+>
+> @@ -47,6 +52,27 @@ unsigned __attribute__((constructor)) cpuinfo_init(voi=
+d)
+>  #endif
+>      left &=3D ~info;
+>
+> +#ifdef CONFIG_ASM_HWPROBE_H
+> +    if (left) {
+> +        /*
+> +         * TODO: glibc 2.40 will introduce <sys/hwprobe.h>, which
+> +         * provides __riscv_hwprobe and __riscv_hwprobe_one,
+> +         * which is a slightly cleaner interface.
+> +         */
+> +        struct riscv_hwprobe pair =3D { .key =3D RISCV_HWPROBE_KEY_IMA_E=
+XT_0 };
+> +        if (syscall(__NR_riscv_hwprobe, &pair, 1, 0, NULL, 0) =3D=3D 0
+> +            && pair.key >=3D 0) {
+> +            info |=3D pair.value & RISCV_HWPROBE_EXT_ZBA ? CPUINFO_ZBA :=
+ 0;
+> +            info |=3D pair.value & RISCV_HWPROBE_EXT_ZBB ? CPUINFO_ZBB :=
+ 0;
+> +            left &=3D ~(CPUINFO_ZBA | CPUINFO_ZBB);
+> +#ifdef RISCV_HWPROBE_EXT_ZICOND
+> +            info |=3D pair.value & RISCV_HWPROBE_EXT_ZICOND ? CPUINFO_ZI=
+COND : 0;
+> +            left &=3D ~CPUINFO_ZICOND;
+> +#endif
+> +        }
+> +    }
+> +#endif /* CONFIG_ASM_HWPROBE_H */
+> +
+>      if (left) {
+>          struct sigaction sa_old, sa_new;
+>
 > --
 > 2.34.1
 >
