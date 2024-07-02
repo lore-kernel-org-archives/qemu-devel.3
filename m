@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3192EC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 19:56:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A394FC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 19:59:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjbe-0005MG-Te; Tue, 02 Jul 2024 15:56:02 -0400
+	id 1sOjeN-0007R1-7x; Tue, 02 Jul 2024 15:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjbc-0005LU-Dn
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:56:00 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjeL-0007Qf-JM
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:58:49 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjba-0007zD-Jb
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:56:00 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-425814992aeso17954165e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 12:55:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjeJ-0008JD-Oa
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:58:49 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42567ddf099so32446735e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 12:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719950157; x=1720554957; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719950326; x=1720555126; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jAkiePLfhkXU8nz4iHMlaIsbatin0g/vxYYhhk0TeqI=;
- b=PO1f5nwKpolgPqG9stKX8TSZ5eG0rv7XOz41OFIzAnfIsUUAUGo1Eei0pmd68YMCa5
- l/WB7D5WfenyXxC8o6AqRDwdsQ7NDaqJ5FC23tLoub6va/cp6+JPYgz5aRi4oVyEb/HK
- flDKgy7ypDiJTi2s2joZjuDVuthW9L3mcAXX7mTtGyy/oI0NOcwfjM33b1pQyNCilza3
- AId48dvlnTVaxKui63sTVKzgstFyB1PXY/Ry5QeGloYgR+/yayeQUOQkkpg9IwkKIIjc
- rMjrzL/ywdVWovmvm3xx/DYULwCsPlPUhbzSOLQe/cri1u978H7cW7AN+ha3UvqQgFvh
- he0Q==
+ bh=HdfM3AJgLCAm/n1O+Ehmm95l9bagbbT1YMOamZ+0NSQ=;
+ b=I2f+HFeXWey+mxLXIUy9I8v5twKRA3hzEzBw3rquOLYWiODdID7x1ZIk9Jvn4qkjBl
+ OR5cAGbNWzfOHRcWy+c7BShtQpzQPYMNIPmoAmzMu1xATkipmt24TyxYScQluyWHAIzv
+ YxVklYch/4ZBzhInVikLi9OwOC246JZ8dfyRrHlG94nMk/12Ja8qyYPVgfrTlLfHCgTM
+ 49ZLCrGmD9T7wtpKcdISC0MJBSc4NSEE9bIGu+pBa0ZpeeA0tvU6B3B+os3cJbcy+0aU
+ 25jOL3QT3jSewvCzxtCmVlN9t1jy1rULPKguioy4T9ANj9S5iK5cUICKNkut29sERkvN
+ TX9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719950157; x=1720554957;
+ d=1e100.net; s=20230601; t=1719950326; x=1720555126;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jAkiePLfhkXU8nz4iHMlaIsbatin0g/vxYYhhk0TeqI=;
- b=WVXEJt565UKfTCmZnd7Daaf2LmKo5J7P/dNQZCjVbv8MmHV2fyS5EMGzw2v3mHlwsW
- v5y7qTT5pj5vTFxkDfNfz/Vc2bfYW6+wQPZWdKpQ/GZj9MjNib2CtJbHy3ikfdx847n5
- aaAw2aKXTE3bQMR9I7BEcG9AQm3zqrcCKfcqdkcL1TS5XJZIQnaiMhEDfYrjy/CAoFXu
- lcI9Wwj+ZYy0l5gvywPQ5+67TM0omQn3OevPAmb62sy09iQ4D74RKV1y1rzdPPUS15tf
- VBKCZ99WRMtMw6XRhp565RGIrAyrtEoaH302Qv4nnaTrPUH6G9KWcfZh0yjIRLlGj/BQ
- bIWw==
+ bh=HdfM3AJgLCAm/n1O+Ehmm95l9bagbbT1YMOamZ+0NSQ=;
+ b=qN/l6Fx6NIJ31K6YROSTQoh6xSJdj7BPpNrtwRxi0GBdCgzLF/UNAFOUHxdcfIrFD3
+ mjNmbDp+T3r+KQXNbn7TZEe5d+bqJtotnEGCTMjjQziAizZE3QVrT9i6W9icB6y/vLA9
+ 4zeWnIjZaR2+uSGjH5L5m1UPSbjNHsDoLoNFNcu5OgkPHh6n0i7/yYOQNzlaLsu+3eWx
+ 5DGe7p5omZWTXm9QhNsVpkJPkQbs3qlWEz82fHCUF0Jc52BWAe8k6YRTwmlHltQNZS0J
+ tPwThearl6zqMgVY9acokQgMqRFOMQQ35Yaeptrvuvr828uwcx0PNYtRvrf4iKMfc7cn
+ 3QFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXV5I0KkUtXA9NoYEEQPmFdUiF8byeDmsi0bDfl+hBjv/RrACVvzD/HgOOe8IG9Oz/v5eECbEfk0i1krjyLA1QOnjNIpoQ=
-X-Gm-Message-State: AOJu0YxJ1+/wXRmAglcNU+hMlEgeaa6vQA91R/Hh17kUkxHfrzJkXEyZ
- ivAEU6eZgOkypWP2+IzNq8DPxKPTvXyOmr+ET+him5Af8hbT/1LKaHB64zlcHos=
-X-Google-Smtp-Source: AGHT+IGqDB0I/oF8VbHP2A9WTBqINuGagYgxVTlEVQhsOX9AYYrq07LVQvG72Yb0JzVWZUxEukz2oA==
-X-Received: by 2002:a5d:64e8:0:b0:360:9d4b:5b82 with SMTP id
- ffacd0b85a97d-36775721583mr8251455f8f.47.1719950156545; 
- Tue, 02 Jul 2024 12:55:56 -0700 (PDT)
+ AJvYcCXjp/HARzYBzYr95Bjmjcjcy4tXMq7zpNeHlNjGbOiJhHy4blq3V+nAwe7C8AL8wVVEZQSMG/a95NUuNEuV1lm40JqlzMk=
+X-Gm-Message-State: AOJu0YxFRk6IKuYarsS/YpnUs/HyWBEYWB+sUGd/JGfnR29HvpIIWiDh
+ z4A8etQy3xVWZFHaHDXA24I5MG7pFVCo5aapIIoEyRsNkhunOew/Lo6K2+LaCRM=
+X-Google-Smtp-Source: AGHT+IGJpUTBcc0MKIXyR6J0VE89pXsDulSDB8+dvxKkDMOmJT5GeasJ3y3A2neSn/8ePUlLqTXtNQ==
+X-Received: by 2002:adf:f5c4:0:b0:365:ebb6:35e4 with SMTP id
+ ffacd0b85a97d-367756a836amr7137150f8f.23.1719950326127; 
+ Tue, 02 Jul 2024 12:58:46 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.220.97])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a1030dfsm14032796f8f.100.2024.07.02.12.55.55
+ 5b1f17b1804b1-425787f37casm76802355e9.1.2024.07.02.12.58.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jul 2024 12:55:56 -0700 (PDT)
-Message-ID: <360734c3-df2a-49cb-892a-0eb7953fa1c1@linaro.org>
-Date: Tue, 2 Jul 2024 21:55:54 +0200
+ Tue, 02 Jul 2024 12:58:45 -0700 (PDT)
+Message-ID: <b527cfe4-c982-46c5-bb9b-db368e6bb758@linaro.org>
+Date: Tue, 2 Jul 2024 21:58:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] util/cpuinfo-riscv: Support host/cpuinfo.h for riscv
+Subject: Re: [PATCH 2/3] util/cpuinfo-riscv: Support OpenBSD signal frame
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: brad@comstyle.com, Alistair.Francis@wdc.com, palmer@dabbelt.com,
  qemu-riscv@nongnu.org
 References: <20240627180350.128575-1-richard.henderson@linaro.org>
- <20240627180350.128575-2-richard.henderson@linaro.org>
+ <20240627180350.128575-3-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240627180350.128575-2-richard.henderson@linaro.org>
+In-Reply-To: <20240627180350.128575-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,63 +98,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 27/6/24 20:03, Richard Henderson wrote:
-> Move detection code out of tcg, similar to other hosts.
-> 
+> Reported-by: Brad Smith <brad@comstyle.com>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   host/include/riscv/host/cpuinfo.h | 23 +++++++++
->   tcg/riscv/tcg-target.h            | 46 ++++++++---------
->   util/cpuinfo-riscv.c              | 85 +++++++++++++++++++++++++++++++
->   tcg/riscv/tcg-target.c.inc        | 84 +++---------------------------
->   util/meson.build                  |  2 +
->   5 files changed, 139 insertions(+), 101 deletions(-)
->   create mode 100644 host/include/riscv/host/cpuinfo.h
->   create mode 100644 util/cpuinfo-riscv.c
+>   util/cpuinfo-riscv.c | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
+> index 6b97100620..abf799794f 100644
+> --- a/util/cpuinfo-riscv.c
+> +++ b/util/cpuinfo-riscv.c
+> @@ -13,7 +13,14 @@ static void sigill_handler(int signo, siginfo_t *si, void *data)
+>   {
+>       /* Skip the faulty instruction */
+>       ucontext_t *uc = (ucontext_t *)data;
+> +
+> +#ifdef __linux__
+>       uc->uc_mcontext.__gregs[REG_PC] += 4;
+> +#elif defined(__OpenBSD__)
+> +    uc->sc_sepc += 4;
 
-
-> +/* Called both as constructor and (possibly) via other constructors. */
-> +unsigned __attribute__((constructor)) cpuinfo_init(void)
-> +{
-> +    unsigned left = CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND;
-> +    unsigned info = cpuinfo;
-> +
-> +    if (info) {
-> +        return info;
-> +    }
-> +
-> +    /* Test for compile-time settings. */
-> +#if defined(__riscv_arch_test) && defined(__riscv_zba)
-> +    info |= CPUINFO_ZBA;
-> +#endif
-> +#if defined(__riscv_arch_test) && defined(__riscv_zbb)
-> +    info |= CPUINFO_ZBB;
-> +#endif
-> +#if defined(__riscv_arch_test) && defined(__riscv_zicond)
-> +    info |= CPUINFO_ZICOND;
-> +#endif
-> +    left &= ~info;
-> +
-> +    if (left) {
-> +        struct sigaction sa_old, sa_new;
-> +
-> +        memset(&sa_new, 0, sizeof(sa_new));
-> +        sa_new.sa_flags = SA_SIGINFO;
-> +        sa_new.sa_sigaction = sigill_handler;
-> +        sigaction(SIGILL, &sa_new, &sa_old);
-> +
-> +        if (left & CPUINFO_ZBA) {
-> +            /* Probe for Zba: add.uw zero,zero,zero. */
-> +            got_sigill = 0;
-> +            asm volatile(".insn r 0x3b, 0, 0x04, zero, zero, zero"
-> +                         : : : "memory");
-> +            info |= !got_sigill * CPUINFO_ZBA;
-
-A bit too optimized to my taste, 'if (sigill) info|=ZBA' would be 
-simpler to follow. Otherwise,
-
+To the best of my non-existent OpenBSD knowledge reviewing corresponding
+https://github.com/openbsd/src/blob/master/sys/arch/riscv64/riscv64/sig_machdep.c,
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> +            left &= ~CPUINFO_ZBA;
-> +        }
+> +#else
+> +# error Unsupported OS
+> +#endif
+>   
+>       got_sigill = 1;
+>   }
 
 
