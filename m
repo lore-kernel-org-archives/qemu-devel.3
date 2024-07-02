@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 265FAC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 21:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C024DC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 21:05:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOkej-00081t-MW; Tue, 02 Jul 2024 17:03:20 -0400
+	id 1sOkgJ-0000q3-G6; Tue, 02 Jul 2024 17:04:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sOkee-000804-OF
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:03:13 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1sOkgH-0000pu-ET
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:04:53 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sOked-0007Hw-5I
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:03:12 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-361785bfa71so3215910f8f.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 14:03:10 -0700 (PDT)
+ id 1sOkgF-0007SD-5l
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:04:52 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-52e743307a2so5298432e87.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 14:04:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719954189; x=1720558989; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719954289; x=1720559089; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
  bh=eT3tfvANiBCnVaEI91vYtDYUp3ZwZaFuJlrs2Y7RAys=;
- b=U9Tg+RwAwUCRkpOguxu4HRefefkBRKKUrupZJbpmdL618FxvRZ7yD/VOou/CQLyN9a
- rdq6xfG1Ap0noa6qODNSXlNu8cBvA1ZKJ5Gz0sawTeQIzQd65U24MrCpJsuAURjUeOqc
- fEgNa9tpm206j2r1xxoF8p3oLpwjah0AmYB0so3WmTXe1nmKyO2x4F9rM/4rWuzLCMSV
- VFGGxow6Koa1JrPItMANpbAGKo05YTm2DMo5wdM1VbFgn88eDt+mA0I54cqqRVAxaZ0u
- yQg0YGhVrOdaGIhYQGq8HWcO/UVCvaMYEEqiu0SfZXZDBxlqQSeMsmo8EKwAGLM9Gyo3
- uVVQ==
+ b=EWV5pc+Y+f6nTS3WhoL3J40cJYRudx9V8Yx6ffMwVjDV20/6jMfi8tt/qxDlCmVdIr
+ 97i6OPQa2kdBJ4ahj1Ub+gYdIhZ9sqpnk0oXw6quhjFl77j+8pbV3yccwOqwuIFXdZue
+ 1YIUkVUGk3aen0xMgC7L0m6AEqyzlL9uJO2znOE5mnf9XwN1CGfO+K8Ma6r9qkQfC9LW
+ Epsh61deBxViY8a88k816WH5A3HxvH6mUQIGXYHoY2so/bopa0arHpvEMko685wPid/4
+ JmtG5NsH3EAO4SlqUQbYVvUcnVmoKABUtbHKIn6KRkq+WMsjruVAVw706Dq56Huo4zN9
+ etPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719954189; x=1720558989;
+ d=1e100.net; s=20230601; t=1719954289; x=1720559089;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
  bh=eT3tfvANiBCnVaEI91vYtDYUp3ZwZaFuJlrs2Y7RAys=;
- b=EwqEZI2K5zf6CCA3NWPHqAjBKk5WSISQoIHgiEeLXBdgCdztj4NT17s7mG000/HQzD
- iCfX4N8Zwb8eScuqEAWD6ttQrCM601p1X96eK3NYPQMk6Crum0paKJ5/hhwJ5d2L0Qma
- e6lcu8XquCNXzMB+XPlIToW3gzkP155xIAxX1oY21erfAJa1NYnxq/AayrQqtjo//Dw+
- cSwBK7SJBM+j5ZDDMo6CxTbirkJsPBA7ImD/BlOHUn7Bo88U3vrhPCn/BVZITlzPldtG
- msOq+SPBHjC30NxF/WkR9RafLd+ORspfR3hfsvYXjgtcJxpGHvzEI+++/vtQQDQ06Jqe
- oCZg==
+ b=vCUB3AZGZjSnmmByxbDOrE3hpEKqOzbVxigrvRYpU4o760BtHEV28UXNfkqPNEyPEE
+ UTYWWQ1ZASFoWS8CwxIF0g9VVgXzsNp/qABqaIuHOH2Xisc8BKemC+dq5P9ui0EbJXn2
+ P5V4Q4bmtPPtRG+dIwVLCbJC1YjrHH1KPY4uHOEx41EAuoh57Gtjxw2ExRk5KnFPyGsl
+ wofiTdoCM+iA+hpgQfMdKKY8LJroBUAAC5Qg4X+qVzf7aA7MFyU8L03Pdwn5XaaFwe33
+ 3LzoRjF7Z6TL3VpPkx2GVoUyQuOctdp6cVwSTsRzBEFTqUYASR7FTZsgmb4ulYprG/G1
+ EntQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU6g9HHUULSunCUeBrwvLG0uUs4adr70LsKDoJThgQUITFLGjz/WDLeyUf1Q01Wt974AZ3gKI0cSedeyJLkIpvIZ0ukCQ8=
-X-Gm-Message-State: AOJu0Yw33IPRHLOzFVS4TTSy0cvEC8pxsGYx3skScMj0ZJYb8JfiC2qm
- 7qjt1Ud0Lte072SxAg3G0XsmSemSmTL6O3RtCRnEwG9I/B/IFY4=
-X-Google-Smtp-Source: AGHT+IEToIuyzV4vlj7y/8IWjbc1L9c4SBlJnyBz7Hb55nRAtCUx++7N6TfgnBP2JkvgAyEDHG6z0g==
-X-Received: by 2002:adf:f510:0:b0:35f:2366:12c5 with SMTP id
- ffacd0b85a97d-367756aade1mr6411680f8f.23.1719954188339; 
- Tue, 02 Jul 2024 14:03:08 -0700 (PDT)
+ AJvYcCWkVe2IV8uy+v4Ee/ZDHQJWCrD3ezhX/ftynfsv2o+bR05rL8D20aY4UX7YWQOYc2pMu0jWk0CMaJoQx33gZEfxizR4jjo=
+X-Gm-Message-State: AOJu0YyV2I07z0ZgXrMV8tDehwDFnAwdOf688T+F4blnkLBH3vcRt8y2
+ q3JW1ZWgU6+rgYSWNN+iRdVm+vNKzRtTt1vX5LNlp2J8bWxlrrQ=
+X-Google-Smtp-Source: AGHT+IFfubuMZGwIKsoDg218iF3VUMOYt0Dre1P5hI2sMHkYELwIz/OvOj/c4Tg72HCJR/tmytgGQA==
+X-Received: by 2002:ac2:4e05:0:b0:52c:d20b:22c8 with SMTP id
+ 2adb3069b0e04-52e8274a865mr7689154e87.64.1719954288425; 
+ Tue, 02 Jul 2024 14:04:48 -0700 (PDT)
 Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3678fefc01dsm910313f8f.26.2024.07.02.14.03.07
+ ffacd0b85a97d-3675a0fc58esm14337739f8f.72.2024.07.02.14.04.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 14:03:07 -0700 (PDT)
+ Tue, 02 Jul 2024 14:04:48 -0700 (PDT)
 From: Zheyu Ma <zheyuma97@gmail.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>
+To: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
 Cc: Zheyu Ma <zheyuma97@gmail.com>,
 	qemu-devel@nongnu.org
 Subject: [PATCH] hw/virtio/virtio-crypto: Fix op_code assignment in
  virtio_crypto_create_asym_session
-Date: Tue,  2 Jul 2024 23:02:27 +0200
-Message-Id: <20240702210227.3059947-1-zheyuma97@gmail.com>
+Date: Tue,  2 Jul 2024 23:04:43 +0200
+Message-Id: <20240702210443.3060881-1-zheyuma97@gmail.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=zheyuma97@gmail.com; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=zheyuma97@gmail.com; helo=mail-lf1-x134.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
