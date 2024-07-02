@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE2FC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 13:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD10EC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 13:16:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOdLe-0005Un-2H; Tue, 02 Jul 2024 09:15:06 -0400
+	id 1sOdMK-0006IC-T7; Tue, 02 Jul 2024 09:15:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sOdLc-0005Rk-D3
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:15:04 -0400
+ id 1sOdM8-0006Al-LB
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:15:45 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sOdLa-00067b-NW
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:15:04 -0400
+ id 1sOdM5-0006QE-Pc
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:15:35 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WD3KD51KZz6JBty;
- Tue,  2 Jul 2024 21:14:24 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WD3JM3xCVz6K9pT;
+ Tue,  2 Jul 2024 21:13:39 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 703BD140517;
- Tue,  2 Jul 2024 21:15:00 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 406C6140B33;
+ Tue,  2 Jul 2024 21:15:31 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 2 Jul 2024 14:14:59 +0100
+ 15.1.2507.39; Tue, 2 Jul 2024 14:15:30 +0100
 To: <imammedo@redhat.com>, <mst@redhat.com>, Markus Armbruster
  <armbru@redhat.com>, <qemu-devel@nongnu.org>, <ankita@nvidia.com>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, Richard Henderson
@@ -38,10 +38,9 @@ CC: <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
  <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
  <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH v4 01/13] hw/acpi: Fix ordering of BDF in Generic Initiator
- PCI Device Handle.
-Date: Tue, 2 Jul 2024 14:14:06 +0100
-Message-ID: <20240702131428.664859-2-Jonathan.Cameron@huawei.com>
+Subject: [PATCH v4 02/13] hw/acpi/GI: Fix trivial parameter alignment issue.
+Date: Tue, 2 Jul 2024 14:14:07 +0100
+Message-ID: <20240702131428.664859-3-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
 References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
@@ -76,38 +75,30 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ordering in ACPI specification [1] has bus number in the lowest byte.
-As ACPI tables are little endian this is the reverse of the ordering
-used by PCI_BUILD_BDF().  As a minimal fix split the QEMU BDF up
-into bus and devfn and write them as single bytes in the correct
-order.
+Before making additional modification, tidy up this misleading indentation.
 
-[1] ACPI Spec 6.3, Table 5.80
-
-Fixes: 0a5b5acdf2d8 ("hw/acpi: Implement the SRAT GI affinity structure")
+Reviewed-by: Ankit Agrawal <ankita@nvidia.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-
 ---
-v4: Picked up Igor's tag.
+v3: Picked up tags.
 ---
- hw/acpi/acpi_generic_initiator.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/acpi/acpi_generic_initiator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/hw/acpi/acpi_generic_initiator.c b/hw/acpi/acpi_generic_initiator.c
-index 17b9a052f5..3d2b567999 100644
+index 3d2b567999..4a02c19468 100644
 --- a/hw/acpi/acpi_generic_initiator.c
 +++ b/hw/acpi/acpi_generic_initiator.c
-@@ -92,7 +92,8 @@ build_srat_generic_pci_initiator_affinity(GArray *table_data, int node,
+@@ -133,7 +133,7 @@ static int build_all_acpi_generic_initiators(Object *obj, void *opaque)
  
-     /* Device Handle - PCI */
-     build_append_int_noprefix(table_data, handle->segment, 2);
--    build_append_int_noprefix(table_data, handle->bdf, 2);
-+    build_append_int_noprefix(table_data, PCI_BUS_NUM(handle->bdf), 1);
-+    build_append_int_noprefix(table_data, PCI_BDF_TO_DEVFN(handle->bdf), 1);
-     for (index = 0; index < 12; index++) {
-         build_append_int_noprefix(table_data, 0, 1);
-     }
+     dev_handle.segment = 0;
+     dev_handle.bdf = PCI_BUILD_BDF(pci_bus_num(pci_get_bus(pci_dev)),
+-                                               pci_dev->devfn);
++                                   pci_dev->devfn);
+ 
+     build_srat_generic_pci_initiator_affinity(table_data,
+                                               gi->node, &dev_handle);
 -- 
 2.43.0
 
