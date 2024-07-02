@@ -4,61 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9000C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFB2C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOapY-0004As-CT; Tue, 02 Jul 2024 06:33:48 -0400
+	id 1sOapK-00046b-SL; Tue, 02 Jul 2024 06:33:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapW-00048z-HC
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapH-00045G-FW
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapU-00076V-SZ
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:46 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapF-00073o-GA
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719916424;
+ s=mimecast20190719; t=1719916406;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UP5k2DL6LgqTBAh4YGOkkQj9J7KbuqTIoxbbpQ6g+zs=;
- b=Di25aOGtvNZSu6rtkHrd91eGNkJjNjnWl2POtmZbzkrYhF6U5vAP2UZfBnbnYMcMhX5Zhr
- ait3RYv0Mg40zaglpQglsJzs5RPA+55qmy7/bDkxqgnF28ui9HOu06NlM5WO7sDIZOuqsq
- JIx8By5TQUARGrB1Mf0rVvUni8SfMh8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7A/I+wCPgV2xnskxgg6ZJcwzn6CrSqHFr9xSr85Rrzo=;
+ b=UwL6CgWqCgNM+t2M10RrAH5je+RR1qI0RLKvhm/lOQyrvSa9Ac27MOD9jiswq037/qdLgR
+ 2MX+HE3MkmN9vVkLxsBpS3TjUnPqYHto7juiR4kPsEWRQ8vXmpN1X/g06I8hJCJ7T76IKC
+ Txka4e+OuIOliRHLftcAXvbb78uHeEg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-SEnZ4n55MgWMwbeCEaqjtg-1; Tue,
- 02 Jul 2024 06:33:40 -0400
-X-MC-Unique: SEnZ4n55MgWMwbeCEaqjtg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-A0Uryo9MOGCJcionAjqbeQ-1; Tue,
+ 02 Jul 2024 06:33:21 -0400
+X-MC-Unique: A0Uryo9MOGCJcionAjqbeQ-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0EC4119560A2; Tue,  2 Jul 2024 10:33:39 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 00C86195609D; Tue,  2 Jul 2024 10:33:20 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C23A219560AA; Tue,  2 Jul 2024 10:33:35 +0000 (UTC)
+ id 3470419560AA; Tue,  2 Jul 2024 10:33:16 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: [PULL 07/12] tests/qtest: Free GThread
-Date: Tue,  2 Jul 2024 12:33:05 +0200
-Message-ID: <20240702103310.347201-8-thuth@redhat.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, Prasad Pandit <pjp@fedoraproject.org>
+Subject: [PULL 02/12] tests/qtest/migration-test: enable on s390x with TCG
+Date: Tue,  2 Jul 2024 12:33:00 +0200
+Message-ID: <20240702103310.347201-3-thuth@redhat.com>
 In-Reply-To: <20240702103310.347201-1-thuth@redhat.com>
 References: <20240702103310.347201-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -82,50 +80,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-These GThreads are never referenced.
+s390x with TCG is more stable now. Enable it.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20240627-san-v2-15-750bb0946dbd@daynix.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Message-Id: <20240525131241.378473-3-npiggin@gmail.com>
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+[thuth: Added "with TCG" to the commit message]
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qtest/vhost-user-test.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tests/qtest/migration-test.c | 12 ------------
+ 1 file changed, 12 deletions(-)
 
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index d4e437265f..929af5c183 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -928,7 +928,7 @@ static void *vhost_user_test_setup_reconnect(GString *cmd_line, void *arg)
- {
-     TestServer *s = test_server_new("reconnect", arg);
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 571fc1334c..70b606b888 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -3823,16 +3823,6 @@ int main(int argc, char **argv)
+                        test_vmstate_checker_script);
+ #endif
  
--    g_thread_new("connect", connect_thread, s);
-+    g_thread_unref(g_thread_new("connect", connect_thread, s));
-     append_mem_opts(s, cmd_line, 256, TEST_MEMFD_AUTO);
-     s->vu_ops->append_opts(s, cmd_line, ",server=on");
+-    /*
+-     * On s390x with TCG, migration is observed to hang due to the 'pending'
+-     * state of the flic interrupt controller not being migrated or
+-     * reconstructed post-migration. Disable it until the problem is resolved.
+-     */
+-    if (g_str_equal(arch, "s390x") && !has_kvm) {
+-        g_test_message("Skipping tests: s390x host with KVM is required");
+-        goto test_add_done;
+-    }
+-
+     if (is_x86) {
+         migration_test_add("/migration/precopy/unix/suspend/live",
+                            test_precopy_unix_suspend_live);
+@@ -4036,8 +4026,6 @@ int main(int argc, char **argv)
+                            test_vcpu_dirty_limit);
+     }
  
-@@ -965,7 +965,7 @@ static void *vhost_user_test_setup_connect_fail(GString *cmd_line, void *arg)
+-test_add_done:
+-
+     ret = g_test_run();
  
-     s->test_fail = true;
- 
--    g_thread_new("connect", connect_thread, s);
-+    g_thread_unref(g_thread_new("connect", connect_thread, s));
-     append_mem_opts(s, cmd_line, 256, TEST_MEMFD_AUTO);
-     s->vu_ops->append_opts(s, cmd_line, ",server=on");
- 
-@@ -980,7 +980,7 @@ static void *vhost_user_test_setup_flags_mismatch(GString *cmd_line, void *arg)
- 
-     s->test_flags = TEST_FLAGS_DISCONNECT;
- 
--    g_thread_new("connect", connect_thread, s);
-+    g_thread_unref(g_thread_new("connect", connect_thread, s));
-     append_mem_opts(s, cmd_line, 256, TEST_MEMFD_AUTO);
-     s->vu_ops->append_opts(s, cmd_line, ",server=on");
- 
+     g_assert_cmpint(ret, ==, 0);
 -- 
 2.45.2
 
