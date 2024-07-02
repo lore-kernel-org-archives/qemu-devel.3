@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A94C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:43:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58071C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:57:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjyd-0001Wa-Ho; Tue, 02 Jul 2024 16:19:47 -0400
+	id 1sOkY7-0004xd-BX; Tue, 02 Jul 2024 16:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyb-0001TB-RU
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1sOkY4-0004wP-I2
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:56:24 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjya-0001HX-06
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951583;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tLYMiEpSTV+muhM/St/OMTi5MMjd/r9xWUNm5/42vJU=;
- b=aNw/rWtK6ZGxmJ4mycSRt6L5kG8MwwdBPa8Uoj4n6l3gTIJjPARrnbyPsQrt0paq1kdI9R
- okDKIc4ypkGHRwla/ay3D7lfcEp4dU0Uc7ZUoXq5olDz2bhgwo6dsUvPyT3PdQ12VvfVNH
- EFDN9KIPgJFSPItNLV70WPVrTwY2VN8=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-fcBLKnkdPPWLCQraLjj58Q-1; Tue, 02 Jul 2024 16:19:41 -0400
-X-MC-Unique: fcBLKnkdPPWLCQraLjj58Q-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52d174e26baso6284535e87.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:19:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951580; x=1720556380;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tLYMiEpSTV+muhM/St/OMTi5MMjd/r9xWUNm5/42vJU=;
- b=xEyVG2UGOqVmpNqBsr7FsDZ17aBHbjKz1k0FeOWQW2hBoK8Y7SQag21pBbDYxpuhFQ
- DwBzzu/QIwdIUPBlVeaogr98isBXwHjl0xBaWbmMW0uVtRVYYLICyUac2bpPWKT6Sp9m
- Iy8x7heWYWCdMq1S2Jx8k7Eoy8s/tVmViWk55I1fn5Egfa+wg4v4fmjr4fG4uD9IevvH
- tdkfMcDHsc4YX1tjnGORZGAmAvVIFXNILUWMLv7dn2H6zK8ny3zvd+x2BMQfYrRfowBJ
- sNxzGsQni21IWWQ3WEq0Jpey/PB1XfS49gUyy09ZIGh6QjUT7mNTIa6oIIBCuA/EL01i
- W1rA==
-X-Gm-Message-State: AOJu0Yyp0y+1JLTbft7qprzhsHzzDnW8p8R0sdiLEhtJJKs6aQzskGCv
- 81PS5ZFWaRezaN3mWnOO6T7GEva0xoMldrzlglG8usZsSwZtIS7PYqYcr4il3KxFU7WQHTXrFK6
- JeMSJzmj9jZu9XasdFrj5+gxTy1oX0D9i+8uTDwGFJIzKp1UHy+xTe7EyhccTOmR35nkqYZcPW3
- kC3u/1YTgbDaEeIdGrGx2KYaR+ysmccQ==
-X-Received: by 2002:a05:6512:2348:b0:52c:df51:20bc with SMTP id
- 2adb3069b0e04-52e82665d66mr6714096e87.16.1719951579919; 
- Tue, 02 Jul 2024 13:19:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxdjLOb8LAAHDB1VxB28pnkXDbR6vAo4boNd7HrmR2kKobDXa+5zyQQdGbZpsncFnyRCFGgg==
-X-Received: by 2002:a05:6512:2348:b0:52c:df51:20bc with SMTP id
- 2adb3069b0e04-52e82665d66mr6714074e87.16.1719951579144; 
- Tue, 02 Jul 2024 13:19:39 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4257cdf4982sm131829435e9.47.2024.07.02.13.19.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:19:38 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:19:35 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
+ id 1sOkY2-0001GC-PD
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:56:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1719953782; x=1751489782;
+ h=from:to:subject:date:message-id:in-reply-to:references:
+ mime-version:content-transfer-encoding;
+ bh=3vwg8wmA5DCsngLhZ8wHvJDzQzDYML4wcP8YeufEq3E=;
+ b=PN0fJMlDm95396RoPCV11xFpeqIvBBXl7EjkNQ0MKc1fHqNaVW16UgSN
+ 2XHhZD6xbTjGFlZklFw/tiTPvok+AtQ/04Xo5XGy08NzCP4TgCqsEXEsL
+ bOnzU2Cw3BKWEW9Wt06jCqfTFCjFz9d7iLi8eg04/V39ApXg6WcOEbpb/
+ bbaI4E+0rbw3kNhEGSPXOPXV/P0wt6M3kpHOKR6g9dKkhqyKpjE9qdb5i
+ 1uHOQkZT5G2GgPJFcFGbSOVHmTHkp1LNEZMaGABlhreob5LsWKbGquuS7
+ GcQhFtk+tGpZR+kVYKuVsI/Bb//1JCap9LxCN7WyM2Yxt0SRAOPcsccJ4 Q==;
+X-CSE-ConnectionGUID: IdfNQ06MRlyeI2z+/Rh69Q==
+X-CSE-MsgGUID: tmywFvQ7RrSN95PD6wWesw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11121"; a="28549753"
+X-IronPort-AV: E=Sophos;i="6.09,180,1716274800"; d="scan'208";a="28549753"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2024 13:56:16 -0700
+X-CSE-ConnectionGUID: evh9ibklTee6XKoQoRuG+g==
+X-CSE-MsgGUID: cocdOU6NQ4CQkEEG7dYktQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,180,1716274800"; d="scan'208";a="46085791"
+Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
+ by fmviesa010.fm.intel.com with ESMTP; 02 Jul 2024 13:56:16 -0700
+From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL v2 66/88] qtest: bios-tables-test: Rename aarch64 tests with
- aarch64 in them
-Message-ID: <49f0c6693ea6076c7027d3a44c5af179e574c745.1719951168.git.mst@redhat.com>
-References: <cover.1719951168.git.mst@redhat.com>
+Subject: [PATCH 2/2] ui/dmabuf: Remove 'sync' from QemuDmaBuf struct
+Date: Tue,  2 Jul 2024 13:55:03 -0700
+Message-Id: <20240702205503.2774745-3-dongwon.kim@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240702205503.2774745-1-dongwon.kim@intel.com>
+References: <20240702205503.2774745-1-dongwon.kim@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1719951168.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.10;
+ envelope-from=dongwon.kim@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,127 +80,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Existing AARCH64 virt test functions do not have AARCH64 in their name.
-To add RISC-V virt related test cases, better to rename existing
-functions to indicate they are ARM only.
+Sync object is not used so removing it from QemuDmaBuf struct
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240625150839.1358279-6-sunilvl@ventanamicro.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
 ---
- tests/qtest/bios-tables-test.c | 35 ++++++++++++++++++----------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ include/ui/dmabuf.h |  2 --
+ ui/dmabuf.c         | 14 --------------
+ 2 files changed, 16 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index d1ff4db7a2..c4a4d1c7bf 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -1570,7 +1570,7 @@ static void test_acpi_piix4_tcg_dimm_pxm(void)
-     test_acpi_tcg_dimm_pxm(MACHINE_PC);
+diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
+index dc74ba895a..7f0f7f3f6e 100644
+--- a/include/ui/dmabuf.h
++++ b/include/ui/dmabuf.h
+@@ -36,13 +36,11 @@ uint32_t qemu_dmabuf_get_y(QemuDmaBuf *dmabuf);
+ uint32_t qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf);
+ uint32_t qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf);
+ bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf);
+-void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
+ int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
+ bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
+ bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
+ void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture);
+ void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
+-void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
+ void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted);
+ void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd);
+ 
+diff --git a/ui/dmabuf.c b/ui/dmabuf.c
+index df7a09703f..2332292a08 100644
+--- a/ui/dmabuf.c
++++ b/ui/dmabuf.c
+@@ -23,7 +23,6 @@ struct QemuDmaBuf {
+     uint32_t  backing_width;
+     uint32_t  backing_height;
+     bool      y0_top;
+-    void      *sync;
+     int       fence_fd;
+     bool      allow_fences;
+     bool      draw_submitted;
+@@ -170,13 +169,6 @@ bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf)
+     return dmabuf->y0_top;
  }
  
--static void test_acpi_virt_tcg_memhp(void)
-+static void test_acpi_aarch64_virt_tcg_memhp(void)
+-void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf)
+-{
+-    assert(dmabuf != NULL);
+-
+-    return dmabuf->sync;
+-}
+-
+ int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf)
  {
-     test_data data = {
-         .machine = "virt",
-@@ -1663,7 +1663,7 @@ static void test_acpi_microvm_ioapic2_tcg(void)
-     free_test_data(&data);
+     assert(dmabuf != NULL);
+@@ -210,12 +202,6 @@ void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd)
+     dmabuf->fence_fd = fence_fd;
  }
  
--static void test_acpi_virt_tcg_numamem(void)
-+static void test_acpi_aarch64_virt_tcg_numamem(void)
+-void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync)
+-{
+-    assert(dmabuf != NULL);
+-    dmabuf->sync = sync;
+-}
+-
+ void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted)
  {
-     test_data data = {
-         .machine = "virt",
-@@ -1685,7 +1685,7 @@ static void test_acpi_virt_tcg_numamem(void)
- 
- }
- 
--static void test_acpi_virt_tcg_pxb(void)
-+static void test_acpi_aarch64_virt_tcg_pxb(void)
- {
-     test_data data = {
-         .machine = "virt",
-@@ -1758,7 +1758,7 @@ static void test_acpi_piix4_tcg_acpi_hmat(void)
-     test_acpi_tcg_acpi_hmat(MACHINE_PC);
- }
- 
--static void test_acpi_virt_tcg_acpi_hmat(void)
-+static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
- {
-     test_data data = {
-         .machine = "virt",
-@@ -1914,7 +1914,7 @@ static void test_acpi_microvm_acpi_erst(void)
- }
- #endif /* CONFIG_POSIX */
- 
--static void test_acpi_virt_tcg(void)
-+static void test_acpi_aarch64_virt_tcg(void)
- {
-     test_data data = {
-         .machine = "virt",
-@@ -1933,7 +1933,7 @@ static void test_acpi_virt_tcg(void)
-     free_test_data(&data);
- }
- 
--static void test_acpi_virt_tcg_topology(void)
-+static void test_acpi_aarch64_virt_tcg_topology(void)
- {
-     test_data data = {
-         .machine = "virt",
-@@ -2016,7 +2016,7 @@ static void test_acpi_q35_cxl(void)
- }
- #endif /* CONFIG_POSIX */
- 
--static void test_acpi_virt_viot(void)
-+static void test_acpi_aarch64_virt_viot(void)
- {
-     test_data data = {
-         .machine = "virt",
-@@ -2192,7 +2192,7 @@ static void test_acpi_microvm_oem_fields(void)
-     g_free(args);
- }
- 
--static void test_acpi_virt_oem_fields(void)
-+static void test_acpi_aarch64_virt_oem_fields(void)
- {
-     test_data data = {
-         .machine = "virt",
-@@ -2364,16 +2364,19 @@ int main(int argc, char *argv[])
-         }
-     } else if (strcmp(arch, "aarch64") == 0) {
-         if (has_tcg && qtest_has_device("virtio-blk-pci")) {
--            qtest_add_func("acpi/virt", test_acpi_virt_tcg);
-+            qtest_add_func("acpi/virt", test_acpi_aarch64_virt_tcg);
-             qtest_add_func("acpi/virt/acpihmatvirt",
--                            test_acpi_virt_tcg_acpi_hmat);
--            qtest_add_func("acpi/virt/topology", test_acpi_virt_tcg_topology);
--            qtest_add_func("acpi/virt/numamem", test_acpi_virt_tcg_numamem);
--            qtest_add_func("acpi/virt/memhp", test_acpi_virt_tcg_memhp);
--            qtest_add_func("acpi/virt/pxb", test_acpi_virt_tcg_pxb);
--            qtest_add_func("acpi/virt/oem-fields", test_acpi_virt_oem_fields);
-+                           test_acpi_aarch64_virt_tcg_acpi_hmat);
-+            qtest_add_func("acpi/virt/topology",
-+                           test_acpi_aarch64_virt_tcg_topology);
-+            qtest_add_func("acpi/virt/numamem",
-+                           test_acpi_aarch64_virt_tcg_numamem);
-+            qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
-+            qtest_add_func("acpi/virt/pxb", test_acpi_aarch64_virt_tcg_pxb);
-+            qtest_add_func("acpi/virt/oem-fields",
-+                           test_acpi_aarch64_virt_oem_fields);
-             if (qtest_has_device("virtio-iommu-pci")) {
--                qtest_add_func("acpi/virt/viot", test_acpi_virt_viot);
-+                qtest_add_func("acpi/virt/viot", test_acpi_aarch64_virt_viot);
-             }
-         }
-     }
+     assert(dmabuf != NULL);
 -- 
-MST
+2.34.1
 
 
