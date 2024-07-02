@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C132C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 354D8C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjtD-0001Vy-W9; Tue, 02 Jul 2024 16:14:12 -0400
+	id 1sOjwL-00082g-RT; Tue, 02 Jul 2024 16:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjtB-0001VE-W0
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:14:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjvP-0006k4-PI
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjtA-0007Yz-FM
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:14:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjvE-0008DV-4V
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951247;
+ s=mimecast20190719; t=1719951375;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uByx4Oz+CQ80E+9HMb1HUHKkD83RXYCyv+000WUVwgE=;
- b=AlptASjlyoHuYFztJ56q7wssmD1Vnp5YL03WTbSve9UupoXwQWJqXhAmD6V09CltHBi2fk
- UbIWKRuOjIxRwBkK+3/WHpPb7hsFQuuUkXmBPyaZ9ogneGnTW2iStkaeQM3DtdJZKHK3xo
- fdx5NkgztxLaFRg9vtXWImuhmviBPTw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2dkENUzfzIIIcUTPF2EEwEXmUV3lpfWAm7D6XMdf5LE=;
+ b=SJtLfGUjTk1FLsItXhEvO06WIk6JBmoiJTqqGf5ZPkOgeHBJjwWg47q0+GG8kYQ8ceXjJH
+ oU+YFkOUGGBseamftLtAEHiglthE2GW60Pd3/uVKz2mjPpdJuRGMY0lV/fLOogG+BINGby
+ 59rFUBevFihgdtqg/vHItIYdlKhZmKI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-2-4EdYDHWTPqevVZHe4tz8bw-1; Tue, 02 Jul 2024 16:14:06 -0400
-X-MC-Unique: 4EdYDHWTPqevVZHe4tz8bw-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4257db9d71fso19086395e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:14:06 -0700 (PDT)
+ us-mta-498-BX33Oy2EP4SCPSmHTHplZA-1; Tue, 02 Jul 2024 16:16:13 -0400
+X-MC-Unique: BX33Oy2EP4SCPSmHTHplZA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3678e523e32so572698f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:16:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951245; x=1720556045;
+ d=1e100.net; s=20230601; t=1719951372; x=1720556172;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uByx4Oz+CQ80E+9HMb1HUHKkD83RXYCyv+000WUVwgE=;
- b=I0Batvxl4ZLkLzE1+eNOge9swTIQO1ISDnm72qu7bDS4N0vkQdGuI50/AKfT0MdGlg
- fyBUKmfu5t7DTCukcopK0zVUT71PMX383C90IYn1CUuss9JPRVquS4rR15nA1rZ2JOYj
- 3XjTTxjWxKZjWGkazLqvwJ3lzf2rV3tuqbwAiOSgWjEjcnuyRyilET8uJw9pmKBtnpB6
- Gvfmy3Ah+CrtOVLIvxyX/1X6varPBP5fktDj1FPUGo1ZPYj9zVbB/SV6KhaP2iCru1dX
- mm6JKdE1Ot9pRTUcAxXVfXxBh98V1ux/vigInITnnDM7Q0O0kwz6ShWAbG9rJsxg2zNS
- tK8A==
-X-Gm-Message-State: AOJu0Yxp9WyJ4N7KMqeA7bHBb+3GGXgN0bJ5FUaUMUjWc4p+MFzggiU+
- 3mmzS5rePh46udKwTTRlk3n8YDd2wgZG2Oq46jiaOZ4jAfjEFQP7UKmmnhshIFPJMNMAj1thi/i
- uhh2Lib4tpxQesuLnzTvWIwNSFxMc7Vn4ADABbcItq4trC0rXp21fk/LpT2RK60lSD2eXNoZgLT
- 99JH85bMVoAg94nKa0q/sgWcu+X0dQng==
-X-Received: by 2002:a05:600c:1585:b0:425:7b77:e943 with SMTP id
- 5b1f17b1804b1-4257b77ea48mr60665825e9.14.1719951244899; 
- Tue, 02 Jul 2024 13:14:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFfM70DX5kf2eTXsf+4cnmZtOBBDUwk72e6Sjs/XlocyKXLowO2MjypsHZ2q0Z4NtpBA4ejmw==
-X-Received: by 2002:a05:600c:1585:b0:425:7b77:e943 with SMTP id
- 5b1f17b1804b1-4257b77ea48mr60665535e9.14.1719951244265; 
- Tue, 02 Jul 2024 13:14:04 -0700 (PDT)
+ bh=2dkENUzfzIIIcUTPF2EEwEXmUV3lpfWAm7D6XMdf5LE=;
+ b=bSVedyxZa+svDwPlUk1k12u5eaiEzvoOw6gPi4XPx7NLbTuC80sFcS3HklzyMyHQum
+ 7XwjqqTBVZUFisaMImEV/PhvzUbVJgT3ghSo0YK/r91cfb/CzD6/fYmaK7DIJpCdBqgX
+ uU5KUJgF1SAY9SC5bcpqkiSdI2hbiw6kmErYQoN3YensT7urtAAtEhh66YtxXxOyuHan
+ zusLZu6W7lunK6n/PTkDlRECWZlbGbl+wO5IBegqpyCy7jjmZEiW+UO5nhDIZRA69NX0
+ xhc/DV2P41I+xWdopFF6M/dfHMEj+iuBXxkvVPyL/MGnmpZLut+o6SH+Sz31GcN7Yn6e
+ h+XQ==
+X-Gm-Message-State: AOJu0YzdNsqJnV0BnwqK/E3T3DYd3vF73nYOxqaCwwc4GInfeaioU+3y
+ LXfq5AP8moH4Lowr4548+GMEDg6Y8/nsXCVjZrHVgSc8WlCxee3AVitDsiTsgXwXi/4BoDkmZC7
+ CW6P4ZQL+FOBxx4feOMnLNKNe4d4B0qaofvWgiIr2k1EvQcb9s401d3YPLvRGTaaUKklzYVF2bG
+ 5JeA0+4eASTfIZFn+KO1qSf/Hy3ptuTg==
+X-Received: by 2002:adf:fd0a:0:b0:366:e9dc:6dcf with SMTP id
+ ffacd0b85a97d-367756bc947mr7462519f8f.42.1719951372230; 
+ Tue, 02 Jul 2024 13:16:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1JjrC8C54IQSFdU8z1l6C/BAz1V4TQsbVZfaH4HC+h4gxCZqSydFsn2y6BW3TOw/P68jXgQ==
+X-Received: by 2002:adf:fd0a:0:b0:366:e9dc:6dcf with SMTP id
+ ffacd0b85a97d-367756bc947mr7462500f8f.42.1719951371587; 
+ Tue, 02 Jul 2024 13:16:11 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af376f5sm211281955e9.6.2024.07.02.13.14.01
+ ffacd0b85a97d-3678ec6ff64sm1344692f8f.3.2024.07.02.13.16.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:14:03 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:13:59 -0400
+ Tue, 02 Jul 2024 13:16:11 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:16:08 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonah Palmer <jonah.palmer@oracle.com>
-Subject: [PULL v2 06/91] virtio-mmio: Handle extra notification data
-Message-ID: <54869366be60af2eb52cffaedad73ba1f4247e15.1719951026.git.mst@redhat.com>
-References: <cover.1719951026.git.mst@redhat.com>
+ Gregory Price <gourry.memverge@gmail.com>,
+ Gregory Price <gregory.price@memverge.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL v2 16/88] hw/cxl/mailbox: change CCI cmd set structure to be a
+ member, not a reference
+Message-ID: <05b70ceba033759d44c6d3d9b24118cd9fc9d616.1719951168.git.mst@redhat.com>
+References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1719951026.git.mst@redhat.com>
+In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
@@ -101,55 +104,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonah Palmer <jonah.palmer@oracle.com>
+From: Gregory Price <gourry.memverge@gmail.com>
 
-Add support to virtio-mmio devices for handling the extra data sent from
-the driver to the device when the VIRTIO_F_NOTIFICATION_DATA transport
-feature has been negotiated.
+This allows devices to have fully customized CCIs, along with complex
+devices where wrapper devices can override or add additional CCI
+commands without having to replicate full command structures or
+pollute a base device with every command that might ever be used.
 
-The extra data that's passed to the virtio-mmio device when this feature
-is enabled varies depending on the device's virtqueue layout.
-
-The data passed to the virtio-mmio device is in the same format as the
-data passed to virtio-pci devices.
-
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-Message-Id: <20240315165557.26942-4-jonah.palmer@oracle.com>
+Signed-off-by: Gregory Price <gregory.price@memverge.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Message-Id: <20240523174651.1089554-2-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-mmio.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ include/hw/cxl/cxl_device.h |  2 +-
+ hw/cxl/cxl-mailbox-utils.c  | 19 +++++++++++++++----
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
-index 22f9fbcf5a..320428ac0d 100644
---- a/hw/virtio/virtio-mmio.c
-+++ b/hw/virtio/virtio-mmio.c
-@@ -248,6 +248,7 @@ static void virtio_mmio_write(void *opaque, hwaddr offset, uint64_t value,
- {
-     VirtIOMMIOProxy *proxy = (VirtIOMMIOProxy *)opaque;
-     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
-+    uint16_t vq_idx;
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index 279b276bda..ccc4611875 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -164,7 +164,7 @@ typedef struct CXLEventLog {
+ } CXLEventLog;
  
-     trace_virtio_mmio_write_offset(offset, value);
+ typedef struct CXLCCI {
+-    const struct cxl_cmd (*cxl_cmd_set)[256];
++    struct cxl_cmd cxl_cmd_set[256][256];
+     struct cel_log {
+         uint16_t opcode;
+         uint16_t effect;
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index e5eb97cb91..2c9f50f0f9 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1447,10 +1447,21 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+                                  bg_timercb, cci);
+ }
  
-@@ -407,8 +408,14 @@ static void virtio_mmio_write(void *opaque, hwaddr offset, uint64_t value,
-         }
-         break;
-     case VIRTIO_MMIO_QUEUE_NOTIFY:
--        if (value < VIRTIO_QUEUE_MAX) {
--            virtio_queue_notify(vdev, value);
-+        vq_idx = value;
-+        if (vq_idx < VIRTIO_QUEUE_MAX && virtio_queue_get_num(vdev, vq_idx)) {
-+            if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
-+                VirtQueue *vq = virtio_get_queue(vdev, vq_idx);
-+
-+                virtio_queue_set_shadow_avail_idx(vq, (value >> 16) & 0xFFFF);
++static void cxl_copy_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmds)[256])
++{
++    for (int set = 0; set < 256; set++) {
++        for (int cmd = 0; cmd < 256; cmd++) {
++            if (cxl_cmds[set][cmd].handler) {
++                cci->cxl_cmd_set[set][cmd] = cxl_cmds[set][cmd];
 +            }
-+            virtio_queue_notify(vdev, vq_idx);
-         }
-         break;
-     case VIRTIO_MMIO_INTERRUPT_ACK:
++        }
++    }
++}
++
+ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+                                   DeviceState *d, size_t payload_max)
+ {
+-    cci->cxl_cmd_set = cxl_cmd_set_sw;
++    cxl_copy_cci_commands(cci, cxl_cmd_set_sw);
+     cci->d = d;
+     cci->intf = intf;
+     cxl_init_cci(cci, payload_max);
+@@ -1458,7 +1469,7 @@ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+ 
+ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
+ {
+-    cci->cxl_cmd_set = cxl_cmd_set;
++    cxl_copy_cci_commands(cci, cxl_cmd_set);
+     cci->d = d;
+ 
+     /* No separation for PCI MB as protocol handled in PCI device */
+@@ -1476,7 +1487,7 @@ static const struct cxl_cmd cxl_cmd_set_t3_ld[256][256] = {
+ void cxl_initialize_t3_ld_cci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+                                size_t payload_max)
+ {
+-    cci->cxl_cmd_set = cxl_cmd_set_t3_ld;
++    cxl_copy_cci_commands(cci, cxl_cmd_set_t3_ld);
+     cci->d = d;
+     cci->intf = intf;
+     cxl_init_cci(cci, payload_max);
+@@ -1496,7 +1507,7 @@ void cxl_initialize_t3_fm_owned_ld_mctpcci(CXLCCI *cci, DeviceState *d,
+                                            DeviceState *intf,
+                                            size_t payload_max)
+ {
+-    cci->cxl_cmd_set = cxl_cmd_set_t3_fm_owned_ld_mctp;
++    cxl_copy_cci_commands(cci, cxl_cmd_set_t3_fm_owned_ld_mctp);
+     cci->d = d;
+     cci->intf = intf;
+     cxl_init_cci(cci, payload_max);
 -- 
 MST
 
