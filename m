@@ -4,79 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F36C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 19:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DC7BC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 19:17:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOijx-0007vR-8U; Tue, 02 Jul 2024 15:00:33 -0400
+	id 1sOizZ-0003DW-EK; Tue, 02 Jul 2024 15:16:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
- id 1sOiji-0007ug-VC; Tue, 02 Jul 2024 15:00:20 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
- id 1sOije-0000ek-G1; Tue, 02 Jul 2024 15:00:17 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2ec61eeed8eso56898961fa.0; 
- Tue, 02 Jul 2024 12:00:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719946809; x=1720551609; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Uu8Geb6Wu8YXfeXNAA9QHexu3Vx5gtAuZ9I8QsmrR5I=;
- b=hu328kVhJQcgxmsdZAOZjEjSH4iYgzF0NLBuPx4dDf6cBlZaxBgkM7LYHyoq8et/0s
- xfnBlpEG5xu3Rk5E+Qh6XYJ1spvkcuTSBfvFU3GJCtjgq5dzIxnDTSJBM6+JzknuaYkk
- cHI8OpO4nX09K2H4A4TNqGdhE4Q4RbIgRiO78xmdyAL4c28HBU5bdACpOrNlwIMvpFfF
- qTIgeCcQsKF6zTUhlxLVGQXKtsioPNPhTisADd/uhcmrOx/yO9msz87Pp/niuZhM4Pn3
- S2NSNMOQsq1EAADo/Mc9V5E6UEbNelnNfJYrnqIYqiUCkz4eDEvVi+EntilVMEfA6b7B
- 2Afw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sOizW-0003Cy-Qg
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:16:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sOizQ-0000aC-VJ
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:16:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719947791;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=k7uDfOeuRf+U/jUOj0gogmqvQNlkulycl0F1w1jay1s=;
+ b=TQQyAN+lryG4BU0zGu2fDrnYyeabh93Ud74ZzzHDz3z9+4baitTrnMxbLPYX5YMvKEZYgq
+ hj9VTGcb1K9W1MkCYb0LwlxSRPhgufQFVRITVXm0i3tdkOjEG9+laTmxHjFjgKF9OGzTFU
+ 6oK1ekhPF/6kYOsB2I7+ErEqpwW3Fi0=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-221-vpr8wGSVNBWK4bzyfl7qyA-1; Tue, 02 Jul 2024 15:16:25 -0400
+X-MC-Unique: vpr8wGSVNBWK4bzyfl7qyA-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6b5d704ead7so858196d6.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 12:16:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719946809; x=1720551609;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Uu8Geb6Wu8YXfeXNAA9QHexu3Vx5gtAuZ9I8QsmrR5I=;
- b=kJsmrNyk7VIIAmyH1Nf4S5aN3x/WDV/A+7IgZN+ihUWhQUOVWQc1jiYIWvF79ovCTc
- jQaTb/eIs9C883W3dydrop2g41CMG9dnZ5L6XHDZN23BFdyIGnuFrBwIfwkAk5GYtgug
- 72k+Qa4KcO+fGVI0p/AZCNbTN+ivvsA0skWjGeQTvvef43xUHk0ZXk8S37qtKri3p7aX
- XB/Qi/DtweRrQP9k3ipdZlK0M4aZmYqLl0zg2YmpZHjH43UCiQY1UEV+lk2iLvw3HbKc
- S8G2G6WpeKOOcnQmq1VT34xXMuvABl6iivFDsZ0mrvvg57po92ud5ECiC+Xbg50HoyGt
- 6QgQ==
+ d=1e100.net; s=20230601; t=1719947784; x=1720552584;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k7uDfOeuRf+U/jUOj0gogmqvQNlkulycl0F1w1jay1s=;
+ b=Vjy/ca9erI9IUJO3j2iXRzenIP6CWxOx/k7HXJvHWRqu9/PqH+dK3o5x9UEwb/XH1C
+ n0TigON20898J+60XMAB/J55UOdGg9rnxHUai7I0ps8GiyI/N/EbVBYE/psTcpJGAJaJ
+ Bqm6KyccEDJU8qg8WhvT4nEh6zUkvebOEH+WaiyXPvYGPcykQLWv2/K3EZHN+jhsNOOo
+ 4KUsV93XbHJSUDRoH1kdAs7JBWV92624++295fzVuMMT2+wkTvdQM4HTmXnfYw5Ldf3R
+ 7kG05IqDs9D1sRPDjaMNdxiUbYH3ResExqNFWFx1X0sJcHpViStoK2I0IBnNtEp5GmIG
+ itQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVal0A8r56c3eMKRU2MDB3uE48vFwRf8YVs8wsYz2WtveX7G/JV7ft4GbSFiXRn/16fsY+8IOq/Sfv+mc2KbRavKl4P1qU=
-X-Gm-Message-State: AOJu0Yzg6tijz9FA9bc1Sz/GqswVJHCldQfwOGxYj2BfsT5x9JID6OuG
- dgjcV1MEtffZCAmZvW1kO2uJVD6WZjdZErBNsC8syKrEqTC7okFopphdEHSHYOI=
-X-Google-Smtp-Source: AGHT+IHNGMaW4f3oxwDjy9x2WrinacwiOmnn/au3epTF32hzViTiUaxtjtgeQOTAiLtrDbFEmwWTxA==
-X-Received: by 2002:a05:651c:244:b0:2ee:7255:5048 with SMTP id
- 38308e7fff4ca-2ee7255542dmr34111281fa.48.1719946808185; 
- Tue, 02 Jul 2024 12:00:08 -0700 (PDT)
-Received: from localhost.localdomain ([176.194.243.4])
- by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2ee6efaa857sm6334291fa.89.2024.07.02.12.00.07
+ AJvYcCVt203suWJo/CyYPvK+J2+qCIbYsUztbBfN4vo8A9ooz8IvyR5aunD6xB8vx0M9p3JlGCQvbyksWR1cw3c6azdsy7J+cGs=
+X-Gm-Message-State: AOJu0YxCPCk4M/voCzPoaZj6XFWA9/OgsJP9dS+yCwE8M1L7xXg7KOfT
+ f3utCjLJJhySGcCzaPHsNO18WdQSYnznby8dKcVITJdZtEwXrb/0x2QU6p15VZe8SOkKZXqotTf
+ 8vdm+BakGmYrZNnABL+TZOlocEg0/d8SLU/JbT5yvI4x73bTLMikQ
+X-Received: by 2002:a05:620a:4952:b0:79c:11c8:785e with SMTP id
+ af79cd13be357-79d7baef903mr977448785a.6.1719947783933; 
+ Tue, 02 Jul 2024 12:16:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH1qA1rbBb5V2iSw9XX5vhzxYRMLHw6/5+Y8tajdtzJXv57MFvDCmo2QDq4X455RfqPOQrAkA==
+X-Received: by 2002:a05:620a:4952:b0:79c:11c8:785e with SMTP id
+ af79cd13be357-79d7baef903mr977445985a.6.1719947783490; 
+ Tue, 02 Jul 2024 12:16:23 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-79d692945b4sm482441785a.57.2024.07.02.12.16.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 12:00:07 -0700 (PDT)
-From: Mikhail Krasheninnikov <krashmisha@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Mi <krashmisha@gmail.com>, Matwey Kornilov <matwey.kornilov@gmail.com>,
- qemu-block@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH v2] virtio: Implement Virtio Backend for SD/MMC in QEMU
-Date: Tue,  2 Jul 2024 18:58:42 +0000
-Message-Id: <20240702185842.31061-1-krashmisha@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ Tue, 02 Jul 2024 12:16:22 -0700 (PDT)
+Date: Tue, 2 Jul 2024 15:16:19 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yichen Wang <yichen.wang@bytedance.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ "Zou, Nanhai" <nanhai.zou@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Subject: Re: [PATCH v3 0/4] Implement using Intel QAT to offload ZLIB
+Message-ID: <ZoRSA4naaje878PK@x1n>
+References: <20240627223445.95096-1-yichen.wang@bytedance.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=krashmisha@gmail.com; helo=mail-lj1-x22f.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240627223445.95096-1-yichen.wang@bytedance.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,387 +110,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mi <krashmisha@gmail.com>
+On Thu, Jun 27, 2024 at 03:34:41PM -0700, Yichen Wang wrote:
+> v3:
+> - Rebase changes on top of master
+> - Merge two patches per Fabiano Rosas's comment
+> - Add versions into comments and documentations
+> 
+> v2:
+> - Rebase changes on top of recent multifd code changes.
+> - Use QATzip API 'qzMalloc' and 'qzFree' to allocate QAT buffers.
+> - Remove parameter tuning and use QATzip's defaults for better
+>   performance.
+> - Add parameter to enable QAT software fallback.
+> 
+> v1:
+> https://lists.nongnu.org/archive/html/qemu-devel/2023-12/msg03761.html
+> 
+> * Performance
+> 
+> We present updated performance results. For circumstantial reasons, v1
+> presented performance on a low-bandwidth (1Gbps) network.
+> 
+> Here, we present updated results with a similar setup as before but with
+> two main differences:
+> 
+> 1. Our machines have a ~50Gbps connection, tested using 'iperf3'.
+> 2. We had a bug in our memory allocation causing us to only use ~1/2 of
+> the VM's RAM. Now we properly allocate and fill nearly all of the VM's
+> RAM.
+> 
+> Thus, the test setup is as follows:
+> 
+> We perform multifd live migration over TCP using a VM with 64GB memory.
+> We prepare the machine's memory by powering it on, allocating a large
+> amount of memory (60GB) as a single buffer, and filling the buffer with
+> the repeated contents of the Silesia corpus[0]. This is in lieu of a more
+> realistic memory snapshot, which proved troublesome to acquire.
+> 
+> We analyze CPU usage by averaging the output of 'top' every second
+> during migration. This is admittedly imprecise, but we feel that it
+> accurately portrays the different degrees of CPU usage of varying
+> compression methods.
+> 
+> We present the latency, throughput, and CPU usage results for all of the
+> compression methods, with varying numbers of multifd threads (4, 8, and
+> 16).
+> 
+> [0] The Silesia corpus can be accessed here:
+> https://sun.aei.polsl.pl//~sdeor/index.php?page=silesia
+> 
+> ** Results
+> 
+> 4 multifd threads:
+> 
+>     |---------------|---------------|----------------|---------|---------|
+>     |method         |time(sec)      |throughput(mbps)|send cpu%|recv cpu%|
+>     |---------------|---------------|----------------|---------|---------|
+>     |qatzip         | 23.13         | 8749.94        |117.50   |186.49   |
+>     |---------------|---------------|----------------|---------|---------|
+>     |zlib           |254.35         |  771.87        |388.20   |144.40   |
+>     |---------------|---------------|----------------|---------|---------|
+>     |zstd           | 54.52         | 3442.59        |414.59   |149.77   |
+>     |---------------|---------------|----------------|---------|---------|
+>     |none           | 12.45         |43739.60        |159.71   |204.96   |
+>     |---------------|---------------|----------------|---------|---------|
+> 
+> 8 multifd threads:
+> 
+>     |---------------|---------------|----------------|---------|---------|
+>     |method         |time(sec)      |throughput(mbps)|send cpu%|recv cpu%|
+>     |---------------|---------------|----------------|---------|---------|
+>     |qatzip         | 16.91         |12306.52        |186.37   |391.84   |
+>     |---------------|---------------|----------------|---------|---------|
+>     |zlib           |130.11         | 1508.89        |753.86   |289.35   |
+>     |---------------|---------------|----------------|---------|---------|
+>     |zstd           | 27.57         | 6823.23        |786.83   |303.80   |
+>     |---------------|---------------|----------------|---------|---------|
+>     |none           | 11.82         |46072.63        |163.74   |238.56   |
+>     |---------------|---------------|----------------|---------|---------|
+> 
+> 16 multifd threads:
+> 
+>     |---------------|---------------|----------------|---------|---------|
+>     |method         |time(sec)      |throughput(mbps)|send cpu%|recv cpu%|
+>     |---------------|---------------|----------------|---------|---------|
+>     |qatzip         |18.64          |11044.52        | 573.61  |437.65   |
+>     |---------------|---------------|----------------|---------|---------|
+>     |zlib           |66.43          | 2955.79        |1469.68  |567.47   |
+>     |---------------|---------------|----------------|---------|---------|
+>     |zstd           |14.17          |13290.66        |1504.08  |615.33   |
+>     |---------------|---------------|----------------|---------|---------|
+>     |none           |16.82          |32363.26        | 180.74  |217.17   |
+>     |---------------|---------------|----------------|---------|---------|
+> 
+> ** Observations
+> 
+> - In general, not using compression outperforms using compression in a
+>   non-network-bound environment.
+> - 'qatzip' outperforms other compression workers with 4 and 8 workers,
+>   achieving a ~91% latency reduction over 'zlib' with 4 workers, and a
+> ~58% latency reduction over 'zstd' with 4 workers.
+> - 'qatzip' maintains comparable performance with 'zstd' at 16 workers,
+>   showing a ~32% increase in latency. This performance difference
+> becomes more noticeable with more workers, as CPU compression is highly
+> parallelizable.
+> - 'qatzip' compression uses considerably less CPU than other compression
+>   methods. At 8 workers, 'qatzip' demonstrates a ~75% reduction in
+> compression CPU usage compared to 'zstd' and 'zlib'.
+> - 'qatzip' decompression CPU usage is less impressive, and is even
+>   slightly worse than 'zstd' and 'zlib' CPU usage at 4 and 16 workers.
 
-Add a Virtio backend for SD/MMC devices. Confirmed interoperability with
-Linux.
+Thanks for the results update.
 
-Signed-off-by: Mikhail Krasheninnikov <krashmisha@gmail.com>
-CC: Matwey Kornilov <matwey.kornilov@gmail.com>
-CC: qemu-block@nongnu.org
-CC: Michael S. Tsirkin <mst@redhat.com>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Stefan Hajnoczi <stefanha@redhat.com>
----
+It looks like the docs/migration/ file is still missing.  It'll be great to
+have it in the next version or separately.
 
-After a feedback, moved virtio.c from virtio core directory to hw/block.
-From what I see from the examples of virtio drivers, other files should
-be where they are now. Correct me if I'm wrong.
+So how it compares with QPL (which got merged already)?  They at least look
+like both supported on an Intel platform, so an user whoever wants to
+compress the RAM could start to look at both.  I'm utterly confused on why
+Intel provides these two similar compressors.  It would be great to have
+some answer and perhaps put into the doc.
 
- hw/block/Kconfig                            |   5 +
- hw/block/meson.build                        |   1 +
- hw/block/virtio-mmc.c                       | 165 ++++++++++++++++++++
- hw/virtio/meson.build                       |   1 +
- hw/virtio/virtio-mmc-pci.c                  |  85 ++++++++++
- hw/virtio/virtio.c                          |   3 +-
- include/hw/virtio/virtio-mmc.h              |  20 +++
- include/standard-headers/linux/virtio_ids.h |   1 +
- 8 files changed, 280 insertions(+), 1 deletion(-)
- create mode 100644 hw/block/virtio-mmc.c
- create mode 100644 hw/virtio/virtio-mmc-pci.c
- create mode 100644 include/hw/virtio/virtio-mmc.h
+I am honestly curious too on whether are you planning to use it in
+production.  It looks like if the network resources are rich, no-comp is
+mostly always better than qatzip, no matter on total migration time or cpu
+consumption.  I'm pretty surprised that it'll take that much resources even
+if the work should have been offloaded to the QAT chips iiuc.
 
-diff --git a/hw/block/Kconfig b/hw/block/Kconfig
-index 9e8f28f982..a3059261fa 100644
---- a/hw/block/Kconfig
-+++ b/hw/block/Kconfig
-@@ -44,3 +44,8 @@ config VHOST_USER_BLK
- 
- config SWIM
-     bool
-+
-+config VIRTIO_MMC
-+    bool
-+    default y
-+    depends on VIRTIO
-diff --git a/hw/block/meson.build b/hw/block/meson.build
-index 8aa4dc3893..4fa6e90b5f 100644
---- a/hw/block/meson.build
-+++ b/hw/block/meson.build
-@@ -19,5 +19,6 @@ system_ss.add(when: 'CONFIG_TC58128', if_true: files('tc58128.c'))
- 
- specific_ss.add(when: 'CONFIG_VIRTIO_BLK', if_true: files('virtio-blk.c', 'virtio-blk-common.c'))
- specific_ss.add(when: 'CONFIG_VHOST_USER_BLK', if_true: files('vhost-user-blk.c', 'virtio-blk-common.c'))
-+specific_ss.add(when: 'CONFIG_VIRTIO_MMC', if_true: files('virtio-mmc.c'))
- 
- subdir('dataplane')
-diff --git a/hw/block/virtio-mmc.c b/hw/block/virtio-mmc.c
-new file mode 100644
-index 0000000000..50bd7113c5
---- /dev/null
-+++ b/hw/block/virtio-mmc.c
-@@ -0,0 +1,165 @@
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+
-+#include "hw/virtio/virtio.h"
-+#include "hw/virtio/virtio-mmc.h"
-+#include "qemu/typedefs.h"
-+#include "sysemu/blockdev.h"
-+
-+typedef struct mmc_req {
-+    uint32_t opcode;
-+    uint32_t arg;
-+} mmc_req;
-+
-+typedef struct virtio_mmc_req {
-+    uint8_t flags;
-+
-+#define VIRTIO_MMC_REQUEST_DATA BIT(1)
-+#define VIRTIO_MMC_REQUEST_WRITE BIT(2)
-+#define VIRTIO_MMC_REQUEST_STOP BIT(3)
-+#define VIRTIO_MMC_REQUEST_SBC BIT(4)
-+
-+    mmc_req request;
-+
-+    uint8_t buf[4096];
-+    size_t buf_len;
-+
-+    mmc_req stop_req;
-+    mmc_req sbc_req;
-+} virtio_mmc_req;
-+
-+typedef struct virtio_mmc_resp {
-+    uint32_t response[4];
-+    int resp_len;
-+    uint8_t buf[4096];
-+} virtio_mmc_resp;
-+
-+static void send_command(SDBus *sdbus, mmc_req *mmc_request, uint8_t *response,
-+                         virtio_mmc_resp *virtio_resp)
-+{
-+    SDRequest sdreq;
-+    sdreq.cmd = (uint8_t)mmc_request->opcode;
-+    sdreq.arg = mmc_request->arg;
-+    int resp_len = sdbus_do_command(sdbus, &sdreq, response);
-+    virtio_resp->resp_len = resp_len;
-+
-+    for (int i = 0; i < resp_len / sizeof(uint32_t); i++) {
-+        virtio_resp->response[i] = ldl_be_p(&virtio_resp->response[i]);
-+    }
-+}
-+
-+static void send_command_without_response(SDBus *sdbus, mmc_req *mmc_request)
-+{
-+    SDRequest sdreq;
-+    sdreq.cmd = (uint8_t)mmc_request->opcode;
-+    sdreq.arg = mmc_request->arg;
-+    uint8_t response[4];
-+    sdbus_do_command(sdbus, &sdreq, response);
-+}
-+
-+static void handle_mmc_request(VirtIODevice *vdev, virtio_mmc_req *virtio_req,
-+                               virtio_mmc_resp *virtio_resp)
-+{
-+    VirtIOMMC *vmmc = VIRTIO_MMC(vdev);
-+    SDBus *sdbus = &vmmc->sdbus;
-+
-+    if (virtio_req->flags & VIRTIO_MMC_REQUEST_SBC) {
-+        send_command_without_response(sdbus, &virtio_req->sbc_req);
-+    }
-+
-+    send_command(sdbus, &virtio_req->request,
-+    (uint8_t *)virtio_resp->response, virtio_resp);
-+
-+    if (virtio_req->flags & VIRTIO_MMC_REQUEST_DATA) {
-+        if (virtio_req->flags & VIRTIO_MMC_REQUEST_WRITE) {
-+            sdbus_write_data(sdbus, virtio_req->buf, virtio_req->buf_len);
-+        } else {
-+            sdbus_read_data(sdbus, virtio_resp->buf, virtio_req->buf_len);
-+        }
-+    }
-+
-+    if (virtio_req->flags & VIRTIO_MMC_REQUEST_STOP) {
-+        send_command_without_response(sdbus, &virtio_req->stop_req);
-+    }
-+}
-+
-+static void handle_request(VirtIODevice *vdev, VirtQueue *vq)
-+{
-+    VirtQueueElement *elem;
-+    virtio_mmc_req virtio_req;
-+    virtio_mmc_resp virtio_resp;
-+
-+    elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
-+
-+    iov_to_buf(elem->out_sg, elem->out_num, 0,
-+    &virtio_req, sizeof(virtio_mmc_req));
-+
-+    handle_mmc_request(vdev, &virtio_req, &virtio_resp);
-+
-+    iov_from_buf(elem->in_sg, elem->in_num, 0,
-+    &virtio_resp, sizeof(virtio_mmc_resp));
-+
-+    virtqueue_push(vq, elem, 1);
-+
-+    virtio_notify(vdev, vq);
-+}
-+
-+static void virtio_mmc_realize(DeviceState *dev, Error **errp)
-+{
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-+    VirtIOMMC *vmmc = VIRTIO_MMC(dev);
-+
-+    virtio_init(vdev, VIRTIO_ID_MMC, 0);
-+
-+    vmmc->vq = virtio_add_queue(vdev, 1, handle_request);
-+
-+    BlockBackend *blk = vmmc->blk;
-+    if (!blk) {
-+        error_setg(errp, "Block backend not found");
-+        return;
-+    }
-+
-+    qbus_init(&vmmc->sdbus, sizeof(vmmc->sdbus), TYPE_SD_BUS, dev, "sd-bus");
-+    DeviceState *card = qdev_new(TYPE_SD_CARD);
-+    qdev_prop_set_drive_err(card, "drive", blk, &error_fatal);
-+    qdev_realize_and_unref(card,
-+    qdev_get_child_bus(dev, "sd-bus"), &error_fatal);
-+}
-+
-+static void virtio_mmc_unrealize(DeviceState *dev)
-+{
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-+    virtio_cleanup(vdev);
-+}
-+
-+static uint64_t virtio_mmc_get_features(VirtIODevice *vdev,
-+                                        uint64_t features, Error **errp)
-+{
-+    return features;
-+}
-+
-+static void virtio_mmc_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    VirtioDeviceClass *k = VIRTIO_DEVICE_CLASS(klass);
-+
-+    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-+
-+    k->realize = virtio_mmc_realize;
-+    k->unrealize = virtio_mmc_unrealize;
-+    k->get_features = virtio_mmc_get_features;
-+}
-+
-+static const TypeInfo virtio_mmc_info = {
-+    .name = TYPE_VIRTIO_MMC,
-+    .parent = TYPE_VIRTIO_DEVICE,
-+    .instance_size = sizeof(VirtIOMMC),
-+    .class_init = virtio_mmc_class_init,
-+};
-+
-+static void virtio_register_types(void)
-+{
-+    type_register_static(&virtio_mmc_info);
-+}
-+
-+type_init(virtio_register_types)
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index 47baf00366..ef05d0d80d 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -68,6 +68,7 @@ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_IOMMU', if_true: files('virtio-iommu-pci.
- virtio_pci_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VHOST_VDPA_DEV', if_true: files('vdpa-dev-pci.c'))
- virtio_pci_ss.add(when: 'CONFIG_VIRTIO_MD', if_true: files('virtio-md-pci.c'))
-+virtio_pci_ss.add(when: 'CONFIG_VIRTIO_MMC', if_true: files('virtio-mmc-pci.c'))
- 
- specific_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
- 
-diff --git a/hw/virtio/virtio-mmc-pci.c b/hw/virtio/virtio-mmc-pci.c
-new file mode 100644
-index 0000000000..f0ed17d03b
---- /dev/null
-+++ b/hw/virtio/virtio-mmc-pci.c
-@@ -0,0 +1,85 @@
-+#include "qemu/osdep.h"
-+
-+#include "hw/virtio/virtio-pci.h"
-+#include "hw/virtio/virtio-mmc.h"
-+#include "hw/qdev-properties-system.h"
-+#include "qemu/typedefs.h"
-+#include "qapi/error.h"
-+#include "sysemu/block-backend-global-state.h"
-+
-+typedef struct VirtIOMMCPCI VirtIOMMCPCI;
-+
-+/*
-+ * virtio-mmc-pci: This extends VirtioPCIProxy.
-+ */
-+#define TYPE_VIRTIO_MMC_PCI "virtio-mmc-pci-base"
-+DECLARE_INSTANCE_CHECKER(VirtIOMMCPCI, VIRTIO_MMC_PCI,
-+                         TYPE_VIRTIO_MMC_PCI)
-+
-+struct VirtIOMMCPCI {
-+    VirtIOPCIProxy parent_obj;
-+    VirtIOMMC vdev;
-+    BlockBackend *blk;
-+};
-+
-+static void virtio_mmc_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
-+{
-+    VirtIOMMCPCI *vmmc = VIRTIO_MMC_PCI(vpci_dev);
-+    DeviceState *dev = DEVICE(&vmmc->vdev);
-+
-+    if (!vmmc->blk) {
-+        error_setg(errp, "Drive property not set");
-+        return;
-+    }
-+    VirtIOMMC *vmmc_dev = &vmmc->vdev;
-+    vmmc_dev->blk = vmmc->blk;
-+    blk_detach_dev(vmmc->blk, DEVICE(vpci_dev));
-+
-+    qdev_set_parent_bus(dev, BUS(&vpci_dev->bus), errp);
-+
-+    virtio_pci_force_virtio_1(vpci_dev);
-+    object_property_set_bool(OBJECT(dev), "realized", true, errp);
-+}
-+
-+static Property virtio_mmc_properties[] = {
-+    DEFINE_PROP_DRIVE("drive", VirtIOMMCPCI, blk),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void virtio_mmc_pci_class_init(ObjectClass *oc, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    VirtioPCIClass *virtio_pci_class = VIRTIO_PCI_CLASS(oc);
-+    PCIDeviceClass *pci_device_class = PCI_DEVICE_CLASS(oc);
-+
-+    device_class_set_props(dc, virtio_mmc_properties);
-+    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-+
-+    virtio_pci_class->realize = virtio_mmc_pci_realize;
-+
-+    pci_device_class->revision = VIRTIO_PCI_ABI_VERSION;
-+    pci_device_class->class_id = PCI_CLASS_MEMORY_FLASH;
-+}
-+
-+static void virtio_mmc_pci_instance_init(Object *obj)
-+{
-+    VirtIOMMCPCI *dev = VIRTIO_MMC_PCI(obj);
-+
-+    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
-+                                TYPE_VIRTIO_MMC);
-+}
-+
-+static const VirtioPCIDeviceTypeInfo virtio_mmc_pci_info = {
-+    .base_name     = TYPE_VIRTIO_MMC_PCI,
-+    .generic_name  = "virtio-mmc-pci",
-+    .instance_size = sizeof(VirtIOMMCPCI),
-+    .class_init    = virtio_mmc_pci_class_init,
-+    .instance_init = virtio_mmc_pci_instance_init,
-+};
-+
-+static void virtio_mmc_pci_register(void)
-+{
-+    virtio_pci_types_register(&virtio_mmc_pci_info);
-+}
-+
-+type_init(virtio_mmc_pci_register)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 7549094154..35f00f06aa 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -193,7 +193,8 @@ const char *virtio_device_names[] = {
-     [VIRTIO_ID_PARAM_SERV] = "virtio-param-serv",
-     [VIRTIO_ID_AUDIO_POLICY] = "virtio-audio-pol",
-     [VIRTIO_ID_BT] = "virtio-bluetooth",
--    [VIRTIO_ID_GPIO] = "virtio-gpio"
-+    [VIRTIO_ID_GPIO] = "virtio-gpio",
-+    [VIRTIO_ID_MMC] = "virtio-mmc",
- };
- 
- static const char *virtio_id_to_name(uint16_t device_id)
-diff --git a/include/hw/virtio/virtio-mmc.h b/include/hw/virtio/virtio-mmc.h
-new file mode 100644
-index 0000000000..a68f45d7cb
---- /dev/null
-+++ b/include/hw/virtio/virtio-mmc.h
-@@ -0,0 +1,20 @@
-+#pragma once
-+
-+#include "hw/virtio/virtio.h"
-+#include "hw/sd/sd.h"
-+#include "qemu/typedefs.h"
-+
-+#define VIRTIO_ID_MMC 42
-+
-+#define TYPE_VIRTIO_MMC "virtio-mmc-device"
-+#define VIRTIO_MMC(obj) \
-+    OBJECT_CHECK(VirtIOMMC, (obj), TYPE_VIRTIO_MMC)
-+#define VIRTIO_MMC_GET_PARENT_CLASS(obj) \
-+    OBJECT_GET_PARENT_CLASS(VIRTIO_MMC(obj), TYPE_VIRTIO_MMC)
-+
-+typedef struct VirtIOMMC {
-+    VirtIODevice parent_obj;
-+    VirtQueue *vq;
-+    SDBus sdbus;
-+    BlockBackend *blk;
-+} VirtIOMMC;
-diff --git a/include/standard-headers/linux/virtio_ids.h b/include/standard-headers/linux/virtio_ids.h
-index 7aa2eb7662..0c67fbf709 100644
---- a/include/standard-headers/linux/virtio_ids.h
-+++ b/include/standard-headers/linux/virtio_ids.h
-@@ -68,6 +68,7 @@
- #define VIRTIO_ID_AUDIO_POLICY		39 /* virtio audio policy */
- #define VIRTIO_ID_BT			40 /* virtio bluetooth */
- #define VIRTIO_ID_GPIO			41 /* virtio gpio */
-+#define VIRTIO_ID_MMC			42 /* virtio mmc */
- 
- /*
-  * Virtio Transitional IDs
+I think it may not be a problem to merge this series even if it performs
+slower at some criterias.. but I think we may still want to know when this
+should be used, or the good reason this should be merged (if it's not about
+it outperforms others).
+
+Thanks,
+
+> 
+> 
+> Bryan Zhang (4):
+>   meson: Introduce 'qatzip' feature to the build system
+>   migration: Add migration parameters for QATzip
+>   migration: Introduce 'qatzip' compression method
+>   tests/migration: Add integration test for 'qatzip' compression method
+> 
+>  hw/core/qdev-properties-system.c |   6 +-
+>  meson.build                      |  10 +
+>  meson_options.txt                |   2 +
+>  migration/meson.build            |   1 +
+>  migration/migration-hmp-cmds.c   |   8 +
+>  migration/multifd-qatzip.c       | 382 +++++++++++++++++++++++++++++++
+>  migration/multifd.h              |   1 +
+>  migration/options.c              |  57 +++++
+>  migration/options.h              |   2 +
+>  qapi/migration.json              |  38 +++
+>  scripts/meson-buildoptions.sh    |   6 +
+>  tests/qtest/meson.build          |   4 +
+>  tests/qtest/migration-test.c     |  35 +++
+>  13 files changed, 551 insertions(+), 1 deletion(-)
+>  create mode 100644 migration/multifd-qatzip.c
+> 
+> -- 
+> Yichen Wang
+> 
+
 -- 
-2.34.1
+Peter Xu
 
 
