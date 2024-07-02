@@ -4,81 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1259DC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9383BC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:29:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOfQV-00045K-5O; Tue, 02 Jul 2024 11:28:15 -0400
+	id 1sOfRD-0004t4-9w; Tue, 02 Jul 2024 11:28:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sOfQM-000422-Ui; Tue, 02 Jul 2024 11:28:07 -0400
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
- id 1sOfQK-0001lf-2E; Tue, 02 Jul 2024 11:28:05 -0400
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-5295eb47b48so5323784e87.1; 
- Tue, 02 Jul 2024 08:28:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719934080; x=1720538880; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+gT6JHgN0sAyJsyLWXnk43TCFTRRU21Xv8R1X9fzSkY=;
- b=Noka3Lf/yKDxUVfKVf3RwgEebidwj5dBtZYcq22Xvohrtb7xzBiNEFs3d+17cuYSO4
- FaZRX8s0yRgiRTkpbdNTVYTZ02H/5tP3RzAD8XSqAPZ7wGCNKjl4YwIJdsFPuWcIKbsL
- SxXJs6Oc9tQkHsuOVT3EUuj4ERxY6qE1wT5gbORgtm6ljrysN/i8LLGr2uXgg8Jj9wtT
- 4YU3IiDRNJl95EIikXdaNO5EU/GC819aLoqX0e/L9BJeSXxjbZa0f7D4XWzmwl/L4L+Y
- ScVpq+bmhPNphFFO+IVkeRXqcq0zF3K/Yl0M/KiL+v6vCEsYhQveP0gsu8zjFzUD3NtG
- xT9A==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOfRC-0004sk-4z
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:28:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOfR9-0001zH-Uu
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:28:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719934135;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MvJCpjClK9+6sgJ6euP8sx3+q2MufAr6TXeVQ1ajVIQ=;
+ b=byYXpRcCbfw0/oNjitUn/HAXtF0t28udBrkrx6wIMtOaCS4Aw8CAQfJEgZQ+OaBjD/jtgO
+ f5LzFjyQg+OKqPEJ3EFnizQrJHzJZmiy7v5oBpN9BABeuqIMKqTRXXoEB+uCZMsTb9iRw8
+ tO9VBrlwcaVFFJdvXMTw2Mrut/wMCEw=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-448-sCNiccUeMTqVhNpG3iqxFg-1; Tue, 02 Jul 2024 11:28:52 -0400
+X-MC-Unique: sCNiccUeMTqVhNpG3iqxFg-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2ec617a3355so43008281fa.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 08:28:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719934080; x=1720538880;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+gT6JHgN0sAyJsyLWXnk43TCFTRRU21Xv8R1X9fzSkY=;
- b=sPxggacY5vs1+hB8HyApEUH6XyPgjlc5B8Vcnz+GeYZAmsibt7d/NNCutIpKK0oZYz
- ZhMM9PjY9JdEJSBh9V/Mt61JyTnYp9rvY0KVtSmc85Ms7YoMwNOpZueJGxJYgFf9Y33F
- L634A5fSRqwFKR/jd/fa2bHzX4ynhYoZYDC6d/YTkd3alZkwysKJ3v682WaSRk5AxCa8
- ZLTTIPpfsfPkpwY+yOuFxSscgfEizLEsM6FmU0jHwo8zDCRv/qYvUoG2E+hiaC1jA3F8
- CgX/T87/UvFQhpd3AH0+jYJLBQd7Sa2Ct0l5pfHkUvNhhb+2AqKMek6FTwpg9XXpg9ls
- ZTlQ==
+ d=1e100.net; s=20230601; t=1719934130; x=1720538930;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MvJCpjClK9+6sgJ6euP8sx3+q2MufAr6TXeVQ1ajVIQ=;
+ b=LL3wJvrWS53SJG7scwGEzI3v4BGU1U6VxUZxuZMssVJqEfkW5P1gukZYRsvbmnW/Jb
+ C6d4DCl24ErX1XcnWe/ui51nhtNajU9mje7+nd906rf2Krd2a+5GFOdqMHTxUjm0fVPL
+ Gx/6b17czQ7cchp4P2UXxvPz/jtIRZnOy9FB8GMabTp6BLvrs9uGFKRP4TfujRaJ6BDO
+ +I203Faj/yF4FWxQ4mW0YOhyK9Ao88XUirtEYcnt4dUnXHCmaFYxjhpdrGtEjVzAP0Cy
+ 6mMV2WqSUICHxEeVyfn8VnG7lV6+bJ3I1Sf5yxuXXZiI9BcTa6SgNx27Yuzcv9P8DmER
+ 19ww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUG97mImpqh3N0/w9UoEQ14wvCmsxZ2uswE089dXLAwPG7waFg9gCJ7fgtg1bHluHsvGJTYi0aOc/eoE7yE/7mVtbM4/kzZWDrwVGb3nAfIeJ6My8oRjMIKDWU=
-X-Gm-Message-State: AOJu0Yw07aQ14vW3JZzMRQf6ZTUY51Fv8hHN53DKRnbPVOW+LEMkWZM0
- 5aberUfQL0yqG21PgGeoUQW65CvUpDMknSmrlTNOUb5Mkjm+0NU=
-X-Google-Smtp-Source: AGHT+IHVKi1YvQ1lZU0y0PCKZAAk5xsp6uAXKuz2kytUqMCJqUzTbAf9ndCebniMWOR1eEbSgN1owg==
-X-Received: by 2002:a2e:a910:0:b0:2ee:7b88:7f3 with SMTP id
- 38308e7fff4ca-2ee7b880869mr1758911fa.12.1719934080072; 
- Tue, 02 Jul 2024 08:28:00 -0700 (PDT)
-Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ AJvYcCV1kNrvxVq632zZa8/ccibMomNWOFOt0Dlv3QZeL3dMrk/0Iz5rBQ7+TUt3ItIVmQIbkT3O2siNCLniLocmhnRhEiWtgqg=
+X-Gm-Message-State: AOJu0YyQJbz11DSxxYcOXsgpKRd5O5209KJGYhk28DhVd/tuQCJBEBWV
+ zxdWXl+RtwAWQpaioqS84VRx1YsH+IgJGnGfEDMwjGJH30HRa1udgMrfgWYQrjpnIzqhFipQP+8
+ 6H8+Q26tndw83iZauaGbpnFJJ59k8GxbgXcZWve4hiTyEw2cfEkvS
+X-Received: by 2002:a2e:a813:0:b0:2ee:7a3e:4728 with SMTP id
+ 38308e7fff4ca-2ee7a3e48d9mr7438851fa.53.1719934130489; 
+ Tue, 02 Jul 2024 08:28:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHO8+dfuTwG1HQFlgaAK8NgjC3BGLBZ6pn/h0PnofuYfRPJWBXOQYhY/McBAqSJ3hn6O4c+Wg==
+X-Received: by 2002:a2e:a813:0:b0:2ee:7a3e:4728 with SMTP id
+ 38308e7fff4ca-2ee7a3e48d9mr7438611fa.53.1719934129795; 
+ Tue, 02 Jul 2024 08:28:49 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af3f14csm204464925e9.6.2024.07.02.08.27.59
+ 5b1f17b1804b1-4257d0d38bbsm119417465e9.38.2024.07.02.08.28.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 08:27:59 -0700 (PDT)
-From: Zheyu Ma <zheyuma97@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v2] hw/char/pl011: Avoid division-by-zero in
- pl011_get_baudrate()
-Date: Tue,  2 Jul 2024 17:27:50 +0200
-Message-Id: <20240702152750.3017426-1-zheyuma97@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ Tue, 02 Jul 2024 08:28:49 -0700 (PDT)
+Date: Tue, 2 Jul 2024 11:28:46 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: Yi Liu <yi.l.liu@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "peterx@redhat.com" <peterx@redhat.com>
+Subject: Re: [PATCH ats_vtd v5 00/22] ATS support for VT-d
+Message-ID: <20240702112821-mutt-send-email-mst@kernel.org>
+References: <20240603055917.18735-1-clement.mathieu--drif@eviden.com>
+ <20240701160122-mutt-send-email-mst@kernel.org>
+ <AM8PR07MB76020A044539A40485F91F0A86DC2@AM8PR07MB7602.eurprd07.prod.outlook.com>
+ <20240702081352-mutt-send-email-mst@kernel.org>
+ <52efc1b0-5451-4e9e-a05d-4db360d3c573@intel.com>
+ <5894d125-0365-4f1a-91f3-0dbb56c4e4cc@eviden.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=zheyuma97@gmail.com; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <5894d125-0365-4f1a-91f3-0dbb56c4e4cc@eviden.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,69 +112,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In pl011_get_baudrate(), when we calculate the baudrate we can
-accidentally divide by zero. This happens because although (as the
-specification requires) we treat UARTIBRD = 0 as invalid, we aren't
-correctly limiting UARTIBRD and UARTFBRD values to the 16-bit and 6-bit
-ranges the hardware allows, and so some non-zero values of UARTIBRD can
-result in a zero divisor.
+On Tue, Jul 02, 2024 at 03:27:13PM +0000, CLEMENT MATHIEU--DRIF wrote:
+> 
+> On 02/07/2024 15:42, Yi Liu wrote:
+> > Caution: External email. Do not open attachments or click links,
+> > unless this email comes from a known sender and you know the content
+> > is safe.
+> >
+> >
+> > On 2024/7/2 20:15, Michael S. Tsirkin wrote:
+> >> On Tue, Jul 02, 2024 at 05:57:57AM +0000, CLEMENT MATHIEU--DRIF wrote:
+> >>>
+> >>>
+> >>> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+> >>>
+> >>> From: Michael S. Tsirkin <mst@redhat.com>
+> >>> Sent: 01 July 2024 22:02
+> >>> To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+> >>> Cc: qemu-devel@nongnu.org <qemu-devel@nongnu.org>; jasowang@redhat.com
+> >>> <jasowang@redhat.com>; zhenzhong.duan@intel.com
+> >>> <zhenzhong.duan@intel.com>;
+> >>> kevin.tian@intel.com <kevin.tian@intel.com>; yi.l.liu@intel.com
+> >>> <yi.l.liu@intel.com>; joao.m.martins@oracle.com
+> >>> <joao.m.martins@oracle.com>;
+> >>> peterx@redhat.com <peterx@redhat.com>
+> >>> Subject: Re: [PATCH ats_vtd v5 00/22] ATS support for VT-d
+> >>>
+> >>> Caution: External email. Do not open attachments or click links,
+> >>> unless this
+> >>> email comes from a known sender and you know the content is safe.
+> >>>
+> >>>
+> >>> On Mon, Jun 03, 2024 at 05:59:38AM +0000, CLEMENT MATHIEU--DRIF wrote:
+> >>>> From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> >>>>
+> >>>> This series belongs to a list of series that add SVM support for VT-d.
+> >>>>
+> >>>> As a starting point, we use the series called 'intel_iommu: Enable
+> >>>> stage-1
+> >>> translation' (rfc2) by Zhenzhong Duan and Yi Liu.
+> >>>>
+> >>>> Here we focus on the implementation of ATS support in the IOMMU and
+> >>>> on a
+> >>> PCI-level
+> >>>> API for ATS to be used by virtual devices.
+> >>>>
+> >>>> This work is based on the VT-d specification version 4.1 (March 2023).
+> >>>> Here is a link to a GitHub repository where you can find the following
+> >>> elements :
+> >>>>      - Qemu with all the patches for SVM
+> >>>>          - ATS
+> >>>>          - PRI
+> >>>>          - Device IOTLB invalidations
+> >>>>          - Requests with already translated addresses
+> >>>>      - A demo device
+> >>>>      - A simple driver for the demo device
+> >>>>      - A userspace program (for testing and demonstration purposes)
+> >>>>
+> >>>> https://eur06.safelinks.protection.outlook.com/?url=
+> >>> https%3A%2F%2Fgithub.com%2FBullSequana%2FQemu-in-guest-SVM-demo&data=
+> >>> 05%7C02%7Cclement.mathieu--drif%40eviden.com%7Cf5759aefcc5f4e7d4e6c08dc9a08d29a%7C7d1c77852d8a437db8421ed5d8fbe00a%7C0%7C0%7C638554609882544195%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C
+> >>>
+> >>> &sdata=2Gza1VD7hKr1Sx3fOLoRh6tk3taSPKTn5nfimhPLz70%3D&reserved=0
+> >>>
+> >>> I will merge, but could you please resend this using git format-patch
+> >>> for formatting?  The patches have trailing CRs and don't show which
+> >>> sha1
+> >>> they are for, which makes re-applying them after each change painful.
+> >>>
+> >>>
+> >>>
+> >>> Hi Michael,
+> >>> I sent the series again without the trailing new line.
+> >>> Tell me if it's better.
+> >>>
+> >>> Is Zhenzhong's FLTS series merged? If not, it might the cause of the
+> >>> sha1
+> >>> problem you are facing
+> >>
+> >> I don't think I have FLTS in any queue.
+> >>
+> >> If your series has a dependency please specify this in
+> >> the cover letter.
+> >>
+> >> Alternatively just include the dependency in the posting.
+> >
+> > seems this is the dependency.
+> >
+> > https://lore.kernel.org/qemu-devel/20240522062313.453317-1-zhenzhong.duan@intel.com/#t
+> >
+> >
+> Sorry if I didn't make it clear.
+> 
+> As mentioned in the cover letter, this series is based on Zhenzhong's
+> and Yi's FLTS implementation which (AFAIK) has only be posted as an RFC
+> so far (keep me up to date please).
+> 
+> v5 is based on that branch :
+> https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv2
 
-Enforce the correct register field widths on guest writes and on inbound
-migration to avoid the division by zero.
+Ah, OK so this is not for merge yet until that patchset is ready.
 
-ASAN log:
-==2973125==ERROR: AddressSanitizer: FPE on unknown address 0x55f72629b348
-(pc 0x55f72629b348 bp 0x7fffa24d0e00 sp 0x7fffa24d0d60 T0)
-    #0 0x55f72629b348 in pl011_get_baudrate hw/char/pl011.c:255:17
-    #1 0x55f726298d94 in pl011_trace_baudrate_change hw/char/pl011.c:260:33
-    #2 0x55f726296fc8 in pl011_write hw/char/pl011.c:378:9
 
-Reproducer:
-cat << EOF | qemu-system-aarch64 -display \
-none -machine accel=qtest, -m 512M -machine realview-pb-a8 -qtest stdio
-writeq 0x1000b024 0xf8000000
-EOF
-
-Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
----
-Changes in v2:
-- Enforce the correct register field widths on writes to both UARTIBRD
-  and UARTFBRD registers.
-- Mask UARTIBRD to 16 bits and UARTFBRD to 6 bits in the pl011_post_load
-  function to prevent division by zero during inbound migration.
----
- hw/char/pl011.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-index 8753b84a84..ba5f7cfbda 100644
---- a/hw/char/pl011.c
-+++ b/hw/char/pl011.c
-@@ -374,11 +374,11 @@ static void pl011_write(void *opaque, hwaddr offset,
-         s->ilpr = value;
-         break;
-     case 9: /* UARTIBRD */
--        s->ibrd = value;
-+        s->ibrd = value & 0xffff;
-         pl011_trace_baudrate_change(s);
-         break;
-     case 10: /* UARTFBRD */
--        s->fbrd = value;
-+        s->fbrd = value & 0x3f;
-         pl011_trace_baudrate_change(s);
-         break;
-     case 11: /* UARTLCR_H */
-@@ -531,6 +531,9 @@ static int pl011_post_load(void *opaque, int version_id)
-         s->read_pos = 0;
-     }
- 
-+    s->ibrd &= 0xffff;
-+    s->fbrd &= 0x3f;
-+
-     return 0;
- }
- 
--- 
-2.34.1
+> >>
+> >>
+> >>
+> >>
+> >>> Thanks
+> >>>> cmd
+> >>>
+> >>>
+> >>>> v2
+> >>>>      - handle huge pages better by detecting the page table level
+> >>>> at which the
+> >>> translation errors occur
+> >>>>      - Changes after review by ZhenZhong Duan :
+> >>>>        - Set the access bit after checking permissions
+> >>>>        - helper for PASID and ATS : make the commit message more
+> >>>> accurate
+> >>> ('present' replaced with 'enabled')
+> >>>>        - pcie_pasid_init: add PCI_PASID_CAP_WIDTH_SHIFT and use it
+> >>>> instead of
+> >>> PCI_EXT_CAP_PASID_SIZEOF for shifting the pasid width when preparing
+> >>> the
+> >>> capability register
+> >>>>        - pci: do not check pci_bus_bypass_iommu after calling
+> >>> pci_device_get_iommu_bus_devfn
+> >>>>        - do not alter formatting of IOMMUTLBEntry declaration
+> >>>>        - vtd_iova_fl_check_canonical : directly use s->aw_bits
+> >>>> instead of aw
+> >>> for the sake of clarity
+> >>>>
+> >>>> v3
+> >>>>      - rebase on new version of Zhenzhong's flts implementation
+> >>>>      - fix the atc lookup operation (check the mask before
+> >>>> returning an entry)
+> >>>>      - add a unit test for the ATC
+> >>>>      - store a user pointer in the iommu notifiers to simplify the
+> >>> implementation of svm devices
+> >>>>      Changes after review by Zhenzhong :
+> >>>>        - store the input pasid instead of rid2pasid when returning
+> >>>> an entry
+> >>> after a translation
+> >>>>        - split the ATC implementation and its unit tests
+> >>>>
+> >>>> v4
+> >>>>      Changes after internal review
+> >>>>        - Fix the nowrite optimization, an ATS translation without
+> >>>> the nowrite
+> >>> flag should not fail when the write permission is not set
+> >>>>
+> >>>> v5
+> >>>>      Changes after review by Philippe :
+> >>>>        - change the type of 'level' to unsigned in vtd_lookup_iotlb
+> >>>>
+> >>>>
+> >>>>
+> >>>> Clément Mathieu--Drif (22):
+> >>>>    intel_iommu: fix FRCD construction macro.
+> >>>>    intel_iommu: make types match
+> >>>>    intel_iommu: return page walk level even when the translation fails
+> >>>>    intel_iommu: do not consider wait_desc as an invalid descriptor
+> >>>>    memory: add permissions in IOMMUAccessFlags
+> >>>>    pcie: add helper to declare PASID capability for a pcie device
+> >>>>    pcie: helper functions to check if PASID and ATS are enabled
+> >>>>    intel_iommu: declare supported PASID size
+> >>>>    pci: cache the bus mastering status in the device
+> >>>>    pci: add IOMMU operations to get address spaces and memory regions
+> >>>>      with PASID
+> >>>>    memory: store user data pointer in the IOMMU notifiers
+> >>>>    pci: add a pci-level initialization function for iommu notifiers
+> >>>>    intel_iommu: implement the get_address_space_pasid iommu operation
+> >>>>    intel_iommu: implement the get_memory_region_pasid iommu operation
+> >>>>    memory: Allow to store the PASID in IOMMUTLBEntry
+> >>>>    intel_iommu: fill the PASID field when creating an instance of
+> >>>>      IOMMUTLBEntry
+> >>>>    atc: generic ATC that can be used by PCIe devices that support SVM
+> >>>>    atc: add unit tests
+> >>>>    memory: add an API for ATS support
+> >>>>    pci: add a pci-level API for ATS
+> >>>>    intel_iommu: set the address mask even when a translation fails
+> >>>>    intel_iommu: add support for ATS
+> >>>>
+> >>>>   hw/i386/intel_iommu.c                     | 142 +++++-
+> >>>>   hw/i386/intel_iommu_internal.h            |   6 +-
+> >>>>   hw/pci/pci.c                              | 127 +++++-
+> >>>>   hw/pci/pcie.c                             |  42 ++
+> >>>>   include/exec/memory.h                     |  51 ++-
+> >>>>   include/hw/i386/intel_iommu.h             |   2 +-
+> >>>>   include/hw/pci/pci.h                      | 101 +++++
+> >>>>   include/hw/pci/pci_device.h               |   1 +
+> >>>>   include/hw/pci/pcie.h                     |   9 +-
+> >>>>   include/hw/pci/pcie_regs.h                |   3 +
+> >>>>   include/standard-headers/linux/pci_regs.h |   1 +
+> >>>>   system/memory.c                           |  20 +
+> >>>>   tests/unit/meson.build                    |   1 +
+> >>>>   tests/unit/test-atc.c                     | 527
+> >>>> ++++++++++++++++++++++
+> >>>>   util/atc.c                                | 211 +++++++++
+> >>>>   util/atc.h                                | 117 +++++
+> >>>>   util/meson.build                          |   1 +
+> >>>>   17 files changed, 1330 insertions(+), 32 deletions(-)
+> >>>>   create mode 100644 tests/unit/test-atc.c
+> >>>>   create mode 100644 util/atc.c
+> >>>>   create mode 100644 util/atc.h
+> >>>>
+> >>>> --
+> >>>> 2.45.1
+> >>>
+> >>
+> >
+> > --
+> > Regards,
+> > Yi Liu
 
 
