@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F7FC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074C3C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeEN-0006ks-4f; Tue, 02 Jul 2024 10:11:39 -0400
+	id 1sOeST-0002im-D0; Tue, 02 Jul 2024 10:26:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeE0-0005Qj-EL
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeDx-0000Sf-1q
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929472;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YWXH9YhJGBTUPtLIg1EJaieR/oMq54SMMzeEyf0UDBU=;
- b=he3z1wNg8IJZhKH/NOiIMXHL9ieV9fUrH9BEVf7AVV4FXRDT/rP09FSogJsvXcXHG8edZL
- 2CQV2+fFxx5AfxuPIQjWdtb+IcCQPuMipa/ES134DpXRstYuYghkJSUd+d+2wlXn25BXxL
- 7goUWmE7mgxv8ETbW0tORdFHPBseo2c=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-679-nKzbKYCBNK6vvN7P2zsauw-1; Tue, 02 Jul 2024 10:11:11 -0400
-X-MC-Unique: nKzbKYCBNK6vvN7P2zsauw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42490ae735dso39307985e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sOeSM-0002X1-UZ
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:26:07 -0400
+Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1sOeSG-0003Yw-9m
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:26:05 -0400
+Received: by mail-yb1-xb2b.google.com with SMTP id
+ 3f1490d57ef6-e026a2238d8so4110068276.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:25:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719930356; x=1720535156;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7dwLDHsLu2o22t8xW0ACP/VA85rNwKuKRt0rC3E7scM=;
+ b=zBOKlBkWWiL8dUnL176VS6p21V4sx19K0eC/9aVleddL4gxVhnWBuw2htZoxKpkVn4
+ g/vJTbg3DrIfEABSMGWpgMVAgYjcABsCUtnXQXt1THUSl5tIU36mRcnkPSo3mWJQbEQQ
+ 6DKIklvNUFinXmdxOMxjXYQUVEVN9m4L2MI6iids8Fk8B9kaFNBQMoXFN0MvSzC6gGuB
+ Kc9lLrG9264iMNwjrlv6+MLpF78lbpsH0JuZHXmYCoy1t7wkDhhIXTFxbTa1lqYciu8S
+ ty84eV8/qwFTcCnBs53NlS81XCoPyPsRG0RV9AgvGktiHlHyWgLL08xu4KtkK6av+fvs
+ h6Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929469; x=1720534269;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YWXH9YhJGBTUPtLIg1EJaieR/oMq54SMMzeEyf0UDBU=;
- b=jeH2BbrpBsesM6IAyomOZL2mx9+uMa2Id2mIkETqb7XgNMVK4Smzs6gMFDmw5sysMB
- 90M4pkokvbHssk+0qRfEtnV8KJsKLi1JZa80BOykAHbbiwIfZNbX9RCDouJmkg5NRaXQ
- dit6b5ibFwN2MSqlb1Zl+fcKbUeYJG3/K0vSPNEB7r98+yZ6gQKNuRv9J5npibhGFPmB
- 36Kqi/orTV8U0xzSY2ivkfneSOvmAFLTW7CG9JCXbz0rUyvWbJFptjpS6opTsW/bfZkG
- FtxbjNwOvtVj8wH2yiJzoj6b+70sYfuyJ9vJw4UJRtd6kxgSpHvk+YbHWLDrdT0QDFed
- cjHA==
-X-Gm-Message-State: AOJu0YzZw0A0Kz/1tTgDRGJWsD7prNaN1AhXtPrgJkofTlXd4ZANWnFm
- LLYHHzFHv5BPY+QavZnDj2uNiEt5JsDZeRV18pdI/ZwSxrpjU9yneXkkFSP+7wXFN/q1veAnO5m
- sRvbZjXRfChAEYBgMxFik5y/Y79P6lj7fKRv+lskbBdnf3Zs0HuXKX0n2MzY6yDPe7Mxcfdav55
- 2v3i06sTttz35NmUVf3BWkzrFxSIqWZA==
-X-Received: by 2002:adf:f18b:0:b0:361:dd0c:678 with SMTP id
- ffacd0b85a97d-367756bc471mr6554379f8f.36.1719929469638; 
- Tue, 02 Jul 2024 07:11:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGFkW784N+QYRpKZGuvfSqwvMm0SkFb2EIMkyD6K8g1BQsf04aP1J9tDnDwBxPlOGqHd6nUWg==
-X-Received: by 2002:adf:f18b:0:b0:361:dd0c:678 with SMTP id
- ffacd0b85a97d-367756bc471mr6554348f8f.36.1719929468985; 
- Tue, 02 Jul 2024 07:11:08 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3678e5c2b08sm805506f8f.71.2024.07.02.07.11.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:11:08 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:11:06 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, jasowang@redhat.com,
- qemu-stable@nongnu.org, Xoykie <xoykie@gmail.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
-Subject: [PULL 80/91] virtio: remove virtio_tswap16s() call in
- vring_packed_event_read()
-Message-ID: <5f9b2cdb0e4bc7eab026bd5ee8ab120f327b86a8.1719929191.git.mst@redhat.com>
-References: <cover.1719929191.git.mst@redhat.com>
+ d=1e100.net; s=20230601; t=1719930356; x=1720535156;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7dwLDHsLu2o22t8xW0ACP/VA85rNwKuKRt0rC3E7scM=;
+ b=qt9CGl3JsIs0B7/eb7TyN3TlOL3g/gkVek8w6GQcot0fSIFOe7C6pgH5eE9AlXBmYQ
+ OGXrZyeKBRQ2o+CcgbrDawcfm6Cr4xNdw3FXDd5zUVLcLvkeS2poYozDxfQrlDHv3fup
+ MnilNQCzh/MbjFTUf5CRrAIf5KrbeDmiC4nJr0QPwncdQedoSBRaXpG+X3AHYLUGpQf3
+ gfTWaiSMiYTCCbZb/vbXa+NtI/j59nsSTERxMnE+2RIBTPqHTtn5fKqzsUpB+j3jrRFB
+ OoPDhme1ccnPHbCpaecTBniQaQOdBYcurhx5d+z+v6SPiZXakxenjndgcJs1sn9ubraD
+ epjg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhpw3UNpnJ3XTJPh6CJjQr5APkgnlNQDxN3SRi8LZMSlR3ydcuuHTN8AvAeSBIvkKLiLwio+vTKPKgelg4l3OFd2ZGqwU=
+X-Gm-Message-State: AOJu0YwRy0vRLpZ7M8KIUgSricjrkxd4SViOvcRgYvOa28/bXtF72uPX
+ tugnvYI+eZo1+z3RqUQTWCtJVbl/1uNX1O8+EefD1b3Igk8g3jjYsn2rVd5a3b+ilqTkrm8fCmk
+ ljABDnYd7fs+9iPnTBqDRpg7gLZIOYUZiyWw1
+X-Google-Smtp-Source: AGHT+IH4CuvTtR1Tf21I0bPPBJXqxpgpGQDTpdXdx1iFfsRcsQPpuFH/fUDqNswTeymyKv/a4MHvygyiYIVSbT4DhTM=
+X-Received: by 2002:a05:690c:d82:b0:631:78a1:bb5 with SMTP id
+ 00721157ae682-64c73419043mr97958637b3.35.1719930355838; Tue, 02 Jul 2024
+ 07:25:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1719929191.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240627-cursor-v2-0-c3cd3ee35616@daynix.com>
+ <20240627-cursor-v2-3-c3cd3ee35616@daynix.com>
+ <CAAibmn0S+BvotSV6Sw-d17ybCu10a6Hgyu2sEUrJrzejHs9WZA@mail.gmail.com>
+ <56d0c526-5d41-44a5-a737-e4eda60f61e7@linaro.org>
+In-Reply-To: <56d0c526-5d41-44a5-a737-e4eda60f61e7@linaro.org>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Tue, 2 Jul 2024 16:25:43 +0200
+Message-ID: <CAAibmn07-dRS05rgh9S2pV619AWpA00GFnnPiajCNs0tNOd72Q@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] ui/cocoa: Add cursor composition
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000e61028061c447d9e"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::b2b;
+ envelope-from=phil@philjordan.eu; helo=mail-yb1-xb2b.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,47 +98,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+--000000000000e61028061c447d9e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Commit d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-switched using of address_space_read_cached() to virito_lduw_phys_cached()
-to access packed descriptor event.
+On Tue, 2 Jul 2024 at 16:20, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+>
+wrote:
 
-When we used address_space_read_cached(), we needed to call
-virtio_tswap16s() to handle the endianess of the field, but
-virito_lduw_phys_cached() already handles it internally, so we no longer
-need to call virtio_tswap16s() (as the commit had done for `off_wrap`,
-but forgot for `flags`).
+> Hi Phil,
+>
+> On 2/7/24 15:19, Phil Dennis-Jordan wrote:
+>
+> > I'm still keen on NSCursor support for absolute pointing mode though, s=
+o
+> > I can experiment with doing a better job of cleaning it up as part v3 o=
+f
+> > that patch series.
+>
+> Do we need a v3, or can you clean on top?
+>
 
-Fixes: d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-Cc: jasowang@redhat.com
-Cc: qemu-stable@nongnu.org
-Reported-by: Xoykie <xoykie@gmail.com>
-Link: https://lore.kernel.org/qemu-devel/CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240701075208.19634-1-sgarzare@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- hw/virtio/virtio.c | 1 -
- 1 file changed, 1 deletion(-)
+Sorry, I meant v3 of my NSCursor patch, not this series.
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 3678ec2f88..583a224163 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -323,7 +323,6 @@ static void vring_packed_event_read(VirtIODevice *vdev,
-     /* Make sure flags is seen before off_wrap */
-     smp_rmb();
-     e->off_wrap = virtio_lduw_phys_cached(vdev, cache, off_off);
--    virtio_tswap16s(vdev, &e->flags);
- }
- 
- static void vring_packed_off_wrap_write(VirtIODevice *vdev,
--- 
-MST
+https://patchew.org/QEMU/20240625134931.92279-1-phil@philjordan.eu/
 
+(That in turn uses the CGImage for the NSCursor as well)
+
+So from my point of view, this series can be merged, and I'll submit v3 of
+my series, which will aim to clean up the CGImage code as well as
+implementing NSCursor support in absolute pointing mode.
+
+Thanks!
+Phil
+
+--000000000000e61028061c447d9e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Tue, 2 Jul 2024 at 16:20, Philippe Mathieu-Daud=C3=A9 &l=
+t;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br>=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Phil,<br>
+<br>
+On 2/7/24 15:19, Phil Dennis-Jordan wrote:<br>
+<br>
+&gt; I&#39;m still keen on NSCursor support for absolute pointing mode thou=
+gh, so <br>
+&gt; I can experiment with doing a better job of cleaning it up as part v3 =
+of <br>
+&gt; that patch series.<br>
+<br>
+Do we need a v3, or can you clean on top?<br></blockquote><div><br></div><d=
+iv>Sorry, I meant v3 of my NSCursor patch, not this series.<br></div><div><=
+br></div><div><a href=3D"https://patchew.org/QEMU/20240625134931.92279-1-ph=
+il@philjordan.eu/">https://patchew.org/QEMU/20240625134931.92279-1-phil@phi=
+ljordan.eu/</a></div><div><br></div><div>(That in turn uses the CGImage for=
+ the NSCursor as well)</div><div><br></div><div>So from my point of view, t=
+his series can be merged, and I&#39;ll submit v3 of my series, which will a=
+im to clean up the CGImage code as well as implementing NSCursor support in=
+ absolute pointing mode.</div><div><br></div><div>Thanks!</div><div>Phil</d=
+iv><div><br></div></div></div>
+
+--000000000000e61028061c447d9e--
 
