@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD510C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73BBDC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOVfy-0006kE-6y; Tue, 02 Jul 2024 01:03:34 -0400
+	id 1sOVfg-00050W-MW; Tue, 02 Jul 2024 01:03:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVfw-0006Zt-Qq
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:03:32 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVff-0004oV-D8
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:03:15 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVfu-0007jH-Rx
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:03:32 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-36743abace4so3058669f8f.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:03:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVfZ-0007fi-9N
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:03:15 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-42578fe58a6so17745495e9.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:03:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719896607; x=1720501407; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719896587; x=1720501387; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gqSkcaHksS2cqMSoL7Eku8EtIEifuvQ5Pl0L19IlD0A=;
- b=B20hqhmICiiAkIiiB3zmghz23/lx1cZ9fsATCi+BbR+QzPjjK0Z3jrxAmbqZRJ2vRb
- 0FOEaxnEgyYxmQCvlLN19mvcLbvKeuutFg+EJRr6kVReiWms5FN1PK9fTAGQxXVUmsOa
- FCvZymuSp0cDamW6Hzt4GcjDba730lnVVla40TQYxlCrpClCAQ8unukRBpaOXzRD/ZnA
- /y7yyRCl6ftKQNAaJxufEMZnZ99xQwwhXHxDR+1+ClEt6jWZK7As2xtLC53kFFJ+DeP/
- QcEDjWqbiJwrvjiq9LbsP3UPXE7ojXPbwEkssem0IOpkuJON1AuTzp9YhzKtrtI36fft
- lm3A==
+ bh=Mkxj1rf41yYS/L7V0n38PLpXQTaW+pjDKubAqykoIKI=;
+ b=geV+eAD0RLpWBUkU8Evm1ve4vkBOwLy3P7G13J+g0ZX1vZa9sB4bzMVX7lRV6jWg2c
+ 5AQIlJv8sSh5Jxjs94SCaLwo8JYRCVrvoUV4G8Dro3dv7il8xSvf8A0+eDYuh97e1m/Z
+ wCDBLbeAlAM2m99yKmu6amQ2GPiTkcgdvffCK3SKl3OQu942kwE8vJBuPwVShkaE+uYY
+ NMTEXIekPKqA9Z+rcUZ/LG7Iz3odGCxJhjeUdcN3MQpHQeJyu0wNzXUqbUpbxcrYaUiJ
+ 9qsPuSn0oeUJlzjhGwnFFjuzBUKgUGinuz5i1dceU8F5/Y+GNAgcPd4SlkzvAGAT/7xq
+ bydw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719896607; x=1720501407;
+ d=1e100.net; s=20230601; t=1719896587; x=1720501387;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gqSkcaHksS2cqMSoL7Eku8EtIEifuvQ5Pl0L19IlD0A=;
- b=O67VmY5/h93uTViBULVI0far57HI3p/On7Eqie4EpdfutieUD+svqUawcMW38YVVxM
- WhQ6vCFDz/11jc4dPWtAiNgLz1zHpy3q70jeFR6VJD5nwEczuxjZmNL2Jz6UehOcJBFD
- 4H6wYl1njp30m3IAivcypWj3dYUHWvyepSH68HAMBS6drDIePP3Cuymka62YhD8Eqv2M
- j3J6CJlKY9JMLga2QLO4C3tP5cWdg9YdL2jPhXoRIpFgUfAFr8lcVn59HhGBb6ybSzSV
- A+6lXO3UAr8TCFk9JShDXQAmvj7RNOtfBbfVjKcyuaiQ937bBE8nlH3jK5dS1rRdur5e
- wOcQ==
-X-Gm-Message-State: AOJu0YxwSyQsTFn6g8AW5bpNRh37QPugHUxpj5ccJos33l1CpIht7KoC
- x1XqEt0gkloJBRkLpf/ZQv3kBx0hsTHjTpzXVOwj6HAx3GA1eY1CB59glBXzEuztX5AEqLwd+KH
- G
-X-Google-Smtp-Source: AGHT+IGumnLFzdNEvjn/7mA/AIS+is9JD1ebCdr7fsuOUDOjfmCSSAGBVPlDTGu8nIXCBV9VBODgAA==
-X-Received: by 2002:a5d:5987:0:b0:363:776:821b with SMTP id
- ffacd0b85a97d-3676045b4a0mr10874244f8f.0.1719896606899; 
- Mon, 01 Jul 2024 22:03:26 -0700 (PDT)
+ bh=Mkxj1rf41yYS/L7V0n38PLpXQTaW+pjDKubAqykoIKI=;
+ b=l9e4yVMf92A5/gbOappSxNHVYZKvfS3hvB9wAYcMGU1R71fzaC+jFR+eKp8fY+LFG+
+ 6jWhP9jM5VnEYHwQbbFrq/NY3JT7jWIwS6W+Qy73iuJcJzI+dSJsC25opxWX3BeSb2a6
+ IUQESIP7ptCI5D3ZV3IX0oW8ld+Bd1mj+2UB7CSqBUSO09OXg9itDUcVcjcYCnOiYlat
+ W1D5hNrACB2Q9FxIK9vqTacOXlC21s9Mk96BebZ0mjt5oIkskaOUDA24l8hdxOqUURly
+ eeWTWivQJWz7BNxCgTKq+uC/89S942qdxzBvQEXmqypj+d1+oQtC5GBmxDqlkIOJ0A08
+ +4cg==
+X-Gm-Message-State: AOJu0Yykoij7fzImrbPMFUtcr5zd5R/NXDypiUGL98iAoEXsrg0EzxzS
+ FwcePNpIwd944MDJlObrPHolIc/uX5lrilylTuV0sCMRt+5k2B2KKz8WwaaFjUBJee+3dwiKpQ0
+ h
+X-Google-Smtp-Source: AGHT+IH5kUcA4G4IbzV3uaFl63nOwY9ynZtozkwdklUl4h+B+mqduwp2A/7zkmwE/YXXfcyOJcAXPg==
+X-Received: by 2002:a05:600c:2157:b0:425:5ea7:1f7e with SMTP id
+ 5b1f17b1804b1-4257a034e49mr59240875e9.10.1719896587370; 
+ Mon, 01 Jul 2024 22:03:07 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0fc4c9sm11968503f8f.86.2024.07.01.22.03.25
+ 5b1f17b1804b1-4256b068d1fsm180045105e9.23.2024.07.01.22.03.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 01 Jul 2024 22:03:26 -0700 (PDT)
+ Mon, 01 Jul 2024 22:03:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 21/22] net/vmnet: Drop ifdef for macOS versions older than 12.0
-Date: Tue,  2 Jul 2024 07:01:11 +0200
-Message-ID: <20240702050112.35907-22-philmd@linaro.org>
+Subject: [PULL 18/22] hvf: Drop ifdef for macOS versions older than 12.0
+Date: Tue,  2 Jul 2024 07:01:08 +0200
+Message-ID: <20240702050112.35907-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240702050112.35907-1-philmd@linaro.org>
 References: <20240702050112.35907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,156 +110,69 @@ https://www.apple.com/newsroom/2021/10/macos-monterey-is-now-available/
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240629-macos-v1-4-6e70a6b700a0@daynix.com>
+Message-ID: <20240629-macos-v1-1-6e70a6b700a0@daynix.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- net/vmnet-host.c    | 24 +-----------------------
- net/vmnet-shared.c  | 13 -------------
- net/vmnet-bridged.m | 13 +------------
- net/vmnet-common.m  |  3 ---
- 4 files changed, 2 insertions(+), 51 deletions(-)
+ accel/hvf/hvf-all.c   |  3 ---
+ target/i386/hvf/hvf.c | 23 +----------------------
+ 2 files changed, 1 insertion(+), 25 deletions(-)
 
-diff --git a/net/vmnet-host.c b/net/vmnet-host.c
-index 1f95f7343a..49fb25c224 100644
---- a/net/vmnet-host.c
-+++ b/net/vmnet-host.c
-@@ -21,31 +21,13 @@
- static bool validate_options(const Netdev *netdev, Error **errp)
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index c008dc2f1e..6ca0850b20 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -23,10 +23,7 @@ const char *hvf_return_string(hv_return_t ret)
+     case HV_NO_RESOURCES: return "HV_NO_RESOURCES";
+     case HV_NO_DEVICE:    return "HV_NO_DEVICE";
+     case HV_UNSUPPORTED:  return "HV_UNSUPPORTED";
+-#if defined(MAC_OS_VERSION_11_0) && \
+-    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
+     case HV_DENIED:       return "HV_DENIED";
+-#endif
+     default:              return "[unknown hv_return value]";
+     }
+ }
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 2d0eef6cd9..c9c64e2978 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -427,27 +427,6 @@ static void hvf_cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+     }
+ }
+ 
+-static hv_return_t hvf_vcpu_run(hv_vcpuid_t vcpu_id)
+-{
+-    /*
+-     * hv_vcpu_run_until is available and recommended from macOS 10.15+,
+-     * HV_DEADLINE_FOREVER from 11.0. Test for availability at runtime and fall
+-     * back to hv_vcpu_run() only where necessary.
+-     */
+-#ifndef MAC_OS_VERSION_11_0
+-    return hv_vcpu_run(vcpu_id);
+-#elif MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
+-    return hv_vcpu_run_until(vcpu_id, HV_DEADLINE_FOREVER);
+-#else /* MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_VERSION_11_0 */
+-    /* 11.0 SDK or newer, but could be < 11 at runtime */
+-    if (__builtin_available(macOS 11.0, *)) {
+-        return hv_vcpu_run_until(vcpu_id, HV_DEADLINE_FOREVER);
+-    } else {
+-        return hv_vcpu_run(vcpu_id);
+-    }
+-#endif
+-}
+-
+ int hvf_vcpu_exec(CPUState *cpu)
  {
-     const NetdevVmnetHostOptions *options = &(netdev->u.vmnet_host);
--
--#if defined(MAC_OS_VERSION_11_0) && \
--    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
--
-     QemuUUID net_uuid;
-+
-     if (options->net_uuid &&
-         qemu_uuid_parse(options->net_uuid, &net_uuid) < 0) {
-         error_setg(errp, "Invalid UUID provided in 'net-uuid'");
-         return false;
-     }
--#else
--    if (options->has_isolated) {
--        error_setg(errp,
--                   "vmnet-host.isolated feature is "
--                   "unavailable: outdated vmnet.framework API");
--        return false;
--    }
--
--    if (options->net_uuid) {
--        error_setg(errp,
--                   "vmnet-host.net-uuid feature is "
--                   "unavailable: outdated vmnet.framework API");
--        return false;
--    }
--#endif
+     X86CPU *x86_cpu = X86_CPU(cpu);
+@@ -476,7 +455,7 @@ int hvf_vcpu_exec(CPUState *cpu)
+             return EXCP_HLT;
+         }
  
-     if ((options->start_address ||
-          options->end_address ||
-@@ -71,9 +53,6 @@ static xpc_object_t build_if_desc(const Netdev *netdev)
-                               vmnet_operation_mode_key,
-                               VMNET_HOST_MODE);
+-        hv_return_t r = hvf_vcpu_run(cpu->accel->fd);
++        hv_return_t r = hv_vcpu_run_until(cpu->accel->fd, HV_DEADLINE_FOREVER);
+         assert_hvf_ok(r);
  
--#if defined(MAC_OS_VERSION_11_0) && \
--    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
--
-     xpc_dictionary_set_bool(if_desc,
-                             vmnet_enable_isolation_key,
-                             options->isolated);
-@@ -85,7 +64,6 @@ static xpc_object_t build_if_desc(const Netdev *netdev)
-                                 vmnet_network_identifier_key,
-                                 net_uuid.data);
-     }
--#endif
- 
-     if (options->start_address) {
-         xpc_dictionary_set_string(if_desc,
-diff --git a/net/vmnet-shared.c b/net/vmnet-shared.c
-index 40c7306a75..4726b07253 100644
---- a/net/vmnet-shared.c
-+++ b/net/vmnet-shared.c
-@@ -21,16 +21,6 @@ static bool validate_options(const Netdev *netdev, Error **errp)
- {
-     const NetdevVmnetSharedOptions *options = &(netdev->u.vmnet_shared);
- 
--#if !defined(MAC_OS_VERSION_11_0) || \
--    MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_VERSION_11_0
--    if (options->has_isolated) {
--        error_setg(errp,
--                   "vmnet-shared.isolated feature is "
--                   "unavailable: outdated vmnet.framework API");
--        return false;
--    }
--#endif
--
-     if ((options->start_address ||
-          options->end_address ||
-          options->subnet_mask) &&
-@@ -76,14 +66,11 @@ static xpc_object_t build_if_desc(const Netdev *netdev)
-                                   options->subnet_mask);
-     }
- 
--#if defined(MAC_OS_VERSION_11_0) && \
--    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
-     xpc_dictionary_set_bool(
-         if_desc,
-         vmnet_enable_isolation_key,
-         options->isolated
-     );
--#endif
- 
-     return if_desc;
- }
-diff --git a/net/vmnet-bridged.m b/net/vmnet-bridged.m
-index 76a28abe79..a04a14fa11 100644
---- a/net/vmnet-bridged.m
-+++ b/net/vmnet-bridged.m
-@@ -88,15 +88,6 @@ static bool validate_options(const Netdev *netdev, Error **errp)
-         return false;
-     }
- 
--#if !defined(MAC_OS_VERSION_11_0) || \
--    MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_VERSION_11_0
--    if (options->has_isolated) {
--        error_setg(errp,
--                   "vmnet-bridged.isolated feature is "
--                   "unavailable: outdated vmnet.framework API");
--        return false;
--    }
--#endif
-     return true;
- }
- 
-@@ -115,12 +106,10 @@ static xpc_object_t build_if_desc(const Netdev *netdev)
-                               vmnet_shared_interface_name_key,
-                               options->ifname);
- 
--#if defined(MAC_OS_VERSION_11_0) && \
--    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
-     xpc_dictionary_set_bool(if_desc,
-                             vmnet_enable_isolation_key,
-                             options->isolated);
--#endif
-+
-     return if_desc;
- }
- 
-diff --git a/net/vmnet-common.m b/net/vmnet-common.m
-index 2958283485..30c4e53c13 100644
---- a/net/vmnet-common.m
-+++ b/net/vmnet-common.m
-@@ -47,11 +47,8 @@
-         return "buffers exhausted in kernel";
-     case VMNET_TOO_MANY_PACKETS:
-         return "packet count exceeds limit";
--#if defined(MAC_OS_VERSION_11_0) && \
--    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
-     case VMNET_SHARING_SERVICE_BUSY:
-         return "conflict, sharing service is in use";
--#endif
-     default:
-         return "unknown vmnet error";
-     }
+         /* handle VMEXIT */
 -- 
 2.41.0
 
