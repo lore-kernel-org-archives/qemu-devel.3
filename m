@@ -4,81 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59DF9C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 09:22:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A3D6C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 09:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOZhY-00015L-BC; Tue, 02 Jul 2024 05:21:29 -0400
+	id 1sOZhM-00013T-Ut; Tue, 02 Jul 2024 05:21:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZhN-00013k-3x
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:21:18 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZhI-00012v-EU
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:21:12 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZhK-0006NH-HQ
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:21:16 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a6fe81a5838so373974966b.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 02:21:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOZh3-0006M6-6f
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 05:21:10 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4257a390a4eso19036985e9.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 02:20:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719912072; x=1720516872; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1tcC9Y5NWB8z03lpw+6038sronrJ1UL/8sqiqucfx+g=;
- b=Ud2BNiOFIdpDOAG4pBHaguQ199Wx4x7NgK1eREkyW1oBVCtNJHvx4400Q/3S9KrYR1
- b+EQWh9+IlVQOZZSuQnefXCQ3o0utRHAZKhz1uEJDZQsnrjDQehThqZFbpwHOMarnFHo
- Q2U+zV9s0JhRKiSHPkA+qx6EeSYzpyf/whJrYcGFHU4jcwGPFG6f7nMpjy/kYskJMJL9
- q927LBelfEOnm3ENx2DzDMwUXBf0osXPyDiW2fqKFiECjYA9ibNMtUMmdJEoJh6VBfYw
- Y+IO8+4pgVSyruFqsEhnIwm9Li06nxbNjspo/C0GgY//pH9fDX0awYRPfnat5ieSfgAE
- 44yA==
+ d=linaro.org; s=google; t=1719912054; x=1720516854; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kBloExwWJk9U/pRDjib3w5J+DtD6Yp3lyW4YWIFqHiY=;
+ b=Nfi/N5D3RoudUXuviIyjefhge8IZwpw9cuQ/U89QvLFBW0YGJCP9x40EnyEPhj59By
+ MEYtQiCJQDwerOMeOQaJVEpyKt63VbSCv9jpJ3rIrprLzeMlLNkdxQoAP0QfVNeyJkp3
+ 0wz9EID93ZM9zzDOwgFHt3qu022YdX3vab639otU9+QY/QrDjrpZ0F3IgoutLpq41VrE
+ jYjlk5e/0HYBgsu9L9GRsOGQtXtRclSIaUE2tRwoT2eNMz5aYPWLxXBdwZRmLPVmyIeh
+ Womw5Nnx2L3/x5xEiY3Cz2AS/gWjsrrvE0PosMd3qofpzh7feCDMY986ORNCOm9SpmlW
+ TZww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719912072; x=1720516872;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1tcC9Y5NWB8z03lpw+6038sronrJ1UL/8sqiqucfx+g=;
- b=xLuATznzid2rR4/wnhvVVsfW0drMC+ik8TFxFVHD9vmtlL15ozc1c963wvUhuIfMEF
- mDQCahWqIX+V6I30AP4jUbseuS6vSHFcryPKLBUgXCAppDGACI3LVg6m8ohUIqCBa3KL
- UMO4Tz0bEOo+T3vtLcdQvZk6Z3AXm5WEAPhDvjMG9GQOhwsURX8lNUhaoWyPsSxqnvmr
- Gir8xERsdrYrVqhZuS8Roo8AGuymgzOBFCwIUgrTcrTzvPAUiHqG71gsooG2g66taCyY
- 8oszY7O+Cd/Y5zuhUM8g21TRHCfgNnc4BiY56f9gcd8A6D/jyi4jXWWFEz5MDiB+4s6h
- z54g==
-X-Gm-Message-State: AOJu0YzTnAXjRWV4lAykM0VJ7PS3+sb2pHh48UqNTY6pA+XtmB95bmuk
- yp3D1fou+Idad/V2gf9JnVOzsNHtWBMFSnZhLzLDj8miZPYQUZauJ3k2Ubk40ddX10USC3BNTx4
- 4
-X-Google-Smtp-Source: AGHT+IGU/aJ6GrLp7nonzauh+bQHgQa5y5ziOOSJJVSf/Tjb/X8OrbFvDLhJ/fskfLFB8GTFJ3RhMA==
-X-Received: by 2002:a17:906:a02:b0:a72:840d:9ecd with SMTP id
- a640c23a62f3a-a75145120ffmr465071966b.64.1719912071705; 
- Tue, 02 Jul 2024 02:21:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719912054; x=1720516854;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kBloExwWJk9U/pRDjib3w5J+DtD6Yp3lyW4YWIFqHiY=;
+ b=k2LEKGhScdzLbhDA8AXl7VfuzddIh/2YA95tAByc77gQ+75I3t9ssKZ5pLP5MNj9Wz
+ y+ETLsZJ5/24v/kSHl1z1JUTpFgPqahjzzQ6g5xzpw/yb5ODYwiC8BDgl0ydv6NAO7V9
+ nV8xXvlrphpNyV/XxjP9mF/sxDLmtf0D0ndHmSPqUGT8oJxWMdLWollBdzdp3WXuIaUB
+ Ihw72jMwYqfNkIqaetxDCxbb3PoPEUBuubQ0CCeL2nqXnv22FY0GeEjtVbRKHQmX9zdz
+ d/NbAarmq7YMtI/oLWuqJrJDm33JDH3nGv1pO4kRrGIZiufxYFWdy3bo6jW5QpNxhJkJ
+ We8Q==
+X-Gm-Message-State: AOJu0YxH4kcEZLMrPlForxVsvtKRGSkPckHdVfBxwjS8DNhsoTHpWFsk
+ jPBWzLWFHlNW2QnI8vcVAYswNUBVhYKCAqWVLzaOL+IC61FXQHTzbKbmf6xRfId0LEeMwiwDpEV
+ n
+X-Google-Smtp-Source: AGHT+IEgy3gBW01zBZUowZlgCibtWKoYh+/oBpd67O8TsUL/hzLg2d9Cu+RNCSQxs0bQ3zKuh8wR/Q==
+X-Received: by 2002:a05:600c:4da1:b0:425:64c4:e016 with SMTP id
+ 5b1f17b1804b1-4257a0098c1mr53041665e9.12.1719912054518; 
+ Tue, 02 Jul 2024 02:20:54 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e16b3sm12563292f8f.61.2024.07.02.02.21.10
+ ffacd0b85a97d-3675a0d9cbasm12652074f8f.38.2024.07.02.02.20.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Jul 2024 02:21:11 -0700 (PDT)
+ Tue, 02 Jul 2024 02:20:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 03/67] hw/sd/sdcard: Trace block offset in READ/WRITE data
- accesses
-Date: Tue,  2 Jul 2024 11:19:46 +0200
-Message-ID: <20240702092051.45754-4-philmd@linaro.org>
+Cc: Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/67] SD/MMC patches for 2024-07-02
+Date: Tue,  2 Jul 2024 11:19:43 +0200
+Message-ID: <20240702092051.45754-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240702092051.45754-1-philmd@linaro.org>
-References: <20240702092051.45754-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x636.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,54 +89,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Useful to detect out of bound accesses.
+The following changes since commit c80a339587fe4148292c260716482dd2f86d4476:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Message-Id: <20240628070216.92609-5-philmd@linaro.org>
----
- hw/sd/sd.c         | 4 ++--
- hw/sd/trace-events | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+  Merge tag 'pull-target-arm-20240701' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-01 10:41:45 -0700)
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index aa011fc892..bed5966ea7 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1917,7 +1917,7 @@ void sd_write_byte(SDState *sd, uint8_t value)
- 
-     trace_sdcard_write_data(sd_proto(sd)->name,
-                             sd->last_cmd_name,
--                            sd->current_cmd, value);
-+                            sd->current_cmd, sd->data_offset, value);
-     switch (sd->current_cmd) {
-     case 24:  /* CMD24:  WRITE_SINGLE_BLOCK */
-         sd->data[sd->data_offset ++] = value;
-@@ -2073,7 +2073,7 @@ uint8_t sd_read_byte(SDState *sd)
- 
-     trace_sdcard_read_data(sd_proto(sd)->name,
-                            sd->last_cmd_name,
--                           sd->current_cmd, io_len);
-+                           sd->current_cmd, sd->data_offset, io_len);
-     switch (sd->current_cmd) {
-     case 6:  /* CMD6:   SWITCH_FUNCTION */
-         ret = sd->data[sd->data_offset ++];
-diff --git a/hw/sd/trace-events b/hw/sd/trace-events
-index 724365efc3..0eee98a646 100644
---- a/hw/sd/trace-events
-+++ b/hw/sd/trace-events
-@@ -52,8 +52,8 @@ sdcard_lock(void) ""
- sdcard_unlock(void) ""
- sdcard_read_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
- sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
--sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint8_t value) "%s %20s/ CMD%02d value 0x%02x"
--sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t length) "%s %20s/ CMD%02d len %" PRIu32
-+sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
-+sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint32_t length) "%s %20s/ CMD%02d ofs %"PRIu32" len %" PRIu32
- sdcard_set_voltage(uint16_t millivolts) "%u mV"
- 
- # pxa2xx_mmci.c
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/sdmmc-20240702
+
+for you to fetch changes up to 8442e1625ba6723bee2c6d0fdb7207a3e27a2b05:
+
+  hw/sd/sdcard: Add sd_acmd_SEND_SCR handler (ACMD51) (2024-07-02 10:08:32 +0200)
+
+Checkpatch warnings ignored:
+
+    WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+    WARNING: line over 80 characters
+    #64: FILE: hw/sd/sd.c:2327:
+    +        [23] = {8,  sd_spi, "SET_WR_BLK_ERASE_COUNT", sd_acmd_SET_WR_BLK_ERASE_COUNT},
+    #72: FILE: hw/sd/sd.c:2386:
+    +        [23] = {8,  sd_ac,   "SET_WR_BLK_ERASE_COUNT", sd_acmd_SET_WR_BLK_ERASE_COUNT},
+    #75: FILE: hw/sd/sd.c:2395:
+    +        [42] = {8,  sd_ac,   "SET_CLR_CARD_DETECT", sd_acmd_SET_CLR_CARD_DETECT},
+
+----------------------------------------------------------------
+SD/MMC patches queue
+
+- Deprecate SD spec v1.10
+- Improve tracing
+- Fix endianness on DAT lines
+- Introduce helpers for commands transmitting data on the DAT lines
+- Convert most commands to new helpers
+- Register various optional commands
+- Add command {name, type, class} fields to SDProto structure
+
+----------------------------------------------------------------
+
+Cédric Le Goater (1):
+  hw/sd/sdcard: Introduce definitions for EXT_CSD register
+
+Philippe Mathieu-Daudé (66):
+  hw/sd/sdcard: Deprecate support for spec v1.10
+  hw/sd/sdcard: Track last command used to help logging
+  hw/sd/sdcard: Trace block offset in READ/WRITE data accesses
+  hw/sd/sdcard: Trace requested address computed by sd_req_get_address()
+  hw/sd/sdcard: Restrict SWITCH_FUNCTION to sd_transfer_state (CMD6)
+  hw/sd/sdcard: Send WRITE_PROT bits MSB first (CMD30)
+  hw/sd/sdcard: Send NUM_WR_BLOCKS bits MSB first (ACMD22)
+  hw/sd/sdcard: Use READY_FOR_DATA definition instead of magic value
+  hw/sd/sdcard: Assign SDCardStates enum values
+  hw/sd/sdcard: Simplify sd_inactive_state handling
+  hw/sd/sdcard: Add direct reference to SDProto in SDState
+  hw/sd/sdcard: Extract sd_blk_len() helper
+  hw/sd/sdcard: Introduce sd_cmd_to_sendingdata and sd_generic_read_byte
+  hw/sd/sdcard: Convert SWITCH_FUNCTION to generic_read_byte (CMD6)
+  hw/sd/sdcard: Convert SEND_CSD/SEND_CID to generic_read_byte (CMD9 &
+    10)
+  hw/sd/sdcard: Duplicate READ_SINGLE_BLOCK / READ_MULTIPLE_BLOCK cases
+  hw/sd/sdcard: Convert READ_SINGLE_BLOCK to generic_read_byte (CMD17)
+  hw/sd/sdcard: Convert SEND_TUNING_BLOCK to generic_read_byte (CMD19)
+  hw/sd/sdcard: Convert SEND_WRITE_PROT to generic_read_byte (CMD30)
+  hw/sd/sdcard: Convert SD_STATUS to generic_read_byte (ACMD13)
+  hw/sd/sdcard: Convert SEND_NUM_WR_BLOCKS to generic_read_byte (ACMD22)
+  hw/sd/sdcard: Convert SEND_SCR to generic_read_byte (ACMD51)
+  hw/sd/sdcard: Introduce sd_cmd_to_receivingdata /
+    sd_generic_write_byte
+  hw/sd/sdcard: Duplicate WRITE_SINGLE_BLOCK / WRITE_MULTIPLE_BLOCK
+    cases
+  hw/sd/sdcard: Convert WRITE_SINGLE_BLOCK to generic_write_byte (CMD24)
+  hw/sd/sdcard: Convert PROGRAM_CID to generic_write_byte (CMD26)
+  hw/sd/sdcard: Convert PROGRAM_CSD to generic_write_byte (CMD27)
+  hw/sd/sdcard: Convert LOCK_UNLOCK to generic_write_byte (CMD42)
+  hw/sd/sdcard: Move sd_[a]cmd_name() methods to sd.c
+  hw/sd/sdcard: Pass SDState as argument to sd_[a]cmd_name()
+  hw/sd/sdcard: Prepare SDProto to contain more fields
+  hw/sd/sdcard: Store command name in SDProto
+  hw/sd/sdcard: Store command type in SDProto
+  hw/sd/sdcard: Store command class in SDProto
+  hw/sd/sdcard: Remove SEND_DSR dead case (CMD4)
+  hw/sd/sdcard: Register generic optional handlers (CMD11 and CMD20)
+  hw/sd/sdcard: Register optional handlers from spec v6.00
+  hw/sd/sdcard: Register SDIO optional handlers
+  hw/sd/sdcard: Register Security Extension optional handlers
+  hw/sd/sdcard: Add sd_cmd_SWITCH_FUNCTION handler (CMD6)
+  hw/sd/sdcard: Add sd_cmd_DE/SELECT_CARD handler (CMD7)
+  hw/sd/sdcard: Add sd_cmd_SEND_IF_COND handler (CMD8)
+  hw/sd/sdcard: Add sd_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)
+  hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)
+  hw/sd/sdcard: Add sd_cmd_STOP_TRANSMISSION handler (CMD12)
+  hw/sd/sdcard: Add sd_cmd_SEND_STATUS handler (CMD13)
+  hw/sd/sdcard: Add sd_cmd_GO_INACTIVE_STATE handler (CMD15)
+  hw/sd/sdcard: Add sd_cmd_SET_BLOCKLEN handler (CMD16)
+  hw/sd/sdcard: Add sd_cmd_READ_SINGLE_BLOCK handler (CMD17)
+  hw/sd/sdcard: Add sd_cmd_WRITE_SINGLE_BLOCK handler (CMD24)
+  hw/sd/sdcard: Add sd_cmd_PROGRAM_CSD handler (CMD27)
+  hw/sd/sdcard: Add sd_cmd_SET/CLR_WRITE_PROT handler (CMD28 & CMD29)
+  hw/sd/sdcard: Add sd_cmd_SEND_WRITE_PROT handler (CMD30)
+  hw/sd/sdcard: Add sd_cmd_ERASE_WR_BLK_START/END handlers (CMD32 &
+    CMD33)
+  hw/sd/sdcard: Add sd_cmd_ERASE handler (CMD38)
+  hw/sd/sdcard: Add sd_cmd_LOCK_UNLOCK handler (CMD42)
+  hw/sd/sdcard: Add sd_cmd_APP_CMD handler (CMD55)
+  hw/sd/sdcard: Add spi_cmd_READ_OCR handler (CMD58)
+  hw/sd/sdcard: Add spi_cmd_CRC_ON_OFF handler (CMD59)
+  hw/sd/sdcard: Add sd_acmd_SET_BUS_WIDTH handler (ACMD6)
+  hw/sd/sdcard: Add sd_acmd_SD_STATUS handler (ACMD13)
+  hw/sd/sdcard: Add sd_acmd_SEND_NUM_WR_BLOCKS handler (ACMD22)
+  hw/sd/sdcard: Add sd_acmd_SET_WR_BLK_ERASE_COUNT handler (ACMD23)
+  hw/sd/sdcard: Add sd_acmd_SD_APP_OP_COND handler (ACMD41)
+  hw/sd/sdcard: Add sd_acmd_SET_CLR_CARD_DETECT handler (ACMD42)
+  hw/sd/sdcard: Add sd_acmd_SEND_SCR handler (ACMD51)
+
+ docs/about/deprecated.rst |    6 +
+ hw/sd/sdmmc-internal.h    |  124 +++-
+ include/hw/sd/sd.h        |    5 +-
+ hw/sd/sd.c                | 1462 +++++++++++++++++++++----------------
+ hw/sd/sdmmc-internal.c    |   72 --
+ hw/sd/meson.build         |    2 +-
+ hw/sd/trace-events        |    5 +-
+ 7 files changed, 940 insertions(+), 736 deletions(-)
+ delete mode 100644 hw/sd/sdmmc-internal.c
+
 -- 
 2.41.0
 
