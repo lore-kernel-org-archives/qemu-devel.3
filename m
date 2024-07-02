@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B31CEC3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 16:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0091DC3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 16:12:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOg5e-0006gk-Lx; Tue, 02 Jul 2024 12:10:46 -0400
+	id 1sOg5e-0006gf-BW; Tue, 02 Jul 2024 12:10:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOg5d-0006g6-Ih
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:10:45 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sOg5c-0006fV-1q
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:10:44 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOg5Z-0008UP-UC
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:10:45 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4256aee6d4fso27050335e9.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 09:10:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sOg5Q-0008Kb-4l
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:10:42 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-57ccd1111b0so1207951a12.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 09:10:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719936640; x=1720541440; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1719936628; x=1720541428; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6t+GbJBD58UyWaUHFeiM6fRRrol1LCDDEUBkP2sRRWQ=;
- b=dAHkw/olkc4sWbVLMOCYXcLhWxcNtG3qLCe/HyjmXL7v1Kl3Jn2KkSBG4IvK4WjBKr
- gKQMSri2aYDBSasP8RQ8eDPJfT3ddnQedTDSgHJj0BmiJw+rW65ByJi53SeHXOrflapJ
- 5v8VFuCya8VX1hAOc9fkfmTZJyXZ9KXsar8GjxhFH8SOVFCxdzGJKSh/diuIs8zCkbzy
- ZYlsPKMKcOidG6XibsLBg1m7x1J+GNgCzctZiGGg/BCWpk8I1KCo8dHHRtTqq7gBXZOw
- AycAqIyH+IcZseuyc74tL2Xi7/ZY8P9HxZO4msBYEwXbzi7icgxnnPN4hOBIMd+7ovDO
- 7cgQ==
+ bh=F+i7ACyt1A0jbEbq7uoJN/YZ4dYpl40dS0lxWrdwFWE=;
+ b=ouQuq5kWS+cU9DJkxi+MZVaBQ4Wkll3LkIZu57jdfUkQJlYRPOatNiFtU4+sOoma4Q
+ C3Goj+hatIILKYeVUWif3ZJUv4kAiH4k1MNQ3UHKJ25qlnT01yW44lyWG0VGIdZf2Z+U
+ vLM4yoGIb3ndiwMOY8LAnSxZrRTVGZSNIIe4x7nBnXY2X5GzaFCO3tebRjZkjOZiVwZQ
+ u4GbU0nXNSVwcZUoptqAhx6VdKLzymTIVOad197dfpAGp199hNjiC0eDhi5CpRPH0c8f
+ fvILuXHW92dxSqaAUX9zYinE3uGzXEXcjBkTPiL/Zk1tsF9cfazHM5n+4QX06y/AYCWt
+ 5ubw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719936640; x=1720541440;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1719936628; x=1720541428;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6t+GbJBD58UyWaUHFeiM6fRRrol1LCDDEUBkP2sRRWQ=;
- b=UFuqogtYv9xqFfke02yHtG8H+Zo8AyAH+29QNu6fR7Fpdp/oDe8S21ghsU58htDgrz
- cO5L4NiluroELsT+RetaXkIJ8vqmNLkvozNlvtzI27hTT4nzRXAf6D5BZNxpC+u+FbjV
- sXtHdQZxBYjq02WmXJcJyHUIVd+PGVZ6Yf/NlTgmK93kGvL2P7H5+tMPAQx2XIXhVBNI
- yHwWniPEzsOqwo80rpxLZwvIbDroGIBO9UMeNKg2jTcfsVlrEEXyxFqL1hcGcna72V5n
- JO2KBe5cyqhsFZthlWPaTPa/i6g/hF0IC46t5uHLx1LHnsbaocAz1fSFLCttdHQDtpKY
- g1eg==
-X-Gm-Message-State: AOJu0YyJJBJZBUsBjRsuw7Q9K1qM9KbSIrFkW5Mu40UGM37qqRvtrH6X
- EvUoWFVHXKrwDNVrjAGeKKyTl8cX7kJnljPApbdyWGSWz3nvrPcjevGU69efE8pmIAnOirj9PZV
- t
-X-Google-Smtp-Source: AGHT+IHV8oQPTs1w/MJrgrSf8wwEkjBNNcun7HXo+1KEX9OnG8LpmAcix1W2N7TPPOsudy858f6mSg==
-X-Received: by 2002:a05:600c:1604:b0:425:5f0e:bb69 with SMTP id
- 5b1f17b1804b1-4257a05f0a6mr57323665e9.38.1719936640047; 
- Tue, 02 Jul 2024 09:10:40 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.209.58])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b097bcbsm204602385e9.35.2024.07.02.09.10.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Jul 2024 09:10:39 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Bin Meng <bmeng.cn@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Luc Michel <luc.michel@amd.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- qemu-block@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v43 1/2] hw/sd/sdcard: Use spec v3.01 by default
-Date: Tue,  2 Jul 2024 18:10:30 +0200
-Message-ID: <20240702161031.59362-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240702161031.59362-1-philmd@linaro.org>
-References: <20240702161031.59362-1-philmd@linaro.org>
+ bh=F+i7ACyt1A0jbEbq7uoJN/YZ4dYpl40dS0lxWrdwFWE=;
+ b=YFnz9bacgbXutkCmNKNt5fEbbAsvZESW2rJY1dI8/0NQlIpkf3nWjvkKglDTvbeLDf
+ PzWMFaVt4Jq7MoW4O8+P9dmPdmlABWrc3ag/bHQRraiN827cio6sE+efkyLrCc3TlWRc
+ EtRnWbfiAFbQ9tXeN5tWcmrtl2klhd4a+YayoBw6Wsm8jvw5V98mMscd83F6zbna+crL
+ leMzjtueccA7zkHVubDzaOGfUJaU+f+mL15SL4hPIIs7u5yYPILqZQGQj0zrJ5+epq8s
+ XHnChA8OuC7kZs8/7oRpJQTbLMcNBh28z/7EtuTMwrWRBbgAxCU+sWQjyfH9KoHNOo4P
+ JOvw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7M7PAloQsKxwttlWjTxECEGvK+KpOFTfzErfS0ljx6W56XXQ3p7i/8KgOXimmL7F6Idi4y1DXLWFmr6YEMP9+/1LaaUo=
+X-Gm-Message-State: AOJu0YzqRfdvCsjFaulEBd7zEyZYDSZajctfYU1KaF9hKX9Uclm6L6F5
+ jO5Oh9AL51zMpBrOomWPXg0UMlVqTMBtF8MdnnJyMG5235aLAz9hK+IQF6HbFdYIZPrv8xwDY5L
+ QIZCR8nIPmjXf33og9uLjXOE7XPSoQzUh0/6/KQ==
+X-Google-Smtp-Source: AGHT+IEnuT1Rv5cWYuGuBaO46pzlv+m+rP5BeTSbSwFLaatEozTSQSd0KgaV6os3ECnMB4yoFOT35gJZs/MA93a5UOs=
+X-Received: by 2002:a05:6402:2549:b0:57d:42f6:63fe with SMTP id
+ 4fb4d7f45d1cf-5879f69b504mr8401197a12.22.1719936628594; Tue, 02 Jul 2024
+ 09:10:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+References: <20240702154042.3018932-1-zheyuma97@gmail.com>
+ <3bdd7747-316d-4b58-a9c3-2320864e6cf8@linaro.org>
+In-Reply-To: <3bdd7747-316d-4b58-a9c3-2320864e6cf8@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 2 Jul 2024 17:10:17 +0100
+Message-ID: <CAFEAcA9iGeUc75tfPPOh2K2QMjVVjsE6s4owmrsO62+-9=Go2Q@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/misc/bcm2835_thermal: Fix access size handling in
+ bcm2835_thermal_ops
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,47 +93,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recent SDHCI expect cards to support the v3.01 spec
-to negociate lower I/O voltage. Select it by default.
+On Tue, 2 Jul 2024 at 16:50, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+> Personally I consider accepting access of
+>
+>    .valid.min_access_size > .impl.min_access_size
+>
+> as a bug in the memory core layer, whether being
+> unaligned or not.
 
-Versioned machine types with a version of 9.0 or
-earlier retain the old default (spec v2.00).
+Mmm. You could make an argument for
+  .valid: min_access_size =3D 4, unaligned =3D true
+  .impl.min_access_size =3D 1, unaligned =3D false
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
-v43: update versioned machines (danpb)
----
- hw/core/machine.c | 1 +
- hw/sd/sd.c        | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+meaning "accesses must be 32 bits, and if the guest
+makes an unaligned 32 bit access then you can
+synthesize it with 4 byte reads/writes", I guess.
+But whether we (a) get that right (b) use it anywhere
+(c) use it anywhere intentionally is not something
+I'd be very confident in asserting :-)
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 655d75c21f..4377f943d5 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -38,6 +38,7 @@ GlobalProperty hw_compat_9_0[] = {
-     {"arm-cpu", "backcompat-cntfrq", "true" },
-     {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
-     {"vfio-pci", "skip-vsc-check", "false" },
-+    {"sd-card", "spec_version", "2" },
- };
- const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
- 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index b158402704..808dc1cea6 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -2471,7 +2471,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
- 
- static Property sd_properties[] = {
-     DEFINE_PROP_UINT8("spec_version", SDState,
--                      spec_version, SD_PHY_SPECv2_00_VERS),
-+                      spec_version, SD_PHY_SPECv3_01_VERS),
-     DEFINE_PROP_DRIVE("drive", SDState, blk),
-     /* We do not model the chip select pin, so allow the board to select
-      * whether card should be in SSI or MMC/SD mode.  It is also up to the
--- 
-2.41.0
+I definitely think that our "synthesize accesses
+where valid and impl mismatch" code could use a
+going-over, so we either get it right or assert if
+the MemoryRegionOps ask for something we don't handle.
+Maybe someday...
 
+thanks
+-- PMM
 
