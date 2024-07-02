@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F994C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 12:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38D57C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 12:34:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOcRS-0005pM-7q; Tue, 02 Jul 2024 08:17:02 -0400
+	id 1sOcht-0005jQ-OU; Tue, 02 Jul 2024 08:34:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOcRQ-0005oz-Vc
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 08:17:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOcRP-0002Hw-Cd
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 08:17:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719922618;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NpKcR33Hbz7dzWbj3Y23KD2bA82BAS/HKvKJYEpKyHk=;
- b=B/wOn02Hrfd2ZAxflAtcHspDCbMRUOfIJzoG7z7Zv0wbZV7q5AHYtc5wdEG6R1wpDFn0O3
- IOcZuxwD4pxwfHnUSbXkGfCIBCWRZqWAfWrivwZzL5dT1rn64OJTIxBku7LafezQzkzX3q
- xNUXamC6JMLun/rL8hL9j6aZSQAp9VE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-10-pvDFNOpwNL2FxITz76Pv3g-1; Tue, 02 Jul 2024 08:16:56 -0400
-X-MC-Unique: pvDFNOpwNL2FxITz76Pv3g-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-36248c176c4so2664815f8f.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 05:16:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sOchr-0005ib-Qh
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 08:33:59 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sOchm-00029z-Pi
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 08:33:59 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42574064b16so25692175e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 05:33:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719923632; x=1720528432; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=DFIxRx5j7fuBSoWpn8JOJb05vE7KT/UrTSTbs75lZi8=;
+ b=i+TmSPVPeg0TiVnCUwKW31sdpA7kXlmEC3z4Py1dsiF4bNqf1qhOhuAa/o8KR85HnA
+ 1C+gqn5cjmZTvPc75h6xtTUZ3X2F3QJxgxid1PhUw8QpBLPxdhjRmrnQ5zsMbdlylH5l
+ rvZ8yfUE4LbpbTUz2t15/T4lWsZ5U37w+Wm/gr+SMakuNRl/5KewdNXWYzqfI++MFb6/
+ /CHjWLTXC3L70evWAw3a//zDOrhu69WTS0Sk75Ct6IDbXm3TmyT1iVt5DXuPCfPfLenw
+ oEsop94H1Uhs1ksLWeg5DEvG5C4JBzDP5PFOhjqcZHEXGwXcrUTNayziP5CXHBS6wqfy
+ HjQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719922615; x=1720527415;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NpKcR33Hbz7dzWbj3Y23KD2bA82BAS/HKvKJYEpKyHk=;
- b=TcMCcg8jBcc6UiTfE62K0Kub/SKoHPgWX8ko29BNthX+xGu56Sh/gMMbbG/u6mQHFa
- 6whXbb2VwC9G6yXkPAt2Q+4UTpDjXuLPCqp4RbOvcdfECiH9LN2jVAHOXTMkLuIkq65e
- 55+6kc1ktOqr973nSV9+lpXF5dgR+mdgIBEnnmlT+15KtpO1+WbTHEU2EjjuyIjkNUo7
- BsnkcRry26tFkaNZiDm1eY/SfYtFcE0O2BC0kOccR6YVtTHwU6Fn/BqosnhMSE4qzfdh
- LpjTR5VGao9sfTK4vNLszoworiNFt2Oc5PZ5Id2bOIAJj+jRBxPn3nl6g/JIklPlzRXJ
- 9KWA==
-X-Gm-Message-State: AOJu0YwOwc/hWct0mTHpuEvg6V/1gWPy5uK2GTZlcL3Uv/uYpnmMvRIz
- XhfRulqQd/Y6bYPUF1XxfDV0/5nefcYMjUprh6lz0t1Qcdioyn9nQI6inG/4+fESMzgCf/tvcL6
- jyuK9BOLJWsUNMpwouv0OrTYHKJ3b5g3dknm2PFw/1jNUkuj4PSyM
-X-Received: by 2002:a5d:5262:0:b0:367:200:28fc with SMTP id
- ffacd0b85a97d-3677572845cmr5026623f8f.62.1719922615321; 
- Tue, 02 Jul 2024 05:16:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAhmWmvYCz6+2e57CYR573DeOWPEHMs+Zp9UqU90xOpRhdA9A5RYnto92W4GDZU09EXK+XMQ==
-X-Received: by 2002:a5d:5262:0:b0:367:200:28fc with SMTP id
- ffacd0b85a97d-3677572845cmr5026593f8f.62.1719922614495; 
- Tue, 02 Jul 2024 05:16:54 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:55d:614d:9fb:6fdd:72a4:f3d])
+ d=1e100.net; s=20230601; t=1719923632; x=1720528432;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DFIxRx5j7fuBSoWpn8JOJb05vE7KT/UrTSTbs75lZi8=;
+ b=iuAycqR9fhBVPD21WFOoMBwlE4e92M30EuBajJQvMfen7w1lX71d12N3093/PSvbSu
+ MX18LQgeINa9NEHZhf1REGFDjMxHEkynoPLdtAJOppmmxiWkhl48Ba1IBT+8yLJa+VBM
+ BwRG55aSMrDQ0xuZjcOj0AcQo9X6iXQ6PpIrSyw7OwBRIJykzH1w4ykmoxPCehdyV5NV
+ CRkTYLLfEhpDpaKQqPqNB62nUXBjcZzOjnutyLzvE6c56t5GCIuZ2CLdE81/5ZWpbB7h
+ qI55PLNk9bcaIhfWRgMxSIE70QWGefVpezvOuz5KkfrPM0lNGBVSYrINyk1YrNdX4hrK
+ lW/Q==
+X-Gm-Message-State: AOJu0Yw1pIPh3WS8xRUi9Q5ofoXq8qN1Nlf09FBRNIz8+9omZ+Sn52tg
+ TjPAe6EN8CYDxirvP+0EOd7OU2EB7dcyFbZrdYIIheY1viUMNurCP6cbRFBaT3M=
+X-Google-Smtp-Source: AGHT+IFYj+yYoh2fi2i7IiscI/v/tKy/gmOCxDrpM1KWbOG6Aj66CorehUZwVYD8dwsZcDzxxSUjSw==
+X-Received: by 2002:a05:600c:54c4:b0:425:63bd:fb44 with SMTP id
+ 5b1f17b1804b1-4257a074abfmr54186735e9.33.1719923632594; 
+ Tue, 02 Jul 2024 05:33:52 -0700 (PDT)
+Received: from meli-email.org (adsl-241.37.6.160.tellas.gr. [37.6.160.241])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a103d00sm13115496f8f.99.2024.07.02.05.16.51
+ 5b1f17b1804b1-42577a0dda2sm87605475e9.0.2024.07.02.05.33.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 05:16:53 -0700 (PDT)
-Date: Tue, 2 Jul 2024 08:16:49 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- Clement Mathieu--Drif <cmdetu@gmail.com>
-Subject: Re: [PATCH ats_vtd v5 00/22] ATS support for VT-d
-Message-ID: <20240702081539-mutt-send-email-mst@kernel.org>
-References: <20240702055221.1337035-1-clement.mathieu--drif@eviden.com>
+ Tue, 02 Jul 2024 05:33:52 -0700 (PDT)
+Date: Tue, 02 Jul 2024 15:25:12 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn =?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Marc-Andr =?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud =?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: Re: [RFC PATCH v3 2/5] rust: add bindgen step as a meson dependency
+User-Agent: meli 0.8.6
+References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
+ <6bf311a35e6d3bfa8b3bfd10d8f896a9e655fa30.1718827153.git.manos.pitsidianakis@linaro.org>
+ <ZnlGlOGORQkOsoO5@intel.com> <fl60u.ry7sk6d8fv39@linaro.org>
+ <ZnrpgW+CopiJAGZF@intel.com> <fnew7.3urdmuxnhe3l@linaro.org>
+ <27f52dce-b659-446d-8358-50b6001f7307@linaro.org>
+ <dfa7bc8f-378f-4876-b630-fe1182dca937@linaro.org>
+ <fu1lr.ewime9aej60m@linaro.org>
+ <2626cef5-3ece-4b01-94e8-1d293bd4425b@linaro.org>
+In-Reply-To: <2626cef5-3ece-4b01-94e8-1d293bd4425b@linaro.org>
+Message-ID: <fzxke.kvm3u8zw4532@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240702055221.1337035-1-clement.mathieu--drif@eviden.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,14 +112,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 02, 2024 at 05:52:29AM +0000, CLEMENT MATHIEU--DRIF wrote:
-> From: Clement Mathieu--Drif <cmdetu@gmail.com>
-> 
-> This series belongs to a list of series that add SVM support for VT-d.
+On Mon, 01 Jul 2024 21:54, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>The ctor is not run, but, interesting point, there is the same problem 
+>on Linux :)
+>
+>Can you please confirm with a clean build this work on your machine with 
+>this v3, and report exact configure and run commands you use?
 
-You don't need ats_vtd as a tag, I think, so if it's helpful
-for someone, I don't mind. What you do need is "repost" so
-people know how it's related to your previous v5 of the
-same patchset.
+On a clean checkout, I did exactly the following:
 
+```
+mkdir ./build && cd ./build
+../configure --enable-system --enable-debug \
+ --target-list=aarch64-softmmu --enable-with-rust
+ninja qemu-system-aarch64
+```
+
+which selected the default cc/gcc on debian,
+gcc (Debian 12.2.0-14) 12.2.0
+
+and ran QEMU with like this:
+
+```
+./qemu-system-aarch64 -M virt \
+  -machine virtualization=true -machine virt,gic-version=3 \
+  -cpu max,pauth-impdef=on -smp 2 -m 4096 \
+  [.. drive and img arguments ..] \
+  -nographic
+```
+
+
+>
+>Thanks,
+>Pierrick
+>
+>On 6/29/24 01:06, Manos Pitsidianakis wrote:
+>> On Fri, 28 Jun 2024 22:12, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>>> I've been able to build rust device on windows, with a few tweaks
+>>> needed.
+>>>
+>>> - specificy the target for libclang (used by bindgen), which targets
+>>> MSVC by default (so different set of headers)
+>>> - additional headers (libclang searches its own header with a relative
+>>> path instead of absolute)
+>>> - additional windows libs that must be linked in final executable
+>>>
+>>> However, even tough I can build the executable, I get this error:
+>>> $ ./build/qemu-system-aarch64 -M virt
+>>> C:\w\qemu\build\qemu-system-aarch64.exe: unknown type 'x-pl011-rust'
+>>>
+>>> Any idea of what could be missing here?
+>> 
+>> Sounds like either the rust lib is not linked to the final binary (which
+>> you can confirm if you look at the included symbols and don't see
+>> anything with rust origin) or the constructor decorated with
+>> #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU"] is not
+>> linked properly (you can add a puts() and see if it's invoked or add a
+>> breakpoint in gdb)
 
