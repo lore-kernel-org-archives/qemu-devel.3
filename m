@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 129B9C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 124C6C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 16:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOfu0-0005nK-Oi; Tue, 02 Jul 2024 11:58:45 -0400
+	id 1sOfzT-0003N8-Oj; Tue, 02 Jul 2024 12:04:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sOftx-0005fP-SP
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:58:41 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOfzP-0003Lc-UX
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:04:19 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sOftv-0004bU-EL
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:58:41 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a727d9dd367so471956566b.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 08:58:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOfzM-0006RM-6u
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:04:19 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52cdf9f934fso4588973e87.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 09:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719935917; x=1720540717; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mm4apseHDj4tJVI9Su72iBDMHNZAfsDlJYJOnF2K+Ko=;
- b=N9fkcN3Mu1SRxoV22qRyw6QhYkRwZaWPrpwkO7tx1AXPr1G+yi2PoRKhUUPqGN2Yyu
- r9N9KSrcyJHQrcTOxvk7ork54elYRLjLKmn2lzx/doAKdfZJDJv4vBPYwFsJ7mj2FPM7
- qJBT+El0DYKdC2cn4JQCVyUidE/hs5cxRrEJsURJ/phQChOkDP7FEFMh609lgHkexTRa
- q2Yoz32zdWm51p+ztGkyAnAgUvbU2Eh85IKI71GFlzFnpZvmcVrxJ7f/4BYgZfiPHtOP
- GBLk5k6DbJUkqOsTOJfFBuXK+QjV1i/h8THUikpxhN08ppN5ntR4gSKak0tE/kDFR4A9
- MQpA==
+ d=linaro.org; s=google; t=1719936248; x=1720541048; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IdsF1XEmlCmkej4/bGhPlpa/GRX9nD8oxSkZZm4exzM=;
+ b=T/OfLiDf2WbbznDJoQ+nrEZrFmKW6BrhiZJq6cIlMxGdfDeFku6RYVuq0E7huHhy5l
+ WxlvkvLbKxPG4/usuqi0x5Ouju/2mAq0sFDgsp0gdvnJ6vRtGXEo8mT/jdPvyTce6gMb
+ I0BzBHx8eoN/Ku/jDpOjHcgtPk/F73RvgjOHXwkVVpbZrpCdWj5LFjdOWi6jLxLlPTOj
+ mOtOj3RtFYh6IvPryQhdvY/Z2CZw8CooxY0JxSkyPILYYq2tUUzr6zFKb1wbHuiVzYwW
+ 14BG2KX8rt7KqRYkgAXdrHNbKrIcDf2sFNkBHduk17hNo+0LOXKm8gp3w73BOSaePxZ6
+ tzrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719935917; x=1720540717;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mm4apseHDj4tJVI9Su72iBDMHNZAfsDlJYJOnF2K+Ko=;
- b=C8a0DWWgFY2+TftvFxDeNczy1SrcPins5ftkCoNjBKq8CaHYTF4684k8Ww9BMm8XMT
- z71FL5BEvPKICDFtktg4gbTqh1ppbV0PN8v93wYaLZ3Tw03ejnR6cWS2ipFia1jqh8VP
- RrfXSQw5QFK030mDqqePh4IjPEiC8gsDssG4Tf05pcttvQZhlR7MNfkFHlvqy8e77rnl
- gGwIfKHyfEho2wnuq5Lfibzq9nxcUrTkUiWzcvJj5IVCK2+AlQ0HGKBG67APDXYD3W07
- h66/7l97QL1sPF2ip0FDQ8904axYDNgUMUAwYR6dunM8oFpbU2Gr6ci7f0DIEVoKIKOy
- qbLQ==
-X-Gm-Message-State: AOJu0YxuxR2Yrm0AbQRURm56tF6oLnfZZqWf4NEqcL3Az2R3jrBcMepF
- pzb9dXHc0dY2n98cq4bbu+m/yvEdVx1KOdwNZW6qAIFh8XC0RWRY1O1zlnWNtS6D9ljQCZgXIV8
- i
-X-Google-Smtp-Source: AGHT+IFvaRmll0zS77ZL07LCquSC8Q5+PAiP8gVicbR7EuUomT28eG3nhhHZULPNuOnYZM9AlaFaWQ==
-X-Received: by 2002:a17:906:c359:b0:a72:554d:82af with SMTP id
- a640c23a62f3a-a751445468amr541836666b.20.1719935917295; 
- Tue, 02 Jul 2024 08:58:37 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aaf6295csm431507566b.72.2024.07.02.08.58.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 08:58:36 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C642E5F790;
- Tue,  2 Jul 2024 16:58:35 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org
-Subject: Re: [PATCH] target/arm: Use cpu_env in cpu_untagged_addr
-In-Reply-To: <20240702154911.1667418-1-richard.henderson@linaro.org> (Richard
- Henderson's message of "Tue, 2 Jul 2024 08:49:11 -0700")
-References: <20240702154911.1667418-1-richard.henderson@linaro.org>
-Date: Tue, 02 Jul 2024 16:58:35 +0100
-Message-ID: <87ed8brdjo.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1719936248; x=1720541048;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IdsF1XEmlCmkej4/bGhPlpa/GRX9nD8oxSkZZm4exzM=;
+ b=dU5M7ftX48I90hcFQttn7momJ+6BVFwO+42d+hZ4T3MOVJIo64C6XK2kOoEfjmJC3E
+ hWq86nuwKRS469r1uFB41QCrNk6G3bl9U1G7aqoxEdUAr/uhVBv5NdX3lStioDFs7igJ
+ uYcvdvidWOW9DAjF33n319YzcT6LtXbqCJoD/1uv3BEe/pT32tZT/sWycgCVb2NAy3Vv
+ 3+6JUHQbvLA7eAtdi1sYcFKfO39ICjcf4AlBthM72gejWI/8+flTp3Dkdtm7TAIaI37c
+ tKTGTH1KlOF26RG3tgAPyVE6v6YKqEGPuONQokgHw49eabOGOxrJJg94CNKREOkMMerB
+ j7+Q==
+X-Gm-Message-State: AOJu0YxZA1EUYsH5Q3+CxMv/0frMXcQONlIITI9DsUnbJKQFPMX+8ar/
+ wrkZO+79V32Y/SPr/zQkwReQJ0GjS5jVLWsl+G8zv94LmHU1g8pouwFKgB9YTi4=
+X-Google-Smtp-Source: AGHT+IGT4qDnOagKjgQ2PIEMU25Iu55suGjmQmkbgqXRGD4t+2L+MPga50PMEOrqqlyv5a4uJNY2pA==
+X-Received: by 2002:a05:6512:3091:b0:52c:d904:d26e with SMTP id
+ 2adb3069b0e04-52e82678ceamr6530881e87.21.1719936248115; 
+ Tue, 02 Jul 2024 09:04:08 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.209.58])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4257a4d4cd1sm140824335e9.28.2024.07.02.09.04.07
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 09:04:07 -0700 (PDT)
+Message-ID: <9be76565-45e5-48dc-a3c6-e0546786fee7@linaro.org>
+Date: Tue, 2 Jul 2024 18:04:05 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v42 06/98] hw/sd/sdcard: Do not store vendor data on block
+ drive (CMD56)
+To: Luc Michel <luc.michel@amd.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+References: <20240628070216.92609-1-philmd@linaro.org>
+ <20240628070216.92609-7-philmd@linaro.org>
+ <ZoJiTdo0yr6V_rgN@XFR-LUMICHEL-L2.amd.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <ZoJiTdo0yr6V_rgN@XFR-LUMICHEL-L2.amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,40 +96,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+On 1/7/24 10:01, Luc Michel wrote:
+> On 09:00 Fri 28 Jun     , Philippe Mathieu-Daudé wrote:
+>> Caution: This message originated from an External Source. Use proper caution when opening attachments, clicking links, or responding.
+>>
+>>
+>> "General command" (GEN_CMD, CMD56) is described as:
+>>
+>>    GEN_CMD is the same as the single block read or write
+>>    commands (CMD24 or CMD17). The difference is that [...]
+>>    the data block is not a memory payload data but has a
+>>    vendor specific format and meaning.
+>>
+>> Thus this block must not be stored overwriting data block
+>> on underlying storage drive. Keep it in a dedicated
+>> 'vendor_data[]' array.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Tested-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>> RFC: Is it safe to reuse VMSTATE_UNUSED_V() (which happens
+>> to be the same size)?
+>>
+>> Cc: Peter Xu <peterx@redhat.com>
+>> Cc: Fabiano Rosas <farosas@suse.de>
+> 
+> I'm not sure about this migration question.
+> 
+> But IMHO you can simplify your implementation to avoid having to store
+> and migrate this vendor_data array. After some research on this command,
+> I came to the conclusion that it's used by manufacturers to return
+> device health related vendor-specific data. (E.g.,
+> https://images-na.ssl-images-amazon.com/images/I/91tTtUMDM3L.pdf Section
+> 1.6.1). So I guess you can simply discard writes and return 0s on reads
+> (or "QEMU" in ASCII or... :)).
 
-> In a completely artifical memset benchmark object_dynamic_cast_assert
-> dominates the profile, even above guest address resolution and
-> the underlying host memset.
+Thanks, very interesting datasheet! Note the argument filter:
 
-We seem to use ARM_CPU() quite liberally for a number of helpers so I
-wonder if its worth codifying this anywhere? At least all the direct TCG
-op helpers take CPUARMState *env directly.
+   To query the Health Status register, CMD56 with
+   argument of [00 00 00 01] is used.
 
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/cpu.h | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index d8eb986a04..ccfb9349a3 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -3309,8 +3309,8 @@ extern const uint64_t pred_esz_masks[5];
->   */
->  static inline target_ulong cpu_untagged_addr(CPUState *cs, target_ulong =
-x)
->  {
-> -    ARMCPU *cpu =3D ARM_CPU(cs);
-> -    if (cpu->env.tagged_addr_enable) {
-> +    CPUARMState *env =3D cpu_env(cs);
-> +    if (env->tagged_addr_enable) {
->          /*
->           * TBI is enabled for userspace but not kernelspace addresses.
->           * Only clear the tag if bit 55 is clear.
+Since we can program this array, I'll simply add it as R/W (KISS).
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> 
+>> ---
+>>   hw/sd/sd.c | 17 +++++++++--------
+>>   1 file changed, 9 insertions(+), 8 deletions(-)
+
 
