@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28A53C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60705C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeAe-00024x-Hk; Tue, 02 Jul 2024 10:07:48 -0400
+	id 1sOeCc-0000uV-4y; Tue, 02 Jul 2024 10:09:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeAa-00023R-T6
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCV-0000Cd-3Z
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeAY-0007x4-JN
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCF-0008Lq-QQ
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929260;
+ s=mimecast20190719; t=1719929365;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bf3inGfH3C1OrX/KdJFaqQvDHDePnfUDWhDjBaZ52tk=;
- b=O3j5J0v0vFSMiLulKM068Y8mV2J+86e5fbBWGJYnSwvIT+SvwfoZd9BVtJPNEb82PanvTr
- e3xtifQpMqxon1cx2bbaq2DCgkn/jef5fhNSeFHre+27qhez6FPf/Yd1hNQM7LmwKzv481
- qsADgfDWmU2hyeIrm4R+l+bPTQThueY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UGyASDiFbODYa7hIKIzPzDlV0Bv9TAjx5HfpD5vtANQ=;
+ b=T5GdU7I+E8GLgwAFyb9XIqzWzBZKaHncT7TnVct0QbBWNZj78y1nzdChvTy7VXM/o3XOcz
+ 695ZxNTiFcTKtKceTz+HS0boQZduqFskNZr4VoOFpBib2r3HF31sSv+YfiBukr2yofcG13
+ acue4bPLjxi2SQXJVJj+j2UV+zxsTbU=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-MJ4QSHjUOX-fLj2B6pW1HA-1; Tue, 02 Jul 2024 10:07:35 -0400
-X-MC-Unique: MJ4QSHjUOX-fLj2B6pW1HA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42567dbbd20so31657415e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:07:35 -0700 (PDT)
+ us-mta-678-tLwoAdioO7GXfv1yNxfJWQ-1; Tue, 02 Jul 2024 10:09:24 -0400
+X-MC-Unique: tLwoAdioO7GXfv1yNxfJWQ-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52e9345073aso273512e87.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929254; x=1720534054;
+ d=1e100.net; s=20230601; t=1719929362; x=1720534162;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Bf3inGfH3C1OrX/KdJFaqQvDHDePnfUDWhDjBaZ52tk=;
- b=InVJs3fBH8s/6B/1pDV58pE0QXgadSZRvJZsempkgwv9+x/jdTwu7GgNMP4r1Ra72C
- W/vM/Hspb8lot8yyD6+RlDDjL7rSt0+jpXCNJYILQ5rnVgp3x2u7KMdpFrPXRNfCpGDF
- e+BrjtezYR1zXruYjjV/DnhzzLtcY8PCCm7KAMNk3NUKJUTHf7Po5IPQ3iZpXWCujOpl
- BmnRwCctgk1AwWQxX8RG6W3TIAduGaB0SSAezIwwmf/5GlaJtBOLm2vzKEaH4VjqGt0X
- 2h8T4Vz6nzd+ZfF6uLDNi322RgL3a9rzcraUdYjLjYkzrLYFYTFcAvbJIOm0+I4DOElX
- eMSg==
-X-Gm-Message-State: AOJu0YwloPrTHdOIl9J2K7uUSU+dhX5QEN85z6vW7oAno3OSIiUkfShM
- SRhYT4r6caUxcqjZhk/g3IOUrFNYXlCIQVrqByB8nylKG46FosTTDOZMIEuUMrTyD02RsbeZRYf
- X7nL3cpAR5xHcHxaNv424A5hDshmJCZQp6EMsk//m6ceGPcn+mI5hixj62qrC+t8XbVjjsmsnQu
- bIYPX3JZpQgb/g/bLG/5P2UdiuUV03qQ==
-X-Received: by 2002:a05:600c:4da1:b0:425:64c4:e016 with SMTP id
- 5b1f17b1804b1-4257a0098c1mr58126755e9.12.1719929254050; 
- Tue, 02 Jul 2024 07:07:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgqgXXTAj0rm4CAIuShkn4R+gTJ9PgwVNThobgo59qdwLkqdpgk8+yeCqyuWs3dnNY5m1lFA==
-X-Received: by 2002:a05:600c:4da1:b0:425:64c4:e016 with SMTP id
- 5b1f17b1804b1-4257a0098c1mr58126515e9.12.1719929253494; 
- Tue, 02 Jul 2024 07:07:33 -0700 (PDT)
+ bh=UGyASDiFbODYa7hIKIzPzDlV0Bv9TAjx5HfpD5vtANQ=;
+ b=uYvAGKHCIysHPJpr75DHlwgaM5pKILUgpssHcKc9lWErowDhEmrXq57pm1t8ob3lSG
+ t0GGxU+5okjY73g92tmIgoWtv4rVMaGgM5VhD5IG9Uvu1JmttiYd5oCvXJNNM8tOj7LR
+ GBkVtbqoxcMydpXeamIGHRkque8I9YV7zjuwaozhIexciX65BuHP3/F6YmjCTI8kDYp4
+ gPassM1nfw4/+DtgYucLGjwSR3t+wtZy0HM+T7Z4Zg9I6qaXSKgmncAukt+NOKDbEJix
+ W31Xd3Xm9nq+xglr+cy9PCg3VzaU5VA5r/9/WGZPALf/kFKFkiYnIQauQg8tWegU+HAP
+ +9Wg==
+X-Gm-Message-State: AOJu0YzdJ2T821Ym+uUkMiP51NfMrObI19H43sjzdsZMG5nkMsDsJKum
+ IQalrW9wE6xYw7MgYY5PIUnRFjh2AmvDkWEGapaLHo7rUY2tptqXieAWS4d8gjzmMPrZ/rzYUpb
+ MbZI2vch/VTxL9EteSOW5PWmxKovmWvK7DXwuXuIGV5Y8tinFKU9SuZDcO5b96DKD6d4DpljTK3
+ h0UE0jZjUfEchblUpQUkGrvHZwQK63qg==
+X-Received: by 2002:a05:6512:ba3:b0:52c:1298:7304 with SMTP id
+ 2adb3069b0e04-52e82661f17mr6206213e87.26.1719929362168; 
+ Tue, 02 Jul 2024 07:09:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHuH7WatXxtPZfjW5xJxKrk48fmN4oGK5WxTFxJ6DEO8RZjI2cZLcsdJoubAbV4txUNqXstWw==
+X-Received: by 2002:a05:6512:ba3:b0:52c:1298:7304 with SMTP id
+ 2adb3069b0e04-52e82661f17mr6206177e87.26.1719929361388; 
+ Tue, 02 Jul 2024 07:09:21 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af55cccsm199945575e9.16.2024.07.02.07.07.31
+ 5b1f17b1804b1-4256b097bcbsm200181985e9.35.2024.07.02.07.09.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:07:32 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:07:29 -0400
+ Tue, 02 Jul 2024 07:09:21 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:09:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Wafer <wafer@jaguarmicro.com>,
- Jason Wang <jasowang@redhat.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
-Subject: [PULL 11/91] hw/virtio: Fix obtain the buffer id from the last
- descriptor
-Message-ID: <33abfea239592a706e98269b01c0096249612ea4.1719929191.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PULL 46/91] qapi: clarify that the default is backend dependent
+Message-ID: <34921eba4321d5a62fcabf1b57c79571cc68ac82.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -105,49 +109,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wafer <wafer@jaguarmicro.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-The virtio-1.3 specification
-<https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html> writes:
-2.8.6 Next Flag: Descriptor Chaining
-      Buffer ID is included in the last descriptor in the list.
+The default value of the @share option of the @MemoryBackendProperties
+really depends on the backend type, so let's document the default
+values in the same place where we define the option to avoid
+dispersing the information.
 
-If the feature (_F_INDIRECT_DESC) has been negotiated, install only
-one descriptor in the virtqueue.
-Therefor the buffer id should be obtained from the first descriptor.
-
-In descriptor chaining scenarios, the buffer id should be obtained
-from the last descriptor.
-
-Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
-
-Signed-off-by: Wafer <wafer@jaguarmicro.com>
-Reviewed-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20240510072753.26158-2-wafer@jaguarmicro.com>
+Cc: David Hildenbrand <david@redhat.com>
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20240618100043.144657-2-sgarzare@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ qapi/qom.json | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 28cd406e16..3678ec2f88 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1745,6 +1745,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
-                                              &indirect_desc_cache);
-     } while (rc == VIRTQUEUE_READ_DESC_MORE);
- 
-+    if (desc_cache != &indirect_desc_cache) {
-+        /* Buffer ID is included in the last descriptor in the list. */
-+        id = desc.id;
-+    }
-+
-     /* Now copy what we have collected and mapped */
-     elem = virtqueue_alloc_element(sz, out_num, in_num);
-     for (i = 0; i < out_num; i++) {
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 8bd299265e..9b8f6a7ab5 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -600,7 +600,9 @@
+ #     preallocation threads (default: none) (since 7.2)
+ #
+ # @share: if false, the memory is private to QEMU; if true, it is
+-#     shared (default: false)
++#     shared (default false for backends memory-backend-file and
++#     memory-backend-ram, true for backends memory-backend-epc and
++#     memory-backend-memfd)
+ #
+ # @reserve: if true, reserve swap space (or huge pages) if applicable
+ #     (default: true) (since 6.1)
+@@ -700,8 +702,6 @@
+ #
+ # Properties for memory-backend-memfd objects.
+ #
+-# The @share boolean option is true by default with memfd.
+-#
+ # @hugetlb: if true, the file to be created resides in the hugetlbfs
+ #     filesystem (default: false)
+ #
+@@ -726,8 +726,6 @@
+ #
+ # Properties for memory-backend-epc objects.
+ #
+-# The @share boolean option is true by default with epc
+-#
+ # The @merge boolean option is false by default with epc
+ #
+ # The @dump boolean option is false by default with epc
 -- 
 MST
 
