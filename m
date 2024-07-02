@@ -4,119 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFD8C3064D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CEC9C41513
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeKq-0005n9-15; Tue, 02 Jul 2024 10:18:20 -0400
+	id 1sOeEW-00086s-BT; Tue, 02 Jul 2024 10:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sOeKf-0005Yy-0c
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:18:12 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sOeKd-00073Z-89
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:18:08 -0400
-Received: from hawking.nue2.suse.org (unknown
- [IPv6:2a07:de40:a101:3:10:168:4:11])
- by smtp-out2.suse.de (Postfix) with ESMTP id BA2F71FBAA;
- Tue,  2 Jul 2024 14:18:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1719929882; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeEN-0006pI-DI
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeED-0000UH-11
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719929484;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=IjYzyje/IhudzfS3VzjW5H3L0Xj8veR61dAnh+bjU9Q=;
- b=D+SNScNd7PwwbDJA5G1GC8hoeOmENYH/1pFWnCYIxnaPYseKZ0rM1iUFK9auqvBvXQz59A
- vSYmzSVvSDpWYiQshDF4YAjWv1KWuVXCZvA6M10GSp+sNaBcoIDsEVQenInOudnMf78mWk
- 9XBubMd8L7ad2+7YySmJcBGrYiHBxKY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1719929882;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IjYzyje/IhudzfS3VzjW5H3L0Xj8veR61dAnh+bjU9Q=;
- b=MgKP+7t+b4Mkf7vJg3eW/8iPdiHOcRBkrzjmQtdFaW2bgQMUWpsA0SXNmWvjHT7rqWNyWE
- Z8+2p6X3kpq/VxCg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=D+SNScNd;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MgKP+7t+
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1719929882; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IjYzyje/IhudzfS3VzjW5H3L0Xj8veR61dAnh+bjU9Q=;
- b=D+SNScNd7PwwbDJA5G1GC8hoeOmENYH/1pFWnCYIxnaPYseKZ0rM1iUFK9auqvBvXQz59A
- vSYmzSVvSDpWYiQshDF4YAjWv1KWuVXCZvA6M10GSp+sNaBcoIDsEVQenInOudnMf78mWk
- 9XBubMd8L7ad2+7YySmJcBGrYiHBxKY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1719929882;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IjYzyje/IhudzfS3VzjW5H3L0Xj8veR61dAnh+bjU9Q=;
- b=MgKP+7t+b4Mkf7vJg3eW/8iPdiHOcRBkrzjmQtdFaW2bgQMUWpsA0SXNmWvjHT7rqWNyWE
- Z8+2p6X3kpq/VxCg==
-Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
- id 556744A054F; Tue,  2 Jul 2024 16:18:02 +0200 (CEST)
-From: Andreas Schwab <schwab@suse.de>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  Warner Losh <imp@bsdimp.com>,
- QEMU Developers <qemu-devel@nongnu.org>
-Subject: Re: linux-user cannot allocate stack memory on riscv64 host due to
- non-zero guest_base
-In-Reply-To: <6cc708b5-5d6f-42c2-9bc6-820abb3eea94@linaro.org> (Richard
- Henderson's message of "Tue, 2 Jul 2024 07:13:55 -0700")
-References: <mvm8qytp828.fsf@suse.de>
- <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org>
- <mvm4j9gp0xd.fsf@suse.de>
- <34fed985-6a6a-4458-95f9-aa651744ef1a@linaro.org>
- <CANCZdfq4=s=g8GoeCKY4576xgJs4-X+fXh7m5ZOJ1UeBXwWdCQ@mail.gmail.com>
- <mvmv81un7m9.fsf@suse.de>
- <CANCZdfpW+G54v3oeKZ6QYuovOga93D5hou9Ajeo838Y9bDNsUA@mail.gmail.com>
- <mvmmsn6lawv.fsf@suse.de>
- <CAFEAcA-dbLncCmY8zyZAz8e+AWeoGC437B=nV3wPznER+RmhbA@mail.gmail.com>
- <mvmr0cdjjlh.fsf@suse.de>
- <f681575f-1dae-481e-8330-6fe2fc8d0f11@linaro.org>
- <mvm7ce4jjvf.fsf@suse.de>
- <6cc708b5-5d6f-42c2-9bc6-820abb3eea94@linaro.org>
-X-Yow: Now I can join WEIGHT WATCHERS!
-Date: Tue, 02 Jul 2024 16:18:02 +0200
-Message-ID: <mvmy16jj2sl.fsf@suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=DMkazJvXlCFuPVFo5zwsqgTLcz0EAKKfqUw3BcILaOs=;
+ b=TMgR6j9ZiVL5cCpFe+m3zetmMe87J/RuelLOxoXxjgk/+bI5/57RmVzE3CqWLnpFVZWXUM
+ bhw1ML+66KtaJpd8Cmwwm7+EKYODheU4qB382OTD2hLtlyQjDZ9VtEbBzJjNO+cFnrtrR9
+ ++CfNJ4MWbCfliLTv0OrR1eLZYkwcBA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-18-xryIpZtAOsCAo4wgJVp4wg-1; Tue, 02 Jul 2024 10:11:23 -0400
+X-MC-Unique: xryIpZtAOsCAo4wgJVp4wg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-425739141c2so27428985e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719929481; x=1720534281;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DMkazJvXlCFuPVFo5zwsqgTLcz0EAKKfqUw3BcILaOs=;
+ b=BzF6p/Mp529MeKyduDcsiUzkQ395e0y7vBCSgZNFNYFYLpEaHqu+IllGiOcOCJ65Fi
+ 4EywgLpXDCHvIyaH/XiI1wccv+zOYOpmvGVqzGv9HAdyOvlb16V4g/Q5jAVR1WJfgreF
+ dcKIiYxIzTCr2J0OmmbJ1oIh7sM4UfWBlTHorxuWqr+ir7Q9RCCS4na+p+5wknAhmp1Y
+ L8cb3O7O4VYcIvhK1XgI4zRHya8QFONiaRP/HRIrML5+XxT9oXKcESgzMA66luuF0O5Y
+ SZ7GDKb743thAHSMCuSBbQIfi5Gscl35Z40KEM8nUkg5+QSNjKiJ6JgB1kL0o+YR8Wcy
+ haCA==
+X-Gm-Message-State: AOJu0YzLcmwRVlTdUAykbvmoH1fb2rJXGRRg0lUmo2G90GcKr0OtpPhf
+ fKuSoxrBDp1Yhzc/mjERyUTUCvowy7Azh8jMVcewQz+lQJNCBKgTc57/QBXIspctVLgD9H27LDy
+ 8VsvmCvDE8Mp46fSaImCG3VQXQsJzxvJbWlLJZqj+yxdy5IlwtSwo69OjLnFsTgHe6XPwn2Mvn0
+ pdKx7MTJkG+b9nL25xg9yEPXv8wGJBTQ==
+X-Received: by 2002:a5d:69c8:0:b0:367:8a72:b8b4 with SMTP id
+ ffacd0b85a97d-3678a72ba4emr886275f8f.33.1719929481763; 
+ Tue, 02 Jul 2024 07:11:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYxAuttfnTxopd9weeQrALkLr81tt4e5N16qWnGw/1xYosbp5grhiwDHHcZaOVB4BMH40KMA==
+X-Received: by 2002:a5d:69c8:0:b0:367:8a72:b8b4 with SMTP id
+ ffacd0b85a97d-3678a72ba4emr886250f8f.33.1719929481221; 
+ Tue, 02 Jul 2024 07:11:21 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0e12e2sm13316329f8f.50.2024.07.02.07.11.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Jul 2024 07:11:20 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:11:18 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+Subject: [PULL 84/91] hw/ppc/spapr_pci: Do not reject VFs created after a PF
+Message-ID: <b11da42aa0c5c3fb5f071116fb50ad2847f2a1d9.1719929191.git.mst@redhat.com>
+References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [1.60 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- HFILTER_HOSTNAME_UNKNOWN(2.50)[]; ONCE_RECEIVED(1.20)[];
- HFILTER_HELO_IP_A(1.00)[hawking.nue2.suse.org];
- RDNS_NONE(1.00)[]; NEURAL_HAM_LONG(-1.00)[-0.995];
- HFILTER_HELO_NORES_A_OR_MX(0.30)[hawking.nue2.suse.org];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.19)[-0.973]; RCVD_NO_TLS_LAST(0.10)[];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- DIRECT_TO_MX(0.00)[Gnus/5.13 (Gnus v5.13)]; ARC_NA(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_ALL(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_ONE(0.00)[1];
- DKIM_TRACE(0.00)[suse.de:+];
- DNSWL_BLOCKED(0.00)[2a07:de40:a101:3:10:168:4:11:from];
- MIME_TRACE(0.00)[0:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,opensuse.org:url]
-X-Spamd-Bar: +
-X-Rspamd-Queue-Id: BA2F71FBAA
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=schwab@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1719929191.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,10 +106,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-https://build.opensuse.org/package/live_build_log/openSUSE:Factory:RISCV/qemu:qemu-linux-user/standard/riscv64
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
+A PF may automatically create VFs and the PF may be function 0.
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-reuse-v10-3-7ca0b8ed3d9f@daynix.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/ppc/spapr_pci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index f63182a03c..ed4454bbf7 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -1573,7 +1573,9 @@ static void spapr_pci_pre_plug(HotplugHandler *plug_handler,
+      * hotplug, we do not allow functions to be hotplugged to a
+      * slot that already has function 0 present
+      */
+-    if (plugged_dev->hotplugged && bus->devices[PCI_DEVFN(slotnr, 0)] &&
++    if (plugged_dev->hotplugged &&
++        !pci_is_vf(pdev) &&
++        bus->devices[PCI_DEVFN(slotnr, 0)] &&
+         PCI_FUNC(pdev->devfn) != 0) {
+         error_setg(errp, "PCI: slot %d function 0 already occupied by %s,"
+                    " additional functions can no longer be exposed to guest.",
 -- 
-Andreas Schwab, SUSE Labs, schwab@suse.de
-GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
-"And now for something completely different."
+MST
+
 
