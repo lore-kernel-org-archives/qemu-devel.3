@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 183E4C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:25:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05CD9C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOfMX-0008Uw-Hw; Tue, 02 Jul 2024 11:24:09 -0400
+	id 1sOfNe-0000eR-FS; Tue, 02 Jul 2024 11:25:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOfMU-0008UD-Ex
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:24:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sOfNd-0000Z3-6J
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:25:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOfMS-0007qO-NM
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:24:06 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sOfNb-0000Ll-2c
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:25:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719933839;
+ s=mimecast20190719; t=1719933913;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k6W/7bz4FU2a2dBYdjgKVFXY9KyO5EeqkZZHe/j9S6c=;
- b=Pqae6w74dvyTYIOqwxex5FBsHI6VmRn+N9DPXC/hn6YXz4gHL8iVHb4YV5EHFiZyaW5NUd
- nAi0Ntavl/qx1exN9rcjDDhA1VRPTY4cNNEir9GTg27XRq5OMA9zfu5YU569aTDmLPZC6O
- nnrQGPbNuKcgyE/hAsSBaLFKrUD7glg=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=T0tpRout87JkbbO0udX29/nyn2IA3E1ZPlM1iE7t+DY=;
+ b=LRpGyRRHFFs1+DTzHQ8jvNQTEyYK5whWGZPbY5/SFZ4/Ly+/jWAVJGyPD0PdVWVIxl7J0u
+ SLQzMS0DVh3jvV5b9zODGPKHymmVupdQTavklL0s9zYZYB/hcTB+RnWZD5J6JfAyANb49C
+ BSECHSnPsOIFq3IYBL61Ovu94vPpijs=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-4qKsBVcMNx6YDDCzwc6aDw-1; Tue, 02 Jul 2024 11:23:58 -0400
-X-MC-Unique: 4qKsBVcMNx6YDDCzwc6aDw-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-52cdd8ca5a8so4426295e87.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 08:23:58 -0700 (PDT)
+ us-mta-622-2RzixQlxNW2XCGCkf5dJnA-1; Tue, 02 Jul 2024 11:25:12 -0400
+X-MC-Unique: 2RzixQlxNW2XCGCkf5dJnA-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6b5cec74f1dso7834386d6.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 08:25:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719933837; x=1720538637;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=k6W/7bz4FU2a2dBYdjgKVFXY9KyO5EeqkZZHe/j9S6c=;
- b=MRDlJwnzeYM/hDvoFRG1GnIIQdvQ35LvVTGLEoud9pBOFSZcXO9S+rYnMLh6adG0jI
- M/vXkRgBop13xgZWK0OIU1ypjGQR6NiurmZLY5QxdX/ib0nT2xWi89mdtoBKfZ1mcRx0
- ZtOxLq2qR6vH22bBz1f0SjRcCcS5LAYjfIrSJEb8t6juCsRnU0jcZnkSPkTKl7OnAZ0s
- CtRT28gEQhNLFx+1Ol8jgZUOTkRSGG++eQR+GLpKB5IKscMTzFtohortJTeI0douw30S
- gGHCo5gq+Ccz+47e068e56sPeEQIfmDv3eCAjlB3hHr1hPunNvN3CU4b4z0mnXaS3Wg2
- mW5w==
+ d=1e100.net; s=20230601; t=1719933911; x=1720538711;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=T0tpRout87JkbbO0udX29/nyn2IA3E1ZPlM1iE7t+DY=;
+ b=VmD0TLKU4IOEY3V+hq3zZFu5WTt+AXb3eCEa6w32+1HyQqPtEU9inJBrAnqtTcRiun
+ Ji3tZD+ycHE4rcnlR7rjOkfOTTOU6qMpwVDB8J4mjtewvbjjCeK7JOk9+4A/7ratuTsA
+ Wqy8mf2gQqXnklXdv9evdvZhD5yzWXgXwJkgpZKZB2hWTv0qL4I++BzTsu1nNnChMNA4
+ ANMiO9InhSJliaOXnY4PX1/82jgTfBDaTWbrsyA4mjh5KduHMfQKV49UWnsyL9KpZGBy
+ LmE+srjW5Rl50+M3pKPfMYu523kY9K3xCgHN0lD0fIEB6+LlaShiXyxEr4cevCxSaA+D
+ yz0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVx4gX4VIgeSE9avIz3e3k1lhyxvZ7FD2CQDClfMxaap9VqH2YCrNCV8ek1uLZ+SBS9PSeUdauP7bxALMKONISr3N6YR+0=
-X-Gm-Message-State: AOJu0YzqmTUkoGEB66LA/krziMhwg/YBbOYVTL24qhE9m5NrbhrrnWaN
- IkfytdpGn8D9XgP+opXksjmM62fzoNmI0gVNirXsxC+ScTyL1xb27bqiTBD3vkbBJEONoRo2e9o
- 1jAvKwpzecWv0wYlFw0IqXW70Qjx0wQaQnVNiIW2I0z9GDHddRnp0AXX5wYzqL9nkeMRAkfiHir
- L/pyxDnBBZuteDA0ZXUea4YMl93ZY=
-X-Received: by 2002:a05:6512:3048:b0:52e:9423:867f with SMTP id
- 2adb3069b0e04-52e94238714mr929e87.36.1719933837086; 
- Tue, 02 Jul 2024 08:23:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXC5f6z6WzBpsZmzAZcin2h9IL0FWRSBxXpp75jdbJlbQC4dOMN1sjRfi91MceDBfSeaRfoy9fq+OUIZs/eHU=
-X-Received: by 2002:a05:6512:3048:b0:52e:9423:867f with SMTP id
- 2adb3069b0e04-52e94238714mr915e87.36.1719933836711; Tue, 02 Jul 2024 08:23:56
- -0700 (PDT)
+ AJvYcCUu9+t0HeHtgchbKyw+/1L4tFk6XWBrtsyf1/gRSodRRCe5KlcBbhH8z+838PkCLz0eXbTLg40258ACkX1AUiqDcFVlEk8=
+X-Gm-Message-State: AOJu0YysOe/FF0CK58DDo3w2S+UOOZ0h9JqaeQKE02kAqTRLeZ3SxKSw
+ 4ENPE6+aurt+MgwXX/A/Hj6yuavLC9P67Fkzv2kEZINZG7S4wblcbvZONe0tPNI42VC9JYKRGLE
+ ORfe4tq4sUfMpdCxcQ5SCgyUS3s9R23GiImIF++HYUKB3+zuRIv/c
+X-Received: by 2002:a05:6214:caf:b0:6b5:dc5a:ffe0 with SMTP id
+ 6a1803df08f44-6b5dc5b01d8mr12896066d6.38.1719933911747; 
+ Tue, 02 Jul 2024 08:25:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFTNY4xh8toscMeq0eKHOHQAgdchW6fy3EiOvQLHkGStgk8CUg+4ZnsbRJAMT56oqZdQ9sOsQ==
+X-Received: by 2002:a05:6214:caf:b0:6b5:dc5a:ffe0 with SMTP id
+ 6a1803df08f44-6b5dc5b01d8mr12895926d6.38.1719933911507; 
+ Tue, 02 Jul 2024 08:25:11 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b59e368ac9sm44187926d6.25.2024.07.02.08.25.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 08:25:11 -0700 (PDT)
+Message-ID: <d5aa033d-fc09-41b1-b0c9-15df9e765ced@redhat.com>
+Date: Tue, 2 Jul 2024 17:25:08 +0200
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
- <e74803e6b570ab36ebc538dd84dc7c4bc2fbe4e7.1718827153.git.manos.pitsidianakis@linaro.org>
- <ZnmkN2PL3r-2sxqe@redhat.com> <g03mb.04m2bqm0mj1q@linaro.org>
-In-Reply-To: <g03mb.04m2bqm0mj1q@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 2 Jul 2024 17:23:44 +0200
-Message-ID: <CABgObfZP9gksqoUSHDdxwRmadYJpza4EVNd=FoQYQXaO+Nrzww@mail.gmail.com>
-Subject: Re: [RFC PATCH v3 1/5] build-sys: Add rust feature option
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
- Richard Henderson <richard.henderson@linaro.org>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] vfio/display: Fix potential memleak of edid info
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, marcandre.lureau@redhat.com,
+ kraxel@redhat.com, chao.p.peng@intel.com
+References: <20240701014809.255682-1-zhenzhong.duan@intel.com>
+ <20240701014809.255682-2-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240701014809.255682-2-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -110,26 +105,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 2, 2024 at 4:44=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
-> >Normally you'd see either --enable-XXX or --with-XXX and their
-> >corresponding --disable-XXX or --without-XXX.
->
-> True. As the commit message says, `rust` is a reserved meson feature
-> name, so the auto-generated scripts/meson-buildoptions.sh
-> has the following args:
->
->   --enable-with-rust
->   --disable-with-rust
->
-> I used the same in `configure` even though it's not autogenerated in
-> order to keep the two synced. If there's a way to get around this I'd
-> prefer it.
+On 7/1/24 3:48 AM, Zhenzhong Duan wrote:
+> EDID related device region info is leaked in vfio_display_edid_init()
+> error path and VFIODisplay destroying path.
+> 
+> Fixes: 08479114b0de ("vfio/display: add edid support.")
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-With the patch I posted, --with-rust/--without-rust is handled
-entirely in configure, Meson gleans the result from the presence of
-RUST_TARGET_TRIPLE in config-host.mak.
 
-Paolo
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   hw/vfio/display.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/hw/vfio/display.c b/hw/vfio/display.c
+> index 661e921616..9c57fd3888 100644
+> --- a/hw/vfio/display.c
+> +++ b/hw/vfio/display.c
+> @@ -171,7 +171,9 @@ static void vfio_display_edid_init(VFIOPCIDevice *vdev)
+>   
+>   err:
+>       trace_vfio_display_edid_write_error();
+> +    g_free(dpy->edid_info);
+>       g_free(dpy->edid_regs);
+> +    dpy->edid_info = NULL;
+>       dpy->edid_regs = NULL;
+>       return;
+>   }
+> @@ -182,6 +184,7 @@ static void vfio_display_edid_exit(VFIODisplay *dpy)
+>           return;
+>       }
+>   
+> +    g_free(dpy->edid_info);
+>       g_free(dpy->edid_regs);
+>       g_free(dpy->edid_blob);
+>       timer_free(dpy->edid_link_timer);
 
 
