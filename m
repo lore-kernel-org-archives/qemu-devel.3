@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38ADAC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 513C0C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:13:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeCN-0007gJ-2R; Tue, 02 Jul 2024 10:09:35 -0400
+	id 1sOeCG-0006cE-JS; Tue, 02 Jul 2024 10:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCK-0007RP-TT
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeC0-0008Is-3l
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929350;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TisxAqM9JFoRTBzvBR2/yPIkvvWOj6XGjDsm9k9s/20=;
- b=RGfQvvgmHrfWQPxc53+GV/X9meQCN43c4FI/y1e1cKOxw+920dKLy3kmtfmUeyW02it2BP
- L8sNNAuCTWTbbnjNwXjP9n8Nd6sPse3mo4PcD6O9YyKPycA1/6YUcEOoQsT3fGiPokoNLf
- iABwi+y6BslLaX697Q1yqbyTioLXj3Y=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-LtdjTcIgNFWxGcaq5Ux9uw-1; Tue, 02 Jul 2024 10:09:09 -0400
-X-MC-Unique: LtdjTcIgNFWxGcaq5Ux9uw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-424a775ee7fso29863525e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOeC6-0005ra-Hy
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:20 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOeBy-0008Ih-TO
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:17 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4256eec963eso30021385e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719929348; x=1720534148; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XWggSwLJ6RlaYPnvt8r7pYn4BtA1ozuqT1p3WRkPS7k=;
+ b=tfFlFu5NY7YgN8x6JsTLpST44yoW8/ClOoKyPv4pYCi6ZFfXo6waeDo3B83y+UxJnW
+ yCKxLOR4PdESBte0J3GGLzcItjjXbvEiNeMWe9+DHZBjHcI1hGxiWCPwZ543DZu3ipwD
+ Yss2MEdpEK7f8xIaZX2VhdTGtpv6lcx+NOQLri3S8Gcwy4jXZRMxPrlrPaCkRj5jptNm
+ Rq+3IfR3VxBNuapi9FX0Y8bNMUv6ek82fClhMbTsYfIGp3lucd7GaZfaKJlaSSYQXYKH
+ f60dJa4APgkkjNm24EaA2b9MF7FyNQEBt01mG3VqYfnYanwSbIKj9mtr3GGVfyg9n3AV
+ kcjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929347; x=1720534147;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TisxAqM9JFoRTBzvBR2/yPIkvvWOj6XGjDsm9k9s/20=;
- b=V+S4fz5/U7mV/AaZr4QDxyGNE4NZRxLQ1rPpPSbgjt03oUwZFWQfJePbdBznmox4Jr
- iyJgDeB2WONdRlq3HwJUBdpwD+GCIMKQtMcEN82v7EaURMumFP5XHYi5hRCS941H6oTd
- jEa2WRG/Vb2nGA9bDc5ENNrLB7PGbUW+YQt4Ie9/AoBhZWU5tf77xj6P8NDFL0ntECwX
- RuLL3wM2Fskrt42YVQsFAUSdVDOhuWU5Ep7fnsdr/BAn06bDSXZg1dfcATc/UUhXb+j8
- vU0UpUFpsIRYMy1GBFFX2YhT5eW7Thrr9GbR6rbBVw2+AMnVztNw9dwl9bimJyQvvgw9
- 9/lw==
-X-Gm-Message-State: AOJu0YxZcPMfFu45FEG9VkpH1klWGMjqs8iROXRiCK/gAhUz19//HbFe
- Q+V6XTM46PNSVA/6HzoMwSs53eNCXZL+qWvDJKBBlCOzRr6f0/vhZjCcMbXsT3fUucuVeGKWhqe
- J5DNR/Ahyt2Si2mHdXEU/BIeb0xn8SUZWpZr4r0D32/krGMHoZHPLC8+j36ss3u376s3/3qqdJ0
- 391jqWyhKFqiPzJe/fex8EcIStqoitKQ==
-X-Received: by 2002:a05:600c:68b:b0:424:a7e7:e443 with SMTP id
- 5b1f17b1804b1-4257a02b8d2mr60203965e9.12.1719929347571; 
- Tue, 02 Jul 2024 07:09:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFpARjIxgEDOnSoOk/9sIqxKCk+3dibiA8TewD7x6DubYxlnlnJHkFaxZXObdOr8+7P2/ingQ==
-X-Received: by 2002:a05:600c:68b:b0:424:a7e7:e443 with SMTP id
- 5b1f17b1804b1-4257a02b8d2mr60203675e9.12.1719929346999; 
- Tue, 02 Jul 2024 07:09:06 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
+ d=1e100.net; s=20230601; t=1719929348; x=1720534148;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XWggSwLJ6RlaYPnvt8r7pYn4BtA1ozuqT1p3WRkPS7k=;
+ b=c9BziYTAAGQFF01vOo3zKbfj0w7sq8zZ75BwIKPn35j9Ukm5V01DweOLoT9XSfvvUg
+ Oe7s9FpZ4XUBM1HQTW2U6RpaHlaRgSF+EGo6P0gBQnBtRC8F1vL97E8fQSwgBKUsFYc5
+ fMQs5ayOJYCClZOu8ETZfJ+Tzy2aykm9bBbZU5LfGJUissZlmZ0RPpM/ke3D9qjsGAR0
+ Tpim0STORlPT5RDSMsnbvG7265tw/Y09NJlLu+3UizM/cTAAXZxh3p/Fr+qe4AnBbTzO
+ SGeZgzuCUl6BISqtGM8zToiz4EKiyak6bJ7TjtS3Hx1XimH+SwaXNtDSMWd4feGXI+IT
+ Okzw==
+X-Gm-Message-State: AOJu0Ywdys+XxKpD6bwc3P2IXwkkO8SD0+eE3chYIgK0M9tRZoZyd7kv
+ HUgqMxwZ8S3yjO7d2xda5rZ1x+lfZ4x19eM4IdK/AJa/hzpMsI8LBdAJLlN8Zp0Xd9wmq09Inmd
+ G
+X-Google-Smtp-Source: AGHT+IGK6J0SIr9qh+SQmZOFCUSzmwpCpfY9oOwpRo0K67Iu3SZcQGj/11yIp47K4VezA9+2tDRakw==
+X-Received: by 2002:a05:600c:35d6:b0:424:e04b:88f9 with SMTP id
+ 5b1f17b1804b1-4257a02c83bmr62402145e9.3.1719929348204; 
+ Tue, 02 Jul 2024 07:09:08 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af5b8e2sm199033255e9.16.2024.07.02.07.09.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:09:05 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:09:03 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ 5b1f17b1804b1-4256b061eedsm191171385e9.26.2024.07.02.07.09.05
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 02 Jul 2024 07:09:07 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 41/91] i386/apic: Add hint on boot failure because of
- disabling x2APIC
-Message-ID: <7801fa5054e0eac7a169b32bf630cb237d2652ec.1719929191.git.mst@redhat.com>
-References: <cover.1719929191.git.mst@redhat.com>
+Cc: Tyrone Ting <kfting@nuvoton.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Hao Wu <wuhaotsh@google.com>, Thomas Huth <thuth@redhat.com>,
+ Shengtan Mao <stmao@google.com>, Chris Rauer <crauer@google.com>,
+ Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Laurent Vivier <lvivier@redhat.com>, Luc Michel <luc.michel@amd.com>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Patrick Venture <venture@google.com>
+Subject: [PATCH 3/4] tests/qtest/npcm7xx_sdhci: Access the card using its
+ published address
+Date: Tue,  2 Jul 2024 16:08:41 +0200
+Message-ID: <20240702140842.54242-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240702140842.54242-1-philmd@linaro.org>
+References: <20240702140842.54242-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1719929191.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,70 +103,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Currently setup_sd_card() asks the card its address,
+but discard the response and use hardcoded 0x4567.
 
-Currently, the Q35 supports up to 4096 vCPUs (since v9.0), but for TCG
-cases, if x2APIC is not actively enabled to boot more than 255 vCPUs (
-e.g., qemu-system-i386 -M pc-q35-9.0 -smp 666), the following error is
-reported:
+Set the SDHC_CMD_RESPONSE bit to have the controller
+record the bus response, and read the response from
+the RSPREG0 register. Then we can select the card with
+its real address.
 
-Unexpected error in apic_common_set_id() at ../hw/intc/apic_common.c:449:
-qemu-system-i386: APIC ID 255 requires x2APIC feature in CPU
-Aborted (core dumped)
-
-This error can be resolved by setting x2apic=on in -cpu. In order to
-better help users deal with this scenario, add the error hint to
-instruct users on how to enable the x2apic feature. Then, the error
-report becomes the following:
-
-Unexpected error in apic_common_set_id() at ../hw/intc/apic_common.c:448:
-qemu-system-i386: APIC ID 255 requires x2APIC feature in CPU
-Try x2apic=on in -cpu.
-Aborted (core dumped)
-
-Note since @errp is &error_abort, error_append_hint() can't be applied
-on @errp. And in order to separate the exact error message from the
-(perhaps effectively) hint, adding a hint via error_append_hint() is
-also necessary. Therefore, introduce @local_error in
-apic_common_set_id() to handle both the error message and the error
-hint.
-
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Message-Id: <20240606140858.2157106-1-zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/apic_common.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Cc: Hao Wu <wuhaotsh@google.com>
+Cc: Chris Rauer <crauer@google.com>
+Cc: Shengtan Mao <stmao@google.com>
+Cc: Patrick Venture <venture@google.com>
+Cc: Tyrone Ting <kfting@nuvoton.com>
+---
+ tests/qtest/libqos/sdhci-cmd.h   | 2 ++
+ tests/qtest/npcm7xx_sdhci-test.c | 8 ++++++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-index d8fc1e2815..c13cdd7994 100644
---- a/hw/intc/apic_common.c
-+++ b/hw/intc/apic_common.c
-@@ -433,6 +433,7 @@ static void apic_common_set_id(Object *obj, Visitor *v, const char *name,
-     APICCommonState *s = APIC_COMMON(obj);
-     DeviceState *dev = DEVICE(obj);
-     uint32_t value;
-+    Error *local_err = NULL;
+diff --git a/tests/qtest/libqos/sdhci-cmd.h b/tests/qtest/libqos/sdhci-cmd.h
+index 9e61dd4944..90efa028ef 100644
+--- a/tests/qtest/libqos/sdhci-cmd.h
++++ b/tests/qtest/libqos/sdhci-cmd.h
+@@ -22,6 +22,7 @@
+ #define SDHC_ARGUMENT 0x08
+ #define SDHC_TRNMOD 0x0C
+ #define SDHC_CMDREG 0x0E
++#define SDHC_RSPREG0 0x10
+ #define SDHC_BDATA 0x20
+ #define SDHC_PRNSTS 0x24
+ #define SDHC_BLKGAP 0x2A
+@@ -38,6 +39,7 @@
+ #define SDHC_TRNS_MULTI 0x0020
  
-     if (dev->realized) {
-         qdev_prop_set_after_realize(dev, name, errp);
-@@ -444,7 +445,11 @@ static void apic_common_set_id(Object *obj, Visitor *v, const char *name,
-     }
+ /* CMD Reg */
++#define SDHC_CMD_RESPONSE (3 << 0)
+ #define SDHC_CMD_DATA_PRESENT (1 << 5)
+ #define SDHC_ALL_SEND_CID (2 << 8)
+ #define SDHC_SEND_RELATIVE_ADDR (3 << 8)
+diff --git a/tests/qtest/npcm7xx_sdhci-test.c b/tests/qtest/npcm7xx_sdhci-test.c
+index 5d68540e52..01f237a816 100644
+--- a/tests/qtest/npcm7xx_sdhci-test.c
++++ b/tests/qtest/npcm7xx_sdhci-test.c
+@@ -30,6 +30,8 @@ char *sd_path;
  
-     if (value >= 255 && !cpu_has_x2apic_feature(&s->cpu->env)) {
--        error_setg(errp, "APIC ID %d requires x2APIC feature in CPU", value);
-+        error_setg(&local_err,
-+                   "APIC ID %d requires x2APIC feature in CPU",
-+                   value);
-+        error_append_hint(&local_err, "Try x2apic=on in -cpu.\n");
-+        error_propagate(errp, local_err);
-         return;
-     }
+ static QTestState *setup_sd_card(void)
+ {
++    uint16_t rca;
++
+     QTestState *qts = qtest_initf(
+         "-machine kudo-bmc "
+         "-device sd-card,drive=drive0 "
+@@ -43,8 +45,10 @@ static QTestState *setup_sd_card(void)
+     sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0, 0, SDHC_APP_CMD);
+     sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0x41200000, 0, (41 << 8));
+     sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0, 0, SDHC_ALL_SEND_CID);
+-    sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0, 0, SDHC_SEND_RELATIVE_ADDR);
+-    sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0x45670000, 0,
++    sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0, 0, SDHC_SEND_RELATIVE_ADDR
++                                                    | SDHC_CMD_RESPONSE);
++    rca = qtest_readl(qts, NPCM7XX_MMC_BA + SDHC_RSPREG0) >> 16;
++    sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, rca << 16, 0,
+                    SDHC_SELECT_DESELECT_CARD);
  
+     return qts;
 -- 
-MST
+2.41.0
 
 
