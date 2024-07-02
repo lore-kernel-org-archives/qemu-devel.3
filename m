@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8948BC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C043C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOVeq-0007pe-JM; Tue, 02 Jul 2024 01:02:24 -0400
+	id 1sOVeo-0007oj-L0; Tue, 02 Jul 2024 01:02:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVen-0007nk-8N
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:21 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVem-0007nU-QF
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:20 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVel-0007CM-7d
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:21 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-52cdc4d221eso4093391e87.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:02:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVef-0007BS-Hm
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:20 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2ee77db6f97so1352011fa.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719896537; x=1720501337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719896531; x=1720501331; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XsG4HS0Hi0hbjd75KzsL4izJ2zeNMAGK2+0U8SqDHJE=;
- b=h4olOEi2s7NrTYrxfv2roBL5GP+AXMUlXKIqpquobTt27UVLKa3rYjVV3/If7UVtND
- N3ay/UGFtkFT3PuHCjePJTwIUiHGTOtCWqFVk2C5Y9EVm37LqBiYv7gOgwBRwL5wEYlY
- upL1EkLEGDWTF8Y9LZrAZNZDWeu1fwphQ7SQcmtaa1d0XUUW+BXF+DIAPhBCJWeRUSte
- 6OMc4GOru+ko6ICuwTchrpvD3rPHKRqCrE0QYTzWtslyaNzeufmmBxNcqLLm5tAXAchV
- muhkDGjiBSR3opgq0zH7W92hFMwUJ0JxZEZnu94job+uA0qyWJn2lxBnCQbZViOQVWKk
- tEiQ==
+ bh=hGQns0yzqsl3OUGwx5bDl3r7+W830Rk2Y5bSGG1iekg=;
+ b=ZC9GdKXbG1ugQYFhlxRs82lRfny7mkRcVDDDkaSjTUIgS9+FrliOaOT48Vth065fqt
+ SKHcC4gQWjeZU4LaCOkkxN3YX0gKyrYAjfq2aBXjfgMbyMEArxjBgb+8yGdMtfV0jpHx
+ VE2N3AEAwzUVOCGkzWsCQyzLhrW7ryz4myNCmMTI6Y12FlUG+m1jjjj53Lk+z7HtmiVF
+ K+aqfWRDQmOEh45WaPPVYpftM1MHubpUPuBpoCwJrOyg5P/C02q/mobDV1kBCHmkJyPt
+ 4rTlkerb5DysIg6QSKhEnysJt6tGipotzE9GPJByvTNV2xVXsMa+8cvwIU59Vc4LUnev
+ NQog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719896537; x=1720501337;
+ d=1e100.net; s=20230601; t=1719896531; x=1720501331;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XsG4HS0Hi0hbjd75KzsL4izJ2zeNMAGK2+0U8SqDHJE=;
- b=usgN14hMh+RxUgO7TE0VU+jHuVL4a4QIHxZNnYyaT9YU/MYqxg05nuKSuMsc/3rz07
- x2moR0Xf7PHPT3XleOX/PNY2ySzNPgtt4AQijnnPg9p3uKfBaF2QgkF8QfbM8Bobmpx1
- wx4BKlCqt7Xv8e2QDeEKBK87iDXzXwEAGXwa74WhRTnLAhCdb2TOKhW+1WjPoU1ZH1Jh
- 4eRT0FQP7IUx3Y05MifMRLlCzsR2zUTzYg1SY0nIrf9tLApG05wGBvN+87LuvO0OpE4j
- NwXyOLtvbbYftzYpjt2CyIL9v3v+dovipFOK1R0HYMj/NRp15JZ3EWoMhxGNyJQIYS4M
- Yp3A==
-X-Gm-Message-State: AOJu0Yx9Jy7dE7zx7CnUzCDwebmSFd4cE0wmD4PAdozht7Lo1sXOTHsk
- Uk3sztvTh52/o2eXWi5QCBVstFUrE+wuQnx42i8hpnQj/hnuQQ+ohbbsxKFbSJzsMmQ0tqtAlkA
- P
-X-Google-Smtp-Source: AGHT+IHEnQnH5Mk5iLK9jJ32wU+zohfO5/Q8FyLCR26QKh0ODkpFiACo4hkk9qjVl7o2PuU9Y4HD9g==
-X-Received: by 2002:a05:6512:1108:b0:52c:d626:77aa with SMTP id
- 2adb3069b0e04-52e82731df2mr4709720e87.58.1719896537064; 
- Mon, 01 Jul 2024 22:02:17 -0700 (PDT)
+ bh=hGQns0yzqsl3OUGwx5bDl3r7+W830Rk2Y5bSGG1iekg=;
+ b=ouRbJO71QWk4thHxq6h/NKTiYAzIZbSItzrVrt49C4/5hWc2cVO+dqGWS8P3r0/4cu
+ ZTE8jk2RpJTa1by70DjTwqlOu1gLFke8SsJg0XJabFp6NeERFEAa8NrfWe2zqoM7CGc7
+ 2wgsZcyjTNMeobzRF4V/L1NvuY8wyr8sOb+x+bfPzoKvQ4fY40PIqc5/3GB1Y6G046Cb
+ So+bV0oSYaO+akpFkbv5HLn29DIGd6zYZxgkCWAJlsBJGji5WVXHhYkS5NTQ8KZYPMU3
+ eRsayraVzatTkjAcFVMLFRIIavS2w3Ev2O1yGIa/8rd3M/2hg4FMESQnDrzrtFmWkq9a
+ E9WA==
+X-Gm-Message-State: AOJu0YynvD6Hl843rpF0KXIC+DPaGc/OM79r9BIht1DlhAibcg36Mizl
+ J0nWQjDvdE9MFlxG+l3at4LncOrFRYHsOETSdWT21SA48r6XfKCwtuMQkWz6r4qZRSUSVODc13u
+ m
+X-Google-Smtp-Source: AGHT+IE3/CgdPUa5tlyLaXaphwECIZA3F7Tl2f2vXPOmK/shBhoi5FWNo0AHQFMpIP+5K2ThzLCFwQ==
+X-Received: by 2002:a2e:a418:0:b0:2ec:557b:f895 with SMTP id
+ 38308e7fff4ca-2ee5e4b91cdmr61056101fa.31.1719896530395; 
+ Mon, 01 Jul 2024 22:02:10 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36789d5ec1csm228250f8f.37.2024.07.01.22.02.15
+ ffacd0b85a97d-3675a0cdc5csm11984562f8f.18.2024.07.01.22.02.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 01 Jul 2024 22:02:16 -0700 (PDT)
+ Mon, 01 Jul 2024 22:02:09 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/22] include/hw: temporarily disable deletion of versioned
- machine types
-Date: Tue,  2 Jul 2024 07:01:00 +0200
-Message-ID: <20240702050112.35907-11-philmd@linaro.org>
+Subject: [PULL 09/22] include/hw: add macros for deprecation & removal of
+ versioned machines
+Date: Tue,  2 Jul 2024 07:00:59 +0200
+Message-ID: <20240702050112.35907-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240702050112.35907-1-philmd@linaro.org>
 References: <20240702050112.35907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,63 +98,163 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The new deprecation and deletion policy for versioned machine types is
-being introduced in QEMU 9.1.0.
+Versioned machines live for a long time to provide back compat for
+incoming migration and restore of saved images. To guide users away from
+usage of old machines, however, we want to deprecate any older than 3
+years (equiv of 9 releases), and delete any older than 6 years (equiva
+of 18 releases).
 
-Under the new policy a number of old machine types (any prior to 2.12)
-would be liable for immediate deletion which would be a violation of our
-historical deprecation and removal policy
+To get a standardized deprecation message and avoid having to remember
+to manually add it after three years, this introduces two macros to be
+used by targets when defining versioned machines.
 
-Thus automatic deletions (by skipping QOM registration) are temporarily
-gated on existance of the env variable "QEMU_DELETE_MACHINES" / QEMU
-version number >= 10.1.0. This allows opt-in testing of the automatic
-deletion logic, while activating it fully in QEMU >= 10.1.0.
+* MACHINE_VER_DEPRECATION(major, minor)
 
-This whole commit should be reverted in the 10.1.0 dev cycle or shortly
-thereafter.
+  Automates the task of setting the 'deprecation_reason' field on the
+  machine, if-and-only-if the major/minor version is older than 3 years.
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+* MACHINE_VER_DELETION(major, minor)
+
+  Simulates the deletion of by skipping registration of the QOM type
+  for a versioned machine, if-and-only-if the major/minor version is
+  older than 6 years.
+
+By using these two macros there is no longer any manual work required
+per-release to deprecate old machines. By preventing the use of machines
+that have reached their deletion date, it is also not necessary to
+manually delete machines per-release. Deletion can be batched up once a
+year or whenever makes most sense.
+
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240620165742.1711389-10-berrange@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240620165742.1711389-9-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/boards.h | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ include/hw/boards.h | 96 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 96 insertions(+)
 
 diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 187ed76646..ef6f18f2c1 100644
+index d5ad712585..187ed76646 100644
 --- a/include/hw/boards.h
 +++ b/include/hw/boards.h
-@@ -686,11 +686,28 @@ struct MachineState {
-  * suitable period of time has passed, it will cause
-  * execution of the method to return, avoiding registration
-  * of the machine
-+ *
-+ * The new deprecation and deletion policy for versioned
-+ * machine types was introduced in QEMU 9.1.0.
-+ *
-+ * Under the new policy a number of old machine types (any
-+ * prior to 2.12) would be liable for immediate deletion
-+ * which would be a violation of our historical deprecation
-+ * and removal policy
-+ *
-+ * Thus deletions are temporarily gated on existance of
-+ * the env variable "QEMU_DELETE_MACHINES" / QEMU version
-+ * number >= 10.1.0. This gate can be deleted in the 10.1.0
-+ * dev cycle
-  */
- #define MACHINE_VER_DELETION(...) \
-     do { \
-         if (MACHINE_VER_SHOULD_DELETE(__VA_ARGS__)) { \
--            return; \
-+            if (getenv("QEMU_DELETE_MACHINES") || \
-+                QEMU_VERSION_MAJOR > 10 || (QEMU_VERSION_MAJOR == 10 && \
-+                                            QEMU_VERSION_MINOR >= 1)) { \
-+                return; \
-+            } \
-         } \
-     } while (0)
+@@ -429,6 +429,7 @@ struct MachineState {
+  *          MachineClass *mc = MACHINE_CLASS(oc); \
+  *          MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
+  *          mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " Virtual Machine"; \
++ *          MACHINE_VER_DEPRECATION(__VA_ARGS__); \
+  *          if (latest) { \
+  *              mc->alias = "virt"; \
+  *          } \
+@@ -440,6 +441,7 @@ struct MachineState {
+  *      }; \
+  *      static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+  *      { \
++ *          MACHINE_VER_DELETION(__VA_ARGS__); \
+  *          type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
+  *      } \
+  *      type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
+@@ -598,6 +600,100 @@ struct MachineState {
+                       _MACHINE_VER_SYM2) (sym, prefix, __VA_ARGS__)
  
+ 
++/*
++ * How many years/major releases for each phase
++ * of the life cycle. Assumes use of versioning
++ * scheme where major is bumped each year
++ */
++#define MACHINE_VER_DELETION_MAJOR 6
++#define MACHINE_VER_DEPRECATION_MAJOR 3
++
++/*
++ * Expands to a static string containing a deprecation
++ * message for a versioned machine type
++ */
++#define MACHINE_VER_DEPRECATION_MSG \
++    "machines more than " stringify(MACHINE_VER_DEPRECATION_MAJOR) \
++    " years old are subject to deletion after " \
++    stringify(MACHINE_VER_DELETION_MAJOR) " years"
++
++#define _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor) \
++    (((QEMU_VERSION_MAJOR - major) > cutoff) || \
++     (((QEMU_VERSION_MAJOR - major) == cutoff) && \
++      (QEMU_VERSION_MINOR - minor) >= 0))
++
++#define _MACHINE_VER_IS_EXPIRED2(cutoff, major, minor) \
++    _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor)
++#define _MACHINE_VER_IS_EXPIRED3(cutoff, major, minor, micro) \
++    _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor)
++#define _MACHINE_VER_IS_EXPIRED4(cutoff, major, minor, _unused, tag) \
++    _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor)
++#define _MACHINE_VER_IS_EXPIRED5(cutoff, major, minor, micro, _unused, tag)   \
++    _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor)
++
++#define _MACHINE_IS_EXPIRED(cutoff, ...) \
++    _MACHINE_VER_PICK(__VA_ARGS__, \
++                      _MACHINE_VER_IS_EXPIRED5, \
++                      _MACHINE_VER_IS_EXPIRED4, \
++                      _MACHINE_VER_IS_EXPIRED3, \
++                      _MACHINE_VER_IS_EXPIRED2) (cutoff, __VA_ARGS__)
++
++/*
++ * Evaluates true when a machine type with (major, minor)
++ * or (major, minor, micro) version should be considered
++ * deprecated based on the current versioned machine type
++ * lifecycle rules
++ */
++#define MACHINE_VER_IS_DEPRECATED(...) \
++    _MACHINE_IS_EXPIRED(MACHINE_VER_DEPRECATION_MAJOR, __VA_ARGS__)
++
++/*
++ * Evaluates true when a machine type with (major, minor)
++ * or (major, minor, micro) version should be considered
++ * for deletion based on the current versioned machine type
++ * lifecycle rules
++ */
++#define MACHINE_VER_SHOULD_DELETE(...) \
++    _MACHINE_IS_EXPIRED(MACHINE_VER_DELETION_MAJOR, __VA_ARGS__)
++
++/*
++ * Sets the deprecation reason for a versioned machine based
++ * on its age
++ *
++ * This must be unconditionally used in the _class_init
++ * function for all machine types which support versioning.
++ *
++ * Initially it will effectively be a no-op, but after a
++ * suitable period of time has passed, it will set the
++ * 'deprecation_reason' field on the machine, to warn users
++ * about forthcoming removal.
++ */
++#define MACHINE_VER_DEPRECATION(...) \
++    do { \
++        if (MACHINE_VER_IS_DEPRECATED(__VA_ARGS__)) { \
++            mc->deprecation_reason = MACHINE_VER_DEPRECATION_MSG; \
++        } \
++    } while (0)
++
++/*
++ * Prevents registration of a versioned machined based on
++ * its age
++ *
++ * This must be unconditionally used in the register
++ * method for all machine types which support versioning.
++ *
++ * Inijtially it will effectively be a no-op, but after a
++ * suitable period of time has passed, it will cause
++ * execution of the method to return, avoiding registration
++ * of the machine
++ */
++#define MACHINE_VER_DELETION(...) \
++    do { \
++        if (MACHINE_VER_SHOULD_DELETE(__VA_ARGS__)) { \
++            return; \
++        } \
++    } while (0)
++
+ #define DEFINE_MACHINE(namestr, machine_initfn) \
+     static void machine_initfn##_class_init(ObjectClass *oc, void *data) \
+     { \
 -- 
 2.41.0
 
