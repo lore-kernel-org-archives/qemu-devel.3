@@ -4,76 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3A24C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:31:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B763C41513
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:41:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOfTb-0007Ab-Dm; Tue, 02 Jul 2024 11:31:27 -0400
+	id 1sOfcm-0004pa-Gu; Tue, 02 Jul 2024 11:40:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sOfTY-00077h-Pc
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:31:25 -0400
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOfci-0004oL-FV
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:40:53 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sOfTW-0005CJ-2Q
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:31:24 -0400
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-446449e5df5so21143951cf.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 08:31:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOfcf-0001Px-Gg
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:40:52 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2ec50d4e47bso42177971fa.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 08:40:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719934281; x=1720539081; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=EzssBnxLsekDQqFHz3eMMn3NJIyn6OIB58pC86B1QWY=;
- b=Jxn3/uTGCpSRPReE2tcGt+of9XI1xXHQiEOFj5XV6epDE/0kezySX03dN5UtvPm425
- 222pnDM0r95qpQgev3Ys9mVBAYB/Ouvmg8z3KiTxSwcp41PPybsvID91VCjGWYa2ifAT
- xHpAyZe6q2ba1R0VrWZ5YD0SQeRdO+8I17SeXEt/IgWuYfgDtiRC0Bq6LogkOLqlhcp7
- 6JyrzffQEEoq0ya99L1FtJ8vPaUNCMgept2niQS+gOS1QattAyXaogfDpOxO+YYuOGpu
- tOiuKcJu03SSYpc9mH0B3RZieN02fIN10/TZZzTTwyrYYDed3HF9m6TaEzvHTmYW904f
- lnmg==
+ d=linaro.org; s=google; t=1719934847; x=1720539647; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=stF7WuGpcrsQaV3ZUFr5l5WCk/9RTmiuVw2jUbyk6xk=;
+ b=Qei5Sh4lqNuvjWCj8vTmP2yRlZ2GxHJ6Jv7pavzbUj1onSSg+18cEQU9uOY/lZGa95
+ IcVYYlHcsAT470VkPf8FEY44g9fOw1BROkY+LqnZemakc1kKPewSBa5ubtKTydMELXTr
+ yN4S75dykFnp8HcpjnBULlu2M4aMfBWzynZV497GPOXQ3QaORIWxYAy+pAq3D/OmiQar
+ /w+KBA3kdRZQTE3Os97f24+5KU+mqlBUqSHwswP/wg0/Awv1Xqm1JazB8IMrjlfC8L7U
+ M4y7q2VHc4+rljinoq+wPSBa7NVqhGIeHenk7XpiUZjycwbLVPdaF6KI0cAh4P9xkGCE
+ rlhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719934281; x=1720539081;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EzssBnxLsekDQqFHz3eMMn3NJIyn6OIB58pC86B1QWY=;
- b=BY8idrQSGDu6fjpfveGBHZVbTBx83KiaOGELip1sQwRLQ0NtZJU/EB33UuI+Y8Rc5w
- qW+hNRUuqzspLB5O03tuslc+zkq9bWImQSVH0IVB007PmNJDiRSsn00NVkCrj6skDLSb
- x1bHfnk4/ha3N04ig/7C7sOMom4M7oqI21mnBBXQy/RZRzUAzvBAluXn9tFAz3R8mwrH
- W8+BkDEAhYco7juJ/3yKxK75NtNSj1QUnYZGpq5JAa/03QlOxzCsSs/uKkd56Q1ZyWuI
- pCb0u9Zz9SRVbatEWltNhCLr7oxXbVu20NsKzyaziYXhKo4eUutqEerFwnMHkejE0sNA
- USOg==
-X-Gm-Message-State: AOJu0Yz1g9oG2N/Nqmd+TgIs+zFv0E3Rd0wSXS1SOd4TMLkz02plWdrf
- 1eCYUn8K++qxZn4RUwXCxcMgReDkpuXnDarJAI9DHx03RkpXuX2PdEhqQve4VS6QWeXmaoIygHV
- 3pyufgE8WF3exSYTZNjufVpS//9k=
-X-Google-Smtp-Source: AGHT+IGWQ8M5/JtsFVnjf7q1j+5zhsm6z5A6DZTsho3Awn7HIOtlk7fu0tlKbLmVOPiP5e8pE5S/YsHYSDDORM/a1Uo=
-X-Received: by 2002:ac8:590d:0:b0:441:315:1c90 with SMTP id
- d75a77b69052e-44662c954bbmr108516121cf.12.1719934280635; Tue, 02 Jul 2024
- 08:31:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719934847; x=1720539647;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=stF7WuGpcrsQaV3ZUFr5l5WCk/9RTmiuVw2jUbyk6xk=;
+ b=kpQlJiMle02Oq2qvvGnAk8VS14aNZtyFSC48hl1y3gmV7NliUcY1CrYrzVa0C3Faq/
+ T+De4ewSIqIYzbhPKk7+5LecX8oahsaTN683r1l4rghzgwuUsf8Wn2g4/L93KnzxibLT
+ nw2FWd+89KQbrvKbkK94QtZQkdAcYeKK0aPpIu5TH+wEB6MJ/XHfwL2WjZVjAO57oDfI
+ IuGIFJ05aRqi7jswr7t0fEGPnKv2HKFZ/LGcrMwKAIaDQocppvdYH7ALQI/s/rOoGETU
+ 3M2W7P6sKMUzwe1/cgrg8/BRx3bQ5oxb12TnqGXzttQdy+MZaD1G/C2bmf+PLGvCKqEl
+ mXYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXfFzfTx1ySdjrXxFUj0FgrYpvJ94FWIcewH6XThhdxpO56US4qcp3PFD6um0A70vcOzqmXcT00tod8kmVXVrNutRAFdSk=
+X-Gm-Message-State: AOJu0Yzood26PTkWHO8oSr4sMN9xSWNzHVHf3UwlJb+o/STQGQPk114u
+ tVyAjZ0OWSc2ILWcJ8yhZJXrMr3mBrFqnKX7vpEQTZVuH4HRZ87nxXf95v07NdRh0diNI21g1bi
+ 6
+X-Google-Smtp-Source: AGHT+IEuNf1jMCVzFwnSd5LWtj/oPDsf16fL9kkdV77XvNfIkJ0JarULKNWHBMBoqVpm1A3i/wbT7A==
+X-Received: by 2002:a2e:a912:0:b0:2ee:4e67:85ec with SMTP id
+ 38308e7fff4ca-2ee5e337908mr81930911fa.5.1719934847322; 
+ Tue, 02 Jul 2024 08:40:47 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.209.58])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256af5b61bsm204781685e9.17.2024.07.02.08.40.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 08:40:46 -0700 (PDT)
+Message-ID: <b72e40c9-c2de-487c-a9ad-a52c1f286d77@linaro.org>
+Date: Tue, 2 Jul 2024 17:40:44 +0200
 MIME-Version: 1.0
-References: <20240701014809.255682-1-zhenzhong.duan@intel.com>
- <20240701014809.255682-2-zhenzhong.duan@intel.com>
-In-Reply-To: <20240701014809.255682-2-zhenzhong.duan@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 2 Jul 2024 19:31:07 +0400
-Message-ID: <CAJ+F1CL1WMK+QdTsSDteBDpUo=rJ91ddhVG7Gx0hsMzsPT5bfA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] vfio/display: Fix potential memleak of edid info
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
- kraxel@redhat.com, chao.p.peng@intel.com
-Content-Type: multipart/alternative; boundary="000000000000d59daa061c456703"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/char/pl011: Avoid division-by-zero in
+ pl011_get_baudrate()
+To: Zheyu Ma <zheyuma97@gmail.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20240702152750.3017426-1-zheyuma97@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240702152750.3017426-1-zheyuma97@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,115 +99,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d59daa061c456703
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Zheyu,
 
-On Mon, Jul 1, 2024 at 5:51=E2=80=AFAM Zhenzhong Duan <zhenzhong.duan@intel=
-.com>
-wrote:
-
-> EDID related device region info is leaked in vfio_display_edid_init()
-> error path and VFIODisplay destroying path.
->
-> Fixes: 08479114b0de ("vfio/display: add edid support.")
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-
+On 2/7/24 17:27, Zheyu Ma wrote:
+> In pl011_get_baudrate(), when we calculate the baudrate we can
+> accidentally divide by zero. This happens because although (as the
+> specification requires) we treat UARTIBRD = 0 as invalid, we aren't
+> correctly limiting UARTIBRD and UARTFBRD values to the 16-bit and 6-bit
+> ranges the hardware allows, and so some non-zero values of UARTIBRD can
+> result in a zero divisor.
+> 
+> Enforce the correct register field widths on guest writes and on inbound
+> migration to avoid the division by zero.
+> 
+> ASAN log:
+> ==2973125==ERROR: AddressSanitizer: FPE on unknown address 0x55f72629b348
+> (pc 0x55f72629b348 bp 0x7fffa24d0e00 sp 0x7fffa24d0d60 T0)
+>      #0 0x55f72629b348 in pl011_get_baudrate hw/char/pl011.c:255:17
+>      #1 0x55f726298d94 in pl011_trace_baudrate_change hw/char/pl011.c:260:33
+>      #2 0x55f726296fc8 in pl011_write hw/char/pl011.c:378:9
+> 
+> Reproducer:
+> cat << EOF | qemu-system-aarch64 -display \
+> none -machine accel=qtest, -m 512M -machine realview-pb-a8 -qtest stdio
+> writeq 0x1000b024 0xf8000000
+> EOF
+> 
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 > ---
->  hw/vfio/display.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/hw/vfio/display.c b/hw/vfio/display.c
-> index 661e921616..9c57fd3888 100644
-> --- a/hw/vfio/display.c
-> +++ b/hw/vfio/display.c
-> @@ -171,7 +171,9 @@ static void vfio_display_edid_init(VFIOPCIDevice *vde=
-v)
->
->  err:
->      trace_vfio_display_edid_write_error();
-> +    g_free(dpy->edid_info);
->      g_free(dpy->edid_regs);
-> +    dpy->edid_info =3D NULL;
->      dpy->edid_regs =3D NULL;
->      return;
->  }
-> @@ -182,6 +184,7 @@ static void vfio_display_edid_exit(VFIODisplay *dpy)
->          return;
->      }
->
-> +    g_free(dpy->edid_info);
->      g_free(dpy->edid_regs);
->      g_free(dpy->edid_blob);
->      timer_free(dpy->edid_link_timer);
-> --
-> 2.34.1
->
->
->
+> Changes in v2:
+> - Enforce the correct register field widths on writes to both UARTIBRD
+>    and UARTFBRD registers.
+> - Mask UARTIBRD to 16 bits and UARTFBRD to 6 bits in the pl011_post_load
+>    function to prevent division by zero during inbound migration.
+> ---
+>   hw/char/pl011.c | 7 +++++--
+>   1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+> index 8753b84a84..ba5f7cfbda 100644
+> --- a/hw/char/pl011.c
+> +++ b/hw/char/pl011.c
+> @@ -374,11 +374,11 @@ static void pl011_write(void *opaque, hwaddr offset,
+>           s->ilpr = value;
+>           break;
+>       case 9: /* UARTIBRD */
+> -        s->ibrd = value;
+> +        s->ibrd = value & 0xffff;
 
---=20
-Marc-Andr=C3=A9 Lureau
+LGTM but could you add a definition instead of these magic values?
 
---000000000000d59daa061c456703
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Similarly to the ones in the top if this file:
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jul 1, 2024 at 5:51=E2=80=AFA=
-M Zhenzhong Duan &lt;<a href=3D"mailto:zhenzhong.duan@intel.com">zhenzhong.=
-duan@intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">EDID related device region info is leaked in vfio_display_edi=
-d_init()<br>
-error path and VFIODisplay destroying path.<br>
-<br>
-Fixes: 08479114b0de (&quot;vfio/display: add edid support.&quot;)<br>
-Signed-off-by: Zhenzhong Duan &lt;<a href=3D"mailto:zhenzhong.duan@intel.co=
-m" target=3D"_blank">zhenzhong.duan@intel.com</a>&gt;<br></blockquote><div>=
-<br></div><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:ma=
-rcandre.lureau@redhat.com">marcandre.lureau@redhat.com</a>&gt;</div><div>=
-=C2=A0<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
----<br>
-=C2=A0hw/vfio/display.c | 3 +++<br>
-=C2=A01 file changed, 3 insertions(+)<br>
-<br>
-diff --git a/hw/vfio/display.c b/hw/vfio/display.c<br>
-index 661e921616..9c57fd3888 100644<br>
---- a/hw/vfio/display.c<br>
-+++ b/hw/vfio/display.c<br>
-@@ -171,7 +171,9 @@ static void vfio_display_edid_init(VFIOPCIDevice *vdev)=
-<br>
-<br>
-=C2=A0err:<br>
-=C2=A0 =C2=A0 =C2=A0trace_vfio_display_edid_write_error();<br>
-+=C2=A0 =C2=A0 g_free(dpy-&gt;edid_info);<br>
-=C2=A0 =C2=A0 =C2=A0g_free(dpy-&gt;edid_regs);<br>
-+=C2=A0 =C2=A0 dpy-&gt;edid_info =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0dpy-&gt;edid_regs =3D NULL;<br>
-=C2=A0 =C2=A0 =C2=A0return;<br>
-=C2=A0}<br>
-@@ -182,6 +184,7 @@ static void vfio_display_edid_exit(VFIODisplay *dpy)<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 g_free(dpy-&gt;edid_info);<br>
-=C2=A0 =C2=A0 =C2=A0g_free(dpy-&gt;edid_regs);<br>
-=C2=A0 =C2=A0 =C2=A0g_free(dpy-&gt;edid_blob);<br>
-=C2=A0 =C2=A0 =C2=A0timer_free(dpy-&gt;edid_link_timer);<br>
--- <br>
-2.34.1<br>
-<br>
-<br>
-</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
-fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
-=A9 Lureau<br></div></div>
+   /* Flag Register, UARTFR */
+   #define PL011_FLAG_RI   0x100
+   #define PL011_FLAG_TXFE 0x80
+   ...
 
---000000000000d59daa061c456703--
+   /* Integer Baud Rate Divider, UARTIBRD */
+   #define IBRD_MASK 0x3f
+
+   /* Fractional Baud Rate Divider, UARTFBRD */
+   #define FBRD_MASK 0xffff
+
+Then use these definitions :)
+
+Regards,
+
+Phil.
+
+>           pl011_trace_baudrate_change(s);
+>           break;
+>       case 10: /* UARTFBRD */
+> -        s->fbrd = value;
+> +        s->fbrd = value & 0x3f;
+>           pl011_trace_baudrate_change(s);
+>           break;
+>       case 11: /* UARTLCR_H */
+> @@ -531,6 +531,9 @@ static int pl011_post_load(void *opaque, int version_id)
+>           s->read_pos = 0;
+>       }
+>   
+> +    s->ibrd &= 0xffff;
+> +    s->fbrd &= 0x3f;
+> +
+>       return 0;
+>   }
+>   
+
 
