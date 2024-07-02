@@ -4,87 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9371BC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F042C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 15:27:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOfOS-00022t-Co; Tue, 02 Jul 2024 11:26:08 -0400
+	id 1sOfPf-0003TN-Qz; Tue, 02 Jul 2024 11:27:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOfOQ-00021y-5B
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:26:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1sOfPe-0003Si-5Z
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:27:22 -0400
+Received: from smarthost4.eviden.com ([80.78.11.85])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOfOM-0000Wt-A1
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:26:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719933960;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5YSVYlYPRZdh8LsAyF8SfrP3LbyeShYZWsp5bICd7r4=;
- b=ftTj31Agoz0ZAOEVHYZpYY7SOCV2ZzrUJId4hNnBQzrvPwF39JdbR2q++FALvwjp7MVlsc
- Z9frdyJI50OXLwpRzTwcsfsfY2HAHNpniFxAbgojKSkg/X8ZGDLET/7QrurNJaLSpQ4nkL
- 3MlUGyuCkIw40GhUcwj39RfGc8+O+1I=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-216-lBMU-YoaNXO7rRxVt0PLXg-1; Tue, 02 Jul 2024 11:25:58 -0400
-X-MC-Unique: lBMU-YoaNXO7rRxVt0PLXg-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2ecb37356edso34141541fa.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 08:25:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719933957; x=1720538757;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5YSVYlYPRZdh8LsAyF8SfrP3LbyeShYZWsp5bICd7r4=;
- b=np5fEvSC2miPsX0+uJezBzud0Cy3onqTBftUlW8vfKbtyG/jbBAuB72AVMkbUCx/k8
- 2hXg45+VGS+1qYJOlvbAO8qCLWdoIzIVrzDNn7tCJW0y0jW7y/ByXfIX/VD3aU14c3i1
- Hc7o9tks5V5M4h/iWT81M8nlPtKqlAWZ+0RwXwqf6yT5BKIbzl0iXVaPpnTeJ1zM6k/B
- i1ODC5MNzjdCWoiwcv31hsXWeOXITq1VCSDHseRKcXF7fIzZdNnHT4y7Xh13tkKAXxxH
- VXPFhXaEFknVire9FmQQx7YzRiNKoOHKi6zlJWchbYyHLwwXrz1FmADV4vc2Owky80UD
- /JQw==
-X-Gm-Message-State: AOJu0YzSsyFz19sEMHKU+c4IgTOxjE3nI0VCztf2KWyZNhATEBuuHbNI
- WCtbKe50h2tM+qXawRMnuWHFZqrRoX0XGqtRFLJGvih9R0fpi1U922P2nXnB4wnpc2fZge3P1D/
- GMNZUUrko3z5YsE15tic4ailn28T/K99yfpJTHN8dWTn7mENVleAJltfHF/CcPJw78XR3SgHBJN
- wzhoffpGlvqa3JErok4jhw3od+O71L1A==
-X-Received: by 2002:a2e:a7c1:0:b0:2ec:53a9:2036 with SMTP id
- 38308e7fff4ca-2ee5e6e01ddmr68962831fa.37.1719933956885; 
- Tue, 02 Jul 2024 08:25:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFg2sptwfWglIwqw+ANoNBVEZyWDz/qP+Rvum4Nhtt5i9uGmfGmKvdeKAWBBfpC1J+JPJQZYg==
-X-Received: by 2002:a2e:a7c1:0:b0:2ec:53a9:2036 with SMTP id
- 38308e7fff4ca-2ee5e6e01ddmr68961911fa.37.1719933954003; 
- Tue, 02 Jul 2024 08:25:54 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b09a828sm204631335e9.37.2024.07.02.08.25.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 08:25:53 -0700 (PDT)
-Date: Tue, 2 Jul 2024 11:25:49 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PULL 00/91] virtio: features,fixes
-Message-ID: <20240702112538-mutt-send-email-mst@kernel.org>
-References: <cover.1719929191.git.mst@redhat.com>
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1sOfPb-0001gt-5v
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 11:27:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1719934039; x=1751470039;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=DYw5ELzKdbsv2XgxOR/yY2w0HaDh5TgrTXFprJc3mGk=;
+ b=n0UUZi/MP8RL422YrYcAoNFqWZbGKEeeIP2CjeKdhqpToRf8zdu8C39C
+ LfQJ9rCKavxog8n18C/OiE67P1YvGaEz+FhV/HxVQpG2mIwJg8Dip0t9q
+ kHbokRKHYGPhD9pygjt9FS4wAj8wcIOlNWkzxMAJK/Kt+TtVzsGjrgfQr
+ FP0VJMPsGQgVU+RKDi5g49kjLBtSP582Um++h4dwyD63oJZ6Eapq/WwNS
+ HVqBSa5R21tQttTLcMW78R7tbAEYVXNl/JRMsYe4vG4/Lm7Sx6JP8UYb2
+ MfzZVGxJo5op14izkCVzmfsg6F0FoFey1u87Pz02DZ2BRTGbVukGZdGxb g==;
+X-IronPort-AV: E=Sophos;i="6.09,178,1716242400"; d="scan'208";a="15861290"
+X-MGA-submission: =?us-ascii?q?MDH4ztiVON/cLwRMmid1Q95wTmz+JiHJa1GpXX?=
+ =?us-ascii?q?S9Sqd4Gcisds02ES957o08IAXrxhO4geHsBkdMT7sBaLruOjpcgyGSFK?=
+ =?us-ascii?q?qiCeneFCHmWcDaIozLDgWQ9csL7H1IzHRWpygwtcr9KaYH1qTjNvrfm0?=
+ =?us-ascii?q?OJb3iNhsXeB8S5TSctI+CRvA=3D=3D?=
+Received: from mail-db8eur05lp2105.outbound.protection.outlook.com (HELO
+ EUR05-DB8-obe.outbound.protection.outlook.com) ([104.47.17.105])
+ by smarthost4.eviden.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2024 17:27:15 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NiBkVSuRwKMBrT+qU4MBpgk9CEEHrlbI15YCKez0M8tw2PV2sN0v8oHc7BD7G1cjJ595Il0pJqtcPBy90sD+pPpVhx3tfpROzBi/+tQLFdGuJNetlw6UaD+op8tkm4wXuJq9+FIiyWQmELx+OBEToArVrSAqu76b1wxOJZX1+kLqN2+5tg2LzD930EoR1xVgzz/bJkbL+0R4tPfu4j6e4fLSRa7S5bV5lckgvqaNDb42ubf7CrlcUq+76HZrFEtOkvAKYL7GBLXXMRs+CKeqT3Cy+5zNmhHiq79t7rV/xfSpQiNkHR0Jr7TKA83s2N9OXQt8V7fksa8jED1kO0hk4w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DYw5ELzKdbsv2XgxOR/yY2w0HaDh5TgrTXFprJc3mGk=;
+ b=QYJgjt/TVnNU2Uzp5uCn125Cctst2LbUu+5BdEKyc52PXR8xcSWQ+aj7mRylk7usv/YlVSnEiYnx/+qWDhrdsQOFnI7AUISrXuKSf1xI9383g36MPBWXG1eEThM/e6Lx2df047DCy96P1WKqqMiy7RNTVZX/u7ccnhOopjmihHuvVzntMRzgcmXL7O9dHiscyQr4wYe6G1vKf5j4Lkc+rwZ2x9WcbO8j2PJ3ezypYPtrNpq6I5z9R0OwvXzF5ajn6nlE2cqsWcZdLAs1M2Xigb9Ehq5sI96Mc0jh97NaUbjn48HMqQ3CvrTg2pwzQcgx2AILF5OmWtlZTKlLS/+jJA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DYw5ELzKdbsv2XgxOR/yY2w0HaDh5TgrTXFprJc3mGk=;
+ b=sF8GeaXzFr6J3ArDLQwzmkjLb82dncNyEBYxnDUIow2t9+dA3RkQdzhysZpTIHjQpRdmT/TVP4OoIEMGR+81B8IxJs5MfeCZiXaVKlaPU+tbf+lcRXZL+XhSrjqgQyYuCuYPxyUlJGxsmUgn8fnVgelX1DXTkNYkWTPuJ4xHkTELiy152mvBRBXKayXEB7Z4ZaLd+fup4Fp3ctO+15nDryKu9V0CF/DWe3BlDjnFf4CuBX3Rs/G3Sw+BgInqt+Od3sTZtHt0LiFsz4okSb783hFdvSA/vK//NYsUv+vPOQ0+V/zVip1nHpgweo1dFm1YYVZDnK78uwyxPwTgXdyV3g==
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by DB8PR07MB6412.eurprd07.prod.outlook.com (2603:10a6:10:138::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.22; Tue, 2 Jul
+ 2024 15:27:13 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d%4]) with mapi id 15.20.7741.017; Tue, 2 Jul 2024
+ 15:27:13 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, 
+ "kevin.tian@intel.com" <kevin.tian@intel.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>
+Subject: Re: [PATCH ats_vtd v5 00/22] ATS support for VT-d
+Thread-Topic: [PATCH ats_vtd v5 00/22] ATS support for VT-d
+Thread-Index: AQHatXs42Vo/2A63BES9fBhuPzCosbHieF0AgACk6VmAAGrUgIAAGEWAgAAdSQA=
+Date: Tue, 2 Jul 2024 15:27:13 +0000
+Message-ID: <5894d125-0365-4f1a-91f3-0dbb56c4e4cc@eviden.com>
+References: <20240603055917.18735-1-clement.mathieu--drif@eviden.com>
+ <20240701160122-mutt-send-email-mst@kernel.org>
+ <AM8PR07MB76020A044539A40485F91F0A86DC2@AM8PR07MB7602.eurprd07.prod.outlook.com>
+ <20240702081352-mutt-send-email-mst@kernel.org>
+ <52efc1b0-5451-4e9e-a05d-4db360d3c573@intel.com>
+In-Reply-To: <52efc1b0-5451-4e9e-a05d-4db360d3c573@intel.com>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|DB8PR07MB6412:EE_
+x-ms-office365-filtering-correlation-id: 0f291f34-3008-42fe-c40a-08dc9aab727a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?SFhIODRYME5zRHpsUWh0SUNtK1JramV0ZlJLNzVjbkhhdnkzc1BzVFF2eEEx?=
+ =?utf-8?B?V25tNHJmL2pnTkZUdUp0N0RyQmRpQ2dQZzZ5dlZSbXpVMmttOVNvMStpRFlZ?=
+ =?utf-8?B?RmV1ODFEUGJ6YXBVZHhtaWVER0h2UjNZak5uMk9nM2tDdmhQbTBNdERKUHVB?=
+ =?utf-8?B?WmdtZmNRZHptbW13TkJUUGp4OHpiaFR5eElENTlDcEZZd0tmcWRHNUVBSlhR?=
+ =?utf-8?B?WStxUWJEcHRvR1ExNUgrOFRFRzZvZEpSbDVpZGNCMW1YR2p2Z1Q2K1dScUxk?=
+ =?utf-8?B?djFuTnJiSHNIRklZckNVVjRIb1lENkdrWjJ0aWx0WXhkdTRKN3ExL3ZHY1VP?=
+ =?utf-8?B?VlNSdDk5WTRHNFZNTkFpdzJwdjBIOG50Q2lzZGdpa1VyTEdOR0hnYWFhT29R?=
+ =?utf-8?B?YkRNVEgyZFkyVFhwQ3RXc3VTTEV2YzdIYTkvS1NueE55N0ZLYWJRblRPN3F4?=
+ =?utf-8?B?SFVWR2llWXlTRlJ1SUtjUGFlZDR3SmwxM0dUVkhCbUloRURTU3d2VTZkR0V0?=
+ =?utf-8?B?K01oQSs0ZGcxMnlud0lHZ21UaDVvcHBvTlFsUDdyaFE4UFcrVXk2WGIrZ09F?=
+ =?utf-8?B?SFdLMkt5K2tBVm5iNUVURENVOU4wRTBmUzVuRGxaN1MzZ1k3TFhwTjY2emV3?=
+ =?utf-8?B?MWtFTXIwanlQeGI3Sjg0UU5sR0p3ODY5TUNja3VkRWZxeEE2ZTJVS011Q3Z6?=
+ =?utf-8?B?NDNmRVpYNFhBVXFZWXoyQzNLUXVzVU12a0JmOXd3NDByeXpHU2ZkQUF2Tml6?=
+ =?utf-8?B?T1p5NXcySjRsR3A2MkV5WCs3Z0x6UHRrZStXWEVpR3V1blVyV0FnMVZZZ3RY?=
+ =?utf-8?B?aDlaZ3VBSUMwYldGN0lvVzRiT3dVd3I2c2NrMDg4a09ncnVuOE1rMlA4cGxi?=
+ =?utf-8?B?YkVnYUh0Wm5jS0UyRVYyMFo1dTQ2STdISFFwcDhIa2lmWmhDSVVXZlhWUzBu?=
+ =?utf-8?B?VnZ2dXFyOXFjbCt6MHluMWw2dXZoeU9DVWVzaW5Takh3ZDM4RHhPN24xODRn?=
+ =?utf-8?B?Y2Zrb3RXb3I1ZWJlVDRsSWs1UWZTejJTVmkyNmlYeE9LWXlmc21jWC9rYXdM?=
+ =?utf-8?B?NXFnQzdnSTFPbkJxbDBvc1ZVQVNLOVZqVlllRU1Bcy9LOFdtMThtd2pRYXhB?=
+ =?utf-8?B?QzljWHJPV3ZtbDVCSWZscGlGN08wS24ySUV4dE9weCt1RnBFS2RSaEhEa2lB?=
+ =?utf-8?B?T2VxTncxOU5lWlFsVTFpYnRweVlNdmlEa0U1OVI1THJlNWVEUE9YbmNkME1q?=
+ =?utf-8?B?RmF1a2dlRmRobStWdm1GSytJQld1WExpSmIxK3lpVGV0cEpFTnVBd2t5Qjhr?=
+ =?utf-8?B?N1FVbE5IY2ZYU1pIYVAvdW9paFpsa0txbzU5dkhXSDlnSnNNSVFGMGhERGdJ?=
+ =?utf-8?B?RkI2NUJsRmlDd3dQL2hhVWhDKzdKcE03ZjJETFFtN3ZjT3ZKVVZENnpOSmYw?=
+ =?utf-8?B?dzJwcFNpMno1SnVPVC9ydEN4cWRrY3Nvb3BPUk9LSktHKzEranZCc1hMc1l3?=
+ =?utf-8?B?ZHFORWt5aG9wSC92aXpBaGd4SGdZYXFlZFRqdUNXbUJocFFTUDhDUU9LdDZS?=
+ =?utf-8?B?RjVWeHY3YzFlRnAxWThnaVFpRDNsbFV3VFJMeXk0d3paQXZJTlplT2hJWHFV?=
+ =?utf-8?B?a2t6ajZPRWtTRE1uU0VBMFl4SnBadjNTclcyekpiUnhpZUV2OUExZzIxZ2Rr?=
+ =?utf-8?B?RE5yZ2dhcEp6cDA2TndZWHVLQ0p5bWpVRldLbk5SNkVNZXd1OXh6bTZ6di9H?=
+ =?utf-8?B?NjMxMDJHV1NOWlVDTkRBbGVNVDI5V01ucE11RzA3a0ZoZGpWSlU2cGx3SFZB?=
+ =?utf-8?Q?Qq+XCHZhtczYz9qhZzNDEnbmgTD/T/35cu91A=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?LzNhMTlYeTRsVHRrNjAvL3RlNmxJQXQxYzcrUGNnYnZLZ215a3lCUDNRaEhO?=
+ =?utf-8?B?RU42TURETDFEZ1BxM0JZaUF5TU10VlhhZTZVRTBpMkw5RS9waUY1Q25tM2dT?=
+ =?utf-8?B?NlNKZitxeXE0TERxRmFSalhpODh4TmFuamNPTUZBcnZyWkNLVk02WUZ4c1Jo?=
+ =?utf-8?B?aGJOZXZoUjQwTDl6NG5RMlB1bllvcXhRMkRGWFlsK1hzK2VmOWg4Z250Nllt?=
+ =?utf-8?B?RjJ4cFNVMlp4QzJHNWt1TEJQL2s2ei8zcWVZRXRuVkorRFo3VERFYit2ZElT?=
+ =?utf-8?B?b1BoeEpPRWRVb0lTYVUzRE5yaG12Q3pNZ3BkREg2TlRpWkR0SVFvaEhaSFNW?=
+ =?utf-8?B?S0dyalZZM3Z2dmFCNXhuWCtraWtIU2JVVlpRR2dYNEZPeG52eCtxdDR3Tkpl?=
+ =?utf-8?B?SitPZjZIWDJjNVNrUE9LZFlEK0dnYlV2dVJLazI0TEc1WnBvTEZjYUt5WHJQ?=
+ =?utf-8?B?Tk43MlBtVG1CNzByRDExWXhVMDFaZXRYcmg1czVwTFVhczJLODgvaHpOWUdk?=
+ =?utf-8?B?dEx5dVRQa2orNHJOclRLajVtRFd1ZkpWZEZIcVBBbE0xODgvY1V4ZUJIT0lS?=
+ =?utf-8?B?bDJIcUx6Z2xINEFxajlMZXo4V0JrMlU2M0IvbCtFQVlKeGxUWHZyckhONHBN?=
+ =?utf-8?B?THJ1L1RIU0xwL1FlZ2c0WU1LelVJWnBodXBTdVEwTFN1bC9jeG5PdVp5cW5I?=
+ =?utf-8?B?K0JWczVmbGJnZk9Rd3hhVEo4MEtiRlp6YXdsaXBjUDgvcWNIcVRXNzAzY3VF?=
+ =?utf-8?B?Q2RURWlMQWVaL2Z3YkNhKy9HMERidXExTXdMNm81K0R6UEFrSG5qYit4bUJU?=
+ =?utf-8?B?dDVNZ3RsbXlJY0NXUEhDREx3MWRXb1VJamNlY2czNzduc1BBYkZ1ZDFhQ0hD?=
+ =?utf-8?B?QXVrZkprbjhwVnQ5dUlEWkdUWlR0ZmpXNER6SGJodHFLZHpKUzNiUStYMGtx?=
+ =?utf-8?B?emFPc0dhbnhUN09GWHdUTkQrTTQyNkwvaW1qVlVHNUY3Q25td2hENWk4dFp5?=
+ =?utf-8?B?MjBKWjBCbUR2QlpyejllT2ZMNnl2VmxLMnVMZk9tVUZrc0s2elpxTEpER0Q3?=
+ =?utf-8?B?Q1oveDZLNHp2NHFkVTl3V3RxRkMwV1p0ZU1ObFVSb3VOL0N3SGRFWEtCZlJm?=
+ =?utf-8?B?YW00WnE0UzExQjJtMmhZcnJGT29hUndzUXNOZE5scDVRdnFWQ1hPeFh2ZXVs?=
+ =?utf-8?B?VlZmMFBnL2NDaHFWVGpoc0dRRE96WmhDZTZmdHVkSThzZUNqU2YzZmZNM251?=
+ =?utf-8?B?YkhLWmNKY3hzL3FDMzVwY2c3UVZsOTZFdHNMZTl6SW03UFd6VkVad3Irbkti?=
+ =?utf-8?B?OUJBM3c4VnBFbWgrZXVUa1ZldFYvV25NSHoyZ2Fjd1A3cEZ1ajNRZytXUCtZ?=
+ =?utf-8?B?ZU03RjBNczNpcmpDUFN1c1BPZTg0Q1ZHWUc3VU0xeE9iUHRJNmVwVjF1STk3?=
+ =?utf-8?B?U0c1cW5vdVFNanlHaGIzcnJ5UEY1dTJZZzF1Y1BxZCsvbGF5VW1qVVZwc2tr?=
+ =?utf-8?B?dGJGNVdaUTNncC91MFNiSXdHS3c3ZGZwZ1JURm9iQ1JuYk8zZDlMTE8yN1J1?=
+ =?utf-8?B?elFYck5XWUlYSHE1Y3NhbVdZNnFid0c4QzNYWmkyUDdKNG04ZHV5bDVNNkZi?=
+ =?utf-8?B?RnBFS3VDeFhTcnd2SkR1UnJpUVgxdGlZS3JDRE9ENGVZMFZmT0FRWFJFLzZo?=
+ =?utf-8?B?T1hERGtpdXRYNjFnRWVrQzQ2bVl6a1YwY3dBMjE0OHlHUmp2dGlvb2M1MVI0?=
+ =?utf-8?B?dFkyY0JXL2c4aW5qcFAzQ2xHa01Yd2U2NE5tSHlBd0FEKyt6MHRaZzVJeGRY?=
+ =?utf-8?B?TnlweUNOS1VsTlRYNG94NDM4ZVlXQXJBdnhjOEdwdjc4VzRCZkdKVzVGSjBQ?=
+ =?utf-8?B?RzFzU28venNxQi8xUlYvRjA3a3hVNkw1cTB6bFZ2Wmgzd3RoclNtWkxXa3hi?=
+ =?utf-8?B?RjB5K1BVc1RrWXEzWk5RUXRlQUJUeGR6YVhnUEQ4eVJPT3h6bGFwSXQ3M3gv?=
+ =?utf-8?B?b1NBeURQZzJMdk9kM2U4ejFOMGw0RWx0TDdXTm9ubmJ6UjlHVFArSWtKN2Ri?=
+ =?utf-8?B?Zzl3U2hiZ21zdnVPSzYva3F1M0FGSzhsZC80RnduU3YrWlVXanVBcWZET1h6?=
+ =?utf-8?B?NDRadXNmS1NDYWk1ZzdPOXVVUGNZNms2TTlnaWtYbU56d2pXOFV4aGl5bUxw?=
+ =?utf-8?Q?97XBCxkwMyZ9lPJjHocp2rk=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <B63D88E311B47742ABECFAB900DBF5EF@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1719929191.git.mst@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f291f34-3008-42fe-c40a-08dc9aab727a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jul 2024 15:27:13.0231 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: l194tkFj4yJOwA/738FVxQYd9DUjJ1qKEtvUDfAtyI3dzdaLzIbY7F0Mr6bYuRE+8IETKgNAtIOPlt9KEyNzmEN3Ah1y4xvytlnjlowFeI6tIz954v05pPvzRkC1ijo6
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8PR07MB6412
+Received-SPF: pass client-ip=80.78.11.85;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost4.eviden.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,591 +203,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 02, 2024 at 10:06:59AM -0400, Michael S. Tsirkin wrote:
-> The following changes since commit 1152a0414944f03231f3177207d379d58125890e:
-> 
->   Merge tag 'pull-xen-20240701' of https://xenbits.xen.org/git-http/people/aperard/qemu-dm into staging (2024-07-01 09:06:25 -0700)
-> 
-> are available in the Git repository at:
-> 
->   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-> 
-> for you to fetch changes up to a323ad3c8a8f12ee180d0582d7fffa8098b1a962:
-> 
->   hw/pci: Replace -1 with UINT32_MAX for romsize (2024-07-02 10:04:21 -0400)
-
-Pls ignore.
-I will send v2.
-
-
-> ----------------------------------------------------------------
-> virtio: features,fixes
-> 
-> A bunch of improvements:
-> - vhost dirty log is now only scanned once, not once per device
-> - virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
-> - cxl gained DCD emulation support
-> - pvpanic gained shutdown support
-> - beginning of patchset for Generic Port Affinity Structure
-> - s3 support
-> - friendlier error messages when boot fails on some illegal configs
-> - for vhost-user, VHOST_USER_SET_LOG_BASE is now only sent once
-> - vhost-user now works on any POSIX system
-> - sr-iov VF setup code has been reworked significantly
-> - new tests, particularly for risc-v ACPI
-> - bugfixes
-> 
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> 
-> ----------------------------------------------------------------
-> Akihiko Odaki (11):
->       hw/virtio: Free vqs after vhost_dev_cleanup()
->       hw/pci: Rename has_power to enabled
->       hw/ppc/spapr_pci: Do not create DT for disabled PCI device
->       hw/ppc/spapr_pci: Do not reject VFs created after a PF
->       pcie_sriov: Do not manually unrealize
->       pcie_sriov: Ensure VF function number does not overflow
->       pcie_sriov: Reuse SR-IOV VF device instances
->       pcie_sriov: Release VFs failed to realize
->       pcie_sriov: Remove num_vfs from PCIESriovPF
->       pcie_sriov: Register VFs after migration
->       hw/pci: Replace -1 with UINT32_MAX for romsize
-> 
-> Alejandro Jimenez (1):
->       pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic shutdown signal
-> 
-> BillXiang (1):
->       vhost-user: Skip unnecessary duplicated VHOST_USER_SET_LOG_BASE requests
-> 
-> Christian Pötzsch (1):
->       Fix vhost user assertion when sending more than one fd
-> 
-> Cindy Lu (1):
->       virtio-pci: Fix the failure process in kvm_virtio_pci_vector_use_one()
-> 
-> Cédric Le Goater (1):
->       virtio-iommu: Clear IOMMUDevice when VFIO device is unplugged
-> 
-> David Woodhouse (1):
->       hw/i386/fw_cfg: Add etc/e820 to fw_cfg late
-> 
-> Dmitry Frolov (1):
->       hw/net/virtio-net.c: fix crash in iov_copy()
-> 
-> Fan Ni (12):
->       hw/cxl/cxl-mailbox-utils: Add dc_event_log_size field to output payload of identify memory device command
->       hw/cxl/cxl-mailbox-utils: Add dynamic capacity region representative and mailbox command support
->       include/hw/cxl/cxl_device: Rename mem_size as static_mem_size for type3 memory devices
->       hw/mem/cxl_type3: Add support to create DC regions to type3 memory devices
->       hw/mem/cxl-type3: Refactor ct3_build_cdat_entries_for_mr to take mr size instead of mr as argument
->       hw/mem/cxl_type3: Add host backend and address space handling for DC regions
->       hw/mem/cxl_type3: Add DC extent list representative and get DC extent list mailbox support
->       hw/cxl/cxl-mailbox-utils: Add mailbox commands to support add/release dynamic capacity response
->       hw/cxl/events: Add qmp interfaces to add/release dynamic capacity extents
->       hw/mem/cxl_type3: Add DPA range validation for accesses to DC regions
->       hw/cxl/cxl-mailbox-utils: Add superset extent release mailbox support
->       hw/mem/cxl_type3: Allow to release extent superset in QMP interface
-> 
-> Gregory Price (2):
->       hw/cxl/mailbox: change CCI cmd set structure to be a member, not a reference
->       hw/cxl/mailbox: interface to add CCI commands to an existing CCI
-> 
-> Halil Pasic (1):
->       vhost-vsock: add VIRTIO_F_RING_PACKED to feature_bits
-> 
-> Ira Weiny (1):
->       hw/cxl: Fix read from bogus memory
-> 
-> Jiqian Chen (2):
->       virtio-pci: only reset pm state during resetting
->       virtio-pci: implement No_Soft_Reset bit
-> 
-> Jonah Palmer (5):
->       virtio/virtio-pci: Handle extra notification data
->       virtio: Prevent creation of device using notification-data with ioeventfd
->       virtio-mmio: Handle extra notification data
->       virtio-ccw: Handle extra notification data
->       vhost/vhost-user: Add VIRTIO_F_NOTIFICATION_DATA to vhost feature bits
-> 
-> Jonathan Cameron (2):
->       hw/cxl/events: Improve QMP interfaces and documentation for add/release dynamic capacity.
->       hw/cxl/events: Mark cxl-add-dynamic-capacity and cxl-release-dynamic-capcity unstable
-> 
-> Li Feng (2):
->       Revert "vhost-user: fix lost reconnect"
->       vhost-user: fix lost reconnect again
-> 
-> Manos Pitsidianakis (1):
->       virtio-iommu: add error check before assert
-> 
-> Marc-André Lureau (1):
->       vhost-user-gpu: fix import of DMABUF
-> 
-> Nicolin Chen (2):
->       hw/arm/virt-acpi-build: Drop local iort_node_offset
->       hw/arm/virt-acpi-build: Fix id_count in build_iort_id_mapping
-> 
-> Si-Wei Liu (2):
->       vhost: dirty log should be per backend type
->       vhost: Perform memory section dirty scans once per iteration
-> 
-> Stefano Garzarella (15):
->       vhost-vdpa: check vhost_vdpa_set_vring_ready() return value
->       qapi: clarify that the default is backend dependent
->       libvhost-user: set msg.msg_control to NULL when it is empty
->       libvhost-user: fail vu_message_write() if sendmsg() is failing
->       libvhost-user: mask F_INFLIGHT_SHMFD if memfd is not supported
->       vhost-user-server: do not set memory fd non-blocking
->       contrib/vhost-user-blk: fix bind() using the right size of the address
->       contrib/vhost-user-*: use QEMU bswap helper functions
->       vhost-user: enable frontends on any POSIX system
->       libvhost-user: enable it on any POSIX system
->       contrib/vhost-user-blk: enable it on any POSIX system
->       hostmem: add a new memory backend based on POSIX shm_open()
->       tests/qtest/vhost-user-blk-test: use memory-backend-shm
->       tests/qtest/vhost-user-test: add a test case for memory-backend-shm
->       virtio: remove virtio_tswap16s() call in vring_packed_event_read()
-> 
-> Sunil V L (15):
->       uefi-test-tools/UefiTestToolsPkg: Add RISC-V support
->       uefi-test-tools: Add support for python based build script
->       tests/data/uefi-boot-images: Add RISC-V ISO image
->       qtest: bios-tables-test: Rename aarch64 tests with aarch64 in them
->       tests/qtest/bios-tables-test.c: Add support for arch in path
->       tests/qtest/bios-tables-test.c: Set "arch" for aarch64 tests
->       tests/qtest/bios-tables-test.c: Set "arch" for x86 tests
->       tests/data/acpi: Move x86 ACPI tables under x86/${machine} path
->       tests/data/acpi/virt: Move ARM64 ACPI tables under aarch64/${machine} path
->       meson.build: Add RISC-V to the edk2-target list
->       pc-bios/meson.build: Add support for RISC-V in unpack_edk2_blobs
->       tests/data/acpi/rebuild-expected-aml.sh: Add RISC-V
->       tests/qtest/bios-tables-test: Add empty ACPI data files for RISC-V
->       tests/qtest/bios-tables-test.c: Enable basic testing for RISC-V
->       tests/qtest/bios-tables-test: Add expected ACPI data files for RISC-V
-> 
-> Thomas Huth (1):
->       hw/virtio: Fix the de-initialization of vhost-user devices
-> 
-> Thomas Weißschuh (6):
->       linux-headers: update to 6.10-rc1
->       hw/misc/pvpanic: centralize definition of supported events
->       tests/qtest/pvpanic: use centralized definition of supported events
->       hw/misc/pvpanic: add support for normal shutdowns
->       tests/qtest/pvpanic: add tests for pvshutdown event
->       Revert "docs/specs/pvpanic: mark shutdown event as not implemented"
-> 
-> Wafer (1):
->       hw/virtio: Fix obtain the buffer id from the last descriptor
-> 
-> Yuxue Liu (1):
->       vhost-user-test: don't set call fd -1 non-blocking
-> 
-> Zhao Liu (1):
->       i386/apic: Add hint on boot failure because of disabling x2APIC
-> 
->  docs/pcie_sriov.txt                                |   8 +-
->  qapi/cxl.json                                      | 189 ++++++
->  qapi/qom.json                                      |  27 +-
->  qapi/run-state.json                                |  14 +
->  hw/i386/e820_memory_layout.h                       |   8 +-
->  hw/i386/fw_cfg.h                                   |   1 +
->  include/hw/cxl/cxl_device.h                        |  85 ++-
->  include/hw/cxl/cxl_events.h                        |  18 +
->  include/hw/misc/pvpanic.h                          |   6 +
->  include/hw/pci/pci.h                               |   2 +-
->  include/hw/pci/pci_device.h                        |  17 +-
->  include/hw/pci/pcie_sriov.h                        |   9 +-
->  include/hw/virtio/vhost-user.h                     |   3 +-
->  include/hw/virtio/vhost.h                          |   1 +
->  include/hw/virtio/virtio-pci.h                     |   5 +
->  include/hw/virtio/virtio.h                         |  10 +-
->  include/standard-headers/linux/ethtool.h           |  55 ++
->  include/standard-headers/linux/pci_regs.h          |   6 +
->  include/standard-headers/linux/virtio_bt.h         |   1 -
->  include/standard-headers/linux/virtio_mem.h        |   2 +
->  include/standard-headers/linux/virtio_net.h        | 143 +++++
->  include/standard-headers/misc/pvpanic.h            |   7 +-
->  include/sysemu/runstate.h                          |   1 +
->  linux-headers/asm-generic/unistd.h                 |   5 +-
->  linux-headers/asm-mips/unistd_n32.h                |   1 +
->  linux-headers/asm-mips/unistd_n64.h                |   1 +
->  linux-headers/asm-mips/unistd_o32.h                |   1 +
->  linux-headers/asm-powerpc/unistd_32.h              |   1 +
->  linux-headers/asm-powerpc/unistd_64.h              |   1 +
->  linux-headers/asm-s390/unistd_32.h                 |   1 +
->  linux-headers/asm-s390/unistd_64.h                 |   1 +
->  linux-headers/asm-x86/unistd_32.h                  |   1 +
->  linux-headers/asm-x86/unistd_64.h                  |   1 +
->  linux-headers/asm-x86/unistd_x32.h                 |   2 +
->  linux-headers/linux/kvm.h                          |   4 +-
->  linux-headers/linux/stddef.h                       |   8 +
->  subprojects/libvhost-user/libvhost-user.h          |   2 +-
->  backends/hostmem-shm.c                             | 123 ++++
->  contrib/vhost-user-blk/vhost-user-blk.c            |  27 +-
->  contrib/vhost-user-input/main.c                    |  16 +-
->  hw/arm/virt-acpi-build.c                           |  22 +-
->  hw/block/vhost-user-blk.c                          |   6 +-
->  hw/core/machine.c                                  |   1 +
->  hw/cxl/cxl-mailbox-utils.c                         | 658 ++++++++++++++++++++-
->  hw/display/vhost-user-gpu.c                        |   5 +-
->  hw/i386/e820_memory_layout.c                       |  16 +-
->  hw/i386/fw_cfg.c                                   |  18 +-
->  hw/i386/microvm.c                                  |   4 +-
->  hw/i386/pc.c                                       |   1 +
->  hw/intc/apic_common.c                              |   7 +-
->  hw/mem/cxl_type3.c                                 | 637 ++++++++++++++++++--
->  hw/mem/cxl_type3_stubs.c                           |  25 +
->  hw/misc/pvpanic-isa.c                              |   3 +-
->  hw/misc/pvpanic-pci.c                              |   2 +-
->  hw/misc/pvpanic.c                                  |   7 +-
->  hw/net/igb.c                                       |  13 +-
->  hw/net/vhost_net.c                                 |   7 +
->  hw/net/virtio-net.c                                |   4 +
->  hw/nvme/ctrl.c                                     |  24 +-
->  hw/pci/pci.c                                       |  29 +-
->  hw/pci/pci_host.c                                  |   4 +-
->  hw/pci/pcie_sriov.c                                | 149 ++---
->  hw/ppc/spapr_pci.c                                 |   8 +-
->  hw/s390x/s390-virtio-ccw.c                         |  17 +-
->  hw/scsi/vhost-scsi.c                               |   1 +
->  hw/scsi/vhost-user-scsi.c                          |   7 +-
->  hw/virtio/vhost-user-base.c                        |   7 +-
->  hw/virtio/vhost-user-fs.c                          |   2 +-
->  hw/virtio/vhost-user-vsock.c                       |   1 +
->  hw/virtio/vhost-user.c                             |  19 +-
->  hw/virtio/vhost-vsock-common.c                     |   1 +
->  hw/virtio/vhost.c                                  | 112 +++-
->  hw/virtio/virtio-iommu.c                           |  43 ++
->  hw/virtio/virtio-mmio.c                            |  11 +-
->  hw/virtio/virtio-pci.c                             |  67 ++-
->  hw/virtio/virtio.c                                 |  46 +-
->  hw/xen/xen_pt_load_rom.c                           |   2 +-
->  net/vhost-vdpa.c                                   |  16 +-
->  subprojects/libvhost-user/libvhost-user.c          |  79 ++-
->  system/runstate.c                                  |   6 +
->  target/i386/kvm/kvm.c                              |   6 +-
->  target/i386/kvm/xen-emu.c                          |   7 +-
->  tests/qtest/bios-tables-test.c                     | 169 +++++-
->  tests/qtest/pvpanic-pci-test.c                     |  44 +-
->  tests/qtest/pvpanic-test.c                         |  34 +-
->  tests/qtest/vhost-user-blk-test.c                  |   2 +-
->  tests/qtest/vhost-user-test.c                      |  28 +-
->  util/vhost-user-server.c                           |  12 +
->  backends/meson.build                               |   1 +
->  docs/specs/pvpanic.rst                             |   2 +-
->  docs/system/devices/vhost-user.rst                 |   5 +-
->  hw/block/Kconfig                                   |   2 +-
->  hw/pci/trace-events                                |   2 +-
->  meson.build                                        |   7 +-
->  pc-bios/meson.build                                |   2 +
->  qemu-options.hx                                    |  16 +
->  tests/data/acpi/{ => aarch64}/virt/APIC            | Bin
->  .../data/acpi/{ => aarch64}/virt/APIC.acpihmatvirt | Bin
->  tests/data/acpi/{ => aarch64}/virt/APIC.topology   | Bin
->  tests/data/acpi/{ => aarch64}/virt/DBG2            | Bin
->  tests/data/acpi/{ => aarch64}/virt/DSDT            | Bin
->  .../data/acpi/{ => aarch64}/virt/DSDT.acpihmatvirt | Bin
->  tests/data/acpi/{ => aarch64}/virt/DSDT.memhp      | Bin
->  tests/data/acpi/{ => aarch64}/virt/DSDT.pxb        | Bin
->  tests/data/acpi/{ => aarch64}/virt/DSDT.topology   | Bin
->  tests/data/acpi/{ => aarch64}/virt/FACP            | Bin
->  tests/data/acpi/{ => aarch64}/virt/GTDT            | Bin
->  .../data/acpi/{ => aarch64}/virt/HMAT.acpihmatvirt | Bin
->  tests/data/acpi/{ => aarch64}/virt/IORT            | Bin
->  tests/data/acpi/{ => aarch64}/virt/MCFG            | Bin
->  tests/data/acpi/{ => aarch64}/virt/NFIT.memhp      | Bin
->  tests/data/acpi/{ => aarch64}/virt/PPTT            | Bin
->  .../data/acpi/{ => aarch64}/virt/PPTT.acpihmatvirt | Bin
->  tests/data/acpi/{ => aarch64}/virt/PPTT.topology   | Bin
->  tests/data/acpi/{pc => aarch64/virt}/SLIT.memhp    | Bin
->  tests/data/acpi/{ => aarch64}/virt/SPCR            | Bin
->  .../data/acpi/{ => aarch64}/virt/SRAT.acpihmatvirt | Bin
->  tests/data/acpi/{ => aarch64}/virt/SRAT.memhp      | Bin
->  tests/data/acpi/{ => aarch64}/virt/SRAT.numamem    | Bin
->  tests/data/acpi/{ => aarch64}/virt/SSDT.memhp      | Bin
->  tests/data/acpi/{ => aarch64}/virt/VIOT            | Bin
->  tests/data/acpi/rebuild-expected-aml.sh            |   5 +-
->  tests/data/acpi/riscv64/virt/APIC                  | Bin 0 -> 116 bytes
->  tests/data/acpi/riscv64/virt/DSDT                  | Bin 0 -> 3518 bytes
->  tests/data/acpi/riscv64/virt/FACP                  | Bin 0 -> 276 bytes
->  tests/data/acpi/riscv64/virt/MCFG                  | Bin 0 -> 60 bytes
->  tests/data/acpi/riscv64/virt/RHCT                  | Bin 0 -> 314 bytes
->  tests/data/acpi/riscv64/virt/SPCR                  | Bin 0 -> 80 bytes
->  tests/data/acpi/{ => x86}/microvm/APIC             | Bin
->  tests/data/acpi/{ => x86}/microvm/APIC.ioapic2     | Bin
->  tests/data/acpi/{ => x86}/microvm/APIC.pcie        | Bin
->  tests/data/acpi/{ => x86}/microvm/DSDT             | Bin
->  tests/data/acpi/{ => x86}/microvm/DSDT.ioapic2     | Bin
->  tests/data/acpi/{ => x86}/microvm/DSDT.pcie        | Bin
->  tests/data/acpi/{ => x86}/microvm/DSDT.rtc         | Bin
->  tests/data/acpi/{ => x86}/microvm/DSDT.usb         | Bin
->  tests/data/acpi/{ => x86}/microvm/ERST.pcie        | Bin
->  tests/data/acpi/{ => x86}/microvm/FACP             | Bin
->  tests/data/acpi/{ => x86}/pc/APIC                  | Bin
->  tests/data/acpi/{ => x86}/pc/APIC.acpihmat         | Bin
->  tests/data/acpi/{ => x86}/pc/APIC.cphp             | Bin
->  tests/data/acpi/{ => x86}/pc/APIC.dimmpxm          | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT                  | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.acpierst         | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.acpihmat         | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.bridge           | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.cphp             | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.dimmpxm          | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.hpbridge         | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.hpbrroot         | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.ipmikcs          | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.memhp            | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.nohpet           | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.numamem          | Bin
->  tests/data/acpi/{ => x86}/pc/DSDT.roothp           | Bin
->  tests/data/acpi/{ => x86}/pc/ERST.acpierst         | Bin
->  tests/data/acpi/{ => x86}/pc/FACP                  | Bin
->  tests/data/acpi/{ => x86}/pc/FACP.nosmm            | Bin
->  tests/data/acpi/{ => x86}/pc/FACS                  | Bin
->  tests/data/acpi/{ => x86}/pc/HMAT.acpihmat         | Bin
->  tests/data/acpi/{ => x86}/pc/HPET                  | Bin
->  tests/data/acpi/{ => x86}/pc/NFIT.dimmpxm          | Bin
->  tests/data/acpi/{ => x86}/pc/SLIT.cphp             | Bin
->  tests/data/acpi/{q35 => x86/pc}/SLIT.memhp         | Bin
->  tests/data/acpi/{ => x86}/pc/SRAT.acpihmat         | Bin
->  tests/data/acpi/{ => x86}/pc/SRAT.cphp             | Bin
->  tests/data/acpi/{ => x86}/pc/SRAT.dimmpxm          | Bin
->  tests/data/acpi/{ => x86}/pc/SRAT.memhp            | Bin
->  tests/data/acpi/{ => x86}/pc/SRAT.numamem          | Bin
->  tests/data/acpi/{ => x86}/pc/SSDT.dimmpxm          | Bin
->  tests/data/acpi/{ => x86}/pc/WAET                  | Bin
->  tests/data/acpi/{ => x86}/q35/APIC                 | Bin
->  tests/data/acpi/{ => x86}/q35/APIC.acpihmat        | Bin
->  .../acpi/{ => x86}/q35/APIC.acpihmat-noinitiator   | Bin
->  tests/data/acpi/{ => x86}/q35/APIC.core-count      | Bin
->  tests/data/acpi/{ => x86}/q35/APIC.core-count2     | Bin
->  tests/data/acpi/{ => x86}/q35/APIC.cphp            | Bin
->  tests/data/acpi/{ => x86}/q35/APIC.dimmpxm         | Bin
->  tests/data/acpi/{ => x86}/q35/APIC.thread-count    | Bin
->  tests/data/acpi/{ => x86}/q35/APIC.thread-count2   | Bin
->  tests/data/acpi/{ => x86}/q35/APIC.type4-count     | Bin
->  tests/data/acpi/{ => x86}/q35/APIC.xapic           | Bin
->  tests/data/acpi/{ => x86}/q35/CEDT.cxl             | Bin
->  tests/data/acpi/{ => x86}/q35/DMAR.dmar            | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT                 | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.acpierst        | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.acpihmat        | Bin
->  .../acpi/{ => x86}/q35/DSDT.acpihmat-noinitiator   | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.applesmc        | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.bridge          | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.core-count      | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.core-count2     | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.cphp            | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.cxl             | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.dimmpxm         | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.ipmibt          | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.ipmismbus       | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.ivrs            | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.memhp           | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.mmio64          | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.multi-bridge    | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.noacpihp        | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.nohpet          | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.numamem         | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.pvpanic-isa     | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.thread-count    | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.thread-count2   | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm12       | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm2        | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.type4-count     | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.viot            | Bin
->  tests/data/acpi/{ => x86}/q35/DSDT.xapic           | Bin
->  tests/data/acpi/{ => x86}/q35/ERST.acpierst        | Bin
->  tests/data/acpi/{ => x86}/q35/FACP                 | Bin
->  tests/data/acpi/{ => x86}/q35/FACP.core-count      | Bin
->  tests/data/acpi/{ => x86}/q35/FACP.core-count2     | Bin
->  tests/data/acpi/{ => x86}/q35/FACP.nosmm           | Bin
->  tests/data/acpi/{ => x86}/q35/FACP.slic            | Bin
->  tests/data/acpi/{ => x86}/q35/FACP.thread-count    | Bin
->  tests/data/acpi/{ => x86}/q35/FACP.thread-count2   | Bin
->  tests/data/acpi/{ => x86}/q35/FACP.type4-count     | Bin
->  tests/data/acpi/{ => x86}/q35/FACP.xapic           | Bin
->  tests/data/acpi/{ => x86}/q35/FACS                 | Bin
->  tests/data/acpi/{ => x86}/q35/HMAT.acpihmat        | Bin
->  .../acpi/{ => x86}/q35/HMAT.acpihmat-noinitiator   | Bin
->  tests/data/acpi/{ => x86}/q35/HPET                 | Bin
->  tests/data/acpi/{ => x86}/q35/IVRS.ivrs            | Bin
->  tests/data/acpi/{ => x86}/q35/MCFG                 | Bin
->  tests/data/acpi/{ => x86}/q35/NFIT.dimmpxm         | Bin
->  tests/data/acpi/{ => x86}/q35/SLIC.slic            | Bin
->  tests/data/acpi/{ => x86}/q35/SLIT.cphp            | Bin
->  tests/data/acpi/{virt => x86/q35}/SLIT.memhp       | Bin
->  tests/data/acpi/{ => x86}/q35/SRAT.acpihmat        | Bin
->  .../acpi/{ => x86}/q35/SRAT.acpihmat-noinitiator   | Bin
->  tests/data/acpi/{ => x86}/q35/SRAT.cphp            | Bin
->  tests/data/acpi/{ => x86}/q35/SRAT.dimmpxm         | Bin
->  tests/data/acpi/{ => x86}/q35/SRAT.memhp           | Bin
->  tests/data/acpi/{ => x86}/q35/SRAT.mmio64          | Bin
->  tests/data/acpi/{ => x86}/q35/SRAT.numamem         | Bin
->  tests/data/acpi/{ => x86}/q35/SRAT.xapic           | Bin
->  tests/data/acpi/{ => x86}/q35/SSDT.dimmpxm         | Bin
->  tests/data/acpi/{ => x86}/q35/TCPA.tis.tpm12       | Bin
->  tests/data/acpi/{ => x86}/q35/TPM2.tis.tpm2        | Bin
->  tests/data/acpi/{ => x86}/q35/VIOT.viot            | Bin
->  tests/data/acpi/{ => x86}/q35/WAET                 | Bin
->  .../bios-tables-test.riscv64.iso.qcow2             | Bin 0 -> 16896 bytes
->  tests/qtest/meson.build                            |   3 +
->  tests/uefi-test-tools/Makefile                     |  19 +-
->  .../UefiTestToolsPkg/UefiTestToolsPkg.dsc          |   6 +-
->  tests/uefi-test-tools/uefi-test-build.config       |  52 ++
->  util/meson.build                                   |   4 +-
->  251 files changed, 2958 insertions(+), 371 deletions(-)
->  create mode 100644 backends/hostmem-shm.c
->  rename tests/data/acpi/{ => aarch64}/virt/APIC (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/APIC.acpihmatvirt (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/APIC.topology (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/DBG2 (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/DSDT (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/DSDT.acpihmatvirt (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/DSDT.memhp (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/DSDT.pxb (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/DSDT.topology (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/FACP (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/GTDT (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/HMAT.acpihmatvirt (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/IORT (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/MCFG (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/NFIT.memhp (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/PPTT (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/PPTT.acpihmatvirt (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/PPTT.topology (100%)
->  rename tests/data/acpi/{pc => aarch64/virt}/SLIT.memhp (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/SPCR (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/SRAT.acpihmatvirt (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/SRAT.memhp (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/SRAT.numamem (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/SSDT.memhp (100%)
->  rename tests/data/acpi/{ => aarch64}/virt/VIOT (100%)
->  create mode 100644 tests/data/acpi/riscv64/virt/APIC
->  create mode 100644 tests/data/acpi/riscv64/virt/DSDT
->  create mode 100644 tests/data/acpi/riscv64/virt/FACP
->  create mode 100644 tests/data/acpi/riscv64/virt/MCFG
->  create mode 100644 tests/data/acpi/riscv64/virt/RHCT
->  create mode 100644 tests/data/acpi/riscv64/virt/SPCR
->  rename tests/data/acpi/{ => x86}/microvm/APIC (100%)
->  rename tests/data/acpi/{ => x86}/microvm/APIC.ioapic2 (100%)
->  rename tests/data/acpi/{ => x86}/microvm/APIC.pcie (100%)
->  rename tests/data/acpi/{ => x86}/microvm/DSDT (100%)
->  rename tests/data/acpi/{ => x86}/microvm/DSDT.ioapic2 (100%)
->  rename tests/data/acpi/{ => x86}/microvm/DSDT.pcie (100%)
->  rename tests/data/acpi/{ => x86}/microvm/DSDT.rtc (100%)
->  rename tests/data/acpi/{ => x86}/microvm/DSDT.usb (100%)
->  rename tests/data/acpi/{ => x86}/microvm/ERST.pcie (100%)
->  rename tests/data/acpi/{ => x86}/microvm/FACP (100%)
->  rename tests/data/acpi/{ => x86}/pc/APIC (100%)
->  rename tests/data/acpi/{ => x86}/pc/APIC.acpihmat (100%)
->  rename tests/data/acpi/{ => x86}/pc/APIC.cphp (100%)
->  rename tests/data/acpi/{ => x86}/pc/APIC.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.acpierst (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.acpihmat (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.bridge (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.cphp (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.hpbridge (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.hpbrroot (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.ipmikcs (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.memhp (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.nohpet (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.numamem (100%)
->  rename tests/data/acpi/{ => x86}/pc/DSDT.roothp (100%)
->  rename tests/data/acpi/{ => x86}/pc/ERST.acpierst (100%)
->  rename tests/data/acpi/{ => x86}/pc/FACP (100%)
->  rename tests/data/acpi/{ => x86}/pc/FACP.nosmm (100%)
->  rename tests/data/acpi/{ => x86}/pc/FACS (100%)
->  rename tests/data/acpi/{ => x86}/pc/HMAT.acpihmat (100%)
->  rename tests/data/acpi/{ => x86}/pc/HPET (100%)
->  rename tests/data/acpi/{ => x86}/pc/NFIT.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/pc/SLIT.cphp (100%)
->  rename tests/data/acpi/{q35 => x86/pc}/SLIT.memhp (100%)
->  rename tests/data/acpi/{ => x86}/pc/SRAT.acpihmat (100%)
->  rename tests/data/acpi/{ => x86}/pc/SRAT.cphp (100%)
->  rename tests/data/acpi/{ => x86}/pc/SRAT.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/pc/SRAT.memhp (100%)
->  rename tests/data/acpi/{ => x86}/pc/SRAT.numamem (100%)
->  rename tests/data/acpi/{ => x86}/pc/SSDT.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/pc/WAET (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.acpihmat (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.acpihmat-noinitiator (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.core-count (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.core-count2 (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.cphp (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.thread-count (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.thread-count2 (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.type4-count (100%)
->  rename tests/data/acpi/{ => x86}/q35/APIC.xapic (100%)
->  rename tests/data/acpi/{ => x86}/q35/CEDT.cxl (100%)
->  rename tests/data/acpi/{ => x86}/q35/DMAR.dmar (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.acpierst (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.acpihmat (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.acpihmat-noinitiator (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.applesmc (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.bridge (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.core-count (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.core-count2 (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.cphp (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.cxl (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.ipmibt (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.ipmismbus (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.ivrs (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.memhp (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.mmio64 (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.multi-bridge (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.noacpihp (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.nohpet (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.numamem (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.pvpanic-isa (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.thread-count (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.thread-count2 (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm12 (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm2 (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.type4-count (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.viot (100%)
->  rename tests/data/acpi/{ => x86}/q35/DSDT.xapic (100%)
->  rename tests/data/acpi/{ => x86}/q35/ERST.acpierst (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACP (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACP.core-count (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACP.core-count2 (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACP.nosmm (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACP.slic (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACP.thread-count (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACP.thread-count2 (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACP.type4-count (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACP.xapic (100%)
->  rename tests/data/acpi/{ => x86}/q35/FACS (100%)
->  rename tests/data/acpi/{ => x86}/q35/HMAT.acpihmat (100%)
->  rename tests/data/acpi/{ => x86}/q35/HMAT.acpihmat-noinitiator (100%)
->  rename tests/data/acpi/{ => x86}/q35/HPET (100%)
->  rename tests/data/acpi/{ => x86}/q35/IVRS.ivrs (100%)
->  rename tests/data/acpi/{ => x86}/q35/MCFG (100%)
->  rename tests/data/acpi/{ => x86}/q35/NFIT.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/q35/SLIC.slic (100%)
->  rename tests/data/acpi/{ => x86}/q35/SLIT.cphp (100%)
->  rename tests/data/acpi/{virt => x86/q35}/SLIT.memhp (100%)
->  rename tests/data/acpi/{ => x86}/q35/SRAT.acpihmat (100%)
->  rename tests/data/acpi/{ => x86}/q35/SRAT.acpihmat-noinitiator (100%)
->  rename tests/data/acpi/{ => x86}/q35/SRAT.cphp (100%)
->  rename tests/data/acpi/{ => x86}/q35/SRAT.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/q35/SRAT.memhp (100%)
->  rename tests/data/acpi/{ => x86}/q35/SRAT.mmio64 (100%)
->  rename tests/data/acpi/{ => x86}/q35/SRAT.numamem (100%)
->  rename tests/data/acpi/{ => x86}/q35/SRAT.xapic (100%)
->  rename tests/data/acpi/{ => x86}/q35/SSDT.dimmpxm (100%)
->  rename tests/data/acpi/{ => x86}/q35/TCPA.tis.tpm12 (100%)
->  rename tests/data/acpi/{ => x86}/q35/TPM2.tis.tpm2 (100%)
->  rename tests/data/acpi/{ => x86}/q35/VIOT.viot (100%)
->  rename tests/data/acpi/{ => x86}/q35/WAET (100%)
->  create mode 100644 tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2
->  create mode 100644 tests/uefi-test-tools/uefi-test-build.config
-> 
-
+DQpPbiAwMi8wNy8yMDI0IDE1OjQyLCBZaSBMaXUgd3JvdGU6DQo+IENhdXRpb246IEV4dGVybmFs
+IGVtYWlsLiBEbyBub3Qgb3BlbiBhdHRhY2htZW50cyBvciBjbGljayBsaW5rcywNCj4gdW5sZXNz
+IHRoaXMgZW1haWwgY29tZXMgZnJvbSBhIGtub3duIHNlbmRlciBhbmQgeW91IGtub3cgdGhlIGNv
+bnRlbnQNCj4gaXMgc2FmZS4NCj4NCj4NCj4gT24gMjAyNC83LzIgMjA6MTUsIE1pY2hhZWwgUy4g
+VHNpcmtpbiB3cm90ZToNCj4+IE9uIFR1ZSwgSnVsIDAyLCAyMDI0IGF0IDA1OjU3OjU3QU0gKzAw
+MDAsIENMRU1FTlQgTUFUSElFVS0tRFJJRiB3cm90ZToNCj4+Pg0KPj4+DQo+Pj4g4pSB4pSB4pSB
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB4pSB
+DQo+Pj4NCj4+PiBGcm9tOiBNaWNoYWVsIFMuIFRzaXJraW4gPG1zdEByZWRoYXQuY29tPg0KPj4+
+IFNlbnQ6IDAxIEp1bHkgMjAyNCAyMjowMg0KPj4+IFRvOiBDTEVNRU5UIE1BVEhJRVUtLURSSUYg
+PGNsZW1lbnQubWF0aGlldS0tZHJpZkBldmlkZW4uY29tPg0KPj4+IENjOiBxZW11LWRldmVsQG5v
+bmdudS5vcmcgPHFlbXUtZGV2ZWxAbm9uZ251Lm9yZz47IGphc293YW5nQHJlZGhhdC5jb20NCj4+
+PiA8amFzb3dhbmdAcmVkaGF0LmNvbT47IHpoZW56aG9uZy5kdWFuQGludGVsLmNvbQ0KPj4+IDx6
+aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+Ow0KPj4+IGtldmluLnRpYW5AaW50ZWwuY29tIDxrZXZp
+bi50aWFuQGludGVsLmNvbT47IHlpLmwubGl1QGludGVsLmNvbQ0KPj4+IDx5aS5sLmxpdUBpbnRl
+bC5jb20+OyBqb2FvLm0ubWFydGluc0BvcmFjbGUuY29tDQo+Pj4gPGpvYW8ubS5tYXJ0aW5zQG9y
+YWNsZS5jb20+Ow0KPj4+IHBldGVyeEByZWRoYXQuY29tIDxwZXRlcnhAcmVkaGF0LmNvbT4NCj4+
+PiBTdWJqZWN0OiBSZTogW1BBVENIIGF0c192dGQgdjUgMDAvMjJdIEFUUyBzdXBwb3J0IGZvciBW
+VC1kDQo+Pj4NCj4+PiBDYXV0aW9uOiBFeHRlcm5hbCBlbWFpbC4gRG8gbm90IG9wZW4gYXR0YWNo
+bWVudHMgb3IgY2xpY2sgbGlua3MsDQo+Pj4gdW5sZXNzIHRoaXMNCj4+PiBlbWFpbCBjb21lcyBm
+cm9tIGEga25vd24gc2VuZGVyIGFuZCB5b3Uga25vdyB0aGUgY29udGVudCBpcyBzYWZlLg0KPj4+
+DQo+Pj4NCj4+PiBPbiBNb24sIEp1biAwMywgMjAyNCBhdCAwNTo1OTozOEFNICswMDAwLCBDTEVN
+RU5UIE1BVEhJRVUtLURSSUYgd3JvdGU6DQo+Pj4+IEZyb206IENsw6ltZW50IE1hdGhpZXUtLURy
+aWYgPGNsZW1lbnQubWF0aGlldS0tZHJpZkBldmlkZW4uY29tPg0KPj4+Pg0KPj4+PiBUaGlzIHNl
+cmllcyBiZWxvbmdzIHRvIGEgbGlzdCBvZiBzZXJpZXMgdGhhdCBhZGQgU1ZNIHN1cHBvcnQgZm9y
+IFZULWQuDQo+Pj4+DQo+Pj4+IEFzIGEgc3RhcnRpbmcgcG9pbnQsIHdlIHVzZSB0aGUgc2VyaWVz
+IGNhbGxlZCAnaW50ZWxfaW9tbXU6IEVuYWJsZQ0KPj4+PiBzdGFnZS0xDQo+Pj4gdHJhbnNsYXRp
+b24nIChyZmMyKSBieSBaaGVuemhvbmcgRHVhbiBhbmQgWWkgTGl1Lg0KPj4+Pg0KPj4+PiBIZXJl
+IHdlIGZvY3VzIG9uIHRoZSBpbXBsZW1lbnRhdGlvbiBvZiBBVFMgc3VwcG9ydCBpbiB0aGUgSU9N
+TVUgYW5kDQo+Pj4+IG9uIGENCj4+PiBQQ0ktbGV2ZWwNCj4+Pj4gQVBJIGZvciBBVFMgdG8gYmUg
+dXNlZCBieSB2aXJ0dWFsIGRldmljZXMuDQo+Pj4+DQo+Pj4+IFRoaXMgd29yayBpcyBiYXNlZCBv
+biB0aGUgVlQtZCBzcGVjaWZpY2F0aW9uIHZlcnNpb24gNC4xIChNYXJjaCAyMDIzKS4NCj4+Pj4g
+SGVyZSBpcyBhIGxpbmsgdG8gYSBHaXRIdWIgcmVwb3NpdG9yeSB3aGVyZSB5b3UgY2FuIGZpbmQg
+dGhlIGZvbGxvd2luZw0KPj4+IGVsZW1lbnRzIDoNCj4+Pj4gICAgICAtIFFlbXUgd2l0aCBhbGwg
+dGhlIHBhdGNoZXMgZm9yIFNWTQ0KPj4+PiAgICAgICAgICAtIEFUUw0KPj4+PiAgICAgICAgICAt
+IFBSSQ0KPj4+PiAgICAgICAgICAtIERldmljZSBJT1RMQiBpbnZhbGlkYXRpb25zDQo+Pj4+ICAg
+ICAgICAgIC0gUmVxdWVzdHMgd2l0aCBhbHJlYWR5IHRyYW5zbGF0ZWQgYWRkcmVzc2VzDQo+Pj4+
+ICAgICAgLSBBIGRlbW8gZGV2aWNlDQo+Pj4+ICAgICAgLSBBIHNpbXBsZSBkcml2ZXIgZm9yIHRo
+ZSBkZW1vIGRldmljZQ0KPj4+PiAgICAgIC0gQSB1c2Vyc3BhY2UgcHJvZ3JhbSAoZm9yIHRlc3Rp
+bmcgYW5kIGRlbW9uc3RyYXRpb24gcHVycG9zZXMpDQo+Pj4+DQo+Pj4+IGh0dHBzOi8vZXVyMDYu
+c2FmZWxpbmtzLnByb3RlY3Rpb24ub3V0bG9vay5jb20vP3VybD0NCj4+PiBodHRwcyUzQSUyRiUy
+RmdpdGh1Yi5jb20lMkZCdWxsU2VxdWFuYSUyRlFlbXUtaW4tZ3Vlc3QtU1ZNLWRlbW8mZGF0YT0N
+Cj4+PiAwNSU3QzAyJTdDY2xlbWVudC5tYXRoaWV1LS1kcmlmJTQwZXZpZGVuLmNvbSU3Q2Y1NzU5
+YWVmY2M1ZjRlN2Q0ZTZjMDhkYzlhMDhkMjlhJTdDN2QxYzc3ODUyZDhhNDM3ZGI4NDIxZWQ1ZDhm
+YmUwMGElN0MwJTdDMCU3QzYzODU1NDYwOTg4MjU0NDE5NSU3Q1Vua25vd24lN0NUV0ZwYkdac2Iz
+ZDhleUpXSWpvaU1DNHdMakF3TURBaUxDSlFJam9pVjJsdU16SWlMQ0pCVGlJNklrMWhhV3dpTENK
+WFZDSTZNbjAlM0QlN0MwJTdDJTdDJTdDDQo+Pj4NCj4+PiAmc2RhdGE9Mkd6YTFWRDdoS3IxU3gz
+Zk9Mb1JoNnRrM3RhU1BLVG41bmZpbWhQTHo3MCUzRCZyZXNlcnZlZD0wDQo+Pj4NCj4+PiBJIHdp
+bGwgbWVyZ2UsIGJ1dCBjb3VsZCB5b3UgcGxlYXNlIHJlc2VuZCB0aGlzIHVzaW5nIGdpdCBmb3Jt
+YXQtcGF0Y2gNCj4+PiBmb3IgZm9ybWF0dGluZz8gIFRoZSBwYXRjaGVzIGhhdmUgdHJhaWxpbmcg
+Q1JzIGFuZCBkb24ndCBzaG93IHdoaWNoDQo+Pj4gc2hhMQ0KPj4+IHRoZXkgYXJlIGZvciwgd2hp
+Y2ggbWFrZXMgcmUtYXBwbHlpbmcgdGhlbSBhZnRlciBlYWNoIGNoYW5nZSBwYWluZnVsLg0KPj4+
+DQo+Pj4NCj4+Pg0KPj4+IEhpIE1pY2hhZWwsDQo+Pj4gSSBzZW50IHRoZSBzZXJpZXMgYWdhaW4g
+d2l0aG91dCB0aGUgdHJhaWxpbmcgbmV3IGxpbmUuDQo+Pj4gVGVsbCBtZSBpZiBpdCdzIGJldHRl
+ci4NCj4+Pg0KPj4+IElzIFpoZW56aG9uZydzIEZMVFMgc2VyaWVzIG1lcmdlZD8gSWYgbm90LCBp
+dCBtaWdodCB0aGUgY2F1c2Ugb2YgdGhlDQo+Pj4gc2hhMQ0KPj4+IHByb2JsZW0geW91IGFyZSBm
+YWNpbmcNCj4+DQo+PiBJIGRvbid0IHRoaW5rIEkgaGF2ZSBGTFRTIGluIGFueSBxdWV1ZS4NCj4+
+DQo+PiBJZiB5b3VyIHNlcmllcyBoYXMgYSBkZXBlbmRlbmN5IHBsZWFzZSBzcGVjaWZ5IHRoaXMg
+aW4NCj4+IHRoZSBjb3ZlciBsZXR0ZXIuDQo+Pg0KPj4gQWx0ZXJuYXRpdmVseSBqdXN0IGluY2x1
+ZGUgdGhlIGRlcGVuZGVuY3kgaW4gdGhlIHBvc3RpbmcuDQo+DQo+IHNlZW1zIHRoaXMgaXMgdGhl
+IGRlcGVuZGVuY3kuDQo+DQo+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvMjAy
+NDA1MjIwNjIzMTMuNDUzMzE3LTEtemhlbnpob25nLmR1YW5AaW50ZWwuY29tLyN0DQo+DQo+DQpT
+b3JyeSBpZiBJIGRpZG4ndCBtYWtlIGl0IGNsZWFyLg0KDQpBcyBtZW50aW9uZWQgaW4gdGhlIGNv
+dmVyIGxldHRlciwgdGhpcyBzZXJpZXMgaXMgYmFzZWQgb24gWmhlbnpob25nJ3MNCmFuZCBZaSdz
+IEZMVFMgaW1wbGVtZW50YXRpb24gd2hpY2ggKEFGQUlLKSBoYXMgb25seSBiZSBwb3N0ZWQgYXMg
+YW4gUkZDDQpzbyBmYXIgKGtlZXAgbWUgdXAgdG8gZGF0ZSBwbGVhc2UpLg0KDQp2NSBpcyBiYXNl
+ZCBvbiB0aGF0IGJyYW5jaCA6DQpodHRwczovL2dpdGh1Yi5jb20veWlsaXUxNzY1L3FlbXUvdHJl
+ZS96aGVuemhvbmcvaW9tbXVmZF9uZXN0aW5nX3JmY3YyDQoNCj4+DQo+Pg0KPj4NCj4+DQo+Pj4g
+VGhhbmtzDQo+Pj4+IGNtZA0KPj4+DQo+Pj4NCj4+Pj4gdjINCj4+Pj4gICAgICAtIGhhbmRsZSBo
+dWdlIHBhZ2VzIGJldHRlciBieSBkZXRlY3RpbmcgdGhlIHBhZ2UgdGFibGUgbGV2ZWwNCj4+Pj4g
+YXQgd2hpY2ggdGhlDQo+Pj4gdHJhbnNsYXRpb24gZXJyb3JzIG9jY3VyDQo+Pj4+ICAgICAgLSBD
+aGFuZ2VzIGFmdGVyIHJldmlldyBieSBaaGVuWmhvbmcgRHVhbiA6DQo+Pj4+ICAgICAgICAtIFNl
+dCB0aGUgYWNjZXNzIGJpdCBhZnRlciBjaGVja2luZyBwZXJtaXNzaW9ucw0KPj4+PiAgICAgICAg
+LSBoZWxwZXIgZm9yIFBBU0lEIGFuZCBBVFMgOiBtYWtlIHRoZSBjb21taXQgbWVzc2FnZSBtb3Jl
+DQo+Pj4+IGFjY3VyYXRlDQo+Pj4gKCdwcmVzZW50JyByZXBsYWNlZCB3aXRoICdlbmFibGVkJykN
+Cj4+Pj4gICAgICAgIC0gcGNpZV9wYXNpZF9pbml0OiBhZGQgUENJX1BBU0lEX0NBUF9XSURUSF9T
+SElGVCBhbmQgdXNlIGl0DQo+Pj4+IGluc3RlYWQgb2YNCj4+PiBQQ0lfRVhUX0NBUF9QQVNJRF9T
+SVpFT0YgZm9yIHNoaWZ0aW5nIHRoZSBwYXNpZCB3aWR0aCB3aGVuIHByZXBhcmluZw0KPj4+IHRo
+ZQ0KPj4+IGNhcGFiaWxpdHkgcmVnaXN0ZXINCj4+Pj4gICAgICAgIC0gcGNpOiBkbyBub3QgY2hl
+Y2sgcGNpX2J1c19ieXBhc3NfaW9tbXUgYWZ0ZXIgY2FsbGluZw0KPj4+IHBjaV9kZXZpY2VfZ2V0
+X2lvbW11X2J1c19kZXZmbg0KPj4+PiAgICAgICAgLSBkbyBub3QgYWx0ZXIgZm9ybWF0dGluZyBv
+ZiBJT01NVVRMQkVudHJ5IGRlY2xhcmF0aW9uDQo+Pj4+ICAgICAgICAtIHZ0ZF9pb3ZhX2ZsX2No
+ZWNrX2Nhbm9uaWNhbCA6IGRpcmVjdGx5IHVzZSBzLT5hd19iaXRzDQo+Pj4+IGluc3RlYWQgb2Yg
+YXcNCj4+PiBmb3IgdGhlIHNha2Ugb2YgY2xhcml0eQ0KPj4+Pg0KPj4+PiB2Mw0KPj4+PiAgICAg
+IC0gcmViYXNlIG9uIG5ldyB2ZXJzaW9uIG9mIFpoZW56aG9uZydzIGZsdHMgaW1wbGVtZW50YXRp
+b24NCj4+Pj4gICAgICAtIGZpeCB0aGUgYXRjIGxvb2t1cCBvcGVyYXRpb24gKGNoZWNrIHRoZSBt
+YXNrIGJlZm9yZQ0KPj4+PiByZXR1cm5pbmcgYW4gZW50cnkpDQo+Pj4+ICAgICAgLSBhZGQgYSB1
+bml0IHRlc3QgZm9yIHRoZSBBVEMNCj4+Pj4gICAgICAtIHN0b3JlIGEgdXNlciBwb2ludGVyIGlu
+IHRoZSBpb21tdSBub3RpZmllcnMgdG8gc2ltcGxpZnkgdGhlDQo+Pj4gaW1wbGVtZW50YXRpb24g
+b2Ygc3ZtIGRldmljZXMNCj4+Pj4gICAgICBDaGFuZ2VzIGFmdGVyIHJldmlldyBieSBaaGVuemhv
+bmcgOg0KPj4+PiAgICAgICAgLSBzdG9yZSB0aGUgaW5wdXQgcGFzaWQgaW5zdGVhZCBvZiByaWQy
+cGFzaWQgd2hlbiByZXR1cm5pbmcNCj4+Pj4gYW4gZW50cnkNCj4+PiBhZnRlciBhIHRyYW5zbGF0
+aW9uDQo+Pj4+ICAgICAgICAtIHNwbGl0IHRoZSBBVEMgaW1wbGVtZW50YXRpb24gYW5kIGl0cyB1
+bml0IHRlc3RzDQo+Pj4+DQo+Pj4+IHY0DQo+Pj4+ICAgICAgQ2hhbmdlcyBhZnRlciBpbnRlcm5h
+bCByZXZpZXcNCj4+Pj4gICAgICAgIC0gRml4IHRoZSBub3dyaXRlIG9wdGltaXphdGlvbiwgYW4g
+QVRTIHRyYW5zbGF0aW9uIHdpdGhvdXQNCj4+Pj4gdGhlIG5vd3JpdGUNCj4+PiBmbGFnIHNob3Vs
+ZCBub3QgZmFpbCB3aGVuIHRoZSB3cml0ZSBwZXJtaXNzaW9uIGlzIG5vdCBzZXQNCj4+Pj4NCj4+
+Pj4gdjUNCj4+Pj4gICAgICBDaGFuZ2VzIGFmdGVyIHJldmlldyBieSBQaGlsaXBwZSA6DQo+Pj4+
+ICAgICAgICAtIGNoYW5nZSB0aGUgdHlwZSBvZiAnbGV2ZWwnIHRvIHVuc2lnbmVkIGluIHZ0ZF9s
+b29rdXBfaW90bGINCj4+Pj4NCj4+Pj4NCj4+Pj4NCj4+Pj4gQ2zDqW1lbnQgTWF0aGlldS0tRHJp
+ZiAoMjIpOg0KPj4+PiAgICBpbnRlbF9pb21tdTogZml4IEZSQ0QgY29uc3RydWN0aW9uIG1hY3Jv
+Lg0KPj4+PiAgICBpbnRlbF9pb21tdTogbWFrZSB0eXBlcyBtYXRjaA0KPj4+PiAgICBpbnRlbF9p
+b21tdTogcmV0dXJuIHBhZ2Ugd2FsayBsZXZlbCBldmVuIHdoZW4gdGhlIHRyYW5zbGF0aW9uIGZh
+aWxzDQo+Pj4+ICAgIGludGVsX2lvbW11OiBkbyBub3QgY29uc2lkZXIgd2FpdF9kZXNjIGFzIGFu
+IGludmFsaWQgZGVzY3JpcHRvcg0KPj4+PiAgICBtZW1vcnk6IGFkZCBwZXJtaXNzaW9ucyBpbiBJ
+T01NVUFjY2Vzc0ZsYWdzDQo+Pj4+ICAgIHBjaWU6IGFkZCBoZWxwZXIgdG8gZGVjbGFyZSBQQVNJ
+RCBjYXBhYmlsaXR5IGZvciBhIHBjaWUgZGV2aWNlDQo+Pj4+ICAgIHBjaWU6IGhlbHBlciBmdW5j
+dGlvbnMgdG8gY2hlY2sgaWYgUEFTSUQgYW5kIEFUUyBhcmUgZW5hYmxlZA0KPj4+PiAgICBpbnRl
+bF9pb21tdTogZGVjbGFyZSBzdXBwb3J0ZWQgUEFTSUQgc2l6ZQ0KPj4+PiAgICBwY2k6IGNhY2hl
+IHRoZSBidXMgbWFzdGVyaW5nIHN0YXR1cyBpbiB0aGUgZGV2aWNlDQo+Pj4+ICAgIHBjaTogYWRk
+IElPTU1VIG9wZXJhdGlvbnMgdG8gZ2V0IGFkZHJlc3Mgc3BhY2VzIGFuZCBtZW1vcnkgcmVnaW9u
+cw0KPj4+PiAgICAgIHdpdGggUEFTSUQNCj4+Pj4gICAgbWVtb3J5OiBzdG9yZSB1c2VyIGRhdGEg
+cG9pbnRlciBpbiB0aGUgSU9NTVUgbm90aWZpZXJzDQo+Pj4+ICAgIHBjaTogYWRkIGEgcGNpLWxl
+dmVsIGluaXRpYWxpemF0aW9uIGZ1bmN0aW9uIGZvciBpb21tdSBub3RpZmllcnMNCj4+Pj4gICAg
+aW50ZWxfaW9tbXU6IGltcGxlbWVudCB0aGUgZ2V0X2FkZHJlc3Nfc3BhY2VfcGFzaWQgaW9tbXUg
+b3BlcmF0aW9uDQo+Pj4+ICAgIGludGVsX2lvbW11OiBpbXBsZW1lbnQgdGhlIGdldF9tZW1vcnlf
+cmVnaW9uX3Bhc2lkIGlvbW11IG9wZXJhdGlvbg0KPj4+PiAgICBtZW1vcnk6IEFsbG93IHRvIHN0
+b3JlIHRoZSBQQVNJRCBpbiBJT01NVVRMQkVudHJ5DQo+Pj4+ICAgIGludGVsX2lvbW11OiBmaWxs
+IHRoZSBQQVNJRCBmaWVsZCB3aGVuIGNyZWF0aW5nIGFuIGluc3RhbmNlIG9mDQo+Pj4+ICAgICAg
+SU9NTVVUTEJFbnRyeQ0KPj4+PiAgICBhdGM6IGdlbmVyaWMgQVRDIHRoYXQgY2FuIGJlIHVzZWQg
+YnkgUENJZSBkZXZpY2VzIHRoYXQgc3VwcG9ydCBTVk0NCj4+Pj4gICAgYXRjOiBhZGQgdW5pdCB0
+ZXN0cw0KPj4+PiAgICBtZW1vcnk6IGFkZCBhbiBBUEkgZm9yIEFUUyBzdXBwb3J0DQo+Pj4+ICAg
+IHBjaTogYWRkIGEgcGNpLWxldmVsIEFQSSBmb3IgQVRTDQo+Pj4+ICAgIGludGVsX2lvbW11OiBz
+ZXQgdGhlIGFkZHJlc3MgbWFzayBldmVuIHdoZW4gYSB0cmFuc2xhdGlvbiBmYWlscw0KPj4+PiAg
+ICBpbnRlbF9pb21tdTogYWRkIHN1cHBvcnQgZm9yIEFUUw0KPj4+Pg0KPj4+PiAgIGh3L2kzODYv
+aW50ZWxfaW9tbXUuYyAgICAgICAgICAgICAgICAgICAgIHwgMTQyICsrKysrLQ0KPj4+PiAgIGh3
+L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJuYWwuaCAgICAgICAgICAgIHwgICA2ICstDQo+Pj4+ICAg
+aHcvcGNpL3BjaS5jICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAxMjcgKysrKystDQo+
+Pj4+ICAgaHcvcGNpL3BjaWUuYyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgfCAgNDIgKysN
+Cj4+Pj4gICBpbmNsdWRlL2V4ZWMvbWVtb3J5LmggICAgICAgICAgICAgICAgICAgICB8ICA1MSAr
+Ky0NCj4+Pj4gICBpbmNsdWRlL2h3L2kzODYvaW50ZWxfaW9tbXUuaCAgICAgICAgICAgICB8ICAg
+MiArLQ0KPj4+PiAgIGluY2x1ZGUvaHcvcGNpL3BjaS5oICAgICAgICAgICAgICAgICAgICAgIHwg
+MTAxICsrKysrDQo+Pj4+ICAgaW5jbHVkZS9ody9wY2kvcGNpX2RldmljZS5oICAgICAgICAgICAg
+ICAgfCAgIDEgKw0KPj4+PiAgIGluY2x1ZGUvaHcvcGNpL3BjaWUuaCAgICAgICAgICAgICAgICAg
+ICAgIHwgICA5ICstDQo+Pj4+ICAgaW5jbHVkZS9ody9wY2kvcGNpZV9yZWdzLmggICAgICAgICAg
+ICAgICAgfCAgIDMgKw0KPj4+PiAgIGluY2x1ZGUvc3RhbmRhcmQtaGVhZGVycy9saW51eC9wY2lf
+cmVncy5oIHwgICAxICsNCj4+Pj4gICBzeXN0ZW0vbWVtb3J5LmMgICAgICAgICAgICAgICAgICAg
+ICAgICAgICB8ICAyMCArDQo+Pj4+ICAgdGVzdHMvdW5pdC9tZXNvbi5idWlsZCAgICAgICAgICAg
+ICAgICAgICAgfCAgIDEgKw0KPj4+PiAgIHRlc3RzL3VuaXQvdGVzdC1hdGMuYyAgICAgICAgICAg
+ICAgICAgICAgIHwgNTI3DQo+Pj4+ICsrKysrKysrKysrKysrKysrKysrKysNCj4+Pj4gICB1dGls
+L2F0Yy5jICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IDIxMSArKysrKysrKysNCj4+
+Pj4gICB1dGlsL2F0Yy5oICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8IDExNyArKysr
+Kw0KPj4+PiAgIHV0aWwvbWVzb24uYnVpbGQgICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAx
+ICsNCj4+Pj4gICAxNyBmaWxlcyBjaGFuZ2VkLCAxMzMwIGluc2VydGlvbnMoKyksIDMyIGRlbGV0
+aW9ucygtKQ0KPj4+PiAgIGNyZWF0ZSBtb2RlIDEwMDY0NCB0ZXN0cy91bml0L3Rlc3QtYXRjLmMN
+Cj4+Pj4gICBjcmVhdGUgbW9kZSAxMDA2NDQgdXRpbC9hdGMuYw0KPj4+PiAgIGNyZWF0ZSBtb2Rl
+IDEwMDY0NCB1dGlsL2F0Yy5oDQo+Pj4+DQo+Pj4+IC0tDQo+Pj4+IDIuNDUuMQ0KPj4+DQo+Pg0K
+Pg0KPiAtLQ0KPiBSZWdhcmRzLA0KPiBZaSBMaXUNCg==
 
