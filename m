@@ -4,58 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C39C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8310DC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeJI-0001CQ-G0; Tue, 02 Jul 2024 10:16:44 -0400
+	id 1sOeCL-0007NH-2i; Tue, 02 Jul 2024 10:09:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=fXIt=OC=kaod.org=clg@ozlabs.org>)
- id 1sOeJ1-0000Sb-TH; Tue, 02 Jul 2024 10:16:33 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeBu-0005Tf-5T
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=fXIt=OC=kaod.org=clg@ozlabs.org>)
- id 1sOeIz-0006qc-5I; Tue, 02 Jul 2024 10:16:27 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WD4hj24kcz4xNs;
- Wed,  3 Jul 2024 00:16:21 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WD4hb4Ngnz4wcS;
- Wed,  3 Jul 2024 00:16:15 +1000 (AEST)
-Message-ID: <d9707ffc-54c5-4071-a3ee-73501a364911@kaod.org>
-Date: Tue, 2 Jul 2024 16:16:13 +0200
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeBi-0008F3-1Z
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719929329;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=YhLUD4bgFXykNLby5YqUbG3vAr/0cDl4XOSKHnOq4eQ=;
+ b=SWNkcraKwU+33j8Fgk90fQ1vdE7xjwVKNwuqn4TIaDBeLLLFrIjw4folk3SDHnnGcgRzTQ
+ /R3eiFUab5jhuoqIFbKl4Jhvdu97mt14LZO3v52qES2IEwH3iP5cF5TWEJnkAlVMYP82Ba
+ Vt0Pp0Wj91PrSBM+YjKtQACh6SdIDJc=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-434-xFZh1DHaNxec_NAuDZacHQ-1; Tue, 02 Jul 2024 10:08:47 -0400
+X-MC-Unique: xFZh1DHaNxec_NAuDZacHQ-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-36248c176c4so2741921f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:08:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719929326; x=1720534126;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YhLUD4bgFXykNLby5YqUbG3vAr/0cDl4XOSKHnOq4eQ=;
+ b=F5GsLF8QGVgqUX/z/FTAdu7BR/km9MPJo00M4wNB2CSNwJoCc9da9oBcy1sgJIumDd
+ okBESnRZsoTSPAeJtsxECoNwtG/pdYKc3cIobRJ6TaLZfNYWTBzw/3AlKKQFiGt7EENy
+ sku/ex0mD5YELGrQnyx3r4W1DVSSoVEEINWQlrtvbLTZtycECcN8j1Z4ICZ/5n4jl3pF
+ iRDyhyqckNsyripYYQFWDSKd/AArjb2xvzarLdOcEaiSvDTrw+lZMPIo/mX4hjIcFWTI
+ kT3cET/x4eiFsc7yfgLLqt/v4hulkf93BUsa6VSNA16vezcvtz1uIJSywGkXhispic2s
+ dWag==
+X-Gm-Message-State: AOJu0YwHlH7W/NjBqpALgGGQ84PpCE6rvja5DPciPsqLZ4wbzXHO0rG7
+ lDIWO9rCOrGSasvCQGVWkiMROiSdDUuNWVa6LVdmIWt6BRV0hCIBTMVeZ/GjhL0r2lv20QFvGFd
+ 2TVtPPzfVnpgMEolAi0Fhabm1OEBFY51BrNwjAcpjizjEofPJ2pHIJ1Fv6fwTaDfFTzQ3LAhtgx
+ FU+y3Sbu/cSfk/n84443elaU2QoLFNYA==
+X-Received: by 2002:a05:6000:400d:b0:366:e685:d0cb with SMTP id
+ ffacd0b85a97d-3677569762bmr5969476f8f.6.1719929325921; 
+ Tue, 02 Jul 2024 07:08:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFlI1QbSiDmh8c9mM8CHdiAhR8Qlw9actoZSffLipZLpZ5KSZcQDn3VxWE9L5My8VJlIfJPFw==
+X-Received: by 2002:a05:6000:400d:b0:366:e685:d0cb with SMTP id
+ ffacd0b85a97d-3677569762bmr5969447f8f.6.1719929325317; 
+ Tue, 02 Jul 2024 07:08:45 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36789fd7a0esm1532692f8f.104.2024.07.02.07.08.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Jul 2024 07:08:44 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:08:42 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 34/91] pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic
+ shutdown signal
+Message-ID: <8db1f7be788b23f8eca189fe4546298ed387e9cb.1719929191.git.mst@redhat.com>
+References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] hw/sd/sdhci: Log non-sequencial access as GUEST_ERROR
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Tyrone Ting <kfting@nuvoton.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Hao Wu <wuhaotsh@google.com>, Thomas Huth <thuth@redhat.com>,
- Shengtan Mao <stmao@google.com>, Chris Rauer <crauer@google.com>,
- Joel Stanley <joel@jms.id.au>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
- Laurent Vivier <lvivier@redhat.com>, Luc Michel <luc.michel@amd.com>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- Patrick Venture <venture@google.com>
-References: <20240702140842.54242-1-philmd@linaro.org>
- <20240702140842.54242-3-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240702140842.54242-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=fXIt=OC=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1719929191.git.mst@redhat.com>
+X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
+X-Mutt-Fcc: =sent
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,36 +104,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/24 4:08 PM, Philippe Mathieu-Daudé wrote:
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
+Emit a QMP event on receiving a PVPANIC_SHUTDOWN event. Even though a typical
+SHUTDOWN event will be sent, it will be indistinguishable from a shutdown
+originating from other cases (e.g. KVM exit due to KVM_SYSTEM_EVENT_SHUTDOWN)
+that also issue the guest-shutdown cause.
+A management layer application can detect the new GUEST_PVSHUTDOWN event to
+determine if the guest is using the pvpanic interface to request shutdowns.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Message-Id: <20240527-pvpanic-shutdown-v8-6-5a28ec02558b@t-8ch.de>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ qapi/run-state.json | 14 ++++++++++++++
+ system/runstate.c   |  1 +
+ 2 files changed, 15 insertions(+)
 
-Thanks,
-
-C.
-
-
-> ---
->   hw/sd/sdhci.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index 27673e1c70..d02c3e3963 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -983,8 +983,9 @@ static inline bool
->   sdhci_buff_access_is_sequential(SDHCIState *s, unsigned byte_num)
->   {
->       if ((s->data_count & 0x3) != byte_num) {
-> -        trace_sdhci_error("Non-sequential access to Buffer Data Port register"
-> -                          "is prohibited\n");
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "SDHCI: Non-sequential access to Buffer Data Port"
-> +                      " register is prohibited\n");
->           return false;
->       }
->       return true;
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index f8773f23b2..5ac0fec852 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -462,6 +462,20 @@
+ { 'event': 'GUEST_CRASHLOADED',
+   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
+ 
++##
++# @GUEST_PVSHUTDOWN:
++#
++# Emitted when guest submits a shutdown request via pvpanic interface
++#
++# Since: 9.1
++#
++# Example:
++#
++#     <- { "event": "GUEST_PVSHUTDOWN",
++#          "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
++##
++{ 'event': 'GUEST_PVSHUTDOWN' }
++
+ ##
+ # @GuestPanicAction:
+ #
+diff --git a/system/runstate.c b/system/runstate.c
+index fc49fd3e61..c833316f6d 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -586,6 +586,7 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
+ 
+ void qemu_system_guest_pvshutdown(void)
+ {
++    qapi_event_send_guest_pvshutdown();
+     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
+ }
+ 
+-- 
+MST
 
 
