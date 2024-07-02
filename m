@@ -4,77 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48EECC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:27:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D6B3C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOk0g-0007qt-WA; Tue, 02 Jul 2024 16:21:55 -0400
+	id 1sOjz1-0002f6-Dl; Tue, 02 Jul 2024 16:20:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOk06-0005fX-Nz
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:21:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyv-0002Pz-FU
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOk03-0002JR-VI
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:21:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyq-0001KY-WE
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951675;
+ s=mimecast20190719; t=1719951600;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=bN0cTm8m+n/A4V5Tgbpm0TUAfWebEt6LcyWQbTcpz4g=;
- b=FBY71wURraoS1WHBLKrkkTDpugC4iLL+W26ORVKvQ9h3g03tzv/9MRisqqHcnRFFMZsYhF
- twLux0fUiC0eBPEdgZlhd6Jc5MkYQNQEP2VY5Fq17zqaN9bZdR6DI2CujgxiUwG1q7Nrp5
- pSWzrE1X+5LJ/J8AnbBHF1GFI1HAU2M=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0nP2DrQRonjaFy24Ds+EPs3WzJvfgKW/1tcH3BUQFDo=;
+ b=NwZSWlnmklmlx6LrJopW4WZXBaOodhJxfZ9O7Ccp0+eRiWJ9lGw6aKM9YWJY0EgoMYz8Qe
+ i2Ekkyoqt9ey2+nQPFcvZTVMi9wHUtDU7ccMS4Gk17Q4sCFBEHOQ8T3BMg/Ke24c3DG7VK
+ QfSk0XaTOgA3KbslfxaHodIymfzGLuk=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-232-Oxo-GAHzP5SytFl3Toc9qw-1; Tue, 02 Jul 2024 16:21:14 -0400
-X-MC-Unique: Oxo-GAHzP5SytFl3Toc9qw-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-424a5a5f024so30181505e9.3
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:21:13 -0700 (PDT)
+ us-mta-357-gNpHldzRMMu_029ij8vzFw-1; Tue, 02 Jul 2024 16:19:58 -0400
+X-MC-Unique: gNpHldzRMMu_029ij8vzFw-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52e94c64651so191453e87.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:19:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951672; x=1720556472;
+ d=1e100.net; s=20230601; t=1719951596; x=1720556396;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bN0cTm8m+n/A4V5Tgbpm0TUAfWebEt6LcyWQbTcpz4g=;
- b=NvfrwdCXotfU7GYbov7iujNecXLhrYaaQYfogMM8Qt7URjHzOlSJ/Q6Oi0k3oRU0RH
- dl2BflPTlNFwhf/Ec8e3m48KEsT/1iiP1TavWdXNY4cU6YJZY8OZ3xsk/aFWNt72gn0z
- 0R59Pxs9qigGsFPKahw0IpodzrIe7Hs5is60nN2LSYo4omIC5AhXcc9bZsfRtniNqRiU
- yirgdHv7ACVqWVJFaIX5lIfdyN2XUVR3cUZyGs5pqrXVpMliR7pG5Pibcd9pHsJmatst
- 0K0yDhFTvdBRZguzAxE9rWZ03d3llsQpmiZ6ej6sb7gRuGmS9cbeQAWelpJHVXZYaJX0
- G4eQ==
-X-Gm-Message-State: AOJu0Yyws6byx5sCIia/Wvp0+Q39MCUhCpBA7yyb/Soo1PVQRBICLfnR
- lA+umTmqt7Owv9HHMMJJcCfbMUPwEAVxlxrvoiqGrs6AzIZQyrqwcCViAl73iv8coIwmd8UYhmd
- x6WprSKMs/gaPTIzDFwNRPsuW1TIUGrOuAGI1XLvTYeNqanvTjIWju9UOU83nm8KqbNUggpuKMC
- /SsfcoD7dcYrJqMkckVRih4jQp778o7Q==
-X-Received: by 2002:a7b:c458:0:b0:424:a2d9:67c5 with SMTP id
- 5b1f17b1804b1-4257a02b78emr66004485e9.16.1719951672211; 
- Tue, 02 Jul 2024 13:21:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEnSmGzWNyqHAWJCiaHjOD7gy47xRmHiiMjxtp0t7enIiEWnVy98KL0ZlXTqzKa+H5HjHidjQ==
-X-Received: by 2002:a7b:c458:0:b0:424:a2d9:67c5 with SMTP id
- 5b1f17b1804b1-4257a02b78emr66004285e9.16.1719951671589; 
- Tue, 02 Jul 2024 13:21:11 -0700 (PDT)
+ bh=0nP2DrQRonjaFy24Ds+EPs3WzJvfgKW/1tcH3BUQFDo=;
+ b=b3uLvmureNDRa1RXXwpKuNGYFMoph9a1+iDc2SGDEQugNmw+IvyWH6Xz1pjkYrutRn
+ LW3d+pEeY8zAJhPKkJCrxPggUdMc/nUROfmgEdHAc7vxjfrwKWzWgPjRqBYVKAMQdl0S
+ 4CcdTzgIDrNdHiA6Jvx/M6LhJiGTVFnjxokZ6k7spgqU5A09CLN3y5X+FbM2bt9u6ncu
+ ei0yfjcwtdfKJMyFd6WhoDV9tfa6EcsK3I+a+qLDjgz6CrHGozLqIfjZyfgEOWgLa5Yn
+ eSoo5tpZyO81SgyiMqdo9kdW+AQr95RpJUJKjjBFb8PE1BIw4T46d+dS00XMPUI/pccv
+ UOkQ==
+X-Gm-Message-State: AOJu0YznMP3eW8humhEFbncmscJrThQ/rcbJ4oua1OG877UceTcUVrw1
+ C2a2cgkmqtUWZtEvYZ8AAF7NHid00l8gz4P+ulpgo8ZydoL3UFnLoNDGSO3i7H6klIUyU7q5rfX
+ 6poxRSfTauDI6usE/anLbjEpe59eS6a09xyR2lAKXtw/rnDgmMJVugeq8/NNJTLfYIdE83gWLRV
+ IGgKDb+IS82KU0DLvPXdB4IQW57VR9Bg==
+X-Received: by 2002:a05:6512:3e09:b0:52c:e3ae:2737 with SMTP id
+ 2adb3069b0e04-52e8273af60mr5553084e87.68.1719951595850; 
+ Tue, 02 Jul 2024 13:19:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKSnWtrc5ic3QpGXEs8m6EwsSo5fvAUXhCC5O3sAYot2+Wu+FSBpSZrE+6jriSZG/EGoHqEQ==
+X-Received: by 2002:a05:6512:3e09:b0:52c:e3ae:2737 with SMTP id
+ 2adb3069b0e04-52e8273af60mr5553053e87.68.1719951594991; 
+ Tue, 02 Jul 2024 13:19:54 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4257fb4fabdsm118041955e9.46.2024.07.02.13.21.07
+ ffacd0b85a97d-3675a0cd712sm14146751f8f.20.2024.07.02.13.19.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:21:11 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:21:03 -0400
+ Tue, 02 Jul 2024 13:19:54 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:19:51 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Markus Armbruster <armbru@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- Paul Durrant <paul@xen.org>, xen-devel@lists.xenproject.org
-Subject: [PULL v2 88/88] hw/pci: Replace -1 with UINT32_MAX for romsize
-Message-ID: <29e45afd8d6abf7a67dab5db0ab1cfbc388daefe.1719951168.git.mst@redhat.com>
+ Sunil V L <sunilvl@ventanamicro.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL v2 70/88] tests/data/acpi: Move x86 ACPI tables under
+ x86/${machine} path
+Message-ID: <fa8449ac13f71743b06346a4b323671aa0ac24ca.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -82,7 +78,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,89 +102,721 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-romsize is an uint32_t variable. Specifying -1 as an uint32_t value is
-obscure way to denote UINT32_MAX.
+To support multiple architectures using same machine name, create x86
+folder and move all x86 related AML files for each machine type inside.
 
-Worse, if int is wider than 32-bit, it will change the behavior of a
-construct like the following:
-romsize = -1;
-if (romsize != -1) {
-    ...
-}
-
-When -1 is assigned to romsize, -1 will be implicitly casted into
-uint32_t, resulting in UINT32_MAX. On contrary, when evaluating
-romsize != -1, romsize will be casted into int, and it will be a
-comparison of UINT32_MAX and -1, and result in false.
-
-Replace -1 with UINT32_MAX for statements involving the variable to
-clarify the intent and prevent potential breakage.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-Id: <20240627-reuse-v10-10-7ca0b8ed3d9f@daynix.com>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240625150839.1358279-10-sunilvl@ventanamicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/pci/pci.c             | 8 ++++----
- hw/xen/xen_pt_load_rom.c | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ tests/data/acpi/{ => x86}/microvm/APIC              | Bin
+ tests/data/acpi/{ => x86}/microvm/APIC.ioapic2      | Bin
+ tests/data/acpi/{ => x86}/microvm/APIC.pcie         | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT              | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT.ioapic2      | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT.pcie         | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT.rtc          | Bin
+ tests/data/acpi/{ => x86}/microvm/DSDT.usb          | Bin
+ tests/data/acpi/{ => x86}/microvm/ERST.pcie         | Bin
+ tests/data/acpi/{ => x86}/microvm/FACP              | Bin
+ tests/data/acpi/{ => x86}/pc/APIC                   | Bin
+ tests/data/acpi/{ => x86}/pc/APIC.acpihmat          | Bin
+ tests/data/acpi/{ => x86}/pc/APIC.cphp              | Bin
+ tests/data/acpi/{ => x86}/pc/APIC.dimmpxm           | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT                   | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.acpierst          | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.acpihmat          | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.bridge            | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.cphp              | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.dimmpxm           | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.hpbridge          | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.hpbrroot          | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.ipmikcs           | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.memhp             | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.nohpet            | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.numamem           | Bin
+ tests/data/acpi/{ => x86}/pc/DSDT.roothp            | Bin
+ tests/data/acpi/{ => x86}/pc/ERST.acpierst          | Bin
+ tests/data/acpi/{ => x86}/pc/FACP                   | Bin
+ tests/data/acpi/{ => x86}/pc/FACP.nosmm             | Bin
+ tests/data/acpi/{ => x86}/pc/FACS                   | Bin
+ tests/data/acpi/{ => x86}/pc/HMAT.acpihmat          | Bin
+ tests/data/acpi/{ => x86}/pc/HPET                   | Bin
+ tests/data/acpi/{ => x86}/pc/NFIT.dimmpxm           | Bin
+ tests/data/acpi/{ => x86}/pc/SLIT.cphp              | Bin
+ tests/data/acpi/{ => x86}/pc/SLIT.memhp             | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.acpihmat          | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.cphp              | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.dimmpxm           | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.memhp             | Bin
+ tests/data/acpi/{ => x86}/pc/SRAT.numamem           | Bin
+ tests/data/acpi/{ => x86}/pc/SSDT.dimmpxm           | Bin
+ tests/data/acpi/{ => x86}/pc/WAET                   | Bin
+ tests/data/acpi/{ => x86}/q35/APIC                  | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.acpihmat         | Bin
+ .../acpi/{ => x86}/q35/APIC.acpihmat-noinitiator    | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.core-count       | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.core-count2      | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.cphp             | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.thread-count     | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.thread-count2    | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.type4-count      | Bin
+ tests/data/acpi/{ => x86}/q35/APIC.xapic            | Bin
+ tests/data/acpi/{ => x86}/q35/CEDT.cxl              | Bin
+ tests/data/acpi/{ => x86}/q35/DMAR.dmar             | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT                  | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.acpierst         | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.acpihmat         | Bin
+ .../acpi/{ => x86}/q35/DSDT.acpihmat-noinitiator    | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.applesmc         | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.bridge           | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.core-count       | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.core-count2      | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.cphp             | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.cxl              | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.ipmibt           | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.ipmismbus        | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.ivrs             | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.memhp            | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.mmio64           | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.multi-bridge     | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.noacpihp         | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.nohpet           | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.numamem          | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.pvpanic-isa      | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.thread-count     | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.thread-count2    | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm12        | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm2         | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.type4-count      | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.viot             | Bin
+ tests/data/acpi/{ => x86}/q35/DSDT.xapic            | Bin
+ tests/data/acpi/{ => x86}/q35/ERST.acpierst         | Bin
+ tests/data/acpi/{ => x86}/q35/FACP                  | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.core-count       | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.core-count2      | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.nosmm            | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.slic             | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.thread-count     | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.thread-count2    | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.type4-count      | Bin
+ tests/data/acpi/{ => x86}/q35/FACP.xapic            | Bin
+ tests/data/acpi/{ => x86}/q35/FACS                  | Bin
+ tests/data/acpi/{ => x86}/q35/HMAT.acpihmat         | Bin
+ .../acpi/{ => x86}/q35/HMAT.acpihmat-noinitiator    | Bin
+ tests/data/acpi/{ => x86}/q35/HPET                  | Bin
+ tests/data/acpi/{ => x86}/q35/IVRS.ivrs             | Bin
+ tests/data/acpi/{ => x86}/q35/MCFG                  | Bin
+ tests/data/acpi/{ => x86}/q35/NFIT.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/q35/SLIC.slic             | Bin
+ tests/data/acpi/{ => x86}/q35/SLIT.cphp             | Bin
+ tests/data/acpi/{ => x86}/q35/SLIT.memhp            | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.acpihmat         | Bin
+ .../acpi/{ => x86}/q35/SRAT.acpihmat-noinitiator    | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.cphp             | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.memhp            | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.mmio64           | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.numamem          | Bin
+ tests/data/acpi/{ => x86}/q35/SRAT.xapic            | Bin
+ tests/data/acpi/{ => x86}/q35/SSDT.dimmpxm          | Bin
+ tests/data/acpi/{ => x86}/q35/TCPA.tis.tpm12        | Bin
+ tests/data/acpi/{ => x86}/q35/TPM2.tis.tpm2         | Bin
+ tests/data/acpi/{ => x86}/q35/VIOT.viot             | Bin
+ tests/data/acpi/{ => x86}/q35/WAET                  | Bin
+ 117 files changed, 0 insertions(+), 0 deletions(-)
+ rename tests/data/acpi/{ => x86}/microvm/APIC (100%)
+ rename tests/data/acpi/{ => x86}/microvm/APIC.ioapic2 (100%)
+ rename tests/data/acpi/{ => x86}/microvm/APIC.pcie (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT.ioapic2 (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT.pcie (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT.rtc (100%)
+ rename tests/data/acpi/{ => x86}/microvm/DSDT.usb (100%)
+ rename tests/data/acpi/{ => x86}/microvm/ERST.pcie (100%)
+ rename tests/data/acpi/{ => x86}/microvm/FACP (100%)
+ rename tests/data/acpi/{ => x86}/pc/APIC (100%)
+ rename tests/data/acpi/{ => x86}/pc/APIC.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/pc/APIC.cphp (100%)
+ rename tests/data/acpi/{ => x86}/pc/APIC.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.acpierst (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.bridge (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.hpbridge (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.hpbrroot (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.ipmikcs (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.nohpet (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.numamem (100%)
+ rename tests/data/acpi/{ => x86}/pc/DSDT.roothp (100%)
+ rename tests/data/acpi/{ => x86}/pc/ERST.acpierst (100%)
+ rename tests/data/acpi/{ => x86}/pc/FACP (100%)
+ rename tests/data/acpi/{ => x86}/pc/FACP.nosmm (100%)
+ rename tests/data/acpi/{ => x86}/pc/FACS (100%)
+ rename tests/data/acpi/{ => x86}/pc/HMAT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/pc/HPET (100%)
+ rename tests/data/acpi/{ => x86}/pc/NFIT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/SLIT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/pc/SLIT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/pc/SRAT.numamem (100%)
+ rename tests/data/acpi/{ => x86}/pc/SSDT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/pc/WAET (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.acpihmat-noinitiator (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.core-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.core-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.cphp (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.thread-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.thread-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.type4-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/APIC.xapic (100%)
+ rename tests/data/acpi/{ => x86}/q35/CEDT.cxl (100%)
+ rename tests/data/acpi/{ => x86}/q35/DMAR.dmar (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.acpierst (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.acpihmat-noinitiator (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.applesmc (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.bridge (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.core-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.core-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.cxl (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.ipmibt (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.ipmismbus (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.ivrs (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.mmio64 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.multi-bridge (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.noacpihp (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.nohpet (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.numamem (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.pvpanic-isa (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.thread-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.thread-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm12 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.tis.tpm2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.type4-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.viot (100%)
+ rename tests/data/acpi/{ => x86}/q35/DSDT.xapic (100%)
+ rename tests/data/acpi/{ => x86}/q35/ERST.acpierst (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.core-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.core-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.nosmm (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.slic (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.thread-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.thread-count2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.type4-count (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACP.xapic (100%)
+ rename tests/data/acpi/{ => x86}/q35/FACS (100%)
+ rename tests/data/acpi/{ => x86}/q35/HMAT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/q35/HMAT.acpihmat-noinitiator (100%)
+ rename tests/data/acpi/{ => x86}/q35/HPET (100%)
+ rename tests/data/acpi/{ => x86}/q35/IVRS.ivrs (100%)
+ rename tests/data/acpi/{ => x86}/q35/MCFG (100%)
+ rename tests/data/acpi/{ => x86}/q35/NFIT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/SLIC.slic (100%)
+ rename tests/data/acpi/{ => x86}/q35/SLIT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/q35/SLIT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.acpihmat (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.acpihmat-noinitiator (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.cphp (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.memhp (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.mmio64 (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.numamem (100%)
+ rename tests/data/acpi/{ => x86}/q35/SRAT.xapic (100%)
+ rename tests/data/acpi/{ => x86}/q35/SSDT.dimmpxm (100%)
+ rename tests/data/acpi/{ => x86}/q35/TCPA.tis.tpm12 (100%)
+ rename tests/data/acpi/{ => x86}/q35/TPM2.tis.tpm2 (100%)
+ rename tests/data/acpi/{ => x86}/q35/VIOT.viot (100%)
+ rename tests/data/acpi/{ => x86}/q35/WAET (100%)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index fa85f87b1c..4c7be52951 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -70,7 +70,7 @@ static bool pcie_has_upstream_port(PCIDevice *dev);
- static Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
--    DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, -1),
-+    DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
-     DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-     DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-@@ -2073,7 +2073,7 @@ static void pci_qdev_realize(DeviceState *qdev, Error **errp)
-                                  g_cmp_uint32, NULL);
-     }
- 
--    if (pci_dev->romsize != -1 && !is_power_of_2(pci_dev->romsize)) {
-+    if (pci_dev->romsize != UINT32_MAX && !is_power_of_2(pci_dev->romsize)) {
-         error_setg(errp, "ROM size %u is not a power of two", pci_dev->romsize);
-         return;
-     }
-@@ -2359,7 +2359,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
-         return;
-     }
- 
--    if (load_file || pdev->romsize == -1) {
-+    if (load_file || pdev->romsize == UINT32_MAX) {
-         path = qemu_find_file(QEMU_FILE_TYPE_BIOS, pdev->romfile);
-         if (path == NULL) {
-             path = g_strdup(pdev->romfile);
-@@ -2378,7 +2378,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
-                        pdev->romfile);
-             return;
-         }
--        if (pdev->romsize != -1) {
-+        if (pdev->romsize != UINT_MAX) {
-             if (size > pdev->romsize) {
-                 error_setg(errp, "romfile \"%s\" (%u bytes) "
-                            "is too large for ROM size %u",
-diff --git a/hw/xen/xen_pt_load_rom.c b/hw/xen/xen_pt_load_rom.c
-index 03422a8a71..6bc64acd33 100644
---- a/hw/xen/xen_pt_load_rom.c
-+++ b/hw/xen/xen_pt_load_rom.c
-@@ -53,7 +53,7 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-     }
-     fseek(fp, 0, SEEK_SET);
- 
--    if (dev->romsize != -1) {
-+    if (dev->romsize != UINT_MAX) {
-         if (st.st_size > dev->romsize) {
-             error_report("ROM BAR \"%s\" (%ld bytes) is too large for ROM size %u",
-                          rom_file, (long) st.st_size, dev->romsize);
+diff --git a/tests/data/acpi/microvm/APIC b/tests/data/acpi/x86/microvm/APIC
+similarity index 100%
+rename from tests/data/acpi/microvm/APIC
+rename to tests/data/acpi/x86/microvm/APIC
+diff --git a/tests/data/acpi/microvm/APIC.ioapic2 b/tests/data/acpi/x86/microvm/APIC.ioapic2
+similarity index 100%
+rename from tests/data/acpi/microvm/APIC.ioapic2
+rename to tests/data/acpi/x86/microvm/APIC.ioapic2
+diff --git a/tests/data/acpi/microvm/APIC.pcie b/tests/data/acpi/x86/microvm/APIC.pcie
+similarity index 100%
+rename from tests/data/acpi/microvm/APIC.pcie
+rename to tests/data/acpi/x86/microvm/APIC.pcie
+diff --git a/tests/data/acpi/microvm/DSDT b/tests/data/acpi/x86/microvm/DSDT
+similarity index 100%
+rename from tests/data/acpi/microvm/DSDT
+rename to tests/data/acpi/x86/microvm/DSDT
+diff --git a/tests/data/acpi/microvm/DSDT.ioapic2 b/tests/data/acpi/x86/microvm/DSDT.ioapic2
+similarity index 100%
+rename from tests/data/acpi/microvm/DSDT.ioapic2
+rename to tests/data/acpi/x86/microvm/DSDT.ioapic2
+diff --git a/tests/data/acpi/microvm/DSDT.pcie b/tests/data/acpi/x86/microvm/DSDT.pcie
+similarity index 100%
+rename from tests/data/acpi/microvm/DSDT.pcie
+rename to tests/data/acpi/x86/microvm/DSDT.pcie
+diff --git a/tests/data/acpi/microvm/DSDT.rtc b/tests/data/acpi/x86/microvm/DSDT.rtc
+similarity index 100%
+rename from tests/data/acpi/microvm/DSDT.rtc
+rename to tests/data/acpi/x86/microvm/DSDT.rtc
+diff --git a/tests/data/acpi/microvm/DSDT.usb b/tests/data/acpi/x86/microvm/DSDT.usb
+similarity index 100%
+rename from tests/data/acpi/microvm/DSDT.usb
+rename to tests/data/acpi/x86/microvm/DSDT.usb
+diff --git a/tests/data/acpi/microvm/ERST.pcie b/tests/data/acpi/x86/microvm/ERST.pcie
+similarity index 100%
+rename from tests/data/acpi/microvm/ERST.pcie
+rename to tests/data/acpi/x86/microvm/ERST.pcie
+diff --git a/tests/data/acpi/microvm/FACP b/tests/data/acpi/x86/microvm/FACP
+similarity index 100%
+rename from tests/data/acpi/microvm/FACP
+rename to tests/data/acpi/x86/microvm/FACP
+diff --git a/tests/data/acpi/pc/APIC b/tests/data/acpi/x86/pc/APIC
+similarity index 100%
+rename from tests/data/acpi/pc/APIC
+rename to tests/data/acpi/x86/pc/APIC
+diff --git a/tests/data/acpi/pc/APIC.acpihmat b/tests/data/acpi/x86/pc/APIC.acpihmat
+similarity index 100%
+rename from tests/data/acpi/pc/APIC.acpihmat
+rename to tests/data/acpi/x86/pc/APIC.acpihmat
+diff --git a/tests/data/acpi/pc/APIC.cphp b/tests/data/acpi/x86/pc/APIC.cphp
+similarity index 100%
+rename from tests/data/acpi/pc/APIC.cphp
+rename to tests/data/acpi/x86/pc/APIC.cphp
+diff --git a/tests/data/acpi/pc/APIC.dimmpxm b/tests/data/acpi/x86/pc/APIC.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/pc/APIC.dimmpxm
+rename to tests/data/acpi/x86/pc/APIC.dimmpxm
+diff --git a/tests/data/acpi/pc/DSDT b/tests/data/acpi/x86/pc/DSDT
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT
+rename to tests/data/acpi/x86/pc/DSDT
+diff --git a/tests/data/acpi/pc/DSDT.acpierst b/tests/data/acpi/x86/pc/DSDT.acpierst
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.acpierst
+rename to tests/data/acpi/x86/pc/DSDT.acpierst
+diff --git a/tests/data/acpi/pc/DSDT.acpihmat b/tests/data/acpi/x86/pc/DSDT.acpihmat
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.acpihmat
+rename to tests/data/acpi/x86/pc/DSDT.acpihmat
+diff --git a/tests/data/acpi/pc/DSDT.bridge b/tests/data/acpi/x86/pc/DSDT.bridge
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.bridge
+rename to tests/data/acpi/x86/pc/DSDT.bridge
+diff --git a/tests/data/acpi/pc/DSDT.cphp b/tests/data/acpi/x86/pc/DSDT.cphp
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.cphp
+rename to tests/data/acpi/x86/pc/DSDT.cphp
+diff --git a/tests/data/acpi/pc/DSDT.dimmpxm b/tests/data/acpi/x86/pc/DSDT.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.dimmpxm
+rename to tests/data/acpi/x86/pc/DSDT.dimmpxm
+diff --git a/tests/data/acpi/pc/DSDT.hpbridge b/tests/data/acpi/x86/pc/DSDT.hpbridge
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.hpbridge
+rename to tests/data/acpi/x86/pc/DSDT.hpbridge
+diff --git a/tests/data/acpi/pc/DSDT.hpbrroot b/tests/data/acpi/x86/pc/DSDT.hpbrroot
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.hpbrroot
+rename to tests/data/acpi/x86/pc/DSDT.hpbrroot
+diff --git a/tests/data/acpi/pc/DSDT.ipmikcs b/tests/data/acpi/x86/pc/DSDT.ipmikcs
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.ipmikcs
+rename to tests/data/acpi/x86/pc/DSDT.ipmikcs
+diff --git a/tests/data/acpi/pc/DSDT.memhp b/tests/data/acpi/x86/pc/DSDT.memhp
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.memhp
+rename to tests/data/acpi/x86/pc/DSDT.memhp
+diff --git a/tests/data/acpi/pc/DSDT.nohpet b/tests/data/acpi/x86/pc/DSDT.nohpet
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.nohpet
+rename to tests/data/acpi/x86/pc/DSDT.nohpet
+diff --git a/tests/data/acpi/pc/DSDT.numamem b/tests/data/acpi/x86/pc/DSDT.numamem
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.numamem
+rename to tests/data/acpi/x86/pc/DSDT.numamem
+diff --git a/tests/data/acpi/pc/DSDT.roothp b/tests/data/acpi/x86/pc/DSDT.roothp
+similarity index 100%
+rename from tests/data/acpi/pc/DSDT.roothp
+rename to tests/data/acpi/x86/pc/DSDT.roothp
+diff --git a/tests/data/acpi/pc/ERST.acpierst b/tests/data/acpi/x86/pc/ERST.acpierst
+similarity index 100%
+rename from tests/data/acpi/pc/ERST.acpierst
+rename to tests/data/acpi/x86/pc/ERST.acpierst
+diff --git a/tests/data/acpi/pc/FACP b/tests/data/acpi/x86/pc/FACP
+similarity index 100%
+rename from tests/data/acpi/pc/FACP
+rename to tests/data/acpi/x86/pc/FACP
+diff --git a/tests/data/acpi/pc/FACP.nosmm b/tests/data/acpi/x86/pc/FACP.nosmm
+similarity index 100%
+rename from tests/data/acpi/pc/FACP.nosmm
+rename to tests/data/acpi/x86/pc/FACP.nosmm
+diff --git a/tests/data/acpi/pc/FACS b/tests/data/acpi/x86/pc/FACS
+similarity index 100%
+rename from tests/data/acpi/pc/FACS
+rename to tests/data/acpi/x86/pc/FACS
+diff --git a/tests/data/acpi/pc/HMAT.acpihmat b/tests/data/acpi/x86/pc/HMAT.acpihmat
+similarity index 100%
+rename from tests/data/acpi/pc/HMAT.acpihmat
+rename to tests/data/acpi/x86/pc/HMAT.acpihmat
+diff --git a/tests/data/acpi/pc/HPET b/tests/data/acpi/x86/pc/HPET
+similarity index 100%
+rename from tests/data/acpi/pc/HPET
+rename to tests/data/acpi/x86/pc/HPET
+diff --git a/tests/data/acpi/pc/NFIT.dimmpxm b/tests/data/acpi/x86/pc/NFIT.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/pc/NFIT.dimmpxm
+rename to tests/data/acpi/x86/pc/NFIT.dimmpxm
+diff --git a/tests/data/acpi/pc/SLIT.cphp b/tests/data/acpi/x86/pc/SLIT.cphp
+similarity index 100%
+rename from tests/data/acpi/pc/SLIT.cphp
+rename to tests/data/acpi/x86/pc/SLIT.cphp
+diff --git a/tests/data/acpi/pc/SLIT.memhp b/tests/data/acpi/x86/pc/SLIT.memhp
+similarity index 100%
+rename from tests/data/acpi/pc/SLIT.memhp
+rename to tests/data/acpi/x86/pc/SLIT.memhp
+diff --git a/tests/data/acpi/pc/SRAT.acpihmat b/tests/data/acpi/x86/pc/SRAT.acpihmat
+similarity index 100%
+rename from tests/data/acpi/pc/SRAT.acpihmat
+rename to tests/data/acpi/x86/pc/SRAT.acpihmat
+diff --git a/tests/data/acpi/pc/SRAT.cphp b/tests/data/acpi/x86/pc/SRAT.cphp
+similarity index 100%
+rename from tests/data/acpi/pc/SRAT.cphp
+rename to tests/data/acpi/x86/pc/SRAT.cphp
+diff --git a/tests/data/acpi/pc/SRAT.dimmpxm b/tests/data/acpi/x86/pc/SRAT.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/pc/SRAT.dimmpxm
+rename to tests/data/acpi/x86/pc/SRAT.dimmpxm
+diff --git a/tests/data/acpi/pc/SRAT.memhp b/tests/data/acpi/x86/pc/SRAT.memhp
+similarity index 100%
+rename from tests/data/acpi/pc/SRAT.memhp
+rename to tests/data/acpi/x86/pc/SRAT.memhp
+diff --git a/tests/data/acpi/pc/SRAT.numamem b/tests/data/acpi/x86/pc/SRAT.numamem
+similarity index 100%
+rename from tests/data/acpi/pc/SRAT.numamem
+rename to tests/data/acpi/x86/pc/SRAT.numamem
+diff --git a/tests/data/acpi/pc/SSDT.dimmpxm b/tests/data/acpi/x86/pc/SSDT.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/pc/SSDT.dimmpxm
+rename to tests/data/acpi/x86/pc/SSDT.dimmpxm
+diff --git a/tests/data/acpi/pc/WAET b/tests/data/acpi/x86/pc/WAET
+similarity index 100%
+rename from tests/data/acpi/pc/WAET
+rename to tests/data/acpi/x86/pc/WAET
+diff --git a/tests/data/acpi/q35/APIC b/tests/data/acpi/x86/q35/APIC
+similarity index 100%
+rename from tests/data/acpi/q35/APIC
+rename to tests/data/acpi/x86/q35/APIC
+diff --git a/tests/data/acpi/q35/APIC.acpihmat b/tests/data/acpi/x86/q35/APIC.acpihmat
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.acpihmat
+rename to tests/data/acpi/x86/q35/APIC.acpihmat
+diff --git a/tests/data/acpi/q35/APIC.acpihmat-noinitiator b/tests/data/acpi/x86/q35/APIC.acpihmat-noinitiator
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.acpihmat-noinitiator
+rename to tests/data/acpi/x86/q35/APIC.acpihmat-noinitiator
+diff --git a/tests/data/acpi/q35/APIC.core-count b/tests/data/acpi/x86/q35/APIC.core-count
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.core-count
+rename to tests/data/acpi/x86/q35/APIC.core-count
+diff --git a/tests/data/acpi/q35/APIC.core-count2 b/tests/data/acpi/x86/q35/APIC.core-count2
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.core-count2
+rename to tests/data/acpi/x86/q35/APIC.core-count2
+diff --git a/tests/data/acpi/q35/APIC.cphp b/tests/data/acpi/x86/q35/APIC.cphp
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.cphp
+rename to tests/data/acpi/x86/q35/APIC.cphp
+diff --git a/tests/data/acpi/q35/APIC.dimmpxm b/tests/data/acpi/x86/q35/APIC.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.dimmpxm
+rename to tests/data/acpi/x86/q35/APIC.dimmpxm
+diff --git a/tests/data/acpi/q35/APIC.thread-count b/tests/data/acpi/x86/q35/APIC.thread-count
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.thread-count
+rename to tests/data/acpi/x86/q35/APIC.thread-count
+diff --git a/tests/data/acpi/q35/APIC.thread-count2 b/tests/data/acpi/x86/q35/APIC.thread-count2
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.thread-count2
+rename to tests/data/acpi/x86/q35/APIC.thread-count2
+diff --git a/tests/data/acpi/q35/APIC.type4-count b/tests/data/acpi/x86/q35/APIC.type4-count
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.type4-count
+rename to tests/data/acpi/x86/q35/APIC.type4-count
+diff --git a/tests/data/acpi/q35/APIC.xapic b/tests/data/acpi/x86/q35/APIC.xapic
+similarity index 100%
+rename from tests/data/acpi/q35/APIC.xapic
+rename to tests/data/acpi/x86/q35/APIC.xapic
+diff --git a/tests/data/acpi/q35/CEDT.cxl b/tests/data/acpi/x86/q35/CEDT.cxl
+similarity index 100%
+rename from tests/data/acpi/q35/CEDT.cxl
+rename to tests/data/acpi/x86/q35/CEDT.cxl
+diff --git a/tests/data/acpi/q35/DMAR.dmar b/tests/data/acpi/x86/q35/DMAR.dmar
+similarity index 100%
+rename from tests/data/acpi/q35/DMAR.dmar
+rename to tests/data/acpi/x86/q35/DMAR.dmar
+diff --git a/tests/data/acpi/q35/DSDT b/tests/data/acpi/x86/q35/DSDT
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT
+rename to tests/data/acpi/x86/q35/DSDT
+diff --git a/tests/data/acpi/q35/DSDT.acpierst b/tests/data/acpi/x86/q35/DSDT.acpierst
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.acpierst
+rename to tests/data/acpi/x86/q35/DSDT.acpierst
+diff --git a/tests/data/acpi/q35/DSDT.acpihmat b/tests/data/acpi/x86/q35/DSDT.acpihmat
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.acpihmat
+rename to tests/data/acpi/x86/q35/DSDT.acpihmat
+diff --git a/tests/data/acpi/q35/DSDT.acpihmat-noinitiator b/tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.acpihmat-noinitiator
+rename to tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator
+diff --git a/tests/data/acpi/q35/DSDT.applesmc b/tests/data/acpi/x86/q35/DSDT.applesmc
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.applesmc
+rename to tests/data/acpi/x86/q35/DSDT.applesmc
+diff --git a/tests/data/acpi/q35/DSDT.bridge b/tests/data/acpi/x86/q35/DSDT.bridge
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.bridge
+rename to tests/data/acpi/x86/q35/DSDT.bridge
+diff --git a/tests/data/acpi/q35/DSDT.core-count b/tests/data/acpi/x86/q35/DSDT.core-count
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.core-count
+rename to tests/data/acpi/x86/q35/DSDT.core-count
+diff --git a/tests/data/acpi/q35/DSDT.core-count2 b/tests/data/acpi/x86/q35/DSDT.core-count2
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.core-count2
+rename to tests/data/acpi/x86/q35/DSDT.core-count2
+diff --git a/tests/data/acpi/q35/DSDT.cphp b/tests/data/acpi/x86/q35/DSDT.cphp
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.cphp
+rename to tests/data/acpi/x86/q35/DSDT.cphp
+diff --git a/tests/data/acpi/q35/DSDT.cxl b/tests/data/acpi/x86/q35/DSDT.cxl
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.cxl
+rename to tests/data/acpi/x86/q35/DSDT.cxl
+diff --git a/tests/data/acpi/q35/DSDT.dimmpxm b/tests/data/acpi/x86/q35/DSDT.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.dimmpxm
+rename to tests/data/acpi/x86/q35/DSDT.dimmpxm
+diff --git a/tests/data/acpi/q35/DSDT.ipmibt b/tests/data/acpi/x86/q35/DSDT.ipmibt
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.ipmibt
+rename to tests/data/acpi/x86/q35/DSDT.ipmibt
+diff --git a/tests/data/acpi/q35/DSDT.ipmismbus b/tests/data/acpi/x86/q35/DSDT.ipmismbus
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.ipmismbus
+rename to tests/data/acpi/x86/q35/DSDT.ipmismbus
+diff --git a/tests/data/acpi/q35/DSDT.ivrs b/tests/data/acpi/x86/q35/DSDT.ivrs
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.ivrs
+rename to tests/data/acpi/x86/q35/DSDT.ivrs
+diff --git a/tests/data/acpi/q35/DSDT.memhp b/tests/data/acpi/x86/q35/DSDT.memhp
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.memhp
+rename to tests/data/acpi/x86/q35/DSDT.memhp
+diff --git a/tests/data/acpi/q35/DSDT.mmio64 b/tests/data/acpi/x86/q35/DSDT.mmio64
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.mmio64
+rename to tests/data/acpi/x86/q35/DSDT.mmio64
+diff --git a/tests/data/acpi/q35/DSDT.multi-bridge b/tests/data/acpi/x86/q35/DSDT.multi-bridge
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.multi-bridge
+rename to tests/data/acpi/x86/q35/DSDT.multi-bridge
+diff --git a/tests/data/acpi/q35/DSDT.noacpihp b/tests/data/acpi/x86/q35/DSDT.noacpihp
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.noacpihp
+rename to tests/data/acpi/x86/q35/DSDT.noacpihp
+diff --git a/tests/data/acpi/q35/DSDT.nohpet b/tests/data/acpi/x86/q35/DSDT.nohpet
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.nohpet
+rename to tests/data/acpi/x86/q35/DSDT.nohpet
+diff --git a/tests/data/acpi/q35/DSDT.numamem b/tests/data/acpi/x86/q35/DSDT.numamem
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.numamem
+rename to tests/data/acpi/x86/q35/DSDT.numamem
+diff --git a/tests/data/acpi/q35/DSDT.pvpanic-isa b/tests/data/acpi/x86/q35/DSDT.pvpanic-isa
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.pvpanic-isa
+rename to tests/data/acpi/x86/q35/DSDT.pvpanic-isa
+diff --git a/tests/data/acpi/q35/DSDT.thread-count b/tests/data/acpi/x86/q35/DSDT.thread-count
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.thread-count
+rename to tests/data/acpi/x86/q35/DSDT.thread-count
+diff --git a/tests/data/acpi/q35/DSDT.thread-count2 b/tests/data/acpi/x86/q35/DSDT.thread-count2
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.thread-count2
+rename to tests/data/acpi/x86/q35/DSDT.thread-count2
+diff --git a/tests/data/acpi/q35/DSDT.tis.tpm12 b/tests/data/acpi/x86/q35/DSDT.tis.tpm12
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.tis.tpm12
+rename to tests/data/acpi/x86/q35/DSDT.tis.tpm12
+diff --git a/tests/data/acpi/q35/DSDT.tis.tpm2 b/tests/data/acpi/x86/q35/DSDT.tis.tpm2
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.tis.tpm2
+rename to tests/data/acpi/x86/q35/DSDT.tis.tpm2
+diff --git a/tests/data/acpi/q35/DSDT.type4-count b/tests/data/acpi/x86/q35/DSDT.type4-count
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.type4-count
+rename to tests/data/acpi/x86/q35/DSDT.type4-count
+diff --git a/tests/data/acpi/q35/DSDT.viot b/tests/data/acpi/x86/q35/DSDT.viot
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.viot
+rename to tests/data/acpi/x86/q35/DSDT.viot
+diff --git a/tests/data/acpi/q35/DSDT.xapic b/tests/data/acpi/x86/q35/DSDT.xapic
+similarity index 100%
+rename from tests/data/acpi/q35/DSDT.xapic
+rename to tests/data/acpi/x86/q35/DSDT.xapic
+diff --git a/tests/data/acpi/q35/ERST.acpierst b/tests/data/acpi/x86/q35/ERST.acpierst
+similarity index 100%
+rename from tests/data/acpi/q35/ERST.acpierst
+rename to tests/data/acpi/x86/q35/ERST.acpierst
+diff --git a/tests/data/acpi/q35/FACP b/tests/data/acpi/x86/q35/FACP
+similarity index 100%
+rename from tests/data/acpi/q35/FACP
+rename to tests/data/acpi/x86/q35/FACP
+diff --git a/tests/data/acpi/q35/FACP.core-count b/tests/data/acpi/x86/q35/FACP.core-count
+similarity index 100%
+rename from tests/data/acpi/q35/FACP.core-count
+rename to tests/data/acpi/x86/q35/FACP.core-count
+diff --git a/tests/data/acpi/q35/FACP.core-count2 b/tests/data/acpi/x86/q35/FACP.core-count2
+similarity index 100%
+rename from tests/data/acpi/q35/FACP.core-count2
+rename to tests/data/acpi/x86/q35/FACP.core-count2
+diff --git a/tests/data/acpi/q35/FACP.nosmm b/tests/data/acpi/x86/q35/FACP.nosmm
+similarity index 100%
+rename from tests/data/acpi/q35/FACP.nosmm
+rename to tests/data/acpi/x86/q35/FACP.nosmm
+diff --git a/tests/data/acpi/q35/FACP.slic b/tests/data/acpi/x86/q35/FACP.slic
+similarity index 100%
+rename from tests/data/acpi/q35/FACP.slic
+rename to tests/data/acpi/x86/q35/FACP.slic
+diff --git a/tests/data/acpi/q35/FACP.thread-count b/tests/data/acpi/x86/q35/FACP.thread-count
+similarity index 100%
+rename from tests/data/acpi/q35/FACP.thread-count
+rename to tests/data/acpi/x86/q35/FACP.thread-count
+diff --git a/tests/data/acpi/q35/FACP.thread-count2 b/tests/data/acpi/x86/q35/FACP.thread-count2
+similarity index 100%
+rename from tests/data/acpi/q35/FACP.thread-count2
+rename to tests/data/acpi/x86/q35/FACP.thread-count2
+diff --git a/tests/data/acpi/q35/FACP.type4-count b/tests/data/acpi/x86/q35/FACP.type4-count
+similarity index 100%
+rename from tests/data/acpi/q35/FACP.type4-count
+rename to tests/data/acpi/x86/q35/FACP.type4-count
+diff --git a/tests/data/acpi/q35/FACP.xapic b/tests/data/acpi/x86/q35/FACP.xapic
+similarity index 100%
+rename from tests/data/acpi/q35/FACP.xapic
+rename to tests/data/acpi/x86/q35/FACP.xapic
+diff --git a/tests/data/acpi/q35/FACS b/tests/data/acpi/x86/q35/FACS
+similarity index 100%
+rename from tests/data/acpi/q35/FACS
+rename to tests/data/acpi/x86/q35/FACS
+diff --git a/tests/data/acpi/q35/HMAT.acpihmat b/tests/data/acpi/x86/q35/HMAT.acpihmat
+similarity index 100%
+rename from tests/data/acpi/q35/HMAT.acpihmat
+rename to tests/data/acpi/x86/q35/HMAT.acpihmat
+diff --git a/tests/data/acpi/q35/HMAT.acpihmat-noinitiator b/tests/data/acpi/x86/q35/HMAT.acpihmat-noinitiator
+similarity index 100%
+rename from tests/data/acpi/q35/HMAT.acpihmat-noinitiator
+rename to tests/data/acpi/x86/q35/HMAT.acpihmat-noinitiator
+diff --git a/tests/data/acpi/q35/HPET b/tests/data/acpi/x86/q35/HPET
+similarity index 100%
+rename from tests/data/acpi/q35/HPET
+rename to tests/data/acpi/x86/q35/HPET
+diff --git a/tests/data/acpi/q35/IVRS.ivrs b/tests/data/acpi/x86/q35/IVRS.ivrs
+similarity index 100%
+rename from tests/data/acpi/q35/IVRS.ivrs
+rename to tests/data/acpi/x86/q35/IVRS.ivrs
+diff --git a/tests/data/acpi/q35/MCFG b/tests/data/acpi/x86/q35/MCFG
+similarity index 100%
+rename from tests/data/acpi/q35/MCFG
+rename to tests/data/acpi/x86/q35/MCFG
+diff --git a/tests/data/acpi/q35/NFIT.dimmpxm b/tests/data/acpi/x86/q35/NFIT.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/q35/NFIT.dimmpxm
+rename to tests/data/acpi/x86/q35/NFIT.dimmpxm
+diff --git a/tests/data/acpi/q35/SLIC.slic b/tests/data/acpi/x86/q35/SLIC.slic
+similarity index 100%
+rename from tests/data/acpi/q35/SLIC.slic
+rename to tests/data/acpi/x86/q35/SLIC.slic
+diff --git a/tests/data/acpi/q35/SLIT.cphp b/tests/data/acpi/x86/q35/SLIT.cphp
+similarity index 100%
+rename from tests/data/acpi/q35/SLIT.cphp
+rename to tests/data/acpi/x86/q35/SLIT.cphp
+diff --git a/tests/data/acpi/q35/SLIT.memhp b/tests/data/acpi/x86/q35/SLIT.memhp
+similarity index 100%
+rename from tests/data/acpi/q35/SLIT.memhp
+rename to tests/data/acpi/x86/q35/SLIT.memhp
+diff --git a/tests/data/acpi/q35/SRAT.acpihmat b/tests/data/acpi/x86/q35/SRAT.acpihmat
+similarity index 100%
+rename from tests/data/acpi/q35/SRAT.acpihmat
+rename to tests/data/acpi/x86/q35/SRAT.acpihmat
+diff --git a/tests/data/acpi/q35/SRAT.acpihmat-noinitiator b/tests/data/acpi/x86/q35/SRAT.acpihmat-noinitiator
+similarity index 100%
+rename from tests/data/acpi/q35/SRAT.acpihmat-noinitiator
+rename to tests/data/acpi/x86/q35/SRAT.acpihmat-noinitiator
+diff --git a/tests/data/acpi/q35/SRAT.cphp b/tests/data/acpi/x86/q35/SRAT.cphp
+similarity index 100%
+rename from tests/data/acpi/q35/SRAT.cphp
+rename to tests/data/acpi/x86/q35/SRAT.cphp
+diff --git a/tests/data/acpi/q35/SRAT.dimmpxm b/tests/data/acpi/x86/q35/SRAT.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/q35/SRAT.dimmpxm
+rename to tests/data/acpi/x86/q35/SRAT.dimmpxm
+diff --git a/tests/data/acpi/q35/SRAT.memhp b/tests/data/acpi/x86/q35/SRAT.memhp
+similarity index 100%
+rename from tests/data/acpi/q35/SRAT.memhp
+rename to tests/data/acpi/x86/q35/SRAT.memhp
+diff --git a/tests/data/acpi/q35/SRAT.mmio64 b/tests/data/acpi/x86/q35/SRAT.mmio64
+similarity index 100%
+rename from tests/data/acpi/q35/SRAT.mmio64
+rename to tests/data/acpi/x86/q35/SRAT.mmio64
+diff --git a/tests/data/acpi/q35/SRAT.numamem b/tests/data/acpi/x86/q35/SRAT.numamem
+similarity index 100%
+rename from tests/data/acpi/q35/SRAT.numamem
+rename to tests/data/acpi/x86/q35/SRAT.numamem
+diff --git a/tests/data/acpi/q35/SRAT.xapic b/tests/data/acpi/x86/q35/SRAT.xapic
+similarity index 100%
+rename from tests/data/acpi/q35/SRAT.xapic
+rename to tests/data/acpi/x86/q35/SRAT.xapic
+diff --git a/tests/data/acpi/q35/SSDT.dimmpxm b/tests/data/acpi/x86/q35/SSDT.dimmpxm
+similarity index 100%
+rename from tests/data/acpi/q35/SSDT.dimmpxm
+rename to tests/data/acpi/x86/q35/SSDT.dimmpxm
+diff --git a/tests/data/acpi/q35/TCPA.tis.tpm12 b/tests/data/acpi/x86/q35/TCPA.tis.tpm12
+similarity index 100%
+rename from tests/data/acpi/q35/TCPA.tis.tpm12
+rename to tests/data/acpi/x86/q35/TCPA.tis.tpm12
+diff --git a/tests/data/acpi/q35/TPM2.tis.tpm2 b/tests/data/acpi/x86/q35/TPM2.tis.tpm2
+similarity index 100%
+rename from tests/data/acpi/q35/TPM2.tis.tpm2
+rename to tests/data/acpi/x86/q35/TPM2.tis.tpm2
+diff --git a/tests/data/acpi/q35/VIOT.viot b/tests/data/acpi/x86/q35/VIOT.viot
+similarity index 100%
+rename from tests/data/acpi/q35/VIOT.viot
+rename to tests/data/acpi/x86/q35/VIOT.viot
+diff --git a/tests/data/acpi/q35/WAET b/tests/data/acpi/x86/q35/WAET
+similarity index 100%
+rename from tests/data/acpi/q35/WAET
+rename to tests/data/acpi/x86/q35/WAET
 -- 
 MST
 
