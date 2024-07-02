@@ -4,96 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F595C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 17:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78120C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 18:01:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOhfF-0007Ia-B4; Tue, 02 Jul 2024 13:51:37 -0400
+	id 1sOho4-0002Kw-3s; Tue, 02 Jul 2024 14:00:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sOhfC-0007I7-Uh
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 13:51:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sOhny-0002KI-P1
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 14:00:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nsoffer@redhat.com>)
- id 1sOhfA-0001DU-FG
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 13:51:33 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sOhnp-0003dL-9H
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 14:00:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719942691;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1719943225;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nxgYAXd/+YFzZ7rLI+uMe+OUSE9XQYlUOuvjx3bEFOE=;
- b=CkJ2FVhmQndZo+iDhDgufqHZ72DAQSctD1VD/w6h3bg4BqFsCzblPaclovPd81nMjUmRUq
- kMNyaqRqA4b1bnOkzkCL41C1u8SNiWIeo4Jy/tvtNU1LKm0ohZJUe2O/syG99ajwaawKfq
- iJaF0qB9c3O8in9e/86e1mX0O97pNPE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-398-KnTOE_L-MzuqIWVSwcpuvw-1; Tue, 02 Jul 2024 13:51:27 -0400
-X-MC-Unique: KnTOE_L-MzuqIWVSwcpuvw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4257db9d71fso18275795e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 10:51:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719942686; x=1720547486;
- h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nxgYAXd/+YFzZ7rLI+uMe+OUSE9XQYlUOuvjx3bEFOE=;
- b=vkAyk8D2abtGUb4jf80fn0mkjNbhOLMReZ8Y045Tlud+vk6+exwaHb6DFm5A3m7f5V
- wKsVX+xTBNmBKaew0pyEgCuJ7ZGJFIvqHnqWGK7nCUtcFOzfQG1TbroRaOaMJsvzF6qn
- NMaw+VoKqKSUd8/REcMRp3vu6CHF2cKhcd5/l5Wme+d45tD9xeo5BTzTReZejWOuVZx8
- jIJlojfvZ8NglqmBYTr6J7YHGJ+QRAuGViWfVe2emAhG3I/Ed5kFuB5qsatowwW38VwK
- 8ddBYX+rTuvgJ4qnDVGyJo+JpBrHuROGaziUpSedY5+Y3eI0yQHwMJTE7gqc6XXZOjlp
- /S/A==
-X-Gm-Message-State: AOJu0Yz06WQsmllaHTxG12JNc2sGO1er5cGfkYry33tAZFPaTeJOAdzM
- UNo+2mWo3wVKhZeboKAb15L2vsx7WDXSPg38fuhMnuu0Rc4cCJX7RWhBiTChvQ5lbGq/69i6Jdp
- WlOuPUeArkIIAgttmBgYB6TQOyaJXtdbw2xz2h7kvFxpHJMSzvg6j
-X-Received: by 2002:a05:600c:a297:b0:425:8d90:4ade with SMTP id
- 5b1f17b1804b1-4258d904b67mr7797625e9.22.1719942686539; 
- Tue, 02 Jul 2024 10:51:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEyYJwdZeYzSikZgUoUdNoIj3A2EIMxSl7R0yzabdfAn3LE3LS01dhapzwKTi6g+X6fCMsdCg==
-X-Received: by 2002:a05:600c:a297:b0:425:8d90:4ade with SMTP id
- 5b1f17b1804b1-4258d904b67mr7797455e9.22.1719942686146; 
- Tue, 02 Jul 2024 10:51:26 -0700 (PDT)
-Received: from smtpclient.apple ([89.138.166.0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af557fesm209680515e9.11.2024.07.02.10.51.24
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 02 Jul 2024 10:51:25 -0700 (PDT)
-From: Nir Soffer <nsoffer@redhat.com>
-Message-Id: <52CCCC9F-CAEE-46D2-9698-209A8D1DEA1E@redhat.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_6863A337-8BE4-4E1D-951C-5378B714D697"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
-Subject: Re: [PATCH 3/4] iotests: Change imports for Python 3.13
-Date: Tue, 2 Jul 2024 20:51:13 +0300
-In-Reply-To: <CAFn=p-Yz58vhQkQABp7uPPFLuuT_bL=Bdjxz+swsaHPzqS+dVA@mail.gmail.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- qemu-block <qemu-block@nongnu.org>, Cleber Rosa <crosa@redhat.com>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-To: John Snow <jsnow@redhat.com>
-References: <20240626232230.408004-1-jsnow@redhat.com>
- <20240626232230.408004-4-jsnow@redhat.com>
- <CAMRbyyuPVcwaLcyW=LeMhAWCRdqDBkNzYwE9q4Wan0Pm0k41GQ@mail.gmail.com>
- <CAFn=p-Yz58vhQkQABp7uPPFLuuT_bL=Bdjxz+swsaHPzqS+dVA@mail.gmail.com>
-X-Mailer: Apple Mail (2.3774.600.62)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=nsoffer@redhat.com;
+ bh=qJSikkv+EJR5AFlo8UVY8nknqzLQr5dmmgUrhJbseU8=;
+ b=TVoUsIQSQxprA/7bRcf0ckfZIvVpR5XYYgKn5OTWOVLyvtZpYsFq8++KXbgf/56gcU+88Q
+ Z2fF9s6vaLXxoTQAeViTpmF9yRgAasgt/aVHiTgyJ8kyUczXCRnRfgJnVXATHnrrglZw+0
+ O/OGWO2SFdFtZawdG+4bFzNtBeOIfFQ=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-nUg9zQKtNnSeBYDelTlc2g-1; Tue,
+ 02 Jul 2024 14:00:24 -0400
+X-MC-Unique: nUg9zQKtNnSeBYDelTlc2g-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED23B1945117; Tue,  2 Jul 2024 18:00:22 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.33])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80BDA19560AD; Tue,  2 Jul 2024 18:00:20 +0000 (UTC)
+Date: Tue, 2 Jul 2024 19:00:17 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 00/22] qga: clean up command source locations and
+ conditionals
+Message-ID: <ZoRAMXeKDObGnl4h@redhat.com>
+References: <20240613150127.1361931-1-berrange@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240613150127.1361931-1-berrange@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,135 +86,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Ping: for any review comments from QGA maintainers ?
 
---Apple-Mail=_6863A337-8BE4-4E1D-951C-5378B714D697
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+On Thu, Jun 13, 2024 at 04:01:05PM +0100, Daniel P. Berrangé wrote:
+> This series is a side effect of other work I started, to attempt to
+> make the QGA safe to use in confidential VMs by automatically
+> restricting the permitted commands. Since this cleanup stands on
+> its own, I'm sending it now.
+> 
+> The QGA codebase has a very complicated maze of #ifdefs to create
+> stubs for the various commands that cannot be implemented on certain
+> platforms. It then has further logic to dynamically disable the stub
+> commands at runtime, except this is not consistently applied, so
+> some commands remain enabled despite being merely stubs.
+> 
+> The resulting code is hard to follow, when trying to understand exactly
+> what commands are available under what circumstances, and when changing
+> impls it is easy to get the #ifdefs wrong, resulting in stubs getting
+> missed on platforms without a real impl. In some cases, we have multiple
+> stubs for the same command, due to the maze of #ifdefs.
+> 
+> The QAPI schema language has support for many years for expressing
+> conditions against commands when declaring them. This results in the
+> QAPI code generator omitting their implementation entirely at build
+> time. This has mutliple benefits
+> 
+>  * The unsupported commands are guaranteed to not exist at runtime
+>  * No stubs need ever be defined in the code
+>  * The generated QAPI reference manual documents the build conditions
+> 
+> This series is broadly split into three parts
+> 
+>  * Moving tonnes of Linux only commands out of commands-posix.c
+>    into commands-linux.c to remove many #ifdefs.
+>  * Adding 'if' conditions in the QAPI schema to reflect the
+>    build conditions, removing many more #ifdefs
+>  * Sanitizing the logic for disabling/enabling commands at
+>    runtime to guarantee consistency
+> 
+> Changed in v2:
+> 
+>  - Make FSFreeze error reporting distinguish inability to enable
+>    VSS from user config choice
+> 
+>  - Fully remove ga_command_init_blockedrpcs() methods. No more
+>    special case disabling of commands. Either they're disabled
+>    at build time, or disabled by user config, or by well defined
+>    rule ie not permitted during FS freeze.
+> 
+>  - Apply rules later in startup to avoid crash from NULL config
+>    pointer
+> 
+>  - Document changed error messages in commit messages
+> 
+>  - Add -c / --config command line parameter
+> 
+>  - Fix mistaken enabling of fsfreeze hooks on win32
+> 
+>  - Remove pointless 'blockrpcs_key' variable
+> 
+>  - Allow concurrent setting of allow and block lists for
+>    RPC commands
+> 
+> Daniel P. Berrangé (22):
+>   qga: drop blocking of guest-get-memory-block-size command
+>   qga: move linux vcpu command impls to commands-linux.c
+>   qga: move linux suspend command impls to commands-linux.c
+>   qga: move linux fs/disk command impls to commands-linux.c
+>   qga: move linux disk/cpu stats command impls to commands-linux.c
+>   qga: move linux memory block command impls to commands-linux.c
+>   qga: move CONFIG_FSFREEZE/TRIM to be meson defined options
+>   qga: conditionalize schema for commands unsupported on Windows
+>   qga: conditionalize schema for commands unsupported on non-Linux POSIX
+>   qga: conditionalize schema for commands requiring getifaddrs
+>   qga: conditionalize schema for commands requiring linux/win32
+>   qga: conditionalize schema for commands only supported on Windows
+>   qga: conditionalize schema for commands requiring fsfreeze
+>   qga: conditionalize schema for commands requiring fstrim
+>   qga: conditionalize schema for commands requiring libudev
+>   qga: conditionalize schema for commands requiring utmpx
+>   qga: conditionalize schema for commands not supported on other UNIX
+>   qga: don't disable fsfreeze commands if vss_init fails
+>   qga: move declare of QGAConfig struct to top of file
+>   qga: remove pointless 'blockrpcs_key' variable
+>   qga: allow configuration file path via the cli
+>   qga: centralize logic for disabling/enabling commands
+> 
+>  docs/interop/qemu-ga.rst |   19 +
+>  meson.build              |   16 +
+>  qga/commands-bsd.c       |   24 -
+>  qga/commands-common.h    |    9 -
+>  qga/commands-linux.c     | 1805 +++++++++++++++++++++++++++++
+>  qga/commands-posix.c     | 2373 +++-----------------------------------
+>  qga/commands-win32.c     |   78 +-
+>  qga/main.c               |  216 ++--
+>  qga/qapi-schema.json     |  153 ++-
+>  9 files changed, 2234 insertions(+), 2459 deletions(-)
+> 
+> -- 
+> 2.45.1
+> 
 
-
-> On 2 Jul 2024, at 17:44, John Snow <jsnow@redhat.com> wrote:
->=20
->=20
->=20
-> On Tue, Jul 2, 2024 at 7:52=E2=80=AFAM Nir Soffer <nsoffer@redhat.com =
-<mailto:nsoffer@redhat.com>> wrote:
->> On Thu, Jun 27, 2024 at 2:23=E2=80=AFAM John Snow <jsnow@redhat.com =
-<mailto:jsnow@redhat.com>> wrote:
->> >
->> > Python 3.13 isn't out yet, but it's in beta and Fedora is ramping =
-up to
->> > make it the default system interpreter for Fedora 41.
->> >
->> > They moved our cheese for where ContextManager lives; add a =
-conditional
->> > to locate it while we support both pre-3.9 and 3.13+.
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com =
-<mailto:jsnow@redhat.com>>
->> > ---
->> >  tests/qemu-iotests/testenv.py    | 7 ++++++-
->> >  tests/qemu-iotests/testrunner.py | 9 ++++++---
->> >  2 files changed, 12 insertions(+), 4 deletions(-)
->> >
->> > diff --git a/tests/qemu-iotests/testenv.py =
-b/tests/qemu-iotests/testenv.py
->> > index 588f30a4f14..96d69e56963 100644
->> > --- a/tests/qemu-iotests/testenv.py
->> > +++ b/tests/qemu-iotests/testenv.py
->> > @@ -25,7 +25,12 @@
->> >  import random
->> >  import subprocess
->> >  import glob
->> > -from typing import List, Dict, Any, Optional, ContextManager
->> > +from typing import List, Dict, Any, Optional
->> > +
->> > +if sys.version_info >=3D (3, 9):
->> > +    from contextlib import AbstractContextManager as =
-ContextManager
->> > +else:
->> > +    from typing import ContextManager
->>=20
->> It can be cleaner to add a compat module hiding the details so the
->> entire project
->> can have a single instance of this. Other code will just use:
->>=20
->>     from compat import ContextManager
->=20
-> If there were more than two uses, I'd consider it. As it stands, a =
-compat.py module with just one import conditional in it doesn't seem =
-worth the hassle. Are there more cases of compatibility goop inside =
-iotests that need to be factored out to make it worth it?
-
-I don=E2=80=99t about other. For me even one instance is ugly enough :-)
-
-
---Apple-Mail=_6863A337-8BE4-4E1D-951C-5378B714D697
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: =
-after-white-space;"><br><div><blockquote type=3D"cite"><div>On 2 Jul =
-2024, at 17:44, John Snow &lt;jsnow@redhat.com&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><br =
-class=3D"Apple-interchange-newline"><br style=3D"caret-color: rgb(0, 0, =
-0); font-family: Helvetica; font-size: 13px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><div class=3D"gmail_quote" style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 13px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, =
-Jul 2, 2024 at 7:52=E2=80=AFAM Nir Soffer &lt;<a =
-href=3D"mailto:nsoffer@redhat.com">nsoffer@redhat.com</a>&gt; =
-wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin: 0px =
-0px 0px 0.8ex; border-left-width: 1px; border-left-style: solid; =
-border-left-color: rgb(204, 204, 204); padding-left: 1ex;">On Thu, Jun =
-27, 2024 at 2:23=E2=80=AFAM John Snow &lt;<a =
-href=3D"mailto:jsnow@redhat.com" =
-target=3D"_blank">jsnow@redhat.com</a>&gt; wrote:<br>&gt;<br>&gt; Python =
-3.13 isn't out yet, but it's in beta and Fedora is ramping up to<br>&gt; =
-make it the default system interpreter for Fedora 41.<br>&gt;<br>&gt; =
-They moved our cheese for where ContextManager lives; add a =
-conditional<br>&gt; to locate it while we support both pre-3.9 and =
-3.13+.<br>&gt;<br>&gt; Signed-off-by: John Snow &lt;<a =
-href=3D"mailto:jsnow@redhat.com" =
-target=3D"_blank">jsnow@redhat.com</a>&gt;<br>&gt; ---<br>&gt;&nbsp; =
-tests/qemu-iotests/testenv.py&nbsp; &nbsp; | 7 ++++++-<br>&gt;&nbsp; =
-tests/qemu-iotests/testrunner.py | 9 ++++++---<br>&gt;&nbsp; 2 files =
-changed, 12 insertions(+), 4 deletions(-)<br>&gt;<br>&gt; diff --git =
-a/tests/qemu-iotests/testenv.py b/tests/qemu-iotests/testenv.py<br>&gt; =
-index 588f30a4f14..96d69e56963 100644<br>&gt; --- =
-a/tests/qemu-iotests/testenv.py<br>&gt; +++ =
-b/tests/qemu-iotests/testenv.py<br>&gt; @@ -25,7 +25,12 @@<br>&gt;&nbsp; =
-import random<br>&gt;&nbsp; import subprocess<br>&gt;&nbsp; import =
-glob<br>&gt; -from typing import List, Dict, Any, Optional, =
-ContextManager<br>&gt; +from typing import List, Dict, Any, =
-Optional<br>&gt; +<br>&gt; +if sys.version_info &gt;=3D (3, 9):<br>&gt; =
-+&nbsp; &nbsp; from contextlib import AbstractContextManager as =
-ContextManager<br>&gt; +else:<br>&gt; +&nbsp; &nbsp; from typing import =
-ContextManager<br><br>It can be cleaner to add a compat module hiding =
-the details so the<br>entire project<br>can have a single instance of =
-this. Other code will just use:<br><br>&nbsp; &nbsp;<span =
-class=3D"Apple-converted-space">&nbsp;</span>from compat import =
-ContextManager<br></blockquote><div><br></div><div>If there were more =
-than two uses, I'd consider it. As it stands, a compat.py module with =
-just one import conditional in it doesn't seem worth the hassle. Are =
-there more cases of compatibility goop inside iotests that need to be =
-factored out to make it worth =
-it?<br></div></div></div></blockquote><div><br></div><div>I don=E2=80=99t =
-about other. For me even one instance is ugly enough =
-:-)</div></div><br></body></html>=
-
---Apple-Mail=_6863A337-8BE4-4E1D-951C-5378B714D697--
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
