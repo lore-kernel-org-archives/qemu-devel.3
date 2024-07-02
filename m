@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77FC6C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 19:24:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3192EC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 19:56:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOj5s-0004PY-Bm; Tue, 02 Jul 2024 15:23:12 -0400
+	id 1sOjbe-0005MG-Te; Tue, 02 Jul 2024 15:56:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1sOj5l-0004OQ-Vt
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:23:06 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjbc-0005LU-Dn
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:56:00 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1sOj5j-0004qw-Tm
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:23:05 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-58b447c511eso1662411a12.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 12:23:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjba-0007zD-Jb
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 15:56:00 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-425814992aeso17954165e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 12:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719948181; x=1720552981; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wGjWIDO7eDFYieOuRM3NIoYxSl+UQV575BXoeht75JI=;
- b=mde6UuXUNpzI0Ei2Bam7KqMtlIl9JCV4k47x+WOIX2qQaSGIfwDEbXcbn48eHG8fBP
- VWytgr1FM93kU0vKeIWQjAiQMUCM6tSK6C+FhtMMMYJwOityjT0vhpi00dUEJnJg9+aL
- 3z84PRj3oSiBtxUKqN9Lg2rh7A1eqizHVI3CcT2hht4Qe5gzg/FAgCt+kwMSOh2HW6N/
- CjQwaJrV5Sifllw/ZnrXjQ8o9OBoFiYk5KPwdwVax4jiPWe5zSIgpuhb7gyT0WuQNNw9
- k3U2ZiBrsiniZw8pEGMzkQ9KI25NBUzyjCfrkLz1RCKQPnt3XHfxcERNql8K/WZjr0cM
- kU9Q==
+ d=linaro.org; s=google; t=1719950157; x=1720554957; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jAkiePLfhkXU8nz4iHMlaIsbatin0g/vxYYhhk0TeqI=;
+ b=PO1f5nwKpolgPqG9stKX8TSZ5eG0rv7XOz41OFIzAnfIsUUAUGo1Eei0pmd68YMCa5
+ l/WB7D5WfenyXxC8o6AqRDwdsQ7NDaqJ5FC23tLoub6va/cp6+JPYgz5aRi4oVyEb/HK
+ flDKgy7ypDiJTi2s2joZjuDVuthW9L3mcAXX7mTtGyy/oI0NOcwfjM33b1pQyNCilza3
+ AId48dvlnTVaxKui63sTVKzgstFyB1PXY/Ry5QeGloYgR+/yayeQUOQkkpg9IwkKIIjc
+ rMjrzL/ywdVWovmvm3xx/DYULwCsPlPUhbzSOLQe/cri1u978H7cW7AN+ha3UvqQgFvh
+ he0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719948181; x=1720552981;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wGjWIDO7eDFYieOuRM3NIoYxSl+UQV575BXoeht75JI=;
- b=roGNqVcMEOThUZuW2heEq2wKU1C8ReTEhBwImbAZxdMARJfqkcUHXJViUeTFg7use8
- fulAD9RHSRUpfzGKep69UaUFuZiFBOfTnssdrLj5Ok4hL03fR/EJ969e3YBZX1PJ5Rsw
- PZ3vU/LLSg6skVVJ2nB+i9EtT3gTGWYmXDSaiB4TXeMXYM7lhKYSMtYnfeeQLtQkGa+6
- MaKGvaY/kCCM6QoJOqmbUZiCYExm/HQ18EkAlY0OQtx/yW8u4niyN/bRLkP9TQEDMBUJ
- xXi2OLQRuKleINj2zMwQDNTI1i3ldVJR+IVyRWRYVHEYvtRr9+FW130UVeUUsM8SAhRM
- 2r0Q==
-X-Gm-Message-State: AOJu0YzPB7SQEfg1pljUr8uuoDtI54YYDP47S5ptn5xVreBhotvLxGFi
- IGFrTesfgfhuzc1WZfNv0HHGV+PT0ArkarY01CkO5lizsO/TRSQKg80J2g==
-X-Google-Smtp-Source: AGHT+IHhPWR7nlo2oO6uk3jE1Lohz82UI/+umt9MB5Iq22vFmRxEvcOE1RYy56G/CiADjQLj+rGAlA==
-X-Received: by 2002:a05:6402:3592:b0:57c:5eed:4ebf with SMTP id
- 4fb4d7f45d1cf-5879f5a61e1mr8072522a12.19.1719948181045; 
- Tue, 02 Jul 2024 12:23:01 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-077-011-043-115.77.11.pool.telefonica.de.
- [77.11.43.115]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58b4a97b1f3sm1321718a12.18.2024.07.02.12.22.58
+ d=1e100.net; s=20230601; t=1719950157; x=1720554957;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jAkiePLfhkXU8nz4iHMlaIsbatin0g/vxYYhhk0TeqI=;
+ b=WVXEJt565UKfTCmZnd7Daaf2LmKo5J7P/dNQZCjVbv8MmHV2fyS5EMGzw2v3mHlwsW
+ v5y7qTT5pj5vTFxkDfNfz/Vc2bfYW6+wQPZWdKpQ/GZj9MjNib2CtJbHy3ikfdx847n5
+ aaAw2aKXTE3bQMR9I7BEcG9AQm3zqrcCKfcqdkcL1TS5XJZIQnaiMhEDfYrjy/CAoFXu
+ lcI9Wwj+ZYy0l5gvywPQ5+67TM0omQn3OevPAmb62sy09iQ4D74RKV1y1rzdPPUS15tf
+ VBKCZ99WRMtMw6XRhp565RGIrAyrtEoaH302Qv4nnaTrPUH6G9KWcfZh0yjIRLlGj/BQ
+ bIWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXV5I0KkUtXA9NoYEEQPmFdUiF8byeDmsi0bDfl+hBjv/RrACVvzD/HgOOe8IG9Oz/v5eECbEfk0i1krjyLA1QOnjNIpoQ=
+X-Gm-Message-State: AOJu0YxJ1+/wXRmAglcNU+hMlEgeaa6vQA91R/Hh17kUkxHfrzJkXEyZ
+ ivAEU6eZgOkypWP2+IzNq8DPxKPTvXyOmr+ET+him5Af8hbT/1LKaHB64zlcHos=
+X-Google-Smtp-Source: AGHT+IGqDB0I/oF8VbHP2A9WTBqINuGagYgxVTlEVQhsOX9AYYrq07LVQvG72Yb0JzVWZUxEukz2oA==
+X-Received: by 2002:a5d:64e8:0:b0:360:9d4b:5b82 with SMTP id
+ ffacd0b85a97d-36775721583mr8251455f8f.47.1719950156545; 
+ Tue, 02 Jul 2024 12:55:56 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.220.97])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a1030dfsm14032796f8f.100.2024.07.02.12.55.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jul 2024 12:22:59 -0700 (PDT)
-Date: Tue, 02 Jul 2024 18:42:23 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>
-CC: philmd@linaro.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/2=5D_hw/isa/vt82c686=2Ec=3A_Embed_i82?=
- =?US-ASCII?Q?59_irq_in_device_state_instead_of_allocating?=
-In-Reply-To: <CAFEAcA_tBjQrJMpjbzVUVcrTWghr4v=MHB0qpWx=xjML6ek9mg@mail.gmail.com>
-References: <cover.1719690591.git.balaton@eik.bme.hu>
- <b70b9e72063b4dd4005bf4bc040b84f2bb617bf4.1719690591.git.balaton@eik.bme.hu>
- <CAFEAcA_tBjQrJMpjbzVUVcrTWghr4v=MHB0qpWx=xjML6ek9mg@mail.gmail.com>
-Message-ID: <4CBF639B-CC3E-4644-9F87-481B9147F2A9@gmail.com>
+ Tue, 02 Jul 2024 12:55:56 -0700 (PDT)
+Message-ID: <360734c3-df2a-49cb-892a-0eb7953fa1c1@linaro.org>
+Date: Tue, 2 Jul 2024 21:55:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x535.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] util/cpuinfo-riscv: Support host/cpuinfo.h for riscv
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: brad@comstyle.com, Alistair.Francis@wdc.com, palmer@dabbelt.com,
+ qemu-riscv@nongnu.org
+References: <20240627180350.128575-1-richard.henderson@linaro.org>
+ <20240627180350.128575-2-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240627180350.128575-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,86 +97,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 27/6/24 20:03, Richard Henderson wrote:
+> Move detection code out of tcg, similar to other hosts.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   host/include/riscv/host/cpuinfo.h | 23 +++++++++
+>   tcg/riscv/tcg-target.h            | 46 ++++++++---------
+>   util/cpuinfo-riscv.c              | 85 +++++++++++++++++++++++++++++++
+>   tcg/riscv/tcg-target.c.inc        | 84 +++---------------------------
+>   util/meson.build                  |  2 +
+>   5 files changed, 139 insertions(+), 101 deletions(-)
+>   create mode 100644 host/include/riscv/host/cpuinfo.h
+>   create mode 100644 util/cpuinfo-riscv.c
 
 
-Am 1=2E Juli 2024 12:58:15 UTC schrieb Peter Maydell <peter=2Emaydell@lina=
-ro=2Eorg>:
->On Sat, 29 Jun 2024 at 21:01, BALATON Zoltan <balaton@eik=2Ebme=2Ehu> wro=
-te:
->>
->> To avoid a warning about unfreed qemu_irq embed the i8259 irq in the
->> device state instead of allocating it=2E
->>
->> Signed-off-by: BALATON Zoltan <balaton@eik=2Ebme=2Ehu>
->> ---
->>  hw/isa/vt82c686=2Ec | 7 ++++---
->>  1 file changed, 4 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/isa/vt82c686=2Ec b/hw/isa/vt82c686=2Ec
->> index 8582ac0322=2E=2E834051abeb 100644
->> --- a/hw/isa/vt82c686=2Ec
->> +++ b/hw/isa/vt82c686=2Ec
->> @@ -592,6 +592,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ViaISAState, VIA_ISA)
->>
->>  struct ViaISAState {
->>      PCIDevice dev;
->> +
->> +    IRQState i8259_irq;
->>      qemu_irq cpu_intr;
->>      qemu_irq *isa_irqs_in;
->>      uint16_t irq_state[ISA_NUM_IRQS];
->> @@ -715,13 +717,12 @@ static void via_isa_realize(PCIDevice *d, Error *=
-*errp)
->>      ViaISAState *s =3D VIA_ISA(d);
->>      DeviceState *dev =3D DEVICE(d);
->>      PCIBus *pci_bus =3D pci_get_bus(d);
->> -    qemu_irq *isa_irq;
->>      ISABus *isa_bus;
->>      int i;
->>
->>      qdev_init_gpio_out(dev, &s->cpu_intr, 1);
->>      qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
->> -    isa_irq =3D qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
->> +    qemu_init_irq(&s->i8259_irq, via_isa_request_i8259_irq, s, 0);
->>      isa_bus =3D isa_bus_new(dev, pci_address_space(d), pci_address_spa=
-ce_io(d),
->>                            errp);
->
->So if I understand correctly, this IRQ line isn't visible
->from outside this chip,
+> +/* Called both as constructor and (possibly) via other constructors. */
+> +unsigned __attribute__((constructor)) cpuinfo_init(void)
+> +{
+> +    unsigned left = CPUINFO_ZBA | CPUINFO_ZBB | CPUINFO_ZICOND;
+> +    unsigned info = cpuinfo;
+> +
+> +    if (info) {
+> +        return info;
+> +    }
+> +
+> +    /* Test for compile-time settings. */
+> +#if defined(__riscv_arch_test) && defined(__riscv_zba)
+> +    info |= CPUINFO_ZBA;
+> +#endif
+> +#if defined(__riscv_arch_test) && defined(__riscv_zbb)
+> +    info |= CPUINFO_ZBB;
+> +#endif
+> +#if defined(__riscv_arch_test) && defined(__riscv_zicond)
+> +    info |= CPUINFO_ZICOND;
+> +#endif
+> +    left &= ~info;
+> +
+> +    if (left) {
+> +        struct sigaction sa_old, sa_new;
+> +
+> +        memset(&sa_new, 0, sizeof(sa_new));
+> +        sa_new.sa_flags = SA_SIGINFO;
+> +        sa_new.sa_sigaction = sigill_handler;
+> +        sigaction(SIGILL, &sa_new, &sa_old);
+> +
+> +        if (left & CPUINFO_ZBA) {
+> +            /* Probe for Zba: add.uw zero,zero,zero. */
+> +            got_sigill = 0;
+> +            asm volatile(".insn r 0x3b, 0, 0x04, zero, zero, zero"
+> +                         : : : "memory");
+> +            info |= !got_sigill * CPUINFO_ZBA;
 
-Actally it is, in the form of the INTR pin=2E Assuming similar naming conv=
-entions in vt82xx and piix, one can confirm this by consulting the piix4 da=
-tasheet, "Figure 5=2E Interrupt Controller Block Diagram"=2E Moreover, the =
-pegasos2 schematics (linked in the QEMU documentation) suggest that this pi=
-n is actually used there, although not modeled in QEMU=2E Compare this to h=
-ow the "intr" pin is exposed by the piix4 device model and wired in the Mal=
-ta board=2E
+A bit too optimized to my taste, 'if (sigill) info|=ZBA' would be 
+simpler to follow. Otherwise,
 
-> we're just trying to wire together
->two internal components of the chip? If so, I agree that
->this seems a better way than creating a named GPIO that
->we then have to document as a "not really an external
->connection, don't try to use this" line=2E (We've done that
->before I think in other devices, and it works but it's
->a bit odd-looking=2E)
->
->That said, I do notice that the via_isa_request_i8259_irq()
->function doesn't do anything except pass the level onto
->another qemu_irq, so I think the theoretical ideal would be
->if we could arrange to plumb things directly through rather
->than needing this extra qemu_irq and function=2E There's
->probably a reason (order of device creation/connection?)
->that doesn't work though=2E
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-I think there could be a general pattern of device creation/connection whi=
-ch I've outlined here: https://lore=2Ekernel=2Eorg/qemu-devel/0FFB5FD2-08CE=
--4CEC-9001-E7AC24407A44@gmail=2Ecom/
+> +            left &= ~CPUINFO_ZBA;
+> +        }
 
-Best regards,
-Bernhard
-
->
->-- PMM
->
 
