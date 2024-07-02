@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DFA8C31D97
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34841C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:06:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjhE-0002LJ-QM; Tue, 02 Jul 2024 16:01:48 -0400
+	id 1sOjl6-0005Y3-JA; Tue, 02 Jul 2024 16:05:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sOjhA-0002Kg-EM
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:01:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sOjh8-00054j-Oa
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:01:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719950501;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4AGPlNJFw2joUXXjyM/R0fQ9nmCPdKV7rxzJkpcrpw4=;
- b=O92iW+3v4gkgrR+YYwh9Nb1LiH8fzpRlZPMC2WfdAgm3YwP22wCENH/cUT0vNNwG22F111
- VfRb21UTXfV3mjjMkT19VIK6tRBc76WXhAU85UIJgsi3+dDxHvPl0D2ibWc+hvu02tOUJP
- KHdhsuOJWRsUefDZJlXIrm1QGUaQGRM=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-3dZNyQylMkqc4w62Bd9C6Q-1; Tue, 02 Jul 2024 16:01:39 -0400
-X-MC-Unique: 3dZNyQylMkqc4w62Bd9C6Q-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2c30144b103so3675161a91.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:01:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjkx-0005VS-Ff
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:05:41 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOjks-00066R-3F
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:05:39 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-424adaa6ceeso28398795e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:05:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719950732; x=1720555532; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=w8gAwN1D88QMpBVoNMosE1dI9F9t175M0EQtzx003Sc=;
+ b=aWmIPRpKqthLVeZUO01Ld1xchsATWU0+5Im/58YKb3g9BdQwAWEXa0p6KRvVTG2sRU
+ Vv+8LMWkFpXMKTanE+w7HO/pgOOzsL4U3USQ8m3uGs/T4UCFnRHEEWaZYTCAcUF2o5JC
+ XtgzV1kI46v5M9ZbdSLxN7+WJYi3+WKfmxvCihQm8lSpkVJVPwZITU9IVp6DBmb3Rmzk
+ xTzIBacA0U0NsLbw4K5ejin12Kqmug+qq6GRx7lKyZlc3KhQyzm3SIm9YvuKF8/E6UY3
+ FwU2BsopzMNHb9G+BzPmD0ZrgLtm6u8yx2JchKzza+S+Uynxc500RgmseAXUu8kFLhgO
+ jt1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719950497; x=1720555297;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4AGPlNJFw2joUXXjyM/R0fQ9nmCPdKV7rxzJkpcrpw4=;
- b=U/I2nVZ3roM8yXwGkM0ut0C3pm6g1xgDHfRs9MSCaU8/en4qu8S7oUeiyFR53UADqv
- BNfbTmFnPucNrrBdoAABqOcAlcvzPOH2nPe91UjvU7lFitcrHe6oLaNI3DPY6/0ANfBz
- KgXxJMMsrZ1DTf/ZCOlUI2JG63Bu2+cYT07XN1ojUUA5GchQbgqreoZRXgN84xti4FYT
- pDgnlrHLPXhlr10snABaP1XoMYCM6z7D1e0ADJCqqgMcJWx3pL5c5zjoq6WvbAY/psg/
- uvdGUQOEuo2P7SIuCLazGBhesIU6/3cucWDU9+lLqvN232PZxOZspMNbyCfRPd9p2X/9
- Nh1w==
-X-Gm-Message-State: AOJu0Yyu8Yay2deOTAGm9eUILZ7qATpOHQpnyKh5d6/G8vJrEaHmNuR9
- umCw7rtdW1MmFwgmF226GklIzt8IzuZpA699Vx8zzlQiAv30UVRdbd1eAptkZwYEtRcOyNFdVGz
- F4yzGAm9naXfOXTp8iuEYXUUeV0tlxPmmuzOnCwgYP9hmRLXQ32/L2k0IUU4vw+OrEwVYltqLO8
- LgBB5m4oYHuV+KROwRdXJ3mb3W6XE4vpiY7aw=
-X-Received: by 2002:a17:90b:230f:b0:2c4:e2d6:8de6 with SMTP id
- 98e67ed59e1d1-2c93d2d18d8mr14926344a91.21.1719950497552; 
- Tue, 02 Jul 2024 13:01:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcwZRubx0USigz8lmLSqODVE4A06i4IKqkgPyLWo/eCZsDJbwMw/f/jRU90cOvn9t9IDT49RCFiTFCyN2tbXU=
-X-Received: by 2002:a17:90b:230f:b0:2c4:e2d6:8de6 with SMTP id
- 98e67ed59e1d1-2c93d2d18d8mr14926312a91.21.1719950497090; Tue, 02 Jul 2024
- 13:01:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719950732; x=1720555532;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=w8gAwN1D88QMpBVoNMosE1dI9F9t175M0EQtzx003Sc=;
+ b=pvzfmx7PpSa/G+bLwZOSdUBfya8Fgu8P8ryk/UOBedT2kbyoOzScAwC8pFY2zoAfpN
+ mcBYg1dVkBjKyMiqlfaAUwGiHwJiDdMkZQ+p3I5vQABMUHdAddUkLeSGypJ9aZJ+nl9S
+ IcP27/+P1rPkLkkhwVoNhCDHxol/60qQ+cP1hbngKmAKTndpAMmN5nVR1hbi2Up/uYFk
+ ipCf+1ZekIhdjC7c3mP2ZFeLfv8vs29hMIbYbrYLUTM6uDL9dEEKD/8+cwQvf45nSp5n
+ 0xoblvErHS6ygdkOLqZPxpMudzrr/VUkpvdLnXGFAKhN3/7Mi01ClKmwff/f6vVvsFMY
+ wCcg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8x0+1fftYyZm/qK6w6yr9+MPWsV4NJnbjA2BRa+07gpPBf4HIP3ZBXxfxg+CayXd6WxLhBFMY9scuQAGtuYHy0vxBHxk=
+X-Gm-Message-State: AOJu0YwW56nmbeEGU3XeHzPkwaOxMRstjLzjev7qIrjm5CxyAfEobNS0
+ /RT3voxm2Xqs0hKNqXBUsed6R0Et+yiR5kHQQtm1l0LaYqZP1oI+jsPdyUn/CW9V9HmWabbVIsD
+ H
+X-Google-Smtp-Source: AGHT+IGGTBAAimkBPC0bVuIQMohYBcTIMmDQ5gMH1Kdz8DpO73EeK2jsD6xpciAnDm/VAxWarGGi9w==
+X-Received: by 2002:a05:600c:54c4:b0:424:b3cf:d704 with SMTP id
+ 5b1f17b1804b1-4257a05edbdmr68282015e9.37.1719950732310; 
+ Tue, 02 Jul 2024 13:05:32 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.220.97])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a0d9b12sm14084722f8f.44.2024.07.02.13.05.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 13:05:31 -0700 (PDT)
+Message-ID: <dedc8d45-42cf-4474-ad33-9af44701dcb8@linaro.org>
+Date: Tue, 2 Jul 2024 22:05:29 +0200
 MIME-Version: 1.0
-References: <20240702195903.204007-1-jsnow@redhat.com>
-In-Reply-To: <20240702195903.204007-1-jsnow@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 2 Jul 2024 16:01:24 -0400
-Message-ID: <CAFn=p-Y1r3SfoA=T9rPMnTzk2ZiF28R8GUCGmLdEdhFnSDzarA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] docs/python: bump minimum Sphinx version
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="0000000000006935de061c492e32"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [RFC PATCH v42 90/98] hw/sd/sdcard: Add experimental
+ 'x-aspeed-emmc-kludge' property
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-devel@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Troy Lee <troy_lee@aspeedtech.com>
+References: <20240628070216.92609-1-philmd@linaro.org>
+ <20240628070216.92609-91-philmd@linaro.org>
+ <4b55f817-0e29-45c0-8f56-f997f34e0e97@kaod.org>
+ <e1a6b93038e67271fc0bd9efcc7d40802cbbede7.camel@codeconstruct.com.au>
+ <2b425f32-41de-4057-a8d0-79411f2519b4@linaro.org>
+ <aa9bd7c7-1b4c-4f3a-975d-1ee7931be422@kaod.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <aa9bd7c7-1b4c-4f3a-975d-1ee7931be422@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,94 +104,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006935de061c492e32
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 2/7/24 18:21, Cédric Le Goater wrote:
+> On 7/2/24 6:15 PM, Philippe Mathieu-Daudé wrote:
+>> On 2/7/24 07:06, Andrew Jeffery wrote:
+>>> On Fri, 2024-06-28 at 11:16 +0200, Cédric Le Goater wrote:
+>>>> On 6/28/24 9:02 AM, Philippe Mathieu-Daudé wrote:
+>>>>> When booting U-boot/Linux on Aspeed boards via eMMC,
+>>>>> some commands don't behave as expected from the spec.
+>>>>>
+>>>>> Add the 'x-aspeed-emmc-kludge' property to allow non
+>>>>> standard uses until we figure out the reasons.
+>>>>
+>>>> I am not aware of any singularity in the eMMC logic provided by Aspeed.
+>>>> U-Boot and Linux drivers seem very generic. May be others can tell.
+>>>
+>>> I'm not aware of any command kludges. The main problem I had when I
+>>> wrote the Linux driver for the Aspeed controller was the phase tuning,
+>>> but that doesn't sound related.
+>>
+>> Yeah I don't think anything Aspeed nor U-boot related, we
+>> model CSD/CID registers per the SD spec, not MMC. Various
+>> fields are identical, but few differ, this might be the
+>> problem.
+>>
+>> I rather respect the spec by default, so until we figure
+>> the issue, are you OK to use a 'x-emmc-kludge' property
+>> and set it on the Aspeed boards?
+> 
+> If these differences are eMMC related, why not simply test :
+> 
+>      if (sd_is_emmc(sd)) ...
+> 
+> in commands ALL_SEND_CID and APP_CMD ? The extra property looks
+> ambiguous to me.
 
-On Tue, Jul 2, 2024 at 3:59=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
+I'd like to keep the sd_is_emmc() check for code respecting
+the eMMC spec. I believe the commands in sd_proto_emmc[] in
+this series do respect it, modulo some register field
+definitions that are SD specific. So 'x-emmc-kludge' would
+be a property to allow eMMC use -- without delaying it further
+--, by bypassing a *bug* in our current model. I'm willing to
+figure out the problem and fix it, but /after/ the 9.1 release.
+We are too close of the soft freeze and trying to fix that
+before is too much pressure on my right now.
 
-> With recent deprecations, we can advance our minimum sphinx version
-> safely. This is heavily motivated by new qapidoc work which is much
-> easier to maintain cross-version compatibility for - see difficulties in
-> our dbus documentation which only works on sphinx >=3D 4.
->
-> We can only guarantee >=3D 3.4.3 now, but that's still vastly easier than
-> maintaining compatibility all the way back to 1.x.
->
-> GitLab: https://gitlab.com/jsnow/qemu/-/pipelines/1357902509
->
-> (failures appear to be unrelated to the series.)
->
-> John Snow (2):
->   Python: bump minimum sphinx version to 3.4.3
->   docs: remove Sphinx 1.x compatibility code
->
->  docs/conf.py             |  7 +++----
->  docs/sphinx/hxtool.py    | 21 ++++-----------------
->  docs/sphinx/kerneldoc.py | 38 ++++++++++++--------------------------
->  docs/sphinx/kernellog.py | 28 ----------------------------
->  docs/sphinx/qapidoc.py   | 29 +++--------------------------
->  pythondeps.toml          |  2 +-
->  6 files changed, 23 insertions(+), 102 deletions(-)
->  delete mode 100644 docs/sphinx/kernellog.py
->
-> --
-> 2.45.0
->
-
-Bleurgh. I meant to shuffle some of the changes in patch 1 into patch 2,
-I'll fix that on re-spin. If you want to review it anyway, just presume
-I'll fix that next go-around.
-
---js
-
---0000000000006935de061c492e32
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jul 2, 2024 at 3:59=E2=80=AFP=
-M John Snow &lt;<a href=3D"mailto:jsnow@redhat.com">jsnow@redhat.com</a>&gt=
-; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">With re=
-cent deprecations, we can advance our minimum sphinx version<br>
-safely. This is heavily motivated by new qapidoc work which is much<br>
-easier to maintain cross-version compatibility for - see difficulties in<br=
->
-our dbus documentation which only works on sphinx &gt;=3D 4.<br>
-<br>
-We can only guarantee &gt;=3D 3.4.3 now, but that&#39;s still vastly easier=
- than<br>
-maintaining compatibility all the way back to 1.x.<br>
-<br>
-GitLab: <a href=3D"https://gitlab.com/jsnow/qemu/-/pipelines/1357902509" re=
-l=3D"noreferrer" target=3D"_blank">https://gitlab.com/jsnow/qemu/-/pipeline=
-s/1357902509</a><br>
-<br>
-(failures appear to be unrelated to the series.)<br>
-<br>
-John Snow (2):<br>
-=C2=A0 Python: bump minimum sphinx version to 3.4.3<br>
-=C2=A0 docs: remove Sphinx 1.x compatibility code<br>
-<br>
-=C2=A0docs/conf.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 7=
- +++----<br>
-=C2=A0docs/sphinx/hxtool.py=C2=A0 =C2=A0 | 21 ++++-----------------<br>
-=C2=A0docs/sphinx/kerneldoc.py | 38 ++++++++++++--------------------------<=
-br>
-=C2=A0docs/sphinx/kernellog.py | 28 ----------------------------<br>
-=C2=A0docs/sphinx/qapidoc.py=C2=A0 =C2=A0| 29 +++--------------------------=
-<br>
-=C2=A0pythondeps.toml=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A06 files changed, 23 insertions(+), 102 deletions(-)<br>
-=C2=A0delete mode 100644 docs/sphinx/kernellog.py<br>
-<br>
--- <br>
-2.45.0<br></blockquote><div><br></div><div>Bleurgh. I meant to shuffle some=
- of the changes in patch 1 into patch 2, I&#39;ll fix that on re-spin. If y=
-ou want to review it anyway, just presume I&#39;ll fix that next go-around.=
-</div><div><br></div><div>--js <br></div></div></div>
-
---0000000000006935de061c492e32--
+> Thanks,
+> 
+> C.
+> 
+> 
 
 
