@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3874AC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 13:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF9AC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 13:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOdPv-0002Ne-89; Tue, 02 Jul 2024 09:19:31 -0400
+	id 1sOdPU-0001qd-7D; Tue, 02 Jul 2024 09:19:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sOdPg-00023s-MV
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:19:22 -0400
+ id 1sOdPA-0001Sh-Ge
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:18:45 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sOdPd-00071x-1a
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:19:15 -0400
+ id 1sOdP8-0006yd-PD
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:18:44 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WD3Q33dGhz6JBvW;
- Tue,  2 Jul 2024 21:18:35 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WD3N115kkz6K9TH;
+ Tue,  2 Jul 2024 21:16:49 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 426D5140B33;
- Tue,  2 Jul 2024 21:19:11 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 67E57140517;
+ Tue,  2 Jul 2024 21:18:40 +0800 (CST)
 Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
  lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 2 Jul 2024 14:19:10 +0100
+ 15.1.2507.39; Tue, 2 Jul 2024 14:18:39 +0100
 To: <imammedo@redhat.com>, <mst@redhat.com>, Markus Armbruster
  <armbru@redhat.com>, <qemu-devel@nongnu.org>, <ankita@nvidia.com>,
  <marcel.apfelbaum@gmail.com>, <philmd@linaro.org>, Richard Henderson
@@ -38,9 +38,10 @@ CC: <linuxarm@huawei.com>, Dave Jiang <dave.jiang@intel.com>, Huang Ying
  <ying.huang@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
  <eduardo@habkost.net>, <linux-cxl@vger.kernel.org>, Michael Roth
  <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH v4 09/13] hw/pci-host/gpex-acpi: Use acpi_uid property.
-Date: Tue, 2 Jul 2024 14:14:14 +0100
-Message-ID: <20240702131428.664859-10-Jonathan.Cameron@huawei.com>
+Subject: [PATCH v4 08/13] hw/i386/acpi: Use TYPE_PXB_BUS property acpi_uid for
+ DSDT
+Date: Tue, 2 Jul 2024 14:14:13 +0100
+Message-ID: <20240702131428.664859-9-Jonathan.Cameron@huawei.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
 References: <20240702131428.664859-1-Jonathan.Cameron@huawei.com>
@@ -75,48 +76,50 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reduce the direct use of PCI internals inside ACPI table creation.
+Rather than relying on PCI internals, use the new acpi_property
+to obtain the ACPI _UID values.  These are still the same
+as the PCI Bus numbers so no functional change.
 
 Suggested-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
-v4: New patch
+v4: New patch.
 ---
- hw/pci-host/gpex-acpi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ hw/i386/acpi-build.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-index f69413ea2c..5faebdd467 100644
---- a/hw/pci-host/gpex-acpi.c
-+++ b/hw/pci-host/gpex-acpi.c
-@@ -140,6 +140,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index ee92783836..cc32f1e6d4 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1550,6 +1550,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
          QLIST_FOREACH(bus, &bus->child, sibling) {
              uint8_t bus_num = pci_bus_num(bus);
              uint8_t numa_node = pci_bus_numa_node(bus);
 +            uint8_t uid;
-             bool is_cxl = pci_bus_is_cxl(bus);
  
+             /* look only for expander root buses */
              if (!pci_bus_is_root(bus)) {
-@@ -155,7 +156,9 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-                 nr_pcie_buses = bus_num;
+@@ -1560,14 +1561,16 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+                 root_bus_limit = bus_num - 1;
              }
  
--            dev = aml_device("PC%.02X", bus_num);
 +            uid = object_property_get_uint(OBJECT(bus), "acpi_uid",
 +                                           &error_fatal);
-+            dev = aml_device("PC%.02X", uid);
-             if (is_cxl) {
-                 struct Aml *pkg = aml_package(2);
-                 aml_append(dev, aml_name_decl("_HID", aml_string("ACPI0016")));
-@@ -167,7 +170,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
-                 aml_append(dev, aml_name_decl("_CID", aml_string("PNP0A03")));
+             scope = aml_scope("\\_SB");
+ 
+             if (pci_bus_is_cxl(bus)) {
+-                dev = aml_device("CL%.02X", bus_num);
++                dev = aml_device("CL%.02X", uid);
+             } else {
+-                dev = aml_device("PC%.02X", bus_num);
++                dev = aml_device("PC%.02X", uid);
              }
-             aml_append(dev, aml_name_decl("_BBN", aml_int(bus_num)));
 -            aml_append(dev, aml_name_decl("_UID", aml_int(bus_num)));
 +            aml_append(dev, aml_name_decl("_UID", aml_int(uid)));
-             aml_append(dev, aml_name_decl("_STR", aml_unicode("pxb Device")));
-             aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
-             if (numa_node != NUMA_NODE_UNASSIGNED) {
+             aml_append(dev, aml_name_decl("_BBN", aml_int(bus_num)));
+             if (pci_bus_is_cxl(bus)) {
+                 struct Aml *aml_pkg = aml_package(2);
 -- 
 2.43.0
 
