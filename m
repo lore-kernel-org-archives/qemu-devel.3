@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71E23C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A41A6C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOVe7-0007Bg-BX; Tue, 02 Jul 2024 01:01:39 -0400
+	id 1sOVf4-0000T5-CT; Tue, 02 Jul 2024 01:02:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVe1-0007A8-GE
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:01:33 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVf1-0008Tq-K3
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:35 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVdy-00061m-JN
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:01:33 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-36743abace4so3057973f8f.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:01:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVex-0007Ea-9r
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:34 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-52e829086f3so3575683e87.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:02:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719896487; x=1720501287; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719896549; x=1720501349; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CImu6gnFSvQkVYqxGUzc3+u9J6fqWPW8HcbEc7YmhgM=;
- b=CJTa0iSDGZdbr2eRLioMveNG1wIhHZBw+fXQpGCXB8ZMr/CpFY9NBDQ+a2PIIGqHXz
- ePHBdsIi4OM2jj6QPQ+Bxy8XzZfMAnzgOYkUsr/otmnV+hfCLicnVsjCiQ2iOgjmcgQM
- bQqYRGp/BDqUBHxWdmyIWc1CGQrXsuGorwpE1sJdcC4v6nXE0LJlqgyykSlCDYfewXyQ
- Td228KtO2Oj2109pu0UE+bEnba7dg1d7w6A697Yve+7U0Y4bomumisc+r75aLBeTOEU8
- +iRhL/BtrbkKgP8JM0rM8Fc3KnXoSwTosWpnBSOnVXAJKv12vkCX8Ba2oNOpy0FLuRjW
- l/ww==
+ bh=JbdsfJ44aAB8rxW6wAXXI/854m0o2ZFI+jAaNwL715g=;
+ b=FBFI41WO3Y5PjrYn8KHPhZQXGFbPrmytEnrd7/qJQbiHEj6bVjgmJXb/IzvNIvJvUH
+ rCAp5tvTeuonI9zWClXeEf7jpOID4LtMGeUcf/nL0kcW3sQrHtqPyxQwJaLgAW+zA5ff
+ FP5pJwUWFFYm23fRUZWC3lKGpBnJZFnxxVHFk5nEbZ32IjysywBCZKCtB+TTBHOqaIA+
+ a5PYGGmTxIPvdZf2d3xFku5n1YaHlb/SahjFMuBWMW5LWQN42kE9auQ+XmNZ4z6wCBWT
+ N4s1nEuhDZpFu3H1SBYsjEwk5LKw8o24jNuVz+PV5o2KdsNYYWrq8jJZ1Mdh1mQJ93wJ
+ M32Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719896487; x=1720501287;
+ d=1e100.net; s=20230601; t=1719896549; x=1720501349;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CImu6gnFSvQkVYqxGUzc3+u9J6fqWPW8HcbEc7YmhgM=;
- b=pH6AU4egxBWwlgV8PzEOw4RLi01UCOMgCgOWm/t1dzMpR975Ia9H7JPAX3ErY/J+jz
- m6aSrcTLA7Z2so2lvXorO15hXR3JLRzCqTLtCcYRsKx6bs6ofpey2PNjwopoQdR4pQzL
- tQLSwwEVl6grlF/+XpA1oufpaOoANSU3NC3HQuvPKaUdIRAccniZ0xyT2/GPHGI/9nks
- xA7rw5luYaP27zM/Js+oJZXoctIHJd2or2684qAGxGYeolln+FulidX8Nu28y4xLkYWq
- iyLcAseL9QHRmqGBf1z4AO+EzDuAosSXI2ZUbItB8jetQdD7gRf2mbGOGSXAYcpcgvOW
- +MwA==
-X-Gm-Message-State: AOJu0YxenM3geXVjCj0bNTpckP/A0HOf/b8Bb6lrUc14/AGaSERwPp9S
- H+dTi3ft2R6eLPW+BXyM78kYuBz6YoL3YDomK8eH1WRu5RgilzreAqS3mRQPnb1snxfjnv/DyPb
- k
-X-Google-Smtp-Source: AGHT+IFzdjF2Sg7wZlX6hLnTi0vcBf6bfFte5OuBU7yqUSirMoYwgUp87UaN9Ft0MnXLC0wM78B7Nw==
-X-Received: by 2002:a05:6000:1f8e:b0:366:e09c:56be with SMTP id
- ffacd0b85a97d-36760a63050mr11121075f8f.6.1719896487437; 
- Mon, 01 Jul 2024 22:01:27 -0700 (PDT)
+ bh=JbdsfJ44aAB8rxW6wAXXI/854m0o2ZFI+jAaNwL715g=;
+ b=uHI05vyDXxW0iDvaawxSqCBaq1ZqNSTBuxxhh3A5tpdID1IbwWfBFGuNaZ0B8+PrCt
+ tccruV3z3fn21TG1BThR3SYx1fxcSL/VwhIZ+SZzNwZnyypcBiM+bvpTau/2DYfI94zM
+ DZueJDAeItLLuT9HfYwngsu/KDL/yT/So8+NTQcdd1RonZj7/fVtWHoaOTJILZd8gFww
+ TjsL7+iLqwO7DBF0EnGWs8GzjznF2arOs5+AAxMtdZq3M/jJFyj9ltpl0CHhaNV0wMvb
+ 0ou0SxCQloL1j8JgwEqxpcPdi0NsjyUmj0dAaJHyv2vvRPm6H4Zz5LNUhJ31YaHaUjot
+ r/OA==
+X-Gm-Message-State: AOJu0YzVKUviFamP2E5n1XlbUNLk/SAQ+ZAaqyz3Kf4OwtMvvp4LgVC6
+ 9qmpChyCQ6aov0SmX/ys5bhItzV/TOKdYSmfX9vfNmVOg5Yvt2VAawCxF8NlVKGEaV22BwURhzd
+ T
+X-Google-Smtp-Source: AGHT+IHcSruALdXDiIhrnburbKhsGcwxE0dO3V+PQeZp6k6vmsrjg8P3WukjH+jfgclugP65Ugy08g==
+X-Received: by 2002:ac2:4c41:0:b0:52b:bee3:dcc6 with SMTP id
+ 2adb3069b0e04-52e826fa995mr5628932e87.51.1719896549046; 
+ Mon, 01 Jul 2024 22:02:29 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a112a54sm11958811f8f.115.2024.07.01.22.01.25
+ ffacd0b85a97d-3675a1108b0sm11916332f8f.114.2024.07.01.22.02.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 01 Jul 2024 22:01:27 -0700 (PDT)
+ Mon, 01 Jul 2024 22:02:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 02/22] include/hw: add helpers for defining versioned machine
- types
-Date: Tue,  2 Jul 2024 07:00:52 +0200
-Message-ID: <20240702050112.35907-3-philmd@linaro.org>
+Subject: [PULL 12/22] hw: skip registration of outdated versioned machine types
+Date: Tue,  2 Jul 2024 07:01:02 +0200
+Message-ID: <20240702050112.35907-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240702050112.35907-1-philmd@linaro.org>
 References: <20240702050112.35907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,218 +97,89 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The various targets which define versioned machine types have
-a bunch of obfuscated macro code for defining unique function
-and variable names using string concatenation.
+This calls the MACHINE_VER_DELETION() macro in the machine type
+registration method, so that when a versioned machine type reaches
+the end of its life, it is no longer registered with QOM and thus
+cannot be used.
 
-This adds a couple of helpers to improve the clarity of such
-code macro.
+The actual definition of the machine type should be deleted at
+this point, but experience shows that can easily be forgotten.
+By skipping registration the manual code deletion task can be
+done at any later date.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240620165742.1711389-2-berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240620165742.1711389-12-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/boards.h | 185 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 185 insertions(+)
+ include/hw/i386/pc.h       | 1 +
+ hw/arm/virt.c              | 1 +
+ hw/m68k/virt.c             | 1 +
+ hw/ppc/spapr.c             | 1 +
+ hw/s390x/s390-virtio-ccw.c | 1 +
+ 5 files changed, 5 insertions(+)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 73ad319d7d..d5ad712585 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -413,6 +413,191 @@ struct MachineState {
-     struct NumaState *numa_state;
- };
- 
-+/*
-+ * The macros which follow are intended to facilitate the
-+ * definition of versioned machine types, using a somewhat
-+ * similar pattern across targets.
-+ *
-+ * For example, a macro that can be used to define versioned
-+ * 'virt' machine types would look like:
-+ *
-+ *  #define DEFINE_VIRT_MACHINE_IMPL(latest, ...) \
-+ *      static void MACHINE_VER_SYM(class_init, virt, __VA_ARGS__)( \
-+ *          ObjectClass *oc, \
-+ *          void *data) \
-+ *      { \
-+ *          MachineClass *mc = MACHINE_CLASS(oc); \
-+ *          MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
-+ *          mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " Virtual Machine"; \
-+ *          if (latest) { \
-+ *              mc->alias = "virt"; \
-+ *          } \
-+ *      } \
-+ *      static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = { \
-+ *          .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
-+ *          .parent = TYPE_VIRT_MACHINE, \
-+ *          .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
-+ *      }; \
-+ *      static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
-+ *      { \
-+ *          type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
-+ *      } \
-+ *      type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
-+ *
-+ * Following this, one (or more) helpers can be added for
-+ * whichever scenarios need to be catered for with a machine:
-+ *
-+ *  // Normal 2 digit, marked as latest e.g. 'virt-9.0'
-+ *  #define DEFINE_VIRT_MACHINE_LATEST(major, minor) \
-+ *      DEFINE_VIRT_MACHINE_IMPL(true, major, minor)
-+ *
-+ *  // Normal 2 digit e.g. 'virt-9.0'
-+ *  #define DEFINE_VIRT_MACHINE(major, minor) \
-+ *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
-+ *
-+ *  // Bugfix 3 digit e.g. 'virt-9.0.1'
-+ *  #define DEFINE_VIRT_MACHINE_BUGFIX(major, minor, micro) \
-+ *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor, micro)
-+ *
-+ *  // Tagged 2 digit e.g. 'virt-9.0-extra'
-+ *  #define DEFINE_VIRT_MACHINE_TAGGED(major, minor, tag) \
-+ *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor, _, tag)
-+ *
-+ *  // Tagged bugfix 2 digit e.g. 'virt-9.0.1-extra'
-+ *  #define DEFINE_VIRT_MACHINE_TAGGED(major, minor, micro, tag) \
-+ *      DEFINE_VIRT_MACHINE_IMPL(false, major, minor, micro, _, tag)
-+ */
-+
-+/*
-+ * Helper for dispatching different macros based on how
-+ * many __VA_ARGS__ are passed. Supports 1 to 5 variadic
-+ * arguments, with the called target able to be prefixed
-+ * with 0 or more fixed arguments too. To be called thus:
-+ *
-+ *  _MACHINE_VER_PICK(__VA_ARGS,
-+ *                    MACRO_MATCHING_5_ARGS,
-+ *                    MACRO_MATCHING_4_ARGS,
-+ *                    MACRO_MATCHING_3_ARGS,
-+ *                    MACRO_MATCHING_2_ARGS,
-+ *                    MACRO_MATCHING_1_ARG) (FIXED-ARG-1,
-+ *                                           ...,
-+ *                                           FIXED-ARG-N,
-+ *                                           __VA_ARGS__)
-+ */
-+#define _MACHINE_VER_PICK(x1, x2, x3, x4, x5, x6, ...) x6
-+
-+/*
-+ * Construct a human targeted machine version string.
-+ *
-+ * Can be invoked with various signatures
-+ *
-+ *  MACHINE_VER_STR(sym, prefix, major, minor)
-+ *  MACHINE_VER_STR(sym, prefix, major, minor, micro)
-+ *  MACHINE_VER_STR(sym, prefix, major, minor, _, tag)
-+ *  MACHINE_VER_STR(sym, prefix, major, minor, micro, _, tag)
-+ *
-+ * Respectively emitting symbols with the format
-+ *
-+ *   "{major}.{minor}"
-+ *   "{major}.{minor}-{tag}"
-+ *   "{major}.{minor}.{micro}"
-+ *   "{major}.{minor}.{micro}-{tag}"
-+ */
-+#define _MACHINE_VER_STR2(major, minor) \
-+    #major "." #minor
-+
-+#define _MACHINE_VER_STR3(major, minor, micro) \
-+    #major "." #minor "." #micro
-+
-+#define _MACHINE_VER_STR4(major, minor, _unused_, tag) \
-+    #major "." #minor "-" #tag
-+
-+#define _MACHINE_VER_STR5(major, minor, micro, _unused_, tag) \
-+    #major "." #minor "." #micro "-" #tag
-+
-+#define MACHINE_VER_STR(...) \
-+    _MACHINE_VER_PICK(__VA_ARGS__, \
-+                      _MACHINE_VER_STR5, \
-+                      _MACHINE_VER_STR4, \
-+                      _MACHINE_VER_STR3, \
-+                      _MACHINE_VER_STR2) (__VA_ARGS__)
-+
-+
-+/*
-+ * Construct a QAPI type name for a versioned machine
-+ * type
-+ *
-+ * Can be invoked with various signatures
-+ *
-+ *  MACHINE_VER_TYPE_NAME(prefix, major, minor)
-+ *  MACHINE_VER_TYPE_NAME(prefix, major, minor, micro)
-+ *  MACHINE_VER_TYPE_NAME(prefix, major, minor, _, tag)
-+ *  MACHINE_VER_TYPE_NAME(prefix, major, minor, micro, _, tag)
-+ *
-+ * Respectively emitting symbols with the format
-+ *
-+ *   "{prefix}-{major}.{minor}"
-+ *   "{prefix}-{major}.{minor}.{micro}"
-+ *   "{prefix}-{major}.{minor}-{tag}"
-+ *   "{prefix}-{major}.{minor}.{micro}-{tag}"
-+ */
-+#define _MACHINE_VER_TYPE_NAME2(prefix, major, minor)   \
-+    prefix "-" #major "." #minor TYPE_MACHINE_SUFFIX
-+
-+#define _MACHINE_VER_TYPE_NAME3(prefix, major, minor, micro) \
-+    prefix "-" #major "." #minor "." #micro TYPE_MACHINE_SUFFIX
-+
-+#define _MACHINE_VER_TYPE_NAME4(prefix, major, minor, _unused_, tag) \
-+    prefix "-" #major "." #minor "-" #tag TYPE_MACHINE_SUFFIX
-+
-+#define _MACHINE_VER_TYPE_NAME5(prefix, major, minor, micro, _unused_, tag) \
-+    prefix "-" #major "." #minor "." #micro "-" #tag TYPE_MACHINE_SUFFIX
-+
-+#define MACHINE_VER_TYPE_NAME(prefix, ...) \
-+    _MACHINE_VER_PICK(__VA_ARGS__, \
-+                      _MACHINE_VER_TYPE_NAME5, \
-+                      _MACHINE_VER_TYPE_NAME4, \
-+                      _MACHINE_VER_TYPE_NAME3, \
-+                      _MACHINE_VER_TYPE_NAME2) (prefix, __VA_ARGS__)
-+
-+/*
-+ * Construct a name for a versioned machine type that is
-+ * suitable for use as a C symbol (function/variable/etc).
-+ *
-+ * Can be invoked with various signatures
-+ *
-+ *  MACHINE_VER_SYM(sym, prefix, major, minor)
-+ *  MACHINE_VER_SYM(sym, prefix, major, minor, micro)
-+ *  MACHINE_VER_SYM(sym, prefix, major, minor, _, tag)
-+ *  MACHINE_VER_SYM(sym, prefix, major, minor, micro, _, tag)
-+ *
-+ * Respectively emitting symbols with the format
-+ *
-+ *   {prefix}_machine_{major}_{minor}_{sym}
-+ *   {prefix}_machine_{major}_{minor}_{micro}_{sym}
-+ *   {prefix}_machine_{major}_{minor}_{tag}_{sym}
-+ *   {prefix}_machine_{major}_{minor}_{micro}_{tag}_{sym}
-+ */
-+#define _MACHINE_VER_SYM2(sym, prefix, major, minor) \
-+    prefix ## _machine_ ## major ## _ ## minor ## _ ## sym
-+
-+#define _MACHINE_VER_SYM3(sym, prefix, major, minor, micro) \
-+    prefix ## _machine_ ## major ## _ ## minor ## _ ## micro ## _ ## sym
-+
-+#define _MACHINE_VER_SYM4(sym, prefix, major, minor, _unused_, tag) \
-+    prefix ## _machine_ ## major ## _ ## minor ## _ ## tag ## _ ## sym
-+
-+#define _MACHINE_VER_SYM5(sym, prefix, major, minor, micro, _unused_, tag) \
-+    prefix ## _machine_ ## major ## _ ## minor ## _ ## micro ## _ ## tag ## _ ## sym
-+
-+#define MACHINE_VER_SYM(sym, prefix, ...) \
-+    _MACHINE_VER_PICK(__VA_ARGS__, \
-+                      _MACHINE_VER_SYM5, \
-+                      _MACHINE_VER_SYM4, \
-+                      _MACHINE_VER_SYM3, \
-+                      _MACHINE_VER_SYM2) (sym, prefix, __VA_ARGS__)
-+
-+
- #define DEFINE_MACHINE(namestr, machine_initfn) \
-     static void machine_initfn##_class_init(ObjectClass *oc, void *data) \
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 83d2e66498..4e55d7ef6e 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -340,6 +340,7 @@ extern const size_t pc_compat_2_3_len;
+     }; \
+     static void MACHINE_VER_SYM(register, namesym, __VA_ARGS__)(void) \
      { \
++        MACHINE_VER_DELETION(__VA_ARGS__); \
+         type_register(&MACHINE_VER_SYM(info, namesym, __VA_ARGS__)); \
+     } \
+     type_init(MACHINE_VER_SYM(register, namesym, __VA_ARGS__));
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 02e13b4a3d..b0c68d66a3 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -123,6 +123,7 @@ static void arm_virt_compat_set(MachineClass *mc)
+     }; \
+     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+     { \
++        MACHINE_VER_DELETION(__VA_ARGS__); \
+         type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
+     } \
+     type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index 37bb36b385..cda199af8f 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -356,6 +356,7 @@ type_init(virt_machine_register_types)
+     }; \
+     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
+     { \
++        MACHINE_VER_DELETION(__VA_ARGS__); \
+         type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
+     } \
+     type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 55268489d3..044e6a8d9d 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4824,6 +4824,7 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+     };                                                               \
+     static void MACHINE_VER_SYM(register, spapr, __VA_ARGS__)(void)  \
+     {                                                                \
++        MACHINE_VER_DELETION(__VA_ARGS__);                           \
+         type_register(&MACHINE_VER_SYM(info, spapr, __VA_ARGS__));   \
+     }                                                                \
+     type_init(MACHINE_VER_SYM(register, spapr, __VA_ARGS__))
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index c25dc3e13f..336cb8c6d4 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -847,6 +847,7 @@ static const TypeInfo ccw_machine_info = {
+     };                                                                        \
+     static void MACHINE_VER_SYM(register, ccw, __VA_ARGS__)(void)             \
+     {                                                                         \
++        MACHINE_VER_DELETION(__VA_ARGS__);                                    \
+         type_register_static(&MACHINE_VER_SYM(info, ccw, __VA_ARGS__));       \
+     }                                                                         \
+     type_init(MACHINE_VER_SYM(register, ccw, __VA_ARGS__))
 -- 
 2.41.0
 
