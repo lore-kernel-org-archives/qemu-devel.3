@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1796AC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA19C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeCw-0002tE-Mz; Tue, 02 Jul 2024 10:10:11 -0400
+	id 1sOeCN-0007i9-8P; Tue, 02 Jul 2024 10:09:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCn-0002PY-C5
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:10:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeC4-0005oG-D3
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCj-0008Tg-ND
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:10:00 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeBv-0008IO-Sa
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929397;
+ s=mimecast20190719; t=1719929345;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nT/3bEAHv/ccVmumWuUDEQosc383NR5xwSBkJ1pU+nE=;
- b=bgr8LZwJBDc37o3tYJtAlQ+89oyllngAAiN9f3JkOErNkfKubwypqLw1KL8Xr2jACmiscH
- rDVfjIspKvjMrXTN0KM+zmbun5A4QgIeGbs/s7ieugVIc1NZghZ3WN+7jthUI6fz0eRIDp
- 5QHvvVZJqPRoD8L95WpL6Tie+cx0WKc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KfDnOZZL3lNpO7yBVqmvfyK4tBARWzqdyh5lLLcyyUM=;
+ b=E1W/nnz+3kttYcLNF9/yp4nvvqE/HUcUe5h5uEMJGmA3VUxIUNjbrOqiM9xISIppEpLojD
+ O4k1lnhXjtMqC50/bS0g6wI3Zm34jmb92OhBHzk2AEWSU8qVa69yoVsYB4BVGg4/dHX8KV
+ fi8Fxwc6xxwWbq+bve+TPmgfYtMSOgU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-210-9Hs4qyHnOZ6o9gY66VlXxg-1; Tue, 02 Jul 2024 10:09:55 -0400
-X-MC-Unique: 9Hs4qyHnOZ6o9gY66VlXxg-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4257a75193aso19235545e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:55 -0700 (PDT)
+ us-mta-346-OhSw-WNBONiO6wG7VEiaQg-1; Tue, 02 Jul 2024 10:09:03 -0400
+X-MC-Unique: OhSw-WNBONiO6wG7VEiaQg-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-362a0c1041dso2338960f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929394; x=1720534194;
+ d=1e100.net; s=20230601; t=1719929340; x=1720534140;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nT/3bEAHv/ccVmumWuUDEQosc383NR5xwSBkJ1pU+nE=;
- b=MFuqKpTgFytgX2Z7/T2mIlQaDMg5lWSAsuRxPzktX8EdN0GSplwujoJTUXRLQl2n9m
- 2UZFbSwc1i56hqzeEs/7plJpb445UYZCJBaNjJRRY2ZhKC66jLPq487YqtB1DoVSLHf/
- xujtCSKD/KVI9awhleKulYs4co2v1jyqD5KBtWf0wa/QD/rQUhdzpqG8F7f8hPE/V2gV
- h31NTzYd0fvqT2aVNCWUiAc6kHZvqqTRKjKvHRT6HeMfY7Vta3qjCQHyz/+dUU46XU+D
- tIVt2xaRA7Lgc3wvTPr+spy1wbMACq93L7tQMXwPTG9CFGVF33DoDqK72ub/2c0b8g/M
- +z9w==
-X-Gm-Message-State: AOJu0YxjeYbAIfw5fxLXNxfndCkn3GQmzRMU5DmTv3gcKMSYwJVHzX0Q
- moK/3zJQljm3sEs1GNc6+aPXtnE/WSoWwJu8ScGLYIwUNlw1P3cf+ehWtjDIxIUBvy+Ds3oorkJ
- 2VBsewmDQKu4Yisc+R0GpwYnamjwkw5PU4WG3/ZWl5IcMvqX9zVvT8amPskktA8Mwt8KWjb7zBY
- kPT2sxVULtRNQ8jQOH0kn2aw5Eq9A1Ow==
-X-Received: by 2002:a05:600c:54e7:b0:424:aa41:4c15 with SMTP id
- 5b1f17b1804b1-4257a0111b5mr58787515e9.22.1719929394063; 
- Tue, 02 Jul 2024 07:09:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF4uRHHq2OlHa1YnnTedsaGn+sZTzHI7rfvWZtB82w1gzbsZfi0Hg091M5CEhcBW1EzVea6dg==
-X-Received: by 2002:a05:600c:54e7:b0:424:aa41:4c15 with SMTP id
- 5b1f17b1804b1-4257a0111b5mr58787205e9.22.1719929393377; 
- Tue, 02 Jul 2024 07:09:53 -0700 (PDT)
+ bh=KfDnOZZL3lNpO7yBVqmvfyK4tBARWzqdyh5lLLcyyUM=;
+ b=OU6Ge4e4+sUoK3jaYguUD3YxqiTnqkcibALcGawGCNWZJkukwMr2XLkzn73S0vBIuZ
+ lOL56a4flnWT7OD5wMK0M1ubJuNHVr+6iOwfd0q6IsWOj7ar36zioM8tmSzkuUiltgWV
+ aOwckVb6kPegbu/6WbyQjzEcH0wtOzEYtF2VbQwDH+2zpVHfp3O6Z0UBBESrsph+o8do
+ UUtkcmf2n51vSls6uhYK71gqZu0pLlVEtBWt1q/NT2Ax0+Y5PT9P1fjBq1lbgFTFYuDO
+ FxuDbJnBUvpnfR3e2yktUW1Dm0FNcVPWTxS0NJLhn7CVLCF0Ac1Ez2pI0mEYQH/EVwUo
+ C77Q==
+X-Gm-Message-State: AOJu0YzbPbm0aOMaKuApvlUUkxiT6y6O0KxjKQC58RS2Zk9DvGPbwOoE
+ S+0Px2TXOt48gjvt/T6IKHYk6hIMwWuzh3u1ycdco1K8B8LFGXqhaMzZKXH6o4Q9xJynceGtuQT
+ ges9A0ukPwERc7rO8RhLEaFcwMguBPwFAa9yJYdEqCi0D4H/N/iQtFNwVAo8OpfLZ4lu2jYP4Kd
+ bzQxgT+0QW/QjnRjrB49gAY0rN2KFwCw==
+X-Received: by 2002:a05:6000:234:b0:362:8749:9639 with SMTP id
+ ffacd0b85a97d-367756bc8demr4859055f8f.35.1719929340618; 
+ Tue, 02 Jul 2024 07:09:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGO02rM1hBFYg6EYT/Jdc+yGp4nt4ds6H99z14/p9F8/p0HN6JoytdrYvA8axaGKbuFql8Ang==
+X-Received: by 2002:a05:6000:234:b0:362:8749:9639 with SMTP id
+ ffacd0b85a97d-367756bc8demr4859028f8f.35.1719929340059; 
+ Tue, 02 Jul 2024 07:09:00 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af55d0fsm197933995e9.19.2024.07.02.07.09.49
+ ffacd0b85a97d-3675a0e12e2sm13311036f8f.50.2024.07.02.07.08.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:09:52 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:09:47 -0400
+ Tue, 02 Jul 2024 07:08:59 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:08:57 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>
-Subject: [PULL 56/91] hostmem: add a new memory backend based on POSIX
- shm_open()
-Message-ID: <f6544f1eb760ef89ae071069556e7d7d50adee2e.1719929191.git.mst@redhat.com>
+ Jiqian Chen <Jiqian.Chen@amd.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PULL 39/91] virtio-pci: implement No_Soft_Reset bit
+Message-ID: <5d98e18823af6d5230fca8098a7ee966aaedeb29.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -108,282 +104,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Jiqian Chen <Jiqian.Chen@amd.com>
 
-shm_open() creates and opens a new POSIX shared memory object.
-A POSIX shared memory object allows creating memory backend with an
-associated file descriptor that can be shared with external processes
-(e.g. vhost-user).
+In current code, when guest does S3, virtio-gpu are reset due to the
+bit No_Soft_Reset is not set. After resetting, the display resources
+of virtio-gpu are destroyed, then the display can't come back and only
+show blank after resuming.
 
-The new `memory-backend-shm` can be used as an alternative when
-`memory-backend-memfd` is not available (Linux only), since shm_open()
-should be provided by any POSIX-compliant operating system.
+Implement No_Soft_Reset bit of PCI_PM_CTRL register, then guest can check
+this bit, if this bit is set, the devices resetting will not be done, and
+then the display can work after resuming.
 
-This backend mimics memfd, allocating memory that is practically
-anonymous. In theory shm_open() requires a name, but this is allocated
-for a short time interval and shm_unlink() is called right after
-shm_open(). After that, only fd is shared with external processes
-(e.g., vhost-user) as if it were associated with anonymous memory.
+No_Soft_Reset bit is implemented for all virtio devices, and was tested
+only on virtio-gpu device. Set it false by default for safety.
 
-In the future we may also allow the user to specify the name to be
-passed to shm_open(), but for now we keep the backend simple, mimicking
-anonymous memory such as memfd.
-
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com> (QAPI schema)
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240618100519.145853-1-sgarzare@redhat.com>
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+Message-Id: <20240606102205.114671-3-Jiqian.Chen@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- qapi/qom.json                      |  23 +++++-
- backends/hostmem-shm.c             | 123 +++++++++++++++++++++++++++++
- backends/meson.build               |   1 +
- docs/system/devices/vhost-user.rst |   5 +-
- qemu-options.hx                    |  16 ++++
- 5 files changed, 164 insertions(+), 4 deletions(-)
- create mode 100644 backends/hostmem-shm.c
+ include/hw/virtio/virtio-pci.h |  5 +++++
+ hw/core/machine.c              |  1 +
+ hw/virtio/virtio-pci.c         | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 9b8f6a7ab5..92b0fea76c 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -601,8 +601,8 @@
- #
- # @share: if false, the memory is private to QEMU; if true, it is
- #     shared (default false for backends memory-backend-file and
--#     memory-backend-ram, true for backends memory-backend-epc and
--#     memory-backend-memfd)
-+#     memory-backend-ram, true for backends memory-backend-epc,
-+#     memory-backend-memfd, and memory-backend-shm)
- #
- # @reserve: if true, reserve swap space (or huge pages) if applicable
- #     (default: true) (since 6.1)
-@@ -721,6 +721,21 @@
-             '*hugetlbsize': 'size',
-             '*seal': 'bool' } }
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 59d88018c1..9e67ba38c7 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -43,6 +43,7 @@ enum {
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+     VIRTIO_PCI_FLAG_AER_BIT,
+     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
++    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT,
+ };
  
-+##
-+# @MemoryBackendShmProperties:
-+#
-+# Properties for memory-backend-shm objects.
-+#
-+# This memory backend supports only shared memory, which is the
-+# default.
-+#
-+# Since: 9.1
-+##
-+{ 'struct': 'MemoryBackendShmProperties',
-+  'base': 'MemoryBackendProperties',
-+  'data': { },
-+  'if': 'CONFIG_POSIX' }
+ /* Need to activate work-arounds for buggy guests at vmstate load. */
+@@ -79,6 +80,10 @@ enum {
+ /* Init Power Management */
+ #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
+ 
++/* Init The No_Soft_Reset bit of Power Management */
++#define VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET \
++  (1 << VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT)
 +
- ##
- # @MemoryBackendEpcProperties:
- #
-@@ -1049,6 +1064,8 @@
-     { 'name': 'memory-backend-memfd',
-       'if': 'CONFIG_LINUX' },
-     'memory-backend-ram',
-+    { 'name': 'memory-backend-shm',
-+      'if': 'CONFIG_POSIX' },
-     'pef-guest',
-     { 'name': 'pr-manager-helper',
-       'if': 'CONFIG_LINUX' },
-@@ -1121,6 +1138,8 @@
-       'memory-backend-memfd':       { 'type': 'MemoryBackendMemfdProperties',
-                                       'if': 'CONFIG_LINUX' },
-       'memory-backend-ram':         'MemoryBackendProperties',
-+      'memory-backend-shm':         { 'type': 'MemoryBackendShmProperties',
-+                                      'if': 'CONFIG_POSIX' },
-       'pr-manager-helper':          { 'type': 'PrManagerHelperProperties',
-                                       'if': 'CONFIG_LINUX' },
-       'qtest':                      'QtestProperties',
-diff --git a/backends/hostmem-shm.c b/backends/hostmem-shm.c
-new file mode 100644
-index 0000000000..374edc3db8
---- /dev/null
-+++ b/backends/hostmem-shm.c
-@@ -0,0 +1,123 @@
-+/*
-+ * QEMU host POSIX shared memory object backend
-+ *
-+ * Copyright (C) 2024 Red Hat Inc
-+ *
-+ * Authors:
-+ *   Stefano Garzarella <sgarzare@redhat.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
+ /* Init Function Level Reset capability */
+ #define VIRTIO_PCI_FLAG_INIT_FLR (1 << VIRTIO_PCI_FLAG_INIT_FLR_BIT)
+ 
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 655d75c21f..f4cba6496c 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -38,6 +38,7 @@ GlobalProperty hw_compat_9_0[] = {
+     {"arm-cpu", "backcompat-cntfrq", "true" },
+     {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
+     {"vfio-pci", "skip-vsc-check", "false" },
++    { "virtio-pci", "x-pcie-pm-no-soft-reset", "off" },
+ };
+ const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
+ 
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 5941f1a94d..9534730bba 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2222,6 +2222,11 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+             pcie_cap_lnkctl_init(pci_dev);
+         }
+ 
++        if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
++            pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
++                         PCI_PM_CTRL_NO_SOFT_RESET);
++        }
 +
-+#include "qemu/osdep.h"
-+#include "sysemu/hostmem.h"
-+#include "qapi/error.h"
-+
-+#define TYPE_MEMORY_BACKEND_SHM "memory-backend-shm"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendShm, MEMORY_BACKEND_SHM)
-+
-+struct HostMemoryBackendShm {
-+    HostMemoryBackend parent_obj;
-+};
-+
-+static bool
-+shm_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
+             /* Init Power Management Control Register */
+             pci_set_word(pci_dev->wmask + pos + PCI_PM_CTRL,
+@@ -2284,11 +2289,33 @@ static void virtio_pci_reset(DeviceState *qdev)
+     }
+ }
+ 
++static bool virtio_pci_no_soft_reset(PCIDevice *dev)
 +{
-+    g_autoptr(GString) shm_name = g_string_new(NULL);
-+    g_autofree char *backend_name = NULL;
-+    uint32_t ram_flags;
-+    int fd, oflag;
-+    mode_t mode;
++    uint16_t pmcsr;
 +
-+    if (!backend->size) {
-+        error_setg(errp, "can't create shm backend with size 0");
++    if (!pci_is_express(dev) || !dev->exp.pm_cap) {
 +        return false;
 +    }
 +
-+    if (!backend->share) {
-+        error_setg(errp, "can't create shm backend with `share=off`");
-+        return false;
-+    }
++    pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
 +
 +    /*
-+     * Let's use `mode = 0` because we don't want other processes to open our
-+     * memory unless we share the file descriptor with them.
++     * When No_Soft_Reset bit is set and the device
++     * is in D3hot state, don't reset device
 +     */
-+    mode = 0;
-+    oflag = O_RDWR | O_CREAT | O_EXCL;
-+    backend_name = host_memory_backend_get_name(backend);
++    return (pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) &&
++           (pmcsr & PCI_PM_CTRL_STATE_MASK) == 3;
++}
 +
-+    /*
-+     * Some operating systems allow creating anonymous POSIX shared memory
-+     * objects (e.g. FreeBSD provides the SHM_ANON constant), but this is not
-+     * defined by POSIX, so let's create a unique name.
-+     *
-+     * From Linux's shm_open(3) man-page:
-+     *   For  portable  use,  a shared  memory  object should be identified
-+     *   by a name of the form /somename;"
-+     */
-+    g_string_printf(shm_name, "/qemu-" FMT_pid "-shm-%s", getpid(),
-+                    backend_name);
-+
-+    fd = shm_open(shm_name->str, oflag, mode);
-+    if (fd < 0) {
-+        error_setg_errno(errp, errno,
-+                         "failed to create POSIX shared memory");
-+        return false;
+ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
+ {
+     PCIDevice *dev = PCI_DEVICE(obj);
+     DeviceState *qdev = DEVICE(obj);
+ 
++    if (virtio_pci_no_soft_reset(dev)) {
++        return;
 +    }
 +
-+    /*
-+     * We have the file descriptor, so we no longer need to expose the
-+     * POSIX shared memory object. However it will remain allocated as long as
-+     * there are file descriptors pointing to it.
-+     */
-+    shm_unlink(shm_name->str);
-+
-+    if (ftruncate(fd, backend->size) == -1) {
-+        error_setg_errno(errp, errno,
-+                         "failed to resize POSIX shared memory to %" PRIu64,
-+                         backend->size);
-+        close(fd);
-+        return false;
-+    }
-+
-+    ram_flags = RAM_SHARED;
-+    ram_flags |= backend->reserve ? 0 : RAM_NORESERVE;
-+
-+    return memory_region_init_ram_from_fd(&backend->mr, OBJECT(backend),
-+                                              backend_name, backend->size,
-+                                              ram_flags, fd, 0, errp);
-+}
-+
-+static void
-+shm_backend_instance_init(Object *obj)
-+{
-+    HostMemoryBackendShm *m = MEMORY_BACKEND_SHM(obj);
-+
-+    MEMORY_BACKEND(m)->share = true;
-+}
-+
-+static void
-+shm_backend_class_init(ObjectClass *oc, void *data)
-+{
-+    HostMemoryBackendClass *bc = MEMORY_BACKEND_CLASS(oc);
-+
-+    bc->alloc = shm_backend_memory_alloc;
-+}
-+
-+static const TypeInfo shm_backend_info = {
-+    .name = TYPE_MEMORY_BACKEND_SHM,
-+    .parent = TYPE_MEMORY_BACKEND,
-+    .instance_init = shm_backend_instance_init,
-+    .class_init = shm_backend_class_init,
-+    .instance_size = sizeof(HostMemoryBackendShm),
-+};
-+
-+static void register_types(void)
-+{
-+    type_register_static(&shm_backend_info);
-+}
-+
-+type_init(register_types);
-diff --git a/backends/meson.build b/backends/meson.build
-index 106312f0c8..749b491f12 100644
---- a/backends/meson.build
-+++ b/backends/meson.build
-@@ -13,6 +13,7 @@ system_ss.add([files(
- if host_os != 'windows'
-   system_ss.add(files('rng-random.c'))
-   system_ss.add(files('hostmem-file.c'))
-+  system_ss.add([files('hostmem-shm.c'), rt])
- endif
- if host_os == 'linux'
-   system_ss.add(files('hostmem-memfd.c'))
-diff --git a/docs/system/devices/vhost-user.rst b/docs/system/devices/vhost-user.rst
-index 9b2da106ce..35259d8ec7 100644
---- a/docs/system/devices/vhost-user.rst
-+++ b/docs/system/devices/vhost-user.rst
-@@ -98,8 +98,9 @@ Shared memory object
+     virtio_pci_reset(qdev);
  
- In order for the daemon to access the VirtIO queues to process the
- requests it needs access to the guest's address space. This is
--achieved via the ``memory-backend-file`` or ``memory-backend-memfd``
--objects. A reference to a file-descriptor which can access this object
-+achieved via the ``memory-backend-file``, ``memory-backend-memfd``, or
-+``memory-backend-shm`` objects.
-+A reference to a file-descriptor which can access this object
- will be passed via the socket as part of the protocol negotiation.
- 
- Currently the shared memory object needs to match the size of the main
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 8ca7f34ef0..ad6521ef5e 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -5240,6 +5240,22 @@ SRST
- 
-         The ``share`` boolean option is on by default with memfd.
- 
-+    ``-object memory-backend-shm,id=id,merge=on|off,dump=on|off,share=on|off,prealloc=on|off,size=size,host-nodes=host-nodes,policy=default|preferred|bind|interleave``
-+        Creates a POSIX shared memory backend object, which allows
-+        QEMU to share the memory with an external process (e.g. when
-+        using vhost-user).
-+
-+        ``memory-backend-shm`` is a more portable and less featureful version
-+        of ``memory-backend-memfd``. It can then be used in any POSIX system,
-+        especially when memfd is not supported.
-+
-+        Please refer to ``memory-backend-file`` for a description of the
-+        options.
-+
-+        The ``share`` boolean option is on by default with shm. Setting it to
-+        off will cause a failure during allocation because it is not supported
-+        by this backend.
-+
-     ``-object iommufd,id=id[,fd=fd]``
-         Creates an iommufd backend which allows control of DMA mapping
-         through the ``/dev/iommu`` device.
+     if (pci_is_express(dev)) {
+@@ -2328,6 +2355,8 @@ static Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
++    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
++                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false),
+     DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+     DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
 -- 
 MST
 
