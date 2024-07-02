@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CE1C3065D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A41D3C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeCl-00027L-4t; Tue, 02 Jul 2024 10:09:59 -0400
+	id 1sOeBU-0004CN-HB; Tue, 02 Jul 2024 10:08:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCh-0001fZ-5J
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeBR-0003pj-U9
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:08:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCa-0008Rt-CI
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:54 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeBQ-0008Cf-2m
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:08:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929387;
+ s=mimecast20190719; t=1719929314;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f88EXx30zef+oxtKxh27fnm0osRHGKUTzZYejeCgKxU=;
- b=MfX7qCsXcWjDwC+ck1rd/6g0MII722hB+RKejnfdFHb0O/PWh0CCveZy94DDla8Zs8rw7W
- BFZ0qC0NdkC/DKZXdMsVBsw4X043P4SAsQbgWZTzIDwK2c4sgBKjWr3LE4oqyxX8hjZOpq
- rNIUV6hvrIBcBe+107OZ+x/zs3SGxFg=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
+ b=BnxtlM91yj03wI9asrZvP0JwFIKHOuRaVmjS2HP6UbuYVWSJmjsI23rtMTekHGGvLJJ6D4
+ nRsYceCA1EQOJMCV04IJLagHWtlSj1Mq34nVFdpXRRjPHTjv+9yBnLJ5eQ6ZwV4AdxwMMW
+ BpnlHsJxtGe3GBbMhoaS/f0z8UMNKH0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-674-oqbmgllFNqCJddRDmQiIiQ-1; Tue, 02 Jul 2024 10:09:46 -0400
-X-MC-Unique: oqbmgllFNqCJddRDmQiIiQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-36248c176c4so2742569f8f.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:46 -0700 (PDT)
+ us-mta-615-yJWFgpvlP0e8Lp9KKyadrA-1; Tue, 02 Jul 2024 10:08:32 -0400
+X-MC-Unique: yJWFgpvlP0e8Lp9KKyadrA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4257a75193aso19222955e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:08:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929385; x=1720534185;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f88EXx30zef+oxtKxh27fnm0osRHGKUTzZYejeCgKxU=;
- b=LK3QKVSqn+LowiDUSIb45noZsDS/d0JDDzvQUnMP3fyf7JrDEKqEpPgLOy6xpWwHea
- spTfFjj4vhZdaA17acmzporiyUnTGGNzVXaSBDS7YNs/ozWy7ogK8VCmBalEwUnc/p1U
- kZn9iVuKRhtWd/MQbbT/g+eMH8WPrHYO5zvCukDwoaaPLFt2uPizAEjECmAY4PmFGcPu
- mEtD6QIgFFnAdGpB+N5a7EsUc84WwZ9k0WjVq+1w25j4rapP7NqmVWI5vtayVXS9Ijwn
- xoJQeiDS86PTAXp3FwOKjPxOsZ+8f9gv7pu+ogGVUabhg0r+ZJ+hfJ06fMqCJwn9/EkK
- /a5g==
-X-Gm-Message-State: AOJu0YwmBMb6yf3CuaXnXle1KeNAy/uLVl31WdwhE7ApdkArUGCfU64Z
- r+oSjbZ09qXXw4mIk1QZP08ebqX0UfIT4txkDlHW9ICl86NZb6OpuXlF9ftl6EyEQEB+thpFwQJ
- i8Bsz+OHQ7yzCqIzK+rdFMTYDT8p8lRu/WInHDlAIuI5KS43Ajg8pzW73nZQDIsyP2SaytlROZG
- UqTDvCeN+dQ5LjaQvZcV47VNbr2pXiUA==
-X-Received: by 2002:adf:e261:0:b0:367:33b1:e82b with SMTP id
- ffacd0b85a97d-36775728540mr4990850f8f.68.1719929384867; 
- Tue, 02 Jul 2024 07:09:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGmAC/nE5wyzN9z6ae0wLWWzKBphmOM/ONNUT1z55m3rXTfGZNnDDqoTzKQn5XQlNJ6FTTbSw==
-X-Received: by 2002:adf:e261:0:b0:367:33b1:e82b with SMTP id
- ffacd0b85a97d-36775728540mr4990824f8f.68.1719929384256; 
- Tue, 02 Jul 2024 07:09:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719929311; x=1720534111;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
+ b=IwJtvy7+x6VdX0ieXCBjpxK7YKtnAvKV+cXjVVy5x5eIQaWEiBVpaVzVZMYOt50mpi
+ 6yB8iSSXNDDeNTDpkHND5Rw8YN3nJThGv8k6nWLVKCn23rtoIpRWGMM3mbniW7rTfbVb
+ kURgSkF+ZZCvwU7CEnqwmNdBb3BXbJladScpyKA5aVZK4wfT34H0qXo4gkdL6gvPUpQ6
+ v5INpna9uyD+6nS5vNb+9AlvwzOHLaKAUEG3Y0Y54JHogN5qUaKiN8+Jy3ulBj+e4MxS
+ FV5/FBPUgwFO7RsBrvQAdQyX3UeFrf+OR+1a251q/OOa0RtunYb+Bug7iPcXmwoGQmDM
+ P+Cg==
+X-Gm-Message-State: AOJu0YzFPeJgRJpuighXRjxgNIGQ9DFTGNbpZMcWNNqOkxvsP6DbwE9N
+ GYzhHcuFw24OdDcitqtzNGhuqZuu/716wjQU7A/CfGDJIiML7R4mWMwcVCzRiXBV47DnIo6Lfle
+ xXBrDwV6X4QQF5dLBRL+E/iNfrD0vLgT4/RXnUk8QTqY7czJMLBX7GqRlasc4K+mxd2OsGNfRgH
+ QVqno77ASEVTZMIHO4ZNyzS0nwPUsXxw==
+X-Received: by 2002:a7b:c458:0:b0:424:a655:c8b with SMTP id
+ 5b1f17b1804b1-4257a010ab5mr58862765e9.19.1719929311402; 
+ Tue, 02 Jul 2024 07:08:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8VuEGxyfX1E4eygZUT+D6B9/QgjkiBFNHFLZX/IlHRAeYyEiWkuA+aZweZmup7TL3k3Q7Hw==
+X-Received: by 2002:a7b:c458:0:b0:424:a655:c8b with SMTP id
+ 5b1f17b1804b1-4257a010ab5mr58862525e9.19.1719929310849; 
+ Tue, 02 Jul 2024 07:08:30 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0cd778sm13563686f8f.5.2024.07.02.07.09.42
+ ffacd0b85a97d-3675a0d9b12sm13309086f8f.44.2024.07.02.07.08.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:09:43 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:09:41 -0400
+ Tue, 02 Jul 2024 07:08:30 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:08:28 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL 54/91] libvhost-user: enable it on any POSIX system
-Message-ID: <800a3dfe84bb922f27156451007ed3e2e3b8abdb.1719929191.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
+ Svetly Todorov <svetly.todorov@memverge.com>,
+ Gregory Price <gregory.price@memverge.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL 29/91] hw/mem/cxl_type3: Allow to release extent superset in
+ QMP interface
+Message-ID: <c51dca04281f9be6eacdad8fc8f9c7ddc87dcf3c.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719929191.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -108,151 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Fan Ni <fan.ni@samsung.com>
 
-The vhost-user protocol is not really Linux-specific so let's enable
-libvhost-user for any POSIX system.
+Before the change, the QMP interface used for add/release DC extents
+only allows to release an extent whose DPA range is contained by a single
+accepted extent in the device.
 
-Compiling it on macOS and FreeBSD some problems came up:
-- avoid to include linux/vhost.h which is available only on Linux
-  (vhost_types.h contains many of the things we need)
-- macOS doesn't provide sys/endian.h, so let's define them
-  (note: libvhost-user doesn't include QEMU's headers, so we can't use
-   use "qemu/bswap.h")
-- define eventfd_[write|read] as write/read wrapper when system doesn't
-  provide those (e.g. macOS)
-- copy SEAL defines from include/qemu/memfd.h to make the code works
-  on FreeBSD where MFD_ALLOW_SEALING is defined
-- define MAP_NORESERVE if it's not defined (e.g. on FreeBSD)
+With the change, we relax the constraints.  As long as the DPA range of
+the extent is covered by accepted extents, we allow the release.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240618100503.145768-1-sgarzare@redhat.com>
+Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Message-Id: <20240523174651.1089554-15-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.h |  2 +-
- subprojects/libvhost-user/libvhost-user.c | 60 +++++++++++++++++++++--
- meson.build                               |  2 +-
- 3 files changed, 59 insertions(+), 5 deletions(-)
+ hw/mem/cxl_type3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
-index deb40e77b3..e13e1d3931 100644
---- a/subprojects/libvhost-user/libvhost-user.h
-+++ b/subprojects/libvhost-user/libvhost-user.h
-@@ -18,9 +18,9 @@
- #include <stdbool.h>
- #include <stddef.h>
- #include <poll.h>
--#include <linux/vhost.h>
- #include <pthread.h>
- #include "standard-headers/linux/virtio_ring.h"
-+#include "standard-headers/linux/vhost_types.h"
- 
- /* Based on qemu/hw/virtio/vhost-user.c */
- #define VHOST_USER_F_PROTOCOL_FEATURES 30
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 9c630c2170..d855a97a4c 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -28,9 +28,7 @@
- #include <inttypes.h>
- #include <sys/types.h>
- #include <sys/socket.h>
--#include <sys/eventfd.h>
- #include <sys/mman.h>
--#include <endian.h>
- 
- /* Necessary to provide VIRTIO_F_VERSION_1 on system
-  * with older linux headers. Must appear before
-@@ -39,8 +37,8 @@
- #include "standard-headers/linux/virtio_config.h"
- 
- #if defined(__linux__)
-+#include <endian.h>
- #include <sys/syscall.h>
--#include <fcntl.h>
- #include <sys/ioctl.h>
- #include <linux/vhost.h>
- #include <sys/vfs.h>
-@@ -52,6 +50,62 @@
- 
- #endif
- 
-+#if defined(__APPLE__) && (__MACH__)
-+#include <libkern/OSByteOrder.h>
-+#define htobe16(x) OSSwapHostToBigInt16(x)
-+#define htole16(x) OSSwapHostToLittleInt16(x)
-+#define be16toh(x) OSSwapBigToHostInt16(x)
-+#define le16toh(x) OSSwapLittleToHostInt16(x)
-+
-+#define htobe32(x) OSSwapHostToBigInt32(x)
-+#define htole32(x) OSSwapHostToLittleInt32(x)
-+#define be32toh(x) OSSwapBigToHostInt32(x)
-+#define le32toh(x) OSSwapLittleToHostInt32(x)
-+
-+#define htobe64(x) OSSwapHostToBigInt64(x)
-+#define htole64(x) OSSwapHostToLittleInt64(x)
-+#define be64toh(x) OSSwapBigToHostInt64(x)
-+#define le64toh(x) OSSwapLittleToHostInt64(x)
-+#endif
-+
-+#ifdef CONFIG_EVENTFD
-+#include <sys/eventfd.h>
-+#else
-+#define eventfd_t uint64_t
-+
-+int eventfd_write(int fd, eventfd_t value)
-+{
-+    return (write(fd, &value, sizeof(value)) == sizeof(value)) ? 0 : -1;
-+}
-+
-+int eventfd_read(int fd, eventfd_t *value)
-+{
-+    return (read(fd, value, sizeof(*value)) == sizeof(*value)) ? 0 : -1;
-+}
-+#endif
-+
-+#ifdef MFD_ALLOW_SEALING
-+#include <fcntl.h>
-+
-+#ifndef F_LINUX_SPECIFIC_BASE
-+#define F_LINUX_SPECIFIC_BASE 1024
-+#endif
-+
-+#ifndef F_ADD_SEALS
-+#define F_ADD_SEALS (F_LINUX_SPECIFIC_BASE + 9)
-+#define F_GET_SEALS (F_LINUX_SPECIFIC_BASE + 10)
-+
-+#define F_SEAL_SEAL     0x0001  /* prevent further seals from being set */
-+#define F_SEAL_SHRINK   0x0002  /* prevent file from shrinking */
-+#define F_SEAL_GROW     0x0004  /* prevent file from growing */
-+#define F_SEAL_WRITE    0x0008  /* prevent writes */
-+#endif
-+#endif
-+
-+#ifndef MAP_NORESERVE
-+#define MAP_NORESERVE 0
-+#endif
-+
- #include "include/atomic.h"
- 
- #include "libvhost-user.h"
-diff --git a/meson.build b/meson.build
-index 98db5ea322..6c1a489cc0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3203,7 +3203,7 @@ if have_system and vfio_user_server_allowed
- endif
- 
- vhost_user = not_found
--if host_os == 'linux' and have_vhost_user
-+if have_vhost_user
-   libvhost_user = subproject('libvhost-user')
-   vhost_user = libvhost_user.get_variable('vhost_user_dep')
- endif
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 0d18259ec0..5d4a1276be 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1947,7 +1947,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
+                            "cannot release extent with pending DPA range");
+                 return;
+             }
+-            if (!cxl_extents_contains_dpa_range(&dcd->dc.extents, dpa, len)) {
++            if (!ct3_test_region_block_backed(dcd, dpa, len)) {
+                 error_setg(errp,
+                            "cannot release extent with non-existing DPA range");
+                 return;
 -- 
 MST
 
