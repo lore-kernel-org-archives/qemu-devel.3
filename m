@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A41A6C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:03:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD36C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:03:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOVf4-0000T5-CT; Tue, 02 Jul 2024 01:02:38 -0400
+	id 1sOVfa-0003mt-UD; Tue, 02 Jul 2024 01:03:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVf1-0008Tq-K3
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:35 -0400
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVfZ-0003T6-0k
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:03:09 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVex-0007Ea-9r
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:34 -0400
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-52e829086f3so3575683e87.3
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:02:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVfT-0007dm-J6
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:03:08 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4255fc43f1cso25869245e9.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:03:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719896549; x=1720501349; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719896581; x=1720501381; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JbdsfJ44aAB8rxW6wAXXI/854m0o2ZFI+jAaNwL715g=;
- b=FBFI41WO3Y5PjrYn8KHPhZQXGFbPrmytEnrd7/qJQbiHEj6bVjgmJXb/IzvNIvJvUH
- rCAp5tvTeuonI9zWClXeEf7jpOID4LtMGeUcf/nL0kcW3sQrHtqPyxQwJaLgAW+zA5ff
- FP5pJwUWFFYm23fRUZWC3lKGpBnJZFnxxVHFk5nEbZ32IjysywBCZKCtB+TTBHOqaIA+
- a5PYGGmTxIPvdZf2d3xFku5n1YaHlb/SahjFMuBWMW5LWQN42kE9auQ+XmNZ4z6wCBWT
- N4s1nEuhDZpFu3H1SBYsjEwk5LKw8o24jNuVz+PV5o2KdsNYYWrq8jJZ1Mdh1mQJ93wJ
- M32Q==
+ bh=RpqEDb+iBtpvIrsNwMVclKz/Xq4RBNysBjtBSTbDfBY=;
+ b=Yg0R9LlMiN2qoJMccT970VzEtaffJS3xqPq1z6XHH56kBxHGYPVAJHJTRkB+73GhdA
+ q1CP+qs7L0/vAxIIJwzbZrZWKtMIKxeTDNCzMPG+Y+h8V+fqGyC2byBLk/7r9EQ/eBPg
+ jsdDhPcwvWM6VvO7HX/VX9UxslH/IeNuQqKt3PYScYY81SaaVRoDbCXyhNEQHCjmMgK4
+ rxAhSm019HmQzVD/WjeNpSI0Xhs8N6gDikciwof7ZCT7MKJBj/ToRr628ET370+f3h4H
+ QyqPmjbNnPa+T3B00DUmzIcZEgSFyxdjX4D2nOW2oRpuV2oqeEMDokbbXc7cYEplOAIW
+ 34uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719896549; x=1720501349;
+ d=1e100.net; s=20230601; t=1719896581; x=1720501381;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JbdsfJ44aAB8rxW6wAXXI/854m0o2ZFI+jAaNwL715g=;
- b=uHI05vyDXxW0iDvaawxSqCBaq1ZqNSTBuxxhh3A5tpdID1IbwWfBFGuNaZ0B8+PrCt
- tccruV3z3fn21TG1BThR3SYx1fxcSL/VwhIZ+SZzNwZnyypcBiM+bvpTau/2DYfI94zM
- DZueJDAeItLLuT9HfYwngsu/KDL/yT/So8+NTQcdd1RonZj7/fVtWHoaOTJILZd8gFww
- TjsL7+iLqwO7DBF0EnGWs8GzjznF2arOs5+AAxMtdZq3M/jJFyj9ltpl0CHhaNV0wMvb
- 0ou0SxCQloL1j8JgwEqxpcPdi0NsjyUmj0dAaJHyv2vvRPm6H4Zz5LNUhJ31YaHaUjot
- r/OA==
-X-Gm-Message-State: AOJu0YzVKUviFamP2E5n1XlbUNLk/SAQ+ZAaqyz3Kf4OwtMvvp4LgVC6
- 9qmpChyCQ6aov0SmX/ys5bhItzV/TOKdYSmfX9vfNmVOg5Yvt2VAawCxF8NlVKGEaV22BwURhzd
- T
-X-Google-Smtp-Source: AGHT+IHcSruALdXDiIhrnburbKhsGcwxE0dO3V+PQeZp6k6vmsrjg8P3WukjH+jfgclugP65Ugy08g==
-X-Received: by 2002:ac2:4c41:0:b0:52b:bee3:dcc6 with SMTP id
- 2adb3069b0e04-52e826fa995mr5628932e87.51.1719896549046; 
- Mon, 01 Jul 2024 22:02:29 -0700 (PDT)
+ bh=RpqEDb+iBtpvIrsNwMVclKz/Xq4RBNysBjtBSTbDfBY=;
+ b=UVoUpjcbqmMygxsAdrG7zU9OyLCMPkOycZ5X6Uz5eE7GbvxrM0s3FMAXc2n03rHsor
+ 3Qaitz30K2lmloZxyjxQn0mtIVrmeOttzZy6j9zUEUd/fF0taxWUSSfrMYL0jvSEYU3Z
+ qMRzPqS9Yuh7baKN1SabBapq7rSg3fdGtIfy5OOcpS58zh73gejsXyBieyXkXPUeRdVc
+ 87vtB/XxLbO+LJOYWuBqoPdh+INOFoqDYuEyERByaOX2mHXXhzhs/0YWnm+tquuPFS/T
+ UwWE/wOX81dVUlf2Tmosp121AUpG4T+qXDCZoFzEbxjphfXdedL9uNu9lbrEm1BpR0PM
+ zMQg==
+X-Gm-Message-State: AOJu0Yx9zAxgk9j9vwKkSAYwNH406SYIX5mwqpEY99pK9yJHN0zufN6m
+ 6VFfEFjEKjBuvpN1dFAXz8wAa0/xJqc2rpWN8sx3PGPv/ogKZ+fCPli9E4tv2bLIw60imeWz3Fl
+ 5
+X-Google-Smtp-Source: AGHT+IGQl9U2uYOo9pG0tYiP+/OdBP1FwY+gimlJrVjIf32637oCpjqnxfMdAZztw/LYl3nIyNdh1Q==
+X-Received: by 2002:a05:600c:4f52:b0:424:ad14:6b87 with SMTP id
+ 5b1f17b1804b1-4257a02d548mr50160455e9.4.1719896580776; 
+ Mon, 01 Jul 2024 22:03:00 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a1108b0sm11916332f8f.114.2024.07.01.22.02.27
+ 5b1f17b1804b1-4256af5b8e2sm180146955e9.16.2024.07.01.22.02.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 01 Jul 2024 22:02:28 -0700 (PDT)
+ Mon, 01 Jul 2024 22:03:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 12/22] hw: skip registration of outdated versioned machine types
-Date: Tue,  2 Jul 2024 07:01:02 +0200
-Message-ID: <20240702050112.35907-13-philmd@linaro.org>
+Subject: [PULL 17/22] hw/ide/macio: switch from using qemu_allocate_irq() to
+ qdev input GPIOs
+Date: Tue,  2 Jul 2024 07:01:07 +0200
+Message-ID: <20240702050112.35907-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240702050112.35907-1-philmd@linaro.org>
 References: <20240702050112.35907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,91 +97,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-This calls the MACHINE_VER_DELETION() macro in the machine type
-registration method, so that when a versioned machine type reaches
-the end of its life, it is no longer registered with QOM and thus
-cannot be used.
+This prevents the IRQs from being leaked when the macio IDE device is used.
 
-The actual definition of the machine type should be deleted at
-this point, but experience shows that can easily be forgotten.
-By skipping registration the manual code deletion task can be
-done at any later date.
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240620165742.1711389-12-berrange@redhat.com>
+Message-ID: <20240628160334.653168-1-mark.cave-ayland@ilande.co.uk>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/i386/pc.h       | 1 +
- hw/arm/virt.c              | 1 +
- hw/m68k/virt.c             | 1 +
- hw/ppc/spapr.c             | 1 +
- hw/s390x/s390-virtio-ccw.c | 1 +
- 5 files changed, 5 insertions(+)
+ include/hw/misc/macio/macio.h |  7 +++++--
+ hw/ide/macio.c                | 10 ++++++----
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 83d2e66498..4e55d7ef6e 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -340,6 +340,7 @@ extern const size_t pc_compat_2_3_len;
-     }; \
-     static void MACHINE_VER_SYM(register, namesym, __VA_ARGS__)(void) \
-     { \
-+        MACHINE_VER_DELETION(__VA_ARGS__); \
-         type_register(&MACHINE_VER_SYM(info, namesym, __VA_ARGS__)); \
-     } \
-     type_init(MACHINE_VER_SYM(register, namesym, __VA_ARGS__));
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 02e13b4a3d..b0c68d66a3 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -123,6 +123,7 @@ static void arm_virt_compat_set(MachineClass *mc)
-     }; \
-     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
-     { \
-+        MACHINE_VER_DELETION(__VA_ARGS__); \
-         type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
-     } \
-     type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index 37bb36b385..cda199af8f 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -356,6 +356,7 @@ type_init(virt_machine_register_types)
-     }; \
-     static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
-     { \
-+        MACHINE_VER_DELETION(__VA_ARGS__); \
-         type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
-     } \
-     type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 55268489d3..044e6a8d9d 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4824,6 +4824,7 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
-     };                                                               \
-     static void MACHINE_VER_SYM(register, spapr, __VA_ARGS__)(void)  \
-     {                                                                \
-+        MACHINE_VER_DELETION(__VA_ARGS__);                           \
-         type_register(&MACHINE_VER_SYM(info, spapr, __VA_ARGS__));   \
-     }                                                                \
-     type_init(MACHINE_VER_SYM(register, spapr, __VA_ARGS__))
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index c25dc3e13f..336cb8c6d4 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -847,6 +847,7 @@ static const TypeInfo ccw_machine_info = {
-     };                                                                        \
-     static void MACHINE_VER_SYM(register, ccw, __VA_ARGS__)(void)             \
-     {                                                                         \
-+        MACHINE_VER_DELETION(__VA_ARGS__);                                    \
-         type_register_static(&MACHINE_VER_SYM(info, ccw, __VA_ARGS__));       \
-     }                                                                         \
-     type_init(MACHINE_VER_SYM(register, ccw, __VA_ARGS__))
+diff --git a/include/hw/misc/macio/macio.h b/include/hw/misc/macio/macio.h
+index 2b54da6b31..16aa95b876 100644
+--- a/include/hw/misc/macio/macio.h
++++ b/include/hw/misc/macio/macio.h
+@@ -80,8 +80,6 @@ struct MACIOIDEState {
+     uint32_t channel;
+     qemu_irq real_ide_irq;
+     qemu_irq real_dma_irq;
+-    qemu_irq ide_irq;
+-    qemu_irq dma_irq;
+ 
+     MemoryRegion mem;
+     IDEBus bus;
+@@ -92,6 +90,11 @@ struct MACIOIDEState {
+     uint32_t irq_reg;
+ };
+ 
++#define MACIO_IDE_PMAC_NIRQS 2
++
++#define MACIO_IDE_PMAC_DMA_IRQ 0
++#define MACIO_IDE_PMAC_IDE_IRQ 1
++
+ void macio_ide_init_drives(MACIOIDEState *ide, DriveInfo **hd_table);
+ void macio_ide_register_dma(MACIOIDEState *ide);
+ 
+diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+index aca90d04f0..e84bf2c9f6 100644
+--- a/hw/ide/macio.c
++++ b/hw/ide/macio.c
+@@ -420,7 +420,8 @@ static void macio_ide_realizefn(DeviceState *dev, Error **errp)
+ {
+     MACIOIDEState *s = MACIO_IDE(dev);
+ 
+-    ide_bus_init_output_irq(&s->bus, s->ide_irq);
++    ide_bus_init_output_irq(&s->bus,
++                            qdev_get_gpio_in(dev, MACIO_IDE_PMAC_IDE_IRQ));
+ 
+     /* Register DMA callbacks */
+     s->dma.ops = &dbdma_ops;
+@@ -456,8 +457,8 @@ static void macio_ide_initfn(Object *obj)
+     sysbus_init_mmio(d, &s->mem);
+     sysbus_init_irq(d, &s->real_ide_irq);
+     sysbus_init_irq(d, &s->real_dma_irq);
+-    s->dma_irq = qemu_allocate_irq(pmac_ide_irq, s, 0);
+-    s->ide_irq = qemu_allocate_irq(pmac_ide_irq, s, 1);
++
++    qdev_init_gpio_in(DEVICE(obj), pmac_ide_irq, MACIO_IDE_PMAC_NIRQS);
+ 
+     object_property_add_link(obj, "dbdma", TYPE_MAC_DBDMA,
+                              (Object **) &s->dbdma,
+@@ -508,7 +509,8 @@ void macio_ide_init_drives(MACIOIDEState *s, DriveInfo **hd_table)
+ 
+ void macio_ide_register_dma(MACIOIDEState *s)
+ {
+-    DBDMA_register_channel(s->dbdma, s->channel, s->dma_irq,
++    DBDMA_register_channel(s->dbdma, s->channel,
++                           qdev_get_gpio_in(DEVICE(s), MACIO_IDE_PMAC_DMA_IRQ),
+                            pmac_ide_transfer, pmac_ide_flush, s);
+ }
+ 
 -- 
 2.41.0
 
