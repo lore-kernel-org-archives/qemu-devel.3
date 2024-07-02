@@ -4,86 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A894C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:18:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33C0C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeCs-0002YX-Rh; Tue, 02 Jul 2024 10:10:06 -0400
+	id 1sOeET-0007jc-Gt; Tue, 02 Jul 2024 10:11:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCh-0001fR-4d
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:55 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeEF-000675-T5
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCY-0008R8-Ng
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:54 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeED-0000V2-DG
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929385;
+ s=mimecast20190719; t=1719929488;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2AGZP+nspE3HlB5tjeGIUHiwMrs8aGiCZ0Y1FdNl3gU=;
- b=cuDWcMhvu5qgMs2FhYSkJDYNWVxWMm3GUQFHd11jCwmgUSK0X21DekS7zY4w2ROg0y92jr
- RrtYx6U5UHuqwrithWFeteDGdXUh2odwEHnPiW1xrQ+YL5JX2AFyfTBkF+MJonCU/eHk5b
- FL9dojMZziMDsmQIuHbkxHzR+1V0drA=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6T5wYohIMyfJ7zfD4BymibarRz8jk6tb2fFAczZH0qE=;
+ b=Bpw8fRhBkNXXgd9AGyUyLhFfUCA2Lb1zj+O8C+NljigKhcT3fFiXnxzPkbe/NqV1Vtwymo
+ sHNM9R1Q/gNmQD90y7h9efEG12xObTTwROBESK8g38QeW7881Ld064zF4MW3iiCNxcq5wR
+ nFudDMQyMWte6PyvKANychAJpW3WwAQ=
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
+ [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-505-FqzP7xG2NgWL7HdHs4tyEg-1; Tue, 02 Jul 2024 10:09:43 -0400
-X-MC-Unique: FqzP7xG2NgWL7HdHs4tyEg-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2ee4a63e95cso42568101fa.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:43 -0700 (PDT)
+ us-mta-547-rukY6QQ2OqKRmKhWxvcrBw-1; Tue, 02 Jul 2024 10:11:27 -0400
+X-MC-Unique: rukY6QQ2OqKRmKhWxvcrBw-1
+Received: by mail-lf1-f70.google.com with SMTP id
+ 2adb3069b0e04-52ce7a15a62so4647907e87.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929381; x=1720534181;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2AGZP+nspE3HlB5tjeGIUHiwMrs8aGiCZ0Y1FdNl3gU=;
- b=J+4vgGiom+PZ4gZgBzz4wVrVPbrNM1JJKVrtZ9CkjfeI9Vb47fJ3UP/9JC6VrGbWut
- /b4h4jRWm9KOvU8k9cMQligGC+MfAFnuXTpIuAbDqKmvWQa/jgCVyrNJ4AQWTUj5hPJM
- bgvYVfKYfybmWjNA1Fo2M8Xo2DhGQCzXTSACIlJsyDbXUL4mLG6dgh6AOVrKJvtQuB8e
- hreZPDLIlSV6+ZfBIjHl8onYnBdcF9T6ISA6Lpz+qZDi/fcGkLUFhSNBss8q09TBFnAH
- 08vAz5MtzPOL+WNj1PLkCybp+nEmEbATpbzLytx0Ee2pOYFM4MMvGp03KPWPmLqHEID9
- q4ig==
-X-Gm-Message-State: AOJu0Yxb7Z87Hui02lJDpEVTPbz3lHxefsF11SogDabHdaF8ZCHkEkO0
- kzfA+9EnrRL4JXlYsTHmFxV4X3w7rxf4QpkMcpbtNJaxbDFBX4latSSkG0idQAAohUYLoLfxZ8J
- e+DswLbIh1L4lCBuJsrMzZShmqDxZ5fRkFdYYReok74qlz4nJQQfoWee5HsW+Kr01VCZE4Njddm
- F6DWvV8NPKrHjJT77x3SWUvXxjisTEHA==
-X-Received: by 2002:a2e:a910:0:b0:2ee:7b88:7f3 with SMTP id
- 38308e7fff4ca-2ee7b880869mr253701fa.12.1719929381695; 
- Tue, 02 Jul 2024 07:09:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEh5T6tlzwkVF81E+h4m6CYc6nyeXRZ3lFkO2Q0xNdE+EoVmKRQcH68EtN3LkWAR4NKoSxqNQ==
-X-Received: by 2002:a2e:a910:0:b0:2ee:7b88:7f3 with SMTP id
- 38308e7fff4ca-2ee7b880869mr253331fa.12.1719929381084; 
- Tue, 02 Jul 2024 07:09:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719929485; x=1720534285;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6T5wYohIMyfJ7zfD4BymibarRz8jk6tb2fFAczZH0qE=;
+ b=Pp2O1hMawcPeMmrA6LaDxB2ivJJ3a8k1bYQtOZqseygtBlvzPOAEXYOGq1nK1myRsY
+ ZX5AV8IICb31nPlQ5AsjE3jWb5qs0Wz0wfp/sTQaCXSZwNN+s2seOdmPcGiAdmkqZTbx
+ l21SAVZ3+NHsMxqAOFZ6liUWxSpjI5zdTy8wDKewCQsjPXqtPo4QnDQsZokrSwnCLqPO
+ 2P41atPdyAjAxqUm9EQe7QZ8TdYRgn/WOwb9lVbBMt+ADoPh2ESBke3G9qFX6f8hQIyL
+ dCXfd+E9asJShyZA1SJuTBdQa0yB1w40Jh7LJ16qDVsx9aMeCA3Luqs7JIhdf+l/n8wb
+ qLNA==
+X-Gm-Message-State: AOJu0Yx+WOAmnp8tFJaqakQVWpp3Rw/0K4SkDwNLaJEq9vPOw3eN7eBY
+ FlGpf5a1mPVn1hev17MfwAsDxBMpyNWI8+R1K75J21cdKXb5NCX2ApubmmvISiFoN5dT2Sv3AWO
+ fSapxk4A4xwCcYcEmqMspnJ/3uukJj6MgH+6y2t6vKYCS3ZMtx/IDxweT8Q8JqXhSeMb4rt8CMc
+ iHUwuqu5ZFT20OotbV9KCW/u07JALaMA==
+X-Received: by 2002:a05:6512:3b0d:b0:52e:73a2:4415 with SMTP id
+ 2adb3069b0e04-52e8270adecmr7084391e87.46.1719929485006; 
+ Tue, 02 Jul 2024 07:11:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFM5HYxHFGNBmB92gJijyddIVKu4mN02lMpyH6Q+TbiBXWLbuPRpq6Dl+sLLM5e0ZQihkGSQg==
+X-Received: by 2002:a05:6512:3b0d:b0:52e:73a2:4415 with SMTP id
+ 2adb3069b0e04-52e8270adecmr7084364e87.46.1719929484337; 
+ Tue, 02 Jul 2024 07:11:24 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4258014f8b7sm105297925e9.41.2024.07.02.07.09.38
+ 5b1f17b1804b1-42588492b4fsm59555655e9.4.2024.07.02.07.11.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:09:40 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:09:37 -0400
+ Tue, 02 Jul 2024 07:11:23 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:11:21 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, qemu-block@nongnu.org
-Subject: [PULL 53/91] vhost-user: enable frontends on any POSIX system
-Message-ID: <7f2a913552148d1f553a67a6f9f92585d150b21c.1719929191.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 85/91] pcie_sriov: Do not manually unrealize
+Message-ID: <2f9bcba626116c645f51c91f3fd5d98fadcb8d0b.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719929191.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -111,71 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The vhost-user protocol is not really Linux-specific so let's enable
-vhost-user frontends for any POSIX system.
+A device gets automatically unrealized when being unparented.
 
-In vhost_net.c we use VHOST_FILE_UNBIND which is defined in a Linux
-specific header, let's define it for other systems as well.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240618100455.145733-1-sgarzare@redhat.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-reuse-v10-4-7ca0b8ed3d9f@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/net/vhost_net.c | 5 +++++
- hw/block/Kconfig   | 2 +-
- meson.build        | 1 -
- 3 files changed, 6 insertions(+), 2 deletions(-)
+ hw/pci/pcie_sriov.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 18898afe81..d25b1bc839 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -34,8 +34,13 @@
- #include "standard-headers/linux/virtio_ring.h"
- #include "hw/virtio/vhost.h"
- #include "hw/virtio/virtio-bus.h"
-+#if defined(__linux__)
- #include "linux-headers/linux/vhost.h"
-+#endif
- 
-+#ifndef VHOST_FILE_UNBIND
-+#define VHOST_FILE_UNBIND -1
-+#endif
- 
- /* Features supported by host kernel. */
- static const int kernel_feature_bits[] = {
-diff --git a/hw/block/Kconfig b/hw/block/Kconfig
-index 9e8f28f982..29ee09e434 100644
---- a/hw/block/Kconfig
-+++ b/hw/block/Kconfig
-@@ -40,7 +40,7 @@ config VHOST_USER_BLK
-     bool
-     # Only PCI devices are provided for now
-     default y if VIRTIO_PCI
--    depends on VIRTIO && VHOST_USER && LINUX
-+    depends on VIRTIO && VHOST_USER
- 
- config SWIM
-     bool
-diff --git a/meson.build b/meson.build
-index 54e6b09f4f..98db5ea322 100644
---- a/meson.build
-+++ b/meson.build
-@@ -151,7 +151,6 @@ have_tpm = get_option('tpm') \
- 
- # vhost
- have_vhost_user = get_option('vhost_user') \
--  .disable_auto_if(host_os != 'linux') \
-   .require(host_os != 'windows',
-            error_message: 'vhost-user is not available on Windows').allowed()
- have_vhost_vdpa = get_option('vhost_vdpa') \
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index e9b23221d7..499becd527 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -204,11 +204,7 @@ static void unregister_vfs(PCIDevice *dev)
+     trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
+                                PCI_FUNC(dev->devfn), num_vfs);
+     for (i = 0; i < num_vfs; i++) {
+-        Error *err = NULL;
+         PCIDevice *vf = dev->exp.sriov_pf.vf[i];
+-        if (!object_property_set_bool(OBJECT(vf), "realized", false, &err)) {
+-            error_reportf_err(err, "Failed to unplug: ");
+-        }
+         object_unparent(OBJECT(vf));
+         object_unref(OBJECT(vf));
+     }
 -- 
 MST
 
