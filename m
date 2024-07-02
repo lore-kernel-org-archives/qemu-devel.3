@@ -4,199 +4,196 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3174CC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 13:39:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EFE8C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 13:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOdiX-00065f-IT; Tue, 02 Jul 2024 09:38:45 -0400
+	id 1sOdkX-000897-2v; Tue, 02 Jul 2024 09:40:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1sOdiV-000654-0M
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:38:43 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ id 1sOdkN-00083Y-Qx
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:40:40 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1sOdiM-0006pQ-HG
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:38:42 -0400
+ id 1sOdk7-0007Ok-Lc
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 09:40:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719927514; x=1751463514;
+ t=1719927623; x=1751463623;
  h=message-id:date:subject:to:cc:references:from:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=oGpNeN+k4P2vWs603Aurvz0ql4ZMFUDCSPm9mmYbgic=;
- b=Sfs9O6fmYer35GqNB9pemGu9BUXbZks/pgb+jYCXoHo8uutygDLUtP4L
- PU7ZjzDX7tyPrqSOa7UyN7mPDwb+ZUWpu79NY0qLLyPXV1n4WY4DX2CWv
- hraKrinwjwMb4g9IHU2IakSrTkDVtAJIBZmbWOL9X2iZcS3IlrytCSbR+
- J//fyxmuZ78qqFzjQ/ZFbDrAsyY5fDPelDIQCG0tMB4aG9e3TvnVuNWsI
- 232fyCUCygH1eT2oTwH0t+q7pJ1Ynp+qAzUEt2wVn9vqLiGV/PrPyE7kx
- S43WPAb48ej3cOnKSExkcL3kEtX9H5fMPYh1MTnt2L1A2QwzSFHTU3jyn w==;
-X-CSE-ConnectionGUID: DZGIboa5Sg+fkQqQAAyL5w==
-X-CSE-MsgGUID: vzT2n50BTDm1JRMJ4397aQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11121"; a="16929432"
-X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; d="scan'208";a="16929432"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jul 2024 06:38:31 -0700
-X-CSE-ConnectionGUID: t0V7fJxxQDWeGbNj8t3YmA==
-X-CSE-MsgGUID: 0kLLduOmSQeWrbdTloJaSA==
+ bh=8tNSHIA7PnwFqcww7e44xfgN25ThyJdbYWA5TpdMIEM=;
+ b=k1Ukun5v8Rjv/idgpzQhdoaBGtEn61cmLvONfNswJk6mv0tekVpt2N7Q
+ LDNRMwatcKu51+cmstxnayB+Dfs++GZ99LiGRUVjQ6DPWCVtuNWSIz/GE
+ QL/fCs//hL/kf94r+DlCfcI4+775cgUpvMkclno5Oc9BPgFj7g3SSQScM
+ GYlwdsnna7GIcCrS7CnKD/83iLfALB+F1i8wkB00Ym/A1h3l/KvWPbai5
+ OgW4zgaqUMSFkRDCNdO6U9j2yq8x9NhPmULlNdSmMsZ8hYk1NuQJ3BFTR
+ URWnAu2HdbsFrSTlsjsLdwGor9ZRFT5x9tyfkbfqFlNJTTmk1wHhMo6Kh g==;
+X-CSE-ConnectionGUID: 3WLWbujeTw2bPpMUqkUKDw==
+X-CSE-MsgGUID: LI+SkI5YSMWS0gcOAD+Egg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11121"; a="27719875"
+X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; d="scan'208";a="27719875"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jul 2024 06:40:20 -0700
+X-CSE-ConnectionGUID: Cq+WVJZFT0Ct35ne3oKpEw==
+X-CSE-MsgGUID: EBqyjgrpTdSLcumhb0wqwQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; d="scan'208";a="46331986"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
- by orviesa006.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 02 Jul 2024 06:38:31 -0700
-Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+X-IronPort-AV: E=Sophos;i="6.09,178,1716274800"; d="scan'208";a="50523922"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by fmviesa004.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 02 Jul 2024 06:40:19 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 2 Jul 2024 06:38:30 -0700
-Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
- fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ 15.1.2507.39; Tue, 2 Jul 2024 06:40:19 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Tue, 2 Jul 2024 06:38:30 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.49) by
- edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ 15.1.2507.39 via Frontend Transport; Tue, 2 Jul 2024 06:40:19 -0700
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.100)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 2 Jul 2024 06:38:30 -0700
+ 15.1.2507.39; Tue, 2 Jul 2024 06:40:18 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ElVgfgfxWmwzqf3FU+MNV49iFXZjSCZJNFMwtgxUsvgueZC+Bj148Wldo/vlkYJb+swAQRpuMTLk3KIJQ+uab2hyAfE4K8VrRAtybDUFmjDZXZmSB49BA6PZyj6Vth6H/yzKcZL4qsHqWof3FAcaMR6xJXuvKankvojREsRCh3QVTZEcGkefJcVEVn6AcfnNCcnnLLFxtnfIhjRxCzwSDQuJBaGfvwn4olYG7UtkeIds2CdqpmmRRmJEVgS2TtAOa63hRl8vZ/a21lTgX9nqheqVqgEneiMlvoY4u58gkScmVvQO9ejr9odnzgSz25uORjKxGXMv8TuEwt/Kjbvqyw==
+ b=SuCeDgzo4LrtESSrbxzEgyhDvXwG88N0qpvUvMuApk4/BuBOJN/VZ0J4oqqqSeXaRJW2tLi3V6YUwiHC6m+2ax7X6imdLqOcrHb0VbCr47Oqc1cDM6xUpOLwRZz/t7hLwGDhR3IsHIVj25hvrVbe1ZYqFmVRuGtEFewIza2cGlkiEAIguGYa72Haf2vK4+rR5rUDUutKxz5DZnAXLGXE2COr3+UE7NmpHrVfP7FhtUaOTPwV9ivQqmPkDgrGZy41L03C/wQE0nOr8CYHqDisSJfNA/akAbNjs7cj4p1A+j3+hOaYFl//VyUi/G1gevuQEehv2lHC9PHXVP/XLm9kmQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mgRhkHVWG2lzPKN6aVskDMBsCvVOd0wcs6jJDVYNsgY=;
- b=FnT9fKQ+v5EMye9mfqeW+QOxRfSFeuv28Qcq0uWjhFjEnv/fLJ9QuV9YPDHJ19rzJrpGvYQO9+EWuX2ytMVsQm7l0hJUTucEWl8qHIKWoKm261nejjf2gcg/22NcAFVwj7cTELDY67jVZueqxVRUOwOfygoKZ7kYrDjCz3fnGhREcdHg0BIs5UZHFQ/Msa5PiXybVUfCC3OTEJ+EG3XeGhJTX2MO+ZEJXBkIMTbJs/RTLSiNgIOJDZ8Fm7qOSBZkbRnnY9/syCGulE9CifbYZeg7HXtnduxBP3C1VFE8IzLsEtlXcF9oTzl2ikA55qkxCw+P3PMsX4FSGwQj9BXwMQ==
+ bh=F4sNxvRULLMtYWdecp/lWC8NMXbzPDPq9TjAqFCBQTs=;
+ b=FyVorS2V4NXyTBRxZDtW3sYzKPiczqTaMsCUnbfHciCZ9Pm+PMnqnPai4sFj5oMEr8tm5FMahSBOjVvilGtsI6qe4m5VAQ8keAoH5WsPScytmOnlpnUprzgOn430jXXutUW1UWy+dSZ+2guQWGYrQ0lbNGRcCn5ckTMIvoGwAYeILE9CgDlx5IORMGpM7h4wTNO+dpreTs4eSCwiogy2aK3ASb0gI9NYhJuyBGdQwgqOc9Jv6QKr/jBMqSL35/V4FHigCrApuWhwf/KK7+ZA4Hl/ZcU2D+YehjWQj9aVbmouegRAI42xQ2byJRaWHHdfZtoKQLvwJFyk3RUseoihJw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from DS0PR11MB7529.namprd11.prod.outlook.com (2603:10b6:8:141::20)
- by SN7PR11MB7417.namprd11.prod.outlook.com (2603:10b6:806:345::17) with
+ by CYYPR11MB8360.namprd11.prod.outlook.com (2603:10b6:930:c3::9) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.23; Tue, 2 Jul
- 2024 13:38:27 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7719.29; Tue, 2 Jul
+ 2024 13:40:16 +0000
 Received: from DS0PR11MB7529.namprd11.prod.outlook.com
  ([fe80::d244:15cd:1060:941a]) by DS0PR11MB7529.namprd11.prod.outlook.com
  ([fe80::d244:15cd:1060:941a%3]) with mapi id 15.20.7719.022; Tue, 2 Jul 2024
- 13:38:27 +0000
-Message-ID: <52efc1b0-5451-4e9e-a05d-4db360d3c573@intel.com>
-Date: Tue, 2 Jul 2024 21:42:23 +0800
+ 13:40:16 +0000
+Message-ID: <9b17bedc-b55b-4293-a1ff-4120296dc83d@intel.com>
+Date: Tue, 2 Jul 2024 21:44:12 +0800
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH ats_vtd v5 00/22] ATS support for VT-d
-To: "Michael S. Tsirkin" <mst@redhat.com>, CLEMENT MATHIEU--DRIF
- <clement.mathieu--drif@eviden.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, 
- "kevin.tian@intel.com" <kevin.tian@intel.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>
-References: <20240603055917.18735-1-clement.mathieu--drif@eviden.com>
- <20240701160122-mutt-send-email-mst@kernel.org>
- <AM8PR07MB76020A044539A40485F91F0A86DC2@AM8PR07MB7602.eurprd07.prod.outlook.com>
- <20240702081352-mutt-send-email-mst@kernel.org>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "mst@redhat.com" <mst@redhat.com>, Clement Mathieu--Drif
+ <cmdetu@gmail.com>
+References: <20240702055221.1337035-1-clement.mathieu--drif@eviden.com>
 Content-Language: en-US
 From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20240702081352-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240702055221.1337035-1-clement.mathieu--drif@eviden.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SGXP274CA0007.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::19)
+X-ClientProxiedBy: SGXP274CA0018.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::30)
  To DS0PR11MB7529.namprd11.prod.outlook.com
  (2603:10b6:8:141::20)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR11MB7529:EE_|SN7PR11MB7417:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6178ee9c-efc3-4625-197b-08dc9a9c40e8
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7529:EE_|CYYPR11MB8360:EE_
+X-MS-Office365-Filtering-Correlation-Id: 36cfc938-7607-4ecf-3d18-08dc9a9c8172
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?ZCt4VTgzYUJTV1ZneEFBelVlckZNSDkxNlZJR1RWcHBjR050cG02UEVUSW5U?=
- =?utf-8?B?UzhUcmpxQkM1Q25wOHRTTGs3L3FWaEMycExpZzY0bno2MzJLVlcwckFvL2JS?=
- =?utf-8?B?dGFzYkk5Nzgybk1DOUo5UVFyWmpocHNibGI1anV6WlV5ZGtxeWJMSTk4T1Ju?=
- =?utf-8?B?VFJFS2ZTTkNPRzFvWEQ4eWQvVjIrRFR6RFFQc1pCR1dHQkNvbk8yTWNvL0k4?=
- =?utf-8?B?UDE2M1FDMGdEaHQ4NkpRa3Fac0lZN3RUcG1mYk1BSkZXWUk5ZENramxhcWZv?=
- =?utf-8?B?NU41d3NXdVIzNy91YXFNUUc4YlVzcG04cFBXYVJNYk16d2E0M0xiNDZGM2tj?=
- =?utf-8?B?REQyd3RCby9zTENBU3hxNDlQcmxVd0ZSTUszdVgzb0s4R2VzdHZ6Q1NNU1E1?=
- =?utf-8?B?aXNrbTNqdlhjeXFXMjFjZHRLUWZLMkQ4RjZNMnhvc0cxcWZMZW5ROUZDZGsw?=
- =?utf-8?B?ayt3WXYyWU9yejBicjlORjdESDdBbk9QNCsrRWlBYjl4RCtRMGdtQ0RGMWNS?=
- =?utf-8?B?Nm1FR0hubzJERnR5ZFd4Z05BQXZMRjBQdlVxL3JVSm1DV1JJeVVtd29MWjZa?=
- =?utf-8?B?MmdjZ3BxRTRJK3FkQkt5ZGlldUxuNU1ZRGd2US9HQlB0UDEvZzJNeS9UdWJy?=
- =?utf-8?B?ektMbkRlbGNWazZpQXlaZmRORGFkdG1SOWpMN3RyUnFXR0RHWlRnYkVTMW5u?=
- =?utf-8?B?REhlbnNTNGd6a3ZRTlBPMHk1ZUJxWllOZlF1Uy9VR2xYTnQzM1g0dUYxbFR5?=
- =?utf-8?B?RHcxT2ZXeXFGOUhEQXR1OGI3SCsvdmFGMmxVTWR1eFhiaHVzT25LVElYRTRx?=
- =?utf-8?B?c2g0ZmJNcWFCUUpEbDVLeHloUS9qd2MxdHpYaStiTzQ3YkMvRGY3L0FBUE96?=
- =?utf-8?B?NkVQeElEL09EV1JPQ0ZHcWRaejdLTjhHTU56TEZRZ1k3MjBjSWhiZ3lJZmNO?=
- =?utf-8?B?SnVRL01QQm9ieFlGdUdhWi8xMGhwRXU1UzhnNHF2TFNRTWZEWENBUnpYc2Ix?=
- =?utf-8?B?RjdLN1pkNUNoL2JwSVZXcmJVa1ZPOFAyazg1QzQwdWZzVCtJUVlodkRnQjVT?=
- =?utf-8?B?b1BwaGVjcjQ1VzdXWHFjcVE4OE5lbjVlYjNRQUd1cjdOQ0JjU0dMSXJhRFJH?=
- =?utf-8?B?VmZXQ20zTEdmSVEwN3ZDcFlJY0NTVVdDcWlITjRSZlRFcGxwaXRpdVZnQndD?=
- =?utf-8?B?SFdmUXRYdEZnNEhNTEJPSmNSSkVmOExuRjQ0cnRpWXVZTGxJOERxU0RlVmJC?=
- =?utf-8?B?emJVTVNOelUvM2xKL3BSOEVTTURZalh0d0FGK0FsRXA5MXBuRXRUYy8yZExI?=
- =?utf-8?B?c3h2UkswWTJ5SmRCWGg4T0JpbjlFckFSV21aTlJBMXJ3RjhVbEtNV21mVjh4?=
- =?utf-8?B?b0tRUVpMM09ZL2tHeXlobjNTVVI3T2FoKzZGdjZJUUkvSEdtT3IxMFVBR2ZN?=
- =?utf-8?B?Z2ViUjZDWEhSY0ZERlFIbmRhSkttRDBiZlN3VFBpTllocXVsRHRpcDRaRDh2?=
- =?utf-8?B?bXRtbVpNeXM1MWlOTnRKdHJ4MGp4ZHdmTDlsdW03VWpuZGN0MFFzRC9TbE5B?=
- =?utf-8?B?TUx6d2FZbmhSb3duRDM0NVRVbTg4S2MyRFdFeWJQK3Y5aU1oS2lXQnNvWXpL?=
- =?utf-8?B?VHBwekpjVWFWTHhCdmhuYko5OFVGbFNDUXRqUkgzaFEvTURGYVAva01FWDBE?=
- =?utf-8?B?b1NZUThtdFV4dHNja0N6VU9LN0REbVVHWDZrNXFvNlVzb0IzeHUxY01pQjZv?=
- =?utf-8?Q?RMzkef3QgvaxJqqByk=3D?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?bTJWWkFuNGFucTRjQVNWclZiRVhjNmU3NGJSb1dFVXFGc2kvRS94WXNFS3hD?=
+ =?utf-8?B?WS9PdENjUGlUQWVRUWRmZ3VLOThhOVZ3N1ZNSVF4MEtQK2dGU0wvb08zVTNF?=
+ =?utf-8?B?VjRPaU5UYUdKRnBhNFAyUEEwS2tpdm16U2laMG9UOGJLR3VNd0hHNlZyZjZK?=
+ =?utf-8?B?SFU0NUVvSGxvUWdMbXNGSEttUUNpNjhWclpjaGtEMmQ3dEx6dHEyc2NRM3V0?=
+ =?utf-8?B?U1BiUW5pUlR4RlVLMm93UnVXQnozK2lEcm9XaEtQODF4U3RWZ1lpZTkySDA5?=
+ =?utf-8?B?L0ZDRlZnb3gxNTFsVXFTNGp5Z2Z5ZTVXTDlLYW9xaUVPRE1WU1AxV0txUzlx?=
+ =?utf-8?B?bEhXYThJRlVFa1NOM2VqQkdtNGI0cVJpOFRnY3gzMXkxT25qYkgyd2tUQm9C?=
+ =?utf-8?B?MlAzL1M1Z2M3UXhNQnc2Q0N5cjB0M0pnc0xaRFNLTGJGaVJCaUQvZnRyZEJo?=
+ =?utf-8?B?c1hFNUx6b3N0S2ZUZVpjdFVSalNMbk9HL1BwVlQ5MGZNUUcwajIrbVJpQ3l1?=
+ =?utf-8?B?VXhObHVGR0RORlBMZzA0N2xBTHVYMEZVTnFkRStBT2xDSjlRZHNZQnkyL0tZ?=
+ =?utf-8?B?Mm1PY0ZVd0szV2pHeVVzZE9YZjNoY29lVVNtbit4K1dDcEZYd2dXN2hmaWV3?=
+ =?utf-8?B?T3B3ZUk0QnhxZHZUU0tpdFpYK053MHdNUnplT1Y4Tm91d3hnNnorWDNsZitl?=
+ =?utf-8?B?UXBiTmtnenJLUm9odFJmYlJ1cDdrRDhmSnZSMkdxcDB1N1JrdUt1dk5EN3A4?=
+ =?utf-8?B?ckt2RVlGaFVFbkRSeUlsU0lOQlpETU5wUzdQR3lYZmdLVHBETFg0aVpiS0Rz?=
+ =?utf-8?B?aVZ1L08wNU9DejBwcnpnUW5wa2tvYkErVlYyMmdHdjMzdnd3b2tDYWd3ZzJW?=
+ =?utf-8?B?Q3pzRW9lRWpRc2c1aFVWY0d5SVJSdFRVd3UwbjQ4ZlVRTGxrWFFia0hPdTdr?=
+ =?utf-8?B?UWswRkx5eisxN3JuY0cxV2JQMnRtbDNwcWx5UXVid09TdmRyYjM3YkVub0Zz?=
+ =?utf-8?B?WUJia3N5ZlhYazh5Z2FOYkpiamhRZVlZZkRSRlhtNjcyK01iU1hPdVpvaDd2?=
+ =?utf-8?B?bjhlZkdXVUJxNFRWOGQrWlBRRWhzc3V6WHNScHJLN0F1QVRIczNqb0t0ZTk2?=
+ =?utf-8?B?OGNQcFVzOVMrSmRQZ3VPMGZRTjJ4UUdtVFNoZ3A2bW41NXc0TTU5dTZZZmZx?=
+ =?utf-8?B?MExxaWlMRkpLcm1MNWxhZGp4UVJrcFhGNkp2MmRwRVJQMEFIclBTYVE1V0JL?=
+ =?utf-8?B?NjhxV1gvNzd1a2pxa0VYZHlEQitwUUFmWXRPclN3M3NnaGs2MFNpbEFJcW9L?=
+ =?utf-8?B?WEtVZ3JVMGhXNjlNSmlyZnhkOERJNmkyc0YwYkNpTGNnUDROblY4ZWJadUJv?=
+ =?utf-8?B?Ym9JUFE2TjBhdzQwTjZsdnAwZ2dhWFRYZzdTSXRMMHJ0VnNDQ0dWd2M0OGk3?=
+ =?utf-8?B?RHdLNUREdnZ4VnBpUk5nVUR0dEFkcm0vZTJYOVFXWUZCVFlrNlVxRkhwUUdX?=
+ =?utf-8?B?WFV1b1ZYZi9UN2VmUkZoRW1CaVQyZExEVk54aUZRRzN1cEg0YmpXY25tMlpN?=
+ =?utf-8?B?L1F1NW9SaHpQNnR3WGh1azhXRnM3Mm1nWis4cDZlVnJXQzExaHRBekladTJ6?=
+ =?utf-8?B?WThOMmxBNHRVbkxkRGJCYmhwRWxSMnFZUnlWSlJtWVhYNm53US9JTElrNDYr?=
+ =?utf-8?B?SUx0TCtIVjEwRlFaTnIrMTI2aUFWeXQrR2IwOFZJeGNnaWN0Q0RZaXphMllW?=
+ =?utf-8?Q?/IszNvMYENrMUxhbTQ=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:DS0PR11MB7529.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?amg3TXpyVVZEak8zOFMvKzJWZG9kVzlaYXR0NUEwNndMTi9vOEpFRENobWZm?=
- =?utf-8?B?R3N2V25GNXRaaUVLTXFBbTUvRHhZNGd4ZWhFdmFsVDd4NzFpaXU5aDRiejM3?=
- =?utf-8?B?YVlyRnRkV1hENFNmK284NlhCMU52dE9lTmNrTFhWWlowUm81cTRnUHY3U1Rh?=
- =?utf-8?B?dXZJTHRrWk0vYnVXVG0rNHlKMStUM09NdTIwM1VOV1lKbkFGL1JJUzRZQnRK?=
- =?utf-8?B?S09ldFdJK0FUYnFOcFNMTUtXMDNBQXhwQUtLSlZScVQ5ZEphRzhNdDNES2VC?=
- =?utf-8?B?WjJTUUxKdk5zb3NpMzArbWw1NU9xVyszOENmOGQxMVJwTzZ6T0RXZ3pjTmRT?=
- =?utf-8?B?UllUYkM1Rld4TllicG1uQXk3M0VIaDU2T3ErdCtnUlZCU0FPL1NPWXhqN1RO?=
- =?utf-8?B?UUx6MjgwS3MyS01qM3ZGVStlaDh0bUUvNlRlT01sOTBabVBjV1FTRzRTelFP?=
- =?utf-8?B?M2cySzc1RU9ySHAxRmxBZVQrcGpmTUZ0ZThPbXFyaXBTcTFqT2k4Z1dBQUNG?=
- =?utf-8?B?MXhxMVRYditUN0U3YmRJN2JqQ2VtY3Z5eXNQNEVmT2lEK0orcnhvN2lCMjRh?=
- =?utf-8?B?ZWRFRm9lUHFzWUZ0bDkzV2VvenRDamhvRHBOSjlxcE56T1Jjd2JNdVNReUdW?=
- =?utf-8?B?ZDNEcHUwcEoyY2krdElOWXEwMUY0cGdhTEQyalRBeTk0Tm04Yk52eUEvcUZk?=
- =?utf-8?B?UUloUFhPVUlPSjl1MGo2MDFsYk1CeXpIb2NYbU5wcTNpYUJmNDlFeHNmRWlS?=
- =?utf-8?B?ZWNLM0VqY2xQaEwzNTV2a25OYkVqQUlIdy9neEJIaFBQWDdhNEg5aE5JWE9J?=
- =?utf-8?B?ZHRqem91OVIwTmRJd1Jvc1NOR0djYllvL1JWT0w5UGdSWVBqU1h5R2E4RWRu?=
- =?utf-8?B?Qk54dFYxSmE2d2hjQVJYTkdrSW9zT20vaGZkelBVUWt3K3NpbDhUc3VMV0Fp?=
- =?utf-8?B?WCtHeHRBZ1VUVkYzZFpaaEY0a3BIVzIvVmdoSmtjOXE3VHZJOUNkdXJiOWZW?=
- =?utf-8?B?REY0L3NlVHptK1Jrc0cyNXg4V1hwelVFSC9mcFExcE4rN3Z1Z1J5cG1Mcm03?=
- =?utf-8?B?eHBLWDVCSVFNZy9hTGhjblFxZEtaSS9KWDlvZHZYUnFWdythbFM3Y1M2MXVP?=
- =?utf-8?B?Tk9DaFZpQlFSRkMxWWp6M1JTZFJCNUxXWlpYbGkreTU4Mmw1cTZXZk12NWg5?=
- =?utf-8?B?ak14dzQ5LzZFQ21SZ2xSMEpWZGpYdU5EOEVQd1E4bFR5SnNtSnpEUUxkRWNt?=
- =?utf-8?B?SVVJQzBDWDFMVFdKKy9lWXhKVGk3eG5haFhWVTZJZWhNZFdNcWxlb016WGo4?=
- =?utf-8?B?a0ljeEc3ekZFQVZPM3lNL2JFQmVEcG9wdm9Vdk1XRVBIR2dpVEZkQmFFY0lt?=
- =?utf-8?B?c0xESnRlcjc4Q1AwYnBLNm93YVpFd1lqVHMrUXphWFArUjRqdmltQjdFbVVy?=
- =?utf-8?B?RzFMMlZQUU9INCtuWTROTDVHa0ZnMCtuRGdyY2NGT2FvcTR1VEtBUyt1ZkNS?=
- =?utf-8?B?Z2dFWTdyZTJHM1lPUEJCUU1PK3RWcXovcDlkdkJJYmlieUZ0SGIwNGVKZlZ6?=
- =?utf-8?B?MnNoWjhIWGRMNDM0bEo3SXRZVE9uWkthNmlXQnFtT0pZTy9zanRNdzZmUHN2?=
- =?utf-8?B?R0xaT0p3SU1nQTcxYzRRR1MyVnhzZjZjYzdyc256a2FjS2NLUi9ZWkxqcFZJ?=
- =?utf-8?B?Nkg2Mk1uQisycStrSXliT3pLYkFyZFhIRTNMWTFQQVR5eFhBSTBXa0toamtI?=
- =?utf-8?B?QkJVMUJOTHhvTDh3UmZaRnFBdEIzUEJNamJjbjdTbHk2QkN4Y29OVmpZcVFZ?=
- =?utf-8?B?cWEwQlB5NnZJSVdFYUtZVjNqVlB2eHBXd3FPaUYyQldXNTJQcVA1c3p0YUxy?=
- =?utf-8?B?ZkVidkZnL2dRWjdZaFowZUREOVgwNDN2Tjd0eFBqZ0Vkak16QlpHN1ZXcjho?=
- =?utf-8?B?UVh2Rmo5aXBGQWVrUVgwcXVFTU8yQkRMU0loSkRtbjB3YjNxTmlJaWN2R0li?=
- =?utf-8?B?ME5HOFZNY1hpc2k5Wk81NVNGSFZFNEdoR0h4SW5hNSs5ckZsRDdxKzRER1Nw?=
- =?utf-8?B?Wlhid3FrTlE0cEhzaFptOFdGckVGOUtBTkVJMlI3bXlLQllQNGRvWHNMdDRs?=
- =?utf-8?Q?F73PEYWowAY/2q7dlTOPrqlLT?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6178ee9c-efc3-4625-197b-08dc9a9c40e8
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y2k3c21SYzdWeFIrSC85U0cvVDYvbW1RQkl1YktxQmoxVU4wSktCb1dPUEZV?=
+ =?utf-8?B?bW5aV3JmYmE0ZysxL296NkZ0UDdXMGZaL2xESGMxdy9uR3VNOHZNektNRFpy?=
+ =?utf-8?B?c05sb0hsbi9rRk9HYzlaeUxKelVoK3owd0lIUURNdCtLRU54UkJtZExmSEFE?=
+ =?utf-8?B?Q3hTMnNDNUV4OXB2Zmo2cXJpdnc0MjRYb1pEOFRhNHYrc05kNjk4bmd3T1NU?=
+ =?utf-8?B?VmVKV2RsUXBCcEM1SU90bkVsZVdyZmo4SnpqcFUreStMQzdsclFtYnpETmFi?=
+ =?utf-8?B?em5WeGdGMHhLMWJJbGZjeGRPTk4yRmZ0OXlocXFsdnNqMnRUZ2FlSVMyVlpL?=
+ =?utf-8?B?ZWxJUFRnakJjbVdZNVFBNHMzWGRlcXlQQ0NDZWtPZkJib1pZVHdENk9RanBo?=
+ =?utf-8?B?SzRJS25FeGFxQ1c1V0dndmlBcExuSmlDdWFuUit4dVhKTE14RXVpZUJnWGM4?=
+ =?utf-8?B?Q3h2Wm4yQ2RVeXVUK3o1OCswUU5DengzekVUY2JkNXAwcUtab0ZyN21HV0th?=
+ =?utf-8?B?V1JjSWZYVmdMdnNQemVyYkt3Zys5bE01T1dQWW9ZR1FnaGVLSWNpWVMwRXFp?=
+ =?utf-8?B?RlZubkdrZFYrVjUzcnVMQk45NXUzeFdmR3gwOVNlV1ovQlY1UU5QWEZ4S3ZR?=
+ =?utf-8?B?NFRMbVlZWmk2T2dKNGVNaTNjUmNHUkl0YjdiWUN2RStsUzNHNGFBUzA2d3o2?=
+ =?utf-8?B?RFZvSUV1RS8yb0ZaWVNmWStHZzcxbVZuaGhRbHFzZDRtZ0crMlIyc0F3KzJw?=
+ =?utf-8?B?dW9ZUERrL0VUNjErMW1UYzA0ZXZLUEVwWVEwQ1dPcTBqbURoK3pKL2tyb3lX?=
+ =?utf-8?B?cmRaMTl3K01PZ3cvYXhTS0poT0ZDblBwQm16WTlrZDhQajF5NURMVGFqdDZt?=
+ =?utf-8?B?cUlVa0laU1NndjQ3TWtWT0NndUV2ZUZQYXU3QzRFMi9NUGNSblhPN2I5Z2I1?=
+ =?utf-8?B?SmlsRFYzZXJadmtzUjNFbjdCR3o2ZkxUZ1JtVGxXenlIL2pCb0dMVHpLckJO?=
+ =?utf-8?B?MTdQSmt6U1h6WGt3RjE2Q0xBUFBVNm1sTGhoVk9zMEVjRGxFL1JXR29QTTE2?=
+ =?utf-8?B?VThwT0tXOWZHQld5NFVzWVdkOEVoVHZVRHMveFNHVDZUQitHZEFTWmZSMXdQ?=
+ =?utf-8?B?TXF3UmZ6NUtWbEdsaFVLVjM0QWtvNTBMWkhOYlFMMWZ2empZT1hXNGlBZlBF?=
+ =?utf-8?B?dHlGTFdLUjgvWkJWOUxhMzdZQ0FZWmFLa0ZGOFIxdGRic244cmlJVGQ4dXpr?=
+ =?utf-8?B?cFJJaVU2NnJha1czVkI2NFU2OFBjVlI3bmJxWGVsaWM5dzY3bTZVZXN0aUN5?=
+ =?utf-8?B?dStxZWc4U3lSSURGTzBGUVhPd00wbnJ0VHNnS3paVVV4U1lpVDJxNHVqM2N4?=
+ =?utf-8?B?QUNrWXJqT0JNYlNMSzl6eTJHZ0w3OTNicUdIZktTelczWUx6Wk4xQlEwbnVl?=
+ =?utf-8?B?bmVEd1JFTThrcjU1d1o4WU9xUzFNTHY5SjhjRnNiUkMxU3AxU3hOUDVaTTZS?=
+ =?utf-8?B?ZUU2N3dtcGduZGNKelkwTjJhS09oa2tYeTEwTmNJWjZGT1YwVjF6TnFTUmlJ?=
+ =?utf-8?B?aHdHK0hhU0w0QmNaM3NoQU5zeG9xRDRpb2xodTN3cVBqUXJ6bXMxdmdESWZC?=
+ =?utf-8?B?L3AwZHljalpnRTY1dm93VHhFODRiZ05Nd3lkVzJTTDlVanBlSEdzTEhIUzc0?=
+ =?utf-8?B?RjdxNUkzQk9QQm9CTWVLczB5ekZFWlNIMmtLQnF3SjE5UjNVNlB4ck5McXpX?=
+ =?utf-8?B?YkxsZG1MUUJvM01FUVBhS2NhNjExOHlLV3o5bWZocVlYSkNXSXp4Z3FVenJJ?=
+ =?utf-8?B?ZG05TFhPWEV4VVZnZ0dwS2ozM0hRbEZON0htemx0bGZiMnF5Y2RpcGJRbWI5?=
+ =?utf-8?B?RUtvb25KdHBIeVcyWkxVRGsxMkowTVFTSGF4QjdManIzc3hFTVRxeWVGUHVL?=
+ =?utf-8?B?M1RQc2pTNno1NUI3SFNPMjdFVGpoNFVORFJUcTdLSGRFd2lzVjcvVGVXSUJT?=
+ =?utf-8?B?WWhtdy9uYnI1N1o0bmNVdUVZSjhVcldUbUx4eUpJQzgvMGtSeG5RaGdaZEZV?=
+ =?utf-8?B?OVBEWXU1ZHkrcWZCdzZzUGVlSWVNUzJoYW0wYkFjODdDUUc0STJhZnY1UUVQ?=
+ =?utf-8?Q?ZHYsHqp3DFLo8LnccAjNyTG+o?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36cfc938-7607-4ecf-3d18-08dc9a9c8172
 X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7529.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2024 13:38:27.7366 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jul 2024 13:40:16.0143 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iXqRj+Wi4sP5yd+nZmag1bsF4vJ4ZqQOWUQpEt1Phcie9XF6rxjpFw04NK7NPsjQ23mrzZ4g7etywQQ6pBEURA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7417
+X-MS-Exchange-CrossTenant-UserPrincipalName: kU/INc4tRfkwdlL6vN6Hckv1EUchps2LtdYZMOacEu5tv9JZyL+MwzpEFyT1hYduOJZsnhEWOmMo2O6BgQetnw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR11MB8360
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=yi.l.liu@intel.com;
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=yi.l.liu@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -212,175 +209,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/7/2 20:15, Michael S. Tsirkin wrote:
-> On Tue, Jul 02, 2024 at 05:57:57AM +0000, CLEMENT MATHIEU--DRIF wrote:
->>
->>
->> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
->> From: Michael S. Tsirkin <mst@redhat.com>
->> Sent: 01 July 2024 22:02
->> To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
->> Cc: qemu-devel@nongnu.org <qemu-devel@nongnu.org>; jasowang@redhat.com
->> <jasowang@redhat.com>; zhenzhong.duan@intel.com <zhenzhong.duan@intel.com>;
->> kevin.tian@intel.com <kevin.tian@intel.com>; yi.l.liu@intel.com
->> <yi.l.liu@intel.com>; joao.m.martins@oracle.com <joao.m.martins@oracle.com>;
->> peterx@redhat.com <peterx@redhat.com>
->> Subject: Re: [PATCH ats_vtd v5 00/22] ATS support for VT-d
->>   
->> Caution: External email. Do not open attachments or click links, unless this
->> email comes from a known sender and you know the content is safe.
->>
->>
->> On Mon, Jun 03, 2024 at 05:59:38AM +0000, CLEMENT MATHIEU--DRIF wrote:
->>> From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
->>>
->>> This series belongs to a list of series that add SVM support for VT-d.
->>>
->>> As a starting point, we use the series called 'intel_iommu: Enable stage-1
->> translation' (rfc2) by Zhenzhong Duan and Yi Liu.
->>>
->>> Here we focus on the implementation of ATS support in the IOMMU and on a
->> PCI-level
->>> API for ATS to be used by virtual devices.
->>>
->>> This work is based on the VT-d specification version 4.1 (March 2023).
->>> Here is a link to a GitHub repository where you can find the following
->> elements :
->>>      - Qemu with all the patches for SVM
->>>          - ATS
->>>          - PRI
->>>          - Device IOTLB invalidations
->>>          - Requests with already translated addresses
->>>      - A demo device
->>>      - A simple driver for the demo device
->>>      - A userspace program (for testing and demonstration purposes)
->>>
->>> https://eur06.safelinks.protection.outlook.com/?url=
->> https%3A%2F%2Fgithub.com%2FBullSequana%2FQemu-in-guest-SVM-demo&data=
->> 05%7C02%7Cclement.mathieu--drif%40eviden.com%7Cf5759aefcc5f4e7d4e6c08dc9a08d29a%7C7d1c77852d8a437db8421ed5d8fbe00a%7C0%7C0%7C638554609882544195%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C
->> &sdata=2Gza1VD7hKr1Sx3fOLoRh6tk3taSPKTn5nfimhPLz70%3D&reserved=0
->>
->> I will merge, but could you please resend this using git format-patch
->> for formatting?  The patches have trailing CRs and don't show which sha1
->> they are for, which makes re-applying them after each change painful.
->>
->>
->>
->> Hi Michael,
->> I sent the series again without the trailing new line.
->> Tell me if it's better.
->>
->> Is Zhenzhong's FLTS series merged? If not, it might the cause of the sha1
->> problem you are facing
+On 2024/7/2 13:52, CLEMENT MATHIEU--DRIF wrote:
+> From: Clement Mathieu--Drif <cmdetu@gmail.com>
 > 
-> I don't think I have FLTS in any queue.
+> This series belongs to a list of series that add SVM support for VT-d.
 > 
-> If your series has a dependency please specify this in
-> the cover letter.
+> As a starting point, we use the series called 'intel_iommu: Enable stage-1 translation' (rfc2) by Zhenzhong Duan and Yi Liu.
 > 
-> Alternatively just include the dependency in the posting.
+> Here we focus on the implementation of ATS support in the IOMMU and on a PCI-level
+> API for ATS to be used by virtual devices.
+> 
+> This work is based on the VT-d specification version 4.1 (March 2023).
+> Here is a link to a GitHub repository where you can find the following elements :
+>      - Qemu with all the patches for SVM
+>          - ATS
+>          - PRI
+>          - Device IOTLB invalidations
+>          - Requests with already translated addresses
+>      - A demo device
+>      - A simple driver for the demo device
+>      - A userspace program (for testing and demonstration purposes)
+> 
+> https://github.com/BullSequana/Qemu-in-guest-SVM-demo
+> 
+> v2
+>      - handle huge pages better by detecting the page table level at which the translation errors occur
+>      - Changes after review by ZhenZhong Duan :
+>      	- Set the access bit after checking permissions
+>      	- helper for PASID and ATS : make the commit message more accurate ('present' replaced with 'enabled')
+>      	- pcie_pasid_init: add PCI_PASID_CAP_WIDTH_SHIFT and use it instead of PCI_EXT_CAP_PASID_SIZEOF for shifting the pasid width when preparing the capability register
+>      	- pci: do not check pci_bus_bypass_iommu after calling pci_device_get_iommu_bus_devfn
+>      	- do not alter formatting of IOMMUTLBEntry declaration
+>      	- vtd_iova_fl_check_canonical : directly use s->aw_bits instead of aw for the sake of clarity
+> 
+> v3
+>      - rebase on new version of Zhenzhong's flts implementation
+>      - fix the atc lookup operation (check the mask before returning an entry)
+>      - add a unit test for the ATC
+>      - store a user pointer in the iommu notifiers to simplify the implementation of svm devices
+>      Changes after review by Zhenzhong :
+>      	- store the input pasid instead of rid2pasid when returning an entry after a translation
+>      	- split the ATC implementation and its unit tests
+> 
+> v4
+>      Changes after internal review
+>      	- Fix the nowrite optimization, an ATS translation without the nowrite flag should not fail when the write permission is not set
+> 
+> v5
+>      Changes after review by Philippe :
+>      	- change the type of 'level' to unsigned in vtd_lookup_iotlb
 
-seems this is the dependency.
+Hi CMD,
 
-https://lore.kernel.org/qemu-devel/20240522062313.453317-1-zhenzhong.duan@intel.com/#t
+I saw two v5 in my inbox, are they the same? :)
 
+> Clément Mathieu--Drif (22):
+>    intel_iommu: fix FRCD construction macro.
+>    intel_iommu: make types match
+>    intel_iommu: return page walk level even when the translation fails
+>    intel_iommu: do not consider wait_desc as an invalid descriptor
+>    memory: add permissions in IOMMUAccessFlags
+>    pcie: add helper to declare PASID capability for a pcie device
+>    pcie: helper functions to check if PASID and ATS are enabled
+>    intel_iommu: declare supported PASID size
+>    pci: cache the bus mastering status in the device
+>    pci: add IOMMU operations to get address spaces and memory regions
+>      with PASID
+>    memory: store user data pointer in the IOMMU notifiers
+>    pci: add a pci-level initialization function for iommu notifiers
+>    intel_iommu: implement the get_address_space_pasid iommu operation
+>    intel_iommu: implement the get_memory_region_pasid iommu operation
+>    memory: Allow to store the PASID in IOMMUTLBEntry
+>    intel_iommu: fill the PASID field when creating an instance of
+>      IOMMUTLBEntry
+>    atc: generic ATC that can be used by PCIe devices that support SVM
+>    atc: add unit tests
+>    memory: add an API for ATS support
+>    pci: add a pci-level API for ATS
+>    intel_iommu: set the address mask even when a translation fails
+>    intel_iommu: add support for ATS
 > 
-> 
-> 
-> 
->> Thanks
->>> cmd
->>
->>
->>> v2
->>>      - handle huge pages better by detecting the page table level at which the
->> translation errors occur
->>>      - Changes after review by ZhenZhong Duan :
->>>        - Set the access bit after checking permissions
->>>        - helper for PASID and ATS : make the commit message more accurate
->> ('present' replaced with 'enabled')
->>>        - pcie_pasid_init: add PCI_PASID_CAP_WIDTH_SHIFT and use it instead of
->> PCI_EXT_CAP_PASID_SIZEOF for shifting the pasid width when preparing the
->> capability register
->>>        - pci: do not check pci_bus_bypass_iommu after calling
->> pci_device_get_iommu_bus_devfn
->>>        - do not alter formatting of IOMMUTLBEntry declaration
->>>        - vtd_iova_fl_check_canonical : directly use s->aw_bits instead of aw
->> for the sake of clarity
->>>
->>> v3
->>>      - rebase on new version of Zhenzhong's flts implementation
->>>      - fix the atc lookup operation (check the mask before returning an entry)
->>>      - add a unit test for the ATC
->>>      - store a user pointer in the iommu notifiers to simplify the
->> implementation of svm devices
->>>      Changes after review by Zhenzhong :
->>>        - store the input pasid instead of rid2pasid when returning an entry
->> after a translation
->>>        - split the ATC implementation and its unit tests
->>>
->>> v4
->>>      Changes after internal review
->>>        - Fix the nowrite optimization, an ATS translation without the nowrite
->> flag should not fail when the write permission is not set
->>>
->>> v5
->>>      Changes after review by Philippe :
->>>        - change the type of 'level' to unsigned in vtd_lookup_iotlb
->>>
->>>
->>>
->>> Clément Mathieu--Drif (22):
->>>    intel_iommu: fix FRCD construction macro.
->>>    intel_iommu: make types match
->>>    intel_iommu: return page walk level even when the translation fails
->>>    intel_iommu: do not consider wait_desc as an invalid descriptor
->>>    memory: add permissions in IOMMUAccessFlags
->>>    pcie: add helper to declare PASID capability for a pcie device
->>>    pcie: helper functions to check if PASID and ATS are enabled
->>>    intel_iommu: declare supported PASID size
->>>    pci: cache the bus mastering status in the device
->>>    pci: add IOMMU operations to get address spaces and memory regions
->>>      with PASID
->>>    memory: store user data pointer in the IOMMU notifiers
->>>    pci: add a pci-level initialization function for iommu notifiers
->>>    intel_iommu: implement the get_address_space_pasid iommu operation
->>>    intel_iommu: implement the get_memory_region_pasid iommu operation
->>>    memory: Allow to store the PASID in IOMMUTLBEntry
->>>    intel_iommu: fill the PASID field when creating an instance of
->>>      IOMMUTLBEntry
->>>    atc: generic ATC that can be used by PCIe devices that support SVM
->>>    atc: add unit tests
->>>    memory: add an API for ATS support
->>>    pci: add a pci-level API for ATS
->>>    intel_iommu: set the address mask even when a translation fails
->>>    intel_iommu: add support for ATS
->>>
->>>   hw/i386/intel_iommu.c                     | 142 +++++-
->>>   hw/i386/intel_iommu_internal.h            |   6 +-
->>>   hw/pci/pci.c                              | 127 +++++-
->>>   hw/pci/pcie.c                             |  42 ++
->>>   include/exec/memory.h                     |  51 ++-
->>>   include/hw/i386/intel_iommu.h             |   2 +-
->>>   include/hw/pci/pci.h                      | 101 +++++
->>>   include/hw/pci/pci_device.h               |   1 +
->>>   include/hw/pci/pcie.h                     |   9 +-
->>>   include/hw/pci/pcie_regs.h                |   3 +
->>>   include/standard-headers/linux/pci_regs.h |   1 +
->>>   system/memory.c                           |  20 +
->>>   tests/unit/meson.build                    |   1 +
->>>   tests/unit/test-atc.c                     | 527 ++++++++++++++++++++++
->>>   util/atc.c                                | 211 +++++++++
->>>   util/atc.h                                | 117 +++++
->>>   util/meson.build                          |   1 +
->>>   17 files changed, 1330 insertions(+), 32 deletions(-)
->>>   create mode 100644 tests/unit/test-atc.c
->>>   create mode 100644 util/atc.c
->>>   create mode 100644 util/atc.h
->>>
->>> --
->>> 2.45.1
->>
+>   hw/i386/intel_iommu.c                     | 146 +++++-
+>   hw/i386/intel_iommu_internal.h            |   6 +-
+>   hw/pci/pci.c                              | 127 +++++-
+>   hw/pci/pcie.c                             |  42 ++
+>   include/exec/memory.h                     |  51 ++-
+>   include/hw/i386/intel_iommu.h             |   2 +-
+>   include/hw/pci/pci.h                      | 101 +++++
+>   include/hw/pci/pci_device.h               |   1 +
+>   include/hw/pci/pcie.h                     |   9 +-
+>   include/hw/pci/pcie_regs.h                |   3 +
+>   include/standard-headers/linux/pci_regs.h |   1 +
+>   system/memory.c                           |  20 +
+>   tests/unit/meson.build                    |   1 +
+>   tests/unit/test-atc.c                     | 527 ++++++++++++++++++++++
+>   util/atc.c                                | 211 +++++++++
+>   util/atc.h                                | 117 +++++
+>   util/meson.build                          |   1 +
+>   17 files changed, 1332 insertions(+), 34 deletions(-)
+>   create mode 100644 tests/unit/test-atc.c
+>   create mode 100644 util/atc.c
+>   create mode 100644 util/atc.h
 > 
 
 -- 
