@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58071C30658
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADC2C3065C
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:57:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOkY7-0004xd-BX; Tue, 02 Jul 2024 16:56:27 -0400
+	id 1sOkY3-0004v1-2t; Tue, 02 Jul 2024 16:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1sOkY4-0004wP-I2
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:56:24 -0400
+ id 1sOkY1-0004uJ-Om
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:56:21 -0400
 Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongwon.kim@intel.com>)
- id 1sOkY2-0001GC-PD
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:56:24 -0400
+ id 1sOkXz-0001EQ-B4
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:56:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719953782; x=1751489782;
- h=from:to:subject:date:message-id:in-reply-to:references:
- mime-version:content-transfer-encoding;
- bh=3vwg8wmA5DCsngLhZ8wHvJDzQzDYML4wcP8YeufEq3E=;
- b=PN0fJMlDm95396RoPCV11xFpeqIvBBXl7EjkNQ0MKc1fHqNaVW16UgSN
- 2XHhZD6xbTjGFlZklFw/tiTPvok+AtQ/04Xo5XGy08NzCP4TgCqsEXEsL
- bOnzU2Cw3BKWEW9Wt06jCqfTFCjFz9d7iLi8eg04/V39ApXg6WcOEbpb/
- bbaI4E+0rbw3kNhEGSPXOPXV/P0wt6M3kpHOKR6g9dKkhqyKpjE9qdb5i
- 1uHOQkZT5G2GgPJFcFGbSOVHmTHkp1LNEZMaGABlhreob5LsWKbGquuS7
- GcQhFtk+tGpZR+kVYKuVsI/Bb//1JCap9LxCN7WyM2Yxt0SRAOPcsccJ4 Q==;
-X-CSE-ConnectionGUID: IdfNQ06MRlyeI2z+/Rh69Q==
-X-CSE-MsgGUID: tmywFvQ7RrSN95PD6wWesw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11121"; a="28549753"
-X-IronPort-AV: E=Sophos;i="6.09,180,1716274800"; d="scan'208";a="28549753"
+ t=1719953779; x=1751489779;
+ h=from:to:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=5Pu0+X0mW3eSWd76cLTOnatF+eLmYr+7ew44hAzSYBE=;
+ b=O3YIoWKmr01hSjnqw7GbEjnsudIT6yAUMWwyvitk+opxGaVfmbom/3Xe
+ OZ/geztC5+ghqE1QlO4VVA3DEjtNiS3nKggZokiYXIfSMUuTVHdD5wxZ1
+ KZKyOnp7z1uq2aop0M5xIGLM3Hnn4DxsLSdxBoF2bB71dOZGDa+wrxrXi
+ GvLme+eBuAF7RrgLHnPzSCGPxPV78yk/mXCBouLXMXRLwVRHDhLw7FxOJ
+ IlxvmAaQMHqrte872teOvyfhShjTTaI/ZJgVaf/sb6Zmv17nP7kqhYs3B
+ IFbClMJia4KoT0V3SnHM6T1NHpMTi/+ZK+oMujdt1BoFIw1MIML5z1GtW g==;
+X-CSE-ConnectionGUID: cik4Sv1/S3yp5zQyu6lZeQ==
+X-CSE-MsgGUID: dmQUgSsCRMWf3sf4uWhQww==
+X-IronPort-AV: E=McAfee;i="6700,10204,11121"; a="28549751"
+X-IronPort-AV: E=Sophos;i="6.09,180,1716274800"; d="scan'208";a="28549751"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  02 Jul 2024 13:56:16 -0700
-X-CSE-ConnectionGUID: evh9ibklTee6XKoQoRuG+g==
-X-CSE-MsgGUID: cocdOU6NQ4CQkEEG7dYktQ==
+X-CSE-ConnectionGUID: nJEWdt2IT9CtRVt3nmcuMQ==
+X-CSE-MsgGUID: oERP9sOATlmPF0EAJqxULA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,180,1716274800"; d="scan'208";a="46085791"
+X-IronPort-AV: E=Sophos;i="6.09,180,1716274800"; d="scan'208";a="46085789"
 Received: from dongwonk-z390-aorus-ultra.fm.intel.com ([10.105.129.124])
  by fmviesa010.fm.intel.com with ESMTP; 02 Jul 2024 13:56:16 -0700
 From: dongwon.kim@intel.com
 To: qemu-devel@nongnu.org
-Subject: [PATCH 2/2] ui/dmabuf: Remove 'sync' from QemuDmaBuf struct
-Date: Tue,  2 Jul 2024 13:55:03 -0700
-Message-Id: <20240702205503.2774745-3-dongwon.kim@intel.com>
+Subject: [PATCH 0/2] Consolidate create-sync and create-fence
+Date: Tue,  2 Jul 2024 13:55:01 -0700
+Message-Id: <20240702205503.2774745-1-dongwon.kim@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240702205503.2774745-1-dongwon.kim@intel.com>
-References: <20240702205503.2774745-1-dongwon.kim@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,74 +80,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Dongwon Kim <dongwon.kim@intel.com>
 
-Sync object is not used so removing it from QemuDmaBuf struct
+Sync object itself is never used as is so can be removed
+from QemuDmaBuf struct. So now sync is only temporarily needed
+when creating fence for the object which means what was done in
+egl_dmabuf_create_sync can now be a part of egl_dmabuf_create_fence
+function. And egl_dmabuf_create_fence returns fence_fd so the
+better function name will be egl_dmabuf_create_fence_fd.
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
----
- include/ui/dmabuf.h |  2 --
- ui/dmabuf.c         | 14 --------------
- 2 files changed, 16 deletions(-)
+Dongwon Kim (2):
+  ui/egl-helpers: Consolidate create-sync and create-fence
+  ui/dmabuf: Remove 'sync' from QemuDmaBuf struct
 
-diff --git a/include/ui/dmabuf.h b/include/ui/dmabuf.h
-index dc74ba895a..7f0f7f3f6e 100644
---- a/include/ui/dmabuf.h
-+++ b/include/ui/dmabuf.h
-@@ -36,13 +36,11 @@ uint32_t qemu_dmabuf_get_y(QemuDmaBuf *dmabuf);
- uint32_t qemu_dmabuf_get_backing_width(QemuDmaBuf *dmabuf);
- uint32_t qemu_dmabuf_get_backing_height(QemuDmaBuf *dmabuf);
- bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf);
--void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf);
- int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf);
- bool qemu_dmabuf_get_allow_fences(QemuDmaBuf *dmabuf);
- bool qemu_dmabuf_get_draw_submitted(QemuDmaBuf *dmabuf);
- void qemu_dmabuf_set_texture(QemuDmaBuf *dmabuf, uint32_t texture);
- void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd);
--void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync);
- void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted);
- void qemu_dmabuf_set_fd(QemuDmaBuf *dmabuf, int32_t fd);
- 
-diff --git a/ui/dmabuf.c b/ui/dmabuf.c
-index df7a09703f..2332292a08 100644
---- a/ui/dmabuf.c
-+++ b/ui/dmabuf.c
-@@ -23,7 +23,6 @@ struct QemuDmaBuf {
-     uint32_t  backing_width;
-     uint32_t  backing_height;
-     bool      y0_top;
--    void      *sync;
-     int       fence_fd;
-     bool      allow_fences;
-     bool      draw_submitted;
-@@ -170,13 +169,6 @@ bool qemu_dmabuf_get_y0_top(QemuDmaBuf *dmabuf)
-     return dmabuf->y0_top;
- }
- 
--void *qemu_dmabuf_get_sync(QemuDmaBuf *dmabuf)
--{
--    assert(dmabuf != NULL);
--
--    return dmabuf->sync;
--}
--
- int32_t qemu_dmabuf_get_fence_fd(QemuDmaBuf *dmabuf)
- {
-     assert(dmabuf != NULL);
-@@ -210,12 +202,6 @@ void qemu_dmabuf_set_fence_fd(QemuDmaBuf *dmabuf, int32_t fence_fd)
-     dmabuf->fence_fd = fence_fd;
- }
- 
--void qemu_dmabuf_set_sync(QemuDmaBuf *dmabuf, void *sync)
--{
--    assert(dmabuf != NULL);
--    dmabuf->sync = sync;
--}
--
- void qemu_dmabuf_set_draw_submitted(QemuDmaBuf *dmabuf, bool draw_submitted)
- {
-     assert(dmabuf != NULL);
+ include/ui/dmabuf.h      |  2 --
+ include/ui/egl-helpers.h |  3 +--
+ ui/dmabuf.c              | 14 --------------
+ ui/egl-helpers.c         | 27 +++++++++++----------------
+ ui/gtk-egl.c             | 15 +++------------
+ ui/gtk-gl-area.c         | 10 ++--------
+ 6 files changed, 17 insertions(+), 54 deletions(-)
+
 -- 
 2.34.1
 
