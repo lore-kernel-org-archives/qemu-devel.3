@@ -4,66 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F2EC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D04C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 11:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOax9-0006SL-F0; Tue, 02 Jul 2024 06:41:39 -0400
+	id 1sObMv-00076c-9v; Tue, 02 Jul 2024 07:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sOax1-0006QA-UE
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:41:33 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sObMj-00073L-EK
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:08:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sOawx-0005OR-75
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:41:30 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WCztV1jKdz6K9DM;
- Tue,  2 Jul 2024 18:39:30 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 541B4140680;
- Tue,  2 Jul 2024 18:41:21 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 2 Jul
- 2024 11:41:20 +0100
-Date: Tue, 2 Jul 2024 11:41:19 +0100
-To: Igor Mammedov <imammedo@redhat.com>, <linuxarm@huawei.com>
-CC: <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- <qemu-devel@nongnu.org>, <ankita@nvidia.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>, "Dave
- Jiang" <dave.jiang@intel.com>, Huang Ying <ying.huang@intel.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, <eduardo@habkost.net>,
- <linux-cxl@vger.kernel.org>, Michael Roth <michael.roth@amd.com>, Ani Sinha
- <anisinha@redhat.com>
-Subject: Re: [PATCH v3 07/11] hw/pci-bridge: Add acpi_uid property to CXL PXB
-Message-ID: <20240702113826.00003a66@huawei.com>
-In-Reply-To: <20240701185203.00006159@Huawei.com>
-References: <20240620160324.109058-1-Jonathan.Cameron@huawei.com>
- <20240620160324.109058-8-Jonathan.Cameron@huawei.com>
- <20240627152758.5eafb402@imammedo.users.ipa.redhat.com>
- <20240627144614.00004358@Huawei.com>
- <20240628135525.0c131846@imammedo.users.ipa.redhat.com>
- <20240701185203.00006159@Huawei.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sObMf-0005sB-L1
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 07:08:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719918479;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/kSRGVRDdr1le02ZG9KrHjf+TWvB9bDKFetcTryVnGs=;
+ b=Oc7X8RXx8KEK+hVbMyowEgCh0fIeBOWL+BYcH20/Tf/WtMAUxr6DL1y+Ud9GlPZZceJK/6
+ bvXw4a4s71WXLybmoBN47cCLoBYmj/NIbQUlzS+Tf4P/LH93MeMTpOg6mV8TqIp6AO5Ygy
+ vz8+qkECpL1RDHz63wGr/+k5y1b+KLI=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-19-nGS5zcPbPui3-wl55Ok0mw-1; Tue, 02 Jul 2024 07:07:56 -0400
+X-MC-Unique: nGS5zcPbPui3-wl55Ok0mw-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52ce1688931so3796208e87.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 04:07:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719918475; x=1720523275;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/kSRGVRDdr1le02ZG9KrHjf+TWvB9bDKFetcTryVnGs=;
+ b=xTIx5Tt4WQx0X9HkI0GymxLBX2oANer+Tqc5t1NfINP7Y24HVLM6Bx+eHpOGSPsv08
+ 5vPl4wOEJUJMZXjIVQ48vdkkAKy18pD+9EEJ0FuJ65fy1abqxD2W6/Z5gSrloyyQFDYd
+ PFkqFhHpEmkd6RqHVPfexmg1ghdvaBstf4tD0b7Lz0N8epHtRGybVsGb4vJu+LEY/FWB
+ UdcaFyfsZjNHlPUdz3OQvQMkjaYNRPRqNoNeNF47haNtq8mc/qCioYOmi+Lb+CZZ8had
+ rvlp6+0LULDU0mCGXi46fdnjkzaSGmviB+pPit20SaCg5m+Byz97dXqSWKTYYVP0FyHK
+ +mBg==
+X-Gm-Message-State: AOJu0YyExjrtGGNMUdNWSRQ6XtJtE0rwYqc4ra47xKIq1qB1DTDd3Kz/
+ +5lGdAQDTms+YbFVAWmBs+/N0lxUHrHVhdONOCaXw/XUuD8F4OCr2G+kDIDWzfizdt7ND2jMbpQ
+ AEabNtpkeIHEVWhLF9T77a2dCPA4lNm+ZuOyvmFOF9LMDmQQP5d1S
+X-Received: by 2002:a05:6512:15a3:b0:52c:e326:f4cf with SMTP id
+ 2adb3069b0e04-52e82643b81mr6554391e87.3.1719918475282; 
+ Tue, 02 Jul 2024 04:07:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1zoA2OCel2pr7DS9/8ql46EfIxVDhjq2ALucDKkPjNpTDOPavC6yNld17rZYSHTF1gWvlkQ==
+X-Received: by 2002:a05:6512:15a3:b0:52c:e326:f4cf with SMTP id
+ 2adb3069b0e04-52e82643b81mr6554332e87.3.1719918473561; 
+ Tue, 02 Jul 2024 04:07:53 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:55d:614d:9fb:6fdd:72a4:f3d])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256b0c0f26sm191311055e9.39.2024.07.02.04.07.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Jul 2024 04:07:53 -0700 (PDT)
+Date: Tue, 2 Jul 2024 07:07:49 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: "Chen, Jiqian" <Jiqian.Chen@amd.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "Huang, Ray" <Ray.Huang@amd.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH v11 2/2] virtio-pci: implement No_Soft_Reset bit
+Message-ID: <20240702070728-mutt-send-email-mst@kernel.org>
+References: <20240606102205.114671-1-Jiqian.Chen@amd.com>
+ <20240606102205.114671-3-Jiqian.Chen@amd.com>
+ <BL1PR12MB5849BFAF241DE61E6F166861E7C92@BL1PR12MB5849.namprd12.prod.outlook.com>
+ <BL1PR12MB5849B84143E04A429E23AB81E7DC2@BL1PR12MB5849.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <BL1PR12MB5849B84143E04A429E23AB81E7DC2@BL1PR12MB5849.namprd12.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,113 +99,136 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 1 Jul 2024 18:52:03 +0100
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
-
-> On Fri, 28 Jun 2024 13:55:25 +0200
-> Igor Mammedov <imammedo@redhat.com> wrote:
-> 
-> > On Thu, 27 Jun 2024 14:46:14 +0100
-> > Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
-> >   
-> > > On Thu, 27 Jun 2024 15:27:58 +0200
-> > > Igor Mammedov <imammedo@redhat.com> wrote:
-> > >     
-> > > > On Thu, 20 Jun 2024 17:03:15 +0100
-> > > > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
-> > > >       
-> > > > > This allows the ACPI SRAT Generic Port Affinity Structure
-> > > > > creation to be independent of PCI internals. Note that
-> > > > > the UID is currently the PCI bus number.
-> > > > > 
-> > > > > Suggested-by: Igor Mammedov <imammedo@redhat.com>
-> > > > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > > > 
-> > > > > ---
-> > > > > v3: New patch
-> > > > > ---
-> > > > >  hw/pci-bridge/pci_expander_bridge.c | 17 ++++++++++++++++-
-> > > > >  1 file changed, 16 insertions(+), 1 deletion(-)
-> > > > > 
-> > > > > diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-> > > > > index 0411ad31ea..92d39b917a 100644
-> > > > > --- a/hw/pci-bridge/pci_expander_bridge.c
-> > > > > +++ b/hw/pci-bridge/pci_expander_bridge.c
-> > > > > @@ -93,6 +93,21 @@ static void pxb_bus_class_init(ObjectClass *class, void *data)
-> > > > >      pbc->numa_node = pxb_bus_numa_node;
-> > > > >  }
-> > > > >  
-> > > > > +static void prop_pxb_cxl_uid_get(Object *obj, Visitor *v, const char *name,
-> > > > > +                             void *opaque, Error **errp)
-> > > > > +{
-> > > > > +    uint32_t uid = pci_bus_num(PCI_BUS(obj));
-> > > > > +
-> > > > > +    visit_type_uint32(v, name, &uid, errp);
-> > > > > +}
-> > > > > +
-> > > > > +static void pxb_cxl_bus_class_init(ObjectClass *class, void *data)
-> > > > > +{
-> > > > > +    pxb_bus_class_init(class, data);
-> > > > > +    object_class_property_add(class, "acpi_uid", "uint32",
-> > > > > +                              prop_pxb_cxl_uid_get, NULL, NULL, NULL);
-> > > > > +}
-> > > > > +
-> > > > >  static const TypeInfo pxb_bus_info = {
-> > > > >      .name          = TYPE_PXB_BUS,
-> > > > >      .parent        = TYPE_PCI_BUS,
-> > > > > @@ -111,7 +126,7 @@ static const TypeInfo pxb_cxl_bus_info = {
-> > > > >      .name          = TYPE_PXB_CXL_BUS,
-> > > > >      .parent        = TYPE_CXL_BUS,
-> > > > >      .instance_size = sizeof(PXBBus),
-> > > > > -    .class_init    = pxb_bus_class_init,
-> > > > > +    .class_init    = pxb_cxl_bus_class_init,        
-> > > > 
-> > > > why it's CXL only, doesn't the same UID rules apply to other PCI buses?      
-> > > 
-> > > In principle, yes.  My nervousness is that we can only test anything
-> > > using this infrastructure today with CXL root bridges.
-> > > 
-> > > So I was thinking we should keep it limited and broaden the scope
-> > > if anyone ever cares.  I don't mind broadening it from the start though.    
+On Tue, Jul 02, 2024 at 02:36:14AM +0000, Chen, Jiqian wrote:
+> On 2024/6/21 17:20, Chen, Jiqian wrote:
+> > Hi MST,
 > > 
-> > Then I'd use it everywhere and cleanup ACPI code to use it as well
-> > just to be consistent.  
-> That is easy to do for all the TYPE_PXB_BUS types and they have separate
-> handling in the various ACPI table builds from other host bridgesn anyway.
-> 
-> Ultimately it might be nice to do for the host bridges in general but
-> that needs to be separate I think as there isn't a simple common
-> ancestor to use.  For at least some cases (gpex-acpi.c) it's hard
-> coded as 0 directly with no look up at all.
-Also worth noting that we could take the approach of not using pci internals
-in ACPI building further and deal with things like numa nodes.
-I don't mind doing that in the longer term, but I don't want that to be
-a dependency for this series.
-
-Jonathan
-
-> 
-> Jonathan
-> 
-> >    
-> > > Jonathan
-> > > 
-> > >     
-> > > > >  };
-> > > > >  
-> > > > >  static const char *pxb_host_root_bus_path(PCIHostState *host_bridge,        
-> > > > 
-> > > >       
-> > >     
+> > On 2024/6/6 18:22, Jiqian Chen wrote:
+> >> In current code, when guest does S3, virtio-gpu are reset due to the
+> >> bit No_Soft_Reset is not set. After resetting, the display resources
+> >> of virtio-gpu are destroyed, then the display can't come back and only
+> >> show blank after resuming.
+> >>
+> >> Implement No_Soft_Reset bit of PCI_PM_CTRL register, then guest can check
+> >> this bit, if this bit is set, the devices resetting will not be done, and
+> >> then the display can work after resuming.
+> >>
+> >> No_Soft_Reset bit is implemented for all virtio devices, and was tested
+> >> only on virtio-gpu device. Set it false by default for safety.
+> >>
+> >> Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+> >> ---
+> >>  hw/core/machine.c              |  1 +
+> >>  hw/virtio/virtio-pci.c         | 29 +++++++++++++++++++++++++++++
+> >>  include/hw/virtio/virtio-pci.h |  5 +++++
+> >>  3 files changed, 35 insertions(+)
+> >>
+> >> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> >> index 77a356f232f5..b6af94edcd0a 100644
+> >> --- a/hw/core/machine.c
+> >> +++ b/hw/core/machine.c
+> >> @@ -36,6 +36,7 @@
+> >>  GlobalProperty hw_compat_9_0[] = {
+> >>      {"arm-cpu", "backcompat-cntfrq", "true" },
+> >>      {"vfio-pci", "skip-vsc-check", "false" },
+> >> +    { "virtio-pci", "x-pcie-pm-no-soft-reset", "off" },
+> >>  };
+> >>  const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
+> >>  
+> >> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> >> index 1b63bcb3f15c..c881f853253c 100644
+> >> --- a/hw/virtio/virtio-pci.c
+> >> +++ b/hw/virtio/virtio-pci.c
+> >> @@ -2230,6 +2230,11 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+> >>              pcie_cap_lnkctl_init(pci_dev);
+> >>          }
+> >>  
+> >> +        if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
+> >> +            pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
+> >> +                         PCI_PM_CTRL_NO_SOFT_RESET);
+> >> +        }
+> >> +
+> >>          if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
+> >>              /* Init Power Management Control Register */
+> >>              pci_set_word(pci_dev->wmask + pos + PCI_PM_CTRL,
+> >> @@ -2292,11 +2297,33 @@ static void virtio_pci_reset(DeviceState *qdev)
+> >>      }
+> >>  }
+> >>  
+> >> +static bool virtio_pci_no_soft_reset(PCIDevice *dev)
+> >> +{
+> >> +    uint16_t pmcsr;
+> >> +
+> >> +    if (!pci_is_express(dev) || !dev->exp.pm_cap) {
+> >> +        return false;
+> >> +    }
+> >> +
+> >> +    pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
+> >> +
+> >> +    /*
+> >> +     * When No_Soft_Reset bit is set and the device
+> >> +     * is in D3hot state, don't reset device
+> >> +     */
+> >> +    return (pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) &&
+> >> +           (pmcsr & PCI_PM_CTRL_STATE_MASK) == 3;
+> >> +}
+> >> +
+> >>  static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
+> >>  {
+> >>      PCIDevice *dev = PCI_DEVICE(obj);
+> >>      DeviceState *qdev = DEVICE(obj);
+> >>  
+> >> +    if (virtio_pci_no_soft_reset(dev)) {
+> >> +        return;
+> >> +    }
+> >> +
+> >>      virtio_pci_reset(qdev);
+> >>  
+> >>      if (pci_is_express(dev)) {
+> >> @@ -2336,6 +2363,8 @@ static Property virtio_pci_properties[] = {
+> >>                      VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+> >>      DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+> >>                      VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
+> >> +    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
+> >> +                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false),
+> >>      DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
+> >>                      VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+> >>      DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
+> >> diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+> >> index 59d88018c16a..9e67ba38c748 100644
+> >> --- a/include/hw/virtio/virtio-pci.h
+> >> +++ b/include/hw/virtio/virtio-pci.h
+> >> @@ -43,6 +43,7 @@ enum {
+> >>      VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+> >>      VIRTIO_PCI_FLAG_AER_BIT,
+> >>      VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
+> >> +    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT,
+> >>  };
+> >>  
+> >>  /* Need to activate work-arounds for buggy guests at vmstate load. */
+> >> @@ -79,6 +80,10 @@ enum {
+> >>  /* Init Power Management */
+> >>  #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
+> >>  
+> >> +/* Init The No_Soft_Reset bit of Power Management */
+> >> +#define VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET \
+> >> +  (1 << VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT)
+> >> +
+> >>  /* Init Function Level Reset capability */
+> >>  #define VIRTIO_PCI_FLAG_INIT_FLR (1 << VIRTIO_PCI_FLAG_INIT_FLR_BIT)
+> >>  
+> > I have added compatibility for old machine.
+> > Do you have any other concerns about this patch?
 > > 
-> >   
-> 
-> 
-> 
+> If you don't have other concerns. May I get your Review-by?
+
+I'm testing this, and if ok will include it in the pull request.
+
+> -- 
+> Best regards,
+> Jiqian Chen.
 
 
