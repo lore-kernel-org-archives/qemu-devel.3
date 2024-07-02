@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E08C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0557BC3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:29:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOk0W-0006kT-IL; Tue, 02 Jul 2024 16:21:44 -0400
+	id 1sOjuX-0005FA-N8; Tue, 02 Jul 2024 16:15:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzc-000534-Qn
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjuU-00055g-EZ
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:15:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzW-0001gp-Hv
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:46 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjuR-0007or-Kj
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:15:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951641;
+ s=mimecast20190719; t=1719951325;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DMkazJvXlCFuPVFo5zwsqgTLcz0EAKKfqUw3BcILaOs=;
- b=IS7G4fmEOyDxjyvngXeMTZu1s7pMhIe1ZYb2UvNhVqhDs/BydNmPJTg4PcCZkvbTZN/bGV
- 61z2VaZeaREkTDyEtFuLMGxtIfoFZIgkBlwfP+Qx8O6HxybIhCaFTGnbU5bspmfiav2GlM
- P31dpiwm8wJfeXCvTQ9ef/3fTcHalOc=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rU41nJqg3mDUGH1bcBpKF5g1VLC3bOtqyqIezIWqM9s=;
+ b=gzynA5iFEOHdchSQ+DGfE8UZzy8kTrVQ+QdTUgHzgHHgQ7VmHvjIHjwTvrWP6xKmmxDCBE
+ YHtJSMnLAP20Rwzv3aHroe0x6LXv/DRy3LKeiwqVUepnXeKVHwagVhVdn2CPyrGKuSwxyR
+ QnVhgymyRg86IC/6zrqYLfEbKyp8M1I=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-3ck2n6byOgCMvhG8q5dZ0Q-1; Tue, 02 Jul 2024 16:20:40 -0400
-X-MC-Unique: 3ck2n6byOgCMvhG8q5dZ0Q-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4257f95fe85so18823315e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:20:40 -0700 (PDT)
+ us-mta-103-EeRlY8FUO2mRpOL9lTgUbQ-1; Tue, 02 Jul 2024 16:15:24 -0400
+X-MC-Unique: EeRlY8FUO2mRpOL9lTgUbQ-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4210d151c5bso32056895e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:15:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951639; x=1720556439;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DMkazJvXlCFuPVFo5zwsqgTLcz0EAKKfqUw3BcILaOs=;
- b=BqsI3M44DQGv6QbqPSo6tbvNCcriETMMBhdv3lPt8kFtPoCN3F93Wg1y3Bx8C4rhZq
- jKm0HlgPCm9KkIYhBILXPNd4ncCgEnflPcNESbS8Na5ajYUhNTXHzOJtmurRIKtv+yhx
- K/IUBRktXZiiIcMVzbZk4xVy7HfUFntqw6UTsxFwBBaA2eG4iLgQRotqCgXfmj211PiX
- 6W1feWUa8tfnmlvxtAhMZGpRFma4jIeuxNISZwfMvzHRRc1jLJOGYeku4D7VINgu6aAO
- eqWvTjO4svjnl05IK1qvgBXOA19lTOURiqmq7nPmmtOspd6M23QFcyx9z8ME9wIF8BLM
- il5A==
-X-Gm-Message-State: AOJu0YzdSNH/54RiLEE1OqHwKMxASlEvQhcmv+QT+59dYnq9REiHr8Dt
- V8R1BVta9f/K+kfNHgIum6Av+LmpX4jZJj1KszvMIMo00pbDGtwIYs8DpQwZUQSbE8i7FTpBUjk
- IDGpLG/uzg7qNUn8+baFgY3dsIsoDrYOxrTmhfWrZOe+Gm80gaZjBUASrX83pck1XLy/mHXThgY
- BZziupGBAH94/v7Bhft52AW9B/Q6tiGg==
-X-Received: by 2002:adf:ef4a:0:b0:367:92b3:f6b0 with SMTP id
- ffacd0b85a97d-36792b3fb91mr26195f8f.21.1719951638981; 
- Tue, 02 Jul 2024 13:20:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHAF+SlkAFzGwtURNvVdFbF9BNL5XgDH8lttnUMErgQlryZynmCV6YMMTleK4DTI+VRjSbS1A==
-X-Received: by 2002:adf:ef4a:0:b0:367:92b3:f6b0 with SMTP id
- ffacd0b85a97d-36792b3fb91mr26178f8f.21.1719951638424; 
- Tue, 02 Jul 2024 13:20:38 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719951322; x=1720556122;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rU41nJqg3mDUGH1bcBpKF5g1VLC3bOtqyqIezIWqM9s=;
+ b=tkKwkN22yNtAG4z/l6ffusZXw4bzOM0cJ+Yec9HuX+UetJ4Ep+4RcG6THdWrh8gik6
+ KVziBOXUHFHbf9K0Mig+Hke961pNc9hwLSFjDd2EhIvBPZMK5cxuOKTSYRzBP/ulG74m
+ gL7QqpmtpLFf7FFIEIA7ptcfRauJlbi+0yDRw4jPsDuUXZ53vcclzjxQuo7iEA/9dtBC
+ 1NgJND0oNgSyDr0gD5X0J4f18VoEQMwngIxVjBe+8fc3e3MrF3YMvQtp+baSEC0DtTJw
+ Vlr/URN8dMBglTLjVDobjA62RP5rPNEzQOV6cKHoC3sLFV9/6f3w9txnjAiehYIKTfSU
+ wS0w==
+X-Gm-Message-State: AOJu0YwtVeRK3R8CZtt9qQv1Y5rg3i6nfl64HsroMVJKCYZzwrtJ2wXC
+ 1nOIc1FEct8zPreQ85vatIQP1iLKI9+vNbUNDtrcl1Ik2/YZI45Lof8jLAgDeRYV31O/3chyonN
+ DzCpiFLS/3jgVoAKhJw4o7hYXxToDbkngaAt8o9DsXEdkDGttMJ2r+m1T1ZnzlH442e7xohs2/W
+ UEcoIRpJ98aM0qih2kLn7ebRjU82L9yA==
+X-Received: by 2002:a5d:42c3:0:b0:367:8a39:85ce with SMTP id
+ ffacd0b85a97d-3678a398791mr1645323f8f.70.1719951322360; 
+ Tue, 02 Jul 2024 13:15:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/yU3iHmn1tY2LXvqeSbkvrwh0z4CNEuwASO7cCMTbUEm/Nq5Z5oUgdDG7ZwZ30eNkx4n5rg==
+X-Received: by 2002:a5d:42c3:0:b0:367:8a39:85ce with SMTP id
+ ffacd0b85a97d-3678a398791mr1645307f8f.70.1719951321848; 
+ Tue, 02 Jul 2024 13:15:21 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e12d7sm14135571f8f.51.2024.07.02.13.20.35
+ ffacd0b85a97d-3675a0d9148sm14075372f8f.34.2024.07.02.13.15.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:20:37 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:20:33 -0400
+ Tue, 02 Jul 2024 13:15:21 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:15:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: [PULL v2 81/88] hw/ppc/spapr_pci: Do not reject VFs created after a PF
-Message-ID: <620ed810335bb71279404d1c197d5a15c7201b79.1719951168.git.mst@redhat.com>
+ Jonah Palmer <jonah.palmer@oracle.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL v2 04/88] virtio/virtio-pci: Handle extra notification data
+Message-ID: <cf39b82860b63589460d8797dd70ae3c1647ccca.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -105,33 +104,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Jonah Palmer <jonah.palmer@oracle.com>
 
-A PF may automatically create VFs and the PF may be function 0.
+Add support to virtio-pci devices for handling the extra data sent
+from the driver to the device when the VIRTIO_F_NOTIFICATION_DATA
+transport feature has been negotiated.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240627-reuse-v10-3-7ca0b8ed3d9f@daynix.com>
+The extra data that's passed to the virtio-pci device when this
+feature is enabled varies depending on the device's virtqueue
+layout.
+
+In a split virtqueue layout, this data includes:
+ - upper 16 bits: shadow_avail_idx
+ - lower 16 bits: virtqueue index
+
+In a packed virtqueue layout, this data includes:
+ - upper 16 bits: 1-bit wrap counter & 15-bit shadow_avail_idx
+ - lower 16 bits: virtqueue index
+
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20240315165557.26942-2-jonah.palmer@oracle.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/ppc/spapr_pci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/hw/virtio/virtio.h |  2 ++
+ hw/virtio/virtio-pci.c     | 12 +++++++++---
+ hw/virtio/virtio.c         | 18 ++++++++++++++++++
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index f63182a03c..ed4454bbf7 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -1573,7 +1573,9 @@ static void spapr_pci_pre_plug(HotplugHandler *plug_handler,
-      * hotplug, we do not allow functions to be hotplugged to a
-      * slot that already has function 0 present
-      */
--    if (plugged_dev->hotplugged && bus->devices[PCI_DEVFN(slotnr, 0)] &&
-+    if (plugged_dev->hotplugged &&
-+        !pci_is_vf(pdev) &&
-+        bus->devices[PCI_DEVFN(slotnr, 0)] &&
-         PCI_FUNC(pdev->devfn) != 0) {
-         error_setg(errp, "PCI: slot %d function 0 already occupied by %s,"
-                    " additional functions can no longer be exposed to guest.",
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 7d5ffdc145..1451926a13 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -307,6 +307,8 @@ int virtio_queue_ready(VirtQueue *vq);
+ 
+ int virtio_queue_empty(VirtQueue *vq);
+ 
++void virtio_queue_set_shadow_avail_idx(VirtQueue *vq, uint16_t idx);
++
+ /* Host binding interface.  */
+ 
+ uint32_t virtio_config_readb(VirtIODevice *vdev, uint32_t addr);
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index b1d02f4b3d..cffc7efcae 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -384,7 +384,7 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
+ {
+     VirtIOPCIProxy *proxy = opaque;
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+-    uint16_t vector;
++    uint16_t vector, vq_idx;
+     hwaddr pa;
+ 
+     switch (addr) {
+@@ -408,8 +408,14 @@ static void virtio_ioport_write(void *opaque, uint32_t addr, uint32_t val)
+             vdev->queue_sel = val;
+         break;
+     case VIRTIO_PCI_QUEUE_NOTIFY:
+-        if (val < VIRTIO_QUEUE_MAX) {
+-            virtio_queue_notify(vdev, val);
++        vq_idx = val;
++        if (vq_idx < VIRTIO_QUEUE_MAX && virtio_queue_get_num(vdev, vq_idx)) {
++            if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
++                VirtQueue *vq = virtio_get_queue(vdev, vq_idx);
++
++                virtio_queue_set_shadow_avail_idx(vq, val >> 16);
++            }
++            virtio_queue_notify(vdev, vq_idx);
+         }
+         break;
+     case VIRTIO_PCI_STATUS:
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 893a072c9d..f7c99e3a96 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2264,6 +2264,24 @@ void virtio_queue_set_align(VirtIODevice *vdev, int n, int align)
+     }
+ }
+ 
++void virtio_queue_set_shadow_avail_idx(VirtQueue *vq, uint16_t shadow_avail_idx)
++{
++    if (!vq->vring.desc) {
++        return;
++    }
++
++    /*
++     * 16-bit data for packed VQs include 1-bit wrap counter and
++     * 15-bit shadow_avail_idx.
++     */
++    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
++        vq->shadow_avail_wrap_counter = (shadow_avail_idx >> 15) & 0x1;
++        vq->shadow_avail_idx = shadow_avail_idx & 0x7FFF;
++    } else {
++        vq->shadow_avail_idx = shadow_avail_idx;
++    }
++}
++
+ static void virtio_queue_notify_vq(VirtQueue *vq)
+ {
+     if (vq->vring.desc && vq->handle_output) {
 -- 
 MST
 
