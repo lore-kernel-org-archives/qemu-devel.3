@@ -4,60 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3886C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75AB3C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOapL-00046p-IF; Tue, 02 Jul 2024 06:33:35 -0400
+	id 1sOapo-0004xM-5I; Tue, 02 Jul 2024 06:34:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapJ-00045T-L5
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapm-0004o2-HA
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:34:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapG-000751-2m
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:32 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapl-00078F-0e
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:34:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719916409;
+ s=mimecast20190719; t=1719916440;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aODMIpY0nJshcSdUoxiUED5/MnuwzU8JRKEfwRevDuw=;
- b=LhDodixTmhbY06Kji46v+1DiR2sHo4Q+fq1iN8taQmiulHGdcEiJ0sT9ucGXVfw9/EgIGY
- J+plbMOTAFwbSPi8BdWh5ae8MELKiqv0BTEbIbDer+brX6DlPC9D5FsYb4axXZB+dGLDU0
- d1pGWTafv6SSKRz+aKBxmsup4iz0Aes=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=6T0SU6q6wZ8+O2LXk5UJvJ5/nk6nIiV7hiT5oboTAYQ=;
+ b=Z7jbPjFlWpVs2JBgXw7wnjs2M24HteOrHRwba44iVF+AJzNT1N50+Swz3pDrhQ+e0QwRw5
+ BXohIDSv99lKOciMjwGIOFjQm6ORQRI8bhwaEnpc/8akowCzb4tNCWZRDIXmyTB55CpS2X
+ dXW62fKoFNcDTUCq//9k93gUaQc0QTw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-Vr3LSq8BOl-qKrCZKNdoWg-1; Tue,
- 02 Jul 2024 06:33:24 -0400
-X-MC-Unique: Vr3LSq8BOl-qKrCZKNdoWg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-aScFn9gBPnaCu_jFVNseQA-1; Tue,
+ 02 Jul 2024 06:33:56 -0400
+X-MC-Unique: aScFn9gBPnaCu_jFVNseQA-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7041E19560B2; Tue,  2 Jul 2024 10:33:23 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 698521944EAC; Tue,  2 Jul 2024 10:33:55 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E448B19560AA; Tue,  2 Jul 2024 10:33:20 +0000 (UTC)
+ id CE5151955E74; Tue,  2 Jul 2024 10:33:53 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: [PULL 03/12] tests/qtest: Use qtest_add_data_func_full()
-Date: Tue,  2 Jul 2024 12:33:01 +0200
-Message-ID: <20240702103310.347201-4-thuth@redhat.com>
+Subject: [PULL 12/12] pc-bios/s390-ccw: Remove duplicated LDFLAGS
+Date: Tue,  2 Jul 2024 12:33:10 +0200
+Message-ID: <20240702103310.347201-13-thuth@redhat.com>
 In-Reply-To: <20240702103310.347201-1-thuth@redhat.com>
 References: <20240702103310.347201-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -81,57 +79,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+The -Wl,-pie and -nostdlib flags are added to LDFLAGS twice. Merge
+the two lines to get rid of the duplicates.
 
-A test function may not be executed depending on the test command line
-so it is wrong to free data with a test function. Use
-qtest_add_data_func_full() to register a function to free data.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20240627-san-v2-10-750bb0946dbd@daynix.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240621082422.136217-2-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/qtest/device-introspect-test.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ pc-bios/s390-ccw/Makefile | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tests/qtest/device-introspect-test.c b/tests/qtest/device-introspect-test.c
-index 5b0ffe43f5..587da59623 100644
---- a/tests/qtest/device-introspect-test.c
-+++ b/tests/qtest/device-introspect-test.c
-@@ -266,7 +266,6 @@ static void test_device_intro_concrete(const void *args)
+diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+index acfcd1e71a..6207911b53 100644
+--- a/pc-bios/s390-ccw/Makefile
++++ b/pc-bios/s390-ccw/Makefile
+@@ -40,7 +40,7 @@ EXTRA_CFLAGS += -ffreestanding -fno-delete-null-pointer-checks -fno-common -fPIE
+ EXTRA_CFLAGS += -fwrapv -fno-strict-aliasing -fno-asynchronous-unwind-tables
+ EXTRA_CFLAGS += -msoft-float
+ EXTRA_CFLAGS += -std=gnu99
+-LDFLAGS += -Wl,-pie -nostdlib
++LDFLAGS += -Wl,-pie -nostdlib -z noexecstack
  
-     qobject_unref(types);
-     qtest_quit(qts);
--    g_free((void *)args);
- }
+ cc-test = $(CC) -Werror $1 -c -o /dev/null -xc /dev/null >/dev/null 2>/dev/null
+ cc-option = if $(call cc-test, $1); then \
+@@ -55,8 +55,6 @@ config-cc.mak: Makefile
+ 	    $(call cc-option,-march=z900,-march=z10)) 3> config-cc.mak
+ -include config-cc.mak
  
- static void test_abstract_interfaces(void)
-@@ -310,12 +309,12 @@ static void add_machine_test_case(const char *mname)
+-LDFLAGS += -Wl,-pie -nostdlib -z noexecstack
+-
+ build-all: s390-ccw.img s390-netboot.img
  
-     path = g_strdup_printf("device/introspect/concrete/defaults/%s", mname);
-     args = g_strdup_printf("-M %s", mname);
--    qtest_add_data_func(path, args, test_device_intro_concrete);
-+    qtest_add_data_func_full(path, args, test_device_intro_concrete, g_free);
-     g_free(path);
- 
-     path = g_strdup_printf("device/introspect/concrete/nodefaults/%s", mname);
-     args = g_strdup_printf("-nodefaults -M %s", mname);
--    qtest_add_data_func(path, args, test_device_intro_concrete);
-+    qtest_add_data_func_full(path, args, test_device_intro_concrete, g_free);
-     g_free(path);
- }
- 
-@@ -330,7 +329,7 @@ int main(int argc, char **argv)
-     qtest_add_func("device/introspect/abstract-interfaces", test_abstract_interfaces);
-     if (g_test_quick()) {
-         qtest_add_data_func("device/introspect/concrete/defaults/none",
--                            g_strdup(common_args), test_device_intro_concrete);
-+                            common_args, test_device_intro_concrete);
-     } else {
-         qtest_cb_for_every_machine(add_machine_test_case, true);
-     }
+ s390-ccw.elf: $(OBJECTS)
 -- 
 2.45.2
 
