@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79AF8C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:26:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF11DC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjyB-0007zZ-D6; Tue, 02 Jul 2024 16:19:19 -0400
+	id 1sOjuR-0004r2-Mk; Tue, 02 Jul 2024 16:15:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjxp-0005j0-RG
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:58 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjuK-0004O0-5s
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:15:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjxn-00014f-Bx
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:57 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjuI-0007kj-3L
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:15:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951534;
+ s=mimecast20190719; t=1719951317;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f88EXx30zef+oxtKxh27fnm0osRHGKUTzZYejeCgKxU=;
- b=VqbRjzkd3QholBKl7h5uYlpd7aeuNj/IvahSJGjm6oB/j7YXvNNRmPtCkr7B/CaGnOSIhW
- bhNqwUQ/jsRlu4ps1hbA6bVR+KVrPt91MfcwEoWB3NdAOG9TvjI1pHToTkippgChJrncVf
- nQpuxYCWyBF2+uhyolUoaRV1nAzN5ck=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uKK/AiLdjMfeKEPpHLdhaqq0Kf5J8WlC0WD4BsUonqY=;
+ b=bJI2C1t/Qc2HhgjZvy8+rhhh0gdDDoA5zKLaCF9Al0sXVIt71c5IMUbyw19O/3wlL/nTe4
+ n7bG1/lXIKHrTKTX/+ujMKuJzr/NMkoIkFGNAup4TrTscXIFhNVNt0C8ZmZ4ext+1iozoJ
+ 8IMq3K0Eq44yrM3JvWwyOknmfPuIujo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-594-hTu9VsoxOE-69zKjJGaaLw-1; Tue, 02 Jul 2024 16:18:51 -0400
-X-MC-Unique: hTu9VsoxOE-69zKjJGaaLw-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4257f95ffc6so19716505e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:18:49 -0700 (PDT)
+ us-mta-616-zFWGn_F5P7maEKkr9gCCZw-1; Tue, 02 Jul 2024 16:15:16 -0400
+X-MC-Unique: zFWGn_F5P7maEKkr9gCCZw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3634a634f8aso2622668f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:15:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951528; x=1720556328;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f88EXx30zef+oxtKxh27fnm0osRHGKUTzZYejeCgKxU=;
- b=JvScXIn0/XWOXNpaqvMbT8eZ0ZjlymmP/iv8sqO+jjIC8WO8QQLxmQHqi2ipQW9HSY
- nSPTyK4qKKXSrRZ9YuUcl8bG8cViocZKJ46Mxd5hhzz1Pd5UKiouCrVogymH/J/1Mn6S
- biNYlDd+upU+5S4BoCnAy0/so83q+dzd0wKvuUJfTfE6dms9ZN5SVFUYQDCmp1K00/NG
- YwXfPjfRp88glW9wo3sH3rMdwv7zC8f6nzL3IlhcVPCsiyNqRQDIXwOKg4gm0Zr6raIs
- o+QeDuyRo1JI/KgouRmW+R+nQ9FvboTXdcGNJZKCy058CxWt2eWhuSLkt4LXyos9Vvse
- V1sA==
-X-Gm-Message-State: AOJu0YygQuYm1XXPoZs/W+fXu+fg6LneZ/26ljihiyuywMKm3CSQoUZO
- E08cBT/Ydxs6x/7vwoCu88zvBZFGxG2cjgkHQ4iytyv8N6yg/UU0qkjVbqqj/ZBFt59PwBSU3VI
- U/f/wK4HF2Fu6F7/PA9L1r5sgur4/a9xvDai3EQ2hTp1g+nmW5Oq30RlC+Ik/oWecXTc3dhlOf6
- /0s8SIwNjNxLPasxjBdhCsPQ2kmJtZGg==
-X-Received: by 2002:a7b:ce83:0:b0:425:6327:f00c with SMTP id
- 5b1f17b1804b1-4257a00ce8emr65064455e9.22.1719951528561; 
- Tue, 02 Jul 2024 13:18:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDe4cvdLvMymVr21h1iEzMSUnPlphfo1BJHJMwnLuepMhPVx/qQSzq0PX/Qw7B2/o5Xt2Qsw==
-X-Received: by 2002:a7b:ce83:0:b0:425:6327:f00c with SMTP id
- 5b1f17b1804b1-4257a00ce8emr65064235e9.22.1719951528032; 
- Tue, 02 Jul 2024 13:18:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719951314; x=1720556114;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uKK/AiLdjMfeKEPpHLdhaqq0Kf5J8WlC0WD4BsUonqY=;
+ b=k8nn5lYdpDGctFz0anz4ed6PCTtwWMbsi8CwztjtBpMiQ4fQ8YoK1kGzHYic0VMVjq
+ y47VLEIi8djzDQjgUZxuWWmI7FVEv7VJLSA9249cqEoF/G3GShazWs3TOIGplXVN5saB
+ AALqVOD60l4hEiStfNfOTCPfFZJjCSCzTm0zcXorhjSDzx7865LbeSHzhFg6hxfKpFm6
+ qFv657Z318TLA0A8I1envpTCGPRGBlYomgzXWy8s00SNL5KWW+ci0zt1GVgNVR8Dk4Js
+ EJZysjNuYQEOfY6H51QLN/GkYf4M4vFGJVIuNr1VOg8vFdB4YV8cobShE1BVJX7mgvzm
+ DAwg==
+X-Gm-Message-State: AOJu0YybCLxvefg1ddEfg/gQU+00eC/Af9YRSkgRg/PxFf3CQTo1fMH5
+ xeypEEqFvozZDNs5cYkppORaqV+rsTRwCfMkmDfCcomPQC9aDwgvcsoYN7r+8/Bf/stZRDQcFqD
+ P33/Cq4AxyB4o1gkU8kUT2Lp5JKx1sOT+Ad6lk3Z9etLpKMXARtH27Zs+MK7x3EwMXhMg8n9I/L
+ T534pJQ3gh70OT/KlD9io+WSqEDEcqpA==
+X-Received: by 2002:a5d:47ab:0:b0:367:4337:4065 with SMTP id
+ ffacd0b85a97d-367757214b2mr8717893f8f.51.1719951314572; 
+ Tue, 02 Jul 2024 13:15:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGxehkpas8/Fnbqd5cCCXPbBWbSNk5lcqrw1uHt3eh02z4nubT/4+5sMKfPry/ztoIc4gQedg==
+X-Received: by 2002:a5d:47ab:0:b0:367:4337:4065 with SMTP id
+ ffacd0b85a97d-367757214b2mr8717869f8f.51.1719951314040; 
+ Tue, 02 Jul 2024 13:15:14 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-425787f37casm77032685e9.1.2024.07.02.13.18.45
+ ffacd0b85a97d-3675a0cd623sm14177713f8f.16.2024.07.02.13.15.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:18:47 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:18:43 -0400
+ Tue, 02 Jul 2024 13:15:13 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:15:10 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PULL v2 54/88] libvhost-user: enable it on any POSIX system
-Message-ID: <38fb67cb262892fb4f4b9a79f533c75ea2f1a899.1719951168.git.mst@redhat.com>
+ Si-Wei Liu <si-wei.liu@oracle.com>,
+ Joao Martins <joao.m.martins@oracle.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL v2 02/88] vhost: Perform memory section dirty scans once per
+ iteration
+Message-ID: <c5cd7e5f230afb56891e3826fbb60f9e2b6c086a.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -108,151 +103,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-The vhost-user protocol is not really Linux-specific so let's enable
-libvhost-user for any POSIX system.
+On setups with one or more virtio-net devices with vhost on,
+dirty tracking iteration increases cost the bigger the number
+amount of queues are set up e.g. on idle guests migration the
+following is observed with virtio-net with vhost=on:
 
-Compiling it on macOS and FreeBSD some problems came up:
-- avoid to include linux/vhost.h which is available only on Linux
-  (vhost_types.h contains many of the things we need)
-- macOS doesn't provide sys/endian.h, so let's define them
-  (note: libvhost-user doesn't include QEMU's headers, so we can't use
-   use "qemu/bswap.h")
-- define eventfd_[write|read] as write/read wrapper when system doesn't
-  provide those (e.g. macOS)
-- copy SEAL defines from include/qemu/memfd.h to make the code works
-  on FreeBSD where MFD_ALLOW_SEALING is defined
-- define MAP_NORESERVE if it's not defined (e.g. on FreeBSD)
+48 queues -> 78.11%  [.] vhost_dev_sync_region.isra.13
+8 queues -> 40.50%   [.] vhost_dev_sync_region.isra.13
+1 queue -> 6.89%     [.] vhost_dev_sync_region.isra.13
+2 devices, 1 queue -> 18.60%  [.] vhost_dev_sync_region.isra.14
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240618100503.145768-1-sgarzare@redhat.com>
+With high memory rates the symptom is lack of convergence as soon
+as it has a vhost device with a sufficiently high number of queues,
+the sufficient number of vhost devices.
+
+On every migration iteration (every 100msecs) it will redundantly
+query the *shared log* the number of queues configured with vhost
+that exist in the guest. For the virtqueue data, this is necessary,
+but not for the memory sections which are the same. So essentially
+we end up scanning the dirty log too often.
+
+To fix that, select a vhost device responsible for scanning the
+log with regards to memory sections dirty tracking. It is selected
+when we enable the logger (during migration) and cleared when we
+disable the logger. If the vhost logger device goes away for some
+reason, the logger will be re-selected from the rest of vhost
+devices.
+
+After making mem-section logger a singleton instance, constant cost
+of 7%-9% (like the 1 queue report) will be seen, no matter how many
+queues or how many vhost devices are configured:
+
+48 queues -> 8.71%    [.] vhost_dev_sync_region.isra.13
+2 devices, 8 queues -> 7.97%   [.] vhost_dev_sync_region.isra.14
+
+Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Message-Id: <1710448055-11709-2-git-send-email-si-wei.liu@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 ---
- subprojects/libvhost-user/libvhost-user.h |  2 +-
- subprojects/libvhost-user/libvhost-user.c | 60 +++++++++++++++++++++--
- meson.build                               |  2 +-
- 3 files changed, 59 insertions(+), 5 deletions(-)
+ include/hw/virtio/vhost.h |  1 +
+ hw/virtio/vhost.c         | 67 +++++++++++++++++++++++++++++++++++----
+ 2 files changed, 62 insertions(+), 6 deletions(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
-index deb40e77b3..e13e1d3931 100644
---- a/subprojects/libvhost-user/libvhost-user.h
-+++ b/subprojects/libvhost-user/libvhost-user.h
-@@ -18,9 +18,9 @@
- #include <stdbool.h>
- #include <stddef.h>
- #include <poll.h>
--#include <linux/vhost.h>
- #include <pthread.h>
- #include "standard-headers/linux/virtio_ring.h"
-+#include "standard-headers/linux/vhost_types.h"
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 02477788df..d75faf46e9 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -129,6 +129,7 @@ struct vhost_dev {
+     void *opaque;
+     struct vhost_log *log;
+     QLIST_ENTRY(vhost_dev) entry;
++    QLIST_ENTRY(vhost_dev) logdev_entry;
+     QLIST_HEAD(, vhost_iommu) iommu_list;
+     IOMMUNotifier n;
+     const VhostDevConfigOps *config_ops;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index a1e8b79e1a..06fc71746e 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -45,6 +45,7 @@
  
- /* Based on qemu/hw/virtio/vhost-user.c */
- #define VHOST_USER_F_PROTOCOL_FEATURES 30
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 9c630c2170..d855a97a4c 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -28,9 +28,7 @@
- #include <inttypes.h>
- #include <sys/types.h>
- #include <sys/socket.h>
--#include <sys/eventfd.h>
- #include <sys/mman.h>
--#include <endian.h>
+ static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
+ static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
++static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
  
- /* Necessary to provide VIRTIO_F_VERSION_1 on system
-  * with older linux headers. Must appear before
-@@ -39,8 +37,8 @@
- #include "standard-headers/linux/virtio_config.h"
+ /* Memslots used by backends that support private memslots (without an fd). */
+ static unsigned int used_memslots;
+@@ -149,6 +150,47 @@ bool vhost_dev_has_iommu(struct vhost_dev *dev)
+     }
+ }
  
- #if defined(__linux__)
-+#include <endian.h>
- #include <sys/syscall.h>
--#include <fcntl.h>
- #include <sys/ioctl.h>
- #include <linux/vhost.h>
- #include <sys/vfs.h>
-@@ -52,6 +50,62 @@
- 
- #endif
- 
-+#if defined(__APPLE__) && (__MACH__)
-+#include <libkern/OSByteOrder.h>
-+#define htobe16(x) OSSwapHostToBigInt16(x)
-+#define htole16(x) OSSwapHostToLittleInt16(x)
-+#define be16toh(x) OSSwapBigToHostInt16(x)
-+#define le16toh(x) OSSwapLittleToHostInt16(x)
-+
-+#define htobe32(x) OSSwapHostToBigInt32(x)
-+#define htole32(x) OSSwapHostToLittleInt32(x)
-+#define be32toh(x) OSSwapBigToHostInt32(x)
-+#define le32toh(x) OSSwapLittleToHostInt32(x)
-+
-+#define htobe64(x) OSSwapHostToBigInt64(x)
-+#define htole64(x) OSSwapHostToLittleInt64(x)
-+#define be64toh(x) OSSwapBigToHostInt64(x)
-+#define le64toh(x) OSSwapLittleToHostInt64(x)
-+#endif
-+
-+#ifdef CONFIG_EVENTFD
-+#include <sys/eventfd.h>
-+#else
-+#define eventfd_t uint64_t
-+
-+int eventfd_write(int fd, eventfd_t value)
++static inline bool vhost_dev_should_log(struct vhost_dev *dev)
 +{
-+    return (write(fd, &value, sizeof(value)) == sizeof(value)) ? 0 : -1;
++    assert(dev->vhost_ops);
++    assert(dev->vhost_ops->backend_type > VHOST_BACKEND_TYPE_NONE);
++    assert(dev->vhost_ops->backend_type < VHOST_BACKEND_TYPE_MAX);
++
++    return dev == QLIST_FIRST(&vhost_log_devs[dev->vhost_ops->backend_type]);
 +}
 +
-+int eventfd_read(int fd, eventfd_t *value)
++static inline void vhost_dev_elect_mem_logger(struct vhost_dev *hdev, bool add)
 +{
-+    return (read(fd, value, sizeof(*value)) == sizeof(*value)) ? 0 : -1;
++    VhostBackendType backend_type;
++
++    assert(hdev->vhost_ops);
++
++    backend_type = hdev->vhost_ops->backend_type;
++    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
++    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
++
++    if (add && !QLIST_IS_INSERTED(hdev, logdev_entry)) {
++        if (QLIST_EMPTY(&vhost_log_devs[backend_type])) {
++            QLIST_INSERT_HEAD(&vhost_log_devs[backend_type],
++                              hdev, logdev_entry);
++        } else {
++            /*
++             * The first vhost_device in the list is selected as the shared
++             * logger to scan memory sections. Put new entry next to the head
++             * to avoid inadvertent change to the underlying logger device.
++             * This is done in order to get better cache locality and to avoid
++             * performance churn on the hot path for log scanning. Even when
++             * new devices come and go quickly, it wouldn't end up changing
++             * the active leading logger device at all.
++             */
++            QLIST_INSERT_AFTER(QLIST_FIRST(&vhost_log_devs[backend_type]),
++                               hdev, logdev_entry);
++        }
++    } else if (!add && QLIST_IS_INSERTED(hdev, logdev_entry)) {
++        QLIST_REMOVE(hdev, logdev_entry);
++    }
 +}
-+#endif
 +
-+#ifdef MFD_ALLOW_SEALING
-+#include <fcntl.h>
-+
-+#ifndef F_LINUX_SPECIFIC_BASE
-+#define F_LINUX_SPECIFIC_BASE 1024
-+#endif
-+
-+#ifndef F_ADD_SEALS
-+#define F_ADD_SEALS (F_LINUX_SPECIFIC_BASE + 9)
-+#define F_GET_SEALS (F_LINUX_SPECIFIC_BASE + 10)
-+
-+#define F_SEAL_SEAL     0x0001  /* prevent further seals from being set */
-+#define F_SEAL_SHRINK   0x0002  /* prevent file from shrinking */
-+#define F_SEAL_GROW     0x0004  /* prevent file from growing */
-+#define F_SEAL_WRITE    0x0008  /* prevent writes */
-+#endif
-+#endif
-+
-+#ifndef MAP_NORESERVE
-+#define MAP_NORESERVE 0
-+#endif
-+
- #include "include/atomic.h"
+ static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
+                                    MemoryRegionSection *section,
+                                    hwaddr first,
+@@ -166,12 +208,14 @@ static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
+     start_addr = MAX(first, start_addr);
+     end_addr = MIN(last, end_addr);
  
- #include "libvhost-user.h"
-diff --git a/meson.build b/meson.build
-index 98db5ea322..6c1a489cc0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3203,7 +3203,7 @@ if have_system and vfio_user_server_allowed
- endif
+-    for (i = 0; i < dev->mem->nregions; ++i) {
+-        struct vhost_memory_region *reg = dev->mem->regions + i;
+-        vhost_dev_sync_region(dev, section, start_addr, end_addr,
+-                              reg->guest_phys_addr,
+-                              range_get_last(reg->guest_phys_addr,
+-                                             reg->memory_size));
++    if (vhost_dev_should_log(dev)) {
++        for (i = 0; i < dev->mem->nregions; ++i) {
++            struct vhost_memory_region *reg = dev->mem->regions + i;
++            vhost_dev_sync_region(dev, section, start_addr, end_addr,
++                                  reg->guest_phys_addr,
++                                  range_get_last(reg->guest_phys_addr,
++                                                 reg->memory_size));
++        }
+     }
+     for (i = 0; i < dev->nvqs; ++i) {
+         struct vhost_virtqueue *vq = dev->vqs + i;
+@@ -383,6 +427,7 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
+         g_free(log);
+     }
  
- vhost_user = not_found
--if host_os == 'linux' and have_vhost_user
-+if have_vhost_user
-   libvhost_user = subproject('libvhost-user')
-   vhost_user = libvhost_user.get_variable('vhost_user_dep')
- endif
++    vhost_dev_elect_mem_logger(dev, false);
+     dev->log = NULL;
+     dev->log_size = 0;
+ }
+@@ -998,6 +1043,15 @@ static int vhost_dev_set_log(struct vhost_dev *dev, bool enable_log)
+             goto err_vq;
+         }
+     }
++
++    /*
++     * At log start we select our vhost_device logger that will scan the
++     * memory sections and skip for the others. This is possible because
++     * the log is shared amongst all vhost devices for a given type of
++     * backend.
++     */
++    vhost_dev_elect_mem_logger(dev, enable_log);
++
+     return 0;
+ err_vq:
+     for (; i >= 0; --i) {
+@@ -2075,6 +2129,7 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+             VHOST_OPS_DEBUG(r, "vhost_set_log_base failed");
+             goto fail_log;
+         }
++        vhost_dev_elect_mem_logger(hdev, true);
+     }
+     if (vrings) {
+         r = vhost_dev_set_vring_enable(hdev, true);
 -- 
 MST
 
