@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25BE3C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8948BC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOVeS-0007Ix-V0; Tue, 02 Jul 2024 01:02:02 -0400
+	id 1sOVeq-0007pe-JM; Tue, 02 Jul 2024 01:02:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVeQ-0007Ic-MH
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:01:58 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVen-0007nk-8N
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:21 -0400
 Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVeO-00070K-Ue
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:01:58 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVel-0007CM-7d
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:21 -0400
 Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-52cdfb69724so4660797e87.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:01:56 -0700 (PDT)
+ 2adb3069b0e04-52cdc4d221eso4093391e87.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719896515; x=1720501315; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719896537; x=1720501337; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ojuMSOD3mJ6z5l/dHTXyuiUf8CYGwAbSuIgUM0ljX7g=;
- b=gH2Kv6GVBmyBUo1pg2skAixpDRIvTjbeLtLtha2JP7ldtjj0bnHcpdyK8xHC3xutdC
- 0YJ9tposCWfnWCPAluzT+rqy3I39tJcRxRqKP5yjCeF+8783ONYtj8JPl8noL/WHzH8o
- gMCzEIdJEWKhm23URhK5di/vm8IC4ZdpraOVijCoPL5bwVVOYU5fsZ13fCA22gAVX7H/
- UTzRZYMdmJngU6XUUdhXJtJ2FK3neuDL9ALzrKVH+JAJHckDd/xCSN2PjEg43XzzSpZm
- ApSNuThLREb4g704TQ2rnELYS+kw7ti52a9kW4zV/EiWUGE9LkOt9CHz1S7W1+wmXpRs
- rUhg==
+ bh=XsG4HS0Hi0hbjd75KzsL4izJ2zeNMAGK2+0U8SqDHJE=;
+ b=h4olOEi2s7NrTYrxfv2roBL5GP+AXMUlXKIqpquobTt27UVLKa3rYjVV3/If7UVtND
+ N3ay/UGFtkFT3PuHCjePJTwIUiHGTOtCWqFVk2C5Y9EVm37LqBiYv7gOgwBRwL5wEYlY
+ upL1EkLEGDWTF8Y9LZrAZNZDWeu1fwphQ7SQcmtaa1d0XUUW+BXF+DIAPhBCJWeRUSte
+ 6OMc4GOru+ko6ICuwTchrpvD3rPHKRqCrE0QYTzWtslyaNzeufmmBxNcqLLm5tAXAchV
+ muhkDGjiBSR3opgq0zH7W92hFMwUJ0JxZEZnu94job+uA0qyWJn2lxBnCQbZViOQVWKk
+ tEiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719896515; x=1720501315;
+ d=1e100.net; s=20230601; t=1719896537; x=1720501337;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ojuMSOD3mJ6z5l/dHTXyuiUf8CYGwAbSuIgUM0ljX7g=;
- b=EVK886pTR4LWBrmvVKeaqFXnuJ97shjmQRd1KX2P5SV0fSEdTYAAvzDJbT0Q9z1Uu8
- TOPnVvwmDeSXzu063uH+N9Qdruz/eV6r3FbRZ/awEoRzPQntHdizygkHntLp3Yqfi4nq
- oZVV5O33WCir0hrlUSJFffvYdBMXTeeMP0hHL1awDgJikgZVRjrhdHEpoSi6twncx1sm
- lfqE3RLxIYl36cTp9FwG1sf4YUwbR6dzmtwDgNdw101liAC5+pD5gYbVMeTD9pB02Koz
- z9YZ2mXg4SpEBRypUNd04aGKKvzye7gBr7/skoNmW2rLQMHwvbGUAg1S45uMNnT6ybmx
- IsDQ==
-X-Gm-Message-State: AOJu0YwtjAiNTqu41qI19RLXJngroHeQh8sGUCSmYyp1oovCWVUbgWgg
- 9rvIR5JAxCNJPOAVADmNVvBLcLBOjq/8mwxbKCsDHydMeSdJ85doNlm+q0n0Cp3C30hvzQvAYqr
- b
-X-Google-Smtp-Source: AGHT+IHQB3zMTuVtzT4hTy8sDXNSZcOFo2IkIpW+3n0LBj9MHpCvAQnzSNfU2VQvlGpQPwZjL7wUlQ==
-X-Received: by 2002:a05:651c:244:b0:2ee:7255:5032 with SMTP id
- 38308e7fff4ca-2ee72555309mr15962701fa.34.1719896493894; 
- Mon, 01 Jul 2024 22:01:33 -0700 (PDT)
+ bh=XsG4HS0Hi0hbjd75KzsL4izJ2zeNMAGK2+0U8SqDHJE=;
+ b=usgN14hMh+RxUgO7TE0VU+jHuVL4a4QIHxZNnYyaT9YU/MYqxg05nuKSuMsc/3rz07
+ x2moR0Xf7PHPT3XleOX/PNY2ySzNPgtt4AQijnnPg9p3uKfBaF2QgkF8QfbM8Bobmpx1
+ wx4BKlCqt7Xv8e2QDeEKBK87iDXzXwEAGXwa74WhRTnLAhCdb2TOKhW+1WjPoU1ZH1Jh
+ 4eRT0FQP7IUx3Y05MifMRLlCzsR2zUTzYg1SY0nIrf9tLApG05wGBvN+87LuvO0OpE4j
+ NwXyOLtvbbYftzYpjt2CyIL9v3v+dovipFOK1R0HYMj/NRp15JZ3EWoMhxGNyJQIYS4M
+ Yp3A==
+X-Gm-Message-State: AOJu0Yx9Jy7dE7zx7CnUzCDwebmSFd4cE0wmD4PAdozht7Lo1sXOTHsk
+ Uk3sztvTh52/o2eXWi5QCBVstFUrE+wuQnx42i8hpnQj/hnuQQ+ohbbsxKFbSJzsMmQ0tqtAlkA
+ P
+X-Google-Smtp-Source: AGHT+IHEnQnH5Mk5iLK9jJ32wU+zohfO5/Q8FyLCR26QKh0ODkpFiACo4hkk9qjVl7o2PuU9Y4HD9g==
+X-Received: by 2002:a05:6512:1108:b0:52c:d626:77aa with SMTP id
+ 2adb3069b0e04-52e82731df2mr4709720e87.58.1719896537064; 
+ Mon, 01 Jul 2024 22:02:17 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4257bc89832sm109373675e9.42.2024.07.01.22.01.32
+ ffacd0b85a97d-36789d5ec1csm228250f8f.37.2024.07.01.22.02.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 01 Jul 2024 22:01:32 -0700 (PDT)
+ Mon, 01 Jul 2024 22:02:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 03/22] hw/arm: convert 'virt' machine definitions to use new
- macros
-Date: Tue,  2 Jul 2024 07:00:53 +0200
-Message-ID: <20240702050112.35907-4-philmd@linaro.org>
+Subject: [PULL 10/22] include/hw: temporarily disable deletion of versioned
+ machine types
+Date: Tue,  2 Jul 2024 07:01:00 +0200
+Message-ID: <20240702050112.35907-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240702050112.35907-1-philmd@linaro.org>
 References: <20240702050112.35907-1-philmd@linaro.org>
@@ -98,74 +98,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-This changes the DEFINE_VIRT_MACHINE macro to use the common
-helpers for constructing versioned symbol names and strings,
-bringing greater consistency across targets.
+The new deprecation and deletion policy for versioned machine types is
+being introduced in QEMU 9.1.0.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Under the new policy a number of old machine types (any prior to 2.12)
+would be liable for immediate deletion which would be a violation of our
+historical deprecation and removal policy
+
+Thus automatic deletions (by skipping QOM registration) are temporarily
+gated on existance of the env variable "QEMU_DELETE_MACHINES" / QEMU
+version number >= 10.1.0. This allows opt-in testing of the automatic
+deletion logic, while activating it fully in QEMU >= 10.1.0.
+
+This whole commit should be reverted in the 10.1.0 dev cycle or shortly
+thereafter.
+
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240620165742.1711389-3-berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240620165742.1711389-10-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/virt.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ include/hw/boards.h | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 0784ee7f46..08990b9abe 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -101,33 +101,35 @@ static void arm_virt_compat_set(MachineClass *mc)
-                      arm_virt_compat_len);
- }
- 
--#define DEFINE_VIRT_MACHINE_LATEST(major, minor, latest) \
--    static void virt_##major##_##minor##_class_init(ObjectClass *oc, \
--                                                    void *data) \
-+#define DEFINE_VIRT_MACHINE_IMPL(latest, ...) \
-+    static void MACHINE_VER_SYM(class_init, virt, __VA_ARGS__)( \
-+        ObjectClass *oc, \
-+        void *data) \
-     { \
-         MachineClass *mc = MACHINE_CLASS(oc); \
-         arm_virt_compat_set(mc); \
--        virt_machine_##major##_##minor##_options(mc); \
--        mc->desc = "QEMU " # major "." # minor " ARM Virtual Machine"; \
-+        MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
-+        mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " ARM Virtual Machine"; \
-         if (latest) { \
-             mc->alias = "virt"; \
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 187ed76646..ef6f18f2c1 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -686,11 +686,28 @@ struct MachineState {
+  * suitable period of time has passed, it will cause
+  * execution of the method to return, avoiding registration
+  * of the machine
++ *
++ * The new deprecation and deletion policy for versioned
++ * machine types was introduced in QEMU 9.1.0.
++ *
++ * Under the new policy a number of old machine types (any
++ * prior to 2.12) would be liable for immediate deletion
++ * which would be a violation of our historical deprecation
++ * and removal policy
++ *
++ * Thus deletions are temporarily gated on existance of
++ * the env variable "QEMU_DELETE_MACHINES" / QEMU version
++ * number >= 10.1.0. This gate can be deleted in the 10.1.0
++ * dev cycle
+  */
+ #define MACHINE_VER_DELETION(...) \
+     do { \
+         if (MACHINE_VER_SHOULD_DELETE(__VA_ARGS__)) { \
+-            return; \
++            if (getenv("QEMU_DELETE_MACHINES") || \
++                QEMU_VERSION_MAJOR > 10 || (QEMU_VERSION_MAJOR == 10 && \
++                                            QEMU_VERSION_MINOR >= 1)) { \
++                return; \
++            } \
          } \
-     } \
--    static const TypeInfo machvirt_##major##_##minor##_info = { \
--        .name = MACHINE_TYPE_NAME("virt-" # major "." # minor), \
--        .parent = TYPE_VIRT_MACHINE, \
--        .class_init = virt_##major##_##minor##_class_init, \
--    }; \
--    static void machvirt_machine_##major##_##minor##_init(void) \
-+    static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
-     { \
--        type_register_static(&machvirt_##major##_##minor##_info); \
-+        .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
-+        .parent = TYPE_VIRT_MACHINE, \
-+        .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
-+    }; \
-+    static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
-+    { \
-+        type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
-     } \
--    type_init(machvirt_machine_##major##_##minor##_init);
-+    type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
+     } while (0)
  
- #define DEFINE_VIRT_MACHINE_AS_LATEST(major, minor) \
--    DEFINE_VIRT_MACHINE_LATEST(major, minor, true)
-+    DEFINE_VIRT_MACHINE_IMPL(true, major, minor)
- #define DEFINE_VIRT_MACHINE(major, minor) \
--    DEFINE_VIRT_MACHINE_LATEST(major, minor, false)
-+    DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
- 
- 
- /* Number of external interrupt lines to configure the GIC with */
 -- 
 2.41.0
 
