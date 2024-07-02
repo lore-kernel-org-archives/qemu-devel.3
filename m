@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2DCC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D541CC3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOk00-0005Q1-DL; Tue, 02 Jul 2024 16:21:12 -0400
+	id 1sOjyI-0000OH-3A; Tue, 02 Jul 2024 16:19:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzi-00058M-KH
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyC-0008BH-KK
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjza-0001hF-SD
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjy6-0001EK-M2
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951646;
+ s=mimecast20190719; t=1719951553;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6T5wYohIMyfJ7zfD4BymibarRz8jk6tb2fFAczZH0qE=;
- b=KxQiaqjJPuMZvgyPq0jMmbH1Bc+AENFmWPX9vwpCEu1idd38igjmB3aojM0qm3prpmmDBX
- fQRh1j8O7s4u+dpBdJsfof8YJ3WYsSrFnZG18ZFcje/abhC8js7KG1ei1sXwmRYGc2uP8A
- 0Klc3tE/WiXytX0NMmTC9Gvpn4alWSc=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/8Z7JyQo+HEEofucdvOkehCzjauROI/8uJ9hGYzaVe8=;
+ b=V3NJ63f5xY2mgT7CT3Uwm7Gl0cwpESicCudmH3whhbSUkp4m9YxwgLzv0xLLIi5nvu/Pv+
+ uBfc+ONUdR0rDDOr1xvTrXBHKNhMCDMbrigtzhWgPZn7fm7Y9W6PmChx3J72cCYrdXX8+P
+ KBSLJU1oyGcdvFBWp3eE44bHcrAYNXo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-e2Sf7kmgNI6xv16s77ztmw-1; Tue, 02 Jul 2024 16:20:45 -0400
-X-MC-Unique: e2Sf7kmgNI6xv16s77ztmw-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2ec617a3355so45389551fa.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:20:44 -0700 (PDT)
+ us-mta-482-m3P6Irj9M7q2MbkjXQ_2rQ-1; Tue, 02 Jul 2024 16:19:12 -0400
+X-MC-Unique: m3P6Irj9M7q2MbkjXQ_2rQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3678fbf4aa7so253334f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:19:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951643; x=1720556443;
+ d=1e100.net; s=20230601; t=1719951550; x=1720556350;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6T5wYohIMyfJ7zfD4BymibarRz8jk6tb2fFAczZH0qE=;
- b=Gi4ISK88Tfh1mrIBAF58P4Bb0tyl2iazr5ryWErzej9KOnJxqybr1lGsPcUaCuUIGg
- 7uFUgry/7yuM10ebEze4EbOJSEq0PIGbQbCe2bxHceNhv5CT5dWpPYfr4vABcY1tuHHL
- gIkkmq0lBd0tc2xGNh7D2CqH3GzxCmSuIr/zPdHu01+6OhotijiVCrhBg//tk8Q+bGW2
- /rK4DTUO0x1ZTi0RINlV7l/66BzQ5QdKZdjAIbMyxIOeB0olsA7UDaI8JNtQJ77YZvmq
- X5hBDfwPRIVvIpyLdBoudSJhIQSQ0Vu9n1szhfb+n0q5B3HWRbDU8tlCvnKQeePgEBs2
- xbXg==
-X-Gm-Message-State: AOJu0YzYR9Ne6sP9KX+RPw7DhcGVFYJTHq+dFQVFiFW3WZKuLHdVtvzZ
- tL6Hgo3RcLt4sDs3UzcnOCRVjWTn4aAnDSVt2HsmA0daHfFhYtlwTqH5QY9d8MiKjHkYg7eyZoz
- KwB6yXTY9PnC/dKudxOvdNKAJgFLhMXMwbGmA0wtg5fnfr4ZsjQmVflNl7od6RvTGZoL+T/brY5
- EUWFTTPOQMjG+RX+3Vc2LQt7PIBq1tcA==
-X-Received: by 2002:a2e:a813:0:b0:2ee:7b7d:66ee with SMTP id
- 38308e7fff4ca-2ee7b7d68f1mr7866551fa.41.1719951643173; 
- Tue, 02 Jul 2024 13:20:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcHXzsT9LOQ95Bb3qlIkTnBS4wRNvaMilflNQJjz8KlF7qUd5cBdpwMwaj5m9ielLSomtTUw==
-X-Received: by 2002:a2e:a813:0:b0:2ee:7b7d:66ee with SMTP id
- 38308e7fff4ca-2ee7b7d68f1mr7866321fa.41.1719951642600; 
- Tue, 02 Jul 2024 13:20:42 -0700 (PDT)
+ bh=/8Z7JyQo+HEEofucdvOkehCzjauROI/8uJ9hGYzaVe8=;
+ b=Fpvh/rsNvTBoia6tB/KIcNR3KjoM2aOh5E17u0NviUlFY/HhYRRylTum8XDSUzFMzK
+ 7t7pRW7nzf1umzBdK3SandU7CQOm0J/jq4BTEepCczgMb9A88ZDvLzz1YkeSFIQWnlHi
+ 0GMH8iVFopQZVIaBH6fnWQGZEbeJa7tPqBL+vQ3VfryClH4bj+A9leNc/GyAbl5lFasM
+ sCXZBlizUfdjPUB6Fb5i6Si83A4v660lqG3V4Z64F5L0ud8H4Wal00tTh29Jo231xfGo
+ u+L42W1h8I7W7jhGzOKpaqnmGlW6t3/qUozPw2nXhUOEyqlsOIMOUgftI1LWYut7Xbym
+ /VdA==
+X-Gm-Message-State: AOJu0YzunhF9VENRETbKVt0emCUwVQngMJkmtkj0QVOu1mgVx4+EbV1V
+ YCiNGrK//l8IRgh6HtFOLdCgE0XYkUrJT3npMOJmK2RRTIhgIebwHVuHA514goH5r/+R2Czqz5H
+ MqKlVfOzqo+AJrgzs1LvtbRk5a9blkE+LsgKji+2l5ohnRRp49L/l1N3BZHxDI4aHxKBYYCBK83
+ C3W4Y1hNfMD4nd0ZgA0lwcfi8zd++Sdg==
+X-Received: by 2002:a5d:598e:0:b0:366:eedd:afd1 with SMTP id
+ ffacd0b85a97d-3677571b6e0mr7083596f8f.45.1719951550421; 
+ Tue, 02 Jul 2024 13:19:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFgj9Mf6EskIwUMr5kIVqr++iVyFCn7YxLCGdkKWDqcjZL6zTfAtlkrpo3kUApo3QLqO1EDLA==
+X-Received: by 2002:a5d:598e:0:b0:366:eedd:afd1 with SMTP id
+ ffacd0b85a97d-3677571b6e0mr7083575f8f.45.1719951549857; 
+ Tue, 02 Jul 2024 13:19:09 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4257cdf4982sm131856715e9.47.2024.07.02.13.20.40
+ ffacd0b85a97d-36790d523bfsm447717f8f.107.2024.07.02.13.19.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:20:42 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:20:38 -0400
+ Tue, 02 Jul 2024 13:19:09 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:19:06 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL v2 82/88] pcie_sriov: Do not manually unrealize
-Message-ID: <f211696efcee92bfd69490b02011fcc79634caea.1719951168.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PULL v2 59/88] hw/virtio: Fix the de-initialization of vhost-user
+ devices
+Message-ID: <805a31ea56e26c360361c5f011d5b78eb6e9b66f.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -78,7 +78,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,34 +102,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Thomas Huth <thuth@redhat.com>
 
-A device gets automatically unrealized when being unparented.
+The unrealize functions of the various vhost-user devices are
+calling the corresponding vhost_*_set_status() functions with a
+status of 0 to shut down the device correctly.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240627-reuse-v10-4-7ca0b8ed3d9f@daynix.com>
+Now these vhost_*_set_status() functions all follow this scheme:
+
+    bool should_start = virtio_device_should_start(vdev, status);
+
+    if (vhost_dev_is_started(&vvc->vhost_dev) == should_start) {
+        return;
+    }
+
+    if (should_start) {
+        /* ... do the initialization stuff ... */
+    } else {
+        /* ... do the cleanup stuff ... */
+    }
+
+The problem here is virtio_device_should_start(vdev, 0) currently
+always returns "true" since it internally only looks at vdev->started
+instead of looking at the "status" parameter. Thus once the device
+got started once, virtio_device_should_start() always returns true
+and thus the vhost_*_set_status() functions return early, without
+ever doing any clean-up when being called with status == 0. This
+causes e.g. problems when trying to hot-plug and hot-unplug a vhost
+user devices multiple times since the de-initialization step is
+completely skipped during the unplug operation.
+
+This bug has been introduced in commit 9f6bcfd99f ("hw/virtio: move
+vm_running check to virtio_device_started") which replaced
+
+ should_start = status & VIRTIO_CONFIG_S_DRIVER_OK;
+
+with
+
+ should_start = virtio_device_started(vdev, status);
+
+which later got replaced by virtio_device_should_start(). This blocked
+the possibility to set should_start to false in case the status flag
+VIRTIO_CONFIG_S_DRIVER_OK was not set.
+
+Fix it by adjusting the virtio_device_should_start() function to
+only consider the status flag instead of vdev->started. Since this
+function is only used in the various vhost_*_set_status() functions
+for exactly the same purpose, it should be fine to fix it in this
+central place there without any risk to change the behavior of other
+code.
+
+Fixes: 9f6bcfd99f ("hw/virtio: move vm_running check to virtio_device_started")
+Buglink: https://issues.redhat.com/browse/RHEL-40708
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20240618121958.88673-1-thuth@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/pci/pcie_sriov.c | 4 ----
- 1 file changed, 4 deletions(-)
+ include/hw/virtio/virtio.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index e9b23221d7..499becd527 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -204,11 +204,7 @@ static void unregister_vfs(PCIDevice *dev)
-     trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
-                                PCI_FUNC(dev->devfn), num_vfs);
-     for (i = 0; i < num_vfs; i++) {
--        Error *err = NULL;
-         PCIDevice *vf = dev->exp.sriov_pf.vf[i];
--        if (!object_property_set_bool(OBJECT(vf), "realized", false, &err)) {
--            error_reportf_err(err, "Failed to unplug: ");
--        }
-         object_unparent(OBJECT(vf));
-         object_unref(OBJECT(vf));
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 1451926a13..7512afbc84 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -472,9 +472,9 @@ static inline bool virtio_device_started(VirtIODevice *vdev, uint8_t status)
+  * @vdev - the VirtIO device
+  * @status - the devices status bits
+  *
+- * This is similar to virtio_device_started() but also encapsulates a
+- * check on the VM status which would prevent a device starting
+- * anyway.
++ * This is similar to virtio_device_started() but ignores vdev->started
++ * and also encapsulates a check on the VM status which would prevent a
++ * device from starting anyway.
+  */
+ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status)
+ {
+@@ -482,7 +482,7 @@ static inline bool virtio_device_should_start(VirtIODevice *vdev, uint8_t status
+         return false;
      }
+ 
+-    return virtio_device_started(vdev, status);
++    return status & VIRTIO_CONFIG_S_DRIVER_OK;
+ }
+ 
+ static inline void virtio_set_started(VirtIODevice *vdev, bool started)
 -- 
 MST
 
