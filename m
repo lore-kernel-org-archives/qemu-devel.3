@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4380C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 263F4C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:18:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjwO-0008CS-Bm; Tue, 02 Jul 2024 16:17:28 -0400
+	id 1sOjvj-0006z7-GO; Tue, 02 Jul 2024 16:16:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjvW-0006uM-4o
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjv3-0005rJ-En
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjvU-0008H2-DI
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjv0-0008Ac-93
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951391;
+ s=mimecast20190719; t=1719951361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/tkdF9wBgRXJ0C7b2uR1oP4dL+2Be2HPdzcygUpss9I=;
- b=TlsCDpQBOsFBX1PVj32DVmRNSRSxlTMMwEI4EbsvUJhJgyVkFZiJqesxMtLIm1mzYJNk+f
- Ww209MZlJ/SeQV4aTlVztb7vFrvjwmjfTBENJuBYWuBn8L3gy+hpNBy6oz0YD6tvTQiP7d
- J9+6JSwpwrIeCfcqA+QRS+vBS7RpLoc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Hq1ZdMUpXgQO0jHpQkHjtkURKxmq/FjBLx45BW2ity0=;
+ b=Rpi5gpX6amnm1cFMNEHaGV9/8DTBfvUyldPl8pWiJq/ELjGjO/07eIVo4WSCwZ/WW6hXAJ
+ pTXWvK42eFPct6CbtHcWY/bA32g8MowVdlRUcqzcWheSBhx6Wx1SYa6kWdw7g3fzxW3apU
+ bEG4MsZ8y0qxmjG3y5s6qg2KjSrNwLw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-275-h0zPu7w9NRuSuIQ-X1g4_g-1; Tue, 02 Jul 2024 16:16:30 -0400
-X-MC-Unique: h0zPu7w9NRuSuIQ-X1g4_g-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4248fa5daacso32285825e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:16:30 -0700 (PDT)
+ us-mta-79-SppjbDLDNLaEYXUJ0FICFQ-1; Tue, 02 Jul 2024 16:15:59 -0400
+X-MC-Unique: SppjbDLDNLaEYXUJ0FICFQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3634a634f8aso2622996f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:15:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951388; x=1720556188;
+ d=1e100.net; s=20230601; t=1719951358; x=1720556158;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/tkdF9wBgRXJ0C7b2uR1oP4dL+2Be2HPdzcygUpss9I=;
- b=QSt4maR9ylzUpQ5r+MaVwrWczezIb29NvQDkrMdNMkeUXPYBP4AJAI8T1RXgXyANds
- Ld7WKhMyuNZCh/VGgKQoBRkBAlVuhAIZg0GYosn7tY5F5mOcGQmuJcGTGEdnh32Aka+N
- JewwvgK7qKsm102+NRjGUvUaebmEzM1j4dnjNlg8sA7pIuYeGZPtZiBUs7Cl0u12boTt
- MPAfg9pKOZ4tNRel/qboXhl1Q3IBB6hMFsP0SLzVl2joz6QvV+af7ZEAD+P9A43b7Iu+
- UGGSlooXcb1bGbo+7GaNSZ1Jzqux7Tc3gD4anc34bdLC00tCDM4a4mbK53+laRZUNaI0
- YUGQ==
-X-Gm-Message-State: AOJu0YwWlOd/GyAMzxNtbk8YP+cPrMBqmurCi1nzPITmnfa+4KNT1TNk
- ivsLZo0Hv+aXLww90EhAJkaqmgFlL93XSocKRnDnGh/Jw5M0hRLRQAF7XwiM14ufvJxM9lAQogW
- 5FLJGz8gVxldMEA9J9ZUWq2AwajD2YxR3Q9T69KQ//3sEPP4dChzH39TwdIFXmx99XYpt/OkFgh
- b8w1mBaqydKLuMO4TA0a4tFcVvqNW44Q==
-X-Received: by 2002:a05:600c:1d1f:b0:425:7aa0:a82e with SMTP id
- 5b1f17b1804b1-4257aa0a8efmr60894855e9.12.1719951388478; 
- Tue, 02 Jul 2024 13:16:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHso2bGebUb8O07EMBDmhlczknVN1Tv1oMHbi7RnLVDcNBDhNpTl0VNb9yMef9AqH5ZoS6g/A==
-X-Received: by 2002:a05:600c:1d1f:b0:425:7aa0:a82e with SMTP id
- 5b1f17b1804b1-4257aa0a8efmr60894635e9.12.1719951387916; 
- Tue, 02 Jul 2024 13:16:27 -0700 (PDT)
+ bh=Hq1ZdMUpXgQO0jHpQkHjtkURKxmq/FjBLx45BW2ity0=;
+ b=IQe6LhSQ7VK2Fsm8ppUwTTKNRa8G2TMhmGuomDLvoYOoVklQZV6tNplwblTn+on0E7
+ V5jwqBri6EfXKheqvoN5zNmQaRa2mQ2CvMvA8vQPVNU93rPPF1vgavVh2oNtNiKQ5xFl
+ ZARpozqV+LLLqtpbegRj777D14WwFekh3j1PqFAlaOfskyEL+7QbYhZMQs4mbdxUXjTj
+ XQ6xdGXJ562ciz4mJKUDySWwoe235bkkoW8QYa5PMWNC4BoJERz/J3yQlFZS6eC8089v
+ sLWnp3zMOQ9yov4qJIWPzQb2E1zk6EcMx6YQAz9a3jyUB4JxhehBekQ1WG3iyLhGUbTQ
+ MZGA==
+X-Gm-Message-State: AOJu0YyjNDbpDaidW8vqpazqLYsCnh9KD9tnijDcXePESpshzR/+hWdB
+ YOdFAjyaP4AJQkiS8hEgTMXiNSqQB1uEXxX3kw1ou6j0M2mGlDtpfUpTmKHVikWPejI7DT6mnAT
+ ouuNhkRWd9fWY2HU+ps6eJ4EogAwSaWVGTG6CsbAGxVrg+AY3K7VB5dUCmy5jFwzNBEDMqaAh8r
+ bdVZ0XnI3wFaiTcPEMwDXzvGnX1Bse6w==
+X-Received: by 2002:a05:6000:1fab:b0:367:4e05:bb7b with SMTP id
+ ffacd0b85a97d-36775721674mr7550001f8f.53.1719951358071; 
+ Tue, 02 Jul 2024 13:15:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHSSEToziFIBuKUpPUwh8bMTLGOpiOk8oLog55IQkWMUGS9uG+en9DkEgSDNZGtG/KtjsmlQg==
+X-Received: by 2002:a05:6000:1fab:b0:367:4e05:bb7b with SMTP id
+ ffacd0b85a97d-36775721674mr7549957f8f.53.1719951357061; 
+ Tue, 02 Jul 2024 13:15:57 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af376easm210950085e9.5.2024.07.02.13.16.26
+ ffacd0b85a97d-3675a1030c8sm14075123f8f.98.2024.07.02.13.15.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:16:27 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:16:25 -0400
+ Tue, 02 Jul 2024 13:15:56 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:15:54 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL v2 20/88] include/hw/cxl/cxl_device: Rename mem_size as
- static_mem_size for type3 memory devices
-Message-ID: <25851080772387ae33d6ee94250b3a31bf719e5c.1719951168.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jiqian Chen <Jiqian.Chen@amd.com>
+Subject: [PULL v2 12/88] virtio-pci: only reset pm state during resetting
+Message-ID: <84b58169e40f5c7428db6f0b229e01213068aa21.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -103,98 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Jiqian Chen <Jiqian.Chen@amd.com>
 
-Rename mem_size as static_mem_size for type3 memdev to cover static RAM and
-pmem capacity, preparing for the introduction of dynamic capacity to support
-dynamic capacity devices.
+Fix bug imported by 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
+After this change, observe that QEMU may erroneously clear the power status of the device,
+or may erroneously clear non writable registers, such as NO_SOFT_RESET, etc.
 
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-6-nifan.cxl@gmail.com>
+Only state of PM_CTRL is writable.
+Only when flag VIRTIO_PCI_FLAG_INIT_PM is set, need to reset state.
+
+Fixes: 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+Message-Id: <20240515073526.17297-2-Jiqian.Chen@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h | 2 +-
- hw/cxl/cxl-mailbox-utils.c  | 4 ++--
- hw/mem/cxl_type3.c          | 8 ++++----
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ hw/virtio/virtio-pci.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index e839370266..f7f56b44e3 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -234,7 +234,7 @@ typedef struct cxl_device_state {
-     } timestamp;
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index cffc7efcae..7d62e92365 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2306,10 +2306,16 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
+     virtio_pci_reset(qdev);
  
-     /* memory region size, HDM */
--    uint64_t mem_size;
-+    uint64_t static_mem_size;
-     uint64_t pmem_size;
-     uint64_t vmem_size;
+     if (pci_is_express(dev)) {
++        VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
++
+         pcie_cap_deverr_reset(dev);
+         pcie_cap_lnkctl_reset(dev);
  
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index bede28e3c8..b592473587 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -803,7 +803,7 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
-     snprintf(id->fw_revision, 0x10, "BWFW VERSION %02d", 0);
- 
-     stq_le_p(&id->total_capacity,
--             cxl_dstate->mem_size / CXL_CAPACITY_MULTIPLIER);
-+             cxl_dstate->static_mem_size / CXL_CAPACITY_MULTIPLIER);
-     stq_le_p(&id->persistent_capacity,
-              cxl_dstate->pmem_size / CXL_CAPACITY_MULTIPLIER);
-     stq_le_p(&id->volatile_capacity,
-@@ -1179,7 +1179,7 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
-     struct clear_poison_pl *in = (void *)payload_in;
- 
-     dpa = ldq_le_p(&in->dpa);
--    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->mem_size) {
-+    if (dpa + CXL_CACHE_LINE_SIZE > cxl_dstate->static_mem_size) {
-         return CXL_MBOX_INVALID_PA;
+-        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
++        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
++            pci_word_test_and_clear_mask(
++                dev->config + dev->exp.pm_cap + PCI_PM_CTRL,
++                PCI_PM_CTRL_STATE_MASK);
++        }
      }
- 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 3e42490b6c..7194c8f902 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -608,7 +608,7 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-         }
-         address_space_init(&ct3d->hostvmem_as, vmr, v_name);
-         ct3d->cxl_dstate.vmem_size = memory_region_size(vmr);
--        ct3d->cxl_dstate.mem_size += memory_region_size(vmr);
-+        ct3d->cxl_dstate.static_mem_size += memory_region_size(vmr);
-         g_free(v_name);
-     }
- 
-@@ -631,7 +631,7 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-         }
-         address_space_init(&ct3d->hostpmem_as, pmr, p_name);
-         ct3d->cxl_dstate.pmem_size = memory_region_size(pmr);
--        ct3d->cxl_dstate.mem_size += memory_region_size(pmr);
-+        ct3d->cxl_dstate.static_mem_size += memory_region_size(pmr);
-         g_free(p_name);
-     }
- 
-@@ -837,7 +837,7 @@ static int cxl_type3_hpa_to_as_and_dpa(CXLType3Dev *ct3d,
-         return -EINVAL;
-     }
- 
--    if (*dpa_offset > ct3d->cxl_dstate.mem_size) {
-+    if (*dpa_offset > ct3d->cxl_dstate.static_mem_size) {
-         return -EINVAL;
-     }
- 
-@@ -1010,7 +1010,7 @@ static bool set_cacheline(CXLType3Dev *ct3d, uint64_t dpa_offset, uint8_t *data)
-         return false;
-     }
- 
--    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.mem_size) {
-+    if (dpa_offset + CXL_CACHE_LINE_SIZE > ct3d->cxl_dstate.static_mem_size) {
-         return false;
-     }
+ }
  
 -- 
 MST
