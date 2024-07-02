@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40314C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B80C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:11:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeAY-00022z-Dk; Tue, 02 Jul 2024 10:07:42 -0400
+	id 1sOeCc-0000uA-2G; Tue, 02 Jul 2024 10:09:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeAR-000216-In
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCV-0000Cf-3Z
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeAI-0007tO-Cp
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeCI-0008MY-2H
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:09:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929245;
+ s=mimecast20190719; t=1719929369;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N8epoI+2XR2IZhKNbWvFqqmIBG6jX2/y5dIWNKzyj2M=;
- b=P9vxdxOTDLfIDMGMo8s+8sHsVZahQFmrIHVtu+9VzRZx2hvqpmAasVN6F5uw32WNBqqFs0
- Z8XwVhYSgar4/ACUd2wg5sVKvKGo9zeCz/ZgU6fzRK8msQ78CrEGEy/JQug+thpZUYfkab
- tc1iVIwTv6GsVuIzhSlHK4hCc7tM5JU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9Yh+r83dQTqjKVESuK/txPttml/pXNBlxCl8GGxw4h4=;
+ b=StIVAVb6e95DBzsJ4iIYjxLmVKyxr74KtIsnebjGOIbjgoHSppoQ9xyGefJAa3o+iAHxjV
+ /APMCmF/xCrVTMXPojlvjq3t7D7s3CSShyaeP+tVz8N06eV/JeWGL0ZEdW/v2m/SexDs7x
+ EQIsj+F/MeFjs7JSXVIR7+mBgnXNayo=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-Sr0d3wFWMmCSeMBdW-fY3w-1; Tue, 02 Jul 2024 10:07:21 -0400
-X-MC-Unique: Sr0d3wFWMmCSeMBdW-fY3w-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4256569a4faso27251975e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:07:21 -0700 (PDT)
+ us-mta-673-Nz5FI3E2OR-FESRZXlexiA-1; Tue, 02 Jul 2024 10:09:26 -0400
+X-MC-Unique: Nz5FI3E2OR-FESRZXlexiA-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52cda76173dso3718661e87.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:09:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929240; x=1720534040;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N8epoI+2XR2IZhKNbWvFqqmIBG6jX2/y5dIWNKzyj2M=;
- b=YBdLDIzyFG4U7e4bseedfF4pVbC/le7l2RrZaLN9xcbdjZ4EvsI8qqeZ9rP/+RwnFH
- tnBJmK9Ww+ldPuxbSLQ7/sYDJ6ykSvTLrU+E2RqOooyfpw3uHSqdS2e0MgNxTjBYmhYZ
- FIGK/Ik6M21Ig7P/sZ1KjC35DVbO7hGnxewG15B2Zk/8gqSwvjpTJ1KCY2SzrSwjCXl8
- KzKjv4SLC+WX1jg5zjfqL5aRgoc6bxaM2kRabF+sCqqIJEPigaTjnev6JFnJIHQ68BMo
- lvbK168Uj7wDpApuzP1qCLZRsCjBGOJ1H5NA+v0mUPD7R4ZNUx1TaJ24FI4iYgSeWMuq
- CwCg==
-X-Gm-Message-State: AOJu0Ywyw7phOy3R23mx+DGdTwF6ATTlC8A0aubIh7WC5iMqyIRnDXbd
- KlagU7ILd3kiJw0y4PfBf7LagG2uxjFpdXbf8yHtlsLYkq/QqVQmwH1i+G5jRiyJW5gOz+f6q5N
- 1uVkEkn8vhwFkxvr+9T8hHF/T6/V6CqDiDHmP64JSEl/u66COgFzCMGeTTmTxj2APmfpPLEKr2U
- YAmaVHDLuR5PuncfGOLGJ8d8FCTeCEig==
-X-Received: by 2002:a05:600c:4f16:b0:421:b65d:2235 with SMTP id
- 5b1f17b1804b1-42579714d61mr85248445e9.0.1719929240566; 
- Tue, 02 Jul 2024 07:07:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcfD/TG50V6u71ZCSG17LMuFoXXHV16QOjAwnFcMBi0KqtEmouEowf5haA8WxfPyl+05xIsA==
-X-Received: by 2002:a05:600c:4f16:b0:421:b65d:2235 with SMTP id
- 5b1f17b1804b1-42579714d61mr85248085e9.0.1719929240079; 
- Tue, 02 Jul 2024 07:07:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719929364; x=1720534164;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9Yh+r83dQTqjKVESuK/txPttml/pXNBlxCl8GGxw4h4=;
+ b=tytyxJuIlQFPCzzY1t8rKdnhEOWTE5NatniYNizlEoUqjmzmFvtIYdlEiAQy67xxJv
+ /pHsQ8VHJqOUZJ4Ux0MS1oYxHZ/+hF7XfRS1YcZUr+Gt9Pecw8RfBM7OHn76su9x16/h
+ +FVZ0tfBw/2mQu72c535xdoAee3syIFTJs1k6apuTwnYDnY9W9NEvJAm6EEdV2WLn8lz
+ FM9LcIWzg/1AQyM6ArctNd1FUPLhMfmacndCFnjSs8uW73EiyfrdNZu7lde8y+aZQyJJ
+ sLSvSMgHBh2ACWWgPotaC6pCp9aVeCBz3c0xQb+IV4+C9Jtp+UudlXmw+Aool0Ak+dsX
+ kgNw==
+X-Gm-Message-State: AOJu0Yy+niL/zT1/s0yKQ2IZf1l3Cb1Ew6v4R1rtrHc8/Jdfr9cm+69y
+ Ab66MXf/joOMKmVhudFcUKUwyIiaK6KbqDjrSORJDC3013NfWHSIvJGKla5VSDSOMAIeIdzEbWB
+ 9K0mcXw6gHwJgotQVYdAwIA/n7Pu6+HlVFtiAMbOXCBN+XkvSqmtkUH2H1SgRPJb8CfXDV2VF6v
+ n294zz721FxRRl2i2MxCiUcSENvtMmRw==
+X-Received: by 2002:ac2:5487:0:b0:52e:934f:bda5 with SMTP id
+ 2adb3069b0e04-52e934fbdf5mr295007e87.21.1719929364764; 
+ Tue, 02 Jul 2024 07:09:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjLCZB0TTmwTxPaTT7oZELPvIz9ZnN4D8cv5pnsdsIn/4sJ4ao74zoCZstcalRZYnOT6lbnw==
+X-Received: by 2002:ac2:5487:0:b0:52e:934f:bda5 with SMTP id
+ 2adb3069b0e04-52e934fbdf5mr294980e87.21.1719929364190; 
+ Tue, 02 Jul 2024 07:09:24 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256f55c4b5sm185964545e9.43.2024.07.02.07.07.18
+ 5b1f17b1804b1-4256b09a2bcsm197928645e9.36.2024.07.02.07.09.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:07:19 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:07:16 -0400
+ Tue, 02 Jul 2024 07:09:23 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:09:21 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Jonah Palmer <jonah.palmer@oracle.com>,
- Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, Eric Blake <eblake@redhat.com>,
  David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-s390x@nongnu.org
-Subject: [PULL 07/91] virtio-ccw: Handle extra notification data
-Message-ID: <594b543a4a75d08f47e5ea92c96a89502a3eab72.1719929191.git.mst@redhat.com>
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 47/91] libvhost-user: set msg.msg_control to NULL when it is
+ empty
+Message-ID: <e4720435db1906258f9d18930fec05a900b008f2.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719929191.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -91,8 +91,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,66 +107,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonah Palmer <jonah.palmer@oracle.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Add support to virtio-ccw devices for handling the extra data sent from
-the driver to the device when the VIRTIO_F_NOTIFICATION_DATA transport
-feature has been negotiated.
+On some OS (e.g. macOS) sendmsg() returns -1 (errno EINVAL) if
+the `struct msghdr` has the field `msg_controllen` set to 0, but
+`msg_control` is not NULL.
 
-The extra data that's passed to the virtio-ccw device when this feature
-is enabled varies depending on the device's virtqueue layout.
-
-That data passed to the virtio-ccw device is in the same format as the
-data passed to virtio-pci devices.
-
-Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-Message-Id: <20240315165557.26942-5-jonah.palmer@oracle.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20240618100043.144657-3-sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/s390x/s390-virtio-ccw.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ subprojects/libvhost-user/libvhost-user.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index cd063f8b64..8cd912f20e 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -126,9 +126,11 @@ static void subsystem_reset(void)
- static int virtio_ccw_hcall_notify(const uint64_t *args)
- {
-     uint64_t subch_id = args[0];
--    uint64_t queue = args[1];
-+    uint64_t data = args[1];
-     SubchDev *sch;
-+    VirtIODevice *vdev;
-     int cssid, ssid, schid, m;
-+    uint16_t vq_idx = data;
- 
-     if (ioinst_disassemble_sch_ident(subch_id, &m, &cssid, &ssid, &schid)) {
-         return -EINVAL;
-@@ -137,12 +139,19 @@ static int virtio_ccw_hcall_notify(const uint64_t *args)
-     if (!sch || !css_subch_visible(sch)) {
-         return -EINVAL;
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 8adb277d54..53bf1adda6 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -632,6 +632,7 @@ vu_message_write(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
+         memcpy(CMSG_DATA(cmsg), vmsg->fds, fdsize);
+     } else {
+         msg.msg_controllen = 0;
++        msg.msg_control = NULL;
      }
--    if (queue >= VIRTIO_QUEUE_MAX) {
-+
-+    vdev = virtio_ccw_get_vdev(sch);
-+    if (vq_idx >= VIRTIO_QUEUE_MAX || !virtio_queue_get_num(vdev, vq_idx)) {
-         return -EINVAL;
-     }
--    virtio_queue_notify(virtio_ccw_get_vdev(sch), queue);
--    return 0;
  
-+    if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
-+        virtio_queue_set_shadow_avail_idx(virtio_get_queue(vdev, vq_idx),
-+                                          (data >> 16) & 0xFFFF);
-+    }
-+
-+    virtio_queue_notify(vdev, vq_idx);
-+    return 0;
- }
- 
- static int virtio_ccw_hcall_early_printk(const uint64_t *args)
+     do {
 -- 
 MST
 
