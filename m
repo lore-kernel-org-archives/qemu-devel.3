@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF505C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381D1C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:31:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjzV-0004qW-TT; Tue, 02 Jul 2024 16:20:42 -0400
+	id 1sOjwP-0008GQ-IF; Tue, 02 Jul 2024 16:17:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzK-0004Y5-MT
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjw6-0007Mu-2w
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:17:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzF-0001aC-8y
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:30 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjw3-0008Pw-Vg
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:17:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951624;
+ s=mimecast20190719; t=1719951426;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YWXH9YhJGBTUPtLIg1EJaieR/oMq54SMMzeEyf0UDBU=;
- b=flYqZ/x7GxGSH/bx0K9XWABSzehITGUakGWQcbaunMzMHZDoN670SsqwDqk2XzM92JhItx
- zmQ/zfTMG3ZOMhCUHhRKqrawMXUJgahqjauLr3wyq/qRsqufAnqbRKcwMKSMIM4eUqYrZS
- /SP4YFt1SJuzaL/2jUoqyS7MxRSX8NU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
+ b=HvavVm/oyAOQVnFNa4wTqevFP601fG0GL2V1LadwuGOZYtCSmH9WVzf/M+aDmdl5aTnliv
+ ysPLlSMN7DFrr/tDDm48D8fqQ7LCanGKtKt0gTF+AaFeZ4JgM7DESXlAfO3OWGkJQf8BlJ
+ vpj2e9yIgQOSEn133ObHIdyGItxJy04=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-542-acjIyXnuOHumOJgH4ahKBQ-1; Tue, 02 Jul 2024 16:20:23 -0400
-X-MC-Unique: acjIyXnuOHumOJgH4ahKBQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-364b75a8194so2826585f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:20:22 -0700 (PDT)
+ us-mta-386-fEpk3Kx-PZSamilY9elDrA-1; Tue, 02 Jul 2024 16:17:05 -0400
+X-MC-Unique: fEpk3Kx-PZSamilY9elDrA-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2ed0d046689so44782231fa.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:17:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951621; x=1720556421;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YWXH9YhJGBTUPtLIg1EJaieR/oMq54SMMzeEyf0UDBU=;
- b=Eo8LL1aih9YlYUgtHIvSeqkXU/pmx2pX9ZGbW3olaqzS1qAvOwGmOY+hSzJQa8pLAx
- IVQ2XCAv0stkmV8TaBFgyJRgUgy32O+Dtai/OS2t3h2N0y1aiWh6dmzugyZ9v3yUeKGC
- lcFIxp8VWc/0jESU3z68jHpjvJCxNsenuziEx1P4yxKXNRzsEIiGb0RT2G2zrDFlsupq
- iBfjav0j2lma3tHkLiIRMU+3s41231TNQG1KWTLgw1ycUVvYi06PQtF2ZSX4Z68OBXvt
- V8I29rn67cdUc3FWXWDaSe0HUAqqrN25pauMRQg7qClv86tOCffabKjGDU6M2j309d8G
- DNkg==
-X-Gm-Message-State: AOJu0Yw/Qplylkf8y4N5MnXs52EBf03/PJxKDjxR8IaKOtUZQRXk6ZxQ
- tr2g32yDyllWlmvsB9WKAma4SBfdfwPSi0ZHkO5FQMqIs+TVaccXeirLAsrZoVExX7JG5YTVUmZ
- eODFLzPu+cVrmhNqsZTNc7+Xh9DuGTtw8wSd8MxMV0WTgFw+oKO/xPDlIXU7Nt6idDUwdChx0ON
- pG5E/AaS/oRmKuccVRP/7zkqO9ce8Fgw==
-X-Received: by 2002:a05:6000:2c4:b0:366:f84b:a9f8 with SMTP id
- ffacd0b85a97d-3677569d1f3mr7014786f8f.14.1719951621359; 
- Tue, 02 Jul 2024 13:20:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvxGBr0DlgZx04DKEE6XsjQ9mRdNRLZEecLPXdjzDu8TIbMq3XBnVe02WBSDIiE4S9bdav0g==
-X-Received: by 2002:a05:6000:2c4:b0:366:f84b:a9f8 with SMTP id
- ffacd0b85a97d-3677569d1f3mr7014770f8f.14.1719951620638; 
- Tue, 02 Jul 2024 13:20:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719951423; x=1720556223;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
+ b=fEB2DmKyMGyJgnQJb0c8OzoIM3+kGCsxWjzKVaaOOM4YyR6pjziSthSmYDwE5MLrtL
+ xY0Fxa2LLtRs6U4viR7+4TIpfe1uN7tIb/AKzLon3lnrjaDIf/Me5fmNb61g0Z3QUyP6
+ 0CAocBlivAKMXi36s0bY4E4JIRYEMdM83nJq2Utz1mJJrX6+A3KewtD48yuMOxBiiN3u
+ Dyr0XQMSosgPexlxyDDr0T48nQJap3UxmsqL+L5+KET67eKWkIvIEZtBPoPpVIepyZFr
+ +EYfPtJ7mKEADimn5TyFnWObzeLMovfBQN2zjbYn/Pdlf0xvRla/u83mXj3/C9zGAIKK
+ 8IDw==
+X-Gm-Message-State: AOJu0YzsiTE71pJ7dyPalhY0ZEn38Z9I5nyGjxQ7L7v2a7Iwk9sg4C9m
+ INfzMuDBx2flKkJUm+6iQ6Lc98uEDe30MSQ64oep+6SVK7LLTrSy/IPhXUIr7xmMyYbuV3NHA7A
+ JPFDWZgqhUYM/Wzzv24uCtepT0i/9c/GDFKZUatg5Scfzg9y1v/uiLDRZr69/U0arU+zLIhjve/
+ zQvNWf7VFh0QVGasHbg0vUpRP+CH38EA==
+X-Received: by 2002:a05:651c:220e:b0:2ec:174b:75bb with SMTP id
+ 38308e7fff4ca-2ee5e38103emr69606671fa.28.1719951423222; 
+ Tue, 02 Jul 2024 13:17:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWuTgT8rvQMK1YaRAM2ZRbnzg6G0ty0wB6ndhH7A99cRdroF7aU89MvWs9FGnNQ6H3zQnMRw==
+X-Received: by 2002:a05:651c:220e:b0:2ec:174b:75bb with SMTP id
+ 38308e7fff4ca-2ee5e38103emr69606501fa.28.1719951422511; 
+ Tue, 02 Jul 2024 13:17:02 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0d8df0sm14224798f8f.29.2024.07.02.13.20.18
+ 5b1f17b1804b1-4256af55e61sm208160205e9.20.2024.07.02.13.17.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:20:20 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:20:17 -0400
+ Tue, 02 Jul 2024 13:17:01 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:16:59 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, jasowang@redhat.com,
- qemu-stable@nongnu.org, Xoykie <xoykie@gmail.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
-Subject: [PULL v2 77/88] virtio: remove virtio_tswap16s() call in
- vring_packed_event_read()
-Message-ID: <ea404555c03b6fd907d8a1af5736d02f1fc468a4.1719951168.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
+ Svetly Todorov <svetly.todorov@memverge.com>,
+ Gregory Price <gregory.price@memverge.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL v2 29/88] hw/mem/cxl_type3: Allow to release extent superset
+ in QMP interface
+Message-ID: <c51dca04281f9be6eacdad8fc8f9c7ddc87dcf3c.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -90,7 +88,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,46 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Fan Ni <fan.ni@samsung.com>
 
-Commit d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-switched using of address_space_read_cached() to virito_lduw_phys_cached()
-to access packed descriptor event.
+Before the change, the QMP interface used for add/release DC extents
+only allows to release an extent whose DPA range is contained by a single
+accepted extent in the device.
 
-When we used address_space_read_cached(), we needed to call
-virtio_tswap16s() to handle the endianess of the field, but
-virito_lduw_phys_cached() already handles it internally, so we no longer
-need to call virtio_tswap16s() (as the commit had done for `off_wrap`,
-but forgot for `flags`).
+With the change, we relax the constraints.  As long as the DPA range of
+the extent is covered by accepted extents, we allow the release.
 
-Fixes: d152cdd6f6 ("virtio: use virtio accessor to access packed event")
-Cc: jasowang@redhat.com
-Cc: qemu-stable@nongnu.org
-Reported-by: Xoykie <xoykie@gmail.com>
-Link: https://lore.kernel.org/qemu-devel/CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240701075208.19634-1-sgarzare@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Message-Id: <20240523174651.1089554-15-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio.c | 1 -
- 1 file changed, 1 deletion(-)
+ hw/mem/cxl_type3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 3678ec2f88..583a224163 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -323,7 +323,6 @@ static void vring_packed_event_read(VirtIODevice *vdev,
-     /* Make sure flags is seen before off_wrap */
-     smp_rmb();
-     e->off_wrap = virtio_lduw_phys_cached(vdev, cache, off_off);
--    virtio_tswap16s(vdev, &e->flags);
- }
- 
- static void vring_packed_off_wrap_write(VirtIODevice *vdev,
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 0d18259ec0..5d4a1276be 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1947,7 +1947,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
+                            "cannot release extent with pending DPA range");
+                 return;
+             }
+-            if (!cxl_extents_contains_dpa_range(&dcd->dc.extents, dpa, len)) {
++            if (!ct3_test_region_block_backed(dcd, dpa, len)) {
+                 error_setg(errp,
+                            "cannot release extent with non-existing DPA range");
+                 return;
 -- 
 MST
 
