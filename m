@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D88FC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79AF8C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjyG-0000Cf-QX; Tue, 02 Jul 2024 16:19:24 -0400
+	id 1sOjyB-0007zZ-D6; Tue, 02 Jul 2024 16:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyE-0008NI-5A
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:22 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjxp-0005j0-RG
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyA-0001En-FY
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:21 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjxn-00014f-Bx
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:18:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951557;
+ s=mimecast20190719; t=1719951534;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SUxXXLDnAjmmN0Yi+4nhd+mhBCkrJEwNWiEK8gau7L4=;
- b=GMLPBotiaqGiNn/+ciz0QGW3SlWXAl4V6V0xDZfjEaQtODECCNrnF9TJRGf882JomAN6cu
- Sv0IyRiQC9LbR/mQXQxG+Ql0UvwQRD18CD3yjBFahz7tBspJTqqR47DM6+qBQTQ4Eh2nem
- xssrMHtt/21X2SUQSvRW4IuzfZdn7B0=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=f88EXx30zef+oxtKxh27fnm0osRHGKUTzZYejeCgKxU=;
+ b=VqbRjzkd3QholBKl7h5uYlpd7aeuNj/IvahSJGjm6oB/j7YXvNNRmPtCkr7B/CaGnOSIhW
+ bhNqwUQ/jsRlu4ps1hbA6bVR+KVrPt91MfcwEoWB3NdAOG9TvjI1pHToTkippgChJrncVf
+ nQpuxYCWyBF2+uhyolUoaRV1nAzN5ck=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-258-MepnCy7eMx2jC2SAoShv-w-1; Tue, 02 Jul 2024 16:19:16 -0400
-X-MC-Unique: MepnCy7eMx2jC2SAoShv-w-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3673ce35cc7so2627579f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:19:16 -0700 (PDT)
+ us-mta-594-hTu9VsoxOE-69zKjJGaaLw-1; Tue, 02 Jul 2024 16:18:51 -0400
+X-MC-Unique: hTu9VsoxOE-69zKjJGaaLw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4257f95ffc6so19716505e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:18:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951555; x=1720556355;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SUxXXLDnAjmmN0Yi+4nhd+mhBCkrJEwNWiEK8gau7L4=;
- b=u+qRc+savLJvIdnLy7L9wzPF5SI51wDsey68fLhKUwt2dv3toCV0csRhrdc6NFfcnu
- c9oEzD7uRv4WltPSfza0QQTj2SWF38Zcfv2qMgts3vCfo8Hue57LVUnlwRYKdg8THJG6
- 9Yjhm4tjN+kOtrSGy3dgOMNmzxap6Ltycs3Wt+fb7oX/kf3m5CP+yMkKdp39TT/SZju3
- 42Me3OQ3h7L2cA/GmRoXVvfMz14XRGSrkJk2rV5UNOaKiHDW5fVruOnh2oriUrZ0q0eZ
- GQ3X2kCq9gFR8duBDeojaaHOUhoQM7ao7vFncHACsSy0RUzo9ADgAs3/vZPk5XQ9Wtqy
- sDDQ==
-X-Gm-Message-State: AOJu0YyUgY+PKRs2SweAuL8D5cfwNcNTqIjB1uYBdSI5J+AMw/YxXO11
- zSnt1McCFsh+6kIouGvI/nfoqLSPyhFVGXy96IZpB8cXVHpm1ixbBriFl9GwSc+FY6nqfLZe5ee
- 1ZTTzDTiqbip57dRRzZOHNdLXAZ2n7SOxGFB2NxfVQqECQe+hLxB0ZZNvT0hsbKv/o5P9kKYgdJ
- 3i3sngL18BplyPmr8fKCpOBLq1mIW3DQ==
-X-Received: by 2002:a05:6000:18ae:b0:367:326b:f257 with SMTP id
- ffacd0b85a97d-367756bb71fmr7021041f8f.33.1719951554916; 
- Tue, 02 Jul 2024 13:19:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHf6z6E4lPyxcsAaxUdsn4mSU0HPwtTfrKRzsqDc1SorrMSaKq9nTfavbAHCNMGjprGbL/lzg==
-X-Received: by 2002:a05:6000:18ae:b0:367:326b:f257 with SMTP id
- ffacd0b85a97d-367756bb71fmr7021018f8f.33.1719951554406; 
- Tue, 02 Jul 2024 13:19:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719951528; x=1720556328;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=f88EXx30zef+oxtKxh27fnm0osRHGKUTzZYejeCgKxU=;
+ b=JvScXIn0/XWOXNpaqvMbT8eZ0ZjlymmP/iv8sqO+jjIC8WO8QQLxmQHqi2ipQW9HSY
+ nSPTyK4qKKXSrRZ9YuUcl8bG8cViocZKJ46Mxd5hhzz1Pd5UKiouCrVogymH/J/1Mn6S
+ biNYlDd+upU+5S4BoCnAy0/so83q+dzd0wKvuUJfTfE6dms9ZN5SVFUYQDCmp1K00/NG
+ YwXfPjfRp88glW9wo3sH3rMdwv7zC8f6nzL3IlhcVPCsiyNqRQDIXwOKg4gm0Zr6raIs
+ o+QeDuyRo1JI/KgouRmW+R+nQ9FvboTXdcGNJZKCy058CxWt2eWhuSLkt4LXyos9Vvse
+ V1sA==
+X-Gm-Message-State: AOJu0YygQuYm1XXPoZs/W+fXu+fg6LneZ/26ljihiyuywMKm3CSQoUZO
+ E08cBT/Ydxs6x/7vwoCu88zvBZFGxG2cjgkHQ4iytyv8N6yg/UU0qkjVbqqj/ZBFt59PwBSU3VI
+ U/f/wK4HF2Fu6F7/PA9L1r5sgur4/a9xvDai3EQ2hTp1g+nmW5Oq30RlC+Ik/oWecXTc3dhlOf6
+ /0s8SIwNjNxLPasxjBdhCsPQ2kmJtZGg==
+X-Received: by 2002:a7b:ce83:0:b0:425:6327:f00c with SMTP id
+ 5b1f17b1804b1-4257a00ce8emr65064455e9.22.1719951528561; 
+ Tue, 02 Jul 2024 13:18:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDe4cvdLvMymVr21h1iEzMSUnPlphfo1BJHJMwnLuepMhPVx/qQSzq0PX/Qw7B2/o5Xt2Qsw==
+X-Received: by 2002:a7b:ce83:0:b0:425:6327:f00c with SMTP id
+ 5b1f17b1804b1-4257a00ce8emr65064235e9.22.1719951528032; 
+ Tue, 02 Jul 2024 13:18:48 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e13d4sm14403760f8f.56.2024.07.02.13.19.11
+ 5b1f17b1804b1-425787f37casm77032685e9.1.2024.07.02.13.18.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:19:13 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:19:10 -0400
+ Tue, 02 Jul 2024 13:18:47 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:18:43 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Nicolin Chen <nicolinc@nvidia.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Auger <eric.auger@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org
-Subject: [PULL v2 60/88] hw/arm/virt-acpi-build: Drop local iort_node_offset
-Message-ID: <2e0246a16374c043852fd168cd9ae1ae5534c678.1719951168.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL v2 54/88] libvhost-user: enable it on any POSIX system
+Message-ID: <38fb67cb262892fb4f4b9a79f533c75ea2f1a899.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -105,46 +108,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Both the other two callers of build_iort_id_mapping() just directly pass
-in the IORT_NODE_OFFSET macro. Keeping a "const uint32_t" local variable
-storing the same value doesn't have any gain.
+The vhost-user protocol is not really Linux-specific so let's enable
+libvhost-user for any POSIX system.
 
-Simplify this by replacing the only place using this local variable with
-the macro directly.
+Compiling it on macOS and FreeBSD some problems came up:
+- avoid to include linux/vhost.h which is available only on Linux
+  (vhost_types.h contains many of the things we need)
+- macOS doesn't provide sys/endian.h, so let's define them
+  (note: libvhost-user doesn't include QEMU's headers, so we can't use
+   use "qemu/bswap.h")
+- define eventfd_[write|read] as write/read wrapper when system doesn't
+  provide those (e.g. macOS)
+- copy SEAL defines from include/qemu/memfd.h to make the code works
+  on FreeBSD where MFD_ALLOW_SEALING is defined
+- define MAP_NORESERVE if it's not defined (e.g. on FreeBSD)
 
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Message-Id: <20240619001708.926511-1-nicolinc@nvidia.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20240618100503.145768-1-sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/arm/virt-acpi-build.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ subprojects/libvhost-user/libvhost-user.h |  2 +-
+ subprojects/libvhost-user/libvhost-user.c | 60 +++++++++++++++++++++--
+ meson.build                               |  2 +-
+ 3 files changed, 59 insertions(+), 5 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index b2366f24f9..102e2da934 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -269,7 +269,6 @@ static void
- build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
- {
-     int i, nb_nodes, rc_mapping_count;
--    const uint32_t iort_node_offset = IORT_NODE_OFFSET;
-     size_t node_size, smmu_offset = 0;
-     AcpiIortIdMapping *idmap;
-     uint32_t id = 0;
-@@ -415,7 +414,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-             range = &g_array_index(its_idmaps, AcpiIortIdMapping, i);
-             /* output IORT node is the ITS group node (the first node) */
-             build_iort_id_mapping(table_data, range->input_base,
--                                  range->id_count, iort_node_offset);
-+                                  range->id_count, IORT_NODE_OFFSET);
-         }
-     } else {
-         /* output IORT node is the ITS group node (the first node) */
+diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
+index deb40e77b3..e13e1d3931 100644
+--- a/subprojects/libvhost-user/libvhost-user.h
++++ b/subprojects/libvhost-user/libvhost-user.h
+@@ -18,9 +18,9 @@
+ #include <stdbool.h>
+ #include <stddef.h>
+ #include <poll.h>
+-#include <linux/vhost.h>
+ #include <pthread.h>
+ #include "standard-headers/linux/virtio_ring.h"
++#include "standard-headers/linux/vhost_types.h"
+ 
+ /* Based on qemu/hw/virtio/vhost-user.c */
+ #define VHOST_USER_F_PROTOCOL_FEATURES 30
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 9c630c2170..d855a97a4c 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -28,9 +28,7 @@
+ #include <inttypes.h>
+ #include <sys/types.h>
+ #include <sys/socket.h>
+-#include <sys/eventfd.h>
+ #include <sys/mman.h>
+-#include <endian.h>
+ 
+ /* Necessary to provide VIRTIO_F_VERSION_1 on system
+  * with older linux headers. Must appear before
+@@ -39,8 +37,8 @@
+ #include "standard-headers/linux/virtio_config.h"
+ 
+ #if defined(__linux__)
++#include <endian.h>
+ #include <sys/syscall.h>
+-#include <fcntl.h>
+ #include <sys/ioctl.h>
+ #include <linux/vhost.h>
+ #include <sys/vfs.h>
+@@ -52,6 +50,62 @@
+ 
+ #endif
+ 
++#if defined(__APPLE__) && (__MACH__)
++#include <libkern/OSByteOrder.h>
++#define htobe16(x) OSSwapHostToBigInt16(x)
++#define htole16(x) OSSwapHostToLittleInt16(x)
++#define be16toh(x) OSSwapBigToHostInt16(x)
++#define le16toh(x) OSSwapLittleToHostInt16(x)
++
++#define htobe32(x) OSSwapHostToBigInt32(x)
++#define htole32(x) OSSwapHostToLittleInt32(x)
++#define be32toh(x) OSSwapBigToHostInt32(x)
++#define le32toh(x) OSSwapLittleToHostInt32(x)
++
++#define htobe64(x) OSSwapHostToBigInt64(x)
++#define htole64(x) OSSwapHostToLittleInt64(x)
++#define be64toh(x) OSSwapBigToHostInt64(x)
++#define le64toh(x) OSSwapLittleToHostInt64(x)
++#endif
++
++#ifdef CONFIG_EVENTFD
++#include <sys/eventfd.h>
++#else
++#define eventfd_t uint64_t
++
++int eventfd_write(int fd, eventfd_t value)
++{
++    return (write(fd, &value, sizeof(value)) == sizeof(value)) ? 0 : -1;
++}
++
++int eventfd_read(int fd, eventfd_t *value)
++{
++    return (read(fd, value, sizeof(*value)) == sizeof(*value)) ? 0 : -1;
++}
++#endif
++
++#ifdef MFD_ALLOW_SEALING
++#include <fcntl.h>
++
++#ifndef F_LINUX_SPECIFIC_BASE
++#define F_LINUX_SPECIFIC_BASE 1024
++#endif
++
++#ifndef F_ADD_SEALS
++#define F_ADD_SEALS (F_LINUX_SPECIFIC_BASE + 9)
++#define F_GET_SEALS (F_LINUX_SPECIFIC_BASE + 10)
++
++#define F_SEAL_SEAL     0x0001  /* prevent further seals from being set */
++#define F_SEAL_SHRINK   0x0002  /* prevent file from shrinking */
++#define F_SEAL_GROW     0x0004  /* prevent file from growing */
++#define F_SEAL_WRITE    0x0008  /* prevent writes */
++#endif
++#endif
++
++#ifndef MAP_NORESERVE
++#define MAP_NORESERVE 0
++#endif
++
+ #include "include/atomic.h"
+ 
+ #include "libvhost-user.h"
+diff --git a/meson.build b/meson.build
+index 98db5ea322..6c1a489cc0 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3203,7 +3203,7 @@ if have_system and vfio_user_server_allowed
+ endif
+ 
+ vhost_user = not_found
+-if host_os == 'linux' and have_vhost_user
++if have_vhost_user
+   libvhost_user = subproject('libvhost-user')
+   vhost_user = libvhost_user.get_variable('vhost_user_dep')
+ endif
 -- 
 MST
 
