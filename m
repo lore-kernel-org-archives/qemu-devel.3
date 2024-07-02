@@ -4,73 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3773FC3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 08:09:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21803C41513
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 08:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOYZH-0004Aa-8J; Tue, 02 Jul 2024 04:08:51 -0400
+	id 1sOYZi-0004IZ-Pj; Tue, 02 Jul 2024 04:09:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sOYZF-0004AK-3v
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 04:08:49 -0400
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sOYZg-0004GZ-6b
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 04:09:16 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1sOYZD-0003iA-KF
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 04:08:48 -0400
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-446427c5923so36008811cf.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 01:08:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719907726; x=1720512526; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8QGrMlwNoqZ8Ow6CEwgXFGmQfIRT9oXtSy6Qm7YZ3A4=;
- b=nNRX9I5tRgjwnkrn7hn4o6Q/nTlLCbu3UdFJ1Tn1Oj3RvhwV6/ROSH2Jc5XYiAv4RY
- upTf2DLgg2PHTWxnXNAEU3P7iR2wMDe7A4pZ45gW6o4kszXEj/sfV+BnY5Viyss2zL/0
- RseHBgwoUam9pIRYrdnKTAwY7YLDzcOswfobGKcqIDxRVjNB0UcI1q8sd2BmeHDvVDqr
- yPam74sV3Z1fmuBo1gbce82WJ+E0yjkrBYCKpnciqAb+qDmgSEi11QnzuUylvzrlp9bp
- o6TAEEIMCxoTM7UevZk/nx++2MQTYJVoheOgTQhqQk+fRzk/wL60UMfRwjQ9HSYPBa/a
- s8Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719907726; x=1720512526;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8QGrMlwNoqZ8Ow6CEwgXFGmQfIRT9oXtSy6Qm7YZ3A4=;
- b=wLE3qZnqfqtcBLZT2R+609UM/nkX+mwlGqQHzm712AlcSasKPyzAsLmV+7BKymQMB4
- L5q8ej9RWHtRtCsgAsuSop99DGh/JRfg9VuucFTH+fhPTLCT0OCn4Mb3JHCTQqqhjlGs
- WcEE2PmqfRpjNXVaz2nsjvNjmFUcMxjYLa3s1P+72MjaYa5oFSwtnPWVHSw6V0keEcc1
- q35P8gmWmnMqP97b1ddjJkPHX2k5ttLvs1PDGSfZXwc0nTZ7szdA3yzyVsOtU2MLKdK8
- trp42eF/TTcNCRQHWkvUA/zyjOe2AgYwz6i3WChz7Oq7JUoNz4GK0OkWWa80kVqYnH5G
- JUAw==
-X-Gm-Message-State: AOJu0YyHrUIlIURtKMz7LvjT+Xx8vj3I/l8BBYEoB7BcUnmfuoYkMcml
- CAU3vCg1JNoR7HyVxNjW7un0Gae5roUU+Mr8GSXk54zxENMW5vRroJVy2Gskeci+5Rbpw7b8gRK
- boVIUTyOKG8Yf0c7efsLS11mEgFMgV3fj
-X-Google-Smtp-Source: AGHT+IF5Lp5JLDlBcDdnCIa1VeR7oqVTRmdWcgUq+xuAyJC80hYJaf4XyBA9zz1X7CM2isCljA+reSekfp11tIvZPwk=
-X-Received: by 2002:a05:622a:15cd:b0:444:cc00:84db with SMTP id
- d75a77b69052e-4465567bd20mr176009831cf.19.1719907725512; Tue, 02 Jul 2024
- 01:08:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1sOYZe-0003kC-BO
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 04:09:15 -0400
+Received: from hawking.nue2.suse.org (unknown [10.168.4.11])
+ by smtp-out2.suse.de (Postfix) with ESMTP id 11A921FB8E;
+ Tue,  2 Jul 2024 08:09:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1719907749; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XhAn2Q5AIYGvUS54A7dLYPFEJO9dOZJ2l+Had+N9ZfM=;
+ b=tTebhrZZtsz5R1mgePKtutV1OjPdDaoUN15u8mHRFXKyjgqxvERBsUor1qGxbDmfSIAzAO
+ ADYeYu28wOoxCfSKupZJ6jxko+pXM409fb/ex32OeB7jaTUZt+pYdF/TAxC8v07ada7OCb
+ 8AfqjRDWwDtt7gbJ+Jj7itwXoeSLXOA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1719907749;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XhAn2Q5AIYGvUS54A7dLYPFEJO9dOZJ2l+Had+N9ZfM=;
+ b=rJP66zbT1QtbSa59uEcm+wsVWUQtMxOXsd7lCdtIJ/ujjuMFZ20lE6/Z7j9VrAVxQWNBjV
+ cTC4EpJdy3N80ZAw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1719907748; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XhAn2Q5AIYGvUS54A7dLYPFEJO9dOZJ2l+Had+N9ZfM=;
+ b=SJV0u2JAmzCbJzSdwMU/t6Ioiy9LvIeidud40X+iwy/AG9MAc8Zt6HeoIR2MNppvq2ZzN3
+ eCAapZapOMGZbnSSyOymAkQZlbbkH2HQaPDh8xtrdPYuFfeDkvXZc5VoVn8nVnllrN7HDF
+ vtCKvMJqehWdyUlP6tx6r6uvLnQjUSw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1719907748;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=XhAn2Q5AIYGvUS54A7dLYPFEJO9dOZJ2l+Had+N9ZfM=;
+ b=gUXGKP0DaHMKkVX1r8jKad1xpxvEkUcKdfab2ZHzVi4+xh6B7g8jefkaEhoO0/+2mq2Eaj
+ 10sm8+99FpONyRDA==
+Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
+ id 063A64A0550; Tue,  2 Jul 2024 10:09:08 +0200 (CEST)
+From: Andreas Schwab <schwab@suse.de>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  Warner Losh <imp@bsdimp.com>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Subject: Re: linux-user cannot allocate stack memory on riscv64 host due to
+ non-zero guest_base
+In-Reply-To: <f681575f-1dae-481e-8330-6fe2fc8d0f11@linaro.org> (Richard
+ Henderson's message of "Mon, 1 Jul 2024 09:05:13 -0700")
+References: <mvm8qytp828.fsf@suse.de>
+ <9f3cb0e3-c069-497d-81de-234db7bd4d33@linaro.org>
+ <mvm4j9gp0xd.fsf@suse.de>
+ <34fed985-6a6a-4458-95f9-aa651744ef1a@linaro.org>
+ <CANCZdfq4=s=g8GoeCKY4576xgJs4-X+fXh7m5ZOJ1UeBXwWdCQ@mail.gmail.com>
+ <mvmv81un7m9.fsf@suse.de>
+ <CANCZdfpW+G54v3oeKZ6QYuovOga93D5hou9Ajeo838Y9bDNsUA@mail.gmail.com>
+ <mvmmsn6lawv.fsf@suse.de>
+ <CAFEAcA-dbLncCmY8zyZAz8e+AWeoGC437B=nV3wPznER+RmhbA@mail.gmail.com>
+ <mvmr0cdjjlh.fsf@suse.de>
+ <f681575f-1dae-481e-8330-6fe2fc8d0f11@linaro.org>
+X-Yow: Okay, BARBRA STREISAND, I recognize you now!!  Also EFREM ZIMBALIST,
+ JUNIOR!!  And BEAUMONT NEWHALL!!  Everybody into th' BATHROOM!
+Date: Tue, 02 Jul 2024 10:09:08 +0200
+Message-ID: <mvm7ce4jjvf.fsf@suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240626155140.74752-1-lvivier@redhat.com>
-In-Reply-To: <20240626155140.74752-1-lvivier@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 2 Jul 2024 12:08:33 +0400
-Message-ID: <CAJ+F1C+1fmOfE_48iNxCRvxNB+Q_yBrJAUoAi7WyPx-=N756-g@mail.gmail.com>
-Subject: Re: [PATCH] net: update netdev stream/dgram man page
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000069c39061c3f39a4"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x834.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.19 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.19)[-0.961]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_NO_TLS_LAST(0.10)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; RCVD_COUNT_ONE(0.00)[1];
+ MID_RHS_MATCH_FROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[hawking.nue2.suse.org:helo,suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=schwab@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,57 +118,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000069c39061c3f39a4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Jul 01 2024, Richard Henderson wrote:
 
-Hi
-
-On Wed, Jun 26, 2024 at 7:53=E2=80=AFPM Laurent Vivier <lvivier@redhat.com>=
- wrote:
-
-> Add the description of "-netdev stream" and "-netdev dgram" in the QEMU
-> manpage.
+> With -d page, I get
 >
-> Add some examples on how to use them, including a way to use
-> "-netdev stream" and "passt" in place of "-netdev user".
-> ("passt" is a non privileged translation proxy between layer-2,
-> like "-netdev stream", and layer-4 on host, like TCP, UDP,
-> ICMP/ICMPv6 echo)
->
+> Locating guest address space @ 0x3f4000
 
-Was there any plan to have passt fallback (default / "-net passt") when
-slirp is disabled ? spawning the process with -F fd etc. That would help
-migrating away from slirp for some systems.
+Why do you get a different address?
 
---=20
-Marc-Andr=C3=A9 Lureau
-
---000000000000069c39061c3f39a4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><br><div class=3D"gmail_quote=
-"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jun 26, 2024 at 7:53=E2=80=
-=AFPM Laurent Vivier &lt;<a href=3D"mailto:lvivier@redhat.com">lvivier@redh=
-at.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
-:1ex">Add the description of &quot;-netdev stream&quot; and &quot;-netdev d=
-gram&quot; in the QEMU<br>
-manpage.<br>
-<br>
-Add some examples on how to use them, including a way to use<br>
-&quot;-netdev stream&quot; and &quot;passt&quot; in place of &quot;-netdev =
-user&quot;.<br>
-(&quot;passt&quot; is a non privileged translation proxy between layer-2,<b=
-r>
-like &quot;-netdev stream&quot;, and layer-4 on host, like TCP, UDP,<br>
-ICMP/ICMPv6 echo)<br></blockquote><div><br></div>Was there any plan to have=
- passt fallback (default / &quot;-net passt&quot;) when slirp is disabled ?=
- spawning the process with -F fd etc. That would help migrating away from s=
-lirp for some systems.<br><div><br></div></div><span class=3D"gmail_signatu=
-re_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-An=
-dr=C3=A9 Lureau<br></div></div>
-
---000000000000069c39061c3f39a4--
+-- 
+Andreas Schwab, SUSE Labs, schwab@suse.de
+GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
+"And now for something completely different."
 
