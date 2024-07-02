@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DEE1C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F7FC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:28:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeEN-0006ki-4C; Tue, 02 Jul 2024 10:11:39 -0400
+	id 1sOeEN-0006ks-4f; Tue, 02 Jul 2024 10:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeE9-0005Tl-Sn
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeE0-0005Qj-EL
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeE7-0000Tz-Vh
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeDx-0000Sf-1q
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929482;
+ s=mimecast20190719; t=1719929472;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PtAXW6LVwA3P89VkFVi94GjAlNMJ1XHCqV5FMloDGgI=;
- b=HSIHvboQuSHCe9BOuzye0Z1dXutLFTvTL3HuTRLHhQG54W6Qd0u5Kl36trUa4kApkZ/urV
- /E+bIN+85kHnTHXpecyFbYQ4DnyGMmbREm4aBh0At4Oq+3e4a60C9KlzhNxmihdL2XnYNO
- kskCRz6qiV8CEGV/KW3zl2IrG2hFB4g=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YWXH9YhJGBTUPtLIg1EJaieR/oMq54SMMzeEyf0UDBU=;
+ b=he3z1wNg8IJZhKH/NOiIMXHL9ieV9fUrH9BEVf7AVV4FXRDT/rP09FSogJsvXcXHG8edZL
+ 2CQV2+fFxx5AfxuPIQjWdtb+IcCQPuMipa/ES134DpXRstYuYghkJSUd+d+2wlXn25BXxL
+ 7goUWmE7mgxv8ETbW0tORdFHPBseo2c=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-VMy5Z14dMxuADzGGNAT3ig-1; Tue, 02 Jul 2024 10:11:18 -0400
-X-MC-Unique: VMy5Z14dMxuADzGGNAT3ig-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-367879e8395so428490f8f.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:18 -0700 (PDT)
+ us-mta-679-nKzbKYCBNK6vvN7P2zsauw-1; Tue, 02 Jul 2024 10:11:11 -0400
+X-MC-Unique: nKzbKYCBNK6vvN7P2zsauw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-42490ae735dso39307985e9.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929477; x=1720534277;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PtAXW6LVwA3P89VkFVi94GjAlNMJ1XHCqV5FMloDGgI=;
- b=NHEAseyU8YMGP8QgDIIWSrmDZ1nU1w0OTM7gjYH3VG+s9OApxTwgnQ6xJx2m5sFaLL
- EpZdN+Vh4UCsVBzb1Qgxd9eUJMFDK/1TN5eDkL8ls9k6fQXfMz/Jxg0qnOKIkQKc7uRW
- OXPiX3KZzN3lGoMIUgYYK2+mogE4Zaj1neHP31AQN+K/2TYPCLrM1ReLd1oUNmlb8jQ2
- 0FQJkPBJdzHMrlKfw2pRJ7zCxbauhW04BjRIXX0G1Lhjs1zXQeaXZtPfZffPko0qC9G7
- MAbHrYW3EO+96utoBQrutv4wXBDbTVlA2vT5LqbHbOh1dgr0zHN/S69rG0ZZYHlaBZ0I
- X5zg==
-X-Gm-Message-State: AOJu0YxqpAiRyI0xQksQwbEMb5eEmHdYF5zXq56XfDeM65zZQMGzlFG5
- Irye6lyckNyky4ZcMYDkZnkfRZ+qDqRyMA4cjneueK2dOuWfbY4znG0/OLfVw/zdNRDfHAUBWhX
- dwx6bI/ljLS/QVhTwjZLFvkWE7y2JXD5199fF7pCDqXjH2WXh4fZqEqN8ylMEpI8NDtXg6AX1xu
- b1cALPUaqf8LcYwywHGXcazQQKzxHeow==
-X-Received: by 2002:a5d:6e65:0:b0:366:f41f:8cc7 with SMTP id
- ffacd0b85a97d-367757249e9mr6984223f8f.46.1719929475675; 
- Tue, 02 Jul 2024 07:11:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHtbvwUarQo8T83+h7CkvuHaP0Rh47QhEy/C0CW/HAD5LHdyGe4lNp58kWe28JSQo8Q9fZNKw==
-X-Received: by 2002:a5d:6e65:0:b0:366:f41f:8cc7 with SMTP id
- ffacd0b85a97d-367757249e9mr6984194f8f.46.1719929474973; 
- Tue, 02 Jul 2024 07:11:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719929469; x=1720534269;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YWXH9YhJGBTUPtLIg1EJaieR/oMq54SMMzeEyf0UDBU=;
+ b=jeH2BbrpBsesM6IAyomOZL2mx9+uMa2Id2mIkETqb7XgNMVK4Smzs6gMFDmw5sysMB
+ 90M4pkokvbHssk+0qRfEtnV8KJsKLi1JZa80BOykAHbbiwIfZNbX9RCDouJmkg5NRaXQ
+ dit6b5ibFwN2MSqlb1Zl+fcKbUeYJG3/K0vSPNEB7r98+yZ6gQKNuRv9J5npibhGFPmB
+ 36Kqi/orTV8U0xzSY2ivkfneSOvmAFLTW7CG9JCXbz0rUyvWbJFptjpS6opTsW/bfZkG
+ FtxbjNwOvtVj8wH2yiJzoj6b+70sYfuyJ9vJw4UJRtd6kxgSpHvk+YbHWLDrdT0QDFed
+ cjHA==
+X-Gm-Message-State: AOJu0YzZw0A0Kz/1tTgDRGJWsD7prNaN1AhXtPrgJkofTlXd4ZANWnFm
+ LLYHHzFHv5BPY+QavZnDj2uNiEt5JsDZeRV18pdI/ZwSxrpjU9yneXkkFSP+7wXFN/q1veAnO5m
+ sRvbZjXRfChAEYBgMxFik5y/Y79P6lj7fKRv+lskbBdnf3Zs0HuXKX0n2MzY6yDPe7Mxcfdav55
+ 2v3i06sTttz35NmUVf3BWkzrFxSIqWZA==
+X-Received: by 2002:adf:f18b:0:b0:361:dd0c:678 with SMTP id
+ ffacd0b85a97d-367756bc471mr6554379f8f.36.1719929469638; 
+ Tue, 02 Jul 2024 07:11:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFkW784N+QYRpKZGuvfSqwvMm0SkFb2EIMkyD6K8g1BQsf04aP1J9tDnDwBxPlOGqHd6nUWg==
+X-Received: by 2002:adf:f18b:0:b0:361:dd0c:678 with SMTP id
+ ffacd0b85a97d-367756bc471mr6554348f8f.36.1719929468985; 
+ Tue, 02 Jul 2024 07:11:08 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a10305fsm13265723f8f.96.2024.07.02.07.11.13
+ ffacd0b85a97d-3678e5c2b08sm805506f8f.71.2024.07.02.07.11.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:11:14 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:11:12 -0400
+ Tue, 02 Jul 2024 07:11:08 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:11:06 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 82/91] hw/pci: Rename has_power to enabled
-Message-ID: <1aabc8bbf3bf63c1a37af9771a0d4c80cb170ea4.1719929191.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>, jasowang@redhat.com,
+ qemu-stable@nongnu.org, Xoykie <xoykie@gmail.com>,
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL 80/91] virtio: remove virtio_tswap16s() call in
+ vring_packed_event_read()
+Message-ID: <5f9b2cdb0e4bc7eab026bd5ee8ab120f327b86a8.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719929191.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,120 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-The renamed state will not only represent powering state of PFs, but
-also represent SR-IOV VF enablement in the future.
+Commit d152cdd6f6 ("virtio: use virtio accessor to access packed event")
+switched using of address_space_read_cached() to virito_lduw_phys_cached()
+to access packed descriptor event.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240627-reuse-v10-1-7ca0b8ed3d9f@daynix.com>
+When we used address_space_read_cached(), we needed to call
+virtio_tswap16s() to handle the endianess of the field, but
+virito_lduw_phys_cached() already handles it internally, so we no longer
+need to call virtio_tswap16s() (as the commit had done for `off_wrap`,
+but forgot for `flags`).
+
+Fixes: d152cdd6f6 ("virtio: use virtio accessor to access packed event")
+Cc: jasowang@redhat.com
+Cc: qemu-stable@nongnu.org
+Reported-by: Xoykie <xoykie@gmail.com>
+Link: https://lore.kernel.org/qemu-devel/CAFU8RB_pjr77zMLsM0Unf9xPNxfr_--Tjr49F_eX32ZBc5o2zQ@mail.gmail.com
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20240701075208.19634-1-sgarzare@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/pci/pci.h        |  7 ++++++-
- include/hw/pci/pci_device.h |  2 +-
- hw/pci/pci.c                | 14 +++++++-------
- hw/pci/pci_host.c           |  4 ++--
- 4 files changed, 16 insertions(+), 11 deletions(-)
+ hw/virtio/virtio.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index eb26cac810..fe04b4fafd 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -678,6 +678,11 @@ static inline void pci_irq_pulse(PCIDevice *pci_dev)
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 3678ec2f88..583a224163 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -323,7 +323,6 @@ static void vring_packed_event_read(VirtIODevice *vdev,
+     /* Make sure flags is seen before off_wrap */
+     smp_rmb();
+     e->off_wrap = virtio_lduw_phys_cached(vdev, cache, off_off);
+-    virtio_tswap16s(vdev, &e->flags);
  }
  
- MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
--void pci_set_power(PCIDevice *pci_dev, bool state);
-+void pci_set_enabled(PCIDevice *pci_dev, bool state);
-+
-+static inline void pci_set_power(PCIDevice *pci_dev, bool state)
-+{
-+    pci_set_enabled(pci_dev, state);
-+}
- 
- #endif
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index d3dd0f64b2..d57f9ce838 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -56,7 +56,7 @@ typedef struct PCIReqIDCache PCIReqIDCache;
- struct PCIDevice {
-     DeviceState qdev;
-     bool partially_hotplugged;
--    bool has_power;
-+    bool enabled;
- 
-     /* PCI config space */
-     uint8_t *config;
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 50b86d5790..68d30feb86 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -1525,7 +1525,7 @@ static void pci_update_mappings(PCIDevice *d)
-             continue;
- 
-         new_addr = pci_bar_address(d, i, r->type, r->size);
--        if (!d->has_power) {
-+        if (!d->enabled) {
-             new_addr = PCI_BAR_UNMAPPED;
-         }
- 
-@@ -1613,7 +1613,7 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
-         pci_update_irq_disabled(d, was_irq_disabled);
-         memory_region_set_enabled(&d->bus_master_enable_region,
-                                   (pci_get_word(d->config + PCI_COMMAND)
--                                   & PCI_COMMAND_MASTER) && d->has_power);
-+                                   & PCI_COMMAND_MASTER) && d->enabled);
-     }
- 
-     msi_write_config(d, addr, val_in, l);
-@@ -2884,18 +2884,18 @@ MSIMessage pci_get_msi_message(PCIDevice *dev, int vector)
-     return msg;
- }
- 
--void pci_set_power(PCIDevice *d, bool state)
-+void pci_set_enabled(PCIDevice *d, bool state)
- {
--    if (d->has_power == state) {
-+    if (d->enabled == state) {
-         return;
-     }
- 
--    d->has_power = state;
-+    d->enabled = state;
-     pci_update_mappings(d);
-     memory_region_set_enabled(&d->bus_master_enable_region,
-                               (pci_get_word(d->config + PCI_COMMAND)
--                               & PCI_COMMAND_MASTER) && d->has_power);
--    if (!d->has_power) {
-+                               & PCI_COMMAND_MASTER) && d->enabled);
-+    if (!d->enabled) {
-         pci_device_reset(d);
-     }
- }
-diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
-index dfe6fe6184..0d82727cc9 100644
---- a/hw/pci/pci_host.c
-+++ b/hw/pci/pci_host.c
-@@ -86,7 +86,7 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
-      * allowing direct removal of unexposed functions.
-      */
-     if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
--        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
-+        !pci_dev->enabled || is_pci_dev_ejected(pci_dev)) {
-         return;
-     }
- 
-@@ -111,7 +111,7 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
-      * allowing direct removal of unexposed functions.
-      */
-     if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
--        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
-+        !pci_dev->enabled || is_pci_dev_ejected(pci_dev)) {
-         return ~0x0;
-     }
- 
+ static void vring_packed_off_wrap_write(VirtIODevice *vdev,
 -- 
 MST
 
