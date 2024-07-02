@@ -4,70 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FF5C41513
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4E2CC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:02:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOVds-00077w-2n; Tue, 02 Jul 2024 01:01:24 -0400
+	id 1sOVeQ-0007Ib-ND; Tue, 02 Jul 2024 01:01:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVdo-00077h-HG
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:01:20 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVeN-0007Hq-Qa
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:01:55 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVdm-000582-EH
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:01:20 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42565697036so28050885e9.1
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:01:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVeL-0006mY-VL
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:01:55 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-356c4e926a3so2165123f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:01:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719896475; x=1720501275; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wc0MaQgBES3M1CkLvxNOArN1CUAzFOoiIWOq/I+5GYY=;
- b=b34+kKpIcHecW7t5ROqNaxQl62BbeTPXfNmaDrLnkthbkObfjm9ZDgy4bnnqPbdtsx
- CjQbWYHbCnk6TLK04S4a0OGhx99WAFxrEeO6OHCokOVqUCDbGv0W5TDfgZbGJa80fvQR
- nNdWckmPosOFtIXLRXlqn9r9FpKksQLng1zx+Hd9N0s0Q7dgQTTWIiCNmaWVJljKvCKz
- u14dx4TkmU0shPyZ3Jz9ZpW2pEoJzXEjhZXCB5reM5Lw5LFB+H1jPn38quN9Zxx0+Itz
- CHhp3RIGDU6BXjS1BEVT0ORfHpipTRUYnGikmMGXBdufIi/4Pn6X4iDvjo/qzt3vAEwN
- 2KTQ==
+ d=linaro.org; s=google; t=1719896512; x=1720501312; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yjoCJaWMopGjgFAzmTclEaniscPXZHqfmSK68jrTLyM=;
+ b=tC7dyutbH5JHqfsRbdsPQY5DIzUZhaVwxcovDr6/gtlronkHa0guRwqBzeI/ze6YR+
+ EgE69iMhfO3Y/t8vRrkB+Orqlo7Vx0LFjxnE0mfcEb+UtWVjRmtkFNjPOm09fsl47yJy
+ 47e25ig+m3xRa+v4D7/MATMTJMZnSFO1BWynsVhkDpL2NRDG0LmUTSFS5uimsWv6iB00
+ HMzysAedDTaZ+mnioIzJQP7YFYjtUJYbga8OOvd4k8EvjiGGUw2ImBhnHoPDoyjuNx6l
+ ktpGt87OyY//ljzzGUQudFiahCeyH1qJ/ymTgoDIhVRvVfSN/5mPBELDn0A56YGhELxn
+ PqrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719896475; x=1720501275;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wc0MaQgBES3M1CkLvxNOArN1CUAzFOoiIWOq/I+5GYY=;
- b=kbdzAcqtixMkwVQvCaFw6IJYI2lUwrTovLX0MkUiVbtXZ6asu+2TNu66um/3Q4JE7I
- WcGDC61BRtsNag5LC67tfH9si/jGwCBdFFEfmXyzkCySzg+WEhJLX/7zI2yMYGLzvRUv
- 8JI6g7rAeYlaycLm8UKBK8v64B67ixfvXkqF+fcPfsmSPpRl60cltz3mjUjfaWa8ceFg
- 9MRpMW0481IPRkxG/xumr/UI4pFskEzQ6sNrxcUxWURaxHW9f562FtkTYD9zGoXLyg97
- BmYxOcEB1uVdzQubrQA7wClCQ48mVkyWxOasTKBKKBSDe9nqnnk9v95AkEWJiIMiWoiT
- Fb2A==
-X-Gm-Message-State: AOJu0YwK8yI/eZ7JsXeuN2ikJ1F24Pr9kttfwtJV6KBJ0akI1tRitIOB
- l5u9dJhS2/R+EYDCnvttc3cxtVHl1poH0fq4qe0+p/CXZ95/XCU9T7xO8dcH783DnuGHlHKYiDK
- L
-X-Google-Smtp-Source: AGHT+IFo3YKoVtRnowO7gROdAueoYzi47Zws7orXaxWBnqqH4ExNBi1hwOWbnQng0qg2aEbY9Ba0Cw==
-X-Received: by 2002:a05:6000:1e46:b0:362:ad01:5435 with SMTP id
- ffacd0b85a97d-36774f938ddmr6810942f8f.29.1719896475198; 
- Mon, 01 Jul 2024 22:01:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719896512; x=1720501312;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yjoCJaWMopGjgFAzmTclEaniscPXZHqfmSK68jrTLyM=;
+ b=X5o7a3ekLe21bl8/0LewguQKBBonzbk5neWiFpkMHCSiIfXpzoVOLAVxBXbv8YXLNv
+ MAGh7JLxGIGdY0mDkCngZoHaSW5y/1REhFKJ4Jreij0avEFlxVegRfN5z9A9kG+3pfIV
+ QMYW6KLQQOLlD5BZDcg2RECQhbvL7pLuusdEoJznmik8TTwXvtK0GzOn9F2fgmb16UmB
+ ewCS2csAP63sJnEXl1uJneGHW7V3zw1A6+Iv5CgPm6v2chy23yeOXcJ7j9SoMxBxKgQ1
+ RfTBd+U/45amFwOJ/g/STfS/AISXPcYQfPyHu1OswVA8QwrqnmRCCOUPoOmUEz1siYCq
+ KQuw==
+X-Gm-Message-State: AOJu0Yx++MvDKy7Rqe4EhAY0HklU2cH05V53el+uHsNHpcvSc9I+QZY2
+ iGVxhhLwpeDAwhSv9sTcaLJ4WuahpwBPMUwYzBxvGp/pVXO/Ob/xao9W1MpGRCW9IxRdMu6usbE
+ U
+X-Google-Smtp-Source: AGHT+IEWoY0XqSvKofa1fbUE4Fl+5mMRMiXkR4AvYoQvx/XxuYgPOOle06C2ajdVLbfYP9VJQCHxLw==
+X-Received: by 2002:a5d:6c66:0:b0:366:e991:b9ac with SMTP id
+ ffacd0b85a97d-367756a3423mr4193492f8f.14.1719896512188; 
+ Mon, 01 Jul 2024 22:01:52 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0cd778sm12174609f8f.5.2024.07.01.22.01.14
+ ffacd0b85a97d-3675a0e141esm11844150f8f.58.2024.07.01.22.01.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 01 Jul 2024 22:01:14 -0700 (PDT)
+ Mon, 01 Jul 2024 22:01:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/22] Misc HW patches for 2024-07-02
-Date: Tue,  2 Jul 2024 07:00:50 +0200
-Message-ID: <20240702050112.35907-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 06/22] hw/m68k: convert 'virt' machine definitions to use new
+ macros
+Date: Tue,  2 Jul 2024 07:00:56 +0200
+Message-ID: <20240702050112.35907-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240702050112.35907-1-philmd@linaro.org>
+References: <20240702050112.35907-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,106 +96,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit b6d32a06fc0984e537091cba08f2e1ed9f775d74:
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2024-06-30 16:12:24 -0700)
+This changes the DEFINE_VIRT_MACHINE macro to use the common
+helpers for constructing versioned symbol names and strings,
+bringing greater consistency across targets.
 
-are available in the Git repository at:
+A DEFINE_VIRT_MACHINE_AS_LATEST helper is added so that it
+is not required to pass 'false' for every single historical
+machine type.
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20240702
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240620165742.1711389-6-berrange@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/m68k/virt.c | 55 ++++++++++++++++++++++++++++----------------------
+ 1 file changed, 31 insertions(+), 24 deletions(-)
 
-for you to fetch changes up to f0936cbc1d42410ccd58c042bc26fa33a23a77d6:
-
-  Remove inclusion of hw/hw.h from files that don't need it (2024-07-02 06:58:48 +0200)
-
-Ignored checkpatch warnings:
-
-  WARNING: line over 80 characters
-  #45: FILE: include/hw/boards.h:431:
-  + *          mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " Virtual Machine"; \
-  #205: FILE: include/hw/boards.h:591:
-  +    prefix ## _machine_ ## major ## _ ## minor ## _ ## micro ## _ ## tag ## _ ## sym
-  #40: FILE: hw/arm/virt.c:112:
-  +        mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " ARM Virtual Machine"; \
-  #55: FILE: hw/s390x/s390-virtio-ccw.c:828:
-  +        mc->desc = "Virtual s390x machine (version " MACHINE_VER_STR(__VA_ARGS__) ")"; \
-  #43: FILE: hw/m68k/virt.c:345:
-  +        mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " M68K Virtual Machine"; \
-
-----------------------------------------------------------------
-Misc HW patches queue
-
-- Prevent NULL deref in sPAPR network model (Oleg)
-- Automatic deprecation of versioned machine types (Daniel)
-- Correct 'dump-guest-core' property name in hint (Akihiko)
-- Prevent IRQ leak in MacIO IDE model (Mark)
-- Remove dead #ifdef'ry related to unsupported macOS 12.0 (Akihiko)
-- Remove "hw/hw.h" where unnecessary (Thomas)
-
-----------------------------------------------------------------
-
-Akihiko Odaki (5):
-  system/physmem: Fix reference to dump-guest-core
-  hvf: Drop ifdef for macOS versions older than 12.0
-  audio: Drop ifdef for macOS versions older than 12.0
-  block/file-posix: Drop ifdef for macOS versions older than 12.0
-  net/vmnet: Drop ifdef for macOS versions older than 12.0
-
-Daniel P. Berrangé (14):
-  include/hw: add helpers for defining versioned machine types
-  hw/arm: convert 'virt' machine definitions to use new macros
-  hw/s390x: convert 'ccw' machine definitions to use new macros
-  hw/ppc: convert 'spapr' machine definitions to use new macros
-  hw/m68k: convert 'virt' machine definitions to use new macros
-  hw/i386: convert 'i440fx' machine definitions to use new macros
-  hw/i386: convert 'q35' machine definitions to use new macros
-  include/hw: add macros for deprecation & removal of versioned machines
-  include/hw: temporarily disable deletion of versioned machine types
-  hw: set deprecation info for all versioned machine types
-  hw: skip registration of outdated versioned machine types
-  hw/ppc: remove obsolete manual deprecation reason string of spapr
-    machines
-  hw/i386: remove obsolete manual deprecation reason string of i440fx
-    machines
-  docs: document special exception for machine type deprecation &
-    removal
-
-Mark Cave-Ayland (1):
-  hw/ide/macio: switch from using qemu_allocate_irq() to qdev input
-    GPIOs
-
-Oleg Sviridov (1):
-  hw/net/spapr: prevent potential NULL dereference
-
-Thomas Huth (1):
-  Remove inclusion of hw/hw.h from files that don't need it
-
- docs/about/deprecated.rst     |  13 ++
- include/hw/boards.h           | 298 ++++++++++++++++++++++++++++++++++
- include/hw/i386/pc.h          |  28 ++++
- include/hw/misc/macio/macio.h |   7 +-
- include/hw/misc/xlnx-cfi-if.h |   1 -
- accel/hvf/hvf-all.c           |   3 -
- block/file-posix.c            |   5 -
- hw/arm/virt.c                 |  34 ++--
- hw/i386/pc_piix.c             | 220 +++++++++++--------------
- hw/i386/pc_q35.c              | 215 ++++++++++--------------
- hw/ide/macio.c                |  10 +-
- hw/m68k/virt.c                |  57 ++++---
- hw/misc/edu.c                 |   1 -
- hw/net/spapr_llan.c           |   6 +
- hw/ppc/spapr.c                | 100 +++++++-----
- hw/s390x/s390-virtio-ccw.c    | 102 +++++++-----
- hw/vfio/container.c           |   1 -
- net/vmnet-host.c              |  24 +--
- net/vmnet-shared.c            |  13 --
- system/physmem.c              |   2 +-
- target/i386/hvf/hvf.c         |  23 +--
- audio/coreaudio.m             |   5 -
- net/vmnet-bridged.m           |  13 +-
- net/vmnet-common.m            |   3 -
- 24 files changed, 710 insertions(+), 474 deletions(-)
-
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index 09bc9bdfef..cd6ee692f7 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -335,99 +335,106 @@ static void virt_machine_register_types(void)
+ 
+ type_init(virt_machine_register_types)
+ 
+-#define DEFINE_VIRT_MACHINE(major, minor, latest) \
+-    static void virt_##major##_##minor##_class_init(ObjectClass *oc, \
+-                                                    void *data) \
++#define DEFINE_VIRT_MACHINE_IMPL(latest, ...) \
++    static void MACHINE_VER_SYM(class_init, virt, __VA_ARGS__)( \
++        ObjectClass *oc, \
++        void *data) \
+     { \
+         MachineClass *mc = MACHINE_CLASS(oc); \
+-        virt_machine_##major##_##minor##_options(mc); \
+-        mc->desc = "QEMU " # major "." # minor " M68K Virtual Machine"; \
++        MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
++        mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " M68K Virtual Machine"; \
+         if (latest) { \
+             mc->alias = "virt"; \
+         } \
+     } \
+-    static const TypeInfo machvirt_##major##_##minor##_info = { \
+-        .name = MACHINE_TYPE_NAME("virt-" # major "." # minor), \
+-        .parent = MACHINE_TYPE_NAME("virt"), \
+-        .class_init = virt_##major##_##minor##_class_init, \
+-    }; \
+-    static void machvirt_machine_##major##_##minor##_init(void) \
++    static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
+     { \
+-        type_register_static(&machvirt_##major##_##minor##_info); \
++        .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
++        .parent = MACHINE_TYPE_NAME("virt"), \
++        .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
++    }; \
++    static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
++    { \
++        type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
+     } \
+-    type_init(machvirt_machine_##major##_##minor##_init);
++    type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
++
++#define DEFINE_VIRT_MACHINE_AS_LATEST(major, minor) \
++    DEFINE_VIRT_MACHINE_IMPL(true, major, minor)
++#define DEFINE_VIRT_MACHINE(major, minor) \
++    DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
+ 
+ static void virt_machine_9_1_options(MachineClass *mc)
+ {
+ }
+-DEFINE_VIRT_MACHINE(9, 1, true)
++DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
+ 
+ static void virt_machine_9_0_options(MachineClass *mc)
+ {
+     virt_machine_9_1_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+ }
+-DEFINE_VIRT_MACHINE(9, 0, false)
++DEFINE_VIRT_MACHINE(9, 0)
+ 
+ static void virt_machine_8_2_options(MachineClass *mc)
+ {
+     virt_machine_9_0_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+ }
+-DEFINE_VIRT_MACHINE(8, 2, false)
++DEFINE_VIRT_MACHINE(8, 2)
+ 
+ static void virt_machine_8_1_options(MachineClass *mc)
+ {
+     virt_machine_8_2_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_8_1, hw_compat_8_1_len);
+ }
+-DEFINE_VIRT_MACHINE(8, 1, false)
++DEFINE_VIRT_MACHINE(8, 1)
+ 
+ static void virt_machine_8_0_options(MachineClass *mc)
+ {
+     virt_machine_8_1_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_8_0, hw_compat_8_0_len);
+ }
+-DEFINE_VIRT_MACHINE(8, 0, false)
++DEFINE_VIRT_MACHINE(8, 0)
+ 
+ static void virt_machine_7_2_options(MachineClass *mc)
+ {
+     virt_machine_8_0_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_7_2, hw_compat_7_2_len);
+ }
+-DEFINE_VIRT_MACHINE(7, 2, false)
++DEFINE_VIRT_MACHINE(7, 2)
+ 
+ static void virt_machine_7_1_options(MachineClass *mc)
+ {
+     virt_machine_7_2_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_7_1, hw_compat_7_1_len);
+ }
+-DEFINE_VIRT_MACHINE(7, 1, false)
++DEFINE_VIRT_MACHINE(7, 1)
+ 
+ static void virt_machine_7_0_options(MachineClass *mc)
+ {
+     virt_machine_7_1_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_7_0, hw_compat_7_0_len);
+ }
+-DEFINE_VIRT_MACHINE(7, 0, false)
++DEFINE_VIRT_MACHINE(7, 0)
+ 
+ static void virt_machine_6_2_options(MachineClass *mc)
+ {
+     virt_machine_7_0_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_6_2, hw_compat_6_2_len);
+ }
+-DEFINE_VIRT_MACHINE(6, 2, false)
++DEFINE_VIRT_MACHINE(6, 2)
+ 
+ static void virt_machine_6_1_options(MachineClass *mc)
+ {
+     virt_machine_6_2_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_6_1, hw_compat_6_1_len);
+ }
+-DEFINE_VIRT_MACHINE(6, 1, false)
++DEFINE_VIRT_MACHINE(6, 1)
+ 
+ static void virt_machine_6_0_options(MachineClass *mc)
+ {
+     virt_machine_6_1_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_6_0, hw_compat_6_0_len);
+ }
+-DEFINE_VIRT_MACHINE(6, 0, false)
++DEFINE_VIRT_MACHINE(6, 0)
 -- 
 2.41.0
 
