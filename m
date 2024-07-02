@@ -4,53 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A22C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0647EC3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOapE-00044Y-Gb; Tue, 02 Jul 2024 06:33:29 -0400
+	id 1sOapJ-00045S-LN; Tue, 02 Jul 2024 06:33:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOap9-000447-MP
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:24 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapB-00044G-JN
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOap6-0006z7-Fx
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOap7-0006zM-Gp
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719916398;
+ s=mimecast20190719; t=1719916399;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=yUUZI1Aj43tbdKL3h2T54aa7CSeX97Wiv+h2Ew2TMQ8=;
- b=hM6q/hC6Klk3qAfQzGxBmx5wE/SgFY4CQFGYqISR/fGEAjs9AgUfALbRxg5thT2sg2iPmM
- vrrYVXpWobpyIUz9LLINGISbiJBsBBrerAJLj1mBHsphsNC5a7ydsXc8jOMt202YsxiUik
- hSLw2prYmgPrJql7p+jBr+w52soVLws=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/wGJ3AdvPh9MnY1NWkWrsPpbBLaKAmxYBc3ebXDFr88=;
+ b=etFJUCH0vZD5Zld3IBdvUth6qnSH06cGtZEE+HHVJLXDYEmIXyCeQ5XPcIFjSQKFMJux1a
+ Pam1bc407aJ8x0SX77afNQv6AHyxtXXnOvr4bxFx2Qvgv26uZ8qPzafjvTk+2fnsIEEMds
+ RnzV5Fd6NmOEs0r1o3XPMjiW3N/bQU4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-209-09skQtHqOtqeWrH3h9Godw-1; Tue,
- 02 Jul 2024 06:33:15 -0400
-X-MC-Unique: 09skQtHqOtqeWrH3h9Godw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-H1_2LyxkP42a3JXyDERrVA-1; Tue,
+ 02 Jul 2024 06:33:18 -0400
+X-MC-Unique: H1_2LyxkP42a3JXyDERrVA-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B534119560B0; Tue,  2 Jul 2024 10:33:14 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3FDEF19560B5; Tue,  2 Jul 2024 10:33:16 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 94C6719560AA; Tue,  2 Jul 2024 10:33:11 +0000 (UTC)
+ id E1DB519560AA; Tue,  2 Jul 2024 10:33:14 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 00/12] qtest, s390x, avocado and doc patches
-Date: Tue,  2 Jul 2024 12:32:58 +0200
-Message-ID: <20240702103310.347201-1-thuth@redhat.com>
+Subject: [PULL 01/12] hw/intc/s390_flic: Fix interrupt controller migration on
+ s390x with TCG
+Date: Tue,  2 Jul 2024 12:32:59 +0200
+Message-ID: <20240702103310.347201-2-thuth@redhat.com>
+In-Reply-To: <20240702103310.347201-1-thuth@redhat.com>
+References: <20240702103310.347201-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -77,63 +80,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi Richard!
+Migration of a s390x guest with TCG was long known to be very unstable,
+so the tests in tests/qtest/migration-test.c are disabled if running
+with TCG instead of KVM.
 
-The following changes since commit c80a339587fe4148292c260716482dd2f86d4476:
+Nicholas Piggin did a great analysis of the problem:
 
-  Merge tag 'pull-target-arm-20240701' of https://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-07-01 10:41:45 -0700)
+"The flic pending state is not migrated, so if the machine is migrated
+ while an interrupt is pending, it can be lost. This shows up in
+ qtest migration test, an extint is pending (due to console writes?)
+ and the CPU waits via s390_cpu_set_psw and expects the interrupt to
+ wake it. However when the flic pending state is lost, s390_cpu_has_int
+ returns false, so s390_cpu_exec_interrupt falls through to halting
+ again."
 
-are available in the Git repository at:
+Thus let's finally migrate the pending state, and to be on the safe
+side, also the other state variables of the QEMUS390FLICState structure.
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-07-02
+Message-ID: <20240619144421.261342-1-thuth@redhat.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ include/hw/s390x/s390_flic.h |  1 +
+ hw/intc/s390_flic.c          | 75 ++++++++++++++++++++++++++++++++++--
+ hw/s390x/s390-virtio-ccw.c   |  5 +++
+ 3 files changed, 78 insertions(+), 3 deletions(-)
 
-for you to fetch changes up to e3e2708fee10e6df413c36a71b100c59710e727e:
-
-  pc-bios/s390-ccw: Remove duplicated LDFLAGS (2024-07-02 09:52:38 +0200)
-
-----------------------------------------------------------------
-* Fix interrupt controller migration on s390x with TCG and enable qtest
-* Fix memory leaks in qtests
-* Use a proper qom-tree parent for s390x virtio-net devices
-* Add hotplug avocado test for virtio-blk
-* Fix Travis jobs (need python3-tomli now)
-
-----------------------------------------------------------------
-Akihiko Odaki (5):
-      tests/qtest: Use qtest_add_data_func_full()
-      tests/qtest: Free unused QMP response
-      tests/qtest: Free old machine variable name
-      tests/qtest: Free paths
-      tests/qtest: Free GThread
-
-Alexandre Iooss (1):
-      docs: add precision about capstone for execlog plugin
-
-Nicholas Piggin (1):
-      tests/qtest/migration-test: enable on s390x with TCG
-
-Thomas Huth (4):
-      hw/intc/s390_flic: Fix interrupt controller migration on s390x with TCG
-      hw/s390x: Attach default virtio-net devices to the /machine/virtual-css-bridge
-      .travis.yml: Install python3-tomli in all build jobs
-      pc-bios/s390-ccw: Remove duplicated LDFLAGS
-
-Vladimir Sementsov-Ogievskiy (1):
-      tests/avocado: add hotplug_blk test
-
- docs/devel/tcg-plugins.rst           |  4 +-
- include/hw/s390x/s390_flic.h         |  1 +
- hw/intc/s390_flic.c                  | 75 ++++++++++++++++++++++++++++++++++--
- hw/s390x/s390-virtio-ccw.c           |  8 ++++
- tests/qtest/device-introspect-test.c |  7 ++--
- tests/qtest/libqtest.c               |  3 ++
- tests/qtest/migration-test.c         | 12 ------
- tests/qtest/qos-test.c               | 16 ++++++--
- tests/qtest/vhost-user-test.c        |  6 +--
- .travis.yml                          |  6 +++
- pc-bios/s390-ccw/Makefile            |  4 +-
- tests/avocado/hotplug_blk.py         | 69 +++++++++++++++++++++++++++++++++
- 12 files changed, 181 insertions(+), 30 deletions(-)
- create mode 100644 tests/avocado/hotplug_blk.py
+diff --git a/include/hw/s390x/s390_flic.h b/include/hw/s390x/s390_flic.h
+index 382d9833f1..4d66c5e42e 100644
+--- a/include/hw/s390x/s390_flic.h
++++ b/include/hw/s390x/s390_flic.h
+@@ -116,6 +116,7 @@ struct QEMUS390FLICState {
+     uint8_t simm;
+     uint8_t nimm;
+     QLIST_HEAD(, QEMUS390FlicIO) io[8];
++    bool migrate_all_state;
+ };
+ 
+ uint32_t qemu_s390_flic_dequeue_service(QEMUS390FLICState *flic);
+diff --git a/hw/intc/s390_flic.c b/hw/intc/s390_flic.c
+index 6771645699..a91a4a47e8 100644
+--- a/hw/intc/s390_flic.c
++++ b/hw/intc/s390_flic.c
+@@ -361,15 +361,77 @@ bool ais_needed(void *opaque)
+     return s->ais_supported;
+ }
+ 
++static bool ais_needed_v(void *opaque, int version_id)
++{
++    return ais_needed(opaque);
++}
++
++static bool qemu_s390_flic_full_state_needed(void *opaque)
++{
++    QEMUS390FLICState *s = opaque;
++
++    return s->migrate_all_state;
++}
++
++static bool qemu_s390_flic_state_needed(void *opaque)
++{
++    return ais_needed(opaque) || qemu_s390_flic_full_state_needed(opaque);
++}
++
++static const VMStateDescription vmstate_qemu_s390_flic_io = {
++     .name = "qemu-s390-flic-io",
++     .version_id = 1,
++     .minimum_version_id = 1,
++     .fields = (const VMStateField[]) {
++         VMSTATE_UINT16(id, QEMUS390FlicIO),
++         VMSTATE_UINT16(nr, QEMUS390FlicIO),
++         VMSTATE_UINT32(parm, QEMUS390FlicIO),
++         VMSTATE_UINT32(word, QEMUS390FlicIO),
++         VMSTATE_END_OF_LIST()
++     },
++};
++
++static const VMStateDescription vmstate_qemu_s390_flic_full = {
++    .name = "qemu-s390-flic-full",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = qemu_s390_flic_full_state_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(pending, QEMUS390FLICState),
++        VMSTATE_UINT32(service_param, QEMUS390FLICState),
++        VMSTATE_QLIST_V(io[0], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[1], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[2], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[3], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[4], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[5], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[6], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_QLIST_V(io[7], QEMUS390FLICState, 1,
++                        vmstate_qemu_s390_flic_io, QEMUS390FlicIO, next),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription qemu_s390_flic_vmstate = {
+     .name = "qemu-s390-flic",
+     .version_id = 1,
+     .minimum_version_id = 1,
+-    .needed = ais_needed,
++    .needed = qemu_s390_flic_state_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT8(simm, QEMUS390FLICState),
+-        VMSTATE_UINT8(nimm, QEMUS390FLICState),
++        VMSTATE_UINT8_TEST(simm, QEMUS390FLICState, ais_needed_v),
++        VMSTATE_UINT8_TEST(nimm, QEMUS390FLICState, ais_needed_v),
+         VMSTATE_END_OF_LIST()
++    },
++    .subsections = (const VMStateDescription * const []) {
++        &vmstate_qemu_s390_flic_full,
++        NULL
+     }
+ };
+ 
+@@ -383,11 +445,18 @@ static void qemu_s390_flic_instance_init(Object *obj)
+     }
+ }
+ 
++static Property qemu_s390_flic_properties[] = {
++    DEFINE_PROP_BOOL("migrate-all-state", QEMUS390FLICState,
++                     migrate_all_state, true),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
+ static void qemu_s390_flic_class_init(ObjectClass *oc, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(oc);
+     S390FLICStateClass *fsc = S390_FLIC_COMMON_CLASS(oc);
+ 
++    device_class_set_props(dc, qemu_s390_flic_properties);
+     dc->reset = qemu_s390_flic_reset;
+     dc->vmsd = &qemu_s390_flic_vmstate;
+     fsc->register_io_adapter = qemu_s390_register_io_adapter;
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index cd063f8b64..f87ca36264 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -863,8 +863,13 @@ static void ccw_machine_9_0_instance_options(MachineState *machine)
+ 
+ static void ccw_machine_9_0_class_options(MachineClass *mc)
+ {
++    static GlobalProperty compat[] = {
++        { TYPE_QEMU_S390_FLIC, "migrate-all-state", "off", },
++    };
++
+     ccw_machine_9_1_class_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_9_0, hw_compat_9_0_len);
++    compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
+ }
+ DEFINE_CCW_MACHINE(9_0, "9.0", false);
+ 
+-- 
+2.45.2
 
 
