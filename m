@@ -4,78 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 406DFC3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 16:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AFEAC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 16:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOg1Q-0004TO-2h; Tue, 02 Jul 2024 12:06:24 -0400
+	id 1sOg2S-0005et-15; Tue, 02 Jul 2024 12:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOg1O-0004T4-3L
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:06:22 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sOg2P-0005eQ-QA
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:07:25 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOg1K-0006wK-OJ
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:06:21 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2ec595d0acbso54184311fa.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 09:06:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sOg2O-00079D-4E
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 12:07:25 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1f9b364faddso27002455ad.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 09:07:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719936377; x=1720541177; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=aRxD39Zokvn9iLXSCY6oLJA+8dI86FxowQXzUUYbOo8=;
- b=nZIm/SIe0EgJweg5I4ALs3z7YWy97BbztqOrBTKEt/FRNgZa+1+6pNqVcgGGjNwr6c
- ayA3iNQp1JvZ7KePJ7iNkJbBOfl2yo6Tajgx/gznBI65EhIXkVE7YKd2tLI2uBoe2EQn
- eZeiHc5IGFxoWZC6sfjaW8/+7b5jMuhPao471sM+SLIkVP/8XSv5Byb1ivHuT9WwXug8
- Hcddj+3O4Mj/WRLlV98OpnYVDskq79gGni+cyJK2MbkJL+KVcPu0JTisYZTlm4IBBxTp
- VMl9SzOyEcJ9LwSZnxuwyQTCPFC/w7SfnQIPwMlKyMnkVY6ONSxKE8PVWB+6iyR6yKMu
- VHXw==
+ d=linaro.org; s=google; t=1719936442; x=1720541242; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zYsFmV7hGOpxcKgFklKsON8FSqJ4rZSt39jfDg5UOCo=;
+ b=LZ62YYUttWoD2j41Qwc9q9Vrz3YBXGZ5fRdPXVR3psh5+zUwSUmnOGzTBKr5n1VXrr
+ 1XN/lJw7YpexBPPX3j3/NF80KeAuBWQpAVEMUbJBKqz90EC7TOM/dK0I4AdLIV1/wMl1
+ EotDy275rvWxX77OtQSzOc4nCL5vlzSCrU1zystYSp5x8/GFXt38SkmUPi5TEvjqKFLS
+ hiNaM9XNUxat6kaT/1Uwfi+Sl8IYWlUXL6hCkO8ps0Fw14Ns1flYCRK7iqifD24C+1M8
+ vmVfnthtqlNVUBTPGa4yFOwSJVHU3D+K8Kc5Tk8eXI+uTY7Etlf5GWYsZGovnxB0lc/G
+ Uj7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719936377; x=1720541177;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1719936442; x=1720541242;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aRxD39Zokvn9iLXSCY6oLJA+8dI86FxowQXzUUYbOo8=;
- b=GcDvl7EvmEsZBiFALCPZJxdEKLVdsPB0lvmkRM1pkP5FW4cejHgIGs0qD8DkLzNkxw
- +CQnd9ya8A0U0grwTDep9qkQBSrhe6lqc5vuPU66tru2Jb6W0M6wDr+eMc+yobmHIczL
- dFlz4/dlJkkjXVeaq2VpX8BcC1fsEN9T6JvSK46hTV+fsPwXUSovi+fL89g7EvfWAWDl
- ddMKqgUSet2ujomt5DuNvJGr2a+Y2P3tBlZAweWYwaY0DygPFyAkc8u+ucbBaqr0XMLu
- GE+Yh7k5gdLdG8t7U+z4OJyVSkVKN9ljMV9/UJCBpkEpMyJd4h4Lq0Q0COMEvH/9rqod
- HrBw==
-X-Gm-Message-State: AOJu0Yxlb26qMDXW4boX2KqbtzhUnwv1PVWqV2e0U2jkfKL5cIrn2Pda
- wukEGvbDInQ8ZAwLWcNp791Nude7QWOpDY9IL+Im3Y5eKeJfl0mhA2i+x97R95sN5nmvQwsMVM1
- M
-X-Google-Smtp-Source: AGHT+IFzjPkkzNBy0wr62GToJMnEZRnAoXH7Ge22vEHoXH1y2vqjuyLn5Fks00orafKQdmllvqCLog==
-X-Received: by 2002:a19:f715:0:b0:52c:1d8a:9716 with SMTP id
- 2adb3069b0e04-52e82671e95mr5309749e87.19.1719936376726; 
- Tue, 02 Jul 2024 09:06:16 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.209.58])
+ bh=zYsFmV7hGOpxcKgFklKsON8FSqJ4rZSt39jfDg5UOCo=;
+ b=PsSgwTqu5yp0Jq5pr+DPQvFVn49x7r2ZsswIkaZ8ab4DLnMXdTvtUxevRR/78ernA4
+ OCM2lMacfHUxbvhdcpKOLrJN7vd/nTmYRQhw2HIv9Z3Nj98X1fNK444lsXB3Au5eHbsF
+ QP8PIx6Bp0CbzUPbdsvn5qfk9X4J2f9P3oE7RY55E//gtwOFVyW86d6qxoM37kNiBkgs
+ E6e7sM9mZ5c3YV+ZlzDL7GTDY4nIE/nIg9xFOoZlwwSdGUf378Qx+EoY0g7kH1CKgchV
+ WtCnk0N+ZBQ+AH2/jDOBq/BIl8ShZg6aepeQ1str7iR2YgzXjVJNuIXBCyFwb4lwPc8H
+ Oe8g==
+X-Gm-Message-State: AOJu0YzrhOV38I8p3lMt3aB5AdLouiDVmAB9q8JnnxwMJTwi9rLpGMtF
+ 3ug7VSvnAGXn78Bon5ARlTf9cgPnSjDuXW5tZszs9fUajgcrJaHLXtsZynUGK0s=
+X-Google-Smtp-Source: AGHT+IFu0/nToU+Q48glIk8h8hI41RTBdCHCvasZ2F8YPuHxuNvyClDTMMA/hlZODiuAQD61Bb7fsA==
+X-Received: by 2002:a17:902:eccf:b0:1fa:3537:58a5 with SMTP id
+ d9443c01a7336-1fadbc73dfemr59035405ad.18.1719936442020; 
+ Tue, 02 Jul 2024 09:07:22 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e1430sm13690243f8f.52.2024.07.02.09.06.15
+ d9443c01a7336-1fac1568efdsm86127315ad.193.2024.07.02.09.07.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Jul 2024 09:06:16 -0700 (PDT)
-Message-ID: <4fcc7b92-6aba-4d85-9b8f-f971a28d713f@linaro.org>
-Date: Tue, 2 Jul 2024 18:06:15 +0200
+ Tue, 02 Jul 2024 09:07:21 -0700 (PDT)
+Message-ID: <5b251e76-a22f-4bb7-98fe-b5becb56a1b4@linaro.org>
+Date: Tue, 2 Jul 2024 09:07:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v42 06/98] hw/sd/sdcard: Do not store vendor data on block
- drive (CMD56)
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-7-philmd@linaro.org>
- <ZoJiTdo0yr6V_rgN@XFR-LUMICHEL-L2.amd.com>
- <9be76565-45e5-48dc-a3c6-e0546786fee7@linaro.org>
+Subject: Re: [RFC PATCH v3 2/5] rust: add bindgen step as a meson dependency
 Content-Language: en-US
-In-Reply-To: <9be76565-45e5-48dc-a3c6-e0546786fee7@linaro.org>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr_=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+References: <rust-pl011-rfc-v3.git.manos.pitsidianakis@linaro.org>
+ <6bf311a35e6d3bfa8b3bfd10d8f896a9e655fa30.1718827153.git.manos.pitsidianakis@linaro.org>
+ <ZnlGlOGORQkOsoO5@intel.com> <fl60u.ry7sk6d8fv39@linaro.org>
+ <ZnrpgW+CopiJAGZF@intel.com> <fnew7.3urdmuxnhe3l@linaro.org>
+ <27f52dce-b659-446d-8358-50b6001f7307@linaro.org>
+ <dfa7bc8f-378f-4876-b630-fe1182dca937@linaro.org>
+ <fu1lr.ewime9aej60m@linaro.org>
+ <2626cef5-3ece-4b01-94e8-1d293bd4425b@linaro.org>
+ <fzxke.kvm3u8zw4532@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <fzxke.kvm3u8zw4532@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,51 +114,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/7/24 18:04, Philippe Mathieu-Daudé wrote:
-> On 1/7/24 10:01, Luc Michel wrote:
->> On 09:00 Fri 28 Jun     , Philippe Mathieu-Daudé wrote:
->>> Caution: This message originated from an External Source. Use proper 
->>> caution when opening attachments, clicking links, or responding.
->>>
->>>
->>> "General command" (GEN_CMD, CMD56) is described as:
->>>
->>>    GEN_CMD is the same as the single block read or write
->>>    commands (CMD24 or CMD17). The difference is that [...]
->>>    the data block is not a memory payload data but has a
->>>    vendor specific format and meaning.
->>>
->>> Thus this block must not be stored overwriting data block
->>> on underlying storage drive. Keep it in a dedicated
->>> 'vendor_data[]' array.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Tested-by: Cédric Le Goater <clg@redhat.com>
->>> ---
->>> RFC: Is it safe to reuse VMSTATE_UNUSED_V() (which happens
->>> to be the same size)?
->>>
->>> Cc: Peter Xu <peterx@redhat.com>
->>> Cc: Fabiano Rosas <farosas@suse.de>
+On 7/2/24 05:25, Manos Pitsidianakis wrote:
+> On Mon, 01 Jul 2024 21:54, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>> The ctor is not run, but, interesting point, there is the same problem
+>> on Linux :)
 >>
->> I'm not sure about this migration question.
+>> Can you please confirm with a clean build this work on your machine with
+>> this v3, and report exact configure and run commands you use?
+> 
+> On a clean checkout, I did exactly the following:
+> 
+> ```
+> mkdir ./build && cd ./build
+> ../configure --enable-system --enable-debug \
+>   --target-list=aarch64-softmmu --enable-with-rust
+> ninja qemu-system-aarch64
+> ```
+> 
+
+Debug flag was the difference.
+After looking with Manos, we identified an issue with release builds 
+(unused symbols gets dropped, including device ctor), that will be 
+solved in v4.
+
+> which selected the default cc/gcc on debian,
+> gcc (Debian 12.2.0-14) 12.2.0
+> 
+> and ran QEMU with like this:
+> 
+> ```
+> ./qemu-system-aarch64 -M virt \
+>    -machine virtualization=true -machine virt,gic-version=3 \
+>    -cpu max,pauth-impdef=on -smp 2 -m 4096 \
+>    [.. drive and img arguments ..] \
+>    -nographic
+> ```
+> 
+> 
 >>
->> But IMHO you can simplify your implementation to avoid having to store
->> and migrate this vendor_data array. After some research on this command,
->> I came to the conclusion that it's used by manufacturers to return
->> device health related vendor-specific data. (E.g.,
->> https://images-na.ssl-images-amazon.com/images/I/91tTtUMDM3L.pdf Section
->> 1.6.1). So I guess you can simply discard writes and return 0s on reads
->> (or "QEMU" in ASCII or... :)).
-> 
-> Thanks, very interesting datasheet! Note the argument filter:
-> 
->    To query the Health Status register, CMD56 with
->    argument of [00 00 00 01] is used.
-> 
-> Since we can program this array, I'll simply add it as R/W (KISS).
-
-(What really matters here is that we don't overwrite the generic
-  data[] array used to access the blocks)
-
+>> Thanks,
+>> Pierrick
+>>
+>> On 6/29/24 01:06, Manos Pitsidianakis wrote:
+>>> On Fri, 28 Jun 2024 22:12, Pierrick Bouvier <pierrick.bouvier@linaro.org> wrote:
+>>>> I've been able to build rust device on windows, with a few tweaks
+>>>> needed.
+>>>>
+>>>> - specificy the target for libclang (used by bindgen), which targets
+>>>> MSVC by default (so different set of headers)
+>>>> - additional headers (libclang searches its own header with a relative
+>>>> path instead of absolute)
+>>>> - additional windows libs that must be linked in final executable
+>>>>
+>>>> However, even tough I can build the executable, I get this error:
+>>>> $ ./build/qemu-system-aarch64 -M virt
+>>>> C:\w\qemu\build\qemu-system-aarch64.exe: unknown type 'x-pl011-rust'
+>>>>
+>>>> Any idea of what could be missing here?
+>>>
+>>> Sounds like either the rust lib is not linked to the final binary (which
+>>> you can confirm if you look at the included symbols and don't see
+>>> anything with rust origin) or the constructor decorated with
+>>> #[cfg_attr(target_os = "windows", link_section = ".CRT$XCU"] is not
+>>> linked properly (you can add a puts() and see if it's invoked or add a
+>>> breakpoint in gdb)
 
