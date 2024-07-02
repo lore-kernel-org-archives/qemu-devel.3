@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B363C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A06C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 10:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOapb-0004DS-IW; Tue, 02 Jul 2024 06:33:51 -0400
+	id 1sOapL-00046j-Da; Tue, 02 Jul 2024 06:33:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapa-0004Cg-DX
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapJ-00045V-LP
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapY-00076n-US
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:50 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sOapG-000750-2y
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 06:33:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719916428;
+ s=mimecast20190719; t=1719916409;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2v7y+Szx7I0PFjj7v8I/JWtqzU8QM9nTaUE9ATLXoTE=;
- b=MhondXAj0gcQO4tYTR44mAd5qG/c/jegF5xPPT4/mOlQey02iE0rUsGHp38L4Vna30BJBa
- oT1ujuYOp+YF9ZebTTEVxyuAj6k2x/zJ38NMvwRW80vANSGGmwBHYfBXkYKb1CNLEiyybq
- VgHzdqMRc9b2FafTsbln4WM3BcZwozI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=y0NL3aqv+v3DosFGjnrW8EZ2itT91S+J9/+IbzdYKwk=;
+ b=TWG/oc4lV6FvFh7pMKr9Gb2qccK6oeBI3kXOS0Yk0T19DKIv6w6ao0VXvjqnUThHS6k+ab
+ uT5EldvrvuWmha07sN70FKKU4928e2ND9RZbN8S3NwmtwYOFv9LXZ0oNGObzzTtlVQZZAi
+ uz52eA23OZAdiywDhSllhAg8ehMwt9E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-s6dEpXTCOZae74KrdY_9Ow-1; Tue,
- 02 Jul 2024 06:33:45 -0400
-X-MC-Unique: s6dEpXTCOZae74KrdY_9Ow-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-5RNaKzizMyiyPZBd7JcGlQ-1; Tue,
+ 02 Jul 2024 06:33:27 -0400
+X-MC-Unique: 5RNaKzizMyiyPZBd7JcGlQ-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7F1E519560AB; Tue,  2 Jul 2024 10:33:43 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D40F019560A6; Tue,  2 Jul 2024 10:33:26 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 647811955D89; Tue,  2 Jul 2024 10:33:39 +0000 (UTC)
+ id 86CD119560AA; Tue,  2 Jul 2024 10:33:24 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org,
 	Richard Henderson <richard.henderson@linaro.org>
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 08/12] docs: add precision about capstone for execlog plugin
-Date: Tue,  2 Jul 2024 12:33:06 +0200
-Message-ID: <20240702103310.347201-9-thuth@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PULL 04/12] tests/qtest: Free unused QMP response
+Date: Tue,  2 Jul 2024 12:33:02 +0200
+Message-ID: <20240702103310.347201-5-thuth@redhat.com>
 In-Reply-To: <20240702103310.347201-1-thuth@redhat.com>
 References: <20240702103310.347201-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -81,35 +81,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandre Iooss <erdnaxe@crans.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Some people are wondering why they get an empty string as disassembly.
-Most of the time, they configured QEMU without Capstone support.
-Let's document this behaviour to help users.
+This fixes LeakSanitizer warnings.
 
-Signed-off-by: Alexandre Iooss <erdnaxe@crans.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-ID: <20240620135731.977377-1-erdnaxe@crans.org>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Message-ID: <20240627-san-v2-11-750bb0946dbd@daynix.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/devel/tcg-plugins.rst | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tests/qtest/libqtest.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
-index 9cc09d8c3d..f7d7b9e3a4 100644
---- a/docs/devel/tcg-plugins.rst
-+++ b/docs/devel/tcg-plugins.rst
-@@ -539,7 +539,9 @@ which will output an execution trace following this structure::
-   0, 0xd34, 0xf9c8f000, "bl #0x10c8"
-   0, 0x10c8, 0xfff96c43, "ldr r3, [r0, #0x44]", load, 0x200000e4, RAM
- 
--the output can be filtered to only track certain instructions or
-+Please note that you need to configure QEMU with Capstone support to get disassembly.
-+
-+The output can be filtered to only track certain instructions or
- addresses using the ``ifilter`` or ``afilter`` options. You can stack the
- arguments if required::
- 
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index c7f6897d78..ca46b1f8d0 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -749,6 +749,8 @@ QDict *qtest_qmp_receive(QTestState *s)
+                         response, s->eventData)) {
+             /* Stash the event for a later consumption */
+             s->pending_events = g_list_append(s->pending_events, response);
++        } else {
++            qobject_unref(response);
+         }
+     }
+ }
 -- 
 2.45.2
 
