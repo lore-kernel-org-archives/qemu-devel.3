@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788E2C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 710CDC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:30:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOjwI-0007Sx-Pc; Tue, 02 Jul 2024 16:17:22 -0400
+	id 1sOk0Y-0006wb-9s; Tue, 02 Jul 2024 16:21:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjux-0005nU-TO
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:16:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzp-00059D-D0
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:21:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjuw-00089u-6p
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:15:59 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzn-0001l0-TR
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:21:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951357;
+ s=mimecast20190719; t=1719951659;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Bf3inGfH3C1OrX/KdJFaqQvDHDePnfUDWhDjBaZ52tk=;
- b=M7O+MS1jSNuDl2WHUT+abSkPRjJzNyWaMZHYQrfB2QSj3AsjpFc4E4LJFHt+8IhigMwvzL
- 7Nkrzw31GNn8SdxE74CKyH2N3+xb0jhm/Is3WULoCdfcRHZDCrgRlUaUeukKMU2F63y9x2
- Y1GdSBEjfE5EfPYdiv967hptQ3z/O9A=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fFIfkLYWXfsdkRs/ADDmSifhmh+YyxsrJ8fplItaj14=;
+ b=RgHb5imVKknt5SL12czJy3YZ6MD31+p4kZX809sOKTO+ZQoSa16oRnHC1IM/qiuxRItVGr
+ PjBi7A8YY+fD0YWb+55Cg7mc6ElDipVEXaNPhE7HvcK1j2RbiXynZGywPQLU6nr+MNpiDB
+ HTJdpgw7mqPPkgi0gewwf8gUASV66qQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-eHB2cmKSOcqF8wSIIvKYLQ-1; Tue, 02 Jul 2024 16:15:56 -0400
-X-MC-Unique: eHB2cmKSOcqF8wSIIvKYLQ-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-52ce04ea31cso4981528e87.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:15:56 -0700 (PDT)
+ us-mta-444-zrUO1PdQO26OK5IB2bjraA-1; Tue, 02 Jul 2024 16:20:58 -0400
+X-MC-Unique: zrUO1PdQO26OK5IB2bjraA-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-424fb2df2bdso42167935e9.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:20:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951354; x=1720556154;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Bf3inGfH3C1OrX/KdJFaqQvDHDePnfUDWhDjBaZ52tk=;
- b=BRspsVZCc+2zDkiSUXTC904DBdFkdnfCo0VNVI11+4AQ7/ug362Ars1tgJQDzCn7YX
- 5yHsD4gVDOnNRtDQg8hFA5MejWFL/6A24yAod1+t8N8wC7Vzke5XICFGJit+3vVVXQpW
- xnhSF/i0fS+oxF1oncOWMR0+WmxWNFJ4OmCLXapuwqbC4TivJ+p/5yqYwgt3/P5VQjki
- +nk74mYSePgjL/dmsrtLLivla9nmBHlPuXItLBoWr3VPCVTykxGuahu5qyTqAbI2zzx8
- LOvov8T+JQ1BDPD869mB6lOase5UOq7HRBJo8BvnMZPijQayeSn7+oFYO1cbOu182ab/
- uDkw==
-X-Gm-Message-State: AOJu0YzhALwBSQUHKgcZMew055XXRWmCfGtD9xWZqd/8Qitl6hBcRqF6
- 63td5gNr6B4KcmfIG7cqWzC2z0B/dTHuAtBE+0x6SRE0QznW9EIMaI+QGM8pMbNwPqlYZvH+6oy
- acBYG/Ryay2On1ekmj8Pg3eHJt/4nHIC0efk3tDteAIn8Qbu5TLCBJthUiCx4QeGn7+dqJ/KmB1
- lB355Crj6ucVtZggxav1j2iLcLYtKYVg==
-X-Received: by 2002:a05:6512:3ca9:b0:52e:765b:c00e with SMTP id
- 2adb3069b0e04-52e8264c2femr6470295e87.7.1719951354496; 
- Tue, 02 Jul 2024 13:15:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHp91x5VfntW+nGeizM8iVLQtgW8Pd0YhVe1U3xHTQ5oa1gOXS9/jLY8Y4tj2tMPxaoF4swrA==
-X-Received: by 2002:a05:6512:3ca9:b0:52e:765b:c00e with SMTP id
- 2adb3069b0e04-52e8264c2femr6470275e87.7.1719951353804; 
- Tue, 02 Jul 2024 13:15:53 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719951656; x=1720556456;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fFIfkLYWXfsdkRs/ADDmSifhmh+YyxsrJ8fplItaj14=;
+ b=rR1NXhIG/ulyFNkkwooouKpSb3ORSUnYXG7Bb1PXbUzPJNua0g/te4sF/z86hy4ptN
+ 0hMfXluAfCNU3yU06TT7CjuOk+UGPioRkiz9Bz4RUdzMY1MGxCa0EOivPcV3Zjbp0wBG
+ gfSjn7QASd8Fg8RBaFhF7bzQ9heEVDtGgh0hz3XopuRKt41zWEYPo+xnMI5Z+AgLlJHj
+ G47+F5q9HT9oTEx+QEJoC49PMUFe/bKVUxG848YVUUvEEBFHoaJq8Nd/aFZHpsB9b/Q1
+ 23Ct6vLFDTDQe+RPFavLZHTviWaeNNL5Ne/DlYz34YT8ZchJqfhHdNRMjXjPx8J0mMeB
+ B8QQ==
+X-Gm-Message-State: AOJu0YwTYoZbpoOfnnMwxNjHBRX8752ph0VnU2355KF3bABtn6vgz0mF
+ Rd8sbuEYv3ChoOnIRYFgOgxa7u1PU+KhJOykb+hGPl0YlQ24e866X76eUnl9c869h8k0nQliWN+
+ 4n9xE82m0xVfyNgcXTJT+Z/YE6XXE0TWJnvPriz0t7JwK7Obn+FXplRdD4UnwLu9MjQAEjc7DX3
+ VMrXgfEnQOm1EidqV/ABgn5FF6CLQuDQ==
+X-Received: by 2002:a5d:4212:0:b0:367:89d3:5d3f with SMTP id
+ ffacd0b85a97d-36789d35f35mr1952544f8f.6.1719951656254; 
+ Tue, 02 Jul 2024 13:20:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+3+Y1xG6sT7SpyEr3z7j9pfrnyyMjqlP+aEyCTgV7Y8+WZ63Mjccc+ed1ZZYtEm7IYecC/w==
+X-Received: by 2002:a5d:4212:0:b0:367:89d3:5d3f with SMTP id
+ ffacd0b85a97d-36789d35f35mr1952523f8f.6.1719951655629; 
+ Tue, 02 Jul 2024 13:20:55 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b098426sm208920815e9.32.2024.07.02.13.15.52
+ ffacd0b85a97d-3675a0d8ed0sm14171038f8f.28.2024.07.02.13.20.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:15:53 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:15:50 -0400
+ Tue, 02 Jul 2024 13:20:54 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:20:51 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Wafer <wafer@jaguarmicro.com>,
- Jason Wang <jasowang@redhat.com>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
-Subject: [PULL v2 11/88] hw/virtio: Fix obtain the buffer id from the last
- descriptor
-Message-ID: <33abfea239592a706e98269b01c0096249612ea4.1719951168.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL v2 85/88] pcie_sriov: Release VFs failed to realize
+Message-ID: <9593e06b3ab7b99c07fc3b78d84aedc897ebb54c.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1719951168.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,49 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wafer <wafer@jaguarmicro.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The virtio-1.3 specification
-<https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html> writes:
-2.8.6 Next Flag: Descriptor Chaining
-      Buffer ID is included in the last descriptor in the list.
+Release VFs failed to realize just as we do in unregister_vfs().
 
-If the feature (_F_INDIRECT_DESC) has been negotiated, install only
-one descriptor in the virtqueue.
-Therefor the buffer id should be obtained from the first descriptor.
-
-In descriptor chaining scenarios, the buffer id should be obtained
-from the last descriptor.
-
-Fixes: 86044b24e8 ("virtio: basic packed virtqueue support")
-
-Signed-off-by: Wafer <wafer@jaguarmicro.com>
-Reviewed-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20240510072753.26158-2-wafer@jaguarmicro.com>
+Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-reuse-v10-7-7ca0b8ed3d9f@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/pci/pcie_sriov.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 28cd406e16..3678ec2f88 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -1745,6 +1745,11 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
-                                              &indirect_desc_cache);
-     } while (rc == VIRTQUEUE_READ_DESC_MORE);
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index faadb0d2ea..9bd7f8acc3 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -99,6 +99,8 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+         vf->exp.sriov_vf.vf_number = i;
  
-+    if (desc_cache != &indirect_desc_cache) {
-+        /* Buffer ID is included in the last descriptor in the list. */
-+        id = desc.id;
-+    }
-+
-     /* Now copy what we have collected and mapped */
-     elem = virtqueue_alloc_element(sz, out_num, in_num);
-     for (i = 0; i < out_num; i++) {
+         if (!qdev_realize(&vf->qdev, bus, errp)) {
++            object_unparent(OBJECT(vf));
++            object_unref(vf);
+             unparent_vfs(dev, i);
+             return false;
+         }
 -- 
 MST
 
