@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599F9C3064D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E33E8C3065C
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeED-0005vc-Ff; Tue, 02 Jul 2024 10:11:29 -0400
+	id 1sOeEl-0001BO-2G; Tue, 02 Jul 2024 10:12:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeDU-00057r-4j
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:10:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeEi-0000vc-5h
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:12:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeDR-0000OT-Oo
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:10:43 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeES-000161-Js
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929441;
+ s=mimecast20190719; t=1719929503;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=H0Zx9hcjCb8TTX+fknLAFuiiboZn7NyIn2VBiJnNZQk=;
- b=XEPfhv//EIrVxqv8Zl+9j3ZVf2TMEBZ/uH1IMjZH09c3wl4bI76hUbhlOg5cMy7aQCVoIx
- MOYwaDFbj18xtPMCy0Cjg5KXN/W21fAQduOgnBZL+xqmRamGu4NUoXJO6SqoAnQeN1TuQd
- 6QQwVg8xldJovJnWpebWn15ixqkpiyY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=7pMoBjPNl8oUEg5zlwInizxqA4Nbo5A/7NGMCDnRaVI=;
+ b=IGfhsfr7DbegstpGF+4AazIPZmWfB2FjcRedkONW2c4BWfvVlD20/JwrlawzAoA12EaEQU
+ vmxvOSpS2Fh9aojXohbI4ekOyCrOUFIplVfrFDtqrGtCnyLZkN4JYWs4OWs9NqLQgopDhp
+ 2GO9eKS4WyOxSA8Wq/YU65QJNW17jn8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-418-VdknvXfhOdOzvk0l9lIVOQ-1; Tue, 02 Jul 2024 10:10:38 -0400
-X-MC-Unique: VdknvXfhOdOzvk0l9lIVOQ-1
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-a724d8c38d3so271837266b.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:10:38 -0700 (PDT)
+ us-mta-460-RfHDw3LzOXivKUezinyriw-1; Tue, 02 Jul 2024 10:11:39 -0400
+X-MC-Unique: RfHDw3LzOXivKUezinyriw-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4257db9d71fso16896985e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929437; x=1720534237;
+ d=1e100.net; s=20230601; t=1719929497; x=1720534297;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=H0Zx9hcjCb8TTX+fknLAFuiiboZn7NyIn2VBiJnNZQk=;
- b=m/xfkfjj+2nO2plPJ9KN4Im8pSbMvSdsGKJgrzdbadDGyeCpZVpzF8eim+bvSZIU/H
- NYwrP+Yp1nlwBex/Mc3hyUY4ZAp91IQrNf2cBjKhox0euDD0QiFHXVEVxdikabDiEFVI
- qBV0eHzOObkbKwwhantco0B08edW+N6Gyp5Z06p5wLwgdrfqFQoPxOTcuULpCZ+Qu0+z
- 9vTQhWVyx0DsBh+CYpUZS4KplWqTVS1UGFC5+i5/jRLSWHEgd4ZuRVAj5vzM8SvGLL1X
- bRjyGdymm0eXfS6xcItYSdiXROLNuqi8Gu6WAz1tYaDIm3JO8p/5gVBpuVADJzZVMYsR
- BGcQ==
-X-Gm-Message-State: AOJu0Yyn5TrOXQwvSPbGyUpy0pBq1iV9W6TDm0Zz7yrelzai8My/ajuP
- EkEZtpnuhViYoMl3hXWIVICyFN5Uxqx/o95PpT6F4O6mRQEIirdyh0/GjUS1T6/t7HdL7xeCvuQ
- jiqP42a/HOLV/y0fcOSbeKlKPCIJgRFDen8QNUtTtVYZfv9FRl40K3eWXvjxaI/bm6s0FUxcPTH
- 47krS25T/4rCnjdzr2g7YyuiCmrKHzVg==
-X-Received: by 2002:a17:906:d202:b0:a75:410c:ecb0 with SMTP id
- a640c23a62f3a-a75410cedd3mr116935066b.67.1719929436839; 
- Tue, 02 Jul 2024 07:10:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLAenNl69KM30pIiU0bvU7Uxc5sMqwnA8SXben1pdrd6dqMlEm4BtP+CiEeLN9C8wOaKLpBg==
-X-Received: by 2002:a17:906:d202:b0:a75:410c:ecb0 with SMTP id
- a640c23a62f3a-a75410cedd3mr116931466b.67.1719929436053; 
- Tue, 02 Jul 2024 07:10:36 -0700 (PDT)
+ bh=7pMoBjPNl8oUEg5zlwInizxqA4Nbo5A/7NGMCDnRaVI=;
+ b=mjXE2eB775RCvKYdGTAROxnpP5nkAgcj+ovMS3XGyjI7cyE9cX5bIwmfNAMZRt3u4H
+ pk9iSak5/eP+Ibpmku4EehH3WIO4xR0Sq5oLfpiA6EJX5UZbqKTrClUQCwUXEdpdcul3
+ j3vosJfutWIxKa6BFi5QhFmcHXPIDijhzxv37KzurjCdUipE8PmTe07gtdMP7stf7cc7
+ JH8e70W8P2OX6mpRQAIm2GSdhutuXjG4Gl8jd8NktVJHOaKnN8jpZC3qXrSCbGle2uez
+ k+AjkJiAjy/rrT8y6UcmvAqwY0imL90f7imBWpZOfJLP7FTMjuvm1YlPiPJQDBCUTezm
+ gEUw==
+X-Gm-Message-State: AOJu0YyBOb9CI7jIqxdSimUi+5mhXUH2kfGbGgaslnqYeMyfeNjScv7q
+ KDHOFayKKpxnnzztFQT0Ache+3SzUgnM8B/1rSYDyfxPf/o0q0/3bHds5dRdw3ozQzhMucloiPj
+ 7UjcHdPtwbWAP+xgD7a5Huh+43Wgzdx8tifzJolXhjDPRzJclrm5BL62aWH0OgSr/aIq+zqcnVb
+ t6yHFaqxQT6fvm3HJ3517oBdmUG81dig==
+X-Received: by 2002:a05:600c:4fc5:b0:425:73a8:2fa3 with SMTP id
+ 5b1f17b1804b1-4257a04fe4emr52593235e9.30.1719929497638; 
+ Tue, 02 Jul 2024 07:11:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGbppqAY4yFRHz3xxAanAETUBxCuOyKH406RquA2nRbW4xIm506aXVMuxJMxO5n6hXq/PS8jg==
+X-Received: by 2002:a05:600c:4fc5:b0:425:73a8:2fa3 with SMTP id
+ 5b1f17b1804b1-4257a04fe4emr52592985e9.30.1719929497082; 
+ Tue, 02 Jul 2024 07:11:37 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72ab06511fsm426469166b.102.2024.07.02.07.10.34
+ ffacd0b85a97d-3675a0cd66fsm13543766f8f.8.2024.07.02.07.11.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:10:35 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:10:33 -0400
+ Tue, 02 Jul 2024 07:11:36 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:11:33 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sunil V L <sunilvl@ventanamicro.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 69/91] tests/qtest/bios-tables-test.c: Set "arch" for x86 tests
-Message-ID: <7ec0c03b4d8744f0e06800f2e9b1254d0b578830.1719929191.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 89/91] pcie_sriov: Remove num_vfs from PCIESriovPF
+Message-ID: <09379acf8955487df1e48a1ab37ae774d9e791c5.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -85,7 +85,6 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,511 +101,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-To search for expected AML files under ${arch}/${machine} path, set this
-field for X86 related test cases.
+num_vfs is not migrated so use PCI_SRIOV_CTRL_VFE and PCI_SRIOV_NUM_VF
+instead.
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240625150839.1358279-9-sunilvl@ventanamicro.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-reuse-v10-8-7ca0b8ed3d9f@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test.c | 77 ++++++++++++++++++++++++++++------
- 1 file changed, 64 insertions(+), 13 deletions(-)
+ include/hw/pci/pcie_sriov.h |  1 -
+ hw/pci/pcie_sriov.c         | 28 ++++++++++++++++++++--------
+ hw/pci/trace-events         |  2 +-
+ 3 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 007c281c9a..f4c4704bab 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -933,6 +933,7 @@ static void test_acpi_piix4_tcg(void)
-      * This is to make guest actually run.
-      */
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
-     test_acpi_one(NULL, &data);
-@@ -944,6 +945,7 @@ static void test_acpi_piix4_tcg_bridge(void)
-     test_data data = {};
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index 70649236c1..5148c5b77d 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -16,7 +16,6 @@
+ #include "hw/pci/pci.h"
  
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".bridge";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
-@@ -981,6 +983,7 @@ static void test_acpi_piix4_no_root_hotplug(void)
-     test_data data = {};
+ typedef struct PCIESriovPF {
+-    uint16_t num_vfs;   /* Number of virtual functions created */
+     uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
+     PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
+ } PCIESriovPF;
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 9bd7f8acc3..fae6acea4a 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -57,7 +57,6 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+     pcie_add_capability(dev, PCI_EXT_CAP_ID_SRIOV, 1,
+                         offset, PCI_EXT_CAP_SRIOV_SIZEOF);
+     dev->exp.sriov_cap = offset;
+-    dev->exp.sriov_pf.num_vfs = 0;
+     dev->exp.sriov_pf.vf = NULL;
  
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".roothp";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
-@@ -997,6 +1000,7 @@ static void test_acpi_piix4_no_bridge_hotplug(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".hpbridge";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
-@@ -1013,6 +1017,7 @@ static void test_acpi_piix4_no_acpi_pci_hotplug(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".hpbrroot";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
-@@ -1034,6 +1039,7 @@ static void test_acpi_q35_tcg(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch = "x86";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
-     test_acpi_one(NULL, &data);
-@@ -1049,6 +1055,7 @@ static void test_acpi_q35_kvm_type4_count(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".type4-count",
-         .required_struct_types = base_required_struct_types,
-         .required_struct_types_len = ARRAY_SIZE(base_required_struct_types),
-@@ -1065,6 +1072,7 @@ static void test_acpi_q35_kvm_core_count(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".core-count",
-         .required_struct_types = base_required_struct_types,
-         .required_struct_types_len = ARRAY_SIZE(base_required_struct_types),
-@@ -1082,6 +1090,7 @@ static void test_acpi_q35_kvm_core_count2(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".core-count2",
-         .required_struct_types = base_required_struct_types,
-         .required_struct_types_len = ARRAY_SIZE(base_required_struct_types),
-@@ -1099,6 +1108,7 @@ static void test_acpi_q35_kvm_thread_count(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".thread-count",
-         .required_struct_types = base_required_struct_types,
-         .required_struct_types_len = ARRAY_SIZE(base_required_struct_types),
-@@ -1116,6 +1126,7 @@ static void test_acpi_q35_kvm_thread_count2(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".thread-count2",
-         .required_struct_types = base_required_struct_types,
-         .required_struct_types_len = ARRAY_SIZE(base_required_struct_types),
-@@ -1134,6 +1145,7 @@ static void test_acpi_q35_tcg_bridge(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".bridge";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
-@@ -1148,6 +1160,7 @@ static void test_acpi_q35_tcg_no_acpi_hotplug(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".noacpihp";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
-@@ -1176,6 +1189,7 @@ static void test_acpi_q35_multif_bridge(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".multi-bridge",
-     };
-     test_vm_prepare("-S"
-@@ -1225,6 +1239,7 @@ static void test_acpi_q35_tcg_mmio64(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".mmio64",
-         .tcg_only = true,
-         .required_struct_types = base_required_struct_types,
-@@ -1245,6 +1260,7 @@ static void test_acpi_piix4_tcg_cphp(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".cphp";
-     test_acpi_one("-smp 2,cores=3,sockets=2,maxcpus=6"
-                   " -object memory-backend-ram,id=ram0,size=64M"
-@@ -1260,6 +1276,7 @@ static void test_acpi_q35_tcg_cphp(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".cphp";
-     test_acpi_one(" -smp 2,cores=3,sockets=2,maxcpus=6"
-                   " -object memory-backend-ram,id=ram0,size=64M"
-@@ -1279,6 +1296,7 @@ static void test_acpi_q35_tcg_ipmi(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".ipmibt";
-     data.required_struct_types = ipmi_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(ipmi_required_struct_types);
-@@ -1293,6 +1311,7 @@ static void test_acpi_q35_tcg_smbus_ipmi(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".ipmismbus";
-     data.required_struct_types = ipmi_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(ipmi_required_struct_types);
-@@ -1310,6 +1329,7 @@ static void test_acpi_piix4_tcg_ipmi(void)
-      * This is to make guest actually run.
-      */
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".ipmikcs";
-     data.required_struct_types = ipmi_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(ipmi_required_struct_types);
-@@ -1324,6 +1344,7 @@ static void test_acpi_q35_tcg_memhp(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".memhp";
-     test_acpi_one(" -m 128,slots=3,maxmem=1G"
-                   " -object memory-backend-ram,id=ram0,size=64M"
-@@ -1339,6 +1360,7 @@ static void test_acpi_piix4_tcg_memhp(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".memhp";
-     test_acpi_one(" -m 128,slots=3,maxmem=1G"
-                   " -object memory-backend-ram,id=ram0,size=64M"
-@@ -1354,6 +1376,7 @@ static void test_acpi_piix4_tcg_nosmm(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".nosmm";
-     test_acpi_one("-machine smm=off", &data);
-     free_test_data(&data);
-@@ -1364,6 +1387,7 @@ static void test_acpi_piix4_tcg_smm_compat(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".smm-compat";
-     test_acpi_one("-global PIIX4_PM.smm-compat=on", &data);
-     free_test_data(&data);
-@@ -1374,6 +1398,7 @@ static void test_acpi_piix4_tcg_smm_compat_nosmm(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".smm-compat-nosmm";
-     test_acpi_one("-global PIIX4_PM.smm-compat=on -machine smm=off", &data);
-     free_test_data(&data);
-@@ -1384,6 +1409,7 @@ static void test_acpi_piix4_tcg_nohpet(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.machine_param = ",hpet=off";
-     data.variant = ".nohpet";
-     test_acpi_one(NULL, &data);
-@@ -1395,6 +1421,7 @@ static void test_acpi_q35_tcg_numamem(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".numamem";
-     test_acpi_one(" -object memory-backend-ram,id=ram0,size=128M"
-                   " -numa node -numa node,memdev=ram0", &data);
-@@ -1406,6 +1433,7 @@ static void test_acpi_q35_kvm_xapic(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".xapic";
-     test_acpi_one(" -object memory-backend-ram,id=ram0,size=128M"
-                   " -numa node -numa node,memdev=ram0"
-@@ -1418,6 +1446,7 @@ static void test_acpi_q35_tcg_nosmm(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".nosmm";
-     test_acpi_one("-machine smm=off", &data);
-     free_test_data(&data);
-@@ -1428,6 +1457,7 @@ static void test_acpi_q35_tcg_smm_compat(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".smm-compat";
-     test_acpi_one("-global ICH9-LPC.smm-compat=on", &data);
-     free_test_data(&data);
-@@ -1438,6 +1468,7 @@ static void test_acpi_q35_tcg_smm_compat_nosmm(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".smm-compat-nosmm";
-     test_acpi_one("-global ICH9-LPC.smm-compat=on -machine smm=off", &data);
-     free_test_data(&data);
-@@ -1448,6 +1479,7 @@ static void test_acpi_q35_tcg_nohpet(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.machine_param = ",hpet=off";
-     data.variant = ".nohpet";
-     test_acpi_one(NULL, &data);
-@@ -1459,6 +1491,7 @@ static void test_acpi_q35_kvm_dmar(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".dmar";
-     test_acpi_one("-machine kernel-irqchip=split -accel kvm"
-                   " -device intel-iommu,intremap=on,device-iotlb=on", &data);
-@@ -1470,6 +1503,7 @@ static void test_acpi_q35_tcg_ivrs(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86",
-     data.variant = ".ivrs";
-     data.tcg_only = true,
-     test_acpi_one(" -device amd-iommu", &data);
-@@ -1481,6 +1515,7 @@ static void test_acpi_piix4_tcg_numamem(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.variant = ".numamem";
-     test_acpi_one(" -object memory-backend-ram,id=ram0,size=128M"
-                   " -numa node -numa node,memdev=ram0", &data);
-@@ -1489,8 +1524,9 @@ static void test_acpi_piix4_tcg_numamem(void)
- 
- uint64_t tpm_tis_base_addr;
- 
--static void test_acpi_tcg_tpm(const char *machine, const char *tpm_if,
--                              uint64_t base, enum TPMVersion tpm_version)
-+static void test_acpi_tcg_tpm(const char *machine, const char *arch,
-+                              const char *tpm_if, uint64_t base,
-+                              enum TPMVersion tpm_version)
- {
-     gchar *tmp_dir_name = g_strdup_printf("qemu-test_acpi_%s_tcg_%s.XXXXXX",
-                                           machine, tpm_if);
-@@ -1517,6 +1553,7 @@ static void test_acpi_tcg_tpm(const char *machine, const char *tpm_if,
-     tpm_emu_test_wait_cond(&test);
- 
-     data.machine = machine;
-+    data.arch = arch;
-     data.variant = variant;
- 
-     args = g_strdup_printf(
-@@ -1540,19 +1577,20 @@ static void test_acpi_tcg_tpm(const char *machine, const char *tpm_if,
- 
- static void test_acpi_q35_tcg_tpm2_tis(void)
- {
--    test_acpi_tcg_tpm("q35", "tis", 0xFED40000, TPM_VERSION_2_0);
-+    test_acpi_tcg_tpm("q35", "x86", "tis", 0xFED40000, TPM_VERSION_2_0);
+     pci_set_word(cfg + PCI_SRIOV_VF_OFFSET, vf_offset);
+@@ -186,6 +185,12 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
+     }
  }
  
- static void test_acpi_q35_tcg_tpm12_tis(void)
++static void clear_ctrl_vfe(PCIDevice *dev)
++{
++    uint8_t *ctrl = dev->config + dev->exp.sriov_cap + PCI_SRIOV_CTRL;
++    pci_set_word(ctrl, pci_get_word(ctrl) & ~PCI_SRIOV_CTRL_VFE);
++}
++
+ static void register_vfs(PCIDevice *dev)
  {
--    test_acpi_tcg_tpm("q35", "tis", 0xFED40000, TPM_VERSION_1_2);
-+    test_acpi_tcg_tpm("q35", "x86", "tis", 0xFED40000, TPM_VERSION_1_2);
+     uint16_t num_vfs;
+@@ -195,6 +200,7 @@ static void register_vfs(PCIDevice *dev)
+     assert(sriov_cap > 0);
+     num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+     if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
++        clear_ctrl_vfe(dev);
+         return;
+     }
+ 
+@@ -203,20 +209,18 @@ static void register_vfs(PCIDevice *dev)
+     for (i = 0; i < num_vfs; i++) {
+         pci_set_enabled(dev->exp.sriov_pf.vf[i], true);
+     }
+-    dev->exp.sriov_pf.num_vfs = num_vfs;
  }
  
--static void test_acpi_tcg_dimm_pxm(const char *machine)
-+static void test_acpi_tcg_dimm_pxm(const char *machine, const char *arch)
+ static void unregister_vfs(PCIDevice *dev)
  {
-     test_data data = {};
+-    uint16_t num_vfs = dev->exp.sriov_pf.num_vfs;
+     uint16_t i;
++    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
  
-     data.machine = machine;
-+    data.arch    = arch;
-     data.variant = ".dimmpxm";
-     test_acpi_one(" -machine nvdimm=on,nvdimm-persistence=cpu"
-                   " -smp 4,sockets=4"
-@@ -1579,12 +1617,12 @@ static void test_acpi_tcg_dimm_pxm(const char *machine)
- 
- static void test_acpi_q35_tcg_dimm_pxm(void)
- {
--    test_acpi_tcg_dimm_pxm(MACHINE_Q35);
-+    test_acpi_tcg_dimm_pxm(MACHINE_Q35, "x86");
+     trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
+-                               PCI_FUNC(dev->devfn), num_vfs);
+-    for (i = 0; i < num_vfs; i++) {
++                               PCI_FUNC(dev->devfn));
++    for (i = 0; i < pci_get_word(cfg + PCI_SRIOV_TOTAL_VF); i++) {
+         pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
+     }
+-    dev->exp.sriov_pf.num_vfs = 0;
  }
  
- static void test_acpi_piix4_tcg_dimm_pxm(void)
- {
--    test_acpi_tcg_dimm_pxm(MACHINE_PC);
-+    test_acpi_tcg_dimm_pxm(MACHINE_PC, "x86");
+ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+@@ -242,6 +246,9 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+         } else {
+             unregister_vfs(dev);
+         }
++    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
++        clear_ctrl_vfe(dev);
++        unregister_vfs(dev);
+     }
  }
  
- static void test_acpi_aarch64_virt_tcg_memhp(void)
-@@ -1621,6 +1659,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
- static void test_acpi_microvm_prepare(test_data *data)
+@@ -304,7 +311,7 @@ PCIDevice *pcie_sriov_get_pf(PCIDevice *dev)
+ PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n)
  {
-     data->machine = "microvm";
-+    data->arch = "x86";
-     data->required_struct_types = NULL; /* no smbios */
-     data->required_struct_types_len = 0;
-     data->blkdev = "virtio-blk-device";
-@@ -1737,11 +1776,12 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
-     free_test_data(&data);
+     assert(!pci_is_vf(dev));
+-    if (n < dev->exp.sriov_pf.num_vfs) {
++    if (n < pcie_sriov_num_vfs(dev)) {
+         return dev->exp.sriov_pf.vf[n];
+     }
+     return NULL;
+@@ -312,5 +319,10 @@ PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n)
+ 
+ uint16_t pcie_sriov_num_vfs(PCIDevice *dev)
+ {
+-    return dev->exp.sriov_pf.num_vfs;
++    uint16_t sriov_cap = dev->exp.sriov_cap;
++    uint8_t *cfg = dev->config + sriov_cap;
++
++    return sriov_cap &&
++           (pci_get_word(cfg + PCI_SRIOV_CTRL) & PCI_SRIOV_CTRL_VFE) ?
++           pci_get_word(cfg + PCI_SRIOV_NUM_VF) : 0;
  }
+diff --git a/hw/pci/trace-events b/hw/pci/trace-events
+index 19643aa8c6..e98f575a9d 100644
+--- a/hw/pci/trace-events
++++ b/hw/pci/trace-events
+@@ -14,7 +14,7 @@ msix_write_config(char *name, bool enabled, bool masked) "dev %s enabled %d mask
  
--static void test_acpi_tcg_acpi_hmat(const char *machine)
-+static void test_acpi_tcg_acpi_hmat(const char *machine, const char *arch)
- {
-     test_data data = {};
+ # hw/pci/pcie_sriov.c
+ sriov_register_vfs(const char *name, int slot, int function, int num_vfs) "%s %02x:%x: creating %d vf devs"
+-sriov_unregister_vfs(const char *name, int slot, int function, int num_vfs) "%s %02x:%x: Unregistering %d vf devs"
++sriov_unregister_vfs(const char *name, int slot, int function) "%s %02x:%x: Unregistering vf devs"
+ sriov_config_write(const char *name, int slot, int fun, uint32_t offset, uint32_t val, uint32_t len) "%s %02x:%x: sriov offset 0x%x val 0x%x len %d"
  
-     data.machine = machine;
-+    data.arch    = arch;
-     data.variant = ".acpihmat";
-     test_acpi_one(" -machine hmat=on"
-                   " -smp 2,sockets=2"
-@@ -1770,12 +1810,12 @@ static void test_acpi_tcg_acpi_hmat(const char *machine)
- 
- static void test_acpi_q35_tcg_acpi_hmat(void)
- {
--    test_acpi_tcg_acpi_hmat(MACHINE_Q35);
-+    test_acpi_tcg_acpi_hmat(MACHINE_Q35, "x86");
- }
- 
- static void test_acpi_piix4_tcg_acpi_hmat(void)
- {
--    test_acpi_tcg_acpi_hmat(MACHINE_PC);
-+    test_acpi_tcg_acpi_hmat(MACHINE_PC, "x86");
- }
- 
- static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
-@@ -1841,6 +1881,7 @@ static void test_acpi_q35_tcg_acpi_hmat_noinitiator(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86";
-     data.variant = ".acpihmat-noinitiator";
-     test_acpi_one(" -machine hmat=on"
-                   " -smp 4,sockets=2"
-@@ -1884,13 +1925,14 @@ static void test_acpi_q35_tcg_acpi_hmat_noinitiator(void)
- }
- 
- #ifdef CONFIG_POSIX
--static void test_acpi_erst(const char *machine)
-+static void test_acpi_erst(const char *machine, const char *arch)
- {
-     gchar *tmp_path = g_dir_make_tmp("qemu-test-erst.XXXXXX", NULL);
-     gchar *params;
-     test_data data = {};
- 
-     data.machine = machine;
-+    data.arch    = arch;
-     data.variant = ".acpierst";
-     params = g_strdup_printf(
-         " -object memory-backend-file,id=erstnvram,"
-@@ -1905,12 +1947,12 @@ static void test_acpi_erst(const char *machine)
- 
- static void test_acpi_piix4_acpi_erst(void)
- {
--    test_acpi_erst(MACHINE_PC);
-+    test_acpi_erst(MACHINE_PC, "x86");
- }
- 
- static void test_acpi_q35_acpi_erst(void)
- {
--    test_acpi_erst(MACHINE_Q35);
-+    test_acpi_erst(MACHINE_Q35, "x86");
- }
- 
- static void test_acpi_microvm_acpi_erst(void)
-@@ -1978,6 +2020,7 @@ static void test_acpi_q35_viot(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".viot",
-     };
- 
-@@ -2002,6 +2045,7 @@ static void test_acpi_q35_cxl(void)
- 
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".cxl",
-     };
-     /*
-@@ -2067,6 +2111,7 @@ static void test_acpi_q35_slic(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".slic",
-     };
- 
-@@ -2081,6 +2126,7 @@ static void test_acpi_q35_applesmc(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".applesmc",
-     };
- 
-@@ -2094,6 +2140,7 @@ static void test_acpi_q35_pvpanic_isa(void)
- {
-     test_data data = {
-         .machine = MACHINE_Q35,
-+        .arch    = "x86",
-         .variant = ".pvpanic-isa",
-     };
- 
-@@ -2106,6 +2153,7 @@ static void test_acpi_pc_smbios_options(void)
-     uint8_t req_type11[] = { 11 };
-     test_data data = {
-         .machine = MACHINE_PC,
-+        .arch    = "x86",
-         .variant = ".pc_smbios_options",
-         .required_struct_types = req_type11,
-         .required_struct_types_len = ARRAY_SIZE(req_type11),
-@@ -2120,6 +2168,7 @@ static void test_acpi_pc_smbios_blob(void)
-     uint8_t req_type11[] = { 11 };
-     test_data data = {
-         .machine = MACHINE_PC,
-+        .arch    = "x86",
-         .variant = ".pc_smbios_blob",
-         .required_struct_types = req_type11,
-         .required_struct_types_len = ARRAY_SIZE(req_type11),
-@@ -2169,6 +2218,7 @@ static void test_acpi_piix4_oem_fields(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_PC;
-+    data.arch    = "x86";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
- 
-@@ -2187,6 +2237,7 @@ static void test_acpi_q35_oem_fields(void)
-     test_data data = {};
- 
-     data.machine = MACHINE_Q35;
-+    data.arch    = "x86";
-     data.required_struct_types = base_required_struct_types;
-     data.required_struct_types_len = ARRAY_SIZE(base_required_struct_types);
- 
+ # pcie.c
 -- 
 MST
 
