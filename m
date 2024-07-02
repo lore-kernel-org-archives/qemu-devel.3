@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A848C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:14:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F293C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:14:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeBH-0002qg-Bv; Tue, 02 Jul 2024 10:08:27 -0400
+	id 1sOeES-0007d0-Mu; Tue, 02 Jul 2024 10:11:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeB5-0002dQ-0B
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:08:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeEN-0006pG-Eo
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeB3-00085d-Az
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:08:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeEL-0000kM-Dz
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929292;
+ s=mimecast20190719; t=1719929496;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=FMOgEcAe53x2nl/kUwLBbhwXiRFlv4+KNdbX+UZGPhI=;
- b=Rv+Yi4guUjGceMuBraNPFZxPW0xCKSrR1m9N5v7JH82p7Z5GBiXe5GiG02qndCPXB/qIns
- XhY7IgIWnbEA3XnabBHzIFyQYsGKLiXE4DPGhXHufzFk3CakJFhe307D49oK3i35DVX+ve
- kNearytWq9bGZE78k79Iur0nkBI0cAc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fFIfkLYWXfsdkRs/ADDmSifhmh+YyxsrJ8fplItaj14=;
+ b=Z38KRAQuQQPMCPzvi8rP9btZC5VljfTUepDSetgo7g1zXdsk8gFJ7oizNYYgZFZ0YhmvRJ
+ Swr4KEpmBqOzbyl7qEF21jiNfGW1SgHIS2w8x8OCgHkHzrD82i7sknqmp3d+PoPtc8oTOS
+ xSXlOINoRSh3ZR0LC+PxiIMW9PFp0cM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-96-ugcoxOOFPAijp1Q2hDod_A-1; Tue, 02 Jul 2024 10:08:09 -0400
-X-MC-Unique: ugcoxOOFPAijp1Q2hDod_A-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-42566e8a9efso39079775e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:08:09 -0700 (PDT)
+ us-mta-558-mmDdIWY6ME6bo80ERQjblg-1; Tue, 02 Jul 2024 10:11:35 -0400
+X-MC-Unique: mmDdIWY6ME6bo80ERQjblg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4257a75193aso19249435e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929287; x=1720534087;
+ d=1e100.net; s=20230601; t=1719929494; x=1720534294;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FMOgEcAe53x2nl/kUwLBbhwXiRFlv4+KNdbX+UZGPhI=;
- b=v3LWgjGIagGhXXSi9zRzEjO4TVC8dDsgtKdwwOcHTHw6aTgXs2SBFIAALjCHSC1Vqe
- ouCwW5uYcQrdI7slzSNdH2qRV5z5286jkXQbY8lf6MCKmiuyk8nv8SoAEQZncAyQxLH5
- +dPLPKhPzcI8cdJydccG4Nwl8CUpSnVjkWc3gPIdSCRKExSAFSzURRo0dsFQlUZVoU90
- 6Fax30qGAcBu4xaCffW3plfzkqDT4htgY9i0WiKJIZa2yyrfsIpiIU8bBAEwQzG5rdIX
- fR+w5VUIyGrHpGQuid2XHXwtuqMOzijDG7GWarpqxoyZjC0xAor4XetUWh9lIpUMh3KM
- 7HXw==
-X-Gm-Message-State: AOJu0YymsJ9RKWpdoumwBb68JAnlvmNyvi+ON0zeqkM6BLhaqrUKLKbF
- HcbEMDziBbKEyH2N54Zrgr1Lyn851zdIUAd+4x+Y2u5nAkyVbHaN+qD7vpV9HaSE63bUsfb5ue1
- bFhoo8LTsUr0KPachXaEAlkdy3jzRHGyfzbvR3VUVfR1KTj2lskRrL/v2nr6aQaFCstzYsuh4DV
- 7QThVcHH7L7tpvoA/ymjE4ViuNflApng==
-X-Received: by 2002:a05:600c:47c7:b0:425:5f73:e2e1 with SMTP id
- 5b1f17b1804b1-4257a00c088mr75859975e9.22.1719929287443; 
- Tue, 02 Jul 2024 07:08:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEpAqU6sWFMZZDpcaKWJOIOFQLed38qFVLFC0AWcnAIyzxV8Wppjj9zWHXMXjIzh0vSbcs0KA==
-X-Received: by 2002:a05:600c:47c7:b0:425:5f73:e2e1 with SMTP id
- 5b1f17b1804b1-4257a00c088mr75859635e9.22.1719929286729; 
- Tue, 02 Jul 2024 07:08:06 -0700 (PDT)
+ bh=fFIfkLYWXfsdkRs/ADDmSifhmh+YyxsrJ8fplItaj14=;
+ b=WbaSI7y3XL9v//fVnYDXeXiv/jsrkH45v8A32j5EXFeNRAiLnj/GBGTM2xHgsL7oPg
+ thrDFb1d/5ZdMBnFguRUQcQIT9EeTo2PmZbtycPrLP0dNA1rV/vKKV3qWBjCqB8YEzZV
+ O3tvaAscxv9tHcWNpbSSUlMKhebQ87Zx/A5Nqt/EbMkWr7gx1tvXg1S2IglYx70PZgfS
+ iwGb8fyNYzOyGszfUB11lAb41tL5CQLmTh2KiL7jpD7o0UJRHhKQ0teuBOzx46S992J+
+ 9XuDQkKoMHdPFMoFKv2kHZ9h+mit3VsTL6Bf17tUy9D9wJUJSjUbLSrI2rl+7CQXp6cM
+ f75Q==
+X-Gm-Message-State: AOJu0YzrfbJy4KWDRauG/PQEq5ZkwWnq1aCYg7Stkj+hRiUq+Lg2ZWk8
+ 0zQADgWyeWF8+gOaRDwSMAfh0mgUn9Ej53UX/ocNPUasj7xF3Rj1audxiobQkUSV+0gBEDaFVrG
+ ccha7IZhWk2yE7A2KqaVicaDnAH5ZmFzMTRI6QYoXPb/9PuvUwy7yc22uR0SaC5LABeTIcMSo7P
+ IwiDMtGJYKCEpBngJ5ooA5GSsw46RxQQ==
+X-Received: by 2002:a5d:56c5:0:b0:360:81f8:698 with SMTP id
+ ffacd0b85a97d-367757296demr5085099f8f.58.1719929494073; 
+ Tue, 02 Jul 2024 07:11:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHkigKak7HA1EhoF1ixzVyZ/5HuRrU8zK7z8MiVLW72Qh+BOcJh/KRn6KERZXUDa6vfCrLa2Q==
+X-Received: by 2002:a5d:56c5:0:b0:360:81f8:698 with SMTP id
+ ffacd0b85a97d-367757296demr5085078f8f.58.1719929493545; 
+ Tue, 02 Jul 2024 07:11:33 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af55aeasm196745725e9.17.2024.07.02.07.08.05
+ ffacd0b85a97d-3675a1030dfsm13289261f8f.100.2024.07.02.07.11.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:08:06 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:08:04 -0400
+ Tue, 02 Jul 2024 07:11:33 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:11:31 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL 22/91] hw/mem/cxl-type3: Refactor
- ct3_build_cdat_entries_for_mr to take mr size instead of mr as argument
-Message-ID: <69e4fb569dc1602bfeef5b8c58de5f40cd5d756e.1719929191.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL 88/91] pcie_sriov: Release VFs failed to realize
+Message-ID: <c23d95ba5faa243a89b65b1bcde2372cd26bdad4.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -103,95 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The function ct3_build_cdat_entries_for_mr only uses size of the passed
-memory region argument, refactor the function definition to make the passed
-arguments more specific.
+Release VFs failed to realize just as we do in unregister_vfs().
 
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-8-nifan.cxl@gmail.com>
+Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-reuse-v10-7-7ca0b8ed3d9f@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/mem/cxl_type3.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ hw/pci/pcie_sriov.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 06c6f9bb78..51be50ce87 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -44,7 +44,7 @@ enum {
- };
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index faadb0d2ea..9bd7f8acc3 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -99,6 +99,8 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+         vf->exp.sriov_vf.vf_number = i;
  
- static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
--                                          int dsmad_handle, MemoryRegion *mr,
-+                                          int dsmad_handle, uint64_t size,
-                                           bool is_pmem, uint64_t dpa_base)
- {
-     CDATDsmas *dsmas;
-@@ -63,7 +63,7 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
-         .DSMADhandle = dsmad_handle,
-         .flags = is_pmem ? CDAT_DSMAS_FLAG_NV : 0,
-         .DPA_base = dpa_base,
--        .DPA_length = memory_region_size(mr),
-+        .DPA_length = size,
-     };
- 
-     /* For now, no memory side cache, plausiblish numbers */
-@@ -132,7 +132,7 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
-          */
-         .EFI_memory_type_attr = is_pmem ? 2 : 1,
-         .DPA_offset = 0,
--        .DPA_length = memory_region_size(mr),
-+        .DPA_length = size,
-     };
- 
-     /* Header always at start of structure */
-@@ -149,6 +149,7 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-     g_autofree CDATSubHeader **table = NULL;
-     CXLType3Dev *ct3d = priv;
-     MemoryRegion *volatile_mr = NULL, *nonvolatile_mr = NULL;
-+    uint64_t vmr_size = 0, pmr_size = 0;
-     int dsmad_handle = 0;
-     int cur_ent = 0;
-     int len = 0;
-@@ -163,6 +164,7 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-             return -EINVAL;
+         if (!qdev_realize(&vf->qdev, bus, errp)) {
++            object_unparent(OBJECT(vf));
++            object_unref(vf);
+             unparent_vfs(dev, i);
+             return false;
          }
-         len += CT3_CDAT_NUM_ENTRIES;
-+        vmr_size = memory_region_size(volatile_mr);
-     }
- 
-     if (ct3d->hostpmem) {
-@@ -171,21 +173,22 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-             return -EINVAL;
-         }
-         len += CT3_CDAT_NUM_ENTRIES;
-+        pmr_size = memory_region_size(nonvolatile_mr);
-     }
- 
-     table = g_malloc0(len * sizeof(*table));
- 
-     /* Now fill them in */
-     if (volatile_mr) {
--        ct3_build_cdat_entries_for_mr(table, dsmad_handle++, volatile_mr,
-+        ct3_build_cdat_entries_for_mr(table, dsmad_handle++, vmr_size,
-                                       false, 0);
-         cur_ent = CT3_CDAT_NUM_ENTRIES;
-     }
- 
-     if (nonvolatile_mr) {
--        uint64_t base = volatile_mr ? memory_region_size(volatile_mr) : 0;
-+        uint64_t base = vmr_size;
-         ct3_build_cdat_entries_for_mr(&(table[cur_ent]), dsmad_handle++,
--                                      nonvolatile_mr, true, base);
-+                                      pmr_size, true, base);
-         cur_ent += CT3_CDAT_NUM_ENTRIES;
-     }
-     assert(len == cur_ent);
 -- 
 MST
 
