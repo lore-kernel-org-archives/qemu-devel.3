@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C043C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108CFC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:02:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOVeo-0007oj-L0; Tue, 02 Jul 2024 01:02:22 -0400
+	id 1sOVee-0007L7-1L; Tue, 02 Jul 2024 01:02:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVem-0007nU-QF
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:20 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVec-0007Ky-Qx
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:10 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVef-0007BS-Hm
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:20 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2ee77db6f97so1352011fa.2
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:02:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVeZ-0007An-7C
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:10 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-36733f09305so2030982f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719896531; x=1720501331; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719896524; x=1720501324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hGQns0yzqsl3OUGwx5bDl3r7+W830Rk2Y5bSGG1iekg=;
- b=ZC9GdKXbG1ugQYFhlxRs82lRfny7mkRcVDDDkaSjTUIgS9+FrliOaOT48Vth065fqt
- SKHcC4gQWjeZU4LaCOkkxN3YX0gKyrYAjfq2aBXjfgMbyMEArxjBgb+8yGdMtfV0jpHx
- VE2N3AEAwzUVOCGkzWsCQyzLhrW7ryz4myNCmMTI6Y12FlUG+m1jjjj53Lk+z7HtmiVF
- K+aqfWRDQmOEh45WaPPVYpftM1MHubpUPuBpoCwJrOyg5P/C02q/mobDV1kBCHmkJyPt
- 4rTlkerb5DysIg6QSKhEnysJt6tGipotzE9GPJByvTNV2xVXsMa+8cvwIU59Vc4LUnev
- NQog==
+ bh=ooE/IicDwUOJQeV5BOGGNPhIl62E0AuvSR43yUD94u4=;
+ b=eyq76TjSfzHDEJpnkvDgeCpF6bz/oUz7J7swcXmujcXj7EaAQyfSw33DIGN3z55W4X
+ e4VcaNGUzL27kX/BzOOgQ3nZGGbvN40vpItYehp6j81tN31WBTyJzTctVu79P72df5oG
+ PWhrlmzjKS5r9S8DEDUAKkYx8B4Y6hxYM9aC7ktooJ6mbOnLFx5RxUa9XBzebjOI5wS4
+ 7SmHR0TJ+QB2Rroj+imPrIDeq0DKrcxXULOiMJJ2GJWL2+Yq0pggwWoLXzVmqxrO2W9z
+ 7BM7Zj294pyVvYQNqrSPF8U+y74U/JYeV2QLXaWaIBSUEs0hjKOukLtejWnvfl/Z2yck
+ iVJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719896531; x=1720501331;
+ d=1e100.net; s=20230601; t=1719896524; x=1720501324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hGQns0yzqsl3OUGwx5bDl3r7+W830Rk2Y5bSGG1iekg=;
- b=ouRbJO71QWk4thHxq6h/NKTiYAzIZbSItzrVrt49C4/5hWc2cVO+dqGWS8P3r0/4cu
- ZTE8jk2RpJTa1by70DjTwqlOu1gLFke8SsJg0XJabFp6NeERFEAa8NrfWe2zqoM7CGc7
- 2wgsZcyjTNMeobzRF4V/L1NvuY8wyr8sOb+x+bfPzoKvQ4fY40PIqc5/3GB1Y6G046Cb
- So+bV0oSYaO+akpFkbv5HLn29DIGd6zYZxgkCWAJlsBJGji5WVXHhYkS5NTQ8KZYPMU3
- eRsayraVzatTkjAcFVMLFRIIavS2w3Ev2O1yGIa/8rd3M/2hg4FMESQnDrzrtFmWkq9a
- E9WA==
-X-Gm-Message-State: AOJu0YynvD6Hl843rpF0KXIC+DPaGc/OM79r9BIht1DlhAibcg36Mizl
- J0nWQjDvdE9MFlxG+l3at4LncOrFRYHsOETSdWT21SA48r6XfKCwtuMQkWz6r4qZRSUSVODc13u
- m
-X-Google-Smtp-Source: AGHT+IE3/CgdPUa5tlyLaXaphwECIZA3F7Tl2f2vXPOmK/shBhoi5FWNo0AHQFMpIP+5K2ThzLCFwQ==
-X-Received: by 2002:a2e:a418:0:b0:2ec:557b:f895 with SMTP id
- 38308e7fff4ca-2ee5e4b91cdmr61056101fa.31.1719896530395; 
- Mon, 01 Jul 2024 22:02:10 -0700 (PDT)
+ bh=ooE/IicDwUOJQeV5BOGGNPhIl62E0AuvSR43yUD94u4=;
+ b=X53MXFr97U0zKIVPSFB1Iv+a4PtDt5QkcWpvizX7iU0m4ALtbBrCf+sa0GuP5scAFN
+ QBbPq/76GF0sesX9gtExkVQV5YiIcpNmoFnXjBP8yHnp0F+b2q1ylDk9BL7vlo4/pGSn
+ 86H9m1af9hzsOfO5iyVUu3Mkha6mWJrlXr1jk2kpUX4KyCv4RsIM05i33g74bUJk1ZCe
+ q8uLOVLXq1z1ycuadnZZVYP6sQoMn9rtiuInjGaFAtYh/7Scf+XSdSaNyI75vTyzCZkC
+ Wv4QZ00pUdVRFCOkb37c8oEI/IUVK1zFMEZGsRMXwu+OSzA/nrw5l7+yTq1kgq9QFlan
+ zoEg==
+X-Gm-Message-State: AOJu0YxDE1p2dVMXyzgGE82Rk2c2C/nFHNz0jwJYRoKNeTXNAI9vCsjD
+ NcI66d3x1WyXSt1OzC0LFQcm9PnLbCTO3Hkk8IypuQLfbZUEMhQPTNAZAQrR3yqdPZUAIpEipWV
+ q
+X-Google-Smtp-Source: AGHT+IFIdxciNiLVVtLJMBG1WxGsFzCYFVeV2WcTn4TXMjhlMqGxm9+IDGnKKH/8SkXgGy6GSyLmLw==
+X-Received: by 2002:a5d:464c:0:b0:366:e8cf:ef6d with SMTP id
+ ffacd0b85a97d-3677571b792mr5814019f8f.55.1719896524464; 
+ Mon, 01 Jul 2024 22:02:04 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0cdc5csm11984562f8f.18.2024.07.01.22.02.09
+ ffacd0b85a97d-3675a0d9cbasm11977844f8f.38.2024.07.01.22.02.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 01 Jul 2024 22:02:09 -0700 (PDT)
+ Mon, 01 Jul 2024 22:02:04 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 09/22] include/hw: add macros for deprecation & removal of
- versioned machines
-Date: Tue,  2 Jul 2024 07:00:59 +0200
-Message-ID: <20240702050112.35907-10-philmd@linaro.org>
+Subject: [PULL 08/22] hw/i386: convert 'q35' machine definitions to use new
+ macros
+Date: Tue,  2 Jul 2024 07:00:58 +0200
+Message-ID: <20240702050112.35907-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240702050112.35907-1-philmd@linaro.org>
 References: <20240702050112.35907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,163 +98,480 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-Versioned machines live for a long time to provide back compat for
-incoming migration and restore of saved images. To guide users away from
-usage of old machines, however, we want to deprecate any older than 3
-years (equiv of 9 releases), and delete any older than 6 years (equiva
-of 18 releases).
+This changes the DEFINE_Q35_MACHINE macro to use the common
+helpers for constructing versioned symbol names and strings,
+bringing greater consistency across targets.
 
-To get a standardized deprecation message and avoid having to remember
-to manually add it after three years, this introduces two macros to be
-used by targets when defining versioned machines.
+The added benefit is that it avoids the need to repeat the
+version number thrice in three different formats in the calls
+to DEFINE_Q35_MACHINE.
 
-* MACHINE_VER_DEPRECATION(major, minor)
+Due to the odd-ball '4.0.1' machine type version, this
+commit introduces a DEFINE_Q35_BUGFIX helper, to allow
+defining of "bugfix" machine types which have a three
+digit version.
 
-  Automates the task of setting the 'deprecation_reason' field on the
-  machine, if-and-only-if the major/minor version is older than 3 years.
-
-* MACHINE_VER_DELETION(major, minor)
-
-  Simulates the deletion of by skipping registration of the QOM type
-  for a versioned machine, if-and-only-if the major/minor version is
-  older than 6 years.
-
-By using these two macros there is no longer any manual work required
-per-release to deprecate old machines. By preventing the use of machines
-that have reached their deletion date, it is also not necessary to
-manually delete machines per-release. Deletion can be batched up once a
-year or whenever makes most sense.
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240620165742.1711389-9-berrange@redhat.com>
+Message-ID: <20240620165742.1711389-8-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/boards.h | 96 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 96 insertions(+)
+ hw/i386/pc_q35.c | 215 ++++++++++++++++++++---------------------------
+ 1 file changed, 90 insertions(+), 125 deletions(-)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index d5ad712585..187ed76646 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -429,6 +429,7 @@ struct MachineState {
-  *          MachineClass *mc = MACHINE_CLASS(oc); \
-  *          MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
-  *          mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " Virtual Machine"; \
-+ *          MACHINE_VER_DEPRECATION(__VA_ARGS__); \
-  *          if (latest) { \
-  *              mc->alias = "virt"; \
-  *          } \
-@@ -440,6 +441,7 @@ struct MachineState {
-  *      }; \
-  *      static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
-  *      { \
-+ *          MACHINE_VER_DELETION(__VA_ARGS__); \
-  *          type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
-  *      } \
-  *      type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
-@@ -598,6 +600,100 @@ struct MachineState {
-                       _MACHINE_VER_SYM2) (sym, prefix, __VA_ARGS__)
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index bd7db4abac..71d3c6d122 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -331,17 +331,11 @@ static void pc_q35_init(MachineState *machine)
+     }
+ }
  
+-#define DEFINE_Q35_MACHINE(suffix, name, compatfn, optionfn) \
+-    static void pc_init_##suffix(MachineState *machine) \
+-    { \
+-        void (*compat)(MachineState *m) = (compatfn); \
+-        if (compat) { \
+-            compat(machine); \
+-        } \
+-        pc_q35_init(machine); \
+-    } \
+-    DEFINE_PC_MACHINE(suffix, name, pc_init_##suffix, optionfn)
++#define DEFINE_Q35_MACHINE(major, minor) \
++    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, major, minor);
  
-+/*
-+ * How many years/major releases for each phase
-+ * of the life cycle. Assumes use of versioning
-+ * scheme where major is bumped each year
-+ */
-+#define MACHINE_VER_DELETION_MAJOR 6
-+#define MACHINE_VER_DEPRECATION_MAJOR 3
-+
-+/*
-+ * Expands to a static string containing a deprecation
-+ * message for a versioned machine type
-+ */
-+#define MACHINE_VER_DEPRECATION_MSG \
-+    "machines more than " stringify(MACHINE_VER_DEPRECATION_MAJOR) \
-+    " years old are subject to deletion after " \
-+    stringify(MACHINE_VER_DELETION_MAJOR) " years"
-+
-+#define _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor) \
-+    (((QEMU_VERSION_MAJOR - major) > cutoff) || \
-+     (((QEMU_VERSION_MAJOR - major) == cutoff) && \
-+      (QEMU_VERSION_MINOR - minor) >= 0))
-+
-+#define _MACHINE_VER_IS_EXPIRED2(cutoff, major, minor) \
-+    _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor)
-+#define _MACHINE_VER_IS_EXPIRED3(cutoff, major, minor, micro) \
-+    _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor)
-+#define _MACHINE_VER_IS_EXPIRED4(cutoff, major, minor, _unused, tag) \
-+    _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor)
-+#define _MACHINE_VER_IS_EXPIRED5(cutoff, major, minor, micro, _unused, tag)   \
-+    _MACHINE_VER_IS_EXPIRED_IMPL(cutoff, major, minor)
-+
-+#define _MACHINE_IS_EXPIRED(cutoff, ...) \
-+    _MACHINE_VER_PICK(__VA_ARGS__, \
-+                      _MACHINE_VER_IS_EXPIRED5, \
-+                      _MACHINE_VER_IS_EXPIRED4, \
-+                      _MACHINE_VER_IS_EXPIRED3, \
-+                      _MACHINE_VER_IS_EXPIRED2) (cutoff, __VA_ARGS__)
-+
-+/*
-+ * Evaluates true when a machine type with (major, minor)
-+ * or (major, minor, micro) version should be considered
-+ * deprecated based on the current versioned machine type
-+ * lifecycle rules
-+ */
-+#define MACHINE_VER_IS_DEPRECATED(...) \
-+    _MACHINE_IS_EXPIRED(MACHINE_VER_DEPRECATION_MAJOR, __VA_ARGS__)
-+
-+/*
-+ * Evaluates true when a machine type with (major, minor)
-+ * or (major, minor, micro) version should be considered
-+ * for deletion based on the current versioned machine type
-+ * lifecycle rules
-+ */
-+#define MACHINE_VER_SHOULD_DELETE(...) \
-+    _MACHINE_IS_EXPIRED(MACHINE_VER_DELETION_MAJOR, __VA_ARGS__)
-+
-+/*
-+ * Sets the deprecation reason for a versioned machine based
-+ * on its age
-+ *
-+ * This must be unconditionally used in the _class_init
-+ * function for all machine types which support versioning.
-+ *
-+ * Initially it will effectively be a no-op, but after a
-+ * suitable period of time has passed, it will set the
-+ * 'deprecation_reason' field on the machine, to warn users
-+ * about forthcoming removal.
-+ */
-+#define MACHINE_VER_DEPRECATION(...) \
-+    do { \
-+        if (MACHINE_VER_IS_DEPRECATED(__VA_ARGS__)) { \
-+            mc->deprecation_reason = MACHINE_VER_DEPRECATION_MSG; \
-+        } \
-+    } while (0)
-+
-+/*
-+ * Prevents registration of a versioned machined based on
-+ * its age
-+ *
-+ * This must be unconditionally used in the register
-+ * method for all machine types which support versioning.
-+ *
-+ * Inijtially it will effectively be a no-op, but after a
-+ * suitable period of time has passed, it will cause
-+ * execution of the method to return, avoiding registration
-+ * of the machine
-+ */
-+#define MACHINE_VER_DELETION(...) \
-+    do { \
-+        if (MACHINE_VER_SHOULD_DELETE(__VA_ARGS__)) { \
-+            return; \
-+        } \
-+    } while (0)
-+
- #define DEFINE_MACHINE(namestr, machine_initfn) \
-     static void machine_initfn##_class_init(ObjectClass *oc, void *data) \
-     { \
++#define DEFINE_Q35_MACHINE_BUGFIX(major, minor, micro) \
++    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, major, minor, micro);
+ 
+ static void pc_q35_machine_options(MachineClass *m)
+ {
+@@ -367,32 +361,30 @@ static void pc_q35_machine_options(MachineClass *m)
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
+ 
+-static void pc_q35_9_1_machine_options(MachineClass *m)
++static void pc_q35_machine_9_1_options(MachineClass *m)
+ {
+     pc_q35_machine_options(m);
+     m->alias = "q35";
+ }
+ 
+-DEFINE_Q35_MACHINE(v9_1, "pc-q35-9.1", NULL,
+-                   pc_q35_9_1_machine_options);
++DEFINE_Q35_MACHINE(9, 1);
+ 
+-static void pc_q35_9_0_machine_options(MachineClass *m)
++static void pc_q35_machine_9_0_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-    pc_q35_9_1_machine_options(m);
++    pc_q35_machine_9_1_options(m);
+     m->alias = NULL;
+     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
+     pcmc->isa_bios_alias = false;
+ }
+ 
+-DEFINE_Q35_MACHINE(v9_0, "pc-q35-9.0", NULL,
+-                   pc_q35_9_0_machine_options);
++DEFINE_Q35_MACHINE(9, 0);
+ 
+-static void pc_q35_8_2_machine_options(MachineClass *m)
++static void pc_q35_machine_8_2_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-    pc_q35_9_0_machine_options(m);
++    pc_q35_machine_9_0_options(m);
+     m->max_cpus = 1024;
+     compat_props_add(m->compat_props, hw_compat_8_2, hw_compat_8_2_len);
+     compat_props_add(m->compat_props, pc_compat_8_2, pc_compat_8_2_len);
+@@ -400,26 +392,24 @@ static void pc_q35_8_2_machine_options(MachineClass *m)
+     pcmc->default_smbios_ep_type = SMBIOS_ENTRY_POINT_TYPE_64;
+ }
+ 
+-DEFINE_Q35_MACHINE(v8_2, "pc-q35-8.2", NULL,
+-                   pc_q35_8_2_machine_options);
++DEFINE_Q35_MACHINE(8, 2);
+ 
+-static void pc_q35_8_1_machine_options(MachineClass *m)
++static void pc_q35_machine_8_1_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-    pc_q35_8_2_machine_options(m);
++    pc_q35_machine_8_2_options(m);
+     pcmc->broken_32bit_mem_addr_check = true;
+     compat_props_add(m->compat_props, hw_compat_8_1, hw_compat_8_1_len);
+     compat_props_add(m->compat_props, pc_compat_8_1, pc_compat_8_1_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v8_1, "pc-q35-8.1", NULL,
+-                   pc_q35_8_1_machine_options);
++DEFINE_Q35_MACHINE(8, 1);
+ 
+-static void pc_q35_8_0_machine_options(MachineClass *m)
++static void pc_q35_machine_8_0_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+ 
+-    pc_q35_8_1_machine_options(m);
++    pc_q35_machine_8_1_options(m);
+     compat_props_add(m->compat_props, hw_compat_8_0, hw_compat_8_0_len);
+     compat_props_add(m->compat_props, pc_compat_8_0, pc_compat_8_0_len);
+ 
+@@ -428,132 +418,120 @@ static void pc_q35_8_0_machine_options(MachineClass *m)
+     m->max_cpus = 288;
+ }
+ 
+-DEFINE_Q35_MACHINE(v8_0, "pc-q35-8.0", NULL,
+-                   pc_q35_8_0_machine_options);
++DEFINE_Q35_MACHINE(8, 0);
+ 
+-static void pc_q35_7_2_machine_options(MachineClass *m)
++static void pc_q35_machine_7_2_options(MachineClass *m)
+ {
+-    pc_q35_8_0_machine_options(m);
++    pc_q35_machine_8_0_options(m);
+     compat_props_add(m->compat_props, hw_compat_7_2, hw_compat_7_2_len);
+     compat_props_add(m->compat_props, pc_compat_7_2, pc_compat_7_2_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v7_2, "pc-q35-7.2", NULL,
+-                   pc_q35_7_2_machine_options);
++DEFINE_Q35_MACHINE(7, 2);
+ 
+-static void pc_q35_7_1_machine_options(MachineClass *m)
++static void pc_q35_machine_7_1_options(MachineClass *m)
+ {
+-    pc_q35_7_2_machine_options(m);
++    pc_q35_machine_7_2_options(m);
+     compat_props_add(m->compat_props, hw_compat_7_1, hw_compat_7_1_len);
+     compat_props_add(m->compat_props, pc_compat_7_1, pc_compat_7_1_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v7_1, "pc-q35-7.1", NULL,
+-                   pc_q35_7_1_machine_options);
++DEFINE_Q35_MACHINE(7, 1);
+ 
+-static void pc_q35_7_0_machine_options(MachineClass *m)
++static void pc_q35_machine_7_0_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-    pc_q35_7_1_machine_options(m);
++    pc_q35_machine_7_1_options(m);
+     pcmc->enforce_amd_1tb_hole = false;
+     compat_props_add(m->compat_props, hw_compat_7_0, hw_compat_7_0_len);
+     compat_props_add(m->compat_props, pc_compat_7_0, pc_compat_7_0_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v7_0, "pc-q35-7.0", NULL,
+-                   pc_q35_7_0_machine_options);
++DEFINE_Q35_MACHINE(7, 0);
+ 
+-static void pc_q35_6_2_machine_options(MachineClass *m)
++static void pc_q35_machine_6_2_options(MachineClass *m)
+ {
+-    pc_q35_7_0_machine_options(m);
++    pc_q35_machine_7_0_options(m);
+     compat_props_add(m->compat_props, hw_compat_6_2, hw_compat_6_2_len);
+     compat_props_add(m->compat_props, pc_compat_6_2, pc_compat_6_2_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v6_2, "pc-q35-6.2", NULL,
+-                   pc_q35_6_2_machine_options);
++DEFINE_Q35_MACHINE(6, 2);
+ 
+-static void pc_q35_6_1_machine_options(MachineClass *m)
++static void pc_q35_machine_6_1_options(MachineClass *m)
+ {
+-    pc_q35_6_2_machine_options(m);
++    pc_q35_machine_6_2_options(m);
+     compat_props_add(m->compat_props, hw_compat_6_1, hw_compat_6_1_len);
+     compat_props_add(m->compat_props, pc_compat_6_1, pc_compat_6_1_len);
+     m->smp_props.prefer_sockets = true;
+ }
+ 
+-DEFINE_Q35_MACHINE(v6_1, "pc-q35-6.1", NULL,
+-                   pc_q35_6_1_machine_options);
++DEFINE_Q35_MACHINE(6, 1);
+ 
+-static void pc_q35_6_0_machine_options(MachineClass *m)
++static void pc_q35_machine_6_0_options(MachineClass *m)
+ {
+-    pc_q35_6_1_machine_options(m);
++    pc_q35_machine_6_1_options(m);
+     compat_props_add(m->compat_props, hw_compat_6_0, hw_compat_6_0_len);
+     compat_props_add(m->compat_props, pc_compat_6_0, pc_compat_6_0_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v6_0, "pc-q35-6.0", NULL,
+-                   pc_q35_6_0_machine_options);
++DEFINE_Q35_MACHINE(6, 0);
+ 
+-static void pc_q35_5_2_machine_options(MachineClass *m)
++static void pc_q35_machine_5_2_options(MachineClass *m)
+ {
+-    pc_q35_6_0_machine_options(m);
++    pc_q35_machine_6_0_options(m);
+     compat_props_add(m->compat_props, hw_compat_5_2, hw_compat_5_2_len);
+     compat_props_add(m->compat_props, pc_compat_5_2, pc_compat_5_2_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v5_2, "pc-q35-5.2", NULL,
+-                   pc_q35_5_2_machine_options);
++DEFINE_Q35_MACHINE(5, 2);
+ 
+-static void pc_q35_5_1_machine_options(MachineClass *m)
++static void pc_q35_machine_5_1_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+ 
+-    pc_q35_5_2_machine_options(m);
++    pc_q35_machine_5_2_options(m);
+     compat_props_add(m->compat_props, hw_compat_5_1, hw_compat_5_1_len);
+     compat_props_add(m->compat_props, pc_compat_5_1, pc_compat_5_1_len);
+     pcmc->kvmclock_create_always = false;
+     pcmc->pci_root_uid = 1;
+ }
+ 
+-DEFINE_Q35_MACHINE(v5_1, "pc-q35-5.1", NULL,
+-                   pc_q35_5_1_machine_options);
++DEFINE_Q35_MACHINE(5, 1);
+ 
+-static void pc_q35_5_0_machine_options(MachineClass *m)
++static void pc_q35_machine_5_0_options(MachineClass *m)
+ {
+-    pc_q35_5_1_machine_options(m);
++    pc_q35_machine_5_1_options(m);
+     m->numa_mem_supported = true;
+     compat_props_add(m->compat_props, hw_compat_5_0, hw_compat_5_0_len);
+     compat_props_add(m->compat_props, pc_compat_5_0, pc_compat_5_0_len);
+     m->auto_enable_numa_with_memdev = false;
+ }
+ 
+-DEFINE_Q35_MACHINE(v5_0, "pc-q35-5.0", NULL,
+-                   pc_q35_5_0_machine_options);
++DEFINE_Q35_MACHINE(5, 0);
+ 
+-static void pc_q35_4_2_machine_options(MachineClass *m)
++static void pc_q35_machine_4_2_options(MachineClass *m)
+ {
+-    pc_q35_5_0_machine_options(m);
++    pc_q35_machine_5_0_options(m);
+     compat_props_add(m->compat_props, hw_compat_4_2, hw_compat_4_2_len);
+     compat_props_add(m->compat_props, pc_compat_4_2, pc_compat_4_2_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v4_2, "pc-q35-4.2", NULL,
+-                   pc_q35_4_2_machine_options);
++DEFINE_Q35_MACHINE(4, 2);
+ 
+-static void pc_q35_4_1_machine_options(MachineClass *m)
++static void pc_q35_machine_4_1_options(MachineClass *m)
+ {
+-    pc_q35_4_2_machine_options(m);
++    pc_q35_machine_4_2_options(m);
+     compat_props_add(m->compat_props, hw_compat_4_1, hw_compat_4_1_len);
+     compat_props_add(m->compat_props, pc_compat_4_1, pc_compat_4_1_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v4_1, "pc-q35-4.1", NULL,
+-                   pc_q35_4_1_machine_options);
++DEFINE_Q35_MACHINE(4, 1);
+ 
+-static void pc_q35_4_0_1_machine_options(MachineClass *m)
++static void pc_q35_machine_4_0_1_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-    pc_q35_4_1_machine_options(m);
++    pc_q35_machine_4_1_options(m);
+     pcmc->default_cpu_version = CPU_VERSION_LEGACY;
+     /*
+      * This is the default machine for the 4.0-stable branch. It is basically
+@@ -564,24 +542,22 @@ static void pc_q35_4_0_1_machine_options(MachineClass *m)
+     compat_props_add(m->compat_props, pc_compat_4_0, pc_compat_4_0_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v4_0_1, "pc-q35-4.0.1", NULL,
+-                   pc_q35_4_0_1_machine_options);
++DEFINE_Q35_MACHINE_BUGFIX(4, 0, 1);
+ 
+-static void pc_q35_4_0_machine_options(MachineClass *m)
++static void pc_q35_machine_4_0_options(MachineClass *m)
+ {
+-    pc_q35_4_0_1_machine_options(m);
++    pc_q35_machine_4_0_1_options(m);
+     m->default_kernel_irqchip_split = true;
+     /* Compat props are applied by the 4.0.1 machine */
+ }
+ 
+-DEFINE_Q35_MACHINE(v4_0, "pc-q35-4.0", NULL,
+-                   pc_q35_4_0_machine_options);
++DEFINE_Q35_MACHINE(4, 0);
+ 
+-static void pc_q35_3_1_machine_options(MachineClass *m)
++static void pc_q35_machine_3_1_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+ 
+-    pc_q35_4_0_machine_options(m);
++    pc_q35_machine_4_0_options(m);
+     m->default_kernel_irqchip_split = false;
+     m->smbus_no_migration_support = true;
+     pcmc->pvh_enabled = false;
+@@ -589,121 +565,110 @@ static void pc_q35_3_1_machine_options(MachineClass *m)
+     compat_props_add(m->compat_props, pc_compat_3_1, pc_compat_3_1_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v3_1, "pc-q35-3.1", NULL,
+-                   pc_q35_3_1_machine_options);
++DEFINE_Q35_MACHINE(3, 1);
+ 
+-static void pc_q35_3_0_machine_options(MachineClass *m)
++static void pc_q35_machine_3_0_options(MachineClass *m)
+ {
+-    pc_q35_3_1_machine_options(m);
++    pc_q35_machine_3_1_options(m);
+     compat_props_add(m->compat_props, hw_compat_3_0, hw_compat_3_0_len);
+     compat_props_add(m->compat_props, pc_compat_3_0, pc_compat_3_0_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v3_0, "pc-q35-3.0", NULL,
+-                    pc_q35_3_0_machine_options);
++DEFINE_Q35_MACHINE(3, 0);
+ 
+-static void pc_q35_2_12_machine_options(MachineClass *m)
++static void pc_q35_machine_2_12_options(MachineClass *m)
+ {
+-    pc_q35_3_0_machine_options(m);
++    pc_q35_machine_3_0_options(m);
+     compat_props_add(m->compat_props, hw_compat_2_12, hw_compat_2_12_len);
+     compat_props_add(m->compat_props, pc_compat_2_12, pc_compat_2_12_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v2_12, "pc-q35-2.12", NULL,
+-                   pc_q35_2_12_machine_options);
++DEFINE_Q35_MACHINE(2, 12);
+ 
+-static void pc_q35_2_11_machine_options(MachineClass *m)
++static void pc_q35_machine_2_11_options(MachineClass *m)
+ {
+-    pc_q35_2_12_machine_options(m);
++    pc_q35_machine_2_12_options(m);
+     m->default_nic = "e1000";
+     compat_props_add(m->compat_props, hw_compat_2_11, hw_compat_2_11_len);
+     compat_props_add(m->compat_props, pc_compat_2_11, pc_compat_2_11_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v2_11, "pc-q35-2.11", NULL,
+-                   pc_q35_2_11_machine_options);
++DEFINE_Q35_MACHINE(2, 11);
+ 
+-static void pc_q35_2_10_machine_options(MachineClass *m)
++static void pc_q35_machine_2_10_options(MachineClass *m)
+ {
+-    pc_q35_2_11_machine_options(m);
++    pc_q35_machine_2_11_options(m);
+     compat_props_add(m->compat_props, hw_compat_2_10, hw_compat_2_10_len);
+     compat_props_add(m->compat_props, pc_compat_2_10, pc_compat_2_10_len);
+     m->auto_enable_numa_with_memhp = false;
+ }
+ 
+-DEFINE_Q35_MACHINE(v2_10, "pc-q35-2.10", NULL,
+-                   pc_q35_2_10_machine_options);
++DEFINE_Q35_MACHINE(2, 10);
+ 
+-static void pc_q35_2_9_machine_options(MachineClass *m)
++static void pc_q35_machine_2_9_options(MachineClass *m)
+ {
+-    pc_q35_2_10_machine_options(m);
++    pc_q35_machine_2_10_options(m);
+     compat_props_add(m->compat_props, hw_compat_2_9, hw_compat_2_9_len);
+     compat_props_add(m->compat_props, pc_compat_2_9, pc_compat_2_9_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v2_9, "pc-q35-2.9", NULL,
+-                   pc_q35_2_9_machine_options);
++DEFINE_Q35_MACHINE(2, 9);
+ 
+-static void pc_q35_2_8_machine_options(MachineClass *m)
++static void pc_q35_machine_2_8_options(MachineClass *m)
+ {
+-    pc_q35_2_9_machine_options(m);
++    pc_q35_machine_2_9_options(m);
+     compat_props_add(m->compat_props, hw_compat_2_8, hw_compat_2_8_len);
+     compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v2_8, "pc-q35-2.8", NULL,
+-                   pc_q35_2_8_machine_options);
++DEFINE_Q35_MACHINE(2, 8);
+ 
+-static void pc_q35_2_7_machine_options(MachineClass *m)
++static void pc_q35_machine_2_7_options(MachineClass *m)
+ {
+-    pc_q35_2_8_machine_options(m);
++    pc_q35_machine_2_8_options(m);
+     m->max_cpus = 255;
+     compat_props_add(m->compat_props, hw_compat_2_7, hw_compat_2_7_len);
+     compat_props_add(m->compat_props, pc_compat_2_7, pc_compat_2_7_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v2_7, "pc-q35-2.7", NULL,
+-                   pc_q35_2_7_machine_options);
++DEFINE_Q35_MACHINE(2, 7);
+ 
+-static void pc_q35_2_6_machine_options(MachineClass *m)
++static void pc_q35_machine_2_6_options(MachineClass *m)
+ {
+     X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+ 
+-    pc_q35_2_7_machine_options(m);
++    pc_q35_machine_2_7_options(m);
+     pcmc->legacy_cpu_hotplug = true;
+     x86mc->fwcfg_dma_enabled = false;
+     compat_props_add(m->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+     compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v2_6, "pc-q35-2.6", NULL,
+-                   pc_q35_2_6_machine_options);
++DEFINE_Q35_MACHINE(2, 6);
+ 
+-static void pc_q35_2_5_machine_options(MachineClass *m)
++static void pc_q35_machine_2_5_options(MachineClass *m)
+ {
+     X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+ 
+-    pc_q35_2_6_machine_options(m);
++    pc_q35_machine_2_6_options(m);
+     x86mc->save_tsc_khz = false;
+     m->legacy_fw_cfg_order = 1;
+     compat_props_add(m->compat_props, hw_compat_2_5, hw_compat_2_5_len);
+     compat_props_add(m->compat_props, pc_compat_2_5, pc_compat_2_5_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v2_5, "pc-q35-2.5", NULL,
+-                   pc_q35_2_5_machine_options);
++DEFINE_Q35_MACHINE(2, 5);
+ 
+-static void pc_q35_2_4_machine_options(MachineClass *m)
++static void pc_q35_machine_2_4_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+ 
+-    pc_q35_2_5_machine_options(m);
++    pc_q35_machine_2_5_options(m);
+     m->hw_version = "2.4.0";
+     pcmc->broken_reserved_end = true;
+     compat_props_add(m->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+     compat_props_add(m->compat_props, pc_compat_2_4, pc_compat_2_4_len);
+ }
+ 
+-DEFINE_Q35_MACHINE(v2_4, "pc-q35-2.4", NULL,
+-                   pc_q35_2_4_machine_options);
++DEFINE_Q35_MACHINE(2, 4);
 -- 
 2.41.0
 
