@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6302C30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A848C3064D
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:14:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeEJ-0006PW-9v; Tue, 02 Jul 2024 10:11:36 -0400
+	id 1sOeBH-0002qg-Bv; Tue, 02 Jul 2024 10:08:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeEC-0005mw-5A
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeB5-0002dQ-0B
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:08:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeE7-0000UB-W5
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:27 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeB3-00085d-Az
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:08:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929483;
+ s=mimecast20190719; t=1719929292;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=actUboiQ+IrTgCsdz18KhXUIoDAvYkrEhXUsAIxh/Nc=;
- b=azpd1l0JiInCl3Jsp3ANWXbjT8oZgO2rkVrkOugnZ/IqaiVRTKVjCfnN9rqxwh13BiJYHL
- PljPiJgiuzobSyFwdhYGQ42U37s1G18D7B8HGAHzJCnNjR4JBjcvxU1XWRleQg9y/AsQ+y
- knMgCqOTSmQYObiaQzSUhn9KCiGPEjk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FMOgEcAe53x2nl/kUwLBbhwXiRFlv4+KNdbX+UZGPhI=;
+ b=Rv+Yi4guUjGceMuBraNPFZxPW0xCKSrR1m9N5v7JH82p7Z5GBiXe5GiG02qndCPXB/qIns
+ XhY7IgIWnbEA3XnabBHzIFyQYsGKLiXE4DPGhXHufzFk3CakJFhe307D49oK3i35DVX+ve
+ kNearytWq9bGZE78k79Iur0nkBI0cAc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-YsTsPej4Nvy9YM0AuGNC-A-1; Tue, 02 Jul 2024 10:11:20 -0400
-X-MC-Unique: YsTsPej4Nvy9YM0AuGNC-A-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4257db9d71fso16894895e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:20 -0700 (PDT)
+ us-mta-96-ugcoxOOFPAijp1Q2hDod_A-1; Tue, 02 Jul 2024 10:08:09 -0400
+X-MC-Unique: ugcoxOOFPAijp1Q2hDod_A-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-42566e8a9efso39079775e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:08:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929479; x=1720534279;
+ d=1e100.net; s=20230601; t=1719929287; x=1720534087;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=actUboiQ+IrTgCsdz18KhXUIoDAvYkrEhXUsAIxh/Nc=;
- b=HbYTlvOkvz6FxSFDxdr4S+2r7wwX2NNMuWgKfYy2Q1oZOGkLvrb2rOQa8udkd+WywU
- kMG0GUJKem+FUpVfpouDVBQZy/hNUdsKsF2sBt49Q2msAnaE5llE2snmnHUnwR3bZ9qZ
- t/7QVS1iGFqhfBNP60a4999pVMzN5UcfL0qTW6BRE+DxgdfbihMW78+p+IgNJVAu50ah
- 7Lt/yKQJd7NktuLfdDrfi5Y2RM2bPgjiY18zraiQytYgNSVY9jPb0VW3p1OsaSYhlA3F
- tJjDYkIbWLOZyv9a/6MPGrF7c+ioksKncgtUrPAlBrpLO4gcAG74383id1UQ9ImlFJv7
- zVgg==
-X-Gm-Message-State: AOJu0YyNIA6NhgriCcK4NFIbyqHf8Zx593D3vbp9/kjzCBxlT3PC4pxt
- YNb/9rp/aSnelD3cslsr4jJUg1wzSU/77adYm1mPQL8EudbsLCQtn1M6bKCe2JtHO6IBZsFlrGS
- mUy2e9ITwPKDQOI9LktS/fllMuHkSD4A/v+DhPUALSzngGr/FEUaZxvYPFjnyKJJAnqQQxBXc/r
- Zu0ZMIa45J0aMMqzkek5aZ0h87C2rQEg==
-X-Received: by 2002:a05:6000:2cc:b0:366:eb45:6d55 with SMTP id
- ffacd0b85a97d-367757215a5mr7036351f8f.49.1719929479414; 
- Tue, 02 Jul 2024 07:11:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuoZUZAxFLi6xOWmUDcw8ZAvIjY+5z3b4et2gwHpUkVjDAM9ED8sWHRmDpZMBQ2aClDMBVjA==
-X-Received: by 2002:a05:6000:2cc:b0:366:eb45:6d55 with SMTP id
- ffacd0b85a97d-367757215a5mr7036294f8f.49.1719929478487; 
- Tue, 02 Jul 2024 07:11:18 -0700 (PDT)
+ bh=FMOgEcAe53x2nl/kUwLBbhwXiRFlv4+KNdbX+UZGPhI=;
+ b=v3LWgjGIagGhXXSi9zRzEjO4TVC8dDsgtKdwwOcHTHw6aTgXs2SBFIAALjCHSC1Vqe
+ ouCwW5uYcQrdI7slzSNdH2qRV5z5286jkXQbY8lf6MCKmiuyk8nv8SoAEQZncAyQxLH5
+ +dPLPKhPzcI8cdJydccG4Nwl8CUpSnVjkWc3gPIdSCRKExSAFSzURRo0dsFQlUZVoU90
+ 6Fax30qGAcBu4xaCffW3plfzkqDT4htgY9i0WiKJIZa2yyrfsIpiIU8bBAEwQzG5rdIX
+ fR+w5VUIyGrHpGQuid2XHXwtuqMOzijDG7GWarpqxoyZjC0xAor4XetUWh9lIpUMh3KM
+ 7HXw==
+X-Gm-Message-State: AOJu0YymsJ9RKWpdoumwBb68JAnlvmNyvi+ON0zeqkM6BLhaqrUKLKbF
+ HcbEMDziBbKEyH2N54Zrgr1Lyn851zdIUAd+4x+Y2u5nAkyVbHaN+qD7vpV9HaSE63bUsfb5ue1
+ bFhoo8LTsUr0KPachXaEAlkdy3jzRHGyfzbvR3VUVfR1KTj2lskRrL/v2nr6aQaFCstzYsuh4DV
+ 7QThVcHH7L7tpvoA/ymjE4ViuNflApng==
+X-Received: by 2002:a05:600c:47c7:b0:425:5f73:e2e1 with SMTP id
+ 5b1f17b1804b1-4257a00c088mr75859975e9.22.1719929287443; 
+ Tue, 02 Jul 2024 07:08:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEpAqU6sWFMZZDpcaKWJOIOFQLed38qFVLFC0AWcnAIyzxV8Wppjj9zWHXMXjIzh0vSbcs0KA==
+X-Received: by 2002:a05:600c:47c7:b0:425:5f73:e2e1 with SMTP id
+ 5b1f17b1804b1-4257a00c088mr75859635e9.22.1719929286729; 
+ Tue, 02 Jul 2024 07:08:06 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0d9b12sm13315259f8f.44.2024.07.02.07.11.16
+ 5b1f17b1804b1-4256af55aeasm196745725e9.17.2024.07.02.07.08.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:11:17 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:11:15 -0400
+ Tue, 02 Jul 2024 07:08:06 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:08:04 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: [PULL 83/91] hw/ppc/spapr_pci: Do not create DT for disabled PCI
- device
-Message-ID: <be7c4eca969b0c1a17a4426c9ef2fbdb3b731d2f.1719929191.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
+ Gregory Price <gregory.price@memverge.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL 22/91] hw/mem/cxl-type3: Refactor
+ ct3_build_cdat_entries_for_mr to take mr size instead of mr as argument
+Message-ID: <69e4fb569dc1602bfeef5b8c58de5f40cd5d756e.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -82,7 +79,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1719929191.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,34 +103,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Fan Ni <fan.ni@samsung.com>
 
-Disabled means it is a disabled SR-IOV VF or it is powered off, and
-hidden from the guest.
+The function ct3_build_cdat_entries_for_mr only uses size of the passed
+memory region argument, refactor the function definition to make the passed
+arguments more specific.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240627-reuse-v10-2-7ca0b8ed3d9f@daynix.com>
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Message-Id: <20240523174651.1089554-8-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/ppc/spapr_pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/mem/cxl_type3.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 7cf9904c35..f63182a03c 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -1296,6 +1296,10 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, PCIDevice *pdev,
-         return;
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 06c6f9bb78..51be50ce87 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -44,7 +44,7 @@ enum {
+ };
+ 
+ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
+-                                          int dsmad_handle, MemoryRegion *mr,
++                                          int dsmad_handle, uint64_t size,
+                                           bool is_pmem, uint64_t dpa_base)
+ {
+     CDATDsmas *dsmas;
+@@ -63,7 +63,7 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
+         .DSMADhandle = dsmad_handle,
+         .flags = is_pmem ? CDAT_DSMAS_FLAG_NV : 0,
+         .DPA_base = dpa_base,
+-        .DPA_length = memory_region_size(mr),
++        .DPA_length = size,
+     };
+ 
+     /* For now, no memory side cache, plausiblish numbers */
+@@ -132,7 +132,7 @@ static void ct3_build_cdat_entries_for_mr(CDATSubHeader **cdat_table,
+          */
+         .EFI_memory_type_attr = is_pmem ? 2 : 1,
+         .DPA_offset = 0,
+-        .DPA_length = memory_region_size(mr),
++        .DPA_length = size,
+     };
+ 
+     /* Header always at start of structure */
+@@ -149,6 +149,7 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+     g_autofree CDATSubHeader **table = NULL;
+     CXLType3Dev *ct3d = priv;
+     MemoryRegion *volatile_mr = NULL, *nonvolatile_mr = NULL;
++    uint64_t vmr_size = 0, pmr_size = 0;
+     int dsmad_handle = 0;
+     int cur_ent = 0;
+     int len = 0;
+@@ -163,6 +164,7 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+             return -EINVAL;
+         }
+         len += CT3_CDAT_NUM_ENTRIES;
++        vmr_size = memory_region_size(volatile_mr);
      }
  
-+    if (!pdev->enabled) {
-+        return;
-+    }
-+
-     err = spapr_dt_pci_device(p->sphb, pdev, p->fdt, p->offset);
-     if (err < 0) {
-         p->err = err;
+     if (ct3d->hostpmem) {
+@@ -171,21 +173,22 @@ static int ct3_build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+             return -EINVAL;
+         }
+         len += CT3_CDAT_NUM_ENTRIES;
++        pmr_size = memory_region_size(nonvolatile_mr);
+     }
+ 
+     table = g_malloc0(len * sizeof(*table));
+ 
+     /* Now fill them in */
+     if (volatile_mr) {
+-        ct3_build_cdat_entries_for_mr(table, dsmad_handle++, volatile_mr,
++        ct3_build_cdat_entries_for_mr(table, dsmad_handle++, vmr_size,
+                                       false, 0);
+         cur_ent = CT3_CDAT_NUM_ENTRIES;
+     }
+ 
+     if (nonvolatile_mr) {
+-        uint64_t base = volatile_mr ? memory_region_size(volatile_mr) : 0;
++        uint64_t base = vmr_size;
+         ct3_build_cdat_entries_for_mr(&(table[cur_ent]), dsmad_handle++,
+-                                      nonvolatile_mr, true, base);
++                                      pmr_size, true, base);
+         cur_ent += CT3_CDAT_NUM_ENTRIES;
+     }
+     assert(len == cur_ent);
 -- 
 MST
 
