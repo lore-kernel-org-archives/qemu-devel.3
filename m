@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E66DC3271E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37AF2C3271F
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 20:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOk0J-0005kS-QR; Tue, 02 Jul 2024 16:21:37 -0400
+	id 1sOjyR-0001Bo-OJ; Tue, 02 Jul 2024 16:19:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzU-0004oH-3j
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:41 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyP-00014m-FJ
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjzS-0001fD-Eb
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:20:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOjyN-0001GG-Ny
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 16:19:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719951637;
+ s=mimecast20190719; t=1719951571;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=actUboiQ+IrTgCsdz18KhXUIoDAvYkrEhXUsAIxh/Nc=;
- b=jMxqsST9afUvCKLr5XrAqdOjjwsEZidyIxye4ZipJR1JtyiAVLJFmITez1WYPK0sYOvMwN
- D/Xzyz1yODVTrk2SQcBzgsE0CFCrg24KfDh4I/RIo1X6SeoPVgqI7n56GQEP7GICXb0vlI
- 4XhNKT2ujetEvCQ9jsaSwcIaRqF7dho=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Qq6X3kMK8U5RTSY4JoCXP6cD3LHFaX4iQOeFqnwxYP8=;
+ b=Y0cQ2Q0gHjrblaPJM2gA+lMTLoW7oCVFtBt38/R4B49pw1X96aLdcytc06nr4ERKw5k8C0
+ hKeCZXYSSAqqHWtHVSIGQkbiJi4NFRvTuCc0A3l6PG2KD7/PVIQSgJ1nKdRidPb+eeTyFG
+ 3MCBIsNylMdtypG+jojuI6yJb2SdgyU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-w2XAogIFOaKG95DIwplffg-1; Tue, 02 Jul 2024 16:20:35 -0400
-X-MC-Unique: w2XAogIFOaKG95DIwplffg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42566e8a9efso42185895e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:20:35 -0700 (PDT)
+ us-mta-164-4M4iWmEiPauShBcCxZNI0g-1; Tue, 02 Jul 2024 16:19:30 -0400
+X-MC-Unique: 4M4iWmEiPauShBcCxZNI0g-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-36789dfcc8bso468728f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 13:19:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719951634; x=1720556434;
+ d=1e100.net; s=20230601; t=1719951568; x=1720556368;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=actUboiQ+IrTgCsdz18KhXUIoDAvYkrEhXUsAIxh/Nc=;
- b=Xr5gm+BFXrM+vK1ZPhXQUGaXOhP+b0XcdMfw8CwbDhH9Dh33nBeYaay0ZryuI0AfPS
- hQcki9QH+rPG+brGG1Ue3iAboqWwEDOs4Arf4P6VwKW1+VoxrEYhpVEA5cCVTYN1qmUr
- +a9iGfLNjjesoRAQyKwUXcDEbaEsuFJHN6MOsmjyYB54b+GyS9V/jFz4yFq1LAezsOxo
- F7gbM1u5DcTlvjeLc2Kt4u54T13eYyKVfd+t86m7lQUo/5lmdrmJWQdBUtg82YuHszOe
- CEuFVWE/7/P817B6jWM5JS8v6ZYpKHpsRfsJsTwIdvdY+f135EXk9a3ibyW/b1RRATXC
- SisQ==
-X-Gm-Message-State: AOJu0YzzHo5nf2xBqUE01jH7o3z05Xq87tZejMB86b2Y83n0KPdObFHQ
- A9JrLgUjSue4iegJ+fNq73a2M1xLMlXhpFFo2MnH3J93t51ap9TInetJRhB7AK2S3hJNUJodg/e
- Km9uop9y1YYI7C1aZJFDWovy7F8D2DPAm7wXSt6s0rV3dXMnlnA35wBabFAXhC3P48d75uvWkPy
- Dnxckz65TvJ9ItF6cVqyvpVa7emxJSyQ==
-X-Received: by 2002:adf:f18b:0:b0:361:dd0c:678 with SMTP id
- ffacd0b85a97d-367756bc471mr7294514f8f.36.1719951633881; 
- Tue, 02 Jul 2024 13:20:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElwaApP0XIJ4pjyGb7BSj59w+Y8v1dEKdAKZhiQ4vH4/PKwktwFYx+c/wz1REhd0gpEnEjUQ==
-X-Received: by 2002:adf:f18b:0:b0:361:dd0c:678 with SMTP id
- ffacd0b85a97d-367756bc471mr7294488f8f.36.1719951633340; 
- Tue, 02 Jul 2024 13:20:33 -0700 (PDT)
+ bh=Qq6X3kMK8U5RTSY4JoCXP6cD3LHFaX4iQOeFqnwxYP8=;
+ b=Mz4AeP17fF+n4s4HJ3igQfHC5R9iNwwmnUFtqTfbSbSCldx5duLubXWUj/rwckCrQI
+ FHBT29F+nxwA/G15CasYOEqv1QGH7e2VjACSnR7kWxTrENHa6IUNOgi/diQsgZ/SXDVo
+ rscxRI8RtKQl6EVEizvG8BonyddqqrNItzcFWvb1Xx9bzIdsR52gitF+FFiRbb1NpGzr
+ Dpzu1N/DxJmNrOE9N4UTE6vUu2QM/zIUzA5dLsLoMnTdzJb0RPw8LzuRYDUM5MHNuf+C
+ 7Z+6ihSFfXui/SnMc27RFph+oHSh5Ns76PAucu2OCm7LRxtLGSJR5/NvW/p655CEOn3H
+ pLqg==
+X-Gm-Message-State: AOJu0YyAb505oQSIUmbGkbUZ+54H6r1e9SuV5N92fzFPTZL/Kk6qRQcx
+ C15JMmX3VDvvwK7ZQnGk0bNaScdNFaVYQJNiqIfbfz+Es3+qos1tkBKkB+uPTjzReuVYM8Z7EPR
+ A+NIGVD1zArYuGZJqX2F03z5Bgdvd01j1xAmFEaZTmqNzSm4qEXX3lbfe747M6u0fXqwVVDXdCK
+ DtBwrIHW5jtlTBpKYMC2j/B9ELZv3QzQ==
+X-Received: by 2002:a5d:630f:0:b0:362:41a4:974d with SMTP id
+ ffacd0b85a97d-3677571b76bmr8009513f8f.46.1719951568165; 
+ Tue, 02 Jul 2024 13:19:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFB42dNu53o5DjJc92/1GCxsGCuDGgRA/SYa/1ezxStI7rHPI61/G2dSAkjuCM1KJG0cEcleg==
+X-Received: by 2002:a5d:630f:0:b0:362:41a4:974d with SMTP id
+ ffacd0b85a97d-3677571b76bmr8009498f8f.46.1719951567582; 
+ Tue, 02 Jul 2024 13:19:27 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e1412sm14091632f8f.53.2024.07.02.13.20.30
+ ffacd0b85a97d-3675a103366sm14034500f8f.102.2024.07.02.13.19.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 13:20:32 -0700 (PDT)
-Date: Tue, 2 Jul 2024 16:20:29 -0400
+ Tue, 02 Jul 2024 13:19:27 -0700 (PDT)
+Date: Tue, 2 Jul 2024 16:19:24 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: [PULL v2 80/88] hw/ppc/spapr_pci: Do not create DT for disabled PCI
- device
-Message-ID: <1367c24db02afde209d307d653313351bf774b07.1719951168.git.mst@redhat.com>
+ Sunil V L <sunilvl@ventanamicro.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v2 63/88] uefi-test-tools/UefiTestToolsPkg: Add RISC-V support
+Message-ID: <e50a460b64a8d311676b46b71f6891d55036cf94.1719951168.git.mst@redhat.com>
 References: <cover.1719951168.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -90,7 +88,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,34 +104,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-Disabled means it is a disabled SR-IOV VF or it is powered off, and
-hidden from the guest.
+Enable building the test application for RISC-V with appropriate
+dependencies updated.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240627-reuse-v10-2-7ca0b8ed3d9f@daynix.com>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240625150839.1358279-3-sunilvl@ventanamicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/ppc/spapr_pci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tests/uefi-test-tools/UefiTestToolsPkg/UefiTestToolsPkg.dsc | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 7cf9904c35..f63182a03c 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -1296,6 +1296,10 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, PCIDevice *pdev,
-         return;
-     }
+diff --git a/tests/uefi-test-tools/UefiTestToolsPkg/UefiTestToolsPkg.dsc b/tests/uefi-test-tools/UefiTestToolsPkg/UefiTestToolsPkg.dsc
+index c8511cd732..0902fd3c73 100644
+--- a/tests/uefi-test-tools/UefiTestToolsPkg/UefiTestToolsPkg.dsc
++++ b/tests/uefi-test-tools/UefiTestToolsPkg/UefiTestToolsPkg.dsc
+@@ -19,7 +19,7 @@
+   PLATFORM_VERSION        = 0.1
+   PLATFORM_NAME           = UefiTestTools
+   SKUID_IDENTIFIER        = DEFAULT
+-  SUPPORTED_ARCHITECTURES = ARM|AARCH64|IA32|X64
++  SUPPORTED_ARCHITECTURES = ARM|AARCH64|IA32|X64|RISCV64
+   BUILD_TARGETS           = DEBUG
  
-+    if (!pdev->enabled) {
-+        return;
-+    }
+ [BuildOptions.IA32]
+@@ -60,6 +60,10 @@
+ 
+ [LibraryClasses.IA32, LibraryClasses.X64]
+   BaseMemoryLib|MdePkg/Library/BaseMemoryLibRepStr/BaseMemoryLibRepStr.inf
++  RegisterFilterLib|MdePkg/Library/RegisterFilterLibNull/RegisterFilterLibNull.inf
 +
-     err = spapr_dt_pci_device(p->sphb, pdev, p->fdt, p->offset);
-     if (err < 0) {
-         p->err = err;
++[LibraryClasses.RISCV64]
++  BaseMemoryLib|MdePkg/Library/BaseMemoryLib/BaseMemoryLib.inf
+ 
+ [PcdsFixedAtBuild]
+   gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x8040004F
 -- 
 MST
 
