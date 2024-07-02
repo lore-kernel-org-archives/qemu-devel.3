@@ -4,85 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074C3C3064D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9519C3065C
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeST-0002im-D0; Tue, 02 Jul 2024 10:26:14 -0400
+	id 1sOeUi-00010E-0I; Tue, 02 Jul 2024 10:28:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sOeSM-0002X1-UZ
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:26:07 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sOeSG-0003Yw-9m
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:26:05 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e026a2238d8so4110068276.0
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:25:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1719930356; x=1720535156;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7dwLDHsLu2o22t8xW0ACP/VA85rNwKuKRt0rC3E7scM=;
- b=zBOKlBkWWiL8dUnL176VS6p21V4sx19K0eC/9aVleddL4gxVhnWBuw2htZoxKpkVn4
- g/vJTbg3DrIfEABSMGWpgMVAgYjcABsCUtnXQXt1THUSl5tIU36mRcnkPSo3mWJQbEQQ
- 6DKIklvNUFinXmdxOMxjXYQUVEVN9m4L2MI6iids8Fk8B9kaFNBQMoXFN0MvSzC6gGuB
- Kc9lLrG9264iMNwjrlv6+MLpF78lbpsH0JuZHXmYCoy1t7wkDhhIXTFxbTa1lqYciu8S
- ty84eV8/qwFTcCnBs53NlS81XCoPyPsRG0RV9AgvGktiHlHyWgLL08xu4KtkK6av+fvs
- h6Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719930356; x=1720535156;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7dwLDHsLu2o22t8xW0ACP/VA85rNwKuKRt0rC3E7scM=;
- b=qt9CGl3JsIs0B7/eb7TyN3TlOL3g/gkVek8w6GQcot0fSIFOe7C6pgH5eE9AlXBmYQ
- OGXrZyeKBRQ2o+CcgbrDawcfm6Cr4xNdw3FXDd5zUVLcLvkeS2poYozDxfQrlDHv3fup
- MnilNQCzh/MbjFTUf5CRrAIf5KrbeDmiC4nJr0QPwncdQedoSBRaXpG+X3AHYLUGpQf3
- gfTWaiSMiYTCCbZb/vbXa+NtI/j59nsSTERxMnE+2RIBTPqHTtn5fKqzsUpB+j3jrRFB
- OoPDhme1ccnPHbCpaecTBniQaQOdBYcurhx5d+z+v6SPiZXakxenjndgcJs1sn9ubraD
- epjg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhpw3UNpnJ3XTJPh6CJjQr5APkgnlNQDxN3SRi8LZMSlR3ydcuuHTN8AvAeSBIvkKLiLwio+vTKPKgelg4l3OFd2ZGqwU=
-X-Gm-Message-State: AOJu0YwRy0vRLpZ7M8KIUgSricjrkxd4SViOvcRgYvOa28/bXtF72uPX
- tugnvYI+eZo1+z3RqUQTWCtJVbl/1uNX1O8+EefD1b3Igk8g3jjYsn2rVd5a3b+ilqTkrm8fCmk
- ljABDnYd7fs+9iPnTBqDRpg7gLZIOYUZiyWw1
-X-Google-Smtp-Source: AGHT+IH4CuvTtR1Tf21I0bPPBJXqxpgpGQDTpdXdx1iFfsRcsQPpuFH/fUDqNswTeymyKv/a4MHvygyiYIVSbT4DhTM=
-X-Received: by 2002:a05:690c:d82:b0:631:78a1:bb5 with SMTP id
- 00721157ae682-64c73419043mr97958637b3.35.1719930355838; Tue, 02 Jul 2024
- 07:25:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=fXIt=OC=kaod.org=clg@ozlabs.org>)
+ id 1sOeUY-0000bb-1z; Tue, 02 Jul 2024 10:28:22 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=fXIt=OC=kaod.org=clg@ozlabs.org>)
+ id 1sOeUU-0003wz-SZ; Tue, 02 Jul 2024 10:28:21 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WD4yP44Mhz4wcS;
+ Wed,  3 Jul 2024 00:28:13 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WD4yG2s2Sz4x0C;
+ Wed,  3 Jul 2024 00:28:06 +1000 (AEST)
+Message-ID: <91ced502-aaa0-4c64-9ed4-4ea7b3257f0a@kaod.org>
+Date: Tue, 2 Jul 2024 16:28:02 +0200
 MIME-Version: 1.0
-References: <20240627-cursor-v2-0-c3cd3ee35616@daynix.com>
- <20240627-cursor-v2-3-c3cd3ee35616@daynix.com>
- <CAAibmn0S+BvotSV6Sw-d17ybCu10a6Hgyu2sEUrJrzejHs9WZA@mail.gmail.com>
- <56d0c526-5d41-44a5-a737-e4eda60f61e7@linaro.org>
-In-Reply-To: <56d0c526-5d41-44a5-a737-e4eda60f61e7@linaro.org>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Tue, 2 Jul 2024 16:25:43 +0200
-Message-ID: <CAAibmn07-dRS05rgh9S2pV619AWpA00GFnnPiajCNs0tNOd72Q@mail.gmail.com>
-Subject: Re: [PATCH v2 3/4] ui/cocoa: Add cursor composition
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] tests/qtest/npcm7xx_sdhci: Access the card using its
+ published address
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000e61028061c447d9e"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=phil@philjordan.eu; helo=mail-yb1-xb2b.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+Cc: Tyrone Ting <kfting@nuvoton.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Hao Wu <wuhaotsh@google.com>, Thomas Huth <thuth@redhat.com>,
+ Shengtan Mao <stmao@google.com>, Chris Rauer <crauer@google.com>,
+ Joel Stanley <joel@jms.id.au>, Sai Pavan Boddu <sai.pavan.boddu@amd.com>,
+ Laurent Vivier <lvivier@redhat.com>, Luc Michel <luc.michel@amd.com>,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-arm@nongnu.org, qemu-block@nongnu.org,
+ Patrick Venture <venture@google.com>
+References: <20240702140842.54242-1-philmd@linaro.org>
+ <20240702140842.54242-4-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240702140842.54242-4-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=fXIt=OC=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,68 +72,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e61028061c447d9e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 7/2/24 4:08 PM, Philippe Mathieu-Daudé wrote:
+> Currently setup_sd_card() asks the card its address,
+> but discard the response and use hardcoded 0x4567.
+> 
+> Set the SDHC_CMD_RESPONSE bit to have the controller
+> record the bus response, and read the response from
+> the RSPREG0 register. Then we can select the card with
+> its real address.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Cc: Hao Wu <wuhaotsh@google.com>
+> Cc: Chris Rauer <crauer@google.com>
+> Cc: Shengtan Mao <stmao@google.com>
+> Cc: Patrick Venture <venture@google.com>
+> Cc: Tyrone Ting <kfting@nuvoton.com>
+> ---
+>   tests/qtest/libqos/sdhci-cmd.h   | 2 ++
+>   tests/qtest/npcm7xx_sdhci-test.c | 8 ++++++--
+>   2 files changed, 8 insertions(+), 2 deletions(-)
 
-On Tue, 2 Jul 2024 at 16:20, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
->
-wrote:
 
-> Hi Phil,
->
-> On 2/7/24 15:19, Phil Dennis-Jordan wrote:
->
-> > I'm still keen on NSCursor support for absolute pointing mode though, s=
-o
-> > I can experiment with doing a better job of cleaning it up as part v3 o=
-f
-> > that patch series.
->
-> Do we need a v3, or can you clean on top?
->
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Sorry, I meant v3 of my NSCursor patch, not this series.
+Thanks,
 
-https://patchew.org/QEMU/20240625134931.92279-1-phil@philjordan.eu/
+C.
 
-(That in turn uses the CGImage for the NSCursor as well)
 
-So from my point of view, this series can be merged, and I'll submit v3 of
-my series, which will aim to clean up the CGImage code as well as
-implementing NSCursor support in absolute pointing mode.
+> 
+> diff --git a/tests/qtest/libqos/sdhci-cmd.h b/tests/qtest/libqos/sdhci-cmd.h
+> index 9e61dd4944..90efa028ef 100644
+> --- a/tests/qtest/libqos/sdhci-cmd.h
+> +++ b/tests/qtest/libqos/sdhci-cmd.h
+> @@ -22,6 +22,7 @@
+>   #define SDHC_ARGUMENT 0x08
+>   #define SDHC_TRNMOD 0x0C
+>   #define SDHC_CMDREG 0x0E
+> +#define SDHC_RSPREG0 0x10
+>   #define SDHC_BDATA 0x20
+>   #define SDHC_PRNSTS 0x24
+>   #define SDHC_BLKGAP 0x2A
+> @@ -38,6 +39,7 @@
+>   #define SDHC_TRNS_MULTI 0x0020
+>   
+>   /* CMD Reg */
+> +#define SDHC_CMD_RESPONSE (3 << 0)
+>   #define SDHC_CMD_DATA_PRESENT (1 << 5)
+>   #define SDHC_ALL_SEND_CID (2 << 8)
+>   #define SDHC_SEND_RELATIVE_ADDR (3 << 8)
+> diff --git a/tests/qtest/npcm7xx_sdhci-test.c b/tests/qtest/npcm7xx_sdhci-test.c
+> index 5d68540e52..01f237a816 100644
+> --- a/tests/qtest/npcm7xx_sdhci-test.c
+> +++ b/tests/qtest/npcm7xx_sdhci-test.c
+> @@ -30,6 +30,8 @@ char *sd_path;
+>   
+>   static QTestState *setup_sd_card(void)
+>   {
+> +    uint16_t rca;
+> +
+>       QTestState *qts = qtest_initf(
+>           "-machine kudo-bmc "
+>           "-device sd-card,drive=drive0 "
+> @@ -43,8 +45,10 @@ static QTestState *setup_sd_card(void)
+>       sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0, 0, SDHC_APP_CMD);
+>       sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0x41200000, 0, (41 << 8));
+>       sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0, 0, SDHC_ALL_SEND_CID);
+> -    sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0, 0, SDHC_SEND_RELATIVE_ADDR);
+> -    sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0x45670000, 0,
+> +    sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, 0, 0, SDHC_SEND_RELATIVE_ADDR
+> +                                                    | SDHC_CMD_RESPONSE);
+> +    rca = qtest_readl(qts, NPCM7XX_MMC_BA + SDHC_RSPREG0) >> 16;
+> +    sdhci_cmd_regs(qts, NPCM7XX_MMC_BA, 0, 0, rca << 16, 0,
+>                      SDHC_SELECT_DESELECT_CARD);
+>   
+>       return qts;
 
-Thanks!
-Phil
-
---000000000000e61028061c447d9e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
-=3D"gmail_attr">On Tue, 2 Jul 2024 at 16:20, Philippe Mathieu-Daud=C3=A9 &l=
-t;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org</a>&gt; wrote:<br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Phil,<br>
-<br>
-On 2/7/24 15:19, Phil Dennis-Jordan wrote:<br>
-<br>
-&gt; I&#39;m still keen on NSCursor support for absolute pointing mode thou=
-gh, so <br>
-&gt; I can experiment with doing a better job of cleaning it up as part v3 =
-of <br>
-&gt; that patch series.<br>
-<br>
-Do we need a v3, or can you clean on top?<br></blockquote><div><br></div><d=
-iv>Sorry, I meant v3 of my NSCursor patch, not this series.<br></div><div><=
-br></div><div><a href=3D"https://patchew.org/QEMU/20240625134931.92279-1-ph=
-il@philjordan.eu/">https://patchew.org/QEMU/20240625134931.92279-1-phil@phi=
-ljordan.eu/</a></div><div><br></div><div>(That in turn uses the CGImage for=
- the NSCursor as well)</div><div><br></div><div>So from my point of view, t=
-his series can be merged, and I&#39;ll submit v3 of my series, which will a=
-im to clean up the CGImage code as well as implementing NSCursor support in=
- absolute pointing mode.</div><div><br></div><div>Thanks!</div><div>Phil</d=
-iv><div><br></div></div></div>
-
---000000000000e61028061c447d9e--
 
