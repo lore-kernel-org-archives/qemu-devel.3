@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA69C3065C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46BEDC30658
 	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 18:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOiV8-0005NS-W7; Tue, 02 Jul 2024 14:45:15 -0400
+	id 1sOiV3-0005KQ-Qe; Tue, 02 Jul 2024 14:45:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sOiV7-0005Mv-EJ
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 14:45:13 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1sOiV1-0005K4-48
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 14:45:07 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sOiV5-0008Il-2e
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 14:45:13 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-656d8b346d2so2690117a12.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 11:45:10 -0700 (PDT)
+ id 1sOiUy-00086W-RR
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 14:45:06 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2c7b14bb4a5so3199272a91.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 11:45:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719945909; x=1720550709; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iz4DsSP3yw8VYMirhIY62MVce7Yg4FT9eLfXZZ6t1/g=;
- b=z1iYSk7csNIHp0dvFoNlqnPOPSqp8ol4HxcYrzXTSirPWjQOHioHj2yZJhELyh0O3a
- MozVbtXcPsqymJkuxoc82vbTgviaAq8SgUEJ/pnAFdoyM6NUplSNH0OKWWyf7XXAW86S
- t7Mz2bSEt7RqmDsbvvZiG1m9xFnnsVOkiqgSkywtRQJPmvvsVTaW6A3gKDS5A8XiqCM/
- 4TrMzdMC5GESRLcnAu9NVi4Qf/wwT+uwKevu8znslBIvMeZfF8tNYrpsJ37vkVc61mx/
- w6wTAL556tclX7i3viGzSELDrRmkywY/PL9cm5jngn/EnGn7ALPE3DDrTU5Js5qfJQHT
- qGAA==
+ d=linaro.org; s=google; t=1719945902; x=1720550702; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zIXRNj6hv7VUKRowdbtUTlmEXvuNh+UxIOlvMPsMxoo=;
+ b=O0ixsG+WGrwUX+gnI3g1/ncRa0fooqYjcXzjUA9BsZK97on1667YOipoAN+HBaY0CC
+ AGWz8oO/UD/shPDpkRqD0ewmBSmgzdftHjQzvOZlzg102X0GxnJ92ScorM1liQxLSD67
+ BVTy2NEfqz8v5SDeNjQZzQwkKg0/GTgCCph8lHe+j8qpflEdjyNCe8khe8lliZl+GAhq
+ hwTKcllObGcrWEX1p5Cbv+Do8XGjOZRRuOTAZ/HjFmb2/MuViAJ7e2j64I+Lyx4dNQi0
+ vU2MrAOSnhj0/sW/qERgTkLM+sQhhiaf40Zllr3ui/m49vZvCyuWzv0tqPFB5VCA9fFM
+ o8lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719945909; x=1720550709;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iz4DsSP3yw8VYMirhIY62MVce7Yg4FT9eLfXZZ6t1/g=;
- b=ClMEQRDl4qPNIlEBozuE61zbvpUwekAj+K4Dr2kXRhkwC2XY6Bz5m0QI/b7qPxi8xA
- c7ya/4sC/4OdfSFU7eNhq8xtOtvE/ROaR/3gCHXUndpELPls2nNfAdaTJWsTLZXaaRX8
- jeec0Msek5KtlqSenZYfiRtM/RjGsgRve6dheZ5gyFfMKr1YBAO4jN11v6RGDiWjMFwE
- g59irMP1x6KoSW4eJ808eI+DDb8/jejyBQapNGEqAXMZ3Ngfv5QuylguoEOPMXqeyFMK
- suos7K0HDsbzJh6mLoC0wi/p2A2bJDi8hKipkZV24AypzF5LKA+WNr0fnSzULB5FyyaR
- zzug==
-X-Gm-Message-State: AOJu0YyLYLWkyOxsk9vH52XGGvxXsGz1FT4xGv1eZEzYUc3SkALhE/jS
- q4rKfEDXL/xQN5XY9QphTnTsv7KYr2fSsI6a4wSnX7yNaca6qOGAoqkGrQ0jYsHWURY1VYUJb8p
- k
-X-Google-Smtp-Source: AGHT+IGkAp1OjX22Sdgm1lxeHSGzm7/x0rKNl6fycwpp8soZxXPgNYFoS5u9nJAh1EX7FBNpNut+UQ==
-X-Received: by 2002:a05:6a21:3418:b0:1be:c747:5925 with SMTP id
- adf61e73a8af0-1bef610e1b8mr7911444637.34.1719945909064; 
- Tue, 02 Jul 2024 11:45:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719945902; x=1720550702;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zIXRNj6hv7VUKRowdbtUTlmEXvuNh+UxIOlvMPsMxoo=;
+ b=cuoNPCendfrJhJX9a+Kp9ALSXXiO3/YC94BTnwY7KkiCVI/mx0cLGJ01SIYBN1Gw28
+ xp0iQD1214jIrnKrQt7QPdX2hqgELu2LnXzHYbRVAj6M8BRJlYBmN/s/DDvExSeawZc4
+ 4bbjHEXN+4PW3624EKF/aqfQhc1SFU+DbpRYlqwbgm6Z8t/KyUUZ+P5yYzGp4JkADQAQ
+ mDPWj5Arp5uabfy8yby29eH6KbL6uuSUWeE3xAjZkdR1iTjGv0k72FVcx43Hz33JumDG
+ dvL86nftvA9b6e+iKuct/4bEFbHfkMf/KwhsRE6D5SCAhmX/FzOKFFvjgcqDwMMmRV0/
+ /SIA==
+X-Gm-Message-State: AOJu0Yx7ySss6jkot/yx0kT0fa/Z726FecUXddD06vfmwZJMD7XCSCE6
+ LDT2bz+PsJVIArVXqjlJhHLkaPqWiqtgDk1eecZy8ElAcG63HqgLUNeq0Y7jDHuKcjro8AdhR3Q
+ K
+X-Google-Smtp-Source: AGHT+IG/O8yf92G5TRqkc3SyUxMxpg+75yVqL8LwGvI3x36DGxLOG4lAfYcVtQRamGevs6FLK/Zk1Q==
+X-Received: by 2002:a17:90b:230f:b0:2c4:e2d6:8de6 with SMTP id
+ 98e67ed59e1d1-2c93d2d18d8mr14683731a91.21.1719945901680; 
+ Tue, 02 Jul 2024 11:45:01 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::2193])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c91d3e8196sm9257394a91.49.2024.07.02.11.45.07
+ 98e67ed59e1d1-2c91d3e8196sm9257394a91.49.2024.07.02.11.45.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 11:45:07 -0700 (PDT)
+ Tue, 02 Jul 2024 11:45:01 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -69,17 +68,15 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v4 4/7] tests/tcg: add mechanism to run specific tests with
- plugins
-Date: Tue,  2 Jul 2024 11:44:45 -0700
-Message-Id: <20240702184448.551705-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 0/7] plugins: access values during a memory read/write
+Date: Tue,  2 Jul 2024 11:44:41 -0700
+Message-Id: <20240702184448.551705-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240702184448.551705-1-pierrick.bouvier@linaro.org>
-References: <20240702184448.551705-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,32 +99,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only multiarch tests are run with plugins, and we want to be able to run
-per-arch test with plugins too.
+This series allows plugins to know which value is read/written during a memory
+access.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- tests/tcg/Makefile.target | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+For every memory access, we know copy this value before calling mem callbacks,
+and those can query it using new API function:
+- qemu_plugin_mem_get_value
 
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index f21be50d3b2..dc5c8b7a3b4 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -152,10 +152,11 @@ PLUGINS=$(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c)))
- # only expand MULTIARCH_TESTS which are common on most of our targets
- # to avoid an exponential explosion as new tests are added. We also
- # add some special helpers the run-plugin- rules can use below.
-+# In more, extra tests can be added using PLUGINS_TESTS variable.
- 
- ifneq ($(MULTIARCH_TESTS),)
- $(foreach p,$(PLUGINS), \
--	$(foreach t,$(MULTIARCH_TESTS),\
-+	$(foreach t,$(MULTIARCH_TESTS) $(PLUGINS_TESTS),\
- 		$(eval run-plugin-$(t)-with-$(p): $t $p) \
- 		$(eval RUN_TESTS+=run-plugin-$(t)-with-$(p))))
- endif # MULTIARCH_TESTS
+Mem plugin was extended to print accesses, and a new test was added to check
+functionality work as expected. A bug was found where callbacks were not
+called as expected.
+
+This will open new use cases for plugins, such as following specific values in
+memory.
+
+v4
+- fix prototype for stubs qemu_plugin_vcpu_mem_cb (inverted low/high parameters
+  names)
+- link gitlab bugs resolved (thanks @Anton Kochkov for reporting)
+  https://gitlab.com/qemu-project/qemu/-/issues/1719
+  https://gitlab.com/qemu-project/qemu/-/issues/2152
+
+v3
+- simplify API: return an algebraic data type for value accessed
+  this can be easily extended when QEMU will support wider accesses
+- fix Makefile test (use quiet-command instead of manually run the command)
+- rename upper/lower to high/low
+- reorder functions parameters and code to low/high instead of high/low, to
+  follow current convention in QEMU codebase
+
+v2
+- fix compilation on aarch64 (missing undef in accel/tcg/atomic_template.h)
+
+v3
+- add info when printing memory accesses (insn_vaddr,mem_vaddr,mem_hwaddr)
+
+Pierrick Bouvier (7):
+  plugins: fix mem callback array size
+  plugins: save value during memory accesses
+  plugins: extend API to get latest memory value accessed
+  tests/tcg: add mechanism to run specific tests with plugins
+  tests/tcg: allow to check output of plugins
+  tests/plugin/mem: add option to print memory accesses
+  tests/tcg/x86_64: add test for plugin memory access
+
+ accel/tcg/atomic_template.h                 | 66 +++++++++++++--
+ include/qemu/plugin.h                       |  8 ++
+ include/qemu/qemu-plugin.h                  | 32 ++++++++
+ accel/tcg/plugin-gen.c                      |  3 +-
+ plugins/api.c                               | 34 ++++++++
+ plugins/core.c                              |  7 ++
+ tcg/tcg-op-ldst.c                           | 72 +++++++++++++++--
+ tests/plugin/mem.c                          | 69 +++++++++++++++-
+ tests/tcg/x86_64/test-plugin-mem-access.c   | 89 +++++++++++++++++++++
+ accel/tcg/atomic_common.c.inc               | 13 ++-
+ accel/tcg/ldst_common.c.inc                 | 38 +++++----
+ plugins/qemu-plugins.symbols                |  1 +
+ tests/tcg/Makefile.target                   | 10 ++-
+ tests/tcg/x86_64/Makefile.target            |  7 ++
+ tests/tcg/x86_64/check-plugin-mem-access.sh | 48 +++++++++++
+ 15 files changed, 462 insertions(+), 35 deletions(-)
+ create mode 100644 tests/tcg/x86_64/test-plugin-mem-access.c
+ create mode 100755 tests/tcg/x86_64/check-plugin-mem-access.sh
+
 -- 
 2.39.2
 
