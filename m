@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0181EC3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 21:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63331C30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 21:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOkhP-0002AN-Pc; Tue, 02 Jul 2024 17:06:03 -0400
+	id 1sOkiH-0003At-Ie; Tue, 02 Jul 2024 17:06:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOkhO-00025c-LC
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:06:02 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOki3-00034h-QW
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:06:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOkhK-0007lb-UL
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:06:02 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOki2-0007tr-Ac
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 17:06:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719954358;
+ s=mimecast20190719; t=1719954401;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=13t9nyOidNN3/uVoCD03S1xUrAuLxGj+RAM9Gv91l70=;
- b=MnqiZlbom+D6PjVQ+xk7aKHzRgkkVZOblFXemz+JTv+EJWadMUoTAeHv90rFcJg7F+KLOZ
- ifcf68k+z6Oxt8WwtukIn1V4RBkUisgkBNCtnWvhV5OAY5x5fwq5z0VetG8mjQs5zjZ1AM
- b1exkAKvyIY0OwlxTrGFcA8S2wKvZVA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SIX6tWJ59X+n4k7MVT9QALRA2G5dp1pBVKAs5eFuyo8=;
+ b=WCB/8AbNUrvcMEZnXdv9iQg8ANETENdLYjlRkgH4mwN8pMZK/AwoWR0PfpJPkAvOekeg5Y
+ IAeIspGYJ9pSkvykyTZSRELxlNfiC7BrvqVZJvihMUy4C/DuwtgjGXCPp0QU1E2y2u7YcP
+ G7Ti9zwpIR7cnkVyx3BpV1Fm573l1MQ=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-587-4ZI31M5gMR6R0m-RHYfpTA-1; Tue, 02 Jul 2024 17:05:56 -0400
-X-MC-Unique: 4ZI31M5gMR6R0m-RHYfpTA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4256718144dso42483295e9.1
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 14:05:56 -0700 (PDT)
+ us-mta-599-NJ1zyvENOECJYKD5k8kPZA-1; Tue, 02 Jul 2024 17:06:40 -0400
+X-MC-Unique: NJ1zyvENOECJYKD5k8kPZA-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52ce42bb0efso5535664e87.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 14:06:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719954355; x=1720559155;
+ d=1e100.net; s=20230601; t=1719954398; x=1720559198;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=13t9nyOidNN3/uVoCD03S1xUrAuLxGj+RAM9Gv91l70=;
- b=PCpwUSBdK6s/uIfI910O4imd7kksX+tYw1n9AL5cfr+P/C3zpOmh9ERWoCUpCCfiMa
- R0dUzaUgkQkyQAL65tpswAklbmraQlOxZHvbs+K8doAMLWEkNhQNOia2zW3ENQYD/pJY
- RdL1TR1j04VZbUz0F/zohGohQW4YCrdFivb1jNKN9MHF0HXPBS4hot8UcaeBjKiTcyaM
- QaCKVaHlYuilihZMX7qsohqFeCzkzaTyQLddjel/8Sa8Jf5tYLedh6xM8H8+euxrieTV
- PE3BnPJVaTd2ap0wFNHPPxkuehHNNWp6s7H3OPj1J7u8ltjmLE6fx6rYhwS5Bzk9YEwu
- ozDw==
+ bh=SIX6tWJ59X+n4k7MVT9QALRA2G5dp1pBVKAs5eFuyo8=;
+ b=pv3pxSd7gQbNWr40H0PZn8+StEMZ0duK3ElxTCM3fcK9Ooo0Dzpgk+62SLP288NS5j
+ u5AlKgF8rHiAlm7vHHYx/Pb/4Kl0CDvfHrFYoNb6VxbwE/3ap2cV5XnGcy+XUD/+mNPr
+ i6dIwkhsEE4CW/SrL8W6bG18qqzTA9T8Rbiq2jk20S3Phj7gTHwDn87kK6esbBmWYBUL
+ Frskp3uCqC53ymgRtxQoHreXoYSmDRdCBHE+Pw6Ch9CWmrBqqcfxW0HLsZsCoQlJ8pZS
+ 49H7zHOR9IiUFs45qoMmmhOLHwsSKLUnRq5mncJ4R4gkekfHXhVYBwDtdCF4msS4KT9x
+ 8hKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUS1Old4FNx7DNYhUVvyqghzwsr8wRhKby+8RJclO/j2GCSEaDwbHDA7trQg0V/SX+WB7RWwfWJv9Rox9SkXhqx0Uc8Hvs=
-X-Gm-Message-State: AOJu0YyQv3KY4pBjQtRhLv5UJhRW81cMvPt7jjpjc9tOp37t1VwDzlIi
- XTbE49Q4PRNRELzJsZP08iDqmTBVfxFYCiCsvZ+tBCXVf6hVO7POOrU1KVmoEpjAyCR4vYiozSX
- 6L3BMf0SSBeiC0yPS337945HJv9EAnSNkc+TMpnPB2KE1SakXXYd4
-X-Received: by 2002:a05:600c:1907:b0:425:80e1:a6b4 with SMTP id
- 5b1f17b1804b1-42580e1a721mr64623065e9.19.1719954355669; 
- Tue, 02 Jul 2024 14:05:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjyqDEqgsIu1k+lDAWPLPnGS+aSWaKcM+1zF8Nt7/N6ZaE1Xb9eZMj2AEswzjPOYX0QmOYnw==
-X-Received: by 2002:a05:600c:1907:b0:425:80e1:a6b4 with SMTP id
- 5b1f17b1804b1-42580e1a721mr64622965e9.19.1719954355160; 
- Tue, 02 Jul 2024 14:05:55 -0700 (PDT)
+ AJvYcCW2jQr9eNbb/mZvNZFy0lovpbKlQPDitY0C0TOJcfkaJCRYAMwcjUIrJm2xqlIGQqXH9armWuQkwuOkRbzZ/svEjCrJPuI=
+X-Gm-Message-State: AOJu0Yx4jXUBzLfHV9iyy0UHXe4aHOPSTv4JpJdxbH/n5fNgpQH8N1FR
+ +Iy+QRI/vsNWG9rG/fqXyBWJDoEwltIUHo7fF+JyP1FQX0axVooMBfQ1FWRlbF4es3NQL+iGtlh
+ bP5xQdxF6IjjHd79CoaNAvbISbqIv1uXhkcnUq2VuSRu5YXSqHtBji9kX0JZw
+X-Received: by 2002:a05:6512:3094:b0:52c:de76:109a with SMTP id
+ 2adb3069b0e04-52e82740e56mr5574443e87.67.1719954397909; 
+ Tue, 02 Jul 2024 14:06:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHi9cSw2xvR10EnLjeviC+xQTJK7VbdZjHkFe0aOuEC4B35F1kck49Rjt5oPbC1yC2xJ/6C4Q==
+X-Received: by 2002:a05:6512:3094:b0:52c:de76:109a with SMTP id
+ 2adb3069b0e04-52e82740e56mr5574430e87.67.1719954397299; 
+ Tue, 02 Jul 2024 14:06:37 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-425787f32ffsm84208525e9.1.2024.07.02.14.05.53
+ 5b1f17b1804b1-4257a4d4cd1sm148672155e9.28.2024.07.02.14.06.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 14:05:54 -0700 (PDT)
-Date: Tue, 2 Jul 2024 17:05:49 -0400
+ Tue, 02 Jul 2024 14:06:36 -0700 (PDT)
+Date: Tue, 2 Jul 2024 17:06:33 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: Zheyu Ma <zheyuma97@gmail.com>
 Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH]  hw/virtio/virtio-crypto: Fix op_code assignment in
+Subject: Re: [PATCH v2] hw/virtio/virtio-crypto: Fix op_code assignment in
  virtio_crypto_create_asym_session
-Message-ID: <20240702170539-mutt-send-email-mst@kernel.org>
-References: <20240702210443.3060881-1-zheyuma97@gmail.com>
+Message-ID: <20240702170606-mutt-send-email-mst@kernel.org>
+References: <20240702210519.3061098-1-zheyuma97@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240702210443.3060881-1-zheyuma97@gmail.com>
+In-Reply-To: <20240702210519.3061098-1-zheyuma97@gmail.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -100,7 +100,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 02, 2024 at 11:04:43PM +0200, Zheyu Ma wrote:
+
+
+On Tue, Jul 02, 2024 at 11:05:19PM +0200, Zheyu Ma wrote:
 > The assignment of the op_code in the virtio_crypto_create_asym_session
 > function was moved before its usage to ensure it is correctly set.
 > Previously, if the function failed during the key_len check, the op_code
@@ -122,9 +124,11 @@ On Tue, Jul 02, 2024 at 11:04:43PM +0200, Zheyu Ma wrote:
 > 
 > Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 
+see my comments on v1.
 
-why did you send 2 copies?
-
+> ---
+> Changes in v2:
+> - Fix the whitespace in title
 > ---
 >  hw/virtio/virtio-crypto.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
