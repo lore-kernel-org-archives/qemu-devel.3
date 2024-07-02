@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E33E8C3065C
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A74FDC30658
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 14:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOeEl-0001BO-2G; Tue, 02 Jul 2024 10:12:03 -0400
+	id 1sOeAA-0001xp-4p; Tue, 02 Jul 2024 10:07:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeEi-0000vc-5h
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:12:00 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeA7-0001xN-Qy
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeES-000161-Js
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:11:59 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sOeA2-0007qW-FG
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 10:07:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1719929503;
+ s=mimecast20190719; t=1719929229;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=7pMoBjPNl8oUEg5zlwInizxqA4Nbo5A/7NGMCDnRaVI=;
- b=IGfhsfr7DbegstpGF+4AazIPZmWfB2FjcRedkONW2c4BWfvVlD20/JwrlawzAoA12EaEQU
- vmxvOSpS2Fh9aojXohbI4ekOyCrOUFIplVfrFDtqrGtCnyLZkN4JYWs4OWs9NqLQgopDhp
- 2GO9eKS4WyOxSA8Wq/YU65QJNW17jn8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uKK/AiLdjMfeKEPpHLdhaqq0Kf5J8WlC0WD4BsUonqY=;
+ b=YcCOqd34goAra87kDcpbmBl6VYvGqQ1/TS+4NVWbpV4DfUVvysbX5b7x4p4RQGStJr5XAU
+ 3y3Gn8m0gKx+C9L6snsM03V92K1pGGQqrtugHfi4nJV8RIlMMEKnH24gU0FNNcAGN6tsm3
+ VkUJG54ZHx/7UXSpP/GzjKdvmbw8DRU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-RfHDw3LzOXivKUezinyriw-1; Tue, 02 Jul 2024 10:11:39 -0400
-X-MC-Unique: RfHDw3LzOXivKUezinyriw-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4257db9d71fso16896985e9.2
- for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:11:38 -0700 (PDT)
+ us-mta-156---SWPAMiPpaT3qvTYUmPOA-1; Tue, 02 Jul 2024 10:07:08 -0400
+X-MC-Unique: --SWPAMiPpaT3qvTYUmPOA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4246cf4c87dso27791755e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 07:07:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719929497; x=1720534297;
+ d=1e100.net; s=20230601; t=1719929226; x=1720534026;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7pMoBjPNl8oUEg5zlwInizxqA4Nbo5A/7NGMCDnRaVI=;
- b=mjXE2eB775RCvKYdGTAROxnpP5nkAgcj+ovMS3XGyjI7cyE9cX5bIwmfNAMZRt3u4H
- pk9iSak5/eP+Ibpmku4EehH3WIO4xR0Sq5oLfpiA6EJX5UZbqKTrClUQCwUXEdpdcul3
- j3vosJfutWIxKa6BFi5QhFmcHXPIDijhzxv37KzurjCdUipE8PmTe07gtdMP7stf7cc7
- JH8e70W8P2OX6mpRQAIm2GSdhutuXjG4Gl8jd8NktVJHOaKnN8jpZC3qXrSCbGle2uez
- k+AjkJiAjy/rrT8y6UcmvAqwY0imL90f7imBWpZOfJLP7FTMjuvm1YlPiPJQDBCUTezm
- gEUw==
-X-Gm-Message-State: AOJu0YyBOb9CI7jIqxdSimUi+5mhXUH2kfGbGgaslnqYeMyfeNjScv7q
- KDHOFayKKpxnnzztFQT0Ache+3SzUgnM8B/1rSYDyfxPf/o0q0/3bHds5dRdw3ozQzhMucloiPj
- 7UjcHdPtwbWAP+xgD7a5Huh+43Wgzdx8tifzJolXhjDPRzJclrm5BL62aWH0OgSr/aIq+zqcnVb
- t6yHFaqxQT6fvm3HJ3517oBdmUG81dig==
-X-Received: by 2002:a05:600c:4fc5:b0:425:73a8:2fa3 with SMTP id
- 5b1f17b1804b1-4257a04fe4emr52593235e9.30.1719929497638; 
- Tue, 02 Jul 2024 07:11:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGbppqAY4yFRHz3xxAanAETUBxCuOyKH406RquA2nRbW4xIm506aXVMuxJMxO5n6hXq/PS8jg==
-X-Received: by 2002:a05:600c:4fc5:b0:425:73a8:2fa3 with SMTP id
- 5b1f17b1804b1-4257a04fe4emr52592985e9.30.1719929497082; 
- Tue, 02 Jul 2024 07:11:37 -0700 (PDT)
+ bh=uKK/AiLdjMfeKEPpHLdhaqq0Kf5J8WlC0WD4BsUonqY=;
+ b=Ch3J/heSigrkGIeshI67CCTfIi5GcedX9BrWMaksDdOoMINg4ZKvbJKm93OEI/LQkw
+ dTk7woJuBOmWHh5wO+4EFXVz9NNUm6utansRA6Gfzk/PDu6j+tChExk9fKibVzMVUbGk
+ pPOKDvorWbhFVQGQbBkoaQ03Dst3CH7LlX3bsc2JS2ZH3fKOqvvAJvn8FVo2P8M9Yb4F
+ PlCqLP8vcMnobvUPzMw5v6aa3FoBYeYDJTeEb4TOf8XOXmtqO/J+vfwqISTYGdJtTeTj
+ nbchFonH5JldXkxVKiKrlx5JTxyHmRqL8cffyrYRkIMSMN9RPxpB/Kpbu6FmgaqORV/q
+ bXcQ==
+X-Gm-Message-State: AOJu0YxXma9bzcYSeaTMexSfdlH+tfk1efV1hPQvBmwznB0xZKNngbJT
+ lqtMynDf2pZ/LLmw3xJk/af+otj8F7QL2ym/wboJ0Oa3EdQtS7Rsn6UPVQtos2YCANuoLBUGb7m
+ 8VxrOLCytnvYECKBJzyakCdl46KdPtQGK2ZOK/0d+Ayw/C+bqDDrOcryFS9plyJpvkfNXYbqhSo
+ 8TQ9lv7tvJtpZ41MNpjsXZBhYRtLSBoA==
+X-Received: by 2002:a05:600c:3089:b0:425:7835:4382 with SMTP id
+ 5b1f17b1804b1-4257a06da46mr69319105e9.34.1719929226304; 
+ Tue, 02 Jul 2024 07:07:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFI16WUx5T88jq4do5CDDCy8opUrMOMxn6fIqHO1v2MsUOF7gXOPZNNsaddb+9agk+96DqYrA==
+X-Received: by 2002:a05:600c:3089:b0:425:7835:4382 with SMTP id
+ 5b1f17b1804b1-4257a06da46mr69318815e9.34.1719929225633; 
+ Tue, 02 Jul 2024 07:07:05 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:1f5:eadd:8c31:db01:9d01:7604])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0cd66fsm13543766f8f.8.2024.07.02.07.11.35
+ 5b1f17b1804b1-4257cad6beasm120554955e9.47.2024.07.02.07.07.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Jul 2024 07:11:36 -0700 (PDT)
-Date: Tue, 2 Jul 2024 10:11:33 -0400
+ Tue, 02 Jul 2024 07:07:05 -0700 (PDT)
+Date: Tue, 2 Jul 2024 10:07:02 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 89/91] pcie_sriov: Remove num_vfs from PCIESriovPF
-Message-ID: <09379acf8955487df1e48a1ab37ae774d9e791c5.1719929191.git.mst@redhat.com>
+ Si-Wei Liu <si-wei.liu@oracle.com>,
+ Joao Martins <joao.m.martins@oracle.com>, Jason Wang <jasowang@redhat.com>
+Subject: [PULL 02/91] vhost: Perform memory section dirty scans once per
+ iteration
+Message-ID: <c5cd7e5f230afb56891e3826fbb60f9e2b6c086a.1719929191.git.mst@redhat.com>
 References: <cover.1719929191.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -85,6 +86,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,134 +103,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Si-Wei Liu <si-wei.liu@oracle.com>
 
-num_vfs is not migrated so use PCI_SRIOV_CTRL_VFE and PCI_SRIOV_NUM_VF
-instead.
+On setups with one or more virtio-net devices with vhost on,
+dirty tracking iteration increases cost the bigger the number
+amount of queues are set up e.g. on idle guests migration the
+following is observed with virtio-net with vhost=on:
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240627-reuse-v10-8-7ca0b8ed3d9f@daynix.com>
+48 queues -> 78.11%  [.] vhost_dev_sync_region.isra.13
+8 queues -> 40.50%   [.] vhost_dev_sync_region.isra.13
+1 queue -> 6.89%     [.] vhost_dev_sync_region.isra.13
+2 devices, 1 queue -> 18.60%  [.] vhost_dev_sync_region.isra.14
+
+With high memory rates the symptom is lack of convergence as soon
+as it has a vhost device with a sufficiently high number of queues,
+the sufficient number of vhost devices.
+
+On every migration iteration (every 100msecs) it will redundantly
+query the *shared log* the number of queues configured with vhost
+that exist in the guest. For the virtqueue data, this is necessary,
+but not for the memory sections which are the same. So essentially
+we end up scanning the dirty log too often.
+
+To fix that, select a vhost device responsible for scanning the
+log with regards to memory sections dirty tracking. It is selected
+when we enable the logger (during migration) and cleared when we
+disable the logger. If the vhost logger device goes away for some
+reason, the logger will be re-selected from the rest of vhost
+devices.
+
+After making mem-section logger a singleton instance, constant cost
+of 7%-9% (like the 1 queue report) will be seen, no matter how many
+queues or how many vhost devices are configured:
+
+48 queues -> 8.71%    [.] vhost_dev_sync_region.isra.13
+2 devices, 8 queues -> 7.97%   [.] vhost_dev_sync_region.isra.14
+
+Co-developed-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Message-Id: <1710448055-11709-2-git-send-email-si-wei.liu@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 ---
- include/hw/pci/pcie_sriov.h |  1 -
- hw/pci/pcie_sriov.c         | 28 ++++++++++++++++++++--------
- hw/pci/trace-events         |  2 +-
- 3 files changed, 21 insertions(+), 10 deletions(-)
+ include/hw/virtio/vhost.h |  1 +
+ hw/virtio/vhost.c         | 67 +++++++++++++++++++++++++++++++++++----
+ 2 files changed, 62 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index 70649236c1..5148c5b77d 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -16,7 +16,6 @@
- #include "hw/pci/pci.h"
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 02477788df..d75faf46e9 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -129,6 +129,7 @@ struct vhost_dev {
+     void *opaque;
+     struct vhost_log *log;
+     QLIST_ENTRY(vhost_dev) entry;
++    QLIST_ENTRY(vhost_dev) logdev_entry;
+     QLIST_HEAD(, vhost_iommu) iommu_list;
+     IOMMUNotifier n;
+     const VhostDevConfigOps *config_ops;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index a1e8b79e1a..06fc71746e 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -45,6 +45,7 @@
  
- typedef struct PCIESriovPF {
--    uint16_t num_vfs;   /* Number of virtual functions created */
-     uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
-     PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
- } PCIESriovPF;
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 9bd7f8acc3..fae6acea4a 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -57,7 +57,6 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
-     pcie_add_capability(dev, PCI_EXT_CAP_ID_SRIOV, 1,
-                         offset, PCI_EXT_CAP_SRIOV_SIZEOF);
-     dev->exp.sriov_cap = offset;
--    dev->exp.sriov_pf.num_vfs = 0;
-     dev->exp.sriov_pf.vf = NULL;
+ static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
+ static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
++static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
  
-     pci_set_word(cfg + PCI_SRIOV_VF_OFFSET, vf_offset);
-@@ -186,6 +185,12 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
+ /* Memslots used by backends that support private memslots (without an fd). */
+ static unsigned int used_memslots;
+@@ -149,6 +150,47 @@ bool vhost_dev_has_iommu(struct vhost_dev *dev)
      }
  }
  
-+static void clear_ctrl_vfe(PCIDevice *dev)
++static inline bool vhost_dev_should_log(struct vhost_dev *dev)
 +{
-+    uint8_t *ctrl = dev->config + dev->exp.sriov_cap + PCI_SRIOV_CTRL;
-+    pci_set_word(ctrl, pci_get_word(ctrl) & ~PCI_SRIOV_CTRL_VFE);
++    assert(dev->vhost_ops);
++    assert(dev->vhost_ops->backend_type > VHOST_BACKEND_TYPE_NONE);
++    assert(dev->vhost_ops->backend_type < VHOST_BACKEND_TYPE_MAX);
++
++    return dev == QLIST_FIRST(&vhost_log_devs[dev->vhost_ops->backend_type]);
 +}
 +
- static void register_vfs(PCIDevice *dev)
- {
-     uint16_t num_vfs;
-@@ -195,6 +200,7 @@ static void register_vfs(PCIDevice *dev)
-     assert(sriov_cap > 0);
-     num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
-     if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
-+        clear_ctrl_vfe(dev);
-         return;
-     }
- 
-@@ -203,20 +209,18 @@ static void register_vfs(PCIDevice *dev)
-     for (i = 0; i < num_vfs; i++) {
-         pci_set_enabled(dev->exp.sriov_pf.vf[i], true);
-     }
--    dev->exp.sriov_pf.num_vfs = num_vfs;
- }
- 
- static void unregister_vfs(PCIDevice *dev)
- {
--    uint16_t num_vfs = dev->exp.sriov_pf.num_vfs;
-     uint16_t i;
-+    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
- 
-     trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
--                               PCI_FUNC(dev->devfn), num_vfs);
--    for (i = 0; i < num_vfs; i++) {
-+                               PCI_FUNC(dev->devfn));
-+    for (i = 0; i < pci_get_word(cfg + PCI_SRIOV_TOTAL_VF); i++) {
-         pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
-     }
--    dev->exp.sriov_pf.num_vfs = 0;
- }
- 
- void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-@@ -242,6 +246,9 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-         } else {
-             unregister_vfs(dev);
-         }
-+    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
-+        clear_ctrl_vfe(dev);
-+        unregister_vfs(dev);
-     }
- }
- 
-@@ -304,7 +311,7 @@ PCIDevice *pcie_sriov_get_pf(PCIDevice *dev)
- PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n)
- {
-     assert(!pci_is_vf(dev));
--    if (n < dev->exp.sriov_pf.num_vfs) {
-+    if (n < pcie_sriov_num_vfs(dev)) {
-         return dev->exp.sriov_pf.vf[n];
-     }
-     return NULL;
-@@ -312,5 +319,10 @@ PCIDevice *pcie_sriov_get_vf_at_index(PCIDevice *dev, int n)
- 
- uint16_t pcie_sriov_num_vfs(PCIDevice *dev)
- {
--    return dev->exp.sriov_pf.num_vfs;
-+    uint16_t sriov_cap = dev->exp.sriov_cap;
-+    uint8_t *cfg = dev->config + sriov_cap;
++static inline void vhost_dev_elect_mem_logger(struct vhost_dev *hdev, bool add)
++{
++    VhostBackendType backend_type;
 +
-+    return sriov_cap &&
-+           (pci_get_word(cfg + PCI_SRIOV_CTRL) & PCI_SRIOV_CTRL_VFE) ?
-+           pci_get_word(cfg + PCI_SRIOV_NUM_VF) : 0;
++    assert(hdev->vhost_ops);
++
++    backend_type = hdev->vhost_ops->backend_type;
++    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
++    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
++
++    if (add && !QLIST_IS_INSERTED(hdev, logdev_entry)) {
++        if (QLIST_EMPTY(&vhost_log_devs[backend_type])) {
++            QLIST_INSERT_HEAD(&vhost_log_devs[backend_type],
++                              hdev, logdev_entry);
++        } else {
++            /*
++             * The first vhost_device in the list is selected as the shared
++             * logger to scan memory sections. Put new entry next to the head
++             * to avoid inadvertent change to the underlying logger device.
++             * This is done in order to get better cache locality and to avoid
++             * performance churn on the hot path for log scanning. Even when
++             * new devices come and go quickly, it wouldn't end up changing
++             * the active leading logger device at all.
++             */
++            QLIST_INSERT_AFTER(QLIST_FIRST(&vhost_log_devs[backend_type]),
++                               hdev, logdev_entry);
++        }
++    } else if (!add && QLIST_IS_INSERTED(hdev, logdev_entry)) {
++        QLIST_REMOVE(hdev, logdev_entry);
++    }
++}
++
+ static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
+                                    MemoryRegionSection *section,
+                                    hwaddr first,
+@@ -166,12 +208,14 @@ static int vhost_sync_dirty_bitmap(struct vhost_dev *dev,
+     start_addr = MAX(first, start_addr);
+     end_addr = MIN(last, end_addr);
+ 
+-    for (i = 0; i < dev->mem->nregions; ++i) {
+-        struct vhost_memory_region *reg = dev->mem->regions + i;
+-        vhost_dev_sync_region(dev, section, start_addr, end_addr,
+-                              reg->guest_phys_addr,
+-                              range_get_last(reg->guest_phys_addr,
+-                                             reg->memory_size));
++    if (vhost_dev_should_log(dev)) {
++        for (i = 0; i < dev->mem->nregions; ++i) {
++            struct vhost_memory_region *reg = dev->mem->regions + i;
++            vhost_dev_sync_region(dev, section, start_addr, end_addr,
++                                  reg->guest_phys_addr,
++                                  range_get_last(reg->guest_phys_addr,
++                                                 reg->memory_size));
++        }
+     }
+     for (i = 0; i < dev->nvqs; ++i) {
+         struct vhost_virtqueue *vq = dev->vqs + i;
+@@ -383,6 +427,7 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
+         g_free(log);
+     }
+ 
++    vhost_dev_elect_mem_logger(dev, false);
+     dev->log = NULL;
+     dev->log_size = 0;
  }
-diff --git a/hw/pci/trace-events b/hw/pci/trace-events
-index 19643aa8c6..e98f575a9d 100644
---- a/hw/pci/trace-events
-+++ b/hw/pci/trace-events
-@@ -14,7 +14,7 @@ msix_write_config(char *name, bool enabled, bool masked) "dev %s enabled %d mask
- 
- # hw/pci/pcie_sriov.c
- sriov_register_vfs(const char *name, int slot, int function, int num_vfs) "%s %02x:%x: creating %d vf devs"
--sriov_unregister_vfs(const char *name, int slot, int function, int num_vfs) "%s %02x:%x: Unregistering %d vf devs"
-+sriov_unregister_vfs(const char *name, int slot, int function) "%s %02x:%x: Unregistering vf devs"
- sriov_config_write(const char *name, int slot, int fun, uint32_t offset, uint32_t val, uint32_t len) "%s %02x:%x: sriov offset 0x%x val 0x%x len %d"
- 
- # pcie.c
+@@ -998,6 +1043,15 @@ static int vhost_dev_set_log(struct vhost_dev *dev, bool enable_log)
+             goto err_vq;
+         }
+     }
++
++    /*
++     * At log start we select our vhost_device logger that will scan the
++     * memory sections and skip for the others. This is possible because
++     * the log is shared amongst all vhost devices for a given type of
++     * backend.
++     */
++    vhost_dev_elect_mem_logger(dev, enable_log);
++
+     return 0;
+ err_vq:
+     for (; i >= 0; --i) {
+@@ -2075,6 +2129,7 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
+             VHOST_OPS_DEBUG(r, "vhost_set_log_base failed");
+             goto fail_log;
+         }
++        vhost_dev_elect_mem_logger(hdev, true);
+     }
+     if (vrings) {
+         r = vhost_dev_set_vring_enable(hdev, true);
 -- 
 MST
 
