@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3372C3064D
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E81C3065C
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 05:04:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOVfv-0006SP-7o; Tue, 02 Jul 2024 01:03:31 -0400
+	id 1sOVfN-0001js-I8; Tue, 02 Jul 2024 01:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVfu-0006Oi-5p
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:03:30 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVfJ-0001Kz-8v
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:53 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVfn-0007h3-QR
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:03:29 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-42573d3f7e4so24132435e9.0
- for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:03:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOVfG-0007GJ-P2
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 01:02:52 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-424ad991cbbso29004525e9.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Jul 2024 22:02:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719896601; x=1720501401; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719896569; x=1720501369; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=O2eqbBVThGDKqLcuplSVwKVoFglEZNBCuYlGK95Q7ps=;
- b=TqMKpZuMPChSFxEkZZIPHl2Wg1aDizidsBRkOGjRHCyVYtgQhCZLHkFfwNUBSLuPxW
- 7IVVnXRbwGg6LxRsmT6e4/iGOUe94yfYThjuAEcgWqijzcSC1emJp38Jv8VvFNBWZ7NL
- GD/eh5CP2CYW3YvIKylLtF+7yirX+6McUOydV1D6RJSGJMnPspy/55WrtMdcBj4aNzn7
- CxxoQIeelnb7vsLbwUhFujx6N85ES3W7k/+lAhikminP2UfzPBG80XhF1euUsk0Ppzpb
- 9KD4IBcktQfiebr8Nw1Nrf/H/bdplh0LiAKgV0nDzZfVCphoD+RvPLMFH+VhjGsDrzEh
- 86Vw==
+ bh=IoGL6utQV9KZz7a0NZhlOkuZgg5oZQA8TSNIPaPeX+c=;
+ b=pxJRoc9gnLyrVxrTMnue1Z0fOLHpNxnGcGXazHLBw5djDfb3GGDKZOBolVqHgGkbWo
+ Zxd1nEsbaJjKQ3AVnUh/rvVRx4eauN5Sm88b3k+I+lFc6LPwsObrnYIsjQ+RW3re3yG5
+ DA4lmFoicpsSxKRya91W5EbkmPZxqsvwO05SkU2xGf2w7gbscHmLrzKyN52CMUlhFf06
+ 8vVCqwlQuLerI1zgDOcd0hyr7lhp5YcpzPNEuXeeBZRM9CuNNjEIZMunkQv6l2ZDERZw
+ EfnIkpJOVrXryB0EEDkRQjyjeniyP6qAG+m34rdYIiLZ13P75jFdXgWiUbXtdIQHoLaF
+ JcOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719896601; x=1720501401;
+ d=1e100.net; s=20230601; t=1719896569; x=1720501369;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=O2eqbBVThGDKqLcuplSVwKVoFglEZNBCuYlGK95Q7ps=;
- b=IjUO3s0tWgNLSGHRRZYHbR+C5iMlxNswERBrAtytXd4GVn/oR5uIZxSPiX5TudqBq/
- 6FacFbgY3rtt09aAv4APwUFY+GhR9F+G4c6YJ42B02Wnijsiclq8WMAp7Kn/UjRUJ8Bj
- wvGDTnyD92R2ONiGS5B3knUjfU4p0cJc0tWA18Zjn9UDqpCJp8javmPD53Fsq5liVif2
- DYgt8s+hw5TM2nyhFYxBRBpj8sZq6ikNCCq+eSVPdzqV/lPmLT+swFgmtVqTRo5fPM+Q
- xyiPSBVH7NqaL8GQ+xROwZM3pwQWD4KzMYpzgMtHIL8Ez6KzVLW7UDX92ty1QafgK+9l
- ic2Q==
-X-Gm-Message-State: AOJu0YyZHJZN/qQ4JViIDH0+JND45/6cF7n4iBrxjSQiV4kt5qcfEeE6
- u79XVyyS1vUFfTZrxR7r3XDPGJFfGAVaF4qnkk2PrsDgfjTo5idsIdmRDViZz/VIIBw6OBIHZ2K
- J
-X-Google-Smtp-Source: AGHT+IG3TonSCRws/XC0Fh7/GuvA5ROm5PRXzfzI9R9noEsYJ/33S6an61mLBQTd2EnBHnkiUS/+xw==
-X-Received: by 2002:a05:600c:4b1a:b0:425:618b:3a4a with SMTP id
- 5b1f17b1804b1-4257a0642d4mr49555235e9.25.1719896600964; 
- Mon, 01 Jul 2024 22:03:20 -0700 (PDT)
+ bh=IoGL6utQV9KZz7a0NZhlOkuZgg5oZQA8TSNIPaPeX+c=;
+ b=Uc3PzVzXLwDw6D4N1guwKQ7E8sKkfJ6216lE0f1XH5aSkGVeGjfMIMhT72pK7kDLqC
+ NIR7YYl1pvipwQs8kejbyQ0oXTiTIGFIw0NDYxYHDivgUc1X/8qozZEDZNx49o6KjeLs
+ W9IcMlswjrEpMOc4bTyfLLUg+D/V7SbqrQ8hjLWL/HbqeYUCb+p4l5brdn5EVykQzoFY
+ emjui1qbqxPeiaS5LfsSO9jU80gRuitvqu8X8moF7QWFKvg3nlj99rxrgaPwniWaBwQJ
+ l1z2quMYfi62G8iGtn3lV2TV1FyX8di1B3KOgm+/UCIOYTqb7D1TsJ6D3JfZLh+2TGPm
+ QYKg==
+X-Gm-Message-State: AOJu0Yw8l9F8QxfCfW36TajAaEEzg3YRjXP+E9hTvFT7x7TxaW2LfT9I
+ SioCaHbbTF5KZuHyVuHe41LIOmHr8xBCCxvp1yBKrZOVB26N/CW+rPy86KNQkKPg9OJtscfWDZ5
+ c
+X-Google-Smtp-Source: AGHT+IFVM6prAhPdX59Xe0UIszUnCIjlrZFwQ2OcgmLo4HyK34MbZmFeg+xhbdSncMOvgFCOT5PWqg==
+X-Received: by 2002:a05:600c:3388:b0:425:600a:5e95 with SMTP id
+ 5b1f17b1804b1-4257a06db61mr43950945e9.39.1719896568880; 
+ Mon, 01 Jul 2024 22:02:48 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.209.58])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a1129ccsm11975427f8f.117.2024.07.01.22.03.19
+ 5b1f17b1804b1-4256af389efsm182140545e9.7.2024.07.01.22.02.47
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 01 Jul 2024 22:03:20 -0700 (PDT)
+ Mon, 01 Jul 2024 22:02:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 20/22] block/file-posix: Drop ifdef for macOS versions older
- than 12.0
-Date: Tue,  2 Jul 2024 07:01:10 +0200
-Message-ID: <20240702050112.35907-21-philmd@linaro.org>
+Subject: [PULL 15/22] docs: document special exception for machine type
+ deprecation & removal
+Date: Tue,  2 Jul 2024 07:01:05 +0200
+Message-ID: <20240702050112.35907-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240702050112.35907-1-philmd@linaro.org>
 References: <20240702050112.35907-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,43 +96,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-macOS versions older than 12.0 are no longer supported.
+This extends the deprecation policy to indicate that versioned machine
+types will be marked deprecated after 3 years, and then subject to
+removal after a further 3 years has passed.
 
-docs/about/build-platforms.rst says:
-> Support for the previous major version will be dropped 2 years after
-> the new major version is released or when the vendor itself drops
-> support, whichever comes first.
-
-macOS 12.0 was released 2021:
-https://www.apple.com/newsroom/2021/10/macos-monterey-is-now-available/
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240629-macos-v1-3-6e70a6b700a0@daynix.com>
+Message-ID: <20240620165742.1711389-15-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- block/file-posix.c | 5 -----
- 1 file changed, 5 deletions(-)
+ docs/about/deprecated.rst | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index f3bd946afa..ff928b5e85 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -3929,11 +3929,6 @@ BlockDriver bdrv_file = {
- static kern_return_t GetBSDPath(io_iterator_t mediaIterator, char *bsdPath,
-                                 CFIndex maxPathSize, int flags);
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index ff3da68208..bba12d1641 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -11,6 +11,19 @@ releases, the feature is liable to be removed. Deprecated features may also
+ generate warnings on the console when QEMU starts up, or if activated via a
+ monitor command, however, this is not a mandatory requirement.
  
--#if !defined(MAC_OS_VERSION_12_0) \
--    || (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_VERSION_12_0)
--#define IOMainPort IOMasterPort
--#endif
--
- static char *FindEjectableOpticalMedia(io_iterator_t *mediaIterator)
- {
-     kern_return_t kernResult = KERN_FAILURE;
++As a special exception to this general timeframe, rather than have an
++indefinite lifetime, versioned machine types are only intended to be
++supported for a period of 6 years, equivalent to 18 QEMU releases. All
++versioned machine types will be automatically marked deprecated after an
++initial 3 years (9 QEMU releases) has passed, and will then be deleted after
++a further 3 year period has passed. It is recommended that a deprecated
++machine type is only used for incoming migrations and restore of saved state,
++for pre-existing VM deployments. They should be scheduled for updating to a
++newer machine type during an appropriate service window. Newly deployed VMs
++should exclusively use a non-deprecated machine type, with use of the most
++recent version highly recommended. Non-versioned machine types follow the
++general feature deprecation policy.
++
+ Prior to the 2.10.0 release there was no official policy on how
+ long features would be deprecated prior to their removal, nor
+ any documented list of which features were deprecated. Thus
 -- 
 2.41.0
 
