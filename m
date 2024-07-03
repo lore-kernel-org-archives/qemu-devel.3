@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7B7C30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 16:08:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E68EEC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 16:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP2WQ-00067w-TI; Wed, 03 Jul 2024 12:07:54 -0400
+	id 1sP2tf-0000lq-Ad; Wed, 03 Jul 2024 12:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sP2WP-00066O-EX
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:07:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sP2WN-0007cc-Jw
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:07:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720022870;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OsxnJALMMzgg5cI1/sgKz0n1A6s0eNcUYOZrO7tY/u8=;
- b=TK/O27vEt0Dy2DEXbj5UkBQT/fVdc7PFIKtDRoP8RJ+fLYMB8qbUD5B4hX22yG8eaBQfSK
- vDlf+JGjUcWmFN22f0Ezkd9XnL6d14MooE/1JBpvYhwLGRYc446Xxy/DdSQuRo0ga9AbS+
- O6P09DkjM5ROLtrBLKzihYMHBBzzZEQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-LnukBp42M5WpWph4wgRDJg-1; Wed, 03 Jul 2024 12:07:48 -0400
-X-MC-Unique: LnukBp42M5WpWph4wgRDJg-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42566c4aa0fso44250115e9.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 09:07:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sP2tc-0000lW-H7
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:31:52 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sP2ta-0003pk-IS
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:31:52 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-710437d0affso3345067a12.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 09:31:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720024308; x=1720629108; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5imSDxRRvQ1NCfqnWNYe8MKqdt3XxEvCuZ0K7waXPK8=;
+ b=fWLOVlmr+c5E99G+PUGyYBU1PcT4qppD8+MnJQdMJtcMHF6BkUEoy2+Wa/+YfHuOWv
+ e/V3Nfx4KFR8/mMdRAr61fIwchBU5a0oDxSszITuZAoiGyYierjLJWKbaUk/p4ZWjBVg
+ F6ZStPywbKeHny6KVWN88/xiJZ8U1WA4OjOaXthxbzlE2KmIs/K5B51QJMzZ7+nf0x4W
+ 03CMa1ZIkSTFVQW5cixgFsj7I4tMEFcdN/yKhHABbzjlkIeT0/njhLkLnPUWI6lErQyq
+ r75lotYEUqkV9l3fsb3Dt1eRk5VnvHL1acJZfap9D43rjDvt7jle2fnO+gcCL/BHzarU
+ McmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720022867; x=1720627667;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=OsxnJALMMzgg5cI1/sgKz0n1A6s0eNcUYOZrO7tY/u8=;
- b=QEcOPrMyMGwVuw++ef2FZwGT65fnQYGiWOrJ301TeEVhq/vMLM/Kgn2ziNcIAlFePj
- KWeOPwaHZJgElwJaaoGSRQLQbMiGJ6Q+uGrUqk03HAsuflzLUqies1pRtMd78YAVUh0Z
- rlMpdvR1NFjpA8lmNkvTEDJD6R/iosIiVqfwcVcacA+rPO/N5bgkhqEm7twmPS/3DQM5
- upYIp3aFdFJJXa2C0xoJ3R9uW0PtqM4+1S/RscLMDv1YKS71B0FOxFtHrK6LpBJ2Tc92
- jv4MGFRkcHmhFFBVBbodMpiOPB1fmc50fD47Eu3X54Cf043rC9v3H0j4nVrQ/HcMprL9
- JUyw==
-X-Gm-Message-State: AOJu0Yz8zxKgbMinhP2ZVgGoastuT+6vr5C7QakdlbXreH911fyp6eGm
- buR2zgWI+cFWuRgjavnFk8r5O7X96gvG6sykdmJhBrk36xUBMVJ++MJSLhRc1U2Kp51l5QG2cMW
- ZBFpW5vfws+zPn38MdRSBCWAm/+q8eDNQoGU4Qj6V1R4eXIRmBRlY8y5mr8ZF3Oa6R8MCq73cDF
- V09Ah4E6iigEmCdXJ46O0d8ihfTwU=
-X-Received: by 2002:a05:600c:491d:b0:425:6d66:e432 with SMTP id
- 5b1f17b1804b1-4257a03a6c8mr80425725e9.22.1720022867532; 
- Wed, 03 Jul 2024 09:07:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHztmedgAI5An/BTtMox7wsPnsORt/wP4r1lqho7ZueQZv7RKlqzTs3rKhqW1gYRwjUk46KU2oBChZYqhyNVLA=
-X-Received: by 2002:a05:600c:491d:b0:425:6d66:e432 with SMTP id
- 5b1f17b1804b1-4257a03a6c8mr80425645e9.22.1720022867215; Wed, 03 Jul 2024
- 09:07:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720024308; x=1720629108;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5imSDxRRvQ1NCfqnWNYe8MKqdt3XxEvCuZ0K7waXPK8=;
+ b=iYC/fXaf3bHj6dZpsAN03dQ/RfG8MkVUwQby8RKaPz4ZFmK1F3dqrBIIfzckC1dlqo
+ G82ai/+Fzad1X8u2A1LIsD6//4S9MDSynpCNK16cAprVai9qNClVHZDHroCyQdr9WJXD
+ bA2Cpp+g+M1/+7bgLCo5R/YcMmve0uqUh+RmDm+TGAohZCdYYiLLFIaKYGz5qkPE6c33
+ t1/Q9wAIZg9MO6C6ceGEjk9dAGqC8wAFKn7UtdN42USvKynl0jBtA6HcMkxSv1UnqhWr
+ +/1GFcuLveFyMziHoBOmWV8bOtZBvG7AyIBMh2BFFtRHkf6ZSEfo02CT4rie+sEL5qh8
+ Joyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPNQ/s/AI9tRjVRgUw+UfnzH0tuUVohQC/eMcB7A5gdkerpywwLIN3/4/GFxfuHqZFyTigHEV1e2YLhqhYAKjo1uf9fBQ=
+X-Gm-Message-State: AOJu0YwcDUbRt3T83SDXCecQvJoZXYrIKIywpDvOaMMKFk0BNkFd6rEE
+ 6G7d7IVsDQTjD5TXdht68kYvBR40u9747DnSTUM/CHj9gwQfsOWLf+uvtVW+mKM=
+X-Google-Smtp-Source: AGHT+IERbz444/0nS+HoE0jrhzRLsR17MG9lZ5TEK60d2bt1eUDsANyqL6MAfuwlHCssomyDDf4kew==
+X-Received: by 2002:a05:6a20:7350:b0:1bd:2071:33cb with SMTP id
+ adf61e73a8af0-1bef60f2575mr13374381637.13.1720024307466; 
+ Wed, 03 Jul 2024 09:31:47 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-708044ae297sm10615327b3a.155.2024.07.03.09.31.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Jul 2024 09:31:47 -0700 (PDT)
+Message-ID: <f0961f6f-642c-4dc8-8bf3-1457f71da500@linaro.org>
+Date: Wed, 3 Jul 2024 09:31:45 -0700
 MIME-Version: 1.0
-References: <20240702195903.204007-1-jsnow@redhat.com>
- <20240702195903.204007-2-jsnow@redhat.com>
- <e0302039-dade-43a7-8bdb-a96d1df76f38@redhat.com>
- <CAFn=p-Yqi5umFBPtUYj2EFiRRA2E6VTgDi=TbuwoOSTs+s9OoA@mail.gmail.com>
- <CABgObfZik_bKuZffohNO1fMss+81kTzaHPEHSPu6H2MCoJVZ=w@mail.gmail.com>
- <CAFn=p-atW1AiW8gX6nUm0DzhG4Qrf8A++vArJQhyUo2bTyPqtg@mail.gmail.com>
-In-Reply-To: <CAFn=p-atW1AiW8gX6nUm0DzhG4Qrf8A++vArJQhyUo2bTyPqtg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 3 Jul 2024 18:07:35 +0200
-Message-ID: <CABgObfZ=vUJeve0wX2HafdxtwH3iFZQHWJeu+XD-MA7Wrq78dA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] Python: bump minimum sphinx version to 3.4.3
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/88] virtio: features,fixes
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <cover.1719951168.git.mst@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <cover.1719951168.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,32 +97,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 3, 2024 at 5:25=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
-> To be clear I mean offline, isolated RPM builds under RHEL9 where I don't=
- think we can utilize PyPI at all; and vendoring Sphinx is I think not a pr=
-actical option due to the number of dependencies and non-pure Python deps.
->
-> It's not a problem for developer workflow, just downstream packaging.
+On 7/2/24 13:15, Michael S. Tsirkin wrote:
+> The following changes since commit 1152a0414944f03231f3177207d379d58125890e:
+> 
+>    Merge tag 'pull-xen-20240701' ofhttps://xenbits.xen.org/git-http/people/aperard/qemu-dm  into staging (2024-07-01 09:06:25 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git  tags/for_upstream
+> 
+> for you to fetch changes up to 29e45afd8d6abf7a67dab5db0ab1cfbc388daefe:
+> 
+>    hw/pci: Replace -1 with UINT32_MAX for romsize (2024-07-02 11:27:19 -0400)
+> 
+> ----------------------------------------------------------------
+> virtio: features,fixes
+> 
+> A bunch of improvements:
+> - vhost dirty log is now only scanned once, not once per device
+> - virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
+> - cxl gained DCD emulation support
+> - pvpanic gained shutdown support
+> - beginning of patchset for Generic Port Affinity Structure
+> - s3 support
+> - friendlier error messages when boot fails on some illegal configs
+> - for vhost-user, VHOST_USER_SET_LOG_BASE is now only sent once
+> - vhost-user now works on any POSIX system
+> - sr-iov VF setup code has been reworked significantly
+> - new tests, particularly for risc-v ACPI
+> - bugfixes
+> 
+> Signed-off-by: Michael S. Tsirkin<mst@redhat.com>
 
-Agreed, switching to PyPI packages is not something that should be
-done lightly---only after the platform Python is EOL, and only if
-there are benefits for QEMU to require 3.9 (like there were for 3.7).
+Fails testing:
 
-In that case, downstream could still package QEMU but they'd have to
-build python39-sphinx or something like that.
+https://gitlab.com/qemu-project/qemu/-/jobs/7257337667
 
-Paolo
+qemu-system-loongarch64: -chardev 
+socket,id=chr-reconnect,path=/tmp/vhost-test-9Y0NQ2/reconnect.sock,server=on: info: QEMU 
+waiting for connection on: disconnected:unix:/tmp/vhost-test-9Y0NQ2/reconnect.sock,server=on
+**
+ERROR:../src/tests/qtest/vhost-user-test.c:255:wait_for_fds: assertion failed: (s->fds_num)
+qemu-system-loongarch64: Failed to set msg fds.
+qemu-system-loongarch64: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
+qemu-system-loongarch64: Failed to set msg fds.
+qemu-system-loongarch64: vhost VQ 1 ring restore failed: -22: Invalid argument (22)
+qemu-system-loongarch64: Failed to write msg. Wrote -1 instead of 12.
+qemu-system-loongarch64: vhost_backend_init failed: Protocol error
+qemu-system-loongarch64: failed to init vhost_net for queue 0
+# child process 
+(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
+[43438]) exit status: 1 (error)
+# child process 
+(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
+[43438]) stdout: ""
+# child process 
+(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
+[43438]) stderr: "qemu-system-loongarch64: -chardev 
+socket,id=chr-reconnect,path=/tmp/vhost-test-9Y0NQ2/reconnect.sock,server=on: info: QEMU 
+waiting for connection on: 
+disconnected:unix:/tmp/vhost-test-9Y0NQ2/reconnect.sock,server=on\n**\nERROR:../src/tests/qtest/vhost-user-test.c:255:wait_for_fds: 
+assertion failed: (s->fds_num)\nqemu-system-loongarch64: Failed to set msg 
+fds.\nqemu-system-loongarch64: vhost VQ 0 ring restore failed: -22: Invalid argument 
+(22)\nqemu-system-loongarch64: Failed to set msg fds.\nqemu-system-loongarch64: vhost VQ 1 
+ring restore failed: -22: Invalid argument (22)\nqemu-system-loongarch64: Failed to write 
+msg. Wrote -1 instead of 12.\nqemu-system-loongarch64: vhost_backend_init failed: Protocol 
+error\nqemu-system-loongarch64: failed to init vhost_net for queue 0\n"
+**
+ERROR:../src/tests/qtest/qos-test.c:190:subprocess_run_one_test: child process 
+(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
+[43438]) failed unexpectedly
+not ok 
+/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect 
+- ERROR:../src/tests/qtest/qos-test.c:190:subprocess_run_one_test: child process 
+(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
+[43438]) failed unexpectedly
+Bail out!
+Abort trap (core dumped)
 
-> Luckily OpenSUSE offers newer Sphinx, but RHEL doesn't yet. Maybe that ca=
-n be rectified eventually - possibly after 3.8 is EOL and there is increase=
-d demand for newer Python packages to be made available in RHEL... but not =
-yet, today.
->
->>
->>
->> Paolo
->>
->
-> Thanks for the ack O:-)
 
+r~
 
