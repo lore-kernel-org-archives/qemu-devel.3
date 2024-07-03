@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06155C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 14:52:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5CBDC30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 14:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP1LJ-0007so-Bf; Wed, 03 Jul 2024 10:52:22 -0400
+	id 1sP1LW-0008Rk-Ay; Wed, 03 Jul 2024 10:52:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sP1Ky-0007jo-U6; Wed, 03 Jul 2024 10:52:02 -0400
-Received: from out30-132.freemail.mail.aliyun.com ([115.124.30.132])
+ id 1sP1LT-0008Mj-AN; Wed, 03 Jul 2024 10:52:31 -0400
+Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sP1Kv-00038Q-RI; Wed, 03 Jul 2024 10:52:00 -0400
+ id 1sP1LP-0003oa-65; Wed, 03 Jul 2024 10:52:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1720018312; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=lq+V9b2Sj5qLSLZhuec5woSRJ0VhkBLEUqs9ya/fTpY=;
- b=sPfzOFqsnYIL/nPJN2ciqBmBHVboHJXqev/bV6Q9ig0S9hRGM68/MNQqjDvfdY60p+d1bfnyDL5oviCO/LASnUoylvJ0g+JJUO2s4OYWwLzuP+ztCKASaVQTSq5Y18Yu7SkvHkKfWOozQw8YtZ7jmj+tB1kvLTHZCrPk2VZYJUU=
+ t=1720018343; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=30Iyc8ruWmszK8588VDlDFaHMZKUnQUhn/PDC1ML8cY=;
+ b=kN28112J6x45+o+pfyOwz4xCgK5+G7JuL6jr/C0QtkGfkVmznhK2iiAzT/rP4Oeg1bh/oCvBhtfRo1QA5wJVVY5Ekk4wyjt1PdrFcg3EKd8zK7MdBPoir4kY72AgoU2LZLSpXb1OkHB5XIrlG5UQUbzTTTL8jHX2zVQ1l4JkuM8=
 X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R191e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033023225041;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W9nebdm_1720018310; 
+ TI=SMTPD_---0W9nebnl_1720018341; 
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W9nebdm_1720018310) by smtp.aliyun-inc.com;
- Wed, 03 Jul 2024 22:51:51 +0800
+ fp:SMTPD_---0W9nebnl_1720018341) by smtp.aliyun-inc.com;
+ Wed, 03 Jul 2024 22:52:23 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
  zhiwei_liu@linux.alibaba.com,
  TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Subject: [PATCH v3 2/7] target/riscv: Adjust PMP size for no-MMU RV64 QEMU
- running RV32
-Date: Wed,  3 Jul 2024 22:49:16 +0800
-Message-Id: <20240703144921.1281-3-zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v3 3/7] target/riscv: Correct SXL return value for RV32 in
+ RV64 QEMU
+Date: Wed,  3 Jul 2024 22:49:17 +0800
+Message-Id: <20240703144921.1281-4-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20240703144921.1281-1-zhiwei_liu@linux.alibaba.com>
 References: <20240703144921.1281-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.132;
+Received-SPF: pass client-ip=115.124.30.101;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-132.freemail.mail.aliyun.com
+ helo=out30-101.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -73,29 +73,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
-Ensure pmp_size is correctly determined using mxl for RV32
-in RV64 QEMU.
+Ensure that riscv_cpu_sxl returns MXL_RV32 when runningRV32 in an
+RV64 QEMU.
 
 Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Fixes: 05e6ca5e156 ("target/riscv: Ignore reserved bits in PTE for RV64")
 Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/pmp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/cpu.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-index 9eea397e72..f65aa3dba7 100644
---- a/target/riscv/pmp.c
-+++ b/target/riscv/pmp.c
-@@ -326,7 +326,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr addr,
-              */
-             pmp_size = -(addr | TARGET_PAGE_MASK);
-         } else {
--            pmp_size = sizeof(target_ulong);
-+            pmp_size = 2UL << riscv_cpu_mxl(env);
-         }
-     } else {
-         pmp_size = size;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 87742047ce..49de81be7e 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -693,8 +693,11 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *env)
+ #ifdef CONFIG_USER_ONLY
+     return env->misa_mxl;
+ #else
+-    return get_field(env->mstatus, MSTATUS64_SXL);
++    if (env->misa_mxl != MXL_RV32) {
++        return get_field(env->mstatus, MSTATUS64_SXL);
++    }
+ #endif
++    return MXL_RV32;
+ }
+ #endif
+ 
 -- 
 2.25.1
 
