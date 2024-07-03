@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4E7C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:53:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F6E1C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvkI-0004JC-93; Wed, 03 Jul 2024 04:53:46 -0400
+	id 1sOvl5-00056Q-Mw; Wed, 03 Jul 2024 04:54:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1sOvkF-0004IV-ME
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:53:43 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
- id 1sOvkD-0004iJ-F2
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:53:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1719996821; x=1751532821;
- h=from:to:cc:subject:in-reply-to:references:date:
- message-id:mime-version;
- bh=uJy6npIbvFhICTmqeRyyXfHKUe2Xu5teyWK4mPdnf60=;
- b=g/ahm4rmFWfpd3VC3C/iUTS0xUy/Ao6OI3QE3fHrqJpzDuSlP1kwaJF5
- axotzHVs/6Laq4B7SpNId6lMHB8awO0t1V09F9KofBOC+s5qmxW89yPIE
- RvxZuM1oou6+3OTa0J5wn7/eYxC0hvDghkvK4UGBd6jl8sfTfbRnRyg8N
- u4YoR0HrYaK0Jv7rJRf3uIrUtUpn1AjnVvCXwOUbhiL9dcH7ztey8Y4Uh
- JciTNE+qIFopTNioz7hXIleT8KahGI7sVzDVFnjUkLBMOtM0AqY77m3hq
- 4iKdS6/t5UksnEYd0hLGPSqI17iSf0PnQhNjn728sbJem0JsiYxTPmF0D g==;
-X-CSE-ConnectionGUID: K7x1ja/gR8ygFmNR+htxfA==
-X-CSE-MsgGUID: Ip34g9+8QUqfWM7Z8oxPFQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11121"; a="27818569"
-X-IronPort-AV: E=Sophos;i="6.09,181,1716274800"; d="scan'208";a="27818569"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2024 01:53:36 -0700
-X-CSE-ConnectionGUID: TNLyrCPHR5SOEUdQfrNb3w==
-X-CSE-MsgGUID: b4l4Pq1yTnWXfVH4a1AjFA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,181,1716274800"; d="scan'208";a="50633629"
-Received: from unknown (HELO yhuang6-desk2.ccr.corp.intel.com)
- ([10.238.208.55])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2024 01:53:31 -0700
-From: "Huang, Ying" <ying.huang@intel.com>
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>,  Gregory Price
- <gourry.memverge@gmail.com>,  <aneesh.kumar@linux.ibm.com>,
- <mhocko@suse.com>,  <tj@kernel.org>,  <john@jagalactic.com>,  Eishan
- Mirakhur <emirakhur@micron.com>,  Vinicius Tavares Petrucci
- <vtavarespetr@micron.com>,  Ravis OpenSrc <Ravis.OpenSrc@micron.com>,
- Alistair Popple <apopple@nvidia.com>,  Srinivasulu Thanneeru
- <sthanneeru@micron.com>,  SeongJae Park <sj@kernel.org>,  "Rafael J.
- Wysocki" <rafael@kernel.org>,  "Len Brown" <lenb@kernel.org>,  Andrew
- Morton <akpm@linux-foundation.org>,  "Dave Jiang" <dave.jiang@intel.com>,
- Dan Williams <dan.j.williams@intel.com>,  <linux-acpi@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>,  <linux-mm@kvack.org>,  "Ho-Ren (Jack)
- Chuang" <horenc@vt.edu>,  "Ho-Ren (Jack) Chuang"
- <horenchuang@bytedance.com>,  "Ho-Ren (Jack) Chuang"
- <horenchuang@gmail.com>,  <linux-cxl@vger.kernel.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2 1/1] memory tier: consolidate the initialization of
- memory tiers
-In-Reply-To: <20240702142535.00003dc0@Huawei.com> (Jonathan Cameron's message
- of "Tue, 2 Jul 2024 14:25:35 +0100")
-References: <20240628060925.303309-1-horen.chuang@linux.dev>
- <20240628060925.303309-2-horen.chuang@linux.dev>
- <20240702142535.00003dc0@Huawei.com>
-Date: Wed, 03 Jul 2024 16:51:40 +0800
-Message-ID: <87a5iykgdf.fsf@yhuang6-desk2.ccr.corp.intel.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sOvl4-000562-0p; Wed, 03 Jul 2024 04:54:34 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sOvl2-00052B-Ay; Wed, 03 Jul 2024 04:54:33 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-70670188420so3537271b3a.2; 
+ Wed, 03 Jul 2024 01:54:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719996868; x=1720601668; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lBtGd/kc9qY147JUp6Sd3Zdv63Ew3wYPxd807yyYljE=;
+ b=iHOIXihS7KPEIrBbL+FVFl4dbPpNf75UFDH1fOnHsBfczKVbT4Z4amYdOwOr+6/FOS
+ KnqAUUdpd+XcvkDt7W0bZNIyLManlu4WdxfbFi31pY97XeMIhAI3Qb9BjnW3AHwRi5vV
+ sZxLsmGUOncZV7Kkir4i+MyxQnaC5QYyOWL+XXX8bIN8Jm9t7j1LYU1e08AN9Cnj0+Hl
+ 8466OFPm5GgjORoWcvohMNQ3lhUH4DNDAgLy8+BFlTdd/6ZMoI/L3yPoP1KYIdBLsMZI
+ dVOcL9U2ieTt9OTwbnC8tlymYX1M7AYC/VUjOMd1KJeUMt00XaRVozfQ3/eGzu1L4UW0
+ 5vaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719996868; x=1720601668;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lBtGd/kc9qY147JUp6Sd3Zdv63Ew3wYPxd807yyYljE=;
+ b=JCuZ9HilvzRvGiJCvRTQES/dbg1F/IkNYmo/fDxgYt3nKtmuELKSbgh/ZU6hhCwciu
+ 6paslcwWd3Lp7LHPdlE0NsLkrfyfjtOTTXca7NpCmxG8VflQdiQxwC4C3/zrVDY7/FGh
+ 8kTQeuUdaZaDQWreurSc/dCMvdhdN7xJyFDEkUGdLyX1vfHwuK7D1cipROPPNyKBZFrZ
+ QiDpIJw2ydKrgCJNPt4L/5Dt7e/AvzUfsYj0O9ECKM+rqxiQASOcU1KmV7YCnOgbp01j
+ OOq2Tp1Fm/Fzx7PgtSKGYZjKsvUSMMSySeL4PfS6BgkgEGOH4FX2SDTI/i3vX2hI+4+f
+ NN8A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVoH/X9To72zaIMTO8T48r685NJ5o3S657Z0/DK9uRteDM/JZa40xPgAmktjPN8d0zvpHmlH1MABWURJ7AGC4k09OY4XmQ=
+X-Gm-Message-State: AOJu0YzKbSP6vdrvu1mx+s5t3JEzZzBGCGy8tOVi2OSuJnlOcoaJSY+3
+ wN9O54a+VwU5d0Wnnuurm0SFtJ43l5Zfen+sxLbxTQgeytwyEJAHvsoslURI
+X-Google-Smtp-Source: AGHT+IEmi3qMPx0c+sBI2hThJxDEPHmbpRinGwXkWR5s2eZ2VIyPaGFs6m+ORnCP+j4o2I+R2ZV0uQ==
+X-Received: by 2002:a05:6a00:2ea6:b0:705:bf9c:4cdd with SMTP id
+ d2e1a72fcca58-70aaad4f015mr12089110b3a.16.1719996868368; 
+ Wed, 03 Jul 2024 01:54:28 -0700 (PDT)
+Received: from jeuk-MS-7D42.. ([210.223.46.112])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7080246e1d9sm9905498b3a.71.2024.07.03.01.54.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jul 2024 01:54:27 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: jeuk20.kim@samsung.com, qemu-block@nongnu.org, j-young.choi@samsung.com,
+ minwoo.im@samsung.com
+Subject: [PATCH] hw/ufs: Fix mcq register range determination logic
+Date: Wed,  3 Jul 2024 17:54:10 +0900
+Message-Id: <6dcb63036f3b35c833de752d1472d08bf4a9c289.1719996804.git.jeuk20.kim@samsung.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ascii
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=ying.huang@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,86 +92,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> writes:
+The function ufs_is_mcq_reg() only evaluated the range of the
+mcq_op_reg offset, which is defined as a constant.
+Therefore, it was possible for ufs_is_mcq_reg() to return true
+despite ufs device is configured to not support the mcq.
+This could cause ufs_mmio_read()/ufs_mmio_write() to overflow the
+buffer. So fix it.
 
-> On Fri, 28 Jun 2024 06:09:23 +0000
-> "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev> wrote:
+Fixes: 5c079578d2e4 ("hw/ufs: Add support MCQ of UFSHCI 4.0")
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+---
+ hw/ufs/ufs.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-[snip]
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 683fff5840..cf0edd281c 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -57,7 +57,13 @@ static inline uint64_t ufs_reg_size(UfsHc *u)
+ 
+ static inline bool ufs_is_mcq_reg(UfsHc *u, uint64_t addr, unsigned size)
+ {
+-    uint64_t mcq_reg_addr = ufs_mcq_reg_addr(u, 0);
++    uint64_t mcq_reg_addr;
++
++    if (!u->params.mcq) {
++        return false;
++    }
++
++    mcq_reg_addr = ufs_mcq_reg_addr(u, 0);
+     return (addr >= mcq_reg_addr &&
+             addr + size <= mcq_reg_addr + sizeof(u->mcq_reg));
+ }
+-- 
+2.34.1
 
->> @@ -875,8 +886,7 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
->>  
->>  static int __init memory_tier_init(void)
->>  {
->> -	int ret, node;
->> -	struct memory_tier *memtier;
->> +	int ret;
->>  
->>  	ret = subsys_virtual_register(&memory_tier_subsys, NULL);
->>  	if (ret)
->> @@ -887,7 +897,8 @@ static int __init memory_tier_init(void)
->>  				GFP_KERNEL);
->>  	WARN_ON(!node_demotion);
->>  #endif
->> -	mutex_lock(&memory_tier_lock);
->> +
->> +	guard(mutex)(&memory_tier_lock);
->
-> If this was safe to do without the rest of the change (I think so)
-> then better to pull that out as a trivial precursor so less noise
-> in here.
->
->>  	/*
->>  	 * For now we can have 4 faster memory tiers with smaller adistance
->>  	 * than default DRAM tier.
->> @@ -897,29 +908,9 @@ static int __init memory_tier_init(void)
->>  	if (IS_ERR(default_dram_type))
->>  		panic("%s() failed to allocate default DRAM tier\n", __func__);
->>  
->> -	/*
->> -	 * Look at all the existing N_MEMORY nodes and add them to
->> -	 * default memory tier or to a tier if we already have memory
->> -	 * types assigned.
->> -	 */
->> -	for_each_node_state(node, N_MEMORY) {
->> -		if (!node_state(node, N_CPU))
->> -			/*
->> -			 * Defer memory tier initialization on
->> -			 * CPUless numa nodes. These will be initialized
->> -			 * after firmware and devices are initialized.
->> -			 */
->> -			continue;
->> -
->> -		memtier = set_node_memory_tier(node);
->> -		if (IS_ERR(memtier))
->> -			/*
->> -			 * Continue with memtiers we are able to setup
->> -			 */
->> -			break;
->> -	}
->> -	establish_demotion_targets();
->> -	mutex_unlock(&memory_tier_lock);
->> +	/* Record nodes with memory and CPU to set default DRAM performance. */
->> +	nodes_and(default_dram_nodes, node_states[N_MEMORY],
->> +		  node_states[N_CPU]);
->
-> There are systems where (for various esoteric reasons, such as describing an
-> association with some other memory that isn't DRAM where the granularity
-> doesn't match) the CPU nodes contain no DRAM but rather it's one node away.
-> Handling that can be a job for another day though.
->
-> Why does this need to be computed here?  Why not do it in
-> hmat_set_default_dram_perf? Doesn't seem to be used anywhere else.
-
-IMO, which node is default dram node is a general concept instead of
-HMAT specific.  So, I think that it's better to decide that in the
-general code (memory-tiers.c).
-
->>  
->>  	hotplug_memory_notifier(memtier_hotplug_callback, MEMTIER_HOTPLUG_PRI);
->>  	return 0;
-
---
-Best Regards,
-Huang, Ying
 
