@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B38C31D97
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:50:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA921C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8mz-0005Vd-PW; Wed, 03 Jul 2024 18:49:25 -0400
+	id 1sP8nR-0007zA-AP; Wed, 03 Jul 2024 18:49:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8mt-0004rB-Gi
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8nP-0007os-Vu
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8mo-000697-GB
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8nM-0007AJ-0y
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046953;
+ s=mimecast20190719; t=1720046985;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XZlKbjCfDnCk5ojJHJFE0MXkNQoHYTrUaZpWkcL5Y50=;
- b=Ez9tkp8ALWjvANQUYRDoDOvllwToxiL6sV1uy5hYOaOZo0AAIK7/cEf2k/5Yp/yRl3skXe
- v3MhYzyLwSIK1TxMjvjNQG8dsdBDzFi24Nbs+6Sfl1+bzS0tf5qJhc65GLf47UqWBruA+3
- xRuCnr3vJt3FhYht4dGWR04o6ZsAIhw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HiuL3Yl7XincD6KXyN+VTvrZTResuK82lOSMfnOW+hA=;
+ b=f9YgxrErv5vrk6/Y37dDBfGOft4++b+cpBXmml/Dw/5gGaeKRwWn8FqqrQFJsKWB2P6aIN
+ 0VPuFA3H34yhlDVqS0bsxp13KC/4CytEATJMHriXTBKd/Q6/a/fdv/7XmW4l57hr8hBDfu
+ O5bh4u3ft3ddjexhso5OI8CvX9Xqy/U=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-uasoGAkMP7KMzxAIMYwwAQ-1; Wed, 03 Jul 2024 18:49:12 -0400
-X-MC-Unique: uasoGAkMP7KMzxAIMYwwAQ-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4256809ae27so20245e9.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:49:12 -0700 (PDT)
+ us-mta-558-brrq2jI_NNif4VbGq80PbQ-1; Wed, 03 Jul 2024 18:49:43 -0400
+X-MC-Unique: brrq2jI_NNif4VbGq80PbQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-367960f4673so535818f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:49:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046951; x=1720651751;
+ d=1e100.net; s=20230601; t=1720046978; x=1720651778;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XZlKbjCfDnCk5ojJHJFE0MXkNQoHYTrUaZpWkcL5Y50=;
- b=LHTGbbRYcFY9WtqQiesk+SyRGfzrhJnrXSckIOVUvxLtZKNBlIuUSneZYVO+KKGBMD
- PW+NdMXciFTIg4G3DOjT2+SBnX0EithkWHGLaGb6FRn8W6e6r1JXM7r7KkvC+nsp5sPH
- 2vh3S4NP1iyi8BnvaBej28JBwEKZKpi61BPlxn68s+A9B6yxap53kMPGWPJEsqTMDJg3
- uPhU34xLLGXdlLf2ogTqY04y9+ObBc5D5wEBLhi8FPZ477bmRN74fp+WmXLsXjsI1Lm3
- HxFRQSbdLVesAkNL5GdV9KFpMdSZhMtmVXlKvoW95Cois1CW4fbxtW1pfgV5YhMjCH45
- sSbg==
-X-Gm-Message-State: AOJu0YzQA5S8Ma+z9Izxd2tQUrP+pOBgQpBeAvTVNkG7UIb4Ggwriaco
- IKO42/9kn49ce2Wdckd0ukaWUxFK0UAVFyVmoSEvS8doP+GaN7TOmQWwcPLjb/UKUR5DTmE+2Fl
- Wd7tVRItmF8UixtIhB8tdQdHg3gqYcWBuZDdtS/nF6DI8yUb7WgFiamG7a29qQxN2Fhhxd7dKTc
- H8muohJ/5/hhQQXv+BbIA0tQtnzA1cfw==
-X-Received: by 2002:a05:600c:6dd9:b0:425:78a9:b3cc with SMTP id
- 5b1f17b1804b1-4264a3e76c8mr345355e9.17.1720046950508; 
- Wed, 03 Jul 2024 15:49:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGIdIfLQjIJkk3VT7yl2D+7fSv/mxb3zhllRvogy1UCDEKlReovwjcT5rokl2dM8ccC1tIaog==
-X-Received: by 2002:a05:600c:6dd9:b0:425:78a9:b3cc with SMTP id
- 5b1f17b1804b1-4264a3e76c8mr345205e9.17.1720046949753; 
- Wed, 03 Jul 2024 15:49:09 -0700 (PDT)
+ bh=HiuL3Yl7XincD6KXyN+VTvrZTResuK82lOSMfnOW+hA=;
+ b=fAPbWMnhDhmE4eud/PxUNNabmh2Z0BHrgIImqi27SkYyBnJkV3+zEiwP6cCSEdHE94
+ 9vFA5ZJdhmNeVGs/adUSYiVba8512Isniy4kZYoJCmuyEGCXpxpIKwEp2h3rhV3cYQgl
+ 5sCCs0UNQQdf8GRm1C5IBF6+zKkIW3n8pvZV+BmiaiRJsK5TKnKfjTnA1Fa0bhj/R58b
+ 1B4jOLCcIMwmAdqBONC8iU2XXpFdwvhNXov9tKlY95egjfq9H3L1EgbvnZ2paupFpGIC
+ GF6O2P8GgGeYJ7XKJ6Mn8Ex+FRwmIqKt9fnUIgsbfoR10Io7iQ48DjQTrTjSpilLx6Y0
+ mrCA==
+X-Gm-Message-State: AOJu0Yx+/2Juih/eC78V6s8lxCWssRofyHPB/A/MmaFcd1MC8t71adUr
+ UdULvupTSFJ/yAudrPnjarH3Fdk8qv03oSKNPzkHOx32C+s40QRql+lzXY2mWJqwi2tuWgePMCO
+ 0Pftydd7UwKLwBpLJS9j88Lx9S/xapbtBQgG8g0wLSWHoiyb10Iqu
+X-Received: by 2002:a05:6000:d4d:b0:366:e09c:56be with SMTP id
+ ffacd0b85a97d-36794780b32mr2393909f8f.6.1720046978140; 
+ Wed, 03 Jul 2024 15:49:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEZBZiE9EHdNM9XQfpup7dQO8vqpZ/kQl9v/m1Ci3M4FjtJoi4rHqCgYjmj5Ap/UkChs9a5xw==
+X-Received: by 2002:a05:6000:d4d:b0:366:e09c:56be with SMTP id
+ ffacd0b85a97d-36794780b32mr2393884f8f.6.1720046977445; 
+ Wed, 03 Jul 2024 15:49:37 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a28d3dasm1115005e9.46.2024.07.03.15.49.07
+ ffacd0b85a97d-3678e68a622sm4301597f8f.106.2024.07.03.15.49.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:49:08 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:49:06 -0400
+ Wed, 03 Jul 2024 15:49:36 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:49:30 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL v3 62/85] tests/data/uefi-boot-images: Add RISC-V ISO image
-Message-ID: <2f95279aa8c3ced9607eb5959c20d2995ecd980b.1720046570.git.mst@redhat.com>
-References: <cover.1720046570.git.mst@redhat.com>
+To: Stefano Garzarella <sgarzare@redhat.com>
+Cc: qemu-devel@nongnu.org, Coiby Xu <Coiby.Xu@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ stefanha@redhat.com, Markus Armbruster <armbru@redhat.com>,
+ slp@redhat.com, Eduardo Habkost <eduardo@habkost.net>,
+ David Hildenbrand <david@redhat.com>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ qemu-block@nongnu.org, Brad Smith <brad@comstyle.com>,
+ Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
+ gmaglione@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v8 00/13] vhost-user: support any POSIX system (tested on
+ macOS, FreeBSD, OpenBSD)
+Message-ID: <20240703184624-mutt-send-email-mst@kernel.org>
+References: <20240618100043.144657-1-sgarzare@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cover.1720046570.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20240618100043.144657-1-sgarzare@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
-X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- LOTS_OF_MONEY=0.001, MONEY_NOHTML=2.499, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,305 +112,613 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+On Tue, Jun 18, 2024 at 12:00:30PM +0200, Stefano Garzarella wrote:
+> As discussed with Michael and Markus [1], this version also includes the patch
+> on which v7 depended to simplify the merge in Michael's tree.
+> 
+> The series is all reviewed, so if there are no new changes required, I would
+> ask to merge it.
 
-To test ACPI tables, edk2 needs to be booted with a disk image having
-EFI partition. This image is created using UefiTestToolsPkg.
 
-The image is generated using tests/uefi-test-tools source.
+I dropped patches 9 and 10 for now since otherwise make vm-build-freebsd
+fails.
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Message-Id: <20240625150839.1358279-5-sunilvl@ventanamicro.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- .../bios-tables-test.riscv64.iso.qcow2          | Bin 0 -> 16896 bytes
- tests/uefi-test-tools/uefi-test-build.config    |   2 +-
- 2 files changed, 1 insertion(+), 1 deletion(-)
- create mode 100644 tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2
+Pls figure it out and resend just 9 and 10.
 
-diff --git a/tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2 b/tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2
-new file mode 100644
-index 0000000000000000000000000000000000000000..c720bf99a45fab6d1e21963cca563ee0ea059b82
-GIT binary patch
-literal 16896
-zcmeIZbx>SSw>CPs4er4PLV%!yTYy1A2ofN82rzg8g9R8|1`7!qNN|D#CrEG$?#v)T
-z2Z!M9gkWFgN8bD0``$X=cmB9l_td@T*;9M%XRXz{cdzcfx_eiRw(`?U004jm_`ibS
-zABr3JFD>!i1@2#t`A1^>%lN+mHUI!{{@?igH~wG6pDy}u{QnXd|HnZHzyn|aFacNq
-ztbfj!f6xD7|I+`FcLz2A>pz_Z{u}?LahK`w|4Neo($D(e_<s(Ne{MziFRA{Q&;6^0
-zzkK6g{NHhBC!+Xw{eKpJ%Y**2{{N1@<@x_z|DVO*^3wm2|6hCTe`JULV<5`E^8>#4
-zE8%}-+<#Q=zX~kf;DTVVmDR!F2~m_*D{-1h(3Rg|uP~$yhl)@fip@r5v$zOd48nJL
-z2g>P!gir)yhj6yFVq{Cu&C<~ut<rTSL4O}gyrLq*0ep}CMiK<3dVI*4wonj!FwK@@
-zsl%LW_~OR|;`WxjtMf4h-qS~;sPDFQ03Yy*10no**djedj96bWBeOR8N1TvG=KVrO
-zwzL!aq>q>dFWcu*pGkTr?uOnM11AU<CIyvs3vISZ*?#wu+-{QM+u)yvg{j+3yI<2v
-z9NoidtVnsvK^BvWDaR$&o%QQ-*Xa>JM~e=}4Hp<p003Az|I<#lQ*Hc1(j(xZ0X~Vd
-z`<dIZ8yt9ea&8HtQK2Y#Lj~jp0511;ETGWdUNE6D2LNDc6$^zzp;mM__bLA{044#h
-za+o%l4FjNK5eo%i5#W-Lb+u`AAcr`SJl&nGt@uijK-Cak@IA1KysnD85*?JA4&*D#
-zsd>Bji|h%fjCc>3y&^6X?$dDZry`VDTlHyI*NP`;ZFWyE954WuzC(eOUsZ`r#xZO}
-z!75AoVuWE}0KmsVm{nZ5#880mTL|J^=m*3*L?L1c?|v{K76*$Mm_mRf?7?omM!TJm
-zLzBqGRVNunckdw=*FoQYM5)mix6BY}7}0_wJggGarA&@aMv@1ve{|Xs8;P{Q0rd|E
-zXshU|^bZL<RqubQr_#qeIH9A3-}_X9_nBTVlIIzp!UxTPJ^`)*T@|F-(keHXDjz?t
-z5D#^Q4iB~J5w+_3K%vcd$zFus-rj^wFM(eIDaaZK0hfm?*oKsJQw($xv|wiz=%Qci
-zK}Lo-RU{DbzqG0KBLyb-p7QZ)Yb`>dDm?u$y)l8qK<MJuS|I=jv*1V__yxLw1sK%{
-z#KOQ0tIEC#zrx2ybpkNGz3W!megL1{+^|lqCetgoE#m#V7xK<4x%KFoBk(h1OOEV7
-zIO*yMCYii4CvE@;XpV0I==TxA7M2hW5lj+H3PjpCTRR_}lM)<#6?St!)`f^>gf2nw
-zJGe3h0f6Hu3lM`yY#B8P=1Y3I=a@;_owDE!L1$q>u*5G+!TU-`1VNB_E5`egHUwFS
-z6hGS>2omH&iVYy3!3`t20Rn~CH|}Gfs6OXWrOWiUQ5f!pAP}tb0uR2if54#NC%(bI
-zM=t?LFEsd=5}yHd;X$IH_w>>!|EuJV{}uk`zlQ(F=dXS7e{Cn0x$`6Yn`g;R?>Gg~
-zUEZbizvEQFcbpn|CuwEx^mOHSoF08A8FcR?WBHw(nfZ>hSl>y|-#pF+x#Ra=+)4Ji
-zJAV%TJI)z&C%MM%^xUd<oQLp^^E%vdzV~-hK;TXfPQT-Vu6JDM?|p;=@3=_hon18X
-zj*ErgadDG7F5z{@C2j7wRLmWh_PFDZ9{iP_cX}DsJ1#qR$K}5Md%P{7nLu5d3P0`N
-zt)MJe<w{INSAyIqik^<6ww4I#^4Y5yowm9U^axjxx@BBnsn`bwblkp^vz{~=f%P9H
-zqN`T--7@Ki7-+y>jwsbXY9w4KQcGu|Ve>~rrS94oI`8Z)bg&vw&f}QS@mhHf2%1*E
-zdjApWk96O+={RiN&ad?@XMdLLwd=G9D=1O$m)T`_enx*?U2xOMj4(ElyFVbrODS#%
-zC9_ex6iPnDYLU<i1s89L7hL#g?V38{nTvNkRc~Z^mNoNzQKV?Dr0jz=)0+H_>6wjC
-zaS)($Z_GpMxHfxwH#4MsW(kxxNBmZ67Z>0&f3SE^boOpN8TH~uL);pgH0yohQrvhj
-zwjVi)Lr3>nTtxk@R-ZE~A^X6<KecZEuqBgxTaC)&4M^57zEK$G=1S$gz_Z?eIo^Ei
-zTj@2>vLe01OZE+`QNMafCK}ez&aB&Lv=16!-Uyy5fqMwqV~y?QpJ%QKJgzowV=zBQ
-zL?yw6Vam1A=0rtvr3SIq^wX^He3Nu!1BPAgmV3d4D?L38HTY8<hnVR9t&3ijP9vQ4
-z+6mPS_zd6eafgi;lzMv;at{FX&4^s6XOjEA5-N}xFv$>!1`xLEMFzo~KAM8@17QYY
-zQ%9s5MF9|l>)@m}f%bZhCfi@I^Qk730QPnTyjGXlCkS~9Zwai9m9ur>b@rjcd7pdj
-z_8DTFUS`F053z#5+am*aF_PetUy0Vth;Pa_WbCD}amwKMz^lF6E1Mj(nqf3ks;@tp
-zx7p93b|acvd!;5jIEX!xC5vNqmgW}DeBK9=iATS<akQ_tb4V$z3;ZBY7Eb%Otx7aC
-zenux*@(O61K2qxlKDnAoLU4J5!tC$?fa^EWtKa+eLs@%!%5}P@B1+>Jp_@P`ZNP7a
-z8%^Jbmm{J59K5$5i36v?R%0q~23W%9S4|)px;&}Ah(qahcBjIylo>%zuO}C!XJTh2
-zqnA^)8U{7Ljs`q1hS%gqO%O*Vn)bUdSZlaEOYJhe7}<q68D34a%v0m*m574%@MdFm
-z>3uJ1$@_Tq>WZ*w+4aQCZhF}YrCwm@bS+jD`LU^g>PnOYO(?=+<seJ4hi;XU19IgL
-z0~iqO0}IJR$q4SiuM07h%>l`KBu6X&jp1+4+O?><4_$p&nFL*+qO6^?!)N54nC|0b
-z?Ub33P=P|4S8t`=%(oZs)6vtJ+icxG!2z<zicK7ktU03OT4sG^Iu45j=9HHti(;dt
-zoNRV|vbWb3Ih)z~IfjJx$Y0Abl>GiY+N&0Ckk=SiPyV@hFuidh-c3*2KjUQk+k@H~
-zvNqWr-<%v4zaMWE(bKaOjx~_R&`T?i*Zhp)GYZ>nI6M5i1ktH{BVo?RA5E)j{U}El
-zSyk8Q4+AE)eG5YC`Md3jT<2(Kf4n>=t`(WwT~u&2A*4;&7OKPFjy9ydF4L)Zk&YN=
-zua2B?QL7uT4Nk2ncEsx`X=a+0Zrp-fUt&4Lw5VYTQuT}uj6_mPxjB;y&rY{_b8&ql
-zIj7y2mv7(>FLiKr$W(kRoD=+vZ$b{j?WU6@?$IFE%6bdg>?03YIeMYx+&6I9G$h`H
-zyzGGQgi{7}y)kO742$1JU4HC(W>Sv+G`huPMw<MleBWP4PQA<8f|o=;>49WWP8IAG
-zeIEux@Z`7o_cFn@^e%yq7u`#0Ed)L17G@qENWc<X;V&gASaVX0O>0>B1fJ7_*y{`!
-z#*+5)f@^o0imM-yKUhdj17$)V>oMXb3>#bX2w&T8KDL5uQ~0t^=%_@JI?o1%7;@gb
-zeSrL!VB&XdC{)jOct$*~^X`81RO!=XN4D1mWM^5asx~%kPYKT+=-hgvOB9i$)lWAr
-z7yYuH|B}8}9n>+{VRW-xHSf5WzJ7Z4gmNVPL*6Q96i*gzS%di$ZE0Qc4W8?wftcY@
-z8M<k8NCDnBu?YkMhZyL7eRN2;dM#!vPa)m<1@>))w9<=6i*KOCs&F3&IWq%YI#u*~
-zgz0;<;Y97lw*;)$+WYA)>SiZRjkR+1o+)qQ1P501#RZTFGxF+JpEKi5pE@o3xQOE7
-znv2!E&nR6kg3xS_5*Eze16{0b?*Jk36lu>5zok^Qdg@*3mOmBF;>e}ev>{#$Ov-(M
-zS*=N*V-YPZ8&7vKq9K(ao?MM!uy}4SJ0>ex{<IH2{ujOMfw-tH4Y!|pEFih2)C9fO
-z%VM1?kXe2;<Jl}Zx5~m*C6*Xq8|P?i3wSpu0i-3q9kiM((p@GLc~}v<8}lOu7gsBZ
-z#~5~T{{XV`u9GNPydRer+0Vg-j7Q6#B+6w<q|6T9(Dve@4~I%i&>vR?Dqjzng)>lN
-z)6+xDGYCa=l0F=kR=mrMtC0Uf5eyvmJO4;rGmF)55M9yrNqThd&(zqcCdOiG3jp~1
-z@|D8E>NpO=t=HStAr()poK3wjeHn$2PeSpz3vJ`*yXb*ZKZz1&t0J5l07<gni@s}{
-zcuGlA{#>y+PVkYtJpYWh^<Db-+6ta<iL&AINJbg%Y1mk6mD`7Iypnibhso9x#G3Ey
-z-yn_Eu>yB*lk6+ef;Y6Lt;qC!?_q6%`;$36YmkWLL^h{svZ2|$gct^{9ZK{|G)8e~
-z!9pSoBHV(hU~U3oA?`n6{ntESv64~ImJrY{_T)ySK`^!Y%0bNfq6ap8M7o@T=k!0P
-z9f141o*23AbKI0p5Z0I%X~8kG);d!-!z?-_rcyY~k7P;4HaU(L+5aX3oxRG>HI{_P
-z0ua}##4dnj)g%bq<&M)<3iDZaeyW37kTO8gx8!KsoyY>&)KU_COPq>&?Q5vVm*1T~
-z$>NzND)|F@D~uJaI0I~L?R57;`UR4rm^q?@R5j@&K;F@*3MW-?EP%c40_+B1essQn
-z1us#37#*oWeCLu^EDTn6^bmKH9UL4km`BfrXGLpkZ4&<-z12O$YZ647wzd{&v#|N2
-zeOoyNzvqPZY!%+t!F;!Qjln170aoq?j-G?9y#Sq#KjXfkXmvjsWpsn`oCUI<Q|<TB
-z;JqiTWC@tr;26ZU`o?tWKCG9d2g!Qv{pFuYl=G2IZc9r1tS7VGbJ0%r(?p6s{gTcN
-z$ACfL$xLL=DE*&>g+!C-_`DAz+ws+A+Dh_%*EnQPyD}N+9r*Mmb+3&^b!dS@9gf~P
-z-7;->LAz@R!Cnj*N0sC=8$D=P(xM%KcB(V+$`(_Xmg`;z((?e{T=`NaguZ8oqf!il
-zf{KPtdk~;wDncEc0LCZT@=(3Timn8+evT*p54Zg;MAH$7B`?K}IlW!i81dBFD+<Tk
-z8y2P8oeZzLG3$_gX*GfA_-D+X7E<e8C)>CtEC{oRH#oiQ0P4=Ae7-ub$5dG`bFoep
-z2x#RnksBO_;l^F^+*AjwE!}01#ynvx_q~)-*x@Q^=T|HPgX(i;y!SUa$;nrXl9Xen
-z`F&pr9+COzM6ue@M?dqhg(l73T+ODfNUp}C4R653EEgzP_mPJI&lmeqH|yXBw}E+A
-zYR&C~!yEq2<ionL#y8U%cpu_p0&Z_B&Cn}EDkzrB##;xQ+dTlBQzhMKprzh#qZFqI
-zH~C<F%{&~n*Mkr<2u6uITv(11exqEL3XLzG_V|o96YyvKncz%FRq=QAdF|t^ciDLi
-z5x-3(Ihk3R$d&4?AUFm!%jHQYk0WT8FZHbpE{x?_*&i{j%qIjuYUzD1u!zLb{;@pr
-zH;DRQdtTuY<L984K!E*)<@mIS2^!kh@;3*cmDsg-HK5a0&5nrSB;iRNH-EaIwt-0V
-zdJv!7$Qk;lW~2@8ZC<euSl!V<PbtAYiMO=76@;u&e=W3)W$KbiXg;A!P;gPKYoP9d
-zxAj`C+3VR++EE{jHy~*|<_b6E)W?A53r{B>^s=m6Sfs(2A5d}2mFkP}zWS=t-Y;P>
-zAv@*YQhGnG@eN}32W<LCbC`OoU9EU}_XW!XiQIBbJ%hig;#-jk+G2pk`nx~?$nlk#
-z45yc-&@l0BpyMz5i3wQ$5iKJ#hg$0yVm1@jiV2S~+0Mqyqc9L@{IF~FD-`w2I`x6p
-zOo9N$biyEP`iRy7OKCFL`Y!(PKk?5i$CT-0&{t4s!nwCx_)-f^dV7mCJ_%81it-V%
-z4-{nYG|7@;QMa&aU3;TdAexE=u)L_fA8?lp&(Xrnnzm4==e#p?ujp+4C)vn9D^_2D
-zzkzcW+Q#PiGnhs7@Us)LYDeZuPql+|2<<I&6s=ijXmd${6#ZgqH(bWB3oJoJzpb>D
-zwcQ=IWk-<CY@S%d`^F%o)~<a@DXe0Jr86hw^`8fK5_7sp{Ace{1N~ieR^MYh7n<*H
-z8!|2Kde?`1w|Q7|g7v3`Al<W$+gr#fnk=z`K+{GKil{p&z#qHfz`xF9S!z6E4%wg0
-z;i$X^Ijtg8K<X6W)%V=(n0ST*zJ)qy(#X781T_4Psc1`(>lb_CFR$*f@nT%|6s&d1
-zQs<=_Z^YyYTKmSWh$;^HUCfl7f>SD`;VNVg(5)`QRH|0IaC4948TA-)any6tb)s-e
-zo9!-z9jvlcJ|q$uqj`xJDjKpojP2fGmQ?6a6mLWe(U9TB5j>SQuQVEPg5ux2#!bNl
-zSc*AZNZ)0RpyofT0Mr_9fH!GyujD2QB59+OAg3|<i7(*_<NdWpbNgT>to<m4zBFR#
-zd8OBYT;qf_0qo(scN)YWLSbefWx*<3GrSia$4ZN#y$tV2h0H$k876&lP)f=V_;q{h
-z)qyzD+toq9tFF@jPN5}H0YclD{(pLKTn~`V&FUv4O%zelMO%)FpP9MkV(`5XpG!kv
-z^bTgkH*qGT(^fO|W}5Xw>?uCWUjg2XWMk&V>9Uzrfk@{bzlOydQHOx|pIg5zcoW{S
-zn|&gZ8Brl<vf@lT`ZzL3)rk%pvi#?T5N(*L=EyA%>O#+ReFyZFUyZ&5oPHov*`J(=
-z1V#d5DAHQDxIg&jz`m`LiZsRPR}bM_W>x#Fd4&s1v2#|+Lf`&cE}&AH3x>p|bpHg&
-zA$@@WdpB{DtUs}Fm#>r@SZG;BuJPT*>9hz3dNx76B?Of0^mCZqAPgOLAn2CHJaIEy
-zTh9vyc8ke|g22K~(Qk!W6<V7_!66l>IJtfr;~T*0jTkdtvf#1Hmqz|)42B<IfMnuj
-z43ym9-~qW^GsTqK6ZslWRZ=>MJYg{Sk&{GgXKy(d;$hbZauW^&IctYVRw3d8MvlTJ
-zftG1H!u*Z2&kUn&W-|1mU!g`ol_k(o%;-oH4IPlPPQ4GQHM<bL?zp`jVz}pPP(36A
-zgqxfrkC*L$z;>8jeY_Fv!MkEi^jFPe&=wsGaq~<3qDVsVi?s0Y6O;{KKq#8dFiFGs
-zM&5*{rHDx~?Eqc081{Pm+gRUMJZ#pQnmolZK5!^nYL0QG4E~nB4`t{O0E&kBSh3Eq
-z<gyS0%RQfqVE{B@ThuxrR6UyU9Q;32KfRYQ)ZCtCy=MK$#?ST(FMLs}Si(-;S;OH6
-zh~#k)HlDl^p2^FXJ0OMPX#Sw$SArxD9zKtpZrqTz?An~4^I6zm_bF5Lw!an#c4u6b
-z<UM`UfNxv%l#t-_Mv8J4JPR)H{^d*7P&&=}Bn9G-*oT^9-`wy`x-^PoisS9ol8L=!
-zJ+$H*ows5aSLoZGe_GsNYAc-POz=GS%(%d1>LKNRZ%ye!kemC=x{>K*w0@FoyTHPE
-z?yypJ_61mR0QcE9-S@@s4ec5Zx_jBBx51=@cE76@eTCd#MDf~y20WjEI`)NrXLSF3
-zAE_+=M5@~@YpXlLTD0UI#u<-@YxWX*Ih)?(KznbNU`SB5SU!V-t*HRRY*hGk0Myig
-zF9vx=hI{5#`U`%*O$wO7tigd1iJ7-?Y%QANMfsT`uqW1zp1kf6yJu#W_lQbz1kSx^
-zwLhIDK^D3$GdD>`(3N?{^r@+EKvwL7_^}QT;;qYCmBWqXoVW0sDc9wan$gq3J!7WR
-zG+*PErq53HVzyqBznVs5%v#&3&`qmzEBiaVYMPp~|IF-<UPT{wACJmi-QG53$=m2%
-z>K1r<FEXxk9Cr61*Le5i<sR8m{PTH7y2e|GCpe|<VJxbDns6kym3U-n?`_V{ZCBiK
-zKkxLtes8mz9TR}I>nwx$45oI7!=C9BOl><AnUcv-N?4&$O_Du;z{yseV;Zf&KGiRG
-z(2^s38Jf~OYaM+oUr<8gTRd%`&^4aEE>T+~UKET(Pxiz5j~u12u&{=$d8(#axu=*|
-zYe2I(HBh1AAgN9bO*N2>&{bH9?c0u~F6U!d=2~0(6I?o38nYWl^;@1&*wJdtKH)1*
-zL$;S+TO*whU0ip>7!7eN&FddFM4;C&0J+-V?Ajr8vL`1sFP^dv2jRaaaF5H5!r5Go
-z9e=`Q75mH!!S?xH(6F6DnBo@HK8ti1l_gOXA{%7Psu-4##HwNUZn|+weB;gS^@88+
-zc>s$od+FmF0D%9{``PU2v}4l{0cl`X>XVN592VdDEPonB&}JzD0B}q1#8L6co~!b9
-z(@z2nP@}oQJW(SquPnsuN3DbQx-qy^^<yV!4ZFmC0KWA`TI3Yd40(VW7euqSgSw<R
-zVeGTnW8?!(J;n*0PkK#f6;>ORgciCkvaAa8Utk+m>ey#)*e`mV3;X(WN$HAM!z>RI
-zHcr%I${%f;AL{0NFJ(WWHlfztR`-Jn$w*aJY_)ZDmt=iO4`0<XV@2tl`FG?0{>grV
-z^CFbuDo;Q*-9u70>Y)ikxm}_Bo>ooDnZI^T!&xce?5qTi-!AK5nyNGX1^nh`>aMO7
-zS4Y<C=aNJfjF^I}ql3`TY+8jl^wHsgDkBTC>b>RdHCLzC1h2PvzjO<U*=TpyUYa>*
-z$^FS1Ej5MWG@DwTk9%XEI+KlNg)hcxE^dJ6l{n>s4)2jF6~-=c!Bu#Itf<M4aIOg9
-zl-yS3B^ZkFA94NmQ?gzq{yblwzx;llG|wn4A5}0j@~hP{?sXi~*%~r-hwHq~inIO+
-zQSayP6yVFLrISYv?s)aJ2<FjG+Lx3cwLd93{Ir}B94~n_v70rTYbSG$%|hS`@3f+}
-zDw|wmvgrYJrfp2b<}OH6z@p)WK^$If4o~4wS%ComCO@9s3C`7ErVb|aVA2KV5ArB9
-z&x7qWikdH0HRh(8_(fum=YH&Azx5cej`Sb+VO4819rTqf51;8C4T>G)>T7(@7molQ
-zkiEprfzqK_uWr71$<xIHYoKU@Tb~DfpVrE&aWQ+xfzuwz1z)Zcs>^b!GiuS#-RD_*
-z?W<3Hk6enCWD;iPcIJ|wChq6bX6<-IlzQ_7y)w{fbDZE2pHV5y_ANPfiqZMZ10LOd
-z4w{%mg9L3r_7=ZU{z+GDd-Y|hD5LqH@g{0VCtIx=uOpjhZ@x5CbS0Yc&<3v1RA8Z<
-zAYb1uyQax6H}OE4lFPJD1FfhGGPhpM&)=}HlT_GSc&s1x?Euvy&@H}Lhth3V#LhSE
-zd)+@v_9D=rN3jEw&1RdWu;W#=%F9nqf4*I0c-~_>z82`cE&)kq_VKpFJCzH|`<_(>
-zY+0(%6$l58soS&wL^D>;ZO%wZK((-!0G-AoFgwtDA$WyhJhhX7Ggx<nUjo0zLy%!W
-zJp8?K`TLdB9bf@BXJw_Ym6-j-G_3z<rquoS+uPd=aq!1i)xn+Ol>vC@bF3W8W!Fr}
-z7F${U8t4Tp@FUjy>se8zjdn96M8E8E?Py=U9~bK3Z~q9jO_JUATi!xzp_UnU6BDrg
-zXaP2Oq*Hf&d24!(T3Sd>LNu9-e&TDsdIi5da`>~;71j*at*Qv_LK^#H8Ht(s3#QgK
-z*=w|*%V0;VCdG|Hmx)f0dXM;)O5q2!l|G26lDWQk5N~FI!W+^?Jf)!(_*q!Sb)U|Z
-zOyJrLMsl_L1H*AwI9}{)$VjcQ8P?-@!rEG4u9-((!kqM6H)<|8DmJXWOiqxmYrDI*
-z^2?A<Em8}LI~UC?R_$)?xM6*}J$#S~F8CnEG_>O=!sUU=ZRdF}9H}CkbYpO3+fvb%
-zNSg3UOor-7LOOEr2*XZb7Dbw9?p}>SV!#mSR(WOTOYBnEAlusniKTDZd66&oXZaVb
-zuvi4Q&J{3&SWu#uvgaY%^5GlmbsHF(nFRnXk(a9jJF@VwHRl9@AJ>q31w|L0(j7Y_
-zbUspwU!=fc0fLPJwoqLsG0O`afW2%@RF-xWI&zh^az+qWx!Oi2!3_1JOh}|i2+Igr
-zs!30$m&_N)8^Z#OyodDWHw#HNl9jq1{+)f^wh@IUD&~Zf7D+W%(^hL5SVEI#6Y`K7
-zV#%V2r$z1!fInY*uqZhyD}8mvE{=HIo>oc@%p{kkqKyAfVKhRo4Ul$GgOWpc`f1GO
-z0}W9#Gq=H=2<`x}=Fg=hBDFFm<W|bt6tRZKF7CLSa5yghOqw~I;iF%Ay8OLv*}Xw<
-zBXu{4?JHec8|#Z#=TMWk+C5?g#^YA3j-hqBS;T8UYKzMo#+C<Yzw+a}?{LHHYUVJr
-zu{Fp25zt|r8gPbX-GcGBW&aT=)un9mT;RitaaWqyaOcbO+s5g}DGv=ibC*nkP&Ar$
-zH-$v#Ew$B<L9A(PY5iUw>1SbtVdL~npxx!-)(ofoSn!UmnA624-b)kwcAE>r!=J(!
-z;Vio^@`VF`etG$ZTI-By_^Ji+9T#wUREkbpH92;H|7lQ|jc`Is$zGq#0v#l~WCwJp
-ze2N~OLF6n3DW9iaM{U7(QEPkw{%1U?z89^q`6KgOpNbWau+1$XFn(sHJ}|rGjRC}S
-z3(7p4(~^polK^9B%!-<z7Y7>E3$EV4V;`w7=HRkDDYUO?;5_!XZLiXCYqL5_ASFAm
-zYD&FIo5Se!@2Ly=(B@2iKbVb-2vhJU_f`Y0BrN(CfHrLew5#1BWMJG`M?)<?*kMy6
-z9k>98ze~(fc5h4aw<OuRjvLc$H*~6fRyV}Cino~Q#{84R@<P~sARL^xQmP|a!60%e
-zH#k{at^)1@V(*i<i5Cl9G@lw~zn}YMoPYNqwM}lBtNB2_$Rx&r(@`svBfnFY&XFUr
-zu3~@YR6I&mV6M|+M8lDJU*&yTcReO!iL(B8O+vdVc?8E;uo!>QlC?1g@kv2&9dM;?
-zJC-?4Or8D1Rg*=u)q9nBI<uZ?@3l_BCExO`<O%|vkPo41JH*-NJO*xBArZ@Sw`s;$
-zSvud3R{B~9-uu&SDLlYz>4Rp(G_Tic=tg{vcyj2f#gSe1ruTtM$Mzw7!i(GC{zDV=
-zGPi^;{#%U*-Tk~{dc#S?ckt3wNEBlWKoE9H!>je8p7mG7>oQfLzQPREK{}~6*xI;V
-zS)JP+<+YcU>*pqqcZ16tNNT2my)nwYCxZC^mr+CX^>*DlK~I-c0_Qd6<xwcQY1PE`
-z_s~toKW~iOBjS}?M={%r`sC}zU=w54-yd4wyYXncq*M)~8^P3?ri`1V+uL<wQfBTM
-zUa$2=K;DZQmK=(Lw**{A){}15@dD2A`9T_=eHh>NsTXia&tfFc?%b@-tn4pb&@$r|
-zc8FA-O7<e>J3#J82=(Q(;hYvq(wWIBx&miFJjtl9WCs&+*-~4<W9)lz=8iKQVutEL
-z)91{f=^;D%aI!LOzq1oK$g8qNd#;p;>*l9zO9d)X6MGipOrz3hz}C$}A`S1dCv6o^
-zYe=Ac&kWx{q|pqc(P7^ub4olj31e6eqF?4yG3!BNjg`5*WQSN@kY7rC`71q?Zc^Pw
-zx;11kCBzam*{Z?)XNx1Jf@x0IEw}%yrMpu#OHPGlWed6qdZM^7ZQ~I3*j|Cy!6SW=
-zoQmWvBSn~!h=`Jwh{{;z;_&n`1s(x$*QT@Eb-lEYoaigb&p!M0=jV^gx>OF^YsWe_
-zawCbw2L1XsUv5*66h>Yi6Z*duzYoRf;ASRXx8Wu66+`;xMf|YosPCrf=q9q!xGy-0
-zZOsVtr&e=X+|W%4Fm>iTx*QwgDIyj8@o2r`I5c`<_tX^UI+}fmYaw<y4J$R9Ll0L2
-zTnJ_7b0%SzzJj<(sc<Mqi{gB~DN1sr?!qqv^xSYOyyq`)+`}fiDZ;ycK*91bo#XqU
-zAyQj!^wR35!o%^`6K^;r5L&GspS8cgl9V8sZu}<XOfVE2AX%IDEwl5ZxVymZKmd-9
-zba@xkJiCKnlW(Kwx9^oToL|?@XYw1sm`o0Fb>E(THILtjXZn#p&EDpv@&@_EBAWH-
-zaq7G(P$3}kN2iELEjl!a`20=aI?xk+?_GNR$DV<8qlMqNTJU38*O~~0lYv}?xYi`m
-zIdlJOg~GAi-Z&oR%=MQo>%m*sI3`*H&)OkWOstMmb<Rsa%txm9odKbt+KNP<$}xVt
-zosk-TDE6@io`(TfV)YO5N!+`_xW<t~L>=;A&jjH<>SJI3?6ZfIagCQ+1WYYl`v#;4
-zB$`nk96IY7=M0SQ*BUj5n0y_(*dF+~x`Wmfq+ig4VE3IBgh`WR-OB<7MivxRWYZt%
-zb;MHV=0Z%ZlR~LXA^c=Q&?w%a<EXp|D$mCgZn>`uQVKSU%Hc$qkKTG=0Nl2T@w2n+
-zrC)8}_=Pk!JJeZq4l~h*kTY;#f7|eSuV8_$Pg+Y_m!x`{wVR|8Gv+D7H)2<jGa2Pw
-z{X#)ivBWe{vzB<*pVXn}w;6{xNYKhOy{>0YLi6#o+A|_u4z8j^a&Bn=V~}oKVu$T8
-zDSj?lqvaH*W$z;uWijJhm04P*o^1<drJlX|PS{W8tR?^-OuBRSz`@D2?LsRn&#d>h
-z!U8FFwUtS!K}F;e(4~39`23X-dmx&nL`z1q159>0Yi1s%LZDb?p|l0b3|D=uE0L}h
-z%755p_-@ythwsWqolIw@Wb}K?(sv)%&+9(<4_f$teT4#L(^&CGwwOr<JpxhBT8w|+
-zTZ~s%-vDDC3}S=ObFGy*?)lJM`<NRBRp3W3jQ8w?QQT;l;Mqn~8^R1F@VPciUrvij
-zk76&~?;Y0F=tp19&gJT5CwfP(FfWdX88^<akq&A%bulmQ>7In>pSkUr7CCLsf_nGe
-z6|>qKZW(qW1^4om+>1zbawQ7OMroHOlcP>x`z)Vg=hQmDR9%-%Ez5iIPpMERUew%f
-z;Hfp0AM0_|wW41&L>$hS%$z2usi;Se<6>Md(g!4~cBr@cMeFtjkmv^UB&U6}P|s<N
-z714K>ekP-!P*V$sIl&_C)IxpZpE7413l21qY^)aiqn=`#mV+4*WFtj2_Mi}=Cr{ck
-z1zD|{<9Jj(c`2J!LnE!&HozJW)y)-x1C>7UYeeORs{J~tLrBX}hJhuIC5r4yRAGx4
-zzg>I1cHUz$MJj@<Y~4u=s@DB?_)Zww$1dYLb|T`s+VMW*n7M&WE}=tw^;aaP7DF}4
-z6K=`|FsHeM!kx#L38c4MsUCUbqJ(bJ>E`#x^V)URTRfXD<8P*KrAxFmG&{h+UClmz
-zy><lEAn^6Hly+g2cIw`XPZKj={jq<zF<f~onD3Oo>4^KZ{!2#MJ6T&bSVcLKqZt{;
-zrMaqL^YBaIL*%fqGIMwj<J)~bq9zt8*e~tP6xvmuHKsIRKrp;~Ljto@Z^pG?%jf1L
-zqQK)(C#}hb$LBU01Lsx>CG)ehv*-9Fk=%N&sCvHi{a3fKHn<ET_%g{Tf?T{%>U#5^
-z@jZ3me1Z=}&>}^}4Y>Y^1gDID;55ZnS+MV_Q&4V3M5u57V~PP!`nMDJCm+}%s<&6X
-z=F?GSPYbCvQD!`IG;0mVa<az0vZ39BSJN9>DNzg8l?&I{?ph|A!4R^hjEd&ij!x!N
-zBlS+%k4g+!C1ofABGbS|xMa?5St2QeMyp@SOmclX(38_CEtja7l$l{2y)pd}UtHGt
-z##)!Kmfw?~D1}!s<!jmR>aoqp2*GBt9DZeEBju@w48@Uq?w^UGv96f<imX&`I?d%@
-z+xlC>5(lXJ;3<_=9x>(*Twh}M>mPx)ZFq$o3WSf9*oR!>T719q<CDtrHu}L{dmep@
-zEqOOAmh+axhppZ63;w9R|DeZ`O{0r+#t%t}1I_*AQC+Sr<>Kd6VT7#l!PEASj9fa4
-zHnpSy@_9u#d0pQ<H4aO9yCQyrp4yW4-jn9FNM7=E_;59EX72DQL9xv*+$lYF;8_Ql
-z>~ZB9PuSyFV)8d)ykzo(S-Iq~*>xty`a8I4g(md*gaI+5Iiz~!=3@THbl0-5Sd%Wg
-zIBXR%P!%%bF{1Fb!-FM4l_!JjjS53Y0}oN@LihM7A+PK|2HFF$Ef+{7330+=7qB$)
-zDV1rhO`FPLroW80_zcBTt;)Do==5KTKA*+>_@i21@s$9k2<|T&zmtG<rbnI_#d6$j
-zc}4MT?wTcb*vBl*#S^>Ug?iQ@IfL9LEl*7vHDe@^K3GATo-tqvA8V%sd(M(I;?-hu
-zZMuNL+8<)RSo!whP%EXt3Zoa@9<s-Ph-j@kMBO<<+?BY0pit$-p3CLc<++i+2=J!9
-zhb3K0L#-1`wWCQd5Vz5<Ka?8EA5pPLOQl)yaX9BxUi^cI$@`Z1s@LRhj}OwBlarB6
-z=Ej>32C?a+Up%i{RFTxANbs@UtL_toS#9AMYRe@S)#aKNBb}t|bjg{Stu){69at1p
-zsXlo_HgOa6lVXyQ=aBSuIGAMM<C_KtO(jO#AP?nD|MCvPueqcSJjfr#r{&JPf>;Z&
-zlWw=G9+Nl`lzy;=q91#;bOe@y5`!PkUZ*)Xk|9KvmnMEaW>$dmfe#bw=<#92#w-#6
-zwV$dVjKq|}yX|eQ;s@-wk46TO`Cs5szC9cA%H9<=h*!S|(m%+N27$@CF1Xg=AS~W)
-z47@SAr&qKi$s$?@6kNE3tp46ST}mA}CMiDk&6jibwpgV#H(n$O^a&c&t_&yNe`4k>
-zrYHw!eM)XZ)B++abkdX<wmg>ytQEZ|9-0qHai_GGS!QeLvkP5!?l2vc5aosiHgw#e
-zzdre$+79MG#5Pgzk{b29D{8SAo38GV)U8#sx3Pa}4>QQxp|Ui7e)NIV9}k;m>}1ip
-zDBjJs%qU?GgEVc>o$=?Wclev^1W)5&VZhCxII|oF^DP&fX>iBt0k%WzfMYwD?C}Lv
-zS&@|v-fvU45vu2`+VAg?4cMgsp<OZH8lsbJd-?a6yC#NTd~8HK7%RCvAbSoUes^I$
-zj7H<A)jSoqiHYIeJou#DTQaF|6qWT}Q9FV(%D88;z_&o`GALd<!P4mTm;JkVyS^vO
-z@qzG1I1!W-(>TGmG>MPbGr8W|bR4=dR&ojFw65}3@eWy5UEYvRb8ViLmO44^@3DOT
-zv3>&@@YBw$PM1r;+AI%8x#gmiD{1SC4IGA_ydyEfRq$@7Ns5;^j9Da$)QB>#$9xzA
-zx++(iz{9g05GKF!wPh;OIf$k)@tiazOTdT(euP1+3fw!i0uWRWQUM4;^K)2UNtwN(
-zqueAH@u)`AOJ7S%+@E;XAHF+wfPo>WT#V8l+pi=9V_6+y>Gr;=z_=kaIPVE#Ys)^?
-zh0e};UR{LW7m8GJPN_aG+DgZcF4)x&on9QL58)F&%(&=#Mn<9@q&zH(jNyftSu18E
-zaYyIUde`Z*IM*1h>CKR=0*j#}K2^_Zo!vcJeYc%2x*qK@a^cOu;dvlR7`U#c@-yW_
-z_Lm47rY}T^Hok7Fp#JO^dRi2yAmXCqm%=Y-8-z<5i{RHc2Lg4N_quH>Ii7}H6_pc(
-ztrc{o%e052G2*x@#H;-hPhz}y&Xe%``dh$@!kV@TkFUafuR&%b?E~90q)}RJj_qLJ
-zZoX$?;hg#AVmk&&D?|~q@ScjaewIt{<CJptP)CK!GaSP34wB<lwExhMOWX#<{>Jd0
-zHe^;K-rhAECy6322i(x5zF*IV;aX~qvL1-ksIJUoqh&O$UoQ~~&LX2p5B@fio8A6o
-zWXA4OTjvYQFO78L*6(PTamjjoC}%S$B)$hbsD~oQQ>dir8m*hAv`fDo?obv>S-o{_
-zZ-3LH1(Sxcf@f64@~c<RBBJU#ka1^OZKZwcK2<5j>&q3l!66F}mWJ;&(fRMy@L~=q
-z^EG~BKEWTBR^*gX6wsic1A-h*YZ39K4=5y<mp<d)=OaG}VDY`YAZp2R3h^Ia5#mvj
-z&Bg5+j<I{rMjD0VR8Ul$#S@+&JIk?Nkh^fTuuhw+)u!43q1wrhq(zr7ixI{t-p^4e
-z&jjHf(kZ~>WmUvtVXCo<wU;T_#-z_*oeLe<%p-Sr+>a7AC#&*{ie-7NtHr+A_tFS-
-z(>U^cQ&Ka_8)W_bxx-^$ei`@kOQdFafqDeZ<S&{c17=+Culuuw<h~Cc1OZf|e=mf7
-zcjN#AB{)2-*+?Waa^`4wW-ouLe{Fmuu7Mmspo8X}qv{U2ZK4Vz-QTcgHxxd9%QF#f
-zqH#~{qUXHVwksuP(UqP2RQavroVM4NY-Rjn)~YsAa5P=wRe!Tghx_k7oKU4H8>P3;
-zZ}l!P29QtRk*Yj9)cD$q<U_ghJ{v>=`5*Qp)y|)y)CBs5b%*uAW4h(v^oGMV@roim
-z2EM9jxbV7gqu4XG<1v7+BURToRPWn_;LiTuuWjBl8Jdo_W-Azsw_-n|(+dQrA)@K&
-zVo`j3NR7~B%a7Tl57eJiQ9;ys$T0Lst2i;0j^D`tYJz-qzP`Pc5y!U_$dqCQO<-Bj
-zfNtD~+59nk{gtpex=Ad`iK$UR=71U3pSQO%N*1Zxx3`URm$w15R4nxo&=?DBlE%=7
-zXB$%HeowXhdIGD)h(qc+9ooG$<xv4}Jc}0M*qczRb!kv42L4N-0ilTF2r4QEY9PcH
-zFgnybq%khQj~YOZ2n-4IPiU(1_eKt>m2iy+sH6CBD*D@i*V$LI7T04RVfXzOK8^+M
-zxcOxubFw?LRsHfimvuqL3lA!J$B;SgQ(Ro4;)22g52{rJlFf&MZnXeEFCXiNq&2hb
-zkFC2|T*s6~b7Rfbmr1(`5DijTCS^JX4A&k!R_^KHOvE|o5)@&q-F)Rnetr46-;Jp(
-z*;~^i!@%=V7n#QQg=STon(gXA2IRut@PcU-cA_+I<g4{39H4o;PNyr@siD4MfRQN+
-z-8n$*f7hD0vE?|6>mOrP>Lz45wd`_o`GyOHBEp=H<*2ysVNwAxBI@g;LK}J-rKMB1
-z@Vs!P-zFz#a^v?toAl^M3XuHya|RzS!57yyj!c5B+?5sZA}%*1t>Yy6VZ;T!E5(3J
-z0>uP-jnmF$9m+G!vy~8=j*c-<mui$Pk5-)?`JA`XaK+HaFu#1$CEWRwOZ6e+qGU&9
-zOk(g5qAa{D$cbqItJ&7~*;V{6+k=25JUd-L3Te(ux+c0Jx@UsE=1@yF=n3@15@;R?
-zg;~tD)&(B|em+#jSp%&}tWhE-lO7w|8wO8VObJbKPtBL(xX`%p|9sT*uzj_?I((ZV
-z5yJ!XTz1c6*26Q&liHKdbKwBBywH9d!?L4~g^No7>gocuXLdq6%cGY_I^!XvDqvyo
-z)za^du2xhl3NwTe(u);>3E{#Fp@48<g%CmtFhlM^3a~<OA+In)Xdth!LP#JRm?6v%
-zd;oPDxw8TW05D7{?_uvDPlhcI#t-@<?yf-i|MLe0|3m&7$*|kz=Xt(=n(x>D`r8`S
-zK%80woB3ux)Qt5uno-(i3t3Opa_zF&U(Havcjdm{_JwoEw8{H;uOnX|ScQy${>*GF
-z$%T?b<HCG8GQ$RyTninEv*yviuCSR4(=e{tovOB7Kqx+mPM2_Bn+;vKsdHPMjxzSR
-zX*gdTiMJIn{qA+XG@97vbHFSF>nsrb$)TQd)KNt*he{E4YReATZ6l{?2LJ%WCQxw(
-zU=S2c2Mhw?;|8}u$*_Y#_(AjbWY}$gTQ?>6J2B}rfJ)hXr?c=~VRF6jI{(WThA)g}
-u>fShPcb7<?Gw(d|I<wdxPxWAt^}9IxIoWnZcNMjP_wWA@_;37w8UF(T+Rjq|
 
-literal 0
-HcmV?d00001
-
-diff --git a/tests/uefi-test-tools/uefi-test-build.config b/tests/uefi-test-tools/uefi-test-build.config
-index 1f389ae541..a4c61fc97a 100644
---- a/tests/uefi-test-tools/uefi-test-build.config
-+++ b/tests/uefi-test-tools/uefi-test-build.config
-@@ -24,7 +24,7 @@ cpy1 = AARCH64/BiosTablesTest.efi  bios-tables-test.aarch64.efi
- ####################################################################################
- # riscv64
- 
--[build.riscv]
-+[build.riscv64]
- conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
- plat = UefiTestTools
- dest = ./Build
--- 
-MST
+> [1] https://patchew.org/QEMU/20240612130140.63004-1-sgarzare@redhat.com/#vabzv4z6g3dd5yndvpmwktcfgbqrdg7qk2e5se6zuflrhss723@dws4vrzen6cs
+> 
+> Thanks,
+> Stefano
+> 
+> Changelog
+> 
+> v1: https://patchew.org/QEMU/20240228114759.44758-1-sgarzare@redhat.com/
+> v2: https://patchew.org/QEMU/20240326133936.125332-1-sgarzare@redhat.com/
+> v3: https://patchew.org/QEMU/20240404122330.92710-1-sgarzare@redhat.com/
+> v4: https://patchew.org/QEMU/20240508074457.12367-1-sgarzare@redhat.com/
+> v5: https://patchew.org/QEMU/20240523145522.313012-1-sgarzare@redhat.com/
+> v6: https://patchew.org/QEMU/20240528103543.145412-1-sgarzare@redhat.com/
+> v7: https://patchew.org/QEMU/20240612130140.63004-1-sgarzare@redhat.com/
+> v8:
+> - Included the dependent patch in this series
+>   https://patchew.org/QEMU/20240611130231.83152-1-sgarzare@redhat.com/
+> - Fixed QAPI documentation about share option [Markus]
+> 
+> Description
+> 
+> The vhost-user protocol is not really Linux-specific, so let's try support
+> QEMU's frontends and backends (including libvhost-user) in any POSIX system
+> with this series. The main use case is to be able to use virtio devices that
+> we don't have built-in in QEMU (e.g. virtiofsd, vhost-user-vsock, etc.) even
+> in non-Linux systems.
+> 
+> The first 5 patches are more like fixes discovered at runtime on macOS or
+> FreeBSD that could go even independently of this series.
+> 
+> Patches 6, 7, 8, 9 enable building of frontends and backends (including
+> libvhost-user) with associated code changes to succeed in compilation.
+> 
+> Patch 10 adds `memory-backend-shm` that uses the POSIX shm_open() API to
+> create shared memory which is identified by an fd that can be shared with
+> vhost-user backends. This is useful on those systems (like macOS) where
+> we don't have memfd_create() or special filesystems like "/dev/shm".
+> 
+> Patches 11 and 12 use `memory-backend-shm` in some vhost-user tests.
+> 
+> Maybe the first 5 patches can go separately, but I only discovered those
+> problems after testing patches 6 - 9, so I have included them in this series
+> for now. Please let me know if you prefer that I send them separately.
+> 
+> I tested this series using vhost-user-blk and QSD on macOS Sonoma 14.4
+> (aarch64), FreeBSD 14 (x86_64), OpenBSD 7.4 (x86_64), and Fedora 40 (x86_64)
+> in this way:
+> 
+> - Start vhost-user-blk or QSD (same commands for all systems)
+> 
+>   vhost-user-blk -s /tmp/vhost.socket \
+>     -b Fedora-Cloud-Base-39-1.5.x86_64.raw
+> 
+>   qemu-storage-daemon \
+>     --blockdev file,filename=Fedora-Cloud-Base-39-1.5.x86_64.qcow2,node-name=file \
+>     --blockdev qcow2,file=file,node-name=qcow2 \
+>     --export vhost-user-blk,addr.type=unix,addr.path=/tmp/vhost.socket,id=vub,num-queues=1,node-name=qcow2,writable=on
+> 
+> - macOS (aarch64): start QEMU (using hvf accelerator)
+> 
+>   qemu-system-aarch64 -smp 2 -cpu host -M virt,accel=hvf,memory-backend=mem \
+>     -drive file=./build/pc-bios/edk2-aarch64-code.fd,if=pflash,format=raw,readonly=on \
+>     -device virtio-net-device,netdev=net0 -netdev user,id=net0 \
+>     -device ramfb -device usb-ehci -device usb-kbd \
+>     -object memory-backend-shm,id=mem,size=512M \
+>     -device vhost-user-blk-pci,num-queues=1,disable-legacy=on,chardev=char0 \
+>     -chardev socket,id=char0,path=/tmp/vhost.socket
+> 
+> - FreeBSD/OpenBSD (x86_64): start QEMU (no accelerators available)
+> 
+>   qemu-system-x86_64 -smp 2 -M q35,memory-backend=mem \
+>     -object memory-backend-shm,id=mem,size="512M" \
+>     -device vhost-user-blk-pci,num-queues=1,chardev=char0 \
+>     -chardev socket,id=char0,path=/tmp/vhost.socket
+> 
+> - Fedora (x86_64): start QEMU (using kvm accelerator)
+> 
+>   qemu-system-x86_64 -smp 2 -M q35,accel=kvm,memory-backend=mem \
+>     -object memory-backend-shm,size="512M" \
+>     -device vhost-user-blk-pci,num-queues=1,chardev=char0 \
+>     -chardev socket,id=char0,path=/tmp/vhost.socket
+> 
+> Branch pushed (and CI started) at https://gitlab.com/sgarzarella/qemu/-/tree/macos-vhost-user?ref_type=heads
+> 
+> Stefano Garzarella (13):
+>   qapi: clarify that the default is backend dependent
+>   libvhost-user: set msg.msg_control to NULL when it is empty
+>   libvhost-user: fail vu_message_write() if sendmsg() is failing
+>   libvhost-user: mask F_INFLIGHT_SHMFD if memfd is not supported
+>   vhost-user-server: do not set memory fd non-blocking
+>   contrib/vhost-user-blk: fix bind() using the right size of the address
+>   contrib/vhost-user-*: use QEMU bswap helper functions
+>   vhost-user: enable frontends on any POSIX system
+>   libvhost-user: enable it on any POSIX system
+>   contrib/vhost-user-blk: enable it on any POSIX system
+>   hostmem: add a new memory backend based on POSIX shm_open()
+>   tests/qtest/vhost-user-blk-test: use memory-backend-shm
+>   tests/qtest/vhost-user-test: add a test case for memory-backend-shm
+> 
+>  docs/system/devices/vhost-user.rst        |   5 +-
+>  meson.build                               |   5 +-
+>  qapi/qom.json                             |  27 ++++-
+>  subprojects/libvhost-user/libvhost-user.h |   2 +-
+>  backends/hostmem-shm.c                    | 123 ++++++++++++++++++++++
+>  contrib/vhost-user-blk/vhost-user-blk.c   |  27 +++--
+>  contrib/vhost-user-input/main.c           |  16 +--
+>  hw/net/vhost_net.c                        |   5 +
+>  subprojects/libvhost-user/libvhost-user.c |  77 +++++++++++++-
+>  tests/qtest/vhost-user-blk-test.c         |   2 +-
+>  tests/qtest/vhost-user-test.c             |  23 ++++
+>  util/vhost-user-server.c                  |  12 +++
+>  backends/meson.build                      |   1 +
+>  hw/block/Kconfig                          |   2 +-
+>  qemu-options.hx                           |  16 +++
+>  util/meson.build                          |   4 +-
+>  16 files changed, 314 insertions(+), 33 deletions(-)
+>  create mode 100644 backends/hostmem-shm.c
+> 
+> 
+> base-commit: 60b54b67c63d8f076152e0f7dccf39854dfc6a77
+> prerequisite-patch-id: 9a9fc9901c4fffc060dbc8a5cfe421ab592afb5a
+> prerequisite-patch-id: 5ebb17e9220273c9962df7be30a60fee638a9ad9
+> prerequisite-patch-id: 28507635bdac7fefb17ea3ff024292b46c1bc324
+> prerequisite-patch-id: a05519b87d25c56641814798f978cdf08cd32074
+> prerequisite-patch-id: ff3b4b9981df39b041afa017b1fc638416d14611
+> prerequisite-patch-id: 5f441be8ccdec01c02658eedec89ca2aa3ad3c5c
+> prerequisite-patch-id: 120307d86e36e3343a4f83f450ab2ae361e259cc
+> prerequisite-patch-id: 16f58ef94a15fad5a389a8f9e3305281dc87ffee
+> prerequisite-patch-id: d2ce57b4e7adf084a8a156679fa27fdc5fdc71e1
+> prerequisite-patch-id: 99dc1b8acda26b05ebc2396822126026189f887a
+> prerequisite-patch-id: a8c454b7ac4d8025a61dbc3fa6ea3d16f6ef1273
+> prerequisite-patch-id: 72ced5e768ed91e1e07cb86fa1428f2c769ec1e4
+> prerequisite-patch-id: 5c615ec5a46fbe357527e6e196d6402413aa3121
+> prerequisite-patch-id: cf2fb177a9188fe727b41db633b7cb108e0ce19d
+> prerequisite-patch-id: ff35dae9c2a37074e5f179384b874b7ca9c66f67
+> prerequisite-patch-id: 49ace634cfb082c705d2d7caf808db8339cd5431
+> prerequisite-patch-id: 6936e66cb455833fb93303a12fbe3014d121d12f
+> prerequisite-patch-id: 82f332c9e3d048258061fe64fb143d7a65afae90
+> prerequisite-patch-id: 2c333aaf540376d5267aa51e40879c2f06b8d725
+> prerequisite-patch-id: e650380ae0cf23e7ce2fc9848447ce5d92fd87e3
+> prerequisite-patch-id: 5eeb7624da657a6b009224cd76f1a5c5e59ffb90
+> prerequisite-patch-id: 1d1e52bf8c672cddb4f23b1094bceafbdf7d1e79
+> prerequisite-patch-id: aa6d84776bf01bdb08bf99f8ae79af888a2d60b1
+> prerequisite-patch-id: 22803721bed02010687685974c2053bc3aea5f25
+> prerequisite-patch-id: 62c529f53b8be1d152e8953a11584207dfaaa2d5
+> prerequisite-patch-id: a809b81f773fe4ac106f0348e1b7edf83f2d63d6
+> prerequisite-patch-id: 945bf0f99292a8d28a9e0cd718f3fdad64b62825
+> prerequisite-patch-id: 4d05eee85d0be89df4d07d1f09e812eba9b74e06
+> prerequisite-patch-id: ab615369f2d516af998be14bf21a51dffa1a6f78
+> prerequisite-patch-id: bfdcb5ec094ccc56cfdc5df83b01b3f9fb9e8236
+> prerequisite-patch-id: e66fd32c22960ed55bb3035015459cc1426d8a12
+> prerequisite-patch-id: 71ff9a225aa34939a7df81d3ede6e0f1982c68af
+> prerequisite-patch-id: 8de2dd32abb1cefa8b6a0119632248bc0cbcd92a
+> prerequisite-patch-id: f01631beae528e69d3bfc9ebde4bb92150ab1233
+> prerequisite-patch-id: eeb9531ea111f9f8685b07335c5e18be46106200
+> prerequisite-patch-id: cda491052a6d7531b979f7957afc4a4963ceb2ff
+> prerequisite-patch-id: e50341e39150230a9c5e56196684a6460f53dfe3
+> prerequisite-patch-id: 544277c70903004bbc92a00490a012c7ef0eb32a
+> prerequisite-patch-id: f14700246a64393535a86e76689c2818e5e4ad93
+> prerequisite-patch-id: f4ad30bb909d1adf71a5bd1c4becff8c50bfb98c
+> prerequisite-patch-id: d50f547244f73607e998b0cd4827c76beed0cdaf
+> prerequisite-patch-id: 2cf516a30811cd3358a3bf3201a994c00d2ffdaf
+> prerequisite-patch-id: 12b253a5446c6612052cb9ffc4eb73cf9d7397b6
+> prerequisite-patch-id: 99589144e70280249ad93dec099355b72fb17562
+> prerequisite-patch-id: b4c8cea48d4e1a05dd3a664d9ce3be8d10dcfe94
+> prerequisite-patch-id: 5250f1b544a1b1ef45f41cf5d2afd8868e9bd009
+> prerequisite-patch-id: 5805e8bada7d1365397d4eccd21eacb7c663d32b
+> prerequisite-patch-id: 2490efee88fd07a21a6c6424c53263ce8d41eacd
+> prerequisite-patch-id: ae68d3b89bd040a8618d7d9cc777f2cb9cf49592
+> prerequisite-patch-id: 20cbd7c15e4fec4f42d02367f17f3376e130c7ff
+> prerequisite-patch-id: 28c5aaacb3dd831aa527d607d76d6a79c5449a47
+> prerequisite-patch-id: ac7fd2d45fd55dfc15fffabe11af48cb13570a82
+> prerequisite-patch-id: dc8cf815eaa73c51ab0c96effdf19058a81e362a
+> prerequisite-patch-id: 31ac16391a89f067f49e88cf377999156957fbd3
+> prerequisite-patch-id: 8967950672a400e14db223c2c3c9a4d6f8a97657
+> prerequisite-patch-id: 76f488f6b3597db046e22abad4fdba9ee4aa86ce
+> prerequisite-patch-id: 214eb68a3b9cfcf70a679b03642f984dcd8b1382
+> prerequisite-patch-id: 353e5a76c80369929234d462dd9ca7de7be4b4d5
+> prerequisite-patch-id: 123f2b6686681035df59de5c27c921b28dfe5d1e
+> prerequisite-patch-id: b95550fd5354b38fa03a40b48a3cd7eb34b0ab84
+> prerequisite-patch-id: 98241a724cf500988a15d42b06f8bc0cb2a78033
+> prerequisite-patch-id: d21276a22abffa24ab2a4337da24c87ca95d7623
+> prerequisite-patch-id: 9c84ca842fa29e9681a33a95109e27570740b5c8
+> prerequisite-patch-id: 5283d3a2a1ffa1baa0d48c2d4f266f0f683a0848
+> prerequisite-patch-id: d1a494ce416f68a02e0ce338ca283dbb79596e18
+> prerequisite-patch-id: 1926ebf42d3c65cbacb078fa3d82e655c6be8ee8
+> prerequisite-patch-id: bf36bbe5cc1e9c86cd185abdcfbde3d6dc594dfe
+> prerequisite-patch-id: e107e54e357e0cd59c0f18b1770ba52b7ac4eace
+> prerequisite-patch-id: 3afae9bc90cc00b0adb57d2e27f2058bd91b9645
+> prerequisite-patch-id: 2b7f2115bbc92c93f8142a1f4c566e0e55bc3555
+> prerequisite-patch-id: 174920d507fffc8c031cf54ee60eca524f163d86
+> prerequisite-patch-id: 8737a3ef34016f65515700564bc13ba73cdeebbe
+> prerequisite-patch-id: 31870935f04e20695ab2b5bfdadf8027f488b0b7
+> prerequisite-patch-id: cce2037bbe515f81e6ef08fc5ba451b4d2f52772
+> prerequisite-patch-id: 1c1bfc8091083b7ea5e7761d33cd06b7de1e1648
+> prerequisite-patch-id: 0f452b4b91fd6c5bab43d200d6b7c486f6a11601
+> prerequisite-patch-id: ae494add09825423eee3f384f691d0aae5c90dd0
+> prerequisite-patch-id: 98d93e4be44f7a67c69038aae8853d3fcb5a30c2
+> prerequisite-patch-id: 13e31112ffce5b06132400ed3b2b909153fa315f
+> prerequisite-patch-id: 0307e4f37006b980facc17c1b1ae2f4e88d1ae70
+> prerequisite-patch-id: c816b09178a7da605db814b8bd709c4c6469b79b
+> prerequisite-patch-id: 51975fe45e8f34c2b2d98875ca38540547e8092e
+> prerequisite-patch-id: aa52dbcce9f511159a945a8428cebdb47f6d2e5a
+> prerequisite-patch-id: 3b6f78114524f15d324913faab386c490ca9a639
+> prerequisite-patch-id: 5ec7691a9f185056510d02b1639c883900790724
+> prerequisite-patch-id: 042323eae4f8df09fec1552ed838e78208f2ffc4
+> prerequisite-patch-id: a83017b0771353507a62b7ff3cc7d3821b7a8829
+> prerequisite-patch-id: e51ff22a2e53b7162bca3f356290b91d56509410
+> prerequisite-patch-id: 191aadac60a85235ec8f8f603b5fc78e71e09ba6
+> prerequisite-patch-id: 264cd9d6fee6c01e186735a491c25d73d2d2ccfd
+> prerequisite-patch-id: 28c4a0a1f19cb803ce47b446ae898e736cf349f8
+> prerequisite-patch-id: ee39ed191f6a43ede1f07f48dc48669d46905978
+> prerequisite-patch-id: 720968ff9cdf1f44f53731135602321f3e210480
+> prerequisite-patch-id: 8ed9604ed5dac7170bffb6882efc6c417c4d65a7
+> prerequisite-patch-id: 192d3211b55d6f4287ecab6c5109b898060f69c8
+> prerequisite-patch-id: 4ac42fedd9329d613472228507d083864af68bbc
+> prerequisite-patch-id: e346cb412c2204035fa969fe0e904bc6ad1d9514
+> prerequisite-patch-id: 291b46176175ceb2efedfbc38e5d2628b0250c30
+> prerequisite-patch-id: feb328077708dcb80ea294fcfcad9c806f249cfd
+> prerequisite-patch-id: 3976fb2af88ec7d5e333abe8c369bf25439aa2c8
+> prerequisite-patch-id: d8082299e2d7a86b47596d795c0e646ea05a5b05
+> prerequisite-patch-id: a752941597c7ab406776a111f64e13ae40619b17
+> prerequisite-patch-id: a40acdf9d4de5b3861fc9a17a5e525c81f7dab92
+> prerequisite-patch-id: 4701d35560942a67da3b329d5c4e585c7a33bf0d
+> prerequisite-patch-id: fa7a331b8da2cb04250621e2d8d1f25c452141f9
+> prerequisite-patch-id: df4aa2ca4ffd76c05f247d2656c34d19f3b9ff90
+> prerequisite-patch-id: ccc28d2ed350195cd6be446243622d202e623a79
+> prerequisite-patch-id: 8263f731797748b03b7fb7ef1a01903064bd788a
+> prerequisite-patch-id: 2db725a2c16c2b5cb52b72ff745acd5437de43de
+> prerequisite-patch-id: 21c8bb8c06095924c3f628c25364b52d7f85dd61
+> prerequisite-patch-id: 33da128d7377476cac289f4aad2ee7026ded9d22
+> prerequisite-patch-id: 72958afa3f270df306503ea76c99f82576411577
+> prerequisite-patch-id: d0a9c278a42f8d5ff776ded9c9b7b6401ee68bd4
+> prerequisite-patch-id: ee203ba6198f3cd58c7e2453a187188e17c1a771
+> prerequisite-patch-id: 34270cb4f7d4ab25a52ec462f929c9b151311cfd
+> prerequisite-patch-id: e6d5e3fb8443903dc12abfc70cfbfc6216f92b58
+> prerequisite-patch-id: ba8141a6db6840731fd3c2c2d9c7799a4d64b30b
+> prerequisite-patch-id: 148f96b283476ff929a73ff80c997ec54a2cd7bb
+> prerequisite-patch-id: 76547bebb2e1af1448d3011be914fa10dabaa6af
+> prerequisite-patch-id: bf1672295d4993d81010fe2c6902c7d7bb19b0da
+> prerequisite-patch-id: 1a875992089d4e66bb9ee777c312b0af0edbf489
+> prerequisite-patch-id: 99da94291e43c47aa732a7d63aa7d78e7bfbde3f
+> prerequisite-patch-id: b0d74d49170c14dc8194da2b0592c1121f1c6f4c
+> prerequisite-patch-id: ba102a6b1c37ec107549c99dfc57fcf8cb869cbb
+> prerequisite-patch-id: eb208c0cab6ef242bca1c84a3bbf4f26193774b6
+> prerequisite-patch-id: b3ee7ef1d506dc31053da887cd4a5bf17e3a6d5d
+> prerequisite-patch-id: bf27b97f9d95c916bfa853aca516c8dd8b9c5563
+> prerequisite-patch-id: 5b41c20998ef383435b47a020a00836d4d0e634d
+> prerequisite-patch-id: d764b6d898e4f000c2df684c48a69c8f0bb85b79
+> prerequisite-patch-id: f293a5d68945e18d767b36588275d684cb3db956
+> prerequisite-patch-id: 796d32031f9c633cfe2a20d3c3a75483364e456e
+> prerequisite-patch-id: 933c6406d9ef46e8a7c9495fab82d6b6567a63d0
+> prerequisite-patch-id: d21b052281968b985478c6271ed7a473faef032a
+> prerequisite-patch-id: 84a70fa3a4bd6adba1ffe40d16b7357ee15b19d7
+> prerequisite-patch-id: ca524c79a7b38aca87d5b48ef7081fa4723d0dcd
+> prerequisite-patch-id: 334386ed13ccae8d5b91d92fa26ab5a12eb21ba5
+> prerequisite-patch-id: 654ea7846358b392019b2352df95fd041e7fbdfb
+> prerequisite-patch-id: 85ea7e867427f02af595ab231d4ead0d0b96eafe
+> prerequisite-patch-id: 863fd007b0dcf130dd8c483084174cdd575090a2
+> prerequisite-patch-id: ed2fc3452b918176a886ab90198afe51de9a378e
+> prerequisite-patch-id: 8ecc772fb5444a3d3ac4a01a2f6702f6bf4d3a67
+> prerequisite-patch-id: f251620c7644d907b5969c498416e2e877dbf4fd
+> prerequisite-patch-id: fc77785ed434654231bba2dd92e1f1f8e944ff91
+> prerequisite-patch-id: 876d400010bb989161ef7832c605104cdd329506
+> prerequisite-patch-id: 6360e6e080ec33819b7b4ab385f872f0a905df84
+> prerequisite-patch-id: 63b3a982300f6162a699ccf9eda870bd095d2fa6
+> prerequisite-patch-id: cf995e99b76839a0cf2cf972d46ab941e0958dc3
+> prerequisite-patch-id: ba81cb349a62ca84e5160a5c1d0243cfa9fb9972
+> prerequisite-patch-id: 44afe78f0171c6e0541a12fffd99564c9f383673
+> prerequisite-patch-id: a5531d8b703351da2492f9b02d3a451c22390687
+> prerequisite-patch-id: 647d5122058b6ec4fb2d1ec243fce1290fb1df6a
+> prerequisite-patch-id: ef1d0fdf1376b2aa632640af321989ffb7bc9813
+> prerequisite-patch-id: 694d221c4af600e99cc8b290b335bee24a5629f1
+> prerequisite-patch-id: fe4b5cf7c1ba87cdf8d7223504066c14fe55fd16
+> prerequisite-patch-id: ae6b64ec1e4d50b7ff3ea475b92ee385185ccd13
+> prerequisite-patch-id: 950f3f75abe12f17ffbcac13b12088f2b743d42c
+> prerequisite-patch-id: 7bd9d4248fc59f1b9331fd20caae0488294385cf
+> prerequisite-patch-id: e70bca29f4bf73da1257739cdb395f5f1a4da2c1
+> prerequisite-patch-id: 3bdd14c80b47219f2886e53582f709a9f4ea6543
+> prerequisite-patch-id: 6b492458231efa88be4bb51f505ba6b50fbe9f36
+> prerequisite-patch-id: 93b3062dce77cecded38d7a231f160376dfa5253
+> prerequisite-patch-id: dfa5abe5d310ce14cff0643d4ae4b250406bd3bd
+> prerequisite-patch-id: e3fdc9a5451c12806c75dee7101f5f2a9eb2ff3b
+> prerequisite-patch-id: b2d7be382b5b140efecab2973acfc654d76660dd
+> prerequisite-patch-id: e5d7a954a747fe55b3334c0c89c345489fb84cd3
+> prerequisite-patch-id: c8a74c8f490278f64915c349fb6ced3edc76a745
+> prerequisite-patch-id: c436dab92e25eb0bb8c3294a4d2c59767fcdc74e
+> prerequisite-patch-id: d03e86390b906eaa2b5f02075b3a5e841420475c
+> prerequisite-patch-id: 5dbe45c5d6f35b9129f78497910c602fa0c05345
+> prerequisite-patch-id: bf67fec728a3d2fc46eb1d3966e0f09feb0176c6
+> prerequisite-patch-id: 4ef531d42ae7fa2d30eda7158c379e3ce407b8b0
+> prerequisite-patch-id: 6de7f90a59151643092efed9914e7b163e4986e4
+> prerequisite-patch-id: 10fea080f442ea04266471c41b557113ab3878c5
+> prerequisite-patch-id: 13b3bdcbc4ba37ce007ea01f3b97a4715f1cb8e5
+> prerequisite-patch-id: fa5f17e9c80fcce3c8b6af0f8e04ed7b7d5c0950
+> prerequisite-patch-id: 12288d0b49669bc96fe7bb60fcead783d07e54f2
+> prerequisite-patch-id: 668e845a011ea725f44f6eb220b186dbe865fa8b
+> prerequisite-patch-id: d263a533dd33046dbb89564881bb098c758cbace
+> prerequisite-patch-id: 15ce2f23b5eeedead09ee93ec6230812a1897f03
+> prerequisite-patch-id: cb5e32bc00b44593548803fafea49846b1fbfd8e
+> prerequisite-patch-id: 5825adf8d34d9bc9a01bb99ebe2857acc4e48837
+> prerequisite-patch-id: 446316f606e1ebe5d1a36eb6faa01e7abe5b01b3
+> prerequisite-patch-id: 1b971ad81ad8161c7e21a2298dfd90c361f59d81
+> prerequisite-patch-id: a0fd852eacce6e62bbcd0599bc2c6b9e352c22cf
+> prerequisite-patch-id: c69fc3623449b73cffce9539c9d91d23ecc28d27
+> prerequisite-patch-id: 20225ef0715ae31057ded54abfdf08476b65c820
+> prerequisite-patch-id: ad105361da70c94743ce2b4096cb6694c8f9e93d
+> prerequisite-patch-id: 33ef5e8d08adc16123fecada7496ce2b21121b4e
+> prerequisite-patch-id: 49143535f99193c3f9d3ec1baa99609396e16726
+> prerequisite-patch-id: f1c195757737eed5c657b8d4c932e746eb8b6828
+> prerequisite-patch-id: 00873bc529c5e2ab8832e960eac08f43d7e118d3
+> prerequisite-patch-id: dbe80915cb9510677723f8b6532de4c0aafb00d0
+> prerequisite-patch-id: a0ece85dd85953f4438536e084e584746edef3fe
+> prerequisite-patch-id: 93310291d1d191198af70417214e4e3bf230fdf1
+> prerequisite-patch-id: 2178db95d1976bd335bdc606b2ea88881e7f1a0e
+> prerequisite-patch-id: 0fb9c8a496e46d8d93107842afe6476135a370d4
+> prerequisite-patch-id: 446e52dde62004604489532b8b3586374ab40469
+> prerequisite-patch-id: dcf23bf3e4d1ca6193b1420797e92d6ca94eb1b5
+> prerequisite-patch-id: 648e39344d2f5a28175b429ec1d1725cd7b40832
+> prerequisite-patch-id: 08c9c5bfcc7fc59c4742e51dac3aece772746154
+> prerequisite-patch-id: 994d7a671c227b1980fd199372a9133322bd33b6
+> prerequisite-patch-id: 9104f3c2d6cd2fb741285fe50380b8542e9a0fc9
+> prerequisite-patch-id: 32f9dcae093841a2f6d24a7deaa760e4ba8f586a
+> prerequisite-patch-id: f5cd20074b9b9a9ab7bdb4f1cfb4dfb5b102b3f1
+> prerequisite-patch-id: 07420c53830a4739100b1973056238007a0eb53f
+> prerequisite-patch-id: 4a32cb11838b1156ccf521ba0b4262366a72694b
+> prerequisite-patch-id: c5c9fbdd46c675766887185be4490629a1b82c85
+> prerequisite-patch-id: d058aeab00e2d92b9d2c5c84e7b48a383da227f8
+> prerequisite-patch-id: 12777e32c096e913b2d02d0284c0cefd060db1be
+> prerequisite-patch-id: 68464d97360fcd8829d3875fa9b40106f15b142e
+> prerequisite-patch-id: f4ba0d65afdc7571042935aadf23c5169357a0c6
+> prerequisite-patch-id: 43e3b7cec0c1efed8c177164260f8493de379b6d
+> prerequisite-patch-id: bfc849fb32943cac2ac4e6cc667eea84a17fde45
+> prerequisite-patch-id: 9abb71281e3353e80a4a8d7723491300fb10e46b
+> prerequisite-patch-id: e5c8890c24836f032661e7df14884f272b45d405
+> prerequisite-patch-id: b7cfe3cdbd106e8f365fb9843de9fabc249c1f7e
+> prerequisite-patch-id: afe882e31560b8b926a04a5a303507600b8a785e
+> prerequisite-patch-id: ffa937e7c83d5faa0ae05d191705c5b46dfcc1cd
+> prerequisite-patch-id: b3824302e7c466aa04ffdb422b51b224cc4ff0a0
+> prerequisite-patch-id: ec5d99103698e4fb07060015e2892b9615bf3655
+> prerequisite-patch-id: 0c9e5a2c64d1c90b5b3063b722effb9a181d7dc1
+> prerequisite-patch-id: 54b8048952f276cd567fbe3c1ec5ede6cc17c3fe
+> prerequisite-patch-id: 02e0153fab34c940fa24da7e0cf18e22e0841969
+> prerequisite-patch-id: 35a9ae0cae72e6d2addb5312861fd9e7f8b0e016
+> prerequisite-patch-id: 81283fc449a77c52ab57948ab1c20232b3a27d0f
+> prerequisite-patch-id: e9b9541587266d037f795861c8b92258f7906b3f
+> prerequisite-patch-id: 93c9a26aa7078b3e7fa5df1f43286a1ada03e47a
+> prerequisite-patch-id: 5dd8ba31312b3497fca5791014d622cc7afa05d2
+> prerequisite-patch-id: df6f2698dae60d1d077c112f6164634be36f234f
+> prerequisite-patch-id: a42f61db594dcb2c9c4c6ad98dda4e0a26e8dc9f
+> prerequisite-patch-id: 17ba0a295e091e160f75cb2fa0f34d641792ab3a
+> prerequisite-patch-id: b3f512b793c45f450f38ee61fd2b323175a815e7
+> prerequisite-patch-id: 17e4374126de232483d0aac726703306a2acb978
+> prerequisite-patch-id: a7c52145f8eb9a4e21c0d4880da9d54ffad81bed
+> prerequisite-patch-id: 2caedc3297049beaf7641b3def7953556969e188
+> prerequisite-patch-id: 19df4b2ca9b8e5083294c4cb7589549438b173aa
+> prerequisite-patch-id: 50a7404e844005954ccab0df31fe26867eb46eb9
+> prerequisite-patch-id: b51538406699bc501c805a0c66ae6c6469d74e0f
+> prerequisite-patch-id: e23c6afe110917b26a34a7dced94499c3e35d590
+> prerequisite-patch-id: eb4117091c76d31b7bf0775cbc3355f141c7718e
+> prerequisite-patch-id: faf9846d8f602d1a7898b2f94c18cbb863bf1fb5
+> prerequisite-patch-id: d6957b911681be1659bf9c42a5e58a3ff4a71ea6
+> prerequisite-patch-id: 1b83e7539f4ad605203cb87354e6bc305ef8d00b
+> prerequisite-patch-id: a9663fc20ea645469b513ef26f06562e7925aa27
+> prerequisite-patch-id: 37af00c7de96e5d0db554ca26ab50377646e5bb5
+> prerequisite-patch-id: 15ef726f868b61b4218c70f1fd69f12b8503d77e
+> prerequisite-patch-id: 01a098895ef542664e5baf90a2eaa1075076cc3b
+> prerequisite-patch-id: defd3d558483dfc1ae9ca63d021859b68f625916
+> prerequisite-patch-id: 77c67fa6c48e58bab2006a456ac084a3c8c724cd
+> prerequisite-patch-id: 7cbb84ce26b8c4cec4ecd6ab812d72ee835b4276
+> prerequisite-patch-id: 5b9f9bed5455f11c483e640e03ac106c9a675303
+> prerequisite-patch-id: 981c6f7198106174847ffa91e5561d9729eab29c
+> prerequisite-patch-id: 527f4972d02f6395f20ff71fe347e7df4e9c5d49
+> prerequisite-patch-id: acb9e9e7d35626830f55a48b71d9ddfa21a6f3f8
+> prerequisite-patch-id: 598773c3926246bc50817560f4a71f97516c1b5e
+> prerequisite-patch-id: 0253f84e39294c8fde5ae91ae3ff522ab3151a14
+> prerequisite-patch-id: 910a61665db49fb6f6135cb4880c8701e3825b2f
+> prerequisite-patch-id: 3c9674434cffd43b72b67be4301074a8e52f97d2
+> prerequisite-patch-id: 77f3f0ddd291120c16eaa640b8a86c1f4c84f863
+> prerequisite-patch-id: 095942e7b63211b760365ce5362847687abc8317
+> prerequisite-patch-id: 786c61f9545c93d3d4cbe4484c74bf8a85753e50
+> prerequisite-patch-id: 15aa2a5ef635f2bb858be24b4e8f1bd4e0608b39
+> prerequisite-patch-id: 2f627bc5310387d732355acaf926780554d48f7c
+> prerequisite-patch-id: c7adf0cf40acd38ab738eaf97eced4f369affffa
+> prerequisite-patch-id: ecc4536e360c90ab9e3609cdd0b73758a4fd9942
+> prerequisite-patch-id: e53fb0c690bb8c1997f3357d48370e954aa2e7fa
+> prerequisite-patch-id: d1f3151facfc2531c41e016aad471447c0a15099
+> prerequisite-patch-id: 909c62f4b9102124ba9a41ea666e226b107ff952
+> prerequisite-patch-id: 8d9a45c57f4c31589952ba09599292dc4072450d
+> prerequisite-patch-id: a7d209b97b24756aa91aadb198f4cf3bfe914042
+> prerequisite-patch-id: b533e83b2b68b34b68f47d0dcde10060bd257d24
+> prerequisite-patch-id: b60b37b3f83c3eb0d3c3f283b3c659fd3acd434d
+> prerequisite-patch-id: 0ed5b5d4ad29ebec38f8a1bc5c41e1bf46dc450a
+> prerequisite-patch-id: 48e300f8fa939c1f9112845dbe8c757eff617a92
+> prerequisite-patch-id: 595ed3348f76d24968ea65f7c68caa63bad6122f
+> prerequisite-patch-id: bf23bb87b969450461566899549cfcc4d0dde6df
+> prerequisite-patch-id: c89c9b274b83db5de08c6f5c35a018879d7b60cd
+> prerequisite-patch-id: 4f4336258b77ac72ed58b33f33ad4daa15524383
+> prerequisite-patch-id: 767d34e16bc46ca88cf30de1e55dee7e8b696a44
+> prerequisite-patch-id: 69d14aed9c5bf5b8ead291df5006b9f2609661e1
+> prerequisite-patch-id: 2d35e97beadf421452a107e318a47c2283bb4bd3
+> prerequisite-patch-id: 9e99f28f8fdf94856cf237ec291b3e522e940dd2
+> prerequisite-patch-id: b5579698d05839390237f31dc1759379c57ede1b
+> prerequisite-patch-id: cf988ff1ccb26e98a8d791cdd1f8ec12ea9ab2e9
+> prerequisite-patch-id: 7ba5de8045696070d6e71dd2b4a12ab01163debf
+> prerequisite-patch-id: 7efcc80df72d0cce93237cfb1ce66766b06543ea
+> prerequisite-patch-id: ce53af57a0cae525a1d0f30c2b40dd1a2328aa99
+> prerequisite-patch-id: bb8ee7752839c14c6057a25ab992f467a75cd3d0
+> prerequisite-patch-id: 2816ba27dbf4433edac47a9bb90679e1d82700d0
+> prerequisite-patch-id: 970c7622f790ab8dd7c90c3c69d652db72fef28c
+> prerequisite-patch-id: 370561873e809f871cf74ac039af3106afaa07ea
+> prerequisite-patch-id: 7829b94aaf5bc7ec3b82ab2d006c0a560dc2b283
+> prerequisite-patch-id: ab561297c603ec94a616f26384fa40bbbb2c0cd6
+> prerequisite-patch-id: 871c2d1e0a36574cdd253af5bf017dbf274e2607
+> prerequisite-patch-id: a7c9f42a40fc04413862800a3aed7e9fe4f3b328
+> prerequisite-patch-id: dd48f9c1f61db071fa540687e8326744f695e957
+> prerequisite-patch-id: 1f3326fcbb083425e5e58fab821a96fb0786d8bc
+> prerequisite-patch-id: 3a23986302dbbefb2f3310251ace36e852e04139
+> prerequisite-patch-id: ecd17f6471d32a1ca7469ff9f0df3ce6f52cc958
+> prerequisite-patch-id: e426a207bac31cb79213dccc046eef660bd2f11b
+> prerequisite-patch-id: f2a25fd554a2e7c2a3b8a3e512c1eb88e7de7c83
+> prerequisite-patch-id: 75c6065974585cec7ba7f506a74e07a69aaaf995
+> prerequisite-patch-id: 6a80ed64de5fe92527365fed6581cac20485682f
+> prerequisite-patch-id: 4a219d25c3480355952531465d9ac813eac60334
+> prerequisite-patch-id: a1c9c86e5c395916846f061917d54fc978eb6e3c
+> prerequisite-patch-id: 3348fee15eaeacc7fcb676ca6184a4993ee3150c
+> prerequisite-patch-id: 36584017836685b4f8405dc14c8b534f19c8e554
+> prerequisite-patch-id: cbfb2f0adefe9b0c701c5fc451091cd1bd28f272
+> prerequisite-patch-id: 16548fc5b18667ab7fd4b08d17b310638e1b78ed
+> prerequisite-patch-id: c459e5f956e9575a51c7e57304b496518220c16b
+> prerequisite-patch-id: 27d900837c8a09f066ef8e0e63a18884ee371145
+> prerequisite-patch-id: a4fc936692ddae3e94669cb6eda99f159ed9a33b
+> prerequisite-patch-id: 64f547f1428e499be930e9f6520b05e8a72f4693
+> prerequisite-patch-id: 22be676197ddd497d0f2ec236dfbaebe5ba734a0
+> prerequisite-patch-id: 09d9a99d0b4d0f6aa82d14e011f4b0b60abc113c
+> prerequisite-patch-id: 03bb62f06f97e7a923d24535c9ab3da741004f0e
+> prerequisite-patch-id: cca12a59062e5b76474927f67533dddea4ae765c
+> prerequisite-patch-id: 49d677a267b652f1b48734acde10ff32ec5c24f9
+> prerequisite-patch-id: 71f6ba630e9ee4132972b3771db2f01bf1937ae8
+> prerequisite-patch-id: c7eaf24675afaafa12a90eb3467cb64de70889cd
+> prerequisite-patch-id: 8c3650c0a209d28ebfd6dd49e25b3612bc68aa72
+> prerequisite-patch-id: fa7b9795a7c043df333d355b77fd4b5372160cc1
+> prerequisite-patch-id: 91ede923e60281453861a3369a2a036c9cc7edb1
+> prerequisite-patch-id: 416208989c3537275b0a6423eae1c35c7c3568c9
+> prerequisite-patch-id: 3d11956e5b0d23d5803fa2ce0c6af70331e7a59f
+> prerequisite-patch-id: 2d0849956881d251f6727c1c500964da9cfe7a4d
+> prerequisite-patch-id: f5e9996d677d3f271a228e13cc474b8a4a228a7d
+> prerequisite-patch-id: 81202dd5649a9c71d60bd5fa2d420fc92d6dbb93
+> prerequisite-patch-id: eec909f2cce1ee6dbfdb2566cceef8330a89ded1
+> prerequisite-patch-id: c32d7469a6a94d7338ce33bf02b10dac9fd58905
+> prerequisite-patch-id: cee3b16546f89a21cf1bd042759a93fc4395f5e7
+> prerequisite-patch-id: 44f84ab816894c29dd9f1df568ca2a540dc2082f
+> prerequisite-patch-id: 81497b1cb79924649beb9115a348d46566ef2250
+> prerequisite-patch-id: 57ea7a0039178014fed7ba520e16282c37db2008
+> prerequisite-patch-id: 19f051ac20b3d54d5cb31f4020ce1097b1127806
+> prerequisite-patch-id: 36e27eb139331cfd31bcb1b1c7cf8bda40b3219e
+> prerequisite-patch-id: dc1c0934f5853b39cbcd29d46080b8a089c55711
+> prerequisite-patch-id: 03bce6f0056238e30d6d7e2351f84eed2cc80116
+> prerequisite-patch-id: 1b37177237d6b93dfd3fde8bc183b4cb60431a0a
+> prerequisite-patch-id: 0d14ebba6a55ace8d69bbf1f28d547919453612f
+> prerequisite-patch-id: 63fe96d6f0f90faf3f073bf0754f03e2449f7a0f
+> prerequisite-patch-id: 440f07af20c96a28130d59af3c4d5017f4589f7c
+> prerequisite-patch-id: 0f6ab7fe9c2f8f690cfc999e3379dd7c3698acdf
+> prerequisite-patch-id: 0b6074cf8c6e4c30f39d1cc37bf0b743e92106d8
+> prerequisite-patch-id: 92a86bd2b713849bd81203e038ba26e2c34a0b48
+> prerequisite-patch-id: 696c0c463867740835b94a5653cf220a544bbd6d
+> prerequisite-patch-id: 022f8972e319c4d6eea41b44af08fc30b8430194
+> prerequisite-patch-id: a7094d414ca2489cd7b2e9368251f20743aa0cbc
+> prerequisite-patch-id: 1ac6a9e24eac0091848dc06f0a97bb302b329616
+> prerequisite-patch-id: f2c360e3d3575a5e633e1b7be99523779b7edbb4
+> prerequisite-patch-id: c3e190a3aaeec9f11b881fd395f3542902288d4e
+> prerequisite-patch-id: 4b9dc3072903e653d687b08827cc4feef3fe42a2
+> prerequisite-patch-id: 4be7d02682f4bb15aaa70d9944f0074fdf0b55b0
+> prerequisite-patch-id: 540cca782c7ada1b555e9aff154b23215b9deeb1
+> prerequisite-patch-id: 9d2fd7bc54256c3905069ab17a7676621dbc4824
+> prerequisite-patch-id: 7c77b8c2e4e29169d4db27154b61efda0f3a60f7
+> prerequisite-patch-id: 63e0bd09888cdd1688018a5444faea5585b615eb
+> prerequisite-patch-id: 63bda4bbdff01a9af8b2a899f3f399f64821e8e5
+> prerequisite-patch-id: f2f5b845fbd96a556d6d6beb6f9dc62f66c551ba
+> prerequisite-patch-id: 2bfd3ff17c27c9fd0c6e2f62f94ae94ca3be2c2f
+> prerequisite-patch-id: 6dcbf1f29f7bdb2d090df3fa2386f84bdabb134c
+> prerequisite-patch-id: aee978ee331aade69dfb15f34d3a49d1e1456010
+> prerequisite-patch-id: 508da75a30876b4308fa195bfc195d423e8b6926
+> prerequisite-patch-id: c0dd414a118e4a4928227cc99d4fa9950ac13e1a
+> prerequisite-patch-id: b44e5bd8ebee1347e6a1bbc509567a9c7131c670
+> prerequisite-patch-id: 4b1976720172be748bfabb9ce1b3df2be5740ccb
+> prerequisite-patch-id: e085ee46525358621a3cdbb764f9c261df2189b9
+> prerequisite-patch-id: cf6c9acae8563614effe680f66358e22fbee16df
+> prerequisite-patch-id: d35a7c3f4d491c8e2fa99d13a24e96b0ffd20fe3
+> prerequisite-patch-id: 252042c9bb537434faac9b6a3b1a5916c87bff3c
+> prerequisite-patch-id: fdf66e6c9bb9ecd2686f343fb7d7199c122c20a8
+> prerequisite-patch-id: 706b9dd63b1a5af07deba0c9c424ce90f0c3089f
+> prerequisite-patch-id: 9d0dda91fae4a3236f64f69e9e705b03b82ccfd1
+> prerequisite-patch-id: daffab6f9c0b0ff08bed4418650dc1e237714750
+> prerequisite-patch-id: 92e5fe246b5aee161ab4d59169e03f453005c0bc
+> prerequisite-patch-id: fb8032a010a548166cf9736591494ddc3592a403
+> prerequisite-patch-id: 9d9291f4523a351f057572d29949453aeba14470
+> prerequisite-patch-id: c81839e007344dc0abd136ce84dd9a03700ed40f
+> prerequisite-patch-id: 36b831f47d3373991800bf859a4b91edb25948aa
+> prerequisite-patch-id: d3859427aaa383739cbc997d1dab5de456d3d93d
+> prerequisite-patch-id: 2799d1da30f6d7527bd1768c526f22dd84442c90
+> prerequisite-patch-id: 864df2fcd3690f8b43fe2932f9a4905fdd84d688
+> prerequisite-patch-id: e3174748a7dbdffc24880593485b7cba9ffe4543
+> prerequisite-patch-id: b55ea90b0a7c76782966811235e6166f36767f17
+> prerequisite-patch-id: fb0e6e79c1eff64537a94318756ca9b5e5527bd8
+> prerequisite-patch-id: 643632539707f6faf28f1e08e0ab9befd18bf907
+> prerequisite-patch-id: 0c5ab44384756b26713f87a7629fce2f903619d4
+> prerequisite-patch-id: 7f97b645947f225f1ca9a8e9f43a2061f1b5c6bd
+> prerequisite-patch-id: 16d51862c67f2397b6f72c4c0b59c19d72562ec9
+> prerequisite-patch-id: 9b9cec25d00826ce998f5b19fa4c597ba3cd686a
+> prerequisite-patch-id: 835fadd8fb7326e16eb864925360702a87aed5d0
+> prerequisite-patch-id: 1798611cf144f3272522dbd7236f4b25ec3ec788
+> prerequisite-patch-id: 4d5cb04222fdfd5e34d325a6180f9424afaabd1d
+> prerequisite-patch-id: b44129cdbee40066940bb4229de42bd18492ca0c
+> prerequisite-patch-id: 9cf1e7134e498540b41444faf838ddf8aadb00da
+> prerequisite-patch-id: 87f8b8a8f40c1735a068e38da505f1255600d601
+> prerequisite-patch-id: 388ec700b5ba4b375a3935d1130d09761b0b2e58
+> prerequisite-patch-id: 035132e672b63d5f81bd67dee7855d6b7fd969d0
+> prerequisite-patch-id: 1111439ad6dce401e5d1b0177b3634f32c1cd831
+> prerequisite-patch-id: a0689a89468f7bd82b10d9229c7b6aa3fe490cc5
+> prerequisite-patch-id: 3d67ad089d87d96f022c9b97b1cad490ae067521
+> prerequisite-patch-id: 94dfdcabb3b924f01fca88a52470a54c6624a3b7
+> prerequisite-patch-id: ea6880da98e2b36732d74ec3baceb33ebf4f92d9
+> prerequisite-patch-id: 9306673f95d19b4691fbda21712754bf17466827
+> prerequisite-patch-id: aeedbcc9c2281775c99bb3d63c1e3dbffbf5550c
+> prerequisite-patch-id: 34fdc5009dbd9dddd5561651f12f3d1022e0abc1
+> prerequisite-patch-id: d42e1038d68eecf064d94555ac570962db845692
+> prerequisite-patch-id: 333208f79e46468817cef0bf948348488c3e6233
+> prerequisite-patch-id: 362fe76bd3530139ab14bd9ff470b653fc77ddbb
+> prerequisite-patch-id: c44c4f29d7740e459d8ab08899a8d5a6689a3516
+> prerequisite-patch-id: e3a6bcfc0fc563e5dbdc854ea09e48305a6fa09a
+> prerequisite-patch-id: 7464a4da1f3e57a43eb587fdfb3fb0d29401703e
+> prerequisite-patch-id: f3a1b4b6d4e6170df160cd4e32429c50ce416d93
+> prerequisite-patch-id: 68e52ce216a7f29dd1d652787002181c89899203
+> prerequisite-patch-id: a352568b04aec91189142b046981f0db09b041dd
+> prerequisite-patch-id: b0740e612ccc5612b641b93a107d2ea2bea876ca
+> prerequisite-patch-id: aff877b6fa3772864b829635566bb265885b9a2d
+> prerequisite-patch-id: 4aeaca9916de80d6965cf8a4a2046ce838868b9e
+> prerequisite-patch-id: d9e1e0e24aec960bd97fb6ea6090f96b279065ae
+> prerequisite-patch-id: 962f178f4adb196263ac97e3e122c227ba8b4593
+> prerequisite-patch-id: ff1bc4e5b325bb70ea2f6e81520079ea23c63877
+> prerequisite-patch-id: 97614480e57fb4965d2d43bede127f74b7e163b5
+> prerequisite-patch-id: 244f7cdda45a32a112ae5f2fb6c838f76d40c632
+> prerequisite-patch-id: cff74a2c389963404740bcdf2eccc500e6c3617f
+> prerequisite-patch-id: de452ad08659abf6b5b9e1955c04f00eea9c6743
+> prerequisite-patch-id: e5da75b92c986b15e60e7831a2f627451a7302c7
+> prerequisite-patch-id: f632675b99397cf02e36f5bce8d43b31a7059b17
+> prerequisite-patch-id: 4cfd90cf66035d8fac4cba4a2c4da96ff14a8353
+> prerequisite-patch-id: 5d6373f107805d335a04e2da363f3bf9a3f4e226
+> prerequisite-patch-id: e255bb29d8f9e1eac9c02534b42c85ea6032743d
+> prerequisite-patch-id: 40362bf8fc5556d749b069aac9da05ec4b3f0322
+> prerequisite-patch-id: 9b61da74940edce0a0e8066502afb931c4448a08
+> prerequisite-patch-id: 6b6b67624ad3279fd1d5bfa85e5c629b19457a1a
+> prerequisite-patch-id: 0f7b52d343155db70d7f6032a33fb42e08c63d6b
+> prerequisite-patch-id: d1cab56c2c0f626b48fb27e8b3d0dfe23467274a
+> prerequisite-patch-id: 4214a4e2601f4316614855d902c756469a975541
+> prerequisite-patch-id: 24d081c7d38f31469fe9bc0b8c31880a87e4f803
+> prerequisite-patch-id: 0207778851a2185aa1cb6add0789895e57a17e37
+> prerequisite-patch-id: 31d9287af072dae499ba3615ac01ac1cb1850768
+> prerequisite-patch-id: be401b009255cd0359d025b2a8b2f2da426968cc
+> prerequisite-patch-id: ea6dab75f14f5d0883fbb2254bfaf05aa0cedbc4
+> prerequisite-patch-id: 66f43dd746c8a4db3d1f63781f07e3f257e1b951
+> prerequisite-patch-id: 66b530ac2d65b27ab400405a694b540232cb48b8
+> prerequisite-patch-id: 4f030521add263c813e5c7ca260da8d3ad0294c7
+> prerequisite-patch-id: 4527a4ba70cfe527485ed026ba1c867e88c1cd49
+> prerequisite-patch-id: d154abd788a30e1b8b20db08891ba6ed3a691589
+> prerequisite-patch-id: 2142cf58a70b837c9b9e37c54908033007f6894e
+> prerequisite-patch-id: 97d9f6cfc40c030d657a62a4baee6ed3a5f771c9
+> prerequisite-patch-id: f87f989cc7f612bad0191f5ce0ae742a1167b164
+> prerequisite-patch-id: 84181d66be864cf3ee399b2e461827ba7222804d
+> prerequisite-patch-id: a1276987d4d75a5882580baf3fb92bb80fdcdec6
+> prerequisite-patch-id: f0b2e6091648632353e392fe8c3393e8902312b5
+> prerequisite-patch-id: f3c3904a4ee5ffd7a7e7cd4543a9b59978d3370a
+> prerequisite-patch-id: d2dc8ff5796218bfe77e2fd5e4d422fa7f13f2df
+> prerequisite-patch-id: 15d1bf096a4efee76a07b2e0040afe1106ec6a8d
+> prerequisite-patch-id: 28710fffbba300a706bdec231466be2488a22020
+> prerequisite-patch-id: a9e960d9bdfeaa6725229b39540f9f12fae17696
+> prerequisite-patch-id: 3d86a9343fc7c4cceba6a73e16d366e939801a18
+> prerequisite-patch-id: 07b50455cb10229d4ad233bbecc5798388f062e6
+> prerequisite-patch-id: 51fdff7f75da815c19684b3581367f80460849e4
+> prerequisite-patch-id: c46f80c6ec7a86988d432c9185b8fa1fad266689
+> prerequisite-patch-id: 886a1f50d9fd351364a7d72d125e7dad4403ed8e
+> prerequisite-patch-id: b05ea374da004aa93a503e26bd06e79de358ca8a
+> prerequisite-patch-id: cfdffb3ad12056811ec180cfdd375964e7c05f78
+> prerequisite-patch-id: 4b945743feb00647979d295450500830bc510f16
+> prerequisite-patch-id: 8c663bd7270ff7128a8ca9b9213956528eb9d795
+> prerequisite-patch-id: 7c68984430bb09524c2347f5c5cf4db10ed0e11e
+> prerequisite-patch-id: 00c5213959edfe39bd0889e8fdf9879bbb65cc9d
+> prerequisite-patch-id: 28597d3ad923f6d64cbeee2e07e480ec4006f212
+> prerequisite-patch-id: d5516a71154adccc271e449a1cfb4b857cbb0193
+> prerequisite-patch-id: e682f00b2389e82ed5d507347ecc2c0fd12290dd
+> prerequisite-patch-id: 3a3498ff58ff056d9a7df7efa08ff748838b398e
+> -- 
+> 2.45.2
 
 
