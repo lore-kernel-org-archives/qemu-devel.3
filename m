@@ -4,60 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D16BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 17:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A28E7C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 18:04:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP4A2-0003Gy-J1; Wed, 03 Jul 2024 13:52:54 -0400
+	id 1sP4Kd-0000kH-My; Wed, 03 Jul 2024 14:03:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sP49y-0003Fp-3y
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 13:52:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sP4KX-0000ic-Ct
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 14:03:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sP49v-0001Fe-0Y
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 13:52:48 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sP4KV-0007o5-FC
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 14:03:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720029164;
+ s=mimecast20190719; t=1720029821;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=4I2T2ZmkOf3dKAxZp55DRV8fPhtqB+VU98FEWUnYfyU=;
- b=ZMFvM7SnX9n3UA6DeMKtEfKdZJKBiNXOcu0rfGGrmgKPWvFDp6aQuOTIOKz+wTI6cTHRxi
- ycj+Jc+z3sv3tmFAHp74ZPoS+mXi6arhxz0O72zUTN2QsIfgYCihVJyC68LRg9OnYlW/OY
- YPHnQaIzbJ4xMfazOpTqvXfAFUwiMVU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-QijJW2V8Mt6KGnWvgMNDSA-1; Wed,
- 03 Jul 2024 13:52:43 -0400
-X-MC-Unique: QijJW2V8Mt6KGnWvgMNDSA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31C371955BC9; Wed,  3 Jul 2024 17:52:42 +0000 (UTC)
-Received: from scv.localdomain (unknown [10.22.34.31])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C15CF1955BC0; Wed,  3 Jul 2024 17:52:40 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 2/2] docs: remove Sphinx 1.x compatibility code
-Date: Wed,  3 Jul 2024 13:52:35 -0400
-Message-ID: <20240703175235.239004-3-jsnow@redhat.com>
-In-Reply-To: <20240703175235.239004-1-jsnow@redhat.com>
-References: <20240703175235.239004-1-jsnow@redhat.com>
+ bh=XfqmdywImwo59dyBOVs3ewAbRoE2VxeJYU/6HHa+VO8=;
+ b=CU/ggdMtPmOd+l8D4+17S/4lVXrA020OCq962Y854iYMNQcGj7g5XUyTFa7xtDFNdJhGe8
+ +YH6vvRv+rqLnb79Zx100a7lSrYBGZ6mKbA/QUAuioUNm/HwgP2kIrZFlMIOq54GHVO2TO
+ lnm0MHJYnhmiyd0GE58r0vCq9iLV4/A=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-372-q-ZI0eOnO2WWIGeoz8sQ8g-1; Wed, 03 Jul 2024 14:03:38 -0400
+X-MC-Unique: q-ZI0eOnO2WWIGeoz8sQ8g-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-79560b25fc4so103030385a.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 11:03:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720029817; x=1720634617;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XfqmdywImwo59dyBOVs3ewAbRoE2VxeJYU/6HHa+VO8=;
+ b=MKcXD0NFT9M/nY2XAKRw8JZ9/0mRRz8+RINh4QYSWCImo5H37iMGoRfd+/E3+QieGb
+ j9u535RD3dJSppt5IXuH8InEdyUHoi9VZrJR21qlmb5eiIo1AJ2I/utdoJ+ixMMhZZon
+ cObMIeb0wCCqPImV4NBoDhagBdEfwxZSxNiSNVV3VbZSxHqPmMfmo/9a1atRtt69UeLe
+ jLiT4jEzNMzNSolieBVZZL3PK7SVSG4ACHhO8LKWLquzJNVXPd83m4RGwIJq/P9KFYHA
+ EqkzqBKm96r2PRDDWLgXrblqsj78DlmD9d9E4mgdNFiiTTRtwlLNTKBotMQ13zFrVI8/
+ qawA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEb2XrNHsPg9eaHmaE28QFMrHlBYGIS3B+YoTLygZnT1QduLNsmwqMG0Fo6qNU6qEcQbNmlN+Y6RzbjTAxN+ltUyPWeOQ=
+X-Gm-Message-State: AOJu0YyIDQ9iO7fDUcuTx6zibdf3+OsJrj3p+oDo4pH8euBgiyJB8mNm
+ 2Gh4KDL4SYrY2AGX26/yaQ6aX3iWPacge1wq5eb0s1EF7BIgNIUUayUmAsxjQeqYviPJ/qQTjK0
+ dEgVb2rkzksGonZt6Ph8Vp+HwPuX4wGGluycehiza/IZ4nqCPKDMS
+X-Received: by 2002:a05:6214:2265:b0:6b5:de38:d6ee with SMTP id
+ 6a1803df08f44-6b5de38dde1mr38530836d6.3.1720029817027; 
+ Wed, 03 Jul 2024 11:03:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTOC6yMgBw/GyfGi6L8AS4Suwcke50c44eGZiFCPyChInAsBACJNtQsHB57ldTqmQltcP4LQ==
+X-Received: by 2002:a05:6214:2265:b0:6b5:de38:d6ee with SMTP id
+ 6a1803df08f44-6b5de38dde1mr38530526d6.3.1720029816549; 
+ Wed, 03 Jul 2024 11:03:36 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6b59e36ac03sm55721736d6.20.2024.07.03.11.03.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jul 2024 11:03:36 -0700 (PDT)
+Date: Wed, 3 Jul 2024 14:03:33 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Wei Wang <wei.w.wang@intel.com>
+Cc: pbonzini@redhat.com, mtosatti@redhat.com, farosas@suse.de,
+ qemu-devel@nongnu.org, Lei Wang <lei4.wang@intel.com>,
+ Jiri Denemark <jdenemar@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH v1] target/i386: kvm: Block migration when enfore_cpuid
+ is set to false
+Message-ID: <ZoWSdR1IOQ0iIxZC@x1n>
+References: <20240703144912.130988-1-wei.w.wang@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240703144912.130988-1-wei.w.wang@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -81,228 +103,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In general, the Use_SSI workaround is no longer needed, and neither is
-the pre-1.6 logging shim for kerneldoc.
+On Wed, Jul 03, 2024 at 10:49:12PM +0800, Wei Wang wrote:
+> When enforce_cpuid is set to false, the guest is launched with a filtered
+> set of features, meaning that unsupported features by the host are removed
+> from the guest's vCPU model. This could cause issues for live migration.
+> For example, a guest on the source is running with features A and B. If
+> the destination host does not support feature B, the stub guest can still
+> be launched on the destination with feature A only if enforce_cpuid=false.
+> Live migration can start in this case, though it may fail later when the
+> states of feature B are put to the destination side. This failure occurs
+> in the late stage (i.e., stop&copy phase) of the migration flow, where the
+> source guest has already been paused. Tests show that in such cases the
+> source guest does not recover, and the destination is unable to resume to
+> run.
+> 
+> Make "enfore_cpuid=true" a hard requirement for a guest to be migratable,
+> and change the default value of "enforce_cpuid" to true, making the guest
+> vCPUs migratable by default. If the destination stub guest has inconsistent
+> CPUIDs (i.e., destination host cannot support the features defined by the
+> guest's vCPU model), it fails to boot (with enfore_cpuid=true by default),
+> thereby preventing migration from occuring. If enfore_cpuid=false is
+> explicitly added for the guest, the guest is deemed as non-migratable
+> (via the migration blocker), so the above issue won't occur as the guest
+> won't be migrated.
+> 
+> Tested-by: Lei Wang <lei4.wang@intel.com>
+> Signed-off-by: Wei Wang <wei.w.wang@intel.com>
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
----
- docs/sphinx/hxtool.py    | 21 ++++-----------------
- docs/sphinx/kerneldoc.py | 38 ++++++++++++--------------------------
- docs/sphinx/kernellog.py | 28 ----------------------------
- docs/sphinx/qapidoc.py   | 29 +++--------------------------
- 4 files changed, 19 insertions(+), 97 deletions(-)
- delete mode 100644 docs/sphinx/kernellog.py
+[Copy Jiri and Dan for libvirt-side implications]
 
-diff --git a/docs/sphinx/hxtool.py b/docs/sphinx/hxtool.py
-index 3729084a36c..a84723be19e 100644
---- a/docs/sphinx/hxtool.py
-+++ b/docs/sphinx/hxtool.py
-@@ -24,16 +24,10 @@
- from docutils.statemachine import ViewList
- from docutils.parsers.rst import directives, Directive
- from sphinx.errors import ExtensionError
-+from sphinx.util.docutils import switch_source_input
- from sphinx.util.nodes import nested_parse_with_titles
- import sphinx
- 
--# Sphinx up to 1.6 uses AutodocReporter; 1.7 and later
--# use switch_source_input. Check borrowed from kerneldoc.py.
--Use_SSI = sphinx.__version__[:3] >= '1.7'
--if Use_SSI:
--    from sphinx.util.docutils import switch_source_input
--else:
--    from sphinx.ext.autodoc import AutodocReporter
- 
- __version__ = '1.0'
- 
-@@ -185,16 +179,9 @@ def run(self):
-     # of title_styles and section_level that kerneldoc.py does,
-     # because nested_parse_with_titles() does that for us.
-     def do_parse(self, result, node):
--        if Use_SSI:
--            with switch_source_input(self.state, result):
--                nested_parse_with_titles(self.state, result, node)
--        else:
--            save = self.state.memo.reporter
--            self.state.memo.reporter = AutodocReporter(result, self.state.memo.reporter)
--            try:
--                nested_parse_with_titles(self.state, result, node)
--            finally:
--                self.state.memo.reporter = save
-+        with switch_source_input(self.state, result):
-+            nested_parse_with_titles(self.state, result, node)
-+
- 
- def setup(app):
-     """ Register hxtool-doc directive with Sphinx"""
-diff --git a/docs/sphinx/kerneldoc.py b/docs/sphinx/kerneldoc.py
-index 72c403a7379..3aa972f2e89 100644
---- a/docs/sphinx/kerneldoc.py
-+++ b/docs/sphinx/kerneldoc.py
-@@ -38,20 +38,14 @@
- from docutils.statemachine import ViewList
- from docutils.parsers.rst import directives, Directive
- 
--#
--# AutodocReporter is only good up to Sphinx 1.7
--#
- import sphinx
-+from sphinx.util import logging
-+from sphinx.util.docutils import switch_source_input
- 
--Use_SSI = sphinx.__version__[:3] >= '1.7'
--if Use_SSI:
--    from sphinx.util.docutils import switch_source_input
--else:
--    from sphinx.ext.autodoc import AutodocReporter
--
--import kernellog
- 
- __version__  = '1.0'
-+logger = logging.getLogger('kerneldoc')
-+
- 
- class KernelDocDirective(Directive):
-     """Extract kernel-doc comments from the specified file"""
-@@ -111,8 +105,7 @@ def run(self):
-         cmd += [filename]
- 
-         try:
--            kernellog.verbose(env.app,
--                              'calling kernel-doc \'%s\'' % (" ".join(cmd)))
-+            logger.verbose('calling kernel-doc \'%s\'' % (" ".join(cmd)))
- 
-             p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-             out, err = p.communicate()
-@@ -122,8 +115,10 @@ def run(self):
-             if p.returncode != 0:
-                 sys.stderr.write(err)
- 
--                kernellog.warn(env.app,
--                               'kernel-doc \'%s\' failed with return code %d' % (" ".join(cmd), p.returncode))
-+                logger.warning(
-+                    'kernel-doc \'%s\' failed with return code %d' %
-+                    (" ".join(cmd), p.returncode)
-+                )
-                 return [nodes.error(None, nodes.paragraph(text = "kernel-doc missing"))]
-             elif env.config.kerneldoc_verbosity > 0:
-                 sys.stderr.write(err)
-@@ -149,22 +144,13 @@ def run(self):
-             return node.children
- 
-         except Exception as e:  # pylint: disable=W0703
--            kernellog.warn(env.app, 'kernel-doc \'%s\' processing failed with: %s' %
-+            logger.warning('kernel-doc \'%s\' processing failed with: %s' %
-                            (" ".join(cmd), str(e)))
-             return [nodes.error(None, nodes.paragraph(text = "kernel-doc missing"))]
- 
-     def do_parse(self, result, node):
--        if Use_SSI:
--            with switch_source_input(self.state, result):
--                self.state.nested_parse(result, 0, node, match_titles=1)
--        else:
--            save = self.state.memo.title_styles, self.state.memo.section_level, self.state.memo.reporter
--            self.state.memo.reporter = AutodocReporter(result, self.state.memo.reporter)
--            self.state.memo.title_styles, self.state.memo.section_level = [], 0
--            try:
--                self.state.nested_parse(result, 0, node, match_titles=1)
--            finally:
--                self.state.memo.title_styles, self.state.memo.section_level, self.state.memo.reporter = save
-+        with switch_source_input(self.state, result):
-+            self.state.nested_parse(result, 0, node, match_titles=1)
- 
- 
- def setup(app):
-diff --git a/docs/sphinx/kernellog.py b/docs/sphinx/kernellog.py
-deleted file mode 100644
-index af924f51a7d..00000000000
---- a/docs/sphinx/kernellog.py
-+++ /dev/null
-@@ -1,28 +0,0 @@
--# SPDX-License-Identifier: GPL-2.0
--#
--# Sphinx has deprecated its older logging interface, but the replacement
--# only goes back to 1.6.  So here's a wrapper layer to keep around for
--# as long as we support 1.4.
--#
--import sphinx
--
--if sphinx.__version__[:3] >= '1.6':
--    UseLogging = True
--    from sphinx.util import logging
--    logger = logging.getLogger('kerneldoc')
--else:
--    UseLogging = False
--
--def warn(app, message):
--    if UseLogging:
--        logger.warning(message)
--    else:
--        app.warn(message)
--
--def verbose(app, message):
--    if UseLogging:
--        logger.verbose(message)
--    else:
--        app.verbose(message)
--
--
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index f270b494f01..9a0cfcbce75 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -31,6 +31,7 @@
- from docutils.statemachine import ViewList
- from docutils.parsers.rst import directives, Directive
- from sphinx.errors import ExtensionError
-+from sphinx.util.docutils import switch_source_input
- from sphinx.util.nodes import nested_parse_with_titles
- import sphinx
- from qapi.gen import QAPISchemaVisitor
-@@ -38,15 +39,6 @@
- from qapi.schema import QAPISchema
- 
- 
--# Sphinx up to 1.6 uses AutodocReporter; 1.7 and later
--# use switch_source_input. Check borrowed from kerneldoc.py.
--Use_SSI = sphinx.__version__[:3] >= '1.7'
--if Use_SSI:
--    from sphinx.util.docutils import switch_source_input
--else:
--    from sphinx.ext.autodoc import AutodocReporter
--
--
- __version__ = '1.0'
- 
- 
-@@ -517,23 +509,8 @@ def do_parse(self, rstlist, node):
-         subheadings (titles) without confusing the rendering of
-         anything else.
-         """
--        # This is from kerneldoc.py -- it works around an API change in
--        # Sphinx between 1.6 and 1.7. Unlike kerneldoc.py, we use
--        # sphinx.util.nodes.nested_parse_with_titles() rather than the
--        # plain self.state.nested_parse(), and so we can drop the saving
--        # of title_styles and section_level that kerneldoc.py does,
--        # because nested_parse_with_titles() does that for us.
--        if Use_SSI:
--            with switch_source_input(self.state, rstlist):
--                nested_parse_with_titles(self.state, rstlist, node)
--        else:
--            save = self.state.memo.reporter
--            self.state.memo.reporter = AutodocReporter(
--                rstlist, self.state.memo.reporter)
--            try:
--                nested_parse_with_titles(self.state, rstlist, node)
--            finally:
--                self.state.memo.reporter = save
-+        with switch_source_input(self.state, rstlist):
-+            nested_parse_with_titles(self.state, rstlist, node)
- 
- 
- def setup(app):
+> ---
+>  target/i386/cpu.c     |  2 +-
+>  target/i386/kvm/kvm.c | 25 +++++++++++++++----------
+>  2 files changed, 16 insertions(+), 11 deletions(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 4c2e6f3a71..7db4fe4ead 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -8258,7 +8258,7 @@ static Property x86_cpu_properties[] = {
+>      DEFINE_PROP_UINT32("hv-version-id-snumber", X86CPU, hyperv_ver_id_sn, 0),
+>  
+>      DEFINE_PROP_BOOL("check", X86CPU, check_cpuid, true),
+> -    DEFINE_PROP_BOOL("enforce", X86CPU, enforce_cpuid, false),
+> +    DEFINE_PROP_BOOL("enforce", X86CPU, enforce_cpuid, true),
+
+I assume in many cases people can still properly migrate when the hosts are
+similar or identical, so maybe we at least want the old machine types keep
+working (by introducing a machine compat property)?
+
+>      DEFINE_PROP_BOOL("x-force-features", X86CPU, force_features, false),
+>      DEFINE_PROP_BOOL("kvm", X86CPU, expose_kvm, true),
+>      DEFINE_PROP_UINT32("phys-bits", X86CPU, phys_bits, 0),
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index dd8b0f3313..aee717c1cf 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -1741,7 +1741,7 @@ static int hyperv_init_vcpu(X86CPU *cpu)
+>      return 0;
+>  }
+>  
+> -static Error *invtsc_mig_blocker;
+> +static Error *cpu_mig_blocker;
+>  
+>  #define KVM_MAX_CPUID_ENTRIES  100
+>  
+> @@ -2012,6 +2012,15 @@ full:
+>      abort();
+>  }
+>  
+> +static bool kvm_vcpu_need_block_migration(X86CPU *cpu)
+> +{
+> +    CPUX86State *env = &cpu->env;
+> +
+> +    return !cpu->enforce_cpuid ||
+> +           (!env->user_tsc_khz && (env->features[FEAT_8000_0007_EDX] &
+> +                                   CPUID_APM_INVTSC));
+> +}
+
+Nit: maybe it's nice this returns a "const char*" with detailed reasons to
+be put into the error_setg(), so it dumps the same as before for the invtsc
+blocker.
+
+Thanks,
+
+> +
+>  int kvm_arch_init_vcpu(CPUState *cs)
+>  {
+>      struct {
+> @@ -2248,18 +2257,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>          has_msr_mcg_ext_ctl = has_msr_feature_control = true;
+>      }
+>  
+> -    if (!env->user_tsc_khz) {
+> -        if ((env->features[FEAT_8000_0007_EDX] & CPUID_APM_INVTSC) &&
+> -            invtsc_mig_blocker == NULL) {
+> -            error_setg(&invtsc_mig_blocker,
+> -                       "State blocked by non-migratable CPU device"
+> -                       " (invtsc flag)");
+> -            r = migrate_add_blocker(&invtsc_mig_blocker, &local_err);
+> +    if (!cpu_mig_blocker &&  kvm_vcpu_need_block_migration(cpu)) {
+> +            error_setg(&cpu_mig_blocker,
+> +                       "State blocked by non-migratable CPU device");
+> +            r = migrate_add_blocker(&cpu_mig_blocker, &local_err);
+>              if (r < 0) {
+>                  error_report_err(local_err);
+>                  return r;
+>              }
+> -        }
+>      }
+>  
+>      if (cpu->vmware_cpuid_freq
+> @@ -2312,7 +2317,7 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>      return 0;
+>  
+>   fail:
+> -    migrate_del_blocker(&invtsc_mig_blocker);
+> +    migrate_del_blocker(&cpu_mig_blocker);
+>  
+>      return r;
+>  }
+> -- 
+> 2.27.0
+> 
+> 
+
 -- 
-2.45.0
+Peter Xu
 
 
