@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3F5BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1510DC3271E
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:48:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8kq-0003Sn-TD; Wed, 03 Jul 2024 18:47:12 -0400
+	id 1sP8jn-0004wx-Ey; Wed, 03 Jul 2024 18:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kn-0003GL-VP
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jj-0004Ow-D9
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8km-0001Xk-1t
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jh-0001Ou-KT
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046827;
+ s=mimecast20190719; t=1720046760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qGhmwqguo7pIYQaZC7WOHDuKcF1Cau7swIzTfVk8co4=;
- b=Yjc3IJw9i2fXiCoBQ7+FveUd8sPhFCS29V14aIylc3mQoqFlau387mSvZSwVmqRLL7iysS
- 0H7O7WIW2yqBpaUOSgdrhS7wT27gjgcffV6hlenTsOQ8o3wQj0h4r20hvYqKQx0MIXDBnr
- MgAop+8+aLgsGM8maja9om7N+YDOqxQ=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1ElU1S3yGZ4jv6gdF/qOH23dlnO7FdnAYenskxuOvWI=;
+ b=bu17zeh6e1sR1dpadqAKUxytmgwCeCOLL8+1LtTMgSCDTGu6WydNsXLbTkXgaRxvG5sSf+
+ sIjulOg5RhrowjsiY09alFal6NOijUd0B5a5EaPaX6TJ/qUf4wmx6QIj3mDwzQuOWsMTvX
+ JGBNVnTe2Gl8CUQv64SNWcNiOTFN86E=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-Z4JkYvqLOA-zuY2XZI772A-1; Wed, 03 Jul 2024 18:47:06 -0400
-X-MC-Unique: Z4JkYvqLOA-zuY2XZI772A-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-57cd2950eefso6616a12.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:47:05 -0700 (PDT)
+ us-mta-683-mmH_molnOSqvSYousO7jAw-1; Wed, 03 Jul 2024 18:45:58 -0400
+X-MC-Unique: mmH_molnOSqvSYousO7jAw-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52e98697a27so1332393e87.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:45:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046825; x=1720651625;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qGhmwqguo7pIYQaZC7WOHDuKcF1Cau7swIzTfVk8co4=;
- b=bw3G2cvE5v/UO9S50mDVUDMi5vICLl5tllh3iA9H+s4opq2XSMsMP6cB+5IdjbUfXA
- p+5FDbBKfWxG/JTNTf5nmhCegCtQNivRaEg1xHW8cuJ68/se2qezL7VZkhXrnseD4aJC
- JNOuvc4rswF4y5ATA07E4TE56cS3TpXJLMDaw20Y7t6vWlxZ6xvhh+atvVb7Uz6P0MqP
- Sji43aBCP/aZKViVLYRQT7tuYSXDZddBKWldtWITu26pJrJKj/yZb4l9jkbKDzVR5kFK
- 6d+d6Mr0YpcAYo5CoyjqymSrCoeWraV+tqS6g+9M9MpwhRtYa/xptALyFTR/hFCwb2gO
- IbfA==
-X-Gm-Message-State: AOJu0YxLtOnpaZTUcT+FaGOJx2XuFxe2bdb6o7eCQmtuARQzAugTQvCb
- wgnUc/dl+45YxzjNgYVi1iiusUWex2xS0WhzFbDupy6xxMXsWuwTlAHpcqI+RneOJL/0rSVMb99
- B7C9kheoWZdX/VLjqPBYy133Ho2HYkwmWrl0qgQwtUfslGEqYihWpGtISAk45/7T246Sr7Xgd4o
- WHeMxw8MQlnNs4924iX8pH3rcZQPb29w==
-X-Received: by 2002:a17:906:36c6:b0:a6f:b75f:3d46 with SMTP id
- a640c23a62f3a-a7514475c22mr878954566b.43.1720046824755; 
- Wed, 03 Jul 2024 15:47:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHPlxWsC2gdMHau1HWYY/a/6YQtTGMUy5LcCafRaKt91Mv1Drlv/1Msod3dn5FnoXKlACj6og==
-X-Received: by 2002:a17:906:36c6:b0:a6f:b75f:3d46 with SMTP id
- a640c23a62f3a-a7514475c22mr878952266b.43.1720046823699; 
- Wed, 03 Jul 2024 15:47:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720046757; x=1720651557;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1ElU1S3yGZ4jv6gdF/qOH23dlnO7FdnAYenskxuOvWI=;
+ b=UphXROtVA0DJWWRmba627ctOYtLikH4aP983XTDmxQltLbZimc7PeVpU5z2GaS54zf
+ rmm18J4tV7Hn04GuoP6lJOzbRveN5gToqiH5giHpfaEq2eyIann45z17a7ofRUkoggqz
+ nUYt40wPWy5DBEwTXUdunCJWKv+zOTad8WeeHjqH9yZJUq+pp3fyptgjcX7Hie6kWa7B
+ fHrHy/3GGovpu99L5h9006hGhMiG4CVaGWEarpHOjhSU3JS4Ugu9qf00RJ0oeMkTk67R
+ CyDkCeYelGXIekbP+av16Wu9hChq9uXhZ7Amtjnv93aJXV1GZSZ5unkEBcsqxPvgHM2G
+ jxug==
+X-Gm-Message-State: AOJu0YxBSFkcbg+/mqBtdL8Wag0zz/XKld11LqHqV+mDVnzu9+lmgYfp
+ RfAzwnZn/QA1s/4ey1zIXIZ7+H0hQRyZQQfD44nBn5bgL674EgwRaiK4jr1ii8I2QQiXVFt4gX1
+ 1My+gyq7wtTvYhlFmmeF94Tp6baoWZ5MtPv92zzy5CUaXkJmja+leJjNNfcc7kbdGe3+tqg25DL
+ 9VLMA51yks/iogHaLhkk0xm9iNAqofbQ==
+X-Received: by 2002:a05:6512:3d91:b0:52c:c1aa:dd52 with SMTP id
+ 2adb3069b0e04-52e8268aa24mr9205105e87.30.1720046756989; 
+ Wed, 03 Jul 2024 15:45:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKipgOaio9YbDukqlH2oh1020WKcEazRdIlfzVqpnThpSLZApOU1nmX0uTAKZEFWjqNnFKWQ==
+X-Received: by 2002:a05:6512:3d91:b0:52c:c1aa:dd52 with SMTP id
+ 2adb3069b0e04-52e8268aa24mr9205082e87.30.1720046756155; 
+ Wed, 03 Jul 2024 15:45:56 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aaf18b15sm551162766b.19.2024.07.03.15.47.00
+ a640c23a62f3a-a72aaf5a612sm548367266b.51.2024.07.03.15.45.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:47:03 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:46:58 -0400
+ Wed, 03 Jul 2024 15:45:55 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:45:51 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL v3 35/85] tests/qtest/pvpanic: add tests for pvshutdown event
-Message-ID: <b279c3c88da3e8a301e4436fcdf233c0838ed4bc.1720046570.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
+ Gregory Price <gregory.price@memverge.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PULL v3 21/85] hw/mem/cxl_type3: Add support to create DC regions
+ to type3 memory devices
+Message-ID: <f4fd91af3ae3b80c795ff5f3e0c1001b14ceb761.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,121 +104,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Weißschuh <thomas@t-8ch.de>
+From: Fan Ni <fan.ni@samsung.com>
 
-Validate that a shutdown via the pvpanic device emits the correct
-QMP events.
+With the change, when setting up memory for type3 memory device, we can
+create DC regions.
+A property 'num-dc-regions' is added to ct3_props to allow users to pass the
+number of DC regions to create. To make it easier, other region parameters
+like region base, length, and block size are hard coded. If needed,
+these parameters can be added easily.
 
-Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20240527-pvpanic-shutdown-v8-7-5a28ec02558b@t-8ch.de>
+With the change, we can create DC regions with proper kernel side
+support like below:
+
+region=$(cat /sys/bus/cxl/devices/decoder0.0/create_dc_region)
+echo $region > /sys/bus/cxl/devices/decoder0.0/create_dc_region
+echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity
+echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
+
+echo "dc0" >/sys/bus/cxl/devices/decoder2.0/mode
+echo 0x40000000 >/sys/bus/cxl/devices/decoder2.0/dpa_size
+
+echo 0x40000000 > /sys/bus/cxl/devices/$region/size
+echo  "decoder2.0" > /sys/bus/cxl/devices/$region/target0
+echo 1 > /sys/bus/cxl/devices/$region/commit
+echo $region > /sys/bus/cxl/drivers/cxl_region/bind
+
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Message-Id: <20240523174651.1089554-7-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
 ---
- tests/qtest/pvpanic-pci-test.c | 39 ++++++++++++++++++++++++++++++++++
- tests/qtest/pvpanic-test.c     | 29 +++++++++++++++++++++++++
- 2 files changed, 68 insertions(+)
+ hw/mem/cxl_type3.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
 
-diff --git a/tests/qtest/pvpanic-pci-test.c b/tests/qtest/pvpanic-pci-test.c
-index b372caf41d..dc021c2fdf 100644
---- a/tests/qtest/pvpanic-pci-test.c
-+++ b/tests/qtest/pvpanic-pci-test.c
-@@ -85,11 +85,50 @@ static void test_panic(void)
-     qtest_quit(qts);
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 7194c8f902..06c6f9bb78 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -30,6 +30,7 @@
+ #include "hw/pci/msix.h"
+ 
+ #define DWORD_BYTE 4
++#define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
+ 
+ /* Default CDAT entries for a memory region */
+ enum {
+@@ -567,6 +568,50 @@ static void ct3d_reg_write(void *opaque, hwaddr offset, uint64_t value,
+     }
  }
  
-+static void test_pvshutdown(void)
++/*
++ * TODO: dc region configuration will be updated once host backend and address
++ * space support is added for DCD.
++ */
++static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
 +{
-+    uint8_t val;
-+    QDict *response, *data;
-+    QTestState *qts;
-+    QPCIBus *pcibus;
-+    QPCIDevice *dev;
-+    QPCIBar bar;
++    int i;
++    uint64_t region_base = 0;
++    uint64_t region_len =  2 * GiB;
++    uint64_t decode_len = 2 * GiB;
++    uint64_t blk_size = 2 * MiB;
++    CXLDCRegion *region;
++    MemoryRegion *mr;
 +
-+    qts = qtest_init("-device pvpanic-pci,addr=04.0");
-+    pcibus = qpci_new_pc(qts, NULL);
-+    dev = qpci_device_find(pcibus, QPCI_DEVFN(0x4, 0x0));
-+    qpci_device_enable(dev);
-+    bar = qpci_iomap(dev, 0, NULL);
++    if (ct3d->hostvmem) {
++        mr = host_memory_backend_get_memory(ct3d->hostvmem);
++        region_base += memory_region_size(mr);
++    }
++    if (ct3d->hostpmem) {
++        mr = host_memory_backend_get_memory(ct3d->hostpmem);
++        region_base += memory_region_size(mr);
++    }
++    if (region_base % CXL_CAPACITY_MULTIPLIER != 0) {
++        error_setg(errp, "DC region base not aligned to 0x%lx",
++                   CXL_CAPACITY_MULTIPLIER);
++        return false;
++    }
 +
-+    qpci_memread(dev, bar, 0, &val, sizeof(val));
-+    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
++    for (i = 0, region = &ct3d->dc.regions[0];
++         i < ct3d->dc.num_regions;
++         i++, region++, region_base += region_len) {
++        *region = (CXLDCRegion) {
++            .base = region_base,
++            .decode_len = decode_len,
++            .len = region_len,
++            .block_size = blk_size,
++            /* dsmad_handle set when creating CDAT table entries */
++            .flags = 0,
++        };
++    }
 +
-+    val = PVPANIC_SHUTDOWN;
-+    qpci_memwrite(dev, bar, 0, &val, sizeof(val));
-+
-+    response = qtest_qmp_eventwait_ref(qts, "GUEST_PVSHUTDOWN");
-+    qobject_unref(response);
-+
-+    response = qtest_qmp_eventwait_ref(qts, "SHUTDOWN");
-+    g_assert(qdict_haskey(response, "data"));
-+    data = qdict_get_qdict(response, "data");
-+    g_assert(qdict_haskey(data, "guest"));
-+    g_assert(qdict_get_bool(data, "guest"));
-+    g_assert(qdict_haskey(data, "reason"));
-+    g_assert_cmpstr(qdict_get_str(data, "reason"), ==, "guest-shutdown");
-+    qobject_unref(response);
-+
-+    g_free(dev);
-+    qpci_free_pc(pcibus);
-+    qtest_quit(qts);
++    return true;
 +}
 +
- int main(int argc, char **argv)
+ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
  {
-     g_test_init(&argc, &argv, NULL);
-     qtest_add_func("/pvpanic-pci/panic", test_panic);
-     qtest_add_func("/pvpanic-pci/panic-nopause", test_panic_nopause);
-+    qtest_add_func("/pvpanic-pci/pvshutdown", test_pvshutdown);
+     DeviceState *ds = DEVICE(ct3d);
+@@ -635,6 +680,13 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+         g_free(p_name);
+     }
  
-     return g_test_run();
- }
-diff --git a/tests/qtest/pvpanic-test.c b/tests/qtest/pvpanic-test.c
-index ccc603472f..d49d2ba931 100644
---- a/tests/qtest/pvpanic-test.c
-+++ b/tests/qtest/pvpanic-test.c
-@@ -58,11 +58,40 @@ static void test_panic(void)
-     qtest_quit(qts);
++    if (ct3d->dc.num_regions > 0) {
++        if (!cxl_create_dc_regions(ct3d, errp)) {
++            error_append_hint(errp, "setup DC regions failed");
++            return false;
++        }
++    }
++
+     return true;
  }
  
-+static void test_pvshutdown(void)
-+{
-+    uint8_t val;
-+    QDict *response, *data;
-+    QTestState *qts;
-+
-+    qts = qtest_init("-device pvpanic");
-+
-+    val = qtest_inb(qts, 0x505);
-+    g_assert_cmpuint(val, ==, PVPANIC_EVENTS);
-+
-+    qtest_outb(qts, 0x505, PVPANIC_SHUTDOWN);
-+
-+    response = qtest_qmp_eventwait_ref(qts, "GUEST_PVSHUTDOWN");
-+    qobject_unref(response);
-+
-+    response = qtest_qmp_eventwait_ref(qts, "SHUTDOWN");
-+    g_assert(qdict_haskey(response, "data"));
-+    data = qdict_get_qdict(response, "data");
-+    g_assert(qdict_haskey(data, "guest"));
-+    g_assert(qdict_get_bool(data, "guest"));
-+    g_assert(qdict_haskey(data, "reason"));
-+    g_assert_cmpstr(qdict_get_str(data, "reason"), ==, "guest-shutdown");
-+    qobject_unref(response);
-+
-+    qtest_quit(qts);
-+}
-+
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
-     qtest_add_func("/pvpanic/panic", test_panic);
-     qtest_add_func("/pvpanic/panic-nopause", test_panic_nopause);
-+    qtest_add_func("/pvpanic/pvshutdown", test_pvshutdown);
+@@ -930,6 +982,7 @@ static Property ct3_props[] = {
+                      HostMemoryBackend *),
+     DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, UI64_NULL),
+     DEFINE_PROP_STRING("cdat", CXLType3Dev, cxl_cstate.cdat.filename),
++    DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
  
-     return g_test_run();
- }
 -- 
 MST
 
