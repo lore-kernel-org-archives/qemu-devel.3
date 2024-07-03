@@ -4,59 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0628C30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 14:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72709C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 14:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP0fH-0004dA-BP; Wed, 03 Jul 2024 10:08:55 -0400
+	id 1sP0gG-0005hN-AG; Wed, 03 Jul 2024 10:09:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=dfZQ=OD=kaod.org=clg@ozlabs.org>)
- id 1sP0ez-0004VE-Lj; Wed, 03 Jul 2024 10:08:39 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=dfZQ=OD=kaod.org=clg@ozlabs.org>)
- id 1sP0ew-0000Kr-0e; Wed, 03 Jul 2024 10:08:35 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WDhT91tP0z4wc1;
- Thu,  4 Jul 2024 00:08:29 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WDhT55MJrz4wbr;
- Thu,  4 Jul 2024 00:08:25 +1000 (AEST)
-Message-ID: <88c24a7f-276f-44ed-9651-9ba6143fb812@kaod.org>
-Date: Wed, 3 Jul 2024 16:08:23 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sP0gD-0005g4-TV
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 10:09:53 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sP0gB-0000Tw-U1
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 10:09:53 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-36798e62aeeso31835f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 07:09:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720015790; x=1720620590; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=K5DxLWZbkwEHo4OuCFMF9eIKQ96NRbe8p0tnyb8+JTE=;
+ b=gtnUteBDGS4s5XaJOOvtFgWLpyngP6Dtzr4R0nobCarYiXrMmoly+YEY4fVIOE4asS
+ zms2FzUm9ptDNnP1XofFSFe+ZgMjS4Hs4HxSFxvRqbb/JG8uCtH2PIu9cByLZuz+Yekz
+ beOJccwfIz3wk2a0G1pEKC/2fC76quDw/Z3wZAzUsFbU3g0X5Llhva/QrUBJwX0Zw3lE
+ WKKDesHFaB8mvdPwKMzo6bccI0UB1z8pkfLaYTDDLdUMAd4ZbGk0bnYfOFB8m4D3TR7q
+ tXaju3mpzFVMySmyZ851twxxPC7KQT8mcqev+W/drHpcwKmm3iYOxITsHSSDaKOrye2Z
+ /yxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720015790; x=1720620590;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=K5DxLWZbkwEHo4OuCFMF9eIKQ96NRbe8p0tnyb8+JTE=;
+ b=NPyqojF/o0Q9NsgQm+rOgaxIV+vPR0G7MYF1dCScKdL9T4vj0dw2LGRjR8xHTkwLm7
+ lS7S8K29V7XEsZlB+uWTzcAGDNBeDn2LIiDqvvCrTqIfrJC+EAY4RA8QJ9NQuXGc561P
+ BUE+1J7WV8GdxZAP4C1dBcdzSVRLFdRahXXp1XS/8pcVG8O7p872PUa+SovcEzRkZKec
+ EG1p3DZP+qlf1e/MpeT/cc6UF9TwQjDhadllxUOz89ETdBLxic+lSIdvi/u81kRaJeWg
+ xMEuTIdyaAFxL0Yhtt9tiT3NAOB9wF5H6s/eDMU0D5Uy9ebuqCoLTUdJS4uP0FgjeQuU
+ /9tA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXoc11rAZ8KYIQyCqqzEKFSzvc7B4k23sLd8zsKAdu7YtpiayQDpv/QyztBT+5Ny9O5b4/gB9267K+D2mUC6mBFGqCt4ak=
+X-Gm-Message-State: AOJu0YxQNlrbK2sdzXCO/mhbLJEEb0vFW6BIU3TCiYtghsgjsaOe1q25
+ /NLXDE0TGrwpQQvCxlJ29MFo2Ln1gHyoBWA51LzTSamCYa/qmVkkD02JkpN9Nys=
+X-Google-Smtp-Source: AGHT+IFH21yFzytjeBWgQsGghEHpLBJfPxc+ZzTtchYWwWlrbngVjYhG2ToAxhn1T/mxE43TKrcPoQ==
+X-Received: by 2002:a5d:6c6a:0:b0:366:ead8:6019 with SMTP id
+ ffacd0b85a97d-3677571b6c7mr10314817f8f.49.1720015790337; 
+ Wed, 03 Jul 2024 07:09:50 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.220.97])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36796b3efb4sm982384f8f.96.2024.07.03.07.09.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Jul 2024 07:09:49 -0700 (PDT)
+Message-ID: <693bb711-3f45-49e4-89f5-b7ee1b2d215b@linaro.org>
+Date: Wed, 3 Jul 2024 16:09:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v46 5/5] hw/sd/sdcard: Extract TYPE_SDMMC_COMMON from
- TYPE_SD_CARD
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Luc Michel <luc.michel@amd.com>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20240703134356.85972-1-philmd@linaro.org>
- <20240703134356.85972-6-philmd@linaro.org>
- <ab8de479-fc85-4e00-8fac-c49dde0a03bc@kaod.org>
- <6a12f867-08f0-4abc-b25a-6c8e4b05c89f@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <6a12f867-08f0-4abc-b25a-6c8e4b05c89f@linaro.org>
+Subject: Re: [PATCH v4 1/2] tests/avocado: sbsa-ref: add FreeBSD tests
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Leif Lindholm <quic_llindhol@quicinc.com>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+References: <20240703-b4-move-to-freebsd-v4-0-07191f958530@linaro.org>
+ <20240703-b4-move-to-freebsd-v4-1-07191f958530@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240703-b4-move-to-freebsd-v4-1-07191f958530@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=dfZQ=OD=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,59 +100,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/24 4:07 PM, Philippe Mathieu-Daudé wrote:
-> On 3/7/24 16:02, Cédric Le Goater wrote:
->> On 7/3/24 3:43 PM, Philippe Mathieu-Daudé wrote:
->>> In order to keep eMMC model simpler to maintain,
->>> extract common properties and the common code from
->>> class_init to the (internal) TYPE_SDMMC_COMMON.
->>>
->>> Update the corresponding QOM cast macros.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>   hw/sd/sdmmc-internal.h |  3 +++
->>>   hw/sd/core.c           | 29 ++++++++++++------------
->>>   hw/sd/sd.c             | 50 ++++++++++++++++++++++++++++--------------
->>>   3 files changed, 52 insertions(+), 30 deletions(-)
+On 3/7/24 16:06, Marcin Juszkiewicz wrote:
+> FreeBSD has longer support cycle for stable release (14.x EoL in 2028)
+> than OpenBSD (7.3 we used is already EoL). Also bugfixes are backported
+> so we can stay on 14.x for longer. Tests done on OpenBSD will now be
+> done using FreeBSD.
 > 
+> OpenBSD 7.3 stays with Cortex-A57 test for local runs only.
 > 
->>> @@ -2508,14 +2521,19 @@ static void sd_spi_class_init(ObjectClass *klass, void *data)
->>>   static const TypeInfo sd_types[] = {
->>>       {
->>> -        .name           = TYPE_SD_CARD,
->>> +        .name           = TYPE_SDMMC_COMMON,
->>>           .parent         = TYPE_DEVICE,
->>>           .instance_size  = sizeof(SDState),
->>>           .class_size     = sizeof(SDCardClass),
->>> -        .class_init     = sd_class_init,
->>> +        .class_init     = sdmmc_common_class_init,
->>>           .instance_init  = sd_instance_init,
->>>           .instance_finalize = sd_instance_finalize,
->>>       },
->>
->> Shouldn't it be an abstract class ?
+> Moved from Neoverse-N1 to Neoverse-N2 as sbsa-ref defaults were changed.
 > 
-> Ah yes, safer. Squashing:
+> Timeout messages expanded to mention being affected by PAuth emulation.
 > 
-> -- >8 --
-> @@ -2513,6 +2513,7 @@ static const TypeInfo sd_types[] = {
->       {
->           .name           = TYPE_SDMMC_COMMON,
->           .parent         = TYPE_DEVICE,
-> +        .abstract       = true,
->           .instance_size  = sizeof(SDState),
->           .class_size     = sizeof(SDCardClass),
->           .class_init     = sdmmc_common_class_init,
+> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> ---
+>   tests/avocado/machine_aarch64_sbsaref.py | 73 ++++++++++++++++++++++++--------
+>   1 file changed, 55 insertions(+), 18 deletions(-)
 
-
-with that,
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
