@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B24C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBAADC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8mw-00059p-EM; Wed, 03 Jul 2024 18:49:22 -0400
+	id 1sP8n2-0005lG-I2; Wed, 03 Jul 2024 18:49:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8ms-0004p2-Mf
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:19 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8n0-0005d8-QH
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8mk-0005sY-LJ
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:18 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8my-0006ZZ-2N
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046950;
+ s=mimecast20190719; t=1720046962;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=wXu48vkZ7/C+tOxLrIxzTN9h9b+wSo5eOaPVc/4Fs+U=;
- b=O8ZzZOWqIM1Q9OzBili2HlSxa6WJQBcBvP37XeHvADaHSBiLrsJoxXQDnhDnBVG+Z3E3DF
- k83WQKxY7bheZwZC8sJYnPoCu/JjIt/rQKOUDHqj0pWSpwHvVZhw8UxvaAMsdqnt2fGkRZ
- eyWsItTB+rujOrkhZ8S1FjaWI5DBSIo=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=J8ROLmjYrb+QdAQNPXPEEZlctlgKEo5Cy/u0jGb6NPk=;
+ b=bPGyG8+eYw5xJyT1H+N5E47r+lxcI/VbL4OfTvFUywAkOkx+eePA48sFQspyDfkUOswZfb
+ bAjYDmfRzqkQXzHvFstK6IoOHzlH53IRMMtw4HDZ/8v8kcUWY+J00AXWdOUrq5I6Noqyyt
+ C/fsBL16O9ByNI3SzRQwL3ul/YnZJLM=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-90-26da-2vkPaCC8s8efYIqmQ-1; Wed, 03 Jul 2024 18:49:08 -0400
-X-MC-Unique: 26da-2vkPaCC8s8efYIqmQ-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-367960f4673so535709f8f.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:49:08 -0700 (PDT)
+ us-mta-586-c6LC3rtONZq5c0YUFigneQ-1; Wed, 03 Jul 2024 18:49:21 -0400
+X-MC-Unique: c6LC3rtONZq5c0YUFigneQ-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2ec61a87db0so59745681fa.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:49:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046947; x=1720651747;
+ d=1e100.net; s=20230601; t=1720046959; x=1720651759;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wXu48vkZ7/C+tOxLrIxzTN9h9b+wSo5eOaPVc/4Fs+U=;
- b=fsN7e7LiK79M4kF8JcJOfxkDxFPcZ3f6BMO0BiCrg6oqdGrLsMI2m1NvxDAVl+OMza
- aRdm8PshhtaVmKuTI8teqR7OdzWjuiYB8bsBfgkm6hv70qAu7cUU/gP10mcw4YmqQp9F
- 1TRzaUt9k8gctNngw0qbR6NSwRhC/94F4PMJ6igiiCrFLmcOojjbc8LFeiX3OHAwB97u
- kFCOFCGYRktVtGCVX6wnKF5z4wxtBRqIVhf+RvV0XetfKHwUlE9a5CbbRYXchFMfpxuX
- 2mTzGqonWGcXqCJlhfxX7OpsAPmkg761C/va5dvVWordAtiGB3ApVGYt2wfIWKus3V3F
- fxeA==
-X-Gm-Message-State: AOJu0Yxl7HxzsfEDq5VE2lypFN5fEC6mjR+PKHK74STAZnQFOb3SVKuo
- k5/KveXWSiGFeWVm3cssm6q/MGR/CsN70MeXKogq1IIraAHgqEkBZ1WgFaf27CoGrJGNxNRJiGQ
- FNYTquFl4uqheagqR8djVUedC4EfY6BYmPX3mamCQvlCsegryVfECW+9hzFXUOiIwlJnRZ3Ue1y
- p4d+AIqYQQjioxtAhqZUZpuJ2+NofYNw==
-X-Received: by 2002:a05:600c:4f0c:b0:424:84fb:9fd2 with SMTP id
- 5b1f17b1804b1-42640b6e086mr27145925e9.19.1720046947030; 
- Wed, 03 Jul 2024 15:49:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWnl5KRGoJO02dkcidekGahK4zIsQQ5S6iCycyafTAJap5UPntX81nwoYOHPFb2EEwymqyAQ==
-X-Received: by 2002:a05:600c:4f0c:b0:424:84fb:9fd2 with SMTP id
- 5b1f17b1804b1-42640b6e086mr27145635e9.19.1720046946049; 
- Wed, 03 Jul 2024 15:49:06 -0700 (PDT)
+ bh=J8ROLmjYrb+QdAQNPXPEEZlctlgKEo5Cy/u0jGb6NPk=;
+ b=OABlgufPWENc6KgVMX0wGBb1bl3YgZDr5VkZhVVGswn/nxyzoJe27fKq3grjWPy6hZ
+ zNntpZQLAL6DSw10HjHFchGFC4otYu7j7PYUZWKcccVDk7RQHnwsQZpAQOoRY+iEFq/4
+ nOp/7JKhvkDwi81YAoMUWnWcA9l6z6MMQkgBpi2OYEWbP5H6GXB6PqXo8I5G0/Wef3vu
+ Xf6Hu24Dn0g8SeTgfCxS1QxRWYqwUrCOd+xOErnK9PgFTWsqMFOz0BUkRysDFUz0HCMy
+ u7ZZTWKOHZDf2AWiYRLA1L642le/v9IaDiqmW/e6LXvnBiaAhMqIOvlCnuXIQus4kejq
+ HkyA==
+X-Gm-Message-State: AOJu0Yw9ib4rKsFRoErEG7DzniWk21S5vEJdwHk3MhLjYVB/6GMzxGxU
+ 5ofvr9z5CeMSnZXEi7Zk+nrFZ2cmQjbZqv3VoOo9ZxQ2KzLC1Ow4prBOeHejG9ZZ1dq8uGFYP9r
+ e6uZ8K8snGPrBxbFeP1N9TidZ8BihL9dpSbxRVxaLMQgT6wEgLrOJ1eSRQmWHQh6UWL5CiGgoQX
+ MdPuRU7aQSkMaukyTV2Vt8k4w0OC3/3A==
+X-Received: by 2002:a2e:7d0a:0:b0:2ee:8c8d:d9dd with SMTP id
+ 38308e7fff4ca-2ee8c8ddbbfmr2785741fa.36.1720046959289; 
+ Wed, 03 Jul 2024 15:49:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGr8xUrsmSAGleVs8PLCQSnGg6KMYREeErjndTr2piNjY/inasSibXo5bij3rGQ/FV/yYzI2g==
+X-Received: by 2002:a2e:7d0a:0:b0:2ee:8c8d:d9dd with SMTP id
+ 38308e7fff4ca-2ee8c8ddbbfmr2785591fa.36.1720046958506; 
+ Wed, 03 Jul 2024 15:49:18 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36796351169sm1995299f8f.95.2024.07.03.15.49.03
+ 5b1f17b1804b1-4264a1d0b24sm1242535e9.3.2024.07.03.15.49.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:49:05 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:49:02 -0400
+ Wed, 03 Jul 2024 15:49:17 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:49:14 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sunil V L <sunilvl@ventanamicro.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL v3 61/85] uefi-test-tools: Add support for python based build
- script
-Message-ID: <ad8560fa29fc18acda2e8cfc1fdd87f6c6cca122.1720046570.git.mst@redhat.com>
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Subject: [PULL v3 64/85] tests/qtest/bios-tables-test.c: Add support for arch
+ in path
+Message-ID: <c9ad3decca13cd0f01ef16dba7a3d44abb096964.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -106,132 +106,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Sunil V L <sunilvl@ventanamicro.com>
 
-edk2-funcs.sh which is used in this Makefile, was removed in the commit
-c28a2891f3 ("edk2: update build script"). It is replaced with a python
-based script. So, update the Makefile and add the configuration file as
-required to support the python based build script.
+Since machine name can be common for multiple architectures (ex: virt),
+add "arch" in the path to search for expected AML files. Since the AML
+files are still under old path, add support for searching with and
+without arch in the path.
 
 Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240625150839.1358279-4-sunilvl@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240625150839.1358279-7-sunilvl@ventanamicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/uefi-test-tools/Makefile               | 19 +++----
- tests/uefi-test-tools/uefi-test-build.config | 52 ++++++++++++++++++++
- 2 files changed, 59 insertions(+), 12 deletions(-)
- create mode 100644 tests/uefi-test-tools/uefi-test-build.config
+ tests/qtest/bios-tables-test.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/tests/uefi-test-tools/Makefile b/tests/uefi-test-tools/Makefile
-index 0c003f2877..f4eaebd8ff 100644
---- a/tests/uefi-test-tools/Makefile
-+++ b/tests/uefi-test-tools/Makefile
-@@ -12,7 +12,7 @@
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index c4a4d1c7bf..29c52952f4 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -78,6 +78,7 @@
+ typedef struct {
+     bool tcg_only;
+     const char *machine;
++    const char *arch;
+     const char *machine_param;
+     const char *variant;
+     const char *uefi_fl1;
+@@ -262,8 +263,19 @@ static void dump_aml_files(test_data *data, bool rebuild)
+         g_assert(exp_sdt->aml);
  
- edk2_dir              := ../../roms/edk2
- images_dir            := ../data/uefi-boot-images
--emulation_targets     := arm aarch64 i386 x86_64
-+emulation_targets     := arm aarch64 i386 x86_64 riscv64
- uefi_binaries         := bios-tables-test
- intermediate_suffixes := .efi .fat .iso.raw
+         if (rebuild) {
+-            aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
++            aml_file = g_strdup_printf("%s/%s/%s/%.4s%s", data_dir,
++                                       data->arch, data->machine,
+                                        sdt->aml, ext);
++
++            /*
++             * To keep test cases not failing before the DATA files are moved to
++             * ${arch}/${machine} folder, add this check as well.
++             */
++            if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
++                aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir,
++                                           data->machine, sdt->aml, ext);
++            }
++
+             if (!g_file_test(aml_file, G_FILE_TEST_EXISTS) &&
+                 sdt->aml_len == exp_sdt->aml_len &&
+                 !memcmp(sdt->aml, exp_sdt->aml, sdt->aml_len)) {
+@@ -398,8 +410,13 @@ static GArray *load_expected_aml(test_data *data)
+         memset(&exp_sdt, 0, sizeof(exp_sdt));
  
-@@ -56,7 +56,8 @@ Build/%.iso.raw: Build/%.fat
- # stripped from, the argument.
- map_arm_to_uefi     = $(subst arm,ARM,$(1))
- map_aarch64_to_uefi = $(subst aarch64,AA64,$(call map_arm_to_uefi,$(1)))
--map_i386_to_uefi    = $(subst i386,IA32,$(call map_aarch64_to_uefi,$(1)))
-+map_riscv64_to_uefi = $(subst riscv64,RISCV64,$(call map_aarch64_to_uefi,$(1)))
-+map_i386_to_uefi    = $(subst i386,IA32,$(call map_riscv64_to_uefi,$(1)))
- map_x86_64_to_uefi  = $(subst x86_64,X64,$(call map_i386_to_uefi,$(1)))
- map_to_uefi         = $(subst .,,$(call map_x86_64_to_uefi,$(1)))
- 
-@@ -70,7 +71,7 @@ Build/%.fat: Build/%.efi
- 	uefi_bin_b=$$(stat --format=%s -- $<) && \
- 		uefi_fat_kb=$$(( (uefi_bin_b * 11 / 10 + 1023) / 1024 )) && \
- 		uefi_fat_kb=$$(( uefi_fat_kb >= 64 ? uefi_fat_kb : 64 )) && \
--		mkdosfs -C $@ -n $(basename $(@F)) -- $$uefi_fat_kb
-+		mkdosfs -C $@ -n "bios-test" -- $$uefi_fat_kb
- 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI
- 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI/BOOT
- 	MTOOLS_SKIP_CHECK=1 mcopy -i $@ -- $< \
-@@ -95,15 +96,9 @@ Build/%.fat: Build/%.efi
- # we must mark the recipe manually as recursive, by using the "+" indicator.
- # This way, when the inner "make" starts a parallel build of the target edk2
- # module, it can communicate with the outer "make"'s job server.
--Build/bios-tables-test.%.efi: build-edk2-tools
--	+./build.sh $(edk2_dir) BiosTablesTest $* $@
--
--build-edk2-tools:
--	cd $(edk2_dir)/BaseTools && git submodule update --init --force
--	$(MAKE) -C $(edk2_dir)/BaseTools \
--		PYTHON_COMMAND=$${EDK2_PYTHON_COMMAND:-python3} \
--		EXTRA_OPTFLAGS='$(EDK2_BASETOOLS_OPTFLAGS)' \
--		EXTRA_LDFLAGS='$(EDK2_BASETOOLS_LDFLAGS)'
-+Build/bios-tables-test.%.efi:
-+	$(PYTHON) ../../roms/edk2-build.py --config uefi-test-build.config \
-+		--match $*
- 
- clean:
- 	rm -rf Build Conf log
-diff --git a/tests/uefi-test-tools/uefi-test-build.config b/tests/uefi-test-tools/uefi-test-build.config
-new file mode 100644
-index 0000000000..1f389ae541
---- /dev/null
-+++ b/tests/uefi-test-tools/uefi-test-build.config
-@@ -0,0 +1,52 @@
-+[global]
-+core = ../../roms/edk2
+ try_again:
+-        aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
+-                                   sdt->aml, ext);
++        aml_file = g_strdup_printf("%s/%s/%s/%.4s%s", data_dir, data->arch,
++                                   data->machine, sdt->aml, ext);
++        if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
++            aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
++                                       sdt->aml, ext);
++        }
 +
-+####################################################################################
-+# arm
-+
-+[build.arm]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = ARM
-+cpy1 = ARM/BiosTablesTest.efi  bios-tables-test.arm.efi
-+
-+####################################################################################
-+# aarch64
-+
-+[build.aarch64]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = AARCH64
-+cpy1 = AARCH64/BiosTablesTest.efi  bios-tables-test.aarch64.efi
-+
-+####################################################################################
-+# riscv64
-+
-+[build.riscv]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = RISCV64
-+cpy1 = RISCV64/BiosTablesTest.efi  bios-tables-test.riscv64.efi
-+
-+####################################################################################
-+# ia32
-+
-+[build.ia32]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = IA32
-+cpy1 = IA32/BiosTablesTest.efi  bios-tables-test.i386.efi
-+
-+####################################################################################
-+# x64
-+
-+[build.x64]
-+conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
-+plat = UefiTestTools
-+dest = ./Build
-+arch = X64
-+cpy1 = X64/BiosTablesTest.efi  bios-tables-test.x86_64.efi
+         if (verbosity_level >= 2) {
+             fprintf(stderr, "Looking for expected file '%s'\n", aml_file);
+         }
 -- 
 MST
 
