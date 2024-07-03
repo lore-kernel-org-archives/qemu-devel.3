@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1022AC31D97
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D55D7C2BD09
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:46:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8iE-0001xe-07; Wed, 03 Jul 2024 18:44:30 -0400
+	id 1sP8jL-00033b-9p; Wed, 03 Jul 2024 18:45:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8iC-0001xB-51
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:44:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jI-000330-Gt
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8i8-0000rU-2x
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:44:27 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jG-0001Gn-L2
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046662;
+ s=mimecast20190719; t=1720046733;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=gfd+vfybB3O3+4pkXHRWr1BbxFsd2M2r8td4r0aSbjQ=;
- b=DpakpC+RHtybI+92CYXmmvWyEaCPajkHdmO6DksKYxZ1JMOkwIa3Xyp/+T8HBm7782RK4p
- xR7tnw/DJ16G7ELyPzd2re5bX4LgvngMjbeXZWSEn7GuF5B+7fdPvhl0tNGBBkudl3bozy
- B8HtXovjLrgQfctKSXIHZMog2eKUW8k=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cwZ47LpotxgqMUotTFYaru0nOsyfZI/sw2MfKtbkph8=;
+ b=C/gR0BEN4ADc/AAe0ze/6FfuF7dHwXHXWcnE6tVAt2gMRNblv3P4MdILn/faJIRM4ZvXUN
+ UwwpeHkJ9YpUTByR8fjhyHvI86YZoB3VijHJ9K/pp/xS5Txc/cZtOIsXPJgc0k3X+Bh3G5
+ RPY8NXiKwRZ9xs8xfB5o5mwNPrBVp9s=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-VcZP3O6JPY6Kz1FwZBMPZw-1; Wed, 03 Jul 2024 18:44:21 -0400
-X-MC-Unique: VcZP3O6JPY6Kz1FwZBMPZw-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-58c7800d03eso4724a12.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:44:21 -0700 (PDT)
+ us-mta-501-UWxIRvh9O2C6Xh4-I9MF_A-1; Wed, 03 Jul 2024 18:45:32 -0400
+X-MC-Unique: UWxIRvh9O2C6Xh4-I9MF_A-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a725b0f8ba9so405666b.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:45:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046660; x=1720651460;
+ d=1e100.net; s=20230601; t=1720046730; x=1720651530;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gfd+vfybB3O3+4pkXHRWr1BbxFsd2M2r8td4r0aSbjQ=;
- b=IxuziDzHyDsYa3ktKCGobVQIIv0bOJtWNX7ESDm6KcBNklzHNYfCTjIu3wWUxVWen7
- chMIXawif+OT4bnKXr7swP7IqlKt6OvN3RbYCKufVe5X6SOOrTaQxVz08qbzI5M0Cg4Y
- 6l9xhA0u1Szv5cxCtuytK+nUb0f+HjKSiObrhxstgQNeOl8ZYyZNnBR49J6BlVSMWp8w
- c43CbjOkrzCzPrLYD852bAFPaNkG0K1HWj4jNcXTZrAebTM4rv5nmxxnfocsuDVOtNEa
- LnOpFuJItZXLn05/JeTysCIviXNaqcuarz11BrketR2hNzfLf8k2dyGyo505p2u9GHNy
- +B+A==
-X-Gm-Message-State: AOJu0YwzAlk3bXCbVYKh9QT7TWGAsEtjTSAToeKcdDdgbaSFji2hpw2U
- 5mq/W/Q/CXCfv2eLitanpCLkFaNg9j8TY4yblVYl8Q6cDG3mymVT4zWa9SI1P5fTg55DnetMdkF
- Tnjoc9lkr8sDiWvqFHuZMRrdHbtqlWbegBLQGH9nAIeGRmFMNnQYOm+JGdzhfXqzSSXwX/5q4C3
- Qa9nntFD/oI+dzuiccyPyizf+m49leyg==
-X-Received: by 2002:a05:6402:234f:b0:58d:b83c:6404 with SMTP id
- 4fb4d7f45d1cf-58db83c65dcmr1084961a12.13.1720046659967; 
- Wed, 03 Jul 2024 15:44:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvcN4XQqXSHuRAhpXDQO35qvl+D4d+Z490OpTN05A3CxxU3CmAwKUebV/X1LB3ywCenaBryA==
-X-Received: by 2002:a05:6402:234f:b0:58d:b83c:6404 with SMTP id
- 4fb4d7f45d1cf-58db83c65dcmr1084941a12.13.1720046659138; 
- Wed, 03 Jul 2024 15:44:19 -0700 (PDT)
+ bh=cwZ47LpotxgqMUotTFYaru0nOsyfZI/sw2MfKtbkph8=;
+ b=fc1j+9MKRcXlhIT24qyEsjXT3mQyJAmRvozcP7EwsRuS/rQhrz3kPrUuYn++nPOkb5
+ sj6shEjDVaPZAuR+/zzhOgxFppzQJ9fq8nFg2+vME7El9ionUgKExx7scChKtG7dX8f+
+ JUcsCmhvVAWTCzUFd2e5Bo1OOyXlKnpXor+Fhq0eqjUYR7yKHx054vZWAaB/P4pa/oJt
+ Zq1QzsG67p1j3lO2OQewoEAgZpCzjRfZn327NyzJGdr2cxLuUmo9VXOUN6oJN1nQDWcB
+ OG9Im+CgHnExOIq3WV5gnfZEcXhxOhOdAe+Tc5S2FFWpT0MlCu6cDUIfztDJ/QJUd/GN
+ 85Xw==
+X-Gm-Message-State: AOJu0Ywgjbv9HxCsKAolfyBc165nOoQMUNQhyINsNaJduIFOoZ0KY0uy
+ 8V/4uj+gSnOD032T6AK+vzhk6txu9bIM3XPE6haz/iwWfsAgE2f/f+w68tWJcMyq0RRG6LGjI5I
+ 3lAYRvoEsowNR1m27v9VE7/1KI+/GlUlSxzJAfK/65du/7Bw9Ly9DmQ59rTHxKv0Xg4fFVghiUv
+ szpcFuW6aH02hHRKt1Jx1Wue/mA/cv8w==
+X-Received: by 2002:a05:6402:1cc1:b0:57c:7c44:74df with SMTP id
+ 4fb4d7f45d1cf-587a0822c1dmr9303822a12.29.1720046729807; 
+ Wed, 03 Jul 2024 15:45:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEf+u9KR/aVkIEBTVVLe5R5Xz/bgzPvtsMH1bviz8Q/1691IGmyGyBEIxKJ8pw7FHj6XvNFGw==
+X-Received: by 2002:a05:6402:1cc1:b0:57c:7c44:74df with SMTP id
+ 4fb4d7f45d1cf-587a0822c1dmr9303800a12.29.1720046729079; 
+ Wed, 03 Jul 2024 15:45:29 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58613159103sm7632478a12.24.2024.07.03.15.44.17
+ 4fb4d7f45d1cf-58d50c4dad9sm1053214a12.10.2024.07.03.15.45.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:44:18 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:44:16 -0400
+ Wed, 03 Jul 2024 15:45:28 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:45:22 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Si-Wei Liu <si-wei.liu@oracle.com>
-Subject: [PULL v3 01/85] vhost: dirty log should be per backend type
-Message-ID: <51d59a64eed6c2cd2d2f991f44ffbe21eb33c733.1720046570.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Li Feng <fengli@smartx.com>,
+ Raphael Norwitz <raphael@enfabrica.net>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org
+Subject: [PULL v3 15/85] vhost-user: fix lost reconnect again
+Message-ID: <6eaf0e612b415877d1c411b95bed2ecb53b546bb.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -77,7 +81,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,134 +105,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Si-Wei Liu <si-wei.liu@oracle.com>
+From: Li Feng <fengli@smartx.com>
 
-There could be a mix of both vhost-user and vhost-kernel clients
-in the same QEMU process, where separate vhost loggers for the
-specific vhost type have to be used. Make the vhost logger per
-backend type, and have them properly reference counted.
+When the vhost-user is reconnecting to the backend, and if the vhost-user fails
+at the get_features in vhost_dev_init(), then the reconnect will fail
+and it will not be retriggered forever.
 
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Si-Wei Liu <si-wei.liu@oracle.com>
-Message-Id: <1710448055-11709-1-git-send-email-si-wei.liu@oracle.com>
+The reason is:
+When the vhost-user fail at get_features, the vhost_dev_cleanup will be called
+immediately.
+
+vhost_dev_cleanup calls 'memset(hdev, 0, sizeof(struct vhost_dev))'.
+
+The reconnect path is:
+vhost_user_blk_event
+   vhost_user_async_close(.. vhost_user_blk_disconnect ..)
+     qemu_chr_fe_set_handlers <----- clear the notifier callback
+       schedule vhost_user_async_close_bh
+
+The vhost->vdev is null, so the vhost_user_blk_disconnect will not be
+called, then the event fd callback will not be reinstalled.
+
+We need to ensure that even if vhost_dev_init initialization fails, the event
+handler still needs to be reinstalled when s->connected is false.
+
+All vhost-user devices have this issue, including vhost-user-blk/scsi.
+
+Fixes: 71e076a07d ("hw/virtio: generalise CHR_EVENT_CLOSED handling")
+
+Signed-off-by: Li Feng <fengli@smartx.com>
+Message-Id: <20240516025753.130171-3-fengli@smartx.com>
+Reviewed-by: Raphael Norwitz <raphael@enfabrica.net>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/vhost.c | 45 +++++++++++++++++++++++++++++++++------------
- 1 file changed, 33 insertions(+), 12 deletions(-)
+ hw/block/vhost-user-blk.c   |  3 ++-
+ hw/scsi/vhost-user-scsi.c   |  3 ++-
+ hw/virtio/vhost-user-base.c |  3 ++-
+ hw/virtio/vhost-user.c      | 10 +---------
+ 4 files changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 4acd77e890..a1e8b79e1a 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -43,8 +43,8 @@
-     do { } while (0)
- #endif
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 15cc24d017..fdbc30b9ce 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -354,7 +354,7 @@ static void vhost_user_blk_disconnect(DeviceState *dev)
+     VHostUserBlk *s = VHOST_USER_BLK(vdev);
  
--static struct vhost_log *vhost_log;
--static struct vhost_log *vhost_log_shm;
-+static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
-+static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
- 
- /* Memslots used by backends that support private memslots (without an fd). */
- static unsigned int used_memslots;
-@@ -287,6 +287,10 @@ static int vhost_set_backend_type(struct vhost_dev *dev,
-         r = -1;
+     if (!s->connected) {
+-        return;
++        goto done;
      }
+     s->connected = false;
  
-+    if (r == 0) {
-+        assert(dev->vhost_ops->backend_type == backend_type);
-+    }
-+
-     return r;
- }
+@@ -362,6 +362,7 @@ static void vhost_user_blk_disconnect(DeviceState *dev)
  
-@@ -319,16 +323,22 @@ static struct vhost_log *vhost_log_alloc(uint64_t size, bool share)
-     return log;
- }
+     vhost_dev_cleanup(&s->dev);
  
--static struct vhost_log *vhost_log_get(uint64_t size, bool share)
-+static struct vhost_log *vhost_log_get(VhostBackendType backend_type,
-+                                       uint64_t size, bool share)
- {
--    struct vhost_log *log = share ? vhost_log_shm : vhost_log;
-+    struct vhost_log *log;
-+
-+    assert(backend_type > VHOST_BACKEND_TYPE_NONE);
-+    assert(backend_type < VHOST_BACKEND_TYPE_MAX);
-+
-+    log = share ? vhost_log_shm[backend_type] : vhost_log[backend_type];
++done:
+     /* Re-instate the event handler for new connections */
+     qemu_chr_fe_set_handlers(&s->chardev, NULL, NULL, vhost_user_blk_event,
+                              NULL, dev, NULL, true);
+diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
+index 421cd654f8..cc91ade525 100644
+--- a/hw/scsi/vhost-user-scsi.c
++++ b/hw/scsi/vhost-user-scsi.c
+@@ -182,7 +182,7 @@ static void vhost_user_scsi_disconnect(DeviceState *dev)
+     VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(dev);
  
-     if (!log || log->size != size) {
-         log = vhost_log_alloc(size, share);
-         if (share) {
--            vhost_log_shm = log;
-+            vhost_log_shm[backend_type] = log;
-         } else {
--            vhost_log = log;
-+            vhost_log[backend_type] = log;
-         }
-     } else {
-         ++log->refcnt;
-@@ -340,11 +350,20 @@ static struct vhost_log *vhost_log_get(uint64_t size, bool share)
- static void vhost_log_put(struct vhost_dev *dev, bool sync)
- {
-     struct vhost_log *log = dev->log;
-+    VhostBackendType backend_type;
- 
-     if (!log) {
-         return;
+     if (!s->connected) {
+-        return;
++        goto done;
      }
+     s->connected = false;
  
-+    assert(dev->vhost_ops);
-+    backend_type = dev->vhost_ops->backend_type;
-+
-+    if (backend_type == VHOST_BACKEND_TYPE_NONE ||
-+        backend_type >= VHOST_BACKEND_TYPE_MAX) {
-+        return;
-+    }
-+
-     --log->refcnt;
-     if (log->refcnt == 0) {
-         /* Sync only the range covered by the old log */
-@@ -352,13 +371,13 @@ static void vhost_log_put(struct vhost_dev *dev, bool sync)
-             vhost_log_sync_range(dev, 0, dev->log_size * VHOST_LOG_CHUNK - 1);
-         }
+@@ -190,6 +190,7 @@ static void vhost_user_scsi_disconnect(DeviceState *dev)
  
--        if (vhost_log == log) {
-+        if (vhost_log[backend_type] == log) {
-             g_free(log->log);
--            vhost_log = NULL;
--        } else if (vhost_log_shm == log) {
-+            vhost_log[backend_type] = NULL;
-+        } else if (vhost_log_shm[backend_type] == log) {
-             qemu_memfd_free(log->log, log->size * sizeof(*(log->log)),
-                             log->fd);
--            vhost_log_shm = NULL;
-+            vhost_log_shm[backend_type] = NULL;
-         }
+     vhost_dev_cleanup(&vsc->dev);
  
-         g_free(log);
-@@ -376,7 +395,8 @@ static bool vhost_dev_log_is_shared(struct vhost_dev *dev)
++done:
+     /* Re-instate the event handler for new connections */
+     qemu_chr_fe_set_handlers(&vs->conf.chardev, NULL, NULL,
+                              vhost_user_scsi_event, NULL, dev, NULL, true);
+diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+index 4b54255682..11e72b1e3b 100644
+--- a/hw/virtio/vhost-user-base.c
++++ b/hw/virtio/vhost-user-base.c
+@@ -225,13 +225,14 @@ static void vub_disconnect(DeviceState *dev)
+     VHostUserBase *vub = VHOST_USER_BASE(vdev);
  
- static inline void vhost_dev_log_resize(struct vhost_dev *dev, uint64_t size)
+     if (!vub->connected) {
+-        return;
++        goto done;
+     }
+     vub->connected = false;
+ 
+     vub_stop(vdev);
+     vhost_dev_cleanup(&vub->vhost_dev);
+ 
++done:
+     /* Re-instate the event handler for new connections */
+     qemu_chr_fe_set_handlers(&vub->chardev,
+                              NULL, NULL, vub_event,
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index c929097e87..c407ea8939 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -2781,16 +2781,8 @@ typedef struct {
+ static void vhost_user_async_close_bh(void *opaque)
  {
--    struct vhost_log *log = vhost_log_get(size, vhost_dev_log_is_shared(dev));
-+    struct vhost_log *log = vhost_log_get(dev->vhost_ops->backend_type,
-+                                          size, vhost_dev_log_is_shared(dev));
-     uint64_t log_base = (uintptr_t)log->log;
-     int r;
+     VhostAsyncCallback *data = opaque;
+-    struct vhost_dev *vhost = data->vhost;
  
-@@ -2044,7 +2064,8 @@ int vhost_dev_start(struct vhost_dev *hdev, VirtIODevice *vdev, bool vrings)
-         uint64_t log_base;
+-    /*
+-     * If the vhost_dev has been cleared in the meantime there is
+-     * nothing left to do as some other path has completed the
+-     * cleanup.
+-     */
+-    if (vhost->vdev) {
+-        data->cb(data->dev);
+-    }
++    data->cb(data->dev);
  
-         hdev->log_size = vhost_get_log_size(hdev);
--        hdev->log = vhost_log_get(hdev->log_size,
-+        hdev->log = vhost_log_get(hdev->vhost_ops->backend_type,
-+                                  hdev->log_size,
-                                   vhost_dev_log_is_shared(hdev));
-         log_base = (uintptr_t)hdev->log->log;
-         r = hdev->vhost_ops->vhost_set_log_base(hdev,
+     g_free(data);
+ }
 -- 
 MST
 
