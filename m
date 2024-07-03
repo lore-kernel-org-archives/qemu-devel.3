@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BD1C3271E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB30C2BD09
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 21:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP77B-0000eX-Tz; Wed, 03 Jul 2024 17:02:09 -0400
+	id 1sP777-0000d6-6p; Wed, 03 Jul 2024 17:02:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sP77A-0000eB-CJ
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 17:02:08 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sP775-0000cu-DR
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 17:02:03 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sP778-00089O-OQ
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 17:02:08 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sP773-00088E-H2
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 17:02:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720040526;
+ s=mimecast20190719; t=1720040519;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=weZkuUwuyqy4MTMy3EjAIkediRMFFXVHhEi2kP2UMqs=;
- b=Dl6OmrnJCyLfciaVhhZJcVEkXAqaVwauYkhhyf+cxv4n4YsWf8FsgEJHwm8E55saE/0G1w
- CUd4LxeGQxvVS8qnKppHM2XvzwG3d74ZNmJDGHiJ6cxMDo3wQi70GPVDfsXZeaHqMH9IEU
- OpRv26l/QjiK/4rVlsuDNEKqgLcY4W8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=jPl2Libghn/zK5iVAyW17gBHT+3bCBjv9cgXjDBY2vk=;
+ b=WgC/Zm6odKNLXaYZ2j7fE4crRv3MOQC5cYvHfsBhrb+by9nEgIroLEMVQgRAF9WHpFyYae
+ Q7OZh7TQhhPZk3jpkr6YQ20PIOV1xVidWkVB+IWxY9nMVaUeJCRWr67DujG7fpnKExw9/h
+ Su6/qXTUzXSaUAj8dnaWyNEGeP9khGg=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-VPASe2OdMOiGj2M1tf2iBA-1; Wed,
- 03 Jul 2024 17:02:02 -0400
-X-MC-Unique: VPASe2OdMOiGj2M1tf2iBA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-XRuf3J2RMsiNOwUBt60DGg-1; Wed,
+ 03 Jul 2024 17:01:56 -0400
+X-MC-Unique: XRuf3J2RMsiNOwUBt60DGg-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C8C3195608C; Wed,  3 Jul 2024 21:02:00 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C4CC219560B2; Wed,  3 Jul 2024 21:01:53 +0000 (UTC)
 Received: from scv.localdomain (unknown [10.22.34.31])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1A29F1955F22; Wed,  3 Jul 2024 21:01:53 +0000 (UTC)
+ id 1C0271955F21; Wed,  3 Jul 2024 21:01:45 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
@@ -68,13 +67,13 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>, Jiri Pirko <jiri@resnulli.us>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 1/8] docs/qapidoc: factor out do_parse()
-Date: Wed,  3 Jul 2024 17:01:36 -0400
-Message-ID: <20240703210144.339530-2-jsnow@redhat.com>
-In-Reply-To: <20240703210144.339530-1-jsnow@redhat.com>
-References: <20240703210144.339530-1-jsnow@redhat.com>
+Subject: [PATCH 0/8] qapi: convert example sections to qmp-example rST
+ directives
+Date: Wed,  3 Jul 2024 17:01:35 -0400
+Message-ID: <20240703210144.339530-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -100,97 +99,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor out the compatibility parser helper into a base class, so it can
-be shared by other directives.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- docs/sphinx/qapidoc.py | 64 +++++++++++++++++++++++-------------------
- 1 file changed, 35 insertions(+), 29 deletions(-)
-
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index efcd84656fa..43dd99e21e6 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -494,7 +494,41 @@ def visit_module(self, name):
-         super().visit_module(name)
- 
- 
--class QAPIDocDirective(Directive):
-+class NestedDirective(Directive):
-+    def run(self):
-+        raise NotImplementedError
-+
-+    def do_parse(self, rstlist, node):
-+        """
-+        Parse rST source lines and add them to the specified node
-+
-+        Take the list of rST source lines rstlist, parse them as
-+        rST, and add the resulting docutils nodes as children of node.
-+        The nodes are parsed in a way that allows them to include
-+        subheadings (titles) without confusing the rendering of
-+        anything else.
-+        """
-+        # This is from kerneldoc.py -- it works around an API change in
-+        # Sphinx between 1.6 and 1.7. Unlike kerneldoc.py, we use
-+        # sphinx.util.nodes.nested_parse_with_titles() rather than the
-+        # plain self.state.nested_parse(), and so we can drop the saving
-+        # of title_styles and section_level that kerneldoc.py does,
-+        # because nested_parse_with_titles() does that for us.
-+        if USE_SSI:
-+            with switch_source_input(self.state, rstlist):
-+                nested_parse_with_titles(self.state, rstlist, node)
-+        else:
-+            save = self.state.memo.reporter
-+            self.state.memo.reporter = AutodocReporter(
-+                rstlist, self.state.memo.reporter
-+            )
-+            try:
-+                nested_parse_with_titles(self.state, rstlist, node)
-+            finally:
-+                self.state.memo.reporter = save
-+
-+
-+class QAPIDocDirective(NestedDirective):
-     """Extract documentation from the specified QAPI .json file"""
- 
-     required_argument = 1
-@@ -532,34 +566,6 @@ def run(self):
-             # so they are displayed nicely to the user
-             raise ExtensionError(str(err)) from err
- 
--    def do_parse(self, rstlist, node):
--        """Parse rST source lines and add them to the specified node
--
--        Take the list of rST source lines rstlist, parse them as
--        rST, and add the resulting docutils nodes as children of node.
--        The nodes are parsed in a way that allows them to include
--        subheadings (titles) without confusing the rendering of
--        anything else.
--        """
--        # This is from kerneldoc.py -- it works around an API change in
--        # Sphinx between 1.6 and 1.7. Unlike kerneldoc.py, we use
--        # sphinx.util.nodes.nested_parse_with_titles() rather than the
--        # plain self.state.nested_parse(), and so we can drop the saving
--        # of title_styles and section_level that kerneldoc.py does,
--        # because nested_parse_with_titles() does that for us.
--        if USE_SSI:
--            with switch_source_input(self.state, rstlist):
--                nested_parse_with_titles(self.state, rstlist, node)
--        else:
--            save = self.state.memo.reporter
--            self.state.memo.reporter = AutodocReporter(
--                rstlist, self.state.memo.reporter
--            )
--            try:
--                nested_parse_with_titles(self.state, rstlist, node)
--            finally:
--                self.state.memo.reporter = save
--
- 
- def setup(app):
-     """Register qapi-doc directive with Sphinx"""
--- 
-2.45.0
+GitLab: https://gitlab.com/jsnow/qemu/-/pipelines/1359714660=0D
+=0D
+This patchset focuses on converting example sections to rST directives=0D
+using a new `.. qmp-example::` directive.=0D
+=0D
+It is based on what I *assume* will be Markus' next pull request that=0D
+covers note conversion. Pull these patches from GitLab directly if=0D
+that's too annoying:=0D
+https://gitlab.com/jsnow/qemu/-/commits/sphinx-domain-prereqs-examples=0D
+=0D
+It is also annoyingly the case that both Markus' next pull request and=0D
+this series conflicts with a separate series I sent out, "docs/python:=0D
+bump minimum Sphinx version" - so it's extremely likely I'll need to=0D
+rebase and respin this series depending on what goes in and in what=0D
+order. Ah well...=0D
+=0D
+Changes since this was split out from the prior series:=0D
+=0D
+- Harmonie updated the CSS for the example block section.=0D
+  I think it's really tidy now! Thanks Harmonie!=0D
+- Dependence on SphinxDirective was removed, but it will likely=0D
+  re-appear in the next series anyway.=0D
+- qapi-code-gen.rst was updated with a section on how to write examples.=0D
+- Various minor tweaks to comments, commit messages, docs, etc.=0D
+=0D
+Harmonie Snow (1):=0D
+  docs/sphinx: add CSS styling for qmp-example directive=0D
+=0D
+John Snow (7):=0D
+  docs/qapidoc: factor out do_parse()=0D
+  docs/qapidoc: create qmp-example directive=0D
+  docs/qapidoc: add QMP highlighting to annotated qmp-example blocks=0D
+  qapi: convert "Example" sections without titles=0D
+  qapi: convert "Example" sections with titles=0D
+  qapi: convert "Example" sections with longer prose=0D
+  qapi: remove "Example" doc section=0D
+=0D
+ docs/devel/qapi-code-gen.rst           |  58 +++++++--=0D
+ docs/sphinx-static/theme_overrides.css |  49 ++++++++=0D
+ docs/sphinx/qapidoc.py                 | 156 +++++++++++++++++++++----=0D
+ qapi/acpi.json                         |   4 +-=0D
+ qapi/block-core.json                   |  88 +++++++-------=0D
+ qapi/block.json                        |  57 +++++----=0D
+ qapi/char.json                         |  24 ++--=0D
+ qapi/control.json                      |   8 +-=0D
+ qapi/dump.json                         |   8 +-=0D
+ qapi/machine-target.json               |   2 +-=0D
+ qapi/machine.json                      |  68 ++++++-----=0D
+ qapi/migration.json                    |  90 +++++++-------=0D
+ qapi/misc-target.json                  |  22 ++--=0D
+ qapi/misc.json                         |  32 ++---=0D
+ qapi/net.json                          |  20 ++--=0D
+ qapi/pci.json                          |   2 +-=0D
+ qapi/qdev.json                         |  10 +-=0D
+ qapi/qom.json                          |  16 +--=0D
+ qapi/replay.json                       |   8 +-=0D
+ qapi/rocker.json                       |   8 +-=0D
+ qapi/run-state.json                    |  30 ++---=0D
+ qapi/tpm.json                          |   6 +-=0D
+ qapi/trace.json                        |   4 +-=0D
+ qapi/transaction.json                  |   2 +-=0D
+ qapi/ui.json                           |  45 +++----=0D
+ qapi/vfio.json                         |   2 +-=0D
+ qapi/virtio.json                       |  45 ++++---=0D
+ qapi/yank.json                         |   4 +-=0D
+ scripts/qapi/parser.py                 |  10 +-=0D
+ tests/qapi-schema/doc-good.json        |  19 +--=0D
+ tests/qapi-schema/doc-good.out         |  26 +++--=0D
+ tests/qapi-schema/doc-good.txt         |  23 ++--=0D
+ 32 files changed, 605 insertions(+), 341 deletions(-)=0D
+=0D
+-- =0D
+2.45.0=0D
+=0D
 
 
