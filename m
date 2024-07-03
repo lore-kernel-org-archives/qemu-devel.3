@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133D2C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B24C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8lI-0005oU-0G; Wed, 03 Jul 2024 18:47:40 -0400
+	id 1sP8mw-00059p-EM; Wed, 03 Jul 2024 18:49:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8lF-0005cm-Ne
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:37 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8ms-0004p2-Mf
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8lC-0001bx-2Z
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:37 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8mk-0005sY-LJ
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046851;
+ s=mimecast20190719; t=1720046950;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=LYdZnAc26juhzysGXK6UuvaiCGSQLeNMHoi5Vg2b1dE=;
- b=hq6AYHuxxYnwsdi29jyyQaZBFZSN2+vHfMNj4w/K1UVnO/FG+IiAPks23CDxVx+xvUc2uK
- k3nib8/76QxR8xHiGb9tOF/8/jZ3GSzLSlAMhYcaDUqT9mPfUVKSU5sRs3L83bsIBj85hc
- qim1eS/mLjuKcVThZuv6LwamL4KK4RQ=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wXu48vkZ7/C+tOxLrIxzTN9h9b+wSo5eOaPVc/4Fs+U=;
+ b=O8ZzZOWqIM1Q9OzBili2HlSxa6WJQBcBvP37XeHvADaHSBiLrsJoxXQDnhDnBVG+Z3E3DF
+ k83WQKxY7bheZwZC8sJYnPoCu/JjIt/rQKOUDHqj0pWSpwHvVZhw8UxvaAMsdqnt2fGkRZ
+ eyWsItTB+rujOrkhZ8S1FjaWI5DBSIo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-218-3kL2Y8V5Ofq6mggGDQqFBg-1; Wed, 03 Jul 2024 18:47:28 -0400
-X-MC-Unique: 3kL2Y8V5Ofq6mggGDQqFBg-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52cda76173dso5431677e87.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:47:28 -0700 (PDT)
+ us-mta-90-26da-2vkPaCC8s8efYIqmQ-1; Wed, 03 Jul 2024 18:49:08 -0400
+X-MC-Unique: 26da-2vkPaCC8s8efYIqmQ-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-367960f4673so535709f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:49:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046847; x=1720651647;
+ d=1e100.net; s=20230601; t=1720046947; x=1720651747;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LYdZnAc26juhzysGXK6UuvaiCGSQLeNMHoi5Vg2b1dE=;
- b=hbFKaS3L6IURLQr6h2IxXMHZdhRz3e5T3GR6KLWbuWy8PYz8A5s4mqKvj38sTQ+zMn
- qwRkp8Xj0cXgBEcZo9Z5Lzyx6BAqZ8mlLA1GlT4HGizBg2Quqrb3pnFsYMnt/9HsItaP
- gAIcTbnqkw44MxEavaOTavtFgkYA+dm9JtfBMkpJFkQK1pUJqB9sDjUOK2Zdu++AXzqS
- nun9l46GIAMSJKNblMgoVLWB9mjR8P/ErNz2Mt4nst1Ed2VbyJAaIdRlj5LAp+i+/OmA
- T/DZmTcpFvN10gV+vhNT78/kWtMI0ryx1+b5g+MyBcs9roWsvN92dKcurYee7X7sqRD4
- lw/g==
-X-Gm-Message-State: AOJu0Yy8YXz1Rhyp49iFfjdH8rGrigIMZHlyi7co2faKbv5pFvWAy9O8
- mZccej0ZGcMp2cenAKZu/5oQ1FX1H96zS4X5qUFPa2j2piicbPTHJ92oxt9hYCqDVJ3vSxOkFaz
- utFthk9NteFQ8oAuausCGqUcvXIqjZCYhtcRhv/npa7lsfxFaTbt4VjONvrUNEFMf3wuPtwjhQu
- 7qzO/Ti2MmlytUZvOgh3qqWwh7XoSHHQ==
-X-Received: by 2002:ac2:5487:0:b0:52e:934f:bda5 with SMTP id
- 2adb3069b0e04-52e934fbdf5mr2360933e87.21.1720046847024; 
- Wed, 03 Jul 2024 15:47:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZtg+8b7ZwW4Xu+gbxk61NEm7H3iipD5KMEeUFWkNdKVicZ5eh/ox7UMMfuXQmzJa24fOD9Q==
-X-Received: by 2002:ac2:5487:0:b0:52e:934f:bda5 with SMTP id
- 2adb3069b0e04-52e934fbdf5mr2360923e87.21.1720046846345; 
- Wed, 03 Jul 2024 15:47:26 -0700 (PDT)
+ bh=wXu48vkZ7/C+tOxLrIxzTN9h9b+wSo5eOaPVc/4Fs+U=;
+ b=fsN7e7LiK79M4kF8JcJOfxkDxFPcZ3f6BMO0BiCrg6oqdGrLsMI2m1NvxDAVl+OMza
+ aRdm8PshhtaVmKuTI8teqR7OdzWjuiYB8bsBfgkm6hv70qAu7cUU/gP10mcw4YmqQp9F
+ 1TRzaUt9k8gctNngw0qbR6NSwRhC/94F4PMJ6igiiCrFLmcOojjbc8LFeiX3OHAwB97u
+ kFCOFCGYRktVtGCVX6wnKF5z4wxtBRqIVhf+RvV0XetfKHwUlE9a5CbbRYXchFMfpxuX
+ 2mTzGqonWGcXqCJlhfxX7OpsAPmkg761C/va5dvVWordAtiGB3ApVGYt2wfIWKus3V3F
+ fxeA==
+X-Gm-Message-State: AOJu0Yxl7HxzsfEDq5VE2lypFN5fEC6mjR+PKHK74STAZnQFOb3SVKuo
+ k5/KveXWSiGFeWVm3cssm6q/MGR/CsN70MeXKogq1IIraAHgqEkBZ1WgFaf27CoGrJGNxNRJiGQ
+ FNYTquFl4uqheagqR8djVUedC4EfY6BYmPX3mamCQvlCsegryVfECW+9hzFXUOiIwlJnRZ3Ue1y
+ p4d+AIqYQQjioxtAhqZUZpuJ2+NofYNw==
+X-Received: by 2002:a05:600c:4f0c:b0:424:84fb:9fd2 with SMTP id
+ 5b1f17b1804b1-42640b6e086mr27145925e9.19.1720046947030; 
+ Wed, 03 Jul 2024 15:49:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWnl5KRGoJO02dkcidekGahK4zIsQQ5S6iCycyafTAJap5UPntX81nwoYOHPFb2EEwymqyAQ==
+X-Received: by 2002:a05:600c:4f0c:b0:424:84fb:9fd2 with SMTP id
+ 5b1f17b1804b1-42640b6e086mr27145635e9.19.1720046946049; 
+ Wed, 03 Jul 2024 15:49:06 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77ae5bfcddsm39242866b.173.2024.07.03.15.47.23
+ ffacd0b85a97d-36796351169sm1995299f8f.95.2024.07.03.15.49.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:47:25 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:47:21 -0400
+ Wed, 03 Jul 2024 15:49:05 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:49:02 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Yuxue Liu <yuxue.liu@jaguarmicro.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL v3 40/85] vhost-user-test: no set non-blocking for cal fd less
- than 0.
-Message-ID: <f72fc16910c8f44edf052f52672e0e63bbbc773c.1720046570.git.mst@redhat.com>
+ Sunil V L <sunilvl@ventanamicro.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v3 61/85] uefi-test-tools: Add support for python based build
+ script
+Message-ID: <ad8560fa29fc18acda2e8cfc1fdd87f6c6cca122.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -104,43 +104,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yuxue Liu <yuxue.liu@jaguarmicro.com>
+From: Sunil V L <sunilvl@ventanamicro.com>
 
-In the scenario where vhost-user sets eventfd to -1,
-qemu_chr_fe_get_msgfds retrieves fd as -1. When vhost_user_read
-receives, it does not perform blocking operations on the descriptor
-with fd=-1, so non-blocking operations should not be performed here
-either.This is a normal use case. Calling g_unix_set_fd_nonblocking
-at this point will cause the test to interrupt.
+edk2-funcs.sh which is used in this Makefile, was removed in the commit
+c28a2891f3 ("edk2: update build script"). It is replaced with a python
+based script. So, update the Makefile and add the configuration file as
+required to support the python based build script.
 
-When vhost_user_write sets the call fd to -1, it sets the number of
-fds to 0, so the fds obtained by qemu_chr_fe_get_msgfds will also
-be 0.
-
-Signed-off-by: Yuxue Liu <yuxue.liu@jaguarmicro.com>
-Message-Id: <20240411073555.1357-1-yuxue.liu@jaguarmicro.com>
+Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Message-Id: <20240625150839.1358279-4-sunilvl@ventanamicro.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/vhost-user-test.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tests/uefi-test-tools/Makefile               | 19 +++----
+ tests/uefi-test-tools/uefi-test-build.config | 52 ++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 12 deletions(-)
+ create mode 100644 tests/uefi-test-tools/uefi-test-build.config
 
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index d4e437265f..255bde54ab 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -458,7 +458,10 @@ static void chr_read(void *opaque, const uint8_t *buf, int size)
-     case VHOST_USER_SET_VRING_KICK:
-     case VHOST_USER_SET_VRING_CALL:
-         /* consume the fd */
--        qemu_chr_fe_get_msgfds(chr, &fd, 1);
-+        if (!qemu_chr_fe_get_msgfds(chr, &fd, 1) && fd < 0) {
-+            qos_printf("call fd: %d, do not set non-blocking\n", fd);
-+            break;
-+        }
-         /*
-          * This is a non-blocking eventfd.
-          * The receive function forces it to be blocking,
+diff --git a/tests/uefi-test-tools/Makefile b/tests/uefi-test-tools/Makefile
+index 0c003f2877..f4eaebd8ff 100644
+--- a/tests/uefi-test-tools/Makefile
++++ b/tests/uefi-test-tools/Makefile
+@@ -12,7 +12,7 @@
+ 
+ edk2_dir              := ../../roms/edk2
+ images_dir            := ../data/uefi-boot-images
+-emulation_targets     := arm aarch64 i386 x86_64
++emulation_targets     := arm aarch64 i386 x86_64 riscv64
+ uefi_binaries         := bios-tables-test
+ intermediate_suffixes := .efi .fat .iso.raw
+ 
+@@ -56,7 +56,8 @@ Build/%.iso.raw: Build/%.fat
+ # stripped from, the argument.
+ map_arm_to_uefi     = $(subst arm,ARM,$(1))
+ map_aarch64_to_uefi = $(subst aarch64,AA64,$(call map_arm_to_uefi,$(1)))
+-map_i386_to_uefi    = $(subst i386,IA32,$(call map_aarch64_to_uefi,$(1)))
++map_riscv64_to_uefi = $(subst riscv64,RISCV64,$(call map_aarch64_to_uefi,$(1)))
++map_i386_to_uefi    = $(subst i386,IA32,$(call map_riscv64_to_uefi,$(1)))
+ map_x86_64_to_uefi  = $(subst x86_64,X64,$(call map_i386_to_uefi,$(1)))
+ map_to_uefi         = $(subst .,,$(call map_x86_64_to_uefi,$(1)))
+ 
+@@ -70,7 +71,7 @@ Build/%.fat: Build/%.efi
+ 	uefi_bin_b=$$(stat --format=%s -- $<) && \
+ 		uefi_fat_kb=$$(( (uefi_bin_b * 11 / 10 + 1023) / 1024 )) && \
+ 		uefi_fat_kb=$$(( uefi_fat_kb >= 64 ? uefi_fat_kb : 64 )) && \
+-		mkdosfs -C $@ -n $(basename $(@F)) -- $$uefi_fat_kb
++		mkdosfs -C $@ -n "bios-test" -- $$uefi_fat_kb
+ 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI
+ 	MTOOLS_SKIP_CHECK=1 mmd -i $@ ::EFI/BOOT
+ 	MTOOLS_SKIP_CHECK=1 mcopy -i $@ -- $< \
+@@ -95,15 +96,9 @@ Build/%.fat: Build/%.efi
+ # we must mark the recipe manually as recursive, by using the "+" indicator.
+ # This way, when the inner "make" starts a parallel build of the target edk2
+ # module, it can communicate with the outer "make"'s job server.
+-Build/bios-tables-test.%.efi: build-edk2-tools
+-	+./build.sh $(edk2_dir) BiosTablesTest $* $@
+-
+-build-edk2-tools:
+-	cd $(edk2_dir)/BaseTools && git submodule update --init --force
+-	$(MAKE) -C $(edk2_dir)/BaseTools \
+-		PYTHON_COMMAND=$${EDK2_PYTHON_COMMAND:-python3} \
+-		EXTRA_OPTFLAGS='$(EDK2_BASETOOLS_OPTFLAGS)' \
+-		EXTRA_LDFLAGS='$(EDK2_BASETOOLS_LDFLAGS)'
++Build/bios-tables-test.%.efi:
++	$(PYTHON) ../../roms/edk2-build.py --config uefi-test-build.config \
++		--match $*
+ 
+ clean:
+ 	rm -rf Build Conf log
+diff --git a/tests/uefi-test-tools/uefi-test-build.config b/tests/uefi-test-tools/uefi-test-build.config
+new file mode 100644
+index 0000000000..1f389ae541
+--- /dev/null
++++ b/tests/uefi-test-tools/uefi-test-build.config
+@@ -0,0 +1,52 @@
++[global]
++core = ../../roms/edk2
++
++####################################################################################
++# arm
++
++[build.arm]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = ARM
++cpy1 = ARM/BiosTablesTest.efi  bios-tables-test.arm.efi
++
++####################################################################################
++# aarch64
++
++[build.aarch64]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = AARCH64
++cpy1 = AARCH64/BiosTablesTest.efi  bios-tables-test.aarch64.efi
++
++####################################################################################
++# riscv64
++
++[build.riscv]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = RISCV64
++cpy1 = RISCV64/BiosTablesTest.efi  bios-tables-test.riscv64.efi
++
++####################################################################################
++# ia32
++
++[build.ia32]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = IA32
++cpy1 = IA32/BiosTablesTest.efi  bios-tables-test.i386.efi
++
++####################################################################################
++# x64
++
++[build.x64]
++conf = UefiTestToolsPkg/UefiTestToolsPkg.dsc
++plat = UefiTestTools
++dest = ./Build
++arch = X64
++cpy1 = X64/BiosTablesTest.efi  bios-tables-test.x86_64.efi
 -- 
 MST
 
