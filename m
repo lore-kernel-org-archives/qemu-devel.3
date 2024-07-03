@@ -4,66 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B2D0C41513
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 21:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF06AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 21:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP7Ro-0003W1-Ju; Wed, 03 Jul 2024 17:23:28 -0400
+	id 1sP7ZU-0007a1-AP; Wed, 03 Jul 2024 17:31:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roderickklein@xs4all.nl>)
- id 1sP7AA-00074a-FJ
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 17:05:14 -0400
-Received: from ewsoutbound.kpnmail.nl ([195.121.94.186])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roderickklein@xs4all.nl>)
- id 1sP7A8-0005El-6C
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 17:05:14 -0400
-X-KPN-MessageId: ed1f5a0c-397f-11ef-959b-00505699b430
-Received: from smtp.kpnmail.nl (unknown [10.31.155.8])
- by ewsoutbound.so.kpn.org (Halon) with ESMTPS
- id ed1f5a0c-397f-11ef-959b-00505699b430;
- Wed, 03 Jul 2024 23:05:07 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xs4all.nl; s=xs4all01;
- h=content-type:subject:from:to:mime-version:date:message-id;
- bh=sbDJ5RFz9jcmmd4RKMYSFp0FIu2I9Rg76DaAeTufIZY=;
- b=PJd87ne982WPhG1nARhBXI750dxiXuqmSFG0WnFaarC5fpo7wNhEzJYO1kRGN/42VWI9WYIZN1y2D
- rk3ts0wSETtmFmrDL5tOKwFuyy4hhEdgoE5IPssqvjxMJKFWCsusFC5xmVV/eOAcAgJZvd4qgWcojq
- 1t5ozRNYKGZ8IGuoUa1qD0cN/59y1Suw+/T00sG0XUbWPh4SxEbrDiHhZeYXeVNMTilxsbaFhUFUsj
- yDZalsDp9bCF/z68BOrRGsxSJxwwQQ5D/VdfwB2xdczGEN6841Bmk3eHl5g/3b2sRZ1+RWpp63XA+Q
- lHP56oXvmiaQxHKk1I+W0cNh8jA/oAw==
-X-KPN-MID: 33|UzZtm9XzzEJWUkPRbR7Ncw0H9QWN3Xr3OlrtEjxUB6QmHY1aDcIjYgZEYyG45uv
- s0yG9vSC8J8UCCi6UxFxl7aL+5AmunQcswhN72xPBmEk=
-X-KPN-VerifiedSender: Yes
-X-CMASSUN: 33|U0OB9ReuY3WmvL5709TWQ3alW9t9LwEZzhecZBznpokkOW0K5e2TZdGjMk6WNNm
- TF+Td5l+UbrlIfmZKvHBblQ==
-X-Originating-IP: 45.138.54.154
-Received: from [192.168.243.144] (smcc.connected.by.freedominter.net
- [45.138.54.154]) by smtp.xs4all.nl (Halon) with ESMTPSA
- id eda1e380-397f-11ef-8b20-00505699d6e5;
- Wed, 03 Jul 2024 23:05:08 +0200 (CEST)
-Message-ID: <3de7c42c-575b-4e29-9d4d-85d0d0f67da4@xs4all.nl>
-Date: Wed, 3 Jul 2024 23:05:08 +0200
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sP7ZR-0007Za-Sr; Wed, 03 Jul 2024 17:31:21 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sP7ZQ-0007MR-8J; Wed, 03 Jul 2024 17:31:21 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-36785e72a48so1359677f8f.3; 
+ Wed, 03 Jul 2024 14:31:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720042278; x=1720647078; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mXZdodmm/SPOx7d8Ft9YHnvvXNt8tnle5mmFhuOWqf4=;
+ b=HEuvHe5ZbHPwwffhxjnu1shHENPaz+6PL1JVuB3RBxhXAA8MXpY3aVl7BP9Pi+rtVI
+ cwmGfHQE1+qJezM6yqMNLfdWz6QLPCtfEQMvsgisIL6Raz9OwRTvqIKnJZkopLLdKmOT
+ 7PYAMkW6lkWH4mXuQ6DX5U/XOtXn99hn1orYqdnhgngGFdkvniTnVhbIlNDJQLDksI73
+ 2MmFybVuL8CU2ce4qU/k9r4ve7jbUiGCQXLwvML4rnc6d/a3h46bfT0lCvj74QuQzicw
+ 0U6nmZDQYiWX6JDFIzbP/R31cXFlNFM9XyJf7KtfFFzAgQsLnUQWF6/3oUjimfVENJ4a
+ NtPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720042278; x=1720647078;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mXZdodmm/SPOx7d8Ft9YHnvvXNt8tnle5mmFhuOWqf4=;
+ b=P3e67ViGgRh2MBRf3yjQSiU1Rxx7h75c7K5ZxXRz2oFCaw/Y8cLSg2t1SPMm5pV83G
+ baN6JMrQRiOKsDmqgklyPP6oUP01yzAvzhk0cycGGKZjGDuhRx5EIrKcc/7PEOj8ZqV2
+ iy9lxe3fpmD2HW1GrgSbWXa3wfoMce7ayJ3VpsBmsXRvI52rt/P7a9KuXusN1s4EAttM
+ ynDqFvQ/dSLZiDApBpYamQ2gFcHD0eH/dG7zb4iSnYQBWSA6F/XY125pc0QODsnFxalQ
+ 5C6yhuyfeChho61bF5LSY5icZAq7hPj48pvluDhl5f34LqFnSQZpptNWdUjLv/sfT3dj
+ 7TXQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVYaenO1xn7rpSCJvGJwcwwz38bxQRdB4oJ5IzbkYmYOT3CSXo8CEnnCR+G25GS0yY1ZzvTmeGKidgTO2QOkvaxdjvAX/VmxEXqKQf8GirqJ3M3o2mQTlzHEmUwpg==
+X-Gm-Message-State: AOJu0YzfJVCEVvW5b4OvrNfaMSn3Y4oYVFc0HgCACdpMhOUSNhpFxI27
+ lWVQQhUJuOS9o3Xpvj1439+HUe5zsOvhOhp01lTu2oJUPS6RJH8=
+X-Google-Smtp-Source: AGHT+IFrCvfL9n6yPKeBMFkiGcPzch+iKMhsI4B4uxV73t7dkTZlJu7zAjTytV6KHhjKHlSnd8dknQ==
+X-Received: by 2002:a5d:5f91:0:b0:367:83e9:b4a5 with SMTP id
+ ffacd0b85a97d-36783e9b614mr4778539f8f.49.1720042277443; 
+ Wed, 03 Jul 2024 14:31:17 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4264924b03csm3043305e9.13.2024.07.03.14.31.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jul 2024 14:31:16 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: Alistair Francis <Alistair.Francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] hw/intc: sifive_plic: Fix heap-buffer-overflow in SiFive PLIC
+ read operation
+Date: Wed,  3 Jul 2024 23:31:02 +0200
+Message-Id: <20240703213102.254927-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: nl
-To: qemu-devel@nongnu.org
-From: Roderick Klein <roderickklein@xs4all.nl>
-Subject: Question about OS/2 support under QEMU....
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=195.121.94.186;
- envelope-from=roderickklein@xs4all.nl; helo=ewsoutbound.kpnmail.nl
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=zheyuma97@gmail.com; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 03 Jul 2024 17:23:27 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,23 +94,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello
+The sifive_plic_read function in hw/intc/sifive_plic.c had a potential
+heap-buffer-overflow issue when reading from the pending_base region.
+This occurred because the code did not check if the calculated word index
+was within valid bounds before accessing the pending array.
 
-Recently a bug was opened to get QEMU to support OS/2 again (newer 
-versions of OS/2).
-https://gitlab.com/qemu-project/qemu/-/issues/2198
+This fix prevents out-of-bounds memory access, ensuring safer and more
+robust handling of PLIC reads.
 
-I would like to point out a company from the US supports a current 
-version of OS/2 called ArcaOS.  I was trying to help out to figure out 
-where I could point the company to contact somebody at QEMU (if the QEMU 
-team is interested) to receive a copy a ArcaOS so they could test QEMU ?
+ASAN log:
+==78800==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000038a14 at pc 0x5baf49d0d6cb bp 0x7ffc2ea4e180 sp 0x7ffc2ea4e178
+READ of size 4 at 0x602000038a14 thread T0
+    #0 0x5baf49d0d6ca in sifive_plic_read hw/intc/sifive_plic.c:151:16
+    #1 0x5baf49f7f3bb in memory_region_read_accessor system/memory.c:445:11
 
-BTW where is documentation how to create clipboard and mouse integration 
-for QEMU. I recently worked on a project for ESXi and would like to look 
-what could be done to get VM integration for ArcaOS done for QEMU.
+Reproducer:
+cat << EOF | qemu-system-riscv64  -display \
+none -machine accel=qtest, -m 512M -machine shakti_c -m 2G -qtest stdio
+readl 0xc001004
+EOF
 
-Best regards,
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+ hw/intc/sifive_plic.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-Roderick Klein
-Dutch OS/2 VOICE foundation
+diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
+index e559f11805..d2a90dfd3a 100644
+--- a/hw/intc/sifive_plic.c
++++ b/hw/intc/sifive_plic.c
+@@ -147,7 +147,14 @@ static uint64_t sifive_plic_read(void *opaque, hwaddr addr, unsigned size)
+                             (plic->num_sources + 31) >> 3)) {
+         uint32_t word = (addr - plic->pending_base) >> 2;
+ 
+-        return plic->pending[word];
++        if (word < plic->bitfield_words) {
++            return plic->pending[word];
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "sifive_plic_read: Word out of bounds for pending_base read: word=%u\n",
++                          word);
++            return 0;
++        }
+     } else if (addr_between(addr, plic->enable_base,
+                             plic->num_addrs * plic->enable_stride)) {
+         uint32_t addrid = (addr - plic->enable_base) / plic->enable_stride;
+-- 
+2.34.1
+
 
