@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C64C3271E
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:53:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 893E7C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:53:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8nU-0008RG-Bu; Wed, 03 Jul 2024 18:49:56 -0400
+	id 1sP8kv-000403-3y; Wed, 03 Jul 2024 18:47:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8nS-000848-4U
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:54 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kt-0003lG-PB
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8nQ-0007B7-Dd
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:53 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kq-0001Zc-Vi
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046991;
+ s=mimecast20190719; t=1720046832;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Dp+XdzPzdo45On8QxmeO3KbH8ukLhYQRI6dbRMmEeEA=;
- b=WgLq6QlIeamBYY8ZSudbE0T6nMRJFEl6Dl/17l1lTZe1AFsegEtrFVyhm7En6ka9TJmkDe
- KtAbfx1fd9fSuF1XvltNn05OY7if4PHCDRV/DIDft57OEon1o1XjnGBZWYR+5Mdklv4xpm
- N5CZMBz8jA6y4AI8PWDPY9A2h3V3YLU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=g4UiaVaJHqFRMzcgj8Lsoa2O3CKB9KU5Hs0p0vn09PA=;
+ b=f98gqa6XZyuA5q/1nw1o3NWZlNYN+7+GIuf6KHxHJBW0cJ8Ao3dg+dSnlUjodrXLBDEvny
+ CQWytZlH9nEcHpMx7bXsR3i/yddWzpMeMz4j+7GhFi/79xEzSMNA5R5zpTFmZKAsFfj86n
+ KwitXelRWc1mqzlMK+yyazUQ/4Bcw2U=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-573-mQA2QOvIPTyiyCkbFsE4kg-1; Wed, 03 Jul 2024 18:49:50 -0400
-X-MC-Unique: mQA2QOvIPTyiyCkbFsE4kg-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-36796a0687bso41640f8f.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:49:50 -0700 (PDT)
+ us-mta-281-uGaIPky4M0eZvtWkFH4IXg-1; Wed, 03 Jul 2024 18:47:10 -0400
+X-MC-Unique: uGaIPky4M0eZvtWkFH4IXg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a72716df71eso1114566b.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:47:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046989; x=1720651789;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Dp+XdzPzdo45On8QxmeO3KbH8ukLhYQRI6dbRMmEeEA=;
- b=g7zBafCAjBvlYnRYoQxYUo2paHLXW3Xw+Oy4cfeLqEooC4yB9NFTnqZ3ZjdMFdc9kC
- Da9zqjCrHwNYEw29KLSDi2nAyJVtXnZ04xsS7eLkLOF3SpFNgID252cGFvWqy+p8BV9u
- 2rAvmH0R1JG/tbOl0rSxCH0QiozT60IaOGrfkGccWAvLgwZS2JQv7NU5tYXwPCiU7lml
- SifRKb1mcM5MDWu99vm/dEghDni0rTeYceF1FmTlsjqmZ9w/raTrp0v93n1fygr6W0rQ
- VIaM5ieIFkePPPNtzfafmEKf9dg+xhK7TqSyKCwPJQQyuvEfrwewMechGnLEB0Bek+8o
- 9P8Q==
-X-Gm-Message-State: AOJu0YzG1yD+QOl937xZWdU9TWWIHMa2BAEkPbStjpdIa8vIXVpfCiko
- tKQqLVwETc+/V+i6QUTWWzvc1bfoMkPc/3BsgRU398TaM5kZLqrUW4l39ZqeGzXRR8SWeagYa4b
- s3tyZdt3WLCRMZF+YmIHs+GeBZwmB62m27gtNVfRcB1/PJI3hKz26c0gF3eiGsCcLA3E8oDoZSg
- cQ53It5OQxuKdczpwY3aGZCEXNpD0QVw==
-X-Received: by 2002:a05:600c:2d44:b0:425:5fe5:f273 with SMTP id
- 5b1f17b1804b1-4264a443e54mr262075e9.26.1720046988858; 
- Wed, 03 Jul 2024 15:49:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHy0AEjGll0NdaFcLsXu/dJZs2t9ZR5+kuPZTJLug7ifo6pHl95fprhPkFzrUgQSU89DDgmKw==
-X-Received: by 2002:a05:600c:2d44:b0:425:5fe5:f273 with SMTP id
- 5b1f17b1804b1-4264a443e54mr261905e9.26.1720046988280; 
- Wed, 03 Jul 2024 15:49:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720046828; x=1720651628;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=g4UiaVaJHqFRMzcgj8Lsoa2O3CKB9KU5Hs0p0vn09PA=;
+ b=G/CXPeRBIipORqxPXR/kYMZwNKDorAkfInlMD0Ofm+2H2PTwNeHnntGZ/7Qv3Iqfw1
+ gbtghUPA2Kk8cqKp0UXpazCUQJ15XMElbz0EdrUQqW9+XN2E8xmLDcwZQ7A4yFNnKFBH
+ 3T6CpUM3dgxJU0Gr4LZe7QnwBUklKK6iVLiN5yLwPdn1S56C9ZcYX9etG697I8m0BaMW
+ Xq8CDkFz9wp/i21lhfTAqkl+8paJJq06S33BlHfiS0IE09bXqwUo0YrtbORJF+KLfOwe
+ OPfX8MS0sVYEn4hxgoXt5rHlFj4nqUlydNcjXWfUDtnmgPjU3UEE6f895BaDqO5qj55C
+ xH+g==
+X-Gm-Message-State: AOJu0YyxA6AIEHvrQwFEj1cP/dcoVH7HOnd183SYLRaLObJKCVPf7A9U
+ meC4QPgNTI94L21kVENimIZaHUL9uA+qqCuXB6BxL0gtVpGJFBVBpqbYeNtkzPdpQ2Upa5AEPTN
+ 2Xp2QZlyLxi900MFQtMEUO4aOQjVqdFcLxXfZZ2hJ5mS3T1baEBSU2NlJztyRYrXEoiCfoXrOhk
+ 5CjIvJu81iy28ac4FylaZ2oQ7Epd6gxw==
+X-Received: by 2002:a17:906:3518:b0:a72:b278:5a7 with SMTP id
+ a640c23a62f3a-a751449f46cmr939805866b.44.1720046828492; 
+ Wed, 03 Jul 2024 15:47:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG0tgV/R+7BiCjys6UuOvXJNtdz1hKaqFOBJGBXHpiOv/lsyw5B4nhwHjR1S7ese8Mj7kFSHA==
+X-Received: by 2002:a17:906:3518:b0:a72:b278:5a7 with SMTP id
+ a640c23a62f3a-a751449f46cmr939804266b.44.1720046827930; 
+ Wed, 03 Jul 2024 15:47:07 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a1d5100sm1239325e9.4.2024.07.03.15.49.45
+ a640c23a62f3a-a72ab065651sm543222366b.126.2024.07.03.15.47.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:49:47 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:49:43 -0400
+ Wed, 03 Jul 2024 15:47:07 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:47:04 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL v3 71/85] tests/data/acpi/rebuild-expected-aml.sh: Add RISC-V
-Message-ID: <0f130d9e372552ef900bfac062ffc6a77b4049cc.1720046570.git.mst@redhat.com>
+ Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL v3 36/85] Revert "docs/specs/pvpanic: mark shutdown event as
+ not implemented"
+Message-ID: <0c0cc13d319cf7b876f327fa1c5cc1866ad868cc.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -103,43 +105,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Thomas Weißschuh <thomas@t-8ch.de>
 
-Update the list of supported architectures to include RISC-V.
+The missing functionality has been implemented now.
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240625150839.1358279-14-sunilvl@ventanamicro.com>
+This reverts commit e739d1935c461d0668057e9dbba9d06f728d29ec.
+
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+Message-Id: <20240527-pvpanic-shutdown-v8-8-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/data/acpi/rebuild-expected-aml.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ docs/specs/pvpanic.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/data/acpi/rebuild-expected-aml.sh b/tests/data/acpi/rebuild-expected-aml.sh
-index dcf2e2f221..c1092fb8ba 100755
---- a/tests/data/acpi/rebuild-expected-aml.sh
-+++ b/tests/data/acpi/rebuild-expected-aml.sh
-@@ -12,7 +12,7 @@
- # This work is licensed under the terms of the GNU GPLv2.
- # See the COPYING.LIB file in the top-level directory.
+diff --git a/docs/specs/pvpanic.rst b/docs/specs/pvpanic.rst
+index b0f27860ec..61a80480ed 100644
+--- a/docs/specs/pvpanic.rst
++++ b/docs/specs/pvpanic.rst
+@@ -29,7 +29,7 @@ bit 1
+   a guest panic has happened and will be handled by the guest;
+   the host should record it or report it, but should not affect
+   the execution of the guest.
+-bit 2 (to be implemented)
++bit 2
+   a regular guest shutdown has happened and should be processed by the host
  
--qemu_arches="x86_64 aarch64"
-+qemu_arches="x86_64 aarch64 riscv64"
- 
- if [ ! -e "tests/qtest/bios-tables-test" ]; then
-     echo "Test: bios-tables-test is required! Run make check before this script."
-@@ -36,7 +36,8 @@ fi
- if [ -z "$qemu_bins" ]; then
-     echo "Only the following architectures are currently supported: $qemu_arches"
-     echo "None of these configured!"
--    echo "To fix, run configure --target-list=x86_64-softmmu,aarch64-softmmu"
-+    echo "To fix, run configure \
-+         --target-list=x86_64-softmmu,aarch64-softmmu,riscv64-softmmu"
-     exit 1;
- fi
- 
+ PCI Interface
 -- 
 MST
 
