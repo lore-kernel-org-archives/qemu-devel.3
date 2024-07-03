@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC585C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47960C31D97
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvAi-0003I9-Lb; Wed, 03 Jul 2024 04:17:00 -0400
+	id 1sOvAm-0003JQ-FZ; Wed, 03 Jul 2024 04:17:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sOvAg-0003HX-Va; Wed, 03 Jul 2024 04:16:59 -0400
+ id 1sOvAk-0003Iy-Mr; Wed, 03 Jul 2024 04:17:02 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sOvAf-00014r-FS; Wed, 03 Jul 2024 04:16:58 -0400
+ id 1sOvAi-00014r-5c; Wed, 03 Jul 2024 04:17:01 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 3 Jul
- 2024 16:16:25 +0800
+ 2024 16:16:26 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 3 Jul 2024 16:16:25 +0800
+ Transport; Wed, 3 Jul 2024 16:16:26 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -38,9 +38,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 3/5] aspeed/soc: update to ftgmac100_high model for AST2700
-Date: Wed, 3 Jul 2024 16:16:21 +0800
-Message-ID: <20240703081623.2740862-4-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 4/5] hw/block: m25p80: support quad mode for w25q01jvq
+Date: Wed, 3 Jul 2024 16:16:22 +0800
+Message-ID: <20240703081623.2740862-5-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
 References: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
@@ -71,39 +71,74 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ASPEED AST2700 SOC is a 64 bits quad core CPUs (Cortex-a35)
-And the base address of dram is "0x4 00000000" which
-is 64bits address.
+According to the w25q01jv datasheet at page 16,
+it is required to set QE bit in "Status Register 2".
+Besides, users are able to utilize "Write Status Register 1(0x01)"
+command to set QE bit in "Status Register 2" and
+utilize "Read Status Register 2(0x35)" command to get the QE bit status.
 
-Update its network model to ftgmac100_high to support
-64bits dram address DMA.
+To support quad mode for w25q01jvq, update collecting data needed
+2 bytes for WRSR command in decode_new_cmd function and
+verify QE bit at the second byte of collecting data bit 2
+in complete_collecting_data.
 
+Update RDCR_EQIO command to set bit 2 of return data
+if quad mode enable in decode_new_cmd.
+
+Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/arm/aspeed_ast27x0.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/block/m25p80.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-index 18e6a8b10c..04604a4bef 100644
---- a/hw/arm/aspeed_ast27x0.c
-+++ b/hw/arm/aspeed_ast27x0.c
-@@ -332,7 +332,7 @@ static void aspeed_soc_ast2700_init(Object *obj)
- 
-     for (i = 0; i < sc->macs_num; i++) {
-         object_initialize_child(obj, "ftgmac100[*]", &s->ftgmac100[i],
--                                TYPE_FTGMAC100);
-+                                TYPE_FTGMAC100_HIGH);
- 
-         object_initialize_child(obj, "mii[*]", &s->mii[i], TYPE_ASPEED_MII);
-     }
-@@ -552,6 +552,7 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    /* Net */
-     for (i = 0; i < sc->macs_num; i++) {
-         object_property_set_bool(OBJECT(&s->ftgmac100[i]), "aspeed", true,
-                                  &error_abort);
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 8dec134832..9e99107b42 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -416,6 +416,7 @@ typedef enum {
+     /*
+      * Micron: 0x35 - enable QPI
+      * Spansion: 0x35 - read control register
++     * Winbond: 0x35 - quad enable
+      */
+     RDCR_EQIO = 0x35,
+     RSTQIO = 0xf5,
+@@ -798,6 +799,11 @@ static void complete_collecting_data(Flash *s)
+                 s->four_bytes_address_mode = extract32(s->data[1], 5, 1);
+             }
+             break;
++        case MAN_WINBOND:
++            if (s->len > 1) {
++                s->quad_enable = !!(s->data[1] & 0x02);
++            }
++            break;
+         default:
+             break;
+         }
+@@ -1254,6 +1260,10 @@ static void decode_new_cmd(Flash *s, uint32_t value)
+             s->needed_bytes = 2;
+             s->state = STATE_COLLECTING_VAR_LEN_DATA;
+             break;
++        case MAN_WINBOND:
++            s->needed_bytes = 2;
++            s->state = STATE_COLLECTING_VAR_LEN_DATA;
++            break;
+         default:
+             s->needed_bytes = 1;
+             s->state = STATE_COLLECTING_DATA;
+@@ -1431,6 +1441,12 @@ static void decode_new_cmd(Flash *s, uint32_t value)
+         case MAN_MACRONIX:
+             s->quad_enable = true;
+             break;
++        case MAN_WINBOND:
++            s->data[0] = (!!s->quad_enable) << 1;
++            s->pos = 0;
++            s->len = 1;
++            s->state = STATE_READING_DATA;
++            break;
+         default:
+             break;
+         }
 -- 
 2.34.1
 
