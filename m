@@ -4,83 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BAD1C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 11:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C52CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 11:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOxkG-0000wO-MN; Wed, 03 Jul 2024 07:01:52 -0400
+	id 1sOxmz-0003H9-30; Wed, 03 Jul 2024 07:04:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOxkE-0000rv-NF
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:01:50 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sOxmo-0003Ff-LP
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:04:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOxkB-0003iQ-IF
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:01:50 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sOxmm-0005tW-Hv
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:04:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720004504;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lpIysTSdh8B/Y+y+Q2OwUtr8eWU5XNjPnxSxI1PSbhc=;
- b=V/E1zH5HqYfq23pOCxq678s4Mb/cwBm3SOKZ5j3IdoO5p6Y42EjTTC8tZ9ish4vZ991Fhn
- NofGXTQ39ugEfhaOyLw/HeAHFRLsl+Gd+GsiYpW56fiOEnqxviUUT0WRtZZExSqHdATu3V
- X084lP4pXxz9vwbB8vEJJcHCRJUxbVE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-283-qAUCz_88PruHRZ_q3Ynmsg-1; Wed, 03 Jul 2024 07:01:42 -0400
-X-MC-Unique: qAUCz_88PruHRZ_q3Ynmsg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4257db9d71fso23720345e9.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 04:01:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720004500; x=1720609300;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lpIysTSdh8B/Y+y+Q2OwUtr8eWU5XNjPnxSxI1PSbhc=;
- b=uZBhuWKCfg4eNzdwXkWQ5AuYWcY1RrMN20hSr0GyUeSY4zHbd7eFg5q//r81W+xsdb
- MzVH8arS7EU0qttImvX342VzxcuDorujbB6JPk8oDzdRgR4ESMmiZSMkzrvdn6qs86ef
- 4m4uDEFpJdryN4UJnPYipnj0LTLmsIMujl83V1azBWiaCagzyLrcWlI0hHxwATqPOq2F
- A468T9PNroyhz/yz2SOvhoLTOUcDh1RZ7PDcIGU9iKpV9OTIZO8sHuBgH2vLi0nJ4ZY7
- rEIFkfPMvJ/nVSFGEREOaoIa1FQTDyxAuZDwUHUCMp4ZcmPvBX756Wqvk2Da3TgwAbHT
- SHLA==
-X-Gm-Message-State: AOJu0YxDLZ3OmNflYpV852ipoPXKFRPgL6zTGSx1eMMXByli+c70qLPB
- BLMYH8uoxz6FttdU1ygXEh6BUQPQ8ggGzVottgUforh75PzBiUHK5aLGsxN/Yq6BE5gK+6FrdkR
- TdEJ7zInmtCyBwzEjd4zi9es8hqE6EqMMO4XHmdQIYbWyHbKAFwpA9cTxjR7CErwbXXsqFwBKF1
- QHRBIwcpuoWVkkNVdw6rBPPwte1XmwFI9Opx72
-X-Received: by 2002:a05:600c:4fc5:b0:425:73a8:2fa3 with SMTP id
- 5b1f17b1804b1-4257a04fe4emr68536235e9.30.1720004500044; 
- Wed, 03 Jul 2024 04:01:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG8M6Ll8xZf5b1S/x9uPIecJp/J5MAA53yE1gyb1rsoqKUEba/weg/V4byMbHtYu5pq6ER07Q==
-X-Received: by 2002:a05:600c:4fc5:b0:425:73a8:2fa3 with SMTP id
- 5b1f17b1804b1-4257a04fe4emr68535995e9.30.1720004499604; 
- Wed, 03 Jul 2024 04:01:39 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af3c2afsm237886785e9.2.2024.07.03.04.01.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 04:01:37 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: michael.roth@amd.com,
-	zixchen@redhat.com
-Subject: [RFC PATCH 1/2] target/i386: add support for masking CPUID features
- in confidential guests
-Date: Wed,  3 Jul 2024 13:01:33 +0200
-Message-ID: <20240703110134.1645979-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240703110134.1645979-1-pbonzini@redhat.com>
-References: <20240703110134.1645979-1-pbonzini@redhat.com>
+ s=mimecast20190719; t=1720004666;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=1N1fE7vZbDbXz8dg3BiSv/FQC0BrWP+p889kkH3aPaw=;
+ b=PvulyiMYa8EXfwtgNFVvP4oJwPAhscb6UYJm9Ff8sLOGjfBymWrFW6bGVM5dUr2UZrKue5
+ q+GaN5jlEzKlPwTZED7cJ1il3dEqYYl9TE23eMoEIrCwkrOG/FL6cYhoQY/kV++mdjZE+d
+ D2REJRUpUENZzlLSClxpXGxMwfxQLSc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-clnleiOFMZ-MDChKyUF1Cg-1; Wed,
+ 03 Jul 2024 07:04:25 -0400
+X-MC-Unique: clnleiOFMZ-MDChKyUF1Cg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 047491955BC0; Wed,  3 Jul 2024 11:04:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.52])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C65E195607C; Wed,  3 Jul 2024 11:04:21 +0000 (UTC)
+Date: Wed, 3 Jul 2024 12:04:18 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net
+Subject: Re: [PATCH 1/2] qdev: change qdev_prop_set_globals() to use Object*
+Message-ID: <ZoUwMr1X170aQNDS@redhat.com>
+References: <20240703094626.1704990-1-dbarboza@ventanamicro.com>
+ <20240703094626.1704990-2-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240703094626.1704990-2-dbarboza@ventanamicro.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,79 +81,86 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some CPUID features may be provided by KVM for some guests, independent of
-processor support, for example TSC deadline or TSC adjust.  If these are
-not supported by the confidential computing firmware, however, the guest
-will fail to start.  Add support for removing unsupported features from
-"-cpu host".
+On Wed, Jul 03, 2024 at 06:46:25AM -0300, Daniel Henrique Barboza wrote:
+> Next patch will add Accel globals support and will use
+> qdev_prop_set_globals().
+> 
+> At this moment this function is hardwired to be used with DeviceState.
+> dev->hotplugged is checked to determine if object_apply_global_props()
+> will receive a NULL or an &error_fatal errp.
+> 
+> Change qdev_prop_set_globals() to receive an Object and an errp. The
+> logic using dev->hotplugged is moved to the caller, device_post_init().
+> 
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> ---
+>  hw/core/qdev-properties.c    | 5 ++---
+>  hw/core/qdev.c               | 2 +-
+>  include/hw/qdev-properties.h | 2 +-
+>  3 files changed, 4 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+> index 86a583574d..4867d7dd9e 100644
+> --- a/hw/core/qdev-properties.c
+> +++ b/hw/core/qdev-properties.c
+> @@ -920,10 +920,9 @@ int qdev_prop_check_globals(void)
+>      return ret;
+>  }
+>  
+> -void qdev_prop_set_globals(DeviceState *dev)
+> +void qdev_prop_set_globals(Object *obj, Error **errp)
+>  {
+> -    object_apply_global_props(OBJECT(dev), global_props(),
+> -                              dev->hotplugged ? NULL : &error_fatal);
+> +    object_apply_global_props(obj, global_props(), errp);
+>  }
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/confidential-guest.h | 24 ++++++++++++++++++++++++
- target/i386/cpu.c                |  9 +++++++++
- target/i386/kvm/kvm.c            |  5 +++++
- 3 files changed, 38 insertions(+)
+If you're going to make this work on Object, instead fo merely
+DeviceState, then all this globals functionality should be
+moved into qom/object.c, and the methods renamed, as it is no
+longer qdev logic.
 
-diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
-index 532e172a60b..7342d2843aa 100644
---- a/target/i386/confidential-guest.h
-+++ b/target/i386/confidential-guest.h
-@@ -39,6 +39,8 @@ struct X86ConfidentialGuestClass {
- 
-     /* <public> */
-     int (*kvm_type)(X86ConfidentialGuest *cg);
-+    uint32_t (*mask_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
-+                                    int reg, uint32_t value);
- };
- 
- /**
-@@ -56,4 +58,26 @@ static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
-         return 0;
-     }
- }
-+
-+/**
-+ * x86_confidential_guest_mask_cpuid_features:
-+ *
-+ * Removes unsupported features from a confidential guest's CPUID values, returns
-+ * the value with the bits removed.  The bits removed should be those that KVM
-+ * provides independent of host-supported CPUID features, but are not supported by
-+ * the confidential computing firmware.
-+ */
-+static inline int x86_confidential_guest_mask_cpuid_features(X86ConfidentialGuest *cg,
-+                                                             uint32_t feature, uint32_t index,
-+                                                             int reg, uint32_t value)
-+{
-+    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
-+
-+    if (klass->mask_cpuid_features) {
-+        return klass->mask_cpuid_features(cg, feature, index, reg, value);
-+    } else {
-+        return value;
-+    }
-+}
-+
- #endif
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index dd8b0f33136..056d117cd11 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -548,6 +548,11 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
-         ret |= 1U << KVM_HINTS_REALTIME;
-     }
- 
-+    if (current_machine->cgs) {
-+        ret = x86_confidential_guest_mask_cpuid_features(
-+            X86_CONFIDENTIAL_GUEST(current_machine->cgs),
-+            function, index, reg, ret);
-+    }
-     return ret;
- }
- 
+>  
+>  /* --- 64bit unsigned int 'size' type --- */
+> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+> index f3a996f57d..923f9ca74c 100644
+> --- a/hw/core/qdev.c
+> +++ b/hw/core/qdev.c
+> @@ -673,7 +673,7 @@ static void device_post_init(Object *obj)
+>       * precedence.
+>       */
+>      object_apply_compat_props(obj);
+> -    qdev_prop_set_globals(DEVICE(obj));
+> +    qdev_prop_set_globals(obj, DEVICE(obj)->hotplugged ? NULL : &error_fatal);
+>  }
+>  
+>  /* Unlink device from bus and free the structure.  */
+> diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
+> index 09aa04ca1e..a1737bf4d8 100644
+> --- a/include/hw/qdev-properties.h
+> +++ b/include/hw/qdev-properties.h
+> @@ -210,7 +210,7 @@ void qdev_prop_register_global(GlobalProperty *prop);
+>  const GlobalProperty *qdev_find_global_prop(Object *obj,
+>                                              const char *name);
+>  int qdev_prop_check_globals(void);
+> -void qdev_prop_set_globals(DeviceState *dev);
+> +void qdev_prop_set_globals(Object *obj, Error **errp);
+>  void error_set_from_qdev_prop_error(Error **errp, int ret, Object *obj,
+>                                      const char *name, const char *value);
+>  
+> -- 
+> 2.45.2
+> 
+
+With regards,
+Daniel
 -- 
-2.45.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
