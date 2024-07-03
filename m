@@ -4,27 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47960C31D97
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF354C30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:18:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvAm-0003JQ-FZ; Wed, 03 Jul 2024 04:17:04 -0400
+	id 1sOvAr-0003Ly-1z; Wed, 03 Jul 2024 04:17:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sOvAk-0003Iy-Mr; Wed, 03 Jul 2024 04:17:02 -0400
+ id 1sOvAp-0003LG-DW; Wed, 03 Jul 2024 04:17:07 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sOvAi-00014r-5c; Wed, 03 Jul 2024 04:17:01 -0400
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ id 1sOvAo-00014r-0X; Wed, 03 Jul 2024 04:17:07 -0400
+Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 3 Jul
- 2024 16:16:26 +0800
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Wed, 3 Jul
+ 2024 16:16:25 +0800
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
+ (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 3 Jul
+ 2024 16:16:25 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 3 Jul 2024 16:16:26 +0800
+ Transport; Wed, 3 Jul 2024 16:16:25 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -38,15 +41,19 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 4/5] hw/block: m25p80: support quad mode for w25q01jvq
-Date: Wed, 3 Jul 2024 16:16:22 +0800
-Message-ID: <20240703081623.2740862-5-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 1/5] hw/net:ftgmac100: update memory region size to 0x200
+Date: Wed, 3 Jul 2024 16:16:19 +0800
+Message-ID: <20240703081623.2740862-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
 References: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
+Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
+ does not designate 192.168.10.10 as permitted sender)
+ receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
+ helo=localhost.localdomain;
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -71,74 +78,56 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the w25q01jv datasheet at page 16,
-it is required to set QE bit in "Status Register 2".
-Besides, users are able to utilize "Write Status Register 1(0x01)"
-command to set QE bit in "Status Register 2" and
-utilize "Read Status Register 2(0x35)" command to get the QE bit status.
+According to the datasheet of ASPEED SOCs,
+one MAC controller owns 128KB of register space for AST2500.
 
-To support quad mode for w25q01jvq, update collecting data needed
-2 bytes for WRSR command in decode_new_cmd function and
-verify QE bit at the second byte of collecting data bit 2
-in complete_collecting_data.
+However, one MAC controller only owns 64KB of register space for AST2600
+and AST2700.
 
-Update RDCR_EQIO command to set bit 2 of return data
-if quad mode enable in decode_new_cmd.
+It set the memory region size 128KB and it occupied another
+controllers Address Spaces.
 
-Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
+Currently, the ftgmac100 model use 0x100 register space.
+To support DMA 64 bits dram address and new future mode(ftgmac100_high) which
+have "Normal Priority Transmit Ring Base Address Register High(0x17C)",
+"High Priority Transmit Ring Base Address Register High(0x184)" and
+"Receive Ring Base Address Register High(0x18C)" to save the high part physical
+address of descriptor manager.
+
+Update memory region size to 0x200.
+
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/block/m25p80.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ hw/net/ftgmac100.c         | 2 +-
+ include/hw/net/ftgmac100.h | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index 8dec134832..9e99107b42 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -416,6 +416,7 @@ typedef enum {
-     /*
-      * Micron: 0x35 - enable QPI
-      * Spansion: 0x35 - read control register
-+     * Winbond: 0x35 - quad enable
-      */
-     RDCR_EQIO = 0x35,
-     RSTQIO = 0xf5,
-@@ -798,6 +799,11 @@ static void complete_collecting_data(Flash *s)
-                 s->four_bytes_address_mode = extract32(s->data[1], 5, 1);
-             }
-             break;
-+        case MAN_WINBOND:
-+            if (s->len > 1) {
-+                s->quad_enable = !!(s->data[1] & 0x02);
-+            }
-+            break;
-         default:
-             break;
-         }
-@@ -1254,6 +1260,10 @@ static void decode_new_cmd(Flash *s, uint32_t value)
-             s->needed_bytes = 2;
-             s->state = STATE_COLLECTING_VAR_LEN_DATA;
-             break;
-+        case MAN_WINBOND:
-+            s->needed_bytes = 2;
-+            s->state = STATE_COLLECTING_VAR_LEN_DATA;
-+            break;
-         default:
-             s->needed_bytes = 1;
-             s->state = STATE_COLLECTING_DATA;
-@@ -1431,6 +1441,12 @@ static void decode_new_cmd(Flash *s, uint32_t value)
-         case MAN_MACRONIX:
-             s->quad_enable = true;
-             break;
-+        case MAN_WINBOND:
-+            s->data[0] = (!!s->quad_enable) << 1;
-+            s->pos = 0;
-+            s->len = 1;
-+            s->state = STATE_READING_DATA;
-+            break;
-         default:
-             break;
-         }
+diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
+index 25e4c0cd5b..4e88430b2f 100644
+--- a/hw/net/ftgmac100.c
++++ b/hw/net/ftgmac100.c
+@@ -1108,7 +1108,7 @@ static void ftgmac100_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     memory_region_init_io(&s->iomem, OBJECT(dev), &ftgmac100_ops, s,
+-                          TYPE_FTGMAC100, 0x2000);
++                          TYPE_FTGMAC100, FTGMAC100_NR_REGS);
+     sysbus_init_mmio(sbd, &s->iomem);
+     sysbus_init_irq(sbd, &s->irq);
+     qemu_macaddr_default_if_unset(&s->conf.macaddr);
+diff --git a/include/hw/net/ftgmac100.h b/include/hw/net/ftgmac100.h
+index 765d1538a4..5a970676da 100644
+--- a/include/hw/net/ftgmac100.h
++++ b/include/hw/net/ftgmac100.h
+@@ -14,6 +14,8 @@
+ #define TYPE_FTGMAC100 "ftgmac100"
+ OBJECT_DECLARE_SIMPLE_TYPE(FTGMAC100State, FTGMAC100)
+ 
++#define FTGMAC100_NR_REGS   0x200
++
+ #include "hw/sysbus.h"
+ #include "net/net.h"
+ 
 -- 
 2.34.1
 
