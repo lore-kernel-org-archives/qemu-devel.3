@@ -4,46 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC030C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 14:51:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB006C30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 14:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP1KK-0007Dz-HT; Wed, 03 Jul 2024 10:51:20 -0400
+	id 1sP1KV-0007IU-0A; Wed, 03 Jul 2024 10:51:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sP1K1-0007BV-Jg; Wed, 03 Jul 2024 10:51:02 -0400
-Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
+ id 1sP1KS-0007GX-Gx; Wed, 03 Jul 2024 10:51:28 -0400
+Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sP1Jy-0007xI-P9; Wed, 03 Jul 2024 10:51:01 -0400
+ id 1sP1KQ-0001H3-2W; Wed, 03 Jul 2024 10:51:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1720018247; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=8zo64TSDiwTT9dX0SWSUE8tvhxqA2zmOKxwbVuDsUmc=;
- b=FQ2kCBcVvKcABB4VSQISWOP6xsH/nnPeElEqiAwbERu9czHvQFobC1PZR5KQJLrCZwcv1thH8KIVzpOtkwJKOP192VMVCiBr4D9uHAOae/owR3JNfuzQEgHU14JijjyU752+xLNWVsXitMZjPHwB33kkml6QCb4uw9Y/lUo2gHk=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R591e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067113;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0W9nclXF_1720018246; 
+ t=1720018281; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=WFo4T08yYcFD2nEJduux7AoJHu9sAzbgr8IyKKTIf0Q=;
+ b=K8FW6bxEORPth2hdn/VyFnlaASwJccfIuVybxFZ7SkJB9F4KPpnMkDtsY2QxUWva9ZAO7XQlLvTwPY97/9Wh6DwgFqGswtqNXhrhg5bnvnpKyCtNqHwzuBeXR++I75yzUmveJzWiRcAixVK6lxG9Lq8ZlcawU8Z4GSQypI+nK0w=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R911e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067110;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0W9ndsQM_1720018277; 
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W9nclXF_1720018246) by smtp.aliyun-inc.com;
- Wed, 03 Jul 2024 22:50:47 +0800
+ fp:SMTPD_---0W9ndsQM_1720018277) by smtp.aliyun-inc.com;
+ Wed, 03 Jul 2024 22:51:19 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- zhiwei_liu@linux.alibaba.com
-Subject: [PATCH v3 0/7] target/riscv: Expose RV32 cpu to RV64 QEMU
-Date: Wed,  3 Jul 2024 22:49:14 +0800
-Message-Id: <20240703144921.1281-1-zhiwei_liu@linux.alibaba.com>
+ zhiwei_liu@linux.alibaba.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Subject: [PATCH v3 1/7] target/riscv: Add fw_dynamic_info32 for booting RV32
+ OpenSBI
+Date: Wed,  3 Jul 2024 22:49:15 +0800
+Message-Id: <20240703144921.1281-2-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20240703144921.1281-1-zhiwei_liu@linux.alibaba.com>
+References: <20240703144921.1281-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.97;
+Received-SPF: pass client-ip=115.124.30.101;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-97.freemail.mail.aliyun.com
+ helo=out30-101.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -67,43 +71,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch set aims to expose 32-bit RISC-V cpu to RV64 QEMU. Thus
-qemu-system-riscv64 can directly boot a RV32 Linux.
+From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 
-This patch set has been tested with 6.9.0 Linux Image.
-And add an avocado test in tests/avocado.
+RV32 OpenSBI need a fw_dynamic_info parameter with 32-bit fields instead
+of target_ulong.
 
-v3:
-  Rebase to the master branch
+In RV64 QEMU, target_ulong is 64. So it is not right for booting RV32 OpenSBI.
+We create a fw_dynmaic_info32 struct for this purpose.
 
-v2:
-  Remove the line that was inadvertently left in PATCH v1 4/6.
-  Add an avocado test.
+Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/riscv/boot.c                 | 35 ++++++++++++++++++++++-----------
+ hw/riscv/sifive_u.c             |  3 ++-
+ include/hw/riscv/boot.h         |  4 +++-
+ include/hw/riscv/boot_opensbi.h | 29 +++++++++++++++++++++++++++
+ 4 files changed, 57 insertions(+), 14 deletions(-)
 
-v1:
-  https://mail.gnu.org/archive/html/qemu-riscv/2024-06/msg00501.html
-
-TANG Tiancheng (7):
-  target/riscv: Add fw_dynamic_info32 for booting RV32 OpenSBI
-  target/riscv: Adjust PMP size for no-MMU RV64 QEMU running RV32
-  target/riscv: Correct SXL return value for RV32 in RV64 QEMU
-  target/riscv: Detect sxl to set bit width for RV32 in RV64
-  target/riscv: Correct mcause/scause bit width for RV32 in RV64 QEMU
-  target/riscv: Enable RV32 CPU support in RV64 QEMU
-  tests/avocado: Add an avocado test for riscv64
-
- configs/targets/riscv64-softmmu.mak |  2 +-
- hw/riscv/boot.c                     | 35 +++++++++++++++++----------
- hw/riscv/sifive_u.c                 |  3 ++-
- include/hw/riscv/boot.h             |  4 +++-
- include/hw/riscv/boot_opensbi.h     | 29 ++++++++++++++++++++++
- target/riscv/cpu.c                  | 17 +++++++++----
- target/riscv/cpu.h                  |  5 +++-
- target/riscv/cpu_helper.c           | 25 +++++++++++++------
- target/riscv/pmp.c                  |  2 +-
- tests/avocado/boot_linux_console.py | 37 +++++++++++++++++++++++++++++
- 10 files changed, 131 insertions(+), 28 deletions(-)
-
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 47281ca853..1a2c1ff9e0 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -342,27 +342,33 @@ void riscv_load_fdt(hwaddr fdt_addr, void *fdt)
+                         rom_ptr_for_as(&address_space_memory, fdt_addr, fdtsize));
+ }
+ 
+-void riscv_rom_copy_firmware_info(MachineState *machine, hwaddr rom_base,
+-                                  hwaddr rom_size, uint32_t reset_vec_size,
++void riscv_rom_copy_firmware_info(MachineState *machine,
++                                  RISCVHartArrayState *harts,
++                                  hwaddr rom_base, hwaddr rom_size,
++                                  uint32_t reset_vec_size,
+                                   uint64_t kernel_entry)
+ {
++    struct fw_dynamic_info32 dinfo32;
+     struct fw_dynamic_info dinfo;
+     size_t dinfo_len;
+ 
+-    if (sizeof(dinfo.magic) == 4) {
+-        dinfo.magic = cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
+-        dinfo.version = cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
+-        dinfo.next_mode = cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
+-        dinfo.next_addr = cpu_to_le32(kernel_entry);
++    if (riscv_is_32bit(harts)) {
++        dinfo32.magic = cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
++        dinfo32.version = cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
++        dinfo32.next_mode = cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
++        dinfo32.next_addr = cpu_to_le32(kernel_entry);
++        dinfo32.options = 0;
++        dinfo32.boot_hart = 0;
++        dinfo_len = sizeof(dinfo32);
+     } else {
+         dinfo.magic = cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
+         dinfo.version = cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
+         dinfo.next_mode = cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
+         dinfo.next_addr = cpu_to_le64(kernel_entry);
++        dinfo.options = 0;
++        dinfo.boot_hart = 0;
++        dinfo_len = sizeof(dinfo);
+     }
+-    dinfo.options = 0;
+-    dinfo.boot_hart = 0;
+-    dinfo_len = sizeof(dinfo);
+ 
+     /**
+      * copy the dynamic firmware info. This information is specific to
+@@ -374,7 +380,10 @@ void riscv_rom_copy_firmware_info(MachineState *machine, hwaddr rom_base,
+         exit(1);
+     }
+ 
+-    rom_add_blob_fixed_as("mrom.finfo", &dinfo, dinfo_len,
++    rom_add_blob_fixed_as("mrom.finfo",
++                           riscv_is_32bit(harts) ?
++                           (void *)&dinfo32 : (void *)&dinfo,
++                           dinfo_len,
+                            rom_base + reset_vec_size,
+                            &address_space_memory);
+ }
+@@ -430,7 +439,9 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
+     }
+     rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
+                           rom_base, &address_space_memory);
+-    riscv_rom_copy_firmware_info(machine, rom_base, rom_size, sizeof(reset_vec),
++    riscv_rom_copy_firmware_info(machine, harts,
++                                 rom_base, rom_size,
++                                 sizeof(reset_vec),
+                                  kernel_entry);
+ }
+ 
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index af5f923f54..5010c3eadb 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -646,7 +646,8 @@ static void sifive_u_machine_init(MachineState *machine)
+     rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
+                           memmap[SIFIVE_U_DEV_MROM].base, &address_space_memory);
+ 
+-    riscv_rom_copy_firmware_info(machine, memmap[SIFIVE_U_DEV_MROM].base,
++    riscv_rom_copy_firmware_info(machine, &s->soc.u_cpus,
++                                 memmap[SIFIVE_U_DEV_MROM].base,
+                                  memmap[SIFIVE_U_DEV_MROM].size,
+                                  sizeof(reset_vec), kernel_entry);
+ 
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index a2e4ae9cb0..806256d23f 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -56,7 +56,9 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
+                                hwaddr rom_base, hwaddr rom_size,
+                                uint64_t kernel_entry,
+                                uint64_t fdt_load_addr);
+-void riscv_rom_copy_firmware_info(MachineState *machine, hwaddr rom_base,
++void riscv_rom_copy_firmware_info(MachineState *machine,
++                                  RISCVHartArrayState *harts,
++                                  hwaddr rom_base,
+                                   hwaddr rom_size,
+                                   uint32_t reset_vec_size,
+                                   uint64_t kernel_entry);
+diff --git a/include/hw/riscv/boot_opensbi.h b/include/hw/riscv/boot_opensbi.h
+index 1b749663dc..18664a174b 100644
+--- a/include/hw/riscv/boot_opensbi.h
++++ b/include/hw/riscv/boot_opensbi.h
+@@ -58,4 +58,33 @@ struct fw_dynamic_info {
+     target_long boot_hart;
+ };
+ 
++/** Representation dynamic info passed by previous booting stage */
++struct fw_dynamic_info32 {
++    /** Info magic */
++    int32_t magic;
++    /** Info version */
++    int32_t version;
++    /** Next booting stage address */
++    int32_t next_addr;
++    /** Next booting stage mode */
++    int32_t next_mode;
++    /** Options for OpenSBI library */
++    int32_t options;
++    /**
++     * Preferred boot HART id
++     *
++     * It is possible that the previous booting stage uses same link
++     * address as the FW_DYNAMIC firmware. In this case, the relocation
++     * lottery mechanism can potentially overwrite the previous booting
++     * stage while other HARTs are still running in the previous booting
++     * stage leading to boot-time crash. To avoid this boot-time crash,
++     * the previous booting stage can specify last HART that will jump
++     * to the FW_DYNAMIC firmware as the preferred boot HART.
++     *
++     * To avoid specifying a preferred boot HART, the previous booting
++     * stage can set it to -1UL which will force the FW_DYNAMIC firmware
++     * to use the relocation lottery mechanism.
++     */
++    int32_t boot_hart;
++};
+ #endif
 -- 
 2.25.1
 
