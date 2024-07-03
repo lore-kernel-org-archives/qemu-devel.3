@@ -4,74 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94528C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 10:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 242B5C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 10:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOwx0-00030Y-8W; Wed, 03 Jul 2024 06:10:59 -0400
+	id 1sOx4i-0005vE-Ga; Wed, 03 Jul 2024 06:18:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sOwwq-0002za-2v
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:10:48 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sOwwm-0006Qz-HK
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:10:47 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxS_CXI4VmfHsAAA--.1464S3;
- Wed, 03 Jul 2024 18:10:31 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Bx08SUI4Vmd3o5AA--.57883S3; 
- Wed, 03 Jul 2024 18:10:30 +0800 (CST)
-Subject: Re: [RFC v3 1/2] target/loongarch: Add loongson binary translation
- feature
-To: Huacai Chen <chenhuacai@kernel.org>, Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Song Gao <gaosong@loongson.cn>, =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?=
- <philmd@linaro.org>, QEMU devel <qemu-devel@nongnu.org>
-References: <20240530064941.1289573-1-maobibo@loongson.cn>
- <20240530064941.1289573-2-maobibo@loongson.cn>
- <db19ed93-027c-4e29-aac5-e3a1edcd760b@app.fastmail.com>
- <60da2f5e-009d-4362-bf62-32a088b2848c@app.fastmail.com>
- <CAAhV-H4YqauX+dDFGK1oHrRjROSykkp-j0AfRD4a43Yea4qMxQ@mail.gmail.com>
-From: maobibo <maobibo@loongson.cn>
-Message-ID: <5224f884-6327-f181-5bbf-f1d1f9f3b894@loongson.cn>
-Date: Wed, 3 Jul 2024 18:10:28 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOx4g-0005ue-Mb
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:18:54 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOx4e-0007zC-9j
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:18:54 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3651ee582cfso2879819f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 03:18:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720001930; x=1720606730; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=y+Za4OZV4iGlBv4Td+EAG1s1wAKssugjf7cdglVy8zM=;
+ b=h/rBuNIsdDCrQv17CjgDADHcXul2Elle8qwlyArmqI+LUbaKrGR/GH3S0lRv8S+3D2
+ wpwfdHWnAIFH/A1qyto6ROVSkGOqIqzlOX/EFyCRPCBxArGvjOKPFqS/qXyDQIxj/3Iv
+ cnZxSWwZn+ARi/TtwfQGiBz6JYFBuSHUV4G3OKajDZdtAbGJZZx5jgHMvipgG9tbG9qY
+ BSTKPlgfr0NGSqJQA/OIuZSwK96BTzLbHU6O3X6bhguD57sFZALk5VIoNuTdyi09YKo3
+ 33tXgEAidPq5NUJgSYOkV21gU0519CeR8dAysilPd9wp+NRyKtZ4fyQryjV/a6DGJwKm
+ amKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720001930; x=1720606730;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=y+Za4OZV4iGlBv4Td+EAG1s1wAKssugjf7cdglVy8zM=;
+ b=VdDlRCG2GvOImHyhTJrffgngj2v3HiyX1jy0fpbXM4OHhshWO4So63jJgtkqV4vSep
+ t6SWK3jariqvbkmfBdZfcSbRoAa9q9XcYNdyI5swW2wZpeIBY8WgXa4BP0uCU4r8DO6+
+ l9tOvZk/BLRH9XzyHaVUI4yRJuYwKEBQ6krwNiJl4Sa62aBxmi2fbCf8Hk3bXHOvdPYj
+ 0mlH+a0KluheaXO+CwkgSSROn7d4H61iYdx7rq/1GPh73lNVltUKUJbBc2A3QHYWQeVB
+ YtPM/JPmIvHqRZupP7F1ebKVqSilltPUrCigj03cjYEDe0pVyYU/PlyKh0xUOOlcf5rt
+ K6pg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEPgsKb2lPP55t+hHQifUMGpDdkNQCd9hnzuUhVT8Lq5taNwORNprygwZ5xeWrxe46RdrftkOvUJZgy0AEPGdeAbk7YaA=
+X-Gm-Message-State: AOJu0YyNjTRZHWrII84owdvXyqaeteMQxmk2DlPJ0JgI8HKdA/S2Mn3G
+ GAd5jbYlfCYxtIm6rUcWTijDOUsubsTuEqdXqKvBrb6fZDvihtCtU7gf12bMxb4=
+X-Google-Smtp-Source: AGHT+IGDLBAa2FwJgaRca0w84XxLI6cq9BW/mb0IkaWVx3v68moi57fW/quPqBLZEiA3/QY7BSw4Wg==
+X-Received: by 2002:a5d:65d1:0:b0:367:926a:7413 with SMTP id
+ ffacd0b85a97d-367926a75a1mr1157464f8f.63.1720001929684; 
+ Wed, 03 Jul 2024 03:18:49 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.220.97])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3675a1046f2sm15403984f8f.112.2024.07.03.03.18.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Jul 2024 03:18:49 -0700 (PDT)
+Message-ID: <f90d9d31-e466-4214-92ca-1ee7cfae4aa3@linaro.org>
+Date: Wed, 3 Jul 2024 12:18:46 +0200
 MIME-Version: 1.0
-In-Reply-To: <CAAhV-H4YqauX+dDFGK1oHrRjROSykkp-j0AfRD4a43Yea4qMxQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [SPAM] [RFC PATCH v42 90/98] hw/sd/sdcard: Add experimental
+ 'x-aspeed-emmc-kludge' property
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-devel@nongnu.org,
+ Joel Stanley <joel@jms.id.au>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Troy Lee <troy_lee@aspeedtech.com>
+References: <20240628070216.92609-1-philmd@linaro.org>
+ <20240628070216.92609-91-philmd@linaro.org>
+ <4b55f817-0e29-45c0-8f56-f997f34e0e97@kaod.org>
+ <e1a6b93038e67271fc0bd9efcc7d40802cbbede7.camel@codeconstruct.com.au>
+ <2b425f32-41de-4057-a8d0-79411f2519b4@linaro.org>
+ <aa9bd7c7-1b4c-4f3a-975d-1ee7931be422@kaod.org>
+ <dedc8d45-42cf-4474-ad33-9af44701dcb8@linaro.org>
 Content-Language: en-US
+In-Reply-To: <dedc8d45-42cf-4474-ad33-9af44701dcb8@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Bx08SUI4Vmd3o5AA--.57883S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxGF1fuFWxuw1fAFWftr4fWFX_yoWrGFW8pa
- y8CFyYkF4DJrW7A3Zav3W5Xrn0vr4xKr42vF1fGryUAwn0kr1xXr1vka9xuF1DZ34rWr1j
- vF1UK347uF4DA3cCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVWxJr0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
- 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8vA
- pUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.819,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,110 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2024/7/3 下午5:43, Huacai Chen wrote:
-> On Wed, Jul 3, 2024 at 3:51 PM Jiaxun Yang <jiaxun.yang@flygoat.com> wrote:
->>
->>
->>
->> 在2024年7月1日七月 下午2:57，Jiaxun Yang写道：
->>> 在2024年5月30日五月 上午7:49，Bibo Mao写道：
->>>> Loongson Binary Translation (LBT) is used to accelerate binary
->>>> translation, which contains 4 scratch registers (scr0 to scr3), x86/ARM
->>>> eflags (eflags) and x87 fpu stack pointer (ftop).
+On 2/7/24 22:05, Philippe Mathieu-Daudé wrote:
+> On 2/7/24 18:21, Cédric Le Goater wrote:
+>> On 7/2/24 6:15 PM, Philippe Mathieu-Daudé wrote:
+>>> On 2/7/24 07:06, Andrew Jeffery wrote:
+>>>> On Fri, 2024-06-28 at 11:16 +0200, Cédric Le Goater wrote:
+>>>>> On 6/28/24 9:02 AM, Philippe Mathieu-Daudé wrote:
+>>>>>> When booting U-boot/Linux on Aspeed boards via eMMC,
+>>>>>> some commands don't behave as expected from the spec.
+>>>>>>
+>>>>>> Add the 'x-aspeed-emmc-kludge' property to allow non
+>>>>>> standard uses until we figure out the reasons.
+>>>>>
+>>>>> I am not aware of any singularity in the eMMC logic provided by 
+>>>>> Aspeed.
+>>>>> U-Boot and Linux drivers seem very generic. May be others can tell.
 >>>>
->>>> Now LBT feature is added in kvm mode, not supported in TCG mode since
->>>> it is not emulated. Feature variable lbt is added with OnOffAuto type,
->>>> If lbt feature is not supported with KVM host, it reports error if there
->>>> is lbt=on command line.
->>>>
->>>> If there is no any command line about lbt parameter, it checks whether
->>>> KVM host supports lbt feature and set the corresponding value in cpucfg.
->>>>
->>>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
->>> Hi Bibo,
+>>>> I'm not aware of any command kludges. The main problem I had when I
+>>>> wrote the Linux driver for the Aspeed controller was the phase tuning,
+>>>> but that doesn't sound related.
 >>>
->>> I was going across recent LoongArch changes and this comes into my attention:
+>>> Yeah I don't think anything Aspeed nor U-boot related, we
+>>> model CSD/CID registers per the SD spec, not MMC. Various
+>>> fields are identical, but few differ, this might be the
+>>> problem.
 >>>
->>>> ---
->>>>   target/loongarch/cpu.c                | 53 +++++++++++++++++++++++++++
->>>>   target/loongarch/cpu.h                |  6 +++
->>>>   target/loongarch/kvm/kvm.c            | 26 +++++++++++++
->>>>   target/loongarch/kvm/kvm_loongarch.h  | 16 ++++++++
->>>>   target/loongarch/loongarch-qmp-cmds.c |  2 +-
->>>>   5 files changed, 102 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>>> index b5c1ec94af..14265b6667 100644
->>>> --- a/target/loongarch/cpu.c
->>>> +++ b/target/loongarch/cpu.c
->>>> @@ -571,6 +571,30 @@ static void loongarch_cpu_disas_set_info(CPUState
->>>> *s, disassemble_info *info)
->>>>       info->print_insn = print_insn_loongarch;
->>>>   }
->>>>
->>>> +static void loongarch_cpu_check_lbt(CPUState *cs, Error **errp)
->>>> +{
->>>> +    CPULoongArchState *env = cpu_env(cs);
->>>> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
->>>> +    bool kvm_supported;
->>>> +
->>>> +    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LBT);
->>>
->>> IMHO if there is no global states that should be saved/restored VM wise,
->>> this should be handled at per CPU level, preferably with CPUCFG flags hint.
->>>
->>> We should minimize non-privilege KVM feature bits to prevent hindering
->>> asymmetry ISA system.
+>>> I rather respect the spec by default, so until we figure
+>>> the issue, are you OK to use a 'x-emmc-kludge' property
+>>> and set it on the Aspeed boards?
 >>
->> + Huacai for further discussion
+>> If these differences are eMMC related, why not simply test :
 >>
->> Hi Bibo, Huacai,
+>>      if (sd_is_emmc(sd)) ...
 >>
->> I investigated the topic further and went through the thread on kernel side.
->>
->> I think Huacai and me are all on the same page that we should unify the interface for per-CPU
->> level feature probing and setting interface. Huacai purposed converting all features to VM feature
->> but I still believe CPUCFG is the best interface.
->>
->> To probe LBT before actual vcpu creation, we can borrow the approach used by other architectures
->> (kvm_arm_create_scratch_host_vcpu() & kvm_riscv_create_scratch_vcpu()).
->>
->> Kernel will reject setting unknown CPUCFG bits with -EINVAL, so to probe LBT we just need to perform
->> KVM_SET_REGS to scratch vcpu with LBT set to see if it's valid for kernel. There is no need for any other
->> probing interface.
->>
->> I do think scratch CPU interface is also necessary if we are going to implement cpu = host.
->>
->> Huacai, would you agree with me?
-> For me the important thing is consistency, all vm-features or all
-> vcpu-features are both accepted.
-To understand features immediately is difficult job for me. There is 
-supported features/used features usages etc, overall feature detection 
-should be VM relative by my knowledge.
-
-Maybe after host machine type and migration feature detection and 
-checking is finished, there will be further upstanding -:(
-
-Regards
-Bibo Mao
-
+>> in commands ALL_SEND_CID and APP_CMD ? The extra property looks
+>> ambiguous to me.
 > 
-> Huacai
-> 
->>
->> Thanks
->> - Jiaxun
->>
->>>
->>> Thanks
->>> - Jiaxun
->>>
->>> --
->>> - Jiaxun
->>
->> --
->> - Jiaxun
+> I'd like to keep the sd_is_emmc() check for code respecting
+> the eMMC spec. I believe the commands in sd_proto_emmc[] in
+> this series do respect it, modulo some register field
+> definitions that are SD specific. So 'x-emmc-kludge' would
+> be a property to allow eMMC use -- without delaying it further
+> --, by bypassing a *bug* in our current model. I'm willing to
+> figure out the problem and fix it, but /after/ the 9.1 release.
+> We are too close of the soft freeze and trying to fix that
+> before is too much pressure on my right now.
 
+The problem is in the still unreviewed patch #86 of this series
+"hw/sd/sdcard: Add emmc_cmd_SEND_OP_COND handler (CMD1)".
+
+SEND_OP_COND should put the card in READY state. We are not
+considering the BOOT_PARTITION_ENABLE feature:
+
+   > When BOOT_PARTITION_ENABLE bits are set and master send
+   > CMD1 (SEND_OP_COND), slave must enter Card Identification
+   > Mode and respond to the command.
+   > If the slave does not support boot operation mode, which
+   > is compliant with v4.2 or before, or BOOT_PARTITION_ENABLE
+   > bit is cleared, slave automatically enter Idle State after
+   > power-on.
+
+Then we don't need the change in the next patch (#91) in
+ALL_SEND_CID.
+
+And likely neither we need #92 (APP_CMD ) but I still need
+to confirm that.
 
