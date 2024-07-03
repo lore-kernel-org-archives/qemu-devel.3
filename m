@@ -4,75 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D49C30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 09:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C4BDC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 09:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOwWH-0002VB-S3; Wed, 03 Jul 2024 05:43:21 -0400
+	id 1sOwZY-0004Hz-EU; Wed, 03 Jul 2024 05:46:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
- id 1sOwWF-0002Uh-Ht
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 05:43:19 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenhuacai@kernel.org>)
- id 1sOwWD-0002qI-P5
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 05:43:19 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 00CC96217E
- for <qemu-devel@nongnu.org>; Wed,  3 Jul 2024 09:43:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3F7C2BD10
- for <qemu-devel@nongnu.org>; Wed,  3 Jul 2024 09:43:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1719999794;
- bh=qenc0dsP8KCDKFLK65aWg7lGsgYAgKKvK+Jgz12/h88=;
- h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
- b=FUya/1V2T2ZxpoQ91+1hu7zVklaumQDIOVUhcjaTXdMDM36/R4keHp4PLlA5yO12k
- 1fSM15Y4sjLkIczX2Eqrvn0eq6DD2ClBr3XbQD6LTqJhHLsBaz0R2CS/oLC1mjqD1C
- /PKaWjVYwbYqpEbmgcV1CP+ADWPRgDkpG9BTd7FacVsqFYQooyGInzIolNyc/dQBed
- VkBMHoRf0jsJgTNRpZKt7badw9lFlLSJcsMZCRLPAl8xb4ttGpj+6n3WwXxVvtq47B
- lLslfLhBvAmuzuuTRjJbYKqOYWt7laenWAoAAeLaVANN5oqNTadh7UMkmQOiT49s82
- kyWend8AyFwmw==
-Received: by mail-lf1-f52.google.com with SMTP id
- 2adb3069b0e04-52e9380add2so2048283e87.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 02:43:14 -0700 (PDT)
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIGOQ5elecMuIgIbXFnBPvHcjp0EHWtlB7hvz53ovsAwVVAuv2oVUg17YBIUAajpC6Vz9etDL30e7gbqsT/VhmgEBh1KQ=
-X-Gm-Message-State: AOJu0YwV1BZLb2rMIVUvwbP4YNcIWu4AQu9t1jYgpgxE6Zi09I0Y49ut
- qqC2xjywQ5WUyjB9KNFaOa2jQKXaT0vQfliRNAzNFe3l2fywmXPtbFW/2dbIpnIaFZXKJ22lnWC
- 0TJZsI1CfYWCnQPLba9CU/hFbA4M=
-X-Google-Smtp-Source: AGHT+IGoOTIuIfsxB5C9W6bvnkaexg0uS0xZHItCHVslgDwpIcqmvxiSqrB4liK+nHQAg7Vdyuo/W+XvSzwgLhUb4bA=
-X-Received: by 2002:a05:6512:3b84:b0:52b:c33a:aa7c with SMTP id
- 2adb3069b0e04-52e82747dcamr8969654e87.65.1719999793051; Wed, 03 Jul 2024
- 02:43:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sOwZW-0004HB-5n
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 05:46:42 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sOwZU-0003fB-3g
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 05:46:41 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2c98660fc91so34116a91.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 02:46:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1719999998; x=1720604798; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=T0cvegh9dJHLx7AZgX8kwOuw/aZvQuYKLzTnaKSvZwM=;
+ b=kOrx2kfPWde9ANQOJNVx9gkcYM0yrS6pS2v8ZLOG7LtTHPlMeC19sAa4G8wo4rfUlr
+ fvKHKoasK8wSZOnH/mjTJ/QBzrVTava5g8j6av+o+1cZA8cygtrUTtnAQdZLTIT2jzGQ
+ DlmQTWu09euo6x+D4Cll2Jrnj41O4rQg3ug4v/4OdWz1cjoMGZT5AFQYckGLbG0tnK5K
+ YA+86eikhOUwqtqdjF36WamuCI82INXTGcRivTWeQFR9UtvBp3gxzqj2EC7QTLHuwfC5
+ IMC/EPzQ9HxMM67/XklcMAAMDKuG+Zk+Az5A0YW0kOllFdXwi4jB9irR7C9vVo6Y0ufl
+ hpyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719999998; x=1720604798;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=T0cvegh9dJHLx7AZgX8kwOuw/aZvQuYKLzTnaKSvZwM=;
+ b=Uls24beaFYv1goBkvQVFElTm0/FSxaCzVizKYi5Vc1X/KsS5c6TYGrCv0WI97km7Cn
+ s+Kd99wxlpJIoRI/4lRZtioqWQ78dx/kDJwBa0pwZgOb4Www7yE2L4Vqbrhxpvs8rwSq
+ yxHSw44/O+pJk2xp8OPZHcvn9t9vD44Yp+wmSmWdX5rzAKI44xefAoXr+lhmzOzexXSf
+ j2qptAY/UaBmRJ0mmG0vuV0zeImdPel1+sjRryB740wtACe6n3p/h2Vgt8FKy/TdDwrJ
+ myeEXlU+1OIWkhJdgZnzrUtK67e67tPIcNZgBrjAUz8tXWkSc1bSLHM5kNJpssUs6juw
+ 9T8w==
+X-Gm-Message-State: AOJu0YyLMMrWuV7gWrLs+L7aesMXhIbgN8ZTUWK0vx80W8+1fdCzViaG
+ abXCaDiM9qlvWXHlSGhgNfql1bRfGFeC8yuKKDWIM8M5aGjQnCujC5F/iOL/Alfo6tBgKF8Xd2D
+ k
+X-Google-Smtp-Source: AGHT+IE3Hkwyh7IHQSR/56ceTw6IWQ8MUUwpxAvahjzBiGrJF3h/E7CD1jO63XIATv6xAu9TkuHytQ==
+X-Received: by 2002:a17:90b:1fcf:b0:2c8:b576:2b7e with SMTP id
+ 98e67ed59e1d1-2c93d771fa4mr6266340a91.46.1719999997903; 
+ Wed, 03 Jul 2024 02:46:37 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([179.193.8.43])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c91d3bc5a1sm10278621a91.36.2024.07.03.02.46.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jul 2024 02:46:37 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, berrange@redhat.com,
+ eduardo@habkost.net, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>
+Subject: [PATCH 2/2] qdev, accel-system: add support to Accel globals
+Date: Wed,  3 Jul 2024 06:46:26 -0300
+Message-ID: <20240703094626.1704990-3-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240703094626.1704990-1-dbarboza@ventanamicro.com>
+References: <20240703094626.1704990-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-References: <20240530064941.1289573-1-maobibo@loongson.cn>
- <20240530064941.1289573-2-maobibo@loongson.cn>
- <db19ed93-027c-4e29-aac5-e3a1edcd760b@app.fastmail.com>
- <60da2f5e-009d-4362-bf62-32a088b2848c@app.fastmail.com>
-In-Reply-To: <60da2f5e-009d-4362-bf62-32a088b2848c@app.fastmail.com>
-From: Huacai Chen <chenhuacai@kernel.org>
-Date: Wed, 3 Jul 2024 17:43:00 +0800
-X-Gmail-Original-Message-ID: <CAAhV-H4YqauX+dDFGK1oHrRjROSykkp-j0AfRD4a43Yea4qMxQ@mail.gmail.com>
-Message-ID: <CAAhV-H4YqauX+dDFGK1oHrRjROSykkp-j0AfRD4a43Yea4qMxQ@mail.gmail.com>
-Subject: Re: [RFC v3 1/2] target/loongarch: Add loongson binary translation
- feature
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- QEMU devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=chenhuacai@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -70
-X-Spam_score: -7.1
-X-Spam_bar: -------
-X-Spam_report: (-7.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1036.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,114 +96,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 3, 2024 at 3:51=E2=80=AFPM Jiaxun Yang <jiaxun.yang@flygoat.com=
-> wrote:
->
->
->
-> =E5=9C=A82024=E5=B9=B47=E6=9C=881=E6=97=A5=E4=B8=83=E6=9C=88 =E4=B8=8B=E5=
-=8D=882:57=EF=BC=8CJiaxun Yang=E5=86=99=E9=81=93=EF=BC=9A
-> > =E5=9C=A82024=E5=B9=B45=E6=9C=8830=E6=97=A5=E4=BA=94=E6=9C=88 =E4=B8=8A=
-=E5=8D=887:49=EF=BC=8CBibo Mao=E5=86=99=E9=81=93=EF=BC=9A
-> >> Loongson Binary Translation (LBT) is used to accelerate binary
-> >> translation, which contains 4 scratch registers (scr0 to scr3), x86/AR=
-M
-> >> eflags (eflags) and x87 fpu stack pointer (ftop).
-> >>
-> >> Now LBT feature is added in kvm mode, not supported in TCG mode since
-> >> it is not emulated. Feature variable lbt is added with OnOffAuto type,
-> >> If lbt feature is not supported with KVM host, it reports error if the=
-re
-> >> is lbt=3Don command line.
-> >>
-> >> If there is no any command line about lbt parameter, it checks whether
-> >> KVM host supports lbt feature and set the corresponding value in cpucf=
-g.
-> >>
-> >> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> > Hi Bibo,
-> >
-> > I was going across recent LoongArch changes and this comes into my atte=
-ntion:
-> >
-> >> ---
-> >>  target/loongarch/cpu.c                | 53 ++++++++++++++++++++++++++=
+We're not honouring KVM options that are provided by any -accel option
+aside from the first. In this example:
+
+qemu-system-riscv64 -accel kvm,riscv-aia=emul (...) \
+    -accel kvm,riscv-aia=hwaccel
+
+'riscv-aia' will be set to 'emul', ignoring the last occurrence of the
+option that set 'riscv-aia' to 'hwaccel'.
+
+A failed attempt to solve this issue by setting 'merge_lists' can be
+found in [1]. A different approach was suggested in [2]: enable global
+properties for accelerators. This allows an user to override any accel
+setting by using '-global' and we won't need to change how '-accel' opts
+are handled.
+
+This is done by calling qdev_prop_set_globals() in accel_init_machine().
+As done in device_post_init(), user's global props take precedence over
+compat props so qdev_prop_set_globals() is called after
+object_set_accelerator_compat_props().
+
+qdev_prop_check_globals() is then changed to recognize TYPE_ACCEL
+globals as valid.
+
+Re-using the fore-mentioned example we'll be able to set
+riscv-aia=hwaccel by doing the following:
+
+qemu-system-riscv64 -accel kvm,riscv-aia=emul (...) \
+    -global kvm-accel.riscv-aia=hwaccel
+
+[1] https://lore.kernel.org/qemu-devel/20240701133038.1489043-1-dbarboza@ventanamicro.com/
+[2] https://lore.kernel.org/qemu-devel/CABgObfbVJkCdpHV2uA7LGTbYEaoaizrbeG0vNo_T1ua5b=jq7Q@mail.gmail.com/
+
+Reported-by: Andrew Jones <ajones@ventanamicro.com>
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ accel/accel-system.c      |  3 +++
+ hw/core/qdev-properties.c | 34 +++++++++++++++++++++++-----------
+ 2 files changed, 26 insertions(+), 11 deletions(-)
+
+diff --git a/accel/accel-system.c b/accel/accel-system.c
+index f6c947dd82..40c73ec62f 100644
+--- a/accel/accel-system.c
++++ b/accel/accel-system.c
+@@ -29,6 +29,8 @@
+ #include "sysemu/cpus.h"
+ #include "qemu/error-report.h"
+ #include "accel-system.h"
++#include "qapi/error.h"
++#include "hw/qdev-properties.h"
+ 
+ int accel_init_machine(AccelState *accel, MachineState *ms)
+ {
+@@ -43,6 +45,7 @@ int accel_init_machine(AccelState *accel, MachineState *ms)
+         object_unref(OBJECT(accel));
+     } else {
+         object_set_accelerator_compat_props(acc->compat_props);
++        qdev_prop_set_globals(OBJECT(accel), &error_fatal);
+     }
+     return ret;
+ }
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index 4867d7dd9e..462a8f96e0 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -10,6 +10,7 @@
+ #include "qemu/cutils.h"
+ #include "qdev-prop-internal.h"
+ #include "qom/qom-qobject.h"
++#include "qemu/accel.h"
+ 
+ void qdev_prop_set_after_realize(DeviceState *dev, const char *name,
+                                   Error **errp)
+@@ -894,27 +895,38 @@ int qdev_prop_check_globals(void)
+ 
+     for (i = 0; i < global_props()->len; i++) {
+         GlobalProperty *prop;
+-        ObjectClass *oc;
++        ObjectClass *globalc, *oc;
+         DeviceClass *dc;
+ 
+         prop = g_ptr_array_index(global_props(), i);
+         if (prop->used) {
+             continue;
+         }
+-        oc = object_class_by_name(prop->driver);
+-        oc = object_class_dynamic_cast(oc, TYPE_DEVICE);
+-        if (!oc) {
+-            warn_report("global %s.%s has invalid class name",
+-                        prop->driver, prop->property);
+-            ret = 1;
++        globalc = object_class_by_name(prop->driver);
++        oc = object_class_dynamic_cast(globalc, TYPE_DEVICE);
++        if (oc) {
++            dc = DEVICE_CLASS(oc);
++            if (!dc->hotpluggable && !prop->used) {
++                warn_report("global %s.%s=%s not used",
++                            prop->driver, prop->property, prop->value);
++                ret = 1;
++            }
+             continue;
+         }
+-        dc = DEVICE_CLASS(oc);
+-        if (!dc->hotpluggable && !prop->used) {
 +
-> >>  target/loongarch/cpu.h                |  6 +++
-> >>  target/loongarch/kvm/kvm.c            | 26 +++++++++++++
-> >>  target/loongarch/kvm/kvm_loongarch.h  | 16 ++++++++
-> >>  target/loongarch/loongarch-qmp-cmds.c |  2 +-
-> >>  5 files changed, 102 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> >> index b5c1ec94af..14265b6667 100644
-> >> --- a/target/loongarch/cpu.c
-> >> +++ b/target/loongarch/cpu.c
-> >> @@ -571,6 +571,30 @@ static void loongarch_cpu_disas_set_info(CPUState
-> >> *s, disassemble_info *info)
-> >>      info->print_insn =3D print_insn_loongarch;
-> >>  }
-> >>
-> >> +static void loongarch_cpu_check_lbt(CPUState *cs, Error **errp)
-> >> +{
-> >> +    CPULoongArchState *env =3D cpu_env(cs);
-> >> +    LoongArchCPU *cpu =3D LOONGARCH_CPU(cs);
-> >> +    bool kvm_supported;
-> >> +
-> >> +    kvm_supported =3D kvm_feature_supported(cs, LOONGARCH_FEATURE_LBT=
-);
-> >
-> > IMHO if there is no global states that should be saved/restored VM wise=
-,
-> > this should be handled at per CPU level, preferably with CPUCFG flags h=
-int.
-> >
-> > We should minimize non-privilege KVM feature bits to prevent hindering
-> > asymmetry ISA system.
->
-> + Huacai for further discussion
->
-> Hi Bibo, Huacai,
->
-> I investigated the topic further and went through the thread on kernel si=
-de.
->
-> I think Huacai and me are all on the same page that we should unify the i=
-nterface for per-CPU
-> level feature probing and setting interface. Huacai purposed converting a=
-ll features to VM feature
-> but I still believe CPUCFG is the best interface.
->
-> To probe LBT before actual vcpu creation, we can borrow the approach used=
- by other architectures
-> (kvm_arm_create_scratch_host_vcpu() & kvm_riscv_create_scratch_vcpu()).
->
-> Kernel will reject setting unknown CPUCFG bits with -EINVAL, so to probe =
-LBT we just need to perform
-> KVM_SET_REGS to scratch vcpu with LBT set to see if it's valid for kernel=
-. There is no need for any other
-> probing interface.
->
-> I do think scratch CPU interface is also necessary if we are going to imp=
-lement cpu =3D host.
->
-> Huacai, would you agree with me?
-For me the important thing is consistency, all vm-features or all
-vcpu-features are both accepted.
++        /*
++         * At this point is either an accelerator global that is
++         * unused or an invalid global. Both set ret = 1.
++         */
++        ret = 1;
++
++        oc = object_class_dynamic_cast(globalc, TYPE_ACCEL);
++        if (oc) {
+             warn_report("global %s.%s=%s not used",
+                         prop->driver, prop->property, prop->value);
+-            ret = 1;
+-            continue;
++        } else {
++            warn_report("global %s.%s has invalid class name",
++                        prop->driver, prop->property);
+         }
+     }
+     return ret;
+-- 
+2.45.2
 
-Huacai
-
->
-> Thanks
-> - Jiaxun
->
-> >
-> > Thanks
-> > - Jiaxun
-> >
-> > --
-> > - Jiaxun
->
-> --
-> - Jiaxun
 
