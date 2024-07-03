@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C04FC3065C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 01:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D9CC3065C
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 01:21:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOoYX-0005j2-5u; Tue, 02 Jul 2024 21:13:09 -0400
+	id 1sOoex-0007KJ-CD; Tue, 02 Jul 2024 21:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOoYU-0005iT-W1; Tue, 02 Jul 2024 21:13:07 -0400
-Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
+ id 1sOoew-0007K3-6a; Tue, 02 Jul 2024 21:19:46 -0400
+Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOoYQ-00012o-2v; Tue, 02 Jul 2024 21:13:05 -0400
-Received: by mail-vk1-xa2e.google.com with SMTP id
- 71dfb90a1353d-4f2db3a59a5so89640e0c.0; 
- Tue, 02 Jul 2024 18:13:01 -0700 (PDT)
+ id 1sOoes-00085e-8k; Tue, 02 Jul 2024 21:19:45 -0400
+Received: by mail-vs1-xe36.google.com with SMTP id
+ ada2fe7eead31-48fde151f25so70583137.1; 
+ Tue, 02 Jul 2024 18:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719969180; x=1720573980; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719969581; x=1720574381; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aVZKFwEDodws2MPl22wNiaqOGt5kTFTXYePutgY3h6g=;
- b=UpbSHNZQGX+exFsfjTwWsegyabp0KKfYjskwwkVVLY85Sa4kOCTAna2T2pfiIkGMck
- wpJGZ0FktauylBYoZJfisARgD4ioENniLogT2paTnPXxUmneI+BS3jDNif4QB2BdQQeo
- 05bXF3N/5BcvrPKRd57mDTJIhdK0HK1rHrcd04KBwgnkduzdpDN00X01m6MGvJgpb7el
- 21TCA9vE2z1cqPzSbN1I22O0QPnKhMZFBwn9Hzc4yryPMoNXwwESz9bUX0+wk6vc4slf
- NitOI4JS6HkXCf4weDhH9DoDoadbsnXZEL70Uy+XtjCE2YBNdJFxwV20LGbEDPiVs+0k
- 5GTw==
+ bh=JHJ81nI5cs2a3/TRLHe0PjJRYgXLDxhW942qw03hgG8=;
+ b=Ukevau91eDXJyweBtrzKHO1dzP742SEDVZtYdlHFphvI39tGQFq1pQYMTbybG5qAfe
+ NpeAwsjy9v1PEmxCFfH5ixbg5A4yPDEoV7sb0V3z3vanMy7E2tk0e+NsW+zj7RLAggHx
+ Ym8y4QxdpeSgfiEZoHMEPZ4dMsD+EONfXC9no3YOKZKT8hoRuDmbQ4E68XpDDHJmVuFi
+ SnpHX1MewMPe/aY2NgAdgKAAkY5N5fj2UKaKnPY2AvkAz+elNI120hipWtUSVjesAfjA
+ YNvFS8EDLSIXj72WQDB2nMJyiIED4Oy6FpRlI4/UEr9liKoMCGqVzTZbxLRB9XB/k0BM
+ YeWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719969180; x=1720573980;
+ d=1e100.net; s=20230601; t=1719969581; x=1720574381;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aVZKFwEDodws2MPl22wNiaqOGt5kTFTXYePutgY3h6g=;
- b=s+//arL0vs1Gw8qWFDp0GX3ad/bkONr86Bo+j6JG4Np88UuiSEjWyfubhJl+T2zmTe
- d/Wr/H8au5DzubODF/agyEmRgBBtncC21HtMy74eYhYwW57pVs+0Z6NIE3gipar106bS
- 5NlddE0YcRNyCWdxVYjsDOjC1/tjjUydN9SveB4moVuWHenpXzBOtDNX5qyyBGpjmXyB
- iQqFsTAv+3fByoryAxXq9pBWEoC8H6h+SJlCf77OPtdWoCTTGk8CkXLSHKV28cqseDuU
- mrb9jJwWE8G43E01LxGrSbatO5yUlBclNogQQ9yvdTqxarr+RfE1wdA8aRScQUGtbAWU
- uhKw==
+ bh=JHJ81nI5cs2a3/TRLHe0PjJRYgXLDxhW942qw03hgG8=;
+ b=BiRGzE7bYiAQsXjhJsTP0cyFE5EJVSkd2gK5UnPZ7ODnyhSLdqYPXdJrTgGD4qq3p6
+ quoR3AkXV1Fr/3frz3aW+fTMmS3sjmeo/TiWzDTIdxPEiZ8SKVEZdo272fSTDkTzOXMn
+ 9MDPdw5cumCfU6VHOSU9yca91+mE3fMNjbmhF6K3ADft883Q+jkoPfr84GGy3EXkZHe8
+ IrDrWgLndMCSfT5n7/+3p1ynG2qTYma5lNtqszEnlze00dne0N5KRpqNUfdbM1GFMlv+
+ CuSNfS6DUUDHgT3ST3iQGZFSnLw5t/w+eyVARyH90FbxdfFF8/QgHM9o+avhIWyb+0zq
+ Sf3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXvQ6yQuFEvFQiCXWkKuVEKFChp8e/8Y8edh2AYQexAFIdQgUUpf7SuhbmWWqeUMoUxlgBqV5dt26DaXcutR9v5+kwPYOI=
-X-Gm-Message-State: AOJu0YzVrOlDnGTOQKQWMGweiWOY8daLy2Z7ZO4wgvxzLFPUYQRyEV9x
- gBlDKkwDQ6ZyDOxtubu0aBmgmZhfaG2z1Ax53owpft7MroHFJ/VYTJh6+FZPOhRf19KQ3n+CnXf
- 5Vk8nWVlyCXViUyIc/uEA5YaXRxw=
-X-Google-Smtp-Source: AGHT+IGDqU5INc3z+oBRQTUiuWHH1OcslRRwyib0GtesbJWXlbesX8E4XiMKSQap7UlT9h51+2N/emsCfWwdrwFrTPQ=
-X-Received: by 2002:a05:6122:d27:b0:4ef:66cf:8745 with SMTP id
- 71dfb90a1353d-4f2a5682046mr13048015e0c.7.1719969180479; Tue, 02 Jul 2024
- 18:13:00 -0700 (PDT)
+ AJvYcCVlnzCk3dH3dErPHdZeJPmjhtyf77Pj78dOTJrF3h1Zn/hpvVUlgZ1KetXg59oGmY6WQioV0/wYeg9U1D++vROn6K8xrbk=
+X-Gm-Message-State: AOJu0YzeePezJuxG0RhavdAa8UoWbI9Kzdzs5K3orA8kv69roKHsYKUo
+ o53byp/soiqAJhVq5MC1OTJ89M9sgrdFvmmQfK99KqgJxaFPBf61Og6DSC+F//MbFZLtiSZY1i2
+ R2VUWZl2sckEr4l8da4OWDRguXfc=
+X-Google-Smtp-Source: AGHT+IEIJgYrcfo0X/hU6CCEgnawZnlRA/YQgx8/N9m6ETjxfv6UWn32tSgqxBwKNXCUCnG86nVmOnfJRZlGd2YU3gU=
+X-Received: by 2002:a67:b44d:0:b0:48f:4b47:5f27 with SMTP id
+ ada2fe7eead31-48faf154c58mr10957730137.33.1719969580723; Tue, 02 Jul 2024
+ 18:19:40 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240626-smcntrpmf_v7-v7-0-bb0f10af7fa9@rivosinc.com>
- <20240626-smcntrpmf_v7-v7-4-bb0f10af7fa9@rivosinc.com>
-In-Reply-To: <20240626-smcntrpmf_v7-v7-4-bb0f10af7fa9@rivosinc.com>
+ <20240626-smcntrpmf_v7-v7-5-bb0f10af7fa9@rivosinc.com>
+In-Reply-To: <20240626-smcntrpmf_v7-v7-5-bb0f10af7fa9@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 3 Jul 2024 11:12:34 +1000
-Message-ID: <CAKmqyKOidVP9rC_N=EpLxJ0hKgJuPckoa9VLKgROhZxcY=Ho3Q@mail.gmail.com>
-Subject: Re: [PATCH v7 04/11] target/riscv: Add cycle & instret privilege mode
- filtering definitions
+Date: Wed, 3 Jul 2024 11:19:14 +1000
+Message-ID: <CAKmqyKN3V9-q+CE93y_+1r=yjr7U1YKa=mCpjZ7nOr-6JtN=ig@mail.gmail.com>
+Subject: Re: [PATCH v7 05/11] target/riscv: Add cycle & instret privilege mode
+ filtering support
 To: Atish Patra <atishp@rivosinc.com>
 Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
  Rajnesh Kanwal <rkanwal@rivosinc.com>, palmer@dabbelt.com, liwei1518@gmail.com,
@@ -71,8 +71,8 @@ Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
  Kaiwen Xue <kaiwenx@rivosinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe36.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,97 +96,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 27, 2024 at 9:58=E2=80=AFAM Atish Patra <atishp@rivosinc.com> w=
-rote:
+On Thu, Jun 27, 2024 at 10:00=E2=80=AFAM Atish Patra <atishp@rivosinc.com> =
+wrote:
 >
 > From: Kaiwen Xue <kaiwenx@rivosinc.com>
 >
-> This adds the definitions for ISA extension smcntrpmf.
+> QEMU only calculates dummy cycles and instructions, so there is no
+> actual means to stop the icount in QEMU. Hence this patch merely adds
+> the functionality of accessing the cfg registers, and cause no actual
+> effects on the counting of cycle and instret counters.
 >
-> Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
+> ---
+>  target/riscv/csr.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++
+>  1 file changed, 88 insertions(+)
+>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 3ad851707e5c..665c534db1a0 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -236,6 +236,24 @@ static RISCVException sscofpmf_32(CPURISCVState *env=
+, int csrno)
+>      return sscofpmf(env, csrno);
+>  }
+>
+> +static RISCVException smcntrpmf(CPURISCVState *env, int csrno)
+> +{
+> +    if (!riscv_cpu_cfg(env)->ext_smcntrpmf) {
+> +        return RISCV_EXCP_ILLEGAL_INST;
+> +    }
+> +
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+> +static RISCVException smcntrpmf_32(CPURISCVState *env, int csrno)
+> +{
+> +    if (riscv_cpu_mxl(env) !=3D MXL_RV32) {
+> +        return RISCV_EXCP_ILLEGAL_INST;
+> +    }
+> +
+> +    return smcntrpmf(env, csrno);
+> +}
+> +
+>  static RISCVException any(CPURISCVState *env, int csrno)
+>  {
+>      return RISCV_EXCP_NONE;
+> @@ -830,6 +848,62 @@ static RISCVException read_hpmcounterh(CPURISCVState=
+ *env, int csrno,
+>
+>  #else /* CONFIG_USER_ONLY */
+>
+> +static RISCVException read_mcyclecfg(CPURISCVState *env, int csrno,
+> +                                     target_ulong *val)
+> +{
+> +    *val =3D env->mcyclecfg;
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+We don't do a good job of this in other places, but we should check
+for RVU and RVS to determine if the bits can actually be set.
+
+This is especially important for Hypervisor support (VS/VU-modes), as
+that is often not supported so we should report that here
 
 Alistair
 
-> ---
->  target/riscv/cpu.h      |  6 ++++++
->  target/riscv/cpu_bits.h | 29 +++++++++++++++++++++++++++++
->  2 files changed, 35 insertions(+)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 46faefd24e09..c5d289e5f4b9 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -339,6 +339,12 @@ struct CPUArchState {
->
->      uint32_t mcountinhibit;
->
-> +    /* PMU cycle & instret privilege mode filtering */
-> +    target_ulong mcyclecfg;
-> +    target_ulong mcyclecfgh;
-> +    target_ulong minstretcfg;
-> +    target_ulong minstretcfgh;
+> +    return RISCV_EXCP_NONE;
+> +}
 > +
->      /* PMU counter state */
->      PMUCTRState pmu_ctrs[RV_MAX_MHPMCOUNTERS];
->
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index c257c5ed7dc9..5faa817453bb 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -397,6 +397,10 @@
->  /* Machine counter-inhibit register */
->  #define CSR_MCOUNTINHIBIT   0x320
->
-> +/* Machine counter configuration registers */
-> +#define CSR_MCYCLECFG       0x321
-> +#define CSR_MINSTRETCFG     0x322
+> +static RISCVException write_mcyclecfg(CPURISCVState *env, int csrno,
+> +                                      target_ulong val)
+> +{
+> +    env->mcyclecfg =3D val;
+> +    return RISCV_EXCP_NONE;
+> +}
 > +
->  #define CSR_MHPMEVENT3      0x323
->  #define CSR_MHPMEVENT4      0x324
->  #define CSR_MHPMEVENT5      0x325
-> @@ -427,6 +431,9 @@
->  #define CSR_MHPMEVENT30     0x33e
->  #define CSR_MHPMEVENT31     0x33f
+> +static RISCVException read_mcyclecfgh(CPURISCVState *env, int csrno,
+> +                                      target_ulong *val)
+> +{
+> +    *val =3D env->mcyclecfgh;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+> +static RISCVException write_mcyclecfgh(CPURISCVState *env, int csrno,
+> +                                       target_ulong val)
+> +{
+> +    env->mcyclecfgh =3D val;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+> +static RISCVException read_minstretcfg(CPURISCVState *env, int csrno,
+> +                                       target_ulong *val)
+> +{
+> +    *val =3D env->minstretcfg;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+> +static RISCVException write_minstretcfg(CPURISCVState *env, int csrno,
+> +                                        target_ulong val)
+> +{
+> +    env->minstretcfg =3D val;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+> +static RISCVException read_minstretcfgh(CPURISCVState *env, int csrno,
+> +                                        target_ulong *val)
+> +{
+> +    *val =3D env->minstretcfgh;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+> +static RISCVException write_minstretcfgh(CPURISCVState *env, int csrno,
+> +                                         target_ulong val)
+> +{
+> +    env->minstretcfgh =3D val;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+>  static RISCVException read_mhpmevent(CPURISCVState *env, int csrno,
+>                                       target_ulong *val)
+>  {
+> @@ -5051,6 +5125,13 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {
+>                               write_mcountinhibit,
+>                               .min_priv_ver =3D PRIV_VERSION_1_11_0      =
+ },
 >
-> +#define CSR_MCYCLECFGH      0x721
-> +#define CSR_MINSTRETCFGH    0x722
+> +    [CSR_MCYCLECFG]      =3D { "mcyclecfg",   smcntrpmf, read_mcyclecfg,
+> +                             write_mcyclecfg,
+> +                             .min_priv_ver =3D PRIV_VERSION_1_12_0      =
+ },
+> +    [CSR_MINSTRETCFG]    =3D { "minstretcfg", smcntrpmf, read_minstretcf=
+g,
+> +                             write_minstretcfg,
+> +                             .min_priv_ver =3D PRIV_VERSION_1_12_0      =
+ },
 > +
->  #define CSR_MHPMEVENT3H     0x723
->  #define CSR_MHPMEVENT4H     0x724
->  #define CSR_MHPMEVENT5H     0x725
-> @@ -884,6 +891,28 @@ typedef enum RISCVException {
->  /* PMU related bits */
->  #define MIE_LCOFIE                         (1 << IRQ_PMU_OVF)
+>      [CSR_MHPMEVENT3]     =3D { "mhpmevent3",     any,    read_mhpmevent,
+>                               write_mhpmevent                           }=
+,
+>      [CSR_MHPMEVENT4]     =3D { "mhpmevent4",     any,    read_mhpmevent,
+> @@ -5110,6 +5191,13 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {
+>      [CSR_MHPMEVENT31]    =3D { "mhpmevent31",    any,    read_mhpmevent,
+>                               write_mhpmevent                           }=
+,
 >
-> +#define MCYCLECFG_BIT_MINH                 BIT_ULL(62)
-> +#define MCYCLECFGH_BIT_MINH                BIT(30)
-> +#define MCYCLECFG_BIT_SINH                 BIT_ULL(61)
-> +#define MCYCLECFGH_BIT_SINH                BIT(29)
-> +#define MCYCLECFG_BIT_UINH                 BIT_ULL(60)
-> +#define MCYCLECFGH_BIT_UINH                BIT(28)
-> +#define MCYCLECFG_BIT_VSINH                BIT_ULL(59)
-> +#define MCYCLECFGH_BIT_VSINH               BIT(27)
-> +#define MCYCLECFG_BIT_VUINH                BIT_ULL(58)
-> +#define MCYCLECFGH_BIT_VUINH               BIT(26)
+> +    [CSR_MCYCLECFGH]     =3D { "mcyclecfgh",   smcntrpmf_32, read_mcycle=
+cfgh,
+> +                             write_mcyclecfgh,
+> +                             .min_priv_ver =3D PRIV_VERSION_1_12_0      =
+  },
+> +    [CSR_MINSTRETCFGH]   =3D { "minstretcfgh", smcntrpmf_32, read_minstr=
+etcfgh,
+> +                             write_minstretcfgh,
+> +                             .min_priv_ver =3D PRIV_VERSION_1_12_0      =
+  },
 > +
-> +#define MINSTRETCFG_BIT_MINH               BIT_ULL(62)
-> +#define MINSTRETCFGH_BIT_MINH              BIT(30)
-> +#define MINSTRETCFG_BIT_SINH               BIT_ULL(61)
-> +#define MINSTRETCFGH_BIT_SINH              BIT(29)
-> +#define MINSTRETCFG_BIT_UINH               BIT_ULL(60)
-> +#define MINSTRETCFGH_BIT_UINH              BIT(28)
-> +#define MINSTRETCFG_BIT_VSINH              BIT_ULL(59)
-> +#define MINSTRETCFGH_BIT_VSINH             BIT(27)
-> +#define MINSTRETCFG_BIT_VUINH              BIT_ULL(58)
-> +#define MINSTRETCFGH_BIT_VUINH             BIT(26)
-> +
->  #define MHPMEVENT_BIT_OF                   BIT_ULL(63)
->  #define MHPMEVENTH_BIT_OF                  BIT(31)
->  #define MHPMEVENT_BIT_MINH                 BIT_ULL(62)
+>      [CSR_MHPMEVENT3H]    =3D { "mhpmevent3h",    sscofpmf_32,  read_mhpm=
+eventh,
+>                               write_mhpmeventh,
+>                               .min_priv_ver =3D PRIV_VERSION_1_12_0      =
+  },
 >
 > --
 > 2.34.1
