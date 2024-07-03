@@ -4,52 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C03BC30658
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 02:13:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811B9C3065C
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 02:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOpUU-0005dA-LE; Tue, 02 Jul 2024 22:13:02 -0400
+	id 1sOpV3-000641-Iw; Tue, 02 Jul 2024 22:13:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sOpUT-0005cP-1T
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 22:13:01 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sOpUN-0001lv-8E
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 22:13:00 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8BxK_Cfs4Rm2FwAAA--.1104S3;
- Wed, 03 Jul 2024 10:12:47 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8CxJMWds4RmPSQ5AA--.57057S4; 
- Wed, 03 Jul 2024 10:12:46 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH 2/3] hw/intc/loongarch_ipi: Add loongarch ipi support
-Date: Wed,  3 Jul 2024 10:12:44 +0800
-Message-Id: <20240703021245.3752786-3-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240703021245.3752786-1-maobibo@loongson.cn>
-References: <20240703021245.3752786-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sOpV2-00063S-EU; Tue, 02 Jul 2024 22:13:36 -0400
+Received: from mail-vk1-xa2e.google.com ([2607:f8b0:4864:20::a2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sOpUx-0001qO-W9; Tue, 02 Jul 2024 22:13:36 -0400
+Received: by mail-vk1-xa2e.google.com with SMTP id
+ 71dfb90a1353d-4ef6f5e2e6cso1552962e0c.1; 
+ Tue, 02 Jul 2024 19:13:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719972809; x=1720577609; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=c9K0okOqOzIEJ+i663e7Bql4OEDVS662Pbrl8g3LbGc=;
+ b=d7aKZ38v5jy11N82z1QB7cU7g0CbRspr4zhs7+yb7bEO7WsFDr+nWEao3GuqYfgb9g
+ BrWfdsaOmIi4bwVbUGui73sQ07mNqKZt/MIxld/sc5f7Dpq+nzVK+g2w6WLPlKVyoL1i
+ uDqtueGLWpBJpMieofL9nc6HsX1enBnPp0BFdgAhSZnB1odpwIPGhObK6F3S+6n0Qn72
+ H0o4gARVjkt/zQvu3WF2AbN+46mu/W/fxF6Xd9MXeQat4oI+cYUknzPPwa1P/Cm9acxg
+ Qv2H+p6WFJumOqYhTwS/gsT/TRYh+sgTFR2pcIz41lniYjBMtRmBJ4Rlo4PZF80VNEq2
+ ubqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719972809; x=1720577609;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=c9K0okOqOzIEJ+i663e7Bql4OEDVS662Pbrl8g3LbGc=;
+ b=mY5Ue2a43IOfIyuKwZr/uuGHhSUS4F4g3O73j95BG3F7KfhuozH61URrdWAoEh3xiq
+ 1AyAnMN9JVSBiZ844v+kbNHB9YNEevfZcJ0etAYFmQM6dWJS9DJplL8d13nh/hJXx3rX
+ FG0OVx3UITD32bOp3/Ljil+sHE6OWv+bc9Qnqha0bgS0YkQWlunUzasc+fhdPfJ5Wv09
+ H/+oBHadFPcAbkibncPyGc9ozp9sQsFICAN/hj1GF7Tb/etLp7BQBaNCK4vNu4KwkrWY
+ EO8LB/KuHxUyNWJuZvvwsj0QOGirNDfYTbvweoEaogOa+B8Ze4u0pA8l56xjTTDvit6b
+ 6FWQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCULUFF1br18Qkur3xsvlGoN6txqebqs2Dsh8AbnP2CP2KNHe8vW7oPBRVssr5KBhR+Inipx4ImXxiEFL6wN+Hh6uanN580=
+X-Gm-Message-State: AOJu0YyyuDPrjYM+FVcQIflEBCZ3BVUd7NTeSY/PUv5lS3fQn1XHA0d/
+ I+df0bur5LXFbeinB3z15t43OZQlky4WQECX0OuAy4Oc6S6q9jmk/IKJCnpc33CN3qgDs9G1v0U
+ McJ7DXupr/SLyVFkrksOgTnJUOX0=
+X-Google-Smtp-Source: AGHT+IGQ9rRtn6cek6kXXR5MxrcO7f5z+9yRLQ2xxa8HvlHX3dTp+hQeC/lT5CHXkTxLDD2WXX3FQO6mLZu8L8KizA4=
+X-Received: by 2002:a05:6122:4982:b0:4f2:e1c9:fc3b with SMTP id
+ 71dfb90a1353d-4f2e1ca0481mr139524e0c.6.1719972809622; Tue, 02 Jul 2024
+ 19:13:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8CxJMWds4RmPSQ5AA--.57057S4
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20240626094153.27208-1-rbradford@rivosinc.com>
+In-Reply-To: <20240626094153.27208-1-rbradford@rivosinc.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 3 Jul 2024 12:13:03 +1000
+Message-ID: <CAKmqyKO0Lo7qCL-5uVNixaKe8H4=N2KXZUMUrUSB-mw76p81CQ@mail.gmail.com>
+Subject: Re: [PATCH] disas/riscv: Add decode for Zawrs extension
+To: Rob Bradford <rbradford@rivosinc.com>
+Cc: qemu-devel@nongnu.org, Balaji Ravikumar <bravikumar@rivosinc.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ "open list:RISC-V TCG target" <qemu-riscv@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2e;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,145 +93,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Loongarch ipi is added here and ipi is emulated in userspace when
-running in kvm mode. It inherits from TYPE_LOONGSON_IPI_COMMON class,
-and two interfaces get_iocsr_as() and cpu_by_arch_id() is added
-for Loongarch 3A5000 machine.
+On Wed, Jun 26, 2024 at 7:43=E2=80=AFPM Rob Bradford <rbradford@rivosinc.co=
+m> wrote:
+>
+> From: Balaji Ravikumar <bravikumar@rivosinc.com>
+>
+> Add disassembly support for these instructions from Zawrs:
+>
+> * wrs.sto
+> * wrs.nto
+>
+> Signed-off-by: Balaji Ravikumar <bravikumar@rivosinc.com>
+> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- hw/intc/loongarch_ipi.c         | 80 +++++++++++++++++++++++++++++++++
- include/hw/intc/loongarch_ipi.h | 33 ++++++++++++++
- 2 files changed, 113 insertions(+)
- create mode 100644 hw/intc/loongarch_ipi.c
- create mode 100644 include/hw/intc/loongarch_ipi.h
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-new file mode 100644
-index 0000000000..91689c35c0
---- /dev/null
-+++ b/hw/intc/loongarch_ipi.c
-@@ -0,0 +1,80 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Loongarch ipi interrupt support
-+ *
-+ * Copyright (C) 2024 Loongson Technology Corporation Limited
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/boards.h"
-+#include "hw/sysbus.h"
-+#include "hw/intc/loongarch_ipi.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-properties.h"
-+#include "qapi/error.h"
-+#include "qemu/log.h"
-+#include "exec/address-spaces.h"
-+#include "migration/vmstate.h"
-+#include "target/loongarch/cpu.h"
-+#include "trace.h"
-+
-+static AddressSpace *get_iocsr_as(CPUState *cpu)
-+{
-+    return LOONGARCH_CPU(cpu)->env.address_space_iocsr;
-+}
-+
-+static int archid_cmp(const void *a, const void *b)
-+{
-+   CPUArchId *archid_a = (CPUArchId *)a;
-+   CPUArchId *archid_b = (CPUArchId *)b;
-+
-+   return archid_a->arch_id - archid_b->arch_id;
-+}
-+
-+static CPUArchId *find_cpu_by_archid(MachineState *ms, uint32_t id)
-+{
-+    CPUArchId apic_id, *found_cpu;
-+
-+    apic_id.arch_id = id;
-+    found_cpu = bsearch(&apic_id, ms->possible_cpus->cpus,
-+        ms->possible_cpus->len, sizeof(*ms->possible_cpus->cpus),
-+        archid_cmp);
-+
-+    return found_cpu;
-+}
-+
-+static CPUState *get_cpu_by_archid(int64_t arch_id)
-+{
-+    MachineState *machine = MACHINE(qdev_get_machine());
-+    CPUArchId *archid;
-+
-+    archid = find_cpu_by_archid(machine, arch_id);
-+    if (archid) {
-+        return CPU(archid->cpu);
-+    }
-+
-+    return NULL;
-+}
-+
-+static void loongarch_ipi_class_init(ObjectClass *klass, void *data)
-+{
-+    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
-+
-+    licc->get_iocsr_as = get_iocsr_as;
-+    licc->cpu_by_arch_id = get_cpu_by_archid;
-+}
-+
-+static const TypeInfo loongarch_ipi_info = {
-+    .name          = TYPE_LOONGARCH_IPI,
-+    .parent        = TYPE_LOONGSON_IPI_COMMON,
-+    .instance_size = sizeof(LoongarchIPIState),
-+    .class_size    = sizeof(LoongarchIPIClass),
-+    .class_init    = loongarch_ipi_class_init,
-+};
-+
-+static void loongarch_ipi_register_types(void)
-+{
-+    type_register_static(&loongarch_ipi_info);
-+}
-+
-+type_init(loongarch_ipi_register_types)
-diff --git a/include/hw/intc/loongarch_ipi.h b/include/hw/intc/loongarch_ipi.h
-new file mode 100644
-index 0000000000..451bbcff5c
---- /dev/null
-+++ b/include/hw/intc/loongarch_ipi.h
-@@ -0,0 +1,33 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * Loongarch ipi interrupt header files
-+ *
-+ * Copyright (C) 2024 Loongson Technology Corporation Limited
-+ */
-+
-+#ifndef HW_LOONGARCH_IPI_H
-+#define HW_LOONGARCH_IPI_H
-+
-+#include "qom/object.h"
-+#include "hw/intc/loongson_ipi_common.h"
-+#include "hw/sysbus.h"
-+
-+#define TYPE_LOONGARCH_IPI  "loongarch_ipi"
-+typedef struct LoongarchIPIClass LoongarchIPIClass;
-+typedef struct LoongarchIPIState LoongarchIPIState;
-+DECLARE_OBJ_CHECKERS(LoongarchIPIState, LoongarchIPIClass,
-+                     LOONGARCH_IPI, TYPE_LOONGARCH_IPI)
-+
-+struct LoongarchIPIState {
-+    LoongsonIPICommonState parent_obj;
-+};
-+
-+struct LoongarchIPIClass {
-+    /*< private >*/
-+    LoongsonIPICommonClass parent_class;
-+    /*< public >*/
-+
-+    DeviceRealize parent_realize;
-+};
-+
-+#endif
--- 
-2.39.3
+Alistair
 
+> ---
+>  disas/riscv.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index 90d6b26de9..e79788ea0a 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -906,6 +906,8 @@ typedef enum {
+>      rv_op_amocas_w =3D 875,
+>      rv_op_amocas_d =3D 876,
+>      rv_op_amocas_q =3D 877,
+> +    rv_op_wrs_sto =3D 878,
+> +    rv_op_wrs_nto =3D 879,
+>  } rv_op;
+>
+>  /* register names */
+> @@ -2096,6 +2098,8 @@ const rv_opcode_data rvi_opcode_data[] =3D {
+>      { "amocas.w", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+>      { "amocas.d", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+>      { "amocas.q", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+> +    { "wrs.sto", rv_codec_none, rv_fmt_none, NULL, 0, 0, 0 },
+> +    { "wrs.nto", rv_codec_none, rv_fmt_none, NULL, 0, 0, 0 },
+>  };
+>
+>  /* CSR names */
+> @@ -3817,6 +3821,8 @@ static void decode_inst_opcode(rv_decode *dec, rv_i=
+sa isa)
+>                      case 0: op =3D rv_op_ecall; break;
+>                      case 32: op =3D rv_op_ebreak; break;
+>                      case 64: op =3D rv_op_uret; break;
+> +                    case 416: op =3D rv_op_wrs_nto; break;
+> +                    case 928: op =3D rv_op_wrs_sto; break;
+>                      }
+>                      break;
+>                  case 256:
+> --
+> 2.45.2
+>
+>
 
