@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDAC8C38150
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0FE0C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8mQ-0001TH-RW; Wed, 03 Jul 2024 18:48:50 -0400
+	id 1sP8kr-0003aP-L9; Wed, 03 Jul 2024 18:47:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8mO-0001Ag-E4
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:48:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kp-0003Pi-Pl
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8mL-0005EH-PV
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:48:48 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8ki-0001X9-GO
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046924;
+ s=mimecast20190719; t=1720046821;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QybIKg16iYqXdH14Jxyn469nV1P/mwHXBmUUNkfpRqo=;
- b=ffqJMdghg5tVf+DxQZ8CmvPp3kWft4jBc6lB/v+ZcyS/XOgQD9bVrfdC/giRfngGS4u75H
- 9ll03g29LfgLRVDDwA0AVzafxVnsWAKie+wlcOrIkEm6dnMMGJqdBz58peZVsNZ8rk2qvD
- rGRVsT7WMhwHEFvhW8dfX1u5G2gSzHo=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YhLUD4bgFXykNLby5YqUbG3vAr/0cDl4XOSKHnOq4eQ=;
+ b=fywVA3o56V5cL5jlEqAbQjb9uLH6N7V6M7QgekzLLD1B97WfmeWz9EOQWhvMlp2IHAHipD
+ QWH6CkZcdr+ohcKHrINDWmSczPAHQPmCDmJTgOfyf/J9vFPQOELo1HJpV9Xa0HliLb6M0G
+ LDFjIP4r8YtUxHTjGBy+li5ruXwGGyY=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-BEohjOQBMiyqKxmYSJ0pPg-1; Wed, 03 Jul 2024 18:48:43 -0400
-X-MC-Unique: BEohjOQBMiyqKxmYSJ0pPg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-364b75a8194so34068f8f.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:48:42 -0700 (PDT)
+ us-mta-595-p55CqpImPtS0xiMFQHoLJw-1; Wed, 03 Jul 2024 18:47:00 -0400
+X-MC-Unique: p55CqpImPtS0xiMFQHoLJw-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-584ef6c00c0so1685181a12.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:47:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046921; x=1720651721;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QybIKg16iYqXdH14Jxyn469nV1P/mwHXBmUUNkfpRqo=;
- b=loFjG1vLoatjyaFaqHEWDXaOpuNzQjRX/YNinPqNO91cYM4Mkl70j3prHieyMNI1Do
- iJpm2mnBZyVMJb9yMGF+Ic5U85uzVmjh35Z9hWXMPc94AWnF9LAsFHjEGDL6CAjp/36K
- OMEPGEJNZ6ST8qRCELh+Bp6OyuyrP9BrKXPbett6WyGuLpETylxWEF9Te86NRtQsYlL6
- S7977rc0TqmkOGI6YfOiPw3nT3JHJcMWHCn3PRNAbfULGILQB+OU2NiMDhWTRj6eiOEi
- VF9Zl1Up8F5isWXH6cW2Hqn7rZ1vHA93LE3uIsvt5dPocVdUypVJmXzM6zP5YCP5fAQ6
- ZO1w==
-X-Gm-Message-State: AOJu0Yz8y6LHJETcXao8Zzh/shndPKXlKInMnGL82jlsBAuYvFt4fxDx
- mqbavcgulUwELt2QeE/u2PZA2DVeJ9CZnBQUkUSNf77D5Z/O91cxFNSTyZ1t8ZcGCrgsl39nflp
- t4/aei3/1IJzixMcua6rYTGqBhxaRx4eRsAiR3We3mr0EHjT3pk3eCU+c1Pbid0lausH4DSktXe
- N/gaIHYIkoz2YlJsaajRZBh6erOjqcAg==
-X-Received: by 2002:adf:e5c9:0:b0:367:94f7:88f3 with SMTP id
- ffacd0b85a97d-3679dd72b16mr2212f8f.57.1720046921389; 
- Wed, 03 Jul 2024 15:48:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDTHY/Gvoyw2qkyB8B+bZX8Vd466iBKU/h2FTOOwHiO6Ov4rfPrbCgPbNnB0tyRisupbeiEg==
-X-Received: by 2002:adf:e5c9:0:b0:367:94f7:88f3 with SMTP id
- ffacd0b85a97d-3679dd72b16mr2190f8f.57.1720046920590; 
- Wed, 03 Jul 2024 15:48:40 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720046819; x=1720651619;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YhLUD4bgFXykNLby5YqUbG3vAr/0cDl4XOSKHnOq4eQ=;
+ b=YrAhbpbjf4VjdSNBsXbVbP/wsTM250xOvtUFVeeW2KXs3S0zf+XNwvUNPknR7VXphv
+ C6wC7e8zw7V/Pgt+dE403AzNtNOO39Yg9kSYPtht/SaTJJ5Sssxes0OTxuCVxuC4xyEk
+ 8I4qCXhUdJr2M5kopfMWPNI6BtPLos2G2avg1zLjY7LuhpyVoOmk8pbpE2cYcjaVYHUN
+ aqFBhAN0o4cTUAtC16KibuseOugfkCvagu+0/4Vh//8NGNBmS3QKoDpFc45yHCOKaEK7
+ o7I94jkGOifTJsBxf8dexSMSf1nCpeBtXmYhmTWa82foSmeuO4z9bdSdk2qQHPmrcEjW
+ zaWg==
+X-Gm-Message-State: AOJu0YzWIe4cXpw5Lh1dlYQam679Mb1dtdWXmn7Q0VEbn6m8pQ8EMDU3
+ YJf5tLynRcOUlMQPmxX58G0B0EKo1ptTzh69tgoxj5TMQxPMZexuHqF/gbeC+OYCS7OskUeBFsR
+ rnpi9N7bzgudVbj4AfRvgWw9jnaTUCKsoNYcj9wDmGnLaV+qj35qb3Hig5z/k4JI13nfT8geZ+1
+ 10BrPi+2//Hf7pSZBXY8Kv2llBV/mp2Q==
+X-Received: by 2002:a05:6402:40c5:b0:586:178f:aaa4 with SMTP id
+ 4fb4d7f45d1cf-58ce5169885mr2529743a12.9.1720046818825; 
+ Wed, 03 Jul 2024 15:46:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENdjYuJum/0AUWZOYdpsjlAu/xeqTbkfywve+ZRZCJpAlgJW3rf9MBRkFeWZhx6xBDabQRzg==
+X-Received: by 2002:a05:6402:40c5:b0:586:178f:aaa4 with SMTP id
+ 4fb4d7f45d1cf-58ce5169885mr2529725a12.9.1720046818289; 
+ Wed, 03 Jul 2024 15:46:58 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3679976da15sm702065f8f.94.2024.07.03.15.48.38
+ 4fb4d7f45d1cf-58612c8368esm7573106a12.19.2024.07.03.15.46.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:48:40 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:48:36 -0400
+ Wed, 03 Jul 2024 15:46:57 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:46:53 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL v3 55/85] tests/qtest/vhost-user-test: add a test case for
- memory-backend-shm
-Message-ID: <0173ce4b2bb4f159f4a6d54e14adbe35f826a848.1720046570.git.mst@redhat.com>
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL v3 34/85] pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic
+ shutdown signal
+Message-ID: <8db1f7be788b23f8eca189fe4546298ed387e9cb.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -108,85 +104,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-`memory-backend-shm` can be used with vhost-user devices, so let's
-add a new test case for it.
+Emit a QMP event on receiving a PVPANIC_SHUTDOWN event. Even though a typical
+SHUTDOWN event will be sent, it will be indistinguishable from a shutdown
+originating from other cases (e.g. KVM exit due to KVM_SYSTEM_EVENT_SHUTDOWN)
+that also issue the guest-shutdown cause.
+A management layer application can detect the new GUEST_PVSHUTDOWN event to
+determine if the guest is using the pvpanic interface to request shutdowns.
 
-Acked-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20240618100534.145917-1-sgarzare@redhat.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Message-Id: <20240527-pvpanic-shutdown-v8-6-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/vhost-user-test.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ qapi/run-state.json | 14 ++++++++++++++
+ system/runstate.c   |  1 +
+ 2 files changed, 15 insertions(+)
 
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index 255bde54ab..0fa8951c9f 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -44,6 +44,8 @@
-                         "mem-path=%s,share=on -numa node,memdev=mem"
- #define QEMU_CMD_MEMFD  " -m %d -object memory-backend-memfd,id=mem,size=%dM," \
-                         " -numa node,memdev=mem"
-+#define QEMU_CMD_SHM    " -m %d -object memory-backend-shm,id=mem,size=%dM," \
-+                        " -numa node,memdev=mem"
- #define QEMU_CMD_CHR    " -chardev socket,id=%s,path=%s%s"
- #define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s,vhostforce=on"
+diff --git a/qapi/run-state.json b/qapi/run-state.json
+index f8773f23b2..5ac0fec852 100644
+--- a/qapi/run-state.json
++++ b/qapi/run-state.json
+@@ -462,6 +462,20 @@
+ { 'event': 'GUEST_CRASHLOADED',
+   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
  
-@@ -195,6 +197,7 @@ enum test_memfd {
-     TEST_MEMFD_AUTO,
-     TEST_MEMFD_YES,
-     TEST_MEMFD_NO,
-+    TEST_MEMFD_SHM,
- };
++##
++# @GUEST_PVSHUTDOWN:
++#
++# Emitted when guest submits a shutdown request via pvpanic interface
++#
++# Since: 9.1
++#
++# Example:
++#
++#     <- { "event": "GUEST_PVSHUTDOWN",
++#          "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
++##
++{ 'event': 'GUEST_PVSHUTDOWN' }
++
+ ##
+ # @GuestPanicAction:
+ #
+diff --git a/system/runstate.c b/system/runstate.c
+index fc49fd3e61..c833316f6d 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -586,6 +586,7 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
  
- static void append_vhost_net_opts(TestServer *s, GString *cmd_line,
-@@ -228,6 +231,8 @@ static void append_mem_opts(TestServer *server, GString *cmd_line,
- 
-     if (memfd == TEST_MEMFD_YES) {
-         g_string_append_printf(cmd_line, QEMU_CMD_MEMFD, size, size);
-+    } else if (memfd == TEST_MEMFD_SHM) {
-+        g_string_append_printf(cmd_line, QEMU_CMD_SHM, size, size);
-     } else {
-         const char *root = init_hugepagefs() ? : server->tmpfs;
- 
-@@ -791,6 +796,19 @@ static void *vhost_user_test_setup_memfd(GString *cmd_line, void *arg)
-     return server;
+ void qemu_system_guest_pvshutdown(void)
+ {
++    qapi_event_send_guest_pvshutdown();
+     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
  }
  
-+static void *vhost_user_test_setup_shm(GString *cmd_line, void *arg)
-+{
-+    TestServer *server = test_server_new("vhost-user-test", arg);
-+    test_server_listen(server);
-+
-+    append_mem_opts(server, cmd_line, 256, TEST_MEMFD_SHM);
-+    server->vu_ops->append_opts(server, cmd_line, "");
-+
-+    g_test_queue_destroy(vhost_user_test_cleanup, server);
-+
-+    return server;
-+}
-+
- static void test_read_guest_mem(void *obj, void *arg, QGuestAllocator *alloc)
- {
-     TestServer *server = arg;
-@@ -1084,6 +1102,11 @@ static void register_vhost_user_test(void)
-                  "virtio-net",
-                  test_read_guest_mem, &opts);
- 
-+    opts.before = vhost_user_test_setup_shm;
-+    qos_add_test("vhost-user/read-guest-mem/shm",
-+                 "virtio-net",
-+                 test_read_guest_mem, &opts);
-+
-     if (qemu_memfd_check(MFD_ALLOW_SEALING)) {
-         opts.before = vhost_user_test_setup_memfd;
-         qos_add_test("vhost-user/read-guest-mem/memfd",
 -- 
 MST
 
