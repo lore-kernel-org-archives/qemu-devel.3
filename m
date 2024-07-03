@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9079DC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 12:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED8FC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 12:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOyla-0002YF-53; Wed, 03 Jul 2024 08:07:18 -0400
+	id 1sOynq-0003dE-Gc; Wed, 03 Jul 2024 08:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sOylU-0002Xl-A9
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 08:07:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sOylS-0004ht-BK
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 08:07:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720008428;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zVNMzmuXBMUs9dqMhokM9NjUSV+1TJa07XXZk6gqM1w=;
- b=dxHNXZOjLXoDn+qVzhMqwLI1hgkAqhM3ZS8mXan9A7pEoDR99GyRdXbSppivOtDm0W+y6B
- 4n7NejI9NWYRWcsmn7JnOHyAahZEdlJGg9VxdWoUU20d+2EKsX/g0Xh3zr4sjPDd6E2r/i
- MNE0EOLZ31boT6UpPZD6UjsYAZJawPk=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-674-KpnsXxnrMumHVa7XjidFaw-1; Wed, 03 Jul 2024 08:06:37 -0400
-X-MC-Unique: KpnsXxnrMumHVa7XjidFaw-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2c933e2426cso3465336a91.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 05:06:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOynb-0003ZM-Sh
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 08:09:31 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOynS-0004wv-Pz
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 08:09:23 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4255fa23f7bso37231145e9.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 05:09:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720008553; x=1720613353; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=V06lt4S1I/ODZ7NEo+FlXlQXX4attX79HE+3wkPLZhY=;
+ b=G25DSGF2x6DNwHxCuce/9pSgVpm9WtmmCBlU7qRYt6lSReMBOO8RjSkiBMQDCfu3Hr
+ 7BJy0zjtgzymtzWsUKb7Y4S32FUd36yizhiAPtqGybXvdB8kIT1MBcPghiR5STzRguN3
+ +6Qpi4KskyRXMSfKWh6oEB5xGmXOT8DB/Bwjca+JJvEBFaX49IcQXQnScIHugmyGmkEw
+ FY9Epy7aUd6AkrR5x6Wv/knDQarjrmi7khTYjnEvPOEZd74gCGypi488wEgX82z6fRmG
+ wlVsZFhSF/BN2WODLviaEwyY72LZQm0qyKEf0j/Ge3pXurCb5jbCqTml8sEhmZgWgGTi
+ 0VxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720008396; x=1720613196;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zVNMzmuXBMUs9dqMhokM9NjUSV+1TJa07XXZk6gqM1w=;
- b=s0RAJhupEjnbib3FufpwPSf3mw1XC1ff7cI87NwyBvK7e0PGFOLQgkSw+ZbGhZPaok
- jqgih28fFKp+nN0O0RyMO3CyLG4oc1L84GHD47tr4H0g+haCnWvWX1161/H/5lVqhw4p
- fKQLJqQQJ9dJp7mZSwFJsclHj5BiRSyLUrfwvxvbVGhYJXvG6taHBdtYggYSh5Dk2EcU
- 6N5g3GNybEJxlV9gw3HB9PmtldapiOiaabJ1k/XUlhOXxodQTtir4ceBLFNQkJDUEyjP
- G0SFRO+UieAmWXvOHP5AO+6cU5qCy6AXEln3FP6I0U6rV+/4KsEqnO2kiulnitGekSUl
- 2Afg==
-X-Gm-Message-State: AOJu0YxyCtZUOwWAI95dIS1SbBD60IkT667+8ezBcFhgW6EOFQtUffYL
- sweEY4LTTTmRbiFA7qFobtIl6Ziynw9WTO0yb9CQ5Kmi70YjXnG23lFypvLV4qIMHeVB6mW1KEC
- h608QVNhOsE5SZCEBY7BiAtnn7i1WeaDg0N/DJCFtInKh4GWE+61hGUHOdRw3LI8ax8BOqnR6Na
- GycqjQX6F3p2MUiWGeb8pvJey7gpI=
-X-Received: by 2002:a17:90a:e17:b0:2c9:3340:621d with SMTP id
- 98e67ed59e1d1-2c93d771efemr7048634a91.37.1720008396055; 
- Wed, 03 Jul 2024 05:06:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVrrGmKg6PIJt3666kwH3SUCmxv7yJZrbBulruyvXEQYKtPvIjJ7dPudPJwzNtlgSfc02lhspoEahTrn5wTlQ=
-X-Received: by 2002:a17:90a:e17:b0:2c9:3340:621d with SMTP id
- 98e67ed59e1d1-2c93d771efemr7048612a91.37.1720008395436; Wed, 03 Jul 2024
- 05:06:35 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720008553; x=1720613353;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=V06lt4S1I/ODZ7NEo+FlXlQXX4attX79HE+3wkPLZhY=;
+ b=bnPt3zoztG00eXq2amkjIdOojODl+91BrzgNqwy/VRX01fcPSZh5F4pv5kVMqyN3j6
+ r0IPAM2ZzDYEOsVVd/HlBpmNNEhKip/jsN+C07eyqmUbx4DBKVinA/vjBDRem+uA/SJk
+ lgMfiXEyKkAmLdTIy88WmGOeHoWRL8kAUfLVHlgNMbBu2CIdNehP0JfdphFJ5BmBdkQw
+ Vmy8nVdwtc9WGiZrCZclJDjBoX2xzCJsdih34tv8JkjSRlEllmIRqifhS13JafXxU4eT
+ 4EWt2Nx5ajBMKsOQMM3oc5ysULKFv1mGn8Zy0o+JwPJOBWGG8ci7J0VhkwHPv6pjzS0l
+ p3pA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV6F0TaNljQbQ0yaD1wCRU4Iav6ywpWS6M8AMZ0Z8zCfWB00qSRUt82HF/qY+H8SYFWL20r4EWIy7ZxiwX6YxHvfQKelH4=
+X-Gm-Message-State: AOJu0YxM+D1gRaNyAhHcTCC1r6KqMcXqH6NDRwvFzZzGdst+kbrwes66
+ 0Q6yTanas85SJQ9vD4LBlrbIfFfdMt5KluPNpOF1Xx5aJrRLDLs1UajO2WZ3j2o=
+X-Google-Smtp-Source: AGHT+IGgx4oSd/auaq0SZ6HiTHY13X8Q2s8/5mDn/uOtwX//k5AqrWpI5BnzG6mSj0iUBvgffNUdzw==
+X-Received: by 2002:a05:600c:44c6:b0:424:a588:ff08 with SMTP id
+ 5b1f17b1804b1-4257a011192mr73955335e9.23.1720008553014; 
+ Wed, 03 Jul 2024 05:09:13 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.220.97])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256b09890dsm237344155e9.36.2024.07.03.05.09.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Jul 2024 05:09:12 -0700 (PDT)
+Message-ID: <a0aa44c2-f671-44c7-ba9c-d3e007de4fff@linaro.org>
+Date: Wed, 3 Jul 2024 14:09:10 +0200
 MIME-Version: 1.0
-References: <20240702195903.204007-1-jsnow@redhat.com>
- <20240702195903.204007-2-jsnow@redhat.com>
- <e0302039-dade-43a7-8bdb-a96d1df76f38@redhat.com>
-In-Reply-To: <e0302039-dade-43a7-8bdb-a96d1df76f38@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 3 Jul 2024 08:06:23 -0400
-Message-ID: <CAFn=p-Yqi5umFBPtUYj2EFiRRA2E6VTgDi=TbuwoOSTs+s9OoA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] Python: bump minimum sphinx version to 3.4.3
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="0000000000006bd447061c56a90b"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 22/22] qga: centralize logic for disabling/enabling
+ commands
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+Cc: =?UTF-8?Q?Marc-Andr_=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240613150127.1361931-1-berrange@redhat.com>
+ <20240613154406.1365469-1-berrange@redhat.com>
+ <20240613154406.1365469-17-berrange@redhat.com>
+ <g1m2c.r93vk15jos2y@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <g1m2c.r93vk15jos2y@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,123 +103,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006bd447061c56a90b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 3/7/24 12:01, Manos Pitsidianakis wrote:
+> Hello Daniel,
+> 
+> This cleanup seems like a good idea,
+> 
+> On Thu, 13 Jun 2024 18:44, "Daniel P. Berrangé" <berrange@redhat.com> 
+> wrote:
+>> It is confusing having many different pieces of code enabling and
+>> disabling commands, and it is not clear that they all have the same
+>> semantics, especially wrt prioritization of the block/allow lists.
+>> The code attempted to prevent the user from setting both the block
+>> and allow lists concurrently, however, the logic was flawed as it
+>> checked settings in the configuration file  separately from the
+>> command line arguments. Thus it was possible to set a block list
+>> in the config file and an allow list via a command line argument.
+>> The --dump-conf option also creates a configuration file with both
+>> keys present, even if unset, which means it is creating a config
+>> that cannot actually be loaded again.
+>>
+>> Centralizing the code in a single method "ga_apply_command_filters"
+>> will provide a strong guarantee of consistency and clarify the
+>> intended behaviour. With this there is no compelling technical
+>> reason to prevent concurrent setting of both the allow and block
+>> lists, so this flawed restriction is removed.
+>>
+>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>> ---
+>> docs/interop/qemu-ga.rst |  14 +++++
+>> qga/commands-posix.c     |   6 --
+>> qga/commands-win32.c     |   6 --
+>> qga/main.c               | 128 +++++++++++++++++----------------------
+>> 4 files changed, 70 insertions(+), 84 deletions(-)
 
-On Wed, Jul 3, 2024, 4:00=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> wr=
-ote:
 
-> On 7/2/24 21:59, John Snow wrote:
-> > With RHEL 8 support retired (It's been two years today since RHEL 9
-> > came out), our very oldest build platform version of Sphinx is now
-> > 3.4.3; and keeping backwards compatibility for versions as old as v1.6
-> > when using domain extensions is a lot of work we don't need to do.
->
-> Technically that's unrelated: thanks to your venv work, :) builds on
-> RHEL 8 / CentOS Stream 8 do not pick the platform Sphinx, because it
-> runs under Python 3.6.  Therefore the version included in RHEL 8 does
-> not matter for picking the minimum supported Sphinx version.
->
+>> +static void ga_apply_command_filters(GAState *state)
+> 
+> Nit: inline?
 
-...!
+No, consensus is today's compilers are smart enough to
+notice inlining, developers shouldn't worry about this
+anymore.
 
-I think I can't mandate 4.x because of RHEL 9 builds though, and offline
-requirements.
-
-
-> > Debian 11: v3.4.3 (QEMU support ends 2024-07-xx)
->
-> Nice. :)
->
-> > diff --git a/pythondeps.toml b/pythondeps.toml
-> > index 9c16602d303..bc656376caa 100644
-> > --- a/pythondeps.toml
-> > +++ b/pythondeps.toml
-> > @@ -23,7 +23,7 @@ meson =3D { accepted =3D ">=3D0.63.0", installed =3D =
-"1.2.3",
-> canary =3D "meson" }
-> >
-> >   [docs]
-> >   # Please keep the installed versions in sync with docs/requirements.t=
-xt
-> > -sphinx =3D { accepted =3D ">=3D1.6", installed =3D "5.3.0", canary =3D
-> "sphinx-build" }
-> > +sphinx =3D { accepted =3D ">=3D3.4.3", installed =3D "5.3.0", canary =
-=3D
-> "sphinx-build" }
-> >   sphinx_rtd_theme =3D { accepted =3D ">=3D0.5", installed =3D "1.1.1" =
-}
-> >
-> >   [avocado]
->
-> Acked-by: Paolo Bonzini <pbonzini@redhat.com>
->
-> Paolo
->
->
-
---0000000000006bd447061c56a90b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Wed, Jul 3, 2024, 4:00=E2=80=AFAM Paolo Bonzini &lt=
-;<a href=3D"mailto:pbonzini@redhat.com">pbonzini@redhat.com</a>&gt; wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;borde=
-r-left:1px #ccc solid;padding-left:1ex">On 7/2/24 21:59, John Snow wrote:<b=
-r>
-&gt; With RHEL 8 support retired (It&#39;s been two years today since RHEL =
-9<br>
-&gt; came out), our very oldest build platform version of Sphinx is now<br>
-&gt; 3.4.3; and keeping backwards compatibility for versions as old as v1.6=
-<br>
-&gt; when using domain extensions is a lot of work we don&#39;t need to do.=
-<br>
-<br>
-Technically that&#39;s unrelated: thanks to your venv work, :) builds on <b=
-r>
-RHEL 8 / CentOS Stream 8 do not pick the platform Sphinx, because it <br>
-runs under Python 3.6.=C2=A0 Therefore the version included in RHEL 8 does =
-<br>
-not matter for picking the minimum supported Sphinx version.<br></blockquot=
-e></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">...!</div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">I think I can&#39;t mandate 4.x be=
-cause of RHEL 9 builds though, and offline requirements.</div><div dir=3D"a=
-uto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pa=
-dding-left:1ex">
-<br>
-&gt; Debian 11: v3.4.3 (QEMU support ends 2024-07-xx)<br>
-<br>
-Nice. :)<br>
-<br>
-&gt; diff --git a/pythondeps.toml b/pythondeps.toml<br>
-&gt; index 9c16602d303..bc656376caa 100644<br>
-&gt; --- a/pythondeps.toml<br>
-&gt; +++ b/pythondeps.toml<br>
-&gt; @@ -23,7 +23,7 @@ meson =3D { accepted =3D &quot;&gt;=3D0.63.0&quot;, =
-installed =3D &quot;1.2.3&quot;, canary =3D &quot;meson&quot; }<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0[docs]<br>
-&gt;=C2=A0 =C2=A0# Please keep the installed versions in sync with docs/req=
-uirements.txt<br>
-&gt; -sphinx =3D { accepted =3D &quot;&gt;=3D1.6&quot;, installed =3D &quot=
-;5.3.0&quot;, canary =3D &quot;sphinx-build&quot; }<br>
-&gt; +sphinx =3D { accepted =3D &quot;&gt;=3D3.4.3&quot;, installed =3D &qu=
-ot;5.3.0&quot;, canary =3D &quot;sphinx-build&quot; }<br>
-&gt;=C2=A0 =C2=A0sphinx_rtd_theme =3D { accepted =3D &quot;&gt;=3D0.5&quot;=
-, installed =3D &quot;1.1.1&quot; }<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0[avocado]<br>
-<br>
-Acked-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=
-=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
-<br>
-Paolo<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000006bd447061c56a90b--
+>> +{
+>> +    qmp_for_each_command(&ga_commands, ga_apply_command_filters_iter, 
+>> state);
+>> +}
 
 
