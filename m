@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBAADC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881E2C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:51:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8n2-0005lG-I2; Wed, 03 Jul 2024 18:49:28 -0400
+	id 1sP8o8-0005ZN-Qs; Wed, 03 Jul 2024 18:50:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8n0-0005d8-QH
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:26 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8o4-0004xt-CO
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:50:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8my-0006ZZ-2N
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:49:26 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8o2-0007Xo-6z
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:50:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046962;
+ s=mimecast20190719; t=1720047029;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=J8ROLmjYrb+QdAQNPXPEEZlctlgKEo5Cy/u0jGb6NPk=;
- b=bPGyG8+eYw5xJyT1H+N5E47r+lxcI/VbL4OfTvFUywAkOkx+eePA48sFQspyDfkUOswZfb
- bAjYDmfRzqkQXzHvFstK6IoOHzlH53IRMMtw4HDZ/8v8kcUWY+J00AXWdOUrq5I6Noqyyt
- C/fsBL16O9ByNI3SzRQwL3ul/YnZJLM=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=30vtT+Bk+aBG/k9psr6e7+phVupnPVIwCqnHm1QF2rI=;
+ b=ZbZ85pPvR/ilXUQCB8ktSoFgVBFN2omtIjiNPIPEVo/2zDfaoqJhaoeHFLFUbFX9U0yc6E
+ HRT/fZAK3UGcwkCPoWDPspHYBi6lukRBhbdPoV2kY6Bj2nvEIYASUrKG98ksdlfm24Epg9
+ Q58CkZUDkxKpKAxDHYYc1kD/t/loT3g=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-c6LC3rtONZq5c0YUFigneQ-1; Wed, 03 Jul 2024 18:49:21 -0400
-X-MC-Unique: c6LC3rtONZq5c0YUFigneQ-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2ec61a87db0so59745681fa.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:49:21 -0700 (PDT)
+ us-mta-222-nvh8kc6UMGWX5CBkDLpmDQ-1; Wed, 03 Jul 2024 18:50:28 -0400
+X-MC-Unique: nvh8kc6UMGWX5CBkDLpmDQ-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-36740a84ad8so51066f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:50:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046959; x=1720651759;
+ d=1e100.net; s=20230601; t=1720047027; x=1720651827;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J8ROLmjYrb+QdAQNPXPEEZlctlgKEo5Cy/u0jGb6NPk=;
- b=OABlgufPWENc6KgVMX0wGBb1bl3YgZDr5VkZhVVGswn/nxyzoJe27fKq3grjWPy6hZ
- zNntpZQLAL6DSw10HjHFchGFC4otYu7j7PYUZWKcccVDk7RQHnwsQZpAQOoRY+iEFq/4
- nOp/7JKhvkDwi81YAoMUWnWcA9l6z6MMQkgBpi2OYEWbP5H6GXB6PqXo8I5G0/Wef3vu
- Xf6Hu24Dn0g8SeTgfCxS1QxRWYqwUrCOd+xOErnK9PgFTWsqMFOz0BUkRysDFUz0HCMy
- u7ZZTWKOHZDf2AWiYRLA1L642le/v9IaDiqmW/e6LXvnBiaAhMqIOvlCnuXIQus4kejq
- HkyA==
-X-Gm-Message-State: AOJu0Yw9ib4rKsFRoErEG7DzniWk21S5vEJdwHk3MhLjYVB/6GMzxGxU
- 5ofvr9z5CeMSnZXEi7Zk+nrFZ2cmQjbZqv3VoOo9ZxQ2KzLC1Ow4prBOeHejG9ZZ1dq8uGFYP9r
- e6uZ8K8snGPrBxbFeP1N9TidZ8BihL9dpSbxRVxaLMQgT6wEgLrOJ1eSRQmWHQh6UWL5CiGgoQX
- MdPuRU7aQSkMaukyTV2Vt8k4w0OC3/3A==
-X-Received: by 2002:a2e:7d0a:0:b0:2ee:8c8d:d9dd with SMTP id
- 38308e7fff4ca-2ee8c8ddbbfmr2785741fa.36.1720046959289; 
- Wed, 03 Jul 2024 15:49:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGr8xUrsmSAGleVs8PLCQSnGg6KMYREeErjndTr2piNjY/inasSibXo5bij3rGQ/FV/yYzI2g==
-X-Received: by 2002:a2e:7d0a:0:b0:2ee:8c8d:d9dd with SMTP id
- 38308e7fff4ca-2ee8c8ddbbfmr2785591fa.36.1720046958506; 
- Wed, 03 Jul 2024 15:49:18 -0700 (PDT)
+ bh=30vtT+Bk+aBG/k9psr6e7+phVupnPVIwCqnHm1QF2rI=;
+ b=v7ttbxXcrMNmRLIerifMUKHcxUU0ZZDaCyj54TyZ+m9hxpI5Rtk62B5v5FyR2gyiLy
+ PmU7uWootBRKOC0TZsAlp1DzhZWbMBOaFaVtvv0Vd28ASEwU+w1/BK8N9Hb5cKtTtb40
+ JxqBs15P8uW/ldqyGxMN0haVES6vgH+M4FQRLSC8ZSIV3mBbVmJm5iu3JEE2S2lVQTsy
+ MmU0b8vIo1ummCj+/mGNopU2EmbFaAwW7nPgW/ylTG6VVrM78zgpPxlxYTq6MNDd1Pys
+ cpiZMo2MTT4SmT9nEOFu/b1GxY4zT++dVuy4A1TxomjqmOAmJr0FJCfyER7ynkXn43ag
+ mZIQ==
+X-Gm-Message-State: AOJu0YyacO5uRK7slA56kxa+zSfsw+36VCr/wR33KgaeT7UwQPGB4rs/
+ tgpQK2F+3kfps6Z/FpCSYXiDGxdRN2QyG1V9iNu+Ku9M4vypqi3MjtEnQQVIgxB9m3HvNRoWEI3
+ 8rVX7I/6JPKext9Hh7TkvT7fFk2JnbCIpU0+Dg8RoIknx/8uYZgPa21Y/JyBqvYOlAEpATdP/x2
+ Uyc5lwhjkli2bKW9D07gjYv38PDKd83A==
+X-Received: by 2002:a5d:55c5:0:b0:367:2d2f:e634 with SMTP id
+ ffacd0b85a97d-3679dd66971mr5124f8f.55.1720047026919; 
+ Wed, 03 Jul 2024 15:50:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFf44Meb/FUzXp1aYvGqhquZJdCtebhyMNFNhxMMcEXtPSxBDnGrO8ppKWaEhcqXWND6Wk0LQ==
+X-Received: by 2002:a5d:55c5:0:b0:367:2d2f:e634 with SMTP id
+ ffacd0b85a97d-3679dd66971mr5101f8f.55.1720047026011; 
+ Wed, 03 Jul 2024 15:50:26 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a1d0b24sm1242535e9.3.2024.07.03.15.49.16
+ ffacd0b85a97d-3679c12440asm292045f8f.73.2024.07.03.15.50.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:49:17 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:49:14 -0400
+ Wed, 03 Jul 2024 15:50:25 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:50:21 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sunil V L <sunilvl@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Subject: [PULL v3 64/85] tests/qtest/bios-tables-test.c: Add support for arch
- in path
-Message-ID: <c9ad3decca13cd0f01ef16dba7a3d44abb096964.1720046570.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Subject: [PULL v3 80/85] pcie_sriov: Ensure VF function number does not
+ overflow
+Message-ID: <77718701157f6ca77ea7a57b536fa0a22f676082.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -104,72 +107,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sunil V L <sunilvl@ventanamicro.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Since machine name can be common for multiple architectures (ex: virt),
-add "arch" in the path to search for expected AML files. Since the AML
-files are still under old path, add support for searching with and
-without arch in the path.
+pci_new() aborts when creating a VF with a function number equals to or
+is greater than PCI_DEVFN_MAX.
 
-Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Message-Id: <20240625150839.1358279-7-sunilvl@ventanamicro.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-reuse-v10-5-7ca0b8ed3d9f@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test.c | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ docs/pcie_sriov.txt         |  8 +++++---
+ include/hw/pci/pcie_sriov.h |  5 +++--
+ hw/net/igb.c                | 13 ++++++++++---
+ hw/nvme/ctrl.c              | 24 ++++++++++++++++--------
+ hw/pci/pcie_sriov.c         | 19 +++++++++++++++++--
+ 5 files changed, 51 insertions(+), 18 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index c4a4d1c7bf..29c52952f4 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -78,6 +78,7 @@
- typedef struct {
-     bool tcg_only;
-     const char *machine;
-+    const char *arch;
-     const char *machine_param;
-     const char *variant;
-     const char *uefi_fl1;
-@@ -262,8 +263,19 @@ static void dump_aml_files(test_data *data, bool rebuild)
-         g_assert(exp_sdt->aml);
+diff --git a/docs/pcie_sriov.txt b/docs/pcie_sriov.txt
+index a47aad0bfa..ab2142807f 100644
+--- a/docs/pcie_sriov.txt
++++ b/docs/pcie_sriov.txt
+@@ -52,9 +52,11 @@ setting up a BAR for a VF.
+       ...
  
-         if (rebuild) {
--            aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
-+            aml_file = g_strdup_printf("%s/%s/%s/%.4s%s", data_dir,
-+                                       data->arch, data->machine,
-                                        sdt->aml, ext);
-+
-+            /*
-+             * To keep test cases not failing before the DATA files are moved to
-+             * ${arch}/${machine} folder, add this check as well.
-+             */
-+            if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
-+                aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir,
-+                                           data->machine, sdt->aml, ext);
-+            }
-+
-             if (!g_file_test(aml_file, G_FILE_TEST_EXISTS) &&
-                 sdt->aml_len == exp_sdt->aml_len &&
-                 !memcmp(sdt->aml, exp_sdt->aml, sdt->aml_len)) {
-@@ -398,8 +410,13 @@ static GArray *load_expected_aml(test_data *data)
-         memset(&exp_sdt, 0, sizeof(exp_sdt));
+       /* Add and initialize the SR/IOV capability */
+-      pcie_sriov_pf_init(d, 0x200, "your_virtual_dev",
+-                       vf_devid, initial_vfs, total_vfs,
+-                       fun_offset, stride);
++      if (!pcie_sriov_pf_init(d, 0x200, "your_virtual_dev",
++                              vf_devid, initial_vfs, total_vfs,
++                              fun_offset, stride, errp)) {
++         return;
++      }
  
- try_again:
--        aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
--                                   sdt->aml, ext);
-+        aml_file = g_strdup_printf("%s/%s/%s/%.4s%s", data_dir, data->arch,
-+                                   data->machine, sdt->aml, ext);
-+        if (!g_file_test(aml_file, G_FILE_TEST_EXISTS)) {
-+            aml_file = g_strdup_printf("%s/%s/%.4s%s", data_dir, data->machine,
-+                                       sdt->aml, ext);
+       /* Set up individual VF BARs (parameters as for normal BARs) */
+       pcie_sriov_pf_init_vf_bar( ... )
+diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+index 450cbef6c2..aa704e8f9d 100644
+--- a/include/hw/pci/pcie_sriov.h
++++ b/include/hw/pci/pcie_sriov.h
+@@ -27,10 +27,11 @@ typedef struct PCIESriovVF {
+     uint16_t vf_number; /* Logical VF number of this function */
+ } PCIESriovVF;
+ 
+-void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
++bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+                         const char *vfname, uint16_t vf_dev_id,
+                         uint16_t init_vfs, uint16_t total_vfs,
+-                        uint16_t vf_offset, uint16_t vf_stride);
++                        uint16_t vf_offset, uint16_t vf_stride,
++                        Error **errp);
+ void pcie_sriov_pf_exit(PCIDevice *dev);
+ 
+ /* Set up a VF bar in the SR/IOV bar area */
+diff --git a/hw/net/igb.c b/hw/net/igb.c
+index b92bba402e..b6ca2f1b8a 100644
+--- a/hw/net/igb.c
++++ b/hw/net/igb.c
+@@ -446,9 +446,16 @@ static void igb_pci_realize(PCIDevice *pci_dev, Error **errp)
+ 
+     pcie_ari_init(pci_dev, 0x150);
+ 
+-    pcie_sriov_pf_init(pci_dev, IGB_CAP_SRIOV_OFFSET, TYPE_IGBVF,
+-        IGB_82576_VF_DEV_ID, IGB_MAX_VF_FUNCTIONS, IGB_MAX_VF_FUNCTIONS,
+-        IGB_VF_OFFSET, IGB_VF_STRIDE);
++    if (!pcie_sriov_pf_init(pci_dev, IGB_CAP_SRIOV_OFFSET,
++                            TYPE_IGBVF, IGB_82576_VF_DEV_ID,
++                            IGB_MAX_VF_FUNCTIONS, IGB_MAX_VF_FUNCTIONS,
++                            IGB_VF_OFFSET, IGB_VF_STRIDE,
++                            errp)) {
++        pcie_cap_exit(pci_dev);
++        igb_cleanup_msix(s);
++        msi_uninit(pci_dev);
++        return;
++    }
+ 
+     pcie_sriov_pf_init_vf_bar(pci_dev, IGBVF_MMIO_BAR_IDX,
+         PCI_BASE_ADDRESS_MEM_TYPE_64 | PCI_BASE_ADDRESS_MEM_PREFETCH,
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 127c3d2383..066389e391 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8048,7 +8048,8 @@ out:
+     return pow2ceil(bar_size);
+ }
+ 
+-static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
++static bool nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset,
++                            Error **errp)
+ {
+     uint16_t vf_dev_id = n->params.use_intel_id ?
+                          PCI_DEVICE_ID_INTEL_NVME : PCI_DEVICE_ID_REDHAT_NVME;
+@@ -8057,12 +8058,17 @@ static void nvme_init_sriov(NvmeCtrl *n, PCIDevice *pci_dev, uint16_t offset)
+                                       le16_to_cpu(cap->vifrsm),
+                                       NULL, NULL);
+ 
+-    pcie_sriov_pf_init(pci_dev, offset, "nvme", vf_dev_id,
+-                       n->params.sriov_max_vfs, n->params.sriov_max_vfs,
+-                       NVME_VF_OFFSET, NVME_VF_STRIDE);
++    if (!pcie_sriov_pf_init(pci_dev, offset, "nvme", vf_dev_id,
++                            n->params.sriov_max_vfs, n->params.sriov_max_vfs,
++                            NVME_VF_OFFSET, NVME_VF_STRIDE,
++                            errp)) {
++        return false;
++    }
+ 
+     pcie_sriov_pf_init_vf_bar(pci_dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
+                               PCI_BASE_ADDRESS_MEM_TYPE_64, bar_size);
++
++    return true;
+ }
+ 
+ static int nvme_add_pm_capability(PCIDevice *pci_dev, uint8_t offset)
+@@ -8155,6 +8161,12 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+         return false;
+     }
+ 
++    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs &&
++        !nvme_init_sriov(n, pci_dev, 0x120, errp)) {
++        msix_uninit(pci_dev, &n->bar0, &n->bar0);
++        return false;
++    }
++
+     nvme_update_msixcap_ts(pci_dev, n->conf_msix_qsize);
+ 
+     if (n->params.cmb_size_mb) {
+@@ -8165,10 +8177,6 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+         nvme_init_pmr(n, pci_dev);
+     }
+ 
+-    if (!pci_is_vf(pci_dev) && n->params.sriov_max_vfs) {
+-        nvme_init_sriov(n, pci_dev, 0x120);
+-    }
+-
+     return true;
+ }
+ 
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 499becd527..f0bde0d3fc 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -24,14 +24,27 @@ static PCIDevice *register_vf(PCIDevice *pf, int devfn,
+                               const char *name, uint16_t vf_num);
+ static void unregister_vfs(PCIDevice *dev);
+ 
+-void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
++bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+                         const char *vfname, uint16_t vf_dev_id,
+                         uint16_t init_vfs, uint16_t total_vfs,
+-                        uint16_t vf_offset, uint16_t vf_stride)
++                        uint16_t vf_offset, uint16_t vf_stride,
++                        Error **errp)
+ {
+     uint8_t *cfg = dev->config + offset;
+     uint8_t *wmask;
+ 
++    if (total_vfs) {
++        uint16_t ari_cap = pcie_find_capability(dev, PCI_EXT_CAP_ID_ARI);
++        uint16_t first_vf_devfn = dev->devfn + vf_offset;
++        uint16_t last_vf_devfn = first_vf_devfn + vf_stride * (total_vfs - 1);
++
++        if ((!ari_cap && PCI_SLOT(dev->devfn) != PCI_SLOT(last_vf_devfn)) ||
++            last_vf_devfn >= PCI_DEVFN_MAX) {
++            error_setg(errp, "VF function number overflows");
++            return false;
 +        }
++    }
 +
-         if (verbosity_level >= 2) {
-             fprintf(stderr, "Looking for expected file '%s'\n", aml_file);
-         }
+     pcie_add_capability(dev, PCI_EXT_CAP_ID_SRIOV, 1,
+                         offset, PCI_EXT_CAP_SRIOV_SIZEOF);
+     dev->exp.sriov_cap = offset;
+@@ -69,6 +82,8 @@ void pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+     pci_set_word(wmask + PCI_SRIOV_SYS_PGSIZE, 0x553);
+ 
+     qdev_prop_set_bit(&dev->qdev, "multifunction", true);
++
++    return true;
+ }
+ 
+ void pcie_sriov_pf_exit(PCIDevice *dev)
 -- 
 MST
 
