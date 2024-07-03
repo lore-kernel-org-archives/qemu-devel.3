@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF88AC30658
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 02:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED929C3065C
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 02:04:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOpKz-00022C-Bs; Tue, 02 Jul 2024 22:03:14 -0400
+	id 1sOpML-00037Q-9I; Tue, 02 Jul 2024 22:04:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOpKp-0001tT-Ea; Tue, 02 Jul 2024 22:03:05 -0400
-Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
+ id 1sOpMA-0002z0-N6; Tue, 02 Jul 2024 22:04:26 -0400
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOpKm-0008IJ-Hg; Tue, 02 Jul 2024 22:03:03 -0400
-Received: by mail-qt1-x836.google.com with SMTP id
- d75a77b69052e-446427c5923so1229711cf.0; 
- Tue, 02 Jul 2024 19:02:59 -0700 (PDT)
+ id 1sOpM8-0008PC-SA; Tue, 02 Jul 2024 22:04:26 -0400
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-80f4f1e7cc3so1421737241.3; 
+ Tue, 02 Jul 2024 19:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719972179; x=1720576979; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719972263; x=1720577063; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j/XKWTOk08Pp5k3MB54gWRXT1YmSd8z1Ae+inYg9n4o=;
- b=GmEL1v1D6E1B2S8+o2iPSXffuNtKTpYUnDN1ArK/DWE1deExCuKGB/K9tk+JJ6VB9T
- +MN1sr7mUWckhYuYsgzsYpTL/KDx+t+TyHlPolfEkjapJbz7ixGg0GtktMtnjUdjshs0
- 8ZRhe/+JDgUEoNyrTdtPPv9XbQJAS9azb69FKXeFA6R2XE/KSmLybpoZaXSdY7eEqpLy
- ZFXJ2s2KwsjrAvfxCNOo+WVwt3J2S6S5KW8uZv1zzK9AtLktT0n5qXnGd/P+52gWWMn9
- 8S5AobSGzHrTupI+FEKflqpu5XNK+wsk1qi8gIuCokgUiqdLdaGczLdFIifGx8evTO7O
- O/Jw==
+ bh=yA0nsuBxDHKXqddDwafxCaALqmi+U9hUNrKaAD2hkzA=;
+ b=SOdrkAwmSHVIIeLV+fvbFVZGzIFaNSropKgSTOYEg5qa8hx4i4QDyqhtJujQFf6LZs
+ 3AdUNfcnl6mp3GTXSPH3TKr/SbWGtSUx8bUwWqJmY3OJcazU8AGS3pNqAo2eYK3Kayo7
+ DbK0j/+XG27YA09KLvgt1jMxnvV/I6uIe346frh23iBKEk/Pb7nDIr+XSD+rn+m3dwMz
+ r0Ld9UZkdjKT/edSM+Z3xJ8Co+jYzB0XbS4dx/JAmKRZqEC2kAqXCmbiJU/Ajiwi41Kt
+ eoRhLdn2jOmimunyPsVlNDCshoiN6Wb4BiXsqoF7YB5hsausCLzJ0MmsWvBBCOFriJQ+
+ dJLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719972179; x=1720576979;
+ d=1e100.net; s=20230601; t=1719972263; x=1720577063;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j/XKWTOk08Pp5k3MB54gWRXT1YmSd8z1Ae+inYg9n4o=;
- b=PXrLMtMB2zKcMHHeKtYAIlY04lj1+Lk+YE3ocofui/3hQvtHkDMj8/oHzWUajcADse
- s69a6stNo4c7XLEDcVCM4Pd/sWXwV3CuzVJiZwuo4fDrVFzobf1OZNkJDoNN6EyZQp8N
- H+2MdPRnNGFNly2BhZQIZR5e+XJ/LP88rCnhWvM+kzjhOyhXBs2IT0s/LpIKf7dzB1mt
- HCPp7qRHHN3A3ndKQQ/nTTVBxkWI8yPSHUPYVLrwDcBbG3YinYXxu6mQ1P7ey7a2CzMD
- 0PZxovU0nQkpRrvHNRFbBeWh+SII/tGq2tpsQo3siqyvwHkzj+4xRCkdmB1VF13WvSnF
- SdxA==
+ bh=yA0nsuBxDHKXqddDwafxCaALqmi+U9hUNrKaAD2hkzA=;
+ b=OAyY0Jr1MmD42vt/s79l1XF2fbIK1eqHsJzrX0oZG2ggemmx8maIfmkBtrJ12mfk1L
+ jYVmCgTFwaKXrXg2o9uzgyRO3OiGuGymh2t/0xQFKd8h54dZr/Vv9G1CKcvl7yjx2bVR
+ NWl9Ry/whZbSf6r2gnIEyi5B0oV4foMjcANXlDVIunn/PQ3lYDPhEo3o8aI2NmV0h/Yi
+ msCynnmF245j0auFIJ9TWQqy6JLATf5U1QpghCXst147/H0WwCQ47wFU3OhtkGgodbwa
+ Sei6MkT+48pk65Bp1eT4TT3OyQxgkle0jTqblBNVOowXR9M65gzAgzaukzCGt8c6LvsI
+ q78A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVxe0u6RLki+IPRANJ0Xjf9HTWiNvz7UVGFtT77l9jaXB1ICAzqMTe1G7R3zCV0OJxUEN2FO0EGkfC1Ih4/QIezC0COzRo=
-X-Gm-Message-State: AOJu0YwMYCLTaRQ6or8NeYWRYrNwmSDjYoBFuyAb3MbO7bP0dQ5tnjct
- tmo3YmKV3UkOyOF/V9yyTh3qUYsmbsQI4suXD3kZdO2AaWws1axUU7oSz7bKX/xjCILzC9vz6G5
- GDcsHbFjMiYm6j+FwglyJGvc9u2xbNYK5
-X-Google-Smtp-Source: AGHT+IF6GUgV/kXvt4ZI0gQpeZY4MoGySH07IambXFNVbR7OPb8qnqdeaGbjYkZPZ0uiXiNKn5y80wIpHbY231mBoas=
-X-Received: by 2002:a05:6102:a4e:b0:48f:42a7:2c60 with SMTP id
- ada2fe7eead31-48fdf007718mr202679137.7.1719972158812; Tue, 02 Jul 2024
- 19:02:38 -0700 (PDT)
+ AJvYcCXVlCyNyQcc86NXFaC6jgsaRQH4/JVDcXo0ABxl74gMKijV9io9XN4vAgRReIXP1+YPPik9ENhvEnVrbsHHP8b9Q4L+6j0=
+X-Gm-Message-State: AOJu0Yxhhuks7hS5KHt193b68bLZLjL4ymwElsXichpDFxSYI9T0nQlI
+ +FkwyJdOkG3vw90cYPUoQaZKmBrKT49kPL8YcmP6801TWCB6WuvrVEKEK6bkhXVOsJzpFrcoQar
+ m0lZiK74Y1ZnUY1fzSMVlotHlJVw=
+X-Google-Smtp-Source: AGHT+IE+XAhoDAOjTYSPa1vT5VruCbyhigTzND7mxgKHlN8w/9rP37D+OliToE/EM/LQDPU4MAFlyIyD82FYwVD+OHM=
+X-Received: by 2002:a67:fe49:0:b0:48f:6009:a924 with SMTP id
+ ada2fe7eead31-48faf0c64e4mr11716290137.17.1719972263047; Tue, 02 Jul 2024
+ 19:04:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240626-smcntrpmf_v7-v7-0-bb0f10af7fa9@rivosinc.com>
- <20240626-smcntrpmf_v7-v7-3-bb0f10af7fa9@rivosinc.com>
-In-Reply-To: <20240626-smcntrpmf_v7-v7-3-bb0f10af7fa9@rivosinc.com>
+ <20240626-smcntrpmf_v7-v7-7-bb0f10af7fa9@rivosinc.com>
+In-Reply-To: <20240626-smcntrpmf_v7-v7-7-bb0f10af7fa9@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 3 Jul 2024 12:02:11 +1000
-Message-ID: <CAKmqyKOjmnvmCe9PvhLeowTT-nHz+pdnF4itEfEjh_C8xmiOOg@mail.gmail.com>
-Subject: Re: [PATCH v7 03/11] target/riscv: Add cycle & instret privilege mode
- filtering properties
+Date: Wed, 3 Jul 2024 12:03:57 +1000
+Message-ID: <CAKmqyKOS4BzOFjqt6-Czkd4VZbrvHj-XBQ3UNEaQFWtw864nbw@mail.gmail.com>
+Subject: Re: [PATCH v7 07/11] target/riscv: Save counter values during
+ countinhibit update
 To: Atish Patra <atishp@rivosinc.com>
 Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, 
  Rajnesh Kanwal <rkanwal@rivosinc.com>, palmer@dabbelt.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
- Kaiwen Xue <kaiwenx@rivosinc.com>
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
- envelope-from=alistair23@gmail.com; helo=mail-qt1-x836.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,60 +95,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 27, 2024 at 9:59=E2=80=AFAM Atish Patra <atishp@rivosinc.com> w=
+On Thu, Jun 27, 2024 at 9:58=E2=80=AFAM Atish Patra <atishp@rivosinc.com> w=
 rote:
 >
-> From: Kaiwen Xue <kaiwenx@rivosinc.com>
+> Currently, if a counter monitoring cycle/instret is stopped via
+> mcountinhibit we just update the state while the value is saved
+> during the next read. This is not accurate as the read may happen
+> many cycles after the counter is stopped. Ideally, the read should
+> return the value saved when the counter is stopped.
 >
-> This adds the properties for ISA extension smcntrpmf. Patches
-> implementing it will follow.
+> Thus, save the value of the counter during the inhibit update
+> operation and return that value during the read if corresponding bit
+> in mcountihibit is set.
 >
 > Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
-> ---
->  target/riscv/cpu.c     | 2 ++
->  target/riscv/cpu_cfg.h | 1 +
->  2 files changed, 3 insertions(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 4760cb2cc17f..ef50130a91e7 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -178,6 +178,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
->      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
->      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
-> +    ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
->      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
->      ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
->      ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
-> @@ -1467,6 +1468,7 @@ const char *riscv_get_misa_ext_description(uint32_t=
- bit)
->  const RISCVCPUMultiExtConfig riscv_cpu_extensions[] =3D {
->      /* Defaults for standard extensions */
->      MULTI_EXT_CFG_BOOL("sscofpmf", ext_sscofpmf, false),
-> +    MULTI_EXT_CFG_BOOL("smcntrpmf", ext_smcntrpmf, false),
 
-Exposing the config should be at the end of the series. Implement then expo=
-se
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
->      MULTI_EXT_CFG_BOOL("zifencei", ext_zifencei, true),
->      MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
->      MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index fb7eebde523b..b1376beb1dab 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -74,6 +74,7 @@ struct RISCVCPUConfig {
->      bool ext_ztso;
->      bool ext_smstateen;
->      bool ext_sstc;
-> +    bool ext_smcntrpmf;
->      bool ext_svadu;
->      bool ext_svinval;
->      bool ext_svnapot;
+> ---
+>  target/riscv/cpu.h     |  1 -
+>  target/riscv/csr.c     | 34 ++++++++++++++++++++++------------
+>  target/riscv/machine.c |  5 ++---
+>  3 files changed, 24 insertions(+), 16 deletions(-)
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index d56d640b06be..91fe2a46ba35 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -153,7 +153,6 @@ typedef struct PMUCTRState {
+>      target_ulong mhpmcounter_prev;
+>      /* Snapshort value of a counter in RV32 */
+>      target_ulong mhpmcounterh_prev;
+> -    bool started;
+>      /* Value beyond UINT32_MAX/UINT64_MAX before overflow interrupt trig=
+ger */
+>      target_ulong irq_overflow_left;
+>  } PMUCTRState;
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index c292d036bcb2..e4adfa324efe 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -1062,17 +1062,11 @@ static RISCVException riscv_pmu_read_ctr(CPURISCV=
+State *env, target_ulong *val,
+>
+>      if (get_field(env->mcountinhibit, BIT(ctr_idx))) {
+>          /*
+> -         * Counter should not increment if inhibit bit is set. We can't =
+really
+> -         * stop the icount counting. Just return the counter value writt=
+en by
+> -         * the supervisor to indicate that counter was not incremented.
+> +         * Counter should not increment if inhibit bit is set. Just retu=
+rn the
+> +         * current counter value.
+>           */
+> -        if (!counter->started) {
+> -            *val =3D ctr_val;
+> -            return RISCV_EXCP_NONE;
+> -        } else {
+> -            /* Mark that the counter has been stopped */
+> -            counter->started =3D false;
+> -        }
+> +         *val =3D ctr_val;
+> +         return RISCV_EXCP_NONE;
+>      }
+>
+>      /*
+> @@ -2114,9 +2108,25 @@ static RISCVException write_mcountinhibit(CPURISCV=
+State *env, int csrno,
+>
+>      /* Check if any other counter is also monitoring cycles/instructions=
+ */
+>      for (cidx =3D 0; cidx < RV_MAX_MHPMCOUNTERS; cidx++) {
+> -        if (!get_field(env->mcountinhibit, BIT(cidx))) {
+>              counter =3D &env->pmu_ctrs[cidx];
+> -            counter->started =3D true;
+> +        if (get_field(env->mcountinhibit, BIT(cidx)) && (val & BIT(cidx)=
+)) {
+> +            /*
+> +             * Update the counter value for cycle/instret as we can't st=
+op the
+> +             * host ticks. But we should show the current value at this =
+moment.
+> +             */
+> +            if (riscv_pmu_ctr_monitor_cycles(env, cidx) ||
+> +                riscv_pmu_ctr_monitor_instructions(env, cidx)) {
+> +                counter->mhpmcounter_val =3D
+> +                    riscv_pmu_ctr_get_fixed_counters_val(env, cidx, fals=
+e) -
+> +                                           counter->mhpmcounter_prev +
+> +                                           counter->mhpmcounter_val;
+> +                if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> +                    counter->mhpmcounterh_val =3D
+> +                        riscv_pmu_ctr_get_fixed_counters_val(env, cidx, =
+true) -
+> +                                                counter->mhpmcounterh_pr=
+ev +
+> +                                                counter->mhpmcounterh_va=
+l;
+> +                }
+> +            }
+>          }
+>      }
+>
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index 76f2150f78b5..492c2c6d9d79 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -320,15 +320,14 @@ static bool pmu_needed(void *opaque)
+>
+>  static const VMStateDescription vmstate_pmu_ctr_state =3D {
+>      .name =3D "cpu/pmu",
+> -    .version_id =3D 1,
+> -    .minimum_version_id =3D 1,
+> +    .version_id =3D 2,
+> +    .minimum_version_id =3D 2,
+>      .needed =3D pmu_needed,
+>      .fields =3D (const VMStateField[]) {
+>          VMSTATE_UINTTL(mhpmcounter_val, PMUCTRState),
+>          VMSTATE_UINTTL(mhpmcounterh_val, PMUCTRState),
+>          VMSTATE_UINTTL(mhpmcounter_prev, PMUCTRState),
+>          VMSTATE_UINTTL(mhpmcounterh_prev, PMUCTRState),
+> -        VMSTATE_BOOL(started, PMUCTRState),
+>          VMSTATE_END_OF_LIST()
+>      }
+>  };
 >
 > --
 > 2.34.1
