@@ -4,30 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C796C30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:17:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9012CC30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvAh-0003HY-1H; Wed, 03 Jul 2024 04:16:59 -0400
+	id 1sOvAp-0003Lc-Tg; Wed, 03 Jul 2024 04:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sOvAU-0003CJ-11; Wed, 03 Jul 2024 04:16:55 -0400
+ id 1sOvAm-0003Js-MV; Wed, 03 Jul 2024 04:17:05 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sOvAP-00011G-AU; Wed, 03 Jul 2024 04:16:45 -0400
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
+ id 1sOvAk-00014r-VI; Wed, 03 Jul 2024 04:17:04 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Wed, 3 Jul
- 2024 16:16:25 +0800
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
- (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 3 Jul
- 2024 16:16:24 +0800
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 3 Jul
+ 2024 16:16:26 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 3 Jul 2024 16:16:24 +0800
+ Transport; Wed, 3 Jul 2024 16:16:26 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -41,17 +38,16 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 0/5] support AST2700 network
-Date: Wed, 3 Jul 2024 16:16:18 +0800
-Message-ID: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 5/5] test/avocado/machine_aspeed.py: update to test network
+ for AST2700
+Date: Wed, 3 Jul 2024 16:16:23 +0800
+Message-ID: <20240703081623.2740862-6-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
+References: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
- does not designate 192.168.10.10 as permitted sender)
- receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
- helo=localhost.localdomain;
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -76,33 +72,75 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-change from v1:
-- ftgmac100
- - fix coding style
- - support 64 bits dma dram address for AST2700
+Update a test case to test network connection via ssh and
+changes to test Aspeed OpenBMC SDK v09.02 for AST2700.
 
-change from v2:
-- ftgmac100: update memory region size to 0x200.
-- ftgmac100: introduce a new class(ftgmac100_high),
-    class attribute and memop handlers, for FTGMAC100_*_HIGH regs read/write.
-- aspeed_ast27x0: update network model to ftgmac100_high to support
-  64 bits dram address DMA.
-- m25p80: support quad mode for w25q01jvq
+ASPEED fixed TX mask issue from linux/drivers/ftgmac100.c.
+It is required to use ASPEED SDK image since v09.02
+for AST2700 QEMU network testing.
 
-Jamin Lin (5):
-  hw/net:ftgmac100: update memory region size to 0x200
-  hw/net:ftgmac100: support 64 bits dma dram address for AST2700
-  aspeed/soc: update to ftgmac100_high model for AST2700
-  hw/block: m25p80: support quad mode for w25q01jvq
-  test/avocado/machine_aspeed.py: update to test network for AST2700
+A test image is downloaded from the ASPEED Forked OpenBMC GitHub
+release repository :
+https://github.com/AspeedTech-BMC/openbmc/releases/
 
- hw/arm/aspeed_ast27x0.c         |   3 +-
- hw/block/m25p80.c               |  16 ++++
- hw/net/ftgmac100.c              | 158 +++++++++++++++++++++++++++-----
- include/hw/net/ftgmac100.h      |  24 +++--
- tests/avocado/machine_aspeed.py |  13 +--
- 5 files changed, 178 insertions(+), 36 deletions(-)
+Test command:
+```
+cd build
+pyvenv/bin/avocado run ../qemu/tests/avocado/machine_aspeed.py:AST2x00MachineSDK.test_aarch64_ast2700_evb_sdk_v09_02
+```
 
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ tests/avocado/machine_aspeed.py | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/tests/avocado/machine_aspeed.py b/tests/avocado/machine_aspeed.py
+index 3a20644fb2..855da805ae 100644
+--- a/tests/avocado/machine_aspeed.py
++++ b/tests/avocado/machine_aspeed.py
+@@ -313,14 +313,14 @@ def do_test_arm_aspeed_sdk_start(self, image):
+ 
+     def do_test_aarch64_aspeed_sdk_start(self, image):
+         self.vm.set_console()
+-        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw')
++        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
++                         '-net', 'nic', '-net', 'user,hostfwd=:127.0.0.1:0-:22')
+ 
+         self.vm.launch()
+ 
+         self.wait_for_console_pattern('U-Boot 2023.10')
+         self.wait_for_console_pattern('## Loading kernel from FIT Image')
+         self.wait_for_console_pattern('Starting kernel ...')
+-        self.wait_for_console_pattern("systemd[1]: Hostname set to")
+ 
+     @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+ 
+@@ -387,15 +387,15 @@ def test_arm_ast2600_evb_sdk(self):
+         year = time.strftime("%Y")
+         self.ssh_command_output_contains('/sbin/hwclock -f /dev/rtc1', year);
+ 
+-    def test_aarch64_ast2700_evb_sdk_v09_01(self):
++    def test_aarch64_ast2700_evb_sdk_v09_02(self):
+         """
+         :avocado: tags=arch:aarch64
+         :avocado: tags=machine:ast2700-evb
+         """
+ 
+         image_url = ('https://github.com/AspeedTech-BMC/openbmc/releases/'
+-                     'download/v09.01/ast2700-default-obmc.tar.gz')
+-        image_hash = 'b1cc0fd73c7650d34c9c8459a243f52a91e9e27144b8608b2645ab19461d1e07'
++                     'download/v09.02/ast2700-default-obmc.tar.gz')
++        image_hash = 'ac969c2602f4e6bdb69562ff466b89ae3fe1d86e1f6797bb7969d787f82116a7'
+         image_path = self.fetch_asset(image_url, asset_hash=image_hash,
+                                       algorithm='sha256')
+         archive.extract(image_path, self.workdir)
+@@ -436,4 +436,5 @@ def test_aarch64_ast2700_evb_sdk_v09_01(self):
+ 
+         self.vm.add_args('-smp', str(num_cpu))
+         self.do_test_aarch64_aspeed_sdk_start(image_dir + 'image-bmc')
+-
++        self.wait_for_console_pattern('nodistro.0 ast2700-default ttyS12')
++        self.ssh_connect('root', '0penBmc', False)
 -- 
 2.34.1
 
