@@ -4,85 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38065C31D97
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 10:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B4BC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 11:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOxSN-0008Le-2i; Wed, 03 Jul 2024 06:43:23 -0400
+	id 1sOxj5-0007lI-2Y; Wed, 03 Jul 2024 07:00:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOxSL-0008LO-NC
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:43:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sOxj2-0007kO-AH; Wed, 03 Jul 2024 07:00:36 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sOxSJ-0002eB-2T
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:43:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720003397;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=oseQ60e5wmgH0ZYm/I14i7Pkbsm8+uJkxNMnBtHXQnA=;
- b=WZQssXeWEPrSOjQ7FEH1qTAM8N6TVTsqyJfxhGhTsBlzGrQNRT3jzomQTj06Y8R4ljS/WC
- AGy7IYALEvZlVLQBtUpmSPwWXl+bhMN7YHU3B3PfZ9lm31ggGsEpd9kWJrXVA01tjpV4he
- iup5d5f/2vdV7FDbphPjgUrI3uefptw=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-6mpm0oXiNgiYRnwqSGLlPQ-1; Wed, 03 Jul 2024 06:43:15 -0400
-X-MC-Unique: 6mpm0oXiNgiYRnwqSGLlPQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42565672e0aso2870645e9.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 03:43:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720003394; x=1720608194;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oseQ60e5wmgH0ZYm/I14i7Pkbsm8+uJkxNMnBtHXQnA=;
- b=EvSaQidRMkIGJ4N/mmxbnfCCI4rnrVleinJR28kPhpkXpO3PQNnPHJXIpaTguKTUML
- YZJ0YKDW8I3gjBzsv5CxfU5wsY1eA/Z7NFsx8rkqjAIDPNCWvYN44AUggvUKqZdG+C9M
- YMTQazAJdK8T7R8FA88zJ71G9JeIyEEmvV2DUKhzwxmMatTLtaCfRZK29Tpa5rFgMS2c
- TDnNVFKXNx32twX1cih9/ECkDtUgLPXjtZZ1AL4XJOV3KTBLRR84+82irNXuDRwv9JGh
- nSCwGttMLpoH61mWf6KPd4O0Dex/s3wWzhN2NNp4AOang37XEol6VAx/ciqinHDVfH0S
- V5Nw==
-X-Gm-Message-State: AOJu0YwcSebXg96B+YdXloNPBXnODQkwtOlEjpxUbY/r4kx1XRzNd8Nf
- 0Q28eZjocX0DEEtg/LlI0b2PrK7PLVna6P1gVV+X/YqakrJoC2CoZbrV7KcLBQreQ/UIG9yKnVF
- clv8S0NagiXN3zBNDjas+ZQIF69MflRPBZHwz67vHjvV0HDc80TfBjrL8qXbsDe6jWZMlz8PQpv
- exFMZWpAARW9qDhvjSXGntGmfx+A0U4egh1Y6U
-X-Received: by 2002:a05:600c:5106:b0:424:86aa:b7e7 with SMTP id
- 5b1f17b1804b1-42640914d1fmr13175695e9.9.1720003393993; 
- Wed, 03 Jul 2024 03:43:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGS5TKI55xriN+xEbVHEfhsraTS0wOn5l8z9QEAQe62aQruh/CyRQsAx1rG/N12ZFH/ir+Xyg==
-X-Received: by 2002:a05:600c:5106:b0:424:86aa:b7e7 with SMTP id
- 5b1f17b1804b1-42640914d1fmr13175495e9.9.1720003393622; 
- Wed, 03 Jul 2024 03:43:13 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256af38a0asm237721405e9.1.2024.07.03.03.43.12
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 03:43:12 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PATCH] target/i386: SEV: fix formatting of CPUID mismatch message
-Date: Wed,  3 Jul 2024 12:43:12 +0200
-Message-ID: <20240703104312.1642361-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sOxiu-00088X-QO; Wed, 03 Jul 2024 07:00:35 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B79A94E600F;
+ Wed, 03 Jul 2024 13:00:23 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id vMBQNv0XF3VH; Wed,  3 Jul 2024 13:00:21 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 6D0954E6001; Wed, 03 Jul 2024 13:00:21 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 6A416746E3B;
+ Wed, 03 Jul 2024 13:00:21 +0200 (CEST)
+Date: Wed, 3 Jul 2024 13:00:21 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+cc: Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH v10 11/12] hw/pci: Convert rom_bar into OnOffAuto
+In-Reply-To: <20240703015747-mutt-send-email-mst@kernel.org>
+Message-ID: <f056b470-a95c-1696-4276-a60eb92fced0@eik.bme.hu>
+References: <20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com>
+ <20240627-reuse-v10-11-7ca0b8ed3d9f@daynix.com>
+ <20240702095426-mutt-send-email-mst@kernel.org>
+ <57c3c9c1-99c5-1f35-59d4-f913c3dee36b@eik.bme.hu>
+ <20240703015747-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,37 +77,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: 70943ad8e4d ("i386/sev: Add support for SNP CPUID validation", 2024-06-05)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/sev.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+On Wed, 3 Jul 2024, Michael S. Tsirkin wrote:
+> On Wed, Jul 03, 2024 at 04:15:23AM +0200, BALATON Zoltan wrote:
+>> On Tue, 2 Jul 2024, Michael S. Tsirkin wrote:
+>>> On Thu, Jun 27, 2024 at 03:08:00PM +0900, Akihiko Odaki wrote:
+>>>> rom_bar is tristate but was defined as uint32_t so convert it into
+>>>> OnOffAuto.
+>>>>
+>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>
+>>> Commit log should explain why this is an improvement,
+>>> not just what's done.
+>>>
+>>>
+>>>> diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
+>>>> index e17bb50789ad..35c6c8e28493 100644
+>>>> --- a/docs/igd-assign.txt
+>>>> +++ b/docs/igd-assign.txt
+>>>> @@ -35,7 +35,7 @@ IGD has two different modes for assignment using vfio-pci:
+>>>>        ISA/LPC bridge device (vfio-pci-igd-lpc-bridge) on the root bus at
+>>>>        PCI address 1f.0.
+>>>>      * The IGD device must have a VGA ROM, either provided via the romfile
+>>>> -      option or loaded automatically through vfio (standard).  rombar=0
+>>>> +      option or loaded automatically through vfio (standard).  rombar=off
+>>>>        will disable legacy mode support.
+>>>>      * Hotplug of the IGD device is not supported.
+>>>>      * The IGD device must be a SandyBridge or newer model device.
+>>>
+>>> ...
+>>>
+>>>> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+>>>> index 39dae72497e0..0e920ed0691a 100644
+>>>> --- a/hw/vfio/pci-quirks.c
+>>>> +++ b/hw/vfio/pci-quirks.c
+>>>> @@ -33,7 +33,7 @@
+>>>>   * execution as noticed with the BCM 57810 card for lack of a
+>>>>   * more better way to handle such issues.
+>>>>   * The  user can still override by specifying a romfile or
+>>>> - * rombar=1.
+>>>> + * rombar=on.
+>>>>   * Please see https://bugs.launchpad.net/qemu/+bug/1284874
+>>>>   * for an analysis of the 57810 card hang. When adding
+>>>>   * a new vendor id/device id combination below, please also add
+>>>
+>>>
+>>> So we are apparently breaking a bunch of users who followed
+>>> documentation to the dot. Why is this a good idea?
+>>
+>> On/off is clearer than 1/0. But isn't 1/0 a synonym for on/off so previous
+>> command lines would still work?
+>>
+>> Regards,
+>> BALATON Zoltan
+>
+> I see nothing in code that would make it so:
+>
+>
+> const QEnumLookup OnOffAuto_lookup = {
+>    .array = (const char *const[]) {
+>        [ON_OFF_AUTO_AUTO] = "auto",
+>        [ON_OFF_AUTO_ON] = "on",
+>        [ON_OFF_AUTO_OFF] = "off",
+>    },
+>    .size = ON_OFF_AUTO__MAX
+> };
+>
+> I also tried with an existing property:
+>
+> $ ./qemu-system-x86_64 -device intel-hda,msi=0
+> qemu-system-x86_64: -device intel-hda,msi=0: Parameter 'msi' does not accept value '0'
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 3ab8b3c28b7..2a0f94d390d 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -841,7 +841,7 @@ sev_snp_cpuid_report_mismatches(SnpCpuidInfo *old,
-     size_t i;
- 
-     if (old->count != new->count) {
--        error_report("SEV-SNP: CPUID validation failed due to count mismatch,"
-+        error_report("SEV-SNP: CPUID validation failed due to count mismatch, "
-                      "provided: %d, expected: %d", old->count, new->count);
-         return;
-     }
-@@ -853,8 +853,8 @@ sev_snp_cpuid_report_mismatches(SnpCpuidInfo *old,
-         new_func = &new->entries[i];
- 
-         if (memcmp(old_func, new_func, sizeof(SnpCpuidFunc))) {
--            error_report("SEV-SNP: CPUID validation failed for function 0x%x, index: 0x%x"
--                         "provided: eax:0x%08x, ebx: 0x%08x, ecx: 0x%08x, edx: 0x%08x"
-+            error_report("SEV-SNP: CPUID validation failed for function 0x%x, index: 0x%x, "
-+                         "provided: eax:0x%08x, ebx: 0x%08x, ecx: 0x%08x, edx: 0x%08x, "
-                          "expected: eax:0x%08x, ebx: 0x%08x, ecx: 0x%08x, edx: 0x%08x",
-                          old_func->eax_in, old_func->ecx_in,
-                          old_func->eax, old_func->ebx, old_func->ecx, old_func->edx,
--- 
-2.45.2
+Then it was probably bit properties that also accept 0/1, on/off, 
+true/false. Maybe similar aliases could be added to on/off/auto?
 
+In any case when I first saw rombar I thought it would set the BAR of the 
+ROM so wondered why it's 1 and not 5 or 6 or an offset. So on/off is 
+clearer in this case.
+
+Regards,
+BALATON Zoltan
 
