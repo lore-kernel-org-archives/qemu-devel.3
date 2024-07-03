@@ -4,88 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9FCC30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 18:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A44C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 18:44:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP4tX-00018R-UA; Wed, 03 Jul 2024 14:39:55 -0400
+	id 1sP4xe-0006DE-CB; Wed, 03 Jul 2024 14:44:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sP4tW-00010A-5M
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 14:39:54 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sP4tU-0004pI-JV
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 14:39:53 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1fb1c69e936so5885105ad.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 11:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720031991; x=1720636791; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7VYbAReiqzHTKFj8yQuKvBVBE+1tfSrrDkD9uZs+csM=;
- b=g3ARCZgtMQylD4Plwev1lC2vGcyWMiqS6Q6KRkLRofyd8GCbYpA4Q0A3tjl1kd/Bd+
- k8gFPostq/Gc2CyQKJYf3pZntK0yh3XH0wX/imqN5KPO7eLvZuy/JwtFJ+upv4L+v9P/
- kXwdqWpK9M/i1s2J4Md6hDGbaQy9iZJEigBJfTT5xEn+9oPBrp/wUPS6+jLPm2ZLozGj
- kZcP4QdcrGKu2sKix2JjE+TtYUfltaCXfsvMjZlw8jzrQgstnWvdoUPXltPW8kPI3vnF
- gfTWpKfaVLOVNj/v7W3B2aTwkO6a0Ai22326BUyORXFcWA4gBNojJIzjduckYzArzHVC
- b8kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720031991; x=1720636791;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7VYbAReiqzHTKFj8yQuKvBVBE+1tfSrrDkD9uZs+csM=;
- b=PnKTGaMWDQAcqwuIG2r8EXCj2vrs4Qpo8dlBVvxgO7d2KhmNyhfNf6nGVAfAx42Ybd
- 3Zc8pQyAGd1PWREh91Jb+J5pMH3eGVerR4dagtKoSOamkZcGuF61WJOFWmh9uAkgDohg
- 5Oo3SuRue2az0Tw6D+uU27h/+U6btswRHY/x92vYSjU7cmUIsQTghVC1NZXcz8VHNJUW
- Zs+jUUpsgndQyP2f97GBW44x21GEpijEHMhdG8GrF7w1dwOIy84UjhZ2nQ+NCNZwYTHA
- chlS77qSGnaXcjn2I2P8jg4ypH9oiKMVgaDOQuu5ge8/E9BP50qxkEIf+81Kmm/dFaJh
- 6+3g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU13skS4lHP6pxKQpBNpsjYDj7iDK9aCw67XcZF/4X6MCrtfcT1/pVeHbZMZpVKnQutCaq3F8e4cHFgMMZ+QflCMA1hiso=
-X-Gm-Message-State: AOJu0YzNWYMzbsoGCvFywtWZq9KmnJZQriLZQf4Kbr/Y6ghdNrLs0sao
- GAE+/QFVT74UgwY/oRgIFc/vRYMdQXhnyjOVpJB0S9Rm6BrhLZfFtOZYZR+PkMU=
-X-Google-Smtp-Source: AGHT+IG/dPL4XVjFqCuM7T/L0bxeoJ82S2vqf0yUnxBVmEwVNAu808poel6bR9O3S8kG/aRbAnuqDw==
-X-Received: by 2002:a17:902:d2ce:b0:1f9:d2ba:46f5 with SMTP id
- d9443c01a7336-1fadbce6563mr83534215ad.54.1720031990860; 
- Wed, 03 Jul 2024 11:39:50 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac15966a6sm106651755ad.257.2024.07.03.11.39.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 11:39:50 -0700 (PDT)
-Message-ID: <19f7a972-049f-4796-9154-0fa410e05b48@linaro.org>
-Date: Wed, 3 Jul 2024 11:39:48 -0700
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sP4xd-0006C2-0h; Wed, 03 Jul 2024 14:44:09 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sP4xb-0005WE-1m; Wed, 03 Jul 2024 14:44:08 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DB00E4E6005;
+ Wed, 03 Jul 2024 20:44:04 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id rtrS10UCRs0x; Wed,  3 Jul 2024 20:44:02 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id EA6FA4E6004; Wed, 03 Jul 2024 20:44:02 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E8E8A746E3B;
+ Wed, 03 Jul 2024 20:44:02 +0200 (CEST)
+Date: Wed, 3 Jul 2024 20:44:02 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Zheyu Ma <zheyuma97@gmail.com>
+cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] hw/display/sm501: Validate local memory size index
+ in sm501_system_config_write
+In-Reply-To: <20240703155633.17352-1-zheyuma97@gmail.com>
+Message-ID: <551b2a8a-4dcf-9fd2-4f5c-22929aa56488@eik.bme.hu>
+References: <20240703155633.17352-1-zheyuma97@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/7] plugins: fix mem callback array size
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
- <erdnaxe@crans.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Xingtao Yao <yaoxt.fnst@fujitsu.com>
-References: <20240702184448.551705-1-pierrick.bouvier@linaro.org>
- <20240702184448.551705-2-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240702184448.551705-2-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,23 +63,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/24 11:44, Pierrick Bouvier wrote:
-> data was correctly copied, but size of array was not set
-> (g_array_sized_new only reserves memory, but does not set size).
-> 
-> As a result, callbacks were not called for code path relying on
-> plugin_register_vcpu_mem_cb().
-> 
-> Found when trying to trigger mem access callbacks for atomic
-> instructions.
-> 
-> Reviewed-by: Xingtao Yao<yaoxt.fnst@fujitsu.com>
-> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
+On Wed, 3 Jul 2024, Zheyu Ma wrote:
+> Ensure that the local_mem_size_index is within valid bounds and does not
+> exceed the allocated memory size before updating it in sm501_system_config_write
+> to prevent out-of-bounds read.
+>
+> ASAN log:
+> ==3067247==ERROR: AddressSanitizer: global-buffer-overflow on address 0x55c6586e4d3c at pc 0x55c655d4e0ac bp 0x7ffc9d5c6a10 sp 0x7ffc9d5c6a08
+> READ of size 4 at 0x55c6586e4d3c thread T0
+>    #0 0x55c655d4e0ab in sm501_2d_operation qemu/hw/display/sm501.c:729:21
+>    #1 0x55c655d4b8a1 in sm501_2d_engine_write qemu/hw/display/sm501.c:1551:13
+>
+> Reproducer:
+> cat << EOF | qemu-system-x86_64  \
+> -display none -machine accel=qtest, -m 512M -machine q35 -nodefaults \
+> -device sm501 -qtest stdio
+> outl 0xcf8 0x80000814
+> outl 0xcfc 0xe4000000
+> outl 0xcf8 0x80000804
+> outw 0xcfc 0x02
+> writel 0xe4000010 0xe000
+> writel 0xe4100010 0x10000
+> writel 0xe4100008 0x10001
+> writel 0xe410000c 0x80000000
+> EOF
+>
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
 > ---
->   accel/tcg/plugin-gen.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+> Changes in v2:
+> - Also check the memory_region_size bound
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> ---
+> hw/display/sm501.c | 14 ++++++++++++--
+> 1 file changed, 12 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/display/sm501.c b/hw/display/sm501.c
+> index 26dc8170d8..a878c35dd9 100644
+> --- a/hw/display/sm501.c
+> +++ b/hw/display/sm501.c
+> @@ -1020,11 +1020,21 @@ static void sm501_system_config_write(void *opaque, hwaddr addr,
+>         s->gpio_63_32_control = value & 0xFF80FFFF;
+>         break;
+>     case SM501_DRAM_CONTROL:
+> -        s->local_mem_size_index = (value >> 13) & 0x7;
+> -        /* TODO : check validity of size change */
+> +    {
+> +        int local_mem_size_index = (value >> 13) & 0x7;
+> +        if (local_mem_size_index < ARRAY_SIZE(sm501_mem_local_size) &&
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Sorry for keep asking for more changes but now the error is not very 
+specific. Maybe it's better to invert these checks as:
+if index >= ARRAY_SIZE
+   log error invalid index
+else if selected size > local_mem_region size
+   log_error memory size cannot be more than vram_size
+else
+   set size index
+endif
 
-r~
+But then it can be that the value in dram_control and 
+s->local_mem_size_index no longer match so you may need to also change 
+sm501_system_config_read() case SM501_DRAM_CONTROL: to remove the mask 
+from there and just return the dram_control value the guest has set and 
+not combine it with mem size from index (keep the mask in write though to 
+mask out non r/w bits). I don't know what the real chip does in this case 
+when one overwrires this value with larger than the installed RAM so don't 
+know what would the correct behaviour be in this case.
+
+Regards,
+BALATON Zoltan
+
+> +            sm501_mem_local_size[local_mem_size_index] <=
+> +                    memory_region_size(&s->local_mem_region)) {
+> +            s->local_mem_size_index = local_mem_size_index;
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "sm501: Invalid local_mem_size_index value: %d or memory size too large\n",
+> +                          local_mem_size_index);
+> +        }
+>         s->dram_control &= 0x80000000;
+>         s->dram_control |= value & 0x7FFFFFC3;
+>         break;
+> +    }
+>     case SM501_ARBTRTN_CONTROL:
+>         s->arbitration_control = value & 0x37777777;
+>         break;
+>
 
