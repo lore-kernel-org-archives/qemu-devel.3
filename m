@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63AA0C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDAC8C38150
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8jD-0002h1-86; Wed, 03 Jul 2024 18:45:31 -0400
+	id 1sP8mQ-0001TH-RW; Wed, 03 Jul 2024 18:48:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8j7-0002Tq-Su
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:26 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8mO-0001Ag-E4
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:48:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8j4-0001BE-BW
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8mL-0005EH-PV
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:48:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046719;
+ s=mimecast20190719; t=1720046924;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Hq1ZdMUpXgQO0jHpQkHjtkURKxmq/FjBLx45BW2ity0=;
- b=HLmfV3g+rCYDj+IWEqh/9Gn1oP+VKHi4LoGYkNbwOIW47r16qZWJZXuxFsQ6XWtyQWugc9
- aqc6ALAgiV6EL/SI3YH5d5bWdaFEhzuoMlwQbgfSol9SI7XI5/uvytd6FGZ5DaBe4UE/DF
- MDo8LVjrXh6geHxoU46AZ23IP1g16d4=
-Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com
- [209.85.167.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QybIKg16iYqXdH14Jxyn469nV1P/mwHXBmUUNkfpRqo=;
+ b=ffqJMdghg5tVf+DxQZ8CmvPp3kWft4jBc6lB/v+ZcyS/XOgQD9bVrfdC/giRfngGS4u75H
+ 9ll03g29LfgLRVDDwA0AVzafxVnsWAKie+wlcOrIkEm6dnMMGJqdBz58peZVsNZ8rk2qvD
+ rGRVsT7WMhwHEFvhW8dfX1u5G2gSzHo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-219-96zP0JrcPkurDFmtphKVSw-1; Wed, 03 Jul 2024 18:45:16 -0400
-X-MC-Unique: 96zP0JrcPkurDFmtphKVSw-1
-Received: by mail-lf1-f70.google.com with SMTP id
- 2adb3069b0e04-52e9345073aso2058484e87.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:45:16 -0700 (PDT)
+ us-mta-453-BEohjOQBMiyqKxmYSJ0pPg-1; Wed, 03 Jul 2024 18:48:43 -0400
+X-MC-Unique: BEohjOQBMiyqKxmYSJ0pPg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-364b75a8194so34068f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:48:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046714; x=1720651514;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hq1ZdMUpXgQO0jHpQkHjtkURKxmq/FjBLx45BW2ity0=;
- b=uSenhd6Q/YMwquno5u2UR2mQIW/ZPvoB0vUpr0iyrliXl7po0GqrgmaAZ495qL9WC1
- IW/KlWI1ZkYhuo7PyFrWyJg6oY7jpLVZfL1YQR19spw4GnnkcO6Xr9t+A2QI0Vv3hUDd
- 0N5uWTxiLCp6taNQ6Ds5O6NLWpq9jsPUOA+Rqhx3iaSNh8czquwNjQUkMkYlxNG3E3Cm
- iN5+uOpWxO+uChE+y6woa+wEqb6yyjVwEp1zcJQ/zY2oUxgEnMFBAgal/4VEz1Z6kRA9
- L3XuRXp50tUuO+CqaJDxZg3jCFcGmt9QtUVZEAFPejNxa521fmTaBZgDpqcamgVDQrTR
- YTjg==
-X-Gm-Message-State: AOJu0Yytv9Fp4MGu60VnKIGINe5rreQk2FDDm64A6r8BNMZ5YNwnEVIu
- ymAR52LV5AlqW39IgtMUm6cubMSbFroKoGFGxyMLiYswyQ6OAt3f0YJ6baePaYgRRCbo+axMIVg
- EPw1hmIDmQfMNyp179lOQbXGK6RdU/LXWA66bwWtc4OVcXstbcKSTfad06/VhcJuI9jFkW/Wf7M
- y+JvnnLKNUTlmDsaprTanL83IBgjChHw==
-X-Received: by 2002:a05:6512:ac6:b0:52c:dc6f:75a3 with SMTP id
- 2adb3069b0e04-52e8268610dmr9713164e87.40.1720046714062; 
- Wed, 03 Jul 2024 15:45:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFHrvjPWmo5M6Bp+qHr04U+rRanKmzSCIePRqp3sDFPBo4fLdOJq6O/XpBKNb0gvoO83XdZRw==
-X-Received: by 2002:a05:6512:ac6:b0:52c:dc6f:75a3 with SMTP id
- 2adb3069b0e04-52e8268610dmr9713142e87.40.1720046713325; 
- Wed, 03 Jul 2024 15:45:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720046921; x=1720651721;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QybIKg16iYqXdH14Jxyn469nV1P/mwHXBmUUNkfpRqo=;
+ b=loFjG1vLoatjyaFaqHEWDXaOpuNzQjRX/YNinPqNO91cYM4Mkl70j3prHieyMNI1Do
+ iJpm2mnBZyVMJb9yMGF+Ic5U85uzVmjh35Z9hWXMPc94AWnF9LAsFHjEGDL6CAjp/36K
+ OMEPGEJNZ6ST8qRCELh+Bp6OyuyrP9BrKXPbett6WyGuLpETylxWEF9Te86NRtQsYlL6
+ S7977rc0TqmkOGI6YfOiPw3nT3JHJcMWHCn3PRNAbfULGILQB+OU2NiMDhWTRj6eiOEi
+ VF9Zl1Up8F5isWXH6cW2Hqn7rZ1vHA93LE3uIsvt5dPocVdUypVJmXzM6zP5YCP5fAQ6
+ ZO1w==
+X-Gm-Message-State: AOJu0Yz8y6LHJETcXao8Zzh/shndPKXlKInMnGL82jlsBAuYvFt4fxDx
+ mqbavcgulUwELt2QeE/u2PZA2DVeJ9CZnBQUkUSNf77D5Z/O91cxFNSTyZ1t8ZcGCrgsl39nflp
+ t4/aei3/1IJzixMcua6rYTGqBhxaRx4eRsAiR3We3mr0EHjT3pk3eCU+c1Pbid0lausH4DSktXe
+ N/gaIHYIkoz2YlJsaajRZBh6erOjqcAg==
+X-Received: by 2002:adf:e5c9:0:b0:367:94f7:88f3 with SMTP id
+ ffacd0b85a97d-3679dd72b16mr2212f8f.57.1720046921389; 
+ Wed, 03 Jul 2024 15:48:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDTHY/Gvoyw2qkyB8B+bZX8Vd466iBKU/h2FTOOwHiO6Ov4rfPrbCgPbNnB0tyRisupbeiEg==
+X-Received: by 2002:adf:e5c9:0:b0:367:94f7:88f3 with SMTP id
+ ffacd0b85a97d-3679dd72b16mr2190f8f.57.1720046920590; 
+ Wed, 03 Jul 2024 15:48:40 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58cf5bdeda0sm1333015a12.73.2024.07.03.15.45.10
+ ffacd0b85a97d-3679976da15sm702065f8f.94.2024.07.03.15.48.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:45:12 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:45:08 -0400
+ Wed, 03 Jul 2024 15:48:40 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:48:36 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Jiqian Chen <Jiqian.Chen@amd.com>
-Subject: [PULL v3 12/85] virtio-pci: only reset pm state during resetting
-Message-ID: <84b58169e40f5c7428db6f0b229e01213068aa21.1720046570.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL v3 55/85] tests/qtest/vhost-user-test: add a test case for
+ memory-backend-shm
+Message-ID: <0173ce4b2bb4f159f4a6d54e14adbe35f826a848.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -100,50 +108,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jiqian Chen <Jiqian.Chen@amd.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Fix bug imported by 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-After this change, observe that QEMU may erroneously clear the power status of the device,
-or may erroneously clear non writable registers, such as NO_SOFT_RESET, etc.
+`memory-backend-shm` can be used with vhost-user devices, so let's
+add a new test case for it.
 
-Only state of PM_CTRL is writable.
-Only when flag VIRTIO_PCI_FLAG_INIT_PM is set, need to reset state.
-
-Fixes: 27ce0f3afc9dd ("fix Power Management Control Register for PCI Express virtio devices"
-Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
-Message-Id: <20240515073526.17297-2-Jiqian.Chen@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20240618100534.145917-1-sgarzare@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-pci.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tests/qtest/vhost-user-test.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index cffc7efcae..7d62e92365 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2306,10 +2306,16 @@ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
-     virtio_pci_reset(qdev);
+diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
+index 255bde54ab..0fa8951c9f 100644
+--- a/tests/qtest/vhost-user-test.c
++++ b/tests/qtest/vhost-user-test.c
+@@ -44,6 +44,8 @@
+                         "mem-path=%s,share=on -numa node,memdev=mem"
+ #define QEMU_CMD_MEMFD  " -m %d -object memory-backend-memfd,id=mem,size=%dM," \
+                         " -numa node,memdev=mem"
++#define QEMU_CMD_SHM    " -m %d -object memory-backend-shm,id=mem,size=%dM," \
++                        " -numa node,memdev=mem"
+ #define QEMU_CMD_CHR    " -chardev socket,id=%s,path=%s%s"
+ #define QEMU_CMD_NETDEV " -netdev vhost-user,id=hs0,chardev=%s,vhostforce=on"
  
-     if (pci_is_express(dev)) {
-+        VirtIOPCIProxy *proxy = VIRTIO_PCI(dev);
-+
-         pcie_cap_deverr_reset(dev);
-         pcie_cap_lnkctl_reset(dev);
+@@ -195,6 +197,7 @@ enum test_memfd {
+     TEST_MEMFD_AUTO,
+     TEST_MEMFD_YES,
+     TEST_MEMFD_NO,
++    TEST_MEMFD_SHM,
+ };
  
--        pci_set_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL, 0);
-+        if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
-+            pci_word_test_and_clear_mask(
-+                dev->config + dev->exp.pm_cap + PCI_PM_CTRL,
-+                PCI_PM_CTRL_STATE_MASK);
-+        }
-     }
+ static void append_vhost_net_opts(TestServer *s, GString *cmd_line,
+@@ -228,6 +231,8 @@ static void append_mem_opts(TestServer *server, GString *cmd_line,
+ 
+     if (memfd == TEST_MEMFD_YES) {
+         g_string_append_printf(cmd_line, QEMU_CMD_MEMFD, size, size);
++    } else if (memfd == TEST_MEMFD_SHM) {
++        g_string_append_printf(cmd_line, QEMU_CMD_SHM, size, size);
+     } else {
+         const char *root = init_hugepagefs() ? : server->tmpfs;
+ 
+@@ -791,6 +796,19 @@ static void *vhost_user_test_setup_memfd(GString *cmd_line, void *arg)
+     return server;
  }
  
++static void *vhost_user_test_setup_shm(GString *cmd_line, void *arg)
++{
++    TestServer *server = test_server_new("vhost-user-test", arg);
++    test_server_listen(server);
++
++    append_mem_opts(server, cmd_line, 256, TEST_MEMFD_SHM);
++    server->vu_ops->append_opts(server, cmd_line, "");
++
++    g_test_queue_destroy(vhost_user_test_cleanup, server);
++
++    return server;
++}
++
+ static void test_read_guest_mem(void *obj, void *arg, QGuestAllocator *alloc)
+ {
+     TestServer *server = arg;
+@@ -1084,6 +1102,11 @@ static void register_vhost_user_test(void)
+                  "virtio-net",
+                  test_read_guest_mem, &opts);
+ 
++    opts.before = vhost_user_test_setup_shm;
++    qos_add_test("vhost-user/read-guest-mem/shm",
++                 "virtio-net",
++                 test_read_guest_mem, &opts);
++
+     if (qemu_memfd_check(MFD_ALLOW_SEALING)) {
+         opts.before = vhost_user_test_setup_memfd;
+         qos_add_test("vhost-user/read-guest-mem/memfd",
 -- 
 MST
 
