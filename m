@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC2FBC30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:25:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF55C30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvIu-0003WS-T6; Wed, 03 Jul 2024 04:25:28 -0400
+	id 1sOvJq-0004zU-Hi; Wed, 03 Jul 2024 04:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvIt-0003W9-Oe
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:25:28 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvJp-0004xK-9a
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:26:25 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvIr-0005F5-Op
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:25:27 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-52ce6c8db7bso7884562e87.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:25:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvJn-0005Qx-Cx
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:26:25 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-52cd717ec07so6318297e87.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:26:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719995122; x=1720599922; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719995180; x=1720599980; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Y3607kfF/10a/THtRDGcXlnXhiR42W28Wwhe5ND7m/w=;
- b=P4CgImYS6c9rmpDXZf4AUPjd95pxNlpnkPIz+vNkE+c07c5pzrrglSTMM7VGZmGzVc
- i8KTIaZnDp7dvG3c3tJDVk4w5CESo38Lmr3SxC/Wqk2SoPO7+HjV5ImTsnBcWTJjMAKG
- kZoNGhxn+AxTNh0d3v3RefwzTlfZDjtD6n12o6vn1zHYYmC/M5ODptCCwJBNhB+EOA9E
- 2KwwaymRYTnjd7jvMv7I3J084abcsErH9tZ8fjUxzIxHYF+m53KxNtPl/vYTuA2WpVxE
- viT8WUvMvHeA8BOerXhvMuDA4z3PmPZC+/a9LO9lqARvpzDc6DuCKGons/jpZzZ+QHB0
- tpew==
+ bh=P3iWR+2TGuQDrXlJJ42OmFmEQ49VfHO1e3z3bM4w8n8=;
+ b=sRe5UqaWjcXINHkEVO5Rqy8RmHQI6Dkk68bW5ox0sq6jPPn7i9IIRpLWP6me2xqpBS
+ g20b8HXFkZrDCFyTaZkJwq4x1Iv8ttp5BZJbntRRBdM9rYgnO7YPiUZe+GvcPdip2t8M
+ WG/6caWvl6ADmKI61VCpJVQr5KagjgiHOTEJO2/z8PlgfL9ipY5nEVJbKyi/NEPCsqfd
+ x71D3AsrCLFoINGZJNb3251X2+kbYHdSr4xinYT4SHd05UZa9lUCZaroOmBvGF2Miitt
+ Q1ThzXiGmNDh6CNkNuGS7AAujCxwYNTr9NJqJnjc46d7qsMW5JNZqXoZlnUEC2VVicII
+ emCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719995122; x=1720599922;
+ d=1e100.net; s=20230601; t=1719995180; x=1720599980;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y3607kfF/10a/THtRDGcXlnXhiR42W28Wwhe5ND7m/w=;
- b=NHs66ph83+lY6fzQk9jMDbAgDV3jn6F3YdDs3Ha6JJwOCW+jmyFvdTljWwGu9BlFjo
- uPQrkY6yErHlu7wz39a/yxa+rp9jOrPmc0Oql4eoIHUnmg9bHF5FnjU87dHYAC04hRlM
- PzKoA2TQkgF7c6Rbw8VpvJttCnfJU11PhtlA99wn04iikc3jlZU+9zD6inlgn0sWe50L
- b2zeH+ho01dEBAJzIs5xaVW9AbvEPvCA326nqyttA+MA0O9Sj9B9jPJK1gFzf6jWDfam
- 1koBw/riiPvfeXxaDubBvQduURaacqH8yHa03sm7vmvVi5i1xJ90W8XXhFAXOLLw39RC
- O8qA==
+ bh=P3iWR+2TGuQDrXlJJ42OmFmEQ49VfHO1e3z3bM4w8n8=;
+ b=gXa+a2p5HaHEikRyrhshznYkmwPhCr2ebNGjjxG3TYFZNXUI5BK9A5HyTVjx2/HBIZ
+ vjGriHdXjK9B6qGsM24Vwr9nJ5NPIZxHHFNZLy3lFsIoo8Qzt5IKXxmvlMZSva6hg4CO
+ Vf5cjagpgzBMRCrZqcOvREQewZTfYyY/TjzuJU3WtHLU4L3Ca1Wtt2tj4DAc+xTCJhme
+ ixk7/cUnTobpCaJuNFPXoeiqgIXIRxF7UIERl6J4b/aOraYEk6Gq7TezGZqyyG5o13kF
+ +N4nrBc8liatC65w5zw7KHVLeF2W+PWwfNJfF84Yuk9xPkvyRh3DqDF8rxodHaLUbYSz
+ Hv3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXmmLPKbsjbUkgwXu3jQrGl+ZS2uGs3bvBPKaCz91+kP51LPmlyZpZGfBNKPPgaelSTkDq0+px+cDZwR5QIWPGy29wpPVo=
-X-Gm-Message-State: AOJu0YzuWhgAf241Lzzi+0G2nu5Yj8v8XyAuDk9nFZVDCDm7u+LULyU3
- aGT1bGmrHbIFV3eWrdZvhymB4l6jU6H1/7jJXpCvyeebxLadwSpsvIX7aUew+vs=
-X-Google-Smtp-Source: AGHT+IFimwdy9nk6iLz9KadfX09zUX6tFmb13oE7xBQz7GvjCSomQAmlvWY2zZKObUnFn5UK3O0yXQ==
-X-Received: by 2002:a05:6512:104c:b0:52c:dc4a:fb14 with SMTP id
- 2adb3069b0e04-52e826522c3mr6919040e87.14.1719995122056; 
- Wed, 03 Jul 2024 01:25:22 -0700 (PDT)
+ AJvYcCUCqevW592tqMUuEYOLuni9Yqs7G+DgEzH7buTiGNlhdSv6AObT4iMSGZ3mP8wd7DQ/P8155uaWFKwHd0LAJUNqF3opnak=
+X-Gm-Message-State: AOJu0YwPqYhuxediDs9LN6BXSAm2OTqZuxaaE3n8DIYVfUBHIR61CGj9
+ c7sXK2OQb2rbPRRYuy6ZmD9qALHIHWPRugCcGXAs3fpDFxhlxsjX7URFgGvtZr4=
+X-Google-Smtp-Source: AGHT+IHaXDQaXLmVL3HpOPsYuxJBYxcJ0viCA+Y/Tmncwtnlet8iqza3DOpPV49GYJeDLsQJP4Gp3Q==
+X-Received: by 2002:a05:6512:3d9e:b0:52c:c5c4:43d4 with SMTP id
+ 2adb3069b0e04-52e8270faddmr7716778e87.53.1719995180694; 
+ Wed, 03 Jul 2024 01:26:20 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.220.97])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0e12fcsm15190163f8f.48.2024.07.03.01.25.20
+ 5b1f17b1804b1-4256af5b66csm224838415e9.18.2024.07.03.01.26.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 01:25:21 -0700 (PDT)
-Message-ID: <94406082-299f-4159-bfc2-a5c295f39a2d@linaro.org>
-Date: Wed, 3 Jul 2024 10:25:19 +0200
+ Wed, 03 Jul 2024 01:26:20 -0700 (PDT)
+Message-ID: <70becccb-97c7-456e-a8d9-f690e0acb5fb@linaro.org>
+Date: Wed, 3 Jul 2024 10:26:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/22] qga: move linux disk/cpu stats command impls to
+Subject: Re: [PATCH v2 06/22] qga: move linux memory block command impls to
  commands-linux.c
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Konstantin Kostiuk
- <kkostiuk@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20240613150127.1361931-1-berrange@redhat.com>
- <20240613150127.1361931-6-berrange@redhat.com>
+ <20240613154406.1365469-1-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240613150127.1361931-6-berrange@redhat.com>
+In-Reply-To: <20240613154406.1365469-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,8 +100,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/6/24 17:01, Daniel P. Berrangé wrote:
-> The qmp_guest_{diskstats,cpustats} command impls in
+On 13/6/24 17:43, Daniel P. Berrangé wrote:
+> The qmp_guest_{set,get}_{memory_blocks,block_info} command impls in
 > commands-posix.c are surrounded by '#ifdef __linux__' so should
 > instead live in commands-linux.c
 > 
@@ -111,11 +110,11 @@ On 13/6/24 17:01, Daniel P. Berrangé wrote:
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   qga/commands-linux.c | 195 ++++++++++++++++++++++++++++++++++++++++++
->   qga/commands-posix.c | 199 -------------------------------------------
->   2 files changed, 195 insertions(+), 199 deletions(-)
+>   qga/commands-linux.c | 308 ++++++++++++++++++++++++++++++++++++++++++
+>   qga/commands-posix.c | 311 +------------------------------------------
+>   2 files changed, 309 insertions(+), 310 deletions(-)
 
-Easy to review using 'git-diff --color-moved=dimmed-zebra'.
+Reviewed using 'git-diff --color-moved=dimmed-zebra'.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
