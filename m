@@ -4,92 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F26B2C30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 15:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB44C30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 15:57:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP2Kk-0001EQ-Io; Wed, 03 Jul 2024 11:55:50 -0400
+	id 1sP2Lu-0002kT-KS; Wed, 03 Jul 2024 11:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sP2Ki-0001E1-Vo
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 11:55:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sP2Kg-0000qA-Q3
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 11:55:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720022145;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UhLVMBTm+kvqFl+iW+xo6f9bBAJ2D0QG8QRM/faRBiI=;
- b=Z2LS0IJUXMScpPLgwIvGESPShlFhWxQ5pidTkNDQFuEjdSVdNKXDAbnFDGpo1UhLJLr2m3
- DTaT+qOGI1UFqqtIA7VmZjzQh2c+XmdUB6f3HA0XoBI2mPj+WpvEcbUEBjQwr5zUpmY/oa
- QrNq26L3c3z0lk2yLKs0G2yBVwSahLs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-ThZ7K_hcNMu00GVqwZj3JQ-1; Wed, 03 Jul 2024 11:55:42 -0400
-X-MC-Unique: ThZ7K_hcNMu00GVqwZj3JQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42568f0cc18so39240795e9.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 08:55:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sP2Lq-0002fC-GI; Wed, 03 Jul 2024 11:56:58 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zheyuma97@gmail.com>)
+ id 1sP2Lo-0000w3-Nq; Wed, 03 Jul 2024 11:56:58 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-425809eef0eso26376125e9.3; 
+ Wed, 03 Jul 2024 08:56:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720022210; x=1720627010; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LQOK9pjTJjZNue9VVtyWIczQ+3PWwfz24C1CtOqUlZA=;
+ b=ay4o8VTPBsNT1ID6EjFIRgVnCmqRNQY66xmEiWPgpklGla7ViJkksN6FjbXzpCF0Hn
+ 78x3VXzkI7qvzjpvbFJQdLAKPRIolQlCNc/lhW9MLcgevyB6iS9OOrKVCJfZ3ayISwTn
+ 4Pr1RWh4R+50SoLLySSxtrpFzjSqCaYrqcTs8Tnbvzc6l26rDIIyoOGqP9J6/xZnYJ6S
+ mm3K8fX78N0qKtbZ1ZGxhvybLhWI8+0NYl0c8hHo5fQIF/3IjdNLTn5fHzXD4QG66q8q
+ nlKTe6GBehZod4h8nEkrSoOYnhByZtcGEwuhIlvybz2vjTTjy5x3tgPJfHIBa4UXbZnr
+ 1djQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720022141; x=1720626941;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UhLVMBTm+kvqFl+iW+xo6f9bBAJ2D0QG8QRM/faRBiI=;
- b=eLPTqTtJRvrWs7WXemEAL27YQC/EAuMedgmxmhbFGQHuAyKvyt/DX84Ntwn5/4ZrXl
- UGWPWDeHAzTzl5NjOvjPlJ4bToaN4ZOrBI9LP4LHjjSyJWJBtugM2NR0XQCir+6aNGqh
- kKnlgNd6GflLib4F7dVzN4Yqgu0JqAC19AtuNj/BIoL8386pHfgzwMwEgXmMrfPjKjN7
- ZLbYGhPlBaORA1JRpC81aUOF3TUb53aoCwi6ltXoOPfR79y2uPpz3n/6ce9dJJrgLDox
- DJPZE9Knjn4KkJkvaBH6B319zy5W5tRA8IQu4h8ubLR5I9b7w/c5durkTUGeyt1GCi9u
- gQnA==
-X-Gm-Message-State: AOJu0Yzzt2ySqtCk8yJTLYXpyKHAhHFdfFxM8ULj691YKJ99LvEuIxw9
- ROqC8S4sGXIlORs2I1b+4MoClHlyvV8OcS0MRV5ev77pyI/I+e6BfUH9ownlhRRaBf2tMWp0eho
- J9wOmID5mySc/Ni2A/2zX1DttfDopQlbGMtk+pf63Kbe/j2Ny0GjGBH/pwPh2tgp2YlgAIbtnXb
- S7Vf0dS66h00UTwkW7coAxTSDwwD0=
-X-Received: by 2002:a05:600c:2d52:b0:425:78fd:ec51 with SMTP id
- 5b1f17b1804b1-4257a03497emr61736675e9.40.1720022141620; 
- Wed, 03 Jul 2024 08:55:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFXHvEdeaiJnv9nOS8SSyi2712ERiP1gyoJhBP+DhA+1EVKWRX1TdNmTgV0hbmacFwtB4N2nL891/NT83GHG+w=
-X-Received: by 2002:a05:600c:2d52:b0:425:78fd:ec51 with SMTP id
- 5b1f17b1804b1-4257a03497emr61736475e9.40.1720022141172; Wed, 03 Jul 2024
- 08:55:41 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720022210; x=1720627010;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LQOK9pjTJjZNue9VVtyWIczQ+3PWwfz24C1CtOqUlZA=;
+ b=u9572S1NOdkZaU+rd6QVhHFXWV2yBXmndX4rKNDr6XPo6d1YwX0w/HNIa0tdycjR0+
+ TxwgE+V4b32h0+gH8FHuMFOrZv8XMU8WDmcno8usHEu4WOtOpZr21J3ZwcgoxcKMIByY
+ 9rZf0Sr7Z/o2zSgOj5//QjAp3ErnfKpS4rpYu9tdhrKDbZ+2J42PvcvQ8mpgFXFmaP2E
+ Na3tYtbkkTcGjCLnDKaV2EquuVKpx5G0E1p+bjtea2LtmmLJW01WFMnrdGeXlfTtjDGb
+ b++bKmOlL2YpMSrRsmJZ/LziG0bFiedPbg2VXZKFtGZ7EtdG8o6BU2ZhQLuaXUfn/rlB
+ RqGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXywBdBo38k+29hu5cUBv2b3t9LDloGWOEoE4KzinUtA/y+CoyUkw87zXrj48zdf1Jp4ZmWH5uzYJekIoJwYgwCt/BKe07oLlqpeY2i/WgHaS+UMJrbmbLo6B8=
+X-Gm-Message-State: AOJu0Yx6479tWRLVspuzP8xBGMrQhWOiwtDRKXsu+SCnE0d5MyCeaPqr
+ rgAZFIQKW81shpvmApTrWe5NY8dlnigIPZLrGx7ypyuJ3/BCOHs=
+X-Google-Smtp-Source: AGHT+IH8oyet79kwsM7q/NtXVGBjyiEwx3JNh0Cs3AUNER/AD0jpReStLc6LLPvoDz3UGxPwAHcwog==
+X-Received: by 2002:a05:600c:3b97:b0:424:addc:c79a with SMTP id
+ 5b1f17b1804b1-4257a02c7famr78725205e9.7.1720022210199; 
+ Wed, 03 Jul 2024 08:56:50 -0700 (PDT)
+Received: from wing.epfl.ch (dhcp-122-dist-b-021.epfl.ch. [128.178.122.21])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256af54ecasm240094075e9.12.2024.07.03.08.56.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jul 2024 08:56:49 -0700 (PDT)
+From: Zheyu Ma <zheyuma97@gmail.com>
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Zheyu Ma <zheyuma97@gmail.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v2] hw/display/sm501: Validate local memory size index in
+ sm501_system_config_write
+Date: Wed,  3 Jul 2024 17:56:33 +0200
+Message-Id: <20240703155633.17352-1-zheyuma97@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240701145853.1394967-1-pbonzini@redhat.com>
- <20240701145853.1394967-4-pbonzini@redhat.com>
- <CAJ+F1C+__WX3EUFw-XdsqtXbwFtH0JZJdNH3WDvFazkNnecAbw@mail.gmail.com>
-In-Reply-To: <CAJ+F1C+__WX3EUFw-XdsqtXbwFtH0JZJdNH3WDvFazkNnecAbw@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 3 Jul 2024 17:55:29 +0200
-Message-ID: <CABgObfaF4FMPWYq7xQ3uWYx=O0XW_+0CWgw6hQTwUMgCQcPK-Q@mail.gmail.com>
-Subject: Re: [PATCH 03/14] rust: define traits and pointer wrappers to convert
- from/to C representations
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
- =?UTF-8?Q?Sebastian_Dr=C3=B6ge?= <slomo@circular-chaos.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=zheyuma97@gmail.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,187 +92,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[warning: long email]
+Ensure that the local_mem_size_index is within valid bounds and does not
+exceed the allocated memory size before updating it in sm501_system_config_write
+to prevent out-of-bounds read.
 
-On Wed, Jul 3, 2024 at 2:48=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@gmail.com> wrote:
->
-> Hi
->
-> (adding Sebastian, one of the glib-rs developers in CC)
->
-> On Mon, Jul 1, 2024 at 7:02=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
->>
->> The qemu::util::foreign module provides:
->>
->> - A trait for structs that can be converted to a C ("foreign") represent=
-ation
->> - A trait for structs that can be built from a C ("foreign") representat=
-ion
->> - A wrapper for a pointer that automatically frees the contained data.
->
-> You worry about technical debt, and I do too. Here you introduce quite di=
-fferent traits than what glib-rs offers.
-> We already touched this subject 2y ago, my opinion didn't change much
-> (https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redha=
-t.com/20210907121943.3498701-13-marcandre.lureau@redhat.com/)
+ASAN log:
+==3067247==ERROR: AddressSanitizer: global-buffer-overflow on address 0x55c6586e4d3c at pc 0x55c655d4e0ac bp 0x7ffc9d5c6a10 sp 0x7ffc9d5c6a08
+READ of size 4 at 0x55c6586e4d3c thread T0
+    #0 0x55c655d4e0ab in sm501_2d_operation qemu/hw/display/sm501.c:729:21
+    #1 0x55c655d4b8a1 in sm501_2d_engine_write qemu/hw/display/sm501.c:1551:13
 
-Hi Marc-Andr=C3=A9, first of all thanks for reviewing and, probably, sorry
-for not going more into detail as to why I reinvented this particular
-wheel.
+Reproducer:
+cat << EOF | qemu-system-x86_64  \
+-display none -machine accel=qtest, -m 512M -machine q35 -nodefaults \
+-device sm501 -qtest stdio
+outl 0xcf8 0x80000814
+outl 0xcfc 0xe4000000
+outl 0xcf8 0x80000804
+outw 0xcfc 0x02
+writel 0xe4000010 0xe000
+writel 0xe4100010 0x10000
+writel 0xe4100008 0x10001
+writel 0xe410000c 0x80000000
+EOF
 
-Like two years ago, I find the full/none nomenclature very confusing
-and there is no trace of them in QEMU, but I could get over that
-easily.
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+Changes in v2:
+- Also check the memory_region_size bound
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+---
+ hw/display/sm501.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-But also, I think the two have different focus and design. All I
-wanted was a place to put common code to convert Rust objects (mostly
-CStr/String/str and Error) to and from C representations (char * and
-QEMU's Error*), to avoid rewriting it over and over. So I wanted the
-traits to be as simple as possible, and I didn't like that glib puts
-to_glib_none and to_glib_full into the same trait, though I understand
-why it does so. I also didn't like that to_glib_full() is an express
-ticket to a memory leak. :)
-
-OwnedPointer<> and free_foreign solve all the qualms I had with glib-rs:
-
-- OwnedPointer<> takes care of freeing at the cost of extra verbosity
-for ".as_ptr()".
-
-- because clone_to_foreign() does not leak, I don't need to think
-about to_glib_none() from the get go.
-
-This has a ripple effect on other parts of the design. For example,
-because glib has to_glib_none(), its basic design is to never allocate
-malloc-ed memory unless ownership of the pointer is passed to C.
-glib-rs's to_glib_none can and will "clone to Rust-managed memory" if
-needed. Instead, because I have free_foreign(), I can malloc freely.
-
-In the future we could add something like Stash/to_glib_none(), but it
-would be very different and with performance properties enforced by
-the type system. It would "create a pointer into *existing*
-Rust-managed memory" cheaply but, every time a cheap borrow is not
-possible, users will have to call clone_to_foreign() explicitly. In
-other words there will be a difference between OwnedPointer<> as the
-result of an expensive operation, and [the equivalent of glib-rs]
-Stash as the result of a cheap operation. This is unlike
-to_glib_none() which is e.g. cheap for CStr but not for String. More
-on this below.
-
-> Also, you don't offer the equivalent of "to_glib_none" which uses a tempo=
-rary stash and is quite useful, as a majority of functions don't take owner=
-ship.
-
-Right, in part you have already answered that: OwnedPointer handles
-freeing in the same way as g_autofree, so you can use it as a
-to_glib_none() replacement. If you need to pass the pointer and forget
-about it, you can use clone_to_foreign_ptr(). If you need something
-temporary that needs to be freed before returning, you use
-clone_to_foreign() and as_ptr().
-
-This is not any more unsafe than to_glib_none(). If you pass a
-temporary pointer (x.clone_to_foreign().as_ptr()) where C code expects
-full ownership, you get a dangling pointer either way. It is less
-leak-happy than to_glib_full() though.
-
-Regarding how to obtain a pointer cheaply, there are two use cases:
-
-- borrow:
-
-  fn borrow_foreign<'a>(&'a self) -> Stash<'a,
-      <Self as CloneToForeign>::Foreign, &'a Self>;
-
-Useful for slices and elementary integer types - including cases where
-C parameters are passed by reference - and also for CStr. However
-right now my main user is strings and it doesn't buy much there.
-Because String and &str are not null-terminated, a "borrow" would
-allocate memory, as in to_glib_none(), which is pretty weird. At this
-point, I find it better to have the more explicit clone_to_foreign()
-that tells you how expensive it is.
-
-- consumption, which does not exist in glib-rs:
-
-    fn into_foreign(self) -> Stash<'static,
-      <Self as CloneToForeign>::Foreign, Self>;
-
-This works for types that, like String, deref to a stable address even
-when moved---this way we don't need to deal with pinning. And it is in
-fact especially nice for the String case and therefore for anything
-that uses format!(), because it could be implemented as
-
-   s.reserve_exact(1);
-   s.push('\0');
-
-The two would be separate traits. There was one case in which I could
-have used into_foreign(), namely the call to error_setg_internal() in
-patch 5. But I am not sure if this will be more common than functions
-taking &str, so I left it for later.
-
-> Because much of our code is using GLib types and API style, I
-> think we should strive for something that is close (if not just the
-> same) to what glib-rs offers. It's already hard enough to handle
-> one binding concept, having 2 will only make the matter worse.
-> Consider a type like GHashTable<GUuid, QOM>, it will be very
-> annoying to deal with if we have different bindings traits and
-> implementations and we will likely end up duplicating glib-rs
-> effort.
-
-I'm not even sure if it's even true that much QEMU code is using GLib
-types. We use quite a bit of GLib, and took a lot of inspiration from
-it because GLib is good. But it's notable that we use very little GLib
-*across modules*. There are only a handful of occurrences to
-GList/GList/GHashTable in function arguments in include/, for all of
-QEMU, and all of them are very rarely used functions. Why? Possibly
-because, even where we take inspiration (the Error** idiom, QOM
-casts), the implementation ends up completely different for reasons
-that aren't just NIH.
-
-In any case I don't see us using glib-rs much, if at all; uses of hash
-tables in Rust code can just use HashMap<>. Yes, there is no
-equivalent of the expensive, O(n) conversion
-self.some_g_hash_table.to_glib_none(); but that's a feature, not a
-limitation.
-
-Also, anyway we couldn't extend the glib traits a lot, and glib-rs
-only supports HashMap<String, String>.
-
-> As for naming & consistency, glib-rs settled on something clearer imho:
->
-> from_glib_full
-> from_glib_none
-> to_glib_full
-> to_glib_none
->
-> vs
->
-> from_foreign
-> cloned_from_foreign
-> clone_to_foreign
-> /nothing/
-
-These last two are respectively clone_to_foreign_ptr and
-clone_to_foreign. I am not wed to my names but I'm not sure the glib
-ones are clearer.
-
-What I want from names is clarity on who allocates or frees; I do that
-with "clone", which is a common Rust term, to indicate that the C side
-still needs to be freed after the call. I find it confusing that
-from_glib_full() requires no freeing but to_glib_full() requires
-freeing, for example - I understand _why_ but still "full" and "none"
-are GIR terms that are not really familiar to most Rust or QEMU
-developers.
-
-And secondarily, clarity on what is cheap and what isn't. I don't have
-that functionality at all for now, but the nomenclature is easily
-extended to borrow_foreign() and into_foreign(). Talking about Rust
-terms, glib-rs lacks "into" which is the standard Rust way to do
-consuming conversions, while my code has into_native().
-
-All in all, I think there are some significant differences between
-glib-rs and this implementation that justify the effort.
-
-
-Paolo
+diff --git a/hw/display/sm501.c b/hw/display/sm501.c
+index 26dc8170d8..a878c35dd9 100644
+--- a/hw/display/sm501.c
++++ b/hw/display/sm501.c
+@@ -1020,11 +1020,21 @@ static void sm501_system_config_write(void *opaque, hwaddr addr,
+         s->gpio_63_32_control = value & 0xFF80FFFF;
+         break;
+     case SM501_DRAM_CONTROL:
+-        s->local_mem_size_index = (value >> 13) & 0x7;
+-        /* TODO : check validity of size change */
++    {
++        int local_mem_size_index = (value >> 13) & 0x7;
++        if (local_mem_size_index < ARRAY_SIZE(sm501_mem_local_size) &&
++            sm501_mem_local_size[local_mem_size_index] <=
++                    memory_region_size(&s->local_mem_region)) {
++            s->local_mem_size_index = local_mem_size_index;
++        } else {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "sm501: Invalid local_mem_size_index value: %d or memory size too large\n",
++                          local_mem_size_index);
++        }
+         s->dram_control &= 0x80000000;
+         s->dram_control |= value & 0x7FFFFFC3;
+         break;
++    }
+     case SM501_ARBTRTN_CONTROL:
+         s->arbitration_control = value & 0x37777777;
+         break;
+-- 
+2.34.1
 
 
