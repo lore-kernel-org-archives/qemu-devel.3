@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E68EEC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 16:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E81C30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 16:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP2tf-0000lq-Ad; Wed, 03 Jul 2024 12:31:55 -0400
+	id 1sP33Z-0006ZJ-HO; Wed, 03 Jul 2024 12:42:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sP2tc-0000lW-H7
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:31:52 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1sP33Y-0006Yw-3Z
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:42:08 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sP2ta-0003pk-IS
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:31:52 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-710437d0affso3345067a12.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 09:31:49 -0700 (PDT)
+ id 1sP33V-0004ZF-3D
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:42:06 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7067108f2cdso4311048b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 09:42:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720024308; x=1720629108; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720024923; x=1720629723; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5imSDxRRvQ1NCfqnWNYe8MKqdt3XxEvCuZ0K7waXPK8=;
- b=fWLOVlmr+c5E99G+PUGyYBU1PcT4qppD8+MnJQdMJtcMHF6BkUEoy2+Wa/+YfHuOWv
- e/V3Nfx4KFR8/mMdRAr61fIwchBU5a0oDxSszITuZAoiGyYierjLJWKbaUk/p4ZWjBVg
- F6ZStPywbKeHny6KVWN88/xiJZ8U1WA4OjOaXthxbzlE2KmIs/K5B51QJMzZ7+nf0x4W
- 03CMa1ZIkSTFVQW5cixgFsj7I4tMEFcdN/yKhHABbzjlkIeT0/njhLkLnPUWI6lErQyq
- r75lotYEUqkV9l3fsb3Dt1eRk5VnvHL1acJZfap9D43rjDvt7jle2fnO+gcCL/BHzarU
- McmQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ijUaT7FMtRGU/YN4aXpAULqtZdn68hVnjBIDO905N9s=;
+ b=OlFoxlpW+d/auhRF/YrjrmzbLpONL4XFYYXNBkl3W0kD2vZs2FKU/kV8l5zuPJV0dE
+ cH66fm9XpwqKHHnJysYwN/thUB043veK4edvJZUlXSkQAKD3TLUr9/sqXIpehOlmRpUP
+ oPqrHJwudx7Q6A6QJZH+1X4T45ULANeIgh0dl99LnZrPaX0CIHjhBjh69nhrbfXOEe68
+ 1Y4/ZhSk1085eS21aSH35snKVyfIbyPpDW6Mw+U6TsiHhvVPj9qIbP1T847tqdlIBThg
+ iBBMSxtZ8uO8g5wJRQxdAT+dssF74vRB89e7YU4A1MlEUs6MYldinfMjXIAcHI259aOb
+ PjPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720024308; x=1720629108;
+ d=1e100.net; s=20230601; t=1720024923; x=1720629723;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5imSDxRRvQ1NCfqnWNYe8MKqdt3XxEvCuZ0K7waXPK8=;
- b=iYC/fXaf3bHj6dZpsAN03dQ/RfG8MkVUwQby8RKaPz4ZFmK1F3dqrBIIfzckC1dlqo
- G82ai/+Fzad1X8u2A1LIsD6//4S9MDSynpCNK16cAprVai9qNClVHZDHroCyQdr9WJXD
- bA2Cpp+g+M1/+7bgLCo5R/YcMmve0uqUh+RmDm+TGAohZCdYYiLLFIaKYGz5qkPE6c33
- t1/Q9wAIZg9MO6C6ceGEjk9dAGqC8wAFKn7UtdN42USvKynl0jBtA6HcMkxSv1UnqhWr
- +/1GFcuLveFyMziHoBOmWV8bOtZBvG7AyIBMh2BFFtRHkf6ZSEfo02CT4rie+sEL5qh8
- Joyw==
+ bh=ijUaT7FMtRGU/YN4aXpAULqtZdn68hVnjBIDO905N9s=;
+ b=XZ7YNXakMRTlaQ77o0c2FXsjVVwx1+/IIvO2HN8HqLlVVDaG6OSptw/0gJ7w29A/b1
+ cRdAmOf8FnKwXtzG1HeRiAkFoK0FUxqbThucZUp5Dh21wzn0hoME+p3HpXMbalxgcmp1
+ 6zMIYv78iaGBNHXxxb6ypaiD16m9KFnr7YyXRWKXd1VzOmr6gbS7B7vEu5++LsTmc58n
+ qGx9sK6M8Cf6+DGqeluByP/xAwlW0MxoDQ/O25ZREK5PmoHoNnUkSOZMvtJPEcLFxnoN
+ JO3W8fmhcIBV8Ye6rWBUAvB4BnA5xW7+hwWly3kmzQas3TEAu3FTbF/tXT/F4FgdLH9X
+ VDUQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPNQ/s/AI9tRjVRgUw+UfnzH0tuUVohQC/eMcB7A5gdkerpywwLIN3/4/GFxfuHqZFyTigHEV1e2YLhqhYAKjo1uf9fBQ=
-X-Gm-Message-State: AOJu0YwcDUbRt3T83SDXCecQvJoZXYrIKIywpDvOaMMKFk0BNkFd6rEE
- 6G7d7IVsDQTjD5TXdht68kYvBR40u9747DnSTUM/CHj9gwQfsOWLf+uvtVW+mKM=
-X-Google-Smtp-Source: AGHT+IERbz444/0nS+HoE0jrhzRLsR17MG9lZ5TEK60d2bt1eUDsANyqL6MAfuwlHCssomyDDf4kew==
-X-Received: by 2002:a05:6a20:7350:b0:1bd:2071:33cb with SMTP id
- adf61e73a8af0-1bef60f2575mr13374381637.13.1720024307466; 
- Wed, 03 Jul 2024 09:31:47 -0700 (PDT)
+ AJvYcCU4DKDAxZVGNpX3xzNOi4l4IJlpL4AQ688HrfMLvRCeEExEETAxp7wF086QMo4HK0Kn7UpqQMNyYjY9i3WT4Zv0oG+fgbg=
+X-Gm-Message-State: AOJu0YxRW4NG+Dw0vXYOtyMERp2OfxiME32GfOapDaPvKggseY5QXL8Q
+ Vwg1aVClljXvJLLFaftcRZen8YnTprTuA8zPULTCV1v+y47i+62sXicJlpuoO9Y=
+X-Google-Smtp-Source: AGHT+IGMAEg7dT5FvuP6oUufVl4qBni9qKMfrKQ1LbGNDL6SbpMDRGtgoJT7Zr8z83SdyiGEbwTKow==
+X-Received: by 2002:a05:6a00:2d83:b0:706:62b6:cbcf with SMTP id
+ d2e1a72fcca58-70aaaf1dffdmr13312251b3a.30.1720024922950; 
+ Wed, 03 Jul 2024 09:42:02 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-708044ae297sm10615327b3a.155.2024.07.03.09.31.46
+ d2e1a72fcca58-70803ed469fsm10665073b3a.111.2024.07.03.09.42.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 09:31:47 -0700 (PDT)
-Message-ID: <f0961f6f-642c-4dc8-8bf3-1457f71da500@linaro.org>
-Date: Wed, 3 Jul 2024 09:31:45 -0700
+ Wed, 03 Jul 2024 09:42:02 -0700 (PDT)
+Message-ID: <9c5dbe05-7097-4fba-abe8-e7ecbf60e15f@linaro.org>
+Date: Wed, 3 Jul 2024 09:42:00 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/88] virtio: features,fixes
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <cover.1719951168.git.mst@redhat.com>
+Subject: Re: [PATCH] target/i386: SEV: fix formatting of CPUID mismatch message
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20240703104312.1642361-1-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <cover.1719951168.git.mst@redhat.com>
+In-Reply-To: <20240703104312.1642361-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,84 +96,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/24 13:15, Michael S. Tsirkin wrote:
-> The following changes since commit 1152a0414944f03231f3177207d379d58125890e:
-> 
->    Merge tag 'pull-xen-20240701' ofhttps://xenbits.xen.org/git-http/people/aperard/qemu-dm  into staging (2024-07-01 09:06:25 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git  tags/for_upstream
-> 
-> for you to fetch changes up to 29e45afd8d6abf7a67dab5db0ab1cfbc388daefe:
-> 
->    hw/pci: Replace -1 with UINT32_MAX for romsize (2024-07-02 11:27:19 -0400)
-> 
-> ----------------------------------------------------------------
-> virtio: features,fixes
-> 
-> A bunch of improvements:
-> - vhost dirty log is now only scanned once, not once per device
-> - virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
-> - cxl gained DCD emulation support
-> - pvpanic gained shutdown support
-> - beginning of patchset for Generic Port Affinity Structure
-> - s3 support
-> - friendlier error messages when boot fails on some illegal configs
-> - for vhost-user, VHOST_USER_SET_LOG_BASE is now only sent once
-> - vhost-user now works on any POSIX system
-> - sr-iov VF setup code has been reworked significantly
-> - new tests, particularly for risc-v ACPI
-> - bugfixes
-> 
-> Signed-off-by: Michael S. Tsirkin<mst@redhat.com>
+On 7/3/24 03:43, Paolo Bonzini wrote:
+> Fixes: 70943ad8e4d ("i386/sev: Add support for SNP CPUID validation", 2024-06-05)
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
+> ---
+>   target/i386/sev.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-Fails testing:
-
-https://gitlab.com/qemu-project/qemu/-/jobs/7257337667
-
-qemu-system-loongarch64: -chardev 
-socket,id=chr-reconnect,path=/tmp/vhost-test-9Y0NQ2/reconnect.sock,server=on: info: QEMU 
-waiting for connection on: disconnected:unix:/tmp/vhost-test-9Y0NQ2/reconnect.sock,server=on
-**
-ERROR:../src/tests/qtest/vhost-user-test.c:255:wait_for_fds: assertion failed: (s->fds_num)
-qemu-system-loongarch64: Failed to set msg fds.
-qemu-system-loongarch64: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
-qemu-system-loongarch64: Failed to set msg fds.
-qemu-system-loongarch64: vhost VQ 1 ring restore failed: -22: Invalid argument (22)
-qemu-system-loongarch64: Failed to write msg. Wrote -1 instead of 12.
-qemu-system-loongarch64: vhost_backend_init failed: Protocol error
-qemu-system-loongarch64: failed to init vhost_net for queue 0
-# child process 
-(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
-[43438]) exit status: 1 (error)
-# child process 
-(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
-[43438]) stdout: ""
-# child process 
-(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
-[43438]) stderr: "qemu-system-loongarch64: -chardev 
-socket,id=chr-reconnect,path=/tmp/vhost-test-9Y0NQ2/reconnect.sock,server=on: info: QEMU 
-waiting for connection on: 
-disconnected:unix:/tmp/vhost-test-9Y0NQ2/reconnect.sock,server=on\n**\nERROR:../src/tests/qtest/vhost-user-test.c:255:wait_for_fds: 
-assertion failed: (s->fds_num)\nqemu-system-loongarch64: Failed to set msg 
-fds.\nqemu-system-loongarch64: vhost VQ 0 ring restore failed: -22: Invalid argument 
-(22)\nqemu-system-loongarch64: Failed to set msg fds.\nqemu-system-loongarch64: vhost VQ 1 
-ring restore failed: -22: Invalid argument (22)\nqemu-system-loongarch64: Failed to write 
-msg. Wrote -1 instead of 12.\nqemu-system-loongarch64: vhost_backend_init failed: Protocol 
-error\nqemu-system-loongarch64: failed to init vhost_net for queue 0\n"
-**
-ERROR:../src/tests/qtest/qos-test.c:190:subprocess_run_one_test: child process 
-(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
-[43438]) failed unexpectedly
-not ok 
-/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect 
-- ERROR:../src/tests/qtest/qos-test.c:190:subprocess_run_one_test: child process 
-(/loongarch64/virt/generic-pcihost/pci-bus-generic/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess 
-[43438]) failed unexpectedly
-Bail out!
-Abort trap (core dumped)
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
