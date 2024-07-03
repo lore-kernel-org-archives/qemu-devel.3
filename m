@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0FE0C2BD09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF3F6C41513
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:50:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8kr-0003aP-L9; Wed, 03 Jul 2024 18:47:13 -0400
+	id 1sP8nl-0002Jz-3r; Wed, 03 Jul 2024 18:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kp-0003Pi-Pl
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8ne-0001zF-80
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:50:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8ki-0001X9-GO
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8nc-0007Db-6k
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:50:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046821;
+ s=mimecast20190719; t=1720047003;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YhLUD4bgFXykNLby5YqUbG3vAr/0cDl4XOSKHnOq4eQ=;
- b=fywVA3o56V5cL5jlEqAbQjb9uLH6N7V6M7QgekzLLD1B97WfmeWz9EOQWhvMlp2IHAHipD
- QWH6CkZcdr+ohcKHrINDWmSczPAHQPmCDmJTgOfyf/J9vFPQOELo1HJpV9Xa0HliLb6M0G
- LDFjIP4r8YtUxHTjGBy+li5ruXwGGyY=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=C8uBwo3DHXNNhuf3rApspBTWgLSO8s/xdDqrmh63AMQ=;
+ b=IgElybKm+ZA8n06MVeZ562pAhUutTo5/fyGX+DZaQJ9RLMdCNHNpvekAHUKYMhu5ypn7z8
+ C+MRN4oqvWC3kDxvgsoW7NPOx0JjhPyIW9tFGO6UOnxRWzsvodmvA0Rc4YHk0DGol1kpnA
+ ZPW64TTEEjXIGeSjyb5iVqbby/dtI/o=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-595-p55CqpImPtS0xiMFQHoLJw-1; Wed, 03 Jul 2024 18:47:00 -0400
-X-MC-Unique: p55CqpImPtS0xiMFQHoLJw-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-584ef6c00c0so1685181a12.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:47:00 -0700 (PDT)
+ us-mta-615-HThBkHcJMpGbyxpfRUDUUw-1; Wed, 03 Jul 2024 18:49:59 -0400
+X-MC-Unique: HThBkHcJMpGbyxpfRUDUUw-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4257a75193aso41575e9.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:49:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046819; x=1720651619;
+ d=1e100.net; s=20230601; t=1720046997; x=1720651797;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YhLUD4bgFXykNLby5YqUbG3vAr/0cDl4XOSKHnOq4eQ=;
- b=YrAhbpbjf4VjdSNBsXbVbP/wsTM250xOvtUFVeeW2KXs3S0zf+XNwvUNPknR7VXphv
- C6wC7e8zw7V/Pgt+dE403AzNtNOO39Yg9kSYPtht/SaTJJ5Sssxes0OTxuCVxuC4xyEk
- 8I4qCXhUdJr2M5kopfMWPNI6BtPLos2G2avg1zLjY7LuhpyVoOmk8pbpE2cYcjaVYHUN
- aqFBhAN0o4cTUAtC16KibuseOugfkCvagu+0/4Vh//8NGNBmS3QKoDpFc45yHCOKaEK7
- o7I94jkGOifTJsBxf8dexSMSf1nCpeBtXmYhmTWa82foSmeuO4z9bdSdk2qQHPmrcEjW
- zaWg==
-X-Gm-Message-State: AOJu0YzWIe4cXpw5Lh1dlYQam679Mb1dtdWXmn7Q0VEbn6m8pQ8EMDU3
- YJf5tLynRcOUlMQPmxX58G0B0EKo1ptTzh69tgoxj5TMQxPMZexuHqF/gbeC+OYCS7OskUeBFsR
- rnpi9N7bzgudVbj4AfRvgWw9jnaTUCKsoNYcj9wDmGnLaV+qj35qb3Hig5z/k4JI13nfT8geZ+1
- 10BrPi+2//Hf7pSZBXY8Kv2llBV/mp2Q==
-X-Received: by 2002:a05:6402:40c5:b0:586:178f:aaa4 with SMTP id
- 4fb4d7f45d1cf-58ce5169885mr2529743a12.9.1720046818825; 
- Wed, 03 Jul 2024 15:46:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENdjYuJum/0AUWZOYdpsjlAu/xeqTbkfywve+ZRZCJpAlgJW3rf9MBRkFeWZhx6xBDabQRzg==
-X-Received: by 2002:a05:6402:40c5:b0:586:178f:aaa4 with SMTP id
- 4fb4d7f45d1cf-58ce5169885mr2529725a12.9.1720046818289; 
- Wed, 03 Jul 2024 15:46:58 -0700 (PDT)
+ bh=C8uBwo3DHXNNhuf3rApspBTWgLSO8s/xdDqrmh63AMQ=;
+ b=sRwNVMkHy9UamGPbB6ajaf3LD58XUDVgaiQutJRiNueCdv1YuyrMBrG+XbnNShrE9F
+ swxeB4A5rh3v2MK7ruJkHFHU5l2ts72hOm1zzIGH5KScoY1eVfE/6+hbb4b0zVGvBLkD
+ G0TYcHAlWvX2nzzSAPDu1WmagIFGYQQ32rZTSxpBf4ygSTQcewO3Cy24y13EzbdKIEaM
+ qR3i+rGDhAQo1mk5btiLZE7uDxtYB6doTrIAnkcMiGjKQEmU3ou5UalSrcYCuAEz2Wsz
+ /W9FIN5iu0qUKEjGcXtd0vi02XeYO7mwmH9ORSBc23o17fTRYHRC6/76RoYms6VHeYKl
+ lMIw==
+X-Gm-Message-State: AOJu0YwLu665DZXaRllvuciPGiiUM1uZ6XETFYKxUUsUy2E924EeHDCk
+ JCxcu7zP/55LS+eYIt6MLdEvD4wP1fos3/E0MNMvn9ygBxvmOEnsC8J2MaSx59MrmDh5EU/uK7D
+ 2ZQQuEa63ZIOk7iN3I90DFaquE1GqCwnL4N1F4VSuu8X3/TF9M10KG9xoE+mAlh97jdVXA3faEo
+ gO0afo2yqsAQmxWQOl+IRrUv46gegaZg==
+X-Received: by 2002:a05:600c:63ce:b0:424:aa83:ef01 with SMTP id
+ 5b1f17b1804b1-4264a3d1e2emr354315e9.10.1720046997383; 
+ Wed, 03 Jul 2024 15:49:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGxeHLkFA9vFSVUs2nluB7hT2NCNMOHVvzFKql/6T+8kYJJHYwOs5zGw3Vabv0YclKur8iCbw==
+X-Received: by 2002:a05:600c:63ce:b0:424:aa83:ef01 with SMTP id
+ 5b1f17b1804b1-4264a3d1e2emr354135e9.10.1720046996637; 
+ Wed, 03 Jul 2024 15:49:56 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58612c8368esm7573106a12.19.2024.07.03.15.46.55
+ 5b1f17b1804b1-4264a1d1668sm1261255e9.1.2024.07.03.15.49.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:46:57 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:46:53 -0400
+ Wed, 03 Jul 2024 15:49:56 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:49:52 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL v3 34/85] pvpanic: Emit GUEST_PVSHUTDOWN QMP event on pvpanic
- shutdown signal
-Message-ID: <8db1f7be788b23f8eca189fe4546298ed387e9cb.1720046570.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Markus Armbruster <armbru@redhat.com>, Fan Ni <fan.ni@samsung.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: [PULL v3 73/85] hw/cxl/events: Mark cxl-add-dynamic-capacity and
+ cxl-release-dynamic-capcity unstable
+Message-ID: <5e3cd0a2f526c2e52dd513ee6b4385f1fb47a19e.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -104,61 +104,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Emit a QMP event on receiving a PVPANIC_SHUTDOWN event. Even though a typical
-SHUTDOWN event will be sent, it will be indistinguishable from a shutdown
-originating from other cases (e.g. KVM exit due to KVM_SYSTEM_EVENT_SHUTDOWN)
-that also issue the guest-shutdown cause.
-A management layer application can detect the new GUEST_PVSHUTDOWN event to
-determine if the guest is using the pvpanic interface to request shutdowns.
+Markus suggested that we make the unstable. I don't expect these
+interfaces to change because of their tight coupling to the Compute
+Express Link (CXL) Specification, Revision 3.1 Fabric Management API
+definitions which can only be extended in backwards compatible way.
+However, there seems little disadvantage in taking a cautious path
+for now and marking them as unstable interfaces.
 
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Message-Id: <20240527-pvpanic-shutdown-v8-6-5a28ec02558b@t-8ch.de>
+Suggested-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Message-Id: <20240625170805.359278-3-Jonathan.Cameron@huawei.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- qapi/run-state.json | 14 ++++++++++++++
- system/runstate.c   |  1 +
- 2 files changed, 15 insertions(+)
+ qapi/cxl.json | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index f8773f23b2..5ac0fec852 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -462,6 +462,20 @@
- { 'event': 'GUEST_CRASHLOADED',
-   'data': { 'action': 'GuestPanicAction', '*info': 'GuestPanicInformation' } }
- 
-+##
-+# @GUEST_PVSHUTDOWN:
-+#
-+# Emitted when guest submits a shutdown request via pvpanic interface
-+#
-+# Since: 9.1
-+#
-+# Example:
-+#
-+#     <- { "event": "GUEST_PVSHUTDOWN",
-+#          "timestamp": { "seconds": 1648245259, "microseconds": 893771 } }
-+##
-+{ 'event': 'GUEST_PVSHUTDOWN' }
-+
- ##
- # @GuestPanicAction:
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index a38622a0d1..bdfac67c47 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -453,6 +453,10 @@
+ # @extents: The "Extent List" field as defined in Compute Express Link
+ #     (CXL) Specification, Revision 3.1, Table 7-70.
  #
-diff --git a/system/runstate.c b/system/runstate.c
-index fc49fd3e61..c833316f6d 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -586,6 +586,7 @@ void qemu_system_guest_crashloaded(GuestPanicInformation *info)
- 
- void qemu_system_guest_pvshutdown(void)
- {
-+    qapi_event_send_guest_pvshutdown();
-     qemu_system_shutdown_request(SHUTDOWN_CAUSE_GUEST_SHUTDOWN);
++# Features:
++#
++# @unstable: For now this command is subject to change.
++#
+ # Since : 9.1
+ ##
+ { 'command': 'cxl-add-dynamic-capacity',
+@@ -462,7 +466,8 @@
+             'region': 'uint8',
+             '*tag': 'str',
+             'extents': [ 'CxlDynamicCapacityExtent' ]
+-           }
++           },
++  'features': [ 'unstable' ]
  }
  
+ ##
+@@ -527,6 +532,10 @@
+ # @extents: The "Extent List" field as defined in Compute Express
+ #     Link (CXL) Specification, Revision 3.1, Table 7-71.
+ #
++# Features:
++#
++# @unstable: For now this command is subject to change.
++#
+ # Since : 9.1
+ ##
+ { 'command': 'cxl-release-dynamic-capacity',
+@@ -538,5 +547,6 @@
+             'region': 'uint8',
+             '*tag': 'str',
+             'extents': [ 'CxlDynamicCapacityExtent' ]
+-           }
++           },
++  'features': [ 'unstable' ]
+ }
 -- 
 MST
 
