@@ -4,199 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FCD3C3065C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 02:27:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A2BC3065C
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 02:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOphY-0005SI-Mh; Tue, 02 Jul 2024 22:26:32 -0400
+	id 1sOpiY-0005mp-3B; Tue, 02 Jul 2024 22:27:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1sOphW-0005S0-NY
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 22:26:30 -0400
-Received: from esa10.fujitsucc.c3s2.iphmx.com ([68.232.159.247])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1sOphU-0007Ty-7h
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 22:26:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj1;
- t=1719973588; x=1751509588;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=lSxnYK5HAQ8wp7C4Mzjwt7qV7gpbAv8C2FBXUDCU5hY=;
- b=i51E30rbTfRMYgDMrFL9JN9tbTcHgjk2/d9tXOOL57qQGH28x1a1tlyH
- aD8F1yjHBm388DsmOrYqNYgZsykF5DBqa7J2OtZMSEUh0LFZyr1qyfcaX
- Pdjg5qmOUjoOhlhU6yXZc6gpEijeaZFk+9vWJ7+HJdBRGI2pJ4Dj2Qf2C
- rvMkNxvyJ86xuRCPrkeg8u1zFuM+o1xyA6ch5pYX5ri07CFWvzBmhC3eu
- U+Plv9UyOInOKIkmIXLmIbExCea+DpsSBbvQcnDBOa933jhw+V/qKOoFR
- uKgNM3E/3h3Gjlkt0T1RUYCXj0K13xKndmSvA5rvV1B8u6yuePgCSg4Hc A==;
-X-IronPort-AV: E=McAfee;i="6700,10204,11121"; a="124150049"
-X-IronPort-AV: E=Sophos;i="6.09,180,1716217200"; d="scan'208";a="124150049"
-Received: from mail-japaneastazlp17011026.outbound.protection.outlook.com
- (HELO TYVP286CU001.outbound.protection.outlook.com) ([40.93.73.26])
- by ob1.fujitsucc.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2024 11:26:20 +0900
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=b6bUxXW8N6eydPk6w6exkYJ/SFw2NvkEaDwn04fKRvBJnOwlymc6cr8o52NS4eZmFjac1Ai149MdbDytMP09cFojqvqBReLbDUd22OtGluPYKySqZNvcoFMQZF4/cGrBNiy54Hzvp4PpRtgsZt9yKWsvZDiXSbpeFRHY2v2NeQPpto2FMKHGrApKzyXi13jdP98Wcvo0Wy/YnxTv1zOZpoex5/+a6enokLjiCcbObQFFSqkGhTTGwetjOHBTxfwQj/0qWMes4sJ7QVuVRtwcw4zMObpEg74ueeKOS6KxQnBAy2lj5+HtSZVbT3vyQkYRovxPd1ePWvAra4QtWKNDYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lSxnYK5HAQ8wp7C4Mzjwt7qV7gpbAv8C2FBXUDCU5hY=;
- b=lILbJNZ5REww58fkh8qGr6qR9q8JynE1F7UvYiVX8uM+b532Gmw371oNjhDQw2m3HJW/Hg2V7Xa+wTbTVkLCVxKk1Q5LdzYM4dbWW76xmqwgdo5MC70oYkS5apo4d0rO9BvN4yOHix7ShXbatJ3MsZkGQWAzZIKvi1CQ47nywdxAbnP4MFOvqtAZjmyljJshrwZH6HXHGBAP9QtFDOrT/59EhLvrz49MHpUiHJEE5yP13PrJIjZve0E99vr00GTHenE7AdZ38F2sCvq8vIYhEWzMX83uJOkrrcpyW1gGPcVulpxx/15bdmJZBg1rO5znOz6nceCjr0wecIrG7W3PVA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
- dkim=pass header.d=fujitsu.com; arc=none
-Received: from OSZPR01MB6453.jpnprd01.prod.outlook.com (2603:1096:604:ed::14)
- by OS3PR01MB7109.jpnprd01.prod.outlook.com (2603:1096:604:127::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7719.33; Wed, 3 Jul
- 2024 02:26:17 +0000
-Received: from OSZPR01MB6453.jpnprd01.prod.outlook.com
- ([fe80::9ef5:e83:9047:de11]) by OSZPR01MB6453.jpnprd01.prod.outlook.com
- ([fe80::9ef5:e83:9047:de11%6]) with mapi id 15.20.7741.017; Wed, 3 Jul 2024
- 02:26:17 +0000
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: =?utf-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>,
- =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>
-Subject: RE: [PATCH v4 4/7] tests/tcg: add mechanism to run specific tests
- with plugins
-Thread-Topic: [PATCH v4 4/7] tests/tcg: add mechanism to run specific tests
- with plugins
-Thread-Index: AQHazLAn/kUGvRE9UECaw4ahRqeDtLHkR0FA
-Date: Wed, 3 Jul 2024 02:26:16 +0000
-Message-ID: <OSZPR01MB64534F19FE30F18BB525E75D8DDD2@OSZPR01MB6453.jpnprd01.prod.outlook.com>
-References: <20240702184448.551705-1-pierrick.bouvier@linaro.org>
- <20240702184448.551705-5-pierrick.bouvier@linaro.org>
-In-Reply-To: <20240702184448.551705-5-pierrick.bouvier@linaro.org>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: =?utf-8?B?TVNJUF9MYWJlbF8xZTkyZWY3My0wYWQxLTQwYzUtYWQ1NS00NmRlMzM5Njgw?=
- =?utf-8?B?MmZfQWN0aW9uSWQ9NjA1YWM1YmMtM2RkOS00NTExLTk2MDMtYTU0MzQ0NDM1?=
- =?utf-8?B?ZjMzO01TSVBfTGFiZWxfMWU5MmVmNzMtMGFkMS00MGM1LWFkNTUtNDZkZTMz?=
- =?utf-8?B?OTY4MDJmX0NvbnRlbnRCaXRzPTA7TVNJUF9MYWJlbF8xZTkyZWY3My0wYWQx?=
- =?utf-8?B?LTQwYzUtYWQ1NS00NmRlMzM5NjgwMmZfRW5hYmxlZD10cnVlO01TSVBfTGFi?=
- =?utf-8?B?ZWxfMWU5MmVmNzMtMGFkMS00MGM1LWFkNTUtNDZkZTMzOTY4MDJmX01ldGhv?=
- =?utf-8?B?ZD1Qcml2aWxlZ2VkO01TSVBfTGFiZWxfMWU5MmVmNzMtMGFkMS00MGM1LWFk?=
- =?utf-8?B?NTUtNDZkZTMzOTY4MDJmX05hbWU9RlVKSVRTVS1QVUJMSUPigIs7TVNJUF9M?=
- =?utf-8?B?YWJlbF8xZTkyZWY3My0wYWQxLTQwYzUtYWQ1NS00NmRlMzM5NjgwMmZfU2V0?=
- =?utf-8?B?RGF0ZT0yMDI0LTA3LTAzVDAyOjI1OjU1WjtNU0lQX0xhYmVsXzFlOTJlZjcz?=
- =?utf-8?B?LTBhZDEtNDBjNS1hZDU1LTQ2ZGUzMzk2ODAyZl9TaXRlSWQ9YTE5ZjEyMWQt?=
- =?utf-8?Q?81e1-4858-a9d8-736e267fd4c7;?=
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=fujitsu.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: OSZPR01MB6453:EE_|OS3PR01MB7109:EE_
-x-ms-office365-filtering-correlation-id: da5a552f-9851-4978-72a0-08dc9b07848b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|38070700018|1580799027; 
-x-microsoft-antispam-message-info: =?utf-8?B?VWNjamI5Ym40b1FLdGdXamFMUWtZeGY4SVViUHNsa012bFlXTzNvOUNsM0lL?=
- =?utf-8?B?UFQ0eE9idWh4VjlHL1BCYlR5c2daNkY0WFhaSTBvdllPYThvQithYjI4bEJY?=
- =?utf-8?B?QWd4enF0YkFQTFFPdE9zSlNkVmo4QTZlZFlPdUJ6YktzdmNZNGIwb082WEpV?=
- =?utf-8?B?cjVablYwamNMMzZScEJLK1AwWEovVm9QVjAxM2E0bks3OVFZU1I5ek9DZlJj?=
- =?utf-8?B?dmNwSGlKTCtXZmJ6L3h5b1lBM0dqRXZvN3lsU1MxNGtIRjhCVDljWmxya1Nj?=
- =?utf-8?B?RmJtbUxONFZ3ZUE0a1BSdmdxVk80UExkQWk3WlpYN0RxT1RBeWV4eDQ2aU9Y?=
- =?utf-8?B?OTlhMWN4WXZ4YzdLYUN5OHNBb0xCQ1VTNG5McFNIQmtRRmVaNWlWdHJ6bGxS?=
- =?utf-8?B?ZUtFaVN3Qlo0dU9NbTRTU01MRGxpY29WWEVVREQ2cmpNYzJyZU9rZlJXUE94?=
- =?utf-8?B?bXNaQXB5OHR6Q1VvYW1NRitLd25UcXRIajQ0SzNPbFdJUGVZRHJFblRmK3E4?=
- =?utf-8?B?S1d0RVRKemFtclJWdm1aZzExVmU1aDJFZDM1bE5WaHcvbXFQdmxLa2pMeTZu?=
- =?utf-8?B?bjhUUnZKVjF3dmhMdkFxYkYyb3M0enQvam5MTWEwTzFZazhSaFljYTFGUVJi?=
- =?utf-8?B?UG4xK1hxMW92dTBreE5DNlN1cU9RRkc2Q3JVclNzTXNoVnRVMXAvSEVuRmJp?=
- =?utf-8?B?aFFURFRndnBMVVhORGhmQWpBb25YV0o1aUs0emhua1lCaVlBZnI1NE8wTmlS?=
- =?utf-8?B?R29OVThOZS9BcG5ScmlUaGRHUTNtUWhrcXBQQmVwcW5QNFhiVldweGZrWFZh?=
- =?utf-8?B?MTdsOXo0cTExQjJwQ1FIY25QaFdrRkdoMmZCZXJ4RkdLd2VtNTFhc21LYjlo?=
- =?utf-8?B?TGhNMHA4clg0VGVKZlYzQVMzZ1M4azFaeVR6Ui9yVjcrSVZnclVxUXJMNFZr?=
- =?utf-8?B?LzhEUDgvVVZadFk4S0Myc1lOZm5BcEVxcFlIa2VhSWpOS21BZExqUDBjYThQ?=
- =?utf-8?B?ZWhnOStEMDlwOEJFbG5QNGM1RmE3WnpScHFnQ2pJRHViSFhFQnRUOFR3QTcw?=
- =?utf-8?B?UjllMWNHUTRsUWNCT3lGM0M0RWExUFBLTExTU0JFTmVBdjdWbE1peVlOdDNZ?=
- =?utf-8?B?M3dub1cyZndVZ1N1cHBHdldwSVZYQ2sxWlZ1eVJTYmxYM1V1cXpuZHpnS2lF?=
- =?utf-8?B?MXJtWEJNUGtIMUh1dzA0QTNRbFFLZk9nQmc1dkNVTW1tVUtnUEVEWnNkNW1v?=
- =?utf-8?B?eFB6Vkp4dzRCZTVpUXN2QzVxZUlCb0lOL3JTa21IQjhQdFp0MGJ5U2NmaFN1?=
- =?utf-8?B?VEhKSHh2V0F5SkliSkM0RFQ2VHJSRFRDM2JIYTVucUtwbUxWN3ZRcTVQSXd5?=
- =?utf-8?B?UHVkVFd0ZjhsNmtTVDNQSU9vYnJDSXMycVQrU3Q5eFZRMERzQUV2bldZV25p?=
- =?utf-8?B?MGYzajlXbUJsR3dMV2VaMDRhK0dTRkpDOGpTMkNhL1BoL1JxYThHQmNLWk11?=
- =?utf-8?B?VmppUzVZL1d3dnJ2NC90MVVYZUk5TnNydHJoeCtGQWxUWmloZC9ZejhNY2ds?=
- =?utf-8?B?cmZIRTU5d09WN3pCMERxVERtQ1pnLytadlcwTkRUSWJraXpkWHVkeUM0cnor?=
- =?utf-8?B?NXJBcmZFTUlyaS9QOUVLai8yUjlabmJWa3dxM0gzVG5yNFg1bXByNnV1TmI0?=
- =?utf-8?B?Z3laMERhMldXYUFzdEh4OXR1ajNRWGRxeExsczZnZ3lDSjJac1lSaCtsRjlP?=
- =?utf-8?B?ZnVDczNqa1YvSzkyNnJoRzZKRjREbWFmbTBaeVpHdmhoaWNleTdxL0pya01a?=
- =?utf-8?B?L2RLaWFCa1FOay9FQjEzbUh6cEUwdW1GTTZLR3NtRVd5c1hJNmhTc0w2YXNU?=
- =?utf-8?B?UnVuWUlKY1hjajd1VWVmRXlFUjI5Z1RhT3BHSURRN2pjQlRrUGZhcjVWb3Mw?=
- =?utf-8?Q?XIcDKQiU/wo=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-cn; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:OSZPR01MB6453.jpnprd01.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(376014)(366016)(1800799024)(38070700018)(1580799027);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?aHBqd2JwK0p2Vy8rSmdka3BqbWpoWUZyQ29FUVA0ZmpPMjFOR2xjV2tPZHNT?=
- =?utf-8?B?amxQNGErQlNKWXZlS2N2Ri9HbDVxeXp1bjBKYWRNSVVrUmdmSnpzcTJRU3M0?=
- =?utf-8?B?SDVLSUJiQW4ybkhjYVRrRFJ2cDBtVTdZZGQrNE9nbk1TVWNXSktsNUhHcnV4?=
- =?utf-8?B?N0pIcnJzU1EvNDlSY2h3bG0xS2FJRGhqTmZPK1h5NUZCNzhHTWhFRkdPTjIw?=
- =?utf-8?B?RytYOUlJNUZyZVVvMWxpV25yNmhMbWd4Vk1WeXFQQlJIQ2dlbmc4c01qdVdv?=
- =?utf-8?B?bjdGRG1URlowcjN3UUs3WUNFSkpmbXJOc3V1Y1JYZ05TNlZhamJuU3BXVnk1?=
- =?utf-8?B?eTN1UVdibUNtK2U0ZzdIdXllMCtFZzVES1R5MHpLQWcxdUdLRGp6cWxIUGZk?=
- =?utf-8?B?VjV6ZXFhUFkwZ3dmekVwNWJja1V6WUQyWkRWeXNDTEt2T1FaZTBvaURHWGV5?=
- =?utf-8?B?Mys1NDI5ODh5OEVmOUJKZm9YNGdDRXF3RXNrNVdlQ0xhcXRrVXUxbmZlVXVn?=
- =?utf-8?B?bkVWTEhNT1ljMFVodVhCaEQ1d0UvNHVMM0ZqOGFkeDBZWEtkSTJNczk1VHVV?=
- =?utf-8?B?cDZJSHVhZlFvS3VLUG5jcUx6YmpOTmpjbTROSTRZQUd6cWtKY3E3WVRlNnlv?=
- =?utf-8?B?a05oVTg5bzRjUk1TU3Jua2l0MU0rVnBGR29RdCtCS3VMWDFOSHg3NSs5L3ds?=
- =?utf-8?B?cUU4Y3g4MThtZFZacmxRb0JWdFBDTUttWVV6SHVNQ1I4TVN0T0RTMFdZUStB?=
- =?utf-8?B?aWQxN1B5U3VpYUQzRG5OZWNnMnlRZ040NkZuaVZWSEhmWkltbEMrRG9hZUg4?=
- =?utf-8?B?THV6Y1ZhV21vOEtkcnprS2lMKzA2bVN2WExlUDZFeW4zM1lEMUQ3dWo4elVZ?=
- =?utf-8?B?T1dXVUVUMGtMaWN4YXhsT2JXdjlQL21FNWJDc1cwcFlZUXNQVlh4SVlBb2Jo?=
- =?utf-8?B?bFl3aDdPZncvSW1JbmYvbUgxT3dwVGR5YXFOOTJTMUcyd1dBMGM0eTZHV05I?=
- =?utf-8?B?dUkwdmlFZTVjemxZOGVlTTFudTZPZ0RBTTlDcUluMDByWXFXQTR1enFGL2g5?=
- =?utf-8?B?bGtocVpWc0xYUXpCVHpxdEd4RzNSSnBOU1JMNGRac1FQZTJMMDIxemhQYTNP?=
- =?utf-8?B?SUJBVVFpOG1tTDk4Ym5xbFRxYS9MQ2pUOGxSSHhLUFU0THRJYVh6VUw4NWR3?=
- =?utf-8?B?Q3RKTTRQSmthK3pzaWNPTEpva3dNRlF1UzdXRlNMRjYxY3FZL0ZudEVBaFlE?=
- =?utf-8?B?blRiQkVXc05XM1JyWmFaQ2RxMzVrdWNtdStvZUsxaXVaZXdaMTV5bGttMWF3?=
- =?utf-8?B?RTZGOFUyeEdWeWc2cVJVbUdlYTE5SHprMFIvMXdtT0FHalVKdm95Z1hqT0Ny?=
- =?utf-8?B?UUIraW0wOGd3WE1sN1hta29FZW15clNJMS9OV2NhbERGNW9RaXM5dnF5elJH?=
- =?utf-8?B?VUFwc2dDbGZiU2JyZUhhYUFpMGx5RVBGSVJWSzcxZTFPRVJWczVneTdWRzll?=
- =?utf-8?B?RGxQNU9KT2ZJbDVPTVl5dE1QTHFSdk5nd3FXQ2ltZUdjQm9heXlJSlN1ZGhp?=
- =?utf-8?B?UE90VnlVb3lwbVBTNVNubk51R3pBVGw4bmhyMytmV3NZei9kOWNjbDRTRGpa?=
- =?utf-8?B?UUdVa1RtS3E0YVkyRGx4Sy9ZRzNBNXhWRTg5eWhqVmFzOTVERnJUOFJIVXBI?=
- =?utf-8?B?S0s5TmJHWTEvMlhldTY5elVOQlV4WmJtWnphK2pRblBSUVJtMldqaEVxZW1X?=
- =?utf-8?B?VlU1dmFGaldvc3NiZyt2b0pDNEJHamRLSTE3L3FGdUpDOVViZ09PM3BZMU9P?=
- =?utf-8?B?cmV0amNCdjY3SGNQZzA3ck4xeGhicWZIRW1RS05Eb2N0NjNVRW95YXFNTTIr?=
- =?utf-8?B?bUtBSTlyM3NIRDhOZkc1dDlPYTBBYmFoSEh0am1zWWxrU1dEZEs2cU45WlVV?=
- =?utf-8?B?Y05nTlRMLzVPcTdGU2l5aitiaER5bjNnRFE5Q0xIVG5OMlZZNis0c2FUcDIy?=
- =?utf-8?B?bHcwcTJndndVVFdUdmVRQ3JjWDQzeGpvOUQvQ2JDeXJGNWFRcDUrcTRTbnhV?=
- =?utf-8?B?VFlqQmp4RjlKb2hWZ0wxZ21DT3ZHbS9WREExMjA4Zm5BTDRLNUt2SDhSMEZx?=
- =?utf-8?Q?9FIJeak/uLeTNUii4MJlgT2zP?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sOpiV-0005m5-HJ; Tue, 02 Jul 2024 22:27:31 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sOpiT-0000I2-KQ; Tue, 02 Jul 2024 22:27:31 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-4ef52ac0ff5so1481829e0c.1; 
+ Tue, 02 Jul 2024 19:27:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1719973648; x=1720578448; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1u3Z3DPkPF7S50P+13nA8NYuX8jYFdedJ40RQ+y9nGU=;
+ b=RdDcqi9+wu0DCDHP4AsUX5mnwUQuLd5hEghGP3pldqJwF8vYP67v9yxCLmvMnqdFte
+ bm4SrShPfX/a6KlweGj1rrPE4sMNGFayIazF8E3VUCNAUABiRg2sYR/vhXq31bkPeo8V
+ O/LVPPbE+f2QVBfEU35IKMDDDwzzLEqLlprlt1QrOqFP3UDCPkxYS1LlE9nv5oqAgvn0
+ YNyVsZ0RdRDl0/uN+64Z7IQUaGGmW1E7GpZ5vKmltWbXGd8Hdnpx6TvcN5OBEBgLZR0P
+ EudhZqjIdygQZgLzw+Q0FxKtG3qJCh6tzfiUhs71aPwc/agDENWv81rGUzy1CXRJw5QF
+ /Jzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719973648; x=1720578448;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1u3Z3DPkPF7S50P+13nA8NYuX8jYFdedJ40RQ+y9nGU=;
+ b=bnts9qPbvHSGZSnIcluzRjJdFZNwwuCJXEHutqVGiaYJg7KFm2SnNO6JYGBevpOufB
+ I3SICRhcHCsPg2V/50PKbbncGtpnDwUBJSijSE5DsZw6lNsnvixuUm1CZFEpI8bVbYMf
+ F6HVm8PXgR0etM2wFzWnJYaJJPU55sqTEJN4XmN6vVtDDGd20CbRMJCf3cSQ02v6Io2c
+ ybAW5Hx41s9f3rjigEgB3abGcFFR4ti7E721y+3LuFh9WP5YoZYoafnXZ4STte7djrRf
+ O47QajcC6iJ7v05WHdnpj+l9B1sdXDfE2MejDY47fcIPr8ZRBy8JHOhSOcJkuTV1WlOi
+ 3TeQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJD4Hom7Tx1oMBz0BCqlfSrRITxSZIeV3o6b+34iCtZavWzxxUEGmI6LDT7/kPSL7oxEMc4BTU4K4tTRN78r+GSwIXyGE=
+X-Gm-Message-State: AOJu0YzUTPzhKMQ5JGEfvt6/hWNYhqKqc6x0AOjjURhPiAW+d8o6C+Ma
+ tOEo4AGR3t4FwQ+nkR0JvF1tBGtulfsERcaZiLMSLqli9PPm5WJ8IuffAdOn1sr43U/TMwnBMBF
+ OGwwUxp08SWmbF8PiR+aafFguO6c=
+X-Google-Smtp-Source: AGHT+IHMBU0YX6+8mrBNCw35mNxrS9h253ZDxRcqEOgBbZ9GyBE34IjXIeJ66EPNzkgEV/1JEUH7Vm81/Gn6jjZW6MM=
+X-Received: by 2002:a05:6122:2899:b0:4ea:edfb:8d89 with SMTP id
+ 71dfb90a1353d-4f2a56dd66cmr11920434e0c.12.1719973648069; Tue, 02 Jul 2024
+ 19:27:28 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 0bCi/YS6Mocpq9uLa8lKtrYuaciZesBGyzA3eNiV3m0iWW+ilDBnRrunofrghZgQWvrLv/gjDe3/JngzOmJgu1SPahMNQG8RbXbZNendKp55OJXbkq6AVE8xIQZKQKdsWCy57btNyImxXEmwGLmxlNrqn2UNsTtRK/5wMBis0Dawbs/lwRzH5Yx07KOsRAVkd0w2Tg8IzqmGAp8TuaO130INA1v09TLlz2KzcpMAfw7mxNdtiZNSCNvm/Ng+61VD0naKl38Wukm5GMs2xKqQD1LgEFhNPdc0NsESkQoWGeZaHi1n0tyA3zGg9SPaYOlgUax64HPmqQJG/ewbcZ/0e7q3vl2QWSS3X1Clhzs3h0psZodZK25XeAbkrxNrI6+3KWRpkSuYFPYEkfgGWJco0h3hShRCSZM/NATEWo/VLS9tbgMmbLFLFj7cgOiOHfF1jWW0rxppqW9swJ+wWOjcWH22VhpOPHBPyCrBSd5GQA+BAtDHCcidyXobvFUuvl4aBtq5iH+j+XwrowvH9RIlYWnDX+ZtG3lZpl/bS+hqiuJXgZhHPoBIS0ieNXYt0CUeb92AYUvVAXaKNaN+ncCXXiGShhRN/sHazQ+cYUEEolzewI8amY/LPeDwoP6VKfgW
-X-OriginatorOrg: fujitsu.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: OSZPR01MB6453.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: da5a552f-9851-4978-72a0-08dc9b07848b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jul 2024 02:26:17.0021 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eByeIAoLoYgbRiYM3GLnOCNGV1vijZuVFccP2tNlPNS9CfyficHEowiyt0t8hzP4UXSYfP/RirALroN7r8lbUA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: OS3PR01MB7109
-Received-SPF: pass client-ip=68.232.159.247;
- envelope-from=yaoxt.fnst@fujitsu.com; helo=esa10.fujitsucc.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240701033722.954-1-zhiwei_liu@linux.alibaba.com>
+ <20240701033722.954-2-zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <20240701033722.954-2-zhiwei_liu@linux.alibaba.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 3 Jul 2024 12:27:01 +1000
+Message-ID: <CAKmqyKOFAYWk6=-_nOM=aMyQEFbkLV8hT2bGW3JrmtTDLtb7kQ@mail.gmail.com>
+Subject: Re: [PATCH 1/6] target/riscv: Add fw_dynamic_info32 for booting RV32
+ OpenSBI
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
+ bmeng.cn@gmail.com, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -209,44 +91,187 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>
-From:  "Xingtao Yao (Fujitsu)" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VGVzdGVkLWJ5OiBYaW5ndGFvIFlhbyA8eWFveHQuZm5zdEBmdWppdHN1LmNvbT4NCg0KPiAtLS0t
-LU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBxZW11LWRldmVsLWJvdW5jZXMreWFveHQu
-Zm5zdD1mdWppdHN1LmNvbUBub25nbnUub3JnDQo+IDxxZW11LWRldmVsLWJvdW5jZXMreWFveHQu
-Zm5zdD1mdWppdHN1LmNvbUBub25nbnUub3JnPiBPbiBCZWhhbGYgT2YNCj4gUGllcnJpY2sgQm91
-dmllcg0KPiBTZW50OiBXZWRuZXNkYXksIEp1bHkgMywgMjAyNCAyOjQ1IEFNDQo+IFRvOiBxZW11
-LWRldmVsQG5vbmdudS5vcmcNCj4gQ2M6IEFsZXggQmVubsOpZSA8YWxleC5iZW5uZWVAbGluYXJv
-Lm9yZz47IE1haG1vdWQgTWFuZG91cg0KPiA8bWEubWFuZG91cnJAZ21haWwuY29tPjsgUGllcnJp
-Y2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPjsNCj4gQWxleGFuZHJlIElv
-b3NzIDxlcmRuYXhlQGNyYW5zLm9yZz47IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpDQo+IDxwaGls
-bWRAbGluYXJvLm9yZz47IFBhb2xvIEJvbnppbmkgPHBib256aW5pQHJlZGhhdC5jb20+OyBSaWNo
-YXJkIEhlbmRlcnNvbg0KPiA8cmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZz47IEVkdWFyZG8g
-SGFia29zdCA8ZWR1YXJkb0BoYWJrb3N0Lm5ldD4NCj4gU3ViamVjdDogW1BBVENIIHY0IDQvN10g
-dGVzdHMvdGNnOiBhZGQgbWVjaGFuaXNtIHRvIHJ1biBzcGVjaWZpYyB0ZXN0cyB3aXRoDQo+IHBs
-dWdpbnMNCj4gDQo+IE9ubHkgbXVsdGlhcmNoIHRlc3RzIGFyZSBydW4gd2l0aCBwbHVnaW5zLCBh
-bmQgd2Ugd2FudCB0byBiZSBhYmxlIHRvIHJ1bg0KPiBwZXItYXJjaCB0ZXN0IHdpdGggcGx1Z2lu
-cyB0b28uDQo+IA0KPiBSZXZpZXdlZC1ieTogUmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVu
-ZGVyc29uQGxpbmFyby5vcmc+DQo+IFNpZ25lZC1vZmYtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBp
-ZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4gLS0tDQo+ICB0ZXN0cy90Y2cvTWFrZWZpbGUu
-dGFyZ2V0IHwgMyArKy0NCj4gIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDEgZGVs
-ZXRpb24oLSkNCj4gDQo+IGRpZmYgLS1naXQgYS90ZXN0cy90Y2cvTWFrZWZpbGUudGFyZ2V0IGIv
-dGVzdHMvdGNnL01ha2VmaWxlLnRhcmdldA0KPiBpbmRleCBmMjFiZTUwZDNiMi4uZGM1YzhiN2Ez
-YjQgMTAwNjQ0DQo+IC0tLSBhL3Rlc3RzL3RjZy9NYWtlZmlsZS50YXJnZXQNCj4gKysrIGIvdGVz
-dHMvdGNnL01ha2VmaWxlLnRhcmdldA0KPiBAQCAtMTUyLDEwICsxNTIsMTEgQEAgUExVR0lOUz0k
-KHBhdHN1YnN0ICUuYywgbGliJS5zbywgJChub3RkaXIgJCh3aWxkY2FyZA0KPiAkKFBMVUdJTl9T
-UkMpLyouYykpKQ0KPiAgIyBvbmx5IGV4cGFuZCBNVUxUSUFSQ0hfVEVTVFMgd2hpY2ggYXJlIGNv
-bW1vbiBvbiBtb3N0IG9mIG91ciB0YXJnZXRzDQo+ICAjIHRvIGF2b2lkIGFuIGV4cG9uZW50aWFs
-IGV4cGxvc2lvbiBhcyBuZXcgdGVzdHMgYXJlIGFkZGVkLiBXZSBhbHNvDQo+ICAjIGFkZCBzb21l
-IHNwZWNpYWwgaGVscGVycyB0aGUgcnVuLXBsdWdpbi0gcnVsZXMgY2FuIHVzZSBiZWxvdy4NCj4g
-KyMgSW4gbW9yZSwgZXh0cmEgdGVzdHMgY2FuIGJlIGFkZGVkIHVzaW5nIFBMVUdJTlNfVEVTVFMg
-dmFyaWFibGUuDQo+IA0KPiAgaWZuZXEgKCQoTVVMVElBUkNIX1RFU1RTKSwpDQo+ICAkKGZvcmVh
-Y2ggcCwkKFBMVUdJTlMpLCBcDQo+IC0JJChmb3JlYWNoIHQsJChNVUxUSUFSQ0hfVEVTVFMpLFwN
-Cj4gKwkkKGZvcmVhY2ggdCwkKE1VTFRJQVJDSF9URVNUUykgJChQTFVHSU5TX1RFU1RTKSxcDQo+
-ICAJCSQoZXZhbCBydW4tcGx1Z2luLSQodCktd2l0aC0kKHApOiAkdCAkcCkgXA0KPiAgCQkkKGV2
-YWwgUlVOX1RFU1RTKz1ydW4tcGx1Z2luLSQodCktd2l0aC0kKHApKSkpDQo+ICBlbmRpZiAjIE1V
-TFRJQVJDSF9URVNUUw0KPiAtLQ0KPiAyLjM5LjINCj4gDQoNCg==
+On Mon, Jul 1, 2024 at 1:40=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibaba=
+.com> wrote:
+>
+> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+>
+> RV32 OpenSBI need a fw_dynamic_info parameter with 32-bit fields instead
+> of target_ulong.
+>
+> In RV64 QEMU, target_ulong is 64. So it is not right for booting RV32 Ope=
+nSBI.
+> We create a fw_dynmaic_info32 struct for this purpose.
+>
+> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> ---
+>  hw/riscv/boot.c                 | 35 ++++++++++++++++++++++-----------
+>  hw/riscv/sifive_u.c             |  3 ++-
+>  include/hw/riscv/boot.h         |  4 +++-
+>  include/hw/riscv/boot_opensbi.h | 29 +++++++++++++++++++++++++++
+>  4 files changed, 57 insertions(+), 14 deletions(-)
+>
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index 47281ca853..1a2c1ff9e0 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -342,27 +342,33 @@ void riscv_load_fdt(hwaddr fdt_addr, void *fdt)
+>                          rom_ptr_for_as(&address_space_memory, fdt_addr, =
+fdtsize));
+>  }
+>
+> -void riscv_rom_copy_firmware_info(MachineState *machine, hwaddr rom_base=
+,
+> -                                  hwaddr rom_size, uint32_t reset_vec_si=
+ze,
+> +void riscv_rom_copy_firmware_info(MachineState *machine,
+> +                                  RISCVHartArrayState *harts,
+> +                                  hwaddr rom_base, hwaddr rom_size,
+> +                                  uint32_t reset_vec_size,
+>                                    uint64_t kernel_entry)
+>  {
+> +    struct fw_dynamic_info32 dinfo32;
+>      struct fw_dynamic_info dinfo;
+>      size_t dinfo_len;
+>
+> -    if (sizeof(dinfo.magic) =3D=3D 4) {
+> -        dinfo.magic =3D cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
+> -        dinfo.version =3D cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
+> -        dinfo.next_mode =3D cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
+> -        dinfo.next_addr =3D cpu_to_le32(kernel_entry);
+> +    if (riscv_is_32bit(harts)) {
+> +        dinfo32.magic =3D cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
+> +        dinfo32.version =3D cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
+> +        dinfo32.next_mode =3D cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
+> +        dinfo32.next_addr =3D cpu_to_le32(kernel_entry);
+> +        dinfo32.options =3D 0;
+> +        dinfo32.boot_hart =3D 0;
+> +        dinfo_len =3D sizeof(dinfo32);
+>      } else {
+>          dinfo.magic =3D cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
+>          dinfo.version =3D cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
+>          dinfo.next_mode =3D cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
+>          dinfo.next_addr =3D cpu_to_le64(kernel_entry);
+> +        dinfo.options =3D 0;
+> +        dinfo.boot_hart =3D 0;
+> +        dinfo_len =3D sizeof(dinfo);
+>      }
+> -    dinfo.options =3D 0;
+> -    dinfo.boot_hart =3D 0;
+> -    dinfo_len =3D sizeof(dinfo);
+>
+>      /**
+>       * copy the dynamic firmware info. This information is specific to
+> @@ -374,7 +380,10 @@ void riscv_rom_copy_firmware_info(MachineState *mach=
+ine, hwaddr rom_base,
+>          exit(1);
+>      }
+>
+> -    rom_add_blob_fixed_as("mrom.finfo", &dinfo, dinfo_len,
+> +    rom_add_blob_fixed_as("mrom.finfo",
+> +                           riscv_is_32bit(harts) ?
+> +                           (void *)&dinfo32 : (void *)&dinfo,
+> +                           dinfo_len,
+>                             rom_base + reset_vec_size,
+>                             &address_space_memory);
+>  }
+> @@ -430,7 +439,9 @@ void riscv_setup_rom_reset_vec(MachineState *machine,=
+ RISCVHartArrayState *harts
+>      }
+>      rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
+>                            rom_base, &address_space_memory);
+> -    riscv_rom_copy_firmware_info(machine, rom_base, rom_size, sizeof(res=
+et_vec),
+> +    riscv_rom_copy_firmware_info(machine, harts,
+> +                                 rom_base, rom_size,
+> +                                 sizeof(reset_vec),
+>                                   kernel_entry);
+>  }
+>
+> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+> index af5f923f54..5010c3eadb 100644
+> --- a/hw/riscv/sifive_u.c
+> +++ b/hw/riscv/sifive_u.c
+> @@ -646,7 +646,8 @@ static void sifive_u_machine_init(MachineState *machi=
+ne)
+>      rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
+>                            memmap[SIFIVE_U_DEV_MROM].base, &address_space=
+_memory);
+>
+> -    riscv_rom_copy_firmware_info(machine, memmap[SIFIVE_U_DEV_MROM].base=
+,
+> +    riscv_rom_copy_firmware_info(machine, &s->soc.u_cpus,
+> +                                 memmap[SIFIVE_U_DEV_MROM].base,
+>                                   memmap[SIFIVE_U_DEV_MROM].size,
+>                                   sizeof(reset_vec), kernel_entry);
+>
+> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+> index a2e4ae9cb0..806256d23f 100644
+> --- a/include/hw/riscv/boot.h
+> +++ b/include/hw/riscv/boot.h
+> @@ -56,7 +56,9 @@ void riscv_setup_rom_reset_vec(MachineState *machine, R=
+ISCVHartArrayState *harts
+>                                 hwaddr rom_base, hwaddr rom_size,
+>                                 uint64_t kernel_entry,
+>                                 uint64_t fdt_load_addr);
+> -void riscv_rom_copy_firmware_info(MachineState *machine, hwaddr rom_base=
+,
+> +void riscv_rom_copy_firmware_info(MachineState *machine,
+> +                                  RISCVHartArrayState *harts,
+> +                                  hwaddr rom_base,
+>                                    hwaddr rom_size,
+>                                    uint32_t reset_vec_size,
+>                                    uint64_t kernel_entry);
+> diff --git a/include/hw/riscv/boot_opensbi.h b/include/hw/riscv/boot_open=
+sbi.h
+> index 1b749663dc..18664a174b 100644
+> --- a/include/hw/riscv/boot_opensbi.h
+> +++ b/include/hw/riscv/boot_opensbi.h
+> @@ -58,4 +58,33 @@ struct fw_dynamic_info {
+>      target_long boot_hart;
+>  };
+>
+> +/** Representation dynamic info passed by previous booting stage */
+> +struct fw_dynamic_info32 {
+> +    /** Info magic */
+> +    int32_t magic;
+> +    /** Info version */
+> +    int32_t version;
+> +    /** Next booting stage address */
+> +    int32_t next_addr;
+> +    /** Next booting stage mode */
+> +    int32_t next_mode;
+> +    /** Options for OpenSBI library */
+> +    int32_t options;
+> +    /**
+> +     * Preferred boot HART id
+> +     *
+> +     * It is possible that the previous booting stage uses same link
+> +     * address as the FW_DYNAMIC firmware. In this case, the relocation
+> +     * lottery mechanism can potentially overwrite the previous booting
+> +     * stage while other HARTs are still running in the previous booting
+> +     * stage leading to boot-time crash. To avoid this boot-time crash,
+> +     * the previous booting stage can specify last HART that will jump
+> +     * to the FW_DYNAMIC firmware as the preferred boot HART.
+> +     *
+> +     * To avoid specifying a preferred boot HART, the previous booting
+> +     * stage can set it to -1UL which will force the FW_DYNAMIC firmware
+> +     * to use the relocation lottery mechanism.
+> +     */
+> +    int32_t boot_hart;
+> +};
+>  #endif
+> --
+> 2.43.0
+>
+>
 
