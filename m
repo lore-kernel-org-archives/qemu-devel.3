@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90923C41513
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 10:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECCB4C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 10:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOxFM-0004c0-On; Wed, 03 Jul 2024 06:29:56 -0400
+	id 1sOxSr-0008QU-1I; Wed, 03 Jul 2024 06:43:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sOxFL-0004bU-DQ
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:29:55 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sOxFI-000189-Mr
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:29:55 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a7527afa23cso383536666b.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 03:29:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720002591; x=1720607391; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=S3BaVCbWUQVWg8g6+tIMwrc/4+x9EHM3HGscom/xawg=;
- b=fJ+uCdqHrz7q4L8Hglf+2JCuS9i60E0XYvKdd+Fnvf+qCzml0W6XqwaL/Ez+jkcnvX
- ZXkR5UCdtJ/d1WHm7MuaePA1qAX9/j9GN+TxViW18uHRtHtfAptT2GydXeRJHHtErRbv
- M/1wUgruM+zfqlqeDO64IsSuF1t2ywSnQjw0dY8/WiDCJwu/ozoJzpN8NqVgvHgU5jjv
- IxY6MmzicsQ1lFqpT5D0C/ECj1SUfP2GG2cvsuLW/Xn6aLNffFhgz5joqsYwQG61MrB1
- 8pyVdKzeACESP4SmC/RJ11O3c0zxJQ+fcbijJ+dUPcixUZ2lH9+yQsaj5dtuR21wnD5x
- Q5Hw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sOxSp-0008QB-1Q
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:43:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sOxSn-0002hm-6j
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:43:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720003426;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=WERYu8GkU5bDVarw5oZeuSjN15G3SYu/gk9IyB/vR6M=;
+ b=NRzxIq3b1Su7RJZN+Kr38Z8t3w9JUXQ6zGg8gwKPfa+qIpl+B3kv+RW1E1ybRW0T7nPXqE
+ TPcE3c34a6HpZCj4Uotj8TfJx2ZXgrkXo9bbxTMC10u5cNk2ZH6y9kyv72KqOrsJODd67A
+ ub2ze9lBypIQBturlmSHGPAc7ocoOsQ=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-567-sZjKalw7PBywh7CZjg2pAQ-1; Wed, 03 Jul 2024 06:43:45 -0400
+X-MC-Unique: sZjKalw7PBywh7CZjg2pAQ-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2ee87069f27so3851311fa.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 03:43:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720002591; x=1720607391;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=S3BaVCbWUQVWg8g6+tIMwrc/4+x9EHM3HGscom/xawg=;
- b=MnWu+O+meKzu1ZZR2ojWeaRgdzbDPRYHfW+cW3jU/MiLL5eJTAVV7YNX4NufFhg/RF
- ATmRwdT2TmFDHHwnHlPKU9ul9lpfKg4ZXCvn45NwLr0Nd5ZNWrroR0o1sU7z1o3poK7n
- ydHInZBqJAIh0Iu7i5ndnOoyv4iR5kjVWysttOeYFmajgaidAJXoNLVLSIFuo81gMxrq
- zz+xBr8qP8TIcClVrXd4eM2q7dpWXEzmgZTGx/pEZHgpYWaHcC8JXikY7VhR48rgFmKg
- GeC3wBUtdRxlmsXgTEPcyBxqkjHApe+UDbyoiBCIpoV6WToG+vYfMGvTw57i8K9SO/WD
- vQUw==
-X-Gm-Message-State: AOJu0YxDs/xWtRKKtmYKG2Nr/WgyjeKkDlEcSA7ZGI8jOuBvmU4yU3/l
- h7U0FwyEuA9s2wmvz5W/z6DQXxv3W+FAZC4D/qzL+LdBP8mTeLMwcXZWhi24O8Y=
-X-Google-Smtp-Source: AGHT+IELes4Zit0wv02a/5x2645sgDTvimp2t+4lwlqxqiT6jBSFAtVyu/ik3DarXLIXrH5HRycj5Q==
-X-Received: by 2002:a17:906:1350:b0:a6f:dc10:6534 with SMTP id
- a640c23a62f3a-a751449e587mr742362066b.34.1720002590346; 
- Wed, 03 Jul 2024 03:29:50 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72ae84b3d8sm481576266b.121.2024.07.03.03.29.49
+ d=1e100.net; s=20230601; t=1720003423; x=1720608223;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WERYu8GkU5bDVarw5oZeuSjN15G3SYu/gk9IyB/vR6M=;
+ b=wORZwghIGk82ccUcFLWp2+WBUWQTGjoLdX2n0jiNzALspUarIWl/n+tw9zXa9pRkb6
+ Q/yCKntot8EWHFJtDFYRZaLRZw0TNLNYX0AHM5pSLNtCWkwtBbg9UO8Zti686FOV4VlB
+ GbltLgVGFe454Jx9l6z/jKURcNEolRshsc0D+MnBlV7L8LgVHb7/sMvZ7Axno/4YeQvo
+ +RkHcZd79jcW3d8LSuGszto5vhPbv0EHd82GPiMDeRaT44ctujqic/0QV67riJmYanBF
+ 0dgUQf18ntlLjtxaAyvvkA86eoPWOFwaW1DX9DnlJGYw1Zj7+UCb0P249tsTfLFIhKY9
+ wQMw==
+X-Gm-Message-State: AOJu0YyhLpVC7Wg0KY4gxdDaRuArPl95FU9AC5sklOJxohPaAtwhz4P/
+ bUOp/yVY1oGKr9vMpt1dmJKJCeAcZbMFvUM8iB/nZQ5buapnvEfKbLqhn2mpaTb9AMh5q4oE5o9
+ SOFXy9kytviMCog7Qt53OF3Zqpyb0R/giwA3W7AkGyRCGfvwdEy3ZHAhs1pgcQ5Aqwks+j6ZQ+v
+ OkgRy2Bzw7hubiZ0ZLFnzBDacXkY8CAmxauMV5
+X-Received: by 2002:a2e:b889:0:b0:2ec:1042:fb04 with SMTP id
+ 38308e7fff4ca-2ee5e6cd745mr74098541fa.35.1720003423038; 
+ Wed, 03 Jul 2024 03:43:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6stTBnGZA9mzHiowXuVjLePHuqmPO1RZFOnT6GL17dGsY9nSuVFoQbIVooWGRPVGuYv+bTg==
+X-Received: by 2002:a2e:b889:0:b0:2ec:1042:fb04 with SMTP id
+ 38308e7fff4ca-2ee5e6cd745mr74098401fa.35.1720003422571; 
+ Wed, 03 Jul 2024 03:43:42 -0700 (PDT)
+Received: from avogadro.local ([151.95.101.29])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-2ee51680450sm18764071fa.76.2024.07.03.03.43.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 03:29:49 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 185755F841;
- Wed,  3 Jul 2024 11:29:49 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Cleber Rosa
- <crosa@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Wainer
- dos Santos Moschetta <wainersm@redhat.com>,  Kevin Wolf
- <kwolf@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Thomas Huth
- <thuth@redhat.com>,  Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH 4/4] python: enable testing for 3.13
-In-Reply-To: <20240626232230.408004-5-jsnow@redhat.com> (John Snow's message
- of "Wed, 26 Jun 2024 19:22:30 -0400")
-References: <20240626232230.408004-1-jsnow@redhat.com>
- <20240626232230.408004-5-jsnow@redhat.com>
-Date: Wed, 03 Jul 2024 11:29:49 +0100
-Message-ID: <871q4arco2.fsf@draig.linaro.org>
+ Wed, 03 Jul 2024 03:43:41 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mdroth@amd.com
+Subject: [PATCH] target/i386: do not include undefined bits in the AMD topoext
+ leaf
+Date: Wed,  3 Jul 2024 12:43:40 +0200
+Message-ID: <20240703104340.1642489-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,21 +100,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Commit d7c72735f61 ("target/i386: Add new EPYC CPU versions with updated
+cache_info", 2023-05-08) ensured that AMD-defined CPU models did not
+have the 'complex_indexing' bit set, but left it set in "-cpu host"
+which uses the default ("legacy") cache information.
 
-> Python 3.13 is in beta and Fedora 41 is preparing to make it the default
-> system interpreter; enable testing for it.
->
-> (In the event problems develop prior to release, it should only impact
-> the check-python-tox job, which is not run by default and is allowed to
-> fail.)
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+Reimplement that commit using a CPU feature, so that it can be applied
+to all guests using a new machine type, independent of the CPU model.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-Tested-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/cpu.h | 3 +++
+ hw/i386/pc.c      | 1 +
+ target/i386/cpu.c | 4 ++++
+ 3 files changed, 8 insertions(+)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 31c9b43849e..c43ac01c794 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2108,6 +2108,9 @@ struct ArchCPU {
+     /* Only advertise CPUID leaves defined by the vendor */
+     bool vendor_cpuid_only;
+ 
++    /* Only advertise TOPOEXT features that AMD defines */
++    bool amd_topoext_features_only;
++
+     /* Enable auto level-increase for Intel Processor Trace leave */
+     bool intel_pt_auto_level;
+ 
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 77415064c62..5dff91422ff 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -80,6 +80,7 @@
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+ 
+ GlobalProperty pc_compat_9_0[] = {
++    { TYPE_X86_CPU, "x-amd-topoext-features-only", "false" },
+     { TYPE_X86_CPU, "x-l1-cache-per-thread", "false" },
+     { TYPE_X86_CPU, "guest-phys-bits", "0" },
+     { "sev-guest", "legacy-vm-type", "true" },
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index a042e6b4edb..c9d8f6339a4 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6991,6 +6991,9 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             *eax = *ebx = *ecx = *edx = 0;
+             break;
+         }
++        if (cpu->amd_topoext_features_only) {
++            *edx &= CACHE_NO_INVD_SHARING | CACHE_INCLUSIVE;
++        }
+         break;
+     case 0x8000001E:
+         if (cpu->core_id <= 255) {
+@@ -8302,6 +8305,7 @@ static Property x86_cpu_properties[] = {
+     DEFINE_PROP_STRING("hv-vendor-id", X86CPU, hyperv_vendor),
+     DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true),
+     DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
++    DEFINE_PROP_BOOL("x-amd-topoext-features-only", X86CPU, amd_topoext_features_only, true),
+     DEFINE_PROP_BOOL("lmce", X86CPU, enable_lmce, false),
+     DEFINE_PROP_BOOL("l3-cache", X86CPU, enable_l3_cache, true),
+     DEFINE_PROP_BOOL("kvm-pv-enforce-cpuid", X86CPU, kvm_pv_enforce_cpuid,
+-- 
+2.45.2
+
 
