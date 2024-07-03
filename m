@@ -4,88 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0459EC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 09:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F2F1C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 09:53:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOwdf-00082i-2c; Wed, 03 Jul 2024 05:50:59 -0400
+	id 1sOwg6-0001Jo-1l; Wed, 03 Jul 2024 05:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sOwdb-0007tV-2e
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 05:50:55 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sOwdZ-0007sr-3B
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 05:50:54 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-58bac81f3f9so2222945a12.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 02:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720000250; x=1720605050; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4gUsmWvhKjuLT/ywSUQEYdSOTXaTrJgIDoLP1BvLGNM=;
- b=GXy+IbLfegxyU+BSJtd3LbiemsnSaZ512w5eDVil2a7t/WayACpoKcib8f88cVhqSC
- o0UhA2Oo9kZrMWx52fEC29f0wii1VgFfKNVRBMb+sZ+socU8X0OdDgEYYBzcR4rKZ1cv
- B1remKuIE5gNC1+9Ot2P7pvdtDbwIUh7P4HqPYVK3crMaRhxKl4EGvTuDYY0deA0ye9O
- KzmLa9QRMAy75Dtd9cHXLOE+pb9nUFIvG3IjaG9A5SFwZWqnTXGJNibEpLKW862H++fk
- Nh14O91Jku6VBRuyTO6EU6WQMyothiCYfO02l9ueYvHT9RfsMc7tdFi0rhnk7GMnXPRB
- qLMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720000250; x=1720605050;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4gUsmWvhKjuLT/ywSUQEYdSOTXaTrJgIDoLP1BvLGNM=;
- b=bFRo6aQ9Bs45UJDjdW0MGsgNieg9lgIY4OrIJcSm+dLCz8AApfVIQRdsB5SKOPpeSg
- Ag1tM1mWD9+cd0HgPCVx9RYWDMkpX3bR0uW2K6FJwgYZ+4/b4gd+ojzddkwYWULkrdUD
- WryINnsmi9LambnCT26wRT0aCdW1hHTd4MbWipcUAzzXC3XNN+vDNnB+qxa3T4uWcYJM
- QOmHi/nQHj8IkEkSf2I+/tIW+c0odKmgExkbqGq448mGvydkQJZJC7JUlqR+rdK1us4q
- xM8XRoNxwRyMxKhSCVJvmhEJ+dpp5h3etYg0VDZP0KUGPNrMqeBMmR8yTn9hnsJZRt7j
- sdJA==
-X-Gm-Message-State: AOJu0YyytX3sdEF89kUcyNGG6cSrfv4088hoFRcVXIwPYb3LaFj9NwfR
- DBtlHo+YeYZSZMyu0ELhYJYheN53B2h9yZZoolmTAApE3N65ezMUTiZLrTfyZ9M=
-X-Google-Smtp-Source: AGHT+IGQeYKCTMP5HpQhWKTbP5as9bV7s6Z1m31//F21ytjnfhY4jzbIhLtZMJzCreWTynXgoErjpg==
-X-Received: by 2002:a05:6402:40cc:b0:58d:318a:508a with SMTP id
- 4fb4d7f45d1cf-58d318a52cdmr486337a12.2.1720000249467; 
- Wed, 03 Jul 2024 02:50:49 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5861503b4c5sm6746996a12.93.2024.07.03.02.50.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 02:50:48 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2341C5F841;
- Wed,  3 Jul 2024 10:50:48 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  qemu-block@nongnu.org,  Cleber Rosa
- <crosa@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Wainer
- dos Santos Moschetta <wainersm@redhat.com>,  Kevin Wolf
- <kwolf@redhat.com>,  Beraldo Leal <bleal@redhat.com>,  Thomas Huth
- <thuth@redhat.com>,  Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH 2/4] python: Do not use pylint 3.2.4 with python 3.8
-In-Reply-To: <20240626232230.408004-3-jsnow@redhat.com> (John Snow's message
- of "Wed, 26 Jun 2024 19:22:28 -0400")
-References: <20240626232230.408004-1-jsnow@redhat.com>
- <20240626232230.408004-3-jsnow@redhat.com>
-Date: Wed, 03 Jul 2024 10:50:48 +0100
-Message-ID: <875xtmreh3.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOwg3-0001JJ-9F
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 05:53:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOwfy-0001Kc-C5
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 05:53:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720000400;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=WBKm4Cjwe2JG+41KrrS9be5YPXWJEJOLoSS/RBHCaUw=;
+ b=WI9uqcdRcHza1Z1i9xRLo9euzu+C57nNbW8r0qhYDJ7WsKJnte9JSA1WleqECjx5dgDiBy
+ vmwwvLsXgzh3wSwaGz4/yCg5zkuYswagWFZJtlqPkyG4H+9HlxiN9M0QvVHYznFQiY2uS+
+ VvCid3qQxxi85YP9vbYYp8+yupUwZzI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-658--MGxM1x3PE-XWUn1zxljYQ-1; Wed,
+ 03 Jul 2024 05:53:16 -0400
+X-MC-Unique: -MGxM1x3PE-XWUn1zxljYQ-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4D0D61944CFF; Wed,  3 Jul 2024 09:53:13 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.4])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B1273000231; Wed,  3 Jul 2024 09:53:12 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3A19B21E6693; Wed,  3 Jul 2024 11:53:10 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: eblake@redhat.com, pbonzini@redhat.com, berrange@redhat.com,
+ eduardo@habkost.net, jsnow@redhat.com,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ John G Johnson <john.g.johnson@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>, qemu-stable@nongnu.org
+Subject: [PATCH] qapi/qom: Document feature unstable of @x-vfio-user-server
+Date: Wed,  3 Jul 2024 11:53:10 +0200
+Message-ID: <20240703095310.1242102-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,16 +83,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Commit 8f9a9259d32c added ObjectType member @x-vfio-user-server with
+feature unstable, but neglected to explain why it is unstable.  Do
+that now.
 
-> There is a bug in this version,
-> see: https://github.com/pylint-dev/pylint/issues/9751
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+Fixes: 8f9a9259d32c (vfio-user: define vfio-user-server object)
+Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Cc: John G Johnson <john.g.johnson@oracle.com>
+Cc: Jagannathan Raman <jag.raman@oracle.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ qapi/qom.json | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 8bd299265e..3c0f8c633d 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1012,7 +1012,8 @@
+ #
+ # Features:
+ #
+-# @unstable: Member @x-remote-object is experimental.
++# @unstable: Members @x-remote-object and @x-vfio-user-server are
++# experimental.
+ #
+ # Since: 6.0
+ ##
+-- 
+2.45.0
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
