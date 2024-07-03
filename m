@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9230CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81502C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:48:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8ja-0003fl-Cm; Wed, 03 Jul 2024 18:45:54 -0400
+	id 1sP8l0-0004Pu-Ur; Wed, 03 Jul 2024 18:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jV-0003UO-Lb
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kx-0004E6-OC
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jT-0001MX-JK
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kv-0001a8-54
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046746;
+ s=mimecast20190719; t=1720046836;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=R2rkXgOWy7oaxjC82Fwhko4ewIXnfZhtW9KkNOPqa7A=;
- b=WZlby+uO1+S/JH/q8kFmJwi4wLu73xNeegptpDy0euys8I4f8YlIbSVoSAU8PMAa9tRrpc
- N5tbuN4JQnB0MFeAmiUjwJYzv+z4NQ5mbNqP6R9lJnp9t2GAu7bSTWHgU5xryeMWY5QTrd
- cGNFP/6L422+fX9O3cZoc92IvcVkizI=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PMqT3UA862JsOGcigX9iEr1iG7UpaUmQpd1D/p7t/1Y=;
+ b=BLMtR6OT0BqKhiN4AKbUYPVMLNMZEg3men9ovwthi8t7xnBh+BI5QLmmkCcus7arEgNUHx
+ /4QPLsFUEDmlDHip3kQu0bZP1yA+e76gurM9nMWn1SNz+0iM4HQ/YwDWx1YzgwKY84NfQW
+ luPdl1IX2L5qP1P4yiEKJqvdizjcxeQ=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-Raqsfjl-OiO3YhT-TIM_Kw-1; Wed, 03 Jul 2024 18:45:44 -0400
-X-MC-Unique: Raqsfjl-OiO3YhT-TIM_Kw-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-58d152f7f67so2163a12.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:45:44 -0700 (PDT)
+ us-mta-612-1-j-HpKBOv6sbQvbDD60Aw-1; Wed, 03 Jul 2024 18:47:15 -0400
+X-MC-Unique: 1-j-HpKBOv6sbQvbDD60Aw-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52e98c1a9d2so1207817e87.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:47:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046743; x=1720651543;
+ d=1e100.net; s=20230601; t=1720046833; x=1720651633;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R2rkXgOWy7oaxjC82Fwhko4ewIXnfZhtW9KkNOPqa7A=;
- b=Qfs03rv9EFLE7jOBzs+clmfwfBXQYKXhOz159OC/SGf76YEpb0UQL5FDqWaMnQhYYz
- Y/MSxC/zAwwaePm1ObiRzJ+AntlW12mR3nBb2oypm/cbjPIILYkGcCJjpc0QyBX2GOXS
- 3iCVxt1GWbIaMw18FfTsKQ0hFxgB2lb4YSdHtBPkEbiPb8pBy4Cnd6w0E37zno8gJsKr
- uaANwdZHiBxOpEhdN0SjYI0Gccxs0d5uEPIuMaWe4PJ9jROs/EAjNx9j0WL4Y+Q7YuxP
- 7qM8+M/L61UcIVhoRqeLAQRkAP50qla2VREtOEqtoZ8Od1ylm69UgDYetG4HrPpkSC+p
- mvJQ==
-X-Gm-Message-State: AOJu0Yyy+w7vhHdS3/3GSLpXmbLcdf5LRjctFCASMXxJt1dxhQt/8qNs
- 0zmxbo5Pal5NlgDU2neSiNeBIaOYeeE0RKMQZ9xymBlp8vz/+2nBlkv/HHX7Os+6zgf0bj3kADa
- Q12TFMCNKAYVNeMDEpXgfrJ2j3PM7V43JD3l1d662FESLemP0+MykblfIiDxWUsMlPMbwP4K95z
- HCqSMx8D9SoDZeRYSz8AS0vkUJiAd6Vw==
-X-Received: by 2002:a05:6402:2547:b0:57a:33a5:9b71 with SMTP id
- 4fb4d7f45d1cf-587a0919556mr10421990a12.33.1720046743291; 
- Wed, 03 Jul 2024 15:45:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH8XneULyE7BI0vXo7U7CggJHhbMaGu29VQXp96igGoEXH6Ez+E85gtATcAr2hxrM81v/uUUQ==
-X-Received: by 2002:a05:6402:2547:b0:57a:33a5:9b71 with SMTP id
- 4fb4d7f45d1cf-587a0919556mr10421958a12.33.1720046742268; 
- Wed, 03 Jul 2024 15:45:42 -0700 (PDT)
+ bh=PMqT3UA862JsOGcigX9iEr1iG7UpaUmQpd1D/p7t/1Y=;
+ b=rTGu24lDELN7XIscv2vdecvr5icMfXB01mztW+hc0cGk9Moxt0kvic72mEa0okLJty
+ /I+6cKbOToMpJncx7fCU2aPuWMvjb8U/9+wWsr9lh5qD8HdV46Kvb7mHRxO/nt8zj24P
+ dhPrt/Ggznf5xLCbgp4XYTZIMbdGo42oB0Pin+E/yOH8gYFTacoGYg2OI8DE4OD76SPh
+ AaAPjLK3g+ImFlzigVGBNt4R18xD7dJs0uYLEo6i/YOz8AePQlgRUHUM6y0+jLHEa9Uu
+ gEIm9nVp0kLhGisGCBA1t0Qj4wFydmXf0XtCJAO+mZSRM4O7QsuqwPdGeQF1r8V3eLrw
+ W64Q==
+X-Gm-Message-State: AOJu0YxB3tbuojGShu6HBCfnySyTx2foShwCtdCGaCUDNbK7W9LFWdyd
+ qBgZ08pUNCHEhniF1mbj8+wiUPzIIlpDAGDe6I2EgqhW8eM5SRPhANvpzoq9TpIfRwfkS237Qk8
+ UcBXHxZTg+EaZ6Nta8mVN+U3IMAGBf7EI5Ugx9Tri0ldT4/xropX2awzmGsRIoqdHDGyty6KWoY
+ et8SNZqEiNlmylAARKYn3j+NiZomzfPQ==
+X-Received: by 2002:a05:6512:3610:b0:52c:825e:3b1c with SMTP id
+ 2adb3069b0e04-52e8266f836mr6460157e87.26.1720046833227; 
+ Wed, 03 Jul 2024 15:47:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHujyPKjr2Wl8Siz3B5hB6YJWFLDZ7BWmFStpBTX1i51rqT+3LekGS1RtyKu8QCGwGvE2bmNQ==
+X-Received: by 2002:a05:6512:3610:b0:52c:825e:3b1c with SMTP id
+ 2adb3069b0e04-52e8266f836mr6460142e87.26.1720046832220; 
+ Wed, 03 Jul 2024 15:47:12 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58614d50464sm7570642a12.69.2024.07.03.15.45.40
+ a640c23a62f3a-a72aaf18b15sm551172866b.19.2024.07.03.15.47.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:45:41 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:45:38 -0400
+ Wed, 03 Jul 2024 15:47:11 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:47:08 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL v3 18/85] hw/cxl/cxl-mailbox-utils: Add dc_event_log_size
- field to output payload of identify memory device command
-Message-ID: <7a21e5dedbbcec11ebab7a53186085f09a53f9e7.1720046570.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Cindy Lu <lulu@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: [PULL v3 37/85] virtio-pci: Fix the failure process in
+ kvm_virtio_pci_vector_use_one()
+Message-ID: <a113d041e8d0b152d72a7c2bf47dd09aabf9ade2.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -79,7 +78,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,7 +86,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,54 +102,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Cindy Lu <lulu@redhat.com>
 
-Based on CXL spec r3.1 Table 8-127 (Identify Memory Device Output
-Payload), dynamic capacity event log size should be part of
-output of the Identify command.
-Add dc_event_log_size to the output payload for the host to get the info.
+In function kvm_virtio_pci_vector_use_one(), the function will only use
+the irqfd/vector for itself. Therefore, in the undo label, the failing
+process is incorrect.
+To fix this, we can just remove this label.
 
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-4-nifan.cxl@gmail.com>
+Fixes: f9a09ca3ea ("vhost: add support for configure interrupt")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+Message-Id: <20240528084840.194538-1-lulu@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/cxl/cxl-mailbox-utils.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/virtio/virtio-pci.c | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 2a64c58e2f..626acc1d0d 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -21,6 +21,7 @@
- #include "sysemu/hostmem.h"
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 7d62e92365..5941f1a94d 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -898,7 +898,7 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
+     }
+     ret = kvm_virtio_pci_vq_vector_use(proxy, vector);
+     if (ret < 0) {
+-        goto undo;
++        return ret;
+     }
+     /*
+      * If guest supports masking, set up irqfd now.
+@@ -908,25 +908,11 @@ static int kvm_virtio_pci_vector_use_one(VirtIOPCIProxy *proxy, int queue_no)
+         ret = kvm_virtio_pci_irqfd_use(proxy, n, vector);
+         if (ret < 0) {
+             kvm_virtio_pci_vq_vector_release(proxy, vector);
+-            goto undo;
++            return ret;
+         }
+     }
  
- #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
-+#define CXL_DC_EVENT_LOG_SIZE 8
- 
- /*
-  * How to add a new command, example. The command set FOO, with cmd BAR.
-@@ -780,8 +781,9 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
-         uint16_t inject_poison_limit;
-         uint8_t poison_caps;
-         uint8_t qos_telemetry_caps;
-+        uint16_t dc_event_log_size;
-     } QEMU_PACKED *id;
--    QEMU_BUILD_BUG_ON(sizeof(*id) != 0x43);
-+    QEMU_BUILD_BUG_ON(sizeof(*id) != 0x45);
-     CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-     CXLType3Class *cvc = CXL_TYPE3_GET_CLASS(ct3d);
-     CXLDeviceState *cxl_dstate = &ct3d->cxl_dstate;
-@@ -807,6 +809,7 @@ static CXLRetCode cmd_identify_memory_device(const struct cxl_cmd *cmd,
-     st24_le_p(id->poison_list_max_mer, 256);
-     /* No limit - so limited by main poison record limit */
-     stw_le_p(&id->inject_poison_limit, 0);
-+    stw_le_p(&id->dc_event_log_size, CXL_DC_EVENT_LOG_SIZE);
- 
-     *len_out = sizeof(*id);
-     return CXL_MBOX_SUCCESS;
+     return 0;
+-undo:
+-
+-    vector = virtio_queue_vector(vdev, queue_no);
+-    if (vector >= msix_nr_vectors_allocated(dev)) {
+-        return ret;
+-    }
+-    if (vdev->use_guest_notifier_mask && k->guest_notifier_mask) {
+-        ret = virtio_pci_get_notifier(proxy, queue_no, &n, &vector);
+-        if (ret < 0) {
+-            return ret;
+-        }
+-        kvm_virtio_pci_irqfd_release(proxy, n, vector);
+-    }
+-    return ret;
+ }
+ static int kvm_virtio_pci_vector_vq_use(VirtIOPCIProxy *proxy, int nvqs)
+ {
 -- 
 MST
 
