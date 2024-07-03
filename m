@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AED3C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2708C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 23:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8wL-0007oJ-Cg; Wed, 03 Jul 2024 18:59:05 -0400
+	id 1sP8yF-0000o6-G7; Wed, 03 Jul 2024 19:01:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8wJ-0007nD-S4
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:59:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8yB-0000lD-3S
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 19:01:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8wF-0001wL-Qr
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:59:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8y9-0003ee-BM
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 19:00:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720047538;
+ s=mimecast20190719; t=1720047656;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=brHSGsqrcLMqSJxNNitPv2WvhUun9R7fdVCQLQot1KY=;
- b=Ljbj+0Ny3SWT3XVXsAIJL8TMzZ/yf6Vh0M9hfFTKaOoW2Ewv0cM4jM2QWpKBF1OZVntdie
- 7UdlhVnjuf7JZ5jz6YpGBel8Mv2JweakJrvnD41wuS+eeiL5YicVLqTBlOfZC34G5N7LCF
- HX7uhwb6WOR2X4nC/R5knVxNp/UfEH4=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=F+6ih40Pd9uCOaYpw+qIWMkjn2ZaTRWOnzxQu9Nl4YU=;
+ b=OQChy6kk5GeuzEg9A8+isHU4ucI3qhMv1iW2/E3ocRIvAM67ivcBTAt/QpghPSOHt6bePr
+ pwPEHuWoHyspBw3h34jhjlAI22pOlLeMATjlqlHbMuc0ZYT0DapFiSoBG7LVNEZXHFb+un
+ nBwW5UhkBoAAqOj78huDXYgjefyM07E=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-306-xmsqSu7VMhi4zkHrBOcSPA-1; Wed, 03 Jul 2024 18:58:57 -0400
-X-MC-Unique: xmsqSu7VMhi4zkHrBOcSPA-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-58d24cad85aso4288a12.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:58:57 -0700 (PDT)
+ us-mta-687-a8FS3n97NdOJve_pgRMVvQ-1; Wed, 03 Jul 2024 19:00:54 -0400
+X-MC-Unique: a8FS3n97NdOJve_pgRMVvQ-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a725eed1cfeso1818666b.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 16:00:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720047536; x=1720652336;
+ d=1e100.net; s=20230601; t=1720047652; x=1720652452;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=brHSGsqrcLMqSJxNNitPv2WvhUun9R7fdVCQLQot1KY=;
- b=t5FbiRdPJOeAJENrKbWu0z8Fc2gApIU5bz9ohg6khfCS1/QZISWajWgB4r/RGql2+M
- VET8DuFaI0kyDG8wAV3An8tJBZur0PyPU1YEYzaK9e35qWFigb97lZcVp733DGWqnnkC
- 5TKOac3M9TO9E2z1ddT3nSA/1DPFaaXarUY1UNcjx/maf1Yzp4BJXARGgWQ11WTWKD3+
- Qx7zCAZrKrUOkv5NFM7HLJ2eEVdXqdnvimK2PWRpz7/GDvGqLK7BP3XDheK4UtQcsH9A
- CMm3RaCwocv/m2lNmf/tJviLEZl3APdW+0qtQS3BjqUh4wwahvo5kAlEFgXdoWciTARK
- H31A==
-X-Gm-Message-State: AOJu0Yz2gU/Js70GlMBL6EM75ERY0Hqk5T/DvvW4/O6i0aaSbGvdE5ci
- MehU2junWHYOzoVdkZKPUcoBTdLG9DSyv0bQIEPzFk/DYgQs2QCZ0AD+c1Y9085Klx8tz30320Q
- YEV3JDSiD85DsO2J6PpUXlB8tSD+T1hiZ5/89XDjdUNFIvMeM8jac
-X-Received: by 2002:a05:6402:354c:b0:579:ca97:da1b with SMTP id
- 4fb4d7f45d1cf-5879ece9247mr9496349a12.6.1720047536050; 
- Wed, 03 Jul 2024 15:58:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEVbBLAggWsGv8AvIQXEOFiIzgekmJelyRWbXuEITrYhZdDJZZguWbGMpghptKB+lER86HZyA==
-X-Received: by 2002:a05:6402:354c:b0:579:ca97:da1b with SMTP id
- 4fb4d7f45d1cf-5879ece9247mr9496302a12.6.1720047535251; 
- Wed, 03 Jul 2024 15:58:55 -0700 (PDT)
+ bh=F+6ih40Pd9uCOaYpw+qIWMkjn2ZaTRWOnzxQu9Nl4YU=;
+ b=OKbThrRiXk3SRc0tG6rXhrigfxWc7IwCyQkxd8qzwfvvJVn/5zRhu9fYBvQVJGEzjC
+ o10/Ryw4vevl6OEmBa+qkeYi5yDk61CTtptRzoPX6QXhKd0XiTCupLf9CaXMqrfKU3LM
+ fTsV5a5iwrigLndfMo3CukTg3I44NghXZRTcK2sWM3SCvH5JpsEzrN4mMr2eVkPxVFHs
+ Crc1m8gCJBN3Zf4NY83ZeUIv2MTrKGxFpL3OGzajOb23W6ks7/96LuBHAkY/z+e0PqDa
+ 5pr/AnSE+4vK1IBaJwBWrJ1scg2VX0jk40Nt2CiL3DBcpGFt2ajbt/CqB+S2cE+e6W6S
+ I5yQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUUaI/+2ROREQdMUWCHKNmqtIOlaHhlCPTelE8X9rqua5FiXpsnCqdV7TxTYYIQGdSWcImHnrNP3xgzWKL13PGGaY4COG8=
+X-Gm-Message-State: AOJu0YxFGzHig9I4YLeCZ3nxzp/2sjLNOq2QW27Yvok+R1+yCVCnbBHa
+ ENm9f/8S14btbeXU1yWCSMk631RdxGhAisLG2uWgeL8Jap2cBTU51XUZqNjfjUALiyZJWXFL7TD
+ dDqqkQ9WJbjzZIrRymjD7SmkRKmifXESaMittJZu8vsgH1hkTt6TP
+X-Received: by 2002:a17:906:6452:b0:a77:aebc:8fad with SMTP id
+ a640c23a62f3a-a77aebcbf2emr74930266b.1.1720047652664; 
+ Wed, 03 Jul 2024 16:00:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG+AFk/JP9Q2aIN11SdJSCvx4lTAhTMGH6GHkTcIri0bEBeAPmRSvV0OG/kvFk3gEEWnGEbHw==
+X-Received: by 2002:a17:906:6452:b0:a77:aebc:8fad with SMTP id
+ a640c23a62f3a-a77aebcbf2emr74928866b.1.1720047652068; 
+ Wed, 03 Jul 2024 16:00:52 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58613159103sm7644927a12.24.2024.07.03.15.58.46
+ a640c23a62f3a-a72aaf63909sm547587466b.77.2024.07.03.16.00.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:58:54 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:58:43 -0400
+ Wed, 03 Jul 2024 16:00:51 -0700 (PDT)
+Date: Wed, 3 Jul 2024 19:00:46 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org,
- jean-philippe@linaro.org, jonathan.cameron@huawei.com,
- lpieralisi@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, imammedo@redhat.com,
- andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
- eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
- will@kernel.org, gshan@redhat.com, rafael@kernel.org,
- alex.bennee@linaro.org, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, salil.mehta@opnsrc.net,
- zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
- wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
- lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
- linuxarm@huawei.com
-Subject: Re: [PATCH V13 0/8] Add architecture agnostic code to support vCPU
- Hotplug
-Message-ID: <20240703185812-mutt-send-email-mst@kernel.org>
-References: <20240607115649.214622-1-salil.mehta@huawei.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PULL v2 00/88] virtio: features,fixes
+Message-ID: <20240703185932-mutt-send-email-mst@kernel.org>
+References: <cover.1719951168.git.mst@redhat.com>
+ <f0961f6f-642c-4dc8-8bf3-1457f71da500@linaro.org>
+ <20240703125101-mutt-send-email-mst@kernel.org>
+ <d18ab076-47e4-4e8a-85d5-45f14f7b7e71@linaro.org>
+ <54f9b0f4-d638-4273-935a-bb9bd129701b@redhat.com>
+ <20240703162544-mutt-send-email-mst@kernel.org>
+ <95648f85-d4b2-4ceb-bccf-888114e0fe03@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240607115649.214622-1-salil.mehta@huawei.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <95648f85-d4b2-4ceb-bccf-888114e0fe03@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -98,7 +92,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,178 +108,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 07, 2024 at 12:56:41PM +0100, Salil Mehta wrote:
-> Virtual CPU hotplug support is being added across various architectures[1][3].
-> This series adds various code bits common across all architectures:
+On Wed, Jul 03, 2024 at 03:37:43PM -0700, Richard Henderson wrote:
+> On 7/3/24 13:26, Michael S. Tsirkin wrote:
+> > On Wed, Jul 03, 2024 at 08:46:38PM +0200, Thomas Huth wrote:
+> > > On 03/07/2024 19.01, Richard Henderson wrote:
+> > > > On 7/3/24 09:51, Michael S. Tsirkin wrote:
+> > > > > On Wed, Jul 03, 2024 at 09:31:45AM -0700, Richard Henderson wrote:
+> > > > > > On 7/2/24 13:15, Michael S. Tsirkin wrote:
+> > > > > > > The following changes since commit
+> > > > > > > 1152a0414944f03231f3177207d379d58125890e:
+> > > > > > > 
+> > > > > > >      Merge tag 'pull-xen-20240701'
+> > > > > > > ofhttps://xenbits.xen.org/git-http/people/aperard/qemu-dm
+> > > > > > > into staging (2024-07-01 09:06:25 -0700)
+> > > > > > > 
+> > > > > > > are available in the Git repository at:
+> > > > > > > 
+> > > > > > >      https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git  tags/for_upstream
+> > > > > > > 
+> > > > > > > for you to fetch changes up to 29e45afd8d6abf7a67dab5db0ab1cfbc388daefe:
+> > > > > > > 
+> > > > > > >      hw/pci: Replace -1 with UINT32_MAX for romsize
+> > > > > > > (2024-07-02 11:27:19 -0400)
+> > > > > > > 
+> > > > > > > ----------------------------------------------------------------
+> > > > > > > virtio: features,fixes
+> > > > > > > 
+> > > > > > > A bunch of improvements:
+> > > > > > > - vhost dirty log is now only scanned once, not once per device
+> > > > > > > - virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
+> > > > > > > - cxl gained DCD emulation support
+> > > > > > > - pvpanic gained shutdown support
+> > > > > > > - beginning of patchset for Generic Port Affinity Structure
+> > > > > > > - s3 support
+> > > > > > > - friendlier error messages when boot fails on some illegal configs
+> > > > > > > - for vhost-user, VHOST_USER_SET_LOG_BASE is now only sent once
+> > > > > > > - vhost-user now works on any POSIX system
+> > > > > > > - sr-iov VF setup code has been reworked significantly
+> > > > > > > - new tests, particularly for risc-v ACPI
+> > > > > > > - bugfixes
+> > > > > > > 
+> > > > > > > Signed-off-by: Michael S. Tsirkin<mst@redhat.com>
+> > > > > > 
+> > > > > > Fails testing:
+> > > > > > 
+> > > > > > https://gitlab.com/qemu-project/qemu/-/jobs/7257337667
+> > > > > 
+> > > > > Could you give me a hint how to trigger this in CI pls?
+> > > > > All tests seem to pass when I push it to gitlab.
+> > > > > Any special variables to set?
+> > > > 
+> > > > In CI, FreeBSD uses travis; I'm not sure what's involved.
+> > > 
+> > > s/travis/cirrus-ci/
+> > > 
+> > > See .gitlab-ci.d/cirrus/README.rst for information how to enable it in your
+> > > private gitlab repo.
+> > > 
+> > > > I replicated it locally within a FreeBSD VM.
+> > > > 
+> > > > It should be reproducible with 'make vm-build-freebsd', but I think
+> > > > that's more difficult to debug after the fact than a full vm.
+> > > 
+> > > Just use "make vm-build-freebsd DEBUG=1" and you should get a shell prompt
+> > > for interactive debugging, so that's likely the best way to tackle such
+> > > issues.
+> > > 
+> > >   HTH,
+> > >    Thomas
+> > 
+> > Thanks!
+> > As a side, is there some way to persist the stuff fetched over the
+> > network so it does not happen each time I re-run make?
 > 
-> 1. vCPU creation and Parking code refactor [Patch 1]
-> 2. Update ACPI GED framework to support vCPU Hotplug [Patch 2,3]
-> 3. ACPI CPUs AML code change [Patch 4,5]
-> 4. Helper functions to support unrealization of CPU objects [Patch 6,7]
-> 5. Docs [Patch 8]
+> That's why I use a proper vm install of freebsd.
+> 
+> 
+> r~
 
-Igor - it's been a while. Looks ok to me superficially. Do you plan to review?
+Anyway. This pull attempted to enable vhost user on freebsd,
+and it looks like that's failing. So I just dropped the
+patches enabling it for now.
 
-> 
-> Repository:
-> 
-> [*] https://github.com/salil-mehta/qemu.git virt-cpuhp-armv8/rfc-v3.arch.agnostic.v13
-> 
-> NOTE: This series is meant to work in conjunction with Architecture specific patch-set.
-> For ARM, a combined patch-set (arch agnostic + specific) was earlier pushed as RFC V2[1].
-> A ARM architecture specific patch-set (subset of RFC V2) is being finalized and shall
-> be floated soon as RFC-V3. Please find a version of it compatible with this patch-set at
-> the below location. (TCG support is broken in below and is being fixed)
-> 
-> [*] https://github.com/salil-mehta/qemu/tree/virt-cpuhp-armv8/rfc-v3-rc2
-> 
-> 
-> Revision History:
-> 
-> Patch-set  V12 -> V13
-> 1. Added Reviewed-by Tag of Harsh Prateek Bora's (IBM) [PATCH V12 1/8]
-> 2. Moved the kvm_{create,park,unpark}_vcpu prototypes from accel/kvm/kvm-cpus.h
->    to include/sysemu/kvm.h. These can later be exported through AccelOps.
-> Link: https://lore.kernel.org/qemu-devel/62f55169-1796-4d8e-a35d-7f003a172750@linux.ibm.com/
-> 
-> Patch-set  V11 -> V12
-> 1. Addressed Harsh Prateek Bora's (IBM) comment
->    - Changed @cpu to @vcpu_id in the kvm_unpark_vcpu protoype header/
-> 2. Added Zhao Liu's (Intel) Tested-by for whole series
->    - Qtest does not breaks on Intel platforms now.
-> 3. Added Zhao Liu's (Intel) Reviewed-by for [PATCH V11 {1/8 - 3/8}]
-> Link: https://lore.kernel.org/qemu-devel/ZlRSPuJGBgyEUW6w@intel.com/
-> Link: https://lore.kernel.org/qemu-devel/a5f3d78e-cfed-441f-9c56-e3e78fa5edee@linux.ibm.com/
-> 
-> Patch-set  V10 -> V11
-> 1. Addressed Nicholas Piggin's (IBM) comment
->    - moved the traces in kvm_unpark_vcpu and kvm_create_vcpu at the end
->    - Added the Reviewed-by Tag for [PATCH V10 1/8]
-> 2.  Addressed Alex Bennée's (Linaro) comments
->    - Added a note explaining dependency of the [PATCH V10 7/8] on Arch specific patch-set
-> Link: https://lore.kernel.org/qemu-devel/D1FS5GOOFWWK.2PNRIVL0V6DBL@gmail.com/ 
-> Link: https://lore.kernel.org/qemu-devel/87frubi402.fsf@draig.linaro.org/
-> 
-> Patch-set  V9 -> V10
-> 1. Addressed Nicholas Piggin's (IBM) & Philippe Mathieu-Daudé (Linaro) comments
->    - carved out kvm_unpark_vcpu and added its trace
->    - Widened the scope of the kvm_unpark_vcpu so that it can be used by generic framework
->      being thought out
-> Link: https://lore.kernel.org/qemu-devel/20240519210620.228342-1-salil.mehta@huawei.com/
-> Link: https://lore.kernel.org/qemu-devel/e94b0e14-efee-4050-9c9f-08382a36b63a@linaro.org/
-> 
-> Patch-set  V8 -> V9
-> 1. Addressed Vishnu Pajjuri's (Ampere) comments
->    - Added kvm_fd to trace in kvm_create_vcpu
->    - Some clean ups: arch vcpu-id and sbd variable
->    - Added the missed initialization of cpu->gdb_num_regs
-> 2. Addressed the commnet from Zhao Liu (Intel)
->    - Make initialization of CPU Hotplug state conditional (possible_cpu_arch_ids!=NULL)
-> Link: https://lore.kernel.org/qemu-devel/20240312020000.12992-1-salil.mehta@huawei.com/
-> 
-> Patch-set V7 -> V8
-> 1. Rebased and Fixed the conflicts
-> 
-> Patch-set  V6 -> V7
-> 1. Addressed Alex Bennée's comments
->    - Updated the docs
-> 2. Addressed Igor Mammedov's comments
->    - Merged patches [Patch V6 3/9] & [Patch V6 7/9] with [Patch V6 4/9]
->    - Updated commit-log of [Patch V6 1/9] and [Patch V6 5/9]     
-> 3. Added Shaoqin Huang's Reviewed-by tags for whole series.
-> Link: https://lore.kernel.org/qemu-devel/20231013105129.25648-1-salil.mehta@huawei.com/
-> 
-> Patch-set  V5 -> V6
-> 1. Addressed Gavin Shan's comments
->    - Fixed the assert() ranges of address spaces
->    - Rebased the patch-set to latest changes in the qemu.git
->    - Added Reviewed-by tags for patches {8,9}
-> 2. Addressed Jonathan Cameron's comments
->    - Updated commit-log for [Patch V5 1/9] with mention of trace events
->    - Added Reviewed-by tags for patches {1,5}
-> 3. Added Tested-by tags from Xianglai Li
-> 4. Fixed checkpatch.pl error "Qemu -> QEMU" in [Patch V5 1/9] 
-> Link: https://lore.kernel.org/qemu-devel/20231011194355.15628-1-salil.mehta@huawei.com/
-> 
-> Patch-set  V4 -> V5
-> 1. Addressed Gavin Shan's comments
->    - Fixed the trace events print string for kvm_{create,get,park,destroy}_vcpu
->    - Added Reviewed-by tag for patch {1}
-> 2. Added Shaoqin Huang's Reviewed-by tags for Patches {2,3}
-> 3. Added Tested-by Tag from Vishnu Pajjuri to the patch-set
-> 4. Dropped the ARM specific [Patch V4 10/10]
-> Link: https://lore.kernel.org/qemu-devel/20231009203601.17584-1-salil.mehta@huawei.com/
-> 
-> Patch-set  V3 -> V4
-> 1. Addressed David Hilderbrand's comments
->    - Fixed the wrong doc comment of kvm_park_vcpu API prototype
->    - Added Reviewed-by tags for patches {2,4}
-> Link: https://lore.kernel.org/qemu-devel/20231009112812.10612-1-salil.mehta@huawei.com/
-> 
-> Patch-set  V2 -> V3
-> 1. Addressed Jonathan Cameron's comments
->    - Fixed 'vcpu-id' type wrongly changed from 'unsigned long' to 'integer'
->    - Removed unnecessary use of variable 'vcpu_id' in kvm_park_vcpu
->    - Updated [Patch V2 3/10] commit-log with details of ACPI_CPU_SCAN_METHOD macro
->    - Updated [Patch V2 5/10] commit-log with details of conditional event handler method
->    - Added Reviewed-by tags for patches {2,3,4,6,7}
-> 2. Addressed Gavin Shan's comments
->    - Remove unnecessary use of variable 'vcpu_id' in kvm_par_vcpu
->    - Fixed return value in kvm_get_vcpu from -1 to -ENOENT
->    - Reset the value of 'gdb_num_g_regs' in gdb_unregister_coprocessor_all
->    - Fixed the kvm_{create,park}_vcpu prototypes docs
->    - Added Reviewed-by tags for patches {2,3,4,5,6,7,9,10}
-> 3. Addressed one earlier missed comment by Alex Bennée in RFC V1
->    - Added traces instead of DPRINTF in the newly added and some existing functions
-> Link: https://lore.kernel.org/qemu-devel/20230930001933.2660-1-salil.mehta@huawei.com/
-> 
-> Patch-set V1 -> V2
-> 1. Addressed Alex Bennée's comments
->    - Refactored the kvm_create_vcpu logic to get rid of goto
->    - Added the docs for kvm_{create,park}_vcpu prototypes
->    - Splitted the gdbstub and AddressSpace destruction change into separate patches
->    - Added Reviewed-by tags for patches {2,10}
-> Link: https://lore.kernel.org/qemu-devel/20230929124304.13672-1-salil.mehta@huawei.com/
-> 
-> References:
-> 
-> [1] https://lore.kernel.org/qemu-devel/20230926100436.28284-1-salil.mehta@huawei.com/
-> [2] https://lore.kernel.org/all/20230913163823.7880-1-james.morse@arm.com/
-> [3] https://lore.kernel.org/qemu-devel/cover.1695697701.git.lixianglai@loongson.cn/
-> 
-> 
-> 
-> Salil Mehta (8):
->   accel/kvm: Extract common KVM vCPU {creation,parking} code
->   hw/acpi: Move CPU ctrl-dev MMIO region len macro to common header file
->   hw/acpi: Update ACPI GED framework to support vCPU Hotplug
->   hw/acpi: Update GED _EVT method AML with CPU scan
->   hw/acpi: Update CPUs AML with cpu-(ctrl)dev change
->   physmem: Add helper function to destroy CPU AddressSpace
->   gdbstub: Add helper function to unregister GDB register space
->   docs/specs/acpi_hw_reduced_hotplug: Add the CPU Hotplug Event Bit
-> 
->  accel/kvm/kvm-all.c                    | 95 +++++++++++++++++---------
->  accel/kvm/kvm-cpus.h                   |  1 -
->  accel/kvm/trace-events                 |  5 +-
->  docs/specs/acpi_hw_reduced_hotplug.rst |  3 +-
->  gdbstub/gdbstub.c                      | 13 ++++
->  hw/acpi/acpi-cpu-hotplug-stub.c        |  6 ++
->  hw/acpi/cpu.c                          | 33 ++++++---
->  hw/acpi/generic_event_device.c         | 21 ++++++
->  hw/core/cpu-common.c                   |  1 -
->  hw/i386/acpi-build.c                   |  3 +-
->  include/exec/cpu-common.h              |  8 +++
->  include/exec/gdbstub.h                 |  6 ++
->  include/hw/acpi/cpu.h                  |  5 +-
->  include/hw/acpi/cpu_hotplug.h          |  4 ++
->  include/hw/acpi/generic_event_device.h |  4 ++
->  include/hw/core/cpu.h                  |  1 +
->  include/sysemu/kvm.h                   | 25 +++++++
->  system/physmem.c                       | 29 ++++++++
->  18 files changed, 214 insertions(+), 49 deletions(-)
-> 
-> -- 
-> 2.34.1
+-- 
+MST
 
 
