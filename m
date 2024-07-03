@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD447C31D97
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938C6C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8jg-0004CP-6n; Wed, 03 Jul 2024 18:46:02 -0400
+	id 1sP8kX-0001If-Uw; Wed, 03 Jul 2024 18:46:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8ja-0003hg-HA
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:54 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kT-00010N-AZ
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jY-0001Ne-Hm
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:54 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kP-0001V1-Px
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046751;
+ s=mimecast20190719; t=1720046805;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Q5yMEJxQrvHs2013SKJXv7QWp1/VlpmqevozX2UnFx8=;
- b=Gci07JTBQxE1O8O2lid/Mq3Ug9kfVPRQ2Zs+YDLznAzh3XJ7Y7PNpynIl0uwXMO2eDOXWq
- +85tZFyLYYSKv79LegOS8vui2IqlPggMFBW1Gf41HUQUSVknysX0PfI94Nlcfxb0AFfGri
- He8KQVSfYpfqcJixGaHfJVTj0Wh85OU=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6YLYsco4l6cXmk5+8G0baLpqo+8dcgJ41Mj5z/Hl5Ws=;
+ b=iOi9uYF08I+rL+LKhuNLoTsSwGcxuX1w3VwUrIxPz6UR9aPi6gxbFC685MsJ4JmNpJtuZO
+ kk9zq4P4bUPZijYsjnBP51fzOX5j8QC5mg4V109o63KYgwYpvuHvsrgxl9KtfnP1Vnb++u
+ SUH3zmU/rQ4h5rhz079Ps3uEwpkqDqA=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231-ZxSjruN1MLyOxVQ-t8L8nw-1; Wed, 03 Jul 2024 18:45:49 -0400
-X-MC-Unique: ZxSjruN1MLyOxVQ-t8L8nw-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2ee86eda4e4so9771771fa.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:45:49 -0700 (PDT)
+ us-mta-477-xqqpEaUJPfGKezJ0UQUsJw-1; Wed, 03 Jul 2024 18:46:42 -0400
+X-MC-Unique: xqqpEaUJPfGKezJ0UQUsJw-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52cd67973e0so7692235e87.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:46:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046747; x=1720651547;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q5yMEJxQrvHs2013SKJXv7QWp1/VlpmqevozX2UnFx8=;
- b=DVdChoI274rYLB+pJ06KFA4/2WGr+WOoOjRUfX28Ey5gRdJoJGIEmnWBUJvR6E/b7B
- /TsHfwwXeKU+SBL43B21rbmbYVcjmczGs5eGQYbmXkR/29ExMSk8+ePcKYrnYV2secTm
- PoBp92kA6yJkL4fLIx0JXIC2aDT+tdzrJ1YQn8u4YAw04LhUelmp3zk0UN/Nf9Gn5tc/
- IZtalDUZzP4XsbJ37vEbJiyJntENm6NK6trCGNRbOD1aL0omwl3x2sVxjfGNb7QZEmC5
- rLHXpSwiNa1u+7AvoSRFkMezWKRaeQkLEATNFwSDPB0NBoH1+C7q/TGHmpQMPFEg5n53
- 3CEw==
-X-Gm-Message-State: AOJu0Ywgxb1N0FQSaXdkrV7pwo3sIAxdnXQQxRq8FCSSTrC3lcXlBLO4
- jd91cAg5R9BDPmHsTcZPpxM5QM6sRo90DcP5CCsV6cYh/CwPfyBx4z/0PHWaQtOOZmaAiH+H89r
- /oJZ9ruAoHkE14Q8PyOzi9jsFYoOxNQt9CM1wTsVIykAY3MpcOLT8l1j2ySXqWllllFX3zj32Pg
- 9b7rdHP03jrxK7T7xapLPxiYFYHDjakw==
-X-Received: by 2002:a05:651c:1a20:b0:2ee:44f7:cc74 with SMTP id
- 38308e7fff4ca-2ee5e34591cmr96368611fa.6.1720046747518; 
- Wed, 03 Jul 2024 15:45:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7mXFUpgNQBCgd7X2pTuYRWexbGaRz0u5FOqZYJpq1l6njhQ2DXVDYitiAWwivRIC3Fm5llA==
-X-Received: by 2002:a05:651c:1a20:b0:2ee:44f7:cc74 with SMTP id
- 38308e7fff4ca-2ee5e34591cmr96368411fa.6.1720046746829; 
- Wed, 03 Jul 2024 15:45:46 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720046800; x=1720651600;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6YLYsco4l6cXmk5+8G0baLpqo+8dcgJ41Mj5z/Hl5Ws=;
+ b=YZhKlPvIVbN9Rt4j4x91M5Wfk2Ub8WtwpOWM+VYpaR6ILw5kg4dFeY8E1cfGRrmxSz
+ awbdJ7krpnHmycAfH3lLoRq3o7USWVJX2kKXlDlsVQfvDh/vgCmJbSysKbNoJ/yPBLjY
+ Df9t11gfBuxumcFU0CnVVu8P7qBx0jt+0yOdvs/DTeaFxFBctS5pgrcy2yeno/FT+Je6
+ SDmCGDxIVsG/teU34XbnqrviW3otisQyojIkOCYc2N3EAWgyzE23HDaY+U8pNDOXbknN
+ sb148VrzvlpsmXxJq1in8i02IfEVpm+BgQnVNTBJBbGyx6je1e1KeEH9OUYVv/xMeYXC
+ 6j3Q==
+X-Gm-Message-State: AOJu0YzyjYkj6tCwM8GZXho5tlHzT4npy93QwoKBpWVmbQueGWE7QQX0
+ 9GBzWqNYGKQerSXvJ0O4KelGdnsPAMM34wYC1CMCVNPgArSCISOs21uyjxLyYgTieXyTdPU6SXf
+ WJa2U/KBmyiZ1b6nxZHSMbcbSeuN0jWp2lC3o+CHavMlSukCCrCxAYFrrkWutBC7CPxVL+kJ3ft
+ MVYw+8sXnh5rZgZ0yX2/YpDpKFxK4eAA==
+X-Received: by 2002:a05:6512:2814:b0:52c:db0e:6c4a with SMTP id
+ 2adb3069b0e04-52e8264bc06mr12021669e87.2.1720046800514; 
+ Wed, 03 Jul 2024 15:46:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGffBAqru7HAWThABBLCiVEackwaX68SSbQ6Bj1MIZGcQU3SsdNumOUghLVym2RP0mw8CZ6Gw==
+X-Received: by 2002:a05:6512:2814:b0:52c:db0e:6c4a with SMTP id
+ 2adb3069b0e04-52e8264bc06mr12021637e87.2.1720046799474; 
+ Wed, 03 Jul 2024 15:46:39 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58614f3d51asm7646980a12.81.2024.07.03.15.45.44
+ a640c23a62f3a-a752d528ee5sm270137266b.212.2024.07.03.15.46.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:45:46 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:45:42 -0400
+ Wed, 03 Jul 2024 15:46:38 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:46:34 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL v3 19/85] hw/cxl/cxl-mailbox-utils: Add dynamic capacity
- region representative and mailbox command support
-Message-ID: <0f0f140b100392fd938eb6933752155ea68b26a8.1720046570.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <thomas@t-8ch.de>,
+ Cornelia Huck <cohuck@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org
+Subject: [PULL v3 30/85] linux-headers: update to 6.10-rc1
+Message-ID: <c5614ee3f2775534871914c02be4b5a61b71ed40.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -103,199 +105,493 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Thomas Weißschuh <thomas@t-8ch.de>
 
-Per cxl spec r3.1, add dynamic capacity (DC) region representative based on
-Table 8-165 and extend the cxl type3 device definition to include DC region
-information. Also, based on info in 8.2.9.9.9.1, add 'Get Dynamic Capacity
-Configuration' mailbox support.
-
-Note: we store region decode length as byte-wise length on the device, which
-should be divided by 256 * MiB before being returned to the host
-for "Get Dynamic Capacity Configuration" mailbox command per
-specification.
-
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-5-nifan.cxl@gmail.com>
+Signed-off-by: Thomas Weißschuh <thomas@t-8ch.de>
+Message-Id: <20240527-pvpanic-shutdown-v8-2-5a28ec02558b@t-8ch.de>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/cxl/cxl_device.h | 16 +++++++
- hw/cxl/cxl-mailbox-utils.c  | 96 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 112 insertions(+)
+ include/standard-headers/linux/ethtool.h    |  55 ++++++++
+ include/standard-headers/linux/pci_regs.h   |   6 +
+ include/standard-headers/linux/virtio_bt.h  |   1 -
+ include/standard-headers/linux/virtio_mem.h |   2 +
+ include/standard-headers/linux/virtio_net.h | 143 ++++++++++++++++++++
+ include/standard-headers/misc/pvpanic.h     |   7 +-
+ linux-headers/asm-generic/unistd.h          |   5 +-
+ linux-headers/asm-mips/unistd_n32.h         |   1 +
+ linux-headers/asm-mips/unistd_n64.h         |   1 +
+ linux-headers/asm-mips/unistd_o32.h         |   1 +
+ linux-headers/asm-powerpc/unistd_32.h       |   1 +
+ linux-headers/asm-powerpc/unistd_64.h       |   1 +
+ linux-headers/asm-s390/unistd_32.h          |   1 +
+ linux-headers/asm-s390/unistd_64.h          |   1 +
+ linux-headers/asm-x86/unistd_32.h           |   1 +
+ linux-headers/asm-x86/unistd_64.h           |   1 +
+ linux-headers/asm-x86/unistd_x32.h          |   2 +
+ linux-headers/linux/kvm.h                   |   4 +-
+ linux-headers/linux/stddef.h                |   8 ++
+ 19 files changed, 236 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index a5f8e25020..e839370266 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -422,6 +422,17 @@ typedef struct CXLPoison {
- typedef QLIST_HEAD(, CXLPoison) CXLPoisonList;
- #define CXL_POISON_LIST_LIMIT 256
- 
-+#define DCD_MAX_NUM_REGION 8
-+
-+typedef struct CXLDCRegion {
-+    uint64_t base;       /* aligned to 256*MiB */
-+    uint64_t decode_len; /* aligned to 256*MiB */
-+    uint64_t len;
-+    uint64_t block_size;
-+    uint32_t dsmadhandle;
-+    uint8_t flags;
-+} CXLDCRegion;
-+
- struct CXLType3Dev {
-     /* Private */
-     PCIDevice parent_obj;
-@@ -454,6 +465,11 @@ struct CXLType3Dev {
-     unsigned int poison_list_cnt;
-     bool poison_list_overflowed;
-     uint64_t poison_list_overflow_ts;
-+
-+    struct dynamic_capacity {
-+        uint8_t num_regions; /* 0-8 regions */
-+        CXLDCRegion regions[DCD_MAX_NUM_REGION];
-+    } dc;
+diff --git a/include/standard-headers/linux/ethtool.h b/include/standard-headers/linux/ethtool.h
+index 01503784d2..b0b4b68410 100644
+--- a/include/standard-headers/linux/ethtool.h
++++ b/include/standard-headers/linux/ethtool.h
+@@ -752,6 +752,61 @@ enum ethtool_module_power_mode {
+ 	ETHTOOL_MODULE_POWER_MODE_HIGH,
  };
  
- #define TYPE_CXL_TYPE3 "cxl-type3"
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 626acc1d0d..bede28e3c8 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -22,6 +22,8 @@
- 
- #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
- #define CXL_DC_EVENT_LOG_SIZE 8
-+#define CXL_NUM_EXTENTS_SUPPORTED 512
-+#define CXL_NUM_TAGS_SUPPORTED 0
- 
- /*
-  * How to add a new command, example. The command set FOO, with cmd BAR.
-@@ -80,6 +82,8 @@ enum {
-         #define GET_POISON_LIST        0x0
-         #define INJECT_POISON          0x1
-         #define CLEAR_POISON           0x2
-+    DCD_CONFIG  = 0x48,
-+        #define GET_DC_CONFIG          0x0
-     PHYSICAL_SWITCH = 0x51,
-         #define IDENTIFY_SWITCH_DEVICE      0x0
-         #define GET_PHYSICAL_PORT_STATE     0x1
-@@ -1238,6 +1242,88 @@ static CXLRetCode cmd_media_clear_poison(const struct cxl_cmd *cmd,
-     return CXL_MBOX_SUCCESS;
- }
- 
-+/*
-+ * CXL r3.1 section 8.2.9.9.9.1: Get Dynamic Capacity Configuration
-+ * (Opcode: 4800h)
++/**
++ * enum ethtool_pse_types - Types of PSE controller.
++ * @ETHTOOL_PSE_UNKNOWN: Type of PSE controller is unknown
++ * @ETHTOOL_PSE_PODL: PSE controller which support PoDL
++ * @ETHTOOL_PSE_C33: PSE controller which support Clause 33 (PoE)
 + */
-+static CXLRetCode cmd_dcd_get_dyn_cap_config(const struct cxl_cmd *cmd,
-+                                             uint8_t *payload_in,
-+                                             size_t len_in,
-+                                             uint8_t *payload_out,
-+                                             size_t *len_out,
-+                                             CXLCCI *cci)
-+{
-+    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-+    struct {
-+        uint8_t region_cnt;
-+        uint8_t start_rid;
-+    } QEMU_PACKED *in = (void *)payload_in;
-+    struct {
-+        uint8_t num_regions;
-+        uint8_t regions_returned;
-+        uint8_t rsvd1[6];
-+        struct {
-+            uint64_t base;
-+            uint64_t decode_len;
-+            uint64_t region_len;
-+            uint64_t block_size;
-+            uint32_t dsmadhandle;
-+            uint8_t flags;
-+            uint8_t rsvd2[3];
-+        } QEMU_PACKED records[];
-+    } QEMU_PACKED *out = (void *)payload_out;
-+    struct {
-+        uint32_t num_extents_supported;
-+        uint32_t num_extents_available;
-+        uint32_t num_tags_supported;
-+        uint32_t num_tags_available;
-+    } QEMU_PACKED *extra_out;
-+    uint16_t record_count;
-+    uint16_t i;
-+    uint16_t out_pl_len;
-+    uint8_t start_rid;
-+
-+    start_rid = in->start_rid;
-+    if (start_rid >= ct3d->dc.num_regions) {
-+        return CXL_MBOX_INVALID_INPUT;
-+    }
-+
-+    record_count = MIN(ct3d->dc.num_regions - in->start_rid, in->region_cnt);
-+
-+    out_pl_len = sizeof(*out) + record_count * sizeof(out->records[0]);
-+    extra_out = (void *)(payload_out + out_pl_len);
-+    out_pl_len += sizeof(*extra_out);
-+    assert(out_pl_len <= CXL_MAILBOX_MAX_PAYLOAD_SIZE);
-+
-+    out->num_regions = ct3d->dc.num_regions;
-+    out->regions_returned = record_count;
-+    for (i = 0; i < record_count; i++) {
-+        stq_le_p(&out->records[i].base,
-+                 ct3d->dc.regions[start_rid + i].base);
-+        stq_le_p(&out->records[i].decode_len,
-+                 ct3d->dc.regions[start_rid + i].decode_len /
-+                 CXL_CAPACITY_MULTIPLIER);
-+        stq_le_p(&out->records[i].region_len,
-+                 ct3d->dc.regions[start_rid + i].len);
-+        stq_le_p(&out->records[i].block_size,
-+                 ct3d->dc.regions[start_rid + i].block_size);
-+        stl_le_p(&out->records[i].dsmadhandle,
-+                 ct3d->dc.regions[start_rid + i].dsmadhandle);
-+        out->records[i].flags = ct3d->dc.regions[start_rid + i].flags;
-+    }
-+    /*
-+     * TODO: Assign values once extents and tags are introduced
-+     * to use.
-+     */
-+    stl_le_p(&extra_out->num_extents_supported, CXL_NUM_EXTENTS_SUPPORTED);
-+    stl_le_p(&extra_out->num_extents_available, CXL_NUM_EXTENTS_SUPPORTED);
-+    stl_le_p(&extra_out->num_tags_supported, CXL_NUM_TAGS_SUPPORTED);
-+    stl_le_p(&extra_out->num_tags_available, CXL_NUM_TAGS_SUPPORTED);
-+
-+    *len_out = out_pl_len;
-+    return CXL_MBOX_SUCCESS;
-+}
-+
- #define IMMEDIATE_CONFIG_CHANGE (1 << 1)
- #define IMMEDIATE_DATA_CHANGE (1 << 2)
- #define IMMEDIATE_POLICY_CHANGE (1 << 3)
-@@ -1282,6 +1368,11 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
-         cmd_media_clear_poison, 72, 0 },
- };
- 
-+static const struct cxl_cmd cxl_cmd_set_dcd[256][256] = {
-+    [DCD_CONFIG][GET_DC_CONFIG] = { "DCD_GET_DC_CONFIG",
-+        cmd_dcd_get_dyn_cap_config, 2, 0 },
++enum ethtool_pse_types {
++	ETHTOOL_PSE_UNKNOWN =	1 << 0,
++	ETHTOOL_PSE_PODL =	1 << 1,
++	ETHTOOL_PSE_C33 =	1 << 2,
 +};
 +
- static const struct cxl_cmd cxl_cmd_set_sw[256][256] = {
-     [INFOSTAT][IS_IDENTIFY] = { "IDENTIFY", cmd_infostat_identify, 0, 0 },
-     [INFOSTAT][BACKGROUND_OPERATION_STATUS] = { "BACKGROUND_OPERATION_STATUS",
-@@ -1487,7 +1578,12 @@ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
- 
- void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
- {
-+    CXLType3Dev *ct3d = CXL_TYPE3(d);
++/**
++ * enum ethtool_c33_pse_admin_state - operational state of the PoDL PSE
++ *	functions. IEEE 802.3-2022 30.9.1.1.2 aPSEAdminState
++ * @ETHTOOL_C33_PSE_ADMIN_STATE_UNKNOWN: state of PSE functions is unknown
++ * @ETHTOOL_C33_PSE_ADMIN_STATE_DISABLED: PSE functions are disabled
++ * @ETHTOOL_C33_PSE_ADMIN_STATE_ENABLED: PSE functions are enabled
++ */
++enum ethtool_c33_pse_admin_state {
++	ETHTOOL_C33_PSE_ADMIN_STATE_UNKNOWN = 1,
++	ETHTOOL_C33_PSE_ADMIN_STATE_DISABLED,
++	ETHTOOL_C33_PSE_ADMIN_STATE_ENABLED,
++};
 +
-     cxl_copy_cci_commands(cci, cxl_cmd_set);
-+    if (ct3d->dc.num_regions) {
-+        cxl_copy_cci_commands(cci, cxl_cmd_set_dcd);
-+    }
-     cci->d = d;
++/**
++ * enum ethtool_c33_pse_pw_d_status - power detection status of the PSE.
++ *	IEEE 802.3-2022 30.9.1.1.3 aPoDLPSEPowerDetectionStatus:
++ * @ETHTOOL_C33_PSE_PW_D_STATUS_UNKNOWN: PSE status is unknown
++ * @ETHTOOL_C33_PSE_PW_D_STATUS_DISABLED: The enumeration "disabled"
++ *	indicates that the PSE State diagram is in the state DISABLED.
++ * @ETHTOOL_C33_PSE_PW_D_STATUS_SEARCHING: The enumeration "searching"
++ *	indicates the PSE State diagram is in a state other than those
++ *	listed.
++ * @ETHTOOL_C33_PSE_PW_D_STATUS_DELIVERING: The enumeration
++ *	"deliveringPower" indicates that the PSE State diagram is in the
++ *	state POWER_ON.
++ * @ETHTOOL_C33_PSE_PW_D_STATUS_TEST: The enumeration "test" indicates that
++ *	the PSE State diagram is in the state TEST_MODE.
++ * @ETHTOOL_C33_PSE_PW_D_STATUS_FAULT: The enumeration "fault" indicates that
++ *	the PSE State diagram is in the state TEST_ERROR.
++ * @ETHTOOL_C33_PSE_PW_D_STATUS_OTHERFAULT: The enumeration "otherFault"
++ *	indicates that the PSE State diagram is in the state IDLE due to
++ *	the variable error_condition = true.
++ */
++enum ethtool_c33_pse_pw_d_status {
++	ETHTOOL_C33_PSE_PW_D_STATUS_UNKNOWN = 1,
++	ETHTOOL_C33_PSE_PW_D_STATUS_DISABLED,
++	ETHTOOL_C33_PSE_PW_D_STATUS_SEARCHING,
++	ETHTOOL_C33_PSE_PW_D_STATUS_DELIVERING,
++	ETHTOOL_C33_PSE_PW_D_STATUS_TEST,
++	ETHTOOL_C33_PSE_PW_D_STATUS_FAULT,
++	ETHTOOL_C33_PSE_PW_D_STATUS_OTHERFAULT,
++};
++
+ /**
+  * enum ethtool_podl_pse_admin_state - operational state of the PoDL PSE
+  *	functions. IEEE 802.3-2018 30.15.1.1.2 aPoDLPSEAdminState
+diff --git a/include/standard-headers/linux/pci_regs.h b/include/standard-headers/linux/pci_regs.h
+index a39193213f..94c00996e6 100644
+--- a/include/standard-headers/linux/pci_regs.h
++++ b/include/standard-headers/linux/pci_regs.h
+@@ -1144,8 +1144,14 @@
+ #define PCI_DOE_DATA_OBJECT_HEADER_2_LENGTH		0x0003ffff
  
-     /* No separation for PCI MB as protocol handled in PCI device */
+ #define PCI_DOE_DATA_OBJECT_DISC_REQ_3_INDEX		0x000000ff
++#define PCI_DOE_DATA_OBJECT_DISC_REQ_3_VER		0x0000ff00
+ #define PCI_DOE_DATA_OBJECT_DISC_RSP_3_VID		0x0000ffff
+ #define PCI_DOE_DATA_OBJECT_DISC_RSP_3_PROTOCOL		0x00ff0000
+ #define PCI_DOE_DATA_OBJECT_DISC_RSP_3_NEXT_INDEX	0xff000000
+ 
++/* Compute Express Link (CXL r3.1, sec 8.1.5) */
++#define PCI_DVSEC_CXL_PORT				3
++#define PCI_DVSEC_CXL_PORT_CTL				0x0c
++#define PCI_DVSEC_CXL_PORT_CTL_UNMASK_SBR		0x00000001
++
+ #endif /* LINUX_PCI_REGS_H */
+diff --git a/include/standard-headers/linux/virtio_bt.h b/include/standard-headers/linux/virtio_bt.h
+index a11ecc3f92..6f0dee7e32 100644
+--- a/include/standard-headers/linux/virtio_bt.h
++++ b/include/standard-headers/linux/virtio_bt.h
+@@ -13,7 +13,6 @@
+ 
+ enum virtio_bt_config_type {
+ 	VIRTIO_BT_CONFIG_TYPE_PRIMARY	= 0,
+-	VIRTIO_BT_CONFIG_TYPE_AMP	= 1,
+ };
+ 
+ enum virtio_bt_config_vendor {
+diff --git a/include/standard-headers/linux/virtio_mem.h b/include/standard-headers/linux/virtio_mem.h
+index 18c74c527c..6bfa41bd8b 100644
+--- a/include/standard-headers/linux/virtio_mem.h
++++ b/include/standard-headers/linux/virtio_mem.h
+@@ -90,6 +90,8 @@
+ #define VIRTIO_MEM_F_ACPI_PXM		0
+ /* unplugged memory must not be accessed */
+ #define VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE	1
++/* plugged memory will remain plugged when suspending+resuming */
++#define VIRTIO_MEM_F_PERSISTENT_SUSPEND		2
+ 
+ 
+ /* --- virtio-mem: guest -> host requests --- */
+diff --git a/include/standard-headers/linux/virtio_net.h b/include/standard-headers/linux/virtio_net.h
+index 0f88417742..fc594fe5fc 100644
+--- a/include/standard-headers/linux/virtio_net.h
++++ b/include/standard-headers/linux/virtio_net.h
+@@ -56,6 +56,7 @@
+ #define VIRTIO_NET_F_MQ	22	/* Device supports Receive Flow
+ 					 * Steering */
+ #define VIRTIO_NET_F_CTRL_MAC_ADDR 23	/* Set MAC address */
++#define VIRTIO_NET_F_DEVICE_STATS 50	/* Device can provide device-level statistics. */
+ #define VIRTIO_NET_F_VQ_NOTF_COAL 52	/* Device supports virtqueue notification coalescing */
+ #define VIRTIO_NET_F_NOTF_COAL	53	/* Device supports notifications coalescing */
+ #define VIRTIO_NET_F_GUEST_USO4	54	/* Guest can handle USOv4 in. */
+@@ -406,4 +407,146 @@ struct  virtio_net_ctrl_coal_vq {
+ 	struct virtio_net_ctrl_coal coal;
+ };
+ 
++/*
++ * Device Statistics
++ */
++#define VIRTIO_NET_CTRL_STATS         8
++#define VIRTIO_NET_CTRL_STATS_QUERY   0
++#define VIRTIO_NET_CTRL_STATS_GET     1
++
++struct virtio_net_stats_capabilities {
++
++#define VIRTIO_NET_STATS_TYPE_CVQ       (1ULL << 32)
++
++#define VIRTIO_NET_STATS_TYPE_RX_BASIC  (1ULL << 0)
++#define VIRTIO_NET_STATS_TYPE_RX_CSUM   (1ULL << 1)
++#define VIRTIO_NET_STATS_TYPE_RX_GSO    (1ULL << 2)
++#define VIRTIO_NET_STATS_TYPE_RX_SPEED  (1ULL << 3)
++
++#define VIRTIO_NET_STATS_TYPE_TX_BASIC  (1ULL << 16)
++#define VIRTIO_NET_STATS_TYPE_TX_CSUM   (1ULL << 17)
++#define VIRTIO_NET_STATS_TYPE_TX_GSO    (1ULL << 18)
++#define VIRTIO_NET_STATS_TYPE_TX_SPEED  (1ULL << 19)
++
++	uint64_t supported_stats_types[1];
++};
++
++struct virtio_net_ctrl_queue_stats {
++	struct {
++		uint16_t vq_index;
++		uint16_t reserved[3];
++		uint64_t types_bitmap[1];
++	} stats[1];
++};
++
++struct virtio_net_stats_reply_hdr {
++#define VIRTIO_NET_STATS_TYPE_REPLY_CVQ       32
++
++#define VIRTIO_NET_STATS_TYPE_REPLY_RX_BASIC  0
++#define VIRTIO_NET_STATS_TYPE_REPLY_RX_CSUM   1
++#define VIRTIO_NET_STATS_TYPE_REPLY_RX_GSO    2
++#define VIRTIO_NET_STATS_TYPE_REPLY_RX_SPEED  3
++
++#define VIRTIO_NET_STATS_TYPE_REPLY_TX_BASIC  16
++#define VIRTIO_NET_STATS_TYPE_REPLY_TX_CSUM   17
++#define VIRTIO_NET_STATS_TYPE_REPLY_TX_GSO    18
++#define VIRTIO_NET_STATS_TYPE_REPLY_TX_SPEED  19
++	uint8_t type;
++	uint8_t reserved;
++	uint16_t vq_index;
++	uint16_t reserved1;
++	uint16_t size;
++};
++
++struct virtio_net_stats_cvq {
++	struct virtio_net_stats_reply_hdr hdr;
++
++	uint64_t command_num;
++	uint64_t ok_num;
++};
++
++struct virtio_net_stats_rx_basic {
++	struct virtio_net_stats_reply_hdr hdr;
++
++	uint64_t rx_notifications;
++
++	uint64_t rx_packets;
++	uint64_t rx_bytes;
++
++	uint64_t rx_interrupts;
++
++	uint64_t rx_drops;
++	uint64_t rx_drop_overruns;
++};
++
++struct virtio_net_stats_tx_basic {
++	struct virtio_net_stats_reply_hdr hdr;
++
++	uint64_t tx_notifications;
++
++	uint64_t tx_packets;
++	uint64_t tx_bytes;
++
++	uint64_t tx_interrupts;
++
++	uint64_t tx_drops;
++	uint64_t tx_drop_malformed;
++};
++
++struct virtio_net_stats_rx_csum {
++	struct virtio_net_stats_reply_hdr hdr;
++
++	uint64_t rx_csum_valid;
++	uint64_t rx_needs_csum;
++	uint64_t rx_csum_none;
++	uint64_t rx_csum_bad;
++};
++
++struct virtio_net_stats_tx_csum {
++	struct virtio_net_stats_reply_hdr hdr;
++
++	uint64_t tx_csum_none;
++	uint64_t tx_needs_csum;
++};
++
++struct virtio_net_stats_rx_gso {
++	struct virtio_net_stats_reply_hdr hdr;
++
++	uint64_t rx_gso_packets;
++	uint64_t rx_gso_bytes;
++	uint64_t rx_gso_packets_coalesced;
++	uint64_t rx_gso_bytes_coalesced;
++};
++
++struct virtio_net_stats_tx_gso {
++	struct virtio_net_stats_reply_hdr hdr;
++
++	uint64_t tx_gso_packets;
++	uint64_t tx_gso_bytes;
++	uint64_t tx_gso_segments;
++	uint64_t tx_gso_segments_bytes;
++	uint64_t tx_gso_packets_noseg;
++	uint64_t tx_gso_bytes_noseg;
++};
++
++struct virtio_net_stats_rx_speed {
++	struct virtio_net_stats_reply_hdr hdr;
++
++	/* rx_{packets,bytes}_allowance_exceeded are too long. So rename to
++	 * short name.
++	 */
++	uint64_t rx_ratelimit_packets;
++	uint64_t rx_ratelimit_bytes;
++};
++
++struct virtio_net_stats_tx_speed {
++	struct virtio_net_stats_reply_hdr hdr;
++
++	/* tx_{packets,bytes}_allowance_exceeded are too long. So rename to
++	 * short name.
++	 */
++	uint64_t tx_ratelimit_packets;
++	uint64_t tx_ratelimit_bytes;
++};
++
+ #endif /* _LINUX_VIRTIO_NET_H */
+diff --git a/include/standard-headers/misc/pvpanic.h b/include/standard-headers/misc/pvpanic.h
+index 54b7485390..b115094431 100644
+--- a/include/standard-headers/misc/pvpanic.h
++++ b/include/standard-headers/misc/pvpanic.h
+@@ -3,7 +3,10 @@
+ #ifndef __PVPANIC_H__
+ #define __PVPANIC_H__
+ 
+-#define PVPANIC_PANICKED	(1 << 0)
+-#define PVPANIC_CRASH_LOADED	(1 << 1)
++#include "standard-headers/linux/const.h"
++
++#define PVPANIC_PANICKED	_BITUL(0)
++#define PVPANIC_CRASH_LOADED	_BITUL(1)
++#define PVPANIC_SHUTDOWN	_BITUL(2)
+ 
+ #endif /* __PVPANIC_H__ */
+diff --git a/linux-headers/asm-generic/unistd.h b/linux-headers/asm-generic/unistd.h
+index 75f00965ab..d983c48a3b 100644
+--- a/linux-headers/asm-generic/unistd.h
++++ b/linux-headers/asm-generic/unistd.h
+@@ -842,8 +842,11 @@ __SYSCALL(__NR_lsm_set_self_attr, sys_lsm_set_self_attr)
+ #define __NR_lsm_list_modules 461
+ __SYSCALL(__NR_lsm_list_modules, sys_lsm_list_modules)
+ 
++#define __NR_mseal 462
++__SYSCALL(__NR_mseal, sys_mseal)
++
+ #undef __NR_syscalls
+-#define __NR_syscalls 462
++#define __NR_syscalls 463
+ 
+ /*
+  * 32 bit systems traditionally used different
+diff --git a/linux-headers/asm-mips/unistd_n32.h b/linux-headers/asm-mips/unistd_n32.h
+index ce2e050a9b..fc93b3be30 100644
+--- a/linux-headers/asm-mips/unistd_n32.h
++++ b/linux-headers/asm-mips/unistd_n32.h
+@@ -390,5 +390,6 @@
+ #define __NR_lsm_get_self_attr (__NR_Linux + 459)
+ #define __NR_lsm_set_self_attr (__NR_Linux + 460)
+ #define __NR_lsm_list_modules (__NR_Linux + 461)
++#define __NR_mseal (__NR_Linux + 462)
+ 
+ #endif /* _ASM_UNISTD_N32_H */
+diff --git a/linux-headers/asm-mips/unistd_n64.h b/linux-headers/asm-mips/unistd_n64.h
+index 5bfb3733ff..e72a3eb2c9 100644
+--- a/linux-headers/asm-mips/unistd_n64.h
++++ b/linux-headers/asm-mips/unistd_n64.h
+@@ -366,5 +366,6 @@
+ #define __NR_lsm_get_self_attr (__NR_Linux + 459)
+ #define __NR_lsm_set_self_attr (__NR_Linux + 460)
+ #define __NR_lsm_list_modules (__NR_Linux + 461)
++#define __NR_mseal (__NR_Linux + 462)
+ 
+ #endif /* _ASM_UNISTD_N64_H */
+diff --git a/linux-headers/asm-mips/unistd_o32.h b/linux-headers/asm-mips/unistd_o32.h
+index 02eaecd020..b86eb0786c 100644
+--- a/linux-headers/asm-mips/unistd_o32.h
++++ b/linux-headers/asm-mips/unistd_o32.h
+@@ -436,5 +436,6 @@
+ #define __NR_lsm_get_self_attr (__NR_Linux + 459)
+ #define __NR_lsm_set_self_attr (__NR_Linux + 460)
+ #define __NR_lsm_list_modules (__NR_Linux + 461)
++#define __NR_mseal (__NR_Linux + 462)
+ 
+ #endif /* _ASM_UNISTD_O32_H */
+diff --git a/linux-headers/asm-powerpc/unistd_32.h b/linux-headers/asm-powerpc/unistd_32.h
+index bbab08d6ec..28627b6546 100644
+--- a/linux-headers/asm-powerpc/unistd_32.h
++++ b/linux-headers/asm-powerpc/unistd_32.h
+@@ -443,6 +443,7 @@
+ #define __NR_lsm_get_self_attr 459
+ #define __NR_lsm_set_self_attr 460
+ #define __NR_lsm_list_modules 461
++#define __NR_mseal 462
+ 
+ 
+ #endif /* _ASM_UNISTD_32_H */
+diff --git a/linux-headers/asm-powerpc/unistd_64.h b/linux-headers/asm-powerpc/unistd_64.h
+index af34cde70f..1fc42a8300 100644
+--- a/linux-headers/asm-powerpc/unistd_64.h
++++ b/linux-headers/asm-powerpc/unistd_64.h
+@@ -415,6 +415,7 @@
+ #define __NR_lsm_get_self_attr 459
+ #define __NR_lsm_set_self_attr 460
+ #define __NR_lsm_list_modules 461
++#define __NR_mseal 462
+ 
+ 
+ #endif /* _ASM_UNISTD_64_H */
+diff --git a/linux-headers/asm-s390/unistd_32.h b/linux-headers/asm-s390/unistd_32.h
+index a3ece69d82..7706c21b87 100644
+--- a/linux-headers/asm-s390/unistd_32.h
++++ b/linux-headers/asm-s390/unistd_32.h
+@@ -434,5 +434,6 @@
+ #define __NR_lsm_get_self_attr 459
+ #define __NR_lsm_set_self_attr 460
+ #define __NR_lsm_list_modules 461
++#define __NR_mseal 462
+ 
+ #endif /* _ASM_S390_UNISTD_32_H */
+diff --git a/linux-headers/asm-s390/unistd_64.h b/linux-headers/asm-s390/unistd_64.h
+index 8c5fd93495..62082d592d 100644
+--- a/linux-headers/asm-s390/unistd_64.h
++++ b/linux-headers/asm-s390/unistd_64.h
+@@ -382,5 +382,6 @@
+ #define __NR_lsm_get_self_attr 459
+ #define __NR_lsm_set_self_attr 460
+ #define __NR_lsm_list_modules 461
++#define __NR_mseal 462
+ 
+ #endif /* _ASM_S390_UNISTD_64_H */
+diff --git a/linux-headers/asm-x86/unistd_32.h b/linux-headers/asm-x86/unistd_32.h
+index 5c9c329e93..fb7b8b169b 100644
+--- a/linux-headers/asm-x86/unistd_32.h
++++ b/linux-headers/asm-x86/unistd_32.h
+@@ -452,6 +452,7 @@
+ #define __NR_lsm_get_self_attr 459
+ #define __NR_lsm_set_self_attr 460
+ #define __NR_lsm_list_modules 461
++#define __NR_mseal 462
+ 
+ 
+ #endif /* _ASM_UNISTD_32_H */
+diff --git a/linux-headers/asm-x86/unistd_64.h b/linux-headers/asm-x86/unistd_64.h
+index d9aab7ae87..da439afee1 100644
+--- a/linux-headers/asm-x86/unistd_64.h
++++ b/linux-headers/asm-x86/unistd_64.h
+@@ -374,6 +374,7 @@
+ #define __NR_lsm_get_self_attr 459
+ #define __NR_lsm_set_self_attr 460
+ #define __NR_lsm_list_modules 461
++#define __NR_mseal 462
+ 
+ 
+ #endif /* _ASM_UNISTD_64_H */
+diff --git a/linux-headers/asm-x86/unistd_x32.h b/linux-headers/asm-x86/unistd_x32.h
+index 63cdd1ee43..4fcb607c72 100644
+--- a/linux-headers/asm-x86/unistd_x32.h
++++ b/linux-headers/asm-x86/unistd_x32.h
+@@ -318,6 +318,7 @@
+ #define __NR_set_mempolicy_home_node (__X32_SYSCALL_BIT + 450)
+ #define __NR_cachestat (__X32_SYSCALL_BIT + 451)
+ #define __NR_fchmodat2 (__X32_SYSCALL_BIT + 452)
++#define __NR_map_shadow_stack (__X32_SYSCALL_BIT + 453)
+ #define __NR_futex_wake (__X32_SYSCALL_BIT + 454)
+ #define __NR_futex_wait (__X32_SYSCALL_BIT + 455)
+ #define __NR_futex_requeue (__X32_SYSCALL_BIT + 456)
+@@ -326,6 +327,7 @@
+ #define __NR_lsm_get_self_attr (__X32_SYSCALL_BIT + 459)
+ #define __NR_lsm_set_self_attr (__X32_SYSCALL_BIT + 460)
+ #define __NR_lsm_list_modules (__X32_SYSCALL_BIT + 461)
++#define __NR_mseal (__X32_SYSCALL_BIT + 462)
+ #define __NR_rt_sigaction (__X32_SYSCALL_BIT + 512)
+ #define __NR_rt_sigreturn (__X32_SYSCALL_BIT + 513)
+ #define __NR_ioctl (__X32_SYSCALL_BIT + 514)
+diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
+index 038731cdef..c93876ca0b 100644
+--- a/linux-headers/linux/kvm.h
++++ b/linux-headers/linux/kvm.h
+@@ -1217,9 +1217,9 @@ struct kvm_vfio_spapr_tce {
+ /* Available with KVM_CAP_SPAPR_RESIZE_HPT */
+ #define KVM_PPC_RESIZE_HPT_PREPARE _IOR(KVMIO, 0xad, struct kvm_ppc_resize_hpt)
+ #define KVM_PPC_RESIZE_HPT_COMMIT  _IOR(KVMIO, 0xae, struct kvm_ppc_resize_hpt)
+-/* Available with KVM_CAP_PPC_RADIX_MMU or KVM_CAP_PPC_HASH_MMU_V3 */
++/* Available with KVM_CAP_PPC_MMU_RADIX or KVM_CAP_PPC_MMU_HASH_V3 */
+ #define KVM_PPC_CONFIGURE_V3_MMU  _IOW(KVMIO,  0xaf, struct kvm_ppc_mmuv3_cfg)
+-/* Available with KVM_CAP_PPC_RADIX_MMU */
++/* Available with KVM_CAP_PPC_MMU_RADIX */
+ #define KVM_PPC_GET_RMMU_INFO	  _IOW(KVMIO,  0xb0, struct kvm_ppc_rmmu_info)
+ /* Available with KVM_CAP_PPC_GET_CPU_CHAR */
+ #define KVM_PPC_GET_CPU_CHAR	  _IOR(KVMIO,  0xb1, struct kvm_ppc_cpu_char)
+diff --git a/linux-headers/linux/stddef.h b/linux-headers/linux/stddef.h
+index bf9749dd14..96aa341942 100644
+--- a/linux-headers/linux/stddef.h
++++ b/linux-headers/linux/stddef.h
+@@ -55,4 +55,12 @@
+ #define __counted_by(m)
+ #endif
+ 
++#ifndef __counted_by_le
++#define __counted_by_le(m)
++#endif
++
++#ifndef __counted_by_be
++#define __counted_by_be(m)
++#endif
++
+ #endif /* _LINUX_STDDEF_H */
 -- 
 MST
 
