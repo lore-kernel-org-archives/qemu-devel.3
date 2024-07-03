@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5022C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:46:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F559C3271E
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8j7-0002Sl-J7; Wed, 03 Jul 2024 18:45:25 -0400
+	id 1sP8kS-0000tl-CC; Wed, 03 Jul 2024 18:46:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8j5-0002PG-GQ
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kR-0000gq-0e
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8j3-0001CM-Pj
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kO-0001Uo-Bm
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046721;
+ s=mimecast20190719; t=1720046803;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3bV+n5a+n2PubUhTQh2qtot7neovPmYiRH9+8WKEDSw=;
- b=cAwpix/5+B+evUegPzVHBxaRn3FjYXpFENSdgo2qXM9QCxUeQJ7UjvGiHS5SXqpTh8DRxT
- vq37YKa1D4aXbt3r1wt1xf6CLZLeCIGQnfbjOxk0G5dSoqVsNoR6T17HQqeyQT6dHIw5wz
- rkOc/QXAiOXUGkAGMFhZ3hkMXoCzccM=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
+ b=WEdfvfbrwUPKp1PJkoJ9O5dDp7DMcgXp6p2mcZad3MeuJwZ/CIQX+veuY4tOW4ICJ5hZDs
+ VeqjmK0ZcvZKUQzNtIkhURZjDzEYwgesePqz3U475Pkgsqwf7tDM5XmSxNVXAR1m7nEkRl
+ 6jM8HJX1SuXDtyWK0hbfmpT/y3t/QGk=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-EfRyHZmqNsq0eodr1D2z8g-1; Wed, 03 Jul 2024 18:45:19 -0400
-X-MC-Unique: EfRyHZmqNsq0eodr1D2z8g-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52e9345073aso2058518e87.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:45:19 -0700 (PDT)
+ us-mta-659-CBAk51sYMMqnzcC1N4PHgg-1; Wed, 03 Jul 2024 18:46:36 -0400
+X-MC-Unique: CBAk51sYMMqnzcC1N4PHgg-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-57c93227bbeso2847049a12.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:46:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046718; x=1720651518;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3bV+n5a+n2PubUhTQh2qtot7neovPmYiRH9+8WKEDSw=;
- b=br6cGoc3RO/JjTOOQTHiKqJVeZ1v8h3Butb0xjqyVEFM1bDbUilN1bLFEpjHNgjCsV
- AI6dLgEbx4V0x6v5ShZxxa5cik0YGxK+ptCLRziLP1xHj63OcQFv9UWuhxR+vCRXoaym
- 0cXYBGkEa5owF+fUYB6SYjEG9FQrGW3YY966Z8vIIgkUzzVRFtSInuhO6aCdedb6FdRT
- SJWqpe+6mx53bNcLAbMQQd7VTVvVimmXMQ7FySivElYV1XW0xRjGF1luTY/KxVGSeU6S
- dNswBVu0r/PkKLUg7vCOnmKoQAaCrAK44V7Pvhjn0kPe4fDGsXsuNyMRabazP4OFhqZO
- Hrzg==
-X-Gm-Message-State: AOJu0YyeX9gbclwX44/6pZXWLwKwGazdD8zuuiR3xzBbkyux2JG6qw+B
- 39xl4oykSIEdZkxJCygOCC5flfCiLzuReID7KtIotew8JO1/faYm926rR5qM6NDIO7bzqaS9OX3
- SHDdWAm9K+HNOzdmY2cdP6SB4h3OWfGOHGTEtEGWLJg4ottfHdJRc5BfNnWKPZE2yWIAcHSPlyl
- fncY5Eqb3rAtZwySsG8jZAcdk/mPJmzA==
-X-Received: by 2002:a05:6512:3e28:b0:52c:a5cb:69e4 with SMTP id
- 2adb3069b0e04-52e826f12d1mr8789741e87.54.1720046717957; 
- Wed, 03 Jul 2024 15:45:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHm1y1ODxOBNU/ryGMbozUFLY20+fUNub+N3ibywlpMDzs+QpQSYKKEK8Gx3+D+rVXzzsGseQ==
-X-Received: by 2002:a05:6512:3e28:b0:52c:a5cb:69e4 with SMTP id
- 2adb3069b0e04-52e826f12d1mr8789726e87.54.1720046716940; 
- Wed, 03 Jul 2024 15:45:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720046795; x=1720651595;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
+ b=qHE4wBWPSHCjLDZYK2KiriHujvMZarPC3QAyw6yRbGeihEU3lJDVEewm3ZOJkmmpdo
+ xu56N0tWpRga0IlvU+PJV1VWUDLXOORDFsQvVYMxOlk/6djwhJvn3Q2X3hEd+SzQvFkL
+ 40OiSwhuyIHzOkLpAjYHlPTZkBjNSeyiwn7iAx+s1sROX23dFa6Yf30BMhP0zSC6Vr88
+ SKYpa1VQ7Xe33fZFIN22mZr129igV82d0eCkTMkNcY+TdwHClEcOjsWCUN39hfP5Byje
+ gUFQAxGWLeOyxMKGgu0a1128VKKdSUvGjb5hWyAT2/PstBNzrlHWuK9Im+bAidDlcXZn
+ 91Eg==
+X-Gm-Message-State: AOJu0YxJyHHzwUd1b7pV4FZAHhZC9de2Bv8be9kVgr8gLRy47ylyKm0c
+ RC1OrpIAx7KxorP7fsL2SbTVTh0CxMm3ZQ6DeWB4ELlhfFhl8+eGwTs8KSQgzvGBlL+P5ANUwGD
+ q5qUvfAYZQlkyYfxsMVq+nTVKDOaFGA4rwuqfItPML1vTg7l8urdKGTgLIMPfHrrJmMrrqsCI7E
+ SK9ntYqOQgH3AuugGN1OnBFZwXKxJduw==
+X-Received: by 2002:a17:906:68d8:b0:a6f:1025:8dd6 with SMTP id
+ a640c23a62f3a-a75144b50b1mr785261266b.71.1720046795120; 
+ Wed, 03 Jul 2024 15:46:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHn8JibTmMf4vuYP1+dSTzvAzAkwnT9Yw/yZLUnI36/nSkW29iBIG9f0zEz1CIhJudHWwRaZg==
+X-Received: by 2002:a17:906:68d8:b0:a6f:1025:8dd6 with SMTP id
+ a640c23a62f3a-a75144b50b1mr785259266b.71.1720046794459; 
+ Wed, 03 Jul 2024 15:46:34 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72ab09028dsm553241466b.179.2024.07.03.15.45.15
+ a640c23a62f3a-a77b784de44sm3452566b.56.2024.07.03.15.46.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:45:16 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:45:13 -0400
+ Wed, 03 Jul 2024 15:46:33 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:46:29 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: [PULL v3 13/85] vhost-user-gpu: fix import of DMABUF
-Message-ID: <80c8a26de5f1b7d67d4594957c0d82a0c47626be.1720046570.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
+ Svetly Todorov <svetly.todorov@memverge.com>,
+ Gregory Price <gregory.price@memverge.com>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PULL v3 29/85] hw/mem/cxl_type3: Allow to release extent superset
+ in QMP interface
+Message-ID: <c51dca04281f9be6eacdad8fc8f9c7ddc87dcf3c.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,40 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Fan Ni <fan.ni@samsung.com>
 
-When using vhost-user-gpu with GL, qemu -display gtk doesn't show output
-and prints: qemu: eglCreateImageKHR failed
+Before the change, the QMP interface used for add/release DC extents
+only allows to release an extent whose DPA range is contained by a single
+accepted extent in the device.
 
-Since commit 9ac06df8b ("virtio-gpu-udmabuf: correct naming of
-QemuDmaBuf size properties"), egl_dmabuf_import_texture() uses
-backing_{width,height} for the texture dimension.
+With the change, we relax the constraints.  As long as the DPA range of
+the extent is covered by accepted extents, we allow the release.
 
-Fixes: 9ac06df8b ("virtio-gpu-udmabuf: correct naming of QemuDmaBuf size properties")
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20240515105237.1074116-1-marcandre.lureau@redhat.com>
+Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Message-Id: <20240523174651.1089554-15-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/display/vhost-user-gpu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/mem/cxl_type3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/display/vhost-user-gpu.c b/hw/display/vhost-user-gpu.c
-index e4b398d26c..63c64ddde6 100644
---- a/hw/display/vhost-user-gpu.c
-+++ b/hw/display/vhost-user-gpu.c
-@@ -281,8 +281,9 @@ vhost_user_gpu_handle_display(VhostUserGPU *g, VhostUserGpuMsg *msg)
-             modifier = m2->modifier;
-         }
- 
--        dmabuf = qemu_dmabuf_new(m->fd_width, m->fd_height,
--                                 m->fd_stride, 0, 0, 0, 0,
-+        dmabuf = qemu_dmabuf_new(m->width, m->height,
-+                                 m->fd_stride, 0, 0,
-+                                 m->fd_width, m->fd_height,
-                                  m->fd_drm_fourcc, modifier,
-                                  fd, false, m->fd_flags &
-                                  VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP);
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 0d18259ec0..5d4a1276be 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1947,7 +1947,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
+                            "cannot release extent with pending DPA range");
+                 return;
+             }
+-            if (!cxl_extents_contains_dpa_range(&dcd->dc.extents, dpa, len)) {
++            if (!ct3_test_region_block_backed(dcd, dpa, len)) {
+                 error_setg(errp,
+                            "cannot release extent with non-existing DPA range");
+                 return;
 -- 
 MST
 
