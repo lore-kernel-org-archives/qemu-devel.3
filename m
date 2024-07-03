@@ -4,62 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12659C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 12:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCC7AC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 12:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOzMy-000200-70; Wed, 03 Jul 2024 08:45:57 -0400
+	id 1sOzPb-0003U4-2v; Wed, 03 Jul 2024 08:48:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=dfZQ=OD=kaod.org=clg@ozlabs.org>)
- id 1sOzMr-0001yo-BM; Wed, 03 Jul 2024 08:45:49 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=dfZQ=OD=kaod.org=clg@ozlabs.org>)
- id 1sOzMo-0000DM-8P; Wed, 03 Jul 2024 08:45:49 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WDfdZ4zWKz4wcJ;
- Wed,  3 Jul 2024 22:45:38 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WDfdR46jwz4wZx;
- Wed,  3 Jul 2024 22:45:30 +1000 (AEST)
-Message-ID: <cf451844-7b47-46be-baa8-af6544f00a81@kaod.org>
-Date: Wed, 3 Jul 2024 14:45:26 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sOzPY-0003T9-5M
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 08:48:36 -0400
+Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1sOzPN-0002kF-RI
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 08:48:35 -0400
+Received: by mail-qt1-x831.google.com with SMTP id
+ d75a77b69052e-445033fbc24so43698791cf.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 05:48:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720010903; x=1720615703; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=FXe54UJENT4oYRKOoepZjVZET03mrUfuhNQKtc+uPAw=;
+ b=l5uws+734jvwR9ffzLK0IMXlkWfdfEeuCyJvbi9S82TVlAuGTWuEOy/cg3e25jY1BR
+ I7Q9bCiD0EfAABsbCL/ekcWld8uempOhvjZdsdV8jlcNEEZkzstQt7nQB9tJ9nQL3wIz
+ kDAsQ7t3dMqp5Fh3t8J+PUOJgWbVlLaSW8JF/qvhIIEthtYYccMIv3tXSPJ1NTlkOzH/
+ P+2T2WtEo3eUZdEuaiyhGO6g4uGI3GAbz+HULpAD0hRvWWfP4t8NzG0l99gd1w/3jF6t
+ wCIKZRhsdLfYHwdq3KO2xVyj1KFFx5b1DQq3fSl7NH7s0ztBJCJcjrI5kxoKrTfa10aQ
+ kcMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720010903; x=1720615703;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FXe54UJENT4oYRKOoepZjVZET03mrUfuhNQKtc+uPAw=;
+ b=VcKxa8H5QCP0HdVI4KAboRBtKDqoLIEVXSiAdrD9iZOnjYApfsBumAAxuwVCV4isld
+ 7FMZsvtozeabbRtbT1mtcMsu7PwawZhO9z0G05P/0p/ll0Z6MEZV8nTzdiZXajkN1m7g
+ 5g/ZvdxoNaGMDFEgDdZL2ujiWsUOLNVMvy+6xjHGyNCFnWesNRUYXXfL2ojNCuq/gK+i
+ c3ySf1oELm2R0SE/dSLRPodRYlIpZED97YGSNF0QkHpQt66eejl3uF36qmZ+MG3Mk4ci
+ d9IQswcJIpzGThhCzXmTQR9fKfvULG19g+C1zfSm1P6ha6xugu//hrAONqndOKfvigrq
+ Ufog==
+X-Gm-Message-State: AOJu0YzYF75MOuF0YymLkIcSfBWo0RSOxsQwA5i56FSFSyGAEPkpuxkg
+ SVaFeCxU1eWxYgEyPQlvM3cCH22v4FIr+XBLHE0AhOFf1x7DU6MRyR3Gdmdwn92lmM8lZdu7g1C
+ yW+TCSL+EFxT8pVHutpI3ho4XY6qDlSIk
+X-Google-Smtp-Source: AGHT+IFgzjwfmigfTGTiF35NgB9i87plFoS4/x1cPBz9t0lTZB8BJ8ipui2VAaGe4TqIcKbgOe/zwPcdeNd9Al3seSY=
+X-Received: by 2002:a05:622a:199b:b0:446:5d60:5cfb with SMTP id
+ d75a77b69052e-44662c9985amr148734021cf.10.1720010903298; Wed, 03 Jul 2024
+ 05:48:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] hw/net:ftgmac100: support 64 bits dma dram address
- for AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
- <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
- <20240703081623.2740862-3-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240703081623.2740862-3-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=dfZQ=OD=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240701145853.1394967-1-pbonzini@redhat.com>
+ <20240701145853.1394967-4-pbonzini@redhat.com>
+In-Reply-To: <20240701145853.1394967-4-pbonzini@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Wed, 3 Jul 2024 16:48:11 +0400
+Message-ID: <CAJ+F1C+__WX3EUFw-XdsqtXbwFtH0JZJdNH3WDvFazkNnecAbw@mail.gmail.com>
+Subject: Re: [PATCH 03/14] rust: define traits and pointer wrappers to convert
+ from/to C representations
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ =?UTF-8?Q?Sebastian_Dr=C3=B6ge?= <slomo@circular-chaos.org>
+Content-Type: multipart/alternative; boundary="000000000000e6ac68061c573e27"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x831.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,448 +95,814 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/24 10:16 AM, Jamin Lin wrote:
-> ASPEED AST2700 SOC is a 64 bits quad core CPUs (Cortex-a35)
-> And the base address of dram is "0x4 00000000" which
-> is 64bits address.
-> 
-> It have "Normal Priority Transmit Ring Base Address Register High(0x17C)",
-> "High Priority Transmit Ring Base Address Register High(0x184)" and
-> "Receive Ring Base Address Register High(0x18C)" to save the high part physical
-> address of descriptor manager.
-> Ex: TX descriptor manager address [34:0]
-> The "Normal Priority Transmit Ring Base Address Register High(0x17C)"
-> bits [2:0] which corresponds the bits [34:32] of the 64 bits address of
-> the TX ring buffer address.
-> The "Normal Priority Transmit Ring Base Address Register(0x20)" bits [31:0]
-> which corresponds the bits [31:0] of the 64 bits address
-> of the TX ring buffer address.
-> 
-> Besides, it have "TXDES 2" and "RXDES 2"
-> to save the high part physical address of packet buffer.
-> Ex: TX packet buffer address [34:0]
-> The "TXDES 2" bits [18:16] which corresponds the bits [34:32]
-> of the 64 bits address of the TX packet buffer address
-> and "TXDES 3" bits [31:0] which corresponds the bits [31:0]
-> of the 64 bits address of the TX packet buffer address.
-> 
-> Update TX/RX ring and descriptor data type to uint64_t
-> and supports TX/RX ring, descriptor and packet buffers
-> 64 bits address for all ASPEED SOCs models.
-> 
-> Incrementing the version of vmstate to 2.
-> 
-> Introduce a new class(ftgmac100_high),
-> class attribute and memop handlers,
-> the realize handler instantiate a new memory
-> region and map it on top of the current one to
-> read/write FTGMAC100_*_HIGH regs.
-> 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+--000000000000e6ac68061c573e27
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi
+
+(adding Sebastian, one of the glib-rs developers in CC)
+
+On Mon, Jul 1, 2024 at 7:02=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
+
+> The qemu::util::foreign module provides:
+>
+> - A trait for structs that can be converted to a C ("foreign")
+> representation
+>   (CloneToForeign)
+>
+> - A trait for structs that can be built from a C ("foreign") representati=
+on
+>   (FromForeign), and the utility IntoNative that can be used with less
+> typing
+>   (similar to the standard library's From and Into pair)
+>
+> - Automatic implementations of the above traits for Option<>, supporting
+> NULL
+>   pointers
+>
+> - A wrapper for a pointer that automatically frees the contained data.  I=
+f
+>   a struct XYZ implements CloneToForeign, you can build an
+> OwnedPointer<XYZ>
+>   and it will free the contents automatically unless you retrieve it with
+>   owned_ptr.into_inner()
+>
+
+You worry about technical debt, and I do too. Here you introduce quite
+different traits than what glib-rs offers. We already touched this subject
+2y ago, my opinion didn't change much (
+https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat.c=
+om/20210907121943.3498701-13-marcandre.lureau@redhat.com/).
+Also, you don't offer the equivalent of "to_glib_none" which uses a
+temporary stash and is quite useful, as a majority of functions don't take
+ownership.
+
+Because much of our code is using GLib types and API style, I think we
+should strive for something that is close (if not just the same) to what
+glib-rs offers. It's already hard enough to handle one binding concept,
+having 2 will only make the matter worse. Consider a type like
+GHashTable<GUuid, QOM>, it will be very annoying to deal with if we have
+different bindings traits and implementations and we will likely end up
+duplicating glib-rs effort.
+
+As for naming & consistency, glib-rs settled on something clearer imho:
+
+from_glib_full
+from_glib_none
+to_glib_full
+to_glib_none
+
+vs
+
+from_foreign
+cloned_from_foreign
+clone_to_foreign
+/nothing/
+
+but overall, this is still close enough that we shouldn't reinvent it.
+
+It may be worth studying what the kernel offers, I haven't checked yet.
+
+
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   hw/net/ftgmac100.c         | 156 ++++++++++++++++++++++++++++++++-----
->   include/hw/net/ftgmac100.h |  24 ++++--
->   2 files changed, 151 insertions(+), 29 deletions(-)
-> 
-> diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-> index 4e88430b2f..3d13f54efc 100644
-> --- a/hw/net/ftgmac100.c
-> +++ b/hw/net/ftgmac100.c
-> @@ -56,6 +56,16 @@
->   #define FTGMAC100_PHYDATA         0x64
->   #define FTGMAC100_FCR             0x68
->   
-> +/*
-> + * FTGMAC100 High registers
-> + *
-> + * values below are offset by - FTGMAC100_HIGH_OFFSET from datasheet
-> + * because its memory region is start at FTGMAC100_HIGH_OFFSET
-> + */
-> +#define FTGMAC100_NPTXR_BADR_HIGH   (0x17C - FTGMAC100_HIGH_OFFSET)
-> +#define FTGMAC100_HPTXR_BADR_HIGH   (0x184 - FTGMAC100_HIGH_OFFSET)
-> +#define FTGMAC100_RXR_BADR_HIGH     (0x18C - FTGMAC100_HIGH_OFFSET)
+>  qemu/src/lib.rs          |   6 +
+>  qemu/src/util/foreign.rs | 247 +++++++++++++++++++++++++++++++++++++++
+>  qemu/src/util/mod.rs     |   1 +
+>  3 files changed, 254 insertions(+)
+>  create mode 100644 qemu/src/util/foreign.rs
+>  create mode 100644 qemu/src/util/mod.rs
+>
+> diff --git a/qemu/src/lib.rs b/qemu/src/lib.rs
+> index fce21d7..c48edcf 100644
+> --- a/qemu/src/lib.rs
+> +++ b/qemu/src/lib.rs
+> @@ -2,3 +2,9 @@
+>  #![allow(dead_code)]
+>
+>  pub mod bindings;
 > +
->   /*
->    * Interrupt status register & interrupt enable register
->    */
-> @@ -165,6 +175,8 @@
->   #define FTGMAC100_TXDES1_TX2FIC          (1 << 30)
->   #define FTGMAC100_TXDES1_TXIC            (1 << 31)
->   
-> +#define FTGMAC100_TXDES2_TXBUF_BADR_HI(x)   (((x) >> 16) & 0x7)
+> +pub mod util;
+> +pub use util::foreign::CloneToForeign;
+> +pub use util::foreign::FromForeign;
+> +pub use util::foreign::IntoNative;
+> +pub use util::foreign::OwnedPointer;
+> diff --git a/qemu/src/util/foreign.rs b/qemu/src/util/foreign.rs
+> new file mode 100644
+> index 0000000..a591925
+> --- /dev/null
+> +++ b/qemu/src/util/foreign.rs
+> @@ -0,0 +1,247 @@
+> +// TODO: change to use .cast() etc.
+> +#![allow(clippy::ptr_as_ptr)]
 > +
->   /*
->    * Receive descriptor
->    */
-> @@ -198,13 +210,15 @@
->   #define FTGMAC100_RXDES1_UDP_CHKSUM_ERR  (1 << 26)
->   #define FTGMAC100_RXDES1_IP_CHKSUM_ERR   (1 << 27)
->   
-> +#define FTGMAC100_RXDES2_RXBUF_BADR_HI(x)   (((x) >> 16) & 0x7)
+> +/// Traits to map between C structs and native Rust types.
+> +/// Similar to glib-rs but a bit simpler and possibly more
+> +/// idiomatic.
+> +use std::borrow::Cow;
+> +use std::fmt;
+> +use std::fmt::Debug;
+> +use std::mem;
+> +use std::ptr;
 > +
->   /*
->    * Receive and transmit Buffer Descriptor
->    */
->   typedef struct {
->       uint32_t        des0;
->       uint32_t        des1;
-> -    uint32_t        des2;        /* not used by HW */
-> +    uint32_t        des2;        /* used by HW high address */
->       uint32_t        des3;
->   } FTGMAC100Desc;
->   
-> @@ -515,12 +529,14 @@ out:
->       return frame_size;
->   }
->   
-> -static void ftgmac100_do_tx(FTGMAC100State *s, uint32_t tx_ring,
-> -                            uint32_t tx_descriptor)
-> +static void ftgmac100_do_tx(FTGMAC100State *s, uint64_t tx_ring,
-> +                            uint64_t tx_descriptor)
->   {
-> +    FTGMAC100Class *fc = FTGMAC100_GET_CLASS(s);
->       int frame_size = 0;
->       uint8_t *ptr = s->frame;
-> -    uint32_t addr = tx_descriptor;
-> +    uint64_t addr = tx_descriptor;
-> +    uint64_t buf_addr = 0;
-
-To ease reading, I would extract in a standalone patch the part converting
-addresses to 64 bits.
-
->       uint32_t flags = 0;
->   
->       while (1) {
-> @@ -559,7 +575,12 @@ static void ftgmac100_do_tx(FTGMAC100State *s, uint32_t tx_ring,
->               len =  sizeof(s->frame) - frame_size;
->           }
->   
-> -        if (dma_memory_read(&address_space_memory, bd.des3,
-> +        buf_addr = bd.des3;
-> +        if (fc->is_dma64) {
-> +            buf_addr = deposit64(buf_addr, 32, 32,
-> +                                 FTGMAC100_TXDES2_TXBUF_BADR_HI(bd.des2));
+> +/// A type for which there is a canonical representation as a C datum.
+> +pub trait CloneToForeign {
+> +    /// The representation of `Self` as a C datum.  Typically a
+> +    /// `struct`, though there are exceptions for example `c_char`
+> +    /// for strings, since C strings are of `char *` type).
+> +    type Foreign;
+> +
+> +    /// Free the C datum pointed to by `p`.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// `p` must be `NULL` or point to valid data.
+> +    unsafe fn free_foreign(p: *mut Self::Foreign);
+> +
+> +    /// Convert a native Rust object to a foreign C struct, copying
+> +    /// everything pointed to by `self` (same as `to_glib_full` in
+> `glib-rs`)
+> +    fn clone_to_foreign(&self) -> OwnedPointer<Self>;
+> +
+> +    /// Convert a native Rust object to a foreign C pointer, copying
+> +    /// everything pointed to by `self`.  The returned pointer must
+> +    /// be freed with the `free_foreign` associated function.
+> +    fn clone_to_foreign_ptr(&self) -> *mut Self::Foreign {
+> +        self.clone_to_foreign().into_inner()
+> +    }
+> +}
+> +
+> +impl<T> CloneToForeign for Option<T>
+> +where
+> +    T: CloneToForeign,
+> +{
+> +    type Foreign =3D <T as CloneToForeign>::Foreign;
+> +
+> +    unsafe fn free_foreign(x: *mut Self::Foreign) {
+> +        T::free_foreign(x)
+> +    }
+> +
+> +    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
+> +        // Same as the underlying implementation, but also convert `None=
+`
+> +        // to a `NULL` pointer.
+> +        self.as_ref()
+> +            .map(CloneToForeign::clone_to_foreign)
+> +            .map(OwnedPointer::into)
+> +            .unwrap_or_default()
+> +    }
+> +}
+> +
+> +impl<T> FromForeign for Option<T>
+> +where
+> +    T: FromForeign,
+> +{
+> +    unsafe fn cloned_from_foreign(p: *const Self::Foreign) -> Self {
+> +        // Same as the underlying implementation, but also accept a
+> `NULL` pointer.
+> +        if p.is_null() {
+> +            None
+> +        } else {
+> +            Some(T::cloned_from_foreign(p))
 > +        }
-> +        if (dma_memory_read(&address_space_memory, buf_addr,
->                               ptr, len, MEMTXATTRS_UNSPECIFIED)) {
->               qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to read packet @ 0x%x\n",
->                             __func__, bd.des3);
-> @@ -726,9 +747,9 @@ static uint64_t ftgmac100_read(void *opaque, hwaddr addr, unsigned size)
->       case FTGMAC100_MATH1:
->           return s->math[1];
->       case FTGMAC100_RXR_BADR:
-> -        return s->rx_ring;
-> +        return extract64(s->rx_ring, 0, 32);
->       case FTGMAC100_NPTXR_BADR:
-> -        return s->tx_ring;
-> +        return extract64(s->tx_ring, 0, 32);
->       case FTGMAC100_ITC:
->           return s->itc;
->       case FTGMAC100_DBLAC:
-> @@ -799,9 +820,8 @@ static void ftgmac100_write(void *opaque, hwaddr addr,
->                             HWADDR_PRIx "\n", __func__, value);
->               return;
->           }
-> -
-> -        s->rx_ring = value;
-> -        s->rx_descriptor = s->rx_ring;
-> +        s->rx_ring = deposit64(s->rx_ring, 0, 32, value);
-> +        s->rx_descriptor = deposit64(s->rx_descriptor, 0, 32, value);
->           break;
->   
->       case FTGMAC100_RBSR: /* DMA buffer size */
-> @@ -814,8 +834,8 @@ static void ftgmac100_write(void *opaque, hwaddr addr,
->                             HWADDR_PRIx "\n", __func__, value);
->               return;
->           }
-> -        s->tx_ring = value;
-> -        s->tx_descriptor = s->tx_ring;
-> +        s->tx_ring = deposit64(s->tx_ring, 0, 32, value);
-> +        s->tx_descriptor = deposit64(s->tx_descriptor, 0, 32, value);
->           break;
->   
->       case FTGMAC100_NPTXPD: /* Trigger transmit */
-> @@ -914,6 +934,60 @@ static void ftgmac100_write(void *opaque, hwaddr addr,
->       ftgmac100_update_irq(s);
->   }
->   
-> +static uint64_t ftgmac100_high_read(void *opaque, hwaddr addr, unsigned size)
-> +{
-> +    FTGMAC100State *s = FTGMAC100(opaque);
-> +    uint64_t val = 0;
-> +
-> +    switch (addr) {
-> +    case FTGMAC100_NPTXR_BADR_HIGH:
-> +        val = extract64(s->tx_ring, 32, 32);
-> +        break;
-> +    case FTGMAC100_HPTXR_BADR_HIGH:
-> +        /* High Priority Transmit Ring Base High Address */
-> +        qemu_log_mask(LOG_UNIMP, "%s: read to unimplemented register 0x%"
-> +                      HWADDR_PRIx "\n", __func__, addr);
-> +        break;
-> +    case FTGMAC100_RXR_BADR_HIGH:
-> +        val = extract64(s->rx_ring, 32, 32);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad address at offset 0x%"
-> +                      HWADDR_PRIx "\n", __func__, addr);
-> +        break;
 > +    }
-> +
-> +    return val;
 > +}
 > +
-> +static void ftgmac100_high_write(void *opaque, hwaddr addr,
-> +                          uint64_t value, unsigned size)
+> +impl<T> CloneToForeign for Box<T>
+> +where
+> +    T: CloneToForeign,
 > +{
-> +    FTGMAC100State *s = FTGMAC100(opaque);
+> +    type Foreign =3D <T as CloneToForeign>::Foreign;
 > +
-> +    switch (addr) {
-> +    case FTGMAC100_NPTXR_BADR_HIGH:
-> +        s->tx_ring = deposit64(s->tx_ring, 32, 32, value);
-> +        s->tx_descriptor = deposit64(s->tx_descriptor, 32, 32, value);
-> +        break;
-> +    case FTGMAC100_HPTXR_BADR_HIGH:
-> +        /* High Priority Transmit Ring Base High Address */
-> +        qemu_log_mask(LOG_UNIMP, "%s: write to unimplemented register 0x%"
-> +                      HWADDR_PRIx "\n", __func__, addr);
-> +        break;
-> +    case FTGMAC100_RXR_BADR_HIGH:
-> +        s->rx_ring = deposit64(s->rx_ring, 32, 32, value);
-> +        s->rx_descriptor = deposit64(s->rx_descriptor, 32, 32, value);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Bad address at offset 0x%"
-> +                      HWADDR_PRIx "\n", __func__, addr);
-> +        break;
+> +    unsafe fn free_foreign(x: *mut Self::Foreign) {
+> +        T::free_foreign(x)
 > +    }
 > +
-> +    ftgmac100_update_irq(s);
+> +    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
+> +        self.as_ref().clone_to_foreign().into()
+> +    }
 > +}
 > +
->   static int ftgmac100_filter(FTGMAC100State *s, const uint8_t *buf, size_t len)
->   {
->       unsigned mcast_idx;
-> @@ -955,11 +1029,12 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
->                                    size_t len)
->   {
->       FTGMAC100State *s = FTGMAC100(qemu_get_nic_opaque(nc));
-> +    FTGMAC100Class *fc = FTGMAC100_GET_CLASS(s);
->       FTGMAC100Desc bd;
->       uint32_t flags = 0;
-> -    uint32_t addr;
-> +    uint64_t addr;
->       uint32_t crc;
-> -    uint32_t buf_addr;
-> +    uint64_t buf_addr = 0;
->       uint8_t *crc_ptr;
->       uint32_t buf_len;
->       size_t size = len;
-> @@ -1024,7 +1099,12 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
->           if (size < 4) {
->               buf_len += size - 4;
->           }
+> +impl<T> FromForeign for Box<T>
+> +where
+> +    T: FromForeign,
+> +{
+> +    unsafe fn cloned_from_foreign(p: *const Self::Foreign) -> Self {
+> +        Box::new(T::cloned_from_foreign(p))
+> +    }
+> +}
 > +
->           buf_addr = bd.des3;
-> +        if (fc->is_dma64) {
-> +            buf_addr = deposit64(buf_addr, 32, 32,
-> +                                 FTGMAC100_RXDES2_RXBUF_BADR_HI(bd.des2));
+> +impl<'a, B> CloneToForeign for Cow<'a, B>
+> +    where B: 'a + ToOwned + ?Sized + CloneToForeign,
+> +{
+> +    type Foreign =3D B::Foreign;
+> +
+> +    unsafe fn free_foreign(ptr: *mut B::Foreign) {
+> +        B::free_foreign(ptr);
+> +    }
+> +
+> +    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
+> +        self.as_ref().clone_to_foreign().into()
+> +    }
+> +}
+> +
+> +/// Convert a C datum into a native Rust object, taking ownership of
+> +/// the C datum.  You should not need to implement this trait
+> +/// as long as Rust types implement `FromForeign`.
+> +pub trait IntoNative<T> {
+> +    /// Convert a C datum to a native Rust object, taking ownership of
+> +    /// the pointer or Rust object (same as `from_glib_full` in `glib-rs=
+`)
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// `p` must point to valid data, or can be `NULL` if Self is an
+> +    /// `Option` type.  It becomes invalid after the function returns.
+> +    unsafe fn into_native(self) -> T;
+> +}
+> +
+> +impl<T, U> IntoNative<U> for *mut T
+> +where
+> +    U: FromForeign<Foreign =3D T>,
+> +{
+> +    unsafe fn into_native(self) -> U {
+> +        U::from_foreign(self)
+> +    }
+> +}
+> +
+> +/// A type which can be constructed from a canonical representation as a
+> +/// C datum.
+> +pub trait FromForeign: CloneToForeign + Sized {
+> +    /// Convert a C datum to a native Rust object, copying everything
+> +    /// pointed to by `p` (same as `from_glib_none` in `glib-rs`)
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// `p` must point to valid data, or can be `NULL` is `Self` is an
+> +    /// `Option` type.
+> +    unsafe fn cloned_from_foreign(p: *const Self::Foreign) -> Self;
+> +
+> +    /// Convert a C datum to a native Rust object, taking ownership of
+> +    /// the pointer or Rust object (same as `from_glib_full` in `glib-rs=
+`)
+> +    ///
+> +    /// The default implementation calls `cloned_from_foreign` and frees
+> `p`.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// `p` must point to valid data, or can be `NULL` is `Self` is an
+> +    /// `Option` type.  `p` becomes invalid after the function returns.
+> +    unsafe fn from_foreign(p: *mut Self::Foreign) -> Self {
+> +        let result =3D Self::cloned_from_foreign(p);
+> +        Self::free_foreign(p);
+> +        result
+> +    }
+> +}
+> +
+> +pub struct OwnedPointer<T: CloneToForeign + ?Sized> {
+> +    ptr: *mut <T as CloneToForeign>::Foreign,
+> +}
+> +
+> +impl<T: CloneToForeign + ?Sized> OwnedPointer<T> {
+> +    /// Return a new `OwnedPointer` that wraps the pointer `ptr`.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The pointer must be valid and live until the returned
+> `OwnedPointer`
+> +    /// is dropped.
+> +    pub unsafe fn new(ptr: *mut <T as CloneToForeign>::Foreign) -> Self =
+{
+> +        OwnedPointer { ptr }
+> +    }
+> +
+> +    /// Safely create an `OwnedPointer` from one that has the same
+> +    /// freeing function.
+> +    pub fn from<U>(x: OwnedPointer<U>) -> Self
+> +    where
+> +        U: CloneToForeign<Foreign =3D <T as CloneToForeign>::Foreign> +
+> ?Sized,
+> +    {
+> +        unsafe {
+> +            // SAFETY: the pointer type and free function are the same,
+> +            // only the type changes
+> +            OwnedPointer::new(x.into_inner())
 > +        }
->           if (first && proto == ETH_P_VLAN && buf_len >= 18) {
->               bd.des1 = lduw_be_p(buf + 14) | FTGMAC100_RXDES1_VLANTAG_AVAIL;
->   
-> @@ -1078,6 +1158,14 @@ static const MemoryRegionOps ftgmac100_ops = {
->       .endianness = DEVICE_LITTLE_ENDIAN,
->   };
->   
-> +static const MemoryRegionOps ftgmac100_high_ops = {
-> +    .read = ftgmac100_high_read,
-> +    .write = ftgmac100_high_write,
-> +    .valid.min_access_size = 4,
-> +    .valid.max_access_size = 4,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +};
-> +
->   static void ftgmac100_cleanup(NetClientState *nc)
->   {
->       FTGMAC100State *s = FTGMAC100(qemu_get_nic_opaque(nc));
-> @@ -1097,6 +1185,7 @@ static NetClientInfo net_ftgmac100_info = {
->   static void ftgmac100_realize(DeviceState *dev, Error **errp)
->   {
->       FTGMAC100State *s = FTGMAC100(dev);
-> +    FTGMAC100Class *fc = FTGMAC100_GET_CLASS(s);
->       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
->   
->       if (s->aspeed) {
-> @@ -1107,9 +1196,17 @@ static void ftgmac100_realize(DeviceState *dev, Error **errp)
->           s->rxdes0_edorr = FTGMAC100_RXDES0_EDORR;
->       }
->   
-> -    memory_region_init_io(&s->iomem, OBJECT(dev), &ftgmac100_ops, s,
-> +    memory_region_init_io(&s->iomem, OBJECT(s), &ftgmac100_ops, s,
->                             TYPE_FTGMAC100, FTGMAC100_NR_REGS);
->       sysbus_init_mmio(sbd, &s->iomem);
-> +
-> +    if (fc->is_dma64) {
-> +        memory_region_init_io(&s->iomem_high, OBJECT(s), &ftgmac100_high_ops,
-> +                              s, TYPE_FTGMAC100_HIGH, FTGMAC100_HIGH_NR_REGS);
-> +        memory_region_add_subregion(&s->iomem, FTGMAC100_HIGH_OFFSET,
-> +                                    &s->iomem_high);
 > +    }
-
-I think that, first, we should introduce a container region. In this
-container region would be mapped a sub region for the current set of
-registers. This container region would be the one that the SoC maps as
-it is done today.
-
-Then, in a second patch, we should introduce a extra sub region for the
-set of new registers and map it at 0x100 in the container region.
-
-It is close to what you did but it lacks an overall container region.
-This container region should be sized as specified in the datasheet.
-
->       sysbus_init_irq(sbd, &s->irq);
->       qemu_macaddr_default_if_unset(&s->conf.macaddr);
->   
-> @@ -1121,18 +1218,14 @@ static void ftgmac100_realize(DeviceState *dev, Error **errp)
->   
->   static const VMStateDescription vmstate_ftgmac100 = {
->       .name = TYPE_FTGMAC100,
-> -    .version_id = 1,
-> -    .minimum_version_id = 1,
-> +    .version_id = 2,
-> +    .minimum_version_id = 2,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINT32(irq_state, FTGMAC100State),
->           VMSTATE_UINT32(isr, FTGMAC100State),
->           VMSTATE_UINT32(ier, FTGMAC100State),
->           VMSTATE_UINT32(rx_enabled, FTGMAC100State),
-> -        VMSTATE_UINT32(rx_ring, FTGMAC100State),
->           VMSTATE_UINT32(rbsr, FTGMAC100State),
-> -        VMSTATE_UINT32(tx_ring, FTGMAC100State),
-> -        VMSTATE_UINT32(rx_descriptor, FTGMAC100State),
-> -        VMSTATE_UINT32(tx_descriptor, FTGMAC100State),
->           VMSTATE_UINT32_ARRAY(math, FTGMAC100State, 2),
->           VMSTATE_UINT32(itc, FTGMAC100State),
->           VMSTATE_UINT32(aptcr, FTGMAC100State),
-> @@ -1151,6 +1244,10 @@ static const VMStateDescription vmstate_ftgmac100 = {
->           VMSTATE_UINT32(phy_int_mask, FTGMAC100State),
->           VMSTATE_UINT32(txdes0_edotr, FTGMAC100State),
->           VMSTATE_UINT32(rxdes0_edorr, FTGMAC100State),
-> +        VMSTATE_UINT64(rx_ring, FTGMAC100State),
-> +        VMSTATE_UINT64(tx_ring, FTGMAC100State),
-> +        VMSTATE_UINT64(rx_descriptor, FTGMAC100State),
-> +        VMSTATE_UINT64(tx_descriptor, FTGMAC100State),
->           VMSTATE_END_OF_LIST()
->       }
->   };
-> @@ -1180,6 +1277,22 @@ static const TypeInfo ftgmac100_info = {
->       .class_init = ftgmac100_class_init,
->   };
->   
-> +static void ftgmac100_high_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    FTGMAC100Class *fc = FTGMAC100_CLASS(klass);
 > +
-> +    dc->desc = "Faraday FTGMAC100 Gigabit Ethernet High emulation";
-> +    fc->is_dma64 = true;
+> +    /// Safely convert an `OwnedPointer` into one that has the same
+> +    /// freeing function.
+> +    pub fn into<U>(self) -> OwnedPointer<U>
+> +    where
+> +        U: CloneToForeign<Foreign =3D <T as CloneToForeign>::Foreign>,
+> +    {
+> +        OwnedPointer::from(self)
+> +    }
+> +
+> +    /// Return the pointer that is stored in the `OwnedPointer`.  The
+> +    /// pointer is valid for as long as the `OwnedPointer` itself.
+> +    pub fn as_ptr(&self) -> *const <T as CloneToForeign>::Foreign {
+> +        self.ptr
+> +    }
+> +
+> +    pub fn as_mut_ptr(&self) -> *mut <T as CloneToForeign>::Foreign {
+> +        self.ptr
+> +    }
+> +
+> +    /// Return the pointer that is stored in the `OwnedPointer`,
+> +    /// consuming the `OwnedPointer` but not freeing the pointer.
+> +    pub fn into_inner(mut self) -> *mut <T as CloneToForeign>::Foreign {
+> +        let result =3D mem::replace(&mut self.ptr, ptr::null_mut());
+> +        mem::forget(self);
+> +        result
+> +    }
 > +}
-
-Using a property to activate the region for new registers, instead of a
-class, would simplify the changes IMO. Let's call the property "dma64" ?
-
-Thanks,
-
-C.
-
-
-
 > +
-> +static const TypeInfo ftgmac100_high_info = {
-> +    .name = TYPE_FTGMAC100_HIGH,
-> +    .parent = TYPE_FTGMAC100,
-> +    .instance_size = sizeof(FTGMAC100State),
-> +    .class_init = ftgmac100_high_class_init,
-> +};
+> +impl<T: FromForeign + ?Sized> OwnedPointer<T> {
+> +    /// Convert a C datum to a native Rust object, taking ownership of
+> +    /// the pointer or Rust object (same as `from_glib_full` in `glib-rs=
+`)
+> +    pub fn into_native(self) -> T {
+> +        // SAFETY: the pointer was passed to the unsafe constructor
+> OwnedPointer::new
+> +        unsafe { T::from_foreign(self.into_inner()) }
+> +    }
+> +}
 > +
->   /*
->    * AST2600 MII controller
->    */
-> @@ -1342,6 +1455,7 @@ static const TypeInfo aspeed_mii_info = {
->   static void ftgmac100_register_types(void)
->   {
->       type_register_static(&ftgmac100_info);
-> +    type_register_static(&ftgmac100_high_info);
->       type_register_static(&aspeed_mii_info);
->   }
->   
-> diff --git a/include/hw/net/ftgmac100.h b/include/hw/net/ftgmac100.h
-> index 5a970676da..3e44ed97c9 100644
-> --- a/include/hw/net/ftgmac100.h
-> +++ b/include/hw/net/ftgmac100.h
-> @@ -12,13 +12,15 @@
->   #include "qom/object.h"
->   
->   #define TYPE_FTGMAC100 "ftgmac100"
-> -OBJECT_DECLARE_SIMPLE_TYPE(FTGMAC100State, FTGMAC100)
-> +#define TYPE_FTGMAC100_HIGH "ftgmac100_high"
-> +OBJECT_DECLARE_TYPE(FTGMAC100State, FTGMAC100Class, FTGMAC100)
->   
-> -#define FTGMAC100_NR_REGS   0x200
-> +#define FTGMAC100_NR_REGS 0x200
-> +#define FTGMAC100_HIGH_OFFSET 0x100
-> +#define FTGMAC100_HIGH_NR_REGS 0x100
->   
->   #include "hw/sysbus.h"
->   #include "net/net.h"
-> -
->   /*
->    * Max frame size for the receiving buffer
->    */
-> @@ -33,6 +35,7 @@ struct FTGMAC100State {
->       NICConf conf;
->       qemu_irq irq;
->       MemoryRegion iomem;
-> +    MemoryRegion iomem_high;
->   
->       uint8_t frame[FTGMAC100_MAX_FRAME_SIZE];
->   
-> @@ -40,10 +43,6 @@ struct FTGMAC100State {
->       uint32_t isr;
->       uint32_t ier;
->       uint32_t rx_enabled;
-> -    uint32_t rx_ring;
-> -    uint32_t rx_descriptor;
-> -    uint32_t tx_ring;
-> -    uint32_t tx_descriptor;
->       uint32_t math[2];
->       uint32_t rbsr;
->       uint32_t itc;
-> @@ -56,7 +55,10 @@ struct FTGMAC100State {
->       uint32_t phycr;
->       uint32_t phydata;
->       uint32_t fcr;
-> -
-> +    uint64_t rx_ring;
-> +    uint64_t rx_descriptor;
-> +    uint64_t tx_ring;
-> +    uint64_t tx_descriptor;
->   
->       uint32_t phy_status;
->       uint32_t phy_control;
-> @@ -69,6 +71,12 @@ struct FTGMAC100State {
->       uint32_t rxdes0_edorr;
->   };
->   
-> +struct FTGMAC100Class {
-> +    SysBusDeviceClass parent_class;
+> +impl<T: CloneToForeign + ?Sized> Debug for OwnedPointer<T> {
+> +    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+> +        let name =3D std::any::type_name::<T>();
+> +        let name =3D format!("OwnedPointer<{}>", name);
+> +        f.debug_tuple(&name).field(&self.as_ptr()).finish()
+> +    }
+> +}
 > +
-> +    bool is_dma64;
-> +};
+> +impl<T: CloneToForeign + Default + ?Sized> Default for OwnedPointer<T> {
+> +    fn default() -> Self {
+> +        <T as Default>::default().clone_to_foreign()
+> +    }
+> +}
 > +
->   #define TYPE_ASPEED_MII "aspeed-mmi"
->   OBJECT_DECLARE_SIMPLE_TYPE(AspeedMiiState, ASPEED_MII)
->   
+> +impl<T: CloneToForeign + ?Sized> Drop for OwnedPointer<T> {
+> +    fn drop(&mut self) {
+> +        let p =3D mem::replace(&mut self.ptr, ptr::null_mut());
+> +        // SAFETY: the pointer was passed to the unsafe constructor
+> OwnedPointer::new
+> +        unsafe { T::free_foreign(p) }
+> +    }
+> +}
+> diff --git a/qemu/src/util/mod.rs b/qemu/src/util/mod.rs
+> new file mode 100644
+> index 0000000..be00d0c
+> --- /dev/null
+> +++ b/qemu/src/util/mod.rs
+> @@ -0,0 +1 @@
+> +pub mod foreign;
+> --
+> 2.45.2
+>
+>
+>
 
+--=20
+Marc-Andr=C3=A9 Lureau
+
+--000000000000e6ac68061c573e27
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi<br></div><div><br></div><div>(adding S=
+ebastian, one of the glib-rs developers in CC)</div><div><br></div><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jul 1, 202=
+4 at 7:02=E2=80=AFPM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.co=
+m">pbonzini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">The qemu::util::foreign module provides:<br>
+<br>
+- A trait for structs that can be converted to a C (&quot;foreign&quot;) re=
+presentation<br>
+=C2=A0 (CloneToForeign)<br>
+<br>
+- A trait for structs that can be built from a C (&quot;foreign&quot;) repr=
+esentation<br>
+=C2=A0 (FromForeign), and the utility IntoNative that can be used with less=
+ typing<br>
+=C2=A0 (similar to the standard library&#39;s From and Into pair)<br>
+<br>
+- Automatic implementations of the above traits for Option&lt;&gt;, support=
+ing NULL<br>
+=C2=A0 pointers<br>
+<br>
+- A wrapper for a pointer that automatically frees the contained data.=C2=
+=A0 If<br>
+=C2=A0 a struct XYZ implements CloneToForeign, you can build an OwnedPointe=
+r&lt;XYZ&gt;<br>
+=C2=A0 and it will free the contents automatically unless you retrieve it w=
+ith<br>
+=C2=A0 owned_ptr.into_inner()<br></blockquote><div><br></div><div>You worry=
+ about technical debt, and I do too. Here you introduce quite different tra=
+its than what glib-rs offers. We already touched this subject 2y ago, my op=
+inion didn&#39;t change much (<a href=3D"https://patchew.org/QEMU/202109071=
+21943.3498701-1-marcandre.lureau@redhat.com/20210907121943.3498701-13-marca=
+ndre.lureau@redhat.com/">https://patchew.org/QEMU/20210907121943.3498701-1-=
+marcandre.lureau@redhat.com/20210907121943.3498701-13-marcandre.lureau@redh=
+at.com/</a>). Also, you don&#39;t offer the equivalent of &quot;to_glib_non=
+e&quot; which uses a temporary stash and is quite useful, as a majority of =
+functions don&#39;t take ownership.<br></div><div><br></div><div>Because mu=
+ch of our code is using GLib types and API style, I think we should strive =
+for something that is close (if not just the same) to what glib-rs offers. =
+It&#39;s already hard enough to handle one binding concept, having 2 will o=
+nly make the matter worse. Consider a type like GHashTable&lt;GUuid, QOM&gt=
+;, it will be very annoying to deal with if we have different bindings trai=
+ts and implementations and we will likely end up duplicating glib-rs effort=
+.</div><div><br></div><div>As for naming &amp; consistency, glib-rs settled=
+ on something clearer imho:</div><div><br></div><div>from_glib_full</div><d=
+iv>from_glib_none</div><div>to_glib_full</div><div>to_glib_none</div><div><=
+br></div><div>vs</div><div><br></div><div>from_foreign</div><div>cloned_fro=
+m_foreign</div><div>clone_to_foreign</div><div>/nothing/<br></div><div><br>=
+</div><div>but overall, this is still close enough that we shouldn&#39;t re=
+invent it.</div><div><br></div><div>It may be worth studying what the kerne=
+l offers, I haven&#39;t checked yet.<br></div><div>=C2=A0<br></div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
+ solid rgb(204,204,204);padding-left:1ex">
+<br>
+Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" tar=
+get=3D"_blank">pbonzini@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0qemu/src/<a href=3D"http://lib.rs" rel=3D"noreferrer" target=3D"_blan=
+k">lib.rs</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A06 +<br>
+=C2=A0qemu/src/util/<a href=3D"http://foreign.rs" rel=3D"noreferrer" target=
+=3D"_blank">foreign.rs</a> | 247 +++++++++++++++++++++++++++++++++++++++<br=
+>
+=C2=A0qemu/src/util/<a href=3D"http://mod.rs" rel=3D"noreferrer" target=3D"=
+_blank">mod.rs</a>=C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
+=C2=A03 files changed, 254 insertions(+)<br>
+=C2=A0create mode 100644 qemu/src/util/<a href=3D"http://foreign.rs" rel=3D=
+"noreferrer" target=3D"_blank">foreign.rs</a><br>
+=C2=A0create mode 100644 qemu/src/util/<a href=3D"http://mod.rs" rel=3D"nor=
+eferrer" target=3D"_blank">mod.rs</a><br>
+<br>
+diff --git a/qemu/src/<a href=3D"http://lib.rs" rel=3D"noreferrer" target=
+=3D"_blank">lib.rs</a> b/qemu/src/<a href=3D"http://lib.rs" rel=3D"noreferr=
+er" target=3D"_blank">lib.rs</a><br>
+index fce21d7..c48edcf 100644<br>
+--- a/qemu/src/<a href=3D"http://lib.rs" rel=3D"noreferrer" target=3D"_blan=
+k">lib.rs</a><br>
++++ b/qemu/src/<a href=3D"http://lib.rs" rel=3D"noreferrer" target=3D"_blan=
+k">lib.rs</a><br>
+@@ -2,3 +2,9 @@<br>
+=C2=A0#![allow(dead_code)]<br>
+<br>
+=C2=A0pub mod bindings;<br>
++<br>
++pub mod util;<br>
++pub use util::foreign::CloneToForeign;<br>
++pub use util::foreign::FromForeign;<br>
++pub use util::foreign::IntoNative;<br>
++pub use util::foreign::OwnedPointer;<br>
+diff --git a/qemu/src/util/<a href=3D"http://foreign.rs" rel=3D"noreferrer"=
+ target=3D"_blank">foreign.rs</a> b/qemu/src/util/<a href=3D"http://foreign=
+.rs" rel=3D"noreferrer" target=3D"_blank">foreign.rs</a><br>
+new file mode 100644<br>
+index 0000000..a591925<br>
+--- /dev/null<br>
++++ b/qemu/src/util/<a href=3D"http://foreign.rs" rel=3D"noreferrer" target=
+=3D"_blank">foreign.rs</a><br>
+@@ -0,0 +1,247 @@<br>
++// TODO: change to use .cast() etc.<br>
++#![allow(clippy::ptr_as_ptr)]<br>
++<br>
++/// Traits to map between C structs and native Rust types.<br>
++/// Similar to glib-rs but a bit simpler and possibly more<br>
++/// idiomatic.<br>
++use std::borrow::Cow;<br>
++use std::fmt;<br>
++use std::fmt::Debug;<br>
++use std::mem;<br>
++use std::ptr;<br>
++<br>
++/// A type for which there is a canonical representation as a C datum.<br>
++pub trait CloneToForeign {<br>
++=C2=A0 =C2=A0 /// The representation of `Self` as a C datum.=C2=A0 Typical=
+ly a<br>
++=C2=A0 =C2=A0 /// `struct`, though there are exceptions for example `c_cha=
+r`<br>
++=C2=A0 =C2=A0 /// for strings, since C strings are of `char *` type).<br>
++=C2=A0 =C2=A0 type Foreign;<br>
++<br>
++=C2=A0 =C2=A0 /// Free the C datum pointed to by `p`.<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// # Safety<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// `p` must be `NULL` or point to valid data.<br>
++=C2=A0 =C2=A0 unsafe fn free_foreign(p: *mut Self::Foreign);<br>
++<br>
++=C2=A0 =C2=A0 /// Convert a native Rust object to a foreign C struct, copy=
+ing<br>
++=C2=A0 =C2=A0 /// everything pointed to by `self` (same as `to_glib_full` =
+in `glib-rs`)<br>
++=C2=A0 =C2=A0 fn clone_to_foreign(&amp;self) -&gt; OwnedPointer&lt;Self&gt=
+;;<br>
++<br>
++=C2=A0 =C2=A0 /// Convert a native Rust object to a foreign C pointer, cop=
+ying<br>
++=C2=A0 =C2=A0 /// everything pointed to by `self`.=C2=A0 The returned poin=
+ter must<br>
++=C2=A0 =C2=A0 /// be freed with the `free_foreign` associated function.<br=
+>
++=C2=A0 =C2=A0 fn clone_to_foreign_ptr(&amp;self) -&gt; *mut Self::Foreign =
+{<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.clone_to_foreign().into_inner()<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++impl&lt;T&gt; CloneToForeign for Option&lt;T&gt;<br>
++where<br>
++=C2=A0 =C2=A0 T: CloneToForeign,<br>
++{<br>
++=C2=A0 =C2=A0 type Foreign =3D &lt;T as CloneToForeign&gt;::Foreign;<br>
++<br>
++=C2=A0 =C2=A0 unsafe fn free_foreign(x: *mut Self::Foreign) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 T::free_foreign(x)<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 fn clone_to_foreign(&amp;self) -&gt; OwnedPointer&lt;Self&gt=
+; {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 // Same as the underlying implementation, but =
+also convert `None`<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 // to a `NULL` pointer.<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.as_ref()<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .map(CloneToForeign::clone_to_fo=
+reign)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .map(OwnedPointer::into)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .unwrap_or_default()<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++impl&lt;T&gt; FromForeign for Option&lt;T&gt;<br>
++where<br>
++=C2=A0 =C2=A0 T: FromForeign,<br>
++{<br>
++=C2=A0 =C2=A0 unsafe fn cloned_from_foreign(p: *const Self::Foreign) -&gt;=
+ Self {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 // Same as the underlying implementation, but =
+also accept a `NULL` pointer.<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if p.is_null() {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 None<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Some(T::cloned_from_foreign(p))<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++impl&lt;T&gt; CloneToForeign for Box&lt;T&gt;<br>
++where<br>
++=C2=A0 =C2=A0 T: CloneToForeign,<br>
++{<br>
++=C2=A0 =C2=A0 type Foreign =3D &lt;T as CloneToForeign&gt;::Foreign;<br>
++<br>
++=C2=A0 =C2=A0 unsafe fn free_foreign(x: *mut Self::Foreign) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 T::free_foreign(x)<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 fn clone_to_foreign(&amp;self) -&gt; OwnedPointer&lt;Self&gt=
+; {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.as_ref().clone_to_foreign().into()<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++impl&lt;T&gt; FromForeign for Box&lt;T&gt;<br>
++where<br>
++=C2=A0 =C2=A0 T: FromForeign,<br>
++{<br>
++=C2=A0 =C2=A0 unsafe fn cloned_from_foreign(p: *const Self::Foreign) -&gt;=
+ Self {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 Box::new(T::cloned_from_foreign(p))<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++impl&lt;&#39;a, B&gt; CloneToForeign for Cow&lt;&#39;a, B&gt;<br>
++=C2=A0 =C2=A0 where B: &#39;a + ToOwned + ?Sized + CloneToForeign,<br>
++{<br>
++=C2=A0 =C2=A0 type Foreign =3D B::Foreign;<br>
++<br>
++=C2=A0 =C2=A0 unsafe fn free_foreign(ptr: *mut B::Foreign) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 B::free_foreign(ptr);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 fn clone_to_foreign(&amp;self) -&gt; OwnedPointer&lt;Self&gt=
+; {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.as_ref().clone_to_foreign().into()<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++/// Convert a C datum into a native Rust object, taking ownership of<br>
++/// the C datum.=C2=A0 You should not need to implement this trait<br>
++/// as long as Rust types implement `FromForeign`.<br>
++pub trait IntoNative&lt;T&gt; {<br>
++=C2=A0 =C2=A0 /// Convert a C datum to a native Rust object, taking owners=
+hip of<br>
++=C2=A0 =C2=A0 /// the pointer or Rust object (same as `from_glib_full` in =
+`glib-rs`)<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// # Safety<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// `p` must point to valid data, or can be `NULL` if Self i=
+s an<br>
++=C2=A0 =C2=A0 /// `Option` type.=C2=A0 It becomes invalid after the functi=
+on returns.<br>
++=C2=A0 =C2=A0 unsafe fn into_native(self) -&gt; T;<br>
++}<br>
++<br>
++impl&lt;T, U&gt; IntoNative&lt;U&gt; for *mut T<br>
++where<br>
++=C2=A0 =C2=A0 U: FromForeign&lt;Foreign =3D T&gt;,<br>
++{<br>
++=C2=A0 =C2=A0 unsafe fn into_native(self) -&gt; U {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 U::from_foreign(self)<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++/// A type which can be constructed from a canonical representation as a<b=
+r>
++/// C datum.<br>
++pub trait FromForeign: CloneToForeign + Sized {<br>
++=C2=A0 =C2=A0 /// Convert a C datum to a native Rust object, copying every=
+thing<br>
++=C2=A0 =C2=A0 /// pointed to by `p` (same as `from_glib_none` in `glib-rs`=
+)<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// # Safety<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// `p` must point to valid data, or can be `NULL` is `Self`=
+ is an<br>
++=C2=A0 =C2=A0 /// `Option` type.<br>
++=C2=A0 =C2=A0 unsafe fn cloned_from_foreign(p: *const Self::Foreign) -&gt;=
+ Self;<br>
++<br>
++=C2=A0 =C2=A0 /// Convert a C datum to a native Rust object, taking owners=
+hip of<br>
++=C2=A0 =C2=A0 /// the pointer or Rust object (same as `from_glib_full` in =
+`glib-rs`)<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// The default implementation calls `cloned_from_foreign` a=
+nd frees `p`.<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// # Safety<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// `p` must point to valid data, or can be `NULL` is `Self`=
+ is an<br>
++=C2=A0 =C2=A0 /// `Option` type.=C2=A0 `p` becomes invalid after the funct=
+ion returns.<br>
++=C2=A0 =C2=A0 unsafe fn from_foreign(p: *mut Self::Foreign) -&gt; Self {<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 let result =3D Self::cloned_from_foreign(p);<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 Self::free_foreign(p);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 result<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++pub struct OwnedPointer&lt;T: CloneToForeign + ?Sized&gt; {<br>
++=C2=A0 =C2=A0 ptr: *mut &lt;T as CloneToForeign&gt;::Foreign,<br>
++}<br>
++<br>
++impl&lt;T: CloneToForeign + ?Sized&gt; OwnedPointer&lt;T&gt; {<br>
++=C2=A0 =C2=A0 /// Return a new `OwnedPointer` that wraps the pointer `ptr`=
+.<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// # Safety<br>
++=C2=A0 =C2=A0 ///<br>
++=C2=A0 =C2=A0 /// The pointer must be valid and live until the returned `O=
+wnedPointer`<br>
++=C2=A0 =C2=A0 /// is dropped.<br>
++=C2=A0 =C2=A0 pub unsafe fn new(ptr: *mut &lt;T as CloneToForeign&gt;::For=
+eign) -&gt; Self {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 OwnedPointer { ptr }<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 /// Safely create an `OwnedPointer` from one that has the sa=
+me<br>
++=C2=A0 =C2=A0 /// freeing function.<br>
++=C2=A0 =C2=A0 pub fn from&lt;U&gt;(x: OwnedPointer&lt;U&gt;) -&gt; Self<br=
+>
++=C2=A0 =C2=A0 where<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 U: CloneToForeign&lt;Foreign =3D &lt;T as Clon=
+eToForeign&gt;::Foreign&gt; + ?Sized,<br>
++=C2=A0 =C2=A0 {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsafe {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 // SAFETY: the pointer type and =
+free function are the same,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 // only the type changes<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OwnedPointer::new(x.into_inner()=
+)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 /// Safely convert an `OwnedPointer` into one that has the s=
+ame<br>
++=C2=A0 =C2=A0 /// freeing function.<br>
++=C2=A0 =C2=A0 pub fn into&lt;U&gt;(self) -&gt; OwnedPointer&lt;U&gt;<br>
++=C2=A0 =C2=A0 where<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 U: CloneToForeign&lt;Foreign =3D &lt;T as Clon=
+eToForeign&gt;::Foreign&gt;,<br>
++=C2=A0 =C2=A0 {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 OwnedPointer::from(self)<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 /// Return the pointer that is stored in the `OwnedPointer`.=
+=C2=A0 The<br>
++=C2=A0 =C2=A0 /// pointer is valid for as long as the `OwnedPointer` itsel=
+f.<br>
++=C2=A0 =C2=A0 pub fn as_ptr(&amp;self) -&gt; *const &lt;T as CloneToForeig=
+n&gt;::Foreign {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.ptr<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 pub fn as_mut_ptr(&amp;self) -&gt; *mut &lt;T as CloneToFore=
+ign&gt;::Foreign {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 self.ptr<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 /// Return the pointer that is stored in the `OwnedPointer`,=
+<br>
++=C2=A0 =C2=A0 /// consuming the `OwnedPointer` but not freeing the pointer=
+.<br>
++=C2=A0 =C2=A0 pub fn into_inner(mut self) -&gt; *mut &lt;T as CloneToForei=
+gn&gt;::Foreign {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 let result =3D mem::replace(&amp;mut self.ptr,=
+ ptr::null_mut());<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 mem::forget(self);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 result<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++impl&lt;T: FromForeign + ?Sized&gt; OwnedPointer&lt;T&gt; {<br>
++=C2=A0 =C2=A0 /// Convert a C datum to a native Rust object, taking owners=
+hip of<br>
++=C2=A0 =C2=A0 /// the pointer or Rust object (same as `from_glib_full` in =
+`glib-rs`)<br>
++=C2=A0 =C2=A0 pub fn into_native(self) -&gt; T {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 // SAFETY: the pointer was passed to the unsaf=
+e constructor OwnedPointer::new<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsafe { T::from_foreign(self.into_inner()) }<=
+br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++impl&lt;T: CloneToForeign + ?Sized&gt; Debug for OwnedPointer&lt;T&gt; {<b=
+r>
++=C2=A0 =C2=A0 fn fmt(&amp;self, f: &amp;mut fmt::Formatter&lt;&#39;_&gt;) =
+-&gt; fmt::Result {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 let name =3D std::any::type_name::&lt;T&gt;();=
+<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 let name =3D format!(&quot;OwnedPointer&lt;{}&=
+gt;&quot;, name);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 f.debug_tuple(&amp;name).field(&amp;self.as_pt=
+r()).finish()<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++impl&lt;T: CloneToForeign + Default + ?Sized&gt; Default for OwnedPointer&=
+lt;T&gt; {<br>
++=C2=A0 =C2=A0 fn default() -&gt; Self {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 &lt;T as Default&gt;::default().clone_to_forei=
+gn()<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++impl&lt;T: CloneToForeign + ?Sized&gt; Drop for OwnedPointer&lt;T&gt; {<br=
+>
++=C2=A0 =C2=A0 fn drop(&amp;mut self) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 let p =3D mem::replace(&amp;mut self.ptr, ptr:=
+:null_mut());<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 // SAFETY: the pointer was passed to the unsaf=
+e constructor OwnedPointer::new<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 unsafe { T::free_foreign(p) }<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
+diff --git a/qemu/src/util/<a href=3D"http://mod.rs" rel=3D"noreferrer" tar=
+get=3D"_blank">mod.rs</a> b/qemu/src/util/<a href=3D"http://mod.rs" rel=3D"=
+noreferrer" target=3D"_blank">mod.rs</a><br>
+new file mode 100644<br>
+index 0000000..be00d0c<br>
+--- /dev/null<br>
++++ b/qemu/src/util/<a href=3D"http://mod.rs" rel=3D"noreferrer" target=3D"=
+_blank">mod.rs</a><br>
+@@ -0,0 +1 @@<br>
++pub mod foreign;<br>
+-- <br>
+2.45.2<br>
+<br>
+<br>
+</blockquote></div><br clear=3D"all"><br><span class=3D"gmail_signature_pre=
+fix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">Marc-Andr=C3=
+=A9 Lureau<br></div></div>
+
+--000000000000e6ac68061c573e27--
 
