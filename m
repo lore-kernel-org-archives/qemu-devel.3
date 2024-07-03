@@ -4,104 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4537AC30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 11:12:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B3DC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 11:12:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOxos-0004pb-1G; Wed, 03 Jul 2024 07:06:38 -0400
+	id 1sOxui-0006a5-Jx; Wed, 03 Jul 2024 07:12:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sOxon-0004nh-Lx
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:06:33 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sOxoc-0006Uq-Un
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:06:27 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id A51151FCD7;
- Wed,  3 Jul 2024 11:06:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1720004777; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=iJI8eZlacjF+JIrWoMYB2IYBGCqYSJYrsfwtQskDw3Y=;
- b=WuHyKivdwbLxoZTFDnlClXPj5+KlLNIhUN/NbvICJbfLGLKeIB1qlcoUEcyN4E0q3nd6GD
- sAOYL7CfrGTY3VrDYdOOna1ecPp5AU96DIuFA8iSgtd/naUx/xGmwhwa3GlryGd28LAxWI
- r5+yPnp/d9JzA8ar9B3be1KhG/G4Vsg=
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.com header.s=susede1 header.b=WuHyKivd
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1720004777; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=iJI8eZlacjF+JIrWoMYB2IYBGCqYSJYrsfwtQskDw3Y=;
- b=WuHyKivdwbLxoZTFDnlClXPj5+KlLNIhUN/NbvICJbfLGLKeIB1qlcoUEcyN4E0q3nd6GD
- sAOYL7CfrGTY3VrDYdOOna1ecPp5AU96DIuFA8iSgtd/naUx/xGmwhwa3GlryGd28LAxWI
- r5+yPnp/d9JzA8ar9B3be1KhG/G4Vsg=
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E0A2913974;
- Wed,  3 Jul 2024 11:06:16 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 6qBiNKgwhWZ6cgAAD6G6ig
- (envelope-from <roy.hopkins@suse.com>); Wed, 03 Jul 2024 11:06:16 +0000
-From: Roy Hopkins <roy.hopkins@suse.com>
-To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v4 00/17] Introduce support for IGVM files
-Date: Wed,  3 Jul 2024 12:05:38 +0100
-Message-ID: <cover.1720004383.git.roy.hopkins@suse.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sOxuS-0006Rz-0C
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:12:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sOxuO-00014w-RP
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:12:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720005139;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=Tu+AwHgqlx8omxivKOmkjnUP5QKkdpTQaeMZERT/80VNtwCLy9ka+TI1wnjuHJ7LpuVGJ8
+ tCVZpc8M4qkXVYkOptpyUK/D2KreNC+CxnbOsd6+tsKamDazNw2t0gu0tYu3qBb0X20pMW
+ XEvY/Xn6g7v2Xu3N23mWa1CDZdydJeg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-384-fTZ_pO3PNWG3_6lfQEfoIg-1; Wed, 03 Jul 2024 07:12:13 -0400
+X-MC-Unique: fTZ_pO3PNWG3_6lfQEfoIg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4257a75193aso26935025e9.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 04:12:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720005132; x=1720609932;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=nVFfxpefJjbb48rHbYVqkzTpIX2TIzSPlU4d450Kc3283x965VJPCuvK821inq7PsX
+ Vjofl5E+1l8y0JOtZv6ErQLo+KYg60cU067a/GIYarW56Ggf5C+KfL8JoAdSgRFO/MYo
+ jDi7cPPO0OyHb36hGiT94B8oCyDWFueKEpi3NWdBy14BRYVAqziLWa8neFc65BC2gnXS
+ ZXyRIom5kj/SkPcPAIWWF7K86BSgAa99onhPwPP9LTRhW1hVZwmTMEekFojYMiXuefnP
+ yJgvRp/jnweWYHXmr6PEwcfPHCuIIwPJewX6dUnth0YZXypR08Uwfw9lKFl0+JkOLjxb
+ imNw==
+X-Gm-Message-State: AOJu0YwdhtLtQb2wHpoNePx4HFMHD40+kQwAluQaZ8aO/6ulbLLaxH38
+ E7Y8f8aW3oBN84bkRK7nIpvmGiMyyN8Hj94gd5xqoL9BjG8FbUBqhqjViELPdiBR7C50kytp8RD
+ oQnlAi4JelAkDmcG8TGNGMXokXEklcsmGFIRXDwk8NL6pJlqHoyd+
+X-Received: by 2002:a05:600c:4f13:b0:424:7dae:7d79 with SMTP id
+ 5b1f17b1804b1-4257a009c65mr70333935e9.7.1720005132337; 
+ Wed, 03 Jul 2024 04:12:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEYuNKXPpHsiKeyCoyNMov0Et8frzFtCUFL181lF7jmMuZXDrFGeQYemFsY2AY9kelGXcL7aQ==
+X-Received: by 2002:a05:600c:4f13:b0:424:7dae:7d79 with SMTP id
+ 5b1f17b1804b1-4257a009c65mr70333805e9.7.1720005132021; 
+ Wed, 03 Jul 2024 04:12:12 -0700 (PDT)
+Received: from avogadro.local ([151.95.101.29])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4256b0621fesm232717835e9.24.2024.07.03.04.12.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jul 2024 04:12:11 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Michal Privoznik <mprivozn@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ michael.roth@amd.com
+Subject: Re: [PATCH 0/2] i386/sev: Two trivial improvements to
+ sev_get_capabilities()
+Date: Wed,  3 Jul 2024 13:12:09 +0200
+Message-ID: <20240703111209.1650300-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <cover.1719218926.git.mprivozn@redhat.com>
+References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: A51151FCD7
-X-Spamd-Result: default: False [-1.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; MID_CONTAINS_FROM(1.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[19];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.com:s=susede1];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.com:dkim];
- TAGGED_RCPT(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.com:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,109 +102,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Here is v4 of the set of patches to add support for IGVM files to QEMU. This is
-based on commit 1a2d52c7fc of qemu.
+Queued, thanks.
 
-This version addresses all of the review comments from v3 along with a couple of
-small bug fixes. This is a much smaller increment than in the previous version
-of the series [1]. Thanks once again to the reviewers that have been looking at
-this series. This v4 patch series is also available on github: [2]
-
-The previous version had a build issue when building without debug enabled.
-Patch 8/17 has been added to fix this and I've updated my own process to test
-both debug and release builds of QEMU.
-
-For testing IGVM support in QEMU you need to generate an IGVM file that is
-configured for the platform you want to launch. You can use the `buildigvm`
-test tool [3] to allow generation of IGVM files for all currently supported
-platforms. Patch 11/17 contains information on how to generate an IGVM file
-using this tool.
-
-Changes in v4:
-
-* Remove unused '#ifdef CONFIG_IGVM' sections
-* Add "'if': 'CONFIG_IGVM'" for IgvmCfgProperties in qom.json
-* Use error_fatal instead of error_abort in suggested locations
-* Prevent addition of bios code when an IGVM file is provided and pci_enabled is false
-* Add patch 6/17 to fix error handling from sev_encrypt_flash()
-* Revert unrequired changes to return values in sev/*_launch_update() functions
-* Add documentation to igvm.rst to describe how to use 'buildigvm'
-* Various convention and code style changes as suggested in reviews
-* Fix handling of sev_features for kernels that do not support KVM_SEV_INIT2
-* Move igvm-cfg from MachineState to X86MachineState
-
-Patch summary:
-
-1-12: Add support and documentation for processing IGVM files for SEV, SEV-ES,
-SEV-SNP and native platforms. 
-
-13-16: Processing of policy and SEV-SNP ID_BLOCK from IGVM file. 
-
-17: Add pre-processing of IGVM file to support synchronization of 'SEV_FEATURES'
-from IGVM VMSA to KVM.
-
-[1] Link to v3:
-https://lore.kernel.org/qemu-devel/cover.1718979106.git.roy.hopkins@suse.com/
-
-[2] v4 patches also available here:
-https://github.com/roy-hopkins/qemu/tree/igvm_master_v4
-
-[3] `buildigvm` tool v0.2.0
-https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
-
-Roy Hopkins (17):
-  meson: Add optional dependency on IGVM library
-  backends/confidential-guest-support: Add functions to support IGVM
-  backends/igvm: Add IGVM loader and configuration
-  hw/i386: Add igvm-cfg object and processing for IGVM files
-  i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
-    IGVM
-  sev: Fix error handling in sev_encrypt_flash()
-  sev: Update launch_update_data functions to use Error handling
-  target/i386: Allow setting of R_LDTR and R_TR with
-    cpu_x86_load_seg_cache()
-  i386/sev: Refactor setting of reset vector and initial CPU state
-  i386/sev: Implement ConfidentialGuestSupport functions for SEV
-  docs/system: Add documentation on support for IGVM
-  docs/interop/firmware.json: Add igvm to FirmwareDevice
-  backends/confidential-guest-support: Add set_guest_policy() function
-  backends/igvm: Process initialization sections in IGVM file
-  backends/igvm: Handle policy for SEV guests
-  i386/sev: Add implementation of CGS set_guest_policy()
-  sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
-
- docs/interop/firmware.json                 |   9 +-
- docs/system/i386/amd-memory-encryption.rst |   2 +
- docs/system/igvm.rst                       | 173 ++++
- docs/system/index.rst                      |   1 +
- meson.build                                |   8 +
- qapi/qom.json                              |  17 +
- backends/igvm.h                            |  23 +
- include/exec/confidential-guest-support.h  |  96 +++
- include/hw/i386/x86.h                      |   3 +
- include/sysemu/igvm-cfg.h                  |  54 ++
- target/i386/cpu.h                          |   9 +-
- target/i386/sev.h                          | 124 +++
- backends/confidential-guest-support.c      |  43 +
- backends/igvm-cfg.c                        |  66 ++
- backends/igvm.c                            | 958 +++++++++++++++++++++
- hw/i386/pc.c                               |  12 +
- hw/i386/pc_piix.c                          |  10 +
- hw/i386/pc_q35.c                           |  10 +
- hw/i386/pc_sysfw.c                         |  31 +-
- target/i386/sev.c                          | 844 ++++++++++++++++--
- backends/meson.build                       |   5 +
- meson_options.txt                          |   2 +
- qemu-options.hx                            |  25 +
- scripts/meson-buildoptions.sh              |   3 +
- 24 files changed, 2447 insertions(+), 81 deletions(-)
- create mode 100644 docs/system/igvm.rst
- create mode 100644 backends/igvm.h
- create mode 100644 include/sysemu/igvm-cfg.h
- create mode 100644 backends/igvm-cfg.c
- create mode 100644 backends/igvm.c
-
--- 
-2.43.0
+Paolo
 
 
