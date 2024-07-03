@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40E81C30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 16:43:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA595C30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 16:49:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP33Z-0006ZJ-HO; Wed, 03 Jul 2024 12:42:09 -0400
+	id 1sP39b-0008Hr-Dz; Wed, 03 Jul 2024 12:48:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sP33Y-0006Yw-3Z
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:42:08 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1sP39a-0008HK-Ac
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:48:22 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sP33V-0004ZF-3D
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:42:06 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7067108f2cdso4311048b3a.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 09:42:04 -0700 (PDT)
+ id 1sP39Y-0007CI-Pl
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 12:48:22 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-706b14044cbso4212149b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 09:48:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720024923; x=1720629723; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720025298; x=1720630098; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ijUaT7FMtRGU/YN4aXpAULqtZdn68hVnjBIDO905N9s=;
- b=OlFoxlpW+d/auhRF/YrjrmzbLpONL4XFYYXNBkl3W0kD2vZs2FKU/kV8l5zuPJV0dE
- cH66fm9XpwqKHHnJysYwN/thUB043veK4edvJZUlXSkQAKD3TLUr9/sqXIpehOlmRpUP
- oPqrHJwudx7Q6A6QJZH+1X4T45ULANeIgh0dl99LnZrPaX0CIHjhBjh69nhrbfXOEe68
- 1Y4/ZhSk1085eS21aSH35snKVyfIbyPpDW6Mw+U6TsiHhvVPj9qIbP1T847tqdlIBThg
- iBBMSxtZ8uO8g5wJRQxdAT+dssF74vRB89e7YU4A1MlEUs6MYldinfMjXIAcHI259aOb
- PjPw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=w6CHw3yqCSskqhgkAhvOaYaaEp0jr/Ot8CMgsBnXoqQ=;
+ b=Pgz0NFjCE4jQlJvKfdd1+9uC/Q+Ga5YrVF+Piy/55Di148YYyiFmqdx0Q4Xe5LI/bo
+ 4sasd88OgKmMQa07/3UnNBvYk8Fblv1nstDuVaZNstJZ4aYwgyS8VBpnb+h/wS37V3gX
+ K7olFvM7z7Hbm4jM4JIxl0USECxQZ8/xn/3Y9GBFftabzAYAJtbyhI3NbV73XUEfFxTj
+ IOX/UFHAmDNo48h8nj50/kp3w9qzr7DNi4ae6ZeYFlmCaVNc6WDaC0w1BdzJv0QAwuzF
+ 0K639PhVOfVveVg1kHhL7ftnODer5wAnG1N2t17gFqCRAToXu/ynIiwRbXQdAM7GnbVf
+ Q5MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720024923; x=1720629723;
+ d=1e100.net; s=20230601; t=1720025298; x=1720630098;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ijUaT7FMtRGU/YN4aXpAULqtZdn68hVnjBIDO905N9s=;
- b=XZ7YNXakMRTlaQ77o0c2FXsjVVwx1+/IIvO2HN8HqLlVVDaG6OSptw/0gJ7w29A/b1
- cRdAmOf8FnKwXtzG1HeRiAkFoK0FUxqbThucZUp5Dh21wzn0hoME+p3HpXMbalxgcmp1
- 6zMIYv78iaGBNHXxxb6ypaiD16m9KFnr7YyXRWKXd1VzOmr6gbS7B7vEu5++LsTmc58n
- qGx9sK6M8Cf6+DGqeluByP/xAwlW0MxoDQ/O25ZREK5PmoHoNnUkSOZMvtJPEcLFxnoN
- JO3W8fmhcIBV8Ye6rWBUAvB4BnA5xW7+hwWly3kmzQas3TEAu3FTbF/tXT/F4FgdLH9X
- VDUQ==
+ bh=w6CHw3yqCSskqhgkAhvOaYaaEp0jr/Ot8CMgsBnXoqQ=;
+ b=pgMVeBNFAjhWhD2MWTuoX1ofLn+FrNdOSloTUvtQLa4Awjc0q8s8VQP2wgipXdD7ho
+ agIgXRWEDbVa7Zm2sc4CtKFBmRVEWNPm8wVxEAK47S6HMCJlhanxRHDMJCNDr5uve2Px
+ WB3lTsQ7E6RmHmLdS1sSuaj3ced9+8p2xV2tFVCV0TVKhUzOSfntt39EylQWrzXDVVVG
+ PstrNVMYXYjaE0nGXy+H4AJtsCWeG6jpQ5qMhsRaITrbe3jZt7XahEjNYgKw9ceNT+NB
+ 5x5h8wOkEP5BFuvXaXfLg9+kW5O++mz2jJStfvsiHd65pKSgnsyzvqx1CaGBTBteQcyB
+ 7uLg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4DKDAxZVGNpX3xzNOi4l4IJlpL4AQ688HrfMLvRCeEExEETAxp7wF086QMo4HK0Kn7UpqQMNyYjY9i3WT4Zv0oG+fgbg=
-X-Gm-Message-State: AOJu0YxRW4NG+Dw0vXYOtyMERp2OfxiME32GfOapDaPvKggseY5QXL8Q
- Vwg1aVClljXvJLLFaftcRZen8YnTprTuA8zPULTCV1v+y47i+62sXicJlpuoO9Y=
-X-Google-Smtp-Source: AGHT+IGMAEg7dT5FvuP6oUufVl4qBni9qKMfrKQ1LbGNDL6SbpMDRGtgoJT7Zr8z83SdyiGEbwTKow==
-X-Received: by 2002:a05:6a00:2d83:b0:706:62b6:cbcf with SMTP id
- d2e1a72fcca58-70aaaf1dffdmr13312251b3a.30.1720024922950; 
- Wed, 03 Jul 2024 09:42:02 -0700 (PDT)
+ AJvYcCXHVdgJ4Cy8M4un1DsDffpWz1wJ280EMC7dxlbEPfw6OMjhbp0GJXlPDcg/MEBBm0L2PgKmZohVcCcOImmuqe1EEJMHHsQ=
+X-Gm-Message-State: AOJu0YwSZHkxRDgp82wOgEyFP3R3tJy+WAWp7HdO5lmNUmAoevIJoGf8
+ WaPOTA9g7grGyVgg9v4wJO5Jr7/G3cavjYc7Ur/T/35jUn/LEF+eEndukrIngf4=
+X-Google-Smtp-Source: AGHT+IHFqxoJaaiYHnlV2miZdbTR8z11emqES0qnv6m0K6P7nHKCgRdsX0tZTP705UKH+cjTGzinwg==
+X-Received: by 2002:a05:6a00:124e:b0:706:b3d0:ffd8 with SMTP id
+ d2e1a72fcca58-70aaad2b50bmr12374612b3a.7.1720025297882; 
+ Wed, 03 Jul 2024 09:48:17 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70803ed469fsm10665073b3a.111.2024.07.03.09.42.02
+ d2e1a72fcca58-70804b8ebebsm10628589b3a.214.2024.07.03.09.48.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 09:42:02 -0700 (PDT)
-Message-ID: <9c5dbe05-7097-4fba-abe8-e7ecbf60e15f@linaro.org>
-Date: Wed, 3 Jul 2024 09:42:00 -0700
+ Wed, 03 Jul 2024 09:48:17 -0700 (PDT)
+Message-ID: <72a2c72d-3e6e-4c12-b8ca-5af3d39256f1@linaro.org>
+Date: Wed, 3 Jul 2024 09:48:15 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: SEV: fix formatting of CPUID mismatch message
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240703104312.1642361-1-pbonzini@redhat.com>
+Subject: Re: [PATCH v3 2/7] target/riscv: Adjust PMP size for no-MMU RV64 QEMU
+ running RV32
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240703144921.1281-1-zhiwei_liu@linux.alibaba.com>
+ <20240703144921.1281-3-zhiwei_liu@linux.alibaba.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240703104312.1642361-1-pbonzini@redhat.com>
+In-Reply-To: <20240703144921.1281-3-zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,14 +101,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/24 03:43, Paolo Bonzini wrote:
-> Fixes: 70943ad8e4d ("i386/sev: Add support for SNP CPUID validation", 2024-06-05)
-> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
-> ---
->   target/i386/sev.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+On 7/3/24 07:49, LIU Zhiwei wrote:
+> -            pmp_size = sizeof(target_ulong);
+> +            pmp_size = 2UL << riscv_cpu_mxl(env);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+UL is almost always incorrect in qemu, as 'long' has no specifically useful meaning.
+
+In this case you can drop it completely.
+
 
 r~
 
