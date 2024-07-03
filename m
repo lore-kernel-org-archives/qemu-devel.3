@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37212C31D97
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 741EFC31D97
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:51:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8lQ-0006Lt-Mg; Wed, 03 Jul 2024 18:47:48 -0400
+	id 1sP8ns-0003Hc-Ho; Wed, 03 Jul 2024 18:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8lP-0006Fo-89
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8nr-0003DN-BH
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:50:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8lN-0001yl-FV
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:46 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8nn-0007Qu-Lg
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:50:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046863;
+ s=mimecast20190719; t=1720047012;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=f1RnRBcwUZd5byR6UedM+mwZMcF5dchy820Keg4IB1o=;
- b=jIg29T0nQdx/vBqSySmm5NESYfBHE92i1LLfDcbb7m/lqVftofepqnqOz+Mau4pWl/FPzn
- zAiZlHw5azfFV85aU2TFwVIvYEEzRSPIl84ckpCh/0ZtjAdkdSJj9xYfMf1TqjxghZ7evE
- Rm571E2cAL5HK1b9U6HG6oiJFXAeVrQ=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PtAXW6LVwA3P89VkFVi94GjAlNMJ1XHCqV5FMloDGgI=;
+ b=AMolVbH2kguEj4tA7choLGdmHig5QFYcQ5nGT6Duk7sixWILIY0lrCb11yDLSDZLfaNl7z
+ CQeUa893mAV6p3SBcAi77/ztXvZBW4wanho8e2cbXufLf2jGZOyQ1WxWci9x+6EBIOee7N
+ /lCBwSmNgMl2ZBv4S0MZUyCPX7P8Y78=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-ElRzljU7NOuDcNr_xasF0A-1; Wed, 03 Jul 2024 18:47:42 -0400
-X-MC-Unique: ElRzljU7NOuDcNr_xasF0A-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52ce7a15a62so6360329e87.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:47:42 -0700 (PDT)
+ us-mta-343-fRc4uKRTMxChNLYPGNeHqg-1; Wed, 03 Jul 2024 18:50:11 -0400
+X-MC-Unique: fRc4uKRTMxChNLYPGNeHqg-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-425897358f0so5405e9.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:50:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046861; x=1720651661;
+ d=1e100.net; s=20230601; t=1720047009; x=1720651809;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f1RnRBcwUZd5byR6UedM+mwZMcF5dchy820Keg4IB1o=;
- b=d7andKQs6seXXyD5oY1wswAboUBoyxfEI2lMRN9woGuLhu1rga2iOXfn8mqznae9f2
- t6+R63ZVcxi5hdpy9mnayMmPCXXKsqIiipYlsUruTMbKE0JTydjgBpPllxG5+5k7b3tB
- YvY1/KKVeT6QMLDMs/RSzac5CPKZfunIdqkCbf3uqBphD5NJVbkilpZhpUKk/5U39Mc3
- zXEIB+hrs8CBLTXKrCSGIqLrdk+4mRDL3t7RVLN1HOi9N6QTcj/UU+r/m17p7Df0S+LN
- agfSp71VSuNb4KakSVyqrB0rZ6RJgQZumMJ/JJ2l56HAoXurIk9gh4UuP41mrYGwqlYf
- 39ww==
-X-Gm-Message-State: AOJu0YzOzpFKc0jyCbYJnw6IOo9SaseAONk9LJoOxRBhpjBiNV8FPJOS
- 3OPOMiTaDaujoTQ72VKMxam9mVjiQfgQYkfwemzbW4wuDvo6rNXxpnP/eYaEZZ1IpfE3elY3m1a
- ve0YXV2xi1Bye6S2ok3ak3D1V0zYyaN2MsYd1U+FJCVynazgj+PoPQszMqpK/ntarvBy1aLcJNP
- 0njjjJbG0NFhQmH1JjFexf9GQkdH+gTQ==
-X-Received: by 2002:a05:6512:104c:b0:52c:e133:7b2e with SMTP id
- 2adb3069b0e04-52e8268b956mr8673589e87.35.1720046860963; 
- Wed, 03 Jul 2024 15:47:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOFyv9bE/A2/4QPauIzJPfpNAjXyFMaCGFIXPPZdL1FvIMdqSIufgqUtSGivODNvqiGZbbzg==
-X-Received: by 2002:a05:6512:104c:b0:52c:e133:7b2e with SMTP id
- 2adb3069b0e04-52e8268b956mr8673570e87.35.1720046860184; 
- Wed, 03 Jul 2024 15:47:40 -0700 (PDT)
+ bh=PtAXW6LVwA3P89VkFVi94GjAlNMJ1XHCqV5FMloDGgI=;
+ b=tiR9QcPY62S0RXRjFNk2RajLyaQv7SrESZcgYM/LonWM8V5FWO1SKwGqh7yhrn/pxc
+ BGQnY8Xrixgztpeske7+U1vXzfftCAsNwy4HLpvvb+p3W+Y4/fLGO0Cc9DGinh4Sjrpt
+ eDX24xt4syYIOhWVd+kb6mQbPK5/yGDZan7uLsbSuiHPAOpaL2lQPS33pH0Mty+ej8Ib
+ AIjVkvgQ1NVcY3HDrdVBW0MEbGFRESEE6Ls8oxgqCS184Nl4sbB+pM+bXVN2CvDPhZ3D
+ 2o9TnfjioSpAxgYX8uID92Eds3AYK5Sqsplwmuvd+7oxROSvi0JLy/yhe30L6dtZfmYd
+ xkNg==
+X-Gm-Message-State: AOJu0YyIIr3SZfsc26my+qqkJJtxqr0rqGkMj9uI1HpRBV0kAMWoPjlD
+ 0CluhZxBTrgx0R4uegHD6O2RaxXTlxoBq+1sJsndTpbK+5+sBwkFlLBz0EiLOHH47udC9DgJr1h
+ xTCdQL//YmtazgwOFo/5EWZv5m0D7EtrIAf+3BCV4VBt1HdXWmRUYerGCVwC6TYTqpuqRFloVrP
+ r0r84+qlZZNokOn4b76PEbooarTnzuTA==
+X-Received: by 2002:a05:600c:4b17:b0:424:a578:fc7 with SMTP id
+ 5b1f17b1804b1-4264a3cc9f5mr415515e9.3.1720047009045; 
+ Wed, 03 Jul 2024 15:50:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFpa77sy9qcpEziIeS7eh+YqAW5vVfTokYAPRI+PfSjMPs8mQy0gyLw0cLiwbfI2y2KQ/aGaA==
+X-Received: by 2002:a05:600c:4b17:b0:424:a578:fc7 with SMTP id
+ 5b1f17b1804b1-4264a3cc9f5mr415265e9.3.1720047008069; 
+ Wed, 03 Jul 2024 15:50:08 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58de4581536sm469309a12.16.2024.07.03.15.47.37
+ 5b1f17b1804b1-4264a1dd902sm1233625e9.12.2024.07.03.15.50.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:47:39 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:47:36 -0400
+ Wed, 03 Jul 2024 15:50:07 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:50:04 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>, Eric Auger <eric.auger@redhat.com>
-Subject: [PULL v3 43/85] virtio-iommu: add error check before assert
-Message-ID: <704391f94a5494f10b886ba79c157363a79b1239.1720046570.git.mst@redhat.com>
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PULL v3 76/85] hw/pci: Rename has_power to enabled
+Message-ID: <6a31b219a5338564f3978251c79f96f689e037da.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -78,7 +78,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -102,88 +102,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-A fuzzer case discovered by Zheyu Ma causes an assert failure.
+The renamed state will not only represent powering state of PFs, but
+also represent SR-IOV VF enablement in the future.
 
-Add a check before the assert, and respond with an error before moving
-on to the next queue element.
-
-To reproduce the failure:
-
-cat << EOF | \
-qemu-system-x86_64 \
--display none -machine accel=qtest -m 512M -machine q35 -nodefaults \
--device virtio-iommu -qtest stdio
-outl 0xcf8 0x80000804
-outw 0xcfc 0x06
-outl 0xcf8 0x80000820
-outl 0xcfc 0xe0004000
-write 0x10000e 0x1 0x01
-write 0xe0004020 0x4 0x00001000
-write 0xe0004028 0x4 0x00101000
-write 0xe000401c 0x1 0x01
-write 0x106000 0x1 0x05
-write 0x100001 0x1 0x60
-write 0x100002 0x1 0x10
-write 0x100009 0x1 0x04
-write 0x10000c 0x1 0x01
-write 0x100018 0x1 0x04
-write 0x10001c 0x1 0x02
-write 0x101003 0x1 0x01
-write 0xe0007001 0x1 0x00
-EOF
-
-Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2359
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-Id: <20240613-fuzz-2359-fix-v2-manos.pitsidianakis@linaro.org>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-reuse-v10-1-7ca0b8ed3d9f@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/virtio/virtio-iommu.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ include/hw/pci/pci.h        |  7 ++++++-
+ include/hw/pci/pci_device.h |  2 +-
+ hw/pci/pci.c                | 14 +++++++-------
+ hw/pci/pci_host.c           |  4 ++--
+ 4 files changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
-index b9a7ddcd14..ed7426afc7 100644
---- a/hw/virtio/virtio-iommu.c
-+++ b/hw/virtio/virtio-iommu.c
-@@ -974,6 +974,9 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
-         iov = elem->out_sg;
-         sz = iov_to_buf(iov, iov_cnt, 0, &head, sizeof(head));
-         if (unlikely(sz != sizeof(head))) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: read %zu bytes from command head"
-+                          "but expected %zu\n", __func__, sz, sizeof(head));
-             tail.status = VIRTIO_IOMMU_S_DEVERR;
-             goto out;
-         }
-@@ -1010,6 +1013,25 @@ static void virtio_iommu_handle_command(VirtIODevice *vdev, VirtQueue *vq)
- out:
-         sz = iov_from_buf(elem->in_sg, elem->in_num, 0,
-                           buf ? buf : &tail, output_size);
-+        if (unlikely(sz != output_size)) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: wrote %zu bytes to command response"
-+                          "but response size is %zu\n",
-+                          __func__, sz, output_size);
-+            tail.status = VIRTIO_IOMMU_S_DEVERR;
-+            /*
-+             * We checked that sizeof(tail) can fit to elem->in_sg at the
-+             * beginning of the loop
-+             */
-+            output_size = sizeof(tail);
-+            g_free(buf);
-+            buf = NULL;
-+            sz = iov_from_buf(elem->in_sg,
-+                              elem->in_num,
-+                              0,
-+                              &tail,
-+                              output_size);
-+        }
-         assert(sz == output_size);
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index eb26cac810..fe04b4fafd 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -678,6 +678,11 @@ static inline void pci_irq_pulse(PCIDevice *pci_dev)
+ }
  
-         virtqueue_push(vq, elem, sz);
+ MSIMessage pci_get_msi_message(PCIDevice *dev, int vector);
+-void pci_set_power(PCIDevice *pci_dev, bool state);
++void pci_set_enabled(PCIDevice *pci_dev, bool state);
++
++static inline void pci_set_power(PCIDevice *pci_dev, bool state)
++{
++    pci_set_enabled(pci_dev, state);
++}
+ 
+ #endif
+diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+index d3dd0f64b2..d57f9ce838 100644
+--- a/include/hw/pci/pci_device.h
++++ b/include/hw/pci/pci_device.h
+@@ -56,7 +56,7 @@ typedef struct PCIReqIDCache PCIReqIDCache;
+ struct PCIDevice {
+     DeviceState qdev;
+     bool partially_hotplugged;
+-    bool has_power;
++    bool enabled;
+ 
+     /* PCI config space */
+     uint8_t *config;
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 50b86d5790..68d30feb86 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -1525,7 +1525,7 @@ static void pci_update_mappings(PCIDevice *d)
+             continue;
+ 
+         new_addr = pci_bar_address(d, i, r->type, r->size);
+-        if (!d->has_power) {
++        if (!d->enabled) {
+             new_addr = PCI_BAR_UNMAPPED;
+         }
+ 
+@@ -1613,7 +1613,7 @@ void pci_default_write_config(PCIDevice *d, uint32_t addr, uint32_t val_in, int
+         pci_update_irq_disabled(d, was_irq_disabled);
+         memory_region_set_enabled(&d->bus_master_enable_region,
+                                   (pci_get_word(d->config + PCI_COMMAND)
+-                                   & PCI_COMMAND_MASTER) && d->has_power);
++                                   & PCI_COMMAND_MASTER) && d->enabled);
+     }
+ 
+     msi_write_config(d, addr, val_in, l);
+@@ -2884,18 +2884,18 @@ MSIMessage pci_get_msi_message(PCIDevice *dev, int vector)
+     return msg;
+ }
+ 
+-void pci_set_power(PCIDevice *d, bool state)
++void pci_set_enabled(PCIDevice *d, bool state)
+ {
+-    if (d->has_power == state) {
++    if (d->enabled == state) {
+         return;
+     }
+ 
+-    d->has_power = state;
++    d->enabled = state;
+     pci_update_mappings(d);
+     memory_region_set_enabled(&d->bus_master_enable_region,
+                               (pci_get_word(d->config + PCI_COMMAND)
+-                               & PCI_COMMAND_MASTER) && d->has_power);
+-    if (!d->has_power) {
++                               & PCI_COMMAND_MASTER) && d->enabled);
++    if (!d->enabled) {
+         pci_device_reset(d);
+     }
+ }
+diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+index dfe6fe6184..0d82727cc9 100644
+--- a/hw/pci/pci_host.c
++++ b/hw/pci/pci_host.c
+@@ -86,7 +86,7 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
+      * allowing direct removal of unexposed functions.
+      */
+     if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
+-        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
++        !pci_dev->enabled || is_pci_dev_ejected(pci_dev)) {
+         return;
+     }
+ 
+@@ -111,7 +111,7 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
+      * allowing direct removal of unexposed functions.
+      */
+     if ((pci_dev->qdev.hotplugged && !pci_get_function_0(pci_dev)) ||
+-        !pci_dev->has_power || is_pci_dev_ejected(pci_dev)) {
++        !pci_dev->enabled || is_pci_dev_ejected(pci_dev)) {
+         return ~0x0;
+     }
+ 
 -- 
 MST
 
