@@ -4,63 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF354C30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10D1AC30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvAr-0003Ly-1z; Wed, 03 Jul 2024 04:17:09 -0400
+	id 1sOvBu-0004Lg-Ig; Wed, 03 Jul 2024 04:18:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sOvAp-0003LG-DW; Wed, 03 Jul 2024 04:17:07 -0400
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1sOvBr-0004EQ-Kz
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:18:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sOvAo-00014r-0X; Wed, 03 Jul 2024 04:17:07 -0400
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Wed, 3 Jul
- 2024 16:16:25 +0800
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
- (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 3 Jul
- 2024 16:16:25 +0800
-Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Wed, 3 Jul 2024 16:16:25 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
- Stanley" <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, "Kevin
- Wolf" <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Jason Wang
- <jasowang@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Wainer dos
- Santos Moschetta" <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC
- here" <qemu-devel@nongnu.org>, "open list:Block layer core"
- <qemu-block@nongnu.org>
-CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 1/5] hw/net:ftgmac100: update memory region size to 0x200
-Date: Wed, 3 Jul 2024 16:16:19 +0800
-Message-ID: <20240703081623.2740862-2-jamin_lin@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
-References: <20240703081623.2740862-1-jamin_lin@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1sOvBi-0001Ft-Nn
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:18:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719994677;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ken4r91DRAVqqYkzN38sQgS07RXcR0e/FFw8rkoP9NI=;
+ b=gLOy8eWbzK28iVbxvQoZUI9d+zsHwjES468kjrkkkG+sbFGpEjwXedgqYpNV6e4nDUgujG
+ qS2FNeMImHLihBD7u4Xyggj1T+LF85HK/56o0cPvu7O+jfox0AjttAU0kUPeVmUIkvKZll
+ SdmEeCAhpp+sk+QMz5vTsSyNUWWre8c=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-279-2Xl-w041MEetkujASN0SeA-1; Wed, 03 Jul 2024 04:17:56 -0400
+X-MC-Unique: 2Xl-w041MEetkujASN0SeA-1
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4460f0951e8so74920201cf.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:17:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719994676; x=1720599476;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ken4r91DRAVqqYkzN38sQgS07RXcR0e/FFw8rkoP9NI=;
+ b=DuHkodODAtzbiPXVMk0FbSC6IwSDFZ/hXZ6F9x5a2n2HeT5r+jTrxySUQjLoe90Iu/
+ e9XBH4uR8sWelFm2giLry3wlF5habNlgdSmV7DcD3jaRyQUL4IB4B8A86VTsXZaKoiHp
+ 2mOu296cmlcP9DHKoaI4M4EH37SiBLgQJwBEB1g6HrasOZVQbpi4e1Bdc7/Fh5Uki8MM
+ 5UA51Eb+X1D5GJCH4pCbfHKUjWaCQLUD5mg2MJ7rxMFtkDSdD5mOzO9E9fIGcZJRfO0P
+ TLLoBXbcIJfqNzazkFVTdX9nCbZRwlfFofsx1rOn0N1NaBpQjm0+5/+5iC27zaaS08uj
+ fCBw==
+X-Gm-Message-State: AOJu0Yy2dA+MeqmsHqK8B0R4RtIXRy8fNZuKQ7VOvGJGhJEDc4uImqBy
+ kCdMvrZ0uTUYclK90H1Ylyhd7Yx/OG24K2FTYayHAJX6anJR2DLtjXvic+Oy9XyRLznt50BP7tK
+ 0ig+rMiQHYvACV8CxvMt026cRHO6bRbiJX9dymT+Tc9HVnlup8ENfqvWQQFwLxJ0bgqOudj2YGi
+ 1ODrEzBdOfmJaL3vlRcuH74AJPQcE=
+X-Received: by 2002:a05:622a:648:b0:444:fe06:d7f with SMTP id
+ d75a77b69052e-44662e3a183mr137273061cf.10.1719994675853; 
+ Wed, 03 Jul 2024 01:17:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPV7F7huIsPavpw+P1hkvJmDMt0un6N8GHu6BqXq+8fMaiqC9WsULzLIMmkeO2TIZQXEIfbyYWpcFblpxkvUA=
+X-Received: by 2002:a05:622a:648:b0:444:fe06:d7f with SMTP id
+ d75a77b69052e-44662e3a183mr137272941cf.10.1719994675570; Wed, 03 Jul 2024
+ 01:17:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
- does not designate 192.168.10.10 as permitted sender)
- receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
- helo=localhost.localdomain;
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240613150127.1361931-1-berrange@redhat.com>
+ <ZoRAMXeKDObGnl4h@redhat.com>
+ <CAMxuvaxKRjA=p8t_RkYT-xJag4DvnukHXhD3uS83LZ-L-OZwCQ@mail.gmail.com>
+ <ZoUGmVsHObVCmVPv@redhat.com>
+In-Reply-To: <ZoUGmVsHObVCmVPv@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Wed, 3 Jul 2024 12:17:44 +0400
+Message-ID: <CAMxuvayg2CoYu_su2qRH=OZSuaHTSUqp-5RSsuBWTvD=wcXtJw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/22] qga: clean up command source locations and
+ conditionals
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Thomas Huth <thuth@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,62 +100,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
-From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the datasheet of ASPEED SOCs,
-one MAC controller owns 128KB of register space for AST2500.
+Hi
 
-However, one MAC controller only owns 64KB of register space for AST2600
-and AST2700.
+On Wed, Jul 3, 2024 at 12:06=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Wed, Jul 03, 2024 at 10:15:44AM +0400, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi Daniel
+> >
+> > On Tue, Jul 2, 2024 at 10:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
+ge@redhat.com> wrote:
+> > >
+> > > Ping: for any review comments from QGA maintainers ?
+> >
+> > Maybe you could resend for patchew to correctly handle the series.
+>
+> I don't want to spam the list again just because patchew didn't
+> handle it. If anyone can't just pull the messages from mail
+> though, they are also at https://gitlab.com/berrange/qemu/-/tags/qga-cond=
+itions-v2
 
-It set the memory region size 128KB and it occupied another
-controllers Address Spaces.
-
-Currently, the ftgmac100 model use 0x100 register space.
-To support DMA 64 bits dram address and new future mode(ftgmac100_high) which
-have "Normal Priority Transmit Ring Base Address Register High(0x17C)",
-"High Priority Transmit Ring Base Address Register High(0x184)" and
-"Receive Ring Base Address Register High(0x18C)" to save the high part physical
-address of descriptor manager.
-
-Update memory region size to 0x200.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
----
- hw/net/ftgmac100.c         | 2 +-
- include/hw/net/ftgmac100.h | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-index 25e4c0cd5b..4e88430b2f 100644
---- a/hw/net/ftgmac100.c
-+++ b/hw/net/ftgmac100.c
-@@ -1108,7 +1108,7 @@ static void ftgmac100_realize(DeviceState *dev, Error **errp)
-     }
- 
-     memory_region_init_io(&s->iomem, OBJECT(dev), &ftgmac100_ops, s,
--                          TYPE_FTGMAC100, 0x2000);
-+                          TYPE_FTGMAC100, FTGMAC100_NR_REGS);
-     sysbus_init_mmio(sbd, &s->iomem);
-     sysbus_init_irq(sbd, &s->irq);
-     qemu_macaddr_default_if_unset(&s->conf.macaddr);
-diff --git a/include/hw/net/ftgmac100.h b/include/hw/net/ftgmac100.h
-index 765d1538a4..5a970676da 100644
---- a/include/hw/net/ftgmac100.h
-+++ b/include/hw/net/ftgmac100.h
-@@ -14,6 +14,8 @@
- #define TYPE_FTGMAC100 "ftgmac100"
- OBJECT_DECLARE_SIMPLE_TYPE(FTGMAC100State, FTGMAC100)
- 
-+#define FTGMAC100_NR_REGS   0x200
-+
- #include "hw/sysbus.h"
- #include "net/net.h"
- 
--- 
-2.34.1
+patchew also handles R-b/A-b/T-b tags, mail ref, versioning etc..
 
 
