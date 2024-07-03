@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E6AAC3065C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 01:50:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6950C3065C
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 01:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOp8Y-0006iW-A1; Tue, 02 Jul 2024 21:50:22 -0400
+	id 1sOp9Z-0007bD-KI; Tue, 02 Jul 2024 21:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sOp8S-0006Xr-Ku; Tue, 02 Jul 2024 21:50:16 -0400
-Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
+ id 1sOp9Y-0007au-G1; Tue, 02 Jul 2024 21:51:24 -0400
+Received: from out30-130.freemail.mail.aliyun.com ([115.124.30.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sOp8Q-0004Y0-Ar; Tue, 02 Jul 2024 21:50:16 -0400
+ id 1sOp9R-0005La-0f; Tue, 02 Jul 2024 21:51:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1719971409; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=7Vt7KZKUac+dTEAY02FrejLRDhLI3dy6y+KEC6BMShY=;
- b=FZeGahKJm4E0muLTYLhrIkX54sBnTegNfkfZHvNpYekUaqA1WgQPPS49HLR61P8sEHagQ0yo6DkMNucN7Ew4RNA8w8iRJsznKecaazq1+xdDfSz/8CBifOgbavFlRfstRGEa4UGXDyijpHr243xucrnJqapfRuNgb29VPtyCKG0=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R731e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033068173054;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W9kC994_1719971407; 
+ t=1719971471; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=0wPsBrD35wauTRFhducDNBmSO5QKrmpP4VmzH4XvJBU=;
+ b=plzM3Nqx3DsYs6XW+A/vxwY7i+c9LT1fz07FrgQpdUkgR0jDPH6l+tiIrGcZzNhirUgf9yHBYEwLlEonlPriBLE9Y2B5tFuOD7zA3/3HJw96vBnh9m8cnMAOjAEr2PTImh25plQ8rSec7uc0Mm8a6YQTKaulhpdh85ZxgpVQ7Zs=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R131e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067113;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
+ TI=SMTPD_---0W9kB2St_1719971469; 
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W9kC994_1719971407) by smtp.aliyun-inc.com;
- Wed, 03 Jul 2024 09:50:08 +0800
+ fp:SMTPD_---0W9kB2St_1719971469) by smtp.aliyun-inc.com;
+ Wed, 03 Jul 2024 09:51:10 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH v3 04/11] disas/riscv: Support zcmop disassemble
-Date: Wed,  3 Jul 2024 09:46:28 +0800
-Message-Id: <20240703014635.1020-5-zhiwei_liu@linux.alibaba.com>
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v3 06/11] target/riscv: Move gen_amo before implement Zabha
+Date: Wed,  3 Jul 2024 09:46:30 +0800
+Message-Id: <20240703014635.1020-7-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
 In-Reply-To: <20240703014635.1020-1-zhiwei_liu@linux.alibaba.com>
 References: <20240703014635.1020-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.133;
+Received-SPF: pass client-ip=115.124.30.130;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-133.freemail.mail.aliyun.com
+ helo=out30-130.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -70,66 +69,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although in QEMU disassemble, we usually lift compressed instruction
-to an normal format when display the instruction name. For C.MOP.n,
-it is more reasonable to directly display its compressed name, because
-its behavior can be redefined by later extension.
-
 Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Deepak Gupta <debug@rivosinc.com>
 ---
- disas/riscv.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ target/riscv/insn_trans/trans_rva.c.inc | 21 ---------------------
+ target/riscv/translate.c                | 21 +++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 3ecbdcbe8d..2e315b4936 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -946,6 +946,14 @@ typedef enum {
-     rv_mop_rr_5    = 915,
-     rv_mop_rr_6    = 916,
-     rv_mop_rr_7    = 917,
-+    rv_c_mop_1     = 918,
-+    rv_c_mop_3     = 919,
-+    rv_c_mop_5     = 920,
-+    rv_c_mop_7     = 921,
-+    rv_c_mop_9     = 922,
-+    rv_c_mop_11    = 923,
-+    rv_c_mop_13    = 924,
-+    rv_c_mop_15    = 925,
- } rv_op;
+diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/insn_trans/trans_rva.c.inc
+index eb080baddd..39bbf60f3c 100644
+--- a/target/riscv/insn_trans/trans_rva.c.inc
++++ b/target/riscv/insn_trans/trans_rva.c.inc
+@@ -96,27 +96,6 @@ static bool gen_sc(DisasContext *ctx, arg_atomic *a, MemOp mop)
+     return true;
+ }
  
- /* register names */
-@@ -2176,6 +2184,14 @@ const rv_opcode_data rvi_opcode_data[] = {
-     { "mop.rr.5", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-     { "mop.rr.6", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-     { "mop.rr.7", rv_codec_r, rv_fmt_rd_rs1_rs2, NULL, 0, 0, 0 },
-+    { "c.mop.1",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.3",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.5",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.7",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.9",  rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.11", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.13", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
-+    { "c.mop.15", rv_codec_ci_none, rv_fmt_none, NULL, 0, 0, 0 },
- };
+-static bool gen_amo(DisasContext *ctx, arg_atomic *a,
+-                    void(*func)(TCGv, TCGv, TCGv, TCGArg, MemOp),
+-                    MemOp mop)
+-{
+-    TCGv dest = dest_gpr(ctx, a->rd);
+-    TCGv src1, src2 = get_gpr(ctx, a->rs2, EXT_NONE);
+-
+-    if (ctx->cfg_ptr->ext_zama16b) {
+-        mop |= MO_ATOM_WITHIN16;
+-    } else {
+-        mop |= MO_ALIGN;
+-    }
+-
+-    decode_save_opc(ctx);
+-    src1 = get_address(ctx, a->rs1, 0);
+-    func(dest, src1, src2, ctx->mem_idx, mop);
+-
+-    gen_set_gpr(ctx, a->rd, dest);
+-    return true;
+-}
+-
+ static bool trans_lr_w(DisasContext *ctx, arg_lr_w *a)
+ {
+     REQUIRE_A_OR_ZALRSC(ctx);
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 8a546f4ece..133550d6e2 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1077,6 +1077,27 @@ static bool gen_unary_per_ol(DisasContext *ctx, arg_r2 *a, DisasExtend ext,
+     return gen_unary(ctx, a, ext, f_tl);
+ }
  
- /* CSR names */
-@@ -2532,6 +2548,13 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             break;
-         case 2: op = rv_op_c_li; break;
-         case 3:
-+            if (dec->cfg->ext_zcmop) {
-+                if ((((inst >> 2) & 0b111111) == 0b100000) &&
-+                    (((inst >> 11) & 0b11) == 0b0)) {
-+                    op = rv_c_mop_1 + ((inst >> 8) & 0b111);
-+                    break;
-+                }
-+            }
-             switch ((inst >> 7) & 0b11111) {
-             case 2: op = rv_op_c_addi16sp; break;
-             default: op = rv_op_c_lui; break;
++static bool gen_amo(DisasContext *ctx, arg_atomic *a,
++                    void(*func)(TCGv, TCGv, TCGv, TCGArg, MemOp),
++                    MemOp mop)
++{
++    TCGv dest = dest_gpr(ctx, a->rd);
++    TCGv src1, src2 = get_gpr(ctx, a->rs2, EXT_NONE);
++
++    if (ctx->cfg_ptr->ext_zama16b) {
++        mop |= MO_ATOM_WITHIN16;
++    } else {
++        mop |= MO_ALIGN;
++    }
++
++    decode_save_opc(ctx);
++    src1 = get_address(ctx, a->rs1, 0);
++    func(dest, src1, src2, ctx->mem_idx, mop);
++
++    gen_set_gpr(ctx, a->rd, dest);
++    return true;
++}
++
+ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ {
+     DisasContext *ctx = container_of(dcbase, DisasContext, base);
 -- 
 2.25.1
 
