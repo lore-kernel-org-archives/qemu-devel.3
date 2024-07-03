@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F559C3271E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6802DC2BD09
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8kS-0000tl-CC; Wed, 03 Jul 2024 18:46:48 -0400
+	id 1sP8jg-000495-5M; Wed, 03 Jul 2024 18:46:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kR-0000gq-0e
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jV-0003UP-Tu
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8kO-0001Uo-Bm
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:46 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jU-0001LG-7g
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:45:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046803;
+ s=mimecast20190719; t=1720046744;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
- b=WEdfvfbrwUPKp1PJkoJ9O5dDp7DMcgXp6p2mcZad3MeuJwZ/CIQX+veuY4tOW4ICJ5hZDs
- VeqjmK0ZcvZKUQzNtIkhURZjDzEYwgesePqz3U475Pkgsqwf7tDM5XmSxNVXAR1m7nEkRl
- 6jM8HJX1SuXDtyWK0hbfmpT/y3t/QGk=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=I7oOBawQ17ekJGPjTeJH6qenvWsB1BSkAwbq0wuPpCg=;
+ b=azgngmo286x2WoMi5lFr0k4SDtxjTnQXxKer/TQOXqlkfuFWeUq+QSkemkjRO3gwg3nz8P
+ MrYfX6TZAw47tPDWB9P2iSMs8gWejZlWuuggMoC4xscRmBxK0G4cwFaNM9Kfuz9zgL98/D
+ teBVuu423rCKuMXK5bxFZvMjx896FSQ=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-659-CBAk51sYMMqnzcC1N4PHgg-1; Wed, 03 Jul 2024 18:46:36 -0400
-X-MC-Unique: CBAk51sYMMqnzcC1N4PHgg-1
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-57c93227bbeso2847049a12.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:46:36 -0700 (PDT)
+ us-mta-364-OkcMpryLNvegmI-L_0QqsQ-1; Wed, 03 Jul 2024 18:45:42 -0400
+X-MC-Unique: OkcMpryLNvegmI-L_0QqsQ-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-57cad6e94e5so2907495a12.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:45:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046795; x=1720651595;
+ d=1e100.net; s=20230601; t=1720046739; x=1720651539;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WFUPapk07PnJ8CLhVhbjjsuC+NoP2UxN6SJb+Hfxl60=;
- b=qHE4wBWPSHCjLDZYK2KiriHujvMZarPC3QAyw6yRbGeihEU3lJDVEewm3ZOJkmmpdo
- xu56N0tWpRga0IlvU+PJV1VWUDLXOORDFsQvVYMxOlk/6djwhJvn3Q2X3hEd+SzQvFkL
- 40OiSwhuyIHzOkLpAjYHlPTZkBjNSeyiwn7iAx+s1sROX23dFa6Yf30BMhP0zSC6Vr88
- SKYpa1VQ7Xe33fZFIN22mZr129igV82d0eCkTMkNcY+TdwHClEcOjsWCUN39hfP5Byje
- gUFQAxGWLeOyxMKGgu0a1128VKKdSUvGjb5hWyAT2/PstBNzrlHWuK9Im+bAidDlcXZn
- 91Eg==
-X-Gm-Message-State: AOJu0YxJyHHzwUd1b7pV4FZAHhZC9de2Bv8be9kVgr8gLRy47ylyKm0c
- RC1OrpIAx7KxorP7fsL2SbTVTh0CxMm3ZQ6DeWB4ELlhfFhl8+eGwTs8KSQgzvGBlL+P5ANUwGD
- q5qUvfAYZQlkyYfxsMVq+nTVKDOaFGA4rwuqfItPML1vTg7l8urdKGTgLIMPfHrrJmMrrqsCI7E
- SK9ntYqOQgH3AuugGN1OnBFZwXKxJduw==
-X-Received: by 2002:a17:906:68d8:b0:a6f:1025:8dd6 with SMTP id
- a640c23a62f3a-a75144b50b1mr785261266b.71.1720046795120; 
- Wed, 03 Jul 2024 15:46:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHn8JibTmMf4vuYP1+dSTzvAzAkwnT9Yw/yZLUnI36/nSkW29iBIG9f0zEz1CIhJudHWwRaZg==
-X-Received: by 2002:a17:906:68d8:b0:a6f:1025:8dd6 with SMTP id
- a640c23a62f3a-a75144b50b1mr785259266b.71.1720046794459; 
- Wed, 03 Jul 2024 15:46:34 -0700 (PDT)
+ bh=I7oOBawQ17ekJGPjTeJH6qenvWsB1BSkAwbq0wuPpCg=;
+ b=EDeJdDcvKrOuYUI7+0+eqvksHP69+Ba1yjDUxt/LN2gmQCvK5uBnyYFHr/NpSlmFuV
+ R3LMDg0L8YEoNGJRyVN8ZRhdEXkNAuyCcWYXV9/ePIyy+z98qI26HP19WvjhoK7vOmy7
+ pqtHSIdXpfZXUXCvl23+BHVgjpOQfIIJHoi3Ol9HXSQvs/4H2lqR3rTE77X6MYR+p6g9
+ KogvGXAHzAyUDIqN7bOiGfi//DjbX50NKfXQk2Or4DsbNY7iOACP5P5EGQM4CD5wlqNF
+ gseUmtTScK7mLZUmNqWcgMpGyDaNHSDYIbfZDvtRb74lFKK+8FNOLKjM4O2yifaP92tk
+ skAA==
+X-Gm-Message-State: AOJu0YxUgYX4TvTZV9PrYLcmttg1hdPVQhlvRKgWU+Fuy5gRxYQnhSYW
+ ODYT6zzk8OAEAdx22hQk8pFxO98czciADEMp+SreCZFw1/ltbm+T+JMP24v+OzPYr95y5i/w4t/
+ 7LJV22ddzenlXG9BmSvE4P8cpftIHr5FoLzhpblZvctQJq1lL445Pj21FU2yDR1HE8uuPauibBI
+ bhxGdXKwf/V6STFKS6ld0sdmsXvSqgEQ==
+X-Received: by 2002:a05:6402:51d3:b0:57c:947c:f9cf with SMTP id
+ 4fb4d7f45d1cf-5879eed9408mr9390423a12.11.1720046738905; 
+ Wed, 03 Jul 2024 15:45:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHZcOFLTyGAEO6NXvv5yhaYNaCwNKD0DVZreB/5Mu/jQWKsJHTsk9pKkhFpORLLotXjQ+/Z+Q==
+X-Received: by 2002:a05:6402:51d3:b0:57c:947c:f9cf with SMTP id
+ 4fb4d7f45d1cf-5879eed9408mr9390402a12.11.1720046738283; 
+ Wed, 03 Jul 2024 15:45:38 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77b784de44sm3452566b.56.2024.07.03.15.46.32
+ 4fb4d7f45d1cf-58de8fe6322sm442672a12.53.2024.07.03.15.45.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:46:33 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:46:29 -0400
+ Wed, 03 Jul 2024 15:45:37 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:45:33 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Svetly Todorov <svetly.todorov@memverge.com>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gregory Price <gourry.memverge@gmail.com>,
  Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PULL v3 29/85] hw/mem/cxl_type3: Allow to release extent superset
- in QMP interface
-Message-ID: <c51dca04281f9be6eacdad8fc8f9c7ddc87dcf3c.1720046570.git.mst@redhat.com>
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>, Fan Ni <fan.ni@samsung.com>
+Subject: [PULL v3 17/85] hw/cxl/mailbox: interface to add CCI commands to an
+ existing CCI
+Message-ID: <67adb7979b6c1151a906d99f19fccf1e789316b1.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -80,7 +80,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1720046570.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -104,39 +104,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Gregory Price <gourry.memverge@gmail.com>
 
-Before the change, the QMP interface used for add/release DC extents
-only allows to release an extent whose DPA range is contained by a single
-accepted extent in the device.
+This enables wrapper devices to customize the base device's CCI
+(for example, with custom commands outside the specification)
+without the need to change the base device.
 
-With the change, we relax the constraints.  As long as the DPA range of
-the extent is covered by accepted extents, we allow the release.
+The also enabled the base device to dispatch those commands without
+requiring additional driver support.
 
-Tested-by: Svetly Todorov <svetly.todorov@memverge.com>
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Heavily edited by Jonathan Cameron to increase code reuse
+
+Signed-off-by: Gregory Price <gregory.price@memverge.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-15-nifan.cxl@gmail.com>
+Message-Id: <20240523174651.1089554-3-nifan.cxl@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/mem/cxl_type3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/cxl/cxl_device.h |  2 ++
+ hw/cxl/cxl-mailbox-utils.c  | 19 +++++++++++++++++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 0d18259ec0..5d4a1276be 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1947,7 +1947,7 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
-                            "cannot release extent with pending DPA range");
-                 return;
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index ccc4611875..a5f8e25020 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -301,6 +301,8 @@ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max);
+ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+                                   DeviceState *d, size_t payload_max);
+ void cxl_init_cci(CXLCCI *cci, size_t payload_max);
++void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
++                          size_t payload_max);
+ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
+                             size_t len_in, uint8_t *pl_in,
+                             size_t *len_out, uint8_t *pl_out,
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 2c9f50f0f9..2a64c58e2f 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1424,9 +1424,9 @@ static void bg_timercb(void *opaque)
+     }
+ }
+ 
+-void cxl_init_cci(CXLCCI *cci, size_t payload_max)
++static void cxl_rebuild_cel(CXLCCI *cci)
+ {
+-    cci->payload_max = payload_max;
++    cci->cel_size = 0; /* Reset for a fresh build */
+     for (int set = 0; set < 256; set++) {
+         for (int cmd = 0; cmd < 256; cmd++) {
+             if (cci->cxl_cmd_set[set][cmd].handler) {
+@@ -1440,6 +1440,13 @@ void cxl_init_cci(CXLCCI *cci, size_t payload_max)
              }
--            if (!cxl_extents_contains_dpa_range(&dcd->dc.extents, dpa, len)) {
-+            if (!ct3_test_region_block_backed(dcd, dpa, len)) {
-                 error_setg(errp,
-                            "cannot release extent with non-existing DPA range");
-                 return;
+         }
+     }
++}
++
++void cxl_init_cci(CXLCCI *cci, size_t payload_max)
++{
++    cci->payload_max = payload_max;
++    cxl_rebuild_cel(cci);
++
+     cci->bg.complete_pct = 0;
+     cci->bg.starttime = 0;
+     cci->bg.runtime = 0;
+@@ -1458,6 +1465,14 @@ static void cxl_copy_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmds)[
+     }
+ }
+ 
++void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
++                                 size_t payload_max)
++{
++    cci->payload_max = MAX(payload_max, cci->payload_max);
++    cxl_copy_cci_commands(cci, cxl_cmd_set);
++    cxl_rebuild_cel(cci);
++}
++
+ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+                                   DeviceState *d, size_t payload_max)
+ {
 -- 
 MST
 
