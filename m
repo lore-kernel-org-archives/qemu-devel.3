@@ -4,57 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD32C30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 14:55:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14579C30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 14:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP1Nw-0003eM-70; Wed, 03 Jul 2024 10:55:06 -0400
+	id 1sP1Qk-0007Zh-V5; Wed, 03 Jul 2024 10:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sP1NY-0003QD-C6; Wed, 03 Jul 2024 10:54:43 -0400
-Received: from out30-131.freemail.mail.aliyun.com ([115.124.30.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sP1NW-0004gl-3s; Wed, 03 Jul 2024 10:54:40 -0400
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sP1Qj-0007Yk-Ng
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 10:57:57 -0400
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1sP1Qg-0005Pi-N6
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 10:57:57 -0400
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3d846f43632so1256935b6e.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 07:57:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1720018471; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=ZSk237mk1v/y+euVx+jvjxeLcA9ahKPXEhoNhRpJAFU=;
- b=LF0qajcomBmlQ2dyqI9/Iwy9k/jbj2QuaDBO0US9xHuFFd9kEQQSkysI1D3C89UcXTv645fOEfRxogyMT9+/P7pB6ljQ/CtoHYDfHvP+XUfNC8QNHDuPD11sE6siBBgW1A37lef8I7ArHF0a7XSFLFijLDZKysraA6zskqK0K5M=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032014031;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0W9ndtKT_1720018469; 
-Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0W9ndtKT_1720018469) by smtp.aliyun-inc.com;
- Wed, 03 Jul 2024 22:54:30 +0800
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- zhiwei_liu@linux.alibaba.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Subject: [PATCH v3 7/7] tests/avocado: Add an avocado test for riscv64
-Date: Wed,  3 Jul 2024 22:49:21 +0800
-Message-Id: <20240703144921.1281-8-zhiwei_liu@linux.alibaba.com>
-X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20240703144921.1281-1-zhiwei_liu@linux.alibaba.com>
-References: <20240703144921.1281-1-zhiwei_liu@linux.alibaba.com>
+ d=ventanamicro.com; s=google; t=1720018673; x=1720623473; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=EBVph4qCfYaMbZP3UoZ2K23x3GSN/F+GNnJRA4L/VXg=;
+ b=ORaqsK51H8yKvZoxLJoqovuJcwuSpMmQDVRcszAqOBTICf7g8BG+gUtK5Y7Eyf0Fzr
+ cTjQfhee3X8UP+LN4x1JnCXX3yoLzgO1WNLtHgPGXctoRB9myVUeJ32W9OCkTa4lWM2u
+ YivleJ6p4hX6PuR330+j4wgtMbcwp+HDFSwnXLehz39WLWudfSrjLn+/Vo02m8UF0NRq
+ SkadJsF2lK35UD4pzAV5M0OKeKe2Gc3EBdmIzRWv7YIj8l5+4kznshYEdx62Ksbpxewg
+ oYkItMb0am4aIvHAVuM1AtZzSkmQrSaHCMnhkd6hqrv/ZIOo7LiyVU4wnc+2lpsh/ooo
+ Ze7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720018673; x=1720623473;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EBVph4qCfYaMbZP3UoZ2K23x3GSN/F+GNnJRA4L/VXg=;
+ b=o8Wms1THUub1bZjyUpF1459uHCeWjCAbq/EX0JhRKSA44aIg/3PhSu5spi2GcE1eRC
+ z0bSm/MYNRD1j/02UBJXH+meQWwZFyXbH3faoedGPF5yjPATl40f5YMjg4CR+Jc0ZtlR
+ +bjIspJnd42seqNOBXiqjUE1KkaUBL3yzpTsB6Aldr8zLQz+xhDv9zPay9lfLg3ewyFB
+ B3ia30tUEW0ETU8e3CBA/jR+P7MBtZez3GZnkq77FYVw0WiRelheLWGsHlj6a3BiDkRL
+ YXH+7PnFEy/MfxisA7l2stpAk9YteuixfJrkXF3GyktbJgYpGtbfbv9+sfXuNxM2U9Bo
+ DYHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIRvcTlve683KfvPZCwEefX274csdKYLZpkAPE9bs0h9goz6D/YGoVVU1J6spvqewV4okhHkg62ziyEuRqcXrdeU87Cuo=
+X-Gm-Message-State: AOJu0YzgThnBkv6DC+f5J+JiXKX6DtTnl67+CRvUUmNZtWCp8WdcjxiL
+ /eKKkj9KEtNv1dZrNqu9T0p+mUeW5/0D/Nvc+FGcAQrCXI38Hiet/lGW94rUkqs=
+X-Google-Smtp-Source: AGHT+IHVsqxV4XGTIjVffB5AyensBfCTbCkocCPk38uDvTI3iZ65HU0X9prSWdmkaq2+TDJZXBeMAw==
+X-Received: by 2002:a05:6808:159b:b0:3d2:1da4:af63 with SMTP id
+ 5614622812f47-3d6b4de260amr11755066b6e.45.1720018672499; 
+ Wed, 03 Jul 2024 07:57:52 -0700 (PDT)
+Received: from sunil-laptop ([106.51.187.237])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3d62fb3ec4esm2101687b6e.49.2024.07.03.07.57.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jul 2024 07:57:36 -0700 (PDT)
+Date: Wed, 3 Jul 2024 20:27:04 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Alistair Francis <alistair23@gmail.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Alistair Francis <alistair23@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [PATCH v4 16/16] tests/qtest/bios-tables-test: Add expected ACPI
+ data files for RISC-V
+Message-ID: <ZoVmwFgIRlziF/v4@sunil-laptop>
+References: <20240625150839.1358279-1-sunilvl@ventanamicro.com>
+ <20240625150839.1358279-17-sunilvl@ventanamicro.com>
+ <20240627141803.42cd46c1@imammedo.users.ipa.redhat.com>
+ <20240701170330-mutt-send-email-mst@kernel.org>
+ <20240702150236.000042eb@Huawei.com>
+ <ZoUmf2zn51RWU0o0@sunil-laptop>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.131;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-131.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZoUmf2zn51RWU0o0@sunil-laptop>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-oi1-x22b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,72 +116,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+On Wed, Jul 03, 2024 at 03:53:08PM +0530, Sunil V L wrote:
+> On Tue, Jul 02, 2024 at 03:02:36PM +0100, Jonathan Cameron wrote:
+> > On Mon, 1 Jul 2024 17:03:43 -0400
+> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
+> > 
+> > > On Thu, Jun 27, 2024 at 02:18:03PM +0200, Igor Mammedov wrote:
+> > > > On Tue, 25 Jun 2024 20:38:39 +0530
+> > > > Sunil V L <sunilvl@ventanamicro.com> wrote:
+> > > >   
+> > > > > As per the step 5 in the process documented in bios-tables-test.c,
+> > > > > generate the expected ACPI AML data files for RISC-V using the
+> > > > > rebuild-expected-aml.sh script and update the
+> > > > > bios-tables-test-allowed-diff.h.
+> > > > > 
+> > > > > These are all new files being added for the first time. Hence, iASL diff
+> > > > > output is not added.
+> > > > > 
+> > > > > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
+> > > > > Acked-by: Alistair Francis <alistair.francis@wdc.com>
+> > > > > Acked-by: Igor Mammedov <imammedo@redhat.com>  
+> > > > 
+> > > > Michael,
+> > > > can it go via risc-v tree or
+> > > > do you plan to merge it via your tree?  
+> > > 
+> > > given patch 1 is merged, I took the rest.
+> > 
+> > Looks like your CI runs are catching this as well but
+> > RHCT here is failing.  I rebased the GI/GP set on top of this
+> > and ignored that failure by skipping riscv64 tests.
+> > 
+> > Jonathan
+> > 
+> Hi Jonathan, Michael,
+> 
+> Looks like a recent RISC-V PR updated the rva22s64 ISA string affecting
+> the RHCT I had in my series. I see that Michael dropped those 3 RISC-V
+> patches from the PR. So, let me update the expected RHCT AML file in a
+> new series. I will also include Igor's feedback to remove fallback path
+> in that series.
+> 
+Hi Alistair,
 
-To regularly test booting Linux with rv32 on QEMU RV64,
-we have added a test to boot_linux_console.py to retrieve
-cpuinfo and verify if it shows 'rv32' when using RV64 to
-boot rv32 CPUs.
+This issue is because, below 3 extensions are present in the ISA string
+for rva22s64 profile cpu after recent RISC-V PR.
 
-Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
----
- tests/avocado/boot_linux_console.py | 37 +++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+zmmul_zaamo_zalrsc
 
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index c35fc5e9ba..193b03d970 100644
---- a/tests/avocado/boot_linux_console.py
-+++ b/tests/avocado/boot_linux_console.py
-@@ -12,6 +12,7 @@
- import lzma
- import gzip
- import shutil
-+import time
- 
- from avocado import skip
- from avocado import skipUnless
-@@ -1545,3 +1546,39 @@ def test_xtensa_lx60(self):
-         """
-         tar_hash = '49e88d9933742f0164b60839886c9739cb7a0d34'
-         self.do_test_advcal_2018('02', tar_hash, 'santas-sleigh-ride.elf')
-+
-+    def test_riscv64_virt_rv32i(self):
-+        """
-+        :avocado: tags=arch:riscv64
-+        :avocado: tags=machine:virt
-+        :avocado: tags=cpu:rv32
-+        """
-+        kernel_url = ('https://github.com/romanheros/rv32-linux/raw'
-+                      '/master/Image32.xz')
-+        kernel_hash = 'a7ced5c38722481e0821b7cd70719cf53e46c13b'
-+        kernel_path_xz = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
-+
-+        kernel_path =  os.path.join(self.workdir, 'kernel.riscv32')
-+        archive.lzma_uncompress(kernel_path_xz, kernel_path)
-+
-+        rootfs_url = ('https://github.com/romanheros/rv32-linux/raw'
-+                      '/master/rootfs.ext2.xz')
-+        rootfs_hash = 'dc25ab9d4b233e8e0bcf7eb220d56fd2008fe263'
-+        rootfs_path_xz = self.fetch_asset(rootfs_url, asset_hash=rootfs_hash)
-+
-+        rootfs_path =  os.path.join(self.workdir, 'rootfs.riscv32')
-+        archive.lzma_uncompress(rootfs_path_xz, rootfs_path)
-+
-+        self.vm.set_console()
-+        kernel_command_line = 'root=/dev/vda ro console=ttyS0'
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_command_line,
-+                         '-drive', f'file={rootfs_path},format=raw,id=hd0',
-+                         '-device', 'virtio-blk-device,drive=hd0',)
-+        self.vm.launch()
-+
-+        console_pattern = 'Welcome to Buildroot'
-+        self.wait_for_console_pattern(console_pattern)
-+        exec_command(self, 'root')
-+        time.sleep(0.1)
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/cpuinfo', 'rv32i')
--- 
-2.25.1
+However, IIUC, they are not mentioned in the RVA22S64 profile spec. Because of
+this change, my AML files are having a difference and failing CI. The
+question is, is this correct behavior? If so, I can update the AML files
+and resubmit the patches. Let me know.
 
+Thanks,
+Sunil
 
