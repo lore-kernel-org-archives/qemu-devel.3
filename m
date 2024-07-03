@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7BB2C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 18:36:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA834C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 18:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP4pJ-0006V2-1Q; Wed, 03 Jul 2024 14:35:33 -0400
+	id 1sP4sr-0000Nm-PM; Wed, 03 Jul 2024 14:39:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sP4pH-0006UT-JB
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 14:35:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sP4so-0000NC-A4
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 14:39:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sP4pF-0004Qp-Gl
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 14:35:31 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sP4sm-0004lm-Ht
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 14:39:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720031722;
+ s=mimecast20190719; t=1720031948;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9GR1yEDQK/TDazM69NiiDr+Beya1fqcjJyS4PTzm6sI=;
- b=cVPiAc07peNLuVLG7eBKUNWFW7bPMGdoqZTKDoIL7GTFI1oi7BimAZidQEPSvjdiGhTzMT
- WhZAmh8cMJ3o2LysIkAkurv6sB3CCm1gMxwk08cJNZ0CCdGY1l63tbUXIC2AUm8BXVM+y5
- DPpmGhUR+6bwQp4KLoc/8r7JJRDyNuI=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cH+hawiwCJcOL7NgRhzN91T6Ffh0Mib1iHwkIuLz3xE=;
+ b=XNUpJK/wOWbHjXaGI9TNMbcodHZWLoTMgFjwJn1jPIct3gTAWU4rSWXRnFVCj4+tBnVYoh
+ n1RthqajRymF0NIbjAaftyOcSDyJIojVa4bDjUJA1C2yBcMicQ1+sIYLXwS6pvznVj++1d
+ bQjDJ3i1ZfLZ67I33hGII0YBy2k1PNQ=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-128--SEhtXslOE2UBfKvkLXtxQ-1; Wed, 03 Jul 2024 14:35:20 -0400
-X-MC-Unique: -SEhtXslOE2UBfKvkLXtxQ-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6b5044e1ed6so56402846d6.0
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 11:35:20 -0700 (PDT)
+ us-mta-168-42JAf9gdMyCBQG7xrUy-4w-1; Wed, 03 Jul 2024 14:39:05 -0400
+X-MC-Unique: 42JAf9gdMyCBQG7xrUy-4w-1
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4459b1ce272so84555471cf.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 11:39:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720031720; x=1720636520;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9GR1yEDQK/TDazM69NiiDr+Beya1fqcjJyS4PTzm6sI=;
- b=KYgKeC9q6RZCxnOdlWjpvC3LewUUfaeUeKx6vQSWMAzHkCDS4OzRcxXp8zvYcpZRik
- jjlOFuoAxmZLB3fESr5v9maW+URw4Wvo0zE9MG3Ija9+t9kgqWkyJ/+pwXYnTKXdCt6N
- kT59sIB73wJMNmR+IC2Lm4LXUg6Tn0exCihpS9VEeDEojmR9P1oKRYB8akD1TRVSVzp1
- Q5MMulQrHfI+/S+hbByRuIkjhl13d23J7mHuI6GUbDyg5xLPY/kux8VNN3ek+3Cd0njp
- R6UZwt2RpoOMoODmWfi8Kd2KpXBASNRGJZbG0AYgdiennbuhKAirA9cbTu3RPkBSoTce
- NudA==
+ d=1e100.net; s=20230601; t=1720031945; x=1720636745;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cH+hawiwCJcOL7NgRhzN91T6Ffh0Mib1iHwkIuLz3xE=;
+ b=K0Et1mIoluGUpvcyl7+xLmNPL21V2YBJ8GMqCsD9WztHZIaH+bU18bVsah56xA5IOA
+ 4z8C0lnN9Se02pQuts4Aej3QGQavJg9RVeI6Bf213DX0dZtwLpMI8+/iJaegp6xpFFdt
+ BxuCC/2V7JIN1tuBd/zxqsQBmd2KHLOxtPZDFjbZuz3w0I7PTu1wzD/o8wxEWe5fUEF2
+ oKTgrqu2ifIQh/GFXyZZdDu5n+wS2oPRXkMJJEwcAnCZvml7gMAIBicl2Uqfp8Ix8r4p
+ CitrSpsPt8IBzFkbQH5yZzAeIWOyFUGMAzFE/00vMjIDydJ2AUSwVnDJoo/3jqoi54N+
+ stLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVDFzX4mF7Xxc9Yzly3I7eTb1FtAGwiGm7yLAVGB6R4bb4AfzEb7C4McEgHuKCzewafSx9SOnvL9ohodVZiwuebNy2FxXo=
-X-Gm-Message-State: AOJu0YzPIKUjhKV2efqRy71heFsQtpW/lNF17x1ozrvqxegtM3ly89ds
- LUqwlIJ15nAKTn4QK4hyxSSolTHnEN3Wtn8XEuvm8gVgGTVJBhNAeYxavkT4Osi89p5fOJ+ZW5/
- M14VeiNlXkbYmZOglBdDEz4i6b131HypRHwZoGLx35qDCvFvfzS9o
-X-Received: by 2002:a05:6214:1948:b0:6b0:7327:c45b with SMTP id
- 6a1803df08f44-6b5b70949f2mr130889846d6.16.1720031720328; 
- Wed, 03 Jul 2024 11:35:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExM1v8zRT09CZRxawYNRLuWTmKSEI20jG/WQaRJa1wZKTf1tv024hsH1zpfIMHBC9pg4+EVw==
-X-Received: by 2002:a05:6214:1948:b0:6b0:7327:c45b with SMTP id
- 6a1803df08f44-6b5b70949f2mr130889646d6.16.1720031720031; 
- Wed, 03 Jul 2024 11:35:20 -0700 (PDT)
+ AJvYcCX1GHcIg0R/WkAcwbzY9VMnOk0qKS3D/it3YnMk50+p8pd0pkJrBrcEfDUj5p7OVZlAP7HiUAQkukQ0t9fTYUoZeY5R50o=
+X-Gm-Message-State: AOJu0Yz9y9gq4B7JUDXzMllUhfErJEKbX2P74EUJjPfmxZfJFV5HXQAq
+ 8eTiWrXP79Qne1lpBcI9Qbs0Pef9uxKSG1APj6OMN5OsZYForQQrzO6Dyv9OgjdDnWGMch8dbpM
+ 0VuIUxBNJrd56VycwHyy0LMcKea55f/sKNwVv8c8GylDK67Q+MErU
+X-Received: by 2002:a05:622a:50b:b0:445:320:d92f with SMTP id
+ d75a77b69052e-44662d9958cmr182105851cf.26.1720031945240; 
+ Wed, 03 Jul 2024 11:39:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHN6RZTfrU/m9gwsH4sTIrWlcOkpTJrPnHoYgpJhaAxn+hmk2lH22ETkVfnhw40o1iupPiX7g==
+X-Received: by 2002:a05:622a:50b:b0:445:320:d92f with SMTP id
+ d75a77b69052e-44662d9958cmr182105691cf.26.1720031944961; 
+ Wed, 03 Jul 2024 11:39:04 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-43-176-82.web.vodafone.de.
  [109.43.176.82]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b59e5869bfsm56505996d6.74.2024.07.03.11.35.18
+ d75a77b69052e-4465143e475sm52957991cf.46.2024.07.03.11.39.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 11:35:19 -0700 (PDT)
-Message-ID: <521d36b0-faf9-41b3-b324-879e24f2905f@redhat.com>
-Date: Wed, 3 Jul 2024 20:35:16 +0200
+ Wed, 03 Jul 2024 11:39:04 -0700 (PDT)
+Message-ID: <8d04ecc0-5698-4b32-b7cd-7be0d5ac92a3@redhat.com>
+Date: Wed, 3 Jul 2024 20:38:59 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] Python: bump minimum sphinx version to 3.4.3
+Subject: Re: [PATCH v2 2/2] docs: remove Sphinx 1.x compatibility code
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>
 References: <20240703175235.239004-1-jsnow@redhat.com>
- <20240703175235.239004-2-jsnow@redhat.com>
-Content-Language: en-US
+ <20240703175235.239004-3-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -121,7 +120,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240703175235.239004-2-jsnow@redhat.com>
+In-Reply-To: <20240703175235.239004-3-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -150,51 +149,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 03/07/2024 19.52, John Snow wrote:
-> With RHEL 8 support retired (It's been two years since RHEL9 released),
-> our very oldest build platform version of Sphinx is now 3.4.3; and
-> keeping backwards compatibility for versions as old as v1.6 when using
-> domain extensions is a lot of work we don't need to do.
-> 
-> This patch is motivated by my work creating a new QAPI domain, which
-> unlike the dbus documentation, cannot be allowed to regress by creating
-> a "dummy" doc when operating under older sphinx versions. Easier is to
-> raise our minimum version as far as we can push it forwards, reducing my
-> burden in creating cross-compatibility hacks and patches.
-> 
-> A sampling of sphinx versions from various distributions, courtesy
-> https://repology.org/project/python:sphinx/versions
-> 
-> Alpine 3.16: v4.3.0 (QEMU support ended 2024-05-23)
-> Alpine 3.17: v5.3.0
-> Alpine 3.18: v6.1.3
-> Alpine 3.19: v6.2.1
-> Ubuntu 20.04 LTS: EOL
-> Ubuntu 22.04 LTS: v4.3.2
-> Ubuntu 22.10: EOL
-> Ubuntu 23.04: EOL
-> Ubuntu 23.10: v5.3.0
-> Ubuntu 24.04 LTS: v7.2.6
-> Debian 11: v3.4.3 (QEMU support ends 2024-07-xx)
-> Debian 12: v5.3.0
-> Fedora 38: EOL
-> Fedora 39: v6.2.1
-> Fedora 40: v7.2.6
-> CentOS Stream 8: v1.7.6 (QEMU support ended 2024-05-17)
-> CentOS Stream 9: v3.4.3
-> OpenSUSE Leap 15.4: EOL
-> OpenSUSE Leap 15.5: 2.3.1, 4.2.0 and 7.2.6
-> 
-> RHEL9 / CentOS Stream 9 becomes the new defining factor in staying at
-> Sphinx 3.4.3 due to downstream offline build requirements that force us
-> to use platform Sphinx instead of newer packages from PyPI.
+> In general, the Use_SSI workaround is no longer needed, and neither is
+> the pre-1.6 logging shim for kerneldoc.
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
-> Acked-by: Paolo Bonzini <pbonzini@redhat.com>
 > Acked-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   docs/conf.py    | 7 +++----
->   pythondeps.toml | 2 +-
->   2 files changed, 4 insertions(+), 5 deletions(-)
+>   docs/sphinx/hxtool.py    | 21 ++++-----------------
+>   docs/sphinx/kerneldoc.py | 38 ++++++++++++--------------------------
+>   docs/sphinx/kernellog.py | 28 ----------------------------
+>   docs/sphinx/qapidoc.py   | 29 +++--------------------------
+>   4 files changed, 19 insertions(+), 97 deletions(-)
+>   delete mode 100644 docs/sphinx/kernellog.py
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
