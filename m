@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73107C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 234A1C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvVY-0001TF-1c; Wed, 03 Jul 2024 04:38:32 -0400
+	id 1sOvWF-0001y9-C2; Wed, 03 Jul 2024 04:39:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvVV-0001SZ-4f
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:38:29 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvWC-0001tZ-GM
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:39:13 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvVT-00006Y-EM
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:38:28 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-52cdcd26d61so5725749e87.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:38:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvWA-0000Aa-KQ
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:39:12 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4257a390a4eso27458815e9.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:39:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719995903; x=1720600703; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719995948; x=1720600748; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6FH9RnHj+2V6lBso7vQOvj4Kswm0JUh+dJIw7qWgDEM=;
- b=iCuKZLCcOdENk4g8IOtKU46kaOfz/xlXMsWBubCp0fYdwlJ9rSAruwja65dz43dfTi
- 4jPmCxrHzarV4a6nCQE9KbNT7g1NDL0B1YqpQAsEkFDHgoq9SELRTRzDgIM7Q7LMO/dJ
- f3lyRuRVJ18tti51bF9wAOch+ZWsMFQ0qGTjPm7KpP8MSduCJG0ja6K+TXb9cYrWTSKb
- e4xro6WYZX88dzHOClMIwKv5xoPb8GR8SZSy49rMYHmDWxdgceWZobYVVDEPwTLpZ7L+
- qapb8UH/6Jc4jhgaZLweQCPg14RmPHnULd59TycMmCg59tKwtqxVeYwAx68M5AUvfe1t
- mtqg==
+ bh=SfzEpk0Bmax6b35euPBIAs98xDuBX+Vp68Dr5Bla9yM=;
+ b=SeNFcrPzMIjgfMC8YLqYjxWvVsNJI+ruzwzsf8RjTVEYz2EFmJMrUd+f0yDSdkqV1K
+ OxOwwvjwNxVTIMF2AT0u46nLfJ6RhCwoOMMrsj/JWW3NkhxrWLF08/JX4Xm8/5o+zC45
+ NusifYigrF7Zb4w5cizkJ4uQuFMcsOBOdT1WFHDB0ufo2ASdS1Xb1GIxthVnGlPbUFlw
+ keHv8UlRJGs89B4jbK3flTN0JPdmoJp9F3kA0UAqZPFSmydsUwQeP0nSKeqh0Xgo4SUO
+ mR+k5y6FZ/thMxe14NS/Ny/5gNFROalN014kbGYJ52GUtkmrBKJjrWFQOL9AG7nwbhzt
+ rkqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719995903; x=1720600703;
+ d=1e100.net; s=20230601; t=1719995948; x=1720600748;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6FH9RnHj+2V6lBso7vQOvj4Kswm0JUh+dJIw7qWgDEM=;
- b=hyZQYK8zdwAHULc0/qlncxx4dITJnXil8IQb58cXWh/Jb2mg8pZnf1xAqLgdyT/ew6
- yUArE7pnQAYY3C3EA/bDwIErWwM5P9T2aOlGLXPRBATX/u2yEJN+ubIF+UgvZ1l88Njt
- QvyWT8+1Rm+j8gE6NsXtog9odHvHoPc709qrQELumFg6Q+v2wbo4+osxKf8zJ41/bAGJ
- BIEXEhlXh1Yu9UuQ2aT3gTbAGOpe/j1W8zy3vEscIKutGTJX/geByOhJdOXdprBpjKEv
- iur6BU6h0qQ6IqG6tPJSMyhNx3rcARgE/QxzkcZdv1YMyy3TcOQSmsAs1kM/3uSv/WgD
- 1DSQ==
+ bh=SfzEpk0Bmax6b35euPBIAs98xDuBX+Vp68Dr5Bla9yM=;
+ b=bRBv7A+4HZRbzPIbd9/sgW1lfLjI+JI5yodsgABP3W5VaZ9Y8egBjDSEsJe6/SSzYp
+ gVEpDIfW0XQHK4CpccHPjwcctsONcjwd1W6R5sQyV2RWEtwerSRQfdeAyLJnn1keFzfB
+ 5iz6RVPKA3jOYfcJ9xhp1Kec2ZfBsWmRgu8qtc8zSpuYhP7SmsMFtGXTEspvRZMc8Z9D
+ NlJtSVul2HhtHPMOOgbyYkVw3ZES6FevILf7soPRojdDFBoINHICe7TGdwD35Fi3JsAq
+ RN5zznsUEwoqDFRrbPh0NkKPc/nyzxjsE9DNKp5X6zB/VPxBNoeegoe0Zq5KdUia5JtW
+ gLnA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbhe49ZfPSZN+3rdBXp59ZouH2bHpGd5+viU78YNaTUFNSMVnAmQOJXX4+rxS75cwRWMroja0ryWKHpnReUGXY1iHTYrQ=
-X-Gm-Message-State: AOJu0Ywmhg6dzSFHnqevWvSOTw/k2ThDn8upmzxsHMuTooRpleg2N6pb
- jtd0Ujn2cKdBb18TqPWCrKG8GIJ/r9VlH4DwyYtzSdK+Of09lXrDb5cGASZf/9c=
-X-Google-Smtp-Source: AGHT+IHbmFO6VjSzJu6WCy1wipm2TCfM6CxBdxFQGHwc6jExrG1A14Rbeudn+skLfniPPSfhIYz3uQ==
-X-Received: by 2002:a05:6512:33d1:b0:52c:e3af:7c5c with SMTP id
- 2adb3069b0e04-52e82686b63mr7205295e87.34.1719995901311; 
- Wed, 03 Jul 2024 01:38:21 -0700 (PDT)
+ AJvYcCW8w6vFkQfg7F5vAwT4iGoF7hC0p8RF+9UEq+h/QETdb2m4ZDOb48ZMQD+0HDqXJpQY/wy93LrWF5IkqJwsS8tc3vTe9gY=
+X-Gm-Message-State: AOJu0Yx0kYAWlbDpL3wUhi5yAocPeyct0a684o6C8f6LJoz7HJx3Npai
+ 4iius+I7r9vK6KNfoJH+7b4bf8vDVfFMPy/oojKpWhBtXE5wLUTd+mWj3cUZT8k=
+X-Google-Smtp-Source: AGHT+IE1xBbmINtT81/rIUs2KD8NB8HLHXloEwgLuc9K/dznx6+ym+QNT6KEFkQZisQzbxfBsWkkmQ==
+X-Received: by 2002:a5d:4241:0:b0:367:973c:aa7b with SMTP id
+ ffacd0b85a97d-367973cabcdmr79827f8f.2.1719995948034; 
+ Wed, 03 Jul 2024 01:39:08 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.220.97])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4256b09a94csm229283225e9.33.2024.07.03.01.38.19
+ ffacd0b85a97d-3675a1046f2sm15188632f8f.112.2024.07.03.01.39.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 01:38:20 -0700 (PDT)
-Message-ID: <4f030afc-9a81-4738-9e4c-83cbf861e117@linaro.org>
-Date: Wed, 3 Jul 2024 10:38:18 +0200
+ Wed, 03 Jul 2024 01:39:07 -0700 (PDT)
+Message-ID: <5146719b-71c1-4ee7-865d-6f3fb6324348@linaro.org>
+Date: Wed, 3 Jul 2024 10:39:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 16/22] qga: conditionalize schema for commands
- requiring utmpx
+Subject: Re: [PATCH v2 17/22] qga: conditionalize schema for commands not
+ supported on other UNIX
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,14 +71,14 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20240613150127.1361931-1-berrange@redhat.com>
  <20240613154406.1365469-1-berrange@redhat.com>
- <20240613154406.1365469-11-berrange@redhat.com>
+ <20240613154406.1365469-12-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240613154406.1365469-11-berrange@redhat.com>
+In-Reply-To: <20240613154406.1365469-12-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,9 +103,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/6/24 17:44, Daniel P. Berrangé wrote:
 > Rather than creating stubs for every command that just return
-> QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
-> fully exclude generation of the get-users command on POSIX
-> platforms lacking required APIs.
+> QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema  to
+> fully exclude generation of the commands on other UNIX.
 > 
 > The command will be rejected at QMP dispatch time instead,
 > avoiding reimplementing rejection by blocking the stub commands.
@@ -122,9 +121,10 @@ On 13/6/24 17:44, Daniel P. Berrangé wrote:
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   qga/commands-posix.c | 10 +---------
->   qga/qapi-schema.json |  6 ++++--
->   2 files changed, 5 insertions(+), 11 deletions(-)
+>   meson.build          | 1 +
+>   qga/commands-posix.c | 8 --------
+>   qga/qapi-schema.json | 3 ++-
+>   3 files changed, 3 insertions(+), 9 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
