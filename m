@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DD8C3065C
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 02:34:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E89A4C30658
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 02:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOpoX-0001Ix-OG; Tue, 02 Jul 2024 22:33:45 -0400
+	id 1sOpqu-00034Q-MS; Tue, 02 Jul 2024 22:36:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOpoV-0001Hq-Nv; Tue, 02 Jul 2024 22:33:43 -0400
-Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
+ id 1sOpqk-00032U-MT; Tue, 02 Jul 2024 22:36:05 -0400
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOpoU-00016H-8N; Tue, 02 Jul 2024 22:33:43 -0400
-Received: by mail-vs1-xe36.google.com with SMTP id
- ada2fe7eead31-48f415262f5so1646765137.1; 
- Tue, 02 Jul 2024 19:33:41 -0700 (PDT)
+ id 1sOpqi-0001Uq-27; Tue, 02 Jul 2024 22:36:01 -0400
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-4f286fe23e1so1520112e0c.2; 
+ Tue, 02 Jul 2024 19:35:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719974021; x=1720578821; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1719974158; x=1720578958; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Mw6tAMuoTW5Vj+xyoeT94JsWwl8HEiRb0KtBEG6/rpY=;
- b=Kl7qxnk8C4ZbV8eyU79zijcn/YAp4bowBkypL0TCRmsC4bmbT9FY21xuC0kke1BGLv
- FVySDIj8RU1oAmvmdW0YgefkjgTaIitcr25jEVY5U/+4Qwq+ZrU9Pi31/91vtCQjlZUe
- 3exdNNTvkFuzpVnvQiLxpFkWHDf54RRWOpVptzPkb8/ZYYxId9mjMUFgLdB/dIAy1ZnJ
- XuGTlb+1e6YCZSci3OZIB401/9GY+Q/Kx/fIH4xnGIw+0+mROWRL0PkpZqOuu5poNqGE
- AP4EpO7UQIjgdmQCBbTf6L8c8v4fIvEbY8Z/UqLusIU2xhrfUtlwx/mBps11w6Eh7bij
- Zj6Q==
+ bh=sFDAsskzOsmr5ef990OhQ72z3SPyVigF03mSALRVvEQ=;
+ b=k5EHe41Qi0gRD2ntnI4+godcIaLN0lPWPqv3ACMWIW3W81yYT/NL5B92+L4XJlH9Dh
+ MemNdBo/2zkZzkX9EvehddkbcQ5A6p4igc1vd3LmJRQQePoVP08V3cAGBokIKG0KH22L
+ qVhM/G97i8osjixcwuFHq1MnYtURtEVr+NcHY9ptNVwkI6rXTTvqu0sMf0eeT5dCutRs
+ syjocb+go5Ee9yqE2dZAecu604XZgcuW92XpTGB6srCghIni1SLBSjHkSg1f+sT1feZU
+ OMnHoKcL9EFlySu1tbDxdVo2feA+K3HYJufz+Nb5r3gHoAA1Gbysu8f0OgRv2miQY1MG
+ L+Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719974021; x=1720578821;
+ d=1e100.net; s=20230601; t=1719974158; x=1720578958;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Mw6tAMuoTW5Vj+xyoeT94JsWwl8HEiRb0KtBEG6/rpY=;
- b=aLGf+lwB3C+Ho9r0VplVGtLUS0PCRWnzzTJHf5YCXfLJfbMjCV/n88whRRRHIqW05Y
- A8vtdHYOqAAdQ0ri3ZhCNs2jU4fqWQ8cIomSEuDlWl3W6nigjYA7/+oDgcn45LZTrLGP
- qY4G/WEAqXHfNs3QBlqmrd1PRQHrX6wvxzXIgcLeF6t6Nr1sBfSY3Vh8VEcbSWBUHC73
- xKzddYuFdEvlaU0ZU6byg5cGCTkF62gZQPGf7ukUYKqKd4/9UC62q3/Zf5x4R9X8FMJ4
- ITbK0p9AM6bryzfpDNHsoGRYyn7uIdGc/jZfiEHziyGpPPFshnNR+MQXzkdh/SkOr7wb
- MyzA==
+ bh=sFDAsskzOsmr5ef990OhQ72z3SPyVigF03mSALRVvEQ=;
+ b=OMBG9fvlS1i/7/zmgOfcXrD7OsMRQQqpROa3NyMYRs2n2/fmGH3nzNgMMZS7MEEBtC
+ rYipUBnXi1hWCJl4ZViFzcOD9vNElE+sCywnfjKW5lb+pWS4AFEXKT6Vn6m0QU360ALG
+ 09YFQ0hkAkH5E9zAwI30bPJFoAz2s4j927rSCqAbpr3G0AO21Jr5JW3RC9ZTNHs0MuTx
+ t0Rmiz/MLLkJeyOwm6yv/dE9mrzY+S3OCJBjXQXBdVQbLzgFdjlHRSMvo87QnPvfzXv8
+ iGUYrK2OeEvD0NDzRtpYJapBuh8PkDi6nUI6xPFTsD/nYSnw2Y21RNILGP4TI8i0kvEP
+ sp/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVF9n6PqVGqoIUGozlHoNPUBUg9sr0TtrqiT2djXJEk2EdEjbxDMSTxlT9iqG5oLc8ICHzD/DyZOVL1FLq7W/N/03AFrWM=
-X-Gm-Message-State: AOJu0YwyVdmWtpls5Rd5A5YzEaJxTzOhz3kuWeoI6WuXM3BgektNEXTZ
- wyEnZYG8G6gUCh53YYlA+qfB3v4afUSWijEzZV0x8LQ8ygQtll/qkjD/HSS5E44w4fcoxKPfOux
- fcSKvINf5eCC73AA3kmyqi0XGcSTAIl+i
-X-Google-Smtp-Source: AGHT+IGyya1UrxRJEXfENJ6PY2srB36odp4fn50bha3gnl9XY14cULbf3biUpGKBMB0l+uJpiCGjaYP5jXnbh+i24R8=
-X-Received: by 2002:a05:6102:290b:b0:48f:a4ee:6d73 with SMTP id
- ada2fe7eead31-48faf09ba65mr13297419137.11.1719974020732; Tue, 02 Jul 2024
- 19:33:40 -0700 (PDT)
+ AJvYcCUwMGj1Zu7cbpd+Cy5PtD1sI5TH4mF2HnNB/sa/1jvWaBo3OycFxuEd4VhbaQgo+DokDbfWI66PvUQRZXtmHr3JQxb+g2Yt22a5ct5Obh8oYgNfN/6PrD1fD8+Bpw==
+X-Gm-Message-State: AOJu0YwcKGecFIH1UruPaRXBNODkhsEqiiWUKOgklnoH4LqKpDBQzs2S
+ znlkAJMN9iNlOHx0882jhQKG1Mb5LFfmyfNM+6gXCmc+jauSMWPGopIMFNccAWX8dNP9KgvUDqO
+ DrT9N+bbDQ9KQV1+g95yrgaXPjOo=
+X-Google-Smtp-Source: AGHT+IFZuAo45n6J3QNiHLmux8i4DZT7yhSCJOiW83owX5zD4rei2boAlfxp5lKiMNUYHgN/YaBb+QXyvUHgrDNJyp8=
+X-Received: by 2002:a05:6122:4888:b0:4ed:14e:9342 with SMTP id
+ 71dfb90a1353d-4f2a563fb25mr14974432e0c.1.1719974157767; Tue, 02 Jul 2024
+ 19:35:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240701033722.954-1-zhiwei_liu@linux.alibaba.com>
- <20240701033722.954-5-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240701033722.954-5-zhiwei_liu@linux.alibaba.com>
+ <cad162ba-db4e-4acb-b45e-39053ebb02b0@linaro.org>
+In-Reply-To: <cad162ba-db4e-4acb-b45e-39053ebb02b0@linaro.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 3 Jul 2024 12:33:14 +1000
-Message-ID: <CAKmqyKPsCWRy2Fwpnv3LB5QXVujBHVBHqLUNrVDnG4rfXH5TVA@mail.gmail.com>
-Subject: Re: [PATCH 4/6] target/riscv: Detect sxl to set bit width for RV32 in
- RV64
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
- bmeng.cn@gmail.com, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+Date: Wed, 3 Jul 2024 12:35:31 +1000
+Message-ID: <CAKmqyKMt16YdS5+Xqab4aqHainwk5rHHQ67b+FA5zZoxDuCAfw@mail.gmail.com>
+Subject: Re: [PATCH 0/6] target/riscv: Expose RV32 cpu to RV64 QEMU
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org, 
+ qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com, 
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,82 +94,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 1, 2024 at 1:41=E2=80=AFPM LIU Zhiwei <zhiwei_liu@linux.alibaba=
-.com> wrote:
+On Wed, Jul 3, 2024 at 12:25=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> Hi Zhiwei,
 >
-> Ensure correct bit width based on sxl when running RV32 on RV64 QEMU.
-> This is required as MMU address translations run in S-mode.
+> On 1/7/24 05:37, LIU Zhiwei wrote:
+> > From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> >
+> > This patch set aims to expose 32-bit RISC-V cpu to RV64 QEMU. Thus
+> > qemu-system-riscv64 can directly boot a RV32 Linux.
+> >
+> > This patch set has been tested with 6.9.0 Linux Image.
+> >
+> > - Run RV64 QEMU with RV32 CPU
+> > qemu-system-riscv64 -cpu rv32 -M virt -nographic \
+> >      -kernel Image \
+> >      -append "root=3D/dev/vda ro console=3DttyS0" \
+> >      -drive file=3Drootfs.ext2,format=3Draw,id=3Dhd0 \
+> >      -device virtio-blk-device,drive=3Dhd0 -netdev user,id=3Dnet0 \
+> >      -device virtio-net-device,netdev=3Dnet0
+> >
+> > OpenSBI v1.4
+> > QEMU emulator version 9.0.50 (v9.0.0-1132-g7799dc2e3b)
+> > [    0.000000] Linux version 6.9.0 (developer@11109ca35736) (riscv32-un=
+known-linux-gnu-gcc (gc891d8dc23e-dirty) 13.2.0, GNU ld (GNU Binutils) 2.42=
+) #3 SMP Fri May 31 08:42:15 UTC 2024
+> > [    0.000000] random: crng init done
+> > [    0.000000] OF: fdt: Ignoring memory range 0x80000000 - 0x80400000
+> > [    0.000000] Machine model: riscv-virtio,qemu
+> > [    0.000000] SBI specification v2.0 detected
+> > [    0.000000] SBI implementation ID=3D0x1 Version=3D0x10004
+> > [    0.000000] SBI TIME extension detected
+> > [    0.000000] SBI IPI extension detected
+> > [    0.000000] SBI RFENCE extension detected
+> > [    0.000000] SBI SRST extension detected
+> > [    0.000000] SBI DBCN extension detected
+> > [    0.000000] efi: UEFI not found.
+> > [    0.000000] OF: reserved mem: 0x80000000..0x8003ffff (256 KiB) nomap=
+ non-reusable mmode_resv1@80000000
+> > [    0.000000] OF: reserved mem: 0x80040000..0x8004ffff (64 KiB) nomap =
+non-reusable mmode_resv0@80040000
+> > [    0.000000] Zone ranges:
+> > [    0.000000]   Normal   [mem 0x0000000080400000-0x0000000087ffffff]
+> > [    0.000000] Movable zone start for each node
+> > [    0.000000] Early memory node ranges
+> > [    0.000000]   node   0: [mem 0x0000000080400000-0x0000000087ffffff]
+> > [    0.000000] Initmem setup node 0 [mem 0x0000000080400000-0x000000008=
+7ffffff]
+> > [    0.000000] On node 0, zone Normal: 1024 pages in unavailable ranges
+> > [    0.000000] SBI HSM extension detected
+> > [    0.000000] riscv: base ISA extensions acdfhim
+> > [    0.000000] riscv: ELF capabilities acdfim
+> > [    0.000000] percpu: Embedded 17 pages/cpu s37728 r8192 d23712 u69632
+> > [    0.000000] Kernel command line: root=3D/dev/vda ro console=3DttyS0
+> > [    0.000000] Dentry cache hash table entries: 16384 (order: 4, 65536 =
+bytes, linear)
+> > [    0.000000] Inode-cache hash table entries: 8192 (order: 3, 32768 by=
+tes, linear)
+> > [    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 3=
+1465
+> > [    0.000000] mem auto-init: stack:all(zero), heap alloc:off, heap fre=
+e:off
+> > [    0.000000] Virtual kernel memory layout:
+> > [    0.000000]       fixmap : 0x9c800000 - 0x9d000000   (8192 kB)
+> > [    0.000000]       pci io : 0x9d000000 - 0x9e000000   (  16 MB)
+> > [    0.000000]      vmemmap : 0x9e000000 - 0xa0000000   (  32 MB)
+> > [    0.000000]      vmalloc : 0xa0000000 - 0xc0000000   ( 512 MB)
+> > [    0.000000]       lowmem : 0xc0000000 - 0xc7c00000   ( 124 MB)
+> > [    0.000000] Memory: 95700K/126976K available (9090K kernel code, 884=
+5K rwdata, 4096K rodata, 4231K init, 341K bss, 31276K reserved, 0K cma-rese=
+rved)
+> > ...
+> > Welcome to Buildroot
+> > buildroot login: root
+> > # cat /proc/cpuinfo
+> > processor       : 0
+> > hart            : 0
+> > isa             : rv32imafdch_zicbom_zicboz_zicntr_zicsr_zifencei_zihin=
+tntl_zihintpause_zihpm_zfa_zba_zbb_zbc_zbs_sstc
+> > mmu             : sv32
 >
-> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-> ---
->  target/riscv/cpu_helper.c | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
->
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 6709622dd3..1af83a0a36 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -887,12 +887,14 @@ static int get_physical_address(CPURISCVState *env,=
- hwaddr *physical,
->
->      CPUState *cs =3D env_cpu(env);
->      int va_bits =3D PGSHIFT + levels * ptidxbits + widened;
-> +    int sxlen =3D 16UL << riscv_cpu_sxl(env);
-> +    int sxlen_bytes =3D sxlen / 8;
->
->      if (first_stage =3D=3D true) {
->          target_ulong mask, masked_msbs;
->
-> -        if (TARGET_LONG_BITS > (va_bits - 1)) {
-> -            mask =3D (1L << (TARGET_LONG_BITS - (va_bits - 1))) - 1;
-> +        if (sxlen > (va_bits - 1)) {
-> +            mask =3D (1L << (sxlen - (va_bits - 1))) - 1;
->          } else {
->              mask =3D 0;
->          }
-> @@ -961,7 +963,7 @@ restart:
->
->          int pmp_prot;
->          int pmp_ret =3D get_physical_address_pmp(env, &pmp_prot, pte_add=
-r,
-> -                                               sizeof(target_ulong),
-> +                                               sxlen_bytes,
->                                                 MMU_DATA_LOAD, PRV_S);
->          if (pmp_ret !=3D TRANSLATE_SUCCESS) {
->              return TRANSLATE_PMP_FAIL;
-> @@ -1113,7 +1115,7 @@ restart:
->           *   it is no longer valid and we must re-walk the page table.
->           */
->          MemoryRegion *mr;
-> -        hwaddr l =3D sizeof(target_ulong), addr1;
-> +        hwaddr l =3D sxlen_bytes, addr1;
->          mr =3D address_space_translate(cs->as, pte_addr, &addr1, &l,
->                                       false, MEMTXATTRS_UNSPECIFIED);
->          if (memory_region_is_ram(mr)) {
-> @@ -1126,6 +1128,11 @@ restart:
->              *pte_pa =3D pte =3D updated_pte;
->  #else
->              target_ulong old_pte =3D qatomic_cmpxchg(pte_pa, pte, update=
-d_pte);
+> Please provide an Avocado test (i.e. checking /proc/cpuinfo
+> contains "isa             : rv32"). See for reference
+> tests/avocado/boot_linux_console.py.
 
-I think you missed removing this line
+Awesome! Thanks for this, this is very exciting.
+
+I agree we should add an Avacado test, that way this will be regularly
+tested as it's something that seems prone to breakage.
 
 Alistair
 
-> +            if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
-> +                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, pte, upd=
-ated_pte);
-> +            } else {
-> +                old_pte =3D qatomic_cmpxchg(pte_pa, pte, updated_pte);
-> +            }
->              if (old_pte !=3D pte) {
->                  goto restart;
->              }
-> --
-> 2.43.0
 >
+> Thanks!
 >
 
