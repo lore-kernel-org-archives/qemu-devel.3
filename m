@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F01C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FCF6C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:38:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8av-00073k-Qi; Wed, 03 Jul 2024 18:36:57 -0400
+	id 1sP8bw-0007MO-E5; Wed, 03 Jul 2024 18:38:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sP8at-00073Y-R4
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:36:55 -0400
-Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
+ id 1sP8bn-0007Lh-Am
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:37:52 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sP8ar-0003Lp-UM
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:36:55 -0400
-Received: by mail-oa1-x30.google.com with SMTP id
- 586e51a60fabf-24c9f892aeaso29016fac.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:36:52 -0700 (PDT)
+ id 1sP8bk-0003Ql-Tp
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:37:50 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1fb1ff21748so6494505ad.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:37:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720046212; x=1720651012; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=77PLC188Ya61WjBUNuFD6c9d/hzjThvnjgefUjH00n4=;
- b=fXAYGkDgnupq3peLJNS9kUgnNOLq9iKiHezWJkX4KPGzaw8sHhlxYytFENRvDxHx/+
- oz+zF/wurCtEHed9StN+O8qs6G6bnxDmhaF9rRl44Jv0JXWVD2zB6hvmGDXOYgviH6Ab
- dNltTRFIl65eAxdeP2faidVsvZTXcyt2e6LMsLuNnmRDXuczmzZnCo4fO/mL0dNs4jsi
- 4XyDfEzvDK1YpgPq1gg+oP6WHXsihz0ma3k3VEuK8t3Baob0ZzpDoOWxOu0n5CjUrN95
- xsFcvaoq6S2cUzeaPK3lnwJ8WEWnWOSKwUJF2VeOCEnZ21meLA7+QhmWJ+84MpqYy+Do
- hh+A==
+ d=linaro.org; s=google; t=1720046267; x=1720651067; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1QrBiPbK/owVlQpEZ77NbA688DkMtAcqX+mYwuLKYlU=;
+ b=P2QLHJEjEwuNXFEquC7EQvTBDw0B4Igpnx0WgtaeYhKMLa8EDUic3ljHcAjoZ/AFSz
+ MDpSdx4mBRn1lPx5h386cIz+jt3ZKWoEQzOO3mhHEZFgLTdAMRuxeYWkdUDFv4xjQU6J
+ bkLgF5U1dP1owojC0dOpBxzr7sOhVDXDiU2M574BO2JBFmCn+ldRt+bp81HvQ0L4qI29
+ v8+VQI0KFO27BIzONuVfsx8CfXT7noFXJu1qT/YQTrnov2senNV8X39fO9osjmYozTfO
+ cqIC1euTNwqpn2rhyAOuQ5ogKrjQDz9CUAoaw62ux0+CcL4gCMUkNxhpKyYvlpDJqtoD
+ yBzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046212; x=1720651012;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1720046267; x=1720651067;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=77PLC188Ya61WjBUNuFD6c9d/hzjThvnjgefUjH00n4=;
- b=P/LWuM3YA3hqOB6ZULsj+YmwWlpdH+oAHPmbDnlouImPfe3QVF9PXwQ2JKkgvHRcq0
- ranWl0U2Mir7mDlzuOq+28Hvsh+2FmMH8wQNErtwvF20qUa+qhjN7HPw48HsPbnpG9vo
- HdhXOe5k6Ri0cGcd6viwc3zRG1erhvBOqx+VhX5I2h0R77jjKZ2IojXDQIglYzYlcZN1
- GFHRi1uJYKResMm3zkM1tq3Ej7K8ZkHnc9rp5DtGpfDfaJ/Y00lNnt/XZVU1ysJVe2fy
- V7ye6+XB2MKX8GAjavs7mJIbuTMHo8DFZaetdG/QHwxvkZsXk9BPT8wpy7r9VSZyRbrq
- jpBg==
-X-Gm-Message-State: AOJu0YzSEDhL+Law0El0xFlNnokKA2TTZhyEFcfKNI+GfanppTdzUZb9
- aMghCFEuntR5SHLL4ZLz6jd/1LYqudW3UOR1h5JffEN0OKgggvztediODnP17a8Fi0y1SUp55tb
- +
-X-Google-Smtp-Source: AGHT+IFbPCkqJ4Te7PX3o0TbrcoRqWJca0Ja2V8qxyTdQbhZMzPaiFAZyY5QGuBjYnI74i/yOtS8mQ==
-X-Received: by 2002:a05:6871:3311:b0:25d:77fb:3b0c with SMTP id
- 586e51a60fabf-25db345a427mr11101446fac.31.1720046211666; 
- Wed, 03 Jul 2024 15:36:51 -0700 (PDT)
+ bh=1QrBiPbK/owVlQpEZ77NbA688DkMtAcqX+mYwuLKYlU=;
+ b=o1OLIq9fRRr/cjfIBB1SrMkqOwOPVgxPNp8B3rscL86uKJdhVsOOUhyP8WWRWLxK/x
+ LsH2nF1KpQoMcgGLgDyhUiImxajhmUYxS/16cZEfq/C4naQFARpO0o3IrdV2wMfB2hMY
+ TL7pBWu8gWNfbccAW+MhLOgShx0s+GnSyvRbNBs/hHl+3kZKJc/lnMf1GOihV/ESBQeg
+ 5S++R+Cozf20jhMLzXMfrtx6ewFNI4LXIYHYdigcaeHluTUTH1Mv8P8AkJKOYG9Ypra0
+ 9jyq2kK+52pmsfOduzdyJiL9bB77wZR2e2E9PV7Z0noa40wAD8aCESfW/7a7sG8jwedO
+ I9UQ==
+X-Gm-Message-State: AOJu0YzpdI7K2yRTNENo5RJ2moeBzc2JwFR99a6+G4ttVbVWJxqz01oP
+ rYCeAWC6XNJoDNqd1BdZisCc+O2PGkcN958S3dJtG+neXBqix3635/re1qVo73Y=
+X-Google-Smtp-Source: AGHT+IHi4pjGFx11x3t840n65oQP24gzuonlJf750eO2UIeV3H/WqrtzBHRYV+chpGjnvf0IGug+jg==
+X-Received: by 2002:a17:90a:c58d:b0:2c9:63e9:8463 with SMTP id
+ 98e67ed59e1d1-2c963e98819mr4469380a91.2.1720046266100; 
+ Wed, 03 Jul 2024 15:37:46 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70803fc98b8sm11280220b3a.97.2024.07.03.15.36.50
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-1fafc3a645fsm37511425ad.6.2024.07.03.15.37.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 15:36:51 -0700 (PDT)
-Message-ID: <79a8c1b1-e541-444f-a936-1e395a9042d5@linaro.org>
-Date: Wed, 3 Jul 2024 15:36:49 -0700
+ Wed, 03 Jul 2024 15:37:45 -0700 (PDT)
+Message-ID: <95648f85-d4b2-4ceb-bccf-888114e0fe03@linaro.org>
+Date: Wed, 3 Jul 2024 15:37:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/7] tcg patch queue
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20240703174226.2117169-1-richard.henderson@linaro.org>
+Subject: Re: [PULL v2 00/88] virtio: features,fixes
+To: "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <cover.1719951168.git.mst@redhat.com>
+ <f0961f6f-642c-4dc8-8bf3-1457f71da500@linaro.org>
+ <20240703125101-mutt-send-email-mst@kernel.org>
+ <d18ab076-47e4-4e8a-85d5-45f14f7b7e71@linaro.org>
+ <54f9b0f4-d638-4273-935a-bb9bd129701b@redhat.com>
+ <20240703162544-mutt-send-email-mst@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20240703174226.2117169-1-richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240703162544-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::30;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x30.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,25 +100,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/24 10:42, Richard Henderson wrote:
-> The following changes since commit 6746482d12da3b6e4d3cdf06481a0027a797f719:
+On 7/3/24 13:26, Michael S. Tsirkin wrote:
+> On Wed, Jul 03, 2024 at 08:46:38PM +0200, Thomas Huth wrote:
+>> On 03/07/2024 19.01, Richard Henderson wrote:
+>>> On 7/3/24 09:51, Michael S. Tsirkin wrote:
+>>>> On Wed, Jul 03, 2024 at 09:31:45AM -0700, Richard Henderson wrote:
+>>>>> On 7/2/24 13:15, Michael S. Tsirkin wrote:
+>>>>>> The following changes since commit
+>>>>>> 1152a0414944f03231f3177207d379d58125890e:
+>>>>>>
+>>>>>>      Merge tag 'pull-xen-20240701'
+>>>>>> ofhttps://xenbits.xen.org/git-http/people/aperard/qemu-dm
+>>>>>> into staging (2024-07-01 09:06:25 -0700)
+>>>>>>
+>>>>>> are available in the Git repository at:
+>>>>>>
+>>>>>>      https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git  tags/for_upstream
+>>>>>>
+>>>>>> for you to fetch changes up to 29e45afd8d6abf7a67dab5db0ab1cfbc388daefe:
+>>>>>>
+>>>>>>      hw/pci: Replace -1 with UINT32_MAX for romsize
+>>>>>> (2024-07-02 11:27:19 -0400)
+>>>>>>
+>>>>>> ----------------------------------------------------------------
+>>>>>> virtio: features,fixes
+>>>>>>
+>>>>>> A bunch of improvements:
+>>>>>> - vhost dirty log is now only scanned once, not once per device
+>>>>>> - virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
+>>>>>> - cxl gained DCD emulation support
+>>>>>> - pvpanic gained shutdown support
+>>>>>> - beginning of patchset for Generic Port Affinity Structure
+>>>>>> - s3 support
+>>>>>> - friendlier error messages when boot fails on some illegal configs
+>>>>>> - for vhost-user, VHOST_USER_SET_LOG_BASE is now only sent once
+>>>>>> - vhost-user now works on any POSIX system
+>>>>>> - sr-iov VF setup code has been reworked significantly
+>>>>>> - new tests, particularly for risc-v ACPI
+>>>>>> - bugfixes
+>>>>>>
+>>>>>> Signed-off-by: Michael S. Tsirkin<mst@redhat.com>
+>>>>>
+>>>>> Fails testing:
+>>>>>
+>>>>> https://gitlab.com/qemu-project/qemu/-/jobs/7257337667
+>>>>
+>>>> Could you give me a hint how to trigger this in CI pls?
+>>>> All tests seem to pass when I push it to gitlab.
+>>>> Any special variables to set?
+>>>
+>>> In CI, FreeBSD uses travis; I'm not sure what's involved.
+>>
+>> s/travis/cirrus-ci/
+>>
+>> See .gitlab-ci.d/cirrus/README.rst for information how to enable it in your
+>> private gitlab repo.
+>>
+>>> I replicated it locally within a FreeBSD VM.
+>>>
+>>> It should be reproducible with 'make vm-build-freebsd', but I think
+>>> that's more difficult to debug after the fact than a full vm.
+>>
+>> Just use "make vm-build-freebsd DEBUG=1" and you should get a shell prompt
+>> for interactive debugging, so that's likely the best way to tackle such
+>> issues.
+>>
+>>   HTH,
+>>    Thomas
 > 
->    Merge tag 'sdmmc-20240702' ofhttps://github.com/philmd/qemu  into staging (2024-07-02 09:52:10 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu  tags/pull-tcg-20240703
-> 
-> for you to fetch changes up to a71d9dfbf63db42d6e6ae87fc112d1f5502183bd:
-> 
->    tcg/optimize: Fix TCG_COND_TST* simplification of setcond2 (2024-07-03 10:24:12 -0700)
-> 
-> ----------------------------------------------------------------
-> util: cpuinfo portability fixes for FreeBSD and OpenBSD
-> util: cpuinfo for riscv host
-> tcg/optimize: Fix TCG_COND_TST* simplification of setcond2
+> Thanks!
+> As a side, is there some way to persist the stuff fetched over the
+> network so it does not happen each time I re-run make?
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+That's why I use a proper vm install of freebsd.
 
 
 r~
