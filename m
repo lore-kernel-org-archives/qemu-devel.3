@@ -4,65 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1447C30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 05:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC58C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 05:14:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOsGR-0006yK-Iy; Wed, 03 Jul 2024 01:10:43 -0400
+	id 1sOsJm-00083D-RT; Wed, 03 Jul 2024 01:14:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1sOsGP-0006y2-Aq
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 01:10:41 -0400
-Received: from pi.codeconstruct.com.au ([203.29.241.158]
- helo=codeconstruct.com.au)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOsJk-00082d-Pj
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 01:14:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1sOsGM-0006Dy-CG
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 01:10:41 -0400
-Received: from [192.168.68.112]
- (ppp118-210-145-155.adl-adc-lon-bras33.tpg.internode.on.net
- [118.210.145.155])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id D74BC20174;
- Wed,  3 Jul 2024 13:10:21 +0800 (AWST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1719983425;
- bh=s3MYnDTFpz0EKynOjcCBRBaXBrQ7j4Jt/efEvnpM9rY=;
- h=Subject:From:To:Date:In-Reply-To:References;
- b=U8O5gNuhFkQhXmBA8XVbrmKByjar9xERRqPTZcSeboM5vIRQ2+gN6IJywbA9XidLt
- Vzrgch2t8fTEAyMnN9gXtdSHRmRrwqHCYuUYrL++q+yBRW3CNxCXjipXWOmm7bXIMW
- 1sdKLjz8gI8rKWP4rtkrobhQAxkMkpAKEMB2VX1MmoNpxWHm2Ngjq0Q6gtOWVDKvx6
- Wmi8vdHLR4PPAhXdzSiOBHm1sCaEAI3TJj3XJy0z0GIfvHiOEH6U0KjOaJuP2kt/ph
- bsV4rwlaorpeEcARdkeHvhfxkzlhOEVO21d9Nr9QwnHFk2oFlZQMizR0bGpZoFo+n4
- IGDcAQRkbfcRQ==
-Message-ID: <b9824203375f3ebec3fa4ba4b5cb1721a00e8030.camel@codeconstruct.com.au>
-Subject: Re: [SPAM] [RFC PATCH v42 90/98] hw/sd/sdcard: Add experimental
- 'x-aspeed-emmc-kludge' property
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, 
- =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>, qemu-devel@nongnu.org,
- Joel Stanley <joel@jms.id.au>, Jamin Lin <jamin_lin@aspeedtech.com>, Troy
- Lee <troy_lee@aspeedtech.com>
-Date: Wed, 03 Jul 2024 14:40:19 +0930
-In-Reply-To: <2b425f32-41de-4057-a8d0-79411f2519b4@linaro.org>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-91-philmd@linaro.org>
- <4b55f817-0e29-45c0-8f56-f997f34e0e97@kaod.org>
- <e1a6b93038e67271fc0bd9efcc7d40802cbbede7.camel@codeconstruct.com.au>
- <2b425f32-41de-4057-a8d0-79411f2519b4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sOsJf-0005UR-Ip
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 01:14:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1719983641;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9jGJxVxvnrXHAapjrXf8PWs8jz7LdDL6OzIh6r4Bvso=;
+ b=dVk6qgVRdLXS1F/ajKDOC5EsYZIS4ty3H+kptxE4+H/2mDQtdFOD4+B26Vodyyl73EESVV
+ P+3zhMGAfic0GmGgdLU57qemuSE1ejEz6XN0W7KbWJi2gKILOsi8pRGG8mHYq1VElGW4Cx
+ e1AGWDumoIjTcbb8P+zQ/Ah+/2jHeXU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-493-t05srrCyPUGkd60uQV155Q-1; Wed,
+ 03 Jul 2024 01:13:59 -0400
+X-MC-Unique: t05srrCyPUGkd60uQV155Q-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 538231956080; Wed,  3 Jul 2024 05:13:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.4])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2DDD184B2DC; Wed,  3 Jul 2024 05:13:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7A93621E65D1; Wed,  3 Jul 2024 07:13:55 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH 0/2] docs/python: bump minimum Sphinx version
+In-Reply-To: <CAFn=p-Y1r3SfoA=T9rPMnTzk2ZiF28R8GUCGmLdEdhFnSDzarA@mail.gmail.com>
+ (John Snow's message of "Tue, 2 Jul 2024 16:01:24 -0400")
+References: <20240702195903.204007-1-jsnow@redhat.com>
+ <CAFn=p-Y1r3SfoA=T9rPMnTzk2ZiF28R8GUCGmLdEdhFnSDzarA@mail.gmail.com>
+Date: Wed, 03 Jul 2024 07:13:55 +0200
+Message-ID: <87h6d7hxbg.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Received-SPF: pass client-ip=203.29.241.158;
- envelope-from=andrew@codeconstruct.com.au; helo=codeconstruct.com.au
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 127.0.0.2
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,36 +86,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2024-07-02 at 18:15 +0200, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 2/7/24 07:06, Andrew Jeffery wrote:
-> > On Fri, 2024-06-28 at 11:16 +0200, C=C3=A9dric Le Goater wrote:
-> > > On 6/28/24 9:02 AM, Philippe Mathieu-Daud=C3=A9 wrote:
-> > > > When booting U-boot/Linux on Aspeed boards via eMMC,
-> > > > some commands don't behave as expected from the spec.
-> > > >=20
-> > > > Add the 'x-aspeed-emmc-kludge' property to allow non
-> > > > standard uses until we figure out the reasons.
-> > >=20
-> > > I am not aware of any singularity in the eMMC logic provided by Aspee=
-d.
-> > > U-Boot and Linux drivers seem very generic. May be others can tell.
-> >=20
-> > I'm not aware of any command kludges. The main problem I had when I
-> > wrote the Linux driver for the Aspeed controller was the phase tuning,
-> > but that doesn't sound related.
->=20
-> Yeah I don't think anything Aspeed nor U-boot related, we
-> model CSD/CID registers per the SD spec, not MMC. Various
-> fields are identical, but few differ, this might be the
-> problem.
->=20
-> I rather respect the spec by default, so until we figure
-> the issue, are you OK to use a 'x-emmc-kludge' property
-> and set it on the Aspeed boards?
+John Snow <jsnow@redhat.com> writes:
 
-Dropping the implication that it's the fault of the Aspeed controller
-seems reasonable (without further evidence that it's true).
+> On Tue, Jul 2, 2024 at 3:59=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
+>
+>> With recent deprecations, we can advance our minimum sphinx version
+>> safely. This is heavily motivated by new qapidoc work which is much
+>> easier to maintain cross-version compatibility for - see difficulties in
+>> our dbus documentation which only works on sphinx >=3D 4.
+>>
+>> We can only guarantee >=3D 3.4.3 now, but that's still vastly easier than
+>> maintaining compatibility all the way back to 1.x.
+>>
+>> GitLab: https://gitlab.com/jsnow/qemu/-/pipelines/1357902509
+>>
+>> (failures appear to be unrelated to the series.)
+>>
+>> John Snow (2):
+>>   Python: bump minimum sphinx version to 3.4.3
+>>   docs: remove Sphinx 1.x compatibility code
+>>
+>>  docs/conf.py             |  7 +++----
+>>  docs/sphinx/hxtool.py    | 21 ++++-----------------
+>>  docs/sphinx/kerneldoc.py | 38 ++++++++++++--------------------------
+>>  docs/sphinx/kernellog.py | 28 ----------------------------
+>>  docs/sphinx/qapidoc.py   | 29 +++--------------------------
+>>  pythondeps.toml          |  2 +-
+>>  6 files changed, 23 insertions(+), 102 deletions(-)
+>>  delete mode 100644 docs/sphinx/kernellog.py
+>>
+>> --
+>> 2.45.0
+>>
+>
+> Bleurgh. I meant to shuffle some of the changes in patch 1 into patch 2,
 
-Andrew
+I was wondering about the split :)
+
+> I'll fix that on re-spin. If you want to review it anyway, just presume
+> I'll fix that next go-around.
+
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
