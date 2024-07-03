@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1510DC3271E
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99390C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 22:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8jn-0004wx-Ey; Wed, 03 Jul 2024 18:46:07 -0400
+	id 1sP8l9-00058g-Jb; Wed, 03 Jul 2024 18:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jj-0004Ow-D9
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:04 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8l6-0004oy-9m
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8jh-0001Ou-KT
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:46:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8l4-0001bL-8M
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 18:47:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720046760;
+ s=mimecast20190719; t=1720046844;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=1ElU1S3yGZ4jv6gdF/qOH23dlnO7FdnAYenskxuOvWI=;
- b=bu17zeh6e1sR1dpadqAKUxytmgwCeCOLL8+1LtTMgSCDTGu6WydNsXLbTkXgaRxvG5sSf+
- sIjulOg5RhrowjsiY09alFal6NOijUd0B5a5EaPaX6TJ/qUf4wmx6QIj3mDwzQuOWsMTvX
- JGBNVnTe2Gl8CUQv64SNWcNiOTFN86E=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KfDnOZZL3lNpO7yBVqmvfyK4tBARWzqdyh5lLLcyyUM=;
+ b=ObU7ne7PfksMdenSirO2i6bQWpTismX3FT+5tWvmoyxOYdCX+zg5Cx0IrpnfaVu4C5neYz
+ OcSu142r6IJ+vCXhUdg6DQuyj7CrPlTvOvyF+xtMuQBa5FT7a9eIIXlTWoc7EHgUph3ZZ7
+ P4hbx/fl1IT8K26CDyFJUU06S542hgY=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-683-mmH_molnOSqvSYousO7jAw-1; Wed, 03 Jul 2024 18:45:58 -0400
-X-MC-Unique: mmH_molnOSqvSYousO7jAw-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-52e98697a27so1332393e87.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:45:58 -0700 (PDT)
+ us-mta-665-HDjiA-kUPtKcLHERXSpcoA-1; Wed, 03 Jul 2024 18:47:23 -0400
+X-MC-Unique: HDjiA-kUPtKcLHERXSpcoA-1
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-58c38bcd765so571a12.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 15:47:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720046757; x=1720651557;
+ d=1e100.net; s=20230601; t=1720046841; x=1720651641;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1ElU1S3yGZ4jv6gdF/qOH23dlnO7FdnAYenskxuOvWI=;
- b=UphXROtVA0DJWWRmba627ctOYtLikH4aP983XTDmxQltLbZimc7PeVpU5z2GaS54zf
- rmm18J4tV7Hn04GuoP6lJOzbRveN5gToqiH5giHpfaEq2eyIann45z17a7ofRUkoggqz
- nUYt40wPWy5DBEwTXUdunCJWKv+zOTad8WeeHjqH9yZJUq+pp3fyptgjcX7Hie6kWa7B
- fHrHy/3GGovpu99L5h9006hGhMiG4CVaGWEarpHOjhSU3JS4Ugu9qf00RJ0oeMkTk67R
- CyDkCeYelGXIekbP+av16Wu9hChq9uXhZ7Amtjnv93aJXV1GZSZ5unkEBcsqxPvgHM2G
- jxug==
-X-Gm-Message-State: AOJu0YxBSFkcbg+/mqBtdL8Wag0zz/XKld11LqHqV+mDVnzu9+lmgYfp
- RfAzwnZn/QA1s/4ey1zIXIZ7+H0hQRyZQQfD44nBn5bgL674EgwRaiK4jr1ii8I2QQiXVFt4gX1
- 1My+gyq7wtTvYhlFmmeF94Tp6baoWZ5MtPv92zzy5CUaXkJmja+leJjNNfcc7kbdGe3+tqg25DL
- 9VLMA51yks/iogHaLhkk0xm9iNAqofbQ==
-X-Received: by 2002:a05:6512:3d91:b0:52c:c1aa:dd52 with SMTP id
- 2adb3069b0e04-52e8268aa24mr9205105e87.30.1720046756989; 
- Wed, 03 Jul 2024 15:45:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEKipgOaio9YbDukqlH2oh1020WKcEazRdIlfzVqpnThpSLZApOU1nmX0uTAKZEFWjqNnFKWQ==
-X-Received: by 2002:a05:6512:3d91:b0:52c:c1aa:dd52 with SMTP id
- 2adb3069b0e04-52e8268aa24mr9205082e87.30.1720046756155; 
- Wed, 03 Jul 2024 15:45:56 -0700 (PDT)
+ bh=KfDnOZZL3lNpO7yBVqmvfyK4tBARWzqdyh5lLLcyyUM=;
+ b=RbYRQ9tItZjGMe8XfX5aec8Cu799gW0qpJ3dE55/Qdyp66zooydf/BsVfttB8dBQj5
+ zdleqphGO4sjOBlggSyQA6RxQPx4xssrpiIq15S4UaFN+ht6vhM1qmx88B/c3lF6qKvm
+ zSR+NJ35mMDeFfsV0ET5HBal5xbb5EyhT/IMYFm3hE7r5T2/wb9p8AFDi/WqGoNxBw6C
+ oylNxytYNXdRdC0q/bXflHXWXSgvBE27bwFReG3s10kJI0JLGY8tjnFrAD8mTV6zH9bj
+ Y0ao/Eudc++inrx5O6DyM2AxEwm1kK4Z/SV3XtVPSJZaxi8WP/To2zAwExJGPKilo1u3
+ vbUw==
+X-Gm-Message-State: AOJu0YyD6Doi2Y2Rf1vEhSOFGkG5bn+bTedrU9/Byq1fFBu1tDnQgymv
+ yvQNj9E34SaiyfSQfGBC4RtBmwJuZMA7PJSAL6cB7teEMq8/l2FBeWOCQvFAgChpKAh3JNHphHV
+ JgciCXxZOH5mIWP4qZXdXOtC+SNlVVG4/BoLLRG9V5hI/ENfW9GIpySOR2pAHtKoi0davTPNcJH
+ Q/XuC7lgNEm+4NI0+5lFnyFp1orWzEJg==
+X-Received: by 2002:a05:6402:2113:b0:57a:2ccb:b3f2 with SMTP id
+ 4fb4d7f45d1cf-5879f59bc0dmr8842031a12.16.1720046841489; 
+ Wed, 03 Jul 2024 15:47:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHqtpYRzqCE5H9Su/cH0xHDWfRFqfsRuGfXq/1nFsEn7AI+uxa0ETm2EpEeJ25aI4C777sezQ==
+X-Received: by 2002:a05:6402:2113:b0:57a:2ccb:b3f2 with SMTP id
+ 4fb4d7f45d1cf-5879f59bc0dmr8842005a12.16.1720046840911; 
+ Wed, 03 Jul 2024 15:47:20 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aaf5a612sm548367266b.51.2024.07.03.15.45.53
+ 4fb4d7f45d1cf-58dafc1d009sm681778a12.63.2024.07.03.15.47.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 15:45:55 -0700 (PDT)
-Date: Wed, 3 Jul 2024 18:45:51 -0400
+ Wed, 03 Jul 2024 15:47:20 -0700 (PDT)
+Date: Wed, 3 Jul 2024 18:47:17 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fan Ni <fan.ni@samsung.com>,
- Gregory Price <gregory.price@memverge.com>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PULL v3 21/85] hw/mem/cxl_type3: Add support to create DC regions
- to type3 memory devices
-Message-ID: <f4fd91af3ae3b80c795ff5f3e0c1001b14ceb761.1720046570.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jiqian Chen <Jiqian.Chen@amd.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PULL v3 39/85] virtio-pci: implement No_Soft_Reset bit
+Message-ID: <5d98e18823af6d5230fca8098a7ee966aaedeb29.1720046570.git.mst@redhat.com>
 References: <cover.1720046570.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -104,127 +104,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Jiqian Chen <Jiqian.Chen@amd.com>
 
-With the change, when setting up memory for type3 memory device, we can
-create DC regions.
-A property 'num-dc-regions' is added to ct3_props to allow users to pass the
-number of DC regions to create. To make it easier, other region parameters
-like region base, length, and block size are hard coded. If needed,
-these parameters can be added easily.
+In current code, when guest does S3, virtio-gpu are reset due to the
+bit No_Soft_Reset is not set. After resetting, the display resources
+of virtio-gpu are destroyed, then the display can't come back and only
+show blank after resuming.
 
-With the change, we can create DC regions with proper kernel side
-support like below:
+Implement No_Soft_Reset bit of PCI_PM_CTRL register, then guest can check
+this bit, if this bit is set, the devices resetting will not be done, and
+then the display can work after resuming.
 
-region=$(cat /sys/bus/cxl/devices/decoder0.0/create_dc_region)
-echo $region > /sys/bus/cxl/devices/decoder0.0/create_dc_region
-echo 256 > /sys/bus/cxl/devices/$region/interleave_granularity
-echo 1 > /sys/bus/cxl/devices/$region/interleave_ways
+No_Soft_Reset bit is implemented for all virtio devices, and was tested
+only on virtio-gpu device. Set it false by default for safety.
 
-echo "dc0" >/sys/bus/cxl/devices/decoder2.0/mode
-echo 0x40000000 >/sys/bus/cxl/devices/decoder2.0/dpa_size
-
-echo 0x40000000 > /sys/bus/cxl/devices/$region/size
-echo  "decoder2.0" > /sys/bus/cxl/devices/$region/target0
-echo 1 > /sys/bus/cxl/devices/$region/commit
-echo $region > /sys/bus/cxl/drivers/cxl_region/bind
-
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Message-Id: <20240523174651.1089554-7-nifan.cxl@gmail.com>
+Signed-off-by: Jiqian Chen <Jiqian.Chen@amd.com>
+Message-Id: <20240606102205.114671-3-Jiqian.Chen@amd.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/mem/cxl_type3.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
+ include/hw/virtio/virtio-pci.h |  5 +++++
+ hw/core/machine.c              |  1 +
+ hw/virtio/virtio-pci.c         | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 35 insertions(+)
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 7194c8f902..06c6f9bb78 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -30,6 +30,7 @@
- #include "hw/pci/msix.h"
+diff --git a/include/hw/virtio/virtio-pci.h b/include/hw/virtio/virtio-pci.h
+index 59d88018c1..9e67ba38c7 100644
+--- a/include/hw/virtio/virtio-pci.h
++++ b/include/hw/virtio/virtio-pci.h
+@@ -43,6 +43,7 @@ enum {
+     VIRTIO_PCI_FLAG_INIT_FLR_BIT,
+     VIRTIO_PCI_FLAG_AER_BIT,
+     VIRTIO_PCI_FLAG_ATS_PAGE_ALIGNED_BIT,
++    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT,
+ };
  
- #define DWORD_BYTE 4
-+#define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
+ /* Need to activate work-arounds for buggy guests at vmstate load. */
+@@ -79,6 +80,10 @@ enum {
+ /* Init Power Management */
+ #define VIRTIO_PCI_FLAG_INIT_PM (1 << VIRTIO_PCI_FLAG_INIT_PM_BIT)
  
- /* Default CDAT entries for a memory region */
- enum {
-@@ -567,6 +568,50 @@ static void ct3d_reg_write(void *opaque, hwaddr offset, uint64_t value,
++/* Init The No_Soft_Reset bit of Power Management */
++#define VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET \
++  (1 << VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT)
++
+ /* Init Function Level Reset capability */
+ #define VIRTIO_PCI_FLAG_INIT_FLR (1 << VIRTIO_PCI_FLAG_INIT_FLR_BIT)
+ 
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 655d75c21f..f4cba6496c 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -38,6 +38,7 @@ GlobalProperty hw_compat_9_0[] = {
+     {"arm-cpu", "backcompat-cntfrq", "true" },
+     {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
+     {"vfio-pci", "skip-vsc-check", "false" },
++    { "virtio-pci", "x-pcie-pm-no-soft-reset", "off" },
+ };
+ const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
+ 
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 5941f1a94d..9534730bba 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2222,6 +2222,11 @@ static void virtio_pci_realize(PCIDevice *pci_dev, Error **errp)
+             pcie_cap_lnkctl_init(pci_dev);
+         }
+ 
++        if (proxy->flags & VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET) {
++            pci_set_word(pci_dev->config + pos + PCI_PM_CTRL,
++                         PCI_PM_CTRL_NO_SOFT_RESET);
++        }
++
+         if (proxy->flags & VIRTIO_PCI_FLAG_INIT_PM) {
+             /* Init Power Management Control Register */
+             pci_set_word(pci_dev->wmask + pos + PCI_PM_CTRL,
+@@ -2284,11 +2289,33 @@ static void virtio_pci_reset(DeviceState *qdev)
      }
  }
  
-+/*
-+ * TODO: dc region configuration will be updated once host backend and address
-+ * space support is added for DCD.
-+ */
-+static bool cxl_create_dc_regions(CXLType3Dev *ct3d, Error **errp)
++static bool virtio_pci_no_soft_reset(PCIDevice *dev)
 +{
-+    int i;
-+    uint64_t region_base = 0;
-+    uint64_t region_len =  2 * GiB;
-+    uint64_t decode_len = 2 * GiB;
-+    uint64_t blk_size = 2 * MiB;
-+    CXLDCRegion *region;
-+    MemoryRegion *mr;
++    uint16_t pmcsr;
 +
-+    if (ct3d->hostvmem) {
-+        mr = host_memory_backend_get_memory(ct3d->hostvmem);
-+        region_base += memory_region_size(mr);
-+    }
-+    if (ct3d->hostpmem) {
-+        mr = host_memory_backend_get_memory(ct3d->hostpmem);
-+        region_base += memory_region_size(mr);
-+    }
-+    if (region_base % CXL_CAPACITY_MULTIPLIER != 0) {
-+        error_setg(errp, "DC region base not aligned to 0x%lx",
-+                   CXL_CAPACITY_MULTIPLIER);
++    if (!pci_is_express(dev) || !dev->exp.pm_cap) {
 +        return false;
 +    }
 +
-+    for (i = 0, region = &ct3d->dc.regions[0];
-+         i < ct3d->dc.num_regions;
-+         i++, region++, region_base += region_len) {
-+        *region = (CXLDCRegion) {
-+            .base = region_base,
-+            .decode_len = decode_len,
-+            .len = region_len,
-+            .block_size = blk_size,
-+            /* dsmad_handle set when creating CDAT table entries */
-+            .flags = 0,
-+        };
-+    }
++    pmcsr = pci_get_word(dev->config + dev->exp.pm_cap + PCI_PM_CTRL);
 +
-+    return true;
++    /*
++     * When No_Soft_Reset bit is set and the device
++     * is in D3hot state, don't reset device
++     */
++    return (pmcsr & PCI_PM_CTRL_NO_SOFT_RESET) &&
++           (pmcsr & PCI_PM_CTRL_STATE_MASK) == 3;
 +}
 +
- static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
+ static void virtio_pci_bus_reset_hold(Object *obj, ResetType type)
  {
-     DeviceState *ds = DEVICE(ct3d);
-@@ -635,6 +680,13 @@ static bool cxl_setup_memory(CXLType3Dev *ct3d, Error **errp)
-         g_free(p_name);
-     }
+     PCIDevice *dev = PCI_DEVICE(obj);
+     DeviceState *qdev = DEVICE(obj);
  
-+    if (ct3d->dc.num_regions > 0) {
-+        if (!cxl_create_dc_regions(ct3d, errp)) {
-+            error_append_hint(errp, "setup DC regions failed");
-+            return false;
-+        }
++    if (virtio_pci_no_soft_reset(dev)) {
++        return;
 +    }
 +
-     return true;
- }
+     virtio_pci_reset(qdev);
  
-@@ -930,6 +982,7 @@ static Property ct3_props[] = {
-                      HostMemoryBackend *),
-     DEFINE_PROP_UINT64("sn", CXLType3Dev, sn, UI64_NULL),
-     DEFINE_PROP_STRING("cdat", CXLType3Dev, cxl_cstate.cdat.filename),
-+    DEFINE_PROP_UINT8("num-dc-regions", CXLType3Dev, dc.num_regions, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
+     if (pci_is_express(dev)) {
+@@ -2328,6 +2355,8 @@ static Property virtio_pci_properties[] = {
+                     VIRTIO_PCI_FLAG_INIT_LNKCTL_BIT, true),
+     DEFINE_PROP_BIT("x-pcie-pm-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_PM_BIT, true),
++    DEFINE_PROP_BIT("x-pcie-pm-no-soft-reset", VirtIOPCIProxy, flags,
++                    VIRTIO_PCI_FLAG_PM_NO_SOFT_RESET_BIT, false),
+     DEFINE_PROP_BIT("x-pcie-flr-init", VirtIOPCIProxy, flags,
+                     VIRTIO_PCI_FLAG_INIT_FLR_BIT, true),
+     DEFINE_PROP_BIT("aer", VirtIOPCIProxy, flags,
 -- 
 MST
 
