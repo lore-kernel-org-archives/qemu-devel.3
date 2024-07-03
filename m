@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF5DBC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4E7C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvij-0001WK-2P; Wed, 03 Jul 2024 04:52:09 -0400
+	id 1sOvkI-0004JC-93; Wed, 03 Jul 2024 04:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvih-0001VT-Kz
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:52:07 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvif-0003yj-PL
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:52:07 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42579b60af1so29610795e9.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:52:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719996720; x=1720601520; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6t+GbJBD58UyWaUHFeiM6fRRrol1LCDDEUBkP2sRRWQ=;
- b=cGV8OzWcx6hw9a4v3Gy85y6bHH73qDgmXUdynLEfEpaDwp0eg5s/M0Qn75WxdNIPJg
- wt3bL30RsU2W4IaqdstSS3WLyPwvq1jj+iWqgu4fVO2xV3G9YQKCOqOwJqgoSjzjlHtc
- o+i3rgsENywmid0H5peyX3Yw/Cju+pbR9N6rEt+4R0m98ft4WJffbyP7QYpexBAEevms
- 8UmvcPCz6NGMeR+DOgpNxpUj/VrbksgH5NxfC7++gQOBwHGR28HbUKqAMyJ/mgmcfJh8
- HzSl1xSz7OlUmbpwzv13F04ZoMn6G1AqzNMLIbMOjlSBmtKTSudiFThTFsbSwbAJuT/z
- LbuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719996720; x=1720601520;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6t+GbJBD58UyWaUHFeiM6fRRrol1LCDDEUBkP2sRRWQ=;
- b=urxDkhs0KwUmSrBvZeZMsixbv0d/5xq/cUpnkLWHf3+pPirdokUnPaAA1kIpeVgw3b
- DoK4fDjp3/zArBHDNn6en2EgXqVjS97SSlXVJ5xEZn18MXUaPGgDQxd9WV9a0rGnuxcl
- kHuxbBNXW47+upHR2Y3tz2715u8mx8qzpasPLB7u4m2PXWMdtIPUja5cay+g4UXtjT1b
- 2/+uUKGh9nKcBTV3imVvtaDfaxf0t/xdac6Mzb7psPWiLHTc9/D38o80i07Pw/kdD+K8
- /nIYDnxQMFqNpqQ00EjzFvEsMolei51Lw5tz29Fx6YYnOoy5OrkFeJQNC+0GTeQ8Cu6A
- TnNQ==
-X-Gm-Message-State: AOJu0Yy0tWP9ZQNxnKrY9Ls2nOAK6aNL+YJ9RZxLHAKs9EbsDVxM+/jc
- 5GfJPkXNOqARdhNErTmUBNS4eeBTX4pzHfPFZ45xvtln8LUJptaS93n6tF3P+UEad+e7Br0Dl7c
- C
-X-Google-Smtp-Source: AGHT+IHBRFnQ8sHjgM0aHRx7B9d1Yug6D0s0+D98mADBDNXbdKjtLSmgs+S6dmg9Uo6b9jlkAjsaYg==
-X-Received: by 2002:a05:600c:3089:b0:425:7835:4382 with SMTP id
- 5b1f17b1804b1-4257a06da46mr83354855e9.34.1719996719944; 
- Wed, 03 Jul 2024 01:51:59 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.220.97])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42573c55ff4sm205970375e9.46.2024.07.03.01.51.57
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 03 Jul 2024 01:51:59 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
- Luc Michel <luc.michel@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v44 1/3] hw/sd/sdcard: Use spec v3.01 by default
-Date: Wed,  3 Jul 2024 10:51:46 +0200
-Message-ID: <20240703085148.66188-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240703085148.66188-1-philmd@linaro.org>
-References: <20240703085148.66188-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1sOvkF-0004IV-ME
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:53:43 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1sOvkD-0004iJ-F2
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:53:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1719996821; x=1751532821;
+ h=from:to:cc:subject:in-reply-to:references:date:
+ message-id:mime-version;
+ bh=uJy6npIbvFhICTmqeRyyXfHKUe2Xu5teyWK4mPdnf60=;
+ b=g/ahm4rmFWfpd3VC3C/iUTS0xUy/Ao6OI3QE3fHrqJpzDuSlP1kwaJF5
+ axotzHVs/6Laq4B7SpNId6lMHB8awO0t1V09F9KofBOC+s5qmxW89yPIE
+ RvxZuM1oou6+3OTa0J5wn7/eYxC0hvDghkvK4UGBd6jl8sfTfbRnRyg8N
+ u4YoR0HrYaK0Jv7rJRf3uIrUtUpn1AjnVvCXwOUbhiL9dcH7ztey8Y4Uh
+ JciTNE+qIFopTNioz7hXIleT8KahGI7sVzDVFnjUkLBMOtM0AqY77m3hq
+ 4iKdS6/t5UksnEYd0hLGPSqI17iSf0PnQhNjn728sbJem0JsiYxTPmF0D g==;
+X-CSE-ConnectionGUID: K7x1ja/gR8ygFmNR+htxfA==
+X-CSE-MsgGUID: Ip34g9+8QUqfWM7Z8oxPFQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11121"; a="27818569"
+X-IronPort-AV: E=Sophos;i="6.09,181,1716274800"; d="scan'208";a="27818569"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2024 01:53:36 -0700
+X-CSE-ConnectionGUID: TNLyrCPHR5SOEUdQfrNb3w==
+X-CSE-MsgGUID: b4l4Pq1yTnWXfVH4a1AjFA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,181,1716274800"; d="scan'208";a="50633629"
+Received: from unknown (HELO yhuang6-desk2.ccr.corp.intel.com)
+ ([10.238.208.55])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2024 01:53:31 -0700
+From: "Huang, Ying" <ying.huang@intel.com>
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+Cc: "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>,  Gregory Price
+ <gourry.memverge@gmail.com>,  <aneesh.kumar@linux.ibm.com>,
+ <mhocko@suse.com>,  <tj@kernel.org>,  <john@jagalactic.com>,  Eishan
+ Mirakhur <emirakhur@micron.com>,  Vinicius Tavares Petrucci
+ <vtavarespetr@micron.com>,  Ravis OpenSrc <Ravis.OpenSrc@micron.com>,
+ Alistair Popple <apopple@nvidia.com>,  Srinivasulu Thanneeru
+ <sthanneeru@micron.com>,  SeongJae Park <sj@kernel.org>,  "Rafael J.
+ Wysocki" <rafael@kernel.org>,  "Len Brown" <lenb@kernel.org>,  Andrew
+ Morton <akpm@linux-foundation.org>,  "Dave Jiang" <dave.jiang@intel.com>,
+ Dan Williams <dan.j.williams@intel.com>,  <linux-acpi@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>,  <linux-mm@kvack.org>,  "Ho-Ren (Jack)
+ Chuang" <horenc@vt.edu>,  "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>,  "Ho-Ren (Jack) Chuang"
+ <horenchuang@gmail.com>,  <linux-cxl@vger.kernel.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 1/1] memory tier: consolidate the initialization of
+ memory tiers
+In-Reply-To: <20240702142535.00003dc0@Huawei.com> (Jonathan Cameron's message
+ of "Tue, 2 Jul 2024 14:25:35 +0100")
+References: <20240628060925.303309-1-horen.chuang@linux.dev>
+ <20240628060925.303309-2-horen.chuang@linux.dev>
+ <20240702142535.00003dc0@Huawei.com>
+Date: Wed, 03 Jul 2024 16:51:40 +0800
+Message-ID: <87a5iykgdf.fsf@yhuang6-desk2.ccr.corp.intel.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=ascii
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=ying.huang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,47 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recent SDHCI expect cards to support the v3.01 spec
-to negociate lower I/O voltage. Select it by default.
+Jonathan Cameron <Jonathan.Cameron@Huawei.com> writes:
 
-Versioned machine types with a version of 9.0 or
-earlier retain the old default (spec v2.00).
+> On Fri, 28 Jun 2024 06:09:23 +0000
+> "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev> wrote:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
-v43: update versioned machines (danpb)
----
- hw/core/machine.c | 1 +
- hw/sd/sd.c        | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+[snip]
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 655d75c21f..4377f943d5 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -38,6 +38,7 @@ GlobalProperty hw_compat_9_0[] = {
-     {"arm-cpu", "backcompat-cntfrq", "true" },
-     {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
-     {"vfio-pci", "skip-vsc-check", "false" },
-+    {"sd-card", "spec_version", "2" },
- };
- const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
- 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index b158402704..808dc1cea6 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -2471,7 +2471,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
- 
- static Property sd_properties[] = {
-     DEFINE_PROP_UINT8("spec_version", SDState,
--                      spec_version, SD_PHY_SPECv2_00_VERS),
-+                      spec_version, SD_PHY_SPECv3_01_VERS),
-     DEFINE_PROP_DRIVE("drive", SDState, blk),
-     /* We do not model the chip select pin, so allow the board to select
-      * whether card should be in SSI or MMC/SD mode.  It is also up to the
--- 
-2.41.0
+>> @@ -875,8 +886,7 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
+>>  
+>>  static int __init memory_tier_init(void)
+>>  {
+>> -	int ret, node;
+>> -	struct memory_tier *memtier;
+>> +	int ret;
+>>  
+>>  	ret = subsys_virtual_register(&memory_tier_subsys, NULL);
+>>  	if (ret)
+>> @@ -887,7 +897,8 @@ static int __init memory_tier_init(void)
+>>  				GFP_KERNEL);
+>>  	WARN_ON(!node_demotion);
+>>  #endif
+>> -	mutex_lock(&memory_tier_lock);
+>> +
+>> +	guard(mutex)(&memory_tier_lock);
+>
+> If this was safe to do without the rest of the change (I think so)
+> then better to pull that out as a trivial precursor so less noise
+> in here.
+>
+>>  	/*
+>>  	 * For now we can have 4 faster memory tiers with smaller adistance
+>>  	 * than default DRAM tier.
+>> @@ -897,29 +908,9 @@ static int __init memory_tier_init(void)
+>>  	if (IS_ERR(default_dram_type))
+>>  		panic("%s() failed to allocate default DRAM tier\n", __func__);
+>>  
+>> -	/*
+>> -	 * Look at all the existing N_MEMORY nodes and add them to
+>> -	 * default memory tier or to a tier if we already have memory
+>> -	 * types assigned.
+>> -	 */
+>> -	for_each_node_state(node, N_MEMORY) {
+>> -		if (!node_state(node, N_CPU))
+>> -			/*
+>> -			 * Defer memory tier initialization on
+>> -			 * CPUless numa nodes. These will be initialized
+>> -			 * after firmware and devices are initialized.
+>> -			 */
+>> -			continue;
+>> -
+>> -		memtier = set_node_memory_tier(node);
+>> -		if (IS_ERR(memtier))
+>> -			/*
+>> -			 * Continue with memtiers we are able to setup
+>> -			 */
+>> -			break;
+>> -	}
+>> -	establish_demotion_targets();
+>> -	mutex_unlock(&memory_tier_lock);
+>> +	/* Record nodes with memory and CPU to set default DRAM performance. */
+>> +	nodes_and(default_dram_nodes, node_states[N_MEMORY],
+>> +		  node_states[N_CPU]);
+>
+> There are systems where (for various esoteric reasons, such as describing an
+> association with some other memory that isn't DRAM where the granularity
+> doesn't match) the CPU nodes contain no DRAM but rather it's one node away.
+> Handling that can be a job for another day though.
+>
+> Why does this need to be computed here?  Why not do it in
+> hmat_set_default_dram_perf? Doesn't seem to be used anywhere else.
 
+IMO, which node is default dram node is a general concept instead of
+HMAT specific.  So, I think that it's better to decide that in the
+general code (memory-tiers.c).
+
+>>  
+>>  	hotplug_memory_notifier(memtier_hotplug_callback, MEMTIER_HOTPLUG_PRI);
+>>  	return 0;
+
+--
+Best Regards,
+Huang, Ying
 
