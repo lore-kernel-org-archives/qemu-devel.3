@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 845ECC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190CCC30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:59:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvpe-0000RY-UE; Wed, 03 Jul 2024 04:59:18 -0400
+	id 1sOvpw-0000aK-Bv; Wed, 03 Jul 2024 04:59:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvpb-0000Py-Hf
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:59:15 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvpm-0000Ud-Bm
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:59:26 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvpY-0005pD-MD
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:59:15 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2ebec2f11b7so58250311fa.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:59:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvpk-0005rT-Os
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:59:26 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2ebe785b234so52939281fa.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:59:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719997150; x=1720601950; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wS2U9HJjfkSENe7/SIRB2TngbCMtAJMpJXX2MGQJH8I=;
- b=C4M0DC2iliGJdFSYFrMP/h//WkcOeoPfqQSojo8eQd288WQMyyDQJrV7FuSnLfeBzt
- O/gA4xa+t+YQrHVNxlEupM+M1EA8a5QHqzOlkA0foyVdMl0lEn7+Le5l3wptIjWR+Uth
- QtURFlqtCyCm/X9Lork1I4EE7fogL6ybHSImZW1Z/rZ8xW4zYDmhLZg56SCU8sKUPDhs
- JHUMin8EFtaTsLFYO9zu/kUQtcJAKPPdhIbH8tjzNVkf4YdxlbY782bMU+ykfd/q9xam
- Ni5gA3APItiD9GUmjxptmFhJiSVHgnQuXBxwSzfoRk31NcbJMabgIkfHehhiPANH0aEt
- mhLw==
+ d=linaro.org; s=google; t=1719997163; x=1720601963; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YoWuf0YZY1BQUG+pjDOF1AACF5xUnONjLqdzkftW+K0=;
+ b=OOxQi2/3wNaOMu68ciJ/4Fk2+ulNAL0uSVn6IuIZpf2lujQJGIuYNjDYP3JNAXZ4R/
+ BNxd8yd09wJYu42rGg55lTclTpO3SUZ2SSfq7+2fw/8biPfeWI76CveceoT0LHF1EzQi
+ 0JMA9pNM/NzI9C+hXpRHNZasnZMAeDzPH7uZB7khVTo+zJzud1dGPiN2B6g9ACnyUvFx
+ Ghsjun1sie4wnloWeUP8C8EL+DkmmFcWJhbhNbDtlfOdq+QuMLWRePa9pMxlkxyalCmm
+ sCD4Ci86icZzawywLca9GoguYN4uCur/6g3iuDLwKNvWHAOe0wis9KRD6VQ/jmySwDKX
+ jqqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719997150; x=1720601950;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wS2U9HJjfkSENe7/SIRB2TngbCMtAJMpJXX2MGQJH8I=;
- b=uWj/aL1mTNv+fTjqhJCu5IjfnC1CkqPX8qxTPghhtfuW8GRRUI7P6AUCfXzZmmjMcG
- DE3K2x71AXTCBt5A2NJWBc3LU9W1I2ahTgOg1FNWwp3cYDzX+HFUo8E+CuzraP9kUzSl
- mj15GnX0vYhXla5WxLiKMknhGYjlyQrBylhqrfBzfbiq2EqUn+E+XU5bpZ4S25i0bgs0
- cwvYzcU9rcF1tmG/h58RvOEQ/PufHiUQJm+pPzC8kulMjTXgLFry7dSigxxabnTC2ll7
- 6yoVH4SZ2yaLQwZdLQVR4aU0AD4n8IIH4cA5mJpiMFu5Wsvm4bDkHRUWmq/7qLG8RgLF
- ypEw==
-X-Gm-Message-State: AOJu0YzYVuLbI0ZoH01rITJ4Chr7T4pdrgD3XKN0GGD2FcUKSGKQTkaP
- aG70ZwoX8oTpSSoiSLCjlP1l09S8qAnCWTuVk6dwF7wneIroPXYFqrSF7v0BAoTejfRMpup2WLk
- 1
-X-Google-Smtp-Source: AGHT+IHqg5ZuAP2AXiXy4PZxcR/BVJYSO9kG3a0LCGcjJ4dl/sfnZloKZ6l0zf823H+dPlbiJECpGw==
-X-Received: by 2002:a2e:a813:0:b0:2ee:7b7d:66ee with SMTP id
- 38308e7fff4ca-2ee7b7d68f1mr17810411fa.41.1719997150552; 
- Wed, 03 Jul 2024 01:59:10 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1719997163; x=1720601963;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YoWuf0YZY1BQUG+pjDOF1AACF5xUnONjLqdzkftW+K0=;
+ b=qvOq92nLNL1tVmvrMeFHXAJpi0coHwHgawJ+fRv0JhyTlVSSeOAQeKuMlAk7o+mFwH
+ gyY4oD43ieQkQqFLB+U1vuPe+VWP8SDQOUokSz0nMhU5uZUGE6kK67qobSLBrwZj/ilE
+ tU2n1GJ9ffiaPoDweWnyPKV5cOUReNJPSPZD3s5xmyW1ODc3p9IftOx1pGZBRbrqWysk
+ GKpp/tbT0RFVg5UcHPYjz/18VngC0AYP4GZdsxEcBkammfQXoAkwdIQU7Y9W0EO8kjX8
+ 2h4V/mRVALIeqZ55hsIB6LdFpBJK9IVUbToegz49jyNdWKV/sqdlNoISCeyKeHn+V1i9
+ dD9Q==
+X-Gm-Message-State: AOJu0YzCjSFja12peLQoeASRwz2HlrrwsTbzEAcRJnwY6aZGS4Zs3Tbk
+ vjPbv7TDjlE/hhKditOZKEv6yngdHmmYzri6jn/5+j1OOWShAQwZ/AQJDmxKu/yx91RFuAu3tnZ
+ p
+X-Google-Smtp-Source: AGHT+IHjy05Iw1VsbWVASawoqmedlzS+nm6T9p86a/BONXDIDX+M/R5X/IZxbIdOiHsw1O1XjQA3VA==
+X-Received: by 2002:a2e:b0d3:0:b0:2ee:811a:54a0 with SMTP id
+ 38308e7fff4ca-2ee811a55abmr7881571fa.14.1719997162900; 
+ Wed, 03 Jul 2024 01:59:22 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.220.97])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a1030dfsm15250922f8f.100.2024.07.03.01.59.09
+ 5b1f17b1804b1-4256b097b77sm226912475e9.33.2024.07.03.01.59.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 03 Jul 2024 01:59:10 -0700 (PDT)
+ Wed, 03 Jul 2024 01:59:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>,
@@ -65,16 +66,19 @@ Cc: Bin Meng <bmeng.cn@gmail.com>,
  Eduardo Habkost <eduardo@habkost.net>, qemu-block@nongnu.org,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Luc Michel <luc.michel@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v45 0/3] hw/sd/sdcard: Cleanups before adding eMMC support
-Date: Wed,  3 Jul 2024 10:59:04 +0200
-Message-ID: <20240703085907.66775-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v45 2/3] hw/sd/sdcard: Use spec v3.01 by default
+Date: Wed,  3 Jul 2024 10:59:06 +0200
+Message-ID: <20240703085907.66775-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
+In-Reply-To: <20240703085907.66775-1-philmd@linaro.org>
+References: <20240703085907.66775-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,20 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(patches from v42 already reviewed not reposted)
+Recent SDHCI expect cards to support the v3.01 spec
+to negociate lower I/O voltage. Select it by default.
 
-- Addressed review comments from Daniel & Luc wrt migration
-- Remove old comment
+Versioned machine types with a version of 9.0 or
+earlier retain the old default (spec v2.00).
 
-Philippe Mathieu-Daudé (3):
-  hw/sd/sdcard: Remove leftover comment about removed 'spi' Property
-  hw/sd/sdcard: Use spec v3.01 by default
-  hw/sd/sdcard: Do not store vendor data on block drive (CMD56)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+v43: update versioned machines (danpb)
+---
+ hw/core/machine.c | 1 +
+ hw/sd/sd.c        | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
- hw/core/machine.c |  1 +
- hw/sd/sd.c        | 35 ++++++++++++++++++++---------------
- 2 files changed, 21 insertions(+), 15 deletions(-)
-
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 655d75c21f..4377f943d5 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -38,6 +38,7 @@ GlobalProperty hw_compat_9_0[] = {
+     {"arm-cpu", "backcompat-cntfrq", "true" },
+     {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
+     {"vfio-pci", "skip-vsc-check", "false" },
++    {"sd-card", "spec_version", "2" },
+ };
+ const size_t hw_compat_9_0_len = G_N_ELEMENTS(hw_compat_9_0);
+ 
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 53767beaf8..a08a452d81 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2471,7 +2471,7 @@ static void sd_realize(DeviceState *dev, Error **errp)
+ 
+ static Property sd_properties[] = {
+     DEFINE_PROP_UINT8("spec_version", SDState,
+-                      spec_version, SD_PHY_SPECv2_00_VERS),
++                      spec_version, SD_PHY_SPECv3_01_VERS),
+     DEFINE_PROP_DRIVE("drive", SDState, blk),
+     DEFINE_PROP_END_OF_LIST()
+ };
 -- 
 2.41.0
 
