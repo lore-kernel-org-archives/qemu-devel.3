@@ -4,58 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD91C30658
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 03:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3867C30653
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 04:48:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOqq0-0001TT-1B; Tue, 02 Jul 2024 23:39:20 -0400
+	id 1sOrtY-0002X3-TN; Wed, 03 Jul 2024 00:47:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongzhihai@eswincomputing.com>)
- id 1sOqpw-0001Sc-Pn
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 23:39:16 -0400
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dongzhihai@eswincomputing.com>) id 1sOqpu-0001QW-D7
- for qemu-devel@nongnu.org; Tue, 02 Jul 2024 23:39:16 -0400
-Received: from E0005117DT.eswin.cn (unknown [10.64.112.170])
- by app2 (Coremail) with SMTP id TQJkCgAXKbvVx4RmaHkTAA--.49688S4;
- Wed, 03 Jul 2024 11:39:03 +0800 (CST)
-From: Zhihai Dong <dongzhihai@eswincomputing.com>
-To: qemu-devel@nongnu.org
-Cc: dongzhihai@eswincomputing.com
-Subject: [PATCH] README.rst: add the missing punctuations
-Date: Wed,  3 Jul 2024 11:39:01 +0800
-Message-Id: <20240703033901.1017-1-dongzhihai@eswincomputing.com>
-X-Mailer: git-send-email 2.33.0.windows.2
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sOrtW-0002W8-LN
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 00:47:02 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sOrtU-00057g-4M
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 00:47:02 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-6eab07ae82bso2973705a12.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Jul 2024 21:46:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1719982018; x=1720586818; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9nr2Oz2suWK4vsrP3dAYq3AnEWFLRItcUBOf7GOL2jU=;
+ b=NReAE7Etknp0t6vzOfvapNGWTdTVrc6ZADJ4o3ib43j6pD0EHjWoFTj4XeRN3mn/dY
+ Cp081wwUBjX7+8MQLkmrPRvybq9n7Y7oW5PvNvxG4e+D/DZKc94z58cP7giykgGmpaYs
+ /hsh8O85FoFxKoRPYELRH8jWyzkmm6lubhrb5DJR4MCavqkdpo+OcH5vAP77r04ee7dD
+ 3HbsMCaPkuIk8DKWMindiIeCJ/m8oG7J7ksaL9ibGaPy2kRzHyL763vk5pQ8HOSLBhF5
+ PZ3EtSk0K18S+ME0exL8QUacw3ynbOFmrD78U5OpuBDzPlyhySpDjjVTL/KSZ9RUUG/N
+ dplg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1719982018; x=1720586818;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9nr2Oz2suWK4vsrP3dAYq3AnEWFLRItcUBOf7GOL2jU=;
+ b=nsm1RBBm1yW3qhbZLXvEigJSIP3sGCaCl4pl78+yifRPqmLM24M7EAcAWKF3WCQnxG
+ 09fXrkwzDYSeqdYXb2dWY4TWWo4jV/lC+3Oxyf6rB7cMAvpta7rHCY8PFHz3PZx6pKhT
+ 9nvSJuW9BmRMu6tTpt8BkniRF3L5/Wj37Rim7PLBr9p7q3/uLoOyeph/YnWykVqNPEMi
+ boCwsYEV6Q5IrqGqMXZfqabMvUx4CcX4fRwwkMLuvC6J8kuAkes5pT5C0cv+3Z9rDi+T
+ CFnVXY3qjLLmUFXhux8HSv6itogV2PFGgh+7DMzZwDlANxkt1IeFn9E4vMNg0pIhIlTV
+ oB7g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXj7L26t8SWZsJTYL31RrCn4YrAHf0zMjuOYHHGkLy710ZKXuZL1HC/cv9+vsDWrHA6RhOOkYa3RmPg8BvapuuZOOCD+gM=
+X-Gm-Message-State: AOJu0YwTvtaqOtK6A25Xq+JxRlbWjGe/SWr3+APQit0L/xGSphs0VdAD
+ yTDMgrt/+B6Lo5xvOgrtrf9ckAD2tBbSxSew33l+NFQRUWZtsPXLYQkXNy7yN44=
+X-Google-Smtp-Source: AGHT+IH8FxHEGF+ka/88yL7PrLBp7rx3sap8hapOBkbTWdh9qd62216nQz4OVvFh3zsz54LZABIdgg==
+X-Received: by 2002:a05:6a20:2588:b0:1bd:2520:c595 with SMTP id
+ adf61e73a8af0-1bef61254admr10667890637.31.1719982018282; 
+ Tue, 02 Jul 2024 21:46:58 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fac10e3311sm92630675ad.79.2024.07.02.21.46.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Jul 2024 21:46:57 -0700 (PDT)
+Message-ID: <ab533c23-85d8-464f-bf06-0eda81bab8af@linaro.org>
+Date: Tue, 2 Jul 2024 21:46:55 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: TQJkCgAXKbvVx4RmaHkTAA--.49688S4
-X-Coremail-Antispam: 1UD129KBjvJXoW7WryrXr4fGrW7tFyxXr1DWrg_yoW8Jr1kpr
- Zxu345u3s2vF13J3yrWa1UZw1FgrZ5XF42qw12gw47JF1Sv3Z2g3ZYyr42ya4UXa9a9rW5
- JF10vr1vqa4UAFJanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUk214x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26w1j6s0DM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4U
- JVWxJr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gc
- CE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
- 2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
- W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc2xSY4AK6svPMxAI
- w28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr
- 4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXVWUAwCIc40Y0x0EwIxG
- rwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8Jw
- CI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2
- z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfU5WlkUUUUU
-X-CM-SenderInfo: pgrqw65klktx46hv4xpqfrz1xxwl0woofrz/
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=dongzhihai@eswincomputing.com;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/12] qtest, s390x, avocado and doc patches
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+References: <20240702103310.347201-1-thuth@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240702103310.347201-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,45 +96,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make the README more clearly.
+On 7/2/24 03:32, Thomas Huth wrote:
+>   Hi Richard!
+> 
+> The following changes since commit c80a339587fe4148292c260716482dd2f86d4476:
+> 
+>    Merge tag 'pull-target-arm-20240701' ofhttps://git.linaro.org/people/pmaydell/qemu-arm  into staging (2024-07-01 10:41:45 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/thuth/qemu.git  tags/pull-request-2024-07-02
+> 
+> for you to fetch changes up to e3e2708fee10e6df413c36a71b100c59710e727e:
+> 
+>    pc-bios/s390-ccw: Remove duplicated LDFLAGS (2024-07-02 09:52:38 +0200)
+> 
+> ----------------------------------------------------------------
+> * Fix interrupt controller migration on s390x with TCG and enable qtest
+> * Fix memory leaks in qtests
+> * Use a proper qom-tree parent for s390x virtio-net devices
+> * Add hotplug avocado test for virtio-blk
+> * Fix Travis jobs (need python3-tomli now)
 
-Signed-off-by: Zhihai Dong <dongzhihai@eswincomputing.com>
----
- README.rst | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-diff --git a/README.rst b/README.rst
-index 21df79ef43..b120a1f69e 100644
---- a/README.rst
-+++ b/README.rst
-@@ -82,7 +82,7 @@ guidelines set out in the `style section
- the Developers Guide.
- 
- Additional information on submitting patches can be found online via
--the QEMU website
-+the QEMU website:
- 
- * `<https://wiki.qemu.org/Contribute/SubmitAPatch>`_
- * `<https://wiki.qemu.org/Contribute/TrivialPatches>`_
-@@ -102,7 +102,7 @@ requires a working 'git send-email' setup, and by default doesn't
- automate everything, so you may want to go through the above steps
- manually for once.
- 
--For installation instructions, please go to
-+For installation instructions, please go to:
- 
- *  `<https://github.com/stefanha/git-publish>`_
- 
-@@ -159,7 +159,7 @@ Contact
- =======
- 
- The QEMU community can be contacted in a number of ways, with the two
--main methods being email and IRC
-+main methods being email and IRC:
- 
- * `<mailto:qemu-devel@nongnu.org>`_
- * `<https://lists.nongnu.org/mailman/listinfo/qemu-devel>`_
--- 
-2.34.1
+
+r~
 
 
