@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E895C31D97
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 11:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278F4C3271E
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 11:12:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOxos-0004pm-Nv; Wed, 03 Jul 2024 07:06:38 -0400
+	id 1sOxot-0004qh-NY; Wed, 03 Jul 2024 07:06:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sOxon-0004nk-NO
+ id 1sOxon-0004nm-NO
  for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:06:33 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sOxoe-0006VY-TG
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:06:28 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ id 1sOxod-0006VO-0i
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:06:26 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 853351FCDA;
- Wed,  3 Jul 2024 11:06:22 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A8F9921BBE;
+ Wed,  3 Jul 2024 11:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1720004782; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1720004781; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m7Sb/K/Ot66RT48lY+i1g0kaHtkpfST5PEzWJSh7WNs=;
- b=Tx68YyGoXefOeB/q1sFPJxlvtQ2QHyUROlX+ayejOmQToNihldsENnQWXKQyhhXjF+9KIV
- ywdlYLqcwQtEfE1qU/6sczG7N4XW2isKjBwMvhc6kFCgst1/TwoLQTbUAz2D6cB7Eofjwi
- XWp9JyXKhPy+1rkRS+3NJB+hG6szMs4=
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.com header.s=susede1 header.b=Tx68YyGo
+ bh=VRRRu1HVMhQopycJAChyulAE58PCso61Wo9ldIbqjbA=;
+ b=kSktW48HBGeiQeHhluhn1nAxnTZu+mOrI2UzGfHvE7t1GcR2J6iGN8ANhxrAs1TTLnx3HU
+ QOufQblIYMwKHgF7K7nPlGlRt2TyclvB0T4c1e1yZAc07LEeCCQ6FGF0hMCGNKZhChQd7V
+ 2dy3UcXNSvhWyQLzMwOC62pWaM4cOYM=
+Authentication-Results: smtp-out1.suse.de;
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1720004782; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1720004781; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m7Sb/K/Ot66RT48lY+i1g0kaHtkpfST5PEzWJSh7WNs=;
- b=Tx68YyGoXefOeB/q1sFPJxlvtQ2QHyUROlX+ayejOmQToNihldsENnQWXKQyhhXjF+9KIV
- ywdlYLqcwQtEfE1qU/6sczG7N4XW2isKjBwMvhc6kFCgst1/TwoLQTbUAz2D6cB7Eofjwi
- XWp9JyXKhPy+1rkRS+3NJB+hG6szMs4=
+ bh=VRRRu1HVMhQopycJAChyulAE58PCso61Wo9ldIbqjbA=;
+ b=kSktW48HBGeiQeHhluhn1nAxnTZu+mOrI2UzGfHvE7t1GcR2J6iGN8ANhxrAs1TTLnx3HU
+ QOufQblIYMwKHgF7K7nPlGlRt2TyclvB0T4c1e1yZAc07LEeCCQ6FGF0hMCGNKZhChQd7V
+ 2dy3UcXNSvhWyQLzMwOC62pWaM4cOYM=
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B962713974;
- Wed,  3 Jul 2024 11:06:21 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EA97F13A7F;
+ Wed,  3 Jul 2024 11:06:20 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id sKo4K60whWZ6cgAAD6G6ig
- (envelope-from <roy.hopkins@suse.com>); Wed, 03 Jul 2024 11:06:21 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id KKtAN6wwhWZ6cgAAD6G6ig
+ (envelope-from <roy.hopkins@suse.com>); Wed, 03 Jul 2024 11:06:20 +0000
 From: Roy Hopkins <roy.hopkins@suse.com>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -70,37 +69,34 @@ Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v4 06/17] sev: Fix error handling in sev_encrypt_flash()
-Date: Wed,  3 Jul 2024 12:05:44 +0100
-Message-ID: <9930eadc36539f6135a0332116a51d48847505fe.1720004383.git.roy.hopkins@suse.com>
+Subject: [PATCH v4 05/17] i386/pc_sysfw: Ensure sysfw flash configuration does
+ not conflict with IGVM
+Date: Wed,  3 Jul 2024 12:05:43 +0100
+Message-ID: <c58c4b5cc8a35245b7ef31fefcc67a72e6346a07.1720004383.git.roy.hopkins@suse.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1720004383.git.roy.hopkins@suse.com>
 References: <cover.1720004383.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 853351FCDA
-X-Spamd-Result: default: False [-1.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; MID_CONTAINS_FROM(1.00)[];
- NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[19];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.com:s=susede1];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.com:email,suse.com:dkim];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+X-Spamd-Result: default: False [1.69 / 50.00]; SUSPICIOUS_RECIPS(1.50)[];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; BAYES_HAM(-0.01)[49.25%];
+ FROM_HAS_DN(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TAGGED_RCPT(0.00)[]; ARC_NA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[19]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
  FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
- DKIM_TRACE(0.00)[suse.com:+];
- R_RATELIMIT(0.00)[to_ip_from(RLgjcjk3igk5en59wt86eb8xw3)];
+ RCVD_TLS_ALL(0.00)[];
+ R_RATELIMIT(0.00)[to_ip_from(RLm8d31jk6dhzwhww9bgqrb1jt)];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,imap1.dmz-prg2.suse.org:helo];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
  FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=195.135.223.130;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -123,42 +119,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function sev_encrypt_flash() checks to see if the return value of
-launch_update_data() < 0, but the function returns a non-zero (and not
-necessarily negative) result on error. This means that some errors in
-updating launch data will result in the function returning success.
+When using an IGVM file the configuration of the system firmware is
+defined by IGVM directives contained in the file. In this case the user
+should not configure any pflash devices.
 
-In addition, the function takes an Error parameter which is not used
-when an error is actually returned.
-
-The return value is now checked for non-zero to indicate an error and
-a suitable error message is logged.
+This commit skips initialization of the ROM mode when pflash0 is not set
+then checks to ensure no pflash devices have been configured when using
+IGVM, exiting with an error message if this is not the case.
 
 Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
 ---
- target/i386/sev.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ hw/i386/pc_sysfw.c | 31 ++++++++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 3ab8b3c28b..491ca5369e 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -1542,12 +1542,9 @@ sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index ef80281d28..f5e40b3ef6 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -219,7 +219,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
+     BlockBackend *pflash_blk[ARRAY_SIZE(pcms->flash)];
  
-     /* if SEV is in update state then encrypt the data else do nothing */
-     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
--        int ret;
--
--        ret = klass->launch_update_data(sev_common, gpa, ptr, len);
--        if (ret < 0) {
--            error_setg(errp, "SEV: Failed to encrypt pflash rom");
--            return ret;
-+        if (klass->launch_update_data(sev_common, gpa, ptr, len)) {
-+            error_setg(errp, "SEV: Failed to encrypt flash");
-+            return -1;
-         }
+     if (!pcmc->pci_enabled) {
+-        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
++        /*
++         * If an IGVM file is specified then the firmware must be provided
++         * in the IGVM file.
++         */
++        if (!X86_MACHINE(pcms)->igvm) {
++            x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, true);
++        }
+         return;
      }
  
+@@ -239,8 +245,13 @@ void pc_system_firmware_init(PCMachineState *pcms,
+     }
+ 
+     if (!pflash_blk[0]) {
+-        /* Machine property pflash0 not set, use ROM mode */
+-        x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
++        /*
++         * Machine property pflash0 not set, use ROM mode unless using IGVM,
++         * in which case the firmware must be provided by the IGVM file.
++         */
++        if (!X86_MACHINE(pcms)->igvm) {
++            x86_bios_rom_init(X86_MACHINE(pcms), "bios.bin", rom_memory, false);
++        }
+     } else {
+         if (kvm_enabled() && !kvm_readonly_mem_enabled()) {
+             /*
+@@ -256,6 +267,20 @@ void pc_system_firmware_init(PCMachineState *pcms,
+     }
+ 
+     pc_system_flash_cleanup_unused(pcms);
++
++    /*
++     * The user should not have specified any pflash devices when using IGVM
++     * to configure the guest.
++     */
++    if (X86_MACHINE(pcms)->igvm) {
++        for (i = 0; i < ARRAY_SIZE(pcms->flash); i++) {
++            if (pcms->flash[i]) {
++                error_report("pflash devices cannot be configured when "
++                             "using IGVM");
++                exit(1);
++            }
++        }
++    }
+ }
+ 
+ void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
 -- 
 2.43.0
 
