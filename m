@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5D0EC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 10:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 706FFC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 10:23:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOx8q-0000rA-JL; Wed, 03 Jul 2024 06:23:12 -0400
+	id 1sOx9N-00021V-8c; Wed, 03 Jul 2024 06:23:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sOx8p-0000qs-DG
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:23:11 -0400
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sOx9L-00020I-L4
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:23:43 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sOx8n-0000SP-NA
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:23:11 -0400
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-3d55db7863bso3382175b6e.1
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 03:23:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sOx9J-00013D-LF
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 06:23:43 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2ec5779b423so47507911fa.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 03:23:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1720002188; x=1720606988; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=tIav5KZUA6cIne1AwYaEIMMojMvU8ctn52V4PV46rME=;
- b=CtgDrRp434LSap9k7otVWL9X0PApP4H+nUqsMLGqElndnghHGJEUP9lecTSdF7Tala
- ORVI1qgL9N8sM7hJ/oX6h/IrcroUIgV0YW3Zq1VDWjUPA0MfRD7urDNFdqau/ijN30ms
- woxKBOtaFWvsxEsUCRc6Bv4L69bg5GRWC1aG8fc12J9AUNxjuiHEA0z+651Blcec/AIS
- x/UXt4V/iGyIAITEPH7ump9auTwVgAU60kQZHta7BnuKmuqJcLdfJL4t9q9msFuA2GJ4
- RiwqDP/Un7Zt4qZlohH3H6F440panp3xWDZl9YlqmsXPAjXF+GEbWJHUTQ374H3ipl/o
- AhJA==
+ d=linaro.org; s=google; t=1720002219; x=1720607019; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Fxyt99NhpqSZijq/0y3id4ljx98fv4+n+XLIHqT3rY8=;
+ b=eVa96Ex5A5CaPfmVCOZQw5quQrITWol5aIlswO6dUR5YIDt+sX1gKTOnGKMz62L1V5
+ 2ZrMWngMNMRViajS58MRT40amtIImFMHVUgKZSLKZiUOnJWCU3LsJupxuqxO4YGrOmm1
+ O419LoVWaq7IS7lSND6lsng4yWLieECWkBgJMqFSJlpoHdaQkbNrwOhih3e/KJZx9qHY
+ BCc0dTBmrVUuXAv9VFQQGll8otnOqz8d5IeGTJLxFg4zdCvsfHQPGezPiC5Pk5nsl85X
+ VVsl/O2/MVrBL1MZKCM4qZvDw5M3K+XImA8vwQYO9wVPNu8MFRApDjB8cOH8Wgc8VM+B
+ 8bTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720002188; x=1720606988;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tIav5KZUA6cIne1AwYaEIMMojMvU8ctn52V4PV46rME=;
- b=uIkq+jrd1MYeEYPvweHaD8Vp54Qc/w9VGxoOfU252kkMFn1hEUh9U639gOeu4rcuqW
- Mmi24KgL+yFxz2Szj9eRvcYhOHT4zE7Wh9eqW5CCeyPIy1HvtE9bVtGLWI57Pz2bRXmJ
- K5SrSHHJGrpR17OwcgSNfDTQ4b+Qxjx4utf1wCQHL8Y5ICNA8EXpdq4ZvtSSuj+jvA2y
- wMXf1/aD1fRPNjJFz07IFpUdQBOrQ7EIzbfXAjkHeGOtmnEGDpDy0UgIw4BlVuyRjDRn
- xevagav/noboTrB0ZvKjEm3ms5qBOykKT2OrNCyX8PD5n1daS+uZop6U6cVtIAWc9bYM
- nmKg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUlYIiFouaPKKePhY1fCeSg9vlgLELnW0OmjhtZM1qOh5X7DoAjDOnafWDRwvs9XjoJLIXLwxd+1pHYvV7qYy7OGnW0Cgw=
-X-Gm-Message-State: AOJu0Ywr59gAw1J5DIGNcekIgiARvHM1PYEty2kXlj5V7jO6aPDRUc7H
- OWhG52NCWPgO1nvp9EysjOTWg7Ucza0KsKuQKUVnGO9gg8gd5S0I5FmJKJjBKF0=
-X-Google-Smtp-Source: AGHT+IFTQ6x6dh+JRMQZByO8hHF3avVlJtysEUJdfD31hCa0q0/aNQIVzAMRSUHVHDr7v8j78GkmzA==
-X-Received: by 2002:a05:6808:2f06:b0:3d2:1a92:8f4a with SMTP id
- 5614622812f47-3d6b32e4136mr15562308b6e.23.1720002187856; 
- Wed, 03 Jul 2024 03:23:07 -0700 (PDT)
-Received: from sunil-laptop ([106.51.187.237])
+ d=1e100.net; s=20230601; t=1720002219; x=1720607019;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Fxyt99NhpqSZijq/0y3id4ljx98fv4+n+XLIHqT3rY8=;
+ b=rcjXs1thyeQTw4c/7Q2gVcfnUY9og4vV4c31ax9Ymq0XlBhl5j8zYWwzMU+mpLaRvm
+ K8998lqnPmq4RkmYRtok+F0HTwF3xCz/dLL4IdgXYHAl/YVO3fg8vO5r/RMHIhsAUlma
+ i50XMqzZGJvXx++Ua7/u2KM1TP8l5IXRD9EDwZpCqZIoggL9KvWhicltRbNpbSToHYE9
+ +j7I+vmKtEVAdfGzKxJTefAd4vWHgux3bQl1l5zhm7AR4Uf5cGBJFY1UT8TkVD7u9/lG
+ zcV2hbabtovRcUoST7/Px/3zoe9xdPMLVa5iE6QTqO2q1DjpDh1xLoEJ2zS500z27hS1
+ qjsw==
+X-Gm-Message-State: AOJu0YwP+ydQPdKfKz4kfR12uGxpb0qlKyoaYclnNdpUaH03QFRNqrIz
+ 4oM2Eo6evppo21GKnutd4LARZJFChpci5Z1ju3RwA4vst++aQmic8xUpvvuD3J+Pp49tjGQ6fgQ
+ 2+yw=
+X-Google-Smtp-Source: AGHT+IHUfIRMsHItMQE/onGd/rfWExc8F3COEbxAd5PZ9UGVYVoABKxK0YuoGGMM5TWjMRL6Jdh9Vg==
+X-Received: by 2002:a2e:9e15:0:b0:2ec:4aac:8fd4 with SMTP id
+ 38308e7fff4ca-2ee5e390cd2mr75461741fa.1.1720002218828; 
+ Wed, 03 Jul 2024 03:23:38 -0700 (PDT)
+Received: from meli-email.org (adsl-193.37.6.1.tellas.gr. [37.6.1.193])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3d62f9e9b20sm2027270b6e.25.2024.07.03.03.23.00
+ ffacd0b85a97d-3675a0cdc5csm15476481f8f.18.2024.07.03.03.23.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 03:23:07 -0700 (PDT)
-Date: Wed, 3 Jul 2024 15:52:55 +0530
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Alistair Francis <alistair23@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH v4 16/16] tests/qtest/bios-tables-test: Add expected ACPI
- data files for RISC-V
-Message-ID: <ZoUmf2zn51RWU0o0@sunil-laptop>
-References: <20240625150839.1358279-1-sunilvl@ventanamicro.com>
- <20240625150839.1358279-17-sunilvl@ventanamicro.com>
- <20240627141803.42cd46c1@imammedo.users.ipa.redhat.com>
- <20240701170330-mutt-send-email-mst@kernel.org>
- <20240702150236.000042eb@Huawei.com>
+ Wed, 03 Jul 2024 03:23:38 -0700 (PDT)
+Date: Wed, 03 Jul 2024 13:21:29 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: qemu-devel@nongnu.org,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>
+Cc: Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 18/22] qga: don't disable fsfreeze commands if vss_init
+ fails
+User-Agent: meli 0.8.6
+References: <20240613150127.1361931-1-berrange@redhat.com>
+ <20240613154406.1365469-1-berrange@redhat.com>
+ <20240613154406.1365469-13-berrange@redhat.com>
+In-Reply-To: <20240613154406.1365469-13-berrange@redhat.com>
+Message-ID: <g1m7d.30xyxwwcb8l4@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240702150236.000042eb@Huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-oi1-x22c.google.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lj1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,49 +104,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 02, 2024 at 03:02:36PM +0100, Jonathan Cameron wrote:
-> On Mon, 1 Jul 2024 17:03:43 -0400
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> 
-> > On Thu, Jun 27, 2024 at 02:18:03PM +0200, Igor Mammedov wrote:
-> > > On Tue, 25 Jun 2024 20:38:39 +0530
-> > > Sunil V L <sunilvl@ventanamicro.com> wrote:
-> > >   
-> > > > As per the step 5 in the process documented in bios-tables-test.c,
-> > > > generate the expected ACPI AML data files for RISC-V using the
-> > > > rebuild-expected-aml.sh script and update the
-> > > > bios-tables-test-allowed-diff.h.
-> > > > 
-> > > > These are all new files being added for the first time. Hence, iASL diff
-> > > > output is not added.
-> > > > 
-> > > > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> > > > Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> > > > Acked-by: Igor Mammedov <imammedo@redhat.com>  
-> > > 
-> > > Michael,
-> > > can it go via risc-v tree or
-> > > do you plan to merge it via your tree?  
-> > 
-> > given patch 1 is merged, I took the rest.
-> 
-> Looks like your CI runs are catching this as well but
-> RHCT here is failing.  I rebased the GI/GP set on top of this
-> and ignored that failure by skipping riscv64 tests.
-> 
-> Jonathan
-> 
-Hi Jonathan, Michael,
+On Thu, 13 Jun 2024 18:44, "Daniel P. Berrangé" <berrange@redhat.com> wrote:
+>The fsfreeze commands are already written to report an error if
+>vss_init() fails. Reporting a more specific error message is more
+>helpful than a generic "command is disabled" message, which cannot
+>beteween an admin config decision and lack of platform support.
 
-Looks like a recent RISC-V PR updated the rva22s64 ISA string affecting
-the RHCT I had in my series. I see that Michael dropped those 3 RISC-V
-patches from the PR. So, let me update the expected RHCT AML file in a
-new series. I will also include Igor's feedback to remove fallback path
-in that series.
+s/beteween/between
 
-Thanks,
-Sunil
+>
+>Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>---
+> qga/commands-win32.c | 18 +++---------------
+> qga/main.c           |  4 ++++
+> 2 files changed, 7 insertions(+), 15 deletions(-)
+>
+>diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+>index 2533e4c748..5866cc2e3c 100644
+>--- a/qga/commands-win32.c
+>+++ b/qga/commands-win32.c
+>@@ -1203,7 +1203,7 @@ GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
+> GuestFsfreezeStatus qmp_guest_fsfreeze_status(Error **errp)
+> {
+>     if (!vss_initialized()) {
+>-        error_setg(errp, QERR_UNSUPPORTED);
+>+        error_setg(errp, "fsfreeze not possible as VSS failed to initialize");
+>         return 0;
 
-Thanks,
-Sunil
+Should this be return -1 by the way?
+
+
+>     }
+> 
+>@@ -1231,7 +1231,7 @@ int64_t qmp_guest_fsfreeze_freeze_list(bool has_mountpoints,
+>     Error *local_err = NULL;
+> 
+>     if (!vss_initialized()) {
+>-        error_setg(errp, QERR_UNSUPPORTED);
+>+        error_setg(errp, "fsfreeze not possible as VSS failed to initialize");
+>         return 0;
+>     }
+> 
+>@@ -1266,7 +1266,7 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
+>     int i;
+> 
+>     if (!vss_initialized()) {
+>-        error_setg(errp, QERR_UNSUPPORTED);
+>+        error_setg(errp, "fsfreeze not possible as VSS failed to initialize");
+>         return 0;
+>     }
+> 
+>@@ -1961,18 +1961,6 @@ done:
+> /* add unsupported commands to the list of blocked RPCs */
+> GList *ga_command_init_blockedrpcs(GList *blockedrpcs)
+> {
+>-    if (!vss_init(true)) {
+>-        g_debug("vss_init failed, vss commands are going to be disabled");
+>-        const char *list[] = {
+>-            "guest-get-fsinfo", "guest-fsfreeze-status",
+>-            "guest-fsfreeze-freeze", "guest-fsfreeze-thaw", NULL};
+>-        char **p = (char **)list;
+>-
+>-        while (*p) {
+>-            blockedrpcs = g_list_append(blockedrpcs, g_strdup(*p++));
+>-        }
+>-    }
+>-
+>     return blockedrpcs;
+> }
+> 
+>diff --git a/qga/main.c b/qga/main.c
+>index f4d5f15bb3..17b6ce18ac 100644
+>--- a/qga/main.c
+>+++ b/qga/main.c
+>@@ -1395,6 +1395,10 @@ static GAState *initialize_agent(GAConfig *config, int socket_activation)
+>                    " '%s': %s", config->state_dir, strerror(errno));
+>         return NULL;
+>     }
+>+
+>+    if (!vss_init(true)) {
+>+        g_debug("vss_init failed, vss commands will not function");
+>+    }
+> #endif
+> 
+>     if (ga_is_frozen(s)) {
+>-- 
+>2.45.1
+>
+>
+
+
+Otherwise LGTM:
+
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
