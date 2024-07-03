@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9985EC30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 11:10:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C1BAC2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 11:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOxoy-0004uZ-E9; Wed, 03 Jul 2024 07:06:48 -0400
+	id 1sOxpC-00051p-PU; Wed, 03 Jul 2024 07:06:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sOxot-0004qk-Ji
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:06:39 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ id 1sOxp4-0004wb-GZ
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:06:50 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sOxon-0006WP-DV
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:06:38 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ id 1sOxop-0006Xe-G2
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 07:06:50 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 81FA01FCDC;
- Wed,  3 Jul 2024 11:06:26 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 9011F21C0D;
+ Wed,  3 Jul 2024 11:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1720004786; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1720004790; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2ujbzFm5VudgRBiG1XS/dQieTizDSTckus7H0R+puoc=;
- b=Kvb25MHrkCNgVV1MAYjTRJQFCGVIo2Z0VQvjfMrY9cPZucWmV3mBInJ84PXxzHXVEBxHCr
- 1KZO4PmgKJBzlEban0KbMnHlYHuYK1GTN1+xkviEhndVx89qwYjtUsjtXhtCljp2L/TEO2
- NGELxUXEAgG29JUHYg9G2FJ3U5Fwj54=
-Authentication-Results: smtp-out2.suse.de;
-	none
+ bh=efF9mcFd7QFCPzLX8mfpG2Oe4EycYroNx5LMAQKhJKE=;
+ b=l1DIeW8g0nxL6sMJy8ypBArjg00UKpW0YuK20C6tnnXkldAsYsTlp68O9jgkVH9l6r1/KF
+ xMVZU+5WlNSAhCFZdB7ZYJMl2aQY/xj3B4ufFqJmgG9f028KpxenVaC3ZHfIES4FvNQg2B
+ o5CqwyN4qnRRu3YhVl0S1Hq0xuvml/4=
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.com header.s=susede1 header.b=l1DIeW8g
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1720004786; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1720004790; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2ujbzFm5VudgRBiG1XS/dQieTizDSTckus7H0R+puoc=;
- b=Kvb25MHrkCNgVV1MAYjTRJQFCGVIo2Z0VQvjfMrY9cPZucWmV3mBInJ84PXxzHXVEBxHCr
- 1KZO4PmgKJBzlEban0KbMnHlYHuYK1GTN1+xkviEhndVx89qwYjtUsjtXhtCljp2L/TEO2
- NGELxUXEAgG29JUHYg9G2FJ3U5Fwj54=
+ bh=efF9mcFd7QFCPzLX8mfpG2Oe4EycYroNx5LMAQKhJKE=;
+ b=l1DIeW8g0nxL6sMJy8ypBArjg00UKpW0YuK20C6tnnXkldAsYsTlp68O9jgkVH9l6r1/KF
+ xMVZU+5WlNSAhCFZdB7ZYJMl2aQY/xj3B4ufFqJmgG9f028KpxenVaC3ZHfIES4FvNQg2B
+ o5CqwyN4qnRRu3YhVl0S1Hq0xuvml/4=
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BD8FD13A7F;
- Wed,  3 Jul 2024 11:06:25 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D030013974;
+ Wed,  3 Jul 2024 11:06:29 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id YPMvLLEwhWZ6cgAAD6G6ig
- (envelope-from <roy.hopkins@suse.com>); Wed, 03 Jul 2024 11:06:25 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YIa7MLUwhWZ6cgAAD6G6ig
+ (envelope-from <roy.hopkins@suse.com>); Wed, 03 Jul 2024 11:06:29 +0000
 From: Roy Hopkins <roy.hopkins@suse.com>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -69,37 +70,44 @@ Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v4 11/17] docs/system: Add documentation on support for IGVM
-Date: Wed,  3 Jul 2024 12:05:49 +0100
-Message-ID: <10ccd85a95b302c7a7465190fcb0dcbe534133cb.1720004383.git.roy.hopkins@suse.com>
+Subject: [PATCH v4 16/17] i386/sev: Add implementation of CGS
+ set_guest_policy()
+Date: Wed,  3 Jul 2024 12:05:54 +0100
+Message-ID: <b52f812aee0396f0a2c5914beb7656fb79b3cc56.1720004383.git.roy.hopkins@suse.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1720004383.git.roy.hopkins@suse.com>
 References: <cover.1720004383.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-1.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-1.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  SUSPICIOUS_RECIPS(1.50)[]; MID_CONTAINS_FROM(1.00)[];
  NEURAL_HAM_LONG(-1.00)[-1.000]; R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.com:s=susede1];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCPT_COUNT_TWELVE(0.00)[19]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.com:s=susede1]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MX_GOOD(-0.01)[]; RCPT_COUNT_TWELVE(0.00)[19];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1];
  FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:email];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
- R_RATELIMIT(0.00)[to_ip_from(RLm8d31jk6dhzwhww9bgqrb1jt)];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]
-Received-SPF: pass client-ip=195.135.223.131;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.com:+];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,suse.com:dkim,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ TAGGED_RCPT(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.com:dkim];
+ R_RATELIMIT(0.00)[to_ip_from(RLgjcjk3igk5en59wt86eb8xw3)];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 9011F21C0D
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,219 +124,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IGVM support has been implemented for Confidential Guests that support
-AMD SEV and AMD SEV-ES. Add some documentation that gives some
-background on the IGVM format and how to use it to configure a
-confidential guest.
+The new cgs_set_guest_policy() function is provided to receive the guest
+policy flags, SNP ID block and SNP ID authentication from guest
+configuration such as an IGVM file and apply it to the platform prior to
+launching the guest.
+
+The policy is used to populate values for the existing 'policy',
+'id_block' and 'id_auth' parameters. When provided, the guest policy is
+applied and the ID block configuration is used to verify the launch
+measurement and signatures. The guest is only successfully started if
+the expected launch measurements match the actual measurements and the
+signatures are valid.
 
 Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
 ---
- docs/system/i386/amd-memory-encryption.rst |   2 +
- docs/system/igvm.rst                       | 173 +++++++++++++++++++++
- docs/system/index.rst                      |   1 +
- 3 files changed, 176 insertions(+)
- create mode 100644 docs/system/igvm.rst
+ target/i386/sev.h | 12 +++++++
+ target/i386/sev.c | 83 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 95 insertions(+)
 
-diff --git a/docs/system/i386/amd-memory-encryption.rst b/docs/system/i386/amd-memory-encryption.rst
-index 748f5094ba..6c23f3535f 100644
---- a/docs/system/i386/amd-memory-encryption.rst
-+++ b/docs/system/i386/amd-memory-encryption.rst
-@@ -1,3 +1,5 @@
-+.. _amd-sev:
-+
- AMD Secure Encrypted Virtualization (SEV)
- =========================================
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index 2ccd6fe1e8..7b92102bd0 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -157,6 +157,18 @@ struct QEMU_PACKED sev_es_save_area {
+     uint8_t fpreg_ymm[256];
+ };
  
-diff --git a/docs/system/igvm.rst b/docs/system/igvm.rst
-new file mode 100644
-index 0000000000..36146a81df
---- /dev/null
-+++ b/docs/system/igvm.rst
-@@ -0,0 +1,173 @@
-+Independent Guest Virtual Machine (IGVM) support
-+================================================
++struct QEMU_PACKED sev_snp_id_authentication {
++    uint32_t id_key_alg;
++    uint32_t auth_key_algo;
++    uint8_t reserved[56];
++    uint8_t id_block_sig[512];
++    uint8_t id_key[1028];
++    uint8_t reserved2[60];
++    uint8_t id_key_sig[512];
++    uint8_t author_key[1028];
++    uint8_t reserved3[892];
++};
 +
-+IGVM files are designed to encapsulate all the information required to launch a
-+virtual machine on any given virtualization stack in a deterministic way. This
-+allows the cryptographic measurement of initial guest state for Confidential
-+Guests to be calculated when the IGVM file is built, allowing a relying party to
-+verify the initial state of a guest via a remote attestation.
+ #ifdef CONFIG_SEV
+ bool sev_enabled(void);
+ bool sev_es_enabled(void);
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 9a05b971c8..c4d0682d75 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -2446,6 +2446,88 @@ static int cgs_get_mem_map_entry(int index,
+     return 0;
+ }
+ 
++static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
++                                uint64_t policy, void *policy_data1,
++                                uint32_t policy_data1_size, void *policy_data2,
++                                uint32_t policy_data2_size, Error **errp)
++{
++    if (policy_type != GUEST_POLICY_SEV) {
++        error_setg(errp, "%s: Invalid guest policy type provided for SEV: %d",
++        __func__, policy_type);
++        return -1;
++    }
++    /*
++     * SEV-SNP handles policy differently. The policy flags are defined in
++     * kvm_start_conf.policy and an ID block and ID auth can be provided.
++     */
++    if (sev_snp_enabled()) {
++        SevSnpGuestState *sev_snp_guest =
++            SEV_SNP_GUEST(MACHINE(qdev_get_machine())->cgs);
++        struct kvm_sev_snp_launch_finish *finish =
++            &sev_snp_guest->kvm_finish_conf;
 +
-+Although IGVM files are designed with Confidential Computing in mind, they can
-+also be used to configure non-confidential guests. Multiple platforms can be
-+defined by a single IGVM file, allowing a single IGVM file to configure a
-+virtual machine that can run on, for example, TDX, SEV and non-confidential
-+hosts.
++        /*
++         * The policy consists of flags in 'policy' and optionally an ID block
++         * and ID auth in policy_data1 and policy_data2 respectively. The ID
++         * block and auth are optional so clear any previous ID block and auth
++         * and set them if provided, but always set the policy flags.
++         */
++        g_free(sev_snp_guest->id_block);
++        g_free((guchar *)finish->id_block_uaddr);
++        g_free(sev_snp_guest->id_auth);
++        g_free((guchar *)finish->id_auth_uaddr);
++        sev_snp_guest->id_block = NULL;
++        finish->id_block_uaddr = 0;
++        sev_snp_guest->id_auth = NULL;
++        finish->id_auth_uaddr = 0;
 +
-+QEMU supports IGVM files through the user-creatable ``igvm-cfg`` object. This
-+object is used to define the filename of the IGVM file to process. A reference
-+to the object is added to the ``-machine`` to configure the virtual machine
-+to use the IGVM file for configuration.
++        if (policy_data1_size > 0) {
++            struct sev_snp_id_authentication *id_auth =
++                (struct sev_snp_id_authentication *)policy_data2;
 +
-+Confidential platform support is provided through the use of
-+the ``ConfidentialGuestSupport`` object. If the virtual machine provides an
-+instance of this object then this is used by the IGVM loader to configure the
-+isolation properties of the directives within the file.
++            if (policy_data1_size != KVM_SEV_SNP_ID_BLOCK_SIZE) {
++                error_setg(errp, "%s: Invalid SEV-SNP ID block: incorrect size",
++                           __func__);
++                return -1;
++            }
++            if (policy_data2_size != KVM_SEV_SNP_ID_AUTH_SIZE) {
++                error_setg(errp,
++                           "%s: Invalid SEV-SNP ID auth block: incorrect size",
++                           __func__);
++                return -1;
++            }
++            assert(policy_data1 != NULL);
++            assert(policy_data2 != NULL);
 +
-+Further Information on IGVM
-+---------------------------
++            finish->id_block_uaddr =
++                (__u64)g_memdup2(policy_data1, KVM_SEV_SNP_ID_BLOCK_SIZE);
++            finish->id_auth_uaddr =
++                (__u64)g_memdup2(policy_data2, KVM_SEV_SNP_ID_AUTH_SIZE);
 +
-+Information about the IGVM format, including links to the format specification
-+and documentation for the Rust and C libraries can be found at the project
-+repository:
++            /*
++             * Check if an author key has been provided and use that to flag
++             * whether the author key is enabled. The first of the author key
++             * must be non-zero to indicate the key type, which will currently
++             * always be 2.
++             */
++            sev_snp_guest->kvm_finish_conf.auth_key_en =
++                id_auth->author_key[0] ? 1 : 0;
++            finish->id_block_en = 1;
++        }
++        sev_snp_guest->kvm_start_conf.policy = policy;
++    } else {
++        SevGuestState *sev_guest = SEV_GUEST(MACHINE(qdev_get_machine())->cgs);
++        /* Only the policy flags are supported for SEV and SEV-ES */
++        if ((policy_data1_size > 0) || (policy_data2_size > 0) || !sev_guest) {
++            error_setg(errp, "%s: An ID block/ID auth block has been provided "
++                             "but SEV-SNP is not enabled", __func__);
++            return -1;
++        }
++        sev_guest->policy = policy;
++    }
++    return 0;
++}
 +
-+https://github.com/microsoft/igvm
-+
-+
-+Supported Platforms
-+-------------------
-+
-+Currently, IGVM files can be provided for Confidential Guests on host systems
-+that support AMD SEV, SEV-ES and SEV-SNP with KVM. IGVM files can also be
-+provided for non-confidential guests.
-+
-+
-+Limitations when using IGVM with AMD SEV, SEV-ES and SEV-SNP
-+------------------------------------------------------------
-+
-+IGVM files configure the initial state of the guest using a set of directives.
-+Not every directive is supported by every Confidential Guest type. For example,
-+AMD SEV does not support encrypted save state regions, therefore setting the
-+initial CPU state using IGVM for SEV is not possible. When an IGVM file contains
-+directives that are not supported for the active platform, an error is generated
-+and the guest launch is aborted.
-+
-+The table below describes the list of directives that are supported for SEV,
-+SEV-ES, SEV-SNP and non-confidential platforms.
-+
-+.. list-table:: SEV, SEV-ES, SEV-SNP & non-confidential Supported Directives
-+   :widths: 35 65
-+   :header-rows: 1
-+
-+   * - IGVM directive
-+     - Notes
-+   * - IGVM_VHT_PAGE_DATA
-+     - ``NORMAL`` zero, measured and unmeasured page types are supported. Other
-+       page types result in an error.
-+   * - IGVM_VHT_PARAMETER_AREA
-+     -
-+   * - IGVM_VHT_PARAMETER_INSERT
-+     -
-+   * - IGVM_VHT_VP_COUNT_PARAMETER
-+     - The guest parameter page is populated with the CPU count.
-+   * - IGVM_VHT_ENVIRONMENT_INFO_PARAMETER
-+     - The ``memory_is_shared`` parameter is set to 1 in the guest parameter
-+       page.
-+
-+.. list-table:: Additional SEV, SEV-ES & SEV_SNP Supported Directives
-+   :widths: 25 75
-+   :header-rows: 1
-+
-+   * - IGVM directive
-+     - Notes
-+   * - IGVM_VHT_MEMORY_MAP
-+     - The memory map page is populated using entries from the E820 table.
-+   * - IGVM_VHT_REQUIRED_MEMORY
-+     -
-+
-+.. list-table:: Additional SEV-ES & SEV-SNP Supported Directives
-+   :widths: 25 75
-+   :header-rows: 1
-+
-+   * - IGVM directive
-+     - Notes
-+   * - IGVM_VHT_VP_CONTEXT
-+     - Setting of the initial CPU state for the boot CPU and additional CPUs is
-+       supported with limitations on the fields that can be provided in the
-+       VMSA. See below for details on which fields are supported.
-+
-+Initial CPU state with VMSA
-+---------------------------
-+
-+The initial state of guest CPUs can be defined in the IGVM file for AMD SEV-ES
-+and SEV-SNP. The state data is provided as a VMSA structure as defined in Table
-+B-4 in the AMD64 Architecture Programmer's Manual, Volume 2 [1].
-+
-+The IGVM VMSA is translated to CPU state in QEMU which is then synchronized
-+by KVM to the guest VMSA during the launch process where it contributes to the
-+launch measurement. See :ref:`amd-sev` for details on the launch process and
-+guest launch measurement.
-+
-+It is important that no information is lost or changed when translating the
-+VMSA provided by the IGVM file into the VSMA that is used to launch the guest.
-+Therefore, QEMU restricts the VMSA fields that can be provided in the IGVM
-+VMSA structure to the following registers:
-+
-+RAX, RCX, RDX, RBX, RBP, RSI, RDI, R8-R15, RSP, RIP, CS, DS, ES, FS, GS, SS,
-+CR0, CR3, CR4, XCR0, EFER, PAT, GDT, IDT, LDTR, TR, DR6, DR7, RFLAGS, X87_FCW,
-+MXCSR.
-+
-+When processing the IGVM file, QEMU will check if any fields other than the
-+above are non-zero and generate an error if this is the case.
-+
-+KVM uses a hardcoded GPA of 0xFFFFFFFFF000 for the VMSA. When an IGVM file
-+defines initial CPU state, the GPA for each VMSA must match this hardcoded
-+value.
-+
-+Firmware Images with IGVM
-+-------------------------
-+
-+When an IGVM filename is specified for a Confidential Guest Support object it
-+overrides the default handling of system firmware: the firmware image, such as
-+an OVMF binary should be contained as a payload of the IGVM file and not
-+provided as a flash drive or via the ``-bios`` parameter. The default QEMU
-+firmware is not automatically populated into the guest memory space.
-+
-+If an IGVM file is provided along with either the ``-bios`` parameter or pflash
-+devices then an error is displayed and the guest startup is aborted.
-+
-+Running a guest configured using IGVM
-+-------------------------------------
-+
-+To run a guest configured with IGVM you firstly need to generate an IGVM file
-+that contains a guest configuration compatible with the platform you are
-+targeting.
-+
-+The ``buildigvm`` tool [2] is an example of a tool that can be used to generate
-+IGVM files for non-confidential X86 platforms as well as for SEV, SEV-ES and
-+SEV-SNP confidential platforms.
-+
-+Example using this tool to generate an IGVM file for AMD SEV-SNP::
-+
-+    buildigvm --firmware /path/to/OVMF.fd --output sev-snp.igvm \
-+              --cpucount 4 sev-snp
-+
-+To run a guest configured with the generated IGVM you need to add an
-+``igvm-cfg`` object and refer to it from the ``-machine`` parameter:
-+
-+Example (for AMD SEV)::
-+
-+    qemu-system-x86_64 \
-+        <other parameters> \
-+        -machine ...,confidential-guest-support=sev0,igvm-cfg=igvm0 \
-+        -object sev-guest,id=sev0,cbitpos=47,reduced-phys-bits=1 \
-+        -object igvm-cfg,id=igvm0,file=/path/to/sev-snp.igvm
-+
-+References
-+----------
-+
-+[1] AMD64 Architecture Programmer's Manual, Volume 2: System Programming
-+  Rev 3.41
-+  https://www.amd.com/content/dam/amd/en/documents/processor-tech-docs/programmer-references/24593.pdf
-+
-+[2] ``buildigvm`` - A tool to build example IGVM files containing OVMF firmware
-+  https://github.com/roy-hopkins/buildigvm
-\ No newline at end of file
-diff --git a/docs/system/index.rst b/docs/system/index.rst
-index c21065e519..6235dfab87 100644
---- a/docs/system/index.rst
-+++ b/docs/system/index.rst
-@@ -38,4 +38,5 @@ or Hypervisor.Framework.
-    security
-    multi-process
-    confidential-guest-support
-+   igvm
-    vm-templating
+ static void
+ sev_common_class_init(ObjectClass *oc, void *data)
+ {
+@@ -2484,6 +2566,7 @@ sev_common_instance_init(Object *obj)
+     cgs->check_support = cgs_check_support;
+     cgs->set_guest_state = cgs_set_guest_state;
+     cgs->get_mem_map_entry = cgs_get_mem_map_entry;
++    cgs->set_guest_policy = cgs_set_guest_policy;
+ 
+     QTAILQ_INIT(&sev_common->launch_vmsa);
+ }
 -- 
 2.43.0
 
