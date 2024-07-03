@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B16AC30653
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:32:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA0B4C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 08:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOvP5-0001oJ-F7; Wed, 03 Jul 2024 04:31:51 -0400
+	id 1sOvPX-0002Kv-CH; Wed, 03 Jul 2024 04:32:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvOv-0001i8-1X
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:31:48 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvPW-0002KS-4k
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:32:18 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvOt-0002mW-CD
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:31:40 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-363bd55bcc2so2752957f8f.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:31:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sOvPU-0002rY-I3
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 04:32:17 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42138eadf64so36376585e9.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 01:32:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1719995497; x=1720600297; darn=nongnu.org;
+ d=linaro.org; s=google; t=1719995535; x=1720600335; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tL/+axddxz7zD0HyYYSH0I/iFm5cKQ5MNEFegkNsma0=;
- b=Y7BwOjJouaQnzyiJxlzhI2k+rHwwwDQ1kS3xywX2yNUrrYKInuJFToSYISLc0j22mG
- wIwlWVj+mNSNnUooP9opCrVsS4Y94SnMnUrwv8v/+iTkbvR8s25MbAJkq97OYmYikBEg
- /cSg7roM83sZ4GP3j5bwbPtN6Wbt3MdmmSUok87her9J+6myq1lplGnd7lP3S0A1Gyb2
- zhaTBjCNgRdSu097MwAp6R615ziq1BgR1Po4UWo8wcDXj+dTmrfjc+HKIyEsDrYHGE6t
- QuiNPRDvhk1FsEPUOpKO7eSZ0WQWM5FvgAHt5GzRRA45xjtSQZ608u3RXL61tK4Oe2lj
- GoWA==
+ bh=VJiaifbYCOj/DzTdzRuPhFPYVdt7SwziTFO8nBrN+94=;
+ b=RKcGGn2ROdSHmYluIOu98CEB3NBQSRT0h5sP2fu6cSDV0/pun7qg2OlIHORwVYxoeK
+ UQb1QJBBR7jsFySoDDxpZvOgukyzjG4yCnimovKh8F9Qp9UrBPJA4HU950LZ9U78OsRF
+ rUm7+RAodSi7VSU7kmqbgW3nig7I0Pcy+ZPxL5j4FoNdJykMpSBQoI2lqe1mPHQ7Y2/6
+ B28+7zS/3TmCyqzT4jDZL/CzCXNpcWvTsvBbp/9IBjEG55pbjHnWpAJonqEX536leGzo
+ WR3gGmImTRR9mKl2tx6Vs/Fo6MeqtmPFcWQozSi6HQwQEKoQznkAUBrhrTG7O37u3Z3u
+ terA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719995497; x=1720600297;
+ d=1e100.net; s=20230601; t=1719995535; x=1720600335;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tL/+axddxz7zD0HyYYSH0I/iFm5cKQ5MNEFegkNsma0=;
- b=fNkw3TWts+e6GMXb+we4ZSEp2w0Bz4UuGxvYBFnrtcyy/8hgv2Ucfi5PNr05xNIzcI
- h/PoZCbAFnm7Xxd7AAP/E7oa/1zdTJOohPjK1xClK8VenlI2ITpmUZH1wvk8cmOjzAFW
- nNiTAhsgHXT8Ab6M4AnFzf73Hnth8Ezeigk9dugZFyOHN371NElROhdGTeQRwXywTdp9
- PGAMQAAVqszq+n62MjKQWOeUyhurT+OWZg3eoCv4T7VwC6Zf4+bQgPtMFPD/MSwxiQud
- Fvw9/55E2bMoxeYSvAPYh6g/yKlEof0cH1zRgMmUp84+9YezlJzQHuwMuqGv/2X1+QhI
- t/oQ==
+ bh=VJiaifbYCOj/DzTdzRuPhFPYVdt7SwziTFO8nBrN+94=;
+ b=gyOc1BvbcJlF1MxbRLVm8XZpu3NoLymxF7JRAY+oN5z3G65Jv3sH0gIHnvagOiPIQG
+ gOYeF34xlRosllIsHcuhTeNzPNedHJ8NaK/yN76AYf9d2+c8mHT69bzGD7S03iIYzB+1
+ XJKsVRIlVhKw8NKJFfGHCS7K6J9Vq8QlyREkjl/bYzi6vtgRZG5vI8e4gyJ+iq8geIQh
+ u5z7dw+Jr7r+AQJhKMLktFPz3eSHZU+gXpisH29eoNy6l+JSgbDVdFPZ8c76AZZiEUPT
+ SApeXhgJe2JAUHqQ4jj8/ZUXAc0EbMUKNmtzAiA+M0SVHclFEy9EsI/UJFHQbIntDLJx
+ vyhw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXT3fEBrDl0It+P27ZoCM84tiZk4/EmoxqEfQVaWweEp2xLNdWv5c0uspcWYQZBR6zxhQyA5j3AagA55EI6A/lWLdU1sIk=
-X-Gm-Message-State: AOJu0YyuF4HOrlFwkpBuO9MU+ACUFKEqpsqGWkmox8Um5scI3k4KcmM6
- Oz+Lpnci4Sr2ThSGxyZsdOtYyenavJainvOHJYPB40+9jALmNukKIIGjyi0Bgi4=
-X-Google-Smtp-Source: AGHT+IFSj0bukzKkNLYAG5vthUL5pGYMaV2OuzulxmQM3oDX00CK/K2v3GjiN+zqKU/Jr2FArcYa4Q==
-X-Received: by 2002:a5d:47c5:0:b0:362:5816:f134 with SMTP id
- ffacd0b85a97d-36775699799mr7578712f8f.13.1719995497215; 
- Wed, 03 Jul 2024 01:31:37 -0700 (PDT)
+ AJvYcCVb2y998NF+63V/KKzGbthBr2ux5Tzy0+K8IpaOm2yNAlBshZY9qQx/y15jWhSjToH6XTeajLOIp7FyKeSmy3YaoRGn2Go=
+X-Gm-Message-State: AOJu0YwEOueFjZy5PIy/fdb8BNPA6yYd0VmpsF1buIPvCOBHcEGfyJ/h
+ IWo1/ZSrdtPwix8vRGAnWoi3mFFogPAAq/TcJ7MD/zoTIdDXAaIuqEfnZ6hv/14=
+X-Google-Smtp-Source: AGHT+IGi7VmhWu6kCFVdSUgBvXodZrvWt9W8agwcEf2Nghzkmwk7/OtpRs3PgIyYsy1aJH3LQeqHeQ==
+X-Received: by 2002:a05:600c:310c:b0:425:7f74:b6cd with SMTP id
+ 5b1f17b1804b1-4257f74b7f0mr45054505e9.40.1719995534988; 
+ Wed, 03 Jul 2024 01:32:14 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.220.97])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a0fb973sm15224630f8f.67.2024.07.03.01.31.35
+ 5b1f17b1804b1-4256af3f14csm231420855e9.6.2024.07.03.01.32.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 01:31:36 -0700 (PDT)
-Message-ID: <202e5ff7-3188-42a6-af7d-5bda71048f51@linaro.org>
-Date: Wed, 3 Jul 2024 10:31:35 +0200
+ Wed, 03 Jul 2024 01:32:14 -0700 (PDT)
+Message-ID: <ff9fe894-ce4c-4f9a-bf4f-eaa292a42f0a@linaro.org>
+Date: Wed, 3 Jul 2024 10:32:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/22] qga: conditionalize schema for commands
- unsupported on non-Linux POSIX
+Subject: Re: [PATCH v2 10/22] qga: conditionalize schema for commands
+ requiring getifaddrs
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -71,14 +71,14 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Michael Roth <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20240613150127.1361931-1-berrange@redhat.com>
  <20240613154406.1365469-1-berrange@redhat.com>
- <20240613154406.1365469-4-berrange@redhat.com>
+ <20240613154406.1365469-5-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240613154406.1365469-4-berrange@redhat.com>
+In-Reply-To: <20240613154406.1365469-5-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,16 +102,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/6/24 17:43, Daniel P. Berrangé wrote:
-> Rather than creating stubs for every command that just return
+> Rather than creating stubs for every comamnd that just return
 > QERR_UNSUPPORTED, use 'if' conditions in the QAPI schema to
-> fully exclude generation of the commands on non-Linux POSIX
-> platforms
+> fully exclude generation of the network interface command on
+> POSIX platforms lacking getifaddrs().
 > 
 > The command will be rejected at QMP dispatch time instead,
 > avoiding reimplementing rejection by blocking the stub commands.
 > This changes the error message for affected commands from
 > 
->      {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
+>     {"class": "CommandNotFound", "desc": "Command FOO has been disabled"}
 > 
 > to
 > 
@@ -122,9 +122,9 @@ On 13/6/24 17:43, Daniel P. Berrangé wrote:
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   qga/commands-posix.c | 66 --------------------------------------------
->   qga/qapi-schema.json | 30 +++++++++++---------
->   2 files changed, 17 insertions(+), 79 deletions(-)
+>   qga/commands-posix.c | 13 -------------
+>   qga/qapi-schema.json | 15 ++++++++++-----
+>   2 files changed, 10 insertions(+), 18 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
