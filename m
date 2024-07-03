@@ -4,78 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0230AC30658
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Jul 2024 23:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14970C30658
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 00:10:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sOnPD-0000yS-99; Tue, 02 Jul 2024 19:59:28 -0400
+	id 1sOnZT-0004bB-0a; Tue, 02 Jul 2024 20:10:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOnP7-0000xE-2R; Tue, 02 Jul 2024 19:59:21 -0400
-Received: from mail-vs1-xe2b.google.com ([2607:f8b0:4864:20::e2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sOnP5-0007gG-Gx; Tue, 02 Jul 2024 19:59:20 -0400
-Received: by mail-vs1-xe2b.google.com with SMTP id
- ada2fe7eead31-48fddbb579dso52402137.3; 
- Tue, 02 Jul 2024 16:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1719964758; x=1720569558; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Xc2aEDgOgEzXvSmnVveht//k4/07WbMFwG5D6w4BLPo=;
- b=X2GSdn8neNabLrWSVtaQpfiwRQaQcIe/u//VpDBReYkKE92JTjg9mA4mjv0cG7xzPL
- ffsKpPg1lVBjcJ5gjFiyzrA7CUDVuZTP4l2gHkD+FUCj/1Cuhco/Oq+oHExLItCWEweu
- GHVs1qGsS2p45YWh5xWM5EvjIbLgOST4RGrUWbRxQD0Ov032Qjj0J4DEKpDYosGbxj7E
- /SA4upNtnzMRlfk0sFlfa6dcNpp6Dy7rlUED8rhxHVLD6Hdrc0F9lpISMdIxVwmbLTUb
- jNJV8JOdSBoXybKiuvIuP2GV1h7NbcbU2Nayq1pv9knvEHstN2XzelPXpcMCgx4h1BTl
- ZIhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1719964758; x=1720569558;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Xc2aEDgOgEzXvSmnVveht//k4/07WbMFwG5D6w4BLPo=;
- b=AlBgwDCpr0CA2dYAae1oczZ5XpquWSfnepPTfJ+xIVTfWff/e4i2gma+mmJ6qQMSa3
- dyIiga3nKcXXMYIebSpI17HEzKYssClXlKTgTjFyKLtn1AgHsPA0c8LQm9IokFtmZwoy
- moaPR7reDwimoBmziSaCCYEviA5iokHJPDukNOST9Wi9s3eCBfbob+GZxaqWDtFnDexa
- yJqS9YiazfhsILhR4xC8VKRqAKYz6xHcleMlzaXxN3Wt+O9FsbpN49hSaOYHE7aZSEup
- XYVjyxplFQHpOcA9Og5aC6SDwwBZJdJjqH2UEvBbGNC2uC82qVOagOaJwWgLYNZ3GlKE
- A6kg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWEvxXqvqsoBWbPJlRR5kALnUSwHvQePSzOyKKw7PoZQb9X9PWr6EZvQczBb4HETS9xEHxzpl5a3/dDI/rxMV71cNMyClA=
-X-Gm-Message-State: AOJu0YzMt7pwibPMS7kPq4E+n2xI6PEYH/aI6OhXaAh515dErHZBrZ0i
- ZVzVC3kvFaQE81yLzo5AfnC3YF+OeDPTNo9FXx/YKcovssGJgmYqxjWxit/2cKDoZyPO5ZIUVzN
- YdS/Qvfesnos8wIyS6gfOZ+TGXkA=
-X-Google-Smtp-Source: AGHT+IEmAiPpRRasPJprEYmrM1o132AlePwbOI6dJLPEye4u7rOiiQfrnm+tDCp37nttAo+KsOlk8NpW491tPlA4x5U=
-X-Received: by 2002:a05:6102:241c:b0:48d:706f:a884 with SMTP id
- ada2fe7eead31-48faf0aa2c2mr9970406137.20.1719964758086; Tue, 02 Jul 2024
- 16:59:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sOnZO-0004aU-VO
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 20:09:59 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sOnZM-0007bc-AJ
+ for qemu-devel@nongnu.org; Tue, 02 Jul 2024 20:09:58 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 71C9D4E6005;
+ Wed, 03 Jul 2024 02:09:47 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id CFhLBmPDO3zA; Wed,  3 Jul 2024 02:09:45 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 2A6A14E6001; Wed, 03 Jul 2024 02:09:45 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 28A1D746E3B;
+ Wed, 03 Jul 2024 02:09:45 +0200 (CEST)
+Date: Wed, 3 Jul 2024 02:09:45 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Bernhard Beschow <shentey@gmail.com>
+cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ philmd@linaro.org, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: Re: [PATCH 2/2] hw/isa/vt82c686.c: Embed i8259 irq in device state
+ instead of allocating
+In-Reply-To: <00311AC8-D02C-4C3A-85A7-8FB3B51DDE9C@gmail.com>
+Message-ID: <cf46b29f-b36f-37b8-373f-72ad487ee749@eik.bme.hu>
+References: <cover.1719690591.git.balaton@eik.bme.hu>
+ <b70b9e72063b4dd4005bf4bc040b84f2bb617bf4.1719690591.git.balaton@eik.bme.hu>
+ <CAFEAcA_tBjQrJMpjbzVUVcrTWghr4v=MHB0qpWx=xjML6ek9mg@mail.gmail.com>
+ <4CBF639B-CC3E-4644-9F87-481B9147F2A9@gmail.com>
+ <00311AC8-D02C-4C3A-85A7-8FB3B51DDE9C@gmail.com>
 MIME-Version: 1.0
-References: <20240627180350.128575-1-richard.henderson@linaro.org>
- <20240627180350.128575-4-richard.henderson@linaro.org>
-In-Reply-To: <20240627180350.128575-4-richard.henderson@linaro.org>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 3 Jul 2024 09:58:52 +1000
-Message-ID: <CAKmqyKM28=qGsXTS-50hOkL-o=X0gGHbh7YKDkzeztPy+Mk=Pw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] util/cpuinfo-riscv: Use linux __riscv_hwprobe syscall
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, brad@comstyle.com, Alistair.Francis@wdc.com, 
- palmer@dabbelt.com, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e2b;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,93 +71,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 28, 2024 at 4:06=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> With recent linux kernels, there is a syscall to probe for various
-> ISA extensions.  These bits were phased in over several kernel
-> releases, so we still require checks for symbol availability.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Tue, 2 Jul 2024, Bernhard Beschow wrote:
+> Am 2. Juli 2024 18:42:23 UTC schrieb Bernhard Beschow <shentey@gmail.com>:
+>> Am 1. Juli 2024 12:58:15 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
+>>> On Sat, 29 Jun 2024 at 21:01, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>>>
+>>>> To avoid a warning about unfreed qemu_irq embed the i8259 irq in the
+>>>> device state instead of allocating it.
+>>>>
+>>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>>> ---
+>>>>  hw/isa/vt82c686.c | 7 ++++---
+>>>>  1 file changed, 4 insertions(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+>>>> index 8582ac0322..834051abeb 100644
+>>>> --- a/hw/isa/vt82c686.c
+>>>> +++ b/hw/isa/vt82c686.c
+>>>> @@ -592,6 +592,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(ViaISAState, VIA_ISA)
+>>>>
+>>>>  struct ViaISAState {
+>>>>      PCIDevice dev;
+>>>> +
+>>>> +    IRQState i8259_irq;
+>>>>      qemu_irq cpu_intr;
+>>>>      qemu_irq *isa_irqs_in;
+>>>>      uint16_t irq_state[ISA_NUM_IRQS];
+>>>> @@ -715,13 +717,12 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
+>>>>      ViaISAState *s = VIA_ISA(d);
+>>>>      DeviceState *dev = DEVICE(d);
+>>>>      PCIBus *pci_bus = pci_get_bus(d);
+>>>> -    qemu_irq *isa_irq;
+>>>>      ISABus *isa_bus;
+>>>>      int i;
+>>>>
+>>>>      qdev_init_gpio_out(dev, &s->cpu_intr, 1);
+>>>>      qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
+>>>> -    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
+>>>> +    qemu_init_irq(&s->i8259_irq, via_isa_request_i8259_irq, s, 0);
+>>>>      isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
+>>>>                            errp);
+>>>
+>>> So if I understand correctly, this IRQ line isn't visible
+>>> from outside this chip,
+>>
+>> Actally it is, in the form of the INTR pin. Assuming similar naming
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+The INTR pin corresponds to qemu_irq cpu_intr not the i8259_irq.
 
-Alistair
+>> conventions in vt82xx and piix, one can confirm this by consulting the 
+>> piix4 datasheet, "Figure 5. Interrupt Controller Block Diagram". 
+>> Moreover, the pegasos2 schematics (linked in the QEMU documentation) 
+>> suggest that this pin is actually used there, although not modeled in 
+>> QEMU.
+>
+> Well, QEMU does actually wire the intr pin in the pegasos2 board code, 
+> except that it isn't a named gpio like in piix4. If we allow this pin to
 
-> ---
->  meson.build          |  6 ++++++
->  util/cpuinfo-riscv.c | 26 ++++++++++++++++++++++++++
->  2 files changed, 32 insertions(+)
+I could make that named to make it clearer, now it's the only output gpio 
+so did not name it as usually devices that only have one output don't use 
+named gpios for that.
+
+> be wired before the south bridge's realize we might be able to eliminate 
+> the "intermediate irq forwarder" as Phil used to name it, resulting in 
+> less and more efficient code. This solution would basically follow the 
+> pattern I outlined under below link.
+
+I think the problem here is that i8259 does not provide an output gpio for 
+this interrupt that the VT82xx could pass on but instead i8259_init() 
+needs a qemu_irq to be passed rhat the i8259 model will set. This seems to 
+be a legacy init function so the fix may be to Qdev-ify i8259 and add an 
+output irq to it then its users could instantiate and connect its IRQs as 
+usual and we don't need to create a qemu_irq to pass it to i8259_init().
+
+Regards,
+BALATON Zoltan
+
+> Best regards,
+> Bernhard
 >
-> diff --git a/meson.build b/meson.build
-> index 97e00d6f59..58afd0125d 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2837,6 +2837,12 @@ have_cpuid_h =3D cc.links('''
->    }''')
->  config_host_data.set('CONFIG_CPUID_H', have_cpuid_h)
->
-> +# Don't bother to advertise asm/hwprobe.h for old versions that do
-> +# not contain RISCV_HWPROBE_EXT_ZBA.
-> +config_host_data.set('CONFIG_ASM_HWPROBE_H',
-> +                     cc.has_header_symbol('asm/hwprobe.h',
-> +                                          'RISCV_HWPROBE_EXT_ZBA'))
-> +
->  config_host_data.set('CONFIG_AVX2_OPT', get_option('avx2') \
->    .require(have_cpuid_h, error_message: 'cpuid.h not available, cannot e=
-nable AVX2') \
->    .require(cc.links('''
-> diff --git a/util/cpuinfo-riscv.c b/util/cpuinfo-riscv.c
-> index abf799794f..cf59ce83a3 100644
-> --- a/util/cpuinfo-riscv.c
-> +++ b/util/cpuinfo-riscv.c
-> @@ -6,6 +6,11 @@
->  #include "qemu/osdep.h"
->  #include "host/cpuinfo.h"
->
-> +#ifdef CONFIG_ASM_HWPROBE_H
-> +#include <asm/hwprobe.h>
-> +#include <sys/syscall.h>
-> +#endif
-> +
->  unsigned cpuinfo;
->  static volatile sig_atomic_t got_sigill;
->
-> @@ -47,6 +52,27 @@ unsigned __attribute__((constructor)) cpuinfo_init(voi=
-d)
->  #endif
->      left &=3D ~info;
->
-> +#ifdef CONFIG_ASM_HWPROBE_H
-> +    if (left) {
-> +        /*
-> +         * TODO: glibc 2.40 will introduce <sys/hwprobe.h>, which
-> +         * provides __riscv_hwprobe and __riscv_hwprobe_one,
-> +         * which is a slightly cleaner interface.
-> +         */
-> +        struct riscv_hwprobe pair =3D { .key =3D RISCV_HWPROBE_KEY_IMA_E=
-XT_0 };
-> +        if (syscall(__NR_riscv_hwprobe, &pair, 1, 0, NULL, 0) =3D=3D 0
-> +            && pair.key >=3D 0) {
-> +            info |=3D pair.value & RISCV_HWPROBE_EXT_ZBA ? CPUINFO_ZBA :=
- 0;
-> +            info |=3D pair.value & RISCV_HWPROBE_EXT_ZBB ? CPUINFO_ZBB :=
- 0;
-> +            left &=3D ~(CPUINFO_ZBA | CPUINFO_ZBB);
-> +#ifdef RISCV_HWPROBE_EXT_ZICOND
-> +            info |=3D pair.value & RISCV_HWPROBE_EXT_ZICOND ? CPUINFO_ZI=
-COND : 0;
-> +            left &=3D ~CPUINFO_ZICOND;
-> +#endif
-> +        }
-> +    }
-> +#endif /* CONFIG_ASM_HWPROBE_H */
-> +
->      if (left) {
->          struct sigaction sa_old, sa_new;
->
-> --
-> 2.34.1
+>> Compare this to how the "intr" pin is exposed by the piix4 device model and wired in the Malta board.
+>>
+>>> we're just trying to wire together
+>>> two internal components of the chip? If so, I agree that
+>>> this seems a better way than creating a named GPIO that
+>>> we then have to document as a "not really an external
+>>> connection, don't try to use this" line. (We've done that
+>>> before I think in other devices, and it works but it's
+>>> a bit odd-looking.)
+>>>
+>>> That said, I do notice that the via_isa_request_i8259_irq()
+>>> function doesn't do anything except pass the level onto
+>>> another qemu_irq, so I think the theoretical ideal would be
+>>> if we could arrange to plumb things directly through rather
+>>> than needing this extra qemu_irq and function. There's
+>>> probably a reason (order of device creation/connection?)
+>>> that doesn't work though.
+>>
+>> I think there could be a general pattern of device creation/connection which I've outlined here: https://lore.kernel.org/qemu-devel/0FFB5FD2-08CE-4CEC-9001-E7AC24407A44@gmail.com/
+>>
+>> Best regards,
+>> Bernhard
+>>
+>>>
+>>> -- PMM
+>>>
 >
 >
 
