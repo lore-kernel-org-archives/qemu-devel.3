@@ -4,104 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD618C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 14:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8D80C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 15:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP1R3-00081s-Q7; Wed, 03 Jul 2024 10:58:17 -0400
+	id 1sP1VM-0002nw-3l; Wed, 03 Jul 2024 11:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1sP1R1-0007wd-T7
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 10:58:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1sP1R0-0005Si-3I
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 10:58:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720018692;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xGZO5P63jdklO4pDntsmgfZbMJFqdINnByvMGT3F7k4=;
- b=gAo6E6LB3p/RUSy2tE0DZqRZIzy2daXGeEI3F4bCPRJYFZFALQFXUQcGDzJi3Vh1Q3gMeE
- 5qd20UignkHCSlftQCRUmGpRhKL2GALbA462iquHhJPGfq7fDuIkx2+0vJ18JHb4ybNgep
- qqx2rdk5x+EZvj6k0S74bCUgM5aRR/U=
-Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
- [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-1USNMFJzNMGoXw88lpM4tw-1; Wed, 03 Jul 2024 10:57:04 -0400
-X-MC-Unique: 1USNMFJzNMGoXw88lpM4tw-1
-Received: by mail-io1-f69.google.com with SMTP id
- ca18e2360f4ac-7f3c9b72aebso590619139f.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 07:57:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
+ id 1sP1VH-0002mk-Sr; Wed, 03 Jul 2024 11:02:40 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
+ id 1sP1V7-0008Jv-DF; Wed, 03 Jul 2024 11:02:38 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52e98087e32so925200e87.2; 
+ Wed, 03 Jul 2024 08:02:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720018945; x=1720623745; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0zmcC04FunrwaP2tXJWBrFcWry32sZJinLKcRC7TcGE=;
+ b=UKV+UtBnUnYoMlyQjBX3j+8tSvqGhB+ltuR3acrcpVJzPJflID5pkFJ2AmB/d+KbSZ
+ URMJLppLg49075TP+qjSsupBviiPh5oM31Y4ths2AJYUkFx2e/RnIQoGwyKnD9/XrSXL
+ Nb9haSSyxcCQ9TUJBh1MQrSj1tBZGAoxEGMQRdwYxWay7IfRsNmRU8sI7ByDepTABblT
+ fdOBpZ7XaXCvsWm68EXd0B5HJh9GkKFencPB06FFbOcx3GYkzWIgU2LK8Sd2HjvcF+RK
+ SSyEQMgx44Io6Tx57fFgEEjFnscYFdcvENQo3u82K/mh9GdpslwE0lbqK3ZAHRTdL6cr
+ uVEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720018623; x=1720623423;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xGZO5P63jdklO4pDntsmgfZbMJFqdINnByvMGT3F7k4=;
- b=kw/jwfPFdGfTTr0nxOk3/KzoZ3ijiuZv+VpmaiRRvFvCZq0fs35vdmOvQ+In2Goo38
- B0fi/s9QXXEPJo+Do4OM7oOIHiY0qC1nAuSaaU8+iNQ3hFT6kMB2SpL53s1m6KSNzp+j
- dbKOFsdS+C46JSA6ElSXjKT/SdVV2EqofpFwf7lCo7acKOlA39N135/crO8XT0VKb2iR
- R2wcgPcn3EMgSumw4pkReCzNIcfbX/slcgBtes+sExIqBhQ4Ib5qxRZct5S5Y7QyQX+i
- GJek89qUrOHT2FHDhcCjkK9FZc8HxTuBAYllymiCjLXyCRVe5uVRHkZmS+QbHp77sPF8
- 1rHw==
+ d=1e100.net; s=20230601; t=1720018945; x=1720623745;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0zmcC04FunrwaP2tXJWBrFcWry32sZJinLKcRC7TcGE=;
+ b=YVk8/qPpmuVLCT6Gl2zRIPF6RqH+f6xl6Dk9bqzMhTxgNPoRGyWqUGL7K1zYQr/2I3
+ l7yPjJ6zfXGCBWJQqqoblI9KisyWD9/Tg6AH+47QDh+W76K1eeO5BV7xiNHIN75HqVpe
+ xQsccrcRvcqcQCJcgQbq6RYHWH9ZeYlgvaV9VK/O7Fwx4agpEje3RScqOl6GrjBbtOqi
+ lU366JLdtJMXYz37vus2DlWUG+dVmXzkE5uz+U1Qk83oFAJP02PL9WdL7W+F3KjmzVR0
+ owGn6gfP1uleQgSIOr/YFRxtwTcwFr4tl6peegzXSbrZWLAgDE+5i2b2xOjSSMhSwwap
+ loxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVwzJr7GQy81QrPfah7gkHhd76qpBiLEe3ZhITz7D6+Naz/paymkB9jrBTiuTd/3u+Z3C2LKvFCobVkAp4xNP6gkYkxJJ0=
-X-Gm-Message-State: AOJu0Ywt2La8TZEaay4ZrHqtb6EJA71deuKVlmMO40e8Gwhll9ZRT8NK
- 8Yb7wXpwubqFaND5zYMGZlbw0KSQFQbleZ7AzKBrs8Dc6WS5OcunKdebIC5l/gj/+dke0Bpm3qi
- +cl9ffrUW0+AO+a2gwFIn2UuyKBRHd9SfufGtjgMWuI2reRQUOiot
-X-Received: by 2002:a05:6602:2be1:b0:7f6:1b3a:437b with SMTP id
- ca18e2360f4ac-7f62ee79e9emr1377092239f.17.1720018623199; 
- Wed, 03 Jul 2024 07:57:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyJLBd933nSl/AdFLqYARYHGPdRI3szfYAvMVVHqlMLFaRr4Gju3aXb5DxDM63Ek+XATZ+jA==
-X-Received: by 2002:a05:6602:2be1:b0:7f6:1b3a:437b with SMTP id
- ca18e2360f4ac-7f62ee79e9emr1377090539f.17.1720018622928; 
- Wed, 03 Jul 2024 07:57:02 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4bb742b1acfsm3377238173.123.2024.07.03.07.57.00
+ AJvYcCU1Htct//87RNxU5wLTw0gHb22UQEkk+D6bwU1RjktOmShMTFzHa24AZqPyxXKhrpYTFDcjm5UCRxE6Pxr3ZezWeQGV6DA=
+X-Gm-Message-State: AOJu0Yw3KYTfQMlaxAlOIDn0wPOjMfklpYFmwFUg4QngAXVCErEJwYVU
+ 0iW4LCLdv8z3Gmudb0khZsP0xhXKjHXFGxewLtz0zaldXyFJ8yDDqH+dE6ECQl4=
+X-Google-Smtp-Source: AGHT+IE7xLRV2tJh8cLCcXFfPNZz9Uj/pfVQtT7Gsz0kWdo0LiMJNFYRWitDzq4UNcupEMSEVbogdA==
+X-Received: by 2002:a05:6512:3da3:b0:52e:713e:697c with SMTP id
+ 2adb3069b0e04-52e8267b8d0mr9692225e87.25.1720018944746; 
+ Wed, 03 Jul 2024 08:02:24 -0700 (PDT)
+Received: from localhost.localdomain ([176.194.243.4])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-52e7ab0ba7esm2157068e87.55.2024.07.03.08.02.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 07:57:02 -0700 (PDT)
-Date: Wed, 3 Jul 2024 08:56:59 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Akihiko Odaki
- <akihiko.odaki@daynix.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Sriram
- Yagnaraman <sriram.yagnaraman@ericsson.com>, Jason Wang
- <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, Klaus Jensen
- <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org
-Subject: Re: [PATCH v10 11/12] hw/pci: Convert rom_bar into OnOffAuto
-Message-ID: <20240703085659.36fc5267.alex.williamson@redhat.com>
-In-Reply-To: <f056b470-a95c-1696-4276-a60eb92fced0@eik.bme.hu>
-References: <20240627-reuse-v10-0-7ca0b8ed3d9f@daynix.com>
- <20240627-reuse-v10-11-7ca0b8ed3d9f@daynix.com>
- <20240702095426-mutt-send-email-mst@kernel.org>
- <57c3c9c1-99c5-1f35-59d4-f913c3dee36b@eik.bme.hu>
- <20240703015747-mutt-send-email-mst@kernel.org>
- <f056b470-a95c-1696-4276-a60eb92fced0@eik.bme.hu>
-Organization: Red Hat
+ Wed, 03 Jul 2024 08:02:23 -0700 (PDT)
+From: Mikhail Krasheninnikov <krashmisha@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Mi <krashmisha@gmail.com>, Matwey Kornilov <matwey.kornilov@gmail.com>,
+ qemu-block@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v3] virtio: Implement Virtio Backend for SD/MMC in QEMU
+Date: Wed,  3 Jul 2024 14:59:56 +0000
+Message-Id: <20240703145956.16193-1-krashmisha@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=krashmisha@gmail.com; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,90 +92,405 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 3 Jul 2024 13:00:21 +0200 (CEST)
-BALATON Zoltan <balaton@eik.bme.hu> wrote:
+From: Mi <krashmisha@gmail.com>
 
-> On Wed, 3 Jul 2024, Michael S. Tsirkin wrote:
-> > On Wed, Jul 03, 2024 at 04:15:23AM +0200, BALATON Zoltan wrote:  
-> >> On Tue, 2 Jul 2024, Michael S. Tsirkin wrote:  
-> >>> On Thu, Jun 27, 2024 at 03:08:00PM +0900, Akihiko Odaki wrote:  
-> >>>> rom_bar is tristate but was defined as uint32_t so convert it into
-> >>>> OnOffAuto.
-> >>>>
-> >>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>  
-> >>>
-> >>> Commit log should explain why this is an improvement,
-> >>> not just what's done.
-> >>>
-> >>>  
-> >>>> diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
-> >>>> index e17bb50789ad..35c6c8e28493 100644
-> >>>> --- a/docs/igd-assign.txt
-> >>>> +++ b/docs/igd-assign.txt
-> >>>> @@ -35,7 +35,7 @@ IGD has two different modes for assignment using vfio-pci:
-> >>>>        ISA/LPC bridge device (vfio-pci-igd-lpc-bridge) on the root bus at
-> >>>>        PCI address 1f.0.
-> >>>>      * The IGD device must have a VGA ROM, either provided via the romfile
-> >>>> -      option or loaded automatically through vfio (standard).  rombar=0
-> >>>> +      option or loaded automatically through vfio (standard).  rombar=off
-> >>>>        will disable legacy mode support.
-> >>>>      * Hotplug of the IGD device is not supported.
-> >>>>      * The IGD device must be a SandyBridge or newer model device.  
-> >>>
-> >>> ...
-> >>>  
-> >>>> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> >>>> index 39dae72497e0..0e920ed0691a 100644
-> >>>> --- a/hw/vfio/pci-quirks.c
-> >>>> +++ b/hw/vfio/pci-quirks.c
-> >>>> @@ -33,7 +33,7 @@
-> >>>>   * execution as noticed with the BCM 57810 card for lack of a
-> >>>>   * more better way to handle such issues.
-> >>>>   * The  user can still override by specifying a romfile or
-> >>>> - * rombar=1.
-> >>>> + * rombar=on.
-> >>>>   * Please see https://bugs.launchpad.net/qemu/+bug/1284874
-> >>>>   * for an analysis of the 57810 card hang. When adding
-> >>>>   * a new vendor id/device id combination below, please also add  
-> >>>
-> >>>
-> >>> So we are apparently breaking a bunch of users who followed
-> >>> documentation to the dot. Why is this a good idea?  
-> >>
-> >> On/off is clearer than 1/0. But isn't 1/0 a synonym for on/off so previous
-> >> command lines would still work?
-> >>
-> >> Regards,
-> >> BALATON Zoltan  
-> >
-> > I see nothing in code that would make it so:
-> >
-> >
-> > const QEnumLookup OnOffAuto_lookup = {
-> >    .array = (const char *const[]) {
-> >        [ON_OFF_AUTO_AUTO] = "auto",
-> >        [ON_OFF_AUTO_ON] = "on",
-> >        [ON_OFF_AUTO_OFF] = "off",
-> >    },
-> >    .size = ON_OFF_AUTO__MAX
-> > };
-> >
-> > I also tried with an existing property:
-> >
-> > $ ./qemu-system-x86_64 -device intel-hda,msi=0
-> > qemu-system-x86_64: -device intel-hda,msi=0: Parameter 'msi' does not accept value '0'  
-> 
-> Then it was probably bit properties that also accept 0/1, on/off, 
-> true/false. Maybe similar aliases could be added to on/off/auto?
-> 
-> In any case when I first saw rombar I thought it would set the BAR of the 
-> ROM so wondered why it's 1 and not 5 or 6 or an offset. So on/off is 
-> clearer in this case.
+Add a Virtio backend for SD/MMC devices. Confirmed interoperability with
+Linux.
 
-There's only one PCI spec defined offset for the ROM BAR.  Yes, the
-option could be more clear but relocating the ROM to a different
-regular BAR offset is invalid.  Thanks,
+Linux patch link: https://lore.kernel.org/linux-mmc/20240701120642.30001-1-krashmisha@gmail.com/
 
-Alex
+Signed-off-by: Mikhail Krasheninnikov <krashmisha@gmail.com>
+CC: Matwey Kornilov <matwey.kornilov@gmail.com>
+CC: qemu-block@nongnu.org
+CC: Michael S. Tsirkin <mst@redhat.com>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+---
+
+Thanks for the feedback!
+
+Changes from v2:
+ - Renamed virtio-mmc to virtio-sdhci
+ - Added a link to linux patch with corresponding driver in commit message
+ - Moved variable declaration to function prologue
+ - Removed duplicate defines
+ - Changed #pragma once
+
+Michael, I couldn't find any simular structs to those in virtio-sdhci.c in Linux
+uapi, I'll be very grateful if you could point them out to me!
+
+ hw/block/Kconfig                            |   6 +
+ hw/block/meson.build                        |   1 +
+ hw/block/virtio-sdhci.c                     | 169 ++++++++++++++++++++
+ hw/virtio/meson.build                       |   1 +
+ hw/virtio/virtio-sdhci-pci.c                |  86 ++++++++++
+ hw/virtio/virtio.c                          |   3 +-
+ include/hw/virtio/virtio-sdhci.h            |  22 +++
+ include/standard-headers/linux/virtio_ids.h |   1 +
+ 8 files changed, 288 insertions(+), 1 deletion(-)
+ create mode 100644 hw/block/virtio-sdhci.c
+ create mode 100644 hw/virtio/virtio-sdhci-pci.c
+ create mode 100644 include/hw/virtio/virtio-sdhci.h
+
+diff --git a/hw/block/Kconfig b/hw/block/Kconfig
+index 9e8f28f982..5b5363da01 100644
+--- a/hw/block/Kconfig
++++ b/hw/block/Kconfig
+@@ -44,3 +44,9 @@ config VHOST_USER_BLK
+ 
+ config SWIM
+     bool
++
++config VIRTIO_SDHCI
++    bool
++    default y
++    select SD
++    depends on VIRTIO
+diff --git a/hw/block/meson.build b/hw/block/meson.build
+index 8aa4dc3893..82356c264e 100644
+--- a/hw/block/meson.build
++++ b/hw/block/meson.build
+@@ -19,5 +19,6 @@ system_ss.add(when: 'CONFIG_TC58128', if_true: files('tc58128.c'))
+ 
+ specific_ss.add(when: 'CONFIG_VIRTIO_BLK', if_true: files('virtio-blk.c', 'virtio-blk-common.c'))
+ specific_ss.add(when: 'CONFIG_VHOST_USER_BLK', if_true: files('vhost-user-blk.c', 'virtio-blk-common.c'))
++specific_ss.add(when: 'CONFIG_VIRTIO_SDHCI', if_true: files('virtio-sdhci.c'))
+ 
+ subdir('dataplane')
+diff --git a/hw/block/virtio-sdhci.c b/hw/block/virtio-sdhci.c
+new file mode 100644
+index 0000000000..8b7105229f
+--- /dev/null
++++ b/hw/block/virtio-sdhci.c
+@@ -0,0 +1,169 @@
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++
++#include "hw/virtio/virtio.h"
++#include "hw/virtio/virtio-sdhci.h"
++#include "qemu/typedefs.h"
++#include "sysemu/blockdev.h"
++#include "standard-headers/linux/virtio_ids.h"
++
++typedef struct sd_req {
++    uint32_t opcode;
++    uint32_t arg;
++} sd_req;
++
++typedef struct virtio_sdhci_req {
++    uint8_t flags;
++
++#define VIRTIO_SDHCI_REQUEST_DATA BIT(1)
++#define VIRTIO_SDHCI_REQUEST_WRITE BIT(2)
++#define VIRTIO_SDHCI_REQUEST_STOP BIT(3)
++#define VIRTIO_SDHCI_REQUEST_SBC BIT(4)
++
++    sd_req request;
++
++    uint8_t buf[4096];
++    size_t buf_len;
++
++    sd_req stop_req;
++    sd_req sbc_req;
++} virtio_sdhci_req;
++
++typedef struct virtio_sdhci_resp {
++    uint32_t response[4];
++    int resp_len;
++    uint8_t buf[4096];
++} virtio_sdhci_resp;
++
++static void send_command(SDBus *sdbus, sd_req *mmc_request, uint8_t *response,
++                         virtio_sdhci_resp *virtio_resp)
++{
++    SDRequest sdreq;
++    int resp_len;
++
++    sdreq.cmd = (uint8_t)mmc_request->opcode;
++    sdreq.arg = mmc_request->arg;
++    resp_len = sdbus_do_command(sdbus, &sdreq, response);
++    virtio_resp->resp_len = resp_len;
++
++    for (int i = 0; i < resp_len / sizeof(uint32_t); i++) {
++        virtio_resp->response[i] = ldl_be_p(&virtio_resp->response[i]);
++    }
++}
++
++static void send_command_without_response(SDBus *sdbus, sd_req *mmc_request)
++{
++    SDRequest sdreq;
++    uint8_t response[4];
++
++    sdreq.cmd = (uint8_t)mmc_request->opcode;
++    sdreq.arg = mmc_request->arg;
++    sdbus_do_command(sdbus, &sdreq, response);
++}
++
++static void handle_mmc_request(VirtIODevice *vdev, virtio_sdhci_req *virtio_req,
++                               virtio_sdhci_resp *virtio_resp)
++{
++    VirtIOSDHCI *vsd = VIRTIO_SDHCI(vdev);
++    SDBus *sdbus = &vsd->sdbus;
++
++    if (virtio_req->flags & VIRTIO_SDHCI_REQUEST_SBC) {
++        send_command_without_response(sdbus, &virtio_req->sbc_req);
++    }
++
++    send_command(sdbus, &virtio_req->request,
++    (uint8_t *)virtio_resp->response, virtio_resp);
++
++    if (virtio_req->flags & VIRTIO_SDHCI_REQUEST_DATA) {
++        if (virtio_req->flags & VIRTIO_SDHCI_REQUEST_WRITE) {
++            sdbus_write_data(sdbus, virtio_req->buf, virtio_req->buf_len);
++        } else {
++            sdbus_read_data(sdbus, virtio_resp->buf, virtio_req->buf_len);
++        }
++    }
++
++    if (virtio_req->flags & VIRTIO_SDHCI_REQUEST_STOP) {
++        send_command_without_response(sdbus, &virtio_req->stop_req);
++    }
++}
++
++static void handle_request(VirtIODevice *vdev, VirtQueue *vq)
++{
++    VirtQueueElement *elem;
++    virtio_sdhci_req virtio_req;
++    virtio_sdhci_resp virtio_resp;
++
++    elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
++
++    iov_to_buf(elem->out_sg, elem->out_num, 0,
++    &virtio_req, sizeof(virtio_sdhci_req));
++
++    handle_mmc_request(vdev, &virtio_req, &virtio_resp);
++
++    iov_from_buf(elem->in_sg, elem->in_num, 0,
++    &virtio_resp, sizeof(virtio_sdhci_resp));
++
++    virtqueue_push(vq, elem, 1);
++
++    virtio_notify(vdev, vq);
++}
++
++static void virtio_sdhci_realize(DeviceState *dev, Error **errp)
++{
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++    VirtIOSDHCI *vsd = VIRTIO_SDHCI(dev);
++
++    virtio_init(vdev, VIRTIO_ID_SDHCI, 0);
++
++    vsd->vq = virtio_add_queue(vdev, 1, handle_request);
++
++    BlockBackend *blk = vsd->blk;
++    if (!blk) {
++        error_setg(errp, "Block backend not found");
++        return;
++    }
++
++    qbus_init(&vsd->sdbus, sizeof(vsd->sdbus), TYPE_SD_BUS, dev, "sd-bus");
++    DeviceState *card = qdev_new(TYPE_SD_CARD);
++    qdev_prop_set_drive_err(card, "drive", blk, &error_fatal);
++    qdev_realize_and_unref(card,
++    qdev_get_child_bus(dev, "sd-bus"), &error_fatal);
++}
++
++static void virtio_sdhci_unrealize(DeviceState *dev)
++{
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++    virtio_cleanup(vdev);
++}
++
++static uint64_t virtio_sdhci_get_features(VirtIODevice *vdev,
++                                          uint64_t features, Error **errp)
++{
++    return features;
++}
++
++static void virtio_sdhci_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    VirtioDeviceClass *k = VIRTIO_DEVICE_CLASS(klass);
++
++    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
++
++    k->realize = virtio_sdhci_realize;
++    k->unrealize = virtio_sdhci_unrealize;
++    k->get_features = virtio_sdhci_get_features;
++}
++
++static const TypeInfo virtio_sdhci_info = {
++    .name = TYPE_VIRTIO_SDHCI,
++    .parent = TYPE_VIRTIO_DEVICE,
++    .instance_size = sizeof(VirtIOSDHCI),
++    .class_init = virtio_sdhci_class_init,
++};
++
++static void virtio_register_types(void)
++{
++    type_register_static(&virtio_sdhci_info);
++}
++
++type_init(virtio_register_types)
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index 47baf00366..c7a8707ba6 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -68,6 +68,7 @@ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_IOMMU', if_true: files('virtio-iommu-pci.
+ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem-pci.c'))
+ virtio_pci_ss.add(when: 'CONFIG_VHOST_VDPA_DEV', if_true: files('vdpa-dev-pci.c'))
+ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_MD', if_true: files('virtio-md-pci.c'))
++virtio_pci_ss.add(when: 'CONFIG_VIRTIO_SDHCI', if_true: files('virtio-sdhci-pci.c'))
+ 
+ specific_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
+ 
+diff --git a/hw/virtio/virtio-sdhci-pci.c b/hw/virtio/virtio-sdhci-pci.c
+new file mode 100644
+index 0000000000..889352f577
+--- /dev/null
++++ b/hw/virtio/virtio-sdhci-pci.c
+@@ -0,0 +1,86 @@
++#include "qemu/osdep.h"
++
++#include "hw/virtio/virtio-pci.h"
++#include "hw/virtio/virtio-sdhci.h"
++#include "hw/qdev-properties-system.h"
++#include "qemu/typedefs.h"
++#include "qapi/error.h"
++#include "sysemu/block-backend-global-state.h"
++
++typedef struct VirtIOSDHCIPCI VirtIOSDHCIPCI;
++
++/*
++ * virtio-mmc-pci: This extends VirtioPCIProxy.
++ */
++#define TYPE_VIRTIO_SDHCI_PCI "virtio-sdhci-pci-base"
++DECLARE_INSTANCE_CHECKER(VirtIOSDHCIPCI, VIRTIO_SDHCI_PCI,
++                         TYPE_VIRTIO_SDHCI_PCI)
++
++struct VirtIOSDHCIPCI {
++    VirtIOPCIProxy parent_obj;
++    VirtIOSDHCI vdev;
++    BlockBackend *blk;
++};
++
++static void virtio_sdhci_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
++{
++    VirtIOSDHCIPCI *vsd = VIRTIO_SDHCI_PCI(vpci_dev);
++    DeviceState *dev = DEVICE(&vsd->vdev);
++    VirtIOSDHCI *vsd_dev;
++
++    if (!vsd->blk) {
++        error_setg(errp, "Drive property not set");
++        return;
++    }
++    vsd_dev = &vsd->vdev;
++    vsd_dev->blk = vsd->blk;
++    blk_detach_dev(vsd->blk, DEVICE(vpci_dev));
++
++    qdev_set_parent_bus(dev, BUS(&vpci_dev->bus), errp);
++
++    virtio_pci_force_virtio_1(vpci_dev);
++    object_property_set_bool(OBJECT(dev), "realized", true, errp);
++}
++
++static Property virtio_sdhci_properties[] = {
++    DEFINE_PROP_DRIVE("drive", VirtIOSDHCIPCI, blk),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void virtio_sdhci_pci_class_init(ObjectClass *oc, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    VirtioPCIClass *virtio_pci_class = VIRTIO_PCI_CLASS(oc);
++    PCIDeviceClass *pci_device_class = PCI_DEVICE_CLASS(oc);
++
++    device_class_set_props(dc, virtio_sdhci_properties);
++    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
++
++    virtio_pci_class->realize = virtio_sdhci_pci_realize;
++
++    pci_device_class->revision = VIRTIO_PCI_ABI_VERSION;
++    pci_device_class->class_id = PCI_CLASS_MEMORY_FLASH;
++}
++
++static void virtio_sdhci_pci_instance_init(Object *obj)
++{
++    VirtIOSDHCIPCI *dev = VIRTIO_SDHCI_PCI(obj);
++
++    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
++                                TYPE_VIRTIO_SDHCI);
++}
++
++static const VirtioPCIDeviceTypeInfo virtio_sdhci_pci_info = {
++    .base_name     = TYPE_VIRTIO_SDHCI_PCI,
++    .generic_name  = "virtio-sdhci-pci",
++    .instance_size = sizeof(VirtIOSDHCIPCI),
++    .class_init    = virtio_sdhci_pci_class_init,
++    .instance_init = virtio_sdhci_pci_instance_init,
++};
++
++static void virtio_sdhci_pci_register(void)
++{
++    virtio_pci_types_register(&virtio_sdhci_pci_info);
++}
++
++type_init(virtio_sdhci_pci_register)
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 7549094154..90a346dfc0 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -193,7 +193,8 @@ const char *virtio_device_names[] = {
+     [VIRTIO_ID_PARAM_SERV] = "virtio-param-serv",
+     [VIRTIO_ID_AUDIO_POLICY] = "virtio-audio-pol",
+     [VIRTIO_ID_BT] = "virtio-bluetooth",
+-    [VIRTIO_ID_GPIO] = "virtio-gpio"
++    [VIRTIO_ID_GPIO] = "virtio-gpio",
++    [VIRTIO_ID_SDHCI] = "virtio-sdhci",
+ };
+ 
+ static const char *virtio_id_to_name(uint16_t device_id)
+diff --git a/include/hw/virtio/virtio-sdhci.h b/include/hw/virtio/virtio-sdhci.h
+new file mode 100644
+index 0000000000..0d91f4a973
+--- /dev/null
++++ b/include/hw/virtio/virtio-sdhci.h
+@@ -0,0 +1,22 @@
++#ifndef QEMU_VIRTIO_SDHCI_H
++#define QEMU_VIRTIO_SDHCI_H
++
++#include "hw/virtio/virtio.h"
++#include "hw/sd/sd.h"
++#include "qemu/typedefs.h"
++
++#define TYPE_VIRTIO_SDHCI "virtio-sdhci-device"
++#define VIRTIO_SDHCI(obj) \
++    OBJECT_CHECK(VirtIOSDHCI, (obj), TYPE_VIRTIO_SDHCI)
++#define VIRTIO_SDHCI_GET_PARENT_CLASS(obj) \
++    OBJECT_GET_PARENT_CLASS(VIRTIO_SDHCI(obj), TYPE_VIRTIO_SDHCI)
++
++typedef struct VirtIOSDHCI {
++    VirtIODevice parent_obj;
++
++    VirtQueue *vq;
++    SDBus sdbus;
++    BlockBackend *blk;
++} VirtIOSDHCI;
++
++#endif
+diff --git a/include/standard-headers/linux/virtio_ids.h b/include/standard-headers/linux/virtio_ids.h
+index 7aa2eb7662..7f13999359 100644
+--- a/include/standard-headers/linux/virtio_ids.h
++++ b/include/standard-headers/linux/virtio_ids.h
+@@ -68,6 +68,7 @@
+ #define VIRTIO_ID_AUDIO_POLICY		39 /* virtio audio policy */
+ #define VIRTIO_ID_BT			40 /* virtio bluetooth */
+ #define VIRTIO_ID_GPIO			41 /* virtio gpio */
++#define VIRTIO_ID_SDHCI			42 /* virtio sdhci */
+ 
+ /*
+  * Virtio Transitional IDs
+-- 
+2.34.1
 
 
