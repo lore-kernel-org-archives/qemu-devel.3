@@ -4,36 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD89C31D97
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B370BC3271E
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPLtJ-00048A-Gk; Thu, 04 Jul 2024 08:48:52 -0400
+	id 1sPLtm-0004gQ-C4; Thu, 04 Jul 2024 08:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLt6-00047N-TD; Thu, 04 Jul 2024 08:48:40 -0400
+ id 1sPLtd-0004Vn-59; Thu, 04 Jul 2024 08:49:09 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLt3-0006HJ-0q; Thu, 04 Jul 2024 08:48:36 -0400
+ id 1sPLta-0006Tg-7H; Thu, 04 Jul 2024 08:49:08 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D32F67739A;
- Thu,  4 Jul 2024 15:48:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 66969773A2;
+ Thu,  4 Jul 2024 15:48:22 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6E9A2FE77F;
+ by tsrv.corpit.ru (Postfix) with SMTP id F28EDFE787;
  Thu,  4 Jul 2024 15:48:26 +0300 (MSK)
-Received: (nullmailer pid 1471762 invoked by uid 1000);
+Received: (nullmailer pid 1471789 invoked by uid 1000);
  Thu, 04 Jul 2024 12:48:26 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.13 00/17] Patch Round-up for stable 7.2.13,
- freeze on 2024-07-14
-Date: Thu,  4 Jul 2024 15:48:07 +0300
-Message-Id: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.13 08/17] ci,
+ docker: update CentOS and OpenSUSE Python to non-EOL versions
+Date: Thu,  4 Jul 2024 15:48:15 +0300
+Message-Id: <20240704124826.1471715-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
+References: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -59,58 +63,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v7.2.13:
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
+Python 3.6 is at end-of-life.  Update the libvirt-ci module to a
+version that supports overrides for targets and package mappings;
+this way, QEMU can use the newer versions provided by CentOS 8 (Python
+3.8) and OpenSUSE 15.3 (Python 3.9).
 
-Patch freeze is 2024-07-14, and the release is planned for 2024-07-16:
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit d639cf79783a1eba349b7705e0fb270fa76118a4)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-  https://wiki.qemu.org/Planning/7.2
+diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
+index 98c26ecf18..b4c99be195 100644
+--- a/docs/devel/testing.rst
++++ b/docs/devel/testing.rst
+@@ -473,6 +473,12 @@ thus some extra preparation steps will be required first
+    the ``libvirt-ci`` submodule to point to a commit that contains
+    the ``mappings.yml`` update.
+ 
++For enterprise distros that default to old, end-of-life versions of the
++Python runtime, QEMU uses a separate set of mappings that work with more
++recent versions.  These can be found in ``tests/lcitool/mappings.yml``.
++Modifying this file should not be necessary unless the new pre-requisite
++is a Python library or tool.
++
+ 
+ Adding new OS distros
+ ^^^^^^^^^^^^^^^^^^^^^
+diff --git a/tests/docker/dockerfiles/centos8.docker b/tests/docker/dockerfiles/centos8.docker
+index 1f70d41aeb..cc09402eb3 100644
+--- a/tests/docker/dockerfiles/centos8.docker
++++ b/tests/docker/dockerfiles/centos8.docker
+@@ -82,7 +82,6 @@ RUN dnf distro-sync -y && \
+         lzo-devel \
+         make \
+         mesa-libgbm-devel \
+-        meson \
+         ncurses-devel \
+         nettle-devel \
+         ninja-build \
+@@ -95,13 +94,12 @@ RUN dnf distro-sync -y && \
+         pixman-devel \
+         pkgconfig \
+         pulseaudio-libs-devel \
+-        python3 \
+-        python3-PyYAML \
+-        python3-numpy \
+-        python3-pillow \
+-        python3-pip \
+-        python3-sphinx \
+-        python3-sphinx_rtd_theme \
++        python38 \
++        python38-PyYAML \
++        python38-numpy \
++        python38-pip \
++        python38-setuptools \
++        python38-wheel \
+         rdma-core-devel \
+         rpm \
+         sed \
+@@ -130,8 +128,14 @@ RUN dnf distro-sync -y && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+ 
++RUN /usr/bin/pip3.8 install \
++                    meson==0.63.2 \
++                    pillow \
++                    sphinx \
++                    sphinx-rtd-theme
++
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+ ENV NINJA "/usr/bin/ninja"
+-ENV PYTHON "/usr/bin/python3"
++ENV PYTHON "/usr/bin/python3.8"
+diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
+index 4361b01464..4f1191dc05 100644
+--- a/tests/docker/dockerfiles/opensuse-leap.docker
++++ b/tests/docker/dockerfiles/opensuse-leap.docker
+@@ -90,16 +90,9 @@ RUN zypper update -y && \
+            pcre-devel-static \
+            perl-base \
+            pkgconfig \
+-           python3-Pillow \
+-           python3-PyYAML \
+-           python3-Sphinx \
+-           python3-base \
+-           python3-numpy \
+-           python3-opencv \
+-           python3-pip \
+-           python3-setuptools \
+-           python3-sphinx_rtd_theme \
+-           python3-wheel \
++           python39-base \
++           python39-pip \
++           python39-setuptools \
+            rdma-core-devel \
+            rpm \
+            sed \
+@@ -131,10 +124,15 @@ RUN zypper update -y && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+ 
+-RUN /usr/bin/pip3 install meson==0.56.0
++RUN /usr/bin/pip3.9 install \
++                    PyYAML \
++                    meson==0.63.2 \
++                    pillow \
++                    sphinx \
++                    sphinx-rtd-theme
+ 
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+ ENV MAKE "/usr/bin/make"
+ ENV NINJA "/usr/bin/ninja"
+-ENV PYTHON "/usr/bin/python3"
++ENV PYTHON "/usr/bin/python3.9"
+diff --git a/tests/docker/dockerfiles/ubuntu2004.docker b/tests/docker/dockerfiles/ubuntu2004.docker
+index 9417bca2fa..39c744eba9 100644
+--- a/tests/docker/dockerfiles/ubuntu2004.docker
++++ b/tests/docker/dockerfiles/ubuntu2004.docker
+@@ -140,7 +140,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+ 
+-RUN /usr/bin/pip3 install meson==0.56.0
++RUN /usr/bin/pip3 install meson==0.63.2
+ 
+ ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
+ ENV LANG "en_US.UTF-8"
+diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+new file mode 100644
+index 0000000000..e4719e4551
+--- /dev/null
++++ b/tests/lcitool/mappings.yml
+@@ -0,0 +1,77 @@
++mappings:
++  flake8:
++    CentOSStream8:
++    OpenSUSELeap153:
++
++  meson:
++    CentOSStream8:
++    OpenSUSELeap153:
++
++  python3:
++    CentOSStream8: python38
++    OpenSUSELeap153: python39-base
++
++  python3-PyYAML:
++    CentOSStream8: python38-PyYAML
++    OpenSUSELeap153:
++
++  python3-devel:
++    CentOSStream8: python38-devel
++    OpenSUSELeap153: python39-devel
++
++  python3-docutils:
++    CentOSStream8:
++    OpenSUSELeap153:
++
++  python3-numpy:
++    CentOSStream8: python38-numpy
++    OpenSUSELeap153:
++
++  python3-opencv:
++    CentOSStream8:
++    OpenSUSELeap153:
++
++  python3-pillow:
++    CentOSStream8:
++    OpenSUSELeap153:
++
++  python3-pip:
++    CentOSStream8: python38-pip
++    OpenSUSELeap153: python39-pip
++
++  python3-pillow:
++    CentOSStream8:
++    OpenSUSELeap153:
++
++  python3-selinux:
++    CentOSStream8:
++    OpenSUSELeap153:
++
++  python3-setuptools:
++    CentOSStream8: python38-setuptools
++    OpenSUSELeap153: python39-setuptools
++
++  python3-sphinx:
++    CentOSStream8:
++    OpenSUSELeap153:
++
++  python3-sphinx-rtd-theme:
++    CentOSStream8:
++    OpenSUSELeap153:
++
++  python3-venv:
++    CentOSStream8: python38
++    OpenSUSELeap153: python39-base
++
++  python3-wheel:
++    CentOSStream8: python38-wheel
++    OpenSUSELeap153: python39-pip
++
++pypi_mappings:
++  # Request more recent version
++  meson:
++    default: meson==0.63.2
++
++  # Drop packages that need devel headers
++  python3-numpy:
++    OpenSUSELeap153:
+diff --git a/tests/lcitool/targets/centos-stream-8.yml b/tests/lcitool/targets/centos-stream-8.yml
+new file mode 100644
+index 0000000000..6b11160fd1
+--- /dev/null
++++ b/tests/lcitool/targets/centos-stream-8.yml
+@@ -0,0 +1,3 @@
++paths:
++  pip3: /usr/bin/pip3.8
++  python: /usr/bin/python3.8
+diff --git a/tests/lcitool/targets/opensuse-leap-153.yml b/tests/lcitool/targets/opensuse-leap-153.yml
+new file mode 100644
+index 0000000000..683016e007
+--- /dev/null
++++ b/tests/lcitool/targets/opensuse-leap-153.yml
+@@ -0,0 +1,3 @@
++paths:
++  pip3: /usr/bin/pip3.9
++  python: /usr/bin/python3.9
+-- 
+2.39.2
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
-
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01 3973615e7fba Mark Cave-Ayland:
-   target/i386: fix size of EBP writeback in gen_enter()
-02 2c3e4e2de699 Alexey Dobriyan:
-   virtio-net: drop too short packets early
-03 b1cf266c82cb Gerd Hoffmann:
-   stdvga: fix screen blanking
-04 54b27921026d Ilya Leoshkevich:
-   linux-user: Make TARGET_NR_setgroups affect only the current thread
-05 521d7fb3ebdf Richard Henderson:
-   tcg/loongarch64: Fix tcg_out_movi vs some pcrel pointers
-06 e030d08c2fc0 Thomas Huth:
-   gitlab-ci.d/buildtest: Merge the --without-default-* jobs
-07 0054dc8bde40 Marc-André Lureau:
-   Update lcitool and fedora to 37
-08 d639cf79783a Paolo Bonzini:
-   ci, docker: update CentOS and OpenSUSE Python to non-EOL versions
-09 641b1efe01b2 Thomas Huth:
-   tests: Update our CI to use CentOS Stream 9 instead of 8
-10 7c7d369b33f0 Alex Bennée:
-   tests: don't run benchmarks for the tsan build
-11 f51f90c65ed7 Thomas Huth:
-   gitlab-ci: Disable the riscv64-debian-cross-container by default
-12 903916f0a017 Chuang Xu:
-   i386/cpu: fixup number of addressable IDs for processor cores in the 
-   physical package
-13 76bccf3cb9d9 Richard Henderson:
-   target/arm: Fix VCMLA Dd, Dn, Dm[idx]
-14 bd385a5298d7 Kevin Wolf:
-   qcow2: Don't open data_file with BDRV_O_NO_IO
-15 2eb42a728d27 Kevin Wolf:
-   iotests/244: Don't store data-file with protocol in image
-16 7e1110664ecb Kevin Wolf:
-   iotests/270: Don't store data-file with json: prefix in image
-17 7ead94699861 Kevin Wolf:
-   block: Parse filenames only when explicitly requested
 
