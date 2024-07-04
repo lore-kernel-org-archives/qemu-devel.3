@@ -4,41 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82078C31D97
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D07C5C31D97
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPLuO-0006Ei-4U; Thu, 04 Jul 2024 08:49:56 -0400
+	id 1sPLti-0004ea-99; Thu, 04 Jul 2024 08:49:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLuD-0005Wt-Dr; Thu, 04 Jul 2024 08:49:47 -0400
+ id 1sPLtY-0004QJ-DI; Thu, 04 Jul 2024 08:49:04 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLuA-0006YS-C2; Thu, 04 Jul 2024 08:49:44 -0400
+ id 1sPLtW-0006R4-Fc; Thu, 04 Jul 2024 08:49:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F0EC1773AA;
+ by isrv.corpit.ru (Postfix) with ESMTP id 56885773A1;
  Thu,  4 Jul 2024 15:48:22 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 87E0EFE78F;
- Thu,  4 Jul 2024 15:48:27 +0300 (MSK)
-Received: (nullmailer pid 1471814 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id D5A69FE786;
+ Thu,  4 Jul 2024 15:48:26 +0300 (MSK)
+Received: (nullmailer pid 1471786 invoked by uid 1000);
  Thu, 04 Jul 2024 12:48:26 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.13 16/17] iotests/270: Don't store data-file with json:
- prefix in image
-Date: Thu,  4 Jul 2024 15:48:23 +0300
-Message-Id: <20240704124826.1471715-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.13 07/17] Update lcitool and fedora to 37
+Date: Thu,  4 Jul 2024 15:48:14 +0300
+Message-Id: <20240704124826.1471715-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
 References: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,52 +65,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-We want to disable filename parsing for data files because it's too easy
-to abuse in malicious image files. Make the test ready for the change by
-passing the data file explicitly in command line options.
+Fedora 35 is EOL.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-(cherry picked from commit 7e1110664ecbc4826f3c978ccb06b6c1bce823e6)
+Update to upstream lcitool, that dropped f35 and added f37.
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20230110132700.833690-7-marcandre.lureau@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20230124180127.1881110-11-alex.bennee@linaro.org>
+(cherry picked from commit 0054dc8bde408d61257bacdb489bbacc4ca5cde5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/270 b/tests/qemu-iotests/270
-index 74352342db..c37b674aa2 100755
---- a/tests/qemu-iotests/270
-+++ b/tests/qemu-iotests/270
-@@ -60,8 +60,16 @@ _make_test_img -o cluster_size=2M,data_file="$TEST_IMG.orig" \
- # "write" 2G of data without using any space.
- # (qemu-img create does not like it, though, because null-co does not
- # support image creation.)
--$QEMU_IMG amend -o data_file="json:{'driver':'null-co',,'size':'4294967296'}" \
--    "$TEST_IMG"
-+test_img_with_null_data="json:{
-+    'driver': '$IMGFMT',
-+    'file': {
-+        'filename': '$TEST_IMG'
-+    },
-+    'data-file': {
-+        'driver': 'null-co',
-+        'size':'4294967296'
-+    }
-+}"
+diff --git a/tests/docker/dockerfiles/fedora-win32-cross.docker b/tests/docker/dockerfiles/fedora-win32-cross.docker
+index 75383ba185..cc5d1ac4be 100644
+--- a/tests/docker/dockerfiles/fedora-win32-cross.docker
++++ b/tests/docker/dockerfiles/fedora-win32-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross mingw32 fedora-35 qemu
++#  $ lcitool dockerfile --layers all --cross mingw32 fedora-37 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
- # This gives us a range of:
- #   2^31 - 512 + 768 - 1 = 2^31 + 255 > 2^31
-@@ -74,7 +82,7 @@ $QEMU_IMG amend -o data_file="json:{'driver':'null-co',,'size':'4294967296'}" \
- # on L2 boundaries, we need large L2 tables; hence the cluster size of
- # 2 MB.  (Anything from 256 kB should work, though, because then one L2
- # table covers 8 GB.)
--$QEMU_IO -c "write 768 $((2 ** 31 - 512))" "$TEST_IMG" | _filter_qemu_io
-+$QEMU_IO -c "write 768 $((2 ** 31 - 512))" "$test_img_with_null_data" | _filter_qemu_io
+-FROM registry.fedoraproject.org/fedora:35
++FROM registry.fedoraproject.org/fedora:37
  
- _check_test_img
+ RUN dnf install -y nosync && \
+     echo -e '#!/bin/sh\n\
+diff --git a/tests/docker/dockerfiles/fedora-win64-cross.docker b/tests/docker/dockerfiles/fedora-win64-cross.docker
+index 98c03dc13b..cabbf4edfc 100644
+--- a/tests/docker/dockerfiles/fedora-win64-cross.docker
++++ b/tests/docker/dockerfiles/fedora-win64-cross.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all --cross mingw64 fedora-35 qemu
++#  $ lcitool dockerfile --layers all --cross mingw64 fedora-37 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
+-FROM registry.fedoraproject.org/fedora:35
++FROM registry.fedoraproject.org/fedora:37
+ 
+ RUN dnf install -y nosync && \
+     echo -e '#!/bin/sh\n\
+diff --git a/tests/docker/dockerfiles/fedora.docker b/tests/docker/dockerfiles/fedora.docker
+index d200c7fc10..f44b005000 100644
+--- a/tests/docker/dockerfiles/fedora.docker
++++ b/tests/docker/dockerfiles/fedora.docker
+@@ -1,10 +1,10 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all fedora-35 qemu
++#  $ lcitool dockerfile --layers all fedora-37 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
+ 
+-FROM registry.fedoraproject.org/fedora:35
++FROM registry.fedoraproject.org/fedora:37
+ 
+ RUN dnf install -y nosync && \
+     echo -e '#!/bin/sh\n\
+diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
+index e3eb28cf2e..319a534c22 160000
+--- a/tests/lcitool/libvirt-ci
++++ b/tests/lcitool/libvirt-ci
+@@ -1 +1 @@
+-Subproject commit e3eb28cf2e17fbcf7fe7e19505ee432b8ec5bbb5
++Subproject commit 319a534c220f53fc8670254cac25d6f662c82112
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index fa966e4009..a5ea0efc3b 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -111,7 +111,7 @@ try:
+     generate_dockerfile("centos8", "centos-stream-8")
+     generate_dockerfile("debian-amd64", "debian-11",
+                         trailer="".join(debian11_extras))
+-    generate_dockerfile("fedora", "fedora-35")
++    generate_dockerfile("fedora", "fedora-37")
+     generate_dockerfile("opensuse-leap", "opensuse-leap-153")
+     generate_dockerfile("ubuntu2004", "ubuntu-2004",
+                         trailer="".join(ubuntu2004_tsanhack))
+@@ -161,12 +161,12 @@ try:
+                         trailer=cross_build("s390x-linux-gnu-",
+                                             "s390x-softmmu,s390x-linux-user"))
+ 
+-    generate_dockerfile("fedora-win32-cross", "fedora-35",
++    generate_dockerfile("fedora-win32-cross", "fedora-37",
+                         cross="mingw32",
+                         trailer=cross_build("i686-w64-mingw32-",
+                                             "i386-softmmu"))
+ 
+-    generate_dockerfile("fedora-win64-cross", "fedora-35",
++    generate_dockerfile("fedora-win64-cross", "fedora-37",
+                         cross="mingw64",
+                         trailer=cross_build("x86_64-w64-mingw32-",
+                                             "x86_64-softmmu"))
 -- 
 2.39.2
 
