@@ -4,43 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7855AC30653
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C55C3271F
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 04:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPDg9-0001gd-5h; Thu, 04 Jul 2024 00:02:41 -0400
+	id 1sPDg1-0001X5-La; Thu, 04 Jul 2024 00:02:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1sPDg7-0001gI-R2
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:02:39 -0400
+ id 1sPDfz-0001UC-NE
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:02:31 -0400
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1sPDg5-0003Uf-SB
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:02:39 -0400
+ id 1sPDft-0003T0-58
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:02:31 -0400
 Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
- by Atcsqr.andestech.com with ESMTPS id 46442LiO005710
+ by Atcsqr.andestech.com with ESMTPS id 464422ja005454
  (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
- Thu, 4 Jul 2024 12:02:21 +0800 (+08)
+ Thu, 4 Jul 2024 12:02:02 +0800 (+08)
  (envelope-from alvinga@andestech.com)
 Received: from atctrx.andestech.com (10.0.15.190) by ATCPCS34.andestech.com
  (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 4 Jul
- 2024 12:02:21 +0800
+ 2024 12:02:02 +0800
 To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
  <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
  <zhiwei_liu@linux.alibaba.com>, Alvin Chang <alvinga@andestech.com>
-Subject: [PATCH 2/2] target/riscv: Add textra matching condition for the
- triggers
-Date: Thu, 4 Jul 2024 12:02:00 +0800
-Message-ID: <20240704040200.243892-3-alvinga@andestech.com>
+Subject: [PATCH 0/2] RISC-V: Add preliminary textra trigger CSR functions
+Date: Thu, 4 Jul 2024 12:01:58 +0800
+Message-ID: <20240704040200.243892-1-alvinga@andestech.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240704040200.243892-1-alvinga@andestech.com>
-References: <20240704040200.243892-1-alvinga@andestech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -48,7 +45,7 @@ X-Originating-IP: [10.0.15.190]
 X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
  ATCPCS34.andestech.com (10.0.1.134)
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 46442LiO005710
+X-MAIL: Atcsqr.andestech.com 464422ja005454
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -74,118 +71,23 @@ From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to RISC-V Debug specification, the optional textra32 and
-textra64 trigger CSRs can be used to configure additional matching
-conditions for the triggers. For example, if the textra.MHSELECT field
-is set to 4 (mcontext), this trigger will only match or fire if the low
-bits of mcontext/hcontext equal textra.MHVALUE field.
+According to RISC-V Debug specification, the optional textra32 and textra64
+trigger CSRs can be used to configure additional matching conditions for the
+triggers.
 
-This commit adds the aforementioned matching condition as common trigger
-matching conditions. Currently, the only legal values of textra.MHSELECT
-are 0 (ignore) and 4 (mcontext). When textra.MHSELECT is 0, we pass the
-checking. When textra.MHSELECT is 4, we compare textra.MHVALUE with
-mcontext CSR. The remaining fields, such as textra.SBYTEMASK,
-textra.SVALUE, and textra.SSELECT, are hardwired to zero for now. Thus,
-we skip checking them here.
+This series support to write MHVALUE and MHSELECT fields into textra32 and
+textra64 trigger CSRs. Besides, the additional matching condition between
+textra.MHVALUE and mcontext CSR is also implemented.
 
-Signed-off-by: Alvin Chang <alvinga@andestech.com>
----
- target/riscv/debug.c | 63 +++++++++++++++++++++++++++++++++++++++++++-
- target/riscv/debug.h |  3 +++
- 2 files changed, 65 insertions(+), 1 deletion(-)
+Alvin Chang (2):
+  target/riscv: Preliminary textra trigger CSR writting support
+  target/riscv: Add textra matching condition for the triggers
 
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index f7d8f5e320..58dd2f25ae 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -367,11 +367,72 @@ static bool trigger_priv_match(CPURISCVState *env, trigger_type_t type,
-     return false;
- }
- 
-+static bool trigger_textra_match(CPURISCVState *env, trigger_type_t type,
-+                                 int trigger_index)
-+{
-+    target_ulong textra = env->tdata3[trigger_index];
-+    target_ulong mhvalue, mhselect;
-+
-+    if (type < TRIGGER_TYPE_AD_MATCH || type > TRIGGER_TYPE_AD_MATCH6) {
-+        /* textra checking is only applicable when type is 2, 3, 4, 5, or 6 */
-+        return true;
-+    }
-+
-+    switch (riscv_cpu_mxl(env)) {
-+    case MXL_RV32:
-+        mhvalue  = get_field(textra, TEXTRA32_MHVALUE);
-+        mhselect = get_field(textra, TEXTRA32_MHSELECT);
-+        break;
-+    case MXL_RV64:
-+    case MXL_RV128:
-+        mhvalue  = get_field(textra, TEXTRA64_MHVALUE);
-+        mhselect = get_field(textra, TEXTRA64_MHSELECT);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    /* Check mhvalue and mhselect. */
-+    switch (mhselect) {
-+    case MHSELECT_IGNORE:
-+        break;
-+    case MHSELECT_MCONTEXT:
-+        /* Match or fire if the low bits of mcontext/hcontext equal mhvalue. */
-+        if (riscv_has_ext(env, RVH)) {
-+            if (mhvalue != env->mcontext) {
-+                return false;
-+            }
-+        } else {
-+            switch (riscv_cpu_mxl(env)) {
-+            case MXL_RV32:
-+                if (mhvalue != (env->mcontext & MCONTEXT32)) {
-+                    return false;
-+                }
-+                break;
-+            case MXL_RV64:
-+            case MXL_RV128:
-+                if (mhvalue != (env->mcontext & MCONTEXT64)) {
-+                    return false;
-+                }
-+                break;
-+            default:
-+                g_assert_not_reached();
-+            }
-+        }
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    return true;
-+}
-+
- /* Common matching conditions for all types of the triggers. */
- static bool trigger_common_match(CPURISCVState *env, trigger_type_t type,
-                                  int trigger_index)
- {
--    return trigger_priv_match(env, type, trigger_index);
-+    return trigger_priv_match(env, type, trigger_index) &&
-+           trigger_textra_match(env, type, trigger_index);
- }
- 
- /* type 2 trigger */
-diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-index c347863578..f76b8f944a 100644
---- a/target/riscv/debug.h
-+++ b/target/riscv/debug.h
-@@ -131,6 +131,9 @@ enum {
- #define ITRIGGER_VU           BIT(25)
- #define ITRIGGER_VS           BIT(26)
- 
-+#define MHSELECT_IGNORE       0
-+#define MHSELECT_MCONTEXT     4
-+
- bool tdata_available(CPURISCVState *env, int tdata_index);
- 
- target_ulong tselect_csr_read(CPURISCVState *env);
+ target/riscv/cpu_bits.h |  10 +++
+ target/riscv/debug.c    | 144 ++++++++++++++++++++++++++++++++++++++--
+ target/riscv/debug.h    |   3 +
+ 3 files changed, 150 insertions(+), 7 deletions(-)
+
 -- 
 2.34.1
 
