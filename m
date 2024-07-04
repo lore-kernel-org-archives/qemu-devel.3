@@ -4,135 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2418FC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 11:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCDCFC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 11:55:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPKxM-0002zT-9t; Thu, 04 Jul 2024 07:48:56 -0400
+	id 1sPL2d-0004qn-V1; Thu, 04 Jul 2024 07:54:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sPKxF-0002z1-Ow
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 07:48:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sPKxA-0000m9-Se
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 07:48:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720093723;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=wbnzEb95xqpOM6pTDVI5AD87mXajYOGOfP+VPhuNCZQ=;
- b=RXLkXo+N3nDtlnydFzkSSzY3D+duwDLUNAaFrYMi9pokzpGriuomTZRawB5i/ideLUZrov
- Jf9aTZXbXxUs71NedQs/MyHge2JmwIb3DJFzewTRoMKoL65cBsgCP0MQAfDigp6WJilAV3
- PninwLIcQVVS8ucOHha+VNGkHrifsHE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-tDUz1uM4OQuGMM7weJEQUw-1; Thu, 04 Jul 2024 07:48:42 -0400
-X-MC-Unique: tDUz1uM4OQuGMM7weJEQUw-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-36796a0687bso500446f8f.2
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 04:48:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sPL2c-0004qT-Rk; Thu, 04 Jul 2024 07:54:22 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sPL2a-0005W6-RP; Thu, 04 Jul 2024 07:54:22 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-70699b6afddso385573b3a.1; 
+ Thu, 04 Jul 2024 04:54:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720094058; x=1720698858; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ViFTZGz7b69e2OkFljgAsDm2Eyk0LA+22Hzj+AsoPlc=;
+ b=MM/MtRrzVnuTDFrdcPNUpKZXtNvpWYd74Y/OItNpVuLfMv5kgpYZRUfvORoZBHML5Q
+ G0yGeBKqnr1ADAG3TqXZvqzK76Rz9/TurtBeGMpQru5aD4EIanDTNAywAqFbzG0490VG
+ N28YKoUSfpS6i7WOq01ii9XaQFo/wWFxDBlwOAEgz1I3g2pLZTKgV8V4EgoUUJpId/z1
+ j1gr3KZ/nF6QnF425IY8grjc4pu4cuf8COyCz4kk0rrr//ItMUqDwDS0s78N//WpgVFk
+ k667OfSB0aALCUmurxjBB/PFDZiB9Hn9pOQ4I/U32j8XUlQjRy2UcoD1cfvkeF7RMKE+
+ GT9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720093721; x=1720698521;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wbnzEb95xqpOM6pTDVI5AD87mXajYOGOfP+VPhuNCZQ=;
- b=Nj3iuHEUeEHO3UfC5zmBnyA3wYbax7JDBQVYmCiv4HbeNSV9fM77VzhWXbZzbFxbyc
- CtVOFdewzqznmZ3dqi0wrRScezPuuvl1E6a8/n/+EfRWoMCMtof9Ec2q+9zZi9yLiPDj
- 9udQGuYeXIU5cMx42idYVOtDWigfbor+YLSRjQsTdn0RY8Nyl29aFg80psgrSbw/C0PO
- hCt1zqgNajXLFZRMAnhxCV7Fu/xiNm+olyingFuQxtUvScBVagViGdic/YM5UE2sYwDa
- 3NXaNL8LiUmBCAMJc2wExn9NrCPpuYgUjx9SFmE87P5hAULdG5KPfZkxZXm3ABsuungj
- wNlg==
+ d=1e100.net; s=20230601; t=1720094058; x=1720698858;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ViFTZGz7b69e2OkFljgAsDm2Eyk0LA+22Hzj+AsoPlc=;
+ b=Im+R50+wOIqRgZ32jSsY/xtdKN896Jx2D8wBSxgywjIXKp5QB0wJKKlbj4VcBDS6WT
+ TGpjbrPR0Kx5s3IoUvwPujHnP7UurqUYQ2j2TMeg8YfrZLVvUjAcHGtcT2X1zQ7o4Rtb
+ rB6KfvTJa33wLnRgWBp1HeQuIFxh08DicPz7UO7QD+ZBYUDS1usk/2A3twIV0vfe9kNU
+ Oo3/5TK5/pnD5LX2cqg9pEIZt4epEQ1dTgJnX3wXT867ZYgzKeCj+sBYc7qz3w2bjcZf
+ XY3V4JDsiSe0UPDpBdrstB/p2pzp+/8iafjchEQ7BJPxDl5nERVylLFWWLrB+4KnRiFR
+ YbxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVjzWC/t7rSr00T51yFsrjVBRE/YIOL7B7fpwZx586UWECGyVBA05l/FuKdpc8UjfWh593yRWdoL5fFBrjG/YVg8bVc+PQ=
-X-Gm-Message-State: AOJu0Yz5gcNNlUDedIjMrLDfdao93564lJKfZaZ6aeV0Uqv+yVqZQZgc
- MooWDH3U44Eh607nr/Y+tuhWxYo1cNLneaiIum4QYsPg7KXfjRJQNYIokf7xmxsC5/Vr63oSZ8f
- ZdcOeN3ofrvG4VyqS9ovC/6bTpXoKL5mIyh8nfmiYqCInXrUguy8M
-X-Received: by 2002:adf:e68b:0:b0:360:791c:aff2 with SMTP id
- ffacd0b85a97d-3679dd66a54mr994215f8f.47.1720093720892; 
- Thu, 04 Jul 2024 04:48:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFVpHWklQ0YSlJr59kKo3eI5IhBZ7DiQzDiwZU1SOPy6cPNlE9e3q25cpazsoS588ZaVaHITw==
-X-Received: by 2002:adf:e68b:0:b0:360:791c:aff2 with SMTP id
- ffacd0b85a97d-3679dd66a54mr994202f8f.47.1720093720569; 
- Thu, 04 Jul 2024 04:48:40 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-42-179-211.web.vodafone.de.
- [109.42.179.211]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367a29eab73sm431506f8f.41.2024.07.04.04.48.39
+ AJvYcCXJctOo9dkQ8dAJLCiiqxwgg1748nZJD9u1cjEDiAuv5qtPcLNgsIII3DwKqcGGXz4ofZUabzU/zKCchwJCWR6Ovc3XOu3pE7fCR99LScgGxwaEugG4srFULbw1VNDy/MYUXIDR7u8FNRGrs1ewbQZ8Lg==
+X-Gm-Message-State: AOJu0Yye2TmCcgYXql+MRqePjQPxIvrTzERKKnIa83g3O2L2O0dSklFr
+ 2NRC9lznGnD89v3Xz5O7v2TVtFP9R71nGXE5d6qvd7aQvKAco+Lq
+X-Google-Smtp-Source: AGHT+IGUnv9nENtwVvIWQfXl41NimERvUIA1EFGuqd5e3ncM9lBoCt4bFYYuTX9xBTs4ctWQhvkLKg==
+X-Received: by 2002:a05:6a00:2d0c:b0:70b:2a:15cd with SMTP id
+ d2e1a72fcca58-70b007e5689mr1638876b3a.0.1720094057904; 
+ Thu, 04 Jul 2024 04:54:17 -0700 (PDT)
+Received: from localhost (118-211-5-80.tpgi.com.au. [118.211.5.80])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-708044adb98sm12432735b3a.172.2024.07.04.04.54.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 04:48:40 -0700 (PDT)
-Message-ID: <db14e63e-3a86-4173-b4f6-cd469a511f10@redhat.com>
-Date: Thu, 4 Jul 2024 13:48:38 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/12] tests/qtest/migration-test: enable on s390x with TCG
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Prasad Pandit <pjp@fedoraproject.org>
-References: <20240702103310.347201-1-thuth@redhat.com>
- <20240702103310.347201-3-thuth@redhat.com>
- <D2GPQVG9Q7RY.1HUJR9EC96HWC@gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <D2GPQVG9Q7RY.1HUJR9EC96HWC@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ Thu, 04 Jul 2024 04:54:17 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 04 Jul 2024 21:54:06 +1000
+Message-Id: <D2GQG8AHHSZT.7SJ9JCS11EVN@gmail.com>
+Cc: "Akihiko Odaki" <akihiko.odaki@daynix.com>, "Eduardo Habkost"
+ <eduardo@habkost.net>, "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Yanan Wang"
+ <wangyanan55@huawei.com>, "John Snow" <jsnow@redhat.com>, "BALATON Zoltan"
+ <balaton@eik.bme.hu>, "Jiaxun Yang" <jiaxun.yang@flygoat.com>, "Daniel
+ Henrique Barboza" <danielhb413@gmail.com>, "Harsh Prateek Bora"
+ <harshpb@linux.ibm.com>, "Alexey Kardashevskiy" <aik@ozlabs.ru>, "Michael
+ S. Tsirkin" <mst@redhat.com>, =?utf-8?q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Peter Xu" <peterx@redhat.com>, "Fabiano Rosas"
+ <farosas@suse.de>, "Paolo Bonzini" <pbonzini@redhat.com>, "David
+ Hildenbrand" <david@redhat.com>, "Thomas Huth" <thuth@redhat.com>, "Laurent
+ Vivier" <lvivier@redhat.com>, <qemu-devel@nongnu.org>,
+ <qemu-block@nongnu.org>, <qemu-ppc@nongnu.org>
+Subject: Re: [PATCH v2 06/15] ppc/vof: Fix unaligned FDT property access
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "David Gibson" <david@gibson.dropbear.id.au>, "Peter Maydell"
+ <peter.maydell@linaro.org>
+X-Mailer: aerc 0.17.0
+References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+ <20240627-san-v2-6-750bb0946dbd@daynix.com>
+ <CAFEAcA-Zmc0BQgUiqEgzCvVGWyiPt9bo+Xt90n4wxhJ3_D91fA@mail.gmail.com>
+ <Zn98p6CUV0KnIo50@zatzit>
+In-Reply-To: <Zn98p6CUV0KnIo50@zatzit>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,29 +110,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/07/2024 13.20, Nicholas Piggin wrote:
-> On Tue Jul 2, 2024 at 8:33 PM AEST, Thomas Huth wrote:
->> From: Nicholas Piggin <npiggin@gmail.com>
->>
->> s390x with TCG is more stable now. Enable it.
-> 
-> Ah, you did a more complete version of my flic fix that migrates all the
-> state. I didn't see that go by but yeah I suspect that was probably the
-> correct thing to do. Thanks for that.
+On Sat Jun 29, 2024 at 1:16 PM AEST, David Gibson wrote:
+> On Fri, Jun 28, 2024 at 04:20:02PM +0100, Peter Maydell wrote:
+> > On Thu, 27 Jun 2024 at 14:39, Akihiko Odaki <akihiko.odaki@daynix.com> =
+wrote:
+> > >
+> > > FDT properties are aligned by 4 bytes, not 8 bytes.
+> > >
+> > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > > ---
+> > >  hw/ppc/vof.c | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > >
+> > > diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+> > > index e3b430a81f4f..b5b6514d79fc 100644
+> > > --- a/hw/ppc/vof.c
+> > > +++ b/hw/ppc/vof.c
+> > > @@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *fdt, GA=
+rray *claimed, uint64_t base)
+> > >      mem0_reg =3D fdt_getprop(fdt, offset, "reg", &proplen);
+> > >      g_assert(mem0_reg && proplen =3D=3D sizeof(uint32_t) * (ac + sc)=
+);
+> > >      if (sc =3D=3D 2) {
+> > > -        mem0_end =3D be64_to_cpu(*(uint64_t *)(mem0_reg + sizeof(uin=
+t32_t) * ac));
+> > > +        mem0_end =3D ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
+> > >      } else {
+> > >          mem0_end =3D be32_to_cpu(*(uint32_t *)(mem0_reg + sizeof(uin=
+t32_t) * ac));
+> > >      }
+> >=20
+> > I did wonder if there was a better way to do what this is doing,
+> > but neither we (in system/device_tree.c) nor libfdt seem to
+> > provide one.
+>
+> libfdt does provide unaligned access helpers (fdt32_ld() etc.), but
+> not an automatic aligned-or-unaligned helper.   Maybe we should add that?
 
-Drat, seems like I forgot to CC: you on that patch, sorry for that, that was 
-by accident and certainly not on purpose :-(
+Runtime test if the pointer is aligned?
 
-> Should the s390x flic migrate fix could be got to stable, perhaps?
+What about just fdt_prop32_ld() and fdt_prop64_ld() where you know it's
+4 byte aligned. Then just do 2 x 4 byte loads for the 64-bit, I don't
+think performance would matter so much to try get a single load.
 
-We need a new machine type for enabling the fix, so it does not make much 
-sense on stable, unfortunately.
-
-> There's some kvm-unit-tests s390x migration tests that can be enabled
-> after the fix too don't forget.
-
-Right, I'll try to remember to enable it once QEMU 9.1 has been released.
-
-  Thomas
-
+Thanks,
+Nick
 
