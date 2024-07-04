@@ -4,74 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5B2C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 15:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D8EC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 15:19:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPOAg-0000oI-Sl; Thu, 04 Jul 2024 11:14:54 -0400
+	id 1sPOEE-0002IF-8q; Thu, 04 Jul 2024 11:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sPOAe-0000lX-QQ
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 11:14:52 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sPOEB-0002HV-Td
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 11:18:31 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sPOAd-0003qP-BJ
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 11:14:52 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-58be2b8b6b2so1054363a12.3
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 08:14:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sPOEA-0006RI-8D
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 11:18:31 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1f4c7b022f8so4756365ad.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 08:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720106087; x=1720710887; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TnybP8MOaskl5toG+ba21y1kIgGyAjS0s8TVYYu0N2E=;
- b=keND24X48oorYEhb/4uYe3N31nGxlsT2CUIDpM2gMafcUJLroBpxFI+frbfUayTzb9
- ANfZhURsZvwJxCy8/xO4PtwqhgLth3Kvuriw0y3Ffj0M1YJBNcP3sG1Z6BfQD76YmF7m
- ey0GE2AgOE+JHhAhY4UiidrMDFNVgwGNB5PCIW0Y8Vp25/7C1eSMjsj+Kbo4W6rq9bfz
- HKLW4sAICVgHP6dpvSIpdHlJ0mjkd/TqR6XQdAWRQjv8fuafQP8gud8D4IiAG+E1Yd1C
- BKnlhXsm2qeVwjgCRMuQ5IoVk6klK48yzUQNGXJOkzLuGpqsExzxd+i7ZHzs+lNCXhR3
- qeuw==
+ d=linaro.org; s=google; t=1720106308; x=1720711108; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wLCzWgyAAzzMDQGCfRV1PTCC5bLFjvKFeRuUldkJYLA=;
+ b=ozdLVAfO2j9o07EtLDXywvCmP61dsr6SMuyJiU1FFaDSouzdZ7ihW8TVjdTjoydf/x
+ 9RLjGHu8qMcQASJ1Ch4HYHtKSSKMdbYl/2RncmfctRScCGEiTsB0HOozB/7lS0wlUA0u
+ 9ntFz1hRUnL5OvIvsey8ytLsm0yPqsmRHKlq6CLyW9PgbsRuRwIJ54i9JpUzJnOAJkEg
+ 9FFwGUEFPVXVXD6oGTTOltFdHj7Y1qsLovugKezWuSchcv9Qk8w6nhXRW1ZhmWxSlM3y
+ 0OHgrIlmeVeLPGcPCD6SW51ezjwXOENyc+dF54ShiL8qJSCk5F8O1V1K9DVrTrgB/ZMx
+ DtBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720106087; x=1720710887;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TnybP8MOaskl5toG+ba21y1kIgGyAjS0s8TVYYu0N2E=;
- b=p/zlX87Peaa1X70Jy39RhqDFcrs8D+AOpKbkCxFeqpzJ2b+U7o3n+gM1xNSgi7eUGl
- i0hg7W9sxKcQfoioQH+JTZ6i5m+WgE0BblPYWnQbqWS0um6MHpAowasn+CH+0f35Dnv8
- aSC6LXUF5IQWHJM/v9dD3VTmea0/HryZcsKWFOjtlqicW31LTj7woeuT4tX4tKjgS05q
- V6h6ugesK93zRAS2ZJdLMUTmtJeuZm5vRkw5PICiek2Le6CTc3yaJ7/9xQUCkkV0EMhK
- 8CruHEpFj+a5b/tbSKSBxrAiLpCpDODLYHz7tHq4ry1xaN2NJ5LODq3ITJB0w5TpvVAX
- E5Ww==
-X-Gm-Message-State: AOJu0YxPyAtQKuetGREJYCc2Eh+wVhOUPQfpE7BbAMNKJOLGGReORedh
- jJ+xHln+2Ytw9BQKgvtA2bRE7Nzgy7BZApveyQBnYn6uHpYyC3MSoabGEZoPzAgUC/aWUgtrvCh
- TDINbi0oHeBTwam6sv8EpuYhVHayJxy9s5h0JMSOmeTMhmocV
-X-Google-Smtp-Source: AGHT+IHXv86zt52LCYOr1rMsGsqfimDS9tbGG3QlxcIMfojv5QbUll7OmEtHGBWCUZGKG2OV3FFrkbpPzTmqx5oiwrM=
-X-Received: by 2002:a05:6402:2353:b0:57c:c166:ba6 with SMTP id
- 4fb4d7f45d1cf-58e59b42805mr1683680a12.19.1720106087611; Thu, 04 Jul 2024
- 08:14:47 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720106308; x=1720711108;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wLCzWgyAAzzMDQGCfRV1PTCC5bLFjvKFeRuUldkJYLA=;
+ b=Br9DIrzr3+RiXwG/4YdUzXnM0kId5XZSSoMYh/o/stAP2sJjrSPnV74MOztAqBqAn4
+ lE2StQaZrfKQyl7oJarodf4rom7kg5YX6q60mgmDshscFMOtvQ4Vso3ijB77VN+VwmpN
+ INSBcApuTbHYFdYQxiK24/Hh9IdXjZAnpjWnJsk3WwpYoxY5PjIZ0ginMNKF+E8vJ0Lc
+ Fwmxl74b5otKAw9K241FWPQvSWCSrwq/tTkPX7xo200z/kWY/cS0BPs3dBt4SCb0IOo1
+ 7pd85bvhXwHWaH3O+RwgI1BxJJLQFqlgiMGhm9E5gua3pMK8JQQ/5+Yn2AsEWLVjOknx
+ daZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVc9ABGOduek02trMudEpTJu8rspx8o2sh8Tu/5BL0zPgyIQ07dWdMRadLBkjAmefhxlsjJsbdk5z5Ido14PLHiBGWIciE=
+X-Gm-Message-State: AOJu0Ywup/EzgE72VC8c4stm+zQKx7OddtSeXbCLO1rlywr0Gok86g55
+ OoX/hm+CRSkAFdKl+bUrgRV33cupLS/mvIMwzisetkjb6P698YuzjvWC4rXgBFc=
+X-Google-Smtp-Source: AGHT+IEnPKvOCSFbNZrciko+h4KORH2CZhfIZ22CyPzWLK7wVzy7U5WhO6i9NXQahw0uG5Lp7r9xvQ==
+X-Received: by 2002:a17:902:ec92:b0:1fa:8f64:8b0d with SMTP id
+ d9443c01a7336-1fb33df55f9mr16234285ad.4.1720106308380; 
+ Thu, 04 Jul 2024 08:18:28 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fb17d8093esm34799395ad.3.2024.07.04.08.18.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Jul 2024 08:18:27 -0700 (PDT)
+Message-ID: <9fe81eeb-473a-4ffb-ad6f-f93e40283e8a@linaro.org>
+Date: Thu, 4 Jul 2024 08:18:25 -0700
 MIME-Version: 1.0
-References: <20240702154911.1667418-1-richard.henderson@linaro.org>
-In-Reply-To: <20240702154911.1667418-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 4 Jul 2024 16:14:36 +0100
-Message-ID: <CAFEAcA9jVe8Fa4=TSHqfbmV54ECUJdpB_-hBsE_0-vYZBDtKow@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Use cpu_env in cpu_untagged_addr
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] target/arm: Fix unwind from dc zva and FEAT_MOPS
+To: Ilya Leoshkevich <iii@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, david@redhat.com,
+ balaton@eik.bme.hu
+References: <20240702234155.2106399-1-richard.henderson@linaro.org>
+ <13b19a4859e25274d05663bc0ca05621c56af985.camel@linux.ibm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <13b19a4859e25274d05663bc0ca05621c56af985.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,18 +99,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Jul 2024 at 16:49, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> In a completely artifical memset benchmark object_dynamic_cast_assert
-> dominates the profile, even above guest address resolution and
-> the underlying host memset.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On 7/4/24 07:50, Ilya Leoshkevich wrote:
+> On Tue, 2024-07-02 at 16:41 -0700, Richard Henderson wrote:
+>> While looking into Zoltan's attempt to speed up ppc64 DCBZ
+>> (data cache block set to zero), I wondered what AArch64 was
+>> doing differently.  It turned out that Arm is the only user
+>> of tlb_vaddr_to_host.
+>>
+>> None of the code sequences in use between AArch64, Power64 and S390X
+>> are 100% safe, with race conditions vs mmap et al, however, AArch64
+>> is the only one that will fail this single threaded test case.  Use
+>> of these new functions fixes the race condition as well, though I
+>> have not yet touched the other guests.
+>>
+>> I thought about exposing accel/tcg/user-retaddr.h for direct use
+>> from the targets, but perhaps these wrappers are cleaner.  RFC?
+>>
+>>
+>> r~
+>>
+>>
+>> Richard Henderson (2):
+>>    accel/tcg: Introduce memset_ra, memmove_ra
+>>    target/arm: Use memset_ra, memmove_ra in helper-a64.c
+>>
+>>   include/exec/cpu_ldst.h            | 40 ++++++++++++++++
+>>   accel/tcg/user-exec.c              | 22 +++++++++
+>>   target/arm/tcg/helper-a64.c        | 10 ++--
+>>   tests/tcg/multiarch/memset-fault.c | 77
+>> ++++++++++++++++++++++++++++++
+>>   4 files changed, 144 insertions(+), 5 deletions(-)
+>>   create mode 100644 tests/tcg/multiarch/memset-fault.c
+> 
+> This sounds good to me.
+> 
+> I haven't debugged it, but I wonder why doesn't s390x fail here.
+> For XC with src == dst, it does access_memset() -> do_access_memset()
+> -> memset() without setting the RA. And I don't think that anything
+> around it sets the RA either.
+
+s390x uses probe_access_flags, which verifies the page is mapped and writable, and raises 
+the exception when it isn't.  In contrast, for user-only, tlb_vaddr_to_host *only* 
+performs the guest -> host address mapping, i.e. (addr + guest_base).
 
 
-
-Applied to target-arm.next, thanks.
-
--- PMM
+r~
 
