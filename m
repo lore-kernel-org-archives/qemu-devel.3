@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF5D4C3271F
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:01:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 078AAC41513
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPTZi-0006aC-FY; Thu, 04 Jul 2024 17:01:06 -0400
+	id 1sPTZz-0007EI-Ch; Thu, 04 Jul 2024 17:01:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTZg-0006YF-Vw; Thu, 04 Jul 2024 17:01:05 -0400
+ id 1sPTZv-000728-Ht; Thu, 04 Jul 2024 17:01:19 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTZe-0004J9-5D; Thu, 04 Jul 2024 17:01:04 -0400
+ id 1sPTZt-0004Ll-S5; Thu, 04 Jul 2024 17:01:19 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 70C887755F;
+ by isrv.corpit.ru (Postfix) with ESMTP id EE12377567;
  Fri,  5 Jul 2024 00:00:50 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 879E1FEC99;
- Fri,  5 Jul 2024 00:00:55 +0300 (MSK)
-Received: (nullmailer pid 1507718 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 10AAFFECA1;
+ Fri,  5 Jul 2024 00:00:56 +0300 (MSK)
+Received: (nullmailer pid 1507743 invoked by uid 1000);
  Thu, 04 Jul 2024 21:00:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexey Dobriyan <adobriyan@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.2 02/22] virtio-net: drop too short packets early
-Date: Fri,  5 Jul 2024 00:00:32 +0300
-Message-Id: <20240704210055.1507652-2-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.2 10/22] tcg/loongarch64: Fix tcg_out_movi vs some pcrel
+ pointers
+Date: Fri,  5 Jul 2024 00:00:40 +0300
+Message-Id: <20240704210055.1507652-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
 References: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
@@ -60,88 +61,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexey Dobriyan <adobriyan@yandex-team.ru>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Reproducer from https://gitlab.com/qemu-project/qemu/-/issues/1451
-creates small packet (1 segment, len = 10 == n->guest_hdr_len),
-then destroys queue.
+Simplify the logic for two-part, 32-bit pc-relative addresses.
+Rather than assume all such fit in int32_t, do some arithmetic
+and assert a result, do some arithmetic first and then check
+to see if the pieces are in range.
 
-"if (n->host_hdr_len != n->guest_hdr_len)" is triggered, if body creates
-zero length/zero segment packet as there is nothing after guest header.
-
-qemu_sendv_packet_async() tries to send it.
-
-slirp discards it because it is smaller than Ethernet header,
-but returns 0 because tx hooks are supposed to return total length of data.
-
-0 is propagated upwards and is interpreted as "packet has been sent"
-which is terrible because queue is being destroyed, nobody is waiting for TX
-to complete and assert it triggered.
-
-Fix is discard such empty packets instead of sending them.
-
-Length 1 packets will go via different codepath:
-
-	virtqueue_push(q->tx_vq, elem, 0);
-	virtio_notify(vdev, q->tx_vq);
-	g_free(elem);
-
-and aren't problematic.
-
-Signed-off-by: Alexey Dobriyan <adobriyan@yandex-team.ru>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 2c3e4e2de699cd4d9f6c71f30a22d8f125cd6164)
+Cc: qemu-stable@nongnu.org
+Fixes: dacc51720db ("tcg/loongarch64: Implement tcg_out_mov and tcg_out_movi")
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Reported-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 521d7fb3ebdf88112ed13556a93e3037742b9eb8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 24e5e7d347..3644bfd91b 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -2749,18 +2749,14 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-         out_sg = elem->out_sg;
-         if (out_num < 1) {
-             virtio_error(vdev, "virtio-net header not in first element");
--            virtqueue_detach_element(q->tx_vq, elem, 0);
--            g_free(elem);
--            return -EINVAL;
-+            goto detach;
-         }
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 06ca1ab11c..8f68bd3e51 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -366,8 +366,7 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
+      * back to the slow path.
+      */
  
-         if (n->has_vnet_hdr) {
-             if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
-                 n->guest_hdr_len) {
-                 virtio_error(vdev, "virtio-net header incorrect");
--                virtqueue_detach_element(q->tx_vq, elem, 0);
--                g_free(elem);
--                return -EINVAL;
-+                goto detach;
-             }
-             if (n->needs_vnet_hdr_swap) {
-                 virtio_net_hdr_swap(vdev, (void *) &vhdr);
-@@ -2791,6 +2787,11 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
-                              n->guest_hdr_len, -1);
-             out_num = sg_num;
-             out_sg = sg;
-+
-+            if (out_num < 1) {
-+                virtio_error(vdev, "virtio-net nothing to send");
-+                goto detach;
-+            }
-         }
+-    intptr_t pc_offset;
+-    tcg_target_long val_lo, val_hi, pc_hi, offset_hi;
++    intptr_t src_rx, pc_offset;
+     tcg_target_long hi12, hi32, hi52;
  
-         ret = qemu_sendv_packet_async(qemu_get_subqueue(n->nic, queue_index),
-@@ -2811,6 +2812,11 @@ drop:
-         }
+     /* Value fits in signed i32.  */
+@@ -377,24 +376,23 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
      }
-     return num_packets;
-+
-+detach:
-+    virtqueue_detach_element(q->tx_vq, elem, 0);
-+    g_free(elem);
-+    return -EINVAL;
- }
  
- static void virtio_net_tx_timer(void *opaque);
+     /* PC-relative cases.  */
+-    pc_offset = tcg_pcrel_diff(s, (void *)val);
+-    if (pc_offset == sextreg(pc_offset, 0, 22) && (pc_offset & 3) == 0) {
+-        /* Single pcaddu2i.  */
+-        tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
+-        return;
++    src_rx = (intptr_t)tcg_splitwx_to_rx(s->code_ptr);
++    if ((val & 3) == 0) {
++        pc_offset = val - src_rx;
++        if (pc_offset == sextreg(pc_offset, 0, 22)) {
++            /* Single pcaddu2i.  */
++            tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
++            return;
++        }
+     }
+ 
+-    if (pc_offset == (int32_t)pc_offset) {
+-        /* Offset within 32 bits; load with pcalau12i + ori.  */
+-        val_lo = sextreg(val, 0, 12);
+-        val_hi = val >> 12;
+-        pc_hi = (val - pc_offset) >> 12;
+-        offset_hi = val_hi - pc_hi;
+-
+-        tcg_debug_assert(offset_hi == sextreg(offset_hi, 0, 20));
+-        tcg_out_opc_pcalau12i(s, rd, offset_hi);
++    pc_offset = (val >> 12) - (src_rx >> 12);
++    if (pc_offset == sextreg(pc_offset, 0, 20)) {
++        /* Load with pcalau12i + ori.  */
++        tcg_target_long val_lo = val & 0xfff;
++        tcg_out_opc_pcalau12i(s, rd, pc_offset);
+         if (val_lo != 0) {
+-            tcg_out_opc_ori(s, rd, rd, val_lo & 0xfff);
++            tcg_out_opc_ori(s, rd, rd, val_lo);
+         }
+         return;
+     }
 -- 
 2.39.2
 
