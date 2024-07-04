@@ -4,68 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E288EC3814E
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 17:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AED0AC3814E
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 17:56:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPPz4-00040Y-EF; Thu, 04 Jul 2024 13:11:02 -0400
+	id 1sPQfg-0000ZM-6i; Thu, 04 Jul 2024 13:55:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sPPz2-00040Q-QV
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 13:11:00 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sPPz1-0007hc-1s
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 13:11:00 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WFNSQ1d8dz6JBH9;
- Fri,  5 Jul 2024 01:10:14 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 1FEEC1409EA;
- Fri,  5 Jul 2024 01:10:56 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 4 Jul
- 2024 18:10:55 +0100
-Date: Thu, 4 Jul 2024 18:10:54 +0100
-To: "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>
-CC: "Huang, Ying" <ying.huang@intel.com>, Gregory Price
- <gourry.memverge@gmail.com>, <aneesh.kumar@linux.ibm.com>, <mhocko@suse.com>, 
- <tj@kernel.org>, <john@jagalactic.com>, Eishan Mirakhur
- <emirakhur@micron.com>, Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
- Ravis OpenSrc <Ravis.OpenSrc@micron.com>, Alistair Popple
- <apopple@nvidia.com>, Srinivasulu Thanneeru <sthanneeru@micron.com>, SeongJae
- Park <sj@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, Len Brown
- <lenb@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, Dave Jiang
- <dave.jiang@intel.com>, "Dan Williams" <dan.j.williams@intel.com>,
- <linux-acpi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-mm@kvack.org>, "Ho-Ren (Jack) Chuang" <horenc@vt.edu>, "Ho-Ren (Jack)
- Chuang" <horenchuang@bytedance.com>, "Ho-Ren (Jack) Chuang"
- <horenchuang@gmail.com>, <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v3] memory tier: consolidate the initialization of
- memory tiers
-Message-ID: <20240704181054.00001f67@Huawei.com>
-In-Reply-To: <20240704072646.437579-1-horen.chuang@linux.dev>
-References: <20240704072646.437579-1-horen.chuang@linux.dev>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1sPQfe-0000Vv-KT
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 13:55:02 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1sPQfb-0004ir-NJ
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 13:55:02 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2ee7a1ad286so9450231fa.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 10:54:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720115697; x=1720720497; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Is3ZyLPwvt3nZQiAgUjvFvmblsM3OzpzDvlfgCbYMOA=;
+ b=PPyKicaHSnKPYu7h3bG7wbnbtW6iMfY3tAszSVrUb2c0ROeDV1JK2/JOHTapdzE3CY
+ XrQYsatmRNWbiygrRCmKabi8oiiJqEkZjJXCoqDAECHRDz2z/LQfbi7o92/tAcdcDNxy
+ seojFUE3Nmx5tI8g19TfZdMGcIaI6ttKeLZDDMSrK9MZpiH5WqgEcENWHcSkfOGyzfbA
+ GTJpl6dkeAU2g2Vj/fmjiwxC4Olf0KEZ2S3VxNS2dvrqIKMlO5nhVk1ePG2LLqvjar08
+ +FNqhLS/y+oky4S2kaaeVlHTH0FcZasdkBVqD6a84ooGUCbR2UNnAy79dke3o1POxqts
+ btNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720115697; x=1720720497;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Is3ZyLPwvt3nZQiAgUjvFvmblsM3OzpzDvlfgCbYMOA=;
+ b=LrdqgX8kfK84lQ9uzBWWbRl0kvKXlFyCMwL5VEUzLpBYhcQdUd6ImsvWu1pdzf7HCz
+ 9ij6LzE8H15LEn4r4uGYfRT9CuhY0cfvMsf7Ni9v+5oy4bnktG6eby0ebDka1pUihYt9
+ untgUnIWOAMbtpP1Z0J594hKPCtrQvMijjVa2u7bUxkxAk7d13UYzsO0vS7GgVsAMytY
+ 0/0CwDleonAK2pyWeV6nban1wSO0kTc2g58wx4q6yQST9CUdh3M0dJzosjG7uO2/4z9d
+ 1Xzu8lmYjgquhGMqkQNlIynIQMgHXcny8lCwS8h+DZoS3O9s652LAf/86jyICzGAt1wu
+ 98Cg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXF41tMljc3hOMdBDt7wifHb/RAWVQEnEkJ0DgqLtC7GS4uiXY5SBpHoxBSoAUPpps0A4kiZI2ggMf4Jkx/Hn+PauNSVAw=
+X-Gm-Message-State: AOJu0YxM5u+s3USrM7mVV/7tS6QtWpy8FU7KJ8dQU4Tp1ptV0yrGuaHo
+ mbrj2SSn9Do/ajwAG4IelX8KbHhhin29P30qFOhugDNqQeHLaYvB1HmLxOL6rEA=
+X-Google-Smtp-Source: AGHT+IERerCxokz8+D/FbT/9E30WbZvkfYabKYLyD3SVTlxujbc2Pt+i+/EPSRs2REYhlf7LnQG5bg==
+X-Received: by 2002:a05:651c:1a0f:b0:2ee:87ce:c863 with SMTP id
+ 38308e7fff4ca-2ee8edff05emr20226921fa.32.1720115696036; 
+ Thu, 04 Jul 2024 10:54:56 -0700 (PDT)
+Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4264a1d510bsm32914735e9.3.2024.07.04.10.54.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Jul 2024 10:54:55 -0700 (PDT)
+Date: Thu, 4 Jul 2024 18:55:08 +0100
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: Mostafa Saleh <smostafa@google.com>
+Cc: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org,
+ qemu-devel@nongnu.org, alex.bennee@linaro.org, maz@kernel.org,
+ nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
+ marcin.juszkiewicz@linaro.org
+Subject: Re: [PATCH v4 01/19] hw/arm/smmu-common: Add missing size check for
+ stage-1
+Message-ID: <20240704175508.GA1693268@myrica>
+References: <20240701110241.2005222-1-smostafa@google.com>
+ <20240701110241.2005222-2-smostafa@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240701110241.2005222-2-smostafa@google.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=jean-philippe@linaro.org; helo=mail-lj1-x229.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,56 +97,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  4 Jul 2024 07:26:44 +0000
-"Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev> wrote:
+On Mon, Jul 01, 2024 at 11:02:23AM +0000, Mostafa Saleh wrote:
+> According to the SMMU architecture specification (ARM IHI 0070 F.b),
+> in “3.4 Address sizes”
+>     The address output from the translation causes a stage 1 Address Size
+>     fault if it exceeds the range of the effective IPA size for the given CD.
+> 
+> However, this check was missing.
+> 
+> There is already a similar check for stage-2 against effective PA.
+> 
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Mostafa Saleh <smostafa@google.com>
 
-> The current memory tier initialization process is distributed across
-> two different functions, memory_tier_init() and memory_tier_late_init().
-> This design is hard to maintain. Thus, this patch is proposed to reduce
-> the possible code paths by consolidating different
-> initialization patches into one.
-> 
-> The earlier discussion with Jonathan and Ying is listed here:
-> https://lore.kernel.org/lkml/20240405150244.00004b49@Huawei.com/
-> 
-> If we want to put these two initializations together, they must be
-> placed together in the later function. Because only at that time,
-> the HMAT information will be ready, adist between nodes can be
-> calculated, and memory tiering can be established based on the adist.
-> So we position the initialization at memory_tier_init() to the
-> memory_tier_late_init() call. Moreover, it's natural to keep
-> memory_tier initialization in drivers at device_initcall() level.
-> 
-> If we simply move the set_node_memory_tier() from memory_tier_init()
-> to late_initcall(), it will result in HMAT not registering
-> the mt_adistance_algorithm callback function, because
-> set_node_memory_tier() is not performed during the memory tiering
-> initialization phase, leading to a lack of correct default_dram
-> information.
-> 
-> Therefore, we introduced a nodemask to pass the information of the
-> default DRAM nodes. The reason for not choosing to reuse
-> default_dram_type->nodes is that it is not clean enough. So in the end,
-> we use a __initdata variable, which is a variable that is released once
-> initialization is complete, including both CPU and memory nodes for HMAT
-> to iterate through.
-> 
-> This patchset is based on commits <cf93be18fa1b> ("memory tier: create
-> CPUless memory tiers after obtaining HMAT info") and
-> <a72a30af550c> ("memory tier: dax/kmem: introduce an abstract layer for
-> finding, allocating, and putting memory types"):
-> [0/2] https://lkml.kernel.org/r/20240405000707.2670063-1-horenchuang@bytedance.com
-> [1/2] https://lkml.kernel.org/r/20240405000707.2670063-2-horenchuang@bytedance.com
-> [1/2] https://lkml.kernel.org/r/20240405000707.2670063-3-horenchuang@bytedance.com
-> 
-> Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
-> Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-LGTM
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
+> ---
+>  hw/arm/smmu-common.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> index 1ce706bf94..eb2356bc35 100644
+> --- a/hw/arm/smmu-common.c
+> +++ b/hw/arm/smmu-common.c
+> @@ -381,6 +381,16 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
+>              goto error;
+>          }
+>  
+> +        /*
+> +         * The address output from the translation causes a stage 1 Address
+> +         * Size fault if it exceeds the range of the effective IPA size for
+> +         * the given CD.
+> +         */
+> +        if (gpa >= (1ULL << cfg->oas)) {
+> +            info->type = SMMU_PTW_ERR_ADDR_SIZE;
+> +            goto error;
+> +        }
+> +
+>          tlbe->entry.translated_addr = gpa;
+>          tlbe->entry.iova = iova & ~mask;
+>          tlbe->entry.addr_mask = mask;
+> -- 
+> 2.45.2.803.g4e1b14247a-goog
+> 
 
