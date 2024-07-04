@@ -4,89 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297F0C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 09:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC0CC3065C
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 09:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPIoS-0005CY-Gj; Thu, 04 Jul 2024 05:31:36 -0400
+	id 1sPIpd-0006am-1r; Thu, 04 Jul 2024 05:32:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPIoQ-0005CA-6a
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:31:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPIoO-0000Ic-Jg
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:31:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720085491;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kxNojJQhevmJiR5jUJTMNLDBmomzLCrmfrhYNJxWwrk=;
- b=VoQLTDuGpdVpckTCqfoBcQ5XzfF3DmkQNA5AksaZQcw5ZTS149tNsjrlM8dnS5vYJetQfm
- HrrVx1tEtLCJEa/LHxr6IbtbkCf9gTA6daQM9RPh34OspbKfMQvIBJNrGGRUjaj67jyP7X
- hS7QzAWtCIvq1JeGp2CLW7NtoD63xrs=
-Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
- [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-XNvov1_qPEivJnoVRVKw0A-1; Thu, 04 Jul 2024 05:31:29 -0400
-X-MC-Unique: XNvov1_qPEivJnoVRVKw0A-1
-Received: by mail-lj1-f200.google.com with SMTP id
- 38308e7fff4ca-2ec4efbbb7aso4069161fa.2
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 02:31:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sPIpa-0006Xp-9K
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:32:46 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sPIpY-000240-JW
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:32:45 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-58bac81f40bso609879a12.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 02:32:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720085561; x=1720690361; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Wg5r9sYSQsAvjhQ+CRVIQveWls8q4Cp7ZuTqAA6lFzA=;
+ b=qDw9DZlPPlu8o0cFuH9Of8+aeCMdVYNsYNNsHUqpEBWmZKqfMLVKlSGT5qEEXjXsRB
+ f1WEc6AU+wS8Vl41uZwJ+z2liX/aWtlhDsopuJ8tZupvvWEuaHFd5Pp4C8V3se2d124K
+ tG/eSZITlAfPQjNWi5Kv1CjRz5p1Q7hUWSp+sf5cgKwtcUz08Eaz2OKDgPXgxOBIeupN
+ 3WQJf7HxiVfgerVer7diSHQfU2o0qYXUEJ8GfplnUhf3fHJUz4UOmM3v+VqpFNAh68gr
+ jsVGm2EDw4ErGEt3/ZrxsswL+6FXppGNW6j2Sodp9rVJGer41Z3etAsiC+V+s5psR5nq
+ 29/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720085488; x=1720690288;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kxNojJQhevmJiR5jUJTMNLDBmomzLCrmfrhYNJxWwrk=;
- b=EQSWOI6j/P0cUHdGof/7+TzYC5sW4TFo2xZPq0cgnS7gAg84IMMKXfCmJNVXZMQU20
- ZNnb+LhMjoeEjHx5ypQr+sby0cSrh9/SP0saXfFUjAP7SiS6FqtSbeMAyG/bdNtMjCwP
- cJW9NPQg0Y2uf35atzYFI8WoMVUkaB/1TG6lQNZgadpnzBEhGBKUaiVVZ8OLjwH2i8ns
- 822fkiQw0iPOH9wOkZLNDJSao5WBfg12sskKgX6aSRwXQCJif87YpwrSmM3V24u/Vk0U
- 8HIzxJXtst765x6AWILb0Qj5LJgrB3gH1GXRRc1J1U/nZNHbRakf5F4hMjKCheUS7PXX
- HeLg==
+ d=1e100.net; s=20230601; t=1720085561; x=1720690361;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Wg5r9sYSQsAvjhQ+CRVIQveWls8q4Cp7ZuTqAA6lFzA=;
+ b=l+/7/UO4Kjayqm2Yc5FF27E5K0JHjb5e+19Lssc0AfOv4MWC8vMmQvRbuaVpj4Mu+v
+ eac5fGiGAgmTHW5+zbjRj1QNnJ079rzSlapQDFu7IVW9rFmbw0n8QNC8tSSXCSDQ14P/
+ huIdt8XQHxN8V2cYfXOam3ru/dM+AzmjZMcGShx/Y89uSr9uX0SaVCyuwA3R3m4xFsZN
+ UtuH8rjDM3fgTRlIj15/zWCUloNPRyuOuHs1Y+hqpYtWjDz5Tl/6bs+kp6I7fcxEnSyc
+ 8NGnxLFnpJALl87WnVgjWDO7j/N34uHX5bSslR0Pr7xD1hDT8EEBdvtgdPG88fnWyknb
+ F4MA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNQqFYlfdStoRPzj1hCNeHw7RQ8zOCMZI83ky3bU9FTPzEIJrNb8uvFIXF0zcM7tCeiqQlyVd0omyKkghYdBQ10jdkgXU=
-X-Gm-Message-State: AOJu0Yy7hWcl+PXzyd99MbvoL45Y9azslI0HRuwAileUarHCVHik+Dfs
- Lu+uQafJHYJTf/YFmiJlpslv7Rux32sjtemHPKmK4hGSbfPw1BexnN2EUv6OOAu5N0GIfYr1u5u
- 6P2FRrj2ZzDo5Y6Go0CaVfonsXq+dLEyZu8iNJVnLwev7WkJb5UzIYYKRBl3V6tc2Z6CtfqRz8/
- RxEerljeIZb6EDC8NSLjV2CVhGFJ0=
-X-Received: by 2002:a2e:9ad4:0:b0:2ee:8566:32cb with SMTP id
- 38308e7fff4ca-2ee8ed91179mr8615431fa.16.1720085488333; 
- Thu, 04 Jul 2024 02:31:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVbVO4d+JOSmyjsLo6p8Y4Usmvfss8knt2bViouPT6u4HSsDLVbHbNmD8TcEEVPjVTziY4gUfUv0aH0IDagiM=
-X-Received: by 2002:a2e:9ad4:0:b0:2ee:8566:32cb with SMTP id
- 38308e7fff4ca-2ee8ed91179mr8615341fa.16.1720085487933; Thu, 04 Jul 2024
- 02:31:27 -0700 (PDT)
+ AJvYcCWsNsBNSMmY2Kk7uR6vIrlRJVCb3frtGcKaFcNP6lXkG57l9Ttm1CFur1D5jw7AfMEgsQkXCzRMC+9vLEAsIAB7SLwiVAo=
+X-Gm-Message-State: AOJu0YyPB2JbNSelbzA1huiv7Itgp6kj+kMdEnUdKRgR8eQZUTj1B0Db
+ XLm2W9wwNwQXHJmW0k1/t1nsidbA+WXTo2mjBAySMgF/0iI0392gacQ/bO3Vq1eF+Sz/GChPlR7
+ pMA7wt4I7+IgSAuufc8p2JQfwetblwwTOywH1ZQ==
+X-Google-Smtp-Source: AGHT+IE7qXHKBYmBeRGY9jO1i6pr9B2inR+WbVBPpgVsf7Cvbh+WgpRKmtihOw20IuEFvTewixVo7sDHvFXPMqFBQk0=
+X-Received: by 2002:a05:6402:34c1:b0:587:2fa6:496a with SMTP id
+ 4fb4d7f45d1cf-58e5abdc863mr784969a12.15.1720085560867; Thu, 04 Jul 2024
+ 02:32:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240704000019.3928862-1-michael.roth@amd.com>
- <CABgObfYX+nDnQSW5xyT3SjYbQ72--EW5buCkUuG_Z_JPFqfQNA@mail.gmail.com>
- <ZoZge_2UT_yRJE56@redhat.com>
-In-Reply-To: <ZoZge_2UT_yRJE56@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 4 Jul 2024 11:31:16 +0200
-Message-ID: <CABgObfbf1u_RvRTcoZFepFWdavFnkqNwUCwHm1nE4tNKmM8+pA@mail.gmail.com>
-Subject: Re: [PATCH] i386/sev: Don't allow automatic fallback to legacy
- KVM_SEV*_INIT
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
+References: <20240703213102.254927-1-zheyuma97@gmail.com>
+In-Reply-To: <20240703213102.254927-1-zheyuma97@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 4 Jul 2024 10:32:29 +0100
+Message-ID: <CAFEAcA_9_fymBmp4Ei+ZxP3PB6u3JckTxufLcJn6JKuf4Yjkaw@mail.gmail.com>
+Subject: Re: [PATCH] hw/intc: sifive_plic: Fix heap-buffer-overflow in SiFive
+ PLIC read operation
+To: Zheyu Ma <zheyuma97@gmail.com>
+Cc: Alistair Francis <Alistair.Francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,57 +92,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 4, 2024 at 10:42=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
+On Wed, 3 Jul 2024 at 22:32, Zheyu Ma <zheyuma97@gmail.com> wrote:
 >
-> On Thu, Jul 04, 2024 at 08:51:05AM +0200, Paolo Bonzini wrote:
-> > On Thu, Jul 4, 2024 at 2:01=E2=80=AFAM Michael Roth <michael.roth@amd.c=
-om> wrote:
-> > > Currently if the 'legacy-vm-type' property of the sev-guest object is
-> > > left unset, QEMU will attempt to use the newer KVM_SEV_INIT2 kernel
-> > > interface in conjunction with the newer KVM_X86_SEV_VM and
-> > > KVM_X86_SEV_ES_VM KVM VM types.
-> > >
-> > > This can lead to measurement changes if, for instance, an SEV guest w=
-as
-> > > created on a host that originally had an older kernel that didn't
-> > > support KVM_SEV_INIT2, but is booted on the same host later on after =
-the
-> > > host kernel was upgraded.
-> >
-> > I think this is the right thing to do for SEV-ES. I agree that it's
-> > bad to require a very new kernel (6.10 will be released only a month
-> > before QEMU 9.1), on the other hand the KVM_SEV_ES_INIT API is broken
-> > in several ways. As long as there is a way to go back to it, and it's
-> > not changed by old machine types, not using it for SEV-ES is the
-> > better choice for upstream.
+> The sifive_plic_read function in hw/intc/sifive_plic.c had a potential
+> heap-buffer-overflow issue when reading from the pending_base region.
+> This occurred because the code did not check if the calculated word index
+> was within valid bounds before accessing the pending array.
 >
-> Broken how ?   I know there was the regression with the 'debug_swap'
-> parameter, but was something that should just be fixed in the kernel,
-> rather than breaking userspace. What else is a problem ?
+> This fix prevents out-of-bounds memory access, ensuring safer and more
+> robust handling of PLIC reads.
+>
+> ASAN log:
+> ==78800==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000038a14 at pc 0x5baf49d0d6cb bp 0x7ffc2ea4e180 sp 0x7ffc2ea4e178
+> READ of size 4 at 0x602000038a14 thread T0
+>     #0 0x5baf49d0d6ca in sifive_plic_read hw/intc/sifive_plic.c:151:16
+>     #1 0x5baf49f7f3bb in memory_region_read_accessor system/memory.c:445:11
+>
+> Reproducer:
+> cat << EOF | qemu-system-riscv64  -display \
+> none -machine accel=qtest, -m 512M -machine shakti_c -m 2G -qtest stdio
+> readl 0xc001004
+> EOF
+>
+> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> ---
+>  hw/intc/sifive_plic.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
+> index e559f11805..d2a90dfd3a 100644
+> --- a/hw/intc/sifive_plic.c
+> +++ b/hw/intc/sifive_plic.c
+> @@ -147,7 +147,14 @@ static uint64_t sifive_plic_read(void *opaque, hwaddr addr, unsigned size)
+>                              (plic->num_sources + 31) >> 3)) {
+>          uint32_t word = (addr - plic->pending_base) >> 2;
+>
+> -        return plic->pending[word];
+> +        if (word < plic->bitfield_words) {
+> +            return plic->pending[word];
+> +        } else {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "sifive_plic_read: Word out of bounds for pending_base read: word=%u\n",
+> +                          word);
+> +            return 0;
+> +        }
 
-The debug_swap parameter simply could not be enabled in the old API
-without breaking measurements. The new API *is the fix* to allow using
-it (though QEMU doesn't have the option plumbed in yet). There is no
-extensibility.
+This seems a bit odd. This part of the code is guarded by
 
-Enabling debug_swap by default is also a thorny problem; it cannot be
-enabled by default because not all CPUs support it, and also we'd have
-the same problem that we cannot enable debug_swap on new machine types
-without requiring a new kernel. Tying the default to the -cpu model
-would work but it is confusing.
+    } else if (addr_between(addr, plic->pending_base,
+                            (plic->num_sources + 31) >> 3)) {
 
-But I guess we can add support for debug_swap, disabled by default and
-switch to the new API if debug_swap is enabled.
+and we calculate plic->bitfield_words in realize based on
+plic->num_sources:
+    s->bitfield_words = (s->num_sources + 31) >> 5;
 
-> I don't think its reasonable for QEMU to require a brand new kernel
-> for new machine types, given SEV & SEV-ES have been deployed for
-> many years already.
+so presumably the intention was that we put enough words
+in the bitfield for the number of sources we have, so that
+the array access wouldn't overrun. Maybe we got the
+calculation wrong?
 
-I think it's reasonable if the fix is displayed right into the error
-message. It's only needed for SEV-ES though, SEV can use the old and
-new APIs interchangeably.
-
-Paolo
-
+thanks
+-- PMM
 
