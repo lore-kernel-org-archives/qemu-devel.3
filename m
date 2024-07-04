@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D727C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 16:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277DBC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 16:45:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPPML-0000pV-Pr; Thu, 04 Jul 2024 12:31:01 -0400
+	id 1sPPZt-0007gq-ET; Thu, 04 Jul 2024 12:45:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sPPMK-0000pD-0X
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 12:31:00 -0400
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPPZr-0007g3-IZ
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 12:44:59 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sPPMI-00047Y-JH
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 12:30:59 -0400
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-5c46c8ccfa7so408248eaf.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 09:30:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPPZp-0001LB-Mk
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 12:44:59 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a77c7d3e8bcso7062166b.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 09:44:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720110657; x=1720715457; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=T7MH3jv75EW6R+PEBAni5pRk+IkKfkvy2qoC/ZKedbo=;
- b=e7IRR9cu8hJgyuon6QoyhlLz24C5I+qYfbuSPks25F2HExpm8ZaV356QyclbCsbikZ
- Rx5S++IesMTyYCbcAl+ho8GibWSOzFw9e576PeKRcJnwatUCletFc3seBso2ssDuMLc3
- mJTk4w9I6gY06j3B6vgcQbqyoP6pABj/G45+gfGe/64fgWuJ9MEta1lnVGzxeG61kbaf
- ifv7tzPZcjNPT7zQxQykEQHvo8uQZS5n3x+HAPi65mOGzXJ6/7E8kLStTU8Lzds8UXTY
- NbOuQGz0GedmmgLc7VhU93tJtjDZK6x7duyNtSOphFo9lLgPpV0khgNC9J8dyqCOhrSm
- ky6g==
+ d=linaro.org; s=google; t=1720111495; x=1720716295; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=7e+9jaG3i6h3581y6bfnNWzVuXNbsmJ9Fdj9t0MGtE0=;
+ b=sF/6EUBGVRKsIfqhsKqg+FQhIPYmeoacCrcP+e/OhWOYyDtACtvEZ/uRiufSnZDXFC
+ 0utdoXhM8fejbvC8GKoFo+BODgJB1vXXkuo55vRGk/wWnpVaetKg5Jmx9ZGhu5rI+vp5
+ W63xfs6tm8t3WlaId6hQipCgx2Nt6qxgjY8ZahxPZe5+qo28FaDLZzlQhaBR/y0GwwLF
+ uNurc7pbBb5WLnvWmkYpabEFtH6pJq8usRNG5LfsGD8C6/wSBXbTR7DBLY39Fmax8ABR
+ OnEQ6MYCsi5WaTSWB9MtUEZVtCILF7e15r+HVVvcIFwsgocG3R0Q7BjhBeYUxeQH9BGc
+ pQhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720110657; x=1720715457;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=T7MH3jv75EW6R+PEBAni5pRk+IkKfkvy2qoC/ZKedbo=;
- b=LlWCoyfELqK7srvsNIW+tFzqfMFxqHEwEkOUJdFSoKHuRw5EaswlQ6w1tsCU2hygSC
- sh4vJDZUWmAq+jPdCaJH+ZIDkZHhfv0LTge+2QJUSp+Xgy9O9cruHv12k85zRUs9DAkH
- 6ijgB0xQx+cuwMmq+cjWut5tjxNDMqYZFX5Hev+LJjGTu/F4maXESlIancS1oLImbYRo
- b4TcauQpZPfFAAgizU8E7hsfrzGK5Eg+8dkjhR4NwSpcudJUFJ4D3h27n6aQVti5zoLy
- Xokb6gJDSIjEKlQC4x0peWkCdNs2/AMoOr93JWovB/Yj5woGkMpzDKZ9Hyo5YI7xJtO7
- sqqA==
+ d=1e100.net; s=20230601; t=1720111495; x=1720716295;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7e+9jaG3i6h3581y6bfnNWzVuXNbsmJ9Fdj9t0MGtE0=;
+ b=PNgiJE1jU26fPKDeg+Zm2B9YrGnToxXmVsjqlSzAPkDOUi1bMm1dfsgzgKF8MLMEV2
+ NxzMNCdY86g6YpjJIJTpN7NdOfQG3UZMfktZcIhlwjF9MVBDYwjkV40RtYiUEtlmahev
+ IwcCcVS+v/3/mh6C5wVVUASESV/qBI4i7xbL7djaJNWL7yQ5FosA1Gp/F1cUT2bvAfth
+ dyF73RA5nD4U9tSKeYXIDYs+552IuwHTyKQQWMrYn871oGV3KG4B6CpdmiKIkAbzj1Xt
+ 7tfOdtklz7tQ0+66Buba1RsAkOM+SlxX2oNKWF3Kdz3lt8iYOiUXHW4qVwEEjUvf/fvC
+ HlzQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcAUE9nyKAAR2DMAW+kzsd/gqINph46l2+pNG9Zw+oYd7U/yadinJKSn1mw5qjQaX586681IoqTE5p+Trstxb5/qi/eeQ=
-X-Gm-Message-State: AOJu0YyoGuYSSBP58wqkdcjtpTjs0lHruRHZmdx99DZHRxzdtbuDy7Ro
- DmUT/JVOqNkxpM5T/xtze0M9BIZ16picKyURbIb7AN2xLpGh00Tgri2Q+1QwbtM=
-X-Google-Smtp-Source: AGHT+IFIZfNIIoq+0LpQT2SgXN0aVYH91aHNwSiML8kzCkxxTViPEO949nK4SBCIvVLyO2cIVWr4fw==
-X-Received: by 2002:a05:6358:7f1e:b0:1a6:72b8:d08f with SMTP id
- e5c5f4694b2df-1aa98ca45abmr195742955d.29.1720110657167; 
- Thu, 04 Jul 2024 09:30:57 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70803ed469fsm12466176b3a.111.2024.07.04.09.30.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 09:30:56 -0700 (PDT)
-Message-ID: <1b23fba0-ab69-444f-8299-9db4f33373a9@linaro.org>
-Date: Thu, 4 Jul 2024 09:30:54 -0700
+ AJvYcCVUjETrlgMI9vMnly1gaJHxvxiG5G2E0yfNbnB9d9rokzohWVmA5UFVg2kkfs2ZsrZc+RzMULL7vWYFCU2hRLscTlbzTbc=
+X-Gm-Message-State: AOJu0Yy9UUHp4smnKqavfFvRGWosga3nKBz0NgbU53ZI/pjGp6fEPwxh
+ 3cZbwRKd+TQVvum2D5BL8KCj9Jkmh88W3rKuTzziwNnYnsB2Z4ZB6/G0APENdhM=
+X-Google-Smtp-Source: AGHT+IGTp3ymlZkKAcuX3mwvsyprJa2baN85p7ojMJg+tCz5V1oNIF9d7xmATIYbzE9cGXc8GE/tow==
+X-Received: by 2002:a17:907:9620:b0:a72:4281:bc72 with SMTP id
+ a640c23a62f3a-a77ba72781fmr186692266b.63.1720111494577; 
+ Thu, 04 Jul 2024 09:44:54 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a77c3edb9f0sm23954366b.121.2024.07.04.09.44.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Jul 2024 09:44:53 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DB6495F839;
+ Thu,  4 Jul 2024 17:44:52 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Anthony PERARD <anthony.perard@vates.tech>
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,  qemu-devel@nongnu.org,
+ sstabellini@kernel.org,  paul@xen.org,  edgar.iglesias@amd.com,
+ xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v1 2/2] xen: mapcache: Fix unmapping of first entries in
+ buckets
+In-Reply-To: <ZoawbAnukIBkYWCw@l14> (Anthony PERARD's message of "Thu, 04 Jul
+ 2024 14:23:41 +0000")
+References: <20240701224421.1432654-1-edgar.iglesias@gmail.com>
+ <20240701224421.1432654-3-edgar.iglesias@gmail.com>
+ <ZoawbAnukIBkYWCw@l14>
+Date: Thu, 04 Jul 2024 17:44:52 +0100
+Message-ID: <87wmm1m7i3.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/7] tests/plugin/mem: add option to print memory
- accesses
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
- <erdnaxe@crans.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20240702184448.551705-1-pierrick.bouvier@linaro.org>
- <20240702184448.551705-7-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240702184448.551705-7-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,17 +102,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/24 11:44, Pierrick Bouvier wrote:
-> +    case QEMU_PLUGIN_MEM_VALUE_U128:
-> +        g_string_append_printf(out, "0x%.0"PRIx64"%"PRIx64,
-> +                               value.data.u128.high, value.data.u128.low);
+Anthony PERARD <anthony.perard@vates.tech> writes:
 
-PRIx64 does not pad.
-You need %016"PRIx64 for the low value.
+> On Tue, Jul 02, 2024 at 12:44:21AM +0200, Edgar E. Iglesias wrote:
+>> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+>>=20
+>> This fixes the clobbering of the entry->next pointer when
+>> unmapping the first entry in a bucket of a mapcache.
+>>=20
+>> Fixes: 123acd816d ("xen: mapcache: Unmap first entries in buckets")
+>> Reported-by: Anthony PERARD <anthony.perard@vates.tech>
+>> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+>> ---
+>>  hw/xen/xen-mapcache.c | 12 +++++++++++-
+>>  1 file changed, 11 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+>> index 5f23b0adbe..18ba7b1d8f 100644
+>> --- a/hw/xen/xen-mapcache.c
+>> +++ b/hw/xen/xen-mapcache.c
+>> @@ -597,7 +597,17 @@ static void xen_invalidate_map_cache_entry_unlocked=
+(MapCache *mc,
+>>          pentry->next =3D entry->next;
+>>          g_free(entry);
+>>      } else {
+>> -        memset(entry, 0, sizeof *entry);
+>> +        /*
+>> +         * Invalidate mapping but keep entry->next pointing to the rest
+>> +         * of the list.
+>> +         *
+>> +         * Note that lock is already zero here, otherwise we don't unma=
+p.
+>> +         */
+>> +        entry->paddr_index =3D 0;
+>> +        entry->vaddr_base =3D NULL;
+>> +        entry->valid_mapping =3D NULL;
+>> +        entry->flags =3D 0;
+>> +        entry->size =3D 0;
+>
+> This kind of feels like mc->entry should be an array of pointer rather
+> than an array of MapCacheEntry but that seems to work well enough and
+> not the first time entries are been cleared like that.
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The use of a hand rolled list is a bit of a concern considering QEMU and
+Glib both provide various abstractions used around the rest of the code
+base. The original patch that introduces the mapcache doesn't tell me
+much about access patterns for the cache, just that it is trying to
+solve memory exhaustion issues with lots of dynamic small mappings.
 
+Maybe a simpler structure is desirable?
 
-r~
+We also have an interval tree implementation ("qemu/interval-tree.h") if
+what we really want is a sorted tree of memory that can be iterated
+locklessly.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
