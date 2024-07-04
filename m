@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 758BCC3271E
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9739C3271E
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPLOJ-0007vj-UA; Thu, 04 Jul 2024 08:16:47 -0400
+	id 1sPLOY-0007yA-E0; Thu, 04 Jul 2024 08:17:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sPLNl-0007r5-JW
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:16:16 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sPLNo-0007rm-TD
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:16:20 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sPLNZ-0002PU-Ik
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:16:13 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-42574064b16so3819535e9.2
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 05:16:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sPLNj-0002Rp-81
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:16:16 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2ebe6495aedso5590661fa.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 05:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720095359; x=1720700159; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9wdmH73h+dBKRqM1kMpHUr/tBq0w0+7ozYuWaUzEdN8=;
- b=kMyEck179WRiFWmQbp2zxPwN0qUnopiwpeMkS/muPv1NMDf/82Drio/BrLSQyDLHZ5
- 2wyVG2lseXrniSSzl+FZsxYbc36re5azkEB/crtw/IQEsDJqKxpeLS7RcBo8dU+OifLz
- uEw5aG9MX2TeNwvYQCsu+TEZgESavNR5XpKRJNMvZod+ViObSAh9dGbZLGdOMh9R/w9f
- /LWH9cclzC0uVRYB6PKTSIWyVwWL06NqAo4NuGJsS3efLHnVQFebeknCFkdQS+74oqKg
- 006I2zo3SAp95ZSVc+4+v5Q/cIOcWyIyNiw33mqUKDc7WTjFd6+sdxlZLR+9e9qyA/DC
- umvQ==
+ d=linaro.org; s=google; t=1720095368; x=1720700168; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=N68lwFl0nfpyW4wDEg4VIaNRRSkKW426BhVoyDd5Sxg=;
+ b=g0FxUZSerB9gQjuidjlm2REvO0RgG4Dh+M8NkHNkWhAVox4yHW3muQbb9xXBF1VPBL
+ ybcE+u0oBOm+xR5V4a5rJfUMop81ITM4L3hLY/7c7PXG5xgfXmDLvleR22hQtaSjDkKo
+ lgxm9uEdE9y0Rmgn3Yr8boTnOdR638iOZvO9CCX6zx7hF2TYEYJgZ/zPHm8YZsaLBLXP
+ vmzMKrdgPZhLi5av9yb+0bueSE9LKoiy0c8nw8TpwZ0Vrk7VIzr687EcWAdKCxtP5iTc
+ JF7cvavaE2HHZWzk8qGw9c4K4H9/W9dTT+MCCml/kVa14MiBhahfWq7XKiSpb4BJaT3H
+ 6eiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720095359; x=1720700159;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9wdmH73h+dBKRqM1kMpHUr/tBq0w0+7ozYuWaUzEdN8=;
- b=FXKgdzUs62qEFixhrq8f8EvXnh79ozzdAd3FeMRpIK2o/QllTeZmaM2G9zMxBGB74D
- cL8wZNYKClL/fVws3/uAM5AarqQKPMT2iGG321Vo2MGIPb+mviG2S6LaBmwpgIZgV2h3
- Mb41ml3BJvAaZ4vHbFL6ISfV7KZGm+DB/HFHZjcS9X/57u6fcGQdyIDZ2MCCT9wh5ZjA
- TSXDlC+jf4YllJEQlSaoLiBZUbXolXYwLv2ncIFJ+N8iQrk6wNYD7Ex45NDggNBxZI5v
- UjN+iDZbIDVZR6+jL+70Y6OUxpEyMu0C9v4QLtXJA578RsltDMSJfjpXf7QOHhYyeMK0
- 5bxg==
-X-Gm-Message-State: AOJu0YyO/1Cde6JfzfEA9vSxHU7aCXV0f3DDmtH8eEKKWZHCcZ6XOPA+
- J/Gz8t3wQhJJog6rP24D+hr0Hoyd17La/dgXYPsVXVXS+wy0u1S/KHW64BW6PhwvOlAG/hbbbMk
- VmWM=
-X-Google-Smtp-Source: AGHT+IErY6rE5qtxu0L1+UIaWbA/c6C9IB8wm+aMHi/LbXJETKPxeKHUM2EX1nQhpNBOFbK83y+YQQ==
-X-Received: by 2002:a05:600c:364d:b0:425:5f6d:b4a with SMTP id
- 5b1f17b1804b1-4264a3e3182mr11164255e9.9.1720095358937; 
- Thu, 04 Jul 2024 05:15:58 -0700 (PDT)
-Received: from localhost.localdomain (adsl-241.37.6.160.tellas.gr.
- [37.6.160.241]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a2ca5casm22471015e9.32.2024.07.04.05.15.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 05:15:58 -0700 (PDT)
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
-Subject: [RFC PATCH v4 2/7] rust: add bindgen step as a meson dependency
-Date: Thu,  4 Jul 2024 15:15:38 +0300
-Message-ID: <4ce5a7330f594c6c94c8cc3aabceb061095bb855.1720094395.git.manos.pitsidianakis@linaro.org>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
-References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
+ d=1e100.net; s=20230601; t=1720095368; x=1720700168;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=N68lwFl0nfpyW4wDEg4VIaNRRSkKW426BhVoyDd5Sxg=;
+ b=gd/lUPQKzG6U3D13H2xqa5Tbim7ZLzWnHmKtjJPg0HB1PCJpS3UULCbLc0tAWub4H4
+ ojUPvzffs0ZHmN/KXDsBqntPCQpwBSnRpygvXVJ7ifCXlXndCuJfCftjyCAfeahngeUS
+ LnWHeQRdOyeSp6j0bwVbe3JaA937oOUru+1DCcribdn4JxcIaLajFtF+yJxHV3OW6ENX
+ XprWd+ZS/YKsdurof0SYP/d9/uu/+toJzoi06KlnnwFpmdPvIbn7rTaFNktzMglt06Hf
+ W7L8FhYTiRUaHtRHGjbOHpsn086MevPQ0BJBAYarso2T2++YtUk+wSRYM0jHgtQzuPx9
+ s30A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVYHDqGgnijHlCysVmnLkYQzdPC78cjkYrvuURmyJXDm24f2shM41P9f/US0+FiWq+4Riln/2h+2tt8GinYa84PKwk1LsI=
+X-Gm-Message-State: AOJu0YykPJyCqs25FRNYw8CUlNqHd342ZWDv47hq0O5PzC1TCh50M+zA
+ TuODNGgPerTh5uwYU9pHZCosZmMElDeZEj2/rgRO+WQqzz1okPQHwLF9F+Wiv0/fnV7vVzUYzgE
+ z+8wF5VT5VnvwV2sV/z/J54B+u5+p7/1L61SUvA==
+X-Google-Smtp-Source: AGHT+IGpvoRhPHYw1R430AwkSGs8NzMqZYnIQNg7OZ/y9s9RwtAV5NC48d5dl6qLKcX1KZc2fA3lIbQM7cCFgIUlauI=
+X-Received: by 2002:a19:5f5c:0:b0:52e:9ebe:7325 with SMTP id
+ 2adb3069b0e04-52ea065f06cmr1074378e87.31.1720095368378; Thu, 04 Jul 2024
+ 05:16:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x330.google.com
+References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+ <20240627-san-v2-6-750bb0946dbd@daynix.com>
+ <CAFEAcA-Zmc0BQgUiqEgzCvVGWyiPt9bo+Xt90n4wxhJ3_D91fA@mail.gmail.com>
+ <Zn98p6CUV0KnIo50@zatzit>
+In-Reply-To: <Zn98p6CUV0KnIo50@zatzit>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 4 Jul 2024 13:15:57 +0100
+Message-ID: <CAFEAcA_LN8i66KUkxrgg=CUKJNYM=s9pTYv6w5QQ7PSU1Q3=bg@mail.gmail.com>
+Subject: Re: [PATCH v2 06/15] ppc/vof: Fix unaligned FDT property access
+To: David Gibson <david@gibson.dropbear.id.au>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Alexey Kardashevskiy <aik@ozlabs.ru>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,346 +108,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add mechanism to generate rust hw targets that depend on a custom
-bindgen target for rust bindings to C.
+On Sat, 29 Jun 2024 at 04:17, David Gibson <david@gibson.dropbear.id.au> wrote:
+>
+> On Fri, Jun 28, 2024 at 04:20:02PM +0100, Peter Maydell wrote:
+> > On Thu, 27 Jun 2024 at 14:39, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+> > >
+> > > FDT properties are aligned by 4 bytes, not 8 bytes.
+> > >
+> > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > > ---
+> > >  hw/ppc/vof.c | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > >
+> > > diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
+> > > index e3b430a81f4f..b5b6514d79fc 100644
+> > > --- a/hw/ppc/vof.c
+> > > +++ b/hw/ppc/vof.c
+> > > @@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
+> > >      mem0_reg = fdt_getprop(fdt, offset, "reg", &proplen);
+> > >      g_assert(mem0_reg && proplen == sizeof(uint32_t) * (ac + sc));
+> > >      if (sc == 2) {
+> > > -        mem0_end = be64_to_cpu(*(uint64_t *)(mem0_reg + sizeof(uint32_t) * ac));
+> > > +        mem0_end = ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
+> > >      } else {
+> > >          mem0_end = be32_to_cpu(*(uint32_t *)(mem0_reg + sizeof(uint32_t) * ac));
+> > >      }
+> >
+> > I did wonder if there was a better way to do what this is doing,
+> > but neither we (in system/device_tree.c) nor libfdt seem to
+> > provide one.
+>
+> libfdt does provide unaligned access helpers (fdt32_ld() etc.), but
+> not an automatic aligned-or-unaligned helper.   Maybe we should add that?
 
-This way bindings will be created before the rust crate is compiled.
+fdt32_ld() and friends only do the "load from this bit of memory"
+part, which we already have QEMU utility functions for (and which
+are this patch uses).
 
-The bindings will end up in BUILDDIR/{target}-generated.rs and have the same name
-as a target:
+This particular bit of code is dealing with an fdt property ("memory")
+that is an array of (address, size) tuples where address and size
+can independently be either 32 or 64 bits, and it wants the
+size value of tuple 0. So the missing functionality is something at
+a higher level than fdt32_ld() which would let you say "give me
+tuple N field X" with some way to specify the tuple layout. (Which
+is an awkward kind of API to write in C.)
 
-ninja aarch64-softmmu-generated.rs
+Slightly less general, but for this case we could perhaps have
+something like the getprop equivalent of qemu_fdt_setprop_sized_cells():
 
-The way the bindings are generated is:
+  uint64_t value_array[2];
+  qemu_fdt_getprop_sized_cells(fdt, nodename, "memory", &value_array,
+                               ac, sc);
+  /*
+   * fills in value_array[0] with address, value_array[1] with size,
+   * probably barfs if the varargs-list of cell-sizes doesn't
+   * cover the whole property, similar to the current assert on
+   * proplen.
+   */
+  mem0_end = value_array[0];
 
-1. All required C headers are included in a single file, in our case
-   rust/wrapper.h for convenience. Otherwise we'd have to provide a list
-   of headers every time to the bindgen tool.
-
-2. Meson creates a generated_rs target that runs bindgen making sure
-   the architecture etc header dependencies are present.
-
-3. The generated_rs target takes a list of files, type symbols,
-   function symbols to block from being generated. This is not necessary
-   for the bindings to work, but saves us time and space.
-
-4. Meson creates rust hardware target dependencies from the rust_targets
-   dictionary defined in rust/meson.build.
-
-   Since we cannot declare a dependency on generated_rs before it is
-   declared in meson.build, the rust crate targets must be defined after
-   the generated_rs target for each target architecture is defined. This
-   way meson sets up the dependency tree properly.
-
-5. After compiling each rust crate with the cargo_wrapper.py script,
-   its static library artifact is linked as a `whole-archive` with the
-   final binary.
-
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- MAINTAINERS              |   3 ++
- meson.build              |  57 ++++++++++++++++++++
- rust/.gitignore          |   3 ++
- rust/meson.build         | 112 +++++++++++++++++++++++++++++++++++++++
- rust/wrapper.h           |  39 ++++++++++++++
- scripts/cargo_wrapper.py |  18 +++----
- 6 files changed, 220 insertions(+), 12 deletions(-)
- create mode 100644 rust/.gitignore
- create mode 100644 rust/meson.build
- create mode 100644 rust/wrapper.h
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index d01bd06ab7..6e7b8207fb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4230,6 +4230,9 @@ Rust build system integration
- M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- S: Maintained
- F: scripts/cargo_wrapper.py
-+F: rust/meson.build
-+F: rust/wrapper.h
-+F: rust/.gitignore
- 
- Miscellaneous
- -------------
-diff --git a/meson.build b/meson.build
-index 11b8b146da..71011fd3b3 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3929,6 +3929,63 @@ foreach target : target_dirs
-     lib_deps += dep.partial_dependency(compile_args: true, includes: true)
-   endforeach
- 
-+  if with_rust and target_type == 'system'
-+       # FIXME: meson outputs the following warnings, which should be resolved
-+       # before merging:
-+       # > WARNING: Project specifies a minimum meson_version '>=0.63.0' but
-+       # > uses features which were added in newer versions:
-+       # > * 0.64.0: {'fs.copyfile'}
-+       # > * 1.0.0: {'dependencies arg in rust.bindgen', 'module rust as stable module'}
-+      rust_bindgen = import('rust')
-+
-+      # We need one bindings_rs build target per arch target, so give them
-+      # arch-specific names.
-+      copy = fs.copyfile('rust/wrapper.h',
-+                         target + '_wrapper.h')
-+      bindings_rs = rust_bindgen.bindgen(
-+        input: copy,
-+        dependencies: arch_deps + lib_deps,
-+        output: 'bindings-' + target + '.rs',
-+        include_directories: include_directories('.', 'include'),
-+        args: [
-+          '--ctypes-prefix', 'core::ffi',
-+          '--formatter', 'rustfmt',
-+          '--generate-block',
-+          '--generate-cstr',
-+          '--impl-debug',
-+          '--merge-extern-blocks',
-+          '--no-doc-comments',
-+          '--no-include-path-detection',
-+          '--use-core',
-+          '--with-derive-default',
-+          '--allowlist-file', meson.project_source_root() + '/include/.*',
-+          '--allowlist-file', meson.project_source_root() + '/.*',
-+          '--allowlist-file', meson.project_build_root() + '/.*'
-+        ],
-+      )
-+
-+      if target in rust_targets
-+        rust_hw = ss.source_set()
-+        foreach t: rust_targets[target]
-+          rust_device_cargo_build = custom_target(t['name'],
-+                                       output: t['output'],
-+                                       depends: [bindings_rs],
-+                                       build_always_stale: true,
-+                                       command: t['command'])
-+          rust_dep = declare_dependency(link_args: [
-+                                          '-Wl,--whole-archive',
-+                                          t['output'],
-+                                          '-Wl,--no-whole-archive'
-+                                          ],
-+                                          sources: [rust_device_cargo_build])
-+          rust_hw.add(rust_dep)
-+        endforeach
-+        rust_hw_config = rust_hw.apply(config_target, strict: false)
-+        arch_srcs += rust_hw_config.sources()
-+        arch_deps += rust_hw_config.dependencies()
-+      endif
-+  endif
-+
-   lib = static_library('qemu-' + target,
-                  sources: arch_srcs + genh,
-                  dependencies: lib_deps,
-diff --git a/rust/.gitignore b/rust/.gitignore
-new file mode 100644
-index 0000000000..1bf71b1f68
---- /dev/null
-+++ b/rust/.gitignore
-@@ -0,0 +1,3 @@
-+# Ignore any cargo development build artifacts; for qemu-wide builds, all build
-+# artifacts will go to the meson build directory.
-+target
-diff --git a/rust/meson.build b/rust/meson.build
-new file mode 100644
-index 0000000000..5fdc2621a3
---- /dev/null
-+++ b/rust/meson.build
-@@ -0,0 +1,112 @@
-+# Supported hosts
-+rust_supported_oses = {
-+  'linux': '-unknown-linux-gnu',
-+  # 'darwin': '-apple-darwin',
-+  # 'windows': '-pc-windows-gnu'
-+}
-+rust_supported_cpus = ['x86_64', 'aarch64']
-+
-+# Future-proof the above definitions against any change in the root meson.build file:
-+foreach rust_os: rust_supported_oses.keys()
-+  if not supported_oses.contains(rust_os)
-+    message()
-+    warning('UNSUPPORTED OS VALUES IN ' + meson.current_source_dir() + '/meson.build')
-+    message()
-+    message('This meson.build file claims OS `+' + rust_os + '` is supported but')
-+    message('it is not included in the global supported OSes list in')
-+    message(meson.global_source_root() + '/meson.build.')
-+  endif
-+endforeach
-+foreach rust_cpu: rust_supported_cpus
-+  if not supported_cpus.contains(rust_cpu)
-+    message()
-+    warning('UNSUPPORTED CPU VALUES IN ' + meson.current_source_dir() + '/meson.build')
-+    message()
-+    message('This meson.build file claims CPU `+' + rust_cpu + '` is supported but')
-+    message('it is not included in the global supported CPUs list in')
-+    message(meson.global_source_root() + '/meson.build.')
-+  endif
-+endforeach
-+
-+msrv = {
-+  'rustc': '1.77.2',
-+  'cargo': '1.77.2',
-+  'bindgen': '0.69.4',
-+}
-+
-+foreach bin_dep: msrv.keys()
-+  bin = find_program(bin_dep, required: true)
-+  if bin.version() < msrv[bin_dep]
-+    message()
-+    error(bin_dep + ' version ' + bin.version() + ' is unsupported: Please upgrade to at least ' + msrv[bin_dep])
-+  endif
-+endforeach
-+
-+rust_target_triple = get_option('with_rust_target_triple')
-+
-+if rust_target_triple == ''
-+  if not supported_oses.contains(host_os)
-+    message()
-+    error('QEMU does not support `' + host_os +'` as a Rust platform.')
-+  elif not supported_cpus.contains(host_arch)
-+    message()
-+    error('QEMU does not support `' + host_arch +'` as a Rust architecture.')
-+  endif
-+  rust_target_triple = host_arch + rust_supported_oses[host_os]
-+  # if host_os == 'windows' and host_arch == 'aarch64'
-+  #   rust_target_triple += 'llvm'
-+  # endif
-+else
-+  # verify rust_target_triple if given as an option
-+  rustc = find_program('rustc', required: true)
-+  rustc_targets = run_command(rustc, '--print', 'target-list', capture: true, check: true).stdout().strip().split()
-+  if not rustc_targets.contains(rust_target_triple)
-+    message()
-+    error('Given rust_target_triple ' + rust_target_triple + ' is not listed in rustc --print target-list output')
-+  endif
-+endif
-+
-+rust_targets = {}
-+
-+cargo_wrapper = [
-+  find_program(meson.global_source_root() / 'scripts/cargo_wrapper.py'),
-+  '--config-headers', meson.project_build_root() / 'config-host.h',
-+  '--meson-build-root', meson.project_build_root(),
-+]
-+
-+if get_option('b_colorout') != 'never'
-+  cargo_wrapper += ['--color', 'always']
-+endif
-+
-+if get_option('optimization') in ['0', '1', 'g']
-+  rs_build_profile = 'dev'
-+else
-+  rs_build_profile = 'release'
-+endif
-+
-+subdir('qemu-api')
-+
-+# Collect metadata for each (crate,qemu-target,compiler-target) combination.
-+# Rust meson targets cannot be defined a priori because they depend on bindgen
-+# generation that is created for each emulation target separately. Thus Rust
-+# meson targets will be defined for each target after the target-specific
-+# bindgen dependency is declared.
-+rust_hw_target_list = {}
-+
-+foreach rust_hw_target, rust_hws: rust_hw_target_list
-+  foreach rust_hw_dev: rust_hws
-+    crate_metadata = {
-+      'name': rust_hw_dev['name'],
-+      'output': [rust_hw_dev['output']],
-+      'command': [cargo_wrapper,
-+        '--crate-dir', meson.current_source_dir() / rust_hw_dev['dirname'],
-+        '--profile', rs_build_profile,
-+        '--target-triple', rust_target_triple,
-+        '--private-dir', '@PRIVATE_DIR@',
-+        '--outdir', '@OUTDIR@',
-+        'build-lib'
-+        ]
-+      }
-+    rust_targets += { rust_hw_target: [crate_metadata] }
-+  endforeach
-+endforeach
-diff --git a/rust/wrapper.h b/rust/wrapper.h
-new file mode 100644
-index 0000000000..51985f0ef1
---- /dev/null
-+++ b/rust/wrapper.h
-@@ -0,0 +1,39 @@
-+/*
-+ * QEMU System Emulator
-+ *
-+ * Copyright 2024 Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a copy
-+ * of this software and associated documentation files (the "Software"), to deal
-+ * in the Software without restriction, including without limitation the rights
-+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-+ * copies of the Software, and to permit persons to whom the Software is
-+ * furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice shall be included in
-+ * all copies or substantial portions of the Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-+ * THE SOFTWARE.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/module.h"
-+#include "qemu-io.h"
-+#include "sysemu/sysemu.h"
-+#include "hw/sysbus.h"
-+#include "exec/memory.h"
-+#include "chardev/char-fe.h"
-+#include "hw/clock.h"
-+#include "hw/qdev-clock.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "hw/irq.h"
-+#include "qapi/error.h"
-+#include "migration/vmstate.h"
-+#include "chardev/char-serial.h"
-diff --git a/scripts/cargo_wrapper.py b/scripts/cargo_wrapper.py
-index d2c7265461..e7d9238c16 100644
---- a/scripts/cargo_wrapper.py
-+++ b/scripts/cargo_wrapper.py
-@@ -111,6 +111,8 @@ def get_cargo_rustc(args: argparse.Namespace) -> tuple[Dict[str, Any], List[str]
- 
-     env = os.environ
-     env["CARGO_ENCODED_RUSTFLAGS"] = cfg
-+    env["MESON_BUILD_DIR"] = str(target_dir)
-+    env["MESON_BUILD_ROOT"] = str(args.meson_build_root)
- 
-     return (env, cargo_cmd)
- 
-@@ -231,19 +233,11 @@ def main() -> None:
-         default=[],
-     )
-     parser.add_argument(
--        "--meson-build-dir",
--        metavar="BUILD_DIR",
--        help="meson.current_build_dir()",
-+        "--meson-build-root",
-+        metavar="BUILD_ROOT",
-+        help="meson.project_build_root(): the root build directory. Example: '/path/to/qemu/build'",
-         type=Path,
--        dest="meson_build_dir",
--        required=True,
--    )
--    parser.add_argument(
--        "--meson-source-dir",
--        metavar="SOURCE_DIR",
--        help="meson.current_source_dir()",
--        type=Path,
--        dest="meson_build_dir",
-+        dest="meson_build_root",
-         required=True,
-     )
-     parser.add_argument(
--- 
-γαῖα πυρί μιχθήτω
-
+thanks
+-- PMM
 
