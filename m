@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2B72C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D64C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPLte-0004W9-7D; Thu, 04 Jul 2024 08:49:10 -0400
+	id 1sPLuJ-0005i3-5V; Thu, 04 Jul 2024 08:49:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLtT-0004E5-Fg; Thu, 04 Jul 2024 08:49:01 -0400
+ id 1sPLu5-0005OJ-Ds; Thu, 04 Jul 2024 08:49:41 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLtJ-0006KZ-Ts; Thu, 04 Jul 2024 08:48:58 -0400
+ id 1sPLu3-0006Vn-Hs; Thu, 04 Jul 2024 08:49:37 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 291587739F;
+ by isrv.corpit.ru (Postfix) with ESMTP id B327F773A7;
  Thu,  4 Jul 2024 15:48:22 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id B657FFE784;
- Thu,  4 Jul 2024 15:48:26 +0300 (MSK)
-Received: (nullmailer pid 1471779 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 4C392FE78C;
+ Thu,  4 Jul 2024 15:48:27 +0300 (MSK)
+Received: (nullmailer pid 1471804 invoked by uid 1000);
  Thu, 04 Jul 2024 12:48:26 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.13 05/17] tcg/loongarch64: Fix tcg_out_movi vs some pcrel
- pointers
-Date: Thu,  4 Jul 2024 15:48:12 +0300
-Message-Id: <20240704124826.1471715-5-mjt@tls.msk.ru>
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.13 13/17] target/arm: Fix VCMLA Dd, Dn, Dm[idx]
+Date: Thu,  4 Jul 2024 15:48:20 +0300
+Message-Id: <20240704124826.1471715-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
 References: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
@@ -63,73 +62,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Simplify the logic for two-part, 32-bit pc-relative addresses.
-Rather than assume all such fit in int32_t, do some arithmetic
-and assert a result, do some arithmetic first and then check
-to see if the pieces are in range.
+The inner loop, bounded by eltspersegment, must not be
+larger than the outer loop, bounded by elements.
 
 Cc: qemu-stable@nongnu.org
-Fixes: dacc51720db ("tcg/loongarch64: Implement tcg_out_mov and tcg_out_movi")
-Reviewed-by: Song Gao <gaosong@loongson.cn>
-Reported-by: Song Gao <gaosong@loongson.cn>
+Fixes: 18fc2405781 ("target/arm: Implement SVE fp complex multiply add (indexed)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2376
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit 521d7fb3ebdf88112ed13556a93e3037742b9eb8)
+Message-id: 20240625183536.1672454-2-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 76bccf3cb9d9383da0128bbc6d1300cddbe3ae8f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: context fixup in tcg/loongarch64/tcg-target.c.inc)
 
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index d326e28740..f1934b6d7b 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -332,8 +332,7 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
-      * back to the slow path.
-      */
+diff --git a/target/arm/vec_helper.c b/target/arm/vec_helper.c
+index f59d3b26ea..859366e264 100644
+--- a/target/arm/vec_helper.c
++++ b/target/arm/vec_helper.c
+@@ -842,7 +842,7 @@ void HELPER(gvec_fcmlah_idx)(void *vd, void *vn, void *vm, void *va,
+     intptr_t index = extract32(desc, SIMD_DATA_SHIFT + 2, 2);
+     uint32_t neg_real = flip ^ neg_imag;
+     intptr_t elements = opr_sz / sizeof(float16);
+-    intptr_t eltspersegment = 16 / sizeof(float16);
++    intptr_t eltspersegment = MIN(16 / sizeof(float16), elements);
+     intptr_t i, j;
  
--    intptr_t pc_offset;
--    tcg_target_long val_lo, val_hi, pc_hi, offset_hi;
-+    intptr_t src_rx, pc_offset;
-     tcg_target_long hi32, hi52;
-     bool rd_high_bits_are_ones;
+     /* Shift boolean to the sign bit so we can xor to negate.  */
+@@ -904,7 +904,7 @@ void HELPER(gvec_fcmlas_idx)(void *vd, void *vn, void *vm, void *va,
+     intptr_t index = extract32(desc, SIMD_DATA_SHIFT + 2, 2);
+     uint32_t neg_real = flip ^ neg_imag;
+     intptr_t elements = opr_sz / sizeof(float32);
+-    intptr_t eltspersegment = 16 / sizeof(float32);
++    intptr_t eltspersegment = MIN(16 / sizeof(float32), elements);
+     intptr_t i, j;
  
-@@ -344,24 +343,23 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
-     }
- 
-     /* PC-relative cases.  */
--    pc_offset = tcg_pcrel_diff(s, (void *)val);
--    if (pc_offset == sextreg(pc_offset, 0, 22) && (pc_offset & 3) == 0) {
--        /* Single pcaddu2i.  */
--        tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
--        return;
-+    src_rx = (intptr_t)tcg_splitwx_to_rx(s->code_ptr);
-+    if ((val & 3) == 0) {
-+        pc_offset = val - src_rx;
-+        if (pc_offset == sextreg(pc_offset, 0, 22)) {
-+            /* Single pcaddu2i.  */
-+            tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
-+            return;
-+        }
-     }
- 
--    if (pc_offset == (int32_t)pc_offset) {
--        /* Offset within 32 bits; load with pcalau12i + ori.  */
--        val_lo = sextreg(val, 0, 12);
--        val_hi = val >> 12;
--        pc_hi = (val - pc_offset) >> 12;
--        offset_hi = val_hi - pc_hi;
--
--        tcg_debug_assert(offset_hi == sextreg(offset_hi, 0, 20));
--        tcg_out_opc_pcalau12i(s, rd, offset_hi);
-+    pc_offset = (val >> 12) - (src_rx >> 12);
-+    if (pc_offset == sextreg(pc_offset, 0, 20)) {
-+        /* Load with pcalau12i + ori.  */
-+        tcg_target_long val_lo = val & 0xfff;
-+        tcg_out_opc_pcalau12i(s, rd, pc_offset);
-         if (val_lo != 0) {
--            tcg_out_opc_ori(s, rd, rd, val_lo & 0xfff);
-+            tcg_out_opc_ori(s, rd, rd, val_lo);
-         }
-         return;
-     }
+     /* Shift boolean to the sign bit so we can xor to negate.  */
 -- 
 2.39.2
 
