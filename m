@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5062C41513
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12A8C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPTaP-0008Cq-C1; Thu, 04 Jul 2024 17:01:49 -0400
+	id 1sPTZs-0006tG-NI; Thu, 04 Jul 2024 17:01:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTaM-00086l-1P; Thu, 04 Jul 2024 17:01:46 -0400
+ id 1sPTZp-0006lG-4t; Thu, 04 Jul 2024 17:01:13 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTaF-0004Lz-Lq; Thu, 04 Jul 2024 17:01:45 -0400
+ id 1sPTZm-0004KY-Gh; Thu, 04 Jul 2024 17:01:12 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0ADFD77568;
- Fri,  5 Jul 2024 00:00:51 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9F5D077562;
+ Fri,  5 Jul 2024 00:00:50 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1F00DFECA2;
- Fri,  5 Jul 2024 00:00:56 +0300 (MSK)
-Received: (nullmailer pid 1507746 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id B5E5DFEC9C;
+ Fri,  5 Jul 2024 00:00:55 +0300 (MSK)
+Received: (nullmailer pid 1507727 invoked by uid 1000);
  Thu, 04 Jul 2024 21:00:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>, Peter Xu <peterx@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.2 11/22] migration: Fix file migration with fdset
-Date: Fri,  5 Jul 2024 00:00:41 +0300
-Message-Id: <20240704210055.1507652-11-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.2 05/22] hw/audio/virtio-snd: Always use little endian
+ audio format
+Date: Fri,  5 Jul 2024 00:00:35 +0300
+Message-Id: <20240704210055.1507652-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
 References: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
@@ -63,58 +63,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-When the "file:" migration support was added we missed the special
-case in the qemu_open_old implementation that allows for a particular
-file name format to be used to refer to a set of file descriptors that
-have been previously provided to QEMU via the add-fd QMP command.
+The VIRTIO Sound Device conforms with the Virtio spec v1.2,
+thus only use little endianness.
 
-When using this fdset feature, we should not truncate the migration
-file because being given an fd means that the management layer is in
-control of the file and will likely already have some data written to
-it. This is further indicated by the presence of the 'offset'
-argument, which indicates the start of the region where QEMU is
-allowed to write.
+Remove the suspicious target_words_bigendian() noticed during
+code review.
 
-Fix the issue by replacing the O_TRUNC flag on open by an ftruncate
-call, which will take the offset into consideration.
-
-Fixes: 385f510df5 ("migration: file URI offset")
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-(cherry picked from commit 6d3279655ac49b806265f08415165f471d33e032)
+Cc: qemu-stable@nongnu.org
+Fixes: eb9ad377bb ("virtio-sound: handle control messages and streams")
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20240422211830.25606-1-philmd@linaro.org>
+(cherry picked from commit a276ec8e2632c9015d0f9b4e47194e4e91dfa8bb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/file.c b/migration/file.c
-index ab18ba505a..ba5b5c44ff 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -84,12 +84,19 @@ void file_start_outgoing_migration(MigrationState *s,
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index c80b58bf5d..4a56c00ec9 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -401,7 +401,7 @@ static void virtio_snd_get_qemu_audsettings(audsettings *as,
+     as->nchannels = MIN(AUDIO_MAX_CHANNELS, params->channels);
+     as->fmt = virtio_snd_get_qemu_format(params->format);
+     as->freq = virtio_snd_get_qemu_freq(params->rate);
+-    as->endianness = target_words_bigendian() ? 1 : 0;
++    as->endianness = 0; /* Conforming to VIRTIO 1.0: always little endian. */
+ }
  
-     trace_migration_file_outgoing(filename);
- 
--    fioc = qio_channel_file_new_path(filename, O_CREAT | O_WRONLY | O_TRUNC,
--                                     0600, errp);
-+    fioc = qio_channel_file_new_path(filename, O_CREAT | O_WRONLY, 0600, errp);
-     if (!fioc) {
-         return;
-     }
- 
-+    if (ftruncate(fioc->fd, offset)) {
-+        error_setg_errno(errp, errno,
-+                         "failed to truncate migration file to offset %" PRIx64,
-+                         offset);
-+        object_unref(OBJECT(fioc));
-+        return;
-+    }
-+
-     outgoing_args.fname = g_strdup(filename);
- 
-     ioc = QIO_CHANNEL(fioc);
+ /*
 -- 
 2.39.2
 
