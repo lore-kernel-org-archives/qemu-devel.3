@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D50FDC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 15:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3C34C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 15:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPOle-0000Ci-Ui; Thu, 04 Jul 2024 11:53:07 -0400
+	id 1sPOmA-0000vv-Ol; Thu, 04 Jul 2024 11:53:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPOlY-0000Bi-D3; Thu, 04 Jul 2024 11:53:00 -0400
+ id 1sPOm9-0000qV-Cl; Thu, 04 Jul 2024 11:53:37 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPOlU-0001yM-Ut; Thu, 04 Jul 2024 11:53:00 -0400
+ id 1sPOm6-00027p-Ct; Thu, 04 Jul 2024 11:53:37 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 53F907748F;
- Thu,  4 Jul 2024 18:52:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 361B37749C;
+ Thu,  4 Jul 2024 18:52:47 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 1C4A8FEADA;
+ by tsrv.corpit.ru (Postfix) with SMTP id E76EAFEAE7;
  Thu,  4 Jul 2024 18:52:51 +0300 (MSK)
-Received: (nullmailer pid 1481671 invoked by uid 1000);
+Received: (nullmailer pid 1481712 invoked by uid 1000);
  Thu, 04 Jul 2024 15:52:51 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.6 01/18] target/i386: fix size of EBP writeback in
- gen_enter()
-Date: Thu,  4 Jul 2024 18:52:32 +0300
-Message-Id: <20240704155251.1481617-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.6 14/18] target/arm: Fix FJCVTZS vs flush-to-zero
+Date: Thu,  4 Jul 2024 18:52:45 +0300
+Message-Id: <20240704155251.1481617-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.6-20240704154854@cover.tls.msk.ru>
 References: <qemu-stable-8.2.6-20240704154854@cover.tls.msk.ru>
@@ -61,40 +60,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The calculation of FrameTemp is done using the size indicated by mo_pushpop()
-before being written back to EBP, but the final writeback to EBP is done using
-the size indicated by mo_stacksize().
+Input denormals cause the Javascript inexact bit
+(output to Z) to be set.
 
-In the case where mo_pushpop() is MO_32 and mo_stacksize() is MO_16 then the
-final writeback to EBP is done using MO_16 which can leave junk in the top
-16-bits of EBP after executing ENTER.
-
-Change the writeback of EBP to use the same size indicated by mo_pushpop() to
-ensure that the full value is written back.
-
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2198
-Message-ID: <20240606095319.229650-5-mark.cave-ayland@ilande.co.uk>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 3973615e7fbaeef1deeaa067577e373781ced70a)
+Fixes: 6c1f6f2733a ("target/arm: Implement ARMv8.3-JSConv")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2375
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240625183536.1672454-4-richard.henderson@linaro.org
+[PMM: fixed hardcoded tab in test case]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 7619129f0d4a14d918227c5c47ad7433662e9ccc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 063727c912..716a747df7 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2662,7 +2662,7 @@ static void gen_enter(DisasContext *s, int esp_addend, int level)
-     }
+diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+index 3e5e37abbe..ff59bc5522 100644
+--- a/target/arm/vfp_helper.c
++++ b/target/arm/vfp_helper.c
+@@ -1121,8 +1121,8 @@ const FloatRoundMode arm_rmode_to_sf_map[] = {
+ uint64_t HELPER(fjcvtzs)(float64 value, void *vstatus)
+ {
+     float_status *status = vstatus;
+-    uint32_t inexact, frac;
+-    uint32_t e_old, e_new;
++    uint32_t frac, e_old, e_new;
++    bool inexact;
  
-     /* Copy the FrameTemp value to EBP.  */
--    gen_op_mov_reg_v(s, a_ot, R_EBP, s->T1);
-+    gen_op_mov_reg_v(s, d_ot, R_EBP, s->T1);
+     e_old = get_float_exception_flags(status);
+     set_float_exception_flags(0, status);
+@@ -1130,13 +1130,13 @@ uint64_t HELPER(fjcvtzs)(float64 value, void *vstatus)
+     e_new = get_float_exception_flags(status);
+     set_float_exception_flags(e_old | e_new, status);
  
-     /* Compute the final value of ESP.  */
-     tcg_gen_subi_tl(s->T1, s->T1, esp_addend + size * level);
+-    if (value == float64_chs(float64_zero)) {
+-        /* While not inexact for IEEE FP, -0.0 is inexact for JavaScript. */
+-        inexact = 1;
+-    } else {
+-        /* Normal inexact or overflow or NaN */
+-        inexact = e_new & (float_flag_inexact | float_flag_invalid);
+-    }
++    /* Normal inexact, denormal with flush-to-zero, or overflow or NaN */
++    inexact = e_new & (float_flag_inexact |
++                       float_flag_input_denormal |
++                       float_flag_invalid);
++
++    /* While not inexact for IEEE FP, -0.0 is inexact for JavaScript. */
++    inexact |= value == float64_chs(float64_zero);
+ 
+     /* Pack the result and the env->ZF representation of Z together.  */
+     return deposit64(frac, 32, 32, inexact);
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 70d728ae9a..4ecbca6a41 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -41,8 +41,9 @@ endif
+ 
+ # Pauth Tests
+ ifneq ($(CROSS_CC_HAS_ARMV8_3),)
+-AARCH64_TESTS += pauth-1 pauth-2 pauth-4 pauth-5
++AARCH64_TESTS += pauth-1 pauth-2 pauth-4 pauth-5 test-2375
+ pauth-%: CFLAGS += -march=armv8.3-a
++test-2375: CFLAGS += -march=armv8.3-a
+ run-pauth-1: QEMU_OPTS += -cpu max
+ run-pauth-2: QEMU_OPTS += -cpu max
+ # Choose a cpu with FEAT_Pauth but without FEAT_FPAC for pauth-[45].
+diff --git a/tests/tcg/aarch64/test-2375.c b/tests/tcg/aarch64/test-2375.c
+new file mode 100644
+index 0000000000..84c7e7de71
+--- /dev/null
++++ b/tests/tcg/aarch64/test-2375.c
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* Copyright (c) 2024 Linaro Ltd */
++/* See https://gitlab.com/qemu-project/qemu/-/issues/2375 */
++
++#include <assert.h>
++
++int main(void)
++{
++   int r, z;
++
++   asm("msr fpcr, %2\n\t"
++       "fjcvtzs %w0, %d3\n\t"
++       "cset %1, eq"
++       : "=r"(r), "=r"(z)
++       : "r"(0x01000000L),      /* FZ = 1 */
++         "w"(0xfcff00L));       /* denormal */
++
++    assert(r == 0);
++    assert(z == 0);
++    return 0;
++}
 -- 
 2.39.2
 
