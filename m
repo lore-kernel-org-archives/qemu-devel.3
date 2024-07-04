@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED9EC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:02:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3427CC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPTaR-0008Tp-UH; Thu, 04 Jul 2024 17:01:52 -0400
+	id 1sPTbG-0002Ut-UW; Thu, 04 Jul 2024 17:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTaP-0008Iq-6G; Thu, 04 Jul 2024 17:01:49 -0400
+ id 1sPTax-0001Yr-Qw; Thu, 04 Jul 2024 17:02:25 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTaN-0004Pa-F5; Thu, 04 Jul 2024 17:01:48 -0400
+ id 1sPTaw-0004Se-AJ; Thu, 04 Jul 2024 17:02:23 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3A8F87756C;
+ by isrv.corpit.ru (Postfix) with ESMTP id B4D6277572;
  Fri,  5 Jul 2024 00:00:51 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 511A5FECA5;
+ by tsrv.corpit.ru (Postfix) with SMTP id C928FFECAB;
  Fri,  5 Jul 2024 00:00:56 +0300 (MSK)
-Received: (nullmailer pid 1507755 invoked by uid 1000);
+Received: (nullmailer pid 1507774 invoked by uid 1000);
  Thu, 04 Jul 2024 21:00:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.2 14/22] target/arm: Fix VCMLA Dd, Dn, Dm[idx]
-Date: Fri,  5 Jul 2024 00:00:44 +0300
-Message-Id: <20240704210055.1507652-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.2 20/22] iotests/270: Don't store data-file with json:
+ prefix in image
+Date: Fri,  5 Jul 2024 00:00:50 +0300
+Message-Id: <20240704210055.1507652-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
 References: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
@@ -60,43 +62,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Kevin Wolf <kwolf@redhat.com>
 
-The inner loop, bounded by eltspersegment, must not be
-larger than the outer loop, bounded by elements.
+We want to disable filename parsing for data files because it's too easy
+to abuse in malicious image files. Make the test ready for the change by
+passing the data file explicitly in command line options.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 18fc2405781 ("target/arm: Implement SVE fp complex multiply add (indexed)")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2376
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240625183536.1672454-2-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 76bccf3cb9d9383da0128bbc6d1300cddbe3ae8f)
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+(cherry picked from commit 7e1110664ecbc4826f3c978ccb06b6c1bce823e6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index 1f93510b85..cc7cab338c 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -843,7 +843,7 @@ void HELPER(gvec_fcmlah_idx)(void *vd, void *vn, void *vm, void *va,
-     intptr_t index = extract32(desc, SIMD_DATA_SHIFT + 2, 2);
-     uint32_t neg_real = flip ^ neg_imag;
-     intptr_t elements = opr_sz / sizeof(float16);
--    intptr_t eltspersegment = 16 / sizeof(float16);
-+    intptr_t eltspersegment = MIN(16 / sizeof(float16), elements);
-     intptr_t i, j;
+diff --git a/tests/qemu-iotests/270 b/tests/qemu-iotests/270
+index 74352342db..c37b674aa2 100755
+--- a/tests/qemu-iotests/270
++++ b/tests/qemu-iotests/270
+@@ -60,8 +60,16 @@ _make_test_img -o cluster_size=2M,data_file="$TEST_IMG.orig" \
+ # "write" 2G of data without using any space.
+ # (qemu-img create does not like it, though, because null-co does not
+ # support image creation.)
+-$QEMU_IMG amend -o data_file="json:{'driver':'null-co',,'size':'4294967296'}" \
+-    "$TEST_IMG"
++test_img_with_null_data="json:{
++    'driver': '$IMGFMT',
++    'file': {
++        'filename': '$TEST_IMG'
++    },
++    'data-file': {
++        'driver': 'null-co',
++        'size':'4294967296'
++    }
++}"
  
-     /* Shift boolean to the sign bit so we can xor to negate.  */
-@@ -905,7 +905,7 @@ void HELPER(gvec_fcmlas_idx)(void *vd, void *vn, void *vm, void *va,
-     intptr_t index = extract32(desc, SIMD_DATA_SHIFT + 2, 2);
-     uint32_t neg_real = flip ^ neg_imag;
-     intptr_t elements = opr_sz / sizeof(float32);
--    intptr_t eltspersegment = 16 / sizeof(float32);
-+    intptr_t eltspersegment = MIN(16 / sizeof(float32), elements);
-     intptr_t i, j;
+ # This gives us a range of:
+ #   2^31 - 512 + 768 - 1 = 2^31 + 255 > 2^31
+@@ -74,7 +82,7 @@ $QEMU_IMG amend -o data_file="json:{'driver':'null-co',,'size':'4294967296'}" \
+ # on L2 boundaries, we need large L2 tables; hence the cluster size of
+ # 2 MB.  (Anything from 256 kB should work, though, because then one L2
+ # table covers 8 GB.)
+-$QEMU_IO -c "write 768 $((2 ** 31 - 512))" "$TEST_IMG" | _filter_qemu_io
++$QEMU_IO -c "write 768 $((2 ** 31 - 512))" "$test_img_with_null_data" | _filter_qemu_io
  
-     /* Shift boolean to the sign bit so we can xor to negate.  */
+ _check_test_img
+ 
 -- 
 2.39.2
 
