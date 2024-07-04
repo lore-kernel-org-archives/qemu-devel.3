@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FBD8C3814E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C57C3271F
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPTY5-0003BI-BC; Thu, 04 Jul 2024 16:59:25 -0400
+	id 1sPTY2-00039T-1Y; Thu, 04 Jul 2024 16:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sPTY0-00038a-MQ; Thu, 04 Jul 2024 16:59:21 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1sPTXy-00035T-6q; Thu, 04 Jul 2024 16:59:18 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sPTXy-0000nk-Uc; Thu, 04 Jul 2024 16:59:20 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a77b4387302so127184566b.1; 
- Thu, 04 Jul 2024 13:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720126756; x=1720731556; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oWtJCgARShGh4Hv3ul6ITFwgpH0VxBhfZ7ANN/LEg44=;
- b=iqhnb+fiDPLkBBrxz2hK4frUoR684LcWHUrioIqDR6Z+UCeppTEyVewj8WEVIwqLee
- rFjL42hHJJa1HVUsXlhErCpSftsIgmT1feeUYHFoH7TcL6F7tVwOGEBDp4Xd86WCLV4o
- lwXj272kyjqbq74S5AhXoIpDKI048fEOpbHs0wAHdyqJFV67dJhq/kBCEvvEOLACujho
- kVP6sdgIgNweoj/Rg3Atgu3FQn4mERIYWHl5hISl7UblZQB7hWypXk3IDyMU0Vdhgte3
- Kl1NbmiOIsmYE99EPiiTpvER3D6mN+EV4tjl7EyctFsD4v5a08MqZaYvy/f8DIPAa/WW
- YZ7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720126756; x=1720731556;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oWtJCgARShGh4Hv3ul6ITFwgpH0VxBhfZ7ANN/LEg44=;
- b=ZtSN4KsCAJNgqSyWhiiAzIBr8h4gidOipBC60t1UvJ1rIekz2WIa0MYfF3/3FobvuG
- fh/5dN2DWT36eougSVw9NhU2+JuDLZwXS+C1Kh/wYgshIDzbcvT6M8uRie+G/hEPKu9/
- uGI9H0oz7rkQdB7My4WA6bKi45ESZj8YhWCftv8GlKM4CtuXifOVyusFcNohi2/An5ak
- dGfamOpvFgMcgrT5gw4zdrzKcAV0B33YuhGsWbj9tOHykb8M91U1IkXzvDO7zefblum+
- 6+MO/397B4qr6NtbUvXJPuPzQcgk4VHU+TKvlgCUexoroTdPmz/f/Na+AEcG5ChTE8rM
- 2mKQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFASauvKmafwHDW809WmO00G/KhIXcmRYUdUQwhIAf6Sfb+74inadMuNyugIrjL1wLEorbE8gl4TuVh5jRy8MohNo9
-X-Gm-Message-State: AOJu0YyETQ+Ae8VgeskGg7HFE3fGjXqHWW1ZH2B/tnNq5HAxIZEzE8SI
- ntq02+QJwQGC9SN1UXliZtEazbcr+SMBoOd3OTSVCob4Qen0ARgcKnigbA==
-X-Google-Smtp-Source: AGHT+IEe+em4smMM6Uqg6zq6iNFvUwHYfqckmsWbkAP/ZX2TFe1Nc8PHNMVA6jnLSEumIr0GAmsK+A==
-X-Received: by 2002:a17:906:f0d1:b0:a72:8296:ca40 with SMTP id
- a640c23a62f3a-a77ba46f820mr184343566b.18.1720126755653; 
+ id 1sPTXw-0000nJ-IA; Thu, 04 Jul 2024 16:59:17 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-52e8b27f493so1162557e87.2; 
  Thu, 04 Jul 2024 13:59:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720126753; x=1720731553; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=k0FDqecZrCamRz8PvtsJUnmPAYojJ7BkczA2Sm72kHU=;
+ b=WCFaJqdnzuEEYdRazK1r6xPq8OJLJfTXxvCFQuGjDs7ZbVxABrRhRBQCzKeP/79yms
+ Xi/Wmr/dC40uw5IRXkhA1FmPYNSAxrE1mzjutocjZ1Y+3eK+C8blySa+VmJwAD7POX5i
+ aJo8ZYQYu+ym48cDZQYr59g+rK0IlmhzJrq9I0EMAMIXX9UBMGspEve2MHpL029RIquD
+ nKBlAu4SqCE0FnG/wGqU7CJsBmSquKXX2wOQecvS/roCFALmQZEIKlGwinBHzicMc4r9
+ pQIYAbwnv/yUx7hWgvGE9P5elQrmOoDh0T56XCzAGUmofYSNc4waOgBtvQrZvWsIgyQD
+ 6uvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720126753; x=1720731553;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=k0FDqecZrCamRz8PvtsJUnmPAYojJ7BkczA2Sm72kHU=;
+ b=Ejoj7PztD9Wm0NjTndc0Rz2faqDnF1/8XJf1Kq+De82vNLCP49vR1119ixakLRnimo
+ rN1xJJYhhP2XulyhB5aYcHJ3smJuS31e+4Tiubp7r69NgQinCM8P6SreKMKAkejU3eJ4
+ K4/Xr3wFALSU8ulzl2kdLr69CfzQxdpOejDj0bQOY3z4TJcMSHc/xPs4dEXeHOEn4k6m
+ Qwsk7iqZ7/gesdN9Dfw3UlCo+KgUviSeigSOyCedpXUQjpbpahk5vjT51APlQDMSWhSp
+ AUoBIyDs72VFzwVS9gDH0DFw5Zb+GzHTEEyoQrT4Z+wPEfNIoNoQhJfFHQwIU3epJpqL
+ 1ZrA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUp2AEai/LqbpuzZWc94vMMCZ8DEJ2lHZD1UKbwRHjaFp5TqgHWkDdAC9152nag8skBh9rbbqXHBB1FEGYJt26G7B8E
+X-Gm-Message-State: AOJu0YzdIgsnm8RkxUjy4CkBtyUvXizHHoBs1EgQfRvRBIyDgJSwbWMm
+ ZmMOdoXLoV8VwMKNGO2ANzkT7LZzkCl9vnPohZEtbdIAVwmgZt3a3l1H7A==
+X-Google-Smtp-Source: AGHT+IESt+KmfIYJd2dETBqh50wtvn1zH9FJkpY7Brrn/sGC6Aqpzjtn8ngmwxaQcCajYf4vF6/KyQ==
+X-Received: by 2002:ac2:5999:0:b0:52e:9407:ddcd with SMTP id
+ 2adb3069b0e04-52ea0628c53mr2001859e87.18.1720126752576; 
+ Thu, 04 Jul 2024 13:59:12 -0700 (PDT)
 Received: from archlinux.. (dynamic-077-188-087-180.77.188.pool.telefonica.de.
  [77.188.87.180]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7400456582sm526153866b.153.2024.07.04.13.59.14
+ a640c23a62f3a-a7400456582sm526153866b.153.2024.07.04.13.59.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 13:59:15 -0700 (PDT)
+ Thu, 04 Jul 2024 13:59:12 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>,
@@ -70,17 +69,15 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>, Huacai Chen <chenhuacai@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 2/3] hw/isa/vt82c686: Resolve intermediate IRQ forwarder
-Date: Thu,  4 Jul 2024 22:58:53 +0200
-Message-ID: <20240704205854.18537-3-shentey@gmail.com>
+Subject: [PATCH 0/3] Resolve vt82c686 and piix4 qemu_irq memory leaks
+Date: Thu,  4 Jul 2024 22:58:51 +0200
+Message-ID: <20240704205854.18537-1-shentey@gmail.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240704205854.18537-1-shentey@gmail.com>
-References: <20240704205854.18537-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x62c.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=shentey@gmail.com; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,131 +100,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When @cpu_intr is populated before vt82xx's realize(), it can be directly passed
-to i8259_init(), avoiding the need for the intermediate
-via_isa_request_i8259_irq() handler. The result is less code and runtime
-overhead, and a fixed memory leak caused by qemu_allocate_irqs().
-
-Inspired-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/isa/vt82c686.c   | 12 ++----------
- hw/mips/fuloong2e.c |  2 +-
- hw/ppc/amigaone.c   |  8 ++++----
- hw/ppc/pegasos2.c   |  4 ++--
- 4 files changed, 9 insertions(+), 17 deletions(-)
-
-diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-index 505b44c4e6..ca02ad4c20 100644
---- a/hw/isa/vt82c686.c
-+++ b/hw/isa/vt82c686.c
-@@ -624,6 +624,7 @@ static void via_isa_init(Object *obj)
-     object_initialize_child(obj, "uhci2", &s->uhci[1], TYPE_VT82C686B_USB_UHCI);
-     object_initialize_child(obj, "ac97", &s->ac97, TYPE_VIA_AC97);
-     object_initialize_child(obj, "mc97", &s->mc97, TYPE_VIA_MC97);
-+    qdev_init_gpio_out_named(DEVICE(obj), &s->cpu_intr, "intr", 1);
- }
- 
- static const TypeInfo via_isa_info = {
-@@ -704,24 +705,15 @@ static void via_isa_pirq(void *opaque, int pin, int level)
-     via_isa_set_irq(opaque, pin, level);
- }
- 
--static void via_isa_request_i8259_irq(void *opaque, int irq, int level)
--{
--    ViaISAState *s = opaque;
--    qemu_set_irq(s->cpu_intr, level);
--}
--
- static void via_isa_realize(PCIDevice *d, Error **errp)
- {
-     ViaISAState *s = VIA_ISA(d);
-     DeviceState *dev = DEVICE(d);
-     PCIBus *pci_bus = pci_get_bus(d);
--    qemu_irq *isa_irq;
-     ISABus *isa_bus;
-     int i;
- 
--    qdev_init_gpio_out_named(dev, &s->cpu_intr, "intr", 1);
-     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
--    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
-     isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
-                           errp);
- 
-@@ -729,7 +721,7 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
-         return;
-     }
- 
--    s->isa_irqs_in = i8259_init(isa_bus, *isa_irq);
-+    s->isa_irqs_in = i8259_init(isa_bus, s->cpu_intr);
-     isa_bus_register_input_irqs(isa_bus, s->isa_irqs_in);
-     i8254_pit_init(isa_bus, 0x40, 0, NULL);
-     i8257_dma_init(OBJECT(d), isa_bus, 0);
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index 6e4303ba47..e6487c34d8 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -286,6 +286,7 @@ static void mips_fuloong2e_init(MachineState *machine)
-     /* South bridge -> IP5 */
-     pci_dev = pci_new_multifunction(PCI_DEVFN(FULOONG2E_VIA_SLOT, 0),
-                                     TYPE_VT82C686B_ISA);
-+    qdev_connect_gpio_out_named(DEVICE(pci_dev), "intr", 0, env->irq[5]);
- 
-     /* Set properties on individual devices before realizing the south bridge */
-     if (machine->audiodev) {
-@@ -299,7 +300,6 @@ static void mips_fuloong2e_init(MachineState *machine)
-                               object_resolve_path_component(OBJECT(pci_dev),
-                                                             "rtc"),
-                               "date");
--    qdev_connect_gpio_out_named(DEVICE(pci_dev), "intr", 0, env->irq[5]);
- 
-     dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
-     pci_ide_create_devs(PCI_DEVICE(dev));
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index 9dcc486c1a..2110875f56 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -148,13 +148,13 @@ static void amigaone_init(MachineState *machine)
-     pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
- 
-     /* VIA VT82c686B South Bridge (multifunction PCI device) */
--    via = OBJECT(pci_create_simple_multifunction(pci_bus, PCI_DEVFN(7, 0),
--                                                 TYPE_VT82C686B_ISA));
-+    via = OBJECT(pci_new_multifunction(PCI_DEVFN(7, 0), TYPE_VT82C686B_ISA));
-+    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
-+                                qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
-+    pci_realize_and_unref(PCI_DEVICE(via), pci_bus, &error_abort);
-     object_property_add_alias(OBJECT(machine), "rtc-time",
-                               object_resolve_path_component(via, "rtc"),
-                               "date");
--    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
--                                qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
-     for (i = 0; i < PCI_NUM_PINS; i++) {
-         qdev_connect_gpio_out(dev, i, qdev_get_gpio_in_named(DEVICE(via),
-                                                              "pirq", i));
-diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-index 9b0a6b70ab..54e60082ce 100644
---- a/hw/ppc/pegasos2.c
-+++ b/hw/ppc/pegasos2.c
-@@ -181,6 +181,8 @@ static void pegasos2_init(MachineState *machine)
- 
-     /* VIA VT8231 South Bridge (multifunction PCI device) */
-     via = OBJECT(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_ISA));
-+    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
-+                                qdev_get_gpio_in_named(pm->mv, "gpp", 31));
- 
-     /* Set properties on individual devices before realizing the south bridge */
-     if (machine->audiodev) {
-@@ -195,8 +197,6 @@ static void pegasos2_init(MachineState *machine)
-     object_property_add_alias(OBJECT(machine), "rtc-time",
-                               object_resolve_path_component(via, "rtc"),
-                               "date");
--    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
--                                qdev_get_gpio_in_named(pm->mv, "gpp", 31));
- 
-     dev = PCI_DEVICE(object_resolve_path_component(via, "ide"));
-     pci_ide_create_devs(dev);
--- 
-2.45.2
-
+This series first turns vt82c686's "INTR" pin into a named GPIO for better=
+=0D
+comprehensibility. It then continues fixing qemu_irq memory leaks in vt82c6=
+86=0D
+and piix4 by connecting out IRQs of the south bridges before they get reali=
+zed.=0D
+This approach is already used in the pc machines after it had been discusse=
+d at=0D
+KVM forum `23.=0D
+=0D
+Observe that out IRQs are callbacks such as an INTR IRQ handler in a CPU wh=
+ich a=0D
+south bridge wants to trigger. If, as an implementation detail, the south b=
+ridge=0D
+wants to pass this callback to a child device, such as the PIC, then this=0D
+callback must be known to the south bridge before it gets realized. Otherwi=
+se=0D
+board code had to wire the PIC device itself, breaking encapsulation. This =
+means=0D
+that qdev_connect_gpio_out*() has to be called before realize() which this=
+=0D
+series implements. Another way to look at it is that callbacks apparently a=
+re=0D
+resouces such as memory regions which are also populated before realize().=
+=0D
+=0D
+Please check if above paragraph makes sense.=0D
+=0D
+Best regards,=0D
+Bernhard=0D
+=0D
+See also:=0D
+* https://lore.kernel.org/qemu-devel/0FFB5FD2-08CE-4CEC-9001-E7AC24407A44@g=
+mail.=0D
+com/=0D
+* "Remove intermediate IRQ forwarder" patches in=0D
+https://lore.kernel.org/qemu-devel/20230210163744.32182-1-philmd@linaro.org=
+/=0D
+=0D
+Testing done:=0D
+* Boot amigaone machine into Linux=0D
+* Boot pegasos2 machine into MorphOS=0D
+* Start fuloong2e machine and check that it doesn't abort=0D
+* Boot malta machine with https://people.debian.org/~gio/dqib/=0D
+=0D
+Bernhard Beschow (3):=0D
+  hw/isa/vt82c686: Turn "intr" irq into a named gpio=0D
+  hw/isa/vt82c686: Resolve intermediate IRQ forwarder=0D
+  hw/isa/piix: Resolve intermediate IRQ forwarder=0D
+=0D
+ hw/isa/piix.c       | 13 ++-----------=0D
+ hw/isa/vt82c686.c   | 12 ++----------=0D
+ hw/mips/fuloong2e.c |  2 +-=0D
+ hw/mips/malta.c     |  4 +---=0D
+ hw/ppc/amigaone.c   |  8 ++++----=0D
+ hw/ppc/pegasos2.c   |  4 ++--=0D
+ 6 files changed, 12 insertions(+), 31 deletions(-)=0D
+=0D
+-- =0D
+2.45.2=0D
+=0D
 
