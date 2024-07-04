@@ -4,95 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2708C2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Jul 2024 23:01:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C39C41513
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 00:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sP8yF-0000o6-G7; Wed, 03 Jul 2024 19:01:03 -0400
+	id 1sP9zz-0002ah-Q5; Wed, 03 Jul 2024 20:06:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8yB-0000lD-3S
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 19:01:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1sP9zr-0002Zy-1F
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 20:06:48 -0400
+Received: from mail-bn8nam12on2052.outbound.protection.outlook.com
+ ([40.107.237.52] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sP8y9-0003ee-BM
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 19:00:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720047656;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=F+6ih40Pd9uCOaYpw+qIWMkjn2ZaTRWOnzxQu9Nl4YU=;
- b=OQChy6kk5GeuzEg9A8+isHU4ucI3qhMv1iW2/E3ocRIvAM67ivcBTAt/QpghPSOHt6bePr
- pwPEHuWoHyspBw3h34jhjlAI22pOlLeMATjlqlHbMuc0ZYT0DapFiSoBG7LVNEZXHFb+un
- nBwW5UhkBoAAqOj78huDXYgjefyM07E=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-a8FS3n97NdOJve_pgRMVvQ-1; Wed, 03 Jul 2024 19:00:54 -0400
-X-MC-Unique: a8FS3n97NdOJve_pgRMVvQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a725eed1cfeso1818666b.3
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 16:00:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720047652; x=1720652452;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F+6ih40Pd9uCOaYpw+qIWMkjn2ZaTRWOnzxQu9Nl4YU=;
- b=OKbThrRiXk3SRc0tG6rXhrigfxWc7IwCyQkxd8qzwfvvJVn/5zRhu9fYBvQVJGEzjC
- o10/Ryw4vevl6OEmBa+qkeYi5yDk61CTtptRzoPX6QXhKd0XiTCupLf9CaXMqrfKU3LM
- fTsV5a5iwrigLndfMo3CukTg3I44NghXZRTcK2sWM3SCvH5JpsEzrN4mMr2eVkPxVFHs
- Crc1m8gCJBN3Zf4NY83ZeUIv2MTrKGxFpL3OGzajOb23W6ks7/96LuBHAkY/z+e0PqDa
- 5pr/AnSE+4vK1IBaJwBWrJ1scg2VX0jk40Nt2CiL3DBcpGFt2ajbt/CqB+S2cE+e6W6S
- I5yQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUaI/+2ROREQdMUWCHKNmqtIOlaHhlCPTelE8X9rqua5FiXpsnCqdV7TxTYYIQGdSWcImHnrNP3xgzWKL13PGGaY4COG8=
-X-Gm-Message-State: AOJu0YxFGzHig9I4YLeCZ3nxzp/2sjLNOq2QW27Yvok+R1+yCVCnbBHa
- ENm9f/8S14btbeXU1yWCSMk631RdxGhAisLG2uWgeL8Jap2cBTU51XUZqNjfjUALiyZJWXFL7TD
- dDqqkQ9WJbjzZIrRymjD7SmkRKmifXESaMittJZu8vsgH1hkTt6TP
-X-Received: by 2002:a17:906:6452:b0:a77:aebc:8fad with SMTP id
- a640c23a62f3a-a77aebcbf2emr74930266b.1.1720047652664; 
- Wed, 03 Jul 2024 16:00:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+AFk/JP9Q2aIN11SdJSCvx4lTAhTMGH6GHkTcIri0bEBeAPmRSvV0OG/kvFk3gEEWnGEbHw==
-X-Received: by 2002:a17:906:6452:b0:a77:aebc:8fad with SMTP id
- a640c23a62f3a-a77aebcbf2emr74928866b.1.1720047652068; 
- Wed, 03 Jul 2024 16:00:52 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aaf63909sm547587466b.77.2024.07.03.16.00.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Jul 2024 16:00:51 -0700 (PDT)
-Date: Wed, 3 Jul 2024 19:00:46 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PULL v2 00/88] virtio: features,fixes
-Message-ID: <20240703185932-mutt-send-email-mst@kernel.org>
-References: <cover.1719951168.git.mst@redhat.com>
- <f0961f6f-642c-4dc8-8bf3-1457f71da500@linaro.org>
- <20240703125101-mutt-send-email-mst@kernel.org>
- <d18ab076-47e4-4e8a-85d5-45f14f7b7e71@linaro.org>
- <54f9b0f4-d638-4273-935a-bb9bd129701b@redhat.com>
- <20240703162544-mutt-send-email-mst@kernel.org>
- <95648f85-d4b2-4ceb-bccf-888114e0fe03@linaro.org>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1sP9zc-0002Zo-Uk
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 20:06:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ijsmdG81HNhHEmk2BtEzHjbydalT+YWAlUdm3oCaAnEHM4Cty+bcEkijlcv1GzpKzOfW4MRjfvc2EGBtuLcOVHdj4G10HLp7ppU/+1Dln0HQYvPK/8TFXgs1l4Tyi3TxAMW3e5rSkFLP3pOjAA5T1W68qkbErWmfIMkj4yIzq67IoPhdP+e3UgIP8o5hiYpclJIQoTGUMuJUqRdRoMQxWhV3K3hNKvBbULkRUPAykkR1k53Mr80FyjrWDzDfZXd+c1r7Xm4kvqiFNR6glVWGK/4GoD1kOdfsU0ddK+wOy5dwwZAyVxr2fUSpzBLcMS3TES2gt8b7lvu5RjKBeQ3uWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=YVy/eR8ifWXY4MCIq+yHoIgKsHrfQilhGMiPY9WrrEI=;
+ b=mqV1zlPLVeP+aHU6fRo5DX70PqsT19IappOrXkzhCTRVQFinokRc89ykw6RBNlQC3ybgXQTWQcsrZF9n7OGBenIaovS1gw9M9d7AlClC+uI4Nf9uV91LikXQfvAtb+N/lC4MyW6otlUgJD8fu8zTvJRvG9Hle8ECUJ42ASUno8oBO71qEIsQeXu83+vPCD2xkRxNpaAcg4xUnjaDu3PLNCJrgrpvanlHomhmR2ZiDnepQtf6b9HNDN6ZXxxgKHZf6ro49AEamkbOyWBXoIers1eSI18EJZ06NkdyNpZMBUV0gT4Db7Hjz5iztEMG1TqlAyaz3A03maSjHfT+2uq8ug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=YVy/eR8ifWXY4MCIq+yHoIgKsHrfQilhGMiPY9WrrEI=;
+ b=QySHwBvl7TMRI2/F1l7lgiWFOBFEWCRfCHeDNuadvEBQSjzdyItpcJXqNj1zgJ4eau0UCVLBepGli+Z4hmT+4Pd0KBhjhGRYsZQ5wg3u6VgYH8CWy0dKokfepqQdu4xSbqfdU5aNenDQUm1HxnZdOPtxsMyuz22++lVQMWQMZaQ=
+Received: from BY3PR03CA0016.namprd03.prod.outlook.com (2603:10b6:a03:39a::21)
+ by MN2PR12MB4208.namprd12.prod.outlook.com (2603:10b6:208:1d0::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.25; Thu, 4 Jul
+ 2024 00:01:24 +0000
+Received: from SJ1PEPF00001CEB.namprd03.prod.outlook.com
+ (2603:10b6:a03:39a:cafe::1e) by BY3PR03CA0016.outlook.office365.com
+ (2603:10b6:a03:39a::21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.25 via Frontend
+ Transport; Thu, 4 Jul 2024 00:01:24 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ SJ1PEPF00001CEB.mail.protection.outlook.com (10.167.242.27) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7741.18 via Frontend Transport; Thu, 4 Jul 2024 00:01:23 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 3 Jul
+ 2024 19:01:23 -0500
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, <kvm@vger.kernel.org>
+Subject: [PATCH] i386/sev: Don't allow automatic fallback to legacy
+ KVM_SEV*_INIT
+Date: Wed, 3 Jul 2024 19:00:19 -0500
+Message-ID: <20240704000019.3928862-1-michael.roth@amd.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <95648f85-d4b2-4ceb-bccf-888114e0fe03@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00001CEB:EE_|MN2PR12MB4208:EE_
+X-MS-Office365-Filtering-Correlation-Id: ab6f2141-c6b7-4ccf-510b-08dc9bbc7185
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|376014|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?K0xZcUpncTloVEVHZWZIaGFjOEUySi9COHo2NEFMSytlS1M1UEZUY2ZXSDF3?=
+ =?utf-8?B?TlJXSnFuQnVSQW1LeVgwWjBpbW1yck1FcXo1YUwrSGJDWXlFTC92dFJhREUy?=
+ =?utf-8?B?QVhBMmQ5NWlyZGJWTllrVFBYY0sxQ1RPS2gwa2k1dE8rWlM4VGdHeHFNeG1y?=
+ =?utf-8?B?bkJ5R0pYOUcwSEQrQ1ozUFJqaENMbEc4MWlTTVJraW1ycjVoVmFTYnQreVZC?=
+ =?utf-8?B?K2l5WVBqVXI4VzhHa0x1ay9LRWVaVHo3YTJScjRnUUw3cllPZmwyNzRuVVc5?=
+ =?utf-8?B?ZW9BUUJRbXdQVDEwYmt0emdCRHVmditCemYzNWVmWXJuTXp1Rys5bmJkWHRi?=
+ =?utf-8?B?WU9JcTNqbk9qeERtVEVBREYzMEl0ODFlcE9Id0UzVjNuazNDL2tYTExnS3VE?=
+ =?utf-8?B?enhJUkhtSlh6RWxieVNpRDl2YVVPbmxIVXkzNkp2UDRvMmFuc0RZZ2tQY3JU?=
+ =?utf-8?B?cDhia3Q1NHFFUmFtYWdkZ1NCWlRhOENGTDRmSDdtUVd2MnMxSklINDdhNWZs?=
+ =?utf-8?B?UlVRWlRsR1dwMXBvY1BpWTBrdEd2Snh5NDVaS21JV1hHQ1IwVlgrQjVBc29B?=
+ =?utf-8?B?UVhoNVNtNWU1ZSszM2FxSHNsbEFmZndTcmhEejBneDM0RHdTTTM3NUdoc2la?=
+ =?utf-8?B?RWRRNGRuWXlEaC9oSDJVRVk1NEI4UHJZT1RRQlhtT2d1bzZpMVd0MzdnY1ZV?=
+ =?utf-8?B?VDNZaitkYTBDOExxazVBQzlmMHk0NGRTODRJdG1ORXlqN1IyeW9iWXp6UUpl?=
+ =?utf-8?B?azRVdHpUR0FBNE1BM2g4Z0pveXNLaVd0NnFFTDR4RHlHc3AxVXVOSTdNNnZr?=
+ =?utf-8?B?S3NvWkE2VHdyeVlJamNlTjRKN29JS0V5ZktvTkplV3I3UEQybTFLc1NCL1RL?=
+ =?utf-8?B?SlhkQlllUnIvSlMxWVhVRUZHdVBOdnVhaGRpdUZpcDRnZnVNOTdYZDUyYzZP?=
+ =?utf-8?B?RDBxOHh2ZFhKdTdadERxVGV4dGdtU216M0xGb0w0TnA2eTU3Mm5ka2dDTmU5?=
+ =?utf-8?B?R3FybzRmY3h0MmJVTmdTSWVRNW9UcWdRNTIrd2xqRVFtRmhOcUZkSVNHbUY3?=
+ =?utf-8?B?M3V6OVNwbnViQk5QT0lrYlVVK2lZdlNZa1pGR1VnS3NWRG54NGJyRDhjU0Np?=
+ =?utf-8?B?QlBGSENEUzk2KzZkUEFjbXZYSUF6Tmt1RXoyTVAzcUlQLzVuK1ZOZHdIQnFp?=
+ =?utf-8?B?cUxjeW9SQnNJckxPNFpIdFJDMWxIRGl3ckZtN3R3cnY0bFFNUUxtWDdVQjVr?=
+ =?utf-8?B?Tzh2a21KRnF6ak56QjhVblhoellMTDhFTTgzR2lQallzTXhNdWpFS0ZhTTVU?=
+ =?utf-8?B?ek5QTGNWNGhYaEkxT2JlMzNTQXpwWlorNlUwS1BwUkpsVWxEQVRvc0J6VkRX?=
+ =?utf-8?B?Q0dTN0JqalpRaXJ6RlUrZUEwSTVIN29NNGdwN1UzYW40OGdESlhMbHlXRkI1?=
+ =?utf-8?B?RnpxdTBiYzc5WXk1Q0NxaEM3UzVQOFNsM254Yk5yTzRSZXdPOVRQcnJlSEY0?=
+ =?utf-8?B?aE1MTGpBTkFFRlV1MjNFdWwrQTRERlhZV3V5Z3Y5UnZ4RGthRDAxd2NiS0M4?=
+ =?utf-8?B?QlpwNnkxL3g5RWREN3VZUkczTFZ4U2JnWnpHYlNuYUJSVnlnWldGcFBTMnho?=
+ =?utf-8?B?S0dubTdQcUlkb3QwdlJyakpPb0RvbHdtMmFkeHRBTExXb0dhNXZIbDU0cHNN?=
+ =?utf-8?B?eEhMSHp6eGxabU1NSlF5ekJDNmNQK25TQjZCdmZ1RWVjTFBCeWdvUmJZTnhi?=
+ =?utf-8?B?MUpvZXNCN0x0S0djSldJak1vdTZ2VzVMYVd5dE55TmRYWmJIWUhyT0NFMTMw?=
+ =?utf-8?B?emZLNkcxeVhaMmc3VEN0VmplVGxFaVdoV0Fxbk1EeHgrK0dLNWZGVFVPVHo2?=
+ =?utf-8?B?dFhQdmxlTjRyT3Jwa2tURWNTaEZCbGFMaW1GM3M0UTZmTWcvbUtlSmJ2amc2?=
+ =?utf-8?Q?g3ytkQpTzsZvlf7YGyCHHsGEWLwVTwXD?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jul 2024 00:01:23.8924 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ab6f2141-c6b7-4ccf-510b-08dc9bbc7185
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00001CEB.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4208
+Received-SPF: permerror client-ip=40.107.237.52;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,89 +154,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 03, 2024 at 03:37:43PM -0700, Richard Henderson wrote:
-> On 7/3/24 13:26, Michael S. Tsirkin wrote:
-> > On Wed, Jul 03, 2024 at 08:46:38PM +0200, Thomas Huth wrote:
-> > > On 03/07/2024 19.01, Richard Henderson wrote:
-> > > > On 7/3/24 09:51, Michael S. Tsirkin wrote:
-> > > > > On Wed, Jul 03, 2024 at 09:31:45AM -0700, Richard Henderson wrote:
-> > > > > > On 7/2/24 13:15, Michael S. Tsirkin wrote:
-> > > > > > > The following changes since commit
-> > > > > > > 1152a0414944f03231f3177207d379d58125890e:
-> > > > > > > 
-> > > > > > >  ††† Merge tag 'pull-xen-20240701'
-> > > > > > > ofhttps://xenbits.xen.org/git-http/people/aperard/qemu-dm
-> > > > > > > into staging (2024-07-01 09:06:25 -0700)
-> > > > > > > 
-> > > > > > > are available in the Git repository at:
-> > > > > > > 
-> > > > > > >  ††† https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git† tags/for_upstream
-> > > > > > > 
-> > > > > > > for you to fetch changes up to 29e45afd8d6abf7a67dab5db0ab1cfbc388daefe:
-> > > > > > > 
-> > > > > > >  ††† hw/pci: Replace -1 with UINT32_MAX for romsize
-> > > > > > > (2024-07-02 11:27:19 -0400)
-> > > > > > > 
-> > > > > > > ----------------------------------------------------------------
-> > > > > > > virtio: features,fixes
-> > > > > > > 
-> > > > > > > A bunch of improvements:
-> > > > > > > - vhost dirty log is now only scanned once, not once per device
-> > > > > > > - virtio and vhost now support VIRTIO_F_NOTIFICATION_DATA
-> > > > > > > - cxl gained DCD emulation support
-> > > > > > > - pvpanic gained shutdown support
-> > > > > > > - beginning of patchset for Generic Port Affinity Structure
-> > > > > > > - s3 support
-> > > > > > > - friendlier error messages when boot fails on some illegal configs
-> > > > > > > - for vhost-user, VHOST_USER_SET_LOG_BASE is now only sent once
-> > > > > > > - vhost-user now works on any POSIX system
-> > > > > > > - sr-iov VF setup code has been reworked significantly
-> > > > > > > - new tests, particularly for risc-v ACPI
-> > > > > > > - bugfixes
-> > > > > > > 
-> > > > > > > Signed-off-by: Michael S. Tsirkin<mst@redhat.com>
-> > > > > > 
-> > > > > > Fails testing:
-> > > > > > 
-> > > > > > https://gitlab.com/qemu-project/qemu/-/jobs/7257337667
-> > > > > 
-> > > > > Could you give me a hint how to trigger this in CI pls?
-> > > > > All tests seem to pass when I push it to gitlab.
-> > > > > Any special variables to set?
-> > > > 
-> > > > In CI, FreeBSD uses travis; I'm not sure what's involved.
-> > > 
-> > > s/travis/cirrus-ci/
-> > > 
-> > > See .gitlab-ci.d/cirrus/README.rst for information how to enable it in your
-> > > private gitlab repo.
-> > > 
-> > > > I replicated it locally within a FreeBSD VM.
-> > > > 
-> > > > It should be reproducible with 'make vm-build-freebsd', but I think
-> > > > that's more difficult to debug after the fact than a full vm.
-> > > 
-> > > Just use "make vm-build-freebsd DEBUG=1" and you should get a shell prompt
-> > > for interactive debugging, so that's likely the best way to tackle such
-> > > issues.
-> > > 
-> > >   HTH,
-> > >    Thomas
-> > 
-> > Thanks!
-> > As a side, is there some way to persist the stuff fetched over the
-> > network so it does not happen each time I re-run make?
-> 
-> That's why I use a proper vm install of freebsd.
-> 
-> 
-> r~
+Currently if the 'legacy-vm-type' property of the sev-guest object is
+left unset, QEMU will attempt to use the newer KVM_SEV_INIT2 kernel
+interface in conjunction with the newer KVM_X86_SEV_VM and
+KVM_X86_SEV_ES_VM KVM VM types.
 
-Anyway. This pull attempted to enable vhost user on freebsd,
-and it looks like that's failing. So I just dropped the
-patches enabling it for now.
+This can lead to measurement changes if, for instance, an SEV guest was
+created on a host that originally had an older kernel that didn't
+support KVM_SEV_INIT2, but is booted on the same host later on after the
+host kernel was upgraded.
 
+Cc: Daniel P. Berrang√© <berrange@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+cc: kvm@vger.kernel.org
+Signed-off-by: Michael Roth <michael.roth@amd.com>
+---
+ qapi/qom.json     | 11 ++++++-----
+ target/i386/sev.c | 30 ++++++++++++++++++++++++------
+ 2 files changed, 30 insertions(+), 11 deletions(-)
+
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 8bd299265e..a212c009aa 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -912,11 +912,12 @@
+ # @handle: SEV firmware handle (default: 0)
+ #
+ # @legacy-vm-type: Use legacy KVM_SEV_INIT KVM interface for creating the VM.
+-#                  The newer KVM_SEV_INIT2 interface syncs additional vCPU
+-#                  state when initializing the VMSA structures, which will
+-#                  result in a different guest measurement. Set this to
+-#                  maintain compatibility with older QEMU or kernel versions
+-#                  that rely on legacy KVM_SEV_INIT behavior.
++#                  The newer KVM_SEV_INIT2 interface, from Linux >= 6.10, syncs
++#                  additional vCPU state when initializing the VMSA structures,
++#                  which will result in a different guest measurement. Set
++#                  this to force compatibility with older QEMU or kernel
++#                  versions that rely on legacy KVM_SEV_INIT behavior.
++#                  Otherwise, QEMU will require KVM_SEV_INIT2 for SEV guests.
+ #                  (default: false) (since 9.1)
+ #
+ # Since: 2.12
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 3ab8b3c28b..8f56c0cf0c 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1347,14 +1347,22 @@ static int sev_kvm_type(X86ConfidentialGuest *cg)
+         goto out;
+     }
+ 
++    if (sev_guest->legacy_vm_type) {
++        sev_common->kvm_type = KVM_X86_DEFAULT_VM;
++        goto out;
++    }
++
+     kvm_type = (sev_guest->policy & SEV_POLICY_ES) ?
+                 KVM_X86_SEV_ES_VM : KVM_X86_SEV_VM;
+-    if (kvm_is_vm_type_supported(kvm_type) && !sev_guest->legacy_vm_type) {
+-        sev_common->kvm_type = kvm_type;
+-    } else {
+-        sev_common->kvm_type = KVM_X86_DEFAULT_VM;
++    if (!kvm_is_vm_type_supported(kvm_type)) {
++            error_report("SEV: host kernel does not support requested %s VM type. To allow use of "
++                         "legacy KVM_X86_DEFAULT_VM VM type, the 'legacy-vm-type' argument must be "
++                         "set to true for the sev-guest object.",
++                         kvm_type == KVM_X86_SEV_VM ? "KVM_X86_SEV_VM" : "KVM_X86_SEV_ES_VM");
++            return -1;
+     }
+ 
++    sev_common->kvm_type = kvm_type;
+ out:
+     return sev_common->kvm_type;
+ }
+@@ -1445,14 +1453,24 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+     }
+ 
+     trace_kvm_sev_init();
+-    if (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common)) == KVM_X86_DEFAULT_VM) {
++    switch (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common))) {
++    case KVM_X86_DEFAULT_VM:
+         cmd = sev_es_enabled() ? KVM_SEV_ES_INIT : KVM_SEV_INIT;
+ 
+         ret = sev_ioctl(sev_common->sev_fd, cmd, NULL, &fw_error);
+-    } else {
++        break;
++    case KVM_X86_SEV_VM:
++    case KVM_X86_SEV_ES_VM:
++    case KVM_X86_SNP_VM: {
+         struct kvm_sev_init args = { 0 };
+ 
+         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
++        break;
++    }
++    default:
++        error_setg(errp, "%s: host kernel does not support the requested SEV configuration.",
++                   __func__);
++        return -1;
+     }
+ 
+     if (ret) {
 -- 
-MST
+2.25.1
 
 
