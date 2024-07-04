@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97658C3065C
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 06:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91FA3C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 06:30:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPFwW-0000gG-0F; Thu, 04 Jul 2024 02:27:44 -0400
+	id 1sPFyR-0002OH-T6; Thu, 04 Jul 2024 02:29:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPFwU-0000du-Fc; Thu, 04 Jul 2024 02:27:42 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1sPFyP-0002Ns-0J; Thu, 04 Jul 2024 02:29:41 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPFwL-000410-80; Thu, 04 Jul 2024 02:27:42 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-7201cb6cae1so154775a12.2; 
- Wed, 03 Jul 2024 23:27:31 -0700 (PDT)
+ id 1sPFy9-0004Qs-JM; Thu, 04 Jul 2024 02:29:40 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-701f397e8ffso175512a34.0; 
+ Wed, 03 Jul 2024 23:29:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720074450; x=1720679250; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720074563; x=1720679363; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8v1sM/8UBJZymI3Xrg+3t9HNx/rOzvi6EiUf1Hfsub0=;
- b=K2CekdBfsk55t9qdnPE4FzETtqMHAktxGV48AVMi9/R6vj2LzdUVx/qwLfve2TBocd
- pZCPnZPFiEjvQTWdQrc+DNtEu6/EFWlYBp0R2tsvHWXdtJxVz61kkfc/mfp4yEjQ9H9N
- fENx2CeZE5RYo2G+PbpgPxr2meCOWHIQqtnlUj0ZI0FKjJ2Py3wM2kMtmBIYo5YaFOjF
- lBopTPgbizzrf63N9eNeRRxDkyZ8ZUWuyl1c91KY54PNsTTgx0OTGWnpWcTLL8AMRALc
- 9t5dV6sV4tz5GyRK+uXWQJbyZjmTt7qYHV7kh78/eCEOnoO9HF2wS4DKSjTORzCMwZCn
- 87aQ==
+ bh=k3IJVjEqwx9TC2jC5Mzs8z2QBHvhpNv9jGZ6ejySruM=;
+ b=edR7OEtDetOmEsxHnj6Cm+EummL9w/IGLxc7xp7btcxtAaQz9y6lum5uthFsI2SF5D
+ h/3YHbU+l1nW6MHz8kCfp1CWlnXR0Imf1FDbYoqkw3igkRvJL4gKuQ1X9A70zU4BcLE2
+ 5+Kk6KOui/iVshRSKN07cmMrc+SUKnmQ9KTVqPcXAzbZAxBVMq/Ddt5mhX64lbNmr4x4
+ Is9+fWfW7Wiw30BFRvnzBMOpx8Z1aPAWqjkLdVm7KumZ2b3lHg3OrC7ymRgzpU/ribAS
+ L52OO36CBynN65DSyeJKpsUa94sfiZO71fq6iqnIP+oD585EUcBmXHtgGCcjPKhi39XP
+ OrMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720074450; x=1720679250;
+ d=1e100.net; s=20230601; t=1720074563; x=1720679363;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=8v1sM/8UBJZymI3Xrg+3t9HNx/rOzvi6EiUf1Hfsub0=;
- b=rroFV2nqQzu/kAJQYAZqMCHlHPjM6dbAyW1kvupXAZxIuK6zGWE6uTweyy516vKf5h
- uFsMuoM1rCu50zkHSlgaVWF8f8haUuYVq8WkZF/wUW7Fhx+zYUEqT2mp/MMH6f2WhREj
- Qc5ELyeQC2KzxDg7nK3CgFEyzsApnvCxsX3qpppNQvvJfB+VpsfynZEpYqexBoER7j2s
- LAf81jw4mTbriDKFp/tWSzAeeM/b4bu5ZPYMcXiZ1MAjNzTsdiV4R8bat9uTiqJBUl1D
- IFYRh017edBsCBp4SXF53tGUjdr3gWXkUiFBCr9w4HKUVIt//e7x+IKmzT1NYkrrCEac
- y8Jg==
+ bh=k3IJVjEqwx9TC2jC5Mzs8z2QBHvhpNv9jGZ6ejySruM=;
+ b=qjSOuy+OuGbgjtsuAOmmCjd1hjVWSoeactwxiGFm8bDJ/tG7+lFRuIaajRElJLLrgL
+ izovAcxSwxtGmbgv/9+J7WkKGP9eqYl6g8s6Qqpp+2APVPIOMyIIcHZ1kQihOYyPbK71
+ BMpNXseG+X1Ok6w/9RgNe0rZOoEOg/+eUT1Mj9op8fDM2uMiSt/Gu9ofyh4xjHU2bBn3
+ tAyg1YTuy5byLJjdslRFiUyLNZX59RciuMC82CMBV9K1S8OkJKoZFPTG2yP7NtZ1wCmp
+ roC6oxV5XAZSptS5nbuckEcNzMtiw7XLX1lnvJDjGNihpxzAXTn8KRFD0leadJdO8G5O
+ RsLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNhJfzbIYHHFepk9I4uwvoeZiGBgLdHwBjz81dSkrlrYkUFyMFIrv57fomK8FrprgOHvIoP/Vo6mudR2PdM/tmYNmEZx1t+OYta/iix3tS1JQsYoABCZPfOHk=
-X-Gm-Message-State: AOJu0Yx5dURk8giS+/zkhQcFisK1qfinR/5nN53bm2sFLAl7dMq++BXs
- JWbTedxI/fFOzpvfUdC9FFqcKnIlW99u0rAzzk07xi/eZibrWSVJBLOSPQ==
-X-Google-Smtp-Source: AGHT+IEcBsoWs9nU+yRdwADvE6X/GvugDD4CQUq1Leww83BsYQaxqu5KeY3M/yImNe5P5GLhvgJZ/g==
-X-Received: by 2002:a05:6a20:8401:b0:1be:ccea:41ea with SMTP id
- adf61e73a8af0-1c0cc8baaf5mr596371637.49.1720074450149; 
- Wed, 03 Jul 2024 23:27:30 -0700 (PDT)
+ AJvYcCVKlAiEcLmjWC5PUDGagxv/MCM1yd6es/4QhErGQ3Z+p2KubYz+4dQUfVbwvJitf8p4qpoIenLAhcYJmeUdGX4MQ362mCWNsX0+69/kbkBXHXNkr4zeWdZUnSw=
+X-Gm-Message-State: AOJu0YwpPQ/zO84aoBft1Q4w6D7Am08i/ZrjryjQ+62uA8RXUQeBc36A
+ 14iag7zGFeOMOftMSxtXjuay/LYoP3S/H/vDYKBmxPpHUZnRGHEs
+X-Google-Smtp-Source: AGHT+IGemK4J2GLDNXjiLWaAQEhi2pQU3iP9iekgNsZlTe0feObTh960vuF5y1QQ5MfJeAnDPdVmPA==
+X-Received: by 2002:a05:6870:a11e:b0:25d:fb57:db43 with SMTP id
+ 586e51a60fabf-25e2b8d5f55mr725294fac.12.1720074562804; 
+ Wed, 03 Jul 2024 23:29:22 -0700 (PDT)
 Received: from localhost ([1.146.24.72]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c99a989405sm652983a91.27.2024.07.03.23.27.27
+ d2e1a72fcca58-70804a91335sm11414079b3a.213.2024.07.03.23.29.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 23:27:29 -0700 (PDT)
+ Wed, 03 Jul 2024 23:29:22 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 04 Jul 2024 16:27:24 +1000
-Message-Id: <D2GJI33WWBJ0.3K03ENUYHPN4A@gmail.com>
+Date: Thu, 04 Jul 2024 16:29:17 +1000
+Message-Id: <D2GJJJ1IQ7DV.L0VUPH6LA4OQ@gmail.com>
 Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH 18/43] target/ppc: Add function to get protection key
- for hash32 MMU
+Subject: Re: [PATCH 19/43] target/ppc/mmu-hash32.c: Inline and remove
+ ppc_hash32_pte_prot()
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.17.0
 References: <cover.1716763435.git.balaton@eik.bme.hu>
- <1fb34b3d81b3301bcc8febde9c8b40e3760b02c0.1716763435.git.balaton@eik.bme.hu>
-In-Reply-To: <1fb34b3d81b3301bcc8febde9c8b40e3760b02c0.1716763435.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ <6b845babbcee896afca10204f43ce0990dac43ff.1716763435.git.balaton@eik.bme.hu>
+In-Reply-To: <6b845babbcee896afca10204f43ce0990dac43ff.1716763435.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=npiggin@gmail.com; helo=mail-ot1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,91 +96,64 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon May 27, 2024 at 9:12 AM AEST, BALATON Zoltan wrote:
-> Add a function to get key bit from SR and use it instead of open coded
-> version.
+> This is used only once and can be inlined.
 >
-
-Nice.
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  target/ppc/mmu-hash32.c | 9 ++++++---
->  target/ppc/mmu-hash32.h | 5 +++++
->  target/ppc/mmu_common.c | 3 +--
->  3 files changed, 12 insertions(+), 5 deletions(-)
+>  target/ppc/mmu-hash32.c | 19 ++++---------------
+>  1 file changed, 4 insertions(+), 15 deletions(-)
 >
 > diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
-> index 8a446c8a7d..93559447ff 100644
+> index 93559447ff..160311de87 100644
 > --- a/target/ppc/mmu-hash32.c
 > +++ b/target/ppc/mmu-hash32.c
-> @@ -42,7 +42,7 @@ static int ppc_hash32_pte_prot(int mmu_idx,
->  {
->      unsigned pp, key;
+> @@ -37,17 +37,6 @@
+>  #  define LOG_BATS(...) do { } while (0)
+>  #endif
 > =20
-> -    key =3D !!(mmuidx_pr(mmu_idx) ? (sr & SR32_KP) : (sr & SR32_KS));
-> +    key =3D ppc_hash32_key(mmuidx_pr(mmu_idx), sr);
->      pp =3D pte.pte1 & HPTE32_R_PP;
-> =20
->      return ppc_hash32_prot(key, pp, !!(sr & SR32_NX));
-> @@ -145,7 +145,6 @@ static bool ppc_hash32_direct_store(PowerPCCPU *cpu, =
-target_ulong sr,
+> -static int ppc_hash32_pte_prot(int mmu_idx,
+> -                               target_ulong sr, ppc_hash_pte32_t pte)
+> -{
+> -    unsigned pp, key;
+> -
+> -    key =3D ppc_hash32_key(mmuidx_pr(mmu_idx), sr);
+> -    pp =3D pte.pte1 & HPTE32_R_PP;
+> -
+> -    return ppc_hash32_prot(key, pp, !!(sr & SR32_NX));
+> -}
+> -
+>  static target_ulong hash32_bat_size(int mmu_idx,
+>                                      target_ulong batu, target_ulong batl=
+)
 >  {
+> @@ -341,10 +330,10 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr,=
+ MMUAccessType access_type,
 >      CPUState *cs =3D CPU(cpu);
 >      CPUPPCState *env =3D &cpu->env;
-> -    int key =3D !!(mmuidx_pr(mmu_idx) ? (sr & SR32_KP) : (sr & SR32_KS))=
-;
-> =20
->      qemu_log_mask(CPU_LOG_MMU, "direct store...\n");
-> =20
-> @@ -206,7 +205,11 @@ static bool ppc_hash32_direct_store(PowerPCCPU *cpu,=
- target_ulong sr,
->          cpu_abort(cs, "ERROR: insn should not need address translation\n=
-");
->      }
-> =20
-> -    *prot =3D key ? PAGE_READ | PAGE_WRITE : PAGE_READ;
-> +    if (ppc_hash32_key(mmuidx_pr(mmu_idx), sr)) {
-> +        *prot =3D PAGE_READ | PAGE_WRITE;
-> +    } else {
-> +        *prot =3D PAGE_READ;
-> +    }
->      if (check_prot_access_type(*prot, access_type)) {
->          *raddr =3D eaddr;
->          return true;
-> diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
-> index bc4eedbecc..5902cf8333 100644
-> --- a/target/ppc/mmu-hash32.h
-> +++ b/target/ppc/mmu-hash32.h
-> @@ -102,6 +102,11 @@ static inline void ppc_hash32_store_hpte1(PowerPCCPU=
- *cpu,
->      stl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2, pte=
-1);
->  }
-> =20
-> +static inline bool ppc_hash32_key(bool pr, target_ulong sr)
-> +{
-> +    return pr ? (sr & SR32_KP) : (sr & SR32_KS);
-> +}
-> +
->  static inline int ppc_hash32_prot(bool key, int pp, bool nx)
->  {
+>      target_ulong sr;
+> -    hwaddr pte_offset;
+> +    hwaddr pte_offset, raddr;
+>      ppc_hash_pte32_t pte;
+> +    bool key;
 >      int prot;
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index 339df377e8..1ed2f45ac7 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -310,8 +310,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *e=
-nv, mmu_ctx_t *ctx,
->      pr =3D FIELD_EX64(env->msr, MSR, PR);
+> -    hwaddr raddr;
 > =20
->      sr =3D env->sr[eaddr >> 28];
-> -    ctx->key =3D (((sr & 0x20000000) && pr) ||
-> -                ((sr & 0x40000000) && !pr)) ? 1 : 0;
-> +    ctx->key =3D ppc_hash32_key(pr, sr);
->      ds =3D sr & SR32_T;
->      nx =3D sr & SR32_NX;
->      vsid =3D sr & SR32_VSID;
+>      /* There are no hash32 large pages. */
+>      *psizep =3D TARGET_PAGE_BITS;
+> @@ -426,8 +415,8 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, M=
+MUAccessType access_type,
+>                  "found PTE at offset %08" HWADDR_PRIx "\n", pte_offset);
+> =20
+>      /* 7. Check access permissions */
+> -
+> -    prot =3D ppc_hash32_pte_prot(mmu_idx, sr, pte);
+> +    key =3D ppc_hash32_key(mmuidx_pr(mmu_idx), sr);
+> +    prot =3D ppc_hash32_prot(key, pte.pte1 & HPTE32_R_PP, sr & SR32_NX);
+> =20
+>      if (!check_prot_access_type(prot, access_type)) {
+>          /* Access right violation */
 
 
