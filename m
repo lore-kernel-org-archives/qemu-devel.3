@@ -4,27 +4,24 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9788C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9896EC3065C
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 08:30:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPHqT-0000Np-Az; Thu, 04 Jul 2024 04:29:37 -0400
+	id 1sPHqV-0000Om-PN; Thu, 04 Jul 2024 04:29:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sPHqQ-0000N8-NK; Thu, 04 Jul 2024 04:29:34 -0400
+ id 1sPHqU-0000OK-Kl; Thu, 04 Jul 2024 04:29:38 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sPHqO-0002HT-IR; Thu, 04 Jul 2024 04:29:34 -0400
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
+ id 1sPHqS-0002HT-S1; Thu, 04 Jul 2024 04:29:38 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Thu, 4 Jul
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 4 Jul
  2024 16:29:22 +0800
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
- (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 4 Jul
- 2024 16:29:23 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
  Transport; Thu, 4 Jul 2024 16:29:22 +0800
@@ -41,17 +38,15 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v3 0/8] support AST2700 network
-Date: Thu, 4 Jul 2024 16:29:14 +0800
-Message-ID: <20240704082922.1464317-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v3 1/8] hw/net:ftgmac100: update memory region size to 64KB
+Date: Thu, 4 Jul 2024 16:29:15 +0800
+Message-ID: <20240704082922.1464317-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240704082922.1464317-1-jamin_lin@aspeedtech.com>
+References: <20240704082922.1464317-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
- does not designate 192.168.10.10 as permitted sender)
- receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
- helo=localhost.localdomain;
+Content-Type: text/plain
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
 X-Spam_score_int: -18
@@ -76,48 +71,70 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-change from v1:
-- ftgmac100
- - fix coding style
- - support 64 bits dma dram address for AST2700
+According to the datasheet of ASPEED SOCs,
+one MAC controller owns 128KB of register space for AST2500.
+However, one MAC controller only owns 64KB of register space for AST2600
+and AST2700. It set the memory region size 128KB and it occupied another
+controllers Address Spaces.
 
-change from v2:
-- ftgmac100: update memory region size to 0x200.
-- ftgmac100: introduce a new class(ftgmac100_high),
-    class attribute and memop handlers, for FTGMAC100_*_HIGH regs read/write.
-- aspeed_ast27x0: update network model to ftgmac100_high to support
-  64 bits dram address DMA.
-- m25p80: support quad mode for w25q01jvq
+Update one MAC controller memory region size to 0x1000
+because AST2500 did not use register spaces over than 64KB.
 
-change from v3:
-- ftgmac100: update memory region size to 64KB.
-- ftgmac100: using a property to activate the region for new registers,
-  instead of a class
-- ftgmac100: introduce TX and RX ring base address high registers
-- ftgmac100: split standalone patch for easy review
-- ftgmac100: update TX and RX packet buffers address to 64 bits
-- aspeed_ast27x0: set dma64 property for AST2700 ftgmac100
-- machine_aspeed.py: update to test sdk v09.02 and network for AST2700
+Introduce a new container region size to 0x1000 and its range
+is from 0 to 0xfff. This container is mapped a sub region
+for the current set of register.
+This sub region range is from 0 to 0xff.
 
-Jamin Lin (8):
-  hw/net:ftgmac100: update memory region size to 64KB
-  hw/net:ftgmac100: update ring base address to 64 bits
-  hw/net:ftgmac100: introduce TX and RX ring base address high registers
-    to support 64 bits
-  hw/net:ftgmac100: update TX and RX packet buffers address to 64 bits
-  aspeed/soc: set dma64 property for AST2700 ftgmac100
-  hw/block: m25p80: support quad mode for w25q01jvq
-  machine_aspeed.py: update to test ASPEED OpenBMC SDK v09.02 for
-    AST2700
-  machine_aspeed.py: update to test network for AST2700
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/net/ftgmac100.c         | 11 ++++++++---
+ include/hw/net/ftgmac100.h |  4 ++++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
- hw/arm/aspeed_ast27x0.c         |   3 +
- hw/block/m25p80.c               |  16 ++++
- hw/net/ftgmac100.c              | 147 +++++++++++++++++++++++++++-----
- include/hw/net/ftgmac100.h      |  17 ++--
- tests/avocado/machine_aspeed.py |  12 +--
- 5 files changed, 162 insertions(+), 33 deletions(-)
-
+diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
+index 25e4c0cd5b..9e1f12cd33 100644
+--- a/hw/net/ftgmac100.c
++++ b/hw/net/ftgmac100.c
+@@ -1107,9 +1107,14 @@ static void ftgmac100_realize(DeviceState *dev, Error **errp)
+         s->rxdes0_edorr = FTGMAC100_RXDES0_EDORR;
+     }
+ 
+-    memory_region_init_io(&s->iomem, OBJECT(dev), &ftgmac100_ops, s,
+-                          TYPE_FTGMAC100, 0x2000);
+-    sysbus_init_mmio(sbd, &s->iomem);
++    memory_region_init(&s->iomem_container, OBJECT(s),
++                       TYPE_FTGMAC100 ".container", FTGMAC100_MEM_SIZE);
++    sysbus_init_mmio(sbd, &s->iomem_container);
++
++    memory_region_init_io(&s->iomem, OBJECT(s), &ftgmac100_ops, s,
++                          TYPE_FTGMAC100 ".regs", FTGMAC100_REG_MEM_SIZE);
++    memory_region_add_subregion(&s->iomem_container, 0x0, &s->iomem);
++
+     sysbus_init_irq(sbd, &s->irq);
+     qemu_macaddr_default_if_unset(&s->conf.macaddr);
+ 
+diff --git a/include/hw/net/ftgmac100.h b/include/hw/net/ftgmac100.h
+index 765d1538a4..269446e858 100644
+--- a/include/hw/net/ftgmac100.h
++++ b/include/hw/net/ftgmac100.h
+@@ -14,6 +14,9 @@
+ #define TYPE_FTGMAC100 "ftgmac100"
+ OBJECT_DECLARE_SIMPLE_TYPE(FTGMAC100State, FTGMAC100)
+ 
++#define FTGMAC100_MEM_SIZE 0x1000
++#define FTGMAC100_REG_MEM_SIZE 0x100
++
+ #include "hw/sysbus.h"
+ #include "net/net.h"
+ 
+@@ -30,6 +33,7 @@ struct FTGMAC100State {
+     NICState *nic;
+     NICConf conf;
+     qemu_irq irq;
++    MemoryRegion iomem_container;
+     MemoryRegion iomem;
+ 
+     uint8_t frame[FTGMAC100_MAX_FRAME_SIZE];
 -- 
 2.34.1
 
