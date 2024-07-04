@@ -4,84 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41167C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 14:50:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B07F7C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 14:51:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPNmM-00069F-66; Thu, 04 Jul 2024 10:49:46 -0400
+	id 1sPNnC-0006sN-DG; Thu, 04 Jul 2024 10:50:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPNmK-00068s-Hs
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 10:49:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1sPNnA-0006rh-Na; Thu, 04 Jul 2024 10:50:36 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPNmI-0003fB-Tn
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 10:49:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720104580;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dLJQEcAty7+LwAOC7ei/wZUkJQhI4/p1Vwyee5EATXE=;
- b=CnQgK3Mlyrby2tW+cKR+vji4D9ZESrf+eXnwzrkeOmZYDcBJabHv2Xi6+ZqalokMxoTa66
- t2rlbX6J27bLFUC34WpHpR/f2bPXZf+ytuM9gZ62Tf+RQ5vTPtAVvccSu/RQ3eofwLA+RY
- SRXcT4AUVvypMOMYtwKPTkfDeHxa2Ms=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-569-4LuAF7FXPB-9OzptlUk8SQ-1; Thu, 04 Jul 2024 10:49:38 -0400
-X-MC-Unique: 4LuAF7FXPB-9OzptlUk8SQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-42648daf064so4469425e9.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 07:49:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720104577; x=1720709377;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dLJQEcAty7+LwAOC7ei/wZUkJQhI4/p1Vwyee5EATXE=;
- b=b1tEXPdo7WUhwrrEZ5DW+ZWN2gai+WuQueOHYd2pZ5U787tNQzyQaywkOPbhfADcTC
- F7MWAcK17SyUsdDeiLRC7MbhhH2DeleJ9jkj2SkAXdiJEY/Vr7qryVWCxESb3J3LimmE
- sSbX91mFqlULDoCEqYfbTSMtgqJ1sgBcK6b1HI8yhVqLlwHZCH82woveeLXfIv6aecY9
- y/cibdbgsWDTUSkMjIrbj2D1eE5HDiNqW5KzG+yGC7Afu3tYrURrB+NJD8qNmJeJfEVD
- GMTcV6RblSziygCI2ORIDAszwldnzWxmAI502Q/X9IrDGNqwJR6CsDSVAuuMtxkN68v/
- 5WjA==
-X-Gm-Message-State: AOJu0YyKB9kWubF05E2NyuWn/F06xz21C2U0salf6al3meH+HOPs0VzM
- BhPUQTXk6ZFyluT9TMOjoKZLF7FFJzF91/D8sOUMdMJF/nLNvg4sNn+Lq8Yb5EXvbfnpIUxWOfF
- GgmClv8h8eas/2wVzNmPJCP+IuSsLlRqhX8XH3+BC7MtXys/AepDn
-X-Received: by 2002:a05:600c:4d96:b0:424:7425:f8a0 with SMTP id
- 5b1f17b1804b1-4264b1619afmr17703325e9.15.1720104577047; 
- Thu, 04 Jul 2024 07:49:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHyLJGuefgLarHTSdSxcdTH9Ccw9fruO3M23ogNhrZW7g5gbITlGY/C0WzFMSa1V6jKDBkIzw==
-X-Received: by 2002:a05:600c:4d96:b0:424:7425:f8a0 with SMTP id
- 5b1f17b1804b1-4264b1619afmr17702925e9.15.1720104576450; 
- Thu, 04 Jul 2024 07:49:36 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:441:1b5b:ac5c:b82e:a18c:2c6e])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a1dd902sm28071535e9.12.2024.07.04.07.49.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 07:49:35 -0700 (PDT)
-Date: Thu, 4 Jul 2024 10:49:32 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: TaiseiIto <taisei1212@outlook.jp>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
-Subject: Re: [PATCH] hw/timer/hpet: Fix wrong HPET interrupts
-Message-ID: <20240704104833-mutt-send-email-mst@kernel.org>
-References: <TY0PR0101MB4285838139BC56DEC3D1CCFDA4CE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1sPNn9-0004HA-1s; Thu, 04 Jul 2024 10:50:36 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 464Dvhrv028382;
+ Thu, 4 Jul 2024 14:50:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ Ov5dR3NVQWZEsjuC0WltBWgRBB1v8xN3mLzqhgCv0LM=; b=ZAhFxUbDHGQ8iL7h
+ pPa/Y7QRrNhDtopozJPn6eIc4taZvsfdRwPJKay9onzb2QGaK+R5XIHCAWNbWulF
+ W89bc5LCahszWnePnIqcq/xrTL+lZ1c07gVfqs8LVLojd2aoe2EGqCJJo+o4x3hr
+ KgMdz01VBdjA8pMJL9dc5N+g03CteGOmafdfKfUQV/bckNdck5Oa40AajHcoPCzp
+ J1YHMk2XEl0NyI1TgA8f/A3mQ3TkfyqsjUJ1jfCABJpiPvk00Duw0yUx1zas3ZVE
+ tC3yMLdgvN5SxixCaENEryvrppdwqofJ6i9XB6XxwFG++KMCyYWSBz4R4nZ3JjbR
+ suFZeA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 405sju0pbs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 04 Jul 2024 14:50:23 +0000 (GMT)
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 464EoMjB011794;
+ Thu, 4 Jul 2024 14:50:22 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 405sju0pbq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 04 Jul 2024 14:50:22 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 464E5Zl4005945; Thu, 4 Jul 2024 14:50:22 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 402vkugug5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 04 Jul 2024 14:50:21 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 464EoIrY40763766
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 4 Jul 2024 14:50:20 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4EFCE20040;
+ Thu,  4 Jul 2024 14:50:18 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E57AA2004B;
+ Thu,  4 Jul 2024 14:50:17 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  4 Jul 2024 14:50:17 +0000 (GMT)
+Message-ID: <13b19a4859e25274d05663bc0ca05621c56af985.camel@linux.ibm.com>
+Subject: Re: [PATCH 0/2] target/arm: Fix unwind from dc zva and FEAT_MOPS
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, david@redhat.com,
+ balaton@eik.bme.hu
+Date: Thu, 04 Jul 2024 16:50:17 +0200
+In-Reply-To: <20240702234155.2106399-1-richard.henderson@linaro.org>
+References: <20240702234155.2106399-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <TY0PR0101MB4285838139BC56DEC3D1CCFDA4CE2@TY0PR0101MB4285.apcprd01.prod.exchangelabs.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: PK1HpEFLX_gBm0BPdLMKMNrcWYQl-D8Y
+X-Proofpoint-ORIG-GUID: Cy5r1Ez5bgLcK3GtC22ihuODAxHZgPQ_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-04_10,2024-07-03_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0
+ malwarescore=0 spamscore=0 bulkscore=0 mlxscore=0 lowpriorityscore=0
+ priorityscore=1501 mlxlogscore=572 phishscore=0 impostorscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407040099
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,69 +114,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 18, 2024 at 01:10:44PM +0000, TaiseiIto wrote:
-> Before this commit, there are 3 problems about HPET timer interrupts. First,
-> HPET periodic timers cause a too early interrupt before HPET main counter
-> value reaches a value written its comparator value register. Second,
-> disabled HPET timers whose comparator value register is not
-> 0xffffffffffffffff cause wrong interrupts. Third, enabled HPET timers whose
-> comparator value register is 0xffffffffffffffff don't cause any interrupts.
-> About the first one, for example, an HPET driver writes 0x00000000aaaaaaaa
-> to an HPET periodic timer comparator value register. As a result, the
-> register becomes 0xffffffffaaaaaaaa because writing to the higher 32 bits
-> of the register doesn't affect itself in periodic mode. (see
-> "case HPET_TN_CMP + 4" of "hpet_ram_write" function.) And "timer->period"
-> which means interrupt period in periodic mode becomes 0xaaaaaaaa. Next, the
-> HPET driver sets the HPET_CFG_ENABLE flag to start the main counter. The
-> comparator value register (0xffffffffaaaaaaaa) indicate the next interrupt
-> time. The period (0xaaaaaaaa) is added to the comparator value register at
-> "hpet_timer" function because "hpet_time_after64" function returns true when
-> the main counter is small. So, the first interrupt is planned when the main
-> counter is 0x0000000055555554, but the first interrupt should occur when the
-> main counter is 0x00000000aaaaaaaa. To solve this problem, I fix the code to
-> clear the higher 32 bits of comparator value registers of periodic mode
-> timers when HPET starts the main counter. About the other two problems, it
-> was decided by comparator value whether each timer is enabled, but it should
-> be decided by "timer_enabled" function which confirm "HPET_TN_ENABLE" flag.
-> To solve these problems, I fix the code to decide correctly whether each
-> timer is enabled. After this commit, the 3 problems are solved. First, HPET
-> periodic timers cause the first interrupt when the main counter value
-> reaches a value written its comparator value register. Second, disabled HPET
-> timers never cause any interrupt. Third, enabled HPET timers cause
-> interrupts correctly even if an HPET driver writes 0xffffffff to its
-> comparator value register.
-> 
-> Signed-off-by: TaiseiIto <taisei1212@outlook.jp>
+On Tue, 2024-07-02 at 16:41 -0700, Richard Henderson wrote:
+> While looking into Zoltan's attempt to speed up ppc64 DCBZ
+> (data cache block set to zero), I wondered what AArch64 was
+> doing differently.=C2=A0 It turned out that Arm is the only user
+> of tlb_vaddr_to_host.
+>=20
+> None of the code sequences in use between AArch64, Power64 and S390X
+> are 100% safe, with race conditions vs mmap et al, however, AArch64
+> is the only one that will fail this single threaded test case.=C2=A0 Use
+> of these new functions fixes the race condition as well, though I
+> have not yet touched the other guests.
+>=20
+> I thought about exposing accel/tcg/user-retaddr.h for direct use
+> from the targets, but perhaps these wrappers are cleaner.=C2=A0 RFC?
+>=20
+>=20
+> r~
+>=20
+>=20
+> Richard Henderson (2):
+> =C2=A0 accel/tcg: Introduce memset_ra, memmove_ra
+> =C2=A0 target/arm: Use memset_ra, memmove_ra in helper-a64.c
+>=20
+> =C2=A0include/exec/cpu_ldst.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 | 40 ++++++++++++++++
+> =C2=A0accel/tcg/user-exec.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 22 +++++++++
+> =C2=A0target/arm/tcg/helper-a64.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 | 10 ++--
+> =C2=A0tests/tcg/multiarch/memset-fault.c | 77
+> ++++++++++++++++++++++++++++++
+> =C2=A04 files changed, 144 insertions(+), 5 deletions(-)
+> =C2=A0create mode 100644 tests/tcg/multiarch/memset-fault.c
 
-I didn't get this patch previously. Donnu why.
-Tagged now.
+This sounds good to me.
 
-> ---
->  hw/timer/hpet.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-> index 01efe4885d..2dcefa7049 100644
-> --- a/hw/timer/hpet.c
-> +++ b/hw/timer/hpet.c
-> @@ -599,8 +599,12 @@ static void hpet_ram_write(void *opaque, hwaddr addr,
->                  s->hpet_offset =
->                      ticks_to_ns(s->hpet_counter) - qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
->                  for (i = 0; i < s->num_timers; i++) {
-> -                    if ((&s->timer[i])->cmp != ~0ULL) {
-> -                        hpet_set_timer(&s->timer[i]);
-> +                    HPETTimer *timer = &s->timer[i];
-> +                    if (timer_enabled(timer)) {
-> +                        if (timer_is_periodic(timer)) {
-> +                            timer->cmp &= 0xffffffffULL;
-> +                        }
-> +                        hpet_set_timer(timer);
->                      }
->                  }
->              } else if (deactivating_bit(old_val, new_val, HPET_CFG_ENABLE)) {
-> -- 
-> 2.34.1
-> 
-> 
-
+I haven't debugged it, but I wonder why doesn't s390x fail here.
+For XC with src =3D=3D dst, it does access_memset() -> do_access_memset()
+-> memset() without setting the RA. And I don't think that anything
+around it sets the RA either.
 
