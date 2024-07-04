@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B370BC3271E
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A03C41513
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:50:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPLtm-0004gQ-C4; Thu, 04 Jul 2024 08:49:18 -0400
+	id 1sPLtc-0004V1-8y; Thu, 04 Jul 2024 08:49:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLtd-0004Vn-59; Thu, 04 Jul 2024 08:49:09 -0400
+ id 1sPLtM-0004B7-68; Thu, 04 Jul 2024 08:48:53 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLta-0006Tg-7H; Thu, 04 Jul 2024 08:49:08 -0400
+ id 1sPLtD-0006Ja-II; Thu, 04 Jul 2024 08:48:51 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 66969773A2;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1A3867739E;
  Thu,  4 Jul 2024 15:48:22 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id F28EDFE787;
+ by tsrv.corpit.ru (Postfix) with SMTP id A66F1FE783;
  Thu,  4 Jul 2024 15:48:26 +0300 (MSK)
-Received: (nullmailer pid 1471789 invoked by uid 1000);
+Received: (nullmailer pid 1471776 invoked by uid 1000);
  Thu, 04 Jul 2024 12:48:26 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.13 08/17] ci,
- docker: update CentOS and OpenSUSE Python to non-EOL versions
-Date: Thu,  4 Jul 2024 15:48:15 +0300
-Message-Id: <20240704124826.1471715-8-mjt@tls.msk.ru>
+Subject: [Stable-7.2.13 04/17] linux-user: Make TARGET_NR_setgroups affect
+ only the current thread
+Date: Thu,  4 Jul 2024 15:48:11 +0300
+Message-Id: <20240704124826.1471715-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
 References: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
@@ -63,239 +64,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Python 3.6 is at end-of-life.  Update the libvirt-ci module to a
-version that supports overrides for targets and package mappings;
-this way, QEMU can use the newer versions provided by CentOS 8 (Python
-3.8) and OpenSUSE 15.3 (Python 3.9).
+Like TARGET_NR_setuid, TARGET_NR_setgroups should affect only the
+calling thread, and not the entire process. Therefore, implement it
+using a syscall, and not a libc call.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit d639cf79783a1eba349b7705e0fb270fa76118a4)
+Cc: qemu-stable@nongnu.org
+Fixes: 19b84f3c35d7 ("added setgroups and getgroups syscalls")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240614154710.1078766-1-iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+(cherry picked from commit 54b27921026df384f67df86f04c39539df375c60)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
-index 98c26ecf18..b4c99be195 100644
---- a/docs/devel/testing.rst
-+++ b/docs/devel/testing.rst
-@@ -473,6 +473,12 @@ thus some extra preparation steps will be required first
-    the ``libvirt-ci`` submodule to point to a commit that contains
-    the ``mappings.yml`` update.
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 74240f99ad..53c46ae951 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -7228,11 +7228,17 @@ static inline int tswapid(int id)
+ #else
+ #define __NR_sys_setresgid __NR_setresgid
+ #endif
++#ifdef __NR_setgroups32
++#define __NR_sys_setgroups __NR_setgroups32
++#else
++#define __NR_sys_setgroups __NR_setgroups
++#endif
  
-+For enterprise distros that default to old, end-of-life versions of the
-+Python runtime, QEMU uses a separate set of mappings that work with more
-+recent versions.  These can be found in ``tests/lcitool/mappings.yml``.
-+Modifying this file should not be necessary unless the new pre-requisite
-+is a Python library or tool.
-+
+ _syscall1(int, sys_setuid, uid_t, uid)
+ _syscall1(int, sys_setgid, gid_t, gid)
+ _syscall3(int, sys_setresuid, uid_t, ruid, uid_t, euid, uid_t, suid)
+ _syscall3(int, sys_setresgid, gid_t, rgid, gid_t, egid, gid_t, sgid)
++_syscall2(int, sys_setgroups, int, size, gid_t *, grouplist)
  
- Adding new OS distros
- ^^^^^^^^^^^^^^^^^^^^^
-diff --git a/tests/docker/dockerfiles/centos8.docker b/tests/docker/dockerfiles/centos8.docker
-index 1f70d41aeb..cc09402eb3 100644
---- a/tests/docker/dockerfiles/centos8.docker
-+++ b/tests/docker/dockerfiles/centos8.docker
-@@ -82,7 +82,6 @@ RUN dnf distro-sync -y && \
-         lzo-devel \
-         make \
-         mesa-libgbm-devel \
--        meson \
-         ncurses-devel \
-         nettle-devel \
-         ninja-build \
-@@ -95,13 +94,12 @@ RUN dnf distro-sync -y && \
-         pixman-devel \
-         pkgconfig \
-         pulseaudio-libs-devel \
--        python3 \
--        python3-PyYAML \
--        python3-numpy \
--        python3-pillow \
--        python3-pip \
--        python3-sphinx \
--        python3-sphinx_rtd_theme \
-+        python38 \
-+        python38-PyYAML \
-+        python38-numpy \
-+        python38-pip \
-+        python38-setuptools \
-+        python38-wheel \
-         rdma-core-devel \
-         rpm \
-         sed \
-@@ -130,8 +128,14 @@ RUN dnf distro-sync -y && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
- 
-+RUN /usr/bin/pip3.8 install \
-+                    meson==0.63.2 \
-+                    pillow \
-+                    sphinx \
-+                    sphinx-rtd-theme
-+
- ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
- ENV LANG "en_US.UTF-8"
- ENV MAKE "/usr/bin/make"
- ENV NINJA "/usr/bin/ninja"
--ENV PYTHON "/usr/bin/python3"
-+ENV PYTHON "/usr/bin/python3.8"
-diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
-index 4361b01464..4f1191dc05 100644
---- a/tests/docker/dockerfiles/opensuse-leap.docker
-+++ b/tests/docker/dockerfiles/opensuse-leap.docker
-@@ -90,16 +90,9 @@ RUN zypper update -y && \
-            pcre-devel-static \
-            perl-base \
-            pkgconfig \
--           python3-Pillow \
--           python3-PyYAML \
--           python3-Sphinx \
--           python3-base \
--           python3-numpy \
--           python3-opencv \
--           python3-pip \
--           python3-setuptools \
--           python3-sphinx_rtd_theme \
--           python3-wheel \
-+           python39-base \
-+           python39-pip \
-+           python39-setuptools \
-            rdma-core-devel \
-            rpm \
-            sed \
-@@ -131,10 +124,15 @@ RUN zypper update -y && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
- 
--RUN /usr/bin/pip3 install meson==0.56.0
-+RUN /usr/bin/pip3.9 install \
-+                    PyYAML \
-+                    meson==0.63.2 \
-+                    pillow \
-+                    sphinx \
-+                    sphinx-rtd-theme
- 
- ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
- ENV LANG "en_US.UTF-8"
- ENV MAKE "/usr/bin/make"
- ENV NINJA "/usr/bin/ninja"
--ENV PYTHON "/usr/bin/python3"
-+ENV PYTHON "/usr/bin/python3.9"
-diff --git a/tests/docker/dockerfiles/ubuntu2004.docker b/tests/docker/dockerfiles/ubuntu2004.docker
-index 9417bca2fa..39c744eba9 100644
---- a/tests/docker/dockerfiles/ubuntu2004.docker
-+++ b/tests/docker/dockerfiles/ubuntu2004.docker
-@@ -140,7 +140,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
- 
--RUN /usr/bin/pip3 install meson==0.56.0
-+RUN /usr/bin/pip3 install meson==0.63.2
- 
- ENV CCACHE_WRAPPERSDIR "/usr/libexec/ccache-wrappers"
- ENV LANG "en_US.UTF-8"
-diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-new file mode 100644
-index 0000000000..e4719e4551
---- /dev/null
-+++ b/tests/lcitool/mappings.yml
-@@ -0,0 +1,77 @@
-+mappings:
-+  flake8:
-+    CentOSStream8:
-+    OpenSUSELeap153:
-+
-+  meson:
-+    CentOSStream8:
-+    OpenSUSELeap153:
-+
-+  python3:
-+    CentOSStream8: python38
-+    OpenSUSELeap153: python39-base
-+
-+  python3-PyYAML:
-+    CentOSStream8: python38-PyYAML
-+    OpenSUSELeap153:
-+
-+  python3-devel:
-+    CentOSStream8: python38-devel
-+    OpenSUSELeap153: python39-devel
-+
-+  python3-docutils:
-+    CentOSStream8:
-+    OpenSUSELeap153:
-+
-+  python3-numpy:
-+    CentOSStream8: python38-numpy
-+    OpenSUSELeap153:
-+
-+  python3-opencv:
-+    CentOSStream8:
-+    OpenSUSELeap153:
-+
-+  python3-pillow:
-+    CentOSStream8:
-+    OpenSUSELeap153:
-+
-+  python3-pip:
-+    CentOSStream8: python38-pip
-+    OpenSUSELeap153: python39-pip
-+
-+  python3-pillow:
-+    CentOSStream8:
-+    OpenSUSELeap153:
-+
-+  python3-selinux:
-+    CentOSStream8:
-+    OpenSUSELeap153:
-+
-+  python3-setuptools:
-+    CentOSStream8: python38-setuptools
-+    OpenSUSELeap153: python39-setuptools
-+
-+  python3-sphinx:
-+    CentOSStream8:
-+    OpenSUSELeap153:
-+
-+  python3-sphinx-rtd-theme:
-+    CentOSStream8:
-+    OpenSUSELeap153:
-+
-+  python3-venv:
-+    CentOSStream8: python38
-+    OpenSUSELeap153: python39-base
-+
-+  python3-wheel:
-+    CentOSStream8: python38-wheel
-+    OpenSUSELeap153: python39-pip
-+
-+pypi_mappings:
-+  # Request more recent version
-+  meson:
-+    default: meson==0.63.2
-+
-+  # Drop packages that need devel headers
-+  python3-numpy:
-+    OpenSUSELeap153:
-diff --git a/tests/lcitool/targets/centos-stream-8.yml b/tests/lcitool/targets/centos-stream-8.yml
-new file mode 100644
-index 0000000000..6b11160fd1
---- /dev/null
-+++ b/tests/lcitool/targets/centos-stream-8.yml
-@@ -0,0 +1,3 @@
-+paths:
-+  pip3: /usr/bin/pip3.8
-+  python: /usr/bin/python3.8
-diff --git a/tests/lcitool/targets/opensuse-leap-153.yml b/tests/lcitool/targets/opensuse-leap-153.yml
-new file mode 100644
-index 0000000000..683016e007
---- /dev/null
-+++ b/tests/lcitool/targets/opensuse-leap-153.yml
-@@ -0,0 +1,3 @@
-+paths:
-+  pip3: /usr/bin/pip3.9
-+  python: /usr/bin/python3.9
+ void syscall_init(void)
+ {
+@@ -11453,7 +11459,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+                 unlock_user(target_grouplist, arg2,
+                             gidsetsize * sizeof(target_id));
+             }
+-            return get_errno(setgroups(gidsetsize, grouplist));
++            return get_errno(sys_setgroups(gidsetsize, grouplist));
+         }
+     case TARGET_NR_fchown:
+         return get_errno(fchown(arg1, low2highuid(arg2), low2highgid(arg3)));
+@@ -11789,7 +11795,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+                 }
+                 unlock_user(target_grouplist, arg2, 0);
+             }
+-            return get_errno(setgroups(gidsetsize, grouplist));
++            return get_errno(sys_setgroups(gidsetsize, grouplist));
+         }
+ #endif
+ #ifdef TARGET_NR_fchown32
 -- 
 2.39.2
 
