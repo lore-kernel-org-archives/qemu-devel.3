@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC3A2C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 19:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DCA9C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPSY3-0002pA-HR; Thu, 04 Jul 2024 15:55:19 -0400
+	id 1sPTY3-0003AU-PW; Thu, 04 Jul 2024 16:59:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPSY1-0002o5-1u
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 15:55:17 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1sPTXy-00036A-Gs; Thu, 04 Jul 2024 16:59:18 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPSXz-0006oB-2b
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 15:55:16 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-a732cb4ea31so170156066b.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 12:55:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1sPTXw-0000nT-Vy; Thu, 04 Jul 2024 16:59:18 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-58c947a6692so1347909a12.0; 
+ Thu, 04 Jul 2024 13:59:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720122913; x=1720727713; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JkTVbHyGeM3SBAtDHPEieTiZwbUjCWrUeYI4o1rC5hU=;
- b=tT/ueTCzgJZVYgZE23bkwrzgg01cKBv3uJ6zTXQN6w0pKZrZEvmexNP5lpI1kOuE6w
- M9+kIsz2g2zBszMZceAq8TbksggGn0oU7BX+N51oVzPLkA6Wc17kBZZq6hJ0IoE2W9vt
- ur0FvuxltCUIjxj9+thbrAlrZvOYUSLmdmwe9ZXVd/ONdTlX7WEr02EsiN8qwRiDHReG
- AQcpTNeY9BAbcujC86pPpy+qooBzxUkted9lyt51z93DBzCq8/RTjarkKxEZYWHQNWjO
- 2anCSTdextlA7QMnLoO7RJDPPTUNuM1svi1l6XLH4erg1kYYeLDb+iVzl936sYkzNyOl
- 2Emg==
+ d=gmail.com; s=20230601; t=1720126754; x=1720731554; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ljcer9zvdVKMvDgAjw0WDcSBwhOat54Z1xUNuYnsdSE=;
+ b=E3Q9a20KHi4xECeEcBX/wKoT6nrsH/bQg3ZUAl7Vy5mqsYeN6DO7H9fKWKrKYHvcVT
+ U7RMdfQfGrWO46fIFFhBwtNbZVMggfOs4TAN4dOJGl3aXW3FLybrKzUK4E30xx9zD4CZ
+ xuWsgaJXWxZDUC3E0g5KbzJurvPiUud1unRP4v5ad2g63UIEh0LxnGVnDswMP4VYZY6n
+ W57GL1NkXx/5rtjvxHwPEFQcjH9uYTJcg3/UsnsYt/br34poRjMQSFAaGu0zH57zGz79
+ q/tLGVygWekTFjUPjkWio5jhBgSIK3AAm6yq4qu4P2OdEe99+6mgzJSee4On58DGeQvO
+ pXPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720122913; x=1720727713;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1720126754; x=1720731554;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JkTVbHyGeM3SBAtDHPEieTiZwbUjCWrUeYI4o1rC5hU=;
- b=wsO23wHYxsPqM5n908Df4zgnjl2hTSr8EnEjTbZBvLWLOcGT3bVesjlKrkDNOMQOY3
- XkgHDl0pUBXL4XYDYcYyJj3HlNAtJ3xv+eDvlFYLXZGVU2uzXxYXz8wzwFa+B45XtHEh
- ydjCCDXYghNBtegGhO5Fcs1BbJMU/5HDxLBmtPvLSZp8o9QdIM+dDW00knW1xEiNW7FR
- 5SET3ElsTHI6MSjp2e+pIz2938nr3cPbQQ+0UI6sBAWerbs18c60JHn7M6BBwWeGvext
- jPgBIpcDh3VoUZzSvVskTl0rcSX4TlyNhIVARhMYN6r9kJIJLEsBIKOKkaRu6Woje3tz
- VR0w==
-X-Gm-Message-State: AOJu0Yw05Vw4kYGLrL9C3ozJz6l/VaeT14ghqJIgV/CUX5CEK9GDEB5/
- uDjV6FOVA3P0vRKOg2bKCPIiBnzMvk1bZhqMDSYeTHe+bPgPBTxt+H/TifrgfcI=
-X-Google-Smtp-Source: AGHT+IEbwnpHgAFAh/0/EDNpcWpFIZhnYmdcrCV7ahLTdPDjepvOsZ7kixGzEYuy19MbuTTdzmeD0A==
-X-Received: by 2002:a17:906:c250:b0:a6f:a2aa:a4c7 with SMTP id
- a640c23a62f3a-a77bd99ecaemr225676266b.3.1720122913051; 
- Thu, 04 Jul 2024 12:55:13 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77c69041f6sm20183566b.103.2024.07.04.12.55.12
+ bh=ljcer9zvdVKMvDgAjw0WDcSBwhOat54Z1xUNuYnsdSE=;
+ b=tzq43aSQgYwMBaVUmGQoh7cLDx9ksTtWxRsZ5C1brY/LU9NNOS9e14zYCk0sKC03RW
+ 3Iy9f59YX9BfMjqXuEXyUljq4J/yFpTv2QnyNN0iyCM0WDEHL47n8MDalhTCs2YMH+ZQ
+ 2GGiMbYm0SXOUiB1QKCXn6W/E0lAw16gto6tb/gW9opRt9x0VnhS/dHGdDDXvzMDTFEd
+ 91o8H/OEqXKCxNgF97Yy1tlXBWXLKK1yZ+z4p3gkQRI6ynTqZ8MydiT95GijC7JmUpaS
+ LIPynF6NBnH0sZjzmRR3qacQTF/1CKqe8TVj3pCT7pvdLOCW6ndb9M4XtifUHQJINGWN
+ kBtA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDl4Dp4ZXQ4lQ9b53wA69y/wx80277P+nQKPBT+JAM4rfkxghOh9nfsVMmZfyqvoSqqGgjRGbsjFcb5BXs5C41ZBF3
+X-Gm-Message-State: AOJu0Yww79drjc5/mLXoorqaoxHOURxuSRY/DXkzYHoP1RzbOETXm4I+
+ OCSRzk/BL7KnLPpKjFipg0qMMDJgBGTz+PQBOxhAIISRg0ucBMJQxHolPQ==
+X-Google-Smtp-Source: AGHT+IH4owux7zm2dmqCwga00syW870P08hZPTPVzBpBzcJIFyh643XzCTtN+VYQITtjxYCq3C8z2Q==
+X-Received: by 2002:a17:906:31c1:b0:a75:115a:25d0 with SMTP id
+ a640c23a62f3a-a77ba70a896mr155201966b.50.1720126754445; 
+ Thu, 04 Jul 2024 13:59:14 -0700 (PDT)
+Received: from archlinux.. (dynamic-077-188-087-180.77.188.pool.telefonica.de.
+ [77.188.87.180]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7400456582sm526153866b.153.2024.07.04.13.59.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 12:55:12 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8FB315F839;
- Thu,  4 Jul 2024 20:55:11 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,  akihiko.odaki@daynix.com,  qemu-arm@nongnu.org
-Subject: Re: [PATCH v4 00/14] test/tcg: Clang build fixes for arm/aarch64
-In-Reply-To: <20240630190050.160642-1-richard.henderson@linaro.org> (Richard
- Henderson's message of "Sun, 30 Jun 2024 12:00:36 -0700")
-References: <20240630190050.160642-1-richard.henderson@linaro.org>
-Date: Thu, 04 Jul 2024 20:55:11 +0100
-Message-ID: <87sewplyow.fsf@draig.linaro.org>
+ Thu, 04 Jul 2024 13:59:13 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-ppc@nongnu.org,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Huacai Chen <chenhuacai@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH 1/3] hw/isa/vt82c686: Turn "intr" irq into a named gpio
+Date: Thu,  4 Jul 2024 22:58:52 +0200
+Message-ID: <20240704205854.18537-2-shentey@gmail.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240704205854.18537-1-shentey@gmail.com>
+References: <20240704205854.18537-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,17 +102,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+Makes the code more comprehensible, matches the datasheet and the piix4 device
+model.
 
-> Supercedes: 20240629-tcg-v3-0-fa57918bdf09@daynix.com
-> ("[PATCH v3 0/7] tests/tcg/aarch64: Fix inline assemblies for clang")
->
-> On top of Akihiko's patches for aarch64, additional changes are
-> required for arm, both as a host and as a guest.
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ hw/isa/vt82c686.c   | 2 +-
+ hw/mips/fuloong2e.c | 2 +-
+ hw/ppc/amigaone.c   | 4 ++--
+ hw/ppc/pegasos2.c   | 4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-Queued to testing/next, thanks.
+diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
+index 8582ac0322..505b44c4e6 100644
+--- a/hw/isa/vt82c686.c
++++ b/hw/isa/vt82c686.c
+@@ -719,7 +719,7 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
+     ISABus *isa_bus;
+     int i;
+ 
+-    qdev_init_gpio_out(dev, &s->cpu_intr, 1);
++    qdev_init_gpio_out_named(dev, &s->cpu_intr, "intr", 1);
+     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
+     isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
+     isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
+diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
+index a45aac368c..6e4303ba47 100644
+--- a/hw/mips/fuloong2e.c
++++ b/hw/mips/fuloong2e.c
+@@ -299,7 +299,7 @@ static void mips_fuloong2e_init(MachineState *machine)
+                               object_resolve_path_component(OBJECT(pci_dev),
+                                                             "rtc"),
+                               "date");
+-    qdev_connect_gpio_out(DEVICE(pci_dev), 0, env->irq[5]);
++    qdev_connect_gpio_out_named(DEVICE(pci_dev), "intr", 0, env->irq[5]);
+ 
+     dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
+     pci_ide_create_devs(PCI_DEVICE(dev));
+diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+index ddfa09457a..9dcc486c1a 100644
+--- a/hw/ppc/amigaone.c
++++ b/hw/ppc/amigaone.c
+@@ -153,8 +153,8 @@ static void amigaone_init(MachineState *machine)
+     object_property_add_alias(OBJECT(machine), "rtc-time",
+                               object_resolve_path_component(via, "rtc"),
+                               "date");
+-    qdev_connect_gpio_out(DEVICE(via), 0,
+-                          qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
++    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
++                                qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
+     for (i = 0; i < PCI_NUM_PINS; i++) {
+         qdev_connect_gpio_out(dev, i, qdev_get_gpio_in_named(DEVICE(via),
+                                                              "pirq", i));
+diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
+index c1bd8dfa21..9b0a6b70ab 100644
+--- a/hw/ppc/pegasos2.c
++++ b/hw/ppc/pegasos2.c
+@@ -195,8 +195,8 @@ static void pegasos2_init(MachineState *machine)
+     object_property_add_alias(OBJECT(machine), "rtc-time",
+                               object_resolve_path_component(via, "rtc"),
+                               "date");
+-    qdev_connect_gpio_out(DEVICE(via), 0,
+-                          qdev_get_gpio_in_named(pm->mv, "gpp", 31));
++    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
++                                qdev_get_gpio_in_named(pm->mv, "gpp", 31));
+ 
+     dev = PCI_DEVICE(object_resolve_path_component(via, "ide"));
+     pci_ide_create_devs(dev);
+-- 
+2.45.2
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
