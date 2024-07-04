@@ -4,54 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8037DC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 03:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7855AC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 04:03:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPDJE-0008PC-WE; Wed, 03 Jul 2024 23:39:01 -0400
+	id 1sPDg9-0001gd-5h; Thu, 04 Jul 2024 00:02:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sPDJ7-0008Le-BV
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:38:53 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sPDJ4-0005Dn-Ex
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:38:52 -0400
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxH_FHGYZmIs0AAA--.2801S3;
- Thu, 04 Jul 2024 11:38:47 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxlsUaGYZmgJI6AA--.59898S5; 
- Thu, 04 Jul 2024 11:38:03 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH v2 3/4] hw/loongarch/virt: Replace loongson ipi with loongarch
- ipi
-Date: Thu,  4 Jul 2024 11:38:01 +0800
-Message-Id: <20240704033802.3838618-4-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240704033802.3838618-1-maobibo@loongson.cn>
-References: <20240704033802.3838618-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
+ id 1sPDg7-0001gI-R2
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:02:39 -0400
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
+ id 1sPDg5-0003Uf-SB
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:02:39 -0400
+Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
+ by Atcsqr.andestech.com with ESMTPS id 46442LiO005710
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+ Thu, 4 Jul 2024 12:02:21 +0800 (+08)
+ (envelope-from alvinga@andestech.com)
+Received: from atctrx.andestech.com (10.0.15.190) by ATCPCS34.andestech.com
+ (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 4 Jul
+ 2024 12:02:21 +0800
+To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, Alvin Chang <alvinga@andestech.com>
+Subject: [PATCH 2/2] target/riscv: Add textra matching condition for the
+ triggers
+Date: Thu, 4 Jul 2024 12:02:00 +0800
+Message-ID: <20240704040200.243892-3-alvinga@andestech.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240704040200.243892-1-alvinga@andestech.com>
+References: <20240704040200.243892-1-alvinga@andestech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8BxlsUaGYZmgJI6AA--.59898S5
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.0.15.190]
+X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
+ ATCPCS34.andestech.com (10.0.1.134)
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 46442LiO005710
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,96 +69,124 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alvin Chang <alvinga@andestech.com>
+From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Loongarch ipi inherits from class LoongsonIPICommonClass, and it only
-contains Loongarch 3A5000 virt machine specific interfaces, rather than
-mix different machine implementations together.
+According to RISC-V Debug specification, the optional textra32 and
+textra64 trigger CSRs can be used to configure additional matching
+conditions for the triggers. For example, if the textra.MHSELECT field
+is set to 4 (mcontext), this trigger will only match or fire if the low
+bits of mcontext/hcontext equal textra.MHVALUE field.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+This commit adds the aforementioned matching condition as common trigger
+matching conditions. Currently, the only legal values of textra.MHSELECT
+are 0 (ignore) and 4 (mcontext). When textra.MHSELECT is 0, we pass the
+checking. When textra.MHSELECT is 4, we compare textra.MHVALUE with
+mcontext CSR. The remaining fields, such as textra.SBYTEMASK,
+textra.SVALUE, and textra.SSELECT, are hardwired to zero for now. Thus,
+we skip checking them here.
+
+Signed-off-by: Alvin Chang <alvinga@andestech.com>
 ---
- hw/intc/Kconfig             | 3 +++
- hw/intc/meson.build         | 1 +
- hw/loongarch/Kconfig        | 2 +-
- hw/loongarch/virt.c         | 4 ++--
- include/hw/loongarch/virt.h | 1 -
- 5 files changed, 7 insertions(+), 4 deletions(-)
+ target/riscv/debug.c | 63 +++++++++++++++++++++++++++++++++++++++++++-
+ target/riscv/debug.h |  3 +++
+ 2 files changed, 65 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
-index 58b6d3a710..870f537236 100644
---- a/hw/intc/Kconfig
-+++ b/hw/intc/Kconfig
-@@ -90,6 +90,9 @@ config M68K_IRQC
- config LOONGSON_IPI
-     bool
+diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+index f7d8f5e320..58dd2f25ae 100644
+--- a/target/riscv/debug.c
++++ b/target/riscv/debug.c
+@@ -367,11 +367,72 @@ static bool trigger_priv_match(CPURISCVState *env, trigger_type_t type,
+     return false;
+ }
  
-+config LOONGARCH_IPI
-+    bool
++static bool trigger_textra_match(CPURISCVState *env, trigger_type_t type,
++                                 int trigger_index)
++{
++    target_ulong textra = env->tdata3[trigger_index];
++    target_ulong mhvalue, mhselect;
 +
- config LOONGARCH_PCH_PIC
-     bool
-     select UNIMP
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index afd1aa51ee..b7fce2f375 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -70,6 +70,7 @@ specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_XIVE'],
- 		if_true: files('spapr_xive_kvm.c'))
- specific_ss.add(when: 'CONFIG_M68K_IRQC', if_true: files('m68k_irqc.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: files('loongson_ipi.c'))
-+specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: files('loongarch_ipi.c', 'loongson_ipi_common.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_pic.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c'))
-diff --git a/hw/loongarch/Kconfig b/hw/loongarch/Kconfig
-index 90a0dba9d5..830cfef72d 100644
---- a/hw/loongarch/Kconfig
-+++ b/hw/loongarch/Kconfig
-@@ -11,7 +11,7 @@ config LOONGARCH_VIRT
-     select SERIAL
-     select VIRTIO_PCI
-     select PLATFORM_BUS
--    select LOONGSON_IPI
-+    select LOONGARCH_IPI
-     select LOONGARCH_PCH_PIC
-     select LOONGARCH_PCH_MSI
-     select LOONGARCH_EXTIOI
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 8be2d2ff6a..6bef2f1165 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -23,7 +23,7 @@
- #include "net/net.h"
- #include "hw/loader.h"
- #include "elf.h"
--#include "hw/intc/loongson_ipi.h"
-+#include "hw/intc/loongarch_ipi.h"
- #include "hw/intc/loongarch_extioi.h"
- #include "hw/intc/loongarch_pch_pic.h"
- #include "hw/intc/loongarch_pch_msi.h"
-@@ -788,7 +788,7 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-      */
++    if (type < TRIGGER_TYPE_AD_MATCH || type > TRIGGER_TYPE_AD_MATCH6) {
++        /* textra checking is only applicable when type is 2, 3, 4, 5, or 6 */
++        return true;
++    }
++
++    switch (riscv_cpu_mxl(env)) {
++    case MXL_RV32:
++        mhvalue  = get_field(textra, TEXTRA32_MHVALUE);
++        mhselect = get_field(textra, TEXTRA32_MHSELECT);
++        break;
++    case MXL_RV64:
++    case MXL_RV128:
++        mhvalue  = get_field(textra, TEXTRA64_MHVALUE);
++        mhselect = get_field(textra, TEXTRA64_MHSELECT);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    /* Check mhvalue and mhselect. */
++    switch (mhselect) {
++    case MHSELECT_IGNORE:
++        break;
++    case MHSELECT_MCONTEXT:
++        /* Match or fire if the low bits of mcontext/hcontext equal mhvalue. */
++        if (riscv_has_ext(env, RVH)) {
++            if (mhvalue != env->mcontext) {
++                return false;
++            }
++        } else {
++            switch (riscv_cpu_mxl(env)) {
++            case MXL_RV32:
++                if (mhvalue != (env->mcontext & MCONTEXT32)) {
++                    return false;
++                }
++                break;
++            case MXL_RV64:
++            case MXL_RV128:
++                if (mhvalue != (env->mcontext & MCONTEXT64)) {
++                    return false;
++                }
++                break;
++            default:
++                g_assert_not_reached();
++            }
++        }
++        break;
++    default:
++        break;
++    }
++
++    return true;
++}
++
+ /* Common matching conditions for all types of the triggers. */
+ static bool trigger_common_match(CPURISCVState *env, trigger_type_t type,
+                                  int trigger_index)
+ {
+-    return trigger_priv_match(env, type, trigger_index);
++    return trigger_priv_match(env, type, trigger_index) &&
++           trigger_textra_match(env, type, trigger_index);
+ }
  
-     /* Create IPI device */
--    ipi = qdev_new(TYPE_LOONGSON_IPI);
-+    ipi = qdev_new(TYPE_LOONGARCH_IPI);
-     qdev_prop_set_uint32(ipi, "num-cpu", ms->smp.cpus);
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
+ /* type 2 trigger */
+diff --git a/target/riscv/debug.h b/target/riscv/debug.h
+index c347863578..f76b8f944a 100644
+--- a/target/riscv/debug.h
++++ b/target/riscv/debug.h
+@@ -131,6 +131,9 @@ enum {
+ #define ITRIGGER_VU           BIT(25)
+ #define ITRIGGER_VS           BIT(26)
  
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 8fdfacf268..91216418c8 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -11,7 +11,6 @@
- #include "target/loongarch/cpu.h"
- #include "hw/boards.h"
- #include "qemu/queue.h"
--#include "hw/intc/loongson_ipi.h"
- #include "hw/block/flash.h"
- #include "hw/loongarch/boot.h"
++#define MHSELECT_IGNORE       0
++#define MHSELECT_MCONTEXT     4
++
+ bool tdata_available(CPURISCVState *env, int tdata_index);
  
+ target_ulong tselect_csr_read(CPURISCVState *env);
 -- 
-2.39.3
+2.34.1
 
 
