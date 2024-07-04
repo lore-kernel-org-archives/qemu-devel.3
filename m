@@ -4,85 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41521C3065C
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 05:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB23AC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 05:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPF4B-0006se-63; Thu, 04 Jul 2024 01:31:35 -0400
+	id 1sPF9l-0001qL-3H; Thu, 04 Jul 2024 01:37:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPF4A-0006sM-86
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 01:31:34 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sPF9i-0001pj-MN
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 01:37:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPF48-0000dz-MS
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 01:31:33 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sPF9g-00024z-8v
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 01:37:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720071091;
+ s=mimecast20190719; t=1720071435;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NJs5D/YEQU/uOIEPQnbJW0N706P0dOcexPyILktT0zY=;
- b=AlEHci0W/XzWNoEY19yb/sBb86bJqcGVP4gHbD7tIDJtcWf9qspxBotKdM2BMZRwlWTIhD
- FvAQhKNR81aJU/gTGcX2Njacgv5L66S1IeFpyBPh/OGBYilQ1JCFSAbaRd3lWHI0gsscpT
- toRc9cgikFRjRKbh5wRMw9n99xH7jYg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-81-7Nr3nwxcPh6gsPn2CJmiKg-1; Thu, 04 Jul 2024 01:31:24 -0400
-X-MC-Unique: 7Nr3nwxcPh6gsPn2CJmiKg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-36793b39ee5so207059f8f.2
- for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 22:31:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720071083; x=1720675883;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NJs5D/YEQU/uOIEPQnbJW0N706P0dOcexPyILktT0zY=;
- b=sG6uhK86hW2kxQI4D6p/RQg0vSn8+AE3NNTjT0WGAUmPDvG7RUIEaqX/Argzwj06a/
- XKvePQQa1ltGDBBljDiWOqmztD5v0B5N9YFgJIEgiPEbjyE/s0tdTIdjjYkaeWqMUQoW
- c/oJ+LXTgYu47DKlWcainIPmhJ639UCwwRGkCZwEsLTVkgX9XfUOFXRPWT3W1tJeCg6P
- jXAnzbzKuIWb7HtmIZzErjieSlIKvasasLgTBS4VUYqt1RBMlEPuwM1ru7njqQtIGIVc
- mX5EDhFwmFNcavC/qt/ZQMUFuL7ZzwwL+Wz0CPlvpTvDgHoT3re58oCilZIXgdQP00CG
- i8bA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWpF8ZdUJlZt12H78oZzRIKh2yCJBRB66C0uymYwQZheqQluE751C+KcrpFynD70qLltu0u5X28Q5w6842Szrd8MKLWay8=
-X-Gm-Message-State: AOJu0Yznf9Y49X0QPFXgnJLiHuXYJf3pQfu/25dijtZcZWGFiXNPvuRo
- dHRHEHgYoFRo+T/E2M1nTtM8RUkLy8za5S7geiRITfLhcSWHwVgD7A8gnuIVRXy8XCl35IEQGNC
- GLMwA4gz3NsNC3R6hj7VEunxJ6JNAFfMhQxbd7p030+56W4H5tBW09PHir/M+hHZEMbjCRr8Yir
- 6XL6WuBrKuvi5DQ/HrFUoSRgGtMMA=
-X-Received: by 2002:adf:fe09:0:b0:367:938c:29cf with SMTP id
- ffacd0b85a97d-3679dd7bb2amr388192f8f.71.1720071083647; 
- Wed, 03 Jul 2024 22:31:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHN4qOO4AVJX2ozxtZrxzLOJCfNwh8Tfcnyl4JAnING0I6YDodUrCDRYotHu9FIOMH4U6gp+LyKJQAIqfi1wwI=
-X-Received: by 2002:adf:fe09:0:b0:367:938c:29cf with SMTP id
- ffacd0b85a97d-3679dd7bb2amr388175f8f.71.1720071083285; Wed, 03 Jul 2024
- 22:31:23 -0700 (PDT)
+ bh=iVjUqdr0AgE6YxFxS+iCOHZGEf9x6TZE1YkTRPXpF/w=;
+ b=fS4gVDz3WWHTz++8k983B4NwhLhKlwFSEKg90phw3aoGt+NCR0QTVz8UhzM0EwGFSxbvLa
+ 2tJ0EvqIHEtKthXXjU+bYG1L7RxUaDebG6udMW6Z9Tk+tqkSsOToXe/6codYBpL6N8+Jfn
+ dtqgPs7EshtxsT/vxW3q/vTQ4bZnTuA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-NxOpUeD8M5OEN5hDs0g2NA-1; Thu,
+ 04 Jul 2024 01:37:09 -0400
+X-MC-Unique: NxOpUeD8M5OEN5hDs0g2NA-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F40019560B0; Thu,  4 Jul 2024 05:37:07 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.39.192.90])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C5B08195607C; Thu,  4 Jul 2024 05:37:03 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Subject: [PATCH 2/8] aspeed: Load eMMC first boot area as a boot rom
+Date: Thu,  4 Jul 2024 07:36:45 +0200
+Message-ID: <20240704053651.1100732-3-clg@redhat.com>
+In-Reply-To: <20240704053651.1100732-1-clg@redhat.com>
+References: <20240704053651.1100732-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
- <20240530111643.1091816-21-pankaj.gupta@amd.com>
- <ce80850a-fbd1-4e14-8107-47c7423fa204@intel.com>
- <20240704003406.6tduun5n25kgtojf@amd.com>
- <213b9762-205e-4d48-b7f7-1948d0f3b0d9@intel.com>
-In-Reply-To: <213b9762-205e-4d48-b7f7-1948d0f3b0d9@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 4 Jul 2024 07:31:08 +0200
-Message-ID: <CABgObfaBa854ugUOHA0GUsfS7M=_XqkaPkAoYHVtwRY-0A0pPw@mail.gmail.com>
-Subject: Re: [PATCH v4 20/31] i386/sev: Add support for SNP CPUID validation
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Michael Roth <michael.roth@amd.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- qemu-devel@nongnu.org, 
- brijesh.singh@amd.com, dovmurik@linux.ibm.com, armbru@redhat.com, 
- thomas.lendacky@amd.com, isaku.yamahata@intel.com, berrange@redhat.com, 
- kvm@vger.kernel.org, anisinha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,22 +86,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 4, 2024 at 6:10=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> wr=
-ote:
-> > So there are specific ranges that are checked, mainly ones where there
-> > is potential for guests to misbehave if they are being lied to. But
-> > hypervisor-ranges are paravirtual in a sense so there's no assumptions
-> > being made about what the underlying hardware is doing, so the checks
-> > are needed as much in those cases.
->
-> I'm a little confused. Per your reference above, hypervisor-ranges is
-> unchecked because it's not in the standard range nor the extended range.
->
-> And your last sentence said "so the checks are needed as much in those
-> cases". So how does hypervisor-ranges get checked?
+From: Cédric Le Goater <clg@kaod.org>
 
-I think "not" is missing in the sentence.
+The first boot area partition (64K) of the eMMC device should contain
+an initial boot loader (u-boot SPL). Load it as a ROM only if an eMMC
+device is available to boot from but no flash device is.
 
-Paolo
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
+---
+ hw/arm/aspeed.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index 105b990233fa..756deb91efd1 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -364,6 +364,7 @@ static void aspeed_machine_init(MachineState *machine)
+     AspeedMachineClass *amc = ASPEED_MACHINE_GET_CLASS(machine);
+     AspeedSoCClass *sc;
+     int i;
++    DriveInfo *emmc0 = NULL;
+ 
+     bmc->soc = ASPEED_SOC(object_new(amc->soc_name));
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(bmc->soc));
+@@ -440,9 +441,8 @@ static void aspeed_machine_init(MachineState *machine)
+     }
+ 
+     if (bmc->soc->emmc.num_slots) {
+-        sdhci_attach_drive(&bmc->soc->emmc.slots[0],
+-                           drive_get(IF_SD, 0, bmc->soc->sdhci.num_slots),
+-                           true);
++        emmc0 = drive_get(IF_SD, 0, bmc->soc->sdhci.num_slots);
++        sdhci_attach_drive(&bmc->soc->emmc.slots[0], emmc0, true);
+     }
+ 
+     if (!bmc->mmio_exec) {
+@@ -452,6 +452,8 @@ static void aspeed_machine_init(MachineState *machine)
+         if (fmc0) {
+             uint64_t rom_size = memory_region_size(&bmc->soc->spi_boot);
+             aspeed_install_boot_rom(bmc, fmc0, rom_size);
++        } else if (emmc0) {
++            aspeed_install_boot_rom(bmc, blk_by_legacy_dinfo(emmc0), 64 * KiB);
+         }
+     }
+ 
+-- 
+2.45.2
 
 
