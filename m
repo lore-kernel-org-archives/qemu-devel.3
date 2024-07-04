@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52EEAC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 15:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B176C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 15:56:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPOmZ-0001aK-1w; Thu, 04 Jul 2024 11:54:03 -0400
+	id 1sPOlu-0000Rv-HT; Thu, 04 Jul 2024 11:53:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPOmX-0001Ui-Lj; Thu, 04 Jul 2024 11:54:01 -0400
+ id 1sPOlm-0000FR-8S; Thu, 04 Jul 2024 11:53:14 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPOmV-0002AI-41; Thu, 04 Jul 2024 11:54:01 -0400
+ id 1sPOlj-00021K-Ic; Thu, 04 Jul 2024 11:53:13 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 636BE7749E;
- Thu,  4 Jul 2024 18:52:47 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9201B77493;
+ Thu,  4 Jul 2024 18:52:46 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 29229FEAE9;
- Thu,  4 Jul 2024 18:52:52 +0300 (MSK)
-Received: (nullmailer pid 1481718 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 59070FEADE;
+ Thu,  4 Jul 2024 18:52:51 +0300 (MSK)
+Received: (nullmailer pid 1481683 invoked by uid 1000);
  Thu, 04 Jul 2024 15:52:51 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.6 16/18] iotests/244: Don't store data-file with protocol
- in image
-Date: Thu,  4 Jul 2024 18:52:47 +0300
-Message-Id: <20240704155251.1481617-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.6 05/18] stdvga: fix screen blanking
+Date: Thu,  4 Jul 2024 18:52:36 +0300
+Message-Id: <20240704155251.1481617-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.6-20240704154854@cover.tls.msk.ru>
 References: <qemu-stable-8.2.6-20240704154854@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,50 +63,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-We want to disable filename parsing for data files because it's too easy
-to abuse in malicious image files. Make the test ready for the change by
-passing the data file explicitly in command line options.
+In case the display surface uses a shared buffer (i.e. uses vga vram
+directly instead of a shadow) go unshare the buffer before clearing it.
+
+This avoids vga memory corruption, which in turn fixes unblanking not
+working properly with X11.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-(cherry picked from commit 2eb42a728d27a43fdcad5f37d3f65706ce6deba5)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2067
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20240605131444.797896-2-kraxel@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit b1cf266c82cb1211ee2785f1813a6a3f3e693390)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/244 b/tests/qemu-iotests/244
-index 3e61fa25bb..bb9cc6512f 100755
---- a/tests/qemu-iotests/244
-+++ b/tests/qemu-iotests/244
-@@ -215,9 +215,22 @@ $QEMU_IMG convert -f $IMGFMT -O $IMGFMT -n -C "$TEST_IMG.src" "$TEST_IMG"
- $QEMU_IMG compare -f $IMGFMT -F $IMGFMT "$TEST_IMG.src" "$TEST_IMG"
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index 37557c3442..cb6b6ee2ca 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -1748,6 +1748,13 @@ static void vga_draw_blank(VGACommonState *s, int full_update)
+     if (s->last_scr_width <= 0 || s->last_scr_height <= 0)
+         return;
  
- # blkdebug doesn't support copy offloading, so this tests the error path
--$QEMU_IMG amend -f $IMGFMT -o "data_file=blkdebug::$TEST_IMG.data" "$TEST_IMG"
--$QEMU_IMG convert -f $IMGFMT -O $IMGFMT -n -C "$TEST_IMG.src" "$TEST_IMG"
--$QEMU_IMG compare -f $IMGFMT -F $IMGFMT "$TEST_IMG.src" "$TEST_IMG"
-+test_img_with_blkdebug="json:{
-+    'driver': 'qcow2',
-+    'file': {
-+        'driver': 'file',
-+        'filename': '$TEST_IMG'
-+    },
-+    'data-file': {
-+        'driver': 'blkdebug',
-+        'image': {
-+            'driver': 'file',
-+            'filename': '$TEST_IMG.data'
-+        }
++    if (is_buffer_shared(surface)) {
++        /* unshare buffer, otherwise the blanking corrupts vga vram */
++        surface = qemu_create_displaysurface(s->last_scr_width,
++                                             s->last_scr_height);
++        dpy_gfx_replace_surface(s->con, surface);
 +    }
-+}"
-+$QEMU_IMG convert -f $IMGFMT -O $IMGFMT -n -C "$TEST_IMG.src" "$test_img_with_blkdebug"
-+$QEMU_IMG compare -f $IMGFMT -F $IMGFMT "$TEST_IMG.src" "$test_img_with_blkdebug"
- 
- echo
- echo "=== Flushing should flush the data file ==="
++
+     w = s->last_scr_width * surface_bytes_per_pixel(surface);
+     d = surface_data(surface);
+     for(i = 0; i < s->last_scr_height; i++) {
 -- 
 2.39.2
 
