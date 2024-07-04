@@ -4,30 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04067C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 08:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9EE3C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 08:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPHqe-0000SM-I1; Thu, 04 Jul 2024 04:29:48 -0400
+	id 1sPHqv-0000bt-Ce; Thu, 04 Jul 2024 04:30:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sPHqc-0000RU-5G; Thu, 04 Jul 2024 04:29:46 -0400
+ id 1sPHqt-0000Yy-BD; Thu, 04 Jul 2024 04:30:03 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sPHqW-0002HT-PL; Thu, 04 Jul 2024 04:29:45 -0400
-Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
+ id 1sPHqn-0002HT-PE; Thu, 04 Jul 2024 04:30:03 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Thu, 4 Jul
- 2024 16:29:23 +0800
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
- (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 4 Jul
- 2024 16:29:23 +0800
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 4 Jul
+ 2024 16:29:24 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 4 Jul 2024 16:29:23 +0800
+ Transport; Thu, 4 Jul 2024 16:29:24 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -40,27 +37,24 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  here" <qemu-devel@nongnu.org>, "open list:Block layer core"
  <qemu-block@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v3 2/8] hw/net:ftgmac100: update ring base address to 64 bits
-Date: Thu, 4 Jul 2024 16:29:16 +0800
-Message-ID: <20240704082922.1464317-3-jamin_lin@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v3 6/8] hw/block: m25p80: support quad mode for w25q01jvq
+Date: Thu, 4 Jul 2024 16:29:20 +0800
+Message-ID: <20240704082922.1464317-7-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240704082922.1464317-1-jamin_lin@aspeedtech.com>
 References: <20240704082922.1464317-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
- does not designate 192.168.10.10 as permitted sender)
- receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
- helo=localhost.localdomain;
 Received-SPF: pass client-ip=211.20.114.72;
  envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-Spam_score_int: -15
+X-Spam_score: -1.6
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, KHOP_HELO_FCRDNS=0.26,
+ SPF_HELO_FAIL=0.001, T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,147 +72,75 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update TX and RX ring base address data type to uint64_t for
-64 bits dram address DMA support.
+According to the w25q01jv datasheet at page 16,
+it is required to set QE bit in "Status Register 2".
+Besides, users are able to utilize "Write Status Register 1(0x01)"
+command to set QE bit in "Status Register 2" and
+utilize "Read Status Register 2(0x35)" command to get the QE bit status.
 
-Both "Normal Priority Transmit Ring Base Address Register(0x20)" and
-"Receive Ring Base Address Register (0x24)" are used for saving the
-low part physical address of descriptor manager.
+To support quad mode for w25q01jvq, update collecting data needed
+2 bytes for WRSR command in decode_new_cmd function and
+verify QE bit at the second byte of collecting data bit 2
+in complete_collecting_data.
 
-Therefore, changes to set TX and RX descriptor manager address bits [31:0]
-in ftgmac100_read and ftgmac100_write functions.
+Update RDCR_EQIO command to set bit 2 of return data
+if quad mode enable in decode_new_cmd.
 
-Incrementing the version of vmstate to 2.
-
+Signed-off-by: Troy Lee <troy_lee@aspeedtech.com>
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/net/ftgmac100.c         | 33 ++++++++++++++++-----------------
- include/hw/net/ftgmac100.h |  9 ++++-----
- 2 files changed, 20 insertions(+), 22 deletions(-)
+ hw/block/m25p80.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
-index 9e1f12cd33..d026242e2b 100644
---- a/hw/net/ftgmac100.c
-+++ b/hw/net/ftgmac100.c
-@@ -515,12 +515,12 @@ out:
-     return frame_size;
- }
- 
--static void ftgmac100_do_tx(FTGMAC100State *s, uint32_t tx_ring,
--                            uint32_t tx_descriptor)
-+static void ftgmac100_do_tx(FTGMAC100State *s, uint64_t tx_ring,
-+                            uint64_t tx_descriptor)
- {
-     int frame_size = 0;
-     uint8_t *ptr = s->frame;
--    uint32_t addr = tx_descriptor;
-+    uint64_t addr = tx_descriptor;
-     uint32_t flags = 0;
- 
-     while (1) {
-@@ -726,9 +726,9 @@ static uint64_t ftgmac100_read(void *opaque, hwaddr addr, unsigned size)
-     case FTGMAC100_MATH1:
-         return s->math[1];
-     case FTGMAC100_RXR_BADR:
--        return s->rx_ring;
-+        return extract64(s->rx_ring, 0, 32);
-     case FTGMAC100_NPTXR_BADR:
--        return s->tx_ring;
-+        return extract64(s->tx_ring, 0, 32);
-     case FTGMAC100_ITC:
-         return s->itc;
-     case FTGMAC100_DBLAC:
-@@ -799,9 +799,8 @@ static void ftgmac100_write(void *opaque, hwaddr addr,
-                           HWADDR_PRIx "\n", __func__, value);
-             return;
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 8dec134832..9e99107b42 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -416,6 +416,7 @@ typedef enum {
+     /*
+      * Micron: 0x35 - enable QPI
+      * Spansion: 0x35 - read control register
++     * Winbond: 0x35 - quad enable
+      */
+     RDCR_EQIO = 0x35,
+     RSTQIO = 0xf5,
+@@ -798,6 +799,11 @@ static void complete_collecting_data(Flash *s)
+                 s->four_bytes_address_mode = extract32(s->data[1], 5, 1);
+             }
+             break;
++        case MAN_WINBOND:
++            if (s->len > 1) {
++                s->quad_enable = !!(s->data[1] & 0x02);
++            }
++            break;
+         default:
+             break;
          }
--
--        s->rx_ring = value;
--        s->rx_descriptor = s->rx_ring;
-+        s->rx_ring = deposit64(s->rx_ring, 0, 32, value);
-+        s->rx_descriptor = deposit64(s->rx_descriptor, 0, 32, value);
-         break;
- 
-     case FTGMAC100_RBSR: /* DMA buffer size */
-@@ -814,8 +813,8 @@ static void ftgmac100_write(void *opaque, hwaddr addr,
-                           HWADDR_PRIx "\n", __func__, value);
-             return;
+@@ -1254,6 +1260,10 @@ static void decode_new_cmd(Flash *s, uint32_t value)
+             s->needed_bytes = 2;
+             s->state = STATE_COLLECTING_VAR_LEN_DATA;
+             break;
++        case MAN_WINBOND:
++            s->needed_bytes = 2;
++            s->state = STATE_COLLECTING_VAR_LEN_DATA;
++            break;
+         default:
+             s->needed_bytes = 1;
+             s->state = STATE_COLLECTING_DATA;
+@@ -1431,6 +1441,12 @@ static void decode_new_cmd(Flash *s, uint32_t value)
+         case MAN_MACRONIX:
+             s->quad_enable = true;
+             break;
++        case MAN_WINBOND:
++            s->data[0] = (!!s->quad_enable) << 1;
++            s->pos = 0;
++            s->len = 1;
++            s->state = STATE_READING_DATA;
++            break;
+         default:
+             break;
          }
--        s->tx_ring = value;
--        s->tx_descriptor = s->tx_ring;
-+        s->tx_ring = deposit64(s->tx_ring, 0, 32, value);
-+        s->tx_descriptor = deposit64(s->tx_descriptor, 0, 32, value);
-         break;
- 
-     case FTGMAC100_NPTXPD: /* Trigger transmit */
-@@ -957,7 +956,7 @@ static ssize_t ftgmac100_receive(NetClientState *nc, const uint8_t *buf,
-     FTGMAC100State *s = FTGMAC100(qemu_get_nic_opaque(nc));
-     FTGMAC100Desc bd;
-     uint32_t flags = 0;
--    uint32_t addr;
-+    uint64_t addr;
-     uint32_t crc;
-     uint32_t buf_addr;
-     uint8_t *crc_ptr;
-@@ -1126,18 +1125,14 @@ static void ftgmac100_realize(DeviceState *dev, Error **errp)
- 
- static const VMStateDescription vmstate_ftgmac100 = {
-     .name = TYPE_FTGMAC100,
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(irq_state, FTGMAC100State),
-         VMSTATE_UINT32(isr, FTGMAC100State),
-         VMSTATE_UINT32(ier, FTGMAC100State),
-         VMSTATE_UINT32(rx_enabled, FTGMAC100State),
--        VMSTATE_UINT32(rx_ring, FTGMAC100State),
-         VMSTATE_UINT32(rbsr, FTGMAC100State),
--        VMSTATE_UINT32(tx_ring, FTGMAC100State),
--        VMSTATE_UINT32(rx_descriptor, FTGMAC100State),
--        VMSTATE_UINT32(tx_descriptor, FTGMAC100State),
-         VMSTATE_UINT32_ARRAY(math, FTGMAC100State, 2),
-         VMSTATE_UINT32(itc, FTGMAC100State),
-         VMSTATE_UINT32(aptcr, FTGMAC100State),
-@@ -1156,6 +1151,10 @@ static const VMStateDescription vmstate_ftgmac100 = {
-         VMSTATE_UINT32(phy_int_mask, FTGMAC100State),
-         VMSTATE_UINT32(txdes0_edotr, FTGMAC100State),
-         VMSTATE_UINT32(rxdes0_edorr, FTGMAC100State),
-+        VMSTATE_UINT64(rx_ring, FTGMAC100State),
-+        VMSTATE_UINT64(tx_ring, FTGMAC100State),
-+        VMSTATE_UINT64(rx_descriptor, FTGMAC100State),
-+        VMSTATE_UINT64(tx_descriptor, FTGMAC100State),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/include/hw/net/ftgmac100.h b/include/hw/net/ftgmac100.h
-index 269446e858..aae57ae8cb 100644
---- a/include/hw/net/ftgmac100.h
-+++ b/include/hw/net/ftgmac100.h
-@@ -42,10 +42,6 @@ struct FTGMAC100State {
-     uint32_t isr;
-     uint32_t ier;
-     uint32_t rx_enabled;
--    uint32_t rx_ring;
--    uint32_t rx_descriptor;
--    uint32_t tx_ring;
--    uint32_t tx_descriptor;
-     uint32_t math[2];
-     uint32_t rbsr;
-     uint32_t itc;
-@@ -58,7 +54,10 @@ struct FTGMAC100State {
-     uint32_t phycr;
-     uint32_t phydata;
-     uint32_t fcr;
--
-+    uint64_t rx_ring;
-+    uint64_t rx_descriptor;
-+    uint64_t tx_ring;
-+    uint64_t tx_descriptor;
- 
-     uint32_t phy_status;
-     uint32_t phy_control;
 -- 
 2.34.1
 
