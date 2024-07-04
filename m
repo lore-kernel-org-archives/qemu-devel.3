@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE2F9C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 06:14:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9596C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 06:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPFiW-0004C2-1Z; Thu, 04 Jul 2024 02:13:16 -0400
+	id 1sPFjr-0005Ku-6C; Thu, 04 Jul 2024 02:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPFiT-00049M-Un; Thu, 04 Jul 2024 02:13:13 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1sPFjp-0005GB-8s; Thu, 04 Jul 2024 02:14:37 -0400
+Received: from mail-il1-x136.google.com ([2607:f8b0:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPFiR-0003zx-62; Thu, 04 Jul 2024 02:13:13 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1f9de13d6baso1581625ad.2; 
- Wed, 03 Jul 2024 23:13:09 -0700 (PDT)
+ id 1sPFjm-00048K-7D; Thu, 04 Jul 2024 02:14:36 -0400
+Received: by mail-il1-x136.google.com with SMTP id
+ e9e14a558f8ab-3815eaa136eso1322415ab.0; 
+ Wed, 03 Jul 2024 23:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720073588; x=1720678388; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720073670; x=1720678470; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y14ngGbTSWuZhQGfn0SptHhCij8BbkiytVh0oFN/oJ0=;
- b=d02HOnPzT9MkaBl9ELY1roVxtNPJxrLk3psaKoUAz90lFVEYrSpt2xVrvUSp2n0Gnb
- b+R9VcXb29gxpubzkdvgNaodNrzBfA0KATajhe1j/hxhllH8iGGPp90/yyAAOGYWOmYj
- QQk6gOT3LLQG2JUoUwfMuVJeiMo0mMCN7Xcfj8r0IrJe36Vq2FkgVRQFAxKn321rkA7j
- NSMLg8gEdrr8+amCZLU6Eei+8uHI4DZbkSQwMDv2Qs4/Df2groptnnCNXqp8f0zUtxQc
- DX4YyAdK5ufSra04x6OA0VBdlO8GYdu7U069t1LEIcvv7wW6mOhS9+hkW1yEP2LEQQW+
- Ta/w==
+ bh=BMdN9Iw/jjAqJoNPiqMzrB5IXm13kQB2KCgkpsBgDUw=;
+ b=jmtUwFnbzo80hHgY0mOUMqpkcjM8YVRr7S+Ea3BSbhfqDrXmxB2aJAENoFDLppRWgq
+ XKlVgh8/0KdATVMseVpzZg3lc7yrS2leDJWExbdgZVzLrxFllF+gm//NoNZwMQ93NvAK
+ 3SSwNLXHTfN6SX0AF+NkvGgo1yH8F6tSz8XSp1NHLU7KXLEjTeRm2o3pVO/0jBiqMoe5
+ zILSWct5+EudAxqAnELIz9ZUm7cCdmHMpFH9h/B4Wr78gfW3UUg7iwyaGwKdFkSVRqKM
+ l9jJNlzQi6siwNZI9gaiScr6QjZ1MkgIH6Aviw4DGYBxBXT9KrJqNjdsCXRiaHBkGQiR
+ XUaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720073588; x=1720678388;
+ d=1e100.net; s=20230601; t=1720073670; x=1720678470;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Y14ngGbTSWuZhQGfn0SptHhCij8BbkiytVh0oFN/oJ0=;
- b=qpU2rJIezgSjKqQIAnh9WT8gye65sy8wP760S7O/xempSSdM1OaMCiPn7fAl3VmD9+
- lATBg+IthBixn3qF+5e9CNtxRODsrqgRTLVBsZ3f/c1NlyVbglq4ARWXM0ivPE0Zu04o
- GS90U5WNWCip12uW/kwp2QpmMQC7QtTqX4+OwJNKnvWy5OlQLnFjoSAFMU0XOi8h5Q+j
- eIs56xwtziIdh1S5gLdW/Rv4M+THARDNbk6HRbkmbAFBTo7yegO/vwGSlu442SKxvirM
- z8ajmqwn6wkKFjLDS/yMyNyEARtI8903DDk6LVvntTfYQKnNRgHQpMSTsdQEuR1CKM/X
- HopA==
+ bh=BMdN9Iw/jjAqJoNPiqMzrB5IXm13kQB2KCgkpsBgDUw=;
+ b=ovvHYw1Iqpusw+AXnjOP/D7H1IFYtTOoOD9KX0z9jcbF8AqBQAc49Ag+rNc6TgEP59
+ DWvCf6UKwUm/H/rjLGEnSJ9NyS9Mk/U6O6hSLCrWPNyoRbmpEi+7oAYeaAOLEWraXekK
+ t4LiutDpV86F36efdQ9St7KONG2K519ucblqkNLe9wCq1rp9J2klz1Hefru9YjKa1SK2
+ WQw0jM8dQ1D9DGrSM51hIqY+1vnjsKB+x7Ur6c1jg1WDr9PFBeguxUU/b6rlk7upPe7/
+ K93T5NA/5SeAsJTyGB+S3fAxf1Pf1e6FBlmhazHqYgIBO/T5ElcRd7Xpcm/8o/Hv9mWi
+ YMDg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXV1oqNQG/8ntljsSOSaqEuIM6cwbXgwesrwTY2XpGc5Kw+Ze6+Em/6wcrP9Tul3GNp6FMHOYL1NjSi+IKP/j6XUOZHfX5FkEVl4026SPnC5XT3DymysoXGTmc=
-X-Gm-Message-State: AOJu0Yxyp5caMbiTjEG89C//G55hp9kFL8twkZCMbt5n5/qjAS6/sDTH
- hHhVSGFfxHlSmcRWbZDD8lyuGlI/b5fOWJhJvQ7HkJPfe8rwH5y8
-X-Google-Smtp-Source: AGHT+IHH6/d9V4AHqkY8RUuiLy8jNepJ/rXmeNmwXTKjevbHgfH8o3etsgRh9WDchZ2+lUQaprmOaw==
-X-Received: by 2002:a17:902:f688:b0:1f9:d1f7:3fe5 with SMTP id
- d9443c01a7336-1fb33e8995fmr5466785ad.34.1720073588172; 
- Wed, 03 Jul 2024 23:13:08 -0700 (PDT)
+ AJvYcCWDUl3WZp/yRPSnoHw5hTRJhCZGWqdRfT4MYr6tF7p1cQgS9Xgyi0fYJCjYMiqrQIhIjIZh75rmAk230jRPRd4lupP6DYpuAVcDPEnvBPIG+zPGu6jlPggCMRE=
+X-Gm-Message-State: AOJu0YwQzwm50BgS/6c0gFnnPWTHlF+vjMOFRj9E/rjkBdUK57sb1OQR
+ 50xQ/HBDYaied7L6ti/xb7y9+EuWff2rAjCLo5c5BLaelGPLi/+2
+X-Google-Smtp-Source: AGHT+IFTbKgH2rtU7qOsS33TpcW3MKizP7YHxGtZEvhiiX3e2ppi0sD9/OHRmvM2IidFu4T9ZTy2uA==
+X-Received: by 2002:a05:6e02:1785:b0:375:efde:97a6 with SMTP id
+ e9e14a558f8ab-38398cece8cmr9723545ab.7.1720073670278; 
+ Wed, 03 Jul 2024 23:14:30 -0700 (PDT)
 Received: from localhost ([1.146.24.72]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fb1cc46b7esm21639795ad.231.2024.07.03.23.13.05
+ 41be03b00d2f7-72c6c7f723csm7643075a12.57.2024.07.03.23.14.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 23:13:07 -0700 (PDT)
+ Wed, 03 Jul 2024 23:14:29 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 04 Jul 2024 16:13:02 +1000
-Message-Id: <D2GJ736YGATJ.2B6B20NSYPM4K@gmail.com>
+Date: Thu, 04 Jul 2024 16:14:24 +1000
+Message-Id: <D2GJ84TPV12M.1YO4QGT9K26ZZ@gmail.com>
 Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH 11/43] target/ppc/mmu_common.c: Remove pte_update_flags()
+Subject: Re: [PATCH 12/43] target/ppc/mmu_common.c: Remove nx field from
+ mmu_ctx_t
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
 X-Mailer: aerc 0.17.0
 References: <cover.1716763435.git.balaton@eik.bme.hu>
- <87df776b2534cc0ad2523d17c99453edb5de3459.1716763435.git.balaton@eik.bme.hu>
-In-Reply-To: <87df776b2534cc0ad2523d17c99453edb5de3459.1716763435.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
+ <3235abe633100992ad1437879a9869f3fb9a8189.1716763435.git.balaton@eik.bme.hu>
+In-Reply-To: <3235abe633100992ad1437879a9869f3fb9a8189.1716763435.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::136;
+ envelope-from=npiggin@gmail.com; helo=mail-il1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,90 +97,126 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon May 27, 2024 at 9:12 AM AEST, BALATON Zoltan wrote:
-> This function is used only once, its return value is ignored and one
-> of its parameter is a return value from a previous call. It is better
-> to inline it in the caller and remove it.
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  target/ppc/mmu_common.c | 41 +++++++++++++----------------------------
->  1 file changed, 13 insertions(+), 28 deletions(-)
->
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index e3537c63c0..c4902b7632 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -119,39 +119,14 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, tar=
-get_ulong pte0,
->      }
->  }
-> =20
-> -static int pte_update_flags(mmu_ctx_t *ctx, target_ulong *pte1p,
-> -                            int ret, MMUAccessType access_type)
-> -{
-> -    int store =3D 0;
-> -
-> -    /* Update page flags */
-> -    if (!(*pte1p & 0x00000100)) {
-> -        /* Update accessed flag */
-> -        *pte1p |=3D 0x00000100;
-> -        store =3D 1;
-> -    }
-> -    if (!(*pte1p & 0x00000080)) {
-> -        if (access_type =3D=3D MMU_DATA_STORE && ret =3D=3D 0) {
-> -            /* Update changed flag */
-> -            *pte1p |=3D 0x00000080;
-> -            store =3D 1;
-> -        } else {
-> -            /* Force page fault for first write access */
-> -            ctx->prot &=3D ~PAGE_WRITE;
-> -        }
-> -    }
-> -
-> -    return store;
-> -}
-> -
->  /* Software driven TLB helpers */
-> =20
->  static int ppc6xx_tlb_check(CPUPPCState *env, mmu_ctx_t *ctx,
->                              target_ulong eaddr, MMUAccessType access_typ=
-e)
->  {
->      ppc6xx_tlb_t *tlb;
-> -    int nr, best, way;
-> -    int ret;
-> +    target_ulong *pte1p;
-> +    int nr, best, way, ret;
-> =20
->      best =3D -1;
->      ret =3D -1; /* No TLB found */
-> @@ -204,7 +179,17 @@ done:
->                        " prot=3D%01x ret=3D%d\n",
->                        ctx->raddr & TARGET_PAGE_MASK, ctx->prot, ret);
->          /* Update page flags */
-> -        pte_update_flags(ctx, &env->tlb.tlb6[best].pte1, ret, access_typ=
-e);
-> +        pte1p =3D &env->tlb.tlb6[best].pte1;
-> +        *pte1p |=3D 0x00000100; /* Update accessed flag */
-> +        if (!(*pte1p & 0x00000080)) {
-> +            if (access_type =3D=3D MMU_DATA_STORE && ret =3D=3D 0) {
-> +                /* Update changed flag */
-> +                *pte1p |=3D 0x00000080;
-> +            } else {
-> +                /* Force page fault for first write access */
-> +                ctx->prot &=3D ~PAGE_WRITE;
-
-Out of curiosity, I guess this unusual part is because ctx->prot can get
-PAGE_WRITE set in the bat lookup, then it has to be cleared if the PTE
-does not have changed bit?
-
-> +            }
-> +        }
->      }
+> Pass it as a parameter instead. Also use named constants instead of
+> hex values when extracting bits from SR.
 
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
->  #if defined(DUMP_PAGE_TABLES)
->      if (qemu_loglevel_mask(CPU_LOG_MMU)) {
+>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>  target/ppc/mmu_common.c | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
+>
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index c4902b7632..9f402a979d 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -43,7 +43,6 @@ typedef struct {
+>      int prot;          /* Protection bits          */
+>      target_ulong ptem; /* Virtual segment ID | API */
+>      int key;           /* Access key               */
+> -    int nx;            /* Non-execute area         */
+>  } mmu_ctx_t;
+> =20
+>  void ppc_store_sdr1(CPUPPCState *env, target_ulong value)
+> @@ -94,7 +93,7 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong ea=
+ddr,
+> =20
+>  static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
+>                                  target_ulong pte1, int pteh,
+> -                                MMUAccessType access_type)
+> +                                MMUAccessType access_type, bool nx)
+>  {
+>      /* Check validity and table match */
+>      if (!pte_is_valid(pte0) || ((pte0 >> 6) & 1) !=3D pteh ||
+> @@ -109,7 +108,7 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, targe=
+t_ulong pte0,
+>      }
+>      /* Keep the matching PTE information */
+>      ctx->raddr =3D pte1;
+> -    ctx->prot =3D ppc_hash32_prot(ctx->key, pte1 & HPTE32_R_PP, ctx->nx)=
+;
+> +    ctx->prot =3D ppc_hash32_prot(ctx->key, pte1 & HPTE32_R_PP, nx);
+>      if (check_prot_access_type(ctx->prot, access_type)) {
+>          qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
+>          return 0;
+> @@ -121,8 +120,9 @@ static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, targe=
+t_ulong pte0,
+> =20
+>  /* Software driven TLB helpers */
+> =20
+> -static int ppc6xx_tlb_check(CPUPPCState *env, mmu_ctx_t *ctx,
+> -                            target_ulong eaddr, MMUAccessType access_typ=
+e)
+> +static int ppc6xx_tlb_check(CPUPPCState *env,
+> +                            mmu_ctx_t *ctx, target_ulong eaddr,
+> +                            MMUAccessType access_type, bool nx)
+>  {
+>      ppc6xx_tlb_t *tlb;
+>      target_ulong *pte1p;
+> @@ -150,7 +150,7 @@ static int ppc6xx_tlb_check(CPUPPCState *env, mmu_ctx=
+_t *ctx,
+>                        access_type =3D=3D MMU_DATA_STORE ? 'S' : 'L',
+>                        access_type =3D=3D MMU_INST_FETCH ? 'I' : 'D');
+>          switch (ppc6xx_tlb_pte_check(ctx, tlb->pte0, tlb->pte1,
+> -                                     0, access_type)) {
+> +                                     0, access_type, nx)) {
+>          case -2:
+>              /* Access violation */
+>              ret =3D -2;
+> @@ -322,7 +322,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *e=
+nv, mmu_ctx_t *ctx,
+>      hwaddr hash;
+>      target_ulong vsid, sr, pgidx;
+>      int ds, target_page_bits;
+> -    bool pr;
+> +    bool pr, nx;
+> =20
+>      /* First try to find a BAT entry if there are any */
+>      if (env->nb_BATs && get_bat_6xx_tlb(env, ctx, eaddr, access_type) =
+=3D=3D 0) {
+> @@ -336,8 +336,8 @@ static int mmu6xx_get_physical_address(CPUPPCState *e=
+nv, mmu_ctx_t *ctx,
+>      ctx->key =3D (((sr & 0x20000000) && pr) ||
+>                  ((sr & 0x40000000) && !pr)) ? 1 : 0;
+>      ds =3D sr & 0x80000000 ? 1 : 0;
+> -    ctx->nx =3D sr & 0x10000000 ? 1 : 0;
+> -    vsid =3D sr & 0x00FFFFFF;
+> +    nx =3D sr & SR32_NX;
+> +    vsid =3D sr & SR32_VSID;
+>      target_page_bits =3D TARGET_PAGE_BITS;
+>      qemu_log_mask(CPU_LOG_MMU,
+>                    "Check segment v=3D" TARGET_FMT_lx " %d " TARGET_FMT_l=
+x
+> @@ -352,10 +352,10 @@ static int mmu6xx_get_physical_address(CPUPPCState =
+*env, mmu_ctx_t *ctx,
+>      ctx->ptem =3D (vsid << 7) | (pgidx >> 10);
+> =20
+>      qemu_log_mask(CPU_LOG_MMU, "pte segment: key=3D%d ds %d nx %d vsid "
+> -                  TARGET_FMT_lx "\n", ctx->key, ds, ctx->nx, vsid);
+> +                  TARGET_FMT_lx "\n", ctx->key, ds, nx, vsid);
+
+This could be !!nx for consistency.
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+
+>      if (!ds) {
+>          /* Check if instruction fetch is allowed, if needed */
+> -        if (type =3D=3D ACCESS_CODE && ctx->nx) {
+> +        if (type =3D=3D ACCESS_CODE && nx) {
+>              qemu_log_mask(CPU_LOG_MMU, "No access allowed\n");
+>              return -3;
+>          }
+> @@ -368,7 +368,7 @@ static int mmu6xx_get_physical_address(CPUPPCState *e=
+nv, mmu_ctx_t *ctx,
+>          /* Initialize real address with an invalid value */
+>          ctx->raddr =3D (hwaddr)-1ULL;
+>          /* Software TLB search */
+> -        return ppc6xx_tlb_check(env, ctx, eaddr, access_type);
+> +        return ppc6xx_tlb_check(env, ctx, eaddr, access_type, nx);
+>      }
+> =20
+>      /* Direct-store segment : absolutely *BUGGY* for now */
 
 
