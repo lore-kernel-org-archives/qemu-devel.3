@@ -4,59 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAC5C3065C
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 04:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F32CC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 04:10:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPDg7-0001fL-92; Thu, 04 Jul 2024 00:02:39 -0400
+	id 1sPDnC-0005kv-Oe; Thu, 04 Jul 2024 00:09:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1sPDg5-0001d1-Ka
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:02:37 -0400
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sPDnA-0005kP-Tl
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:09:56 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1sPDg3-0003UB-Iv
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:02:37 -0400
-Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
- by Atcsqr.andestech.com with ESMTPS id 46442KK0005709
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
- Thu, 4 Jul 2024 12:02:20 +0800 (+08)
- (envelope-from alvinga@andestech.com)
-Received: from atctrx.andestech.com (10.0.15.190) by ATCPCS34.andestech.com
- (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 4 Jul
- 2024 12:02:20 +0800
-To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, Alvin Chang <alvinga@andestech.com>
-Subject: [PATCH 1/2] target/riscv: Preliminary textra trigger CSR writting
- support
-Date: Thu, 4 Jul 2024 12:01:59 +0800
-Message-ID: <20240704040200.243892-2-alvinga@andestech.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240704040200.243892-1-alvinga@andestech.com>
-References: <20240704040200.243892-1-alvinga@andestech.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sPDn8-0000yO-Ol
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 00:09:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1720066195; x=1751602195;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=vPfv98N33pPnna36PiJA/F9cC9nEMA5OavXDbU2b7Iw=;
+ b=XlFZlr0JzkfYf2rbKGMlB66G9Ro9/al2YjGb60Xs6HwPHBHwfPh93Bqq
+ gqNm8yAR3mFn6zrqnGgYwd4vg1pUBcq/n/0l/QRV0sfuFpqU8THym87h6
+ veweYagmyq9JW4r6O2kRDJ+qmOSRwODwOcD7DMWcY3MrCr3KskU0IbmLX
+ XDE0eX05+FwAxWtlwL/EtfqWDl61ZPLrcc0vo+Llh2b0ADGAoJKG8F3j+
+ UdO4sMlMFoQXL76enu8o2ogLyDOnN8UlfiFOeC9970JnWLV7fQslgRjAG
+ 8WT4tvpDatousvID1xW9svE6ntW0sjaO3x7IFFnz2tsPiVfV7o57IV8t2 A==;
+X-CSE-ConnectionGUID: AmpwQdXRRb+ALz+5B27r6A==
+X-CSE-MsgGUID: 984pOd8UT1Sv+5lgNlECRQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11122"; a="21195172"
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="21195172"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2024 21:09:52 -0700
+X-CSE-ConnectionGUID: geRWiIKuQAehZqJYaC3G0g==
+X-CSE-MsgGUID: 8gcTW4u+SQK0aH2QY11Lqg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="84008243"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.26])
+ ([10.124.240.26])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jul 2024 21:09:49 -0700
+Message-ID: <213b9762-205e-4d48-b7f7-1948d0f3b0d9@intel.com>
+Date: Thu, 4 Jul 2024 12:09:45 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.15.190]
-X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
- ATCPCS34.andestech.com (10.0.1.134)
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 46442KK0005709
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 20/31] i386/sev: Add support for SNP CPUID validation
+To: Michael Roth <michael.roth@amd.com>
+Cc: Pankaj Gupta <pankaj.gupta@amd.com>, qemu-devel@nongnu.org,
+ brijesh.singh@amd.com, dovmurik@linux.ibm.com, armbru@redhat.com,
+ pbonzini@redhat.com, thomas.lendacky@amd.com, isaku.yamahata@intel.com,
+ berrange@redhat.com, kvm@vger.kernel.org, anisinha@redhat.com
+References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
+ <20240530111643.1091816-21-pankaj.gupta@amd.com>
+ <ce80850a-fbd1-4e14-8107-47c7423fa204@intel.com>
+ <20240704003406.6tduun5n25kgtojf@amd.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240704003406.6tduun5n25kgtojf@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,163 +87,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alvin Chang <alvinga@andestech.com>
-From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit allows program to write textra trigger CSR for type 2, 3, 6
-triggers. In this preliminary patch, the textra.MHVALUE and the
-textra.MHSELECT fields are allowed to be configured. Other fields, such
-as textra.SBYTEMASK, textra.SVALUE, and textra.SSELECT, are hardwired to
-zero for now.
+On 7/4/2024 8:34 AM, Michael Roth wrote:
+> On Tue, Jul 02, 2024 at 11:07:18AM +0800, Xiaoyao Li wrote:
+>> On 5/30/2024 7:16 PM, Pankaj Gupta wrote:
+>>> From: Michael Roth <michael.roth@amd.com>
+>>>
+>>> SEV-SNP firmware allows a special guest page to be populated with a
+>>> table of guest CPUID values so that they can be validated through
+>>> firmware before being loaded into encrypted guest memory where they can
+>>> be used in place of hypervisor-provided values[1].
+>>>
+>>> As part of SEV-SNP guest initialization, use this interface to validate
+>>> the CPUID entries reported by KVM_GET_CPUID2 prior to initial guest
+>>> start and populate the CPUID page reserved by OVMF with the resulting
+>>> encrypted data.
+>>
+>> How is KVM CPUIDs (leaf 0x40000001) validated?
+>>
+>> I suppose not all KVM_FEATURE_XXX are supported for SNP guest. And SNP
+>> firmware doesn't validate such CPUID range. So how does them get validated?
+> 
+> This rules for CPUID enforcement are documented in the PPR for each AMD
+> CPU model in Chapter 2, section "CPUID Policy Enforcement". For the
+> situation you mentioned, it's stated there that:
+> 
+>    The PSP enforces the following policy:
+>    - If the CPUID function is not in the standard range (Fn00000000 through
+>      Fn0000FFFF) or the extended range
+>      (Fn8000_0000 through Fn8000_FFFF), the function output check is
+>      UnChecked.
+>    - If the CPUID function is in the standard or extended range and the
+>      function is not listed in SEV-SNP CPUID
+>      Policy table, then the output check is Strict and required to be 0. Note
+>      that if the CPUID function does not depend
+>      on ECX and/or XCR0, then the PSP policy ignores those inputs,
+>      respectively.
+>    - Otherwise, the check is defined according to the values listed in
+>      SEV-SNP CPUID Policy table.
+> 
+> So there are specific ranges that are checked, mainly ones where there
+> is potential for guests to misbehave if they are being lied to. But
+> hypervisor-ranges are paravirtual in a sense so there's no assumptions
+> being made about what the underlying hardware is doing, so the checks
+> are needed as much in those cases.
 
-For textra.MHSELECT field, the only legal values are 0 (ignore) and 4
-(mcontext). Writing 1~3 into textra.MHSELECT will be changed to 0, and
-writing 5~7 into textra.MHSELECT will be changed to 4. This behavior is
-aligned to RISC-V SPIKE simulator.
+I'm a little confused. Per your reference above, hypervisor-ranges is 
+unchecked because it's not in the standard range nor the extended range.
 
-Signed-off-by: Alvin Chang <alvinga@andestech.com>
----
- target/riscv/cpu_bits.h | 10 +++++
- target/riscv/debug.c    | 81 ++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 85 insertions(+), 6 deletions(-)
+And your last sentence said "so the checks are needed as much in those 
+cases". So how does hypervisor-ranges get checked?
 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index c257c5ed7d..0530b4f9f4 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -906,6 +906,16 @@ typedef enum RISCVException {
- #define JVT_BASE                           (~0x3F)
- 
- /* Debug Sdtrig CSR masks */
-+#define TEXTRA32_MHVALUE                   0xFC000000
-+#define TEXTRA32_MHSELECT                  0x03800000
-+#define TEXTRA32_SBYTEMASK                 0x000C0000
-+#define TEXTRA32_SVALUE                    0x0003FFFC
-+#define TEXTRA32_SSELECT                   0x00000003
-+#define TEXTRA64_MHVALUE                   0xFFF8000000000000ULL
-+#define TEXTRA64_MHSELECT                  0x0007000000000000ULL
-+#define TEXTRA64_SBYTEMASK                 0x000000F000000000ULL
-+#define TEXTRA64_SVALUE                    0x00000003FFFFFFFCULL
-+#define TEXTRA64_SSELECT                   0x0000000000000003ULL
- #define MCONTEXT32                         0x0000003F
- #define MCONTEXT64                         0x0000000000001FFFULL
- #define MCONTEXT32_HCONTEXT                0x0000007F
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 0b5099ff9a..f7d8f5e320 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -217,6 +217,69 @@ static inline void warn_always_zero_bit(target_ulong val, target_ulong mask,
-     }
- }
- 
-+static target_ulong textra_validate(CPURISCVState *env, target_ulong tdata3)
-+{
-+    target_ulong mhvalue, mhselect;
-+    target_ulong mhselect_new;
-+    target_ulong textra;
-+    const uint32_t mhselect_no_rvh[8] = { 0, 0, 0, 0, 4, 4, 4, 4 };
-+
-+    switch (riscv_cpu_mxl(env)) {
-+    case MXL_RV32:
-+        mhvalue  = get_field(tdata3, TEXTRA32_MHVALUE);
-+        mhselect = get_field(tdata3, TEXTRA32_MHSELECT);
-+        /* Validate unimplemented (always zero) bits */
-+        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA32_SBYTEMASK,
-+                             "sbytemask");
-+        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA32_SVALUE,
-+                             "svalue");
-+        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA32_SSELECT,
-+                             "sselect");
-+        break;
-+    case MXL_RV64:
-+    case MXL_RV128:
-+        mhvalue  = get_field(tdata3, TEXTRA64_MHVALUE);
-+        mhselect = get_field(tdata3, TEXTRA64_MHSELECT);
-+        /* Validate unimplemented (always zero) bits */
-+        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA64_SBYTEMASK,
-+                             "sbytemask");
-+        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA64_SVALUE,
-+                             "svalue");
-+        warn_always_zero_bit(tdata3, (target_ulong)TEXTRA64_SSELECT,
-+                             "sselect");
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    /* Validate mhselect. */
-+    mhselect_new = mhselect_no_rvh[mhselect];
-+
-+    /* Write legal values into textra */
-+    textra = 0;
-+    switch (riscv_cpu_mxl(env)) {
-+    case MXL_RV32:
-+        textra = set_field(textra, TEXTRA32_MHVALUE,  mhvalue);
-+        textra = set_field(textra, TEXTRA32_MHSELECT, mhselect_new);
-+        break;
-+    case MXL_RV64:
-+    case MXL_RV128:
-+        textra = set_field(textra, TEXTRA64_MHVALUE,  mhvalue);
-+        textra = set_field(textra, TEXTRA64_MHSELECT, mhselect_new);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (textra != tdata3) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "different value 0x" TARGET_FMT_lx " write to tdata3\n",
-+                      textra);
-+    }
-+
-+    return textra;
-+}
-+
- static void do_trigger_action(CPURISCVState *env, target_ulong trigger_index)
- {
-     trigger_action_t action = get_trigger_action(env, trigger_index);
-@@ -441,8 +504,10 @@ static void type2_reg_write(CPURISCVState *env, target_ulong index,
-         }
-         break;
-     case TDATA3:
--        qemu_log_mask(LOG_UNIMP,
--                      "tdata3 is not supported for type 2 trigger\n");
-+        new_val = textra_validate(env, val);
-+        if (new_val != env->tdata3[index]) {
-+            env->tdata3[index] = new_val;
-+        }
-         break;
-     default:
-         g_assert_not_reached();
-@@ -558,8 +623,10 @@ static void type6_reg_write(CPURISCVState *env, target_ulong index,
-         }
-         break;
-     case TDATA3:
--        qemu_log_mask(LOG_UNIMP,
--                      "tdata3 is not supported for type 6 trigger\n");
-+        new_val = textra_validate(env, val);
-+        if (new_val != env->tdata3[index]) {
-+            env->tdata3[index] = new_val;
-+        }
-         break;
-     default:
-         g_assert_not_reached();
-@@ -741,8 +808,10 @@ static void itrigger_reg_write(CPURISCVState *env, target_ulong index,
-                       "tdata2 is not supported for icount trigger\n");
-         break;
-     case TDATA3:
--        qemu_log_mask(LOG_UNIMP,
--                      "tdata3 is not supported for icount trigger\n");
-+        new_val = textra_validate(env, val);
-+        if (new_val != env->tdata3[index]) {
-+            env->tdata3[index] = new_val;
-+        }
-         break;
-     default:
-         g_assert_not_reached();
--- 
-2.34.1
+> -Mike
+> 
+>>
+>>> [1] SEV SNP Firmware ABI Specification, Rev. 0.8, 8.13.2.6
+>>>
+>>
 
 
