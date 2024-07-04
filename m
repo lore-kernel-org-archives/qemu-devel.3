@@ -4,88 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277DBC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 16:45:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF482C3271F
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 17:09:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPPZt-0007gq-ET; Thu, 04 Jul 2024 12:45:01 -0400
+	id 1sPPwq-00027a-6w; Thu, 04 Jul 2024 13:08:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPPZr-0007g3-IZ
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 12:44:59 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPPZp-0001LB-Mk
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 12:44:59 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a77c7d3e8bcso7062166b.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 09:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720111495; x=1720716295; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7e+9jaG3i6h3581y6bfnNWzVuXNbsmJ9Fdj9t0MGtE0=;
- b=sF/6EUBGVRKsIfqhsKqg+FQhIPYmeoacCrcP+e/OhWOYyDtACtvEZ/uRiufSnZDXFC
- 0utdoXhM8fejbvC8GKoFo+BODgJB1vXXkuo55vRGk/wWnpVaetKg5Jmx9ZGhu5rI+vp5
- W63xfs6tm8t3WlaId6hQipCgx2Nt6qxgjY8ZahxPZe5+qo28FaDLZzlQhaBR/y0GwwLF
- uNurc7pbBb5WLnvWmkYpabEFtH6pJq8usRNG5LfsGD8C6/wSBXbTR7DBLY39Fmax8ABR
- OnEQ6MYCsi5WaTSWB9MtUEZVtCILF7e15r+HVVvcIFwsgocG3R0Q7BjhBeYUxeQH9BGc
- pQhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720111495; x=1720716295;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7e+9jaG3i6h3581y6bfnNWzVuXNbsmJ9Fdj9t0MGtE0=;
- b=PNgiJE1jU26fPKDeg+Zm2B9YrGnToxXmVsjqlSzAPkDOUi1bMm1dfsgzgKF8MLMEV2
- NxzMNCdY86g6YpjJIJTpN7NdOfQG3UZMfktZcIhlwjF9MVBDYwjkV40RtYiUEtlmahev
- IwcCcVS+v/3/mh6C5wVVUASESV/qBI4i7xbL7djaJNWL7yQ5FosA1Gp/F1cUT2bvAfth
- dyF73RA5nD4U9tSKeYXIDYs+552IuwHTyKQQWMrYn871oGV3KG4B6CpdmiKIkAbzj1Xt
- 7tfOdtklz7tQ0+66Buba1RsAkOM+SlxX2oNKWF3Kdz3lt8iYOiUXHW4qVwEEjUvf/fvC
- HlzQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUjETrlgMI9vMnly1gaJHxvxiG5G2E0yfNbnB9d9rokzohWVmA5UFVg2kkfs2ZsrZc+RzMULL7vWYFCU2hRLscTlbzTbc=
-X-Gm-Message-State: AOJu0Yy9UUHp4smnKqavfFvRGWosga3nKBz0NgbU53ZI/pjGp6fEPwxh
- 3cZbwRKd+TQVvum2D5BL8KCj9Jkmh88W3rKuTzziwNnYnsB2Z4ZB6/G0APENdhM=
-X-Google-Smtp-Source: AGHT+IGTp3ymlZkKAcuX3mwvsyprJa2baN85p7ojMJg+tCz5V1oNIF9d7xmATIYbzE9cGXc8GE/tow==
-X-Received: by 2002:a17:907:9620:b0:a72:4281:bc72 with SMTP id
- a640c23a62f3a-a77ba72781fmr186692266b.63.1720111494577; 
- Thu, 04 Jul 2024 09:44:54 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77c3edb9f0sm23954366b.121.2024.07.04.09.44.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 09:44:53 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DB6495F839;
- Thu,  4 Jul 2024 17:44:52 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Anthony PERARD <anthony.perard@vates.tech>
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,  qemu-devel@nongnu.org,
- sstabellini@kernel.org,  paul@xen.org,  edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH v1 2/2] xen: mapcache: Fix unmapping of first entries in
- buckets
-In-Reply-To: <ZoawbAnukIBkYWCw@l14> (Anthony PERARD's message of "Thu, 04 Jul
- 2024 14:23:41 +0000")
-References: <20240701224421.1432654-1-edgar.iglesias@gmail.com>
- <20240701224421.1432654-3-edgar.iglesias@gmail.com>
- <ZoawbAnukIBkYWCw@l14>
-Date: Thu, 04 Jul 2024 17:44:52 +0100
-Message-ID: <87wmm1m7i3.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sPPwo-00027F-9N
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 13:08:42 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sPPwl-0006jI-Fj
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 13:08:41 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WFNP12qNzz67Hm8;
+ Fri,  5 Jul 2024 01:07:17 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id C7BFF14065C;
+ Fri,  5 Jul 2024 01:08:24 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 4 Jul
+ 2024 18:08:24 +0100
+Date: Thu, 4 Jul 2024 18:08:23 +0100
+To: "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>
+CC: "Huang, Ying" <ying.huang@intel.com>, Gregory Price
+ <gourry.memverge@gmail.com>, <aneesh.kumar@linux.ibm.com>, <mhocko@suse.com>, 
+ <tj@kernel.org>, <john@jagalactic.com>, Eishan Mirakhur
+ <emirakhur@micron.com>, Vinicius Tavares Petrucci <vtavarespetr@micron.com>,
+ Ravis OpenSrc <Ravis.OpenSrc@micron.com>, Alistair Popple
+ <apopple@nvidia.com>, Srinivasulu Thanneeru <sthanneeru@micron.com>,
+ "SeongJae  Park" <sj@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Len Brown <lenb@kernel.org>, "Andrew Morton" <akpm@linux-foundation.org>,
+ Dave Jiang <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>,
+ <linux-acpi@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-mm@kvack.org>, "Ho-Ren (Jack) Chuang" <horenc@vt.edu>, "Ho-Ren (Jack)
+ Chuang" <horenchuang@bytedance.com>, "Ho-Ren (Jack) Chuang"
+ <horenchuang@gmail.com>, <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v2 1/1] memory tier: consolidate the initialization of
+ memory tiers
+Message-ID: <20240704180823.0000212d@Huawei.com>
+In-Reply-To: <84b43294411bb1fe0ed58f2da59abf554ef48f7d@linux.dev>
+References: <20240628060925.303309-1-horen.chuang@linux.dev>
+ <20240628060925.303309-2-horen.chuang@linux.dev>
+ <20240702142535.00003dc0@Huawei.com>
+ <84b43294411bb1fe0ed58f2da59abf554ef48f7d@linux.dev>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.174.77]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,64 +81,156 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Anthony PERARD <anthony.perard@vates.tech> writes:
 
-> On Tue, Jul 02, 2024 at 12:44:21AM +0200, Edgar E. Iglesias wrote:
->> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
->>=20
->> This fixes the clobbering of the entry->next pointer when
->> unmapping the first entry in a bucket of a mapcache.
->>=20
->> Fixes: 123acd816d ("xen: mapcache: Unmap first entries in buckets")
->> Reported-by: Anthony PERARD <anthony.perard@vates.tech>
->> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
->> ---
->>  hw/xen/xen-mapcache.c | 12 +++++++++++-
->>  1 file changed, 11 insertions(+), 1 deletion(-)
->>=20
->> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
->> index 5f23b0adbe..18ba7b1d8f 100644
->> --- a/hw/xen/xen-mapcache.c
->> +++ b/hw/xen/xen-mapcache.c
->> @@ -597,7 +597,17 @@ static void xen_invalidate_map_cache_entry_unlocked=
-(MapCache *mc,
->>          pentry->next =3D entry->next;
->>          g_free(entry);
->>      } else {
->> -        memset(entry, 0, sizeof *entry);
->> +        /*
->> +         * Invalidate mapping but keep entry->next pointing to the rest
->> +         * of the list.
->> +         *
->> +         * Note that lock is already zero here, otherwise we don't unma=
-p.
->> +         */
->> +        entry->paddr_index =3D 0;
->> +        entry->vaddr_base =3D NULL;
->> +        entry->valid_mapping =3D NULL;
->> +        entry->flags =3D 0;
->> +        entry->size =3D 0;
->
-> This kind of feels like mc->entry should be an array of pointer rather
-> than an array of MapCacheEntry but that seems to work well enough and
-> not the first time entries are been cleared like that.
+Hi,
 
-The use of a hand rolled list is a bit of a concern considering QEMU and
-Glib both provide various abstractions used around the rest of the code
-base. The original patch that introduces the mapcache doesn't tell me
-much about access patterns for the cache, just that it is trying to
-solve memory exhaustion issues with lots of dynamic small mappings.
+> > > 
+> > >  static int __init memory_tier_init(void)
+> > > 
+> > >  {
+> > > 
+> > >  - int ret, node;
+> > > 
+> > >  - struct memory_tier *memtier;
+> > > 
+> > >  + int ret;
+> > > 
+> > >  
+> > > 
+> > >  ret = subsys_virtual_register(&memory_tier_subsys, NULL);
+> > > 
+> > >  if (ret)
+> > > 
+> > >  @@ -887,7 +897,8 @@ static int __init memory_tier_init(void)
+> > > 
+> > >  GFP_KERNEL);
+> > > 
+> > >  WARN_ON(!node_demotion);
+> > > 
+> > >  #endif
+> > > 
+> > >  - mutex_lock(&memory_tier_lock);
+> > > 
+> > >  +
+> > > 
+> > >  + guard(mutex)(&memory_tier_lock);
+> > >   
+> > 
+> > If this was safe to do without the rest of the change (I think so)
+> > 
+> > then better to pull that out as a trivial precursor so less noise
+> > 
+> > in here.
+> >   
+> 
+> Do you mean instead of using guard(mutex)(),
+> use mutex_lock() as it was? or?
+> 
 
-Maybe a simpler structure is desirable?
+Code as here, but possibly pull the guard(mutex) part out as
+a patch 1 as it's an unrelated improvement to the rest of the set
+which would be in patch 2.
 
-We also have an interval tree implementation ("qemu/interval-tree.h") if
-what we really want is a sorted tree of memory that can be iterated
-locklessly.
+Not particularly important though as you've sent a v3 in the
+meantime and it's fine to have it in one patch.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> > > 
+> > > /*
+> > > 
+> > >  * For now we can have 4 faster memory tiers with smaller adistance
+> > > 
+> > >  * than default DRAM tier.
+> > > 
+> > >  @@ -897,29 +908,9 @@ static int __init memory_tier_init(void)
+> > > 
+> > >  if (IS_ERR(default_dram_type))
+> > > 
+> > >  panic("%s() failed to allocate default DRAM tier\n", __func__);
+> > > 
+> > >  
+> > > 
+> > >  - /*
+> > > 
+> > >  - * Look at all the existing N_MEMORY nodes and add them to
+> > > 
+> > >  - * default memory tier or to a tier if we already have memory
+> > > 
+> > >  - * types assigned.
+> > > 
+> > >  - */
+> > > 
+> > >  - for_each_node_state(node, N_MEMORY) {
+> > > 
+> > >  - if (!node_state(node, N_CPU))
+> > > 
+> > >  - /*
+> > > 
+> > >  - * Defer memory tier initialization on
+> > > 
+> > >  - * CPUless numa nodes. These will be initialized
+> > > 
+> > >  - * after firmware and devices are initialized.
+> > > 
+> > >  - */
+> > > 
+> > >  - continue;
+> > > 
+> > >  -
+> > > 
+> > >  - memtier = set_node_memory_tier(node);
+> > > 
+> > >  - if (IS_ERR(memtier))
+> > > 
+> > >  - /*
+> > > 
+> > >  - * Continue with memtiers we are able to setup
+> > > 
+> > >  - */
+> > > 
+> > >  - break;
+> > > 
+> > >  - }
+> > > 
+> > >  - establish_demotion_targets();
+> > > 
+> > >  - mutex_unlock(&memory_tier_lock);
+> > > 
+> > >  + /* Record nodes with memory and CPU to set default DRAM performance. */
+> > > 
+> > >  + nodes_and(default_dram_nodes, node_states[N_MEMORY],
+> > > 
+> > >  + node_states[N_CPU]);
+> > >   
+> > 
+> > There are systems where (for various esoteric reasons, such as describing an
+> > 
+> > association with some other memory that isn't DRAM where the granularity
+> > 
+> > doesn't match) the CPU nodes contain no DRAM but rather it's one node away.
+> > 
+> > Handling that can be a job for another day though.
+> >   
+> 
+> Thank you for informing me of this situation.
+> Sounds like handling that also requires a mapping table between
+> the CPU and the corresponding DRAM.
+
+I've not yet looked at how it interacts with this, but
+from an ACPI point of view it's just 'near' in SLIT and
+HMAT.  The nearest thing to a description is
+Memory Proximity Domain Attributes structures in HMAT.
+That allows you to describe the location of the memory
+controller, but in this type of system there may be
+a many to 1 mapping (interleaving across memory controllers
+in some CPU only nodes) for example.
+
+Anyhow, guess I need to spin up some emulated machines and
+see what breaks :)
+
+Jonathan
 
