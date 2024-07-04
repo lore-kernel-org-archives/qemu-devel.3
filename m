@@ -4,96 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F17C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 03:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3F4EC2BD09
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 03:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPCte-00052a-S4; Wed, 03 Jul 2024 23:12:34 -0400
+	id 1sPCwb-000654-G3; Wed, 03 Jul 2024 23:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPCtc-00052H-Fp; Wed, 03 Jul 2024 23:12:32 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPCta-00058W-Qp; Wed, 03 Jul 2024 23:12:32 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7067108f2cdso165648b3a.1; 
- Wed, 03 Jul 2024 20:12:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720062749; x=1720667549; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0vIpk2hTuboav/csV+AvXPd9VbWUOPpLMO6LH+weGUY=;
- b=AgNHVhgyxMHBMTxHbtNi03tngl0BkMIGXREYJcNatXw1vRVswx5BhcHs5tgx8k9Zfj
- 60KVSaQF7l0PuvaKm5QOVT8/ClptBn96Ig7MEklIZrybNt3W4fbZ/xE/LqrmJhZ0n6Mv
- kEMItuy8f2V0LILUXEPKrwzOig10LvoWFLcdqNGdHb973ZS4bGetY0cFnnesvHpWPfrD
- zo5bedd6jZ+8SlDW8pHB0R0yZgS897PwcdrhISD+j+/xjK1c597KsX/SbrhiJ5VZHirB
- GE/UAbOcQDxIABxw4/rtey4uMBstKLETxK5ApbobKHJinAwyoRKtEcjCTN5faEJ/JNzL
- kUHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720062749; x=1720667549;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=0vIpk2hTuboav/csV+AvXPd9VbWUOPpLMO6LH+weGUY=;
- b=XnuXdN3aIVc6dMjTRkQL5Baq3BGIdWy2XLDiE3sdaA5tkx+FSco7zP36F0Z8E/cRsy
- fik+xQA2poa0I2vIL4yTC0S5S5L8IoeihbyW+CgtzuXpzDvePKakS+dPkuNFo8CPB7rF
- OxsgIDzSQYz+OPIEWtV9M9UceF25bnDSV0M9c14bYH7ZS4joqqXJhHETO3H2UUJpghkd
- n4fARX36IpmwXJTwao3oSho4t4g7xrRW+V7N3gBDejvYZVlG8A2LYngq2M8unawqALr7
- 3tEf3WSeYHkb+wcQn8wsTxnXt5uskbck5xI0mVGnYiVC1x3VJ/JOfWgJrwtSYxZZDTr0
- 7+dw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXqL8eh/20iL6f3hmj1UFCsDCmcqY8TjFRpt1JCjvJMHJ1pjJX7AtP9UqaAfgfLsVfBpmRAm/rQp9/ttSHPu+1JGB5/URNhfeWd1UzAqUsyPqfGFlQvJtImlLg=
-X-Gm-Message-State: AOJu0YwfbzqNUuDqRxrjiPXwAgE3RhMaiDse9OjsN9FgFqL1ISenHzPX
- dZZq0w2azOB65/qbYm8BQxWral7QUEuO/Pc0fYHPHoKN+O3rEnFU
-X-Google-Smtp-Source: AGHT+IFBChDeP18JaYtspV3IbogoLdvOrmlHkU1d3RmljlmXg2SJagSablEjptJiZu/gdMspX721zg==
-X-Received: by 2002:a05:6a00:2401:b0:705:c273:d19 with SMTP id
- d2e1a72fcca58-70b00946d36mr417167b3a.12.1720062748748; 
- Wed, 03 Jul 2024 20:12:28 -0700 (PDT)
-Received: from localhost ([1.146.95.80]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70af8097796sm879452b3a.84.2024.07.03.20.12.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 20:12:28 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 04 Jul 2024 13:12:09 +1000
-Message-Id: <D2GFCLH11HGJ.1IJGANHQ9ZQRL@gmail.com>
-To: "Salil Mehta" <salil.mehta@huawei.com>, <qemu-devel@nongnu.org>,
- <qemu-arm@nongnu.org>, <mst@redhat.com>
-Cc: <maz@kernel.org>, <jean-philippe@linaro.org>,
- <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
- <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
- <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
- <philmd@linaro.org>, <eric.auger@redhat.com>, <will@kernel.org>,
- <ardb@kernel.org>, <oliver.upton@linux.dev>, <pbonzini@redhat.com>,
- <gshan@redhat.com>, <rafael@kernel.org>, <borntraeger@linux.ibm.com>,
- <alex.bennee@linaro.org>, <harshpb@linux.ibm.com>, <linux@armlinux.org.uk>,
- <darren@os.amperecomputing.com>, <ilkka@os.amperecomputing.com>,
- <vishnu@os.amperecomputing.com>, <karl.heubaum@oracle.com>,
- <miguel.luis@oracle.com>, <salil.mehta@opnsrc.net>,
- <zhukeqian1@huawei.com>, <wangxiongfeng2@huawei.com>,
- <wangyanan55@huawei.com>, <jiakernel2@gmail.com>, <maobibo@loongson.cn>,
- <lixianglai@loongson.cn>, <shahuang@redhat.com>, <zhao1.liu@intel.com>,
- <linuxarm@huawei.com>
-Subject: Re: [PATCH RFC V3 02/29] cpu-common: Add common CPU utility for
- possible vCPUs
-From: "Nicholas Piggin" <npiggin@gmail.com>
-X-Mailer: aerc 0.17.0
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-3-salil.mehta@huawei.com>
-In-Reply-To: <20240613233639.202896-3-salil.mehta@huawei.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1sPCwT-00061x-Fe
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:15:33 -0400
+Received: from mx2.zhaoxin.com ([203.110.167.99])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1sPCwQ-0006aQ-NP
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:15:28 -0400
+X-ASG-Debug-ID: 1720062895-1eb14e2e61c9f90001-jgbH7p
+Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
+ mx2.zhaoxin.com with ESMTP id ChiieRIx54Waeyrb (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Thu, 04 Jul 2024 11:14:55 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
+Received: from zxbjmbx1.zhaoxin.com (10.29.252.163) by ZXSHMBX2.zhaoxin.com
+ (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 4 Jul
+ 2024 11:14:54 +0800
+Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 4 Jul
+ 2024 11:14:54 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
+Message-ID: <7a988f9e-fc63-4a6d-b3b1-d416dfc7e982@zhaoxin.com>
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.66.62
+Date: Wed, 3 Jul 2024 23:14:53 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] target/i386: Update CMPLegacy handling for Zhaoxin
+ and VIA CPUs
+To: Xiaoyao Li <xiaoyao.li@intel.com>, <pbonzini@redhat.com>
+X-ASG-Orig-Subj: Re: [PATCH 4/4] target/i386: Update CMPLegacy handling for
+ Zhaoxin and VIA CPUs
+CC: <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>,
+ <rockcui@zhaoxin.com>, <louisqi@zhaoxin.com>
+References: <20240625091905.1325205-1-ewanhai-oc@zhaoxin.com>
+ <20240625091905.1325205-5-ewanhai-oc@zhaoxin.com>
+ <81ee1a67-e70f-4437-ab28-6c4d4f741d8b@intel.com>
+Content-Language: en-US
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+In-Reply-To: <81ee1a67-e70f-4437-ab28-6c4d4f741d8b@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
+X-Barracuda-Start-Time: 1720062895
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 1790
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.127137
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=203.110.167.99;
+ envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,34 +97,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Jun 14, 2024 at 9:36 AM AEST, Salil Mehta wrote:
+On 7/3/24 10:49, Xiaoyao Li wrote:
+>
+> On 6/25/2024 5:19 PM, EwanHai wrote:
+>> Zhaoxin and VIA CPUs handle the CMPLegacy bit in the same way
+>> as Intel CPUs. This patch simplifies the existing logic by
+>> using the IS_XXX_CPU macro and includes checks for Zhaoxin
+>> and VIA vendors to align their behavior with Intel.
+>>
+>> Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
+>> ---
+>>   target/i386/cpu.c | 6 +++---
+>>   1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>> index 50edff077e..0836416617 100644
+>> --- a/target/i386/cpu.c
+>> +++ b/target/i386/cpu.c
+>> @@ -6945,9 +6945,9 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t 
+>> index, uint32_t count,
+>>            * So don't set it here for Intel to make Linux guests happy.
+>>            */
+>>           if (threads_per_pkg > 1) {
+>> -            if (env->cpuid_vendor1 != CPUID_VENDOR_INTEL_1 ||
+>> -                env->cpuid_vendor2 != CPUID_VENDOR_INTEL_2 ||
+>> -                env->cpuid_vendor3 != CPUID_VENDOR_INTEL_3) {
+>> +            if (!IS_INTEL_CPU(env) &&
+>> +                !IS_ZHAOXIN_CPU(env) &&
+>> +                !IS_VIA_CPU(env)) {
+>
+> it seems you added ! by mistake.
+>
+>>                   *ecx |= 1 << 1; /* CmpLegacy bit */
+>>               }
+>>           }
+>
+For CPUID leaf 0x80000001 ECX bit 1, Intel defines it as "Bits 04-01: 
+Reserved,"
+whereas AMD defines it as "CmpLegacy, Core multi-processing legacy 
+mode." For Intel
+CPUs and those following Intel's behavior, this bit should not be set to 
+1. Therefore,
+I believe the "!" here is correct.
 
-[...]
-
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 60b160d0b4..60b4778da9 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-
-[...]
-
-> +/**
-> + * qemu_get_cpu_archid:
-> + * @cpu_index: possible vCPU for which arch-id needs to be retreived
-> + *
-> + * Fetches the vCPU arch-id from the present possible vCPUs.
-> + *
-> + * Returns: arch-id of the possible vCPU
-> + */
-> +uint64_t qemu_get_cpu_archid(int cpu_index);
-
-Not sure if blind... I can't see where this is used.
-
-I'd be interested to see why it needs to be in non-arch code,
-presumably it's only relevant to arch specific code. I'm
-guessing ACPI needs it, but then could it be put into some
-ACPI state or helper?
-
-Thanks,
-Nick
 
