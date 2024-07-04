@@ -4,76 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A38C2BD09
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 03:19:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 063DAC31D97
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 03:28:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPD09-0007UK-GR; Wed, 03 Jul 2024 23:19:17 -0400
+	id 1sPD8c-00020h-SK; Wed, 03 Jul 2024 23:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sPD07-0007Tp-IJ
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:19:15 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sPD05-0000fo-OV
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:19:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1720063154; x=1751599154;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=W3bTFOLBuac1BrRBBLR71U03QeIrXChG8XHMyRtOPMI=;
- b=Yh85C+sqgexUxLYtfYLbCvyhLwn0EKrzbk9scUrp49AyaxWzrBVZDxy7
- 580QZ+9DITF/1SatSC7jb+yZZqj5Ex5n4xlMX5minqlFHiwpWmzgE0MqV
- UffCOyOSbGqX1OzB4iYgRCD5z5P4iL0JaNon74q+nGnKoe20UzHSYJxqf
- C+sBUkLxfNGfd+hhlMiGOXalXkAkPhEFCnRhPWDPJWBMpscDjvQGu0FRA
- tZTzOzlw1DuWkcM0tUa4e7ajg9E+CKXUMvhAGLbsvBnEMZQ+KkM6Pu2hV
- hA9UcH92PEMonYiDrB5znyJCmMZh5k7eVKzIsEweaj+nsjd27GxaHPBt9 Q==;
-X-CSE-ConnectionGUID: juz/FDUWRJK2cbrKURT+Yg==
-X-CSE-MsgGUID: 6RHgkKdzTqSC7DWeB5D5WA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11122"; a="17460263"
-X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="17460263"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2024 20:19:12 -0700
-X-CSE-ConnectionGUID: 1GUe2LA6TBKE4yNIKj+5Rg==
-X-CSE-MsgGUID: UV4594Z8Q22iMh8sftHgYQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="46424241"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.26])
- ([10.124.240.26])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jul 2024 20:19:08 -0700
-Message-ID: <3f0c171e-b956-4b90-8a84-a0ce297053f3@intel.com>
-Date: Thu, 4 Jul 2024 11:19:05 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] target/i386: Update CMPLegacy handling for Zhaoxin
- and VIA CPUs
-To: Ewan Hai <ewanhai-oc@zhaoxin.com>, pbonzini@redhat.com
-Cc: qemu-devel@nongnu.org, ewanhai@zhaoxin.com, cobechen@zhaoxin.com,
- rockcui@zhaoxin.com, louisqi@zhaoxin.com
-References: <20240625091905.1325205-1-ewanhai-oc@zhaoxin.com>
- <20240625091905.1325205-5-ewanhai-oc@zhaoxin.com>
- <81ee1a67-e70f-4437-ab28-6c4d4f741d8b@intel.com>
- <7a988f9e-fc63-4a6d-b3b1-d416dfc7e982@zhaoxin.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <7a988f9e-fc63-4a6d-b3b1-d416dfc7e982@zhaoxin.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sPD8b-00020M-CU; Wed, 03 Jul 2024 23:28:01 -0400
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sPD8Z-0005IX-RK; Wed, 03 Jul 2024 23:28:01 -0400
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3d566b147ffso143782b6e.2; 
+ Wed, 03 Jul 2024 20:27:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720063678; x=1720668478; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I2+C7IcpdJ79NejgUr+JInPmtNhkeAMJDu7Mdn8JKaM=;
+ b=B1RUncWbjwz62Fc4hWrNDeFdA3jq5HhEV9gg/21mV2RQrczmAvQ6N/EEojggrMyu4A
+ ka/4FspxIdhPr9TxfNdLcs/YzblaY92CxSGiOAtcul6rmJWaVHhU6jjZnyEA52NHLjun
+ rqWBekm8M++OwOQVI8CqIAmAdP0dbr6NeTTNEuBLIQnwKiIwAb11gLAxDvvksk345j/J
+ edeLEagaNASyIjLNFvCRHJ652gYjDgH7urKJtKpcNMTXjKWYZJnzrYmlILjECBif7U2z
+ VlTkfDKJXYcM2rz/m1UUZYMrQFvCbVwX9+ZBNKs7ODOkEiK0J7O+SCY1bZV8x6v9i6j5
+ 8nsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720063678; x=1720668478;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=I2+C7IcpdJ79NejgUr+JInPmtNhkeAMJDu7Mdn8JKaM=;
+ b=SqdS2X7d/RlQWZ/HsoDGXyGspPlwFJzCJoBiZhDthZIKN8sj/AlqHN9NpXw87Qjm3J
+ 5fdrcw9NKmSO2aOAUQLi1GQj1NFRwHkDZMoOafW6q8K5laJ4DricEIsPivqxI6RZ6wMj
+ MyG7wm1J1KPySKdOAlsy4r15T4OPctAZbc/M8vmBaver437cmC5VDfka8oxtMWeProKN
+ ynmxcMyEhd+tS6azqcabHMMlWkrEQ2jNNl24zilCy/SmKBwm5zgpSzQxJnWWwEokl4qp
+ RJlhDWojhOcxkSzGK//K/6IFg0Tw14p2IuQ6SDc6527FAWl9AtTCMLqov81shnulF3xr
+ 8mfA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/QfoQsFe+Jt85/nuv9y1G3u2YQ6SGmWxr3aopoyDuDcoi5Jn4m5AOCw5OWb50YrWDUH8Q6L4p0NPR1/HUY5q3vDBTWprlDjnEainSOH129r6YKyDIqBRkCMA=
+X-Gm-Message-State: AOJu0Yyn/DT7GFF0NMQJuQDcBxLuu6VKmeBwilde3UMl45MkBxWvoErO
+ 6UelCh8dcs+slUUYwkwCnpmWBwjqiyZeoshMvhFtdmyoGRk5aQvj
+X-Google-Smtp-Source: AGHT+IEGlyu+NRmWlDH2wxZTHGG5TKQgpUk22AjSOy/xooV0LTDVe9GwBnQgvrQGuX2NtCNJ9vrOQQ==
+X-Received: by 2002:a05:6808:284:b0:3d6:59a0:fccc with SMTP id
+ 5614622812f47-3d914c5e895mr545338b6e.24.1720063678156; 
+ Wed, 03 Jul 2024 20:27:58 -0700 (PDT)
+Received: from localhost ([1.146.95.80]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7080246c662sm11204052b3a.61.2024.07.03.20.27.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Jul 2024 20:27:57 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 04 Jul 2024 13:27:39 +1000
+Message-Id: <D2GFOGQC3HYO.2LKOV306JIU98@gmail.com>
+Cc: <maz@kernel.org>, <jean-philippe@linaro.org>,
+ <jonathan.cameron@huawei.com>, <lpieralisi@kernel.org>,
+ <peter.maydell@linaro.org>, <richard.henderson@linaro.org>,
+ <imammedo@redhat.com>, <andrew.jones@linux.dev>, <david@redhat.com>,
+ <philmd@linaro.org>, <eric.auger@redhat.com>, <will@kernel.org>,
+ <ardb@kernel.org>, <oliver.upton@linux.dev>, <pbonzini@redhat.com>,
+ <gshan@redhat.com>, <rafael@kernel.org>, <borntraeger@linux.ibm.com>,
+ <alex.bennee@linaro.org>, <harshpb@linux.ibm.com>, <linux@armlinux.org.uk>,
+ <darren@os.amperecomputing.com>, <ilkka@os.amperecomputing.com>,
+ <vishnu@os.amperecomputing.com>, <karl.heubaum@oracle.com>,
+ <miguel.luis@oracle.com>, <salil.mehta@opnsrc.net>,
+ <zhukeqian1@huawei.com>, <wangxiongfeng2@huawei.com>,
+ <wangyanan55@huawei.com>, <jiakernel2@gmail.com>, <maobibo@loongson.cn>,
+ <lixianglai@loongson.cn>, <shahuang@redhat.com>, <zhao1.liu@intel.com>,
+ <linuxarm@huawei.com>
+Subject: Re: [PATCH RFC V3 25/29] target/arm/kvm: Write CPU state back to
+ KVM on reset
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Salil Mehta" <salil.mehta@huawei.com>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>, <mst@redhat.com>
+X-Mailer: aerc 0.17.0
+References: <20240613233639.202896-1-salil.mehta@huawei.com>
+ <20240613233639.202896-26-salil.mehta@huawei.com>
+In-Reply-To: <20240613233639.202896-26-salil.mehta@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=npiggin@gmail.com; helo=mail-oi1-x230.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,54 +110,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/4/2024 11:14 AM, Ewan Hai wrote:
-> On 7/3/24 10:49, Xiaoyao Li wrote:
->>
->> On 6/25/2024 5:19 PM, EwanHai wrote:
->>> Zhaoxin and VIA CPUs handle the CMPLegacy bit in the same way
->>> as Intel CPUs. This patch simplifies the existing logic by
->>> using the IS_XXX_CPU macro and includes checks for Zhaoxin
->>> and VIA vendors to align their behavior with Intel.
->>>
->>> Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
->>> ---
->>>   target/i386/cpu.c | 6 +++---
->>>   1 file changed, 3 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->>> index 50edff077e..0836416617 100644
->>> --- a/target/i386/cpu.c
->>> +++ b/target/i386/cpu.c
->>> @@ -6945,9 +6945,9 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t 
->>> index, uint32_t count,
->>>            * So don't set it here for Intel to make Linux guests happy.
->>>            */
->>>           if (threads_per_pkg > 1) {
->>> -            if (env->cpuid_vendor1 != CPUID_VENDOR_INTEL_1 ||
->>> -                env->cpuid_vendor2 != CPUID_VENDOR_INTEL_2 ||
->>> -                env->cpuid_vendor3 != CPUID_VENDOR_INTEL_3) {
->>> +            if (!IS_INTEL_CPU(env) &&
->>> +                !IS_ZHAOXIN_CPU(env) &&
->>> +                !IS_VIA_CPU(env)) {
->>
->> it seems you added ! by mistake.
->>
->>>                   *ecx |= 1 << 1; /* CmpLegacy bit */
->>>               }
->>>           }
->>
-> For CPUID leaf 0x80000001 ECX bit 1, Intel defines it as "Bits 04-01: 
-> Reserved,"
-> whereas AMD defines it as "CmpLegacy, Core multi-processing legacy 
-> mode." For Intel
-> CPUs and those following Intel's behavior, this bit should not be set to 
-> 1. Therefore,
-> I believe the "!" here is correct.
-> 
+On Fri Jun 14, 2024 at 9:36 AM AEST, Salil Mehta wrote:
+> From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+>
+> When a KVM vCPU is reset following a PSCI CPU_ON call, its power state
+> is not synchronized with KVM at the moment. Because the vCPU is not
+> marked dirty, we miss the call to kvm_arch_put_registers() that writes
+> to KVM's MP_STATE. Force mp_state synchronization.
 
-Sorry, I misread the original code.
+Hmm. Is this a bug fix for upstream? arm does respond to CPU_ON calls
+by the look, but maybe it's not doing KVM parking until your series?
+Maybe just a slight change to say "When KVM parking is implemented for
+ARM..." if so.
 
-I think maybe we can just use is_AMD_CPU(). But I'm not sure if any 
-magic use case with customized VENDOR ID relies on it. So you code looks 
-good to me.
+>
+> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> ---
+>  target/arm/kvm.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 1121771c4a..7acd83ce64 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -980,6 +980,7 @@ void kvm_arm_cpu_post_load(ARMCPU *cpu)
+>  void kvm_arm_reset_vcpu(ARMCPU *cpu)
+>  {
+>      int ret;
+> +    CPUState *cs =3D CPU(cpu);
+> =20
+>      /* Re-init VCPU so that all registers are set to
+>       * their respective reset values.
+> @@ -1001,6 +1002,12 @@ void kvm_arm_reset_vcpu(ARMCPU *cpu)
+>       * for the same reason we do so in kvm_arch_get_registers().
+>       */
+>      write_list_to_cpustate(cpu);
+> +
+> +    /*
+> +     * Ensure we call kvm_arch_put_registers(). The vCPU isn't marked di=
+rty if
+> +     * it was parked in KVM and is now booting from a PSCI CPU_ON call.
+> +     */
+> +    cs->vcpu_dirty =3D true;
+>  }
+> =20
+>  void kvm_arm_create_host_vcpu(ARMCPU *cpu)
+
+Also above my pay grade, but arm_set_cpu_on_async_work() which seems
+to be what calls the CPU reset you refer to does a bunch of CPU register
+and state setting including the power state setting that you mention.
+Would the vcpu_dirty be better to go there?
+
+Thanks,
+Nick
 
