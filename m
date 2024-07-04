@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5ECBC31D97
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEF11C31D97
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:33:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPLYr-0006f5-6x; Thu, 04 Jul 2024 08:27:41 -0400
+	id 1sPLeD-0008CK-W3; Thu, 04 Jul 2024 08:33:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sPLYo-0006eT-OM; Thu, 04 Jul 2024 08:27:38 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
- id 1sPLYc-0008Bu-Eo; Thu, 04 Jul 2024 08:27:38 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WFG9C2G4gz6JB5N;
- Thu,  4 Jul 2024 20:26:39 +0800 (CST)
-Received: from lhrpeml100006.china.huawei.com (unknown [7.191.160.224])
- by mail.maildlp.com (Postfix) with ESMTPS id 13A3B140736;
- Thu,  4 Jul 2024 20:27:21 +0800 (CST)
-Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
- lhrpeml100006.china.huawei.com (7.191.160.224) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 4 Jul 2024 13:27:20 +0100
-Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
- lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
- Thu, 4 Jul 2024 13:27:20 +0100
-To: Nicholas Piggin <npiggin@gmail.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "mst@redhat.com" <mst@redhat.com>
-CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
- <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
- "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
- <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "will@kernel.org"
- <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>,
- "rafael@kernel.org" <rafael@kernel.org>, "borntraeger@linux.ibm.com"
- <borntraeger@linux.ibm.com>, "alex.bennee@linaro.org"
- <alex.bennee@linaro.org>, "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
- "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
- "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
- "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
- "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
- "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
- <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
- zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
- <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
- "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
- <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
- "shahuang@redhat.com" <shahuang@redhat.com>, "zhao1.liu@intel.com"
- <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>
-Subject: RE: [PATCH RFC V3 25/29] target/arm/kvm: Write CPU state back to KVM
- on reset
-Thread-Topic: [PATCH RFC V3 25/29] target/arm/kvm: Write CPU state back to KVM
- on reset
-Thread-Index: AQHavewIBjwTl+QVTkWSZMJOrzp7nbHl96KAgACklnA=
-Date: Thu, 4 Jul 2024 12:27:20 +0000
-Message-ID: <a4329bdf36d74e29b6c2a00329fb9e97@huawei.com>
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-26-salil.mehta@huawei.com>
- <D2GFOGQC3HYO.2LKOV306JIU98@gmail.com>
-In-Reply-To: <D2GFOGQC3HYO.2LKOV306JIU98@gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.48.159.88]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPLeC-0008Bt-0Q
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:33:12 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPLe9-0004Ie-Tn
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:33:11 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a77af4cd570so37739766b.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 05:33:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720096388; x=1720701188; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=f19Bs9ZT0OpY9y4aYpk3+UQ7z4NKFudecNznbxwtnC0=;
+ b=I+kccLUH/0C1rQH0Lnk1xi03wHQpdyFdTDXyF0+RSty0mdh9D4LQyidZvi9V6d3c+f
+ fZvZothY5HjhzasJDY49LfXOkbGqiFxRRskzcPk830zkXLsp+g1uQ532laUpgqRSdgkc
+ LnuIJtzUAAECoGFZ8O/zxlY4btg1njGvwwv5Sox2nn4ETyU7JPqHY7744dZiRNQWoa+z
+ PutClP7ie0r3PaWFVRu8ZLBGWwvxO142tU3+ht6uFnK/R4Kg+X3/EcNV8khwVAm3bJyr
+ ByvXxWvmPs+Cx6SKpw/S6ynkgvfv6+P0I2L3WQIWw9pAWanqH0IZIQoUaQrorGVRjlXt
+ ZZbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720096388; x=1720701188;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=f19Bs9ZT0OpY9y4aYpk3+UQ7z4NKFudecNznbxwtnC0=;
+ b=MLuDhFtIFk4n1/GhLWhaAIMUqkDix97VNj8p/unDjHeoSXAWKfH1Yl263uJqDy3+wo
+ pCWYuYPXhxDmCHFARpwVLAfuXWd+IM2iKsRG+06NuUN8WKc3i9Hn/ZPQtjnS2YYv2hMA
+ /3FsIMUPeTQ0xo0Q11swgG6VHS9OvD4+YR6vrtT1mh66klOLU0xCh0fz8nwHglqj03NM
+ l2Z/q9RkO0KCw2lU9q2D+H+xPcfiNOUJAvQZKDQF6VcT+ofTuVxOUXZz+3bDHLtQC955
+ rm8XDjYSeqT2SS2xYsRFlZYFYuutJLOhyoRP2c5i+70YV959eeGh+ZCftGtaXoO4H2mz
+ zTrw==
+X-Gm-Message-State: AOJu0YxwwPDj78rWwVpk4yBPFO3PwLid+HBaF4FDK/tJm6XQ1iko0RX2
+ iKUXXL6xXR7l0F+bkq3zBwfrIFUntl0116SJl3DWYl5qLyXWyZVZaIoK3N+0jLc=
+X-Google-Smtp-Source: AGHT+IHJ3ZLpuxYytL1DyxnCP+DvoaUgRS13CTvCqP8SY1N58Wkfb2LrCUmoL6UbQ+1/8ezcXP5vYQ==
+X-Received: by 2002:a05:6402:22f0:b0:58c:8c63:22ee with SMTP id
+ 4fb4d7f45d1cf-58e5be72411mr1004212a12.42.1720096387662; 
+ Thu, 04 Jul 2024 05:33:07 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-58d50c4dad9sm1817894a12.10.2024.07.04.05.33.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Jul 2024 05:33:06 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9AD645F839;
+ Thu,  4 Jul 2024 13:33:05 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: qemu-devel@nongnu.org,  sstabellini@kernel.org,  anthony@xenproject.org,
+ paul@xen.org,  edgar.iglesias@amd.com,  xen-devel@lists.xenproject.org,
+ Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v1 1/2] physmem: Bail out qemu_ram_block_from_host() for
+ invalid ram addrs
+In-Reply-To: <CAJy5ezpD6i3Fc9K-i58=V0e1uxrB-VZ2sd+gtoOc4TnbkWHSZQ@mail.gmail.com>
+ (Edgar E. Iglesias's message of "Thu, 4 Jul 2024 14:42:25 +0300")
+References: <20240701224421.1432654-1-edgar.iglesias@gmail.com>
+ <20240701224421.1432654-2-edgar.iglesias@gmail.com>
+ <87ikxlo3lx.fsf@draig.linaro.org>
+ <CAJy5ezpD6i3Fc9K-i58=V0e1uxrB-VZ2sd+gtoOc4TnbkWHSZQ@mail.gmail.com>
+Date: Thu, 04 Jul 2024 13:33:05 +0100
+Message-ID: <875xtlnxq6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,55 +100,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Salil Mehta <salil.mehta@huawei.com>
-From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgTmljaywNCg0KPiAgRnJvbTogTmljaG9sYXMgUGlnZ2luIDxucGlnZ2luQGdtYWlsLmNvbT4N
-Cj4gIFNlbnQ6IFRodXJzZGF5LCBKdWx5IDQsIDIwMjQgNDoyOCBBTQ0KPiAgVG86IFNhbGlsIE1l
-aHRhIDxzYWxpbC5tZWh0YUBodWF3ZWkuY29tPjsgcWVtdS1kZXZlbEBub25nbnUub3JnOw0KPiAg
-cWVtdS1hcm1Abm9uZ251Lm9yZzsgbXN0QHJlZGhhdC5jb20NCj4gIA0KPiAgT24gRnJpIEp1biAx
-NCwgMjAyNCBhdCA5OjM2IEFNIEFFU1QsIFNhbGlsIE1laHRhIHdyb3RlOg0KPiAgPiBGcm9tOiBK
-ZWFuLVBoaWxpcHBlIEJydWNrZXIgPGplYW4tcGhpbGlwcGVAbGluYXJvLm9yZz4NCj4gID4NCj4g
-ID4gV2hlbiBhIEtWTSB2Q1BVIGlzIHJlc2V0IGZvbGxvd2luZyBhIFBTQ0kgQ1BVX09OIGNhbGws
-IGl0cyBwb3dlciBzdGF0ZQ0KPiAgPiBpcyBub3Qgc3luY2hyb25pemVkIHdpdGggS1ZNIGF0IHRo
-ZSBtb21lbnQuIEJlY2F1c2UgdGhlIHZDUFUgaXMgbm90DQo+ICA+IG1hcmtlZCBkaXJ0eSwgd2Ug
-bWlzcyB0aGUgY2FsbCB0byBrdm1fYXJjaF9wdXRfcmVnaXN0ZXJzKCkgdGhhdCB3cml0ZXMNCj4g
-ID4gdG8gS1ZNJ3MgTVBfU1RBVEUuIEZvcmNlIG1wX3N0YXRlIHN5bmNocm9uaXphdGlvbi4NCj4g
-IA0KPiAgSG1tLiBJcyB0aGlzIGEgYnVnIGZpeCBmb3IgdXBzdHJlYW0/IGFybSBkb2VzIHJlc3Bv
-bmQgdG8gQ1BVX09OIGNhbGxzIGJ5DQo+ICB0aGUgbG9vaywgYnV0IG1heWJlIGl0J3Mgbm90IGRv
-aW5nIEtWTSBwYXJraW5nIHVudGlsIHlvdXIgc2VyaWVzPw0KDQoNClllcywgdGhpcyBpcyByZXF1
-aXJlZCB3ZSBub3cgcGFyayBhbmQgdW4tcGFyayB0aGUgdkNQVXMuIFdlIG11c3QgZW5zdXJlIHRo
-ZQ0KS1ZNIHJlc2V0cyB0aGUgS1ZNIFZDUFUgc3RhdGUgYXMgd2VsbC4gSGVuY2UsIG5vdCBhIGZp
-eCBidXQgYSBjaGFuZ2Ugd2hpY2gNCmlzIHJlcXVpcmVkIGluIGNvbnRleHQgdG8gdGhpcyBwYXRj
-aC1zZXQuDQoNCg0KPiAgTWF5YmUganVzdCBhIHNsaWdodCBjaGFuZ2UgdG8gc2F5ICJXaGVuIEtW
-TSBwYXJraW5nIGlzIGltcGxlbWVudGVkIGZvcg0KPiAgQVJNLi4uIiBpZiBzby4NCg0KU3VyZS4N
-Cg0KPiAgDQo+ICA+DQo+ICA+IFNpZ25lZC1vZmYtYnk6IEplYW4tUGhpbGlwcGUgQnJ1Y2tlciA8
-amVhbi1waGlsaXBwZUBsaW5hcm8ub3JnPg0KPiAgPiBTaWduZWQtb2ZmLWJ5OiBTYWxpbCBNZWh0
-YSA8c2FsaWwubWVodGFAaHVhd2VpLmNvbT4NCj4gID4gLS0tDQo+ICA+ICB0YXJnZXQvYXJtL2t2
-bS5jIHwgNyArKysrKysrDQo+ICA+ICAxIGZpbGUgY2hhbmdlZCwgNyBpbnNlcnRpb25zKCspDQo+
-ICA+DQo+ICA+IGRpZmYgLS1naXQgYS90YXJnZXQvYXJtL2t2bS5jIGIvdGFyZ2V0L2FybS9rdm0u
-YyBpbmRleA0KPiAgPiAxMTIxNzcxYzRhLi43YWNkODNjZTY0IDEwMDY0NA0KPiAgPiAtLS0gYS90
-YXJnZXQvYXJtL2t2bS5jDQo+ICA+ICsrKyBiL3RhcmdldC9hcm0va3ZtLmMNCj4gID4gQEAgLTk4
-MCw2ICs5ODAsNyBAQCB2b2lkIGt2bV9hcm1fY3B1X3Bvc3RfbG9hZChBUk1DUFUgKmNwdSkNCj4g
-IHZvaWQNCj4gID4ga3ZtX2FybV9yZXNldF92Y3B1KEFSTUNQVSAqY3B1KSAgew0KPiAgPiAgICAg
-IGludCByZXQ7DQo+ICA+ICsgICAgQ1BVU3RhdGUgKmNzID0gQ1BVKGNwdSk7DQo+ICA+DQo+ICA+
-ICAgICAgLyogUmUtaW5pdCBWQ1BVIHNvIHRoYXQgYWxsIHJlZ2lzdGVycyBhcmUgc2V0IHRvDQo+
-ICA+ICAgICAgICogdGhlaXIgcmVzcGVjdGl2ZSByZXNldCB2YWx1ZXMuDQo+ICA+IEBAIC0xMDAx
-LDYgKzEwMDIsMTIgQEAgdm9pZCBrdm1fYXJtX3Jlc2V0X3ZjcHUoQVJNQ1BVICpjcHUpDQo+ICA+
-ICAgICAgICogZm9yIHRoZSBzYW1lIHJlYXNvbiB3ZSBkbyBzbyBpbiBrdm1fYXJjaF9nZXRfcmVn
-aXN0ZXJzKCkuDQo+ICA+ICAgICAgICovDQo+ICA+ICAgICAgd3JpdGVfbGlzdF90b19jcHVzdGF0
-ZShjcHUpOw0KPiAgPiArDQo+ICA+ICsgICAgLyoNCj4gID4gKyAgICAgKiBFbnN1cmUgd2UgY2Fs
-bCBrdm1fYXJjaF9wdXRfcmVnaXN0ZXJzKCkuIFRoZSB2Q1BVIGlzbid0IG1hcmtlZCBkaXJ0eSBp
-Zg0KPiAgPiArICAgICAqIGl0IHdhcyBwYXJrZWQgaW4gS1ZNIGFuZCBpcyBub3cgYm9vdGluZyBm
-cm9tIGEgUFNDSSBDUFVfT04gY2FsbC4NCj4gID4gKyAgICAgKi8NCj4gID4gKyAgICBjcy0+dmNw
-dV9kaXJ0eSA9IHRydWU7DQo+ICA+ICB9DQo+ICA+DQo+ICA+ICB2b2lkIGt2bV9hcm1fY3JlYXRl
-X2hvc3RfdmNwdShBUk1DUFUgKmNwdSkNCj4gIA0KPiAgQWxzbyBhYm92ZSBteSBwYXkgZ3JhZGUs
-IGJ1dCBhcm1fc2V0X2NwdV9vbl9hc3luY193b3JrKCkgd2hpY2ggc2VlbXMNCj4gIHRvIGJlIHdo
-YXQgY2FsbHMgdGhlIENQVSByZXNldCB5b3UgcmVmZXIgdG8gZG9lcyBhIGJ1bmNoIG9mIENQVSBy
-ZWdpc3RlciBhbmQNCj4gIHN0YXRlIHNldHRpbmcgaW5jbHVkaW5nIHRoZSBwb3dlciBzdGF0ZSBz
-ZXR0aW5nIHRoYXQgeW91IG1lbnRpb24uDQo+ICBXb3VsZCB0aGUgdmNwdV9kaXJ0eSBiZSBiZXR0
-ZXIgdG8gZ28gdGhlcmU/DQoNCg0KTWF5YmUgd2UgY2FuLiBMZXQgbWUgY3Jvc3MgdmVyaWZ5IHRo
-aXMuDQoNCg0KVGhhbmtzDQpTYWxpbC4NCg0KPiAgDQo+ICBUaGFua3MsDQo+ICBOaWNrDQo=
+"Edgar E. Iglesias" <edgar.iglesias@gmail.com> writes:
+
+> On Thu, Jul 4, 2024 at 1:26=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@lina=
+ro.org> wrote:
+>
+>  "Edgar E. Iglesias" <edgar.iglesias@gmail.com> writes:
+>
+>  > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+>  >
+>  > Bail out in qemu_ram_block_from_host() when
+>  > xen_ram_addr_from_mapcache() does not find an existing
+>  > mapping.
+>  >
+>  > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+>  > ---
+>  >  system/physmem.c | 4 ++++
+>  >  1 file changed, 4 insertions(+)
+>  >
+>  > diff --git a/system/physmem.c b/system/physmem.c
+>  > index 33d09f7571..59d1576c2b 100644
+>  > --- a/system/physmem.c
+>  > +++ b/system/physmem.c
+>  > @@ -2277,6 +2277,10 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, b=
+ool round_offset,
+>  >          ram_addr_t ram_addr;
+>  >          RCU_READ_LOCK_GUARD();
+>  >          ram_addr =3D xen_ram_addr_from_mapcache(ptr);
+>  > +        if (ram_addr =3D=3D RAM_ADDR_INVALID) {
+>  > +            return NULL;
+>  > +        }
+>  > +
+>
+>  Isn't this indicative of a failure? Should there at least be a trace
+>  point for failed mappings?
+>
+> Yes but there are already trace points for the failure cases inside xen_r=
+am_addr_from_mapcache().
+> Do those address your concerns or do you think we need additional
+> trace points?
+
+Ahh that will do.
+
+I am curious for the reasons why we might not have an entry in the
+mapcache. I guess the trace_xen_map_cache() covers all insertions into
+the cache although you need to check trace_xen_map_cache_return() to see
+if anything failed.
+
+Anyway:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
