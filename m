@@ -4,138 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A5AC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 18:54:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 282BDC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 19:27:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPRaj-00005O-5t; Thu, 04 Jul 2024 14:54:01 -0400
+	id 1sPS6M-0004lD-50; Thu, 04 Jul 2024 15:26:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1sPRag-000055-Og
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:53:58 -0400
-Received: from mail-bn8nam12on2066.outbound.protection.outlook.com
- ([40.107.237.66] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
- id 1sPRae-0003Hs-MQ
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:53:58 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XVOpyD+PvdgEJKM60hdhvnuEj1CALD8DYMa5APVVmdkG4DROjiVRaIF8yQDrvrMceTCk7a+QUWHd/nw2utwP+q/tw+V5rxTkzmSeJQvBmg3obQvhFqKycw4/zvSIlCz2CtGKwPEY1ZtppQnkQwZbn/ynWVTnHui9+YOUdCOZaw1hcW7nzprLsWEEvFLAjMof48T23Y31jtWNZ8yQwY8PBh5NBBjdKSomuICoQDJ1L0e6NmLCCm2irigl0U7oz0bSohMyk7Wpq6AwJSxRflb6QCisuCVFUQtqdekn0ubyTXf4wdPCoh1m8iQS8GjTrpEaubmIjzKwLhihEyba/cu/jA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZgFO+CJcjsUoi7CKvUCcl5rizxjr5Xw2OZ/mnxTWvdc=;
- b=PqH+jGSMHvnx2sQHgXvuw/6viBP3VI6wKW2c9tu4/tr69rfURkwYl3OFWqwa3ohqK4h5zsCTUedwnf2YXX1/tlMOFcTpqJRfKX7qv24E/ziPierbBtG65B2BxdZsqwH8GxxNPuTxLMPfYAlE5Immr10cbVqwNeB/RB9FMYJhwzdEO+kRtRi+yEqSezk87P9JWAANJnidb829jwijyTez2dV8i9qIf2R9eSCw3Bebqhed6CoLlmM3DZOu08omp21F+v5yh9az3HMB9+nqIIm83GE+Fxsv30YX/0mTISq1QyIqnyrdJfW+rkebsK0C8HNzFbQ/alcnqChsd8lCm7Um7A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZgFO+CJcjsUoi7CKvUCcl5rizxjr5Xw2OZ/mnxTWvdc=;
- b=U2WwfuD69pp7kjqCmM5VZHAKg5Qs9w8t6hjTO4E5momBZbLxeO0tA91gw8nFsUFogcgZsHXrBKEaoUCZgOmkWzVVNmi4GRvG6HUt8pG1qEN6a+nglEniiAoxenA6AgjSgyR8+isfqDebfisrWmzCv9mCqopcwjy/W3DK2xLfEwM=
-Received: from PH0PR07CA0059.namprd07.prod.outlook.com (2603:10b6:510:e::34)
- by DS0PR12MB7995.namprd12.prod.outlook.com (2603:10b6:8:14e::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.25; Thu, 4 Jul
- 2024 18:48:47 +0000
-Received: from SN1PEPF000252A2.namprd05.prod.outlook.com
- (2603:10b6:510:e:cafe::4a) by PH0PR07CA0059.outlook.office365.com
- (2603:10b6:510:e::34) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.30 via Frontend
- Transport; Thu, 4 Jul 2024 18:48:47 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- SN1PEPF000252A2.mail.protection.outlook.com (10.167.242.9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7741.18 via Frontend Transport; Thu, 4 Jul 2024 18:48:47 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 4 Jul
- 2024 13:48:46 -0500
-Date: Thu, 4 Jul 2024 21:48:37 +0300
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-CC: Anthony PERARD <anthony.perard@vates.tech>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, <qemu-devel@nongnu.org>,
- <sstabellini@kernel.org>, <paul@xen.org>, <xen-devel@lists.xenproject.org>
-Subject: Re: [PATCH v1 2/2] xen: mapcache: Fix unmapping of first entries in
- buckets
-Message-ID: <ZobuhcLHqUEy_bQs@toto>
-References: <20240701224421.1432654-1-edgar.iglesias@gmail.com>
- <20240701224421.1432654-3-edgar.iglesias@gmail.com>
- <ZoawbAnukIBkYWCw@l14> <87wmm1m7i3.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sPS6K-0004kj-0r
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 15:26:40 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sPS6H-0005IW-E7
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 15:26:39 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-70df2135426so535727a12.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 12:26:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720121195; x=1720725995; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GAC6jHN8VZhA09F2X3Jk8b+6bboZn4diELXlRBPKZmM=;
+ b=fccwkiZJRF0vq90lzpj/xM6RgEbjMJTIaMf1kxLkhn5C2UpwEpL1/Obe21aERLmLsL
+ Ytr5P7Fv3VxReR0/fS9X+7RPz36n/RlSBRr51+xA4WURtDaUCCO7gE6gTT7Ldq0yUdM8
+ dHE/TUTQdI/KH4v35Br8OwZK/GxBjBRQw/VE1XCAFGqIsmsiDkJ74DsT/F44Ox3yzWR9
+ uIr+xn4dMGsfbhqq+u17e8gub10uNgzbdIJ6cbhp/LikeaHb1A7BN3PzxJADMDgN3LLC
+ 7NrvrWIaJmC+yzT27yTS+GCDYd94Uy1mTUqSMm0IDPZHNi242o9ynrnLYwf9lFqlz0Hp
+ fgBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720121195; x=1720725995;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GAC6jHN8VZhA09F2X3Jk8b+6bboZn4diELXlRBPKZmM=;
+ b=dMxTHN8sY0nm4u0t5FPDGhbpy61HuCpjFR9Qm7qiiMeL5De6vV3c2s+0xL0uj1Z988
+ qe+eNzi2SYE4niYii+ZRjbKc6RuU/rJ1CZo1koeI/rB03LK+IqfE52vofLV6FwL7uVZO
+ Qbl5fNNShVKYS8yVP7pfLrMHORwRWfdDcgVJhPwsrL1xp75jijJDEhQ8EWcyfymGkjYr
+ I01Y74rZSUFDFIrNXBMg7duiY4RnVyrkwHsi7yhXdczXEpmh67wFSAtdJmILRr+rpwzB
+ obPgWpZYkTCWSbVYOB464TK9m2yXtH/U8/XqEcioyrQGpZJOi2tzBbbXIVnFmXxfno6h
+ PL/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5PV9IYIaK8aWyWnTs1+MppuTAeQa5Ya9g/ugRMT0SI2nChFrIXkbxb0YTPCGfoxqKnY835y+l4gDoWY8j6SEf0dsjNJc=
+X-Gm-Message-State: AOJu0YyuHq4MLge+e8oQAWqyN2MYVFBgF5qQgSGJu7hb1bktZH9DXCcd
+ c9H38Y9vjWflNgW9R2I7xMz4wXwCuA2tKIduXhX0JT1yTPxj8C0X9zcWJwp+HhU=
+X-Google-Smtp-Source: AGHT+IExypEFeSgfgYY6BYAJX0PibjEELDtwnJEI8NOQRrmzfiYRGoqBvD2xEJ7NMDNTgnGuaYjGcw==
+X-Received: by 2002:a05:6a20:841e:b0:1be:ca6c:d93 with SMTP id
+ adf61e73a8af0-1c0cc8effa5mr2817986637.52.1720121195281; 
+ Thu, 04 Jul 2024 12:26:35 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fb1e50f63asm32862635ad.138.2024.07.04.12.26.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Jul 2024 12:26:34 -0700 (PDT)
+Message-ID: <0d85e013-1c38-4781-8fd6-5e837327f33f@linaro.org>
+Date: Thu, 4 Jul 2024 12:26:33 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87wmm1m7i3.fsf@draig.linaro.org>
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN1PEPF000252A2:EE_|DS0PR12MB7995:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5b88fb85-c7c4-414a-54f1-08dc9c59f00c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?lSTjJ81PxN0lSR9gfPK7O5MTICJw5wS8Xi5eYX/jjs6tdK24I3itEjkkSF?=
- =?iso-8859-1?Q?clnlExTr72Eo9gvIxku5nB6b1rwYEV7j+UAy7id3sN1BJ9Q4coaNNQcosC?=
- =?iso-8859-1?Q?6n4CYDdO9+ZHjcAm+WcTKq7vQZ9iYi26A9LqMOKq9cNKhD0cTI62doDh7S?=
- =?iso-8859-1?Q?Cklyxa5rONVz9I1UHaEcmhxhk9swLxjPy16W9/uu+bIBZljeFsJfpAdgkJ?=
- =?iso-8859-1?Q?47rLbBvAUNAhwrdZaM07ChQReGPNeqyHer7SLBvincYSrD9phWgyiCpq3/?=
- =?iso-8859-1?Q?xnrTLvJGBteGKH6cPzYgaLzvGtXCZwK06Tdh4Pc/yd+Y2POD5y4+2FENsg?=
- =?iso-8859-1?Q?iQqpy+cWfr7pSZnTk8ArZ6v+wc5MtSXkZ21J5iamlHBAWqvfknOVc89h3f?=
- =?iso-8859-1?Q?Ca/a3yn4//uA1h/9EQ1iH+483kSiY8Ocj8B+GcdpWcbQCk3zNdH1zZVT6V?=
- =?iso-8859-1?Q?hUTAx9ixkwieLexdzEvd9xo2CI5p7SgfzWejrtjMtoY1bgyvKck3OYUKC4?=
- =?iso-8859-1?Q?c55EhSdpJO/jP8I9crlOuZF87g6nGt6f5xi59APnzniHq2qb5wTH/6awrF?=
- =?iso-8859-1?Q?F9rm41qEgya+JzoafrfnJ5zz7HUNz0NaJQCn3cpYs/UW6uWIq+cA7tIIsd?=
- =?iso-8859-1?Q?rXHuihd0R7HfNUe3v1DusaeAzrcMyUW/HNWRhLKmvNrT3rQ1RdvKhD6lW8?=
- =?iso-8859-1?Q?am3n10KpYJh5BCcMCOEVdEPsKj/Auj/O98pVvuOOyA6RFqydDC6aTgRtpY?=
- =?iso-8859-1?Q?vhdF+dJ5VlcgAC9HPTekbhVGMlB5n5D0SRYg+O9QOJoN81JRVRLGKwHbJY?=
- =?iso-8859-1?Q?B/IZ9WKwzTWPqtvyYSe2+eoRaVUnTabC2g3q/SYsXOnk6OqY20LZHzc35D?=
- =?iso-8859-1?Q?RR2yRbtu4ar4ysu3okLpPKQelnIpT7MLdyBc4WS/0rG675xKRbYINj2KNe?=
- =?iso-8859-1?Q?b+r8PXLfwNhuSS/EKZHjRTXCHiX9UOaxeEMevpm0Uimp89K1phggKkvE44?=
- =?iso-8859-1?Q?j4N2WXfD9ytCiOuvuJO6kLeG7t5wqUvptH+4L7/zrimnveq+bm07DhueP2?=
- =?iso-8859-1?Q?DD8uqBAglM1XycGE4ksnebbdWZ8RAzc8B4UEEW4pQF6z44Fy0XqdbvhDlY?=
- =?iso-8859-1?Q?yaEbBrtTNbI1LZjpBUgTocT+sLqrSEgAWcMSAnjYjSLCL26z53TcD0nEf9?=
- =?iso-8859-1?Q?o+gZMyc2zbasv4fzjRoXlEsv7UNATcyA5ltjOuIG3Zu4lMt9ut6a70MjSb?=
- =?iso-8859-1?Q?PDe9APxCxxcFbngqUhpMgoruiRFEAjnIclESvjHN3rwPn8ah2U1SA7Jomj?=
- =?iso-8859-1?Q?OVzZjv83phHzjBsnud697/9/FZWEQqxm6OMV45SHXbUd1CdPtPxRFPzXlG?=
- =?iso-8859-1?Q?v8kTKSphElnSQmiSRy/WwZ+bEZVFUBMnmNbdVCFbakzLHcYAxADjE6SP6o?=
- =?iso-8859-1?Q?mgsp3o4Gln+RxwV+UFnQcFNTSKkbIQaKSgBQeCGUDokzIdt74LkiAAUI1h?=
- =?iso-8859-1?Q?0BBV3rjTLUdkWO0+adHOzf?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jul 2024 18:48:47.2192 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5b88fb85-c7c4-414a-54f1-08dc9c59f00c
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF000252A2.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7995
-Received-SPF: permerror client-ip=40.107.237.66;
- envelope-from=Edgar.Iglesias@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/14] rust: example of bindings code for Rust in QEMU
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+References: <20240701145853.1394967-1-pbonzini@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240701145853.1394967-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,77 +99,269 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-From:  "Edgar E. Iglesias" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 04, 2024 at 05:44:52PM +0100, Alex Bennée wrote:
-> Anthony PERARD <anthony.perard@vates.tech> writes:
+Hi Paolo,
+
+thanks for this series!
+Some comments below.
+
+On 7/1/24 07:58, Paolo Bonzini wrote:
+> Hi all,
 > 
-> > On Tue, Jul 02, 2024 at 12:44:21AM +0200, Edgar E. Iglesias wrote:
-> >> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> >> 
-> >> This fixes the clobbering of the entry->next pointer when
-> >> unmapping the first entry in a bucket of a mapcache.
-> >> 
-> >> Fixes: 123acd816d ("xen: mapcache: Unmap first entries in buckets")
-> >> Reported-by: Anthony PERARD <anthony.perard@vates.tech>
-> >> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> >> ---
-> >>  hw/xen/xen-mapcache.c | 12 +++++++++++-
-> >>  1 file changed, 11 insertions(+), 1 deletion(-)
-> >> 
-> >> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-> >> index 5f23b0adbe..18ba7b1d8f 100644
-> >> --- a/hw/xen/xen-mapcache.c
-> >> +++ b/hw/xen/xen-mapcache.c
-> >> @@ -597,7 +597,17 @@ static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
-> >>          pentry->next = entry->next;
-> >>          g_free(entry);
-> >>      } else {
-> >> -        memset(entry, 0, sizeof *entry);
-> >> +        /*
-> >> +         * Invalidate mapping but keep entry->next pointing to the rest
-> >> +         * of the list.
-> >> +         *
-> >> +         * Note that lock is already zero here, otherwise we don't unmap.
-> >> +         */
-> >> +        entry->paddr_index = 0;
-> >> +        entry->vaddr_base = NULL;
-> >> +        entry->valid_mapping = NULL;
-> >> +        entry->flags = 0;
-> >> +        entry->size = 0;
-> >
-> > This kind of feels like mc->entry should be an array of pointer rather
-> > than an array of MapCacheEntry but that seems to work well enough and
-> > not the first time entries are been cleared like that.
+> this is an example of what some bindings code for QEMU would look like.
+> Note that some parts of this code are barely expected to compile, and
+> are probably full of bugs, but still should look like finished code
+> (in fact, because they compile, the type system parts should be okay;
+> though a conditional "should" is required).
 > 
-> The use of a hand rolled list is a bit of a concern considering QEMU and
-> Glib both provide various abstractions used around the rest of the code
-> base. The original patch that introduces the mapcache doesn't tell me
-> much about access patterns for the cache, just that it is trying to
-> solve memory exhaustion issues with lots of dynamic small mappings.
+> This code is not integrated in the QEMU source tree, because again it
+> is just a example of what kind of Rust code would exist to handle the
+> C<->Rust FFI.  The translation of a handful of C structs and function
+> prototypes is done by hand rather than with bindgen, in particular.
 > 
-> Maybe a simpler structure is desirable?
+> The patches are organized as follows:
 > 
-> We also have an interval tree implementation ("qemu/interval-tree.h") if
-> what we really want is a sorted tree of memory that can be iterated
-> locklessly.
+> Patches 1-2 introduce the skeleton for the rest of the code and are
+> not particularly interesting, since that skeleton would be provided
+> by the patches that introduce Rust usage in QEMU.
+> 
+> 
+> Patches 3-4 define common code to handle conversion of data structures
+> between Rust and C.  I couldn't find an existing crate to do this,
+> though there are similar concepts in glib-rs.  The crate defines
+> variants of Clone, From and Into that convert a Rust struct to a
+> C pointer, for example:
+> 
+>     let s = "abc".clone_to_foreign();        // mallocs a NULL-terminated copy
+>     let p = s.as_ptr();
+>     drop(s);                                 // p is freed now
+> 
+> or the other way round:
+> 
+>     let s = String::cloned_from_foreign(p);  // p is a *const c_char
+> 
+>     let t: String = p.into_native();         // p is a *mut c_char and is free()d
+> 
+> The second patch defines what you need to convert strings from and to
+> C.  It's used by tests but also by a couple of QOM functions implemented
+> below; it lets you forget the differences between String, &str, CString,
+> &CStr and Cow<'_, str>.
+> 
+> This is the only complete part of the skeleton (in fact I wrote it
+> a couple years ago), and it comes with testcases that pass in both
+> "#[test]" and "doctest" (i.e. snippets integrated in the documentation
+> comments) styles.
+> 
+> 
+> Patch 5 (mostly complete except for &error_abort support and missing
+> tests) allows using the above functionality for the QEMU Error*.
+> 
+> 
+> Patches 6-8 provide an example of how to use QOM from Rust.  They
+> define all the functionality to:
+> 
+> - handle reference counting
+> 
+> - handle typesafe casting (i.e. code doesn't compile if an upcast
+>    is invalid, or if a downcast cannot possibly succeed).
+> 
+> - faking inheritance since Rust doesn't support it.
+> 
+> While I started with some implementation ideas in glib-rs, this has
+> evolved quite a bit and doesn't really look much like glib-rs anymore.
+> I provided a handful of functions to wrap C APIs.  For example:
+> 
+>     object_property_add_child(obj, "foo", object_new(TYPE_BLAH))
+> 
+> becomes
+> 
+>     obj.property_add_child("foo", Blah::new());
+> 
+> ... except that the former leaks a reference and the latter does not
+> (gotcha :)).  The idea is that these functions would be written, in
+> general, as soon as Rust code uses them, but I included a few as an
+> example of using the various abstractions for typecasting, reference
+> counting, and converting from/to C data strcutures.
+> 
+> A large part of this code is of the "it compiles and it looks nice, it
+> must be perfect" kind.  Rust is _very_ picky on type safety, in case you
+> didn't know.  One day we're all going to be programming in Haskell,
+> without even noticing it.
+> 
+> 
+> Patches 9-10 deal with how to define new subclasses in Rust.  They are
+> a lot less polished and less ready.  There is probably a lot of polish
+> that could be applied to make the code look nicer, but I guess there is
+> always time to make the code look nicer until the details are sorted out.
+> 
+> The things that I considered here are:
+> 
+> - splitting configuration from runtime state.  Configuration is
+>    immutable throughout the lifetime of the object, and holds the
+>    value of user-configured properties.  State will typically be a
+>    Mutex<> or RefCell<> since the QOM bindings make wide use of interior
+>    mutability---almost all functions are declared as &self---following
+>    the lead of glib-rs.
+> 
+> - automatic generation of instance_init and instance_finalize.  For
+>    this I opted to introduce a new initialization step that is tailored to
+>    Rust, called instance_mem_init(), that is executed before the default
+>    value of properties is set.  This makes sure that user code only ever
+>    sees valid values for the whole struct, including after a downcast;
+>    it matters because some Rust types (notably references) cannot be
+>    initialized to a zero-bytes pattern.  The default implementation of
+>    instance_mem_init is simply a memset(), since the callback replaces the
+> 
+>      memset(obj, 0, type->instance_size);
+> 
+>    line in object_initialize_with_type().  I have prototyped this change
+>    in QEMU already.
+> 
+> - generation of C vtables from safe code that is written in Rust. I
+>    chose a trait that only contains associated constants as a way to
+>    access the vtables generically.  For example:
+> 
+>      impl ObjectImpl for TestDevice {
+>          const UNPARENT: Option<fn(&TestDevice)> = Some(TestDevice::unparent);
+>      }
+> 
+>      impl DeviceImpl for TestDevice {
+>          const REALIZE: Option<fn(&TestDevice) -> Result<()>> = Some(TestDevice::realize);
+>      }
+> 
+>    This works and it seems like a style that (in the future) we could apply
+>    macro or even procedural macro magic to.
+> 
+> - generation of qdev property tables.  While only boolean properties are
+>    implemented here, one idea that I experimented with, is that the
+>    default value of properties is derived from the ConstDefault trait.
+>    (ConstDefault is provided by the const_default external crate).  Again,
+>    this is material for future conversion to procedural macros.
+> 
+> I absolutely didn't look at vmstate, but it shouldn't be too different
+> from properties, at least for the common cases.
+> 
+> 
+> Patches 11-14 finally are an example of the changes that are needed
+> to respect a minimum supported Rust version consistent with what is in
+> Debian Bullseye.  It's not too bad, especially since the current version
+> of the QOM bindings does not require generic associated types anymore.
+> 
+> 
+> Why am I posting this?  Because this kind of glue code is the ultimate
+> source of technical debt.  It is the thing that we should be scared of
+> when introducing a new language in QEMU.  It makes it harder to change C
+> code, and it is hard to change once Rust code becomes more widespread.
+> If we think a C API is not fully baked, we probably shouldn't write
+> Rust code that uses it (including bindings code).  If we think a Rust
+> API is not fully baked, we probably shouldn't add too much Rust code
+> that uses it.
 > 
 
-Yes, it would be interesting to benchmark other options.
-I agree that we should at minimum reuse existing lists/hash tables.
+Shouldn't we focus more on how we want to write a QOM device in Rust 
+instead, by making abstraction of existing C implementation first?
+Once we have satisfying idea, we could evaluate how it maps to existing 
+implementation, and which compromise should be made for efficiency.
 
-We've also had some discussions around removing it partially or alltogether but
-there are some concerns around that. We're going to need something to
-keep track of grants. For 32-bit hosts, it's a problem to exhaust virtual
-address-space if mapping all of the guest (are folks still using 32-bit hosts?).
-There may be other issues aswell.
+It seems that the current approach is to stick to existing model, and 
+derive Rust bindings from this.
 
-Some benefits are that we'll remove some of the complexity and latency for mapping
-and unmapping stuff continously.
+I agree this glue can be a source of technical debt, but on the other 
+side, it should be easy to refactor it, if we decided first what the 
+"clean and idiomatic" Rust API should look like.
 
-Cheers,
-Edgar
+A compromise where you have to manually translate some structs, or copy 
+memory to traverse languages borders at some point, could be worth the 
+safety and expressiveness.
+
+> We should have an idea of what this glue code looks like, in order to make
+> an informed choice.  If we think we're not comfortable with reviewing it,
+> well, we should be ready to say so and stick with C until we are.
+>
+
+While it is important that this glue code is maintainable and looks 
+great, I don't think it should be the main reason to accept usage of a 
+new language.
+
+> The alternative could be to use Rust without this kind of binding.  I
+> think it's a bad idea.  It removes many of the advantages of Rust
+> (which are exemplified by the above object_property_add_child one-liner),
+> and it also introduces _new_ kinds of memory errors, since Rust has
+> its own undefined behavior conditions that are not there in C/C++.
+> For example:
+> 
+>      impl Struct {
+>          pub fn f(&self) {
+>              call_some_c_function(Self::g, self as *const Self as *mut _);
+>          }
+> 
+>          fn do_g(&mut self) {
+>              ...
+>          }
+> 
+>          extern "C" fn g(ptr: *mut Self) {
+>              unsafe { &mut *ptr }.do_g();
+>          }
+>      }
+> 
+> is invalid because a &mut reference (exclusive) is alive at the same time
+> as a & reference (shared).  It is left as an exercise to the reader to
+> figure out all the possible ways in which we can shoot our own feet,
+> considering the pervasive use of callbacks in QEMU.
+> 
+
+I agree with this point that you made on the original RFC series from 
+Manos. Just calling qemu C API through unsafe code is not making the 
+best possible usage of Rust.
+
+> 
+> With respect to callbacks, that's something that is missing in this
+> prototype.  Fortunately, that's also something that will be tackled very
+> soon if the PL011 example is merged, because memory regions and character
+> devices both introduce them.  Also, as I understand it, Rust code using
+> callbacks is not particularly nice anyway, though it is of course doable.
+> Instead, this exercise are about being able to write *nice* Rust code,
+> with all the advantages provided by the language, and the cost of
+> writing/maintaining the glue code that makes it possible.  I expect
+> that we'll use a technique similar to the extern_c crate (it's 20 lines of
+> code; https://docs.rs/crate/extern-c/) to convert something that implements
+> Fn(), including a member function, into an extern "C" function.
+> 
+
+It could be an interesting thing to explore. Is the best solution to use 
+specific traits (no callbacks involved from Rust code), or should we 
+have Rust closures that mimic this behavior.
+
+We could have a specific trait with functions to handle various kind of 
+events. And the glue code could be responsible to translate this to 
+callbacks for the C side (and calling Rust code accordingly, eventually 
+serializing this on a single thread to avoid any race issues).
+
+> 
+> Anyhow: I think we can do it, otherwise I would not have written 2000 lines
+> of code (some of it two or three times).  But if people are now scared and
+> think we shouldn't, well, that's also a success of its own kind.
+> 
+> Paolo
+> 
+> 
+> Paolo Bonzini (14):
+>    add skeleton
+>    set expectations
+>    rust: define traits and pointer wrappers to convert from/to C
+>      representations
+>    rust: add tests for util::foreign
+>    rust: define wrappers for Error
+>    rust: define wrappers for basic QOM concepts
+>    rust: define wrappers for methods of the QOM Object class
+>    rust: define wrappers for methods of the QOM Device class
+>    rust: add idiomatic bindings to define Object subclasses
+>    rust: add idiomatic bindings to define Device subclasses
+>    rust: replace std::ffi::c_char with libc::c_char
+>    rust: replace c"" literals with cstr crate
+>    rust: introduce alternative to offset_of!
+>    rust: use version of toml_edit that does not require new Rust
+> 
 
