@@ -4,81 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E14C3065C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B013BC3271F
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 03:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPDJH-0008U9-EF; Wed, 03 Jul 2024 23:39:04 -0400
+	id 1sPDIZ-0007tW-UC; Wed, 03 Jul 2024 23:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1sPDJA-0008Nr-HO
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:38:56 -0400
-Received: from esa8.hc1455-7.c3s2.iphmx.com ([139.138.61.253])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaoxt.fnst@fujitsu.com>)
- id 1sPDJ8-0005Jl-1x
- for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:38:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1720064333; x=1751600333;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=0W5mhg8hCyKpK1eNIePtBioTpvKDhGzWNYxpqDOgeZs=;
- b=Nz9hUhM2DmI0ugsI60UgLiPZmuwIkWUV5faIh/6kviE/6aNIwZOa6JfB
- FFqvwH5cAIzZimpaSYLE51kMHM9wO2wqiMAmW8pKEpr+4jaywrn2y+/S9
- r7ubosHDN20SNbUyQICeNdlYZn6AWsxTujIVKyCFWhHphVjChU5zArjsc
- KktzElZcACsN3I8Td/Mmn501StxAqSEf0FE3G5PfOTYMB6mVCjLHP/Osm
- aAcDRY8xQEDsHZhvDDoanITkV0xFqaCZWpT27kFddi5wPEWxS2Bt/7bQn
- 9+ogZHBfVQKmTQF/2Nhhk627kX14JW4pxhQ1rlTSvead0IgD4zQu1a6Sk w==;
-X-IronPort-AV: E=McAfee;i="6700,10204,11122"; a="153849532"
-X-IronPort-AV: E=Sophos;i="6.09,183,1716217200"; d="scan'208";a="153849532"
-Received: from unknown (HELO yto-r3.gw.nic.fujitsu.com) ([218.44.52.219])
- by esa8.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jul 2024 12:38:47 +0900
-Received: from yto-m4.gw.nic.fujitsu.com (yto-nat-yto-m4.gw.nic.fujitsu.com
- [192.168.83.67])
- by yto-r3.gw.nic.fujitsu.com (Postfix) with ESMTP id 6CFE6E428A
- for <qemu-devel@nongnu.org>; Thu,  4 Jul 2024 12:38:45 +0900 (JST)
-Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
- [192.51.206.22])
- by yto-m4.gw.nic.fujitsu.com (Postfix) with ESMTP id A6F79F0F31
- for <qemu-devel@nongnu.org>; Thu,  4 Jul 2024 12:38:44 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 3014F1EBDB3
- for <qemu-devel@nongnu.org>; Thu,  4 Jul 2024 12:38:44 +0900 (JST)
-Received: from localhost.localdomain (unknown [10.167.225.88])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 789A21A000B;
- Thu,  4 Jul 2024 11:38:43 +0800 (CST)
-To: mst@redhat.com,
-	marcel.apfelbaum@gmail.com
-Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
- Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Subject: [PATCH] pci-bridge: avoid linking a single downstream port more than
- once
-Date: Wed,  3 Jul 2024 23:38:34 -0400
-Message-Id: <20240704033834.3362-1-yaoxt.fnst@fujitsu.com>
-X-Mailer: git-send-email 2.37.3
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1sPDIW-0007qy-Qf
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:38:17 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1sPDIS-0003AK-P7
+ for qemu-devel@nongnu.org; Wed, 03 Jul 2024 23:38:16 -0400
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8Ax3vAbGYZmC80AAA--.2620S3;
+ Thu, 04 Jul 2024 11:38:03 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by localhost.localdomain (Coremail) with SMTP id
+ AQAAf8BxlsUaGYZmgJI6AA--.59898S3; 
+ Thu, 04 Jul 2024 11:38:03 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Paolo Bonzini <pbonzini@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v2 1/4] hw/intc/loongson_ipi_common: Add loongson ipi common
+ class
+Date: Thu,  4 Jul 2024 11:37:59 +0800
+Message-Id: <20240704033802.3838618-2-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240704033802.3838618-1-maobibo@loongson.cn>
+References: <20240704033802.3838618-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28508.002
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28508.002
-X-TMASE-Result: 10--5.224400-10.000000
-X-TMASE-MatchedRID: 1/+HFyQe+xt6bMYbioM9qazGfgakLdjaCZa9cSpBObnAuQ0xDMaXkH4q
- tYI9sRE/1rH4Rg0AOT0G9ZKAHndbv3YueYDP2Zdtdo0n+JPFcJp9LQinZ4QefPcjNeVeWlqY+gt
- Hj7OwNO35N/S1zEq4ukauK2j86yr7R8RykkDhrDcwlma87ehZgpLB5sVlLr7G
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=139.138.61.253;
- envelope-from=yaoxt.fnst@fujitsu.com; helo=esa8.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+X-CM-TRANSID: AQAAf8BxlsUaGYZmgJI6AA--.59898S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,78 +64,513 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Yao Xingtao <yaoxt.fnst@fujitsu.com>
-From:  Yao Xingtao via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since the downstream port is not checked, two slots can be linked to
-a single port. However, this can prevent the driver from detecting the
-device properly.
+Loongson ipi common class and instance is created here, it comes
+from file loongson_ipi mostly. For the new added loongson ipi
+common class, there is four interfaces defined here:
+ 1. Interfaces pre_save/post_load are used for future kvm child class
+ 2. Interface get_iocsr_as can be used for different architectures,
+now MIPS 3A4000 and LoongArch 3A5000 machine use this ip, can inherit
+this common class.
+ 3. Interace cpu_by_arch_id is added, by default generic function
+cpu_by_arch_id() is used to search vcpu from physical cpuid, it is
+generic searching method. Different machine may define other search
+methods such binary searching method.
 
-It is necessary to ensure that a downstream port is not linked more than
-once.
-
-Links: https://lore.kernel.org/qemu-devel/OSZPR01MB6453BC61D2FF4035F18084EF8DDC2@OSZPR01MB6453.jpnprd01.prod.outlook.com
-Signed-off-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/pci-bridge/cxl_downstream.c     | 6 ++++++
- hw/pci-bridge/pcie_root_port.c     | 6 ++++++
- hw/pci-bridge/xio3130_downstream.c | 6 ++++++
- 3 files changed, 18 insertions(+)
+ hw/intc/loongson_ipi_common.c         | 394 ++++++++++++++++++++++++++
+ include/hw/intc/loongson_ipi_common.h |  77 +++++
+ 2 files changed, 471 insertions(+)
+ create mode 100644 hw/intc/loongson_ipi_common.c
+ create mode 100644 include/hw/intc/loongson_ipi_common.h
 
-diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-index 742da07a01..fa33cdb36b 100644
---- a/hw/pci-bridge/cxl_downstream.c
-+++ b/hw/pci-bridge/cxl_downstream.c
-@@ -153,6 +153,12 @@ static void cxl_dsp_realize(PCIDevice *d, Error **errp)
-         goto err_bridge;
-     }
- 
-+    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
-+        rc = -EBUSY;
-+        error_setg(errp, "Can't link port, error %d", rc);
-+        goto err_msi;
+diff --git a/hw/intc/loongson_ipi_common.c b/hw/intc/loongson_ipi_common.c
+new file mode 100644
+index 0000000000..3b8b077871
+--- /dev/null
++++ b/hw/intc/loongson_ipi_common.c
+@@ -0,0 +1,394 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Loongson ipi interrupt support
++ *
++ * Copyright (C) 2021 Loongson Technology Corporation Limited
++ */
++
++#include "qemu/osdep.h"
++#include "hw/boards.h"
++#include "hw/sysbus.h"
++#include "hw/intc/loongson_ipi_common.h"
++#include "hw/irq.h"
++#include "hw/qdev-properties.h"
++#include "qapi/error.h"
++#include "qemu/log.h"
++#include "exec/address-spaces.h"
++#include "exec/memory.h"
++#include "migration/vmstate.h"
++#include "trace.h"
++
++MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr,
++                                    uint64_t *data,
++                                    unsigned size, MemTxAttrs attrs)
++{
++    IPICore *s = opaque;
++    uint64_t ret = 0;
++    int index = 0;
++
++    addr &= 0xff;
++    switch (addr) {
++    case CORE_STATUS_OFF:
++        ret = s->status;
++        break;
++    case CORE_EN_OFF:
++        ret = s->en;
++        break;
++    case CORE_SET_OFF:
++        ret = 0;
++        break;
++    case CORE_CLEAR_OFF:
++        ret = 0;
++        break;
++    case CORE_BUF_20 ... CORE_BUF_38 + 4:
++        index = (addr - CORE_BUF_20) >> 2;
++        ret = s->buf[index];
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "invalid read: %x", (uint32_t)addr);
++        break;
 +    }
 +
-     rc = pcie_cap_init(d, CXL_DOWNSTREAM_PORT_EXP_OFFSET,
-                        PCI_EXP_TYPE_DOWNSTREAM, p->port,
-                        errp);
-diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
-index 09a34786bc..350137bd8c 100644
---- a/hw/pci-bridge/pcie_root_port.c
-+++ b/hw/pci-bridge/pcie_root_port.c
-@@ -89,6 +89,12 @@ static void rp_realize(PCIDevice *d, Error **errp)
-         }
-     }
- 
-+    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
-+        rc = -EBUSY;
-+        error_setg(errp, "Can't link port, error %d", rc);
-+        goto err_int;
++    trace_loongson_ipi_read(size, (uint64_t)addr, ret);
++    *data = ret;
++    return MEMTX_OK;
++}
++
++static MemTxResult loongson_ipi_iocsr_readl(void *opaque, hwaddr addr,
++                                            uint64_t *data,
++                                            unsigned size, MemTxAttrs attrs)
++{
++    LoongsonIPICommonState *ipi = opaque;
++    IPICore *s;
++
++    if (attrs.requester_id >= ipi->num_cpu) {
++        return MEMTX_DECODE_ERROR;
 +    }
 +
-     rc = pcie_cap_init(d, rpc->exp_offset, PCI_EXP_TYPE_ROOT_PORT,
-                        p->port, errp);
-     if (rc < 0) {
-diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
-index 907d5105b0..af04d2efad 100644
---- a/hw/pci-bridge/xio3130_downstream.c
-+++ b/hw/pci-bridge/xio3130_downstream.c
-@@ -88,6 +88,12 @@ static void xio3130_downstream_realize(PCIDevice *d, Error **errp)
-         goto err_msi;
-     }
- 
-+    if (pcie_find_port_by_pn(pci_get_bus(d), p->port) != NULL) {
-+        rc = -EBUSY;
-+        error_setg(errp, "Can't link port, error %d", rc);
-+        goto err_msi;
++    s = &ipi->cpu[attrs.requester_id];
++    return loongson_ipi_core_readl(s, addr, data, size, attrs);
++}
++
++static MemTxResult send_ipi_data(LoongsonIPICommonState *ipi, CPUState *cpu,
++                                 uint64_t val,
++                                 hwaddr addr, MemTxAttrs attrs)
++{
++    int i, mask = 0, data = 0;
++    AddressSpace *iocsr_as;
++    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(ipi);
++
++    iocsr_as = NULL;
++    if (licc->get_iocsr_as) {
++        iocsr_as = licc->get_iocsr_as(cpu);
 +    }
 +
-     rc = pcie_cap_init(d, XIO3130_EXP_OFFSET, PCI_EXP_TYPE_DOWNSTREAM,
-                        p->port, errp);
-     if (rc < 0) {
++    if (!iocsr_as) {
++        return MEMTX_DECODE_ERROR;
++    }
++
++    /*
++     * bit 27-30 is mask for byte writing,
++     * if the mask is 0, we need not to do anything.
++     */
++    if ((val >> 27) & 0xf) {
++        data = address_space_ldl_le(iocsr_as, addr, attrs, NULL);
++        for (i = 0; i < 4; i++) {
++            /* get mask for byte writing */
++            if (val & (0x1 << (27 + i))) {
++                mask |= 0xff << (i * 8);
++            }
++        }
++    }
++
++    data &= mask;
++    data |= (val >> 32) & ~mask;
++    address_space_stl_le(iocsr_as, addr, data, attrs, NULL);
++
++    return MEMTX_OK;
++}
++
++static CPUState *get_cpu_by_arch_id(LoongsonIPICommonState *ipi, uint32_t cpuid)
++{
++    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(ipi);
++
++    if (licc->cpu_by_arch_id) {
++        return licc->cpu_by_arch_id(cpuid);
++    }
++
++    return cpu_by_arch_id(cpuid);
++}
++
++static MemTxResult mail_send(LoongsonIPICommonState *ipi, uint64_t val,
++                             MemTxAttrs attrs)
++{
++    uint32_t cpuid;
++    hwaddr addr;
++    CPUState *cs;
++
++    cpuid = extract32(val, 16, 10);
++    cs = get_cpu_by_arch_id(ipi, cpuid);
++    if (cs == NULL) {
++        return MEMTX_DECODE_ERROR;
++    }
++
++    /* override requester_id */
++    addr = SMP_IPI_MAILBOX + CORE_BUF_20 + (val & 0x1c);
++    attrs.requester_id = cs->cpu_index;
++    return send_ipi_data(ipi, cs, val, addr, attrs);
++}
++
++static MemTxResult any_send(LoongsonIPICommonState *ipi, uint64_t val,
++                            MemTxAttrs attrs)
++{
++    uint32_t cpuid;
++    hwaddr addr;
++    CPUState *cs;
++
++    cpuid = extract32(val, 16, 10);
++    cs = get_cpu_by_arch_id(ipi, cpuid);
++    if (cs == NULL) {
++        return MEMTX_DECODE_ERROR;
++    }
++
++    /* override requester_id */
++    addr = val & 0xffff;
++    attrs.requester_id = cs->cpu_index;
++    return send_ipi_data(ipi, cs, val, addr, attrs);
++}
++
++MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
++                                     uint64_t val, unsigned size,
++                                     MemTxAttrs attrs)
++{
++    IPICore *s = opaque;
++    LoongsonIPICommonState *ipi = s->ipi;
++    int index = 0;
++    uint32_t cpuid;
++    uint8_t vector;
++    CPUState *cs;
++
++    addr &= 0xff;
++    trace_loongson_ipi_write(size, (uint64_t)addr, val);
++    switch (addr) {
++    case CORE_STATUS_OFF:
++        qemu_log_mask(LOG_GUEST_ERROR, "can not be written");
++        break;
++    case CORE_EN_OFF:
++        s->en = val;
++        break;
++    case CORE_SET_OFF:
++        s->status |= val;
++        if (s->status != 0 && (s->status & s->en) != 0) {
++            qemu_irq_raise(s->irq);
++        }
++        break;
++    case CORE_CLEAR_OFF:
++        s->status &= ~val;
++        if (s->status == 0 && s->en != 0) {
++            qemu_irq_lower(s->irq);
++        }
++        break;
++    case CORE_BUF_20 ... CORE_BUF_38 + 4:
++        index = (addr - CORE_BUF_20) >> 2;
++        s->buf[index] = val;
++        break;
++    case IOCSR_IPI_SEND:
++        cpuid = extract32(val, 16, 10);
++        /* IPI status vector */
++        vector = extract8(val, 0, 5);
++        cs = get_cpu_by_arch_id(ipi, cpuid);
++        if (cs == NULL || cs->cpu_index >= ipi->num_cpu) {
++            return MEMTX_DECODE_ERROR;
++        }
++        loongson_ipi_core_writel(&ipi->cpu[cs->cpu_index], CORE_SET_OFF,
++                                 BIT(vector), 4, attrs);
++        break;
++    default:
++        qemu_log_mask(LOG_UNIMP, "invalid write: %x", (uint32_t)addr);
++        break;
++    }
++
++    return MEMTX_OK;
++}
++
++static MemTxResult loongson_ipi_iocsr_writel(void *opaque, hwaddr addr,
++                                            uint64_t val, unsigned size,
++                                            MemTxAttrs attrs)
++{
++    LoongsonIPICommonState *ipi = opaque;
++    IPICore *s;
++
++    if (attrs.requester_id >= ipi->num_cpu) {
++        return MEMTX_DECODE_ERROR;
++    }
++
++    s = &ipi->cpu[attrs.requester_id];
++    return loongson_ipi_core_writel(s, addr, val, size, attrs);
++}
++
++static const MemoryRegionOps loongson_ipi_iocsr_ops = {
++    .read_with_attrs = loongson_ipi_iocsr_readl,
++    .write_with_attrs = loongson_ipi_iocsr_writel,
++    .impl.min_access_size = 4,
++    .impl.max_access_size = 4,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 8,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
++/* mail send and any send only support writeq */
++static MemTxResult loongson_ipi_writeq(void *opaque, hwaddr addr, uint64_t val,
++                                        unsigned size, MemTxAttrs attrs)
++{
++    MemTxResult ret = MEMTX_OK;
++    LoongsonIPICommonState *ipi = opaque;
++
++    addr &= 0xfff;
++    switch (addr) {
++    case MAIL_SEND_OFFSET:
++        ret = mail_send(ipi, val, attrs);
++        break;
++    case ANY_SEND_OFFSET:
++        ret = any_send(ipi, val, attrs);
++        break;
++    default:
++       break;
++    }
++
++    return ret;
++}
++
++static const MemoryRegionOps loongson_ipi64_ops = {
++    .write_with_attrs = loongson_ipi_writeq,
++    .impl.min_access_size = 8,
++    .impl.max_access_size = 8,
++    .valid.min_access_size = 8,
++    .valid.max_access_size = 8,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++};
++
++static void loongson_ipi_common_realize(DeviceState *dev, Error **errp)
++{
++    LoongsonIPICommonState *s = LOONGSON_IPI_COMMON(dev);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    int i;
++
++    if (s->num_cpu == 0) {
++        error_setg(errp, "num-cpu must be at least 1");
++        return;
++    }
++
++    memory_region_init_io(&s->ipi_iocsr_mem, OBJECT(dev),
++                          &loongson_ipi_iocsr_ops,
++                          s, "loongson_ipi_iocsr", 0x48);
++
++    /* loongson_ipi_iocsr performs re-entrant IO through ipi_send */
++    s->ipi_iocsr_mem.disable_reentrancy_guard = true;
++
++    sysbus_init_mmio(sbd, &s->ipi_iocsr_mem);
++
++    memory_region_init_io(&s->ipi64_iocsr_mem, OBJECT(dev),
++                          &loongson_ipi64_ops,
++                          s, "loongson_ipi64_iocsr", 0x118);
++    sysbus_init_mmio(sbd, &s->ipi64_iocsr_mem);
++
++    s->cpu = g_new0(IPICore, s->num_cpu);
++    if (s->cpu == NULL) {
++        error_setg(errp, "Memory allocation for IPICore faile");
++        return;
++    }
++
++    for (i = 0; i < s->num_cpu; i++) {
++        s->cpu[i].ipi = s;
++        qdev_init_gpio_out(dev, &s->cpu[i].irq, 1);
++    }
++}
++
++static int loongson_ipi_pre_save(void *opaque)
++{
++    LoongsonIPICommonState *s = (LoongsonIPICommonState *)opaque;
++    LoongsonIPICommonClass *c = LOONGSON_IPI_COMMON_GET_CLASS(s);
++
++    if (c->pre_save) {
++        c->pre_save(s);
++    }
++
++    return 0;
++}
++
++static int loongson_ipi_post_load(void *opaque, int version_id)
++{
++    LoongsonIPICommonState *s = (LoongsonIPICommonState *)opaque;
++    LoongsonIPICommonClass *c = LOONGSON_IPI_COMMON_GET_CLASS(s);
++
++    if (c->post_load) {
++        c->post_load(s);
++    }
++    return 0;
++}
++
++static const VMStateDescription vmstate_ipi_core = {
++    .name = "ipi-single",
++    .version_id = 2,
++    .minimum_version_id = 2,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(status, IPICore),
++        VMSTATE_UINT32(en, IPICore),
++        VMSTATE_UINT32(set, IPICore),
++        VMSTATE_UINT32(clear, IPICore),
++        VMSTATE_UINT32_ARRAY(buf, IPICore, IPI_MBX_NUM * 2),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static const VMStateDescription vmstate_loongson_ipi = {
++    /* Fixed name to keep compatible */
++    .name = "loongson_ipi",
++    .pre_save  = loongson_ipi_pre_save,
++    .post_load = loongson_ipi_post_load,
++    .version_id = 2,
++    .minimum_version_id = 2,
++    .fields = (const VMStateField[]) {
++        VMSTATE_STRUCT_VARRAY_POINTER_UINT32(cpu, LoongsonIPICommonState,
++                                       num_cpu, vmstate_ipi_core, IPICore),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++static Property ipi_properties[] = {
++    DEFINE_PROP_UINT32("num-cpu", LoongsonIPICommonState, num_cpu, 1),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void loongson_ipi_common_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = loongson_ipi_common_realize;
++    device_class_set_props(dc, ipi_properties);
++    dc->vmsd = &vmstate_loongson_ipi;
++}
++
++static void loongson_ipi_common_finalize(Object *obj)
++{
++    LoongsonIPICommonState *s = LOONGSON_IPI_COMMON(obj);
++
++    g_free(s->cpu);
++}
++
++static const TypeInfo loongson_ipi_common_info = {
++    .name          = TYPE_LOONGSON_IPI_COMMON,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(LoongsonIPICommonState),
++    .class_size    = sizeof(LoongsonIPICommonClass),
++    .class_init    = loongson_ipi_common_class_init,
++    .instance_finalize = loongson_ipi_common_finalize,
++    .abstract = true,
++};
++
++static void loongson_ipi_common_register_types(void)
++{
++    type_register_static(&loongson_ipi_common_info);
++}
++
++type_init(loongson_ipi_common_register_types)
+diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
+new file mode 100644
+index 0000000000..4b75c4572a
+--- /dev/null
++++ b/include/hw/intc/loongson_ipi_common.h
+@@ -0,0 +1,77 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * Loongson ipi interrupt header files
++ *
++ * Copyright (C) 2021 Loongson Technology Corporation Limited
++ */
++
++#ifndef HW_LOONGSON_IPI_COMMON_H
++#define HW_LOONGSON_IPI_COMMON_H
++
++#include "hw/sysbus.h"
++#include "hw/core/cpu.h"
++#include "qom/object.h"
++
++/* Mainy used by iocsr read and write */
++#define SMP_IPI_MAILBOX      0x1000ULL
++#define CORE_STATUS_OFF       0x0
++#define CORE_EN_OFF           0x4
++#define CORE_SET_OFF          0x8
++#define CORE_CLEAR_OFF        0xc
++#define CORE_BUF_20           0x20
++#define CORE_BUF_28           0x28
++#define CORE_BUF_30           0x30
++#define CORE_BUF_38           0x38
++#define IOCSR_IPI_SEND        0x40
++#define IOCSR_MAIL_SEND       0x48
++#define IOCSR_ANY_SEND        0x158
++
++#define MAIL_SEND_ADDR        (SMP_IPI_MAILBOX + IOCSR_MAIL_SEND)
++#define MAIL_SEND_OFFSET      0
++#define ANY_SEND_OFFSET       (IOCSR_ANY_SEND - IOCSR_MAIL_SEND)
++
++#define IPI_MBX_NUM           4
++
++#define TYPE_LOONGSON_IPI_COMMON "loongson_ipi_common"
++typedef struct LoongsonIPICommonClass LoongsonIPICommonClass;
++typedef struct LoongsonIPICommonState LoongsonIPICommonState;
++DECLARE_OBJ_CHECKERS(LoongsonIPICommonState, LoongsonIPICommonClass,
++                     LOONGSON_IPI_COMMON, TYPE_LOONGSON_IPI_COMMON)
++
++typedef struct IPICore {
++    LoongsonIPICommonState *ipi;
++    uint32_t status;
++    uint32_t en;
++    uint32_t set;
++    uint32_t clear;
++    /* 64bit buf divide into 2 32bit buf */
++    uint32_t buf[IPI_MBX_NUM * 2];
++    qemu_irq irq;
++} IPICore;
++
++struct LoongsonIPICommonState {
++    SysBusDevice parent_obj;
++    MemoryRegion ipi_iocsr_mem;
++    MemoryRegion ipi64_iocsr_mem;
++    uint32_t num_cpu;
++    IPICore *cpu;
++};
++
++struct LoongsonIPICommonClass {
++    /*< private >*/
++    SysBusDeviceClass parent_class;
++    /*< public >*/
++
++    void (*pre_save)(LoongsonIPICommonState *s);
++    void (*post_load)(LoongsonIPICommonState *s);
++    AddressSpace *(*get_iocsr_as)(CPUState *cpu);
++    CPUState *(*cpu_by_arch_id)(int64_t id);
++};
++
++MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr,
++                                    uint64_t *data,
++                                    unsigned size, MemTxAttrs attrs);
++MemTxResult loongson_ipi_core_writel(void *opaque, hwaddr addr,
++                                     uint64_t val, unsigned size,
++                                     MemTxAttrs attrs);
++#endif
 -- 
-2.37.3
+2.39.3
 
 
