@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3427CC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A73B8C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:03:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPTbG-0002Ut-UW; Thu, 04 Jul 2024 17:02:43 -0400
+	id 1sPTaR-0008Si-Rm; Thu, 04 Jul 2024 17:01:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTax-0001Yr-Qw; Thu, 04 Jul 2024 17:02:25 -0400
+ id 1sPTaO-0008Ip-Tu; Thu, 04 Jul 2024 17:01:49 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTaw-0004Se-AJ; Thu, 04 Jul 2024 17:02:23 -0400
+ id 1sPTaN-0004PG-2e; Thu, 04 Jul 2024 17:01:48 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B4D6277572;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2C5347756B;
  Fri,  5 Jul 2024 00:00:51 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id C928FFECAB;
+ by tsrv.corpit.ru (Postfix) with SMTP id 3F2DEFECA4;
  Fri,  5 Jul 2024 00:00:56 +0300 (MSK)
-Received: (nullmailer pid 1507774 invoked by uid 1000);
+Received: (nullmailer pid 1507752 invoked by uid 1000);
  Thu, 04 Jul 2024 21:00:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Eric Blake <eblake@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Hanna Czenczek <hreitz@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.2 20/22] iotests/270: Don't store data-file with json:
- prefix in image
-Date: Fri,  5 Jul 2024 00:00:50 +0300
-Message-Id: <20240704210055.1507652-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Chuang Xu <xuchuangxclwt@bytedance.com>,
+ Guixiong Wei <weiguixiong@bytedance.com>, Yipeng Yin <yinyipeng@bytedance.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.2 13/22] i386/cpu: fixup number of addressable IDs for
+ processor cores in the physical package
+Date: Fri,  5 Jul 2024 00:00:43 +0300
+Message-Id: <20240704210055.1507652-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
 References: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
@@ -62,52 +63,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Chuang Xu <xuchuangxclwt@bytedance.com>
 
-We want to disable filename parsing for data files because it's too easy
-to abuse in malicious image files. Make the test ready for the change by
-passing the data file explicitly in command line options.
+When QEMU is started with:
+-cpu host,host-cache-info=on,l3-cache=off \
+-smp 2,sockets=1,dies=1,cores=1,threads=2
+Guest can't acquire maximum number of addressable IDs for processor cores in
+the physical package from CPUID[04H].
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-(cherry picked from commit 7e1110664ecbc4826f3c978ccb06b6c1bce823e6)
+When creating a CPU topology of 1 core per package, host-cache-info only
+uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
+resulting in a conflict (on the multicore Host) between the Guest core
+topology information in this field and the Guest's actual cores number.
+
+Fix it by removing the unnecessary condition to cover 1 core per package
+case. This is safe because cores_per_pkg will not be 0 and will be at
+least 1.
+
+Fixes: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-ID: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 903916f0a017fe4b7789f1c6c6982333a5a71876)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: fixup for 9.0 due to other changes in this area past 9.0)
 
-diff --git a/tests/qemu-iotests/270 b/tests/qemu-iotests/270
-index 74352342db..c37b674aa2 100755
---- a/tests/qemu-iotests/270
-+++ b/tests/qemu-iotests/270
-@@ -60,8 +60,16 @@ _make_test_img -o cluster_size=2M,data_file="$TEST_IMG.orig" \
- # "write" 2G of data without using any space.
- # (qemu-img create does not like it, though, because null-co does not
- # support image creation.)
--$QEMU_IMG amend -o data_file="json:{'driver':'null-co',,'size':'4294967296'}" \
--    "$TEST_IMG"
-+test_img_with_null_data="json:{
-+    'driver': '$IMGFMT',
-+    'file': {
-+        'filename': '$TEST_IMG'
-+    },
-+    'data-file': {
-+        'driver': 'null-co',
-+        'size':'4294967296'
-+    }
-+}"
- 
- # This gives us a range of:
- #   2^31 - 512 + 768 - 1 = 2^31 + 255 > 2^31
-@@ -74,7 +82,7 @@ $QEMU_IMG amend -o data_file="json:{'driver':'null-co',,'size':'4294967296'}" \
- # on L2 boundaries, we need large L2 tables; hence the cluster size of
- # 2 MB.  (Anything from 256 kB should work, though, because then one L2
- # table covers 8 GB.)
--$QEMU_IO -c "write 768 $((2 ** 31 - 512))" "$TEST_IMG" | _filter_qemu_io
-+$QEMU_IO -c "write 768 $((2 ** 31 - 512))" "$test_img_with_null_data" | _filter_qemu_io
- 
- _check_test_img
- 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index e693f8ca9a..02a2da04a7 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6097,10 +6097,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+             if (*eax & 31) {
+                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+                 int vcpus_per_socket = cs->nr_cores * cs->nr_threads;
+-                if (cs->nr_cores > 1) {
+-                    *eax &= ~0xFC000000;
+-                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
+-                }
++                *eax &= ~0xFC000000;
++                *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
+                 if (host_vcpus_per_cache > vcpus_per_socket) {
+                     *eax &= ~0x3FFC000;
+                     *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
 -- 
 2.39.2
 
