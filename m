@@ -4,89 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26926C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 08:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9788C41513
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 08:30:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPHkv-0004tQ-Ge; Thu, 04 Jul 2024 04:23:53 -0400
+	id 1sPHqT-0000Np-Az; Thu, 04 Jul 2024 04:29:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
- id 1sPHkt-0004sv-Oy; Thu, 04 Jul 2024 04:23:51 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
- id 1sPHkr-0006PS-0K; Thu, 04 Jul 2024 04:23:51 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-52e93d1432fso455489e87.0; 
- Thu, 04 Jul 2024 01:23:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720081425; x=1720686225; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yQnN8i7Q3Agv1GB7Ie85hPPlxoEZgQKu5DIkmyD4QLQ=;
- b=haVk8K257l+l0ItVtcY1mAhCTSy3SUcBlXuF0zuzHQhBsEFtzu0OmiRlasqxxGih1y
- 534AyXQc2u/EuZiAEMWoGWaQfeLoKJyQVEmSVxt0/wS3deqSJOXhGDmv94ol3gmVq6JN
- kaglxGR2gZLCG6J5L9noHY9Jmyb5VK6mkG/LXItKyPfVuIs+aRkyqP//LYLG4m/9HTBi
- miwNPeJxL66a/2m6aSTsHIFjyl4VoHz9EKhkPsbJ4zI1ZnFdc5Sq4HDXIMx9PPETE8k/
- Yyq3U8FemnIW/vh5Fqf+t+SnePkSZwD9LZt37U1PQrgVS3IgEuShXZZGSUScJuFJHaCt
- jysA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720081425; x=1720686225;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yQnN8i7Q3Agv1GB7Ie85hPPlxoEZgQKu5DIkmyD4QLQ=;
- b=EUVYYkt1ofLI9is+xSFCwVrPQE7WAUJZI2cIM2YiJNSr/Cke+ZNKYfhRGB0YF9i1yO
- jHoi6xnjc5af0Gu5VwSFpVzRIYYZsnpBYj6A7t+t3TwAtue4wTix86c7BmFvf0UJHHr4
- 4WXe/wa2KF1RQUU5PknYgWqcEndx2G3ACKhrYwRjSuBT9jOdCM+lFfqUzhJaqFRgi7Zg
- xs01f/evnk6LDKDTt+D6LjuDfocZY6ax6LygHO8pnZDymFYN86t/3UKZXUjYuhWvSKXk
- cgaccfyGdqWNgVsuPACVXQLtFnxY5Jl/eP98nZAvtxfPBL1V2SxNsJW7NeF7E/5B9xd6
- vV8A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU1KxF5Y19SCxpRgsUsmUa1CAq0sJHG+1TGrBcW5Sml3JzpGrMwWz4B0BJIp7TfsDA9HGXGnEmrbqKVcC0DUITLHnWaJTXSoX0b6g1KnTIzhqA6T19GdeEFL/OQrg==
-X-Gm-Message-State: AOJu0Yxzw5rCDXIMZGsXSD0wNEACaK0/f2cmhS66BEpUHgwalHnuWijz
- VrfGe5GSD2ZyZQtO2r1e9TN8Z8SW0/yK4zRaQDs6nu0d8TrojIWu
-X-Google-Smtp-Source: AGHT+IHOiqHi/vsWX2eEDfTW5dkCYFybBVQxYDkRtVlgARG17Sl409E0BT55s2x3oG3SeBAYWIi87g==
-X-Received: by 2002:a19:5e52:0:b0:52c:e5ac:ecd2 with SMTP id
- 2adb3069b0e04-52ea06bc9e8mr473042e87.51.1720081424417; 
- Thu, 04 Jul 2024 01:23:44 -0700 (PDT)
-Received: from smtpclient.apple ([94.25.185.41])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-52ea1e76d13sm33959e87.123.2024.07.04.01.23.43
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 04 Jul 2024 01:23:43 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
-Subject: Re: [PATCH v3] virtio: Implement Virtio Backend for SD/MMC in QEMU
-From: =?utf-8?B?0JzQuA==?= <krashmisha@gmail.com>
-In-Reply-To: <20240704033637-mutt-send-email-mst@kernel.org>
-Date: Thu, 4 Jul 2024 11:23:31 +0300
-Cc: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Matwey Kornilov <matwey.kornilov@gmail.com>,
- qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B357E4DF-3873-4627-A322-C9744A905942@gmail.com>
-References: <20240703145956.16193-1-krashmisha@gmail.com>
- <87le2ipigb.fsf@draig.linaro.org>
- <7c281582-e5a3-265b-f6fc-80f7a1f01078@gmail.com>
- <20240703160451-mutt-send-email-mst@kernel.org>
- <e0e1e2bd-a230-a460-79b2-dd9318e7c92e@gmail.com>
- <20240704033637-mutt-send-email-mst@kernel.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-Mailer: Apple Mail (2.3774.600.62)
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=krashmisha@gmail.com; helo=mail-lf1-x129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1sPHqQ-0000N8-NK; Thu, 04 Jul 2024 04:29:34 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1sPHqO-0002HT-IR; Thu, 04 Jul 2024 04:29:34 -0400
+Received: from TWMBX02.aspeed.com (192.168.0.24) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1258.12; Thu, 4 Jul
+ 2024 16:29:22 +0800
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX02.aspeed.com
+ (192.168.0.25) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 4 Jul
+ 2024 16:29:23 +0800
+Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
+ Transport; Thu, 4 Jul 2024 16:29:22 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
+ <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
+ Stanley" <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, "Kevin
+ Wolf" <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>, Jason Wang
+ <jasowang@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Wainer dos
+ Santos Moschetta" <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC
+ here" <qemu-devel@nongnu.org>, "open list:Block layer core"
+ <qemu-block@nongnu.org>
+CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
+ <yunlin.tang@aspeedtech.com>
+Subject: [PATCH v3 0/8] support AST2700 network
+Date: Thu, 4 Jul 2024 16:29:14 +0800
+Message-ID: <20240704082922.1464317-1-jamin_lin@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: Fail (TWMBX02.aspeed.com: domain of jamin_lin@aspeedtech.com
+ does not designate 192.168.10.10 as permitted sender)
+ receiver=TWMBX02.aspeed.com; client-ip=192.168.10.10;
+ helo=localhost.localdomain;
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=jamin_lin@aspeedtech.com; helo=TWMBX01.aspeed.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_FAIL=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,69 +71,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jamin Lin <jamin_lin@aspeedtech.com>
+From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+change from v1:
+- ftgmac100
+ - fix coding style
+ - support 64 bits dma dram address for AST2700
 
-> 4 =D0=B8=D1=8E=D0=BB=D1=8F 2024=E2=80=AF=D0=B3., =D0=B2 10:38, Michael =
-S. Tsirkin <mst@redhat.com> =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=D0=BB(=D0=
-=B0):
->=20
-> On Thu, Jul 04, 2024 at 10:25:53AM +0300, Mikhail Krasheninnikov =
-wrote:
->>=20
->> On Wed, 3 Jul 2024, Michael S. Tsirkin wrote:
->>=20
->>> On Wed, Jul 03, 2024 at 10:55:17PM +0300, Mikhail Krasheninnikov =
-wrote:
->>>>=20
->>>> Hello, Alex!
->>>>=20
->>>> No, there's no patch to the VirtIO specification yet. This is=20
->>>> proof-of-concept solution since I'm not sure that I did everything=20=
+change from v2:
+- ftgmac100: update memory region size to 0x200.
+- ftgmac100: introduce a new class(ftgmac100_high),
+    class attribute and memop handlers, for FTGMAC100_*_HIGH regs read/write.
+- aspeed_ast27x0: update network model to ftgmac100_high to support
+  64 bits dram address DMA.
+- m25p80: support quad mode for w25q01jvq
 
->>>> correct with the design (and as folks' reviews show, for a good =
-reason).=20
->>>> As soon as most obvious issues would be out of the way, I think =
-I'll=20
->>>> submit a patch.
->>>=20
->>>=20
->>> Mikhail, if you want people to review your patches but not merge
->>> them yet, pls use an RFC tag in the subject to avoid confusion.
->>>=20
->>> Thanks,
->>>=20
->>> --=20
->>> MST
->>>=20
->>>=20
->>=20
->> Hello, Michael!
->>=20
->> I was planning to submit three patches: to the kernel, emulator and =
-Virtio=20
->> specification around the same time - as soon as the obvious bugs are=20=
+change from v3:
+- ftgmac100: update memory region size to 64KB.
+- ftgmac100: using a property to activate the region for new registers,
+  instead of a class
+- ftgmac100: introduce TX and RX ring base address high registers
+- ftgmac100: split standalone patch for easy review
+- ftgmac100: update TX and RX packet buffers address to 64 bits
+- aspeed_ast27x0: set dma64 property for AST2700 ftgmac100
+- machine_aspeed.py: update to test sdk v09.02 and network for AST2700
 
->> fixed, I'll submit a patch to the specification. I thought it wasn't=20=
+Jamin Lin (8):
+  hw/net:ftgmac100: update memory region size to 64KB
+  hw/net:ftgmac100: update ring base address to 64 bits
+  hw/net:ftgmac100: introduce TX and RX ring base address high registers
+    to support 64 bits
+  hw/net:ftgmac100: update TX and RX packet buffers address to 64 bits
+  aspeed/soc: set dma64 property for AST2700 ftgmac100
+  hw/block: m25p80: support quad mode for w25q01jvq
+  machine_aspeed.py: update to test ASPEED OpenBMC SDK v09.02 for
+    AST2700
+  machine_aspeed.py: update to test network for AST2700
 
->> necessary to use the RFC tag in that case, but if you think it is,=20
->> I'll include it with the next version of the patch.
->=20
-> RFC means "this is proof of concept". On the one hand some people
-> won't bother reviewing then. On the other your patch will be
-> judged less harshly. If your code still has debugging printks,
-> it's clearly an RFC at best.
->=20
-> --=20
-> MST
->=20
+ hw/arm/aspeed_ast27x0.c         |   3 +
+ hw/block/m25p80.c               |  16 ++++
+ hw/net/ftgmac100.c              | 147 +++++++++++++++++++++++++++-----
+ include/hw/net/ftgmac100.h      |  17 ++--
+ tests/avocado/machine_aspeed.py |  12 +--
+ 5 files changed, 162 insertions(+), 33 deletions(-)
 
-I apologize for the debug printks in other patch, I=E2=80=99m not really =
-sure
-how I gazed over it.. If it makes my situation better, it=E2=80=99s my =
-first series
-of patches. I=E2=80=99ll make sure to triple-check next time. Thanks for =
-the
-feedback!=
+-- 
+2.34.1
+
 
