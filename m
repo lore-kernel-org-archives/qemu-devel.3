@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C18EC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 08:43:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B60EC41513
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 08:54:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPI3J-00078w-Ae; Thu, 04 Jul 2024 04:42:53 -0400
+	id 1sPIDh-00010V-VE; Thu, 04 Jul 2024 04:53:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sPI3I-00078m-78
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 04:42:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <binbin.wu@linux.intel.com>)
+ id 1sPIDg-00010I-31
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 04:53:36 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sPI3C-0004B0-W7
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 04:42:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720082565;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vozscD3o8VlMPbAmDro3V7LyfO/P+fi6WccYcHp4DII=;
- b=NH5njtcUfcEInh6kcPQzw4kFvwuuDJvHPpYG9rwRUtTbqZexTBbrtwCFCUnaFRhVTnyl0w
- 1vbrqxHCU5R3D0AeJPUsQbvgOUFoQ0IAvCW6f4dc+521re4NMnk9Hk09R8Hsf4XXZyW2cG
- mv1OzFRYaPVXSvHlSOlfK0mfte1fJ1o=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-6OlWIiqyOrqGJhyDnD3FHg-1; Thu,
- 04 Jul 2024 04:42:43 -0400
-X-MC-Unique: 6OlWIiqyOrqGJhyDnD3FHg-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC19F1956088; Thu,  4 Jul 2024 08:42:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.21])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30406195605A; Thu,  4 Jul 2024 08:42:38 +0000 (UTC)
-Date: Thu, 4 Jul 2024 09:42:35 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH] i386/sev: Don't allow automatic fallback to legacy
- KVM_SEV*_INIT
-Message-ID: <ZoZge_2UT_yRJE56@redhat.com>
-References: <20240704000019.3928862-1-michael.roth@amd.com>
- <CABgObfYX+nDnQSW5xyT3SjYbQ72--EW5buCkUuG_Z_JPFqfQNA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <binbin.wu@linux.intel.com>)
+ id 1sPIDd-0003SU-Qs
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 04:53:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1720083214; x=1751619214;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=+lF34JGBkAdyt9HCQOqpXFiCvpqwRAf+cHBgPF+ZnVU=;
+ b=Lwyf3k7/1bu1FJHbYOmVDUm5kFQbRgJbPx0x8snyL7dHcvjt56oBVIHz
+ g0QkXk8MImqcL6HOLNobTipZt5SlCFKxe9Zcnzttx1xffO91Hh+ouqZZU
+ pQSUxm12lH7BSjZ0162ir53i9vxF8HCMepisRjh9vmtxvSebuggIAkc6E
+ xQzXDl26Jh0ZT2Y/u3q2n1UEhyMi534978nOAhzdcpi+fL/a5MAl0pJZv
+ jYT5k/xoIamA55c/8tlZU1h1Ae4VqDrpL3Om7V1Eycm1VRbBlcEFN9jwE
+ xsc4nbzEY6Dpdw8GUitWZtjMuP02iwHxpnWUZDpMrjds84Yk773FpG55Z w==;
+X-CSE-ConnectionGUID: eh+1AQpCRUio2+5zeqweAQ==
+X-CSE-MsgGUID: ORIrxiGSSFWHgnqhwWnSzg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11122"; a="12390395"
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="12390395"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2024 01:53:29 -0700
+X-CSE-ConnectionGUID: /KZ/JQjzTZymZwam7D3/NQ==
+X-CSE-MsgGUID: 1IoHEw6XTUS8aKcV3xujdw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="46486287"
+Received: from chungegx-mobl1.ccr.corp.intel.com (HELO [10.238.1.52])
+ ([10.238.1.52])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2024 01:53:26 -0700
+Message-ID: <d25cc62c-0f56-4be2-968a-63c8b1d63b5a@linux.intel.com>
+Date: Thu, 4 Jul 2024 16:53:24 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 30/31] i386/kvm: Add KVM_EXIT_HYPERCALL handling for
+ KVM_HC_MAP_GPA_RANGE
+To: Pankaj Gupta <pankaj.gupta@amd.com>, qemu-devel@nongnu.org
+Cc: brijesh.singh@amd.com, dovmurik@linux.ibm.com, armbru@redhat.com,
+ michael.roth@amd.com, xiaoyao.li@intel.com, pbonzini@redhat.com,
+ thomas.lendacky@amd.com, isaku.yamahata@intel.com, berrange@redhat.com,
+ kvm@vger.kernel.org, anisinha@redhat.com
+References: <20240530111643.1091816-1-pankaj.gupta@amd.com>
+ <20240530111643.1091816-31-pankaj.gupta@amd.com>
+Content-Language: en-US
+From: Binbin Wu <binbin.wu@linux.intel.com>
+In-Reply-To: <20240530111643.1091816-31-pankaj.gupta@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfYX+nDnQSW5xyT3SjYbQ72--EW5buCkUuG_Z_JPFqfQNA@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=192.198.163.16;
+ envelope-from=binbin.wu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,43 +85,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 04, 2024 at 08:51:05AM +0200, Paolo Bonzini wrote:
-> On Thu, Jul 4, 2024 at 2:01 AM Michael Roth <michael.roth@amd.com> wrote:
-> > Currently if the 'legacy-vm-type' property of the sev-guest object is
-> > left unset, QEMU will attempt to use the newer KVM_SEV_INIT2 kernel
-> > interface in conjunction with the newer KVM_X86_SEV_VM and
-> > KVM_X86_SEV_ES_VM KVM VM types.
-> >
-> > This can lead to measurement changes if, for instance, an SEV guest was
-> > created on a host that originally had an older kernel that didn't
-> > support KVM_SEV_INIT2, but is booted on the same host later on after the
-> > host kernel was upgraded.
-> 
-> I think this is the right thing to do for SEV-ES. I agree that it's
-> bad to require a very new kernel (6.10 will be released only a month
-> before QEMU 9.1), on the other hand the KVM_SEV_ES_INIT API is broken
-> in several ways. As long as there is a way to go back to it, and it's
-> not changed by old machine types, not using it for SEV-ES is the
-> better choice for upstream.
-
-Broken how ?   I know there was the regression with the 'debug_swap'
-parameter, but was something that should just be fixed in the kernel,
-rather than breaking userspace. What else is a problem ?
-
-I don't think its reasonable for QEMU to require a brand new kernel
-for new machine types, given SEV & SEV-ES have been deployed for
-many years already. 
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+On 5/30/2024 7:16 PM, Pankaj Gupta wrote:
 
+[...]
+> +/*
+> + * Currently the handling here only supports use of KVM_HC_MAP_GPA_RANGE
+> + * to service guest-initiated memory attribute update requests so that
+> + * KVM_SET_MEMORY_ATTRIBUTES can update whether or not a page should be
+> + * backed by the private memory pool provided by guest_memfd, and as such
+> + * is only applicable to guest_memfd-backed guests (e.g. SNP/TDX).
+> + *
+> + * Other other use-cases for KVM_HC_MAP_GPA_RANGE, such as for SEV live
+            ^
+            extra "other"?
+> + * migration, are not implemented here currently.
+> + *
+> + * For the guest_memfd use-case, these exits will generally be synthesized
+> + * by KVM based on platform-specific hypercalls, like GHCB requests in the
+> + * case of SEV-SNP, and not issued directly within the guest though the
+> + * KVM_HC_MAP_GPA_RANGE hypercall. So in this case, KVM_HC_MAP_GPA_RANGE is
+> + * not actually advertised to guests via the KVM CPUID feature bit, as
+> + * opposed to SEV live migration where it would be. Since it is unlikely the
+> + * SEV live migration use-case would be useful for guest-memfd backed guests,
+> + * because private/shared page tracking is already provided through other
+> + * means, these 2 use-cases should be treated as being mutually-exclusive.
+> + */
+> +static int kvm_handle_hc_map_gpa_range(struct kvm_run *run)
+> +{
+> +    uint64_t gpa, size, attributes;
+> +
+> +    if (!machine_require_guest_memfd(current_machine))
+> +        return -EINVAL;
+> +
+> +    gpa = run->hypercall.args[0];
+> +    size = run->hypercall.args[1] * TARGET_PAGE_SIZE;
+> +    attributes = run->hypercall.args[2];
+> +
+> +    trace_kvm_hc_map_gpa_range(gpa, size, attributes, run->hypercall.flags);
+> +
+> +    return kvm_convert_memory(gpa, size, attributes & KVM_MAP_GPA_RANGE_ENCRYPTED);
+
+run->hypercall.ret should be updated accordingly.
+At least for successful case.
+For failure case, QEMU will shutdown the VM, is it the expected behavior?
+
+
+> +}
+> +
+> +static int kvm_handle_hypercall(struct kvm_run *run)
+> +{
+> +    if (run->hypercall.nr == KVM_HC_MAP_GPA_RANGE)
+> +        return kvm_handle_hc_map_gpa_range(run);
+> +
+> +    return -EINVAL;
+> +}
+> +
+>
+[...]
 
