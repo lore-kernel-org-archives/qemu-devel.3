@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE08C3065C
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A0FC3065C
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:20:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPGkF-00048Y-8B; Thu, 04 Jul 2024 03:19:07 -0400
+	id 1sPGkp-0004fP-JX; Thu, 04 Jul 2024 03:19:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPGkD-00048B-Rz; Thu, 04 Jul 2024 03:19:05 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1sPGkn-0004dH-BT; Thu, 04 Jul 2024 03:19:41 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPGkC-0004m1-9E; Thu, 04 Jul 2024 03:19:05 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-7180e5f735bso207008a12.0; 
- Thu, 04 Jul 2024 00:19:03 -0700 (PDT)
+ id 1sPGkl-0004pr-J0; Thu, 04 Jul 2024 03:19:41 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2c95ca60719so264432a91.3; 
+ Thu, 04 Jul 2024 00:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720077542; x=1720682342; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1720077577; x=1720682377; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Zg0OPkjqYoVo/z98XnrOu3gmca9ERpMyaK1oUmKADyQ=;
- b=dQcIh2aYxv3Z5pK6vfHwVZWVDl3t9Q9A/x0+jmLeHeBBAL31NcoLevgEeOgUaYhCfv
- 2g35rP2ES/qrLUkIMzbjS14jX64L7PqOy6RspGSfyj+3sILf46Palq+nAKgGxyu8l7o/
- Vftm6QNR9vhtQwqbQoq8vSWNQAyYKKal5L7wp0ABcVxIe3B7qe7oqmPPpSsMUS6fLpmX
- Tjyx9kk6BsAsFGcOaZszLW+QREM5cKEMUwECutjhpJOFjh2SNzdazPoQkhLF2hzy4vlV
- L6vP2DCnm2o9tWqIya4q1qJ1x/V5jBXDGoKRXuq7bHeoZmNz0ZyqisXlR/RnqFFt08r3
- 6wxA==
+ bh=oYIVcDd6a6XHVfTem6LOfnljo1ZQ+M4znzmkeJSy5U4=;
+ b=GzpYo7VMa69hJ/uVUtBYh/EMrET5YITXdmRkS0WIBSojLmisRJPTJ+YL+PK46FehJA
+ cTO/IcRrzrCx/KGJ9tF48xGrpPZ1W19X4FphG50XtX13RDwkG/NBM6HR4ZEk+6Gfak6/
+ WmCtaaVnHTC6cd6s55QTQ2J2nqu9i4Ui3iHpJcjpuMM+ViRMstSCajp2p+Tyl6P81HfE
+ 48gjl61+4G04QhOaj2ZhY7lQZQ+Jq1PNBGL7moTMcBDp0ns9VIZ/AWZH8YigXMPtqqS9
+ /2wd4kUaSrR3+CaLI9fsy9KUyUjigUOpukWnUa2/oWf+Gv5mZWgLvQbEziQgRIpiUXiV
+ KQeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720077542; x=1720682342;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1720077577; x=1720682377;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Zg0OPkjqYoVo/z98XnrOu3gmca9ERpMyaK1oUmKADyQ=;
- b=MXMi2iS2dTHl8WNoTF4IxIQg45igeUtdtOLxMaDCswoFjkWwp2I9n36ORGVSY9mNLw
- zcviz3G87JZXx4FxbwQ8x1fM4eLUsSDMikZfGLPxYp43Ik2Uwbp1JaR0ai3K06rRMG7C
- W8dF2XQW1D4HgXh5oP5+FMBeBRPfNuIPxhr0qPTtNAJGWpAOnoVv7ccwkZGoTV+C2Rt+
- eS5N6ysBV/jbgTKUzYD0pSnPHQI5uauNq9LbWxuhjlSw9O8jpr8VYg/DBeyBSVJHAwYb
- l+G+KAGdErpjS+6/8FnGfH6JLHpo53UohLSJfpoCneNnH503kE1M/vuZi0VHQBx+wtSi
- +TjQ==
+ bh=oYIVcDd6a6XHVfTem6LOfnljo1ZQ+M4znzmkeJSy5U4=;
+ b=m6np4XMi9WmMMH2tD2jU0L/JU/OnNojjEgnSEaypGJ/iBB/x506QkFMLfUs2nalFbs
+ Gq+tOcsUA/XEwd2yK/o317epCjSvMrdnPsIlPjLzoqTzDKVVhE8QYPfJ1oLZnY46Ql2X
+ J6sFU3Er4WyV4iaA3qignJrxHEy6pu2op/45SL3fdd38XMSgUqR5Z1UUOvyCHAqtFJBP
+ CnZzXC0GLF0Qkvmq166gWuV4U00nTG4fwkd0qYqmbSQ4CZ+qVdZmgE8+op4y67CoX+PG
+ fzT9ojPq7NtJMVaG1Gxus6u+jQ6kS/j0LwMVU59LmK0Vr+F6V3bk/g7pvc9xKDTGUhEm
+ EqbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpLx3Cqkuh8RFbMemO+yrnl9fCcbs5/RDkB1VRCMrJiD4vk/LBZ1cIIgewM6vUPfXLVkeK9QHKL+idmUI3JMLJQN17YUQWccNlEDW9UP9ucu1gPK4UuJ8eDSU=
-X-Gm-Message-State: AOJu0YwyTfRu7GdjZkh5mZDvoNo60L38RMfNFIE9B+6KgrzYfLFLBV5P
- FBUxXmJgkAZK0+w9tYf9h7B200vmVg3oDz8joD3IEWoQom76StYb
-X-Google-Smtp-Source: AGHT+IFYN6R2UrO1vcm6wh4Uw5Su6Tk1SdiXOnpyA9BbcQQRLP6gLE3AA57jJbGsrBmiVWkUTOMyDQ==
-X-Received: by 2002:a17:90a:f18d:b0:2c7:49b4:7e3a with SMTP id
- 98e67ed59e1d1-2c99f309b21mr964933a91.7.1720077541917; 
- Thu, 04 Jul 2024 00:19:01 -0700 (PDT)
+ AJvYcCV5br2rPOSeqWpiT0t4MRHAsQrSrDK5fZHSN1QS/TniGZ9kxWUCWfpIqAqNcD6k52JUPbx1iu+Af+urrisPfl65D6IbvNUcDwtVXD+oOVisLqP67y3MCVO+kCA=
+X-Gm-Message-State: AOJu0YztGbd2lYKzwh3vK0fLxoeNA0aVEDtcjSHGVVYG27UKW0deTzmg
+ LE1LuU86cQfa1fM220b/dBFEqj0WNHK1YFiI/07vUCsutvXDUTu5
+X-Google-Smtp-Source: AGHT+IEMdXZJtD7IoAcSn3ypwnyAFQQoKx5+fZ0T5x3i5VTfdZrRlFUnMtfffGEKNupexnoGY0WDTg==
+X-Received: by 2002:a17:90a:8c0a:b0:2c9:81c6:b0e7 with SMTP id
+ 98e67ed59e1d1-2c99c80b369mr546176a91.30.1720077576754; 
+ Thu, 04 Jul 2024 00:19:36 -0700 (PDT)
 Received: from localhost ([1.146.24.72]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-72c6c7f76aesm9086956a12.67.2024.07.04.00.18.58
+ 98e67ed59e1d1-2c99a98ac94sm753560a91.33.2024.07.04.00.19.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 00:19:01 -0700 (PDT)
+ Thu, 04 Jul 2024 00:19:36 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 04 Jul 2024 17:18:56 +1000
-Message-Id: <D2GKLJBBSWBH.2873DA1I8QJ9Q@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH 33/43] target/ppc: Remove single use static inline function
+Date: Thu, 04 Jul 2024 17:19:31 +1000
+Message-Id: <D2GKLZP7V4YS.DWYD2TL8WKTA@gmail.com>
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH 35/43] target/ppc/mmu-hash32.c: Change parameter type of
+ ppc_hash32_bat_lookup()
 X-Mailer: aerc 0.17.0
 References: <cover.1716763435.git.balaton@eik.bme.hu>
- <c30ddd4f433bbe60629d2be66c5214076f677fa9.1716763435.git.balaton@eik.bme.hu>
-In-Reply-To: <c30ddd4f433bbe60629d2be66c5214076f677fa9.1716763435.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
+ <c6424ad0d838c2e72e6801544b38ed682aa081ed.1716763435.git.balaton@eik.bme.hu>
+In-Reply-To: <c6424ad0d838c2e72e6801544b38ed682aa081ed.1716763435.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,68 +97,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon May 27, 2024 at 9:13 AM AEST, BALATON Zoltan wrote:
-> The ger_pack_masks() function is only used once and the inverse of
-> this operation is already inlined so it can be inlined too in the only
-> caller and removed from the header.
-
-Is this needed for later patches? I might prefer to keep it, even
-move it into vsx-impl.c.inc and pull its inverse out into its own
-function too even.
-
-Thanks,
-Nick
-
+> This function takes PowerPCCPU but only needs the env from it. Change
+> its parameter to CPUPPCState *env.
 >
+
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  target/ppc/internal.h               | 9 ---------
->  target/ppc/translate/vsx-impl.c.inc | 6 ++++--
->  2 files changed, 4 insertions(+), 11 deletions(-)
+>  target/ppc/mmu-hash32.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 >
-> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-> index 20fb2ec593..8e5a241f74 100644
-> --- a/target/ppc/internal.h
-> +++ b/target/ppc/internal.h
-> @@ -293,13 +293,4 @@ FIELD(GER_MSK, XMSK, 0, 4)
->  FIELD(GER_MSK, YMSK, 4, 4)
->  FIELD(GER_MSK, PMSK, 8, 8)
-> =20
-> -static inline int ger_pack_masks(int pmsk, int ymsk, int xmsk)
-> -{
-> -    int msk =3D 0;
-> -    msk =3D FIELD_DP32(msk, GER_MSK, XMSK, xmsk);
-> -    msk =3D FIELD_DP32(msk, GER_MSK, YMSK, ymsk);
-> -    msk =3D FIELD_DP32(msk, GER_MSK, PMSK, pmsk);
-> -    return msk;
-> -}
-> -
->  #endif /* PPC_INTERNAL_H */
-> diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/v=
-sx-impl.c.inc
-> index 0266f09119..62950d348a 100644
-> --- a/target/ppc/translate/vsx-impl.c.inc
-> +++ b/target/ppc/translate/vsx-impl.c.inc
-> @@ -2819,7 +2819,7 @@ static bool trans_XXSETACCZ(DisasContext *ctx, arg_=
-X_a *a)
->  static bool do_ger(DisasContext *ctx, arg_MMIRR_XX3 *a,
->      void (*helper)(TCGv_env, TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_i32))
->  {
-> -    uint32_t mask;
-> +    uint32_t mask =3D 0;
->      TCGv_ptr xt, xa, xb;
->      REQUIRE_INSNS_FLAGS2(ctx, ISA310);
->      REQUIRE_VSX(ctx);
-> @@ -2832,7 +2832,9 @@ static bool do_ger(DisasContext *ctx, arg_MMIRR_XX3=
- *a,
->      xa =3D gen_vsr_ptr(a->xa);
->      xb =3D gen_vsr_ptr(a->xb);
-> =20
-> -    mask =3D ger_pack_masks(a->pmsk, a->ymsk, a->xmsk);
-> +    mask =3D FIELD_DP32(mask, GER_MSK, XMSK, a->xmsk);
-> +    mask =3D FIELD_DP32(mask, GER_MSK, YMSK, a->ymsk);
-> +    mask =3D FIELD_DP32(mask, GER_MSK, PMSK, a->pmsk);
->      helper(tcg_env, xa, xb, xt, tcg_constant_i32(mask));
->      return true;
+> diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+> index 44b16142ab..a2c0ac05d2 100644
+> --- a/target/ppc/mmu-hash32.c
+> +++ b/target/ppc/mmu-hash32.c
+> @@ -48,11 +48,10 @@ static target_ulong hash32_bat_size(int mmu_idx,
+>      return BATU32_BEPI & ~((batu & BATU32_BL) << 15);
 >  }
+> =20
+> -static hwaddr ppc_hash32_bat_lookup(PowerPCCPU *cpu, target_ulong ea,
+> +static hwaddr ppc_hash32_bat_lookup(CPUPPCState *env, target_ulong ea,
+>                                      MMUAccessType access_type, int *prot=
+,
+>                                      int mmu_idx)
+>  {
+> -    CPUPPCState *env =3D &cpu->env;
+>      target_ulong *BATlt, *BATut;
+>      bool ifetch =3D access_type =3D=3D MMU_INST_FETCH;
+>      int i;
+> @@ -316,7 +315,7 @@ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, M=
+MUAccessType access_type,
+> =20
+>      /* 2. Check Block Address Translation entries (BATs) */
+>      if (env->nb_BATs !=3D 0) {
+> -        raddr =3D ppc_hash32_bat_lookup(cpu, eaddr, access_type, protp, =
+mmu_idx);
+> +        raddr =3D ppc_hash32_bat_lookup(env, eaddr, access_type, protp, =
+mmu_idx);
+>          if (raddr !=3D -1) {
+>              if (!check_prot_access_type(*protp, access_type)) {
+>                  if (guest_visible) {
 
 
