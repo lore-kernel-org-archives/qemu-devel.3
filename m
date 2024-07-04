@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB267C3065C
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F90C3065C
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPGqU-00018p-Hj; Thu, 04 Jul 2024 03:25:34 -0400
+	id 1sPGrE-0001xS-5N; Thu, 04 Jul 2024 03:26:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPGqP-00017a-VX; Thu, 04 Jul 2024 03:25:32 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
+ id 1sPGrB-0001qc-8f; Thu, 04 Jul 2024 03:26:17 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPGqM-0008IN-RC; Thu, 04 Jul 2024 03:25:29 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70b0428f793so60594b3a.3; 
- Thu, 04 Jul 2024 00:25:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
+ id 1sPGqz-0008OB-47; Thu, 04 Jul 2024 03:26:16 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52e9fe05354so453150e87.1; 
+ Thu, 04 Jul 2024 00:26:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720077923; x=1720682723; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZQrUtpG+xlk+hJGI1Ct2rMyBgiDEOKzTfhr3UYC3Iow=;
- b=AM8K4FuZWxjHWaKl42JRL8T2qrjhCjY++3Pn8j3UL+tCinBIUFbUMnGeE4rN18qh40
- YICtjkZlfiJszcMnB0GvestYqqoqQXRwrJyuF72SqPjwFZLc2i+KtGJjJw3qz0tkcw18
- CMt6/x0kp3qGJWjUgGKs+epOSlpG1VvxuQu7Pa0gf7SqdmKObVXpPYnibHE8mkZRQ+6T
- 2yy3RE96wGQGw+JvECDibWjp+I4vdc7f+3dZAWiMsrbYxjuOWuxwF+i+QmehtSoKgWLF
- +ei6WzBLgMuCl11hLcTQSdlheKAxAlPJcXB18L/FsL5aG9dohSnfh7n71CCHKVvgojDs
- auAA==
+ d=gmail.com; s=20230601; t=1720077961; x=1720682761; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:date
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VmFt2tmkjrED2F+p4Jgi2Im8lxalM94exu7ZMBJhdSg=;
+ b=V1YJ+XWHQNX8KziHT/+XGOZqdk4h7v9T5DwFJ7fAJilbMtb17hoEdGn0cQknXCwaHo
+ ibYbrdDnyxRTC9CQ0z6jvJy0AXhaZP3/UloWhqCaMNfW55fIPAdsqXYFrGgUq8G4vE5P
+ Guj2v3I7XaKszWY1bO27LFb144FeTYxJbJLfliHTujh2T9V8mjfdbq8oe1Cov2YUYe7i
+ L9R9LOxw7d3+ZSKzHryC6+nL7AZDghJrk0Ss/jAmdyeUMtM5TDvJXxA2FRaVJEybL3wc
+ XZvxOd02Qb+ta3IPH4yhtvcJUZR3qtAWyBom3jXpACd0yoXSDF/QMWVfdYCAP3d468tL
+ HZ1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720077923; x=1720682723;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ZQrUtpG+xlk+hJGI1Ct2rMyBgiDEOKzTfhr3UYC3Iow=;
- b=QJj37kNnYzcmVMEujWDsCAHRmN4hmgzi1O9N2dPq0HhzyKN6FWJDRMhzo8w4KLe2f+
- EpJXRfQ7JUcd++e+kIYvYSu4manbQtVBW7963Fj1RVOLYDtbXAL3BtfN5wPDJz2DpQ/g
- //ZvqKPezpvUXOb2+IA5J/ao1Bxh4WxVd//ZKcAZnLQUfZY80ZC9oPfwCDrgo3i5+j40
- jb9nWP/BZRVDGXchAMM6wEMNAf0iBv7gse3mWqzInki1DAUcyfTd/LheJiKvRM1+GjYu
- 57ZSCYRuUcJjnMNXgWypGShtCHnX/9CQaebTJDSvcBUMjbQNkyhOpunc8KJ2mHbkA4mM
- rRMQ==
+ d=1e100.net; s=20230601; t=1720077961; x=1720682761;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:date
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VmFt2tmkjrED2F+p4Jgi2Im8lxalM94exu7ZMBJhdSg=;
+ b=uFIJ7Ab4lUbr9BCzxxyAjRC+AQPxgBk6X1+FA+woA6haZyzVrrozmTxU4XWBhhXsaD
+ UjPlCVXbkUX7tdAt4bb7SdptE5ZN6ViMf/Lm6mjK68jT/Gn1MugwcPRISAGnuqNvYa20
+ +q7BHshU05v5KeeGadxTCx/ACHz0Vbg6n/GwRh9Dt4MVuod0iup9Oek7cAaYLqUpN8cw
+ mcRYEo2qzHerOk0SLlfZVH9UePhpvTXCFaKIZrDvIo9RK39RRI1uDL/GCMGpjMZyDS5d
+ LG9n6VpeIHkmEoMUXb5X97pq+1u7dKE0UJyxVytHZsiXsw7OfzrFji4+9uldaWO4KiHK
+ ud2Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWdjjlUa2Go0tSvqixDfQMzwyRudLSJwickBFP9TdLHBTmjFoBFJseEx1cbLtyqSdOFPWja7P0iqydV1wWmMikiuYULKEQDeMlIGkGA2D0jk8hfoO1sxpCN0+M=
-X-Gm-Message-State: AOJu0Yz6RgmM8klMpzg6Xgf3EzeRl31O7j9OsNmLu8FSy/D/QDIbybUh
- u4UIcgKeGK8Xc8//NeRV+1uz26LrErcz9A0wkKv4syGFnP3IHIGFAZHewA==
-X-Google-Smtp-Source: AGHT+IEd9XWTmdOrp/kTYSD7nGreY6JbRzHiOcIbw+BBNELlyFzaCfERop4RBa0LPNwtaWcIB0Ds9A==
-X-Received: by 2002:a05:6a00:2292:b0:708:10:f42d with SMTP id
- d2e1a72fcca58-70b0095b829mr791280b3a.14.1720077923420; 
- Thu, 04 Jul 2024 00:25:23 -0700 (PDT)
-Received: from localhost ([1.146.24.72]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70afeb4186esm800778b3a.41.2024.07.04.00.25.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 00:25:23 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 04 Jul 2024 17:25:17 +1000
-Message-Id: <D2GKQEIL9SE1.9Q0GOOG6V6M8@gmail.com>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH 40/43] target/ppc: Change parameter type of
- ppc64_v3_radix()
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <cover.1716763435.git.balaton@eik.bme.hu>
- <4cdbb66fc918f00f51e6fb6266e1b0714496b266.1716763435.git.balaton@eik.bme.hu>
-In-Reply-To: <4cdbb66fc918f00f51e6fb6266e1b0714496b266.1716763435.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ AJvYcCURQ0yaRZELZpeL787EZXaGCEcHzyWsXgvKDzk2Krq3o5/tx9KitB1OjABWhsRwBwOSExOjSVZD7Ngz4h6UmVFjhYPYlMjd+mq84HHA4DM7Ejwx/7FBNzU39oyz5g==
+X-Gm-Message-State: AOJu0Yxxs/EmYcK56nzm2BUnvw6rXqmWb0L6zRkAfVTgleiZnQ0/IlQO
+ daEdtTvktPguURgAcC27tZ1VF0CA/yKSwD5sDLLWUvDwi+BQKq+h
+X-Google-Smtp-Source: AGHT+IHQF88DHG//lgj3bTced6RGQnJe0WxcIf4s9AcRD64DmIiXUDo4U2WO8Dm00k5NwKPs7Yfc8w==
+X-Received: by 2002:a2e:8795:0:b0:2ee:8d19:85af with SMTP id
+ 38308e7fff4ca-2ee8edff25amr5197171fa.36.1720077960276; 
+ Thu, 04 Jul 2024 00:26:00 -0700 (PDT)
+Received: from [192.168.188.220] ([94.25.185.41])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-2ee8842b920sm2940231fa.39.2024.07.04.00.25.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Jul 2024 00:25:59 -0700 (PDT)
+From: Mikhail Krasheninnikov <krashmisha@gmail.com>
+X-Google-Original-From: Mikhail Krasheninnikov <mi@gmail.com>
+Date: Thu, 4 Jul 2024 10:25:53 +0300 (MSK)
+To: "Michael S. Tsirkin" <mst@redhat.com>
+cc: Mikhail Krasheninnikov <krashmisha@gmail.com>, 
+ =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Matwey Kornilov <matwey.kornilov@gmail.com>, 
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH v3] virtio: Implement Virtio Backend for SD/MMC in QEMU
+In-Reply-To: <20240703160451-mutt-send-email-mst@kernel.org>
+Message-ID: <e0e1e2bd-a230-a460-79b2-dd9318e7c92e@gmail.com>
+References: <20240703145956.16193-1-krashmisha@gmail.com>
+ <87le2ipigb.fsf@draig.linaro.org>
+ <7c281582-e5a3-265b-f6fc-80f7a1f01078@gmail.com>
+ <20240703160451-mutt-send-email-mst@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=krashmisha@gmail.com; helo=mail-lf1-x12c.google.com
+X-Spam_score_int: 9
+X-Spam_score: 0.9
+X-Spam_bar: /
+X-Spam_report: (0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ MALFORMED_FREEMAIL=2.967, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,75 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon May 27, 2024 at 9:13 AM AEST, BALATON Zoltan wrote:
-> This function takes PowerPCCPU but only needs the env from it. Change
-> its parameter to CPUPPCState *env.
 
-Acked-by: Nicholas Piggin <npiggin@gmail.com>
+On Wed, 3 Jul 2024, Michael S. Tsirkin wrote:
 
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  hw/ppc/spapr_rtas.c        | 2 +-
->  target/ppc/mmu-book3s-v3.h | 4 ++--
->  target/ppc/mmu_common.c    | 4 ++--
->  3 files changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-> index f329693c55..38e94fc0d7 100644
-> --- a/hw/ppc/spapr_rtas.c
-> +++ b/hw/ppc/spapr_rtas.c
-> @@ -177,7 +177,7 @@ static void rtas_start_cpu(PowerPCCPU *callcpu, Spapr=
-MachineState *spapr,
->           * New cpus are expected to start in the same radix/hash mode
->           * as the existing CPUs
->           */
-> -        if (ppc64_v3_radix(callcpu)) {
-> +        if (ppc64_v3_radix(&callcpu->env)) {
->              lpcr |=3D LPCR_UPRT | LPCR_GTSE | LPCR_HR;
->          } else {
->              lpcr &=3D ~(LPCR_UPRT | LPCR_GTSE | LPCR_HR);
-> diff --git a/target/ppc/mmu-book3s-v3.h b/target/ppc/mmu-book3s-v3.h
-> index be66e26604..e52129ff7f 100644
-> --- a/target/ppc/mmu-book3s-v3.h
-> +++ b/target/ppc/mmu-book3s-v3.h
-> @@ -75,9 +75,9 @@ bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lp=
-id,
->   * dig out the partition table in the fast path. This is
->   * also how the HW uses it.
->   */
-> -static inline bool ppc64_v3_radix(PowerPCCPU *cpu)
-> +static inline bool ppc64_v3_radix(CPUPPCState *env)
->  {
-> -    return !!(cpu->env.spr[SPR_LPCR] & LPCR_HR);
-> +    return !!(env->spr[SPR_LPCR] & LPCR_HR);
->  }
-> =20
->  #endif /* TARGET_PPC64 */
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index b45eb64f6e..ab055ca96b 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -565,7 +565,7 @@ void dump_mmu(CPUPPCState *env)
->          dump_slb(env_archcpu(env));
->          break;
->      case POWERPC_MMU_3_00:
-> -        if (ppc64_v3_radix(env_archcpu(env))) {
-> +        if (ppc64_v3_radix(env)) {
->              qemu_log_mask(LOG_UNIMP, "%s: the PPC64 MMU is unsupported\n=
-",
->                            __func__);
->          } else {
-> @@ -810,7 +810,7 @@ bool ppc_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAcces=
-sType access_type,
->      switch (cpu->env.mmu_model) {
->  #if defined(TARGET_PPC64)
->      case POWERPC_MMU_3_00:
-> -        if (ppc64_v3_radix(cpu)) {
-> +        if (ppc64_v3_radix(&cpu->env)) {
->              return ppc_radix64_xlate(cpu, eaddr, access_type, raddrp,
->                                       psizep, protp, mmu_idx, guest_visib=
-le);
->          }
+> On Wed, Jul 03, 2024 at 10:55:17PM +0300, Mikhail Krasheninnikov wrote:
+> > 
+> > Hello, Alex!
+> > 
+> > No, there's no patch to the VirtIO specification yet. This is 
+> > proof-of-concept solution since I'm not sure that I did everything 
+> > correct with the design (and as folks' reviews show, for a good reason). 
+> > As soon as most obvious issues would be out of the way, I think I'll 
+> > submit a patch.
+> 
+> 
+> Mikhail, if you want people to review your patches but not merge
+> them yet, pls use an RFC tag in the subject to avoid confusion.
+> 
+> Thanks,
+> 
+> -- 
+> MST
+> 
+> 
 
+Hello, Michael!
+
+I was planning to submit three patches: to the kernel, emulator and Virtio 
+specification around the same time - as soon as the obvious bugs are 
+fixed, I'll submit a patch to the specification. I thought it wasn't 
+necessary to use the RFC tag in that case, but if you think it is, 
+I'll include it with the next version of the patch.
 
