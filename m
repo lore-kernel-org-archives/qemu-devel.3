@@ -4,84 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3DEAC3271F
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 18:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97A5AC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 18:54:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPRKd-0004w6-6n; Thu, 04 Jul 2024 14:37:23 -0400
+	id 1sPRaj-00005O-5t; Thu, 04 Jul 2024 14:54:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1sPRKb-0004pq-C9
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:37:21 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1sPRKQ-0006Kr-Cj
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:37:21 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-35f06861ae6so551303f8f.2
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 11:37:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720118229; x=1720723029; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=iMf1a2w7VycJ9es19fvo3ydFWICUzfaziKIWRKUyz3Q=;
- b=c8XMLyHiY8UDtXWHG7RwF7N++M+323uwKqJzew389Qm6hTaf4KWYpGbN/8SQUXK8PG
- Xe09Tk6RNZbrtSALrFzYsaPpzkToYjTLyjkKb2PlwDXoHysVFxyDDcXsHN06iLHpyx51
- lK9YbHe7C02kHmjvDS9dwW7H9GrCAufj6jjQMga3j3WAU+B0+M+DQwK+E/g+aJAzrBAA
- HoHsYfZiUzER+wuP8folpVRSaSqI9lo5AQmP/xtO1Fo1PbC5kmIt7Gj5+xFqGIQ/00x9
- KAayk3QCIXgiYYFnm87uWD3t2qy4ZCCy1PAE4jJKIrYFSeF2gilnBvcSNM3cz0hWqpqd
- uRvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720118229; x=1720723029;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iMf1a2w7VycJ9es19fvo3ydFWICUzfaziKIWRKUyz3Q=;
- b=twi9xtbRI2GbjF2ZRx/QgIfNJMt/vUB1KoOkYE3A9pEIsNEM8/9e2mppCFLDeOJueB
- AdTn6gfnR6Q32jArHzQoU5dkhy+Gs9HWkkQPoV9O/WorobytDVyl+qXBQU0zWu8ZGyup
- fQ2u75pJm/+hby7fLWmPC8yJEwfCnL4rh+HZ7t1Mxf7EIaIy4cGw6xdb7aGygflZUA4z
- Q9MM5JMimACZB3nyn2eJTqjeLScOb8oONSCJ1PGmknhkaxxm7tnpv65w2gOV7Rm6nxot
- ikrMVQWls4MZPCu13P89Q92a1VjLG+Crfdz1RhF+5KPNhiayAyFBL/ja+p1/TbMP+kC2
- lCTQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW2pHTXbyymAXHrZpKpUADh/OmM0EDJWdjBt0KzETMdjQMVdu9yCynZExmUgVsBUcVXCqdNUDl+GfLeeOCtslqR+er16Xw=
-X-Gm-Message-State: AOJu0YzCg8VoPS8AoqvCk+c9/u3u7UbFETI7dlVtS2Kv+09+ISjxepH4
- nO61FPMNF0/5CYr1PlnHtcg+RMInux5bo/AcZusx4x12sgQeysHyWH7Ac+tAwOBLFdwou24x597
- 9
-X-Google-Smtp-Source: AGHT+IErKuRR4tcYeAJJxFKJdMpKQelJaP0GUTVGnGsivPfYaOWuPGzg2OVSKUNVmrrOJp18x6rBwg==
-X-Received: by 2002:a5d:48c9:0:b0:367:8a39:85ce with SMTP id
- ffacd0b85a97d-3679dd806a8mr1754794f8f.70.1720118228471; 
- Thu, 04 Jul 2024 11:37:08 -0700 (PDT)
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367956ca37asm4535626f8f.75.2024.07.04.11.37.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 11:37:08 -0700 (PDT)
-Date: Thu, 4 Jul 2024 19:37:21 +0100
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Mostafa Saleh <smostafa@google.com>
-Cc: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org,
- qemu-devel@nongnu.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-Subject: Re: [PATCH v4 19/19] hw/arm/smmu: Refactor SMMU OAS
-Message-ID: <20240704183721.GP1693268@myrica>
-References: <20240701110241.2005222-1-smostafa@google.com>
- <20240701110241.2005222-20-smostafa@google.com>
+ (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
+ id 1sPRag-000055-Og
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:53:58 -0400
+Received: from mail-bn8nam12on2066.outbound.protection.outlook.com
+ ([40.107.237.66] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Edgar.Iglesias@amd.com>)
+ id 1sPRae-0003Hs-MQ
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:53:58 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=XVOpyD+PvdgEJKM60hdhvnuEj1CALD8DYMa5APVVmdkG4DROjiVRaIF8yQDrvrMceTCk7a+QUWHd/nw2utwP+q/tw+V5rxTkzmSeJQvBmg3obQvhFqKycw4/zvSIlCz2CtGKwPEY1ZtppQnkQwZbn/ynWVTnHui9+YOUdCOZaw1hcW7nzprLsWEEvFLAjMof48T23Y31jtWNZ8yQwY8PBh5NBBjdKSomuICoQDJ1L0e6NmLCCm2irigl0U7oz0bSohMyk7Wpq6AwJSxRflb6QCisuCVFUQtqdekn0ubyTXf4wdPCoh1m8iQS8GjTrpEaubmIjzKwLhihEyba/cu/jA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ZgFO+CJcjsUoi7CKvUCcl5rizxjr5Xw2OZ/mnxTWvdc=;
+ b=PqH+jGSMHvnx2sQHgXvuw/6viBP3VI6wKW2c9tu4/tr69rfURkwYl3OFWqwa3ohqK4h5zsCTUedwnf2YXX1/tlMOFcTpqJRfKX7qv24E/ziPierbBtG65B2BxdZsqwH8GxxNPuTxLMPfYAlE5Immr10cbVqwNeB/RB9FMYJhwzdEO+kRtRi+yEqSezk87P9JWAANJnidb829jwijyTez2dV8i9qIf2R9eSCw3Bebqhed6CoLlmM3DZOu08omp21F+v5yh9az3HMB9+nqIIm83GE+Fxsv30YX/0mTISq1QyIqnyrdJfW+rkebsK0C8HNzFbQ/alcnqChsd8lCm7Um7A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ZgFO+CJcjsUoi7CKvUCcl5rizxjr5Xw2OZ/mnxTWvdc=;
+ b=U2WwfuD69pp7kjqCmM5VZHAKg5Qs9w8t6hjTO4E5momBZbLxeO0tA91gw8nFsUFogcgZsHXrBKEaoUCZgOmkWzVVNmi4GRvG6HUt8pG1qEN6a+nglEniiAoxenA6AgjSgyR8+isfqDebfisrWmzCv9mCqopcwjy/W3DK2xLfEwM=
+Received: from PH0PR07CA0059.namprd07.prod.outlook.com (2603:10b6:510:e::34)
+ by DS0PR12MB7995.namprd12.prod.outlook.com (2603:10b6:8:14e::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.25; Thu, 4 Jul
+ 2024 18:48:47 +0000
+Received: from SN1PEPF000252A2.namprd05.prod.outlook.com
+ (2603:10b6:510:e:cafe::4a) by PH0PR07CA0059.outlook.office365.com
+ (2603:10b6:510:e::34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.30 via Frontend
+ Transport; Thu, 4 Jul 2024 18:48:47 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ SN1PEPF000252A2.mail.protection.outlook.com (10.167.242.9) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7741.18 via Frontend Transport; Thu, 4 Jul 2024 18:48:47 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 4 Jul
+ 2024 13:48:46 -0500
+Date: Thu, 4 Jul 2024 21:48:37 +0300
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+CC: Anthony PERARD <anthony.perard@vates.tech>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, <qemu-devel@nongnu.org>,
+ <sstabellini@kernel.org>, <paul@xen.org>, <xen-devel@lists.xenproject.org>
+Subject: Re: [PATCH v1 2/2] xen: mapcache: Fix unmapping of first entries in
+ buckets
+Message-ID: <ZobuhcLHqUEy_bQs@toto>
+References: <20240701224421.1432654-1-edgar.iglesias@gmail.com>
+ <20240701224421.1432654-3-edgar.iglesias@gmail.com>
+ <ZoawbAnukIBkYWCw@l14> <87wmm1m7i3.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Disposition: inline
-In-Reply-To: <20240701110241.2005222-20-smostafa@google.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=jean-philippe@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87wmm1m7i3.fsf@draig.linaro.org>
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF000252A2:EE_|DS0PR12MB7995:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5b88fb85-c7c4-414a-54f1-08dc9c59f00c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|36860700013|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?lSTjJ81PxN0lSR9gfPK7O5MTICJw5wS8Xi5eYX/jjs6tdK24I3itEjkkSF?=
+ =?iso-8859-1?Q?clnlExTr72Eo9gvIxku5nB6b1rwYEV7j+UAy7id3sN1BJ9Q4coaNNQcosC?=
+ =?iso-8859-1?Q?6n4CYDdO9+ZHjcAm+WcTKq7vQZ9iYi26A9LqMOKq9cNKhD0cTI62doDh7S?=
+ =?iso-8859-1?Q?Cklyxa5rONVz9I1UHaEcmhxhk9swLxjPy16W9/uu+bIBZljeFsJfpAdgkJ?=
+ =?iso-8859-1?Q?47rLbBvAUNAhwrdZaM07ChQReGPNeqyHer7SLBvincYSrD9phWgyiCpq3/?=
+ =?iso-8859-1?Q?xnrTLvJGBteGKH6cPzYgaLzvGtXCZwK06Tdh4Pc/yd+Y2POD5y4+2FENsg?=
+ =?iso-8859-1?Q?iQqpy+cWfr7pSZnTk8ArZ6v+wc5MtSXkZ21J5iamlHBAWqvfknOVc89h3f?=
+ =?iso-8859-1?Q?Ca/a3yn4//uA1h/9EQ1iH+483kSiY8Ocj8B+GcdpWcbQCk3zNdH1zZVT6V?=
+ =?iso-8859-1?Q?hUTAx9ixkwieLexdzEvd9xo2CI5p7SgfzWejrtjMtoY1bgyvKck3OYUKC4?=
+ =?iso-8859-1?Q?c55EhSdpJO/jP8I9crlOuZF87g6nGt6f5xi59APnzniHq2qb5wTH/6awrF?=
+ =?iso-8859-1?Q?F9rm41qEgya+JzoafrfnJ5zz7HUNz0NaJQCn3cpYs/UW6uWIq+cA7tIIsd?=
+ =?iso-8859-1?Q?rXHuihd0R7HfNUe3v1DusaeAzrcMyUW/HNWRhLKmvNrT3rQ1RdvKhD6lW8?=
+ =?iso-8859-1?Q?am3n10KpYJh5BCcMCOEVdEPsKj/Auj/O98pVvuOOyA6RFqydDC6aTgRtpY?=
+ =?iso-8859-1?Q?vhdF+dJ5VlcgAC9HPTekbhVGMlB5n5D0SRYg+O9QOJoN81JRVRLGKwHbJY?=
+ =?iso-8859-1?Q?B/IZ9WKwzTWPqtvyYSe2+eoRaVUnTabC2g3q/SYsXOnk6OqY20LZHzc35D?=
+ =?iso-8859-1?Q?RR2yRbtu4ar4ysu3okLpPKQelnIpT7MLdyBc4WS/0rG675xKRbYINj2KNe?=
+ =?iso-8859-1?Q?b+r8PXLfwNhuSS/EKZHjRTXCHiX9UOaxeEMevpm0Uimp89K1phggKkvE44?=
+ =?iso-8859-1?Q?j4N2WXfD9ytCiOuvuJO6kLeG7t5wqUvptH+4L7/zrimnveq+bm07DhueP2?=
+ =?iso-8859-1?Q?DD8uqBAglM1XycGE4ksnebbdWZ8RAzc8B4UEEW4pQF6z44Fy0XqdbvhDlY?=
+ =?iso-8859-1?Q?yaEbBrtTNbI1LZjpBUgTocT+sLqrSEgAWcMSAnjYjSLCL26z53TcD0nEf9?=
+ =?iso-8859-1?Q?o+gZMyc2zbasv4fzjRoXlEsv7UNATcyA5ltjOuIG3Zu4lMt9ut6a70MjSb?=
+ =?iso-8859-1?Q?PDe9APxCxxcFbngqUhpMgoruiRFEAjnIclESvjHN3rwPn8ah2U1SA7Jomj?=
+ =?iso-8859-1?Q?OVzZjv83phHzjBsnud697/9/FZWEQqxm6OMV45SHXbUd1CdPtPxRFPzXlG?=
+ =?iso-8859-1?Q?v8kTKSphElnSQmiSRy/WwZ+bEZVFUBMnmNbdVCFbakzLHcYAxADjE6SP6o?=
+ =?iso-8859-1?Q?mgsp3o4Gln+RxwV+UFnQcFNTSKkbIQaKSgBQeCGUDokzIdt74LkiAAUI1h?=
+ =?iso-8859-1?Q?0BBV3rjTLUdkWO0+adHOzf?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jul 2024 18:48:47.2192 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5b88fb85-c7c4-414a-54f1-08dc9c59f00c
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF000252A2.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7995
+Received-SPF: permerror client-ip=40.107.237.66;
+ envelope-from=Edgar.Iglesias@amd.com;
+ helo=NAM12-BN8-obe.outbound.protection.outlook.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,183 +148,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+From:  "Edgar E. Iglesias" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 01, 2024 at 11:02:41AM +0000, Mostafa Saleh wrote:
-> SMMUv3 OAS is currently hardcoded in the code to 44 bits, for nested
-> configurations that can be a problem, as stage-2 might be shared with
-> the CPU which might have different PARANGE, and according to SMMU manual
-> ARM IHI 0070F.b:
->     6.3.6 SMMU_IDR5, OAS must match the system physical address size.
+On Thu, Jul 04, 2024 at 05:44:52PM +0100, Alex Bennée wrote:
+> Anthony PERARD <anthony.perard@vates.tech> writes:
 > 
-> This patch doesn't change the SMMU OAS, but refactors the code to
-> make it easier to do that:
-> - Rely everywhere on IDR5 for reading OAS instead of using the
->   SMMU_IDR5_OAS macro, so, it is easier just to change IDR5 and
->   it propagages correctly.
-> - Add additional checks when OAS is greater than 48bits.
-> - Remove unused functions/macros: pa_range/MAX_PA.
+> > On Tue, Jul 02, 2024 at 12:44:21AM +0200, Edgar E. Iglesias wrote:
+> >> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> >> 
+> >> This fixes the clobbering of the entry->next pointer when
+> >> unmapping the first entry in a bucket of a mapcache.
+> >> 
+> >> Fixes: 123acd816d ("xen: mapcache: Unmap first entries in buckets")
+> >> Reported-by: Anthony PERARD <anthony.perard@vates.tech>
+> >> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> >> ---
+> >>  hw/xen/xen-mapcache.c | 12 +++++++++++-
+> >>  1 file changed, 11 insertions(+), 1 deletion(-)
+> >> 
+> >> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+> >> index 5f23b0adbe..18ba7b1d8f 100644
+> >> --- a/hw/xen/xen-mapcache.c
+> >> +++ b/hw/xen/xen-mapcache.c
+> >> @@ -597,7 +597,17 @@ static void xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
+> >>          pentry->next = entry->next;
+> >>          g_free(entry);
+> >>      } else {
+> >> -        memset(entry, 0, sizeof *entry);
+> >> +        /*
+> >> +         * Invalidate mapping but keep entry->next pointing to the rest
+> >> +         * of the list.
+> >> +         *
+> >> +         * Note that lock is already zero here, otherwise we don't unmap.
+> >> +         */
+> >> +        entry->paddr_index = 0;
+> >> +        entry->vaddr_base = NULL;
+> >> +        entry->valid_mapping = NULL;
+> >> +        entry->flags = 0;
+> >> +        entry->size = 0;
+> >
+> > This kind of feels like mc->entry should be an array of pointer rather
+> > than an array of MapCacheEntry but that seems to work well enough and
+> > not the first time entries are been cleared like that.
 > 
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Mostafa Saleh <smostafa@google.com>
+> The use of a hand rolled list is a bit of a concern considering QEMU and
+> Glib both provide various abstractions used around the rest of the code
+> base. The original patch that introduces the mapcache doesn't tell me
+> much about access patterns for the cache, just that it is trying to
+> solve memory exhaustion issues with lots of dynamic small mappings.
+> 
+> Maybe a simpler structure is desirable?
+> 
+> We also have an interval tree implementation ("qemu/interval-tree.h") if
+> what we really want is a sorted tree of memory that can be iterated
+> locklessly.
+> 
 
-Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Yes, it would be interesting to benchmark other options.
+I agree that we should at minimum reuse existing lists/hash tables.
 
-> ---
->  hw/arm/smmu-common.c     |  7 ++++---
->  hw/arm/smmuv3-internal.h | 13 -------------
->  hw/arm/smmuv3.c          | 35 ++++++++++++++++++++++++++++-------
->  3 files changed, 32 insertions(+), 23 deletions(-)
-> 
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index faba4adc49..2cff80e5dd 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -452,7 +452,8 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
->      inputsize = 64 - tt->tsz;
->      level = 4 - (inputsize - 4) / stride;
->      indexmask = VMSA_IDXMSK(inputsize, stride, level);
-> -    baseaddr = extract64(tt->ttb, 0, 48);
-> +
-> +    baseaddr = extract64(tt->ttb, 0, cfg->oas);
->      baseaddr &= ~indexmask;
->  
->      while (level < VMSA_LEVELS) {
-> @@ -576,8 +577,8 @@ static int smmu_ptw_64_s2(SMMUTransCfg *cfg,
->       * Get the ttb from concatenated structure.
->       * The offset is the idx * size of each ttb(number of ptes * (sizeof(pte))
->       */
-> -    uint64_t baseaddr = extract64(cfg->s2cfg.vttb, 0, 48) + (1 << stride) *
-> -                                  idx * sizeof(uint64_t);
-> +    uint64_t baseaddr = extract64(cfg->s2cfg.vttb, 0, cfg->s2cfg.eff_ps) +
-> +                                  (1 << stride) * idx * sizeof(uint64_t);
->      dma_addr_t indexmask = VMSA_IDXMSK(inputsize, stride, level);
->  
->      baseaddr &= ~indexmask;
-> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-> index 0f3ecec804..0ebf2eebcf 100644
-> --- a/hw/arm/smmuv3-internal.h
-> +++ b/hw/arm/smmuv3-internal.h
-> @@ -602,19 +602,6 @@ static inline int oas2bits(int oas_field)
->      return -1;
->  }
->  
-> -static inline int pa_range(STE *ste)
-> -{
-> -    int oas_field = MIN(STE_S2PS(ste), SMMU_IDR5_OAS);
-> -
-> -    if (!STE_S2AA64(ste)) {
-> -        return 40;
-> -    }
-> -
-> -    return oas2bits(oas_field);
-> -}
-> -
-> -#define MAX_PA(ste) ((1 << pa_range(ste)) - 1)
-> -
->  /* CD fields */
->  
->  #define CD_VALID(x)   extract32((x)->word[0], 31, 1)
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 88378e83dd..6954b385c7 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -410,10 +410,10 @@ static bool s2t0sz_valid(SMMUTransCfg *cfg)
->      }
->  
->      if (cfg->s2cfg.granule_sz == 16) {
-> -        return (cfg->s2cfg.tsz >= 64 - oas2bits(SMMU_IDR5_OAS));
-> +        return (cfg->s2cfg.tsz >= 64 - cfg->s2cfg.eff_ps);
->      }
->  
-> -    return (cfg->s2cfg.tsz >= MAX(64 - oas2bits(SMMU_IDR5_OAS), 16));
-> +    return (cfg->s2cfg.tsz >= MAX(64 - cfg->s2cfg.eff_ps, 16));
->  }
->  
->  /*
-> @@ -434,8 +434,11 @@ static bool s2_pgtable_config_valid(uint8_t sl0, uint8_t t0sz, uint8_t gran)
->      return nr_concat <= VMSA_MAX_S2_CONCAT;
->  }
->  
-> -static int decode_ste_s2_cfg(SMMUTransCfg *cfg, STE *ste)
-> +static int decode_ste_s2_cfg(SMMUv3State *s, SMMUTransCfg *cfg,
-> +                             STE *ste)
->  {
-> +    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
-> +
->      if (STE_S2AA64(ste) == 0x0) {
->          qemu_log_mask(LOG_UNIMP,
->                        "SMMUv3 AArch32 tables not supported\n");
-> @@ -468,7 +471,15 @@ static int decode_ste_s2_cfg(SMMUTransCfg *cfg, STE *ste)
->      }
->  
->      /* For AA64, The effective S2PS size is capped to the OAS. */
-> -    cfg->s2cfg.eff_ps = oas2bits(MIN(STE_S2PS(ste), SMMU_IDR5_OAS));
-> +    cfg->s2cfg.eff_ps = oas2bits(MIN(STE_S2PS(ste), oas));
-> +    /*
-> +     * For SMMUv3.1 and later, when OAS == IAS == 52, the stage 2 input
-> +     * range is further limited to 48 bits unless STE.S2TG indicates a
-> +     * 64KB granule.
-> +     */
-> +    if (cfg->s2cfg.granule_sz != 16) {
-> +        cfg->s2cfg.eff_ps = MIN(cfg->s2cfg.eff_ps, 48);
-> +    }
->      /*
->       * It is ILLEGAL for the address in S2TTB to be outside the range
->       * described by the effective S2PS value.
-> @@ -544,6 +555,7 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
->                        STE *ste, SMMUEventInfo *event)
->  {
->      uint32_t config;
-> +    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
->      int ret;
->  
->      if (!STE_VALID(ste)) {
-> @@ -587,8 +599,8 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
->           * Stage-1 OAS defaults to OAS even if not enabled as it would be used
->           * in input address check for stage-2.
->           */
-> -        cfg->oas = oas2bits(SMMU_IDR5_OAS);
-> -        ret = decode_ste_s2_cfg(cfg, ste);
-> +        cfg->oas = oas2bits(oas);
-> +        ret = decode_ste_s2_cfg(s, cfg, ste);
->          if (ret) {
->              goto bad_ste;
->          }
-> @@ -714,6 +726,7 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
->      int i;
->      SMMUTranslationStatus status;
->      SMMUTLBEntry *entry;
-> +    uint8_t oas = FIELD_EX32(s->idr[5], IDR5, OAS);
->  
->      if (!CD_VALID(cd) || !CD_AARCH64(cd)) {
->          goto bad_cd;
-> @@ -732,7 +745,7 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
->      cfg->aa64 = true;
->  
->      cfg->oas = oas2bits(CD_IPS(cd));
-> -    cfg->oas = MIN(oas2bits(SMMU_IDR5_OAS), cfg->oas);
-> +    cfg->oas = MIN(oas2bits(oas), cfg->oas);
->      cfg->tbi = CD_TBI(cd);
->      cfg->asid = CD_ASID(cd);
->      cfg->affd = CD_AFFD(cd);
-> @@ -761,6 +774,14 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
->              goto bad_cd;
->          }
->  
-> +        /*
-> +         * An address greater than 48 bits in size can only be output from a
-> +         * TTD when, in SMMUv3.1 and later, the effective IPS is 52 and a 64KB
-> +         * granule is in use for that translation table
-> +         */
-> +        if (tt->granule_sz != 16) {
-> +            cfg->oas = MIN(cfg->oas, 48);
-> +        }
->          tt->tsz = tsz;
->          tt->ttb = CD_TTB(cd, i);
->  
-> -- 
-> 2.45.2.803.g4e1b14247a-goog
-> 
+We've also had some discussions around removing it partially or alltogether but
+there are some concerns around that. We're going to need something to
+keep track of grants. For 32-bit hosts, it's a problem to exhaust virtual
+address-space if mapping all of the guest (are folks still using 32-bit hosts?).
+There may be other issues aswell.
+
+Some benefits are that we'll remove some of the complexity and latency for mapping
+and unmapping stuff continously.
+
+Cheers,
+Edgar
 
