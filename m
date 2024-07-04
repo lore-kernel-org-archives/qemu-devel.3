@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E8AC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 09:59:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A376C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 09:59:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPJEL-0006Rx-Il; Thu, 04 Jul 2024 05:58:21 -0400
+	id 1sPJEI-0006RC-1V; Thu, 04 Jul 2024 05:58:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPJEK-0006Rf-FD
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:58:20 -0400
+ id 1sPJEG-0006Qj-8C
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:58:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPJEI-00085t-OX
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:58:20 -0400
+ id 1sPJEE-000854-JJ
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:58:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720087098;
+ s=mimecast20190719; t=1720087093;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:  content-type:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=slf3JlT9Ki235quSaIGjyx/R7fsjuK4UD3wvGiUiUBA=;
- b=EywLIMiasiZd/rVIq+yrzeIUD23fZNOr1lPoktzWyJil9LK4qsm8Rj5GsHIpPNaSOM80Lg
- lOGAZevcK8vfWnY8T7yeUvEYV/anbWAq7ZLI5R95nqunBiK0Rl36sZZNU94LDtHcUqrSlx
- 1K2Pz8tC/CkdFiprlKhb8cr4dbMMJAs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EYG7z0+92zsKHX2B0kS2w6WkiJ9TG5QWULKkYSPwyBU=;
+ b=GorGj7byopdBn3WFbRVhRUI2tLdJOVj9jMPFdjpHW0XefOmlgT1l8E4veCMXb/XfITj09M
+ meyeqSPhCq5rv1dFN3wZmEg7dJ2OERrH4NS+mt4xGikAXbCiygF8iQu3qWDKmEdHKj2h6N
+ RKd6hrqGx/+SjRFRpPnAAZE/sArAxdk=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-536-4KMqoXwQMomC3hojiXdvDQ-1; Thu, 04 Jul 2024 05:58:09 -0400
-X-MC-Unique: 4KMqoXwQMomC3hojiXdvDQ-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3678f403afaso306743f8f.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 02:58:09 -0700 (PDT)
+ us-mta-582-o-fV7CN6NCCRB8Jj-ZFBkQ-1; Thu, 04 Jul 2024 05:58:11 -0400
+X-MC-Unique: o-fV7CN6NCCRB8Jj-ZFBkQ-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52ea249d1c9so187217e87.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 02:58:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720087088; x=1720691888;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=slf3JlT9Ki235quSaIGjyx/R7fsjuK4UD3wvGiUiUBA=;
- b=CjfmOIEcRvFDFPvghafGlEbDyIl4r2tryoSlhvmIh8i07b4OvBLRwffBTapWjokyj0
- bqIFDIWhPEDB0EGUExIix7MSXo3zQ90AgeOuESZfbbDjd/lLuM+FDXO94sDNJ2vhZFXc
- c+Few9OeZfFlMd54QNDpetudfA+GoRrm3Wl3l0C60x7DVhR9CUeJMlkXNyB2vB3Vv9AO
- aaA0cwqSvnu2LW6g1BblfSofAotBcm1oxA7QO19dihlK+op0Vig+PFrg/uhE6kSfuzFr
- 31No5kI1G783g5H3/CInB1zFzwQdzre0/Ko6pDkyoy2N/DqpdL1B9b8bcb4+Ep/8n3zG
- uvPg==
-X-Gm-Message-State: AOJu0Yyl/TN1Y9IYNmxN0NP9I9FYh2qd+P9Pfa78oNyHZCDZfY5FAK61
- s5doT/qQjpNOa1X5liImljuKraOsyok8c0p7k9ASJ/gLzzoDiRLI4N+uetLMymECeCNt68TBVHH
- CQOin/c1EJqvK7s5Le3pLEQUS9vTmYEyL8GY9dMH2Jy20C5a8tw6+7UUFr5Z88uVnJtO1mMW8XV
- FtElJG/2NZnQLT9iCBPlCwS88MOirvk8IrytLb
-X-Received: by 2002:adf:fe8d:0:b0:360:775d:f909 with SMTP id
- ffacd0b85a97d-3679dd67443mr1053900f8f.55.1720087088374; 
- Thu, 04 Jul 2024 02:58:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQNs7WTVvOfILI2JhJ/Z+lTzAmfjO7/4D/Bqw6kR7cqkrr84sv+AEVglBcPD4nLQ3cUrnHkA==
-X-Received: by 2002:adf:fe8d:0:b0:360:775d:f909 with SMTP id
- ffacd0b85a97d-3679dd67443mr1053882f8f.55.1720087087912; 
- Thu, 04 Jul 2024 02:58:07 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720087090; x=1720691890;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EYG7z0+92zsKHX2B0kS2w6WkiJ9TG5QWULKkYSPwyBU=;
+ b=ZM8s2VOZTJPTcD8JJ7qWlirZvsh7hh0pH9qmk4yqczTYG+sNZCux2VxkvyygK6Ktgh
+ 9N3KP1FYr9pOELB/jcGJQEjcFfKl8J4sJb5lI1hnG/SRdg5UruQYhfj5RHVGlKB4hI8g
+ pPPzI/ZcZ7iG2axjLUreCbaFyTnd2hi1S7ghgJuKvH75MoBOeGv54iW8dYOYKY1gNLR4
+ DztOXoKxUzc/2wPOpupV+/pu2eax3XtxZsoeOe0+zRmhjPv0KEsxQf46NDo6PgXko4an
+ 34v65DAQIje33vBc0X2Ad76nFlg3YYL70fcPkZ+f0OHU/cxwcWN1VrR8X9R8j92DtXc7
+ 7tAQ==
+X-Gm-Message-State: AOJu0Yw2J7yYhsu9qiklnwObjYRoFpZ2RxXlKjD8hrv+K2v7CG7nbKFP
+ kv7kfyDUb9OrWx6ksgqlR5LS5WIhzkG5/a4XTOuojyi2Rr/Z+5q+J62ZsQlGaGumQyBZoq7CYV+
+ Fy16h/1ZkxEJ2k0uxmy6jerpk+gp1ap8Jz77R2NQEizUd5nx0X+6g4yh0g/d/FKPmShUMJjnZE7
+ cC9s7O9CvAGReJqPxaOq6I8SdFtR2rbVbhkz7N
+X-Received: by 2002:ac2:57c1:0:b0:52e:7125:c70a with SMTP id
+ 2adb3069b0e04-52ea06bc9f4mr801000e87.47.1720087089905; 
+ Thu, 04 Jul 2024 02:58:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHrtf+9BoxgTq+hDNCHdQVz0sxkcrpAjCxOl0rZNolNELJQnztPXtQuW3I5ogVA8NUniAvdVw==
+X-Received: by 2002:ac2:57c1:0:b0:52e:7125:c70a with SMTP id
+ 2adb3069b0e04-52ea06bc9f4mr800991e87.47.1720087089448; 
+ Thu, 04 Jul 2024 02:58:09 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36797bff8cbsm2482392f8f.14.2024.07.04.02.58.07
+ 5b1f17b1804b1-4264a1d50b0sm17612535e9.7.2024.07.04.02.58.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 02:58:07 -0700 (PDT)
+ Thu, 04 Jul 2024 02:58:08 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/16] meson, i386 changes for 2024-07-04
-Date: Thu,  4 Jul 2024 11:57:50 +0200
-Message-ID: <20240704095806.1780273-1-pbonzini@redhat.com>
+Subject: [PULL 01/16] meson: move shared_module() calls where modules are
+ already walked
+Date: Thu,  4 Jul 2024 11:57:51 +0200
+Message-ID: <20240704095806.1780273-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240704095806.1780273-1-pbonzini@redhat.com>
+References: <20240704095806.1780273-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -99,76 +103,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 1a2d52c7fcaeaaf4f2fe8d4d5183dccaeab67768:
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build | 34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-  Merge tag 'pull-request-2024-07-02' of https://gitlab.com/thuth/qemu into staging (2024-07-02 15:49:08 -0700)
-
-are available in the Git repository at:
-
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
-
-for you to fetch changes up to 188569c10d5dc6996bde90ce25645083e9661ecb:
-
-  target/i386/SEV: implement mask_cpuid_features (2024-07-04 11:56:20 +0200)
-
-----------------------------------------------------------------
-* meson: Pass objects and dependencies to declare_dependency(), not static_library()
-* meson: Drop the .fa library suffix
-* target/i386: drop AMD machine check bits from Intel CPUID
-* target/i386: add avx-vnni-int16 feature
-* target/i386: SEV bugfixes
-* target/i386: SEV-SNP -cpu host support
-* char: fix exit issues
-
-----------------------------------------------------------------
-Akihiko Odaki (2):
-      meson: Pass objects and dependencies to declare_dependency()
-      Revert "meson: Propagate gnutls dependency"
-
-Maxim Mikityanskiy (1):
-      char-stdio: Restore blocking mode of stdout on exit
-
-Michal Privoznik (2):
-      i386/sev: Fix error message in sev_get_capabilities()
-      i386/sev: Fallback to the default SEV device if none provided in sev_get_capabilities()
-
-Paolo Bonzini (11):
-      meson: move shared_module() calls where modules are already walked
-      meson: move block.syms dependency out of libblock
-      meson: merge plugin_ldflags into emulator_link_args
-      meson: Drop the .fa library suffix
-      target/i386: pass X86CPU to x86_cpu_get_supported_feature_word
-      target/i386: drop AMD machine check bits from Intel CPUID
-      target/i386: SEV: fix formatting of CPUID mismatch message
-      target/i386: do not include undefined bits in the AMD topoext leaf
-      target/i386: add avx-vnni-int16 feature
-      target/i386: add support for masking CPUID features in confidential guests
-      target/i386/SEV: implement mask_cpuid_features
-
- docs/devel/build-system.rst         |   8 +--
- meson.build                         | 100 ++++++++++++++++++------------------
- target/i386/confidential-guest.h    |  24 +++++++++
- target/i386/cpu.h                   |  10 +++-
- chardev/char-stdio.c                |   4 ++
- hw/i386/pc.c                        |   1 +
- stubs/blk-exp-close-all.c           |   2 +-
- target/i386/cpu.c                   |  40 +++++++++++----
- target/i386/kvm/kvm-cpu.c           |   2 +-
- target/i386/kvm/kvm.c               |   5 ++
- target/i386/sev.c                   |  51 ++++++++++++++----
- .gitlab-ci.d/buildtest-template.yml |   2 -
- .gitlab-ci.d/buildtest.yml          |   2 -
- block/meson.build                   |   2 +-
- gdbstub/meson.build                 |   6 +--
- io/meson.build                      |   2 +-
- plugins/meson.build                 |   7 ++-
- pythondeps.toml                     |   2 +-
- storage-daemon/meson.build          |   3 +-
- tcg/meson.build                     |   8 +--
- tests/Makefile.include              |   2 +-
- tests/qtest/libqos/meson.build      |   3 +-
- ui/meson.build                      |   2 +-
- 23 files changed, 183 insertions(+), 105 deletions(-)
+diff --git a/meson.build b/meson.build
+index 54e6b09f4fb..8909f8c87d9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3602,6 +3602,7 @@ modinfo_files = []
+ 
+ block_mods = []
+ system_mods = []
++emulator_modules = []
+ foreach d, list : modules
+   if not (d == 'block' ? have_block : have_system)
+     continue
+@@ -3609,14 +3610,20 @@ foreach d, list : modules
+ 
+   foreach m, module_ss : list
+     if enable_modules
++      module_ss.add(modulecommon)
+       module_ss = module_ss.apply(config_all_devices, strict: false)
+       sl = static_library(d + '-' + m, [genh, module_ss.sources()],
+-                          dependencies: [modulecommon, module_ss.dependencies()], pic: true)
++                          dependencies: module_ss.dependencies(), pic: true)
+       if d == 'block'
+         block_mods += sl
+       else
+         system_mods += sl
+       endif
++      emulator_modules += shared_module(sl.name(),
++                    name_prefix: '',
++                    link_whole: sl,
++                    install: true,
++                    install_dir: qemu_moddir)
+       if module_ss.sources() != []
+         # FIXME: Should use sl.extract_all_objects(recursive: true) as
+         # input. Sources can be used multiple times but objects are
+@@ -3642,6 +3649,7 @@ endforeach
+ foreach d, list : target_modules
+   foreach m, module_ss : list
+     if enable_modules
++      module_ss.add(modulecommon)
+       foreach target : target_dirs
+         if target.endswith('-softmmu')
+           config_target = config_target_mak[target]
+@@ -3654,11 +3662,16 @@ foreach d, list : target_modules
+             module_name = d + '-' + m + '-' + config_target['TARGET_NAME']
+             sl = static_library(module_name,
+                                 [genh, target_module_ss.sources()],
+-                                dependencies: [modulecommon, target_module_ss.dependencies()],
++                                dependencies: target_module_ss.dependencies(),
+                                 include_directories: target_inc,
+                                 c_args: c_args,
+                                 pic: true)
+             system_mods += sl
++            emulator_modules += shared_module(sl.name(),
++                    name_prefix: '',
++                    link_whole: sl,
++                    install: true,
++                    install_dir: qemu_moddir)
+             # FIXME: Should use sl.extract_all_objects(recursive: true) too.
+             modinfo_files += custom_target(module_name + '.modinfo',
+                                            output: module_name + '.modinfo',
+@@ -3692,6 +3705,10 @@ if enable_modules
+       hw_arch[arch].add(modinfo_dep)
+     endif
+   endforeach
++
++  if emulator_modules.length() > 0
++    alias_target('modules', emulator_modules)
++  endif
+ endif
+ 
+ nm = find_program('nm')
+@@ -3785,19 +3802,6 @@ common_ss.add(hwcore)
+ # Targets #
+ ###########
+ 
+-emulator_modules = []
+-foreach m : block_mods + system_mods
+-  emulator_modules += shared_module(m.name(),
+-                build_by_default: true,
+-                name_prefix: '',
+-                link_whole: m,
+-                install: true,
+-                install_dir: qemu_moddir)
+-endforeach
+-if emulator_modules.length() > 0
+-  alias_target('modules', emulator_modules)
+-endif
+-
+ system_ss.add(authz, blockdev, chardev, crypto, io, qmp)
+ common_ss.add(qom, qemuutil)
+ 
 -- 
 2.45.2
 
