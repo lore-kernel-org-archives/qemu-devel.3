@@ -4,41 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD49C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F731C3271E
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 15:54:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPOlq-0000G9-DN; Thu, 04 Jul 2024 11:53:20 -0400
+	id 1sPOla-0000CY-OG; Thu, 04 Jul 2024 11:53:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPOlf-0000Dl-8D; Thu, 04 Jul 2024 11:53:08 -0400
+ id 1sPOlY-0000Bk-DD; Thu, 04 Jul 2024 11:53:00 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPOlZ-0001zl-Rm; Thu, 04 Jul 2024 11:53:06 -0400
+ id 1sPOlU-0001yc-UX; Thu, 04 Jul 2024 11:52:58 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 747AE77491;
+ by isrv.corpit.ru (Postfix) with ESMTP id 49AF07748E;
  Thu,  4 Jul 2024 18:52:46 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 38A4CFEADC;
+ by tsrv.corpit.ru (Postfix) with SMTP id 10A0AFEAD9;
  Thu,  4 Jul 2024 18:52:51 +0300 (MSK)
-Received: (nullmailer pid 1481677 invoked by uid 1000);
+Received: (nullmailer pid 1481666 invoked by uid 1000);
  Thu, 04 Jul 2024 15:52:51 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dongwon Kim <dongwon.kim@intel.com>,
- Vivek Kasireddy <vivek.kasireddy@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.6 03/18] ui/gtk: Draw guest frame at refresh cycle
-Date: Thu,  4 Jul 2024 18:52:34 +0300
-Message-Id: <20240704155251.1481617-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.6 00/18] Patch Round-up for stable 8.2.6,
+ freeze on 2024-07-14
+Date: Thu,  4 Jul 2024 18:52:31 +0300
+Message-Id: <qemu-stable-8.2.6-20240704154854@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-8.2.6-20240704154854@cover.tls.msk.ru>
-References: <qemu-stable-8.2.6-20240704154854@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -48,7 +43,7 @@ X-Spam_score_int: -68
 X-Spam_score: -6.9
 X-Spam_bar: ------
 X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,53 +59,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+The following patches are queued for QEMU stable v8.2.6:
 
-Draw routine needs to be manually invoked in the next refresh
-if there is a scanout blob from the guest. This is to prevent
-a situation where there is a scheduled draw event but it won't
-happen bacause the window is currently in inactive state
-(minimized or tabified). If draw is not done for a long time,
-gl_block timeout and/or fence timeout (on the guest) will happen
-eventually.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-8.2
 
-v2: Use gd_gl_area_draw(vc) in gtk-gl-area.c
+Patch freeze is 2024-07-14, and the release is planned for 2024-07-16:
 
-Suggested-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20240426225059.3871283-1-dongwon.kim@intel.com>
-(cherry picked from commit 77bf310084dad38b3a2badf01766c659056f1cf2)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+  https://wiki.qemu.org/Planning/8.2
 
-diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
-index 955234429d..bceeeb0352 100644
---- a/ui/gtk-egl.c
-+++ b/ui/gtk-egl.c
-@@ -150,6 +150,7 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
-             vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
-     if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+        gd_egl_draw(vc);
-         return;
-     }
- 
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 7fffd0544e..b490727402 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -126,6 +126,7 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
-     gd_update_monitor_refresh_rate(vc, vc->window ? vc->window : vc->gfx.drawing_area);
- 
-     if (vc->gfx.guest_fb.dmabuf && vc->gfx.guest_fb.dmabuf->draw_submitted) {
-+        gd_gl_area_draw(vc);
-         return;
-     }
- 
--- 
-2.39.2
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 3973615e7fba Mark Cave-Ayland:
+   target/i386: fix size of EBP writeback in gen_enter()
+02 2c3e4e2de699 Alexey Dobriyan:
+   virtio-net: drop too short packets early
+03 77bf310084da Dongwon Kim:
+   ui/gtk: Draw guest frame at refresh cycle
+04 a276ec8e2632 Philippe Mathieu-Daudé:
+   hw/audio/virtio-snd: Always use little endian audio format
+05 b1cf266c82cb Gerd Hoffmann:
+   stdvga: fix screen blanking
+06 3b279f73fa37 Anton Johansson:
+   accel/tcg: Fix typo causing tb->page_addr[1] to not be recorded
+07 54b27921026d Ilya Leoshkevich:
+   linux-user: Make TARGET_NR_setgroups affect only the current thread
+08 6b4965373e56 Clément Chigot:
+   target/sparc: use signed denominator in sdiv helper
+09 521d7fb3ebdf Richard Henderson:
+   tcg/loongarch64: Fix tcg_out_movi vs some pcrel pointers
+10 6d3279655ac4 Fabiano Rosas:
+   migration: Fix file migration with fdset
+11 641b1efe01b2 Thomas Huth:
+   tests: Update our CI to use CentOS Stream 9 instead of 8
+12 903916f0a017 Chuang Xu:
+   i386/cpu: fixup number of addressable IDs for processor cores in the 
+   physical package
+13 76bccf3cb9d9 Richard Henderson:
+   target/arm: Fix VCMLA Dd, Dn, Dm[idx]
+14 7619129f0d4a Richard Henderson:
+   target/arm: Fix FJCVTZS vs flush-to-zero
+15 bd385a5298d7 Kevin Wolf:
+   qcow2: Don't open data_file with BDRV_O_NO_IO
+16 2eb42a728d27 Kevin Wolf:
+   iotests/244: Don't store data-file with protocol in image
+17 7e1110664ecb Kevin Wolf:
+   iotests/270: Don't store data-file with json: prefix in image
+18 7ead94699861 Kevin Wolf:
+   block: Parse filenames only when explicitly requested
 
