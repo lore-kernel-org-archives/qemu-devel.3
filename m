@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D16C3065C
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 06:21:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B86C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 06:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPFpp-00043H-Pk; Thu, 04 Jul 2024 02:20:49 -0400
+	id 1sPFtW-0005zU-6t; Thu, 04 Jul 2024 02:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPFpm-000426-7u; Thu, 04 Jul 2024 02:20:46 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPFpk-0007tW-CN; Thu, 04 Jul 2024 02:20:45 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-7066c799382so211942b3a.3; 
- Wed, 03 Jul 2024 23:20:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720074042; x=1720678842; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Gv50ANTbR1SgSYBiJC3uWBfK+qv8YSp1D/PlLAybUwU=;
- b=MvaLwgudjlFlWi8AilhIS8nknnrbubQde5yOlcz8B76VXUNfL8qlMF9TgzMJn+WedL
- sGvMD74jRrF7OQxEMkDHnf840ZG6Gs10UdaNFVkSWRuw/lT5ikbBWFrgTwq3zMBdBscj
- Sd3pUK6M2roMiNaSx6s2UPZEp9cG5WYjNLX/3E5XcwnrDXwlnJWGrq+Y5a3kLeF1tpEy
- kGwM1U0jRRpQPNXi+Hhklj/9ZwPLA2Te1HCs8o0HSeWIBuibI9/5vMIJkN4N304DdNdV
- 4sOb1+4NQLVQHGwPXuzi6YhMO1OTnCvhlzqZJ/hVGBC/Pib6ubvxGQIRN/cSkvP1TRwX
- eqxg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPFtQ-0005yR-HW
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 02:24:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPFtN-0002Nw-3x
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 02:24:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720074265;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NbWAN/jWLPxSh31gcHe1aEGF01n6sh9YS0SIckHY8Rg=;
+ b=dPVoviCCVaBDwXzrvEQNOhOBVuJ3q5IrvMqmWS/WM/syEY49H35+GGLQ4WjftwoeZsB6be
+ w+WFxlAfL3oKWSA8p2xhlHAVrgJEdKA8LgpcshU2UwSV7eFDHSF/aiMTV07ki3cTFjLeOD
+ wDxax1g+vIiW3LWbGdRTWIqFM+UM+yU=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-606-rvfMOaouNy-Hmpi5fyk-mw-1; Thu, 04 Jul 2024 02:24:24 -0400
+X-MC-Unique: rvfMOaouNy-Hmpi5fyk-mw-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a7244d1b086so23714366b.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Jul 2024 23:24:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720074042; x=1720678842;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Gv50ANTbR1SgSYBiJC3uWBfK+qv8YSp1D/PlLAybUwU=;
- b=BSPE1FvxHY5k4whbMBmsK6Be5oHfzef5GrdhU5lWEUbjB5eHvp9gMCy6iIg2+lmTxK
- UZRMexnn9pbxwHTDOFypQDhMdbDxe67F+UfkpnnLCHooydFzwKjAKlqeKp6YKL6PRjWN
- xJQTTvo4r2aoEsEztBcXbbAWZ3NWpm/XTqPID60o44oG0J/FSbWiSJjN5IdQetSf0ohi
- eNKmuDM7zVQEZHT2pMSCmiy+mwf6lqDuAZk55pqSbNaY1+ALFUl5l6FJ5CpCrrO0fz0D
- kRosx5hCzIwNft37o7Rl4tN/j+hGVZkg5CRBgwPyoYE5zpZkNDwdOZNEz0Hkx62zA/Zv
- jIRw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWb8ZDoA+XTANB3Yf+4m0A98P45gGUbhEzo6q296kMq+0qonmOA6hTQYAoI3ufL3IzMh3Z3jhDLsrGNWaEzmpMl6Vd976bfSNZuS4ddHwDnCz/RVTrOjcWo3VM=
-X-Gm-Message-State: AOJu0YxwD2i0ucztIic56P9Eg9hQ8SNyHATDEvFhf2USEz5phhmCv3rd
- gQ/YANc6vCi1kUK81bn7UDyL296f63qPKEqSGfcT4+wMBcLLViRy
-X-Google-Smtp-Source: AGHT+IEzLwbW82lrvico/HXJ23a7iVk6+uywg/vfNv3O+E8geAMGiEEHI/dmM+bUlBPdXuZmq9EBuA==
-X-Received: by 2002:a05:6a21:3384:b0:1be:e01d:b1c5 with SMTP id
- adf61e73a8af0-1c0cc7552e4mr669620637.4.1720074042236; 
- Wed, 03 Jul 2024 23:20:42 -0700 (PDT)
-Received: from localhost ([1.146.24.72]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fb01f6f02asm40597955ad.279.2024.07.03.23.20.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Jul 2024 23:20:41 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 04 Jul 2024 16:20:36 +1000
-Message-Id: <D2GJCVQOTZDD.2LV9K1YJQB2BA@gmail.com>
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
-Subject: Re: [PATCH 16/43] target/ppc/mmu_common.c: Inline and remove
- ppc6xx_tlb_pte_check()
-X-Mailer: aerc 0.17.0
-References: <cover.1716763435.git.balaton@eik.bme.hu>
- <67350d0b2e2773d02536ba9cce812361ff1b5a16.1716763435.git.balaton@eik.bme.hu>
-In-Reply-To: <67350d0b2e2773d02536ba9cce812361ff1b5a16.1716763435.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x430.google.com
+ d=1e100.net; s=20230601; t=1720074263; x=1720679063;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NbWAN/jWLPxSh31gcHe1aEGF01n6sh9YS0SIckHY8Rg=;
+ b=G4JhH/9oWfc5HaHmcw8QCisXDNQVQg30Zhqk3/82E3wK69DN3iLgKDOKIaCAXyFwIS
+ a332jZrAockCbXgDo4dqiKnjAqbnZ6wCOnHnF9RY3DjLDxUvb63GKCQjqgGyipWsmZLt
+ Ay1LAG8WqijRPjxt9G7ihYdLYd62x0LQcX+DbT77JIvEYc/GZ98KIB567KPpxqJO/fkn
+ lod1F6urGota7mIyznp79QfGRE3syRiQ9Sx8BWhE/CCWyOkQWzY08iauJzofH9rk9ZNa
+ vDc9oxmqw/xjmrIGXqDvniW5lczK7x90/Tpocf0D7/Yhl3GwnSOSVhGZewvNBrIRJvK1
+ RPqg==
+X-Gm-Message-State: AOJu0YxjqBj1SJTRL7cMQ66x/yT1vQktkb9AzXJisj5NhieYgaH25cP9
+ 2mbsxhi8FZbHsvKY9VN5zbqzJPWQ7pQqYsYqxryspXeaaQytmYCpwoX8Z1qAVmrIGUsvs4K7NJG
+ 9Vkj+GXi/scSzPHYA55/p07CUlqJ4EtFafZ2c5ouMLHVaFCv3jfZI
+X-Received: by 2002:a17:906:c104:b0:a6f:38:6968 with SMTP id
+ a640c23a62f3a-a77ba471103mr46613166b.32.1720074262805; 
+ Wed, 03 Jul 2024 23:24:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHYDQscumDq9gdmeIb41iysaDiaXm/iqg7vGhnR1eh0U1dR+br83EXMEcpNpdSqoNOeUW1/+A==
+X-Received: by 2002:a17:906:c104:b0:a6f:38:6968 with SMTP id
+ a640c23a62f3a-a77ba471103mr46610766b.32.1720074262232; 
+ Wed, 03 Jul 2024 23:24:22 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:441:91a8:a47d:5a9:c02f:92f2])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a72ab08cfb6sm569958666b.159.2024.07.03.23.24.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Jul 2024 23:24:21 -0700 (PDT)
+Date: Thu, 4 Jul 2024 02:24:17 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "peterx@redhat.com" <peterx@redhat.com>
+Subject: Re: [PATCH v1 0/8] PRI support for VT-d
+Message-ID: <20240704022318-mutt-send-email-mst@kernel.org>
+References: <20240530122439.42888-1-clement.mathieu--drif@eviden.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240530122439.42888-1-clement.mathieu--drif@eviden.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,118 +105,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon May 27, 2024 at 9:12 AM AEST, BALATON Zoltan wrote:
-> This function is only called once and we can make the caller simpler
-> by inlining it.
+On Thu, May 30, 2024 at 12:24:58PM +0000, CLEMENT MATHIEU--DRIF wrote:
+> This series belongs to a list of series that add SVM support for VT-d.
+> 
+> Here we focus on the implementation of PRI support in the IOMMU and on a PCI-level
+> API for PRI to be used by virtual devices.
+> 
+> This work is based on the VT-d specification version 4.1 (March 2023).
+> Here is a link to a GitHub repository where you can find the following elements :
+>     - Qemu with all the patches for SVM
+>         - ATS
+>         - PRI
+>         - Device IOTLB invalidations
+>         - Requests with already translated addresses
+>     - A demo device
+>     - A simple driver for the demo device
+>     - A userspace program (for testing and demonstration purposes)
+> 
+> https://github.com/BullSequana/Qemu-in-guest-SVM-demo
 
-I'm inclined to agree. Splitting into function can be nice,
-but translating return values here is pretty horrible.
 
-I think it looks right.
+To make things clear, is this patchset independent or
+does it have a dependency, too?
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  target/ppc/mmu_common.c | 71 +++++++++++++----------------------------
->  1 file changed, 22 insertions(+), 49 deletions(-)
->
-> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
-> index b2993e8563..784e833ff2 100644
-> --- a/target/ppc/mmu_common.c
-> +++ b/target/ppc/mmu_common.c
-> @@ -91,33 +91,6 @@ int ppc6xx_tlb_getnum(CPUPPCState *env, target_ulong e=
-addr,
->      return nr;
->  }
-> =20
-> -static int ppc6xx_tlb_pte_check(mmu_ctx_t *ctx, target_ulong pte0,
-> -                                target_ulong pte1, int pteh,
-> -                                MMUAccessType access_type, bool nx)
-> -{
-> -    /* Check validity and table match */
-> -    if (!pte_is_valid(pte0) || ((pte0 >> 6) & 1) !=3D pteh ||
-> -        (pte0 & PTE_PTEM_MASK) !=3D ctx->ptem) {
-> -        return -1;
-> -    }
-> -    /* all matches should have equal RPN, WIMG & PP */
-> -    if (ctx->raddr !=3D (hwaddr)-1ULL &&
-> -        (ctx->raddr & PTE_CHECK_MASK) !=3D (pte1 & PTE_CHECK_MASK)) {
-> -        qemu_log_mask(CPU_LOG_MMU, "Bad RPN/WIMG/PP\n");
-> -        return -3;
-> -    }
-> -    /* Keep the matching PTE information */
-> -    ctx->raddr =3D pte1;
-> -    ctx->prot =3D ppc_hash32_prot(ctx->key, pte1 & HPTE32_R_PP, nx);
-> -    if (check_prot_access_type(ctx->prot, access_type)) {
-> -        qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
-> -        return 0;
-> -    } else {
-> -        qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
-> -        return -2;
-> -    }
-> -}
-> -
->  /* Software driven TLB helpers */
-> =20
->  static int ppc6xx_tlb_check(CPUPPCState *env,
-> @@ -149,32 +122,32 @@ static int ppc6xx_tlb_check(CPUPPCState *env,
->                        tlb->EPN, eaddr, tlb->pte1,
->                        access_type =3D=3D MMU_DATA_STORE ? 'S' : 'L',
->                        access_type =3D=3D MMU_INST_FETCH ? 'I' : 'D');
-> -        switch (ppc6xx_tlb_pte_check(ctx, tlb->pte0, tlb->pte1,
-> -                                     0, access_type, nx)) {
-> -        case -2:
-> -            /* Access violation */
-> -            ret =3D -2;
-> -            best =3D nr;
-> -            break;
-> -        case -1: /* No match */
-> -        case -3: /* TLB inconsistency */
-> -        default:
-> -            break;
-> -        case 0:
-> -            /* access granted */
-> -            /*
-> -             * XXX: we should go on looping to check all TLBs
-> -             *      consistency but we can speed-up the whole thing as
-> -             *      the result would be undefined if TLBs are not
-> -             *      consistent.
-> -             */
-> +        /* Check validity and table match */
-> +        if (!pte_is_valid(tlb->pte0) || ((tlb->pte0 >> 6) & 1) !=3D 0 ||
-> +            (tlb->pte0 & PTE_PTEM_MASK) !=3D ctx->ptem) {
-> +            continue;
-> +        }
-> +        /* all matches should have equal RPN, WIMG & PP */
-> +        if (ctx->raddr !=3D (hwaddr)-1ULL &&
-> +            (ctx->raddr & PTE_CHECK_MASK) !=3D (tlb->pte1 & PTE_CHECK_MA=
-SK)) {
-> +            qemu_log_mask(CPU_LOG_MMU, "Bad RPN/WIMG/PP\n");
-> +            /* TLB inconsistency */
-> +            continue;
-> +        }
-> +        /* Keep the matching PTE information */
-> +        best =3D nr;
-> +        ctx->raddr =3D tlb->pte1;
-> +        ctx->prot =3D ppc_hash32_prot(ctx->key, tlb->pte1 & HPTE32_R_PP,=
- nx);
-> +        if (check_prot_access_type(ctx->prot, access_type)) {
-> +            qemu_log_mask(CPU_LOG_MMU, "PTE access granted !\n");
->              ret =3D 0;
-> -            best =3D nr;
-> -            goto done;
-> +            break;
-> +        } else {
-> +            qemu_log_mask(CPU_LOG_MMU, "PTE access rejected\n");
-> +            ret =3D -2;
->          }
->      }
->      if (best !=3D -1) {
-> -done:
->          qemu_log_mask(CPU_LOG_MMU, "found TLB at addr " HWADDR_FMT_plx
->                        " prot=3D%01x ret=3D%d\n",
->                        ctx->raddr & TARGET_PAGE_MASK, ctx->prot, ret);
+> Clément Mathieu--Drif (8):
+>   pcie: add a helper to declare the PRI capability for a pcie device
+>   pcie: helper functions to check to check if PRI is enabled
+>   pcie: add a way to get the outstanding page request allocation (pri)
+>     from the config space.
+>   pci: declare structures and IOMMU operation for PRI
+>   pci: add a PCI-level API for PRI
+>   intel_iommu: declare PRI constants and structures
+>   intel_iommu: declare registers for PRI
+>   intel_iommu: add PRI operations support
+> 
+>  hw/i386/intel_iommu.c          | 302 +++++++++++++++++++++++++++++++++
+>  hw/i386/intel_iommu_internal.h |  54 +++++-
+>  hw/pci/pci.c                   |  37 ++++
+>  hw/pci/pcie.c                  |  42 +++++
+>  include/exec/memory.h          |  65 +++++++
+>  include/hw/pci/pci.h           |  45 +++++
+>  include/hw/pci/pci_bus.h       |   1 +
+>  include/hw/pci/pcie.h          |   7 +-
+>  include/hw/pci/pcie_regs.h     |   4 +
+>  system/memory.c                |  49 ++++++
+>  10 files changed, 604 insertions(+), 2 deletions(-)
+> 
+> -- 
+> 2.45.1
 
 
