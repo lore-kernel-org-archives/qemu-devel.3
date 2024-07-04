@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30C70C3814E
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF5D4C3271F
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPTZf-0006UP-7n; Thu, 04 Jul 2024 17:01:03 -0400
+	id 1sPTZi-0006aC-FY; Thu, 04 Jul 2024 17:01:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTZd-0006Qd-EZ; Thu, 04 Jul 2024 17:01:01 -0400
+ id 1sPTZg-0006YF-Vw; Thu, 04 Jul 2024 17:01:05 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTZZ-0004IJ-LT; Thu, 04 Jul 2024 17:01:01 -0400
+ id 1sPTZe-0004J9-5D; Thu, 04 Jul 2024 17:01:04 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 57BA17755D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 70C887755F;
  Fri,  5 Jul 2024 00:00:50 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 6DFF4FEC97;
+ by tsrv.corpit.ru (Postfix) with SMTP id 879E1FEC99;
  Fri,  5 Jul 2024 00:00:55 +0300 (MSK)
-Received: (nullmailer pid 1507710 invoked by uid 1000);
+Received: (nullmailer pid 1507718 invoked by uid 1000);
  Thu, 04 Jul 2024 21:00:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.2 00/22] Patch Round-up for stable 9.0.2,
- freeze on 2024-07-14
-Date: Fri,  5 Jul 2024 00:00:30 +0300
-Message-Id: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alexey Dobriyan <adobriyan@yandex-team.ru>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.2 02/22] virtio-net: drop too short packets early
+Date: Fri,  5 Jul 2024 00:00:32 +0300
+Message-Id: <20240704210055.1507652-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
+References: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -59,68 +60,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v9.0.2:
+From: Alexey Dobriyan <adobriyan@yandex-team.ru>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-9.0
+Reproducer from https://gitlab.com/qemu-project/qemu/-/issues/1451
+creates small packet (1 segment, len = 10 == n->guest_hdr_len),
+then destroys queue.
 
-Patch freeze is 2024-07-14, and the release is planned for 2024-07-16:
+"if (n->host_hdr_len != n->guest_hdr_len)" is triggered, if body creates
+zero length/zero segment packet as there is nothing after guest header.
 
-  https://wiki.qemu.org/Planning/9.0
+qemu_sendv_packet_async() tries to send it.
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+slirp discards it because it is smaller than Ethernet header,
+but returns 0 because tx hooks are supposed to return total length of data.
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+0 is propagated upwards and is interpreted as "packet has been sent"
+which is terrible because queue is being destroyed, nobody is waiting for TX
+to complete and assert it triggered.
 
-Thanks!
+Fix is discard such empty packets instead of sending them.
 
-/mjt
+Length 1 packets will go via different codepath:
 
---------------------------------------
-01 3973615e7fba Mark Cave-Ayland:
-   target/i386: fix size of EBP writeback in gen_enter()
-02 2c3e4e2de699 Alexey Dobriyan:
-   virtio-net: drop too short packets early
-03 77bf310084da Dongwon Kim:
-   ui/gtk: Draw guest frame at refresh cycle
-04 719c6819ed9a Stefan Hajnoczi:
-   Revert "monitor: use aio_co_reschedule_self()"
-05 a276ec8e2632 Philippe Mathieu-Daudé:
-   hw/audio/virtio-snd: Always use little endian audio format
-06 b1cf266c82cb Gerd Hoffmann:
-   stdvga: fix screen blanking
-07 3b279f73fa37 Anton Johansson:
-   accel/tcg: Fix typo causing tb->page_addr[1] to not be recorded
-08 54b27921026d Ilya Leoshkevich:
-   linux-user: Make TARGET_NR_setgroups affect only the current thread
-09 6b4965373e56 Clément Chigot:
-   target/sparc: use signed denominator in sdiv helper
-10 521d7fb3ebdf Richard Henderson:
-   tcg/loongarch64: Fix tcg_out_movi vs some pcrel pointers
-11 6d3279655ac4 Fabiano Rosas:
-   migration: Fix file migration with fdset
-12 641b1efe01b2 Thomas Huth:
-   tests: Update our CI to use CentOS Stream 9 instead of 8
-13 903916f0a017 Chuang Xu:
-   i386/cpu: fixup number of addressable IDs for processor cores in the 
-   physical package
-14 76bccf3cb9d9 Richard Henderson:
-   target/arm: Fix VCMLA Dd, Dn, Dm[idx]
-15 7619129f0d4a Richard Henderson:
-   target/arm: Fix FJCVTZS vs flush-to-zero
-16 9d7950edb0cd Daniel P. Berrangé:
-   hw/core: allow parameter=1 for SMP topology on any machine
-17 e68dcbb07923 Daniel P. Berrangé:
-   tests: add testing of parameter=1 for SMP topology
-18 bd385a5298d7 Kevin Wolf:
-   qcow2: Don't open data_file with BDRV_O_NO_IO
-19 2eb42a728d27 Kevin Wolf:
-   iotests/244: Don't store data-file with protocol in image
-20 7e1110664ecb Kevin Wolf:
-   iotests/270: Don't store data-file with json: prefix in image
-21 7ead94699861 Kevin Wolf:
-   block: Parse filenames only when explicitly requested
-22 a71d9dfbf63d Richard Henderson:
-   tcg/optimize: Fix TCG_COND_TST* simplification of setcond2
+	virtqueue_push(q->tx_vq, elem, 0);
+	virtio_notify(vdev, q->tx_vq);
+	g_free(elem);
+
+and aren't problematic.
+
+Signed-off-by: Alexey Dobriyan <adobriyan@yandex-team.ru>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 2c3e4e2de699cd4d9f6c71f30a22d8f125cd6164)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 24e5e7d347..3644bfd91b 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -2749,18 +2749,14 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+         out_sg = elem->out_sg;
+         if (out_num < 1) {
+             virtio_error(vdev, "virtio-net header not in first element");
+-            virtqueue_detach_element(q->tx_vq, elem, 0);
+-            g_free(elem);
+-            return -EINVAL;
++            goto detach;
+         }
+ 
+         if (n->has_vnet_hdr) {
+             if (iov_to_buf(out_sg, out_num, 0, &vhdr, n->guest_hdr_len) <
+                 n->guest_hdr_len) {
+                 virtio_error(vdev, "virtio-net header incorrect");
+-                virtqueue_detach_element(q->tx_vq, elem, 0);
+-                g_free(elem);
+-                return -EINVAL;
++                goto detach;
+             }
+             if (n->needs_vnet_hdr_swap) {
+                 virtio_net_hdr_swap(vdev, (void *) &vhdr);
+@@ -2791,6 +2787,11 @@ static int32_t virtio_net_flush_tx(VirtIONetQueue *q)
+                              n->guest_hdr_len, -1);
+             out_num = sg_num;
+             out_sg = sg;
++
++            if (out_num < 1) {
++                virtio_error(vdev, "virtio-net nothing to send");
++                goto detach;
++            }
+         }
+ 
+         ret = qemu_sendv_packet_async(qemu_get_subqueue(n->nic, queue_index),
+@@ -2811,6 +2812,11 @@ drop:
+         }
+     }
+     return num_packets;
++
++detach:
++    virtqueue_detach_element(q->tx_vq, elem, 0);
++    g_free(elem);
++    return -EINVAL;
+ }
+ 
+ static void virtio_net_tx_timer(void *opaque);
+-- 
+2.39.2
+
 
