@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F8E4C3065C
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 10:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1626FC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 10:01:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPJEs-00077u-Fh; Thu, 04 Jul 2024 05:58:54 -0400
+	id 1sPJEu-0007Cm-Md; Thu, 04 Jul 2024 05:58:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPJEk-0006up-Dz
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:58:46 -0400
+ id 1sPJEr-000784-EF
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:58:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPJEi-00088i-Oj
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:58:46 -0400
+ id 1sPJEp-00089a-Tp
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:58:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720087123;
+ s=mimecast20190719; t=1720087129;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7MkRViG8QZ36KoPeTrYQRb9R5sxJAqGeAW3NIdlDUcY=;
- b=Urkq4L4IQ2uprxgwuu/HXJLuY0vCp6j/8Ya+pqWPKAn7lErARkj2wVrwUwGnuSP/OTDzzn
- stFvaJtMCeFcu4THV6u6lV9hKtTfw1JNA3ZRUF8obAwOU3a6JZIBlEMwHttoYn6WZ3kD/+
- /X1vhKWc0yH0EImCSbZQ0UILceS1f2w=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8YNBGwi/blnINBXAKV0uUkbw1rjgQvKXb4SGyR3x4F4=;
+ b=iHDadlmrjbUdMSnltO9MtNhtpFdZKNFdZn8m6knaaKkjB+AlXM1kg60vr0mbqfBamovniY
+ C8Bu3iNNkg3taMxMhwafXM9Wyn/3Pvl7brsbe6Iiaoco6w0fuUxgtG7TdHBlXPdsS1qO3c
+ AtMYcY7xdAohbG/3P0WWyRPW9XfUqRc=
+Received: from mail-lj1-f197.google.com (mail-lj1-f197.google.com
+ [209.85.208.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-65-tNuVtscjOc6-240Cr64Ovg-1; Thu, 04 Jul 2024 05:58:41 -0400
-X-MC-Unique: tNuVtscjOc6-240Cr64Ovg-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-367990a5796so328071f8f.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 02:58:41 -0700 (PDT)
+ us-mta-573-VhyKXNYVOwuQhCBSBTcTPw-1; Thu, 04 Jul 2024 05:58:46 -0400
+X-MC-Unique: VhyKXNYVOwuQhCBSBTcTPw-1
+Received: by mail-lj1-f197.google.com with SMTP id
+ 38308e7fff4ca-2ee45dea727so5316061fa.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 02:58:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720087120; x=1720691920;
+ d=1e100.net; s=20230601; t=1720087124; x=1720691924;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=7MkRViG8QZ36KoPeTrYQRb9R5sxJAqGeAW3NIdlDUcY=;
- b=wE9Q+VN4sUvT7XAjP+/kA8prsI8ptUwxdi6LsQhwRqz0nSkqbbp0YmAY7isVSc0Pr9
- uxTARjvDRRQajxKHhnf4PoYHqca3OeXAYTOJsFcaoguwW6OnkzEhzGCemHrq+lCJUFQJ
- HtWBaOK247nlKuBpQZXBG+2SgNr9j63TrwOI3/NKqF92+BfGmioAYHQcSqvDRcbWZI7t
- 1X3pMZIt958Y4U0BX4w84knrIKF1oVRN0A37lJgtKbIxPXQTM/xEFYxrasPiLgYOFRWq
- c1lNUrRQQ1CCuGiR93LTEtcZoHr8TEscHseFg8PX/vcGcKvaTfwb1Y7gtkukMBQKV/sT
- rRyQ==
-X-Gm-Message-State: AOJu0YzRZ1bJW7ujvM//twM1m2RcuDR9873r/pULzXRfW/NBtgJGPIZ9
- A5RtVLjarUXr046OCCRimzEP7hF0xwNSIDq8PbMrWNhz3ndVqcf6F+r6OoP91tAsYxVy8Ne9XVD
- ucPLK155SAjQT+2VLMg/K7S+YgBYpyGrrOk7ubf1JwQTti5Npy+GCa8bybrXmlvPsKMtmMi69mV
- npoV9l27Gu7oqFsTSclwYbsKlDZ0X4XGW1Xsfq
-X-Received: by 2002:a5d:5265:0:b0:367:9ce3:1667 with SMTP id
- ffacd0b85a97d-3679dd3c4eemr791563f8f.15.1720087120022; 
- Thu, 04 Jul 2024 02:58:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGeWQQn67J2uNHzR8rJjJIkc2KFIzrg2kotGZayvEsJHFaCKCLm0Ujp2E8Z28vRLJSuY4OYwg==
-X-Received: by 2002:a5d:5265:0:b0:367:9ce3:1667 with SMTP id
- ffacd0b85a97d-3679dd3c4eemr791554f8f.15.1720087119695; 
- Thu, 04 Jul 2024 02:58:39 -0700 (PDT)
+ bh=8YNBGwi/blnINBXAKV0uUkbw1rjgQvKXb4SGyR3x4F4=;
+ b=ajdvJQ6J+zdTdhg23pVWIPSelOoKKlUg29YqO57wIm0mQzXHBx7WyZKzhiBTIb3t2n
+ v8s6TXU4pzxorbgU3+eOJitYyjPnIFjzQ2Jih8I/sru2Xz061xQ/T7F6Gijcm6/Aavy2
+ zNk/bLjZpSTxCBReZPyuitfPQuOJtw2saFAY+X9TLb8YhQItOJZj5RrKLepY32TNU2k4
+ 25SqMA+Iuj8pcuZ3zt6tFoDiA1Ph+OvYUJTXO9mLPzhlgxzV+Ck4KjdocZY5OtvfWOAA
+ w64oL1LGncJL0b/XLyEba8eyxppYU+zBATqXm71EYwsQ3jAhdbhcGaQDquMa4d7d0hoD
+ ecHA==
+X-Gm-Message-State: AOJu0YxQeKc5aryteQa0ljDc77XIU98C92rr/9xabOfVRHPd9nc1mZPE
+ p83buCEQX/CN8shzPnmYhMVKEEVtgiISjYBMkerl6zXpAqYQcWi0RNFGL2SCqNQ0ljuW7JHnpdl
+ 0sPFh/ZypQDE5n/6Q60LD7OJrzlnz5UeHgZCkAPHNj83lLbWP7bhcKF0GV9wG3VElC0FU8uIP9i
+ ag/kS6nZkPyhfSlVwXkUXrkeXNP9+NMa88kTbn
+X-Received: by 2002:a2e:a312:0:b0:2ec:54ec:173d with SMTP id
+ 38308e7fff4ca-2ee8eda7119mr8166341fa.27.1720087124426; 
+ Thu, 04 Jul 2024 02:58:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFDiga0/GUfD4Rgrx8+CnT1PyHAG6o5mf302odZeu+v/p+zB4VAkIC6VzT4yxXetWBxXcrRSQ==
+X-Received: by 2002:a2e:a312:0:b0:2ec:54ec:173d with SMTP id
+ 38308e7fff4ca-2ee8eda7119mr8165661fa.27.1720087121932; 
+ Thu, 04 Jul 2024 02:58:41 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3675a103366sm17879438f8f.102.2024.07.04.02.58.39
+ 5b1f17b1804b1-4264a2ca5casm17347975e9.32.2024.07.04.02.58.40
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 02:58:39 -0700 (PDT)
+ Thu, 04 Jul 2024 02:58:40 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Maxim Mikityanskiy <maxtram95@gmail.com>
-Subject: [PULL 14/16] char-stdio: Restore blocking mode of stdout on exit
-Date: Thu,  4 Jul 2024 11:58:04 +0200
-Message-ID: <20240704095806.1780273-15-pbonzini@redhat.com>
+Subject: [PULL 15/16] target/i386: add support for masking CPUID features in
+ confidential guests
+Date: Thu,  4 Jul 2024 11:58:05 +0200
+Message-ID: <20240704095806.1780273-16-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240704095806.1780273-1-pbonzini@redhat.com>
 References: <20240704095806.1780273-1-pbonzini@redhat.com>
@@ -102,52 +103,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Maxim Mikityanskiy <maxtram95@gmail.com>
+Some CPUID features may be provided by KVM for some guests, independent of
+processor support, for example TSC deadline or TSC adjust.  If these are
+not supported by the confidential computing firmware, however, the guest
+will fail to start.  Add support for removing unsupported features from
+"-cpu host".
 
-qemu_chr_open_fd() sets stdout into non-blocking mode. Restore the old
-fd flags on exit to avoid breaking unsuspecting applications that run on
-the same terminal after qemu and don't expect to get EAGAIN.
-
-While at at, also ensure term_exit is called once (at the moment it's
-called both from char_stdio_finalize() and as the atexit() hook.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2423
-Signed-off-by: Maxim Mikityanskiy <maxtram95@gmail.com>
-Link: https://lore.kernel.org/r/20240703190812.3459514-1-maxtram95@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- chardev/char-stdio.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/i386/confidential-guest.h | 24 ++++++++++++++++++++++++
+ target/i386/kvm/kvm.c            |  5 +++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/chardev/char-stdio.c b/chardev/char-stdio.c
-index 3c648678ab1..b960ddd4e4c 100644
---- a/chardev/char-stdio.c
-+++ b/chardev/char-stdio.c
-@@ -41,6 +41,7 @@
- /* init terminal so that we can grab keys */
- static struct termios oldtty;
- static int old_fd0_flags;
-+static int old_fd1_flags;
- static bool stdio_in_use;
- static bool stdio_allow_signal;
- static bool stdio_echo_state;
-@@ -50,6 +51,8 @@ static void term_exit(void)
-     if (stdio_in_use) {
-         tcsetattr(0, TCSANOW, &oldtty);
-         fcntl(0, F_SETFL, old_fd0_flags);
-+        fcntl(1, F_SETFL, old_fd1_flags);
-+        stdio_in_use = false;
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index 532e172a60b..7342d2843aa 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -39,6 +39,8 @@ struct X86ConfidentialGuestClass {
+ 
+     /* <public> */
+     int (*kvm_type)(X86ConfidentialGuest *cg);
++    uint32_t (*mask_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
++                                    int reg, uint32_t value);
+ };
+ 
+ /**
+@@ -56,4 +58,26 @@ static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
+         return 0;
      }
  }
++
++/**
++ * x86_confidential_guest_mask_cpuid_features:
++ *
++ * Removes unsupported features from a confidential guest's CPUID values, returns
++ * the value with the bits removed.  The bits removed should be those that KVM
++ * provides independent of host-supported CPUID features, but are not supported by
++ * the confidential computing firmware.
++ */
++static inline int x86_confidential_guest_mask_cpuid_features(X86ConfidentialGuest *cg,
++                                                             uint32_t feature, uint32_t index,
++                                                             int reg, uint32_t value)
++{
++    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
++
++    if (klass->mask_cpuid_features) {
++        return klass->mask_cpuid_features(cg, feature, index, reg, value);
++    } else {
++        return value;
++    }
++}
++
+ #endif
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index dd8b0f33136..056d117cd11 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -548,6 +548,11 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
+         ret |= 1U << KVM_HINTS_REALTIME;
+     }
  
-@@ -102,6 +105,7 @@ static void qemu_chr_open_stdio(Chardev *chr,
++    if (current_machine->cgs) {
++        ret = x86_confidential_guest_mask_cpuid_features(
++            X86_CONFIDENTIAL_GUEST(current_machine->cgs),
++            function, index, reg, ret);
++    }
+     return ret;
+ }
  
-     stdio_in_use = true;
-     old_fd0_flags = fcntl(0, F_GETFL);
-+    old_fd1_flags = fcntl(1, F_GETFL);
-     tcgetattr(0, &oldtty);
-     if (!g_unix_set_fd_nonblocking(0, true, NULL)) {
-         error_setg_errno(errp, errno, "Failed to set FD nonblocking");
 -- 
 2.45.2
 
