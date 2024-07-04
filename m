@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D239C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 08:14:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26926C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 08:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPHbC-00030u-HH; Thu, 04 Jul 2024 04:13:50 -0400
+	id 1sPHkv-0004tQ-Ge; Thu, 04 Jul 2024 04:23:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sPHbB-00030e-2U
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 04:13:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sPHb9-0001uQ-E1
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 04:13:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720080823;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=0Uo9ByMszePi8w1SCN8bp6Plsfpl8+p/Q8/LA+YXJdY=;
- b=fXd1imIt0LU8c/ZAmj6P/97P2enYc0ou0CURu71+5+RdVfadO49dyUgvp1baHZ5SiM74Jy
- Gavuq1f1553s3Yxril2iAIKYIQDXD8jqXglgtEb5QpohjLqiaDvY6oCxicvZeHozkg26W+
- yGI1Jl8fJ2mmPI7TMrWBY6iXZgkWquM=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-UlpLvaHcMtasuAIe_zZLpA-1; Thu, 04 Jul 2024 04:13:42 -0400
-X-MC-Unique: UlpLvaHcMtasuAIe_zZLpA-1
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-79d588000e4so59412485a.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 01:13:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
+ id 1sPHkt-0004sv-Oy; Thu, 04 Jul 2024 04:23:51 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <krashmisha@gmail.com>)
+ id 1sPHkr-0006PS-0K; Thu, 04 Jul 2024 04:23:51 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-52e93d1432fso455489e87.0; 
+ Thu, 04 Jul 2024 01:23:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720081425; x=1720686225; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yQnN8i7Q3Agv1GB7Ie85hPPlxoEZgQKu5DIkmyD4QLQ=;
+ b=haVk8K257l+l0ItVtcY1mAhCTSy3SUcBlXuF0zuzHQhBsEFtzu0OmiRlasqxxGih1y
+ 534AyXQc2u/EuZiAEMWoGWaQfeLoKJyQVEmSVxt0/wS3deqSJOXhGDmv94ol3gmVq6JN
+ kaglxGR2gZLCG6J5L9noHY9Jmyb5VK6mkG/LXItKyPfVuIs+aRkyqP//LYLG4m/9HTBi
+ miwNPeJxL66a/2m6aSTsHIFjyl4VoHz9EKhkPsbJ4zI1ZnFdc5Sq4HDXIMx9PPETE8k/
+ Yyq3U8FemnIW/vh5Fqf+t+SnePkSZwD9LZt37U1PQrgVS3IgEuShXZZGSUScJuFJHaCt
+ jysA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720080822; x=1720685622;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0Uo9ByMszePi8w1SCN8bp6Plsfpl8+p/Q8/LA+YXJdY=;
- b=TTtdXffDTe0VeEkvRvbR54zHzkaHCMhkIvChU2dFDSOqnSDjzx9qQzWtQabVZ5cMua
- aKGaPSxrAGCfGooYXKzpMmBrV+P4/6+rrNzFHr8Sy1IoIjg2gkzoE9Z4aGmONMTZWz5R
- PrE1VM5SpEXFSjbk6AeTJlIVRfb+GthYybXab/QdQupdJGp8gEr233kRmlzk9n4arzUM
- 1/bxNz7XtD3DfjprEu01oQRUL3hfFEhr7oRCy97cif3D9yzo0jSzDH65p2CEzHA2qL0q
- py9rH15HI+OI8PheJbDbtXE4lzzYeVE8tv+SrpxZ7ULuNNyiOWCtFkR7JnWdOkOqe4Es
- hb5w==
-X-Gm-Message-State: AOJu0YydzRmVCj696ENPhMPO0mOBdZRxZUI0n2390UX9r14BHVYP9R88
- SFo02plInOAToZUf2Fl86MR8IaD2xoGVbZqNGi7fiYQsxU62rUW6+OCW22JBhjLv6PlDsDdoR4f
- +nNQd9vaUMKsBdhFC3w0y+8icUCdLQtZhd3ZV8bCcg2xWeqC6d2xlUTbe14QteIWYPOs4YVfIsA
- jQJsx9lLLsa4uX3uEKpHn1KdB+TOGhvcV7MTUD
-X-Received: by 2002:a05:620a:849:b0:79d:61bb:78d2 with SMTP id
- af79cd13be357-79eee20d40cmr99820485a.1.1720080821837; 
- Thu, 04 Jul 2024 01:13:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBCtj6jHHICyfG+UTMp+/Cq+W77aiuTWghbfzv6jsMS7VCMPdMH/euOhumPWZ/7+2xfnJ07g==
-X-Received: by 2002:a05:620a:849:b0:79d:61bb:78d2 with SMTP id
- af79cd13be357-79eee20d40cmr99818285a.1.1720080821332; 
- Thu, 04 Jul 2024 01:13:41 -0700 (PDT)
-Received: from step1.redhat.com ([193.207.147.116])
+ d=1e100.net; s=20230601; t=1720081425; x=1720686225;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yQnN8i7Q3Agv1GB7Ie85hPPlxoEZgQKu5DIkmyD4QLQ=;
+ b=EUVYYkt1ofLI9is+xSFCwVrPQE7WAUJZI2cIM2YiJNSr/Cke+ZNKYfhRGB0YF9i1yO
+ jHoi6xnjc5af0Gu5VwSFpVzRIYYZsnpBYj6A7t+t3TwAtue4wTix86c7BmFvf0UJHHr4
+ 4WXe/wa2KF1RQUU5PknYgWqcEndx2G3ACKhrYwRjSuBT9jOdCM+lFfqUzhJaqFRgi7Zg
+ xs01f/evnk6LDKDTt+D6LjuDfocZY6ax6LygHO8pnZDymFYN86t/3UKZXUjYuhWvSKXk
+ cgaccfyGdqWNgVsuPACVXQLtFnxY5Jl/eP98nZAvtxfPBL1V2SxNsJW7NeF7E/5B9xd6
+ vV8A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1KxF5Y19SCxpRgsUsmUa1CAq0sJHG+1TGrBcW5Sml3JzpGrMwWz4B0BJIp7TfsDA9HGXGnEmrbqKVcC0DUITLHnWaJTXSoX0b6g1KnTIzhqA6T19GdeEFL/OQrg==
+X-Gm-Message-State: AOJu0Yxzw5rCDXIMZGsXSD0wNEACaK0/f2cmhS66BEpUHgwalHnuWijz
+ VrfGe5GSD2ZyZQtO2r1e9TN8Z8SW0/yK4zRaQDs6nu0d8TrojIWu
+X-Google-Smtp-Source: AGHT+IHOiqHi/vsWX2eEDfTW5dkCYFybBVQxYDkRtVlgARG17Sl409E0BT55s2x3oG3SeBAYWIi87g==
+X-Received: by 2002:a19:5e52:0:b0:52c:e5ac:ecd2 with SMTP id
+ 2adb3069b0e04-52ea06bc9e8mr473042e87.51.1720081424417; 
+ Thu, 04 Jul 2024 01:23:44 -0700 (PDT)
+Received: from smtpclient.apple ([94.25.185.41])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79d6929be9esm652654585a.60.2024.07.04.01.13.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 01:13:40 -0700 (PDT)
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PATCH] MAINTAINERS: add Stefano Garzarella as vhost/vhost-user
- reviewer
-Date: Thu,  4 Jul 2024 10:13:36 +0200
-Message-ID: <20240704081336.21208-1-sgarzare@redhat.com>
-X-Mailer: git-send-email 2.45.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ 2adb3069b0e04-52ea1e76d13sm33959e87.123.2024.07.04.01.23.43
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 04 Jul 2024 01:23:43 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.600.62\))
+Subject: Re: [PATCH v3] virtio: Implement Virtio Backend for SD/MMC in QEMU
+From: =?utf-8?B?0JzQuA==?= <krashmisha@gmail.com>
+In-Reply-To: <20240704033637-mutt-send-email-mst@kernel.org>
+Date: Thu, 4 Jul 2024 11:23:31 +0300
+Cc: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Matwey Kornilov <matwey.kornilov@gmail.com>,
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B357E4DF-3873-4627-A322-C9744A905942@gmail.com>
+References: <20240703145956.16193-1-krashmisha@gmail.com>
+ <87le2ipigb.fsf@draig.linaro.org>
+ <7c281582-e5a3-265b-f6fc-80f7a1f01078@gmail.com>
+ <20240703160451-mutt-send-email-mst@kernel.org>
+ <e0e1e2bd-a230-a460-79b2-dd9318e7c92e@gmail.com>
+ <20240704033637-mutt-send-email-mst@kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-Mailer: Apple Mail (2.3774.600.62)
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=krashmisha@gmail.com; helo=mail-lf1-x129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,28 +103,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I have recently been working on supporting vhost-user on any POSIX,
-so I want to help maintain it.
 
-Cc: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
----
- MAINTAINERS | 1 +
- 1 file changed, 1 insertion(+)
+> 4 =D0=B8=D1=8E=D0=BB=D1=8F 2024=E2=80=AF=D0=B3., =D0=B2 10:38, Michael =
+S. Tsirkin <mst@redhat.com> =D0=BD=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=D0=BB(=D0=
+=B0):
+>=20
+> On Thu, Jul 04, 2024 at 10:25:53AM +0300, Mikhail Krasheninnikov =
+wrote:
+>>=20
+>> On Wed, 3 Jul 2024, Michael S. Tsirkin wrote:
+>>=20
+>>> On Wed, Jul 03, 2024 at 10:55:17PM +0300, Mikhail Krasheninnikov =
+wrote:
+>>>>=20
+>>>> Hello, Alex!
+>>>>=20
+>>>> No, there's no patch to the VirtIO specification yet. This is=20
+>>>> proof-of-concept solution since I'm not sure that I did everything=20=
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 6725913c8b..47493f19d9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2207,6 +2207,7 @@ F: docs/devel/vfio-iommufd.rst
- 
- vhost
- M: Michael S. Tsirkin <mst@redhat.com>
-+R: Stefano Garzarella <sgarzare@redhat.com>
- S: Supported
- F: hw/*/*vhost*
- F: docs/interop/vhost-user.json
--- 
-2.45.2
+>>>> correct with the design (and as folks' reviews show, for a good =
+reason).=20
+>>>> As soon as most obvious issues would be out of the way, I think =
+I'll=20
+>>>> submit a patch.
+>>>=20
+>>>=20
+>>> Mikhail, if you want people to review your patches but not merge
+>>> them yet, pls use an RFC tag in the subject to avoid confusion.
+>>>=20
+>>> Thanks,
+>>>=20
+>>> --=20
+>>> MST
+>>>=20
+>>>=20
+>>=20
+>> Hello, Michael!
+>>=20
+>> I was planning to submit three patches: to the kernel, emulator and =
+Virtio=20
+>> specification around the same time - as soon as the obvious bugs are=20=
 
+>> fixed, I'll submit a patch to the specification. I thought it wasn't=20=
+
+>> necessary to use the RFC tag in that case, but if you think it is,=20
+>> I'll include it with the next version of the patch.
+>=20
+> RFC means "this is proof of concept". On the one hand some people
+> won't bother reviewing then. On the other your patch will be
+> judged less harshly. If your code still has debugging printks,
+> it's clearly an RFC at best.
+>=20
+> --=20
+> MST
+>=20
+
+I apologize for the debug printks in other patch, I=E2=80=99m not really =
+sure
+how I gazed over it.. If it makes my situation better, it=E2=80=99s my =
+first series
+of patches. I=E2=80=99ll make sure to triple-check next time. Thanks for =
+the
+feedback!=
 
