@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC0CC3065C
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 09:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A44EC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 09:36:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPIpd-0006am-1r; Thu, 04 Jul 2024 05:32:49 -0400
+	id 1sPIse-0001qN-4H; Thu, 04 Jul 2024 05:35:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sPIpa-0006Xp-9K
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:32:46 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1sPIsc-0001pI-K4
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:35:54 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sPIpY-000240-JW
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:32:45 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-58bac81f40bso609879a12.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 02:32:42 -0700 (PDT)
+ id 1sPIsX-000370-Pt
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 05:35:54 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-58b447c5112so528687a12.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 02:35:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720085561; x=1720690361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720085748; x=1720690548; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Wg5r9sYSQsAvjhQ+CRVIQveWls8q4Cp7ZuTqAA6lFzA=;
- b=qDw9DZlPPlu8o0cFuH9Of8+aeCMdVYNsYNNsHUqpEBWmZKqfMLVKlSGT5qEEXjXsRB
- f1WEc6AU+wS8Vl41uZwJ+z2liX/aWtlhDsopuJ8tZupvvWEuaHFd5Pp4C8V3se2d124K
- tG/eSZITlAfPQjNWi5Kv1CjRz5p1Q7hUWSp+sf5cgKwtcUz08Eaz2OKDgPXgxOBIeupN
- 3WQJf7HxiVfgerVer7diSHQfU2o0qYXUEJ8GfplnUhf3fHJUz4UOmM3v+VqpFNAh68gr
- jsVGm2EDw4ErGEt3/ZrxsswL+6FXppGNW6j2Sodp9rVJGer41Z3etAsiC+V+s5psR5nq
- 29/w==
+ bh=U03veFQenI/Utth8gnAPVCdRcWiHwgvsqN6ytuwipU0=;
+ b=vAbGfGebxKLLthr8qzX+fXXDdXI5ZjHzvzhIh8LR9YOn3X2S2Axx9hwSSRbcdILjDe
+ QaQJyrG4XIvOlQCgBd2s2Fff1/1MOJi2D2g1XQt9iGiHdbuO7ngpbznQ2jMyRdUC4B4C
+ +Kt2ya66bY9yPYb5y6pt4RkuAG43E2uh2wchSR3ZI5SOanoVSovUSM5DpCnj1HCTbAA9
+ +38KoysyscVyA/1Ttd1AQQJZXdiLp0KoFjh9zFWXFQ4ZZk0WXfP7H0ds39HqktA8/HNY
+ 0ij3yNbjI52c1++46D/lzUDIBTebIGL6SIinP6/0PlNN/loLSv7GS/k3ps5B45KmQVIv
+ QxAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720085561; x=1720690361;
+ d=1e100.net; s=20230601; t=1720085748; x=1720690548;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Wg5r9sYSQsAvjhQ+CRVIQveWls8q4Cp7ZuTqAA6lFzA=;
- b=l+/7/UO4Kjayqm2Yc5FF27E5K0JHjb5e+19Lssc0AfOv4MWC8vMmQvRbuaVpj4Mu+v
- eac5fGiGAgmTHW5+zbjRj1QNnJ079rzSlapQDFu7IVW9rFmbw0n8QNC8tSSXCSDQ14P/
- huIdt8XQHxN8V2cYfXOam3ru/dM+AzmjZMcGShx/Y89uSr9uX0SaVCyuwA3R3m4xFsZN
- UtuH8rjDM3fgTRlIj15/zWCUloNPRyuOuHs1Y+hqpYtWjDz5Tl/6bs+kp6I7fcxEnSyc
- 8NGnxLFnpJALl87WnVgjWDO7j/N34uHX5bSslR0Pr7xD1hDT8EEBdvtgdPG88fnWyknb
- F4MA==
+ bh=U03veFQenI/Utth8gnAPVCdRcWiHwgvsqN6ytuwipU0=;
+ b=iB90dpOb/ZUFnjkQS5rXdZt6FxiRiaRTxNRiukM+vkIj1bT5Yg5GdpajGmPoqj7lHQ
+ nn8mbz+TU6supN8fEUZ//XbFYRBkgpEw2ayLhwhS3krMLi3L4Tk3c3D4JRLqAfRHlu5n
+ 15yNuy5iS+/2p68JJ2JU2IRhzVla8y6NussaI/NA1rojnTRIBFQG43Bu9WTpWc8s7vLZ
+ q5lDbJHf0ufnXVU5GhNO154TlkAkRnYNLQPMOgYFVp9Hh+jVCFnwkuT5Nw2sGz7a350n
+ /BggeoQ6JpnWZUg1DNCM9W/mZ3IMFEA7Pr0hRzIm2M9wzgIyXgunCdHKrfph38dFZlYx
+ 7x8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsNsBNSMmY2Kk7uR6vIrlRJVCb3frtGcKaFcNP6lXkG57l9Ttm1CFur1D5jw7AfMEgsQkXCzRMC+9vLEAsIAB7SLwiVAo=
-X-Gm-Message-State: AOJu0YyPB2JbNSelbzA1huiv7Itgp6kj+kMdEnUdKRgR8eQZUTj1B0Db
- XLm2W9wwNwQXHJmW0k1/t1nsidbA+WXTo2mjBAySMgF/0iI0392gacQ/bO3Vq1eF+Sz/GChPlR7
- pMA7wt4I7+IgSAuufc8p2JQfwetblwwTOywH1ZQ==
-X-Google-Smtp-Source: AGHT+IE7qXHKBYmBeRGY9jO1i6pr9B2inR+WbVBPpgVsf7Cvbh+WgpRKmtihOw20IuEFvTewixVo7sDHvFXPMqFBQk0=
-X-Received: by 2002:a05:6402:34c1:b0:587:2fa6:496a with SMTP id
- 4fb4d7f45d1cf-58e5abdc863mr784969a12.15.1720085560867; Thu, 04 Jul 2024
- 02:32:40 -0700 (PDT)
+ AJvYcCXWM4mPjHGe/+dqFvoeo0zOUQDYGxO/F243458mlQt0AwKDSsSeluUWEVnDfSS9/H28wqzviHbKCSjugr4130E1grVCvWk=
+X-Gm-Message-State: AOJu0YzNtxCDNssf5KHxZ11QnVYb1UDV7cRVbnZ/FslJgi3D0/HxJcUC
+ M/Te36+MmP1qaUp1OjmyrzDA0Yqc37EMvGeKj3RESOHNdi78IL7HYlTulBQ08wz6DXAAz6iyY0t
+ pyno3xQSXyCWLFDYmo/MwGCWp4ePUWhSEPgWNqQ==
+X-Google-Smtp-Source: AGHT+IHiDLwFohbLMfdykNOns5eO0chkk+sAjL47R3R0AibStB3FYkrUSI23NG5RIx3kTVScr/rG5M/m69WmYpn0WOs=
+X-Received: by 2002:a05:6402:11d0:b0:57c:5ec6:1466 with SMTP id
+ 4fb4d7f45d1cf-58e5b2b0643mr913509a12.25.1720085748120; Thu, 04 Jul 2024
+ 02:35:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240703213102.254927-1-zheyuma97@gmail.com>
-In-Reply-To: <20240703213102.254927-1-zheyuma97@gmail.com>
+References: <20240704084759.1824420-1-zhao1.liu@intel.com>
+ <20240704084759.1824420-4-zhao1.liu@intel.com>
+In-Reply-To: <20240704084759.1824420-4-zhao1.liu@intel.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 4 Jul 2024 10:32:29 +0100
-Message-ID: <CAFEAcA_9_fymBmp4Ei+ZxP3PB6u3JckTxufLcJn6JKuf4Yjkaw@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc: sifive_plic: Fix heap-buffer-overflow in SiFive
- PLIC read operation
-To: Zheyu Ma <zheyuma97@gmail.com>
-Cc: Alistair Francis <Alistair.Francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
+Date: Thu, 4 Jul 2024 10:35:36 +0100
+Message-ID: <CAFEAcA8BAwjLo_4M_U6ucbM9at9ko28mXJPq7yEByjG1fr3o=A@mail.gmail.com>
+Subject: Re: [PATCH 3/4] util/oslib-posix: Fix superfluous trailing semicolon
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-trivial@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,64 +92,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 3 Jul 2024 at 22:32, Zheyu Ma <zheyuma97@gmail.com> wrote:
+On Thu, 4 Jul 2024 at 09:33, Zhao Liu <zhao1.liu@intel.com> wrote:
 >
-> The sifive_plic_read function in hw/intc/sifive_plic.c had a potential
-> heap-buffer-overflow issue when reading from the pending_base region.
-> This occurred because the code did not check if the calculated word index
-> was within valid bounds before accessing the pending array.
->
-> This fix prevents out-of-bounds memory access, ensuring safer and more
-> robust handling of PLIC reads.
->
-> ASAN log:
-> ==78800==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000038a14 at pc 0x5baf49d0d6cb bp 0x7ffc2ea4e180 sp 0x7ffc2ea4e178
-> READ of size 4 at 0x602000038a14 thread T0
->     #0 0x5baf49d0d6ca in sifive_plic_read hw/intc/sifive_plic.c:151:16
->     #1 0x5baf49f7f3bb in memory_region_read_accessor system/memory.c:445:11
->
-> Reproducer:
-> cat << EOF | qemu-system-riscv64  -display \
-> none -machine accel=qtest, -m 512M -machine shakti_c -m 2G -qtest stdio
-> readl 0xc001004
-> EOF
->
-> Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
->  hw/intc/sifive_plic.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
+>  util/oslib-posix.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
-> index e559f11805..d2a90dfd3a 100644
-> --- a/hw/intc/sifive_plic.c
-> +++ b/hw/intc/sifive_plic.c
-> @@ -147,7 +147,14 @@ static uint64_t sifive_plic_read(void *opaque, hwaddr addr, unsigned size)
->                              (plic->num_sources + 31) >> 3)) {
->          uint32_t word = (addr - plic->pending_base) >> 2;
+> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+> index e76441695bdc..b090fe0eed0d 100644
+> --- a/util/oslib-posix.c
+> +++ b/util/oslib-posix.c
+> @@ -263,7 +263,7 @@ int qemu_socketpair(int domain, int type, int protocol, int sv[2])
+>          return ret;
+>      }
+>  #endif
+> -    ret = socketpair(domain, type, protocol, sv);;
+> +    ret = socketpair(domain, type, protocol, sv);
+>      if (ret == 0) {
+>          qemu_set_cloexec(sv[0]);
+>          qemu_set_cloexec(sv[1]);
+> --
+> 2.34.1
 >
-> -        return plic->pending[word];
-> +        if (word < plic->bitfield_words) {
-> +            return plic->pending[word];
-> +        } else {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "sifive_plic_read: Word out of bounds for pending_base read: word=%u\n",
-> +                          word);
-> +            return 0;
-> +        }
 
-This seems a bit odd. This part of the code is guarded by
-
-    } else if (addr_between(addr, plic->pending_base,
-                            (plic->num_sources + 31) >> 3)) {
-
-and we calculate plic->bitfield_words in realize based on
-plic->num_sources:
-    s->bitfield_words = (s->num_sources + 31) >> 5;
-
-so presumably the intention was that we put enough words
-in the bitfield for the number of sources we have, so that
-the array access wouldn't overrun. Maybe we got the
-calculation wrong?
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
