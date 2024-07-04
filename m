@@ -4,77 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D33FC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 18:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B469C3271F
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 18:25:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPR0Q-0004JD-16; Thu, 04 Jul 2024 14:16:30 -0400
+	id 1sPR8Q-0001aX-T8; Thu, 04 Jul 2024 14:24:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sPR0O-0004IV-3b
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:16:28 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1sPR8P-0001Xa-2a
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:24:45 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sPR0M-0000BA-Bp
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:16:27 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7066f68e22cso644651b3a.2
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 11:16:25 -0700 (PDT)
+ id 1sPR8N-00007f-47
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:24:44 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1fb0d7e4ee9so5257735ad.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 11:24:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720116984; x=1720721784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720117481; x=1720722281; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8wxdDhrJj5m9EBv+KsTaak4F5a5JHE5zuinYQ+oTD74=;
- b=MeeyHbVjj81IZln0geVc7LZwz+y2hbqTPgHx4qN56Y00TXK8KwjPjZhp8GRIRJJonr
- aT6pL5DRVJTDDAsJd+TgwuVYrvPodP8UA2WuuqmwgiDwivQZu8TvpzqD4MJUDg2j056G
- p2y0gJ2xxvMyYXktKRZHETxjBR7Re6JgaGdkUhF9z5e9YCsU9QpImL9X2pDkxiOULATy
- SRO4ZCjPp2KOz9hunxh9OWtjo/a8EyrfNmAHWA6gNJqIlY4CF7+tmjgXygtiOy8Rmc0F
- KMLA9q9GKL9VdGxXmiNN13CcCcG7ZhOBmCR23LHhTsKMxXPy0kHcp9zzBYd8zeTbww8d
- vURQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=O9HMrFcVZDenmphTehp9py7axRg9tQZVyNoIrqkiERM=;
+ b=WLPfAzVtiGyfjhcSfVXkkpkTPaYAzn9g6zYhaVnhRt+ivw+qy8+Zmcd17ZfGu9qA7y
+ /mnMB/B8U1JEeTjzGOoXCb/Np7GCNcPRaCt0cpu7ol8NdmDWGS9tyElmXDvxbzKnHYx7
+ 17KiBhvlAZKBffAOctM/OyAck3c0x5VK0r1X5qAy0cLSb149zRgHKlZh9WVH96ioQP1F
+ x52ahZY2SJnG8/6U9zHrTsYq7rjqlJ9pqGf/O4uFp54lX33+1C5wHer2FxX4fI3yKX1p
+ gC1X9Wd8hFYXujDHlwvvx4jz/rQ1XWikMxvSQuOqfBIuIpOzJL8MQddO/fp0R4Onr7Nv
+ xZeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720116984; x=1720721784;
+ d=1e100.net; s=20230601; t=1720117481; x=1720722281;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8wxdDhrJj5m9EBv+KsTaak4F5a5JHE5zuinYQ+oTD74=;
- b=mxoBOVQrPMxkmNIZr5SsOJ9rVA1U/al2LxstWAEGHNlChZw9IpAtTv5y7RTy55CwmR
- 4Fpry+94UD+rp68Hs/lq7d7Xkfb9mjMGcjkNFz8n4gWv/thyfDEt01rmfWB7HoP6AeCo
- dpWNzfM4npV7kxPu+lmJ5QZIdTsePlK+wu2y15gU6yoO8dhIGo/dIcA+etqai9StzF+E
- b2PDVVvag8zaFubMfRhus3kzGD07abpacZTPLS7KjmiBq/zym7HhWG8Zah0qR5rVnLDv
- ABB+ZGGjctj4t6eReVqYNbMHIP9kTYppfO7qra2sEaLvu8MOS8wtrZNFRY/r1lqZ1vMe
- XBVQ==
+ bh=O9HMrFcVZDenmphTehp9py7axRg9tQZVyNoIrqkiERM=;
+ b=DUruLyMt6Xf0h6IGFqMiYPWiaSCEV0d6XFiUhviHBdXi8gid7xzuaSHsu0lnzbHgLV
+ ZeIA951ZuLVODOMcG3OMf8MJrbihA4IGsyS/CKjz8R0zjew56p/e/osaVh+JZwEftaPd
+ NQ3+qV9kYcHElsNo7sOFjgomGIqOOSGDKm/mIsweTnhMRMCKYtx3yo/7H9+YiNfOurP2
+ mQPb+wSvLfd2usgbNCD+TdAaufbFd+XHlk26sTMFqq+nwY9VxO2AB/45M78gv0WOJ+wT
+ vBGlgo5W/thxZTt3r9ltAzW2RlImhe/hgnpWIzKPYyFjl/ChZcTdSSSHDHxUdxAMi8Xx
+ DFjA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4j+zBF7b3D8jSuOtn5huAOB8/JKWRCkwAWCX7hsqyid/Ws6k81RjveGmOUMCfQLoDHkvskgSE4raZIYjfGjrvUVB17fY=
-X-Gm-Message-State: AOJu0YxPgKyRsm1ZHhq/cl3hYBoCZJybAyj6pQr8CoyJBqh10UH1yAu2
- CqiJsb1/bVcpE2OalV6Vy/wblmCX7uzb663pGDa/vmuXRITIltXDyIa5z9sNPL3z71wMLkJyXjB
- L
-X-Google-Smtp-Source: AGHT+IHMjwHCvwrbeyhUYUQKS8SURYUIpVt1GZpSz6DuEllCRIqrTP+D9IAl6lHCPwoOF0ThS1GnMA==
-X-Received: by 2002:a05:6a00:13a7:b0:706:5e33:32d5 with SMTP id
- d2e1a72fcca58-70b00afe62bmr2645485b3a.33.1720116984151; 
- Thu, 04 Jul 2024 11:16:24 -0700 (PDT)
+ AJvYcCWHWcEqNa20QSSGFWgGJT1zhPBV9sLhj3NIrGUV4wSwyu0eMcdn8nfH9a5NiU89HSbzm+BFzS2Oywd9pb5COZsAqmfrfD4=
+X-Gm-Message-State: AOJu0Yympu8F5ZnleeYluV346DHl1dvnbXhLt84MhzNlOULI86JCc/o8
+ faavXPLpojibfmI+EI3tGkueFnAG8uC4Z3nM5n1H6BK1z8SHT/B1N7Ia2J9Z2vjfsm68zM7bw/y
+ U
+X-Google-Smtp-Source: AGHT+IF6GN5aUIUaK3ll7LKcb6IYXMc+CCh4GI9NYkc+S0UKWER3Q5578+fblBsKtRpFKJth/nTAwg==
+X-Received: by 2002:a17:902:f693:b0:1f7:1706:25ba with SMTP id
+ d9443c01a7336-1fb33e17bf7mr18111975ad.15.1720117481167; 
+ Thu, 04 Jul 2024 11:24:41 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7080246c90asm12518290b3a.59.2024.07.04.11.16.23
+ d9443c01a7336-1fac0ba60a2sm129029805ad.0.2024.07.04.11.24.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 11:16:23 -0700 (PDT)
-Message-ID: <ffd0e577-95e0-4cfb-9500-9e2dee993fa6@linaro.org>
-Date: Thu, 4 Jul 2024 11:16:21 -0700
+ Thu, 04 Jul 2024 11:24:40 -0700 (PDT)
+Message-ID: <c69acef3-aba9-4171-8b9b-167025827b4e@linaro.org>
+Date: Thu, 4 Jul 2024 11:24:38 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/16] meson, i386 changes for 2024-07-04
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240704095806.1780273-1-pbonzini@redhat.com>
+Subject: Re: [PATCH 0/2] target/arm: Always build Aarch64 gdbstub helpers
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>,
+ qemu-arm@nongnu.org, Anton Johansson <anjo@rev.ng>
+References: <20240619124903.56898-1-philmd@linaro.org>
+ <42de8f25-3624-4e7c-b38c-ad8e3b8e61a4@linaro.org>
+ <83667101-daba-43ea-ba33-1df547020cd9@linaro.org>
+ <ebfa6ca6-d93e-45b3-8786-cb52505e2d7c@linaro.org>
+ <CAFEAcA9bqgFwxsbvKFLUiGu=ThzF0zAy7-rD+7Yo4yNEoi4Pbg@mail.gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240704095806.1780273-1-pbonzini@redhat.com>
+In-Reply-To: <CAFEAcA9bqgFwxsbvKFLUiGu=ThzF0zAy7-rD+7Yo4yNEoi4Pbg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,31 +104,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/4/24 02:57, Paolo Bonzini wrote:
-> The following changes since commit 1a2d52c7fcaeaaf4f2fe8d4d5183dccaeab67768:
+On 7/4/24 08:01, Peter Maydell wrote:
+> On Fri, 28 Jun 2024 at 17:50, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> On 6/28/24 09:37, Philippe Mathieu-Daudé wrote:
+>>> On 28/6/24 16:31, Richard Henderson wrote:
+>>>> On 6/19/24 05:49, Philippe Mathieu-Daudé wrote:
+>>>>> Merge gdbstub64.c in gdbstub.c and remove uses of
+>>>>> target specific TARGET_AARCH64 definition.
+>>>>> Small step toward single ARM/Aarch64 binary.
+>>>>>
+>>>>> Philippe Mathieu-Daudé (2):
+>>>>>     target/arm: Merge gdbstub64.c within gdbstub.c
+>>>>>     target/arm: Always build Aarch64 gdbstub helpers
+>>>>>
+>>>>>    target/arm/cpu.h       |   8 +-
+>>>>>    target/arm/internals.h |   2 -
+>>>>>    target/arm/gdbstub.c   | 363 +++++++++++++++++++++++++++++++++++++-
+>>>>>    target/arm/gdbstub64.c | 383 -----------------------------------------
+>>>>>    target/arm/meson.build |   1 -
+>>>>>    5 files changed, 364 insertions(+), 393 deletions(-)
+>>>>>    delete mode 100644 target/arm/gdbstub64.c
+>>>>>
+>>>>
+>>>> Are we attempting a single binary for user-only as well?
+>>>
+>>> No, due to ABI constraints, right? I did a user-emulation
+>>> smoke build, no failure, did I miss something?
+>>
+>> Well, no.  But qemu-arm does not need gdbstub64.c.
+>> Given TARGET_AARCH64 will be set on a combined build, I'm not sure what is the fix?
 > 
->    Merge tag 'pull-request-2024-07-02' ofhttps://gitlab.com/thuth/qemu  into staging (2024-07-02 15:49:08 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/bonzini/qemu.git  tags/for-upstream
-> 
-> for you to fetch changes up to 188569c10d5dc6996bde90ce25645083e9661ecb:
-> 
->    target/i386/SEV: implement mask_cpuid_features (2024-07-04 11:56:20 +0200)
-> 
-> ----------------------------------------------------------------
-> * meson: Pass objects and dependencies to declare_dependency(), not static_library()
-> * meson: Drop the .fa library suffix
-> * target/i386: drop AMD machine check bits from Intel CPUID
-> * target/i386: add avx-vnni-int16 feature
-> * target/i386: SEV bugfixes
-> * target/i386: SEV-SNP -cpu host support
-> * char: fix exit issues
+> Richard: I'm a bit confused about where we are with this
+> patchset. Do your comments mean:
+>   * this patchset is OK for system emulation but we
+>     should (later) think also about user-mode ?
+>   * this patchset has a problem with user-mode so it
+>     needs rethinking ?
+>   * something else ?
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+I'm confused about what this patch set improves.
+
+It doesn't remove ifdefs; they're still there in gdbstub.c.  The code that handles aarch64 
+is now in gdbstub instead of segregated into gdbstub64.c, so we have one larger file for 
+no obvious benefit.
+
+Was there some other build problem that I missed?  Because I don't see how it advances the 
+stated goal of "a single ARM/AArch64 binary".
 
 
 r~
-
 
