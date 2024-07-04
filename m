@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E261EC3271F
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:02:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED9EC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 21:02:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPTZn-0006hV-0c; Thu, 04 Jul 2024 17:01:11 -0400
+	id 1sPTaR-0008Tp-UH; Thu, 04 Jul 2024 17:01:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTZl-0006dt-4o; Thu, 04 Jul 2024 17:01:09 -0400
+ id 1sPTaP-0008Iq-6G; Thu, 04 Jul 2024 17:01:49 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPTZj-0004Js-DI; Thu, 04 Jul 2024 17:01:08 -0400
+ id 1sPTaN-0004Pa-F5; Thu, 04 Jul 2024 17:01:48 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 90C8877561;
- Fri,  5 Jul 2024 00:00:50 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3A8F87756C;
+ Fri,  5 Jul 2024 00:00:51 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id A7A9AFEC9B;
- Fri,  5 Jul 2024 00:00:55 +0300 (MSK)
-Received: (nullmailer pid 1507724 invoked by uid 1000);
+ by tsrv.corpit.ru (Postfix) with SMTP id 511A5FECA5;
+ Fri,  5 Jul 2024 00:00:56 +0300 (MSK)
+Received: (nullmailer pid 1507755 invoked by uid 1000);
  Thu, 04 Jul 2024 21:00:55 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-9.0.2 04/22] Revert "monitor: use aio_co_reschedule_self()"
-Date: Fri,  5 Jul 2024 00:00:34 +0300
-Message-Id: <20240704210055.1507652-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-9.0.2 14/22] target/arm: Fix VCMLA Dd, Dn, Dm[idx]
+Date: Fri,  5 Jul 2024 00:00:44 +0300
+Message-Id: <20240704210055.1507652-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
 References: <qemu-stable-9.0.2-20240704162154@cover.tls.msk.ru>
@@ -60,57 +60,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Commit 1f25c172f837 ("monitor: use aio_co_reschedule_self()") was a code
-cleanup that uses aio_co_reschedule_self() instead of open coding
-coroutine rescheduling.
-
-Bug RHEL-34618 was reported and Kevin Wolf <kwolf@redhat.com> identified
-the root cause. I missed that aio_co_reschedule_self() ->
-qemu_get_current_aio_context() only knows about
-qemu_aio_context/IOThread AioContexts and not about iohandler_ctx. It
-does not function correctly when going back from the iohandler_ctx to
-qemu_aio_context.
-
-Go back to open coding the AioContext transitions to avoid this bug.
-
-This reverts commit 1f25c172f83704e350c0829438d832384084a74d.
+The inner loop, bounded by eltspersegment, must not be
+larger than the outer loop, bounded by elements.
 
 Cc: qemu-stable@nongnu.org
-Buglink: https://issues.redhat.com/browse/RHEL-34618
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20240506190622.56095-2-stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 719c6819ed9a9838520fa732f9861918dc693bda)
+Fixes: 18fc2405781 ("target/arm: Implement SVE fp complex multiply add (indexed)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2376
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240625183536.1672454-2-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 76bccf3cb9d9383da0128bbc6d1300cddbe3ae8f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
-index f3488afeef..176b549473 100644
---- a/qapi/qmp-dispatch.c
-+++ b/qapi/qmp-dispatch.c
-@@ -212,7 +212,8 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
-              * executing the command handler so that it can make progress if it
-              * involves an AIO_WAIT_WHILE().
-              */
--            aio_co_reschedule_self(qemu_get_aio_context());
-+            aio_co_schedule(qemu_get_aio_context(), qemu_coroutine_self());
-+            qemu_coroutine_yield();
-         }
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 1f93510b85..cc7cab338c 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -843,7 +843,7 @@ void HELPER(gvec_fcmlah_idx)(void *vd, void *vn, void *vm, void *va,
+     intptr_t index = extract32(desc, SIMD_DATA_SHIFT + 2, 2);
+     uint32_t neg_real = flip ^ neg_imag;
+     intptr_t elements = opr_sz / sizeof(float16);
+-    intptr_t eltspersegment = 16 / sizeof(float16);
++    intptr_t eltspersegment = MIN(16 / sizeof(float16), elements);
+     intptr_t i, j;
  
-         monitor_set_cur(qemu_coroutine_self(), cur_mon);
-@@ -226,7 +227,9 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
-              * Move back to iohandler_ctx so that nested event loops for
-              * qemu_aio_context don't start new monitor commands.
-              */
--            aio_co_reschedule_self(iohandler_get_aio_context());
-+            aio_co_schedule(iohandler_get_aio_context(),
-+                            qemu_coroutine_self());
-+            qemu_coroutine_yield();
-         }
-     } else {
-        /*
+     /* Shift boolean to the sign bit so we can xor to negate.  */
+@@ -905,7 +905,7 @@ void HELPER(gvec_fcmlas_idx)(void *vd, void *vn, void *vm, void *va,
+     intptr_t index = extract32(desc, SIMD_DATA_SHIFT + 2, 2);
+     uint32_t neg_real = flip ^ neg_imag;
+     intptr_t elements = opr_sz / sizeof(float32);
+-    intptr_t eltspersegment = 16 / sizeof(float32);
++    intptr_t eltspersegment = MIN(16 / sizeof(float32), elements);
+     intptr_t i, j;
+ 
+     /* Shift boolean to the sign bit so we can xor to negate.  */
 -- 
 2.39.2
 
