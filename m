@@ -4,49 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40C6C31D97
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F0CC30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPLuM-0005vt-FN; Thu, 04 Jul 2024 08:49:54 -0400
+	id 1sPLtX-0004L5-B6; Thu, 04 Jul 2024 08:49:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLtm-0004gb-U2; Thu, 04 Jul 2024 08:49:19 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1sPLtJ-0004Ad-Iu
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:48:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPLth-0006Vl-GP; Thu, 04 Jul 2024 08:49:18 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A4B3C773A6;
- Thu,  4 Jul 2024 15:48:22 +0300 (MSK)
-Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id 3A373FE78B;
- Thu,  4 Jul 2024 15:48:27 +0300 (MSK)
-Received: (nullmailer pid 1471801 invoked by uid 1000);
- Thu, 04 Jul 2024 12:48:26 -0000
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1sPLtE-0006Jw-H2
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:48:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720097322;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=0KIsVzaMJ2c6J7JjJ0pwhbJkp5EspKm1WD0SiiZ8bvQ=;
+ b=YzJUtnLKCJhz86/4YATZib4CUtaqxVe8I87SkBveWpvdMHbguTfGjZPyZUZymo0RzDRoC0
+ MZzFBDpMfH/6FLA0dt+anuIzl3D9yzeBKFtLnzHJqDfaNk977RKwfnsTby4vdOUPW6pZEu
+ T+oG+e46GErdGJXXbyVPOodcSDmlatI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-i6hVYa_wO6yS0Jj88EeCoQ-1; Thu,
+ 04 Jul 2024 08:48:39 -0400
+X-MC-Unique: i6hVYa_wO6yS0Jj88EeCoQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44479196CE01; Thu,  4 Jul 2024 12:48:38 +0000 (UTC)
+Received: from lenovo-t14s.redhat.com (unknown [10.39.192.194])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B45391955F65; Thu,  4 Jul 2024 12:48:35 +0000 (UTC)
+From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Chuang Xu <xuchuangxclwt@bytedance.com>,
- Guixiong Wei <weiguixiong@bytedance.com>, Yipeng Yin <yinyipeng@bytedance.com>,
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.13 12/17] i386/cpu: fixup number of addressable IDs for
- processor cores in the physical package
-Date: Thu,  4 Jul 2024 15:48:19 +0300
-Message-Id: <20240704124826.1471715-12-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
-References: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
+ Jason Wang <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH v2 0/4] net: update netdev stream/dgram man page
+Date: Thu,  4 Jul 2024 14:48:30 +0200
+Message-ID: <20240704124834.81958-1-lvivier@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -63,52 +80,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chuang Xu <xuchuangxclwt@bytedance.com>
-
-When QEMU is started with:
--cpu host,host-cache-info=on,l3-cache=off \
--smp 2,sockets=1,dies=1,cores=1,threads=2
-Guest can't acquire maximum number of addressable IDs for processor cores in
-the physical package from CPUID[04H].
-
-When creating a CPU topology of 1 core per package, host-cache-info only
-uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
-resulting in a conflict (on the multicore Host) between the Guest core
-topology information in this field and the Guest's actual cores number.
-
-Fix it by removing the unnecessary condition to cover 1 core per package
-case. This is safe because cores_per_pkg will not be 0 and will be at
-least 1.
-
-Fixes: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
-Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
-Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
-Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Message-ID: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 903916f0a017fe4b7789f1c6c6982333a5a71876)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(Mjt: fixup for 7.2 due to other changes in this area past 8.2)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 52a3020032..9c3e64c54b 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -5297,10 +5297,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
-                 int vcpus_per_socket = env->nr_dies * cs->nr_cores *
-                                        cs->nr_threads;
--                if (cs->nr_cores > 1) {
--                    *eax &= ~0xFC000000;
--                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
--                }
-+                *eax &= ~0xFC000000;
-+                *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
-                 if (host_vcpus_per_cache > vcpus_per_socket) {
-                     *eax &= ~0x3FFC000;
-                     *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
--- 
-2.39.2
+Add the description of "-netdev stream" and "-netdev dgram" in the QEMU=0D
+manpage.=0D
+=0D
+Add some examples on how to use them, including a way to use=0D
+"-netdev stream" and "passt" in place of "-netdev user".=0D
+("passt" is a non privileged translation proxy between layer-2,=0D
+like "-netdev stream", and layer-4 on host, like TCP, UDP,=0D
+ICMP/ICMPv6 echo)=0D
+=0D
+v2:=0D
+  - split patch=0D
+  - update unix socket description with stream and datagram words.=0D
+=0D
+Laurent Vivier (4):=0D
+  net: update netdev stream/dgram man page=0D
+  net: update netdev stream man page with unix socket=0D
+  net: update netdev dgram man page with unix socket=0D
+  net: update netdev stream man page with the reconnect parameter=0D
+=0D
+ qemu-options.hx | 189 ++++++++++++++++++++++++++++++++++++++++++++++++=0D
+ 1 file changed, 189 insertions(+)=0D
+=0D
+-- =0D
+2.45.2=0D
+=0D
 
 
