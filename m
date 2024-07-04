@@ -4,69 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A344C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:50:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40C6C31D97
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 12:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPLtd-0004Vz-JF; Thu, 04 Jul 2024 08:49:10 -0400
+	id 1sPLuM-0005vt-FN; Thu, 04 Jul 2024 08:49:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1sPLtN-0004BT-JS
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:48:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sPLtm-0004gb-U2; Thu, 04 Jul 2024 08:49:19 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1sPLtH-0006Ng-Tp
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 08:48:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720097327;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b14Iq179KB9r4vFMn7lJuT4Zw90NLVWbiSbt+SfClCw=;
- b=OQyEkmVqGUvN+DU7NOM/pc3Ga/OgXHBi8jsJuzFjpMA5VGXWWG1IX5TR+t3xW3FSIlgExr
- 5T0ItiWuxHkWzt0POxcSfXp2c3ZF5dP4BtGmJsbug1YgYo8X7hCzlbTtwI0XeBJoJGTedR
- t17DxmhPet0SPCs/j2rKIU46GWWkXXw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-it3F5MypMjamiy68QoWcgQ-1; Thu,
- 04 Jul 2024 08:48:44 -0400
-X-MC-Unique: it3F5MypMjamiy68QoWcgQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D0821955F0D; Thu,  4 Jul 2024 12:48:43 +0000 (UTC)
-Received: from lenovo-t14s.redhat.com (unknown [10.39.192.194])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A5AEE1956046; Thu,  4 Jul 2024 12:48:41 +0000 (UTC)
-From: Laurent Vivier <lvivier@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sPLth-0006Vl-GP; Thu, 04 Jul 2024 08:49:18 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A4B3C773A6;
+ Thu,  4 Jul 2024 15:48:22 +0300 (MSK)
+Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with SMTP id 3A373FE78B;
+ Thu,  4 Jul 2024 15:48:27 +0300 (MSK)
+Received: (nullmailer pid 1471801 invoked by uid 1000);
+ Thu, 04 Jul 2024 12:48:26 -0000
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@gmail.com>,
- Jason Wang <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 2/4] net: update netdev stream man page with unix socket
-Date: Thu,  4 Jul 2024 14:48:32 +0200
-Message-ID: <20240704124834.81958-3-lvivier@redhat.com>
-In-Reply-To: <20240704124834.81958-1-lvivier@redhat.com>
-References: <20240704124834.81958-1-lvivier@redhat.com>
+Cc: qemu-stable@nongnu.org, Chuang Xu <xuchuangxclwt@bytedance.com>,
+ Guixiong Wei <weiguixiong@bytedance.com>, Yipeng Yin <yinyipeng@bytedance.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.13 12/17] i386/cpu: fixup number of addressable IDs for
+ processor cores in the physical package
+Date: Thu,  4 Jul 2024 15:48:19 +0300
+Message-Id: <20240704124826.1471715-12-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
+References: <qemu-stable-7.2.13-20240704143502@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,72 +63,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the description of "-netdev stream" with a unix domain socket.
-The code has been added but the man page has not been updated.
+From: Chuang Xu <xuchuangxclwt@bytedance.com>
 
-Include an example how to use "-netdev stream" and "passt" in place
-of "-netdev user".
-("passt" is a non privileged translation proxy between layer-2, like
-"-netdev stream", and layer-4 on host, like TCP, UDP, ICMP/ICMPv6 echo)
+When QEMU is started with:
+-cpu host,host-cache-info=on,l3-cache=off \
+-smp 2,sockets=1,dies=1,cores=1,threads=2
+Guest can't acquire maximum number of addressable IDs for processor cores in
+the physical package from CPUID[04H].
 
-Fixes: 13c6be96618c ("net: stream: add unix socket")
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
----
- qemu-options.hx | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+When creating a CPU topology of 1 core per package, host-cache-info only
+uses the Host's addressable core IDs field (CPUID.04H.EAX[bits 31-26]),
+resulting in a conflict (on the multicore Host) between the Guest core
+topology information in this field and the Guest's actual cores number.
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 2a099731ea0a..ef476b593cd1 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3393,6 +3393,46 @@ SRST
-                       -device virtio-net,netdev=net0,mac=52:54:00:12:34:57 \\
-                       -netdev stream,id=net0,server=off,addr.type=inet,addr.host=localhost,addr.port=1234
- 
-+``-netdev stream,id=str[,server=on|off],addr.type=unix,addr.path=path[,abstract=on|off][,tight=on|off]``
-+    Configure a network backend to connect to another QEMU virtual machine or a proxy using a stream oriented unix domain socket.
-+
-+    ``server=on|off``
-+        if ``on`` create a server socket
-+
-+    ``addr.path=path``
-+        filesystem path to use
-+
-+    ``abstract=on|off``
-+        if ``on``, this is a Linux abstract socket address.
-+
-+    ``tight=on|off``
-+        if false, pad an abstract socket address with enough null bytes to make it fill struct sockaddr_un member sun_path.
-+
-+    Example (using passt as a replacement of -netdev user):
-+
-+    .. parsed-literal::
-+
-+        # start passt server as a non privileged user
-+        passt
-+        UNIX domain socket bound at /tmp/passt_1.socket
-+        # start QEMU to connect to passt
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0 \\
-+                      -netdev stream,id=net0,server=off,addr.type=unix,addr.path=/tmp/passt_1.socket
-+
-+    Example (two guests connected using a stream oriented unix domain socket):
-+
-+    .. parsed-literal::
-+
-+        # first VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:56 \\
-+                      netdev stream,id=net0,server=on,addr.type=unix,addr.path=/tmp/qemu0
-+        # second VM
-+        |qemu_system| linux.img \\
-+                      -device virtio-net,netdev=net0,mac=52:54:00:12:34:57 \\
-+                      -netdev stream,id=net0,server=off,addr.type=unix,addr.path=/tmp/qemu0
-+
- ``-netdev stream,id=str[,server=on|off],addr.type=fd,addr.str=file-descriptor``
-     Configure a network backend to connect to another QEMU virtual machine or a proxy using a stream oriented socket file descriptor.
- 
+Fix it by removing the unnecessary condition to cover 1 core per package
+case. This is safe because cores_per_pkg will not be 0 and will be at
+least 1.
+
+Fixes: d7caf13b5fcf ("x86: cpu: fixup number of addressable IDs for logical processors sharing cache")
+Signed-off-by: Guixiong Wei <weiguixiong@bytedance.com>
+Signed-off-by: Yipeng Yin <yinyipeng@bytedance.com>
+Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Message-ID: <20240611032314.64076-1-xuchuangxclwt@bytedance.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 903916f0a017fe4b7789f1c6c6982333a5a71876)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+(Mjt: fixup for 7.2 due to other changes in this area past 8.2)
+
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 52a3020032..9c3e64c54b 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -5297,10 +5297,8 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+                 int host_vcpus_per_cache = 1 + ((*eax & 0x3FFC000) >> 14);
+                 int vcpus_per_socket = env->nr_dies * cs->nr_cores *
+                                        cs->nr_threads;
+-                if (cs->nr_cores > 1) {
+-                    *eax &= ~0xFC000000;
+-                    *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
+-                }
++                *eax &= ~0xFC000000;
++                *eax |= (pow2ceil(cs->nr_cores) - 1) << 26;
+                 if (host_vcpus_per_cache > vcpus_per_socket) {
+                     *eax &= ~0x3FFC000;
+                     *eax |= (pow2ceil(vcpus_per_socket) - 1) << 14;
 -- 
-2.45.2
+2.39.2
 
 
