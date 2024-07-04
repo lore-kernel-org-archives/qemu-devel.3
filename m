@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A549FC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:17:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C80E6C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:18:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPGiE-0000hO-Fe; Thu, 04 Jul 2024 03:17:02 -0400
+	id 1sPGiS-00017t-2u; Thu, 04 Jul 2024 03:17:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPGhv-0000bZ-Ez; Thu, 04 Jul 2024 03:16:47 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1sPGiO-00015p-J4; Thu, 04 Jul 2024 03:17:14 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPGhg-0002hS-81; Thu, 04 Jul 2024 03:16:43 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1fb0d88fdc8so1371645ad.2; 
- Thu, 04 Jul 2024 00:16:25 -0700 (PDT)
+ id 1sPGiJ-0002lc-0H; Thu, 04 Jul 2024 03:17:12 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-75e7e110e89so179959a12.3; 
+ Thu, 04 Jul 2024 00:17:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720077384; x=1720682184; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=gmail.com; s=20230601; t=1720077425; x=1720682225; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6oezTeJBRlFuNdoRr4itJQE5TWsPguCtpbNGnqiaxMw=;
- b=jO8pznpYA73JFbJ8sIoY+b2WCxP+1HOUpgSpmtBYKg4TpMkpzPHS4kLIQFBnRjrB2E
- k8hSE3Bp5cEG1m1omycHvJe++t+7k6bfp0DuaRqpszmxcWj2xNzlWpIxqCQ1SR9rPiZk
- LZGap/Qt0mMwGN0lUdtlA1fLwVcdIug/fS3QLMbXEr59+2k0RdmqaD593g6qZte//og4
- Ig4L/2G477xaROQIcJ2pUsy4Bi1NLL1iIdl0U+XYwXhGmg6lnNFa3ohpPynpr4ZgMjPE
- C4ki1NYd0uX4MdiyRK4W4kuNZaGvPn+UxTAQ7K+81MMODIFBSDdD7bCVqmZphW9n/Arb
- VOQA==
+ bh=y2lHcjNGBSgRJ4EugwwnvEemXnideuZ3dBI7H424eAM=;
+ b=bMdv1ynq0EFm52k8TkDEx1KgIgSTm1KHghJEYDeWu0NwAc/K7yqD4IAPdqGt4+LWi2
+ No5IuBsKQC3+mlHq8pEPie7g5ojtneoovnkDV01Co3PhQ/kN90LAe0Bgykr4zRnYgYXz
+ R2bOnX2d77bG9qxa8ivPOhvc/3M0Mrv8Ll2/vycZCs6LTeASD/+ClzlDtL2/64vKfYfx
+ E56ORCR76zKSVPdoJUtexvssuyRhpz856EhOGLh5aHaR2Gqi1r8Q3dLVBGQ3aMWqqum9
+ SkUFWmkIXyI2yKAh14iAVQGBsGcpOSTgjKINaJ/tmV7GY8nWmFqNw3ml0Muin17Cv6eG
+ 7Nsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720077384; x=1720682184;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
+ d=1e100.net; s=20230601; t=1720077425; x=1720682225;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=6oezTeJBRlFuNdoRr4itJQE5TWsPguCtpbNGnqiaxMw=;
- b=DGZcircG4FuBbxX+fqC2FSSaBJs/+cLaDQYa75pzOmA/P/hWTyhNKIh2GFZkgBAzc0
- HTmfHNPcTTfWP0P9BztwugZLa2LPDsuTrZgVWPVXh4ElK4pKaDn7kq3Ir0Aj6U3rtzkQ
- pz8fkV6OWShkIQyia4GOTTq3t+pzbfnBs/AjHnusOwrQ00bmLV2HSvppOSjc0Cn5k8M8
- uGqZsh+3do3FkNEN2yc6NASe+VHNdjoaVrcqSgNLAzWt747QfyoBM7Yn5/MZXG9YnUJu
- OFpU9c9I87GRgjmQmiUjG210xZ1NxxVqkW6CPFAgF4M71PVaxathwLyuqRC3B24kukQt
- qvzg==
+ bh=y2lHcjNGBSgRJ4EugwwnvEemXnideuZ3dBI7H424eAM=;
+ b=RJdSvcWqjtrM7JlvVpUoqNFQDAhJdYVSk9T5QKHfjbx4pA2f9LEfOsz4p8hjrnqg7q
+ r+hdVSXdQmtWrF7Ormzjhx3C0hpwnic6H6UiGKJJCObOQcwnzl3Uf7XaGrhNuiY/S63j
+ l3G1UwwkJT9WtFY60oV//qRlQtEVkzClomH3hxFI6pHBDPz8SAfjwG8QpVmAPTsCnNp0
+ xXjlOS8md7FXW4rcj5W1bR+TMti8dIwNu3MoctcCAuL7lMYhdd7kCXnp3UBcagU30I5s
+ Y0iwbh6nXdGwj19MpVC4xrtk5OaCmao5JARoaRD31WyZhdNUBKPnOMwCfOPVeYYwR8SB
+ g7ww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX08czooAf6RvMkdz7PIbmPm9NCYz+itfOosjUdv7xRyLVAA6zyIssquXQUauAC7x6NBmRLyRE4Rnz/iuMePIpqERU8XasMphlWPb+S8Qa5SFo/WOVdVnrgWd4=
-X-Gm-Message-State: AOJu0Yy5peibNwQy1gYvAlwIkHSqJWKMz0LadGYL9mbBlqPTArdi2b7p
- W8JoXt3qJOCEuL+54UDtedXBG3gneK1JuPVO1gcyDWNeBWjFr8NR
-X-Google-Smtp-Source: AGHT+IGIGyyXzuiCjfnegwS2B5iTjWkvDcSBJA94ftw6wgiTWbGKs7FyomPWk33EfQmXOe0FEd4pOA==
-X-Received: by 2002:a17:903:1111:b0:1fa:2e4:204d with SMTP id
- d9443c01a7336-1fb33edfd04mr6078685ad.43.1720077383930; 
- Thu, 04 Jul 2024 00:16:23 -0700 (PDT)
+ AJvYcCUWynHgi9QAsAyP0OgMcoDe4DCC1Jfk5IR3snS77c+NiAPemvx4E8JTP2SYyNASqJPPZl7xQJHueFbv/3wZJjeryVJYdbo7b6S4KisPx/TVTp3x/t30ISwntzw=
+X-Gm-Message-State: AOJu0YyqDpy63YMhEZeSwej+qQRwzFzaHNuzkqSpSTTddWjOS925jJ6s
+ 4hKaj5+Rjy7BOFzjAJWq/9sBzbOGE3BF7aUFaszQkHFCPZ263MI+
+X-Google-Smtp-Source: AGHT+IECQ4mQVhIhzjvQhDwn3ToeF11IHi2hUqvQ5JnKEksfuqmU/IxAp/H9I3z/ZP2cEn93ypJ6JQ==
+X-Received: by 2002:a05:6a21:9990:b0:1bf:117b:bea1 with SMTP id
+ adf61e73a8af0-1c0cc8b3a39mr778337637.41.1720077425019; 
+ Thu, 04 Jul 2024 00:17:05 -0700 (PDT)
 Received: from localhost ([1.146.24.72]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fb36ff02e4sm5131715ad.116.2024.07.04.00.16.21
+ d9443c01a7336-1fac1569449sm115446385ad.220.2024.07.04.00.17.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 00:16:23 -0700 (PDT)
+ Thu, 04 Jul 2024 00:17:04 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 04 Jul 2024 17:16:18 +1000
-Message-Id: <D2GKJIW74X64.RE6VSXU1TTQP@gmail.com>
-Subject: Re: [PATCH 30/43] target/ppc: Unexport some functions from
- mmu-book3s-v3.h
+Date: Thu, 04 Jul 2024 17:16:59 +1000
+Message-Id: <D2GKK1VXLXIM.20G0PWTUV1MP@gmail.com>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH 31/43] target/ppc/mmu-radix64: Remove externally unused
+ parts from header
 From: "Nicholas Piggin" <npiggin@gmail.com>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
  <qemu-ppc@nongnu.org>
-Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
 X-Mailer: aerc 0.17.0
 References: <cover.1716763435.git.balaton@eik.bme.hu>
- <d024465e3cf461c3106e758d753b93cc2590eaba.1716763435.git.balaton@eik.bme.hu>
-In-Reply-To: <d024465e3cf461c3106e758d753b93cc2590eaba.1716763435.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+ <3eccbbc40175cbf8e592fb62c0544202052c571c.1716763435.git.balaton@eik.bme.hu>
+In-Reply-To: <3eccbbc40175cbf8e592fb62c0544202052c571c.1716763435.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,224 +97,186 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon May 27, 2024 at 9:13 AM AEST, BALATON Zoltan wrote:
-> The ppc_hash64_hpt_base() and ppc_hash64_hpt_mask() functions are
-> mostly used by mmu-hash64.c only but there is one call to
-> ppc_hash64_hpt_mask() in hw/ppc/spapr_vhyp_mmu.c.in a helper function
-> that can be moved to mmu-hash64.c which allows these functions to be
-> removed from the header.
+> Move the parts not needed outside of mmu-radix64.c from the header to
+> the C file to leave only parts in the header that need to be exported.
+> Also drop unneded include of this header.
 >
-
-Fine. Probably too big to inline anyway.
-
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+
+Acked-by: Nicholas Piggin <npiggin@gmail.com>
+
 > ---
->  hw/ppc/spapr_vhyp_mmu.c    | 21 ++++------------
->  target/ppc/mmu-book3s-v3.h | 40 -------------------------------
->  target/ppc/mmu-hash64.c    | 49 ++++++++++++++++++++++++++++++++++++++
->  target/ppc/mmu-hash64.h    |  1 +
->  4 files changed, 54 insertions(+), 57 deletions(-)
+>  target/ppc/mmu-book3s-v3.c |  1 -
+>  target/ppc/mmu-radix64.c   | 49 +++++++++++++++++++++++++++++++++++
+>  target/ppc/mmu-radix64.h   | 53 +-------------------------------------
+>  3 files changed, 50 insertions(+), 53 deletions(-)
 >
-> diff --git a/hw/ppc/spapr_vhyp_mmu.c b/hw/ppc/spapr_vhyp_mmu.c
-> index b3dd8b3a59..2d41d7f77b 100644
-> --- a/hw/ppc/spapr_vhyp_mmu.c
-> +++ b/hw/ppc/spapr_vhyp_mmu.c
-> @@ -15,19 +15,6 @@
->  #include "helper_regs.h"
->  #include "hw/ppc/spapr.h"
+> diff --git a/target/ppc/mmu-book3s-v3.c b/target/ppc/mmu-book3s-v3.c
+> index c8f69b3df9..a812cb5113 100644
+> --- a/target/ppc/mmu-book3s-v3.c
+> +++ b/target/ppc/mmu-book3s-v3.c
+> @@ -21,7 +21,6 @@
+>  #include "cpu.h"
 >  #include "mmu-hash64.h"
-> -#include "mmu-book3s-v3.h"
-> -
-> -
-> -static inline bool valid_ptex(PowerPCCPU *cpu, target_ulong ptex)
-> -{
-> -    /*
-> -     * hash value/pteg group index is normalized by HPT mask
-> -     */
-> -    if (((ptex & ~7ULL) / HPTES_PER_GROUP) & ~ppc_hash64_hpt_mask(cpu)) =
-{
-> -        return false;
-> -    }
-> -    return true;
-> -}
+>  #include "mmu-book3s-v3.h"
+> -#include "mmu-radix64.h"
 > =20
->  static target_ulong h_enter(PowerPCCPU *cpu, SpaprMachineState *spapr,
->                              target_ulong opcode, target_ulong *args)
-> @@ -70,7 +57,7 @@ static target_ulong h_enter(PowerPCCPU *cpu, SpaprMachi=
-neState *spapr,
+>  bool ppc64_v3_get_pate(PowerPCCPU *cpu, target_ulong lpid, ppc_v3_pate_t=
+ *entry)
+>  {
+> diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
+> index 5a02e4963b..cf9619e847 100644
+> --- a/target/ppc/mmu-radix64.c
+> +++ b/target/ppc/mmu-radix64.c
+> @@ -29,6 +29,37 @@
+>  #include "mmu-radix64.h"
+>  #include "mmu-book3s-v3.h"
 > =20
->      pteh &=3D ~0x60ULL;
-> =20
-> -    if (!valid_ptex(cpu, ptex)) {
-> +    if (!ppc_hash64_valid_ptex(cpu, ptex)) {
->          return H_PARAMETER;
+> +/* Radix Partition Table Entry Fields */
+> +#define PATE1_R_PRTB           0x0FFFFFFFFFFFF000
+> +#define PATE1_R_PRTS           0x000000000000001F
+> +
+> +/* Radix Process Table Entry Fields */
+> +#define PRTBE_R_GET_RTS(rts) \
+> +    ((((rts >> 58) & 0x18) | ((rts >> 5) & 0x7)) + 31)
+> +#define PRTBE_R_RPDB            0x0FFFFFFFFFFFFF00
+> +#define PRTBE_R_RPDS            0x000000000000001F
+> +
+> +/* Radix Page Directory/Table Entry Fields */
+> +#define R_PTE_VALID             0x8000000000000000
+> +#define R_PTE_LEAF              0x4000000000000000
+> +#define R_PTE_SW0               0x2000000000000000
+> +#define R_PTE_RPN               0x01FFFFFFFFFFF000
+> +#define R_PTE_SW1               0x0000000000000E00
+> +#define R_GET_SW(sw)            (((sw >> 58) & 0x8) | ((sw >> 9) & 0x7))
+> +#define R_PTE_R                 0x0000000000000100
+> +#define R_PTE_C                 0x0000000000000080
+> +#define R_PTE_ATT               0x0000000000000030
+> +#define R_PTE_ATT_NORMAL        0x0000000000000000
+> +#define R_PTE_ATT_SAO           0x0000000000000010
+> +#define R_PTE_ATT_NI_IO         0x0000000000000020
+> +#define R_PTE_ATT_TOLERANT_IO   0x0000000000000030
+> +#define R_PTE_EAA_PRIV          0x0000000000000008
+> +#define R_PTE_EAA_R             0x0000000000000004
+> +#define R_PTE_EAA_RW            0x0000000000000002
+> +#define R_PTE_EAA_X             0x0000000000000001
+> +#define R_PDE_NLB               PRTBE_R_RPDB
+> +#define R_PDE_NLS               PRTBE_R_RPDS
+> +
+>  static bool ppc_radix64_get_fully_qualified_addr(const CPUPPCState *env,
+>                                                   vaddr eaddr,
+>                                                   uint64_t *lpid, uint64_=
+t *pid)
+> @@ -180,6 +211,24 @@ static void ppc_radix64_raise_hsi(PowerPCCPU *cpu, M=
+MUAccessType access_type,
 >      }
-> =20
-> @@ -119,7 +106,7 @@ static RemoveResult remove_hpte(PowerPCCPU *cpu
->      const ppc_hash_pte64_t *hptes;
->      target_ulong v, r;
-> =20
-> -    if (!valid_ptex(cpu, ptex)) {
-> +    if (!ppc_hash64_valid_ptex(cpu, ptex)) {
->          return REMOVE_PARM;
->      }
-> =20
-> @@ -250,7 +237,7 @@ static target_ulong h_protect(PowerPCCPU *cpu, SpaprM=
-achineState *spapr,
->      const ppc_hash_pte64_t *hptes;
->      target_ulong v, r;
-> =20
-> -    if (!valid_ptex(cpu, ptex)) {
-> +    if (!ppc_hash64_valid_ptex(cpu, ptex)) {
->          return H_PARAMETER;
->      }
-> =20
-> @@ -287,7 +274,7 @@ static target_ulong h_read(PowerPCCPU *cpu, SpaprMach=
-ineState *spapr,
->      int i, ridx, n_entries =3D 1;
->      const ppc_hash_pte64_t *hptes;
-> =20
-> -    if (!valid_ptex(cpu, ptex)) {
-> +    if (!ppc_hash64_valid_ptex(cpu, ptex)) {
->          return H_PARAMETER;
->      }
-> =20
-> diff --git a/target/ppc/mmu-book3s-v3.h b/target/ppc/mmu-book3s-v3.h
-> index f3f7993958..263ce55c1f 100644
-> --- a/target/ppc/mmu-book3s-v3.h
-> +++ b/target/ppc/mmu-book3s-v3.h
-> @@ -83,46 +83,6 @@ static inline bool ppc64_v3_radix(PowerPCCPU *cpu)
->      return !!(cpu->env.spr[SPR_LPCR] & LPCR_HR);
 >  }
 > =20
-> -static inline hwaddr ppc_hash64_hpt_base(PowerPCCPU *cpu)
+> +static int ppc_radix64_get_prot_eaa(uint64_t pte)
+> +{
+> +    return (pte & R_PTE_EAA_R ? PAGE_READ : 0) |
+> +           (pte & R_PTE_EAA_RW ? PAGE_READ | PAGE_WRITE : 0) |
+> +           (pte & R_PTE_EAA_X ? PAGE_EXEC : 0);
+> +}
+> +
+> +static int ppc_radix64_get_prot_amr(const PowerPCCPU *cpu)
+> +{
+> +    const CPUPPCState *env =3D &cpu->env;
+> +    int amr =3D env->spr[SPR_AMR] >> 62; /* We only care about key0 AMR6=
+3:62 */
+> +    int iamr =3D env->spr[SPR_IAMR] >> 62; /* We only care about key0 IA=
+MR63:62 */
+> +
+> +    return (amr & 0x2 ? 0 : PAGE_WRITE) | /* Access denied if bit is set=
+ */
+> +           (amr & 0x1 ? 0 : PAGE_READ) |
+> +           (iamr & 0x1 ? 0 : PAGE_EXEC);
+> +}
+> +
+>  static bool ppc_radix64_check_prot(PowerPCCPU *cpu, MMUAccessType access=
+_type,
+>                                     uint64_t pte, int *fault_cause, int *=
+prot,
+>                                     int mmu_idx, bool partition_scoped)
+> diff --git a/target/ppc/mmu-radix64.h b/target/ppc/mmu-radix64.h
+> index c5c04a1527..6620b3d648 100644
+> --- a/target/ppc/mmu-radix64.h
+> +++ b/target/ppc/mmu-radix64.h
+> @@ -3,7 +3,7 @@
+> =20
+>  #ifndef CONFIG_USER_ONLY
+> =20
+> -#include "exec/page-protection.h"
+> +#ifdef TARGET_PPC64
+> =20
+>  /* Radix Quadrants */
+>  #define R_EADDR_MASK            0x3FFFFFFFFFFFFFFF
+> @@ -14,61 +14,10 @@
+>  #define R_EADDR_QUADRANT2       0x8000000000000000
+>  #define R_EADDR_QUADRANT3       0xC000000000000000
+> =20
+> -/* Radix Partition Table Entry Fields */
+> -#define PATE1_R_PRTB           0x0FFFFFFFFFFFF000
+> -#define PATE1_R_PRTS           0x000000000000001F
+> -
+> -/* Radix Process Table Entry Fields */
+> -#define PRTBE_R_GET_RTS(rts) \
+> -    ((((rts >> 58) & 0x18) | ((rts >> 5) & 0x7)) + 31)
+> -#define PRTBE_R_RPDB            0x0FFFFFFFFFFFFF00
+> -#define PRTBE_R_RPDS            0x000000000000001F
+> -
+> -/* Radix Page Directory/Table Entry Fields */
+> -#define R_PTE_VALID             0x8000000000000000
+> -#define R_PTE_LEAF              0x4000000000000000
+> -#define R_PTE_SW0               0x2000000000000000
+> -#define R_PTE_RPN               0x01FFFFFFFFFFF000
+> -#define R_PTE_SW1               0x0000000000000E00
+> -#define R_GET_SW(sw)            (((sw >> 58) & 0x8) | ((sw >> 9) & 0x7))
+> -#define R_PTE_R                 0x0000000000000100
+> -#define R_PTE_C                 0x0000000000000080
+> -#define R_PTE_ATT               0x0000000000000030
+> -#define R_PTE_ATT_NORMAL        0x0000000000000000
+> -#define R_PTE_ATT_SAO           0x0000000000000010
+> -#define R_PTE_ATT_NI_IO         0x0000000000000020
+> -#define R_PTE_ATT_TOLERANT_IO   0x0000000000000030
+> -#define R_PTE_EAA_PRIV          0x0000000000000008
+> -#define R_PTE_EAA_R             0x0000000000000004
+> -#define R_PTE_EAA_RW            0x0000000000000002
+> -#define R_PTE_EAA_X             0x0000000000000001
+> -#define R_PDE_NLB               PRTBE_R_RPDB
+> -#define R_PDE_NLS               PRTBE_R_RPDS
+> -
+> -#ifdef TARGET_PPC64
+> -
+>  bool ppc_radix64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType acces=
+s_type,
+>                         hwaddr *raddr, int *psizep, int *protp, int mmu_i=
+dx,
+>                         bool guest_visible);
+> =20
+> -static inline int ppc_radix64_get_prot_eaa(uint64_t pte)
 > -{
-> -    uint64_t base;
-> -
-> -    if (cpu->vhyp) {
-> -        return 0;
-> -    }
-> -    if (cpu->env.mmu_model =3D=3D POWERPC_MMU_3_00) {
-> -        ppc_v3_pate_t pate;
-> -
-> -        if (!ppc64_v3_get_pate(cpu, cpu->env.spr[SPR_LPIDR], &pate)) {
-> -            return 0;
-> -        }
-> -        base =3D pate.dw0;
-> -    } else {
-> -        base =3D cpu->env.spr[SPR_SDR1];
-> -    }
-> -    return base & SDR_64_HTABORG;
+> -    return (pte & R_PTE_EAA_R ? PAGE_READ : 0) |
+> -           (pte & R_PTE_EAA_RW ? PAGE_READ | PAGE_WRITE : 0) |
+> -           (pte & R_PTE_EAA_X ? PAGE_EXEC : 0);
 > -}
 > -
-> -static inline hwaddr ppc_hash64_hpt_mask(PowerPCCPU *cpu)
+> -static inline int ppc_radix64_get_prot_amr(const PowerPCCPU *cpu)
 > -{
-> -    uint64_t base;
+> -    const CPUPPCState *env =3D &cpu->env;
+> -    int amr =3D env->spr[SPR_AMR] >> 62; /* We only care about key0 AMR6=
+3:62 */
+> -    int iamr =3D env->spr[SPR_IAMR] >> 62; /* We only care about key0 IA=
+MR63:62 */
 > -
-> -    if (cpu->vhyp) {
-> -        return cpu->vhyp_class->hpt_mask(cpu->vhyp);
-> -    }
-> -    if (cpu->env.mmu_model =3D=3D POWERPC_MMU_3_00) {
-> -        ppc_v3_pate_t pate;
-> -
-> -        if (!ppc64_v3_get_pate(cpu, cpu->env.spr[SPR_LPIDR], &pate)) {
-> -            return 0;
-> -        }
-> -        base =3D pate.dw0;
-> -    } else {
-> -        base =3D cpu->env.spr[SPR_SDR1];
-> -    }
-> -    return (1ULL << ((base & SDR_64_HTABSIZE) + 18 - 7)) - 1;
+> -    return (amr & 0x2 ? 0 : PAGE_WRITE) | /* Access denied if bit is set=
+ */
+> -           (amr & 0x1 ? 0 : PAGE_READ) |
+> -           (iamr & 0x1 ? 0 : PAGE_EXEC);
 > -}
 > -
 >  #endif /* TARGET_PPC64 */
 > =20
 >  #endif /* CONFIG_USER_ONLY */
-> diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
-> index cbc8efa0c3..7bc0323f26 100644
-> --- a/target/ppc/mmu-hash64.c
-> +++ b/target/ppc/mmu-hash64.c
-> @@ -508,6 +508,46 @@ static int ppc_hash64_amr_prot(PowerPCCPU *cpu, ppc_=
-hash_pte64_t pte)
->      return prot;
->  }
-> =20
-> +static hwaddr ppc_hash64_hpt_base(PowerPCCPU *cpu)
-> +{
-> +    uint64_t base;
-> +
-> +    if (cpu->vhyp) {
-> +        return 0;
-> +    }
-> +    if (cpu->env.mmu_model =3D=3D POWERPC_MMU_3_00) {
-> +        ppc_v3_pate_t pate;
-> +
-> +        if (!ppc64_v3_get_pate(cpu, cpu->env.spr[SPR_LPIDR], &pate)) {
-> +            return 0;
-> +        }
-> +        base =3D pate.dw0;
-> +    } else {
-> +        base =3D cpu->env.spr[SPR_SDR1];
-> +    }
-> +    return base & SDR_64_HTABORG;
-> +}
-> +
-> +static hwaddr ppc_hash64_hpt_mask(PowerPCCPU *cpu)
-> +{
-> +    uint64_t base;
-> +
-> +    if (cpu->vhyp) {
-> +        return cpu->vhyp_class->hpt_mask(cpu->vhyp);
-> +    }
-> +    if (cpu->env.mmu_model =3D=3D POWERPC_MMU_3_00) {
-> +        ppc_v3_pate_t pate;
-> +
-> +        if (!ppc64_v3_get_pate(cpu, cpu->env.spr[SPR_LPIDR], &pate)) {
-> +            return 0;
-> +        }
-> +        base =3D pate.dw0;
-> +    } else {
-> +        base =3D cpu->env.spr[SPR_SDR1];
-> +    }
-> +    return (1ULL << ((base & SDR_64_HTABSIZE) + 18 - 7)) - 1;
-> +}
-> +
->  const ppc_hash_pte64_t *ppc_hash64_map_hptes(PowerPCCPU *cpu,
->                                               hwaddr ptex, int n)
->  {
-> @@ -545,6 +585,15 @@ void ppc_hash64_unmap_hptes(PowerPCCPU *cpu, const p=
-pc_hash_pte64_t *hptes,
->                          false, n * HASH_PTE_SIZE_64);
->  }
-> =20
-> +bool ppc_hash64_valid_ptex(PowerPCCPU *cpu, target_ulong ptex)
-> +{
-> +    /* hash value/pteg group index is normalized by HPT mask */
-> +    if (((ptex & ~7ULL) / HPTES_PER_GROUP) & ~ppc_hash64_hpt_mask(cpu)) =
-{
-> +        return false;
-> +    }
-> +    return true;
-> +}
-> +
->  static unsigned hpte_page_shift(const PPCHash64SegmentPageSizes *sps,
->                                  uint64_t pte0, uint64_t pte1)
->  {
-> diff --git a/target/ppc/mmu-hash64.h b/target/ppc/mmu-hash64.h
-> index de653fcae5..ae8d4b37ae 100644
-> --- a/target/ppc/mmu-hash64.h
-> +++ b/target/ppc/mmu-hash64.h
-> @@ -120,6 +120,7 @@ const ppc_hash_pte64_t *ppc_hash64_map_hptes(PowerPCC=
-PU *cpu,
->                                               hwaddr ptex, int n);
->  void ppc_hash64_unmap_hptes(PowerPCCPU *cpu, const ppc_hash_pte64_t *hpt=
-es,
->                              hwaddr ptex, int n);
-> +bool ppc_hash64_valid_ptex(PowerPCCPU *cpu, target_ulong ptex);
-> =20
->  static inline uint64_t ppc_hash64_hpte0(PowerPCCPU *cpu,
->                                          const ppc_hash_pte64_t *hptes, i=
-nt i)
 
 
