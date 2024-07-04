@@ -4,82 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E359AC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46FB3C3271F
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPH34-0002iH-MR; Thu, 04 Jul 2024 03:38:35 -0400
+	id 1sPH3Q-0002uL-VM; Thu, 04 Jul 2024 03:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPH32-0002eP-02; Thu, 04 Jul 2024 03:38:32 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPH30-0001eh-6x; Thu, 04 Jul 2024 03:38:31 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1fb3037b47dso2308135ad.2; 
- Thu, 04 Jul 2024 00:38:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720078707; x=1720683507; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TLA9wWkmSK7sZ4PTxw2n+RD9rNTP46vLwVKdbFjOfnU=;
- b=XXDK8PVZxCHg816UaNRlRE8bVbOj3mqAZy8/17JWsDnouME1K9Zd61dKBcbLv7/Wyx
- KbBBj/HEs8nygw6EsfG+cgbRmoNH/uLtY1OAGHG6g2INY2Zwe5KuOybYBZxS8vqrEZHw
- 2vCY/wS7K2WnmeGwG57u+70YEvR6VGdtKwktuczGT9mzE+3BpTREke3nwqTAtruzJbes
- IgfvuAbG0FQNKSA1N4bbpS72rehKbVEEhMKzfQKR3L1ll4IjfDX+XSUovlvzgWI5Q8Ow
- adtKchUCMdVpOYqm3VtIXpdRZkIdA3czvTnwku1g232lMTmrteozmbfvkXGZMLw3UT9V
- 3fsw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPH39-0002l2-Br
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 03:38:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPH37-0001fE-Ly
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 03:38:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720078717;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WupVS4jy2yd83kCNqab5/4/svLeaqZHFOnO70w+d1Ck=;
+ b=Ttw6pm13WihCmxEcOw+weWq1qzXsD5nozfnjq9V0Vhqt3RwDrQtAXnGpHuTdbs3zEybw+F
+ IgMbJYHKkiQTCMpfdxwLCp8R8CVB6i1aLHOOBVZsNe2paM+uy3tgta7lGDog3A6cHrlihO
+ xUbFWzO0kkSVmFXaS9f5mo/tE0E2cEw=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-287-M_DswJHoMcO5Q4QHzBxedg-1; Thu, 04 Jul 2024 03:38:32 -0400
+X-MC-Unique: M_DswJHoMcO5Q4QHzBxedg-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2ec61a87db0so3331741fa.2
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 00:38:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720078707; x=1720683507;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=TLA9wWkmSK7sZ4PTxw2n+RD9rNTP46vLwVKdbFjOfnU=;
- b=tO9ShLjMFn1qVKLkI1LOKbuqMkrmmYb4SulNAo+n0Im512G5jS0n8IQby4olU3f6vy
- SaqGZ00+ZQGAJUhw+QPU8SQw6/b20EAD/5J8bBGNRHRermqcKhUvEJpsnDvfx1zvZXr0
- zPA3QifFpwaboIm27P3h8Cs9d80i1T7WTbivls1znt09GXxqLrx05b8lf/4mOQ4Py/mf
- C5opl3JU5O+pcHKYwTQyolK0CN74E2OxuhwjJFuVVGacY8IHVUbgqO8bryLChW3+CmOQ
- C1WnJMxoRQdSxSVGR2f1l7Lbuz1z/KQN4YF8r/L1D7Vpm7VE9JJaEVkDQqwa2rtD6Pko
- zRsA==
+ d=1e100.net; s=20230601; t=1720078711; x=1720683511;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WupVS4jy2yd83kCNqab5/4/svLeaqZHFOnO70w+d1Ck=;
+ b=tgSX7JSYrHN+mMtOuBiqk8GiQT6de726UDYsA3lQBM1kmf1yDXjTefZYUf+b/idpnb
+ wq4IDt4qV8Siuc6p8EbiyqicIe3Ev94Og/jgTb5CBsa45ZnMxVcOiCueBcZWSWrEmAEQ
+ EYphM/SPbmOXSSAwjbWe3q2Nei9RVkaicEGn73xlEn3D8w7lq3J2n4CxFsnbHqG3MxsW
+ YRtiGC5XTEyRI7PO4Y2CcNwZTjtPVuNl9wMj2vUdV3hbo/Hu175bX3zQTgtuFXGjtIAX
+ o96k0ItiU0KIlGpTGEa9LY9uAPGvbblcOB18a6gExWrVnPU8j1eMwe2KbxwwgBBLfNCz
+ MmkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHQHdQ3LT00WCJQ4KGpPN8Pthr2SgDvXWdFxpDalm8YlgEa2/+2HgHO9s3CxzvNgY/IvkQXfBP6EVzAMSLMQ7Otg4ZkkCQaUCqekVwMgFOblI0L8FYuWky6+8=
-X-Gm-Message-State: AOJu0YwOf6MFwn9i7+5B2TWg/FQx6Yr7bXOPJSdZgPb/RXyn9HZi0njI
- aY2RasfucBFNT/fQ9p4d/Y7fJSKAiaZ8Rsu3drtWuvEfXUnFdcoQ1mxXdw==
-X-Google-Smtp-Source: AGHT+IFn8czwch0apLt/fW60i88UxWP75Y0kkM5XXlgGMzj5BiBAFKPixew4MLBQniZtW5PrFVgN7w==
-X-Received: by 2002:a17:903:244c:b0:1f9:ecb6:c6c6 with SMTP id
- d9443c01a7336-1fb33e123bbmr7096135ad.3.1720078707382; 
+ AJvYcCXN49mJBeMZgs/NhSLo43knMIgJhB8GO+NhAC5HsWlRLqX8pEocmroaD8GAJfgePeCGV/eXOYxgUxv1spUJeUFZAdjc6N4=
+X-Gm-Message-State: AOJu0YyD/8C7DzM94GkKVdrr884LsRE15rhH3MRLYw6udwMMkCycTC6b
+ rz7fo9Xf7mFmfZy/XmEeZolZLJCQbag9wUWgoapKNh8qGGaqAFzdQFqBa4GgkXJjVY9UE1ymjIR
+ Si/AcIGpZVPF9ubGxFZ63/SeDtshRri7O9l3T/hNF34FPiMUURkmb
+X-Received: by 2002:a05:651c:11c5:b0:2ee:8701:787e with SMTP id
+ 38308e7fff4ca-2ee8ed62fb2mr5246561fa.1.1720078710952; 
+ Thu, 04 Jul 2024 00:38:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9rCY8skyMXuoUo7+q6ETzr+91+TodOELQECjpIg3JE8+Z/Zz9/lJvsjE6I2UsuvxWb2BS0A==
+X-Received: by 2002:a05:651c:11c5:b0:2ee:8701:787e with SMTP id
+ 38308e7fff4ca-2ee8ed62fb2mr5245881fa.1.1720078708264; 
+ Thu, 04 Jul 2024 00:38:28 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f7:82e2:c2d2:c800:4b76:dc98])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4264a21cc59sm12582415e9.25.2024.07.04.00.38.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 04 Jul 2024 00:38:27 -0700 (PDT)
-Received: from localhost ([1.146.24.72]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac1569192sm115790235ad.214.2024.07.04.00.38.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 00:38:27 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 04 Jul 2024 17:38:21 +1000
-Message-Id: <D2GL0EXPBTWH.3M9QTJYZO9C6A@gmail.com>
-Cc: <balaton@eik.bme.hu>, <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 3/7] target/ppc: optimize hreg_compute_pmu_hflags_value
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>,
- <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <20240523051412.226970-1-harshpb@linux.ibm.com>
- <20240523051412.226970-4-harshpb@linux.ibm.com>
-In-Reply-To: <20240523051412.226970-4-harshpb@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+Date: Thu, 4 Jul 2024 03:38:22 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Mikhail Krasheninnikov <krashmisha@gmail.com>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Matwey Kornilov <matwey.kornilov@gmail.com>,
+ qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH v3] virtio: Implement Virtio Backend for SD/MMC in QEMU
+Message-ID: <20240704033637-mutt-send-email-mst@kernel.org>
+References: <20240703145956.16193-1-krashmisha@gmail.com>
+ <87le2ipigb.fsf@draig.linaro.org>
+ <7c281582-e5a3-265b-f6fc-80f7a1f01078@gmail.com>
+ <20240703160451-mutt-send-email-mst@kernel.org>
+ <e0e1e2bd-a230-a460-79b2-dd9318e7c92e@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e0e1e2bd-a230-a460-79b2-dd9318e7c92e@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,40 +106,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 23, 2024 at 3:14 PM AEST, Harsh Prateek Bora wrote:
-> The second if-condition can be true only if the first one above is true.
-> Enclose the latter into the former to avoid un-necessary check if first
-> condition fails.
->
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+On Thu, Jul 04, 2024 at 10:25:53AM +0300, Mikhail Krasheninnikov wrote:
+> 
+> On Wed, 3 Jul 2024, Michael S. Tsirkin wrote:
+> 
+> > On Wed, Jul 03, 2024 at 10:55:17PM +0300, Mikhail Krasheninnikov wrote:
+> > > 
+> > > Hello, Alex!
+> > > 
+> > > No, there's no patch to the VirtIO specification yet. This is 
+> > > proof-of-concept solution since I'm not sure that I did everything 
+> > > correct with the design (and as folks' reviews show, for a good reason). 
+> > > As soon as most obvious issues would be out of the way, I think I'll 
+> > > submit a patch.
+> > 
+> > 
+> > Mikhail, if you want people to review your patches but not merge
+> > them yet, pls use an RFC tag in the subject to avoid confusion.
+> > 
+> > Thanks,
+> > 
+> > -- 
+> > MST
+> > 
+> > 
+> 
+> Hello, Michael!
+> 
+> I was planning to submit three patches: to the kernel, emulator and Virtio 
+> specification around the same time - as soon as the obvious bugs are 
+> fixed, I'll submit a patch to the specification. I thought it wasn't 
+> necessary to use the RFC tag in that case, but if you think it is, 
+> I'll include it with the next version of the patch.
 
-Ditto for this it's possible compiler can transform it, but I
-like the code.
+RFC means "this is proof of concept". On the one hand some people
+won't bother reviewing then. On the other your patch will be
+judged less harshly. If your code still has debugging printks,
+it's clearly an RFC at best.
 
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-
-> ---
->  target/ppc/helper_regs.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-> index d09dcacd5e..261a8ba79f 100644
-> --- a/target/ppc/helper_regs.c
-> +++ b/target/ppc/helper_regs.c
-> @@ -66,9 +66,9 @@ static uint32_t hreg_compute_pmu_hflags_value(CPUPPCSta=
-te *env)
->  #ifndef CONFIG_USER_ONLY
->      if (env->pmc_ins_cnt) {
->          hflags |=3D 1 << HFLAGS_INSN_CNT;
-> -    }
-> -    if (env->pmc_ins_cnt & 0x1e) {
-> -        hflags |=3D 1 << HFLAGS_PMC_OTHER;
-> +        if (env->pmc_ins_cnt & 0x1e) {
-> +            hflags |=3D 1 << HFLAGS_PMC_OTHER;
-> +        }
->      }
->  #endif
->  #endif
+-- 
+MST
 
 
