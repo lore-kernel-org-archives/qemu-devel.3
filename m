@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3C34C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 15:54:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DE11C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 15:54:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPOmA-0000vv-Ol; Thu, 04 Jul 2024 11:53:38 -0400
+	id 1sPOlz-0000Wi-FX; Thu, 04 Jul 2024 11:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPOm9-0000qV-Cl; Thu, 04 Jul 2024 11:53:37 -0400
+ id 1sPOlv-0000St-8X; Thu, 04 Jul 2024 11:53:23 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sPOm6-00027p-Ct; Thu, 04 Jul 2024 11:53:37 -0400
+ id 1sPOls-00023m-G2; Thu, 04 Jul 2024 11:53:22 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 361B37749C;
- Thu,  4 Jul 2024 18:52:47 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D0B1377497;
+ Thu,  4 Jul 2024 18:52:46 +0300 (MSK)
 Received: from tls.msk.ru (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with SMTP id E76EAFEAE7;
+ by tsrv.corpit.ru (Postfix) with SMTP id 98F19FEAE2;
  Thu,  4 Jul 2024 18:52:51 +0300 (MSK)
-Received: (nullmailer pid 1481712 invoked by uid 1000);
+Received: (nullmailer pid 1481696 invoked by uid 1000);
  Thu, 04 Jul 2024 15:52:51 -0000
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-8.2.6 14/18] target/arm: Fix FJCVTZS vs flush-to-zero
-Date: Thu,  4 Jul 2024 18:52:45 +0300
-Message-Id: <20240704155251.1481617-14-mjt@tls.msk.ru>
+ Song Gao <gaosong@loongson.cn>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-8.2.6 09/18] tcg/loongarch64: Fix tcg_out_movi vs some pcrel
+ pointers
+Date: Thu,  4 Jul 2024 18:52:40 +0300
+Message-Id: <20240704155251.1481617-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <qemu-stable-8.2.6-20240704154854@cover.tls.msk.ru>
 References: <qemu-stable-8.2.6-20240704154854@cover.tls.msk.ru>
@@ -62,98 +63,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Input denormals cause the Javascript inexact bit
-(output to Z) to be set.
+Simplify the logic for two-part, 32-bit pc-relative addresses.
+Rather than assume all such fit in int32_t, do some arithmetic
+and assert a result, do some arithmetic first and then check
+to see if the pieces are in range.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 6c1f6f2733a ("target/arm: Implement ARMv8.3-JSConv")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2375
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: dacc51720db ("tcg/loongarch64: Implement tcg_out_mov and tcg_out_movi")
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Reported-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240625183536.1672454-4-richard.henderson@linaro.org
-[PMM: fixed hardcoded tab in test case]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 7619129f0d4a14d918227c5c47ad7433662e9ccc)
+(cherry picked from commit 521d7fb3ebdf88112ed13556a93e3037742b9eb8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 3e5e37abbe..ff59bc5522 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -1121,8 +1121,8 @@ const FloatRoundMode arm_rmode_to_sf_map[] = {
- uint64_t HELPER(fjcvtzs)(float64 value, void *vstatus)
- {
-     float_status *status = vstatus;
--    uint32_t inexact, frac;
--    uint32_t e_old, e_new;
-+    uint32_t frac, e_old, e_new;
-+    bool inexact;
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index abdc8b7f4d..6c99e799b3 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -365,8 +365,7 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
+      * back to the slow path.
+      */
  
-     e_old = get_float_exception_flags(status);
-     set_float_exception_flags(0, status);
-@@ -1130,13 +1130,13 @@ uint64_t HELPER(fjcvtzs)(float64 value, void *vstatus)
-     e_new = get_float_exception_flags(status);
-     set_float_exception_flags(e_old | e_new, status);
+-    intptr_t pc_offset;
+-    tcg_target_long val_lo, val_hi, pc_hi, offset_hi;
++    intptr_t src_rx, pc_offset;
+     tcg_target_long hi12, hi32, hi52;
  
--    if (value == float64_chs(float64_zero)) {
--        /* While not inexact for IEEE FP, -0.0 is inexact for JavaScript. */
--        inexact = 1;
--    } else {
--        /* Normal inexact or overflow or NaN */
--        inexact = e_new & (float_flag_inexact | float_flag_invalid);
--    }
-+    /* Normal inexact, denormal with flush-to-zero, or overflow or NaN */
-+    inexact = e_new & (float_flag_inexact |
-+                       float_flag_input_denormal |
-+                       float_flag_invalid);
-+
-+    /* While not inexact for IEEE FP, -0.0 is inexact for JavaScript. */
-+    inexact |= value == float64_chs(float64_zero);
+     /* Value fits in signed i32.  */
+@@ -376,24 +375,23 @@ static void tcg_out_movi(TCGContext *s, TCGType type, TCGReg rd,
+     }
  
-     /* Pack the result and the env->ZF representation of Z together.  */
-     return deposit64(frac, 32, 32, inexact);
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index 70d728ae9a..4ecbca6a41 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -41,8 +41,9 @@ endif
+     /* PC-relative cases.  */
+-    pc_offset = tcg_pcrel_diff(s, (void *)val);
+-    if (pc_offset == sextreg(pc_offset, 0, 22) && (pc_offset & 3) == 0) {
+-        /* Single pcaddu2i.  */
+-        tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
+-        return;
++    src_rx = (intptr_t)tcg_splitwx_to_rx(s->code_ptr);
++    if ((val & 3) == 0) {
++        pc_offset = val - src_rx;
++        if (pc_offset == sextreg(pc_offset, 0, 22)) {
++            /* Single pcaddu2i.  */
++            tcg_out_opc_pcaddu2i(s, rd, pc_offset >> 2);
++            return;
++        }
+     }
  
- # Pauth Tests
- ifneq ($(CROSS_CC_HAS_ARMV8_3),)
--AARCH64_TESTS += pauth-1 pauth-2 pauth-4 pauth-5
-+AARCH64_TESTS += pauth-1 pauth-2 pauth-4 pauth-5 test-2375
- pauth-%: CFLAGS += -march=armv8.3-a
-+test-2375: CFLAGS += -march=armv8.3-a
- run-pauth-1: QEMU_OPTS += -cpu max
- run-pauth-2: QEMU_OPTS += -cpu max
- # Choose a cpu with FEAT_Pauth but without FEAT_FPAC for pauth-[45].
-diff --git a/tests/tcg/aarch64/test-2375.c b/tests/tcg/aarch64/test-2375.c
-new file mode 100644
-index 0000000000..84c7e7de71
---- /dev/null
-+++ b/tests/tcg/aarch64/test-2375.c
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/* Copyright (c) 2024 Linaro Ltd */
-+/* See https://gitlab.com/qemu-project/qemu/-/issues/2375 */
-+
-+#include <assert.h>
-+
-+int main(void)
-+{
-+   int r, z;
-+
-+   asm("msr fpcr, %2\n\t"
-+       "fjcvtzs %w0, %d3\n\t"
-+       "cset %1, eq"
-+       : "=r"(r), "=r"(z)
-+       : "r"(0x01000000L),      /* FZ = 1 */
-+         "w"(0xfcff00L));       /* denormal */
-+
-+    assert(r == 0);
-+    assert(z == 0);
-+    return 0;
-+}
+-    if (pc_offset == (int32_t)pc_offset) {
+-        /* Offset within 32 bits; load with pcalau12i + ori.  */
+-        val_lo = sextreg(val, 0, 12);
+-        val_hi = val >> 12;
+-        pc_hi = (val - pc_offset) >> 12;
+-        offset_hi = val_hi - pc_hi;
+-
+-        tcg_debug_assert(offset_hi == sextreg(offset_hi, 0, 20));
+-        tcg_out_opc_pcalau12i(s, rd, offset_hi);
++    pc_offset = (val >> 12) - (src_rx >> 12);
++    if (pc_offset == sextreg(pc_offset, 0, 20)) {
++        /* Load with pcalau12i + ori.  */
++        tcg_target_long val_lo = val & 0xfff;
++        tcg_out_opc_pcalau12i(s, rd, pc_offset);
+         if (val_lo != 0) {
+-            tcg_out_opc_ori(s, rd, rd, val_lo & 0xfff);
++            tcg_out_opc_ori(s, rd, rd, val_lo);
+         }
+         return;
+     }
 -- 
 2.39.2
 
