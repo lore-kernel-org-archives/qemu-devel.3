@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F77C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 11:43:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE950C3271E
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 11:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPKrc-0004kz-6a; Thu, 04 Jul 2024 07:43:00 -0400
+	id 1sPKsn-0006Sd-O7; Thu, 04 Jul 2024 07:44:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sPKrT-0004jU-9z
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 07:42:52 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sPKrR-0005yW-CH
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 07:42:50 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-58ba3e38028so730480a12.0
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 04:42:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720093358; x=1720698158; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=HzfFhpY9wpDm0aoDe9W7snDRqUECUqFzPYV35L92RvU=;
- b=M9CvCUbMwxio+gcm+0zrL7Oo706otEllpjZvh782VJJO0s3dwG/Zcxqr3SjUav/YoT
- ayu25gTZDqHb/0gd6iveyzCfjnhE5YNuVOY24N+nwjRj+EV0K02qPcOm0XD5wFEbRR/n
- kztsW7sCFUNLiGa5anC/Y+pKiK4QEO7OQBvK4rGup1FstcqyO8ZS213gwe3bBn1EKWgH
- VeGprHa9kE2V2bcAp80MSEWc3BxyMez0+r1trI+BWIQjdOA1RrZ2FhjM8HJuwEwe/KLq
- DvOWV8/LZnUkf9mi8UhpbppkOLQINSEY/zFHYD+RGW81Y+bKobtRFfaMoW71Que/VyLD
- MDxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720093358; x=1720698158;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HzfFhpY9wpDm0aoDe9W7snDRqUECUqFzPYV35L92RvU=;
- b=riS2fQXdH0yTxePeOA1LVpnoDAgDCRZFYtZtiQRAwGPrin8jobJ2+tw/QIQOq+qIKs
- UtvcKx6/aG+ZwFehU4jQ52EFjxWZ5czEukFrg+OCdm3jbOu07xcIoqFfdfOuqk3Z9zW/
- WtyTtmERhtRDw+QTGwijfvSV9sbdyW+ow43QHyrW80odNdKybIJryNdiI0pkiH19JNfl
- b6fK5cOf2WkVgd7yb9zuCYLWw9MCi1nfgke0FI6GgYsSL4+5biM0yA1K8v9WZM89k73J
- e78JItbmV/YIVwmalCLH1BRKTUWsoIbtkwAYoaEOM82IRANi2E71ElfWzUyhQMPQITQQ
- pDVw==
-X-Gm-Message-State: AOJu0YyV6+L6YmIvA96zXe9pG4IQrf6AMKF/J6IX9TpWfOP3WKhZpPGx
- XWQxOlwLHdflULU0TWXZ6cXrqek6DMEKhrVaoFI5tb0DgRFZz6LQNYSOPfCSuaMwBHtJ5xXse+T
- I5vT0jy2CLqBNe1JSjkbKSl72b+E=
-X-Google-Smtp-Source: AGHT+IHasBEGIlgvaru77AmnEamynOyBIUI9Gcvx3G8Hln78yqQw9r5HACJZLDYiclHUBv3xStP7OftQm8aV8lp5t9E=
-X-Received: by 2002:a05:6402:34c2:b0:58d:e458:1310 with SMTP id
- 4fb4d7f45d1cf-58e5acd87ccmr827965a12.13.1720093357631; Thu, 04 Jul 2024
- 04:42:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sPKsf-0006I1-DG; Thu, 04 Jul 2024 07:44:05 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sPKsc-0006DE-Bh; Thu, 04 Jul 2024 07:44:05 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WFF9g1gQYz6K99n;
+ Thu,  4 Jul 2024 19:41:59 +0800 (CST)
+Received: from lhrpeml100003.china.huawei.com (unknown [7.191.160.210])
+ by mail.maildlp.com (Postfix) with ESMTPS id 51A5B140B63;
+ Thu,  4 Jul 2024 19:43:53 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml100003.china.huawei.com (7.191.160.210) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 4 Jul 2024 12:43:52 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Thu, 4 Jul 2024 12:43:52 +0100
+To: Nicholas Piggin <npiggin@gmail.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
+CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
+ <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
+ <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "will@kernel.org" <will@kernel.org>,
+ "gshan@redhat.com" <gshan@redhat.com>, "rafael@kernel.org"
+ <rafael@kernel.org>, "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
+ <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
+ zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
+ <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
+ <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>, Linuxarm
+ <linuxarm@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Shaoqin Huang <shahuang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: RE: [PATCH V13 3/8] hw/acpi: Update ACPI GED framework to support
+ vCPU Hotplug
+Thread-Topic: [PATCH V13 3/8] hw/acpi: Update ACPI GED framework to support
+ vCPU Hotplug
+Thread-Index: AQHauNIRAeRMruTFh0K+ZTjTNpSYCbHl+vuAgACeIgA=
+Date: Thu, 4 Jul 2024 11:43:52 +0000
+Message-ID: <5539e63ff2e8409f94edf210ad9d7a21@huawei.com>
+References: <20240607115649.214622-1-salil.mehta@huawei.com>
+ <20240607115649.214622-4-salil.mehta@huawei.com>
+ <D2GF5O8SP4Q8.38I35G35K74OG@gmail.com>
+In-Reply-To: <D2GF5O8SP4Q8.38I35G35K74OG@gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.159.88]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20240701224421.1432654-1-edgar.iglesias@gmail.com>
- <20240701224421.1432654-2-edgar.iglesias@gmail.com>
- <87ikxlo3lx.fsf@draig.linaro.org>
-In-Reply-To: <87ikxlo3lx.fsf@draig.linaro.org>
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Date: Thu, 4 Jul 2024 14:42:25 +0300
-Message-ID: <CAJy5ezpD6i3Fc9K-i58=V0e1uxrB-VZ2sd+gtoOc4TnbkWHSZQ@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] physmem: Bail out qemu_ram_block_from_host() for
- invalid ram addrs
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org, 
- paul@xen.org, edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000008fef90061c6a7180"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,125 +97,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008fef90061c6a7180
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Jul 4, 2024 at 1:26=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linaro=
-.org> wrote:
-
-> "Edgar E. Iglesias" <edgar.iglesias@gmail.com> writes:
->
-> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> >
-> > Bail out in qemu_ram_block_from_host() when
-> > xen_ram_addr_from_mapcache() does not find an existing
-> > mapping.
-> >
-> > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> > ---
-> >  system/physmem.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/system/physmem.c b/system/physmem.c
-> > index 33d09f7571..59d1576c2b 100644
-> > --- a/system/physmem.c
-> > +++ b/system/physmem.c
-> > @@ -2277,6 +2277,10 @@ RAMBlock *qemu_ram_block_from_host(void *ptr,
-> bool round_offset,
-> >          ram_addr_t ram_addr;
-> >          RCU_READ_LOCK_GUARD();
-> >          ram_addr =3D xen_ram_addr_from_mapcache(ptr);
-> > +        if (ram_addr =3D=3D RAM_ADDR_INVALID) {
-> > +            return NULL;
-> > +        }
-> > +
->
-> Isn't this indicative of a failure? Should there at least be a trace
-> point for failed mappings?
->
->
-Yes but there are already trace points for the failure cases inside
-xen_ram_addr_from_mapcache().
-Do those address your concerns or do you think we need additional trace
-points?
-
-Cheers,
-Edgar
-
-
-> >          block =3D qemu_get_ram_block(ram_addr);
-> >          if (block) {
-> >              *offset =3D ram_addr - block->offset;
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
->
-
---0000000000008fef90061c6a7180
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">On Thu, Jul 4, 2024 at 1:26=E2=80=AFPM Al=
-ex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.org">alex.bennee@li=
-naro.org</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">&quot;Edgar E. Iglesias&quot; &lt;<a hre=
-f=3D"mailto:edgar.iglesias@gmail.com" target=3D"_blank">edgar.iglesias@gmai=
-l.com</a>&gt; writes:<br>
-<br>
-&gt; From: &quot;Edgar E. Iglesias&quot; &lt;<a href=3D"mailto:edgar.iglesi=
-as@amd.com" target=3D"_blank">edgar.iglesias@amd.com</a>&gt;<br>
-&gt;<br>
-&gt; Bail out in qemu_ram_block_from_host() when<br>
-&gt; xen_ram_addr_from_mapcache() does not find an existing<br>
-&gt; mapping.<br>
-&gt;<br>
-&gt; Signed-off-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.iglesias@=
-amd.com" target=3D"_blank">edgar.iglesias@amd.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 system/physmem.c | 4 ++++<br>
-&gt;=C2=A0 1 file changed, 4 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/system/physmem.c b/system/physmem.c<br>
-&gt; index 33d09f7571..59d1576c2b 100644<br>
-&gt; --- a/system/physmem.c<br>
-&gt; +++ b/system/physmem.c<br>
-&gt; @@ -2277,6 +2277,10 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, b=
-ool round_offset,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ram_addr_t ram_addr;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 RCU_READ_LOCK_GUARD();<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ram_addr =3D xen_ram_addr_from_mapca=
-che(ptr);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ram_addr =3D=3D RAM_ADDR_INVALID) {<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +<br>
-<br>
-Isn&#39;t this indicative of a failure? Should there at least be a trace<br=
->
-point for failed mappings?<br>
-<br></blockquote><div><br></div><div>Yes but there are already trace points=
- for the failure cases inside xen_ram_addr_from_mapcache().</div><div>Do th=
-ose address your concerns or do you think we need additional trace points?<=
-/div><div><br></div><div>Cheers,</div><div>Edgar</div><div>=C2=A0</div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
-:1px solid rgb(204,204,204);padding-left:1ex">
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 block =3D qemu_get_ram_block(ram_add=
-r);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (block) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *offset =3D ram_addr -=
- block-&gt;offset;<br>
-<br>
--- <br>
-Alex Benn=C3=A9e<br>
-Virtualisation Tech Lead @ Linaro<br>
-</blockquote></div></div>
-
---0000000000008fef90061c6a7180--
+SEkgTmljaywNCg0KPiAgRnJvbTogTmljaG9sYXMgUGlnZ2luIDxucGlnZ2luQGdtYWlsLmNvbT4N
+Cj4gIFNlbnQ6IFRodXJzZGF5LCBKdWx5IDQsIDIwMjQgNDowMyBBTQ0KPiAgVG86IFNhbGlsIE1l
+aHRhIDxzYWxpbC5tZWh0YUBodWF3ZWkuY29tPjsgcWVtdS1kZXZlbEBub25nbnUub3JnOw0KPiAg
+cWVtdS1hcm1Abm9uZ251Lm9yZw0KPiAgDQo+ICBPbiBGcmkgSnVuIDcsIDIwMjQgYXQgOTo1NiBQ
+TSBBRVNULCBTYWxpbCBNZWh0YSB3cm90ZToNCj4gID4gQEAgLTQwMCw2ICs0MTEsMTIgQEAgc3Rh
+dGljIHZvaWQgYWNwaV9nZWRfaW5pdGZuKE9iamVjdCAqb2JqKQ0KPiAgPiAgICAgIG1lbW9yeV9y
+ZWdpb25faW5pdF9pbygmZ2VkX3N0LT5yZWdzLCBvYmosICZnZWRfcmVnc19vcHMsIGdlZF9zdCwN
+Cj4gID4gICAgICAgICAgICAgICAgICAgICAgICAgICAgVFlQRV9BQ1BJX0dFRCAiLXJlZ3MiLCBB
+Q1BJX0dFRF9SRUdfQ09VTlQpOw0KPiAgPiAgICAgIHN5c2J1c19pbml0X21taW8oc2JkLCAmZ2Vk
+X3N0LT5yZWdzKTsNCj4gID4gKw0KPiAgPiArICAgIG1lbW9yeV9yZWdpb25faW5pdCgmcy0+Y29u
+dGFpbmVyX2NwdWhwLCBPQkpFQ1QoZGV2KSwgImNwdWhwDQo+ICBjb250YWluZXIiLA0KPiAgPiAr
+ICAgICAgICAgICAgICAgICAgICAgICBBQ1BJX0NQVV9IT1RQTFVHX1JFR19MRU4pOw0KPiAgPiAr
+ICAgIHN5c2J1c19pbml0X21taW8oc2JkLCAmcy0+Y29udGFpbmVyX2NwdWhwKTsNCj4gID4gKyAg
+ICBjcHVfaG90cGx1Z19od19pbml0KCZzLT5jb250YWluZXJfY3B1aHAsIE9CSkVDVChkZXYpLA0K
+PiAgPiArICAgICAgICAgICAgICAgICAgICAgICAgJnMtPmNwdWhwX3N0YXRlLCAwKTsNCj4gID4g
+IH0NCj4gIA0KPiAgQ291bGQgdGhlIEFDUEkgcGVyc2lzdGVudCBwcmVzZW5jZSBBUk0gcmVxdWly
+ZXMgYmUgYSBwcm9wZXJ0eSBvZiB0aGUgQUNQSQ0KPiAgZGV2aWNlPw0KDQoNCkkgdGhpbmsgaXQg
+aXMgbW9yZSBvZiBhIENQVSBwcm9wZXJ0eSByYXRoZXIgdGhhbiBhIEdFRCBkZXZpY2U/IA0KDQoN
+Cj4gIA0KPiAgVGhhbmtzLA0KPiAgTmljaw0K
 
