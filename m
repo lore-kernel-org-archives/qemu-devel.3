@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB758C30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3F62C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 07:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPHDX-0003z1-FS; Thu, 04 Jul 2024 03:49:23 -0400
+	id 1sPHLq-0003Qj-0z; Thu, 04 Jul 2024 03:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPHDS-0003xu-DR; Thu, 04 Jul 2024 03:49:18 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPHDQ-0007ES-Kq; Thu, 04 Jul 2024 03:49:18 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1f9ffd24262so2034545ad.0; 
- Thu, 04 Jul 2024 00:49:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720079354; x=1720684154; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KAzDNf9DWGbJubzE9VzLF12FDRQ16GG1jmbaSAmlVOg=;
- b=RTXZ4dJ8L7qeggh7FL57IPPchn88l7fd9dDwWqd697MAcod6uHBZTwRLvGt+8fRejp
- BqOikjQwZUPLz/WcTp9Og3TFcHRKVWRiOshZKJHD9MTpoixfm6qgnOuDnLbItzkVBaOS
- z17IAGoydjwmkfwo1yM5s6vWQ5Q2Ofcj3t1yMKCvtIuQmoPCVoFkqLWuS3jETqg//Cs9
- lxZPGKi4u3vHOlE1bki68BIxUy8CvxJLAd0g4p04GVGrXWh67w0lUUoyxoa2dPWVeZfm
- 38M8MS7kshjYg9UKtAhE64CNJz+kdtMVV5FN6xdFvkTwORZTm+CBJz9cl1F1NCnquffb
- aDAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720079354; x=1720684154;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=KAzDNf9DWGbJubzE9VzLF12FDRQ16GG1jmbaSAmlVOg=;
- b=EbTp72FUjNDaOW80W6AQb5ddsRd5pXLEwWw7zGEufl0TNL+M9SOByDWxlww98yu2A3
- t0U0Ig6xovyQ7K7QV/sgayZ9/hhXXE7C/1tiePUyUHZddktmYjC+rcVsTfrdbHzN0NQg
- 65LSlCxKg3DGOKNZd/8aERVNBDiDzUwnJqIBevh/ZZbj8m/jdGasf3ekxpnC0J764owm
- jpNNN6CRBpMwdqrZEjkJn1L2LD49x++HhLMa/FvzsZgcprPhhwut3oGvYNSkDb1GKhpF
- iI6Vhc0b8eouEY22QRAGtLU4c2IfNpMJ8xTCUILQWbOozqle+JPCUdHmP8wraqRsylL6
- 74FA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdhO9/Nc7Zh1/cKAA/IwUEUHYL2ORA7wDDmLBO8+rLI30BsoFi6pqkUpSLeAo39osvMJWoHgXmrNNEjTsIMS2/fqYs+PtlMkDaKtCstNWVFsEkck++9ze6kB8=
-X-Gm-Message-State: AOJu0YxWg3sK9xiMbEkpR946TJRQqWLMB2WXR8Y4hwM0R6GteWnEmWxL
- kIA/OZv1AGAse8oJWbkxIWD43UWofe3dcR9DBE26gJQmAbzqTTeu
-X-Google-Smtp-Source: AGHT+IFr56Ih2qyzCEu3iMlommcnK+yaG0mZhMHrIA9PTNSm9C7Z4FKgtawFIzXcF/qFkY8xI+UkNw==
-X-Received: by 2002:a17:902:ecc6:b0:1fb:2eb3:7874 with SMTP id
- d9443c01a7336-1fb33e58856mr8311935ad.28.1720079354467; 
- Thu, 04 Jul 2024 00:49:14 -0700 (PDT)
-Received: from localhost ([1.146.24.72]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac1535d37sm116919865ad.171.2024.07.04.00.49.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 00:49:14 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 04 Jul 2024 17:49:08 +1000
-Message-Id: <D2GL8O0BR8KC.STO51QHTZ6D5@gmail.com>
-Cc: <balaton@eik.bme.hu>, <danielhb413@gmail.com>
-Subject: Re: [PATCH v2 7/7] target/ppc: redue code duplication across
- Power9/10 init code
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>,
- <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.17.0
-References: <20240523051412.226970-1-harshpb@linux.ibm.com>
- <20240523051412.226970-8-harshpb@linux.ibm.com>
-In-Reply-To: <20240523051412.226970-8-harshpb@linux.ibm.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1sPHLn-0003Nq-Bh
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 03:57:55 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ying.huang@intel.com>)
+ id 1sPHLj-0003nD-I5
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 03:57:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1720079872; x=1751615872;
+ h=from:to:cc:subject:in-reply-to:references:date:
+ message-id:mime-version;
+ bh=+nlEZm29FY0yjN+onfpT9t6OyQeU1Kx/26D0jQA3u8A=;
+ b=SxYFBOd/Bz0wSaQZQoyAb8buqQigKKmmXMcAwTB9YKLacwBvYClJ+zcp
+ 5ugSISI7Erz1oYOUX7hDa181lBHQM/wv/+cudcC0h5qylJP5w9lqsW9Oj
+ 81/iNESow+l1dReZsf8VJtsB1X6B9FaaNzSUciq/sMapApfEefAUVkXBW
+ acCnGPVU3yOi89E5ipDAQXvO3QDOwzELlx0tPXgP6n45L+icd1qQCTHaD
+ ABbkc8Zf88L/H3MFWo7s9GacQ057xoP8z+0/pgDRapfdLb81vpTFxG97Q
+ YhU26yQV3oR/eC2z8dyo3Q7DzIYojCSZhVtrmPi62aDXRkTW0fEDTdifM g==;
+X-CSE-ConnectionGUID: 2h9IJIQcTDqXUMiwI2m8fg==
+X-CSE-MsgGUID: nS1eSz+9QUCc4k2XFwTMyQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11122"; a="17484926"
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="17484926"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2024 00:57:40 -0700
+X-CSE-ConnectionGUID: zZCUaaKITQGaYrZ7AzctJg==
+X-CSE-MsgGUID: 2WZ2FzmURDqjsTbeqHjHSw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="46932661"
+Received: from unknown (HELO yhuang6-desk2.ccr.corp.intel.com)
+ ([10.238.208.55])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2024 00:57:30 -0700
+From: "Huang, Ying" <ying.huang@intel.com>
+To: "Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev>
+Cc: "Jonathan Cameron" <Jonathan.Cameron@Huawei.com>,  "Gregory Price"
+ <gourry.memverge@gmail.com>,  aneesh.kumar@linux.ibm.com,
+ mhocko@suse.com,  tj@kernel.org,  john@jagalactic.com,  "Eishan Mirakhur"
+ <emirakhur@micron.com>,  "Vinicius Tavares Petrucci"
+ <vtavarespetr@micron.com>,  "Ravis OpenSrc" <Ravis.OpenSrc@micron.com>,
+ "Alistair Popple" <apopple@nvidia.com>,  "Srinivasulu Thanneeru"
+ <sthanneeru@micron.com>,  "SeongJae Park" <sj@kernel.org>,  "Rafael J.
+ Wysocki" <rafael@kernel.org>,  Len Brown <lenb@kernel.org>,  Andrew Morton
+ <akpm@linux-foundation.org>,  Dave Jiang <dave.jiang@intel.com>,  Dan
+ Williams <dan.j.williams@intel.com>,  linux-acpi@vger.kernel.org,
+ linux-kernel@vger.kernel.org,  linux-mm@kvack.org,  "Ho-Ren (Jack)
+ Chuang" <horenc@vt.edu>,  "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>,  "Ho-Ren (Jack) Chuang"
+ <horenchuang@gmail.com>,  linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] memory tier: consolidate the initialization of
+ memory tiers
+In-Reply-To: <20240704072646.437579-1-horen.chuang@linux.dev> (Ho-Ren Chuang's
+ message of "Thu, 4 Jul 2024 07:26:44 +0000")
+References: <20240704072646.437579-1-horen.chuang@linux.dev>
+Date: Thu, 04 Jul 2024 15:55:39 +0800
+Message-ID: <87tth5h9qc.fsf@yhuang6-desk2.ccr.corp.intel.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=ascii
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=ying.huang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,143 +97,229 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu May 23, 2024 at 3:14 PM AEST, Harsh Prateek Bora wrote:
-> Power9/10 initialization code consists of a lot of logical OR of
-> various flag bits as supported by respective Power platform during its
-> initialization, most of which is duplicated and only selected bits are
-> added or removed as needed with each new platform support being added.
-> Remove the duplicate code and share using common macros.
+"Ho-Ren (Jack) Chuang" <horen.chuang@linux.dev> writes:
 
-This an the previous patch are fiddly to verify but good cleanups I
-think. Couple of small things.
-
+> The current memory tier initialization process is distributed across
+> two different functions, memory_tier_init() and memory_tier_late_init().
+> This design is hard to maintain. Thus, this patch is proposed to reduce
+> the possible code paths by consolidating different
+> initialization patches into one.
 >
-> Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> The earlier discussion with Jonathan and Ying is listed here:
+> https://lore.kernel.org/lkml/20240405150244.00004b49@Huawei.com/
+>
+> If we want to put these two initializations together, they must be
+> placed together in the later function. Because only at that time,
+> the HMAT information will be ready, adist between nodes can be
+> calculated, and memory tiering can be established based on the adist.
+> So we position the initialization at memory_tier_init() to the
+> memory_tier_late_init() call. Moreover, it's natural to keep
+> memory_tier initialization in drivers at device_initcall() level.
+>
+> If we simply move the set_node_memory_tier() from memory_tier_init()
+> to late_initcall(), it will result in HMAT not registering
+> the mt_adistance_algorithm callback function, because
+> set_node_memory_tier() is not performed during the memory tiering
+> initialization phase, leading to a lack of correct default_dram
+> information.
+>
+> Therefore, we introduced a nodemask to pass the information of the
+> default DRAM nodes. The reason for not choosing to reuse
+> default_dram_type->nodes is that it is not clean enough. So in the end,
+> we use a __initdata variable, which is a variable that is released once
+> initialization is complete, including both CPU and memory nodes for HMAT
+> to iterate through.
+>
+> This patchset is based on commits <cf93be18fa1b> ("memory tier: create
+> CPUless memory tiers after obtaining HMAT info") and
+> <a72a30af550c> ("memory tier: dax/kmem: introduce an abstract layer for
+> finding, allocating, and putting memory types"):
+> [0/2] https://lkml.kernel.org/r/20240405000707.2670063-1-horenchuang@bytedance.com
+> [1/2] https://lkml.kernel.org/r/20240405000707.2670063-2-horenchuang@bytedance.com
+> [1/2] https://lkml.kernel.org/r/20240405000707.2670063-3-horenchuang@bytedance.com
+>
+> Signed-off-by: Ho-Ren (Jack) Chuang <horenchuang@bytedance.com>
+> Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+LGTM, Thanks!
+
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+
 > ---
->  target/ppc/cpu_init.h |  77 ++++++++++++++++++++++++++
->  target/ppc/cpu_init.c | 123 ++++++------------------------------------
->  2 files changed, 92 insertions(+), 108 deletions(-)
->  create mode 100644 target/ppc/cpu_init.h
+> - v3:
+>  * Combine the cover letter and the patch.
+>  * Remove extern default_dram_type
+>  * Remove __initdata in a extern variable
+>  * Roll back coding style, fix comment description
+> - v2:
+>  Thanks to Huang, Ying's and Andrew's comments
+>  * Add a cover letter
+>  * Add Suggested-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>  * Add get/put_online_mems() protection in memory_tier_late_init()
+>  * If memtype is set, skip initializing its node
+>  * Remove redundant code/comments or rewrite code in a cleaner manner
+>  * https://lore.kernel.org/all/20240628060925.303309-1-horen.chuang@linux.dev/
+> - v1:
+>  * https://lore.kernel.org/all/20240621044833.3953055-1-horen.chuang@linux.dev/
 >
-> diff --git a/target/ppc/cpu_init.h b/target/ppc/cpu_init.h
-> new file mode 100644
-> index 0000000000..53909987b0
-> --- /dev/null
-> +++ b/target/ppc/cpu_init.h
-> @@ -0,0 +1,77 @@
-
-This should have a SPDX license tag I guess.
-
-I suppose doing a new header for it is the way to go. That cpu_init.c
-file is enormous...
-
-> +#ifndef TARGET_PPC_CPU_INIT_H
-> +#define TARGET_PPC_CPU_INIT_H
+> - Open to discussion:
+>  * Should we use `continue` or `break` if set_node_memory_tier() fails in
+>    memory_tier_late_init()? I've changed it to `continue` in v3.
+>  * Compute the default_dram_nodes mask in hmat when needed? Currently,
+>    it still remains in memory-tiers.c
+>  * Instead of using guard(mutex)(), use mutex_lock() as it was to make a
+>    cleaner diff?
+>
+> Thanks,
+> Ho-Ren (Jack) Chuang
+>
+>  drivers/acpi/numa/hmat.c     |  5 +---
+>  include/linux/memory-tiers.h |  2 ++
+>  mm/memory-tiers.c            | 54 ++++++++++++++----------------------
+>  3 files changed, 24 insertions(+), 37 deletions(-)
+>
+> diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+> index 2c8ccc91ebe6..a2f9e7a4b479 100644
+> --- a/drivers/acpi/numa/hmat.c
+> +++ b/drivers/acpi/numa/hmat.c
+> @@ -940,10 +940,7 @@ static int hmat_set_default_dram_perf(void)
+>  	struct memory_target *target;
+>  	struct access_coordinate *attrs;
+>  
+> -	if (!default_dram_type)
+> -		return -EIO;
+> -
+> -	for_each_node_mask(nid, default_dram_type->nodes) {
+> +	for_each_node_mask(nid, default_dram_nodes) {
+>  		pxm = node_to_pxm(nid);
+>  		target = find_mem_target(pxm);
+>  		if (!target)
+> diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
+> index 0d70788558f4..0dc0cf2863e2 100644
+> --- a/include/linux/memory-tiers.h
+> +++ b/include/linux/memory-tiers.h
+> @@ -38,6 +38,7 @@ struct access_coordinate;
+>  #ifdef CONFIG_NUMA
+>  extern bool numa_demotion_enabled;
+>  extern struct memory_dev_type *default_dram_type;
+> +extern nodemask_t default_dram_nodes;
+>  struct memory_dev_type *alloc_memory_type(int adistance);
+>  void put_memory_type(struct memory_dev_type *memtype);
+>  void init_node_memory_type(int node, struct memory_dev_type *default_type);
+> @@ -76,6 +77,7 @@ static inline bool node_is_toptier(int node)
+>  
+>  #define numa_demotion_enabled	false
+>  #define default_dram_type	NULL
+> +#define default_dram_nodes	NODE_MASK_NONE
+>  /*
+>   * CONFIG_NUMA implementation returns non NULL error.
+>   */
+> diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
+> index 6632102bd5c9..4775b3a3dabe 100644
+> --- a/mm/memory-tiers.c
+> +++ b/mm/memory-tiers.c
+> @@ -43,6 +43,7 @@ static LIST_HEAD(memory_tiers);
+>  static LIST_HEAD(default_memory_types);
+>  static struct node_memory_type_map node_memory_types[MAX_NUMNODES];
+>  struct memory_dev_type *default_dram_type;
+> +nodemask_t default_dram_nodes __initdata = NODE_MASK_NONE;
+>  
+>  static const struct bus_type memory_tier_subsys = {
+>  	.name = "memory_tiering",
+> @@ -671,28 +672,35 @@ EXPORT_SYMBOL_GPL(mt_put_memory_types);
+>  
+>  /*
+>   * This is invoked via `late_initcall()` to initialize memory tiers for
+> - * CPU-less memory nodes after driver initialization, which is
+> - * expected to provide `adistance` algorithms.
+> + * memory nodes, both with and without CPUs. After the initialization of
+> + * firmware and devices, adistance algorithms are expected to be provided.
+>   */
+>  static int __init memory_tier_late_init(void)
+>  {
+>  	int nid;
+> +	struct memory_tier *memtier;
+>  
+> +	get_online_mems();
+>  	guard(mutex)(&memory_tier_lock);
 > +
-> +#define POWERPC_FAMILY_POWER9_INSNS_FLAGS                           \
-> +    PPC_INSNS_BASE | PPC_ISEL | PPC_STRING | PPC_MFTB |             \
-> +    PPC_FLOAT | PPC_FLOAT_FSEL | PPC_FLOAT_FRES |                   \
-> +    PPC_FLOAT_FSQRT | PPC_FLOAT_FRSQRTE | PPC_FLOAT_FRSQRTES |      \
-> +    PPC_FLOAT_STFIWX | PPC_FLOAT_EXT |PPC_CACHE | PPC_CACHE_ICBI |  \
-> +    PPC_CACHE_DCBZ | PPC_MEM_SYNC | PPC_MEM_EIEIO | PPC_MEM_TLBIE | \
-> +    PPC_MEM_TLBSYNC | PPC_64B | PPC_64H | PPC_64BX | PPC_ALTIVEC |  \
-> +    PPC_SEGMENT_64B | PPC_SLBI | PPC_POPCNTB | PPC_POPCNTWD |       \
-> +    PPC_CILDST
+> +	/* Assign each uninitialized N_MEMORY node to a memory tier. */
+>  	for_each_node_state(nid, N_MEMORY) {
+>  		/*
+> -		 * Some device drivers may have initialized memory tiers
+> -		 * between `memory_tier_init()` and `memory_tier_late_init()`,
+> -		 * potentially bringing online memory nodes and
+> -		 * configuring memory tiers. Exclude them here.
+> +		 * Some device drivers may have initialized
+> +		 * memory tiers, potentially bringing memory nodes
+> +		 * online and configuring memory tiers.
+> +		 * Exclude them here.
+>  		 */
+>  		if (node_memory_types[nid].memtype)
+>  			continue;
+>  
+> -		set_node_memory_tier(nid);
+> +		memtier = set_node_memory_tier(nid);
+> +		if (IS_ERR(memtier))
+> +			continue;
+>  	}
+>  
+>  	establish_demotion_targets();
+> +	put_online_mems();
+>  
+>  	return 0;
+>  }
+> @@ -875,8 +883,7 @@ static int __meminit memtier_hotplug_callback(struct notifier_block *self,
+>  
+>  static int __init memory_tier_init(void)
+>  {
+> -	int ret, node;
+> -	struct memory_tier *memtier;
+> +	int ret;
+>  
+>  	ret = subsys_virtual_register(&memory_tier_subsys, NULL);
+>  	if (ret)
+> @@ -887,7 +894,8 @@ static int __init memory_tier_init(void)
+>  				GFP_KERNEL);
+>  	WARN_ON(!node_demotion);
+>  #endif
+> -	mutex_lock(&memory_tier_lock);
 > +
-> +#define POWERPC_FAMILY_POWER9_INSNS_FLAGS2_COMMON                   \
-> +    PPC2_VSX | PPC2_VSX207 | PPC2_DFP | PPC2_DBRX |                 \
-> +    PPC2_PERM_ISA206 | PPC2_DIVE_ISA206 | PPC2_ATOMIC_ISA206 |      \
-> +    PPC2_FP_CVT_ISA206 | PPC2_FP_TST_ISA206 | PPC2_BCTAR_ISA207 |   \
-> +    PPC2_LSQ_ISA207 | PPC2_ALTIVEC_207 | PPC2_ISA205 |              \
-> +    PPC2_ISA207S | PPC2_FP_CVT_S64 | PPC2_ISA300 | PPC2_PRCNTL |    \
-> +    PPC2_MEM_LWSYNC | PPC2_BCDA_ISA206
-> +
-> +#define POWERPC_FAMILY_POWER9_INSNS_FLAGS2                          \
-> +    POWERPC_FAMILY_POWER9_INSNS_FLAGS2_COMMON | PPC2_TM
-> +#define POWERPC_FAMILY_POWER10_INSNS_FLAGS2                         \
-> +    POWERPC_FAMILY_POWER9_INSNS_FLAGS2_COMMON | PPC2_ISA310
-> +
-> +#define POWERPC_POWER9_COMMON_PCC_MSR_MASK \
-> +    (1ull << MSR_SF) |                     \
-> +    (1ull << MSR_HV) |                     \
-> +    (1ull << MSR_VR) |                     \
-> +    (1ull << MSR_VSX) |                    \
-> +    (1ull << MSR_EE) |                     \
-> +    (1ull << MSR_PR) |                     \
-> +    (1ull << MSR_FP) |                     \
-> +    (1ull << MSR_ME) |                     \
-> +    (1ull << MSR_FE0) |                    \
-> +    (1ull << MSR_SE) |                     \
-> +    (1ull << MSR_DE) |                     \
-> +    (1ull << MSR_FE1) |                    \
-> +    (1ull << MSR_IR) |                     \
-> +    (1ull << MSR_DR) |                     \
-> +    (1ull << MSR_PMM) |                    \
-> +    (1ull << MSR_RI) |                     \
-> +    (1ull << MSR_LE)
-> +
-> +#define POWERPC_POWER9_PCC_MSR_MASK \
-> +    POWERPC_POWER9_COMMON_PCC_MSR_MASK | (1ull << MSR_TM)
-> +#define POWERPC_POWER10_PCC_MSR_MASK \
-> +    POWERPC_POWER9_COMMON_PCC_MSR_MASK
-> +#define POWERPC_POWER9_PCC_PCR_MASK \
-> +    PCR_COMPAT_2_05 | PCR_COMPAT_2_06 | PCR_COMPAT_2_07
-> +#define POWERPC_POWER10_PCC_PCR_MASK \
-> +    POWERPC_POWER9_PCC_PCR_MASK | PCR_COMPAT_3_00
-> +#define POWERPC_POWER9_PCC_PCR_SUPPORTED \
-> +    PCR_COMPAT_3_00 | PCR_COMPAT_2_07 | PCR_COMPAT_2_06 | PCR_COMPAT_2_0=
-5
-> +#define POWERPC_POWER10_PCC_PCR_SUPPORTED \
-> +    POWERPC_POWER9_PCC_PCR_SUPPORTED | PCR_COMPAT_3_10
-> +#define POWERPC_POWER9_PCC_LPCR_MASK                                    =
-    \
-> +    LPCR_VPM1 | LPCR_ISL | LPCR_KBV | LPCR_DPFD |                       =
-    \
-> +    (LPCR_PECE_U_MASK & LPCR_HVEE) | LPCR_ILE | LPCR_AIL |              =
-    \
-> +    LPCR_UPRT | LPCR_EVIRT | LPCR_ONL | LPCR_HR | LPCR_LD |             =
-    \
-> +    (LPCR_PECE_L_MASK & (LPCR_PDEE|LPCR_HDEE|LPCR_EEE|LPCR_DEE|LPCR_OEE)=
-) | \
-> +    LPCR_MER | LPCR_GTSE | LPCR_TC | LPCR_HEIC | LPCR_LPES0 | LPCR_HVICE=
- |  \
-> +    LPCR_HDICE
-> +/* DD2 adds an extra HAIL bit */
-> +#define POWERPC_POWER10_PCC_LPCR_MASK \
-> +    POWERPC_POWER9_PCC_LPCR_MASK | LPCR_HAIL
-> +#define POWERPC_POWER9_PCC_FLAGS_COMMON                                 =
-\
-> +    POWERPC_FLAG_VRE | POWERPC_FLAG_SE | POWERPC_FLAG_BE |              =
-\
-> +    POWERPC_FLAG_PMM | POWERPC_FLAG_BUS_CLK | POWERPC_FLAG_CFAR |       =
-\
-> +    POWERPC_FLAG_VSX | POWERPC_FLAG_SCV
-> +
-> +#define POWERPC_POWER9_PCC_FLAGS  \
-> +    POWERPC_POWER9_PCC_FLAGS_COMMON | POWERPC_FLAG_TM
-> +#define POWERPC_POWER10_PCC_FLAGS POWERPC_POWER9_PCC_FLAGS_COMMON
-
-I can't tell if it would be better to add all the POWER9 defines then
-all the POWER10 defines or interleave like this. I guess this is okay.
-
-[snip]
-
-> -    pcc->lpcr_mask =3D LPCR_VPM1 | LPCR_ISL | LPCR_KBV | LPCR_DPFD |
-> -        (LPCR_PECE_U_MASK & LPCR_HVEE) | LPCR_ILE | LPCR_AIL |
-> -        LPCR_UPRT | LPCR_EVIRT | LPCR_ONL | LPCR_HR | LPCR_LD |
-> -        (LPCR_PECE_L_MASK & (LPCR_PDEE | LPCR_HDEE | LPCR_EEE |
-> -                             LPCR_DEE | LPCR_OEE))
-> -        | LPCR_MER | LPCR_GTSE | LPCR_TC |
-> -        LPCR_HEIC | LPCR_LPES0 | LPCR_HVICE | LPCR_HDICE;
-> -    /* DD2 adds an extra HAIL bit */
-> -    pcc->lpcr_mask |=3D LPCR_HAIL;
-> +    pcc->insns_flags =3D POWERPC_FAMILY_POWER9_INSNS_FLAGS; /* same as P=
-9 */
-
-I would add POWER10 defines for all of them even the ones that are
-the same, because if you're adding or changing flags around, you then
-just have one place to go to which is the cpu_init.h file.
-
-Thanks,
-Nick
+> +	guard(mutex)(&memory_tier_lock);
+>  	/*
+>  	 * For now we can have 4 faster memory tiers with smaller adistance
+>  	 * than default DRAM tier.
+> @@ -897,29 +905,9 @@ static int __init memory_tier_init(void)
+>  	if (IS_ERR(default_dram_type))
+>  		panic("%s() failed to allocate default DRAM tier\n", __func__);
+>  
+> -	/*
+> -	 * Look at all the existing N_MEMORY nodes and add them to
+> -	 * default memory tier or to a tier if we already have memory
+> -	 * types assigned.
+> -	 */
+> -	for_each_node_state(node, N_MEMORY) {
+> -		if (!node_state(node, N_CPU))
+> -			/*
+> -			 * Defer memory tier initialization on
+> -			 * CPUless numa nodes. These will be initialized
+> -			 * after firmware and devices are initialized.
+> -			 */
+> -			continue;
+> -
+> -		memtier = set_node_memory_tier(node);
+> -		if (IS_ERR(memtier))
+> -			/*
+> -			 * Continue with memtiers we are able to setup
+> -			 */
+> -			break;
+> -	}
+> -	establish_demotion_targets();
+> -	mutex_unlock(&memory_tier_lock);
+> +	/* Record nodes with memory and CPU to set default DRAM performance. */
+> +	nodes_and(default_dram_nodes, node_states[N_MEMORY],
+> +		  node_states[N_CPU]);
+>  
+>  	hotplug_memory_notifier(memtier_hotplug_callback, MEMTIER_HOTPLUG_PRI);
+>  	return 0;
 
