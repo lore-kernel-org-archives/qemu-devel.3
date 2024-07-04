@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 201FFC3065C
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 06:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55055C30653
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 06:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPG1W-0004eX-6t; Thu, 04 Jul 2024 02:32:54 -0400
+	id 1sPG1o-000592-DJ; Thu, 04 Jul 2024 02:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sPG1R-0004V3-SA
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 02:32:49 -0400
-Received: from mx2.zhaoxin.com ([203.110.167.99])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sPG1P-0006hI-BX
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 02:32:49 -0400
-X-ASG-Debug-ID: 1720074756-1eb14e2e5eca320001-jgbH7p
-Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
- mx2.zhaoxin.com with ESMTP id iaHVNq9yAXwgUEex (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Thu, 04 Jul 2024 14:32:36 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from zxbjmbx1.zhaoxin.com (10.29.252.163) by ZXSHMBX3.zhaoxin.com
- (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 4 Jul
- 2024 14:32:36 +0800
-Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 4 Jul
- 2024 14:32:35 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Message-ID: <3bb68fee-5406-497e-bf2d-85434994e349@zhaoxin.com>
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.66.62
-Date: Thu, 4 Jul 2024 02:32:34 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] target/i386: Update CMPLegacy handling for Zhaoxin
- and VIA CPUs
-To: Xiaoyao Li <xiaoyao.li@intel.com>, <pbonzini@redhat.com>
-X-ASG-Orig-Subj: Re: [PATCH 4/4] target/i386: Update CMPLegacy handling for
- Zhaoxin and VIA CPUs
-CC: <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>,
- <rockcui@zhaoxin.com>, <louisqi@zhaoxin.com>
-References: <20240625091905.1325205-1-ewanhai-oc@zhaoxin.com>
- <20240625091905.1325205-5-ewanhai-oc@zhaoxin.com>
- <81ee1a67-e70f-4437-ab28-6c4d4f741d8b@intel.com>
- <7a988f9e-fc63-4a6d-b3b1-d416dfc7e982@zhaoxin.com>
- <3f0c171e-b956-4b90-8a84-a0ce297053f3@intel.com>
-Content-Language: en-US
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <3f0c171e-b956-4b90-8a84-a0ce297053f3@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
-X-Barracuda-Start-Time: 1720074756
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 2431
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.127144
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=203.110.167.99;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sPG1k-0004yV-TS; Thu, 04 Jul 2024 02:33:08 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sPG1h-0006kU-Mj; Thu, 04 Jul 2024 02:33:07 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-70df2135426so155861a12.2; 
+ Wed, 03 Jul 2024 23:33:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720074781; x=1720679581; darn=nongnu.org;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6pW4IVJ3VX7HsHjeIdWQNmZStem/CMD0/GtV2HTSZTY=;
+ b=LF2C4mtVzcX+Q7ogh1g2ruu3hS6xY4whVH2g7ZQvVaXHUL6ieIZdFwLXyWkt8HDzRR
+ qE5RngSdxVXV4iI+rQwTMm/VKdbRPGlfQm2EF+mLlMADONpxMqiNpoNTqhRwtWip7LGc
+ ssY/3wXUAlOJt2EeIhdT7+WOzQ8uBs3THKbYMMInnWhOZbm+RH1gC249SrRGQDKmKm1I
+ DXnwXpIcaGSPQ83P5SrqSCIOOdECowK9+2N+64I8dhgmUsLku9JdU2KLCIIkgfUSFkli
+ DouUsv5663nHL52lMExSHfZQSQLz7J7dliJOxLM1nizS10vI698lVq1kXR/kKS4t/+bx
+ +Cfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720074781; x=1720679581;
+ h=in-reply-to:references:subject:cc:to:from:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=6pW4IVJ3VX7HsHjeIdWQNmZStem/CMD0/GtV2HTSZTY=;
+ b=jlfZhafkvLpLKvqynP0mx/0zHB9EyzAQPlfqI/oLh4aTmrcvT8RaF2LgZ6VJ1xQV0b
+ m8yYP6rKmXFaVQ1VzZIqOjTb7Wn3Mx8sGatsSf42pvRYDg9IFJPJXIb+niGu9izKCKnL
+ 2ADb3tmFBUmt0zm0FYJ/cZ6e+cP8ND+EDBgcLmphFnXWjsCF2l3aMgyKl2rVQsSSDAgU
+ iGG3yU3G2tEvHv1LQO2YBF1nu65xSWB2GlsHnxt7mv5YEyv5f7TIjgjQ+1SiwV4rbHnn
+ QHcEgdZFYFzh9NBpJ+c58YiB6tv71ecKjpHC6Iu4KwTEVaIdjgxXaROqB3xogFm+kNT5
+ TlQQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVvoRDc9NaIWA40mPKo52mjj5jl77EjVJDynGDbcL6oOofpkBRdQyXUZ/20KoF+gOM0XG1zZcmowjC9bYCB8sVbSxHwictkpOkARItih8Cm5tDyc9Db0uYN7I=
+X-Gm-Message-State: AOJu0YwkCp9HeDavsWGwDPDRqtPaiZb2N6FtIU9BnYpAOp0ETO/sIpvu
+ 6PA+hwiOfcfbWU1oITnzqQLDiD392mQrWOvhbc0o7jKsjiUqHOH/C5fMpA==
+X-Google-Smtp-Source: AGHT+IEhbT1lpEBwqzRqeOYwgeoah+I5sM6qxQfzFkSSLm6Ww3XrwSknE6DNWccTDeEi1hTnM9MxfQ==
+X-Received: by 2002:a05:6a20:12c2:b0:1b7:4f5a:8d27 with SMTP id
+ adf61e73a8af0-1c0cc8eff2emr628023637.56.1720074780843; 
+ Wed, 03 Jul 2024 23:33:00 -0700 (PDT)
+Received: from localhost ([1.146.24.72]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fac10c6c57sm114571755ad.53.2024.07.03.23.32.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Jul 2024 23:33:00 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 04 Jul 2024 16:32:55 +1000
+Message-Id: <D2GJMBA6A7HV.3H5SSP17PXY32@gmail.com>
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>,
+ <qemu-ppc@nongnu.org>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>
+Subject: Re: [PATCH 23/43] target/ppc/mmu_common.c: Rename function parameter
+X-Mailer: aerc 0.17.0
+References: <cover.1716763435.git.balaton@eik.bme.hu>
+ <f09e49e0e0e400e67ac0c61164ca3937ee8cc335.1716763435.git.balaton@eik.bme.hu>
+In-Reply-To: <f09e49e0e0e400e67ac0c61164ca3937ee8cc335.1716763435.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,62 +95,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon May 27, 2024 at 9:12 AM AEST, BALATON Zoltan wrote:
+> Rename parameter of get_bat_6xx_tlb() from virtual to eaddr to match
+> other functions.
 
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 
-On 7/3/24 23:19, Xiaoyao Li wrote:
-> On 7/4/2024 11:14 AM, Ewan Hai wrote:
->> On 7/3/24 10:49, Xiaoyao Li wrote:
->>> On 6/25/2024 5:19 PM, EwanHai wrote:
->>>> Zhaoxin and VIA CPUs handle the CMPLegacy bit in the same way
->>>> as Intel CPUs. This patch simplifies the existing logic by
->>>> using the IS_XXX_CPU macro and includes checks for Zhaoxin
->>>> and VIA vendors to align their behavior with Intel.
->>>>
->>>> Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
->>>> ---
->>>>   target/i386/cpu.c | 6 +++---
->>>>   1 file changed, 3 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->>>> index 50edff077e..0836416617 100644
->>>> --- a/target/i386/cpu.c
->>>> +++ b/target/i386/cpu.c
->>>> @@ -6945,9 +6945,9 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t
->>>> index, uint32_t count,
->>>>            * So don't set it here for Intel to make Linux guests 
->>>> happy.
->>>>            */
->>>>           if (threads_per_pkg > 1) {
->>>> -            if (env->cpuid_vendor1 != CPUID_VENDOR_INTEL_1 ||
->>>> -                env->cpuid_vendor2 != CPUID_VENDOR_INTEL_2 ||
->>>> -                env->cpuid_vendor3 != CPUID_VENDOR_INTEL_3) {
->>>> +            if (!IS_INTEL_CPU(env) &&
->>>> +                !IS_ZHAOXIN_CPU(env) &&
->>>> +                !IS_VIA_CPU(env)) {
->>>
->>> it seems you added ! by mistake.
->>>
->>>>                   *ecx |= 1 << 1; /* CmpLegacy bit */
->>>>               }
->>>>           }
->>>
->> For CPUID leaf 0x80000001 ECX bit 1, Intel defines it as "Bits 04-01:
->> Reserved,"
->> whereas AMD defines it as "CmpLegacy, Core multi-processing legacy
->> mode." For Intel
->> CPUs and those following Intel's behavior, this bit should not be set to
->> 1. Therefore,
->> I believe the "!" here is correct.
->>
 >
-> Sorry, I misread the original code.
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>  target/ppc/mmu_common.c | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
 >
-> I think maybe we can just use is_AMD_CPU(). But I'm not sure if any
-> magic use case with customized VENDOR ID relies on it. So you code looks
-> good to me.
-Ok, thanks. Additionally, in this patch series, I used some VIA terms, which
-might cause confusion. I will remove all VIA references in the description
-of the next version of the patch.
-Currently, the “Centaurhauls” Vendor ID belongs to Zhaoxin CPUs.
+> diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+> index ede409eb99..110936ca83 100644
+> --- a/target/ppc/mmu_common.c
+> +++ b/target/ppc/mmu_common.c
+> @@ -221,7 +221,7 @@ static inline void bat_size_prot(CPUPPCState *env, ta=
+rget_ulong *blp,
+>  }
+> =20
+>  static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_t *ctx,
+> -                           target_ulong virtual, MMUAccessType access_ty=
+pe)
+> +                           target_ulong eaddr, MMUAccessType access_type=
+)
+>  {
+>      target_ulong *BATlt, *BATut, *BATu, *BATl;
+>      target_ulong BEPIl, BEPIu, bl;
+> @@ -230,7 +230,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_=
+t *ctx,
+>      bool ifetch =3D access_type =3D=3D MMU_INST_FETCH;
+> =20
+>      qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT v " TARGET_FMT_lx "\n", __func=
+__,
+> -                  ifetch ? 'I' : 'D', virtual);
+> +                  ifetch ? 'I' : 'D', eaddr);
+>      if (ifetch) {
+>          BATlt =3D env->IBAT[1];
+>          BATut =3D env->IBAT[0];
+> @@ -246,15 +246,15 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ct=
+x_t *ctx,
+>          bat_size_prot(env, &bl, &valid, &prot, BATu, BATl);
+>          qemu_log_mask(CPU_LOG_MMU, "%s: %cBAT%d v " TARGET_FMT_lx " BATu=
+ "
+>                        TARGET_FMT_lx " BATl " TARGET_FMT_lx "\n", __func_=
+_,
+> -                      ifetch ? 'I' : 'D', i, virtual, *BATu, *BATl);
+> -        if ((virtual & 0xF0000000) =3D=3D BEPIu &&
+> -            ((virtual & 0x0FFE0000) & ~bl) =3D=3D BEPIl) {
+> +                      ifetch ? 'I' : 'D', i, eaddr, *BATu, *BATl);
+> +        if ((eaddr & 0xF0000000) =3D=3D BEPIu &&
+> +            ((eaddr & 0x0FFE0000) & ~bl) =3D=3D BEPIl) {
+>              /* BAT matches */
+>              if (valid !=3D 0) {
+>                  /* Get physical address */
+>                  ctx->raddr =3D (*BATl & 0xF0000000) |
+> -                    ((virtual & 0x0FFE0000 & bl) | (*BATl & 0x0FFE0000))=
+ |
+> -                    (virtual & 0x0001F000);
+> +                    ((eaddr & 0x0FFE0000 & bl) | (*BATl & 0x0FFE0000)) |
+> +                    (eaddr & 0x0001F000);
+>                  /* Compute access rights */
+>                  ctx->prot =3D prot;
+>                  if (check_prot_access_type(ctx->prot, access_type)) {
+> @@ -273,7 +273,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_=
+t *ctx,
+>      if (ret < 0) {
+>          if (qemu_log_enabled()) {
+>              qemu_log_mask(CPU_LOG_MMU, "no BAT match for "
+> -                          TARGET_FMT_lx ":\n", virtual);
+> +                          TARGET_FMT_lx ":\n", eaddr);
+>              for (i =3D 0; i < 4; i++) {
+>                  BATu =3D &BATut[i];
+>                  BATl =3D &BATlt[i];
+> @@ -284,7 +284,7 @@ static int get_bat_6xx_tlb(CPUPPCState *env, mmu_ctx_=
+t *ctx,
+>                                " BATu " TARGET_FMT_lx " BATl " TARGET_FMT=
+_lx
+>                                "\n\t" TARGET_FMT_lx " " TARGET_FMT_lx " "
+>                                TARGET_FMT_lx "\n", __func__, ifetch ? 'I'=
+ : 'D',
+> -                              i, virtual, *BATu, *BATl, BEPIu, BEPIl, bl=
+);
+> +                              i, eaddr, *BATu, *BATl, BEPIu, BEPIl, bl);
+>              }
+>          }
+>      }
 
 
