@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E7FFC30653
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 18:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E602C3271F
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Jul 2024 18:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPRIH-0001Xn-4l; Thu, 04 Jul 2024 14:34:57 -0400
+	id 1sPRJg-00034I-5v; Thu, 04 Jul 2024 14:36:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1sPRIF-0001UY-4p
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:34:55 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1sPRJe-00033j-Dm
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:36:22 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1sPRIB-0004qb-SN
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:34:54 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42562e4b5d1so6114115e9.1
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 11:34:51 -0700 (PDT)
+ id 1sPRJc-0005Ri-Jt
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 14:36:22 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-425624255f3so6023345e9.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 11:36:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720118090; x=1720722890; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720118168; x=1720722968; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=0QXWX4qz6faB0p5QP7wLk33QyiWxxAQGCZN44SNcwPo=;
- b=R8kmU92KOpmN8s3Yj6FzZsQlNwQSZUSZJsH80ICBUvW4EHCu7XIPdLKR1M0qt2ctVS
- h8oRb1W6uv9ysQh9UHeH6KXgK4jXpbUlDQjldDAOeOSaBL2awpHvaHaIlyhYcEv7W7jW
- ynaS5lQ0kHkBekcgC/1MEPzG3hWRKAE8/74DhlvMPYajps7kOUW/n5mAz8yuWTArlFs2
- UPY9HYRTbOI9AD9ot7mq3yJtqtwblzd2eEFRjqJXkPxo8gykR5GALEprLfQ7PJFMbECc
- K2MrZ+0RU4K9sbAQI4DfmUzRrxIbd22OxXwo9nI66V/V9cj4F6RBduk1rFdX56R+kWSn
- DIxQ==
+ bh=xUcX8OSnZPAM+qJh3gAPm0zyGoKendARxFQeDBD8NZA=;
+ b=dnoOaSzpLDrihEY0bYK7UuuoFTXL340A7mwtxlqyy7hz95mQm3blDEAEE1/EFqmeGD
+ 3uoTTI7KKfMcu2WGM5/9rnpnSEgOgvjs7jwhYtwAmNtx857y65QXhuAALqaNsGQmOjYg
+ +aso32nd/NNIuXqMnhThyDxoj1J5WEHzZOAUVOMMPetDQwqZ2UN/7yPJTxDuHScbKeJt
+ GX95A5pORbrVfys1JaFe4atOS+uwFEOJPrY6XptFToX03H2KHHf3DG7IZoe4YgYcw/zz
+ T324NvcjSaofisKgQMHh4bjqHpGjh8nYiwBM/grIji4lao3u/dRiBFkg434FLTpu/qxI
+ MmeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720118090; x=1720722890;
+ d=1e100.net; s=20230601; t=1720118168; x=1720722968;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0QXWX4qz6faB0p5QP7wLk33QyiWxxAQGCZN44SNcwPo=;
- b=du3/fIBcbgANsl4TBNcYEtQv9juGbmDDE7E8gzCeSHXjEpTBeyNiob+RPmhwTVHMf0
- HMdPd8hqrr5/d9JSX0+CE8L0xmx39OT0CuC8P7w76ZVMWWL311n/fumTRxMbKIcHL0Vz
- y0WB1S8CacM/FYHYyVCAP47W9+LEq5xbeOToaS1o3DbQxa4SSJnwKQnDi78vopmBBwu9
- ChKvg0PNHfmQqG2c8f5QB9UXcBN/C3bYblVV+G75Tirr2ToiXV516v0Bzk6o/cvRD283
- bEXM8EPfsItZMXr0itGPw9FYqIcXz+G4zYJ03eBr26Gf9c9YBbz03LpNOjy5VF+EaakY
- ygbg==
+ bh=xUcX8OSnZPAM+qJh3gAPm0zyGoKendARxFQeDBD8NZA=;
+ b=qfSssBoR/MtKt9rX71XStC1BEyny6UfLXagbh5cJwiQHReDZbJX8frsSaOVtdoCN3L
+ qg1Rh1CWoAciY7BBrqYiCIjy+iqo+EYAJIXNfoeHXvj04lHLbwCvhLp68Xd55QaVYEI6
+ cDSNYNiy60graJftrdZ03HpJY+QKtbf++R4N0x1zyNPd9zI8YuEhA8RPXg7beJEI4dON
+ uWYwhKhsMqDmjvVWoi3WLQ4HHcacHovECbVUkOP8sKSB+9IgYDKGUkDtV7E5UR9ED/7m
+ 8jwhWWXhAiYH7AeWSSYv16dEfZTPYBV3CHp2MECTPXC9HtpraBrjddvIcUNauHyVSyfS
+ V4fw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWmR4v357Y3epKpS/6XqYOk/n/MriYCByy5Ayiyph0XFR3HLSkl8T00i6LCjaPDBd0WsI7z/OO2Kop4B6EwI7dC2l7ujFU=
-X-Gm-Message-State: AOJu0Yy9dS18Sg7CTqt9MQg76+UEYasUnD1bwb+PHyG5hv6OH4/cJBJ6
- h1UqaXZtr/C2LNIkDPvdwPe/tmghv9+xAH0NHwIFxt9MUsoaM5v12BL3sTCPjt0=
-X-Google-Smtp-Source: AGHT+IEyZTVVumnDnlONSxCGuoa6eb0or8S3heJSwMcSCBaCdF8PaInd4pTl1o5J8WRM68AE2jF4ug==
-X-Received: by 2002:a05:600c:4f52:b0:425:602f:d62c with SMTP id
- 5b1f17b1804b1-4264a3e2ed7mr18252725e9.9.1720118090509; 
- Thu, 04 Jul 2024 11:34:50 -0700 (PDT)
+ AJvYcCWiM0KIYwJ8wsotbJo0NkBVxtkMVy5kaR81PPajgxSMb0ruryssbntr0Q8uY65MqnDBKNXU8T1EZkP68jke5OiwObd7Pjk=
+X-Gm-Message-State: AOJu0YzaqHGbT78uPyCUnowerB+OHhdqWZ2QCxj6XjD8lQIi0jWegt6N
+ TKzLp04Abes+RMFDnDwBI58OllHm5P98+8ZBzOZmNoHMQHzIscW6eYvsuqzjRyE=
+X-Google-Smtp-Source: AGHT+IHn5Baii57+Pho6BH3Ld6xrqD6gYO2Fd5H3MYHn8Pb70IW1TVB0XxglA8RSyp/gs4iJgHwQVQ==
+X-Received: by 2002:a05:600c:3154:b0:424:895c:b84b with SMTP id
+ 5b1f17b1804b1-4264b0cc4d0mr21803195e9.4.1720118168617; 
+ Thu, 04 Jul 2024 11:36:08 -0700 (PDT)
 Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a188edasm33430055e9.0.2024.07.04.11.34.49
+ 5b1f17b1804b1-4264d6d41cesm18764715e9.16.2024.07.04.11.36.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Jul 2024 11:34:50 -0700 (PDT)
-Date: Thu, 4 Jul 2024 19:35:03 +0100
+ Thu, 04 Jul 2024 11:36:08 -0700 (PDT)
+Date: Thu, 4 Jul 2024 19:36:21 +0100
 From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 To: Mostafa Saleh <smostafa@google.com>
 Cc: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org,
  qemu-devel@nongnu.org, alex.bennee@linaro.org, maz@kernel.org,
  nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
  marcin.juszkiewicz@linaro.org
-Subject: Re: [PATCH v4 15/19] hw/arm/smmuv3: Support nested SMMUs in
- smmuv3_notify_iova()
-Message-ID: <20240704183503.GL1693268@myrica>
+Subject: Re: [PATCH v4 16/19] hw/arm/smmuv3: Handle translation faults
+ according to SMMUPTWEventInfo
+Message-ID: <20240704183621.GM1693268@myrica>
 References: <20240701110241.2005222-1-smostafa@google.com>
- <20240701110241.2005222-16-smostafa@google.com>
+ <20240701110241.2005222-17-smostafa@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240701110241.2005222-16-smostafa@google.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x335.google.com
+In-Reply-To: <20240701110241.2005222-17-smostafa@google.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,129 +98,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 01, 2024 at 11:02:37AM +0000, Mostafa Saleh wrote:
-> IOMMUTLBEvent only understands IOVA, for stage-1 or stage-2
-> SMMU instances we consider the input address as the IOVA, but when
-> nesting is used, we can't mix stage-1 and stage-2 addresses, so for
-> nesting only stage-1 is considered the IOVA and would be notified.
+On Mon, Jul 01, 2024 at 11:02:38AM +0000, Mostafa Saleh wrote:
+> Previously, to check if faults are enabled, it was sufficient to check
+> the current stage of translation and check the corresponding
+> record_faults flag.
+> 
+> However, with nesting, it is possible for stage-1 (nested) translation
+> to trigger a stage-2 fault, so we check SMMUPTWEventInfo as it would
+> have the correct stage set from the page table walk.
 > 
 > Signed-off-by: Mostafa Saleh <smostafa@google.com>
 > ---
->  hw/arm/smmuv3.c     | 28 +++++++++++++++++++---------
->  hw/arm/trace-events |  2 +-
->  2 files changed, 20 insertions(+), 10 deletions(-)
+>  hw/arm/smmuv3.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
 > 
 > diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index e9007af3cd..36eb6f514a 100644
+> index 36eb6f514a..6c18dc0acf 100644
 > --- a/hw/arm/smmuv3.c
 > +++ b/hw/arm/smmuv3.c
-> @@ -1064,17 +1064,17 @@ epilogue:
->   * @iova: iova
->   * @tg: translation granule (if communicated through range invalidation)
->   * @num_pages: number of @granule sized pages (if tg != 0), otherwise 1
-> + * @stage: Which stage(1 or 2) is used
->   */
->  static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->                                 IOMMUNotifier *n,
->                                 int asid, int vmid,
->                                 dma_addr_t iova, uint8_t tg,
-> -                               uint64_t num_pages)
-> +                               uint64_t num_pages, int stage)
->  {
->      SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
->      IOMMUTLBEvent event;
->      uint8_t granule;
-> -    SMMUv3State *s = sdev->smmu;
+> @@ -34,9 +34,10 @@
+>  #include "smmuv3-internal.h"
+>  #include "smmu-internal.h"
 >  
->      if (!tg) {
+> -#define PTW_RECORD_FAULT(cfg)   (((cfg)->stage == SMMU_STAGE_1) ? \
+> -                                 (cfg)->record_faults : \
+> -                                 (cfg)->s2cfg.record_faults)
+> +#define PTW_RECORD_FAULT(ptw_info, cfg) (((ptw_info).stage == SMMU_STAGE_1 && \
+> +                                        (cfg)->record_faults) || \
+> +                                        ((ptw_info).stage == SMMU_STAGE_2 && \
+> +                                        (cfg)->s2cfg.record_faults))
 
-Should the stage check be outside of the TG test?  I think CMD_TLBI_S2_IPA
-with TG != 0 and nesting enabled would still go through.
+I guess this could be simplified as "(info.stage == STAGE_1) ? s1cfg : s2cfg"
+Anyway:
 
-Thanks,
-Jean
+Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
->          SMMUEventInfo eventinfo = {.inval_ste_allowed = true};
-> @@ -1093,14 +1093,24 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->              return;
->          }
 >  
-> -        if (STAGE1_SUPPORTED(s)) {
-> +        /*
-> +         * stage is passed from TLB invalidation commands which can be either
-> +         * stage-1 or stage-2.
-> +         * However, IOMMUTLBEvent only understands IOVA, for stage-1 or stage-2
-> +         * SMMU instances we consider the input address as the IOVA, but when
-> +         * nesting is used, we can't mix stage-1 and stage-2 addresses, so for
-> +         * nesting only stage-1 is considered the IOVA and would be notified.
-> +         */
-> +        if (stage == SMMU_STAGE_1) {
->              tt = select_tt(cfg, iova);
->              if (!tt) {
->                  return;
+>  /**
+>   * smmuv3_trigger_irq - pulse @irq if enabled and update
+> @@ -919,7 +920,7 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
+>              event->u.f_walk_eabt.addr2 = ptw_info.addr;
+>              break;
+>          case SMMU_PTW_ERR_TRANSLATION:
+> -            if (PTW_RECORD_FAULT(cfg)) {
+> +            if (PTW_RECORD_FAULT(ptw_info, cfg)) {
+>                  event->type = SMMU_EVT_F_TRANSLATION;
+>                  event->u.f_translation.addr = addr;
+>                  event->u.f_translation.addr2 = ptw_info.addr;
+> @@ -928,7 +929,7 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
 >              }
->              granule = tt->granule_sz;
-> -        } else {
-> +        } else if ((stage == SMMU_STAGE_2) && (cfg->stage != SMMU_NESTED)) {
->              granule = cfg->s2cfg.granule_sz;
-> +        } else {
-> +            return;
->          }
->  
->      } else {
-> @@ -1119,7 +1129,7 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->  /* invalidate an asid/vmid/iova range tuple in all mr's */
->  static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
->                                        dma_addr_t iova, uint8_t tg,
-> -                                      uint64_t num_pages)
-> +                                      uint64_t num_pages, int stage)
->  {
->      SMMUDevice *sdev;
->  
-> @@ -1128,10 +1138,10 @@ static void smmuv3_inv_notifiers_iova(SMMUState *s, int asid, int vmid,
->          IOMMUNotifier *n;
->  
->          trace_smmuv3_inv_notifiers_iova(mr->parent_obj.name, asid, vmid,
-> -                                        iova, tg, num_pages);
-> +                                        iova, tg, num_pages, stage);
->  
->          IOMMU_NOTIFIER_FOREACH(n, mr) {
-> -            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg, num_pages);
-> +            smmuv3_notify_iova(mr, n, asid, vmid, iova, tg, num_pages, stage);
->          }
->      }
->  }
-> @@ -1162,7 +1172,7 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
->  
->      if (!tg) {
->          trace_smmuv3_range_inval(vmid, asid, addr, tg, 1, ttl, leaf, stage);
-> -        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1);
-> +        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, 1, stage);
->          if (stage == SMMU_STAGE_1) {
->              smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, 1, ttl);
->          } else {
-> @@ -1185,7 +1195,7 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage)
->          num_pages = (mask + 1) >> granule;
->          trace_smmuv3_range_inval(vmid, asid, addr, tg, num_pages,
->                                   ttl, leaf, stage);
-> -        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, num_pages);
-> +        smmuv3_inv_notifiers_iova(s, asid, vmid, addr, tg, num_pages, stage);
->          if (stage == SMMU_STAGE_1) {
->              smmu_iotlb_inv_iova(s, asid, vmid, addr, tg, num_pages, ttl);
->          } else {
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index 593cc571da..be6c8f720b 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -55,7 +55,7 @@ smmuv3_cmdq_tlbi_s12_vmid(int vmid) "vmid=%d"
->  smmuv3_config_cache_inv(uint32_t sid) "Config cache INV for sid=0x%x"
->  smmuv3_notify_flag_add(const char *iommu) "ADD SMMUNotifier node for iommu mr=%s"
->  smmuv3_notify_flag_del(const char *iommu) "DEL SMMUNotifier node for iommu mr=%s"
-> -smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64
-> +smmuv3_inv_notifiers_iova(const char *name, int asid, int vmid, uint64_t iova, uint8_t tg, uint64_t num_pages, int stage) "iommu mr=%s asid=%d vmid=%d iova=0x%"PRIx64" tg=%d num_pages=0x%"PRIx64" stage=%d"
->  
->  # strongarm.c
->  strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
+>              break;
+>          case SMMU_PTW_ERR_ADDR_SIZE:
+> -            if (PTW_RECORD_FAULT(cfg)) {
+> +            if (PTW_RECORD_FAULT(ptw_info, cfg)) {
+>                  event->type = SMMU_EVT_F_ADDR_SIZE;
+>                  event->u.f_addr_size.addr = addr;
+>                  event->u.f_addr_size.addr2 = ptw_info.addr;
+> @@ -937,7 +938,7 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
+>              }
+>              break;
+>          case SMMU_PTW_ERR_ACCESS:
+> -            if (PTW_RECORD_FAULT(cfg)) {
+> +            if (PTW_RECORD_FAULT(ptw_info, cfg)) {
+>                  event->type = SMMU_EVT_F_ACCESS;
+>                  event->u.f_access.addr = addr;
+>                  event->u.f_access.addr2 = ptw_info.addr;
+> @@ -946,7 +947,7 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
+>              }
+>              break;
+>          case SMMU_PTW_ERR_PERMISSION:
+> -            if (PTW_RECORD_FAULT(cfg)) {
+> +            if (PTW_RECORD_FAULT(ptw_info, cfg)) {
+>                  event->type = SMMU_EVT_F_PERMISSION;
+>                  event->u.f_permission.addr = addr;
+>                  event->u.f_permission.addr2 = ptw_info.addr;
 > -- 
 > 2.45.2.803.g4e1b14247a-goog
 > 
