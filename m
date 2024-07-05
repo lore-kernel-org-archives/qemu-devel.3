@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E414BC3271E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 21:09:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4B5DC41513
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 21:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPqAn-0002Tq-23; Fri, 05 Jul 2024 17:08:53 -0400
+	id 1sPqDk-0003Gd-OS; Fri, 05 Jul 2024 17:11:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPqAl-0002Th-W7
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 17:08:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sPqAj-0002z4-UH
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 17:08:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720213728;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZyrC4m9T7Jad1HpgkV4n1X7ZVIUtCpWotbaFVc9PX74=;
- b=ABcMSq3YzZYgx0FI5jDpXyV9OovxAGy16J5T2Aj3aVjLlpTlr7Eqxr3kjIBtoXTj7vS+/a
- vTDuCdPEXhRtmxfvc7q5Md0dxNeId1cLwuSr+bcORGpk5taPl+1wV1V1moPA1dqYvaA9CB
- aUlJjd8FRAPgkUMtch9Q/LRyxaXCW2M=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-33-WfzjZpdFOqqWHDMo-ssJwA-1; Fri, 05 Jul 2024 17:08:46 -0400
-X-MC-Unique: WfzjZpdFOqqWHDMo-ssJwA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-36794fcfdd6so993264f8f.3
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 14:08:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sPqDj-0003GQ-Pt
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 17:11:55 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sPqDh-0005NN-Km
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 17:11:55 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-3d91e390601so454359b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 14:11:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1720213912; x=1720818712; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JBWZquwUDTsMhD6kpe8vj2ETAMSHV3Jy5bFDy/xKF7M=;
+ b=UhemtHwjfoufmr5jmSoeoFYtf1sYuyojkz0Et7RkH1IfKo64qviqJOr2lEo4B7ZBTA
+ Oua+hNXp5iQrNd+HCZ7ToarAsjg4bYQcbr+cQcrP7Qq0f+TTUPukGv6Y95JveDm5FSH2
+ WXg+UIUljZRwR7uiCqkMsMSuNZRcQ8O7Ym6dmZnl6msFx/9p35MF+j9rvDEY/OKwJ75W
+ h+O0yLrZ9Uz/umqBu50vKYNoR+6mOdHeYXWX4mJsRQF6c50H9EZTkFDxxTT67a+ASXOC
+ 1HYjJRuCLuaN+K/c++vE7LwoUPhEKePdvRC1LsLBk4vbnErser7vreIPySzPkCrTA1H0
+ CscA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720213725; x=1720818525;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZyrC4m9T7Jad1HpgkV4n1X7ZVIUtCpWotbaFVc9PX74=;
- b=OI1QoUyMLGd14vHrEwfxZ9eH2jf77BhMLt0y0CvEQpWZUb8m2jb6CHvJeEx7XgMaEo
- BnozKTknpLbIQlG6k6WiBcUBep3TdxaeyIpYDVT83YUwGeqahxx7PIG7LXSpgRZ7tV7g
- WTNkiNLfOOUpCM5o4I/WmD06jOHfQFokesrYbvWRLNOH5DeOrQ71bJHKQwlP68f5FQlh
- ZlPHAV9NwbWrpexB+t492coAJ+HTtvfymAkb3wyI9dGsd2bk65syNED6/6ChqDynMwad
- vQ1QyKoFk7iyXCON4we3Q4+tbNazaZvzPQzIcajtONF04zOJTomJDHAB0tRZ+Cmq77vx
- CmFg==
-X-Gm-Message-State: AOJu0YycBIAZn1aiwvapWlUI1jqZxcB31QMxasRRKQqd/KXH60bpE62R
- AKTthhXCBgeWrgT1S+WyYfRFIRhy8G7ZRrDlmObyUfazHa0LyIhrHMXmaURAwz1HaDc7WTwRZ2i
- b0IjdQ5c3TdYytpUB8n9aJvLqIcE0owXaMACjwWVfDISMKmQQW7wcY1Zhqsl3cGqA+jNIG32u7x
- Yug0W/p5W2CbPVjjQMvcb8r5ol9Yg=
-X-Received: by 2002:a05:6000:1b02:b0:367:9287:64c1 with SMTP id
- ffacd0b85a97d-3679dd26afdmr4356705f8f.16.1720213725376; 
- Fri, 05 Jul 2024 14:08:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFz1zHjyXYlRm5YKBVZFkFdU2Dn/lDKqYwCTsDabj3Q+UNe/J+rILqxCc1iEvIbclzcF09CWuQOJVlEmT2QbzQ=
-X-Received: by 2002:a05:6000:1b02:b0:367:9287:64c1 with SMTP id
- ffacd0b85a97d-3679dd26afdmr4356694f8f.16.1720213724903; Fri, 05 Jul 2024
- 14:08:44 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720213912; x=1720818712;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JBWZquwUDTsMhD6kpe8vj2ETAMSHV3Jy5bFDy/xKF7M=;
+ b=ItvjP1j00xwqNtwluSb3hIPiCekQfg5Q4+qUh279Y5LH9ueZVw5KkPCR4mytbBqupU
+ kcGrQdIQLethCKxT3mPNev9RO7kyhQnGCo6hL++fZGNe1pwbSnR3ZIx8wWXONDAtVfmQ
+ gy1XhXhV1EfRfR9fiZDhKnJVt1Yu7dFCkb+ajkXibBJDNTocs4JeRJpnrUuVZJVirup4
+ ShRwv4gwOaSRjwpPT5BRvFXGPhIWcKaX/YN7TmNk3onbZtgMb4WCZVV9R0sTirQ9tShL
+ dQ0kpEaKvwk60A1XtX4YOlcIZ97mcNaIFDjOQuz3obmLln4PVFj2frmJ5mixPRltYYw1
+ sJSQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPxpIY1dNuc8q0cjIFldPLueh+Yewedp2E1wF3C5lwlJtdB6Fibarwb9+5cWlhOTXgCRqm0jnzNDgIk5IBFbhpCddIi8c=
+X-Gm-Message-State: AOJu0Yx6+f3MksIH0s4ERAhmm/4jZv7BhwPXzCZb2Xl5qBst2Z3iWc5Z
+ iMs/OHVzfc7zXCfpxY2gAKKMe5QRPWImupmu3Go7IV0o/95KXm+0rq55DBOuMFU=
+X-Google-Smtp-Source: AGHT+IEz8eau+8YysWtcxqMm53xQb5RzZje8TfG/Oijc2P54u12yBdNInY+y+VR7PmTJLi1Q1mVJBg==
+X-Received: by 2002:a05:6808:1b2b:b0:3d6:35c7:7172 with SMTP id
+ 5614622812f47-3d914e9f3eamr6290313b6e.46.1720213911599; 
+ Fri, 05 Jul 2024 14:11:51 -0700 (PDT)
+Received: from [192.168.68.109] ([179.193.8.43])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b15e0cefcsm686088b3a.166.2024.07.05.14.11.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Jul 2024 14:11:51 -0700 (PDT)
+Message-ID: <a0b303ba-e5b6-4fa1-b9df-b86a1e5652bd@ventanamicro.com>
+Date: Fri, 5 Jul 2024 18:11:45 -0300
 MIME-Version: 1.0
-References: <20240701145853.1394967-1-pbonzini@redhat.com>
- <0d85e013-1c38-4781-8fd6-5e837327f33f@linaro.org>
- <CABgObfZVWt4GkH_qAbWqoF7=xXP_mPopRqUbRFxii8Tki5YuBw@mail.gmail.com>
- <d9acf51b-a70d-450c-a768-3ecf25dbd597@linaro.org>
-In-Reply-To: <d9acf51b-a70d-450c-a768-3ecf25dbd597@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 5 Jul 2024 23:08:32 +0200
-Message-ID: <CABgObfbEPfCsRD3fSgZX1kL_8iKszzCz7YTJrx_bHOdScBuKmg@mail.gmail.com>
-Subject: Re: [PATCH 00/14] rust: example of bindings code for Rust in QEMU
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 03/14] hw/riscv: add RISC-V IOMMU base emulation
+To: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ ajones@ventanamicro.com, tjeznach@rivosinc.com, frank.chang@sifive.com,
+ Sebastien Boeuf <seb@rivosinc.com>
+References: <20240624201825.1054980-1-dbarboza@ventanamicro.com>
+ <20240624201825.1054980-4-dbarboza@ventanamicro.com>
+ <a1be0779-cbb5-42d2-8ced-7567c66f2bd0@sifive.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <a1be0779-cbb5-42d2-8ced-7567c66f2bd0@sifive.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-oi1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,133 +102,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, first of all I want to clarify the raison d'etre for this posting,
-which I have also explained to Manos. Nothing you see here is code
-that will be certainly included in QEMU; it's (mostly) throwaway by
-design. I don't have much attachment to any of the code except perhaps
-the casting and reference counting stuff (which is in, like, the third
-rewrite... I got nerd-sniped there :)). But at the same time I think
-it's plausibly not too different (in look and complexity) from what
-the actual code will look like.
+Hi,
 
-It's also not an attempt to bypass/leapfrog other people in the
-design; it's more a "let's be ready for this to happen" than a design
-document. The first step and the more immediate focus remains the
-build system integration.
+On 7/4/24 11:20 AM, Jason Chien wrote:
+> Hi Danial,
+> 
+> On 2024/6/25 上午 04:18, Daniel Henrique Barboza wrote:
+>> From: Tomasz Jeznach <tjeznach@rivosinc.com>
+>>
+>> The RISC-V IOMMU specification is now ratified as-per the RISC-V
+>> international process. The latest frozen specifcation can be found at:
+>>
+>> https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0/riscv-iommu.pdf
+>>
+>> Add the foundation of the device emulation for RISC-V IOMMU, which
+>> includes an IOMMU that has no capabilities but MSI interrupt support and
+>> fault queue interfaces. We'll add more features incrementally in the
+>> next patches.
+>>
+>> Co-developed-by: Sebastien Boeuf <seb@rivosinc.com>
+>> Signed-off-by: Sebastien Boeuf <seb@rivosinc.com>
+>> Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   hw/riscv/Kconfig            |    4 +
+>>   hw/riscv/meson.build        |    1 +
+>>   hw/riscv/riscv-iommu-bits.h |    2 +
+>>   hw/riscv/riscv-iommu.c      | 1641 +++++++++++++++++++++++++++++++++++
+>>   hw/riscv/riscv-iommu.h      |  142 +++
+>>   hw/riscv/trace-events       |   11 +
+>>   hw/riscv/trace.h            |    1 +
+>>   include/hw/riscv/iommu.h    |   36 +
+>>   meson.build                 |    1 +
+>>   9 files changed, 1839 insertions(+)
+>>   create mode 100644 hw/riscv/riscv-iommu.c
+>>   create mode 100644 hw/riscv/riscv-iommu.h
+>>   create mode 100644 hw/riscv/trace-events
+>>   create mode 100644 hw/riscv/trace.h
+>>   create mode 100644 include/hw/riscv/iommu.h
+>>
+>> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+>> index a2030e3a6f..f69d6e3c8e 100644
 
-But you have good questions and observations so I'll put something
-below about the design as well.
+(...)
 
-On Fri, Jul 5, 2024 at 8:52=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
-> To give an example of questions we could have:
->
-> Why should we have distinct structs for a device, the object
-> represented, and its state?
 
-If you refer to the conf and state, a bit because of the different
-traits required (ConstDefault is needed for properties but not the
-rest) and especially because we can enforce immutability of
-configuration vs. interior mutability of state.
+>> +/* IOMMU index for transactions without process_id specified. */
+>> +#define RISCV_IOMMU_NOPROCID 0
+>> +
+>> +static void riscv_iommu_notify(RISCVIOMMUState *s, int vec)
+>> +{
+>> +    const uint32_t fctl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FCTL);
+>> +    uint32_t ipsr, ivec;
+>> +
+>> +    if (fctl & RISCV_IOMMU_FCTL_WSI || !s->notify) {
+> For WSI, we can assert INTx by invoking pci_set_irq().
 
-In particular, from Manos's prototype I noticed that you need to
-access the Chardev while the state is *not* borrowed; methods on the
-Chardev call back into the device and the callback needs mutable
-access to the state. So some kind of separation seems to be necessary,
-for better or worse, unless interior mutability is achieved with a
-dozen Cells (not great).
+For now we're not advertising WSI support because we don't have a way to test it
+(riscv-iommu-pci only supports MSI). In fact riscv_iommu_notify() isn't called
+for any WSI capable device, at least for now.
 
-> Having to implement ObjectImpl and DeviceImpl looks like an
-> implementation detail, that could be derived automatically from a
-> device. What's wrong with calling a realize that does nothing in the end?
+I'm finishing some patches where we'll re-introduce riscv-iommu-sys in the 'virt'
+machine with WSI. At that point we'll pay more attention with the WSI bits that
+we're ignoring for now.
 
-The problem is not calling a realize that does nothing, it's that you
-are forced to override the superclass implementation (which might be
-in C) if you don't go through Option<>. class_init methods update a
-few superclass methods but not all of them.
+>> +        return;
+>> +    }
+>> +
+>> +    ipsr = riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IPSR, (1 << vec), 0);
+>> +    ivec = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_IVEC);
+>> +
+>> +    if (!(ipsr & (1 << vec))) {
+>> +        s->notify(s, (ivec >> (vec * 4)) & 0x0F);
+>> +    }
+>> +}
+>> +
 
-The vtable in ObjectImpl/DeviceImpl could be generated via macros; for
-now I did it by hand to avoid getting carried away too much with
-syntactic sugar.
+(...)
 
-> Could device state be serialized with something like serde?
+>> +
+>> +/* Check if GPA matches MSI/MRIF pattern. */
+>> +static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>> +    dma_addr_t gpa)
+>> +{
+> 
+> If IOMMU does not support MSI, that is, s->enable_msi is false, we can return false.
+> 
 
-Probably not, there's extra complications for versioning. A long time
-ago there was an attempt to have some kind of IDL embedded in C code
-(not unlike Rust attributes) to automatically generate properties and
-vmstate, but it was too ambitious.
-(https://www.linux-kvm.org/images/b/b5/2012-forum-qidl-talk.pdf,
-slides 1-9).
+Done.
 
-Generating property and vmstate declarations could be done with
-"normal" macros just like in C, or with attribute macros (needs a lot
-more code and experience, wouldn't do it right away). However, serde
-for QAPI and/or visitors may be a possibility, after all JSON is
-serde's bread and butter.
+>> +    if (get_field(ctx->msiptp, RISCV_IOMMU_DC_MSIPTP_MODE) !=
+>> +        RISCV_IOMMU_DC_MSIPTP_MODE_FLAT) {
+>> +        return false; /* Invalid MSI/MRIF mode */
+>> +    }
+>> +
+>> +    if ((PPN_DOWN(gpa) ^ ctx->msi_addr_pattern) & ~ctx->msi_addr_mask) {
+>> +        return false; /* GPA not in MSI range defined by AIA IMSIC rules. */
+>> +    }
+>> +
+>> +    return true;
+>> +}
+>> +
+>> +/* RISCV IOMMU Address Translation Lookup - Page Table Walk */
+>> +static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+>> +    IOMMUTLBEntry *iotlb)
+>> +{
+>> +    /* Early check for MSI address match when IOVA == GPA */
+>> +    if (iotlb->perm & IOMMU_WO &&
+>> +        riscv_iommu_msi_check(s, ctx, iotlb->iova)) {
+>> +        iotlb->target_as = &s->trap_as;
+>> +        iotlb->translated_addr = iotlb->iova;
+>> +        iotlb->addr_mask = ~TARGET_PAGE_MASK;
+>> +        return 0;
+>> +    }
+>  From spec 2.3, step 17 and step 18 state that the MSI address translation is always done after the first stage translation is done.
 
-> This is the kind of things that could be discussed, on a reduced
-> example, without specially looking at how to implement that concretely,
-> in a first time.
+This piece of code isn't doing MSI addr translation. It's preventing the lookup
+process by doing an early exit if IOVA==GPA, i.e. there's nothing to translate.
 
-There are some things that Rust really hates that you do, and they
-aren't always obvious. Therefore in this exercise I tried to let
-intuition guide me, and see how much the type system fought that
-intuition (not much actually!). I started from the more technical and
-less artistic part to see if I was able to get somewhere.
+What you described is being done in patch 8 with s-stage and g-stage support.
 
-But yes, it's a great exercise to do this experiment from the opposite
-end. Then the actual glue code will "meet in the middle", applying
-lessons learnt from both experiments, with individual pieces of the
-real interface implemented and applied to the PL011 sample at the same
-time. The main missing thing in PL011 is DMA, otherwise it's a nice
-playground.
+(...)
 
-> usage of magic macros as syntactic sugar should indeed be thought twice.
-> Return a collection of QDevProperty could be better than having a magic
-> @properties syntactic sugar.
+>> +/* Redirect MSI write for given GPA. */
+>> +static MemTxResult riscv_iommu_msi_write(RISCVIOMMUState *s,
+>> +    RISCVIOMMUContext *ctx, uint64_t gpa, uint64_t data,
+>> +    unsigned size, MemTxAttrs attrs)
+>> +{
+>> +    MemTxResult res;
+>> +    dma_addr_t addr;
+>> +    uint64_t intn;
+>> +    uint32_t n190;
+>> +    uint64_t pte[2];
+>> +    int fault_type = RISCV_IOMMU_FQ_TTYPE_UADDR_WR;
+>> +    int cause;
+>> +
+>> +    if (!riscv_iommu_msi_check(s, ctx, gpa)) {
+> I think we have invoked riscv_iommu_msi_check() before writing to s->trap_as. Do we need this check?
 
-No hard opinions there, sure. I went for the magic syntax because the
-properties cannot be a const and I wanted to hide the ugly "static
-mut", but certainly there could be better ways to do it.
 
-> Another thing that could be discussed is: do we want to have the whole
-> inheritance mechanism for Rust devices? Is it really needed?
+You're right. Removed.
 
-Eh, this time unfortunately I think it is. Stuff like children and
-properties, which are methods of Object, need to be available to
-subclasses in instance_init and/or realize. Reset is in Device and we
-have the whole Device/SysBusDevice/PCIDevice set of classes, so you
-need to access superclass methods from subclasses. It's not a lot of
-code though.
+(...)
 
-> Between having a clean and simple Device definition, with a bit more of
-> magic glue (hidden internally), and requires devices to do some magic
-> initialization to satisfy existing architecture, what would be the best?
-> Even though it takes 1000 more lines, I would be in favor to have
-> Devices that are as clean and simple as possible. Because this is the
-> kind of code what will be the most added/modified, compared to the glue
-> part.
+>> +
+>> +    if (data & RISCV_IOMMU_IPSR_PIP) {
+>> +        pqcsr = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQCSR);
+>> +
+>> +        if (pqcsr & RISCV_IOMMU_PQCSR_PIE &&
+>> +            (pqcsr & RISCV_IOMMU_PQCSR_PQOF ||
+>> +             pqcsr & RISCV_IOMMU_PQCSR_PQMF)) {
+>> +            ipsr_set |= RISCV_IOMMU_IPSR_PIP;
+>> +        } else {
+>> +            ipsr_clr |= RISCV_IOMMU_IPSR_PIP;
+>> +        }
+>> +    } else {
+>> +        ipsr_clr |= RISCV_IOMMU_IPSR_PIP;
+>> +    }
+>> +
+>> +    riscv_iommu_reg_mod32(s, RISCV_IOMMU_REG_IPSR, ipsr_set, ipsr_clr);
+> If the pending bit is cleared, we can deassert the WSI.
 
-That's an opinion I share but I wasn't sure it's universal, which was
-another reason to prototype and post some "scary but perhaps
-necessary" code.
 
-> Or have multiple traits matching every possible operation, and allow a
-> device to implement it or not, like Read/Write traits. And the glue code
-> could call qemu_chr_fe_set_handlers.
+I'll make a note to remind about this later when we add WSI support.
 
-Possibly, yes. https://lwn.net/Articles/863459/ you see many such
-techniques: traits (gpio::Chip etc.), composition (device::Data),
-lambdas (only for initialization).
 
-The advantage of the lambda approach is that it scales to multiple
-backends or multiple memory regions. We'll see.
+(...)
 
-> I hope my answer helped to understand more my point that discussing the
-> interface is more important than discussing the glue needed.
 
-Sure, and I don't think we are very much in disagreement, if at all.
+>> +#ifndef HW_RISCV_IOMMU_STATE_H
+>> +#define HW_RISCV_IOMMU_STATE_H
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "qom/object.h"
+>> +
+>> +#include "hw/riscv/iommu.h"
+>> +
+>> +struct RISCVIOMMUState {
+>> +    /*< private >*/
+>> +    DeviceState parent_obj;
+>> +
+>> +    /*< public >*/
+>> +    uint32_t version;     /* Reported interface version number */
+>> +    uint32_t pasid_bits;  /* process identifier width */
+> Do you mind renaming pasid_bits to something like pid_bits to remain consistency?
 
-Paolo
 
+Done. In fact I also renamed 'pasid' from the first patch to 'pid' as well.
+
+
+Thanks,
+
+Daniel
 
