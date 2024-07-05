@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BFF2C30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:43:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39C79C3271F
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:43:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPeVW-0000t9-QI; Fri, 05 Jul 2024 04:41:30 -0400
+	id 1sPeVW-0000t5-QN; Fri, 05 Jul 2024 04:41:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPeV6-000054-RS
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:41:05 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1sPeVE-00008W-89
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:41:14 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPeUy-0003Df-1J
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:41:02 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a689ad8d1f6so150306566b.2
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:40:55 -0700 (PDT)
+ id 1sPeV9-0003HT-TG
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:41:11 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-58bac81f419so1968677a12.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:41:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720168854; x=1720773654; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720168866; x=1720773666; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eCIJ8bLXeHB17pKaSQdy+AoMR/5GJt+VWuDtEUviVm0=;
- b=TSgbsHnue/E35OQm3GNoHsGWKMsPSjc1AKKYlr7r4Q/5Gus3VpQUWYOHHADr7yW/Xn
- 6KjH8fUtUm6ZZZpXdFsOJjKMtw8/JpU0fg7utjV71BEU6BS4AGXUfk3ADp/0cgNfPylo
- QtRwzcP3GMd3k3SoltUuDe5oT/tAANzyafEFrWI2N+plNIo35N81t5HTdwFu59BKKUVq
- ILtpLfNjERNyyYVTc1QHHpeB4GqgyjS4gcDAflKVEM9QqtoNQWsER0M4Xse8lSP6GU6i
- /SASMJB/KY7M4KMWl0xsqKOyJmUV9vnSmTdQ1TEiA280wx1AucBRwwo2VofemgL5fvW1
- 2A7g==
+ bh=xGMwdrjzaVjDq8zEZYSVnqK2CyrYL4caV/sFBWJUwr8=;
+ b=Ak7jKdK4SNmN7ZUmF78STJF7G4GBBZ8fo+llHShZxXbtKsqUUynBtQa/2OMs2oVNXh
+ QFRXG07XXL8su3CtknbFhWrbLbzKL3jmV/W2rHJ5I3MBO6LfGllkoES29D6IIQXa7JpW
+ azT6LsVpXUj4NLHMId0ExvIGQbtEixOvurAdwM4P8vuPF7NnOJaq7PnKIshsYt1otdhz
+ 2MEhgCDNj0GtDBmU9HJZxNiSmurJr61mBLG5MGSARvU3bi25HodsbIlbTaWt/Ghh08FI
+ moZj3IOaQ/dzW7zcMaav6iH0mzF22G1hgAymLq3xAZ3UCbQSM13uO81PedBgPj4vrmWl
+ H6ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720168854; x=1720773654;
+ d=1e100.net; s=20230601; t=1720168866; x=1720773666;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eCIJ8bLXeHB17pKaSQdy+AoMR/5GJt+VWuDtEUviVm0=;
- b=v15ccSoitYHTsDD/dNHwBzBLxOHPQQPoXd4zbz4RnLUyWAfTzEmzT2RAEPu1ZkJvpS
- wNX20LQmKU+n/TBdLhXv73f8/gnUnpzkjOrSnBr7rHRoAGMaWs9mftlTEAqk4toIGAfv
- emogo3VLfz68rkqGUdkj81Z11CKiT8c63IRlxoyZ3Y/6OTNLo2u4AcCnig5H4kRzOC+I
- 0gg6JG3fFoYh6mrbydFbj+WPBL4l2UvF9Zw4erpkQZXdF7Fegr0LcD1IltuuXLgSqOVm
- y1c78w6ubAY6Jf3jEL5hOx/CdvysIqp2a3oHhO1weRwR19iu0ndF4dNn8Jge8QSH0EeF
- euOg==
-X-Gm-Message-State: AOJu0Yy/CorWjCONmmVtZbS9VK4in7yAByOpMnU7nl55umaQ07w9dx1s
- pZqCiuu9XQL3lah7kIzJwdKhXrMPMiPs4Yo1tXBQIGA5UghrmL+JyPNiSloQ0K0=
-X-Google-Smtp-Source: AGHT+IGlinUwjXJ6GfTDJw/NBVSEcVveQTLNCCT+Qsw1HBCKNegSH/Ef/wK+SyMZuMrzmRuXjrkp6g==
-X-Received: by 2002:a17:906:5acd:b0:a77:b81a:2471 with SMTP id
- a640c23a62f3a-a77ba7115d5mr278975266b.49.1720168853661; 
- Fri, 05 Jul 2024 01:40:53 -0700 (PDT)
+ bh=xGMwdrjzaVjDq8zEZYSVnqK2CyrYL4caV/sFBWJUwr8=;
+ b=ND/nNf9A2Zb66BLknNyHeMtre8HT1Fnl3w6Ju7Xw3IlDlK1Ib4D5YOmUyjRsQslOCA
+ inQhMu9LuimTB8GSU6Ff3kY6R3AoJqsahd/Tf3nVw4pbhvukk2qoj0GKcHyMAzQM6MP6
+ lwGgowYOHcGvoapmBBp3xvhlKeZTD+805UpKphawsNw4JBeUbigXNlilV6/cmBp4UH5m
+ D4yFr7D/4SEs8Zfz2lHdotnkdSydELRH1lZn6dzBpPKYBOR0MQQU0tTw7pr6GSswrvgk
+ BNv+Z+nrsCo+MjP36TnHeUtS+HboUK9QECv56veIV7P340l4sv2vA0re4rKLFvR9Iw26
+ p6aw==
+X-Gm-Message-State: AOJu0Yy1ZUM1HtsVJsUAVBjb0M659JaJSP1EmhQUrQGwmPqMCGHlXpLR
+ QWg9TGEABd1GdW44nzGm9doOZp54MDXozf5n2qt3wF8SqFpiotJ+Kz+7An7iCf0=
+X-Google-Smtp-Source: AGHT+IG3ittBM/K9+GEuiAPuXbV5kJonx+k58MpQduMwZltZG15RemxO/mBmRFXnWoDn3Kr0/bwgSw==
+X-Received: by 2002:a17:906:605:b0:a6f:e47d:a965 with SMTP id
+ a640c23a62f3a-a77ba4d146dmr238250066b.41.1720168866257; 
+ Fri, 05 Jul 2024 01:41:06 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aaf5290dsm660596666b.48.2024.07.05.01.40.50
+ a640c23a62f3a-a73e52c2cb5sm578758266b.16.2024.07.05.01.40.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 01:40:52 -0700 (PDT)
+ Fri, 05 Jul 2024 01:41:00 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8CE49620ED;
- Fri,  5 Jul 2024 09:40:48 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A390462139;
+ Fri,  5 Jul 2024 09:40:49 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
@@ -77,19 +77,18 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paul Burton <paulburton@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH v2 09/40] tests/tcg/aarch64: Explicitly specify register width
-Date: Fri,  5 Jul 2024 09:40:16 +0100
-Message-Id: <20240705084047.857176-10-alex.bennee@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH v2 20/40] gitlab: don't bother with KVM for TCI builds
+Date: Fri,  5 Jul 2024 09:40:27 +0100
+Message-Id: <20240705084047.857176-21-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705084047.857176-1-alex.bennee@linaro.org>
 References: <20240705084047.857176-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,69 +111,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In fact any other accelerator would be pointless as the point is to
+exercise the TCI accelerator anyway.
 
-clang version 18.1.6 assumes a register is 64-bit by default and
-complains if a 32-bit value is given. Explicitly specify register width
-when passing a 32-bit value.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240627-tcg-v2-3-1690a813348e@daynix.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240630190050.160642-5-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/tcg/aarch64/bti-1.c | 6 +++---
- tests/tcg/aarch64/bti-3.c | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ .gitlab-ci.d/buildtest.yml   | 2 +-
+ .gitlab-ci.d/crossbuilds.yml | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/tcg/aarch64/bti-1.c b/tests/tcg/aarch64/bti-1.c
-index 99a879af23..1fada8108d 100644
---- a/tests/tcg/aarch64/bti-1.c
-+++ b/tests/tcg/aarch64/bti-1.c
-@@ -17,15 +17,15 @@ static void skip2_sigill(int sig, siginfo_t *info, ucontext_t *uc)
- #define BTI_JC    "hint #38"
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 425fc6479b..e3a0758bd9 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -635,7 +635,7 @@ build-tci:
+     - TARGETS="aarch64 arm hppa m68k microblaze ppc64 s390x x86_64"
+     - mkdir build
+     - cd build
+-    - ../configure --enable-tcg-interpreter --disable-docs --disable-gtk --disable-vnc
++    - ../configure --enable-tcg-interpreter --disable-kvm --disable-docs --disable-gtk --disable-vnc
+         --target-list="$(for tg in $TARGETS; do echo -n ${tg}'-softmmu '; done)"
+         || { cat config.log meson-logs/meson-log.txt && exit 1; }
+     - make -j"$JOBS"
+diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+index 3de0341afe..cb499e4ee0 100644
+--- a/.gitlab-ci.d/crossbuilds.yml
++++ b/.gitlab-ci.d/crossbuilds.yml
+@@ -68,7 +68,7 @@ cross-i686-tci:
+   variables:
+     IMAGE: debian-i686-cross
+     ACCEL: tcg-interpreter
+-    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins
++    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
+     MAKE_CHECK_ARGS: check check-tcg
  
- #define BTYPE_1(DEST) \
--    asm("mov %0,#1; adr x16, 1f; br x16; 1: " DEST "; mov %0,#0" \
-+    asm("mov %w0,#1; adr x16, 1f; br x16; 1: " DEST "; mov %w0,#0" \
-         : "=r"(skipped) : : "x16")
- 
- #define BTYPE_2(DEST) \
--    asm("mov %0,#1; adr x16, 1f; blr x16; 1: " DEST "; mov %0,#0" \
-+    asm("mov %w0,#1; adr x16, 1f; blr x16; 1: " DEST "; mov %w0,#0" \
-         : "=r"(skipped) : : "x16", "x30")
- 
- #define BTYPE_3(DEST) \
--    asm("mov %0,#1; adr x15, 1f; br x15; 1: " DEST "; mov %0,#0" \
-+    asm("mov %w0,#1; adr x15, 1f; br x15; 1: " DEST "; mov %w0,#0" \
-         : "=r"(skipped) : : "x15")
- 
- #define TEST(WHICH, DEST, EXPECT) \
-diff --git a/tests/tcg/aarch64/bti-3.c b/tests/tcg/aarch64/bti-3.c
-index 8c534c09d7..6a3bd037bc 100644
---- a/tests/tcg/aarch64/bti-3.c
-+++ b/tests/tcg/aarch64/bti-3.c
-@@ -11,15 +11,15 @@ static void skip2_sigill(int sig, siginfo_t *info, ucontext_t *uc)
- }
- 
- #define BTYPE_1() \
--    asm("mov %0,#1; adr x16, 1f; br x16; 1: hint #25; mov %0,#0" \
-+    asm("mov %w0,#1; adr x16, 1f; br x16; 1: hint #25; mov %w0,#0" \
-         : "=r"(skipped) : : "x16", "x30")
- 
- #define BTYPE_2() \
--    asm("mov %0,#1; adr x16, 1f; blr x16; 1: hint #25; mov %0,#0" \
-+    asm("mov %w0,#1; adr x16, 1f; blr x16; 1: hint #25; mov %w0,#0" \
-         : "=r"(skipped) : : "x16", "x30")
- 
- #define BTYPE_3() \
--    asm("mov %0,#1; adr x15, 1f; br x15; 1: hint #25; mov %0,#0" \
-+    asm("mov %w0,#1; adr x15, 1f; br x15; 1: hint #25; mov %w0,#0" \
-         : "=r"(skipped) : : "x15", "x30")
- 
- #define TEST(WHICH, EXPECT) \
+ cross-mipsel-system:
 -- 
 2.39.2
 
