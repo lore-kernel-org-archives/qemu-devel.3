@@ -4,63 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 396FEC3814E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 09:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B8FC30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 09:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPfR3-0007yk-LG; Fri, 05 Jul 2024 05:40:58 -0400
+	id 1sPfSq-0000SE-C7; Fri, 05 Jul 2024 05:42:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sPfR1-0007yU-JG
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 05:40:55 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPfSo-0000Rw-Mk
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 05:42:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sPfQw-0001I2-2h
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 05:40:55 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WFpQS5W5Zz6JBSv;
- Fri,  5 Jul 2024 17:40:00 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 9F9BE140B38;
- Fri,  5 Jul 2024 17:40:44 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 5 Jul
- 2024 10:40:44 +0100
-Date: Fri, 5 Jul 2024 10:40:43 +0100
-To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
-CC: Zhao Liu <zhao1.liu@intel.com>, "linux-cxl@vger.kernel.org"
- <linux-cxl@vger.kernel.org>, "mst@redhat.com" <mst@redhat.com>, "Markus
- Armbruster" <armbru@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "linuxarm@huawei.com" <linuxarm@huawei.com>, "Zhao
- Liu" <zhao1.liu@linux.intel.com>
-Subject: Re: [PATCH 1/3] hw/cxl: Get rid of unused cfmw_list
-Message-ID: <20240705104043.000023fb@Huawei.com>
-In-Reply-To: <eb397f41-9a81-4b1f-a1ed-7f0b99b42b30@fujitsu.com>
-References: <20240702143425.717452-1-Jonathan.Cameron@huawei.com>
- <20240702143425.717452-2-Jonathan.Cameron@huawei.com>
- <5ffea576-0b87-46c1-b4dc-e09bd253805e@fujitsu.com>
- <ZodXMPef9bIROG5u@intel.com>
- <eb397f41-9a81-4b1f-a1ed-7f0b99b42b30@fujitsu.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPfSm-0001R1-MN
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 05:42:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720172562;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8DDl39HI1d7txN/C1d+aLYYWuSgAVvXKgr1RPKhrYn4=;
+ b=gDh/Ia0p2LFYuO3pIdCBIRL60Y8qhSXoOfJ4FY7kokak4xrCygOBppGGMvgv9GSEpPalZ6
+ cMSomDK8qA5EQftPR6NyJVbnfXXJg/pPyH0WvGyCklgR1zfzvrm7gcTlMceV/9d+T1xTi2
+ 6gRVya0X1bCkZ03ghegxrDYY1RPKkmo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-vbgkPcWDNVSyKL7naDfpkg-1; Fri, 05 Jul 2024 05:42:39 -0400
+X-MC-Unique: vbgkPcWDNVSyKL7naDfpkg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4265b751469so20015e9.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 02:42:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720172558; x=1720777358;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8DDl39HI1d7txN/C1d+aLYYWuSgAVvXKgr1RPKhrYn4=;
+ b=QFOHMnmpvpe6/McC9T5G9jcjM6WrdB9YO5BuF94D5/37WyNuZBlpvuBcDwLQ9ZAX2Y
+ pOspOwPzmsk3FgdaabWSEcu1JBIRZHp9VnurFUtqWu9JlG/kkd5SxSzyJ1ZMQFS4tgOI
+ oTyjhTorI/DMJcHQlWYSF9DSpqLzVPySBJgJkWmcy0JvGtREdUm3e9MQJb7QeX4yWhrl
+ f2+UCke/TL6ac0y5NT4Rq8WC2sHeVMQemoSgek8t7e2l+pmoqEgKwEh3DO7HjS/eGN5O
+ uFO9wu/t3ajWq/tHp+ArX6g926Gqve9EAX7Vkb4MLBOyPE4u3HqE/rnu9Usk3F0lRo5I
+ p18g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVh91e4DaXGEeDFg1TC3zMi1eVb+Xjlm8D4DL/ffyTruBp5bIs00LPtb2smJ6ZsKHkEAcat4dhWDpjCALnnHtFdlMau8ZE=
+X-Gm-Message-State: AOJu0YwkJYZtAtlaiYgGIQR2dV1tm06yrT6NDcb6alZEHAfi602H8o0V
+ wrNtxlOFxpzm3ScpXeAqEMLn6EXHlk4l4MhoE7j3s4Cge6vDLNy4mpAkBspQhAQASqG043fyxAn
+ 4lrAn5n1X6cEDucPeSpBkVUfiIpT2TfuENiZ+bU2xxZGCSLph91XT
+X-Received: by 2002:a05:600c:3b99:b0:421:b65d:2235 with SMTP id
+ 5b1f17b1804b1-4264b004191mr34240125e9.0.1720172558254; 
+ Fri, 05 Jul 2024 02:42:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF7Hr/GOoi0MgtU3Gh+umMU5DKDmGgDDbrzAxy7FQpCT2sQEnBYVRhAMQB9uTUdSthd9q7tDg==
+X-Received: by 2002:a05:600c:3b99:b0:421:b65d:2235 with SMTP id
+ 5b1f17b1804b1-4264b004191mr34239825e9.0.1720172557511; 
+ Fri, 05 Jul 2024 02:42:37 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f0:a185:2de6:83fc:7632:9788])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4264a1f23c1sm54469005e9.28.2024.07.05.02.42.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 05 Jul 2024 02:42:36 -0700 (PDT)
+Date: Fri, 5 Jul 2024 05:42:25 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "peterx@redhat.com" <peterx@redhat.com>
+Subject: Re: [PATCH v3 3/3] intel_iommu: make types match
+Message-ID: <20240705054156-mutt-send-email-mst@kernel.org>
+References: <20240705050213.1492515-1-clement.mathieu--drif@eviden.com>
+ <20240705050213.1492515-4-clement.mathieu--drif@eviden.com>
+ <SJ0PR11MB6744DDE438D094FEB4F8A29392DF2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <d637bd99-11cb-4bbc-a8c4-06fae21b6c88@eviden.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d637bd99-11cb-4bbc-a8c4-06fae21b6c88@eviden.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,76 +106,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jul 2024 02:29:34 +0000
-"Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com> wrote:
-
-> On 05/07/2024 10:15, Zhao Liu wrote:
-> >> There is a new user for cfmw_list now
-> >> https://lore.kernel.org/qemu-devel/20240704093404.1848132-1-zhao1.liu@=
-linux.intel.com/
+On Fri, Jul 05, 2024 at 09:24:50AM +0000, CLEMENT MATHIEU--DRIF wrote:
+> 
+> 
+> On 05/07/2024 10:51, Duan, Zhenzhong wrote:
+> > Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
+> >
+> >
+> >> -----Original Message-----
+> >> From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+> >> Subject: [PATCH v3 3/3] intel_iommu: make types match
 > >>
-> >> So I think we should drop this patch. =20
->=20
-> > Hi Zhijian,
-> >=20
-> > I'm not a "real" user and that bug was originally found by code reading.
-> >=20
-> > So that fix won't block your drop. =F0=9F=99=82 =20
->=20
->=20
-> "hw/cxl: Get rid of unused cfmw_list" is no longer needed.
->=20
->=20
->=20
-> >=20
-> > And I think the fix is worth being laned before cfmw_list gets dropped,
-> > for being able to port backwards to stable QEMU. =20
->=20
-> Your fix[0] requires CXLState.cfmw_list, and I think CXLState.cfmw_list w=
-as designed for *get* purpose
-> but got mistake at that time.
->=20
-> [0] https://lore.kernel.org/qemu-devel/20240704093404.1848132-1-zhao1.liu=
-@linux.intel.com/
-Ok.  Michael, please ignore this one as the lack of use is result of anothe=
-r bug.=20
-I hadn't gotten to that fix yet, so missed the connection.
+> >> From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> >>
+> >> The 'level' field in vtd_iotlb_key is an unsigned integer.
+> >> We don't need to store level as an int in vtd_lookup_iotlb.
+> >>
+> >> Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> >> ---
+> >> hw/i386/intel_iommu.c | 2 +-
+> >> 1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> >> index 37c21a0aec..be0cb39b5c 100644
+> >> --- a/hw/i386/intel_iommu.c
+> >> +++ b/hw/i386/intel_iommu.c
+> >> @@ -358,7 +358,7 @@ static VTDIOTLBEntry
+> >> *vtd_lookup_iotlb(IntelIOMMUState *s, uint16_t source_id,
+> >> {
+> >>      struct vtd_iotlb_key key;
+> >>      VTDIOTLBEntry *entry;
+> >> -    int level;
+> >> +    unsigned level;
+> > Will it bring any issue if int is used?
+> It shouldn't, but it might trigger static analyzer warnings.
+> Do you want me to drop the patch?
 
-The rest of this series is unrelated.
 
-Jonathan
+just write a better commit log.
+"Not an issue by itself, but using unsigned here seems cleaner".
 
->=20
->=20
-> >    =20
-> >> On 02/07/2024 22:34, Jonathan Cameron wrote: =20
-> >>> From: Li Zhijian<lizhijian@fujitsu.com>
-> >>>
-> >>> There is no user for this member. All '-M cxl-fmw.N' options have
-> >>> been parsed and saved to CXLState.fixed_windows.
-> >>>
-> >>> Signed-off-by: Li Zhijian<lizhijian@fujitsu.com>
-> >>> Signed-off-by: Jonathan Cameron<Jonathan.Cameron@huawei.com>
-> >>> ---
-> >>>    include/hw/cxl/cxl.h | 1 -
-> >>>    hw/cxl/cxl-host.c    | 1 -
-> >>>    2 files changed, 2 deletions(-)
-> >>>
-> >>> diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
-> >>> index 75e47b6864..e3ecbef038 100644
-> >>> --- a/include/hw/cxl/cxl.h
-> >>> +++ b/include/hw/cxl/cxl.h
-> >>> @@ -43,7 +43,6 @@ typedef struct CXLState {
-> >>>        MemoryRegion host_mr;
-> >>>        unsigned int next_mr_idx;
-> >>>        GList *fixed_windows;
-> >>> -    CXLFixedMemoryWindowOptionsList *cfmw_list;
-> >>>    } CXLState;
-> >>>    =20
+
+> >
+> >>      for (level = VTD_SL_PT_LEVEL; level < VTD_SL_PML4_LEVEL; level++) {
+> >>          key.gfn = vtd_get_iotlb_gfn(addr, level);
+> >> --
+> >> 2.45.2
 
 
