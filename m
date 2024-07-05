@@ -4,91 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B710C30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 13:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9DB4C30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 14:13:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPj50-00014u-48; Fri, 05 Jul 2024 09:34:27 -0400
+	id 1sPjg9-0006k3-3f; Fri, 05 Jul 2024 10:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sPj4u-00014Z-EW
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 09:34:22 -0400
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1sPjg6-0006js-S0
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 10:12:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sPj4r-0005p7-Jl
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 09:34:20 -0400
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1sPjg5-0001i5-Aw
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 10:12:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720186454;
+ s=mimecast20190719; t=1720188763;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/H7LV2t1nlR7wGQ2dayilpeheOsH+8O2COgkGb2uveY=;
- b=OmW261+BKyzEXI8tYywps/gqh5XX7zW1ppUbqMtMgcpQFJZY1VWxX1S1Qd9m0SDVT1vq89
- 7RCL80851PrOzgVsnvfkMw6u6S70aQ7OeRuEVMcCR1yGBSRWpy7x0vtzcQU8eHNiARgRGE
- zovrm1EfHPHDlJpCXVy9msj6fqUrq7o=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IkYR99WpRoCZJXm0Q0WKP2bp06IWsxIAsgzVIkFJsIE=;
+ b=HJC99HquiVEEWPeKUqTGbAq8b53i2dvIuoIxK8pupk0LO2fNcV8ojGGx57qFWGAncaiIuh
+ ubeMAQFCnEdaqPpnWryoSEMEjT2ATJoCGUt/DOKuZwq3O2caMzb/8hu/vhigqd0su2W2g4
+ P1v4imxmFySnmyVIO4btDB4rRhyw9R0=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-vJx3gmwANTuRfP8Eh6u7Pw-1; Fri, 05 Jul 2024 09:34:13 -0400
-X-MC-Unique: vJx3gmwANTuRfP8Eh6u7Pw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6b5e99c06efso1697776d6.2
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 06:34:13 -0700 (PDT)
+ us-mta-636-7wy5kYelM4K_J3ZdNhu3WQ-1; Fri, 05 Jul 2024 10:12:40 -0400
+X-MC-Unique: 7wy5kYelM4K_J3ZdNhu3WQ-1
+Received: by mail-io1-f72.google.com with SMTP id
+ ca18e2360f4ac-7f652a0d89dso200616639f.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 07:12:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720186453; x=1720791253;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/H7LV2t1nlR7wGQ2dayilpeheOsH+8O2COgkGb2uveY=;
- b=MDR+RMNxGjnAAimA9JUSvAUGTUPZmeD4cR8uX4ecZlE06ySb6DHVYBIiTh1sCubOpZ
- XA1FHBupjITOqj9l7+8WQQ3oivobrkgMqOMjNMMES/Iu4eJ9G5mkjspS8OhcZcGgdaIw
- vmTwz+soo7Brkfg2ESAmFs0Fl17LeR67mUCMpNcoXeygMcyHYIc0oYby5kwbsulecdia
- cW0YxEEK60D1Y7CWiEsyLnkm6ESMJDK70EOUNZbymwSx7pu+otwbfy5iDqkV2KRJwk1p
- iGDvWhm6c8tm8B8s2Q0SJIqmz5F1Ml14JT7bSHIvjZFGPXg165VYrpQActUBalJTniLw
- OzvQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdoq4hfxcPvZAc0Tu1Pa7Kg4m0YOyXaFHp50idwyq98/vsYuxJHIBwL0hrkX3ecREfF7EAvUdMKJufsMPADzL35jH6j7c=
-X-Gm-Message-State: AOJu0Yw3fdC0Ngojy+R1nNU7W6x+f2ckqL2Pd8WDf7eMrqF86XWeyi1o
- zcxt7kHlROlmJ4nM1ANSzMIthkt72clK+ZxaQ4TfDBTfohp7JE49U5vHI8SsIsmS17UphmIQsZd
- rTrDOcFP68yYe8MlPczMjXo2aUZOJKs1lFp6cXUn+B7zPksQHf8Cr
-X-Received: by 2002:a05:620a:4088:b0:79c:103b:af39 with SMTP id
- af79cd13be357-79eee298dfamr483438885a.7.1720186452846; 
- Fri, 05 Jul 2024 06:34:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IED9Vl0Ibg455++/iYEsDJIgpQBDhl/jwSD4X2i7uF3SmWSG7btg9aRm7U85KIUJ84FGExUBQ==
-X-Received: by 2002:a05:620a:4088:b0:79c:103b:af39 with SMTP id
- af79cd13be357-79eee298dfamr483436385a.7.1720186452375; 
- Fri, 05 Jul 2024 06:34:12 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79d820acc1bsm606892985a.47.2024.07.05.06.34.11
+ d=1e100.net; s=20230601; t=1720188760; x=1720793560;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IkYR99WpRoCZJXm0Q0WKP2bp06IWsxIAsgzVIkFJsIE=;
+ b=iDQt/KBW8vBdU9O4HNqHoOlt3ZG3adLwajlwZF0e4Y9iMF9L2F7x6DEFLwov3bpbvY
+ siKBSC0qYMjmmTBRl0gsQPYYTztu6p0cCEm9gQyKXmM44N0FsvTTC/5A2W7A3sHmfEu8
+ +cO/xt97DN2SEW9XEbNj5u9xr8g9OR/J6waE+WGn03BF21gaYp0YYVNTP23gDOhYHe32
+ diwvkQ7p9FrvHjrdkpfcvN1XatB6mMreFJ6LcEHuikt7LPG1VEMve8668T7TM0/URq+H
+ ZTEE21SG01XVtGPKry/zFu4vMTqQd61y5EZYhhVP7QQBhLrNGnGye7bo7LEESVCvW0ft
+ TGgg==
+X-Gm-Message-State: AOJu0Yx4gpUvqPMV4InMdLnu9kauQbW5Nfbh+k703ottULqyQiHInZp9
+ 6PVgMEMZmIbWqvtf7+KAxflSRepfKgDYwl9+NXp8Lt6nViyi6EN+zumqsakZ2QhIKNPynCfldZT
+ sUTIjHZTEOVLJRtl8WR/N9o5tZfrV3FfGI1ta01JRa5aOMAcJGFYv
+X-Received: by 2002:a05:6602:e19:b0:7f6:1f87:70c7 with SMTP id
+ ca18e2360f4ac-7f66dea9ee5mr585711039f.11.1720188760013; 
+ Fri, 05 Jul 2024 07:12:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6Mue8LeOIqAdu2vXJpAmBIHwAJTi3x8QadjLTkCZtCRywtdG7lSgQXuTd9SpHdJymvyadhA==
+X-Received: by 2002:a05:6602:e19:b0:7f6:1f87:70c7 with SMTP id
+ ca18e2360f4ac-7f66dea9ee5mr585708339f.11.1720188759677; 
+ Fri, 05 Jul 2024 07:12:39 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4bb73bba7c0sm4508128173.16.2024.07.05.07.12.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 06:34:11 -0700 (PDT)
-Date: Fri, 5 Jul 2024 09:34:09 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Wang, Wei W" <wei.w.wang@intel.com>
-Cc: "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "mtosatti@redhat.com" <mtosatti@redhat.com>,
- "farosas@suse.de" <farosas@suse.de>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Wang, Lei4" <lei4.wang@intel.com>, Jiri Denemark <jdenemar@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: Re: [PATCH v1] target/i386: kvm: Block migration when enfore_cpuid
- is set to false
-Message-ID: <Zof2UVtNa4yPDRyF@x1n>
-References: <20240703144912.130988-1-wei.w.wang@intel.com>
- <ZoWSdR1IOQ0iIxZC@x1n>
- <DS0PR11MB6373852F86A43ED9E1AFC7B7DCDE2@DS0PR11MB6373.namprd11.prod.outlook.com>
- <ZobGx3KORPLQfBNC@x1n>
- <DS0PR11MB6373F79B4D34DBF5DAB416F2DCDF2@DS0PR11MB6373.namprd11.prod.outlook.com>
+ Fri, 05 Jul 2024 07:12:39 -0700 (PDT)
+Date: Fri, 5 Jul 2024 08:12:37 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: tugouxp <13824125580@163.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: About VFIO Device Pass-through on Qemu.
+Message-ID: <20240705081237.41208949.alex.williamson@redhat.com>
+In-Reply-To: <17672e.9050.190822743a6.Coremail.13824125580@163.com>
+References: <17672e.9050.190822743a6.Coremail.13824125580@163.com>
+Organization: Red Hat
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <DS0PR11MB6373F79B4D34DBF5DAB416F2DCDF2@DS0PR11MB6373.namprd11.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,137 +101,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 05, 2024 at 10:22:23AM +0000, Wang, Wei W wrote:
-> On Thursday, July 4, 2024 11:59 PM, Peter Xu wrote:
-> > On Thu, Jul 04, 2024 at 03:10:27PM +0000, Wang, Wei W wrote:
-> > > > > diff --git a/target/i386/cpu.c b/target/i386/cpu.c index
-> > > > > 4c2e6f3a71..7db4fe4ead 100644
-> > > > > --- a/target/i386/cpu.c
-> > > > > +++ b/target/i386/cpu.c
-> > > > > @@ -8258,7 +8258,7 @@ static Property x86_cpu_properties[] = {
-> > > > >      DEFINE_PROP_UINT32("hv-version-id-snumber", X86CPU,
-> > > > > hyperv_ver_id_sn, 0),
-> > > > >
-> > > > >      DEFINE_PROP_BOOL("check", X86CPU, check_cpuid, true),
-> > > > > -    DEFINE_PROP_BOOL("enforce", X86CPU, enforce_cpuid, false),
-> > > > > +    DEFINE_PROP_BOOL("enforce", X86CPU, enforce_cpuid, true),
-> > > >
-> > > > I assume in many cases people can still properly migrate when the
-> > > > hosts are similar or identical, so maybe we at least want the old
-> > > > machine types keep working (by introducing a machine compat property)?
-> > >
-> > > You meant keeping "enforce_cpuid=false" for old machine types (e.g. before
-> > 9.1)?
-> > > This will make them non-migratable with this patch, but they were
-> > > migratable (by
-> > > default) as "migratable" wasn't enforced by "enforce_cpuid". Should we
-> > > keep them being migratable by default (e.g. enforce_cpuid=true) as well?
-> > 
-> > Ah, this is trickier than I thought..
-> > 
-> > The issue is if we make them silently switch to enforce_cpuid=true on old
-> > machines, there's chance they start to fail boot, am I right?
+On Fri, 5 Jul 2024 17:08:49 +0800 (CST)
+tugouxp <13824125580@163.com> wrote:
+
+> Hi folks:
 > 
-> Right for newly launched guests, regardless of whether they are new or old
-> machine types, they will fail to boot when the host cannot afford the features
-> for the configured vCPU models. This is expected, and actually part of the
-> intentions of this patch.
 > 
-> When there is a need to boot a guest with reduced features, users need to
-> explicitly add "enforce_cpuid=false", which marks the new booted guest as
-> non-migratable, or a _better_ way, to identify the unsupported features from 
-> the host first, and then get it booted with "-cpu CpuModel,-A,-B", this can make
-> it migratable with those known reduced features, and the destination guest is
-> required to use the same QEMU commands (as usual) to reduce the same set
-> of features as the source and get a enforced check by "enforce_cpuid".
+>     I have a questions about device vfio pass-through usage snarios,
+> PCI device pass-throug for example. did the GPA that host physical
+> memory  mapped to Guest vcpu through MMU must be identical with the
+> IOVA that host physical memory mapped to gust device thourgh iommu?
+
+I'm having trouble parsing that wording, but without a vIOMMU the
+device operates in the GPA address space, so IOVA == GPA.
+
+
+> if so, that will be convenient for driver developer, because then can
+> share data physical address between device and share memory. but is
+> this true? is this the pass-through user manner?
+
+If you're asking about a shared DMA memory buffer between devices, yes,
+without a vIOMMU the buffer GPA (IOVA) would be the same between
+devices.  Also note that device MMIO is mapped into the device address
+space, so depending on the underlying host support for peer-to-peer DMA
+there might be a working "direct" path between devices (where "direct"
+means bounced through the IOMMU).
+
+> my thought: it will be very convent for driver developer if GPA ==
+> IOVA. because theuy are all "physical" on Guest, will offer a
+> consistent view of memory resource for vCPU and vDevice, but is this
+> true?
 > 
-> For live update of QEMU for existing running guests (as you mentioned
-> below), the impact is only on the running guests that have had features reduced
-> from vCPU models (at the time of their original launch). For this case, the
-> recommended way to update them to the new QEMU is also to explicitly identify
-> the reduced features and update them with "-cpu CpuModel,-A,-B".
 > 
-> The rationale behind this is that the features reduced from the guest needs to
-> be explicitly determined and controllable. In terms of live migration, the
-> destination is ensured to have the same set of reduced features as the source
-> side.
-> 
-> > 
-> >     if (cpu->enforce_cpuid && x86_cpu_have_filtered_features(cpu)) {
-> >         error_setg(&local_err,
-> >                    accel_uses_host_cpuid() ?
-> >                        "Host doesn't support requested features" :
-> >                        "TCG doesn't support requested features");
-> >         goto out;
-> >     }
-> > 
-> > I suppose we still need to keep all the old worlds running all fine without
-> > breaking them when people do an QEMU upgrade.  It needs to work both on
-> > booting fine, and on allowing to migrate.
-> > 
-> > So maybe we actually need two things?
-> > 
-> >   - One patch introduce forbit_migration_if_cpuid_mismatch property, when
-> >     set, block migration if not enforced, otherwise it should still allow
-> >     migration even if enforce_cpud=fales.  It should default to on, but off
-> >     on old machines.
-> > 
-> >   - One patch change default value of enforce_cpuid to on, but turn it off
-> >     on old machines.
-> > 
-> > Does that look right?
-> 
-> I think this can work. Not sure what you would think about the above explanations.
-> If agree, then probably we don’t need to add the extra complexity.
-> 
-> Also, the above two things seem to impede the upgrade for guests with older machine
-> types to incorporate this enforcement. I think the primary goal of live updating to a
-> newer QEMU version is to benefit from the enhancements offered by the new QEMU.
-> So it seems more beneficial to bring old guests under such enforcements, given
-> that this doesn't break functionalities that the guest is running. The only
-> requirement for this is to upgrade using more explicit QEMU commands
-> (i.e., -cpu CpuModel,-A,-B) when needed.
+> VCPU:
+>  GVA----(MMU)----GPA-------(+offset)----->HVA------>(MMU)----->HPA.
+>  Device in Guest:                      
+>   IOVA---->(IOMMU)---->HPA
 
-What you said makes sense.  It's just that the concern still exists, and
-I'm not sure whether that'll be too much to ask for a customer.
+Yes.  In fact this is the only way we can do transparent device
+assignment without a paravirtualized DMA layer is to use the IOMMU to
+map the device into the GPA address space.  Also the fixed IOVA/GPA to
+HPA mapping in the IOMMU is what necessitates memory pinning.  Thanks,
 
-Also, see this commit:
-
-commit 15e41345906d29a319cc9cdf566347bf79134d24
-Author: Eduardo Habkost <ehabkost@redhat.com>
-Date:   Wed Aug 26 13:25:44 2015 -0300
-
-    target-i386: Enable "check" mode by default
-    
-    Current default behavior of QEMU is to silently disable features that
-    are not supported by the host when a CPU model is requested in the
-    command-line. This means that in addition to risking breaking guest ABI
-    by default, we are silent about it.
-    
-    I would like to enable "enforce" by default, but this can easily break
-    existing production systems because of the way libvirt makes assumptions
-    about CPU models today (this will change in the future, once QEMU
-    provide a proper interface for checking if a CPU model is runnable).
-    
-    But there's no reason we should be silent about it. So, change
-    target-i386 to enable "check" mode by default so at least we have some
-    warning printed to stderr (and hopefully logged somewhere) when QEMU
-    disables a feature that is not supported by the host system.
-
-    Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-    Signed-off-by: Eduardo Habkost <ehabkost@redhat.com>
-
-I don't think I know what's the "libvirt assumptions" mentioned, and how it
-changed as of today.  I had a vague memory Libvirt constantly set off on
-some of the relevant flags last time Jiri explained some cpuid issues to
-me; maybe it's "check" not "enforce"? It would be great if Jiri or Dan can
-comment here.
-
-Copy Igor too from the commit.
-
-Thanks,
-
--- 
-Peter Xu
+Alex
 
 
