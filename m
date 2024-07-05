@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E611AC38150
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:38:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36192C3DA41
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPl08-0002ge-NZ; Fri, 05 Jul 2024 11:37:32 -0400
+	id 1sPl0B-0002of-2q; Fri, 05 Jul 2024 11:37:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPkzw-0002bL-4m
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:20 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1sPl02-0002dY-Dm
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:26 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPkzu-0001Hj-HN
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:19 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-58ba3e38028so2365220a12.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:37:18 -0700 (PDT)
+ id 1sPkzz-0001J6-LN
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:25 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52e976208f8so2006598e87.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:37:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193837; x=1720798637; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193842; x=1720798642; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RP3B/0cPkW5+Move7SaNmebJelEP2P1mPvRnO3rEjf4=;
- b=lvuWJuOSWefr+gjQaTwklWxx6VQ/e/GNzz6gurV7EfnRg0A14rW8XpivBgCQyP0ptN
- SeMm9Uc4jpJTsNPGUEbD4gRR5R+k8KiukAk6jltJubbSYoCD2lRxZV+UAMhYyFI4O4LX
- C62BP3YJ/jeq4X5XRzUfAHsGMpO/72T7IV1X4BuaGMXgTfT3GWKmNH5Fch2H8VhUPKuz
- Q7tCDUIDcnAQxy79M/vGSLNkvOTHprtBcU7Sp5qbTPXGgND3MHDve7hWk99acl84Bxhf
- S6H9l6tBqacfSveLRxiGdA1r75qZDIUIBa4XPtIu9kv+sLDr8l2VHkeWRzDbjcZi095U
- dGxA==
+ bh=yODWEb1vcYCc/9pyRjXwD+WI1whqQ36urKRs7eztwzQ=;
+ b=FUxHJhzyg4AMlhXoDxktgeU9WXxBc6bcfh3t3iJWUWKsiUiPivNJkAqSIk8Hav8eKS
+ 8uwb15BJhLLZYN4etVQITdCvXvWPTKEAH2LZixf2qT3sJ9izBihdawT7P9IBqaAfNqZc
+ PxpQgrOV87W/0so/ffEjyaKNyTElheQIf6xyuqJMZF4N+iz6Dh2k2CIM2zXdqgIEXlCQ
+ u6oy7P5FHYvB9lwbVP8YCYdLI/fIeXXlEXtXaXlG9Wev4q40MKXM9pxH44UfBpAH3DKG
+ 0Yl4uqDYongF4xJK7IcPuija3KDB2MXtwAvxdBvha9CD/Wk5zjhW0PxhwMdVD1JFX1sx
+ un1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193837; x=1720798637;
+ d=1e100.net; s=20230601; t=1720193842; x=1720798642;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RP3B/0cPkW5+Move7SaNmebJelEP2P1mPvRnO3rEjf4=;
- b=PBHbZkRRi8NWwu9E2QapLOv00Mcdk54GAVNEI4C52Hqv7Qq3x3lOJH9VCXpVyNIaJZ
- j6oBPOeRMtPSvXP46jgtZXBE7ai2GcFu0x55XJksorG8mxG9/hqomHxlIPpPczyNo6vW
- 8A86arqZZvRGTUKWXe/4XJrnZD7XdSIorQtbVkLEJYBVhcGrSzKMimPbqqwROWvCtcVl
- pyIJnUPBFM8f7J9V5mN5eZRuOVmdecCnKAo0BtMC3YZPAOXKfpnquW+8VgqX5hyRQAa7
- ZM8/s/MwPvt5fDGo1/RmLM89pMH5GkMVtALUO63qq5h7YO+r0/N8KFAG17gb0BKxFUVs
- YnWQ==
-X-Gm-Message-State: AOJu0YyV4aSRtPz7mtzT0wx8/DVsqptP5/efSrAHKkP+1A/epxBJ0TS8
- Z8iIrROnLR3hsxO0+s8vC5gV90+lO6MYKB3OwPgI+F2ZiXzGruXtaIR3ifrDq0U=
-X-Google-Smtp-Source: AGHT+IEsXcdPA9DWU3UXkw9eQ3VkaZvKs7/u4HBjVDh7e/yRtBHCqEXbAfRYLaa3ao0IyM8dUnbuMg==
-X-Received: by 2002:a05:6402:2548:b0:585:c001:c1b5 with SMTP id
- 4fb4d7f45d1cf-58e5a6f21bemr3745678a12.5.1720193836880; 
- Fri, 05 Jul 2024 08:37:16 -0700 (PDT)
+ bh=yODWEb1vcYCc/9pyRjXwD+WI1whqQ36urKRs7eztwzQ=;
+ b=D41wt7RHMxxx6QYooI17hnqpyPfgtdn74vvA4CwALS+opohBvA4t2IIRMa9oHmZL/X
+ /3v6LIJ451MjBCDS4oC9P929+NJ6+myYaLQbqNfRL25rGmC1ch1jDIT4AW4eLrn6koI/
+ 4nsxntRyrKPtiaw9YYNAzb4t9o/2RN7DcN8DEmVy5OTBX9oIyjOe+D7QVPbvthTHdukV
+ yWwLOzZ2ifiFBwG2zKJTsKzamTwOAYs99d66xIG7z2DK24qwEYh3WpOlsbegslZVZAIn
+ GXIuCp3iPvvIudauhE+hQOtCZ8CP0ufTyLRQLeKqTduwo+0rPWuppPu1gyRmLbX0nReh
+ lgHw==
+X-Gm-Message-State: AOJu0YyVPcQsFvbQS3qTsiGCU1422O7v3Ucu/SqevnyiX3+VU21juw6K
+ MS4JxjWP+xgoR68z19O7C92fZ4Z4F+qRX+qIByZ31GRpRPDtGgmeLfrFVrM48e0=
+X-Google-Smtp-Source: AGHT+IFKxUGk7CuQ2Jqs30QtZpZGDjHf4y0EX6R/CCBx5cBsjTBfMYyrpN4eGxrhXhGfbaIWcqvDEQ==
+X-Received: by 2002:ac2:4115:0:b0:52c:f3fa:86c with SMTP id
+ 2adb3069b0e04-52ea0629bc7mr4008184e87.18.1720193841693; 
+ Fri, 05 Jul 2024 08:37:21 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58f9893a747sm972496a12.19.2024.07.05.08.37.12
+ a640c23a62f3a-a752cb50dc7sm417579466b.101.2024.07.05.08.37.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 08:37:14 -0700 (PDT)
+ Fri, 05 Jul 2024 08:37:20 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4891E62142;
- Fri,  5 Jul 2024 16:30:55 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id B6DD35F92A;
+ Fri,  5 Jul 2024 16:30:54 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 24/40] plugins/lockstep: make mixed-mode safe
-Date: Fri,  5 Jul 2024 16:30:36 +0100
-Message-Id: <20240705153052.1219696-25-alex.bennee@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PULL 18/40] tests/tcg/arm: Use vmrs/vmsr instead of mcr/mrc
+Date: Fri,  5 Jul 2024 16:30:30 +0100
+Message-Id: <20240705153052.1219696-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,36 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ExecState is shared across the socket and if we want to compare
-say 64 bit and 32 bit binaries we need the two to use the same sizes
-for things.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Clang 14 generates
+
+/home/rth/qemu/src/tests/tcg/arm/fcvt.c:431:9: error: invalid operand for instruction
+    asm("mrc p10, 7, r1, cr1, cr0, 0\n\t"
+        ^
+<inline asm>:1:6: note: instantiated into assembly here
+        mrc p10, 7, r1, cr1, cr0, 0
+            ^
+/home/rth/qemu/src/tests/tcg/arm/fcvt.c:432:32: error: invalid operand for instruction
+        "orr r1, r1, %[flags]\n\t"
+                               ^
+<inline asm>:3:6: note: instantiated into assembly here
+        mcr p10, 7, r1, cr1, cr0, 0
+            ^
+
+This is perhaps a clang bug, but using the neon mnemonic is clearer.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240630190050.160642-14-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-25-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-19-alex.bennee@linaro.org>
 
-diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
-index 67a779ee9d..8b90b37f67 100644
---- a/contrib/plugins/lockstep.c
-+++ b/contrib/plugins/lockstep.c
-@@ -57,7 +57,7 @@ typedef struct {
- /* The execution state we compare */
- typedef struct {
-     uint64_t pc;
--    unsigned long insn_count;
-+    uint64_t insn_count;
- } ExecState;
+diff --git a/tests/tcg/arm/fcvt.c b/tests/tcg/arm/fcvt.c
+index d8c61cd29f..ecebbb0247 100644
+--- a/tests/tcg/arm/fcvt.c
++++ b/tests/tcg/arm/fcvt.c
+@@ -427,10 +427,9 @@ int main(int argc, char *argv[argc])
  
- typedef struct {
-@@ -148,7 +148,7 @@ static void report_divergance(ExecState *us, ExecState *them)
- 
-         g_string_printf(out,
-                         "Δ insn_count @ 0x%016" PRIx64
--                        " (%ld) vs 0x%016" PRIx64 " (%ld)\n",
-+                        " (%"PRId64") vs 0x%016" PRIx64 " (%"PRId64")\n",
-                         us->pc, us->insn_count, them->pc, them->insn_count);
- 
-         for (entry = log, i = 0;
+     /* And now with ARM alternative FP16 */
+ #if defined(__arm__)
+-    /* See glibc sysdeps/arm/fpu_control.h */
+-    asm("mrc p10, 7, r1, cr1, cr0, 0\n\t"
++    asm("vmrs r1, fpscr\n\t"
+         "orr r1, r1, %[flags]\n\t"
+-        "mcr p10, 7, r1, cr1, cr0, 0\n\t"
++        "vmsr fpscr, r1"
+         : /* no output */ : [flags] "n" (1 << 26) : "r1" );
+ #else
+     asm("mrs x1, fpcr\n\t"
 -- 
 2.39.2
 
