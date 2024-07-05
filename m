@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71AC6C3271E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:53:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1260C41513
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 16:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPlEw-0008In-Nv; Fri, 05 Jul 2024 11:52:50 -0400
+	id 1sPltK-0008V7-GN; Fri, 05 Jul 2024 12:34:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sPlEv-0008HP-O5
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:52:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1sPlEu-0001Oa-3T
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:52:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720194767;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NMrfNHlzkjcsTNOD+0GHdJcY1TJNRx/RCDWS3xygGVI=;
- b=LZ+ZWQ5qASbwKBfODLMz1K9evy+oC4wshysurcrgCCcxVfap+NF5VHxOzWOZjjqCjtOOd4
- 9on0CsgIajkwZtF7yd1vJeDuymY6ZozOHtL/dZKf+crFEtQAmyEBXMcDwZQPNG2WbIbfG4
- 4bNY4nkm09QLj3vIwDYS95dbylja62s=
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
- [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-L8tvGOD6PEuGl7j_4U7hAA-1; Fri, 05 Jul 2024 11:52:45 -0400
-X-MC-Unique: L8tvGOD6PEuGl7j_4U7hAA-1
-Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-2c9015b0910so2342093a91.1
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:52:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sPltI-0008OL-87
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 12:34:32 -0400
+Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sPltG-0002gW-PV
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 12:34:31 -0400
+Received: by mail-il1-x12a.google.com with SMTP id
+ e9e14a558f8ab-3839d74a2abso6103245ab.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 09:34:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720197269; x=1720802069; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=03aL4emIefcjYIg0HnF+4eNDMqJB4FbEPJCILYtwM6k=;
+ b=fY/sEdJLKQktebn3We3nnx7qzxvi7iR2ufnu8zHABLnVz1y0I8V/F+BN5cn0g+/uSa
+ 69KlCkKuB7Uew9yDPmVGUVb9Yorc/NrqBn28YKKh+zN17IV8+1Zdpt0VqeP1ezaT1Cy/
+ AwT6lbwib5F5id5k9OErPjHmfSdbup0eMpXbq9ugDxe1mQlIj0oFn6ubHXnvyjbKO2BJ
+ HD7yY3Ins1zE6r0WdODCklQgwqn6j9DkCWtof7EmM6RnsS4Qs/d791lOayAHCFUr9daa
+ EqiF2Se8MwYw3S1KQ6cLqgTT2z5iUUvcwl13VpPlD1zLs1xuokz2rXHbmO3ZW/L/5qZU
+ ik/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720194764; x=1720799564;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NMrfNHlzkjcsTNOD+0GHdJcY1TJNRx/RCDWS3xygGVI=;
- b=dOTs3eJtK5gwEZjDXZfTMDbSWwRCNvYaEvupJ5WsfjKusFT8BlWm/zzpxij4nXwmlC
- odi6ajMn5bLXrss/hIa/wBdK/vUfajgQ9kkr7i2uwZGhMn4vi4xJDdp62mQaym5U/CV9
- j55Mmvbjl0jdDFUSOR1uXy95LgWA3PP6RadiYRA24hENWdfMc8gOcMGSB4/g7OSLSn7W
- TcC7rG44CgH/dO+7vVXDHzVxxDnnLD55UNkdadeZRdXj0vxTCUZJ50BjUxjxtbSZyhbz
- zq60jHbx8w2cfYeUiPD3GImDM6rAdmNwVmUV8aQWbFQl+Wx1H4V10KCtBjOMmuTAUspr
- cdsw==
-X-Gm-Message-State: AOJu0Yzf6wBAr3TzTbm0cC1uWtLgPouo45aFF3eXF8mH/iFnH8vJAf2J
- oEnHWBOOail7oplMe5tsduQcMvuJpugJ4VO/F2Ha0j767vh0J5RM6yYHrzkziGXPfDQuT7hujEs
- 4gWSNjhwQhcCDGRwJ9YIVrSAf6ebvMXDmiT50j4EqYUjMy5VrV2gIXU7zUTOZAKue8GZ1bEHqZH
- J4AemiSe1YqOU6h4odhjrCAgHf59NkdME+GDc=
-X-Received: by 2002:a17:90a:1197:b0:2c8:5055:e24f with SMTP id
- 98e67ed59e1d1-2c99f2fd2c8mr6706180a91.2.1720194763787; 
- Fri, 05 Jul 2024 08:52:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEPaOutwkwV8rmV80gOnHvNtV8c1L40XTt2OzNuyD0VL0zktASDlpuTeEemH0SWvKMbjkiEp2plShTiFCgvrT8=
-X-Received: by 2002:a17:90a:1197:b0:2c8:5055:e24f with SMTP id
- 98e67ed59e1d1-2c99f2fd2c8mr6706149a91.2.1720194763143; Fri, 05 Jul 2024
- 08:52:43 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720197269; x=1720802069;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=03aL4emIefcjYIg0HnF+4eNDMqJB4FbEPJCILYtwM6k=;
+ b=tne+zOK+hnrXhqrX3D0p4WAoZNxLTU6NqPyj2P7NWuAF9PLWbAxWoLdBexjexgCywQ
+ D1FccHMYpTaYVzcqAc8xd1a8H7671ozNnBW4bXzDqFVMiPCIwoTdhv/4T3aOD/TSO9j9
+ kTu8AcQgWoYgEj+0x2ELlgqVfoI6IkfFl7xi9msfZrMZ3Dr67swclI+RIz8hQtEJvr7p
+ 19C0GQw1ZlG2MD8spmnRGBmcTyNmDPervOtbzKYzW44/0OO/KsD+cKQfXUfgXZX6RGlF
+ jpbSZ7xwECuV0HcE8QKpmfiJtGDbQOqQQW29/4euOBOw4FIRJn98Tsh4bCe2uxXtf5Lr
+ kEMQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXFZb+2+NlVoDaJZFt3eprG2pE+8MEUNvPRYkidgETq6vcqSpQExR44tnXAc3Tkbuf9ZCqRLK1hT4buMzN9yzXi6N3xFV0=
+X-Gm-Message-State: AOJu0Yw6I5B0oCSPU5waB0dSJdYX7XbbuWyCytPPQag+BG9OfaDrO0yT
+ vEn0iQopJHguk3pxLO5p40HwzibfzW0+DgXOmRb5V6212kd6asB6kXrlm5I1Fxk=
+X-Google-Smtp-Source: AGHT+IG7oxeE6wEa24tLg+K6GXPrJ3DSBNGxYLGs5/2m0Nu+kpVNSg48FgkDgDVLnETQMDzyhaY2qg==
+X-Received: by 2002:a05:6e02:1fea:b0:375:a205:86a6 with SMTP id
+ e9e14a558f8ab-38398ced11fmr52971195ab.17.1720197269189; 
+ Fri, 05 Jul 2024 09:34:29 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-72c6afb9042sm11494733a12.41.2024.07.05.09.34.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Jul 2024 09:34:28 -0700 (PDT)
+Message-ID: <e8613098-74e2-4c14-9f47-24cc7a6b0b62@linaro.org>
+Date: Fri, 5 Jul 2024 09:34:26 -0700
 MIME-Version: 1.0
-References: <20240626232230.408004-1-jsnow@redhat.com>
-In-Reply-To: <20240626232230.408004-1-jsnow@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 5 Jul 2024 11:52:30 -0400
-Message-ID: <CAFn=p-ZF1mZC1rbHXe5rX-PMpKSOk+=Lg563aApKVUQwrQ6cwA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Python: Add 3.13 support, play linter whackamole
-To: qemu-devel <qemu-devel@nongnu.org>
-Cc: Qemu-block <qemu-block@nongnu.org>, Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Beraldo Leal <bleal@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000cd5963061c820d0d"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/7] plugins: save value during memory accesses
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240705003421.750895-1-pierrick.bouvier@linaro.org>
+ <20240705003421.750895-3-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240705003421.750895-3-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-il1-x12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,90 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000cd5963061c820d0d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 7/4/24 17:34, Pierrick Bouvier wrote:
+> +static void
+> +plugin_gen_mem_callbacks_i32(TCGv_i32 val,
+> +                             TCGv_i64 copy_addr, TCGTemp *orig_addr,
+> +                             MemOpIdx oi, enum qemu_plugin_mem_rw rw)
+> +{
+> +#ifdef CONFIG_PLUGIN
+> +    if (tcg_ctx->plugin_insn != NULL) {
+> +        tcg_gen_st_i32(val, tcg_env,
+> +                       offsetof(CPUState, neg.plugin_mem_value_low) -
+> +                       sizeof(CPUState));
+> +        plugin_gen_mem_callbacks(copy_addr, orig_addr, oi, rw);
+> +    }
+> +#endif
+> +}
 
-On Wed, Jun 26, 2024, 7:22=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
+You need the big-endian offset for the low half of the uint64_t:
 
-> Fix some regressions in check-python-tox that have crept in since Pylint
-> 3.x, and add Python 3.13 support to the pipeline.
->
-> GitLab pipeline (before I fixed the missing DCO, but let's be honest, it
-> can't possibly be worth re-running so many tests for just that):
->   https://gitlab.com/jsnow/qemu/-/pipelines/1349737188
->
-> John Snow (4):
->   python: linter changes for pylint 3.x
->   python: Do not use pylint 3.2.4 with python 3.8
->   iotests: Change imports for Python 3.13
->   python: enable testing for 3.13
->
->  python/qemu/machine/machine.py         | 1 +
->  python/qemu/utils/qemu_ga_client.py    | 2 +-
->  python/setup.cfg                       | 4 +++-
->  tests/docker/dockerfiles/python.docker | 1 +
->  tests/qemu-iotests/testenv.py          | 7 ++++++-
->  tests/qemu-iotests/testrunner.py       | 9 ++++++---
->  6 files changed, 18 insertions(+), 6 deletions(-)
->
-> --
-> 2.45.0
->
+   HOST_BIG_ENDIAN * 4.
 
-Staging under my Python branch, since I need to get tests green to roll
-forward with some more substantial changes.
 
---js
-
->
-
---000000000000cd5963061c820d0d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Wed, Jun 26, 2024, 7:22=E2=80=AFPM John Snow &lt;<a=
- href=3D"mailto:jsnow@redhat.com">jsnow@redhat.com</a>&gt; wrote:<br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
-x #ccc solid;padding-left:1ex">Fix some regressions in check-python-tox tha=
-t have crept in since Pylint<br>
-3.x, and add Python 3.13 support to the pipeline.<br>
-<br>
-GitLab pipeline (before I fixed the missing DCO, but let&#39;s be honest, i=
-t<br>
-can&#39;t possibly be worth re-running so many tests for just that):<br>
-=C2=A0 <a href=3D"https://gitlab.com/jsnow/qemu/-/pipelines/1349737188" rel=
-=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/jsnow/qemu/=
--/pipelines/1349737188</a><br>
-<br>
-John Snow (4):<br>
-=C2=A0 python: linter changes for pylint 3.x<br>
-=C2=A0 python: Do not use pylint 3.2.4 with python 3.8<br>
-=C2=A0 iotests: Change imports for Python 3.13<br>
-=C2=A0 python: enable testing for 3.13<br>
-<br>
-=C2=A0python/qemu/machine/machine.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 1 +=
-<br>
-=C2=A0python/qemu/utils/qemu_ga_client.py=C2=A0 =C2=A0 | 2 +-<br>
-=C2=A0python/setup.cfg=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 4 +++-<br>
-=C2=A0tests/docker/dockerfiles/python.docker | 1 +<br>
-=C2=A0tests/qemu-iotests/testenv.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 7 +=
-+++++-<br>
-=C2=A0tests/qemu-iotests/testrunner.py=C2=A0 =C2=A0 =C2=A0 =C2=A0| 9 ++++++=
----<br>
-=C2=A06 files changed, 18 insertions(+), 6 deletions(-)<br>
-<br>
--- <br>
-2.45.0<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"=
-auto">Staging under my Python branch, since I need to get tests green to ro=
-ll forward with some more substantial changes.</div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto">--js</div><div dir=3D"auto"><div class=3D"gmail_quot=
-e"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left=
-:1px #ccc solid;padding-left:1ex">
-</blockquote></div></div></div>
-
---000000000000cd5963061c820d0d--
-
+r~
 
