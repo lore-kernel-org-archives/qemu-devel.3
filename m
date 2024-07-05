@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBAE0C3DA41
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:35:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B661BC38150
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:35:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPku5-0005lT-MW; Fri, 05 Jul 2024 11:31:17 -0400
+	id 1sPku5-0005lZ-SM; Fri, 05 Jul 2024 11:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPku4-0005kK-7l
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:16 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1sPku3-0005j4-SV
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:15 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPkty-0000Rs-9X
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:15 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a77b550128dso227621066b.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:31:08 -0700 (PDT)
+ id 1sPktw-0000RQ-V1
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:14 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a77cbb5e987so99699866b.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193467; x=1720798267; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193466; x=1720798266; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QehyRM+GTwCmdsI3rONPQxQARmvRAp8NK6kIeDY+sDQ=;
- b=Ool1+wKjSguZSqZldgEQlGRknT9iUHGJIr9DzxKRCyOvQu2YyaU9P6civf5AAgRhbO
- 9O3X7zMVp3/vxrAaFPr32hGOdtcoHmUBcjV9986AeEmZvLXXQH6h+suRoH+iQb8Sl4/Y
- vb5glPgzN1dUL5X/ZBerrEx44FLaWwLfskiescsa2i3i8m1s5Xk4ZUImTrbjhlpEZhaA
- nifeFyG7U0vEPX0IWxwEfTIgWPogYJSwmGXgrSxW66ADhwHdwte4nrfd5KQY+z+r53zK
- PXmcXX5hUOWV/xReLhCm3LYckpjvmIVMDlVgBoCApZnAQa6AR7UHmXMWU/I/FG8XDFE0
- HJTw==
+ bh=mpfNv2j1tI1/v38krNO8PFDL7fPSKpwptFmGNLBYEoE=;
+ b=ej3zdBcfzH/zSAxOhJFma/V29bxTzJiF/+09GrVFfD8bouleA/YCPAgg+YSOtq1obR
+ ubIInOeDnoEtXdc5fad11x6OpCRVYwpdfJup2HMoffLISncwZ7yScM92vbTcyZ3nWDL6
+ PPnLZbRjOjUttXy61hBPCp4zTA+EjLujNqM1C8taMGJ3cKmIndHh6472AlRRIK6J6nX5
+ EiQKZgiS4pGHaqdtCMbiU3Gs4RXLfHBdJXtANm1vXIB5G8fiMJ3Eam+wXAioU3KAwmuo
+ n3kDstTcvdxTz8+t/YfdCTD5D0+J/2Ycx52V5X7eLBIj7MbMY+jCfVykISS4ql/WhSCh
+ 8WpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193467; x=1720798267;
+ d=1e100.net; s=20230601; t=1720193466; x=1720798266;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QehyRM+GTwCmdsI3rONPQxQARmvRAp8NK6kIeDY+sDQ=;
- b=Xs/IC3wp9NzzlmnG+dnGe0N8dsP0vFCVIlv+9MbITDNdvG3rwZcF8unnQ5DJarYDUM
- Shh0jUfk31FUMRz3XRIXVnoxZ+v5Xam0hm8jo/Z6Z6Yh2a+QTI5QbXWvxLKkiSGY8V5Z
- zmBYIOxain8I37heGCpwcGtCimLM8Z9uXStPtbllHUmcJDaUsaZdR0STDiuTq3/Nx/EB
- Use4UWuwJSWkJQW65E+uv/y8fe2nNlL26vkenzgJLB57uH0Jf9FBjZbeE4f4DuROkFE/
- 3MkV89vrzdP3b1G8jnzPjC7N1mqJQs66POriArWwp6S0RHXmdUBKYdKYE/UIfZPPYRsV
- 3ztA==
-X-Gm-Message-State: AOJu0YyNfD60jm3vtGCiTjA99Qma9u8XP1wAo9nunsh9DXu5dESPzsT9
- B/8U8EzC/RtWsPrhXDsQWG4qmDcOcS7FAJ5sHB0B2I8yLK/huHPMO/G+0Gs+TRQ=
-X-Google-Smtp-Source: AGHT+IGcck61umbUMgfe961N6IIg4yjJj2DtEGXEMLtQ9OLREDmuWyEpzZEwcIQC+YSes7UQ3S+c2A==
-X-Received: by 2002:a17:906:4794:b0:a75:3cd2:aaab with SMTP id
- a640c23a62f3a-a77ba455290mr397533666b.3.1720193467111; 
- Fri, 05 Jul 2024 08:31:07 -0700 (PDT)
+ bh=mpfNv2j1tI1/v38krNO8PFDL7fPSKpwptFmGNLBYEoE=;
+ b=iRku91COMWJSRzWbZkbRIdYtbyADy1jzY/JuJgPSbQwLegJhC5tQE4kETVKDJcFCSF
+ NOIVPw4H0VoooIUnUf4qz2HCBFVwJxn9ilA/NFI4zPneOkM5wLm4MUoI+GNHL94ANTEq
+ exwKtc6LW3mJeW+e9tgoh4td8QHwloX0zj7/p7/IrZCVdik+HylbQnXEZCHtVFGUyR85
+ msQTM27tdcuIAf7WUXWFYukxCeeg2jJmh0YJFKscd0WcyjwRF1fdm/SYcmawe0HOspfE
+ 2wnuZeF4ZKehR1dBn3Lsix7kQpNFKYOTvP16MCxErqnsJhXRV7PXZo3VGwKFWI8Aj/Gz
+ lniw==
+X-Gm-Message-State: AOJu0YzPc5+CztL4/gPzg1BPalZupy0flXz8Y6HBhizxE599uOd6DyLU
+ /RvIwAW3gHUsVoRwd1XO3fxbzrKIoh5IbZx3/49/q5Le2V96XeDvlDYJNeWTBjo=
+X-Google-Smtp-Source: AGHT+IFktobtFQF7pXq8M8MB/zRklhx6L1bZLUudQVSQNGTyOtiiGg+8aBxphxOzxduoqOoXb3IEdA==
+X-Received: by 2002:a17:906:494e:b0:a77:cf09:9c70 with SMTP id
+ a640c23a62f3a-a77cf099d0emr113404666b.43.1720193466149; 
+ Fri, 05 Jul 2024 08:31:06 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77da27c044sm33109966b.157.2024.07.05.08.31.03
+ a640c23a62f3a-a77d965dc4asm37881266b.87.2024.07.05.08.30.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 05 Jul 2024 08:31:04 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8C6CB62177;
- Fri,  5 Jul 2024 16:30:56 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A26546211C;
+ Fri,  5 Jul 2024 16:30:54 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 37/40] gdbstub: Pass CPU context to command handler
-Date: Fri,  5 Jul 2024 16:30:49 +0100
-Message-Id: <20240705153052.1219696-38-alex.bennee@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PULL 17/40] tests/tcg/arm: Use -march and -mfpu for fcvt
+Date: Fri,  5 Jul 2024 16:30:29 +0100
+Message-Id: <20240705153052.1219696-18-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,64 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Allow passing the current CPU context to command handlers via user_ctx
-when the handler requires it.
+Clang requires the architecture to be set properly
+in order to assemble the half-precision instructions.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-Id: <20240628050850.536447-9-gustavo.romero@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240630190050.160642-13-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-38-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-18-alex.bennee@linaro.org>
 
-diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-index e51f276b40..f3058f9dda 100644
---- a/include/gdbstub/commands.h
-+++ b/include/gdbstub/commands.h
-@@ -54,6 +54,8 @@ typedef union GdbCmdVariant {
-  * "stop reply" packet. The list of commands that accept such response is
-  * defined at the GDB Remote Serial Protocol documentation. See:
-  * https://sourceware.org/gdb/onlinedocs/gdb/Stop-Reply-Packets.html#Stop-Reply-Packets.
-+ *
-+ * @need_cpu_context: Pass current CPU context to command handler via user_ctx.
-  */
- typedef struct GdbCmdParseEntry {
-     GdbCmdHandler handler;
-@@ -61,6 +63,7 @@ typedef struct GdbCmdParseEntry {
-     bool cmd_startswith;
-     const char *schema;
-     bool allow_stop_reply;
-+    bool need_cpu_context;
- } GdbCmdParseEntry;
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 95f891bf8c..8e287191af 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -29,8 +29,8 @@ test-arm-iwmmxt: test-arm-iwmmxt.S
  
- /**
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index b1ca253f97..5c1612ed2a 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -938,6 +938,7 @@ static bool process_string_cmd(const char *data,
- 
-     for (i = 0; i < num_cmds; i++) {
-         const GdbCmdParseEntry *cmd = &cmds[i];
-+        void *user_ctx = NULL;
-         g_assert(cmd->handler && cmd->cmd);
- 
-         if ((cmd->cmd_startswith && !startswith(data, cmd->cmd)) ||
-@@ -952,8 +953,12 @@ static bool process_string_cmd(const char *data,
-             }
-         }
- 
-+        if (cmd->need_cpu_context) {
-+            user_ctx = (void *)gdbserver_state.g_cpu;
-+        }
-+
-         gdbserver_state.allow_stop_reply = cmd->allow_stop_reply;
--        cmd->handler(params, NULL);
-+        cmd->handler(params, user_ctx);
-         return true;
-     }
- 
+ # Float-convert Tests
+ ARM_TESTS += fcvt
+-fcvt: LDFLAGS+=-lm
+-# fcvt: CFLAGS+=-march=armv8.2-a+fp16 -mfpu=neon-fp-armv8
++fcvt: LDFLAGS += -lm
++fcvt: CFLAGS += -march=armv8.2-a+fp16 -mfpu=neon-fp-armv8
+ run-fcvt: fcvt
+ 	$(call run-test,fcvt,$(QEMU) $<)
+ 	$(call diff-out,fcvt,$(ARM_SRC)/fcvt.ref)
 -- 
 2.39.2
 
