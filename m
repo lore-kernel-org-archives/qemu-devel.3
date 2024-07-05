@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B8FC30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 09:43:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D343AC3271F
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 09:50:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPfSq-0000SE-C7; Fri, 05 Jul 2024 05:42:48 -0400
+	id 1sPfZU-0002Xz-Kj; Fri, 05 Jul 2024 05:49:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPfSo-0000Rw-Mk
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 05:42:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPfSm-0001R1-MN
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 05:42:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720172562;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8DDl39HI1d7txN/C1d+aLYYWuSgAVvXKgr1RPKhrYn4=;
- b=gDh/Ia0p2LFYuO3pIdCBIRL60Y8qhSXoOfJ4FY7kokak4xrCygOBppGGMvgv9GSEpPalZ6
- cMSomDK8qA5EQftPR6NyJVbnfXXJg/pPyH0WvGyCklgR1zfzvrm7gcTlMceV/9d+T1xTi2
- 6gRVya0X1bCkZ03ghegxrDYY1RPKkmo=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-vbgkPcWDNVSyKL7naDfpkg-1; Fri, 05 Jul 2024 05:42:39 -0400
-X-MC-Unique: vbgkPcWDNVSyKL7naDfpkg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4265b751469so20015e9.1
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 02:42:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sPfZT-0002Xn-8V
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 05:49:39 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sPfZR-0002hS-GZ
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 05:49:39 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52e97e5a84bso2080648e87.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 02:49:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720172975; x=1720777775; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SA5fqbbIKfYnNVXC6O8TAip/fhhb8m+yZ0iiLyhENgE=;
+ b=utsWzrAuwUvMLyFXJCRGRazRUjLcXfrXlQa3x/Eb9afGgCSAYskNMwOVhHC8+/8fV+
+ HmAQNdJgm5pTyNdZRFzLaCFA6kqN76lGd1ykwl1N0SbZ+9NuB98MNWBtiB/Q21DdLF7e
+ m8Gc1Mn2ni097LG0cWFPzJ8uPZLBIJfFYqky1nSfRHh161aJ7jOQCYyh7lOPlMMinnsG
+ DVFGVu3SoVlA8NfM4DW6pr7rAS2JEfjvl4Mnh5dmyX5gqjRQSLLm6GqI+iF2DvMwBOVB
+ frMwss7trDMsCDokt7x2WG19HMdf63VpqeVkOL6Mg84IHb7ZvhvOPpg3/tddv1NQaW8Z
+ dbAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720172558; x=1720777358;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8DDl39HI1d7txN/C1d+aLYYWuSgAVvXKgr1RPKhrYn4=;
- b=QFOHMnmpvpe6/McC9T5G9jcjM6WrdB9YO5BuF94D5/37WyNuZBlpvuBcDwLQ9ZAX2Y
- pOspOwPzmsk3FgdaabWSEcu1JBIRZHp9VnurFUtqWu9JlG/kkd5SxSzyJ1ZMQFS4tgOI
- oTyjhTorI/DMJcHQlWYSF9DSpqLzVPySBJgJkWmcy0JvGtREdUm3e9MQJb7QeX4yWhrl
- f2+UCke/TL6ac0y5NT4Rq8WC2sHeVMQemoSgek8t7e2l+pmoqEgKwEh3DO7HjS/eGN5O
- uFO9wu/t3ajWq/tHp+ArX6g926Gqve9EAX7Vkb4MLBOyPE4u3HqE/rnu9Usk3F0lRo5I
- p18g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVh91e4DaXGEeDFg1TC3zMi1eVb+Xjlm8D4DL/ffyTruBp5bIs00LPtb2smJ6ZsKHkEAcat4dhWDpjCALnnHtFdlMau8ZE=
-X-Gm-Message-State: AOJu0YwkJYZtAtlaiYgGIQR2dV1tm06yrT6NDcb6alZEHAfi602H8o0V
- wrNtxlOFxpzm3ScpXeAqEMLn6EXHlk4l4MhoE7j3s4Cge6vDLNy4mpAkBspQhAQASqG043fyxAn
- 4lrAn5n1X6cEDucPeSpBkVUfiIpT2TfuENiZ+bU2xxZGCSLph91XT
-X-Received: by 2002:a05:600c:3b99:b0:421:b65d:2235 with SMTP id
- 5b1f17b1804b1-4264b004191mr34240125e9.0.1720172558254; 
- Fri, 05 Jul 2024 02:42:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7Hr/GOoi0MgtU3Gh+umMU5DKDmGgDDbrzAxy7FQpCT2sQEnBYVRhAMQB9uTUdSthd9q7tDg==
-X-Received: by 2002:a05:600c:3b99:b0:421:b65d:2235 with SMTP id
- 5b1f17b1804b1-4264b004191mr34239825e9.0.1720172557511; 
- Fri, 05 Jul 2024 02:42:37 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f0:a185:2de6:83fc:7632:9788])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a1f23c1sm54469005e9.28.2024.07.05.02.42.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 02:42:36 -0700 (PDT)
-Date: Fri, 5 Jul 2024 05:42:25 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "peterx@redhat.com" <peterx@redhat.com>
-Subject: Re: [PATCH v3 3/3] intel_iommu: make types match
-Message-ID: <20240705054156-mutt-send-email-mst@kernel.org>
-References: <20240705050213.1492515-1-clement.mathieu--drif@eviden.com>
- <20240705050213.1492515-4-clement.mathieu--drif@eviden.com>
- <SJ0PR11MB6744DDE438D094FEB4F8A29392DF2@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <d637bd99-11cb-4bbc-a8c4-06fae21b6c88@eviden.com>
+ d=1e100.net; s=20230601; t=1720172975; x=1720777775;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SA5fqbbIKfYnNVXC6O8TAip/fhhb8m+yZ0iiLyhENgE=;
+ b=lFdf3x1KFG1UaGfx3FhaIxdwt6Kbw9KVn+D1hNbaiXq/vTPqlJqftlLaQAGpOZMxDy
+ xYHGv8AUKj86MUAhCJ8n9K1nHh6Dwa0r53/QzKyQIENrrz7tBWQvWS0GZ+jMkF4C9tZD
+ MUOQCib/9+M+QBZK2zmDwawHVpUe+n3uqZxnuPLTFhc8QDkKum6LQI0mB8aAkvye16M3
+ ytSGSrLWoL7lVDq2evq6Vjr/bU+xHr9A/ZdlDGwDdfwtXVHd0TQHdKBjbSQS+tOmMgpq
+ PD+ikdUjbZqEK1eAfR3Fk5SzBbrRZty6f6T1DQ/vRkkUBlhsVx+ilsmx92wCjqb2ezrr
+ WGdA==
+X-Gm-Message-State: AOJu0YzB89wtXWVRa/Bu/OqF4ieFZlTF8Ho13t52CZWC1aIR1GsL1nVs
+ csNe+X7cKT2mTrnwzStIRiy0hD+fsIyg71/hjV5vL0yz/CXjRvvHPh9ROXrLMOM5GwfZ3uwIxO8
+ YhsYM0x8Wcejps1gi9KK56//Vz4FF8k9kC0V9Pg==
+X-Google-Smtp-Source: AGHT+IEVgkphEPZLVcvXk/FhDhmGKva9+16mUH7TFZa7IkicGO9tBYsN+zesRnWhkXT86MzgG9woZhiXlXUXe1a6YxU=
+X-Received: by 2002:a05:6512:15e:b0:52c:76ac:329b with SMTP id
+ 2adb3069b0e04-52ea0632400mr3357568e87.35.1720172975271; Fri, 05 Jul 2024
+ 02:49:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d637bd99-11cb-4bbc-a8c4-06fae21b6c88@eviden.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20240705084047.857176-1-alex.bennee@linaro.org>
+ <20240705084047.857176-5-alex.bennee@linaro.org>
+In-Reply-To: <20240705084047.857176-5-alex.bennee@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Fri, 5 Jul 2024 12:49:19 +0300
+Message-ID: <CAAjaMXZVbuKO=f8DUYc-ogVEtBer+U5Ms3vUPYAfFuJzDNiXiQ@mail.gmail.com>
+Subject: Re: [PATCH v2 04/40] hw/core: ensure kernel_end never gets used
+ undefined
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>, 
+ Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ Thomas Huth <thuth@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Mads Ynddal <mads@ynddal.dk>,
+ Yanan Wang <wangyanan55@huawei.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Peter Xu <peterx@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paul Burton <paulburton@kernel.org>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Laurent Vivier <laurent@vivier.eu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,51 +105,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 05, 2024 at 09:24:50AM +0000, CLEMENT MATHIEU--DRIF wrote:
-> 
-> 
-> On 05/07/2024 10:51, Duan, Zhenzhong wrote:
-> > Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
-> >
-> >
-> >> -----Original Message-----
-> >> From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-> >> Subject: [PATCH v3 3/3] intel_iommu: make types match
-> >>
-> >> From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> >>
-> >> The 'level' field in vtd_iotlb_key is an unsigned integer.
-> >> We don't need to store level as an int in vtd_lookup_iotlb.
-> >>
-> >> Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> >> ---
-> >> hw/i386/intel_iommu.c | 2 +-
-> >> 1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> >> index 37c21a0aec..be0cb39b5c 100644
-> >> --- a/hw/i386/intel_iommu.c
-> >> +++ b/hw/i386/intel_iommu.c
-> >> @@ -358,7 +358,7 @@ static VTDIOTLBEntry
-> >> *vtd_lookup_iotlb(IntelIOMMUState *s, uint16_t source_id,
-> >> {
-> >>      struct vtd_iotlb_key key;
-> >>      VTDIOTLBEntry *entry;
-> >> -    int level;
-> >> +    unsigned level;
-> > Will it bring any issue if int is used?
-> It shouldn't, but it might trigger static analyzer warnings.
-> Do you want me to drop the patch?
+On Fri, 5 Jul 2024 at 11:41, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Really the problem here is the return values of fit_load_[kernel|fdt]() a=
+re a
+> little all over the place. However we don't want to somehow get
+> through not having set kernel_end and having it just be random unused
+> data.
+>
+> The compiler complained on an --enable-gcov build:
+>
+>   In file included from ../../hw/core/loader-fit.c:20:
+>   /home/alex/lsrc/qemu.git/include/qemu/osdep.h: In function =E2=80=98loa=
+d_fit=E2=80=99:
+>   /home/alex/lsrc/qemu.git/include/qemu/osdep.h:486:45: error: =E2=80=98k=
+ernel_end=E2=80=99 may be used uninitialized [-Werror=3Dmaybe-uninitialized=
+]
+>     486 | #define ROUND_UP(n, d) ROUND_DOWN((n) + (d) - 1, (d))
+>         |                                             ^
+>   ../../hw/core/loader-fit.c:270:12: note: =E2=80=98kernel_end=E2=80=99 w=
+as declared here
+>     270 |     hwaddr kernel_end;
+>         |            ^~~~~~~~~~
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> ---
+>  hw/core/loader-fit.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/hw/core/loader-fit.c b/hw/core/loader-fit.c
+> index 9f20007dbb..7ccc9d5fbc 100644
+> --- a/hw/core/loader-fit.c
+> +++ b/hw/core/loader-fit.c
+> @@ -267,7 +267,7 @@ int load_fit(const struct fit_loader *ldr, const char=
+ *filename, void *opaque)
+>      const char *def_cfg_name;
+>      char path[FIT_LOADER_MAX_PATH];
+>      int itb_size, configs, cfg_off, off;
+> -    hwaddr kernel_end;
+> +    hwaddr kernel_end =3D 0;
+>      int ret;
+>
+>      itb =3D load_device_tree(filename, &itb_size);
+> --
+> 2.39.2
+>
 
-
-just write a better commit log.
-"Not an issue by itself, but using unsigned here seems cleaner".
-
-
-> >
-> >>      for (level = VTD_SL_PT_LEVEL; level < VTD_SL_PML4_LEVEL; level++) {
-> >>          key.gfn = vtd_get_iotlb_gfn(addr, level);
-> >> --
-> >> 2.45.2
-
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
