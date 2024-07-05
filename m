@@ -4,60 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3961DC30653
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 00:40:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ACA6C30653
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 00:43:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPWzG-00019R-Lp; Thu, 04 Jul 2024 20:39:42 -0400
+	id 1sPX29-00024T-Vo; Thu, 04 Jul 2024 20:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sPWzD-00017U-Bj; Thu, 04 Jul 2024 20:39:40 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sPWzA-0004iX-QI; Thu, 04 Jul 2024 20:39:39 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3CEA74E6004;
- Fri, 05 Jul 2024 02:39:35 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id VkQkitHiwck1; Fri,  5 Jul 2024 02:39:33 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3B73E4E6001; Fri, 05 Jul 2024 02:39:33 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 364EB746E3B;
- Fri, 05 Jul 2024 02:39:33 +0200 (CEST)
-Date: Fri, 5 Jul 2024 02:39:33 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-ppc@nongnu.org, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Huacai Chen <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 2/3] hw/isa/vt82c686: Resolve intermediate IRQ
- forwarder
-In-Reply-To: <6ec5354e-1a1e-93a1-956c-1d0b5e0e5024@eik.bme.hu>
-Message-ID: <6f0dbc98-9063-a578-c45f-bec80de644f2@eik.bme.hu>
-References: <20240704205854.18537-1-shentey@gmail.com>
- <20240704205854.18537-3-shentey@gmail.com>
- <6ec5354e-1a1e-93a1-956c-1d0b5e0e5024@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sPX28-00023L-4n
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 20:42:40 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sPX26-0006gS-8T
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 20:42:39 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1fa9f540f45so6613735ad.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 17:42:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720140156; x=1720744956; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QcWRUXboWQGErs9Vw8rcF2NNyPNQW1LJklcHVieAbjs=;
+ b=eiYo39rpNAA7nnDKfbq4JLGCM3fOc6sLAw31iO9IBjFGmkTtZXnmVVtlZVYa8Z1gsA
+ t0UlpKCu1S/s5nWbO8cgn4A5j74PiKALzNxXArpC6tJz8yAa/ndIHzVDz0aKfzDcAy0h
+ +tjpo0eIzrlJEK36HghKApNBd8LEzfxuDU5cLXB2no6tBAToRLd8i2wWBOxPUbTR2fHv
+ cTUfHFf7tMl+POoP4VuHa3kB/AkqNgzu4IWSTiFwy/MqXrRsObzTFevWUb/O73KJENc7
+ MOGJwiP/itO+mklKKW2mJh5bA5URLMAB4PMqgCuRWlKfq0J415Pp3Ntrs46BM/4nI63R
+ eRXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720140156; x=1720744956;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=QcWRUXboWQGErs9Vw8rcF2NNyPNQW1LJklcHVieAbjs=;
+ b=Fa4Zd0zYippm6plm22cGInqeDrabvVGbwEqS1ilqlzqlYLhfPPc3WGXlp4r4SyerjP
+ z173RSkUEv7PgAYVHe/sQvvL0YOpFlz95mNcy4WoJO8iB0ExnWSlOY4YQR3eqCqM2Wiu
+ bCewTnHGeno/KPF39M6BrsYDVrr3qSoniL2gLsel2c10UBQOOBZpNb6YPsK4Uz5ut6MD
+ rEMWP5xzHfO+BM4dcJPR1rvSpIVrdoDa3KIHKtZIzpjjsSktpJnxlmr+JQ/ScptduQ0u
+ JmKo4NDecSDzyj69iJHbzDM+86hlE0e0oLfwZRlfENH6weSuL4opNYW9KlZvZwDVoIpi
+ 7MfQ==
+X-Gm-Message-State: AOJu0YyCKP2zwKSeQlphwS/m17OcGpZj+cZQKpbe9j4m8RO/LO9fyQa6
+ AeXDSCwTlfxieV7xV6tPqhfjc3Vk4QpvwGCjB9yZJRnt4vShwKx2SeE401+GcqhIYRAi5m6uLci
+ oGO4=
+X-Google-Smtp-Source: AGHT+IEbwVMvKqlnlrqNuNZZYJ2vyjuAHWFdbP2NpN2moroK1D9myaadqGHsJOii1w/P/H+d550Zjw==
+X-Received: by 2002:a17:903:1250:b0:1fa:fb88:3a15 with SMTP id
+ d9443c01a7336-1fb33eea803mr19699945ad.42.1720140155664; 
+ Thu, 04 Jul 2024 17:42:35 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fac2f03acdsm128602405ad.302.2024.07.04.17.42.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Jul 2024 17:42:35 -0700 (PDT)
+Message-ID: <1fae0be3-b80c-427a-8999-9d420d74b9d5@linaro.org>
+Date: Thu, 4 Jul 2024 17:42:27 -0700
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1666430843-1720139973=:66834"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/7] plugins: access values during a memory read/write
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
+ <erdnaxe@crans.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20240702184448.551705-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240702184448.551705-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,161 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Posted v5.
 
---3866299591-1666430843-1720139973=:66834
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Fri, 5 Jul 2024, BALATON Zoltan wrote:
-> On Thu, 4 Jul 2024, Bernhard Beschow wrote:
->> When @cpu_intr is populated before vt82xx's realize(), it can be directly 
->> passed
->> to i8259_init(), avoiding the need for the intermediate
->> via_isa_request_i8259_irq() handler. The result is less code and runtime
->> overhead, and a fixed memory leak caused by qemu_allocate_irqs().
->> 
->> Inspired-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->> ---
->> hw/isa/vt82c686.c   | 12 ++----------
->> hw/mips/fuloong2e.c |  2 +-
->> hw/ppc/amigaone.c   |  8 ++++----
->> hw/ppc/pegasos2.c   |  4 ++--
->> 4 files changed, 9 insertions(+), 17 deletions(-)
->> 
->> diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
->> index 505b44c4e6..ca02ad4c20 100644
->> --- a/hw/isa/vt82c686.c
->> +++ b/hw/isa/vt82c686.c
->> @@ -624,6 +624,7 @@ static void via_isa_init(Object *obj)
->>     object_initialize_child(obj, "uhci2", &s->uhci[1], 
->> TYPE_VT82C686B_USB_UHCI);
->>     object_initialize_child(obj, "ac97", &s->ac97, TYPE_VIA_AC97);
->>     object_initialize_child(obj, "mc97", &s->mc97, TYPE_VIA_MC97);
->> +    qdev_init_gpio_out_named(DEVICE(obj), &s->cpu_intr, "intr", 1);
->> }
->> 
->> static const TypeInfo via_isa_info = {
->> @@ -704,24 +705,15 @@ static void via_isa_pirq(void *opaque, int pin, int 
->> level)
->>     via_isa_set_irq(opaque, pin, level);
->> }
->> 
->> -static void via_isa_request_i8259_irq(void *opaque, int irq, int level)
->> -{
->> -    ViaISAState *s = opaque;
->> -    qemu_set_irq(s->cpu_intr, level);
->> -}
->> -
->> static void via_isa_realize(PCIDevice *d, Error **errp)
->> {
->>     ViaISAState *s = VIA_ISA(d);
->>     DeviceState *dev = DEVICE(d);
->>     PCIBus *pci_bus = pci_get_bus(d);
->> -    qemu_irq *isa_irq;
->>     ISABus *isa_bus;
->>     int i;
->> 
->> -    qdev_init_gpio_out_named(dev, &s->cpu_intr, "intr", 1);
->>     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
->
-> I still don't like how this makes handling of out and in gpios different and 
-> it also prevents to create the device with pci_create_simple_multifunction() 
-> and needs tweaking before realize. I think the fix should be in i8259 and not 
-> in this device.
-
-I mean users of this device should not need changing.
-
-> Regards,
-> BALATON Zoltan
->
->> -    isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
->>     isa_bus = isa_bus_new(dev, pci_address_space(d), 
->> pci_address_space_io(d),
->>                           errp);
->> 
->> @@ -729,7 +721,7 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
->>         return;
->>     }
->> 
->> -    s->isa_irqs_in = i8259_init(isa_bus, *isa_irq);
->> +    s->isa_irqs_in = i8259_init(isa_bus, s->cpu_intr);
->>     isa_bus_register_input_irqs(isa_bus, s->isa_irqs_in);
->>     i8254_pit_init(isa_bus, 0x40, 0, NULL);
->>     i8257_dma_init(OBJECT(d), isa_bus, 0);
->> diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
->> index 6e4303ba47..e6487c34d8 100644
->> --- a/hw/mips/fuloong2e.c
->> +++ b/hw/mips/fuloong2e.c
->> @@ -286,6 +286,7 @@ static void mips_fuloong2e_init(MachineState *machine)
->>     /* South bridge -> IP5 */
->>     pci_dev = pci_new_multifunction(PCI_DEVFN(FULOONG2E_VIA_SLOT, 0),
->>                                     TYPE_VT82C686B_ISA);
->> +    qdev_connect_gpio_out_named(DEVICE(pci_dev), "intr", 0, env->irq[5]);
->>
->>     /* Set properties on individual devices before realizing the south 
->> bridge */
->>     if (machine->audiodev) {
->> @@ -299,7 +300,6 @@ static void mips_fuloong2e_init(MachineState *machine)
->>                               object_resolve_path_component(OBJECT(pci_dev),
->>                                                             "rtc"),
->>                               "date");
->> -    qdev_connect_gpio_out_named(DEVICE(pci_dev), "intr", 0, env->irq[5]);
->>
->>     dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
->>     pci_ide_create_devs(PCI_DEVICE(dev));
->> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
->> index 9dcc486c1a..2110875f56 100644
->> --- a/hw/ppc/amigaone.c
->> +++ b/hw/ppc/amigaone.c
->> @@ -148,13 +148,13 @@ static void amigaone_init(MachineState *machine)
->>     pci_bus = PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
->>
->>     /* VIA VT82c686B South Bridge (multifunction PCI device) */
->> -    via = OBJECT(pci_create_simple_multifunction(pci_bus, PCI_DEVFN(7, 0),
->> -                                                 TYPE_VT82C686B_ISA));
->> +    via = OBJECT(pci_new_multifunction(PCI_DEVFN(7, 0), 
->> TYPE_VT82C686B_ISA));
->> +    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
->> +                                qdev_get_gpio_in(DEVICE(cpu), 
->> PPC6xx_INPUT_INT));
->> +    pci_realize_and_unref(PCI_DEVICE(via), pci_bus, &error_abort);
->>     object_property_add_alias(OBJECT(machine), "rtc-time",
->>                               object_resolve_path_component(via, "rtc"),
->>                               "date");
->> -    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
->> -                                qdev_get_gpio_in(DEVICE(cpu), 
->> PPC6xx_INPUT_INT));
->>     for (i = 0; i < PCI_NUM_PINS; i++) {
->>         qdev_connect_gpio_out(dev, i, qdev_get_gpio_in_named(DEVICE(via),
->>                                                              "pirq", i));
->> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
->> index 9b0a6b70ab..54e60082ce 100644
->> --- a/hw/ppc/pegasos2.c
->> +++ b/hw/ppc/pegasos2.c
->> @@ -181,6 +181,8 @@ static void pegasos2_init(MachineState *machine)
->>
->>     /* VIA VT8231 South Bridge (multifunction PCI device) */
->>     via = OBJECT(pci_new_multifunction(PCI_DEVFN(12, 0), TYPE_VT8231_ISA));
->> +    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
->> +                                qdev_get_gpio_in_named(pm->mv, "gpp", 
->> 31));
->>
->>     /* Set properties on individual devices before realizing the south 
->> bridge */
->>     if (machine->audiodev) {
->> @@ -195,8 +197,6 @@ static void pegasos2_init(MachineState *machine)
->>     object_property_add_alias(OBJECT(machine), "rtc-time",
->>                               object_resolve_path_component(via, "rtc"),
->>                               "date");
->> -    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
->> -                                qdev_get_gpio_in_named(pm->mv, "gpp", 
->> 31));
->>
->>     dev = PCI_DEVICE(object_resolve_path_component(via, "ide"));
->>     pci_ide_create_devs(dev);
->
---3866299591-1666430843-1720139973=:66834--
+On 7/2/24 11:44, Pierrick Bouvier wrote:
+> This series allows plugins to know which value is read/written during a memory
+> access.
+> 
+> For every memory access, we know copy this value before calling mem callbacks,
+> and those can query it using new API function:
+> - qemu_plugin_mem_get_value
+> 
+> Mem plugin was extended to print accesses, and a new test was added to check
+> functionality work as expected. A bug was found where callbacks were not
+> called as expected.
+> 
+> This will open new use cases for plugins, such as following specific values in
+> memory.
+> 
+> v4
+> - fix prototype for stubs qemu_plugin_vcpu_mem_cb (inverted low/high parameters
+>    names)
+> - link gitlab bugs resolved (thanks @Anton Kochkov for reporting)
+>    https://gitlab.com/qemu-project/qemu/-/issues/1719
+>    https://gitlab.com/qemu-project/qemu/-/issues/2152
+> 
+> v3
+> - simplify API: return an algebraic data type for value accessed
+>    this can be easily extended when QEMU will support wider accesses
+> - fix Makefile test (use quiet-command instead of manually run the command)
+> - rename upper/lower to high/low
+> - reorder functions parameters and code to low/high instead of high/low, to
+>    follow current convention in QEMU codebase
+> 
+> v2
+> - fix compilation on aarch64 (missing undef in accel/tcg/atomic_template.h)
+> 
+> v3
+> - add info when printing memory accesses (insn_vaddr,mem_vaddr,mem_hwaddr)
+> 
+> Pierrick Bouvier (7):
+>    plugins: fix mem callback array size
+>    plugins: save value during memory accesses
+>    plugins: extend API to get latest memory value accessed
+>    tests/tcg: add mechanism to run specific tests with plugins
+>    tests/tcg: allow to check output of plugins
+>    tests/plugin/mem: add option to print memory accesses
+>    tests/tcg/x86_64: add test for plugin memory access
+> 
+>   accel/tcg/atomic_template.h                 | 66 +++++++++++++--
+>   include/qemu/plugin.h                       |  8 ++
+>   include/qemu/qemu-plugin.h                  | 32 ++++++++
+>   accel/tcg/plugin-gen.c                      |  3 +-
+>   plugins/api.c                               | 34 ++++++++
+>   plugins/core.c                              |  7 ++
+>   tcg/tcg-op-ldst.c                           | 72 +++++++++++++++--
+>   tests/plugin/mem.c                          | 69 +++++++++++++++-
+>   tests/tcg/x86_64/test-plugin-mem-access.c   | 89 +++++++++++++++++++++
+>   accel/tcg/atomic_common.c.inc               | 13 ++-
+>   accel/tcg/ldst_common.c.inc                 | 38 +++++----
+>   plugins/qemu-plugins.symbols                |  1 +
+>   tests/tcg/Makefile.target                   | 10 ++-
+>   tests/tcg/x86_64/Makefile.target            |  7 ++
+>   tests/tcg/x86_64/check-plugin-mem-access.sh | 48 +++++++++++
+>   15 files changed, 462 insertions(+), 35 deletions(-)
+>   create mode 100644 tests/tcg/x86_64/test-plugin-mem-access.c
+>   create mode 100755 tests/tcg/x86_64/check-plugin-mem-access.sh
+> 
 
