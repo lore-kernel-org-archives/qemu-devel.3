@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C081C3271E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 22:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DB8C38150
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 22:05:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPr2t-0001Wn-Ug; Fri, 05 Jul 2024 18:04:47 -0400
+	id 1sPr2z-0001aW-JF; Fri, 05 Jul 2024 18:04:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr2r-0001WE-Rt
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:04:45 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr2x-0001XH-OJ
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:04:51 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr2q-0007A9-4n
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:04:45 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-42567ddf099so14159495e9.3
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 15:04:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr2w-0007An-9R
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:04:51 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-35f06861ae6so1218101f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 15:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720217082; x=1720821882; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720217087; x=1720821887; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GfXglVFItdMvYp2Ch/WZz6ab4++EfcJpsrja1IJfWWk=;
- b=P0kAaTzOb7/WQubpeDPsbYBAUj+5TooA0UFtSfWOzP0ThsWx4xuUJI6N+WoZwqjYp1
- 2xtvtkv+lBnqeCJvAHFSGji8rWjWYJ4qQqt92Tut0gRQVTc+7pXP00XI7OT2nAQcpwUY
- CmXOzj3tnhQw8OrQ150erRAun386Ioq5TlrD8qMau1jbS+wzKKdDsw8e5e7IhZXuBgff
- UCd9qbwNk8EhMZt/4L3ERnmYHqET4QnlANQipJRpxSSIvMw4vjFkToaBxRFrJ96HMqUO
- L3fQ6b9cRn5NKpd/X40YJXCJXLNywB2ABgHTg8o9p64hf97eDr0Aaf6zN45mN0GbxAMo
- AkLQ==
+ bh=n4MUhhhcXCJmOjITmXxH8sb428buFk6h9v9ZsvqgcZw=;
+ b=TE1Lj2ojcE+6jeUlN37BadakwUyZEMzQbA0+OxutMTqkxchQdliMUbrJY6COuaz7DR
+ FH19y1V5ywk9HRHzi6x6Rwu194LCgtcVF7l+ihYyY/zBtcP0XcJsdKH5JFLE149JuRI1
+ QA/q3s17Sd+qi4z4EKww65w+df2lePBcsU9zwzulwGXcwY7Z57yTN9oYb6cr7lbDcyuj
+ zpn/tvEypaGvJuIDGvaH00QXVeL3n2OSFcAgRbsZkdFAzFrzpAHj+cK3tSUi+RDfOP0M
+ M5mkUp78eH2WTgELEdNxloQ0ZU0Iq9oPU+uGngVK3Ztc2ZpkyNuk5IOvGSqT3mUa2x5a
+ OIHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720217082; x=1720821882;
+ d=1e100.net; s=20230601; t=1720217087; x=1720821887;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GfXglVFItdMvYp2Ch/WZz6ab4++EfcJpsrja1IJfWWk=;
- b=Ve7vJMiWHwmftIdt6bLdGwGoCl/sU9GAHO32kRFgxr2Z0gjov4Dv6kn4rorztK/jnD
- TRjd0QqRTasR6cyL5J4jN6aWfgQSy6Z5JZhoqZrOe7TjRjCDgqopaBK7vYaEpJOFh/5j
- qwtTQIEpAy76SoFNnYwRfiKndfLyUvBmE2munKW04LWIgaUEUCWiGZTv9uh22fSF+aQX
- 5qF5popHXTfgV2gliasK/TPgz4yy/aXZJi3DwHbCQY6EvIXsplVYQOhfg51uolRQIXuz
- YAUf+3M0uI18QqLQ9s5skf98YGjR4vuP7aM2bH0IqgUr+iyG/D/Nt9g+qHxu3G6+C5PU
- 9Y1w==
-X-Gm-Message-State: AOJu0YyVdFK/11u0AIWny+mfxC1EwqFexB8xmEjbose6I9uLyDig7z1O
- bNLayyphohJtnBdDR379dvZZXpqPKZxSWyOFKblXb27qKMzA7mB4M61FkUzmJBQIhBrQ6vYcwOW
- s
-X-Google-Smtp-Source: AGHT+IEiaBYqDXCZomUx9F3ltw5EiG68Go6/Fi1EMTax4vKTSEkBKsIoSSS1/RwCr/32HVKLhwejgQ==
-X-Received: by 2002:a05:600c:3217:b0:425:6fe4:5472 with SMTP id
- 5b1f17b1804b1-4264a3d978cmr38039775e9.2.1720217082522; 
- Fri, 05 Jul 2024 15:04:42 -0700 (PDT)
+ bh=n4MUhhhcXCJmOjITmXxH8sb428buFk6h9v9ZsvqgcZw=;
+ b=HfG4KVVvQugqa32EWY+GYx8Zqlewt9HuKOYYbIMuDgiGLLVP5xIBlTgKnn06rXjh4Z
+ HNiFqYu4UeIHl2lxY5KGGQvmEKAHYFAhY5Po5Ukn2i4G4ahUckUe0qTo5SDRQ/PX5pCR
+ Xlqx0nkBZekREMU9M94vqplOxig8yakbnaHUfag1CPyQ4JDOrgChfhKDEk543rHN+7vU
+ b/xDDKaJmxWDy2qqwWrLZJFZGaxWsCEK6sHsL/9J34ed1TOFtL0Jjqtf9UQ65dLrHjmc
+ eoX8PDsCEwaRQ6Sjm/WQePJ/MggWv9R9TUvmB3Jdur7SRjI0yXH/eXLnZLqZkgCihaGC
+ pr1A==
+X-Gm-Message-State: AOJu0YxTSv2a8fXnPx1UDsJVsw+/iHtbqvw9tE+nss48b08I4iatnHSd
+ X91iZapqctyx5Ua9Oovu4y7WuMLg68ajA78FGAkvi9y9AdebqfPpLkM164EpEW85pNjTykj0Gp/
+ 0
+X-Google-Smtp-Source: AGHT+IEIuSeFI1xd6ZepxEpDGNnELb+4Nah9BJgHQDTPz6ZZns7ePWSdueOMTaWJTACYD1R9OGUeLw==
+X-Received: by 2002:a5d:5407:0:b0:360:89a3:5293 with SMTP id
+ ffacd0b85a97d-3679db88a10mr4268703f8f.0.1720217087570; 
+ Fri, 05 Jul 2024 15:04:47 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.163.129])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a28327fsm74533965e9.39.2024.07.05.15.04.41
+ 5b1f17b1804b1-4264a1d6123sm74888065e9.12.2024.07.05.15.04.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 05 Jul 2024 15:04:42 -0700 (PDT)
+ Fri, 05 Jul 2024 15:04:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PULL 01/16] hw/sd/sdhci: Log non-sequencial access as GUEST_ERROR
-Date: Sat,  6 Jul 2024 00:04:19 +0200
-Message-ID: <20240705220435.15415-2-philmd@linaro.org>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 02/16] hw/sd/npcm7xx_sdhci: Use TYPE_SYSBUS_SDHCI definition
+Date: Sat,  6 Jul 2024 00:04:20 +0200
+Message-ID: <20240705220435.15415-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240705220435.15415-1-philmd@linaro.org>
 References: <20240705220435.15415-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,30 +94,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use the macro instead of two explicit string literals.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Message-Id: <20240702140842.54242-3-philmd@linaro.org>
+Message-Id: <20240702140842.54242-2-philmd@linaro.org>
 ---
- hw/sd/sdhci.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ hw/sd/npcm7xx_sdhci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 27673e1c70..d02c3e3963 100644
---- a/hw/sd/sdhci.c
-+++ b/hw/sd/sdhci.c
-@@ -983,8 +983,9 @@ static inline bool
- sdhci_buff_access_is_sequential(SDHCIState *s, unsigned byte_num)
+diff --git a/hw/sd/npcm7xx_sdhci.c b/hw/sd/npcm7xx_sdhci.c
+index e93dab8dbd..fb51821e11 100644
+--- a/hw/sd/npcm7xx_sdhci.c
++++ b/hw/sd/npcm7xx_sdhci.c
+@@ -16,6 +16,7 @@
+ 
+ #include "qemu/osdep.h"
+ 
++#include "hw/sd/sdhci.h"
+ #include "hw/sd/npcm7xx_sdhci.h"
+ #include "migration/vmstate.h"
+ #include "sdhci-internal.h"
+@@ -162,7 +163,7 @@ static void npcm7xx_sdhci_instance_init(Object *obj)
  {
-     if ((s->data_count & 0x3) != byte_num) {
--        trace_sdhci_error("Non-sequential access to Buffer Data Port register"
--                          "is prohibited\n");
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "SDHCI: Non-sequential access to Buffer Data Port"
-+                      " register is prohibited\n");
-         return false;
-     }
-     return true;
+     NPCM7xxSDHCIState *s = NPCM7XX_SDHCI(obj);
+ 
+-    object_initialize_child(OBJECT(s), "generic-sdhci", &s->sdhci,
++    object_initialize_child(OBJECT(s), TYPE_SYSBUS_SDHCI, &s->sdhci,
+                             TYPE_SYSBUS_SDHCI);
+ }
+ 
 -- 
 2.41.0
 
