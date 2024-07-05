@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04AF5C3271E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 12:46:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8FBEC30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 12:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPiKN-0001qQ-2h; Fri, 05 Jul 2024 08:46:15 -0400
+	id 1sPiJw-0001lP-5k; Fri, 05 Jul 2024 08:45:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPiKL-0001o5-Cb
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 08:46:13 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPiJj-0001go-8C
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 08:45:35 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPiKJ-0006PJ-LB
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 08:46:13 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-52db11b1d31so2418669e87.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 05:46:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPiJh-0006MQ-Qe
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 08:45:35 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4265b7514fcso1163095e9.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 05:45:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720183570; x=1720788370; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=5NVMv4AboV1wj7lPPlne7miK0vMDkmY7UdvILUOuREg=;
- b=kEx0OdD/aHF+xen8bQ7hn9c/Yq7Q/0yEU008dP8WNlwbZzz88b6plX968aPvrgYXfc
- mPznU8YD2K2GPzz2vHxIs/xPO19l6wRu7NiANsAZobkgglG78YThnrOfHr1dJgLLgfVd
- 13inHIDAvx3TBPJG8nwkGrneplVD1Q6uWuT5f5e4tWi0yQarcwsJJghMZLiFazyXMza6
- i177Nwcwqz8n+ZuGMVa7yR8N4i++UrGxs53AToSQQQyw6vM1zaUEiUEyZUD9cr3eJyeY
- GJKb9I0pJT3/zX1e2Gmx41Hsjh30s6pSEoKwxO4rQtN74eiIDIWpAK4FsViZjPNymCA7
- 3JrQ==
+ d=linaro.org; s=google; t=1720183531; x=1720788331; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pfMDrGQNjJl/SzSSLkHWGPthpMt8sX9VrBjXHa0Dvf4=;
+ b=K5lFwzvbcs/D7lDhWT856BRz8bp/yjnu7lXd0hL7xNEbYDx5hsKl1PRMg2hZq67aSk
+ OPhOWHbgjkaqQRPJfTK58+U6VkGd3JgwrdCVnXn89du1CRKG0wkhdHdh1Oods0uuMGms
+ 3hQ1t/keY6R5J/CC4300c9pJ+9bf422AEir4Od/c1cxq8N2QFrtncsZmGY6BftphYNJR
+ OMsDu84nrd/LKj7+4fQ76a8r1UZLslIxzrZAqKdxQysq6SkHOB/Tz67guTui8fjIx64N
+ KW2Q4+nXmL+J1fFS2OGrjquzegnfntTOIUjUUAnuatWI3I3o+2BTKgHcDBFdI42tmTNf
+ zWLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720183570; x=1720788370;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5NVMv4AboV1wj7lPPlne7miK0vMDkmY7UdvILUOuREg=;
- b=Y8G86EZo6eBT35djkw9OspoqaWhYxPah7oxELScB3t6P5LuXsmj23/IuHaFDwGqYeK
- aCp9tl1YAREHXDO9hz4ji9qJiMTAXLvfbR+uVNE0RXX61gbp44HoxepzFS5qrFOcUBMX
- q+fw4gugRYv+2EQxJ9avVIvVloaKu3Q/D58wUP3pMMa7q+mOJ1cqix4xZtIhR5VWBq8I
- uiwcjv1WoorofNlv6U/zd1tEDoqW/StTb/bPEhzeCrlx5V5nxU8IJc42H57m/B8ctt8C
- R9R8WEEXsJ0+PmXME2kvDJ1AHNP679hywFlaSAUQbk5DHJetNG2xvn0gawiE/0Pjr9s6
- RY3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhbnxIfkOfQ4MUT2RnkufWCQ4LOqdzknIhcOIWUPDJmMXqRWZSaHysnFIcNBrWJIM9w/7YRbwW7usdHslFyTobCHgv0Pw=
-X-Gm-Message-State: AOJu0YzCw1DQA2I9QYqn/1T4PWdikJZ9DclAu7OALJiL8H2a/sVaX/Bw
- yZK5cf/SCDR42qTscix5cyoRdFWCDyQPXBLczp7JDRrpbPSbEbxATP3Fjxtw3PY=
-X-Google-Smtp-Source: AGHT+IHHOFdhc7dOaP8Kgv3NZkEtuwgFepROnjqx5uJa6K3g2KUzG/GxTZtGvO9HklDj+AkGSHvJKw==
-X-Received: by 2002:a05:6512:3b4:b0:52e:830f:38a7 with SMTP id
- 2adb3069b0e04-52ea0628c5emr3218696e87.21.1720183569820; 
- Fri, 05 Jul 2024 05:46:09 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.163.129])
+ d=1e100.net; s=20230601; t=1720183531; x=1720788331;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pfMDrGQNjJl/SzSSLkHWGPthpMt8sX9VrBjXHa0Dvf4=;
+ b=Lguoi281dt5ppEFu1KifUBvysYq34B9knD/5/N4Sa12FzUeFxph/wWINSnzqmcdngK
+ YPpCuY1qwvea7Q800cgNeIJTS84ICaP5ap0ukdq16h/5lujlY4Jqf9KJZpEjWuyZKv+r
+ MDfta2FdKlpXT1nSus0QRn6/4tpEa7wIewPbCbMPVbz5OE3YEZ53PLha9bBylkobg0Mn
+ oQe/rbv0TNhZPTkbxtHg/Z6shsAoLuTw11oV7dKJ4oRLKyJzRFYopCF+4DNPqdbyotPK
+ mu/x6d7l7O4PqrrzfYYaWBEsOhP0X3ONzMSsf9Hd9MK0zJezwLkhbZ05RLeMaowWpVgT
+ ymjQ==
+X-Gm-Message-State: AOJu0YzUg7ubDGlLvYlDwzL8c3y4V9xeJtR47pMxfQNTb4S52i2/9A7m
+ uGG63is5YYOruWn7ctnc8PuZzW0ArlVk9uPImhpVbFZo8+eiOZrE/5KOdmpyQst05A9VCQgZE7E
+ 0
+X-Google-Smtp-Source: AGHT+IEOuubZ6kbgxbedpry34lfS2r3CTlpBOVMIGvE4+Z4MO9OW+WisrbMSY1d184rFUCFH8SYKdg==
+X-Received: by 2002:a5d:6e5e:0:b0:363:337a:3e0 with SMTP id
+ ffacd0b85a97d-3679f6c48ecmr3737172f8f.1.1720183531240; 
+ Fri, 05 Jul 2024 05:45:31 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.163.129])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3679f9783d0sm3708376f8f.9.2024.07.05.05.46.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Jul 2024 05:46:09 -0700 (PDT)
-Message-ID: <b822017b-bd83-4cf1-8ecb-22d998b1b99a@linaro.org>
-Date: Fri, 5 Jul 2024 14:46:07 +0200
+ 5b1f17b1804b1-4264a2fc9besm61047315e9.43.2024.07.05.05.45.29
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 05 Jul 2024 05:45:30 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?unknown-8bit?q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/2] system: Enable the device aliases for or1k, too
+Date: Fri,  5 Jul 2024 14:45:26 +0200
+Message-ID: <20240705124528.97471-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system: Enable the device aliases for or1k, too
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Jia Liu <proljc@gmail.com>, Stafford Horne <shorne@gmail.com>
-Cc: qemu-trivial@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-block@nongnu.org
-References: <20240705090808.1305765-1-thuth@redhat.com>
- <73a0498e-8f66-46ff-a4f2-fcb6b80f9d42@linaro.org>
-Content-Language: en-US
-In-Reply-To: <73a0498e-8f66-46ff-a4f2-fcb6b80f9d42@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x135.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,32 +92,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/24 14:39, Philippe Mathieu-Daudé wrote:
-> On 5/7/24 11:08, Thomas Huth wrote:
->> Now that we've got a "virt" machine for or1k that supports PCI, too,
->> we can also enable the virtio device aliases like we do on other
->> similar platforms. This will e.g. help to run the iotests with
->> qemu-system-or1k later.
-> 
-> Indeed, since 2022 in commit 40fef82c4e ("hw/openrisc:
-> Add PCI bus support to virt").
-> 
->>
->> While we're at it, sort QEMU_ARCH_LOONGARCH alphabetically into
->> the list.
-> 
-> Suggestion: a preliminary patch sorting 1 arch per line ;)
+Respin of Thomas' v1 sorting the definition first.
 
-Done here:
-https://lore.kernel.org/qemu-devel/20240705124528.97471-1-philmd@linaro.org/
+Philippe Mathieu-Daudé (1):
+  system: Sort QEMU_ARCH_VIRTIO_PCI definition
 
-> 
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   system/qdev-monitor.c | 6 +++---
->>   1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
+Thomas Huth (1):
+  system: Enable the device aliases for or1k, too
+
+ system/qdev-monitor.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
+
+-- 
+2.41.0
 
 
