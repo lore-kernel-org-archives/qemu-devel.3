@@ -4,81 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70053C38150
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 20:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E414BC3271E
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 21:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPpZj-0003RA-Oj; Fri, 05 Jul 2024 16:30:35 -0400
+	id 1sPqAn-0002Tq-23; Fri, 05 Jul 2024 17:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sPpZh-0003Qt-EF
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 16:30:33 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sPpZZ-0003Lh-OT
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 16:30:33 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-70b0e9ee7bcso758427b3a.1
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 13:30:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1720211417; x=1720816217;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=EzSeRnqQsFkn+txwV9nFx2mIiow8+UQRdPUIhdl501k=;
- b=KCE561WQCm7afe7AI1e6MOrONeT4ightEiJOEXvd2qz4+jLHyRz2bvzzXjSZ/0rn/Y
- cfSs0Ry6gWzgnpqueZl34a6ffRYkOSKFGPLcmyiqJ8/SbKZ/FCXZyO6q0wZqTA57Lqii
- EUKqwr9ULC5imAFqCnsbPdWuLJr5hoPhITCO+98eb99xtCHFWk8HTsGQr99D0AAOlZZf
- k9GccskBTd326W6jORe5gv54FpLUMcK0Jd+0H8mTO0S09SDF2sWGAV6k04RGuYz+NQ7u
- 2LKrZiCwHsQn4LNnTIUrOWf/fULKKsS8kVMHItKH8iTj+AmZRMzw0yIENxODYu6F8oCP
- PXkA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sPqAl-0002Th-W7
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 17:08:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sPqAj-0002z4-UH
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 17:08:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720213728;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZyrC4m9T7Jad1HpgkV4n1X7ZVIUtCpWotbaFVc9PX74=;
+ b=ABcMSq3YzZYgx0FI5jDpXyV9OovxAGy16J5T2Aj3aVjLlpTlr7Eqxr3kjIBtoXTj7vS+/a
+ vTDuCdPEXhRtmxfvc7q5Md0dxNeId1cLwuSr+bcORGpk5taPl+1wV1V1moPA1dqYvaA9CB
+ aUlJjd8FRAPgkUMtch9Q/LRyxaXCW2M=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-33-WfzjZpdFOqqWHDMo-ssJwA-1; Fri, 05 Jul 2024 17:08:46 -0400
+X-MC-Unique: WfzjZpdFOqqWHDMo-ssJwA-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-36794fcfdd6so993264f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 14:08:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720211417; x=1720816217;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EzSeRnqQsFkn+txwV9nFx2mIiow8+UQRdPUIhdl501k=;
- b=LICl4/5ZfMOgr0hCUgZJz1vLfOnvjn0yiljjSv8f/pzwg9qOauK9wHMDVKJCJUnq9Q
- lkOsyG0qzia9Pmq443GFxtNBMkMWa1udVQmGLxfFw6cApyrUnUvkLz3q5maD7/U8YRX0
- gRyd/QzoNnl32F/+dR/RbtZdVakWk+gmV0NDDRaYyouMgI1yRqsdQgwKdANFs9VQdp3L
- D3m9gC2ZjwdsgLGcl2hW4bUgu9yG2c8rlKBN2qv7WnxcTx67lSly+MYnBnKpcnbNVsG+
- +4wMfsdGfs+9El5YMV/WHG7OUkryjzy7boRdwfX1y833OdNan+3iNSUO7/YW7XY05jZQ
- lWwA==
-X-Gm-Message-State: AOJu0YziOpTnfPhW7fLVdr/81oGCQjw7+q+csosTYyNZv+yOXaCpEhop
- q50rW+cLS3ox0PdUWED6CBa3rx5mZih2H5eU5x291hg68dHYbJe+ZNfzjWbCI2Dbok1cH8XKj6q
- IHurfFA==
-X-Google-Smtp-Source: AGHT+IHowJkbCYxtb9qC6KbSzmZlePrP6c2bML0li83Mo0oPIdjsl1qTDRAugQeqpPq4xqi5Dhv5nw==
-X-Received: by 2002:a05:6a20:8426:b0:1bd:709:e4cc with SMTP id
- adf61e73a8af0-1c0cc8f677fmr7360354637.38.1720211416203; 
- Fri, 05 Jul 2024 13:30:16 -0700 (PDT)
-Received: from localhost.localdomain ([118.114.60.207])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c99a970ce6sm3855487a91.18.2024.07.05.13.30.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 13:30:15 -0700 (PDT)
-From: Hyman Huang <yong.huang@smartx.com>
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>,
-	yong.huang@smartx.com
-Subject: [PATCH] e1000: Fix the unexpected assumption that the receive buffer
- is full
-Date: Sat,  6 Jul 2024 04:30:09 +0800
-Message-Id: <c7338afab65df208772f215567f323ae9b3c5910.1720210988.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.39.1
+ d=1e100.net; s=20230601; t=1720213725; x=1720818525;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZyrC4m9T7Jad1HpgkV4n1X7ZVIUtCpWotbaFVc9PX74=;
+ b=OI1QoUyMLGd14vHrEwfxZ9eH2jf77BhMLt0y0CvEQpWZUb8m2jb6CHvJeEx7XgMaEo
+ BnozKTknpLbIQlG6k6WiBcUBep3TdxaeyIpYDVT83YUwGeqahxx7PIG7LXSpgRZ7tV7g
+ WTNkiNLfOOUpCM5o4I/WmD06jOHfQFokesrYbvWRLNOH5DeOrQ71bJHKQwlP68f5FQlh
+ ZlPHAV9NwbWrpexB+t492coAJ+HTtvfymAkb3wyI9dGsd2bk65syNED6/6ChqDynMwad
+ vQ1QyKoFk7iyXCON4we3Q4+tbNazaZvzPQzIcajtONF04zOJTomJDHAB0tRZ+Cmq77vx
+ CmFg==
+X-Gm-Message-State: AOJu0YycBIAZn1aiwvapWlUI1jqZxcB31QMxasRRKQqd/KXH60bpE62R
+ AKTthhXCBgeWrgT1S+WyYfRFIRhy8G7ZRrDlmObyUfazHa0LyIhrHMXmaURAwz1HaDc7WTwRZ2i
+ b0IjdQ5c3TdYytpUB8n9aJvLqIcE0owXaMACjwWVfDISMKmQQW7wcY1Zhqsl3cGqA+jNIG32u7x
+ Yug0W/p5W2CbPVjjQMvcb8r5ol9Yg=
+X-Received: by 2002:a05:6000:1b02:b0:367:9287:64c1 with SMTP id
+ ffacd0b85a97d-3679dd26afdmr4356705f8f.16.1720213725376; 
+ Fri, 05 Jul 2024 14:08:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFz1zHjyXYlRm5YKBVZFkFdU2Dn/lDKqYwCTsDabj3Q+UNe/J+rILqxCc1iEvIbclzcF09CWuQOJVlEmT2QbzQ=
+X-Received: by 2002:a05:6000:1b02:b0:367:9287:64c1 with SMTP id
+ ffacd0b85a97d-3679dd26afdmr4356694f8f.16.1720213724903; Fri, 05 Jul 2024
+ 14:08:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=yong.huang@smartx.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240701145853.1394967-1-pbonzini@redhat.com>
+ <0d85e013-1c38-4781-8fd6-5e837327f33f@linaro.org>
+ <CABgObfZVWt4GkH_qAbWqoF7=xXP_mPopRqUbRFxii8Tki5YuBw@mail.gmail.com>
+ <d9acf51b-a70d-450c-a768-3ecf25dbd597@linaro.org>
+In-Reply-To: <d9acf51b-a70d-450c-a768-3ecf25dbd597@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 5 Jul 2024 23:08:32 +0200
+Message-ID: <CABgObfbEPfCsRD3fSgZX1kL_8iKszzCz7YTJrx_bHOdScBuKmg@mail.gmail.com>
+Subject: Re: [PATCH 00/14] rust: example of bindings code for Rust in QEMU
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,175 +105,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unexpected work by certain Windows guests equipped with the e1000
-interface can cause the network to go down and never come back up
-again unless the guest's interface is reset.
+Hi, first of all I want to clarify the raison d'etre for this posting,
+which I have also explained to Manos. Nothing you see here is code
+that will be certainly included in QEMU; it's (mostly) throwaway by
+design. I don't have much attachment to any of the code except perhaps
+the casting and reference counting stuff (which is in, like, the third
+rewrite... I got nerd-sniped there :)). But at the same time I think
+it's plausibly not too different (in look and complexity) from what
+the actual code will look like.
 
-To reproduce the failure:
-1. Set up two guests with a Windows 2016 or 2019 server operating
-   system.
-2. Set up the e1000 interface for the guests.
-3. Pressurize the network slightly between two guests using the iPerf tool.
+It's also not an attempt to bypass/leapfrog other people in the
+design; it's more a "let's be ready for this to happen" than a design
+document. The first step and the more immediate focus remains the
+build system integration.
 
-The network goes down after a few days (2-5days), and the issue
-is the result of not adhering to the e1000 specification. Refer
-to the details of the specification at the following link:
-https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
+But you have good questions and observations so I'll put something
+below about the design as well.
 
-Chapter 3.2.6 describe the Receive Descriptor Tail register(RDT)
-as following:
-This register holds a value that is an offset from the base, and
-identifies the location beyond the last descriptor hardware can
-process. Note that tail should still point to an area in the
-descriptor ring (somewhere between RDBA and RDBA + RDLEN).
-This is because tail points to the location where software writes
-the first new descriptor.
+On Fri, Jul 5, 2024 at 8:52=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+> To give an example of questions we could have:
+>
+> Why should we have distinct structs for a device, the object
+> represented, and its state?
 
-This means that if the provider—in this case, QEMU—has not yet
-loaded the packet, RDT should never point to that place. When
-implementing the emulation of the e1000 interface, QEMU evaluates
-if the receive ring buffer is full once the RDT equals the RDH,
-based on the assumption that guest drivers adhere to this
-criterion strictly.
+If you refer to the conf and state, a bit because of the different
+traits required (ConstDefault is needed for properties but not the
+rest) and especially because we can enforce immutability of
+configuration vs. interior mutability of state.
 
-We applied the following log patch to assist in analyzing the
-issue and eventually obtained the unexpected information.
+In particular, from Manos's prototype I noticed that you need to
+access the Chardev while the state is *not* borrowed; methods on the
+Chardev call back into the device and the callback needs mutable
+access to the state. So some kind of separation seems to be necessary,
+for better or worse, unless interior mutability is achieved with a
+dozen Cells (not great).
 
-Log patch:
------------------------------------------------------------------
-|--- a/hw/net/e1000.c
-|+++ b/hw/net/e1000.c
-|@@ -836,6 +836,9 @@ e1000_set_link_status(NetClientState *nc)
-| static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
-| {
-|     int bufs;
-|+    DBGOUT(RX, "rxbuf_size = %u, s->mac_reg[RDLEN] = %u, s->mac_reg[RDH] = %u, s->mac_reg[RDT] = %u\n",
-|+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], s->mac_reg[RDT]);
-|+
-|     /* Fast-path short packets */
-|     if (total_size <= s->rxbuf_size) {
-|         if (s->mac_reg[RDH] == s->mac_reg[RDT] && s->last_overrun)
-|@@ -1022,6 +1025,9 @@ e1000_receive_iov(NetClientState *nc, const struct iovec *iov, int iovcnt)
-|         s->rxbuf_min_shift)
-|         n |= E1000_ICS_RXDMT0;
-|
-|+    DBGOUT(RX, "rxbuf_size = %u, s->mac_reg[RDLEN] = %u, s->mac_reg[RDH] = %u, s->mac_reg[RDT] = %u\n",
-|+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], s->mac_reg[RDT]);
-|+
------------------------------------------------------------------
+> Having to implement ObjectImpl and DeviceImpl looks like an
+> implementation detail, that could be derived automatically from a
+> device. What's wrong with calling a realize that does nothing in the end?
 
-The last few logs of information when the network is down:
+The problem is not calling a realize that does nothing, it's that you
+are forced to override the superclass implementation (which might be
+in C) if you don't go through Option<>. class_init methods update a
+few superclass methods but not all of them.
 
-e1000: total_size = 1, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 897, s->mac_reg[RDT] = 885
-<- the receive ring buffer is checked for fullness in the
-e1000_has_rxbufs function, not full.
+The vtable in ObjectImpl/DeviceImpl could be generated via macros; for
+now I did it by hand to avoid getting carried away too much with
+syntactic sugar.
 
-e1000: total_size = 64, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 898, s->mac_reg[RDT] = 885
-<- RDT stays the same, RDH updates to 898, and 1 descriptor
-utilized after putting the packet to ring buffer.
+> Could device state be serialized with something like serde?
 
-e1000: total_size = 1, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 898, s->mac_reg[RDT] = 885
-<- the receive ring buffer is checked for fullness in the
-e1000_has_rxbufs function, not full.
+Probably not, there's extra complications for versioning. A long time
+ago there was an attempt to have some kind of IDL embedded in C code
+(not unlike Rust attributes) to automatically generate properties and
+vmstate, but it was too ambitious.
+(https://www.linux-kvm.org/images/b/b5/2012-forum-qidl-talk.pdf,
+slides 1-9).
 
-e1000: total_size = 64, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 899, s->mac_reg[RDT] = 885
-<- RDT stays the same, RDH updates to 899, and 1 descriptor
-utilized after putting the packet to ring buffer.
+Generating property and vmstate declarations could be done with
+"normal" macros just like in C, or with attribute macros (needs a lot
+more code and experience, wouldn't do it right away). However, serde
+for QAPI and/or visitors may be a possibility, after all JSON is
+serde's bread and butter.
 
-e1000: total_size = 1, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 899, s->mac_reg[RDT] = 885
-<- the receive ring buffer is checked for fullness in the
-e1000_has_rxbufs function, not full.
+> This is the kind of things that could be discussed, on a reduced
+> example, without specially looking at how to implement that concretely,
+> in a first time.
 
-e1000: total_size = 64, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 900, s->mac_reg[RDT] = 885
-<- RDT stays the same, RDH updates to 900 , and 1 descriptor
-utilized after putting the packet to ring buffer.
+There are some things that Rust really hates that you do, and they
+aren't always obvious. Therefore in this exercise I tried to let
+intuition guide me, and see how much the type system fought that
+intuition (not much actually!). I started from the more technical and
+less artistic part to see if I was able to get somewhere.
 
-e1000: total_size = 1, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 900, s->mac_reg[RDT] = 900
-<- The ring is full, according to e1000_has_rxbufs, because
-of the RDT update to 900 and equals RDH ! But in reality,
-the state of the ring buffer is empty because the producer
-only used one descriptor the last time, and the ring buffer
-was not full after that.
+But yes, it's a great exercise to do this experiment from the opposite
+end. Then the actual glue code will "meet in the middle", applying
+lessons learnt from both experiments, with individual pieces of the
+real interface implemented and applied to the PL011 sample at the same
+time. The main missing thing in PL011 is DMA, otherwise it's a nice
+playground.
 
-To sum up, QEMU claims that the receive ring buffer is full
-in the aforementioned scenario, placing the packet in the
-self-maintained queue and unregistering the tap device's
-readable fd handler and then waiting for the guest to consume
-the receive ring buffer. This brings down the network since
-guests have nothing to consume and never update the RDT
-location.
+> usage of magic macros as syntactic sugar should indeed be thought twice.
+> Return a collection of QDevProperty could be better than having a magic
+> @properties syntactic sugar.
 
-In the above scenario, QEMU assert that the ring is full,
-put the packet on the queue, unregister the readable fd
-handler of the tap device, waiting the guest to consume
-the receive ring. While, guest have nothing to consume
-on the receive ring and never update the RDT location,
-this makes the network down.
+No hard opinions there, sure. I went for the magic syntax because the
+properties cannot be a const and I wanted to hide the ugly "static
+mut", but certainly there could be better ways to do it.
 
-To get around this issue, just mark the overrun if RDH
-equals RDT at the end of placing the packet on the ring
-buffer for the producer.
+> Another thing that could be discussed is: do we want to have the whole
+> inheritance mechanism for Rust devices? Is it really needed?
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- hw/net/e1000.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+Eh, this time unfortunately I think it is. Stuff like children and
+properties, which are methods of Object, need to be available to
+subclasses in instance_init and/or realize. Reset is in Device and we
+have the whole Device/SysBusDevice/PCIDevice set of classes, so you
+need to access superclass methods from subclasses. It's not a lot of
+code though.
 
-diff --git a/hw/net/e1000.c b/hw/net/e1000.c
-index 5012b96464..f80cb70283 100644
---- a/hw/net/e1000.c
-+++ b/hw/net/e1000.c
-@@ -126,6 +126,12 @@ struct E1000State_st {
- 
-     QEMUTimer *flush_queue_timer;
- 
-+    /*
-+     * Indicate that the receive circular buffer queue overrun
-+     * the last time hardware produced packets.
-+     */
-+    bool last_overrun;
-+
- /* Compatibility flags for migration to/from qemu 1.3.0 and older */
- #define E1000_FLAG_MAC_BIT 2
- #define E1000_FLAG_TSO_BIT 3
-@@ -832,7 +838,12 @@ static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
-     int bufs;
-     /* Fast-path short packets */
-     if (total_size <= s->rxbuf_size) {
--        return s->mac_reg[RDH] != s->mac_reg[RDT];
-+        if (s->mac_reg[RDH] == s->mac_reg[RDT] && s->last_overrun) {
-+            return false;
-+        }
-+
-+        DBGOUT(RX, "Receive ring buffer is not full unexpectedly!\n");
-+        return true;
-     }
-     if (s->mac_reg[RDH] < s->mac_reg[RDT]) {
-         bufs = s->mac_reg[RDT] - s->mac_reg[RDH];
-@@ -840,7 +851,12 @@ static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
-         bufs = s->mac_reg[RDLEN] /  sizeof(struct e1000_rx_desc) +
-             s->mac_reg[RDT] - s->mac_reg[RDH];
-     } else {
--        return false;
-+        if (s->last_overrun) {
-+            return false;
-+        }
-+
-+        DBGOUT(RX, "Receive ring buffer is not full unexpectedly!\n");
-+        return true;
-     }
-     return total_size <= bufs * s->rxbuf_size;
- }
-@@ -999,6 +1015,8 @@ e1000_receive_iov(NetClientState *nc, const struct iovec *iov, int iovcnt)
- 
-     e1000x_update_rx_total_stats(s->mac_reg, pkt_type, size, total_size);
- 
-+    s->last_overrun = (s->mac_reg[RDH] == s->mac_reg[RDT]) ? true : false;
-+
-     n = E1000_ICS_RXT0;
-     if ((rdt = s->mac_reg[RDT]) < s->mac_reg[RDH])
-         rdt += s->mac_reg[RDLEN] / sizeof(desc);
--- 
-2.39.1
+> Between having a clean and simple Device definition, with a bit more of
+> magic glue (hidden internally), and requires devices to do some magic
+> initialization to satisfy existing architecture, what would be the best?
+> Even though it takes 1000 more lines, I would be in favor to have
+> Devices that are as clean and simple as possible. Because this is the
+> kind of code what will be the most added/modified, compared to the glue
+> part.
+
+That's an opinion I share but I wasn't sure it's universal, which was
+another reason to prototype and post some "scary but perhaps
+necessary" code.
+
+> Or have multiple traits matching every possible operation, and allow a
+> device to implement it or not, like Read/Write traits. And the glue code
+> could call qemu_chr_fe_set_handlers.
+
+Possibly, yes. https://lwn.net/Articles/863459/ you see many such
+techniques: traits (gpio::Chip etc.), composition (device::Data),
+lambdas (only for initialization).
+
+The advantage of the lambda approach is that it scales to multiple
+backends or multiple memory regions. We'll see.
+
+> I hope my answer helped to understand more my point that discussing the
+> interface is more important than discussing the glue needed.
+
+Sure, and I don't think we are very much in disagreement, if at all.
+
+Paolo
 
 
