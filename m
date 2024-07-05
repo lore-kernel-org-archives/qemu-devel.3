@@ -4,87 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB85EC3271E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 17:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A065C3271E
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 17:25:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPmQo-0005sd-S4; Fri, 05 Jul 2024 13:09:10 -0400
+	id 1sPmfu-0002kA-CD; Fri, 05 Jul 2024 13:24:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sPmQn-0005sC-8f
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 13:09:09 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sPmQl-0006gd-G9
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 13:09:09 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-58ba3e38028so2465650a12.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 10:09:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720199343; x=1720804143; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N8XwHrnmX2/76QaJ4ERsHEHiXnf9ZiKxXKmCkXATcrI=;
- b=LPYwyy42c/kEo8s2jW+ilD25O7MQdCaOxAKLCfxUB3CUu/q01Rqw3JyTR0P8SIdfcu
- BlHCq9YBLrBfDxjd2rsk+K+xK8E0t8BMc2PSE++WRR6iZgO6Cloz3vE1CEPpxDulzjQD
- wUAASaekqaf+z5Omn9K7RtKNFf78qFWfK7plDd1nRyb2I27zL5XHK1xp3ojlvIzWfFIV
- kDKhfCXxKDANa5g9hplIhFVnfYTq1psMHwRjmaSHQDs2FA5R+iTwmms91zNyda+Q4SzU
- czYdy0p3nPieqclvWCTMWrkGtdsAYavvFmVkPZw+s8Q41GSEP8qArJVFUIcCuDnps5Y0
- VaUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720199343; x=1720804143;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=N8XwHrnmX2/76QaJ4ERsHEHiXnf9ZiKxXKmCkXATcrI=;
- b=GpTZF/7/30h5ZWMdEFKgyqxRE6NNPls9iDRJY5PJtBDRpr380tlEFkUJrL5wojNfa/
- b0vfvdfg7XgBwpPvtH8sPYhg25ob7wRpZbmHTF7GzSY0RUSnEzNBZOyVswL4J8DecyTK
- 1wvCOQ3et0ckCHC1jtCmlHYkMjAwUbVjFrEbvwQnU5hdVc0JPS8SaYvMsRnFOv5FEcrz
- CBvgOOOYjdFSSyhV/EZ7yoBi2kD4qXb0Y+cQ6gH7HAppfkDu+y2PoNK3Iaq7wU1GFiqt
- WF40qUmKEGq8d3AUYaBljGtaIPjyB3Fq7ib3VJ4GpVP3q823Xw6GBpV1aMoJoajTCTY8
- KBYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWo7ZeUil0pk2TTmEkmiMdrsnpiFF/ZcAxSwPvN2E79MAjglI8LaZ3S9aBKOBA4h/N8YqHgx4k/s44VKyag383/mmq8gxo=
-X-Gm-Message-State: AOJu0YyRNSB0J43mCZqCNpDo7bceKEoquyzfrc/E7+pd/GTbkm88+G8E
- jS0fBjBsvVjRie5fBfk+f0Peu8aCZ9K7VvBcjvLgnrGB8WsROttr7J2XO7X6ii8bXmKYXUmTwY7
- 2plDHlkRZTPClPFXaGYXzYUi280EWjrmrdnsmgA==
-X-Google-Smtp-Source: AGHT+IGKdzO416owUrpAWTyoEEkvRISO7l+VLL80akCuIivEim5TVeQu5cqjm6V8neHu3yBkIXY2+K1RZjZgaQiTI8Y=
-X-Received: by 2002:a05:6402:274c:b0:57c:6d9a:9149 with SMTP id
- 4fb4d7f45d1cf-58e5adce5efmr3266250a12.15.1720199342889; Fri, 05 Jul 2024
- 10:09:02 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240305135237.3111642-1-peter.maydell@linaro.org>
- <20240305135237.3111642-18-peter.maydell@linaro.org>
- <C875173E-4B5B-4F71-8CF4-4325F7AB7629@gmail.com>
- <72ED7A80-9EA7-4FF6-BE29-9583587985C7@gmail.com>
- <f6976b40-e3d5-4157-8597-ce7db6ceb068@linaro.org>
- <CAFEAcA-BD1TmaBB_5ephnRoNsOCWsS4w3C_oj0P_182+fOLPUQ@mail.gmail.com>
- <C27AC9E0-AB61-483E-BF07-B435AABE3D13@gmail.com>
- <b871bf81-ed1a-4720-ae70-9dbc517f155e@linaro.org>
- <5E575AFE-7E8F-4CEA-999E-30D9881104A8@gmail.com>
- <FC32203C-AD71-4032-9219-9CACB8AB36FE@gmail.com>
-In-Reply-To: <FC32203C-AD71-4032-9219-9CACB8AB36FE@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 5 Jul 2024 18:08:51 +0100
-Message-ID: <CAFEAcA-fO8snCF-kQ4YpQ1=5HuATV4yO9wk5Od7gxuOFA8Hd-A@mail.gmail.com>
-Subject: Re: [PULL 17/20] target/arm: Do memory type alignment check when
- translation disabled
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1sPmfs-0002jT-OJ; Fri, 05 Jul 2024 13:24:44 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1sPmfq-00068n-41; Fri, 05 Jul 2024 13:24:43 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 465ExWeU017854;
+ Fri, 5 Jul 2024 17:24:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ BuYZ8Ses1IWixZbo4FE/LJUTnb87qx79OuGVEcweAHY=; b=I2htMkbpcEljUdN9
+ iFpBfE9DV0sOcazIKhljkf5fXZQ9a+8hSRIcGAhDfacyc2vWlZlXHSqwpMgZG20b
+ SEl4oh7/JSGglusIy6PDii3DcXnWlTqAbUoqMXGCO3suXp/bcVNof9o+o7nnv8nS
+ raScihToxG3TTC68YgflA8cOC1lFbkStcqhev1dDDHOYUV8ypFOUJVsiLRtCpGo8
+ GL+/vcWz5kfqy0g8q/6WvZelEsqv16d/4ZFnlfi38AmqoQUgjZZpBbT4F+8RFAD3
+ D9cTjS6uSQL+Y3rCBUVavEY/1csHioRBqcLOauo98fsfS2Nh7uGEdLoSP9avpsZx
+ b54Zlg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 406k2e8cv0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 05 Jul 2024 17:24:27 +0000 (GMT)
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 465HOQxU015296;
+ Fri, 5 Jul 2024 17:24:26 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 406k2e8cup-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 05 Jul 2024 17:24:26 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 465F31RF009477; Fri, 5 Jul 2024 17:24:25 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 402xtn6dmm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 05 Jul 2024 17:24:25 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 465HOMjH31523282
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 5 Jul 2024 17:24:24 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 047492004D;
+ Fri,  5 Jul 2024 17:24:22 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 939BB20063;
+ Fri,  5 Jul 2024 17:24:21 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  5 Jul 2024 17:24:21 +0000 (GMT)
+Message-ID: <e78b2024e22769c4d2cc3203ccfe5748d2e409e5.camel@linux.ibm.com>
+Subject: Re: [PATCH 0/2] target/arm: Fix unwind from dc zva and FEAT_MOPS
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, david@redhat.com,
+ balaton@eik.bme.hu
+Date: Fri, 05 Jul 2024 19:24:21 +0200
+In-Reply-To: <426dbf1d-cfa8-4fd4-b857-8b8a283dd55e@linaro.org>
+References: <20240702234155.2106399-1-richard.henderson@linaro.org>
+ <13b19a4859e25274d05663bc0ca05621c56af985.camel@linux.ibm.com>
+ <9fe81eeb-473a-4ffb-ad6f-f93e40283e8a@linaro.org>
+ <426dbf1d-cfa8-4fd4-b857-8b8a283dd55e@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: lmB3YdtX8sjyw7UWJ0ORmn6p-FmGa1df
+X-Proofpoint-ORIG-GUID: rY7gIb9dMK3djrKamF-xVAnxrs_zR2YV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-05_12,2024-07-05_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 bulkscore=0
+ suspectscore=0 adultscore=0 mlxlogscore=659 impostorscore=0 malwarescore=0
+ phishscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2406140001 definitions=main-2407050122
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,54 +117,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jul 2024 at 12:46, Bernhard Beschow <shentey@gmail.com> wrote:
-> Am 27. Mai 2024 17:49:26 UTC schrieb Bernhard Beschow <shentey@gmail.com>=
-:
-> >Am 27. Mai 2024 16:20:44 UTC schrieb Richard Henderson <richard.henderso=
-n@linaro.org>:
-> >>On 5/27/24 08:29, Bernhard Beschow wrote:
-> >>> I think the kernel's output indicates that the MMU is active:
-> >>>
-> >>>    [7e849b05] *pgd=3D2c552831, *pte=3D109eb34f, *ppte=3D109eb83f
-> >>>
-> >>> AFAIU, the value in brackets is a virtual address while the pte's are=
- physical ones. Furthermore, the `info mtree` QMP command tells that the ph=
-ysical addresses are RAM addresses:
-> >>>
-> >>>    0000000010000000-000000002fffffff (prio 0, ram): sabrelite.ram
-> >>>
-> >>> So I think we can conclude this to be "normal memory" to speak in ARM=
- terms.
-> >>
-> >>Normal and Device are attributes on the page table entry.
-> >>See section G5.7 Memory region attributes in the Arm ARM.
-> >>
-> >>But it's unlikely that the Linux kernel has messed this up, even back i=
-n 4.x days.
-> >>
-> >>If you want to make any progress, you'll have to share a test case.
-> >
-> >It's a proprietary guest, so I need to strip it down first. This may tak=
-e some time. Thanks for yor feedbak so far!
->
-> I finally had some time to look deeper into it. While this patch triggere=
-d alignment issues, it is not the culprit. The culprit is that the sabrelit=
-e board sets arm_boot_info::secure_boot =3D true which causes the Linux ker=
-nel to run in EL3 mode where hardware alignment fixing is apparently not pe=
-rformed. Setting it to false fixes all problems and the guest boots just fi=
-ne.
->
-> Question: Does it make sense to ignore the secure_boot flag on direct ker=
-nel boot? If not, what do you suggest?
+On Thu, 2024-07-04 at 14:48 -0700, Richard Henderson wrote:
+> On 7/4/24 08:18, Richard Henderson wrote:
+> > On 7/4/24 07:50, Ilya Leoshkevich wrote:
+> > > On Tue, 2024-07-02 at 16:41 -0700, Richard Henderson wrote:
+> > > > While looking into Zoltan's attempt to speed up ppc64 DCBZ
+> > > > (data cache block set to zero), I wondered what AArch64 was
+> > > > doing differently.=C2=A0 It turned out that Arm is the only user
+> > > > of tlb_vaddr_to_host.
+> > > >=20
+> > > > None of the code sequences in use between AArch64, Power64 and
+> > > > S390X
+> > > > are 100% safe, with race conditions vs mmap et al, however,
+> > > > AArch64
+> > > > is the only one that will fail this single threaded test case.=C2=
+=A0
+> > > > Use
+> > > > of these new functions fixes the race condition as well, though
+> > > > I
+> > > > have not yet touched the other guests.
+> > > >=20
+> > > > I thought about exposing accel/tcg/user-retaddr.h for direct
+> > > > use
+> > > > from the targets, but perhaps these wrappers are cleaner.=C2=A0 RFC=
+?
+> > > >=20
+> > > >=20
+> > > > r~
+> > > >=20
+> > > >=20
+> > > > Richard Henderson (2):
+> > > > =C2=A0=C2=A0 accel/tcg: Introduce memset_ra, memmove_ra
+> > > > =C2=A0=C2=A0 target/arm: Use memset_ra, memmove_ra in helper-a64.c
+> > > >=20
+> > > > =C2=A0=C2=A0include/exec/cpu_ldst.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 40 ++++++++++++++++
+> > > > =C2=A0=C2=A0accel/tcg/user-exec.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 22 +++++++++
+> > > > =C2=A0=C2=A0target/arm/tcg/helper-a64.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 | 10 ++--
+> > > > =C2=A0=C2=A0tests/tcg/multiarch/memset-fault.c | 77
+> > > > ++++++++++++++++++++++++++++++
+> > > > =C2=A0=C2=A04 files changed, 144 insertions(+), 5 deletions(-)
+> > > > =C2=A0=C2=A0create mode 100644 tests/tcg/multiarch/memset-fault.c
+> > >=20
+> > > This sounds good to me.
+> > >=20
+> > > I haven't debugged it, but I wonder why doesn't s390x fail here.
+> > > For XC with src =3D=3D dst, it does access_memset() ->
+> > > do_access_memset()
+> > > -> memset() without setting the RA. And I don't think that
+> > > anything
+> > > around it sets the RA either.
+> >=20
+> > s390x uses probe_access_flags, which verifies the page is mapped
+> > and writable, and raises=20
+> > the exception when it isn't.=C2=A0 In contrast, for user-only,
+> > tlb_vaddr_to_host *only*=20
+> > performs the guest -> host address mapping, i.e. (addr +
+> > guest_base).
+>=20
+> I should clarify: probe_access_flags verifies that the page is mapped
+> *at that moment*,=20
+> but does not take the mmap_lock.=C2=A0 So the race is that the page can b=
+e
+> unmapped by another=20
+> thread after probe_access_flags and before the memset completes.
 
-The secure_boot flag specifically means "when direct booting
-a kernel, do it in Secure SVC, not NonSecure Hyp or NonSecure SVC";
-it has no effect on the boot of bios/baremetal images.
+I see, thanks. I completely overlooked the access_prepare() calls.
 
-It's only supposed to be set on the (very few) boards where that's
-how kernels are booted, and kernels that boot on those boards are
-supposed to be able to handle being booted that way...
-
-thanks
--- PMM
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
