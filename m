@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 496B1C3DA41
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03154C38150
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPktv-0005dB-Ed; Fri, 05 Jul 2024 11:31:07 -0400
+	id 1sPku7-0005nX-LY; Fri, 05 Jul 2024 11:31:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPktq-0005bk-UC
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:04 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1sPku5-0005lL-Cf
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:17 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPktn-0000IM-Sj
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:02 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-58b447c511eso2379572a12.2
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:30:56 -0700 (PDT)
+ id 1sPktt-0000QL-NB
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:17 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a77bf336171so258696966b.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:31:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193455; x=1720798255; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193464; x=1720798264; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ldyUH9Hn6Eww0iJRRhRb5soziQO77Zzr7htHiwXtIxg=;
- b=vcazQ5gK9cdfKbFtgkJ14zzr9+j84b462kAWPGDtM7GIgN4qS1s1N5saR0iNe+dkwt
- pSRqq8/2tVtkZe9EpFEgOCoG5F6hZSU4EskTYbI7yJR1I72umHCr2fT0ZdqJkLJ05QLp
- EvslcGMPD5enJaEl49PD96xuTMZLqboF0jHbkEdKlrNz9qEHecnci2Z+L7ARqGF6zXDa
- VJmjKW6mUKzzvhOOZ/YJalIvm3trLp5W1itxAVPgpyenXorjlAvKajnT3YzHk5HJjAUo
- rZaVB4bQHch6SF2tMek081MUtfbJZHRQuk+6DcrupIzE/X95psccYib4MDuRJgaeO/T5
- eeng==
+ bh=7dL44LVhy8HUCuCBi0juUZMiha6qD0o8n5oVMcUj9i8=;
+ b=rOu1jg4h4D7/QSccAJLykUdGoMYVJPY+OLfDkpAzju70lC8rSGZnNJtq3BIkNTV2cn
+ EsHEYFBHaCoiKvKkeXr+CodvT4L0MC/HYdUy90g00HvIfzgpIqS5sP+KiKdaxLkGezpz
+ 3Xgmw3BjobTaCPSpPEvylQQcrV1XSO+T/0z590QcXRllQsgJGeEgNBS7y/hWDZVZla48
+ Ca3fEWPO4T0d1abC/YHOkN66WkLbc/Nxb5+HYHgApN0AvLfzu2bsxhmH/TFIVLAeH0uW
+ C9PG8TmBV8Ys+bFNDizfT3Bsi4ES9zfrzRHzNkW2vJb9PMa+g3v5Mbaw5r269bKbAfrO
+ 9B9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193455; x=1720798255;
+ d=1e100.net; s=20230601; t=1720193464; x=1720798264;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ldyUH9Hn6Eww0iJRRhRb5soziQO77Zzr7htHiwXtIxg=;
- b=Wmu+8Bd+FwYdZUiuPrpNEhMNE0rnptwhr2RJGOlV22J1seiU2qugYylTvnyHfPOcaY
- MplZf2fYVx2rKPqWRpccJocqW8+gZW5WZx5L73+uylUSes+CE9E/xxEY7SPKAeFHHmE9
- EoMnFlXKVe7C4/QmQV9BQ7Up6qkk6GT9DC4I0Dv0c51lZSypPVfznxNg/wQK4OJGibt+
- j3FhsjQegqFFY4zLG6VVrQs4xK2ip+Bu1qzhjTx+sPuGWISdeXyVKWzsiX0Py9EBoElm
- fbdAvQdqAChFxnoozXYAhgExR3cBRDTUm4vB/PgHnOW/sW0kY/5vMCudjq15eJ+ZLmPp
- rwZw==
-X-Gm-Message-State: AOJu0Yw1oZmjM0byeGQkV/hCVcJlmZ2vKQGB8bE6nh8Hwc2SmqOeFs66
- vHInai8TqkW0PaKRkdaMMrOUUT3LMwHn7KITkhtV9s6S6zvYHRmb4g8DQgIfHKs=
-X-Google-Smtp-Source: AGHT+IEfBcRLZhAWGhejHXED4dXSg1RWBn099gU0f+sUf8pNd+fwrtcxRBVpOGpZ/h/4ayl9vx38OQ==
-X-Received: by 2002:a17:906:5acd:b0:a72:4402:9344 with SMTP id
- a640c23a62f3a-a77ba46ce62mr418927266b.20.1720193454358; 
- Fri, 05 Jul 2024 08:30:54 -0700 (PDT)
+ bh=7dL44LVhy8HUCuCBi0juUZMiha6qD0o8n5oVMcUj9i8=;
+ b=YhoFi41Z0Qest3tfZiNqLk1xOlbwMy+Su5ekGFkJiDMMWBuACrZO3dAHJdw0Fs53dY
+ NMczSDWP+1IOLeEYq3kIfUATBYGLK8iiYlAgaIRv2Z4luKgqBLB59+zLJojJCQO2v2TC
+ IpX2qjVpxi9fIuUdbWeKvCW/SsVeIAspSG0bevh7nSM6j9/8GYh5mbCombeBF0efDIH0
+ wrPk3yiGjJDgwa+lFAWnCMbSzL1dYbKQHZ7+AobJWXK0rj8U7pG+cQQTBfMcr8Wi/dtD
+ v8qEVn5spkaclEh4+xKIZswUuNj+X9rqKiViYU4FkOK9zV+koA4YBjor6Ymad84n6OTt
+ K1Jw==
+X-Gm-Message-State: AOJu0YzOA6EEmG7tdDwns7nKIgFjCRC4w1DJ0CqN3ay2NkInMi5Fsf2i
+ WdOBiF2Yl7XEWmlZMNO/qXv0OHVM6HmwIqWovczc+IGJd223qSbEYGev/BAunxQ=
+X-Google-Smtp-Source: AGHT+IHvNJccW14j2SjIdj+564lohEMfSN7YgUhr1SpvIt/cFbGQRsI7MxrWEtQrYFkJ9BE4g9Bp1A==
+X-Received: by 2002:a17:906:1919:b0:a72:4207:479b with SMTP id
+ a640c23a62f3a-a77bd99ec6cmr368981466b.5.1720193463682; 
+ Fri, 05 Jul 2024 08:31:03 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77d965dc4asm37874766b.87.2024.07.05.08.30.53
+ a640c23a62f3a-a77c4cdee52sm101519766b.128.2024.07.05.08.30.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 08:30:53 -0700 (PDT)
+ Fri, 05 Jul 2024 08:30:57 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2401F5F8AF;
- Fri,  5 Jul 2024 16:30:53 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 0D0D2620FA;
+ Fri,  5 Jul 2024 16:30:54 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Subject: [PULL 01/40] tests/lcitool: fix debian-i686-cross toolchain prefix
-Date: Fri,  5 Jul 2024 16:30:13 +0100
-Message-Id: <20240705153052.1219696-2-alex.bennee@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PULL 11/40] tests/tcg/aarch64: Do not use x constraint
+Date: Fri,  5 Jul 2024 16:30:23 +0100
+Message-Id: <20240705153052.1219696-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +99,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I guess we never noticed and tried to build with this cross image. Fix
-the toolchain prefix so we actually build 32 bit images.
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+clang version 18.1.6 does not support x constraint for AArch64.
+Use w instead.
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240627-tcg-v2-5-1690a813348e@daynix.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240630190050.160642-7-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-2-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-12-alex.bennee@linaro.org>
 
-diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
-index f1e5b0b877..f4ef054a2e 100644
---- a/tests/docker/dockerfiles/debian-i686-cross.docker
-+++ b/tests/docker/dockerfiles/debian-i686-cross.docker
-@@ -169,7 +169,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/i686-linux-gnu && \
+diff --git a/tests/tcg/arm/fcvt.c b/tests/tcg/arm/fcvt.c
+index 7ac47b564e..f631197287 100644
+--- a/tests/tcg/arm/fcvt.c
++++ b/tests/tcg/arm/fcvt.c
+@@ -126,7 +126,7 @@ static void convert_single_to_half(void)
+         asm("vcvtb.f16.f32 %0, %1" : "=t" (output) : "x" (input));
+ #else
+         uint16_t output;
+-        asm("fcvt %h0, %s1" : "=w" (output) : "x" (input));
++        asm("fcvt %h0, %s1" : "=w" (output) : "w" (input));
+ #endif
+         print_half_number(i, output);
+     }
+@@ -149,7 +149,7 @@ static void convert_single_to_double(void)
+ #if defined(__arm__)
+         asm("vcvt.f64.f32 %P0, %1" : "=w" (output) : "t" (input));
+ #else
+-        asm("fcvt %d0, %s1" : "=w" (output) : "x" (input));
++        asm("fcvt %d0, %s1" : "=w" (output) : "w" (input));
+ #endif
+         print_double_number(i, output);
+     }
+@@ -244,7 +244,7 @@ static void convert_double_to_half(void)
+         /* asm("vcvtb.f16.f64 %0, %P1" : "=t" (output) : "x" (input)); */
+         output = input;
+ #else
+-        asm("fcvt %h0, %d1" : "=w" (output) : "x" (input));
++        asm("fcvt %h0, %d1" : "=w" (output) : "w" (input));
+ #endif
+         print_half_number(i, output);
+     }
+@@ -267,7 +267,7 @@ static void convert_double_to_single(void)
+ #if defined(__arm__)
+         asm("vcvt.f32.f64 %0, %P1" : "=w" (output) : "x" (input));
+ #else
+-        asm("fcvt %s0, %d1" : "=w" (output) : "x" (input));
++        asm("fcvt %s0, %d1" : "=w" (output) : "w" (input));
+ #endif
  
- ENV ABI "i686-linux-gnu"
- ENV MESON_OPTS "--cross-file=i686-linux-gnu"
--ENV QEMU_CONFIGURE_OPTS --cross-prefix=x86_64-linux-gnu-
-+ENV QEMU_CONFIGURE_OPTS --cross-prefix=i686-linux-gnu-
- ENV DEF_TARGET_LIST x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user
- # As a final step configure the user (if env is defined)
- ARG USER
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index b25e3ac4dd..ac803e34f1 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -167,7 +167,7 @@ try:
- 
-     generate_dockerfile("debian-i686-cross", "debian-11",
-                         cross="i686",
--                        trailer=cross_build("x86_64-linux-gnu-",
-+                        trailer=cross_build("i686-linux-gnu-",
-                                             "x86_64-softmmu,"
-                                             "x86_64-linux-user,"
-                                             "i386-softmmu,i386-linux-user"))
+         print_single_number(i, output);
+@@ -335,7 +335,7 @@ static void convert_half_to_double(void)
+         /* asm("vcvtb.f64.f16 %P0, %1" : "=w" (output) : "t" (input)); */
+         output = input;
+ #else
+-        asm("fcvt %d0, %h1" : "=w" (output) : "x" (input));
++        asm("fcvt %d0, %h1" : "=w" (output) : "w" (input));
+ #endif
+         print_double_number(i, output);
+     }
+@@ -357,7 +357,7 @@ static void convert_half_to_single(void)
+ #if defined(__arm__)
+         asm("vcvtb.f32.f16 %0, %1" : "=w" (output) : "x" ((uint32_t)input));
+ #else
+-        asm("fcvt %s0, %h1" : "=w" (output) : "x" (input));
++        asm("fcvt %s0, %h1" : "=w" (output) : "w" (input));
+ #endif
+         print_single_number(i, output);
+     }
+@@ -380,7 +380,7 @@ static void convert_half_to_integer(void)
+         /* asm("vcvt.s32.f16 %0, %1" : "=t" (output) : "t" (input)); v8.2*/
+         output = input;
+ #else
+-        asm("fcvt %s0, %h1" : "=w" (output) : "x" (input));
++        asm("fcvt %s0, %h1" : "=w" (output) : "w" (input));
+ #endif
+         print_int64(i, output);
+     }
 -- 
 2.39.2
 
