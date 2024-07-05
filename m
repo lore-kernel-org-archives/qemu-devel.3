@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E62C30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 03:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AA7DC30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 03:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPZn3-0007X1-Ia; Thu, 04 Jul 2024 23:39:17 -0400
+	id 1sPZou-0008LF-KC; Thu, 04 Jul 2024 23:41:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1sPZn1-0007WG-QV; Thu, 04 Jul 2024 23:39:15 -0400
+ id 1sPZot-0008KR-EX; Thu, 04 Jul 2024 23:41:11 -0400
 Received: from pi.codeconstruct.com.au ([203.29.241.158]
  helo=codeconstruct.com.au)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1sPZn0-0002R4-5a; Thu, 04 Jul 2024 23:39:15 -0400
+ id 1sPZor-0003Nr-Nk; Thu, 04 Jul 2024 23:41:11 -0400
 Received: from [192.168.68.112]
  (ppp118-210-145-155.adl-adc-lon-bras33.tpg.internode.on.net
  [118.210.145.155])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 301FA2014E;
- Fri,  5 Jul 2024 11:39:10 +0800 (AWST)
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 49C5D20127;
+ Fri,  5 Jul 2024 11:41:06 +0800 (AWST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1720150750;
- bh=iZbIs8kJw277k4hPcQvVI8L6MOunHhIgf7u0USBq86k=;
+ d=codeconstruct.com.au; s=2022a; t=1720150866;
+ bh=qz/mGvu3wG8HLxNI7YHtOWWbBV1t1vAFTBeS+dIApW4=;
  h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=YMkZt4TyBX+5IZfr6f+egYfVTTjSZaeJ6P1lPJHR25465CHzymbO1Z3EbVOnhTYr0
- ow+tYo4vmutwTaQ+dBHRUwQ4A9erNReSF02uOJpavX5kOx4Gbz8fa7+njwoCWF+/1E
- LwD37ThFT2WwLt74NxQWYnsVjekaVI0KkNc9ciXZxqmYmLkW3SFtPKE5yKBBVqxcoS
- 3L7ufF8j+fnvon7p5Bq7Z4ypffWNi2jXFnFdKo35sgrWThNI4Tv7ZjmDPRN15r7qjK
- cxffcMsIKGeajQVxNDrOSvglTe5xYwydg08K2XnDJov+E9iuKJIMaNjGh6EOdN++81
- tuLUBtxZYYTiw==
-Message-ID: <62ba0b417de5e2cf940a2a6f6d9ca5117efcfac6.camel@codeconstruct.com.au>
-Subject: Re: [PATCH 4/8] aspeed: Introduce a AspeedSoCClass 'boot_from_emmc'
- handler
+ b=XhL1U/9+qEhope8vYOD3/36x5NyUC3zUme9SohnJJQ7z5jWgvcAukfHWvHul3SoGe
+ +ReKddQwGQzOutbuny9e0JU+VwgaTe6VT+S7FN3TJtDgVP2CohqpP7XUinWCnwjRMN
+ tLOIOcAK9phh6FLL7O+9iMHY5b85uBi6llAb2uuAH+/QEssBcqWoDPOi/jk3RnpayY
+ qxEwgo9h4+ayRqZfVb5ZvAiiwXGuQWI7XNnyDwWWVZOnYvcz9RZsKO71tW1DF3KwXN
+ fnbNnfJDvdYMpKLY+TE5IIUkzAKZHOmBacw8IPSJse4Y+8sqHwx9Fn7Rjfc1U66fYh
+ BDC5P/SUKEcRw==
+Message-ID: <f50579b99ef8883dac5fcfc1606a45abfb8bf85f.camel@codeconstruct.com.au>
+Subject: Re: [PATCH 5/8] aspeed: Set eMMC 'boot-config' property to reflect
+ HW strapping
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
 To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
  qemu-arm@nongnu.org,  qemu-devel@nongnu.org
@@ -45,10 +45,10 @@ Cc: Joel Stanley <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>,
  Maydell <peter.maydell@linaro.org>, Philippe
  =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
-Date: Fri, 05 Jul 2024 13:09:09 +0930
-In-Reply-To: <20240704053651.1100732-5-clg@redhat.com>
+Date: Fri, 05 Jul 2024 13:11:05 +0930
+In-Reply-To: <20240704053651.1100732-6-clg@redhat.com>
 References: <20240704053651.1100732-1-clg@redhat.com>
- <20240704053651.1100732-5-clg@redhat.com>
+ <20240704053651.1100732-6-clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.46.4-2 
@@ -79,12 +79,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, 2024-07-04 at 07:36 +0200, C=C3=A9dric Le Goater wrote:
 > From: C=C3=A9dric Le Goater <clg@kaod.org>
 >=20
-> Report support on the AST2600 SoC if the boot-from-eMMC HW strapping
-> bit is set at the board level. AST2700 also has support but it is not
-> yet ready in QEMU and others SoCs do not have support, so return false
-> always for these.
+> When the boot-from-eMMC HW strapping bit is set, use the 'boot-config'
+> property to set the boot config register to boot from the first boot
+> area partition of the eMMC device.
 >=20
 > Signed-off-by: C=C3=A9dric Le Goater <clg@kaod.org>
+> ---
+>  hw/arm/aspeed.c | 15 +++++++++++----
+>  1 file changed, 11 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index 756deb91efd1..135f4eb72215 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -327,7 +327,8 @@ void aspeed_board_init_flashes(AspeedSMCState *s, con=
+st char *flashtype,
+>      }
+>  }
+> =20
+> -static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool=
+ emmc)
+> +static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool=
+ emmc,
+> +                               bool boot_emmc)
+>  {
+>          DeviceState *card;
+> =20
+> @@ -335,6 +336,9 @@ static void sdhci_attach_drive(SDHCIState *sdhci, Dri=
+veInfo *dinfo, bool emmc)
+>              return;
+>          }
+>          card =3D qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
+> +        if (emmc) {
+> +            qdev_prop_set_uint8(card, "boot-config", boot_emmc ? 0x48 : =
+0x0);
+
+0x48 feels a little bit magic. I poked around a bit and there are some
+boot-config macros, but not the ones you need and they're all in an
+"internal" header anyway. I guess this is fine for now?
 
 Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
