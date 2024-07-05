@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5AF4C30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 03:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E62C30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 03:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPZko-0006iE-O4; Thu, 04 Jul 2024 23:36:58 -0400
+	id 1sPZn3-0007X1-Ia; Thu, 04 Jul 2024 23:39:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1sPZkm-0006hp-J9; Thu, 04 Jul 2024 23:36:56 -0400
+ id 1sPZn1-0007WG-QV; Thu, 04 Jul 2024 23:39:15 -0400
 Received: from pi.codeconstruct.com.au ([203.29.241.158]
  helo=codeconstruct.com.au)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrew@codeconstruct.com.au>)
- id 1sPZkk-0007qi-S8; Thu, 04 Jul 2024 23:36:56 -0400
+ id 1sPZn0-0002R4-5a; Thu, 04 Jul 2024 23:39:15 -0400
 Received: from [192.168.68.112]
  (ppp118-210-145-155.adl-adc-lon-bras33.tpg.internode.on.net
  [118.210.145.155])
- by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 749522014E;
- Fri,  5 Jul 2024 11:36:50 +0800 (AWST)
+ by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 301FA2014E;
+ Fri,  5 Jul 2024 11:39:10 +0800 (AWST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=codeconstruct.com.au; s=2022a; t=1720150611;
- bh=qrD3APwVTbEb6+UMXnlZvDWL8hR6derTmvhNktZVIG4=;
+ d=codeconstruct.com.au; s=2022a; t=1720150750;
+ bh=iZbIs8kJw277k4hPcQvVI8L6MOunHhIgf7u0USBq86k=;
  h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=hloTUKUjB1hfce45LdMBEgN3FArVjPsw+wV9r4vJk5fYS1gNAJAEXNc4hkxVsl/QO
- cb0Dw/ETc9IjGN40nIh7LrDTFcNhShH8uFQpicSJSWlSJEtvfxiEF/LlqIUtePTcyU
- RKFllkwycrFbDAatPlmiMXb5uHPmx+OvSZ6Q4C0L5LrK8ahskKJz4iPd7NiFuUvcxR
- 5O4GL94ottZD63QFQhL5b+jT2QEaw2neF6OqjVgdQPuMj/zHUR7H912VdDRXq8a118
- lJcImNOdiEVmW6JoVoJ5veB41XXFfEkpIU+RthtngBXP1sUaehm4zmaFgz7Jt4Ugd4
- HoOOsJ6dAYtgQ==
-Message-ID: <ba8b451ff51446c114fac96daa6e81abddf952a8.camel@codeconstruct.com.au>
-Subject: Re: [PATCH 3/8] aspeed/scu: Add boot-from-eMMC HW strapping bit for
- AST2600 SoC
+ b=YMkZt4TyBX+5IZfr6f+egYfVTTjSZaeJ6P1lPJHR25465CHzymbO1Z3EbVOnhTYr0
+ ow+tYo4vmutwTaQ+dBHRUwQ4A9erNReSF02uOJpavX5kOx4Gbz8fa7+njwoCWF+/1E
+ LwD37ThFT2WwLt74NxQWYnsVjekaVI0KkNc9ciXZxqmYmLkW3SFtPKE5yKBBVqxcoS
+ 3L7ufF8j+fnvon7p5Bq7Z4ypffWNi2jXFnFdKo35sgrWThNI4Tv7ZjmDPRN15r7qjK
+ cxffcMsIKGeajQVxNDrOSvglTe5xYwydg08K2XnDJov+E9iuKJIMaNjGh6EOdN++81
+ tuLUBtxZYYTiw==
+Message-ID: <62ba0b417de5e2cf940a2a6f6d9ca5117efcfac6.camel@codeconstruct.com.au>
+Subject: Re: [PATCH 4/8] aspeed: Introduce a AspeedSoCClass 'boot_from_emmc'
+ handler
 From: Andrew Jeffery <andrew@codeconstruct.com.au>
 To: =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
  qemu-arm@nongnu.org,  qemu-devel@nongnu.org
@@ -45,10 +45,10 @@ Cc: Joel Stanley <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>,
  Maydell <peter.maydell@linaro.org>, Philippe
  =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
-Date: Fri, 05 Jul 2024 13:06:49 +0930
-In-Reply-To: <20240704053651.1100732-4-clg@redhat.com>
+Date: Fri, 05 Jul 2024 13:09:09 +0930
+In-Reply-To: <20240704053651.1100732-5-clg@redhat.com>
 References: <20240704053651.1100732-1-clg@redhat.com>
- <20240704053651.1100732-4-clg@redhat.com>
+ <20240704053651.1100732-5-clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.46.4-2 
@@ -79,32 +79,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, 2024-07-04 at 07:36 +0200, C=C3=A9dric Le Goater wrote:
 > From: C=C3=A9dric Le Goater <clg@kaod.org>
 >=20
-> Bit SCU500[2] of the AST2600 controls the boot device of the SoC.
+> Report support on the AST2600 SoC if the boot-from-eMMC HW strapping
+> bit is set at the board level. AST2700 also has support but it is not
+> yet ready in QEMU and others SoCs do not have support, so return false
+> always for these.
 >=20
-> Future changes will configure this bit to boot from eMMC disk images
-> specially built for this purpose.
->=20
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
 > Signed-off-by: C=C3=A9dric Le Goater <clg@kaod.org>
-> ---
->  include/hw/misc/aspeed_scu.h | 4 ++++
->  1 file changed, 4 insertions(+)
->=20
-> diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
-> index 58db28db45aa..c9f98c20ffd9 100644
-> --- a/include/hw/misc/aspeed_scu.h
-> +++ b/include/hw/misc/aspeed_scu.h
-> @@ -349,6 +349,10 @@ uint32_t aspeed_scu_get_apb_freq(AspeedSCUState *s);
->  #define SCU_AST2600_H_PLL_BYPASS_EN                        (0x1 << 24)
->  #define SCU_AST2600_H_PLL_OFF                              (0x1 << 23)
-> =20
-> +/* STRAP1 SCU500 */
-> +#define AST2600_HW_STRAP_BOOT_SRC_EMMC            (0x1 << 2)
-> +#define AST2600_HW_STRAP_BOOT_SRC_SPI             (0x0 << 2)
-
-Maybe these should have a `SCU_` prefix for consistency?
-
-Anyway:
 
 Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
