@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1260C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC23C3271E
 	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 16:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPltK-0008V7-GN; Fri, 05 Jul 2024 12:34:34 -0400
+	id 1sPltp-0002Bd-Lz; Fri, 05 Jul 2024 12:35:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sPltI-0008OL-87
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 12:34:32 -0400
-Received: from mail-il1-x12a.google.com ([2607:f8b0:4864:20::12a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPlto-00028B-Fj
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 12:35:04 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sPltG-0002gW-PV
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 12:34:31 -0400
-Received: by mail-il1-x12a.google.com with SMTP id
- e9e14a558f8ab-3839d74a2abso6103245ab.1
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 09:34:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPltm-0003JO-JV
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 12:35:04 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2ebe40673e8so24461761fa.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 09:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720197269; x=1720802069; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720197299; x=1720802099; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=03aL4emIefcjYIg0HnF+4eNDMqJB4FbEPJCILYtwM6k=;
- b=fY/sEdJLKQktebn3We3nnx7qzxvi7iR2ufnu8zHABLnVz1y0I8V/F+BN5cn0g+/uSa
- 69KlCkKuB7Uew9yDPmVGUVb9Yorc/NrqBn28YKKh+zN17IV8+1Zdpt0VqeP1ezaT1Cy/
- AwT6lbwib5F5id5k9OErPjHmfSdbup0eMpXbq9ugDxe1mQlIj0oFn6ubHXnvyjbKO2BJ
- HD7yY3Ins1zE6r0WdODCklQgwqn6j9DkCWtof7EmM6RnsS4Qs/d791lOayAHCFUr9daa
- EqiF2Se8MwYw3S1KQ6cLqgTT2z5iUUvcwl13VpPlD1zLs1xuokz2rXHbmO3ZW/L/5qZU
- ik/A==
+ bh=qVWSQG3CnDdkh7ckcl4qhpjIBkWTa9GUF45FvgsQbqY=;
+ b=mv3sYLUUeseVqpoTzwIPoQ875m8phmzwwEIh97yJ02WOgLZmmnqDidzC2S+qQqnb0M
+ hCMX9v+ftXdry4EWVt/dKPtHQBZZkKUUD4nUq64QU0siNm3kiO4nwp3/tAfyfDDWblXe
+ IQX/Q7WdonmgtEzDUO8FT+dsQ/isFhVXER3y/ezulUBvBT1mM+hGuBNnXq58qsfEi6gD
+ 8sG55/aMQBvxORekgYVu6xS+5nA44pt70Fb571S3qBL3PGTXNzsvFvb4uBBud4imNyDE
+ 8G/5PncOQga5fvo+FzWHUaG2L9ch+bX0ZD9Nx2T3jwZVMOaR1PWfFuBg7knJIHiPXY+/
+ tggA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720197269; x=1720802069;
+ d=1e100.net; s=20230601; t=1720197299; x=1720802099;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=03aL4emIefcjYIg0HnF+4eNDMqJB4FbEPJCILYtwM6k=;
- b=tne+zOK+hnrXhqrX3D0p4WAoZNxLTU6NqPyj2P7NWuAF9PLWbAxWoLdBexjexgCywQ
- D1FccHMYpTaYVzcqAc8xd1a8H7671ozNnBW4bXzDqFVMiPCIwoTdhv/4T3aOD/TSO9j9
- kTu8AcQgWoYgEj+0x2ELlgqVfoI6IkfFl7xi9msfZrMZ3Dr67swclI+RIz8hQtEJvr7p
- 19C0GQw1ZlG2MD8spmnRGBmcTyNmDPervOtbzKYzW44/0OO/KsD+cKQfXUfgXZX6RGlF
- jpbSZ7xwECuV0HcE8QKpmfiJtGDbQOqQQW29/4euOBOw4FIRJn98Tsh4bCe2uxXtf5Lr
- kEMQ==
+ bh=qVWSQG3CnDdkh7ckcl4qhpjIBkWTa9GUF45FvgsQbqY=;
+ b=eykdIbwIer8vGypkxRbshV8GYK0cnxHVaSddnB1whhtD9G7pbKduRod1hUVgpqafYu
+ blhGH4ojJegX/Kab35YK7SWBtETSQfj714NmnA2j2CsdGyU0KH4mDcjPMzwqcgy1UI8Z
+ FEgOQiKyx2TcVvJBHfHhRzRAhGz4pmDVg2qUOqcrND8xiOWj3kt20GDSNZeIcw92tJg7
+ ZJQxcbzK2PaGHFqxSrMtATaTa4MHb/pa+WWTswyfjN9mxjnUF7bOJFwvWjylC0ZhPdy4
+ b2C2VC5t3s1TvWqutmBlIGGMmZj7K+cJvtEBOCdkhm63MjXmREL7DSAzpNcg97HVP20o
+ TIcg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFZb+2+NlVoDaJZFt3eprG2pE+8MEUNvPRYkidgETq6vcqSpQExR44tnXAc3Tkbuf9ZCqRLK1hT4buMzN9yzXi6N3xFV0=
-X-Gm-Message-State: AOJu0Yw6I5B0oCSPU5waB0dSJdYX7XbbuWyCytPPQag+BG9OfaDrO0yT
- vEn0iQopJHguk3pxLO5p40HwzibfzW0+DgXOmRb5V6212kd6asB6kXrlm5I1Fxk=
-X-Google-Smtp-Source: AGHT+IG7oxeE6wEa24tLg+K6GXPrJ3DSBNGxYLGs5/2m0Nu+kpVNSg48FgkDgDVLnETQMDzyhaY2qg==
-X-Received: by 2002:a05:6e02:1fea:b0:375:a205:86a6 with SMTP id
- e9e14a558f8ab-38398ced11fmr52971195ab.17.1720197269189; 
- Fri, 05 Jul 2024 09:34:29 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ AJvYcCX0XiAOvgK2CV6NcLddM6P29fc7cjjAVJlAfYGQIasmA7dU1JMGzt/arKRZ/kvhk4NUutDaPbuOJTTJdc4FLo3Wy/19Luc=
+X-Gm-Message-State: AOJu0YxHmcTe0fSkhgdvFc0WTQJ92eUpOO2z2kpN/qSjamwdVAqgE9x5
+ Wnz0gz5glWjLarQnce6we5LdmUj6vBp4NVNDfMcyxMiCl86wKnrsnwKVIyANRQo=
+X-Google-Smtp-Source: AGHT+IHUAQOzxjkwADsbM89h2pY5ZVgjSGeHIYaqUtyyOARHfPnp7b9i1SuOz4qDshsT2fx/apQA/Q==
+X-Received: by 2002:a2e:8e82:0:b0:2ec:617b:4757 with SMTP id
+ 38308e7fff4ca-2ee8ed8c869mr32639041fa.13.1720197299451; 
+ Fri, 05 Jul 2024 09:34:59 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.163.129])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-72c6afb9042sm11494733a12.41.2024.07.05.09.34.27
+ 5b1f17b1804b1-4264aa07a95sm66397295e9.1.2024.07.05.09.34.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Jul 2024 09:34:28 -0700 (PDT)
-Message-ID: <e8613098-74e2-4c14-9f47-24cc7a6b0b62@linaro.org>
-Date: Fri, 5 Jul 2024 09:34:26 -0700
+ Fri, 05 Jul 2024 09:34:58 -0700 (PDT)
+Message-ID: <07195265-2a54-4396-9724-2a63c98e45fb@linaro.org>
+Date: Fri, 5 Jul 2024 18:34:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/7] plugins: save value during memory accesses
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+Subject: Re: [PATCH v2 20/40] gitlab: don't bother with KVM for TCI builds
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Thomas Huth <thuth@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240705003421.750895-1-pierrick.bouvier@linaro.org>
- <20240705003421.750895-3-pierrick.bouvier@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Aleksandar Rikalo <arikalo@gmail.com>, Mads Ynddal <mads@ynddal.dk>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paul Burton <paulburton@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20240705084047.857176-1-alex.bennee@linaro.org>
+ <20240705084047.857176-21-alex.bennee@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240705003421.750895-3-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240705084047.857176-21-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12a;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x12a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,26 +110,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/4/24 17:34, Pierrick Bouvier wrote:
-> +static void
-> +plugin_gen_mem_callbacks_i32(TCGv_i32 val,
-> +                             TCGv_i64 copy_addr, TCGTemp *orig_addr,
-> +                             MemOpIdx oi, enum qemu_plugin_mem_rw rw)
-> +{
-> +#ifdef CONFIG_PLUGIN
-> +    if (tcg_ctx->plugin_insn != NULL) {
-> +        tcg_gen_st_i32(val, tcg_env,
-> +                       offsetof(CPUState, neg.plugin_mem_value_low) -
-> +                       sizeof(CPUState));
-> +        plugin_gen_mem_callbacks(copy_addr, orig_addr, oi, rw);
-> +    }
-> +#endif
-> +}
+On 5/7/24 10:40, Alex Bennée wrote:
+> In fact any other accelerator would be pointless as the point is to
+> exercise the TCI accelerator anyway.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   .gitlab-ci.d/buildtest.yml   | 2 +-
+>   .gitlab-ci.d/crossbuilds.yml | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> index 425fc6479b..e3a0758bd9 100644
+> --- a/.gitlab-ci.d/buildtest.yml
+> +++ b/.gitlab-ci.d/buildtest.yml
+> @@ -635,7 +635,7 @@ build-tci:
+>       - TARGETS="aarch64 arm hppa m68k microblaze ppc64 s390x x86_64"
+>       - mkdir build
+>       - cd build
+> -    - ../configure --enable-tcg-interpreter --disable-docs --disable-gtk --disable-vnc
+> +    - ../configure --enable-tcg-interpreter --disable-kvm --disable-docs --disable-gtk --disable-vnc
 
-You need the big-endian offset for the low half of the uint64_t:
+Shouldn't we also disable the other accelerators for completeness?
 
-   HOST_BIG_ENDIAN * 4.
+>           --target-list="$(for tg in $TARGETS; do echo -n ${tg}'-softmmu '; done)"
+>           || { cat config.log meson-logs/meson-log.txt && exit 1; }
+>       - make -j"$JOBS"
+> diff --git a/.gitlab-ci.d/crossbuilds.yml b/.gitlab-ci.d/crossbuilds.yml
+> index 3de0341afe..cb499e4ee0 100644
+> --- a/.gitlab-ci.d/crossbuilds.yml
+> +++ b/.gitlab-ci.d/crossbuilds.yml
+> @@ -68,7 +68,7 @@ cross-i686-tci:
+>     variables:
+>       IMAGE: debian-i686-cross
+>       ACCEL: tcg-interpreter
+> -    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins
+> +    EXTRA_CONFIGURE_OPTS: --target-list=i386-softmmu,i386-linux-user,aarch64-softmmu,aarch64-linux-user,ppc-softmmu,ppc-linux-user --disable-plugins --disable-kvm
+>       MAKE_CHECK_ARGS: check check-tcg
+>   
+>   cross-mipsel-system:
 
-
-r~
 
