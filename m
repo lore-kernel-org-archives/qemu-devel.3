@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84F51C3271F
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4304BC30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPeVo-0001rF-Tm; Fri, 05 Jul 2024 04:41:48 -0400
+	id 1sPeVq-00021r-Ie; Fri, 05 Jul 2024 04:41:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPeVH-0000B2-Q5
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:41:17 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1sPeVG-00009h-FT
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:41:16 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPeVD-0003I2-LR
+ id 1sPeVD-0003IH-In
  for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:41:14 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a77baa87743so154558866b.3
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-58b447c51bfso1786014a12.2
  for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:41:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720168868; x=1720773668; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720168869; x=1720773669; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lvuQOiGW9BFlfC8YjQOeAwRsNcaM68CdeZDfIgp7wbI=;
- b=pb/TUa4p8EIwBtGtYE14DnQa/qmg3QKIbizRuIy8zZpEuJqEtswRYIiURfcyOeGUV+
- DLvEkl5igHp+A2b34hsOGgxJVD+WkwMVdMQWmKAA2levolWYzDro1Yb/p/+5QNp36ggM
- AhTvt3NW8qZVEDiD3Xh+W0E009iXX/mineUG5TPzb2wYWYU3kYw+X0cL1TkvpmswEccx
- Sl0dmt0APJ9GRzlUE5vP4vl+R2Gwp2C1izP3Qd9JHkav1xSbAhL9yf+9h7Tvn5SVhRdS
- MI39GK0clq4FPJkaM92sDEW847rz4Oc4y9a0CQ7LSdybMC5MmVxVJq7npyBiR2RgoutJ
- S9BQ==
+ bh=z+z1akQCdvD4EPIckgvY2ywucJ1AQ3R2DHXwf7IjKDc=;
+ b=ndxaD3ACtGucNmxTduEJYr7U1uNmPv+WMKgXwsqf0o4Tn9HDH4+rspT45KH7wheQ8+
+ z5Un7TXQPgIfasrBZMBpxgNjGVvTPcIr0lzn/hAIeU3ooRXQwzPMwXawUePmg6Ylr74G
+ tj7idwWtD6EbAheulxdsFKbFfSoPopJsVSMwV3lEnknm7Pu+M+Q73qaspuxFeOL7KwFL
+ nR0780dOSn/DiHSerwZE1LMdnpdMXcJ28tWhLT8yKld0xvWVxeo/9G7tnuHbzOX0BTft
+ s2fGo33ab7xq/h/QaRTxVMMjVynyxUcqNFfGw4zuOKCl+TgfQpiELDr4WLUFw6SVAPd7
+ D6eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720168868; x=1720773668;
+ d=1e100.net; s=20230601; t=1720168869; x=1720773669;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lvuQOiGW9BFlfC8YjQOeAwRsNcaM68CdeZDfIgp7wbI=;
- b=JUNtVZtMnBT4MXZfXgtFjmDdCZZ37Ct3/ac41s4QjcZg0M+QSUDixlvy4kT9JL5gYY
- eNJg4V7OwDSKCpJp50GkRLK412W915Gobu3sqjlLFzR6F+/lfJ0Bhg6ujZRPCiKeMYny
- 2BP2LkId1uQ+Dg3jmrZ9yRVEeoNmNFePaW3RWNXzm5yE+eoynArONFDCrKf09A22wx3V
- NNcbrnmqHIqKxS3B3yPnP9fdB9vbF14knD8aNlUUJSTgWZD0tkI9tgxxi4n7d0XTlG+x
- c97gXaTv3O+k2Q9KQ1jlZm/IYcaIk65XCJj5sdX3XZT3Xo1H1R4aarTxZa8JWAhrSOt2
- R4Nw==
-X-Gm-Message-State: AOJu0YxfYilBMNHI5Fk+xz5ZxbTpoxjyQU1WgDWEi3cYRE8QGh9kTxBQ
- 0sXWAy85TthA/85UOCaHBL+mQYgkS8qCD8XmhF7ubZ8781LVAMACigV2bKikK4o=
-X-Google-Smtp-Source: AGHT+IEEeCMWOVzRLbNVbM2FEBrAPwUAOjM9enpMEEM6qfqWvnFtjEcdslg6UkgYLyB4ykj0j3iOOA==
-X-Received: by 2002:a17:906:34d3:b0:a72:a05a:6601 with SMTP id
- a640c23a62f3a-a77ba455f83mr340685566b.14.1720168868164; 
+ bh=z+z1akQCdvD4EPIckgvY2ywucJ1AQ3R2DHXwf7IjKDc=;
+ b=OWO5quiJPjWH5hcoWCM5pRNP5Kz5TRR1aptjjt3da2HJV/Lq6kKsscx6ws98W82hnM
+ ZwjyJgrtTMhtmo/i++azWCJESyJjF3i2RyMqPXKkh6pzoufP9Obfjuc/XEUBNh44J+X/
+ GxoWYBwl01ibek3O2td4d/OiIK+mQYcoYIqOaBeJxUAYeknh8QQ/6CfLrxuI8spsQeLN
+ AUI6pJ2uCkbNl0HL86bu2MxQ4fcjN/5e/8ZILY9foFx6TfZnI7AivyWsBHK0Yc9YScXo
+ dFKBjgRdEzlDAr9WM03TgSao8p6ncHSejUQCA5XPKgT6PBnu91xRzjc039vsh8KNODTR
+ HZIA==
+X-Gm-Message-State: AOJu0YwvSh+HneYxAxmBZvCikcxoUQu6mym2BKwthGQkDzp8XlN1fWs1
+ +PYBSY0BKTm/c9yKcvjFDwm/vZ6uYi7fj8gCrxd78+b3MWLWnME7Ha+yeMv4QyM=
+X-Google-Smtp-Source: AGHT+IFyHg2rkZgGiY42rqPAYRhZULZTk8PAfnHDMb2P387ScVI/ThA5hJE8jhCFt/yupzymWrXSyQ==
+X-Received: by 2002:a05:6402:5ce:b0:58e:dbd:65cd with SMTP id
+ 4fb4d7f45d1cf-58e5b5a68b0mr2957743a12.26.1720168868595; 
  Fri, 05 Jul 2024 01:41:08 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77c3ef218bsm76340466b.71.2024.07.05.01.40.58
+ 4fb4d7f45d1cf-58fbfccf0f9sm444538a12.75.2024.07.05.01.40.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 01:41:01 -0700 (PDT)
+ Fri, 05 Jul 2024 01:41:04 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6572862155;
+ by draig.lan (Postfix) with ESMTP id 7D4CF62156;
  Fri,  5 Jul 2024 09:40:50 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -78,18 +78,18 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Paul Burton <paulburton@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v2 28/40] plugins: Free CPUPluginState before destroying vCPU
- state
-Date: Fri,  5 Jul 2024 09:40:35 +0100
-Message-Id: <20240705084047.857176-29-alex.bennee@linaro.org>
+Subject: [PATCH v2 29/40] accel/tcg: Move qemu_plugin_vcpu_init__async() to
+ plugins/
+Date: Fri,  5 Jul 2024 09:40:36 +0100
+Message-Id: <20240705084047.857176-30-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705084047.857176-1-alex.bennee@linaro.org>
 References: <20240705084047.857176-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,49 +114,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-cpu::plugin_state is allocated in cpu_common_initfn() when
-the vCPU state is created. Release it in cpu_common_finalize()
-when we are done.
+Calling qemu_plugin_vcpu_init__async() on the vCPU thread
+is a detail of plugins, not relevant to TCG vCPU management.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240606124010.2460-3-philmd@linaro.org>
+Message-Id: <20240606124010.2460-4-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/qemu/plugin.h | 3 +++
- hw/core/cpu-common.c  | 5 +++++
- 2 files changed, 8 insertions(+)
+ hw/core/cpu-common.c | 9 +--------
+ plugins/core.c       | 8 +++++++-
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index bc5aef979e..af5f9db469 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -149,6 +149,9 @@ struct CPUPluginState {
- 
- /**
-  * qemu_plugin_create_vcpu_state: allocate plugin state
-+ *
-+ * The returned data must be released with g_free()
-+ * when no longer required.
-  */
- CPUPluginState *qemu_plugin_create_vcpu_state(void);
- 
 diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index f131cde2c0..8f6cb64da3 100644
+index 8f6cb64da3..b19e1fdacf 100644
 --- a/hw/core/cpu-common.c
 +++ b/hw/core/cpu-common.c
-@@ -283,6 +283,11 @@ static void cpu_common_finalize(Object *obj)
- {
-     CPUState *cpu = CPU(obj);
+@@ -192,13 +192,6 @@ static void cpu_common_parse_features(const char *typename, char *features,
+     }
+ }
  
-+#ifdef CONFIG_PLUGIN
-+    if (tcg_enabled()) {
-+        g_free(cpu->plugin_state);
-+    }
-+#endif
-     g_array_free(cpu->gdb_regs, TRUE);
-     qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
-     qemu_mutex_destroy(&cpu->work_mutex);
+-#ifdef CONFIG_PLUGIN
+-static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
+-{
+-    qemu_plugin_vcpu_init_hook(cpu);
+-}
+-#endif
+-
+ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+ {
+     CPUState *cpu = CPU(dev);
+@@ -274,7 +267,7 @@ static void cpu_common_initfn(Object *obj)
+ #ifdef CONFIG_PLUGIN
+     if (tcg_enabled()) {
+         cpu->plugin_state = qemu_plugin_create_vcpu_state();
+-        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
++        qemu_plugin_vcpu_init_hook(cpu);
+     }
+ #endif
+ }
+diff --git a/plugins/core.c b/plugins/core.c
+index a864275ae7..12c67b4b4e 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -241,7 +241,7 @@ static void plugin_grow_scoreboards__locked(CPUState *cpu)
+     end_exclusive();
+ }
+ 
+-void qemu_plugin_vcpu_init_hook(CPUState *cpu)
++static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
+ {
+     bool success;
+ 
+@@ -258,6 +258,12 @@ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
+     plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_INIT);
+ }
+ 
++void qemu_plugin_vcpu_init_hook(CPUState *cpu)
++{
++    /* Plugin initialization must wait until the cpu start executing code */
++    async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
++}
++
+ void qemu_plugin_vcpu_exit_hook(CPUState *cpu)
+ {
+     bool success;
 -- 
 2.39.2
 
