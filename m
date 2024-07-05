@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE258C3271E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:38:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C912AC38150
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPl0F-00033B-07; Fri, 05 Jul 2024 11:37:39 -0400
+	id 1sPl0B-0002pr-OK; Fri, 05 Jul 2024 11:37:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPl04-0002eb-7Z
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:28 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1sPl02-0002dl-Qa
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:26 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPl00-0001JG-BZ
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:27 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-58b447c511eso2387501a12.2
+ id 1sPl00-0001JE-0m
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:26 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a77b550128dso228461266b.0
  for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:37:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193843; x=1720798643; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193842; x=1720798642; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AzZJILDpjzCFS1oa5xiSH1SXLCbMpnINOysIyIIVbec=;
- b=EgeIztKz2EHAecYecCkmc1FD4HYzuqcefh/0ypZ53JtnGiVAJa+bcN4PQ2tBtywOR5
- K8pQ0k1brxtRbzYHTlkRqkeYrr2WBPag6Lrk4udXlQphWulWKhnnst744wygd2ZnUesf
- RR0GUx9T3qtyAoU+Jw6KwfZjLrHSOMNKDNrREjDCy2Z8DwSASqbbaeImvO1aNS3DprGR
- DyG/GX7+NYlLo8KPAOWjnFWdCMrwKKS1WP16c2bMvuk5VXiqveWYLCTNtXatIkQ+aODV
- u1vHyGzSUyywY4UdZ8Dr/KC/VFldB/NCLkGi06JWessoiwAoJNULMzjLZMygM4zSu8k5
- BmiQ==
+ bh=n236Rd+ZsQdBpOfpU2JzZjmyVcpBVPLX43laLzo8bCU=;
+ b=fcMOHP/xRw1Ihu5WbaqRNOzWTzsxWxKQCxeWvoMez8bFVb071MtwFBvbXh9VhqlJ8p
+ ZpQjbA3Q72/0oy6Rg4v4dsBTcy9TPChd0PnayRYLDgEwjzW9LGXjTwx3vkaCqR8kaDjj
+ e1A82X2qKIAeAzCj1T660VOoJWS6Y4DDgUh62uWYq5IeaUDbedwOL4u+hyw3wZWVI8OV
+ vF77wxCruGyCLpSrSnC8p6f1pq2ZROihwopmA/nivRIm2XnQzPAbVt2wNgavz0M/Ea3H
+ rtCchRTs8+xhLiqOMoJwSnfuFPki0hgif1AAO2ePiPJVQmQb9DYKOVfSkPaQrIukiKHV
+ viVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193843; x=1720798643;
+ d=1e100.net; s=20230601; t=1720193842; x=1720798642;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AzZJILDpjzCFS1oa5xiSH1SXLCbMpnINOysIyIIVbec=;
- b=Csk46In+rMXN3G5Hb4dV3c7Lmr7rYYQFtgTJ9S2LQ5ppnA44t7Bdjrrv+xjtO5i5so
- Jyisf6K0zIV4XY9BmLP0z+oUMaCRwZ/GyiYU+5nXA3++iAVINhcpKQN2wcyw1HJasx89
- ugPixiA4ipSSYlht0eczBXzZf1QWjwXjbrNoFUgy5gtJRHX1mGDIXbNRttVkjaB45vg5
- 1YGsxIaJZUUdEOPQxH0mKihrsunEfcrNHbT2ZNLemdYSeL2AjvkYfq7yqwC2tNFMztPq
- oFs7hxGuX/PyiAtPwohdTSw53kkyo+Jq7hjY7SQuKsQVai6Ng3K2x/pVnVFE0i5Bfq75
- Ae6w==
-X-Gm-Message-State: AOJu0Yw2i5oymJAXRptfcV3zljI+Cg30H/6ggP2eMWDtsqjfHRjD122S
- g5mXFB1I79ZCP6x8rx6aQyGPN43YjCITEwaPGSmL+bGabL0DCGNugh5k7L2iizc=
-X-Google-Smtp-Source: AGHT+IFnWmXC2OshjSJmyBEEzd1zp2xXesFXu9aa4D2IxGRrCmdUXsLCq/qC3ch5OHK2C61yC8Ti3A==
-X-Received: by 2002:a17:906:64f:b0:a77:de2a:af00 with SMTP id
- a640c23a62f3a-a77de2ab225mr27017066b.44.1720193842241; 
+ bh=n236Rd+ZsQdBpOfpU2JzZjmyVcpBVPLX43laLzo8bCU=;
+ b=f+3JnG/0i/hMjon9GCb9j4jDVj3bEF1Bx+zF8uc0ZyI9rZgG3q2ZJgw4cVuC5xFRa3
+ ewRp0n1+QTU/uTG35mMQoUA1GptLbBq4vE4yEHMzXMT4aKuNkXTRDA1jxh4LDjfFPCnz
+ CWarqb7SLzDmHCxsEQs9CsF99fJay/rdUf77o2zEcFZeDxjfmBGBo9evTCKCKbSP1wUZ
+ MrB5tLfH6tLi/WlsNVe31VjvGw79qenA+WDKU+pnD6BbVkzpolwhcM8+V0tcS9Xw/4qr
+ bLx7dCTJ4X/QXfPUyi7KZ8TtI7bVigu2peh8523ZncGxTTIwhMTPOd0xrzFCUvR/zX5e
+ fuxw==
+X-Gm-Message-State: AOJu0YwvWWUeXwPiO/322npYd1z6qAGzE2cg0JM/Ftg4XRBQvPTG/xGh
+ +0bau+XJRe3CdID7xcuk58aZhJjSbXDV+T/kbHLeSt2oQ4P+uOnafD/eqUnQqG0=
+X-Google-Smtp-Source: AGHT+IHEyA5Tw15ixlH7b6MQBwt7uQYKFPV7w9u6HhVlGiGwOvgNj3lx2hQhViuqIaw+/8lNk4n3nA==
+X-Received: by 2002:a17:906:c00f:b0:a77:dc23:5625 with SMTP id
+ a640c23a62f3a-a77dc235698mr55196266b.22.1720193842229; 
  Fri, 05 Jul 2024 08:37:22 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a72aaf638fesm686349366b.68.2024.07.05.08.37.15
+ a640c23a62f3a-a77dba80177sm25511866b.30.2024.07.05.08.37.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 05 Jul 2024 08:37:20 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CE3E55F931;
- Fri,  5 Jul 2024 16:30:55 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id CB2666211E;
+ Fri,  5 Jul 2024 16:30:54 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 30/40] gdbstub: Clean up process_string_cmd
-Date: Fri,  5 Jul 2024 16:30:42 +0100
-Message-Id: <20240705153052.1219696-31-alex.bennee@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PULL 19/40] linux-user/main: Suppress out-of-range comparison
+ warning for clang
+Date: Fri,  5 Jul 2024 16:30:31 +0100
+Message-Id: <20240705153052.1219696-20-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,123 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Change 'process_string_cmd' to return true on success and false on
-failure, instead of 0 and -1.
+For arm32 host and arm64 guest we get
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240628050850.536447-2-gustavo.romero@linaro.org>
+.../main.c:851:32: error: result of comparison of constant 70368744177664 with expression of type 'unsigned long' is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+        if (TASK_UNMAPPED_BASE < reserved_va) {
+            ~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~
+
+We already disable -Wtype-limits here, for this exact comparison, but
+that is not enough for clang.  Disable -Wtautological-compare as well,
+which is a superset.  GCC ignores the unknown warning flag.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240630190050.160642-15-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-31-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-20-alex.bennee@linaro.org>
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index b3574997ea..37314b92e5 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -962,14 +962,14 @@ static inline int startswith(const char *string, const char *pattern)
-   return !strncmp(string, pattern, strlen(pattern));
- }
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 94c99a1366..7d3cf45fa9 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -843,6 +843,7 @@ int main(int argc, char **argv, char **envp)
+      */
+ #pragma GCC diagnostic push
+ #pragma GCC diagnostic ignored "-Wtype-limits"
++#pragma GCC diagnostic ignored "-Wtautological-compare"
  
--static int process_string_cmd(const char *data,
--                              const GdbCmdParseEntry *cmds, int num_cmds)
-+static bool process_string_cmd(const char *data,
-+                               const GdbCmdParseEntry *cmds, int num_cmds)
- {
-     int i;
-     g_autoptr(GArray) params = g_array_new(false, true, sizeof(GdbCmdVariant));
- 
-     if (!cmds) {
--        return -1;
-+        return false;
-     }
- 
-     for (i = 0; i < num_cmds; i++) {
-@@ -984,16 +984,16 @@ static int process_string_cmd(const char *data,
-         if (cmd->schema) {
-             if (cmd_parse_params(&data[strlen(cmd->cmd)],
-                                  cmd->schema, params)) {
--                return -1;
-+                return false;
-             }
-         }
- 
-         gdbserver_state.allow_stop_reply = cmd->allow_stop_reply;
-         cmd->handler(params, NULL);
--        return 0;
-+        return true;
-     }
- 
--    return -1;
-+    return false;
- }
- 
- static void run_cmd_parser(const char *data, const GdbCmdParseEntry *cmd)
-@@ -1007,7 +1007,7 @@ static void run_cmd_parser(const char *data, const GdbCmdParseEntry *cmd)
- 
-     /* In case there was an error during the command parsing we must
-     * send a NULL packet to indicate the command is not supported */
--    if (process_string_cmd(data, cmd, 1)) {
-+    if (!process_string_cmd(data, cmd, 1)) {
-         gdb_put_packet("");
-     }
- }
-@@ -1523,9 +1523,9 @@ static void handle_v_commands(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (process_string_cmd(get_param(params, 0)->data,
--                           gdb_v_commands_table,
--                           ARRAY_SIZE(gdb_v_commands_table))) {
-+    if (!process_string_cmd(get_param(params, 0)->data,
-+                            gdb_v_commands_table,
-+                            ARRAY_SIZE(gdb_v_commands_table))) {
-         gdb_put_packet("");
-     }
- }
-@@ -1889,15 +1889,15 @@ static void handle_gen_query(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (!process_string_cmd(get_param(params, 0)->data,
--                            gdb_gen_query_set_common_table,
--                            ARRAY_SIZE(gdb_gen_query_set_common_table))) {
-+    if (process_string_cmd(get_param(params, 0)->data,
-+                           gdb_gen_query_set_common_table,
-+                           ARRAY_SIZE(gdb_gen_query_set_common_table))) {
-         return;
-     }
- 
--    if (process_string_cmd(get_param(params, 0)->data,
--                           gdb_gen_query_table,
--                           ARRAY_SIZE(gdb_gen_query_table))) {
-+    if (!process_string_cmd(get_param(params, 0)->data,
-+                            gdb_gen_query_table,
-+                            ARRAY_SIZE(gdb_gen_query_table))) {
-         gdb_put_packet("");
-     }
- }
-@@ -1908,13 +1908,13 @@ static void handle_gen_set(GArray *params, void *user_ctx)
-         return;
-     }
- 
--    if (!process_string_cmd(get_param(params, 0)->data,
--                            gdb_gen_query_set_common_table,
--                            ARRAY_SIZE(gdb_gen_query_set_common_table))) {
-+    if (process_string_cmd(get_param(params, 0)->data,
-+                           gdb_gen_query_set_common_table,
-+                           ARRAY_SIZE(gdb_gen_query_set_common_table))) {
-         return;
-     }
- 
--    if (process_string_cmd(get_param(params, 0)->data,
-+    if (!process_string_cmd(get_param(params, 0)->data,
-                            gdb_gen_set_table,
-                            ARRAY_SIZE(gdb_gen_set_table))) {
-         gdb_put_packet("");
+     /*
+      * Select an initial value for task_unmapped_base that is in range.
 -- 
 2.39.2
 
