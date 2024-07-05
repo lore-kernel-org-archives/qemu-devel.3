@@ -4,69 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90C3BC30653
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 01:56:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 273B4C30653
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 02:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPYBK-0007KX-9G; Thu, 04 Jul 2024 21:56:14 -0400
+	id 1sPYEk-0002UW-9L; Thu, 04 Jul 2024 21:59:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sPYBH-0007AU-TT
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 21:56:11 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sPYBF-0001qc-9D
- for qemu-devel@nongnu.org; Thu, 04 Jul 2024 21:56:11 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxH_GzUodmMSIBAA--.3879S3;
- Fri, 05 Jul 2024 09:56:04 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8BxWcaxUodm2sQ7AA--.7174S3; 
- Fri, 05 Jul 2024 09:56:03 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch: Set CSR_PRCFG1 and CSR_PRCFG2 values
-To: maobibo <maobibo@loongson.cn>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, philmd@linaro.org
-References: <20240704111218.712654-1-gaosong@loongson.cn>
- <5d7ff632-4d78-bb81-0969-a1ab656e22bc@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <fc16786a-3186-997d-2789-0c1efed91952@loongson.cn>
-Date: Fri, 5 Jul 2024 09:56:09 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sPYEg-0002TK-F2
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 21:59:43 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sPYEe-0002Vj-0c
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 21:59:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1720144780; x=1751680780;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=H5aKULNt4WSucCpS33VBoTqFB2U+MngO5Rz+nQDfDew=;
+ b=Eij/3Mogp6p7eTspowIBlbShKA+/utwvOEU30RFOcBhd1+LDiSLHNfbw
+ lh6WmAWTf49utV17y05gQi/EykvTdtN6pPTS2IOL+NgAleFBrSd7KW9qT
+ bNtVJhNex2Sk6Gn9+tleLieIVJwmIRBQDmBuXZj7Kv/YU4PwKWWWzPalT
+ kuOVmeMR/Noo5Z8w9hRRrU4Nj3EIL1UKetbymUOhpduaduWpXo99BQI03
+ BHQTYo+alAkbZZiE6I6nafUxgiyvLbu1IDWbn2OEXs4DfrtQiPxtbvEWa
+ PdcnXb5VWmcfeJILVbDVzQeb7s8cTVlIudRFwdtbsxKvl1+TeTwXvFgty A==;
+X-CSE-ConnectionGUID: eH43dk/XR/KgK/ZOLRo9zQ==
+X-CSE-MsgGUID: IXPcUyGNQ/uYtgec879YpA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11123"; a="28820686"
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="28820686"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jul 2024 18:59:37 -0700
+X-CSE-ConnectionGUID: v/fgd0WsTXKYXpSlhOVeNA==
+X-CSE-MsgGUID: 73xskWlKTLid94cGL7iGvw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,183,1716274800"; d="scan'208";a="51695204"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa005.jf.intel.com with ESMTP; 04 Jul 2024 18:59:34 -0700
+Date: Fri, 5 Jul 2024 10:15:12 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "mst@redhat.com" <mst@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "linuxarm@huawei.com" <linuxarm@huawei.com>,
+ Zhao Liu <zhao1.liu@linux.intel.com>
+Subject: Re: [PATCH 1/3] hw/cxl: Get rid of unused cfmw_list
+Message-ID: <ZodXMPef9bIROG5u@intel.com>
+References: <20240702143425.717452-1-Jonathan.Cameron@huawei.com>
+ <20240702143425.717452-2-Jonathan.Cameron@huawei.com>
+ <5ffea576-0b87-46c1-b4dc-e09bd253805e@fujitsu.com>
 MIME-Version: 1.0
-In-Reply-To: <5d7ff632-4d78-bb81-0969-a1ab656e22bc@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8BxWcaxUodm2sQ7AA--.7174S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Ww4DZF4xur1kGr4xur4xZrc_yoW8tF4kpr
- 4vyrZ0v398JF4kA34xAw1Yq343Xr4Ik3Z7Aa48Cas2krZ8Xr9aqFWvgFsFgF17A3yFyr42
- vF12yFyUZFsrZFbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.243,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5ffea576-0b87-46c1-b4dc-e09bd253805e@fujitsu.com>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,64 +88,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2024/7/4 下午8:47, maobibo 写道:
->
->
-> On 2024/7/4 下午7:12, Song Gao wrote:
->> We set the value of register CSR_PRCFG3, but left out CSR_PRCFG1
->> and CSR_PRCFG2. Set CSR_PRCFG1 and CSR_PRCFG2 according to the
->> default values of the physical machine.
->>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   target/loongarch/cpu.c | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->> index 270f711f11..ad40750701 100644
->> --- a/target/loongarch/cpu.c
->> +++ b/target/loongarch/cpu.c
->> @@ -538,6 +538,12 @@ static void loongarch_cpu_reset_hold(Object 
->> *obj, ResetType type)
->>       env->CSR_MERRCTL = FIELD_DP64(env->CSR_MERRCTL, CSR_MERRCTL, 
->> ISMERR, 0);
->>       env->CSR_TID = cs->cpu_index;
->>   +    env->CSR_PRCFG1 = FIELD_DP64(env->CSR_PRCFG1, CSR_PRCFG1, 
->> SAVE_NUM, 8);
->> +    env->CSR_PRCFG1 = FIELD_DP64(env->CSR_PRCFG1, CSR_PRCFG1, 
->> TIMER_BITS, 0x2f);
->> +    env->CSR_PRCFG1 = FIELD_DP64(env->CSR_PRCFG1, CSR_PRCFG1, VSMAX, 
->> 7);
->> +
->> +    env->CSR_PRCFG2 = 0x3ffff000;
->> +
->>       env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, 
->> TLB_TYPE, 2);
->>       env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, 
->> MTLB_ENTRY, 63);
->>       env->CSR_PRCFG3 = FIELD_DP64(env->CSR_PRCFG3, CSR_PRCFG3, 
->> STLB_WAYS, 7);
->>
-> For the function, it looks good to me. There are some nits:
-> For PRCFG1-PRCFG3, it is constant. I thinks it had better be put at 
-> cpu instance_init() or instance_finalize().
-You are right, we should put them in instance_init().
->
-> Also it is strange that most of cpu_state should be cleared with 0 
-> besides cpucfg/prcfg etc, such as end_reset_fields marker in other 
-> architectures.
->
-> Maybe it will better if there is double check with cpu state change 
-> callback such as init/reset etc :)
->
-The CSRs that need to be reset are from chapter 6, section 4 of the 
-manual, and they are not always reset to 0.
-I think maybe that's why end_reset_fields was not used at the time. We 
-should add some comments to loongarch_cpu_reset_hold().
+On Fri, Jul 05, 2024 at 01:04:51AM +0000, Zhijian Li (Fujitsu) wrote:
+> Date: Fri, 5 Jul 2024 01:04:51 +0000
+> From: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+> Subject: Re: [PATCH 1/3] hw/cxl: Get rid of unused cfmw_list
+> 
+> Jonathan,
+> 
+> 
+> There is a new user for cfmw_list now
+> https://lore.kernel.org/qemu-devel/20240704093404.1848132-1-zhao1.liu@linux.intel.com/
+> 
+> So I think we should drop this patch.
 
-Thanks.
-Song Gao
-> Regards
-> Bibo Mao
+Hi Zhijian,
 
+I'm not a "real" user and that bug was originally found by code reading.
+
+So that fix won't block your drop. :-)
+
+And I think the fix is worth being laned before cfmw_list gets dropped,
+for being able to port backwards to stable QEMU.
+ 
+> On 02/07/2024 22:34, Jonathan Cameron wrote:
+> > From: Li Zhijian <lizhijian@fujitsu.com>
+> > 
+> > There is no user for this member. All '-M cxl-fmw.N' options have
+> > been parsed and saved to CXLState.fixed_windows.
+> > 
+> > Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > ---
+> >   include/hw/cxl/cxl.h | 1 -
+> >   hw/cxl/cxl-host.c    | 1 -
+> >   2 files changed, 2 deletions(-)
+> > 
+> > diff --git a/include/hw/cxl/cxl.h b/include/hw/cxl/cxl.h
+> > index 75e47b6864..e3ecbef038 100644
+> > --- a/include/hw/cxl/cxl.h
+> > +++ b/include/hw/cxl/cxl.h
+> > @@ -43,7 +43,6 @@ typedef struct CXLState {
+> >       MemoryRegion host_mr;
+> >       unsigned int next_mr_idx;
+> >       GList *fixed_windows;
+> > -    CXLFixedMemoryWindowOptionsList *cfmw_list;
+> >   } CXLState;
+> >   
+> >   struct CXLHost {
+> > diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> > index c5f5fcfd64..926d3d3da7 100644
+> > --- a/hw/cxl/cxl-host.c
+> > +++ b/hw/cxl/cxl-host.c
+> > @@ -335,7 +335,6 @@ static void machine_set_cfmw(Object *obj, Visitor *v, const char *name,
+> >       for (it = cfmw_list; it; it = it->next) {
+> >           cxl_fixed_memory_window_config(state, it->value, errp);
+> >       }
+> > -    state->cfmw_list = cfmw_list;
+> >   }
+> >   
+> >   void cxl_machine_init(Object *obj, CXLState *state)
 
