@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DB8C38150
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 22:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2448C3271E
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 22:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPr2z-0001aW-JF; Fri, 05 Jul 2024 18:04:53 -0400
+	id 1sPr3B-0001si-Pa; Fri, 05 Jul 2024 18:05:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr2x-0001XH-OJ
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:04:51 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr39-0001qH-Mu
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:05:03 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr2w-0007An-9R
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:04:51 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-35f06861ae6so1218101f8f.2
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 15:04:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr37-0007Bm-CF
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:05:02 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-367963ea053so1574076f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 15:04:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720217087; x=1720821887; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720217098; x=1720821898; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n4MUhhhcXCJmOjITmXxH8sb428buFk6h9v9ZsvqgcZw=;
- b=TE1Lj2ojcE+6jeUlN37BadakwUyZEMzQbA0+OxutMTqkxchQdliMUbrJY6COuaz7DR
- FH19y1V5ywk9HRHzi6x6Rwu194LCgtcVF7l+ihYyY/zBtcP0XcJsdKH5JFLE149JuRI1
- QA/q3s17Sd+qi4z4EKww65w+df2lePBcsU9zwzulwGXcwY7Z57yTN9oYb6cr7lbDcyuj
- zpn/tvEypaGvJuIDGvaH00QXVeL3n2OSFcAgRbsZkdFAzFrzpAHj+cK3tSUi+RDfOP0M
- M5mkUp78eH2WTgELEdNxloQ0ZU0Iq9oPU+uGngVK3Ztc2ZpkyNuk5IOvGSqT3mUa2x5a
- OIHg==
+ bh=E7r9/bwMA7Y9aC77VYKrC6dcppuacEWAp1H+HkEgQaQ=;
+ b=nE6thAv/gtU5DRGDUnUYdqpI9zF8utS6clazL6K6RAMMdYJG+zW4r/Yre5hZ3DrRB/
+ i/fR5mQxrmpNKc4YfOtirXxHlnM2sUC2XaZJilvMuxlRUGUvULrNteoEfB5d1okoTul+
+ EoUsv5pBJe3hFwVwpfMN3TUKdOZcFJXSXv2n0XlwZJoBh7JqDGMOOi8nTzTjNcnRN9CQ
+ ZPW4EuEdyGpwD0q2xh2q06peLJTr4JjHG1KOXJCwus+J2d7QBnMBXy7Hi6wuf2YG/ICs
+ s4W53EJl/E+i/gNyuo+usjsKqmmm5DWZM3vgbqquvJIcYF2ySAi8Xpyb1MXtLEDGkkMK
+ toOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720217087; x=1720821887;
+ d=1e100.net; s=20230601; t=1720217098; x=1720821898;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n4MUhhhcXCJmOjITmXxH8sb428buFk6h9v9ZsvqgcZw=;
- b=HfG4KVVvQugqa32EWY+GYx8Zqlewt9HuKOYYbIMuDgiGLLVP5xIBlTgKnn06rXjh4Z
- HNiFqYu4UeIHl2lxY5KGGQvmEKAHYFAhY5Po5Ukn2i4G4ahUckUe0qTo5SDRQ/PX5pCR
- Xlqx0nkBZekREMU9M94vqplOxig8yakbnaHUfag1CPyQ4JDOrgChfhKDEk543rHN+7vU
- b/xDDKaJmxWDy2qqwWrLZJFZGaxWsCEK6sHsL/9J34ed1TOFtL0Jjqtf9UQ65dLrHjmc
- eoX8PDsCEwaRQ6Sjm/WQePJ/MggWv9R9TUvmB3Jdur7SRjI0yXH/eXLnZLqZkgCihaGC
- pr1A==
-X-Gm-Message-State: AOJu0YxTSv2a8fXnPx1UDsJVsw+/iHtbqvw9tE+nss48b08I4iatnHSd
- X91iZapqctyx5Ua9Oovu4y7WuMLg68ajA78FGAkvi9y9AdebqfPpLkM164EpEW85pNjTykj0Gp/
- 0
-X-Google-Smtp-Source: AGHT+IEIuSeFI1xd6ZepxEpDGNnELb+4Nah9BJgHQDTPz6ZZns7ePWSdueOMTaWJTACYD1R9OGUeLw==
-X-Received: by 2002:a5d:5407:0:b0:360:89a3:5293 with SMTP id
- ffacd0b85a97d-3679db88a10mr4268703f8f.0.1720217087570; 
- Fri, 05 Jul 2024 15:04:47 -0700 (PDT)
+ bh=E7r9/bwMA7Y9aC77VYKrC6dcppuacEWAp1H+HkEgQaQ=;
+ b=DYiBruBF8BSZ1g1bQDoVVa+O387B16gNdyolpLlpiqmLpKErdZg2FXjJRuqy9gux2G
+ XsmjEsagX/q15uMbqiE4Md8BqMSKiwUCzmIynlvk4DB7hscNywqEoN044F4olVh7wKh0
+ d1BEHE/baiSyDZeYtf5UueUDboRea9PIqnpZXrZ8rbl1lUI0y6F+70snzEMK6HvBlGMz
+ w6IXkrrxmj69peYFjIlwcQBVK7Nd3/ZZAj/gNm5Ct0aA4/Lxh6WytPjwEWDWVZR5djwB
+ EQ5qjZ+uBRlKdM1ZN15zPfJWr3L1bDbdCuSWNjJEMD4NF/DoTaduZS0zSyVD6m2VKakO
+ 15og==
+X-Gm-Message-State: AOJu0Yx4ZBSOPT71josD8lRwrG+jqebclYLe8+foEF8y3IvSvkQpqToi
+ cWYBf1GShpE+xtYtcK0wMQXmBIV8jh+GVseqVyAb4rKkULW0eqK2czF09nRrEQf1wP1UkDBNszM
+ 5
+X-Google-Smtp-Source: AGHT+IGmddp/Mt8Q/t8E8svxiBEF62A6ZsMiYILbTVZgSvZCKsgXjJ6iZjl9TTxughSmc18S2KqLIw==
+X-Received: by 2002:a5d:4745:0:b0:367:8de4:84ef with SMTP id
+ ffacd0b85a97d-3679dd31158mr4923237f8f.30.1720217098129; 
+ Fri, 05 Jul 2024 15:04:58 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.163.129])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a1d6123sm74888065e9.12.2024.07.05.15.04.46
+ ffacd0b85a97d-367a8d74e0bsm2700480f8f.52.2024.07.05.15.04.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 05 Jul 2024 15:04:47 -0700 (PDT)
+ Fri, 05 Jul 2024 15:04:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 02/16] hw/sd/npcm7xx_sdhci: Use TYPE_SYSBUS_SDHCI definition
-Date: Sat,  6 Jul 2024 00:04:20 +0200
-Message-ID: <20240705220435.15415-3-philmd@linaro.org>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>
+Subject: [PULL 04/16] hw/sd/sdcard: Generate random RCA value
+Date: Sat,  6 Jul 2024 00:04:22 +0200
+Message-ID: <20240705220435.15415-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240705220435.15415-1-philmd@linaro.org>
 References: <20240705220435.15415-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,36 +95,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the macro instead of two explicit string literals.
+Rather than using the obscure 0x4567 magic value,
+use a real random one.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Message-Id: <20240702140842.54242-2-philmd@linaro.org>
+Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Message-Id: <20240702140842.54242-5-philmd@linaro.org>
 ---
- hw/sd/npcm7xx_sdhci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/sd/sd.c         | 11 ++++++++---
+ hw/sd/trace-events |  1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/hw/sd/npcm7xx_sdhci.c b/hw/sd/npcm7xx_sdhci.c
-index e93dab8dbd..fb51821e11 100644
---- a/hw/sd/npcm7xx_sdhci.c
-+++ b/hw/sd/npcm7xx_sdhci.c
-@@ -16,6 +16,7 @@
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 552957b2e5..b158402704 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -46,6 +46,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/timer.h"
+ #include "qemu/log.h"
++#include "qemu/guest-random.h"
+ #include "qemu/module.h"
+ #include "sdmmc-internal.h"
+ #include "trace.h"
+@@ -515,9 +516,10 @@ static void sd_set_csd(SDState *sd, uint64_t size)
  
- #include "qemu/osdep.h"
+ /* Relative Card Address register */
  
-+#include "hw/sd/sdhci.h"
- #include "hw/sd/npcm7xx_sdhci.h"
- #include "migration/vmstate.h"
- #include "sdhci-internal.h"
-@@ -162,7 +163,7 @@ static void npcm7xx_sdhci_instance_init(Object *obj)
+-static void sd_set_rca(SDState *sd)
++static void sd_set_rca(SDState *sd, uint16_t value)
  {
-     NPCM7xxSDHCIState *s = NPCM7XX_SDHCI(obj);
- 
--    object_initialize_child(OBJECT(s), "generic-sdhci", &s->sdhci,
-+    object_initialize_child(OBJECT(s), TYPE_SYSBUS_SDHCI, &s->sdhci,
-                             TYPE_SYSBUS_SDHCI);
+-    sd->rca += 0x4567;
++    trace_sdcard_set_rca(value);
++    sd->rca = value;
  }
  
+ static uint16_t sd_req_get_rca(SDState *s, SDRequest req)
+@@ -1212,11 +1214,14 @@ static sd_rsp_type_t sd_cmd_ALL_SEND_CID(SDState *sd, SDRequest req)
+ /* CMD3 */
+ static sd_rsp_type_t sd_cmd_SEND_RELATIVE_ADDR(SDState *sd, SDRequest req)
+ {
++    uint16_t random_rca;
++
+     switch (sd->state) {
+     case sd_identification_state:
+     case sd_standby_state:
+         sd->state = sd_standby_state;
+-        sd_set_rca(sd);
++        qemu_guest_getrandom_nofail(&random_rca, sizeof(random_rca));
++        sd_set_rca(sd, random_rca);
+         return sd_r6;
+ 
+     default:
+diff --git a/hw/sd/trace-events b/hw/sd/trace-events
+index 43eaeba149..6a51b0e906 100644
+--- a/hw/sd/trace-events
++++ b/hw/sd/trace-events
+@@ -43,6 +43,7 @@ sdcard_response(const char *rspdesc, int rsplen) "%s (sz:%d)"
+ sdcard_powerup(void) ""
+ sdcard_inquiry_cmd41(void) ""
+ sdcard_reset(void) ""
++sdcard_set_rca(uint16_t value) "new RCA: 0x%04x"
+ sdcard_set_blocklen(uint16_t length) "block len 0x%03x"
+ sdcard_set_block_count(uint32_t cnt) "block cnt 0x%"PRIx32
+ sdcard_inserted(bool readonly) "read_only: %u"
 -- 
 2.41.0
 
