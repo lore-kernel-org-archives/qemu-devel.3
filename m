@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9043EC38150
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B490C3271E
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:38:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPkzw-0002b6-Gu; Fri, 05 Jul 2024 11:37:20 -0400
+	id 1sPl02-0002dV-GM; Fri, 05 Jul 2024 11:37:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPkzs-0002Zq-F2
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:16 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1sPkzu-0002aj-Hq
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:18 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPkzp-0001GP-Id
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:16 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-58b5f7bf3edso1118672a12.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:37:13 -0700 (PDT)
+ id 1sPkzs-0001H8-Sd
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:18 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-57cd26347d3so2434633a12.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:37:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193832; x=1720798632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193835; x=1720798635; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ua23xrZ298Q42RDQyaYLhWTnQd77z5dPlxT8bKsVuUY=;
- b=T9OaeGVBYQU0WVa+fs/1TSFsI2Ra0XfWN6SmbU2MCwsrwBM9Nd1NUlnHgpNVo3HMZU
- /KvfSlU7pS69DQwacEeFvsNy2MnzesDOqMfSwX9N1XZ8oACPR1bYcu9nyHRT80z0TwlB
- fEtNv9IWOAYg2hve9mKiLVhvIWoN+cDejvStI+rVwzXWQmu+Jg+kBrj5Dw5lrC+55DT3
- m5QXW3lkoEP+tyQrvm0lHnQ2FwdhLMSgZLMC+vGSkOm0HvQ/72Ja/bKAwhV1mMdHiYfq
- cAjZRWnMIl5QSOuHBm79sFDE06VN5YdlbWfGhQ3/hR/Hvgui8YOr+DKps2Bn7S3iexD5
- Zu5Q==
+ bh=YzA2EMsKf7CQ8lqPZMs8GAjfAh3DVBSL7qsQ3s3Y9XE=;
+ b=mr61Th4ex8OBsmmNWv37GykglZ0JpsWZP5TOyG5UbAJPArL26dWNZZHfIaf5MDAh+i
+ 6E1nDF2xPP1CrIDRcL2s4yfsgsw7lR5Ec/lfLNXLgXPVzFHTE0PnpfwkZCw9sO8rURVl
+ xdMLmVZSDDt0f2+1A7xeBLceyEl5TOIEii7HgHURzxohomATdzK2WAmexJCtBeOzh4h8
+ 5ICmTbD8Ux2QhM3kY409kt83suJG9fCZvnrn3AHPPqIm8L3Fh8TXuAr/P14mNXX+YeKf
+ c9aqp8BhHIc4zQhJoHvspuTpEPfrJkEeE0r6nEWK9WXY56jI2yphhHC10CCjfyFg49mH
+ 6MRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193832; x=1720798632;
+ d=1e100.net; s=20230601; t=1720193835; x=1720798635;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ua23xrZ298Q42RDQyaYLhWTnQd77z5dPlxT8bKsVuUY=;
- b=p4D6qxljGzmHviwGs6cfIIXTFv97hXYpOz+JElLpqNZ/5QVgWiX//VxmCXGei7pC18
- EiQnG686TeN3p+ORE8OUcUZlVoQ97KuQp9JJsq+HvP/0wjG+Qd8cS2FtntMK557VSGFv
- 6Rle/titkftRyBSd3NioLQ6vcRFzI/l1i+sUc27GcrDUt5SMUyuv46opGyFUcCtrzcXQ
- 7SRLuMnj2iyOQYh4pQd9ud0rYGmPCTZFVge7QrDYR+nR3r9driEDtGVyzkLzgRjKZkvl
- YioO8fs6eO8wQTE/bGujc4MA+v7a5gxGZZ+yl26tvzabIDCOxEVaP71sgt5zGSkR4L2E
- ucqA==
-X-Gm-Message-State: AOJu0YzcGPUcChp5U+uH4HLehFfquFbqaRPVhYGWnkkUKWWMa0YaMvHv
- W1OiAOlFZhpCHg5Z2QDjYJx4Nx6SbZSUspqL5OaA9NfcO4kCFI7bWIrvKgnLMDE=
-X-Google-Smtp-Source: AGHT+IFZccrel+TFP0JVYkHmWdVeZ5dXJTaanWcRPzpZB2PkqoX9Q4At3wMRE6ZwNXLYT2CNqZAgog==
-X-Received: by 2002:a05:6402:1ece:b0:57d:496:209a with SMTP id
- 4fb4d7f45d1cf-58e5994eb84mr4943921a12.6.1720193831410; 
- Fri, 05 Jul 2024 08:37:11 -0700 (PDT)
+ bh=YzA2EMsKf7CQ8lqPZMs8GAjfAh3DVBSL7qsQ3s3Y9XE=;
+ b=C/rF9vefZcfL94Kif2mFWobhKHceYY74P9fT5TORfIcsA39ZmxiEVY7AqZ3kbMD55N
+ 4r7It9WB/9adArwVmk/n0yWeGNldqXmdR1/2qqa9gVO1KCh/UinNbsoBfTwoSapdTCox
+ BsF0m5pvo+mBpHkDQDvqQ7P4lVtnHJ5J0+mTeGLtRlyuFWhvT0U7n2bJqMOkGvkFB6XC
+ dN0MojLgMRPSOaq/ECFeuwUnEQSfNBSm/78suoG1nSU8nQ+p+x76uJc+LezGgaogGo6T
+ uWad34wPifPy86qkFj+rfjnW7/TcESd31awQwMvsY/KchE6K6Ackf4U9NpXQKD2kYBMc
+ +OFQ==
+X-Gm-Message-State: AOJu0YwSiqk41632bhvG9Tdaby9g8UDn87KYVAyoYwNQubAKbHtVPT8Q
+ bPJyQWFTrPWAuJzHKDhYDFsF5d78IPie9bss9E9k2pu2EelQyhGYiZ8sY2SqRJQ=
+X-Google-Smtp-Source: AGHT+IEPCetaNG5Cf400+fFPzzFGj7ghkDve4XAhmciBM8muzHyP8AnevjWFZVSlDTUs5v4fo6SBhw==
+X-Received: by 2002:a05:6402:274c:b0:57c:6d9a:9149 with SMTP id
+ 4fb4d7f45d1cf-58e5adce5efmr3133130a12.15.1720193834775; 
+ Fri, 05 Jul 2024 08:37:14 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5907e4d79ddsm212536a12.59.2024.07.05.08.37.10
+ 4fb4d7f45d1cf-58eff6d1da5sm1537029a12.0.2024.07.05.08.37.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 08:37:10 -0700 (PDT)
+ Fri, 05 Jul 2024 08:37:14 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 896355F876;
+ by draig.lan (Postfix) with ESMTP id BA15962156;
  Fri,  5 Jul 2024 16:30:55 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PULL 27/40] plugins: Ensure vCPU index is assigned in init/exit hooks
-Date: Fri,  5 Jul 2024 16:30:39 +0100
-Message-Id: <20240705153052.1219696-28-alex.bennee@linaro.org>
+Subject: [PULL 29/40] accel/tcg: Move qemu_plugin_vcpu_init__async() to
+ plugins/
+Date: Fri,  5 Jul 2024 16:30:41 +0100
+Message-Id: <20240705153052.1219696-30-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,35 +106,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Since vCPUs are hashed by their index, this index can't
-be uninitialized (UNASSIGNED_CPU_INDEX).
+Calling qemu_plugin_vcpu_init__async() on the vCPU thread
+is a detail of plugins, not relevant to TCG vCPU management.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240606124010.2460-2-philmd@linaro.org>
+Message-Id: <20240606124010.2460-4-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-28-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-30-alex.bennee@linaro.org>
 
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 8f6cb64da3..b19e1fdacf 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -192,13 +192,6 @@ static void cpu_common_parse_features(const char *typename, char *features,
+     }
+ }
+ 
+-#ifdef CONFIG_PLUGIN
+-static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
+-{
+-    qemu_plugin_vcpu_init_hook(cpu);
+-}
+-#endif
+-
+ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+ {
+     CPUState *cpu = CPU(dev);
+@@ -274,7 +267,7 @@ static void cpu_common_initfn(Object *obj)
+ #ifdef CONFIG_PLUGIN
+     if (tcg_enabled()) {
+         cpu->plugin_state = qemu_plugin_create_vcpu_state();
+-        async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
++        qemu_plugin_vcpu_init_hook(cpu);
+     }
+ #endif
+ }
 diff --git a/plugins/core.c b/plugins/core.c
-index 9d737d8278..a864275ae7 100644
+index a864275ae7..12c67b4b4e 100644
 --- a/plugins/core.c
 +++ b/plugins/core.c
-@@ -245,6 +245,7 @@ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
+@@ -241,7 +241,7 @@ static void plugin_grow_scoreboards__locked(CPUState *cpu)
+     end_exclusive();
+ }
+ 
+-void qemu_plugin_vcpu_init_hook(CPUState *cpu)
++static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
  {
      bool success;
  
-+    assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
-     qemu_rec_mutex_lock(&plugin.lock);
-     plugin.num_vcpus = MAX(plugin.num_vcpus, cpu->cpu_index + 1);
-     plugin_cpu_update__locked(&cpu->cpu_index, NULL, NULL);
-@@ -263,6 +264,7 @@ void qemu_plugin_vcpu_exit_hook(CPUState *cpu)
+@@ -258,6 +258,12 @@ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
+     plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_INIT);
+ }
  
-     plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_EXIT);
- 
-+    assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
-     qemu_rec_mutex_lock(&plugin.lock);
-     success = g_hash_table_remove(plugin.cpu_ht, &cpu->cpu_index);
-     g_assert(success);
++void qemu_plugin_vcpu_init_hook(CPUState *cpu)
++{
++    /* Plugin initialization must wait until the cpu start executing code */
++    async_run_on_cpu(cpu, qemu_plugin_vcpu_init__async, RUN_ON_CPU_NULL);
++}
++
+ void qemu_plugin_vcpu_exit_hook(CPUState *cpu)
+ {
+     bool success;
 -- 
 2.39.2
 
