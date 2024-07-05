@@ -4,104 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CDDC30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B3F4C30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPeTu-0007MW-1g; Fri, 05 Jul 2024 04:39:51 -0400
+	id 1sPeV1-0008Q9-3O; Fri, 05 Jul 2024 04:40:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sPeTs-0007Kw-LS
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:39:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1sPeTq-0001qO-Ob
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:39:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720168785;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U2zz8KCHD3hS0K+Ngii5R4uTxbaAh3WfFnqhJ8jnM9w=;
- b=PJtMol09yGUZmNzkPI+pK6g1DYKnnR5JLonLvibUkOi+np8L/DXMHRsLQc58kQp5bRjjWG
- bJHzwLuBFN8wvaTorT2w0AYL2xFWgCMpQcyoVy3A1W4gJCEC5cuF9wQMAchU6vsy04Ghq7
- xeVNjKzqXp5zE/FJL5D2qkXTkuNUDBc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-Macqqvy5PuqCCFIkvu6NRA-1; Fri, 05 Jul 2024 04:39:43 -0400
-X-MC-Unique: Macqqvy5PuqCCFIkvu6NRA-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-367990a5796so970135f8f.1
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:39:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPeUy-0008Oz-Lt
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:40:56 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPeUv-0003Ay-6s
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:40:56 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-58b447c513aso1603325a12.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:40:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720168850; x=1720773650; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lFrU6v/HY4VIQITgassfFHdNS/uhlHYlsqE77XfqPZs=;
+ b=AzkkqL450gSHHsGVLbtLqWdfec+mJ03Lhh673oDIwb8ypGeUDu8dBt+148Zd99sy5j
+ 4mvM6Vi+xIZc1rya7pJ9fR3p4xbn5FD6w+iXuB9nzBjbCGhWEQ2fmdDsbnxsf6biHZ+3
+ B85HTqa+YAxRSj6YsdKYFdht55i9R+ZAPnBb+qZbhrcIKgDKruV/QWOrpyylfx9ekCSP
+ pAPjHg7OzZE4BncJdw/HWwdu1rt8uak/S5FQL76sFPpjGadNuDYYUiS2LHpqGmF0Zwn2
+ hZKRBJEok2eiaXCRF4/1OW1oozmBYzZn1vJvbZ/W0oEyNKGXOn4r3yte2bSI6FFsAuqh
+ +BEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720168782; x=1720773582;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=U2zz8KCHD3hS0K+Ngii5R4uTxbaAh3WfFnqhJ8jnM9w=;
- b=Rg4oKH0w4xVM7XOnlTT1Wb/ol6uorE2vSNWjpxYod4UUVAUFi7IG4ppE2sMhFtWW4b
- O0ZMSLbtR41cL1FuVKGkmkuiP+9ECGTabbwOFhWG6jhVksIbQd+gDibvv2Wnr/pQ5Or6
- KlZ1HPVoYGpJ2Qr6qowoxBva5ooNo4v9exjrJLZaQ45kE3T6NA3ydYNPfzFdrJ1RY1WZ
- m/BLSHiSi+fTWwgtRuRFyOXN0EFuxs6x4oNgp5c9AT1FCcBwKxceb39Nhx0BD1FnEpCj
- K9vzy3bkWT9W/AzziQcza8UAtgBb8qvGLT0N/YGwnLNY3OiyAnH0914SzwL1wk2ghpOj
- GlLw==
-X-Gm-Message-State: AOJu0YwnUMIrpf0rGCcdl5RJwvERs8tk+9wGLPPegZMsWm5x6qNrgVfo
- EqL8E39EqNigXHT3CtKhY25wt2MoHJjkbV4gGoQQbxu4qxVAmoX+fGb7cFNysWHghK2P3EC0DFH
- QXOdMdNeeYg4Vgu5VcxHnKGfjAycbg0hy748QjDjst2bxr55ogLDF
-X-Received: by 2002:adf:a3d2:0:b0:367:97b9:d5ed with SMTP id
- ffacd0b85a97d-3679dd310edmr3035688f8f.9.1720168782394; 
- Fri, 05 Jul 2024 01:39:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+t1XN3u02n1jZWTWFk/RQGfXmkCoYnTzjYMJlQbmj+L7qLMYRBMTwkf0q28VksAjMJKzs/w==
-X-Received: by 2002:adf:a3d2:0:b0:367:97b9:d5ed with SMTP id
- ffacd0b85a97d-3679dd310edmr3035658f8f.9.1720168781636; 
- Fri, 05 Jul 2024 01:39:41 -0700 (PDT)
-Received: from sgarzare-redhat ([193.207.134.140])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367900fd1e5sm6862057f8f.63.2024.07.05.01.39.38
+ d=1e100.net; s=20230601; t=1720168850; x=1720773650;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lFrU6v/HY4VIQITgassfFHdNS/uhlHYlsqE77XfqPZs=;
+ b=AXaFWGVwFp48+n9RkUEp9kSoaH7jEgSlpHB9X19nknDd391Wj4OwaUgw5oxPFdn3kW
+ kSUM/j+H95Dql94DKoHbrfR9SvoEcImJKoSmieC9CdwfLHsLnyIseZvvkMMmsAh/Koda
+ XmCqle2ZtaddZ2EB6X3LiNiC7iKKA40O1e8vvK9RzWO0REKPp5KkC3TACAVsh71CdJaJ
+ +xxByx5QL5ZEQWcR4C8jjMh+xNJwSiJhVAClzBsmUoovJncAuCCWI31nyUxbjqABvf/S
+ 4O7YdKVhKrEhKn2cRPkmLLMA3P5QCflZpZn6RtD/o7bHe/FASejdQ5MdJYbpJRC7YSUU
+ WKdA==
+X-Gm-Message-State: AOJu0Yy/zf2AN84Z5rU+nARZZIq3rv4MIQiw9wT+ZNyXH+2iEfoM2XJ0
+ DPyMswFyfGjzE3AIBChj5OGOAZoj0oiiuwBar49LGET9vr3q8jTgJ4e7zt859KY=
+X-Google-Smtp-Source: AGHT+IEo1flafWU6+cEdwievaIimim5rz1ZpyRSPd/NRdT7yRN98lzK6pWrUpa6eCwXBYCDy2jZVZQ==
+X-Received: by 2002:a05:6402:278e:b0:58b:fd23:7065 with SMTP id
+ 4fb4d7f45d1cf-58e5aec8d0amr2298950a12.16.1720168850164; 
+ Fri, 05 Jul 2024 01:40:50 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-58ad8730dcfsm5113394a12.7.2024.07.05.01.40.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 01:39:41 -0700 (PDT)
-Date: Fri, 5 Jul 2024 10:39:33 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Coiby Xu <Coiby.Xu@gmail.com>, 
- Kevin Wolf <kwolf@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- stefanha@redhat.com, Markus Armbruster <armbru@redhat.com>, slp@redhat.com, 
- Eduardo Habkost <eduardo@habkost.net>, David Hildenbrand <david@redhat.com>, 
- Raphael Norwitz <raphael@enfabrica.net>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <thuth@redhat.com>,
- qemu-block@nongnu.org, 
- Brad Smith <brad@comstyle.com>, Hanna Reitz <hreitz@redhat.com>,
- Eric Blake <eblake@redhat.com>, 
- gmaglione@redhat.com, Paolo Bonzini <pbonzini@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-Subject: Re: [PATCH v8 00/13] vhost-user: support any POSIX system (tested on
- macOS, FreeBSD, OpenBSD)
-Message-ID: <suvpzkb3ppdodjdyo5zcpngz5mwrrlq3nfowemh4tqjghbc4si@hzrsr23fganv>
-References: <20240618100043.144657-1-sgarzare@redhat.com>
- <20240703184624-mutt-send-email-mst@kernel.org>
+ Fri, 05 Jul 2024 01:40:49 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id F102B5F92B;
+ Fri,  5 Jul 2024 09:40:47 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Thomas Huth <thuth@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Aleksandar Rikalo <arikalo@gmail.com>, Mads Ynddal <mads@ynddal.dk>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paul Burton <paulburton@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH v2 03/40] tracepoints: move physmem trace points
+Date: Fri,  5 Jul 2024 09:40:10 +0100
+Message-Id: <20240705084047.857176-4-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240705084047.857176-1-alex.bennee@linaro.org>
+References: <20240705084047.857176-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240703184624-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,108 +111,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 03, 2024 at 06:49:30PM GMT, Michael S. Tsirkin wrote:
->On Tue, Jun 18, 2024 at 12:00:30PM +0200, Stefano Garzarella wrote:
->> As discussed with Michael and Markus [1], this version also includes the patch
->> on which v7 depended to simplify the merge in Michael's tree.
->>
->> The series is all reviewed, so if there are no new changes required, I would
->> ask to merge it.
->
->
->I dropped patches 9 and 10 for now since otherwise make vm-build-freebsd
->fails.
->
->Pls figure it out and resend just 9 and 10.
+They don't need to be in the global trace-events file and can have a
+local trace header. Also add address_space_map tracepoint for tracking
+mapping behaviour.
 
-I replicated locally, but I can't understand why it only happens in 
-certain architectures, in my case on loongarch64, ppc64, and riscv32:
+Message-Id: <20240628124258.832466-5-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-326/846 qemu:qtest+qtest-loongarch64 / qtest-loongarch64/qos-test
-ERROR          116.10s   killed by signal 6 SIGABRT
-337/846 qemu:qtest+qtest-ppc64 / qtest-ppc64/qos-test
-ERROR          115.10s   killed by signal 6 SIGABRT
-339/846 qemu:qtest+qtest-riscv32 / qtest-riscv32/qos-test
-ERROR          107.65s   killed by signal 6 SIGABRT
+---
+v2
+  - dropped qatomic_set which came from another patch
+---
+ system/physmem.c    | 4 +++-
+ system/trace-events | 6 ++++++
+ trace-events        | 5 -----
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-I focused on ppc64 running `gmake --output-sync -j6 check-qtest-ppc64` 
-in the FreeBSD VM and it fails every time. In particular, the test that 
-fails is the `vhost-user/reconnect` test, in fact disabling it this way, 
-the qos-test tests always pass:
-
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index 0fa8951c9f..c3d686f0ee 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -1118,9 +1119,11 @@ static void register_vhost_user_test(void)
-                   "virtio-net",
-                   test_migrate, &opts);
-
-+#if 0
-      opts.before = vhost_user_test_setup_reconnect;
-      qos_add_test("vhost-user/reconnect", "virtio-net",
-                   test_reconnect, &opts);
-+#endif
-
-      opts.before = vhost_user_test_setup_connect_fail;
-      qos_add_test("vhost-user/connect-fail", "virtio-net",
-
-Analyzing the test, what happens is that after the disconnection, the 
-test doesn't receive VHOST_USER_SET_MEM_TABLE message, so the second 
-`wait_for_fds()` fails after the 5 sec timeout (increasing it doesn't 
-help), not having received the fds.
-
-diff --git a/tests/qtest/vhost-user-test.c b/tests/qtest/vhost-user-test.c
-index 0fa8951c9f..c3d686f0ee 100644
---- a/tests/qtest/vhost-user-test.c
-+++ b/tests/qtest/vhost-user-test.c
-@@ -976,6 +976,7 @@ static void test_reconnect(void *obj, void *arg, 
-QGuestAllocator *alloc)
-      g_source_set_callback(src, reconnect_cb, s, NULL);
-      g_source_attach(src, s->context);
-      g_source_unref(src);
-+    // THIS one is failing
-      g_assert(wait_for_fds(s));
-      wait_for_rings_started(s, 2);
-  }
-
-This is the test log (note: IIUC QEMU failures happen after the test 
-exits on the assertion, so so it could mean that the chardev reconnected 
-correctly):
-
-     ▶ 28/30 /ppc64/pseries/spapr-pci-host-bridge/pci-bus-spapr/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect - ERROR:../src/tests/qtest/qos-test.c:191:subprocess_run_one_test: child process (/ppc64/pseries/spapr-pci-host-bridge/pci-bus-spapr/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess [54991]) failed unexpectedly FAIL
-     ▶ 28/30                                                                   ERROR
-     [28-30/30] 🌒 qemu:qtest+qtest-ppc64 / qtest-ppc64/qmp-cmd-test                       [28-30/30] 🌓 qemu:qtest+qtest-ppc64 / qtest-ppc64/migration-test                     28/30 qemu:qtest+qtest-ppc64 / qtest-ppc64/qos-test                       ERROR           21.53s   killed by signal 6 SIGABRT
-     >>> PYTHON=/usr/home/qemu/qemu-test.OD8v2L/build/pyvenv/bin/python3.9 ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 G_TEST_DBUS_DAEMON=/usr/home/qemu/qemu-test.OD8v2L/src/tests/dbus-vmstate-daemon.sh QTEST_QEMU_BINARY=./qemu-system-ppc64 MALLOC_PERTURB_=141 QTEST_QEMU_IMG=./qemu-img QTEST_QEMU_STORAGE_DAEMON_BINARY=./storage-daemon/qemu-storage-daemon UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 /usr/home/qemu/qemu-test.OD8v2L/build/tests/qtest/qos-test --tap -k
-     ―――――――――――――――――――――――――――――――――――――――― ✀  ――――――――――――――――――――――――――――――――――――――――
-     stderr:
-     Vhost user backend fails to broadcast fake RARP
-     qemu-system-ppc64: -chardev socket,id=chr-reconnect,path=/tmp/vhost-test-Z5VMQ2/reconnect.sock,server=on: info: QEMU waiting for connection on: disconnected:unix:/tmp/vhost-test-Z5VMQ2/reconnect.sock,server=on
-     **
-     ERROR:../src/tests/qtest/vhost-user-test.c:255:wait_for_fds: assertion failed: (s->fds_num)
-     qemu-system-ppc64: Failed to set msg fds.
-     qemu-system-ppc64: vhost VQ 0 ring restore failed: -22: Invalid argument (22)
-     qemu-system-ppc64: Failed to set msg fds.
-     qemu-system-ppc64: vhost_set_vring_endian failed: Invalid argument (22)
-     qemu-system-ppc64: Failed to set msg fds.
-     qemu-system-ppc64: vhost VQ 1 ring restore failed: -22: Invalid argument 
-     (22)
-     qemu-system-ppc64: Failed to set msg fds.
-     qemu-system-ppc64: vhost_set_vring_endian failed: Invalid argument (22)
-     qemu-system-ppc64: Failed to write msg. Wrote -1 instead of 12.
-     qemu-system-ppc64: vhost_backend_init failed: Protocol error
-     qemu-system-ppc64: failed to init vhost_net for queue 0
-     **
-     ERROR:../src/tests/qtest/qos-test.c:191:subprocess_run_one_test: child process (/ppc64/pseries/spapr-pci-host-bridge/pci-bus-spapr/pci-bus/virtio-net-pci/virtio-net/virtio-net-tests/vhost-user/reconnect/subprocess [54991]) failed unexpectedly
-     
-     (test program exited with status code -6)
-
-
-I would think of some endianness problem, but it's strange that it only 
-happens in the reconnect test. Next week I'll try to figure out why this 
-is systematic only on some architectures, does anyone have any ideas?
-
-Thanks,
-Stefano
+diff --git a/system/physmem.c b/system/physmem.c
+index 261196cde0..14aa025d41 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -53,7 +53,7 @@
+ #include "sysemu/hostmem.h"
+ #include "sysemu/hw_accel.h"
+ #include "sysemu/xen-mapcache.h"
+-#include "trace/trace-root.h"
++#include "trace.h"
+ 
+ #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
+ #include <linux/falloc.h>
+@@ -3193,6 +3193,8 @@ void *address_space_map(AddressSpace *as,
+     MemoryRegion *mr;
+     FlatView *fv;
+ 
++    trace_address_space_map(as, addr, len, is_write, *(uint32_t *) &attrs);
++
+     if (len == 0) {
+         return NULL;
+     }
+diff --git a/system/trace-events b/system/trace-events
+index 69c9044151..2ed1d59b1f 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -21,6 +21,12 @@ flatview_destroy(void *view, void *root) "%p (root %p)"
+ flatview_destroy_rcu(void *view, void *root) "%p (root %p)"
+ global_dirty_changed(unsigned int bitmask) "bitmask 0x%"PRIx32
+ 
++# physmem.c
++address_space_map(void *as, uint64_t addr, uint64_t len, bool is_write, uint32_t attrs) "as:%p addr 0x%"PRIx64":%"PRIx64" write:%d attrs:0x%x"
++find_ram_offset(uint64_t size, uint64_t offset) "size: 0x%" PRIx64 " @ 0x%" PRIx64
++find_ram_offset_loop(uint64_t size, uint64_t candidate, uint64_t offset, uint64_t next, uint64_t mingap) "trying size: 0x%" PRIx64 " @ 0x%" PRIx64 ", offset: 0x%" PRIx64" next: 0x%" PRIx64 " mingap: 0x%" PRIx64
++ram_block_discard_range(const char *rbname, void *hva, size_t length, bool need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d fallocate: %d ret: %d"
++
+ # cpus.c
+ vm_stop_flush_all(int ret) "ret %d"
+ 
+diff --git a/trace-events b/trace-events
+index dd318ed1af..9cb96f64c4 100644
+--- a/trace-events
++++ b/trace-events
+@@ -37,11 +37,6 @@ dma_complete(void *dbs, int ret, void *cb) "dbs=%p ret=%d cb=%p"
+ dma_blk_cb(void *dbs, int ret) "dbs=%p ret=%d"
+ dma_map_wait(void *dbs) "dbs=%p"
+ 
+-# exec.c
+-find_ram_offset(uint64_t size, uint64_t offset) "size: 0x%" PRIx64 " @ 0x%" PRIx64
+-find_ram_offset_loop(uint64_t size, uint64_t candidate, uint64_t offset, uint64_t next, uint64_t mingap) "trying size: 0x%" PRIx64 " @ 0x%" PRIx64 ", offset: 0x%" PRIx64" next: 0x%" PRIx64 " mingap: 0x%" PRIx64
+-ram_block_discard_range(const char *rbname, void *hva, size_t length, bool need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d fallocate: %d ret: %d"
+-
+ # job.c
+ job_state_transition(void *job,  int ret, const char *legal, const char *s0, const char *s1) "job %p (ret: %d) attempting %s transition (%s-->%s)"
+ job_apply_verb(void *job, const char *state, const char *verb, const char *legal) "job %p in state %s; applying verb %s (%s)"
+-- 
+2.39.2
 
 
