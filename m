@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC40C3271F
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:49:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97E8BC3271F
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPebb-00018A-Il; Fri, 05 Jul 2024 04:47:48 -0400
+	id 1sPecI-00035q-Kz; Fri, 05 Jul 2024 04:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPebG-0000tm-Te
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:47:27 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1sPebR-00011A-4S
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:47:37 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPeb5-0004Aa-8k
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:47:25 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-58b5f7bf3edso880706a12.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:47:12 -0700 (PDT)
+ id 1sPebA-0004CP-RN
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:47:36 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52ea2f58448so1290408e87.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:47:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720169232; x=1720774032; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720169238; x=1720774038; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wP7tDDLg44bwHUt8SqbYxvL0ekGWQNKDr20DKrRYxss=;
- b=oCRt8zXiielVnfGoVZacjZ6UYFMT3ewmaZh8tbnCS99ir/YPMpB7IKZBmTca0xLV0X
- jCEtgJftL9NF+LUE5viHwXkLYdw0ExmpvW+obOPNN9VYoxfTsrv2t8Fo52pZ/379soh4
- 0zOa0Nv+Oq4G0EhmIB94/Tuvsfw3X5Utq2D5aVXbSZ8XTM1zLX3rWmU45e3kamFw5F+C
- 2d3vEPiQvg2aIUQlpTY4Spk0eqNe7YWWs+x18Kayv2MhJZnOuazcpqMaxQlxZqqxDV2n
- NyxWLeWLoopiKoxbm+BCDCv6UfMsTyN+qusJFW3+FbCDY0BDUaYwPZKv9/WYKUYe0faZ
- KVdw==
+ bh=77YvatHWOR33cTX9z3lD3BFIb9bFvCKghDfoEWx4ifM=;
+ b=YxgaobAkELsg/R7aYC8kgWRAOGKUmEcWuLAQS1qvktdmE2YnzYMY2Pg2F9pdBGgfov
+ /AjjTPx1eobbI5gdgvtN4ql+u97iHPMw4qwqaQossAU3fLrFAraYHQhYQqvU0n35ejEt
+ vwBLgBBe6EYeGLueE7CVZOXqrQeJjl9IvNEJLm0iVF45ByVBz6xcti0BUy5qIQuz9g04
+ vmWUX9xq04qLbV0/PBQ6A4BgkvCXevDsu4JDz9Jx5Ysg5ib+kd38q07cgFzTbApUt2Kj
+ s75TcjD8T3Tni+BWVQRkacRZJVu6G1dr5vBNkHPs046uTBolRW07mJYSSAZ909J4oB3/
+ WL2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720169232; x=1720774032;
+ d=1e100.net; s=20230601; t=1720169238; x=1720774038;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wP7tDDLg44bwHUt8SqbYxvL0ekGWQNKDr20DKrRYxss=;
- b=HF2IzBbvvLhGG6xPqpPcfV1I3kS2efElf0CGHGBOzfhPK6g2E+kbFGoQ5yLYJW5qBb
- BdGdpbmB2e9JNcN3XTrwC9lbwJxkeuAAZqTIxC5RNV2aKBwIvoKv+4l36dbvQFlYX+qf
- d+E2CAA5tiNdjVdVW5g1H6d+0qneohiHskwSf6qsGJLPJ+G02Yvqs3d6PdV08rQDN8uY
- 0S57oGe3eGLZqgDmGWjeXZ/UbMuZSLzXFOQL56NirtYoWXByA8XrvAe4cKQiUWDKMKND
- PPznQ9gLFw6V2RqL/Ct7YJTbw0FoGSJ1zJoXfAUnvItLhCZfCM7zho4NtQ9WOstYS+KU
- 3ihQ==
-X-Gm-Message-State: AOJu0YwAt2YooqNFnhGpThSX+9YKKHl+OC05SoR1eaJeKpnM5yPb+Drb
- HPcJZUw1FsMxM6z2Fqs7PG7QioS0627lUoT3DXZRGkRxz7WhE/LTWvbvJVIOskA=
-X-Google-Smtp-Source: AGHT+IH6pqLRN2BJry8uihFs7eo43QrE13jE3wSumHFBZkfY5J/MUYf4TRrBpTsgmSGz+kGUd0z0AQ==
-X-Received: by 2002:a05:6402:5108:b0:58b:2d93:ad6c with SMTP id
- 4fb4d7f45d1cf-58e5a408b30mr4002966a12.19.1720169231495; 
- Fri, 05 Jul 2024 01:47:11 -0700 (PDT)
+ bh=77YvatHWOR33cTX9z3lD3BFIb9bFvCKghDfoEWx4ifM=;
+ b=r0aKpilZA6Y5S3UHBHHZiTtQ8yRbQgd4dRsUb/6O+yd2x0Zp8m10iRiNr6czNiw3GJ
+ ovxAO0gmfxHrsx5v0mLGE/WSE7N0Lj2qwCiuWR4ye0BYSMS2gEYY1bvta0qYkYFuhvgP
+ orBCYT9Es+kqVDwX3VAX4YGvtMoRt3z6VvZ/6tvIKDONZciR4GdpNTOhlDAjMw49OCmg
+ e451P2ml0sZ6Un+bDGCbqgY5B3/tXV1bWokAvkzfd0rtNJVw14WsylxPZjhqrl1jSGkJ
+ ERQzO2rapPHSNvie4Ey4cXBQKC6OmS1NiA4RIP/X4ZiGoc5npMW/GtRl7parIdidFDeB
+ rFhA==
+X-Gm-Message-State: AOJu0YzfN6NtqGMqygCHR33QE/AI9G11x73CaM1Oqi+UH0qXoCXd62Kz
+ 5zx0IePTFE4j7LNpx79FzefoQhp20gIxJiwm+cAr4tsoq9O9jymT4ChOeT/9isc=
+X-Google-Smtp-Source: AGHT+IFg1/+kF3iTierx2fmPEuZ+gpoRIneMJUDTMazG/hSFaQyo9o15Q648oMk5deFvwrCi4aiyxg==
+X-Received: by 2002:a05:6512:15a9:b0:52e:a60e:3a0e with SMTP id
+ 2adb3069b0e04-52ea60e3b9cmr1232186e87.0.1720169238294; 
+ Fri, 05 Jul 2024 01:47:18 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58eeabbf108sm1247721a12.93.2024.07.05.01.47.10
+ 4fb4d7f45d1cf-58c9061becfsm3499904a12.83.2024.07.05.01.47.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 01:47:10 -0700 (PDT)
+ Fri, 05 Jul 2024 01:47:16 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 085AA62142;
- Fri,  5 Jul 2024 09:40:50 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 6D9E9621AC;
+ Fri,  5 Jul 2024 09:40:51 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
@@ -77,18 +77,19 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paul Burton <paulburton@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v2 24/40] plugins/lockstep: make mixed-mode safe
-Date: Fri,  5 Jul 2024 09:40:31 +0100
-Message-Id: <20240705084047.857176-25-alex.bennee@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH v2 38/40] gdbstub: Use true to set cmd_startswith
+Date: Fri,  5 Jul 2024 09:40:45 +0100
+Message-Id: <20240705084047.857176-39-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705084047.857176-1-alex.bennee@linaro.org>
 References: <20240705084047.857176-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,39 +112,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ExecState is shared across the socket and if we want to compare
-say 64 bit and 32 bit binaries we need the two to use the same sizes
-for things.
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Message-Id: <20240628124258.832466-11-alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+cmd_startswith is a boolean so use 'true' to set it instead of 1.
+
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240628050850.536447-10-gustavo.romero@linaro.org>
 ---
- contrib/plugins/lockstep.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ gdbstub/gdbstub.c | 80 +++++++++++++++++++++++------------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
 
-diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
-index 111ec3fa27..761bcdf363 100644
---- a/contrib/plugins/lockstep.c
-+++ b/contrib/plugins/lockstep.c
-@@ -57,7 +57,7 @@ typedef struct {
- /* The execution state we compare */
- typedef struct {
-     uint64_t pc;
--    unsigned long insn_count;
-+    uint64_t insn_count;
- } ExecState;
- 
- typedef struct {
-@@ -148,7 +148,7 @@ static void report_divergance(ExecState *us, ExecState *them)
- 
-         g_string_printf(out,
-                         "Δ insn_count @ 0x%016" PRIx64
--                        " (%ld) vs 0x%016" PRIx64 " (%ld)\n",
-+                        " (%"PRId64") vs 0x%016" PRIx64 " (%"PRId64")\n",
-                         us->pc, us->insn_count, them->pc, them->insn_count);
- 
-         for (entry = log, i = 0;
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 5c1612ed2a..b9ad0a063e 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -1433,26 +1433,26 @@ static const GdbCmdParseEntry gdb_v_commands_table[] = {
+     {
+         .handler = handle_v_cont_query,
+         .cmd = "Cont?",
+-        .cmd_startswith = 1
++        .cmd_startswith = true
+     },
+     {
+         .handler = handle_v_cont,
+         .cmd = "Cont",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .allow_stop_reply = true,
+         .schema = "s0"
+     },
+     {
+         .handler = handle_v_attach,
+         .cmd = "Attach;",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .allow_stop_reply = true,
+         .schema = "l0"
+     },
+     {
+         .handler = handle_v_kill,
+         .cmd = "Kill;",
+-        .cmd_startswith = 1
++        .cmd_startswith = true
+     },
+ #ifdef CONFIG_USER_ONLY
+     /*
+@@ -1462,25 +1462,25 @@ static const GdbCmdParseEntry gdb_v_commands_table[] = {
+     {
+         .handler = gdb_handle_v_file_open,
+         .cmd = "File:open:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "s,L,L0"
+     },
+     {
+         .handler = gdb_handle_v_file_close,
+         .cmd = "File:close:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "l0"
+     },
+     {
+         .handler = gdb_handle_v_file_pread,
+         .cmd = "File:pread:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "l,L,L0"
+     },
+     {
+         .handler = gdb_handle_v_file_readlink,
+         .cmd = "File:readlink:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "s0"
+     },
+ #endif
+@@ -1748,7 +1748,7 @@ static const GdbCmdParseEntry gdb_gen_query_set_common_table[] = {
+     {
+         .handler = handle_set_qemu_sstep,
+         .cmd = "qemu.sstep=",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "l0"
+     },
+ };
+@@ -1804,7 +1804,7 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
+     {
+         .handler = handle_query_thread_extra,
+         .cmd = "ThreadExtraInfo,",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "t0"
+     },
+ #ifdef CONFIG_USER_ONLY
+@@ -1816,14 +1816,14 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
+     {
+         .handler = gdb_handle_query_rcmd,
+         .cmd = "Rcmd,",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "s0"
+     },
+ #endif
+     {
+         .handler = handle_query_supported,
+         .cmd = "Supported:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "s0"
+     },
+     {
+@@ -1834,7 +1834,7 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
+     {
+         .handler = handle_query_xfer_features,
+         .cmd = "Xfer:features:read:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "s:l,l0"
+     },
+ #if defined(CONFIG_USER_ONLY)
+@@ -1842,27 +1842,27 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
+     {
+         .handler = gdb_handle_query_xfer_auxv,
+         .cmd = "Xfer:auxv:read::",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "l,l0"
+     },
+     {
+         .handler = gdb_handle_query_xfer_siginfo,
+         .cmd = "Xfer:siginfo:read::",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "l,l0"
+      },
+ #endif
+     {
+         .handler = gdb_handle_query_xfer_exec_file,
+         .cmd = "Xfer:exec-file:read:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "l:l,l0"
+     },
+ #endif
+     {
+         .handler = gdb_handle_query_attached,
+         .cmd = "Attached:",
+-        .cmd_startswith = 1
++        .cmd_startswith = true
+     },
+     {
+         .handler = gdb_handle_query_attached,
+@@ -1901,14 +1901,14 @@ static const GdbCmdParseEntry gdb_gen_set_table[] = {
+     {
+         .handler = handle_set_qemu_sstep,
+         .cmd = "qemu.sstep:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "l0"
+     },
+ #ifndef CONFIG_USER_ONLY
+     {
+         .handler = gdb_handle_set_qemu_phy_mem_mode,
+         .cmd = "qemu.PhyMemMode:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "l0"
+     },
+ #endif
+@@ -1916,7 +1916,7 @@ static const GdbCmdParseEntry gdb_gen_set_table[] = {
+     {
+         .handler = gdb_handle_set_catch_syscalls,
+         .cmd = "CatchSyscalls:",
+-        .cmd_startswith = 1,
++        .cmd_startswith = true,
+         .schema = "s0",
+     },
+ #endif
+@@ -2012,7 +2012,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry target_halted_cmd_desc = {
+                 .handler = handle_target_halt,
+                 .cmd = "?",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .allow_stop_reply = true,
+             };
+             cmd_parser = &target_halted_cmd_desc;
+@@ -2023,7 +2023,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry continue_cmd_desc = {
+                 .handler = handle_continue,
+                 .cmd = "c",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .allow_stop_reply = true,
+                 .schema = "L0"
+             };
+@@ -2035,7 +2035,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry cont_with_sig_cmd_desc = {
+                 .handler = handle_cont_with_sig,
+                 .cmd = "C",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .allow_stop_reply = true,
+                 .schema = "l0"
+             };
+@@ -2047,7 +2047,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry v_cmd_desc = {
+                 .handler = handle_v_commands,
+                 .cmd = "v",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "s0"
+             };
+             cmd_parser = &v_cmd_desc;
+@@ -2064,7 +2064,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry detach_cmd_desc = {
+                 .handler = handle_detach,
+                 .cmd = "D",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "?.l0"
+             };
+             cmd_parser = &detach_cmd_desc;
+@@ -2075,7 +2075,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry step_cmd_desc = {
+                 .handler = handle_step,
+                 .cmd = "s",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .allow_stop_reply = true,
+                 .schema = "L0"
+             };
+@@ -2087,7 +2087,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry backward_cmd_desc = {
+                 .handler = handle_backward,
+                 .cmd = "b",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .allow_stop_reply = true,
+                 .schema = "o0"
+             };
+@@ -2099,7 +2099,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry file_io_cmd_desc = {
+                 .handler = gdb_handle_file_io,
+                 .cmd = "F",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "L,L,o0"
+             };
+             cmd_parser = &file_io_cmd_desc;
+@@ -2110,7 +2110,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry read_all_regs_cmd_desc = {
+                 .handler = handle_read_all_regs,
+                 .cmd = "g",
+-                .cmd_startswith = 1
++                .cmd_startswith = true
+             };
+             cmd_parser = &read_all_regs_cmd_desc;
+         }
+@@ -2120,7 +2120,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry write_all_regs_cmd_desc = {
+                 .handler = handle_write_all_regs,
+                 .cmd = "G",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "s0"
+             };
+             cmd_parser = &write_all_regs_cmd_desc;
+@@ -2131,7 +2131,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry read_mem_cmd_desc = {
+                 .handler = handle_read_mem,
+                 .cmd = "m",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "L,L0"
+             };
+             cmd_parser = &read_mem_cmd_desc;
+@@ -2142,7 +2142,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry write_mem_cmd_desc = {
+                 .handler = handle_write_mem,
+                 .cmd = "M",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "L,L:s0"
+             };
+             cmd_parser = &write_mem_cmd_desc;
+@@ -2153,7 +2153,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry get_reg_cmd_desc = {
+                 .handler = handle_get_reg,
+                 .cmd = "p",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "L0"
+             };
+             cmd_parser = &get_reg_cmd_desc;
+@@ -2164,7 +2164,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry set_reg_cmd_desc = {
+                 .handler = handle_set_reg,
+                 .cmd = "P",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "L?s0"
+             };
+             cmd_parser = &set_reg_cmd_desc;
+@@ -2175,7 +2175,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry insert_bp_cmd_desc = {
+                 .handler = handle_insert_bp,
+                 .cmd = "Z",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "l?L?L0"
+             };
+             cmd_parser = &insert_bp_cmd_desc;
+@@ -2186,7 +2186,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry remove_bp_cmd_desc = {
+                 .handler = handle_remove_bp,
+                 .cmd = "z",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "l?L?L0"
+             };
+             cmd_parser = &remove_bp_cmd_desc;
+@@ -2197,7 +2197,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry set_thread_cmd_desc = {
+                 .handler = handle_set_thread,
+                 .cmd = "H",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "o.t0"
+             };
+             cmd_parser = &set_thread_cmd_desc;
+@@ -2208,7 +2208,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry thread_alive_cmd_desc = {
+                 .handler = handle_thread_alive,
+                 .cmd = "T",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "t0"
+             };
+             cmd_parser = &thread_alive_cmd_desc;
+@@ -2219,7 +2219,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry gen_query_cmd_desc = {
+                 .handler = handle_gen_query,
+                 .cmd = "q",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "s0"
+             };
+             cmd_parser = &gen_query_cmd_desc;
+@@ -2230,7 +2230,7 @@ static int gdb_handle_packet(const char *line_buf)
+             static const GdbCmdParseEntry gen_set_cmd_desc = {
+                 .handler = handle_gen_set,
+                 .cmd = "Q",
+-                .cmd_startswith = 1,
++                .cmd_startswith = true,
+                 .schema = "s0"
+             };
+             cmd_parser = &gen_set_cmd_desc;
 -- 
 2.39.2
 
