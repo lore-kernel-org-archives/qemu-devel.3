@@ -4,98 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 113C9C30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 04:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A24CC30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 05:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPakV-0006wg-Q7; Fri, 05 Jul 2024 00:40:44 -0400
+	id 1sPb6c-0005Rn-IX; Fri, 05 Jul 2024 01:03:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPakR-0006ry-Jf; Fri, 05 Jul 2024 00:40:39 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sPakM-0003T8-Nv; Fri, 05 Jul 2024 00:40:38 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-65465878c1fso276937b3.2; 
- Thu, 04 Jul 2024 21:40:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720154431; x=1720759231; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=T82L/c5XETygIXcbVVnE8ZgZ4PysgILa/Ah7LG+aDkA=;
- b=VAPhE3GVvy+7fx/EdSyCE9tHVOPdTpFGHIKKvjHJxx3C8nbGk7uEeeCxHkvD6i8/aw
- X6CUBiJ7qfDHysC4iArkQxTP1F0/xFhO003ArOFk/CirlRJMO1vcF/NJD9MnUvzVYjJW
- 5eVpvCzT3CkY0b1/0vOlNLhGRIBXOb77Rpnir/tuHJWLkHMIRLmKdgKxr7IG38q2hIBD
- qpTC12gZFls/JQfZp2z4CId6wz5Fxd42Lo+n8gmx0KBmaVOLPK/EYpxEtWrQKEZAL9DS
- iOd1PHIzm6obgGyhjYkJYjpL9ogbA4faovR1fu7miGGZnyPNT9K/bzcGEY0WPMwlmyky
- qtfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720154431; x=1720759231;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=T82L/c5XETygIXcbVVnE8ZgZ4PysgILa/Ah7LG+aDkA=;
- b=WxvqfCYJr//IcuosUph8mj5z1gCNlrAQcdX92+a++s0M1UWfLD67u0usjeIojKdu4d
- OMnS9Xf/+qyjGpE+UjMP9CUtF/qaDVUd4JxBHz1BLjqnwpGUEIizM2zAIkSH5Rp0Pji7
- MaUaoaGwJ3dtxrRNRhRC8uL+Pnq5qU3FJcGVc8axAprcyBTUx3Pdf36yuJQ21MP1UGHa
- /+I7G/ogK/FG/KnHjuUbcACuYtwFpExxYBfUMOVxfrBJx+zKNFBSx5AB956Ky4XqAOQD
- gNQ37JAD72Uec9fJPStricKu6/QhcSOrHsimvKB94SYXrKBXgoHWLWEk3IeuzvGGZjLn
- J0Mw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMZrJt4tiM/VgDsgKuuk9ocV3CrZS2SrwIfQIRFM7HDpYP5eXARroQAJ/9G0INBeUQm/AEykIkrShAAiY4N2mDHtyFRcDzc0DxGjfqLeP339cHbfkfiC4zgwj0YgT8SAOOEW+Nios5hoiAzxP9r6mXog==
-X-Gm-Message-State: AOJu0Yx4ArQ2jDPt6IQawoS6PTcVpuqoC8A2Wm8PWDZn0157MdWz/rv+
- KpRUb88BZ1dG6UPQujO6S18rBVafKh2FIA3reKYNs460BUVptDHs
-X-Google-Smtp-Source: AGHT+IFmzlDZzeBd4mG2a3j1h9cq4Pj6UU8qG1LM3V28a2zDARRWNZnz/EouiRi0mTKP75eLa4TnHQ==
-X-Received: by 2002:a05:690c:6b0e:b0:64a:4728:eed with SMTP id
- 00721157ae682-652d803ad69mr41792697b3.46.1720154431089; 
- Thu, 04 Jul 2024 21:40:31 -0700 (PDT)
-Received: from localhost (118-211-5-80.tpgi.com.au. [118.211.5.80])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7080256c9dcsm13025732b3a.74.2024.07.04.21.40.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 21:40:30 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 05 Jul 2024 14:40:19 +1000
-Message-Id: <D2HBUN5N504E.27WH86Z4HPTKW@gmail.com>
-Cc: "Peter Maydell" <peter.maydell@linaro.org>, "Akihiko Odaki"
- <akihiko.odaki@daynix.com>, "Eduardo Habkost" <eduardo@habkost.net>,
- "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Yanan Wang"
- <wangyanan55@huawei.com>, "John Snow" <jsnow@redhat.com>, "BALATON Zoltan"
- <balaton@eik.bme.hu>, "Jiaxun Yang" <jiaxun.yang@flygoat.com>, "Daniel
- Henrique Barboza" <danielhb413@gmail.com>, "Harsh Prateek Bora"
- <harshpb@linux.ibm.com>, "Alexey Kardashevskiy" <aik@ozlabs.ru>, "Michael
- S. Tsirkin" <mst@redhat.com>, =?utf-8?q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Peter Xu" <peterx@redhat.com>, "Fabiano Rosas"
- <farosas@suse.de>, "Paolo Bonzini" <pbonzini@redhat.com>, "David
- Hildenbrand" <david@redhat.com>, "Thomas Huth" <thuth@redhat.com>, "Laurent
- Vivier" <lvivier@redhat.com>, <qemu-devel@nongnu.org>,
- <qemu-block@nongnu.org>, <qemu-ppc@nongnu.org>
-Subject: Re: [PATCH v2 06/15] ppc/vof: Fix unaligned FDT property access
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "David Gibson" <david@gibson.dropbear.id.au>
-X-Mailer: aerc 0.17.0
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-6-750bb0946dbd@daynix.com>
- <CAFEAcA-Zmc0BQgUiqEgzCvVGWyiPt9bo+Xt90n4wxhJ3_D91fA@mail.gmail.com>
- <Zn98p6CUV0KnIo50@zatzit>
- <CAFEAcA_LN8i66KUkxrgg=CUKJNYM=s9pTYv6w5QQ7PSU1Q3=bg@mail.gmail.com>
- <D2H7KBZF8OA4.3EKIA8NHHJ3MJ@gmail.com> <ZodPOTAcLo1XF4MB@zatzit>
-In-Reply-To: <ZodPOTAcLo1XF4MB@zatzit>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=npiggin@gmail.com; helo=mail-yw1-x1129.google.com
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1sPb6a-0005OT-Rt
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 01:03:32 -0400
+Received: from smarthost1.eviden.com ([80.78.11.82])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@eviden.com>)
+ id 1sPb6Z-0003g3-2n
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 01:03:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=eviden.com; i=@eviden.com; q=dns/txt; s=mail;
+ t=1720155812; x=1751691812;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=8hp9YS8jEEsaaQtV+h2ko9fpqQi3pY6lFFsOK57EHS4=;
+ b=p3RdIs1Crs+bj1U4bS0Pl7nhk7PqaLSgTyGyg6fli07HkGo0j8HXL6jU
+ eXPa4uFHUdDdpaSUWXDD2lAlxapfQOE6HvCo7t2IfpGQ1HQmrsa5NRAHx
+ V3t5k3XyVGCE8oKP6ik3K6fZxHySqG3SBiqiVKlEwqbsiiKvuQyYGeowU
+ hCIAW8SidmpSL+yE0kpAPje0OhaD1QSDvMg8X127UcQOjNIhJUQQbQpTb
+ ZZE5NKpQENIHYYUw88oCIGBI5y1e8tWUasKCdMnpfXMRHV8DVXA40Vug/
+ AHobaRgosiTcs/oa8eF0i9xwsW2wER0CXJM6ahg2uhOHqNZzyEMUVkpUx Q==;
+X-IronPort-AV: E=Sophos;i="6.09,184,1716242400"; d="scan'208";a="15924033"
+X-MGA-submission: =?us-ascii?q?MDFK+l94PiF81q8arAJRzBfErXYhlrAHhReiw2?=
+ =?us-ascii?q?QoMg0LaEHyJoPxOLx5lBU0uJe7IPcE6P1+IAoHFJEZ8wviF9GxgzpvKd?=
+ =?us-ascii?q?2uwBqUZZP25MrI+xFo23P2yJDZu60x7LlLBBV7t8gQlsuEq8yKWy83FC?=
+ =?us-ascii?q?Q1sQ+wScoNAb42zPZ7jqKapw=3D=3D?=
+Received: from mail-vi1eur05lp2169.outbound.protection.outlook.com (HELO
+ EUR05-VI1-obe.outbound.protection.outlook.com) ([104.47.17.169])
+ by smarthost1.eviden.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Jul 2024 07:03:20 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Z7/B4GHyd6Ae2kfdXDsc6KAHwgCV5v05g+FUMDvPYhcpfOJn94OJOZa9xgTicI1D01Lk150XSbbo+wRbX7fhttJEEwqNS+JVEL5xfJjWDQxXYuoPAF/nFeL1LB8oTMIfKxT01dyM7kwm8u57zCYRXoUpZnvemfQ2KvKRe9mg+WTn54Vb77ZqfsnuVhs5reshE2Ae+nKNaPcy79G+hadLxlW5yA1qwdDLihtR8qxd8kUf/YWA+tY1OkitJxSqD+W1Co5NWnn7bKDeEKapf/+O+UZ8TzM0nnv0E2HjVbXL1BsMHqVb36O5vgjI1V1U4QXiRGh539qIuHFdKXemiSaZfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8hp9YS8jEEsaaQtV+h2ko9fpqQi3pY6lFFsOK57EHS4=;
+ b=DcLcxl8X78bvtlmv3wDi2OOJ0iM56tZ0Wq8vjrO1CUPSW5FGigPv5e0BUjex1jdZNs2HGZusdYjwnZkVOCgLsS7Ej8v0cv9YNZVBpEs3k8PiDfMatZJKPu932n+utFKzlcPa/q6ppfq63oIVgNL0cLWPdxbZeAzszh/c90hYnOqwdm/CXhWSE+t90DvFuduGLPFIyeEKV+vQDvkE5pfJaF9CGnXIpPdIVySiNWhyjPipk3c6Leum7QhEMyDriu8dvxFqqYI48wgnzwqh4GoWcRBSR+AxPsuLqRTGYFGFvxHEMyYbhf6qcdEIwOg8NCbSBG5WwUGQcqpeSj8bK4nYqA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=eviden.com; dmarc=pass action=none header.from=eviden.com;
+ dkim=pass header.d=eviden.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Eviden.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8hp9YS8jEEsaaQtV+h2ko9fpqQi3pY6lFFsOK57EHS4=;
+ b=gx0BvnlcQP6rBSzbCCfXMu1DAJHIUojgPL9BEsy4zV1CtXSxVU6pmPOX1jA2nXpCkr9qg+miDlm6aiy3/+LUHP1K/cBu6AnxWJUSl56HjpP9KlApsi3PxMZjoLjzndWYoV82zJtPZtuqhX0Qx0NFqnK20zqQTC29z0zsxZKyBDAGLA0kVISLnt4jzUJhNQO4ZEIlLYElmd1R4f26khlCK2jCOOBvL871Nxj6Des8fIQsjH2r3Rzav4vRHHztpppQbUI4YXBJj57+pFhnQPcLsbjAS0S3HEnwWsnEoxp5Fxan0fAE1ay9ob4ZAfkjGedsIqL2BPCLK/NajLVzj5ClMw==
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by VI1PR07MB6542.eurprd07.prod.outlook.com (2603:10a6:800:179::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7762.11; Fri, 5 Jul
+ 2024 05:03:17 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::fbd7:ca71:b636:6f9d%4]) with mapi id 15.20.7741.017; Fri, 5 Jul 2024
+ 05:03:17 +0000
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "jasowang@redhat.com" <jasowang@redhat.com>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, "kevin.tian@intel.com" <kevin.tian@intel.com>,
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "peterx@redhat.com" <peterx@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, CLEMENT MATHIEU--DRIF
+ <clement.mathieu--drif@eviden.com>
+Subject: [PATCH  v3 2/3] intel_iommu: fix type of the mask field in
+ VTDIOTLBPageInvInfo
+Thread-Topic: [PATCH  v3 2/3] intel_iommu: fix type of the mask field in
+ VTDIOTLBPageInvInfo
+Thread-Index: AQHazpil+0mQLG18N0+TygrrlyLdGQ==
+Date: Fri, 5 Jul 2024 05:03:17 +0000
+Message-ID: <20240705050213.1492515-3-clement.mathieu--drif@eviden.com>
+References: <20240705050213.1492515-1-clement.mathieu--drif@eviden.com>
+In-Reply-To: <20240705050213.1492515-1-clement.mathieu--drif@eviden.com>
+Accept-Language: en-GB, fr-FR, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=eviden.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|VI1PR07MB6542:EE_
+x-ms-office365-filtering-correlation-id: 731a34f8-adbe-4e59-0ad9-08dc9cafc853
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?TTJSOU82bUI4UXJ2clpzTTB3bkxWaDZGaUlPZzJsdG0xNVN3SzFXYSsvQUdN?=
+ =?utf-8?B?NDYvZDA2TGYyRHpvYTlaWG5oai9nKzMwTnZIR25adXRUeC9QRTNjU2txSk90?=
+ =?utf-8?B?dDB2RFgwWW8vY0lKNDJiZ240LytqelhDeDNmdGhxdFdTQmZJTko4Q1ZlbDhH?=
+ =?utf-8?B?L3VQME90Rk55Y1RHVlRkdVZUN1FuR29ScUI4b3hzTjNFQ1hvSWoyRzRQcTBm?=
+ =?utf-8?B?L0JTUWwwK1Y5SEZaZmF1c3A2SnF5MHBuTldETzQ1R3pvNWdZT3g3Um00NSti?=
+ =?utf-8?B?M09hQ0JIOGhYaVhMb3ZLY1REdDlyTWhkdmRJZlBTcWVndCtDb2xvNEVvWlNP?=
+ =?utf-8?B?Q1V5dG9qU3Fya3NkWmRNL0dOSm9ZbGVHUEhHdnRFZjFuLzJZYXVLenV0YmJh?=
+ =?utf-8?B?R0Y2VlUvV3VhMTJvaFRBYlZIb3l6cXJ5S1A1dFV2Qys0K2tpelBpUExmV2hB?=
+ =?utf-8?B?L0tzZVBpbCtsRThxS0hsQ0xXNjdVOEdBcnMxTk5WNXhIYUw2V3d2RWh3MlJO?=
+ =?utf-8?B?bWFrdlpKaFBGTjQ4SDNSVXBSdFZtY2ROY1BuTjMvUzNYMWlFc2ErSlNRWnZV?=
+ =?utf-8?B?VUdhYm1PQWJJSDB3VzI5S25ybnVvcXhDRWc5NzFJcXN0cFBUVEdLSXUxNTBJ?=
+ =?utf-8?B?UmFHSFdLYUtlUlFpcGZhdXhSR040VjdyR0tsT2V6c3J3RGdWOHVob1A2cDVo?=
+ =?utf-8?B?S3JEbS9yTmJtQXhtZVlrbTZSVVF3OHVCK0EzL01HbVY4MVZwSGo5RXBGUXky?=
+ =?utf-8?B?L2xYRmhhUlVwY2dmWkpNRFNvcmJ2eEMydHFPWmJiME0vSEdMc1dzNjhnL0x1?=
+ =?utf-8?B?VFJuN3NSMThHeWo4Sm9qOTZDRFpoZSszU2pSSDV2dzNIQ28yaDZ5alkxTHR3?=
+ =?utf-8?B?M01QcFBPOUtYaGVMaWhLVEpNMnZqaG9Pcm1QNzJ2dytraUNjT2hncUVxMUlh?=
+ =?utf-8?B?U2xwK0NZYUFQUTZaYkJSWk5XTlFKN29CZVNNTWdLbFRTckoxL0FONGFxbXkx?=
+ =?utf-8?B?YU9VMTVXcE9xdUJjSHVOYys2YTRmS0VMNVIyRkU5Uk0vWUVrZkVlbG9sZjk3?=
+ =?utf-8?B?WGVvSTBhYStrWmhrRGNzNExmTXNwdmRpazNIb2doWm52a0V0bzl3Z3ZvYzJD?=
+ =?utf-8?B?VTk5WUV1QXJyTnJZdHlEQURwSXFBdUFuOVBGaGVOZHZYcHM4cGtXckNHNU41?=
+ =?utf-8?B?SktXbllaU2tSUGNISk5TQ2V1MmVLM0NxV1lUdDIremxVZm5uVkxUaW1Sdnhn?=
+ =?utf-8?B?YjY2MUphK3EwZkdOenhYQys0NUxXRFdwNXYxaVEvY0cwVnJ4T3BlbVc0dHFE?=
+ =?utf-8?B?OTBrcEdTMitNSnZvdDBSQ3U1V0RkNTFtdzF6Z3g5UFIxT29MODRMRzZ3YUlw?=
+ =?utf-8?B?VnlaTVcwU1FXVHpyVWhwVmJDSUYwcG9BaHpNSEZUNWFneE0rb2N6WkdLNU5n?=
+ =?utf-8?B?ZTFDRUlOa2w5QS9zcUZqaldiWXZ1Q0VOWlE5N3A0UUc1RVM2SDFTT2V4bHo5?=
+ =?utf-8?B?T2tUeUJvczZSM1pnOW1SQ0JRNnY4Q1BGUGhqLytISEM1cmNQR1YrQ05ma0U5?=
+ =?utf-8?B?NzBMNTVwczZ3TlhOSngxdHBKOU80UGd5MHcwUXhZeUJJZkwrNHRqcmxQeVQw?=
+ =?utf-8?B?SjBXZE0vTnhTWjZOQjE2TWRFNjV2YnJqZFU0SXlIQ3QxMkVKUVQzNXdPWXpF?=
+ =?utf-8?B?L0crV1dHdll4ZlFKdDcxTlBwYXhlLzZFRGxwc01PRFVLZzJ3Q1FwMTBvb24x?=
+ =?utf-8?B?QVMyRTNGRmlRaDR6eXBUQ3dhWFlxMTNQTU5iUzJ5b0NrNWlNMXFnT3pTOC9W?=
+ =?utf-8?B?R2d4QUh4UWQ0YmZETk1MWlh2dGRvRXcvUG5Ydy95MmlyZE9CeUh5RkRBNVE2?=
+ =?utf-8?B?bStic1UvQjl2Wkd1czRHSXVtZ3dZb1Z1R1ptNHZ3bVVablE9PQ==?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Y2x2cVdxK1dwUWxKS1FTTkg2S0xaYWZZOGZlSE1kdEVqYnpFblliTWZaODRl?=
+ =?utf-8?B?eEUrWTcyWUt1NzZhSEhuSDdtSkVIMTBDRFNiUVFxMkFFeFBKTTJ3aDVMdDZE?=
+ =?utf-8?B?UmZNM0NmNFpxWmNKaG9oVHRNNjM3UGRxZzFwSysrTW1ySkV4Qzc5WUE5bGRH?=
+ =?utf-8?B?QzVhTzc2OElpTnd0bHY3dXdWQTd3c3RuSlQ5aVBIeWFKMkRKQmFhTVFKK2dS?=
+ =?utf-8?B?TlVqVDhyOW5LZ1pTUUg3THl2aUxIVDUwQXoyWjVCWHovR3NqWFJlYnNjWTNC?=
+ =?utf-8?B?TXZCcHE1R3B1c1hGZTg4anJxc0U5ZWYzbE9XMHk3ejNpd25SUzMyUkZXcTVS?=
+ =?utf-8?B?WEVNZjErTUdpMGFySHJhZU8vS3Z4SHp5d3UybWJlYWlhS1orM0ZKbTBpRkJ6?=
+ =?utf-8?B?RzZBaFpEMFFINS8rbUVOeFVoSUpiK1pIWGpjdzdUSTIxT3NLZWRGQzl3UmhF?=
+ =?utf-8?B?TU1xY0lrWFY5N1Nkd09kUWJIOU1NMnVINWE1cE50K010WVJJdmlEQ1ZhUzdW?=
+ =?utf-8?B?Mmx0cGFVNXdLVDJhUmZ1QkVPYXlGVEtkclZkN3NMTndWYVdvbmVZWnpKenBU?=
+ =?utf-8?B?VWF3dFQ4ci83c1UxZXpsME9kejhlT3QweHdlRVVMSlRHTXVEOGpRSkhGRjRD?=
+ =?utf-8?B?ZWJFcXg5MWJqdXdjU0hjQ0ZLSlhIdjVuS3dUVjVoK3poRlF3RW93d0pZUnA2?=
+ =?utf-8?B?dUFqR2JOc040WVROMUFtK1BpZVpJMnhIRVpyREMvbkc5djI1UWs0a2FqMEZz?=
+ =?utf-8?B?elY2enRoSVEzeFFnbmovb08xejlvcUJ6N2gzN3plYmtVMXBwWjFZdEY0U1Qw?=
+ =?utf-8?B?Ry9BQ1hPNWdlQnkzSGh0RVJVRDBIeG9MUFZjU0Q2NCtsazlXdDUraUs2Zjhv?=
+ =?utf-8?B?UmhjOHFjZkN4eCtFcWUzWGFrajcvdkJwcGR1MitaMWRtcDhRVFQ2c1lyN3cr?=
+ =?utf-8?B?NmNGenphS1VwQy9pdGM0VllzcW4vLzhsUERDcnVrWlR0OWYvNXFaK21iYXFk?=
+ =?utf-8?B?R1htSE9aaVA3dkxKalRWU3g5OUlmMmJIVTU1QXk4eGNQZmZlSGc2OUxxL201?=
+ =?utf-8?B?dWE3ZHV4TW5oaEdKSzA5aTNTL3VObkNlSGduVnJxNEFNOHladmo4K2tpeXJp?=
+ =?utf-8?B?UzlOVDllSXJsd1dtNi9nM0ZMbW9HODJMeWl2bnFiVWNWbHdKT1V2aHU2ZStx?=
+ =?utf-8?B?M01EN1p0RWxEbTRBMU1nc3k4RmVNcDdwL0xtZlNJZ2Rnczh2UmVlRDMvZnFQ?=
+ =?utf-8?B?MjZKVVhxYWZFNTFRYnE3dWk0THc2THMvT2FWMUxHV1JqM29xZmVNUGVHV3Zz?=
+ =?utf-8?B?ejQzM0xPSmUwMTlnNk9EWHZVYUJGUkhyY2tMMlpObkxtVHJIQ3FYTEVIV1Fu?=
+ =?utf-8?B?WVIycG1MYzlERDg4R3B0TGpTVDN6NW9mSEhrVXpYdE9MY1NYM1FnYjFxdkpH?=
+ =?utf-8?B?ZWk2VlJsS2VNQXRhMU9pMjJXQVc5OEl5NEhZWEl2NmxzY3RnbUhGalBEUVVK?=
+ =?utf-8?B?NUxJQTVETGxvazIyZW92VVIvWEFrc1JIWmE0VnhQVGpTL2V2TlBnVHBuQUxT?=
+ =?utf-8?B?eGtMczZsc2RPOGNnM0prTUVPaTZHRGVLVzdXZjdwdWUvaDB2aS9GeEhGRFJM?=
+ =?utf-8?B?V3k4S2lkb3pNTTFiYUtUdWR3Q1RhWEFDK1FuRktKZTNrczFJd2duQU5tbzVG?=
+ =?utf-8?B?ZUl1eHRiRi9oOXdQdDNIWk1iNGQrd1IrZy9ZMWthdjR3UTd0ckU4VDZyaVNm?=
+ =?utf-8?B?UjB1cXg5QlZKSWxqVStTODhLWURwTEc4VStvTVQ3eWJ2dzJvdkVKMEg3MDk4?=
+ =?utf-8?B?LzFpTS9ncEYwTk55V09qVlZyVmdCZFhCeGM3Y2oyeGx4ejlnZkQrZ0tYcjBE?=
+ =?utf-8?B?cU5zb2R4WUxsbjl2cnIyMUM0VTg0Sms0S3dTMk83UmViR3V2VGRxMFRwS0s4?=
+ =?utf-8?B?TktCU1BrMXZQVlhCY0Q5U2FFWUJ4dUJZU081R0M3ckdkTEcydFZzNTFkaUNI?=
+ =?utf-8?B?TGFldzd5R2JsTFU2eHA5RmluZjR6KzFaY29PeStKUGRNekpmMHNCM0JNa2RO?=
+ =?utf-8?B?SDhwUzlFRmRoSFk5UjNKOU5QaE01dW92K2FMbENNMUNEdHRJN2NqeUpxdTlj?=
+ =?utf-8?B?bEhndFBMU2d4ZFBYZWdkanI3ZHM4TGJ5RFJwV0I0R0M2RHJML2RoSFBodVRq?=
+ =?utf-8?Q?O27GE5FZrpSXRIqMazR4Ack=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <CD9C547FE506694A97C604DD9C6748C0@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: eviden.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 731a34f8-adbe-4e59-0ad9-08dc9cafc853
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jul 2024 05:03:17.3459 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: nb0D3kvg5GUxACaqOhKUEkN5EJIFXoND8P8mqC41JpiHb7fzyFw7HCndUKb8zJoWFgo8FMRTmn/iyAR52gTURNzZ0aM86QaqLUMvx9w/+MMCxxlDMPgAHJSEj9oEvUju
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: VI1PR07MB6542
+Received-SPF: pass client-ip=80.78.11.82;
+ envelope-from=clement.mathieu--drif@eviden.com; helo=smarthost1.eviden.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,92 +204,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Jul 5, 2024 at 11:41 AM AEST, David Gibson wrote:
-> On Fri, Jul 05, 2024 at 11:18:47AM +1000, Nicholas Piggin wrote:
-> > On Thu Jul 4, 2024 at 10:15 PM AEST, Peter Maydell wrote:
-> > > On Sat, 29 Jun 2024 at 04:17, David Gibson <david@gibson.dropbear.id.=
-au> wrote:
-> > > >
-> > > > On Fri, Jun 28, 2024 at 04:20:02PM +0100, Peter Maydell wrote:
-> > > > > On Thu, 27 Jun 2024 at 14:39, Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
-> > > > > >
-> > > > > > FDT properties are aligned by 4 bytes, not 8 bytes.
-> > > > > >
-> > > > > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > > > > > ---
-> > > > > >  hw/ppc/vof.c | 2 +-
-> > > > > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > > >
-> > > > > > diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-> > > > > > index e3b430a81f4f..b5b6514d79fc 100644
-> > > > > > --- a/hw/ppc/vof.c
-> > > > > > +++ b/hw/ppc/vof.c
-> > > > > > @@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *f=
-dt, GArray *claimed, uint64_t base)
-> > > > > >      mem0_reg =3D fdt_getprop(fdt, offset, "reg", &proplen);
-> > > > > >      g_assert(mem0_reg && proplen =3D=3D sizeof(uint32_t) * (ac=
- + sc));
-> > > > > >      if (sc =3D=3D 2) {
-> > > > > > -        mem0_end =3D be64_to_cpu(*(uint64_t *)(mem0_reg + size=
-of(uint32_t) * ac));
-> > > > > > +        mem0_end =3D ldq_be_p(mem0_reg + sizeof(uint32_t) * ac=
-);
-> > > > > >      } else {
-> > > > > >          mem0_end =3D be32_to_cpu(*(uint32_t *)(mem0_reg + size=
-of(uint32_t) * ac));
-> > > > > >      }
-> > > > >
-> > > > > I did wonder if there was a better way to do what this is doing,
-> > > > > but neither we (in system/device_tree.c) nor libfdt seem to
-> > > > > provide one.
-> > > >
-> > > > libfdt does provide unaligned access helpers (fdt32_ld() etc.), but
-> > > > not an automatic aligned-or-unaligned helper.   Maybe we should add=
- that?
-> > >
-> > > fdt32_ld() and friends only do the "load from this bit of memory"
-> > > part, which we already have QEMU utility functions for (and which
-> > > are this patch uses).
-> > >
-> > > This particular bit of code is dealing with an fdt property ("memory"=
-)
-> > > that is an array of (address, size) tuples where address and size
-> > > can independently be either 32 or 64 bits, and it wants the
-> > > size value of tuple 0. So the missing functionality is something at
-> > > a higher level than fdt32_ld() which would let you say "give me
-> > > tuple N field X" with some way to specify the tuple layout. (Which
-> > > is an awkward kind of API to write in C.)
-> > >
-> > > Slightly less general, but for this case we could perhaps have
-> > > something like the getprop equivalent of qemu_fdt_setprop_sized_cells=
-():
-> > >
-> > >   uint64_t value_array[2];
-> > >   qemu_fdt_getprop_sized_cells(fdt, nodename, "memory", &value_array,
-> > >                                ac, sc);
-> > >   /*
-> > >    * fills in value_array[0] with address, value_array[1] with size,
-> > >    * probably barfs if the varargs-list of cell-sizes doesn't
-> > >    * cover the whole property, similar to the current assert on
-> > >    * proplen.
-> > >    */
-> > >   mem0_end =3D value_array[0];
-> >=20
-> > Since 4/8 byte cells are most common and size is probably
-> > normally known, what about something simpler to start with?
->
-> Hrm, I don't think this helps much.  As Peter points out the actual
-> load isn't really the issue, it's locating the right spot for it.
-
-I don't really see why that's a problem, it's just a pointer
-addition - base + fdt_address_cells * 4. The problem was in
-the memory access (yes it's fixed with the patch but you could
-add a general libfdt way to do it).
-
-Some fancy function like above could be used, But is it really
-worth implementing such a thing for this?
-
-Thanks,
-Nick
+RnJvbTogQ2zDqW1lbnQgTWF0aGlldS0tRHJpZiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRl
+bi5jb20+DQoNClZURElPVExCUGFnZUludkluZm8ubWFzayBtaWdodCBub3QgZml0IGluIGFuIHVp
+bnQ4X3QuDQpNb3Jlb3ZlciwgdGhpcyBmaWVsZCBpcyB1c2VkIGluIGJpbmFyeSBvcGVyYXRpb25z
+IHdpdGggNjQtYml0IGFkZHJlc3Nlcy4NCg0KU2lnbmVkLW9mZi1ieTogQ2zDqW1lbnQgTWF0aGll
+dS0tRHJpZiA8Y2xlbWVudC5tYXRoaWV1LS1kcmlmQGV2aWRlbi5jb20+DQotLS0NCiBody9pMzg2
+L2ludGVsX2lvbW11X2ludGVybmFsLmggfCAyICstDQogMSBmaWxlIGNoYW5nZWQsIDEgaW5zZXJ0
+aW9uKCspLCAxIGRlbGV0aW9uKC0pDQoNCmRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11
+X2ludGVybmFsLmggYi9ody9pMzg2L2ludGVsX2lvbW11X2ludGVybmFsLmgNCmluZGV4IGNiYzQw
+MzAwMzEuLjVmY2JlMjc0NGYgMTAwNjQ0DQotLS0gYS9ody9pMzg2L2ludGVsX2lvbW11X2ludGVy
+bmFsLmgNCisrKyBiL2h3L2kzODYvaW50ZWxfaW9tbXVfaW50ZXJuYWwuaA0KQEAgLTQzNiw3ICs0
+MzYsNyBAQCBzdHJ1Y3QgVlRESU9UTEJQYWdlSW52SW5mbyB7DQogICAgIHVpbnQxNl90IGRvbWFp
+bl9pZDsNCiAgICAgdWludDMyX3QgcGFzaWQ7DQogICAgIHVpbnQ2NF90IGFkZHI7DQotICAgIHVp
+bnQ4X3QgbWFzazsNCisgICAgdWludDY0X3QgbWFzazsNCiB9Ow0KIHR5cGVkZWYgc3RydWN0IFZU
+RElPVExCUGFnZUludkluZm8gVlRESU9UTEJQYWdlSW52SW5mbzsNCiANCi0tIA0KMi40NS4yDQo=
 
