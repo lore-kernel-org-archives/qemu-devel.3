@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68EAFC3271F
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4827C3271F
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:47:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPebK-0000vV-Rg; Fri, 05 Jul 2024 04:47:30 -0400
+	id 1sPebT-00010a-8T; Fri, 05 Jul 2024 04:47:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPebG-0000tl-Td
+ id 1sPebE-0000tP-PY
  for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:47:27 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPeb3-0004Ax-OI
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:47:26 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-58b966b4166so1702972a12.1
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:47:13 -0700 (PDT)
+ id 1sPeb2-0004AU-RS
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:47:24 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a7541fad560so157277566b.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:47:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720169232; x=1720774032; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720169231; x=1720774031; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JoliEJsSzkKhZQwY3f6Epel/jCgNkpeyE6ZHVJ+pXJo=;
- b=Qvi2a9XjpxLe5AkyUofn6/LikWpfyagKI2mRbm40T+GS1gFCTMTdMgOyqo1AA9ydVP
- TbCfsDJ41dylcx+WGxPCbh7pUA72WPa5bpwoq7mxiuT551yZ/+oo2w9FwzQV2ZLb8jEJ
- S05s7reCIgFIgRKICG0DFYhfr/B3jZyFBjV+NqklnBc+Q0qIGaD1uQe88EMk3PL3/r4N
- XuLYnfESkOYhJzlNErEBwEToWjdhsLLYZ35mm+VOFofFMiPglrQx4+mfpvbHdHbF4Boy
- +0NvRmrEbHGQLVcA6IJcaGBWHA41sWRU6x2+FbDNPqyhKb3WClXFTxppRlxeGBVDe8bJ
- xseg==
+ bh=U6hurhQTjp832TOlAx+LCodgHfvL9JAd0ZCjMoFRr6I=;
+ b=tloXcRzD/TdeBgMvGcAJw7duetYDQWUVFysuCIMfYrG9Kjeku+naNCo53+rdsr/w2r
+ 7u2rotExWPqrDmprKCDnG+sUIDvAIW37KUO8tNcTFndzYBnGm0gLeAW0MPsX5C3kv8ep
+ yOnu5fkhvPMjc+t5C8R7LLdep/AcnU1xu9DO8td8iCSYKYXhM18QSx9JO7JQF1b5pZZt
+ cgru0a8gGyMwUfm87Q7SgSLozGRhgnX32sSK1WKREX0u3YF5X3W/ICD0Q7iSa5RFilaB
+ KWjEatUVAWxbvj/SRm8GTnoySSFpPF+i1lptDyZ+/17sTAZQxH1r9JRnibk6IxDbqlJK
+ coVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720169232; x=1720774032;
+ d=1e100.net; s=20230601; t=1720169231; x=1720774031;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JoliEJsSzkKhZQwY3f6Epel/jCgNkpeyE6ZHVJ+pXJo=;
- b=sq+BzcHXwCL9S5d4t8addtNZzcW8Pkt3CkAFqErmz00w75rBSoBnGcX14sUG096/en
- tsWsIvaLxwi0CZc+ED9wgZ61xfarFQsgvFzmubBt7pgS+FYmxHkSkHeyzTkOophxtoWS
- kzEZShoNZHnIqO7QdKMdMPvUtcSODH4nDMposODDrp1bHDDApIQlfROtpvhOwfkqPzh+
- R7inbuHMpLyzRsWscbZvOqEQQ7QEFJ9+dpX475CcuIkDYBCNR4bb48wNca6n00RzWFdM
- wMO/Drotl1qfQSl+wDJYBpQ9UrjNrOa5N++GgDGActZ2ctyC3XTekKSlX/s9528uYafW
- oSog==
-X-Gm-Message-State: AOJu0YzTOJ/GBSG/D2Tm8w/ndSXPt+UHnKQHRs8uq875nzpsQtHmFWni
- M5xL09EavA6uhbnNSz3I33tsTGDykYzOMsbNuE+wCYowxlU3XCE1lX9yE80g5dA=
-X-Google-Smtp-Source: AGHT+IF5VPLchM8xkt4tOfpWY9w6IdBRhKtzuufLUL6EXMGsg8G6JvkrPJpaKA75LaO44V8otM3+gA==
-X-Received: by 2002:a05:6402:17c4:b0:585:3a33:9de0 with SMTP id
- 4fb4d7f45d1cf-58e5aecb62cmr2266271a12.26.1720169231829; 
- Fri, 05 Jul 2024 01:47:11 -0700 (PDT)
+ bh=U6hurhQTjp832TOlAx+LCodgHfvL9JAd0ZCjMoFRr6I=;
+ b=hjOr/kfLvTJSRQWEzm6dXEEukvn02Z2bv31/UtwSYuE68hseAOz7DDojKVxZDwaSnc
+ aWLoD79jiev+CFxxHqxas+fXOQOmMu/BOVW36IYgWKN03DXmfs1aBBKpRhMIIkwtIWlZ
+ 4JJPcfLjJWvsauUuFoEoebZO454v5gE64uytE4UCwVqlhLDKT4sYC2N3B+U6WE238ze+
+ Zz+DC2ACQjYRZEKV8kRc913cm7pbwcodPqlqczzQmRzwccJGGclEyzbLBqMm+8soWahc
+ BGsLsERkRko3FBeGoW5jDdzkCaFIwY21FeYuCEKjDfvYjK08ztScIe8Ft+kUxd1xMwIE
+ 8qDw==
+X-Gm-Message-State: AOJu0YwmKu+xTB8rM5utbBxkvmiFLcWCnu+810IYQWgaZLsEV2u87eJo
+ c9NB9fCFjsYB/aCO5aR/tPpb47n7bbG4TmnqJ/ThDCH/2rnUZv417FZYx+aWsi4=
+X-Google-Smtp-Source: AGHT+IEubJGY+NDAKB0/iFr5NUae5zedXOgoBWbSGzbBjmJUi4vwkha4pOXNA4h47JqROyILcck8cg==
+X-Received: by 2002:a17:907:97c8:b0:a77:a58f:7f6a with SMTP id
+ a640c23a62f3a-a77ba70e417mr395665766b.38.1720169230781; 
+ Fri, 05 Jul 2024 01:47:10 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58f9d3f11ffsm573363a12.67.2024.07.05.01.47.10
+ a640c23a62f3a-a77cd9637f4sm30271366b.57.2024.07.05.01.47.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 05 Jul 2024 01:47:10 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5527F6217D;
+ by draig.lan (Postfix) with ESMTP id 2244A62176;
  Fri,  5 Jul 2024 09:40:51 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -79,23 +79,23 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>,
  Gustavo Romero <gustavo.romero@linaro.org>
-Subject: [PATCH v2 37/40] gdbstub: Pass CPU context to command handler
-Date: Fri,  5 Jul 2024 09:40:44 +0100
-Message-Id: <20240705084047.857176-38-alex.bennee@linaro.org>
+Subject: [PATCH v2 35/40] target/arm: Factor out code for setting MTE TCF0
+ field
+Date: Fri,  5 Jul 2024 09:40:42 +0100
+Message-Id: <20240705084047.857176-36-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705084047.857176-1-alex.bennee@linaro.org>
 References: <20240705084047.857176-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,64 +114,179 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Allow passing the current CPU context to command handlers via user_ctx
-when the handler requires it.
+Factor out the code used for setting the MTE TCF0 field from the prctl
+code into a convenient function. Other subsystems, like gdbstub, need to
+set this field as well, so keep it as a separate function to avoid
+duplication and ensure consistency in how this field is set across the
+board.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-Id: <20240628050850.536447-7-gustavo.romero@linaro.org>
+[AJB: clean-up includes, move MTE defines]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240628050850.536447-9-gustavo.romero@linaro.org>
----
- include/gdbstub/commands.h | 3 +++
- gdbstub/gdbstub.c          | 7 ++++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
-index e51f276b40..f3058f9dda 100644
---- a/include/gdbstub/commands.h
-+++ b/include/gdbstub/commands.h
-@@ -54,6 +54,8 @@ typedef union GdbCmdVariant {
-  * "stop reply" packet. The list of commands that accept such response is
-  * defined at the GDB Remote Serial Protocol documentation. See:
-  * https://sourceware.org/gdb/onlinedocs/gdb/Stop-Reply-Packets.html#Stop-Reply-Packets.
+---
+vAJB:
+  - clean-up includes, move MTE defines
+---
+ linux-user/aarch64/mte_user_helper.h | 32 +++++++++++++++++++++++++
+ linux-user/aarch64/target_prctl.h    | 22 ++---------------
+ linux-user/aarch64/mte_user_helper.c | 35 ++++++++++++++++++++++++++++
+ linux-user/syscall.c                 |  9 -------
+ linux-user/aarch64/meson.build       |  2 ++
+ 5 files changed, 71 insertions(+), 29 deletions(-)
+ create mode 100644 linux-user/aarch64/mte_user_helper.h
+ create mode 100644 linux-user/aarch64/mte_user_helper.c
+
+diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
+new file mode 100644
+index 0000000000..8685e5175a
+--- /dev/null
++++ b/linux-user/aarch64/mte_user_helper.h
+@@ -0,0 +1,32 @@
++/*
++ * ARM MemTag convenience functions.
 + *
-+ * @need_cpu_context: Pass current CPU context to command handler via user_ctx.
-  */
- typedef struct GdbCmdParseEntry {
-     GdbCmdHandler handler;
-@@ -61,6 +63,7 @@ typedef struct GdbCmdParseEntry {
-     bool cmd_startswith;
-     const char *schema;
-     bool allow_stop_reply;
-+    bool need_cpu_context;
- } GdbCmdParseEntry;
- 
- /**
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index b1ca253f97..5c1612ed2a 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -938,6 +938,7 @@ static bool process_string_cmd(const char *data,
- 
-     for (i = 0; i < num_cmds; i++) {
-         const GdbCmdParseEntry *cmd = &cmds[i];
-+        void *user_ctx = NULL;
-         g_assert(cmd->handler && cmd->cmd);
- 
-         if ((cmd->cmd_startswith && !startswith(data, cmd->cmd)) ||
-@@ -952,8 +953,12 @@ static bool process_string_cmd(const char *data,
-             }
-         }
- 
-+        if (cmd->need_cpu_context) {
-+            user_ctx = (void *)gdbserver_state.g_cpu;
-+        }
++ * This code is licensed under the GNU GPL v2 or later.
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
 +
-         gdbserver_state.allow_stop_reply = cmd->allow_stop_reply;
--        cmd->handler(params, NULL);
-+        cmd->handler(params, user_ctx);
-         return true;
-     }
++#ifndef AARCH64_MTE_USER_HELPER_H
++#define AARCH64_MTE USER_HELPER_H
++
++#ifndef PR_MTE_TCF_SHIFT
++# define PR_MTE_TCF_SHIFT       1
++# define PR_MTE_TCF_NONE        (0UL << PR_MTE_TCF_SHIFT)
++# define PR_MTE_TCF_SYNC        (1UL << PR_MTE_TCF_SHIFT)
++# define PR_MTE_TCF_ASYNC       (2UL << PR_MTE_TCF_SHIFT)
++# define PR_MTE_TCF_MASK        (3UL << PR_MTE_TCF_SHIFT)
++# define PR_MTE_TAG_SHIFT       3
++# define PR_MTE_TAG_MASK        (0xffffUL << PR_MTE_TAG_SHIFT)
++#endif
++
++/**
++ * arm_set_mte_tcf0 - Set TCF0 field in SCTLR_EL1 register
++ * @env: The CPU environment
++ * @value: The value to be set for the Tag Check Fault in EL0 field.
++ *
++ * Only SYNC and ASYNC modes can be selected. If ASYMM mode is given, the SYNC
++ * mode is selected instead. So, there is no way to set the ASYMM mode.
++ */
++void arm_set_mte_tcf0(CPUArchState *env, abi_long value);
++
++#endif /* AARCH64_MTE_USER_HELPER_H */
+diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
+index aa8e203c15..ed75b9e4b5 100644
+--- a/linux-user/aarch64/target_prctl.h
++++ b/linux-user/aarch64/target_prctl.h
+@@ -7,6 +7,7 @@
+ #define AARCH64_TARGET_PRCTL_H
  
+ #include "target/arm/cpu-features.h"
++#include "mte_user_helper.h"
+ 
+ static abi_long do_prctl_sve_get_vl(CPUArchState *env)
+ {
+@@ -173,26 +174,7 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
+     env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
+ 
+     if (cpu_isar_feature(aa64_mte, cpu)) {
+-        /*
+-         * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
+-         *
+-         * The kernel has a per-cpu configuration for the sysadmin,
+-         * /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred,
+-         * which qemu does not implement.
+-         *
+-         * Because there is no performance difference between the modes, and
+-         * because SYNC is most useful for debugging MTE errors, choose SYNC
+-         * as the preferred mode.  With this preference, and the way the API
+-         * uses only two bits, there is no way for the program to select
+-         * ASYMM mode.
+-         */
+-        unsigned tcf = 0;
+-        if (arg2 & PR_MTE_TCF_SYNC) {
+-            tcf = 1;
+-        } else if (arg2 & PR_MTE_TCF_ASYNC) {
+-            tcf = 2;
+-        }
+-        env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
++        arm_set_mte_tcf0(env, arg2);
+ 
+         /*
+          * Write PR_MTE_TAG to GCR_EL1[Exclude].
+diff --git a/linux-user/aarch64/mte_user_helper.c b/linux-user/aarch64/mte_user_helper.c
+new file mode 100644
+index 0000000000..a5b1c8503b
+--- /dev/null
++++ b/linux-user/aarch64/mte_user_helper.c
+@@ -0,0 +1,35 @@
++/*
++ * ARM MemTag convenience functions.
++ *
++ * This code is licensed under the GNU GPL v2 or later.
++ *
++ * SPDX-License-Identifier: LGPL-2.1-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu.h"
++#include "mte_user_helper.h"
++
++void arm_set_mte_tcf0(CPUArchState *env, abi_long value)
++{
++    /*
++     * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
++     *
++     * The kernel has a per-cpu configuration for the sysadmin,
++     * /sys/devices/system/cpu/cpu<N>/mte_tcf_preferred,
++     * which qemu does not implement.
++     *
++     * Because there is no performance difference between the modes, and
++     * because SYNC is most useful for debugging MTE errors, choose SYNC
++     * as the preferred mode.  With this preference, and the way the API
++     * uses only two bits, there is no way for the program to select
++     * ASYMM mode.
++     */
++    unsigned tcf = 0;
++    if (value & PR_MTE_TCF_SYNC) {
++        tcf = 1;
++    } else if (value & PR_MTE_TCF_ASYNC) {
++        tcf = 2;
++    }
++    env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
++}
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index e2804312fc..b8c278b91d 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -6281,15 +6281,6 @@ abi_long do_arch_prctl(CPUX86State *env, int code, abi_ulong addr)
+ # define PR_GET_TAGGED_ADDR_CTRL 56
+ # define PR_TAGGED_ADDR_ENABLE  (1UL << 0)
+ #endif
+-#ifndef PR_MTE_TCF_SHIFT
+-# define PR_MTE_TCF_SHIFT       1
+-# define PR_MTE_TCF_NONE        (0UL << PR_MTE_TCF_SHIFT)
+-# define PR_MTE_TCF_SYNC        (1UL << PR_MTE_TCF_SHIFT)
+-# define PR_MTE_TCF_ASYNC       (2UL << PR_MTE_TCF_SHIFT)
+-# define PR_MTE_TCF_MASK        (3UL << PR_MTE_TCF_SHIFT)
+-# define PR_MTE_TAG_SHIFT       3
+-# define PR_MTE_TAG_MASK        (0xffffUL << PR_MTE_TAG_SHIFT)
+-#endif
+ #ifndef PR_SET_IO_FLUSHER
+ # define PR_SET_IO_FLUSHER 57
+ # define PR_GET_IO_FLUSHER 58
+diff --git a/linux-user/aarch64/meson.build b/linux-user/aarch64/meson.build
+index 248c578d15..f75bb3cd75 100644
+--- a/linux-user/aarch64/meson.build
++++ b/linux-user/aarch64/meson.build
+@@ -9,3 +9,5 @@ vdso_le_inc = gen_vdso.process('vdso-le.so',
+                                extra_args: ['-r', '__kernel_rt_sigreturn'])
+ 
+ linux_user_ss.add(when: 'TARGET_AARCH64', if_true: [vdso_be_inc, vdso_le_inc])
++
++linux_user_ss.add(when: 'TARGET_AARCH64', if_true: [files('mte_user_helper.c')])
 -- 
 2.39.2
 
