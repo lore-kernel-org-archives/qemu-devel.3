@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8B4EC38150
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CCBC3DA44
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:32:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPktw-0005eC-HU; Fri, 05 Jul 2024 11:31:08 -0400
+	id 1sPktz-0005gw-A3; Fri, 05 Jul 2024 11:31:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPktq-0005bl-Uf
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:04 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1sPktv-0005dC-CX
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:07 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPktm-0000Im-Fn
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:02 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a77c9d3e593so103473166b.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:30:56 -0700 (PDT)
+ id 1sPktq-0000O6-Vi
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:07 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52ea5dc3c66so1501632e87.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:31:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193455; x=1720798255; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193461; x=1720798261; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CurKVhgGzPO6kvK5KOd6kl4xIM/fKHjGD5Ox4ZiqWow=;
- b=QooZZcdZAyIt6GDlokBLZJb/gbEL0O4BwIdWv/6PLTYW1rmf27H2wPHiYhdUsHW+aj
- I6G5yB7oWWpRrJ0tb00rs/7YmFr3R1NHgeybw9M3TQf94ohp5uRqypLfh3BHYUbeFRxU
- ificnIkuJo7s1RAsNFvIxDu36I29jIdpsVURL8mQU832ho39SOlcudUK5KnyW6IAJMMK
- P5WI80RJd8zMaFPWPn1w9IdvDbG5jmT9tr4a1TD0mDXrGi712Zih4+ekS+hs6/amOOFK
- X4W7i9nG3Av7VQHfZfZKNTsQl5wHCzWL+V+DPM8IuvlJReoIls/wdBKsjlPcfDVURfX7
- aU5Q==
+ bh=mWUoJ8jMYHKZK6JbWNGMObF6aodq8m6nBv1ts3bfECs=;
+ b=Sg2UBWVl7UkQNaW0vv0qf0dJ4Jw9egmEwa+LkZInYeT9numwHEfcGhoHWGVZ7DliYZ
+ lmQFvXLPwqaCPevX4+5ESVBcHjqofLY7/IwSf1J2OA1ipPkaqYORdpS3xqPrcdC5f56T
+ 9wJUQfjlyoQpS4Wz+DNwQuJzrbFrIA71mNl4/nV7x0hGlB7KIXsX1mWDDuU7zImYcMXK
+ +3ncEoOtfjELiQXEQGJ0S2vZ587sqSAw0SaFQsE4WtjXonTKnCSQkLkYVNcWDqlCUBjb
+ vtbffZiJQXgqKXxjd0xvUFdgJzr4g9j7R747ogopJ2chwgmZsyFTIvR2vdLccFeyBEDh
+ 4bxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193455; x=1720798255;
+ d=1e100.net; s=20230601; t=1720193461; x=1720798261;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CurKVhgGzPO6kvK5KOd6kl4xIM/fKHjGD5Ox4ZiqWow=;
- b=UUFXreYZxZirS91Q3jjVoULn36RrKfIe/YwW+xKV3Ou2JnRNvGGL7/1VihiLJOLpD+
- A90QoCYP6HOWrPmPp5DN5CV1rHsQUGYjA1bG+av9qHBWZS3RWqvVW7mq2rLQZuCLKpQb
- KETLug0Ja794zPGCsnO+xVx3D3Jf7CYPyA/dQyKLEi+2tWDj4m62WnTyccUq+7Xejp0D
- ydOtPXsMhVakFq8rDgQNMAFSLfaJ11fBvb1u9rjHEG6INx6TTM0GJ3ywu66OGi9bW58F
- jx6r6INlZE5qf7tfySBBX3OJdL3RastXnTCMimXbVK91c296Az1FQQrzCaacjYYYvAfK
- jFvg==
-X-Gm-Message-State: AOJu0YxdChggzgQYEbzAw+BvLrZFVswh0c0TkRoqbaZy7VlHjgMLqS7h
- 6Om/Negtly2sXD/mTHZc83S9dQL9SEFJuOKB7sdKwkEs0NiiVTz3kESIltSNfoI=
-X-Google-Smtp-Source: AGHT+IF0L1QaqcKeMInhjUGjMZY7zdiQR+gsY0atO7qfHdPnG18IVrxR7GmLOfGE1HRAEy9LNzQQrg==
-X-Received: by 2002:a17:906:5acd:b0:a72:631d:6de1 with SMTP id
- a640c23a62f3a-a77ba4785b5mr338581866b.20.1720193454930; 
- Fri, 05 Jul 2024 08:30:54 -0700 (PDT)
+ bh=mWUoJ8jMYHKZK6JbWNGMObF6aodq8m6nBv1ts3bfECs=;
+ b=HdlBeNr2BcWdYOu/WMT3XcKr6fcO2uyg1A+KTkqqAjli+7rx6leaPSrmuter1MUkfx
+ 37Pn0I3Egk+8IMiOoqwiShQjVvLae9LzZQ5yR+qLLD01vvh4pnxVA/ucrEuUSD90I0l2
+ 1TnDbPPeRolBzfNWRfYCxP7d/R6riFRKl8doK2LHdiMHe2hay+sZT3/FvwiqWd7T60we
+ zRJb3gEJ/U6FZ6666eGXau3ebVKQtOroXVWLJJPAotPbawa/rXubIsX0pMcZbPRA5d8I
+ iexomt7+Aa2kdsZnpjAQtBw9+E9v/NlCitsSZDmktktcLxb7tI2IMcoB+QULFSKX8l4u
+ 3yWw==
+X-Gm-Message-State: AOJu0Yzjhv/d6ocD2hD7ByqqgFSbvSmkTWHFCcMm7h8WdnUqdz1h3l2d
+ opktlS8XztUnIswOp+9pJw/oxPGzDRrRumUusJAvEZfVEmoZO4oKDbJsVMA0VyCbdCf+ZB8/+hd
+ s
+X-Google-Smtp-Source: AGHT+IG0SSWEJpdw2cBbq/3YXwpEo0ihf9pl6B/13VyKeqvdIa58uYBQExqWIflSxlPgNT2fdf27+g==
+X-Received: by 2002:a05:6512:32a6:b0:52d:3ada:4b6b with SMTP id
+ 2adb3069b0e04-52ea060dc75mr4337366e87.1.1720193460674; 
+ Fri, 05 Jul 2024 08:31:00 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77c3925a96sm105257666b.120.2024.07.05.08.30.53
+ a640c23a62f3a-a77a18c7123sm236694766b.58.2024.07.05.08.30.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 08:30:53 -0700 (PDT)
+ Fri, 05 Jul 2024 08:30:57 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4E4895F92B;
- Fri,  5 Jul 2024 16:30:53 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 21C23620FD;
+ Fri,  5 Jul 2024 16:30:54 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>
-Subject: [PULL 03/40] tracepoints: move physmem trace points
-Date: Fri,  5 Jul 2024 16:30:15 +0100
-Message-Id: <20240705153052.1219696-4-alex.bennee@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PULL 12/40] tests/tcg/aarch64: Add -fno-integrated-as for sme
+Date: Fri,  5 Jul 2024 16:30:24 +0100
+Message-Id: <20240705153052.1219696-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,69 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-They don't need to be in the global trace-events file and can have a
-local trace header. Also add address_space_map tracepoint for tracking
-mapping behaviour.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The only use of SME is inline assembly.  Both gcc and clang only
+support SME with very recent releases; by deferring detection to
+the assembler we get better test coverage.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240630190050.160642-8-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-4-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-13-alex.bennee@linaro.org>
 
-diff --git a/system/physmem.c b/system/physmem.c
-index 261196cde0..14aa025d41 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -53,7 +53,7 @@
- #include "sysemu/hostmem.h"
- #include "sysemu/hw_accel.h"
- #include "sysemu/xen-mapcache.h"
--#include "trace/trace-root.h"
-+#include "trace.h"
+diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+index 11ccde5579..ad1774c2ce 100644
+--- a/tests/tcg/aarch64/Makefile.target
++++ b/tests/tcg/aarch64/Makefile.target
+@@ -20,6 +20,7 @@ run-fcvt: fcvt
  
- #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
- #include <linux/falloc.h>
-@@ -3193,6 +3193,8 @@ void *address_space_map(AddressSpace *as,
-     MemoryRegion *mr;
-     FlatView *fv;
+ config-cc.mak: Makefile
+ 	$(quiet-@)( \
++	    fnia=`$(call cc-test,-fno-integrated-as) && echo -fno-integrated-as`; \
+ 	    $(call cc-option,-march=armv8.1-a+sve,          CROSS_CC_HAS_SVE); \
+ 	    $(call cc-option,-march=armv8.1-a+sve2,         CROSS_CC_HAS_SVE2); \
+ 	    $(call cc-option,-march=armv8.2-a,              CROSS_CC_HAS_ARMV8_2); \
+@@ -27,7 +28,7 @@ config-cc.mak: Makefile
+ 	    $(call cc-option,-march=armv8.5-a,              CROSS_CC_HAS_ARMV8_5); \
+ 	    $(call cc-option,-mbranch-protection=standard,  CROSS_CC_HAS_ARMV8_BTI); \
+ 	    $(call cc-option,-march=armv8.5-a+memtag,       CROSS_CC_HAS_ARMV8_MTE); \
+-	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme, CROSS_AS_HAS_ARMV9_SME)) 3> config-cc.mak
++	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme $$fnia, CROSS_AS_HAS_ARMV9_SME)) 3> config-cc.mak
+ -include config-cc.mak
  
-+    trace_address_space_map(as, addr, len, is_write, *(uint32_t *) &attrs);
-+
-     if (len == 0) {
-         return NULL;
-     }
-diff --git a/system/trace-events b/system/trace-events
-index 69c9044151..2ed1d59b1f 100644
---- a/system/trace-events
-+++ b/system/trace-events
-@@ -21,6 +21,12 @@ flatview_destroy(void *view, void *root) "%p (root %p)"
- flatview_destroy_rcu(void *view, void *root) "%p (root %p)"
- global_dirty_changed(unsigned int bitmask) "bitmask 0x%"PRIx32
- 
-+# physmem.c
-+address_space_map(void *as, uint64_t addr, uint64_t len, bool is_write, uint32_t attrs) "as:%p addr 0x%"PRIx64":%"PRIx64" write:%d attrs:0x%x"
-+find_ram_offset(uint64_t size, uint64_t offset) "size: 0x%" PRIx64 " @ 0x%" PRIx64
-+find_ram_offset_loop(uint64_t size, uint64_t candidate, uint64_t offset, uint64_t next, uint64_t mingap) "trying size: 0x%" PRIx64 " @ 0x%" PRIx64 ", offset: 0x%" PRIx64" next: 0x%" PRIx64 " mingap: 0x%" PRIx64
-+ram_block_discard_range(const char *rbname, void *hva, size_t length, bool need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d fallocate: %d ret: %d"
-+
- # cpus.c
- vm_stop_flush_all(int ret) "ret %d"
- 
-diff --git a/trace-events b/trace-events
-index dd318ed1af..9cb96f64c4 100644
---- a/trace-events
-+++ b/trace-events
-@@ -37,11 +37,6 @@ dma_complete(void *dbs, int ret, void *cb) "dbs=%p ret=%d cb=%p"
- dma_blk_cb(void *dbs, int ret) "dbs=%p ret=%d"
- dma_map_wait(void *dbs) "dbs=%p"
- 
--# exec.c
--find_ram_offset(uint64_t size, uint64_t offset) "size: 0x%" PRIx64 " @ 0x%" PRIx64
--find_ram_offset_loop(uint64_t size, uint64_t candidate, uint64_t offset, uint64_t next, uint64_t mingap) "trying size: 0x%" PRIx64 " @ 0x%" PRIx64 ", offset: 0x%" PRIx64" next: 0x%" PRIx64 " mingap: 0x%" PRIx64
--ram_block_discard_range(const char *rbname, void *hva, size_t length, bool need_madvise, bool need_fallocate, int ret) "%s@%p + 0x%zx: madvise: %d fallocate: %d ret: %d"
--
- # job.c
- job_state_transition(void *job,  int ret, const char *legal, const char *s0, const char *s1) "job %p (ret: %d) attempting %s transition (%s-->%s)"
- job_apply_verb(void *job, const char *state, const char *verb, const char *legal) "job %p in state %s; applying verb %s (%s)"
+ ifneq ($(CROSS_CC_HAS_ARMV8_2),)
 -- 
 2.39.2
 
