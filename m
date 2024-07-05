@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E98E0C3271F
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F6B8C30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPeVN-0000FJ-HN; Fri, 05 Jul 2024 04:41:21 -0400
+	id 1sPeV2-0008Tp-JY; Fri, 05 Jul 2024 04:41:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPeV1-0008Qm-N9
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:40:59 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1sPeV0-0008Q2-7L
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:40:58 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPeUt-0003Ag-MP
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:40:59 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-58b447c51bfso1785569a12.2
+ id 1sPeUv-0003Aj-Dw
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:40:57 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-58b0dddab8cso2259777a12.0
  for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:40:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720168849; x=1720773649; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3AncV0n0Nr8xyguEQlZ6mHLdeGfbGdlqoVR8NDgRWgE=;
- b=e01xI4RWH5X8U+aIECuMwsX1oBYNq6JMDqGJec8CGOE2SGaSPxVEmsJGDgOOeyp/mF
- p1O2QCNUU8mmaAd7/cq4vwnuMxYk1TANguagX/untfHGo4grIoDfxlb/6Sq0jDCKlueD
- XDPeeIQLuvfPjTR0yjOsRH9nm+zgm8f58XUsWbbN76EEK3Sxvez743a0910HbrnQOgFT
- PL/fCKp+gZ7E/2pQsuuDVnIA+CSOpvWWyvBgrkOsVpa3MBsvHyamj9rmqhpa/E6WglQW
- 1ngf0ZUfZxfccrZcZ9B7+cZVdy89tbp1IKNn/UC9l1dtDoSiIvM+sRn4EFkXoHcFo8cZ
- 0acQ==
+ d=linaro.org; s=google; t=1720168850; x=1720773650; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0F1ubdjTjfUgOjFoVtYGFPGbIziBRq1wNHSOYJr4Cqo=;
+ b=T0alJLfwWI7MZDT8YXo9MU695xBz8ct2IHYZ4eQ6NGR2phNvQCWTjJrCVBmwKJbR8e
+ FU+6bZIhSFclENE2ghVmSyla5qj5ZxMRO8Lk4rt6r4sNGR8DbZe/bBuRDP26JsIJFGyy
+ xXeHbkNsmzOsDsiAyMEU6CFerQkueorPwq6aqVl2Ng9wwarvbhpn3rOw/uiMEkxmW3gT
+ HYecYY/UbSCDSQoumE6r6Sw78txq0T58M+CtQ9oAZKXea3Kz1a5O9eKhuWX57DvZAbaV
+ fLfDti3/0Jz1mnz9aFvZClVyNBbElkC7bPv/pBOFX9oQSEr50crPCpQU3KUoxiuwKO+u
+ sWiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720168849; x=1720773649;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3AncV0n0Nr8xyguEQlZ6mHLdeGfbGdlqoVR8NDgRWgE=;
- b=mcdBXrKVQ8s6SgWOUaOTI7QHzLtLh+nnAjsFa3V2StHBfx8+qGG8IMlIZvAeTAK9xx
- L/pbx2ShC+dOoY8wQzUsFmRpt8msMBXdY846yuQSLtIxHGkZnltNPybiBsMIjP8veHiR
- WkY3lVluYKLDeGffPX2er3qr5OSqv6xVIQnzDsYOOuryKzfv7MC+7D8SDHBsHAY6aALl
- 6fnxygASmSTrkGUtEu+y+XAOUYmS2XLD4YoGAWLUF/vgp/COHmoAcQzcpNI8rJOlv+c2
- FobKOGHnNCi+P5p3ZJNHmICFhYoZb26W+MsPOgcRuOUafAwriVnVapqpZvQ80waBR1Qx
- +gog==
-X-Gm-Message-State: AOJu0Yw/+Y3i8mKxQXH6rBCbUOAX2IyBfpqhtBeN8VHa28AB8KmQf1a+
- /mdJcQoZwmV38DT6IoFfRCjJcBcKpU0i57k/HpcvE0Q0YsbVWJiQrf9oIbeB+W0=
-X-Google-Smtp-Source: AGHT+IG3S5PRLiu98hSW6qo6ukMthRZU9uUJVJ/rpc60nqOrix7Dkw1nok/5dKsEXS5nfTaf3ndE+w==
-X-Received: by 2002:a17:907:3f8b:b0:a72:8fc7:ef7f with SMTP id
- a640c23a62f3a-a77ba72c6camr275860466b.65.1720168849023; 
+ d=1e100.net; s=20230601; t=1720168850; x=1720773650;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0F1ubdjTjfUgOjFoVtYGFPGbIziBRq1wNHSOYJr4Cqo=;
+ b=TTYKKh94aGYnsgnxHJFQH5Kje0Pq8GEql+Ojwjs+Px71axREGlAm8kYP3gB0e1w5FG
+ T4KQrLfIMyJVKiK0WhrT8G7H2+W0SUkomWTAkocvXaux55BER/TMHjChS1/kLqEe2xJG
+ ah7zh9jwxib25mXe2Xi8G9Vjp8NcMJ0uGZ4EYVh5Wk6Ihv1XW4lFeGpZQ+nUHgtGWAQx
+ uOEtxbAbHE+BtXnUrMPGZyU0qCPDm3PCIXCxC8oFPublYqMTLJwJz8WbmX7UknNMZ50a
+ 2VwLoFEUP2tG4pZgfefoOGX4TwS5NZmDaZtn6hOx1WSE5IcG7o7CMPPPtGeCTMooP8VA
+ 5yxA==
+X-Gm-Message-State: AOJu0YxZTrndpoCvJ3pb6xBzm1ERreO0ck0cnPQpvp+ryuxonWE/TMgm
+ bU3Eld96IojbfsyWpne/zB7StKH5kE6pOk8gYLv4KpZseCvg1jpv12ArGl1DsWA=
+X-Google-Smtp-Source: AGHT+IFW3Y03zwSxGnaJubf7MbKYPWgM/N2gBI0ZffN4L/lJ6xltOb1sdohV+6nFHC6coxWP2TCfpQ==
+X-Received: by 2002:a05:6402:1d4e:b0:57c:5fcf:b570 with SMTP id
+ 4fb4d7f45d1cf-58e5aecb1d7mr2823840a12.32.1720168849351; 
  Fri, 05 Jul 2024 01:40:49 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77d23494a8sm23446666b.35.2024.07.05.01.40.48
+ 4fb4d7f45d1cf-58cb2b83380sm3333502a12.74.2024.07.05.01.40.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 05 Jul 2024 01:40:48 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AC8585F876;
+ by draig.lan (Postfix) with ESMTP id C44435F8AF;
  Fri,  5 Jul 2024 09:40:47 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -77,22 +78,24 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Paul Burton <paulburton@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v2 00/40] July maintainer updates (32bit, testing, plugins,
- gdbstub)
-Date: Fri,  5 Jul 2024 09:40:07 +0100
-Message-Id: <20240705084047.857176-1-alex.bennee@linaro.org>
+Subject: [PATCH v2 01/40] tests/lcitool: fix debian-i686-cross toolchain prefix
+Date: Fri,  5 Jul 2024 09:40:08 +0100
+Message-Id: <20240705084047.857176-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240705084047.857176-1-alex.bennee@linaro.org>
+References: <20240705084047.857176-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,134 +111,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+I guess we never noticed and tried to build with this cross image. Fix
+the toolchain prefix so we actually build 32 bit images.
 
-This is a grab bag of fixes and clean-ups as we swiftly approach the
-soft freeze deadline. The i386 TCG fix has been dropped now rth's TCG
-clean-ups have been merged. I've also taken a series from Richard that
-built on Akihiko's TCG test cleanups. There is one new fix I came
-across when doing some gcov testing.
+Message-Id: <20240628124258.832466-2-alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/docker/dockerfiles/debian-i686-cross.docker | 2 +-
+ tests/lcitool/refresh                             | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-The following still need review:
-
-  plugins/lockstep: clean-up output
-  plugins/lockstep: mention the one-insn-per-tb option
-  plugins/lockstep: preserve sock_path
-  test/plugins: preserve the instruction record over translations
-  test/plugin: make insn plugin less noisy by default
-  gitlab: don't bother with KVM for TCI builds
-  hw/core: ensure kernel_end never gets used undefined
-  testing: restore some testing for i686
-
-Akihiko Odaki (6):
-  tests/docker: Specify --userns keep-id for Podman
-  tests/tcg/aarch64: Explicitly specify register width
-  tests/tcg/aarch64: Fix irg operand type
-  tests/tcg/aarch64: Do not use x constraint
-  tests/tcg/arm: Fix fcvt result messages
-  tests/tcg/arm: Manually register allocate half-precision numbers
-
-Alex Bennée (11):
-  tests/lcitool: fix debian-i686-cross toolchain prefix
-  testing: restore some testing for i686
-  tracepoints: move physmem trace points
-  hw/core: ensure kernel_end never gets used undefined
-  gitlab: don't bother with KVM for TCI builds
-  test/plugin: make insn plugin less noisy by default
-  test/plugins: preserve the instruction record over translations
-  plugins/lockstep: preserve sock_path
-  plugins/lockstep: make mixed-mode safe
-  plugins/lockstep: mention the one-insn-per-tb option
-  plugins/lockstep: clean-up output
-
-Gustavo Romero (11):
-  gdbstub: Clean up process_string_cmd
-  gdbstub: Move GdbCmdParseEntry into a new header file
-  gdbstub: Add support for target-specific stubs
-  target/arm: Fix exception case in allocation_tag_mem_probe
-  target/arm: Make some MTE helpers widely available
-  target/arm: Factor out code for setting MTE TCF0 field
-  gdbstub: Make hex conversion function non-internal
-  gdbstub: Pass CPU context to command handler
-  gdbstub: Use true to set cmd_startswith
-  gdbstub: Add support for MTE in user mode
-  tests/tcg/aarch64: Add MTE gdbstub tests
-
-Philippe Mathieu-Daudé (3):
-  plugins: Ensure vCPU index is assigned in init/exit hooks
-  plugins: Free CPUPluginState before destroying vCPU state
-  accel/tcg: Move qemu_plugin_vcpu_init__async() to plugins/
-
-Richard Henderson (9):
-  tests/tcg/minilib: Constify digits in print_num
-  tests/tcg: Adjust variable defintion from cc-option
-  tests/tcg/aarch64: Drop -fno-tree-loop-distribute-patterns
-  tests/tcg/aarch64: Add -fno-integrated-as for sme
-  tests/tcg/arm: Drop -N from LDFLAGS
-  tests/tcg/arm: Use -fno-integrated-as for test-arm-iwmmxt
-  tests/tcg/arm: Use -march and -mfpu for fcvt
-  tests/tcg/arm: Use vmrs/vmsr instead of mcr/mrc
-  linux-user/main: Suppress out-of-range comparison warning for clang
-
- configure                                     |   4 +
- configs/targets/aarch64-linux-user.mak        |   2 +-
- gdbstub/internals.h                           |  23 -
- include/gdbstub/commands.h                    | 103 +++
- include/qemu/plugin.h                         |   3 +
- linux-user/aarch64/mte_user_helper.h          |  32 +
- linux-user/aarch64/target_prctl.h             |  22 +-
- target/arm/internals.h                        |   6 +
- target/arm/tcg/mte_helper.h                   |  66 ++
- contrib/plugins/lockstep.c                    |  23 +-
- gdbstub/gdbstub.c                             | 341 ++++++----
- gdbstub/syscalls.c                            |   7 +-
- gdbstub/system.c                              |   7 +-
- gdbstub/user-target.c                         |  25 +-
- gdbstub/user.c                                |   7 +-
- hw/core/cpu-common.c                          |  14 +-
- hw/core/loader-fit.c                          |   2 +-
- linux-user/aarch64/mte_user_helper.c          |  35 +
- linux-user/main.c                             |   1 +
- linux-user/syscall.c                          |   9 -
- plugins/core.c                                |  10 +-
- system/physmem.c                              |   4 +-
- target/arm/cpu.c                              |   1 +
- target/arm/gdbstub.c                          |  46 ++
- target/arm/gdbstub64.c                        | 223 +++++++
- target/arm/tcg/mte_helper.c                   |  48 +-
- tests/plugin/insn.c                           | 112 +++-
- tests/tcg/aarch64/bti-1.c                     |   6 +-
- tests/tcg/aarch64/bti-3.c                     |   6 +-
- tests/tcg/aarch64/mte-1.c                     |   2 +-
- tests/tcg/aarch64/mte-8.c                     |  99 +++
- tests/tcg/arm/fcvt.c                          |  28 +-
- tests/tcg/minilib/printf.c                    |   2 +-
- .gitlab-ci.d/buildtest.yml                    |   2 +-
- .gitlab-ci.d/crossbuilds.yml                  |  13 +-
- gdb-xml/aarch64-mte.xml                       |  11 +
- linux-user/aarch64/meson.build                |   2 +
- system/trace-events                           |   6 +
- tests/docker/Makefile.include                 |   7 +-
- .../dockerfiles/debian-i686-cross.docker      |   2 +-
- tests/lcitool/refresh                         |   2 +-
- tests/tcg/Makefile.target                     |   2 +-
- tests/tcg/aarch64/Makefile.softmmu-target     |   4 +-
- tests/tcg/aarch64/Makefile.target             |  32 +-
- tests/tcg/aarch64/fcvt.ref                    | 604 +++++++++---------
- tests/tcg/aarch64/gdbstub/test-mte.py         |  86 +++
- tests/tcg/arm/Makefile.softmmu-target         |   4 +-
- tests/tcg/arm/Makefile.target                 |  12 +-
- tests/tcg/arm/fcvt.ref                        | 604 +++++++++---------
- trace-events                                  |   5 -
- 50 files changed, 1771 insertions(+), 946 deletions(-)
- create mode 100644 include/gdbstub/commands.h
- create mode 100644 linux-user/aarch64/mte_user_helper.h
- create mode 100644 target/arm/tcg/mte_helper.h
- create mode 100644 linux-user/aarch64/mte_user_helper.c
- create mode 100644 tests/tcg/aarch64/mte-8.c
- create mode 100644 gdb-xml/aarch64-mte.xml
- create mode 100644 tests/tcg/aarch64/gdbstub/test-mte.py
-
+diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
+index f1e5b0b877..f4ef054a2e 100644
+--- a/tests/docker/dockerfiles/debian-i686-cross.docker
++++ b/tests/docker/dockerfiles/debian-i686-cross.docker
+@@ -169,7 +169,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/i686-linux-gnu && \
+ 
+ ENV ABI "i686-linux-gnu"
+ ENV MESON_OPTS "--cross-file=i686-linux-gnu"
+-ENV QEMU_CONFIGURE_OPTS --cross-prefix=x86_64-linux-gnu-
++ENV QEMU_CONFIGURE_OPTS --cross-prefix=i686-linux-gnu-
+ ENV DEF_TARGET_LIST x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user
+ # As a final step configure the user (if env is defined)
+ ARG USER
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index b25e3ac4dd..ac803e34f1 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -167,7 +167,7 @@ try:
+ 
+     generate_dockerfile("debian-i686-cross", "debian-11",
+                         cross="i686",
+-                        trailer=cross_build("x86_64-linux-gnu-",
++                        trailer=cross_build("i686-linux-gnu-",
+                                             "x86_64-softmmu,"
+                                             "x86_64-linux-user,"
+                                             "i386-softmmu,i386-linux-user"))
 -- 
 2.39.2
 
