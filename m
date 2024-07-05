@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F0C0C3DA41
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:33:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BF58C38150
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:34:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPku2-0005j1-P8; Fri, 05 Jul 2024 11:31:14 -0400
+	id 1sPku5-0005lC-83; Fri, 05 Jul 2024 11:31:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPku0-0005ht-RM
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:12 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1sPku3-0005j7-9f
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:15 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPktt-0000Qg-WF
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:12 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-57cf8880f95so2433805a12.3
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:31:05 -0700 (PDT)
+ id 1sPkty-0000Rh-57
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:15 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a77b550128dso227619966b.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:31:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193464; x=1720798264; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193467; x=1720798267; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=it+TebEWAUdyZUulzklPipDIOEzwrfquC83Yceo5Vww=;
- b=UvMC0qDbELTp+dHAjvkZk0o/GXMViFml59c2pjH5nd2uZYyzgxkEX67qLMMvb8LhTQ
- oBYAgFaKQ9cbeH8hnNOgpUVXd8RUsT4whPKpkWbv0qR2+Jb5KPI7HML1JaQjSpZ6U3g8
- FRmDg3VivaPo+ON2yW0U+mL4f4f2oYvETSe29kzXtZ6A+UZtqdtsi5QEda+WNy/xVPQg
- Ov5b1MwtQ0hA4z/bTr3mJruzCnZKD2fm+luG8PkB9bWIS/MeiAtlAGGwD/Y5zzHxIuQn
- MQUB9cc76z4IkwfuFnVbCyeaVOgW8mVZJyKZIh/Dvi9E4J4iw1O2HhoRU/xrIfDiZy5V
- 66vQ==
+ bh=ylCfX57vu2XtKdQ2UE07h/WESYaBK96i7YkZDwjHda4=;
+ b=jMkTZFL+H/x6Kc7yVz5WrvgqBDQV/BzkdYeVZw0oa+71zsjFOJnoI3HnPwl46MQzSF
+ 0chlSeQX1yy2x4i3EU4ubbDXMwVinMCOHA3UC/XOyDkgzbTCVNb6jGGIcNa8vadmBkkD
+ bucmYiRFLq/t4ToeckFB3IznwMaFXia7fK/qWO4Wh5ggZg4hozXfWXLsWnysqIrmxe1W
+ uswP3WIypq8Xvt/c25r6ZtRHAVAQNsH8GAQK3Se4Aeky/WdPMJHXoFaClCkf4BrZdj5o
+ ijjvSOuOAL+Cgmbz9nKJnlAC1MS8LTa128c3LTUj9nC5c3KmZ0ME99Rfa0Y3WfuExm3q
+ 5+zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193464; x=1720798264;
+ d=1e100.net; s=20230601; t=1720193467; x=1720798267;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=it+TebEWAUdyZUulzklPipDIOEzwrfquC83Yceo5Vww=;
- b=kZ8w9ptyE2WEbuhS9RRoEbaB3ml1Vn9XHdf7wdrukSCm/KlqIJ2KV8srO7Kn9Y81BI
- kz98hk2sWpRhYeeLxwMf1TpEZWEiqha4DrW93xhtayqH0mb5uVioaabDLxdL2hHKPyLt
- X4IwDnMGJqFApMzxuZesuPj/O8FdhES5pIfDQ/E1HIXahaVFCZMS3JD/DMitOqiBeHRq
- 3Ro9Au9tzFUiw+OPOXwMunUqcoRyhVQjx6gDPXMGLF9WedLAIdUJicf1SIaZRvkNGfml
- VOkKPQoE1W3G//+kOe9Yk7+MnQ7zq6nYHOWQ3AJ+Vrjjqa2T6BtJk9RjrM/mleJAM9fL
- XNKg==
-X-Gm-Message-State: AOJu0YwJKKZ7mm6ubVdwqqi4xIvRUzGQkLvcREwI+ixcOhjtdhbumIJT
- sNMU1xwMHPei9VLRhwVYbfZEsnRVJ64vsbB2riIbS/CBjgMoAz0pqIt/gKztUHBsBq1ChK39HD3
- d
-X-Google-Smtp-Source: AGHT+IGlhsrSTkQISMGkr2BGHBBb/YXVcSAXq5i6vJUG3AR9IRKMZAUWGk2wGaKosIc4NAUMd70Kfw==
-X-Received: by 2002:a17:906:1355:b0:a77:ddce:e9b8 with SMTP id
- a640c23a62f3a-a77ddceec07mr38506966b.75.1720193464024; 
- Fri, 05 Jul 2024 08:31:04 -0700 (PDT)
+ bh=ylCfX57vu2XtKdQ2UE07h/WESYaBK96i7YkZDwjHda4=;
+ b=lPY20YaG/EJzRS6wIGWCZmTJ5k+U7mofnuGcEtx8I6OyKz4Wy6jDr9PKQhcCNQlNuJ
+ mG1Ajziah6Qy4twqEK/SVTlFSqoKDt7d6pbKPAe1iLuFTn0IJwErF0iNK97Hik4piu8d
+ vLIKqwB8AYqz3uY+lXgR9P6ikAe8imuaQlYehnWgjIGkX+irv3bjgQxtZ1upSjbrwpBp
+ /gVH0zf1yNWh2hGn4L/GXx9alBnOLR/QMJQrlxuCD9LIpfRDor5F1QjXxmJ/7JC4+LdZ
+ EJpO/BNyzj+YVjQiN1g29bPziYU55JaUVu6lMQSchkaaN1XPGoTNz0MGrXsH38w7tJ15
+ ZagA==
+X-Gm-Message-State: AOJu0YzTRBs2CexVdrPHnf+gZ5iXkiuHKMvQaP17dIQkTpNLH91+h2pz
+ L9y/7kiu5w9o9KKeLfflIxxMVz07Hva7aHZ0s90QkoynJ5znFv7nj14z62Hzrfo=
+X-Google-Smtp-Source: AGHT+IELrAN0WvOf6IiV4zXOkT7YLd0AvenxfVzf0knR6hixn0iY24Ig8j1kL7B9Eus2YWRPN1Fmzw==
+X-Received: by 2002:a17:906:17c1:b0:a6f:59dc:4ed0 with SMTP id
+ a640c23a62f3a-a77ba48e64emr387205866b.46.1720193466525; 
+ Fri, 05 Jul 2024 08:31:06 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77b226b1bcsm172178166b.88.2024.07.05.08.30.55
+ a640c23a62f3a-a77ab405d36sm185924166b.186.2024.07.05.08.30.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 08:30:57 -0700 (PDT)
+ Fri, 05 Jul 2024 08:31:04 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D3C5E620ED;
- Fri,  5 Jul 2024 16:30:53 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 760D95F8AF;
+ Fri,  5 Jul 2024 16:30:54 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PULL 09/40] tests/tcg/aarch64: Explicitly specify register width
-Date: Fri,  5 Jul 2024 16:30:21 +0100
-Message-Id: <20240705153052.1219696-10-alex.bennee@linaro.org>
+Subject: [PULL 15/40] tests/tcg/arm: Use -fno-integrated-as for test-arm-iwmmxt
+Date: Fri,  5 Jul 2024 16:30:27 +0100
+Message-Id: <20240705153052.1219696-16-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,66 +100,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-clang version 18.1.6 assumes a register is 64-bit by default and
-complains if a 32-bit value is given. Explicitly specify register width
-when passing a 32-bit value.
+Clang does not support IWMXT instructions.
+Fall back to the external assembler.
 
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240627-tcg-v2-3-1690a813348e@daynix.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240630190050.160642-5-richard.henderson@linaro.org>
+Message-Id: <20240630190050.160642-11-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-10-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-16-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/aarch64/bti-1.c b/tests/tcg/aarch64/bti-1.c
-index 99a879af23..1fada8108d 100644
---- a/tests/tcg/aarch64/bti-1.c
-+++ b/tests/tcg/aarch64/bti-1.c
-@@ -17,15 +17,15 @@ static void skip2_sigill(int sig, siginfo_t *info, ucontext_t *uc)
- #define BTI_JC    "hint #38"
+diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
+index 0a1965fce7..95f891bf8c 100644
+--- a/tests/tcg/arm/Makefile.target
++++ b/tests/tcg/arm/Makefile.target
+@@ -8,6 +8,11 @@ ARM_SRC=$(SRC_PATH)/tests/tcg/arm
+ # Set search path for all sources
+ VPATH 		+= $(ARM_SRC)
  
- #define BTYPE_1(DEST) \
--    asm("mov %0,#1; adr x16, 1f; br x16; 1: " DEST "; mov %0,#0" \
-+    asm("mov %w0,#1; adr x16, 1f; br x16; 1: " DEST "; mov %w0,#0" \
-         : "=r"(skipped) : : "x16")
++config-cc.mak: Makefile
++	$(quiet-@)( \
++	    $(call cc-option,-fno-integrated-as, CROSS_CC_HAS_FNIA)) 3> config-cc.mak
++-include config-cc.mak
++
+ float_madds: CFLAGS+=-mfpu=neon-vfpv4
  
- #define BTYPE_2(DEST) \
--    asm("mov %0,#1; adr x16, 1f; blr x16; 1: " DEST "; mov %0,#0" \
-+    asm("mov %w0,#1; adr x16, 1f; blr x16; 1: " DEST "; mov %w0,#0" \
-         : "=r"(skipped) : : "x16", "x30")
+ # Basic Hello World
+@@ -17,7 +22,8 @@ hello-arm: LDFLAGS+=-nostdlib
  
- #define BTYPE_3(DEST) \
--    asm("mov %0,#1; adr x15, 1f; br x15; 1: " DEST "; mov %0,#0" \
-+    asm("mov %w0,#1; adr x15, 1f; br x15; 1: " DEST "; mov %w0,#0" \
-         : "=r"(skipped) : : "x15")
+ # IWMXT floating point extensions
+ ARM_TESTS += test-arm-iwmmxt
+-test-arm-iwmmxt: CFLAGS+=-marm -march=iwmmxt -mabi=aapcs -mfpu=fpv4-sp-d16
++# Clang assembler does not support IWMXT, so use the external assembler.
++test-arm-iwmmxt: CFLAGS += -marm -march=iwmmxt -mabi=aapcs -mfpu=fpv4-sp-d16 $(CROSS_CC_HAS_FNIA)
+ test-arm-iwmmxt: test-arm-iwmmxt.S
+ 	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
  
- #define TEST(WHICH, DEST, EXPECT) \
-diff --git a/tests/tcg/aarch64/bti-3.c b/tests/tcg/aarch64/bti-3.c
-index 8c534c09d7..6a3bd037bc 100644
---- a/tests/tcg/aarch64/bti-3.c
-+++ b/tests/tcg/aarch64/bti-3.c
-@@ -11,15 +11,15 @@ static void skip2_sigill(int sig, siginfo_t *info, ucontext_t *uc)
- }
- 
- #define BTYPE_1() \
--    asm("mov %0,#1; adr x16, 1f; br x16; 1: hint #25; mov %0,#0" \
-+    asm("mov %w0,#1; adr x16, 1f; br x16; 1: hint #25; mov %w0,#0" \
-         : "=r"(skipped) : : "x16", "x30")
- 
- #define BTYPE_2() \
--    asm("mov %0,#1; adr x16, 1f; blr x16; 1: hint #25; mov %0,#0" \
-+    asm("mov %w0,#1; adr x16, 1f; blr x16; 1: hint #25; mov %w0,#0" \
-         : "=r"(skipped) : : "x16", "x30")
- 
- #define BTYPE_3() \
--    asm("mov %0,#1; adr x15, 1f; br x15; 1: hint #25; mov %0,#0" \
-+    asm("mov %w0,#1; adr x15, 1f; br x15; 1: hint #25; mov %w0,#0" \
-         : "=r"(skipped) : : "x15", "x30")
- 
- #define TEST(WHICH, EXPECT) \
 -- 
 2.39.2
 
