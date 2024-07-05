@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B661BC38150
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9043EC38150
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:38:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPku5-0005lZ-SM; Fri, 05 Jul 2024 11:31:17 -0400
+	id 1sPkzw-0002b6-Gu; Fri, 05 Jul 2024 11:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPku3-0005j4-SV
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:15 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ id 1sPkzs-0002Zq-F2
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:16 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPktw-0000RQ-V1
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:14 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-a77cbb5e987so99699866b.3
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:31:07 -0700 (PDT)
+ id 1sPkzp-0001GP-Id
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:16 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-58b5f7bf3edso1118672a12.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193466; x=1720798266; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193832; x=1720798632; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mpfNv2j1tI1/v38krNO8PFDL7fPSKpwptFmGNLBYEoE=;
- b=ej3zdBcfzH/zSAxOhJFma/V29bxTzJiF/+09GrVFfD8bouleA/YCPAgg+YSOtq1obR
- ubIInOeDnoEtXdc5fad11x6OpCRVYwpdfJup2HMoffLISncwZ7yScM92vbTcyZ3nWDL6
- PPnLZbRjOjUttXy61hBPCp4zTA+EjLujNqM1C8taMGJ3cKmIndHh6472AlRRIK6J6nX5
- EiQKZgiS4pGHaqdtCMbiU3Gs4RXLfHBdJXtANm1vXIB5G8fiMJ3Eam+wXAioU3KAwmuo
- n3kDstTcvdxTz8+t/YfdCTD5D0+J/2Ycx52V5X7eLBIj7MbMY+jCfVykISS4ql/WhSCh
- 8WpA==
+ bh=Ua23xrZ298Q42RDQyaYLhWTnQd77z5dPlxT8bKsVuUY=;
+ b=T9OaeGVBYQU0WVa+fs/1TSFsI2Ra0XfWN6SmbU2MCwsrwBM9Nd1NUlnHgpNVo3HMZU
+ /KvfSlU7pS69DQwacEeFvsNy2MnzesDOqMfSwX9N1XZ8oACPR1bYcu9nyHRT80z0TwlB
+ fEtNv9IWOAYg2hve9mKiLVhvIWoN+cDejvStI+rVwzXWQmu+Jg+kBrj5Dw5lrC+55DT3
+ m5QXW3lkoEP+tyQrvm0lHnQ2FwdhLMSgZLMC+vGSkOm0HvQ/72Ja/bKAwhV1mMdHiYfq
+ cAjZRWnMIl5QSOuHBm79sFDE06VN5YdlbWfGhQ3/hR/Hvgui8YOr+DKps2Bn7S3iexD5
+ Zu5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193466; x=1720798266;
+ d=1e100.net; s=20230601; t=1720193832; x=1720798632;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mpfNv2j1tI1/v38krNO8PFDL7fPSKpwptFmGNLBYEoE=;
- b=iRku91COMWJSRzWbZkbRIdYtbyADy1jzY/JuJgPSbQwLegJhC5tQE4kETVKDJcFCSF
- NOIVPw4H0VoooIUnUf4qz2HCBFVwJxn9ilA/NFI4zPneOkM5wLm4MUoI+GNHL94ANTEq
- exwKtc6LW3mJeW+e9tgoh4td8QHwloX0zj7/p7/IrZCVdik+HylbQnXEZCHtVFGUyR85
- msQTM27tdcuIAf7WUXWFYukxCeeg2jJmh0YJFKscd0WcyjwRF1fdm/SYcmawe0HOspfE
- 2wnuZeF4ZKehR1dBn3Lsix7kQpNFKYOTvP16MCxErqnsJhXRV7PXZo3VGwKFWI8Aj/Gz
- lniw==
-X-Gm-Message-State: AOJu0YzPc5+CztL4/gPzg1BPalZupy0flXz8Y6HBhizxE599uOd6DyLU
- /RvIwAW3gHUsVoRwd1XO3fxbzrKIoh5IbZx3/49/q5Le2V96XeDvlDYJNeWTBjo=
-X-Google-Smtp-Source: AGHT+IFktobtFQF7pXq8M8MB/zRklhx6L1bZLUudQVSQNGTyOtiiGg+8aBxphxOzxduoqOoXb3IEdA==
-X-Received: by 2002:a17:906:494e:b0:a77:cf09:9c70 with SMTP id
- a640c23a62f3a-a77cf099d0emr113404666b.43.1720193466149; 
- Fri, 05 Jul 2024 08:31:06 -0700 (PDT)
+ bh=Ua23xrZ298Q42RDQyaYLhWTnQd77z5dPlxT8bKsVuUY=;
+ b=p4D6qxljGzmHviwGs6cfIIXTFv97hXYpOz+JElLpqNZ/5QVgWiX//VxmCXGei7pC18
+ EiQnG686TeN3p+ORE8OUcUZlVoQ97KuQp9JJsq+HvP/0wjG+Qd8cS2FtntMK557VSGFv
+ 6Rle/titkftRyBSd3NioLQ6vcRFzI/l1i+sUc27GcrDUt5SMUyuv46opGyFUcCtrzcXQ
+ 7SRLuMnj2iyOQYh4pQd9ud0rYGmPCTZFVge7QrDYR+nR3r9driEDtGVyzkLzgRjKZkvl
+ YioO8fs6eO8wQTE/bGujc4MA+v7a5gxGZZ+yl26tvzabIDCOxEVaP71sgt5zGSkR4L2E
+ ucqA==
+X-Gm-Message-State: AOJu0YzcGPUcChp5U+uH4HLehFfquFbqaRPVhYGWnkkUKWWMa0YaMvHv
+ W1OiAOlFZhpCHg5Z2QDjYJx4Nx6SbZSUspqL5OaA9NfcO4kCFI7bWIrvKgnLMDE=
+X-Google-Smtp-Source: AGHT+IFZccrel+TFP0JVYkHmWdVeZ5dXJTaanWcRPzpZB2PkqoX9Q4At3wMRE6ZwNXLYT2CNqZAgog==
+X-Received: by 2002:a05:6402:1ece:b0:57d:496:209a with SMTP id
+ 4fb4d7f45d1cf-58e5994eb84mr4943921a12.6.1720193831410; 
+ Fri, 05 Jul 2024 08:37:11 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77d965dc4asm37881266b.87.2024.07.05.08.30.59
+ 4fb4d7f45d1cf-5907e4d79ddsm212536a12.59.2024.07.05.08.37.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 08:31:04 -0700 (PDT)
+ Fri, 05 Jul 2024 08:37:10 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A26546211C;
- Fri,  5 Jul 2024 16:30:54 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 896355F876;
+ Fri,  5 Jul 2024 16:30:55 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PULL 17/40] tests/tcg/arm: Use -march and -mfpu for fcvt
-Date: Fri,  5 Jul 2024 16:30:29 +0100
-Message-Id: <20240705153052.1219696-18-alex.bennee@linaro.org>
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PULL 27/40] plugins: Ensure vCPU index is assigned in init/exit hooks
+Date: Fri,  5 Jul 2024 16:30:39 +0100
+Message-Id: <20240705153052.1219696-28-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,32 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Clang requires the architecture to be set properly
-in order to assemble the half-precision instructions.
+Since vCPUs are hashed by their index, this index can't
+be uninitialized (UNASSIGNED_CPU_INDEX).
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240630190050.160642-13-richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240606124010.2460-2-philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-18-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-28-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
-index 95f891bf8c..8e287191af 100644
---- a/tests/tcg/arm/Makefile.target
-+++ b/tests/tcg/arm/Makefile.target
-@@ -29,8 +29,8 @@ test-arm-iwmmxt: test-arm-iwmmxt.S
+diff --git a/plugins/core.c b/plugins/core.c
+index 9d737d8278..a864275ae7 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -245,6 +245,7 @@ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
+ {
+     bool success;
  
- # Float-convert Tests
- ARM_TESTS += fcvt
--fcvt: LDFLAGS+=-lm
--# fcvt: CFLAGS+=-march=armv8.2-a+fp16 -mfpu=neon-fp-armv8
-+fcvt: LDFLAGS += -lm
-+fcvt: CFLAGS += -march=armv8.2-a+fp16 -mfpu=neon-fp-armv8
- run-fcvt: fcvt
- 	$(call run-test,fcvt,$(QEMU) $<)
- 	$(call diff-out,fcvt,$(ARM_SRC)/fcvt.ref)
++    assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
+     qemu_rec_mutex_lock(&plugin.lock);
+     plugin.num_vcpus = MAX(plugin.num_vcpus, cpu->cpu_index + 1);
+     plugin_cpu_update__locked(&cpu->cpu_index, NULL, NULL);
+@@ -263,6 +264,7 @@ void qemu_plugin_vcpu_exit_hook(CPUState *cpu)
+ 
+     plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_EXIT);
+ 
++    assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
+     qemu_rec_mutex_lock(&plugin.lock);
+     success = g_hash_table_remove(plugin.cpu_ht, &cpu->cpu_index);
+     g_assert(success);
 -- 
 2.39.2
 
