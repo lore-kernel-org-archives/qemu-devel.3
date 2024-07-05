@@ -4,55 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A220C30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 14:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79CD0C3DA41
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPjlh-0007wU-QE; Fri, 05 Jul 2024 10:18:33 -0400
+	id 1sPkuB-0005pp-Uf; Fri, 05 Jul 2024 11:31:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=slai=OF=kaod.org=clg@ozlabs.org>)
- id 1sPjlg-0007w8-48; Fri, 05 Jul 2024 10:18:32 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=slai=OF=kaod.org=clg@ozlabs.org>)
- id 1sPjle-0003il-9y; Fri, 05 Jul 2024 10:18:31 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WFwbf2hz1z4wbr;
- Sat,  6 Jul 2024 00:18:22 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WFwbZ2Hs6z4wZx;
- Sat,  6 Jul 2024 00:18:17 +1000 (AEST)
-Message-ID: <34099911-4c2b-4cfa-a1e7-c03e78a25f6e@kaod.org>
-Date: Fri, 5 Jul 2024 16:18:13 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPku9-0005oZ-2Q
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:21 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPku0-0000Ra-NP
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:20 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a7527afa23cso214712066b.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:31:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720193467; x=1720798267; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FV/c21quCr2VaXyJq0rrCWTuAfHB+Xc6e4tf9YOx3HA=;
+ b=xbiw100lxVheZOvQJxpgsyiVU047ySljYn6rsgc7Gm3wlyQVYbtyGf9QBUnxiu9xSa
+ PluvtmYTwGCCRJOS7e9OkPFYbVHfahQl642rB/H96kDcm9hfUPOrnVB1PyexLSokxqeX
+ cymJmGZLXYYR44/0YhZUUHuEXq/6iHU7xfvZYotNO3FdSCcj1U9gIZH7RYn5wg6wx0Y7
+ Hd8hHKLVjs16LOUmfP9WkH2TgSZlUjB+WJOOkHTq5i3bP6uYflhXeNUfgfi/A265GEkB
+ NzQao6rgUz3zOKz1b+etSdbwmDEV1epdyQsgMOKOqrCAA9QM/cwppT7IGTbeUkcIEklr
+ B1ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720193467; x=1720798267;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FV/c21quCr2VaXyJq0rrCWTuAfHB+Xc6e4tf9YOx3HA=;
+ b=OE03YyFGOKE1nUoks7/B2XOtVZsvYtS+nXPwAsJcVp7aVMNuEmUKd1NNJNA+bnECdj
+ MucJD0nleA4riOnr7clRjQdCFiriC0rooSXSjDZ38iAiAAn3iLFXil5ssFbpJFQlITCN
+ 0vDrjf2j9A/b3hzV2EsLYb2xswqkC6aYvF4PG18lCooy4tSbnxYG9IPN8fPIo/X0javq
+ 2a68FkJPe4Wq9kgApe1GO2JhxuqlL4L35C4c7N9yIA0QGcZV904r0hofrUqnlfgXLhdS
+ ABw41MF62xPL0j348lTO/odFXCSxuix6Rvm9E1jKURsgl9tCXZaLXFasIndT5GYZmq/E
+ F5cQ==
+X-Gm-Message-State: AOJu0YyEmK+N5mKYigIrFVjrSzjnpxCb5WzHPnS4P/XOqSbpWQRRiwie
+ YjAhdpfq+L5fH52kXtXIxJ9k8ee77Z/pq7zbGzkV19TwJdCxCROkcN5+6X+KAvIDAtJ58YUpfcX
+ H
+X-Google-Smtp-Source: AGHT+IGbI/prXsD4sS4V/tCTlMQAVAoGENYkY1umeErSiqMOHC6m50YqmLRZ5AngPVzFaj9PBxrZ2w==
+X-Received: by 2002:a17:906:4818:b0:a6f:4e1f:e613 with SMTP id
+ a640c23a62f3a-a77ba48e4c4mr310842966b.37.1720193466737; 
+ Fri, 05 Jul 2024 08:31:06 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a77d56ccb8csm46718666b.200.2024.07.05.08.30.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 05 Jul 2024 08:31:04 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8B4C56211A;
+ Fri,  5 Jul 2024 16:30:54 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PULL 16/40] tests/tcg/arm: Manually register allocate half-precision
+ numbers
+Date: Fri,  5 Jul 2024 16:30:28 +0100
+Message-Id: <20240705153052.1219696-17-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
+References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v46 0/5] hw/sd/sdcard: Cleanups before adding eMMC support
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Luc Michel <luc.michel@amd.com>,
- Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20240703134356.85972-1-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240703134356.85972-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=slai=OF=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,35 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/3/24 3:43 PM, Philippe Mathieu-Daudé wrote:
-> (patches from v42 already reviewed not reposted)
-> 
-> Since v45:
-> - RAZ/WI on GEN_CMD (Luc & Manos)
-> - Rename sd_cmd_SEND_OP_COND
-> - Introduce TYPE_SDMMC_COMMON
-> 
-> Philippe Mathieu-Daudé (5):
->    hw/sd/sdcard: Use spec v3.01 by default
->    hw/sd/sdcard: Add sd_cmd_GEN_CMD handler (CMD56)
->    hw/sd/sdcard: Rename sd_cmd_SEND_OP_COND handler
->    hw/sd/sdcard: Introduce set_csd/set_cid handlers
->    hw/sd/sdcard: Extract TYPE_SDMMC_COMMON from TYPE_SD_CARD
-> 
->   hw/sd/sdmmc-internal.h |   3 ++
->   include/hw/sd/sd.h     |   2 +
->   hw/core/machine.c      |   1 +
->   hw/sd/core.c           |  29 ++++++-----
->   hw/sd/sd.c             | 113 ++++++++++++++++++++++-------------------
->   5 files changed, 81 insertions(+), 67 deletions(-)
-> 
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
+Clang does not allow specifying an integer as the value of a single
+precision register.  Explicitly move value from a general register.
 
-Tested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+[rth: Use one single inline asm block.]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Message-Id: <20240630190050.160642-12-richard.henderson@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-17-alex.bennee@linaro.org>
 
-Thanks,
-
-C.
-
+diff --git a/tests/tcg/arm/fcvt.c b/tests/tcg/arm/fcvt.c
+index 157790e679..d8c61cd29f 100644
+--- a/tests/tcg/arm/fcvt.c
++++ b/tests/tcg/arm/fcvt.c
+@@ -355,7 +355,12 @@ static void convert_half_to_single(void)
+ 
+         print_half_number(i, input);
+ #if defined(__arm__)
+-        asm("vcvtb.f32.f16 %0, %1" : "=w" (output) : "x" ((uint32_t)input));
++        /*
++         * Clang refuses to allocate an integer to a fp register.
++         * Perform the move from a general register by hand.
++         */
++        asm("vmov %0, %1\n\t"
++            "vcvtb.f32.f16 %0, %0" : "=w" (output) : "r" (input));
+ #else
+         asm("fcvt %s0, %h1" : "=w" (output) : "w" (input));
+ #endif
+-- 
+2.39.2
 
 
