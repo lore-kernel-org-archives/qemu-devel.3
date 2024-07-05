@@ -4,57 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54054C3271E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 00:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F91C30653
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 00:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPWs9-0001VG-7a; Thu, 04 Jul 2024 20:32:21 -0400
+	id 1sPWtI-0001rZ-3e; Thu, 04 Jul 2024 20:33:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sPWs7-0001Un-Af; Thu, 04 Jul 2024 20:32:19 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sPWs5-0008HX-F5; Thu, 04 Jul 2024 20:32:19 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 6A6914E6004;
- Fri, 05 Jul 2024 02:32:13 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id 4OMt6LgTSG8t; Fri,  5 Jul 2024 02:32:11 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6A2394E6001; Fri, 05 Jul 2024 02:32:11 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 653F0746E3B;
- Fri, 05 Jul 2024 02:32:11 +0200 (CEST)
-Date: Fri, 5 Jul 2024 02:32:11 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-ppc@nongnu.org, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Huacai Chen <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 1/3] hw/isa/vt82c686: Turn "intr" irq into a named gpio
-In-Reply-To: <20240704205854.18537-2-shentey@gmail.com>
-Message-ID: <5f8089ed-fb3f-d92c-0287-e055e8448677@eik.bme.hu>
-References: <20240704205854.18537-1-shentey@gmail.com>
- <20240704205854.18537-2-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sPWtG-0001r7-IJ
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 20:33:30 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sPWtE-0008MY-Gx
+ for qemu-devel@nongnu.org; Thu, 04 Jul 2024 20:33:30 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-70af81e8439so889979b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 17:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720139603; x=1720744403; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BORRlieUou2cb86baxlfY/Ctl0TtXeE4XD7UnWB5qX8=;
+ b=ieIfiRxZd64DNA7PddgO6C9rriQJT6eKU/e7w4kOiN31wRJiKAwn6JUmPoGlM+xy6e
+ auAhXYhYG6jtE6J1GVHDiw13Vhb9UKlE4VpFziAp9jkiOgo1x2hdYLMf6bKIOzKklNnj
+ WZwSELYyUkcA+QIvi2F5JbsQX0D8F7T2bndf5ws0aAwEEs5Bn6/rxGUtvQpeCALRT1Tc
+ 3cxn3I0bb5yJi46Za9YCur1EES1R/0LcQbxBcQmivMP/stOGj1hLkeYJ0tAXcJnTbBCW
+ f/5BsiRwFbASK2FT6YQeZyrKWeQiwp6YY0pQoWdsG4CVZXIuTLTRv2lFbJ7uvFYCCr6G
+ kXFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720139603; x=1720744403;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BORRlieUou2cb86baxlfY/Ctl0TtXeE4XD7UnWB5qX8=;
+ b=BHonBL3c3i2APdv4sbv1hyqZWJtvww/c16dJrOZid3Di18iRYCv+HLYxYPYKCzgokz
+ QnH6OM6QL9yP+I6FJqKnDCU7Ccu8YuIZjwpjRl8O+t57RqVWenbqsKqTnvMtUelDNXdo
+ wINIhV+p7MylFFBDfBtAMmO7bwZeRw2hZaTvNRIjdOkL/9TLxtxW4g3HrGAnTkM5K0QE
+ qp7/DPX0orUCASuXNUgi42ZB3k47pwvDAOv/QH3Ic7a83hmD51mygAW/x04KDCxwSpDg
+ 4JSGSeLspMIx3ZMiBFsDDjXN/QM58IFV+4fTQNHry2oM27Asu/EZJKwmrjyPBeaLkHds
+ UVmA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCULhgfbgFRhd8WqdB16CQQOHUQmry3+IW6199AZcFdOK+Xk9zKZTKq3jlQrlFSprlX2WcpKSMJRdDFJCwJa3AdU3QPXoEM=
+X-Gm-Message-State: AOJu0YxfhZ5EFtKnTStJfdlaOFXeB7CsKJFR8IATINaLTKwxWj7q7+Tn
+ qP7WwEHXysrUkvmdVDy3uZJeTEbukPRE5YX6VaEJFWK+B2YyIt2mWi8Ww6RtxuM=
+X-Google-Smtp-Source: AGHT+IGZaKOdTl8EFLs/xt7c1LX1RYnxRHw/UDSBW2bcETAZFAifWJKcqDu2epyujIVJCKv3XHydjg==
+X-Received: by 2002:a05:6a00:1909:b0:705:9748:7bb8 with SMTP id
+ d2e1a72fcca58-70b00ac9852mr2891988b3a.29.1720139602990; 
+ Thu, 04 Jul 2024 17:33:22 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70801e63218sm13259468b3a.11.2024.07.04.17.33.16
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Jul 2024 17:33:22 -0700 (PDT)
+Message-ID: <d754f850-dbdd-4af1-b2cf-0129180d23c0@linaro.org>
+Date: Thu, 4 Jul 2024 17:33:14 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/7] plugins: save value during memory accesses
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
+ <erdnaxe@crans.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20240702184448.551705-1-pierrick.bouvier@linaro.org>
+ <20240702184448.551705-3-pierrick.bouvier@linaro.org>
+ <1118b3e7-31c7-4918-a63a-e9b9279941c4@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <1118b3e7-31c7-4918-a63a-e9b9279941c4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,86 +103,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 4 Jul 2024, Bernhard Beschow wrote:
-> Makes the code more comprehensible, matches the datasheet and the piix4 device
-> model.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
-> hw/isa/vt82c686.c   | 2 +-
-> hw/mips/fuloong2e.c | 2 +-
-> hw/ppc/amigaone.c   | 4 ++--
-> hw/ppc/pegasos2.c   | 4 ++--
-> 4 files changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-> index 8582ac0322..505b44c4e6 100644
-> --- a/hw/isa/vt82c686.c
-> +++ b/hw/isa/vt82c686.c
-> @@ -719,7 +719,7 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
->     ISABus *isa_bus;
->     int i;
->
-> -    qdev_init_gpio_out(dev, &s->cpu_intr, 1);
-> +    qdev_init_gpio_out_named(dev, &s->cpu_intr, "intr", 1);
->     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
->     isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
->     isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
-> diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-> index a45aac368c..6e4303ba47 100644
-> --- a/hw/mips/fuloong2e.c
-> +++ b/hw/mips/fuloong2e.c
-> @@ -299,7 +299,7 @@ static void mips_fuloong2e_init(MachineState *machine)
->                               object_resolve_path_component(OBJECT(pci_dev),
->                                                             "rtc"),
->                               "date");
-> -    qdev_connect_gpio_out(DEVICE(pci_dev), 0, env->irq[5]);
-> +    qdev_connect_gpio_out_named(DEVICE(pci_dev), "intr", 0, env->irq[5]);
+On 7/3/24 11:58, Richard Henderson wrote:
+> On 7/2/24 11:44, Pierrick Bouvier wrote:
+>> Different code paths handle memory accesses:
+>> - tcg generated code
+>> - load/store helpers
+>> - atomic helpers
+>>
+>> This value is saved in cpu->plugin_state.
+>>
+>> Atomic operations are doing read/write at the same time, so we generate
+>> two memory callbacks instead of one, to allow plugins to access distinct
+>> values.
+>>
+>> For now, we can have access only up to 128 bits, thus split this in two
+>> 64 bits words. When QEMU will support wider operations, we'll be able to
+>> reconsider this.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    accel/tcg/atomic_template.h   | 66 ++++++++++++++++++++++++++++----
+>>    include/qemu/plugin.h         |  8 ++++
+>>    plugins/core.c                |  7 ++++
+>>    tcg/tcg-op-ldst.c             | 72 +++++++++++++++++++++++++++++++----
+>>    accel/tcg/atomic_common.c.inc | 13 ++++++-
+>>    accel/tcg/ldst_common.c.inc   | 38 +++++++++++-------
+>>    6 files changed, 173 insertions(+), 31 deletions(-)
+> 
+> It looks correct so,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> Possibilities for follow-up improvement:
+> 
+> 
+>> --- a/tcg/tcg-op-ldst.c
+>> +++ b/tcg/tcg-op-ldst.c
+>> @@ -148,14 +148,24 @@ static TCGv_i64 plugin_maybe_preserve_addr(TCGTemp *addr)
+>>        return NULL;
+>>    }
+>>    
+>> +#ifdef CONFIG_PLUGIN
+>>    static void
+>> -plugin_gen_mem_callbacks(TCGv_i64 copy_addr, TCGTemp *orig_addr, MemOpIdx oi,
+>> +plugin_gen_mem_callbacks(TCGv_i64 value_low, TCGv_i64 value_high,
+>> +                         TCGv_i64 copy_addr, TCGTemp *orig_addr, MemOpIdx oi,
+>>                             enum qemu_plugin_mem_rw rw)
+>>    {
+>> -#ifdef CONFIG_PLUGIN
+>>        if (tcg_ctx->plugin_insn != NULL) {
+>>            qemu_plugin_meminfo_t info = make_plugin_meminfo(oi, rw);
+>>    
+>> +        TCGv_ptr plugin_state = tcg_temp_ebb_new_ptr();
+>> +        tcg_gen_ld_ptr(plugin_state, tcg_env,
+>> +                       offsetof(CPUState, plugin_state) - sizeof(CPUState));
+>> +        tcg_gen_st_i64(value_low, plugin_state,
+>> +                       offsetof(CPUPluginState, mem_value_low));
+>> +        tcg_gen_st_i64(value_high, plugin_state,
+>> +                       offsetof(CPUPluginState, mem_value_high));
+> 
+> Maybe better to place this data at the beginning of CPUNegativeOffsetState?
+> This would eliminate a load dependency and most hosts would be able to use (relatively)
+> small negative offset efficiently.
+> 
 
-I was wondering why we still have 0 when we have a name so checked the doc 
-commant in include/hw/qdev-core.h and found that the docs in 
-qdev_connect_gpio_out_named is mostly just a copy&paste of the 
-qdev_connect_gpio_out and it also talks about output GPIO array but then 
-says input GPIOs in that array. I've stopped reading at that point as this 
-text makes little sense. Somebody who knows how this actually works might 
-want to update that doc comment.
+That's a good suggestion. Moved it here for v5.
 
-But that's unrelated to this patch so this is
+>> +static void
+>> +plugin_gen_mem_callbacks_i32(TCGv_i32 val,
+>> +                             TCGv_i64 copy_addr, TCGTemp *orig_addr,
+>> +                             MemOpIdx oi, enum qemu_plugin_mem_rw rw)
+>> +{
+>> +#ifdef CONFIG_PLUGIN
+>> +    if (tcg_ctx->plugin_insn != NULL) {
+>> +        TCGv_i64 ext_val = tcg_temp_ebb_new_i64();
+>> +        tcg_gen_extu_i32_i64(ext_val, val);
+>> +        plugin_gen_mem_callbacks(ext_val, tcg_constant_i64(0),
+> 
+> This zero extension got me to thinking:
+> (1) why zero extension and not sign-extension based on MO_SIGN from oi?
 
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+This was to truncate upper value, but as you mentioned, I simply clip it 
+later, so it's not important.
 
->
->     dev = DEVICE(object_resolve_path_component(OBJECT(pci_dev), "ide"));
->     pci_ide_create_devs(PCI_DEVICE(dev));
-> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-> index ddfa09457a..9dcc486c1a 100644
-> --- a/hw/ppc/amigaone.c
-> +++ b/hw/ppc/amigaone.c
-> @@ -153,8 +153,8 @@ static void amigaone_init(MachineState *machine)
->     object_property_add_alias(OBJECT(machine), "rtc-time",
->                               object_resolve_path_component(via, "rtc"),
->                               "date");
-> -    qdev_connect_gpio_out(DEVICE(via), 0,
-> -                          qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
-> +    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
-> +                                qdev_get_gpio_in(DEVICE(cpu), PPC6xx_INPUT_INT));
->     for (i = 0; i < PCI_NUM_PINS; i++) {
->         qdev_connect_gpio_out(dev, i, qdev_get_gpio_in_named(DEVICE(via),
->                                                              "pirq", i));
-> diff --git a/hw/ppc/pegasos2.c b/hw/ppc/pegasos2.c
-> index c1bd8dfa21..9b0a6b70ab 100644
-> --- a/hw/ppc/pegasos2.c
-> +++ b/hw/ppc/pegasos2.c
-> @@ -195,8 +195,8 @@ static void pegasos2_init(MachineState *machine)
->     object_property_add_alias(OBJECT(machine), "rtc-time",
->                               object_resolve_path_component(via, "rtc"),
->                               "date");
-> -    qdev_connect_gpio_out(DEVICE(via), 0,
-> -                          qdev_get_gpio_in_named(pm->mv, "gpp", 31));
-> +    qdev_connect_gpio_out_named(DEVICE(via), "intr", 0,
-> +                                qdev_get_gpio_in_named(pm->mv, "gpp", 31));
->
->     dev = PCI_DEVICE(object_resolve_path_component(via, "ide"));
->     pci_ide_create_devs(dev);
->
+> (2) given that the callback will have oi, do we really need any extension
+>       at all here?  We could allow the bits outside oi be garbage.
+>       This would eliminate the store to value_high entirely for most ops,
+>       and would allow this i32 op to avoid the extension -- simply perform
+>       a 32-bit store into the low half of value_low.
+> 
+
+I implemented selective store for plugin_gen_mem_callbacks function for 
+next version.
+
+However, for helpers based memory accesses, I prefer to keep existing 
+version. It would require to create several small functions 
+(atomic_trace_rmw_post, plugin_load/store_cb and qemu_plugin_vcpu_mem_cb 
+for every size). It's something that could be desirable later when we'll 
+introduce bigger tcg word size though.
+
+> That appears to be what you're doing anyway with qemu_plugin_mem_value in the next patch.
+> 
+> 
+> r~
 
