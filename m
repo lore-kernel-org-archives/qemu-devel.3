@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 695D6C30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 05:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63923C30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 05:39:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPbcx-0007Eo-2N; Fri, 05 Jul 2024 01:36:59 -0400
+	id 1sPbel-00089S-Mx; Fri, 05 Jul 2024 01:38:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sPbcv-0007EY-Ur
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 01:36:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sPbek-00089B-6f
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 01:38:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sPbct-0004Ts-SB
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 01:36:57 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sPbea-0008D8-Uc
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 01:38:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720157814;
+ s=mimecast20190719; t=1720157919;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PRl2ojit9NvtghK0Bj/fvvr0pzZm3U6iOSQWZZBTNn8=;
- b=Sv7CMxEdfCmOhxVOjK2phKlqotHtua5aJHStEDbi+vOM8ztODcYNcqF5Y9pMQujpfXZdH9
- I5C0CCv7isNPavrINiwH9dDrNyhqu1GLvVkbJN7rZwKczUlFYGBPg1Jz1r4tFeda3EiXjg
- rCj96uXn2Hi2BgX/r1dMo8Q1hwRhcdY=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TEksHmUWt00lTxG6oU7rGTdcMcd0W/EM5mkNsWPPkY0=;
+ b=W7kU3qaAKExmKJ0O6VGf6NjEES14GHeZsSsn8U4wUgQntJeC5Y6S/ACDyO/3yTuzzfTcXN
+ PptQ/BOSTrk6d1rvm0iP5xHlYQk1GsCV5E5TckchberT80Mgc5xrF9MkKf7BN4Hmr+kdYE
+ VpuCBDu3jPRqVpHDjbyMGkxFUwS0bcQ=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-53-vwhe53yLMT-ncJ26oK2XjA-1; Fri, 05 Jul 2024 01:36:53 -0400
-X-MC-Unique: vwhe53yLMT-ncJ26oK2XjA-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-79d586c5e9eso169702685a.2
- for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 22:36:53 -0700 (PDT)
+ us-mta-528-cAqXXrg-PSKxHRYJYlhxuQ-1; Fri, 05 Jul 2024 01:38:37 -0400
+X-MC-Unique: cAqXXrg-PSKxHRYJYlhxuQ-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6b5de421bc6so18356796d6.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Jul 2024 22:38:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720157812; x=1720762612;
+ d=1e100.net; s=20230601; t=1720157917; x=1720762717;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PRl2ojit9NvtghK0Bj/fvvr0pzZm3U6iOSQWZZBTNn8=;
- b=ErwVE2dPe57cRu3QbGWsbbADCj/ejcXTH6N44q5DOP/T7LLoG3w9u3lS8Xkn3Lllr9
- R3mtAQp83Tk2bXlDTJQAxG5OyzIrKRZ1/0imQiZIb+I4iix7zRc5q41Qix7AKJ69gio/
- a+w5NHd+jRZ3uPqZ186Ssbr4hjzzjcqQJUDGc8cjv8ltmLb28/9vAJT7scCcaLnJm8La
- e8QnCojbnH9H2NAVJo7SGywZdShtpBJI4atigsNPO6vO5aEUroyZJ3eN0+XNp6yKnFxT
- 8ojwMGQN3kONVuWMFo9ZxZJNn55G92Q/6qwH6BrnZthvbzOPhETB46IgthRzBBK0kmrT
- XNtA==
+ bh=TEksHmUWt00lTxG6oU7rGTdcMcd0W/EM5mkNsWPPkY0=;
+ b=cbZLu4H9XggU+NxrUr6QyQLf06yGYIyPC/FzTs3KzbBUMAFKiAAafxtsL0wntsLaSd
+ vvMYMwNlmVJII9LKa9mGkuwJP6nqPyBYosBXxAaqNwyAprCDgeFNisAgNWdW+hPh2DnR
+ JpJLLkiQFza2CAaWocPxqgVDVtnoYX+wHBzrrE9on2UvH0CcuKHG5m+QECpa78l/L9o2
+ mfSNhAKu1o+g+PRNnYs0AX+XbuMQC1IxVhezWXcxrJ3N1rBA294O36DqK4nImnmTd3vH
+ QUdM4n3ZbFqPl2RcWaSLRfetNT1IOJjdoh9gmpQ/RRCmecFIIU7/9tC0ClfyxEyC8Qj1
+ +W7A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV2Py+k58LRvP9ELK3DhQdNGPo0lTOrOKGlDdV/OKO/yNyoe0DwVrp5w5xZc38OlLMLWH4kFxPdvpA/U8ACKVkOUef+TE8=
-X-Gm-Message-State: AOJu0YwIcJnYJMUM8s7RskvGi8mxTBfSVEyRdo3UkSGFHR3nAINfJlKS
- xqr03BmOnsw7I+gT4fgFLsjTnqQg/Y2CBvVSi0y8Rh5cDsysK71d3aBlYMFzzO4aYf+LgEDfNiP
- DsCHF4rAii5Ax/6kH1IjPPJflRFomlZ3HxUCFZdCSRoY5e0eUsJIi
-X-Received: by 2002:a05:620a:4627:b0:79d:582b:95b7 with SMTP id
- af79cd13be357-79eee273f8emr415180685a.52.1720157812618; 
- Thu, 04 Jul 2024 22:36:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH11AzuqfZnVJQTu9CB2Ko3sW0P5cakUSfFLkvIsuugMsCDawM9TnhTRwp9+AYX92Ia0c1M2g==
-X-Received: by 2002:a05:620a:4627:b0:79d:582b:95b7 with SMTP id
- af79cd13be357-79eee273f8emr415180085a.52.1720157812322; 
- Thu, 04 Jul 2024 22:36:52 -0700 (PDT)
+ AJvYcCUUrqL7xwNj16SuyXpJI9/PoAXilnzoW0ZpFn1M2cSgRBkU4AiHEWvnkzVfnK/H2/Jw5THjvdzGHM6jIAVbFWCsA1Tz2xI=
+X-Gm-Message-State: AOJu0YwqzC9bIFAfycE++mH4pM5LZAEI8aZHAABLgZrzlmF41xeEaTZ6
+ k3WmxOJGzWBdq8BYYM/KBdisxnJv2v40QRXLog8eIAk3nPSjuCiU3NMNkMamtjEGjGViiHLhc/j
+ qPkc8UzDCqq54N0raoV8hti1kCTeT0bRqITJrCICi+0Aho9fOTgjx
+X-Received: by 2002:a05:6214:53c8:b0:6b5:42b7:122 with SMTP id
+ 6a1803df08f44-6b5ed196d97mr40578016d6.60.1720157917354; 
+ Thu, 04 Jul 2024 22:38:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGL/t49WO5/YqkMxoG2kWY7GS8ps14odKLGw2fahqLjoCy98AlYo72XJOZMANRYqK4i6nrBFA==
+X-Received: by 2002:a05:6214:53c8:b0:6b5:42b7:122 with SMTP id
+ 6a1803df08f44-6b5ed196d97mr40577936d6.60.1720157917060; 
+ Thu, 04 Jul 2024 22:38:37 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79d692f255esm740911785a.87.2024.07.04.22.36.50
+ 6a1803df08f44-6b5eca5a923sm12310716d6.47.2024.07.04.22.38.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Jul 2024 22:36:51 -0700 (PDT)
-Message-ID: <9d8e87ec-3f9b-48c8-8378-8102dacbc133@redhat.com>
-Date: Fri, 5 Jul 2024 07:36:48 +0200
+ Thu, 04 Jul 2024 22:38:36 -0700 (PDT)
+Message-ID: <e6ca185f-3f9a-40e1-9ed2-eccfbbdf1444@redhat.com>
+Date: Fri, 5 Jul 2024 07:38:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] aspeed/scu: Add boot-from-eMMC HW strapping bit for
- AST2600 SoC
+Subject: Re: [PATCH 5/8] aspeed: Set eMMC 'boot-config' property to reflect HW
+ strapping
 To: Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>,
@@ -80,22 +80,22 @@ Cc: Joel Stanley <joel@jms.id.au>, Steven Lee <steven_lee@aspeedtech.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 References: <20240704053651.1100732-1-clg@redhat.com>
- <20240704053651.1100732-4-clg@redhat.com>
- <ba8b451ff51446c114fac96daa6e81abddf952a8.camel@codeconstruct.com.au>
+ <20240704053651.1100732-6-clg@redhat.com>
+ <f50579b99ef8883dac5fcfc1606a45abfb8bf85f.camel@codeconstruct.com.au>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-In-Reply-To: <ba8b451ff51446c114fac96daa6e81abddf952a8.camel@codeconstruct.com.au>
+In-Reply-To: <f50579b99ef8883dac5fcfc1606a45abfb8bf85f.camel@codeconstruct.com.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,38 +111,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/24 5:36 AM, Andrew Jeffery wrote:
+On 7/5/24 5:41 AM, Andrew Jeffery wrote:
 > On Thu, 2024-07-04 at 07:36 +0200, Cédric Le Goater wrote:
 >> From: Cédric Le Goater <clg@kaod.org>
 >>
->> Bit SCU500[2] of the AST2600 controls the boot device of the SoC.
+>> When the boot-from-eMMC HW strapping bit is set, use the 'boot-config'
+>> property to set the boot config register to boot from the first boot
+>> area partition of the eMMC device.
 >>
->> Future changes will configure this bit to boot from eMMC disk images
->> specially built for this purpose.
->>
->> Signed-off-by: Joel Stanley <joel@jms.id.au>
 >> Signed-off-by: Cédric Le Goater <clg@kaod.org>
 >> ---
->>   include/hw/misc/aspeed_scu.h | 4 ++++
->>   1 file changed, 4 insertions(+)
+>>   hw/arm/aspeed.c | 15 +++++++++++----
+>>   1 file changed, 11 insertions(+), 4 deletions(-)
 >>
->> diff --git a/include/hw/misc/aspeed_scu.h b/include/hw/misc/aspeed_scu.h
->> index 58db28db45aa..c9f98c20ffd9 100644
->> --- a/include/hw/misc/aspeed_scu.h
->> +++ b/include/hw/misc/aspeed_scu.h
->> @@ -349,6 +349,10 @@ uint32_t aspeed_scu_get_apb_freq(AspeedSCUState *s);
->>   #define SCU_AST2600_H_PLL_BYPASS_EN                        (0x1 << 24)
->>   #define SCU_AST2600_H_PLL_OFF                              (0x1 << 23)
+>> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+>> index 756deb91efd1..135f4eb72215 100644
+>> --- a/hw/arm/aspeed.c
+>> +++ b/hw/arm/aspeed.c
+>> @@ -327,7 +327,8 @@ void aspeed_board_init_flashes(AspeedSMCState *s, const char *flashtype,
+>>       }
+>>   }
 >>   
->> +/* STRAP1 SCU500 */
->> +#define AST2600_HW_STRAP_BOOT_SRC_EMMC            (0x1 << 2)
->> +#define AST2600_HW_STRAP_BOOT_SRC_SPI             (0x0 << 2)
+>> -static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc)
+>> +static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc,
+>> +                               bool boot_emmc)
+>>   {
+>>           DeviceState *card;
+>>   
+>> @@ -335,6 +336,9 @@ static void sdhci_attach_drive(SDHCIState *sdhci, DriveInfo *dinfo, bool emmc)
+>>               return;
+>>           }
+>>           card = qdev_new(emmc ? TYPE_EMMC : TYPE_SD_CARD);
+>> +        if (emmc) {
+>> +            qdev_prop_set_uint8(card, "boot-config", boot_emmc ? 0x48 : 0x0);
 > 
-> Maybe these should have a `SCU_` prefix for consistency?
+> 0x48 feels a little bit magic. I poked around a bit and there are some
+> boot-config macros, but not the ones you need and they're all in an
+> "internal" header anyway. I guess this is fine for now?
 
-Yep. I agree.  
-> Anyway:
-> 
+You are right and we should be using these :
+
+hw/sd/sdmmc-internal.h:#define EXT_CSD_PART_CONFIG             179     /* R/W */
+
+hw/sd/sdmmc-internal.h:#define EXT_CSD_PART_CONFIG_ACC_MASK            (0x7)
+hw/sd/sdmmc-internal.h:#define EXT_CSD_PART_CONFIG_ACC_DEFAULT         (0x0)
+hw/sd/sdmmc-internal.h:#define EXT_CSD_PART_CONFIG_ACC_BOOT0           (0x1)
+hw/sd/sdmmc-internal.h:#define EXT_CSD_PART_CONFIG_EN_MASK             (0x7 << 3)
+hw/sd/sdmmc-internal.h:#define EXT_CSD_PART_CONFIG_EN_BOOT0            (0x1 << 3)
+hw/sd/sdmmc-internal.h:#define EXT_CSD_PART_CONFIG_EN_USER             (0x7 << 3)
+
+So I wonder where the 0x48 is coming from. Will change.
+
 > Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 > 
 
@@ -150,6 +169,7 @@ Yep. I agree.
 Thanks,
 
 C.
+
 
 
 
