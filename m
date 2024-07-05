@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A395BC3271E
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:34:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 496B1C3DA41
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPku3-0005j6-88; Fri, 05 Jul 2024 11:31:15 -0400
+	id 1sPktv-0005dB-Ed; Fri, 05 Jul 2024 11:31:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPkty-0005gN-Uc
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:11 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1sPktq-0005bk-UC
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:04 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPktt-0000QG-89
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:10 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-58b447c513aso2092152a12.2
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:31:04 -0700 (PDT)
+ id 1sPktn-0000IM-Sj
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:31:02 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-58b447c511eso2379572a12.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:30:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193464; x=1720798264; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193455; x=1720798255; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qi8EZxXfCvRnQubk3+hKID52gSjI2xNtzTbxu1dIU6s=;
- b=SsgN2AMEOtLniac5HMZXImt2fjBdShOzc8XyfWAaIMBGq5G74o+5Axg/ZeUnfiz4K9
- 74nrRTNvS4mwciG8cPHie4S2jhFgqHHc0/2cprfFwCMWoEyTKO2FMf/NpNUmG4t39wsX
- V1ImyBSOyu/5NaQ2YcZP8x/E9Kh7S1MBcIp5nr2U2q4tDsFCr7Y190Z5f/gaZy4Px2sj
- ct+yxggUpVumpjhmZRl81JbJlfG5N14RYguGpdqQlnRXmwT+sFdQCE50RUyC6Ew/NXu5
- gQ8H80Xag7BF5osgq/QMUCElAIQf4nhw1KG/nW7Xrnuox5kTSxtQ1mvsyfgnjLWfXu+W
- v6Uw==
+ bh=ldyUH9Hn6Eww0iJRRhRb5soziQO77Zzr7htHiwXtIxg=;
+ b=vcazQ5gK9cdfKbFtgkJ14zzr9+j84b462kAWPGDtM7GIgN4qS1s1N5saR0iNe+dkwt
+ pSRqq8/2tVtkZe9EpFEgOCoG5F6hZSU4EskTYbI7yJR1I72umHCr2fT0ZdqJkLJ05QLp
+ EvslcGMPD5enJaEl49PD96xuTMZLqboF0jHbkEdKlrNz9qEHecnci2Z+L7ARqGF6zXDa
+ VJmjKW6mUKzzvhOOZ/YJalIvm3trLp5W1itxAVPgpyenXorjlAvKajnT3YzHk5HJjAUo
+ rZaVB4bQHch6SF2tMek081MUtfbJZHRQuk+6DcrupIzE/X95psccYib4MDuRJgaeO/T5
+ eeng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193464; x=1720798264;
+ d=1e100.net; s=20230601; t=1720193455; x=1720798255;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qi8EZxXfCvRnQubk3+hKID52gSjI2xNtzTbxu1dIU6s=;
- b=SuWdTr5wMYX/azhycE4ASFxYIpaQQICCuKnuYqpAPugPHe9WDeW9rjW6rFWhM++tOS
- 5AFdTd/qmDk9uWgyXHsnJlbzCkxFRcvP+E0Bcvj699Bo655Pub39dkeyPA0iK6KfkkkS
- DevT54G0157izQRyrDkCY1zv0pNqWCrFq2GZcyK7hBzX2IlNaDeHHCMsfNMS5Bxp7k/Y
- toe2k5C78F43K6teKIDibXUFzEIA276vQNwCaqFj6JEPrEhnzU2laKD6tkOUzkJ/NLQe
- Eiye1z10awdCuxvKUA30f9Rae1KAhoh8hbrJzXFZjHcu76k+/N/G/H0R6V80ApK1hq/b
- 4Kew==
-X-Gm-Message-State: AOJu0Ywc4NQ1kBuRNkfPAQODywt2mMeiHHnOV5oTVfQ6sJ8YRaLRt4d4
- sdgJUML+pcV+qGcRimfeYgaCznVndGVP/wK7cL9GX1Pt8mVplbrx0OriGuHtoqS94WjckedMnUZ
- U
-X-Google-Smtp-Source: AGHT+IHiI68D0FraDJBDYUx6TOTBSDNW9KHhIvfBS05UPPDin+D54I0XSWig71Y9RFcokuGHl+yvzg==
-X-Received: by 2002:aa7:d693:0:b0:58b:9077:2bd4 with SMTP id
- 4fb4d7f45d1cf-58e5cd151dfmr2659043a12.41.1720193463385; 
- Fri, 05 Jul 2024 08:31:03 -0700 (PDT)
+ bh=ldyUH9Hn6Eww0iJRRhRb5soziQO77Zzr7htHiwXtIxg=;
+ b=Wmu+8Bd+FwYdZUiuPrpNEhMNE0rnptwhr2RJGOlV22J1seiU2qugYylTvnyHfPOcaY
+ MplZf2fYVx2rKPqWRpccJocqW8+gZW5WZx5L73+uylUSes+CE9E/xxEY7SPKAeFHHmE9
+ EoMnFlXKVe7C4/QmQV9BQ7Up6qkk6GT9DC4I0Dv0c51lZSypPVfznxNg/wQK4OJGibt+
+ j3FhsjQegqFFY4zLG6VVrQs4xK2ip+Bu1qzhjTx+sPuGWISdeXyVKWzsiX0Py9EBoElm
+ fbdAvQdqAChFxnoozXYAhgExR3cBRDTUm4vB/PgHnOW/sW0kY/5vMCudjq15eJ+ZLmPp
+ rwZw==
+X-Gm-Message-State: AOJu0Yw1oZmjM0byeGQkV/hCVcJlmZ2vKQGB8bE6nh8Hwc2SmqOeFs66
+ vHInai8TqkW0PaKRkdaMMrOUUT3LMwHn7KITkhtV9s6S6zvYHRmb4g8DQgIfHKs=
+X-Google-Smtp-Source: AGHT+IEfBcRLZhAWGhejHXED4dXSg1RWBn099gU0f+sUf8pNd+fwrtcxRBVpOGpZ/h/4ayl9vx38OQ==
+X-Received: by 2002:a17:906:5acd:b0:a72:4402:9344 with SMTP id
+ a640c23a62f3a-a77ba46ce62mr418927266b.20.1720193454358; 
+ Fri, 05 Jul 2024 08:30:54 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5861324dca6sm9809697a12.31.2024.07.05.08.30.55
+ a640c23a62f3a-a77d965dc4asm37874766b.87.2024.07.05.08.30.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 08:30:57 -0700 (PDT)
+ Fri, 05 Jul 2024 08:30:53 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EC3E0620F2;
+ by draig.lan (Postfix) with ESMTP id 2401F5F8AF;
  Fri,  5 Jul 2024 16:30:53 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PULL 10/40] tests/tcg/aarch64: Fix irg operand type
-Date: Fri,  5 Jul 2024 16:30:22 +0100
-Message-Id: <20240705153052.1219696-11-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PULL 01/40] tests/lcitool: fix debian-i686-cross toolchain prefix
+Date: Fri,  5 Jul 2024 16:30:13 +0100
+Message-Id: <20240705153052.1219696-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,31 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+I guess we never noticed and tried to build with this cross image. Fix
+the toolchain prefix so we actually build 32 bit images.
 
-irg expects 64-bit integers. Passing a 32-bit integer results in
-compilation failure with clang version 18.1.6.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240627-tcg-v2-4-1690a813348e@daynix.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240630190050.160642-6-richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-11-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-2-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/aarch64/mte-1.c b/tests/tcg/aarch64/mte-1.c
-index 88dcd617ad..146cad4a04 100644
---- a/tests/tcg/aarch64/mte-1.c
-+++ b/tests/tcg/aarch64/mte-1.c
-@@ -15,7 +15,7 @@ int main(int ac, char **av)
-     enable_mte(PR_MTE_TCF_NONE);
-     p0 = alloc_mte_mem(sizeof(*p0));
+diff --git a/tests/docker/dockerfiles/debian-i686-cross.docker b/tests/docker/dockerfiles/debian-i686-cross.docker
+index f1e5b0b877..f4ef054a2e 100644
+--- a/tests/docker/dockerfiles/debian-i686-cross.docker
++++ b/tests/docker/dockerfiles/debian-i686-cross.docker
+@@ -169,7 +169,7 @@ endian = 'little'\n" > /usr/local/share/meson/cross/i686-linux-gnu && \
  
--    asm("irg %0,%1,%2" : "=r"(p1) : "r"(p0), "r"(1));
-+    asm("irg %0,%1,%2" : "=r"(p1) : "r"(p0), "r"(1l));
-     assert(p1 != p0);
-     asm("subp %0,%1,%2" : "=r"(c) : "r"(p0), "r"(p1));
-     assert(c == 0);
+ ENV ABI "i686-linux-gnu"
+ ENV MESON_OPTS "--cross-file=i686-linux-gnu"
+-ENV QEMU_CONFIGURE_OPTS --cross-prefix=x86_64-linux-gnu-
++ENV QEMU_CONFIGURE_OPTS --cross-prefix=i686-linux-gnu-
+ ENV DEF_TARGET_LIST x86_64-softmmu,x86_64-linux-user,i386-softmmu,i386-linux-user
+ # As a final step configure the user (if env is defined)
+ ARG USER
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index b25e3ac4dd..ac803e34f1 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -167,7 +167,7 @@ try:
+ 
+     generate_dockerfile("debian-i686-cross", "debian-11",
+                         cross="i686",
+-                        trailer=cross_build("x86_64-linux-gnu-",
++                        trailer=cross_build("i686-linux-gnu-",
+                                             "x86_64-softmmu,"
+                                             "x86_64-linux-user,"
+                                             "i386-softmmu,i386-linux-user"))
 -- 
 2.39.2
 
