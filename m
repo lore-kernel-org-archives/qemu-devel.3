@@ -4,94 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26E13C30658
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8048DC30658
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 08:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPefo-0007I2-TL; Fri, 05 Jul 2024 04:52:08 -0400
+	id 1sPel2-0002mt-78; Fri, 05 Jul 2024 04:57:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPefn-0007HL-0I
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:52:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sPefl-0000bS-Lh
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:52:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720169525;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cXgte17EvLlkzv+Evn3u/2Hw3vaBARiEo1c4cOUu3+o=;
- b=cmXjWCkptHrW3xnnNJiThsdC1FoaiXU+/aejcBBNt5iYb5aahF6xqZ9rHWPLFX/Og1enr7
- /lZvwWFXNRdtbgiKOlDZJqchJfm3IffRRSnFFizUtfeKSyE7nrWXqFOjBCkMWcRM9IIrlg
- TA7+i6l00A1iwDAiMwH7tktClolsMWo=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-YQiq6RfjOJqoa4XHmRq1kQ-1; Fri, 05 Jul 2024 04:52:03 -0400
-X-MC-Unique: YQiq6RfjOJqoa4XHmRq1kQ-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4246cf4c87dso9774575e9.2
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:52:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPeky-0002f2-9m
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:57:28 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sPekk-0001uW-1b
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 04:57:28 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2eaae2a6dc1so19930291fa.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 01:57:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720169832; x=1720774632; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ho2Bfe7yXa5eu8lKetJ/WAF5D27mUTaA0a7vXnXcLIs=;
+ b=mFoAOdUB6/t3Vn+1zMnJuodmIonBo0cOUFmVGgdsJ6CjzgKySr0PU7L3q9nro14D7N
+ RvuBDSvlKOIx8jgJ0N+sLC2ZI46AirP31A9g+W0KKDCutt0iBhSj8qFl3nkz1/3yk5h1
+ WuXsl/d+MwXddanKK6GnNFMclu+C+SM0zAkVyF9kgktll3L/cBCiVX7CJ5eXaSdZsSNi
+ 0uzJ51pN6IcsPZxIMmJAm5RlTfnhg1sRzSGcGhMM78q3B+LH1GfOvpwn7CMxOuBGIpBG
+ 4kqRQdWtzBgD0TDK2E9iXMxB/b+pMhxWG5PMtjxZF1/hTE6mj4YFmq5rV5QejjJPkHI5
+ NTeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720169522; x=1720774322;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cXgte17EvLlkzv+Evn3u/2Hw3vaBARiEo1c4cOUu3+o=;
- b=VyNzPxx1QV/N05E9kdfrMpq2ibmWQjZilPA48IJc69MnIG/0DvmYRw5H0D9lPFUbFu
- 6KQw4DVNVImB1Vs3KadFTDwhgTX+vnAnCRupXHmKWR10bw8j/DGrvJpwBdRmb5W33kBr
- bJibI0FswUCHNueFT8N0FopFC9PyaHLL4QVwcKbMNtVg13YybwNg6/pmascI2iOabtg1
- KibNcXrcE0zy7ksp372oCDmYb3ZFZaHcJQVlalId0RQ7yDOUBF02cGvQ3wrOtJTm4x9C
- GxkSBji4uKWU6RJD9hvKnRGAAohctMXTuozocFmvgMaodFc74SsLCJzSy14tPTTtqgJU
- f6uA==
-X-Gm-Message-State: AOJu0Yw+cisOpE/ib2jQ+C5pjt5Y+IcBTZg8tJkGrXmwnnI6VaB77TQD
- LDeZpqNqL253kyoo+cOJRTZyFGHVG2JADoar7g0BQi6qzEvXT0teW8/Bh55bYbzNktctg7eo1Ip
- vyEqnGSXHW6vu14xxBv9E7h2c20VPl+PkZv7ZgthfkytQaV9K8GPf
-X-Received: by 2002:a05:600c:ad5:b0:425:65fd:449 with SMTP id
- 5b1f17b1804b1-4264a444030mr27184995e9.28.1720169521939; 
- Fri, 05 Jul 2024 01:52:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4DnbVACHslplTAJkLhh9SB7Rz9B/WXSTeMp5O+qtXXefIE84XD4P0UIj/0Q6WDaghhn0t+w==
-X-Received: by 2002:a05:600c:ad5:b0:425:65fd:449 with SMTP id
- 5b1f17b1804b1-4264a444030mr27184835e9.28.1720169521278; 
- Fri, 05 Jul 2024 01:52:01 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:1f0:a185:2de6:83fc:7632:9788])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367a0b09da7sm3020262f8f.69.2024.07.05.01.51.59
+ d=1e100.net; s=20230601; t=1720169832; x=1720774632;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ho2Bfe7yXa5eu8lKetJ/WAF5D27mUTaA0a7vXnXcLIs=;
+ b=ZuyTe2/KtSI7K9aIQeo1KF1gSCU1+ywowzfkbB8Cmm3vH5fhM/4OUmDTjnHwsFLHWP
+ mHLRxsuk2UsjtJOKxH7pu18W9Wib3s3pISoNG57aNNxhU06Sda8Ytsyr5z1O1VuwrIRY
+ VNcBhdc9dsbH7MrT2rz7/4O1On12y802ZBFm551pP5snVCoUldF/LPsAqY/TmyRFUloj
+ fhepCXVx2FdN2liB/5Wcg9wlkY9fq+2WFex4JON17QHETkkaGW8nzxYfwUN8KjJGdIhl
+ oEqLWO6aA6nMvhJ0e4w5x91VCMewXgH8ymH+WYD9iYFpdQE+twTdxMuN52mf0SyC16wv
+ npsA==
+X-Gm-Message-State: AOJu0YxZ0zjyarDfuKFq4O6mFcAV1E3+F20mJwHv9ldFLKO3U+w1qBi+
+ U0JuuC4EthTTiphjeY1XhEFo3OqxDrtTia94N7TD4Lu2bJEt9u23POb4/quj+uQ=
+X-Google-Smtp-Source: AGHT+IHfZol7NkpqhMgZI+ueTbQskITA3RtbBrKeyqRVZF47QARE14/7WoFDnDzuzhXOLEPchKKOpA==
+X-Received: by 2002:a2e:9c8a:0:b0:2ee:80b2:1ea9 with SMTP id
+ 38308e7fff4ca-2ee8ee21297mr31636331fa.49.1720169831473; 
+ Fri, 05 Jul 2024 01:57:11 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a77c0117b15sm101350566b.43.2024.07.05.01.57.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 01:52:00 -0700 (PDT)
-Date: Fri, 5 Jul 2024 04:51:57 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- "kevin.tian@intel.com" <kevin.tian@intel.com>,
- "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "peterx@redhat.com" <peterx@redhat.com>
-Subject: Re: [PATCH  v3 2/3] intel_iommu: fix type of the mask field in
- VTDIOTLBPageInvInfo
-Message-ID: <20240705045005-mutt-send-email-mst@kernel.org>
-References: <20240705050213.1492515-1-clement.mathieu--drif@eviden.com>
- <20240705050213.1492515-3-clement.mathieu--drif@eviden.com>
+ Fri, 05 Jul 2024 01:57:10 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E720B6213D;
+ Fri,  5 Jul 2024 09:40:49 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Thomas Huth <thuth@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ Aleksandar Rikalo <arikalo@gmail.com>, Mads Ynddal <mads@ynddal.dk>,
+ Yanan Wang <wangyanan55@huawei.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Peter Xu <peterx@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paul Burton <paulburton@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH v2 23/40] plugins/lockstep: preserve sock_path
+Date: Fri,  5 Jul 2024 09:40:30 +0100
+Message-Id: <20240705084047.857176-24-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240705084047.857176-1-alex.bennee@linaro.org>
+References: <20240705084047.857176-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240705050213.1492515-3-clement.mathieu--drif@eviden.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,38 +111,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 05, 2024 at 05:03:17AM +0000, CLEMENT MATHIEU--DRIF wrote:
-> From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> 
-> VTDIOTLBPageInvInfo.mask might not fit in an uint8_t.
+We can't assign sock_path directly from the autofree'd GStrv, take a
+copy.
 
-I think what you mean is that is assigned values that might not
-fit .... it's u8 ATM so of course it fits.
+Signed-off-by: Alex BennÃ©e <alex.bennee@linaro.org>
+---
+ contrib/plugins/lockstep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Moreover, this field is used in binary operations with 64-bit addresses.
-
-So what?
-
-> 
-> Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> ---
->  hw/i386/intel_iommu_internal.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index cbc4030031..5fcbe2744f 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -436,7 +436,7 @@ struct VTDIOTLBPageInvInfo {
->      uint16_t domain_id;
->      uint32_t pasid;
->      uint64_t addr;
-> -    uint8_t mask;
-> +    uint64_t mask;
->  };
->  typedef struct VTDIOTLBPageInvInfo VTDIOTLBPageInvInfo;
->  
-> -- 
-> 2.45.2
+diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
+index 237543b43a..111ec3fa27 100644
+--- a/contrib/plugins/lockstep.c
++++ b/contrib/plugins/lockstep.c
+@@ -347,7 +347,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                 return -1;
+             }
+         } else if (g_strcmp0(tokens[0], "sockpath") == 0) {
+-            sock_path = tokens[1];
++            sock_path = strdup(tokens[1]);
+         } else {
+             fprintf(stderr, "option parsing failed: %s\n", p);
+             return -1;
+-- 
+2.39.2
 
 
