@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C912AC38150
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D01C3271E
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 15:38:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPl0B-0002pr-OK; Fri, 05 Jul 2024 11:37:35 -0400
+	id 1sPl09-0002h6-DD; Fri, 05 Jul 2024 11:37:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPl02-0002dl-Qa
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:26 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ id 1sPkzy-0002cO-Js
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:22 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sPl00-0001JE-0m
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:26 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-a77b550128dso228461266b.0
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:37:23 -0700 (PDT)
+ id 1sPkzw-0001IW-Va
+ for qemu-devel@nongnu.org; Fri, 05 Jul 2024 11:37:22 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a77cc73d35fso130563566b.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 08:37:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720193842; x=1720798642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720193839; x=1720798639; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n236Rd+ZsQdBpOfpU2JzZjmyVcpBVPLX43laLzo8bCU=;
- b=fcMOHP/xRw1Ihu5WbaqRNOzWTzsxWxKQCxeWvoMez8bFVb071MtwFBvbXh9VhqlJ8p
- ZpQjbA3Q72/0oy6Rg4v4dsBTcy9TPChd0PnayRYLDgEwjzW9LGXjTwx3vkaCqR8kaDjj
- e1A82X2qKIAeAzCj1T660VOoJWS6Y4DDgUh62uWYq5IeaUDbedwOL4u+hyw3wZWVI8OV
- vF77wxCruGyCLpSrSnC8p6f1pq2ZROihwopmA/nivRIm2XnQzPAbVt2wNgavz0M/Ea3H
- rtCchRTs8+xhLiqOMoJwSnfuFPki0hgif1AAO2ePiPJVQmQb9DYKOVfSkPaQrIukiKHV
- viVg==
+ bh=tcblXcJm1xF5LxPcrc6RNUAzD4wW3iGRX/uV+phD6V0=;
+ b=LYl7hFAque1r8d9B93ePkItkHP0yvn4oi7GgmfPKnr90xEfGPF0n7jrFZeAVNQU3oT
+ OGnESmOsYBnsqRPOd7wH3xLA4JGftWt5GIewBWPlfm7zid6BXPdgnahoOCTtTsk6CJ63
+ VN4OV7lSKJxWcqBBOVxSSMi6Bs78V3G/fBDbbGLlm6Ilgmu0qjYv+p8Ias6SXro/uFsD
+ e7mWP4TzXMPp4dkVAGfKTI7tWPHTAZ6nNSASyCN7ci44qrweV2pAC8cMcyhghrO+DkAx
+ lEAKtYmWJw7WUKinT4bUE+IEQRQ0hPUP4Mu4xnw1c4V4K8tiO9Xq+kIryaBssYwvaSJa
+ oThw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720193842; x=1720798642;
+ d=1e100.net; s=20230601; t=1720193839; x=1720798639;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n236Rd+ZsQdBpOfpU2JzZjmyVcpBVPLX43laLzo8bCU=;
- b=f+3JnG/0i/hMjon9GCb9j4jDVj3bEF1Bx+zF8uc0ZyI9rZgG3q2ZJgw4cVuC5xFRa3
- ewRp0n1+QTU/uTG35mMQoUA1GptLbBq4vE4yEHMzXMT4aKuNkXTRDA1jxh4LDjfFPCnz
- CWarqb7SLzDmHCxsEQs9CsF99fJay/rdUf77o2zEcFZeDxjfmBGBo9evTCKCKbSP1wUZ
- MrB5tLfH6tLi/WlsNVe31VjvGw79qenA+WDKU+pnD6BbVkzpolwhcM8+V0tcS9Xw/4qr
- bLx7dCTJ4X/QXfPUyi7KZ8TtI7bVigu2peh8523ZncGxTTIwhMTPOd0xrzFCUvR/zX5e
- fuxw==
-X-Gm-Message-State: AOJu0YwvWWUeXwPiO/322npYd1z6qAGzE2cg0JM/Ftg4XRBQvPTG/xGh
- +0bau+XJRe3CdID7xcuk58aZhJjSbXDV+T/kbHLeSt2oQ4P+uOnafD/eqUnQqG0=
-X-Google-Smtp-Source: AGHT+IHEyA5Tw15ixlH7b6MQBwt7uQYKFPV7w9u6HhVlGiGwOvgNj3lx2hQhViuqIaw+/8lNk4n3nA==
-X-Received: by 2002:a17:906:c00f:b0:a77:dc23:5625 with SMTP id
- a640c23a62f3a-a77dc235698mr55196266b.22.1720193842229; 
- Fri, 05 Jul 2024 08:37:22 -0700 (PDT)
+ bh=tcblXcJm1xF5LxPcrc6RNUAzD4wW3iGRX/uV+phD6V0=;
+ b=aFV3UtBRYNYPzbuEO+9DhMMFT5ioG26aFlewKCpfVCNJK9PwlVB9Ra7visDjeE9PmP
+ o/HuMUK5FSCSuCl8zWg/61O3QhBOZHkBuCyqT1M7/sid93vXH09ZKuh+V0DPFWlm28Ao
+ enqBNNUXpoqt1WJ3AuQYuZ5HHg8SAFiDKuGf2bjlZzYCR5qfAD9XBW4QxSFMt2j8117e
+ 6xoR4nQNsAiUQW46TRP00fM55YrKMrPe9L+Hdq2dwbI3Gmp3DxYP6dswzzf/PrB4/D6u
+ N3VfcKFH/HLK6YMVsvEAEMQRFR7gKnG/tP12qpydnnhTHcx7xK8GInSSO+Q5KyP5oH5D
+ jiFw==
+X-Gm-Message-State: AOJu0YwbJy4JimxQNNBxAqJXP10UN26SPRLgfqPiyfjwM3AVEkOpWSJc
+ lJ+Mnt0NoqoKdcy7apXx/q2DP2E7gtumwGAzZcNbTf28FDFwfkIZXJRjPQQT9SA=
+X-Google-Smtp-Source: AGHT+IHP5vAOBmjMJaXra2aiwjJhGqJHotB4VfhfRqcWkzIhyw0Vuk1bxsrne9XAORZTgUdlXO0zoA==
+X-Received: by 2002:a17:906:d1d2:b0:a77:cfe9:8ed5 with SMTP id
+ a640c23a62f3a-a77cfe98f21mr157190366b.30.1720193839427; 
+ Fri, 05 Jul 2024 08:37:19 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a77dba80177sm25511866b.30.2024.07.05.08.37.14
+ a640c23a62f3a-a77c3ef218bsm103433166b.71.2024.07.05.08.37.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Jul 2024 08:37:20 -0700 (PDT)
+ Fri, 05 Jul 2024 08:37:14 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CB2666211E;
- Fri,  5 Jul 2024 16:30:54 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 7384B62176;
+ Fri,  5 Jul 2024 16:30:56 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 19/40] linux-user/main: Suppress out-of-range comparison
- warning for clang
-Date: Fri,  5 Jul 2024 16:30:31 +0100
-Message-Id: <20240705153052.1219696-20-alex.bennee@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 36/40] gdbstub: Make hex conversion function non-internal
+Date: Fri,  5 Jul 2024 16:30:48 +0100
+Message-Id: <20240705153052.1219696-37-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240705153052.1219696-1-alex.bennee@linaro.org>
 References: <20240705153052.1219696-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,36 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-For arm32 host and arm64 guest we get
+Make gdb_hextomem non-internal so it's not confined to use only in
+gdbstub.c.
 
-.../main.c:851:32: error: result of comparison of constant 70368744177664 with expression of type 'unsigned long' is always false [-Werror,-Wtautological-constant-out-of-range-compare]
-        if (TASK_UNMAPPED_BASE < reserved_va) {
-            ~~~~~~~~~~~~~~~~~~ ^ ~~~~~~~~~~~
-
-We already disable -Wtype-limits here, for this exact comparison, but
-that is not enough for clang.  Disable -Wtautological-compare as well,
-which is a superset.  GCC ignores the unknown warning flag.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-Id: <20240630190050.160642-15-richard.henderson@linaro.org>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240628050850.536447-8-gustavo.romero@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240705084047.857176-20-alex.bennee@linaro.org>
+Message-Id: <20240705084047.857176-37-alex.bennee@linaro.org>
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index 94c99a1366..7d3cf45fa9 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -843,6 +843,7 @@ int main(int argc, char **argv, char **envp)
-      */
- #pragma GCC diagnostic push
- #pragma GCC diagnostic ignored "-Wtype-limits"
-+#pragma GCC diagnostic ignored "-Wtautological-compare"
+diff --git a/gdbstub/internals.h b/gdbstub/internals.h
+index 34121dc61a..bf5a5c6302 100644
+--- a/gdbstub/internals.h
++++ b/gdbstub/internals.h
+@@ -107,7 +107,6 @@ static inline int tohex(int v)
  
-     /*
-      * Select an initial value for task_unmapped_base that is in range.
+ void gdb_put_strbuf(void);
+ int gdb_put_packet_binary(const char *buf, int len, bool dump);
+-void gdb_hextomem(GByteArray *mem, const char *buf, int len);
+ void gdb_memtohex(GString *buf, const uint8_t *mem, int len);
+ void gdb_memtox(GString *buf, const char *mem, int len);
+ void gdb_read_byte(uint8_t ch);
+diff --git a/include/gdbstub/commands.h b/include/gdbstub/commands.h
+index 306dfdef97..e51f276b40 100644
+--- a/include/gdbstub/commands.h
++++ b/include/gdbstub/commands.h
+@@ -91,4 +91,10 @@ void gdb_extend_set_table(GdbCmdParseEntry *table, int size);
+  */
+ void gdb_extend_qsupported_features(char *qsupported_features);
+ 
++/**
++ * Convert a hex string to bytes. Conversion is done per byte, so 2 hex digits
++ * are converted to 1 byte. Invalid hex digits are treated as 0 digits.
++ */
++void gdb_hextomem(GByteArray *mem, const char *buf, int len);
++
+ #endif /* GDBSTUB_COMMANDS_H */
 -- 
 2.39.2
 
