@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E669BC38150
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 09:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36C5C38150
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 09:31:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQ1js-00004x-Jg; Sat, 06 Jul 2024 05:29:52 -0400
+	id 1sQ1ju-0000A6-F9; Sat, 06 Jul 2024 05:29:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sQ1jo-0008UU-LU
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 05:29:48 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sQ1js-00005g-68
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 05:29:52 -0400
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sQ1jk-0006pO-F2
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 05:29:48 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1fb53bfb6easo7530875ad.2
- for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 02:29:44 -0700 (PDT)
+ id 1sQ1jq-0006qL-PF
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 05:29:51 -0400
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3d84546a05bso1255018b6e.1
+ for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 02:29:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720258183; x=1720862983;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720258188; x=1720862988;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=cNH7pzH7pWMk7GwZKAjOZkKaKNTxy8Q2306a5wKd+pg=;
- b=G80Atig8nQvnT/uXJWF5ojZX1GkZMzWLUKpMXW/WJcepGgAj0bsbE1t/vZOC82YK05
- nuu2HFKh/jc4WGYkAPjdUA1Ei+oGp+43qw+ZLBYbdQiirW/l49dTOs+olzjOC8RzMMOH
- UGfMRulpXbh4wejr+HFalZP3/OlgciZAM5+Hl6e+IPl1N2ci++z/cur0+p3jkta0hxn8
- tvF0pc4vnpaTJ6OnjUYuKQE5eiXpmMIb5t9LTQgD3Pn+ID5cX9aRnxm0VZH6m0CLNssW
- mqz1IgkJESq0v9GFOk6BSqYIC6ZMUQMjs38RCbuspv0Y6vOGP98uZ8rfzB5MaM4C90SU
- XPng==
+ :reply-to; bh=0VSYKVQCF4c9EWbUkbZPOSynuO1Ww6rZL2afZDm8mb0=;
+ b=rYOZpOlY1s1RJ3rM5v/l5RQuhu6qwSesIPp+QA9dGkGXX0BVcM5+7bCrbsc+QqZ+Gu
+ pGCRp0hnw9ZdHv6MNoAvzWcFOWQYGf2iQxqsYkTvN/guB8TtyP98aF37E5aHOan8liZ/
+ iAtQHfZD6EQyyRGoG0UEZq2F3AD3rfRLZPOIE0okpUTfhfBpzD4Iyl3d1werkb5EouEr
+ TWWV71o2PNuHzRWIVyudIC5BpWIRDvWCrVOq3DJUuYl1gBCsuEwagdI9ls7N4qBE39lg
+ GwemISAXPE8sliO41gS9CcU7uZDuraf/M7UbgXpmtNP7C24vzvTZWgTxaVJOestD9GC9
+ ddUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720258183; x=1720862983;
+ d=1e100.net; s=20230601; t=1720258188; x=1720862988;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cNH7pzH7pWMk7GwZKAjOZkKaKNTxy8Q2306a5wKd+pg=;
- b=sDbgtfLwMSuRLU5+/RJp7p4jbVP69a7/FE2shY8XeWAPsF9eCbOWfXeoxBil4VuK8W
- KtumDlgS/Qea4wiqwCXzZEr+LKfHYOWtAEtRMlsb7UBRrM5FonMsvHOhoCwQSVoDdZzd
- y1A60NJ261ROwP7uQynO6T238jdzBeh6InwlO9GEaYDN1/Q99SJgOwwdGj5jRst03X2+
- UiZiTut2q17MzyFaSkewebM6KjlRwDP73DuWHTob1GJ34tDbKtmYLTcy9eDAhNjKf1Ui
- aBbPfXVpW4+VPCiOLYzWfu1M1FsYBZkr/Wux8H6prYWGlYF45/QG105WKHkwIgO/hWfi
- 3TNQ==
-X-Gm-Message-State: AOJu0Yx87xpVek6KmpFfJkqAMl8mdWh+8pn42fYwCC4hx4RDs9hOEz1u
- HRANcywsCg6RHIFo3oKUuxnlKPWW+WMsj3Gmce2qJNrMnhkZzQ7s+y4rNEqxhcCCEQsvl53dBgF
- EXAE=
-X-Google-Smtp-Source: AGHT+IHItZjQKnoAlyczYw0QW75LmzzI1WxhhW2f5TD8YzaQmwbMeZgHUdws+9LZQ1eVG36Nrj9AyQ==
-X-Received: by 2002:a17:902:d48d:b0:1fb:284b:b3ad with SMTP id
- d9443c01a7336-1fb33e5b27dmr59727295ad.28.1720258182965; 
- Sat, 06 Jul 2024 02:29:42 -0700 (PDT)
+ bh=0VSYKVQCF4c9EWbUkbZPOSynuO1Ww6rZL2afZDm8mb0=;
+ b=v5TphcjcXpasWOdUS/oJefZUQP7+9bZTrHY0OeRaIS2cO1NgjVkXdPIm9TcdK8i1N8
+ U0OhpR7BxIZMlCXKMEPh6NS1V+eOqqesnM09nBkOCbztT5Vl4C95k2J3Tg0lvrijNBDl
+ 8QRqCTmRy8sZXA7YHrhO+npN4lhhsgD0FBBf0i8UldLGU2PDYFr1/ha4rlZAMevJS7Ud
+ E1gEg35Z9/hil1aJzW8TmZZ9d74z+ChAlJPu0IM4gq8kpgUto0LgXj6appndbfZaTp9l
+ xJdlB52MdADyCHJhuWauuGevLgIajWPqG/Uqa162eBRXKxAZfymiVo85QhKQw+W3I5KL
+ aw1g==
+X-Gm-Message-State: AOJu0YwTsy5TVS/0O6YHHVlf0uFAJG0TwWE06DKzG0mY8MWrDPbuOAgh
+ XSVBBgwg9IuCXXjJ/CP/42gZqaJfPKg9WmCca6j6GaMUVO0SlXKenwhkEy8f+LY=
+X-Google-Smtp-Source: AGHT+IGB+EQlGz0ilMTKvabnps6LeG4zVWHm59SVK/fv5Eab3qpVTNNrIDwe+aHjtVkCrYk1VyjumQ==
+X-Received: by 2002:a05:6808:144b:b0:3d5:5e73:1645 with SMTP id
+ 5614622812f47-3d914b7899bmr9378745b6e.0.1720258188183; 
+ Sat, 06 Jul 2024 02:29:48 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1fb13059efasm65202525ad.41.2024.07.06.02.29.39
+ d2e1a72fcca58-70803ecf9d0sm15394737b3a.115.2024.07.06.02.29.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 06 Jul 2024 02:29:42 -0700 (PDT)
+ Sat, 06 Jul 2024 02:29:47 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 06 Jul 2024 18:29:23 +0900
-Subject: [PATCH 3/4] hw/pci: Convert rom_bar into OnOffAuto
+Date: Sat, 06 Jul 2024 18:29:24 +0900
+Subject: [PATCH 4/4] hw/qdev: Remove opts member
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240706-rombar-v1-3-802daef2aec1@daynix.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240706-rombar-v1-4-802daef2aec1@daynix.com>
 References: <20240706-rombar-v1-0-802daef2aec1@daynix.com>
 In-Reply-To: <20240706-rombar-v1-0-802daef2aec1@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -82,8 +81,8 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -105,356 +104,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rom_bar is tristate but was defined as uint32_t so convert it into
-OnOffAuto to clarify that. For compatibility, a uint32 value set via
-QOM will be converted into OnOffAuto.
+It is no longer used.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/igd-assign.txt               |  2 +-
- include/hw/pci/pci_device.h       |  2 +-
- hw/pci/pci.c                      | 57 +++++++++++++++++++++++++++++++++++++--
- hw/vfio/pci-quirks.c              |  2 +-
- hw/vfio/pci.c                     | 11 ++++----
- hw/xen/xen_pt_load_rom.c          |  4 +--
- tests/qtest/virtio-net-failover.c | 32 +++++++++++-----------
- 7 files changed, 81 insertions(+), 29 deletions(-)
+ include/hw/qdev-core.h |  4 ----
+ hw/core/qdev.c         |  1 -
+ system/qdev-monitor.c  | 12 +++++++-----
+ 3 files changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/docs/igd-assign.txt b/docs/igd-assign.txt
-index e17bb50789ad..35c6c8e28493 100644
---- a/docs/igd-assign.txt
-+++ b/docs/igd-assign.txt
-@@ -35,7 +35,7 @@ IGD has two different modes for assignment using vfio-pci:
-       ISA/LPC bridge device (vfio-pci-igd-lpc-bridge) on the root bus at
-       PCI address 1f.0.
-     * The IGD device must have a VGA ROM, either provided via the romfile
--      option or loaded automatically through vfio (standard).  rombar=0
-+      option or loaded automatically through vfio (standard).  rombar=off
-       will disable legacy mode support.
-     * Hotplug of the IGD device is not supported.
-     * The IGD device must be a SandyBridge or newer model device.
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index ca151325085d..49b341ce2e27 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -147,7 +147,7 @@ struct PCIDevice {
-     uint32_t romsize;
-     bool has_rom;
-     MemoryRegion rom;
--    uint32_t rom_bar;
-+    OnOffAuto rom_bar;
- 
-     /* INTx routing notifier */
-     PCIINTxRoutingNotifier intx_routing_notifier;
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 4c7be5295110..ca8fb5383765 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -67,11 +67,64 @@ static char *pcibus_get_fw_dev_path(DeviceState *dev);
- static void pcibus_reset_hold(Object *obj, ResetType type);
- static bool pcie_has_upstream_port(PCIDevice *dev);
- 
-+static void rom_bar_get(Object *obj, Visitor *v, const char *name, void *opaque,
-+                        Error **errp)
-+{
-+    Property *prop = opaque;
-+    int *ptr = object_field_prop_ptr(obj, prop);
-+
-+    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
-+}
-+
-+static void rom_bar_set(Object *obj, Visitor *v, const char *name, void *opaque,
-+                        Error **errp)
-+{
-+    Property *prop = opaque;
-+    Error *local_err = NULL;
-+    int *ptr = object_field_prop_ptr(obj, prop);
-+    uint32_t value;
-+
-+    visit_type_enum(v, name, ptr, prop->info->enum_table, &local_err);
-+    if (!local_err) {
-+        return;
-+    }
-+
-+    if (visit_type_uint32(v, name, &value, NULL)) {
-+        if (value) {
-+            *ptr = ON_OFF_AUTO_ON;
-+            warn_report("Specifying a number for rombar is deprecated; replace a non-zero value with 'on'");
-+        } else {
-+            *ptr = ON_OFF_AUTO_OFF;
-+            warn_report("Specifying a number for rombar is deprecated; replace 0 with 'off'");
-+        }
-+
-+        return;
-+    }
-+
-+    error_propagate(errp, local_err);
-+}
-+
-+static void rom_bar_set_default_value(ObjectProperty *op, const Property *prop)
-+{
-+    object_property_set_default_str(op,
-+        qapi_enum_lookup(prop->info->enum_table, prop->defval.i));
-+}
-+
-+static const PropertyInfo qdev_prop_rom_bar = {
-+    .name = "OnOffAuto",
-+    .description = "on/off/auto",
-+    .enum_table = &OnOffAuto_lookup,
-+    .get = rom_bar_get,
-+    .set = rom_bar_set,
-+    .set_default_value = rom_bar_set_default_value,
-+};
-+
- static Property pci_props[] = {
-     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
-     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
-     DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
--    DEFINE_PROP_UINT32("rombar",  PCIDevice, rom_bar, 1),
-+    DEFINE_PROP_SIGNED("rombar",  PCIDevice, rom_bar, ON_OFF_AUTO_AUTO,
-+                       qdev_prop_rom_bar, OnOffAuto),
-     DEFINE_PROP_BIT("multifunction", PCIDevice, cap_present,
-                     QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
-     DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
-@@ -2334,7 +2387,7 @@ static void pci_add_option_rom(PCIDevice *pdev, bool is_default_rom,
-         return;
+diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+index 5336728a23f6..40f2d185f17c 100644
+--- a/include/hw/qdev-core.h
++++ b/include/hw/qdev-core.h
+@@ -237,10 +237,6 @@ struct DeviceState {
+      * @pending_deleted_expires_ms: optional timeout for deletion events
+      */
+     int64_t pending_deleted_expires_ms;
+-    /**
+-     * @opts: QDict of options for the device
+-     */
+-    QDict *opts;
+     /**
+      * @hotplugged: was device added after PHASE_MACHINE_READY?
+      */
+diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+index f3a996f57dee..2fc84699d432 100644
+--- a/hw/core/qdev.c
++++ b/hw/core/qdev.c
+@@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
+         dev->canonical_path = NULL;
      }
  
--    if (!pdev->rom_bar) {
-+    if (pdev->rom_bar == ON_OFF_AUTO_OFF) {
-         /*
-          * Load rom via fw_cfg instead of creating a rom bar,
-          * for 0.11 compatibility.
-diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-index 39dae72497e0..0e920ed0691a 100644
---- a/hw/vfio/pci-quirks.c
-+++ b/hw/vfio/pci-quirks.c
-@@ -33,7 +33,7 @@
-  * execution as noticed with the BCM 57810 card for lack of a
-  * more better way to handle such issues.
-  * The  user can still override by specifying a romfile or
-- * rombar=1.
-+ * rombar=on.
-  * Please see https://bugs.launchpad.net/qemu/+bug/1284874
-  * for an analysis of the 57810 card hang. When adding
-  * a new vendor id/device id combination below, please also add
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index e03d9f3ba546..502ee2ed0489 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -902,7 +902,7 @@ static void vfio_pci_load_rom(VFIOPCIDevice *vdev)
-         error_report("vfio-pci: Cannot read device rom at "
-                     "%s", vdev->vbasedev.name);
-         error_printf("Device option ROM contents are probably invalid "
--                    "(check dmesg).\nSkip option ROM probe with rombar=0, "
-+                    "(check dmesg).\nSkip option ROM probe with rombar=off, "
-                     "or load from file with romfile=\n");
-         return;
-     }
-@@ -1012,11 +1012,10 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
- {
-     uint32_t orig, size = cpu_to_le32((uint32_t)PCI_ROM_ADDRESS_MASK);
-     off_t offset = vdev->config_offset + PCI_ROM_ADDRESS;
--    DeviceState *dev = DEVICE(vdev);
-     char *name;
-     int fd = vdev->vbasedev.fd;
+-    qobject_unref(dev->opts);
+     g_free(dev->id);
+ }
  
--    if (vdev->pdev.romfile || !vdev->pdev.rom_bar) {
-+    if (vdev->pdev.romfile || vdev->pdev.rom_bar == ON_OFF_AUTO_OFF) {
-         /* Since pci handles romfile, just print a message and return */
-         if (vfio_opt_rom_in_denylist(vdev) && vdev->pdev.romfile) {
-             warn_report("Device at %s is known to cause system instability"
-@@ -1046,17 +1045,17 @@ static void vfio_pci_size_rom(VFIOPCIDevice *vdev)
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 6af6ef7d667f..3551989d5153 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -624,6 +624,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     char *id;
+     DeviceState *dev = NULL;
+     BusState *bus = NULL;
++    QDict *properties;
+ 
+     driver = qdict_get_try_str(opts, "driver");
+     if (!driver) {
+@@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
      }
  
-     if (vfio_opt_rom_in_denylist(vdev)) {
--        if (dev->opts && qdict_haskey(dev->opts, "rombar")) {
-+        if (vdev->pdev.rom_bar == ON_OFF_AUTO_ON) {
-             warn_report("Device at %s is known to cause system instability"
-                         " issues during option rom execution",
-                         vdev->vbasedev.name);
-             error_printf("Proceeding anyway since user specified"
--                         " non zero value for rombar\n");
-+                         " on for rombar\n");
-         } else {
-             warn_report("Rom loading for device at %s has been disabled"
-                         " due to system instability issues",
-                         vdev->vbasedev.name);
--            error_printf("Specify rombar=1 or romfile to force\n");
-+            error_printf("Specify rombar=on or romfile to force\n");
-             return;
-         }
+     /* set properties */
+-    dev->opts = qdict_clone_shallow(opts);
+-    qdict_del(dev->opts, "driver");
+-    qdict_del(dev->opts, "bus");
+-    qdict_del(dev->opts, "id");
++    properties = qdict_clone_shallow(opts);
++    qdict_del(properties, "driver");
++    qdict_del(properties, "bus");
++    qdict_del(properties, "id");
+ 
+-    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_json,
++    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
+                                       errp);
++    qobject_unref(properties);
+     if (*errp) {
+         goto err_del_dev;
      }
-diff --git a/hw/xen/xen_pt_load_rom.c b/hw/xen/xen_pt_load_rom.c
-index 6bc64acd3352..025a6b25a916 100644
---- a/hw/xen/xen_pt_load_rom.c
-+++ b/hw/xen/xen_pt_load_rom.c
-@@ -26,7 +26,7 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-     Object *owner = OBJECT(dev);
- 
-     /* If loading ROM from file, pci handles it */
--    if (dev->romfile || !dev->rom_bar) {
-+    if (dev->romfile || dev->rom_bar == ON_OFF_AUTO_OFF) {
-         return NULL;
-     }
- 
-@@ -71,7 +71,7 @@ void *pci_assign_dev_load_option_rom(PCIDevice *dev,
-     if (!fread(ptr, 1, st.st_size, fp)) {
-         error_report("pci-assign: Cannot read from host %s", rom_file);
-         error_printf("Device option ROM contents are probably invalid "
--                     "(check dmesg).\nSkip option ROM probe with rombar=0, "
-+                     "(check dmesg).\nSkip option ROM probe with rombar=off, "
-                      "or load from file with romfile=\n");
-         goto close_rom;
-     }
-diff --git a/tests/qtest/virtio-net-failover.c b/tests/qtest/virtio-net-failover.c
-index 73dfabc2728b..f65b97683fb6 100644
---- a/tests/qtest/virtio-net-failover.c
-+++ b/tests/qtest/virtio-net-failover.c
-@@ -568,7 +568,7 @@ static void test_hotplug_2_reverse(void)
-                          "{'bus': 'root0',"
-                          "'failover': true,"
-                          "'netdev': 'hs0',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_STANDBY0"'}");
- 
-@@ -655,7 +655,7 @@ static void test_migrate_out(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -765,7 +765,7 @@ static void test_migrate_in(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -819,7 +819,7 @@ static void test_off_migrate_out(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -887,7 +887,7 @@ static void test_off_migrate_in(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -938,7 +938,7 @@ static void test_guest_off_migrate_out(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1014,7 +1014,7 @@ static void test_guest_off_migrate_in(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1065,7 +1065,7 @@ static void test_migrate_guest_off_abort(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1170,7 +1170,7 @@ static void test_migrate_abort_wait_unplug(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1259,7 +1259,7 @@ static void test_migrate_abort_active(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1358,7 +1358,7 @@ static void test_migrate_off_abort(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1450,7 +1450,7 @@ static void test_migrate_abort_timeout(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1543,7 +1543,7 @@ static void test_multi_out(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1574,7 +1574,7 @@ static void test_multi_out(gconstpointer opaque)
-                          "{'bus': 'root3',"
-                          "'failover_pair_id': 'standby1',"
-                          "'netdev': 'hs3',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY1"'}");
- 
-@@ -1713,7 +1713,7 @@ static void test_multi_in(gconstpointer opaque)
-                          "{'bus': 'root1',"
-                          "'failover_pair_id': 'standby0',"
-                          "'netdev': 'hs1',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY0"'}");
- 
-@@ -1737,7 +1737,7 @@ static void test_multi_in(gconstpointer opaque)
-                          "{'bus': 'root3',"
-                          "'failover_pair_id': 'standby1',"
-                          "'netdev': 'hs3',"
--                         "'rombar': 0,"
-+                         "'rombar': 'off',"
-                          "'romfile': '',"
-                          "'mac': '"MAC_PRIMARY1"'}");
- 
 
 -- 
 2.45.2
