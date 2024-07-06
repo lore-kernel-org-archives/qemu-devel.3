@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8DFC2BD09
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 14:37:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BCA4C2BD09
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 14:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQ6XQ-0002hk-2V; Sat, 06 Jul 2024 10:37:20 -0400
+	id 1sQ6bD-0005i4-8n; Sat, 06 Jul 2024 10:41:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sQ6XO-0002hG-68
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 10:37:18 -0400
+ id 1sQ6bA-0005gl-7x
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 10:41:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sQ6XL-0008BI-G4
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 10:37:17 -0400
+ id 1sQ6b8-0001Wd-HZ
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 10:41:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720276634;
+ s=mimecast20190719; t=1720276869;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OYIR22Y6ur7dGuiM4dyqKXye/Kx4OeEC8Q7B/SkT5So=;
- b=CGaABmyRyLxt574Aki6Itkn7lIBV760LwRmQlwZl4lcGGUnXMGRhJd3Yv8OIN/mkfCZpSZ
- BpXlZzPYj0H7YnKk43WalGWIHg5AIaEZmPsshXaUbyA4t3eU7K3Wgt/F3EbEkQ4M2lQQrh
- 6DyfvxxKwL5DzSEW5FljAQpgY/iW4S8=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gCKQWQ5N/O7xFn9vt40NyrtyS75JScU93rfdKb9KEdM=;
+ b=fRLyVkzdH+1oy23K45H2D56RcvRDBWdE8ovhk2bfkJnlVSmD7i33dYoUyvEUbUXPXu7jc/
+ 3zM/79b+5Nab/XmnWlwnSLk4QW0oTRQOLNQYNJQnu5HfSMS6bkTHoqfcUVm2T7GUb22zIt
+ y530IWoaihek3PiM9tKLJyLSm0+JWH8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-InM-HQzlNGCuvVR4CrkJfg-1; Sat, 06 Jul 2024 10:37:09 -0400
-X-MC-Unique: InM-HQzlNGCuvVR4CrkJfg-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52e969d34bbso2886616e87.1
- for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 07:37:09 -0700 (PDT)
+ us-mta-529-wuvtjZabMKusE1OvqWAx8A-1; Sat, 06 Jul 2024 10:41:08 -0400
+X-MC-Unique: wuvtjZabMKusE1OvqWAx8A-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-367962f0cb0so1705903f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 07:41:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720276628; x=1720881428;
+ d=1e100.net; s=20230601; t=1720276867; x=1720881667;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OYIR22Y6ur7dGuiM4dyqKXye/Kx4OeEC8Q7B/SkT5So=;
- b=S7Jsxd/UUXi7CosqworIFeTSK/Gm/1VP7HEnuZDNAEo+W1eggdqUopmvldSx2iCtev
- dk7dZgwBIjhRzQJoGdzfbVh6qs15XMFsDD11T0QrTrlkfQi0A/k1PiiGh3Tm3df44vmr
- pFloP3Jojxj9u5s8CCCU9h0QLkIq88ic+dxpxY3/wBd+44vQf3NLyUKvFAvBAkawHzRg
- A0c739w6IUT3lCg4PKHK0cERY2dISFqKnwaIFT70BTtLpvc8sKIi6SdyYt22Ja0UOCiN
- zOCjjaUEsC+t6uIp3WPtHp0nQYm05wZhTB6pI2qvv9ambiDUTIiEnTjN+mXkKwR1wjDd
- T5iQ==
-X-Gm-Message-State: AOJu0Yw9wrNVqj8wbxYWiUhUux0CXGxQWJ2TmLqPfMDQPo0m8pqbrh4p
- TCgK0HEuNfmOsWnrxE+MhE3zTSiRcvglUAlWo6lisT/PcK8NrpBzGFQfnK1nFCgG5GSLC6n0pV1
- JDFFeDEsVu3rd7c/AVz0LIEgnNAdweDtYLMK+RHHNAE2KB041KvmT
-X-Received: by 2002:ac2:5dca:0:b0:52c:d84c:1182 with SMTP id
- 2adb3069b0e04-52ea06e62e3mr4360114e87.64.1720276627977; 
- Sat, 06 Jul 2024 07:37:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRERe2elgyQoXhs551d6jNqUU2+x/Ozc6nWcvxpIBeERzXMex7iIw6gvNLV28aDavgFZNCrg==
-X-Received: by 2002:ac2:5dca:0:b0:52c:d84c:1182 with SMTP id
- 2adb3069b0e04-52ea06e62e3mr4360084e87.64.1720276627476; 
- Sat, 06 Jul 2024 07:37:07 -0700 (PDT)
+ bh=gCKQWQ5N/O7xFn9vt40NyrtyS75JScU93rfdKb9KEdM=;
+ b=Fmc0gjZQVmCNlQkSfgbaT2lIsDbp8vFozxT/TeqxOYDsLDsx/dXmT5HO56hb+qKvGk
+ ZPHtoQ0YvJG8rMR8OKvsWrNEHaGnBCPLM5RDPkZvpUcfuIjA7y9eshOB0XZw69K/u96R
+ 0agc1oxcfLuWFsGN/zChgLKbr7RKecDwPfcqR3f9R0zlFDHPdxL67xLs1PBJVluw6wzz
+ npE8oKnnz9pnyro6nGdNH2HfywwTm5bwpvI2e9GrdONf/cKg8uREIwPDzhkycr4P3CfC
+ NTZGX3kxX3xMZ85CKBdVy9+Nl2XNg+O+H61sBN7FsQO/F9Aj9JOAB8Wf9KHQUvoFCM3T
+ QUag==
+X-Gm-Message-State: AOJu0YxBfOlylbhiUV3J8BGBtfxZueZWyCfzRFf1EEJi9UyDXFPw/3AL
+ U5KhyvmImg32uK2fe+ngufdAM3TKT/q3Uhm34c8rcD9AoSvfmhqQXEerPAOLgKDWk3KNBnqmx9v
+ Y7F9tXSjRzuT+PxIV3R6hJWh9Y38BkqrAdSvyrp3G4MG03tcrMmcK
+X-Received: by 2002:adf:e68b:0:b0:367:4d9d:56a5 with SMTP id
+ ffacd0b85a97d-3679dd63aa0mr5419502f8f.44.1720276866875; 
+ Sat, 06 Jul 2024 07:41:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEP0AA4YMUmDcdbBJa+n4ZeJA8w2TFy/xM7v2jIG8XFjTomCT1LF5I90K9yEp+swYcHm/PVNg==
+X-Received: by 2002:adf:e68b:0:b0:367:4d9d:56a5 with SMTP id
+ ffacd0b85a97d-3679dd63aa0mr5419469f8f.44.1720276866450; 
+ Sat, 06 Jul 2024 07:41:06 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a21cbc6sm99529345e9.24.2024.07.06.07.37.05
+ ffacd0b85a97d-367a18c2810sm5772765f8f.18.2024.07.06.07.41.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 06 Jul 2024 07:37:07 -0700 (PDT)
-Date: Sat, 6 Jul 2024 16:37:04 +0200
+ Sat, 06 Jul 2024 07:41:05 -0700 (PDT)
+Date: Sat, 6 Jul 2024 16:41:03 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Salil Mehta <salil.mehta@huawei.com>
 Cc: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <maz@kernel.org>,
@@ -84,12 +84,12 @@ Cc: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <maz@kernel.org>,
  <lixianglai@loongson.cn>, <npiggin@gmail.com>, <harshpb@linux.ibm.com>,
  <linuxarm@huawei.com>, Shaoqin Huang <shahuang@redhat.com>, Zhao Liu
  <zhao1.liu@intel.com>
-Subject: Re: [PATCH V13 6/8] physmem: Add helper function to destroy CPU
- AddressSpace
-Message-ID: <20240706163704.524ba618@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240607115649.214622-7-salil.mehta@huawei.com>
+Subject: Re: [PATCH V13 7/8] gdbstub: Add helper function to unregister GDB
+ register space
+Message-ID: <20240706164103.16662dd2@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240607115649.214622-8-salil.mehta@huawei.com>
 References: <20240607115649.214622-1-salil.mehta@huawei.com>
- <20240607115649.214622-7-salil.mehta@huawei.com>
+ <20240607115649.214622-8-salil.mehta@huawei.com>
 X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -102,7 +102,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,12 +118,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 7 Jun 2024 12:56:47 +0100
+On Fri, 7 Jun 2024 12:56:48 +0100
 Salil Mehta <salil.mehta@huawei.com> wrote:
 
-> Virtual CPU Hot-unplug leads to unrealization of a CPU object. This also
-> involves destruction of the CPU AddressSpace. Add common function to help
-> destroy the CPU AddressSpace.
+> Add common function to help unregister the GDB register space. This shall be
+> done in context to the CPU unrealization.
+> 
+> Note: These are common functions exported to arch specific code. For example,
+> for ARM this code is being referred in associated arch specific patch-set:
+> 
+> Link: https://lore.kernel.org/qemu-devel/20230926103654.34424-1-salil.mehta@huawei.com/
 > 
 > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 > Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
@@ -131,94 +135,70 @@ Salil Mehta <salil.mehta@huawei.com> wrote:
 > Tested-by: Xianglai Li <lixianglai@loongson.cn>
 > Tested-by: Miguel Luis <miguel.luis@oracle.com>
 > Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
 > Tested-by: Zhao Liu <zhao1.liu@intel.com>
-
-
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-
 > ---
->  include/exec/cpu-common.h |  8 ++++++++
->  include/hw/core/cpu.h     |  1 +
->  system/physmem.c          | 29 +++++++++++++++++++++++++++++
->  3 files changed, 38 insertions(+)
+>  gdbstub/gdbstub.c      | 13 +++++++++++++
+>  hw/core/cpu-common.c   |  1 -
+>  include/exec/gdbstub.h |  6 ++++++
+>  3 files changed, 19 insertions(+), 1 deletion(-)
 > 
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index 815342d043..240ee04369 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -129,6 +129,14 @@ size_t qemu_ram_pagesize_largest(void);
->   */
->  void cpu_address_space_init(CPUState *cpu, int asidx,
->                              const char *prefix, MemoryRegion *mr);
-> +/**
-> + * cpu_address_space_destroy:
-> + * @cpu: CPU for which address space needs to be destroyed
-> + * @asidx: integer index of this address space
-> + *
-> + * Note that with KVM only one address space is supported.
-> + */
-> +void cpu_address_space_destroy(CPUState *cpu, int asidx);
->  
->  void cpu_physical_memory_rw(hwaddr addr, void *buf,
->                              hwaddr len, bool is_write);
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index bb398e8237..60b160d0b4 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -486,6 +486,7 @@ struct CPUState {
->      QSIMPLEQ_HEAD(, qemu_work_item) work_list;
->  
->      struct CPUAddressSpace *cpu_ases;
-> +    int cpu_ases_count;
->      int num_ases;
->      AddressSpace *as;
->      MemoryRegion *memory;
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 342b7a8fd4..146f17826a 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -763,6 +763,7 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
->  
->      if (!cpu->cpu_ases) {
->          cpu->cpu_ases = g_new0(CPUAddressSpace, cpu->num_ases);
-> +        cpu->cpu_ases_count = cpu->num_ases;
->      }
->  
->      newas = &cpu->cpu_ases[asidx];
-> @@ -776,6 +777,34 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
+> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+> index b3574997ea..1949b09240 100644
+> --- a/gdbstub/gdbstub.c
+> +++ b/gdbstub/gdbstub.c
+> @@ -617,6 +617,19 @@ void gdb_register_coprocessor(CPUState *cpu,
 >      }
 >  }
 >  
-> +void cpu_address_space_destroy(CPUState *cpu, int asidx)
+> +void gdb_unregister_coprocessor_all(CPUState *cpu)
 > +{
-> +    CPUAddressSpace *cpuas;
+> +    /*
+> +     * Safe to nuke everything. GDBRegisterState::xml is static const char so
+> +     * it won't be freed
+> +     */
+> +    g_array_free(cpu->gdb_regs, true);
 > +
-> +    assert(cpu->cpu_ases);
-> +    assert(asidx >= 0 && asidx < cpu->num_ases);
-> +    /* KVM cannot currently support multiple address spaces. */
-> +    assert(asidx == 0 || !kvm_enabled());
-> +
-> +    cpuas = &cpu->cpu_ases[asidx];
-> +    if (tcg_enabled()) {
-> +        memory_listener_unregister(&cpuas->tcg_as_listener);
-> +    }
-> +
-> +    address_space_destroy(cpuas->as);
-> +    g_free_rcu(cpuas->as, rcu);
-> +
-> +    if (asidx == 0) {
-> +        /* reset the convenience alias for address space 0 */
-> +        cpu->as = NULL;
-> +    }
-> +
-> +    if (--cpu->cpu_ases_count == 0) {
-> +        g_free(cpu->cpu_ases);
-> +        cpu->cpu_ases = NULL;
-> +    }
+> +    cpu->gdb_regs = NULL;
+> +    cpu->gdb_num_regs = 0;
+> +    cpu->gdb_num_g_regs = 0;
 > +}
 > +
->  AddressSpace *cpu_get_address_space(CPUState *cpu, int asidx)
+>  static void gdb_process_breakpoint_remove_all(GDBProcess *p)
 >  {
->      /* Return the AddressSpace corresponding to the specified index */
+>      CPUState *cpu = gdb_get_first_cpu_in_process(p);
+> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+> index 0f0a247f56..e5140b4bc1 100644
+> --- a/hw/core/cpu-common.c
+> +++ b/hw/core/cpu-common.c
+> @@ -274,7 +274,6 @@ static void cpu_common_finalize(Object *obj)
+>  {
+>      CPUState *cpu = CPU(obj);
+>  
+> -    g_array_free(cpu->gdb_regs, TRUE);
+
+so free() is gone but new  gdb_unregister_coprocessor_all() ain't called,
+are we staring to leak some memory here?
+
+>      qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
+>      qemu_mutex_destroy(&cpu->work_mutex);
+>  }
+> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
+> index eb14b91139..249d4d4bc8 100644
+> --- a/include/exec/gdbstub.h
+> +++ b/include/exec/gdbstub.h
+> @@ -49,6 +49,12 @@ void gdb_register_coprocessor(CPUState *cpu,
+>                                gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
+>                                const GDBFeature *feature, int g_pos);
+>  
+> +/**
+> + * gdb_unregister_coprocessor_all() - unregisters supplemental set of registers
+> + * @cpu - the CPU associated with registers
+> + */
+> +void gdb_unregister_coprocessor_all(CPUState *cpu);
+> +
+>  /**
+>   * gdbserver_start: start the gdb server
+>   * @port_or_device: connection spec for gdb
 
 
