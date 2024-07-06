@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E4D6C2BD09
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 10:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2049EC2BD09
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 12:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQ2nG-0001gC-PV; Sat, 06 Jul 2024 06:37:26 -0400
+	id 1sQ44i-0000JU-K7; Sat, 06 Jul 2024 07:59:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sQ2nG-0001fg-7l
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 06:37:26 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sQ44g-0000HE-K4
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 07:59:31 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sQ2nB-0005VD-KL
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 06:37:25 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-57cc30eaf0aso1440655a12.2
- for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 03:37:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sQ44b-0007RW-Ni
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 07:59:29 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1fa2ea1c443so17969395ad.0
+ for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 04:59:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720262240; x=1720867040; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jO7DcIhp8P3W4A9GauU7XoEyeM4bVuSO9a4fuZ4GKyY=;
- b=JSuZo3HXHD6gne+ww+quFyfaNTsmfcG0WOXD6hIMDGi0lV6dt19zAM7Us2Fcd8Zxmo
- 6jjrxmrbMEVtnQjaLfPnw3W7vxA7W9vq/Vm07jp9KoAFuks77sihz16p7CAISjZdAcaO
- XhZEprVjLSgYCovE2sO9cpLBpBqNFyoGhj+DqFekkrbR2g3FmVi9iWA2ivuSRBP1SGLC
- Vq8IdCXU+ZhB+e+P+BicfH3bTeFH2cwr67VM9I1L5SnVlQMUxqoVwvUSto6K3+9Ph3a3
- CaigCfAI9KgcVtsdy2kj9TYd+MYqRTI09SH0/AJa8GJjMhkbrP7/S2DKzDB6G4XXwzNy
- vTTw==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720267160; x=1720871960;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LuTP0nYskG/5WnjMC5pQCxB+nsljiZvY5jnUCFfL0co=;
+ b=23rcqHqqUraryFJ0VP0gYJjn7irPu6x/D7oRHuOpVR+G6A1q8Ql91Q54ayGnpuT8gM
+ ZD4GHmS0QH9jY3y+nwZtwdtsxCH7bj204WwC4ZFxuLPps28ySoWU8FL0B2hznk9Dfrb4
+ jdH1c09cJbfixiwAZJcmgt/ymEbsClTMzapYTW0+CcgPSjOtBAzY3kIIEssO/0UjVtdU
+ od75eQNSw4UpHwyJOMX5OzqzCU2ivzhuEPU9JWju5NU5W8J0fLOhfLxAXRSANLGa5sq9
+ kN7b/YftAEAsKRw0wXsqeCgDOlrMFe3gbcPxOqwXBpHHtGHgbKMyrbBGrVMjIcqkYJoE
+ hz/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720262240; x=1720867040;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jO7DcIhp8P3W4A9GauU7XoEyeM4bVuSO9a4fuZ4GKyY=;
- b=pNMMHZ2qQKmWBqZWVsZwYHUTZRol3PiAgL5xk3B/t7MappZiM4RpaGa6IuN5G4CdUW
- GV0DhilCxaJp4rsoPC0F9/l/4n3XfnTrinXyIuW7FAKjmkM+bgaM/csa7ALwXIiMmqIp
- VCbvXFXKKnrmWxyyOCqEkjpRClWffWSQwdTKhR7Vd03pSBUQiPEt8tXaiwoJiFAiuw/8
- Ozk05U5mih303BPb2M8sEx0k1z1XJSIDs0/L1jV1mk56Zipt69CWpwK99yrbqU9byb3J
- BljrPgA9fb7seJR3auCvJmO1zlOtgl1/n3MkoHsAmSSS/JvBvqpN6fWmp/AzKzlZMW8c
- SMiA==
+ d=1e100.net; s=20230601; t=1720267160; x=1720871960;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LuTP0nYskG/5WnjMC5pQCxB+nsljiZvY5jnUCFfL0co=;
+ b=Wut8ltyLV8iOHkWyCA9SyyeohBNGbEJ8LMkkYf0j9oRt3p1q0BZi/eMQbXsZySfR5s
+ 5fE9qWnWE/LHQtAIGiCiBuQuqNXSE08WFoHAwps5qnfXz9QiCcCjksqZR91IsDBKj26U
+ tkFIfoLVje7X0McvcmPdGXoEt3ri8uxiu/jnwyTHc3E0Li/3QhTewwIK1+XDLH2z30Lp
+ yVoAQKh6iTOb03JGkGlDIRImhlYsYWieSlHh9S3KAU4wD+0dc2I+0q6bF2SdeLHXE/Dc
+ ScKa2rHoPBJ63HmEJbN9CMdTnkiZwRpr+N+ORi5n5UnAfg4+ET/JHloEl8lTsFnCw5Qf
+ 64fQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUo2dtVi/VIipuPR9a4Lyu66fu4lN7IETNuWbsWXnfFUBs8z69vvfJ49ntSR1TrrefLHuhEXqvx+SwqKJ+UowsNeunJ4g=
-X-Gm-Message-State: AOJu0YxQ0sjLW3EiJU7geJMzr4Lzq6Tt25DIIh/yS8bh28HKvnqhdZ4B
- Al9GGIblZY/z+CO2SZTYlYmyTHc681rG6SQm4OBYmi4FXPDVks4fFG2Xfmiqg82DmBC8bagQEOc
- HC86RZl0rKyTY3So6ThdCewRwZF6vvDhY6wHHOQ==
-X-Google-Smtp-Source: AGHT+IEM6EhVPQWW/Bu5/ZBxJjhyIt6G2UvJRo0YwCyYjUiSuXHVcVUy0W6yueEJk8SoGJYPhBrReiULrrPRzSSJmm4=
-X-Received: by 2002:a05:6402:5ce:b0:587:2dd1:4b6c with SMTP id
- 4fb4d7f45d1cf-58e5b898deemr6577488a12.30.1720262239550; Sat, 06 Jul 2024
- 03:37:19 -0700 (PDT)
+ AJvYcCWlKOU36BQvS0XCNc3Fv9n2NF1qyn2BUEnEoSCcVmDlDXIe5N+cdLesHq+eDhKj32MIh2ez2S9Lv1xQwQTwNRzK7gUcnZ4=
+X-Gm-Message-State: AOJu0Yzl1gHZNbh9tXw2PeAon1iVAT1PbUceNQPbQ7nAypUMBYdz1Aky
+ ddNYXwjQd7I+zquWd8uDFwfVjmsdHKRpraE1Y50CWakvvAZMHUFCMCtr5B3WNrU=
+X-Google-Smtp-Source: AGHT+IFTq0KbV2o1Fmms33BcRk1DbOknTYbNFsG5isNCkz/mGWt7mANrym0olUAKOHtiBolHeoOV8Q==
+X-Received: by 2002:a17:903:1cd:b0:1fa:ab25:f625 with SMTP id
+ d9443c01a7336-1fb33e8cb9fmr64612745ad.38.1720267160328; 
+ Sat, 06 Jul 2024 04:59:20 -0700 (PDT)
+Received: from [157.82.204.135] ([157.82.204.135])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1face441ae0sm148375075ad.261.2024.07.06.04.59.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 06 Jul 2024 04:59:20 -0700 (PDT)
+Message-ID: <84a7b513-228c-4c8e-8519-6ab465d4e8c8@daynix.com>
+Date: Sat, 6 Jul 2024 20:59:13 +0900
 MIME-Version: 1.0
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-6-750bb0946dbd@daynix.com>
- <CAFEAcA-Zmc0BQgUiqEgzCvVGWyiPt9bo+Xt90n4wxhJ3_D91fA@mail.gmail.com>
- <Zn98p6CUV0KnIo50@zatzit>
- <CAFEAcA_LN8i66KUkxrgg=CUKJNYM=s9pTYv6w5QQ7PSU1Q3=bg@mail.gmail.com>
- <D2H7KBZF8OA4.3EKIA8NHHJ3MJ@gmail.com> <ZodPOTAcLo1XF4MB@zatzit>
- <D2HBUN5N504E.27WH86Z4HPTKW@gmail.com> <ZoeAutfGIAaNEFBC@zatzit>
-In-Reply-To: <ZoeAutfGIAaNEFBC@zatzit>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sat, 6 Jul 2024 11:37:08 +0100
-Message-ID: <CAFEAcA-QyGWNqS5saqGMc9f4WVS5mg8+YjUfOczovaT6duZAvQ@mail.gmail.com>
-Subject: Re: [PATCH v2 06/15] ppc/vof: Fix unaligned FDT property access
-To: David Gibson <david@gibson.dropbear.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 09/15] memory: Do not create circular reference with
+ subregion
+To: Peter Xu <peterx@redhat.com>
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
  Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, 
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org
+References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+ <20240627-san-v2-9-750bb0946dbd@daynix.com> <ZoQ8cCrPXgK8I6b6@x1n>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <ZoQ8cCrPXgK8I6b6@x1n>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,110 +113,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jul 2024 at 06:13, David Gibson <david@gibson.dropbear.id.au> wrote:
->
-> On Fri, Jul 05, 2024 at 02:40:19PM +1000, Nicholas Piggin wrote:
-> > On Fri Jul 5, 2024 at 11:41 AM AEST, David Gibson wrote:
-> > > On Fri, Jul 05, 2024 at 11:18:47AM +1000, Nicholas Piggin wrote:
-> > > > On Thu Jul 4, 2024 at 10:15 PM AEST, Peter Maydell wrote:
-> > > > > On Sat, 29 Jun 2024 at 04:17, David Gibson <david@gibson.dropbear.id.au> wrote:
-> > > > > >
-> > > > > > On Fri, Jun 28, 2024 at 04:20:02PM +0100, Peter Maydell wrote:
-> > > > > > > On Thu, 27 Jun 2024 at 14:39, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
-> > > > > > > >
-> > > > > > > > FDT properties are aligned by 4 bytes, not 8 bytes.
-> > > > > > > >
-> > > > > > > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > > > > > > > ---
-> > > > > > > >  hw/ppc/vof.c | 2 +-
-> > > > > > > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > > > > >
-> > > > > > > > diff --git a/hw/ppc/vof.c b/hw/ppc/vof.c
-> > > > > > > > index e3b430a81f4f..b5b6514d79fc 100644
-> > > > > > > > --- a/hw/ppc/vof.c
-> > > > > > > > +++ b/hw/ppc/vof.c
-> > > > > > > > @@ -646,7 +646,7 @@ static void vof_dt_memory_available(void *fdt, GArray *claimed, uint64_t base)
-> > > > > > > >      mem0_reg = fdt_getprop(fdt, offset, "reg", &proplen);
-> > > > > > > >      g_assert(mem0_reg && proplen == sizeof(uint32_t) * (ac + sc));
-> > > > > > > >      if (sc == 2) {
-> > > > > > > > -        mem0_end = be64_to_cpu(*(uint64_t *)(mem0_reg + sizeof(uint32_t) * ac));
-> > > > > > > > +        mem0_end = ldq_be_p(mem0_reg + sizeof(uint32_t) * ac);
-> > > > > > > >      } else {
-> > > > > > > >          mem0_end = be32_to_cpu(*(uint32_t *)(mem0_reg + sizeof(uint32_t) * ac));
-> > > > > > > >      }
-> > > > > > >
-> > > > > > > I did wonder if there was a better way to do what this is doing,
-> > > > > > > but neither we (in system/device_tree.c) nor libfdt seem to
-> > > > > > > provide one.
-> > > > > >
-> > > > > > libfdt does provide unaligned access helpers (fdt32_ld() etc.), but
-> > > > > > not an automatic aligned-or-unaligned helper.   Maybe we should add that?
-> > > > >
-> > > > > fdt32_ld() and friends only do the "load from this bit of memory"
-> > > > > part, which we already have QEMU utility functions for (and which
-> > > > > are this patch uses).
-> > > > >
-> > > > > This particular bit of code is dealing with an fdt property ("memory")
-> > > > > that is an array of (address, size) tuples where address and size
-> > > > > can independently be either 32 or 64 bits, and it wants the
-> > > > > size value of tuple 0. So the missing functionality is something at
-> > > > > a higher level than fdt32_ld() which would let you say "give me
-> > > > > tuple N field X" with some way to specify the tuple layout. (Which
-> > > > > is an awkward kind of API to write in C.)
-> > > > >
-> > > > > Slightly less general, but for this case we could perhaps have
-> > > > > something like the getprop equivalent of qemu_fdt_setprop_sized_cells():
-> > > > >
-> > > > >   uint64_t value_array[2];
-> > > > >   qemu_fdt_getprop_sized_cells(fdt, nodename, "memory", &value_array,
-> > > > >                                ac, sc);
-> > > > >   /*
-> > > > >    * fills in value_array[0] with address, value_array[1] with size,
-> > > > >    * probably barfs if the varargs-list of cell-sizes doesn't
-> > > > >    * cover the whole property, similar to the current assert on
-> > > > >    * proplen.
-> > > > >    */
-> > > > >   mem0_end = value_array[0];
-> > > >
-> > > > Since 4/8 byte cells are most common and size is probably
-> > > > normally known, what about something simpler to start with?
-> > >
-> > > Hrm, I don't think this helps much.  As Peter points out the actual
-> > > load isn't really the issue, it's locating the right spot for it.
-> >
-> > I don't really see why that's a problem, it's just a pointer
-> > addition - base + fdt_address_cells * 4. The problem was in
->
-> This is harder if #address-cells and #size-cells are different, or if
-> you're parsing ranges and #address-cells is different between parent
-> and child node.
->
-> > the memory access (yes it's fixed with the patch but you could
-> > add a general libfdt way to do it).
->
-> Huh.. well I'm getting different impressions of what the problem
-> actually is from what I initially read versus Peter Maydell's
-> comments, so I don't really know what to think.
->
-> If it's just the load then fdt32_ld() etc. already exist.  Or is it
-> really such a hot path that unconditionally handling unaligned
-> accesses isn't tenable?
+On 2024/07/03 2:44, Peter Xu wrote:
+> On Thu, Jun 27, 2024 at 10:37:52PM +0900, Akihiko Odaki wrote:
+>> A memory region does not use their own reference counters, but instead
+>> piggybacks on another QOM object, "owner" (unless the owner is not the
+>> memory region itself). When creating a subregion, a new reference to the
+>> owner of the container must be created. However, if the subregion is
+>> owned by the same QOM object, this result in a self-reference, and make
+>> the owner immortal. Avoid such a self-reference.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   system/memory.c | 11 +++++++++--
+>>   1 file changed, 9 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/system/memory.c b/system/memory.c
+>> index 74cd73ebc78b..949f5016a68d 100644
+>> --- a/system/memory.c
+>> +++ b/system/memory.c
+>> @@ -2638,7 +2638,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
+>>   
+>>       memory_region_transaction_begin();
+>>   
+>> -    memory_region_ref(subregion);
+>> +    if (mr->owner != subregion->owner) {
+>> +        memory_region_ref(subregion);
+>> +    }
+>> +
+>>       QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
+>>           if (subregion->priority >= other->priority) {
+>>               QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
+>> @@ -2696,7 +2699,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
+>>           assert(alias->mapped_via_alias >= 0);
+>>       }
+>>       QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
+>> -    memory_region_unref(subregion);
+>> +
+>> +    if (mr->owner != subregion->owner) {
+>> +        memory_region_unref(subregion);
+>> +    }
+>> +
+>>       memory_region_update_pending |= mr->enabled && subregion->enabled;
+>>       memory_region_transaction_commit();
+>>   }
+> 
+> This does look like a real issue.. the patch looks reasonable to me, but I
+> wonder whether we should start to add some good comments in code to reflect
+> that complexity starting from this one.  The MR refcount isn't easy to
+> understand to me.
+> 
+> It also lets me start to wonder how MR refcount went through until it looks
+> like today..  It's definitely not extremely intuitive to use mr->owner as
+> the object to do refcounting if mr itself does has its own QObject,
+> meanwhile it has other tricks around.
+> 
+> E.g. the first thing I stumbled over when looking was the optimization
+> where we will avoid refcounting the mr when there's no owner, and IIUC it
+> was for the case when the "guest memory" (which will never be freed) used
+> to have no owner so we can speedup DMA if we know it won't go away.
+> 
+> https://lore.kernel.org/qemu-devel/1450263601-2828-5-git-send-email-pbonzini@redhat.com/
+> 
+> commit 612263cf33062f7441a5d0e3b37c65991fdc3210
+> Author: Paolo Bonzini <pbonzini@redhat.com>
+> Date:   Wed Dec 9 11:44:25 2015 +0100
+> 
+>      memory: avoid unnecessary object_ref/unref
+>      
+>      For the common case of DMA into non-hotplugged RAM, it is unnecessary
+>      but expensive to do object_ref/unref.  Add back an owner field to
+>      MemoryRegion, so that these memory regions can skip the reference
+>      counting.
+> 
+> If so, it looks like it will stop working with memory-backends get
+> involved?  As I think those MRs will have owner set always, and I wonder
+> whether memory-backends should be the major way to specify guest memory now
+> and in the future.  So I'm not sure how important that optimization is as
+> of now, and whether we could "simplify" it back to always do the refcount
+> if the major scenarios will not adopt it.
+> 
+> The other issue is we used owner refcount from the start of
+> memory_region_ref() got introduced, since:
+> 
+> commit 46637be269aaaceb9867ffdf176e906401138fff
+> Author: Paolo Bonzini <pbonzini@redhat.com>
+> Date:   Tue May 7 09:06:00 2013 +0200
+> 
+>      memory: add ref/unref
+> 
+> And we still have that in our document, even though I don't think it's true
+> anymore:
+> 
+>   * ...  MemoryRegions actually do not have their
+>   * own reference count; they piggyback on a QOM object, their "owner".
+>   * This function adds a reference to the owner.
+> 
+> It looks like what happened is when introduced the change, MR is not a QOM
+> object yet.  But it later is..
+> 
+> I mentioned all these only because I found that _if_ we can keep mr
+> refcounting as simple as other objects:
+> 
+> memory_region_ref(mr)
+> {
+>      object_ref(OBJECT(mr));
+> }
+> 
+> Then looks like this "recursive refcount" problem can also go away.  I'm
+> curious whether you or anyone tried to explore that path, or whether above
+> doesn't make sense at all.
 
-The specific problem here is that the code as written tries to
-cast a not-aligned-enough pointer to uint64_t* to do the load,
-which is UB. The patch submitted fixes that, and personally I
-think it would be entirely fine to say that's all we need to do here.
+It unfortunately does not solve the problem.
 
-*If* we want to look at the broader question of "why is this
-code that's reading something out of an fdt having to do the
-pretty low-level action of getting the start address of the
-fdt property and then doing pointer arithmetic and then fishing
-a value out of it as a 64-bit unaligned load?" then we get into
-"do we want to provide a helper function that lets the caller
-say 'give me element X from tuple Y'?". But that seems like a
-lot of effort for what's basically a single callsite we would
-be tidying up...
+The underlying problem is that the whole device must be kept alive while 
+its memory region are. Indeed MemoryRegions do have refcounts, but 
+incrementing them do not extend the lifetime of the devices (i.e., the 
+owners). The refcount of the owners must be incremented for correctness.
 
-thanks
--- PMM
+Referencing a subregion MemoryRegion from its container MemoryRegion 
+owned by the same device is an exceptional case. Incrementing the 
+refcount of the owner extends the owner's lifetime to forever.
+
+Regards,
+Akihiko Odaki
 
