@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9801C2BD09
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 20:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D8CCC2BD09
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 20:19:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQBmm-0007dw-5s; Sat, 06 Jul 2024 16:13:32 -0400
+	id 1sQBs3-0000QL-U3; Sat, 06 Jul 2024 16:18:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sQBmk-0007dC-0W; Sat, 06 Jul 2024 16:13:30 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1sQBs0-0000Pr-I8; Sat, 06 Jul 2024 16:18:56 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sQBmh-0005qY-5f; Sat, 06 Jul 2024 16:13:28 -0400
+ id 1sQBrx-0000IY-C1; Sat, 06 Jul 2024 16:18:55 -0400
 Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 43DB54E6005;
- Sat, 06 Jul 2024 22:13:18 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id B40E54E601B;
+ Sat, 06 Jul 2024 22:18:50 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id fRS0oUd3Pp6t; Sat,  6 Jul 2024 22:13:16 +0200 (CEST)
+ with ESMTP id Y21Htg7-YIva; Sat,  6 Jul 2024 22:18:48 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 487854E601B; Sat, 06 Jul 2024 22:13:16 +0200 (CEST)
+ id BCC6C4E6005; Sat, 06 Jul 2024 22:18:48 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4682B746E3B;
- Sat, 06 Jul 2024 22:13:16 +0200 (CEST)
-Date: Sat, 6 Jul 2024 22:13:16 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id BB3BC746E3B;
+ Sat, 06 Jul 2024 22:18:48 +0200 (CEST)
+Date: Sat, 6 Jul 2024 22:18:48 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
 To: Nicholas Piggin <npiggin@gmail.com>
 cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
  Daniel Henrique Barboza <danielhb413@gmail.com>
-Subject: Re: [PATCH 33/43] target/ppc: Remove single use static inline function
-In-Reply-To: <D2GKLJBBSWBH.2873DA1I8QJ9Q@gmail.com>
-Message-ID: <dd077f40-4f90-4ad1-4c43-b98f62d1aed6@eik.bme.hu>
+Subject: Re: [PATCH 36/43] target/ppc/mmu-hash32: Remove some static inlines
+ from header
+In-Reply-To: <D2GKNUSA4XP0.35L5LIXFHYBTB@gmail.com>
+Message-ID: <0ac3436c-94f1-4210-6d3f-6086a664cb90@eik.bme.hu>
 References: <cover.1716763435.git.balaton@eik.bme.hu>
- <c30ddd4f433bbe60629d2be66c5214076f677fa9.1716763435.git.balaton@eik.bme.hu>
- <D2GKLJBBSWBH.2873DA1I8QJ9Q@gmail.com>
+ <3b3cce4a39e0debbf6fa29d4a2ead3014898cb93.1716763435.git.balaton@eik.bme.hu>
+ <D2GKNUSA4XP0.35L5LIXFHYBTB@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -67,73 +68,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, 4 Jul 2024, Nicholas Piggin wrote:
 > On Mon May 27, 2024 at 9:13 AM AEST, BALATON Zoltan wrote:
->> The ger_pack_masks() function is only used once and the inverse of
->> this operation is already inlined so it can be inlined too in the only
->> caller and removed from the header.
+>> Two of these are not used anywhere and the other two are used only
+>> once and can be inlined and removed from the header.
 >
-> Is this needed for later patches? I might prefer to keep it, even
+> I'd prefer to put these in the .c file. Probably calculating the
+> base once would generate marginally better code since it would not
+> have to keep reloading it (since there is a barrier there it can't
+> cache the value).
 
-No, I think this patch can just be dropped then. I don't plan to make 
-another version of it so just leave it out if you don't want to take it.
+These aren't even used anywhere but one function and they are inefficient 
+becuase they would call ppc_hash32_hpt_base() on each call. Next patch 
+even removes base and calculates pte_addr once before the loop, then it's 
+quite straight forward what these read from guest memory even without 
+inline functions. I see no reason to keep these inline functions.
 
-Regards,
-BALATON Zoltan
-
-> move it into vsx-impl.c.inc and pull its inverse out into its own
-> function too even.
->
 > Thanks,
 > Nick
 >
 >>
 >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 >> ---
->>  target/ppc/internal.h               | 9 ---------
->>  target/ppc/translate/vsx-impl.c.inc | 6 ++++--
->>  2 files changed, 4 insertions(+), 11 deletions(-)
+>>  target/ppc/mmu-hash32.c |  5 +++--
+>>  target/ppc/mmu-hash32.h | 32 --------------------------------
+>>  2 files changed, 3 insertions(+), 34 deletions(-)
 >>
->> diff --git a/target/ppc/internal.h b/target/ppc/internal.h
->> index 20fb2ec593..8e5a241f74 100644
->> --- a/target/ppc/internal.h
->> +++ b/target/ppc/internal.h
->> @@ -293,13 +293,4 @@ FIELD(GER_MSK, XMSK, 0, 4)
->>  FIELD(GER_MSK, YMSK, 4, 4)
->>  FIELD(GER_MSK, PMSK, 8, 8)
+>> diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+>> index a2c0ac05d2..7a6a674f8a 100644
+>> --- a/target/ppc/mmu-hash32.c
+>> +++ b/target/ppc/mmu-hash32.c
+>> @@ -206,17 +206,18 @@ static hwaddr ppc_hash32_pteg_search(PowerPCCPU *cpu, hwaddr pteg_off,
+>>  {
+>>      hwaddr pte_offset = pteg_off;
+>>      target_ulong pte0, pte1;
+>> +    hwaddr base = ppc_hash32_hpt_base(cpu);
+>>      int i;
 >>
->> -static inline int ger_pack_masks(int pmsk, int ymsk, int xmsk)
+>>      for (i = 0; i < HPTES_PER_GROUP; i++) {
+>> -        pte0 = ppc_hash32_load_hpte0(cpu, pte_offset);
+>> +        pte0 = ldl_phys(CPU(cpu)->as, base + pte_offset);
+>>          /*
+>>           * pte0 contains the valid bit and must be read before pte1,
+>>           * otherwise we might see an old pte1 with a new valid bit and
+>>           * thus an inconsistent hpte value
+>>           */
+>>          smp_rmb();
+>> -        pte1 = ppc_hash32_load_hpte1(cpu, pte_offset);
+>> +        pte1 = ldl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2);
+>>
+>>          if ((pte0 & HPTE32_V_VALID)
+>>              && (secondary == !!(pte0 & HPTE32_V_SECONDARY))
+>> diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
+>> index 2838de031c..4db55fb0a0 100644
+>> --- a/target/ppc/mmu-hash32.h
+>> +++ b/target/ppc/mmu-hash32.h
+>> @@ -69,38 +69,6 @@ static inline hwaddr ppc_hash32_hpt_mask(PowerPCCPU *cpu)
+>>      return ((cpu->env.spr[SPR_SDR1] & SDR_32_HTABMASK) << 16) | 0xFFFF;
+>>  }
+>>
+>> -static inline target_ulong ppc_hash32_load_hpte0(PowerPCCPU *cpu,
+>> -                                                 hwaddr pte_offset)
 >> -{
->> -    int msk = 0;
->> -    msk = FIELD_DP32(msk, GER_MSK, XMSK, xmsk);
->> -    msk = FIELD_DP32(msk, GER_MSK, YMSK, ymsk);
->> -    msk = FIELD_DP32(msk, GER_MSK, PMSK, pmsk);
->> -    return msk;
+>> -    target_ulong base = ppc_hash32_hpt_base(cpu);
+>> -
+>> -    return ldl_phys(CPU(cpu)->as, base + pte_offset);
 >> -}
 >> -
->>  #endif /* PPC_INTERNAL_H */
->> diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
->> index 0266f09119..62950d348a 100644
->> --- a/target/ppc/translate/vsx-impl.c.inc
->> +++ b/target/ppc/translate/vsx-impl.c.inc
->> @@ -2819,7 +2819,7 @@ static bool trans_XXSETACCZ(DisasContext *ctx, arg_X_a *a)
->>  static bool do_ger(DisasContext *ctx, arg_MMIRR_XX3 *a,
->>      void (*helper)(TCGv_env, TCGv_ptr, TCGv_ptr, TCGv_ptr, TCGv_i32))
+>> -static inline target_ulong ppc_hash32_load_hpte1(PowerPCCPU *cpu,
+>> -                                                 hwaddr pte_offset)
+>> -{
+>> -    target_ulong base = ppc_hash32_hpt_base(cpu);
+>> -
+>> -    return ldl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2);
+>> -}
+>> -
+>> -static inline void ppc_hash32_store_hpte0(PowerPCCPU *cpu,
+>> -                                          hwaddr pte_offset, target_ulong pte0)
+>> -{
+>> -    target_ulong base = ppc_hash32_hpt_base(cpu);
+>> -
+>> -    stl_phys(CPU(cpu)->as, base + pte_offset, pte0);
+>> -}
+>> -
+>> -static inline void ppc_hash32_store_hpte1(PowerPCCPU *cpu,
+>> -                                          hwaddr pte_offset, target_ulong pte1)
+>> -{
+>> -    target_ulong base = ppc_hash32_hpt_base(cpu);
+>> -
+>> -    stl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2, pte1);
+>> -}
+>> -
+>>  static inline hwaddr get_pteg_offset32(PowerPCCPU *cpu, hwaddr hash)
 >>  {
->> -    uint32_t mask;
->> +    uint32_t mask = 0;
->>      TCGv_ptr xt, xa, xb;
->>      REQUIRE_INSNS_FLAGS2(ctx, ISA310);
->>      REQUIRE_VSX(ctx);
->> @@ -2832,7 +2832,9 @@ static bool do_ger(DisasContext *ctx, arg_MMIRR_XX3 *a,
->>      xa = gen_vsr_ptr(a->xa);
->>      xb = gen_vsr_ptr(a->xb);
->>
->> -    mask = ger_pack_masks(a->pmsk, a->ymsk, a->xmsk);
->> +    mask = FIELD_DP32(mask, GER_MSK, XMSK, a->xmsk);
->> +    mask = FIELD_DP32(mask, GER_MSK, YMSK, a->ymsk);
->> +    mask = FIELD_DP32(mask, GER_MSK, PMSK, a->pmsk);
->>      helper(tcg_env, xa, xb, xt, tcg_constant_i32(mask));
->>      return true;
->>  }
+>>      return (hash * HASH_PTEG_SIZE_32) & ppc_hash32_hpt_mask(cpu);
 >
 >
 
