@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0851EC2BD09
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 19:05:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08760C3814E
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 19:14:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQAhk-0007X5-Rr; Sat, 06 Jul 2024 15:04:16 -0400
+	id 1sQAr4-0002Da-LX; Sat, 06 Jul 2024 15:13:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sQAhj-0007WW-1o
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 15:04:15 -0400
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ id 1sQAr3-0002DC-1K
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 15:13:53 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sQAhh-0008HD-Gn
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 15:04:14 -0400
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-5c661df5db4so615985eaf.1
- for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 12:04:12 -0700 (PDT)
+ id 1sQAr1-00045K-GB
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 15:13:52 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1fb70169c23so1703325ad.1
+ for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 12:13:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720292652; x=1720897452; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QrGb8XRgBHudkMS89kxEbg5rnDc+Z71DAKsEagOp1tM=;
- b=p1Neg9zrmd+1y/HK6MHJPC0HkSIjz1SV8eMgWVM3Bufxi+2UVnqruU3A7zgYzRlmoV
- PH6zEEcQfglyhXqxr0xBfHw9gVIUtYXmFM18G/ExbkKrVtH2Fx0Zo1Dy7NVwht1jmp44
- DOCuJx90j9hO5vso8+YKc/e2v+cjiaD6wdwQG+8bygHwIO8vvgJWuZblB+ITwt9Ql/w3
- sCAc4EhGVGBqpJgRdZm/uR543RHlFhBkCs8Q10ofsCvR3DKF+hxFEAb3kABowTO1vQLV
- oQfhIwiUsjjFQiQ4pPk+gPCYzGcXn3D07cMGLgFc3u6NgiuRyES0to/rMsw9+0EptCJG
- i7bQ==
+ d=linaro.org; s=google; t=1720293229; x=1720898029; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t4bNu6CI6omvOt9CPXqjom5ah5T2zFduQZDfzw7pbQM=;
+ b=JEinJQdaGKvBpFxnYUO3y66s4dl2SiY7N/3ShcSEh3qU/+Zw2vkoM6JO/Js2Qlv5DX
+ arGbN6hu739fmrblTMJpdfGLQE0AyVZUoU4tthpMyZNZ/eSdH/2kFxqzMoB2mhBPqdmB
+ wIO+TP9LP4Y9dM2CFkdIawTBik0EnFIwYYTwPgut10e1Kyj8FgOdJaMqvWD9pz7OtCXe
+ VpWg4X0MXrGoBZJxwhiFqeaMBV6ZpXkk8b2DzzYkpv0yG/c001ZKhPiR/ugRLYHexLdC
+ Tppn4KrHndGwZ2uHxV54PWRmCyYafikorsyiuU/uOO5myqChUK/VattBGoH+WUHIcffC
+ Ntkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720292652; x=1720897452;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QrGb8XRgBHudkMS89kxEbg5rnDc+Z71DAKsEagOp1tM=;
- b=f2aCk850jvFbZ+TwkxjySO4z95MEmrsCaEtMiLPJv0SoT+jE54m0o8bwQnatUTN5IJ
- +/tTgXU33roox/Mliq/uUzmCr5MuBc8nYBvY/uCK0oBX4wbN+bUV4HOFvfym96UDcwRe
- 6taj7KpBXj9G/q31eGIyxfL1T60ArDlVVzZVZgTd3wYsgvmQMlPE+aYGSXLuccWbozgH
- QoFBLu5nJHveBvhGpTMLAjJ2Y/yofOdBuKEtWDwZmsLSnIKWBo5ixTfzDq3NlDXrWicO
- 2GXrgtuKwcYDktoyrY9PXS9q5XK7FJdGrmlEIdohTsaqWjmoMfgSjNz+stxoT/VHdeV9
- 5Cxw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU9Jmc5QTzoignxO6Xs/nKXoU/KTk79khIogJdY58Ek60ObAR+G6M+Qokgfn+ElwkYOt4aI1iSDsKjJIb1CabTXuK0wtKI=
-X-Gm-Message-State: AOJu0YxYc37cmePwCB9saGzt9+9i8xKUuyTael9uzMYeeJh41+5Mt75q
- Ke7iC9bLdD8ReFW5Pw/6+9KMHccQJp/bgmUqXuvKa6A7zXsRFXteukplrXXNLjIMa48cOAMT9cC
- hXvA=
-X-Google-Smtp-Source: AGHT+IGNLToUdHoZ4sc/grjXIfgjy6EYRBDoxd2tiznjbn2xxtyZK5pN2btc0r7QshLLyWBH+QL9lQ==
-X-Received: by 2002:a05:6870:e2cf:b0:25e:1c7c:3df8 with SMTP id
- 586e51a60fabf-25e2b8d9c0amr7135852fac.10.1720292651780; 
- Sat, 06 Jul 2024 12:04:11 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::2193? ([2604:3d08:9384:1d00::2193])
+ d=1e100.net; s=20230601; t=1720293229; x=1720898029;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=t4bNu6CI6omvOt9CPXqjom5ah5T2zFduQZDfzw7pbQM=;
+ b=Fu8zDZROxl4krvLAwrRdL7eYjfqeuLQbnr0EcxfbidrsxkQjdnwnvXlrfLMl4aDBD2
+ vgYIJvvAmpnq/ksph2FwEqWaL8mY0Nj8i/PTO+qg2lhwU2OOQlLYoszxBw9c33ljugUM
+ OyvHhDuAsmmRLDvDzW+RKfzB4dcU2C7TVqdOFsMOXdYQJEMB0h+5Rv74gegwfgaGhXPU
+ 71YxCaim/GY3H4d2AHPWoU9WLEcgEw/E6/LjNT6iAitQ2a6qVRwOKRGCdOmoSayZFMKw
+ cBVQSUPJ57ntXg1YROSxogblYzJU1CcE08H0lsMn1vieJaLjDIBREjF6rGzjHXRibKNy
+ ilcQ==
+X-Gm-Message-State: AOJu0YwB7KDtE/OVszj+vLllan2sDNwd57fXLEbXYV22Vvll3+zxj3El
+ 2Si6f+imhI7eIvCHD8xJpgJV9DTZ+FM41NMDj4atuG7Za4aOK4sOk9WrcE1JkNGZs+ne9jwYivM
+ 4pMA=
+X-Google-Smtp-Source: AGHT+IFZCHK2O1EIiWQwWBAhjnSm3AjaBNheqhWLqOcYl7No9gcv6sWAdQOAu+rx6+OPAYpv3iAanQ==
+X-Received: by 2002:a17:902:e9c6:b0:1f6:89b1:a419 with SMTP id
+ d9443c01a7336-1fb33e15326mr45465225ad.17.1720293229102; 
+ Sat, 06 Jul 2024 12:13:49 -0700 (PDT)
+Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::2193])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b1b40b12dsm1793676b3a.185.2024.07.06.12.04.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 06 Jul 2024 12:04:11 -0700 (PDT)
-Message-ID: <99f95fee-5633-4fba-8695-4cb6cee4b477@linaro.org>
-Date: Sat, 6 Jul 2024 12:04:09 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/7] plugins: save value during memory accesses
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240705003421.750895-1-pierrick.bouvier@linaro.org>
- <20240705003421.750895-3-pierrick.bouvier@linaro.org>
- <e8613098-74e2-4c14-9f47-24cc7a6b0b62@linaro.org>
-Content-Language: en-US
+ d9443c01a7336-1fb6153cb3bsm17304305ad.129.2024.07.06.12.13.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 06 Jul 2024 12:13:48 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <e8613098-74e2-4c14-9f47-24cc7a6b0b62@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-oo1-xc30.google.com
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Xingtao Yao <yaoxt.fnst@fujitsu.com>
+Subject: [PATCH v6 5/7] tests/tcg: allow to check output of plugins
+Date: Sat,  6 Jul 2024 12:13:33 -0700
+Message-Id: <20240706191335.878142-6-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240706191335.878142-1-pierrick.bouvier@linaro.org>
+References: <20240706191335.878142-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,30 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/24 09:34, Richard Henderson wrote:
-> On 7/4/24 17:34, Pierrick Bouvier wrote:
->> +static void
->> +plugin_gen_mem_callbacks_i32(TCGv_i32 val,
->> +                             TCGv_i64 copy_addr, TCGTemp *orig_addr,
->> +                             MemOpIdx oi, enum qemu_plugin_mem_rw rw)
->> +{
->> +#ifdef CONFIG_PLUGIN
->> +    if (tcg_ctx->plugin_insn != NULL) {
->> +        tcg_gen_st_i32(val, tcg_env,
->> +                       offsetof(CPUState, neg.plugin_mem_value_low) -
->> +                       sizeof(CPUState));
->> +        plugin_gen_mem_callbacks(copy_addr, orig_addr, oi, rw);
->> +    }
->> +#endif
->> +}
-> 
-> You need the big-endian offset for the low half of the uint64_t:
-> 
->     HOST_BIG_ENDIAN * 4.
-> 
+A specific plugin test can now read and check a plugin output, to ensure
+it contains expected values.
 
-Oh right, thanks. Will fix in v6.
+Tested-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ tests/tcg/Makefile.target | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-> 
-> r~
+diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+index 52616544d52..6f50b0176ea 100644
+--- a/tests/tcg/Makefile.target
++++ b/tests/tcg/Makefile.target
+@@ -90,6 +90,7 @@ CFLAGS=
+ LDFLAGS=
+ 
+ QEMU_OPTS=
++CHECK_PLUGIN_OUTPUT_COMMAND=true
+ 
+ 
+ # If TCG debugging, or TCI is enabled things are a lot slower
+@@ -180,6 +181,9 @@ run-plugin-%:
+ 		-plugin $(PLUGIN_LIB)/$(call extract-plugin,$@)$(PLUGIN_ARGS) \
+ 		-d plugin -D $*.pout \
+ 		 $(call strip-plugin,$<))
++	$(call quiet-command, $(CHECK_PLUGIN_OUTPUT_COMMAND) $*.pout, \
++	       TEST, check plugin $(call extract-plugin,$@) output \
++	       with $(call strip-plugin,$<))
+ else
+ run-%: %
+ 	$(call run-test, $<, \
+@@ -194,6 +198,9 @@ run-plugin-%:
+ 	   	  -plugin $(PLUGIN_LIB)/$(call extract-plugin,$@)$(PLUGIN_ARGS) \
+ 	    	  -d plugin -D $*.pout \
+ 		  $(QEMU_OPTS) $(call strip-plugin,$<))
++	$(call quiet-command, $(CHECK_PLUGIN_OUTPUT_COMMAND) $*.pout, \
++	       TEST, check plugin $(call extract-plugin,$@) output \
++	       with $(call strip-plugin,$<))
+ endif
+ 
+ gdb-%: %
+-- 
+2.39.2
+
 
