@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 893EEC38150
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Jul 2024 22:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63035C2BD09
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 06:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sPr4G-0006cU-GJ; Fri, 05 Jul 2024 18:06:12 -0400
+	id 1sPytu-0002F7-CV; Sat, 06 Jul 2024 02:28:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr4A-0006MU-Vy
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:06:08 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sPyts-0002Ed-9q
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 02:28:00 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sPr47-0007lm-D5
- for qemu-devel@nongnu.org; Fri, 05 Jul 2024 18:06:06 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-424a3ccd0c0so13648485e9.1
- for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 15:06:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sPytq-0004pD-Eo
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 02:28:00 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-a77bf336171so336555466b.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Jul 2024 23:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720217162; x=1720821962; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hlkz3clXDCDO3v5Iog6G74XdcZ10dv/Csn6ZB+lh8og=;
- b=UsHAcBr2IX/k15lCaYs7K6Ke1R1mTfTe6HPPVlKUbC/FFe+WSO68SJpgpvSmjnHHjr
- 8nmvFr7+lvNrzM+tYYJm/ftP0eUW613DZB9cSLzmo1C+HKttegJNKhxROeXYfvrDXg8b
- aJiknz5UNsSWyw3IAE/g2ABurZMRT1KdhRtN6bM9A1AN92pysY+oz2MbYpbJ/BkCN+Li
- 1ZMIiOkmfU4B1oZvHtexkR+XCb64PjPcmFH6ur4Iz3LPI7R8uOhG1Arc6cG8w0gIzG+B
- CsIKTH9jKGTMdhCSfLRc5YP/HL18DulVAhty7O1/FkbieMyFv5BgcWZ/6kin/mbVeKbE
- Wj4Q==
+ d=gmail.com; s=20230601; t=1720247276; x=1720852076; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=pvIUEf4OGw4szd3dnSi14gEwyaKCg7Ab/IbdT2ipIzg=;
+ b=CZ9JR1AdiLKKHJhS5cEYjP/Y2N8qsfQx2fchYpFP913RKOHXehqsSWedbiOzT7hhZp
+ xZs57TEA3QInGDPNrXp/v37AEGhdMbaeQtJurA04PNo97/Tk5rrgkcoMeWqCbLBTD6+q
+ 6CpyVX6YSs8jpALR8EIbD+WqBz0XIdiEBK/J8rRxMstR8JNFDS8NRHcL2tYz7IQhNaL7
+ x1i2eZnZJ4cC1RgewFnlPF/uhAhT2I+vIK45W71CI3XlKVc9Hr22eK5mESTyoAkB3kmB
+ sWVDceOGJmSYTCwinB5ngh6rc7E4w+0qX9gIsowim2fiKioDW+Ete5NcYxM4jvg9WTPz
+ ciiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720217162; x=1720821962;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Hlkz3clXDCDO3v5Iog6G74XdcZ10dv/Csn6ZB+lh8og=;
- b=nMUMtMrEk7Y89N5+NqZGFEPJfVgYYZJ1OSmHk/MB2sdzNW1bBrhEsmkf4RzlNkP0lU
- mKol1AITvKIn3sP9Rm0cWnpRbXS9U4HUc2q+oA4eDND1btcM9MfsLQBCBrSDAIEtJK85
- SgFcKlidg2BejojO8xI1mzX8yB1iaV7gkZslBIrwLO73cfSQWvAkv3zdzLLJHrbdlhB5
- xKvyX59r1WJk7pnwe0EY2gex8bi9vQ/MlrMNQaVyHmIyHEy61RWDUc0H1jSJIYUeCAoz
- lBCgPdTcEr8o9ECqggsP2f6ekvU2ZzqSJTrdIAB7Q/2l8+TtUhIECrwZkNUWrl5oKMdu
- QT3g==
-X-Gm-Message-State: AOJu0YwL0Rkq3yeCsh7f9akWFn44GC41mL+rQX7uL6qOEH7yUfbfMeEk
- OEa5HdyTnK4MbmxgjZ7+NYu8iVAjGDkK+30TTdI3AyTFHROEQ8lufUY1Qv0PWtdK7pd+qX/ZO3G
- 1
-X-Google-Smtp-Source: AGHT+IGQc5vesk+maRMpg4+4OEh5Hb+woNrZbtYXNWogN7i5i670aeOdxtMkFW31THOqThC6AY3/5g==
-X-Received: by 2002:a05:600c:158b:b0:422:62db:5a02 with SMTP id
- 5b1f17b1804b1-4264a4561d7mr39828355e9.32.1720217161638; 
- Fri, 05 Jul 2024 15:06:01 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.163.129])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a1d510bsm76253755e9.3.2024.07.05.15.06.00
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 05 Jul 2024 15:06:01 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PULL 16/16] hw/sd/sdcard: Extract TYPE_SDMMC_COMMON from TYPE_SD_CARD
-Date: Sat,  6 Jul 2024 00:04:34 +0200
-Message-ID: <20240705220435.15415-17-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240705220435.15415-1-philmd@linaro.org>
-References: <20240705220435.15415-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1720247276; x=1720852076;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pvIUEf4OGw4szd3dnSi14gEwyaKCg7Ab/IbdT2ipIzg=;
+ b=c1dzSKxqcEfJD+QMUS29vCM/DEmLDgBPsirerGQQCjPcM2cZno1OiNYY7NByJMZUK6
+ M70DzfoIPzc5686Lp9FLXyQPTJPIy5CoYwjU1cXTbqTGZDIy1p08ZXyWvJgQruSGMtrx
+ PXet6YzvDjNQtBSjV9u0pyxKmhECn5u64GwJRWE9TMTABEQZm75WjL+ykrpxYOY9T2Kq
+ hi3bW6aKaCk9kFW+PodbgeOxRl6QUhtM06C/gGzCCJi3GPUNadMsxu0fSmWxpt8HCXZ1
+ KPbbDHBgjz8PgEsVxAXfRYRYyKQiO8Ql2N+C0mBn+5TkG/XttLXB6W4u/C2FwRfRwMcl
+ KtXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWhlE0jm6ESCzGRe4gs/MRgYykoTfMW38/4zB+Q8kYaqtdStpJ/tf+AeIaR8vX3DJBI3HJvM3kbewSByi583sWjv8MNwzM=
+X-Gm-Message-State: AOJu0Yye1SAwE/XJLCwjPaL64jEfGyIxumGRVPcCefOGuSIzUvU3TToo
+ MHzgtHtUucrK1OYKvrnYkKzBXtkDm9eJPL3f67ehRfNuta/6LjSjwIyibiTSk0f+oeccF23D+Bs
+ Fk8Wfe/Gk+cvUJihqUwaZq7MkbbM=
+X-Google-Smtp-Source: AGHT+IHb4euwyMG906Cgc/z+6QFks7kCcEVu5rz8RaCdbkYNp03KGEF87G5qUqigQ1YjyF5U+qdmoA3h1kC1O2PHljE=
+X-Received: by 2002:a17:906:c14b:b0:a77:d9b5:ad4b with SMTP id
+ a640c23a62f3a-a77d9b5db0cmr282609366b.9.1720247275819; Fri, 05 Jul 2024
+ 23:27:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+References: <20240701224421.1432654-1-edgar.iglesias@gmail.com>
+ <20240701224421.1432654-3-edgar.iglesias@gmail.com> <ZoawbAnukIBkYWCw@l14>
+ <87wmm1m7i3.fsf@draig.linaro.org> <ZobuhcLHqUEy_bQs@toto>
+In-Reply-To: <ZobuhcLHqUEy_bQs@toto>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Sat, 6 Jul 2024 09:27:43 +0300
+Message-ID: <CAJy5ezrfbAzwPWg_YABLy5NwCUiNa31FFR1nAZzy-WC3vXrMhg@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] xen: mapcache: Fix unmapping of first entries in
+ buckets
+To: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Anthony PERARD <anthony.perard@vates.tech>, qemu-devel@nongnu.org,
+ sstabellini@kernel.org, paul@xen.org, xen-devel@lists.xenproject.org
+Content-Type: multipart/alternative; boundary="000000000000cd1a70061c8e471c"
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,299 +94,202 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to keep eMMC model simpler to maintain,
-extract common properties and the common code from
-class_init to the (internal) TYPE_SDMMC_COMMON.
+--000000000000cd1a70061c8e471c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Update the corresponding QOM cast macros.
+On Thu, Jul 4, 2024 at 9:48=E2=80=AFPM Edgar E. Iglesias <edgar.iglesias@am=
+d.com>
+wrote:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Tested-by: Andrew Jeffery <andrew@codeconstruct.com.au>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Message-Id: <20240703134356.85972-6-philmd@linaro.org>
----
- hw/sd/sdmmc-internal.h |  3 +++
- hw/sd/core.c           | 29 ++++++++++++------------
- hw/sd/sd.c             | 51 +++++++++++++++++++++++++++++-------------
- 3 files changed, 53 insertions(+), 30 deletions(-)
+> On Thu, Jul 04, 2024 at 05:44:52PM +0100, Alex Benn=C3=A9e wrote:
+> > Anthony PERARD <anthony.perard@vates.tech> writes:
+> >
+> > > On Tue, Jul 02, 2024 at 12:44:21AM +0200, Edgar E. Iglesias wrote:
+> > >> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> > >>
+> > >> This fixes the clobbering of the entry->next pointer when
+> > >> unmapping the first entry in a bucket of a mapcache.
+> > >>
+> > >> Fixes: 123acd816d ("xen: mapcache: Unmap first entries in buckets")
+> > >> Reported-by: Anthony PERARD <anthony.perard@vates.tech>
+> > >> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > >> ---
+> > >>  hw/xen/xen-mapcache.c | 12 +++++++++++-
+> > >>  1 file changed, 11 insertions(+), 1 deletion(-)
+> > >>
+> > >> diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
+> > >> index 5f23b0adbe..18ba7b1d8f 100644
+> > >> --- a/hw/xen/xen-mapcache.c
+> > >> +++ b/hw/xen/xen-mapcache.c
+> > >> @@ -597,7 +597,17 @@ static void
+> xen_invalidate_map_cache_entry_unlocked(MapCache *mc,
+> > >>          pentry->next =3D entry->next;
+> > >>          g_free(entry);
+> > >>      } else {
+> > >> -        memset(entry, 0, sizeof *entry);
+> > >> +        /*
+> > >> +         * Invalidate mapping but keep entry->next pointing to the
+> rest
+> > >> +         * of the list.
+> > >> +         *
+> > >> +         * Note that lock is already zero here, otherwise we don't
+> unmap.
+> > >> +         */
+> > >> +        entry->paddr_index =3D 0;
+> > >> +        entry->vaddr_base =3D NULL;
+> > >> +        entry->valid_mapping =3D NULL;
+> > >> +        entry->flags =3D 0;
+> > >> +        entry->size =3D 0;
+> > >
+> > > This kind of feels like mc->entry should be an array of pointer rathe=
+r
+> > > than an array of MapCacheEntry but that seems to work well enough and
+> > > not the first time entries are been cleared like that.
+> >
+> > The use of a hand rolled list is a bit of a concern considering QEMU an=
+d
+> > Glib both provide various abstractions used around the rest of the code
+> > base. The original patch that introduces the mapcache doesn't tell me
+> > much about access patterns for the cache, just that it is trying to
+> > solve memory exhaustion issues with lots of dynamic small mappings.
+> >
+> > Maybe a simpler structure is desirable?
+> >
+> > We also have an interval tree implementation ("qemu/interval-tree.h") i=
+f
+> > what we really want is a sorted tree of memory that can be iterated
+> > locklessly.
+> >
+>
+> Yes, it would be interesting to benchmark other options.
+> I agree that we should at minimum reuse existing lists/hash tables.
+>
+> We've also had some discussions around removing it partially or
+> alltogether but
+> there are some concerns around that. We're going to need something to
+> keep track of grants. For 32-bit hosts, it's a problem to exhaust virtual
+> address-space if mapping all of the guest (are folks still using 32-bit
+> hosts?).
+> There may be other issues aswell.
+>
+> Some benefits are that we'll remove some of the complexity and latency fo=
+r
+> mapping
+> and unmapping stuff continously.
+>
+>
+One more thing I forgot to add is that IMO, these larger longer term
+changes should not block this tiny bugfix...
 
-diff --git a/hw/sd/sdmmc-internal.h b/hw/sd/sdmmc-internal.h
-index cc0b69e834..91eb5b6b2f 100644
---- a/hw/sd/sdmmc-internal.h
-+++ b/hw/sd/sdmmc-internal.h
-@@ -11,6 +11,9 @@
- #ifndef SDMMC_INTERNAL_H
- #define SDMMC_INTERNAL_H
- 
-+#define TYPE_SDMMC_COMMON "sdmmc-common"
-+DECLARE_OBJ_CHECKERS(SDState, SDCardClass, SDMMC_COMMON, TYPE_SDMMC_COMMON)
-+
- /*
-  * EXT_CSD Modes segment
-  *
-diff --git a/hw/sd/core.c b/hw/sd/core.c
-index 52d5d90045..4b30218b52 100644
---- a/hw/sd/core.c
-+++ b/hw/sd/core.c
-@@ -24,6 +24,7 @@
- #include "hw/sd/sd.h"
- #include "qemu/module.h"
- #include "qapi/error.h"
-+#include "sdmmc-internal.h"
- #include "trace.h"
- 
- static inline const char *sdbus_name(SDBus *sdbus)
-@@ -39,7 +40,7 @@ static SDState *get_card(SDBus *sdbus)
-     if (!kid) {
-         return NULL;
-     }
--    return SD_CARD(kid->child);
-+    return SDMMC_COMMON(kid->child);
- }
- 
- uint8_t sdbus_get_dat_lines(SDBus *sdbus)
-@@ -48,7 +49,7 @@ uint8_t sdbus_get_dat_lines(SDBus *sdbus)
-     uint8_t dat_lines = 0b1111; /* 4 bit bus width */
- 
-     if (slave) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(slave);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(slave);
- 
-         if (sc->get_dat_lines) {
-             dat_lines = sc->get_dat_lines(slave);
-@@ -65,7 +66,7 @@ bool sdbus_get_cmd_line(SDBus *sdbus)
-     bool cmd_line = true;
- 
-     if (slave) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(slave);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(slave);
- 
-         if (sc->get_cmd_line) {
-             cmd_line = sc->get_cmd_line(slave);
-@@ -82,7 +83,7 @@ void sdbus_set_voltage(SDBus *sdbus, uint16_t millivolts)
- 
-     trace_sdbus_set_voltage(sdbus_name(sdbus), millivolts);
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         assert(sc->set_voltage);
-         sc->set_voltage(card, millivolts);
-@@ -95,7 +96,7 @@ int sdbus_do_command(SDBus *sdbus, SDRequest *req, uint8_t *response)
- 
-     trace_sdbus_command(sdbus_name(sdbus), req->cmd, req->arg);
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         return sc->do_command(card, req, response);
-     }
-@@ -109,7 +110,7 @@ void sdbus_write_byte(SDBus *sdbus, uint8_t value)
- 
-     trace_sdbus_write(sdbus_name(sdbus), value);
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         sc->write_byte(card, value);
-     }
-@@ -121,7 +122,7 @@ void sdbus_write_data(SDBus *sdbus, const void *buf, size_t length)
-     const uint8_t *data = buf;
- 
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         for (size_t i = 0; i < length; i++) {
-             trace_sdbus_write(sdbus_name(sdbus), data[i]);
-@@ -136,7 +137,7 @@ uint8_t sdbus_read_byte(SDBus *sdbus)
-     uint8_t value = 0;
- 
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         value = sc->read_byte(card);
-     }
-@@ -151,7 +152,7 @@ void sdbus_read_data(SDBus *sdbus, void *buf, size_t length)
-     uint8_t *data = buf;
- 
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         for (size_t i = 0; i < length; i++) {
-             data[i] = sc->read_byte(card);
-@@ -165,7 +166,7 @@ bool sdbus_receive_ready(SDBus *sdbus)
-     SDState *card = get_card(sdbus);
- 
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         return sc->receive_ready(card);
-     }
-@@ -178,7 +179,7 @@ bool sdbus_data_ready(SDBus *sdbus)
-     SDState *card = get_card(sdbus);
- 
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         return sc->data_ready(card);
-     }
-@@ -191,7 +192,7 @@ bool sdbus_get_inserted(SDBus *sdbus)
-     SDState *card = get_card(sdbus);
- 
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         return sc->get_inserted(card);
-     }
-@@ -204,7 +205,7 @@ bool sdbus_get_readonly(SDBus *sdbus)
-     SDState *card = get_card(sdbus);
- 
-     if (card) {
--        SDCardClass *sc = SD_CARD_GET_CLASS(card);
-+        SDCardClass *sc = SDMMC_COMMON_GET_CLASS(card);
- 
-         return sc->get_readonly(card);
-     }
-@@ -250,7 +251,7 @@ void sdbus_reparent_card(SDBus *from, SDBus *to)
-         return;
-     }
- 
--    sc = SD_CARD_GET_CLASS(card);
-+    sc = SDMMC_COMMON_GET_CLASS(card);
-     readonly = sc->get_readonly(card);
- 
-     sdbus_set_inserted(from, false);
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 058a70a0f8..d6a07f0ade 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -679,8 +679,8 @@ static inline uint64_t sd_addr_to_wpnum(uint64_t addr)
- 
- static void sd_reset(DeviceState *dev)
- {
--    SDState *sd = SD_CARD(dev);
--    SDCardClass *sc = SD_CARD_GET_CLASS(sd);
-+    SDState *sd = SDMMC_COMMON(dev);
-+    SDCardClass *sc = SDMMC_COMMON_GET_CLASS(sd);
-     uint64_t size;
-     uint64_t sect;
- 
-@@ -2377,8 +2377,8 @@ static const SDProto sd_proto_sd = {
- 
- static void sd_instance_init(Object *obj)
- {
--    SDState *sd = SD_CARD(obj);
--    SDCardClass *sc = SD_CARD_GET_CLASS(sd);
-+    SDState *sd = SDMMC_COMMON(obj);
-+    SDCardClass *sc = SDMMC_COMMON_GET_CLASS(sd);
- 
-     sd->proto = sc->proto;
-     sd->last_cmd_name = "UNSET";
-@@ -2388,14 +2388,14 @@ static void sd_instance_init(Object *obj)
- 
- static void sd_instance_finalize(Object *obj)
- {
--    SDState *sd = SD_CARD(obj);
-+    SDState *sd = SDMMC_COMMON(obj);
- 
-     timer_free(sd->ocr_power_timer);
- }
- 
- static void sd_realize(DeviceState *dev, Error **errp)
- {
--    SDState *sd = SD_CARD(dev);
-+    SDState *sd = SDMMC_COMMON(dev);
-     int ret;
- 
-     switch (sd->spec_version) {
-@@ -2446,20 +2446,23 @@ static void sd_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
--static Property sd_properties[] = {
--    DEFINE_PROP_UINT8("spec_version", SDState,
--                      spec_version, SD_PHY_SPECv3_01_VERS),
-+static Property sdmmc_common_properties[] = {
-     DEFINE_PROP_DRIVE("drive", SDState, blk),
-     DEFINE_PROP_END_OF_LIST()
- };
- 
--static void sd_class_init(ObjectClass *klass, void *data)
-+static Property sd_properties[] = {
-+    DEFINE_PROP_UINT8("spec_version", SDState,
-+                      spec_version, SD_PHY_SPECv3_01_VERS),
-+    DEFINE_PROP_END_OF_LIST()
-+};
-+
-+static void sdmmc_common_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
--    SDCardClass *sc = SD_CARD_CLASS(klass);
-+    SDCardClass *sc = SDMMC_COMMON_CLASS(klass);
- 
--    dc->realize = sd_realize;
--    device_class_set_props(dc, sd_properties);
-+    device_class_set_props(dc, sdmmc_common_properties);
-     dc->vmsd = &sd_vmstate;
-     dc->reset = sd_reset;
-     dc->bus_type = TYPE_SD_BUS;
-@@ -2476,6 +2479,16 @@ static void sd_class_init(ObjectClass *klass, void *data)
-     sc->enable = sd_enable;
-     sc->get_inserted = sd_get_inserted;
-     sc->get_readonly = sd_get_readonly;
-+}
-+
-+static void sd_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    SDCardClass *sc = SDMMC_COMMON_CLASS(klass);
-+
-+    dc->realize = sd_realize;
-+    device_class_set_props(dc, sd_properties);
-+
-     sc->set_cid = sd_set_cid;
-     sc->set_csd = sd_set_csd;
-     sc->proto = &sd_proto_sd;
-@@ -2490,7 +2503,7 @@ static void sd_class_init(ObjectClass *klass, void *data)
- static void sd_spi_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
--    SDCardClass *sc = SD_CARD_CLASS(klass);
-+    SDCardClass *sc = SDMMC_COMMON_CLASS(klass);
- 
-     dc->desc = "SD SPI";
-     sc->proto = &sd_proto_spi;
-@@ -2498,14 +2511,20 @@ static void sd_spi_class_init(ObjectClass *klass, void *data)
- 
- static const TypeInfo sd_types[] = {
-     {
--        .name           = TYPE_SD_CARD,
-+        .name           = TYPE_SDMMC_COMMON,
-         .parent         = TYPE_DEVICE,
-+        .abstract       = true,
-         .instance_size  = sizeof(SDState),
-         .class_size     = sizeof(SDCardClass),
--        .class_init     = sd_class_init,
-+        .class_init     = sdmmc_common_class_init,
-         .instance_init  = sd_instance_init,
-         .instance_finalize = sd_instance_finalize,
-     },
-+    {
-+        .name           = TYPE_SD_CARD,
-+        .parent         = TYPE_SDMMC_COMMON,
-+        .class_init     = sd_class_init,
-+    },
-     {
-         .name           = TYPE_SD_CARD_SPI,
-         .parent         = TYPE_SD_CARD,
--- 
-2.41.0
+Cheers,
+Edgar
 
+--000000000000cd1a70061c8e471c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">On Thu, Jul 4, 2024 at 9:48=E2=80=AFPM Ed=
+gar E. Iglesias &lt;<a href=3D"mailto:edgar.iglesias@amd.com">edgar.iglesia=
+s@amd.com</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex">On Thu, Jul 04, 2024 at 05:44:52PM +010=
+0, Alex Benn=C3=A9e wrote:<br>
+&gt; Anthony PERARD &lt;anthony.perard@vates.tech&gt; writes:<br>
+&gt; <br>
+&gt; &gt; On Tue, Jul 02, 2024 at 12:44:21AM +0200, Edgar E. Iglesias wrote=
+:<br>
+&gt; &gt;&gt; From: &quot;Edgar E. Iglesias&quot; &lt;<a href=3D"mailto:edg=
+ar.iglesias@amd.com" target=3D"_blank">edgar.iglesias@amd.com</a>&gt;<br>
+&gt; &gt;&gt; <br>
+&gt; &gt;&gt; This fixes the clobbering of the entry-&gt;next pointer when<=
+br>
+&gt; &gt;&gt; unmapping the first entry in a bucket of a mapcache.<br>
+&gt; &gt;&gt; <br>
+&gt; &gt;&gt; Fixes: 123acd816d (&quot;xen: mapcache: Unmap first entries i=
+n buckets&quot;)<br>
+&gt; &gt;&gt; Reported-by: Anthony PERARD &lt;anthony.perard@vates.tech&gt;=
+<br>
+&gt; &gt;&gt; Signed-off-by: Edgar E. Iglesias &lt;<a href=3D"mailto:edgar.=
+iglesias@amd.com" target=3D"_blank">edgar.iglesias@amd.com</a>&gt;<br>
+&gt; &gt;&gt; ---<br>
+&gt; &gt;&gt;=C2=A0 hw/xen/xen-mapcache.c | 12 +++++++++++-<br>
+&gt; &gt;&gt;=C2=A0 1 file changed, 11 insertions(+), 1 deletion(-)<br>
+&gt; &gt;&gt; <br>
+&gt; &gt;&gt; diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c<br=
+>
+&gt; &gt;&gt; index 5f23b0adbe..18ba7b1d8f 100644<br>
+&gt; &gt;&gt; --- a/hw/xen/xen-mapcache.c<br>
+&gt; &gt;&gt; +++ b/hw/xen/xen-mapcache.c<br>
+&gt; &gt;&gt; @@ -597,7 +597,17 @@ static void xen_invalidate_map_cache_ent=
+ry_unlocked(MapCache *mc,<br>
+&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pentry-&gt;next =3D entry-&=
+gt;next;<br>
+&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(entry);<br>
+&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 } else {<br>
+&gt; &gt;&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 memset(entry, 0, sizeof *entry);=
+<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Invalidate mapping but k=
+eep entry-&gt;next pointing to the rest<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* of the list.<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Note that lock is alread=
+y zero here, otherwise we don&#39;t unmap.<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 entry-&gt;paddr_index =3D 0;<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 entry-&gt;vaddr_base =3D NULL;<b=
+r>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 entry-&gt;valid_mapping =3D NULL=
+;<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 entry-&gt;flags =3D 0;<br>
+&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 entry-&gt;size =3D 0;<br>
+&gt; &gt;<br>
+&gt; &gt; This kind of feels like mc-&gt;entry should be an array of pointe=
+r rather<br>
+&gt; &gt; than an array of MapCacheEntry but that seems to work well enough=
+ and<br>
+&gt; &gt; not the first time entries are been cleared like that.<br>
+&gt; <br>
+&gt; The use of a hand rolled list is a bit of a concern considering QEMU a=
+nd<br>
+&gt; Glib both provide various abstractions used around the rest of the cod=
+e<br>
+&gt; base. The original patch that introduces the mapcache doesn&#39;t tell=
+ me<br>
+&gt; much about access patterns for the cache, just that it is trying to<br=
+>
+&gt; solve memory exhaustion issues with lots of dynamic small mappings.<br=
+>
+&gt; <br>
+&gt; Maybe a simpler structure is desirable?<br>
+&gt; <br>
+&gt; We also have an interval tree implementation (&quot;qemu/interval-tree=
+.h&quot;) if<br>
+&gt; what we really want is a sorted tree of memory that can be iterated<br=
+>
+&gt; locklessly.<br>
+&gt; <br>
+<br>
+Yes, it would be interesting to benchmark other options.<br>
+I agree that we should at minimum reuse existing lists/hash tables.<br>
+<br>
+We&#39;ve also had some discussions around removing it partially or alltoge=
+ther but<br>
+there are some concerns around that. We&#39;re going to need something to<b=
+r>
+keep track of grants. For 32-bit hosts, it&#39;s a problem to exhaust virtu=
+al<br>
+address-space if mapping all of the guest (are folks still using 32-bit hos=
+ts?).<br>
+There may be other issues aswell.<br>
+<br>
+Some benefits are that we&#39;ll remove some of the complexity and latency =
+for mapping<br>
+and unmapping stuff continously.<br><br></blockquote><div><br></div><div>On=
+e more thing I forgot to add is that IMO, these larger longer term changes =
+should not block this tiny bugfix...</div><div><br></div><div>Cheers,</div>=
+<div>Edgar=C2=A0<br></div></div></div>
+
+--000000000000cd1a70061c8e471c--
 
