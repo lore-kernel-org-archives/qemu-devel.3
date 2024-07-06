@@ -4,100 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2049EC2BD09
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 12:00:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4AECC2BD09
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 13:13:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQ44i-0000JU-K7; Sat, 06 Jul 2024 07:59:32 -0400
+	id 1sQ5D2-0000wu-KB; Sat, 06 Jul 2024 09:12:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sQ44g-0000HE-K4
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 07:59:31 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sQ44b-0007RW-Ni
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 07:59:29 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1fa2ea1c443so17969395ad.0
- for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 04:59:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720267160; x=1720871960;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LuTP0nYskG/5WnjMC5pQCxB+nsljiZvY5jnUCFfL0co=;
- b=23rcqHqqUraryFJ0VP0gYJjn7irPu6x/D7oRHuOpVR+G6A1q8Ql91Q54ayGnpuT8gM
- ZD4GHmS0QH9jY3y+nwZtwdtsxCH7bj204WwC4ZFxuLPps28ySoWU8FL0B2hznk9Dfrb4
- jdH1c09cJbfixiwAZJcmgt/ymEbsClTMzapYTW0+CcgPSjOtBAzY3kIIEssO/0UjVtdU
- od75eQNSw4UpHwyJOMX5OzqzCU2ivzhuEPU9JWju5NU5W8J0fLOhfLxAXRSANLGa5sq9
- kN7b/YftAEAsKRw0wXsqeCgDOlrMFe3gbcPxOqwXBpHHtGHgbKMyrbBGrVMjIcqkYJoE
- hz/g==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sQ5Cw-0000vp-QB
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 09:12:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sQ5Cu-0004gg-Id
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 09:12:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720271521;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8LSu3tTiEecAPECmoeXbRlHI/G9nJ80MJdc3JJ88kQY=;
+ b=VSnRMEEEGEgjVg97lsEL3uXujxdkxFAg/QYo4h6SqBluSznTl4qi7WomuTu4RLGpEsSM6y
+ LZ2Gzq0hiA+fBpVoQUGi/2SPyrHEAY6bqH/RZG6EGwNp8neohCgxDnZNrjKYhUcg+peFQa
+ rV1fGMLhmCHGg+lUVjaXeuO6BCaxDDo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-368-CSNeCAOeM76sHHbKIcJCuw-1; Sat, 06 Jul 2024 09:11:59 -0400
+X-MC-Unique: CSNeCAOeM76sHHbKIcJCuw-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-36792df120fso1840081f8f.1
+ for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 06:11:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720267160; x=1720871960;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LuTP0nYskG/5WnjMC5pQCxB+nsljiZvY5jnUCFfL0co=;
- b=Wut8ltyLV8iOHkWyCA9SyyeohBNGbEJ8LMkkYf0j9oRt3p1q0BZi/eMQbXsZySfR5s
- 5fE9qWnWE/LHQtAIGiCiBuQuqNXSE08WFoHAwps5qnfXz9QiCcCjksqZR91IsDBKj26U
- tkFIfoLVje7X0McvcmPdGXoEt3ri8uxiu/jnwyTHc3E0Li/3QhTewwIK1+XDLH2z30Lp
- yVoAQKh6iTOb03JGkGlDIRImhlYsYWieSlHh9S3KAU4wD+0dc2I+0q6bF2SdeLHXE/Dc
- ScKa2rHoPBJ63HmEJbN9CMdTnkiZwRpr+N+ORi5n5UnAfg4+ET/JHloEl8lTsFnCw5Qf
- 64fQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlKOU36BQvS0XCNc3Fv9n2NF1qyn2BUEnEoSCcVmDlDXIe5N+cdLesHq+eDhKj32MIh2ez2S9Lv1xQwQTwNRzK7gUcnZ4=
-X-Gm-Message-State: AOJu0Yzl1gHZNbh9tXw2PeAon1iVAT1PbUceNQPbQ7nAypUMBYdz1Aky
- ddNYXwjQd7I+zquWd8uDFwfVjmsdHKRpraE1Y50CWakvvAZMHUFCMCtr5B3WNrU=
-X-Google-Smtp-Source: AGHT+IFTq0KbV2o1Fmms33BcRk1DbOknTYbNFsG5isNCkz/mGWt7mANrym0olUAKOHtiBolHeoOV8Q==
-X-Received: by 2002:a17:903:1cd:b0:1fa:ab25:f625 with SMTP id
- d9443c01a7336-1fb33e8cb9fmr64612745ad.38.1720267160328; 
- Sat, 06 Jul 2024 04:59:20 -0700 (PDT)
-Received: from [157.82.204.135] ([157.82.204.135])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1face441ae0sm148375075ad.261.2024.07.06.04.59.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 06 Jul 2024 04:59:20 -0700 (PDT)
-Message-ID: <84a7b513-228c-4c8e-8519-6ab465d4e8c8@daynix.com>
-Date: Sat, 6 Jul 2024 20:59:13 +0900
+ d=1e100.net; s=20230601; t=1720271518; x=1720876318;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8LSu3tTiEecAPECmoeXbRlHI/G9nJ80MJdc3JJ88kQY=;
+ b=bUlvBcFXnmYA9oiZ7uu0xEr2dyOPwttWsVC4JTjHZgDS/WFNzF4Mo1dsizL2dCWYFB
+ gdAdWyc1vPJK7nwepqU7IGy/Kc5LBYBGt4/ILfY/PyUNVWxy75UCcezXTpVuU5U5XCPG
+ c5c7AOI/8wYDhZ4BK61jvHIbATSff8FKkkoZGLOgaQJaIbeazkPNSgq8fMS4dLEeU3oU
+ G414LfAkn6llWFwftIIk9dHNWlSwDPKi8nLssdqGFhjHnJjUl4g78Nkym6at/SO6VVaA
+ Qyxhf4jS6DLPtit7aRPjuLuuvjf7knKVAPhCMjEnGOxmalVqxJzTsgTLwOC8/g4SmL+z
+ HbIw==
+X-Gm-Message-State: AOJu0YzMaKMbZ8ccaqRrvt8urGTgR0iuFXGW7TfJUhswiFakiMHsL2vG
+ KahtHpD7KPhcyyNC1aJE55C8VPMVTDR1+tim68IcwYKsQCZpHhuYZqcH1kEFEDrumxigHUz5Xmx
+ iyMEYKrnMe3i2o7Mo7uZNKqDQt4HbnDqyENtEDX53fsn0Wh2xFrZp
+X-Received: by 2002:adf:f5cb:0:b0:367:96a8:d94b with SMTP id
+ ffacd0b85a97d-3679dd715ddmr4476590f8f.57.1720271518095; 
+ Sat, 06 Jul 2024 06:11:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEA0zhecJUgeKK6PqiylLwlpEWpW6Sl73joZpTvhWXEWikfvf85fkrHSJaMIuqkXXAs2ajC6Q==
+X-Received: by 2002:adf:f5cb:0:b0:367:96a8:d94b with SMTP id
+ ffacd0b85a97d-3679dd715ddmr4476568f8f.57.1720271517619; 
+ Sat, 06 Jul 2024 06:11:57 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36789a02631sm11590075f8f.1.2024.07.06.06.11.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 06 Jul 2024 06:11:56 -0700 (PDT)
+Date: Sat, 6 Jul 2024 15:11:54 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Salil Mehta <salil.mehta@huawei.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <maz@kernel.org>,
+ <jean-philippe@linaro.org>, <jonathan.cameron@huawei.com>,
+ <lpieralisi@kernel.org>, <peter.maydell@linaro.org>,
+ <richard.henderson@linaro.org>, <andrew.jones@linux.dev>,
+ <david@redhat.com>, <philmd@linaro.org>, <eric.auger@redhat.com>,
+ <oliver.upton@linux.dev>, <pbonzini@redhat.com>, <mst@redhat.com>,
+ <will@kernel.org>, <gshan@redhat.com>, <rafael@kernel.org>,
+ <alex.bennee@linaro.org>, <linux@armlinux.org.uk>,
+ <darren@os.amperecomputing.com>, <ilkka@os.amperecomputing.com>,
+ <vishnu@os.amperecomputing.com>, <karl.heubaum@oracle.com>,
+ <miguel.luis@oracle.com>, <salil.mehta@opnsrc.net>,
+ <zhukeqian1@huawei.com>, <wangxiongfeng2@huawei.com>,
+ <wangyanan55@huawei.com>, <jiakernel2@gmail.com>, <maobibo@loongson.cn>,
+ <lixianglai@loongson.cn>, <npiggin@gmail.com>, <harshpb@linux.ibm.com>,
+ <linuxarm@huawei.com>, Shaoqin Huang <shahuang@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH V13 1/8] accel/kvm: Extract common KVM vCPU
+ {creation,parking} code
+Message-ID: <20240706151154.7c430b0a@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240607115649.214622-2-salil.mehta@huawei.com>
+References: <20240607115649.214622-1-salil.mehta@huawei.com>
+ <20240607115649.214622-2-salil.mehta@huawei.com>
+X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/15] memory: Do not create circular reference with
- subregion
-To: Peter Xu <peterx@redhat.com>
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-9-750bb0946dbd@daynix.com> <ZoQ8cCrPXgK8I6b6@x1n>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <ZoQ8cCrPXgK8I6b6@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,127 +118,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/07/03 2:44, Peter Xu wrote:
-> On Thu, Jun 27, 2024 at 10:37:52PM +0900, Akihiko Odaki wrote:
->> A memory region does not use their own reference counters, but instead
->> piggybacks on another QOM object, "owner" (unless the owner is not the
->> memory region itself). When creating a subregion, a new reference to the
->> owner of the container must be created. However, if the subregion is
->> owned by the same QOM object, this result in a self-reference, and make
->> the owner immortal. Avoid such a self-reference.
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   system/memory.c | 11 +++++++++--
->>   1 file changed, 9 insertions(+), 2 deletions(-)
->>
->> diff --git a/system/memory.c b/system/memory.c
->> index 74cd73ebc78b..949f5016a68d 100644
->> --- a/system/memory.c
->> +++ b/system/memory.c
->> @@ -2638,7 +2638,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
->>   
->>       memory_region_transaction_begin();
->>   
->> -    memory_region_ref(subregion);
->> +    if (mr->owner != subregion->owner) {
->> +        memory_region_ref(subregion);
->> +    }
->> +
->>       QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
->>           if (subregion->priority >= other->priority) {
->>               QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
->> @@ -2696,7 +2699,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
->>           assert(alias->mapped_via_alias >= 0);
->>       }
->>       QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
->> -    memory_region_unref(subregion);
->> +
->> +    if (mr->owner != subregion->owner) {
->> +        memory_region_unref(subregion);
->> +    }
->> +
->>       memory_region_update_pending |= mr->enabled && subregion->enabled;
->>       memory_region_transaction_commit();
->>   }
-> 
-> This does look like a real issue.. the patch looks reasonable to me, but I
-> wonder whether we should start to add some good comments in code to reflect
-> that complexity starting from this one.  The MR refcount isn't easy to
-> understand to me.
-> 
-> It also lets me start to wonder how MR refcount went through until it looks
-> like today..  It's definitely not extremely intuitive to use mr->owner as
-> the object to do refcounting if mr itself does has its own QObject,
-> meanwhile it has other tricks around.
-> 
-> E.g. the first thing I stumbled over when looking was the optimization
-> where we will avoid refcounting the mr when there's no owner, and IIUC it
-> was for the case when the "guest memory" (which will never be freed) used
-> to have no owner so we can speedup DMA if we know it won't go away.
-> 
-> https://lore.kernel.org/qemu-devel/1450263601-2828-5-git-send-email-pbonzini@redhat.com/
-> 
-> commit 612263cf33062f7441a5d0e3b37c65991fdc3210
-> Author: Paolo Bonzini <pbonzini@redhat.com>
-> Date:   Wed Dec 9 11:44:25 2015 +0100
-> 
->      memory: avoid unnecessary object_ref/unref
->      
->      For the common case of DMA into non-hotplugged RAM, it is unnecessary
->      but expensive to do object_ref/unref.  Add back an owner field to
->      MemoryRegion, so that these memory regions can skip the reference
->      counting.
-> 
-> If so, it looks like it will stop working with memory-backends get
-> involved?  As I think those MRs will have owner set always, and I wonder
-> whether memory-backends should be the major way to specify guest memory now
-> and in the future.  So I'm not sure how important that optimization is as
-> of now, and whether we could "simplify" it back to always do the refcount
-> if the major scenarios will not adopt it.
-> 
-> The other issue is we used owner refcount from the start of
-> memory_region_ref() got introduced, since:
-> 
-> commit 46637be269aaaceb9867ffdf176e906401138fff
-> Author: Paolo Bonzini <pbonzini@redhat.com>
-> Date:   Tue May 7 09:06:00 2013 +0200
-> 
->      memory: add ref/unref
-> 
-> And we still have that in our document, even though I don't think it's true
-> anymore:
-> 
->   * ...  MemoryRegions actually do not have their
->   * own reference count; they piggyback on a QOM object, their "owner".
->   * This function adds a reference to the owner.
-> 
-> It looks like what happened is when introduced the change, MR is not a QOM
-> object yet.  But it later is..
-> 
-> I mentioned all these only because I found that _if_ we can keep mr
-> refcounting as simple as other objects:
-> 
-> memory_region_ref(mr)
-> {
->      object_ref(OBJECT(mr));
-> }
-> 
-> Then looks like this "recursive refcount" problem can also go away.  I'm
-> curious whether you or anyone tried to explore that path, or whether above
-> doesn't make sense at all.
+On Fri, 7 Jun 2024 12:56:42 +0100
+Salil Mehta <salil.mehta@huawei.com> wrote:
 
-It unfortunately does not solve the problem.
+> KVM vCPU creation is done once during the vCPU realization when Qemu vCPU thread
+> is spawned. This is common to all the architectures as of now.
+> 
+> Hot-unplug of vCPU results in destruction of the vCPU object in QOM but the
+> corresponding KVM vCPU object in the Host KVM is not destroyed as KVM doesn't
+> support vCPU removal. Therefore, its representative KVM vCPU object/context in
+> Qemu is parked.
+> 
+> Refactor architecture common logic so that some APIs could be reused by vCPU
+> Hotplug code of some architectures likes ARM, Loongson etc. Update new/old APIs
+> with trace events. No functional change is intended here.
+> 
+> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> Tested-by: Miguel Luis <miguel.luis@oracle.com>
+> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+> Tested-by: Zhao Liu <zhao1.liu@intel.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> ---
+>  accel/kvm/kvm-all.c    | 95 ++++++++++++++++++++++++++++--------------
+>  accel/kvm/kvm-cpus.h   |  1 -
+>  accel/kvm/trace-events |  5 ++-
+>  include/sysemu/kvm.h   | 25 +++++++++++
+>  4 files changed, 92 insertions(+), 34 deletions(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index c0be9f5eed..8f9128bb92 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -340,14 +340,71 @@ err:
+>      return ret;
+>  }
+>  
+> +void kvm_park_vcpu(CPUState *cpu)
+> +{
+> +    struct KVMParkedVcpu *vcpu;
+> +
+> +    trace_kvm_park_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+> +
+> +    vcpu = g_malloc0(sizeof(*vcpu));
+> +    vcpu->vcpu_id = kvm_arch_vcpu_id(cpu);
+> +    vcpu->kvm_fd = cpu->kvm_fd;
+> +    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+> +}
+> +
+> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+> +{
+> +    struct KVMParkedVcpu *cpu;
+> +    int kvm_fd = -ENOENT;
+> +
+> +    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> +        if (cpu->vcpu_id == vcpu_id) {
+> +            QLIST_REMOVE(cpu, node);
+> +            kvm_fd = cpu->kvm_fd;
+> +            g_free(cpu);
+> +        }
+> +    }
+> +
+> +    trace_kvm_unpark_vcpu(vcpu_id, kvm_fd > 0 ? "unparked" : "not found parked");
+> +
+> +    return kvm_fd;
+> +}
+> +
+> +int kvm_create_vcpu(CPUState *cpu)
+> +{
+> +    unsigned long vcpu_id = kvm_arch_vcpu_id(cpu);
+> +    KVMState *s = kvm_state;
+> +    int kvm_fd;
+> +
+> +    /* check if the KVM vCPU already exist but is parked */
+> +    kvm_fd = kvm_unpark_vcpu(s, vcpu_id);
+> +    if (kvm_fd < 0) {
+> +        /* vCPU not parked: create a new KVM vCPU */
+> +        kvm_fd = kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
+> +        if (kvm_fd < 0) {
+> +            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu", vcpu_id);
+> +            return kvm_fd;
+> +        }
+> +    }
+> +
+> +    cpu->kvm_fd = kvm_fd;
+> +    cpu->kvm_state = s;
+> +    cpu->vcpu_dirty = true;
+> +    cpu->dirty_pages = 0;
+> +    cpu->throttle_us_per_full = 0;
+> +
+> +    trace_kvm_create_vcpu(cpu->cpu_index, vcpu_id, kvm_fd);
+> +
+> +    return 0;
+> +}
 
-The underlying problem is that the whole device must be kept alive while 
-its memory region are. Indeed MemoryRegions do have refcounts, but 
-incrementing them do not extend the lifetime of the devices (i.e., the 
-owners). The refcount of the owners must be incremented for correctness.
+Is there any reason why you are embedding/hiding kvm_state in new API
+instead of passing it as argument (all callers have it defined, so why not reuse that)?
 
-Referencing a subregion MemoryRegion from its container MemoryRegion 
-owned by the same device is an exceptional case. Incrementing the 
-refcount of the owner extends the owner's lifetime to forever.
+otherwise patch lgtm 
 
-Regards,
-Akihiko Odaki
+> +
+>  static int do_kvm_destroy_vcpu(CPUState *cpu)
+>  {
+>      KVMState *s = kvm_state;
+>      long mmap_size;
+> -    struct KVMParkedVcpu *vcpu = NULL;
+>      int ret = 0;
+>  
+> -    trace_kvm_destroy_vcpu();
+> +    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+>  
+>      ret = kvm_arch_destroy_vcpu(cpu);
+>      if (ret < 0) {
+> @@ -373,10 +430,7 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
+>          }
+>      }
+>  
+> -    vcpu = g_malloc0(sizeof(*vcpu));
+> -    vcpu->vcpu_id = kvm_arch_vcpu_id(cpu);
+> -    vcpu->kvm_fd = cpu->kvm_fd;
+> -    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+> +    kvm_park_vcpu(cpu);
+>  err:
+>      return ret;
+>  }
+> @@ -389,24 +443,6 @@ void kvm_destroy_vcpu(CPUState *cpu)
+>      }
+>  }
+>  
+> -static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id)
+> -{
+> -    struct KVMParkedVcpu *cpu;
+> -
+> -    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> -        if (cpu->vcpu_id == vcpu_id) {
+> -            int kvm_fd;
+> -
+> -            QLIST_REMOVE(cpu, node);
+> -            kvm_fd = cpu->kvm_fd;
+> -            g_free(cpu);
+> -            return kvm_fd;
+> -        }
+> -    }
+> -
+> -    return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id);
+> -}
+> -
+>  int kvm_init_vcpu(CPUState *cpu, Error **errp)
+>  {
+>      KVMState *s = kvm_state;
+> @@ -415,19 +451,14 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+>  
+>      trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+>  
+> -    ret = kvm_get_vcpu(s, kvm_arch_vcpu_id(cpu));
+> +    ret = kvm_create_vcpu(cpu);
+>      if (ret < 0) {
+> -        error_setg_errno(errp, -ret, "kvm_init_vcpu: kvm_get_vcpu failed (%lu)",
+> +        error_setg_errno(errp, -ret,
+> +                         "kvm_init_vcpu: kvm_create_vcpu failed (%lu)",
+>                           kvm_arch_vcpu_id(cpu));
+>          goto err;
+>      }
+>  
+> -    cpu->kvm_fd = ret;
+> -    cpu->kvm_state = s;
+> -    cpu->vcpu_dirty = true;
+> -    cpu->dirty_pages = 0;
+> -    cpu->throttle_us_per_full = 0;
+> -
+>      mmap_size = kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
+>      if (mmap_size < 0) {
+>          ret = mmap_size;
+> diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
+> index ca40add32c..171b22fd29 100644
+> --- a/accel/kvm/kvm-cpus.h
+> +++ b/accel/kvm/kvm-cpus.h
+> @@ -22,5 +22,4 @@ bool kvm_supports_guest_debug(void);
+>  int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len);
+>  int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr len);
+>  void kvm_remove_all_breakpoints(CPUState *cpu);
+> -
+>  #endif /* KVM_CPUS_H */
+> diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
+> index 681ccb667d..37626c1ac5 100644
+> --- a/accel/kvm/trace-events
+> +++ b/accel/kvm/trace-events
+> @@ -9,6 +9,10 @@ kvm_device_ioctl(int fd, int type, void *arg) "dev fd %d, type 0x%x, arg %p"
+>  kvm_failed_reg_get(uint64_t id, const char *msg) "Warning: Unable to retrieve ONEREG %" PRIu64 " from KVM: %s"
+>  kvm_failed_reg_set(uint64_t id, const char *msg) "Warning: Unable to set ONEREG %" PRIu64 " to KVM: %s"
+>  kvm_init_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
+> +kvm_create_vcpu(int cpu_index, unsigned long arch_cpu_id, int kvm_fd) "index: %d, id: %lu, kvm fd: %d"
+> +kvm_destroy_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
+> +kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id: %lu"
+> +kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) "id: %lu %s"
+>  kvm_irqchip_commit_routes(void) ""
+>  kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %s vector %d virq %d"
+>  kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
+> @@ -25,7 +29,6 @@ kvm_dirty_ring_reaper(const char *s) "%s"
+>  kvm_dirty_ring_reap(uint64_t count, int64_t t) "reaped %"PRIu64" pages (took %"PRIi64" us)"
+>  kvm_dirty_ring_reaper_kick(const char *reason) "%s"
+>  kvm_dirty_ring_flush(int finished) "%d"
+> -kvm_destroy_vcpu(void) ""
+>  kvm_failed_get_vcpu_mmap_size(void) ""
+>  kvm_cpu_exec(void) ""
+>  kvm_interrupt_exit_request(void) ""
+> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+> index c31d9c7356..c4a914b3d8 100644
+> --- a/include/sysemu/kvm.h
+> +++ b/include/sysemu/kvm.h
+> @@ -313,6 +313,31 @@ int kvm_create_device(KVMState *s, uint64_t type, bool test);
+>   */
+>  bool kvm_device_supported(int vmfd, uint64_t type);
+>  
+> +/**
+> + * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
+> + * @cpu: QOM CPUState object for which KVM vCPU has to be fetched/created.
+> + *
+> + * @returns: 0 when success, errno (<0) when failed.
+> + */
+> +int kvm_create_vcpu(CPUState *cpu);
+> +
+> +/**
+> + * kvm_park_vcpu - Park QEMU KVM vCPU context
+> + * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to be parked.
+> + *
+> + * @returns: none
+> + */
+> +void kvm_park_vcpu(CPUState *cpu);
+> +
+> +/**
+> + * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
+> + * @s: KVM State
+> + * @vcpu_id: Architecture vCPU ID of the parked vCPU
+> + *
+> + * @returns: KVM fd
+> + */
+> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
+> +
+>  /* Arch specific hooks */
+>  
+>  extern const KVMCapabilityInfo kvm_arch_required_capabilities[];
+
 
