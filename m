@@ -4,73 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFE67C2BD09
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 15:16:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BA49C2BD09
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Jul 2024 15:44:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQ78j-0005P5-ON; Sat, 06 Jul 2024 11:15:53 -0400
+	id 1sQ7ZI-0007Jx-C1; Sat, 06 Jul 2024 11:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+2cd58391f824c65ad45b+7622+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sQ78a-0005O1-1A
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 11:15:49 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+2cd58391f824c65ad45b+7622+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sQ78U-00012w-Gj
- for qemu-devel@nongnu.org; Sat, 06 Jul 2024 11:15:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:Date:Cc:To:
- From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
- Content-Description:In-Reply-To:References;
- bh=Pw51G1KpOGUl/q/oZdXsvnlqCQJuV2DOozmyAcwTQic=; b=afGOTo6wkNWgzp/70n2D5dL9o8
- zWTCNfD/n8aZCxOXDcNcsE1IDKh8jq54VegluuqU5w9LRCaZHdpewGINMKYCUICoo57m0mIlJ3Kzy
- RUFxAqy7ecftHOf3rk1jFI+ab1hgLHGutJYi8dVzzg+ClD2y4/iWWyJ3fPSwOQ1L9GUPOYbZQfBZW
- dX9WXLPmpOrscJumdkSt0b8SgqN9Jsyw29pvx9L94KFFhXb6mpZD44BhbQ7SLREvbNQkypaEdwMQ/
- VgQwHTRX3Ejd57xLHNlI07ZafLgMIXvBRPLIyBF8AE3xPyWn5oOmSvlSwzyvexZ7QJNzLYfln/ZXX
- wxU48uOQ==;
-Received: from [2001:8b0:10b:5:1c0a:b1e9:f10d:816f]
- (helo=u3832b3a9db3152.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1sQ77Y-000000056DS-0nes; Sat, 06 Jul 2024 15:14:40 +0000
-Message-ID: <830699d1fa8aaf3de1fa9ded54228d0811b5aab8.camel@infradead.org>
-Subject: [RFC PATCH v3] ptp: Add vDSO-style vmclock support
-From: David Woodhouse <dwmw2@infradead.org>
-To: Peter Hilber <peter.hilber@opensynergy.com>,
- linux-kernel@vger.kernel.org,  virtualization@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org,  linux-rtc@vger.kernel.org, "Ridoux,
- Julien" <ridouxj@amazon.com>,  virtio-dev@lists.linux.dev, "Luu, Ryan"
- <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>
-Cc: "Christopher S. Hall" <christopher.s.hall@intel.com>, Jason Wang
- <jasowang@redhat.com>, John Stultz <jstultz@google.com>, "Michael S.
- Tsirkin" <mst@redhat.com>, netdev@vger.kernel.org, Richard Cochran
- <richardcochran@gmail.com>, Stephen Boyd <sboyd@kernel.org>, Thomas
- Gleixner <tglx@linutronix.de>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>, Marc
- Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>, Daniel
- Lezcano <daniel.lezcano@linaro.org>, Alessandro Zummo
- <a.zummo@towertech.it>,  Alexandre Belloni <alexandre.belloni@bootlin.com>,
- qemu-devel <qemu-devel@nongnu.org>
-Date: Sat, 06 Jul 2024 16:14:39 +0100
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-A7XXBkhSUxEJ7w2L3Q8s"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
+ id 1sQ7ZG-0007JV-85
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 11:43:18 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
+ id 1sQ7ZD-0004iB-Bx
+ for qemu-devel@nongnu.org; Sat, 06 Jul 2024 11:43:17 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a77c4309fc8so239857466b.3
+ for <qemu-devel@nongnu.org>; Sat, 06 Jul 2024 08:43:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=opnsrc.net; s=google; t=1720280593; x=1720885393; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JINafJZPZuQK6y1lT1i/J985oAJPOEoYkiROHI9bShg=;
+ b=XAkDQ68i/EhzX9eZx60TFb+0iMPoq14ALZCfO1H0CQx+rW4ymbs652CMdvrLZkDRcy
+ wE2D0MFp8Vh1mWYXOTgsBvdLK4NCWCjPhcsj6BxjjG1NdJBdMI07mv8d5BKluWhNLk8E
+ DCjy23baGz6xEmOQmpcVzLJqDJzUqWonvjCEINbpIuMdSVmqCOgI2YBfD20jLTWxkW19
+ 9HingKGAMQEKuTA/Wbb7JaI/kjZ4FI/3DXo2hoX7MOe2jreClz9Ypzks0CAMR2L7QEcj
+ +1AVVhE3EqKg0E7CiT60l73e/Co2LhCm8oolQAjD7U3yNYco0K0GoZ7aiXxvZLRC93zC
+ qieA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720280593; x=1720885393;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JINafJZPZuQK6y1lT1i/J985oAJPOEoYkiROHI9bShg=;
+ b=RkZ/03tuPFi8rBj2dtOOBNUOEYxpd7KdGn7nK9mN4G0JGZgcKlRKITCrjNALMDUg2i
+ N4gVdVo4KzfTy2Sq1xoN9TtGeV96hUK4bJGECGxi9pkwNbVnY0CaA4oLe2clQsaewjMJ
+ mU3cSCwpzC+BhiCvmv3OXq0YAVize0rMhK0sZ2QdWZOhV1tDJc6KBnt8jxUwWytBQK09
+ n1GvR0XiMpRk206QJQt2gTfOT1134fj+76sefULJzgQ03hzpG1WcYf7bg0Yu0Pz1ArFk
+ F+b37P80/8jJwjZNBIRlQs1G8+xsx1sFUqsEOOWjCKgkCDPchyRpd4dmoaVJnw20WYeX
+ +/Zg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWKAlv8Ggn8bt/zpqDxxSbxO8kg+NCTI5N9Jlsaw2qc058BYPZfYY4Ljl/RHnK8LTwGi5tzmAffUwD5mGnvbVXYUSjB6Yc=
+X-Gm-Message-State: AOJu0YzV8pxtp7XrwS2y+UzKaYtrktwyt8eU2Uv4Pb/HR1m+jg7QvdlO
+ B4jH7pJexanz3jSgRWK6ZnYss0aTQe/K+llS+iBaewMFpLAfGeKKx4S7X2+saxHJjXrEPEWAgPs
+ Gv9izF1ravG+HPUG6p/1yZd5vq62Hq2Z7QOeJFw==
+X-Google-Smtp-Source: AGHT+IFjmvmVRPl8QjTu1s9LkoU9l4qbtigRjw6ocZW9Gvtzmklcm8uzu3kAfTt5VQ9Yayfi99iBiiLhdVioO46a57c=
+X-Received: by 2002:a17:906:4751:b0:a6f:4fc8:2665 with SMTP id
+ a640c23a62f3a-a77ba70a724mr469586066b.50.1720280593099; Sat, 06 Jul 2024
+ 08:43:13 -0700 (PDT)
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+2cd58391f824c65ad45b+7622+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+References: <20240607115649.214622-1-salil.mehta@huawei.com>
+ <20240607115649.214622-2-salil.mehta@huawei.com>
+ <20240706151154.7c430b0a@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240706151154.7c430b0a@imammedo.users.ipa.redhat.com>
+From: Salil Mehta <salil.mehta@opnsrc.net>
+Date: Sat, 6 Jul 2024 15:43:01 +0000
+Message-ID: <CAJ7pxeZV6qmDR8aXE5LaDZdjvGCJhnE4RZeL4823XqaiDApe1Q@mail.gmail.com>
+Subject: Re: [PATCH V13 1/8] accel/kvm: Extract common KVM vCPU
+ {creation,parking} code
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, 
+ maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com, 
+ lpieralisi@kernel.org, peter.maydell@linaro.org, richard.henderson@linaro.org, 
+ andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org, 
+ eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com, 
+ mst@redhat.com, will@kernel.org, gshan@redhat.com, rafael@kernel.org, 
+ alex.bennee@linaro.org, linux@armlinux.org.uk, darren@os.amperecomputing.com, 
+ ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com, 
+ karl.heubaum@oracle.com, miguel.luis@oracle.com, zhukeqian1@huawei.com, 
+ wangxiongfeng2@huawei.com, wangyanan55@huawei.com, jiakernel2@gmail.com, 
+ maobibo@loongson.cn, lixianglai@loongson.cn, npiggin@gmail.com, 
+ harshpb@linux.ibm.com, linuxarm@huawei.com, 
+ Shaoqin Huang <shahuang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Content-Type: multipart/alternative; boundary="000000000000aa8788061c960930"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=salil.mehta@opnsrc.net; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,922 +105,642 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---=-A7XXBkhSUxEJ7w2L3Q8s
+--000000000000aa8788061c960930
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-From: David Woodhouse <dwmw@amazon.co.uk>
+Hi Igor,
+Thanks for taking out time to review.
 
-The vmclock "device" provides a shared memory region with precision clock
-information. By using shared memory, it is safe across Live Migration.
+On Sat, Jul 6, 2024 at 1:12=E2=80=AFPM Igor Mammedov <imammedo@redhat.com> =
+wrote:
 
-Like the KVM PTP clock, this can convert TSC-based cross timestamps into
-KVM clock values. Unlike the KVM PTP clock, it does so only when such is
-actually helpful.
-
-The memory region of the device is also exposed to userspace so it can be
-read or memory mapped by application which need reliable notification of
-clock disruptions.
-
-The shared memory structure is intended to be adopted into the nascent
-virtio-rtc specification (since one might consider a virtio-rtc
-specification that doesn't fix the live migration problem to be not fit
-for purpose). It can also be presented via a simple ACPI device.
-
-Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
----
-QEMU implementation at=20
-https://git.infradead.org/users/dwmw2/qemu.git/shortlog/refs/heads/vmclock
-
-Remaining questions/TODO for virtio-rtc adoption:
- =E2=80=A2 Use of signed integer for tai_offset field
- =E2=80=A2 Explicit little-endianness
- =E2=80=A2 Is picoseconds the right unit for absolute error (I was going to=
- make
-   this (seconds>>64) but that actually reduces the *range* that can be
-   expressed).
- =E2=80=A2 Are the clock_status values sensible?
-
-v3:
- =E2=80=A2 Add esterror fields
- =E2=80=A2 Reduce seq_count to 32 bits
- =E2=80=A2 Expand size to permit 64KiB pages
- =E2=80=A2 Align with virtio-rtc fields, values and leap handling
- =E2=80=A2 Drop gettime() method (since we have gettimex())
- =E2=80=A2 Add leap second smearing hint
- =E2=80=A2 Use a real _CRS on the ACPI device
-
-v2:=20
- =E2=80=A2 Add gettimex64() support
- =E2=80=A2 Convert TSC values to KVM clock when appropriate
- =E2=80=A2 Require int128 support
- =E2=80=A2 Add counter_period_shift
- =E2=80=A2 Add timeout when seq_count is invalid
- =E2=80=A2 Add flags field
- =E2=80=A2 Better comments in vmclock ABI structure
- =E2=80=A2 Explicitly forbid smearing (as clock rates would need to change)
-
- drivers/ptp/Kconfig          |  13 +
- drivers/ptp/Makefile         |   1 +
- drivers/ptp/ptp_vmclock.c    | 516 +++++++++++++++++++++++++++++++++++
- include/uapi/linux/vmclock.h | 138 ++++++++++
- 4 files changed, 668 insertions(+)
- create mode 100644 drivers/ptp/ptp_vmclock.c
- create mode 100644 include/uapi/linux/vmclock.h
-
-diff --git a/drivers/ptp/Kconfig b/drivers/ptp/Kconfig
-index 604541dcb320..e98c9767e0ef 100644
---- a/drivers/ptp/Kconfig
-+++ b/drivers/ptp/Kconfig
-@@ -131,6 +131,19 @@ config PTP_1588_CLOCK_KVM
- 	  To compile this driver as a module, choose M here: the module
- 	  will be called ptp_kvm.
-=20
-+config PTP_1588_CLOCK_VMCLOCK
-+	tristate "Virtual machine PTP clock"
-+	depends on X86_TSC || ARM_ARCH_TIMER
-+	depends on PTP_1588_CLOCK && ACPI && ARCH_SUPPORTS_INT128
-+	default y
-+	help
-+	  This driver adds support for using a virtual precision clock
-+	  advertised by the hypervisor. This clock is only useful in virtual
-+	  machines where such a device is present.
-+
-+	  To compile this driver as a module, choose M here: the module
-+	  will be called ptp_vmclock.
-+
- config PTP_1588_CLOCK_IDT82P33
- 	tristate "IDT 82P33xxx PTP clock"
- 	depends on PTP_1588_CLOCK && I2C
-diff --git a/drivers/ptp/Makefile b/drivers/ptp/Makefile
-index 68bf02078053..01b5cd91eb61 100644
---- a/drivers/ptp/Makefile
-+++ b/drivers/ptp/Makefile
-@@ -11,6 +11,7 @@ obj-$(CONFIG_PTP_1588_CLOCK_DTE)	+=3D ptp_dte.o
- obj-$(CONFIG_PTP_1588_CLOCK_INES)	+=3D ptp_ines.o
- obj-$(CONFIG_PTP_1588_CLOCK_PCH)	+=3D ptp_pch.o
- obj-$(CONFIG_PTP_1588_CLOCK_KVM)	+=3D ptp_kvm.o
-+obj-$(CONFIG_PTP_1588_CLOCK_VMCLOCK)	+=3D ptp_vmclock.o
- obj-$(CONFIG_PTP_1588_CLOCK_QORIQ)	+=3D ptp-qoriq.o
- ptp-qoriq-y				+=3D ptp_qoriq.o
- ptp-qoriq-$(CONFIG_DEBUG_FS)		+=3D ptp_qoriq_debugfs.o
-diff --git a/drivers/ptp/ptp_vmclock.c b/drivers/ptp/ptp_vmclock.c
-new file mode 100644
-index 000000000000..e19c2eed8009
---- /dev/null
-+++ b/drivers/ptp/ptp_vmclock.c
-@@ -0,0 +1,516 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Virtual PTP 1588 clock for use with LM-safe VMclock device.
-+ *
-+ * Copyright =C2=A9 2024 Amazon.com, Inc. or its affiliates.
-+ */
-+
-+#include <linux/device.h>
-+#include <linux/err.h>
-+#include <linux/init.h>
-+#include <linux/kernel.h>
-+#include <linux/slab.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/miscdevice.h>
-+#include <linux/acpi.h>
-+#include <uapi/linux/vmclock.h>
-+
-+#include <linux/ptp_clock_kernel.h>
-+
-+#ifdef CONFIG_X86
-+#include <asm/pvclock.h>
-+#include <asm/kvmclock.h>
-+#endif
-+
-+static DEFINE_IDA(vmclock_ida);
-+
-+ACPI_MODULE_NAME("vmclock");
-+
-+struct vmclock_state {
-+	phys_addr_t phys_addr;
-+	struct vmclock_abi *clk;
-+	struct miscdevice miscdev;
-+	struct ptp_clock_info ptp_clock_info;
-+	struct ptp_clock *ptp_clock;
-+	enum clocksource_ids cs_id, sys_cs_id;
-+	int index;
-+	char *name;
-+};
-+
-+#define VMCLOCK_MAX_WAIT ms_to_ktime(100)
-+
-+/*
-+ * Multiply a 64-bit count by a 64-bit tick 'period' in units of seconds >=
-> 64
-+ * and add the fractional second part of the reference time.
-+ *
-+ * The result is a 128-bit value, the top 64 bits of which are seconds, an=
+> On Fri, 7 Jun 2024 12:56:42 +0100
+> Salil Mehta <salil.mehta@huawei.com> wrote:
+>
+> > KVM vCPU creation is done once during the vCPU realization when Qemu
+> vCPU thread
+> > is spawned. This is common to all the architectures as of now.
+> >
+> > Hot-unplug of vCPU results in destruction of the vCPU object in QOM but
+> the
+> > corresponding KVM vCPU object in the Host KVM is not destroyed as KVM
+> doesn't
+> > support vCPU removal. Therefore, its representative KVM vCPU
+> object/context in
+> > Qemu is parked.
+> >
+> > Refactor architecture common logic so that some APIs could be reused by
+> vCPU
+> > Hotplug code of some architectures likes ARM, Loongson etc. Update
+> new/old APIs
+> > with trace events. No functional change is intended here.
+> >
+> > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> > Reviewed-by: Gavin Shan <gshan@redhat.com>
+> > Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> > Tested-by: Miguel Luis <miguel.luis@oracle.com>
+> > Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> > Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> > Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+> > Tested-by: Zhao Liu <zhao1.liu@intel.com>
+> > Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> > Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> > ---
+> >  accel/kvm/kvm-all.c    | 95 ++++++++++++++++++++++++++++--------------
+> >  accel/kvm/kvm-cpus.h   |  1 -
+> >  accel/kvm/trace-events |  5 ++-
+> >  include/sysemu/kvm.h   | 25 +++++++++++
+> >  4 files changed, 92 insertions(+), 34 deletions(-)
+> >
+> > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> > index c0be9f5eed..8f9128bb92 100644
+> > --- a/accel/kvm/kvm-all.c
+> > +++ b/accel/kvm/kvm-all.c
+> > @@ -340,14 +340,71 @@ err:
+> >      return ret;
+> >  }
+> >
+> > +void kvm_park_vcpu(CPUState *cpu)
+> > +{
+> > +    struct KVMParkedVcpu *vcpu;
+> > +
+> > +    trace_kvm_park_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+> > +
+> > +    vcpu =3D g_malloc0(sizeof(*vcpu));
+> > +    vcpu->vcpu_id =3D kvm_arch_vcpu_id(cpu);
+> > +    vcpu->kvm_fd =3D cpu->kvm_fd;
+> > +    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+> > +}
+> > +
+> > +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+> > +{
+> > +    struct KVMParkedVcpu *cpu;
+> > +    int kvm_fd =3D -ENOENT;
+> > +
+> > +    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> > +        if (cpu->vcpu_id =3D=3D vcpu_id) {
+> > +            QLIST_REMOVE(cpu, node);
+> > +            kvm_fd =3D cpu->kvm_fd;
+> > +            g_free(cpu);
+> > +        }
+> > +    }
+> > +
+> > +    trace_kvm_unpark_vcpu(vcpu_id, kvm_fd > 0 ? "unparked" : "not foun=
 d
-+ * the low 64 bits are (seconds >> 64).
-+ *
-+ * If __int128 isn't available, perform the calculation 32 bits at a time =
-to
-+ * avoid overflow.
-+ */
-+static inline uint64_t mul_u64_u64_shr_add_u64(uint64_t *res_hi, uint64_t =
-delta,
-+					       uint64_t period, uint8_t shift,
-+					       uint64_t frac_sec)
-+{
-+	unsigned __int128 res =3D (unsigned __int128)delta * period;
-+
-+	res >>=3D shift;
-+	res +=3D frac_sec;
-+	*res_hi =3D res >> 64;
-+	return (uint64_t)res;
-+}
-+
-+static int vmclock_get_crosststamp(struct vmclock_state *st,
-+				   struct ptp_system_timestamp *sts,
-+				   struct system_counterval_t *system_counter,
-+				   struct timespec64 *tspec)
-+{
-+	ktime_t deadline =3D ktime_add(ktime_get(), VMCLOCK_MAX_WAIT);
-+	struct system_time_snapshot systime_snapshot;
-+	uint64_t cycle, delta, seq, frac_sec;
-+
-+#ifdef CONFIG_X86
-+	/*
-+	 * We'd expect the hypervisor to know this and to report the clock
-+	 * status as VMCLOCK_STATUS_UNRELIABLE. But be paranoid.
-+	 */
-+	if (check_tsc_unstable())
-+		return -EINVAL;
-+#endif
-+
-+	while (1) {
-+		seq =3D st->clk->seq_count & ~1ULL;
-+		virt_rmb();
-+
-+		if (st->clk->clock_status =3D=3D VMCLOCK_STATUS_UNRELIABLE)
-+			return -EINVAL;
-+
-+		/*
-+		 * When invoked for gettimex64(), fill in the pre/post system
-+		 * times. The simple case is when system time is based on the
-+		 * same counter as st->cs_id, in which case all three times
-+		 * will be derived from the *same* counter value.
-+		 *
-+		 * If the system isn't using the same counter, then the value
-+		 * from ktime_get_snapshot() will still be used as pre_ts, and
-+		 * ptp_read_system_postts() is called to populate postts after
-+		 * calling get_cycles().
-+		 *
-+		 * The conversion to timespec64 happens further down, outside
-+		 * the seq_count loop.
-+		 */
-+		if (sts) {
-+			ktime_get_snapshot(&systime_snapshot);
-+			if (systime_snapshot.cs_id =3D=3D st->cs_id) {
-+				cycle =3D systime_snapshot.cycles;
-+			} else {
-+				cycle =3D get_cycles();
-+				ptp_read_system_postts(sts);
-+			}
-+		} else
-+			cycle =3D get_cycles();
-+
-+		delta =3D cycle - st->clk->counter_value;
-+
-+		frac_sec =3D mul_u64_u64_shr_add_u64(&tspec->tv_sec, delta,
-+						   st->clk->counter_period_frac_sec,
-+						   st->clk->counter_period_shift,
-+						   st->clk->utc_time_frac_sec);
-+		tspec->tv_nsec =3D mul_u64_u64_shr(frac_sec, NSEC_PER_SEC, 64);
-+		tspec->tv_sec +=3D st->clk->utc_time_sec;
-+
-+		virt_rmb();
-+		if (seq =3D=3D st->clk->seq_count)
-+			break;
-+
-+		if (ktime_after(ktime_get(), deadline))
-+			return -ETIMEDOUT;
-+	}
-+
-+	if (system_counter) {
-+		system_counter->cycles =3D cycle;
-+		system_counter->cs_id =3D st->cs_id;
-+	}
-+
-+	if (sts) {
-+		sts->pre_ts =3D ktime_to_timespec64(systime_snapshot.real);
-+		if (systime_snapshot.cs_id =3D=3D st->cs_id)
-+			sts->post_ts =3D sts->pre_ts;
-+	}
-+
-+	return 0;
-+}
-+
-+#ifdef CONFIG_X86
-+/*
-+ * In the case where the system is using the KVM clock for timekeeping, co=
-nvert
-+ * the TSC value into a KVM clock time in order to return a paired reading=
- that
-+ * get_device_system_crosststamp() can cope with.
-+ */
-+static int vmclock_get_crosststamp_kvmclock(struct vmclock_state *st,
-+					    struct ptp_system_timestamp *sts,
-+					    struct system_counterval_t *system_counter,
-+					    struct timespec64 *tspec)
-+{
-+	struct pvclock_vcpu_time_info *pvti =3D this_cpu_pvti();
-+	unsigned pvti_ver;
-+	int ret;
-+
-+	preempt_disable_notrace();
-+
-+	do {
-+		pvti_ver =3D pvclock_read_begin(pvti);
-+
-+		ret =3D vmclock_get_crosststamp(st, sts, system_counter, tspec);
-+		if (ret)
-+			break;
-+
-+		system_counter->cycles =3D __pvclock_read_cycles(pvti,
-+							       system_counter->cycles);
-+		system_counter->cs_id =3D CSID_X86_KVM_CLK;
-+
-+		/*
-+		 * This retry should never really happen; if the TSC is
-+		 * stable and reliable enough across vCPUS that it is sane
-+		 * for the hypervisor to expose a VMCLOCK device which uses
-+		 * it as the reference counter, then the KVM clock sohuld be
-+		 * in 'master clock mode' and basically never changed. But
-+		 * the KVM clock is a fickle and often broken thing, so do
-+		 * it "properly" just in case.
-+		 */
-+	} while (pvclock_read_retry(pvti, pvti_ver));
-+
-+	preempt_enable_notrace();
-+
-+	return ret;
-+}
-+#endif
-+
-+static int ptp_vmclock_get_time_fn(ktime_t *device_time,
-+				   struct system_counterval_t *system_counter,
-+				   void *ctx)
-+{
-+	struct vmclock_state *st =3D ctx;
-+	struct timespec64 tspec;
-+	int ret;
-+
-+#ifdef CONFIG_X86
-+	if (READ_ONCE(st->sys_cs_id) =3D=3D CSID_X86_KVM_CLK)
-+		ret =3D vmclock_get_crosststamp_kvmclock(st, NULL, system_counter,
-+						       &tspec);
-+	else
-+#endif
-+		ret =3D vmclock_get_crosststamp(st, NULL, system_counter, &tspec);
-+
-+	if (!ret)
-+		*device_time =3D timespec64_to_ktime(tspec);
-+
-+	return ret;
-+}
-+
-+
-+static int ptp_vmclock_getcrosststamp(struct ptp_clock_info *ptp,
-+				      struct system_device_crosststamp *xtstamp)
-+{
-+	struct vmclock_state *st =3D container_of(ptp, struct vmclock_state,
-+						ptp_clock_info);
-+	int ret =3D get_device_system_crosststamp(ptp_vmclock_get_time_fn, st,
-+						NULL, xtstamp);
-+#ifdef CONFIG_X86
-+	/*
-+	 * On x86, the KVM clock may be used for the system time. We can
-+	 * actually convert a TSC reading to that, and return a paired
-+	 * timestamp that get_device_system_crosststamp() *can* handle.
-+	 */
-+	if (ret =3D=3D -ENODEV) {
-+		struct system_time_snapshot systime_snapshot;
-+		ktime_get_snapshot(&systime_snapshot);
-+
-+		if (systime_snapshot.cs_id =3D=3D CSID_X86_TSC ||
-+		    systime_snapshot.cs_id =3D=3D CSID_X86_KVM_CLK) {
-+			WRITE_ONCE(st->sys_cs_id, systime_snapshot.cs_id);
-+			ret =3D get_device_system_crosststamp(ptp_vmclock_get_time_fn,
-+							    st, NULL, xtstamp);
-+		}
-+	}
-+#endif
-+	return ret;
-+}
-+
-+/*
-+ * PTP clock operations
-+ */
-+
-+static int ptp_vmclock_adjfine(struct ptp_clock_info *ptp, long delta)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
-+static int ptp_vmclock_adjtime(struct ptp_clock_info *ptp, s64 delta)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
-+static int ptp_vmclock_settime(struct ptp_clock_info *ptp,
-+			   const struct timespec64 *ts)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
-+static int ptp_vmclock_gettime(struct ptp_clock_info *ptp, struct timespec=
-64 *ts)
-+{
-+	struct vmclock_state *st =3D container_of(ptp, struct vmclock_state,
-+						ptp_clock_info);
-+
-+	return vmclock_get_crosststamp(st, NULL, NULL, ts);
-+}
-+
-+static int ptp_vmclock_gettimex(struct ptp_clock_info *ptp, struct timespe=
-c64 *ts,
-+				struct ptp_system_timestamp *sts)
-+{
-+	struct vmclock_state *st =3D container_of(ptp, struct vmclock_state,
-+						ptp_clock_info);
-+
-+	return vmclock_get_crosststamp(st, sts, NULL, ts);
-+}
-+
-+static int ptp_vmclock_enable(struct ptp_clock_info *ptp,
-+			  struct ptp_clock_request *rq, int on)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
-+static const struct ptp_clock_info ptp_vmclock_info =3D {
-+	.owner		=3D THIS_MODULE,
-+	.max_adj	=3D 0,
-+	.n_ext_ts	=3D 0,
-+	.n_pins		=3D 0,
-+	.pps		=3D 0,
-+	.adjfine	=3D ptp_vmclock_adjfine,
-+	.adjtime	=3D ptp_vmclock_adjtime,
-+	.gettime64	=3D ptp_vmclock_gettime,
-+	.gettimex64	=3D ptp_vmclock_gettimex,
-+	.settime64	=3D ptp_vmclock_settime,
-+	.enable		=3D ptp_vmclock_enable,
-+	.getcrosststamp =3D ptp_vmclock_getcrosststamp,
-+};
-+
-+static int vmclock_miscdev_mmap(struct file *fp, struct vm_area_struct *vm=
-a)
-+{
-+	struct vmclock_state *st =3D container_of(fp->private_data,
-+						struct vmclock_state, miscdev);
-+
-+	if ((vma->vm_flags & (VM_READ|VM_WRITE)) !=3D VM_READ)
-+		return -EROFS;
-+
-+	if (vma->vm_end - vma->vm_start !=3D PAGE_SIZE || vma->vm_pgoff)
-+		return -EINVAL;
-+
-+        if (io_remap_pfn_range(vma, vma->vm_start,
-+			       st->phys_addr >> PAGE_SHIFT, PAGE_SIZE,
-+                               vma->vm_page_prot))
-+                return -EAGAIN;
-+
-+        return 0;
-+}
-+
-+static ssize_t vmclock_miscdev_read(struct file *fp, char __user *buf,
-+				    size_t count, loff_t *ppos)
-+{
-+	struct vmclock_state *st =3D container_of(fp->private_data,
-+						struct vmclock_state, miscdev);
-+	ktime_t deadline =3D ktime_add(ktime_get(), VMCLOCK_MAX_WAIT);
-+	size_t max_count;
-+	int32_t seq;
-+
-+	if (*ppos >=3D PAGE_SIZE)
-+		return 0;
-+
-+	max_count =3D PAGE_SIZE - *ppos;
-+	if (count > max_count)
-+		count =3D max_count;
-+
-+	while (1) {
-+		seq =3D st->clk->seq_count & ~1ULL;
-+		virt_rmb();
-+
-+		if (copy_to_user(buf, ((char *)st->clk) + *ppos, count))
-+			return -EFAULT;
-+
-+		virt_rmb();
-+		if (seq =3D=3D st->clk->seq_count)
-+			break;
-+
-+		if (ktime_after(ktime_get(), deadline))
-+			return -ETIMEDOUT;
-+	}
-+
-+	*ppos +=3D count;
-+	return count;
-+}
-+
-+static const struct file_operations vmclock_miscdev_fops =3D {
-+        .mmap =3D vmclock_miscdev_mmap,
-+        .read =3D vmclock_miscdev_read,
-+};
-+
-+/* module operations */
-+
-+static void vmclock_remove(struct platform_device *pdev)
-+{
-+	struct device *dev =3D &pdev->dev;
-+	struct vmclock_state *st =3D dev_get_drvdata(dev);
-+
-+	if (st->ptp_clock)
-+		ptp_clock_unregister(st->ptp_clock);
-+
-+	if (st->miscdev.minor =3D=3D MISC_DYNAMIC_MINOR)
-+		misc_deregister(&st->miscdev);
-+}
-+
-+static int vmclock_probe_acpi(struct device *dev, struct vmclock_state *st=
-)
-+{
-+	struct acpi_buffer parsed =3D { ACPI_ALLOCATE_BUFFER };
-+	struct acpi_device *adev =3D ACPI_COMPANION(dev);
-+	union acpi_object *obj;
-+	acpi_status status;
-+
-+	status =3D acpi_evaluate_object(adev->handle, "ADDR", NULL, &parsed);
-+	if (ACPI_FAILURE(status)) {
-+		ACPI_EXCEPTION((AE_INFO, status, "Evaluating ADDR"));
-+		return -ENODEV;
-+	}
-+	obj =3D parsed.pointer;
-+	if (!obj || obj->type !=3D ACPI_TYPE_PACKAGE || obj->package.count !=3D 2=
- ||
-+	    obj->package.elements[0].type !=3D ACPI_TYPE_INTEGER ||
-+	    obj->package.elements[1].type !=3D ACPI_TYPE_INTEGER)
-+		return -EINVAL;
-+
-+	st->phys_addr =3D (obj->package.elements[0].integer.value << 0) |
-+		(obj->package.elements[1].integer.value << 32);
-+
-+	return 0;
-+}
-+
-+static void vmclock_put_idx(void *data)
-+{
-+	struct vmclock_state *st =3D data;
-+
-+	ida_free(&vmclock_ida, st->index);
-+}
-+
-+static int vmclock_probe(struct platform_device *pdev)
-+{
-+	struct device *dev =3D &pdev->dev;
-+	struct vmclock_state *st;
-+	int ret;
-+
-+	st =3D devm_kzalloc(dev, sizeof (*st), GFP_KERNEL);
-+	if (!st)
-+		return -ENOMEM;
-+
-+	if (has_acpi_companion(dev))
-+		ret =3D vmclock_probe_acpi(dev, st);
-+	else
-+		ret =3D -EINVAL; /* Only ACPI for now */
-+
-+	if (ret) {
-+		dev_info(dev, "Failed to obtain physical address: %d\n", ret);
-+		goto out;
-+	}
-+
-+	st->clk =3D devm_memremap(dev, st->phys_addr, sizeof(*st->clk),
-+				MEMREMAP_WB);
-+	if (IS_ERR(st->clk)) {
-+		ret =3D PTR_ERR(st->clk);
-+		dev_info(dev, "failed to map shared memory\n");
-+		st->clk =3D NULL;
-+		goto out;
-+	}
-+
-+	if (st->clk->magic !=3D VMCLOCK_MAGIC ||
-+	    st->clk->size < sizeof(*st->clk) ||
-+	    st->clk->version !=3D 1) {
-+		dev_info(dev, "vmclock magic fields invalid\n");
-+		ret =3D -EINVAL;
-+		goto out;
-+	}
-+
-+	if (IS_ENABLED(CONFIG_ARM64) &&
-+	    st->clk->counter_id =3D=3D VMCLOCK_COUNTER_ARM_VCNT) {
-+		/* Can we check it's the virtual counter? */
-+		st->cs_id =3D CSID_ARM_ARCH_COUNTER;
-+	} else if (IS_ENABLED(CONFIG_X86) &&
-+		   st->clk->counter_id =3D=3D VMCLOCK_COUNTER_X86_TSC) {
-+		st->cs_id =3D CSID_X86_TSC;
-+	}
-+	st->sys_cs_id =3D st->cs_id;
-+
-+	ret =3D ida_alloc(&vmclock_ida, GFP_KERNEL);
-+	if (ret < 0)
-+		goto out;
-+
-+	st->index =3D ret;
-+        ret =3D devm_add_action_or_reset(&pdev->dev, vmclock_put_idx, st);
-+	if (ret)
-+		goto out;
-+
-+	st->name =3D devm_kasprintf(&pdev->dev, GFP_KERNEL, "vmclock%d", st->inde=
-x);
-+	if (!st->name) {
-+		ret =3D -ENOMEM;
-+		goto out;
-+	}
-+
-+	/* If the structure is big enough, it can be mapped to userspace */
-+	if (st->clk->size >=3D PAGE_SIZE) {
-+		st->miscdev.minor =3D MISC_DYNAMIC_MINOR;
-+		st->miscdev.fops =3D &vmclock_miscdev_fops;
-+		st->miscdev.name =3D st->name;
-+
-+		ret =3D misc_register(&st->miscdev);
-+		if (ret)
-+			goto out;
-+	}
-+
-+	/* If there is valid clock information, register a PTP clock */
-+	if (st->cs_id) {
-+		st->ptp_clock_info =3D ptp_vmclock_info;
-+		strncpy(st->ptp_clock_info.name, st->name, sizeof(st->ptp_clock_info.nam=
-e));
-+		st->ptp_clock =3D ptp_clock_register(&st->ptp_clock_info, dev);
-+
-+		if (IS_ERR(st->ptp_clock)) {
-+			ret =3D PTR_ERR(st->ptp_clock);
-+			st->ptp_clock =3D NULL;
-+			vmclock_remove(pdev);
-+			goto out;
-+		}
-+	}
-+
-+	dev_set_drvdata(dev, st);
-+
-+ out:
-+	return ret;
-+}
-+
-+static const struct acpi_device_id vmclock_acpi_ids[] =3D {
-+	{ "VMCLOCK", 0 },
-+	{}
-+};
-+MODULE_DEVICE_TABLE(acpi, vmclock_acpi_ids);
-+
-+static struct platform_driver vmclock_platform_driver =3D {
-+	.probe		=3D vmclock_probe,
-+	.remove_new	=3D vmclock_remove,
-+	.driver	=3D {
-+		.name	=3D "vmclock",
-+		.acpi_match_table =3D vmclock_acpi_ids,
-+	},
-+};
-+
-+module_platform_driver(vmclock_platform_driver)
-+
-+MODULE_AUTHOR("David Woodhouse <dwmw2@infradead.org>");
-+MODULE_DESCRIPTION("PTP clock using VMCLOCK");
-+MODULE_LICENSE("GPL v2");
-diff --git a/include/uapi/linux/vmclock.h b/include/uapi/linux/vmclock.h
-new file mode 100644
-index 000000000000..cf0f22205e79
---- /dev/null
-+++ b/include/uapi/linux/vmclock.h
-@@ -0,0 +1,138 @@
-+/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Cl=
-ause) */
-+
-+/*
-+ * This structure provides a vDSO-style clock to VM guests, exposing the
-+ * relationship (or lack thereof) between the CPU clock (TSC, timebase, ar=
-ch
-+ * counter, etc.) and real time. It is designed to address the problem of
-+ * live migration, which other clock enlightenments do not.
-+ *
-+ * When a guest is live migrated, this affects the clock in two ways.
-+ *
-+ * First, even between identical hosts the actual frequency of the underly=
-ing
-+ * counter will change within the tolerances of its specification (typical=
-ly
-+ * =C2=B150PPM, or 4 seconds a day). The frequency also varies over time o=
-n the
-+ * same host, but can be tracked by NTP as it generally varies slowly. Wit=
-h
-+ * live migration there is a step change in the frequency, with no warning=
-.
-+ *
-+ * Second, there may be a step change in the value of the counter itself, =
-as
-+ * its accuracy is limited by the precision of the NTP synchronization on =
-the
-+ * source and destination hosts.
-+ *
-+ * So any calibration (NTP, PTP, etc.) which the guest has done on the sou=
-rce
-+ * host before migration is invalid, and needs to be redone on the new hos=
-t.
-+ *
-+ * In its most basic mode, this structure provides only an indication to t=
-he
-+ * guest that live migration has occurred. This allows the guest to know t=
-hat
-+ * its clock is invalid and take remedial action. For applications that ne=
-ed
-+ * reliable accurate timestamps (e.g. distributed databases), the structur=
-e
-+ * can be mapped all the way to userspace. This allows the application to =
-see
-+ * directly for itself that the clock is disrupted and take appropriate
-+ * action, even when using a vDSO-style method to get the time instead of =
-a
-+ * system call.
-+ *
-+ * In its more advanced mode. this structure can also be used to expose th=
-e
-+ * precise relationship of the CPU counter to real time, as calibrated by =
-the
-+ * host. This means that userspace applications can have accurate time
-+ * immediately after live migration, rather than having to pause operation=
-s
-+ * and wait for NTP to recover. This mode does, of course, rely on the
-+ * counter being reliable and consistent across CPUs.
-+ *
-+ * Note that this must be true UTC, never with smeared leap seconds. If a
-+ * guest wishes to construct a smeared clock, it can do so. Presenting a
-+ * smeared clock through this interface would be problematic because it
-+ * actually messes with the apparent counter *period*. A linear smearing
-+ * of 1 ms per second would effectively tweak the counter period by 1000PP=
-M
-+ * at the start/end of the smearing period, while a sinusoidal smear would
-+ * basically be impossible to represent.
-+ */
-+
-+#ifndef __VMCLOCK_H__
-+#define __VMCLOCK_H__
-+
-+#ifdef __KERNEL__
-+#include <linux/types.h>
-+#else
-+#include <stdint.h>
-+#endif
-+
-+struct vmclock_abi {
-+	uint32_t magic;
-+#define VMCLOCK_MAGIC	0x4b4c4356 /* "VCLK" */
-+	uint16_t size;		/* Size of page containing this structure */
-+	uint16_t version;	/* 1 */
-+
-+	/* Sequence lock. Low bit means an update is in progress. */
-+	uint64_t seq_count;
-+
-+	/*
-+	 * This field changes to another non-repeating value when the CPU
-+	 * counter is disrupted, for example on live migration.
-+	 */
-+	uint64_t disruption_marker;
-+
-+	/*
-+	 * By providing the TAI offset, the guest can know both UTC and TAI
-+	 * reliably. There is no need to choose one *or* the other. Valid if
-+	 * VMCLOCK_FLAG_TAI_OFFSET_VALID is set in flags.
-+	 */
-+	int16_t tai_offset_sec;
-+
-+	uint16_t flags;
-+	/* Indicates that the tai_offset_sec field is valid */
-+#define VMCLOCK_FLAG_TAI_OFFSET_VALID		(1 << 0)
-+	/*
-+	 * Optionally used to notify guests of pending maintenance events.
-+	 * A guest may wish to remove itself from service if an event is
-+	 * coming up. Two flags indicate the rough imminence of the event.
-+	 */
-+#define VMCLOCK_FLAG_DISRUPTION_SOON		(1 << 1) /* About a day */
-+#define VMCLOCK_FLAG_DISRUPTION_IMMINENT	(1 << 2) /* About an hour */
-+	/* Indicates that the utc_time_maxerror_picosec field is valid */
-+#define VMCLOCK_FLAG_UTC_MAXERROR_VALID		(1 << 3)
-+	/* Indicates counter_period_error_rate_frac_sec is valid */
-+#define VMCLOCK_FLAG_UTC_PERIOD_ERROR_VALID	(1 << 4)
-+
-+	uint8_t clock_status;
-+#define VMCLOCK_STATUS_UNKNOWN		0
-+#define VMCLOCK_STATUS_INITIALIZING	1
-+#define VMCLOCK_STATUS_SYNCHRONIZED	2
-+#define VMCLOCK_STATUS_FREERUNNING	3
-+#define VMCLOCK_STATUS_UNRELIABLE	4
-+
-+	uint8_t counter_id;
-+#define VMCLOCK_COUNTER_INVALID		0
-+#define VMCLOCK_COUNTER_X86_TSC		1
-+#define VMCLOCK_COUNTER_ARM_VCNT	2
-+
-+	/* Bit shift for counter_period_frac_sec and its error rate */
-+	uint8_t counter_period_shift;
-+
-+	/*
-+	 * Unlike in NTP, this can indicate a leap second in the past. This
-+	 * is needed to allow guests to derive an imprecise clock with
-+	 * smeared leap seconds for themselves, as some modes of smearing
-+	 * need the adjustments to continue even after the moment at which
-+	 * the leap second should have occurred.
-+	 */
-+	int8_t leapsecond_direction;
-+	uint64_t leapsecond_tai_sec; /* Since 1970-01-01 00:00:00z */
-+
-+	/*
-+	 * Paired values of counter and UTC at a given point in time.
-+	 */
-+	uint64_t counter_value;
-+	uint64_t utc_time_sec; /* Since 1970-01-01 00:00:00z */
-+	uint64_t utc_time_frac_sec;
-+
-+	/*
-+	 * Counter frequency, and error margin. The unit of these fields is
-+	 * seconds >> (64 + counter_period_shift)
-+	 */
-+	uint64_t counter_period_frac_sec;
-+	uint64_t counter_period_error_rate_frac_sec;
-+
-+	/* Error margin of UTC reading above (=C2=B1 picoseconds) */
-+	uint64_t utc_time_maxerror_picosec;
-+};
-+
-+#endif /*  __VMCLOCK_H__ */
---=20
-2.44.0
+> parked");
+> > +
+> > +    return kvm_fd;
+> > +}
+> > +
+> > +int kvm_create_vcpu(CPUState *cpu)
+> > +{
+> > +    unsigned long vcpu_id =3D kvm_arch_vcpu_id(cpu);
+> > +    KVMState *s =3D kvm_state;
+> > +    int kvm_fd;
+> > +
+> > +    /* check if the KVM vCPU already exist but is parked */
+> > +    kvm_fd =3D kvm_unpark_vcpu(s, vcpu_id);
+> > +    if (kvm_fd < 0) {
+> > +        /* vCPU not parked: create a new KVM vCPU */
+> > +        kvm_fd =3D kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
+> > +        if (kvm_fd < 0) {
+> > +            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu",
+> vcpu_id);
+> > +            return kvm_fd;
+> > +        }
+> > +    }
+> > +
+> > +    cpu->kvm_fd =3D kvm_fd;
+> > +    cpu->kvm_state =3D s;
+> > +    cpu->vcpu_dirty =3D true;
+> > +    cpu->dirty_pages =3D 0;
+> > +    cpu->throttle_us_per_full =3D 0;
+> > +
+> > +    trace_kvm_create_vcpu(cpu->cpu_index, vcpu_id, kvm_fd);
+> > +
+> > +    return 0;
+> > +}
+>
+> Is there any reason why you are embedding/hiding kvm_state in new API
+> instead of passing it as argument (all callers have it defined, so why no=
+t
+> reuse that)?
+>
+
+It is a global variable and I don't think it is a usual practice to specify
+the global variable
+as an input parameter.
 
 
 
---=-A7XXBkhSUxEJ7w2L3Q8s
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzA2MTUxNDM5WjAvBgkqhkiG9w0BCQQxIgQghnm5xpfJ
-nVI8tgRT1IsDuvRQKmWnetnbZAxwYdwDwxAwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgCjSHlWviLx+mIyx0CxR3jmt7quVpLaNMEr
-StxO1ldE7mqtoaeJS2w1ewfPSLlXHFCWJ7/bEWwMqm+6YxbVCRh1QiWaK0LKUs+l2h/4KgCAnHUX
-3mXaVkg7exoyKLPtpFpDr4VCs//WLKBEqQCGv2jHjLHHkUL7C6gQimylv99AF5wLhVJ6qoxq/k8i
-wiB+fqZPz8sTHjV/FTWtJjSblMmKtzTDyAI9j2gFqos8NIs6eyN9DMR+MS/i+etbmmbcsZLRteHL
-JaMTYyXbVTQXcydqV+vqJPxJSBYjNZeHezZPXL6WFEb4e+kAquukF727jB7cjlaUksm57WPuuSEJ
-pWg8gp8rmcampP6dKrV4HT10CD5+rUMYEULK/MPkBzizUygcgBZYT7GddrRgF7irryoqZ1QjIwyH
-2U9HcGRV/5xIJOLLPjKYGrdyqbB5+FImjkjj8QUFfoESgwpDUCwFBGUErcsZWEhVjArbbkU4fZmS
-eDYpRASML9hUYVqccQsLFeuwLRFLAhi51cuwy9WuoI0mx9TBdhFsytoN/wUYa23q49GGp9UIS2Ae
-9I+AlP0PpbmuZDVsWqtSmTsGbRcWMPo4WBjzjFNzAMyxr6Dk32PDfNZcqztiusHAr7syWkwXQBnz
-x4tdPsKXtMz3bED05ejwfOIi6hDHD9fquHIcjhXYSAAAAAAAAA==
+>
+> otherwise patch lgtm
 
 
---=-A7XXBkhSUxEJ7w2L3Q8s--
+May I request your Reviewed-by for this patch?
+
+Thanks
+Salil.
+
+
+>
+>
+> > +
+> >  static int do_kvm_destroy_vcpu(CPUState *cpu)
+> >  {
+> >      KVMState *s =3D kvm_state;
+> >      long mmap_size;
+> > -    struct KVMParkedVcpu *vcpu =3D NULL;
+> >      int ret =3D 0;
+> >
+> > -    trace_kvm_destroy_vcpu();
+> > +    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+> >
+> >      ret =3D kvm_arch_destroy_vcpu(cpu);
+> >      if (ret < 0) {
+> > @@ -373,10 +430,7 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
+> >          }
+> >      }
+> >
+> > -    vcpu =3D g_malloc0(sizeof(*vcpu));
+> > -    vcpu->vcpu_id =3D kvm_arch_vcpu_id(cpu);
+> > -    vcpu->kvm_fd =3D cpu->kvm_fd;
+> > -    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+> > +    kvm_park_vcpu(cpu);
+> >  err:
+> >      return ret;
+> >  }
+> > @@ -389,24 +443,6 @@ void kvm_destroy_vcpu(CPUState *cpu)
+> >      }
+> >  }
+> >
+> > -static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id)
+> > -{
+> > -    struct KVMParkedVcpu *cpu;
+> > -
+> > -    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> > -        if (cpu->vcpu_id =3D=3D vcpu_id) {
+> > -            int kvm_fd;
+> > -
+> > -            QLIST_REMOVE(cpu, node);
+> > -            kvm_fd =3D cpu->kvm_fd;
+> > -            g_free(cpu);
+> > -            return kvm_fd;
+> > -        }
+> > -    }
+> > -
+> > -    return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id);
+> > -}
+> > -
+> >  int kvm_init_vcpu(CPUState *cpu, Error **errp)
+> >  {
+> >      KVMState *s =3D kvm_state;
+> > @@ -415,19 +451,14 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+> >
+> >      trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+> >
+> > -    ret =3D kvm_get_vcpu(s, kvm_arch_vcpu_id(cpu));
+> > +    ret =3D kvm_create_vcpu(cpu);
+> >      if (ret < 0) {
+> > -        error_setg_errno(errp, -ret, "kvm_init_vcpu: kvm_get_vcpu
+> failed (%lu)",
+> > +        error_setg_errno(errp, -ret,
+> > +                         "kvm_init_vcpu: kvm_create_vcpu failed (%lu)"=
+,
+> >                           kvm_arch_vcpu_id(cpu));
+> >          goto err;
+> >      }
+> >
+> > -    cpu->kvm_fd =3D ret;
+> > -    cpu->kvm_state =3D s;
+> > -    cpu->vcpu_dirty =3D true;
+> > -    cpu->dirty_pages =3D 0;
+> > -    cpu->throttle_us_per_full =3D 0;
+> > -
+> >      mmap_size =3D kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
+> >      if (mmap_size < 0) {
+> >          ret =3D mmap_size;
+> > diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
+> > index ca40add32c..171b22fd29 100644
+> > --- a/accel/kvm/kvm-cpus.h
+> > +++ b/accel/kvm/kvm-cpus.h
+> > @@ -22,5 +22,4 @@ bool kvm_supports_guest_debug(void);
+> >  int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr
+> len);
+> >  int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr
+> len);
+> >  void kvm_remove_all_breakpoints(CPUState *cpu);
+> > -
+> >  #endif /* KVM_CPUS_H */
+> > diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
+> > index 681ccb667d..37626c1ac5 100644
+> > --- a/accel/kvm/trace-events
+> > +++ b/accel/kvm/trace-events
+> > @@ -9,6 +9,10 @@ kvm_device_ioctl(int fd, int type, void *arg) "dev fd
+> %d, type 0x%x, arg %p"
+> >  kvm_failed_reg_get(uint64_t id, const char *msg) "Warning: Unable to
+> retrieve ONEREG %" PRIu64 " from KVM: %s"
+> >  kvm_failed_reg_set(uint64_t id, const char *msg) "Warning: Unable to
+> set ONEREG %" PRIu64 " to KVM: %s"
+> >  kvm_init_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id:
+> %lu"
+> > +kvm_create_vcpu(int cpu_index, unsigned long arch_cpu_id, int kvm_fd)
+> "index: %d, id: %lu, kvm fd: %d"
+> > +kvm_destroy_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d
+> id: %lu"
+> > +kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id:
+> %lu"
+> > +kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) "id: %lu %=
+s"
+> >  kvm_irqchip_commit_routes(void) ""
+> >  kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %s
+> vector %d virq %d"
+> >  kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=3D%d"
+> > @@ -25,7 +29,6 @@ kvm_dirty_ring_reaper(const char *s) "%s"
+> >  kvm_dirty_ring_reap(uint64_t count, int64_t t) "reaped %"PRIu64" pages
+> (took %"PRIi64" us)"
+> >  kvm_dirty_ring_reaper_kick(const char *reason) "%s"
+> >  kvm_dirty_ring_flush(int finished) "%d"
+> > -kvm_destroy_vcpu(void) ""
+> >  kvm_failed_get_vcpu_mmap_size(void) ""
+> >  kvm_cpu_exec(void) ""
+> >  kvm_interrupt_exit_request(void) ""
+> > diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+> > index c31d9c7356..c4a914b3d8 100644
+> > --- a/include/sysemu/kvm.h
+> > +++ b/include/sysemu/kvm.h
+> > @@ -313,6 +313,31 @@ int kvm_create_device(KVMState *s, uint64_t type,
+> bool test);
+> >   */
+> >  bool kvm_device_supported(int vmfd, uint64_t type);
+> >
+> > +/**
+> > + * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
+> > + * @cpu: QOM CPUState object for which KVM vCPU has to be
+> fetched/created.
+> > + *
+> > + * @returns: 0 when success, errno (<0) when failed.
+> > + */
+> > +int kvm_create_vcpu(CPUState *cpu);
+> > +
+> > +/**
+> > + * kvm_park_vcpu - Park QEMU KVM vCPU context
+> > + * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to be
+> parked.
+> > + *
+> > + * @returns: none
+> > + */
+> > +void kvm_park_vcpu(CPUState *cpu);
+> > +
+> > +/**
+> > + * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
+> > + * @s: KVM State
+> > + * @vcpu_id: Architecture vCPU ID of the parked vCPU
+> > + *
+> > + * @returns: KVM fd
+> > + */
+> > +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
+> > +
+> >  /* Arch specific hooks */
+> >
+> >  extern const KVMCapabilityInfo kvm_arch_required_capabilities[];
+>
+>
+
+--000000000000aa8788061c960930
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Igor,<div>Thanks for taking out time t=
+o review.</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Sat, Jul 6, 2024 at 1:12=E2=80=AFPM Igor Mammedov &lt;<a=
+ href=3D"mailto:imammedo@redhat.com">imammedo@redhat.com</a>&gt; wrote:<br>=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">On Fri, 7 Jun 2024 =
+12:56:42 +0100<br>
+Salil Mehta &lt;<a href=3D"mailto:salil.mehta@huawei.com" target=3D"_blank"=
+>salil.mehta@huawei.com</a>&gt; wrote:<br>
+<br>
+&gt; KVM vCPU creation is done once during the vCPU realization when Qemu v=
+CPU thread<br>
+&gt; is spawned. This is common to all the architectures as of now.<br>
+&gt; <br>
+&gt; Hot-unplug of vCPU results in destruction of the vCPU object in QOM bu=
+t the<br>
+&gt; corresponding KVM vCPU object in the Host KVM is not destroyed as KVM =
+doesn&#39;t<br>
+&gt; support vCPU removal. Therefore, its representative KVM vCPU object/co=
+ntext in<br>
+&gt; Qemu is parked.<br>
+&gt; <br>
+&gt; Refactor architecture common logic so that some APIs could be reused b=
+y vCPU<br>
+&gt; Hotplug code of some architectures likes ARM, Loongson etc. Update new=
+/old APIs<br>
+&gt; with trace events. No functional change is intended here.<br>
+&gt; <br>
+&gt; Signed-off-by: Salil Mehta &lt;<a href=3D"mailto:salil.mehta@huawei.co=
+m" target=3D"_blank">salil.mehta@huawei.com</a>&gt;<br>
+&gt; Reviewed-by: Gavin Shan &lt;<a href=3D"mailto:gshan@redhat.com" target=
+=3D"_blank">gshan@redhat.com</a>&gt;<br>
+&gt; Tested-by: Vishnu Pajjuri &lt;<a href=3D"mailto:vishnu@os.amperecomput=
+ing.com" target=3D"_blank">vishnu@os.amperecomputing.com</a>&gt;<br>
+&gt; Reviewed-by: Jonathan Cameron &lt;<a href=3D"mailto:Jonathan.Cameron@h=
+uawei.com" target=3D"_blank">Jonathan.Cameron@huawei.com</a>&gt;<br>
+&gt; Tested-by: Xianglai Li &lt;<a href=3D"mailto:lixianglai@loongson.cn" t=
+arget=3D"_blank">lixianglai@loongson.cn</a>&gt;<br>
+&gt; Tested-by: Miguel Luis &lt;<a href=3D"mailto:miguel.luis@oracle.com" t=
+arget=3D"_blank">miguel.luis@oracle.com</a>&gt;<br>
+&gt; Reviewed-by: Shaoqin Huang &lt;<a href=3D"mailto:shahuang@redhat.com" =
+target=3D"_blank">shahuang@redhat.com</a>&gt;<br>
+&gt; Reviewed-by: Vishnu Pajjuri &lt;<a href=3D"mailto:vishnu@os.amperecomp=
+uting.com" target=3D"_blank">vishnu@os.amperecomputing.com</a>&gt;<br>
+&gt; Reviewed-by: Nicholas Piggin &lt;<a href=3D"mailto:npiggin@gmail.com" =
+target=3D"_blank">npiggin@gmail.com</a>&gt;<br>
+&gt; Tested-by: Zhao Liu &lt;<a href=3D"mailto:zhao1.liu@intel.com" target=
+=3D"_blank">zhao1.liu@intel.com</a>&gt;<br>
+&gt; Reviewed-by: Zhao Liu &lt;<a href=3D"mailto:zhao1.liu@intel.com" targe=
+t=3D"_blank">zhao1.liu@intel.com</a>&gt;<br>
+&gt; Reviewed-by: Harsh Prateek Bora &lt;<a href=3D"mailto:harshpb@linux.ib=
+m.com" target=3D"_blank">harshpb@linux.ibm.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 accel/kvm/kvm-all.c=C2=A0 =C2=A0 | 95 ++++++++++++++++++++++++++=
+++--------------<br>
+&gt;=C2=A0 accel/kvm/kvm-cpus.h=C2=A0 =C2=A0|=C2=A0 1 -<br>
+&gt;=C2=A0 accel/kvm/trace-events |=C2=A0 5 ++-<br>
+&gt;=C2=A0 include/sysemu/kvm.h=C2=A0 =C2=A0| 25 +++++++++++<br>
+&gt;=C2=A0 4 files changed, 92 insertions(+), 34 deletions(-)<br>
+&gt; <br>
+&gt; diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c<br>
+&gt; index c0be9f5eed..8f9128bb92 100644<br>
+&gt; --- a/accel/kvm/kvm-all.c<br>
+&gt; +++ b/accel/kvm/kvm-all.c<br>
+&gt; @@ -340,14 +340,71 @@ err:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return ret;<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; +void kvm_park_vcpu(CPUState *cpu)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 struct KVMParkedVcpu *vcpu;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 trace_kvm_park_vcpu(cpu-&gt;cpu_index, kvm_arch_vcpu_id=
+(cpu));<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 vcpu =3D g_malloc0(sizeof(*vcpu));<br>
+&gt; +=C2=A0 =C2=A0 vcpu-&gt;vcpu_id =3D kvm_arch_vcpu_id(cpu);<br>
+&gt; +=C2=A0 =C2=A0 vcpu-&gt;kvm_fd =3D cpu-&gt;kvm_fd;<br>
+&gt; +=C2=A0 =C2=A0 QLIST_INSERT_HEAD(&amp;kvm_state-&gt;kvm_parked_vcpus, =
+vcpu, node);<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 struct KVMParkedVcpu *cpu;<br>
+&gt; +=C2=A0 =C2=A0 int kvm_fd =3D -ENOENT;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 QLIST_FOREACH(cpu, &amp;s-&gt;kvm_parked_vcpus, node) {=
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cpu-&gt;vcpu_id =3D=3D vcpu_id) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 QLIST_REMOVE(cpu, node);<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 kvm_fd =3D cpu-&gt;kvm_fd;<=
+br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(cpu);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 trace_kvm_unpark_vcpu(vcpu_id, kvm_fd &gt; 0 ? &quot;un=
+parked&quot; : &quot;not found parked&quot;);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return kvm_fd;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +int kvm_create_vcpu(CPUState *cpu)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 unsigned long vcpu_id =3D kvm_arch_vcpu_id(cpu);<br>
+&gt; +=C2=A0 =C2=A0 KVMState *s =3D kvm_state;<br>
+&gt; +=C2=A0 =C2=A0 int kvm_fd;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /* check if the KVM vCPU already exist but is parked */=
+<br>
+&gt; +=C2=A0 =C2=A0 kvm_fd =3D kvm_unpark_vcpu(s, vcpu_id);<br>
+&gt; +=C2=A0 =C2=A0 if (kvm_fd &lt; 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* vCPU not parked: create a new KVM vCPU=
+ */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 kvm_fd =3D kvm_vm_ioctl(s, KVM_CREATE_VCP=
+U, vcpu_id);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (kvm_fd &lt; 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_report(&quot;KVM_CREA=
+TE_VCPU IOCTL failed for vCPU %lu&quot;, vcpu_id);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return kvm_fd;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 cpu-&gt;kvm_fd =3D kvm_fd;<br>
+&gt; +=C2=A0 =C2=A0 cpu-&gt;kvm_state =3D s;<br>
+&gt; +=C2=A0 =C2=A0 cpu-&gt;vcpu_dirty =3D true;<br>
+&gt; +=C2=A0 =C2=A0 cpu-&gt;dirty_pages =3D 0;<br>
+&gt; +=C2=A0 =C2=A0 cpu-&gt;throttle_us_per_full =3D 0;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 trace_kvm_create_vcpu(cpu-&gt;cpu_index, vcpu_id, kvm_f=
+d);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 return 0;<br>
+&gt; +}<br>
+<br>
+Is there any reason why you are embedding/hiding kvm_state in new API<br>
+instead of passing it as argument (all callers have it defined, so why not =
+reuse that)?<br></blockquote><div><br></div><div>It is a global variable an=
+d I don&#39;t think it is a usual=C2=A0practice to specify the global varia=
+ble</div><div>as an input parameter.</div><div><br></div><div>=C2=A0</div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+otherwise patch lgtm</blockquote><div><br></div><div>May I request your Rev=
+iewed-by for this patch?</div><div><br></div><div>Thanks</div><div>Salil.</=
+div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px =
+0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"> <br=
+>
+<br>
+&gt; +<br>
+&gt;=C2=A0 static int do_kvm_destroy_vcpu(CPUState *cpu)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 KVMState *s =3D kvm_state;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 long mmap_size;<br>
+&gt; -=C2=A0 =C2=A0 struct KVMParkedVcpu *vcpu =3D NULL;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 int ret =3D 0;<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 trace_kvm_destroy_vcpu();<br>
+&gt; +=C2=A0 =C2=A0 trace_kvm_destroy_vcpu(cpu-&gt;cpu_index, kvm_arch_vcpu=
+_id(cpu));<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 ret =3D kvm_arch_destroy_vcpu(cpu);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (ret &lt; 0) {<br>
+&gt; @@ -373,10 +430,7 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 vcpu =3D g_malloc0(sizeof(*vcpu));<br>
+&gt; -=C2=A0 =C2=A0 vcpu-&gt;vcpu_id =3D kvm_arch_vcpu_id(cpu);<br>
+&gt; -=C2=A0 =C2=A0 vcpu-&gt;kvm_fd =3D cpu-&gt;kvm_fd;<br>
+&gt; -=C2=A0 =C2=A0 QLIST_INSERT_HEAD(&amp;kvm_state-&gt;kvm_parked_vcpus, =
+vcpu, node);<br>
+&gt; +=C2=A0 =C2=A0 kvm_park_vcpu(cpu);<br>
+&gt;=C2=A0 err:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 return ret;<br>
+&gt;=C2=A0 }<br>
+&gt; @@ -389,24 +443,6 @@ void kvm_destroy_vcpu(CPUState *cpu)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; -static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id)<br>
+&gt; -{<br>
+&gt; -=C2=A0 =C2=A0 struct KVMParkedVcpu *cpu;<br>
+&gt; -<br>
+&gt; -=C2=A0 =C2=A0 QLIST_FOREACH(cpu, &amp;s-&gt;kvm_parked_vcpus, node) {=
+<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cpu-&gt;vcpu_id =3D=3D vcpu_id) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int kvm_fd;<br>
+&gt; -<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 QLIST_REMOVE(cpu, node);<br=
+>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 kvm_fd =3D cpu-&gt;kvm_fd;<=
+br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(cpu);<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return kvm_fd;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; -=C2=A0 =C2=A0 }<br>
+&gt; -<br>
+&gt; -=C2=A0 =C2=A0 return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id=
+);<br>
+&gt; -}<br>
+&gt; -<br>
+&gt;=C2=A0 int kvm_init_vcpu(CPUState *cpu, Error **errp)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 KVMState *s =3D kvm_state;<br>
+&gt; @@ -415,19 +451,14 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)<b=
+r>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 trace_kvm_init_vcpu(cpu-&gt;cpu_index, kvm_arch_vc=
+pu_id(cpu));<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 ret =3D kvm_get_vcpu(s, kvm_arch_vcpu_id(cpu));<br>
+&gt; +=C2=A0 =C2=A0 ret =3D kvm_create_vcpu(cpu);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (ret &lt; 0) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, -ret, &quot;kvm_in=
+it_vcpu: kvm_get_vcpu failed (%lu)&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_errno(errp, -ret,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0&quot;kvm_init_vcpu: kvm_create_vcpu failed (%lu)&quot=
+;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0kvm_arch_vcpu_id(cpu));<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto err;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 cpu-&gt;kvm_fd =3D ret;<br>
+&gt; -=C2=A0 =C2=A0 cpu-&gt;kvm_state =3D s;<br>
+&gt; -=C2=A0 =C2=A0 cpu-&gt;vcpu_dirty =3D true;<br>
+&gt; -=C2=A0 =C2=A0 cpu-&gt;dirty_pages =3D 0;<br>
+&gt; -=C2=A0 =C2=A0 cpu-&gt;throttle_us_per_full =3D 0;<br>
+&gt; -<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 mmap_size =3D kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE,=
+ 0);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 if (mmap_size &lt; 0) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D mmap_size;<br>
+&gt; diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h<br>
+&gt; index ca40add32c..171b22fd29 100644<br>
+&gt; --- a/accel/kvm/kvm-cpus.h<br>
+&gt; +++ b/accel/kvm/kvm-cpus.h<br>
+&gt; @@ -22,5 +22,4 @@ bool kvm_supports_guest_debug(void);<br>
+&gt;=C2=A0 int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, v=
+addr len);<br>
+&gt;=C2=A0 int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, v=
+addr len);<br>
+&gt;=C2=A0 void kvm_remove_all_breakpoints(CPUState *cpu);<br>
+&gt; -<br>
+&gt;=C2=A0 #endif /* KVM_CPUS_H */<br>
+&gt; diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events<br>
+&gt; index 681ccb667d..37626c1ac5 100644<br>
+&gt; --- a/accel/kvm/trace-events<br>
+&gt; +++ b/accel/kvm/trace-events<br>
+&gt; @@ -9,6 +9,10 @@ kvm_device_ioctl(int fd, int type, void *arg) &quot;d=
+ev fd %d, type 0x%x, arg %p&quot;<br>
+&gt;=C2=A0 kvm_failed_reg_get(uint64_t id, const char *msg) &quot;Warning: =
+Unable to retrieve ONEREG %&quot; PRIu64 &quot; from KVM: %s&quot;<br>
+&gt;=C2=A0 kvm_failed_reg_set(uint64_t id, const char *msg) &quot;Warning: =
+Unable to set ONEREG %&quot; PRIu64 &quot; to KVM: %s&quot;<br>
+&gt;=C2=A0 kvm_init_vcpu(int cpu_index, unsigned long arch_cpu_id) &quot;in=
+dex: %d id: %lu&quot;<br>
+&gt; +kvm_create_vcpu(int cpu_index, unsigned long arch_cpu_id, int kvm_fd)=
+ &quot;index: %d, id: %lu, kvm fd: %d&quot;<br>
+&gt; +kvm_destroy_vcpu(int cpu_index, unsigned long arch_cpu_id) &quot;inde=
+x: %d id: %lu&quot;<br>
+&gt; +kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) &quot;index: =
+%d id: %lu&quot;<br>
+&gt; +kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) &quot;id:=
+ %lu %s&quot;<br>
+&gt;=C2=A0 kvm_irqchip_commit_routes(void) &quot;&quot;<br>
+&gt;=C2=A0 kvm_irqchip_add_msi_route(char *name, int vector, int virq) &quo=
+t;dev %s vector %d virq %d&quot;<br>
+&gt;=C2=A0 kvm_irqchip_update_msi_route(int virq) &quot;Updating MSI route =
+virq=3D%d&quot;<br>
+&gt; @@ -25,7 +29,6 @@ kvm_dirty_ring_reaper(const char *s) &quot;%s&quot;<=
+br>
+&gt;=C2=A0 kvm_dirty_ring_reap(uint64_t count, int64_t t) &quot;reaped %&qu=
+ot;PRIu64&quot; pages (took %&quot;PRIi64&quot; us)&quot;<br>
+&gt;=C2=A0 kvm_dirty_ring_reaper_kick(const char *reason) &quot;%s&quot;<br=
+>
+&gt;=C2=A0 kvm_dirty_ring_flush(int finished) &quot;%d&quot;<br>
+&gt; -kvm_destroy_vcpu(void) &quot;&quot;<br>
+&gt;=C2=A0 kvm_failed_get_vcpu_mmap_size(void) &quot;&quot;<br>
+&gt;=C2=A0 kvm_cpu_exec(void) &quot;&quot;<br>
+&gt;=C2=A0 kvm_interrupt_exit_request(void) &quot;&quot;<br>
+&gt; diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h<br>
+&gt; index c31d9c7356..c4a914b3d8 100644<br>
+&gt; --- a/include/sysemu/kvm.h<br>
+&gt; +++ b/include/sysemu/kvm.h<br>
+&gt; @@ -313,6 +313,31 @@ int kvm_create_device(KVMState *s, uint64_t type,=
+ bool test);<br>
+&gt;=C2=A0 =C2=A0*/<br>
+&gt;=C2=A0 bool kvm_device_supported(int vmfd, uint64_t type);<br>
+&gt;=C2=A0 <br>
+&gt; +/**<br>
+&gt; + * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU<br>
+&gt; + * @cpu: QOM CPUState object for which KVM vCPU has to be fetched/cre=
+ated.<br>
+&gt; + *<br>
+&gt; + * @returns: 0 when success, errno (&lt;0) when failed.<br>
+&gt; + */<br>
+&gt; +int kvm_create_vcpu(CPUState *cpu);<br>
+&gt; +<br>
+&gt; +/**<br>
+&gt; + * kvm_park_vcpu - Park QEMU KVM vCPU context<br>
+&gt; + * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to b=
+e parked.<br>
+&gt; + *<br>
+&gt; + * @returns: none<br>
+&gt; + */<br>
+&gt; +void kvm_park_vcpu(CPUState *cpu);<br>
+&gt; +<br>
+&gt; +/**<br>
+&gt; + * kvm_unpark_vcpu - unpark QEMU KVM vCPU context<br>
+&gt; + * @s: KVM State<br>
+&gt; + * @vcpu_id: Architecture vCPU ID of the parked vCPU<br>
+&gt; + *<br>
+&gt; + * @returns: KVM fd<br>
+&gt; + */<br>
+&gt; +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);<br>
+&gt; +<br>
+&gt;=C2=A0 /* Arch specific hooks */<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 extern const KVMCapabilityInfo kvm_arch_required_capabilities[];=
+<br>
+<br>
+</blockquote></div></div>
+
+--000000000000aa8788061c960930--
 
