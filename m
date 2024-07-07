@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB22C30653
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74B35C41513
 	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 09:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQNkL-0002eg-UY; Sun, 07 Jul 2024 04:59:50 -0400
+	id 1sQNkL-0002dA-46; Sun, 07 Jul 2024 04:59:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1sQNkH-0002Zd-Gv; Sun, 07 Jul 2024 04:59:45 -0400
+ id 1sQNkH-0002Zf-Jb; Sun, 07 Jul 2024 04:59:45 -0400
 Received: from zproxy4.enst.fr ([137.194.2.223])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1sQNkE-0006J6-B0; Sun, 07 Jul 2024 04:59:45 -0400
+ id 1sQNkE-0006JA-CX; Sun, 07 Jul 2024 04:59:45 -0400
 Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id B01A22077E;
- Sun,  7 Jul 2024 10:59:37 +0200 (CEST)
+ by zproxy4.enst.fr (Postfix) with ESMTP id 5209F206F0;
+ Sun,  7 Jul 2024 10:59:38 +0200 (CEST)
 Received: from zproxy4.enst.fr ([IPv6:::1])
  by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id GSbPr4r7irzX; Sun,  7 Jul 2024 10:59:37 +0200 (CEST)
+ id Pq4vU82PqISi; Sun,  7 Jul 2024 10:59:37 +0200 (CEST)
 Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id E8401206F0;
- Sun,  7 Jul 2024 10:59:36 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr E8401206F0
+ by zproxy4.enst.fr (Postfix) with ESMTP id 9CD8520769;
+ Sun,  7 Jul 2024 10:59:37 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 9CD8520769
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1720342776;
- bh=vgqKD2QOBi6bFJBvLWo5Afi4a+tq/8QOXwi1I5e8m3k=;
+ s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1720342777;
+ bh=c8ENjiff4Xy7HERVz3+urS3GGp04uSfEuEG00VB4S7E=;
  h=From:To:Date:Message-ID:MIME-Version;
- b=BbJ/Ms7/LmWUqouOOrn9Jz7sA04d1QSUMZ8Uv/WrmteoK9GB7rfQe0xoFvyzpw9Bk
- Q6b5lpzbhOITNSYSmf1BvGKAlsP7rzCGUQfto3IRQZCozsVCsJomdpxjoxSdwAOGWA
- ZIRL5QZ/tTR9bIyeGUDxe1JruEQVNxX+hWEAhdjY=
+ b=I1R+/6TamrhEIu+IIbNX6DRixEwzPZSiQW25fT7ErGQvhukLMOZGDBOJ4G4dkH42V
+ dQR9SJZorVxou8+yY6pjEEHOdld8FsnAS2roP3paef5oMj2TOvxByk3S4H2tzjLj1J
+ XEXGKiLaSWncf/qlitlugTxhnyj3+mMDxmLqJAJ8=
 X-Virus-Scanned: amavis at enst.fr
 Received: from zproxy4.enst.fr ([IPv6:::1])
  by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id TAAXG3tW-j4g; Sun,  7 Jul 2024 10:59:36 +0200 (CEST)
+ id X26Yh8W8r6D2; Sun,  7 Jul 2024 10:59:37 +0200 (CEST)
 Received: from inesv-Inspiron-3501.enst.fr (unknown
  [IPv6:2a04:8ec0:0:124::190c])
- by zproxy4.enst.fr (Postfix) with ESMTPSA id 08DD02076A;
- Sun,  7 Jul 2024 10:59:35 +0200 (CEST)
+ by zproxy4.enst.fr (Postfix) with ESMTPSA id C9A9120775;
+ Sun,  7 Jul 2024 10:59:36 +0200 (CEST)
 From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
@@ -50,9 +50,9 @@ Cc: qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
  Arnaud Minier <arnaud.minier@telecom-paris.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 2/3] hw/misc: In STM32L4x5 EXTI, handle direct interrupts
-Date: Sun,  7 Jul 2024 10:58:54 +0200
-Message-ID: <20240707085927.122867-3-ines.varhol@telecom-paris.fr>
+Subject: [PATCH v3 3/3] hw/arm: In STM32L4x5 SOC, connect USART devices to EXTI
+Date: Sun,  7 Jul 2024 10:58:55 +0200
+Message-ID: <20240707085927.122867-4-ines.varhol@telecom-paris.fr>
 X-Mailer: git-send-email 2.43.2
 In-Reply-To: <20240707085927.122867-1-ines.varhol@telecom-paris.fr>
 References: <20240707085927.122867-1-ines.varhol@telecom-paris.fr>
@@ -82,37 +82,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The previous implementation for EXTI interrupts only handled
-"configurable" interrupts, like those originating from STM32L4x5 SYSCFG
-(the only device currently connected to the EXTI up until now).
-
-In order to connect STM32L4x5 USART to the EXTI, this commit adds
-handling for direct interrupts (interrupts without configurable edge).
+The USART devices were previously connecting their outbound IRQs
+directly to the CPU because the EXTI wasn't handling direct lines
+interrupts.
+Now the USART connects to the EXTI inbound GPIOs, and the EXTI connects
+its IRQs to the CPU.
+The existing QTest for the USART (tests/qtest/stm32l4x5_usart-test.c)
+checks that USART1_IRQ in the CPU is pending when expected so it
+confirms that the connection through the EXTI still works.
 
 Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/misc/stm32l4x5_exti.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/arm/stm32l4x5_soc.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/hw/misc/stm32l4x5_exti.c b/hw/misc/stm32l4x5_exti.c
-index b9a69a69f6..e281841dcf 100644
---- a/hw/misc/stm32l4x5_exti.c
-+++ b/hw/misc/stm32l4x5_exti.c
-@@ -113,6 +113,13 @@ static void stm32l4x5_exti_set_irq(void *opaque, int=
- irq, int level)
-         return;
+diff --git a/hw/arm/stm32l4x5_soc.c b/hw/arm/stm32l4x5_soc.c
+index 38f7a2d5d9..fac83d349c 100644
+--- a/hw/arm/stm32l4x5_soc.c
++++ b/hw/arm/stm32l4x5_soc.c
+@@ -81,6 +81,10 @@ static const int exti_irq[NUM_EXTI_IRQ] =3D {
+ #define RCC_BASE_ADDRESS 0x40021000
+ #define RCC_IRQ 5
+=20
++#define EXTI_USART1_IRQ 26
++#define EXTI_UART4_IRQ 29
++#define EXTI_LPUART1_IRQ 31
++
+ static const int exti_or_gates_out[NUM_EXTI_OR_GATES] =3D {
+     23, 40, 63, 1,
+ };
+@@ -129,10 +133,6 @@ static const hwaddr uart_addr[] =3D {
+=20
+ #define LPUART_BASE_ADDRESS 0x40008000
+=20
+-static const int usart_irq[] =3D { 37, 38, 39 };
+-static const int uart_irq[] =3D { 52, 53 };
+-#define LPUART_IRQ 70
+-
+ static void stm32l4x5_soc_initfn(Object *obj)
+ {
+     Stm32l4x5SocState *s =3D STM32L4X5_SOC(obj);
+@@ -297,6 +297,7 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
+c, Error **errp)
+         }
      }
 =20
-+    /* In case of a direct line interrupt */
-+    if (extract32(exti_romask[bank], irq, 1)) {
-+        qemu_set_irq(s->irq[oirq], level);
-+        return;
-+    }
-+
-+    /* In case of a configurable interrupt */
-     if ((level && extract32(s->rtsr[bank], irq, 1)) ||
-         (!level && extract32(s->ftsr[bank], irq, 1))) {
++    /* Connect SYSCFG to EXTI */
+     for (unsigned i =3D 0; i < GPIO_NUM_PINS; i++) {
+         qdev_connect_gpio_out(DEVICE(&s->syscfg), i,
+                               qdev_get_gpio_in(DEVICE(&s->exti), i));
+@@ -322,15 +323,10 @@ static void stm32l4x5_soc_realize(DeviceState *dev_=
+soc, Error **errp)
+             return;
+         }
+         sysbus_mmio_map(busdev, 0, usart_addr[i]);
+-        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, usart_irq=
+[i]));
++        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(DEVICE(&s->exti),
++                                                       EXTI_USART1_IRQ +=
+ i));
+     }
 =20
+-    /*
+-     * TODO: Connect the USARTs, UARTs and LPUART to the EXTI once the E=
+XTI
+-     * can handle other gpio-in than the gpios. (e.g. Direct Lines for t=
+he
+-     * usarts)
+-     */
+-
+     /* UART devices */
+     for (int i =3D 0; i < STM_NUM_UARTS; i++) {
+         g_autofree char *name =3D g_strdup_printf("uart%d-out", STM_NUM_=
+USARTS + i + 1);
+@@ -343,7 +339,8 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
+c, Error **errp)
+             return;
+         }
+         sysbus_mmio_map(busdev, 0, uart_addr[i]);
+-        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, uart_irq[=
+i]));
++        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(DEVICE(&s->exti),
++                                                       EXTI_UART4_IRQ + =
+i));
+     }
+=20
+     /* LPUART device*/
+@@ -356,7 +353,8 @@ static void stm32l4x5_soc_realize(DeviceState *dev_so=
+c, Error **errp)
+         return;
+     }
+     sysbus_mmio_map(busdev, 0, LPUART_BASE_ADDRESS);
+-    sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m, LPUART_IRQ));
++    sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(DEVICE(&s->exti),
++                                                   EXTI_LPUART1_IRQ));
+=20
+     /* APB1 BUS */
+     create_unimplemented_device("TIM2",      0x40000000, 0x400);
 --=20
 2.43.2
 
