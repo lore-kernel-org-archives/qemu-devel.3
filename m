@@ -4,53 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7112C3DA44
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 18:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D33AC3DA41
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 18:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQWLz-0002VG-Vp; Sun, 07 Jul 2024 14:11:16 -0400
+	id 1sQWZc-000647-JR; Sun, 07 Jul 2024 14:25:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1sQWLw-0002Uf-EN
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 14:11:12 -0400
-Received: from torg.zytor.com ([2607:7c80:54:3::138] helo=mail.zytor.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1sQWLu-0008Ap-R8
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 14:11:12 -0400
-Received: from terminus.zytor.com (terminus.zytor.com
- [IPv6:2607:7c80:54:3:0:0:0:136]) (authenticated bits=0)
- by mail.zytor.com (8.17.2/8.17.1) with ESMTPSA id 467IAwCu2793340
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
- Sun, 7 Jul 2024 11:11:01 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 467IAwCu2793340
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
- s=2024061501; t=1720375862;
- bh=iXGMbjpQTWpMUQvwW757TRbDez+R7EpXv1gocfpAutg=;
- h=From:To:Cc:Subject:Date:From;
- b=Md7V/HIcTSHmfDKkFRXnd7SYigqbttPoJq03G43zYJpmMjnhP84UX8Fzxi1gYeQR0
- /UiaM5NY2ymRV9k6Rwvf1kxjdb9Mcu0AXgQk6qkcCGHf9fKS0NthzouyT1LcRsmO1g
- 528Z+wSS+UdIMet+eJJcLYbyol2hWSKkPveotKhGjkK/h4vZPYzyvrKQxDBzgJdn8+
- 3/ZhZ+8iJtUv4OuwM06w/bKBP5rDhABR34IYu580c1DzMG8njhBrdzcyytVuW2zq3+
- FQlS5lUqk+MGt0Vh0XirmZvOBzgI+2HG+zIttgmgTI60tuDbwGCMrOzlPxIh2NvnI3
- UFRwOUcrAy6wQ==
-From: "Xin Li (Intel)" <xin@zytor.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, xin3.li@intel.com
-Subject: [PATCH v1 1/1] target/i386: Add VMX entry load FRED control name to
- VMX feature words
-Date: Sun,  7 Jul 2024 11:10:57 -0700
-Message-ID: <20240707181057.2793329-1-xin@zytor.com>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sQWZW-00063b-Dj
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 14:25:14 -0400
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sQWZT-0003Mu-14
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 14:25:14 -0400
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-25e15406855so2092027fac.0
+ for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 11:25:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720376707; x=1720981507; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x72S/bP572lZYGHI+vmbONPu26VdoFpVFLepZ7z0D+8=;
+ b=Ow+OQPaaVJPs1JOE8G1l0/io8FAkNmcukYZWxxf+cMrajuF6EOCpoHmDqcHzFuWxT4
+ HINLJB9hD62jCFebYu8UHlcCmiRgYU6HTEq9tsi5BhCFC7l4sqEulRQ2GyoqrqeDRBai
+ afmPyxgnyKO3Yu5LTVx7BZpmRh6yfKLkNNj9N93zoQkeGdtQS+GOmS12BRaGyj75PuLa
+ +p0vtaBWDPKWlcMD9tbyC5k+MtW0hXeqrtHmsjrj5rs4AGl0XzGkSJiWHOaSwg4BGa3o
+ IQy0eCTFzx2Nd/fmZo4ucdR1CSKUiG6Hj2RM/fSG35uIu8IP1DiIkdcHa+jyCGepVNRC
+ txjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720376707; x=1720981507;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=x72S/bP572lZYGHI+vmbONPu26VdoFpVFLepZ7z0D+8=;
+ b=Fhc4Kfec8K18ayy9RKElrjve/oCRKwO7yXh7U5LPbK2dCpJwshG2WNiICCF+Lp0wjJ
+ o38n6jFFDb504IXYe58029uFTDvK9Ig/auXpxHa0ZvLi754jJwf/lklTkPUtGJdWcPKB
+ SfjX9CjnzvAsCZjz0MEMGHGnZrVnhjKkVlqBSjfh2EhVGbnSTcTqWWXSQTXJ0Dm4k7Fv
+ 9H5ApX6S/iJ3+6+8LKTWWabtToaIBdRPvoLYkKDyEebGaE3oxRNrV6elSFKsZ31/iINd
+ J1tyKwA4ng1hOabC7qBFRWaILle0F2G/kyRhaMJmuaeOHhJPUdCYQ2SZzJguJQxeISBK
+ ca9A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJa2zHeC6QWG96w+QHwg4irxsui8ioBiYbqoi4ukdKh4xnpuXsFIHwJewQNYdsywgQF4FoXUm/j2zuUS55vbFHrHjClkY=
+X-Gm-Message-State: AOJu0YxZeFWI3RkryQLZ3bnbZGt268Ncsrpk1E775zGESKugDo3jSI5U
+ laibeybLbFHABeLaOIC4K2msB1eEr5vSg6mlJCHiMuu+3wQonwWZaobimyQKLug=
+X-Google-Smtp-Source: AGHT+IGZgvnfqvCHeKaHfz5Cl7QPU0J1nKVF9xxyqLzuKjL/9fMxG8s9ykHkEXcEiGIdsfE5sMISCg==
+X-Received: by 2002:a05:6870:618a:b0:259:8b2f:8d76 with SMTP id
+ 586e51a60fabf-25e2ba129a1mr8610725fac.20.1720376706735; 
+ Sun, 07 Jul 2024 11:25:06 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b0fee6792sm4825305b3a.179.2024.07.07.11.25.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 07 Jul 2024 11:25:06 -0700 (PDT)
+Message-ID: <94961afc-f229-4e0d-be62-9e1cdb886e28@linaro.org>
+Date: Sun, 7 Jul 2024 11:25:04 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:7c80:54:3::138; envelope-from=xin@zytor.com;
- helo=mail.zytor.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 7/7] tests/tcg/x86_64: add test for plugin memory access
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
+ <erdnaxe@crans.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
+ Xingtao Yao <yaoxt.fnst@fujitsu.com>
+References: <20240706191335.878142-1-pierrick.bouvier@linaro.org>
+ <20240706191335.878142-8-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240706191335.878142-8-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,30 +104,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As VMX entry load FRED control is required to enable FRED in nested VMX,
-add it to VMX feature words.
+On 7/6/24 12:13, Pierrick Bouvier wrote:
+> +++ b/tests/tcg/x86_64/test-plugin-mem-access.c
+> @@ -0,0 +1,89 @@
+> +#include <emmintrin.h>
+> +#include <pthread.h>
 
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
----
- target/i386/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+All new files should have license boilerplate and description.
+You can use spdx to limit to just a couple of lines.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c05765eeaf..84a09c19cf 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1450,7 +1450,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             NULL, "vmx-entry-ia32e-mode", NULL, NULL,
-             NULL, "vmx-entry-load-perf-global-ctrl", "vmx-entry-load-pat", "vmx-entry-load-efer",
-             "vmx-entry-load-bndcfgs", NULL, "vmx-entry-load-rtit-ctl", NULL,
--            NULL, NULL, "vmx-entry-load-pkrs", NULL,
-+            NULL, NULL, "vmx-entry-load-pkrs", "vmx-entry-load-fred",
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-         },
 
-base-commit: f2cb4026fccfe073f84a4b440e41d3ed0c3134f6
--- 
-2.45.2
+r~
+
 
 
