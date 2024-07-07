@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7AEC3DA41
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40472C41513
 	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 19:12:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQXIe-0000my-0y; Sun, 07 Jul 2024 15:11:52 -0400
+	id 1sQXIV-0000kW-5M; Sun, 07 Jul 2024 15:11:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sQXId-0000mm-8b
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 15:11:51 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1sQXIT-0000kN-LF
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 15:11:41 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sQXIb-00059a-Pg
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 15:11:51 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1f65a3abd01so22586825ad.3
- for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 12:11:49 -0700 (PDT)
+ id 1sQXIS-00057n-1D
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 15:11:41 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1fb0d7e4ee9so20860715ad.3
+ for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 12:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720379508; x=1720984308; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7QeYYhSPAIOJyKkxryN3Nk246i89++ucyqIxnORISd4=;
- b=OdjFWn5wM4rSaCxbrSNGokrwhJ0IX5Bz2jwNH4VRMb7LDxHeLPMFiIsaAUstQyxHex
- EELjCMdgREHiJghrs1qrY5SVxNQ+aOLrX8j6YTj7ZT1cRz3/2W+hNhkR7RzAtzMPav4b
- dsMvrjmUZpsQ6fZpvU+wY7lfW4gcK4Wt1zmXx8YqcCLqF7OEvpfu1RwbUtQoCvQ5c1HG
- klcMeDttzXHwDWL1f+b5Xey8hZxckhyCgYketYr608Rbi2C+uYYIN0M+0QOZyI6crfdl
- 3SSSzgnmG1xptrkuu6Dqa1mJb9wceyBPQjnvuMxhdNqwyPmG7aVpP4aU/eKGDUz8cYyH
- /9aQ==
+ d=gmail.com; s=20230601; t=1720379497; x=1720984297; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=x4Cvn0idnBY5rLrGLMI3XlTtjVp/Agnh7kMWDPo86Rw=;
+ b=PLa7JlQOLmioJ54gM5ZRZ1mqmfr/lkr7lcmoovNMWANIxdS4J3f0zTDF602RV9yg+d
+ nFrM1ecaLVbHplLAEKF4qYQZ0rwDh/MEjYIKbpsuEQGlVWt67sG3U8lYNpqdlVhzOIeO
+ WkBotl9X7I1xCDNcsX0YoMi9Y9xJF/LUCjO+IgkmsK4Z9b5UVYrsvNLr2cdx7j9HvYbP
+ HZRHZKz+cRTms50MTZjQPoCZFkvdoIMTLFDHQURGXDhtCXzd/c+/EI06IOGr/gRU9Dzh
+ Iy9NPV0NS1lOCz7jPziC7SGdZdnsjOiAtGSjrJIE7KPyihCGAhU6tfyRQuUWLqxEFeZc
+ LCOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720379508; x=1720984308;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7QeYYhSPAIOJyKkxryN3Nk246i89++ucyqIxnORISd4=;
- b=sOAAL3tF/JoPDYXfUthRX3fi9G7jRCvbQiPW0nCE1VzPGXFQGr1m0bNXGcdstaW6JD
- DP0ry+W4g6ngGft1NNMc9PFvwV4FhmZr19qvINkV3LQf61mYADH+7rGYJcp3wG9RynMD
- Q5nGCHj8IcE7/DJdnO5heH+GSsy9A95RuM9/8hpU4aHouLECANggfH3AZxG4nYupm54T
- S5KFuHRYvrOc3jVps2o5Ssju2KOcO6koXQWunIs8f8mUAZIjHeAk72jh5Y/jUmu2XjEE
- HX9WLG//X+V5aahdt15aN6KIZMYoFVMPvM2ViWeQMKOY84caYogoOdEV05Jnmz8SUMG5
- 52Sw==
-X-Gm-Message-State: AOJu0Yx9RbuZYjMNXYfwMy6+ki/zlLW2uLazzxlGyVBzgjzS6P0IVNKm
- sPsQ4Wk+2u/AiIf4uAECF74Aa+0mRYOR3Gtz2rTAuiEpgAnqob5jVFNv0Pt9
-X-Google-Smtp-Source: AGHT+IEOpgOprySwIe49Tz7iuItn+AUFtDpWnuVdEhm6ZbquG9KwJuDeIej/9Edzbwcron4XC3eGCw==
-X-Received: by 2002:a17:903:120b:b0:1f6:ed74:b4e3 with SMTP id
- d9443c01a7336-1fb33e0511amr115189115ad.3.1720379508057; 
- Sun, 07 Jul 2024 12:11:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720379497; x=1720984297;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=x4Cvn0idnBY5rLrGLMI3XlTtjVp/Agnh7kMWDPo86Rw=;
+ b=hGpEnaj3KYRuZqAXHmlqXhPl9hs4aJkExCfMDypQPEbW+SHEAdLSzVqkYpCUwQ3asg
+ iYR6pvTqiLCoroXtGz2w9ew/NLGz2QXDMkMFoAL4xZJs7puAWKmjOmxfLAJz2Wh7MMP5
+ 9nOF9EsEoo0wRvh7KVU/qXLryiLjWAjA/6qLSWbdXGl9LHIeG+sYG6beR5acjOllcBN9
+ TkcHShi9Nk5W3PbJX/RRlsHIKbwfvgmj0Ya2HLZg3k7Lh7Dj/q+voeI4rMWQk22BuVyw
+ fb4PB7zcqkLYY9qdBvBqKsA/z03fXNFjYrEtUwUV5BROhgKKLgmXVTYR43TDvPmmlMWd
+ RwAQ==
+X-Gm-Message-State: AOJu0Yym4NPpsUcy+ZLWzkKcN2kLZH+ZgE8hBbslF+LRi02V6zFsh19u
+ UFwMRCixc133S28XFXGclotcASVfWdBHgmRerzXezVwQIf+b1OE+7D995Q==
+X-Google-Smtp-Source: AGHT+IF+RcyIo1tHgE3j1jzmumWixBWug3zk7Cb6h4Ti8vzs3yVnSNKLTmJ5zPTMNaDR90wVf947kg==
+X-Received: by 2002:a17:902:f70d:b0:1fb:80cf:fc95 with SMTP id
+ d9443c01a7336-1fb80cffef0mr27078495ad.62.1720379496482; 
+ Sun, 07 Jul 2024 12:11:36 -0700 (PDT)
 Received: from localhost.localdomain ([106.222.220.84])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac11d8a70sm172156725ad.118.2024.07.07.12.11.46
+ d9443c01a7336-1fac11d8a70sm172156725ad.118.2024.07.07.12.11.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Jul 2024 12:11:47 -0700 (PDT)
+ Sun, 07 Jul 2024 12:11:36 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>,
- Ajeet Singh <itachis@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>
-Subject: [PATCH v2 5/8] bsd-user:Add get_mcontext function for ARM AArch64
-Date: Mon,  8 Jul 2024 00:41:25 +0530
-Message-Id: <20240707191128.10509-6-itachis@FreeBSD.org>
+Cc: Warner Losh <imp@bsdimp.com>,
+	Ajeet Singh <itachis@FreeBSD.org>
+Subject: [PATCH v2 0/8] ARM AArch64 Support for BSD
+Date: Mon,  8 Jul 2024 00:41:20 +0530
+Message-Id: <20240707191128.10509-1-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240707191128.10509-1-itachis@FreeBSD.org>
-References: <20240707191128.10509-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=itachis6234@gmail.com; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=itachis6234@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,57 +93,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+Patch 1: Previous patches 1 to 5, which were reviewed and acked, have been folded into this patch.Some changes that were suggested,
+         such as replacing "pstate &= ~PSTATE_C" with faster constructs like "env->CF = 0", have been addressed in patch 8.
+Patch 2: In this patch, patches 6 to 11 have been folded. Changes such as using "ROUND_DOWN" for stack pointer calculation
+         and replacing "__uint128_t" with "Int128" in the following patch 8 have been addressed. Also, "CPUARMState" will be
+         changed to "CPUArchState" in the upcoming version, and the issue with "-R" is being worked on separately.
+Patch 3: Patches 12 to 16 were reviewed and folded. The function "get_second_rval" will be used upstream.
+Patch 4: Patches 17 to 19 were folded, and "__uint128_t" to "Int128" has been fixed in patch 8. Also, the suggestion to
+         use "const_le32()" has been deferred for now.
+Patch 5: Previously patch 20, the FP suggestion is being deferred, but the patch is ready for review.
+Patch 6: Previously patch 21 has been reviewed.
+Patch 7: Previously patch 22, same as patch 5.
+Patch 8: Previously patch 23. For now, no changes, but issues of other patches have been addressed, such as updating
+         AArch64 code to use CF directly and changing FP data structures to use Int128 instead of __uint128_t.
 
-function to retrieve machine context,it populates the provided
-target_mcontext_t structure with information from the CPUARMState
-registers.
+Stacey Son (6):
+  bsd-user:Add CPU initialization and management functions
+  bsd-user:Add AArch64 register handling and related functions
+  bsd-user:Add ARM AArch64 signal handling support
+  bsd-user:Add get_mcontext function for ARM AArch64
+  bsd-user:Add set_mcontext function for ARM AArch64
+  bsd-user:Add AArch64 improvements and signal handling functions
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
----
- bsd-user/aarch64/signal.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+Warner Losh (2):
+  bsd-user:Add ARM AArch64 support and capabilities
+  bsd-user:Add setup_sigframe_arch function for ARM AArch64
 
-diff --git a/bsd-user/aarch64/signal.c b/bsd-user/aarch64/signal.c
-index 98861f9ab3..ab3bf8558a 100644
---- a/bsd-user/aarch64/signal.c
-+++ b/bsd-user/aarch64/signal.c
-@@ -51,3 +51,33 @@ abi_long set_sigtramp_args(CPUARMState *regs, int sig,
- 
-     return 0;
- }
-+
-+/*
-+ * Compare to get_mcontext() in arm64/arm64/machdep.c
-+ * Assumes that the memory is locked if mcp points to user memory.
-+ */
-+abi_long get_mcontext(CPUARMState *regs, target_mcontext_t *mcp, int flags)
-+{
-+    int err = 0, i;
-+    uint64_t *gr = mcp->mc_gpregs.gp_x;
-+
-+    mcp->mc_gpregs.gp_spsr = pstate_read(regs);
-+    if (flags & TARGET_MC_GET_CLEAR_RET) {
-+        gr[0] = 0UL;
-+        mcp->mc_gpregs.gp_spsr &= ~CPSR_C;
-+    } else {
-+        gr[0] = tswap64(regs->xregs[0]);
-+    }
-+
-+    for (i = 1; i < 30; i++) {
-+        gr[i] = tswap64(regs->xregs[i]);
-+    }
-+
-+    mcp->mc_gpregs.gp_sp = tswap64(regs->xregs[TARGET_REG_SP]);
-+    mcp->mc_gpregs.gp_lr = tswap64(regs->xregs[TARGET_REG_LR]);
-+    mcp->mc_gpregs.gp_elr = tswap64(regs->pc);
-+
-+    /* XXX FP? */
-+
-+    return err;
-+}
+ bsd-user/aarch64/signal.c               | 137 +++++++++++++++++
+ bsd-user/aarch64/target_arch.h          |  28 ++++
+ bsd-user/aarch64/target_arch_cpu.c      |  31 ++++
+ bsd-user/aarch64/target_arch_cpu.h      | 188 ++++++++++++++++++++++++
+ bsd-user/aarch64/target_arch_elf.h      | 165 +++++++++++++++++++++
+ bsd-user/aarch64/target_arch_reg.h      |  56 +++++++
+ bsd-user/aarch64/target_arch_signal.h   |  80 ++++++++++
+ bsd-user/aarch64/target_arch_sigtramp.h |  48 ++++++
+ bsd-user/aarch64/target_arch_sysarch.h  |  42 ++++++
+ bsd-user/aarch64/target_arch_thread.h   |  61 ++++++++
+ bsd-user/aarch64/target_arch_vmparam.h  |  74 ++++++++++
+ bsd-user/aarch64/target_syscall.h       |  51 +++++++
+ bsd-user/qemu.h                         |   3 +
+ 13 files changed, 964 insertions(+)
+ create mode 100644 bsd-user/aarch64/signal.c
+ create mode 100644 bsd-user/aarch64/target_arch.h
+ create mode 100644 bsd-user/aarch64/target_arch_cpu.c
+ create mode 100644 bsd-user/aarch64/target_arch_cpu.h
+ create mode 100644 bsd-user/aarch64/target_arch_elf.h
+ create mode 100644 bsd-user/aarch64/target_arch_reg.h
+ create mode 100644 bsd-user/aarch64/target_arch_signal.h
+ create mode 100644 bsd-user/aarch64/target_arch_sigtramp.h
+ create mode 100644 bsd-user/aarch64/target_arch_sysarch.h
+ create mode 100644 bsd-user/aarch64/target_arch_thread.h
+ create mode 100644 bsd-user/aarch64/target_arch_vmparam.h
+ create mode 100644 bsd-user/aarch64/target_syscall.h
+
 -- 
 2.34.1
 
