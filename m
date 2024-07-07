@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B80C30653
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 09:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D572C38150
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 11:26:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQNkJ-0002aR-Aq; Sun, 07 Jul 2024 04:59:47 -0400
+	id 1sQQ1I-0002SM-IY; Sun, 07 Jul 2024 07:25:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1sQNkG-0002Yz-9P; Sun, 07 Jul 2024 04:59:44 -0400
-Received: from zproxy4.enst.fr ([2001:660:330f:2::df])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ines.varhol@telecom-paris.fr>)
- id 1sQNkE-0006J1-Bc; Sun, 07 Jul 2024 04:59:44 -0400
-Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id BB88D2075D;
- Sun,  7 Jul 2024 10:59:36 +0200 (CEST)
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10032) with ESMTP
- id 91whTsW1Ly2u; Sun,  7 Jul 2024 10:59:36 +0200 (CEST)
-Received: from localhost (localhost [IPv6:::1])
- by zproxy4.enst.fr (Postfix) with ESMTP id 1BB6F206F0;
- Sun,  7 Jul 2024 10:59:36 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.10.3 zproxy4.enst.fr 1BB6F206F0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=telecom-paris.fr;
- s=A35C7578-1106-11E5-A17F-C303FDDA8F2E; t=1720342776;
- bh=BeaFKQuGG4jIe49CkCds4F/v3CiIYtAA1KyJr5W9pOs=;
- h=From:To:Date:Message-ID:MIME-Version;
- b=uqvB/3QzPqXdItqEfSGsNE18OUPMyLz4ARrqZ7/9Cp87kZ6Bx2ExklHFpMJsgjjNr
- H8BUjPIXO9sVY9i5utAU5tP1xw+JUpzLV+2zJ3Rgxb2Ofj0GihZ/JtT5Rhn1pbypa1
- N0RpxPxv1HkBqfA9cnoURuBDvMA4iyVIya6MMlPM=
-X-Virus-Scanned: amavis at enst.fr
-Received: from zproxy4.enst.fr ([IPv6:::1])
- by localhost (zproxy4.enst.fr [IPv6:::1]) (amavis, port 10026) with ESMTP
- id k15C758iKCTk; Sun,  7 Jul 2024 10:59:35 +0200 (CEST)
-Received: from inesv-Inspiron-3501.enst.fr (unknown
- [IPv6:2a04:8ec0:0:124::190c])
- by zproxy4.enst.fr (Postfix) with ESMTPSA id 3BCC52075C;
- Sun,  7 Jul 2024 10:59:35 +0200 (CEST)
-From: =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>
+ (Exim 4.90_1) (envelope-from <lrh2000@pku.edu.cn>)
+ id 1sQQ1G-0002SA-MJ
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 07:25:26 -0400
+Received: from zg8tmtu5ljy1ljeznc42.icoremail.net ([159.65.134.6])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lrh2000@pku.edu.cn>) id 1sQQ1D-00039I-5J
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 07:25:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=pku.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:Date:
+ Message-ID:MIME-Version:Content-Transfer-Encoding; bh=qs+mRCS9Xv
+ IDMiaCnaWXpyQGgXgHhCiT2BiBzQhadY8=; b=Xqhk2V5zXNdm9t+rpofx95ijfA
+ 6WLsTu7Al7PNR0N46g+KNhdeV6+xW2kqF44KfwWpmrbROm4n+QQruBSBiFTNClOM
+ 2CL5g1DzNTXbDJF0k7Tb0BvWUbs3amm3MMtLS+mvKHUwZRk+ytrkUnz4EWHYRoag
+ Tz9T0EGqzeaUGRbXg=
+Received: from localhost.localdomain (unknown [10.7.41.133])
+ by front01 (Coremail) with SMTP id 5oFpogD30cgUe4pmAJH3AA--.51167S2;
+ Sun, 07 Jul 2024 19:25:11 +0800 (CST)
+From: Ruihan Li <lrh2000@pku.edu.cn>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Alistair Francis <alistair@alistair23.me>,
- =?UTF-8?q?In=C3=A8s=20Varhol?= <ines.varhol@telecom-paris.fr>,
- Arnaud Minier <arnaud.minier@telecom-paris.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 1/3] hw/misc: In STM32L4x5 EXTI, consolidate 2 constants
-Date: Sun,  7 Jul 2024 10:58:53 +0200
-Message-ID: <20240707085927.122867-2-ines.varhol@telecom-paris.fr>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240707085927.122867-1-ines.varhol@telecom-paris.fr>
-References: <20240707085927.122867-1-ines.varhol@telecom-paris.fr>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Ruihan Li <lrh2000@pku.edu.cn>
+Subject: [PATCH] char-mux: Don't overwrite the receive buffer
+Date: Sun,  7 Jul 2024 19:19:42 +0800
+Message-ID: <20240707111940.232549-3-lrh2000@pku.edu.cn>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2001:660:330f:2::df;
- envelope-from=ines.varhol@telecom-paris.fr; helo=zproxy4.enst.fr
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: 5oFpogD30cgUe4pmAJH3AA--.51167S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7uw4ftFy5Jr4fGrWDuF45Jrb_yoW8ur1xpa
+ yYkFyUCr4DJFnFywn8CF1jgw1rAa95XayUG3Z8A34jvw15CrnYvry3Kay093yUu3yxGr1j
+ vrs8ZFWrCF1qv3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUvK1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
+ w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
+ IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1l84ACjcxK6I8E
+ 87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_GcCE3s1lnxkEFVAIw20F6c
+ xK64vIFxWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2Wl
+ Yx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbV
+ WUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc2xSY4AK6svP
+ MxAIw28IcxkI7VAKI48JMxAIw28IcVCjz48v1sIEY20_Kr1UJr1l4I8I3I0E4IkC6x0Yz7
+ v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF
+ 1VAY17CE14v26r126r1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIx
+ AIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI
+ 42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxh
+ VjvjDU0xZFpf9x0JUQZ23UUUUU=
+X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEFBWaBhWQODAAYsf
+Received-SPF: pass client-ip=159.65.134.6; envelope-from=lrh2000@pku.edu.cn;
+ helo=zg8tmtu5ljy1ljeznc42.icoremail.net
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_BL=0.001, RCVD_IN_MSPIKE_L5=0.001, RCVD_IN_VALIDITY_RPBL=1.31,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,77 +81,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Up until now, the EXTI implementation had 16 inbound GPIOs connected to
-the 16 outbound GPIOs of STM32L4x5 SYSCFG.
-The EXTI actually handles 40 lines (namely 5 from STM32L4x5 USART
-devices which are already implemented in QEMU).
-In order to connect USART devices to EXTI, this commit consolidates
-constants `EXTI_NUM_INTERRUPT_OUT_LINES` (40) and
-`EXTI_NUM_GPIO_EVENT_IN_LINES` (16) into `EXTI_NUM_LINES` (40).
+This commit fixes a bug that causes incorrect results when pasting more
+than 32 bytes, the size of the receive buffer b->buffer, into the virtio
+console.
 
-Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Example (note that the last 32 bytes are always correct, but something
+goes wrong just before the last 32 bytes):
+
+	Pasting  abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()
+	Received abcdefg)EFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()EFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()
+
+The root cause of this bug is as follows:
+
+The mux_chr_read function passes the data to the backend via
+be->chr_read one byte at a time, either directly or via another
+mux_chr_accept_input method. However, if the receive buffer is full,
+there is a chance that the mux_chr_can_read method will return more than
+one byte, because in this case the method directly returns whatever
+be->chr_can_read returns.
+
+This is problematic because if mux_chr_read passes a byte to the backend
+by calling be->chr_read, it will consume the entire backend buffer, at
+least in the case of virtio. Once all backend buffers are used,
+mux_chr_read writes all remaining bytes to the receive buffer d->buffer,
+but the number of remaining bytes can be larger than the buffer size.
+This does not lead to security problems since it is a ring buffer, but
+it does mess up the receive data.
+
+This can be fixed by having mux_chr_can_read return either zero or one.
+This fix is not very efficient, but it is quite reasonable since
+mux_chr_read also passes the data to the backend one byte at a time.
+
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
 ---
- include/hw/misc/stm32l4x5_exti.h | 4 ++--
- hw/misc/stm32l4x5_exti.c         | 6 ++----
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ chardev/char-mux.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/misc/stm32l4x5_exti.h b/include/hw/misc/stm32l4x5=
-_exti.h
-index 55f763fa37..62f79362f2 100644
---- a/include/hw/misc/stm32l4x5_exti.h
-+++ b/include/hw/misc/stm32l4x5_exti.h
-@@ -30,7 +30,7 @@
- #define TYPE_STM32L4X5_EXTI "stm32l4x5-exti"
- OBJECT_DECLARE_SIMPLE_TYPE(Stm32l4x5ExtiState, STM32L4X5_EXTI)
-=20
--#define EXTI_NUM_INTERRUPT_OUT_LINES 40
-+#define EXTI_NUM_LINES 40
- #define EXTI_NUM_REGISTER 2
-=20
- struct Stm32l4x5ExtiState {
-@@ -47,7 +47,7 @@ struct Stm32l4x5ExtiState {
-=20
-     /* used for edge detection */
-     uint32_t irq_levels[EXTI_NUM_REGISTER];
--    qemu_irq irq[EXTI_NUM_INTERRUPT_OUT_LINES];
-+    qemu_irq irq[EXTI_NUM_LINES];
- };
-=20
- #endif
-diff --git a/hw/misc/stm32l4x5_exti.c b/hw/misc/stm32l4x5_exti.c
-index 6a2ec62d78..b9a69a69f6 100644
---- a/hw/misc/stm32l4x5_exti.c
-+++ b/hw/misc/stm32l4x5_exti.c
-@@ -42,7 +42,6 @@
- #define EXTI_SWIER2 0x30
- #define EXTI_PR2    0x34
-=20
--#define EXTI_NUM_GPIO_EVENT_IN_LINES 16
- #define EXTI_MAX_IRQ_PER_BANK 32
- #define EXTI_IRQS_BANK0  32
- #define EXTI_IRQS_BANK1  8
-@@ -238,7 +237,7 @@ static void stm32l4x5_exti_init(Object *obj)
- {
-     Stm32l4x5ExtiState *s =3D STM32L4X5_EXTI(obj);
-=20
--    for (size_t i =3D 0; i < EXTI_NUM_INTERRUPT_OUT_LINES; i++) {
-+    for (size_t i =3D 0; i < EXTI_NUM_LINES; i++) {
-         sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq[i]);
+diff --git a/chardev/char-mux.c b/chardev/char-mux.c
+index ee2d47b..5c6eea2 100644
+--- a/chardev/char-mux.c
++++ b/chardev/char-mux.c
+@@ -210,8 +210,8 @@ static int mux_chr_can_read(void *opaque)
+         return 1;
      }
-=20
-@@ -246,8 +245,7 @@ static void stm32l4x5_exti_init(Object *obj)
-                           TYPE_STM32L4X5_EXTI, 0x400);
-     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-=20
--    qdev_init_gpio_in(DEVICE(obj), stm32l4x5_exti_set_irq,
--                      EXTI_NUM_GPIO_EVENT_IN_LINES);
-+    qdev_init_gpio_in(DEVICE(obj), stm32l4x5_exti_set_irq, EXTI_NUM_LINE=
-S);
- }
-=20
- static const VMStateDescription vmstate_stm32l4x5_exti =3D {
---=20
-2.43.2
+ 
+-    if (be && be->chr_can_read) {
+-        return be->chr_can_read(be->opaque);
++    if (be && be->chr_can_read && be->chr_can_read(be->opaque)) {
++        return 1;
+     }
+ 
+     return 0;
+-- 
+2.45.2
 
 
