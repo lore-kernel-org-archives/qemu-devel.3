@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3199CC3DA44
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 20:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2C09C3DA41
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 22:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQYPV-0003pj-PM; Sun, 07 Jul 2024 16:23:01 -0400
+	id 1sQaX3-0001o4-Lv; Sun, 07 Jul 2024 18:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sQYPU-0003pE-1g
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 16:23:00 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sQaX1-0001nq-3u
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 18:38:55 -0400
+Received: from mail-vk1-xa35.google.com ([2607:f8b0:4864:20::a35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sQYPS-0003bp-6x
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 16:22:59 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-652fd0bb5e6so2154492a12.0
- for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 13:22:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sQaWz-0005Gg-EQ
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 18:38:54 -0400
+Received: by mail-vk1-xa35.google.com with SMTP id
+ 71dfb90a1353d-4f2faade55dso786071e0c.1
+ for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 15:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720383776; x=1720988576; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lk/O7wDD/7sHPGr13gWZQbjDvJur2ZHfkRKeMxGuqD8=;
- b=DRr9W0rfITjFS6O8UfDuYAVJV1mfmGf6KFovfhZKUzttWb2GOaskF12PzdIegFFg0E
- Yt6buvPafybHgrfq8NRjPTingcnmIekQ5x+kCi26Y666MbBtUV6Okn7E2pHb6KRo73mu
- lUZXQ/Jnq70x5oDU0hC3HTm/uw4HkML+GhIY5zeLnBjvNbGeWph6a2uoKAUM/d2iOEaV
- LCFPIVf8HEgFmA4H+2NQzFdsZ+BR8z6q9tdhtaz5enO7s+QYt7YvS3JhSDNH2Q/pIlaS
- Oe6NXBD+2ZiLIhbHc3maQGvn6kzaPRZqcukfH9HQRWEM9bcBf46ByztCFVpZgoF5IhNn
- Fk/A==
+ d=gmail.com; s=20230601; t=1720391931; x=1720996731; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=E/lxgjKOnVZfJCmDT/xWhfIAxHIkrlzi59TPuyFKwYU=;
+ b=UQBUcDWWoo8CJ8v2SUwRExmmZu0+Lv4dJfHvZjnw4ovcdenvllXAy1JrRlJd8zs5gz
+ yrAwk+HI62ud1NIjUdn4xUs+SEzfXkQVxAHJuF6BAi+jA7KERfKUwhbtHZ/vUb2crs1f
+ X3lkeq9BjrAdL6NIXizw9M9x6bTdbsct3wpbEkOQte181do2RGyWeptF9eJL87QiP6fy
+ vbdf0iLvov7pkinYcOOhjaQTEnJZhcDySwEyF1BLFNbNrjgwVliAXCEcV5sAhj8Zlbx3
+ Lio6/5cLYdsaExNR55EYfh3ZltJnQ6D4t1byRVvM11PAcUGwWf7hFeXPybPnbflWh96n
+ CKJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720383776; x=1720988576;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lk/O7wDD/7sHPGr13gWZQbjDvJur2ZHfkRKeMxGuqD8=;
- b=m+lqDHquJGDVjFRVHZq/JrwOUBnItrKa5PAI38O33TTrr2XxkCTt2ZT2Fbc8/h/y3U
- GyTYxcqJJ12ClPTSWoryOBp/E6VJAwTk92l0KvrUMQDtBWvczV1fJ0+YVKnWHivhvOWx
- hodN8YEReLWMCd9w2jljk7vIzIqF27RoMyAXtUQmx3JG3V85lo0ATZCHV4td/97f6kiJ
- ffihIq2Jr5b5exwwg1LVuRjRbw8YFrz2tAkIb1T49zdshSucHNQw2tocSdN/0pLh/N4b
- mZb1H8DZhtkdlBJ+JV439BZwSc//CFy47MgmRm9gVNH04zB58kbS8u+1JW6Lw+cKQB5G
- 0hlA==
-X-Gm-Message-State: AOJu0YwaKW40744tMuf0IGmbaX5swruw7H2aK2O94DXPaJ9F7IN95V2D
- n9e+I9Sw3EBLHYHOqluWUmVGXhgolJciaCDlQtMSRJvNWaw8m9dVG1y7nnkEwN3o1Wn9QsczZIp
- XYKA=
-X-Google-Smtp-Source: AGHT+IGxOKx8GU4NxQyUtGqjEjftvxsRceR/80Fh9tTG+6uQmQuysYgng3crO1CoGUTuI+klXAdokw==
-X-Received: by 2002:a05:6a20:d48b:b0:1be:e1e1:d5de with SMTP id
- adf61e73a8af0-1c0cc88ee94mr14245814637.30.1720383775969; 
- Sun, 07 Jul 2024 13:22:55 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c99a92c27csm6764469a91.12.2024.07.07.13.22.55
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 07 Jul 2024 13:22:55 -0700 (PDT)
-Message-ID: <26f31338-72ae-4073-8cd1-090c9c99b031@linaro.org>
-Date: Sun, 7 Jul 2024 13:22:53 -0700
+ d=1e100.net; s=20230601; t=1720391931; x=1720996731;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=E/lxgjKOnVZfJCmDT/xWhfIAxHIkrlzi59TPuyFKwYU=;
+ b=CEPYCi9sVQ0zqUbzs1fZwpiQIG+7ksuECge1zFmoY1D5s8dMe+OHflnUojwxDFUXLI
+ YqJlEAOj0wwWtuO+OCeVIpNsDCSkW0ke+zwxCBBKQm3L+f2sTShELaymz/kp6nqbe1pn
+ QLoLeqJGK5aBHzk6xMaXt4Iu3BzUOVtOzXa2iyGqhh97+2EjMSeQ4gpHTK6Remy3ZHyU
+ yu8a1NETC5Mb14mBygcTFQn4PE8/wmLvbLFu2hR7dS43A1koKuTdMGDwy9R/tz3aNhhf
+ wQr8Qvi2TYb291BbWui/duPesL9jVk47abayLaNuphNN8SSNSrUA+3htQxb1d2C7pPDx
+ hCzw==
+X-Gm-Message-State: AOJu0Yz0fRAsAgglHTPSTgSpvuMkZgajMFWmUI2rN7vuoTGv33PbtlF0
+ 5JGbwp23schWQZVmV2rrFqYsQhoYNacXJRNPFNKcWTKavyRLGRlhChlqx1Ry8v9Ctx1o3HiBmWa
+ hLyZf7vOt/mK6aga90pL3mnPcMss=
+X-Google-Smtp-Source: AGHT+IGGX4lV9yDcd7THGf5Mpof8ZwoJq3kWqzrgD/Iujkm+E2Brex8nJOsy6gGdhxqDW99Qh+i2KRBEbiyjUxNFuNw=
+X-Received: by 2002:a05:6122:4884:b0:4ed:52b:dd29 with SMTP id
+ 71dfb90a1353d-4f2f3e437e6mr11138695e0c.3.1720391930456; Sun, 07 Jul 2024
+ 15:38:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/16] SD/MMC patches for 2024-07-06
-To: qemu-devel@nongnu.org
-References: <20240705220435.15415-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240705220435.15415-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240701022553.1982-1-lijiayi@eswincomputing.com>
+In-Reply-To: <20240701022553.1982-1-lijiayi@eswincomputing.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 8 Jul 2024 08:38:24 +1000
+Message-ID: <CAKmqyKMmqPkMWVotao_PtpFtJLQSYahqvmLxdr-UZdx7o+kgJA@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Validate the mode in write_vstvec
+To: Jiayi Li <lijiayi@eswincomputing.com>
+Cc: qemu-devel@nongnu.org, bmeng.cn@gmail.com, dbarboza@ventanamicro.com, 
+ luweu1518@gmail.com, zhiwei_liu@linux.alibaba.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a35;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa35.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,30 +91,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/24 15:04, Philippe Mathieu-Daudé wrote:
-> The following changes since commit f2cb4026fccfe073f84a4b440e41d3ed0c3134f6:
-> 
->    Merge tag 'pull-maintainer-july24-050724-1' ofhttps://gitlab.com/stsquad/qemu  into staging (2024-07-05 09:15:48 -0700)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/philmd/qemu.git  tags/sdmmc-20240706
-> 
-> for you to fetch changes up to 0bcea3f74b04cdc23ecd6822bea7e46a55eb4be7:
-> 
->    hw/sd/sdcard: Extract TYPE_SDMMC_COMMON from TYPE_SD_CARD (2024-07-05 23:55:02 +0200)
-> 
-> ----------------------------------------------------------------
-> SD/MMC patches queue
-> 
-> - Use published card address (RCA) in qtest/npcm7xx_sdhci
-> - Have cards use random RCA
-> - Use SD spec v3.01 by default
-> - Convert GEN_CMD to sd_generic_read/write_byte style
-> - Extract SDMMC_COMMON abstract QDev parent from SD_CARD
-> - Few housekeeping
+On Mon, Jul 1, 2024 at 3:42=E2=80=AFPM Jiayi Li <lijiayi@eswincomputing.com=
+> wrote:
+>
+> Base on the riscv-privileged spec, vstvec substitutes for the usual stvec=
+.
+> Therefore, the encoding of the MODE should also be restricted to 0 and 1.
+>
+> Signed-off-by: Jiayi Li <lijiayi@eswincomputing.com>
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-r~
+Alistair
+
+> ---
+>  target/riscv/csr.c | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 432c59dc66..f9229d92ab 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -3791,7 +3791,12 @@ static RISCVException read_vstvec(CPURISCVState *e=
+nv, int csrno,
+>  static RISCVException write_vstvec(CPURISCVState *env, int csrno,
+>                                     target_ulong val)
+>  {
+> -    env->vstvec =3D val;
+> +    /* bits [1:0] encode mode; 0 =3D direct, 1 =3D vectored, 2 >=3D rese=
+rved */
+> +    if ((val & 3) < 2) {
+> +        env->vstvec =3D val;
+> +    } else {
+> +        qemu_log_mask(LOG_UNIMP, "CSR_VSTVEC: reserved mode not supporte=
+d\n");
+> +    }
+>      return RISCV_EXCP_NONE;
+>  }
+>
+> --
+> 2.25.1
+>
+>
 
