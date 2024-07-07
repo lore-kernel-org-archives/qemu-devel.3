@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84F94C3DA45
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 19:12:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8AFC3DA41
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Jul 2024 19:12:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQXIk-0000ou-Dt; Sun, 07 Jul 2024 15:11:58 -0400
+	id 1sQXIb-0000mG-DI; Sun, 07 Jul 2024 15:11:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sQXIi-0000oT-NU
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 15:11:56 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sQXIZ-0000lk-TM
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 15:11:47 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sQXIg-0005AC-V4
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 15:11:56 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1fb05b0be01so18836575ad.2
- for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 12:11:54 -0700 (PDT)
+ id 1sQXIX-00058U-Qt
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 15:11:47 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-70af4868d3dso1891750b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 12:11:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720379513; x=1720984313; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720379504; x=1720984304; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xg27xgnLi4xIfFOcGoXylyDerzXo9C4ECzAbWCiXwIs=;
- b=NJYYOXUCC2zJ/5I8HntuqygmN5LY6JXGksE9PkGOtzHbquitntfBM2N5qpW0Xh0MIu
- onD5jHMiFIvpFp0itqH0ObQTO27wfuUwGA7FWE47kicJcUbcHfcvxZvVXLno7TOrqcnE
- Ku2SdFKxqZgJijCh/p7VAh8ZTiFH0R/hyFuxiPCCvNmMimM2nD1NsE60JjrDVdUZB23U
- P2AGPNdKz0pYMOcDV3NYjCm2NoC/NKhgPcxEGAn/ecRhOK+OfarbVkKwaB/0bbUywjVI
- yhRG5H4jDNNdIccwrQfJ8GdAUhSuUiCaJIhWL+m1VZwSXgwkDhfW3cseK8Zo3RX9xv/U
- /Uhw==
+ bh=wdfibBhkqHXEKbib4pcHbTKhIdldRjkJogYjN56GcWY=;
+ b=XAnxL1SvmikR97i30YxhBIrddo5UTAL4g35WfQXRx70ABNTKCFZ9shh589PBLgQqMy
+ tw99VPgcRB/2rT8uXreRsOg+lvl+G7YJa9GrLILw52lPWjdTm2slcx88LmFAl50WxlBt
+ 2iRSBt2R3vsp7ZsbI/GvRceZyzN1NazdSOJxqqLUNLJL8Nh4yFPb5GEpTxS5x6DuSerJ
+ V3ipW1XBGivl9f5pE4GiHNFMzhm3Gy6bmXwWPiOVV94+H+JVJkTpO6XTv5zCiycOUamQ
+ b0cMs0wQhlB0IrUUBlNH2af0nxweUmYKIjdzvj+XGCJ0cDDyVQkTczayWYn945cKDL3W
+ QzVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720379513; x=1720984313;
+ d=1e100.net; s=20230601; t=1720379504; x=1720984304;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xg27xgnLi4xIfFOcGoXylyDerzXo9C4ECzAbWCiXwIs=;
- b=NoNiNsILprM5+yWrxM7c84lKCTCT0mhESZkJbp54XF4jeUJ1nw/HMy/IUvYt3TcnBv
- tALc6e8CFhjGl6jSgSZ/j+K01xtQsqkwRtzDwPHs9hcKAEy04NFVtC0pv7VMaofdnjwy
- +5fQCsESnrbN5O5lc8ZWWG3TE3kGyxSPGYlX6wPB+XnU3vjRvfwId01GBG8UAYj/r7eK
- L+lU/765GOGhEzY8qjBChCij98dXYn2PkSqILWHfjBidrWmQA3fglcWPUq6txF0Zb0uM
- a91LaKcKmtFvgR9EJbaLQACj7QphDTGEBv9YsQfyZTCVdjUURBvnIqR7798REsD0v/eJ
- 9WBA==
-X-Gm-Message-State: AOJu0YwYUzH13jAH7Cu4ycRl/gpdg9BEldOmXZs45YSOp7FkR7n4Ylic
- K0VJQVO5Y0W6SeJSSf0im8iu1Anr2TOTfLxjeUgcILnWllxVm/n5NzVYD26j
-X-Google-Smtp-Source: AGHT+IEEoH0C9spPE58kwVarAh8KAIyTPsXjq8q7V0TLneUbUXCeurdn5sx+Vddq+nituF8jAqLXRg==
-X-Received: by 2002:a17:902:da86:b0:1fb:80a3:5833 with SMTP id
- d9443c01a7336-1fb80a35b3emr29724305ad.47.1720379513456; 
- Sun, 07 Jul 2024 12:11:53 -0700 (PDT)
+ bh=wdfibBhkqHXEKbib4pcHbTKhIdldRjkJogYjN56GcWY=;
+ b=ho/MElxQY3LBh5uQdoTlWGhYLsNOZOSEZOcj4dsszSzP58F0ZaOfVo1EomMpgtnxu3
+ 6mKFERaiswtZmFVPbk56ao9Di1p0cg8WfFR0MhR82jpo1lwPcnWZ5J5AMPbDPxfYLDUl
+ MZOsBfhdTNPR+MqZqFUmwXaEHYTjAsrJlvpdUvWSYJ2XmdAffEExA6ivf2CCGaOWqcsY
+ ZoeZnvcb/0xGXIPQnQfTre5TxuDKwKU/WWGmZlmxwNGzBivQQ8VI1gWARwiT1Rqspzfd
+ humZqalUTDGZpKxpHfCxPRvYXIn269om/sda9WDnMeFgRaqf7ETtYBCJ4no9HAhCuDrB
+ InNA==
+X-Gm-Message-State: AOJu0YzdwMy3rU2ru72zDQDsDGEL3U3KEEGWx3HbVli0vAw7Yb2LT+OH
+ V75zsjJLIuRTgs4hiakeMKr/oVWxpqoFOvnUwOY7cDCibNHcmXdxWiaLkmxq
+X-Google-Smtp-Source: AGHT+IG9XO/cmUFWaaJV3EhQYvwN8ccQZWh2EK5qhP5BPrlpkwM322B7DVQ0BluScwS3DwpBea0vqg==
+X-Received: by 2002:a05:6a20:d49b:b0:1c0:f33e:aae3 with SMTP id
+ adf61e73a8af0-1c0f33eb034mr660380637.59.1720379503855; 
+ Sun, 07 Jul 2024 12:11:43 -0700 (PDT)
 Received: from localhost.localdomain ([106.222.220.84])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fac11d8a70sm172156725ad.118.2024.07.07.12.11.51
+ d9443c01a7336-1fac11d8a70sm172156725ad.118.2024.07.07.12.11.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Jul 2024 12:11:53 -0700 (PDT)
+ Sun, 07 Jul 2024 12:11:43 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>,
- Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH v2 8/8] bsd-user:Add AArch64 improvements and signal handling
- functions
-Date: Mon,  8 Jul 2024 00:41:28 +0530
-Message-Id: <20240707191128.10509-9-itachis@FreeBSD.org>
+ Ajeet Singh <itachis@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v2 3/8] bsd-user:Add ARM AArch64 support and capabilities
+Date: Mon,  8 Jul 2024 00:41:23 +0530
+Message-Id: <20240707191128.10509-4-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240707191128.10509-1-itachis@FreeBSD.org>
 References: <20240707191128.10509-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=itachis6234@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=itachis6234@gmail.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,132 +97,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+From: Warner Losh <imp@bsdimp.com>
 
-Added get_ucontext_sigreturn function to check processor state ensuring current execution mode is EL0 and no flags
-indicating interrupts or exceptions are set.
-Updated AArch64 code to use CF directly without reading/writing the entire processor state, improving efficiency.
-Changed FP data structures to use Int128 instead of __uint128_t, leveraging QEMU's generic mechanism for referencing this type.
+Added function to access rval2 by accessing the x1 register.
+Defined ARM AArch64 ELF parameters including mmap and dynamic load addresses.
+Introduced extensive hardware capability definitions and macros for retrieving hardware capability (hwcap) flags.
+Implemented function to retrieve ARM AArch64 hardware capabilities using the `GET_FEATURE_ID` macro.
+Added function to retrieve extended ARM AArch64 hardware capability flags.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
+Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- bsd-user/aarch64/signal.c             | 20 +++++++++++++++++++-
- bsd-user/aarch64/target_arch_cpu.h    |  7 ++-----
- bsd-user/aarch64/target_arch_reg.h    |  2 +-
- bsd-user/aarch64/target_arch_signal.h |  2 +-
- bsd-user/qemu.h                       |  3 +++
- 5 files changed, 26 insertions(+), 8 deletions(-)
+ bsd-user/aarch64/target_arch_elf.h     | 165 +++++++++++++++++++++++++
+ bsd-user/aarch64/target_arch_vmparam.h |   6 +
+ 2 files changed, 171 insertions(+)
+ create mode 100644 bsd-user/aarch64/target_arch_elf.h
 
-diff --git a/bsd-user/aarch64/signal.c b/bsd-user/aarch64/signal.c
-index 13faac8ce6..6bc73a798f 100644
---- a/bsd-user/aarch64/signal.c
-+++ b/bsd-user/aarch64/signal.c
-@@ -21,7 +21,7 @@
- #include "qemu.h"
- 
- /*
-- * Compare to sendsig() in sys/arm64/arm64/machdep.c
-+ * Compare to sendsig() in sys/arm64/arm64/exec_machdep.c
-  * Assumes that target stack frame memory is locked.
-  */
- abi_long set_sigtramp_args(CPUARMState *regs, int sig,
-@@ -117,3 +117,21 @@ abi_long set_mcontext(CPUARMState *regs, target_mcontext_t *mcp, int srflag)
- 
-     return err;
+diff --git a/bsd-user/aarch64/target_arch_elf.h b/bsd-user/aarch64/target_arch_elf.h
+new file mode 100644
+index 0000000000..7202cd8334
+--- /dev/null
++++ b/bsd-user/aarch64/target_arch_elf.h
+@@ -0,0 +1,165 @@
++/*
++ * ARM AArch64 ELF definitions for bsd-user
++ *
++ * Copyright (c) 2015 Stacey D. Son
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef TARGET_ARCH_ELF_H
++#define TARGET_ARCH_ELF_H
++
++#include "target/arm/cpu-features.h"
++
++#define ELF_START_MMAP 0x80000000
++#define ELF_ET_DYN_LOAD_ADDR    0x100000
++
++#define elf_check_arch(x) ((x) == EM_AARCH64)
++
++#define ELF_CLASS       ELFCLASS64
++#define ELF_DATA        ELFDATA2LSB
++#define ELF_ARCH        EM_AARCH64
++
++#define USE_ELF_CORE_DUMP
++#define ELF_EXEC_PAGESIZE       4096
++
++enum {
++    ARM_HWCAP_A64_FP            = 1 << 0,
++    ARM_HWCAP_A64_ASIMD         = 1 << 1,
++    ARM_HWCAP_A64_EVTSTRM       = 1 << 2,
++    ARM_HWCAP_A64_AES           = 1 << 3,
++    ARM_HWCAP_A64_PMULL         = 1 << 4,
++    ARM_HWCAP_A64_SHA1          = 1 << 5,
++    ARM_HWCAP_A64_SHA2          = 1 << 6,
++    ARM_HWCAP_A64_CRC32         = 1 << 7,
++    ARM_HWCAP_A64_ATOMICS       = 1 << 8,
++    ARM_HWCAP_A64_FPHP          = 1 << 9,
++    ARM_HWCAP_A64_ASIMDHP       = 1 << 10,
++    ARM_HWCAP_A64_CPUID         = 1 << 11,
++    ARM_HWCAP_A64_ASIMDRDM      = 1 << 12,
++    ARM_HWCAP_A64_JSCVT         = 1 << 13,
++    ARM_HWCAP_A64_FCMA          = 1 << 14,
++    ARM_HWCAP_A64_LRCPC         = 1 << 15,
++    ARM_HWCAP_A64_DCPOP         = 1 << 16,
++    ARM_HWCAP_A64_SHA3          = 1 << 17,
++    ARM_HWCAP_A64_SM3           = 1 << 18,
++    ARM_HWCAP_A64_SM4           = 1 << 19,
++    ARM_HWCAP_A64_ASIMDDP       = 1 << 20,
++    ARM_HWCAP_A64_SHA512        = 1 << 21,
++    ARM_HWCAP_A64_SVE           = 1 << 22,
++    ARM_HWCAP_A64_ASIMDFHM      = 1 << 23,
++    ARM_HWCAP_A64_DIT           = 1 << 24,
++    ARM_HWCAP_A64_USCAT         = 1 << 25,
++    ARM_HWCAP_A64_ILRCPC        = 1 << 26,
++    ARM_HWCAP_A64_FLAGM         = 1 << 27,
++    ARM_HWCAP_A64_SSBS          = 1 << 28,
++    ARM_HWCAP_A64_SB            = 1 << 29,
++    ARM_HWCAP_A64_PACA          = 1 << 30,
++    ARM_HWCAP_A64_PACG          = 1UL << 31,
++
++    ARM_HWCAP2_A64_DCPODP       = 1 << 0,
++    ARM_HWCAP2_A64_SVE2         = 1 << 1,
++    ARM_HWCAP2_A64_SVEAES       = 1 << 2,
++    ARM_HWCAP2_A64_SVEPMULL     = 1 << 3,
++    ARM_HWCAP2_A64_SVEBITPERM   = 1 << 4,
++    ARM_HWCAP2_A64_SVESHA3      = 1 << 5,
++    ARM_HWCAP2_A64_SVESM4       = 1 << 6,
++    ARM_HWCAP2_A64_FLAGM2       = 1 << 7,
++    ARM_HWCAP2_A64_FRINT        = 1 << 8,
++    ARM_HWCAP2_A64_SVEI8MM      = 1 << 9,
++    ARM_HWCAP2_A64_SVEF32MM     = 1 << 10,
++    ARM_HWCAP2_A64_SVEF64MM     = 1 << 11,
++    ARM_HWCAP2_A64_SVEBF16      = 1 << 12,
++    ARM_HWCAP2_A64_I8MM         = 1 << 13,
++    ARM_HWCAP2_A64_BF16         = 1 << 14,
++    ARM_HWCAP2_A64_DGH          = 1 << 15,
++    ARM_HWCAP2_A64_RNG          = 1 << 16,
++    ARM_HWCAP2_A64_BTI          = 1 << 17,
++    ARM_HWCAP2_A64_MTE          = 1 << 18,
++};
++
++#define ELF_HWCAP   get_elf_hwcap()
++#define ELF_HWCAP2  get_elf_hwcap2()
++
++#define GET_FEATURE_ID(feat, hwcap) \
++    do { if (cpu_isar_feature(feat, cpu)) { hwcaps |= hwcap; } } while (0)
++
++static uint32_t get_elf_hwcap(void)
++{
++    ARMCPU *cpu = ARM_CPU(thread_cpu);
++    uint32_t hwcaps = 0;
++
++    hwcaps |= ARM_HWCAP_A64_FP;
++    hwcaps |= ARM_HWCAP_A64_ASIMD;
++    hwcaps |= ARM_HWCAP_A64_CPUID;
++
++    /* probe for the extra features */
++
++    GET_FEATURE_ID(aa64_aes, ARM_HWCAP_A64_AES);
++    GET_FEATURE_ID(aa64_pmull, ARM_HWCAP_A64_PMULL);
++    GET_FEATURE_ID(aa64_sha1, ARM_HWCAP_A64_SHA1);
++    GET_FEATURE_ID(aa64_sha256, ARM_HWCAP_A64_SHA2);
++    GET_FEATURE_ID(aa64_sha512, ARM_HWCAP_A64_SHA512);
++    GET_FEATURE_ID(aa64_crc32, ARM_HWCAP_A64_CRC32);
++    GET_FEATURE_ID(aa64_sha3, ARM_HWCAP_A64_SHA3);
++    GET_FEATURE_ID(aa64_sm3, ARM_HWCAP_A64_SM3);
++    GET_FEATURE_ID(aa64_sm4, ARM_HWCAP_A64_SM4);
++    GET_FEATURE_ID(aa64_fp16, ARM_HWCAP_A64_FPHP | ARM_HWCAP_A64_ASIMDHP);
++    GET_FEATURE_ID(aa64_atomics, ARM_HWCAP_A64_ATOMICS);
++    GET_FEATURE_ID(aa64_rdm, ARM_HWCAP_A64_ASIMDRDM);
++    GET_FEATURE_ID(aa64_dp, ARM_HWCAP_A64_ASIMDDP);
++    GET_FEATURE_ID(aa64_fcma, ARM_HWCAP_A64_FCMA);
++    GET_FEATURE_ID(aa64_sve, ARM_HWCAP_A64_SVE);
++    GET_FEATURE_ID(aa64_pauth, ARM_HWCAP_A64_PACA | ARM_HWCAP_A64_PACG);
++    GET_FEATURE_ID(aa64_fhm, ARM_HWCAP_A64_ASIMDFHM);
++    GET_FEATURE_ID(aa64_jscvt, ARM_HWCAP_A64_JSCVT);
++    GET_FEATURE_ID(aa64_sb, ARM_HWCAP_A64_SB);
++    GET_FEATURE_ID(aa64_condm_4, ARM_HWCAP_A64_FLAGM);
++    GET_FEATURE_ID(aa64_dcpop, ARM_HWCAP_A64_DCPOP);
++    GET_FEATURE_ID(aa64_rcpc_8_3, ARM_HWCAP_A64_LRCPC);
++    GET_FEATURE_ID(aa64_rcpc_8_4, ARM_HWCAP_A64_ILRCPC);
++
++    return hwcaps;
++}
++
++static uint32_t get_elf_hwcap2(void)
++{
++    ARMCPU *cpu = ARM_CPU(thread_cpu);
++    uint32_t hwcaps = 0;
++
++    GET_FEATURE_ID(aa64_dcpodp, ARM_HWCAP2_A64_DCPODP);
++    GET_FEATURE_ID(aa64_sve2, ARM_HWCAP2_A64_SVE2);
++    GET_FEATURE_ID(aa64_sve2_aes, ARM_HWCAP2_A64_SVEAES);
++    GET_FEATURE_ID(aa64_sve2_pmull128, ARM_HWCAP2_A64_SVEPMULL);
++    GET_FEATURE_ID(aa64_sve2_bitperm, ARM_HWCAP2_A64_SVEBITPERM);
++    GET_FEATURE_ID(aa64_sve2_sha3, ARM_HWCAP2_A64_SVESHA3);
++    GET_FEATURE_ID(aa64_sve2_sm4, ARM_HWCAP2_A64_SVESM4);
++    GET_FEATURE_ID(aa64_condm_5, ARM_HWCAP2_A64_FLAGM2);
++    GET_FEATURE_ID(aa64_frint, ARM_HWCAP2_A64_FRINT);
++    GET_FEATURE_ID(aa64_sve_i8mm, ARM_HWCAP2_A64_SVEI8MM);
++    GET_FEATURE_ID(aa64_sve_f32mm, ARM_HWCAP2_A64_SVEF32MM);
++    GET_FEATURE_ID(aa64_sve_f64mm, ARM_HWCAP2_A64_SVEF64MM);
++    GET_FEATURE_ID(aa64_sve_bf16, ARM_HWCAP2_A64_SVEBF16);
++    GET_FEATURE_ID(aa64_i8mm, ARM_HWCAP2_A64_I8MM);
++    GET_FEATURE_ID(aa64_bf16, ARM_HWCAP2_A64_BF16);
++    GET_FEATURE_ID(aa64_rndr, ARM_HWCAP2_A64_RNG);
++    GET_FEATURE_ID(aa64_bti, ARM_HWCAP2_A64_BTI);
++    GET_FEATURE_ID(aa64_mte, ARM_HWCAP2_A64_MTE);
++
++    return hwcaps;
++}
++
++#undef GET_FEATURE_ID
++
++#endif /* TARGET_ARCH_ELF_H */
+diff --git a/bsd-user/aarch64/target_arch_vmparam.h b/bsd-user/aarch64/target_arch_vmparam.h
+index dc66e1289b..0c35491970 100644
+--- a/bsd-user/aarch64/target_arch_vmparam.h
++++ b/bsd-user/aarch64/target_arch_vmparam.h
+@@ -65,4 +65,10 @@ static inline void set_second_rval(CPUARMState *state, abi_ulong retval2)
+ {
+     state->xregs[1] = retval2; /* XXX not really used on 64-bit arch */
  }
 +
-+/* Compare to sys_sigreturn() in  arm64/arm64/machdep.c */
-+abi_long get_ucontext_sigreturn(CPUARMState *regs, abi_ulong target_sf,
-+                                abi_ulong *target_uc)
++static inline abi_ulong get_second_rval(CPUARMState *state)
 +{
-+    uint32_t pstate = pstate_read(regs);
-+
-+    *target_uc = 0;
-+
-+    if ((pstate & PSTATE_M) != PSTATE_MODE_EL0t  ||
-+        (pstate & (PSTATE_F | PSTATE_I | PSTATE_A | PSTATE_D)) != 0) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    *target_uc = target_sf;
-+
-+    return 0;
++    return state->xregs[1];
 +}
-diff --git a/bsd-user/aarch64/target_arch_cpu.h b/bsd-user/aarch64/target_arch_cpu.h
-index 4e950305d3..408aef2bb5 100644
---- a/bsd-user/aarch64/target_arch_cpu.h
-+++ b/bsd-user/aarch64/target_arch_cpu.h
-@@ -47,7 +47,6 @@ static inline void target_cpu_loop(CPUARMState *env)
-     CPUState *cs = env_cpu(env);
-     int trapnr, ec, fsc, si_code, si_signo;
-     uint64_t code, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8;
--    uint32_t pstate;
-     abi_long ret;
- 
-     for (;;) {
-@@ -87,18 +86,16 @@ static inline void target_cpu_loop(CPUARMState *env)
-              * The carry bit is cleared for no error; set for error.
-              * See arm64/arm64/vm_machdep.c cpu_set_syscall_retval()
-              */
--            pstate = pstate_read(env);
-             if (ret >= 0) {
--                pstate &= ~PSTATE_C;
-+                env->CF = 0;
-                 env->xregs[0] = ret;
-             } else if (ret == -TARGET_ERESTART) {
-                 env->pc -= 4;
-                 break;
-             } else if (ret != -TARGET_EJUSTRETURN) {
--                pstate |= PSTATE_C;
-+                env->CF = 1;
-                 env->xregs[0] = -ret;
-             }
--            pstate_write(env, pstate);
-             break;
- 
-         case EXCP_INTERRUPT:
-diff --git a/bsd-user/aarch64/target_arch_reg.h b/bsd-user/aarch64/target_arch_reg.h
-index 5c7154f0c1..b53302e7f7 100644
---- a/bsd-user/aarch64/target_arch_reg.h
-+++ b/bsd-user/aarch64/target_arch_reg.h
-@@ -31,7 +31,7 @@ typedef struct target_reg {
- } target_reg_t;
- 
- typedef struct target_fpreg {
--    __uint128_t     fp_q[32];
-+    Int128          fp_q[32];
-     uint32_t        fp_sr;
-     uint32_t        fp_cr;
- } target_fpreg_t;
-diff --git a/bsd-user/aarch64/target_arch_signal.h b/bsd-user/aarch64/target_arch_signal.h
-index df17173316..bff752a67a 100644
---- a/bsd-user/aarch64/target_arch_signal.h
-+++ b/bsd-user/aarch64/target_arch_signal.h
-@@ -49,7 +49,7 @@ struct target_gpregs {
- };
- 
- struct target_fpregs {
--    __uint128_t fp_q[32];
-+    Int128      fp_q[32];
-     uint32_t    fp_sr;
-     uint32_t    fp_cr;
-     uint32_t    fp_flags;
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index 9d2fc7148e..3736c41786 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -17,6 +17,9 @@
- #ifndef QEMU_H
- #define QEMU_H
- 
-+#include <sys/param.h>
 +
-+#include "qemu/int128.h"
- #include "cpu.h"
- #include "qemu/units.h"
- #include "exec/cpu_ldst.h"
+ #endif /* TARGET_ARCH_VMPARAM_H */
 -- 
 2.34.1
 
