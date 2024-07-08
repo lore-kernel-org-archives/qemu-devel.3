@@ -4,71 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1895CC3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 15:33:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2C0C3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 15:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQqMn-0005Ma-Oe; Mon, 08 Jul 2024 11:33:25 -0400
+	id 1sQqQW-00035p-8A; Mon, 08 Jul 2024 11:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sQqMk-0005LE-VV
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:33:22 -0400
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sQqQU-00035K-MI
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:37:14 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sQqMf-0000D8-8R
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:33:19 -0400
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-52ea5765e75so4078008e87.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 08:33:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sQqQT-0001Kn-6O
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:37:14 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-75ee39f1ffbso2969415a12.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 08:37:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720452794; x=1721057594; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CfDKabwbkhzBnNFkgs25Ai9FqhNzmhV2Qv0inHFS3/U=;
- b=Nq8ve4zpbtkc8EdUhGG5dWcmF3vV7RoNlbMa6isw4kL9/20xBfKjg2d0AUpBms260q
- DCI3qJz2ZXI0MSSabxpnI9mHDDvCKRwksjyZA9xuvHjIEW+cotMM9uCuZxHxDxY1JOZL
- 16JZ+X1m2p2ifrvkcgCJjKDP/L91PCauEJZdnKQYn4kG1SOPxkitXBYFBJhDSGf4hjUn
- xC1kCUESUujw81Kd39i3lnLZQ6JIzuvgO4o5HTfKRLmNyGsbYIjYAOH0J87zzObWbI9Y
- M7MGzSlUazirXEPBbr+4BcZnsVhrAQIEmMMGboqUCxLMe9WM9t3F3Pzr4LcT/RC5bAON
- mfVQ==
+ d=linaro.org; s=google; t=1720453032; x=1721057832; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=5MAFIySr/6ifcfVkzRdNJpopzwxbmdSq22xk3AL2kIs=;
+ b=grggitXeiOoJ6rqbb8bYeK4rvPtDW7WuFXKoGT5evZPfWU7WLkN+MbxkGvnfRzXyvQ
+ FYELhrP9p7b8Omi6nw9sMFo55BHHHs/J2cYs3Cqd01mAP8M2czfZKEHo/+1O6gP7cPtA
+ weJQObDKDmDjmMtvWtovN+7XDYQ5o9lkD8pN/oEoW9g0jn0VefUiHjLsgOAfQnFFPbAx
+ tTZPjLiL6FD5zpdM59fsMcfdU10tOuY/q1hYffDNf5L4MhF0DmtWH8F84RDCNIgOZMHA
+ M9PSJT97JwMf4EYS/1bDLy2X0RHOnakdqAkyJ9Tl8I9jga+KkHIaszdZbqhulzFOANBm
+ wWcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720452794; x=1721057594;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CfDKabwbkhzBnNFkgs25Ai9FqhNzmhV2Qv0inHFS3/U=;
- b=SJo5e0CIy8ih5mJpPYDnWGFZioMDPYWhdwJdbdyFNDklBOnmuOpdMutOoAWWdYF2TL
- SY04emN0rz2LChc+ODZZy2ml2/KiEp745Ik6rWMI6D1s9kxs32ZQlVdmDGrpY63YFmgH
- LgrUiS6B4rS6dkCvf1kb2YOh7zfOo8J2LpMXuMGa9DxZmZqcK26YMm+XJcdLh+fSVhXW
- pzb+6OlfT5EX3TpCtJ7ij2jMp3M1cBMXbG/XGIFNWdY9KpnY5rSSnYbxKoKPo5X2vmx6
- wCfq/UedsXikjP5Q8l8tYbZr/NhdhbKsMvYlv0g4xtEfOEdFDd9plJLRB3sQCARU8Cs/
- 0pjg==
-X-Gm-Message-State: AOJu0YyZC5U0CxuiEs2KrEGA/z82uK5PrILiSFoLKq12GM5TpcK6WCTL
- S5V5C9QKDDEj+dg/fgEpbxFBcPq3WKCaqGkPQq4SGrza5vSB2e7ap8VQpzzrKmb7p1UZjIpm+ax
- KjvY=
-X-Google-Smtp-Source: AGHT+IHkOZhjpccss1GkjOYqcTQ3dhrsEkSpbvUQgShPUnl5t9DHST4nBxYLw76fHQtPQC7RaSCVEg==
-X-Received: by 2002:a19:ee11:0:b0:52c:dd21:8d09 with SMTP id
- 2adb3069b0e04-52ea06e8702mr6832080e87.63.1720452794255; 
- Mon, 08 Jul 2024 08:33:14 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1720453032; x=1721057832;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5MAFIySr/6ifcfVkzRdNJpopzwxbmdSq22xk3AL2kIs=;
+ b=W4g3UJbIlVQis1EVy2emIq7qThT1arKLqyJXiQE+09119KhnozDLYiuAVtFpP2PEq9
+ Orq8ieTdycY0zlZtsFDJf7KeU5ZwDbFaIP3x5Nj+MVxo1Ot+6ymhbS5CNo4/LCcSNdcJ
+ kkUZC/xBbX044j+/FBSU936Y7M7K4nwEyiBnDmNNcLqB9Y2a0pLjLEkYCxTazH98cTqK
+ r/sW36RagKlxFoTjJyOn/ulZLsfZxV5roXzn25TgoTU9W+wqK74+I3yWI49qQz/bA1eS
+ g8z7HftrcSPGHJhD8+GL6ELW4AW2AW7MmiPnsYyP6SPePwUgw6ajxnbZYKXLc5om0zIz
+ /H4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWNGIFjPfHyPg7PmPrJoZgQyzGjwgHGH63gcGOc6UpY2ti6uNnmdr3Kgnq5CI2KFqJsGH/itoN1TNAjcjLsYTpUNKfCSU4=
+X-Gm-Message-State: AOJu0Yy94uWT2VWVPTdqZ+/oKWzuM9IEXrgKVUZnK33TLwNLjAiYA5X/
+ 7aoGaxbekpCo+Yfhm8qt/umlF0LpTCTu2oa/1ejmm2g4aoSYClOcKzQkfF+spmn3L/D4bgmR14Q
+ FWDY=
+X-Google-Smtp-Source: AGHT+IEFMCXI6+dZqlA19aq6G5XqPRQhslj015kZPezjNl9LVOhSz758D6KR8tITMlvJeeB5y749uw==
+X-Received: by 2002:a05:6a20:3c94:b0:1c2:8b95:de13 with SMTP id
+ adf61e73a8af0-1c28b95e2e8mr2906700637.6.1720453031650; 
+ Mon, 08 Jul 2024 08:37:11 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4265f84cd44sm95476115e9.18.2024.07.08.08.33.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jul 2024 08:33:13 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] include/hw/qdev-core.h: Correct and clarify gpio doc comments
-Date: Mon,  8 Jul 2024 16:33:12 +0100
-Message-Id: <20240708153312.3109380-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d2e1a72fcca58-70b202d78c7sm4427568b3a.217.2024.07.08.08.37.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jul 2024 08:37:11 -0700 (PDT)
+Message-ID: <a3e6cd8b-068d-465b-a95c-45e55c2c289d@linaro.org>
+Date: Mon, 8 Jul 2024 08:37:08 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH qemu] target/riscv: Add Zilsd and Zcmlsd extension support
+To: ~liuxu <liuxu@nucleisys.com>, qemu-devel@nongnu.org
+References: <171997728731.22972.8946294105229314138-0@git.sr.ht>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <171997728731.22972.8946294105229314138-0@git.sr.ht>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,76 +97,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The doc comments for the functions for named GPIO inputs and
-outputs had a couple of problems:
- * some copy-and-paste errors meant the qdev_connect_gpio_out_named()
-   doc comment had references to input GPIOs that should be to
-   output GPIOs
- * it wasn't very clear that named GPIOs are arrays and so the
-   connect functions specify a single GPIO line by giving both
-   the name of the array and the index within that array
+On 7/2/24 01:10, ~liuxu wrote:
+> +static bool gen_load_ld(DisasContext *ctx, arg_lb *a, MemOp memop, int flag)
+> +{
+> +    REQUIRE_ZCMLSD(ctx);
+> +    REQUIRE_32BIT(ctx);
+> +
+> +    if (flag&&a->rd==0){
+> +        return false;
+> +    }
+> +
+> +    TCGv dest_low= dest_gpr(ctx, a->rd);
+> +    TCGv addr = get_address(ctx, a->rs1, a->imm);
+> +    tcg_gen_qemu_ld_tl(dest_low, addr, ctx->mem_idx, memop);
+> +
+> +    TCGv dest_high= dest_gpr(ctx, a->rd+1);
+> +    tcg_gen_addi_tl(addr, addr, 32);
+> +    tcg_gen_qemu_ld_tl(dest_high, addr, ctx->mem_idx, memop);
+> +
+> +    gen_set_gpr(ctx, a->rd, dest_low);
+> +    gen_set_gpr(ctx, a->rd+1, dest_high);
+> +
+> +    return true;
+> +}
 
-Fix the copy-and-paste errors and slightly expand the text
-to say that functions are connecting one line in a named GPIO
-array, not a single named GPIO line.
+You need to impliment this as one 64-bit load and split the data afterward with 
+tcg_gen_extr_i64_tl().  That will also fix the incorrect increment that Alistair noted.
 
-Reported-by: BALATON Zoltan <balaton@eik.bme.hu>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-Does this help? I wrote the text and know what the functions do
-to start with so it's a bit tricky for me to see where the docs
-don't state things as clearly as they ought to do...
----
- include/hw/qdev-core.h | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 5336728a23f..77bfcbdf732 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -624,8 +624,9 @@ qemu_irq qdev_get_gpio_in(DeviceState *dev, int n);
-  * @name: Name of the input GPIO array
-  * @n: Number of the GPIO line in that array (which must be in range)
-  *
-- * Returns the qemu_irq corresponding to a named input GPIO line
-- * (which the device has set up with qdev_init_gpio_in_named()).
-+ * Returns the qemu_irq corresponding to a single input GPIO line
-+ * in a named array of input GPIO lines on a device (which the device
-+ * has set up with qdev_init_gpio_in_named()).
-  * The @name string must correspond to an input GPIO array which exists on
-  * the device, and the index @n of the GPIO line must be valid (i.e.
-  * be at least 0 and less than the total number of input GPIOs in that
-@@ -673,15 +674,15 @@ void qdev_connect_gpio_out(DeviceState *dev, int n, qemu_irq pin);
-  *                              GPIO lines
-  * @dev: Device whose GPIO to connect
-  * @name: Name of the output GPIO array
-- * @n: Number of the anonymous output GPIO line (which must be in range)
-+ * @n: Number of the output GPIO line within that array (which must be in range)
-  * @input_pin: qemu_irq to connect the output line to
-  *
-- * This function connects an anonymous output GPIO line on a device
-- * up to an arbitrary qemu_irq, so that when the device asserts that
-- * output GPIO line, the qemu_irq's callback is invoked.
-+ * This function connects a single GPIO output in a named array of output
-+ * GPIO lines on a device up to an arbitrary qemu_irq, so that when the
-+ * device asserts that output GPIO line, the qemu_irq's callback is invoked.
-  * The @name string must correspond to an output GPIO array which exists on
-  * the device, and the index @n of the GPIO line must be valid (i.e.
-- * be at least 0 and less than the total number of input GPIOs in that
-+ * be at least 0 and less than the total number of output GPIOs in that
-  * array); this function will assert() if passed an invalid name or index.
-  *
-  * Outbound GPIO lines can be connected to any qemu_irq, but the common
-@@ -796,7 +797,7 @@ void qdev_init_gpio_out(DeviceState *dev, qemu_irq *pins, int n);
-  * @dev: Device to create output GPIOs for
-  * @pins: Pointer to qemu_irq or qemu_irq array for the GPIO lines
-  * @name: Name to give this array of GPIO lines
-- * @n: Number of GPIO lines to create
-+ * @n: Number of GPIO lines to create in this array
-  *
-  * Like qdev_init_gpio_out(), but creates an array of GPIO output lines
-  * with a name. Code using the device can then connect these GPIO lines
--- 
-2.34.1
-
+r~
 
