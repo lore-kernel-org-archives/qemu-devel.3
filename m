@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E358C3DA41
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 03:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8BCEC3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 03:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQewj-0000OV-Gl; Sun, 07 Jul 2024 23:21:45 -0400
+	id 1sQf03-0008Q4-4J; Sun, 07 Jul 2024 23:25:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sQewh-0000D7-If
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 23:21:43 -0400
+ id 1sQezz-0008Ot-8X
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 23:25:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sQewf-0005Un-Ht
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 23:21:43 -0400
+ id 1sQezx-0006Co-RH
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 23:25:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720408897;
+ s=mimecast20190719; t=1720409103;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s9qsxE2Bl0meYSIeOd93gXq+RAu4CTeyiBXWxH1fg3c=;
- b=DKpaIWdiKtlYTl8oo9aLIn7kJAVN80ed/R+TOm+GQHetx8YbNf1a1uCuiO7OWHdUHnN2eE
- MKFNyQDHi4rs8VMmN742Ib2U4gdbPySv10poZXscoycE3WkkUXcgJTgHayEQrq0eWDBk6G
- hjQDvBFraircptnlAeGmnb9JDOh9Fb8=
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
- [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Jq3KstHEkI4aUdy/qYvuyyWx359jRQacLLdvvfJOsMo=;
+ b=FBSQVYDPtPYhW9U3YUWrqtXdMY62Z6Q4Ou4TLsk01CLl5uT040/I/RnH6gQEDzELncLecQ
+ qo+0rp9NOfmeStKSW11Wq8NMg4DrR+ViFDrKkTVeRmkPQki5BezjTsrZsSuYUftMYHZc/8
+ rKQF23aj5e8jYNGm0crqI/ur8LECQTQ=
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-60-nVG_3EyNNQOS4bo0cq1UeQ-1; Sun, 07 Jul 2024 23:21:35 -0400
-X-MC-Unique: nVG_3EyNNQOS4bo0cq1UeQ-1
-Received: by mail-ot1-f70.google.com with SMTP id
- 46e09a7af769-703674b18cfso1100502a34.2
- for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 20:21:35 -0700 (PDT)
+ us-mta-584-ISebJjahNbaAgLCV5EKTCA-1; Sun, 07 Jul 2024 23:25:02 -0400
+X-MC-Unique: ISebJjahNbaAgLCV5EKTCA-1
+Received: by mail-il1-f198.google.com with SMTP id
+ e9e14a558f8ab-38260829891so36508875ab.1
+ for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 20:25:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720408895; x=1721013695;
+ d=1e100.net; s=20230601; t=1720409101; x=1721013901;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s9qsxE2Bl0meYSIeOd93gXq+RAu4CTeyiBXWxH1fg3c=;
- b=ofI7ZMb97t5ixNtqaKzK5EjyaWp9KpiHNFk+DcJ+ZaGepOhFCrswMSPSwfc9yGv132
- +/0VtR4xgRnsh2P5rIhLdiAYCruthuLa1Fto8Tfn1tzsmf1PEIGM75ixj01k63qDOWSR
- tKn76kfk1IUnjAJoPN0UEe51N1wSSS5ZvFQgCBEu6gnRVpCxzE8+jHH9uCVpWxfZmV8E
- 6E1Jrg35yGs65Snr3H0VRTJW8ZrWlACV6cZ5bykrZK+o2DTH6iXWRadl849WaYOqqC+V
- l/oiLDk1JX/9zB3PsFTIHIhG/cAgAkBIopPfcO6AwmoQDKwZGizoWj5vBKT7l3c/bHk0
- 9IAQ==
-X-Gm-Message-State: AOJu0Yw9cJIHnpNJooava9iATS5cHnsOMqsNSJ0+WLdl8r90hU8nsUSJ
- lWcaOnh7DFAhHIWIsJ+OtH9VnUhNPOyIPEbK5/1q/9b+ds/DZbxUTi7odOhyohtddIMlriRR/Bf
- fV88nzqGPxHiMAjthI9+vk7xfQTMke/VxMwyf0M2Zl9DZ8ghJWezq6h/B+aAnIm5PdOAr6QBU/b
- OGEOGrSSYKTDJy4SW/HlBzpj4ah3E=
-X-Received: by 2002:a05:6358:988e:b0:1a6:1ed1:2366 with SMTP id
- e5c5f4694b2df-1aa98c244b0mr1070706355d.16.1720408894868; 
- Sun, 07 Jul 2024 20:21:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFTUCTDqqh+ud0IltVlQwda8t9OMK6YYZPf7ayojxtDTjflpc0nLFHQJcM73bkvlaTVrq7zHJEKUDQLExDS1fo=
-X-Received: by 2002:a05:6358:988e:b0:1a6:1ed1:2366 with SMTP id
- e5c5f4694b2df-1aa98c244b0mr1070705155d.16.1720408894433; Sun, 07 Jul 2024
- 20:21:34 -0700 (PDT)
+ bh=Jq3KstHEkI4aUdy/qYvuyyWx359jRQacLLdvvfJOsMo=;
+ b=bf8cD7goHg856NNexoKaYfCCBo6qIgMa2xGLzJLqmnmFkWpGZZ7gkdxKMbn9vdqDrx
+ WQB+0CBdYBJziXE1q302q91m+VXQNu2sabx8KFTLuGkLczzUnArdeC9SW9AioFnDvWNw
+ hZsFr5QM+6GStgSdEuiQ9Q4eVF0zK+rDEOnUAn4fY+mdybaxaMQhaHIoD7nhLEX7Zt3q
+ HXZpdjcgKYHCfbYk2idoDDGdUTMzRu5mAARYpgcaG+93wqHnrOPhI9S9KQroe27vBlkU
+ /fmgqxMOmPoDMGKKXVW0HvUJSw5QnoBV1usVh/HZrc41liGOf2otCI5hxE1nYS0gSUjK
+ DzXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUt2S66v8KQWqWexfyHCrMezdtXGfxG/Iu+MR1wT7JDAA/O1AqPhXhZI6s1ZPwtU6CfexzOyb+MZo7v6wEVlooabtn3TqM=
+X-Gm-Message-State: AOJu0YxVMe1pc5B0qggUUQuo+Tn8GldNGN3wJE6h93YqLewGrfMZW4V7
+ bBUeJz5MDxXM1kcnIwYmmeKQ+TmKc0HpzHTsIy/pH57IBqc4IMlSJmF4nWeUnRfrBtMjxcnpysA
+ uvPl4Lg1oNyKFSsxi89wuL31hpgBx6AYkkAQWtgCegPbcIFEhIF64l6K4XfjcotzsNYZvq3VUAR
+ y08vjf6YChFp7mDfAlH7kpOPs+Pf0=
+X-Received: by 2002:a05:6e02:152b:b0:375:a15e:d28b with SMTP id
+ e9e14a558f8ab-38399874d44mr147825565ab.16.1720409101526; 
+ Sun, 07 Jul 2024 20:25:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEX7+QuL1xA2zsoHrV1FvzxRuSgAbrpJbUA509biH9ZsMEso5Un28+1uIIiyCVjJFmcn9rgxwpsG5IKQE1jyJw=
+X-Received: by 2002:a05:6e02:152b:b0:375:a15e:d28b with SMTP id
+ e9e14a558f8ab-38399874d44mr147825465ab.16.1720409101227; Sun, 07 Jul 2024
+ 20:25:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <c7338afab65df208772f215567f323ae9b3c5910.1720210988.git.yong.huang@smartx.com>
-In-Reply-To: <c7338afab65df208772f215567f323ae9b3c5910.1720210988.git.yong.huang@smartx.com>
+References: <20240708032112.796339-1-yi.l.liu@intel.com>
+In-Reply-To: <20240708032112.796339-1-yi.l.liu@intel.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 8 Jul 2024 11:21:18 +0800
-Message-ID: <CACGkMEuX+FxOtWD9YoMF-T_VsgMezCT5ff_5Wk5CwQ3kNu41Aw@mail.gmail.com>
-Subject: Re: [PATCH] e1000: Fix the unexpected assumption that the receive
- buffer is full
-To: Hyman Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org
+Date: Mon, 8 Jul 2024 11:24:48 +0800
+Message-ID: <CACGkMEtZ7yDzvGQOj9txFiYzaHgTtmHeeZmLH+uoxEBwkN0NDg@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Add myself as a VT-d reviewer
+To: Yi Liu <yi.l.liu@intel.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org, peterx@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
@@ -97,147 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 6, 2024 at 4:30=E2=80=AFAM Hyman Huang <yong.huang@smartx.com> =
-wrote:
+On Mon, Jul 8, 2024 at 11:21=E2=80=AFAM Yi Liu <yi.l.liu@intel.com> wrote:
 >
-> Unexpected work by certain Windows guests equipped with the e1000
-> interface can cause the network to go down and never come back up
-> again unless the guest's interface is reset.
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> ---
+>  MAINTAINERS | 1 +
+>  1 file changed, 1 insertion(+)
 >
-> To reproduce the failure:
-> 1. Set up two guests with a Windows 2016 or 2019 server operating
->    system.
-
-I vaguely remember e1000 support for Windows has been deprecated for
-several years...
-
-That's why e1000e or igb is implemented in Qemu.
-
-> 2. Set up the e1000 interface for the guests.
-> 3. Pressurize the network slightly between two guests using the iPerf too=
-l.
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 6725913c8b..61724b91d8 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3656,6 +3656,7 @@ F: tests/uefi-test-tools/
+>  VT-d Emulation
+>  M: Michael S. Tsirkin <mst@redhat.com>
+>  R: Jason Wang <jasowang@redhat.com>
+> +R: Yi Liu <yi.l.liu@intel.com>
+>  S: Supported
+>  F: hw/i386/intel_iommu.c
+>  F: hw/i386/intel_iommu_internal.h
+> --
+> 2.34.1
 >
-> The network goes down after a few days (2-5days), and the issue
-> is the result of not adhering to the e1000 specification. Refer
-> to the details of the specification at the following link:
-> https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-control=
-lers-software-dev-manual.pdf
->
-> Chapter 3.2.6 describe the Receive Descriptor Tail register(RDT)
-> as following:
-> This register holds a value that is an offset from the base, and
-> identifies the location beyond the last descriptor hardware can
-> process. Note that tail should still point to an area in the
-> descriptor ring (somewhere between RDBA and RDBA + RDLEN).
-> This is because tail points to the location where software writes
-> the first new descriptor.
->
-> This means that if the provider=E2=80=94in this case, QEMU=E2=80=94has no=
-t yet
-> loaded the packet,
 
-What do you mean by "load" here?
+Acked-by: Jason Wang <jasowang@redhat.com>
 
-> RDT should never point to that place.
-
-And "that place"?
-
-> When
-> implementing the emulation of the e1000 interface, QEMU evaluates
-> if the receive ring buffer is full once the RDT equals the RDH,
-> based on the assumption that guest drivers adhere to this
-> criterion strictly.
->
-> We applied the following log patch to assist in analyzing the
-> issue and eventually obtained the unexpected information.
->
-> Log patch:
-> -----------------------------------------------------------------
-> |--- a/hw/net/e1000.c
-> |+++ b/hw/net/e1000.c
-> |@@ -836,6 +836,9 @@ e1000_set_link_status(NetClientState *nc)
-> | static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
-> | {
-> |     int bufs;
-> |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u, s->mac_reg=
-[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
-> |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], s->mac_re=
-g[RDT]);
-> |+
-> |     /* Fast-path short packets */
-> |     if (total_size <=3D s->rxbuf_size) {
-> |         if (s->mac_reg[RDH] =3D=3D s->mac_reg[RDT] && s->last_overrun)
-> |@@ -1022,6 +1025,9 @@ e1000_receive_iov(NetClientState *nc, const struct=
- iovec *iov, int iovcnt)
-> |         s->rxbuf_min_shift)
-> |         n |=3D E1000_ICS_RXDMT0;
-> |
-> |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u, s->mac_reg=
-[RDH] =3D %u, s->mac_reg[RDT] =3D %u\n",
-> |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], s->mac_re=
-g[RDT]);
-> |+
-> -----------------------------------------------------------------
->
-> The last few logs of information when the network is down:
->
-> e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 16384=
-, s->mac_reg[RDH] =3D 897, s->mac_reg[RDT] =3D 885
-> <- the receive ring buffer is checked for fullness in the
-> e1000_has_rxbufs function, not full.
->
-> e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 1638=
-4, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
-> <- RDT stays the same, RDH updates to 898, and 1 descriptor
-> utilized after putting the packet to ring buffer.
->
-> e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 16384=
-, s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
-> <- the receive ring buffer is checked for fullness in the
-> e1000_has_rxbufs function, not full.
->
-> e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 1638=
-4, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
-> <- RDT stays the same, RDH updates to 899, and 1 descriptor
-> utilized after putting the packet to ring buffer.
->
-> e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 16384=
-, s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
-> <- the receive ring buffer is checked for fullness in the
-> e1000_has_rxbufs function, not full.
->
-> e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 1638=
-4, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 885
-> <- RDT stays the same, RDH updates to 900 , and 1 descriptor
-> utilized after putting the packet to ring buffer.
->
-> e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 16384=
-, s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 900
-> <- The ring is full, according to e1000_has_rxbufs, because
-> of the RDT update to 900 and equals RDH !
-
-Just to make sure I understand this, RDT=3D=3DRDH means the ring is empty I=
- think?
-
-See commit:
-
-commit e5b8b0d4ba29fe1268ba049519a1b0cf8552a21a
-Author: Dmitry Fleytman <dmitry@daynix.com>
-Date:   Fri Oct 19 07:56:55 2012 +0200
-
-    e1000: drop check_rxov, always treat RX ring with RDH =3D=3D RDT as emp=
-ty
-
-    Real HW always treats RX ring with RDH =3D=3D RDT as empty.
-    Emulation is supposed to behave the same.
-
-    Reported-by: Chris Webb <chris.webb@elastichosts.com>
-    Reported-by: Richard Davies <richard.davies@elastichosts.com>
-    Signed-off-by: Dmitry Fleytman <dmitry@daynix.com>
-    Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-
-Or did you mean we need to revert the above commit in fact?
-
-Thanks
+Thanks!
 
 
