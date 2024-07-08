@@ -4,94 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D27C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 14:50:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EDB4C3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 14:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQpgW-0008Cb-Ix; Mon, 08 Jul 2024 10:49:45 -0400
+	id 1sQpiG-00026n-Gc; Mon, 08 Jul 2024 10:51:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sQpgP-0008Bm-1l
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:49:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sQpgN-00060Q-EJ
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:49:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720450171;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2SkJo/6Pii6pZ98dT6jDqRTjQhsaH59RpYtqwPg2dH8=;
- b=LT2NUn2ofyPKcb76ZzVfbqk9AUgPcR2zNwnLvNaHrmAOt4HEVAXJaqU4Ouk0XGPe1YvJ78
- +nzVVC+5jmTuJ2bXWuhUTS1RXy+GboUdtaNEjhxSTu8P7QP3L4J7qfYULspKDwg4urLImx
- AlAlseskjRHe3C5mCx/SKCilVmKhXa0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-434--7mL9zTrNNaQI7yaTmD1fw-1; Mon, 08 Jul 2024 10:49:29 -0400
-X-MC-Unique: -7mL9zTrNNaQI7yaTmD1fw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-367a531a2f0so1924182f8f.3
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 07:49:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sQpi8-0001oR-5P
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:51:27 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sQpi4-0006tw-O3
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:51:22 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-58b966b4166so4799827a12.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 07:51:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720450278; x=1721055078; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lcWaRLCRcltFzrZD7uyMSRteYZApdqogMNAhv6d5RII=;
+ b=yWKqKmkXbrM5X3EwJcWcLJ76xXwp9iVJvBFKAn74v0G02L6LJPWxjJvGTxDtrGB2be
+ fh7hyNZTxci+8810mqYeAZGOKmisb+WMN01/RqMZmNdRCLqZg8UQoB/gNGQUa3tMk7Iu
+ upFFbA/LIpGuhH+cW4Jtm3cBUWSPNtLOjyTyaLR1GNir6tYztRgVsz5bgwSBE2zy9oWZ
+ 4fiZNefaO698zmOWjoTn+xZ/mi6uE+3zaJ1Z9Xa6haxo3lw0UlDcxCQtHd2m7AZ1yJGJ
+ vu4f+R4hYt3ogHX5cuDvia4Ooau34dE4fPJnUb92oxWXoYjdagiOakoYNjuBWYN7DI+y
+ atBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720450168; x=1721054968;
+ d=1e100.net; s=20230601; t=1720450278; x=1721055078;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2SkJo/6Pii6pZ98dT6jDqRTjQhsaH59RpYtqwPg2dH8=;
- b=r0KiukWcJoCo3OoScuumxvHH9cnfG3XQgfFuhk9VzeNcN0CMliYau2c2RjulSJQpyA
- XZoi9016EwFYwCUCrn9gn/PriGs5DLkPTKb9IpPdaFqjPu1RQU3W3DB8p9swfOfSu0Dl
- PIzezGlXipaBHlgMU+GtRzO0bsKiaiwl8oxzQSe0LdZl8dE45Hh2jg7m/4wUD7hQ6tV7
- WlInnY/w25bO17ej1i8DkHPXk8XTD/rnWmmScjUr7O+N+sZnoJXx7befji1pXjlZDfjp
- +2ebRVhR1YpMz95mDk7KGl2++9D43pIGlPlgGAVFzZSNuPwPqO/rZcQnerpMJ1m19AQX
- qefg==
-X-Gm-Message-State: AOJu0YyJ8YLwmxsQbTRLjheqwMDuWzRxHMeRhsCgJkIzE3Di+auSdnSI
- 9Lvjf0hIyx07NqEXqWer6CuKTu2iBznbiu59i1czwJ7M9QEVwBw2gwm4qQE3S8ihNa89G4TAFZ9
- JNoFxR5/zAWV/suXkF/hImEhk8lUDttmZh4m+MQcq47X0ehs+1wIVnYkniUWErvHoLihXQ7p9gN
- BQFM0FMLWFDMtpWfoeYGHx0az84/Y=
-X-Received: by 2002:a5d:4810:0:b0:366:ebf5:c6cc with SMTP id
- ffacd0b85a97d-3679dd683cbmr7635012f8f.50.1720450168479; 
- Mon, 08 Jul 2024 07:49:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUId0b2WFe4vskiUL0+17jYqDOLppLIjTkwQOTVoygqSC5JJ5M5JXrka+JTkqZFvk1xJivzjLsD58bFs/vfug=
-X-Received: by 2002:a5d:4810:0:b0:366:ebf5:c6cc with SMTP id
- ffacd0b85a97d-3679dd683cbmr7634987f8f.50.1720450168114; Mon, 08 Jul 2024
- 07:49:28 -0700 (PDT)
+ bh=lcWaRLCRcltFzrZD7uyMSRteYZApdqogMNAhv6d5RII=;
+ b=W9xAWWGH9TBr2+IEnIdClKOk4JeVDHPMq8ejwgyD30829Cuq8FyyW1kAds7Brz7VEg
+ h0xnAbynlIky4rKRgGuuez2tA54jigwpaJmWxAViz4FTGBm71ltj9pWmcRLbRnM3f+4z
+ 5F8VtF5aLr28JH30M0iXKxwOOITXOPQuGIybdT/qmdMzMhv3P93hHCsQcawpOxrV3/iA
+ lN8acFHAzEQJukYE54TEBXrimLeAVewwNExnhmrQOGFU1K+kOZTdzK8Fd6eCcawhinZO
+ PofiP9j0bBqvYaJSuPQcHJL4y6fTbDWQn7NR7HwWFlvVexf+OyZ816KvAm0jQ3Y1mLeZ
+ c93A==
+X-Gm-Message-State: AOJu0YzAE0yblxMz2PeNlil6QbvBOYWhoxpI6iDPEmkK8HBfyetvSZZB
+ 9yieDcr/dJOhLJzWHdzJbyln60F8/reVmt0k0WPjXW1hfjJ/k+XqBQnEzn7nF5IvwUMEF7z4tEC
+ OQ7iz4emqhSm19tOrhz3EeeLq1A1fOBFJDrVdNYPvHRI9JYaM
+X-Google-Smtp-Source: AGHT+IH+OslzLbYqJR2PY66CX2frVHo8niVZlaJuLr0f8L48TvBYAUkiqD89vSKXS3xfN2tOxwDckWq89Lb/UwGHhBU=
+X-Received: by 2002:a05:6402:2803:b0:57c:c10c:eee8 with SMTP id
+ 4fb4d7f45d1cf-58e59b3f7f4mr9113069a12.19.1720450278145; Mon, 08 Jul 2024
+ 07:51:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
- <12f78335f01f2264b91b3170995aa86ccae7d0cb.1720094395.git.manos.pitsidianakis@linaro.org>
-In-Reply-To: <12f78335f01f2264b91b3170995aa86ccae7d0cb.1720094395.git.manos.pitsidianakis@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 8 Jul 2024 16:49:15 +0200
-Message-ID: <CABgObfZXiNdu_bFFfbZzyR0JCWdJ=J6WBHo+K35pxFCpc+EqTw@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 1/7] build-sys: Add rust feature option
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
- Richard Henderson <richard.henderson@linaro.org>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
+References: <20240707085927.122867-1-ines.varhol@telecom-paris.fr>
+In-Reply-To: <20240707085927.122867-1-ines.varhol@telecom-paris.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 8 Jul 2024 15:51:06 +0100
+Message-ID: <CAFEAcA9MDLPAqQWMADPupSJmheHuCPUnf+9Uebrt9x+ikZmRaA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Connect STM32L4x5 USART devices to the EXTI
+To: =?UTF-8?B?SW7DqHMgVmFyaG9s?= <ines.varhol@telecom-paris.fr>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Alistair Francis <alistair@alistair23.me>,
+ Arnaud Minier <arnaud.minier@telecom-paris.fr>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,18 +92,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 4, 2024 at 2:16=E2=80=AFPM Manos Pitsidianakis
-<manos.pitsidianakis@linaro.org> wrote:
+On Sun, 7 Jul 2024 at 09:59, In=C3=A8s Varhol <ines.varhol@telecom-paris.fr=
+> wrote:
 >
-> Add options for Rust in meson_options.txt, meson.build, configure to
-> prepare for adding Rust code in the followup commits.
+> STM32L4x5 EXTI was handling only configurable interrupts
+> (such as those coming from STM32L4x5 SYSCFG which was the
+> only device connected to the EXTI).
+> This patch adds support for direct line interrupts and
+> connects the existing STM32L4x5 USART devices to the EXTI.
+> The patch also corrects the handling of configurable line
+> interrupts in the EXTI.
 >
-> `rust` is a reserved meson name, so we have to use an alternative.
-> `with_rust` was chosen.
+> Changes from v2 (2nd commit):
+> - The 2nd commit was split, part of the changes went in
+> another patch correcting EXTI configurable interrupts.
+> Stayed in the commit only changes relevant to direct interrupts.
+>
+> Changes from v1 (2nd commit):
+> - add STM32L4x5 EXTI status fields `irq_levels` to track
+> configurable irq levels and do edge detection
+> - use `qemu_set_irq` instead of qemu_irq_raise/lower
+>
+> Signed-off-by: In=C3=A8s Varhol <ines.varhol@telecom-paris.fr>
 
-Did you find any problem with the other approach that I sent, to
-support --cargo and the CARGO environment variable in configure?
 
-Paolo
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
