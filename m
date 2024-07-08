@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6203BC3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 05:30:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC12FC3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 05:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQgxM-0000g6-3h; Mon, 08 Jul 2024 01:30:32 -0400
+	id 1sQgzN-0005gA-5B; Mon, 08 Jul 2024 01:32:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sQgxE-0000cm-CT
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 01:30:24 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1sQgzK-0005di-H7
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 01:32:35 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sQgxC-0003Th-Ih
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 01:30:24 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3679e9bfb08so1951601f8f.1
- for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 22:30:22 -0700 (PDT)
+ id 1sQgzI-0003Ys-Nd
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 01:32:34 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-426606f80ebso9019625e9.1
+ for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 22:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1720416621; x=1721021421; darn=nongnu.org;
+ d=opnsrc.net; s=google; t=1720416751; x=1721021551; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MdxhzsEahdwu6Vr8VLJzv6yiEh6/xuSTCWcfQqzOv0Q=;
- b=F43ucfw8BkaNIvC5UVJ9kru3CnjkHR6jqtarOXlF4PBm5fCYdOe3lWhVnhK0H95rzb
- b0R1Is5ZMhtjx7jxDrreVWlkUeNkbcOaIZreFuOS1DNXocCRka3QMr5e42NzGwfpvQMG
- H2lU0DxnDRAu1WayYMz/P6Vwd/7jaeSLpE6N9ccY7iVZGOwvoXw3vDzDQT53LyzBRRbh
- THaDrneECTPuzoOYPSVbLmIaTiAaBEhISVGbtazGXGUs7FWmXkF7u/UspScK9TsUXG7h
- 8Z2rC6RvlwETKnNOSWkmA+McTHdD3un0jwu5ZH6FwZ/nPbcLwiDNGPo4OxaD4epl7btO
- 2ayQ==
+ bh=dm929TgKAN98lOusto7ZMWWlCh02WcjqKU7UMCwZV0A=;
+ b=gJ1JEULapAh+tyMdK/Si8Vu4PHFX2Z3PtSWgCVOzIDX3zQU7X6Ra2+HeM/NFjQBdfL
+ /PB54KbTgwUwffh+o2mpKr6DSnRxt5TIuGBKX1jMKwZqS8Y6O2jNLX7xhoP4xHQnrM5U
+ vBguxRaK6/OIFcCHKHHLY06P4BSQv4hi2VKie3JHePS+6U0CWZXgpH/UObDLQBt47FL4
+ hJWyJxBh43uF4coFTLTxHsoIubaKRDI0N6juCfHLZCVjvlyA4S43WcBYG67OAlj3h8vB
+ 2PtSVli5Uv3sqf9HJBfAmrOgiSyUJpDGBBsXfvF8aXqSG8whfLBszHLg6dD65+Wx6tz5
+ zfDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720416621; x=1721021421;
+ d=1e100.net; s=20230601; t=1720416751; x=1721021551;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MdxhzsEahdwu6Vr8VLJzv6yiEh6/xuSTCWcfQqzOv0Q=;
- b=pWgfAMQzaE/27SqTFq/cV/7Y4Nv9w8Mofy+uAW9UF5ScHjOrKZvXAtmfhje/nqqMg6
- ssTtMWULTUZyUyaFTMfXZIQjXqhL/FOZBsS887xg/u0sUqiHfGMqqkT1Wp9HZ2oKxJNJ
- j0E0ahm+3aHUIJlT7OWljxFvNSq9BPSoyuh2OUKCGsP9Q13RvUn4VHMixeSzuPPmNgy5
- EchDCJBoktoFfY86nctRvJJ2c5QD2ajFCrthtLSftxMgYeq2bX7YB6Dz3+eaheTT0Fop
- Eb9GTQ4IEkT75VVCwYP23GGRbbbmh+3IcegUlIsVxI6u4D58jX28qp+0XZA60lV5qvsS
- HlXQ==
-X-Gm-Message-State: AOJu0YzPRseVPEzkdH6W660o4MbZnmjVfaqd2M3Ya2JwqZsM6PvWr9Xn
- colMsILNGMbjbUm+XNe+JdzzU1JDUQQxaJkF1pHwkEpEg6kwekh1fT1bmlw+Zjs=
-X-Google-Smtp-Source: AGHT+IG59JCNKzPFGsDzMrrMonk2Q6S5KMxRwaYS3ffEEeQj4iJ+uAPtRRk45K6F4a7fbMQWGhc7fg==
-X-Received: by 2002:adf:ef89:0:b0:367:9268:bfca with SMTP id
- ffacd0b85a97d-3679f75c4famr9360109f8f.22.1720416620962; 
- Sun, 07 Jul 2024 22:30:20 -0700 (PDT)
+ bh=dm929TgKAN98lOusto7ZMWWlCh02WcjqKU7UMCwZV0A=;
+ b=ewJg2s1e9V1tMFf10+/7IJ/MFUUgILveXO0gzgdlRhAym7U9NMn5GYQqT0UPev0cfi
+ YNlAKSPiQcIIMc4ujybUYWGPtoEWNNcXThwcE/2k/YdEVkYE7VB1wpBI62B+FKUlrEb+
+ 6bSoSw0h3awYG4mFLqVb5meyKBYpsal4e+BCFluNKpAmGQVLNs2mbZ/0+S34e26paF5C
+ cTDKmMncKYHjriSPSDohXeIVEDHlrGDXuD9u0UyVki6obu3ZcBDlOEBGz2go9XWalcm/
+ 9HKBAVt3q5LixfZQ8dMvH2bNzMrMeMQO4Uc587Pb4ZIJzw2efjxhOi+TJBibjQ1B+0nl
+ m0Fg==
+X-Gm-Message-State: AOJu0YwKk2fYa7VWHMqCoTWuls5Xr++tMzQ5vOdkiVjyB190g7aMl6UO
+ /awGpMbLsy/fD30FFJils3h55eBV3jJ1wg3P2DNmBjuKtc7hPQV0gJjDrOBrIoI=
+X-Google-Smtp-Source: AGHT+IHVJ5VTeuWPCIJDC1Yp7HLKmAtjpWs2Xqm00Rj6FPGTR4xCYYJsOMz/8s58VQKn8Lg+aPBgTw==
+X-Received: by 2002:a05:600c:8a7:b0:426:605b:8c53 with SMTP id
+ 5b1f17b1804b1-426605b8e0fmr27511665e9.19.1720416751108; 
+ Sun, 07 Jul 2024 22:32:31 -0700 (PDT)
 Received: from [10.11.12.72] ([90.220.10.255])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-426623153f9sm63051685e9.29.2024.07.07.22.30.19
+ 5b1f17b1804b1-4264a2fc8bcsm149719465e9.44.2024.07.07.22.32.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 07 Jul 2024 22:30:20 -0700 (PDT)
-Message-ID: <9d1b4caa-6886-4dde-8941-f62bdf4a562b@opnsrc.net>
-Date: Mon, 8 Jul 2024 05:30:19 +0000
+ Sun, 07 Jul 2024 22:32:30 -0700 (PDT)
+Message-ID: <db8c2a7c-cc40-4fed-98fc-171f70e239ea@opnsrc.net>
+Date: Mon, 8 Jul 2024 05:32:28 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V13 7/8] gdbstub: Add helper function to unregister GDB
- register space
+Subject: Re: [PATCH V13 8/8] docs/specs/acpi_hw_reduced_hotplug: Add the CPU
+ Hotplug Event Bit
 To: Igor Mammedov <imammedo@redhat.com>, Salil Mehta <salil.mehta@huawei.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org,
  jean-philippe@linaro.org, jonathan.cameron@huawei.com,
@@ -77,25 +77,24 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org,
  miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
  wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
  lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
- linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
+ linuxarm@huawei.com, Zhao Liu <zhao1.liu@intel.com>
 References: <20240607115649.214622-1-salil.mehta@huawei.com>
- <20240607115649.214622-8-salil.mehta@huawei.com>
- <20240706164103.16662dd2@imammedo.users.ipa.redhat.com>
+ <20240607115649.214622-9-salil.mehta@huawei.com>
+ <20240706164519.06c53d77@imammedo.users.ipa.redhat.com>
 Content-Language: en-GB
 From: Salil Mehta <salil.mehta@opnsrc.net>
-In-Reply-To: <20240706164103.16662dd2@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240706164519.06c53d77@imammedo.users.ipa.redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=salil.mehta@opnsrc.net; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,99 +110,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
-
-On 06/07/2024 14:41, Igor Mammedov wrote:
-> On Fri, 7 Jun 2024 12:56:48 +0100
+On 06/07/2024 14:45, Igor Mammedov wrote:
+> On Fri, 7 Jun 2024 12:56:49 +0100
 > Salil Mehta <salil.mehta@huawei.com> wrote:
 >
->> Add common function to help unregister the GDB register space. This shall be
->> done in context to the CPU unrealization.
->>
->> Note: These are common functions exported to arch specific code. For example,
->> for ARM this code is being referred in associated arch specific patch-set:
->>
->> Link: https://lore.kernel.org/qemu-devel/20230926103654.34424-1-salil.mehta@huawei.com/
+>> GED interface is used by many hotplug events like memory hotplug, NVDIMM hotplug
+>> and non-hotplug events like system power down event. Each of these can be
+>> selected using a bit in the 32 bit GED IO interface. A bit has been reserved for
+>> the CPU hotplug event.
 >>
 >> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
->> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
 >> Reviewed-by: Gavin Shan <gshan@redhat.com>
->> Tested-by: Xianglai Li <lixianglai@loongson.cn>
->> Tested-by: Miguel Luis <miguel.luis@oracle.com>
->> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
->> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
 >> Tested-by: Zhao Liu <zhao1.liu@intel.com>
+> suggest to squash this into the patch that introduces this bit [3/8]
+
+I thought, we are introducing a change common to all architectures?
+
+Best, Salil.
+
 >> ---
->>   gdbstub/gdbstub.c      | 13 +++++++++++++
->>   hw/core/cpu-common.c   |  1 -
->>   include/exec/gdbstub.h |  6 ++++++
->>   3 files changed, 19 insertions(+), 1 deletion(-)
+>>   docs/specs/acpi_hw_reduced_hotplug.rst | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
 >>
->> diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
->> index b3574997ea..1949b09240 100644
->> --- a/gdbstub/gdbstub.c
->> +++ b/gdbstub/gdbstub.c
->> @@ -617,6 +617,19 @@ void gdb_register_coprocessor(CPUState *cpu,
->>       }
->>   }
+>> diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst b/docs/specs/acpi_hw_reduced_hotplug.rst
+>> index 0bd3f9399f..3acd6fcd8b 100644
+>> --- a/docs/specs/acpi_hw_reduced_hotplug.rst
+>> +++ b/docs/specs/acpi_hw_reduced_hotplug.rst
+>> @@ -64,7 +64,8 @@ GED IO interface (4 byte access)
+>>          0: Memory hotplug event
+>>          1: System power down event
+>>          2: NVDIMM hotplug event
+>> -    3-31: Reserved
+>> +       3: CPU hotplug event
+>> +    4-31: Reserved
 >>   
->> +void gdb_unregister_coprocessor_all(CPUState *cpu)
->> +{
->> +    /*
->> +     * Safe to nuke everything. GDBRegisterState::xml is static const char so
->> +     * it won't be freed
->> +     */
->> +    g_array_free(cpu->gdb_regs, true);
->> +
->> +    cpu->gdb_regs = NULL;
->> +    cpu->gdb_num_regs = 0;
->> +    cpu->gdb_num_g_regs = 0;
->> +}
->> +
->>   static void gdb_process_breakpoint_remove_all(GDBProcess *p)
->>   {
->>       CPUState *cpu = gdb_get_first_cpu_in_process(p);
->> diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
->> index 0f0a247f56..e5140b4bc1 100644
->> --- a/hw/core/cpu-common.c
->> +++ b/hw/core/cpu-common.c
->> @@ -274,7 +274,6 @@ static void cpu_common_finalize(Object *obj)
->>   {
->>       CPUState *cpu = CPU(obj);
+>>   **write_access:**
 >>   
->> -    g_array_free(cpu->gdb_regs, TRUE);
-> so free() is gone but new  gdb_unregister_coprocessor_all() ain't called,
-> are we staring to leak some memory here?
-
-Ah, sorry yes for other architectures. Maybe I can put below check
-
-and keep the free'ing code?
-
-+     if (cpu->gdb_regs)
-
-+ g_array_free(cpu->gdb_regs, TRUE);
-
-
-Thanks, Salil.
-
->>       qemu_lockcnt_destroy(&cpu->in_ioctl_lock);
->>       qemu_mutex_destroy(&cpu->work_mutex);
->>   }
->> diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
->> index eb14b91139..249d4d4bc8 100644
->> --- a/include/exec/gdbstub.h
->> +++ b/include/exec/gdbstub.h
->> @@ -49,6 +49,12 @@ void gdb_register_coprocessor(CPUState *cpu,
->>                                 gdb_get_reg_cb get_reg, gdb_set_reg_cb set_reg,
->>                                 const GDBFeature *feature, int g_pos);
->>   
->> +/**
->> + * gdb_unregister_coprocessor_all() - unregisters supplemental set of registers
->> + * @cpu - the CPU associated with registers
->> + */
->> +void gdb_unregister_coprocessor_all(CPUState *cpu);
->> +
->>   /**
->>    * gdbserver_start: start the gdb server
->>    * @port_or_device: connection spec for gdb
+> :
+>
 
