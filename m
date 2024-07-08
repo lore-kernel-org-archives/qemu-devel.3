@@ -4,144 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71568C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 07:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96A5FC3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 07:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQicp-00070X-7m; Mon, 08 Jul 2024 03:17:27 -0400
+	id 1sQixB-0001qg-T3; Mon, 08 Jul 2024 03:38:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sQicn-0006zl-Oa
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 03:17:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sQica-0006K3-7K
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 03:17:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720423031;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3LjhV95yFNt+xV806ye0Wr00+whqUyGiAVm2OF+NrHU=;
- b=ScBDZbONSd9oJy0a3c8qcCGPorN5/3uX4xSXxcrb4rrgU3stOAvM/NThW3xXMueB4wtMgN
- J2MQJaiyP8ueqBVouXaFTRaLYRQDoYtH6Kxii4zaMXUZSIRAsURYr3YLuK3Xp+qeXfOMiF
- LPdI20sYF1Cxxn9xBz79yH3P0leDf20=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-deP-uzRGOF6meShncmHAEg-1; Mon, 08 Jul 2024 03:17:09 -0400
-X-MC-Unique: deP-uzRGOF6meShncmHAEg-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a77dbdc2cf6so151865566b.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 00:17:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sQixA-0001pV-C6
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 03:38:28 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sQix8-00022A-Ds
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 03:38:28 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-6f8d0a1e500so3412498a34.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 00:38:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720424305; x=1721029105;
+ darn=nongnu.org; 
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rCSY0W9iL+t61dd1Hlu0W2EubsIgvsOQqg19HIV4E6Y=;
+ b=fFv1UFGKg25MdLtY5f4VOV81hJG3NJrR3l0wYmjV7MBBCNUNj1+8BV4i79ZjObH2rd
+ mP4rZrLhlVVYKukQh0eMXK3qMF+XLLGyzsUNnl/a/RE9Ss2AE+MdhHNsMGmVKqIq91mM
+ SHTZdhWQvioQED77fe6tyQQjUWTcbHEyquVT8MpBjA5T7ZUPp0WjXJCREfO+kYCKGuMG
+ Fg80MdSCJ7VgKUuR3L+kA8BhuqKXErTIEnRK6dZnyOWT9zRBFfbVQye/KnRtmefWRbCe
+ 7l1aQfLVZ+tGpNFD4WMetofBVD1wRXFVSEZJ7/lLOetbbCSVSKckQIrjGNJ8+cO9E2bv
+ OCCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720423028; x=1721027828;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1720424305; x=1721029105;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3LjhV95yFNt+xV806ye0Wr00+whqUyGiAVm2OF+NrHU=;
- b=Zb5wRHT6/q5x0TAYfckUEZrYMQwHxi+u8uPL3y5HDDGacm/H2VF5jAu9uK4/9zbZpt
- TVZPoleJvG/joPkCHvtGUu3cKLnLaEFKlv8gxalAO5qwIMn+8eYhBCECQ8zDDmmpGiSs
- ab6mSnoN0rYfKGc+8tsB0SrZUdQQq3R75BVgOvFWWU010nhGA7in782zgbOC/YWzuINj
- gNlnDZeiti+Za0jJkQ7x25FqhZPSP8tsn+R3gUBbW9JmKSqELvc+7yCmnZP3ulBe08wN
- Dvy9BOS71XwufeCqJV/5Il7gJ3jPCvXNisfOE+5gjoNMBszeWQQwgcgkRRpaVy0IB6a3
- 9Ugg==
-X-Gm-Message-State: AOJu0YyPieloYa0x9w4yJdnZJ92BKP2FG4g3N9ATo+2Z0ojAii46X2uP
- nhjCrsoRuDHTyXBK+2QkYKt7v6YE0j6jZxNPVXYWlq7vdE9QdlCNffgCx0vnSyAsXHxAxUPwLLx
- tnbQeC8+bnkzTI1ZCedReZRaL7zVf+bZq0vNi9VCva4yCgx5okZH8
-X-Received: by 2002:a17:906:4751:b0:a74:5b82:7f28 with SMTP id
- a640c23a62f3a-a77ba4787a5mr714537366b.23.1720423027959; 
- Mon, 08 Jul 2024 00:17:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJTSE5n267jp67bXENZ/SXSahdFgStMnw1YrhIlubhqg5fy0fN4h53o0ynFqC9KT08JHUWXQ==
-X-Received: by 2002:a17:906:4751:b0:a74:5b82:7f28 with SMTP id
- a640c23a62f3a-a77ba4787a5mr714535766b.23.1720423027534; 
- Mon, 08 Jul 2024 00:17:07 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-42-179-211.web.vodafone.de.
- [109.42.179.211]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-58eff6d1da5sm4263197a12.0.2024.07.08.00.17.06
+ bh=rCSY0W9iL+t61dd1Hlu0W2EubsIgvsOQqg19HIV4E6Y=;
+ b=b7urLhCfiHJ2b3LcXHSyy+Z/0hN2/1UpPeqSy23q53a5P1eoP+nB19pzvbXphPouTk
+ zqt61sUA1Ls6AuCJnZfjB32KzQsZ6ZUNXqqet+61ChMe8rqiH2sBZHe95/OeGUOG+zsU
+ 1z+heRE2+gZ5B13IGekTCvVepAnA9C4991XATIBcTxAyZXVbapsN8ng+LmkRSkHJN8Yf
+ X1osXx/DFdRyj7dUcmPJGkOILaxyXRrl9Z27K98O8B9H/5uX/jLZSKToTbc2lxBvWuYv
+ rmbrDkYxCq2L/LaoMUQ3x5it3oGy7CY37XReD4oDCu6gKC+/ofi7JwT6+HSg4o4CPl0N
+ ncUw==
+X-Gm-Message-State: AOJu0Yw+s7gn2iLTnawjqEQaYIsg2Z3bT4viYPZ63qvjU1M6EAKC4v6m
+ D7fRNb+2fUt3ArbFRfp5dT2WqZXBkH3p5p2AKPHYVpx4Ht8G05ldFddvE/y1w7o=
+X-Google-Smtp-Source: AGHT+IHQc/SYMTQeOQAgrEZO0dnEbkqDCWnieruKNDhoF89gfAVrQtLOiOWmZ4JL7t24PBr5V6Pw8Q==
+X-Received: by 2002:a05:6870:1496:b0:254:a881:cec5 with SMTP id
+ 586e51a60fabf-25e2bf1e319mr10813428fac.53.1720424304842; 
+ Mon, 08 Jul 2024 00:38:24 -0700 (PDT)
+Received: from localhost ([157.82.204.135])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d2e1a72fcca58-70b0c9b8573sm5895030b3a.191.2024.07.08.00.38.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Jul 2024 00:17:07 -0700 (PDT)
-Message-ID: <36fb3902-f211-4145-bd4d-cc5c543699f0@redhat.com>
-Date: Mon, 8 Jul 2024 09:17:05 +0200
+ Mon, 08 Jul 2024 00:38:24 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PATCH v2 0/4] virtio-net: Convert feature properties to OnOffAuto
+Date: Mon, 08 Jul 2024 16:38:05 +0900
+Message-Id: <20240708-auto-v2-0-f4908b953f05@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 9/9] tests/qtest: Delete previous boot file
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-References: <20240708-san-v3-0-b03f671c40c6@daynix.com>
- <20240708-san-v3-9-b03f671c40c6@daynix.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240708-san-v3-9-b03f671c40c6@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-B4-Tracking: v=1; b=H4sIAF2Xi2YC/13Muw7CMAyF4VepPBNkW+UiJt6j6pAmhnqgQUmJW
+ lV5d0JHxv/o6NsgSVRJcGs2iJI1aZhq8KEBN9rpKUZ9bWDkFlu+GvuZgxkEvUNC7+0J6vUd5aH
+ LznR97VHTHOK6q5l+6x+QyaC5DEjMdLbEePd2nXQ5uvCCvpTyBecoON+ZAAAA
+To: Jason Wang <jasowang@redhat.com>, 
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
+ Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
+ Vincenzo Maffione <v.maffione@gmail.com>, 
+ Andrew Melnychenko <andrew@daynix.com>, 
+ Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::329;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x329.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,17 +104,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/07/2024 08.55, Akihiko Odaki wrote:
-> A test run may create boot files several times. Delete the previous boot
-> file before creating a new one.
-> 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
->   tests/qtest/migration-test.c | 18 +++++++++++-------
->   1 file changed, 11 insertions(+), 7 deletions(-)
+Based-on: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
+("[PATCH v10 00/18] virtio-net RSS/hash report fixes and improvements")
 
+Some features are not always available, and virtio-net used to disable
+them when not available even if the corresponding properties were
+explicitly set to "on".
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+Convert feature properties to OnOffAuto so that the user can explicitly
+tell QEMU to automatically select the value by setting them "auto".
+QEMU will give an error if they are set "on".
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+Changes in v2:
+- Added patch "virtio-net: Remove fallback from ebpf-rss-fds".
+- Added a compatibility property.
+- Corrected property type name.
+- Link to v1: https://lore.kernel.org/r/20240428-auto-v1-0-7b012216a120@daynix.com
+
+---
+Akihiko Odaki (4):
+      qdev-properties: Add DEFINE_PROP_ON_OFF_AUTO_BIT64()
+      virtio-net: Convert feature properties to OnOffAuto
+      virtio-net: Report RSS warning at device realization
+      virtio-net: Remove fallback from ebpf-rss-fds
+
+ include/hw/qdev-properties.h   |  18 +++
+ include/hw/virtio/virtio-net.h |   3 +-
+ hw/core/machine.c              |   1 +
+ hw/core/qdev-properties.c      |  65 +++++++++-
+ hw/net/virtio-net.c            | 278 ++++++++++++++++++++++++-----------------
+ 5 files changed, 251 insertions(+), 114 deletions(-)
+---
+base-commit: f2cb4026fccfe073f84a4b440e41d3ed0c3134f6
+change-id: 20240428-auto-be0dc010dda5
+
+Best regards,
+-- 
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
