@@ -4,88 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D0A1C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 13:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB45C3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 13:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQodi-0002Bz-UN; Mon, 08 Jul 2024 09:42:48 -0400
+	id 1sQoeR-000531-5g; Mon, 08 Jul 2024 09:43:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sQodf-00020F-RP
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 09:42:44 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sQoeE-0004UY-UH
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 09:43:23 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sQodd-0007WU-JC
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 09:42:43 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-42665be6916so8011275e9.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 06:42:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sQoeB-0007jU-S5
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 09:43:18 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-58b0dddab8cso5816696a12.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 06:43:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720446159; x=1721050959; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=plam+MFcmfxD2GSE9v6KPzLMJ0N7tVOJ5S4D8FS3to8=;
- b=ed9fy9ampgBfjpwv3hoTuVWDVPbMqSA950XyhPjVbO7fHOu9ehoCvBX8PM/KFbZ0g6
- VPLUmo3UBTNQjtcIFm8F9tmGy+Uvt5cNZTUkSLFlzIlESSB7Txno0Y7T2YC++xkDayz0
- +cFqkJALjD8uH5X3AUWdFPfZisn7I4nnQaPMaZWZxj06gpvalZiPrMBbQR9hTci1uN04
- T9MbfXnbT4a9JXoel1HwhEnCSWpnV7tcbK9/cQ8GHSBPfGj5AlMKGrOmGB7eeV1c5HlR
- ka2TPgUGe12YQFdywiBA4Ubh9H+vedfsCL9f2fPl5H8/OTC0mNFu9ppERnTGAnE5UutF
- fo9w==
+ d=bytedance.com; s=google; t=1720446191; x=1721050991; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pKSoI62ZUHwdahf8CJHoLPgyPIsD1XRZd3RLyVHnlDQ=;
+ b=d6NuDdMAo/nQ1Co7iagXpDmMPpAzrxAo2h5ChmCVSE04riDUH8BvIiuE+Jdt+PIFNH
+ QgQ0kc1kxA3p5Y186g4VI/9Q5ntwqOmyv4xYt27lUV+eMWmXlRHix/Ld4BZ6nvpcSDBZ
+ 4pXwC/losrRRJLE36imyLr9FUfslRcdKu10wSmy6NXUdjfuiMkNLCBp63toMdDiFCt8T
+ s8nDv1ygG44dS912xF7M+S/ps8L5Xk8w1THfNukE5WdlVP/xEzjuGrKe/MICE0+hZ6CQ
+ Xn/tIlEYw75y+tYeDdzE7pxhtSq8JbIIoNI+HhkytrKHCoheseNJMB38q63paE9hgLbA
+ 0OvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720446159; x=1721050959;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=plam+MFcmfxD2GSE9v6KPzLMJ0N7tVOJ5S4D8FS3to8=;
- b=pxlxY+ZZ1V3TwdoohgP9VoaxedE2v5OH01f5hks+nvea9o6+WRUQ/X87q/ALiJ8vvh
- qRVPMBEKKiEAuHm5vZRZC5lo2XMptY1qprwCrV3WWFwvyPQuSoP0A8bXHk244cl+SHE1
- WIOwys8u2IYkLFOjmrgElugYqR9vgxCqMk64bybhATpvp7VA1uIwxi2Y+NDctIsoN78A
- JLqEKptlRpKXaCWcDL81hlnuKeEdBB9vBtRL1HOXFHhPnQ+jFs4Io4Be17XbfSKTrlQe
- j0woqlY3PBNsaBAGHwi/6YKx/sgHOPpBr3nAQO70N0REgcJxS3TBII87I/FhFMDrnwzC
- KsfA==
+ d=1e100.net; s=20230601; t=1720446191; x=1721050991;
+ h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pKSoI62ZUHwdahf8CJHoLPgyPIsD1XRZd3RLyVHnlDQ=;
+ b=dg9FlB0YZmX0y5yXYV5MDWc4nNc8ECntJYfv+TuEo5vi+URvwUee9ZogTfWNXiyHdg
+ u1RxN+NypPq6ivTLef0zMWce7moxvF16yha/4sOe49QRnT7/ly+w7FE42im9kUGDomb9
+ iGKiiUW2IOadyOwul4BzSkdcqfoZvj0FWx2svT7e0usrPWgngGth9aY00Oi/HXgYLPo9
+ KOmxy9GtzLVW0OMT5FC8y0pz2isjHOJoM4KqH4JNYQomUt+ETUMneMylgsNW3Gh+Vexo
+ zv4QyPHjp4HfE8CjCu7lANlIrNRdZ3aAiWb0doQy2nitxgPBfxaUbrFNqV7bhfR68AKz
+ 0wxw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUz+HEgJkfoECTAdGXN/8qAPaNFjHBo53j+24a7RF/rhL7W8Em7oa6zICsELvg8PDmZR6c7hAj7LvhoF0HLmsUQGwS1GjM=
-X-Gm-Message-State: AOJu0YyEbH7Ti2VAuPFYxx9t7ywFRSe1DewEoENztP3qaZlinz+9arNC
- TIZA5Ez8HZA84NjER8HgmMGoysxTDmTh1I2wU7jNvobTqCz8eozBttxD9Y/3bGM=
-X-Google-Smtp-Source: AGHT+IFGKN6JMJSXEBRL2fkDlXZcMt9qQRBsfFoiDK8ValkWdZG1THxZRGnP1WypReeCHB+MpOcAgw==
-X-Received: by 2002:a05:600c:4586:b0:426:6f0e:8ba4 with SMTP id
- 5b1f17b1804b1-4266f0e8d4bmr3917575e9.8.1720446158849; 
- Mon, 08 Jul 2024 06:42:38 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.169.151])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a21cbc6sm167592875e9.24.2024.07.08.06.42.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Jul 2024 06:42:38 -0700 (PDT)
-Message-ID: <b94c987e-835a-490f-a4d4-72f87db7f7b1@linaro.org>
-Date: Mon, 8 Jul 2024 15:42:36 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Add support for machine specific pmu's
- events
-To: Aleksei Filippov <alexei.filippov@syntacore.com>,
- Richard Henderson <richard.henderson@linaro.org>, palmer@dabbelt.com
-Cc: alistair.francis@wdc.com, bmeng.cn@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, liwei1518@gmail.com, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-References: <20240625144643.34733-1-alexei.filippov@syntacore.com>
- <2cb94b34-1a5f-4dc9-bec4-78c7008cd79d@linaro.org>
- <a019a09d-9549-4fa9-8b30-befb4df96fc0@syntacore.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <a019a09d-9549-4fa9-8b30-befb4df96fc0@syntacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+ AJvYcCXpjiAMXu5OptvdKkZKRWpBEPS9YJT+upiw/Ri09bQyREwWjfShQJHHn7kr12Nf5ddl+5CH3TDj1ZWYEYx88t3H0LdS5ko=
+X-Gm-Message-State: AOJu0YwKi2rmpbKp6aO6e6jqvGgTwQYDGP68V4opNDNuf0MpyB2ocaVH
+ lx3/EYhC6/Xrk+kQ+X+Ws5KYAQI9Vbe/J/U1NZ180bxYnW6njA4HWZZg4vIjCiDP8uPKEoDzbcT
+ 5FT2kL9vKX0Q5Zlk4DO0/Y538M31w3Zqbt5bNQA==
+X-Google-Smtp-Source: AGHT+IEb7DUflzK3koDxp5vmhGGCZ1uxhwUX1hC1CK7WuGmiJ6LsuEmdBT9YNcLaWO9q18ugsLEfL2G3ojf5vMY1wqU=
+X-Received: by 2002:a05:6402:1d4e:b0:57c:5fcf:b570 with SMTP id
+ 4fb4d7f45d1cf-58e5aecb1d7mr8232289a12.32.1720446191373; Mon, 08 Jul 2024
+ 06:43:11 -0700 (PDT)
+Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
+ Mon, 8 Jul 2024 09:43:10 -0400
+From: =?UTF-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
+In-Reply-To: <20240708130107.11495-1-luchangqi.123@bytedance.com>
+References: <20240708130107.11495-1-luchangqi.123@bytedance.com>
+Mime-Version: 1.0
+Date: Mon, 8 Jul 2024 09:43:10 -0400
+Message-ID: <CAO5cSZBVDAZzZ-MZJmGe3NCS0tW53z0E9F44CDfQ5icE0okF-w@mail.gmail.com>
+Subject: Re: [PATCH v8 00/10] Support persistent reservation operations
+To: qemu-block@nongnu.org, qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net, 
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de, 
+ kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org, 
+ pizhenwei@bytedance.com
+Content-Type: multipart/alternative; boundary="00000000000017a6e7061cbc981e"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,63 +93,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Aleksei,
+--00000000000017a6e7061cbc981e
+Content-Type: text/plain; charset="UTF-8"
 
-On 8/7/24 11:46, Aleksei Filippov wrote:
-> On 25.06.2024 21:18, Richard Henderson wrote:
->> On 6/25/24 07:46, Alexei Filippov wrote:
->>> Was added call backs for machine specific pmu events.
->>> Simplify monitor functions by adding new hash table, which going to map
->>> counter number and event index.
->>> Was added read/write callbacks which going to simplify support for 
->>> events,
->>> which expected to have different behavior.
->>>
->>> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
->>> ---
->>> Changes since v2:
->>>         -rebased to latest master
->>>   target/riscv/cpu.h |   9 +++
->>>   target/riscv/csr.c |  43 +++++++++-----
->>>   target/riscv/pmu.c | 139 ++++++++++++++++++++++-----------------------
->>>   target/riscv/pmu.h |  11 ++--
->>>   4 files changed, 115 insertions(+), 87 deletions(-)
->>>
->>> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
->>> index 6fe0d712b4..fbf82b050b 100644
->>> --- a/target/riscv/cpu.h
->>> +++ b/target/riscv/cpu.h
->>> @@ -374,6 +374,13 @@ struct CPUArchState {
->>>       uint64_t (*rdtime_fn)(void *);
->>>       void *rdtime_fn_arg;
->>> +    /*machine specific pmu callback */
->>> +    void (*pmu_ctr_write)(PMUCTRState *counter, uint32_t event_idx,
->>> +                          target_ulong val, bool high_half);
->>> +    target_ulong (*pmu_ctr_read)(PMUCTRState *counter, uint32_t 
->>> event_idx,
->>> +                                 bool high_half);
->>> +    bool (*pmu_vendor_support)(uint32_t event_idx);
->>
->> Do these really belong in CPUArchState, rather than RISCVCPUClass?
->>
->> Surely there's more to this series, since these fields are never set...
->>
->>
->> r~
-> 
-> Initially this callbacks was added to CPUArchState just to be along with 
-> similar implementation with rdtime_fn*.
-> 
-> Yes, you're right, there are more series to this, but, it can't be 
-> separated from syntacore specific parts, which is unfortunately not 
-> ready yet to be published. So, I can prepare second patch to implement 
-> PMU subsystem for virt device. What do you think about it? (I'll send it 
-> in the few days).
+Hi,
 
-How can we test your patch meanwhile?
+I am sorry.  There may be a problem with the mailbox server, and all emails
+cannot be send out. Please ignore the above emails.
+From: "Changqi Lu"<luchangqi.123@bytedance.com>
+Date: Mon, Jul 8, 2024, 21:01
+Subject: [PATCH v8 00/10] Support persistent reservation operations
+To: <qemu-block@nongnu.org>, <qemu-devel@nongnu.org>
+Cc: <kwolf@redhat.com>, <hreitz@redhat.com>, <stefanha@redhat.com>, <
+fam@euphon.net>, <ronniesahlberg@gmail.com>, <pbonzini@redhat.com>, <
+pl@dlhnet.de>, <kbusch@kernel.org>, <its@irrelevant.dk>, <foss@defmacro.it>,
+<philmd@linaro.org>, <pizhenwei@bytedance.com>, "Changqi Lu"<
+luchangqi.123@bytedance.com>
+Stefan, the issue you mentioned has been fixed. Almost all patches have
+been reviewed, thank you very much to Stefan and Klaus. v7->v8: - Fix
+num_keys may be less than 0 at scsi_pr_read_keys_complete(). - Fix buf
+memory leak at iscsi driver. v6->v7: - Add buferlen size check at SCSI
+layer. - Add pr_cap calculation in bdrv_merge_limits() function at block
+layer, so the ugly bs->file->bs->bl.pr_cap in scsi and nvme layers was
+changed to bs->bl.pr_cap. - Fix memory leak at iscsi driver, and some other
+spelling errors. v5->v6: - Add relevant comments in the io layer. v4->v5: -
+Fixed a memory leak bug at hw/nvme/ctrl.c. v3->v4: - At the nvme layer, the
+two patches of enabling the ONCS function and enabling rescap are combined
+into one. - At the nvme layer, add helper functions for pr capacity
+conversion between the block layer and the nvme layer. v2->v3: In v2
+Persist Through Power Loss(PTPL) is enable default. In v3 PTPL is
+supported, which is passed as a parameter. v1->v2: - Add sg_persist
+--report-capabilities for SCSI protocol and enable oncs and rescap for NVMe
+protocol. - Add persistent reservation capabilities constants and helper
+functions for SCSI and NVMe protocol. - Add comments for necessary APIs.
+v1: - Add seven APIs about persistent reservation command for block layer.
+These APIs including reading keys, reading reservations, registering,
+reserving, releasing, clearing and preempting. - Add the necessary
+pr-related operation APIs for both the SCSI protocol and NVMe protocol at
+the device layer. - Add scsi driver at the driver layer to verify the
+functions Changqi Lu (10): block: add persistent reservation in/out api
+block/raw: add persistent reservation in/out driver scsi/constant: add
+persistent reservation in/out protocol constants scsi/util: add helper
+functions for persistent reservation types conversion hw/scsi: add
+persistent reservation in/out api for scsi device block/nvme: add
+reservation command protocol constants hw/nvme: add helper functions for
+converting reservation types hw/nvme: enable ONCS and rescap function
+hw/nvme: add reservation protocal command block/iscsi: add persistent
+reservation in/out driver block/block-backend.c | 403
+++++++++++++++++++++++++++++ block/io.c | 164 ++++++++++++ block/iscsi.c |
+425 ++++++++++++++++++++++++++++++ block/raw-format.c | 56 ++++
+hw/nvme/ctrl.c | 326 ++++++++++++++++++++++- hw/nvme/ns.c | 5 +
+hw/nvme/nvme.h | 88 +++++++ hw/scsi/scsi-disk.c | 368
+++++++++++++++++++++++++++ include/block/block-common.h | 40 +++
+include/block/block-io.h | 20 ++ include/block/block_int-common.h | 84
+++++++ include/block/nvme.h | 100 ++++++- include/scsi/constants.h | 52
+++++ include/scsi/utils.h | 8 + include/sysemu/block-backend-io.h | 24 ++
+scsi/utils.c | 81 ++++++ 16 files changed, 2241 insertions(+), 3
+deletions(-) -- 2.20.1
 
-Thanks,
+--00000000000017a6e7061cbc981e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phil.
+<html><head></head><body><div id=3D"editor_version_1.17.2_YqoEMP31" style=
+=3D"word-break:break-word"><div style=3D"margin-top:4px;margin-bottom:4px;l=
+ine-height:1.6"><div dir=3D"auto" class=3D"" style=3D"font-size:16px">Hi,</=
+div></div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6"><=
+div dir=3D"auto" class=3D"" style=3D"font-size:16px"><br></div></div><div s=
+tyle=3D"margin-top:4px;margin-bottom:4px;line-height:1.6"><div dir=3D"auto"=
+ class=3D"" style=3D"font-size:16px">I am sorry.=C2=A0 There may be a probl=
+em with the mailbox server, and all emails cannot be send out. Please ignor=
+e the above emails.</div></div></div><div class=3D"history-quote-wrapper" i=
+d=3D"lark-mail-quote-172044618"><div style=3D"list-style-position:inside"><=
+div class=3D"adit-html-block adit-html-block--collapsed" style=3D"border-le=
+ft:none;padding-left:0px"><div><div class=3D"adit-html-block__attr history-=
+quote-meta-wrapper history-quote-gap-tag" id=3D"lark-mail-quote-meta-narEfr=
+smo" style=3D"padding:12px;background:rgb(245,246,247);color:rgb(31,35,41);=
+border-radius:4px;margin-top:24px;margin-bottom:12px"><div id=3D"lark-mail-=
+quote-27ea1886fc7d5a7915997f00642e34d4"><div style=3D"word-break:break-word=
+"><div style=3D""><span style=3D"white-space:nowrap">From: </span><span sty=
+le=3D"white-space:nowrap">&quot;Changqi Lu&quot;&lt;<a style=3D"white-space=
+:pre-wrap;word-break:break-word;text-decoration:none;color:inherit" href=3D=
+"mailto:luchangqi.123@bytedance.com" class=3D"quote-head-meta-mailto">lucha=
+ngqi.123@bytedance.com</a>&gt;</span></div><div style=3D""><span style=3D"w=
+hite-space:nowrap">Date: </span> Mon, Jul 8, 2024, 21:01</div><div style=3D=
+""><span style=3D"white-space:nowrap">Subject: </span> [PATCH v8 00/10] Sup=
+port persistent reservation operations</div><div style=3D""><span style=3D"=
+white-space:nowrap">To: </span><span style=3D"white-space:nowrap">&lt;<a st=
+yle=3D"white-space:pre-wrap;word-break:break-word;text-decoration:none;colo=
+r:inherit" href=3D"mailto:qemu-block@nongnu.org" class=3D"quote-head-meta-m=
+ailto">qemu-block@nongnu.org</a>&gt;</span>, <span style=3D"white-space:now=
+rap">&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;text-decora=
+tion:none;color:inherit" href=3D"mailto:qemu-devel@nongnu.org" class=3D"quo=
+te-head-meta-mailto">qemu-devel@nongnu.org</a>&gt;</span></div><div style=
+=3D""><span style=3D"white-space:nowrap">Cc: </span><span style=3D"white-sp=
+ace:nowrap">&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;text=
+-decoration:none;color:inherit" href=3D"mailto:kwolf@redhat.com" class=3D"q=
+uote-head-meta-mailto">kwolf@redhat.com</a>&gt;</span>, <span style=3D"whit=
+e-space:nowrap">&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;=
+text-decoration:none;color:inherit" href=3D"mailto:hreitz@redhat.com" class=
+=3D"quote-head-meta-mailto">hreitz@redhat.com</a>&gt;</span>, <span style=
+=3D"white-space:nowrap">&lt;<a style=3D"white-space:pre-wrap;word-break:bre=
+ak-word;text-decoration:none;color:inherit" href=3D"mailto:stefanha@redhat.=
+com" class=3D"quote-head-meta-mailto">stefanha@redhat.com</a>&gt;</span>, <=
+span style=3D"white-space:nowrap">&lt;<a style=3D"white-space:pre-wrap;word=
+-break:break-word;text-decoration:none;color:inherit" href=3D"mailto:fam@eu=
+phon.net" class=3D"quote-head-meta-mailto">fam@euphon.net</a>&gt;</span>, <=
+span style=3D"white-space:nowrap">&lt;<a style=3D"white-space:pre-wrap;word=
+-break:break-word;text-decoration:none;color:inherit" href=3D"mailto:ronnie=
+sahlberg@gmail.com" class=3D"quote-head-meta-mailto">ronniesahlberg@gmail.c=
+om</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt;<a style=3D"white=
+-space:pre-wrap;word-break:break-word;text-decoration:none;color:inherit" h=
+ref=3D"mailto:pbonzini@redhat.com" class=3D"quote-head-meta-mailto">pbonzin=
+i@redhat.com</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt;<a styl=
+e=3D"white-space:pre-wrap;word-break:break-word;text-decoration:none;color:=
+inherit" href=3D"mailto:pl@dlhnet.de" class=3D"quote-head-meta-mailto">pl@d=
+lhnet.de</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt;<a style=3D=
+"white-space:pre-wrap;word-break:break-word;text-decoration:none;color:inhe=
+rit" href=3D"mailto:kbusch@kernel.org" class=3D"quote-head-meta-mailto">kbu=
+sch@kernel.org</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt;<a st=
+yle=3D"white-space:pre-wrap;word-break:break-word;text-decoration:none;colo=
+r:inherit" href=3D"mailto:its@irrelevant.dk" class=3D"quote-head-meta-mailt=
+o">its@irrelevant.dk</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt=
+;<a style=3D"white-space:pre-wrap;word-break:break-word;text-decoration:non=
+e;color:inherit" href=3D"mailto:foss@defmacro.it" class=3D"quote-head-meta-=
+mailto">foss@defmacro.it</a>&gt;</span>, <span style=3D"white-space:nowrap"=
+>&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;text-decoration=
+:none;color:inherit" href=3D"mailto:philmd@linaro.org" class=3D"quote-head-=
+meta-mailto">philmd@linaro.org</a>&gt;</span>, <span style=3D"white-space:n=
+owrap">&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;text-deco=
+ration:none;color:inherit" href=3D"mailto:pizhenwei@bytedance.com" class=3D=
+"quote-head-meta-mailto">pizhenwei@bytedance.com</a>&gt;</span>, <span styl=
+e=3D"white-space:nowrap">&quot;Changqi Lu&quot;&lt;<a style=3D"white-space:=
+pre-wrap;word-break:break-word;text-decoration:none;color:inherit" href=3D"=
+mailto:luchangqi.123@bytedance.com" class=3D"quote-head-meta-mailto">luchan=
+gqi.123@bytedance.com</a>&gt;</span></div></div></div></div><div><div style=
+=3D"white-space:pre-wrap">Stefan, the issue you mentioned has been fixed.
 
+Almost all patches have been reviewed, thank you very much
+to Stefan and Klaus.
+
+
+v7-&gt;v8:
+- Fix num_keys may be less than 0 at scsi_pr_read_keys_complete().
+- Fix buf memory leak at iscsi driver.
+
+v6-&gt;v7:
+- Add buferlen size check at SCSI layer.
+- Add pr_cap calculation in bdrv_merge_limits() function at block layer,
+  so the ugly bs-&gt;file-&gt;bs-&gt;bl.pr_cap in scsi and nvme layers was
+  changed to bs-&gt;bl.pr_cap.
+- Fix memory leak at iscsi driver, and some other spelling errors.
+
+v5-&gt;v6:
+- Add relevant comments in the io layer.
+
+v4-&gt;v5:
+- Fixed a memory leak bug at hw/nvme/ctrl.c.
+
+v3-&gt;v4:
+- At the nvme layer, the two patches of enabling the ONCS
+  function and enabling rescap are combined into one.
+- At the nvme layer, add helper functions for pr capacity
+  conversion between the block layer and the nvme layer.
+
+v2-&gt;v3:
+In v2 Persist Through Power Loss(PTPL) is enable default.
+In v3 PTPL is supported, which is passed as a parameter.
+
+v1-&gt;v2:
+- Add sg_persist --report-capabilities for SCSI protocol and enable
+  oncs and rescap for NVMe protocol.
+- Add persistent reservation capabilities constants and helper functions fo=
+r
+  SCSI and NVMe protocol.
+- Add comments for necessary APIs.
+
+v1:
+- Add seven APIs about persistent reservation command for block layer.
+  These APIs including reading keys, reading reservations, registering,
+  reserving, releasing, clearing and preempting.
+- Add the necessary pr-related operation APIs for both the
+  SCSI protocol and NVMe protocol at the device layer.
+- Add scsi driver at the driver layer to verify the functions
+
+
+Changqi Lu (10):
+  block: add persistent reservation in/out api
+  block/raw: add persistent reservation in/out driver
+  scsi/constant: add persistent reservation in/out protocol constants
+  scsi/util: add helper functions for persistent reservation types
+    conversion
+  hw/scsi: add persistent reservation in/out api for scsi device
+  block/nvme: add reservation command protocol constants
+  hw/nvme: add helper functions for converting reservation types
+  hw/nvme: enable ONCS and rescap function
+  hw/nvme: add reservation protocal command
+  block/iscsi: add persistent reservation in/out driver
+
+ block/block-backend.c             | 403 ++++++++++++++++++++++++++++
+ block/io.c                        | 164 ++++++++++++
+ block/iscsi.c                     | 425 ++++++++++++++++++++++++++++++
+ block/raw-format.c                |  56 ++++
+ hw/nvme/ctrl.c                    | 326 ++++++++++++++++++++++-
+ hw/nvme/ns.c                      |   5 +
+ hw/nvme/nvme.h                    |  88 +++++++
+ hw/scsi/scsi-disk.c               | 368 ++++++++++++++++++++++++++
+ include/block/block-common.h      |  40 +++
+ include/block/block-io.h          |  20 ++
+ include/block/block_int-common.h  |  84 ++++++
+ include/block/nvme.h              | 100 ++++++-
+ include/scsi/constants.h          |  52 ++++
+ include/scsi/utils.h              |   8 +
+ include/sysemu/block-backend-io.h |  24 ++
+ scsi/utils.c                      |  81 ++++++
+ 16 files changed, 2241 insertions(+), 3 deletions(-)
+
+--=20
+2.20.1</div></div></div></div></div></div></body></html>
+
+--00000000000017a6e7061cbc981e--
 
