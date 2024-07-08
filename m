@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5554DC3DA42
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 14:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E572C3DA47
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 14:35:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQpRv-0003ck-Ej; Mon, 08 Jul 2024 10:34:39 -0400
+	id 1sQpRw-0003fa-7c; Mon, 08 Jul 2024 10:34:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sQpRs-0003Sq-UV
+ id 1sQpRt-0003VW-Jx
  for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:34:37 -0400
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
- id 1sQpRq-0002Sf-SF
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:34:36 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4687fSJj000593;
- Mon, 8 Jul 2024 14:34:31 GMT
+ id 1sQpRr-0002T1-QR
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:34:37 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4687fWid018091;
+ Mon, 8 Jul 2024 14:34:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
  from:to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=I
- 3o+Y3tPTDDhYqxDwGJca8lPCovvHqZ6UeePhw50hUk=; b=EhafbAVseaxrLbega
- 5cBGAbzghb/IJsNxjXiqwy/5VJoQj8dtHp2jaDOyqGQkgjBtv7bapk1EKjAKa2xZ
- 3GjR2+qqJhofQzSqzI8xKwPJLwe4pTmFwsYEBUWjw80K9rBM1nvVED7TW8tVSoxK
- vpjylhqNYONSSEd1Qre0buM5Q7ikFf4hE9CkxuYi0xsAJbY+sDCgx8o6c8Ag1V8v
- ZS46jTKqPZBEZjsBdNsXRm/YbhULBmisys2GdzBU/2wRzQytqcbdeoJ14PyastNg
- /byHh9oAyV9QJk9B6Z/n3mNwzwMQUYecxW95vzpB2imTaVQaVDpr6jksnY3ZWZhN
- ocZNw==
+ :mime-version:content-transfer-encoding; s=corp-2023-11-20; bh=D
+ jsII+DNYKco05c74h+Jixdr9avjNbNwMO03qwOWNPU=; b=G9dVd04LpQvGHLald
+ M/xvrC2o9YKiFA5kGgVoFtrl70tqnov1xIHtPrUNLYLNwajKai9H4c/PNJ6J5R2m
+ Txx+ArNhgvW3pgql/SbQC/j3PCDxeqlSHBNV0K39eN67fJRRjaRJezSblMzSE0Gj
+ Xtqx6DKE26x6uGXnilokbOH37XopR+Mh/bifpnaDSsT6Tfd8Sqx4WgGdL9KsUfHM
+ RTjRoF/gW5vQ7BjH/yqTHghMLl29qizU14Rktt6Bg8mf+xtw/8cv0DW9nm+bR0XV
+ h3C6jknop1rTVJBrTTm1F/msbPNyjesOvomJhQ9Ycqbn3eagUahqkJnAl3H7ZZ9m
+ zZFeQ==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 406wkcas6m-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 407emst65v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 08 Jul 2024 14:34:31 +0000 (GMT)
+ Mon, 08 Jul 2024 14:34:33 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 468D8MPC007177; Mon, 8 Jul 2024 14:34:31 GMT
+ with ESMTP id 468DJVi9007488; Mon, 8 Jul 2024 14:34:33 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 407tu1r6rb-1
+ 407tu1r6sk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 08 Jul 2024 14:34:31 +0000
+ Mon, 08 Jul 2024 14:34:33 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 468EXkZ5037381;
- Mon, 8 Jul 2024 14:34:30 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 468EXkZ7037381;
+ Mon, 8 Jul 2024 14:34:32 GMT
 Received: from joaomart-mac.nl.oracle.com (dhcp-10-175-56-128.vpn.oracle.com
  [10.175.56.128])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 407tu1r6ms-2; Mon, 08 Jul 2024 14:34:30 +0000
+ 407tu1r6ms-3; Mon, 08 Jul 2024 14:34:32 +0000
 From: Joao Martins <joao.m.martins@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -62,10 +62,10 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Cedric Le Goater <clg@redhat.com>, Jason Gunthorpe <jgg@nvidia.com>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>
-Subject: [PATCH v3 01/10] vfio/iommufd: Don't fail to realize on
- IOMMU_GET_HW_INFO failure
-Date: Mon,  8 Jul 2024 15:34:11 +0100
-Message-Id: <20240708143420.16953-2-joao.m.martins@oracle.com>
+Subject: [PATCH v3 02/10] backends/iommufd: Extend
+ iommufd_backend_get_device_info() to fetch HW capabilities
+Date: Mon,  8 Jul 2024 15:34:12 +0100
+Message-Id: <20240708143420.16953-3-joao.m.martins@oracle.com>
 In-Reply-To: <20240708143420.16953-1-joao.m.martins@oracle.com>
 References: <20240708143420.16953-1-joao.m.martins@oracle.com>
 MIME-Version: 1.0
@@ -74,12 +74,12 @@ X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-08_09,2024-07-05_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- mlxlogscore=824
+ mlxlogscore=585
  mlxscore=0 phishscore=0 spamscore=0 adultscore=0 malwarescore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2406180000 definitions=main-2407080109
-X-Proofpoint-ORIG-GUID: fEVxUn7o1_-aHk7FTJgBBWixuUiUYYVu
-X-Proofpoint-GUID: fEVxUn7o1_-aHk7FTJgBBWixuUiUYYVu
+X-Proofpoint-GUID: dDmXGX5jOYsCGIk3HUQRFiIJxwczqk1I
+X-Proofpoint-ORIG-GUID: dDmXGX5jOYsCGIk3HUQRFiIJxwczqk1I
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=joao.m.martins@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -104,43 +104,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mdevs aren't "physical" devices and when asking for backing IOMMU info, it
-fails the entire provisioning of the guest. Fix that by filling caps info
-when IOMMU_GET_HW_INFO succeeds plus discarding the error we would get into
-iommufd_backend_get_device_info().
+The helper will be able to fetch vendor agnostic IOMMU capabilities
+supported both by hardware and software. Right now it is only iommu dirty
+tracking.
 
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com> 
-Fixes: 930589520128 ("vfio/iommufd: Implement HostIOMMUDeviceClass::realize() handler")
 Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
 ---
- hw/vfio/iommufd.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ include/sysemu/iommufd.h | 2 +-
+ backends/iommufd.c       | 4 +++-
+ hw/vfio/iommufd.c        | 4 +++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
+diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
+index 9edfec604595..57d502a1c79a 100644
+--- a/include/sysemu/iommufd.h
++++ b/include/sysemu/iommufd.h
+@@ -49,7 +49,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+                               hwaddr iova, ram_addr_t size);
+ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+                                      uint32_t *type, void *data, uint32_t len,
+-                                     Error **errp);
++                                     uint64_t *caps, Error **errp);
+ 
+ #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+ #endif
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 84fefbc9ee7a..2b3d51af26d2 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -210,7 +210,7 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+ 
+ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+                                      uint32_t *type, void *data, uint32_t len,
+-                                     Error **errp)
++                                     uint64_t *caps, Error **errp)
+ {
+     struct iommu_hw_info info = {
+         .size = sizeof(info),
+@@ -226,6 +226,8 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+ 
+     g_assert(type);
+     *type = info.out_data_type;
++    g_assert(caps);
++    *caps = info.out_capabilities;
+ 
+     return true;
+ }
 diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index c2f158e60386..a4d23f488b01 100644
+index a4d23f488b01..9cee71659b1c 100644
 --- a/hw/vfio/iommufd.c
 +++ b/hw/vfio/iommufd.c
-@@ -631,15 +631,13 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+@@ -628,11 +628,13 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+     union {
+         struct iommu_hw_info_vtd vtd;
+     } data;
++    uint64_t hw_caps;
  
      hiod->agent = opaque;
  
--    if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
--                                         &type, &data, sizeof(data), errp)) {
--        return false;
-+    if (iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
-+                                         &type, &data, sizeof(data), NULL)) {
-+        hiod->name = g_strdup(vdev->name);
-+        caps->type = type;
-+        caps->aw_bits = vfio_device_get_aw_bits(vdev);
-     }
- 
--    hiod->name = g_strdup(vdev->name);
--    caps->type = type;
--    caps->aw_bits = vfio_device_get_aw_bits(vdev);
--
-     return true;
- }
- 
+     if (iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
+-                                         &type, &data, sizeof(data), NULL)) {
++                                        &type, &data, sizeof(data),
++                                        &hw_caps, NULL)) {
+         hiod->name = g_strdup(vdev->name);
+         caps->type = type;
+         caps->aw_bits = vfio_device_get_aw_bits(vdev);
 -- 
 2.17.2
 
