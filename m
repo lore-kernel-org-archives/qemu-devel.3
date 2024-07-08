@@ -4,69 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27BDBC3DA42
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 14:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AFC0C3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 14:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQpO7-00080K-GG; Mon, 08 Jul 2024 10:30:43 -0400
+	id 1sQpOq-00007A-5g; Mon, 08 Jul 2024 10:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sQpO5-0007z6-0c
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:30:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sQpO2-0001pC-NP
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:30:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720449036;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Vp3QXicmwzRQ2pwcooQ3iJyhC+RNAMVLkShP5mrWX7I=;
- b=R/XDxOzCrntsdOUjfsRKlwmufdvvB6piFdP+BT2e8tj7L2VRIQxfTs1SV03qbm6g3jfX50
- fWUKFb3Qha8mQKx8QCVtj90e7MdjpdFvC+p5GW0GwS51cJ55E6skk/JQfZmPgJ7gmYB1x7
- 5+5WxpZkb6DbI+p5kJC6+6NsPWC8aQE=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-179-CXs4h0T4OvKYYPhPn6yhfg-1; Mon,
- 08 Jul 2024 10:30:32 -0400
-X-MC-Unique: CXs4h0T4OvKYYPhPn6yhfg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 917C2196A954; Mon,  8 Jul 2024 14:30:30 +0000 (UTC)
-Received: from localhost (unknown [10.39.193.174])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 75D681955F3B; Mon,  8 Jul 2024 14:30:29 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH] qdev-monitor: QAPIfy QMP device_add
-Date: Mon,  8 Jul 2024 16:30:27 +0200
-Message-ID: <20240708143027.480821-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sQpOe-0008F3-Li
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:31:26 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sQpOc-0001sy-GA
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:31:16 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-58c2e5e8649so7465827a12.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 07:31:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720449071; x=1721053871; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=1OKlewebdRdEbxTmajT78KBQ6FSBdR09yAPN/qa7eUc=;
+ b=YIchKu0VayJqdHgYwlaA7n5faG2+tBNXQp/qC3xObLYOgI1Jd3JS/LWCYro5RK1d1s
+ ySUqFPkG5eBiuZSQ0XvQ+X42OgaEVzbDu4YH5wu6yLTbPb5SenNgsSmkYC1WFljWPln7
+ JVk/HuGLjEHiulwIlOf6ST+JZAgQNYdRawEQEDGkvk8OT101O7DJ4LMh2pBaZWCNOcAu
+ OFZFHIUPjmNMVuR0kFWO6npm6AK+HuIuHuS+DIEfZDu2pQ5xpDDdALzVKjtbOIp7kBUY
+ 7LT10p97hVJuLNXl2WjsrZoOG9zRC6M382976m2DmW7Ysu2uAJaTj7GBdrFG1I2r1LLW
+ ignA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720449071; x=1721053871;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1OKlewebdRdEbxTmajT78KBQ6FSBdR09yAPN/qa7eUc=;
+ b=Wjw2iRZ1IaGNkCia8xQ+bUwKnrOV2ikc/7qnAdHyPwoOT49Iuv0oYKkkpPfEZW0H0P
+ Je3BOXEulpUDv1wxtmo9rPPRHDDpyi19ufaRGBHVtqFLo1QtbkdjvCrZ2flVZOZN9a89
+ /mG+OIYvGoQgogmw7PgW8Ezfu8CWL+PdIVklP8ehhzBVp/GYbuGL3hYDYrONoJjRQGOs
+ Olz9FCQUL0buHURpUtU8mOEPbzpFRT8KQZV7fF0IvNOgSkn2ozQJwHjWJ1HBhupYCs1B
+ 4hhUcUGsLiz/JYuRuJ8Wa6h007H7iF+cFJ+2yvNwVemHs2Y7T/omO/gsO3Hup9/2aasg
+ lyaw==
+X-Gm-Message-State: AOJu0YyhavPtXZ5Z16+bgdUHcSGSlt1t77HrLAP48VVyH6S3GzgORLob
+ KCcy5cHLouJz0bQWKJbCrZXjkh8GUPcAyLXI+8tu23jeF8EG5JpUzJYqPCDdutfTWPI60J4ax5O
+ 4NU5BAQqOLOePPxOqQf2bs5WKo7Z9pIUqs0DjCA==
+X-Google-Smtp-Source: AGHT+IFfheZDdAWfHb0b0HlHFX19Bdt2r25h1XbTUK0uq/zlWLv/1Q3rczN/jAvXOMYm7MJhvIY19QlQ+os17NCmWNs=
+X-Received: by 2002:aa7:d149:0:b0:57d:40e3:2a71 with SMTP id
+ 4fb4d7f45d1cf-58e7a94b244mr8128547a12.6.1720449070910; Mon, 08 Jul 2024
+ 07:31:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240702234155.2106399-1-richard.henderson@linaro.org>
+ <20240702234155.2106399-2-richard.henderson@linaro.org>
+In-Reply-To: <20240702234155.2106399-2-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 8 Jul 2024 15:31:00 +0100
+Message-ID: <CAFEAcA_3Ayf-Eo4OHisewA+qgCWSF1S0Tn5aLrYy_3rF0ytStA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] accel/tcg: Introduce memset_ra, memmove_ra
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org, 
+ iii@linux.ibm.com, david@redhat.com, balaton@eik.bme.hu
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,111 +89,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QMP device_add monitor command converts the QDict arguments to
-QemuOpts and then back again to QDict. This process only supports scalar
-types. Device properties like virtio-blk-pci's iothread-vq-mapping (an
-array of objects) are silently dropped by qemu_opts_from_qdict() during
-the QemuOpts conversion even though QAPI is capable of validating them.
-As a result, hotplugging virtio-blk-pci devices with the
-iothread-vq-mapping property does not work as expected (the property is
-ignored). It's time to QAPIfy QMP device_add!
+On Wed, 3 Jul 2024 at 00:43, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Add wrappers that set and clear helper_retaddr around the
+> host memory operation.  This cannot fail for system mode,
+> but might raise SIGSEGV for user mode.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  include/exec/cpu_ldst.h | 40 ++++++++++++++++++++++++++++++++++++++++
+>  accel/tcg/user-exec.c   | 22 ++++++++++++++++++++++
+>  2 files changed, 62 insertions(+)
+>
+> diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+> index 71009f84f5..baf4f9367d 100644
+> --- a/include/exec/cpu_ldst.h
+> +++ b/include/exec/cpu_ldst.h
+> @@ -379,4 +379,44 @@ void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
+>                          MMUAccessType access_type, int mmu_idx);
+>  #endif
+>
+> +/**
+> + * memset_ra:
+> + * @p: host pointer
+> + * @c: data
+> + * @n: length
+> + * @ra: unwind return address
+> + *
+> + * Like system memset(p,c,n), except manages @ra for the calling
+> + * helper in the event of a signal.  To be used with the result
+> + * of tlb_vaddr_to_host to resolve the host pointer.
+> + */
+> +#ifdef CONFIG_USER_ONLY
+> +void *memset_ra(void *p, int c, size_t n, uintptr_t ra);
+> +#else
+> +static inline void *memset_ra(void *p, int c, size_t n, uintptr_t ra)
+> +{
+> +    return memset(p, c, n);
+> +}
+> +#endif
+> +
+> +/**
+> + * memmove_ra:
+> + * @d: host destination pointer
+> + * @s: host source pointer
+> + * @n: length
+> + * @ra: unwind return address
+> + *
+> + * Like system memmove(d,s,n), except manages @ra for the calling
+> + * helper in the event of a signal.  To be used with the result of
+> + * tlb_vaddr_to_host to resolve the host pointer.
+> + */
+> +#ifdef CONFIG_USER_ONLY
+> +void *memmove_ra(void *d, const void *s, size_t n, uintptr_t ra);
+> +#else
+> +static inline void *memmove_ra(void *d, const void *s, size_t n, uintptr_t ra)
+> +{
+> +    return memmove(d, s, n);
+> +}
+> +#endif
 
-Get rid of the QemuOpts conversion in qmp_device_add() and call
-qdev_device_add_from_qdict() with from_json=true. Using the QMP
-command's QDict arguments directly allows non-scalar properties.
+I guess these make sense. I feel like they're a function where
+the caller needs to be quite careful about what they're doing
+(e.g. not to use them in a way that the memmove or memset
+would cross a page boundary if other guest register state needs
+to be kept in sync with the reported fault address), but I
+can't think of a useful non-architecture-specific warning that
+would be worth putting in the doc comments.
 
-The HMP is also adjusted since qmp_device_add()'s now expects properly
-typed JSON arguments and cannot be used from HMP anymore. Move the code
-that was previously in qmp_device_add() (with QemuOpts conversion and
-from_json=false) into hmp_device_add() so that its behavior is
-unchanged.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-This patch changes the behavior of QMP device_add but not HMP
-device_add. QMP clients that sent incorrectly typed device_add QMP
-commands no longer work. This is a breaking change but clients should be
-using the correct types already. See the netdev_add QAPIfication in
-commit db2a380c8457 for similar reasoning.
-
-Markus helped me figure this out and even provided a draft patch. The
-code ended up very close to what he suggested.
-
-Suggested-by: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- system/qdev-monitor.c | 41 ++++++++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 13 deletions(-)
-
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 6af6ef7d66..1427aa173c 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -849,18 +849,9 @@ void hmp_info_qdm(Monitor *mon, const QDict *qdict)
- 
- void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
- {
--    QemuOpts *opts;
-     DeviceState *dev;
- 
--    opts = qemu_opts_from_qdict(qemu_find_opts("device"), qdict, errp);
--    if (!opts) {
--        return;
--    }
--    if (!monitor_cur_is_qmp() && qdev_device_help(opts)) {
--        qemu_opts_del(opts);
--        return;
--    }
--    dev = qdev_device_add(opts, errp);
-+    dev = qdev_device_add_from_qdict(qdict, true, errp);
-     if (!dev) {
-         /*
-          * Drain all pending RCU callbacks. This is done because
-@@ -872,8 +863,6 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
-          * to the user
-          */
-         drain_call_rcu();
--
--        qemu_opts_del(opts);
-         return;
-     }
-     object_unref(OBJECT(dev));
-@@ -967,8 +956,34 @@ void qmp_device_del(const char *id, Error **errp)
- void hmp_device_add(Monitor *mon, const QDict *qdict)
- {
-     Error *err = NULL;
-+    QemuOpts *opts;
-+    DeviceState *dev;
- 
--    qmp_device_add((QDict *)qdict, NULL, &err);
-+    opts = qemu_opts_from_qdict(qemu_find_opts("device"), qdict, &err);
-+    if (!opts) {
-+        goto out;
-+    }
-+    if (qdev_device_help(opts)) {
-+        qemu_opts_del(opts);
-+        return;
-+    }
-+    dev = qdev_device_add(opts, &err);
-+    if (!dev) {
-+        /*
-+         * Drain all pending RCU callbacks. This is done because
-+         * some bus related operations can delay a device removal
-+         * (in this case this can happen if device is added and then
-+         * removed due to a configuration error)
-+         * to a RCU callback, but user might expect that this interface
-+         * will finish its job completely once qmp command returns result
-+         * to the user
-+         */
-+        drain_call_rcu();
-+
-+        qemu_opts_del(opts);
-+    }
-+    object_unref(OBJECT(dev));
-+out:
-     hmp_handle_error(mon, err);
- }
- 
--- 
-2.45.2
-
+thanks
+-- PMM
 
