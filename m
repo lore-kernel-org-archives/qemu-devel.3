@@ -4,80 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BE28C38150
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 02:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB310C38150
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 02:05:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQdhF-0008Ug-Vv; Sun, 07 Jul 2024 22:01:42 -0400
+	id 1sQdkW-0004uB-Eb; Sun, 07 Jul 2024 22:05:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sQdhE-0008TJ-MX; Sun, 07 Jul 2024 22:01:40 -0400
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sQdhD-0007mM-08; Sun, 07 Jul 2024 22:01:40 -0400
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-8101b144fddso806858241.3; 
- Sun, 07 Jul 2024 19:01:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720404097; x=1721008897; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=j8KuolbZbpJz3+BmmHTAiTNBanrZbLCa5wxZZONf+54=;
- b=UB/IuwwIc5YAjS39ljHcauH8kHPI3iUzj+BMHLVnex8wsKyqs/3w35brZ/7LLc8Sax
- H3OZbTKQcEIdK6TYAG/bu5LSTOOUyd0UnQrxDzYtSNFGZZ1F9Fyu2rXDmw/YkuekNSpJ
- C9MIp89r5UjUpjtov/UgJyzSiQDLzkxAv0j6QUNIAfvmMNJnpNgDHR89fau9AKoZP5zY
- TZPXYiaanD8MZhESSz8OIjEuvU8eOaoy4L2C5i2bMhkQMt5cV0LAcK8XegnA1c4aUf6H
- ZjjE1cX5EW003NJDTR7ItKBpWHg4JERXmws2Y+N2TzvBodFbb67pbr+rq1yUNdlrqlLx
- lCCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720404097; x=1721008897;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=j8KuolbZbpJz3+BmmHTAiTNBanrZbLCa5wxZZONf+54=;
- b=A2ntDAHPqeTSTxSpy+DWjjmvjPEvXI6RjKV6jHMvROHAyWt/U6/+VQgLKxvG+615W8
- HsDDCHbJEE5P37T1+XEv2AnRnH/XmZtVTrV0I3FDbJpVn+liYyGcKJ3xfr56LMWu5+7x
- ZucZU8oSxcPOAjXSjaPhtTm78yaMSmNCxpz8KP0g3TUocoGcZYUiRNoPAKHQjwKW12Cf
- kahsZiTZ7bI70ByXeFHlPvE1aexuRjuP4K7LVyw78KEWSphJ0rD506lrq9QiMCML+Vjx
- A6fO7n3H8thKJjNy1hpIgXmAfoqqJCx5iPJZllo2LXmpyoifVzedVnMnBkmrug8kAm8y
- V7Nw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXMh4cFlTzHF/ZEUy/2Ek/+86O9UDVTpPgUd1b01gP69U2iomPr132f8ETmZWBEBq7y1zBDrE1zGq9rTkTs/685m2HERE=
-X-Gm-Message-State: AOJu0YyHCeMQjxn00LhCBZ0P6VgMCmMWQ/JXsDhClcbBw+h/4AqB9Wwp
- S0y2GYOgJw1Um9y2BkgNbpn2yaQxWBW2fhuggXCFCCtaIa/ujRHc4b0Dwl1H02pfSBWKJ+FefZV
- 8S+9+Kczda90zhfmKmUGEWo7ELIM=
-X-Google-Smtp-Source: AGHT+IELvzKzZT6HXpcgEdE8YIVgHpBKi0abZvUerIaLn7230gCoflxJbITp846b034X+BLRErezluZzzvzftKqrSTw=
-X-Received: by 2002:a05:6122:6607:b0:4f2:f1df:89c3 with SMTP id
- 71dfb90a1353d-4f2f3adde5amr11429499e0c.0.1720404097127; Sun, 07 Jul 2024
- 19:01:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sQdkU-0004tU-MM
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 22:05:02 -0400
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sQdkS-0007y3-NF
+ for qemu-devel@nongnu.org; Sun, 07 Jul 2024 22:05:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1720404301; x=1751940301;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=xUkLj7gycHRPrc2vJ98aEzGOvd7jb/4I0Fb5L2d3we8=;
+ b=fAMlW5nefFnwZH3wNKHWzafjZmZ3Bd1gKlrtuBkQUzHqtAHPYmbbuKmk
+ e9AiN3fk371foBP4Wg3AF5v66tHgWSkTj47hfjVRTdwFNM5kk8qUhy0Ao
+ Jx/6mNiexqe410q2Q95YDRiSHA8E9BMwK2ZXVUImd/JiOwpUIO3717NYr
+ PELiUL+N9e8F7ReyN5nYaCjQfs/d0BHYXZIb4nV00yGfu5PC2qapx7vCH
+ py1wMwc1jizOX1Cdp+70ChVW4udcVrMCC95xiXbnt98yfSny5eOzKdfRe
+ vxuTzFiUwNOOnKzOLZnhBX3LY0gNpe4P902AfbYZE0nCUmnDZHuY12UZ4 w==;
+X-CSE-ConnectionGUID: oFpZSotPTqafcD5mES/lKA==
+X-CSE-MsgGUID: DB2wV2KgQNS5F+RPDjC+pw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11126"; a="17463581"
+X-IronPort-AV: E=Sophos;i="6.09,191,1716274800"; d="scan'208";a="17463581"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Jul 2024 19:04:55 -0700
+X-CSE-ConnectionGUID: 4nyaRrFQRF2E1T5hgo1Y/A==
+X-CSE-MsgGUID: wIM4lsQ3S4SfsWRiP6ZMjg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,191,1716274800"; d="scan'208";a="47246725"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa007.fm.intel.com with ESMTP; 07 Jul 2024 19:04:53 -0700
+Date: Mon, 8 Jul 2024 10:20:32 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] i386/cpu: Drop the check of phys_bits in
+ host_cpu_realizefn()
+Message-ID: <ZotM8CF4ZpdhYhWB@intel.com>
+References: <20240704111231.2881016-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-References: <20240703144921.1281-1-zhiwei_liu@linux.alibaba.com>
- <20240703144921.1281-4-zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <20240703144921.1281-4-zhiwei_liu@linux.alibaba.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 8 Jul 2024 12:01:10 +1000
-Message-ID: <CAKmqyKOXuOtonzLY775VbcA92eHFE7N7TgAMm9yXQHG2f=Td+Q@mail.gmail.com>
-Subject: Re: [PATCH v3 3/7] target/riscv: Correct SXL return value for RV32 in
- RV64 QEMU
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, dbarboza@ventanamicro.com, liwei1518@gmail.com, 
- bmeng.cn@gmail.com, TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240704111231.2881016-1-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,46 +82,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 4, 2024 at 12:53=E2=80=AFAM LIU Zhiwei <zhiwei_liu@linux.alibab=
-a.com> wrote:
->
-> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
->
-> Ensure that riscv_cpu_sxl returns MXL_RV32 when runningRV32 in an
-> RV64 QEMU.
->
-> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-> Fixes: 05e6ca5e156 ("target/riscv: Ignore reserved bits in PTE for RV64")
-> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Hi Xiaoyao,
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
+On Thu, Jul 04, 2024 at 07:12:31AM -0400, Xiaoyao Li wrote:
+> Date: Thu,  4 Jul 2024 07:12:31 -0400
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH] i386/cpu: Drop the check of phys_bits in
+>  host_cpu_realizefn()
+> X-Mailer: git-send-email 2.34.1
+> 
+> The check of cpu->phys_bits to be in range between
+> [32, TARGET_PHYS_ADDR_SPACE_BITS] in host_cpu_realizefn()
+> is duplicated with check in x86_cpu_realizefn().
+> 
+> Since the ckeck in x86_cpu_realizefn() is called later and can cover all
+> teh x86 case. Remove the one in host_cpu_realizefn().
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > ---
->  target/riscv/cpu.h | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 87742047ce..49de81be7e 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -693,8 +693,11 @@ static inline RISCVMXL riscv_cpu_sxl(CPURISCVState *=
-env)
->  #ifdef CONFIG_USER_ONLY
->      return env->misa_mxl;
->  #else
-> -    return get_field(env->mstatus, MSTATUS64_SXL);
-> +    if (env->misa_mxl !=3D MXL_RV32) {
-> +        return get_field(env->mstatus, MSTATUS64_SXL);
-> +    }
->  #endif
-> +    return MXL_RV32;
->  }
->  #endif
->
-> --
-> 2.25.1
->
->
+>  target/i386/host-cpu.c | 12 +-----------
+>  1 file changed, 1 insertion(+), 11 deletions(-)
+> 
+> diff --git a/target/i386/host-cpu.c b/target/i386/host-cpu.c
+> index 8b8bf5afeccf..b109c1a2221f 100644
+> --- a/target/i386/host-cpu.c
+> +++ b/target/i386/host-cpu.c
+> @@ -75,17 +75,7 @@ bool host_cpu_realizefn(CPUState *cs, Error **errp)
+>      CPUX86State *env = &cpu->env;
+>  
+>      if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
+> -        uint32_t phys_bits = host_cpu_adjust_phys_bits(cpu);
+> -
+> -        if (phys_bits &&
+> -            (phys_bits > TARGET_PHYS_ADDR_SPACE_BITS ||
+> -             phys_bits < 32)) {
+> -            error_setg(errp, "phys-bits should be between 32 and %u "
+> -                       " (but is %u)",
+> -                       TARGET_PHYS_ADDR_SPACE_BITS, phys_bits);
+> -            return false;
+> -        }
+> -        cpu->phys_bits = phys_bits;
+> +        cpu->phys_bits = host_cpu_adjust_phys_bits(cpu);
+
+Just nit:
+
+cpu->phys_bits can be adjusted directly in host_cpu_adjust_phys_bits(),
+and no need to return it out again.
+
+Otherwise,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
 
