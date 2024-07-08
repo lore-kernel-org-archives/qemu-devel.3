@@ -4,104 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC565C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 15:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F31A8C3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 15:59:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQqZP-0004O6-NI; Mon, 08 Jul 2024 11:46:27 -0400
+	id 1sQql8-00057G-6c; Mon, 08 Jul 2024 11:58:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sQqZF-0004Mz-5b
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:46:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sQqZC-0003MD-Rc
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:46:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720453573;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=P6k4EpXsKOPlZOPblKQNV8GLILAZMQIqsSEIv3ueRdI=;
- b=IH4zpicp9hBeGohA2S7qO6rEg3r0WIcvzR7AOeQ7zG0BYB7QhK8mOOw3AzCjM8eLBQPWU7
- S+TdIibtQeahURU+t0wuKAY/IhBZ76aPBVh02BfZxhLkfeA7xXK4k8JG1PGrET5LvjAqZr
- f4aiiz2FXvqVtodMkZHZoa6s6NjKra8=
-Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
- [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-FPjBfmaqPLGM_1SMvGNFFw-1; Mon, 08 Jul 2024 11:46:10 -0400
-X-MC-Unique: FPjBfmaqPLGM_1SMvGNFFw-1
-Received: by mail-yb1-f199.google.com with SMTP id
- 3f1490d57ef6-dfd377669d6so1117424276.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 08:46:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sQql4-00056H-TL
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:58:31 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sQql2-000643-Io
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:58:30 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a77e7420697so258149566b.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 08:58:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720454306; x=1721059106; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EnG08U+jkWf7cwOUSHuVDaB1xTG8WFa8YrBhx1M5Lk8=;
+ b=i9G5hcmXW5LIQeK0CSVNDz3ot8y0yuhVAatsP9lY0qyUnhw6NrJVPW97glfRUhB2Gd
+ AY+m9PiLjUL8uoIfyFHBNPtPxYu4lhEJKnduPl/O/kzB6UJLvKA+VXbLPQyjXDBhI9MD
+ 7EpLmqocAPXUQUv4Wt8yMFtglqYEnSDk63u9xFw8fY2OhHWfb9bIobwmEr0KJFPjOuWG
+ cS0IjamEA8WNTwirEI/M9zxYMIXmsdv0RuzGqJGM0fYXWeQM8GMIr7I3+unyKmPA6tFY
+ LKL5wEesDie1IYQ/Hq9MWdpxNF8F8TuOqA6n2mrkZIbuxHhNf2FyiDh87X5KRX6qDpgU
+ T4jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720453570; x=1721058370;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=P6k4EpXsKOPlZOPblKQNV8GLILAZMQIqsSEIv3ueRdI=;
- b=M/rWr8AlMK4KJXndNJX656dVBrv2lc1SnklgF/bkMb0cvgx2fu++U4t7AxxWKMLf5B
- 7xry7VpGHVk3I8h55GJJ782a3Zjs6qzfsnwjfKq64hKU1Vf2kmuVxjHHplbCZRZR+DQ1
- Hl59T3qW+ix0RqdRtPQvTda4HwHosjIWZvHSUuLzZmp508OgOlpR1u2deu10Ljj3gDhM
- YExWhkXnNKaTZOn59Nk720Meo5yw6GQJ9cr4qfsiH4OJH5FHCxiGz6McsJzl041yA3fp
- 6lA+Cu84NixU2GHRs24oz+oeayBzPCQjIDOvVrhrB+I9Zl/Y9nY3DWF+i9QXN3AxhaMp
- B3WA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtuU7WGJFIFkXqAiue6iBAot6FuU3wzc2o6RJiFrm2NKVx+7zW3H7kQ7qNroeh4YnFkdy0KlhZiRgkcHj3v1mZ37HX+zI=
-X-Gm-Message-State: AOJu0YyR8HIzyqL3SSRZJi0yFnaOOeEPsFQUo9IESONIR9AfaI4ctpjm
- Mwf2t/YgKupdPVbN8jZtS3QLwyPKiYjZqe5XInNL0OzhaCYIfE5IlpVQNgfMEbxIfoPLosiHfQ5
- H2b+HU48AZXTAYW/1ZBn4NaXSjZswbsU6+1qXhL3ZAPQuj/M2n0N8
-X-Received: by 2002:a25:84cb:0:b0:e03:af0f:f487 with SMTP id
- 3f1490d57ef6-e041af41bcamr173319276.0.1720453569870; 
- Mon, 08 Jul 2024 08:46:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGnZScfX1BF3HF1AaUGapdS9e1LCyPhs1tBVJ3sNZL6OIGyvdqLfRFR9B5xfUMS3VBucPAwGQ==
-X-Received: by 2002:a25:84cb:0:b0:e03:af0f:f487 with SMTP id
- 3f1490d57ef6-e041af41bcamr173293276.0.1720453569575; 
- Mon, 08 Jul 2024 08:46:09 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b61ba9f323sm494146d6.132.2024.07.08.08.46.08
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jul 2024 08:46:09 -0700 (PDT)
-Date: Mon, 8 Jul 2024 11:46:06 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yichen Wang <yichen.wang@bytedance.com>
-Cc: "Liu, Yuan1" <yuan1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Hao Xiang <hao.xiang@linux.dev>, "Zou, Nanhai" <nanhai.zou@intel.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Subject: Re: [External] [PATCH v3 0/4] Implement using Intel QAT to offload
- ZLIB
-Message-ID: <ZowJvvvEJzgPiFAu@x1n>
-References: <20240627223445.95096-1-yichen.wang@bytedance.com>
- <ZoRSA4naaje878PK@x1n>
- <PH7PR11MB5941E373F92A78EB5A7E4FCAA3DE2@PH7PR11MB5941.namprd11.prod.outlook.com>
- <ZobBeWWyf5aHGROj@x1n>
- <PH7PR11MB5941064312077F74CE235E45A3DF2@PH7PR11MB5941.namprd11.prod.outlook.com>
- <8E9B92DE-5576-48C9-8878-3F750DA116E4@bytedance.com>
+ d=1e100.net; s=20230601; t=1720454306; x=1721059106;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EnG08U+jkWf7cwOUSHuVDaB1xTG8WFa8YrBhx1M5Lk8=;
+ b=cuDYobygFpxfohkk+6kkYQC3pGT6va/Z4+rv4ktaMrMVmoM+Ab8RKyXynaVUV9vfLf
+ +2mNS9sG5jsYy0NK1Fe+gl3m9tepvJ4pUWzbpu7kI0PJ51CsTdrCKtV/iplMT03UZc0A
+ w6efPN1fQcwiXdS20xLs4T7+Rxf63klVSbmwMBksgFBdHldQDFtQx2eOToIdCsBPTiEE
+ w5OZ2wRJKyWqwqBRy+sWlc3wFQua/wXESAJCLzj/NpPk9bztUoiZLjgiwhnQvOOWCfpW
+ D9kpkNTFkLWwB5q2fDOobbq1U84imdzTwQj4L8bE4LV8XiSFf+pTlRakVViJKAxHJ0ly
+ poUA==
+X-Gm-Message-State: AOJu0YyVB5RkHYYiaAypjyehKEmZ2OjcSnjbN2ZcuOAUr+iGailXYf1W
+ OT3rZP49ENEBUuOHJzA4EzVPoFaBHsIxExrutKrNr4o1aPSq/FMJbF3fYoPd9GzUo52ZB8otGCZ
+ 2sPhwicXC5qaW6/BF1q8Q7mGWcZEFkG1qrTIMNQ==
+X-Google-Smtp-Source: AGHT+IEvdtULHhHKMlbT+UJDlvM8ehV4uTiaD9kjx8Ev0OQ5+vADlN3hDmtm7V8TS1gloKIA1HGr3RiuYMdcmU5diNM=
+X-Received: by 2002:a17:906:e56:b0:a77:e55a:9e79 with SMTP id
+ a640c23a62f3a-a780b68829amr1927166b.4.1720454306248; Mon, 08 Jul 2024
+ 08:58:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8E9B92DE-5576-48C9-8878-3F750DA116E4@bytedance.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <87cynoszg2.fsf@draig.linaro.org>
+In-Reply-To: <87cynoszg2.fsf@draig.linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Mon, 8 Jul 2024 18:58:10 +0300
+Message-ID: <CAAjaMXbdLZLmUr94ee4-81rXX_YjYa2-cz44xux7rJe+fwnmRw@mail.gmail.com>
+Subject: Re: QEMU Community Call Agenda Items (July 8th, 2024)
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Andreas Faerber <afaerber@suse.de>, 
+ Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, 
+ Markus Armbruster <armbru@redhat.com>, bbauman@redhat.com,
+ Brian Cain <bcain@quicinc.com>, 
+ "Daniel P. Berrange" <berrange@redhat.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org, 
+ dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com, 
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
+ Jim Shu <jim.shu@sifive.com>, 
+ jjherne@linux.vnet.ibm.com, Joao Martins <joao.m.martins@oracle.com>, 
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>,
+ Max Chou <max.chou@sifive.com>, 
+ Mark Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
+ mimu@linux.vnet.ibm.com, 
+ Paul Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, 
+ Stefan Hajnoczi <stefanha@gmail.com>, Wei Wang <wei.w.wang@intel.com>,
+ z.huo@139.com, 
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,26 +118,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 05, 2024 at 11:28:25AM -0700, Yichen Wang wrote:
-> Just want to add some information here. So in ByteDance, the current
-> generation server is quipped with 2*100Gb NIC. We reserve 10Gbps for
-> control plane purposes which includes live migration here. So it is not
-> about we are using “good network”, it is about not normal to use full
-> bandwidth for control plane purposes. Hence we do have a requirements for
-> QAT/IAA in these cases.
+Hello Alex, I thought It was tomorrow? QEMU Project Calendar says "
+Tuesday, July 9=E2=8B=854:00 =E2=80=93 5:00pm
+Every 2 weeks on Tuesday
+"
 
-Yes, this makes sense.
-
-But then you may then also want to figure out the high cpu consumption of
-those cards, to not interrupt more important workloads?
-
-I saw there's a new version posted, I didn't see an explanation of the cpu
-consumption issue mentioned.  Meanwhile I also see that the docs/ update is
-missing.
-
-Would you consider adding both by replying to the new version?
-
--- 
-Peter Xu
-
+On Mon, 8 Jul 2024 at 17:58, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+>
+> Hi,
+>
+> The KVM/QEMU community call is at:
+>
+>   https://meet.jit.si/kvmcallmeeting
+>   @
+>   8/7/2024 14:00 UTC
+>
+> Are there any agenda items for the sync-up?
+>
+> --
+> Alex Benn=C3=A9e
+> Virtualisation Tech Lead @ Linaro
 
