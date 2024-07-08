@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 223ECC3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 23:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCACC3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 23:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQxoH-0006SK-IQ; Mon, 08 Jul 2024 19:30:17 -0400
+	id 1sQy9k-0005rN-Mw; Mon, 08 Jul 2024 19:52:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sQxo8-0006Px-N7
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 19:30:09 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1sQy9j-0005qL-O2
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 19:52:27 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sQxo6-0004OS-9o
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 19:30:08 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-367a081d1cdso2613618f8f.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 16:30:05 -0700 (PDT)
+ id 1sQy9h-0008BX-Vz
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 19:52:27 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4266f344091so4997315e9.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 16:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1720481404; x=1721086204; darn=nongnu.org;
+ d=opnsrc.net; s=google; t=1720482742; x=1721087542; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LeEWBDUnSE8T2MXF9CJ5tN8DkUm3ThWysb2CZv2tP6s=;
- b=DHoszfOK4crQDAubOU0qq/4dXtur8Mtv5Sew5bxtwFOd/Forf3k2k2pz9+f87l9k0u
- 77OX1ssFtgIUE1guivPSnDIdKvIhV6PpFVUAOHJS/dyU2XOio8Cl72EpjOOPZSmfj8K2
- XtDMTveBXVwiI5TAedvmbJpm9C5FYOgPSpwltTgztWmYHb2rXgQh37WpQRei6wpIc+bi
- sNsIBMIZmTTf0IcIcxNyrYFOR8u0wgIV4c4bgJ2Q4QcitmXVv5ALoM4Us1kGIrPPG75L
- OGLabAKBJ201XVk/uu3oV6s2LI63Ht1mm38DqRggOLmpafZvSotQ1dNIh3l5zF+9zXYn
- oYdQ==
+ bh=uoIxqkkfp6D3byamgWRg4iE8qJKE6OKUgrTUAvLelts=;
+ b=cA9ifLf3CAViWJfcCKq63ITBaVNNUGC1h1taoLSpmBMtWSxZuXfAnAjxH5/H+gDm8c
+ zDVZeBq15iA8NvXE4qI/S0YsyOyUTFRO54s1iHyM1r658FTVim5FFi393YJj+OlgVje9
+ jg2ckUTRo32D+UqlRvqru5iDbumi/CRnt3t6Q0Vug5G2TsRSZMqF+Zet2ZepZylbrlI5
+ iDGUHs1+h2khI/G5JKH3QCrpWFDa6BtSC2GweqkLNpp9T+2Jv6zM71Gm2bu0xBsHR8uJ
+ KBEA1QDNd6N2e6ETmZ8tBZbLFOpJrUiBlE8hUmLs1W007BzimO2U4442garl66YNk3Xh
+ wC7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720481404; x=1721086204;
+ d=1e100.net; s=20230601; t=1720482742; x=1721087542;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LeEWBDUnSE8T2MXF9CJ5tN8DkUm3ThWysb2CZv2tP6s=;
- b=OYBPm+Z29Ioi8bNuDYZ2yVkRdnnkMG5WQZGMVxUaE/fjBIrR9wVFujXZBlxal421jB
- FscoA4sdGiyF08IWJ9rDmoTAoWUJzC6iFwuyVxdLJzYyvoZB0r+wfECqnY77BIUCCkPH
- AzMqDdudBHIh9yCMhivnf3MrJ9bmbY7P9YOFKjfXGuOwz72JxSBux8d6x/qn/zqqg83e
- ZSdJwfv8BrJXre3cwPDOTtonfns4frwO3NyrSIizefvUC4QtsHTv7jpCz6nTObXa69ms
- CoHqrRffhyd7WgINuQEDSqIcUlMyPvWQOpUxjC+z73n4WCojuEcj7zKLlu0BeYHGdjXi
- FNQg==
+ bh=uoIxqkkfp6D3byamgWRg4iE8qJKE6OKUgrTUAvLelts=;
+ b=uLFd0h6H3uab8a2B5swFprezLKNge5o+rXp5ZR0tSFAA2QWih3hdxFWbgEvxwlEwDj
+ uywyu5aXUBff0gVRhmrPF1xeMxEOTkmUxGxyA9QIWXna+HuXWe/XD0UwP90OCuYIuW/c
+ BawHciMFO1rvKLB06cXm9xwBDJSqjrXv/OwsVFLuNO0e5U2S8iNjCUOmUfj+4ZC4rcv2
+ HsCXaBLOBgW62g9P49sy5u6j2Poa9zMNk+kQchoCEE1783AcgW452qHwy4/AhRTH/jMx
+ pOITiJaAbn9MyV9XgtJ3BdbTb16JWrYKjDUn/KoNPhc+wNYedlkS3YRrjRCClNYXN9Lm
+ g66Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWK8KVIz/Cjf33KgOpSMoIdm7B7rEdcHTghOVOV0mRcz7QW9tDphIuRTfYIthZDcUUEJUPTOpmqclME40qkTLPkW4OJnrY=
-X-Gm-Message-State: AOJu0YzV/2MG304hUBD4NiL/tE68agRl/L4C2pEOBcRpGUc7WNSoIsyF
- mjgoxzMlkKpnhnVe7wLqULVnJPAkNSWfA/belBbEl9XvpyD16qN1SD8ry6fzXh8=
-X-Google-Smtp-Source: AGHT+IHP0vovMVmZCvndeaWDmOXmntewIztKETapk+hpuVJ+e/n1Yx/5tfrhESgvhnukqf/+pKPPvQ==
-X-Received: by 2002:a5d:4ac5:0:b0:367:9792:8bd4 with SMTP id
- ffacd0b85a97d-367ceac4988mr688827f8f.43.1720481403463; 
- Mon, 08 Jul 2024 16:30:03 -0700 (PDT)
+ AJvYcCV9j7PBQzAl+RPIZlArNtoSohlh4X++QSyaGnCxcr3fcAHbivfXe/fnqeo40tEUP/5AeAn/Gh/GS6OzWyGjmUGuMb3iwnY=
+X-Gm-Message-State: AOJu0Yza1/VPULf+lf4ZcCEggn8gZe1XWMte3WJ8oJu8pX1FgaDNXsGu
+ s49p6E0kIHriHxASHpt46D3CRUqNaODBaRUPFPa0RSwtG3OGyW33bO61cyfdva0=
+X-Google-Smtp-Source: AGHT+IGYIbwQn90fv+TqAb/NGXWj5dhCw5gWd1YxptU1PeRO63aRM7tsMSGtHHZCr2jOYd5F8GO8gw==
+X-Received: by 2002:a05:600c:48aa:b0:426:6e95:78d6 with SMTP id
+ 5b1f17b1804b1-426706c62d9mr5557445e9.4.1720482741977; 
+ Mon, 08 Jul 2024 16:52:21 -0700 (PDT)
 Received: from [10.11.12.72] ([90.220.10.255])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f6e0b19sm14666225e9.2.2024.07.08.16.30.01
+ 5b1f17b1804b1-4266a38f5a5sm53833465e9.43.2024.07.08.16.52.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Jul 2024 16:30:03 -0700 (PDT)
-Message-ID: <01c2df70-0189-4519-8f15-7b96ba315d7a@opnsrc.net>
-Date: Mon, 8 Jul 2024 23:30:01 +0000
+ Mon, 08 Jul 2024 16:52:21 -0700 (PDT)
+Message-ID: <f825e5df-ec87-4703-9722-98f1aa7aa33f@opnsrc.net>
+Date: Mon, 8 Jul 2024 23:52:19 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V13 1/8] accel/kvm: Extract common KVM vCPU
- {creation,parking} code
+Subject: Re: [PATCH V13 8/8] docs/specs/acpi_hw_reduced_hotplug: Add the CPU
+ Hotplug Event Bit
 To: Igor Mammedov <imammedo@redhat.com>
 Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, maz@kernel.org, jean-philippe@linaro.org,
@@ -80,20 +80,19 @@ Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
  miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
  wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
  lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
- linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
+ linuxarm@huawei.com, Zhao Liu <zhao1.liu@intel.com>
 References: <20240607115649.214622-1-salil.mehta@huawei.com>
- <20240607115649.214622-2-salil.mehta@huawei.com>
- <20240706151154.7c430b0a@imammedo.users.ipa.redhat.com>
- <CAJ7pxeZV6qmDR8aXE5LaDZdjvGCJhnE4RZeL4823XqaiDApe1Q@mail.gmail.com>
- <20240708153216.0d6d1ad1@imammedo.users.ipa.redhat.com>
+ <20240607115649.214622-9-salil.mehta@huawei.com>
+ <20240706164519.06c53d77@imammedo.users.ipa.redhat.com>
+ <db8c2a7c-cc40-4fed-98fc-171f70e239ea@opnsrc.net>
+ <20240708155507.52418191@imammedo.users.ipa.redhat.com>
 Content-Language: en-GB
 From: Salil Mehta <salil.mehta@opnsrc.net>
-In-Reply-To: <20240708153216.0d6d1ad1@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240708155507.52418191@imammedo.users.ipa.redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-wr1-x42e.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=salil.mehta@opnsrc.net; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,322 +115,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
 
-On 08/07/2024 13:32, Igor Mammedov wrote:
-> On Sat, 6 Jul 2024 15:43:01 +0000
+On 08/07/2024 13:55, Igor Mammedov wrote:
+> On Mon, 8 Jul 2024 05:32:28 +0000
 > Salil Mehta <salil.mehta@opnsrc.net> wrote:
 >
->> Hi Igor,
->> Thanks for taking out time to review.
->>
->> On Sat, Jul 6, 2024 at 1:12 PM Igor Mammedov <imammedo@redhat.com> wrote:
->>
->>> On Fri, 7 Jun 2024 12:56:42 +0100
+>> On 06/07/2024 14:45, Igor Mammedov wrote:
+>>> On Fri, 7 Jun 2024 12:56:49 +0100
 >>> Salil Mehta <salil.mehta@huawei.com> wrote:
 >>>   
->>>> KVM vCPU creation is done once during the vCPU realization when Qemu
->>> vCPU thread
->>>> is spawned. This is common to all the architectures as of now.
->>>>
->>>> Hot-unplug of vCPU results in destruction of the vCPU object in QOM but
->>> the
->>>> corresponding KVM vCPU object in the Host KVM is not destroyed as KVM
->>> doesn't
->>>> support vCPU removal. Therefore, its representative KVM vCPU
->>> object/context in
->>>> Qemu is parked.
->>>>
->>>> Refactor architecture common logic so that some APIs could be reused by
->>> vCPU
->>>> Hotplug code of some architectures likes ARM, Loongson etc. Update
->>> new/old APIs
->>>> with trace events. No functional change is intended here.
+>>>> GED interface is used by many hotplug events like memory hotplug, NVDIMM hotplug
+>>>> and non-hotplug events like system power down event. Each of these can be
+>>>> selected using a bit in the 32 bit GED IO interface. A bit has been reserved for
+>>>> the CPU hotplug event.
 >>>>
 >>>> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 >>>> Reviewed-by: Gavin Shan <gshan@redhat.com>
->>>> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
->>>> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->>>> Tested-by: Xianglai Li <lixianglai@loongson.cn>
->>>> Tested-by: Miguel Luis <miguel.luis@oracle.com>
->>>> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
->>>> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
->>>> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 >>>> Tested-by: Zhao Liu <zhao1.liu@intel.com>
->>>> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
->>>> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
->>>> ---
->>>>   accel/kvm/kvm-all.c    | 95 ++++++++++++++++++++++++++++--------------
->>>>   accel/kvm/kvm-cpus.h   |  1 -
->>>>   accel/kvm/trace-events |  5 ++-
->>>>   include/sysemu/kvm.h   | 25 +++++++++++
->>>>   4 files changed, 92 insertions(+), 34 deletions(-)
->>>>
->>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
->>>> index c0be9f5eed..8f9128bb92 100644
->>>> --- a/accel/kvm/kvm-all.c
->>>> +++ b/accel/kvm/kvm-all.c
->>>> @@ -340,14 +340,71 @@ err:
->>>>       return ret;
->>>>   }
->>>>
->>>> +void kvm_park_vcpu(CPUState *cpu)
->>>> +{
->>>> +    struct KVMParkedVcpu *vcpu;
->>>> +
->>>> +    trace_kvm_park_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
->>>> +
->>>> +    vcpu = g_malloc0(sizeof(*vcpu));
->>>> +    vcpu->vcpu_id = kvm_arch_vcpu_id(cpu);
->>>> +    vcpu->kvm_fd = cpu->kvm_fd;
->>>> +    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
->>>> +}
->>>> +
->>>> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
->>>> +{
->>>> +    struct KVMParkedVcpu *cpu;
->>>> +    int kvm_fd = -ENOENT;
->>>> +
->>>> +    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
->>>> +        if (cpu->vcpu_id == vcpu_id) {
->>>> +            QLIST_REMOVE(cpu, node);
->>>> +            kvm_fd = cpu->kvm_fd;
->>>> +            g_free(cpu);
->>>> +        }
->>>> +    }
->>>> +
->>>> +    trace_kvm_unpark_vcpu(vcpu_id, kvm_fd > 0 ? "unparked" : "not found
->>> parked");
->>>> +
->>>> +    return kvm_fd;
->>>> +}
->>>> +
->>>> +int kvm_create_vcpu(CPUState *cpu)
->>>> +{
->>>> +    unsigned long vcpu_id = kvm_arch_vcpu_id(cpu);
->>>> +    KVMState *s = kvm_state;
->>>> +    int kvm_fd;
->>>> +
->>>> +    /* check if the KVM vCPU already exist but is parked */
->>>> +    kvm_fd = kvm_unpark_vcpu(s, vcpu_id);
->>>> +    if (kvm_fd < 0) {
->>>> +        /* vCPU not parked: create a new KVM vCPU */
->>>> +        kvm_fd = kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
->>>> +        if (kvm_fd < 0) {
->>>> +            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu",
->>> vcpu_id);
->>>> +            return kvm_fd;
->>>> +        }
->>>> +    }
->>>> +
->>>> +    cpu->kvm_fd = kvm_fd;
->>>> +    cpu->kvm_state = s;
->>>> +    cpu->vcpu_dirty = true;
->>>> +    cpu->dirty_pages = 0;
->>>> +    cpu->throttle_us_per_full = 0;
->>>> +
->>>> +    trace_kvm_create_vcpu(cpu->cpu_index, vcpu_id, kvm_fd);
->>>> +
->>>> +    return 0;
->>>> +}
->>> Is there any reason why you are embedding/hiding kvm_state in new API
->>> instead of passing it as argument (all callers have it defined, so why not
->>> reuse that)?
->>>   
->> It is a global variable and I don't think it is a usual practice to specify
->> the global variable
->> as an input parameter.
-> Ideally, global would be accessed once at API boundary entry
-> and the passed as an argument to functions it calls.
-> It makes it easier to follow as opposed to mixed access we have now,
-> which is harder to review since one has to check both
-> flavors (argument passed or directly accessed).
+>>> suggest to squash this into the patch that introduces this bit [3/8]
+>> I thought, we are introducing a change common to all architectures?
+> hw reduced hotplug implies GED, so including doc change
+> into the patch that introduces bit in the code is better
+> option.
 >
-> in this patch  kvm_init_vcpu() calls new kvm_create_vcpu()
-> and the former caches these global into 's' local variable,
-> so I'd reuse that local variable like kvm_get_vcpu() you are removing here did.
-That is one perspective, but:
-1. kvm_create_vcpu() will also be called externally from other contexts.
-    It would be awkward to pass this variable from those non-local places
-    where it would seem unnecessary.
-2. If you look at other symmetrical functions like kvm_destroy_vcpu(),
-    they also have a similar prototype.
+> it also easier on the folks that come later and find doc
+> and code in the same commit (which is easier to follow
+> than looking for different commits in git log).
 
-I think it is about doing a slight trade-off. If you really believe this
-change is necessary for us to proceed, I will make the adjustment.
-However, please note that it will affect the IBM team as well.
+Ok. I'll squash this into the 3rd patch of this series.
 
-Hi Nick,
+Thanks
 
-I hope you are okay with this suggested change?
-
-Thanks,
-Salil
->>> otherwise patch lgtm
->>
->> May I request your Reviewed-by for this patch?
->>
->> Thanks
->> Salil.
->>
->>
->>>   
->>>> +
->>>>   static int do_kvm_destroy_vcpu(CPUState *cpu)
->>>>   {
->>>>       KVMState *s = kvm_state;
->>>>       long mmap_size;
->>>> -    struct KVMParkedVcpu *vcpu = NULL;
->>>>       int ret = 0;
+>
+>>> Best, Salil.
+>>>> ---
+>>>>    docs/specs/acpi_hw_reduced_hotplug.rst | 3 ++-
+>>>>    1 file changed, 2 insertions(+), 1 deletion(-)
 >>>>
->>>> -    trace_kvm_destroy_vcpu();
->>>> +    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
->>>>
->>>>       ret = kvm_arch_destroy_vcpu(cpu);
->>>>       if (ret < 0) {
->>>> @@ -373,10 +430,7 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
->>>>           }
->>>>       }
->>>>
->>>> -    vcpu = g_malloc0(sizeof(*vcpu));
->>>> -    vcpu->vcpu_id = kvm_arch_vcpu_id(cpu);
->>>> -    vcpu->kvm_fd = cpu->kvm_fd;
->>>> -    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
->>>> +    kvm_park_vcpu(cpu);
->>>>   err:
->>>>       return ret;
->>>>   }
->>>> @@ -389,24 +443,6 @@ void kvm_destroy_vcpu(CPUState *cpu)
->>>>       }
->>>>   }
->>>>
->>>> -static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id)
->>>> -{
->>>> -    struct KVMParkedVcpu *cpu;
->>>> -
->>>> -    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
->>>> -        if (cpu->vcpu_id == vcpu_id) {
->>>> -            int kvm_fd;
->>>> -
->>>> -            QLIST_REMOVE(cpu, node);
->>>> -            kvm_fd = cpu->kvm_fd;
->>>> -            g_free(cpu);
->>>> -            return kvm_fd;
->>>> -        }
->>>> -    }
->>>> -
->>>> -    return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id);
->>>> -}
->>>> -
->>>>   int kvm_init_vcpu(CPUState *cpu, Error **errp)
->>>>   {
->>>>       KVMState *s = kvm_state;
->>>> @@ -415,19 +451,14 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
->>>>
->>>>       trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
->>>>
->>>> -    ret = kvm_get_vcpu(s, kvm_arch_vcpu_id(cpu));
->>>> +    ret = kvm_create_vcpu(cpu);
->>>>       if (ret < 0) {
->>>> -        error_setg_errno(errp, -ret, "kvm_init_vcpu: kvm_get_vcpu
->>> failed (%lu)",
->>>> +        error_setg_errno(errp, -ret,
->>>> +                         "kvm_init_vcpu: kvm_create_vcpu failed (%lu)",
->>>>                            kvm_arch_vcpu_id(cpu));
->>>>           goto err;
->>>>       }
->>>>
->>>> -    cpu->kvm_fd = ret;
->>>> -    cpu->kvm_state = s;
->>>> -    cpu->vcpu_dirty = true;
->>>> -    cpu->dirty_pages = 0;
->>>> -    cpu->throttle_us_per_full = 0;
->>>> -
->>>>       mmap_size = kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
->>>>       if (mmap_size < 0) {
->>>>           ret = mmap_size;
->>>> diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
->>>> index ca40add32c..171b22fd29 100644
->>>> --- a/accel/kvm/kvm-cpus.h
->>>> +++ b/accel/kvm/kvm-cpus.h
->>>> @@ -22,5 +22,4 @@ bool kvm_supports_guest_debug(void);
->>>>   int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr
->>> len);
->>>>   int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vaddr
->>> len);
->>>>   void kvm_remove_all_breakpoints(CPUState *cpu);
->>>> -
->>>>   #endif /* KVM_CPUS_H */
->>>> diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
->>>> index 681ccb667d..37626c1ac5 100644
->>>> --- a/accel/kvm/trace-events
->>>> +++ b/accel/kvm/trace-events
->>>> @@ -9,6 +9,10 @@ kvm_device_ioctl(int fd, int type, void *arg) "dev fd
->>> %d, type 0x%x, arg %p"
->>>>   kvm_failed_reg_get(uint64_t id, const char *msg) "Warning: Unable to
->>> retrieve ONEREG %" PRIu64 " from KVM: %s"
->>>>   kvm_failed_reg_set(uint64_t id, const char *msg) "Warning: Unable to
->>> set ONEREG %" PRIu64 " to KVM: %s"
->>>>   kvm_init_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id:
->>> %lu"
->>>> +kvm_create_vcpu(int cpu_index, unsigned long arch_cpu_id, int kvm_fd)
->>> "index: %d, id: %lu, kvm fd: %d"
->>>> +kvm_destroy_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d
->>> id: %lu"
->>>> +kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d id:
->>> %lu"
->>>> +kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) "id: %lu %s"
->>>>   kvm_irqchip_commit_routes(void) ""
->>>>   kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %s
->>> vector %d virq %d"
->>>>   kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=%d"
->>>> @@ -25,7 +29,6 @@ kvm_dirty_ring_reaper(const char *s) "%s"
->>>>   kvm_dirty_ring_reap(uint64_t count, int64_t t) "reaped %"PRIu64" pages
->>> (took %"PRIi64" us)"
->>>>   kvm_dirty_ring_reaper_kick(const char *reason) "%s"
->>>>   kvm_dirty_ring_flush(int finished) "%d"
->>>> -kvm_destroy_vcpu(void) ""
->>>>   kvm_failed_get_vcpu_mmap_size(void) ""
->>>>   kvm_cpu_exec(void) ""
->>>>   kvm_interrupt_exit_request(void) ""
->>>> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
->>>> index c31d9c7356..c4a914b3d8 100644
->>>> --- a/include/sysemu/kvm.h
->>>> +++ b/include/sysemu/kvm.h
->>>> @@ -313,6 +313,31 @@ int kvm_create_device(KVMState *s, uint64_t type,
->>> bool test);
->>>>    */
->>>>   bool kvm_device_supported(int vmfd, uint64_t type);
->>>>
->>>> +/**
->>>> + * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
->>>> + * @cpu: QOM CPUState object for which KVM vCPU has to be
->>> fetched/created.
->>>> + *
->>>> + * @returns: 0 when success, errno (<0) when failed.
->>>> + */
->>>> +int kvm_create_vcpu(CPUState *cpu);
->>>> +
->>>> +/**
->>>> + * kvm_park_vcpu - Park QEMU KVM vCPU context
->>>> + * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to be
->>> parked.
->>>> + *
->>>> + * @returns: none
->>>> + */
->>>> +void kvm_park_vcpu(CPUState *cpu);
->>>> +
->>>> +/**
->>>> + * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
->>>> + * @s: KVM State
->>>> + * @vcpu_id: Architecture vCPU ID of the parked vCPU
->>>> + *
->>>> + * @returns: KVM fd
->>>> + */
->>>> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
->>>> +
->>>>   /* Arch specific hooks */
->>>>
->>>>   extern const KVMCapabilityInfo kvm_arch_required_capabilities[];
+>>>> diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst b/docs/specs/acpi_hw_reduced_hotplug.rst
+>>>> index 0bd3f9399f..3acd6fcd8b 100644
+>>>> --- a/docs/specs/acpi_hw_reduced_hotplug.rst
+>>>> +++ b/docs/specs/acpi_hw_reduced_hotplug.rst
+>>>> @@ -64,7 +64,8 @@ GED IO interface (4 byte access)
+>>>>           0: Memory hotplug event
+>>>>           1: System power down event
+>>>>           2: NVDIMM hotplug event
+>>>> -    3-31: Reserved
+>>>> +       3: CPU hotplug event
+>>>> +    4-31: Reserved
+>>>>    
+>>>>    **write_access:**
+>>>>      
+>>> :
 >>>   
 
