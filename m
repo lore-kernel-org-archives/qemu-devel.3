@@ -4,103 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13697C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 04:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98248C3DA42
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 04:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQfxS-0000v4-I5; Mon, 08 Jul 2024 00:26:34 -0400
+	id 1sQfxw-0001Qm-Gr; Mon, 08 Jul 2024 00:27:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sQfxP-0000tg-TQ
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 00:26:32 -0400
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sQfxu-0001H3-L3; Mon, 08 Jul 2024 00:27:02 -0400
+Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1sQfxO-0001gD-4Y
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 00:26:31 -0400
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-7035d9edcd9so1234406a34.1
- for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 21:26:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sQfxs-0001l6-3N; Mon, 08 Jul 2024 00:27:02 -0400
+Received: by mail-ua1-x92e.google.com with SMTP id
+ a1e0cc1a2514c-8102193c82bso774981241.3; 
+ Sun, 07 Jul 2024 21:26:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1720412788; x=1721017588; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=JUUBxMzRjQBsfjECj+DhRcfMU2jw9tTIrKCKiq0P4dE=;
- b=JH9Yj8rafKtDrnY/TDFehtxv8ftNFzhVNVM+f6dqlsL8b49LA20Wwa+iKLe707WK7r
- uJ8Hr4iT6/TxWNO8Ir/sWbskTwL/SdGO5xZmVryEIDVZtNE6wQc+PPMDXCAdn987phgX
- WeR+1XGrXTd6Z9i2/ulcEURDSMwX3abAP+53r1Bi0JZ0UPwMmupzt4/RTxwKOCLLbvpO
- dQt99qrA3OUR7LWr2l+xJy6goBD17xgc0NfAipMCIadA4XZae0l+qNN46au1LayiVXsL
- l3mo8dYoMhmo+a3oSY/VGZ9RGgCJAxpv5OEbfvl0XPcpoQ1LEBeUJj26bYzgHRtni1Xt
- 65mg==
+ d=gmail.com; s=20230601; t=1720412818; x=1721017618; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EzJNVjkkMIYEjVEVfRoWaf2Pm21fpj/5XKfftee2h0s=;
+ b=d3YU4T7xmHVRr8b8S5ofG7Is1V6hxhUkLMDd+BBUBHvA6u7uMyAp+AN+BDc15Zc8FD
+ xKACfOzHCHi/G68xYdWKUP2ZVXpqZPJmsCXnEClsJCEwlRAV7UwouZo2V34JipqXG/Wk
+ ovQqUcEV1MvTidglb9s8o72bYjjflSawxI7Hqxmk4y4l2Liov42+5I10RrMqo4mn/bb6
+ cXRaVtO2p1M9oMCWa5IlkZv+thnao3mvlboa7vOFyiru7zkKf9L35vQhDsjjbctIETJZ
+ Dkb0zL+aoOyTnaQ+07aySXvUJIzzJlqa6xbuHZdYW89/iWLtzVgwbT2lvxlwEgzlpnJp
+ rA/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720412788; x=1721017588;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JUUBxMzRjQBsfjECj+DhRcfMU2jw9tTIrKCKiq0P4dE=;
- b=e0OkUQgt9yS/u5ucfQCLLBgdf0h8xhthCv14X2MSv1hbJsXrHteH1l9SW+qt0ZRZj2
- DYNveAamzdu+hUwh2/l+xa417EasihgK5tUxkqH2jPdvvzKleTxll+lha0A7NxKnRiTf
- ITHMqLx1SIv9IHPDBbu7u/jgaJpsDm5uA8J9XzgoKn/VkCd25rwSl36kG+23V87/U4yk
- K0OJyy6xdtpuMtRuK6UP5KrtEJ6HIeY/LpPHb6xfq0H4LehaXNFkl/7ZP7ADzgYY0ZHL
- UFMG96vGaFxVh656arRSUvbEjXWhVfUeushwwxVziJ1/0O0gFrsXX5U2hehzfuqx7Yov
- Cfow==
+ d=1e100.net; s=20230601; t=1720412818; x=1721017618;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EzJNVjkkMIYEjVEVfRoWaf2Pm21fpj/5XKfftee2h0s=;
+ b=Fl4eks5xlCdf7hAoqbhA7SxS9UupFWD0OVHx1eXJDpPzfPTgsgsbLdCReR1mUUBiJC
+ +pv8tmIjVR58ziUre7Eg8Lso7b+X5NZAE9Xy/m+3Rf5zF1aBpb1Zg56AY712rIOD4k+g
+ 7D8qr+PDirI2BLogI4f+wjDqPfTlsVIqJiu5h6EvSFnFmaqYC1A7RR2zqx5nKduYgm7M
+ TcQhYs5bx+n6J3O/Gsb3oxrq37nmY8YIcD6fGJCcc7M8sHa1b+siZd+7+93OpCmJBPLM
+ 2d9kettGN+FU/9eadR5MYGOR49kEi7jxmAaVp7cert7s9JXxPRDiBefEDdMkX97bAmTr
+ aBDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUXCZYOl3zpMcfsxIbDuhSv24J5lK3Ow6boIOUIMpQd9TqeLOXxnylvDFNVNWej0XuDI+D0W0TsHeMILJHc0nKXTNa9NlE=
-X-Gm-Message-State: AOJu0Yz9pLnu/pVcHTMOV8SoY8l91ZRyZ64vAsyx5otVde0eP6H6M77T
- t7D+Gk5FroMYPYbpqf+5Bk8akMsahtBMAb4gelSs0mE289jZ0vgbWcV11zx9tzk=
-X-Google-Smtp-Source: AGHT+IGiJNq+uhlgEqH1ReBOwLU634s9ssjfomUCVH0jEmpJfJu9ymumJHhwC1SQGO7en7+nxwazEw==
-X-Received: by 2002:a9d:6d19:0:b0:703:64d4:8e0f with SMTP id
- 46e09a7af769-70364d48fc1mr4812669a34.6.1720412788521; 
- Sun, 07 Jul 2024 21:26:28 -0700 (PDT)
-Received: from sunil-laptop ([106.51.187.237])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-701f7b35531sm3653472a34.65.2024.07.07.21.26.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Jul 2024 21:26:27 -0700 (PDT)
-Date: Mon, 8 Jul 2024 09:56:14 +0530
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, qemu-riscv@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH v4 16/16] tests/qtest/bios-tables-test: Add expected ACPI
- data files for RISC-V
-Message-ID: <ZotqZsO2QdPG4tsg@sunil-laptop>
-References: <20240625150839.1358279-1-sunilvl@ventanamicro.com>
- <20240625150839.1358279-17-sunilvl@ventanamicro.com>
- <20240627141803.42cd46c1@imammedo.users.ipa.redhat.com>
- <20240701170330-mutt-send-email-mst@kernel.org>
- <20240702150236.000042eb@Huawei.com>
- <ZoUmf2zn51RWU0o0@sunil-laptop> <ZoVmwFgIRlziF/v4@sunil-laptop>
- <CAKmqyKPMW0WMJQn7=2ebuqf0c=ow87LCtPd1bOdiWVP_xjoTJA@mail.gmail.com>
+ AJvYcCWRGJ5a2XK1CawemzqGOGMqinkyK7hjn+YYkRjpTaKU0/u69bkDcWhJlq78asBZlt1neSTVN8zx0UTZCfiLRyerhaj4vkI=
+X-Gm-Message-State: AOJu0YwuGQ5aPdLexGz5FHHG7ttgmkGrpjBMLZFd3cCoYloBmH90DsLz
+ /jOT0MKlXwT3EH3ysNyxbIpLAYIOX65QndkTXzf0+WkniT9pibve6PHEkhRSdtIhmMzbu8ggKJW
+ ALDopavMqnqCMyOMuxjQoPGKkYtw=
+X-Google-Smtp-Source: AGHT+IG0pnIaiaymJRlyrHTdemVGxWHVmMIxofkMWk225wFtVNYjFml7f9HUdcfODPEmliMpnkFsCOfqVrKD8kGZPZw=
+X-Received: by 2002:a05:6102:2ee:b0:48f:a75a:278c with SMTP id
+ ada2fe7eead31-48fee7dc023mr10843801137.27.1720412818365; Sun, 07 Jul 2024
+ 21:26:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKPMW0WMJQn7=2ebuqf0c=ow87LCtPd1bOdiWVP_xjoTJA@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-ot1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240612031706.2927602-1-ethan84@andestech.com>
+ <20240612031706.2927602-3-ethan84@andestech.com>
+ <CAKmqyKM+dSQfGAUcU9w+hHA1SVA-OSLhsfYHh7rV1uutaeppfw@mail.gmail.com>
+ <ZnjQCkiR2ikr1Rng@ethan84-VirtualBox>
+ <CAKmqyKMzg0rHj0RfpcGB3Mecy4tVvMQWDhgM8u3=GaRn46q2vg@mail.gmail.com>
+ <ZnustMxe+9eToclp@ethan84-VirtualBox>
+In-Reply-To: <ZnustMxe+9eToclp@ethan84-VirtualBox>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 8 Jul 2024 14:26:32 +1000
+Message-ID: <CAKmqyKOpiPcmTdsKak8W6XAoeGR+rVV6mNr-JBVdCiB2Q3N47Q@mail.gmail.com>
+Subject: Re: [PATCH v7 2/2] hw/riscv/virt: Add IOPMP support
+To: Ethan Chen <ethan84@andestech.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -118,76 +98,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 08, 2024 at 01:16:49PM +1000, Alistair Francis wrote:
-> On Thu, Jul 4, 2024 at 12:57 AM Sunil V L <sunilvl@ventanamicro.com> wrote:
+On Wed, Jun 26, 2024 at 3:53=E2=80=AFPM Ethan Chen <ethan84@andestech.com> =
+wrote:
+>
+> On Wed, Jun 26, 2024 at 11:22:46AM +1000, Alistair Francis wrote:
 > >
-> > On Wed, Jul 03, 2024 at 03:53:08PM +0530, Sunil V L wrote:
-> > > On Tue, Jul 02, 2024 at 03:02:36PM +0100, Jonathan Cameron wrote:
-> > > > On Mon, 1 Jul 2024 17:03:43 -0400
-> > > > "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> > > >
-> > > > > On Thu, Jun 27, 2024 at 02:18:03PM +0200, Igor Mammedov wrote:
-> > > > > > On Tue, 25 Jun 2024 20:38:39 +0530
-> > > > > > Sunil V L <sunilvl@ventanamicro.com> wrote:
-> > > > > >
-> > > > > > > As per the step 5 in the process documented in bios-tables-test.c,
-> > > > > > > generate the expected ACPI AML data files for RISC-V using the
-> > > > > > > rebuild-expected-aml.sh script and update the
-> > > > > > > bios-tables-test-allowed-diff.h.
-> > > > > > >
-> > > > > > > These are all new files being added for the first time. Hence, iASL diff
-> > > > > > > output is not added.
-> > > > > > >
-> > > > > > > Signed-off-by: Sunil V L <sunilvl@ventanamicro.com>
-> > > > > > > Acked-by: Alistair Francis <alistair.francis@wdc.com>
-> > > > > > > Acked-by: Igor Mammedov <imammedo@redhat.com>
-> > > > > >
-> > > > > > Michael,
-> > > > > > can it go via risc-v tree or
-> > > > > > do you plan to merge it via your tree?
-> > > > >
-> > > > > given patch 1 is merged, I took the rest.
-> > > >
-> > > > Looks like your CI runs are catching this as well but
-> > > > RHCT here is failing.  I rebased the GI/GP set on top of this
-> > > > and ignored that failure by skipping riscv64 tests.
-> > > >
-> > > > Jonathan
-> > > >
-> > > Hi Jonathan, Michael,
+> > On Mon, Jun 24, 2024 at 11:47=E2=80=AFAM Ethan Chen <ethan84@andestech.=
+com> wrote:
 > > >
-> > > Looks like a recent RISC-V PR updated the rva22s64 ISA string affecting
-> > > the RHCT I had in my series. I see that Michael dropped those 3 RISC-V
-> > > patches from the PR. So, let me update the expected RHCT AML file in a
-> > > new series. I will also include Igor's feedback to remove fallback path
-> > > in that series.
+> > > Hi Alistair,
 > > >
-> > Hi Alistair,
+> > > IOPMP can applies all device. In this patch series, PCI devices on th=
+e bridge
+> > > can connect to IOPMP by pci_setup_iommu(), but other devices need cha=
+nge their
+> > > memory access address space from system memory to IOPMP by themself.
 > >
-> > This issue is because, below 3 extensions are present in the ISA string
-> > for rva22s64 profile cpu after recent RISC-V PR.
+> > We should be really clear about that then. The documentation and the
+> > flag `iopmp=3D[on|off]` implies that either the IOPMP is on or off.
 > >
-> > zmmul_zaamo_zalrsc
-> 
-> zmmul (multiply) is implied by M (multiply and divide). The other two
-> are similar.
-> 
+> > For example, what happens in the future if we extend support to apply
+> > to all devices? That will be a breaking change for anyone currently
+> > using `iopmp=3Don`.
 > >
-> > However, IIUC, they are not mentioned in the RVA22S64 profile spec. Because of
-> > this change, my AML files are having a difference and failing CI. The
-> > question is, is this correct behavior? If so, I can update the AML files
-> > and resubmit the patches. Let me know.
-> 
-> This does feel correct. Is software only needed zmmul for multiplying
-> then reporting zmmul when we support M feels like the right thing to
-> do.
-> 
-> I can't find a spec that says either way though. So unless anyone else
-> knows of one I think this current approach is correct
-> 
-Thanks a lot, Alistair. I had a discussion with Daniel as well and we
-concluded the same. I will update the AML files.
+> > Maybe we should have use something like `iopmp=3D[pci|off]` instead, an=
+d
+> > then be really clear in the docs what is and isn't going through the
+> > IOPMP.
+> >
+> > Alistair
+>
+> Hi Alistair,
+>
+> According to Zhiwei's suggestion in this patch series, we will remove
+> iopmp_setup_pci because it will be exclusive with IOMMU integration.
+>
+> We are looking for an interface to make device memory access to be
+> checked by IOPMP. After iopmp_setup_pci is removed, all devices need
+> to change memory access target to iommu memory region in IOPMP
+> themselves in current method. Therefore, by default, all devices won't
+> go through the IOPMP even if iopmp=3Don.
+>
+> Another method is to replace the memory region of protected device
+> in the system memory by iommu memory region in IOPMP (similar to
+> MPC in arm/mps2-tz) when iopmp=3Don. With this method, all devices are
+> going through the IOPMP by default when iopmp=3Don.
+>
+> Which method is more suitable for the RISC-V virt machine?
 
-Thanks,
-Sunil
+Sorry for the delay here, I missed this question.
+
+I think if a user specifies `iopmp=3Don` we should run everything
+through the IOPMP. If we don't we need to be really clear about what
+does/does not go through the IOPMP.
+
+It's unfortunately a little clunky, which isn't ideal, but I feel it's
+better to properly support the IOPMP in this case. Maybe this is a
+good reason for a "server" platform...
+
+Alistair
+
+>
+> Thanks,
+> Ethan
+>
+> >
+> > >
+> > > Thanks,
+> > > Ethan
+> > >
+> > > On Fri, Jun 21, 2024 at 03:54:15PM +1000, Alistair Francis wrote:
+> > > > On Wed, Jun 12, 2024 at 1:25=E2=80=AFPM Ethan Chen via <qemu-devel@=
+nongnu.org> wrote:
+> > > > >
+> > > > > If a requestor device is connected to the IOPMP device, its memor=
+y access will
+> > > > > be checked by the IOPMP rule.
+> > > > >
+> > > > > - Add 'iopmp=3Don' option to add an iopmp device and make the Gen=
+eric PCI Express
+> > > > >   Bridge connect to IOPMP.
+> > > >
+> > > > I have only had a chance to have a quick look at this series and th=
+e spec.
+> > > >
+> > > > But the IOPMP spec applies to all devices right, but this series se=
+ems
+> > > > to only work with PCI. Am I missing something?
+> > > >
+> > > > Alistair
+> > > >
+> > > > >
+> > > > > Signed-off-by: Ethan Chen <ethan84@andestech.com>
+> > > > > ---
+> > > > >  docs/system/riscv/virt.rst |  6 ++++
+> > > > >  hw/riscv/Kconfig           |  1 +
+> > > > >  hw/riscv/virt.c            | 57 ++++++++++++++++++++++++++++++++=
+++++--
+> > > > >  include/hw/riscv/virt.h    |  5 +++-
+> > > > >  4 files changed, 66 insertions(+), 3 deletions(-)
+> > > > >
+> > > > > diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.=
+rst
+> > > > > index 9a06f95a34..3b2576f905 100644
+> > > > > --- a/docs/system/riscv/virt.rst
+> > > > > +++ b/docs/system/riscv/virt.rst
+> > > > > @@ -116,6 +116,12 @@ The following machine-specific options are s=
+upported:
+> > > > >    having AIA IMSIC (i.e. "aia=3Daplic-imsic" selected). When not=
+ specified,
+> > > > >    the default number of per-HART VS-level AIA IMSIC pages is 0.
+> > > > >
+> > > > > +- iopmp=3D[on|off]
+> > > > > +
+> > > > > +  When this option is "on", an IOPMP device is added to machine.=
+ It checks dma
+> > > > > +  operations from the generic PCIe host bridge. This option is a=
+ssumed to be
+> > > > > +  "off".
+> > > > > +
+> > > > >  Running Linux kernel
+> > > > >  --------------------
+> > > > >
+> > > > > diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> > > > > index a2030e3a6f..0b45a5ade2 100644
+> > > > > --- a/hw/riscv/Kconfig
+> > > > > +++ b/hw/riscv/Kconfig
+> > > > > @@ -56,6 +56,7 @@ config RISCV_VIRT
+> > > > >      select PLATFORM_BUS
+> > > > >      select ACPI
+> > > > >      select ACPI_PCI
+> > > > > +    select RISCV_IOPMP
+> > > > >
+> > > > >  config SHAKTI_C
+> > > > >      bool
+> > > > > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> > > > > index 4fdb660525..53a1b71c71 100644
+> > > > > --- a/hw/riscv/virt.c
+> > > > > +++ b/hw/riscv/virt.c
+> > > > > @@ -55,6 +55,7 @@
+> > > > >  #include "hw/acpi/aml-build.h"
+> > > > >  #include "qapi/qapi-visit-common.h"
+> > > > >  #include "hw/virtio/virtio-iommu.h"
+> > > > > +#include "hw/misc/riscv_iopmp.h"
+> > > > >
+> > > > >  /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulat=
+ed by QEMU. */
+> > > > >  static bool virt_use_kvm_aia(RISCVVirtState *s)
+> > > > > @@ -82,6 +83,7 @@ static const MemMapEntry virt_memmap[] =3D {
+> > > > >      [VIRT_UART0] =3D        { 0x10000000,         0x100 },
+> > > > >      [VIRT_VIRTIO] =3D       { 0x10001000,        0x1000 },
+> > > > >      [VIRT_FW_CFG] =3D       { 0x10100000,          0x18 },
+> > > > > +    [VIRT_IOPMP] =3D        { 0x10200000,      0x100000 },
+> > > > >      [VIRT_FLASH] =3D        { 0x20000000,     0x4000000 },
+> > > > >      [VIRT_IMSIC_M] =3D      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+> > > > >      [VIRT_IMSIC_S] =3D      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+> > > > > @@ -1006,6 +1008,24 @@ static void create_fdt_virtio_iommu(RISCVV=
+irtState *s, uint16_t bdf)
+> > > > >                             bdf + 1, iommu_phandle, bdf + 1, 0xff=
+ff - bdf);
+> > > > >  }
+> > > > >
+> > > > > +static void create_fdt_iopmp(RISCVVirtState *s, const MemMapEntr=
+y *memmap,
+> > > > > +                             uint32_t irq_mmio_phandle) {
+> > > > > +    g_autofree char *name =3D NULL;
+> > > > > +    MachineState *ms =3D MACHINE(s);
+> > > > > +
+> > > > > +    name =3D g_strdup_printf("/soc/iopmp@%lx", (long)memmap[VIRT=
+_IOPMP].base);
+> > > > > +    qemu_fdt_add_subnode(ms->fdt, name);
+> > > > > +    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "riscv_=
+iopmp");
+> > > > > +    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0x0, memmap[VIR=
+T_IOPMP].base,
+> > > > > +        0x0, memmap[VIRT_IOPMP].size);
+> > > > > +    qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq=
+_mmio_phandle);
+> > > > > +    if (s->aia_type =3D=3D VIRT_AIA_TYPE_NONE) {
+> > > > > +        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", IOPMP=
+_IRQ);
+> > > > > +    } else {
+> > > > > +        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", IOPM=
+P_IRQ, 0x4);
+> > > > > +    }
+> > > > > +}
+> > > > > +
+> > > > >  static void finalize_fdt(RISCVVirtState *s)
+> > > > >  {
+> > > > >      uint32_t phandle =3D 1, irq_mmio_phandle =3D 1, msi_pcie_pha=
+ndle =3D 1;
+> > > > > @@ -1024,6 +1044,10 @@ static void finalize_fdt(RISCVVirtState *s=
+)
+> > > > >      create_fdt_uart(s, virt_memmap, irq_mmio_phandle);
+> > > > >
+> > > > >      create_fdt_rtc(s, virt_memmap, irq_mmio_phandle);
+> > > > > +
+> > > > > +    if (s->have_iopmp) {
+> > > > > +        create_fdt_iopmp(s, virt_memmap, irq_mmio_phandle);
+> > > > > +    }
+> > > > >  }
+> > > > >
+> > > > >  static void create_fdt(RISCVVirtState *s, const MemMapEntry *mem=
+map)
+> > > > > @@ -1404,7 +1428,7 @@ static void virt_machine_init(MachineState =
+*machine)
+> > > > >      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(machine);
+> > > > >      MemoryRegion *system_memory =3D get_system_memory();
+> > > > >      MemoryRegion *mask_rom =3D g_new(MemoryRegion, 1);
+> > > > > -    DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
+> > > > > +    DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip, *=
+gpex_dev;
+> > > > >      int i, base_hartid, hart_count;
+> > > > >      int socket_count =3D riscv_socket_count(machine);
+> > > > >
+> > > > > @@ -1570,7 +1594,7 @@ static void virt_machine_init(MachineState =
+*machine)
+> > > > >              qdev_get_gpio_in(virtio_irqchip, VIRTIO_IRQ + i));
+> > > > >      }
+> > > > >
+> > > > > -    gpex_pcie_init(system_memory, pcie_irqchip, s);
+> > > > > +    gpex_dev =3D gpex_pcie_init(system_memory, pcie_irqchip, s);
+> > > > >
+> > > > >      create_platform_bus(s, mmio_irqchip);
+> > > > >
+> > > > > @@ -1581,6 +1605,14 @@ static void virt_machine_init(MachineState=
+ *machine)
+> > > > >      sysbus_create_simple("goldfish_rtc", memmap[VIRT_RTC].base,
+> > > > >          qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
+> > > > >
+> > > > > +    if (s->have_iopmp) {
+> > > > > +        DeviceState *iopmp_dev =3D sysbus_create_simple(TYPE_IOP=
+MP,
+> > > > > +            memmap[VIRT_IOPMP].base,
+> > > > > +            qdev_get_gpio_in(DEVICE(mmio_irqchip), IOPMP_IRQ));
+> > > > > +
+> > > > > +        iopmp_setup_pci(iopmp_dev, PCI_HOST_BRIDGE(gpex_dev)->bu=
+s);
+> > > > > +    }
+> > > > > +
+> > > > >      for (i =3D 0; i < ARRAY_SIZE(s->flash); i++) {
+> > > > >          /* Map legacy -drive if=3Dpflash to machine properties *=
+/
+> > > > >          pflash_cfi01_legacy_drive(s->flash[i],
+> > > > > @@ -1684,6 +1716,21 @@ static void virt_set_aclint(Object *obj, b=
+ool value, Error **errp)
+> > > > >      s->have_aclint =3D value;
+> > > > >  }
+> > > > >
+> > > > > +static bool virt_get_iopmp(Object *obj, Error **errp)
+> > > > > +{
+> > > > > +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> > > > > +
+> > > > > +    return s->have_iopmp;
+> > > > > +}
+> > > > > +
+> > > > > +static void virt_set_iopmp(Object *obj, bool value, Error **errp=
+)
+> > > > > +{
+> > > > > +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> > > > > +
+> > > > > +    s->have_iopmp =3D value;
+> > > > > +}
+> > > > > +
+> > > > > +
+> > > > >  bool virt_is_acpi_enabled(RISCVVirtState *s)
+> > > > >  {
+> > > > >      return s->acpi !=3D ON_OFF_AUTO_OFF;
+> > > > > @@ -1794,6 +1841,12 @@ static void virt_machine_class_init(Object=
+Class *oc, void *data)
+> > > > >                                NULL, NULL);
+> > > > >      object_class_property_set_description(oc, "acpi",
+> > > > >                                            "Enable ACPI");
+> > > > > +
+> > > > > +    object_class_property_add_bool(oc, "iopmp", virt_get_iopmp,
+> > > > > +                                   virt_set_iopmp);
+> > > > > +    object_class_property_set_description(oc, "iopmp",
+> > > > > +                                          "Set on/off to enable/=
+disable "
+> > > > > +                                          "iopmp device");
+> > > > >  }
+> > > > >
+> > > > >  static const TypeInfo virt_machine_typeinfo =3D {
+> > > > > diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+> > > > > index 3db839160f..81460e29c4 100644
+> > > > > --- a/include/hw/riscv/virt.h
+> > > > > +++ b/include/hw/riscv/virt.h
+> > > > > @@ -55,6 +55,7 @@ struct RISCVVirtState {
+> > > > >
+> > > > >      int fdt_size;
+> > > > >      bool have_aclint;
+> > > > > +    bool have_iopmp;
+> > > > >      RISCVVirtAIAType aia_type;
+> > > > >      int aia_guests;
+> > > > >      char *oem_id;
+> > > > > @@ -84,12 +85,14 @@ enum {
+> > > > >      VIRT_PCIE_MMIO,
+> > > > >      VIRT_PCIE_PIO,
+> > > > >      VIRT_PLATFORM_BUS,
+> > > > > -    VIRT_PCIE_ECAM
+> > > > > +    VIRT_PCIE_ECAM,
+> > > > > +    VIRT_IOPMP,
+> > > > >  };
+> > > > >
+> > > > >  enum {
+> > > > >      UART0_IRQ =3D 10,
+> > > > >      RTC_IRQ =3D 11,
+> > > > > +    IOPMP_IRQ =3D 12,
+> > > > >      VIRTIO_IRQ =3D 1, /* 1 to 8 */
+> > > > >      VIRTIO_COUNT =3D 8,
+> > > > >      PCIE_IRQ =3D 0x20, /* 32 to 35 */
+> > > > > --
+> > > > > 2.34.1
+> > > > >
+> > > > >
 
