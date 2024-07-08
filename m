@@ -4,80 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB45C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 13:43:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82243C3DA42
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 13:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQoeR-000531-5g; Mon, 08 Jul 2024 09:43:33 -0400
+	id 1sQohv-0004tH-5F; Mon, 08 Jul 2024 09:47:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sQoeE-0004UY-UH
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 09:43:23 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sQoeB-0007jU-S5
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 09:43:18 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-58b0dddab8cso5816696a12.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 06:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1720446191; x=1721050991; darn=nongnu.org;
- h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=pKSoI62ZUHwdahf8CJHoLPgyPIsD1XRZd3RLyVHnlDQ=;
- b=d6NuDdMAo/nQ1Co7iagXpDmMPpAzrxAo2h5ChmCVSE04riDUH8BvIiuE+Jdt+PIFNH
- QgQ0kc1kxA3p5Y186g4VI/9Q5ntwqOmyv4xYt27lUV+eMWmXlRHix/Ld4BZ6nvpcSDBZ
- 4pXwC/losrRRJLE36imyLr9FUfslRcdKu10wSmy6NXUdjfuiMkNLCBp63toMdDiFCt8T
- s8nDv1ygG44dS912xF7M+S/ps8L5Xk8w1THfNukE5WdlVP/xEzjuGrKe/MICE0+hZ6CQ
- Xn/tIlEYw75y+tYeDdzE7pxhtSq8JbIIoNI+HhkytrKHCoheseNJMB38q63paE9hgLbA
- 0OvQ==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sQohn-0004qT-FU
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 09:47:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sQohl-0008RK-KZ
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 09:46:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720446417;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=oZYNNuqk86Qjz5ykdFCl7yYzVQ6X6y4DiiY0UaN1MpA=;
+ b=WzSIBfH9uPUoE3d+v6LdmXaO1PvyGtGdZOjE5LiOjFsaiBqOBZ7UoQyxU4at8eNu18Za5W
+ y+ipq++pA5Q/NbkJ1P1RmiNsyAlK0w3KHrzou+LRhuiHrBoEU+6yBcOSf8BonaUYZCz7Cz
+ 3lEqYYMm6rm2L+HZMzgM6f4h7L+2J7s=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-225-jx_s-3lHN4CcsV3gufSP-Q-1; Mon, 08 Jul 2024 09:46:53 -0400
+X-MC-Unique: jx_s-3lHN4CcsV3gufSP-Q-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a77c539bfbcso277579466b.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 06:46:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720446191; x=1721050991;
- h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pKSoI62ZUHwdahf8CJHoLPgyPIsD1XRZd3RLyVHnlDQ=;
- b=dg9FlB0YZmX0y5yXYV5MDWc4nNc8ECntJYfv+TuEo5vi+URvwUee9ZogTfWNXiyHdg
- u1RxN+NypPq6ivTLef0zMWce7moxvF16yha/4sOe49QRnT7/ly+w7FE42im9kUGDomb9
- iGKiiUW2IOadyOwul4BzSkdcqfoZvj0FWx2svT7e0usrPWgngGth9aY00Oi/HXgYLPo9
- KOmxy9GtzLVW0OMT5FC8y0pz2isjHOJoM4KqH4JNYQomUt+ETUMneMylgsNW3Gh+Vexo
- zv4QyPHjp4HfE8CjCu7lANlIrNRdZ3aAiWb0doQy2nitxgPBfxaUbrFNqV7bhfR68AKz
- 0wxw==
+ d=1e100.net; s=20230601; t=1720446412; x=1721051212;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oZYNNuqk86Qjz5ykdFCl7yYzVQ6X6y4DiiY0UaN1MpA=;
+ b=cxqIjlZLo9XYcaL6d4UpP+5vj8RoFWs+BLWiqBHDNYssZbz01WBJV4wllJQlnDuBuC
+ I1NCS3Lom5waTQyTc5ThXMLwbL404+Y8O5/yRfqAqO92RFax0O0UAwHDpNVjmaRxaaIv
+ TIkKqxJhV/Q1mWBimznM6d58g9Tjh6+Ff8S0AcIitDO8a8qJO8gl/Bl/hE0cgC/dYOtL
+ tMDC2lSr1TiHy56P+JeZUXoRWDFSAZt+SE6+PsbWkBVjB0kWFaSRubPEtAZQ2bwSRsEU
+ bZJyIq8WPC4yj01/KAughYY1EWdk+ZP3iuZTTifgbdj3aOp9Fz60Tgj+7sKPiS21GQOZ
+ V21w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXpjiAMXu5OptvdKkZKRWpBEPS9YJT+upiw/Ri09bQyREwWjfShQJHHn7kr12Nf5ddl+5CH3TDj1ZWYEYx88t3H0LdS5ko=
-X-Gm-Message-State: AOJu0YwKi2rmpbKp6aO6e6jqvGgTwQYDGP68V4opNDNuf0MpyB2ocaVH
- lx3/EYhC6/Xrk+kQ+X+Ws5KYAQI9Vbe/J/U1NZ180bxYnW6njA4HWZZg4vIjCiDP8uPKEoDzbcT
- 5FT2kL9vKX0Q5Zlk4DO0/Y538M31w3Zqbt5bNQA==
-X-Google-Smtp-Source: AGHT+IEb7DUflzK3koDxp5vmhGGCZ1uxhwUX1hC1CK7WuGmiJ6LsuEmdBT9YNcLaWO9q18ugsLEfL2G3ojf5vMY1wqU=
-X-Received: by 2002:a05:6402:1d4e:b0:57c:5fcf:b570 with SMTP id
- 4fb4d7f45d1cf-58e5aecb1d7mr8232289a12.32.1720446191373; Mon, 08 Jul 2024
- 06:43:11 -0700 (PDT)
-Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
- Mon, 8 Jul 2024 09:43:10 -0400
-From: =?UTF-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
-In-Reply-To: <20240708130107.11495-1-luchangqi.123@bytedance.com>
-References: <20240708130107.11495-1-luchangqi.123@bytedance.com>
-Mime-Version: 1.0
-Date: Mon, 8 Jul 2024 09:43:10 -0400
-Message-ID: <CAO5cSZBVDAZzZ-MZJmGe3NCS0tW53z0E9F44CDfQ5icE0okF-w@mail.gmail.com>
-Subject: Re: [PATCH v8 00/10] Support persistent reservation operations
-To: qemu-block@nongnu.org, qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net, 
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de, 
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org, 
- pizhenwei@bytedance.com
-Content-Type: multipart/alternative; boundary="00000000000017a6e7061cbc981e"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ AJvYcCViKs0+uHdB2KVE/PreIX8CMulrtOEr0uLJZ06MByzvOTGqeyGRnwK7hQj0/5PvtAeBlmAzqD+/ZX6EqE4HpGRIJDQ14ic=
+X-Gm-Message-State: AOJu0YxuhMPMStPBKOhmMS3DfXiHxdMdJ3IbvNW5kBOcacKkewTbEmcc
+ WpiJuNVLxLesh+A7h+U58+xCmyvKpsxOvU9AI+ToYUH9pr6cIqlVuv0ft6eVecpKgap8Y6YnDiG
+ KUSTh/FOxbo+XWqChZY889VikKrKaAvFw19TNhNnrFiWrKhhbN7F2
+X-Received: by 2002:a17:906:d183:b0:a6f:586b:6c2 with SMTP id
+ a640c23a62f3a-a77ba70a6a1mr677321366b.60.1720446412161; 
+ Mon, 08 Jul 2024 06:46:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEVhH0ib8soHBfHamjVA24xOrFyzTHNskmSGMO8bgjsZ0zMrCPJkEWzXSVmGxOQmsCwx5/xA==
+X-Received: by 2002:a17:906:d183:b0:a6f:586b:6c2 with SMTP id
+ a640c23a62f3a-a77ba70a6a1mr677318566b.60.1720446411633; 
+ Mon, 08 Jul 2024 06:46:51 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a72ab065672sm935582466b.136.2024.07.08.06.46.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jul 2024 06:46:51 -0700 (PDT)
+Date: Mon, 8 Jul 2024 15:46:48 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Salil Mehta <salil.mehta@opnsrc.net>
+Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, maz@kernel.org, jean-philippe@linaro.org,
+ jonathan.cameron@huawei.com, lpieralisi@kernel.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
+ eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
+ mst@redhat.com, will@kernel.org, gshan@redhat.com, rafael@kernel.org,
+ alex.bennee@linaro.org, linux@armlinux.org.uk,
+ darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
+ vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
+ wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
+ lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH V13 4/8] hw/acpi: Update GED _EVT method AML with CPU scan
+Message-ID: <20240708154648.3aeab316@imammedo.users.ipa.redhat.com>
+In-Reply-To: <4a092822-099c-4818-a0fc-1b9bb376b3c6@opnsrc.net>
+References: <20240607115649.214622-1-salil.mehta@huawei.com>
+ <20240607115649.214622-5-salil.mehta@huawei.com>
+ <20240706162845.3baf5568@imammedo.users.ipa.redhat.com>
+ <4a092822-099c-4818-a0fc-1b9bb376b3c6@opnsrc.net>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,224 +120,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000017a6e7061cbc981e
-Content-Type: text/plain; charset="UTF-8"
+On Mon, 8 Jul 2024 05:21:06 +0000
+Salil Mehta <salil.mehta@opnsrc.net> wrote:
 
-Hi,
+> Hi Igor,
+>=20
+> On 06/07/2024 14:28, Igor Mammedov wrote:
+> > On Fri, 7 Jun 2024 12:56:45 +0100
+> > Salil Mehta <salil.mehta@huawei.com> wrote:
+> > =20
+> >> OSPM evaluates _EVT method to map the event. The CPU hotplug event eve=
+ntually
+> >> results in start of the CPU scan. Scan figures out the CPU and the kin=
+d of
+> >> event(plug/unplug) and notifies it back to the guest. Update the GED A=
+ML _EVT
+> >> method with the call to \\_SB.CPUS.CSCN
+> >>
+> >> Also, macro CPU_SCAN_METHOD might be referred in other places like dur=
+ing GED
+> >> intialization so it makes sense to have its definition placed in some =
+common
+> >> header file like cpu_hotplug.h. But doing this can cause compilation b=
+reak
+> >> because of the conflicting macro definitions present in cpu.c and cpu_=
+hotplug.c =20
+> > one of the reasons is that you reusing legacy hw/acpi/cpu_hotplug.h,
+> > see below for suggestion. =20
+> ok
+> > =20
+> >> and because both these files get compiled due to historic reasons of x=
+86 world
+> >> i.e. decision to use legacy(GPE.2)/modern(GED) CPU hotplug interface h=
+appens
+> >> during runtime [1]. To mitigate above, for now, declare a new common m=
+acro
+> >> ACPI_CPU_SCAN_METHOD for CPU scan method instead.
+> >> (This needs a separate discussion later on for clean-up)
+> >>
+> >> Reference:
+> >> [1] https://lore.kernel.org/qemu-devel/1463496205-251412-24-git-send-e=
+mail-imammedo@redhat.com/
+> >>
+> >> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
+> >> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+> >> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> >> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> >> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> >> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> >> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> >> Tested-by: Miguel Luis <miguel.luis@oracle.com>
+> >> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> >> Tested-by: Zhao Liu <zhao1.liu@intel.com>
+> >> ---
+> >>   hw/acpi/cpu.c                  | 2 +-
+> >>   hw/acpi/generic_event_device.c | 4 ++++
+> >>   include/hw/acpi/cpu_hotplug.h  | 2 ++
+> >>   3 files changed, 7 insertions(+), 1 deletion(-)
+> >>
+> >> diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+> >> index 473b37ba88..af2b6655d2 100644
+> >> --- a/hw/acpi/cpu.c
+> >> +++ b/hw/acpi/cpu.c
+> >> @@ -327,7 +327,7 @@ const VMStateDescription vmstate_cpu_hotplug =3D {
+> >>   #define CPUHP_RES_DEVICE  "PRES"
+> >>   #define CPU_LOCK          "CPLK"
+> >>   #define CPU_STS_METHOD    "CSTA"
+> >> -#define CPU_SCAN_METHOD   "CSCN"
+> >> +#define CPU_SCAN_METHOD   ACPI_CPU_SCAN_METHOD
+> >>   #define CPU_NOTIFY_METHOD "CTFY"
+> >>   #define CPU_EJECT_METHOD  "CEJ0"
+> >>   #define CPU_OST_METHOD    "COST"
+> >> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_de=
+vice.c
+> >> index 54d3b4bf9d..63226b0040 100644
+> >> --- a/hw/acpi/generic_event_device.c
+> >> +++ b/hw/acpi/generic_event_device.c
+> >> @@ -109,6 +109,10 @@ void build_ged_aml(Aml *table, const char *name, =
+HotplugHandler *hotplug_dev,
+> >>                   aml_append(if_ctx, aml_call0(MEMORY_DEVICES_CONTAINE=
+R "."
+> >>                                                MEMORY_SLOT_SCAN_METHOD=
+));
+> >>                   break;
+> >> +            case ACPI_GED_CPU_HOTPLUG_EVT:
+> >> +                aml_append(if_ctx, aml_call0(ACPI_CPU_CONTAINER "."
+> >> +                                             ACPI_CPU_SCAN_METHOD)); =
+=20
+> > I don't particularly like exposing cpu hotplug internals for outside co=
+de
+> > and then making that code do plumbing hoping that nothing will explode
+> > in the future. =20
+>=20
+> I understand your point but I've followed what was already existing.
+>=20
+> For example,
+>=20
+> build_dsdt()
+>=20
+> {
+>=20
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 [...]
+>=20
+>  =C2=A0=C2=A0=C2=A0 acpi_dsdt_add_uart(scope, &memmap[VIRT_UART],
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (irqmap[VIRT_U=
+ART] + ARM_SPI_BASE));
+>  =C2=A0=C2=A0=C2=A0 if (vmc->acpi_expose_flash) {
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 acpi_dsdt_add_flash(scope, &m=
+emmap[VIRT_FLASH]);
+>  =C2=A0=C2=A0=C2=A0 }
+>  =C2=A0=C2=A0=C2=A0 fw_cfg_acpi_dsdt_add(scope, &memmap[VIRT_FW_CFG]);
+>  =C2=A0=C2=A0=C2=A0 virtio_acpi_dsdt_add(scope, memmap[VIRT_MMIO].base,=20
+> memmap[VIRT_MMIO].size,
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 (i=
+rqmap[VIRT_MMIO] + ARM_SPI_BASE),
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0,=
+ NUM_VIRTIO_TRANSPORTS);
+>  =C2=A0=C2=A0=C2=A0 acpi_dsdt_add_pci(scope, memmap, irqmap[VIRT_PCIE] + =
+ARM_SPI_BASE,=20
+> vms);
+>  =C2=A0=C2=A0=C2=A0 if (vms->acpi_dev) {
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 build_ged_aml(scope, "\\_SB."=
+GED_DEVICE,
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 HOTPLUG_HANDLER(vms-=
+>acpi_dev),
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 irqmap[VIRT_ACPI_GED=
+] + ARM_SPI_BASE,=20
+> AML_SYSTEM_MEMORY,
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 memmap[VIRT_ACPI_GED=
+].base);
+>  =C2=A0=C2=A0=C2=A0 } else {
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 acpi_dsdt_add_gpio(scope, &me=
+mmap[VIRT_GPIO],
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 (irqmap[VIRT_GPIO] + ARM_SPI_BASE));
+>  =C2=A0=C2=A0=C2=A0 }
+>=20
+>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 [...]
+>=20
+> }
+>=20
+> Refactoring all of this code will create a noise in this patch-set.
+> > build_cpus_aml() takes event_handler_method to create a method that
+> > can be called by platform. What I suggest is to call that method here
+> > instead of trying to expose CPU hotplug internals and manually building
+> > call path here.
+> > aka:
+> >    build_cpus_aml(event_handler_method =3D PATH_TO_GED_DEVICE.CSCN)
+> > and then call here
+> >    aml_append(if_ctx, aml_call0(CSCN));
+> > which will call  CSCN in GED scope, that was be populated by
+> > build_cpus_aml() to do cpu scan properly without need to expose
+> > cpu hotplug internal names and then trying to fixup conflicts caused by=
+ that.
+> >
+> > PS:
+> > we should do the same for memory hotplug, we see in context above
+> > =20
+> Although. I agree with your suggested change but I think this should be
+>=20
+> carried in another patch-set.
 
-I am sorry.  There may be a problem with the mailbox server, and all emails
-cannot be send out. Please ignore the above emails.
-From: "Changqi Lu"<luchangqi.123@bytedance.com>
-Date: Mon, Jul 8, 2024, 21:01
-Subject: [PATCH v8 00/10] Support persistent reservation operations
-To: <qemu-block@nongnu.org>, <qemu-devel@nongnu.org>
-Cc: <kwolf@redhat.com>, <hreitz@redhat.com>, <stefanha@redhat.com>, <
-fam@euphon.net>, <ronniesahlberg@gmail.com>, <pbonzini@redhat.com>, <
-pl@dlhnet.de>, <kbusch@kernel.org>, <its@irrelevant.dk>, <foss@defmacro.it>,
-<philmd@linaro.org>, <pizhenwei@bytedance.com>, "Changqi Lu"<
-luchangqi.123@bytedance.com>
-Stefan, the issue you mentioned has been fixed. Almost all patches have
-been reviewed, thank you very much to Stefan and Klaus. v7->v8: - Fix
-num_keys may be less than 0 at scsi_pr_read_keys_complete(). - Fix buf
-memory leak at iscsi driver. v6->v7: - Add buferlen size check at SCSI
-layer. - Add pr_cap calculation in bdrv_merge_limits() function at block
-layer, so the ugly bs->file->bs->bl.pr_cap in scsi and nvme layers was
-changed to bs->bl.pr_cap. - Fix memory leak at iscsi driver, and some other
-spelling errors. v5->v6: - Add relevant comments in the io layer. v4->v5: -
-Fixed a memory leak bug at hw/nvme/ctrl.c. v3->v4: - At the nvme layer, the
-two patches of enabling the ONCS function and enabling rescap are combined
-into one. - At the nvme layer, add helper functions for pr capacity
-conversion between the block layer and the nvme layer. v2->v3: In v2
-Persist Through Power Loss(PTPL) is enable default. In v3 PTPL is
-supported, which is passed as a parameter. v1->v2: - Add sg_persist
---report-capabilities for SCSI protocol and enable oncs and rescap for NVMe
-protocol. - Add persistent reservation capabilities constants and helper
-functions for SCSI and NVMe protocol. - Add comments for necessary APIs.
-v1: - Add seven APIs about persistent reservation command for block layer.
-These APIs including reading keys, reading reservations, registering,
-reserving, releasing, clearing and preempting. - Add the necessary
-pr-related operation APIs for both the SCSI protocol and NVMe protocol at
-the device layer. - Add scsi driver at the driver layer to verify the
-functions Changqi Lu (10): block: add persistent reservation in/out api
-block/raw: add persistent reservation in/out driver scsi/constant: add
-persistent reservation in/out protocol constants scsi/util: add helper
-functions for persistent reservation types conversion hw/scsi: add
-persistent reservation in/out api for scsi device block/nvme: add
-reservation command protocol constants hw/nvme: add helper functions for
-converting reservation types hw/nvme: enable ONCS and rescap function
-hw/nvme: add reservation protocal command block/iscsi: add persistent
-reservation in/out driver block/block-backend.c | 403
-++++++++++++++++++++++++++++ block/io.c | 164 ++++++++++++ block/iscsi.c |
-425 ++++++++++++++++++++++++++++++ block/raw-format.c | 56 ++++
-hw/nvme/ctrl.c | 326 ++++++++++++++++++++++- hw/nvme/ns.c | 5 +
-hw/nvme/nvme.h | 88 +++++++ hw/scsi/scsi-disk.c | 368
-++++++++++++++++++++++++++ include/block/block-common.h | 40 +++
-include/block/block-io.h | 20 ++ include/block/block_int-common.h | 84
-++++++ include/block/nvme.h | 100 ++++++- include/scsi/constants.h | 52
-++++ include/scsi/utils.h | 8 + include/sysemu/block-backend-io.h | 24 ++
-scsi/utils.c | 81 ++++++ 16 files changed, 2241 insertions(+), 3
-deletions(-) -- 2.20.1
+I have to disagree with another patch-set on top as it introduces
+unnecessary code changes, wich 'another patch-set' will put back.
+(talking specifically about CPU hotplug)
 
---00000000000017a6e7061cbc981e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Not to mention doing as it was suggested should reduce size of
+your series and overall complexity.
 
-<html><head></head><body><div id=3D"editor_version_1.17.2_YqoEMP31" style=
-=3D"word-break:break-word"><div style=3D"margin-top:4px;margin-bottom:4px;l=
-ine-height:1.6"><div dir=3D"auto" class=3D"" style=3D"font-size:16px">Hi,</=
-div></div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6"><=
-div dir=3D"auto" class=3D"" style=3D"font-size:16px"><br></div></div><div s=
-tyle=3D"margin-top:4px;margin-bottom:4px;line-height:1.6"><div dir=3D"auto"=
- class=3D"" style=3D"font-size:16px">I am sorry.=C2=A0 There may be a probl=
-em with the mailbox server, and all emails cannot be send out. Please ignor=
-e the above emails.</div></div></div><div class=3D"history-quote-wrapper" i=
-d=3D"lark-mail-quote-172044618"><div style=3D"list-style-position:inside"><=
-div class=3D"adit-html-block adit-html-block--collapsed" style=3D"border-le=
-ft:none;padding-left:0px"><div><div class=3D"adit-html-block__attr history-=
-quote-meta-wrapper history-quote-gap-tag" id=3D"lark-mail-quote-meta-narEfr=
-smo" style=3D"padding:12px;background:rgb(245,246,247);color:rgb(31,35,41);=
-border-radius:4px;margin-top:24px;margin-bottom:12px"><div id=3D"lark-mail-=
-quote-27ea1886fc7d5a7915997f00642e34d4"><div style=3D"word-break:break-word=
-"><div style=3D""><span style=3D"white-space:nowrap">From: </span><span sty=
-le=3D"white-space:nowrap">&quot;Changqi Lu&quot;&lt;<a style=3D"white-space=
-:pre-wrap;word-break:break-word;text-decoration:none;color:inherit" href=3D=
-"mailto:luchangqi.123@bytedance.com" class=3D"quote-head-meta-mailto">lucha=
-ngqi.123@bytedance.com</a>&gt;</span></div><div style=3D""><span style=3D"w=
-hite-space:nowrap">Date: </span> Mon, Jul 8, 2024, 21:01</div><div style=3D=
-""><span style=3D"white-space:nowrap">Subject: </span> [PATCH v8 00/10] Sup=
-port persistent reservation operations</div><div style=3D""><span style=3D"=
-white-space:nowrap">To: </span><span style=3D"white-space:nowrap">&lt;<a st=
-yle=3D"white-space:pre-wrap;word-break:break-word;text-decoration:none;colo=
-r:inherit" href=3D"mailto:qemu-block@nongnu.org" class=3D"quote-head-meta-m=
-ailto">qemu-block@nongnu.org</a>&gt;</span>, <span style=3D"white-space:now=
-rap">&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;text-decora=
-tion:none;color:inherit" href=3D"mailto:qemu-devel@nongnu.org" class=3D"quo=
-te-head-meta-mailto">qemu-devel@nongnu.org</a>&gt;</span></div><div style=
-=3D""><span style=3D"white-space:nowrap">Cc: </span><span style=3D"white-sp=
-ace:nowrap">&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;text=
--decoration:none;color:inherit" href=3D"mailto:kwolf@redhat.com" class=3D"q=
-uote-head-meta-mailto">kwolf@redhat.com</a>&gt;</span>, <span style=3D"whit=
-e-space:nowrap">&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;=
-text-decoration:none;color:inherit" href=3D"mailto:hreitz@redhat.com" class=
-=3D"quote-head-meta-mailto">hreitz@redhat.com</a>&gt;</span>, <span style=
-=3D"white-space:nowrap">&lt;<a style=3D"white-space:pre-wrap;word-break:bre=
-ak-word;text-decoration:none;color:inherit" href=3D"mailto:stefanha@redhat.=
-com" class=3D"quote-head-meta-mailto">stefanha@redhat.com</a>&gt;</span>, <=
-span style=3D"white-space:nowrap">&lt;<a style=3D"white-space:pre-wrap;word=
--break:break-word;text-decoration:none;color:inherit" href=3D"mailto:fam@eu=
-phon.net" class=3D"quote-head-meta-mailto">fam@euphon.net</a>&gt;</span>, <=
-span style=3D"white-space:nowrap">&lt;<a style=3D"white-space:pre-wrap;word=
--break:break-word;text-decoration:none;color:inherit" href=3D"mailto:ronnie=
-sahlberg@gmail.com" class=3D"quote-head-meta-mailto">ronniesahlberg@gmail.c=
-om</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt;<a style=3D"white=
--space:pre-wrap;word-break:break-word;text-decoration:none;color:inherit" h=
-ref=3D"mailto:pbonzini@redhat.com" class=3D"quote-head-meta-mailto">pbonzin=
-i@redhat.com</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt;<a styl=
-e=3D"white-space:pre-wrap;word-break:break-word;text-decoration:none;color:=
-inherit" href=3D"mailto:pl@dlhnet.de" class=3D"quote-head-meta-mailto">pl@d=
-lhnet.de</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt;<a style=3D=
-"white-space:pre-wrap;word-break:break-word;text-decoration:none;color:inhe=
-rit" href=3D"mailto:kbusch@kernel.org" class=3D"quote-head-meta-mailto">kbu=
-sch@kernel.org</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt;<a st=
-yle=3D"white-space:pre-wrap;word-break:break-word;text-decoration:none;colo=
-r:inherit" href=3D"mailto:its@irrelevant.dk" class=3D"quote-head-meta-mailt=
-o">its@irrelevant.dk</a>&gt;</span>, <span style=3D"white-space:nowrap">&lt=
-;<a style=3D"white-space:pre-wrap;word-break:break-word;text-decoration:non=
-e;color:inherit" href=3D"mailto:foss@defmacro.it" class=3D"quote-head-meta-=
-mailto">foss@defmacro.it</a>&gt;</span>, <span style=3D"white-space:nowrap"=
->&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;text-decoration=
-:none;color:inherit" href=3D"mailto:philmd@linaro.org" class=3D"quote-head-=
-meta-mailto">philmd@linaro.org</a>&gt;</span>, <span style=3D"white-space:n=
-owrap">&lt;<a style=3D"white-space:pre-wrap;word-break:break-word;text-deco=
-ration:none;color:inherit" href=3D"mailto:pizhenwei@bytedance.com" class=3D=
-"quote-head-meta-mailto">pizhenwei@bytedance.com</a>&gt;</span>, <span styl=
-e=3D"white-space:nowrap">&quot;Changqi Lu&quot;&lt;<a style=3D"white-space:=
-pre-wrap;word-break:break-word;text-decoration:none;color:inherit" href=3D"=
-mailto:luchangqi.123@bytedance.com" class=3D"quote-head-meta-mailto">luchan=
-gqi.123@bytedance.com</a>&gt;</span></div></div></div></div><div><div style=
-=3D"white-space:pre-wrap">Stefan, the issue you mentioned has been fixed.
+>=20
+> Best, Salil.
+>=20
+> > =20
+> >> +                break;
+> >>               case ACPI_GED_PWR_DOWN_EVT:
+> >>                   aml_append(if_ctx,
+> >>                              aml_notify(aml_name(ACPI_POWER_BUTTON_DEV=
+ICE),
+> >> diff --git a/include/hw/acpi/cpu_hotplug.h b/include/hw/acpi/cpu_hotpl=
+ug.h
+> >> index 48b291e45e..ef631750b4 100644
+> >> --- a/include/hw/acpi/cpu_hotplug.h
+> >> +++ b/include/hw/acpi/cpu_hotplug.h
+> >> @@ -20,6 +20,8 @@
+> >>   #include "hw/acpi/cpu.h"
+> >>  =20
+> >>   #define ACPI_CPU_HOTPLUG_REG_LEN 12
+> >> +#define ACPI_CPU_SCAN_METHOD "CSCN"
+> >> +#define ACPI_CPU_CONTAINER "\\_SB.CPUS"
+> >>  =20
+> >>   typedef struct AcpiCpuHotplug {
+> >>       Object *device; =20
+>=20
 
-Almost all patches have been reviewed, thank you very much
-to Stefan and Klaus.
-
-
-v7-&gt;v8:
-- Fix num_keys may be less than 0 at scsi_pr_read_keys_complete().
-- Fix buf memory leak at iscsi driver.
-
-v6-&gt;v7:
-- Add buferlen size check at SCSI layer.
-- Add pr_cap calculation in bdrv_merge_limits() function at block layer,
-  so the ugly bs-&gt;file-&gt;bs-&gt;bl.pr_cap in scsi and nvme layers was
-  changed to bs-&gt;bl.pr_cap.
-- Fix memory leak at iscsi driver, and some other spelling errors.
-
-v5-&gt;v6:
-- Add relevant comments in the io layer.
-
-v4-&gt;v5:
-- Fixed a memory leak bug at hw/nvme/ctrl.c.
-
-v3-&gt;v4:
-- At the nvme layer, the two patches of enabling the ONCS
-  function and enabling rescap are combined into one.
-- At the nvme layer, add helper functions for pr capacity
-  conversion between the block layer and the nvme layer.
-
-v2-&gt;v3:
-In v2 Persist Through Power Loss(PTPL) is enable default.
-In v3 PTPL is supported, which is passed as a parameter.
-
-v1-&gt;v2:
-- Add sg_persist --report-capabilities for SCSI protocol and enable
-  oncs and rescap for NVMe protocol.
-- Add persistent reservation capabilities constants and helper functions fo=
-r
-  SCSI and NVMe protocol.
-- Add comments for necessary APIs.
-
-v1:
-- Add seven APIs about persistent reservation command for block layer.
-  These APIs including reading keys, reading reservations, registering,
-  reserving, releasing, clearing and preempting.
-- Add the necessary pr-related operation APIs for both the
-  SCSI protocol and NVMe protocol at the device layer.
-- Add scsi driver at the driver layer to verify the functions
-
-
-Changqi Lu (10):
-  block: add persistent reservation in/out api
-  block/raw: add persistent reservation in/out driver
-  scsi/constant: add persistent reservation in/out protocol constants
-  scsi/util: add helper functions for persistent reservation types
-    conversion
-  hw/scsi: add persistent reservation in/out api for scsi device
-  block/nvme: add reservation command protocol constants
-  hw/nvme: add helper functions for converting reservation types
-  hw/nvme: enable ONCS and rescap function
-  hw/nvme: add reservation protocal command
-  block/iscsi: add persistent reservation in/out driver
-
- block/block-backend.c             | 403 ++++++++++++++++++++++++++++
- block/io.c                        | 164 ++++++++++++
- block/iscsi.c                     | 425 ++++++++++++++++++++++++++++++
- block/raw-format.c                |  56 ++++
- hw/nvme/ctrl.c                    | 326 ++++++++++++++++++++++-
- hw/nvme/ns.c                      |   5 +
- hw/nvme/nvme.h                    |  88 +++++++
- hw/scsi/scsi-disk.c               | 368 ++++++++++++++++++++++++++
- include/block/block-common.h      |  40 +++
- include/block/block-io.h          |  20 ++
- include/block/block_int-common.h  |  84 ++++++
- include/block/nvme.h              | 100 ++++++-
- include/scsi/constants.h          |  52 ++++
- include/scsi/utils.h              |   8 +
- include/sysemu/block-backend-io.h |  24 ++
- scsi/utils.c                      |  81 ++++++
- 16 files changed, 2241 insertions(+), 3 deletions(-)
-
---=20
-2.20.1</div></div></div></div></div></div></body></html>
-
---00000000000017a6e7061cbc981e--
 
