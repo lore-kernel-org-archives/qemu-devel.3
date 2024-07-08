@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 151D8C38150
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 01:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E334FC38150
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 01:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQdEu-0003Ek-5r; Sun, 07 Jul 2024 21:32:25 -0400
+	id 1sQdEv-0003IX-Qm; Sun, 07 Jul 2024 21:32:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sQdEp-0003Ax-UM; Sun, 07 Jul 2024 21:32:19 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1sQdEr-0003E5-Q0; Sun, 07 Jul 2024 21:32:22 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1sQdEo-0001aM-6C; Sun, 07 Jul 2024 21:32:19 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-706a1711ee5so1828547b3a.0; 
- Sun, 07 Jul 2024 18:32:16 -0700 (PDT)
+ id 1sQdEq-0001an-A2; Sun, 07 Jul 2024 21:32:21 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2c9baecc80fso1087562a91.1; 
+ Sun, 07 Jul 2024 18:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720402334; x=1721007134; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=w22szoAG675Q8ABHy9DYD9nwmRV07dPGYZPauXiWGdM=;
- b=c9ozO+R2jFQTKZoSsarbRyiIq/q/nULRmqLsFTMv9NO6U5JnJhS8zP1V4ZGTiGvYD5
- 086z4fi810vnhzOhrsk2eU4ysimmuqDM9wK1x8ae5Aj7OJnQgjYy8USGUCp38hQH1c7Y
- fxbr6vCKYUB5tUAwwd1jhdMuzxT0LLC3jqqS++XLv+Sy3G0igGmem5WYSnkrgUdZvpzO
- ysCUczXxMgLLEioVg2b482ARJv0v9vLBh14hR9rgdUlio8whnhP+8sigAasYnfK5/3hT
- 6VpaGJivXfFI9dQAEKr6+sQVDciso6J2d5FUGohzeCaW6t1YyeR49vIQQYGYO4Jwkde0
- XU7A==
+ d=gmail.com; s=20230601; t=1720402337; x=1721007137; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dGWic2psjPhblcVbvDyhK2I28rJI4ynyRXnbyzTr1n0=;
+ b=hKU6jMqUbITYXc+sz/RRdVROvyVYgrRItphO4a3D1F7GfhBSwvCWFYQP3WZDemtcEk
+ 8mitqtZlemsTKJcIktl8UBlkZHkQWxDenJZAPl1hw8S5L06u0TSXymd3Ri10UmpHCGVs
+ B/gsga+a1yhMdrwKAbRThhhet0NYc0U1YvsdbRSvAQkqSi2AOzJkCJcp/vxU/a7sfF+Y
+ 9kSoGnFrFxLpubRG3bUaCy6hykU/sEJ65UWupiCBFxkpCL2kApbTpqOaOkoYIjWKs496
+ bWFbrpPY2uPbJa0AKWQajnidgLH00D1x1NJ2pAQSpIyW4WGfMpVx+V4+Z/0VXZtVZRaK
+ 84UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720402334; x=1721007134;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=w22szoAG675Q8ABHy9DYD9nwmRV07dPGYZPauXiWGdM=;
- b=O47GhtcCppko/xqzoxwqtklm1iR1PCgH4zn5FHBmxcZo/av/aC7xxlINcib7pZybi3
- 8WLMPPb8I/rUAuHebo/1zQMpMLJRQzf4T5rjEueCvsWJuo/OIslKTU3X1U0UGll9UrPt
- 9I2+5UytyPy+FMt469EjKL27RxA8TfftB3RgxnkbqA47VvDi4VS0HxJxDskFV9J4J88v
- BkfGFM/v7JIlkQYhHNoPIhoYZJGKg88J5DyumO1/sqBYYsM0AGU/E7kbcAXUkDAqDR9c
- MAHnOcj/eejMS2UYDy91OVomwSlXWMBO4E3vNjCj7ti4dvhIqyluruR7mgBWgmu8EEfn
- cSAA==
+ d=1e100.net; s=20230601; t=1720402337; x=1721007137;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dGWic2psjPhblcVbvDyhK2I28rJI4ynyRXnbyzTr1n0=;
+ b=St2FWUR2WOmQ8KdDNEAfo0Q05wCn1oEq9uBVpXHNhJOP+uLTC8iyGQGIEqNNaRBEm7
+ 1w5ce8QfbkDtzrzvw+vknTiaFUXh4r3B0DzvjbAv4Wn4gPg12vig0td/CvsFY10/8A5s
+ 1iecxck8OefatesMjo/FoRxPeRG6j8PYiyhEZv57oXFRDgIGMVqk82eSKQMTjrp59S6R
+ T/ZjwIsK84ydVyCkLSRfsefj/k27LyxsI2sRRyMjsVWajpiZ5Gl4dL3mmjJ3okbIm/q2
+ /Fj3CU7cPo6k9NUUoIa9Eqt/9ymkUBQukuJhUNsO035wF9nvqb0GcyJTbTq90Bl96dVs
+ lT2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWeRkF00zuP3Xjtf/qxV+jHkE1NLni6xrhAqKLamfBb/XgZFvSlQWPOZ/ULgKUOxeg9q5bLdxVky8sr3Uz1xlUvNwdQH+c=
-X-Gm-Message-State: AOJu0YwnABQ9zQj+ZPklihzuOZ4mBCc3GO2bOLI0CYclwFExy7ODCxK6
- H40YToedzIDBwijvEwYX1LlvAvKuxlqsdqpF6JtsObN032e3Y5v64fVysgi6
-X-Google-Smtp-Source: AGHT+IGVI6snG5TZHTxnpXCYzgshFRnCpaYnS/enir40MjnMdjm3clSV+uWyvjWeRGz1ts0sRKWsIA==
-X-Received: by 2002:a05:6a21:7896:b0:1c0:ebca:ead0 with SMTP id
- adf61e73a8af0-1c0ebcaf176mr2295342637.47.1720402334493; 
- Sun, 07 Jul 2024 18:32:14 -0700 (PDT)
+ AJvYcCW7HGkiZQUy1bxcnv9mSXybRA5li24OyAOhDsPKLPKCXeWsPJ9nX33ixuU8t7SVaPsVy1hPQqZvAqeE6SUq5Mj6bZSpt9Y=
+X-Gm-Message-State: AOJu0Ywj8htzgYr3dMigotgSw3lMjgaGvwKRneC4nVFkVclmYHnWDkNX
+ VDYl1YraLs8wIyGvIZojySZrHbsg08OM6zqcj6ZLE35ZqMSe6avcHKq06qbG
+X-Google-Smtp-Source: AGHT+IG8x05yo0lwJYk7xvWjT3hc3rWomjE7qSKcSHh7vrJnztM74SaHSuO3PobJ5kzSMry2eHnO+Q==
+X-Received: by 2002:a17:90a:bf8c:b0:2c9:679d:78a7 with SMTP id
+ 98e67ed59e1d1-2c99c7f7c71mr5371620a91.25.1720402337183; 
+ Sun, 07 Jul 2024 18:32:17 -0700 (PDT)
 Received: from jeuk-MS-7D42.. ([210.223.46.112])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c99a98ac94sm6963729a91.33.2024.07.07.18.32.12
+ 98e67ed59e1d1-2c99a98ac94sm6963729a91.33.2024.07.07.18.32.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 07 Jul 2024 18:32:14 -0700 (PDT)
+ Sun, 07 Jul 2024 18:32:16 -0700 (PDT)
 From: Jeuk Kim <jeuk20.kim@gmail.com>
 To: qemu-devel@nongnu.org,
 	richard.henderson@linaro.org
 Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
- jeuk20.kim@samsung.com, j-young.choi@samsung.com
-Subject: [PULL 0/1] ufs queue
-Date: Mon,  8 Jul 2024 10:31:44 +0900
-Message-Id: <cover.1720402238.git.jeuk20.kim@samsung.com>
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com,
+ Minwoo Im <minwoo.im@samsung.com>
+Subject: [PULL 1/1] hw/ufs: Fix mcq register range determination logic
+Date: Mon,  8 Jul 2024 10:31:45 +0900
+Message-Id: <6db492596dd9204e8fe341b2396472271cf15023.1720402238.git.jeuk20.kim@samsung.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <cover.1720402238.git.jeuk20.kim@samsung.com>
+References: <cover.1720402238.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pf1-x42b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,26 +98,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-The following changes since commit b9ee1387e0cf0fba5a73a610d31cb9cead457dc0:
+The function ufs_is_mcq_reg() only evaluated the range of the
+mcq_op_reg offset, which is defined as a constant.
+Therefore, it was possible for ufs_is_mcq_reg() to return true
+despite ufs device is configured to not support the mcq.
+This could cause ufs_mmio_read()/ufs_mmio_write() to result in
+a segmentation fault due to accessing an invalid address.
+So fix it.
 
-  Merge tag 'sdmmc-20240706' of https://github.com/philmd/qemu into staging (2024-07-07 10:34:52 -0700)
-
-are available in the Git repository at:
-
-  https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20240708
-
-for you to fetch changes up to 6db492596dd9204e8fe341b2396472271cf15023:
-
-  hw/ufs: Fix mcq register range determination logic (2024-07-08 10:25:20 +0900)
-
-----------------------------------------------------------------
-hw/ufs:
-- Fix invalid address access in ufs_is_mcq_reg()
-
-----------------------------------------------------------------
-Jeuk Kim (1):
-      hw/ufs: Fix mcq register range determination logic
-
+Fixes: 5c079578d2e4 ("hw/ufs: Add support MCQ of UFSHCI 4.0")
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+Reviewed-by: Minwoo Im <minwoo.im@samsung.com>
+Message-Id: <6dcb63036f3b35c833de752d1472d08bf4a9c289.1719996804.git.jeuk20.kim@samsung.com>
+---
  hw/ufs/ufs.c | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 683fff5840..cf0edd281c 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -57,7 +57,13 @@ static inline uint64_t ufs_reg_size(UfsHc *u)
+ 
+ static inline bool ufs_is_mcq_reg(UfsHc *u, uint64_t addr, unsigned size)
+ {
+-    uint64_t mcq_reg_addr = ufs_mcq_reg_addr(u, 0);
++    uint64_t mcq_reg_addr;
++
++    if (!u->params.mcq) {
++        return false;
++    }
++
++    mcq_reg_addr = ufs_mcq_reg_addr(u, 0);
+     return (addr >= mcq_reg_addr &&
+             addr + size <= mcq_reg_addr + sizeof(u->mcq_reg));
+ }
+-- 
+2.34.1
+
 
