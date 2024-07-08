@@ -4,95 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F72C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 16:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81645C3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 16:58:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQrej-000135-KL; Mon, 08 Jul 2024 12:56:01 -0400
+	id 1sQrgs-0006jC-Vt; Mon, 08 Jul 2024 12:58:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sQreh-00012L-Kw
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:55:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sQreg-0000v9-1F
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:55:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720457757;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NHHOyaRzlEllx6stfHpVMNlHxn8cQlboOUZ0ts9nlwg=;
- b=fHmiNBJIPyOfFMrUzUZFz9NzUZ8Wo49aqMjEnTejpVHXlmGff+F/gi8fgwlvz9RHLBX1pN
- zJX3nl7ICxEUH0hiWKf2cUND/Ca2g5iKdw9ppeB6X3AzIXr2giD+Hxu8XzCTdaGYNgf/BE
- 7EUJVWgeW0gDlG7HegSpNKJXM2xAXmA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-659-EfrLFRFYNPq1jU4lWyk5uQ-1; Mon, 08 Jul 2024 12:55:54 -0400
-X-MC-Unique: EfrLFRFYNPq1jU4lWyk5uQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-426653ac6e4so10490865e9.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 09:55:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sQrgq-0006hy-Ns
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:58:12 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sQrgp-0001AN-6j
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:58:12 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4266ed6c691so3108565e9.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 09:58:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720457889; x=1721062689; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sKXQoGJHy+ph39EqAz0WFsjbz/4rOW1h6XfVy2kMcGQ=;
+ b=jVaxeD5CQdCYmF/I9+0Moj9Gtc22d0aYDq4XeBy5UxXlcu0aI/3PaGOLC94ENYn19L
+ yBUiTMBz/gN6mriXzQqEJsEoke8AN644MaSGuTcgJYRYD9W79aDZXN1YxZIo/LABaLyP
+ 7QNibrZbarABZ7fgeGZTInf2Nd/jiMiS0fuLWhVmTv66D1AB65wb25Ko7qmRcnOTSVmV
+ VF6clgtkrKPhZ8d6OsoLkCHCJMvzmpE+w9hw+LeY0cwleKx/UzvkC3F8Ib9YNMqeRHZW
+ h9OAkgwQHOwGb6c5nn3/9v1qXsN9eL3w2meHt3lmGzK1XeFZXXkGGQeMy1a3DP44TW/2
+ UpNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720457753; x=1721062553;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NHHOyaRzlEllx6stfHpVMNlHxn8cQlboOUZ0ts9nlwg=;
- b=p5tYPNkm8KAsZCQ3ya5f+UNCjxC/QI9ILGUzB5YPxtdMXZWH7ym96ukBEBoXrtbHhV
- Kp37J3F1/SMrSui8Y1cONVwNTNlzjs28LhV0vsY+5Ankn1Nxct9wngkrDyxQ0f4K7R8E
- 5Eujkiy2zEC59XhfdqXXyUwwAb+BNbSl9sj3iuDMA1ETU4qaKVA4saklJVJRFuCnQYqm
- QZp0tk8Wc36ii5p9j9lrdIw/2UMNutWLMET/Qoh/PKMbcObjEZTUu80cKZn4RKtjjwNh
- /Gm7RaF6qUctSgJXFYsx4rlE0+2OIv8UI6orCq5PG6ZQcjaq8kCe5t5lc1ADj+FQ4C/T
- cTYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWIsQ78c3Wck4sGJQCLzl61NJlSn9lGtyw90IshBAGRfCUEKh4oUBYPKl+BicucScmKcBcBiqVCjmSMl84MMdWSxTJ0aLc=
-X-Gm-Message-State: AOJu0Yzo9nB69px1666+JjSWMaHzdRFXgex1x4Bz6jBIyfJmtkbrn95h
- fi8etYDM4vxv6LbFtVHJisuhZN2pvzry37UKdoUpgEnRcl4Wt2ZjRuYxZq+pthhCt/2MfGeeLCx
- KWQlv3m+KT1tSGjysMhFnS67FwSSHSYXLZKMhxAHCEookW1OTJph1MXUJBTD/ARwjo4XiOnBkNc
- z1FnitJYKUOZSFgyObI3rrxr6Ac2o=
-X-Received: by 2002:a05:600c:3b12:b0:426:66fb:fcd6 with SMTP id
- 5b1f17b1804b1-426706c64b5mr1306845e9.3.1720457753136; 
- Mon, 08 Jul 2024 09:55:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGJEeDTUECd0LJAKKDwn8EDtdvv/0gNzlt2K9djb65+pCMpvW2RE6wTbEekeAcz43FRAXLGukVmR9aIeyj+lyo=
-X-Received: by 2002:a05:600c:3b12:b0:426:66fb:fcd6 with SMTP id
- 5b1f17b1804b1-426706c64b5mr1306715e9.3.1720457752711; Mon, 08 Jul 2024
- 09:55:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720457889; x=1721062689;
+ h=content-transfer-encoding:in-reply-to:cc:content-language
+ :references:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sKXQoGJHy+ph39EqAz0WFsjbz/4rOW1h6XfVy2kMcGQ=;
+ b=u05E4rx4kQcK/WrKe5OPPpB83qhgZqjbxe9NBfju6+L374WMwv7J+9lcNziT0k6cEi
+ AbhX9ndXXAOkCmuoNbf8mWK0Nc3NKgJPWA/VtM5l1NuIQ99UGvMtuLExNOkrGyF7dkRM
+ /dVypcBuYVXEtctVnLWdcf8EYhdcHEYZ7ZzN/PIdaz48diQwIp7BxM8qVKu7Q49K7BAS
+ kfvyhPQFwW8euRptk1Qlw7idPtj27o7o75qSMOXeQ/NssdqtkBLQXwoGPSWMpk+EsX7+
+ pP/ShDvD3Oudrr5m7sSrrm/Kh3ACZpG4+Vc4+gk43YJhoB09kItzv+a1wzcxK4h5NY+j
+ DhcQ==
+X-Gm-Message-State: AOJu0YzCIUC2woDf2II4oM1qVK6yqXQo7ohQGsQEhwa28R4ISNVENyIL
+ U5Yaq7tPU+AIei1IM7AT5ORRMpGi/RjwqM7P465Ht2AzCfMZ/n7ghW4yfwun5yu84fbJM99AJNF
+ E
+X-Google-Smtp-Source: AGHT+IEUTLeqxJTcNUqepbLQlXu0oAhyriee76r//zaWVU3JAPFkLkRWOyAnfOeW5xits2bpn3ohBA==
+X-Received: by 2002:a05:600c:4a24:b0:426:629f:154e with SMTP id
+ 5b1f17b1804b1-426708f2111mr1198795e9.30.1720457889101; 
+ Mon, 08 Jul 2024 09:58:09 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.169.151])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4266f6f6fb9sm5524575e9.27.2024.07.08.09.58.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jul 2024 09:58:08 -0700 (PDT)
+Message-ID: <152d9c90-3e58-4706-b12a-6d2796681d0f@linaro.org>
+Date: Mon, 8 Jul 2024 18:58:07 +0200
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
- <8dfd1047-436d-4157-83cb-9cad399544fe@redhat.com>
- <ZowUyFX7zcK1FvuG@redhat.com>
-In-Reply-To: <ZowUyFX7zcK1FvuG@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 8 Jul 2024 18:55:40 +0200
-Message-ID: <CABgObfZfQNSeYeCqcuNHcu=pyKz+f_MUc=9rZGRYxaPNBO-U4A@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 0/7] Add Rust support, implement ARM PL011
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: multipart/alternative; boundary="00000000000033ab94061cbf4931"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v42 96/98] hw/sd/sdcard: Support boot area in emmc
+ image
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Joel Stanley <joel@jms.id.au>
+References: <20240628070216.92609-1-philmd@linaro.org>
+ <20240628070216.92609-97-philmd@linaro.org>
+Content-Language: en-US
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Markus Armbruster <armbru@redhat.com>
+In-Reply-To: <20240628070216.92609-97-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,105 +97,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000033ab94061cbf4931
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Joel, Cédric,
 
-Il lun 8 lug 2024, 18:33 Daniel P. Berrang=C3=A9 <berrange@redhat.com> ha
-scritto:
+On 28/6/24 09:02, Philippe Mathieu-Daudé wrote:
+> From: Joel Stanley <joel@jms.id.au>
+> 
+> This assumes a specially constructed image:
+> 
+>    dd if=/dev/zero of=mmc-bootarea.img count=2 bs=1M
+>    dd if=u-boot-spl.bin of=mmc-bootarea.img conv=notrunc
+>    dd if=u-boot.bin of=mmc-bootarea.img conv=notrunc count=64 bs=1K
+>    cat mmc-bootarea.img obmc-phosphor-image.wic > mmc.img
 
-> This series is still missing changes to enable build on all targets
-> during CI, including cross-compiles, to prove that we're doing the
-> correct thing on all our targetted platforms. That's a must have
-> before considering it suitable for merge.
->
+I'm not keen on imposing that layout to use the model (besides
+so far we use 1MiB as constant). I'd rather use 3 BlockBackends
+for eMMC (boot[01], user). This would scale for multiple sizes.
 
-But we're not=E2=80=94in particular it's still using several features not i=
-n all
-supported distros.
+>    truncate --size 16GB mmc.img
+>    truncate --size 128MB mmc-bootarea.img
+> 
+> For now this still requires a mtd image to load the SPL:
+> 
+>    qemu-system-arm -M tacoma-bmc -nographic \
+>     -global driver=sd-card,property=emmc,value=true \
+>     -drive file=mmc.img,if=sd,index=2 \
+>     -drive file=mmc-bootarea.img,if=mtd,format=raw
 
-I also believe we should default to enabling rust toolchain by
-> default in configure, and require and explicit --without-rust
-> to disable it, *despite* it not technically being a mandatory
-> feature....yet.
->
+(AFAICT we don't need that mtd anymore, correct?)
 
-I guess the detection could be done, but actually enabling the build part
-needs to wait until the minimum supported version is low enough.
-
-Paolo
-
-
-> This is to give users a clear message that Rust is likely to
-> become a fundamental part of QEMU, so they need to give feedback
-> if they hit any problems / have use cases we've not anticipated
-> that are problematic wrt Rust.
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
-
---00000000000033ab94061cbf4931
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il lun 8 lug 2024, 18:33 Daniel P. Berrang=C3=A9 &lt;<=
-a href=3D"mailto:berrange@redhat.com">berrange@redhat.com</a>&gt; ha scritt=
-o:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">This series i=
-s still missing changes to enable build on all targets<br>
-during CI, including cross-compiles, to prove that we&#39;re doing the<br>
-correct thing on all our targetted platforms. That&#39;s a must have<br>
-before considering it suitable for merge.<br></blockquote></div></div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">But we&#39;re not=E2=80=94in parti=
-cular it&#39;s still using several features not in all supported distros.</=
-div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote=
-"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">I also believe we shoul=
-d default to enabling rust toolchain by<br>
-default in configure, and require and explicit --without-rust<br>
-to disable it, *despite* it not technically being a mandatory<br>
-feature....yet.<br></blockquote></div></div><div dir=3D"auto"><br></div><di=
-v dir=3D"auto">I guess the detection could be done, but actually enabling t=
-he build part needs to wait until the minimum supported version is low enou=
-gh.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">
-<br>
-This is to give users a clear message that Rust is likely to<br>
-become a fundamental part of QEMU, so they need to give feedback<br>
-if they hit any problems / have use cases we&#39;ve not anticipated<br>
-that are problematic wrt Rust.<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer" target=3D=
-"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a h=
-ref=3D"https://www.flickr.com/photos/dberrange" rel=3D"noreferrer noreferre=
-r" target=3D"_blank">https://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer" target=3D"=
-_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com=
-" rel=3D"noreferrer noreferrer" target=3D"_blank">https://fstop138.berrange=
-.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer noreferrer" tar=
-get=3D"_blank">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0=
- <a href=3D"https://www.instagram.com/dberrange" rel=3D"noreferrer noreferr=
-er" target=3D"_blank">https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000033ab94061cbf4931--
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/sd/sd.h |  1 +
+>   hw/sd/sd.c         | 39 +++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 40 insertions(+)
 
 
