@@ -4,75 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1FE6C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 14:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54D27C3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 14:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQpV5-00050U-3f; Mon, 08 Jul 2024 10:37:55 -0400
+	id 1sQpgW-0008Cb-Ix; Mon, 08 Jul 2024 10:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sQpV0-0004lV-0n
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:37:50 -0400
-Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1sQpUx-0003ej-Mt
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:37:49 -0400
-Received: by mail-ua1-x92d.google.com with SMTP id
- a1e0cc1a2514c-81028024ec8so875849241.3
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 07:37:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1720449465; x=1721054265;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=IV8C7TOWiA/jHjkH2AJCLuksU3FbrQCJeDbWcKU/MAY=;
- b=AGdHfo/bB2w9lzg/goNFttAqd+UKVBCC7SoXl0WpBaZhOVn1YR658FoMFTbO+wloOO
- E1CEsDm9SRAvWh8sNKD3n6/rSPFnlQVm/wKY1Pi8qMG0g09Vu6t3rh1aEd8fiI17cpsZ
- FsqEVqR9IcR5WVkgEg5doRZUBwojZ+9RS5QlDF0HCDzkBZ7pwiSf9Z92UwThSZwJ7dFo
- M4FzN4gN7MRUeq9nIsPC+L7bKqYj3n6ZUqDNYPUCFDKE3g99wBXxnsNDWOYSpSet/9xe
- pM1JKrRyzBpCMTXCjLIWr9AsKrnh12FX5h6gu17Vp5flk7tJI6siEesjSswFMHi9b5hq
- ruJw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sQpgP-0008Bm-1l
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:49:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sQpgN-00060Q-EJ
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 10:49:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720450171;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2SkJo/6Pii6pZ98dT6jDqRTjQhsaH59RpYtqwPg2dH8=;
+ b=LT2NUn2ofyPKcb76ZzVfbqk9AUgPcR2zNwnLvNaHrmAOt4HEVAXJaqU4Ouk0XGPe1YvJ78
+ +nzVVC+5jmTuJ2bXWuhUTS1RXy+GboUdtaNEjhxSTu8P7QP3L4J7qfYULspKDwg4urLImx
+ AlAlseskjRHe3C5mCx/SKCilVmKhXa0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-434--7mL9zTrNNaQI7yaTmD1fw-1; Mon, 08 Jul 2024 10:49:29 -0400
+X-MC-Unique: -7mL9zTrNNaQI7yaTmD1fw-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-367a531a2f0so1924182f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 07:49:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720449465; x=1721054265;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=IV8C7TOWiA/jHjkH2AJCLuksU3FbrQCJeDbWcKU/MAY=;
- b=QlYEqUubb9x9efecqIKibols3o4NaQiOCfito/w78ksXr+DgYX2jNpwHrASwg6lbXh
- Tb6wyaXvngZROv/E0JZQAIE0Ff2/EOpne/d7ePAZxLc04Denamb2tax/iJdeaN+Ya/Fg
- GsShi4oeqZViO3gRHV/D3pYjRHu9FdIv4NmHl+mhKuY4ifl4NFXRgIqA7UEwoIwtvpGk
- o4/bkLJQ8zivQb9aTr2CdomNXkTzjmOWmJ00vttUHFDXBOa/FVlNnOOYNk/OvAPPFhP7
- +2IllI9gPb+ft+VPQIcPItSg0004JUUd3uvRZBydl0643+D977pZRGT5osh5dH6gqZeK
- PB8w==
-X-Gm-Message-State: AOJu0YzOGkPyzDiIQqk6UP9k+PH5ZDsZiuxC8OiRYwj9yipDLARZOC+E
- 9w1+Z6uirB3rFHVvFA1LCaY4ap3SX45aygCnNhlVvlB9yIeAnVCyuBihcjnHMCb30oTlhJwPDUN
- h2NMvezGKGuk06n8xigWv1tJcDb2mRlNa3Grw+NveJACxPy0=
-X-Google-Smtp-Source: AGHT+IHRo3JIsuBHMrg8akgaVEkijiaGElEHOmDACJdGKvAwWNQPOcaQfgc2jK+43gVRXnQLpGDHxSZoOg+YTKFuej4=
-X-Received: by 2002:a05:6102:19ca:b0:48f:95aa:ae2b with SMTP id
- ada2fe7eead31-48fee6bcc74mr11506837137.28.1720449465221; Mon, 08 Jul 2024
- 07:37:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720450168; x=1721054968;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2SkJo/6Pii6pZ98dT6jDqRTjQhsaH59RpYtqwPg2dH8=;
+ b=r0KiukWcJoCo3OoScuumxvHH9cnfG3XQgfFuhk9VzeNcN0CMliYau2c2RjulSJQpyA
+ XZoi9016EwFYwCUCrn9gn/PriGs5DLkPTKb9IpPdaFqjPu1RQU3W3DB8p9swfOfSu0Dl
+ PIzezGlXipaBHlgMU+GtRzO0bsKiaiwl8oxzQSe0LdZl8dE45Hh2jg7m/4wUD7hQ6tV7
+ WlInnY/w25bO17ej1i8DkHPXk8XTD/rnWmmScjUr7O+N+sZnoJXx7befji1pXjlZDfjp
+ +2ebRVhR1YpMz95mDk7KGl2++9D43pIGlPlgGAVFzZSNuPwPqO/rZcQnerpMJ1m19AQX
+ qefg==
+X-Gm-Message-State: AOJu0YyJ8YLwmxsQbTRLjheqwMDuWzRxHMeRhsCgJkIzE3Di+auSdnSI
+ 9Lvjf0hIyx07NqEXqWer6CuKTu2iBznbiu59i1czwJ7M9QEVwBw2gwm4qQE3S8ihNa89G4TAFZ9
+ JNoFxR5/zAWV/suXkF/hImEhk8lUDttmZh4m+MQcq47X0ehs+1wIVnYkniUWErvHoLihXQ7p9gN
+ BQFM0FMLWFDMtpWfoeYGHx0az84/Y=
+X-Received: by 2002:a5d:4810:0:b0:366:ebf5:c6cc with SMTP id
+ ffacd0b85a97d-3679dd683cbmr7635012f8f.50.1720450168479; 
+ Mon, 08 Jul 2024 07:49:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUId0b2WFe4vskiUL0+17jYqDOLppLIjTkwQOTVoygqSC5JJ5M5JXrka+JTkqZFvk1xJivzjLsD58bFs/vfug=
+X-Received: by 2002:a5d:4810:0:b0:366:ebf5:c6cc with SMTP id
+ ffacd0b85a97d-3679dd683cbmr7634987f8f.50.1720450168114; Mon, 08 Jul 2024
+ 07:49:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240624094647.77156-1-phil@philjordan.eu>
-In-Reply-To: <20240624094647.77156-1-phil@philjordan.eu>
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-Date: Mon, 8 Jul 2024 16:37:34 +0200
-Message-ID: <CAAibmn0HizdzdqACQRQHamzYqL6J1_FPo-bzOodJQM2CCZv_dg@mail.gmail.com>
-Subject: Re: [PATCH] i386/hvf: Integrates x2APIC support with hvf accel
-To: qemu-devel@nongnu.org
-Cc: dirty@apple.com, rbolshakov@ddn.com, lists@philjordan.eu, 
- minhquangbui99@gmail.com
-Content-Type: multipart/alternative; boundary="0000000000003aa0c2061cbd5bb3"
-Received-SPF: neutral client-ip=2607:f8b0:4864:20::92d;
- envelope-from=phil@philjordan.eu; helo=mail-ua1-x92d.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
+ <12f78335f01f2264b91b3170995aa86ccae7d0cb.1720094395.git.manos.pitsidianakis@linaro.org>
+In-Reply-To: <12f78335f01f2264b91b3170995aa86ccae7d0cb.1720094395.git.manos.pitsidianakis@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 8 Jul 2024 16:49:15 +0200
+Message-ID: <CABgObfZXiNdu_bFFfbZzyR0JCWdJ=J6WBHo+K35pxFCpc+EqTw@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 1/7] build-sys: Add rust feature option
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
+ Richard Henderson <richard.henderson@linaro.org>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,241 +107,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003aa0c2061cbd5bb3
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Ping!
-
-It would be nice to get this one in before the 9.1 merge window closes.
-
-Thanks,
-Phil
-
-
-
-
-On Mon, 24 Jun 2024 at 11:47, Phil Dennis-Jordan <phil@philjordan.eu> wrote=
-:
-
-> Support for x2APIC mode was recently introduced in the software emulated
-> APIC implementation for TCG. Enabling it when using macOS=E2=80=99s hvf
-> accelerator is useful and significantly helps performance, as Qemu
-> currently uses the emulated APIC when running on hvf as well.
+On Thu, Jul 4, 2024 at 2:16=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
 >
-> This change wires up the read & write operations for the MSR VM exits
-> and allow-lists the CPUID flag in the x86 hvf runtime.
+> Add options for Rust in meson_options.txt, meson.build, configure to
+> prepare for adding Rust code in the followup commits.
 >
-> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-> ---
->  target/i386/hvf/x86_cpuid.c |  4 ++--
->  target/i386/hvf/x86_emu.c   | 31 +++++++++++++++++++++++++++++++
->  2 files changed, 33 insertions(+), 2 deletions(-)
->
-> diff --git a/target/i386/hvf/x86_cpuid.c b/target/i386/hvf/x86_cpuid.c
-> index e56cd8411b..4f260d46a8 100644
-> --- a/target/i386/hvf/x86_cpuid.c
-> +++ b/target/i386/hvf/x86_cpuid.c
-> @@ -64,8 +64,8 @@ uint32_t hvf_get_supported_cpuid(uint32_t func, uint32_=
-t
-> idx,
->               CPUID_PAT | CPUID_PSE36 | CPUID_CLFLUSH | CPUID_MMX |
->               CPUID_FXSR | CPUID_SSE | CPUID_SSE2 | CPUID_SS;
->          ecx &=3D CPUID_EXT_SSE3 | CPUID_EXT_PCLMULQDQ | CPUID_EXT_SSSE3 =
-|
-> -             CPUID_EXT_FMA | CPUID_EXT_CX16 | CPUID_EXT_PCID |
-> -             CPUID_EXT_SSE41 | CPUID_EXT_SSE42 | CPUID_EXT_MOVBE |
-> +             CPUID_EXT_FMA | CPUID_EXT_CX16 | CPUID_EXT_PCID |
-> CPUID_EXT_SSE41 |
-> +             CPUID_EXT_SSE42 | CPUID_EXT_X2APIC | CPUID_EXT_MOVBE |
->               CPUID_EXT_POPCNT | CPUID_EXT_AES | CPUID_EXT_XSAVE |
->               CPUID_EXT_AVX | CPUID_EXT_F16C | CPUID_EXT_RDRAND;
->          ecx |=3D CPUID_EXT_HYPERVISOR;
-> diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c
-> index 38c782b8e3..be675bcfb7 100644
-> --- a/target/i386/hvf/x86_emu.c
-> +++ b/target/i386/hvf/x86_emu.c
-> @@ -663,6 +663,15 @@ static void exec_lods(CPUX86State *env, struct
-> x86_decode *decode)
->      env->eip +=3D decode->len;
->  }
->
-> +static void raise_exception(CPUX86State *env, int exception_index,
-> +                            int error_code)
-> +{
-> +    env->exception_nr =3D exception_index;
-> +    env->error_code =3D error_code;
-> +    env->has_error_code =3D true;
-> +    env->exception_injected =3D 1;
-> +}
-> +
->  void simulate_rdmsr(CPUX86State *env)
->  {
->      X86CPU *cpu =3D env_archcpu(env);
-> @@ -677,6 +686,17 @@ void simulate_rdmsr(CPUX86State *env)
->      case MSR_IA32_APICBASE:
->          val =3D cpu_get_apic_base(cpu->apic_state);
->          break;
-> +    case MSR_APIC_START ... MSR_APIC_END: {
-> +        int ret;
-> +        int index =3D (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
-> +
-> +        ret =3D apic_msr_read(index, &val);
-> +        if (ret < 0) {
-> +            raise_exception(env, EXCP0D_GPF, 0);
-> +        }
-> +
-> +        break;
-> +    }
->      case MSR_IA32_UCODE_REV:
->          val =3D cpu->ucode_rev;
->          break;
-> @@ -777,6 +797,17 @@ void simulate_wrmsr(CPUX86State *env)
->      case MSR_IA32_APICBASE:
->          cpu_set_apic_base(cpu->apic_state, data);
->          break;
-> +    case MSR_APIC_START ... MSR_APIC_END: {
-> +        int ret;
-> +        int index =3D (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
-> +
-> +        ret =3D apic_msr_write(index, data);
-> +        if (ret < 0) {
-> +            raise_exception(env, EXCP0D_GPF, 0);
-> +        }
-> +
-> +        break;
-> +    }
->      case MSR_FSBASE:
->          wvmcs(cs->accel->fd, VMCS_GUEST_FS_BASE, data);
->          break;
-> --
-> 2.39.3 (Apple Git-146)
->
->
+> `rust` is a reserved meson name, so we have to use an alternative.
+> `with_rust` was chosen.
 
---0000000000003aa0c2061cbd5bb3
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Did you find any problem with the other approach that I sent, to
+support --cargo and the CARGO environment variable in configure?
 
-<div dir=3D"ltr"><div>Ping!</div><div><br></div><div>It would be nice to ge=
-t this one in before the 9.1 merge window closes.</div><div><br></div><div>=
-Thanks,</div><div>Phil</div><div><br></div><div><br></div><div><br></div></=
-div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On=
- Mon, 24 Jun 2024 at 11:47, Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@p=
-hiljordan.eu" target=3D"_blank">phil@philjordan.eu</a>&gt; wrote:<br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left:1px solid rgb(204,204,204);padding-left:1ex">Support for x2APIC mode w=
-as recently introduced in the software emulated<br>
-APIC implementation for TCG. Enabling it when using macOS=E2=80=99s hvf<br>
-accelerator is useful and significantly helps performance, as Qemu<br>
-currently uses the emulated APIC when running on hvf as well.<br>
-<br>
-This change wires up the read &amp; write operations for the MSR VM exits<b=
-r>
-and allow-lists the CPUID flag in the x86 hvf runtime.<br>
-<br>
-Signed-off-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu"=
- target=3D"_blank">phil@philjordan.eu</a>&gt;<br>
----<br>
-=C2=A0target/i386/hvf/x86_cpuid.c |=C2=A0 4 ++--<br>
-=C2=A0target/i386/hvf/x86_emu.c=C2=A0 =C2=A0| 31 ++++++++++++++++++++++++++=
-+++++<br>
-=C2=A02 files changed, 33 insertions(+), 2 deletions(-)<br>
-<br>
-diff --git a/target/i386/hvf/x86_cpuid.c b/target/i386/hvf/x86_cpuid.c<br>
-index e56cd8411b..4f260d46a8 100644<br>
---- a/target/i386/hvf/x86_cpuid.c<br>
-+++ b/target/i386/hvf/x86_cpuid.c<br>
-@@ -64,8 +64,8 @@ uint32_t hvf_get_supported_cpuid(uint32_t func, uint32_t =
-idx,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CPUID_PAT | CPUID_PSE36 | =
-CPUID_CLFLUSH | CPUID_MMX |<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CPUID_FXSR | CPUID_SSE | C=
-PUID_SSE2 | CPUID_SS;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ecx &amp;=3D CPUID_EXT_SSE3 | CPUID_EXT_P=
-CLMULQDQ | CPUID_EXT_SSSE3 |<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CPUID_EXT_FMA | CPUID_EXT_=
-CX16 | CPUID_EXT_PCID |<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CPUID_EXT_SSE41 | CPUID_EX=
-T_SSE42 | CPUID_EXT_MOVBE |<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CPUID_EXT_FMA | CPUID_EXT_=
-CX16 | CPUID_EXT_PCID | CPUID_EXT_SSE41 |<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CPUID_EXT_SSE42 | CPUID_EX=
-T_X2APIC | CPUID_EXT_MOVBE |<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CPUID_EXT_POPCNT | CPUID_E=
-XT_AES | CPUID_EXT_XSAVE |<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CPUID_EXT_AVX | CPUID_EXT_=
-F16C | CPUID_EXT_RDRAND;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ecx |=3D CPUID_EXT_HYPERVISOR;<br>
-diff --git a/target/i386/hvf/x86_emu.c b/target/i386/hvf/x86_emu.c<br>
-index 38c782b8e3..be675bcfb7 100644<br>
---- a/target/i386/hvf/x86_emu.c<br>
-+++ b/target/i386/hvf/x86_emu.c<br>
-@@ -663,6 +663,15 @@ static void exec_lods(CPUX86State *env, struct x86_dec=
-ode *decode)<br>
-=C2=A0 =C2=A0 =C2=A0env-&gt;eip +=3D decode-&gt;len;<br>
-=C2=A0}<br>
-<br>
-+static void raise_exception(CPUX86State *env, int exception_index,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 int error_code)<br>
-+{<br>
-+=C2=A0 =C2=A0 env-&gt;exception_nr =3D exception_index;<br>
-+=C2=A0 =C2=A0 env-&gt;error_code =3D error_code;<br>
-+=C2=A0 =C2=A0 env-&gt;has_error_code =3D true;<br>
-+=C2=A0 =C2=A0 env-&gt;exception_injected =3D 1;<br>
-+}<br>
-+<br>
-=C2=A0void simulate_rdmsr(CPUX86State *env)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0X86CPU *cpu =3D env_archcpu(env);<br>
-@@ -677,6 +686,17 @@ void simulate_rdmsr(CPUX86State *env)<br>
-=C2=A0 =C2=A0 =C2=A0case MSR_IA32_APICBASE:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0val =3D cpu_get_apic_base(cpu-&gt;apic_st=
-ate);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-+=C2=A0 =C2=A0 case MSR_APIC_START ... MSR_APIC_END: {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 int ret;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 int index =3D (uint32_t)env-&gt;regs[R_ECX] - =
-MSR_APIC_START;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D apic_msr_read(index, &amp;val);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret &lt; 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 raise_exception(env, EXCP0D_GPF,=
- 0);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0case MSR_IA32_UCODE_REV:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0val =3D cpu-&gt;ucode_rev;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-@@ -777,6 +797,17 @@ void simulate_wrmsr(CPUX86State *env)<br>
-=C2=A0 =C2=A0 =C2=A0case MSR_IA32_APICBASE:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cpu_set_apic_base(cpu-&gt;apic_state, dat=
-a);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
-+=C2=A0 =C2=A0 case MSR_APIC_START ... MSR_APIC_END: {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 int ret;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 int index =3D (uint32_t)env-&gt;regs[R_ECX] - =
-MSR_APIC_START;<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D apic_msr_write(index, data);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ret &lt; 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 raise_exception(env, EXCP0D_GPF,=
- 0);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0case MSR_FSBASE:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0wvmcs(cs-&gt;accel-&gt;fd, VMCS_GUEST_FS_=
-BASE, data);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
--- <br>
-2.39.3 (Apple Git-146)<br>
-<br>
-</blockquote></div>
+Paolo
 
---0000000000003aa0c2061cbd5bb3--
 
