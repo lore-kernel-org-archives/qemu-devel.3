@@ -4,100 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DA08C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 16:31:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1CA9C3DA41
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 16:34:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQrGd-0001OS-00; Mon, 08 Jul 2024 12:31:07 -0400
+	id 1sQrJ2-0006Xv-WB; Mon, 08 Jul 2024 12:33:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sQrGZ-0001Ng-Th
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:31:04 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sQrJ1-0006Vo-7C
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:33:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sQrGW-0004eb-SA
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:31:03 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sQrIv-00056x-Qz
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:33:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720456258;
+ s=mimecast20190719; t=1720456409;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HjGbYZ9SL0+r3c1nWTC603usckRgPGn71L4n803ns+c=;
- b=I4Uwt7XqwSguGeHpo/I/W48qbWYRYvNRnNTiSasiHjkcDta/8YeDyFu5GOkaYuYf8JEFV1
- dPyA6ElzRx3n/y3SZ1DurnWPY7rNSm7Nf9drxcXiXfyvWlhei6C4/S/H4NSG75m3HpJaeq
- BpCK5w/OM5J4pXQcR5J49TRtRgU8zG8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-1JIvakRRPfi0NryhWy9SqA-1; Mon, 08 Jul 2024 12:30:52 -0400
-X-MC-Unique: 1JIvakRRPfi0NryhWy9SqA-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-36796a0687bso3200372f8f.2
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 09:30:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720456251; x=1721061051;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HjGbYZ9SL0+r3c1nWTC603usckRgPGn71L4n803ns+c=;
- b=xR2nKVAFqmsnCmyEFWQfJ5/B2vjgl/5GcZ887nt6PcdtKduDN61Tkxh6syWx1F5fgJ
- 4qOKjxFuZtYEfLYr5rt4DRQecuPDNqAuQLTGLqK1/iHVtPKGvY32BzAUrhey1C7WF/S4
- 4o+7avELf+AV/sbME97l2QvIWrdWZzEv0Fuy65Xbk09CopiqZ8KgaHfE+OjFR5z8vWp4
- I0IN/C+Xwf4kJWtI1uWTCS8Ps17GbpiiwpGuxwIZdJcKG6FVUVfxuSOYHPLKYGOkOfaf
- o1OEnqDNQ2C+et6cahjB6y/5nzZzlwi2P0ytE5aJHiXcpknKOSNizOpnDPhzxktwuKel
- 0beQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4dn5Hm2kPeGb9jft66i86LZ11VC1krPg5fexI4Ckc/Yr8BTs6JeZNe1pipyjKcPYsys3rHHHR35S/+atgsPUKOkVfk40=
-X-Gm-Message-State: AOJu0YwJfWj5dlbEuXpx21C1muy54JL0ydYDuM3KdHtH3RLGQiNLaUlM
- 39yois/FPBSNGog1XlUjzSf7QBBSDmRfWzRV+KUVcDxPyMgMU8J+sTME2ev5NRZ/wD6w6eEMzDE
- Q+OB5bKAvQNo/TbvaKPs08lbX3DQA/2R9rOgKRk9cpkaeBbnwyRhe
-X-Received: by 2002:a5d:5552:0:b0:367:4354:52c2 with SMTP id
- ffacd0b85a97d-367cea6b825mr93347f8f.22.1720456251619; 
- Mon, 08 Jul 2024 09:30:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEn+A3eNt90pJEup33A0PTIKiT4GQx+hVbbSfM0fyxZL0lRDA7BNRkXwUa+wThOBde6zEXWew==
-X-Received: by 2002:a5d:5552:0:b0:367:4354:52c2 with SMTP id
- ffacd0b85a97d-367cea6b825mr93325f8f.22.1720456251238; 
- Mon, 08 Jul 2024 09:30:51 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367cde7df53sm215934f8f.14.2024.07.08.09.30.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Jul 2024 09:30:50 -0700 (PDT)
-Message-ID: <4cc94a1f-4328-4bec-aa66-fc2d88701a16@redhat.com>
-Date: Mon, 8 Jul 2024 18:30:48 +0200
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=xi/RORaJtup4y0JQaoatG6EuvaPE+SuZE7eUqube6Kk=;
+ b=LugnnCWgXWr8t8CpwNserPdh77xKb3vl1l/5fLfp2k25tmpbU66spsKOT54j4whQ20B09w
+ j3rU1vI3OGOzcrFQkNgg/wRA4NuY0OZx5/zpBYllTbjXlSxsuqQdFHKoaglcP1AdofC3li
+ +Jvlh0OS0nwYpZpbSvInOIpy4U06tU0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-OGGFO4DiOmCJxWJwSGIb6Q-1; Mon,
+ 08 Jul 2024 12:33:25 -0400
+X-MC-Unique: OGGFO4DiOmCJxWJwSGIb6Q-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C5E219103CE; Mon,  8 Jul 2024 16:33:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.51])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9205A3000181; Mon,  8 Jul 2024 16:33:15 +0000 (UTC)
+Date: Mon, 8 Jul 2024 17:33:12 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH v4 0/7] Add Rust support, implement ARM PL011
+Message-ID: <ZowUyFX7zcK1FvuG@redhat.com>
+References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
+ <8dfd1047-436d-4157-83cb-9cad399544fe@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 16/19] hw/arm/smmuv3: Handle translation faults
- according to SMMUPTWEventInfo
-Content-Language: en-US
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, maz@kernel.org, nicolinc@nvidia.com, julien@xen.org,
- richard.henderson@linaro.org, marcin.juszkiewicz@linaro.org
-References: <20240701110241.2005222-1-smostafa@google.com>
- <20240701110241.2005222-17-smostafa@google.com>
- <20240704183621.GM1693268@myrica>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20240704183621.GM1693268@myrica>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <8dfd1047-436d-4157-83cb-9cad399544fe@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,92 +89,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Jul 08, 2024 at 06:26:22PM +0200, Paolo Bonzini wrote:
+> On 7/4/24 14:15, Manos Pitsidianakis wrote:
+> > Changes from v3->v4:
+> > - Add rust-specific files to .gitattributes
+> > - Added help text to scripts/cargo_wrapper.py arguments (thanks Stephan)
+> > - Split bindings separate crate
+> > - Add declarative macros for symbols exported to QEMU to said crate
+> > - Lowered MSRV to 1.77.2
+> > - Removed auto-download and install of bindgen-cli
+> > - Fixed re-compilation of Rust objects in case they are missing from
+> >    filesystem
+> > - Fixed optimized builds by adding #[used] (thanks Pierrick for the help
+> >    debugging this)
+> 
+> I think the largest issue is that I'd rather have a single cargo build using
+> a virtual manifest, because my hunch is that it'd be the easiest path
+> towards Kconfig integration.  But it's better to do this after merge, as the
+> changes are pretty large.  It's also independent from any other changes
+> targeted at removing unsafe code, so no need to hold back on merging.
+> 
+> Other comments I made that should however be addressed before merging, from
+> most to least important:
+> 
+> - TODO comments when the code is doing potential undefined behavior
+> 
+> - module structure should IMO resemble the C part of the tree
+> 
+> - only generate bindings.rs.inc once
+> 
+> - a couple abstractions that I'd like to have now: a trait to store the CStr
+> corresponding to the structs, and one to generate all-zero structs without
+> having to type "unsafe { MaybeUninit::zeroed().assume_init() }"
+> 
+> - I pointed out a couple lints that are too broad and should be enabled
+> per-file, even if right now it's basically all files that include them.
+> 
+> - add support for --cargo and CARGO environment variables (if my patch works
+> without too much hassle)
+> 
+> - I'd like to use ctor instead of non-portable linker magic, and the cstr
+> crate instead of CStr statics or c""
+> 
+> - please check if -Wl,--whole-archive can be replaced with link_whole:
+> 
+> - probably, until Rust is enabled by default we should treat dependencies as
+> a moving target and not commit Cargo.lock files.  In the meanwhile we can
+> discuss how to handle them.
+> 
+> And a few aesthetic changes on top of this.
 
+This series is still missing changes to enable build on all targets
+during CI, including cross-compiles, to prove that we're doing the
+correct thing on all our targetted platforms. That's a must have
+before considering it suitable for merge.
 
-On 7/4/24 20:36, Jean-Philippe Brucker wrote:
-> On Mon, Jul 01, 2024 at 11:02:38AM +0000, Mostafa Saleh wrote:
->> Previously, to check if faults are enabled, it was sufficient to check
->> the current stage of translation and check the corresponding
->> record_faults flag.
->>
->> However, with nesting, it is possible for stage-1 (nested) translation
->> to trigger a stage-2 fault, so we check SMMUPTWEventInfo as it would
->> have the correct stage set from the page table walk.
->>
->> Signed-off-by: Mostafa Saleh <smostafa@google.com>
->> ---
->>  hw/arm/smmuv3.c | 15 ++++++++-------
->>  1 file changed, 8 insertions(+), 7 deletions(-)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 36eb6f514a..6c18dc0acf 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -34,9 +34,10 @@
->>  #include "smmuv3-internal.h"
->>  #include "smmu-internal.h"
->>  
->> -#define PTW_RECORD_FAULT(cfg)   (((cfg)->stage == SMMU_STAGE_1) ? \
->> -                                 (cfg)->record_faults : \
->> -                                 (cfg)->s2cfg.record_faults)
->> +#define PTW_RECORD_FAULT(ptw_info, cfg) (((ptw_info).stage == SMMU_STAGE_1 && \
->> +                                        (cfg)->record_faults) || \
->> +                                        ((ptw_info).stage == SMMU_STAGE_2 && \
->> +                                        (cfg)->s2cfg.record_faults))
-> I guess this could be simplified as "(info.stage == STAGE_1) ? s1cfg : s2cfg"
-> Anyway:
->
-> Reviewed-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+I also believe we should default to enabling rust toolchain by
+default in configure, and require and explicit --without-rust
+to disable it, *despite* it not technically being a mandatory
+feature....yet.
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+This is to give users a clear message that Rust is likely to
+become a fundamental part of QEMU, so they need to give feedback
+if they hit any problems / have use cases we've not anticipated
+that are problematic wrt Rust.
 
-Eric
->
->>  
->>  /**
->>   * smmuv3_trigger_irq - pulse @irq if enabled and update
->> @@ -919,7 +920,7 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
->>              event->u.f_walk_eabt.addr2 = ptw_info.addr;
->>              break;
->>          case SMMU_PTW_ERR_TRANSLATION:
->> -            if (PTW_RECORD_FAULT(cfg)) {
->> +            if (PTW_RECORD_FAULT(ptw_info, cfg)) {
->>                  event->type = SMMU_EVT_F_TRANSLATION;
->>                  event->u.f_translation.addr = addr;
->>                  event->u.f_translation.addr2 = ptw_info.addr;
->> @@ -928,7 +929,7 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
->>              }
->>              break;
->>          case SMMU_PTW_ERR_ADDR_SIZE:
->> -            if (PTW_RECORD_FAULT(cfg)) {
->> +            if (PTW_RECORD_FAULT(ptw_info, cfg)) {
->>                  event->type = SMMU_EVT_F_ADDR_SIZE;
->>                  event->u.f_addr_size.addr = addr;
->>                  event->u.f_addr_size.addr2 = ptw_info.addr;
->> @@ -937,7 +938,7 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
->>              }
->>              break;
->>          case SMMU_PTW_ERR_ACCESS:
->> -            if (PTW_RECORD_FAULT(cfg)) {
->> +            if (PTW_RECORD_FAULT(ptw_info, cfg)) {
->>                  event->type = SMMU_EVT_F_ACCESS;
->>                  event->u.f_access.addr = addr;
->>                  event->u.f_access.addr2 = ptw_info.addr;
->> @@ -946,7 +947,7 @@ static SMMUTranslationStatus smmuv3_do_translate(SMMUv3State *s, hwaddr addr,
->>              }
->>              break;
->>          case SMMU_PTW_ERR_PERMISSION:
->> -            if (PTW_RECORD_FAULT(cfg)) {
->> +            if (PTW_RECORD_FAULT(ptw_info, cfg)) {
->>                  event->type = SMMU_EVT_F_PERMISSION;
->>                  event->u.f_permission.addr = addr;
->>                  event->u.f_permission.addr2 = ptw_info.addr;
->> -- 
->> 2.45.2.803.g4e1b14247a-goog
->>
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
