@@ -4,66 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FD3EC3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 09:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9A5DC3DA42
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 09:18:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQkRM-00057l-82; Mon, 08 Jul 2024 05:13:44 -0400
+	id 1sQkVE-0001Vq-5P; Mon, 08 Jul 2024 05:17:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+a495452fc5bbce0c6044+7624+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sQkRJ-00056z-KQ
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 05:13:42 -0400
-Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <BATV+a495452fc5bbce0c6044+7624+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1sQkR8-0002sL-JC
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 05:13:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
- In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=wFZY+bVlCncJ3wryKxbz1/DeMOQ1WemvD+RP4peflHU=; b=gCm1Vh76hFw8w3vnd46Ugm5Tea
- GBAbAr3Vc9JNZoQWwhLAFnog/RmegJxlFtoYrmcRs1cn1Xfv7MZ3RdFj9lGmkUO1q6+6WvF8zx3HB
- c/Mog5gWOVSjMzy7JdBElidLQngd2GSIw66JShs2v0sattSlKqXWeZXnemuQKvQRuQtWsTrevk3Uj
- 2UmEmjgOOCodWHwLZ1HLgDrIFAKlMjA7Jm6bcUJDCtdihDfS+cOkSfPelQK5+su5GwRLuKRgxlnmm
- WVXBdVD88Oe+cXW31ma0xdo1xSAYJ0Vl0M5+sK4W/yH/LpfsyvqFAzLkyUi/f+UERn2jzfTYEfDXI
- k3T3guEw==;
-Received: from [2001:8b0:10b:5:6b09:42c7:5b33:77f2]
- (helo=u3832b3a9db3152.ant.amazon.com)
- by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
- id 1sQkR1-00000006giN-0K5E; Mon, 08 Jul 2024 09:13:23 +0000
-Message-ID: <39b92288418839e9cdba447705a44a8e216dedc3.camel@infradead.org>
-Subject: Re: More than 255 vcpus Windows VM setup without viommu ?
-From: David Woodhouse <dwmw2@infradead.org>
-To: Sandesh Patel <sandesh.patel@nutanix.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Rob Scheepens
- <rob.scheepens@nutanix.com>, Prerna Saxena <confluence@nutanix.com>, Dexuan
- Cui <decui@microsoft.com>
-Date: Mon, 08 Jul 2024 10:13:22 +0100
-In-Reply-To: <7BBA47BD-AC3D-4F12-A860-AD3F2B509257@nutanix.com>
-References: <B75A5788-630B-4898-8758-52B57D3D5895@nutanix.com>
- <3bb7c269ab0a13fe4398d2c7920d2f6bf8e86d47.camel@infradead.org>
- <7BBA47BD-AC3D-4F12-A860-AD3F2B509257@nutanix.com>
-Content-Type: multipart/signed; micalg="sha-256";
- protocol="application/pkcs7-signature"; 
- boundary="=-cPo7WbZr0eAeA5i+DUp7"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <13824125580@163.com>)
+ id 1sQkUl-0001Qx-VP
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 05:17:19 -0400
+Received: from m16.mail.163.com ([117.135.210.2])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <13824125580@163.com>) id 1sQkUi-0003jT-Tw
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 05:17:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+ Message-ID; bh=9BE3M36HCQfzhr2eyakQOuAMQxsub9eO4TT0TRw7AYc=; b=S
+ lZ+sZzI4m1tDpdrRyWTd0QPUpMdp0+24VLRJF2jnGlGfm43JN4PI+1H1MAlqzMWn
+ 6OjuPol1VSOhTi0QdsCbIDqh/sIaOzioe7syp6zVxAg5tQjA2wZ5fQZsbA3WswOe
+ x1QXK6J3+K+CPvRvnELJ8/kDdXakbscyz1IgnpPdVI=
+Received: from 13824125580$163.com ( [14.125.52.22] ) by
+ ajax-webmail-wmsvr-40-123 (Coremail) ; Mon, 8 Jul 2024 17:16:57 +0800 (CST)
+X-Originating-IP: [14.125.52.22]
+Date: Mon, 8 Jul 2024 17:16:57 +0800 (CST)
+From: tugouxp <13824125580@163.com>
+To: qemu-devel@nongnu.org
+Subject: Now, Can  the Device That Pass-through to The Guest Linux OS use
+ "iommu" again to map its own device iova?
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+X-NTES-SC: AL_Qu2ZAviYv0oq4SSbZ+kfmk0UgOs5WcS2vPUm24ReO5FwjAnp9Ck7eVVGEGbP3OKFCR+zvR2STilHzOlhfIdDQpMkgV+pLVyYJbFld991ocH0ag==
+Content-Type: multipart/alternative; 
+ boundary="----=_Part_145003_1350236499.1720430217436"
 MIME-Version: 1.0
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
- casper.infradead.org. See http://www.infradead.org/rpr.html
-Received-SPF: none client-ip=2001:8b0:10b:1236::1;
- envelope-from=BATV+a495452fc5bbce0c6044+7624+infradead.org+dwmw2@casper.srs.infradead.org;
- helo=casper.infradead.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Message-ID: <8d59f81.9999.19091a1c8dc.Coremail.13824125580@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID: _____wD3P5qJrotm08ElAA--.45671W
+X-CM-SenderInfo: bprtmjyurskkiyq6il2tof0z/1tbiZR8WQmXAm5f6vwADsB
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Received-SPF: pass client-ip=117.135.210.2; envelope-from=13824125580@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
+ FROM_LOCAL_HEX=0.006, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_BL=0.001, RCVD_IN_MSPIKE_L4=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,185 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---=-cPo7WbZr0eAeA5i+DUp7
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, 2024-07-03 at 16:01 +0000, Sandesh Patel wrote:
-> >=20
-> > Interesting. What exactly has Windows *done* in those MSI entries?
-> > That
-> > might give a clue about how to support it.
->=20
-> The KVM_SET_GSI_ROUTING ioctl calls kvm_set_routing_entry function in
-> kvm.
->=20
-> int kvm_set_routing_entry(struct kvm *kvm, struct
-> kvm_kernel_irq_routing_entry *e,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const struct kvm_irq_routing_entry *ue)
-> {
->=20
-> =C2=A0=C2=A0=C2=A0=C2=A0switch (ue->type) {
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0case KVM_IRQ_ROUTING_MSI:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0e->set =3D kvm_set_msi;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0e->msi.address_lo =3D ue-=
->u.msi.address_lo;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0e->msi.address_hi =3D ue-=
->u.msi.address_hi;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0e->msi.data =3D ue->u.msi=
-.data;
->=20
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (kvm_msi_route_invalid=
-(kvm, e))
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -EIN=
-VAL;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
-> =C2=A0=C2=A0=C2=A0=C2=A0}
-> }
->=20
-> static inline bool kvm_msi_route_invalid(struct kvm *kvm,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct kvm_kernel_irq_routing_entry *e)
-> {
-> =C2=A0 =C2=A0 return kvm->arch.x2apic_format && (e->msi.address_hi & 0xff=
-);
-> }
->=20
-> That means msi.address_hi must have 0 in the last byte.
->=20
-> Qemu function=C2=A0kvm_arch_fixup_msi_route is responsible for
-> fixing=C2=A0msi.address_hi value in=C2=A0
-> msi routing entry that is passed to kvm.
-> This function got msi.addr_hi:=C2=A0 0x0 in input when iommu was enabled
-> and msi.addr_hi:=C2=A0 0x1
-> when viommu was not enabled for one of the entry.=C2=A0The same value was
-> returned in the output.=C2=A0
-> and saved as routing entry.
-
-That's after QEMU has translated it though. Precisely which MSI is
-this, belonging to which device, and what exactly did Windows write to
-the MSI table?
-
-If *Windows* put anything into the high address bits, that isn't even
-targeted at the APIC, and it would be an attempt at writing to actual
-memory. I suspect that isn't the case.
-
-Can you make kvm_arch_fixup_msi_route() print the actual address and
-data directly from the guest?=20
-
-
---=-cPo7WbZr0eAeA5i+DUp7
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Disposition: attachment; filename="smime.p7s"
+------=_Part_145003_1350236499.1720430217436
+Content-Type: text/plain; charset=GBK
 Content-Transfer-Encoding: base64
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
-ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
-EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
-FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
-aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
-EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
-VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
-aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
-AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
-ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
-QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
-rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
-ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
-U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
-DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
-BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
-dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
-BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
-QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
-CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
-xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
-IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
-kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
-eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
-KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
-1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
-OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
-x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
-5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
-DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
-VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
-UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
-MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
-ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
-oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
-SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
-xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
-RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
-bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
-NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
-KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
-5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
-C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
-gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
-VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
-MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
-by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
-b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
-BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
-QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
-c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
-AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
-qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
-v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
-Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
-tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
-Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
-YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
-ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
-IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
-ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
-GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
-h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
-9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
-P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
-2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
-BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
-7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
-lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
-lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
-AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
-Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
-FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
-BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
-cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
-aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
-LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
-BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
-cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
-Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
-lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
-WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
-hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
-IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
-dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
-NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
-xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzA4MDkxMzIyWjAvBgkqhkiG9w0BCQQxIgQguIK9WTU5
-M7jlmT72WUgBlynY28zRFJXrvj5N/QEO8JAwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
-BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
-A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
-dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
-DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
-MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
-Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBCmn5AFCqjvgBnzP3HgyR6ih+b0i9gB30s
-8isxPP5HdOSQNT+OFjkhEF2Hlfzxyj4VwqYpFSWym1rRwJYXunlUPs8EJV1DhBgN5lY7dbDDLzNC
-dvrZwrEanhVq3K4KvKv+p5Nag6c8eNGoQXN57ZrZrd7dgNA07LGx7XUUby1IoUx8C+DyYHax+2KZ
-ZeQgg0Xek75x1kbv3n5C3kFFzlkGIH0Kb2U+NbGlAMvndfDzTcb3gdZq7Bs7NqoingP3GPoogH0L
-LGRlUDJpB2I6R0t4Dh1b0X9sBpma37177uEbO92GAv5h9IZ49bVTdj4hbhvGMpyw0kO45vPYRbcY
-DPpO/tkLIfFgqpud1t92xZVkg8EYblhPwgu//BKlFlLde5WmW2vefSXyr7UQn/aAXc4vzxJV4/Fg
-drGAAi+x0llpFMUbgI1DXYHkEULO0icx80/HpL5Z7vBybFgFQbBQ+KinTbiA9Sf74mxKYrSBtPFx
-6lFB/SguDked6EjDBQaSnG+G2IZtRsPYD1SYuKIcvfIsC9CeqLcJyFIoGiT3pMBxWIRZccHwKfjj
-B4DZaFVcKyEG7rpsuoywum7mA000j4PghnxRpXeGC7u8DfumVYRXxc9iL8PVxV3Y5/F1cKn263kk
-AuuJwM2VSNw+2FTfaZHwujSZFDAf4axSBGcYwBXsXQAAAAAAAA==
+SGVsbG8gZm9sa3M6CiAgb24gZGV2aWNlIHBhc3MtdGhyb3VnaCBzY2VuYXJpb3MsIGEgZGV2aWNl
+IGNhbiBiZSBwYXNzLXRocm91ZWQgdGhyb3VkIGlvbW11IGJ5IG1ha2luZyBhIGR1cGxpY2F0ZSBw
+YWdlIHRhYmxlIChJT1ZBLCBIUEEpIHdpdGggdGhlIFZDUFUgbWFwKEdQQSxIUEEpLCBidXQgdGhl
+IGRldmljZSBpbiB0aGUgZ3Vlc3Qgb3MgY2FudCB1c2VkIGlvbW11IGFnYWluCnRvIG1ha2UgaXRz
+IG93biBtYXAgbGlrZSBpbiBIT1NUIE9TLiB0aGF0IGNhbiBiZSBjYWN1bGF0ZWQgdGhyb3VnaCB0
+d28gd2F5czoKMS4gZG1lc2d8Z3JlcCAtaSBpb21tdQoyLiBwcmludGsgdGhlIHN0cnVjdCBidXN5
+X3R5cGUtPmlvbW11X29wcy4Kd2hpY2ggdGhlIGZpcnN0IG9uZSBzaG93cyB0aGUgaW9tbXUgY2Fu
+dCBvcGVuIGluIHZtLiBhbmQgdGhlIGxhdGVyIHNob3dzIHRoZXJlIGFyZSBubyBpb21tdSBvcHMg
+YmluZ2RpbmcgdG8gZGV2aWNlIGRyaXZlci4KCgpTbywgaXMgdGhpcyB0aGUgZ2VuZXJhbCBjYXNl
+IG9uIHByZXNlbnQgZGV2aWNlIHZpcnR1YWxpemF0aW9uPyBpZiBzbyAsIGRpZCB0aGlzIG1lYW5z
+IGFsdGhvdWcgd2UgY2FuIGRvIGEgbmVzdCB2aXJ0dWFsbGl6YXRpb24gb24gQ1BVLCBidXQgd2Ug
+c3RpbGwgY2FudCBkbyB0aGUgZGV2aWNlIG5lc3QgdmlydHVhbHphdGlvbiBwcmVzZW50PyAgdGhh
+bmsgeW91ciB5b3VyIGtpbmRseSBoZWxwLgoKCkJScwp6bGNhby4=
+------=_Part_145003_1350236499.1720430217436
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+SGVsbG8gZm9sa3M6PC9k
+aXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij4mbmJzcDsgb24gZGV2aWNlIHBhc3MtdGhyb3VnaCBz
+Y2VuYXJpb3MsIGEgZGV2aWNlIGNhbiBiZSBwYXNzLXRocm91ZWQgdGhyb3VkIGlvbW11IGJ5IG1h
+a2luZyBhIGR1cGxpY2F0ZSBwYWdlIHRhYmxlIChJT1ZBLCBIUEEpIHdpdGggdGhlIFZDUFUgbWFw
+KEdQQSxIUEEpLCBidXQgdGhlIGRldmljZSBpbiB0aGUgZ3Vlc3Qgb3MgY2FudCB1c2VkIGlvbW11
+IGFnYWluPC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij50byBtYWtlIGl0cyBvd24gbWFwIGxp
+a2UgaW4gSE9TVCBPUy4gdGhhdCBjYW4gYmUgY2FjdWxhdGVkIHRocm91Z2ggdHdvIHdheXM6PC9k
+aXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij4xLiBkbWVzZ3xncmVwIC1pIGlvbW11PC9kaXY+PGRp
+diBzdHlsZT0ibWFyZ2luOjA7Ij4yLiBwcmludGsgdGhlIHN0cnVjdCBidXN5X3R5cGUtJmd0O2lv
+bW11X29wcy48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPndoaWNoIHRoZSBmaXJzdCBvbmUg
+c2hvd3MgdGhlIGlvbW11IGNhbnQgb3BlbiBpbiB2bS4gYW5kIHRoZSBsYXRlciBzaG93cyB0aGVy
+ZSBhcmUgbm8gaW9tbXUgb3BzIGJpbmdkaW5nIHRvIGRldmljZSBkcml2ZXIuPC9kaXY+PGRpdiBz
+dHlsZT0ibWFyZ2luOjA7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij5TbywgaXMg
+dGhpcyB0aGUgZ2VuZXJhbCBjYXNlIG9uIHByZXNlbnQgZGV2aWNlIHZpcnR1YWxpemF0aW9uPyBp
+ZiBzbyAsIGRpZCB0aGlzIG1lYW5zIGFsdGhvdWcgd2UgY2FuIGRvIGEgbmVzdCB2aXJ0dWFsbGl6
+YXRpb24gb24gQ1BVLCBidXQgd2Ugc3RpbGwgY2FudCBkbyB0aGUgZGV2aWNlIG5lc3QgdmlydHVh
+bHphdGlvbiBwcmVzZW50PyZuYnNwOyB0aGFuayB5b3VyIHlvdXIga2luZGx5IGhlbHAuPC9kaXY+
+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij5C
+UnM8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPnpsY2FvLjwvZGl2PjwvZGl2Pg==
+------=_Part_145003_1350236499.1720430217436--
 
---=-cPo7WbZr0eAeA5i+DUp7--
 
