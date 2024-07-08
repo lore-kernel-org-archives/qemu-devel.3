@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC6AC3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 15:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A66AC3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 15:28:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQqGX-0003FT-95; Mon, 08 Jul 2024 11:26:57 -0400
+	id 1sQqHl-0006Cr-5R; Mon, 08 Jul 2024 11:28:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sQqGV-0003Ad-CG
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:26:55 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sQqGO-0007BS-KF
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:26:54 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-585e774fd3dso5332193a12.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 08:26:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720452404; x=1721057204; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZkC2y6M8pI7idOeViCjT4FahQm568LGM8eyZteXdTU0=;
- b=NtUBN32nONgQaRqEuqw7jrX2rj47WtZ720yTKsQrHyhHadDGgcn/QzV2pfTqUpc+sa
- 8SeSWk3dznECnNY8Oa8MMqS5Mhz/SQj3xrwTM+gWWnZO0xVls5nczLwY7MwDi7/lIX+B
- IWI7I0jp55Dz/SUifdK7rcb/DQtMaGVQzx3ogO4m5YXiS0ilmUlZ9T99R6ABbXsJNRRk
- OdlM9FFdBWzVpAwnv3qS00nfecM9tpQegZfq2HCQOezPLGjtjMyXSip0I+N69P0SiiXc
- WB3JRkZOUgLGp+/ogzM1CY+o+uA4Ed5ILGKqj9eZsu8y8E43Jz7/jbq3n/o9hfQkte31
- YBDw==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sQqHj-00068o-Vq
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:28:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sQqHi-0007Xi-D4
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:28:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720452488;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zmQG/ctAarOldhq94wtuOKKlHsCmMFPRrRPUbh79YPI=;
+ b=Gtl8wE6XUJP/xs5av6G471hww5CJS8zN+M3gBLdhvUTmpY1lDgXTqAPJV8w0GEnPIUoPr7
+ icE9yPXwPoN1K9ue7EDidByuFOsWHLq3uchJDTvP4iKrDhkR6ffA9X2H292wv2Ai/8wxy1
+ f/ckMCjjOpo5XUDx7zMTWtdfhI/atVg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-402-x22CcyIYO1mG96ba7hcXKA-1; Mon, 08 Jul 2024 11:28:07 -0400
+X-MC-Unique: x22CcyIYO1mG96ba7hcXKA-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-36796a0687bso3168899f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 08:28:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720452404; x=1721057204;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZkC2y6M8pI7idOeViCjT4FahQm568LGM8eyZteXdTU0=;
- b=oMKYdAMNq3oN62zu6quPih6+ATH+G+mHOlHXRPTrS/nmtLyJ2AjdiXPkbbxsC/kt2O
- MxqRwjyXEaR1Ruq36tmVC4bgDw1LjuEBMeQR/mHfilwRtDeUDi7W8pz7x6cX5uPqM5jA
- Tqom6aB51EQKDpp0QRpr84Qm3koCP7YUk27CVPjpgajcl7+dXWeePXNOwKs44Xmydt4r
- vEFqhPMDTqjYU7MxNWo9xU9A/UHkVKxZdZ2fDL3Rv9BfT/vDP57k8CvQK5S4c0lPUPpx
- B1h1T404+rbgkamvcOD1Z1Gf1tOrnNt8humwrpgV63uoIx2+fGWR66vvRUDtLL1Zrrhi
- Wp6w==
+ d=1e100.net; s=20230601; t=1720452486; x=1721057286;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zmQG/ctAarOldhq94wtuOKKlHsCmMFPRrRPUbh79YPI=;
+ b=uchDzYKql9WYLn1Qc+cvVvV486tx0+Gwwx0da3nTdQUekscsQRstxttzdYEMuuXIa5
+ YFrO4A8tudH7TMfWT19bJw5uRN01ahJg3hUubyEAIgZgjOxidSq/Xnht8oZX0A5zyPjT
+ tUEHk3T/p2wL7w4rGURxZq/vueU8cxRItJG5Ot//VBUaOtfiOsWCj+l71JaosUQVWL/K
+ K8eFaFpW1hKNUBIT9dGEDs4OmeBG9liHxlAK/PM/bqoL0icNDKYWSMO+TCzKNjerCSn6
+ GSB6PXNtiKnxPK34L9WXaXB1/vUxE+Y/utwUBFp0d7f6m0OgEw/CWCBWm8Of70NPV1kb
+ l0FA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWeEJa8KXf7EecDbilolkrM57MT/Xk5/iO1kywMCKqo4TQULvRe9v4nb9OZtLIM20Sf1Ur+UtwFPflGJBGEHdf0AsvoRV8=
-X-Gm-Message-State: AOJu0YyqMlmPFkwPf5wQCrecx/n8i5WQXgQTVWTvaSSUa1Er7/rw2IZW
- LA9CuFeBCIA2eu6nP/glIl8/zrZlby+DEN52tKQ6Ow8J4weo0uY+pf5BcIpYZfCHxWkp5u+HXWe
- kBmtj3Z4cr416Jc0h0pbyJgaZTKTFzFJF0SL+fg==
-X-Google-Smtp-Source: AGHT+IHT8O+lo9/GRDNeAWrH3yN3TJ922duHRJ/l5zq3Me5pjti1yXw3W823hbr1Mxne93DQdjfzjecfBX5/I4VXtJQ=
-X-Received: by 2002:a05:6402:354f:b0:57d:5286:b513 with SMTP id
- 4fb4d7f45d1cf-58e5926674dmr9108540a12.9.1720452404412; Mon, 08 Jul 2024
- 08:26:44 -0700 (PDT)
+ AJvYcCVCN+bVLXyq1NadGqdv6RJ6H540hYJAaLBNEQTYIKAyeszvKU7IEHrmdWd7j37kECQV/kH3ViRbTXEAR2kqDyatoMqQkFQ=
+X-Gm-Message-State: AOJu0YxIC03En3OvGqTRXqR5qyzrFsFr19eXyw9p8mki7qLY4f6OQKpb
+ SJ5vKC+hYJ6Oe6jCMHVl/0YpC6VLBFq1LsuAxZRWg7vWNYXkkWxH4DCxJHfQYjft/UQ/Pz9Kb0a
+ 4kAPxpOJL05ZsBg7N4fwm3MFcfBVgYIqORWjAtpFjmbSsHMrwNxW9TJVTgfDB
+X-Received: by 2002:a5d:5183:0:b0:362:40cd:1bc with SMTP id
+ ffacd0b85a97d-3679dd29813mr7454168f8f.24.1720452485883; 
+ Mon, 08 Jul 2024 08:28:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFU4GpNFh/DZ6VxNo76l5LS39cory4it/iVBzJKj9d2J0cS1aK3FS6YG+dZIu7czOiEH8W+Ow==
+X-Received: by 2002:a5d:5183:0:b0:362:40cd:1bc with SMTP id
+ ffacd0b85a97d-3679dd29813mr7454156f8f.24.1720452485556; 
+ Mon, 08 Jul 2024 08:28:05 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-367cde846dfsm77009f8f.28.2024.07.08.08.28.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jul 2024 08:28:04 -0700 (PDT)
+Message-ID: <5420483f-03cf-4383-be73-e3a8ec2a4378@redhat.com>
+Date: Mon, 8 Jul 2024 17:28:03 +0200
 MIME-Version: 1.0
-References: <20240704205854.18537-1-shentey@gmail.com>
- <20240704205854.18537-2-shentey@gmail.com>
- <5f8089ed-fb3f-d92c-0287-e055e8448677@eik.bme.hu>
-In-Reply-To: <5f8089ed-fb3f-d92c-0287-e055e8448677@eik.bme.hu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 8 Jul 2024 16:26:32 +0100
-Message-ID: <CAFEAcA8Yq+kt6-R7SZiDp3WQ_z4_4Sp8DT_YN71CwA+5Wz=Kmg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] hw/isa/vt82c686: Turn "intr" irq into a named gpio
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-ppc@nongnu.org, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Huacai Chen <chenhuacai@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 03/10] vfio/iommufd: Return errno in
+ iommufd_cdev_attach_ioas_hwpt()
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+References: <20240708143420.16953-1-joao.m.martins@oracle.com>
+ <20240708143420.16953-4-joao.m.martins@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240708143420.16953-4-joao.m.martins@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,70 +108,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jul 2024 at 01:32, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->
-> On Thu, 4 Jul 2024, Bernhard Beschow wrote:
-> > Makes the code more comprehensible, matches the datasheet and the piix4 device
-> > model.
-> >
-> > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> > ---
-> > hw/isa/vt82c686.c   | 2 +-
-> > hw/mips/fuloong2e.c | 2 +-
-> > hw/ppc/amigaone.c   | 4 ++--
-> > hw/ppc/pegasos2.c   | 4 ++--
-> > 4 files changed, 6 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/hw/isa/vt82c686.c b/hw/isa/vt82c686.c
-> > index 8582ac0322..505b44c4e6 100644
-> > --- a/hw/isa/vt82c686.c
-> > +++ b/hw/isa/vt82c686.c
-> > @@ -719,7 +719,7 @@ static void via_isa_realize(PCIDevice *d, Error **errp)
-> >     ISABus *isa_bus;
-> >     int i;
-> >
-> > -    qdev_init_gpio_out(dev, &s->cpu_intr, 1);
-> > +    qdev_init_gpio_out_named(dev, &s->cpu_intr, "intr", 1);
-> >     qdev_init_gpio_in_named(dev, via_isa_pirq, "pirq", PCI_NUM_PINS);
-> >     isa_irq = qemu_allocate_irqs(via_isa_request_i8259_irq, s, 1);
-> >     isa_bus = isa_bus_new(dev, pci_address_space(d), pci_address_space_io(d),
-> > diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-> > index a45aac368c..6e4303ba47 100644
-> > --- a/hw/mips/fuloong2e.c
-> > +++ b/hw/mips/fuloong2e.c
-> > @@ -299,7 +299,7 @@ static void mips_fuloong2e_init(MachineState *machine)
-> >                               object_resolve_path_component(OBJECT(pci_dev),
-> >                                                             "rtc"),
-> >                               "date");
-> > -    qdev_connect_gpio_out(DEVICE(pci_dev), 0, env->irq[5]);
-> > +    qdev_connect_gpio_out_named(DEVICE(pci_dev), "intr", 0, env->irq[5]);
->
-> I was wondering why we still have 0 when we have a name so checked the doc
-> commant in include/hw/qdev-core.h and found that the docs in
-> qdev_connect_gpio_out_named is mostly just a copy&paste of the
-> qdev_connect_gpio_out and it also talks about output GPIO array but then
-> says input GPIOs in that array. I've stopped reading at that point as this
-> text makes little sense. Somebody who knows how this actually works might
-> want to update that doc comment.
+Hello Joao,
 
-Yeah, there's some copy-n-paste errors there. I'll send a patch.
+On 7/8/24 4:34 PM, Joao Martins wrote:
+> In preparation to implement auto domains have the attach function
+> return the errno it got during domain attach instead of a bool.
+> 
+> -EINVAL is tracked to track domain incompatibilities, and decide whether
+> to create a new IOMMU domain.
 
-The answer to "why is there both a name and a number 0" is
-that named GPIOs (both input and output) are always created as
-arrays of GPIOs, not single GPIOs. So you can create a named GPIO
-output array like this:
-   qdev_init_gpio_out_named(dev, s->fiq, "fiq", BCM2836_NCORES);
-and then connect to fiq 0, fiq 1, fiq 2, and so on.
-A single named output GPIO is a special case of the array-output
-with only one element, so when you connect it up you still have
-to say "I want element 0 of this length-1 array".
+Please leave the return value as a bool unless there is a very
+good reason not to.
 
-(The unnamed (anonymous) GPIOs are implemented under the hood
-as "a named GPIO array where the name of the GPIO array is NULL".
-So their semantics and also the documentation for the functions
-is very similar to that for named GPIO arrays. But there are
-also some places where I made cut-n-paste errors...)
 
-thanks
--- PMM
+Thanks,
+
+C.
+
+
+> 
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> ---
+>   hw/vfio/iommufd.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 9cee71659b1c..5a5993b17c2e 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -172,7 +172,7 @@ out:
+>       return ret;
+>   }
+>   
+> -static bool iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
+> +static int iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
+>                                            Error **errp)
+>   {
+>       int iommufd = vbasedev->iommufd->fd;
+> @@ -187,12 +187,12 @@ static bool iommufd_cdev_attach_ioas_hwpt(VFIODevice *vbasedev, uint32_t id,
+>           error_setg_errno(errp, errno,
+>                            "[iommufd=%d] error attach %s (%d) to id=%d",
+>                            iommufd, vbasedev->name, vbasedev->fd, id);
+> -        return false;
+> +        return -errno;
+>       }
+>   
+>       trace_iommufd_cdev_attach_ioas_hwpt(iommufd, vbasedev->name,
+>                                           vbasedev->fd, id);
+> -    return true;
+> +    return 0;
+>   }
+>   
+>   static bool iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
+> @@ -216,7 +216,7 @@ static bool iommufd_cdev_attach_container(VFIODevice *vbasedev,
+>                                             VFIOIOMMUFDContainer *container,
+>                                             Error **errp)
+>   {
+> -    return iommufd_cdev_attach_ioas_hwpt(vbasedev, container->ioas_id, errp);
+> +    return !iommufd_cdev_attach_ioas_hwpt(vbasedev, container->ioas_id, errp);
+>   }
+>   
+>   static void iommufd_cdev_detach_container(VFIODevice *vbasedev,
+
 
