@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98248C3DA42
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 04:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD144C3DA42
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 04:49:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQfxw-0001Qm-Gr; Mon, 08 Jul 2024 00:27:04 -0400
+	id 1sQgJC-0005bW-BG; Mon, 08 Jul 2024 00:49:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sQfxu-0001H3-L3; Mon, 08 Jul 2024 00:27:02 -0400
-Received: from mail-ua1-x92e.google.com ([2607:f8b0:4864:20::92e])
+ (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
+ id 1sQgJ9-0005aV-K1; Mon, 08 Jul 2024 00:49:00 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sQfxs-0001l6-3N; Mon, 08 Jul 2024 00:27:02 -0400
-Received: by mail-ua1-x92e.google.com with SMTP id
- a1e0cc1a2514c-8102193c82bso774981241.3; 
- Sun, 07 Jul 2024 21:26:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <east.moutain.yang@gmail.com>)
+ id 1sQgJ7-0005B7-EH; Mon, 08 Jul 2024 00:48:59 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-64f2fe21015so33085767b3.3; 
+ Sun, 07 Jul 2024 21:48:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720412818; x=1721017618; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EzJNVjkkMIYEjVEVfRoWaf2Pm21fpj/5XKfftee2h0s=;
- b=d3YU4T7xmHVRr8b8S5ofG7Is1V6hxhUkLMDd+BBUBHvA6u7uMyAp+AN+BDc15Zc8FD
- xKACfOzHCHi/G68xYdWKUP2ZVXpqZPJmsCXnEClsJCEwlRAV7UwouZo2V34JipqXG/Wk
- ovQqUcEV1MvTidglb9s8o72bYjjflSawxI7Hqxmk4y4l2Liov42+5I10RrMqo4mn/bb6
- cXRaVtO2p1M9oMCWa5IlkZv+thnao3mvlboa7vOFyiru7zkKf9L35vQhDsjjbctIETJZ
- Dkb0zL+aoOyTnaQ+07aySXvUJIzzJlqa6xbuHZdYW89/iWLtzVgwbT2lvxlwEgzlpnJp
- rA/g==
+ d=gmail.com; s=20230601; t=1720414135; x=1721018935; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QfZOfS3BX8KseGGzt0f4eUOQuCr53gCxUGHQr6cI90c=;
+ b=hLhdo5t3mAMYgQVbqQ+veTFL9kpSzVR08LXwcNHylEcOT9TF6UaCnmbxyFioxmqifp
+ izsRGUGrJbgcA5wn27yM/5j4iiVBmMvNp/hbP/LeYhEDahA4qqh/fQOnPS5G+GtxykGR
+ UP0/gpZgUqNPfGL/ebCvdfvFlCqAkpSxG6l3lpRapIw7xiiIznk1hKXp2NjEm/8psnpJ
+ DBw1MTKbPF+CGu//R5hPunbSIYqKcR0qZRGxkAaAVd2MU+cjVkylu7zG+wJqfTgolFIg
+ uyCODTpGIH0FRbHyc3KN1OoFVfJn2pnwECrE01p/TrZlT5gQMtPoNNE9mOVfL78dSLcd
+ vffw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720412818; x=1721017618;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EzJNVjkkMIYEjVEVfRoWaf2Pm21fpj/5XKfftee2h0s=;
- b=Fl4eks5xlCdf7hAoqbhA7SxS9UupFWD0OVHx1eXJDpPzfPTgsgsbLdCReR1mUUBiJC
- +pv8tmIjVR58ziUre7Eg8Lso7b+X5NZAE9Xy/m+3Rf5zF1aBpb1Zg56AY712rIOD4k+g
- 7D8qr+PDirI2BLogI4f+wjDqPfTlsVIqJiu5h6EvSFnFmaqYC1A7RR2zqx5nKduYgm7M
- TcQhYs5bx+n6J3O/Gsb3oxrq37nmY8YIcD6fGJCcc7M8sHa1b+siZd+7+93OpCmJBPLM
- 2d9kettGN+FU/9eadR5MYGOR49kEi7jxmAaVp7cert7s9JXxPRDiBefEDdMkX97bAmTr
- aBDw==
+ d=1e100.net; s=20230601; t=1720414135; x=1721018935;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QfZOfS3BX8KseGGzt0f4eUOQuCr53gCxUGHQr6cI90c=;
+ b=Q7lm+hVZtq24+RQAUXP2BoGZzCgYqphEziCCWc2EfWk48g5Rk6bFWFK25KSri/bOri
+ T5KSWYAb9q761nOH7/4WAVcDWbG2nSZmenCy1miaAYZnQMEeMLRA4N0FQwtloIYV724P
+ lWL7OB2W1S2NYFL+foloYYwaEpFkYou3KAC3dvt+wynzT/H/VW2mtwToIRyEn4C3BtUH
+ 48rC+PMSSxuLdfuReubnsFnPvf4EqdDYNSPV0Rcg6ymmtIZMvfufC4YjRsvkqt5qsCuq
+ CZd5AyHBuNEmY2Sx8EPdygC+77JjgHZENJ4E2Tn21Q6kOggZL86wEWxrDfPbGQN/Z8Z9
+ wyFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWRGJ5a2XK1CawemzqGOGMqinkyK7hjn+YYkRjpTaKU0/u69bkDcWhJlq78asBZlt1neSTVN8zx0UTZCfiLRyerhaj4vkI=
-X-Gm-Message-State: AOJu0YwuGQ5aPdLexGz5FHHG7ttgmkGrpjBMLZFd3cCoYloBmH90DsLz
- /jOT0MKlXwT3EH3ysNyxbIpLAYIOX65QndkTXzf0+WkniT9pibve6PHEkhRSdtIhmMzbu8ggKJW
- ALDopavMqnqCMyOMuxjQoPGKkYtw=
-X-Google-Smtp-Source: AGHT+IG0pnIaiaymJRlyrHTdemVGxWHVmMIxofkMWk225wFtVNYjFml7f9HUdcfODPEmliMpnkFsCOfqVrKD8kGZPZw=
-X-Received: by 2002:a05:6102:2ee:b0:48f:a75a:278c with SMTP id
- ada2fe7eead31-48fee7dc023mr10843801137.27.1720412818365; Sun, 07 Jul 2024
- 21:26:58 -0700 (PDT)
+ AJvYcCVwar5ZVQCT0yRb3eZcjci/pzbaJlveE3lis/j6bUxZHDNtzPtnbektNu74blXqNrzO2uSOEODyLAcEcRNNfbZKBcRElTFJ
+X-Gm-Message-State: AOJu0YwkLZSHtFiLV/jiQ0Mf6tSNJItfklOUxzgp3PhEY34TlSczz/wM
+ INvv0863frwIcqQLxB1gTrLGamZKEAsjwC9WQ1I3AxC/eXDBwZe2bfTZf5ZBIaA=
+X-Google-Smtp-Source: AGHT+IHjZnnyMHQHhyIJsn76X8xQv467i3ZOmF/+e0oi5zg6oVq6zi30nyqgvwBeDqxnvcZ6Qj607A==
+X-Received: by 2002:a81:92c8:0:b0:650:a40c:acb1 with SMTP id
+ 00721157ae682-652d5ff874emr131173687b3.28.1720414135041; 
+ Sun, 07 Jul 2024 21:48:55 -0700 (PDT)
+Received: from localhost.localdomain ([118.242.3.34])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-74a3594c5ffsm8752841a12.35.2024.07.07.21.48.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 07 Jul 2024 21:48:54 -0700 (PDT)
+From: Wencheng Yang <east.moutain.yang@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, jasowang@redhat.com, stefanha@redhat.com,
+ hreitz@redhat.com, qemu-stable@nongnu.org,
+ thomas <east.moutain.yang@gmail.com>
+Subject: [PATCH v9] virtio-net: Fix network stall at the host side waiting for
+ kick
+Date: Mon,  8 Jul 2024 12:48:39 +0800
+Message-Id: <20240708044839.2120-1-east.moutain.yang@gmail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-References: <20240612031706.2927602-1-ethan84@andestech.com>
- <20240612031706.2927602-3-ethan84@andestech.com>
- <CAKmqyKM+dSQfGAUcU9w+hHA1SVA-OSLhsfYHh7rV1uutaeppfw@mail.gmail.com>
- <ZnjQCkiR2ikr1Rng@ethan84-VirtualBox>
- <CAKmqyKMzg0rHj0RfpcGB3Mecy4tVvMQWDhgM8u3=GaRn46q2vg@mail.gmail.com>
- <ZnustMxe+9eToclp@ethan84-VirtualBox>
-In-Reply-To: <ZnustMxe+9eToclp@ethan84-VirtualBox>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 8 Jul 2024 14:26:32 +1000
-Message-ID: <CAKmqyKOpiPcmTdsKak8W6XAoeGR+rVV6mNr-JBVdCiB2Q3N47Q@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] hw/riscv/virt: Add IOPMP support
-To: Ethan Chen <ethan84@andestech.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92e;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=east.moutain.yang@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,318 +93,386 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 26, 2024 at 3:53=E2=80=AFPM Ethan Chen <ethan84@andestech.com> =
-wrote:
->
-> On Wed, Jun 26, 2024 at 11:22:46AM +1000, Alistair Francis wrote:
-> >
-> > On Mon, Jun 24, 2024 at 11:47=E2=80=AFAM Ethan Chen <ethan84@andestech.=
-com> wrote:
-> > >
-> > > Hi Alistair,
-> > >
-> > > IOPMP can applies all device. In this patch series, PCI devices on th=
-e bridge
-> > > can connect to IOPMP by pci_setup_iommu(), but other devices need cha=
-nge their
-> > > memory access address space from system memory to IOPMP by themself.
-> >
-> > We should be really clear about that then. The documentation and the
-> > flag `iopmp=3D[on|off]` implies that either the IOPMP is on or off.
-> >
-> > For example, what happens in the future if we extend support to apply
-> > to all devices? That will be a breaking change for anyone currently
-> > using `iopmp=3Don`.
-> >
-> > Maybe we should have use something like `iopmp=3D[pci|off]` instead, an=
-d
-> > then be really clear in the docs what is and isn't going through the
-> > IOPMP.
-> >
-> > Alistair
->
-> Hi Alistair,
->
-> According to Zhiwei's suggestion in this patch series, we will remove
-> iopmp_setup_pci because it will be exclusive with IOMMU integration.
->
-> We are looking for an interface to make device memory access to be
-> checked by IOPMP. After iopmp_setup_pci is removed, all devices need
-> to change memory access target to iommu memory region in IOPMP
-> themselves in current method. Therefore, by default, all devices won't
-> go through the IOPMP even if iopmp=3Don.
->
-> Another method is to replace the memory region of protected device
-> in the system memory by iommu memory region in IOPMP (similar to
-> MPC in arm/mps2-tz) when iopmp=3Don. With this method, all devices are
-> going through the IOPMP by default when iopmp=3Don.
->
-> Which method is more suitable for the RISC-V virt machine?
+From: thomas <east.moutain.yang@gmail.com>
 
-Sorry for the delay here, I missed this question.
+Patch 06b12970174 ("virtio-net: fix network stall under load")
+added double-check to test whether the available buffer size
+can satisfy the request or not, in case the guest has added
+some buffers to the avail ring simultaneously after the first
+check. It will be lucky if the available buffer size becomes
+okay after the double-check, then the host can send the packet
+to the guest. If the buffer size still can't satisfy the request,
+even if the guest has added some buffers, viritio-net would
+stall at the host side forever.
 
-I think if a user specifies `iopmp=3Don` we should run everything
-through the IOPMP. If we don't we need to be really clear about what
-does/does not go through the IOPMP.
+The patch enables notification and checks whether the guest has
+added some buffers since last check of available buffers when
+the available buffers are insufficient. If no buffer is added,
+return false, else recheck the available buffers in the loop.
+If the available buffers are sufficient, disable notification
+and return true.
 
-It's unfortunately a little clunky, which isn't ideal, but I feel it's
-better to properly support the IOPMP in this case. Maybe this is a
-good reason for a "server" platform...
+Changes:
+1. Change the return type of virtqueue_get_avail_bytes() from void
+   to int, it returns an opaque that represents the shadow_avail_idx
+   of the virtqueue on success, else -1 on error.
+2. Add a new API: virtio_queue_enable_notification_and_check(),
+   it takes an opaque as input arg which is returned from
+   virtqueue_get_avail_bytes(). It enables notification firstly,
+   then checks whether the guest has added some buffers since
+   last check of available buffers or not by virtio_queue_poll(),
+   return ture if yes.
 
-Alistair
+The patch also reverts patch "06b12970174".
 
->
-> Thanks,
-> Ethan
->
-> >
-> > >
-> > > Thanks,
-> > > Ethan
-> > >
-> > > On Fri, Jun 21, 2024 at 03:54:15PM +1000, Alistair Francis wrote:
-> > > > On Wed, Jun 12, 2024 at 1:25=E2=80=AFPM Ethan Chen via <qemu-devel@=
-nongnu.org> wrote:
-> > > > >
-> > > > > If a requestor device is connected to the IOPMP device, its memor=
-y access will
-> > > > > be checked by the IOPMP rule.
-> > > > >
-> > > > > - Add 'iopmp=3Don' option to add an iopmp device and make the Gen=
-eric PCI Express
-> > > > >   Bridge connect to IOPMP.
-> > > >
-> > > > I have only had a chance to have a quick look at this series and th=
-e spec.
-> > > >
-> > > > But the IOPMP spec applies to all devices right, but this series se=
-ems
-> > > > to only work with PCI. Am I missing something?
-> > > >
-> > > > Alistair
-> > > >
-> > > > >
-> > > > > Signed-off-by: Ethan Chen <ethan84@andestech.com>
-> > > > > ---
-> > > > >  docs/system/riscv/virt.rst |  6 ++++
-> > > > >  hw/riscv/Kconfig           |  1 +
-> > > > >  hw/riscv/virt.c            | 57 ++++++++++++++++++++++++++++++++=
-++++--
-> > > > >  include/hw/riscv/virt.h    |  5 +++-
-> > > > >  4 files changed, 66 insertions(+), 3 deletions(-)
-> > > > >
-> > > > > diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.=
-rst
-> > > > > index 9a06f95a34..3b2576f905 100644
-> > > > > --- a/docs/system/riscv/virt.rst
-> > > > > +++ b/docs/system/riscv/virt.rst
-> > > > > @@ -116,6 +116,12 @@ The following machine-specific options are s=
-upported:
-> > > > >    having AIA IMSIC (i.e. "aia=3Daplic-imsic" selected). When not=
- specified,
-> > > > >    the default number of per-HART VS-level AIA IMSIC pages is 0.
-> > > > >
-> > > > > +- iopmp=3D[on|off]
-> > > > > +
-> > > > > +  When this option is "on", an IOPMP device is added to machine.=
- It checks dma
-> > > > > +  operations from the generic PCIe host bridge. This option is a=
-ssumed to be
-> > > > > +  "off".
-> > > > > +
-> > > > >  Running Linux kernel
-> > > > >  --------------------
-> > > > >
-> > > > > diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> > > > > index a2030e3a6f..0b45a5ade2 100644
-> > > > > --- a/hw/riscv/Kconfig
-> > > > > +++ b/hw/riscv/Kconfig
-> > > > > @@ -56,6 +56,7 @@ config RISCV_VIRT
-> > > > >      select PLATFORM_BUS
-> > > > >      select ACPI
-> > > > >      select ACPI_PCI
-> > > > > +    select RISCV_IOPMP
-> > > > >
-> > > > >  config SHAKTI_C
-> > > > >      bool
-> > > > > diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> > > > > index 4fdb660525..53a1b71c71 100644
-> > > > > --- a/hw/riscv/virt.c
-> > > > > +++ b/hw/riscv/virt.c
-> > > > > @@ -55,6 +55,7 @@
-> > > > >  #include "hw/acpi/aml-build.h"
-> > > > >  #include "qapi/qapi-visit-common.h"
-> > > > >  #include "hw/virtio/virtio-iommu.h"
-> > > > > +#include "hw/misc/riscv_iopmp.h"
-> > > > >
-> > > > >  /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulat=
-ed by QEMU. */
-> > > > >  static bool virt_use_kvm_aia(RISCVVirtState *s)
-> > > > > @@ -82,6 +83,7 @@ static const MemMapEntry virt_memmap[] =3D {
-> > > > >      [VIRT_UART0] =3D        { 0x10000000,         0x100 },
-> > > > >      [VIRT_VIRTIO] =3D       { 0x10001000,        0x1000 },
-> > > > >      [VIRT_FW_CFG] =3D       { 0x10100000,          0x18 },
-> > > > > +    [VIRT_IOPMP] =3D        { 0x10200000,      0x100000 },
-> > > > >      [VIRT_FLASH] =3D        { 0x20000000,     0x4000000 },
-> > > > >      [VIRT_IMSIC_M] =3D      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
-> > > > >      [VIRT_IMSIC_S] =3D      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
-> > > > > @@ -1006,6 +1008,24 @@ static void create_fdt_virtio_iommu(RISCVV=
-irtState *s, uint16_t bdf)
-> > > > >                             bdf + 1, iommu_phandle, bdf + 1, 0xff=
-ff - bdf);
-> > > > >  }
-> > > > >
-> > > > > +static void create_fdt_iopmp(RISCVVirtState *s, const MemMapEntr=
-y *memmap,
-> > > > > +                             uint32_t irq_mmio_phandle) {
-> > > > > +    g_autofree char *name =3D NULL;
-> > > > > +    MachineState *ms =3D MACHINE(s);
-> > > > > +
-> > > > > +    name =3D g_strdup_printf("/soc/iopmp@%lx", (long)memmap[VIRT=
-_IOPMP].base);
-> > > > > +    qemu_fdt_add_subnode(ms->fdt, name);
-> > > > > +    qemu_fdt_setprop_string(ms->fdt, name, "compatible", "riscv_=
-iopmp");
-> > > > > +    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0x0, memmap[VIR=
-T_IOPMP].base,
-> > > > > +        0x0, memmap[VIRT_IOPMP].size);
-> > > > > +    qemu_fdt_setprop_cell(ms->fdt, name, "interrupt-parent", irq=
-_mmio_phandle);
-> > > > > +    if (s->aia_type =3D=3D VIRT_AIA_TYPE_NONE) {
-> > > > > +        qemu_fdt_setprop_cell(ms->fdt, name, "interrupts", IOPMP=
-_IRQ);
-> > > > > +    } else {
-> > > > > +        qemu_fdt_setprop_cells(ms->fdt, name, "interrupts", IOPM=
-P_IRQ, 0x4);
-> > > > > +    }
-> > > > > +}
-> > > > > +
-> > > > >  static void finalize_fdt(RISCVVirtState *s)
-> > > > >  {
-> > > > >      uint32_t phandle =3D 1, irq_mmio_phandle =3D 1, msi_pcie_pha=
-ndle =3D 1;
-> > > > > @@ -1024,6 +1044,10 @@ static void finalize_fdt(RISCVVirtState *s=
-)
-> > > > >      create_fdt_uart(s, virt_memmap, irq_mmio_phandle);
-> > > > >
-> > > > >      create_fdt_rtc(s, virt_memmap, irq_mmio_phandle);
-> > > > > +
-> > > > > +    if (s->have_iopmp) {
-> > > > > +        create_fdt_iopmp(s, virt_memmap, irq_mmio_phandle);
-> > > > > +    }
-> > > > >  }
-> > > > >
-> > > > >  static void create_fdt(RISCVVirtState *s, const MemMapEntry *mem=
-map)
-> > > > > @@ -1404,7 +1428,7 @@ static void virt_machine_init(MachineState =
-*machine)
-> > > > >      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(machine);
-> > > > >      MemoryRegion *system_memory =3D get_system_memory();
-> > > > >      MemoryRegion *mask_rom =3D g_new(MemoryRegion, 1);
-> > > > > -    DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip;
-> > > > > +    DeviceState *mmio_irqchip, *virtio_irqchip, *pcie_irqchip, *=
-gpex_dev;
-> > > > >      int i, base_hartid, hart_count;
-> > > > >      int socket_count =3D riscv_socket_count(machine);
-> > > > >
-> > > > > @@ -1570,7 +1594,7 @@ static void virt_machine_init(MachineState =
-*machine)
-> > > > >              qdev_get_gpio_in(virtio_irqchip, VIRTIO_IRQ + i));
-> > > > >      }
-> > > > >
-> > > > > -    gpex_pcie_init(system_memory, pcie_irqchip, s);
-> > > > > +    gpex_dev =3D gpex_pcie_init(system_memory, pcie_irqchip, s);
-> > > > >
-> > > > >      create_platform_bus(s, mmio_irqchip);
-> > > > >
-> > > > > @@ -1581,6 +1605,14 @@ static void virt_machine_init(MachineState=
- *machine)
-> > > > >      sysbus_create_simple("goldfish_rtc", memmap[VIRT_RTC].base,
-> > > > >          qdev_get_gpio_in(mmio_irqchip, RTC_IRQ));
-> > > > >
-> > > > > +    if (s->have_iopmp) {
-> > > > > +        DeviceState *iopmp_dev =3D sysbus_create_simple(TYPE_IOP=
-MP,
-> > > > > +            memmap[VIRT_IOPMP].base,
-> > > > > +            qdev_get_gpio_in(DEVICE(mmio_irqchip), IOPMP_IRQ));
-> > > > > +
-> > > > > +        iopmp_setup_pci(iopmp_dev, PCI_HOST_BRIDGE(gpex_dev)->bu=
-s);
-> > > > > +    }
-> > > > > +
-> > > > >      for (i =3D 0; i < ARRAY_SIZE(s->flash); i++) {
-> > > > >          /* Map legacy -drive if=3Dpflash to machine properties *=
-/
-> > > > >          pflash_cfi01_legacy_drive(s->flash[i],
-> > > > > @@ -1684,6 +1716,21 @@ static void virt_set_aclint(Object *obj, b=
-ool value, Error **errp)
-> > > > >      s->have_aclint =3D value;
-> > > > >  }
-> > > > >
-> > > > > +static bool virt_get_iopmp(Object *obj, Error **errp)
-> > > > > +{
-> > > > > +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> > > > > +
-> > > > > +    return s->have_iopmp;
-> > > > > +}
-> > > > > +
-> > > > > +static void virt_set_iopmp(Object *obj, bool value, Error **errp=
-)
-> > > > > +{
-> > > > > +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
-> > > > > +
-> > > > > +    s->have_iopmp =3D value;
-> > > > > +}
-> > > > > +
-> > > > > +
-> > > > >  bool virt_is_acpi_enabled(RISCVVirtState *s)
-> > > > >  {
-> > > > >      return s->acpi !=3D ON_OFF_AUTO_OFF;
-> > > > > @@ -1794,6 +1841,12 @@ static void virt_machine_class_init(Object=
-Class *oc, void *data)
-> > > > >                                NULL, NULL);
-> > > > >      object_class_property_set_description(oc, "acpi",
-> > > > >                                            "Enable ACPI");
-> > > > > +
-> > > > > +    object_class_property_add_bool(oc, "iopmp", virt_get_iopmp,
-> > > > > +                                   virt_set_iopmp);
-> > > > > +    object_class_property_set_description(oc, "iopmp",
-> > > > > +                                          "Set on/off to enable/=
-disable "
-> > > > > +                                          "iopmp device");
-> > > > >  }
-> > > > >
-> > > > >  static const TypeInfo virt_machine_typeinfo =3D {
-> > > > > diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> > > > > index 3db839160f..81460e29c4 100644
-> > > > > --- a/include/hw/riscv/virt.h
-> > > > > +++ b/include/hw/riscv/virt.h
-> > > > > @@ -55,6 +55,7 @@ struct RISCVVirtState {
-> > > > >
-> > > > >      int fdt_size;
-> > > > >      bool have_aclint;
-> > > > > +    bool have_iopmp;
-> > > > >      RISCVVirtAIAType aia_type;
-> > > > >      int aia_guests;
-> > > > >      char *oem_id;
-> > > > > @@ -84,12 +85,14 @@ enum {
-> > > > >      VIRT_PCIE_MMIO,
-> > > > >      VIRT_PCIE_PIO,
-> > > > >      VIRT_PLATFORM_BUS,
-> > > > > -    VIRT_PCIE_ECAM
-> > > > > +    VIRT_PCIE_ECAM,
-> > > > > +    VIRT_IOPMP,
-> > > > >  };
-> > > > >
-> > > > >  enum {
-> > > > >      UART0_IRQ =3D 10,
-> > > > >      RTC_IRQ =3D 11,
-> > > > > +    IOPMP_IRQ =3D 12,
-> > > > >      VIRTIO_IRQ =3D 1, /* 1 to 8 */
-> > > > >      VIRTIO_COUNT =3D 8,
-> > > > >      PCIE_IRQ =3D 0x20, /* 32 to 35 */
-> > > > > --
-> > > > > 2.34.1
-> > > > >
-> > > > >
+The case below can reproduce the stall.
+
+                                       Guest 0
+                                     +--------+
+                                     | iperf  |
+                    ---------------> | server |
+         Host       |                +--------+
+       +--------+   |                    ...
+       | iperf  |----
+       | client |----                  Guest n
+       +--------+   |                +--------+
+                    |                | iperf  |
+                    ---------------> | server |
+                                     +--------+
+
+Boot many guests from qemu with virtio network:
+ qemu ... -netdev tap,id=net_x \
+    -device virtio-net-pci-non-transitional,\
+    iommu_platform=on,mac=xx:xx:xx:xx:xx:xx,netdev=net_x
+
+Each guest acts as iperf server with commands below:
+ iperf3 -s -D -i 10 -p 8001
+ iperf3 -s -D -i 10 -p 8002
+
+The host as iperf client:
+ iperf3 -c guest_IP -p 8001 -i 30 -w 256k -P 20 -t 40000
+ iperf3 -c guest_IP -p 8002 -i 30 -w 256k -P 20 -t 40000
+
+After some time, the host loses connection to the guest,
+the guest can send packet to the host, but can't receive
+packet from the host.
+
+It's more likely to happen if SWIOTLB is enabled in the guest,
+allocating and freeing bounce buffer takes some CPU ticks,
+copying from/to bounce buffer takes more CPU ticks, compared
+with that there is no bounce buffer in the guest.
+Once the rate of producing packets from the host approximates
+the rate of receiveing packets in the guest, the guest would
+loop in NAPI.
+
+         receive packets    ---
+               |             |
+               v             |
+           free buf      virtnet_poll
+               |             |
+               v             |
+     add buf to avail ring  ---
+               |
+               |  need kick the host?
+               |  NAPI continues
+               v
+         receive packets    ---
+               |             |
+               v             |
+           free buf      virtnet_poll
+               |             |
+               v             |
+     add buf to avail ring  ---
+               |
+               v
+              ...           ...
+
+On the other hand, the host fetches free buf from avail
+ring, if the buf in the avail ring is not enough, the
+host notifies the guest the event by writing the avail
+idx read from avail ring to the event idx of used ring,
+then the host goes to sleep, waiting for the kick signal
+from the guest.
+
+Once the guest finds the host is waiting for kick singal
+(in virtqueue_kick_prepare_split()), it kicks the host.
+
+The host may stall forever at the sequences below:
+
+         Host                        Guest
+     ------------                 -----------
+ fetch buf, send packet           receive packet ---
+         ...                          ...         |
+ fetch buf, send packet             add buf       |
+         ...                        add buf   virtnet_poll
+    buf not enough      avail idx-> add buf       |
+    read avail idx                  add buf       |
+                                    add buf      ---
+                                  receive packet ---
+    write event idx                   ...         |
+    wait for kick                   add buf   virtnet_poll
+                                      ...         |
+                                                 ---
+                                 no more packet, exit NAPI
+
+In the first loop of NAPI above, indicated in the range of
+virtnet_poll above, the host is sending packets while the
+guest is receiving packets and adding buffers.
+ step 1: The buf is not enough, for example, a big packet
+         needs 5 buf, but the available buf count is 3.
+         The host read current avail idx.
+ step 2: The guest adds some buf, then checks whether the
+         host is waiting for kick signal, not at this time.
+         The used ring is not empty, the guest continues
+         the second loop of NAPI.
+ step 3: The host writes the avail idx read from avail
+         ring to used ring as event idx via
+         virtio_queue_set_notification(q->rx_vq, 1).
+ step 4: At the end of the second loop of NAPI, recheck
+         whether kick is needed, as the event idx in the
+         used ring written by the host is beyound the
+         range of kick condition, the guest will not
+         send kick signal to the host.
+
+Fixes: 06b12970174 ("virtio-net: fix network stall under load")
+Signed-off-by: Wencheng Yang <east.moutain.yang@gmail.com>
+---
+Changelog:
+v9:
+- Add document
+- Pass opaque returned from virtqueue_get_avail_bytes() to
+  virtio_queue_set_notification_and_check() as arg
+
+v8:
+- Change virtqueue_get_avail_bytes() return type from void
+  to int, it returns shadow_avail_idx on success.
+- virtio_queue_set_notification_and_check() accepts two args,
+  the second arg is the shadow idx retruned from
+  virtqueue_get_avail_bytes()
+- Add function virtio_queue_poll(), it accepts shadow idx
+  returned from virtqueue_get_avail_bytes() as the second
+  arg, and tells whether guest had add some buffers since
+  last check of available buffers.
+
+v7:
+- Add function virtio_queue_set_notification_and_check()
+- Restore the function sequence introduce in v6
+
+v6:
+- Take packed packed queue into cosideration
+- Adjust function sequence to fix compilation issue
+
+v5:
+- Modify return type of virtio_queue_set_notification() to
+  bool to indicate whether the guest has added some buffers
+  after last check of avail idx
+- Loop in virtio_net_has_buffers() if the available buffers
+  are not sufficient and the guest has added some buffers.
+- Revert patch "06b12970174"
+- Update the subject
+
+v4:
+- Correct spelling mistake in the subject
+- Describe the issue that virtio-net is blocked at host side
+
+v3:
+- Add virtio-net tag in the subject
+- Refine commit log
+
+v2:
+- Add SOB tag at the end of the commit message
+- Place Fixes tag at the end of the commit message
+
+v1:
+- Initial patch
+
+ hw/net/virtio-net.c        | 28 ++++++++++-------
+ hw/virtio/virtio.c         | 64 +++++++++++++++++++++++++++++++++++---
+ include/hw/virtio/virtio.h | 22 +++++++++++--
+ 3 files changed, 95 insertions(+), 19 deletions(-)
+
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 9c7e85caea..b1a10e0548 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1641,24 +1641,28 @@ static bool virtio_net_can_receive(NetClientState *nc)
+ 
+ static int virtio_net_has_buffers(VirtIONetQueue *q, int bufsize)
+ {
++    int opaque;
++    unsigned int in_bytes;
+     VirtIONet *n = q->n;
+-    if (virtio_queue_empty(q->rx_vq) ||
+-        (n->mergeable_rx_bufs &&
+-         !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
+-        virtio_queue_set_notification(q->rx_vq, 1);
+-
+-        /* To avoid a race condition where the guest has made some buffers
+-         * available after the above check but before notification was
+-         * enabled, check for available buffers again.
+-         */
+-        if (virtio_queue_empty(q->rx_vq) ||
+-            (n->mergeable_rx_bufs &&
+-             !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
++
++    while (virtio_queue_empty(q->rx_vq) || n->mergeable_rx_bufs) {
++        opaque = virtqueue_get_avail_bytes(q->rx_vq, &in_bytes, NULL,
++                                           bufsize, 0);
++        /* buffer is enough, disable notifiaction */
++        if (bufsize <= in_bytes) {
++            break;
++        }
++
++        if (virtio_queue_enable_notification_and_check(q->rx_vq, opaque)) {
++            /* guest has added some buffers, try again */
++            continue;
++        } else {
+             return 0;
+         }
+     }
+ 
+     virtio_queue_set_notification(q->rx_vq, 0);
++
+     return 1;
+ }
+ 
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 893a072c9d..8314de45dd 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -745,6 +745,60 @@ int virtio_queue_empty(VirtQueue *vq)
+     }
+ }
+ 
++static bool virtio_queue_split_poll(VirtQueue *vq, unsigned shadow_idx)
++{
++    if (unlikely(!vq->vring.avail)) {
++        return false;
++    }
++
++    return (uint16_t)shadow_idx != vring_avail_idx(vq);
++}
++
++static bool virtio_queue_packed_poll(VirtQueue *vq, unsigned shadow_idx)
++{
++    VRingPackedDesc desc;
++    VRingMemoryRegionCaches *caches;
++
++    if (unlikely(!vq->vring.desc)) {
++        return false;
++    }
++
++    caches = vring_get_region_caches(vq);
++    if (!caches) {
++        return false;
++    }
++
++    vring_packed_desc_read(vq->vdev, &desc, &caches->desc,
++                           shadow_idx, true);
++
++    return is_desc_avail(desc.flags, vq->shadow_avail_wrap_counter);
++}
++
++static bool virtio_queue_poll(VirtQueue *vq, unsigned shadow_idx)
++{
++    if (virtio_device_disabled(vq->vdev)) {
++        return false;
++    }
++
++    if (virtio_vdev_has_feature(vq->vdev, VIRTIO_F_RING_PACKED)) {
++        return virtio_queue_packed_poll(vq, shadow_idx);
++    } else {
++        return virtio_queue_split_poll(vq, shadow_idx);
++    }
++}
++
++bool virtio_queue_enable_notification_and_check(VirtQueue *vq,
++                                                int opaque)
++{
++    virtio_queue_set_notification(vq, 1);
++
++    if (opaque >= 0) {
++        return virtio_queue_poll(vq, (unsigned)opaque);
++    } else {
++        return false;
++    }
++}
++
+ static void virtqueue_unmap_sg(VirtQueue *vq, const VirtQueueElement *elem,
+                                unsigned int len)
+ {
+@@ -1332,9 +1386,9 @@ err:
+     goto done;
+ }
+ 
+-void virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
+-                               unsigned int *out_bytes,
+-                               unsigned max_in_bytes, unsigned max_out_bytes)
++int virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
++                              unsigned int *out_bytes, unsigned max_in_bytes,
++                              unsigned max_out_bytes)
+ {
+     uint16_t desc_size;
+     VRingMemoryRegionCaches *caches;
+@@ -1367,7 +1421,7 @@ void virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
+                                         caches);
+     }
+ 
+-    return;
++    return (int)vq->shadow_avail_idx;
+ err:
+     if (in_bytes) {
+         *in_bytes = 0;
+@@ -1375,6 +1429,8 @@ err:
+     if (out_bytes) {
+         *out_bytes = 0;
+     }
++
++    return -1;
+ }
+ 
+ int virtqueue_avail_bytes(VirtQueue *vq, unsigned int in_bytes,
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 7d5ffdc145..ecbacdc2df 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -271,9 +271,14 @@ void qemu_put_virtqueue_element(VirtIODevice *vdev, QEMUFile *f,
+                                 VirtQueueElement *elem);
+ int virtqueue_avail_bytes(VirtQueue *vq, unsigned int in_bytes,
+                           unsigned int out_bytes);
+-void virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
+-                               unsigned int *out_bytes,
+-                               unsigned max_in_bytes, unsigned max_out_bytes);
++/**
++ * return <0 on error or an opaque >=0 to pass to
++ * virtio_queue_enable_notification_and_check
++ * on asuccess
++ */
++int virtqueue_get_avail_bytes(VirtQueue *vq, unsigned int *in_bytes,
++                              unsigned int *out_bytes, unsigned max_in_bytes,
++                              unsigned max_out_bytes);
+ 
+ void virtio_notify_irqfd(VirtIODevice *vdev, VirtQueue *vq);
+ void virtio_notify(VirtIODevice *vdev, VirtQueue *vq);
+@@ -307,6 +312,17 @@ int virtio_queue_ready(VirtQueue *vq);
+ 
+ int virtio_queue_empty(VirtQueue *vq);
+ 
++/**
++ * enable notification and check whether guest has added some
++ * buffers since last call to virtqueue_get_avail_bytes.
++ *
++ * @opaque: value returned from virtqueue_get_avail_bytes
++ */
++bool virtio_queue_enable_notification_and_check(VirtQueue *vq,
++                                                int opaque);
++
++void virtio_queue_set_shadow_avail_idx(VirtQueue *vq, uint16_t idx);
++
+ /* Host binding interface.  */
+ 
+ uint32_t virtio_config_readb(VirtIODevice *vdev, uint32_t addr);
+-- 
+2.39.0
+
 
