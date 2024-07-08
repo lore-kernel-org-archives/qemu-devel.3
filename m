@@ -4,86 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 858AFC2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:31:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0DD2C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRClH-0004JU-KB; Tue, 09 Jul 2024 11:28:11 -0400
+	id 1sRCqf-0000ne-EH; Tue, 09 Jul 2024 11:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCl9-0003T9-DA
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:28:04 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCl3-0006Y7-SV
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:28:03 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-52ea1a69624so6105525e87.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:27:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720538875; x=1721143675; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+IrpdCD+BuSWH4PAnzhWg9dOS6Rs+7FERDF9DQN/buM=;
- b=TQIzWjlzP2Vk/R3b23Bu50k2arFb2fFPAA+v5ToFk4KxWqDKMY5A6gtd6a9f0mpctk
- OGq8Jw7EzNhRqrFrhV0kn3Z0F4Suqd2ziOJabG4NmawKNUtuSWQx3XDZZlmEWmUQ539M
- pb1paKImHdWxcDDH5rK6h0otyX6aMU4bEkNz00PmdKdBkgfu04cXLLaZkgDRMc1Amfoe
- pJM1JodVQHMXUQSSV3YbX5zezjLZaemdzZbtBamBjIiYH1RX9jx8GDeqZjunijHRCQDw
- U9GSkD54z+FTdhJIf9d3IPxQGXRm0dAp0RUiw6nOblzdeZRx/dsXI0orfh1kD6q98Atw
- nxBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720538875; x=1721143675;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+IrpdCD+BuSWH4PAnzhWg9dOS6Rs+7FERDF9DQN/buM=;
- b=IPl/KlOQdtxmlioyRDMCzQ2Q36enr++P/psKXm8d+V6okb1HwmCuG54rfkMyCF/22J
- Cbxa+0yhxf7rNl4HhfDGsLPd/21dW839LIluIkHCSSA8mdfUj9Fx90Iyr3Ql5i9FYpzE
- WdU3+pMgzPUgtWn8lFcZcDYdI6KTGj3iFuPGLaH4UOkzQPLPf1qoQVAeP/7THWJB3SO4
- JV79uoNXgJGBERv4AQrHOglmxdlr5S7edwNThHRuqeJVbmSzJN42sda6m6O+iO3IqHJ/
- vCf7x+xdXpFsoo9HsJ2+KKQsjhMaeWcoEtY1zhoahQK80oXcEiiRMQQUq5EfxQGYIfCz
- 8bCQ==
-X-Gm-Message-State: AOJu0Yz3iwFJsFaZr0Gjbd+xhAIfIZdhhP+WeabgVn8AQT1Ank+noUfE
- 6gZu47PqoRCm4C+1hxDhzxSIYT4NMnC8wk9f6+Vzzuh7lcqZ3v2O82S7puFLwiNlj6Z7vf3MdfC
- v
-X-Google-Smtp-Source: AGHT+IE/KUS9nFXQqVi+nJcCXRRmL4z0TVAQ8SIkOfTfqf/rl3q1LRxFnr1ooIy43BiTlWlIYepmaA==
-X-Received: by 2002:a05:6512:1154:b0:52b:c14d:733c with SMTP id
- 2adb3069b0e04-52eb99d741bmr1577497e87.68.1720538875240; 
- Tue, 09 Jul 2024 08:27:55 -0700 (PDT)
-Received: from m1x-phil.lan (vau06-h02-176-184-43-20.dsl.sta.abo.bbox.fr.
- [176.184.43.20]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f7420cesm45316395e9.46.2024.07.09.08.27.53
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Jul 2024 08:27:54 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-block@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Bin Meng <bmeng.cn@gmail.com>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>
-Subject: [PATCH v47 19/19] hw/sd/sdcard: Enable TYPE_EMMC card model
-Date: Tue,  9 Jul 2024 17:25:56 +0200
-Message-ID: <20240709152556.52896-20-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240709152556.52896-1-philmd@linaro.org>
-References: <20240709152556.52896-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1sRCqc-0000bx-6c
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:33:42 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
+ id 1sRCqZ-0007me-Lz
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:33:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1720539219; x=1752075219;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=KrLTwNlzo01QEff6U6k8t106ll2vENByCwV80gL6fDQ=;
+ b=OAbXRUB+PiQZz+MYzaslL9fvYVh9rmr89SKeQAcxCZE/pYEq3rSLRIGN
+ opGjILgsCKkS6P7EPpMujpXfrfpS0xWRVWUYFta+ImE7PsOmSn+VpTTny
+ F/P28/PSm/2zaeYxOy4Ekuf2yV56E7Zb2tayx+p/P7vamnyXE0XFKr3bh
+ BSDvIymwpOJggDISqpC6bI8JdPEPuxqd2vhRR1VSgynW0tB3ikoZHThDa
+ gSz1FLzMQX++XoXeG3+K+BD3Kl2Mnx0Q/06qbPGx3GC7YFnjNz8OiIBMy
+ mcKQuz7D47BNiI+ku93nJNqrHjRxIZ9evjn8E17PpPe4Ymdsn4h9pBhTA g==;
+X-CSE-ConnectionGUID: rDSnVks8QWWrBJKdrHVLoQ==
+X-CSE-MsgGUID: bWqvMjxjSDCxwEHTLPhy3w==
+X-IronPort-AV: E=McAfee;i="6700,10204,11128"; a="17943900"
+X-IronPort-AV: E=Sophos;i="6.09,195,1716274800"; d="scan'208";a="17943900"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Jul 2024 08:33:35 -0700
+X-CSE-ConnectionGUID: oRcyBD6vQYCyqRbp+uMWTg==
+X-CSE-MsgGUID: fm7DCs00SsK8fmaC1zZpDg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,195,1716274800"; d="scan'208";a="71110715"
+Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
+ by fmviesa002.fm.intel.com with ESMTP; 09 Jul 2024 08:33:33 -0700
+From: Yuan Liu <yuan1.liu@intel.com>
+To: yichen.wang@bytedance.com,
+	peterx@redhat.com,
+	farosas@suse.de
+Cc: qemu-devel@nongnu.org,
+	yuan1.liu@intel.com,
+	nanhai.zou@intel.com
+Subject: [PATCH] docs/migration: add qatzip compression feature
+Date: Tue,  9 Jul 2024 01:53:59 +0800
+Message-ID: <20240708175359.1104493-1-yuan1.liu@intel.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=yuan1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_12_24=1.049,
+ DKIMWL_WL_HIGH=-0.144, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,27 +82,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now than the implementation is functional, allow
-to instantiate it.
+add Intel QATzip compression method introduction
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+Reviewed-by: Nanhai Zou <nanhai.zou@intel.com>
 ---
- hw/sd/sd.c | 1 -
- 1 file changed, 1 deletion(-)
+ docs/devel/migration/features.rst           |   1 +
+ docs/devel/migration/qatzip-compression.rst | 112 ++++++++++++++++++++
+ 2 files changed, 113 insertions(+)
+ create mode 100644 docs/devel/migration/qatzip-compression.rst
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 6aa83251f7..4a6e9cc035 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -2941,7 +2941,6 @@ static const TypeInfo sd_types[] = {
-         .name           = TYPE_EMMC,
-         .parent         = TYPE_SDMMC_COMMON,
-         .class_init     = emmc_class_init,
--        .abstract       = true, /* FIXME: Remove once model fully functional */
-     },
- };
- 
+diff --git a/docs/devel/migration/features.rst b/docs/devel/migration/features.rst
+index 58f8fd9e16..8f431d52f9 100644
+--- a/docs/devel/migration/features.rst
++++ b/docs/devel/migration/features.rst
+@@ -14,3 +14,4 @@ Migration has plenty of features to support different use cases.
+    CPR
+    qpl-compression
+    uadk-compression
++   qatzip-compression
+diff --git a/docs/devel/migration/qatzip-compression.rst b/docs/devel/migration/qatzip-compression.rst
+new file mode 100644
+index 0000000000..8e2137652c
+--- /dev/null
++++ b/docs/devel/migration/qatzip-compression.rst
+@@ -0,0 +1,112 @@
++==================
++QATzip Compression
++==================
++In scenarios with limited network bandwidth, the ``QATzip`` solution can help
++users save a lot of host CPU resources by accelerating compression and
++decompression through the Intel QuickAssist Technology(``QAT``) hardware.
++
++``QATzip`` is a user space library which builds on top of the Intel QuickAssist
++Technology user space library, to provide extended accelerated compression and
++decompression services.
++
++For more ``QATzip`` introduction, please refer to `QATzip Introduction
++<https://github.com/intel/QATzip?tab=readme-ov-file#introductionl>`_
++
++QATzip Compression Framework
++============================
++
++::
++
++  +----------------+
++  | MultiFd Thread |
++  +-------+--------+
++          |
++          | compress/decompress
++  +-------+--------+
++  | QATzip library |
++  +-------+--------+
++          |
++  +-------+--------+
++  |  QAT library   |
++  +-------+--------+
++          |         user space
++  --------+---------------------
++          |         kernel space
++   +------+-------+
++   |  QAT  Driver |
++   +------+-------+
++          |
++   +------+-------+
++   | QAT Devices  |
++   +--------------+
++
++
++QATzip Installation
++-------------------
++
++The ``QATzip`` installation package has been integrated into some Linux
++distributions and can be installed directly. For example, the Ubuntu Server
++24.04 LTS system can be installed using below command
++
++.. code-block:: shell
++   
++   #apt search qatzip
++   libqatzip-dev/noble 1.2.0-0ubuntu3 amd64
++     Intel QuickAssist user space library development files
++
++   libqatzip3/noble 1.2.0-0ubuntu3 amd64
++     Intel QuickAssist user space library
++
++   qatzip/noble,now 1.2.0-0ubuntu3 amd64 [installed]
++     Compression user-space tool for Intel QuickAssist Technology
++
++   #sudo apt install libqatzip-dev libqatzip3 qatzip
++
++If your system does not support the ``QATzip`` installation package, you can
++use the source code to build and install, please refer to `QATzip source code installation
++<https://github.com/intel/QATzip?tab=readme-ov-file#build-intel-quickassist-technology-driver>`_
++
++QAT Hardware Deployment
++-----------------------
++
++``QAT`` supports physical functions(PFs) and virtual functions(VFs) for
++deployment, and users can configure ``QAT`` resources for migration according
++to actual needs. For more details about ``QAT`` deployment, please refer to
++`Intel QuickAssist Technology Documentation
++<https://intel.github.io/quickassist/index.html>`_
++
++For more ``QAT`` hardware introduction, please refer to `intel-quick-assist-technology-overview
++<https://www.intel.com/content/www/us/en/architecture-and-technology/intel-quick-assist-technology-overview.html>`_
++
++How To Use QATzip Compression
++=============================
++
++1 - Install ``QATzip`` library
++
++2 - Build ``QEMU`` with ``--enable-qatzip`` parameter
++
++  E.g. configure --target-list=x86_64-softmmu --enable-kvm ``--enable-qatzip``
++
++3 - Set ``migrate_set_parameter multifd-compression qatzip``
++
++4 - Set ``migrate_set_parameter multifd-qatzip-level comp_level``, the default
++comp_level value is 1, and it supports levels from 1 to 9
++
++How To Choose Between QATzip and QPL
++====================================
++Starting from Intel 4th Gen Intel Xeon Scalable processors, codenamed Sapphire
++Rapids processor(``SPR``), it supports multiple build-in accelerators including
++``QAT`` and ``IAA``, the former can accelerate ``QATzip``, and the latter is
++used to accelerate ``QPL``.
++
++Here are some suggestions:
++
++1 - If your live migration scenario is limited network bandwidth and ``QAT``
++hardware resources exceed ``IAA``, then use the ``QATzip`` method, which
++can save a lot of host CPU resources for compression.
++
++2 - If your system cannot support shared virtual memory(SVM) technology, please
++use ``QATzip`` method because ``QPL`` performance is not good without SVM
++support.
++
++3 - For other scenarios, please use the ``QPL`` method first.
 -- 
-2.41.0
+2.43.0
 
 
