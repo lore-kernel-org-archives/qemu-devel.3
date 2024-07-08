@@ -4,88 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E20BAC3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 18:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68CBC3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 18:42:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQtHI-0008Jy-VD; Mon, 08 Jul 2024 14:39:56 -0400
+	id 1sQtJ4-0004FG-Os; Mon, 08 Jul 2024 14:41:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sQtHG-0008Il-7O
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 14:39:54 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sQtJ3-0004EE-0l
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 14:41:45 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sQtHB-0003qT-71
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 14:39:52 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a77e5929033so278942166b.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 11:39:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sQtIy-0004FO-L8
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 14:41:44 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3679e9bfb08so2507026f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 11:41:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720463987; x=1721068787; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SLDqDGlO92l92KS91xFHytjJfe2jY2GhFTgRCDnaXqg=;
- b=O1p28Pk8peJ48hcw8Mz0d5U1gd8sy4/9cU9Bs1sF5Fq0DK/M85zgkp1sctWlJ6aDXI
- cCbhdu5SAdbQ14szyVKfcLKl08VkaQiZ0oPCQPtbgzqqIkhROJq/9XgV7S/+5Iaoss1/
- TiTJ3cu0pIDOYIQlAh9ijLyOI7ZnYULTMUZmv96ltU8X741aLTkGfDgYfB8wsJvIJkf1
- oy39jsnyWxjNf9GlsMQbwVrBTucqqG6Z+lhAJG7J17LA6zce4Ly4u1tzM4qMZjlEN1Ps
- zhT4NQ+flQDsO7NFlPcP74hU5ISw3C4iWqTM9+5iaaWb2GV7wR98FxFK90fMWxlrTYmH
- sSWQ==
+ d=linaro.org; s=google; t=1720464099; x=1721068899; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/Lx4HErboVIWBInq+HOXM+PVFQbk4nqolJMN3lQHjRc=;
+ b=Xf/7h1xX0NL64f1rQZa9zanuMKqhYa+e4iB/iHax5rRDrGYlCjY2Xfj/fdNtBJhCiP
+ kVZfJ0K3QAcXi1JThzDWRqfumueK3ts84In6oM1AJ3OIUvEdxCfCQrvVGTsbIyN5zqUM
+ JkDAS51maDyXNdfMwYU0oH6Uo0tVsyobB0uqQZJdvE0iyGQT+ck+C5qFk+0Dc0n54wbH
+ hg+CSmnYXeTgInR7Bj7TzvIU4vBHTo5xYlbMPLmYmmkIMf+50wHA5F3yfM4Lei8bqV2t
+ J2+TsZa0TVu2t2+ejZjoqT13w+LMY+z/1Ieluw0IX1wzpWqrKsTRdOMI2ai7DMjI5ZvO
+ WMtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720463987; x=1721068787;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SLDqDGlO92l92KS91xFHytjJfe2jY2GhFTgRCDnaXqg=;
- b=lxNLIgarBlG7kG6hg4DRoF47/XHFTObEiylM8jQzFARaN5BZ5nL/po+OzYo4p730Vq
- mxfXdxli5hzemWFQpwrYJ4so6JcXc1c7OFXPNw7GUWGeh/OVbif08FCvL658OoM345tU
- jw9ypubVawmFAfsAR7XxNwJIhqylDM/l7iv87eiR+pwyAxmKmDeVedUZqK8IEpl6AjLY
- t4LMyaIRrEjGaqNcvTSAXe31tiFjp69OQEmjtpvxq1c+zQdjF5A+On4GDBLBpDUqZZK3
- +tme0yXCLeSD6u50JVMK2stVZC1KtBE/jwXfZURsaETN0HvRu8DFlxPrNBa7JNPgB6CF
- W++A==
+ d=1e100.net; s=20230601; t=1720464099; x=1721068899;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/Lx4HErboVIWBInq+HOXM+PVFQbk4nqolJMN3lQHjRc=;
+ b=dldGyTukexMrjDAjxZi4idY13njMz/7jXLL8m5sgq7sinGyjn/ZWy9tAG7YJOfk6cT
+ MmuXkUlLUmiOifbMOWcA62swB9YAweDAKOMQTNlgq6Y25tiXvKGk2wfzgPajoFD3bqB4
+ WLtkYP+bujccsdmNwJVbo83WoHq3+ygIhS2bvVnBwrwuEZV+u1WzJv1uRRJW/i0TAwkj
+ iahYLq4I7O+qF1T4AYpYznIMF0k7aRS2IP80qk5XIdsIqyd3/nOuwCyOmAwwsgnWpPfy
+ qNvOUtZmNDa0DLJOZl+JSKR3M0IJpu1lwGsVjsYw4Z2Qbkw8erZZ/ElMCahI/cQAy+PY
+ IZCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV+DGYsu32f8gZFn4dK4imkKu9CtIRK8C14Y5NU8fMwctW3H0iAwb0JiaYmRtlTQGZHUgT/o7/I0MWkkboQlnIioSQYjC0=
-X-Gm-Message-State: AOJu0YxMsGe/xl/TxPQSbJWolXaDGDf6uIT/sWBeiPy3P5QaX84H8Dk6
- V39uYkCOyIAHhA2WZ6pGELOuoedEOICaDGEUNTnbTkZzMx9bIXh/5MBm9jwsk4B5xrpDWWgp3J5
- dyfzN4GuaZTMGyY24/bYjbLXmIRwLaS88wOy35g==
-X-Google-Smtp-Source: AGHT+IG0ESIQhxkbRNfT5Reu+djezIOSBjQt3wyKVVES3WLad13Q8ir+MY38ndCfO04z2euYDUANA3XxUrWwRmGc6gQ=
-X-Received: by 2002:a17:906:5a92:b0:a6f:51d8:1963 with SMTP id
- a640c23a62f3a-a780b6ff67amr26504566b.43.1720463986798; Mon, 08 Jul 2024
- 11:39:46 -0700 (PDT)
+ AJvYcCVF7T1TMY1rHdAR+Qh6K4071A7xBreAj9gVqOBrAGEPLLndCgfCN4WMZkLmoyHISoFbkoahaDbshLF8r5Yok4zLd1os+9M=
+X-Gm-Message-State: AOJu0YwGcW/6ovhEHnIeWE0o6m2tkDHRw0+mVLgqwFvkLJOWCpUzQftZ
+ +Ke6RBDqgEheT0t4y/kX4iN3PLT98gRow9NvHlsoaVViYk0EcGgRF1/okRuyNDU=
+X-Google-Smtp-Source: AGHT+IFimJNQnvPh2z7oMrjOF9Z8WyIMC0M4aJo5CIP5Y3Npwc5NnZQqAzPh+HVGBEdoUhlm6M+OoQ==
+X-Received: by 2002:adf:f741:0:b0:367:40b6:b90b with SMTP id
+ ffacd0b85a97d-367d2b39ab0mr66688f8f.10.1720464098969; 
+ Mon, 08 Jul 2024 11:41:38 -0700 (PDT)
+Received: from [192.168.69.100] (vau06-h02-176-184-43-20.dsl.sta.abo.bbox.fr.
+ [176.184.43.20]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4266f6e0b4bsm7968585e9.8.2024.07.08.11.41.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jul 2024 11:41:38 -0700 (PDT)
+Message-ID: <f27632d0-4215-48e9-af2b-0270eeb4ea17@linaro.org>
+Date: Mon, 8 Jul 2024 20:41:32 +0200
 MIME-Version: 1.0
-References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
- <8dfd1047-436d-4157-83cb-9cad399544fe@redhat.com>
- <ZowUyFX7zcK1FvuG@redhat.com>
- <CABgObfZfQNSeYeCqcuNHcu=pyKz+f_MUc=9rZGRYxaPNBO-U4A@mail.gmail.com>
- <Zowd-UxAnPmJSA0G@redhat.com>
- <CABgObfaDKhKBcpmgypST=bo2KSqoNMCLKP-8oAvppxt9GDxBPA@mail.gmail.com>
-In-Reply-To: <CABgObfaDKhKBcpmgypST=bo2KSqoNMCLKP-8oAvppxt9GDxBPA@mail.gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 8 Jul 2024 21:39:36 +0300
-Message-ID: <CAAjaMXa6E0koPXcytY9hEuUbhLeFcJqZsA3fz10q_HF0grz24w@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 0/7] Add Rust support, implement ARM PL011
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
- Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000c84ce7061cc0bc29"
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x629.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: QEMU Community Call Agenda Items (July 9th, 2024)
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>
+Cc: Andreas Faerber <afaerber@suse.de>, Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
+ Markus Armbruster <armbru@redhat.com>, bbauman@redhat.com,
+ Brian Cain <bcain@quicinc.com>, "Daniel P. Berrange" <berrange@redhat.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org,
+ dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com,
+ Warner Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
+ Jim Shu <jim.shu@sifive.com>, jjherne@linux.vnet.ibm.com,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Max Chou <max.chou@sifive.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ mdean@redhat.com, mimu@linux.vnet.ibm.com,
+ Paul Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>,
+ Wei Wang <wei.w.wang@intel.com>, z.huo@139.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+References: <87cynoszg2.fsf@draig.linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <87cynoszg2.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,65 +122,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c84ce7061cc0bc29
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 8/7/24 16:58, Alex Bennée wrote:
+> 
+> Hi,
+> 
+> The KVM/QEMU community call is at:
+> 
+>    https://meet.jit.si/kvmcallmeeting
+>    @
+>    9/7/2024 14:00 UTC
+> 
+> Are there any agenda items for the sync-up?
 
-On Mon, 8 Jul 2024, 21:34 Paolo Bonzini, <pbonzini@redhat.com> wrote:
+- I don't remember who mentioned "3 phase reset and KVM",
+   maybe Daniel Barboza or Peter Xu.
 
->
->
-> Il lun 8 lug 2024, 19:12 Daniel P. Berrang=C3=A9 <berrange@redhat.com> ha
-> scritto:
->
->> That's exactly why I suggest its a pre-requisite for merging
->> this. Unless we're able to demonstrate that we can enable
->> Rust on all our CI platforms, the benefits of Rust will
->> not be realized in QEMU, and we'll have never ending debates
->> about whether each given feature needs to be in C or Rust.
->>
->
-> In that case we should develop it on a branch, so that more than one
-> person can contribute (unlike if we keep iterating on this RFC).
->
-> Paolo
->
+- Questions for block team:
 
+   . Are there plan to remove the legacy DriveInfo? What should
+     we use instead, blk_by_name() and/or blk_by_qdev_id()?
 
+   . Are there plan to move away from the IF_FOO (see blockdev::if_name)
+     or is it OK to use them and keep them in mind with new designs?
 
-If you do, I'd really appreciate it if you did not use any part of my
-patches.
-
-Thanks,
-Manos
-
---000000000000c84ce7061cc0bc29
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Mon, 8 Jul 2024, 21:34 Paolo Bonzini, &lt;<a href=
-=3D"mailto:pbonzini@redhat.com">pbonzini@redhat.com</a>&gt; wrote:<br></div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"auto"><div><=
-br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">Il =
-lun 8 lug 2024, 19:12 Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrang=
-e@redhat.com" target=3D"_blank" rel=3D"noreferrer">berrange@redhat.com</a>&=
-gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-That&#39;s exactly why I suggest its a pre-requisite for merging<br>
-this. Unless we&#39;re able to demonstrate that we can enable<br>
-Rust on all our CI platforms, the benefits of Rust will<br>
-not be realized in QEMU, and we&#39;ll have never ending debates<br>
-about whether each given feature needs to be in C or Rust.<br></blockquote>=
-</div></div><div dir=3D"auto"><br></div><div dir=3D"auto">In that case we s=
-hould develop it on a branch, so that more than one person can contribute (=
-unlike if we keep iterating on this RFC).</div><div dir=3D"auto"><br></div>=
-<div dir=3D"auto">Paolo</div></div></blockquote></div></div><div dir=3D"aut=
-o"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div d=
-ir=3D"auto">If you do, I&#39;d really appreciate it if you did not use any =
-part of my patches.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Than=
-ks,</div><div dir=3D"auto">Manos=C2=A0</div></div>
-
---000000000000c84ce7061cc0bc29--
+   . To model one HW with multiple drives (at least 3), is there
+     a recommended way to create that from the CLI?
 
