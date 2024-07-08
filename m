@@ -4,98 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F31A8C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 15:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B714AC3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 16:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQql8-00057G-6c; Mon, 08 Jul 2024 11:58:34 -0400
+	id 1sQqmP-0000MY-13; Mon, 08 Jul 2024 11:59:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sQql4-00056H-TL
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:58:31 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sQqmJ-0000AL-1b
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:59:47 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sQql2-000643-Io
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:58:30 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a77e7420697so258149566b.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 08:58:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sQqmG-0006Hx-Sq
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 11:59:46 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-58f9874aeb4so4175587a12.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 08:59:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720454306; x=1721059106; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EnG08U+jkWf7cwOUSHuVDaB1xTG8WFa8YrBhx1M5Lk8=;
- b=i9G5hcmXW5LIQeK0CSVNDz3ot8y0yuhVAatsP9lY0qyUnhw6NrJVPW97glfRUhB2Gd
- AY+m9PiLjUL8uoIfyFHBNPtPxYu4lhEJKnduPl/O/kzB6UJLvKA+VXbLPQyjXDBhI9MD
- 7EpLmqocAPXUQUv4Wt8yMFtglqYEnSDk63u9xFw8fY2OhHWfb9bIobwmEr0KJFPjOuWG
- cS0IjamEA8WNTwirEI/M9zxYMIXmsdv0RuzGqJGM0fYXWeQM8GMIr7I3+unyKmPA6tFY
- LKL5wEesDie1IYQ/Hq9MWdpxNF8F8TuOqA6n2mrkZIbuxHhNf2FyiDh87X5KRX6qDpgU
- T4jQ==
+ d=linaro.org; s=google; t=1720454382; x=1721059182; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=s7JXpTqY7x/2nCeSmZ7/HI4msoHcS3XeLCEZ2YFvCtU=;
+ b=k6dJxlkXoWGPMBce5k6nJOzIee7VGw2imLv3KwRt/ZF1KB2sSnccrth8n9ZZaXTHui
+ qRgYFqoMKDyMLIhryH6XI/bc+ehIK3DLP9g9884cQZt7J+rHLdj4H8c22I5rVnrre94k
+ qz+ZghG1+zQPWTtUvoi3YH6j3bj0m6dNNksBEWpwNZWB1V/rAaHEqwiyqdBjgmeBVoAU
+ J8NO/t9CKbwzd4mwlOdzqgm71LgVxM1T8/jhnLO2GE2QkdrgrZNzFe7p3m5ewkuhWNrc
+ ihiycUd0XLXpEiF9jymdREa+HIhlFrcqfsvFfVefPF9+mac1nHRq63+44T+MeFEJhyyx
+ QEmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720454306; x=1721059106;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EnG08U+jkWf7cwOUSHuVDaB1xTG8WFa8YrBhx1M5Lk8=;
- b=cuDYobygFpxfohkk+6kkYQC3pGT6va/Z4+rv4ktaMrMVmoM+Ab8RKyXynaVUV9vfLf
- +2mNS9sG5jsYy0NK1Fe+gl3m9tepvJ4pUWzbpu7kI0PJ51CsTdrCKtV/iplMT03UZc0A
- w6efPN1fQcwiXdS20xLs4T7+Rxf63klVSbmwMBksgFBdHldQDFtQx2eOToIdCsBPTiEE
- w5OZ2wRJKyWqwqBRy+sWlc3wFQua/wXESAJCLzj/NpPk9bztUoiZLjgiwhnQvOOWCfpW
- D9kpkNTFkLWwB5q2fDOobbq1U84imdzTwQj4L8bE4LV8XiSFf+pTlRakVViJKAxHJ0ly
- poUA==
-X-Gm-Message-State: AOJu0YyVB5RkHYYiaAypjyehKEmZ2OjcSnjbN2ZcuOAUr+iGailXYf1W
- OT3rZP49ENEBUuOHJzA4EzVPoFaBHsIxExrutKrNr4o1aPSq/FMJbF3fYoPd9GzUo52ZB8otGCZ
- 2sPhwicXC5qaW6/BF1q8Q7mGWcZEFkG1qrTIMNQ==
-X-Google-Smtp-Source: AGHT+IEvdtULHhHKMlbT+UJDlvM8ehV4uTiaD9kjx8Ev0OQ5+vADlN3hDmtm7V8TS1gloKIA1HGr3RiuYMdcmU5diNM=
-X-Received: by 2002:a17:906:e56:b0:a77:e55a:9e79 with SMTP id
- a640c23a62f3a-a780b68829amr1927166b.4.1720454306248; Mon, 08 Jul 2024
- 08:58:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720454382; x=1721059182;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=s7JXpTqY7x/2nCeSmZ7/HI4msoHcS3XeLCEZ2YFvCtU=;
+ b=MKtzSxG5Lyw24KSH3gxCnMisBjRFg1spVlYjFOLLn1RkDOyNLZx5aDvSm4cPPyCSZG
+ JdBbm/IU0pV3Hs0iIp0QbkmTsqvwvaspyMn6T3we3jkMQUp/DKMYd9GSUHSH7HNdtJiq
+ 4og6qwBbhcX6Zc8c1it9IYa62z+MWS7UebwOfliCrR21FYfyzEptEv8l6guwJBwQVWhN
+ pigwTBSRNyeRoOcwN5bK5zHNCbdjoeCn85IWyClbpppVExK+7nVcY5BQuH2nBDfC/lBN
+ goWxUusJhcZtoIFxE4Fgsgvx9l5++MCX7GyhtC3IYWWwWlJOojbvlu8KUFhNe4k++g2+
+ uUvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXEEZtNGuteJ/+DhmsftOmxbxUpat+Ygqc5C42yGl909n+fR5QpC5QW5WlFf1xBu0csexdSkhC0/Hjhj5afjFymt+i2qc=
+X-Gm-Message-State: AOJu0YweuxW6hUPzvFYL2QmQczWtSyc0EYBW3WTJaXTuk+m0DHh74Niq
+ vMZid6YuLsnY5UzQx+TjNpLsPAWQQIHIwsFU2MtIYX8a5gwDvNK6JUH3Bh5IukbL1L+S6q76JF7
+ kk32p77dozlJpF2wmX/93WTkvyLT7y1ilrX0ItA==
+X-Google-Smtp-Source: AGHT+IFFGPGFKifANUej5hr/r+3sS5zXJV0wA/E4cHrXvpYCq2RgyL//gg+QCsRF5cXG5jBEvfdfSQ4QS87zI98fAvs=
+X-Received: by 2002:a05:6402:4307:b0:582:5195:3a79 with SMTP id
+ 4fb4d7f45d1cf-594ba98f268mr28034a12.6.1720454382086; Mon, 08 Jul 2024
+ 08:59:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <87cynoszg2.fsf@draig.linaro.org>
-In-Reply-To: <87cynoszg2.fsf@draig.linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Mon, 8 Jul 2024 18:58:10 +0300
-Message-ID: <CAAjaMXbdLZLmUr94ee4-81rXX_YjYa2-cz44xux7rJe+fwnmRw@mail.gmail.com>
-Subject: Re: QEMU Community Call Agenda Items (July 8th, 2024)
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Andreas Faerber <afaerber@suse.de>, 
- Alessandro Di Federico <ale@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, 
- Markus Armbruster <armbru@redhat.com>, bbauman@redhat.com,
- Brian Cain <bcain@quicinc.com>, 
- "Daniel P. Berrange" <berrange@redhat.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org, 
- dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com, 
- iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>,
- Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
- Jim Shu <jim.shu@sifive.com>, 
- jjherne@linux.vnet.ibm.com, Joao Martins <joao.m.martins@oracle.com>, 
- Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>,
- Max Chou <max.chou@sifive.com>, 
- Mark Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
- mimu@linux.vnet.ibm.com, 
- Paul Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Bernhard Beschow <shentey@gmail.com>, 
- Stefan Hajnoczi <stefanha@gmail.com>, Wei Wang <wei.w.wang@intel.com>,
- z.huo@139.com, 
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
+ <20240627-san-v2-6-750bb0946dbd@daynix.com>
+ <CAFEAcA-Zmc0BQgUiqEgzCvVGWyiPt9bo+Xt90n4wxhJ3_D91fA@mail.gmail.com>
+ <Zn98p6CUV0KnIo50@zatzit>
+ <CAFEAcA_LN8i66KUkxrgg=CUKJNYM=s9pTYv6w5QQ7PSU1Q3=bg@mail.gmail.com>
+ <D2H7KBZF8OA4.3EKIA8NHHJ3MJ@gmail.com> <ZodPOTAcLo1XF4MB@zatzit>
+ <D2HBUN5N504E.27WH86Z4HPTKW@gmail.com> <ZoeAutfGIAaNEFBC@zatzit>
+ <CAFEAcA-QyGWNqS5saqGMc9f4WVS5mg8+YjUfOczovaT6duZAvQ@mail.gmail.com>
+ <ZonXSmp9XZxl_HHp@zatzit> <D2JZR5EF6CF1.1DDFFT4TZAD1H@gmail.com>
+In-Reply-To: <D2JZR5EF6CF1.1DDFFT4TZAD1H@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 8 Jul 2024 16:59:30 +0100
+Message-ID: <CAFEAcA9L+ApvH8bptyEi2C7fg=WPYLZecAUBv6mpx0o1-3K2=w@mail.gmail.com>
+Subject: Re: [PATCH v2 06/15] ppc/vof: Fix unaligned FDT property access
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: David Gibson <david@gibson.dropbear.id.au>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>, 
+ BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Alexey Kardashevskiy <aik@ozlabs.ru>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,26 +112,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Alex, I thought It was tomorrow? QEMU Project Calendar says "
-Tuesday, July 9=E2=8B=854:00 =E2=80=93 5:00pm
-Every 2 weeks on Tuesday
-"
+On Mon, 8 Jul 2024 at 08:49, Nicholas Piggin <npiggin@gmail.com> wrote:
+>
+> On Sun Jul 7, 2024 at 9:46 AM AEST, David Gibson wrote:
+> > On Sat, Jul 06, 2024 at 11:37:08AM +0100, Peter Maydell wrote:
+> > > On Fri, 5 Jul 2024 at 06:13, David Gibson <david@gibson.dropbear.id.au> wrote:
+> > > > Huh.. well I'm getting different impressions of what the problem
+> > > > actually is from what I initially read versus Peter Maydell's
+> > > > comments, so I don't really know what to think.
+> > > >
+> > > > If it's just the load then fdt32_ld() etc. already exist.  Or is it
+> > > > really such a hot path that unconditionally handling unaligned
+> > > > accesses isn't tenable?
+> > >
+> > > The specific problem here is that the code as written tries to
+> > > cast a not-aligned-enough pointer to uint64_t* to do the load,
+> > > which is UB.
+> >
+> > Ah... and I'm assuming it's the cast itself which triggers the UB, not
+> > just dereferencing it.
+>
+> Oh it's just the cast itself that is UB? Looks like that's true.
+> Interesting gcc and clang don't flag it, I guess they care about
+> warning on practical breakage first.
 
-On Mon, 8 Jul 2024 at 17:58, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
->
->
-> Hi,
->
-> The KVM/QEMU community call is at:
->
->   https://meet.jit.si/kvmcallmeeting
->   @
->   8/7/2024 14:00 UTC
->
-> Are there any agenda items for the sync-up?
->
-> --
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
+Er, I was speaking a bit vaguely there, don't take my word for
+it without going and looking at the text of the C standard.
+
+What I *meant* was that the practical problem here is that we
+really do dereference a pointer for a 64-bit load when the
+pointer isn't necessarily 64-bit-aligned.
+
+As it happens, C99 says that it is the cast that is UB:
+section 6.3.2.3 para 7 says:
+ "A pointer to an object or incomplete type may be converted to
+  a pointer to a different object or incomplete type. If the
+  resulting pointer is not correctly aligned for the pointed-to
+  type, the behavior is undefined. Otherwise, when converted back
+  again, the result shall compare equal to the original pointer."
+
+Presumably this is envisaging the possibility of a pointer cast
+being a destructive operation somehow, such that e.g. a uint64_t*
+can only represent 64-bit-aligned values. But I bet QEMU does
+a lot of casting pointers around that might fall foul of this
+rule, so I'm not particularly worried about trying to clean up
+that kind of thing (until/unless analysers start warning about
+it, in which case we have a specific set of things to clean up).
+
+What I care about from the point of view of this patch
+is that we fix the actually-broken-on-some-real-hardware problem
+of doing the load as a misaligned access. My vote would be for
+"take Akihiko's patch as-is, rather than gating fixing the bug
+on deciding on an improvement/change to the fdt API or our
+wrappers of it".
+
+thanks
+-- PMM
 
