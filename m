@@ -4,97 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC03AC3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 05:21:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9395BC3DA42
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 05:26:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQgoN-0005xk-A8; Mon, 08 Jul 2024 01:21:15 -0400
+	id 1sQgt1-0002Xt-10; Mon, 08 Jul 2024 01:26:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sQgoL-0005vn-Fd
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 01:21:13 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sQgsx-0002X6-De
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 01:25:59 -0400
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sQgoI-00025Q-F9
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 01:21:13 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2ebeefb9a7fso41613721fa.0
- for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 22:21:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sQgst-0002rr-FF
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 01:25:59 -0400
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-5c661e75ff6so1159777eaf.2
+ for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 22:25:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1720416068; x=1721020868; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7fMvhV7ZPunSsonAYx4gHRlHd0ReqWNpiBKeLTJyNUM=;
- b=CJT2e0jQ1vLFCgr2bOY/gUs2XnqTO3D9rrL5xFs4Po3PnWD+UtCRR/0DFGGvrC9IKs
- 41Kq5yvsBE6gOEfb3CZ7CF6eouSS7cm4J+G+bttAJ0qeXR85dimVAkgTgYC6Dm8JnxHA
- D4GH2u+6oTOpwDfMh2pKplfjmTnhCJeVxD++368xMIAUdD6QI0y8ou0+H2q9c5BsI9XW
- Zrv/8KZzPzgU+eN9HKYGHqORkjauvOfqFYwqSb0zAJD5FJbD4Sxrd85kK9+WVT01EQzP
- X9U9zuT4o/IBxbARmDTMEYri708D81QHiNDZrBRDn1HucAnj/G9GMlpVFPPCSTIU3bT+
- S5KA==
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1720416353; x=1721021153;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6Uu6JhmRCdRn53oqvN+C+sPcazpeb16i6PQ2iwTVNd4=;
+ b=G5IFX1hVLAIZ9YhUy+Wjyg9hXEKbmCLq2uSbCoqM04byoZRGS6VV05Ynt1FPMRxwf0
+ UNq4Due/OLcVTYbxd29YWuDh4zziSfUY0DICBF+MSd//JMnq3VMuihxW3XiZUfaAorQm
+ bgof4ykuiP3H6E64xhG7obo6+RgEFtsdLdevbV+YD5tkcWZYTzh1CG2TWFbklYr0tlXi
+ 3sHSvDdy60kV4IHMjyppuiN4Yo3CFKLWV19jlHGB06gqgwhycl9XWgI5XmmHRYBgW3gP
+ hzslLGb3C7KFfUqTeHLjwP6TAJqTaOCtfDaZ0HONKM7287JeGU9Aw8zLl4DhL5lsmLOy
+ 6JMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720416068; x=1721020868;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7fMvhV7ZPunSsonAYx4gHRlHd0ReqWNpiBKeLTJyNUM=;
- b=E1nmIySQ1gI3RVLCliG2tIf7sT0PDyt7b6T3NhXuKPA58Ns/aJ/QQ5j3mtdpn8HWDD
- Q5yTfUgT8YljxkB7uusIJigUrGR2mGu/rEapRkBOz0eEa0bE0z8sij0ut+TJe9nUYEhp
- Q9g2N04dz8gRVNQpLpKrXaEPR1g+1WOOivlB64y157DKpMkB/BctQA1wg0a496hBE+vF
- OyrowPAQF5MfgYhvaCRrqXzd8txd8aWHpwM3kfyTjajp6QyBfVGJNdmut712/zELnEgL
- P7SjOsM7td1PKN79nKNsXs6oGsEreoeHrs+zYTpW1835SeCCuSRS7WjA9ZR/nIUDYgfW
- mDQw==
-X-Gm-Message-State: AOJu0YxOOuM9fwtZiqueM0GftsLYfZMU41S1fjYZ2CXLE2vmhe3igOlj
- l2mRBu4RCImtFd1t7FemhYl8CBUSQYkeT62vEyLmLBLqBVn6eoRvaUXBL59N3Rk=
-X-Google-Smtp-Source: AGHT+IFCT/kp92Ghi2iGO1AbdAhriKZnwyak7QRCaFIlb0gdffGLvTSnGZWlRTs3Y9paIw+aQlCJOg==
-X-Received: by 2002:ac2:530e:0:b0:52c:dea0:dd55 with SMTP id
- 2adb3069b0e04-52ea0629e54mr6779491e87.24.1720416068268; 
- Sun, 07 Jul 2024 22:21:08 -0700 (PDT)
-Received: from [10.11.12.72] ([90.220.10.255])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3679976da15sm10451449f8f.94.2024.07.07.22.21.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 07 Jul 2024 22:21:07 -0700 (PDT)
-Message-ID: <4a092822-099c-4818-a0fc-1b9bb376b3c6@opnsrc.net>
-Date: Mon, 8 Jul 2024 05:21:06 +0000
+ d=1e100.net; s=20230601; t=1720416353; x=1721021153;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6Uu6JhmRCdRn53oqvN+C+sPcazpeb16i6PQ2iwTVNd4=;
+ b=jtJcSv1VDcuSAsa24gr+Hqjpr1qJFzGf4S+T+4YrpnKu+ofj0uDQkDSy3WtZ+w2Vms
+ UmuXKpC3nCrSdX/40IOafo8y706iAj6Pp8WZ6DTYW0OC+hU490eTr9H4lYNOSmd7Mw+E
+ nJbATg5Gl1/KD4kAmaTFX4pNgQTAwQRGo5d4YqLgOxBl+SqQgCczIP9SCK9AHd6Z+d7W
+ ucnrLkFIbV1N5XQlBvyz1l+FmzpfPcszIpoyNkwR1pcT3QwwHke2bHL9ZN/xzpDhZO4a
+ m9UzppY4MBIVZTvSkyRVmU3Ecf8wBIen1wZu39PKm34eXF+WwvXbj4RM0HTEi2UGomTJ
+ I9LQ==
+X-Gm-Message-State: AOJu0YwUVVh09BPAQodymHCy6hMzYMAf/bP6KIHBXGrDyqgGfibNrv3Y
+ gTYtMjWNmk1X+S1RKN6KlgUHMwLBJwYa/2QjO3JW3LhJC+FKvebnhVXzNa7Xy3n72fGGm1tPmCf
+ D4+ATONWnfARYz5mwRoOW/z21wyKWQB/ct2i5znaHJN4HtgH/1/XBAOHT
+X-Google-Smtp-Source: AGHT+IECia6Sl4vyDB1iOF9R6Xp/rp6mUXwCJqXa2VBL5ec3TsnNBf0cT0xHdbNJgQN1tLNxijSde6JGREiVB+6DBtY=
+X-Received: by 2002:a05:6870:40c4:b0:250:6a57:e1d3 with SMTP id
+ 586e51a60fabf-25e2bec97d6mr10204628fac.38.1720416352600; Sun, 07 Jul 2024
+ 22:25:52 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V13 4/8] hw/acpi: Update GED _EVT method AML with CPU scan
-To: Igor Mammedov <imammedo@redhat.com>, Salil Mehta <salil.mehta@huawei.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, maz@kernel.org,
- jean-philippe@linaro.org, jonathan.cameron@huawei.com,
- lpieralisi@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, andrew.jones@linux.dev, david@redhat.com,
- philmd@linaro.org, eric.auger@redhat.com, oliver.upton@linux.dev,
- pbonzini@redhat.com, mst@redhat.com, will@kernel.org, gshan@redhat.com,
- rafael@kernel.org, alex.bennee@linaro.org, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
- wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
- lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
- linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20240607115649.214622-1-salil.mehta@huawei.com>
- <20240607115649.214622-5-salil.mehta@huawei.com>
- <20240706162845.3baf5568@imammedo.users.ipa.redhat.com>
-Content-Language: en-GB
-From: Salil Mehta <salil.mehta@opnsrc.net>
-In-Reply-To: <20240706162845.3baf5568@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <c7338afab65df208772f215567f323ae9b3c5910.1720210988.git.yong.huang@smartx.com>
+In-Reply-To: <c7338afab65df208772f215567f323ae9b3c5910.1720210988.git.yong.huang@smartx.com>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Mon, 8 Jul 2024 13:25:36 +0800
+Message-ID: <CAK9dgmaC3DiqWmf+OWURjZ=XOQbYLFdOuUS6_cESJyRDzxiJig@mail.gmail.com>
+Subject: Re: [PATCH] e1000: Fix the unexpected assumption that the receive
+ buffer is full
+To: qemu-devel@nongnu.org
+Cc: Jason Wang <jasowang@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000902076061cb5a508"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc31.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,153 +88,514 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
+--000000000000902076061cb5a508
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 06/07/2024 14:28, Igor Mammedov wrote:
-> On Fri, 7 Jun 2024 12:56:45 +0100
-> Salil Mehta <salil.mehta@huawei.com> wrote:
+On Sat, Jul 6, 2024 at 4:30=E2=80=AFAM Hyman Huang <yong.huang@smartx.com> =
+wrote:
+
+> Unexpected work by certain Windows guests equipped with the e1000
+> interface can cause the network to go down and never come back up
+> again unless the guest's interface is reset.
 >
->> OSPM evaluates _EVT method to map the event. The CPU hotplug event eventually
->> results in start of the CPU scan. Scan figures out the CPU and the kind of
->> event(plug/unplug) and notifies it back to the guest. Update the GED AML _EVT
->> method with the call to \\_SB.CPUS.CSCN
->>
->> Also, macro CPU_SCAN_METHOD might be referred in other places like during GED
->> intialization so it makes sense to have its definition placed in some common
->> header file like cpu_hotplug.h. But doing this can cause compilation break
->> because of the conflicting macro definitions present in cpu.c and cpu_hotplug.c
-> one of the reasons is that you reusing legacy hw/acpi/cpu_hotplug.h,
-> see below for suggestion.
-ok
+> To reproduce the failure:
+> 1. Set up two guests with a Windows 2016 or 2019 server operating
+>    system.
+> 2. Set up the e1000 interface for the guests.
+> 3. Pressurize the network slightly between two guests using the iPerf too=
+l.
 >
->> and because both these files get compiled due to historic reasons of x86 world
->> i.e. decision to use legacy(GPE.2)/modern(GED) CPU hotplug interface happens
->> during runtime [1]. To mitigate above, for now, declare a new common macro
->> ACPI_CPU_SCAN_METHOD for CPU scan method instead.
->> (This needs a separate discussion later on for clean-up)
->>
->> Reference:
->> [1] https://lore.kernel.org/qemu-devel/1463496205-251412-24-git-send-email-imammedo@redhat.com/
->>
->> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
->> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
->> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
->> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->> Reviewed-by: Gavin Shan <gshan@redhat.com>
->> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
->> Tested-by: Xianglai Li <lixianglai@loongson.cn>
->> Tested-by: Miguel Luis <miguel.luis@oracle.com>
->> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
->> Tested-by: Zhao Liu <zhao1.liu@intel.com>
->> ---
->>   hw/acpi/cpu.c                  | 2 +-
->>   hw/acpi/generic_event_device.c | 4 ++++
->>   include/hw/acpi/cpu_hotplug.h  | 2 ++
->>   3 files changed, 7 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
->> index 473b37ba88..af2b6655d2 100644
->> --- a/hw/acpi/cpu.c
->> +++ b/hw/acpi/cpu.c
->> @@ -327,7 +327,7 @@ const VMStateDescription vmstate_cpu_hotplug = {
->>   #define CPUHP_RES_DEVICE  "PRES"
->>   #define CPU_LOCK          "CPLK"
->>   #define CPU_STS_METHOD    "CSTA"
->> -#define CPU_SCAN_METHOD   "CSCN"
->> +#define CPU_SCAN_METHOD   ACPI_CPU_SCAN_METHOD
->>   #define CPU_NOTIFY_METHOD "CTFY"
->>   #define CPU_EJECT_METHOD  "CEJ0"
->>   #define CPU_OST_METHOD    "COST"
->> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
->> index 54d3b4bf9d..63226b0040 100644
->> --- a/hw/acpi/generic_event_device.c
->> +++ b/hw/acpi/generic_event_device.c
->> @@ -109,6 +109,10 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
->>                   aml_append(if_ctx, aml_call0(MEMORY_DEVICES_CONTAINER "."
->>                                                MEMORY_SLOT_SCAN_METHOD));
->>                   break;
->> +            case ACPI_GED_CPU_HOTPLUG_EVT:
->> +                aml_append(if_ctx, aml_call0(ACPI_CPU_CONTAINER "."
->> +                                             ACPI_CPU_SCAN_METHOD));
-> I don't particularly like exposing cpu hotplug internals for outside code
-> and then making that code do plumbing hoping that nothing will explode
-> in the future.
-
-I understand your point but I've followed what was already existing.
-
-For example,
-
-build_dsdt()
-
-{
-
-        [...]
-
-     acpi_dsdt_add_uart(scope, &memmap[VIRT_UART],
-                        (irqmap[VIRT_UART] + ARM_SPI_BASE));
-     if (vmc->acpi_expose_flash) {
-         acpi_dsdt_add_flash(scope, &memmap[VIRT_FLASH]);
-     }
-     fw_cfg_acpi_dsdt_add(scope, &memmap[VIRT_FW_CFG]);
-     virtio_acpi_dsdt_add(scope, memmap[VIRT_MMIO].base, 
-memmap[VIRT_MMIO].size,
-                          (irqmap[VIRT_MMIO] + ARM_SPI_BASE),
-                          0, NUM_VIRTIO_TRANSPORTS);
-     acpi_dsdt_add_pci(scope, memmap, irqmap[VIRT_PCIE] + ARM_SPI_BASE, 
-vms);
-     if (vms->acpi_dev) {
-         build_ged_aml(scope, "\\_SB."GED_DEVICE,
-                       HOTPLUG_HANDLER(vms->acpi_dev),
-                       irqmap[VIRT_ACPI_GED] + ARM_SPI_BASE, 
-AML_SYSTEM_MEMORY,
-                       memmap[VIRT_ACPI_GED].base);
-     } else {
-         acpi_dsdt_add_gpio(scope, &memmap[VIRT_GPIO],
-                            (irqmap[VIRT_GPIO] + ARM_SPI_BASE));
-     }
-
-       [...]
-
-}
-
-Refactoring all of this code will create a noise in this patch-set.
-> build_cpus_aml() takes event_handler_method to create a method that
-> can be called by platform. What I suggest is to call that method here
-> instead of trying to expose CPU hotplug internals and manually building
-> call path here.
-> aka:
->    build_cpus_aml(event_handler_method = PATH_TO_GED_DEVICE.CSCN)
-> and then call here
->    aml_append(if_ctx, aml_call0(CSCN));
-> which will call  CSCN in GED scope, that was be populated by
-> build_cpus_aml() to do cpu scan properly without need to expose
-> cpu hotplug internal names and then trying to fixup conflicts caused by that.
+> The network goes down after a few days (2-5days), and the issue
+> is the result of not adhering to the e1000 specification. Refer
+> to the details of the specification at the following link:
 >
-> PS:
-> we should do the same for memory hotplug, we see in context above
+> https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-control=
+lers-software-dev-manual.pdf
 >
-Although. I agree with your suggested change but I think this should be
-
-carried in another patch-set.
-
-Best, Salil.
-
+> Chapter 3.2.6 describe the Receive Descriptor Tail register(RDT)
+> as following:
+> This register holds a value that is an offset from the base, and
+> identifies the location beyond the last descriptor hardware can
+> process. Note that tail should still point to an area in the
+> descriptor ring (somewhere between RDBA and RDBA + RDLEN).
+> This is because tail points to the location where software writes
+> the first new descriptor.
 >
->> +                break;
->>               case ACPI_GED_PWR_DOWN_EVT:
->>                   aml_append(if_ctx,
->>                              aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
->> diff --git a/include/hw/acpi/cpu_hotplug.h b/include/hw/acpi/cpu_hotplug.h
->> index 48b291e45e..ef631750b4 100644
->> --- a/include/hw/acpi/cpu_hotplug.h
->> +++ b/include/hw/acpi/cpu_hotplug.h
->> @@ -20,6 +20,8 @@
->>   #include "hw/acpi/cpu.h"
->>   
->>   #define ACPI_CPU_HOTPLUG_REG_LEN 12
->> +#define ACPI_CPU_SCAN_METHOD "CSCN"
->> +#define ACPI_CPU_CONTAINER "\\_SB.CPUS"
->>   
->>   typedef struct AcpiCpuHotplug {
->>       Object *device;
+> This means that if the provider=E2=80=94in this case, QEMU=E2=80=94has no=
+t yet
+> loaded the packet, RDT should never point to that place. When
+> implementing the emulation of the e1000 interface, QEMU evaluates
+> if the receive ring buffer is full once the RDT equals the RDH,
+> based on the assumption that guest drivers adhere to this
+> criterion strictly.
+>
+> We applied the following log patch to assist in analyzing the
+> issue and eventually obtained the unexpected information.
+>
+> Log patch:
+> -----------------------------------------------------------------
+> |--- a/hw/net/e1000.c
+> |+++ b/hw/net/e1000.c
+> |@@ -836,6 +836,9 @@ e1000_set_link_status(NetClientState *nc)
+> | static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
+> | {
+> |     int bufs;
+> |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u, s->mac_reg=
+[RDH]
+> =3D %u, s->mac_reg[RDT] =3D %u\n",
+> |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH],
+> s->mac_reg[RDT]);
+> |+
+> |     /* Fast-path short packets */
+> |     if (total_size <=3D s->rxbuf_size) {
+> |         if (s->mac_reg[RDH] =3D=3D s->mac_reg[RDT] && s->last_overrun)
+> |@@ -1022,6 +1025,9 @@ e1000_receive_iov(NetClientState *nc, const struct
+> iovec *iov, int iovcnt)
+> |         s->rxbuf_min_shift)
+> |         n |=3D E1000_ICS_RXDMT0;
+> |
+> |+    DBGOUT(RX, "rxbuf_size =3D %u, s->mac_reg[RDLEN] =3D %u, s->mac_reg=
+[RDH]
+> =3D %u, s->mac_reg[RDT] =3D %u\n",
+> |+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH],
+> s->mac_reg[RDT]);
+> |+
+> -----------------------------------------------------------------
+>
+> The last few logs of information when the network is down:
+>
+> e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 16384=
+,
+> s->mac_reg[RDH] =3D 897, s->mac_reg[RDT] =3D 885
+> <- the receive ring buffer is checked for fullness in the
+> e1000_has_rxbufs function, not full.
+>
+> e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 1638=
+4,
+> s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
+> <- RDT stays the same, RDH updates to 898, and 1 descriptor
+> utilized after putting the packet to ring buffer.
+>
+> e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 16384=
+,
+> s->mac_reg[RDH] =3D 898, s->mac_reg[RDT] =3D 885
+> <- the receive ring buffer is checked for fullness in the
+> e1000_has_rxbufs function, not full.
+>
+> e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 1638=
+4,
+> s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
+> <- RDT stays the same, RDH updates to 899, and 1 descriptor
+> utilized after putting the packet to ring buffer.
+>
+> e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 16384=
+,
+> s->mac_reg[RDH] =3D 899, s->mac_reg[RDT] =3D 885
+> <- the receive ring buffer is checked for fullness in the
+> e1000_has_rxbufs function, not full.
+>
+> e1000: total_size =3D 64, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 1638=
+4,
+> s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 885
+> <- RDT stays the same, RDH updates to 900 , and 1 descriptor
+> utilized after putting the packet to ring buffer.
+>
+> e1000: total_size =3D 1, rxbuf_size =3D 2048, s->mac_reg[RDLEN] =3D 16384=
+,
+> s->mac_reg[RDH] =3D 900, s->mac_reg[RDT] =3D 900
+> <- The ring is full, according to e1000_has_rxbufs, because
+> of the RDT update to 900 and equals RDH ! But in reality,
+> the state of the ring buffer is empty because the producer
+> only used one descriptor the last time, and the ring buffer
+> was not full after that.
+>
+> To sum up, QEMU claims that the receive ring buffer is full
+> in the aforementioned scenario, placing the packet in the
+> self-maintained queue and unregistering the tap device's
+> readable fd handler and then waiting for the guest to consume
+> the receive ring buffer. This brings down the network since
+> guests have nothing to consume and never update the RDT
+> location.
+>
+> In the above scenario, QEMU assert that the ring is full,
+> put the packet on the queue, unregister the readable fd
+> handler of the tap device, waiting the guest to consume
+> the receive ring. While, guest have nothing to consume
+> on the receive ring and never update the RDT location,
+> this makes the network down.
+>
+> To get around this issue, just mark the overrun if RDH
+> equals RDT at the end of placing the packet on the ring
+> buffer for the producer.
+>
+> Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> ---
+>  hw/net/e1000.c | 22 ++++++++++++++++++++--
+>  1 file changed, 20 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+> index 5012b96464..f80cb70283 100644
+> --- a/hw/net/e1000.c
+> +++ b/hw/net/e1000.c
+> @@ -126,6 +126,12 @@ struct E1000State_st {
+>
+>      QEMUTimer *flush_queue_timer;
+>
+> +    /*
+> +     * Indicate that the receive circular buffer queue overrun
+> +     * the last time hardware produced packets.
+> +     */
+> +    bool last_overrun;
+> +
+>  /* Compatibility flags for migration to/from qemu 1.3.0 and older */
+>  #define E1000_FLAG_MAC_BIT 2
+>  #define E1000_FLAG_TSO_BIT 3
+> @@ -832,7 +838,12 @@ static bool e1000_has_rxbufs(E1000State *s, size_t
+> total_size)
+>      int bufs;
+>      /* Fast-path short packets */
+>      if (total_size <=3D s->rxbuf_size) {
+> -        return s->mac_reg[RDH] !=3D s->mac_reg[RDT];
+> +        if (s->mac_reg[RDH] =3D=3D s->mac_reg[RDT] && s->last_overrun) {
+> +            return false;
+> +        }
+> +
+> +        DBGOUT(RX, "Receive ring buffer is not full unexpectedly!\n");
+>
+
+I'll drop this DBGOUT in the next version now that "treat RX ring with RDH
+=3D=3D RDT as empty"
+is the expected and original conclusion in commit:
+
+commit e5b8b0d4ba29fe1268ba049519a1b0cf8552a21a
+Author: Dmitry Fleytman <dmitry@daynix.com>
+Date:   Fri Oct 19 07:56:55 2012 +0200
+
+    e1000: drop check_rxov, always treat RX ring with RDH =3D=3D RDT as emp=
+ty
+
+    Real HW always treats RX ring with RDH =3D=3D RDT as empty.
+    Emulation is supposed to behave the same.
+
+    Reported-by: Chris Webb <chris.webb@elastichosts.com>
+    Reported-by: Richard Davies <richard.davies@elastichosts.com>
+    Signed-off-by: Dmitry Fleytman <dmitry@daynix.com>
+    Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+
+> +        return true;
+>      }
+>      if (s->mac_reg[RDH] < s->mac_reg[RDT]) {
+>          bufs =3D s->mac_reg[RDT] - s->mac_reg[RDH];
+> @@ -840,7 +851,12 @@ static bool e1000_has_rxbufs(E1000State *s, size_t
+> total_size)
+>          bufs =3D s->mac_reg[RDLEN] /  sizeof(struct e1000_rx_desc) +
+>              s->mac_reg[RDT] - s->mac_reg[RDH];
+>      } else {
+> -        return false;
+> +        if (s->last_overrun) {
+> +            return false;
+> +        }
+> +
+> +        DBGOUT(RX, "Receive ring buffer is not full unexpectedly!\n");
+> +        return true;
+>      }
+>      return total_size <=3D bufs * s->rxbuf_size;
+>  }
+> @@ -999,6 +1015,8 @@ e1000_receive_iov(NetClientState *nc, const struct
+> iovec *iov, int iovcnt)
+>
+>      e1000x_update_rx_total_stats(s->mac_reg, pkt_type, size, total_size)=
+;
+>
+> +    s->last_overrun =3D (s->mac_reg[RDH] =3D=3D s->mac_reg[RDT]) ? true =
+: false;
+> +
+>      n =3D E1000_ICS_RXT0;
+>      if ((rdt =3D s->mac_reg[RDT]) < s->mac_reg[RDH])
+>          rdt +=3D s->mac_reg[RDLEN] / sizeof(desc);
+> --
+> 2.39.1
+>
+>
+
+--=20
+Best regards
+
+--000000000000902076061cb5a508
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Jul 6, 202=
+4 at 4:30=E2=80=AFAM Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.co=
+m">yong.huang@smartx.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left=
+-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">Unexpecte=
+d work by certain Windows guests equipped with the e1000<br>
+interface can cause the network to go down and never come back up<br>
+again unless the guest&#39;s interface is reset.<br>
+<br>
+To reproduce the failure:<br>
+1. Set up two guests with a Windows 2016 or 2019 server operating<br>
+=C2=A0 =C2=A0system.<br>
+2. Set up the e1000 interface for the guests.<br>
+3. Pressurize the network slightly between two guests using the iPerf tool.=
+<br>
+<br>
+The network goes down after a few days (2-5days), and the issue<br>
+is the result of not adhering to the e1000 specification. Refer<br>
+to the details of the specification at the following link:<br>
+<a href=3D"https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gb=
+e-controllers-software-dev-manual.pdf" rel=3D"noreferrer" target=3D"_blank"=
+>https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controll=
+ers-software-dev-manual.pdf</a><br>
+<br>
+Chapter 3.2.6 describe the Receive Descriptor Tail register(RDT)<br>
+as following:<br>
+This register holds a value that is an offset from the base, and<br>
+identifies the location beyond the last descriptor hardware can<br>
+process. Note that tail should still point to an area in the<br>
+descriptor ring (somewhere between RDBA and RDBA + RDLEN).<br>
+This is because tail points to the location where software writes<br>
+the first new descriptor.<br>
+<br>
+This means that if the provider=E2=80=94in this case, QEMU=E2=80=94has not =
+yet<br>
+loaded the packet, RDT should never point to that place. When<br>
+implementing the emulation of the e1000 interface, QEMU evaluates<br>
+if the receive ring buffer is full once the RDT equals the RDH,<br>
+based on the assumption that guest drivers adhere to this<br>
+criterion strictly.<br>
+<br>
+We applied the following log patch to assist in analyzing the<br>
+issue and eventually obtained the unexpected information.<br>
+<br>
+Log patch:<br>
+-----------------------------------------------------------------<br>
+|--- a/hw/net/e1000.c<br>
+|+++ b/hw/net/e1000.c<br>
+|@@ -836,6 +836,9 @@ e1000_set_link_status(NetClientState *nc)<br>
+| static bool e1000_has_rxbufs(E1000State *s, size_t total_size)<br>
+| {<br>
+|=C2=A0 =C2=A0 =C2=A0int bufs;<br>
+|+=C2=A0 =C2=A0 DBGOUT(RX, &quot;rxbuf_size =3D %u, s-&gt;mac_reg[RDLEN] =
+=3D %u, s-&gt;mac_reg[RDH] =3D %u, s-&gt;mac_reg[RDT] =3D %u\n&quot;,<br>
+|+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;rxbuf_size, s-&gt;mac_reg[=
+RDLEN], s-&gt;mac_reg[RDH], s-&gt;mac_reg[RDT]);<br>
+|+<br>
+|=C2=A0 =C2=A0 =C2=A0/* Fast-path short packets */<br>
+|=C2=A0 =C2=A0 =C2=A0if (total_size &lt;=3D s-&gt;rxbuf_size) {<br>
+|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (s-&gt;mac_reg[RDH] =3D=3D s-&gt;mac_=
+reg[RDT] &amp;&amp; s-&gt;last_overrun)<br>
+|@@ -1022,6 +1025,9 @@ e1000_receive_iov(NetClientState *nc, const struct i=
+ovec *iov, int iovcnt)<br>
+|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;rxbuf_min_shift)<br>
+|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0n |=3D E1000_ICS_RXDMT0;<br>
+|<br>
+|+=C2=A0 =C2=A0 DBGOUT(RX, &quot;rxbuf_size =3D %u, s-&gt;mac_reg[RDLEN] =
+=3D %u, s-&gt;mac_reg[RDH] =3D %u, s-&gt;mac_reg[RDT] =3D %u\n&quot;,<br>
+|+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;rxbuf_size, s-&gt;mac_reg[=
+RDLEN], s-&gt;mac_reg[RDH], s-&gt;mac_reg[RDT]);<br>
+|+<br>
+-----------------------------------------------------------------<br>
+<br>
+The last few logs of information when the network is down:<br>
+<br>
+e1000: total_size =3D 1, rxbuf_size =3D 2048, s-&gt;mac_reg[RDLEN] =3D 1638=
+4, s-&gt;mac_reg[RDH] =3D 897, s-&gt;mac_reg[RDT] =3D 885<br>
+&lt;- the receive ring buffer is checked for fullness in the<br>
+e1000_has_rxbufs function, not full.<br>
+<br>
+e1000: total_size =3D 64, rxbuf_size =3D 2048, s-&gt;mac_reg[RDLEN] =3D 163=
+84, s-&gt;mac_reg[RDH] =3D 898, s-&gt;mac_reg[RDT] =3D 885<br>
+&lt;- RDT stays the same, RDH updates to 898, and 1 descriptor<br>
+utilized after putting the packet to ring buffer.<br>
+<br>
+e1000: total_size =3D 1, rxbuf_size =3D 2048, s-&gt;mac_reg[RDLEN] =3D 1638=
+4, s-&gt;mac_reg[RDH] =3D 898, s-&gt;mac_reg[RDT] =3D 885<br>
+&lt;- the receive ring buffer is checked for fullness in the<br>
+e1000_has_rxbufs function, not full.<br>
+<br>
+e1000: total_size =3D 64, rxbuf_size =3D 2048, s-&gt;mac_reg[RDLEN] =3D 163=
+84, s-&gt;mac_reg[RDH] =3D 899, s-&gt;mac_reg[RDT] =3D 885<br>
+&lt;- RDT stays the same, RDH updates to 899, and 1 descriptor<br>
+utilized after putting the packet to ring buffer.<br>
+<br>
+e1000: total_size =3D 1, rxbuf_size =3D 2048, s-&gt;mac_reg[RDLEN] =3D 1638=
+4, s-&gt;mac_reg[RDH] =3D 899, s-&gt;mac_reg[RDT] =3D 885<br>
+&lt;- the receive ring buffer is checked for fullness in the<br>
+e1000_has_rxbufs function, not full.<br>
+<br>
+e1000: total_size =3D 64, rxbuf_size =3D 2048, s-&gt;mac_reg[RDLEN] =3D 163=
+84, s-&gt;mac_reg[RDH] =3D 900, s-&gt;mac_reg[RDT] =3D 885<br>
+&lt;- RDT stays the same, RDH updates to 900 , and 1 descriptor<br>
+utilized after putting the packet to ring buffer.<br>
+<br>
+e1000: total_size =3D 1, rxbuf_size =3D 2048, s-&gt;mac_reg[RDLEN] =3D 1638=
+4, s-&gt;mac_reg[RDH] =3D 900, s-&gt;mac_reg[RDT] =3D 900<br>
+&lt;- The ring is full, according to e1000_has_rxbufs, because<br>
+of the RDT update to 900 and equals RDH ! But in reality,<br>
+the state of the ring buffer is empty because the producer<br>
+only used one descriptor the last time, and the ring buffer<br>
+was not full after that.<br>
+<br>
+To sum up, QEMU claims that the receive ring buffer is full<br>
+in the aforementioned scenario, placing the packet in the<br>
+self-maintained queue and unregistering the tap device&#39;s<br>
+readable fd handler and then waiting for the guest to consume<br>
+the receive ring buffer. This brings down the network since<br>
+guests have nothing to consume and never update the RDT<br>
+location.<br>
+<br>
+In the above scenario, QEMU assert that the ring is full,<br>
+put the packet on the queue, unregister the readable fd<br>
+handler of the tap device, waiting the guest to consume<br>
+the receive ring. While, guest have nothing to consume<br>
+on the receive ring and never update the RDT location,<br>
+this makes the network down.<br>
+<br>
+To get around this issue, just mark the overrun if RDH<br>
+equals RDT at the end of placing the packet on the ring<br>
+buffer for the producer.<br>
+<br>
+Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" tar=
+get=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+---<br>
+=C2=A0hw/net/e1000.c | 22 ++++++++++++++++++++--<br>
+=C2=A01 file changed, 20 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/hw/net/e1000.c b/hw/net/e1000.c<br>
+index 5012b96464..f80cb70283 100644<br>
+--- a/hw/net/e1000.c<br>
++++ b/hw/net/e1000.c<br>
+@@ -126,6 +126,12 @@ struct E1000State_st {<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0QEMUTimer *flush_queue_timer;<br>
+<br>
++=C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0* Indicate that the receive circular buffer queue over=
+run<br>
++=C2=A0 =C2=A0 =C2=A0* the last time hardware produced packets.<br>
++=C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 bool last_overrun;<br>
++<br>
+=C2=A0/* Compatibility flags for migration to/from qemu 1.3.0 and older */<=
+br>
+=C2=A0#define E1000_FLAG_MAC_BIT 2<br>
+=C2=A0#define E1000_FLAG_TSO_BIT 3<br>
+@@ -832,7 +838,12 @@ static bool e1000_has_rxbufs(E1000State *s, size_t tot=
+al_size)<br>
+=C2=A0 =C2=A0 =C2=A0int bufs;<br>
+=C2=A0 =C2=A0 =C2=A0/* Fast-path short packets */<br>
+=C2=A0 =C2=A0 =C2=A0if (total_size &lt;=3D s-&gt;rxbuf_size) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 return s-&gt;mac_reg[RDH] !=3D s-&gt;mac_reg[R=
+DT];<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (s-&gt;mac_reg[RDH] =3D=3D s-&gt;mac_reg[RD=
+T] &amp;&amp; s-&gt;last_overrun) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 DBGOUT(RX, &quot;Receive ring buffer is not fu=
+ll unexpectedly!\n&quot;);<br></blockquote><div><br></div><div><div class=
+=3D"gmail_default"><span style=3D"font-family:&quot;comic sans ms&quot;,san=
+s-serif">I&#39;ll drop thi</span><font face=3D"comic sans ms, sans-serif">s=
+=C2=A0DBGOUT in the</font><span style=3D"font-family:&quot;comic sans ms&qu=
+ot;,sans-serif">=C2=A0next version now that </span><font face=3D"comic sans=
+ ms, sans-serif">&quot;treat RX ring with RDH =3D=3D RDT as empty&quot;</fo=
+nt></div><div class=3D"gmail_default"><font face=3D"comic sans ms, sans-ser=
+if">is=C2=A0</font><span style=3D"font-family:&quot;comic sans ms&quot;,san=
+s-serif">the expected and original conclusion in commit:</span></div><div s=
+tyle=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_de=
+fault"><br></div><div style=3D"font-family:&quot;comic sans ms&quot;,sans-s=
+erif" class=3D"gmail_default"><span style=3D"font-family:Arial,Helvetica,sa=
+ns-serif">commit e5b8b0d4ba29fe1268ba049519a1b0</span><span style=3D"font-f=
+amily:Arial,Helvetica,sans-serif">cf8552a21a</span><br style=3D"font-family=
+:Arial,Helvetica,sans-serif"><span style=3D"font-family:Arial,Helvetica,san=
+s-serif">Author: Dmitry Fleytman &lt;</span><a href=3D"mailto:dmitry@daynix=
+.com" target=3D"_blank" style=3D"font-family:Arial,Helvetica,sans-serif">dm=
+itry@daynix.com</a><span style=3D"font-family:Arial,Helvetica,sans-serif">&=
+gt;</span><br style=3D"font-family:Arial,Helvetica,sans-serif"><span style=
+=3D"font-family:Arial,Helvetica,sans-serif">Date:=C2=A0 =C2=A0Fri Oct 19 07=
+:56:55 2012 +0200</span><br style=3D"font-family:Arial,Helvetica,sans-serif=
+"><br style=3D"font-family:Arial,Helvetica,sans-serif"><span style=3D"font-=
+family:Arial,Helvetica,sans-serif">=C2=A0 =C2=A0 e1000: drop check_rxov, al=
+ways treat RX ring with RDH =3D=3D RDT as empty</span><br style=3D"font-fam=
+ily:Arial,Helvetica,sans-serif"><br style=3D"font-family:Arial,Helvetica,sa=
+ns-serif"><span style=3D"font-family:Arial,Helvetica,sans-serif">=C2=A0 =C2=
+=A0 Real HW always treats RX ring with RDH =3D=3D RDT as empty.</span><br s=
+tyle=3D"font-family:Arial,Helvetica,sans-serif"><span style=3D"font-family:=
+Arial,Helvetica,sans-serif">=C2=A0 =C2=A0 Emulation is supposed to behave t=
+he same.</span><br style=3D"font-family:Arial,Helvetica,sans-serif"><br sty=
+le=3D"font-family:Arial,Helvetica,sans-serif"><span style=3D"font-family:Ar=
+ial,Helvetica,sans-serif">=C2=A0 =C2=A0 Reported-by: Chris Webb &lt;</span>=
+<a href=3D"mailto:chris.webb@elastichosts.com" target=3D"_blank" style=3D"f=
+ont-family:Arial,Helvetica,sans-serif">chris.webb@elastichosts.com</a><span=
+ style=3D"font-family:Arial,Helvetica,sans-serif">&gt;</span><br style=3D"f=
+ont-family:Arial,Helvetica,sans-serif"><span style=3D"font-family:Arial,Hel=
+vetica,sans-serif">=C2=A0 =C2=A0 Reported-by: Richard Davies &lt;</span><a =
+href=3D"mailto:richard.davies@elastichosts.com" target=3D"_blank" style=3D"=
+font-family:Arial,Helvetica,sans-serif">richard.davies@elastichosts.com</a>=
+<span style=3D"font-family:Arial,Helvetica,sans-serif">&gt;</span><br style=
+=3D"font-family:Arial,Helvetica,sans-serif"><span style=3D"font-family:Aria=
+l,Helvetica,sans-serif">=C2=A0 =C2=A0 Signed-off-by: Dmitry Fleytman &lt;</=
+span><a href=3D"mailto:dmitry@daynix.com" target=3D"_blank" style=3D"font-f=
+amily:Arial,Helvetica,sans-serif">dmitry@daynix.com</a><span style=3D"font-=
+family:Arial,Helvetica,sans-serif">&gt;</span><br style=3D"font-family:Aria=
+l,Helvetica,sans-serif"><span style=3D"font-family:Arial,Helvetica,sans-ser=
+if">=C2=A0 =C2=A0 Signed-off-by: Stefan Hajnoczi &lt;</span><a href=3D"mail=
+to:stefanha@redhat.com" target=3D"_blank" style=3D"font-family:Arial,Helvet=
+ica,sans-serif">stefanha@redhat.com</a><span style=3D"font-family:Arial,Hel=
+vetica,sans-serif">&gt;</span></div></div><div>=C2=A0</div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;b=
+order-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex"=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return true;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0if (s-&gt;mac_reg[RDH] &lt; s-&gt;mac_reg[RDT]) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bufs =3D s-&gt;mac_reg[RDT] - s-&gt;mac_r=
+eg[RDH];<br>
+@@ -840,7 +851,12 @@ static bool e1000_has_rxbufs(E1000State *s, size_t tot=
+al_size)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0bufs =3D s-&gt;mac_reg[RDLEN] /=C2=A0 siz=
+eof(struct e1000_rx_desc) +<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;mac_reg[RDT] - s-&gt;=
+mac_reg[RDH];<br>
+=C2=A0 =C2=A0 =C2=A0} else {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (s-&gt;last_overrun) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 DBGOUT(RX, &quot;Receive ring buffer is not fu=
+ll unexpectedly!\n&quot;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return true;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0return total_size &lt;=3D bufs * s-&gt;rxbuf_size;<br>
+=C2=A0}<br>
+@@ -999,6 +1015,8 @@ e1000_receive_iov(NetClientState *nc, const struct iov=
+ec *iov, int iovcnt)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0e1000x_update_rx_total_stats(s-&gt;mac_reg, pkt_type, s=
+ize, total_size);<br>
+<br>
++=C2=A0 =C2=A0 s-&gt;last_overrun =3D (s-&gt;mac_reg[RDH] =3D=3D s-&gt;mac_=
+reg[RDT]) ? true : false;<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0n =3D E1000_ICS_RXT0;<br>
+=C2=A0 =C2=A0 =C2=A0if ((rdt =3D s-&gt;mac_reg[RDT]) &lt; s-&gt;mac_reg[RDH=
+])<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rdt +=3D s-&gt;mac_reg[RDLEN] / sizeof(de=
+sc);<br>
+-- <br>
+2.39.1<br>
+<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
+</div></div></div>
+
+--000000000000902076061cb5a508--
 
