@@ -4,58 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9A5DC3DA42
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 09:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03EAC3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 09:28:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQkVE-0001Vq-5P; Mon, 08 Jul 2024 05:17:45 -0400
+	id 1sQkeY-0000AZ-5W; Mon, 08 Jul 2024 05:27:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <13824125580@163.com>)
- id 1sQkUl-0001Qx-VP
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 05:17:19 -0400
-Received: from m16.mail.163.com ([117.135.210.2])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <13824125580@163.com>) id 1sQkUi-0003jT-Tw
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 05:17:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
- Message-ID; bh=9BE3M36HCQfzhr2eyakQOuAMQxsub9eO4TT0TRw7AYc=; b=S
- lZ+sZzI4m1tDpdrRyWTd0QPUpMdp0+24VLRJF2jnGlGfm43JN4PI+1H1MAlqzMWn
- 6OjuPol1VSOhTi0QdsCbIDqh/sIaOzioe7syp6zVxAg5tQjA2wZ5fQZsbA3WswOe
- x1QXK6J3+K+CPvRvnELJ8/kDdXakbscyz1IgnpPdVI=
-Received: from 13824125580$163.com ( [14.125.52.22] ) by
- ajax-webmail-wmsvr-40-123 (Coremail) ; Mon, 8 Jul 2024 17:16:57 +0800 (CST)
-X-Originating-IP: [14.125.52.22]
-Date: Mon, 8 Jul 2024 17:16:57 +0800 (CST)
-From: tugouxp <13824125580@163.com>
-To: qemu-devel@nongnu.org
-Subject: Now, Can  the Device That Pass-through to The Guest Linux OS use
- "iommu" again to map its own device iova?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-X-NTES-SC: AL_Qu2ZAviYv0oq4SSbZ+kfmk0UgOs5WcS2vPUm24ReO5FwjAnp9Ck7eVVGEGbP3OKFCR+zvR2STilHzOlhfIdDQpMkgV+pLVyYJbFld991ocH0ag==
-Content-Type: multipart/alternative; 
- boundary="----=_Part_145003_1350236499.1720430217436"
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sQkeM-0008Vz-Je
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 05:27:13 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sQkeL-0005dh-3N
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 05:27:10 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-57ccd1111aeso4708037a12.0
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 02:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720430827; x=1721035627; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Ga+Ta1L8WckIlByEL4NKaVCsySeBSp2lgHQDCsyQkTU=;
+ b=eZ/yqIVkUy2fWu0ErzoZSPh2M3d7lRwE7hFj6DdzS3/HzHHaOc8rLsLwm4Rd1xo9x8
+ y16rMRfLH2+0Y7GptAVPb9XVnalcS5IiQFqzv2FrxS1IDlTktK6P6XUskZcxKAMWJwCK
+ PDzuXSxzBNK3Rs7Y7F2tH2ek4PgZQhcIHnxrYkFjFjLJEfQ5vPrNhmRm5eg6R5CRAghx
+ FFTuZa7DHW2SzKhEbAgsuDvnmK9vsv0rVKDHn37E9Cln3EUTZZHoSwuG2Unf5BNy2JpO
+ vChKVgPQ+THfzmRA86q7IUpV6CxIIaNBGeuRK1m99z74U4XdZ6NkriOstQJ/C1gAUP7s
+ Z3mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720430827; x=1721035627;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ga+Ta1L8WckIlByEL4NKaVCsySeBSp2lgHQDCsyQkTU=;
+ b=sNwuLjp44XuGZYQgjfQu9goatNjh0cXwyd14M/sDuwP/y2V13IEQlkmdIPaviCMuBD
+ /ME1pBXcpgUXxmZwa7agqqA3y97UJPZfja7FoDCtpbFNna+siDB8FzhXW6I+pGCZ0W6k
+ 5tX5AHCUQefmAJXL76+AEs/WDiYQqW6wozWBEAYTWbV+SN7LAXSrABs5PuEwJRNG87N9
+ B4Q4umrhsKeKBS9WVozJWnLgrRr27ckg1GouqFEJ04e61wePrn6COCEd6saePyDaucvp
+ s+WKMTYuhnUuh00V+lt3GQylPmUyJ11aO9jDkxTqyi+vZx+fZ0KmVZQXVx1ynVEWj7Qe
+ UC9Q==
+X-Gm-Message-State: AOJu0YyAd9nM5FDRvpSJgnbgDeMrhppoYhr1qgaGwg4Ol56EzjXBIiyV
+ 6329BfQEliVm8rJk0t7L7mxNU6KkFy4YTd+HerJYAqTpSB37aapMpTQ5IfZv6g4=
+X-Google-Smtp-Source: AGHT+IHgq70MasG5948pSIEWXGJBR/uovzs0Tx/jl4hpM/PYRU0Ui80H08jRi/fwzSF5uxD7x7tjng==
+X-Received: by 2002:a05:6402:5114:b0:57c:6234:e95b with SMTP id
+ 4fb4d7f45d1cf-58e5a6ef55fmr8358621a12.5.1720430826733; 
+ Mon, 08 Jul 2024 02:27:06 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-58de8fe6322sm5467729a12.53.2024.07.08.02.27.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jul 2024 02:27:06 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 39B475F7A1;
+ Mon,  8 Jul 2024 10:27:05 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Yanan Wang <wangyanan55@huawei.com>,  Xingtao Yao
+ <yaoxt.fnst@fujitsu.com>
+Subject: Re: [PATCH v6 1/7] plugins: fix mem callback array size
+In-Reply-To: <20240706191335.878142-2-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Sat, 6 Jul 2024 12:13:29 -0700")
+References: <20240706191335.878142-1-pierrick.bouvier@linaro.org>
+ <20240706191335.878142-2-pierrick.bouvier@linaro.org>
+Date: Mon, 08 Jul 2024 10:27:05 +0100
+Message-ID: <87v81gtes6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Message-ID: <8d59f81.9999.19091a1c8dc.Coremail.13824125580@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: _____wD3P5qJrotm08ElAA--.45671W
-X-CM-SenderInfo: bprtmjyurskkiyq6il2tof0z/1tbiZR8WQmXAm5f6vwADsB
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-Received-SPF: pass client-ip=117.135.210.2; envelope-from=13824125580@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
- FROM_LOCAL_HEX=0.006, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_BL=0.001, RCVD_IN_MSPIKE_L4=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,47 +102,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------=_Part_145003_1350236499.1720430217436
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-SGVsbG8gZm9sa3M6CiAgb24gZGV2aWNlIHBhc3MtdGhyb3VnaCBzY2VuYXJpb3MsIGEgZGV2aWNl
-IGNhbiBiZSBwYXNzLXRocm91ZWQgdGhyb3VkIGlvbW11IGJ5IG1ha2luZyBhIGR1cGxpY2F0ZSBw
-YWdlIHRhYmxlIChJT1ZBLCBIUEEpIHdpdGggdGhlIFZDUFUgbWFwKEdQQSxIUEEpLCBidXQgdGhl
-IGRldmljZSBpbiB0aGUgZ3Vlc3Qgb3MgY2FudCB1c2VkIGlvbW11IGFnYWluCnRvIG1ha2UgaXRz
-IG93biBtYXAgbGlrZSBpbiBIT1NUIE9TLiB0aGF0IGNhbiBiZSBjYWN1bGF0ZWQgdGhyb3VnaCB0
-d28gd2F5czoKMS4gZG1lc2d8Z3JlcCAtaSBpb21tdQoyLiBwcmludGsgdGhlIHN0cnVjdCBidXN5
-X3R5cGUtPmlvbW11X29wcy4Kd2hpY2ggdGhlIGZpcnN0IG9uZSBzaG93cyB0aGUgaW9tbXUgY2Fu
-dCBvcGVuIGluIHZtLiBhbmQgdGhlIGxhdGVyIHNob3dzIHRoZXJlIGFyZSBubyBpb21tdSBvcHMg
-YmluZ2RpbmcgdG8gZGV2aWNlIGRyaXZlci4KCgpTbywgaXMgdGhpcyB0aGUgZ2VuZXJhbCBjYXNl
-IG9uIHByZXNlbnQgZGV2aWNlIHZpcnR1YWxpemF0aW9uPyBpZiBzbyAsIGRpZCB0aGlzIG1lYW5z
-IGFsdGhvdWcgd2UgY2FuIGRvIGEgbmVzdCB2aXJ0dWFsbGl6YXRpb24gb24gQ1BVLCBidXQgd2Ug
-c3RpbGwgY2FudCBkbyB0aGUgZGV2aWNlIG5lc3QgdmlydHVhbHphdGlvbiBwcmVzZW50PyAgdGhh
-bmsgeW91ciB5b3VyIGtpbmRseSBoZWxwLgoKCkJScwp6bGNhby4=
-------=_Part_145003_1350236499.1720430217436
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+> data was correctly copied, but size of array was not set
+> (g_array_sized_new only reserves memory, but does not set size).
+>
+> As a result, callbacks were not called for code path relying on
+> plugin_register_vcpu_mem_cb().
+>
+> Found when trying to trigger mem access callbacks for atomic
+> instructions.
+>
+> Reviewed-by: Xingtao Yao <yaoxt.fnst@fujitsu.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjowOyI+SGVsbG8gZm9sa3M6PC9k
-aXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij4mbmJzcDsgb24gZGV2aWNlIHBhc3MtdGhyb3VnaCBz
-Y2VuYXJpb3MsIGEgZGV2aWNlIGNhbiBiZSBwYXNzLXRocm91ZWQgdGhyb3VkIGlvbW11IGJ5IG1h
-a2luZyBhIGR1cGxpY2F0ZSBwYWdlIHRhYmxlIChJT1ZBLCBIUEEpIHdpdGggdGhlIFZDUFUgbWFw
-KEdQQSxIUEEpLCBidXQgdGhlIGRldmljZSBpbiB0aGUgZ3Vlc3Qgb3MgY2FudCB1c2VkIGlvbW11
-IGFnYWluPC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij50byBtYWtlIGl0cyBvd24gbWFwIGxp
-a2UgaW4gSE9TVCBPUy4gdGhhdCBjYW4gYmUgY2FjdWxhdGVkIHRocm91Z2ggdHdvIHdheXM6PC9k
-aXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij4xLiBkbWVzZ3xncmVwIC1pIGlvbW11PC9kaXY+PGRp
-diBzdHlsZT0ibWFyZ2luOjA7Ij4yLiBwcmludGsgdGhlIHN0cnVjdCBidXN5X3R5cGUtJmd0O2lv
-bW11X29wcy48L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPndoaWNoIHRoZSBmaXJzdCBvbmUg
-c2hvd3MgdGhlIGlvbW11IGNhbnQgb3BlbiBpbiB2bS4gYW5kIHRoZSBsYXRlciBzaG93cyB0aGVy
-ZSBhcmUgbm8gaW9tbXUgb3BzIGJpbmdkaW5nIHRvIGRldmljZSBkcml2ZXIuPC9kaXY+PGRpdiBz
-dHlsZT0ibWFyZ2luOjA7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij5TbywgaXMg
-dGhpcyB0aGUgZ2VuZXJhbCBjYXNlIG9uIHByZXNlbnQgZGV2aWNlIHZpcnR1YWxpemF0aW9uPyBp
-ZiBzbyAsIGRpZCB0aGlzIG1lYW5zIGFsdGhvdWcgd2UgY2FuIGRvIGEgbmVzdCB2aXJ0dWFsbGl6
-YXRpb24gb24gQ1BVLCBidXQgd2Ugc3RpbGwgY2FudCBkbyB0aGUgZGV2aWNlIG5lc3QgdmlydHVh
-bHphdGlvbiBwcmVzZW50PyZuYnNwOyB0aGFuayB5b3VyIHlvdXIga2luZGx5IGhlbHAuPC9kaXY+
-PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOjA7Ij5C
-UnM8L2Rpdj48ZGl2IHN0eWxlPSJtYXJnaW46MDsiPnpsY2FvLjwvZGl2PjwvZGl2Pg==
-------=_Part_145003_1350236499.1720430217436--
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
