@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF081C3DA42
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 06:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21843C3DA45
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 06:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQiIu-0002cR-2e; Mon, 08 Jul 2024 02:56:52 -0400
+	id 1sQiIo-00023j-En; Mon, 08 Jul 2024 02:56:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sQiIr-0002Oi-Ce
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 02:56:50 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1sQiIn-0001uA-7r
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 02:56:45 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sQiIp-0001xd-QV
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 02:56:49 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-73aba5230b6so2253738a12.1
- for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 23:56:47 -0700 (PDT)
+ id 1sQiIj-0001wP-Qh
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 02:56:43 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7276c331f78so2971611a12.0
+ for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 23:56:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720421806; x=1721026606;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1720421800; x=1721026600;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=MN/3EfVBXv6jlnRXRpQP7cJiMDwiSYrMczZXVrsioJo=;
- b=CVHIBlG6ZYWbm6eW/FFo4zw6tgCIxUd4I8YE1vobOK1hismy1p1kXvIXr7+y804g+Y
- T2vGjxo9c0D14yqxSYy7X/N/h8uh5gZfmxPI2+YUMkA9TTGoXzGFzuc6sTcXIuN5atRj
- 5a59DXKScNUlUk1VYgMi/zM+c1Yn7ab8XT5OnaZDcpsEvTJ7RAaMSgssCNVV9nDAXZG4
- pt1wEW80x4oMjAsgfnIhHjubT9YGgtHPr9llmoeHAnf9QKopChZmBiuqwHJrnAuUyRar
- XzjBXFgCJapN7GzFfREuHC0X9BpfKqI3Q77MVec0FMrqxnqlQR5m6n+3nXI0pqYjjpcE
- Q80g==
+ :reply-to; bh=tLjKua6/1Hq2H1WMYp9C0UeVmJOmPJCabCtwzxYyu/w=;
+ b=DVN8qqyoedF0LwyM5e6XliCbYOd7wEqHOrZuUXy2nsJGEkFSn/7Rx7uB0It69yFUKF
+ ZT1+saYscXc/yduH+61iKXb1AW+fEgSz7JXNL+2CvIam5smUjxLjxihHf2OjyERf7SRk
+ dyrevOjqoTJXEiyO+9QEGIOOI+EdURNBKn0cZLAZVFirA/WE2w7I3TVTvHsZtzrqyTqL
+ wk1KUkJzQ++lxmCnv6uuIUwaozD9uml+w0LJwrMkvp/aVBNstvOya15I+s+UHNKLqu/z
+ ppTX5i7KeyCaMPjAvMfo/jioC/f0w5QrKK5pv543px/dR9t81FOSfl5IjwwjjZMGoyze
+ 7BDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720421806; x=1721026606;
+ d=1e100.net; s=20230601; t=1720421800; x=1721026600;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MN/3EfVBXv6jlnRXRpQP7cJiMDwiSYrMczZXVrsioJo=;
- b=OiWYn4L0jnu9JQamA06weQ1HLmFWMxAjQN6KqaQg5CBwWUKJbA6iS8n2EchYLrQkAz
- nvwdCFvLeK7Hdv8WDAc9S48FfAtDwvqoHJZEaw70R096jQJCpzi8qJ0zYoeUuEjfUKdY
- NesMObdvN1J5osYF3mKSJ4hzawwTFeYoqO8G/vF2g+QYTSLaM5OG7r0sVk7NBphZaUky
- pn9gGlI3GNU0nLcb6LxLm63IgIlBPo0wLOWBHdC3Wq/ZpLJkxxCFO24EQ8jKAAq/NbEa
- FvrotpmeFy5FkqJansnsuc8F0NfENni1YvEgoCt6uWxVcO1IDsCym6J0NBxihF8/ILUk
- gO3w==
-X-Gm-Message-State: AOJu0YzUCYeDsz5r+zMVuYubAzT7oc97UD8qtoqni/683QSzb6lPKesA
- It0sGOxjFzVgQ0aRWJER5uEXUSF8P5SRzAH3ZJYeiyVHzFKcloTbz6hxscfFjQw=
-X-Google-Smtp-Source: AGHT+IHP6b2+9XmIFVTQc3FtbQmi+g9ayoGwvJXvh/X9w5iLuVeTzCzpwSPN6ELi+UNELouIc67xUg==
-X-Received: by 2002:a05:6a20:cfa3:b0:1bd:2c3d:ccae with SMTP id
- adf61e73a8af0-1c0cd203e34mr14896527637.29.1720421806264; 
- Sun, 07 Jul 2024 23:56:46 -0700 (PDT)
+ bh=tLjKua6/1Hq2H1WMYp9C0UeVmJOmPJCabCtwzxYyu/w=;
+ b=RxFL3LblFj9uUuFtO/VlBFPALgt10ze5wM7US2cxGDXw/72/sFxiqubyJsiKWnbODr
+ DXklxN0H126SJppx7Yy7P+4ZdkMUKYF9Z3RPEhimfuCZ2CINKFyjtfLb9k+BOoxQa5vK
+ d7cdgZpw3WC9TXyi7yudgkRUJISFrN8KOhAzxixthrZTwRxZXiDGrTBil1M2YsQAfK8A
+ ZfbXO3oR3QpYETMVs4DPH1oob6au4leFaKgp5sK6ROk3jN4fL75PsJEioEmcFunGb7RE
+ wHqRgcw3WULXOAc5H5T7HIF7Y/WaV3QiTbky7vTs2JmOkTSlNUg4L8+7KEiJwFv9SOiT
+ 67GA==
+X-Gm-Message-State: AOJu0YzJbTXHnX8NbEh7kjph32KM2rsW6KuHcN4H+Wgs+vLclqUL4Ixm
+ Bqh1YuWEXp4EQ+5EjNXUcR5TQp4glTalnScJPqWwbKioJAa7I2NA066cYJNQv4g=
+X-Google-Smtp-Source: AGHT+IGimfWqqHnSqOntC/f3ozquovyx9nC2f2NQCfqeGesCHlONjh70lg+bYJV2RrwbgWKdHUVV5g==
+X-Received: by 2002:a05:6a20:a123:b0:1c0:eba5:e19d with SMTP id
+ adf61e73a8af0-1c0eba5e35bmr7575031637.18.1720421800288; 
+ Sun, 07 Jul 2024 23:56:40 -0700 (PDT)
 Received: from localhost ([157.82.204.135])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-70b27349696sm2284625b3a.75.2024.07.07.23.56.41
+ 41be03b00d2f7-72c6d1f77bcsm14717594a12.79.2024.07.07.23.56.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 07 Jul 2024 23:56:46 -0700 (PDT)
+ Sun, 07 Jul 2024 23:56:40 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 08 Jul 2024 15:55:20 +0900
-Subject: [PATCH v3 9/9] tests/qtest: Delete previous boot file
+Date: Mon, 08 Jul 2024 15:55:19 +0900
+Subject: [PATCH v3 8/9] memory: Do not create circular reference with subregion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240708-san-v3-9-b03f671c40c6@daynix.com>
+Message-Id: <20240708-san-v3-8-b03f671c40c6@daynix.com>
 References: <20240708-san-v3-0-b03f671c40c6@daynix.com>
 In-Reply-To: <20240708-san-v3-0-b03f671c40c6@daynix.com>
 To: Eduardo Habkost <eduardo@habkost.net>, 
@@ -84,14 +84,14 @@ To: Eduardo Habkost <eduardo@habkost.net>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::52a;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,57 +107,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A test run may create boot files several times. Delete the previous boot
-file before creating a new one.
+memory_region_update_container_subregions() calls memory_region_ref()
+on behalf of the owner of the container. memory_region_ref() must not
+be called if the owner of the container also owns the subregion.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/migration-test.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ system/memory.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 70b606b88864..6c06100d91e2 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -144,12 +144,23 @@ static char *bootpath;
- #include "tests/migration/ppc64/a-b-kernel.h"
- #include "tests/migration/s390x/a-b-bios.h"
+diff --git a/system/memory.c b/system/memory.c
+index 2d6952136066..09c98042e443 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2625,7 +2625,10 @@ static void memory_region_update_container_subregions(MemoryRegion *subregion)
  
-+static void bootfile_delete(void)
-+{
-+    unlink(bootpath);
-+    g_free(bootpath);
-+    bootpath = NULL;
-+}
-+
- static void bootfile_create(char *dir, bool suspend_me)
- {
-     const char *arch = qtest_get_arch();
-     unsigned char *content;
-     size_t len;
+     memory_region_transaction_begin();
  
-+    if (bootpath) {
-+        bootfile_delete();
+-    memory_region_ref(subregion);
++    if (mr->owner != subregion->owner) {
++        memory_region_ref(subregion);
 +    }
 +
-     bootpath = g_strdup_printf("%s/bootsect", dir);
-     if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
-         /* the assembled x86 boot sector should be exactly one sector large */
-@@ -177,13 +188,6 @@ static void bootfile_create(char *dir, bool suspend_me)
-     fclose(bootfile);
+     QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
+         if (subregion->priority >= other->priority) {
+             QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
+@@ -2683,7 +2686,11 @@ void memory_region_del_subregion(MemoryRegion *mr,
+         assert(alias->mapped_via_alias >= 0);
+     }
+     QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
+-    memory_region_unref(subregion);
++
++    if (mr->owner != subregion->owner) {
++        memory_region_unref(subregion);
++    }
++
+     memory_region_update_pending |= mr->enabled && subregion->enabled;
+     memory_region_transaction_commit();
  }
- 
--static void bootfile_delete(void)
--{
--    unlink(bootpath);
--    g_free(bootpath);
--    bootpath = NULL;
--}
--
- /*
-  * Wait for some output in the serial output file,
-  * we get an 'A' followed by an endless string of 'B's
 
 -- 
 2.45.2
