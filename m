@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5303C38150
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 01:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 151D8C38150
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 01:32:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQdDN-0007qM-4t; Sun, 07 Jul 2024 21:30:49 -0400
+	id 1sQdEu-0003Ek-5r; Sun, 07 Jul 2024 21:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sQdDM-0007pn-0T
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 21:30:48 -0400
-Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sQdEp-0003Ax-UM; Sun, 07 Jul 2024 21:32:19 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sQdDK-00016X-DW
- for qemu-devel@nongnu.org; Sun, 07 Jul 2024 21:30:47 -0400
-Received: by mail-vs1-xe31.google.com with SMTP id
- ada2fe7eead31-48fde375918so676712137.1
- for <qemu-devel@nongnu.org>; Sun, 07 Jul 2024 18:30:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sQdEo-0001aM-6C; Sun, 07 Jul 2024 21:32:19 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-706a1711ee5so1828547b3a.0; 
+ Sun, 07 Jul 2024 18:32:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720402243; x=1721007043; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wUAsrnG2zBlfGXNtNQ7IEvf7WUzmBGMcnhOfaa9DpBA=;
- b=nDnT8rwtQ8XVCiSzVv2uYFrHpodk2HJ5/Im0/5hufqJxYVcJVg1EBTzBld9m2Q6jum
- aI/dlHwe3K4UPEcF3I2WCW44vm1hAVl0IKw46BDfiFgyhXqN4T6j1oJ+Am+pAhAp/Z83
- tXk9ornmpoK9uyUpzoqshPad3UVcXCSoBiOx3zKjeRVdQBB29u3RrOkQWOjmboMH4GJu
- hbnEK5pos8eBuonIeUNlHRsworidrqoh9oQ5MDqgsQuazwmHhrGl8JhejRh3GciBC22D
- q/NMmb2r8ClOfhRR/wWAIn93gJH2uRO6rT6//rLxnigArMXZpJO/KauAWSfC3tF7QPZi
- c27Q==
+ d=gmail.com; s=20230601; t=1720402334; x=1721007134; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=w22szoAG675Q8ABHy9DYD9nwmRV07dPGYZPauXiWGdM=;
+ b=c9ozO+R2jFQTKZoSsarbRyiIq/q/nULRmqLsFTMv9NO6U5JnJhS8zP1V4ZGTiGvYD5
+ 086z4fi810vnhzOhrsk2eU4ysimmuqDM9wK1x8ae5Aj7OJnQgjYy8USGUCp38hQH1c7Y
+ fxbr6vCKYUB5tUAwwd1jhdMuzxT0LLC3jqqS++XLv+Sy3G0igGmem5WYSnkrgUdZvpzO
+ ysCUczXxMgLLEioVg2b482ARJv0v9vLBh14hR9rgdUlio8whnhP+8sigAasYnfK5/3hT
+ 6VpaGJivXfFI9dQAEKr6+sQVDciso6J2d5FUGohzeCaW6t1YyeR49vIQQYGYO4Jwkde0
+ XU7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720402243; x=1721007043;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wUAsrnG2zBlfGXNtNQ7IEvf7WUzmBGMcnhOfaa9DpBA=;
- b=p1C9d9J1FrxUgj7Jf5YzWwxOBGkiH1MU9e8oIQmomlB/1XNCTxkKLa0LVn0N9UF6D4
- IMkgd63MzOkLWONbxQ0z3kNiqhmzO/nX/9YlE8kg5iaYNrwC0mYHi1+RE3BJmZhzV5RL
- EADI6vHdyfcPXGYz4Rqy1vf0ZGQX92u6CGg8u+DEjCVir6XlV8Suv4m86JIKaU7QJr2Q
- JIfQIjE+GcCS4RmRYRNHLrcm5WLEwvg4txcEloI63rdCKgKCdT+VmfBMSv2BT/4/aDmi
- 3QgCVsA3yFz/MaoRRf8jipqAJEdwgoEVXwYBf6h45HdTUWkYZtmDh257BYOt79XT9n3V
- lBSQ==
-X-Gm-Message-State: AOJu0YxyuM36WagWUAHStFn/nXwmOlHxoWCjW5BD0xeco1vNOSqo25MW
- /l9Rw4C7Uuh0mGlcU28/VDNYUjr6i89agKZ17LCI5XGyEBfZ75B1SQF4wkfACsiPb13JgXiFbkq
- hfRtyjUf65Zr/iv9Qrg/Q4CM+HJA=
-X-Google-Smtp-Source: AGHT+IGrWB3uFsZporOdMdKg9RPmf3GB1GHQgRpzo1Wc3+thoVoOJX9NKBg1XSW4IZbYf7wd0MbxbRS/FT705l9qbew=
-X-Received: by 2002:a67:b308:0:b0:48f:4d5c:69cc with SMTP id
- ada2fe7eead31-48fee6d98bfmr6736520137.11.1720402242069; Sun, 07 Jul 2024
- 18:30:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1720402334; x=1721007134;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=w22szoAG675Q8ABHy9DYD9nwmRV07dPGYZPauXiWGdM=;
+ b=O47GhtcCppko/xqzoxwqtklm1iR1PCgH4zn5FHBmxcZo/av/aC7xxlINcib7pZybi3
+ 8WLMPPb8I/rUAuHebo/1zQMpMLJRQzf4T5rjEueCvsWJuo/OIslKTU3X1U0UGll9UrPt
+ 9I2+5UytyPy+FMt469EjKL27RxA8TfftB3RgxnkbqA47VvDi4VS0HxJxDskFV9J4J88v
+ BkfGFM/v7JIlkQYhHNoPIhoYZJGKg88J5DyumO1/sqBYYsM0AGU/E7kbcAXUkDAqDR9c
+ MAHnOcj/eejMS2UYDy91OVomwSlXWMBO4E3vNjCj7ti4dvhIqyluruR7mgBWgmu8EEfn
+ cSAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWeRkF00zuP3Xjtf/qxV+jHkE1NLni6xrhAqKLamfBb/XgZFvSlQWPOZ/ULgKUOxeg9q5bLdxVky8sr3Uz1xlUvNwdQH+c=
+X-Gm-Message-State: AOJu0YwnABQ9zQj+ZPklihzuOZ4mBCc3GO2bOLI0CYclwFExy7ODCxK6
+ H40YToedzIDBwijvEwYX1LlvAvKuxlqsdqpF6JtsObN032e3Y5v64fVysgi6
+X-Google-Smtp-Source: AGHT+IGVI6snG5TZHTxnpXCYzgshFRnCpaYnS/enir40MjnMdjm3clSV+uWyvjWeRGz1ts0sRKWsIA==
+X-Received: by 2002:a05:6a21:7896:b0:1c0:ebca:ead0 with SMTP id
+ adf61e73a8af0-1c0ebcaf176mr2295342637.47.1720402334493; 
+ Sun, 07 Jul 2024 18:32:14 -0700 (PDT)
+Received: from jeuk-MS-7D42.. ([210.223.46.112])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2c99a98ac94sm6963729a91.33.2024.07.07.18.32.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 07 Jul 2024 18:32:14 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+To: qemu-devel@nongnu.org,
+	richard.henderson@linaro.org
+Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com
+Subject: [PULL 0/1] ufs queue
+Date: Mon,  8 Jul 2024 10:31:44 +0900
+Message-Id: <cover.1720402238.git.jeuk20.kim@samsung.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20240701022553.1982-1-lijiayi@eswincomputing.com>
-In-Reply-To: <20240701022553.1982-1-lijiayi@eswincomputing.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 8 Jul 2024 11:30:15 +1000
-Message-ID: <CAKmqyKMX_5rJu2b49LBdrUiP+oshUVz1Rb=3ipr2TB9+yKotPQ@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Validate the mode in write_vstvec
-To: Jiayi Li <lijiayi@eswincomputing.com>
-Cc: qemu-devel@nongnu.org, bmeng.cn@gmail.com, dbarboza@ventanamicro.com, 
- luweu1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe31.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,48 +92,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 1, 2024 at 3:42=E2=80=AFPM Jiayi Li <lijiayi@eswincomputing.com=
-> wrote:
->
-> Base on the riscv-privileged spec, vstvec substitutes for the usual stvec=
-.
-> Therefore, the encoding of the MODE should also be restricted to 0 and 1.
->
-> Signed-off-by: Jiayi Li <lijiayi@eswincomputing.com>
+From: Jeuk Kim <jeuk20.kim@samsung.com>
 
-Thanks!
+The following changes since commit b9ee1387e0cf0fba5a73a610d31cb9cead457dc0:
 
-Applied to riscv-to-apply.next
+  Merge tag 'sdmmc-20240706' of https://github.com/philmd/qemu into staging (2024-07-07 10:34:52 -0700)
 
-Alistair
+are available in the Git repository at:
 
-> ---
->  target/riscv/csr.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 432c59dc66..f9229d92ab 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -3791,7 +3791,12 @@ static RISCVException read_vstvec(CPURISCVState *e=
-nv, int csrno,
->  static RISCVException write_vstvec(CPURISCVState *env, int csrno,
->                                     target_ulong val)
->  {
-> -    env->vstvec =3D val;
-> +    /* bits [1:0] encode mode; 0 =3D direct, 1 =3D vectored, 2 >=3D rese=
-rved */
-> +    if ((val & 3) < 2) {
-> +        env->vstvec =3D val;
-> +    } else {
-> +        qemu_log_mask(LOG_UNIMP, "CSR_VSTVEC: reserved mode not supporte=
-d\n");
-> +    }
->      return RISCV_EXCP_NONE;
->  }
->
-> --
-> 2.25.1
->
->
+  https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20240708
+
+for you to fetch changes up to 6db492596dd9204e8fe341b2396472271cf15023:
+
+  hw/ufs: Fix mcq register range determination logic (2024-07-08 10:25:20 +0900)
+
+----------------------------------------------------------------
+hw/ufs:
+- Fix invalid address access in ufs_is_mcq_reg()
+
+----------------------------------------------------------------
+Jeuk Kim (1):
+      hw/ufs: Fix mcq register range determination logic
+
+ hw/ufs/ufs.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
