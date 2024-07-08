@@ -4,69 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04302C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 09:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D8E7C3271E
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 10:00:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQkxU-00058R-3V; Mon, 08 Jul 2024 05:46:56 -0400
+	id 1sQlAL-0003Xc-9W; Mon, 08 Jul 2024 06:00:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sQkxN-000578-Fi; Mon, 08 Jul 2024 05:46:51 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexei.filippov@syntacore.com>)
- id 1sQkxL-0000qZ-Et; Mon, 08 Jul 2024 05:46:49 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com A51D4C0009
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1720431999;
- bh=h9FBMue+lSJJa4CegpDfm0jQjIxBppdJ+RRVSvcvzH0=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=o80Zvw9J+1Smnj6dV6kFCzKiYu3kWlpZIOBCyfdwSsaYhTq2vUydWS20CGxa59GbN
- R17+CzwsSPcsUccFmJNwmDpHUpUCu+D8+tim7xiXN1jg7e79xAP8HrD3qLaZVU3cG+
- /OHEl0reWsrALSr/8vUXt/EomkPCzs4iUX/qfBUnePZFBT3Z+T18IIkmhPtVQUNS+u
- H1hkgFMdcaB/FRPlZFly3zD6Vl3ZZk8ftuE2mlUZqEW5yuH+IGiUlEF0ss+wezC2Nm
- DiHUSR+uHVCCH0ejYy6HnljrkbslC3kKCiNXi3KdiyVw89YzEuk183NdLBilx//hLn
- YQGy2ueqYkDIA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1720431999;
- bh=h9FBMue+lSJJa4CegpDfm0jQjIxBppdJ+RRVSvcvzH0=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=tpKUV/kcFSetdJ1u4yzQQdhPNHFBtm2Wd/7I6aSnXeoqCUKYddTpKp2/cY/FFmBnM
- 6vpQXmIiEe+cU3gxseTraoB3PoLRWkF/BfEzWAsvyF0+pHBHIrCBhljxZXgrnoQLHk
- Z/xvvyLSc4muoZqIgSbhRdmydLFcCKipPYhV6nDGqUkpO0OuYQqRj4y6VGEGSLWL73
- qPRuTvNkMZ20cQWQPAGGMqpufEGlyO6Wu1YfXNlkBVHHoCLf8zdgF8uSGXilE6Y9qh
- +rpes/Q8zn5qMoYhDN9njCkaZdryNKqw2EBW+ER6V87UV7XCCw5se8R9rHEU2M42Ic
- muyNp3DmhBwvg==
-Message-ID: <a019a09d-9549-4fa9-8b30-befb4df96fc0@syntacore.com>
-Date: Mon, 8 Jul 2024 12:46:38 +0300
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sQlAI-0003Vl-6T; Mon, 08 Jul 2024 06:00:10 -0400
+Received: from mail-io1-xd2f.google.com ([2607:f8b0:4864:20::d2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1sQlAG-0003VA-Ek; Mon, 08 Jul 2024 06:00:09 -0400
+Received: by mail-io1-xd2f.google.com with SMTP id
+ ca18e2360f4ac-7f70a708f8aso83085839f.2; 
+ Mon, 08 Jul 2024 03:00:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1720432806; x=1721037606; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4aj1sxdQuxq4aGzCcWkLz8jBmDv61PWOKKF4iZWQ4WE=;
+ b=OQhroePGuTRj8By7ahJdpBjFaHiUJiOgv0GYMjOr/9HqKYsDYrqN5/HyXC/f/zqU2r
+ VW38fGgFCGoUjaCyz2QOjeSRC4uR/I3hCa3z6D8RyGIlDBxpkSSybFWy4Y+IgERG0yam
+ 3ZT2NK7lU6GgN6RmeRV64Lqrqd0g/gVc9fDdEOdSr/Dk2YoK7S56F471GgDKUmP/uksD
+ jgCyBltkhbRHWi3at+Dr0GMTLwz3VlQ47NsVgfUQoifVYud/XZZcTyw9PokKHeHKH/80
+ GIamH5N1w/hp9aFySMEBdSPz9sw9epcU4uh1Z6xWp6/36+K/OYVeOch39cOBmIaYwjUd
+ 1+qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720432806; x=1721037606;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4aj1sxdQuxq4aGzCcWkLz8jBmDv61PWOKKF4iZWQ4WE=;
+ b=tLhDkBCLunewuN6L7jpqvxkDQyDAzAfKXn+2LxKtxTsQmLqAK/L8UgMaHS/QNTDq1z
+ 7EaM+3t6D5WweNDDUZJVUYhPnvRg8YUvqx2jjfGAKiY+qar2KLyqFWFldZWMmtLFFvPe
+ DnDhIQiqC4el+qzAYifjzd/Q4/P78O1U4Aw/lvM3ivC1veO0gAgGXaKT2HNtVOr+DphG
+ OdBUmTSJQGglB1wv+TyBWLMrjUxsFmcZtdkgbhrmRl0VsYBvl0y7yTgysuqYBaWfrVmh
+ nf/7VnGe8fiMFl7oT05F4SeJEsZ2jihm89Dh9AMrLtw85QIEmbJP49E6/tRPFXYDUNGT
+ GPrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWgUwA0EVRxg5G6k5bMME6gJur7WhlPCrnreZX9aiuu8CU8iIljVvlrYc9UEjNoaffRCWIuS2+RIXTMZj/ouqJ+UB4Odvs=
+X-Gm-Message-State: AOJu0Yzj2dSet0aQFXIUDjAlBKd7vwFBy5iaWSR8pci3JPArUovJO1+Q
+ D49HShgV1HfIO1QUzSOt/zkWY2vfAzG6ZPi26sYOSSWHxvuKCN8QzvcvESBs
+X-Google-Smtp-Source: AGHT+IFDVmnYhXBhmzjB8M/F6h/4LC1/I7Oy39ywiVwhW44kc8//L3JHZHYmdeGw2us6jXmELPxRBg==
+X-Received: by 2002:a05:6e02:18cb:b0:371:6b02:9da0 with SMTP id
+ e9e14a558f8ab-38398fd1965mr140867595ab.19.1720432805738; 
+ Mon, 08 Jul 2024 03:00:05 -0700 (PDT)
+Received: from [192.168.0.22] ([210.223.46.112])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b1f43c4dasm4074738b3a.98.2024.07.08.03.00.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jul 2024 03:00:05 -0700 (PDT)
+Message-ID: <75f0b28a-df00-41dc-b5e4-dfe384f43a4d@gmail.com>
+Date: Mon, 8 Jul 2024 19:00:01 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Add support for machine specific pmu's
- events
-To: Richard Henderson <richard.henderson@linaro.org>, <palmer@dabbelt.com>
-CC: <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
- <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>,
- <liwei1518@gmail.com>, <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
-References: <20240625144643.34733-1-alexei.filippov@syntacore.com>
- <2cb94b34-1a5f-4dc9-bec4-78c7008cd79d@linaro.org>
-Content-Language: en-US
-From: Aleksei Filippov <alexei.filippov@syntacore.com>
-Organization: Syntacore
-In-Reply-To: <2cb94b34-1a5f-4dc9-bec4-78c7008cd79d@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: T-EXCH-07.corp.yadro.com (172.17.11.57) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=alexei.filippov@syntacore.com; helo=mta-04.yadro.com
+Subject: Re: [PULL 0/1] ufs queue
+Content-Language: ko
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+To: qemu-devel@nongnu.org, richard.henderson@linaro.org
+Cc: fam@euphon.net, pbonzini@redhat.com, qemu-block@nongnu.org,
+ jeuk20.kim@samsung.com, j-young.choi@samsung.com
+References: <cover.1720402238.git.jeuk20.kim@samsung.com>
+In-Reply-To: <cover.1720402238.git.jeuk20.kim@samsung.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2f;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-io1-xd2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,56 +96,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+I'm so sorry. I forgot to add something to the patch, I'll add it and 
+resend it to you.
+Sorry again.
 
 
-On 25.06.2024 21:18, Richard Henderson wrote:
-> On 6/25/24 07:46, Alexei Filippov wrote:
->> Was added call backs for machine specific pmu events.
->> Simplify monitor functions by adding new hash table, which going to map
->> counter number and event index.
->> Was added read/write callbacks which going to simplify support for events,
->> which expected to have different behavior.
->>
->> Signed-off-by: Alexei Filippov <alexei.filippov@syntacore.com>
->> ---
->> Changes since v2:
->>         -rebased to latest master
->>   target/riscv/cpu.h |   9 +++
->>   target/riscv/csr.c |  43 +++++++++-----
->>   target/riscv/pmu.c | 139 ++++++++++++++++++++++-----------------------
->>   target/riscv/pmu.h |  11 ++--
->>   4 files changed, 115 insertions(+), 87 deletions(-)
->>
->> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
->> index 6fe0d712b4..fbf82b050b 100644
->> --- a/target/riscv/cpu.h
->> +++ b/target/riscv/cpu.h
->> @@ -374,6 +374,13 @@ struct CPUArchState {
->>       uint64_t (*rdtime_fn)(void *);
->>       void *rdtime_fn_arg;
->> +    /*machine specific pmu callback */
->> +    void (*pmu_ctr_write)(PMUCTRState *counter, uint32_t event_idx,
->> +                          target_ulong val, bool high_half);
->> +    target_ulong (*pmu_ctr_read)(PMUCTRState *counter, uint32_t event_idx,
->> +                                 bool high_half);
->> +    bool (*pmu_vendor_support)(uint32_t event_idx);
-> 
-> Do these really belong in CPUArchState, rather than RISCVCPUClass?
-> 
-> Surely there's more to this series, since these fields are never set...
-> 
-> 
-> r~
-
-Initially this callbacks was added to CPUArchState just to be along with similar 
-implementation with rdtime_fn*.
-
-Yes, you're right, there are more series to this, but, it can't be separated 
-from syntacore specific parts, which is unfortunately not ready yet to be 
-published. So, I can prepare second patch to implement PMU subsystem for virt 
-device. What do you think about it? (I'll send it in the few days).
-
--- 
-Sincerely,
-Aleksei Filippov
+On 7/8/2024 10:31 AM, Jeuk Kim wrote:
+> From: Jeuk Kim <jeuk20.kim@samsung.com>
+>
+> The following changes since commit b9ee1387e0cf0fba5a73a610d31cb9cead457dc0:
+>
+>    Merge tag 'sdmmc-20240706' of https://github.com/philmd/qemu into staging (2024-07-07 10:34:52 -0700)
+>
+> are available in the Git repository at:
+>
+>    https://gitlab.com/jeuk20.kim/qemu.git tags/pull-ufs-20240708
+>
+> for you to fetch changes up to 6db492596dd9204e8fe341b2396472271cf15023:
+>
+>    hw/ufs: Fix mcq register range determination logic (2024-07-08 10:25:20 +0900)
+>
+> ----------------------------------------------------------------
+> hw/ufs:
+> - Fix invalid address access in ufs_is_mcq_reg()
+>
+> ----------------------------------------------------------------
+> Jeuk Kim (1):
+>        hw/ufs: Fix mcq register range determination logic
+>
+>   hw/ufs/ufs.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
 
