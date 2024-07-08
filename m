@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69269C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 16:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18DC6C3DA41
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 16:52:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQrQ2-0004VD-86; Mon, 08 Jul 2024 12:40:50 -0400
+	id 1sQrah-0003ay-It; Mon, 08 Jul 2024 12:51:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sQrPr-0004PR-00
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:40:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sQrag-0003Wl-74
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:51:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sQrPj-0006fe-PT
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:40:35 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sQrae-0008SC-7D
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:51:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720456830;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1720457506;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=82QSr8yMWdaSe+3MZ74RhaXd+PtGZ+J9sQJR79iB+lE=;
- b=WFmmGOB794CVjTEL9Q/WmA1VMFYtDc2K6d9MfwQkKrvkrFPlxsP5xIJNqE82mUrb8iJZNP
- E4MDeJoxSfICms3vMyTGU8iTNdqQOY9JP3crne84mcDtNz8wzoQ9s36mshlIIesyXifOfQ
- nqMq7UQwpGRLL/b015/cVzIRDDUHZrM=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HSnd0i7P0nG6+oAmjYKaVL2/5qRtYO1496V8NqLX0b4=;
+ b=KTatiPGOayIARhR72Dtlu0mc7KtRfsl/Vcbz/MaU5BKf6l9huup4p+b/+qspG+fU5DQMOO
+ FXB+/2E2bw9slPETI5kNihZwDAk2qQgJQB1jVA9qwqkDE5bihzovVch69I+Y1JBzQAU9vH
+ BeRV/kJoR9FzqTdfmcMQmJmkgSgzf0U=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-28-QmmdWftePE-yPAMcdiv9Pg-1; Mon, 08 Jul 2024 12:40:28 -0400
-X-MC-Unique: QmmdWftePE-yPAMcdiv9Pg-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6b5dc283dcfso2169876d6.2
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 09:40:28 -0700 (PDT)
+ us-mta-347--IIVP2qiMwu4kRfIxdH9-w-1; Mon, 08 Jul 2024 12:51:45 -0400
+X-MC-Unique: -IIVP2qiMwu4kRfIxdH9-w-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3678fbf4aa7so2531859f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 09:51:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720456828; x=1721061628;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=82QSr8yMWdaSe+3MZ74RhaXd+PtGZ+J9sQJR79iB+lE=;
- b=hr5Jv3YwR5bqdtn+j10oB9gbehZunKuNhxNFa3Eto+FqZxDg0fAHhwLSL2DTRQXDSQ
- UN0htYEsxiMaMFb/JHw5kVqEAHS9KXHnPg3q3cCjhqTYW/dmZk3bBxOw+mXFDfLBmv/B
- byTNscp1uTX3bSPA+GU+n8SXet6S4XdlYYhPtCKyXjTHxwtAh5dITGZ51lMmAlg+Cul7
- 6GGfnFvs6uJn5rJj2nNZSuElatAzvk3FDprcjv4Y4kRlcWGuGw9B6sf6zBm+DPiNav7z
- ZC3BnA8NgOkq8nVJEiO5WdGVmRizH9vZOAQhc02ODDb3WXwJJfPpHxb3Mimlc0lYxOb5
- QQhg==
+ d=1e100.net; s=20230601; t=1720457503; x=1721062303;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HSnd0i7P0nG6+oAmjYKaVL2/5qRtYO1496V8NqLX0b4=;
+ b=SmIaihDYHsgC2OldPfJsmOKBbSSQnN+LRCxXVYrKtMctNvknIhHQoGxr9+Siv820us
+ llyaiVNJdmx3bLa6swQpJgY4lqVPJkZENffeImUtQcH54OcUG0vF9y7Xy1mVruvBdkjf
+ X6LHoj3BuEZurYTIvh/1tR6c7BkfgfSovBJ00fwgmB9KKfDGdrhHQG/n2mZUmF4CjynK
+ Izw9m6hdySNPnz/4JeU+FlG2WLOBafrcGLJT+iPHEQ8l86DlsGeT9YjBWFqZmfeSpVAa
+ wxgt3hxMJ5qnvLb/PjXNbYM31tabjZAGc8xFckH0yTMmbPk7vZTvHcax4Q9HO2h16MNR
+ pxWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXlv2TfPniZ6RGDKgVu3qVc9ozG0n8hdFfeQdHR1Rre8U6gBEYpOmh9mjK2CRqI308dKaZaRpZzYCleLcRbOIpzkHSS7e0=
-X-Gm-Message-State: AOJu0YwZ7T8yhMwVGlDEEGktIXT6qCrq+dusv2KpuJuvsIHQ5lD9ha9Z
- XlZejfzlQNaJhmNTlxazmNqvpahG8WW9avWZMCWIHYQmxATNZnQp5B7RE2OcTHpXxcqGRpkLUrd
- BA1y0N6DLbu+6iQ4Kn7p42dU918S3a1J7I1BDcTNQHTCRlf8mancm
-X-Received: by 2002:ad4:4e02:0:b0:6b2:b53a:5ef3 with SMTP id
- 6a1803df08f44-6b61c1b4c5cmr2433206d6.3.1720456827565; 
- Mon, 08 Jul 2024 09:40:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDi41IDyAmKj1ejW5sJeKc2k5FDuShvGEVfw0xk47bV5rseN4cyz/oGYSOj8hf/n7/E6bn8A==
-X-Received: by 2002:ad4:4e02:0:b0:6b2:b53a:5ef3 with SMTP id
- 6a1803df08f44-6b61c1b4c5cmr2432886d6.3.1720456827098; 
- Mon, 08 Jul 2024 09:40:27 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6b61ba8d8e1sm897826d6.124.2024.07.08.09.40.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jul 2024 09:40:26 -0700 (PDT)
-Date: Mon, 8 Jul 2024 12:40:23 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, John Snow <jsnow@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Alexey Kardashevskiy <aik@ozlabs.ru>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [PATCH v2 09/15] memory: Do not create circular reference with
- subregion
-Message-ID: <ZowWd7VR56QkWH3g@x1n>
-References: <20240627-san-v2-0-750bb0946dbd@daynix.com>
- <20240627-san-v2-9-750bb0946dbd@daynix.com> <ZoQ8cCrPXgK8I6b6@x1n>
- <84a7b513-228c-4c8e-8519-6ab465d4e8c8@daynix.com>
- <f52c6660-3a1c-449e-93c0-07e4cefebef3@linaro.org>
+ AJvYcCV44ypbV450eE1DO9lXV3oNpp09y1ecKr61CLL2ke+nPRG0lgrr5g+I/q5B3wOGpOT4H8RXUYTXgq++yF+aDjn/MIqUIL4=
+X-Gm-Message-State: AOJu0YwYSOO0OKR4tkzZrQnxM/s7rqLrd76rIijnpBE+axfGfKde8H/K
+ t+UN7eO9d/k3e7dScxHtxlZEEkUq08ZAzdvvn8fwdcTJr+pPWPGK2/0J+WZEU/RpNOU0ERxGoB3
+ z71kZkligqMMy+jjc2tTPGHss/tUL0ZjM5XmG/GhZT3bXhyR8x7mlvXvLB8RK
+X-Received: by 2002:a5d:5847:0:b0:367:9614:fb99 with SMTP id
+ ffacd0b85a97d-367cea46a4emr169238f8f.10.1720457503627; 
+ Mon, 08 Jul 2024 09:51:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG+9ObSIkf2x/we97KYbHSkH8jz7mZv3rThiNHBeso32jhoiby+JV/ZQVvNOqOvP5Lb5IePbw==
+X-Received: by 2002:a5d:5847:0:b0:367:9614:fb99 with SMTP id
+ ffacd0b85a97d-367cea46a4emr169223f8f.10.1720457503274; 
+ Mon, 08 Jul 2024 09:51:43 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-367cdfab199sm241520f8f.106.2024.07.08.09.51.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jul 2024 09:51:42 -0700 (PDT)
+Message-ID: <69fb7fb2-52fc-4d03-bfd6-deb2a254f081@redhat.com>
+Date: Mon, 8 Jul 2024 18:51:41 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f52c6660-3a1c-449e-93c0-07e4cefebef3@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 17/19] hw/arm/smmuv3: Support and advertise nesting
+Content-Language: en-US
+To: Mostafa Saleh <smostafa@google.com>, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, qemu-devel@nongnu.org
+Cc: jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
+ marcin.juszkiewicz@linaro.org
+References: <20240701110241.2005222-1-smostafa@google.com>
+ <20240701110241.2005222-18-smostafa@google.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240701110241.2005222-18-smostafa@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -117,215 +108,100 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 08, 2024 at 10:06:44AM +0200, Philippe Mathieu-Daudé wrote:
-> On 6/7/24 13:59, Akihiko Odaki wrote:
-> > On 2024/07/03 2:44, Peter Xu wrote:
-> > > On Thu, Jun 27, 2024 at 10:37:52PM +0900, Akihiko Odaki wrote:
-> > > > A memory region does not use their own reference counters, but instead
-> > > > piggybacks on another QOM object, "owner" (unless the owner is not the
-> > > > memory region itself). When creating a subregion, a new reference to the
-> > > > owner of the container must be created. However, if the subregion is
-> > > > owned by the same QOM object, this result in a self-reference, and make
-> > > > the owner immortal. Avoid such a self-reference.
-> > > > 
-> > > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> > > > ---
-> > > >   system/memory.c | 11 +++++++++--
-> > > >   1 file changed, 9 insertions(+), 2 deletions(-)
-> > > > 
-> > > > diff --git a/system/memory.c b/system/memory.c
-> > > > index 74cd73ebc78b..949f5016a68d 100644
-> > > > --- a/system/memory.c
-> > > > +++ b/system/memory.c
-> > > > @@ -2638,7 +2638,10 @@ static void
-> > > > memory_region_update_container_subregions(MemoryRegion
-> > > > *subregion)
-> > > >       memory_region_transaction_begin();
-> > > > -    memory_region_ref(subregion);
-> > > > +    if (mr->owner != subregion->owner) {
-> > > > +        memory_region_ref(subregion);
-> > > > +    }
-> > > > +
-> > > >       QTAILQ_FOREACH(other, &mr->subregions, subregions_link) {
-> > > >           if (subregion->priority >= other->priority) {
-> > > >               QTAILQ_INSERT_BEFORE(other, subregion, subregions_link);
-> > > > @@ -2696,7 +2699,11 @@ void
-> > > > memory_region_del_subregion(MemoryRegion *mr,
-> > > >           assert(alias->mapped_via_alias >= 0);
-> > > >       }
-> > > >       QTAILQ_REMOVE(&mr->subregions, subregion, subregions_link);
-> > > > -    memory_region_unref(subregion);
-> > > > +
-> > > > +    if (mr->owner != subregion->owner) {
-> > > > +        memory_region_unref(subregion);
-> > > > +    }
-> > > > +
-> > > >       memory_region_update_pending |= mr->enabled && subregion->enabled;
-> > > >       memory_region_transaction_commit();
-> > > >   }
-> > > 
-> > > This does look like a real issue.. the patch looks reasonable to me,
-> > > but I
-> > > wonder whether we should start to add some good comments in code to
-> > > reflect
-> > > that complexity starting from this one.  The MR refcount isn't easy to
-> > > understand to me.
-> > > 
-> > > It also lets me start to wonder how MR refcount went through until
-> > > it looks
-> > > like today..  It's definitely not extremely intuitive to use mr->owner as
-> > > the object to do refcounting if mr itself does has its own QObject,
-> > > meanwhile it has other tricks around.
-> > > 
-> > > E.g. the first thing I stumbled over when looking was the optimization
-> > > where we will avoid refcounting the mr when there's no owner, and IIUC it
-> > > was for the case when the "guest memory" (which will never be freed) used
-> > > to have no owner so we can speedup DMA if we know it won't go away.
-> > > 
-> > > https://lore.kernel.org/qemu-devel/1450263601-2828-5-git-send-email-pbonzini@redhat.com/
-> > > 
-> > > commit 612263cf33062f7441a5d0e3b37c65991fdc3210
-> > > Author: Paolo Bonzini <pbonzini@redhat.com>
-> > > Date:   Wed Dec 9 11:44:25 2015 +0100
-> > > 
-> > >      memory: avoid unnecessary object_ref/unref
-> > >      For the common case of DMA into non-hotplugged RAM, it is
-> > > unnecessary
-> > >      but expensive to do object_ref/unref.  Add back an owner field to
-> > >      MemoryRegion, so that these memory regions can skip the reference
-> > >      counting.
-> > > 
-> > > If so, it looks like it will stop working with memory-backends get
-> > > involved?  As I think those MRs will have owner set always, and I wonder
-> > > whether memory-backends should be the major way to specify guest
-> > > memory now
-> > > and in the future.  So I'm not sure how important that optimization is as
-> > > of now, and whether we could "simplify" it back to always do the refcount
-> > > if the major scenarios will not adopt it.
-> > > 
-> > > The other issue is we used owner refcount from the start of
-> > > memory_region_ref() got introduced, since:
-> > > 
-> > > commit 46637be269aaaceb9867ffdf176e906401138fff
-> > > Author: Paolo Bonzini <pbonzini@redhat.com>
-> > > Date:   Tue May 7 09:06:00 2013 +0200
-> > > 
-> > >      memory: add ref/unref
-> > > 
-> > > And we still have that in our document, even though I don't think
-> > > it's true
-> > > anymore:
-> > > 
-> > >   * ...  MemoryRegions actually do not have their
-> > >   * own reference count; they piggyback on a QOM object, their "owner".
-> > >   * This function adds a reference to the owner.
-> > > 
-> > > It looks like what happened is when introduced the change, MR is not
-> > > a QOM
-> > > object yet.  But it later is..
-> > > 
-> > > I mentioned all these only because I found that _if_ we can keep mr
-> > > refcounting as simple as other objects:
-> > > 
-> > > memory_region_ref(mr)
-> > > {
-> > >      object_ref(OBJECT(mr));
-> > > }
-> > > 
-> > > Then looks like this "recursive refcount" problem can also go away.  I'm
-> > > curious whether you or anyone tried to explore that path, or whether
-> > > above
-> > > doesn't make sense at all.
-> > 
-> > It unfortunately does not solve the problem.
-> > 
-> > The underlying problem is that the whole device must be kept alive while
-> > its memory region are. Indeed MemoryRegions do have refcounts, but
-> > incrementing them do not extend the lifetime of the devices (i.e., the
-> > owners). The refcount of the owners must be incremented for correctness.
-> > 
-> > Referencing a subregion MemoryRegion from its container MemoryRegion
-> > owned by the same device is an exceptional case. Incrementing the
-> > refcount of the owner extends the owner's lifetime to forever.
-> 
-> Is it really an exceptional case?
-> 
-> What I'm seeing are a lot of devices creating MR and never bother
-> to destroy them, so indeed owner (device) refcount never reaches 0.
-> 
-> Most of the time when we create MR in .instance_init/.realize,
-> we neglect to implement the undo path (.instance_finalize or
-> .unrealize).
+Hi Mostafa,
 
-Right.  The cross-reference of MR <-> device makes sense from the concept
-level, but I'm not sure how much we rely on that from QEMU perspective
-currently.  It complicates refcount and looks like it needs some thoughts.
+On 7/1/24 13:02, Mostafa Saleh wrote:
+> Everything is in place, consolidate parsing of STE cfg and setting
+> translation stage.
+>
+> Advertise nesting if stage requested is "nested".
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-One proof is, when I replied I actually tested all qemu qtests with below
-patch and nothing yet explode:
-
-===8<===
-diff --git a/system/memory.c b/system/memory.c
-index 2d69521360..a1d2c1f808 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1801,26 +1801,12 @@ Object *memory_region_owner(MemoryRegion *mr)
- 
- void memory_region_ref(MemoryRegion *mr)
- {
--    /* MMIO callbacks most likely will access data that belongs
--     * to the owner, hence the need to ref/unref the owner whenever
--     * the memory region is in use.
--     *
--     * The memory region is a child of its owner.  As long as the
--     * owner doesn't call unparent itself on the memory region,
--     * ref-ing the owner will also keep the memory region alive.
--     * Memory regions without an owner are supposed to never go away;
--     * we do not ref/unref them because it slows down DMA sensibly.
--     */
--    if (mr && mr->owner) {
--        object_ref(mr->owner);
--    }
-+    object_ref(OBJECT(mr));
- }
- 
- void memory_region_unref(MemoryRegion *mr)
- {
--    if (mr && mr->owner) {
--        object_unref(mr->owner);
--    }
-+    object_unref(OBJECT(mr));
- }
-===8<===
-
-I'm not sure how much it covers dynamic destruction of devices, though,
-where the device creates internal MRs to the guest address space.  I'm
-actually wondering whether we have other barriers already to avoid having
-any MR ops being invoked if a device was removed.
-
-So I think above indeed would remove the cross-ref we used to have. It
-might be a matter of whether that's fine for now to fix the cyclic ref
-issue alone, and even if we still want some cross-ref.. whether we should
-do it the old way.  I mean, the cross-ref can also be done in other forms,
-and it may not block MR has its own refcounts.
-
-Even if we want to have dev<->MR refcount, I wonder whether we should avoid
-having MR refcount the device, because it looks like "sub-object refs the
-parent" which sounds like a good source of cyclic refcount issue.  I wonder
-whether device should ref the MR instead (when MR is dynamically created; I
-am not sure whether we even need that if in Phil's comment where the MR
-object is a sub-struct-field of the Device object).  Then the device can
-provide a proper destroy() function to release the MRs under it, perhaps by
-disabling them first (then any ops should already fail after that), then
-unref the MRs with the hope that they're the last ref holder then MRs
-destroys there too.
-
-Thanks,
-
--- 
-Peter Xu
+Eric
+>
+> Signed-off-by: Mostafa Saleh <smostafa@google.com>
+> ---
+>  hw/arm/smmuv3.c | 35 ++++++++++++++++++++++++++---------
+>  1 file changed, 26 insertions(+), 9 deletions(-)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 6c18dc0acf..807f26f2da 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -261,6 +261,9 @@ static void smmuv3_init_regs(SMMUv3State *s)
+>      /* Based on sys property, the stages supported in smmu will be advertised.*/
+>      if (s->stage && !strcmp("2", s->stage)) {
+>          s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S2P, 1);
+> +    } else if (s->stage && !strcmp("nested", s->stage)) {
+> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S1P, 1);
+> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S2P, 1);
+>      } else {
+>          s->idr[0] = FIELD_DP32(s->idr[0], IDR0, S1P, 1);
+>      }
+> @@ -425,8 +428,6 @@ static bool s2_pgtable_config_valid(uint8_t sl0, uint8_t t0sz, uint8_t gran)
+>  
+>  static int decode_ste_s2_cfg(SMMUTransCfg *cfg, STE *ste)
+>  {
+> -    cfg->stage = SMMU_STAGE_2;
+> -
+>      if (STE_S2AA64(ste) == 0x0) {
+>          qemu_log_mask(LOG_UNIMP,
+>                        "SMMUv3 AArch32 tables not supported\n");
+> @@ -509,6 +510,27 @@ bad_ste:
+>      return -EINVAL;
+>  }
+>  
+> +static void decode_ste_config(SMMUTransCfg *cfg, uint32_t config)
+> +{
+> +
+> +    if (STE_CFG_ABORT(config)) {
+> +        cfg->aborted = true;
+> +        return;
+> +    }
+> +    if (STE_CFG_BYPASS(config)) {
+> +        cfg->bypassed = true;
+> +        return;
+> +    }
+> +
+> +    if (STE_CFG_S1_ENABLED(config)) {
+> +        cfg->stage = SMMU_STAGE_1;
+> +    }
+> +
+> +    if (STE_CFG_S2_ENABLED(config)) {
+> +        cfg->stage |= SMMU_STAGE_2;
+> +    }
+> +}
+> +
+>  /* Returns < 0 in case of invalid STE, 0 otherwise */
+>  static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+>                        STE *ste, SMMUEventInfo *event)
+> @@ -525,13 +547,9 @@ static int decode_ste(SMMUv3State *s, SMMUTransCfg *cfg,
+>  
+>      config = STE_CONFIG(ste);
+>  
+> -    if (STE_CFG_ABORT(config)) {
+> -        cfg->aborted = true;
+> -        return 0;
+> -    }
+> +    decode_ste_config(cfg, config);
+>  
+> -    if (STE_CFG_BYPASS(config)) {
+> -        cfg->bypassed = true;
+> +    if (cfg->aborted || cfg->bypassed) {
+>          return 0;
+>      }
+>  
+> @@ -704,7 +722,6 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
+>  
+>      /* we support only those at the moment */
+>      cfg->aa64 = true;
+> -    cfg->stage = SMMU_STAGE_1;
+>  
+>      cfg->oas = oas2bits(CD_IPS(cd));
+>      cfg->oas = MIN(oas2bits(SMMU_IDR5_OAS), cfg->oas);
 
 
