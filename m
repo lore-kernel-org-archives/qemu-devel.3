@@ -4,56 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D7FC3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 20:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 317BEC3DA41
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 21:11:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQuzq-0004ek-IE; Mon, 08 Jul 2024 16:30:02 -0400
+	id 1sQvcu-00037I-W5; Mon, 08 Jul 2024 17:10:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=VcrY=OI=kaod.org=clg@ozlabs.org>)
- id 1sQuzp-0004ds-0r
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 16:30:01 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sQvct-00036a-Uw
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 17:10:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=VcrY=OI=kaod.org=clg@ozlabs.org>)
- id 1sQuzn-0006m1-13
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 16:30:00 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WHwhn2r6hz4xQN;
- Tue,  9 Jul 2024 06:29:45 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WHwhk5jsWz4w2M;
- Tue,  9 Jul 2024 06:29:42 +1000 (AEST)
-Message-ID: <d48b6357-c839-4971-aa28-bdbd5b1bab53@kaod.org>
-Date: Mon, 8 Jul 2024 22:29:35 +0200
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sQvcs-0005QU-Ea
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 17:10:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720473021;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TyuEl7qvFUtY6RLTRnWbmnTVtAbyrHw+UWpzY2KNixA=;
+ b=OjMhQCvZZEbzBbAYrTTpRBrJg9Px4VYJATlRRC+OpA3C8lFgxcWZDTIb2y2BDjKOwpcH7+
+ 7zPu3L/uRxjl9eTuj6QhI2cAxVObV8gY3w1z+ayNLfoum44JNhVdtQXyXkhOBfmSU+Jnmk
+ r/ovtxO6PnLVckqRus4hLBLJLlVSVlI=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-653-zk4WXM_4NOmYGQCFgm5bhA-1; Mon, 08 Jul 2024 17:10:18 -0400
+X-MC-Unique: zk4WXM_4NOmYGQCFgm5bhA-1
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6b60b5b85deso4627666d6.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 14:10:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720473018; x=1721077818;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TyuEl7qvFUtY6RLTRnWbmnTVtAbyrHw+UWpzY2KNixA=;
+ b=fEfEcy7PTiNX1EpWVbw0F7xaO/mm1pM8f5VbSlPYbTo7mkyuH9PJAKI0HRIyZzN1MY
+ cc6T1xst0m3ZoAwgg7kz9Q/gd6Zwtr7ac4oXG/Z3y5SbamBBxnhVjUZsZb5J69UcrNoy
+ hsBJzUo1s3kkiUL1vhII9OdTAJ9kDOhcNsm3RYr06sXXpllEOz1JfuRtAmPRNQSFIiKO
+ ZLKa7GZn9vcp48IUQCKv2JlIFdZO9uAOG08jzBwT71aiJSt4cDbTPrOtc1XuWXcmrTck
+ ujyJ5iDjj4Y+EeraRCBzHz1Bfd3DfmbS2jBSbtiP78uoDuoRWxtt5lzZxSYC2xIUXum0
+ +phw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVLCwmkw80Vqx7JyXLMlde7TSNoVq08c2+4uWmDsXL0+FMJrOTcFF+cqS9XM7lSrabP+lBK2vdmk649mwzmP1Y/lkSje7U=
+X-Gm-Message-State: AOJu0YzMgpM9wmUX9upbIRpA4lPDVhEurg/8VIxmOcVMB+BdX23uSElw
+ xcatY8d7pnDeEqQoQOI+18TnP1YNTvYJTT5Xxu/sIoW1YDtvuIrLuUzq6c7DE6gidlYljrlMje1
+ mHLorjC3F5LbFH+3caYoAgLKotkyLAgIvblvGPJsiVnZsIKhc3h9M
+X-Received: by 2002:a37:de0a:0:b0:795:53d0:ce4e with SMTP id
+ af79cd13be357-79f19abd662mr59588985a.5.1720473018446; 
+ Mon, 08 Jul 2024 14:10:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEcn/FzwYTtXubYouBiYo5IeYv2MRTcKTS0cc7iXMvKC486W1vLBdFwlNO1pj4Syj64kkWeA==
+X-Received: by 2002:a37:de0a:0:b0:795:53d0:ce4e with SMTP id
+ af79cd13be357-79f19abd662mr59587485a.5.1720473018142; 
+ Mon, 08 Jul 2024 14:10:18 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-79f190896d4sm27834285a.85.2024.07.08.14.10.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jul 2024 14:10:17 -0700 (PDT)
+Date: Mon, 8 Jul 2024 17:10:15 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yichen Wang <yichen.wang@bytedance.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ "Zou, Nanhai" <nanhai.zou@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: Re: [PATCH v4 2/4] migration: Add migration parameters for QATzip
+Message-ID: <ZoxVt1NPCu-UFE5c@x1n>
+References: <20240705182901.48948-1-yichen.wang@bytedance.com>
+ <20240705182901.48948-3-yichen.wang@bytedance.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v42 96/98] hw/sd/sdcard: Support boot area in emmc
- image
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Joel Stanley <joel@jms.id.au>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-97-philmd@linaro.org>
- <152d9c90-3e58-4706-b12a-6d2796681d0f@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <152d9c90-3e58-4706-b12a-6d2796681d0f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=VcrY=OI=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240705182901.48948-3-yichen.wang@bytedance.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,56 +112,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/24 6:58 PM, Philippe Mathieu-Daudé wrote:
-> Hi Joel, Cédric,
-> 
-> On 28/6/24 09:02, Philippe Mathieu-Daudé wrote:
->> From: Joel Stanley <joel@jms.id.au>
->>
->> This assumes a specially constructed image:
->>
->>    dd if=/dev/zero of=mmc-bootarea.img count=2 bs=1M
->>    dd if=u-boot-spl.bin of=mmc-bootarea.img conv=notrunc
->>    dd if=u-boot.bin of=mmc-bootarea.img conv=notrunc count=64 bs=1K
->>    cat mmc-bootarea.img obmc-phosphor-image.wic > mmc.img
-> 
-> I'm not keen on imposing that layout to use the model (besides
-> so far we use 1MiB as constant). I'd rather use 3 BlockBackends
-> for eMMC (boot[01], user). This would scale for multiple sizes.
+On Fri, Jul 05, 2024 at 11:28:59AM -0700, Yichen Wang wrote:
+> +# @multifd-qatzip-sw-fallback: Enable software fallback if QAT hardware
+> +#     is unavailable. Defaults to false. Software fallback performance
+> +#     is very poor compared to regular zlib, so be cautious about
+> +#     enabling this option. (Since 9.1)
 
-This is the same device with multiple partitions. Why would you
-want to have 3 backends ? The sizes are defined in an EXT_CSD
-register AFAIR.
+Could we avoid this parameter but always have the fallback?
 
-  
->>    truncate --size 16GB mmc.img
->>    truncate --size 128MB mmc-bootarea.img
->>
->> For now this still requires a mtd image to load the SPL:
->>
->>    qemu-system-arm -M tacoma-bmc -nographic \
->>     -global driver=sd-card,property=emmc,value=true \
->>     -drive file=mmc.img,if=sd,index=2 \
->>     -drive file=mmc-bootarea.img,if=mtd,format=raw
-> 
-> (AFAICT we don't need that mtd anymore, correct?)
+IMHO anyone who is serious with using a HW-accelerated compression method
+during migration should make sure that the HWs are properly setup.
 
-we don't.
+If you think such caucious is required, would warn_report_once() works when
+the fallback happens?
 
 Thanks,
 
-C.
-
-
-
-> 
->> Signed-off-by: Joel Stanley <joel@jms.id.au>
->> Signed-off-by: Cédric Le Goater <clg@kaod.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/hw/sd/sd.h |  1 +
->>   hw/sd/sd.c         | 39 +++++++++++++++++++++++++++++++++++++++
->>   2 files changed, 40 insertions(+)
-> 
+-- 
+Peter Xu
 
 
