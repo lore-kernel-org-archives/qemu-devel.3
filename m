@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5072C38150
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 02:19:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C4D2C38150
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 02:19:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQdxt-0006hi-9f; Sun, 07 Jul 2024 22:18:53 -0400
+	id 1sQdyL-0000rK-TP; Sun, 07 Jul 2024 22:19:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sQdxl-0006RE-Ip; Sun, 07 Jul 2024 22:18:46 -0400
-Received: from mail-vk1-xa29.google.com ([2607:f8b0:4864:20::a29])
+ id 1sQdyK-0000k4-2I; Sun, 07 Jul 2024 22:19:20 -0400
+Received: from mail-vs1-xe29.google.com ([2607:f8b0:4864:20::e29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sQdxk-0001iw-44; Sun, 07 Jul 2024 22:18:45 -0400
-Received: by mail-vk1-xa29.google.com with SMTP id
- 71dfb90a1353d-4e4efbc3218so1436653e0c.0; 
- Sun, 07 Jul 2024 19:18:42 -0700 (PDT)
+ id 1sQdyI-0001lS-C1; Sun, 07 Jul 2024 22:19:19 -0400
+Received: by mail-vs1-xe29.google.com with SMTP id
+ ada2fe7eead31-48fde3a2b17so1149862137.0; 
+ Sun, 07 Jul 2024 19:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720405122; x=1721009922; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1720405157; x=1721009957; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZKIwMRn5Yli7LICD1JPIutBeKifZLgq3ExSaGGJGA9Y=;
- b=M8I4bPNk9IgQluOR4NaQFhpC0vjCBpxPrzyxc5bA14zdfYQWuUIDngrDozsbHspz0r
- hA9DCHGm2VmqqYu9ZBAqVTwnHfS04448LD3auKAVzxhFLE9nhJ6BJLCxWNBMDzsrLPPa
- GFHkm8M4l5kG7IKsVBeRvUBK7dkt9lbeaV4ZK0mbbWcCMCY17R1Injgyxm5H2cvo0xZ6
- fRks8708d6lbNyYYqIMc+QflB83oSd2jdfnBSZO8acw/MJyHMrQ04YniKhB4xmGhxsbB
- +WNfzIwZLza4tRDBzFd5NT+nRKhK9x7fD/nIqvpt5nVRKJ7qDldZRVnThGPeYdeV9qdW
- CwRw==
+ bh=acoq333b3C8guK9U0dvpe211RuNQEBkb3Ev0BsnkM3A=;
+ b=F8og1GyQA6M6qCPsXeNKaBDTaBJb+I0CwSlPIfx+buP1HzRHUV0pl1ZUK/yoNs+sDD
+ tqbljQTMjV1PQEvyoxipHGfs8eVWa9AIJIfQTrFCteFRbHiXenpfydJ6i/P2VW9dR57S
+ 5960RdlF9iGwy28Nx4+Xc3GORm7D/py1xrvoSMxaCPYmFLcZF9SXKKyzjcfyQH/fKUK6
+ hyYhOJIJtwmnyqD2xd/kVYuoQ5iqejC2N7Wn99LwA48rL+i42Ez19bNhzvd7TeD0stZB
+ p5Uo+DxnaaL4nyV6TEuaNt6BqAcJXla5KX4fdEehl/deGHY4KgTP4riGckEql/bsyxD1
+ yzGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720405122; x=1721009922;
+ d=1e100.net; s=20230601; t=1720405157; x=1721009957;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZKIwMRn5Yli7LICD1JPIutBeKifZLgq3ExSaGGJGA9Y=;
- b=jMY1sMe3vlePRjD6NtH9I10BCJK1UCc7IvqJ7JXH9cepMgS8enOzJy8l4d3mdzjawu
- wkNinWEBVj8pI+zlToMGqMC4KmxfRAjPCE1rTiEO12T4eCO//AgRa6eUCmLotuS2PZ8j
- 0ZkK6/yHB8qx6mhgiyIFe/e42HGqtcAoI3p2kHRvCeqCvfVc6Ti1tV8Nqogptjn68FR5
- nD9mD5WQmOgq0aaUjyTfSnonWKpGh8pbd8TDYjepmR1UQnbaw+jd606LB5PO4+DeUWFu
- zYx105qELKZlW1eNTTlQKHcOQLhpQyBbiJg/QMnqr+Pv1mj1J0gfYjnAYfkP/LSZa0ob
- aNdQ==
+ bh=acoq333b3C8guK9U0dvpe211RuNQEBkb3Ev0BsnkM3A=;
+ b=f0IzLTQ59blCEPE70zwq8YATMWsXgrn6qiUZ03nph8Sqn6Yr5URt0obk1VeLRXzyMU
+ Y7lnOgx6QfVqzi4iKU/RzmD88JagPj9I960PuScForvfmipnIPagCn0M2qldwWz5j7p+
+ 4XGKL9iaSJxALK1TIbhsBwmk/XX5rYtzYs73GOBYIHvurqP0PV22N/UpVrEj13NextoI
+ kpf+B2YmCg/lFm9ezIJzvGErTnTYIuMGqWZg1L0H/KAKuix4eGcM0smllvGRPTMLiEPK
+ zm5SiRZfvscEDDLHnjD7D55734M702UIy007+EShKMh57OMqG4/cCcTW6nGEgUqa9CcU
+ 2SFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXfjmBSQmnl9konQL6gyio6w5nuklIZzKELE24IoP/mTHjhC0vLr309HYLendJ92t4BB1SUOMLKMRjSTx3uK90vB4phpqY=
-X-Gm-Message-State: AOJu0Yx3P7NLnA8D9Z4lO/NnJNUgOLNKVk4rpD1N041srXsyd9PARNuN
- zYqvyY0C/29+zWGUlKKXCUVM6tTH6F5ofIe5nbGTeb3R7IeNcOn9pC7ih+stnpVpcsa3sIVznhS
- q7bCzVC+yZYe8cG7O53qBn+TCWs4=
-X-Google-Smtp-Source: AGHT+IGz+PqsTCj0KymLaDlcZ9ZFXB5uMs78+lDQYquYQVtOJ7Dtw0BbRBxZjBX/HTM/y75jw5c8oYNSjZsA2ovM0LM=
-X-Received: by 2002:a05:6122:4306:b0:4ef:6731:83c6 with SMTP id
- 71dfb90a1353d-4f2f3f16330mr11452071e0c.9.1720405121687; Sun, 07 Jul 2024
- 19:18:41 -0700 (PDT)
+ AJvYcCVU37iJTnaaDiHQbKefTiJ8LPL235FBYr8RBVWdxop9lI4EuhInZYeXl8c131Yiyk92Om5ubYhHEc91ww6K46So5Pd/+KI=
+X-Gm-Message-State: AOJu0YyuxqeNOkRaiNd6tfYDxAZlE2kC4Hg5/9S6RFUyCRSFJJO57q4r
+ svpIBd6AWuL66UAJ1J/MkmekEpJbULSOrcURVEfY6BeN8CsfTxMfkvQewtlNUMEBtQc7621IPd6
+ oLj3fD4e4K/n4b6diGboPRqBapg30PQ==
+X-Google-Smtp-Source: AGHT+IGejtAaBV0WE7CvH411YCOEFx5WzluYvNfIz/Pu/hMKc0RoVWzODQCRjXLtBrKM6E9avurp0ZYJMmukHKQQKCA=
+X-Received: by 2002:a05:6102:17c1:b0:48f:8ead:7a3 with SMTP id
+ ada2fe7eead31-48fee65f2c4mr11037263137.9.1720405156835; Sun, 07 Jul 2024
+ 19:19:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240624201825.1054980-1-dbarboza@ventanamicro.com>
- <7a0f63e4-9634-4274-af00-93c4a4e34810@ventanamicro.com>
-In-Reply-To: <7a0f63e4-9634-4274-af00-93c4a4e34810@ventanamicro.com>
+References: <20240705165316.127494-1-rbradford@rivosinc.com>
+In-Reply-To: <20240705165316.127494-1-rbradford@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 8 Jul 2024 12:18:15 +1000
-Message-ID: <CAKmqyKMWTjPnQa1x-n8EEEgwHFjVmBR7jPjcNHH85VoNMBBLuw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/14] riscv: QEMU RISC-V IOMMU Support
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
- palmer@rivosinc.com, ajones@ventanamicro.com, tjeznach@rivosinc.com, 
- frank.chang@sifive.com, jason.chien@sifive.com
+Date: Mon, 8 Jul 2024 12:18:50 +1000
+Message-ID: <CAKmqyKO2cmGeSS_Fn3ney0W8OXg8ip0BSqQ1vdd-8=hNXNt9qA@mail.gmail.com>
+Subject: Re: [PATCH v2] disas/riscv: Add decode for Zawrs extension
+To: Rob Bradford <rbradford@rivosinc.com>
+Cc: qemu-devel@nongnu.org, Balaji Ravikumar <bravikumar@rivosinc.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, 
+ "open list:RISC-V TCG target" <qemu-riscv@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a29;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e29;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe29.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -94,32 +93,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Jul 6, 2024 at 7:26=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Sat, Jul 6, 2024 at 2:54=E2=80=AFAM Rob Bradford <rbradford@rivosinc.com=
+> wrote:
 >
-> Hi,
+> From: Balaji Ravikumar <bravikumar@rivosinc.com>
 >
-> Would it make it easier for review if we squash patch 3:
+> Add disassembly support for these instructions from Zawrs:
 >
-> [PATCH v4 03/14] hw/riscv: add RISC-V IOMMU base emulation
+> * wrs.sto
+> * wrs.nto
 >
-> and patch 8:
->
-> [PATCH v4 09/14] hw/riscv/riscv-iommu: add s-stage and g-stage support
->
-> In the same patch?
->
-> I'm asking because I've been noticing since the first versions that some =
-reviews
-> on patch 3 seems to refer to context that are s-stage and g-stage related=
-, i.e.
-> added later. Perhaps squashing them together makes it easier to review si=
-nce
-> we'll have a more complete picture. Patch 3 will end up gaining +381 line=
-s
-> though.
+> Signed-off-by: Balaji Ravikumar <bravikumar@rivosinc.com>
+> Signed-off-by: Rob Bradford <rbradford@rivosinc.com>
 
-Squashing is probably the way to go
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
+
+> ---
+>  disas/riscv.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index 05b663ebfe..ff0323f0dd 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -974,6 +974,8 @@ typedef enum {
+>      rv_op_amomaxu_h =3D 943,
+>      rv_op_amocas_b  =3D 944,
+>      rv_op_amocas_h  =3D 945,
+> +    rv_op_wrs_sto =3D 946,
+> +    rv_op_wrs_nto =3D 947,
+>  } rv_op;
+>
+>  /* register names */
+> @@ -2232,6 +2234,8 @@ const rv_opcode_data rvi_opcode_data[] =3D {
+>      { "amomaxu.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 }=
+,
+>      { "amocas.b", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+>      { "amocas.h", rv_codec_r_a, rv_fmt_aqrl_rd_rs2_rs1, NULL, 0, 0, 0 },
+> +    { "wrs.sto", rv_codec_none, rv_fmt_none, NULL, 0, 0, 0 },
+> +    { "wrs.nto", rv_codec_none, rv_fmt_none, NULL, 0, 0, 0 },
+>  };
+>
+>  /* CSR names */
+> @@ -4000,6 +4004,8 @@ static void decode_inst_opcode(rv_decode *dec, rv_i=
+sa isa)
+>                      case 0: op =3D rv_op_ecall; break;
+>                      case 32: op =3D rv_op_ebreak; break;
+>                      case 64: op =3D rv_op_uret; break;
+> +                    case 416: op =3D rv_op_wrs_nto; break;
+> +                    case 928: op =3D rv_op_wrs_sto; break;
+>                      }
+>                      break;
+>                  case 256:
+> --
+> 2.45.2
+>
+>
 
