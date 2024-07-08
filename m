@@ -4,84 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81645C3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 16:58:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20439C3DA41
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 17:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQrgs-0006jC-Vt; Mon, 08 Jul 2024 12:58:15 -0400
+	id 1sQrrV-0003ib-Jq; Mon, 08 Jul 2024 13:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sQrgq-0006hy-Ns
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:58:12 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sQrgp-0001AN-6j
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 12:58:12 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4266ed6c691so3108565e9.3
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 09:58:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720457889; x=1721062689; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:cc:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sKXQoGJHy+ph39EqAz0WFsjbz/4rOW1h6XfVy2kMcGQ=;
- b=jVaxeD5CQdCYmF/I9+0Moj9Gtc22d0aYDq4XeBy5UxXlcu0aI/3PaGOLC94ENYn19L
- yBUiTMBz/gN6mriXzQqEJsEoke8AN644MaSGuTcgJYRYD9W79aDZXN1YxZIo/LABaLyP
- 7QNibrZbarABZ7fgeGZTInf2Nd/jiMiS0fuLWhVmTv66D1AB65wb25Ko7qmRcnOTSVmV
- VF6clgtkrKPhZ8d6OsoLkCHCJMvzmpE+w9hw+LeY0cwleKx/UzvkC3F8Ib9YNMqeRHZW
- h9OAkgwQHOwGb6c5nn3/9v1qXsN9eL3w2meHt3lmGzK1XeFZXXkGGQeMy1a3DP44TW/2
- UpNQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sQrrU-0003fk-6V
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 13:09:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1sQrrR-0003NG-Vz
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 13:09:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720458548;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/wI4dcONFNpTlPb+n+mVHHHm9UMhgB4awWZCFEdENkw=;
+ b=GOvmdknf6JQ6TEw06QrufhFLJcCcNULX+0IIDZhdEysEuSNRZhLC2qneg9JJml6/EoUqUp
+ gnCiUU97shqkpw63xGaxcHZzAc28GxMyhVWMFAo5YvuJyJlM1o8kKYCfbXhvlVtrUWRZjp
+ nRFBoXOe/33/VM2jcZWTLJr0+MkPXGI=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-18-xJu06LsjP0SM6vcUPMilCw-1; Mon, 08 Jul 2024 13:09:07 -0400
+X-MC-Unique: xJu06LsjP0SM6vcUPMilCw-1
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-7035c3667aaso2282703a34.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 10:09:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720457889; x=1721062689;
- h=content-transfer-encoding:in-reply-to:cc:content-language
- :references:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sKXQoGJHy+ph39EqAz0WFsjbz/4rOW1h6XfVy2kMcGQ=;
- b=u05E4rx4kQcK/WrKe5OPPpB83qhgZqjbxe9NBfju6+L374WMwv7J+9lcNziT0k6cEi
- AbhX9ndXXAOkCmuoNbf8mWK0Nc3NKgJPWA/VtM5l1NuIQ99UGvMtuLExNOkrGyF7dkRM
- /dVypcBuYVXEtctVnLWdcf8EYhdcHEYZ7ZzN/PIdaz48diQwIp7BxM8qVKu7Q49K7BAS
- kfvyhPQFwW8euRptk1Qlw7idPtj27o7o75qSMOXeQ/NssdqtkBLQXwoGPSWMpk+EsX7+
- pP/ShDvD3Oudrr5m7sSrrm/Kh3ACZpG4+Vc4+gk43YJhoB09kItzv+a1wzcxK4h5NY+j
- DhcQ==
-X-Gm-Message-State: AOJu0YzCIUC2woDf2II4oM1qVK6yqXQo7ohQGsQEhwa28R4ISNVENyIL
- U5Yaq7tPU+AIei1IM7AT5ORRMpGi/RjwqM7P465Ht2AzCfMZ/n7ghW4yfwun5yu84fbJM99AJNF
- E
-X-Google-Smtp-Source: AGHT+IEUTLeqxJTcNUqepbLQlXu0oAhyriee76r//zaWVU3JAPFkLkRWOyAnfOeW5xits2bpn3ohBA==
-X-Received: by 2002:a05:600c:4a24:b0:426:629f:154e with SMTP id
- 5b1f17b1804b1-426708f2111mr1198795e9.30.1720457889101; 
- Mon, 08 Jul 2024 09:58:09 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.169.151])
+ d=1e100.net; s=20230601; t=1720458547; x=1721063347;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/wI4dcONFNpTlPb+n+mVHHHm9UMhgB4awWZCFEdENkw=;
+ b=d/ylDDI1rYPPVqB3JK/hqcpYkRdtJPzXLuT5Z6M455ir3JbSNI24oLAAil1pkoGRYI
+ VbhsEYOlKl6aCJFZBfAa+40vw4Yc1tKRifHomaU/djIDsdqxnsrUT0kAJbbmsorPgNWT
+ iCLBnd8P55Chih6BaUstoIGT114s5bhYBJfj2RotiaQDXMxy7Le4ZrM1ZU+h8lgMBY0N
+ 8OlErz4bkfXbb9xJl/Ts7+aE4BBfcjsGHwWnMtBYSwMS1qB+qgtjE91/0OzSaHdJqkck
+ GK/at76OijXxCYczRWQHkUw2nGxJ9goJDrgV5tM6tr+DJpxihIwQwRcBN1a7ejNrCt6m
+ vnaA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8r5lQ4sgI3VH2ahwiA8sHVmQyaG8/LRd7ZshD7SSUn1p9GUIFlaKeTjIGoPO0ttxROl7RPxFTWsrxZQsue6A5/xifo4I=
+X-Gm-Message-State: AOJu0YxdnXvL7DxR+LfhA9TNWG+MJsXCIz56PMsw67PHYiWnYZLi7jdk
+ Rke4ZalP1U3zT8v3Ua7e92vRdYroCpxzWvndb+36KSbj9FfILJ/ldfzR2MlqYCQGkqPixJXnJVO
+ x5cpy6UZmrtDSsAhZJaqr8qu2L4klY/t0d+KB+0kU3bgZH18QBu4w
+X-Received: by 2002:a9d:784d:0:b0:703:5d05:9291 with SMTP id
+ 46e09a7af769-70375a17aa3mr65715a34.18.1720458546756; 
+ Mon, 08 Jul 2024 10:09:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFESwpew7XeB+jk27miiD4k6NdjfkSVTL7r42XjyeCtM/ZxVYVLH4c8m8fe0EVf6unYYJzmWw==
+X-Received: by 2002:a9d:784d:0:b0:703:5d05:9291 with SMTP id
+ 46e09a7af769-70375a17aa3mr65690a34.18.1720458546381; 
+ Mon, 08 Jul 2024 10:09:06 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f6f6fb9sm5524575e9.27.2024.07.08.09.58.08
+ 6a1803df08f44-6b61ba73dfbsm1118386d6.96.2024.07.08.10.09.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Jul 2024 09:58:08 -0700 (PDT)
-Message-ID: <152d9c90-3e58-4706-b12a-6d2796681d0f@linaro.org>
-Date: Mon, 8 Jul 2024 18:58:07 +0200
+ Mon, 08 Jul 2024 10:09:05 -0700 (PDT)
+Message-ID: <f2a17216-1a03-4c84-85af-8c3145f305ae@redhat.com>
+Date: Mon, 8 Jul 2024 19:09:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v42 96/98] hw/sd/sdcard: Support boot area in emmc
- image
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Joel Stanley <joel@jms.id.au>
-References: <20240628070216.92609-1-philmd@linaro.org>
- <20240628070216.92609-97-philmd@linaro.org>
+Subject: Re: [PATCH v4 18/19] hw/arm/smmuv3: Advertise S2FWB
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org, maz@kernel.org, nicolinc@nvidia.com, julien@xen.org,
+ richard.henderson@linaro.org, marcin.juszkiewicz@linaro.org
+References: <20240701110241.2005222-1-smostafa@google.com>
+ <20240701110241.2005222-19-smostafa@google.com>
+ <20240704183658.GO1693268@myrica>
 Content-Language: en-US
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Markus Armbruster <armbru@redhat.com>
-In-Reply-To: <20240628070216.92609-97-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20240704183658.GO1693268@myrica>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,43 +109,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Joel, Cédric,
+Hi Mostafa,
 
-On 28/6/24 09:02, Philippe Mathieu-Daudé wrote:
-> From: Joel Stanley <joel@jms.id.au>
-> 
-> This assumes a specially constructed image:
-> 
->    dd if=/dev/zero of=mmc-bootarea.img count=2 bs=1M
->    dd if=u-boot-spl.bin of=mmc-bootarea.img conv=notrunc
->    dd if=u-boot.bin of=mmc-bootarea.img conv=notrunc count=64 bs=1K
->    cat mmc-bootarea.img obmc-phosphor-image.wic > mmc.img
+On 7/4/24 20:36, Jean-Philippe Brucker wrote:
+> On Mon, Jul 01, 2024 at 11:02:40AM +0000, Mostafa Saleh wrote:
+>> QEMU doesn's support memory attributes, so FWB is NOP, this
+>> might change in the future if memory attributre would be supported.
+attributes here and below as reported along with v3
+>>
+>> Signed-off-by: Mostafa Saleh <smostafa@google.com>
+>> ---
+>>  hw/arm/smmuv3.c | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+>>
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index 807f26f2da..88378e83dd 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -287,6 +287,14 @@ static void smmuv3_init_regs(SMMUv3State *s)
+>>      if (FIELD_EX32(s->idr[0], IDR0, S2P)) {
+>>          /* XNX is a stage-2-specific feature */
+>>          s->idr[3] = FIELD_DP32(s->idr[3], IDR3, XNX, 1);
+>> +        if (FIELD_EX32(s->idr[0], IDR0, S1P)) {
+> Why is this check needed?
+>
+>> +            /*
+>> +             * QEMU doesn's support memory attributes, so FWB is NOP, this
+> doesn't
+I have just seen your reply on my v3 comments. I still do not understand
+why we expose this bit at this stage.
 
-I'm not keen on imposing that layout to use the model (besides
-so far we use 1MiB as constant). I'd rather use 3 BlockBackends
-for eMMC (boot[01], user). This would scale for multiple sizes.
+Thanks
 
->    truncate --size 16GB mmc.img
->    truncate --size 128MB mmc-bootarea.img
-> 
-> For now this still requires a mtd image to load the SPL:
-> 
->    qemu-system-arm -M tacoma-bmc -nographic \
->     -global driver=sd-card,property=emmc,value=true \
->     -drive file=mmc.img,if=sd,index=2 \
->     -drive file=mmc-bootarea.img,if=mtd,format=raw
-
-(AFAICT we don't need that mtd anymore, correct?)
-
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> Signed-off-by: Cédric Le Goater <clg@kaod.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/hw/sd/sd.h |  1 +
->   hw/sd/sd.c         | 39 +++++++++++++++++++++++++++++++++++++++
->   2 files changed, 40 insertions(+)
+Eric
+>
+> Thanks,
+> Jean
+>
+>> +             * might change in the future if memory attributre would be
+>> +             * supported.
+>> +             */
+>> +           s->idr[3] = FIELD_DP32(s->idr[3], IDR3, FWB, 1);
+>> +        }
+>>      }
+>>      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 1);
+>>      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, BBML, 2);
+>> -- 
+>> 2.45.2.803.g4e1b14247a-goog
+>>
 
 
