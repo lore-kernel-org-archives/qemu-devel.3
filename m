@@ -4,95 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCACC3271E
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Jul 2024 23:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C25B2C3DA45
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 00:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sQy9k-0005rN-Mw; Mon, 08 Jul 2024 19:52:28 -0400
+	id 1sQyGm-0004fH-Rw; Mon, 08 Jul 2024 19:59:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sQy9j-0005qL-O2
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 19:52:27 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sQyGl-0004e4-OA
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 19:59:43 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
- id 1sQy9h-0008BX-Vz
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 19:52:27 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4266f344091so4997315e9.0
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 16:52:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sQyGi-0000bh-Sn
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 19:59:42 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-707040e3017so3029283a12.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 16:59:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=opnsrc.net; s=google; t=1720482742; x=1721087542; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uoIxqkkfp6D3byamgWRg4iE8qJKE6OKUgrTUAvLelts=;
- b=cA9ifLf3CAViWJfcCKq63ITBaVNNUGC1h1taoLSpmBMtWSxZuXfAnAjxH5/H+gDm8c
- zDVZeBq15iA8NvXE4qI/S0YsyOyUTFRO54s1iHyM1r658FTVim5FFi393YJj+OlgVje9
- jg2ckUTRo32D+UqlRvqru5iDbumi/CRnt3t6Q0Vug5G2TsRSZMqF+Zet2ZepZylbrlI5
- iDGUHs1+h2khI/G5JKH3QCrpWFDa6BtSC2GweqkLNpp9T+2Jv6zM71Gm2bu0xBsHR8uJ
- KBEA1QDNd6N2e6ETmZ8tBZbLFOpJrUiBlE8hUmLs1W007BzimO2U4442garl66YNk3Xh
- wC7w==
+ d=linaro.org; s=google; t=1720483177; x=1721087977; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=cCQtk4ewWl7WgPDITSsZ5PpDbONDkoK+blGGaS89AM4=;
+ b=BvQYio/jpOY0Iqn+OHtzjdzEHK037A09hJVjS6cens7nRYRiIfr7GWUnS3T6PQSvmB
+ Nrs7ORnFKU9cyZMfWOI1u90L2PzmKGk4apHsnzJswseAi3l5wIP3EXaCDAYzHKH8iQ2W
+ 70+skYhHrCHSnkpNy8b18K5iqMpAFxEQpRgoXQbBxGYrY7Dp+uomf2CT4dRw47HGl6+Y
+ zLrwsp2hau6XXe+5idA4Pu1BGyedRLYMAQbQzXsLFW9DYwA1NoNgP/ORu0K5lFTZTuwR
+ n+vXEe3Te6U8pXrHFuFc8+MqsQuW7fqjuggZ7XLyKtYCl+ZhpXneY7i3I17+6OhaY79W
+ 0Zpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720482742; x=1721087542;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uoIxqkkfp6D3byamgWRg4iE8qJKE6OKUgrTUAvLelts=;
- b=uLFd0h6H3uab8a2B5swFprezLKNge5o+rXp5ZR0tSFAA2QWih3hdxFWbgEvxwlEwDj
- uywyu5aXUBff0gVRhmrPF1xeMxEOTkmUxGxyA9QIWXna+HuXWe/XD0UwP90OCuYIuW/c
- BawHciMFO1rvKLB06cXm9xwBDJSqjrXv/OwsVFLuNO0e5U2S8iNjCUOmUfj+4ZC4rcv2
- HsCXaBLOBgW62g9P49sy5u6j2Poa9zMNk+kQchoCEE1783AcgW452qHwy4/AhRTH/jMx
- pOITiJaAbn9MyV9XgtJ3BdbTb16JWrYKjDUn/KoNPhc+wNYedlkS3YRrjRCClNYXN9Lm
- g66Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV9j7PBQzAl+RPIZlArNtoSohlh4X++QSyaGnCxcr3fcAHbivfXe/fnqeo40tEUP/5AeAn/Gh/GS6OzWyGjmUGuMb3iwnY=
-X-Gm-Message-State: AOJu0Yza1/VPULf+lf4ZcCEggn8gZe1XWMte3WJ8oJu8pX1FgaDNXsGu
- s49p6E0kIHriHxASHpt46D3CRUqNaODBaRUPFPa0RSwtG3OGyW33bO61cyfdva0=
-X-Google-Smtp-Source: AGHT+IGYIbwQn90fv+TqAb/NGXWj5dhCw5gWd1YxptU1PeRO63aRM7tsMSGtHHZCr2jOYd5F8GO8gw==
-X-Received: by 2002:a05:600c:48aa:b0:426:6e95:78d6 with SMTP id
- 5b1f17b1804b1-426706c62d9mr5557445e9.4.1720482741977; 
- Mon, 08 Jul 2024 16:52:21 -0700 (PDT)
-Received: from [10.11.12.72] ([90.220.10.255])
+ d=1e100.net; s=20230601; t=1720483177; x=1721087977;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cCQtk4ewWl7WgPDITSsZ5PpDbONDkoK+blGGaS89AM4=;
+ b=Ae6KjUSpUy6wUSXrvJQySlGyawOg3B9gq5+zM5Xp+9ZtXlQEqNJ5IxCSK64zTjxj7L
+ jKlN/JuCTybTzMQVQnANl2tRozb3A5Jy5tZmFf5jgW9kjFMULdpDDVSkyOMbmJpf+Hqi
+ 6Nl9SxkXqXh0bYLAIHzmnae/Seqy3geVw1vmqjwzrlQ7NpawZasCfwIrBXjDLCuTUw8N
+ QdKCp/7u2kay2a1zLGB0ifn3TQwFpl92VaRCJk7VTQg4Fq4YDpR6idNljTkGxXLKOs9W
+ 4flvalAeDegqt3cLIEftIsHzli+wl5r85idJjemnJNOiTvURcN35PxQOrOYRRxzH6mdw
+ P2Mw==
+X-Gm-Message-State: AOJu0Yzn32qy1IXIXCdDu/l2svf+10nZIMlE2krpGz9mI4j9RFAmdgBA
+ N0+TuNBCq4fOXYLHi0WsE2YdeN+MsNAReggmjnXuI8JIDk0dLmILgM6TeIQChy2JWwR8ECQT3FZ
+ 8Fcs=
+X-Google-Smtp-Source: AGHT+IGtdVo0BqHGuSWYXIDFZI7F8O+LU1UFYOY/fwFmCY2Od0zDqsGfUwQ+ArWSQlUpggxVrqPd8w==
+X-Received: by 2002:a05:6a20:d80d:b0:1c2:9941:c9bb with SMTP id
+ adf61e73a8af0-1c29941cb6amr656168637.58.1720483177539; 
+ Mon, 08 Jul 2024 16:59:37 -0700 (PDT)
+Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266a38f5a5sm53833465e9.43.2024.07.08.16.52.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Jul 2024 16:52:21 -0700 (PDT)
-Message-ID: <f825e5df-ec87-4703-9722-98f1aa7aa33f@opnsrc.net>
-Date: Mon, 8 Jul 2024 23:52:19 +0000
+ d9443c01a7336-1fbb6ac0841sm4156325ad.211.2024.07.08.16.59.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Jul 2024 16:59:37 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.prg
+Subject: [PATCH 0/6] target/arm: AdvSIMD decodetree conversion, part 3
+Date: Mon,  8 Jul 2024 16:59:30 -0700
+Message-ID: <20240708235936.382058-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V13 8/8] docs/specs/acpi_hw_reduced_hotplug: Add the CPU
- Hotplug Event Bit
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, maz@kernel.org, jean-philippe@linaro.org,
- jonathan.cameron@huawei.com, lpieralisi@kernel.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
- eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
- mst@redhat.com, will@kernel.org, gshan@redhat.com, rafael@kernel.org,
- alex.bennee@linaro.org, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
- wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
- lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
- linuxarm@huawei.com, Zhao Liu <zhao1.liu@intel.com>
-References: <20240607115649.214622-1-salil.mehta@huawei.com>
- <20240607115649.214622-9-salil.mehta@huawei.com>
- <20240706164519.06c53d77@imammedo.users.ipa.redhat.com>
- <db8c2a7c-cc40-4fed-98fc-171f70e239ea@opnsrc.net>
- <20240708155507.52418191@imammedo.users.ipa.redhat.com>
-Content-Language: en-GB
-From: Salil Mehta <salil.mehta@opnsrc.net>
-In-Reply-To: <20240708155507.52418191@imammedo.users.ipa.redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=salil.mehta@opnsrc.net; helo=mail-wm1-x334.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,57 +91,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+A small set, but better than waiting for a larger set.
+It's a good stopping point, finishing the convertion of
 
-On 08/07/2024 13:55, Igor Mammedov wrote:
-> On Mon, 8 Jul 2024 05:32:28 +0000
-> Salil Mehta <salil.mehta@opnsrc.net> wrote:
->
->> On 06/07/2024 14:45, Igor Mammedov wrote:
->>> On Fri, 7 Jun 2024 12:56:49 +0100
->>> Salil Mehta <salil.mehta@huawei.com> wrote:
->>>   
->>>> GED interface is used by many hotplug events like memory hotplug, NVDIMM hotplug
->>>> and non-hotplug events like system power down event. Each of these can be
->>>> selected using a bit in the 32 bit GED IO interface. A bit has been reserved for
->>>> the CPU hotplug event.
->>>>
->>>> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
->>>> Reviewed-by: Gavin Shan <gshan@redhat.com>
->>>> Tested-by: Zhao Liu <zhao1.liu@intel.com>
->>> suggest to squash this into the patch that introduces this bit [3/8]
->> I thought, we are introducing a change common to all architectures?
-> hw reduced hotplug implies GED, so including doc change
-> into the patch that introduces bit in the code is better
-> option.
->
-> it also easier on the folks that come later and find doc
-> and code in the same commit (which is easier to follow
-> than looking for different commits in git log).
+  disas_simd_three_reg_diff
+  disas_simd_scalar_three_reg_diff
+  disas_simd_indexed
 
-Ok. I'll squash this into the 3rd patch of this series.
 
-Thanks
+r~
 
->
->>> Best, Salil.
->>>> ---
->>>>    docs/specs/acpi_hw_reduced_hotplug.rst | 3 ++-
->>>>    1 file changed, 2 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/docs/specs/acpi_hw_reduced_hotplug.rst b/docs/specs/acpi_hw_reduced_hotplug.rst
->>>> index 0bd3f9399f..3acd6fcd8b 100644
->>>> --- a/docs/specs/acpi_hw_reduced_hotplug.rst
->>>> +++ b/docs/specs/acpi_hw_reduced_hotplug.rst
->>>> @@ -64,7 +64,8 @@ GED IO interface (4 byte access)
->>>>           0: Memory hotplug event
->>>>           1: System power down event
->>>>           2: NVDIMM hotplug event
->>>> -    3-31: Reserved
->>>> +       3: CPU hotplug event
->>>> +    4-31: Reserved
->>>>    
->>>>    **write_access:**
->>>>      
->>> :
->>>   
+
+Richard Henderson (6):
+  target/arm: Convert SMULL, UMULL, SMLAL, UMLAL, SMLSL, UMLSL to
+    decodetree
+  target/arm: Convert SADDL, SSUBL, SABDL, SABAL, and unsigned to
+    decodetree
+  target/arm: Convert SQDMULL, SQDMLAL, SQDMLSL to decodetree
+  target/arm: Convert SADDW, SSUBW, UADDW, USUBW to decodetree
+  target/arm: Convert ADDHN, SUBHN, RADDHN, RSUBHN to decodetree
+  target/arm: Convert PMULL to decodetree
+
+ target/arm/tcg/translate-a64.c | 1155 +++++++++++---------------------
+ target/arm/tcg/a64.decode      |   77 +++
+ 2 files changed, 460 insertions(+), 772 deletions(-)
+
+-- 
+2.43.0
+
 
