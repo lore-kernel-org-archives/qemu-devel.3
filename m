@@ -4,74 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8291CC2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 09:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64652C3DA41
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 09:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR7KG-0002SI-UL; Tue, 09 Jul 2024 05:39:56 -0400
+	id 1sR7Xi-0000Nu-I4; Tue, 09 Jul 2024 05:53:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sR7KE-0002Ra-3s
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 05:39:54 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sR7KC-0005Ip-FZ
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 05:39:53 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a7527afa23cso612661466b.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 02:39:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720517990; x=1721122790; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=gIeqpd0Ni+01y9GBfgzCBOOuLFSJIDHwjq65CNAIGK4=;
- b=HADURW/lKJt84cYxLjdiHUmf7qJFGrG44hHGa6uNAlgJNJlrNLiBj2zHigUR53h4EV
- KSNgWYlvR1GU2nWWqo2Z7p8KG5++FDx5qGwkEySZFU5Z6TPLtTv1gC+t6XRD01a8qveT
- A/xC8UtKnSJH5QVuZRwM61/iezRKy8PX/q+UJHHMYPkAIFqeONrcgD+fc6UFOhLVRjl5
- /FAAnE8gYzNZp1M2U69KaFzVfcIWCnhMkoEg35CYEcwWsuH9qBP0OAA92sGecVYzDrKp
- UmVJnNbtxEXYHEFr/gcs3XUzfwnfToOOB5gsJZfLAiDqizS8dKYj+SWTUEszcTtd/hs8
- 3Ttg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720517990; x=1721122790;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gIeqpd0Ni+01y9GBfgzCBOOuLFSJIDHwjq65CNAIGK4=;
- b=IjBgmq2VjXbZ/PcijZdK+/Ek+Ij6l4oi++ep5NN21nHQU9hlz2PQJVALnb3zPAYc2T
- U8zs6W4z8vdzpQoSh7uvSDGVwAbh8fACnIxqpjXwh1UIj/ZeGbZnCcu0k+LOvoWLFnGm
- g6IuCfi2tx4MlgF9UuKHwTiqkkyibhVvwLUUWW4HPBRjgpmbPELUzn9dtCiC9QDSqC2o
- AbfKZK+ir3fsFkoNZujMbXs3yPvp/nvcAY+8OnOcZaluVRD0YjnZz1Q9eSUqu2fn+nCZ
- q22RtimMqiiB2O5rZ972Op/MHheVUgDZQHIPLr/h8gNf1LegKEg0HmlW89HYUWQNouBw
- i9xg==
-X-Gm-Message-State: AOJu0YyYwJFs0nNJjOC1PsxTHBlQgK7VmdVFwDx4DBe8NUl2eBL/y59g
- zZc5Wa/5SbxMjNzBWh5yl25CHO5vPzsexxtax+waGfnPbhPJC+I5TgGjUY0ykMR41AIAXDNrcMm
- 8h9dkBzlcezlGHtULXZf2RJfD5oUjIu5jfPeP1g==
-X-Google-Smtp-Source: AGHT+IGSZjcSIIIX8CPK08iPwLxsI1eQMY+TqEjTJYHeXBqFjnRCJxP2/5hsQDAv3MhIbEVUF0EEJavxePlW+xFgKQc=
-X-Received: by 2002:a17:906:b319:b0:a77:deb2:8b01 with SMTP id
- a640c23a62f3a-a780b6891ebmr175951266b.1.1720517989544; Tue, 09 Jul 2024
- 02:39:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org>)
+ id 1sR7XT-0000GO-Br; Tue, 09 Jul 2024 05:53:40 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org>)
+ id 1sR7XF-0007ic-CF; Tue, 09 Jul 2024 05:53:34 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WJGWm0t4Gz4xPg;
+ Tue,  9 Jul 2024 19:53:08 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WJGWc5b23z4w2K;
+ Tue,  9 Jul 2024 19:53:00 +1000 (AEST)
+Message-ID: <528e5ee9-c49b-425c-a779-dc5dcb57da93@kaod.org>
+Date: Tue, 9 Jul 2024 11:52:53 +0200
 MIME-Version: 1.0
-References: <20240708181709.27410-1-rkir@google.com>
-In-Reply-To: <20240708181709.27410-1-rkir@google.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Jul 2024 10:39:38 +0100
-Message-ID: <CAFEAcA_r9ee+5VLSEVPN-g8AzFOb7j7ft+_GYCYLFVe=ieBMiA@mail.gmail.com>
-Subject: Re: [PATCH] iov: don't use void* in pointer arithmetic in headers
-To: Roman Kiryanov <rkir@google.com>
-Cc: qemu-devel@nongnu.org, jansene@google.com, mett@google.com, 
- jpcottin@google.com, pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/8] support AST2700 network
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>, "open list:All patches CC here"
+ <qemu-devel@nongnu.org>, "open list:Block layer core" <qemu-block@nongnu.org>
+Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
+References: <20240704082922.1464317-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240704082922.1464317-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,24 +73,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Jul 2024 at 19:18, Roman Kiryanov <rkir@google.com> wrote:
->
-> void* pointer arithmetic is a GCC extentension
-> which could not be available in other build tools
-> (e.g. C++). This changes removes this assumption.
->
-> Signed-off-by: Roman Kiryanov <rkir@google.com>
+On 7/4/24 10:29 AM, Jamin Lin wrote:
+> change from v1:
+> - ftgmac100
+>   - fix coding style
+>   - support 64 bits dma dram address for AST2700
+> 
+> change from v2:
+> - ftgmac100: update memory region size to 0x200.
+> - ftgmac100: introduce a new class(ftgmac100_high),
+>      class attribute and memop handlers, for FTGMAC100_*_HIGH regs read/write.
+> - aspeed_ast27x0: update network model to ftgmac100_high to support
+>    64 bits dram address DMA.
+> - m25p80: support quad mode for w25q01jvq
+> 
+> change from v3:
+> - ftgmac100: update memory region size to 64KB.
+> - ftgmac100: using a property to activate the region for new registers,
+>    instead of a class
+> - ftgmac100: introduce TX and RX ring base address high registers
+> - ftgmac100: split standalone patch for easy review
+> - ftgmac100: update TX and RX packet buffers address to 64 bits
+> - aspeed_ast27x0: set dma64 property for AST2700 ftgmac100
+> - machine_aspeed.py: update to test sdk v09.02 and network for AST2700
+> 
+> Jamin Lin (8):
+>    hw/net:ftgmac100: update memory region size to 64KB
+>    hw/net:ftgmac100: update ring base address to 64 bits
+>    hw/net:ftgmac100: introduce TX and RX ring base address high registers
+>      to support 64 bits
+>    hw/net:ftgmac100: update TX and RX packet buffers address to 64 bits
+>    aspeed/soc: set dma64 property for AST2700 ftgmac100
+>    hw/block: m25p80: support quad mode for w25q01jvq
+>    machine_aspeed.py: update to test ASPEED OpenBMC SDK v09.02 for
+>      AST2700
+>    machine_aspeed.py: update to test network for AST2700
+> 
+>   hw/arm/aspeed_ast27x0.c         |   3 +
+>   hw/block/m25p80.c               |  16 ++++
+>   hw/net/ftgmac100.c              | 147 +++++++++++++++++++++++++++-----
+>   include/hw/net/ftgmac100.h      |  17 ++--
+>   tests/avocado/machine_aspeed.py |  12 +--
+>   5 files changed, 162 insertions(+), 33 deletions(-)
+> 
 
-We had the question on a previous "make this C++
-compatible" patch of "how much of this stuff is there?".
 
-https://lore.kernel.org/qemu-devel/ZnqPpqfBxlk9tEdX@redhat.com/
+Applied to aspeed-next.
 
-Please can you give us an idea of how much of this stuff
-there is that you're planning to send out and what its
-scope is, rather than just sending one "well this looks
-small on its own" patch a week?
+Thanks,
 
-thanks
--- PMM
+C.
+
+
 
