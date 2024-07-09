@@ -4,100 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FCBC3DA41
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 11:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5203FC2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 11:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR9GS-0001ag-4j; Tue, 09 Jul 2024 07:44:08 -0400
+	id 1sR9GO-0001N1-Pp; Tue, 09 Jul 2024 07:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1sR9GP-0001Oc-53; Tue, 09 Jul 2024 07:44:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sR9GM-0001BF-G2; Tue, 09 Jul 2024 07:44:02 -0400
+Received: from out30-98.freemail.mail.aliyun.com ([115.124.30.98])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
- id 1sR9GJ-0004tO-RJ; Tue, 09 Jul 2024 07:44:04 -0400
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469B8Odx007567;
- Tue, 9 Jul 2024 11:43:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=jSdduZ9Z/MkWV
- Knf00JM4b2UUd4vYFwMPWCVn5SBq6M=; b=XnUkCqfo4heBSykflz3xjTyWb0mDR
- GkGiAn93mO6KerlkW0kBAXBhpVXQcz+suoM9PVRjcHXvGepDugLubFSBKnmyUIb0
- XX5Ntlf3L2NLBj/4il6RBLULBbcrDV/Dek+FFl35L+MA2VtS4O+t+pQ0Dgn6qIkj
- cRlYhrUUBR8aRgrPl2kCXDbrfnPj9tg9UDfMcXqhGTv6mI+bd+VYJgQVT5yCDZvU
- +Yj8wDRGcF4TK23lKpvOOO0NdplaJkrv50gF8pLRywQWzPDacwn5a3/qUp9r9HLt
- Bg4UxOULY6/Rrs4WEhEWyA1bES2DSCRFkeq145YKiSn1xSKGUbmqu1NIg==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4093x903jw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jul 2024 11:43:56 +0000 (GMT)
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 469BgKOx027482;
- Tue, 9 Jul 2024 11:43:55 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4093x903jv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jul 2024 11:43:55 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 4699TlGZ006903; Tue, 9 Jul 2024 11:43:54 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 407jfmbyc1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 09 Jul 2024 11:43:54 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 469BhpvO47055148
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 9 Jul 2024 11:43:53 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 34D3B2004D;
- Tue,  9 Jul 2024 11:43:51 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EB44020040;
- Tue,  9 Jul 2024 11:43:49 +0000 (GMT)
-Received: from localhost.in.ibm.com (unknown [9.199.192.140])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  9 Jul 2024 11:43:49 +0000 (GMT)
-From: Chinmay Rath <rathc@linux.ibm.com>
-To: qemu-ppc@nongnu.org
-Cc: qemu-devel@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com,
- richard.henderson@linaro.org, harshpb@linux.ibm.com
-Subject: [PATCH v3 2/3] target/ppc: Update VMX storage access insns to use
- tcg_gen_qemu_ld/st_i128.
-Date: Tue,  9 Jul 2024 17:13:40 +0530
-Message-Id: <20240709114341.152175-3-rathc@linux.ibm.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20240709114341.152175-1-rathc@linux.ibm.com>
-References: <20240709114341.152175-1-rathc@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sR9GJ-0004nP-O5; Tue, 09 Jul 2024 07:44:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1720525432; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=VqRQouRCFEypQvieYOaE/qVZLAT7KhhQ1HsNHlNDUls=;
+ b=Be0dsdBiqjas0AxywG8pHMAeOv7GlNT1FYBl5izQQXVhEoB7KZ0ztBmfJiKiN7L+JPiNx/3OE+lsOvxkyBQPZCFum56kAt64lcgPmbhgf1n9UuIKggl5Td1hI1kMjhU5XlSduAN7f/NyEjol4pi5OTNHSixNN8lWahjgarchrks=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R421e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067111;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
+ TI=SMTPD_---0WABynFc_1720525430; 
+Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WABynFc_1720525430) by smtp.aliyun-inc.com;
+ Tue, 09 Jul 2024 19:43:51 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ zhiwei_liu@linux.alibaba.com
+Subject: [PATCH v4 10/11] target/riscv: Expose zabha extension as a cpu
+ property
+Date: Tue,  9 Jul 2024 19:36:51 +0800
+Message-Id: <20240709113652.1239-11-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20240709113652.1239-1-zhiwei_liu@linux.alibaba.com>
+References: <20240709113652.1239-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: t3QBYem2aCFDxMQtxnb8Kg28IUncJnRG
-X-Proofpoint-ORIG-GUID: _rsxbxLd6n-g2QhXYqkbEdzAoN4kaMyt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-09_02,2024-07-08_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0
- clxscore=1015 phishscore=0 spamscore=0 mlxlogscore=736 lowpriorityscore=0
- priorityscore=1501 adultscore=0 impostorscore=0 suspectscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2406140001
- definitions=main-2407090077
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=rathc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=115.124.30.98;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-98.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,92 +70,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Updated instructions {l, st}vx to use tcg_gen_qemu_ld/st_i128,
-instead of using 64 bits loads/stores in succession.
-Introduced functions {get, set}_avr_full in vmx-impl.c.inc to
-facilitate the above, and potential future usage.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/ppc/translate/vmx-impl.c.inc | 42 ++++++++++++++---------------
- 1 file changed, 20 insertions(+), 22 deletions(-)
+ target/riscv/cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/ppc/translate/vmx-impl.c.inc b/target/ppc/translate/vmx-impl.c.inc
-index a182d2cf81..70d0ad2e71 100644
---- a/target/ppc/translate/vmx-impl.c.inc
-+++ b/target/ppc/translate/vmx-impl.c.inc
-@@ -24,25 +24,29 @@ static inline void set_avr64(int regno, TCGv_i64 src, bool high)
-     tcg_gen_st_i64(src, tcg_env, avr64_offset(regno, high));
- }
- 
-+static inline void get_avr_full(TCGv_i128 dst, int regno)
-+{
-+    tcg_gen_ld_i128(dst, tcg_env, avr_full_offset(regno));
-+}
-+
-+static inline void set_avr_full(int regno, TCGv_i128 src)
-+{
-+    tcg_gen_st_i128(src, tcg_env, avr_full_offset(regno));
-+}
-+
- static bool trans_LVX(DisasContext *ctx, arg_X *a)
- {
-     TCGv EA;
--    TCGv_i64 avr;
-+    TCGv_i128 avr;
-     REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-     REQUIRE_VECTOR(ctx);
-     gen_set_access_type(ctx, ACCESS_INT);
--    avr = tcg_temp_new_i64();
-+    avr = tcg_temp_new_i128();
-     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     tcg_gen_andi_tl(EA, EA, ~0xf);
--    /*
--     * We only need to swap high and low halves. gen_qemu_ld64_i64
--     * does necessary 64-bit byteswap already.
--     */
--    gen_qemu_ld64_i64(ctx, avr, EA);
--    set_avr64(a->rt, avr, !ctx->le_mode);
--    tcg_gen_addi_tl(EA, EA, 8);
--    gen_qemu_ld64_i64(ctx, avr, EA);
--    set_avr64(a->rt, avr, ctx->le_mode);
-+    tcg_gen_qemu_ld_i128(avr, EA, ctx->mem_idx,
-+                         DEF_MEMOP(MO_128 | MO_ATOM_IFALIGN_PAIR));
-+    set_avr_full(a->rt, avr);
-     return true;
- }
- 
-@@ -56,22 +60,16 @@ static bool trans_LVXL(DisasContext *ctx, arg_LVXL *a)
- static bool trans_STVX(DisasContext *ctx, arg_STVX *a)
- {
-     TCGv EA;
--    TCGv_i64 avr;
-+    TCGv_i128 avr;
-     REQUIRE_INSNS_FLAGS(ctx, ALTIVEC);
-     REQUIRE_VECTOR(ctx);
-     gen_set_access_type(ctx, ACCESS_INT);
--    avr = tcg_temp_new_i64();
-+    avr = tcg_temp_new_i128();
-     EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     tcg_gen_andi_tl(EA, EA, ~0xf);
--    /*
--     * We only need to swap high and low halves. gen_qemu_st64_i64
--     * does necessary 64-bit byteswap already.
--     */
--    get_avr64(avr, a->rt, !ctx->le_mode);
--    gen_qemu_st64_i64(ctx, avr, EA);
--    tcg_gen_addi_tl(EA, EA, 8);
--    get_avr64(avr, a->rt, ctx->le_mode);
--    gen_qemu_st64_i64(ctx, avr, EA);
-+    get_avr_full(avr, a->rt);
-+    tcg_gen_qemu_st_i128(avr, EA, ctx->mem_idx,
-+                         DEF_MEMOP(MO_128 | MO_ATOM_IFALIGN_PAIR));
-     return true;
- }
- 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 5219b44176..8cd52e6801 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -117,6 +117,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+     ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_11),
+     ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
++    ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
+     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+     ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
+     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
+@@ -1478,6 +1479,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
+     MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
+     MULTI_EXT_CFG_BOOL("zama16b", ext_zama16b, false),
++    MULTI_EXT_CFG_BOOL("zabha", ext_zabha, false),
+     MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
+     MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
+     MULTI_EXT_CFG_BOOL("zawrs", ext_zawrs, true),
 -- 
-2.39.3
+2.25.1
 
 
