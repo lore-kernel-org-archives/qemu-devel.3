@@ -4,56 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A62C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14033C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:47:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRD2O-0007eW-6C; Tue, 09 Jul 2024 11:45:52 -0400
+	id 1sRD2r-0001CC-0w; Tue, 09 Jul 2024 11:46:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org>)
- id 1sRD2H-0007Bq-CG; Tue, 09 Jul 2024 11:45:45 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org>)
- id 1sRD2E-0002KN-Ow; Tue, 09 Jul 2024 11:45:45 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WJQLW5dh1z4x1P;
- Wed, 10 Jul 2024 01:45:39 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WJQLR3Cncz4w2M;
- Wed, 10 Jul 2024 01:45:35 +1000 (AEST)
-Message-ID: <fd66f8ad-3dc9-4558-80c6-babf308dc90a@kaod.org>
-Date: Tue, 9 Jul 2024 17:45:20 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sRD2i-0000mG-73
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:46:16 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sRD2g-0002Od-3h
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:46:11 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-70af8062039so3219904b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:46:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720539968; x=1721144768; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9JD0Dbr7T3ZUz9lt7nR+lfIlFQr6E0Gj/yU3KGxEYB0=;
+ b=QmkBcCaKZ7skYU0nN0GGDfGiwnAdt8Vqr/N+36GDZk/nfem6dP/U+lcuD7oNsVA/RS
+ XHPl+o6axKUvM4bpWR9zkgIy+QF4E5GzLJYqMi8L+hHboMYdUzhvEIiOXquUCiVph4mw
+ yYS7b6wjwmNc/xFb+mMreSgH6pyDymV2UkI7B9Z4AaVdub7/M0KENwfAfS1tTaBkmvnM
+ z7BTX+2rYeowY72OB2mbITopGcf2xW79XA3mmb84QAD50mygHoeS56MK967+dpds1CQl
+ oL1l/6WUIJrMsAGBrE/00X2XngL0aRRRo9fo9kaXciBM1aVreZebKiiPe94wneaq6UVS
+ d3GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720539968; x=1721144768;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9JD0Dbr7T3ZUz9lt7nR+lfIlFQr6E0Gj/yU3KGxEYB0=;
+ b=RgY39g3tNybCHL0qI07p8CUt4gkK5vJZAoFSk7+eUMwqwbmJnSny6yroWQdflABvU2
+ VqKVd2o+6J5rDi+22Sp1tt/epNBGBl2Cl7aacnmogZGl/ai1ojrl/I2NfO9bosdTsiq+
+ Jo6qdtaLu3NTyI8jb5BrG13kwaIAsVBuXESGGNYU1VZ1Y6tyN62qxJ+dx9g0iCUtuzeT
+ rOXz4MN46OaUJwLlZ8xILhrW0bfqGnYbF5oLD+RSa9JmeuZaNq1Zyq6I2wd4rooGfFeW
+ re+EIR0o2vnzTGP27YnyyrfnV9KC4/2u/66dLYHGeBMGKqSZGT3cjLXcm7m3J3+SXUrO
+ S4PQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWJ9dyDILNtHUgAmzTq1uwmGZ7GSpn7K4w8m0/T6gZv8yzWNVBTWuP2nU5BmUmIrglzHC5ozNc0CK3V8mW/m+LP7MDqZyc=
+X-Gm-Message-State: AOJu0YzamQ0lmdIm4+5VkWhnvvPxsGckHuk5xhP6Cy+PFMmFPW8e63CJ
+ +TarvADXYJvz4hfUW2mjTxkhtHgn+aJPMiRYSQ7cFRrrA8NhcGL34DL17Q3gesk=
+X-Google-Smtp-Source: AGHT+IH0XnyCvtEHHpJxqK/AnHS/F8YQaHps/BsNn1SwHSPY/KjymlQI5WaPf3MIaNpWa1EsbFGQdw==
+X-Received: by 2002:a05:6a00:4650:b0:706:34d2:62bc with SMTP id
+ d2e1a72fcca58-70b435709d9mr3391749b3a.18.1720539961482; 
+ Tue, 09 Jul 2024 08:46:01 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70b4397ed2esm2035874b3a.149.2024.07.09.08.46.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Jul 2024 08:46:01 -0700 (PDT)
+Message-ID: <b1edf94a-5003-4075-a92b-87a802e748ab@linaro.org>
+Date: Tue, 9 Jul 2024 08:45:59 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v47 11/19] hw/sd/sdcard: Add eMMC 'boot-size' property
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH 1/2] target/arm: Fix handling of LDAPR/STLR with negative
+ offset
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-block@nongnu.org,
- Bin Meng <bmeng.cn@gmail.com>, Joel Stanley <joel@jms.id.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>
-References: <20240709152556.52896-1-philmd@linaro.org>
- <20240709152556.52896-12-philmd@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240709152556.52896-12-philmd@linaro.org>
+References: <20240709134504.3500007-1-peter.maydell@linaro.org>
+ <20240709134504.3500007-2-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240709134504.3500007-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,58 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/24 5:25 PM, Philippe Mathieu-Daudé wrote:
-> Avoid hardcoding 1MiB boot size in EXT_CSD_BOOT_MULT,
-> expose it as QOM property.
+On 7/9/24 06:45, Peter Maydell wrote:
+> When we converted the LDAPR/STLR instructions to decodetree we
+> accidentally introduced a regression where the offset is negative.
+> The 9-bit immediate field is signed, and the old hand decoder
+> correctly used sextract32() to get it out of the insn word,
+> but the ldapr_stlr_i pattern in the decode file used"imm:9"
+> instead of"imm:s9", so it treated the field as unsigned.
 > 
-> By default, do not use any size. Board is responsible
-> to set the boot size property.
+> Fix the pattern to treat the field as a signed immediate.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-I would move this patch at the end with the other patches adding
-boot support.
-
-
-Thanks,
-
-C.
-
-
-
+> Cc:qemu-stable@nongnu.org
+> Fixes: 2521b6073b7 ("target/arm: Convert LDAPR/STLR (imm) to decodetree")
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2419
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   hw/sd/sd.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-> index c809961418..df0e2345c0 100644
-> --- a/hw/sd/sd.c
-> +++ b/hw/sd/sd.c
-> @@ -129,6 +129,7 @@ struct SDState {
->       /* Static properties */
->   
->       uint8_t spec_version;
-> +    uint64_t boot_part_size;
->       BlockBackend *blk;
->   
->       const SDProto *proto;
-> @@ -490,7 +491,8 @@ static void mmc_set_ext_csd(SDState *sd, uint64_t size)
->       sd->ext_csd[EXT_CSD_TRIM_MULT] = 0x1; /* Trim multiplier */
->       sd->ext_csd[EXT_CSD_SEC_FEATURE_SUPPORT] = 0x15; /* Secure feature */
->       sd->ext_csd[EXT_CSD_BOOT_INFO] = 0x7; /* Boot information */
-> -    sd->ext_csd[EXT_CSD_BOOT_MULT] = 0x8; /* Boot partition size. 128KB unit */
-> +                                     /* Boot partition size. 128KB unit */
-> +    sd->ext_csd[EXT_CSD_BOOT_MULT] = sd->boot_part_size / (128 * KiB);
->       sd->ext_csd[EXT_CSD_ACC_SIZE] = 0x6; /* Access size */
->       sd->ext_csd[EXT_CSD_HC_ERASE_GRP_SIZE] = 0x4; /* HC Erase unit size */
->       sd->ext_csd[EXT_CSD_ERASE_TIMEOUT_MULT] = 0x01; /* HC erase timeout */
-> @@ -2693,6 +2695,7 @@ static Property sd_properties[] = {
->   };
->   
->   static Property emmc_properties[] = {
-> +    DEFINE_PROP_UINT64("boot-size", SDState, boot_part_size, 0),
->       DEFINE_PROP_END_OF_LIST()
->   };
->   
+>   target/arm/tcg/a64.decode | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
