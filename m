@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C89C3DA47
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:30:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12A83C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:30:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRCjt-0004Fw-5x; Tue, 09 Jul 2024 11:26:45 -0400
+	id 1sRClG-00046S-HQ; Tue, 09 Jul 2024 11:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCjq-000466-9V
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:26:43 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCkw-0002WF-S3
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:52 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCjn-0006Gt-W2
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:26:42 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4266fd395eeso8155705e9.3
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:26:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCkt-0006Wd-Kg
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:50 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52eafa1717bso2595699e87.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720538798; x=1721143598; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720538864; x=1721143664; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=daY+t25+t6fUlvq8XgRmvXSG1rxW6z777bj+RrC4xDs=;
- b=FUdkAThuB/oVl2mEKN3PytIRlKxYmI7yeJLXAKUiqwpM3znJpM+m11sH6RTlT01KOE
- llhMCOfrGBAs9Ta8uOcec6/DCOZw5F7Y47o8rnMI/+5fawcL4U3lsgrZlRbcab4POkLf
- PpP8CZXjF2CeBDux3odTrQJ19wrmx80qqPjR40CJHG5sxVhZ9D5wJ/HDGPWWX6ST55eP
- CVH1cmVsVR8ptDKKAyBQLWSNeV4hS4nF80cpJQEIlN3cxg/o0QitMfkuysM9iiXZsme6
- dw5WJMuuppHRMLvgnpPX69nIlWBqfatXF1gojPsRG1UmkFiWTggDzuKnwuaH3ZuyThrE
- JrJQ==
+ bh=egTnAJY4Ail08o7ydS3nshQ0gmoljQp4B2SNOCZM4Nk=;
+ b=OCW5Xo4UcQ5u/BJ4MZXAT1fDkefnYsAR0UV53gtFdVQOc9bbFskBaqgRBcHaOv/TEz
+ ImwmvYdnLBDs8Yno1SkzmQhetSDiu7uVw8KLBhvXr/XVPKrYKbqY1lSXNoiNe4JnnxWX
+ NNXttNrlVfOlV3yuBdyleXnOzcn9ZzNiy2bECUyFOdMxIZ0O80FzJAOsGh2tubfC6Lcm
+ c7IDGtACVso5Ae2nPDC0zwm1eFzhGzOQtTlAKoyLGEevfsKmwXBwQMKrGykOGFSVrwd9
+ h8o82ToB3+Wpy4D1oqCcJC6xduNLJQFCY5TgAZwXMQp/Eed8qsnbXD1AIRNG4BEtbsZb
+ 8xcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720538798; x=1721143598;
+ d=1e100.net; s=20230601; t=1720538864; x=1721143664;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=daY+t25+t6fUlvq8XgRmvXSG1rxW6z777bj+RrC4xDs=;
- b=ZyBs/GSMKRMeUHzaGVIluzG+/Iihuqg/hl20htnbKFeFL37ajrKb6qLubuVbtwmwLI
- ghyS1e+A1pvUqbRzWByhh5ykjwgB8gJEapPl37cV3K+vcwe2CVNvx2GgYvTUpGczbDQh
- fUQxXKtbnHs58oMD8PCLqhPs+DeFc0lBfaykCWMGRu4ySYgTbGmhvGbNY+m0D+RyzsZ5
- ZTSao4JxQQFSWxYit09lv+KNs204hX3u4ldPeox2XkXyvtGygS5kzFLBfP+jSuht2Amb
- ONHdUwOEJ9vE4bo8IrP0I0Luqc+qiMAVY7jTSz0357AUUCUoByYMyULhzz8pOuQOpDV3
- tPmg==
-X-Gm-Message-State: AOJu0YwfrAm8ogTKtqFcBn35GGkZQjWnjqv1Sm79j1Ow4HFGwXS1ccE0
- 2E9OWo6EKHA5nu/PxKgn44fQr5iBuwSP5y0u687t7ZmFenXdo/awBV9sgg5xw0ApXkv6gFc6H9Q
- F
-X-Google-Smtp-Source: AGHT+IGpaP1PaUQFbl5nkPS7zpUzx+EbRXFb+HKC55gHe1HHT2eJFKuQL7IwD3NsVOSjKU/IfCy+NQ==
-X-Received: by 2002:a05:600c:1c10:b0:426:5416:67de with SMTP id
- 5b1f17b1804b1-426707f7e68mr19359555e9.30.1720538798331; 
- Tue, 09 Jul 2024 08:26:38 -0700 (PDT)
+ bh=egTnAJY4Ail08o7ydS3nshQ0gmoljQp4B2SNOCZM4Nk=;
+ b=nRVy3cy519DBgvT4rkO4dIRyuHcCLW4DIH+/OvU20lVFcxykmHuWgsQvwAbOLcZyJ0
+ cu+Rz+a4s7azdtb/ZKPkG/KL0JiUVzl2vA2CoZ1q62PIzK9BrjVSIMYU81wGmjpaM8MB
+ POMR+HnDDAR2zSWn5nBNKV38/hxRzbReAhr35+QOKTRn82RHHvIkIGEfLRMaWaQQzcOt
+ pAtrZp33u7y/qen1IYWjJKbjrgjQ2KbWfbLokpoM5bkwt/hum5M8JJS91hV+In2KrWN8
+ u6SWvew/yUKHqiHcj0vXkRAYKT7O4VdCZqliYyR7yazxOknKxHS0UIjb7iYU7fwNI7xy
+ CE1A==
+X-Gm-Message-State: AOJu0Yy8wCbNKxIxZLmYC8h5BHbfihpWo0LNaiRKZEalN/BEy0/JJL/M
+ u0vSxtXmcI3OAkiprlZW+t8+MkvVSNqbCUq+UB7d0TA2/P7+8v8tLElPXkg/AaFSnCssM3J2Eas
+ l
+X-Google-Smtp-Source: AGHT+IG0cotN2kE7WlMybEPu1eIZlrXG239DnKZesEeq5IqssmtGpUoLVragYJxBV7owKkvUFVm0MA==
+X-Received: by 2002:a05:6512:2309:b0:52c:8024:1db with SMTP id
+ 2adb3069b0e04-52eb99d4ebamr1935061e87.63.1720538863738; 
+ Tue, 09 Jul 2024 08:27:43 -0700 (PDT)
 Received: from m1x-phil.lan (vau06-h02-176-184-43-20.dsl.sta.abo.bbox.fr.
  [176.184.43.20]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f7362d9sm44351915e9.30.2024.07.09.08.26.36
+ ffacd0b85a97d-367cdfab80asm2863625f8f.109.2024.07.09.08.27.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Jul 2024 08:26:37 -0700 (PDT)
+ Tue, 09 Jul 2024 08:27:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -66,18 +66,17 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>
-Subject: [PATCH v47 06/19] hw/sd/sdcard: Add emmc_cmd_SET_RELATIVE_ADDR
- handler (CMD3)
-Date: Tue,  9 Jul 2024 17:25:43 +0200
-Message-ID: <20240709152556.52896-7-philmd@linaro.org>
+Subject: [Aspeed PATCH v47 17/19] hw/sd/sdcard: Subtract bootarea size from blk
+Date: Tue,  9 Jul 2024 17:25:54 +0200
+Message-ID: <20240709152556.52896-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240709152556.52896-1-philmd@linaro.org>
 References: <20240709152556.52896-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,49 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@kaod.org>
+From: Joel Stanley <joel@jms.id.au>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The userdata size is derived from the file the user passes on the
+command line, but we must take into account the boot areas.
+
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240628070216.92609-86-philmd@linaro.org>
 ---
- hw/sd/sd.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Squash in previous?
+---
+ hw/sd/sd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index f580c6b2ae..83d45c897f 100644
+index 5830725629..291497468f 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -1280,6 +1280,20 @@ static sd_rsp_type_t sd_cmd_SEND_RELATIVE_ADDR(SDState *sd, SDRequest req)
+@@ -814,6 +814,10 @@ static void sd_reset(DeviceState *dev)
      }
- }
+     size = sect << HWBLOCK_SHIFT;
  
-+static sd_rsp_type_t emmc_cmd_SET_RELATIVE_ADDR(SDState *sd, SDRequest req)
-+{
-+    switch (sd->state) {
-+    case sd_identification_state:
-+    case sd_standby_state:
-+        sd->state = sd_standby_state;
-+        sd_set_rca(sd, req.arg >> 16);
-+        return sd_r1;
-+
-+    default:
-+        return sd_invalid_state_for_cmd(sd, req);
++    if (sc->bootpart_offset) {
++        size -= sd_bootpart_offset(sd);
 +    }
-+}
 +
- /* CMD6 */
- static sd_rsp_type_t sd_cmd_SWITCH_FUNCTION(SDState *sd, SDRequest req)
- {
-@@ -2445,6 +2459,7 @@ static const SDProto sd_proto_emmc = {
-         [0]  = {0,  sd_bc,   "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
-         [1]  = {0,  sd_bcr,  "SEND_OP_COND", sd_cmd_SEND_OP_COND},
-         [2]  = {0,  sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
-+        [3]  = {0,  sd_ac,   "SET_RELATIVE_ADDR", emmc_cmd_SET_RELATIVE_ADDR},
-         [4]  = {0,  sd_bc,   "SEND_DSR", sd_cmd_unimplemented},
-         [7]  = {0,  sd_ac,   "(DE)SELECT_CARD", sd_cmd_DE_SELECT_CARD},
-         [9]  = {0,  sd_ac,   "SEND_CSD", sd_cmd_SEND_CSD},
+     sect = sd_addr_to_wpnum(size) + 1;
+ 
+     sd->reset_time_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
 -- 
 2.41.0
 
