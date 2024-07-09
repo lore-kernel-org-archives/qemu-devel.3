@@ -4,70 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0825CC3DA41
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 12:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 306E3C3DA41
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 12:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR9aK-0001qK-B3; Tue, 09 Jul 2024 08:04:40 -0400
+	id 1sR9em-0002it-BM; Tue, 09 Jul 2024 08:09:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1sR9aH-0001if-3V
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 08:04:37 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1sR9aE-0000mU-Al
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 08:04:36 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxP_FGJ41meWsCAA--.7711S3;
- Tue, 09 Jul 2024 20:04:23 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Bx08RDJ41mpgJBAA--.7855S3; 
- Tue, 09 Jul 2024 20:04:21 +0800 (CST)
-Subject: Re: [PATCH v2 0/4] Reconstruct loongson ipi driver
-From: maobibo <maobibo@loongson.cn>
-To: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20240704033802.3838618-1-maobibo@loongson.cn>
-Message-ID: <fb5d8ffb-b183-ffbe-b64a-c4506b5b546d@loongson.cn>
-Date: Tue, 9 Jul 2024 20:04:19 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sR9ek-0002aX-2X
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 08:09:14 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sR9eg-0001Vc-J0
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 08:09:12 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-58c947a6692so6264927a12.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 05:09:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720526949; x=1721131749; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4Bq5n00imy9rQIePz4fJTbXX2aNjXlQDi1uni+2ghOk=;
+ b=yc4l3IKWneiPYcMx/tWpA4JTlb20QrNuk1t6ly64mBH6kUjmvaiA9u7CsROqZdIMOj
+ Dvc2Rm7iTMRUZ1qUTpVW0AohsVs2+P1cy26EX8qowtmvJA4O0qF7FDubnGiTVKzc/VDh
+ TG0w/B9/H7pYLEv7Ci7QgKCwDkys0p/kfUA94Agn/GP/2cHh3uF0AcA7HkeurXmwpssX
+ 8UajImB1W7ruQyOxBgStwjU79963pcQzgLgyySj0lHZJDUBVyFUIe7H2XP7THkdX8kfG
+ B4bcOlaky+YSM62G6ynPGP5p7InwQrBSU1YwzVUiuXLA9h9HgR/jdrBmpuBYd3xkmrns
+ GqHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720526949; x=1721131749;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4Bq5n00imy9rQIePz4fJTbXX2aNjXlQDi1uni+2ghOk=;
+ b=Nqhh37mbNIXfyXWXJcmGvnRmvlR0ec9s7o0fCMU+Ku1D08UlZyt8gXX39fAGdvnxF9
+ HJhuOPdMIXe2XTAvahgV8T6Nv34W0hft8J1r2Owi4HJH0DqEk+fjCUQPVCSwnFE+l1zw
+ /qZykqHXgdEYH6/hHBbLszSSolBFzYJeGAkEniUK+V34IXOYLnpGPUn+QNsOVyIKaJ9H
+ VQoxNsWzx0KjeoHLgvshJEIcOLknQPWqn2hl9ztOib64lX4hKpE2zND8MFG5LawT55+V
+ bYzQDoQMVh9oDgShHvoQXCjUG5khBJ8+kfiaAHWlcn3gbuMVa88SYzvTTN+Q7jeUobK3
+ kU6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVoAeVH3pbVSdD7LCMszeqUrvsbz/mWxLwSrDo9v/duexYjtx9wRb0cxF9Sf02RXM9ukx9Yj3Lxb2FYA79VJSgqjT6WeY=
+X-Gm-Message-State: AOJu0YzclyWMkCI0zxbsTZcyhtlB3aU9VfoEWnIV++KBBvVXlHnR8A/K
+ KSERso3zhtnkNQWGCEGyopVDr8vreSoey9VVfeZKnJM6Ha7f8c1PQJzQ1iUCGryXiTARQGQnjqc
+ g8ZWKsrH75E2dwwHSQjKURwH4Ue8fJLrgpS/5fQ==
+X-Google-Smtp-Source: AGHT+IEtXz3cJitTuHnCXkuiq/aPaAGE54sUrON3/9GuzUdw37cV3jB/IkdpNZrbAA9+UG37Urm/WJVrdGl8EI6x9F4=
+X-Received: by 2002:aa7:d717:0:b0:58c:8c06:74c8 with SMTP id
+ 4fb4d7f45d1cf-594bb869e18mr1404038a12.33.1720526948580; Tue, 09 Jul 2024
+ 05:09:08 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20240704033802.3838618-1-maobibo@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8Bx08RDJ41mpgJBAA--.7855S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7CrW3Kr1kCF13tryfXF4kKrX_yoW8uF4xpF
- W3Cw1agr48Jry7Arn3tas8XFZxZFn3GrW29F1S934xCr9IqF10vw1xGr95Xay5C34UXryq
- vFsYgryUWF1UA3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUr529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUBFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVWxJr0_GcWln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
- xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y
- 6r17McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
- 1lc7I2V7IY0VAS07AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWU
- JVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4
- vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IY
- x2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26c
- xKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAF
- wI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07jrpnQUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.431,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
+ <4ce5a7330f594c6c94c8cc3aabceb061095bb855.1720094395.git.manos.pitsidianakis@linaro.org>
+ <87msmqsunu.fsf@draig.linaro.org>
+In-Reply-To: <87msmqsunu.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 9 Jul 2024 13:08:57 +0100
+Message-ID: <CAFEAcA9X0564R7V=EsN2qxj51FNNkot3Pfev6mMgUbr35WYFZw@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 2/7] rust: add bindgen step as a meson dependency
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,57 +103,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe/Jiaxun,
+On Tue, 9 Jul 2024 at 11:53, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
+> > +msrv =3D {
+> > +  'rustc': '1.77.2',
+> > +  'cargo': '1.77.2',
+> > +  'bindgen': '0.69.4',
+> > +}
+>
+> This is still pretty bleeding edge (it even tripped up on the
+> .cargo/bin/cargo I have installed). This needs to be set to the
+> baseline which from:
+>
+>   https://wiki.qemu.org/RustInQemu/2022
+>
+> Looks to be 1.24.0 for rustc and I guess even lower for cargo (Debian
+> says 0.66.0). While it might make sense to delay merging if we are
+> waiting for one distro to produce a new LTS we shouldn't be needing
+> rustup by default.
 
-Could you do me a favor giving a review about this patch?
+I suspect that some of the older distro releases in that chart
+have already fallen off the end of our supported-platforms set,
+so the minimum is probably newer than 1.24.0 now.
 
-Regards
-Bibo Mao
+My take on this one is that (at some point, not necessarily
+right now) we want to look at:
 
-On 2024/7/4 上午11:37, Bibo Mao wrote:
-> Now loongson ipi and loongarch ipi share the same code with different
-> macro, loongson ipi has its separate function such mmio region,
-> loongarch ipi has other requirement such as irqchip in kernel.
-> 
-> Interrupt irqchip has strong relationship with architecture, since
-> it sends irq to vcpu and interfaces to get irqchip register is also
-> architecture specific.
-> 
-> Here like other architectures, base class TYPE_LOONGSON_IPI_COMMON
-> is added, it comes from loongson ipi mostly. And it defined four abstract
-> interfaces which can be used for MIPS 3A4000 and Loongarch 3A5000 machine,
-> also can be used for 3A5000 irqchip in kernel mode soon.
-> 
-> Also Loongarch ipi and loongson ipi device are added here, it inherits
-> from base class TYPE_LOONGSON_IPI_COMMON. Loongarch ipi is tested,
-> loongson ipi device only passes to compile and make check, it is not
-> tested.
-> 
-> Bibo Mao (4):
->    hw/intc/loongson_ipi_common: Add loongson ipi common class
->    hw/intc/loongarch_ipi: Add loongarch ipi support
->    hw/loongarch/virt: Replace loongson ipi with loongarch ipi
->    hw/intc/loongson_ipi: reconstruct driver inherit from common class
-> 
->   hw/intc/Kconfig                       |   3 +
->   hw/intc/loongarch_ipi.c               |  80 ++++++
->   hw/intc/loongson_ipi.c                | 330 ++-------------------
->   hw/intc/loongson_ipi_common.c         | 394 ++++++++++++++++++++++++++
->   hw/intc/meson.build                   |   3 +-
->   hw/loongarch/Kconfig                  |   2 +-
->   hw/loongarch/virt.c                   |   4 +-
->   include/hw/intc/loongarch_ipi.h       |  33 +++
->   include/hw/intc/loongson_ipi.h        |  54 ++--
->   include/hw/intc/loongson_ipi_common.h |  77 +++++
->   include/hw/loongarch/virt.h           |   1 -
->   11 files changed, 632 insertions(+), 349 deletions(-)
->   create mode 100644 hw/intc/loongarch_ipi.c
->   create mode 100644 hw/intc/loongson_ipi_common.c
->   create mode 100644 include/hw/intc/loongarch_ipi.h
->   create mode 100644 include/hw/intc/loongson_ipi_common.h
-> 
-> 
-> base-commit: 6746482d12da3b6e4d3cdf06481a0027a797f719
-> 
+ * what is the actual baseline requirement? We definitely want
+   to support "using rustup on an older system" (should be no
+   problem) and "current distro building QEMU using the distro's
+   rust", I assume. It would certainly be nice to have "building
+   QEMU on the older-but-still-in-our-support-list distro releases
+   with that distro's rust", but this probably implies not just
+   a minimum rust version but also a limited set of crates.
+   I think (but forget the details) that some of what we've done
+   with Python where we accept that the older-but-still-supported
+   distro will end up taking the "download at build time" path
+   in the build system might apply also for Rust.
+ * what, on the Rust side, is the version requirement? Presumably
+   there's some features that are pretty much "we really need
+   this and can't do without it" and some which are "this would
+   be pretty awkward not to have but if we have to we can implement
+   some kind of fallback/alternative with a TODO note to come
+   back and clean up when our baseline moves forwards".
 
+At that point we have more information to figure out what
+if any tradeoff we want to make.
+
+thanks
+-- PMM
 
