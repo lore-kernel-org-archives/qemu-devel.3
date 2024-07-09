@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F34CCC2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 14:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8592C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 14:42:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRC0H-0008Oh-Rs; Tue, 09 Jul 2024 10:39:37 -0400
+	id 1sRC2i-0004u8-Q9; Tue, 09 Jul 2024 10:42:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sRC0F-0008Na-VB
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:39:35 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sRC0E-0005dz-7p
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:39:35 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-58b5f7bf3edso3262175a12.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 07:39:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lrh2000@pku.edu.cn>)
+ id 1sRC2e-0004tf-QL
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:42:04 -0400
+Received: from zg8tmja2lje4os4yms4ymjma.icoremail.net ([206.189.21.223])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lrh2000@pku.edu.cn>) id 1sRC2b-0006Is-E2
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:42:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720535971; x=1721140771; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nTYpZgqpBsEX/fM413Pj9V3El8+8hgmO8+MLcltRclQ=;
- b=OTsFMF9JTWKWNLJ5QUDoM58Jgg0DA2A11P+PkNKHFTBDSL6rFTYmEc0kkG+slLuk+V
- 4AeOHhnV4HT4+FCwLkXbZB/nu3YKDApEdMaf6MBeoT6e2xJkuHoFDA7HzgiCtJJV6dPy
- 6PwCCIW7ToXMmD88LnWCWJcDTxRTsNB3JigNNwY4jXrAiB43MSj6EP86jA+c/1lRJoRt
- T0Mq22ThpvCshV689lsG4gyhBLWircUTSm9GTxaJ2OJsKmDH8gCqnbduJJVsg9MhmE3q
- B/IIMIVfK2fbONpC1P/C2wN/WYNl9IS0vSASiAoQscLgRg7wFnSh2n418PQIziz1xkoz
- doDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720535971; x=1721140771;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nTYpZgqpBsEX/fM413Pj9V3El8+8hgmO8+MLcltRclQ=;
- b=s/0WWZyhsIvo6hVM6jrJZuu1/dV7lMWWDk/9AXjbGBm1lE8jXa3FqLgbtlweZ9uFsG
- vAImZROqqyRzbcvQxjbXTXUlyg5k7eTI61+wsDPoCPKcuF4om5I4zBNNPKaM1oGP0YWo
- gyx8qcqwGTESEMVLe2sNWw0Cn51Qg8K6JopK3QJSSk2bSY5USaOEBCvz4TikRyvqc0ka
- gNmIekXVnNsADRTWArC4Ug8g3r9FH3K4z2FPUCAlC7IB7hV1iK/j1ESLGbU1bBq0ekmy
- nOS1XkVGA3NLNizUfyCFm+3+XY0L6qBWNNPnKQTUzmvY3IwzPAJ+90gxI6/BeaKgVu8e
- wnag==
-X-Gm-Message-State: AOJu0Yzv1dLTr0vXfuCCp+2VbD0IC76FH8V1pDyID/cCAsB8Blg7nIvc
- fPQ8kiRfAracCFQdVk+wF69HRp/KJAgvgpmgIWawwJhxPG/EqKpf3AVpEAY4+pKJ6rsKZNKgC5f
- kSIAKe/SKoneHds9ttsTv4N3uH3iJVzSmNGnneA==
-X-Google-Smtp-Source: AGHT+IFFtm+lKRWZz7RgdVp+m7uGM/3J8+v/tgByi7xC687pk4mhd597OxxcxJ6pFFf43Ev5gKgw1J04jlZj2oi7c4k=
-X-Received: by 2002:a05:6402:13c7:b0:57d:4f47:d9f7 with SMTP id
- 4fb4d7f45d1cf-594b7e7d0f0mr2670036a12.0.1720535970941; Tue, 09 Jul 2024
- 07:39:30 -0700 (PDT)
+ d=pku.edu.cn; s=dkim; h=Received:Date:From:To:Cc:Subject:
+ Message-ID:References:MIME-Version:Content-Type:
+ Content-Disposition:Content-Transfer-Encoding:In-Reply-To; bh=pA
+ 92XaFhsXYB4VWevdEQqdOFVJVatKmeRfBVR2w89eE=; b=mNhjMYIRrrCWhQcvfs
+ eYj/UbZF+cY9nViK3FjVJfBAKeZ6abV/Y4MLRyfelj742+gmALgKkwG2HocBlSEp
+ MHtRpUBAKRclhOdWzpzWCglYt0oCV7HL8fy7x/dhZVeLeP7/y9R+M2hP/MgeH9Eb
+ Yy/e3CBEGEijDCluBfp1FWToE=
+Received: from localhost (unknown [124.127.75.182])
+ by front02 (Coremail) with SMTP id 54FpogCXXRwpTI1mFNubAA--.24056S2;
+ Tue, 09 Jul 2024 22:41:49 +0800 (CST)
+Date: Tue, 9 Jul 2024 22:41:44 +0800
+From: Ruihan Li <lrh2000@pku.edu.cn>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Ruihan Li <lrh2000@pku.edu.cn>
+Subject: Re: [PATCH] char-mux: Don't overwrite the receive buffer
+Message-ID: <fx2rkepa2jhuy7novlpyqfgwh2fven3rjjzfng72hzkh3vnylg@wokdocju7bx4>
+References: <20240707111940.232549-3-lrh2000@pku.edu.cn>
+ <CAJ+F1CKHve-3SOzFOLBCKo-5yQDuo7QpSqxw9N5NtPbg7bdQdA@mail.gmail.com>
+ <uvyay4oml2krvru2jflwcv7z6ex375glbmpmy2k2a7fophaiew@3cz5i7zqrd3j>
+ <CAJ+F1CJc8dS3tSChnN+MwUCZfYPkoXGS+kd2Trw2RTtG1HRq1w@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240708112520.106127-1-junjiehua@tencent.com>
-In-Reply-To: <20240708112520.106127-1-junjiehua@tencent.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Jul 2024 15:39:20 +0100
-Message-ID: <CAFEAcA_pR6VLjKcOgcL+m8aONtey5Lm2ODkWAKv2ne_3ziqknw@mail.gmail.com>
-Subject: Re: [PATCH] contrib/elf2dmp: a workaround for the buggy
- msvcrt.dll!fwrite
-To: junjiehua <halouworls@gmail.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
- junjiehua <junjiehua@tencent.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ+F1CJc8dS3tSChnN+MwUCZfYPkoXGS+kd2Trw2RTtG1HRq1w@mail.gmail.com>
+X-CM-TRANSID: 54FpogCXXRwpTI1mFNubAA--.24056S2
+X-Coremail-Antispam: 1UD129KBjvJXoW3JF18Zry8AF1xZry8Jr1fWFg_yoWxJFy8pF
+ WYkFyjyr4DJFnFyrsIv3WYqw1FyayrXryUWF4Dtr1a9w1q9Fn3XrWUKFWY9Fyxur4xGF1j
+ qF4UZFZrC3WqvFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUU9j1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
+ w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
+ IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
+ z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2vYz4IE04k24V
+ AvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xf
+ McIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7
+ v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW5
+ XwCF04k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26w4DJr1UJwCFx2IqxVCFs4IE7x
+ kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
+ 67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
+ CI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
+ MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvf
+ C2KfnxnUUI43ZEXa7VUbSdgPUUUUU==
+X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEFBWaBhWQODAAosv
+Received-SPF: pass client-ip=206.189.21.223; envelope-from=lrh2000@pku.edu.cn;
+ helo=zg8tmja2lje4os4yms4ymjma.icoremail.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,98 +88,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Jul 2024 at 14:24, junjiehua <halouworls@gmail.com> wrote:
->
-> when building elf2dump with x86_64-w64-mingw32-gcc, fwrite is imported from
-> msvcrt.dll. However, the implementation of msvcrt.dll!fwrite is buggy:
-> it enters an infinite loop when the size of a single write exceeds 4GB.
-> This patch addresses the issue by splitting large physical memory
-> blocks into smaller chunks.
+Hi,
 
-Hi; thanks for this patch.
+On Mon, Jul 08, 2024 at 03:21:58PM GMT, Marc-André Lureau wrote:
+> Hi
+> 
+> On Mon, Jul 8, 2024 at 12:12 AM Ruihan Li <lrh2000@pku.edu.cn> wrote:
+> 
+> > Hi,
+> >
+> > Thanks for your quick review!
+> >
+> > On Sun, Jul 07, 2024 at 08:28:50PM GMT, Marc-André Lureau wrote:
+> > > Hi
+> > >
+> > > On Sun, Jul 7, 2024 at 3:26 PM Ruihan Li <lrh2000@pku.edu.cn> wrote:
+> > >
+> > > > This commit fixes a bug that causes incorrect results when pasting more
+> > > > than 32 bytes, the size of the receive buffer b->buffer, into the
+> > virtio
+> > > > console.
+> > > >
+> > > > Example (note that the last 32 bytes are always correct, but something
+> > > > goes wrong just before the last 32 bytes):
+> > > >
+> > > >         Pasting
+> > > >
+> > abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()
+> > > >         Received
+> > > >
+> > abcdefg)EFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()EFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()
+> > > >
+> > > > The root cause of this bug is as follows:
+> > > >
+> > > > The mux_chr_read function passes the data to the backend via
+> > > > be->chr_read one byte at a time, either directly or via another
+> > > > mux_chr_accept_input method. However, if the receive buffer is full,
+> > > > there is a chance that the mux_chr_can_read method will return more
+> > than
+> > > > one byte, because in this case the method directly returns whatever
+> > > > be->chr_can_read returns.
+> > > >
+> > > > This is problematic because if mux_chr_read passes a byte to the
+> > backend
+> > > > by calling be->chr_read, it will consume the entire backend buffer, at
+> > > > least in the case of virtio. Once all backend buffers are used,
+> > > > mux_chr_read writes all remaining bytes to the receive buffer
+> > d->buffer,
+> > > >
+> > >
+> > > My understanding of the code execution is:
+> > > - mux_chr_can_read() returns be->chr_can_read(), say N, because d->buffer
+> > > is already MUX_BUFFER_SIZE.
+> > > - mux_chr_read() is called with N bytes
+> > > - mux_chr_accept_input() flushes d->buffer, writing MUX_BUFFER_SIZE
+> > > - be should still accept N-MUX_BUFFER_SIZE
+> > > - mux_proc_byte() loops for N bytes
+> > > - chr_read() should accept the N-MUX_BUFFER_SIZE
+> > > - d->buffer is then filled with the remaining MUX_BUFFER_SIZE
+> >
+> > Note this:
+> >         [..] if mux_chr_read passes a byte to the backend by calling
+> >         be->chr_read, it will consume the entire backend buffer, at
+> >         least in the case of virtio [..]
+> >
+> > At least in the case of virtio, if the guest provides a buffer of length
+> > 4096, be->chr_can_read will report 4096. But if you then call
+> > be->chr_read with one byte, the whole 4096 buffer will be used. After
+> > that, be->chr_can_read will return zero instead of 4095.
+> >
+> > This should make sense since the device cannot change the number of
+> > bytes in the buffer after it has made the buffer available to the CPU.
+> >
+> 
+> Thanks, that helps explaining the incorrect behaviour.
+> 
+> I think the concept of extra buffer as introduced in commit
+> bd9bdce694ccb76facc882363e4c337e8a88c918 ("Add input buffer to mux chr
+> (patch by Tristan Gingold)") is flawed, as Jan Kiszka explained in commit
+> a80bf99fa3dd829ecea88b9bfb4f7cf146208f07 ("char-mux: Use separate input
+> buffers (Jan Kiszka)"):
+>     Note: In contrast to the original author's claim, the buffering concept
+>     still breaks down when the fifo of the currently active sub-device is
+>     full. As we cannot accept futher data from this point on without risking
+>     to loose it, we will also miss escape sequences, just like without all
+>     that buffering. In short: There is no reliable escape sequence handling
+>     without infinite buffers or the risk of loosing some data.
+> 
+> Maybe the best course is to remove the cycle buffer and either:
+> - drop the data that be can't accept, but have always responsive mux (by
+> default)
+> - blocking, including mux, until the be can accept more data (not friendly)
+> - or allow unlimited buffering?
+> 
+> Given that mux is meant for developers and qemu CLI users, I guess any of
+> this would be acceptable.
 
-(Does the library fwrite fail for > 4GB, or for >= 4GB ?)
+Thanks for your comments.
 
-> Signed-off-by: junjiehua <junjiehua@tencent.com>
-> ---
->  contrib/elf2dmp/main.c | 19 +++++++++++++++----
->  1 file changed, 15 insertions(+), 4 deletions(-)
->
-> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
-> index d046a72ae6..1994553d95 100644
-> --- a/contrib/elf2dmp/main.c
-> +++ b/contrib/elf2dmp/main.c
-> @@ -23,6 +23,8 @@
->  #define INITIAL_MXCSR   0x1f80
->  #define MAX_NUMBER_OF_RUNS  42
->
-> +#define MAX_CHUNK_SIZE (128 * 1024 * 1024)
+However, I'm not really sure what you're talking about. If we make
+mux_chr_can_read return either zero or one (as I've done in the patch),
+do you mean that we are still at risk of losing some escape sequences?
 
-I think we could add a comment here, something like:
+In mux_proc_byte, we set d->term_got_escape to 1 when we see the escape
+character. As far as I can see, the escape sequence is always handled
+correctly. So I don't understand how losing escape sequences can happen.
 
-/*
- * Maximum size to fwrite() to the output file at once;
- * the MSVCRT runtime will not correctly handle fwrite()
- * of more than 4GB at once.
- */
+Would you mind explaining this in more detail?
 
-That will act as a reminder about why we do it.
+> 
+> 
+> >
+> > >
+> > >
+> > > > but the number of remaining bytes can be larger than the buffer size.
+> > > >
+> > >
+> > > By the above description, I don't see how it happens.
+> > >
+> > > This does not lead to security problems since it is a ring buffer, but
+> > > > it does mess up the receive data.
+> > > >
+> > > > This can be fixed by having mux_chr_can_read return either zero or one.
+> > > > This fix is not very efficient, but it is quite reasonable since
+> > > > mux_chr_read also passes the data to the backend one byte at a time.
+> > > >
+> > >
+> > > Could you share your testing setup? Even better if you could write a
+> > test!
+> >
+> > This happens in https://github.com/asterinas/asterinas. Sorry, but I
+> > don't have a minimal reproducible example, and I don't think I can make
+> > one anytime soon.
+> >
+> > As for the tests, I'd like to know how to write such tests in QEMU. I
+> > checked the documentation but didn't find anything, maybe I'm missing
+> > something?
+> >
+> > >
+> > >
+> > > thanks
+> > >
+> > >
+> > > > Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+> > > > ---
+> > > >  chardev/char-mux.c | 4 ++--
+> > > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > > >
+> > > > diff --git a/chardev/char-mux.c b/chardev/char-mux.c
+> > > > index ee2d47b..5c6eea2 100644
+> > > > --- a/chardev/char-mux.c
+> > > > +++ b/chardev/char-mux.c
+> > > > @@ -210,8 +210,8 @@ static int mux_chr_can_read(void *opaque)
+> > > >          return 1;
+> > > >      }
+> > > >
+> > > > -    if (be && be->chr_can_read) {
+> > > > -        return be->chr_can_read(be->opaque);
+> > > > +    if (be && be->chr_can_read && be->chr_can_read(be->opaque)) {
+> > > > +        return 1;
+> > > >      }
+> > > >
+> > > >      return 0;
+> > > > --
+> > > > 2.45.2
+> > > >
+> > > >
+> > > >
+> > >
+> > > --
+> > > Marc-André Lureau
+> >
+> > Thanks,
+> > Ruihan Li
+> >
+> >
+> 
+> -- 
+> Marc-André Lureau
 
-(Does the library fwrite fail for > 4GB, or for >= 4GB ?
-Your commit message says the former, so I've gone with that,
-but if it's an "overflows 32 bit variable" kind of bug then
-4GB exactly probably also doesn't work.)
+Thanks,
+Ruihan Li
 
-Is there a particular reason to use 128MB here? If the
-runtime only fails on 4GB or more, maybe we should use
-a larger MAX_CHUNK_SIZE, like 2GB ?
-
-
-
-> +
->  typedef struct idt_desc {
->      uint16_t offset1;   /* offset bits 0..15 */
->      uint16_t selector;
-> @@ -434,13 +436,22 @@ static bool write_dump(struct pa_space *ps,
->
->      for (i = 0; i < ps->block_nr; i++) {
->          struct pa_block *b = &ps->block[i];
-> +        size_t offset = 0;
-> +        size_t chunk_size;
->
->          printf("Writing block #%zu/%zu of %"PRIu64" bytes to file...\n", i,
->                  ps->block_nr, b->size);
-> -        if (fwrite(b->addr, b->size, 1, dmp_file) != 1) {
-> -            eprintf("Failed to write block\n");
-> -            fclose(dmp_file);
-> -            return false;
-> +
-> +        while (offset < b->size) {
-> +            chunk_size = (b->size - offset > MAX_CHUNK_SIZE)
-> +                         ? MAX_CHUNK_SIZE
-> +                         : (b->size - offset);
-
-You can write this as
-     chunk_size = MIN(b->size - offset, MAX_CHUNK_SIZE);
-which I think is clearer. (Our osdep header provides MIN().)
-
-> +            if (fwrite(b->addr + offset, chunk_size, 1, dmp_file) != 1) {
-> +                eprintf("Failed to write block\n");
-> +                fclose(dmp_file);
-> +                return false;
-> +            }
-> +            offset += chunk_size;
-
-I think we should abstract out the bug workaround into a
-separate function, with the same API as fwrite(). Call
-it do_fwrite() or something, and make all the fwrite()
-calls use it. I know at the moment there's only two of
-them, and one of them is the header so never 4GB, but
-I think this more cleanly separates out the "work around
-a runtime library problem" part from the main logic of
-the program, and will mean that if we ever need to rearrange
-how we write out the data in future it will be simple.
-
-thanks
--- PMM
 
