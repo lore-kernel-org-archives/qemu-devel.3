@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA4A0C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 11:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2EAEC3DA47
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 11:40:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR9D1-0008Q5-L0; Tue, 09 Jul 2024 07:40:35 -0400
+	id 1sR9Cv-0007x7-Hj; Tue, 09 Jul 2024 07:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sR9Cr-0007mf-RV; Tue, 09 Jul 2024 07:40:27 -0400
-Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
+ id 1sR9CO-0007Du-DX; Tue, 09 Jul 2024 07:40:00 -0400
+Received: from out30-100.freemail.mail.aliyun.com ([115.124.30.100])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sR9Cp-0003px-7h; Tue, 09 Jul 2024 07:40:25 -0400
+ id 1sR9CK-0003SS-ID; Tue, 09 Jul 2024 07:39:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1720525213; h=From:To:Subject:Date:Message-Id:MIME-Version;
- bh=oc7hLj9TA+xntZOXNaglhfbhL9qRiZrXTNam8MYrmTQ=;
- b=teRG3qXULhXjvaZpKESwO2i0Y6mdsd9bLaZwx2SziJkQ/O6g5W0oStVNmboiPuGhVSdxivB33Sf0CaXc87AFrUKNRBq9MTKSrqj93LeDI183v1YOrMLogF14ib4jIrsazhHyzA98UyJP1RpDzkBczTlNNxBrv4VfVww+GARitxE=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045046011;
- MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
- TI=SMTPD_---0WABym-E_1720525211; 
+ t=1720525120; h=From:To:Subject:Date:Message-Id:MIME-Version:Content-Type;
+ bh=6WeQ/TC4kAHtbqMkGbyFO2+Gwgg1z56Rftcq/gV6Psw=;
+ b=QdOt5FzY5UMy6KM32ujzCbq0Tab++B+2DuMxjettvRYwUiQeWXUasjgK7ArfMKZ7d7D2iGXz2Iy6ILWOw69bzddMWHSQcj1zm+ab1OIWJrfomPTM5eqc+0Db9XKJo+MPkIPtWRn4mmHH6LLCrngcryuJRRXC4gjj9e7RBxjWVwg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R861e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033068173054;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
+ TI=SMTPD_---0WABxGmd_1720525117; 
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WABym-E_1720525211) by smtp.aliyun-inc.com;
- Tue, 09 Jul 2024 19:40:12 +0800
+ fp:SMTPD_---0WABxGmd_1720525117) by smtp.aliyun-inc.com;
+ Tue, 09 Jul 2024 19:38:38 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH v4 03/11] target/riscv: Add zcmop extension
-Date: Tue,  9 Jul 2024 19:36:44 +0800
-Message-Id: <20240709113652.1239-4-zhiwei_liu@linux.alibaba.com>
+ zhiwei_liu@linux.alibaba.com
+Subject: [PATCH v4 00/11] target/riscv: Support zimop/zcmop/zama16b/zabha
+Date: Tue,  9 Jul 2024 19:36:41 +0800
+Message-Id: <20240709113652.1239-1-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
-In-Reply-To: <20240709113652.1239-1-zhiwei_liu@linux.alibaba.com>
-References: <20240709113652.1239-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.112;
+Received-SPF: pass client-ip=115.124.30.100;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-112.freemail.mail.aliyun.com
+ helo=out30-100.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -69,136 +68,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zcmop defines eight 16-bit MOP instructions named C.MOP.n, where n is
-an odd integer between 1 and 15, inclusive. C.MOP.n is encoded in
-the reserved encoding space corresponding to C.LUI xn, 0.
+I once used a wrong major opcode for zimop. It should use 0x73 as major opcode.
+This was detected after I got a toolchain with zimop support. Before that, I tested
+this implementation with hardwire code instruction instead of assemble code.
 
-Unlike the MOPs defined in the Zimop extension, the C.MOP.n instructions
-are defined to not write any register.
+This patch set has been queued to alistair/riscv-to-apply.next, but it is still not
+merged by the master branch. I think we had better fix it before merging into the
+master.
 
-In current implementation, C.MOP.n only has an check function, without any
-other more behavior.
+v3->v4:
+    1. Fix zimop opcode and disassemble
 
-Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Deepak Gupta <debug@rivosinc.com>
----
- target/riscv/cpu.c                          |  2 ++
- target/riscv/cpu_cfg.h                      |  1 +
- target/riscv/insn16.decode                  |  1 +
- target/riscv/insn_trans/trans_rvzcmop.c.inc | 29 +++++++++++++++++++++
- target/riscv/tcg/tcg-cpu.c                  |  5 ++++
- target/riscv/translate.c                    |  1 +
- 6 files changed, 39 insertions(+)
+v2->v3:
+    1. Add review tags.
+    2. Reword the patch 10 in commit log
+
+v1->v2:
+    1. Fix the isa orders.
+    2. Make zimop/zcmop/zama16b/zabha depend on priviledged 1.13
+    3. Add review tags.
+
+The v2 patch set is here
+https://mail.gnu.org/archive/html/qemu-riscv/2024-06/msg00489.html
+
+The v1 patch set is here
+    1. zimop/zcmop
+        https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00207.html
+    2. zama16b
+        https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00212.html
+    3. zabha
+        https://mail.gnu.org/archive/html/qemu-riscv/2024-05/msg00214.html
+
+LIU Zhiwei (11):
+  target/riscv: Add zimop extension
+  disas/riscv: Support zimop disassemble
+  target/riscv: Add zcmop extension
+  disas/riscv: Support zcmop disassemble
+  target/riscv: Support Zama16b extension
+  target/riscv: Move gen_amo before implement Zabha
+  target/riscv: Add AMO instructions for Zabha
+  target/riscv: Move gen_cmpxchg before adding amocas.[b|h]
+  target/riscv: Add amocas.[b|h] for Zabha
+  target/riscv: Expose zabha extension as a cpu property
+  disas/riscv: Support zabha disassemble
+
+ disas/riscv.c                               | 181 ++++++++++++++++++++
+ target/riscv/cpu.c                          |   8 +
+ target/riscv/cpu_cfg.h                      |   4 +
+ target/riscv/insn16.decode                  |   1 +
+ target/riscv/insn32.decode                  |  33 ++++
+ target/riscv/insn_trans/trans_rva.c.inc     |  51 ++----
+ target/riscv/insn_trans/trans_rvd.c.inc     |  14 +-
+ target/riscv/insn_trans/trans_rvf.c.inc     |  14 +-
+ target/riscv/insn_trans/trans_rvi.c.inc     |   6 +
+ target/riscv/insn_trans/trans_rvzabha.c.inc | 145 ++++++++++++++++
+ target/riscv/insn_trans/trans_rvzacas.c.inc |  13 --
+ target/riscv/insn_trans/trans_rvzcmop.c.inc |  29 ++++
+ target/riscv/insn_trans/trans_rvzimop.c.inc |  37 ++++
+ target/riscv/tcg/tcg-cpu.c                  |   5 +
+ target/riscv/translate.c                    |  38 ++++
+ 15 files changed, 529 insertions(+), 50 deletions(-)
+ create mode 100644 target/riscv/insn_trans/trans_rvzabha.c.inc
  create mode 100644 target/riscv/insn_trans/trans_rvzcmop.c.inc
+ create mode 100644 target/riscv/insn_trans/trans_rvzimop.c.inc
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index d3853a5804..1d1402775a 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -131,6 +131,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zcf, PRIV_VERSION_1_12_0, ext_zcf),
-     ISA_EXT_DATA_ENTRY(zcd, PRIV_VERSION_1_12_0, ext_zcd),
-     ISA_EXT_DATA_ENTRY(zce, PRIV_VERSION_1_12_0, ext_zce),
-+    ISA_EXT_DATA_ENTRY(zcmop, PRIV_VERSION_1_13_0, ext_zcmop),
-     ISA_EXT_DATA_ENTRY(zcmp, PRIV_VERSION_1_12_0, ext_zcmp),
-     ISA_EXT_DATA_ENTRY(zcmt, PRIV_VERSION_1_12_0, ext_zcmt),
-     ISA_EXT_DATA_ENTRY(zba, PRIV_VERSION_1_12_0, ext_zba),
-@@ -1473,6 +1474,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
-     MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
-     MULTI_EXT_CFG_BOOL("zimop", ext_zimop, false),
-+    MULTI_EXT_CFG_BOOL("zcmop", ext_zcmop, false),
-     MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
-     MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
-     MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 9f53512053..d85e54b475 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -72,6 +72,7 @@ struct RISCVCPUConfig {
-     bool ext_zihintpause;
-     bool ext_zihpm;
-     bool ext_zimop;
-+    bool ext_zcmop;
-     bool ext_ztso;
-     bool ext_smstateen;
-     bool ext_sstc;
-diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
-index b96c534e73..3953bcf82d 100644
---- a/target/riscv/insn16.decode
-+++ b/target/riscv/insn16.decode
-@@ -140,6 +140,7 @@ sw                110  ... ... .. ... 00 @cs_w
- addi              000 .  .....  ..... 01 @ci
- addi              010 .  .....  ..... 01 @c_li
- {
-+  c_mop_n         011 0 0 n:3 1 00000 01
-   illegal         011 0  -----  00000 01 # c.addi16sp and c.lui, RES nzimm=0
-   addi            011 .  00010  ..... 01 @c_addi16sp
-   lui             011 .  .....  ..... 01 @c_lui
-diff --git a/target/riscv/insn_trans/trans_rvzcmop.c.inc b/target/riscv/insn_trans/trans_rvzcmop.c.inc
-new file mode 100644
-index 0000000000..7205586508
---- /dev/null
-+++ b/target/riscv/insn_trans/trans_rvzcmop.c.inc
-@@ -0,0 +1,29 @@
-+/*
-+ * RISC-V translation routines for compressed May-Be-Operation(zcmop).
-+ *
-+ * Copyright (c) 2024 Alibaba Group.
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#define REQUIRE_ZCMOP(ctx) do {           \
-+    if (!ctx->cfg_ptr->ext_zcmop) {       \
-+        return false;                     \
-+    }                                     \
-+} while (0)
-+
-+static bool trans_c_mop_n(DisasContext *ctx, arg_c_mop_n *a)
-+{
-+    REQUIRE_ZCMOP(ctx);
-+    return true;
-+}
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index ae25686824..28cc3f80a9 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -547,6 +547,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         }
-     }
- 
-+    if (cpu->cfg.ext_zcmop && !cpu->cfg.ext_zca) {
-+        error_setg(errp, "Zcmop extensions require Zca");
-+        return;
-+    }
-+
-     if (mcc->misa_mxl_max != MXL_RV32 && cpu->cfg.ext_zcf) {
-         error_setg(errp, "Zcf extension is only relevant to RV32");
-         return;
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 379b68289f..8a546f4ece 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1114,6 +1114,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
- /* Include the auto-generated decoder for 16 bit insn */
- #include "decode-insn16.c.inc"
- #include "insn_trans/trans_rvzce.c.inc"
-+#include "insn_trans/trans_rvzcmop.c.inc"
- 
- /* Include decoders for factored-out extensions */
- #include "decode-XVentanaCondOps.c.inc"
 -- 
 2.25.1
 
