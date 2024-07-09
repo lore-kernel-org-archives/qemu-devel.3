@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3359C41513
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 11:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68EACC3DA41
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 11:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR9Mt-0005As-N3; Tue, 09 Jul 2024 07:50:47 -0400
+	id 1sR9Mv-0005Mb-F6; Tue, 09 Jul 2024 07:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sR9Mo-0004tG-9x
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sR9Mo-0004tC-9g
  for qemu-devel@nongnu.org; Tue, 09 Jul 2024 07:50:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sR9Md-0006Jn-Kt
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sR9Mh-0006Jz-2P
  for qemu-devel@nongnu.org; Tue, 09 Jul 2024 07:50:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720525830;
+ s=mimecast20190719; t=1720525833;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N/psBi7hxDD95OK0J6Y6wND/KwFqqF6imNOS0uY2/EE=;
- b=cWM+nQ/F7YJiXMOUf0vQnH8a/l8vk1HUktUwunTPDF6EqFV8aXL3Gcq9Vxdfdq7Xfqr6p+
- WPH3cY9REAKPd8H+xoinjlCk9J1G5xwfzQUALwkYZBS7xZCQAIDkD3l0lsmDLUTwAUcA9W
- 0Eva5Khw/GJOAnd0qDJHDQFeISY4o5s=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ycE0kOAbk35t/G7qJITOZOUF1v6Ay4CxIjywLtMCyQM=;
+ b=SA9e0xM2bFOExWMSnoD06nBUdB3pr3g3DRMPVG4yggq54Mvjmlwm6R7f0TFexcvzkD3YZz
+ krmvCiTiQyAQ0jOk0FykzOQpflsWHg/55tvA/PXEfmLVeeGanSduH/GQZElFberXpk/tOf
+ L5vf07XUXjsAWIG2p4cDsEZqng7ywVU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-88Q40L0PMo6iu3FlQY1I9Q-1; Tue,
- 09 Jul 2024 07:50:27 -0400
-X-MC-Unique: 88Q40L0PMo6iu3FlQY1I9Q-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-N-XUN6gNPSadr584DlvgoA-1; Tue,
+ 09 Jul 2024 07:50:29 -0400
+X-MC-Unique: N-XUN6gNPSadr584DlvgoA-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9066F1955F3B; Tue,  9 Jul 2024 11:50:26 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF672196CE01; Tue,  9 Jul 2024 11:50:28 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.193.243])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AC0033000184; Tue,  9 Jul 2024 11:50:23 +0000 (UTC)
+ id CCBCF3000181; Tue,  9 Jul 2024 11:50:26 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -51,10 +51,10 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
  "Michael S . Tsirkin" <mst@redhat.com>
-Subject: [PULL 2/9] vfio-container-base: Introduce
- vfio_container_get_iova_ranges() helper
-Date: Tue,  9 Jul 2024 13:50:10 +0200
-Message-ID: <20240709115017.798043-3-clg@redhat.com>
+Subject: [PULL 3/9] HostIOMMUDevice : remove Error handle from get_iova_ranges
+ callback
+Date: Tue,  9 Jul 2024 13:50:11 +0200
+Message-ID: <20240709115017.798043-4-clg@redhat.com>
 In-Reply-To: <20240709115017.798043-1-clg@redhat.com>
 References: <20240709115017.798043-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -87,109 +87,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Eric Auger <eric.auger@redhat.com>
 
-Introduce vfio_container_get_iova_ranges() to retrieve the usable
-IOVA regions of the base container and use it in the Host IOMMU
-device implementations of get_iova_ranges() callback.
+The error handle argument is not used anywhere. let's remove it.
 
-We also fix a UAF bug as the list was shallow copied while
-g_list_free_full() was used both on the single call site, in
-virtio_iommu_set_iommu_device() but also in
-vfio_container_instance_finalize(). Instead use g_list_copy_deep.
-
-Fixes: cf2647a76e ("virtio-iommu: Compute host reserved regions")
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/vfio/vfio-container-base.h |  2 ++
- hw/vfio/container-base.c              | 15 +++++++++++++++
- hw/vfio/container.c                   |  8 +-------
- hw/vfio/iommufd.c                     |  8 +-------
- 4 files changed, 19 insertions(+), 14 deletions(-)
+ include/sysemu/host_iommu_device.h | 3 +--
+ hw/vfio/container.c                | 2 +-
+ hw/vfio/iommufd.c                  | 2 +-
+ hw/virtio/virtio-iommu.c           | 2 +-
+ 4 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index 419e45ee7a5ac960dae4a993127fc9ee66d48db2..45d7c40fce8f4f3508cbc08b436b2db1dfaa01e4 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -86,6 +86,8 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
- int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-                    VFIOBitmap *vbmap, hwaddr iova, hwaddr size, Error **errp);
+diff --git a/include/sysemu/host_iommu_device.h b/include/sysemu/host_iommu_device.h
+index ee6c813c8b2299ed1d1d3b34d143c20a8ec27400..05c7324a0d1ccd2e30bc42ca1f0353e55361500a 100644
+--- a/include/sysemu/host_iommu_device.h
++++ b/include/sysemu/host_iommu_device.h
+@@ -87,9 +87,8 @@ struct HostIOMMUDeviceClass {
+      * @hiod Host IOMMU device
+      *
+      * @hiod: handle to the host IOMMU device
+-     * @errp: error handle
+      */
+-    GList* (*get_iova_ranges)(HostIOMMUDevice *hiod, Error **errp);
++    GList* (*get_iova_ranges)(HostIOMMUDevice *hiod);
+ };
  
-+GList *vfio_container_get_iova_ranges(const VFIOContainerBase *bcontainer);
-+
- #define TYPE_VFIO_IOMMU "vfio-iommu"
- #define TYPE_VFIO_IOMMU_LEGACY TYPE_VFIO_IOMMU "-legacy"
- #define TYPE_VFIO_IOMMU_SPAPR TYPE_VFIO_IOMMU "-spapr"
-diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
-index 50b1664f89a8192cf4021498e59f2a92cd2f6e89..809b15767425a48f2404b08fc409ee5684af2094 100644
---- a/hw/vfio/container-base.c
-+++ b/hw/vfio/container-base.c
-@@ -83,6 +83,21 @@ int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
-                                                errp);
- }
- 
-+static gpointer copy_iova_range(gconstpointer src, gpointer data)
-+{
-+     Range *source = (Range *)src;
-+     Range *dest = g_new(Range, 1);
-+
-+     range_set_bounds(dest, range_lob(source), range_upb(source));
-+     return dest;
-+}
-+
-+GList *vfio_container_get_iova_ranges(const VFIOContainerBase *bcontainer)
-+{
-+    assert(bcontainer);
-+    return g_list_copy_deep(bcontainer->iova_ranges, copy_iova_range, NULL);
-+}
-+
- static void vfio_container_instance_finalize(Object *obj)
- {
-     VFIOContainerBase *bcontainer = VFIO_IOMMU(obj);
+ /*
 diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 88ede913d6f7f8a6a6ec059fbe4b72d7cdb99e72..0804c1b8de2af203fd8f7ef91ee12fef105df9b5 100644
+index 0804c1b8de2af203fd8f7ef91ee12fef105df9b5..ddd835996cfae13dcab01e53fd381ace1cdae668 100644
 --- a/hw/vfio/container.c
 +++ b/hw/vfio/container.c
-@@ -1168,15 +1168,9 @@ static GList *
- hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
- {
-     VFIODevice *vdev = hiod->agent;
--    GList *l = NULL;
- 
-     g_assert(vdev);
--
--    if (vdev->bcontainer) {
--        l = g_list_copy(vdev->bcontainer->iova_ranges);
--    }
--
--    return l;
-+    return vfio_container_get_iova_ranges(vdev->bcontainer);
+@@ -1165,7 +1165,7 @@ static int hiod_legacy_vfio_get_cap(HostIOMMUDevice *hiod, int cap,
  }
  
- static void vfio_iommu_legacy_instance_init(Object *obj)
+ static GList *
+-hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
++hiod_legacy_vfio_get_iova_ranges(HostIOMMUDevice *hiod)
+ {
+     VFIODevice *vdev = hiod->agent;
+ 
 diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index c2f158e60386502eef267769ac9bce1effb67033..890d8d6a38e98138fc14780a76dc8261285f90b5 100644
+index 890d8d6a38e98138fc14780a76dc8261285f90b5..211e7223f150ee3c8447a9c454c5a3528860682f 100644
 --- a/hw/vfio/iommufd.c
 +++ b/hw/vfio/iommufd.c
-@@ -647,15 +647,9 @@ static GList *
- hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
- {
-     VFIODevice *vdev = hiod->agent;
--    GList *l = NULL;
- 
-     g_assert(vdev);
--
--    if (vdev->bcontainer) {
--        l = g_list_copy(vdev->bcontainer->iova_ranges);
--    }
--
--    return l;
-+    return vfio_container_get_iova_ranges(vdev->bcontainer);
+@@ -644,7 +644,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
  }
  
- static void hiod_iommufd_vfio_class_init(ObjectClass *oc, void *data)
+ static GList *
+-hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod, Error **errp)
++hiod_iommufd_vfio_get_iova_ranges(HostIOMMUDevice *hiod)
+ {
+     VFIODevice *vdev = hiod->agent;
+ 
+diff --git a/hw/virtio/virtio-iommu.c b/hw/virtio/virtio-iommu.c
+index 8fe69ab094f501fced7098f1ba790c26e63aa775..f278417f2bd95bc57832e9d03671e2834fca5f36 100644
+--- a/hw/virtio/virtio-iommu.c
++++ b/hw/virtio/virtio-iommu.c
+@@ -635,7 +635,7 @@ static bool virtio_iommu_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+ 
+     if (hiodc->get_iova_ranges) {
+         int ret;
+-        host_iova_ranges = hiodc->get_iova_ranges(hiod, errp);
++        host_iova_ranges = hiodc->get_iova_ranges(hiod);
+         if (!host_iova_ranges) {
+             return true; /* some old kernels may not support that capability */
+         }
 -- 
 2.45.2
 
