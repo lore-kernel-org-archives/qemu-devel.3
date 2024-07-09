@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484C0C3DA47
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 02:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69359C3271E
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 02:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR0tI-0006Go-Cs; Mon, 08 Jul 2024 22:47:40 -0400
+	id 1sR0xB-00027X-Ry; Mon, 08 Jul 2024 22:51:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sR0tG-0006DR-HS
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 22:47:38 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sR0tE-0003pU-UC
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 22:47:38 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-2c95ca60719so2721882a91.3
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 19:47:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1720493255; x=1721098055; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ROim7xG4VeV7okIeoWk1lldyf4YzP1rLfO+fx4YPjhw=;
- b=AhZm9ZZgGfIyJkuFqAwnSBYX66taznC7VmrYsG4uDJKu6nhpct4gyapD7i6rQtiuuV
- CThv0M7/WmIYCL1z53ivswizF18PAzyM4uaFviH6jK6tyrv7VHtK2LR+9fVsZrqmqgbw
- NGUF/YCq+oWVShP0HuyJ+ZvnTRU8rsB/yI0p+yELApUUWglNnh4Vf5x8LLbVqwWqGI9s
- 5wMVs+6elOVBtM6mtQFBh9Bk7MdIkhY5dfuvZWOjjXCZCItN8H8hV10wZeItA5xz7yJE
- SN+u6Sv0h6s80UFH3FSzxBpf8vfhYb5ljo2JIs2IFyLBNVvQY1tnX+jAXmiSAhcyqsnG
- OZgw==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sR0xA-00022E-ED
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 22:51:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sR0x8-0004zi-UE
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 22:51:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720493498;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OA8bFMklEuyOjtQBEPuHdk0sWxOcKI40ostgyJ61G9g=;
+ b=IfgoyuGLtjy/kKjCJjClHxS7XJqcP6R7LlVt70P1YDimX+mDmtQwjfw3fPNyC+MjnA3Mqf
+ lally7WiS4o5jfqYubJHxyPZ6h9mbfqaYrS7xssURoJ8Oxcot7YKCHWn39l8NF+p5krQfL
+ ridGUABuhj9DLe2NtwP0mzM1f1rT+Gs=
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
+ [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-528-j2Y4Kz74O3qI2dzg6Z276w-1; Mon, 08 Jul 2024 22:51:36 -0400
+X-MC-Unique: j2Y4Kz74O3qI2dzg6Z276w-1
+Received: by mail-ot1-f71.google.com with SMTP id
+ 46e09a7af769-7036e5add8dso1312470a34.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 19:51:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720493255; x=1721098055;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1720493496; x=1721098296;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ROim7xG4VeV7okIeoWk1lldyf4YzP1rLfO+fx4YPjhw=;
- b=Eujl8/jO8ZK445VqWJCK7zHJzV2eWvYiSLe1GjMT0YpEJ+iMjRQu5Ch2ttfZBT4WkC
- XW4Pk23ESyrc+fFjoxeIDwaDJamyIPbiG0/epY7e6oycmq0XvSfnvIXK9B1XBVnwSdUw
- 11IX5oT9Mz57AHRKCB42qcFbRGMKgq/aaJ2N0JGMCepVMfmi5JwXd1Gahx7aSic5/T7x
- LFPYZuWAaLd97IGsRlQlduDoIJlL1BQLWb4fosuuYNUD9T2vWhkzti9Mesa8OPE/VGN5
- Sl/TYGMUd3KiMHxDdXfhsAQwbpaBDkn3Ka7v8PAiSDzh3jxxnOKO9m4iib2QZcmTLdG+
- tzgQ==
+ bh=OA8bFMklEuyOjtQBEPuHdk0sWxOcKI40ostgyJ61G9g=;
+ b=iO3UdWj7kWM8UTqVjswFdcYtOOFJwOhBziPXLyY1eeSyQauESws53jhPjhkCvFpjZh
+ pHCPX/fwFKciJ0+fW9zKECxsmBEvs1hEurr986HMGGD9b2qYgw3ij/L996rHTaSz8Ot3
+ ebCPgK+TnlLRIU5XIXhR37/jObRu56qafN54VRoldiUZZ05z3kK1VMRQCIP0ZlTS+bIM
+ cHY701BavhxbYGsTFY+PyFcnQIa239cWH6G5rb3jk0V0rJTuvkC3B5zz48qvtixdiHDR
+ q5I0Xkcl5vk8A6BFYdV7xenFH2aDMp1QyJ4QCJR21PqbT8TMysf/9TzfepG/5WB9RTnQ
+ s4cg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVqWIPnLCJJFKkfHoxp8vDjD2QrEbbhwiXb/iiu++SPtvEaC+K4I+ht3J6Y3PQFZcXzAlLV1Ql6XHxOX0c7QIGSr/XL4o=
-X-Gm-Message-State: AOJu0YyR85h/+Eg9PM/xy+CtJ9zq2qiD+j3jAYCMzzsYwzmufEdnkU5K
- 0/kSvoT7YEswAOl0J7eAFF8KfvC5ZNvvQFlaU8iuEhzllYHTtK7C/FSuRO4Uqws=
-X-Google-Smtp-Source: AGHT+IGLx7Kudcu6eYHjzoDDW32UULQB2c0hm4P9miPhIpUEEh/+JHRA1IiyzYADjnO/TzLlVMucUw==
-X-Received: by 2002:a17:90a:10c9:b0:2c8:da73:af82 with SMTP id
- 98e67ed59e1d1-2ca35be7ec4mr1148479a91.10.1720493255483; 
- Mon, 08 Jul 2024 19:47:35 -0700 (PDT)
-Received: from TF4D9JK212.bytedance.net ([61.213.176.9])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c99a97e8a5sm8964661a91.27.2024.07.08.19.47.31
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 08 Jul 2024 19:47:35 -0700 (PDT)
-From: Changqi Lu <luchangqi.123@bytedance.com>
-To: qemu-block@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
- kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
- pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
-Subject: [PATCH v8 02/10] block/raw: add persistent reservation in/out driver
-Date: Tue,  9 Jul 2024 10:46:58 +0800
-Message-Id: <20240709024706.4108-3-luchangqi.123@bytedance.com>
-X-Mailer: git-send-email 2.39.2 (Apple Git-143)
-In-Reply-To: <20240709024706.4108-1-luchangqi.123@bytedance.com>
-References: <20240709024706.4108-1-luchangqi.123@bytedance.com>
+ AJvYcCUg7ZIe88sg1OWV1mG9abgQ7yPabI/TcJufc1Cdftu8L2AbBzrXXvBgo1jtXK+h6srfCnTfqvqMAQeKSwMgwUXTGZyYMCQ=
+X-Gm-Message-State: AOJu0YxPMzf4u4A0FWfc/Mzbpd8P/usUt5SBhUPEgrliBoMT7fBy9Ytx
+ 5dBCwTFMadZNR7qteRQYU9qcBNvG1WWMV8X4GLA2bMlfYrfFF4Ig8ZQ/9YN3Ix+PNRgY209ltYu
+ cP+xZuZUa5vgGXKBQGh6XNKIawFzpIcqN5fVA+Wq5UD3Czm4xMB5p967+8SEz1RI/rrgaq2fGGG
+ rIqtXOZOXr7GMwSJSeGOI3N/cy8IU=
+X-Received: by 2002:a05:6870:1728:b0:25e:ff1:8314 with SMTP id
+ 586e51a60fabf-25eae88a814mr670145fac.33.1720493496027; 
+ Mon, 08 Jul 2024 19:51:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFm3jWcRiJExUB1Lmo7e1k/13jDtySth6pSXUJc5m4mqhgTn2nKPzl0o/jPZnSi3OcbRbc6M2xpTpInF4TNSg4=
+X-Received: by 2002:a05:6870:1728:b0:25e:ff1:8314 with SMTP id
+ 586e51a60fabf-25eae88a814mr670132fac.33.1720493495583; Mon, 08 Jul 2024
+ 19:51:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240705105937.1630829-1-clement.mathieu--drif@eviden.com>
+ <20240705105937.1630829-2-clement.mathieu--drif@eviden.com>
+ <c8bd5b18-9e49-44f1-a1d3-05bd02a91bc5@intel.com>
+In-Reply-To: <c8bd5b18-9e49-44f1-a1d3-05bd02a91bc5@intel.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 9 Jul 2024 10:51:24 +0800
+Message-ID: <CACGkMEvwBvjRQ5tpJLCHRfL6FRQHEGrT+FD2v1GpAmt5EGJzhQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] intel_iommu: fix FRCD construction macro
+To: Yi Liu <yi.l.liu@intel.com>
+Cc: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ "kevin.tian@intel.com" <kevin.tian@intel.com>, 
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, "mst@redhat.com" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,93 +105,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add persistent reservation in/out operations for raw driver.
-The following methods are implemented: bdrv_co_pr_read_keys,
-bdrv_co_pr_read_reservation, bdrv_co_pr_register, bdrv_co_pr_reserve,
-bdrv_co_pr_release, bdrv_co_pr_clear and bdrv_co_pr_preempt.
+On Mon, Jul 8, 2024 at 3:04=E2=80=AFPM Yi Liu <yi.l.liu@intel.com> wrote:
+>
+> On 2024/7/5 19:01, CLEMENT MATHIEU--DRIF wrote:
+> > From: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> >
+> > The constant must be unsigned, otherwise the two's complement
+> > overrides the other fields when a PASID is present.
+> >
+> > Fixes: 1b2b12376c8a ("intel-iommu: PASID support")
+> >
+>
+> The extra line behind the "Fixes tag" is not needed.
+>
+> > Signed-off-by: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden=
+.com>
+> > Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+> > Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> > ---
+> >   hw/i386/intel_iommu_internal.h | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_inter=
+nal.h
+> > index f8cf99bddf..cbc4030031 100644
+> > --- a/hw/i386/intel_iommu_internal.h
+> > +++ b/hw/i386/intel_iommu_internal.h
+> > @@ -267,7 +267,7 @@
+> >   /* For the low 64-bit of 128-bit */
+> >   #define VTD_FRCD_FI(val)        ((val) & ~0xfffULL)
+> >   #define VTD_FRCD_PV(val)        (((val) & 0xffffULL) << 40)
+> > -#define VTD_FRCD_PP(val)        (((val) & 0x1) << 31)
+> > +#define VTD_FRCD_PP(val)        (((val) & 0x1ULL) << 31)
+> >   #define VTD_FRCD_IR_IDX(val)    (((val) & 0xffffULL) << 48)
+> >
+> >   /* DMA Remapping Fault Conditions */
+>
+> It might be fine to squash patch 02 of this series into this one. @Jason?
 
-Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- block/raw-format.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+Not sure, we may need this for -stable. So having a standalone patch
+doesn't hurt.
 
-diff --git a/block/raw-format.c b/block/raw-format.c
-index ac7e8495f6..3746bc1bd3 100644
---- a/block/raw-format.c
-+++ b/block/raw-format.c
-@@ -454,6 +454,55 @@ raw_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
-     return bdrv_co_ioctl(bs->file->bs, req, buf);
- }
- 
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
-+                    uint32_t num_keys, uint64_t *keys)
-+{
-+
-+    return bdrv_co_pr_read_keys(bs->file->bs, generation, num_keys, keys);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
-+                           uint64_t *key, BlockPrType *type)
-+{
-+    return bdrv_co_pr_read_reservation(bs->file->bs, generation, key, type);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_register(BlockDriverState *bs, uint64_t old_key,
-+                   uint64_t new_key, BlockPrType type,
-+                   bool ptpl, bool ignore_key)
-+{
-+    return bdrv_co_pr_register(bs->file->bs, old_key, new_key,
-+                               type, ptpl, ignore_key);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type)
-+{
-+    return bdrv_co_pr_reserve(bs->file->bs, key, type);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type)
-+{
-+    return bdrv_co_pr_release(bs->file->bs, key, type);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_clear(BlockDriverState *bs, uint64_t key)
-+{
-+    return bdrv_co_pr_clear(bs->file->bs, key);
-+}
-+
-+static int coroutine_fn GRAPH_RDLOCK
-+raw_co_pr_preempt(BlockDriverState *bs, uint64_t old_key,
-+                  uint64_t new_key, BlockPrType type, bool abort)
-+{
-+    return bdrv_co_pr_preempt(bs->file->bs, old_key, new_key, type, abort);
-+}
-+
- static int GRAPH_RDLOCK raw_has_zero_init(BlockDriverState *bs)
- {
-     return bdrv_has_zero_init(bs->file->bs);
-@@ -672,6 +721,13 @@ BlockDriver bdrv_raw = {
-     .strong_runtime_opts  = raw_strong_runtime_opts,
-     .mutable_opts         = mutable_opts,
-     .bdrv_cancel_in_flight = raw_cancel_in_flight,
-+    .bdrv_co_pr_read_keys    = raw_co_pr_read_keys,
-+    .bdrv_co_pr_read_reservation = raw_co_pr_read_reservation,
-+    .bdrv_co_pr_register     = raw_co_pr_register,
-+    .bdrv_co_pr_reserve      = raw_co_pr_reserve,
-+    .bdrv_co_pr_release      = raw_co_pr_release,
-+    .bdrv_co_pr_clear        = raw_co_pr_clear,
-+    .bdrv_co_pr_preempt      = raw_co_pr_preempt,
- };
- 
- static void bdrv_raw_init(void)
--- 
-2.20.1
+Thanks
+
+>
+> --
+> Regards,
+> Yi Liu
+>
 
 
