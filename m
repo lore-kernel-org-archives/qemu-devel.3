@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50483C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 13:28:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF6CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 13:34:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRAsB-0004d5-8T; Tue, 09 Jul 2024 09:27:11 -0400
+	id 1sRAxx-0002cp-1U; Tue, 09 Jul 2024 09:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sRAs9-0004Zk-4x
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 09:27:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sRAxu-0002am-1x
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 09:33:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sRAs6-0007ND-VS
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 09:27:08 -0400
+ id 1sRAxh-0008Nl-T2
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 09:33:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720531625;
+ s=mimecast20190719; t=1720531972;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jbI1WDKjUJrWfKnr+awdNz8FbJ/HSPUffNOcZEvJ9gQ=;
- b=dc/D5f5u2U5AIs7V4i0eQMEGc10TYsKKQJ063sU8zK0M5r9NDSofomBCn7mlu+5xNSNShn
- 04sBNtzXZl3jcrctmOVRV633KJu1mVuQ9HM5KqQYT0efq+Dw82tCYiC/ASktK9BXnxjPrx
- n3o45rIFGoLk2PAeL9mmRCVYiNqUHPo=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hcYNPiAxxZiFlbDUPTi8jag3xNX3lLeMyqZc5BZbBs4=;
+ b=ZKzdDxIb0Tp6SOj+SK8la1MX4YqmXxYNRFyyd5LTB9n25196DbCgoPFNBHWpqFqBydxBSu
+ Cf+m3ZaL4wC8tflKhloOcI7RhtjDCD7IHw4Li9y0dnNkC1oyMvUuZQYtrioHj5zxwHUm24
+ MIhyXEHFhdSLGxtXgGbW0PCevuJcQpk=
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-82-6lW2eBQLOUuv6ywP7RwkzQ-1; Tue, 09 Jul 2024 09:27:03 -0400
-X-MC-Unique: 6lW2eBQLOUuv6ywP7RwkzQ-1
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-79f19f19b11so127896485a.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 06:27:03 -0700 (PDT)
+ us-mta-303-LsseWWTMNSS4BS9kVMghGg-1; Tue, 09 Jul 2024 09:32:50 -0400
+X-MC-Unique: LsseWWTMNSS4BS9kVMghGg-1
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-3d8685dd263so5141134b6e.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 06:32:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720531623; x=1721136423;
+ d=1e100.net; s=20230601; t=1720531970; x=1721136770;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=jbI1WDKjUJrWfKnr+awdNz8FbJ/HSPUffNOcZEvJ9gQ=;
- b=bn1XGGkw4vSZaDH7qdocNTN04SPpmXtU0FwoAlxo5MESN+5vdFCESVqULtUByApo9G
- Q/EYGFT/9OCsyt/8aAEC7cO94NMZNYYeZ/pUosT6WCFCxA5CzHoGAWuARHUH/gIhJW/q
- sY/nt3fHl4jvrOKw+imnAr4pgcnGxwd9lrPhbz2lFelaVAzd2HHPsQT3CajyLsrLsdLL
- XX1VEqNR4PjdCGO/F014I90FVipAVlW7mx7nIA8xqu+dKEfOnAK05qM1/D4ZvHwDPGGk
- Vh+1w4lw0V1fFB3QqSzLwPqqLDjA5/YlYbA6go+Nx40TjDvEo9lLEJs1gmZqrZxxw/Nv
- tNew==
+ bh=hcYNPiAxxZiFlbDUPTi8jag3xNX3lLeMyqZc5BZbBs4=;
+ b=jxdooFRPJaIR4XvlNnCincTYpt/cclmn344HLlvzR7Bw2BKTdOAil7GkKpbJFgTWGD
+ lPQN7Eph4+THJ7ufhuU/5GgC7keMGFGXIvDaJfVPNy1jjuJqxA1QBjuQ8sHvczlDgeYZ
+ dRiJVluEMVATqYW4Bpj4CIyWzCsrMXzU4fQofD43l1REHovWSbCPfP6ZVC8M9xvCe1rv
+ xduwO3q3ty9tKJyZCPVCGNBWcjQBDV8zubxfxA2xXpDPXWS4jhmQyDgjATdArYDEawsG
+ 2vp7wCzvJ5BEHFaQ5R2mYqvMkV646HgnqYZBQc3k2XiWXnbKGBgaBSNXm2ATmi4bADCY
+ gVPQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDUtDB+v9LQA+mhuXhKI6X28VIbzyG70lpgUClLK3RKtYKel+BLOYiP+YddUz2iJw0vmJduoMaUJlVZ3i3Hv2vut68GaU=
-X-Gm-Message-State: AOJu0YxTJDDydLwWqJodz/abtVsbB6wXCzZiPA1J4/xDA0dM/Y0R+Oim
- GtKsc7Uh1LcTKDkXbOmDmZ4whzmGtg/30vw5PL1QjG0Pm9BkJhgR+tD0Qb6/XWtQyDcwIEJJxik
- jpyYFaN70UfZNFd1kIq4mv1TDYQu4AmQ33yzOkJWZBw05Lmm3ELt2
-X-Received: by 2002:a05:620a:4111:b0:79d:77b8:d2e4 with SMTP id
- af79cd13be357-79f19bee298mr250589685a.65.1720531623322; 
- Tue, 09 Jul 2024 06:27:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE26Rsb1CVJ/YF5tCQv0vXqw/XQ+TA7Vbu6lIboRhl0JJ73rJhmrKGDDElkHZ6dYx+1GWSLYg==
-X-Received: by 2002:a05:620a:4111:b0:79d:77b8:d2e4 with SMTP id
- af79cd13be357-79f19bee298mr250586985a.65.1720531622937; 
- Tue, 09 Jul 2024 06:27:02 -0700 (PDT)
+ AJvYcCWay2FddIMT1jqYeb61ORVtMqfkRjdfL18eDK1w96Lvkm0lzoUOO6fAHI+MdFuoGJS2F0+aDPT3VdX2BNcPqkYsB9P6mHs=
+X-Gm-Message-State: AOJu0Yw1Uj8sDGPc/Ywrq+3b0KJQUvwS3Md4c+0d02i1v0OO2NWH98Uz
+ VCpR3MZAxIUFdTn9UFMtaqtZEVRJYxN3W5UyG2tLoANhAZ632xZH4gfAggE1SGMGxecdYiFnDpQ
+ coPfgBmQ0sViN1occEnUB7eb3T0M7R+6SJ6yBKoj4Ay0T8mkGE0R+
+X-Received: by 2002:a05:6808:17a5:b0:3d2:23e0:d7aa with SMTP id
+ 5614622812f47-3d93bef8b38mr3153317b6e.13.1720531969846; 
+ Tue, 09 Jul 2024 06:32:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG/LJ8rv1OPW/ob+cCW/EGCVHsn5vcUe4TFlGASFSOMb+8IvbF2eaGIyfDMTQ4CpiMCoZs1xg==
+X-Received: by 2002:a05:6808:17a5:b0:3d2:23e0:d7aa with SMTP id
+ 5614622812f47-3d93bef8b38mr3153287b6e.13.1720531969386; 
+ Tue, 09 Jul 2024 06:32:49 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
  ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79f18ff691bsm97238185a.21.2024.07.09.06.27.00
+ d75a77b69052e-447fa56d88csm9767081cf.27.2024.07.09.06.32.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jul 2024 06:27:02 -0700 (PDT)
-Message-ID: <9c3e95c2-1035-4a55-89a3-97165ef32f18@redhat.com>
-Date: Tue, 9 Jul 2024 15:26:58 +0200
+ Tue, 09 Jul 2024 06:32:48 -0700 (PDT)
+Message-ID: <d59d2d2a-e6b7-4dde-9be7-56986f3fdf91@redhat.com>
+Date: Tue, 9 Jul 2024 15:32:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFCv1 05/10] hw/arm/virt: Add VIRT_NESTED_SMMU
+Subject: Re: [PATCH RFCv1 06/10] hw/arm/virt: Assign vfio-pci devices to
+ nested SMMUs
 Content-Language: en-US
 To: Nicolin Chen <nicolinc@nvidia.com>, peter.maydell@linaro.org,
  shannon.zhaosl@gmail.com, mst@redhat.com, imammedo@redhat.com,
@@ -83,12 +84,12 @@ Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, jgg@nvidia.com,
  shameerali.kolothum.thodi@huawei.com, jasowang@redhat.com,
  Andrea Bolognani <abologna@redhat.com>
 References: <cover.1719361174.git.nicolinc@nvidia.com>
- <bc7a57311ac4976699789ceca329edfdfe823c2d.1719361174.git.nicolinc@nvidia.com>
+ <67c6311756de2a6e827e3dd0563f939dcf334418.1719361174.git.nicolinc@nvidia.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <bc7a57311ac4976699789ceca329edfdfe823c2d.1719361174.git.nicolinc@nvidia.com>
+In-Reply-To: <67c6311756de2a6e827e3dd0563f939dcf334418.1719361174.git.nicolinc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -96,7 +97,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,295 +115,180 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nicolin,
+
 
 On 6/26/24 02:28, Nicolin Chen wrote:
-> VIRT_SMMU can be used as an emulated SMMU, i.e. iommu=smmuv3. However, the
-> MMIO space for VIRT_SMMU isn't large enough to accommodate multiple nested
-> SMMUv3 instances. Add a new VIRT_NESTED_SMMU to separate MMIO space.
+> With iommu=nested-smmuv3, there could be multiple nested SMMU instances in
+> the vms. A passthrough device must to look up for its iommu handler in its
+> sysfs node, and then link to the nested SMMU instance created for the same
+> iommu handler. This isn't easy to do.
 >
-> Meanwhile, a nested SMMUv3 could only work with a vfio-pci device that is
-> physically associated to a host-level SMMUv3 instance, meaning that such a
-> passthrough deivce must be linked to a nesteed SMMU corresponding to the
-> underlying host-level SMMUv3 instance:
->       HW SMMU0 <-----------------> vSMMU0 (nested)
->           ^                             ^
-> 	  |                             |
-> 	  ----> PCI dev0 & PCI dev1 <----
->       HW SMMU1 <-----------------> vSMMU1 (nested)
->           ^                             ^
-> 	  |                             |
-> 	  ----> PCI dev2 & PCI dev3 <----
+> Add an auto-assign piece after all vSMMU backed pxb buses are created. It
+> loops the existing input devices, and sets/replaces their pci bus numbers
+> with a newly created pcie-root-port to the pxb bus.
+Here again I don't think it is acceptable to create such topology under
+the hood. Libvirt shall master the whole PCIe topology.
+
+Eric
 >
-> Note that, on the other hand, an emulated deivce should not be associated
-> to a nested SMMU.
->
-> To prepare for that, create a PCIe Expander Bridge per nested SMMU as a
-> docker for pci-vfio devices. It eases the QEMU code to build ID mappings
-> in the IORT.
+> Note that this is not an ideal solution to handle hot plug device.
 >
 > Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 > ---
->  hw/arm/virt.c         | 110 +++++++++++++++++++++++++++++++++++++-----
->  include/hw/arm/virt.h |  17 +++++++
->  2 files changed, 116 insertions(+), 11 deletions(-)
+>  hw/arm/virt.c         | 110 ++++++++++++++++++++++++++++++++++++++++++
+>  include/hw/arm/virt.h |  13 +++++
+>  2 files changed, 123 insertions(+)
 >
 > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index ef59c79ca3..a54332fca8 100644
+> index a54332fca8..3610f53304 100644
 > --- a/hw/arm/virt.c
 > +++ b/hw/arm/virt.c
-> @@ -55,6 +55,7 @@
->  #include "qemu/bitops.h"
->  #include "qemu/error-report.h"
->  #include "qemu/module.h"
-> +#include "hw/pci/pci_bus.h"
->  #include "hw/pci-host/gpex.h"
->  #include "hw/virtio/virtio-pci.h"
->  #include "hw/core/sysbus-fdt.h"
-> @@ -83,6 +84,7 @@
->  #include "hw/virtio/virtio-md-pci.h"
->  #include "hw/virtio/virtio-iommu.h"
->  #include "hw/char/pl011.h"
-> +#include "qemu/config-file.h"
->  #include "qemu/guest-random.h"
->  
->  static GlobalProperty arm_virt_compat[] = {
-> @@ -177,6 +179,7 @@ static const MemMapEntry base_memmap[] = {
->      [VIRT_PVTIME] =             { 0x090a0000, 0x00010000 },
->      [VIRT_SECURE_GPIO] =        { 0x090b0000, 0x00001000 },
->      [VIRT_MMIO] =               { 0x0a000000, 0x00000200 },
-> +    [VIRT_NESTED_SMMU] =        { 0x0b000000, 0x01000000 },
->      /* ...repeating for a total of NUM_VIRTIO_TRANSPORTS, each of that size */
->      [VIRT_PLATFORM_BUS] =       { 0x0c000000, 0x02000000 },
->      [VIRT_SECURE_MEM] =         { 0x0e000000, 0x01000000 },
-> @@ -221,7 +224,8 @@ static const int a15irqmap[] = {
->      [VIRT_MMIO] = 16, /* ...to 16 + NUM_VIRTIO_TRANSPORTS - 1 */
->      [VIRT_GIC_V2M] = 48, /* ...to 48 + NUM_GICV2M_SPIS - 1 */
->      [VIRT_SMMU] = 74,    /* ...to 74 + NUM_SMMU_IRQS - 1 */
-> -    [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 */
-> +    [VIRT_PLATFORM_BUS] = 112, /* ...to 112 + PLATFORM_BUS_NUM_IRQS -1 (179) */
-> +    [VIRT_NESTED_SMMU] = 200, /* Keep it at the end of list */
->  };
->  
->  static void create_randomness(MachineState *ms, const char *node)
-> @@ -1383,21 +1387,19 @@ static void create_pcie_irq_map(const MachineState *ms,
->                             0x7           /* PCI irq */);
->  }
->  
-> -static void create_smmu(const VirtMachineState *vms,
-> -                        PCIBus *bus)
-> +static DeviceState *_create_smmu(const VirtMachineState *vms, PCIBus *bus,
-> +                                 hwaddr base, hwaddr size, int irq,
-> +                                 uint32_t smmu_phandle)
->  {
->      char *node;
->      const char compat[] = "arm,smmu-v3";
-> -    int irq =  vms->irqmap[VIRT_SMMU];
->      int i;
-> -    hwaddr base = vms->memmap[VIRT_SMMU].base;
-> -    hwaddr size = vms->memmap[VIRT_SMMU].size;
->      const char irq_names[] = "eventq\0priq\0cmdq-sync\0gerror";
->      DeviceState *dev;
->      MachineState *ms = MACHINE(vms);
->  
-> -    if (!virt_has_smmuv3(vms) || !vms->iommu_phandle) {
-> -        return;
-> +    if (!virt_has_smmuv3(vms) || !smmu_phandle) {
-> +        return NULL;
->      }
->  
->      dev = qdev_new(TYPE_ARM_SMMUV3);
-> @@ -1436,8 +1438,31 @@ static void create_smmu(const VirtMachineState *vms,
->  
->      qemu_fdt_setprop_cell(ms->fdt, node, "#iommu-cells", 1);
->  
-> -    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
-> +    qemu_fdt_setprop_cell(ms->fdt, node, "phandle", smmu_phandle);
->      g_free(node);
-> +
-> +    return dev;
-> +}
-> +
-> +static DeviceState *create_smmu(const VirtMachineState *vms, PCIBus *bus)
-> +{
-> +    hwaddr base = vms->memmap[VIRT_SMMU].base;
-> +    hwaddr size = vms->memmap[VIRT_SMMU].size;
-> +    int irq = vms->irqmap[VIRT_SMMU];
-> +
-> +    return _create_smmu(vms, bus, base, size, irq, vms->iommu_phandle);
-> +}
-> +
-> +static DeviceState *create_nested_smmu(const VirtMachineState *vms, PCIBus *bus,
-> +                                       int i)
-> +{
-> +    hwaddr base = vms->memmap[VIRT_NESTED_SMMU].base + i * SMMU_IO_LEN;
-> +    int irq = vms->irqmap[VIRT_SMMU] + i * NUM_SMMU_IRQS;
-> +    hwaddr size = SMMU_IO_LEN;
-> +    DeviceState *dev;
-> +
-> +    dev = _create_smmu(vms, bus, base, size, irq, vms->nested_smmu_phandle[i]);
-> +    return dev;
->  }
->  
->  static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
-> @@ -1466,6 +1491,48 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
+> @@ -38,6 +38,7 @@
+>  #include "hw/arm/primecell.h"
+>  #include "hw/arm/virt.h"
+>  #include "hw/block/flash.h"
+> +#include "hw/vfio/pci.h"
+>  #include "hw/vfio/vfio-calxeda-xgmac.h"
+>  #include "hw/vfio/vfio-amd-xgbe.h"
+>  #include "hw/display/ramfb.h"
+> @@ -1491,6 +1492,112 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
 >                             bdf + 1, vms->iommu_phandle, bdf + 1, 0xffff - bdf);
 >  }
 >  
-> +/*
-> + * FIXME this is used to reverse for hotplug devices, yet it could result in a
-> + * big waste of PCI bus numbners.
-> + */
-> +#define MAX_DEV_PER_NESTED_SMMU (4)
-> +
-> +static PCIBus *create_pcie_expander_bridge(VirtMachineState *vms, uint8_t idx)
+> +static char *create_new_pcie_port(VirtNestedSmmu *nested_smmu, Error **errp)
 > +{
-> +    /* Total = PXB + MAX_DEV_PER_NESTED_SMMU x (Rootport + device) */
-> +    const uint8_t total_bus_nums = 1 + MAX_DEV_PER_NESTED_SMMU * 2;
-> +    uint8_t bus_nr = PCI_BUS_MAX -
-> +                     (vms->num_nested_smmus - idx) * total_bus_nums;
-> +
-> +    VirtNestedSmmu *nested_smmu = find_nested_smmu_by_index(vms, idx);
-> +    char *name_pxb = g_strdup_printf("pxb_for_smmu.%d", idx);
-> +    PCIBus *bus = vms->bus;
+> +    uint32_t port_nr = nested_smmu->pci_bus->qbus.num_children;
+> +    uint32_t chassis_nr = UINT8_MAX - nested_smmu->index;
+> +    uint32_t bus_nr = pci_bus_num(nested_smmu->pci_bus);
 > +    DeviceState *dev;
+> +    char *name_port;
 > +
-> +    /* Create an expander bridge */
-> +    dev = qdev_new("pxb-pcie");
-> +    if (!qdev_set_id(dev, name_pxb, &error_fatal)) {
+> +    /* Create a root port */
+> +    dev = qdev_new("pcie-root-port");
+> +    name_port = g_strdup_printf("smmu_bus0x%x_port%d", bus_nr, port_nr);
+> +
+> +    if (!qdev_set_id(dev, name_port, &error_fatal)) {
+> +        /* FIXME retry with a different port num? */
+> +        error_setg(errp, "Could not set pcie-root-port ID %s", name_port);
+> +        g_free(name_port);
+> +        g_free(dev);
 > +        return NULL;
 > +    }
-> +
-> +    qdev_prop_set_uint8(dev, "bus_nr", bus_nr);
-> +    qdev_prop_set_uint16(dev, "numa_node", idx);
-> +    qdev_realize_and_unref(dev, BUS(bus), &error_fatal);
-> +
-> +    /* Get the pxb bus */
-> +    QLIST_FOREACH(bus, &bus->child, sibling) {
-> +        if (pci_bus_num(bus) == bus_nr) {
-> +            break;
-> +        }
-> +    }
-> +    g_assert(bus && pci_bus_num(bus) == bus_nr);
-> +    nested_smmu->pci_bus = bus;
-> +    nested_smmu->reserved_bus_nums = total_bus_nums;
-> +
-> +    /* Return the pxb bus */
-> +    return bus;
+> +    qdev_prop_set_uint32(dev, "chassis", chassis_nr);
+> +    qdev_prop_set_uint32(dev, "slot", port_nr);
+> +    qdev_prop_set_uint64(dev, "io-reserve", 0);
+> +    qdev_realize_and_unref(dev, BUS(nested_smmu->pci_bus), &error_fatal);
+> +    return name_port;
 > +}
 > +
->  static void create_pcie(VirtMachineState *vms)
->  {
->      hwaddr base_mmio = vms->memmap[VIRT_PCIE_MMIO].base;
-> @@ -1580,12 +1647,33 @@ static void create_pcie(VirtMachineState *vms)
->      qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
->      create_pcie_irq_map(ms, vms->gic_phandle, irq, nodename);
->  
-> -    if (vms->iommu) {
-> +    /* Build PCI Expander Bridge + Root Port from the top of PCI_BUS_MAX */
-> +    if (vms->num_nested_smmus) {
-> +        /* VIRT_NESTED_SMMU must hold all vSMMUs */
-> +        g_assert(vms->num_nested_smmus <=
-> +                 vms->memmap[VIRT_NESTED_SMMU].size / SMMU_IO_LEN);
+> +static int assign_nested_smmu(void *opaque, QemuOpts *opts, Error **errp)
+> +{
+> +    VirtMachineState *vms = (VirtMachineState *)opaque;
+> +    const char *sysfsdev = qemu_opt_get(opts, "sysfsdev");
+> +    const char *iommufd = qemu_opt_get(opts, "iommufd");
+> +    const char *driver = qemu_opt_get(opts, "driver");
+> +    const char *host = qemu_opt_get(opts, "host");
+> +    const char *bus = qemu_opt_get(opts, "bus");
+> +    VirtNestedSmmu *nested_smmu;
+> +    char *link_iommu;
+> +    char *dir_iommu;
+> +    char *smmu_node;
+> +    char *name_port;
+> +    int ret = 0;
 > +
-> +        vms->nested_smmu_phandle = g_new0(uint32_t, vms->num_nested_smmus);
+> +    if (!iommufd || !driver) {
+> +        return 0;
+> +    }
+> +    if (!sysfsdev && !host) {
+> +        return 0;
+> +    }
+> +    if (strncmp(driver, TYPE_VFIO_PCI, strlen(TYPE_VFIO_PCI))) {
+> +        return 0;
+> +    }
+> +    /* If the device wants to attach to the default bus, do not reassign it */
+> +    if (bus && !strncmp(bus, "pcie.0", strlen(bus))) {
+> +        return 0;
+> +    }
 > +
-> +        for (i = 0; i < vms->num_nested_smmus; i++) {
-> +            DeviceState *smmu_dev;
-> +            PCIBus *pxb_bus;
+> +    if (sysfsdev) {
+> +        link_iommu = g_strdup_printf("%s/iommu", sysfsdev);
+> +    } else {
+> +        link_iommu = g_strdup_printf("/sys/bus/pci/devices/%s/iommu", host);
+> +    }
 > +
-> +            pxb_bus = create_pcie_expander_bridge(vms, i);
-> +            g_assert(pxb_bus);
+> +    dir_iommu = realpath(link_iommu, NULL);
+> +    if (!dir_iommu) {
+> +        error_setg(errp, "Could not get the real path for iommu link: %s",
+> +                   link_iommu);
+> +        ret = -EINVAL;
+> +        goto free_link;
+> +    }
 > +
-> +            vms->nested_smmu_phandle[i] = qemu_fdt_alloc_phandle(ms->fdt);
-> +            smmu_dev = create_nested_smmu(vms, pxb_bus, i);
-> +            g_assert(smmu_dev);
+> +    smmu_node = g_path_get_basename(dir_iommu);
+> +    if (!smmu_node) {
+> +        error_setg(errp, "Could not get SMMU node name for iommu at: %s",
+> +                   dir_iommu);
+> +        ret = -EINVAL;
+> +        goto free_dir;
+> +    }
 > +
-> +            qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map", 0x0,
-> +                                   vms->nested_smmu_phandle[i], 0x0, 0x10000);
-I think libvirt is supposed to create the pcie bus topology instead and
-it shall not be created by qemu behind the scene.
-The pcie elements you create here are not visible to libvirt and I guess
-they may collide with elements explicitly created by libvirt at a given
-pci bdf.
-
-I think it would make more sense to be able to attach an smmu instance
-to a given pci root or pxb either by adding an iommu id to a given
-pxb-pcie option
-
--device
-pxb-pcie,bus_nr=100,id=pci.12,numa_node=0,bus=pcie.0,addr=0x3,iommu=<id>
-or
-adding a list of pxb ids to the iommu option. It is unfortunate the
-iommu option is a machine option. the smmu being a sysbus device the
-platform bus framework could be considered to dynamically allocate them
-using the -device option. This has been used along with dt generation
-but with ACPI this would need to be studied. However at the time the
-smmu was integrated the machine option was prefered.
-
-Maybe using the 1st option would allow to infer that if there are
-different iommu ids this implies that several IOMMU instances need to be
-created.
-
- 
-Adding Andrea in cc
-
-Thanks
-
-Eric
-
-
-
-> +        }
-> +    } else if (vms->iommu) {
+> +    nested_smmu = find_nested_smmu_by_sysfs(vms, smmu_node);
+> +    if (!nested_smmu) {
+> +        error_setg(errp, "Could not find any detected SMMU matching node: %s",
+> +                   smmu_node);
+> +        ret = -EINVAL;
+> +        goto free_node;
+> +    }
+> +
+> +    name_port = create_new_pcie_port(nested_smmu, errp);
+> +    if (!name_port) {
+> +        ret = -EBUSY;
+> +        goto free_node;
+> +    }
+> +
+> +    qemu_opt_set(opts, "bus", name_port, &error_fatal);
+> +    if (bus) {
+> +        error_report("overriding PCI bus %s to %s for device %s [%s]",
+> +                     bus, name_port, host, sysfsdev);
+> +    }
+> +
+> +free_node:
+> +    free(smmu_node);
+> +free_dir:
+> +    free(dir_iommu);
+> +free_link:
+> +    free(link_iommu);
+> +    return ret;
+> +}
+> +
+>  /*
+>   * FIXME this is used to reverse for hotplug devices, yet it could result in a
+>   * big waste of PCI bus numbners.
+> @@ -1669,6 +1776,9 @@ static void create_pcie(VirtMachineState *vms)
+>              qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map", 0x0,
+>                                     vms->nested_smmu_phandle[i], 0x0, 0x10000);
+>          }
+> +
+> +        qemu_opts_foreach(qemu_find_opts("device"),
+> +                          assign_nested_smmu, vms, &error_fatal);
+>      } else if (vms->iommu) {
 >          vms->iommu_phandle = qemu_fdt_alloc_phandle(ms->fdt);
 >  
->          switch (vms->iommu) {
->          case VIRT_IOMMU_SMMUV3:
-> -        case VIRT_IOMMU_NESTED_SMMUV3:
->              create_smmu(vms, vms->bus);
->              qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
->                                     0x0, vms->iommu_phandle, 0x0, 0x10000);
 > diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-> index b35c4f62d7..0a3f1ab8b5 100644
+> index 0a3f1ab8b5..dfbc4bba3c 100644
 > --- a/include/hw/arm/virt.h
 > +++ b/include/hw/arm/virt.h
-> @@ -63,6 +63,7 @@ enum {
->      VIRT_GIC_ITS,
->      VIRT_GIC_REDIST,
->      VIRT_SMMU,
-> +    VIRT_NESTED_SMMU,
->      VIRT_UART,
->      VIRT_MMIO,
->      VIRT_RTC,
-> @@ -141,6 +142,8 @@ struct VirtMachineClass {
->  typedef struct VirtNestedSmmu {
->      int index;
->      char *smmu_node;
-> +    PCIBus *pci_bus;
-> +    int reserved_bus_nums;
->      QLIST_ENTRY(VirtNestedSmmu) next;
->  } VirtNestedSmmu;
->  
-> @@ -179,6 +182,7 @@ struct VirtMachineState {
->      uint32_t gic_phandle;
->      uint32_t msi_phandle;
->      uint32_t iommu_phandle;
-> +    uint32_t *nested_smmu_phandle;
->      int psci_conduit;
->      hwaddr highest_gpa;
->      DeviceState *gic;
-> @@ -229,4 +233,17 @@ static inline bool virt_has_smmuv3(const VirtMachineState *vms)
->             vms->iommu == VIRT_IOMMU_NESTED_SMMUV3;
+> @@ -246,4 +246,17 @@ find_nested_smmu_by_index(VirtMachineState *vms, int index)
+>      return NULL;
 >  }
 >  
 > +static inline VirtNestedSmmu *
-> +find_nested_smmu_by_index(VirtMachineState *vms, int index)
+> +find_nested_smmu_by_sysfs(VirtMachineState *vms, char *node)
 > +{
 > +    VirtNestedSmmu *nested_smmu;
 > +
 > +    QLIST_FOREACH(nested_smmu, &vms->nested_smmu_list, next) {
-> +        if (nested_smmu->index == index) {
+> +        if (!strncmp(nested_smmu->smmu_node, node, strlen(node))) {
 > +            return nested_smmu;
 > +        }
 > +    }
