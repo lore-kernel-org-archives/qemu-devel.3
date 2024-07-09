@@ -4,76 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8592C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 14:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A44A7C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 14:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRC2i-0004u8-Q9; Tue, 09 Jul 2024 10:42:08 -0400
+	id 1sRC9P-0004qR-Ar; Tue, 09 Jul 2024 10:49:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lrh2000@pku.edu.cn>)
- id 1sRC2e-0004tf-QL
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:42:04 -0400
-Received: from zg8tmja2lje4os4yms4ymjma.icoremail.net ([206.189.21.223])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lrh2000@pku.edu.cn>) id 1sRC2b-0006Is-E2
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:42:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=pku.edu.cn; s=dkim; h=Received:Date:From:To:Cc:Subject:
- Message-ID:References:MIME-Version:Content-Type:
- Content-Disposition:Content-Transfer-Encoding:In-Reply-To; bh=pA
- 92XaFhsXYB4VWevdEQqdOFVJVatKmeRfBVR2w89eE=; b=mNhjMYIRrrCWhQcvfs
- eYj/UbZF+cY9nViK3FjVJfBAKeZ6abV/Y4MLRyfelj742+gmALgKkwG2HocBlSEp
- MHtRpUBAKRclhOdWzpzWCglYt0oCV7HL8fy7x/dhZVeLeP7/y9R+M2hP/MgeH9Eb
- Yy/e3CBEGEijDCluBfp1FWToE=
-Received: from localhost (unknown [124.127.75.182])
- by front02 (Coremail) with SMTP id 54FpogCXXRwpTI1mFNubAA--.24056S2;
- Tue, 09 Jul 2024 22:41:49 +0800 (CST)
-Date: Tue, 9 Jul 2024 22:41:44 +0800
-From: Ruihan Li <lrh2000@pku.edu.cn>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Ruihan Li <lrh2000@pku.edu.cn>
-Subject: Re: [PATCH] char-mux: Don't overwrite the receive buffer
-Message-ID: <fx2rkepa2jhuy7novlpyqfgwh2fven3rjjzfng72hzkh3vnylg@wokdocju7bx4>
-References: <20240707111940.232549-3-lrh2000@pku.edu.cn>
- <CAJ+F1CKHve-3SOzFOLBCKo-5yQDuo7QpSqxw9N5NtPbg7bdQdA@mail.gmail.com>
- <uvyay4oml2krvru2jflwcv7z6ex375glbmpmy2k2a7fophaiew@3cz5i7zqrd3j>
- <CAJ+F1CJc8dS3tSChnN+MwUCZfYPkoXGS+kd2Trw2RTtG1HRq1w@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <simon.hamelin@grenoble-inp.org>)
+ id 1sRB5s-0000eq-42
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 09:41:20 -0400
+Received: from smtpout02-ext4.partage.renater.fr ([194.254.241.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <simon.hamelin@grenoble-inp.org>)
+ id 1sRB5p-0001iH-MF
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 09:41:19 -0400
+Received: from zmtaauth04.partage.renater.fr (zmtaauth04.partage.renater.fr
+ [194.254.241.26])
+ by smtpout20.partage.renater.fr (Postfix) with ESMTP id 8703ABFF98;
+ Tue,  9 Jul 2024 15:41:03 +0200 (CEST)
+Received: from zmtaauth04.partage.renater.fr (localhost [127.0.0.1])
+ by zmtaauth04.partage.renater.fr (Postfix) with ESMTPS id 94F111C0080;
+ Tue,  9 Jul 2024 15:41:02 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zmtaauth04.partage.renater.fr (Postfix) with ESMTP id 762D91C036F;
+ Tue,  9 Jul 2024 15:41:02 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.10.3 zmtaauth04.partage.renater.fr 762D91C036F
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=grenoble-inp.org;
+ s=F42A61D9-9621-4693-8E8E-830FB5F1ED6E; t=1720532462;
+ bh=zzqJqmIbyGxqw0N+PLsLoueGmR3j5CIeIIgAEVbnSxQ=;
+ h=From:To:Date:Message-ID:MIME-Version;
+ b=cCqi9f1nEi4C+hIzYNYco9ysmh4CS1/UdjJq30VmPZamgM9x3PWimRbt6m2O0MUSW
+ aKluSreKj9Z8GfEWJZIaF7EKJk723vXXniAHzb/PiSnttrYZ9rFHBrmek/amLMYVew
+ gZoiMsohveTYxh8xouoibp+MThBmPyOilVTsbLnwNqmvQduNw3uU4OG3DJc72288bj
+ DA5+JujcOgFrDTW3DqvAivJqh02Bq6uOqSblpqg7zQN3NuAHcN7Vsx3x0/+VNim1dB
+ Acu1T19frk+v0g42TeHQAlO7LaU6x47DgmBg1WiUJTTtLy3dKWOGPgFOdRhVL85JZx
+ OoeHDNMNXo8kg==
+Received: from zmtaauth04.partage.renater.fr ([127.0.0.1])
+ by localhost (zmtaauth04.partage.renater.fr [127.0.0.1]) (amavis, port 10026)
+ with ESMTP id BXXfqDPXdX1w; Tue,  9 Jul 2024 15:41:02 +0200 (CEST)
+Received: from 188.231.11.184 (unknown [194.254.241.251])
+ by zmtaauth04.partage.renater.fr (Postfix) with ESMTPA id 1682F1C050B;
+ Tue,  9 Jul 2024 15:41:02 +0200 (CEST)
+From: Simon Hamelin <simon.hamelin@grenoble-inp.org>
+To: qemu-devel@nongnu.org
+Cc: Simon Hamelin <simon.hamelin@grenoble-inp.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH] plugins/stoptrigger: TCG plugin to stop execution under
+ conditions
+Date: Tue,  9 Jul 2024 15:40:06 +0200
+Message-ID: <20240709134031.85954-1-simon.hamelin@grenoble-inp.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ+F1CJc8dS3tSChnN+MwUCZfYPkoXGS+kd2Trw2RTtG1HRq1w@mail.gmail.com>
-X-CM-TRANSID: 54FpogCXXRwpTI1mFNubAA--.24056S2
-X-Coremail-Antispam: 1UD129KBjvJXoW3JF18Zry8AF1xZry8Jr1fWFg_yoWxJFy8pF
- WYkFyjyr4DJFnFyrsIv3WYqw1FyayrXryUWF4Dtr1a9w1q9Fn3XrWUKFWY9Fyxur4xGF1j
- qF4UZFZrC3WqvFDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUU9j1xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
- w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
- IY67AKxVWDJVCq3wA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
- z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2vYz4IE04k24V
- AvwVAKI4IrM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xf
- McIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7
- v_Jr0_Gr1lF7xvr2IY64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkIecxEwVAFwVW5
- XwCF04k20xvY0x0EwIxGrwCF04k20xvE74AGY7Cv6cx26w4DJr1UJwCFx2IqxVCFs4IE7x
- kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
- 67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
- CI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
- MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvf
- C2KfnxnUUI43ZEXa7VUbSdgPUUUUU==
-X-CM-SenderInfo: yssqiiarrvmko6sn3hxhgxhubq/1tbiAgEFBWaBhWQODAAosv
-Received-SPF: pass client-ip=206.189.21.223; envelope-from=lrh2000@pku.edu.cn;
- helo=zg8tmja2lje4os4yms4ymjma.icoremail.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Virus-Scanned: clamav-milter 0.103.8 at clamav03
+X-Virus-Status: Clean
+X-Renater-Ptge-SpamState: clean
+X-Renater-Ptge-SpamScore: -100
+X-Renater-Ptge-SpamCause: gggruggvucftvghtrhhoucdtuddrgeeftddrvdelgdeijecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucftgffptefvgfftnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffoggfgsedtkeertdertddtnecuhfhrohhmpefuihhmohhnucfjrghmvghlihhnuceoshhimhhonhdrhhgrmhgvlhhinhesghhrvghnohgslhgvqdhinhhprdhorhhgqeenucggtffrrghtthgvrhhnpedttdduiefgtdelfeehuedtvdeuudekhffhffekudekhfdtudelffdvgeetleetfeenucfkphepudelgedrvdehgedrvdeguddrvdehudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduleegrddvheegrddvgedurddvhedupdhhvghlohepudekkedrvdefuddruddurddukeegpdhmrghilhhfrhhomhepshhimhhonhdrhhgrmhgvlhhinhesghhrvghnohgslhgvqdhinhhprdhorhhgpdhnsggprhgtphhtthhopeekpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehsihhmohhnrdhhrghmvghlihhnsehgrhgvnhhosghlvgdqihhnphdrohhrghdprhgtphhtthhopegvrhgunhgrgigvsegtrhgrnhhsrdhorhhgpdhrtghpthhtoheprghlvgigrdgsvghnnhgvvgeslhhinhgrrhhordhorhhgpdhrtghpthhtohepmhgrrdhmrghnughouhhrrhesghhm
+ rghilhdrtghomhdprhgtphhtthhopehpihgvrhhrihgtkhdrsghouhhvihgvrheslhhinhgrrhhordhorhhg
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: none client-ip=194.254.241.31;
+ envelope-from=simon.hamelin@grenoble-inp.org;
+ helo=smtpout02-ext4.partage.renater.fr
+X-Spam_score_int: 3
+X-Spam_score: 0.3
+X-Spam_bar: /
+X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_HELO_IP_MISMATCH=2.368,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_BL=0.001, RCVD_IN_MSPIKE_ZBI=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 09 Jul 2024 10:48:59 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,186 +95,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+This new plugin allows to stop emulation using conditions on the
+emulation state. By setting this plugin arguments, it is possible
+to set an instruction count limit and/or trigger address(es) to stop at.
+The code returned at emulation exit can be customized.
 
-On Mon, Jul 08, 2024 at 03:21:58PM GMT, Marc-André Lureau wrote:
-> Hi
-> 
-> On Mon, Jul 8, 2024 at 12:12 AM Ruihan Li <lrh2000@pku.edu.cn> wrote:
-> 
-> > Hi,
-> >
-> > Thanks for your quick review!
-> >
-> > On Sun, Jul 07, 2024 at 08:28:50PM GMT, Marc-André Lureau wrote:
-> > > Hi
-> > >
-> > > On Sun, Jul 7, 2024 at 3:26 PM Ruihan Li <lrh2000@pku.edu.cn> wrote:
-> > >
-> > > > This commit fixes a bug that causes incorrect results when pasting more
-> > > > than 32 bytes, the size of the receive buffer b->buffer, into the
-> > virtio
-> > > > console.
-> > > >
-> > > > Example (note that the last 32 bytes are always correct, but something
-> > > > goes wrong just before the last 32 bytes):
-> > > >
-> > > >         Pasting
-> > > >
-> > abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()
-> > > >         Received
-> > > >
-> > abcdefg)EFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()EFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()
-> > > >
-> > > > The root cause of this bug is as follows:
-> > > >
-> > > > The mux_chr_read function passes the data to the backend via
-> > > > be->chr_read one byte at a time, either directly or via another
-> > > > mux_chr_accept_input method. However, if the receive buffer is full,
-> > > > there is a chance that the mux_chr_can_read method will return more
-> > than
-> > > > one byte, because in this case the method directly returns whatever
-> > > > be->chr_can_read returns.
-> > > >
-> > > > This is problematic because if mux_chr_read passes a byte to the
-> > backend
-> > > > by calling be->chr_read, it will consume the entire backend buffer, at
-> > > > least in the case of virtio. Once all backend buffers are used,
-> > > > mux_chr_read writes all remaining bytes to the receive buffer
-> > d->buffer,
-> > > >
-> > >
-> > > My understanding of the code execution is:
-> > > - mux_chr_can_read() returns be->chr_can_read(), say N, because d->buffer
-> > > is already MUX_BUFFER_SIZE.
-> > > - mux_chr_read() is called with N bytes
-> > > - mux_chr_accept_input() flushes d->buffer, writing MUX_BUFFER_SIZE
-> > > - be should still accept N-MUX_BUFFER_SIZE
-> > > - mux_proc_byte() loops for N bytes
-> > > - chr_read() should accept the N-MUX_BUFFER_SIZE
-> > > - d->buffer is then filled with the remaining MUX_BUFFER_SIZE
-> >
-> > Note this:
-> >         [..] if mux_chr_read passes a byte to the backend by calling
-> >         be->chr_read, it will consume the entire backend buffer, at
-> >         least in the case of virtio [..]
-> >
-> > At least in the case of virtio, if the guest provides a buffer of length
-> > 4096, be->chr_can_read will report 4096. But if you then call
-> > be->chr_read with one byte, the whole 4096 buffer will be used. After
-> > that, be->chr_can_read will return zero instead of 4095.
-> >
-> > This should make sense since the device cannot change the number of
-> > bytes in the buffer after it has made the buffer available to the CPU.
-> >
-> 
-> Thanks, that helps explaining the incorrect behaviour.
-> 
-> I think the concept of extra buffer as introduced in commit
-> bd9bdce694ccb76facc882363e4c337e8a88c918 ("Add input buffer to mux chr
-> (patch by Tristan Gingold)") is flawed, as Jan Kiszka explained in commit
-> a80bf99fa3dd829ecea88b9bfb4f7cf146208f07 ("char-mux: Use separate input
-> buffers (Jan Kiszka)"):
->     Note: In contrast to the original author's claim, the buffering concept
->     still breaks down when the fifo of the currently active sub-device is
->     full. As we cannot accept futher data from this point on without risking
->     to loose it, we will also miss escape sequences, just like without all
->     that buffering. In short: There is no reliable escape sequence handling
->     without infinite buffers or the risk of loosing some data.
-> 
-> Maybe the best course is to remove the cycle buffer and either:
-> - drop the data that be can't accept, but have always responsive mux (by
-> default)
-> - blocking, including mux, until the be can accept more data (not friendly)
-> - or allow unlimited buffering?
-> 
-> Given that mux is meant for developers and qemu CLI users, I guess any of
-> this would be acceptable.
+This plugin demonstrates how someone could stop QEMU execution.
+It could be used for research purposes to launch some code and
+deterministically stop it and understand where its execution flow went.
 
-Thanks for your comments.
+Co-authored-by: Alexandre Iooss <erdnaxe@crans.org>
+Signed-off-by: Simon Hamelin <simon.hamelin@grenoble-inp.org>
+Signed-off-by: Alexandre Iooss <erdnaxe@crans.org>
+---
+ contrib/plugins/Makefile      |   1 +
+ contrib/plugins/stoptrigger.c | 125 ++++++++++++++++++++++++++++++++++
+ docs/devel/tcg-plugins.rst    |  22 ++++++
+ 3 files changed, 148 insertions(+)
+ create mode 100644 contrib/plugins/stoptrigger.c
 
-However, I'm not really sure what you're talking about. If we make
-mux_chr_can_read return either zero or one (as I've done in the patch),
-do you mean that we are still at risk of losing some escape sequences?
-
-In mux_proc_byte, we set d->term_got_escape to 1 when we see the escape
-character. As far as I can see, the escape sequence is always handled
-correctly. So I don't understand how losing escape sequences can happen.
-
-Would you mind explaining this in more detail?
-
-> 
-> 
-> >
-> > >
-> > >
-> > > > but the number of remaining bytes can be larger than the buffer size.
-> > > >
-> > >
-> > > By the above description, I don't see how it happens.
-> > >
-> > > This does not lead to security problems since it is a ring buffer, but
-> > > > it does mess up the receive data.
-> > > >
-> > > > This can be fixed by having mux_chr_can_read return either zero or one.
-> > > > This fix is not very efficient, but it is quite reasonable since
-> > > > mux_chr_read also passes the data to the backend one byte at a time.
-> > > >
-> > >
-> > > Could you share your testing setup? Even better if you could write a
-> > test!
-> >
-> > This happens in https://github.com/asterinas/asterinas. Sorry, but I
-> > don't have a minimal reproducible example, and I don't think I can make
-> > one anytime soon.
-> >
-> > As for the tests, I'd like to know how to write such tests in QEMU. I
-> > checked the documentation but didn't find anything, maybe I'm missing
-> > something?
-> >
-> > >
-> > >
-> > > thanks
-> > >
-> > >
-> > > > Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
-> > > > ---
-> > > >  chardev/char-mux.c | 4 ++--
-> > > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > > >
-> > > > diff --git a/chardev/char-mux.c b/chardev/char-mux.c
-> > > > index ee2d47b..5c6eea2 100644
-> > > > --- a/chardev/char-mux.c
-> > > > +++ b/chardev/char-mux.c
-> > > > @@ -210,8 +210,8 @@ static int mux_chr_can_read(void *opaque)
-> > > >          return 1;
-> > > >      }
-> > > >
-> > > > -    if (be && be->chr_can_read) {
-> > > > -        return be->chr_can_read(be->opaque);
-> > > > +    if (be && be->chr_can_read && be->chr_can_read(be->opaque)) {
-> > > > +        return 1;
-> > > >      }
-> > > >
-> > > >      return 0;
-> > > > --
-> > > > 2.45.2
-> > > >
-> > > >
-> > > >
-> > >
-> > > --
-> > > Marc-André Lureau
-> >
-> > Thanks,
-> > Ruihan Li
-> >
-> >
-> 
-> -- 
-> Marc-André Lureau
-
-Thanks,
-Ruihan Li
+diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+index 449ead1130..98a89d5c40 100644
+--- a/contrib/plugins/Makefile
++++ b/contrib/plugins/Makefile
+@@ -28,6 +28,7 @@ NAMES +=3D hwprofile
+ NAMES +=3D cache
+ NAMES +=3D drcov
+ NAMES +=3D ips
++NAMES +=3D stoptrigger
+=20
+ ifeq ($(CONFIG_WIN32),y)
+ SO_SUFFIX :=3D .dll
+diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.=
+c
+new file mode 100644
+index 0000000000..26b8a78f08
+--- /dev/null
++++ b/contrib/plugins/stoptrigger.c
+@@ -0,0 +1,125 @@
++/*
++ * Copyright (C) 2024, Simon Hamelin <simon.hamelin@grenoble-inp.org>
++ *
++ * Stop execution once a given address is reached or if the
++ * count of executed instructions reached a specified limit
++ *
++ * License: GNU GPL, version 2 or later.
++ *   See the COPYING file in the top-level directory.
++ */
++
++#include <assert.h>
++#include <inttypes.h>
++#include <stdio.h>
++#include <stdlib.h>
++
++#include <qemu-plugin.h>
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version =3D QEMU_PLUGIN_VERSION;
++
++static uint64_t icount;
++static int icount_exit_code;
++static uint64_t executed_instructions;
++
++static bool exit_on_icount;
++static bool exit_on_address;
++
++/* Map trigger addresses to exit code */
++static GHashTable *addrs_ht;
++static GMutex addrs_ht_lock;
++
++static void vcpu_insn_exec(unsigned int cpu_index, void *udata)
++{
++    executed_instructions++;
++
++    if (exit_on_icount && executed_instructions > icount) {
++        /* We shouldn't execute more instructions than specified */
++        g_assert(executed_instructions =3D=3D icount + 1);
++        qemu_plugin_outs("icount reached, exiting\n");
++        exit(icount_exit_code);
++    }
++
++    if (exit_on_address) {
++        uint64_t insn_vaddr =3D GPOINTER_TO_UINT(udata);
++        g_mutex_lock(&addrs_ht_lock);
++        if (g_hash_table_contains(addrs_ht, GUINT_TO_POINTER(insn_vaddr)=
+)) {
++            /* Exit triggered by address */
++            int exit_code =3D GPOINTER_TO_INT(g_hash_table_lookup(addrs_=
+ht,
++                                            GUINT_TO_POINTER(insn_vaddr)=
+));
++            char *msg =3D g_strdup_printf("0x%" PRIx64 " reached, exitin=
+g\n",
++                                        insn_vaddr);
++            qemu_plugin_outs(msg);
++            exit(exit_code);
++        }
++        g_mutex_unlock(&addrs_ht_lock);
++    }
++}
++
++static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb=
+)
++{
++    /* Register vcpu_insn_exec callback on each instruction */
++    size_t tb_n =3D qemu_plugin_tb_n_insns(tb);
++    for (size_t i =3D 0; i < tb_n; i++) {
++        struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn(tb, i)=
+;
++        uint64_t insn_vaddr =3D qemu_plugin_insn_vaddr(insn);
++        qemu_plugin_register_vcpu_insn_exec_cb(insn, vcpu_insn_exec,
++                                               QEMU_PLUGIN_CB_NO_REGS,
++                                               GUINT_TO_POINTER(insn_vad=
+dr));
++    }
++}
++
++static void plugin_exit(qemu_plugin_id_t id, void *p)
++{
++    g_hash_table_destroy(addrs_ht);
++}
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info, int =
+argc,
++                                           char **argv)
++{
++    addrs_ht =3D g_hash_table_new(NULL, g_direct_equal);
++
++    for (int i =3D 0; i < argc; i++) {
++        char *opt =3D argv[i];
++        g_auto(GStrv) tokens =3D g_strsplit(opt, "=3D", 2);
++        if (g_strcmp0(tokens[0], "icount") =3D=3D 0) {
++            g_auto(GStrv) icount_tokens =3D g_strsplit(tokens[1], ":", 2=
+);
++            icount =3D g_ascii_strtoull(icount_tokens[0], NULL, 0);
++            if (icount < 1 || g_strrstr(icount_tokens[0], "-") !=3D NULL=
+) {
++                fprintf(stderr, "icount parsing failed: '%s' must be a "
++                        "positive integer\n", icount_tokens[0]);
++                return -1;
++            }
++            if (icount_tokens[1]) {
++                icount_exit_code =3D g_ascii_strtoull(icount_tokens[1], =
+NULL, 0);
++            }
++            exit_on_icount =3D true;
++        } else if (g_strcmp0(tokens[0], "addr") =3D=3D 0) {
++            g_auto(GStrv) addr_tokens =3D g_strsplit(tokens[1], ":", 2);
++            uint64_t exit_addr =3D g_ascii_strtoull(addr_tokens[0], NULL=
+, 0);
++            int exit_code =3D 0;
++            if (addr_tokens[1]) {
++                exit_code =3D g_ascii_strtoull(addr_tokens[1], NULL, 0);
++            }
++            g_mutex_lock(&addrs_ht_lock);
++            g_hash_table_insert(addrs_ht, GUINT_TO_POINTER(exit_addr),
++                                GINT_TO_POINTER(exit_code));
++            g_mutex_unlock(&addrs_ht_lock);
++            exit_on_address =3D true;
++        } else {
++            fprintf(stderr, "option parsing failed: %s\n", opt);
++            return -1;
++        }
++    }
++
++    if (!exit_on_icount && !exit_on_address) {
++        fprintf(stderr, "'icount' or 'addr' argument missing\n");
++        return -1;
++    }
++
++    /* Register translation block and exit callbacks */
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
++    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
++
++    return 0;
++}
+diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
+index f7d7b9e3a4..954623f9bf 100644
+--- a/docs/devel/tcg-plugins.rst
++++ b/docs/devel/tcg-plugins.rst
+@@ -642,6 +642,28 @@ The plugin has a number of arguments, all of them ar=
+e optional:
+   configuration arguments implies ``l2=3Don``.
+   (default: N =3D 2097152 (2MB), B =3D 64, A =3D 16)
+=20
++- contrib/plugins/stoptrigger.c
++
++The stoptrigger plugin allows to setup triggers to stop emulation.
++It can be used for research purposes to launch some code and precisely s=
+top it
++and understand where its execution flow went.
++
++Two types of triggers can be configured: a count of instructions to stop=
+ at,
++or an address to stop at. Multiple triggers can be set at once.
++
++By default, QEMU will exit with return code 0. A custom return code can =
+be
++configured for each trigger using ``:CODE`` syntax.
++
++For example, to stop at the 20-th instruction with return code 41, at ad=
+dress
++0xd4 with return code 0 or at address 0xd8 with return code 42::
++
++  $ qemu-system-aarch64 $(QEMU_ARGS) \
++    -plugin ./contrib/plugins/libstoptrigger.so,icount=3D20:41,addr=3D0x=
+d4,addr=3D0xd8:42 -d plugin
++
++The plugin will log the reason of exit, for example::
++
++  0xd4 reached, exiting
++
+ Plugin API
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+=20
+--=20
+2.43.0
 
 
