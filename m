@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB895C3DA45
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 02:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B8C9C3DA45
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 02:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR0uC-0001KD-Bm; Mon, 08 Jul 2024 22:48:37 -0400
+	id 1sR0tp-0007co-CA; Mon, 08 Jul 2024 22:48:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sR0u4-0000eW-RA
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 22:48:30 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1sR0tZ-0006yd-Th
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 22:48:04 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sR0u1-0004D8-95
- for qemu-devel@nongnu.org; Mon, 08 Jul 2024 22:48:28 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2c96187b3d1so2627321a91.3
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 19:48:24 -0700 (PDT)
+ id 1sR0tW-0003y1-0P
+ for qemu-devel@nongnu.org; Mon, 08 Jul 2024 22:47:56 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2c9df3eb0edso1808216a91.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 19:47:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1720493303; x=1721098103; darn=nongnu.org;
+ d=bytedance.com; s=google; t=1720493273; x=1721098073; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wf7JaRE116YRJ47jpXrVccE2M8602dkABnf39B3fRt4=;
- b=WxQaQHsbi1dBvPbYF5fI69HtDjQb+IHTo7GyC2QRqQtqTuUFQ9WEJpww6MY7dDG8Jb
- 0OZ4/nMihtlBZMKOT/D5hYytxhT5ut27ZZv9VfiqX9mUBpA6QHrr5mvsw4vtw7JwUJZK
- lKcZf/ru+cQ3I1HbSAXLemRKGJ8tMi2SSfv48NL9uZUtUcoAHo15p3eqTEb0ZoZmcNhQ
- /qLg1Ahliqu+TS4kANs0UTcoaqF13hG3L+sy+X2PZZ5niYwi97jkCHnleJGdO1wXJTn5
- gLyRdky6HQCyOltwfGRwZagRcY4MTItjMMPdtSrHd2h4hSZX/aRnpnQXctiFzAyHw0x+
- KBQQ==
+ bh=k/nkJpsENqr9B0X5L0j+OPvH0SDv1gpy1ACWG+Ghrts=;
+ b=BN2/gQqsA6SM6CxAgzZRg/Eahd4UsTQI4nIZ2zRtQ+qBlWqUiuqRq8eyxQDSAFKT8k
+ bO1vOh1SWseieqBP5KDrxxwxSA51YiKYrx9BShkJ3j62LJVq6ORPdA9GjY5IlGxHNONL
+ l21r+YGRT+ml6sVIt2eQfQZPDCzvsFtJOMZYWWBGuZAKy5G9UYs8weJp++F5HGUvw7/G
+ UAtpjy5tn40yt6DR1/Pijx+yzKs4oa+yLCOmVWxpyH61ZnqhQCJAElZLO3fzLyOkuROV
+ XJN8YhwChRdeOnHrdwKvM/AHcPvUwZdNwXA6nJeacvmZb5y/X7+0hvxFyyRiHc2O6gqf
+ b/Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720493303; x=1721098103;
+ d=1e100.net; s=20230601; t=1720493273; x=1721098073;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wf7JaRE116YRJ47jpXrVccE2M8602dkABnf39B3fRt4=;
- b=BXT4Sg/mU260Rd0VW9bT/diFpaOxg1by8SwXEc6kVaJSFclw1Y56jy9xZioEaV8PH6
- TEWsQOn3EwACStUW3iNjGj+FdBpPyTsS+Cqlbg2GkN55YbjnO+MPc9Y79NfSK+Us8j0I
- gv/Ya8ObZk1rk+Fl+P77PitB661pTAwDP/2J9jgFf/3WN4IFQzig3tPpQi7JlvcPYAcA
- wtaWIqMOp8GhIk4tEvI4nWA2RMdNvmbPOhe/iVKVeiRyRnPsjqolA9ycOZgw+4+IAC1h
- rz/9Cn0zFos5o4r+OPfCJwiqMAmQFgUzjrnTc1CkTXgutFOkQF5KvIUofjql4qAu7GKV
- r6fA==
+ bh=k/nkJpsENqr9B0X5L0j+OPvH0SDv1gpy1ACWG+Ghrts=;
+ b=pdJpy0FhsJERm/lhtTX0dWj67DZgpyXvFox64C6dzS9FPj4N970fxRezq3+y8QB2n9
+ l7V6qYUm5q/2E1gWG74p9ZF62rXn+xYAOdw2/LsH6gW9xV7o3+ly9CbP6AN6cE+f83gK
+ 3EtCDgTbYfJhcAl1KUNuvK/ctfCXMy7q36u9rGfnTsUZL0SY2F830BoYW4pEZk3o6hTR
+ lHig8NHypoIfUiZjE9HchVrpYBBRCI341PKBILOuMUmIMxl38Bi/TJqY8W+t3NnOFB4o
+ VXfrSVZLfXJVG2hwuwFHm2E5SWZvI8pr8k+ARlFPmkUAtlqETvR8F9z5NIb6ksMxs8ru
+ vuRw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX2PdFbQmjzYNuEVGazY5XEtJbX/nUKBoTotKX0wucF2NvGwqSouM/QrWvNTo5xZN3ulW1oVyWPH81aT1Mt5B0gspzwSS0=
-X-Gm-Message-State: AOJu0YzK7XOUtNpuhr1tEFIG7AuvipVOMoavUIQMxzo7i6CgxtYckxUr
- Umf/WeWqdt4ivMlzeXmKMD+ZzacSkv2uhTrvajLksQcuomvURiJp6DXzfJM3r88=
-X-Google-Smtp-Source: AGHT+IGa45nztKedRfLrV6ZUBisf1fzhspNzw25dCnjTCTA13VUACsC7TaEXCrrl9h51UwXUUwSHiw==
-X-Received: by 2002:a17:90a:fe13:b0:2c9:90f5:cfca with SMTP id
- 98e67ed59e1d1-2ca35d5bbdbmr1145438a91.42.1720493303351; 
- Mon, 08 Jul 2024 19:48:23 -0700 (PDT)
+ AJvYcCU09mA45LhNZ74ARTKvexECEGEMVvpm+9cN2DpyzIvhvbg6ED8xwqdDQiF7Ri9130zaBzLcpwH2WHRchYvKWyUcrjJTu8k=
+X-Gm-Message-State: AOJu0YwHMYnjoMdrWl7oMs6vmUxWwF2723QpPMXApI2tjMznoQlhhDo2
+ 9C7ZjhqsSSlHlVY6LsHcrn7CKMD/swZD2MOpE9TbDkHrbkWfByGooZgKAgWvroc=
+X-Google-Smtp-Source: AGHT+IHrDBX+KGY6zxVzeG5IifRCwIT5BKD+WYV3y84hC/3LmxlldhhVpQFNWmOayfh5WFE5iD1xFg==
+X-Received: by 2002:a17:90a:4ce1:b0:2bf:de8b:bef5 with SMTP id
+ 98e67ed59e1d1-2ca35c30c1bmr1070660a91.12.1720493272665; 
+ Mon, 08 Jul 2024 19:47:52 -0700 (PDT)
 Received: from TF4D9JK212.bytedance.net ([61.213.176.9])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2c99a97e8a5sm8964661a91.27.2024.07.08.19.48.18
+ 98e67ed59e1d1-2c99a97e8a5sm8964661a91.27.2024.07.08.19.47.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 08 Jul 2024 19:48:23 -0700 (PDT)
+ Mon, 08 Jul 2024 19:47:52 -0700 (PDT)
 From: Changqi Lu <luchangqi.123@bytedance.com>
 To: qemu-block@nongnu.org,
 	qemu-devel@nongnu.org
@@ -67,16 +67,17 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
  ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de,
  kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, philmd@linaro.org,
  pizhenwei@bytedance.com, Changqi Lu <luchangqi.123@bytedance.com>
-Subject: [PATCH v8 10/10] block/iscsi: add persistent reservation in/out driver
-Date: Tue,  9 Jul 2024 10:47:06 +0800
-Message-Id: <20240709024706.4108-11-luchangqi.123@bytedance.com>
+Subject: [PATCH v8 05/10] hw/scsi: add persistent reservation in/out api for
+ scsi device
+Date: Tue,  9 Jul 2024 10:47:01 +0800
+Message-Id: <20240709024706.4108-6-luchangqi.123@bytedance.com>
 X-Mailer: git-send-email 2.39.2 (Apple Git-143)
 In-Reply-To: <20240709024706.4108-1-luchangqi.123@bytedance.com>
 References: <20240709024706.4108-1-luchangqi.123@bytedance.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,495 +100,437 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add persistent reservation in/out operations for iscsi driver.
-The following methods are implemented: bdrv_co_pr_read_keys,
-bdrv_co_pr_read_reservation, bdrv_co_pr_register, bdrv_co_pr_reserve,
-bdrv_co_pr_release, bdrv_co_pr_clear and bdrv_co_pr_preempt.
+Add persistent reservation in/out operations in the
+SCSI device layer. By introducing the persistent
+reservation in/out api, this enables the SCSI device
+to perform reservation-related tasks, including querying
+keys, querying reservation status, registering reservation
+keys, initiating and releasing reservations, as well as
+clearing and preempting reservations held by other keys.
+
+These operations are crucial for management and control of
+shared storage resources in a persistent manner.
 
 Signed-off-by: Changqi Lu <luchangqi.123@bytedance.com>
 Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
 ---
- block/iscsi.c | 425 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 425 insertions(+)
+ hw/scsi/scsi-disk.c | 368 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 368 insertions(+)
 
-diff --git a/block/iscsi.c b/block/iscsi.c
-index 2ff14b7472..ba51f6d016 100644
---- a/block/iscsi.c
-+++ b/block/iscsi.c
-@@ -96,6 +96,7 @@ typedef struct IscsiLun {
-     unsigned long *allocmap_valid;
-     long allocmap_size;
-     int cluster_size;
-+    uint8_t pr_cap;
-     bool use_16_for_rw;
-     bool write_protected;
-     bool lbpme;
-@@ -280,6 +281,10 @@ iscsi_co_generic_cb(struct iscsi_context *iscsi, int status,
-                     iTask->err_code = -error;
-                     iTask->err_str = g_strdup(iscsi_get_error(iscsi));
-                 }
-+            } else if (status == SCSI_STATUS_RESERVATION_CONFLICT) {
-+                iTask->err_code = -EBADE;
-+                error_report("iSCSI Persistent Reservation Conflict: %s",
-+                             iscsi_get_error(iscsi));
-             }
-         }
-     }
-@@ -1792,6 +1797,50 @@ static void iscsi_save_designator(IscsiLun *lun,
-     }
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 4bd7af9d0c..09c12fafe3 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -32,6 +32,7 @@
+ #include "migration/vmstate.h"
+ #include "hw/scsi/emulation.h"
+ #include "scsi/constants.h"
++#include "scsi/utils.h"
+ #include "sysemu/block-backend.h"
+ #include "sysemu/blockdev.h"
+ #include "hw/block/block.h"
+@@ -42,6 +43,7 @@
+ #include "qemu/cutils.h"
+ #include "trace.h"
+ #include "qom/object.h"
++#include "block/block_int.h"
+ 
+ #ifdef __linux
+ #include <scsi/sg.h>
+@@ -1474,6 +1476,362 @@ static void scsi_disk_emulate_read_data(SCSIRequest *req)
+     scsi_req_complete(&r->req, GOOD);
  }
  
-+/*
-+ *  Ensure iscsi_open() must succeed, weather or not the target
-+ *  implement SCSI_PR_IN_REPORT_CAPABILITIES.
-+ */
-+static void iscsi_get_pr_cap_sync(IscsiLun *iscsilun)
++typedef struct SCSIPrReadKeys {
++    uint32_t generation;
++    uint32_t num_keys;
++    uint64_t *keys;
++    SCSIDiskReq *req;
++} SCSIPrReadKeys;
++
++typedef struct SCSIPrReadReservation {
++    uint32_t generation;
++    uint64_t key;
++    BlockPrType type;
++    SCSIDiskReq *req;
++} SCSIPrReadReservation;
++
++static void scsi_pr_read_keys_complete(void *opaque, int ret)
 +{
-+    struct scsi_task *task = NULL;
-+    struct scsi_persistent_reserve_in_report_capabilities *rc = NULL;
-+    int retries = ISCSI_CMD_RETRIES;
-+    int xferlen = sizeof(struct scsi_persistent_reserve_in_report_capabilities);
++    int num_keys;
++    uint8_t *buf;
++    SCSIPrReadKeys *blk_keys = (SCSIPrReadKeys *)opaque;
++    SCSIDiskReq *r = blk_keys->req;
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
 +
-+    do {
-+        if (task != NULL) {
-+            scsi_free_scsi_task(task);
-+            task = NULL;
-+        }
++    assert(blk_get_aio_context(s->qdev.conf.blk) ==
++            qemu_get_current_aio_context());
 +
-+        task = iscsi_persistent_reserve_in_sync(iscsilun->iscsi,
-+               iscsilun->lun, SCSI_PR_IN_REPORT_CAPABILITIES, xferlen);
-+        if (task != NULL && task->status == SCSI_STATUS_GOOD) {
-+                rc = scsi_datain_unmarshall(task);
-+                if (rc == NULL) {
-+                    error_report("iSCSI: Failed to unmarshall "
-+                                 "report capabilities data.");
-+                } else {
-+                    iscsilun->pr_cap =
-+                    scsi_pr_cap_to_block(rc->persistent_reservation_type_mask);
-+                    iscsilun->pr_cap |= (rc->ptpl_a) ? BLK_PR_CAP_PTPL : 0;
-+                }
-+                break;
-+        }
-+    } while (task != NULL && task->status == SCSI_STATUS_CHECK_CONDITION
-+             && task->sense.key == SCSI_SENSE_UNIT_ATTENTION
-+             && retries-- > 0);
++    assert(r->req.aiocb != NULL);
++    r->req.aiocb = NULL;
 +
-+    if (task == NULL || task->status != SCSI_STATUS_GOOD) {
-+        error_report("iSCSI: failed to send report capabilities command.");
++    if (scsi_disk_req_check_error(r, ret, true)) {
++        goto done;
 +    }
 +
-+    if (task) {
-+        scsi_free_scsi_task(task);
++    buf = scsi_req_get_buf(&r->req);
++    num_keys = MIN(blk_keys->num_keys, ret > 0 ? ret : 0);
++    blk_keys->generation = cpu_to_be32(blk_keys->generation);
++    memcpy(&buf[0], &blk_keys->generation, 4);
++    for (int i = 0; i < num_keys; i++) {
++        blk_keys->keys[i] = cpu_to_be64(blk_keys->keys[i]);
++        memcpy(&buf[8 + i * 8], &blk_keys->keys[i], 8);
 +    }
++    num_keys = cpu_to_be32(num_keys * 8);
++    memcpy(&buf[4], &num_keys, 4);
++
++    scsi_req_data(&r->req, r->buflen);
++done:
++    scsi_req_unref(&r->req);
++    g_free(blk_keys->keys);
++    g_free(blk_keys);
 +}
 +
- static int iscsi_open(BlockDriverState *bs, QDict *options, int flags,
-                       Error **errp)
++static void scsi_disk_emulate_pr_read_keys(SCSIRequest *req)
++{
++    SCSIPrReadKeys *blk_keys;
++    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
++    int buflen = MIN(r->req.cmd.xfer, r->buflen);
++    int num_keys = (buflen - sizeof(uint32_t) * 2) / sizeof(uint64_t);
++
++    if (num_keys <= 0) {
++        scsi_check_condition(r, SENSE_CODE(INVALID_PARAM_LEN));
++        return;
++    }
++
++    blk_keys = g_new0(SCSIPrReadKeys, 1);
++    blk_keys->generation = 0;
++    /* num_keys is the maximum number of keys that can be transmitted */
++    blk_keys->num_keys = num_keys;
++    blk_keys->keys = g_malloc(sizeof(uint64_t) * num_keys);
++    blk_keys->req = r;
++
++    /* The request is used as the AIO opaque value, so add a ref.  */
++    scsi_req_ref(&r->req);
++    r->req.aiocb = blk_aio_pr_read_keys(s->qdev.conf.blk, &blk_keys->generation,
++                                        blk_keys->num_keys, blk_keys->keys,
++                                        scsi_pr_read_keys_complete, blk_keys);
++    return;
++}
++
++static void scsi_pr_read_reservation_complete(void *opaque, int ret)
++{
++    uint8_t *buf;
++    uint32_t additional_len = 0;
++    SCSIPrReadReservation *blk_rsv = (SCSIPrReadReservation *)opaque;
++    SCSIDiskReq *r = blk_rsv->req;
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
++
++    assert(blk_get_aio_context(s->qdev.conf.blk) ==
++            qemu_get_current_aio_context());
++
++    assert(r->req.aiocb != NULL);
++    r->req.aiocb = NULL;
++
++    if (scsi_disk_req_check_error(r, ret, true)) {
++        goto done;
++    }
++
++    buf = scsi_req_get_buf(&r->req);
++    blk_rsv->generation = cpu_to_be32(blk_rsv->generation);
++    memcpy(&buf[0], &blk_rsv->generation, 4);
++    if (ret) {
++        additional_len = cpu_to_be32(16);
++        blk_rsv->key = cpu_to_be64(blk_rsv->key);
++        memcpy(&buf[8], &blk_rsv->key, 8);
++        buf[21] = block_pr_type_to_scsi(blk_rsv->type) & 0xf;
++    } else {
++        additional_len = cpu_to_be32(0);
++    }
++
++    memcpy(&buf[4], &additional_len, 4);
++    scsi_req_data(&r->req, r->buflen);
++
++done:
++    scsi_req_unref(&r->req);
++    g_free(blk_rsv);
++}
++
++static void scsi_disk_emulate_pr_read_reservation(SCSIRequest *req)
++{
++    SCSIPrReadReservation *blk_rsv;
++    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
++    int buflen = MIN(r->req.cmd.xfer, r->buflen);
++    int count = sizeof(uint32_t) * 2 + sizeof(uint64_t) +
++                sizeof(uint32_t) + sizeof(uint8_t) * 2;
++
++    if (buflen < count) {
++        scsi_check_condition(r, SENSE_CODE(INVALID_PARAM_LEN));
++        return;
++    }
++
++    blk_rsv = g_malloc(sizeof(*blk_rsv));
++    blk_rsv->generation = 0;
++    blk_rsv->key = 0;
++    blk_rsv->type = 0;
++    blk_rsv->req = r;
++
++    /* The request is used as the AIO opaque value, so add a ref.  */
++    scsi_req_ref(&r->req);
++    r->req.aiocb = blk_aio_pr_read_reservation(s->qdev.conf.blk,
++                   &blk_rsv->generation, &blk_rsv->key, &blk_rsv->type,
++                   scsi_pr_read_reservation_complete, blk_rsv);
++    return;
++}
++
++static void scsi_disk_emulate_pr_report_capabilities(SCSIRequest *req)
++{
++    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
++    BlockDriverState *bs = blk_bs(s->qdev.conf.blk);
++    uint8_t blk_pr_cap = bs->bl.pr_cap;
++    uint8_t *buf = scsi_req_get_buf(req);
++    uint16_t pr_cap;
++    /*
++     * according to response of report_capabilities
++     * command of chapter 6.13 of spc4
++     */
++    int len = sizeof(uint16_t) * 2 + sizeof(uint8_t) * 4;
++
++    if (len > r->buflen) {
++        scsi_check_condition(r, SENSE_CODE(INVALID_PARAM_LEN));
++        return;
++    }
++
++    len = cpu_to_be16(len);
++    memcpy(&buf[0], &len, 2);
++    /* enable PTPL_C */
++    buf[2] = 1;
++    buf[3] = (blk_pr_cap & BLK_PR_CAP_PTPL) ? 1 : 0;
++    /* enable TMV */
++    buf[3] |= 1 << 7;
++
++    /* enable persistent reservation type */
++    pr_cap = block_pr_cap_to_scsi(blk_pr_cap);
++    buf[4] = pr_cap >> 8 & 0xff;
++    buf[5] = pr_cap & 0xff;
++
++    scsi_req_data(&r->req, len);
++    return;
++}
++
++static void scsi_aio_pr_complete(void *opaque, int ret)
++{
++    SCSIDiskReq *r = (SCSIDiskReq *)opaque;
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, r->req.dev);
++
++    /* The request must only run in the BlockBackend's AioContext */
++    assert(blk_get_aio_context(s->qdev.conf.blk) ==
++           qemu_get_current_aio_context());
++
++    assert(r->req.aiocb != NULL);
++    r->req.aiocb = NULL;
++
++    if (scsi_disk_req_check_error(r, ret, true)) {
++        goto done;
++    }
++
++    scsi_req_complete(&r->req, GOOD);
++
++done:
++    scsi_req_unref(&r->req);
++}
++
++static void scsi_disk_emulate_pr_register(SCSIDiskReq *r, uint64_t r_key,
++                                         uint64_t sa_key, SCSIPrType type,
++                                         uint8_t aptpl, bool ignore_key)
++{
++    SCSIRequest *req = &r->req;
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
++
++    /* The request is used as the AIO opaque value, so add a ref.  */
++    scsi_req_ref(&r->req);
++    r->req.aiocb = blk_aio_pr_register(s->qdev.conf.blk, r_key, sa_key,
++                                       scsi_pr_type_to_block(type),
++                                       aptpl ? true : false,
++                                       ignore_key, scsi_aio_pr_complete, r);
++
++    return;
++}
++
++static void scsi_disk_emulate_pr_reserve(SCSIDiskReq *r, uint64_t r_key,
++                                        SCSIPrType type)
++{
++    SCSIRequest *req = &r->req;
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
++
++    /* The request is used as the AIO opaque value, so add a ref.  */
++    scsi_req_ref(&r->req);
++    r->req.aiocb = blk_aio_pr_reserve(s->qdev.conf.blk, r_key,
++                                      scsi_pr_type_to_block(type),
++                                      scsi_aio_pr_complete, r);
++
++    return;
++}
++
++static void scsi_disk_emulate_pr_release(SCSIDiskReq *r, uint64_t r_key,
++                                        SCSIPrType type)
++{
++    SCSIRequest *req = &r->req;
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
++
++    /* The request is used as the AIO opaque value, so add a ref.  */
++    scsi_req_ref(&r->req);
++    r->req.aiocb = blk_aio_pr_release(s->qdev.conf.blk, r_key,
++                                      scsi_pr_type_to_block(type),
++                                      scsi_aio_pr_complete, r);
++
++    return;
++}
++
++static void scsi_disk_emulate_pr_clear(SCSIDiskReq *r, uint64_t r_key)
++{
++    SCSIRequest *req = &r->req;
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
++
++    /* The request is used as the AIO opaque value, so add a ref.  */
++    scsi_req_ref(&r->req);
++    r->req.aiocb = blk_aio_pr_clear(s->qdev.conf.blk, r_key,
++                                    scsi_aio_pr_complete, r);
++
++    return;
++}
++
++static void scsi_disk_emulate_pr_preempt(SCSIDiskReq *r, uint64_t r_key,
++                                        uint64_t sa_key, SCSIPrType type,
++                                        bool abort)
++{
++    SCSIRequest *req = &r->req;
++    SCSIDiskState *s = DO_UPCAST(SCSIDiskState, qdev, req->dev);
++
++    /* The request is used as the AIO opaque value, so add a ref.  */
++    scsi_req_ref(&r->req);
++    r->req.aiocb = blk_aio_pr_preempt(s->qdev.conf.blk, r_key, sa_key,
++                                      scsi_pr_type_to_block(type), abort,
++                                      scsi_aio_pr_complete, r);
++
++    return;
++}
++
++static void scsi_disk_emulate_pr_in(SCSIRequest *req)
++{
++    SCSIPrInAction action = req->cmd.buf[1] & 0x1f;
++    SCSIDiskReq *r = DO_UPCAST(SCSIDiskReq, req, req);
++
++    switch (action) {
++    case SCSI_PR_IN_READ_KEYS:
++        scsi_disk_emulate_pr_read_keys(req);
++        break;
++    case SCSI_PR_IN_READ_RESERVATION:
++        scsi_disk_emulate_pr_read_reservation(req);
++        break;
++    case SCSI_PR_IN_REPORT_CAPABILITIES:
++        scsi_disk_emulate_pr_report_capabilities(req);
++        break;
++    default:
++        scsi_check_condition(r, SENSE_CODE(INVALID_OPCODE));
++        return;
++    }
++
++    return;
++}
++
++static void scsi_disk_emulate_pr_out(SCSIDiskReq *r, uint8_t *inbuf)
++{
++    uint8_t aptpl;
++    uint64_t r_key, sa_key;
++    SCSIPrOutAction action;
++    SCSIPrScope scope;
++    SCSIPrType type;
++    SCSIRequest *req = &r->req;
++
++    memcpy(&r_key, &inbuf[0], 8);
++    r_key = be64_to_cpu(r_key);
++    memcpy(&sa_key, &inbuf[8], 8);
++    sa_key = be64_to_cpu(sa_key);
++    memcpy(&aptpl, &inbuf[20], 1);
++    aptpl =  aptpl & 0x01;
++    action = req->cmd.buf[1] & 0x1f;
++    scope = (req->cmd.buf[2] >> 4) & 0x0f;
++    type = req->cmd.buf[2] & 0x0f;
++
++    if (scope != SCSI_PR_LU_SCOPE) {
++        scsi_req_complete(&r->req, TASK_ABORTED);
++        return;
++    }
++
++    switch (action) {
++    case SCSI_PR_OUT_REGISTER:
++        scsi_disk_emulate_pr_register(r, r_key, sa_key, type,
++                                      aptpl, false);
++        break;
++    case SCSI_PR_OUT_REG_AND_IGNORE_KEY:
++        scsi_disk_emulate_pr_register(r, r_key, sa_key, type, aptpl, true);
++        break;
++    case SCSI_PR_OUT_RESERVE:
++        scsi_disk_emulate_pr_reserve(r, r_key, type);
++        break;
++    case SCSI_PR_OUT_RELEASE:
++        scsi_disk_emulate_pr_release(r, r_key, type);
++        break;
++    case SCSI_PR_OUT_CLEAR:
++        scsi_disk_emulate_pr_clear(r, r_key);
++        break;
++    case SCSI_PR_OUT_PREEMPT:
++        scsi_disk_emulate_pr_preempt(r, r_key, sa_key, type, false);
++        break;
++    case SCSI_PR_OUT_PREEMPT_AND_ABORT:
++        scsi_disk_emulate_pr_preempt(r, r_key, sa_key, type, true);
++        break;
++    default:
++        scsi_check_condition(r, SENSE_CODE(INVALID_OPCODE));
++        return;
++    }
++
++    return;
++}
++
+ static int scsi_disk_check_mode_select(SCSIDiskState *s, int page,
+                                        uint8_t *inbuf, int inlen)
  {
-@@ -2024,6 +2073,7 @@ static int iscsi_open(BlockDriverState *bs, QDict *options, int flags,
-         bs->supported_zero_flags = BDRV_REQ_MAY_UNMAP;
+@@ -1957,6 +2315,9 @@ static void scsi_disk_emulate_write_data(SCSIRequest *req)
+         scsi_req_complete(&r->req, GOOD);
+         break;
+ 
++    case PERSISTENT_RESERVE_OUT:
++        scsi_disk_emulate_pr_out(r, r->iov.iov_base);
++        break;
+     default:
+         abort();
      }
+@@ -2213,6 +2574,11 @@ static int32_t scsi_disk_emulate_command(SCSIRequest *req, uint8_t *buf)
+     case FORMAT_UNIT:
+         trace_scsi_disk_emulate_command_FORMAT_UNIT(r->req.cmd.xfer);
+         break;
++    case PERSISTENT_RESERVE_OUT:
++        break;
++    case PERSISTENT_RESERVE_IN:
++        scsi_disk_emulate_pr_in(req);
++        return 0;
+     default:
+         trace_scsi_disk_emulate_command_UNKNOWN(buf[0],
+                                                 scsi_command_name(buf[0]));
+@@ -2632,6 +2998,8 @@ static const SCSIReqOps *const scsi_disk_reqops_dispatch[256] = {
+     [VERIFY_12]                       = &scsi_disk_emulate_reqops,
+     [VERIFY_16]                       = &scsi_disk_emulate_reqops,
+     [FORMAT_UNIT]                     = &scsi_disk_emulate_reqops,
++    [PERSISTENT_RESERVE_IN]           = &scsi_disk_emulate_reqops,
++    [PERSISTENT_RESERVE_OUT]          = &scsi_disk_emulate_reqops,
  
-+    iscsi_get_pr_cap_sync(iscsilun);
- out:
-     qemu_opts_del(opts);
-     g_free(initiator_name);
-@@ -2110,6 +2160,8 @@ static void iscsi_refresh_limits(BlockDriverState *bs, Error **errp)
-         bs->bl.opt_transfer = pow2floor(iscsilun->bl.opt_xfer_len *
-                                         iscsilun->block_size);
-     }
-+
-+    bs->bl.pr_cap = iscsilun->pr_cap;
- }
- 
- /* Note that this will not re-establish a connection with an iSCSI target - it
-@@ -2408,6 +2460,371 @@ out_unlock:
-     return r;
- }
- 
-+static int coroutine_fn
-+iscsi_co_pr_read_keys(BlockDriverState *bs, uint32_t *generation,
-+                      uint32_t num_keys, uint64_t *keys)
-+{
-+    IscsiLun *iscsilun = bs->opaque;
-+    QEMUIOVector qiov;
-+    struct IscsiTask iTask;
-+    int xferlen = sizeof(struct scsi_persistent_reserve_in_read_keys) +
-+                  sizeof(uint64_t) * num_keys;
-+    g_autofree uint8_t *buf = g_malloc0(xferlen);
-+    int32_t num_collect_keys = 0;
-+    int r = 0;
-+
-+    qemu_iovec_init_buf(&qiov, buf, xferlen);
-+    iscsi_co_init_iscsitask(iscsilun, &iTask);
-+    qemu_mutex_lock(&iscsilun->mutex);
-+retry:
-+    iTask.task = iscsi_persistent_reserve_in_task(iscsilun->iscsi,
-+                 iscsilun->lun, SCSI_PR_IN_READ_KEYS, xferlen,
-+                 iscsi_co_generic_cb, &iTask);
-+
-+    if (iTask.task == NULL) {
-+        qemu_mutex_unlock(&iscsilun->mutex);
-+        return -ENOMEM;
-+    }
-+
-+    scsi_task_set_iov_in(iTask.task, (struct scsi_iovec *)qiov.iov, qiov.niov);
-+    iscsi_co_wait_for_task(&iTask, iscsilun);
-+
-+    if (iTask.task != NULL) {
-+        scsi_free_scsi_task(iTask.task);
-+        iTask.task = NULL;
-+    }
-+
-+    if (iTask.do_retry) {
-+        iTask.complete = 0;
-+        goto retry;
-+    }
-+
-+    if (iTask.status != SCSI_STATUS_GOOD) {
-+        error_report("iSCSI PERSISTENT_RESERVE_IN failed: %s", iTask.err_str);
-+        r = iTask.err_code;
-+        goto out;
-+    }
-+
-+    memcpy(generation, &buf[0], 4);
-+    *generation = be32_to_cpu(*generation);
-+    memcpy(&num_collect_keys, &buf[4], 4);
-+    num_collect_keys = be32_to_cpu(num_collect_keys) / sizeof(uint64_t);
-+    if (num_collect_keys > num_keys) {
-+        r = -EINVAL;
-+        goto out;
-+    }
-+
-+    for (int i = 0; i < num_collect_keys; i++) {
-+        memcpy(&keys[i], &buf[8 + i * 8], 8);
-+        keys[i] = be64_to_cpu(keys[i]);
-+    }
-+    r = num_collect_keys;
-+
-+out:
-+    qemu_mutex_unlock(&iscsilun->mutex);
-+    g_free(iTask.err_str);
-+    g_free(buf);
-+    return r;
-+}
-+
-+static int coroutine_fn
-+iscsi_co_pr_read_reservation(BlockDriverState *bs, uint32_t *generation,
-+                             uint64_t *key, BlockPrType *type)
-+{
-+    IscsiLun *iscsilun = bs->opaque;
-+    QEMUIOVector qiov;
-+    struct IscsiTask iTask;
-+    int xferlen = sizeof(struct scsi_persistent_reserve_in_read_reservation);
-+    g_autofree uint8_t *buf = g_malloc0(xferlen);
-+    uint8_t scope_type = 0;
-+    int32_t num_collect_keys = 0;
-+    int r = 0;
-+
-+    qemu_iovec_init_buf(&qiov, buf, xferlen);
-+    iscsi_co_init_iscsitask(iscsilun, &iTask);
-+    qemu_mutex_lock(&iscsilun->mutex);
-+retry:
-+    iTask.task = iscsi_persistent_reserve_in_task(iscsilun->iscsi,
-+                 iscsilun->lun, SCSI_PR_IN_READ_RESERVATION,
-+                 xferlen, iscsi_co_generic_cb, &iTask);
-+
-+    if (iTask.task == NULL) {
-+        qemu_mutex_unlock(&iscsilun->mutex);
-+        return -ENOMEM;
-+    }
-+
-+    scsi_task_set_iov_in(iTask.task, (struct scsi_iovec *)qiov.iov, qiov.niov);
-+    iscsi_co_wait_for_task(&iTask, iscsilun);
-+
-+    if (iTask.task != NULL) {
-+        scsi_free_scsi_task(iTask.task);
-+        iTask.task = NULL;
-+    }
-+
-+    if (iTask.do_retry) {
-+        iTask.complete = 0;
-+        goto retry;
-+    }
-+
-+    if (iTask.status != SCSI_STATUS_GOOD) {
-+        error_report("iSCSI PERSISTENT_RESERVE_IN failed: %s", iTask.err_str);
-+        r = iTask.err_code;
-+        goto out;
-+    }
-+
-+    memcpy(generation, &buf[0], 4);
-+    *generation = be32_to_cpu(*generation);
-+    memcpy(key, &buf[8], 8);
-+    *key = be64_to_cpu(*key);
-+    memcpy(&scope_type, &buf[21], 1);
-+    *type = scsi_pr_type_to_block(scope_type & 0xf);
-+    memcpy(&num_collect_keys, &buf[4], 4);
-+    r = be32_to_cpu(num_collect_keys) / sizeof(uint64_t);
-+out:
-+    qemu_mutex_unlock(&iscsilun->mutex);
-+    g_free(iTask.err_str);
-+    g_free(buf);
-+    return r;
-+}
-+
-+static int coroutine_fn
-+iscsi_co_pr_register(BlockDriverState *bs, uint64_t old_key,
-+                     uint64_t new_key, BlockPrType type,
-+                     bool ptpl, bool ignore_key)
-+{
-+    IscsiLun *iscsilun = bs->opaque;
-+    struct IscsiTask iTask;
-+    struct scsi_persistent_reserve_out_basic basic;
-+    SCSIPrOutAction action = ignore_key ? SCSI_PR_OUT_REG_AND_IGNORE_KEY :
-+                                          SCSI_PR_OUT_REGISTER;
-+    int r = 0;
-+
-+    basic.reservation_key = old_key;
-+    basic.service_action_reservation_key = new_key;
-+    basic.aptpl = ptpl ? 1 : 0;
-+
-+    iscsi_co_init_iscsitask(iscsilun, &iTask);
-+    qemu_mutex_lock(&iscsilun->mutex);
-+retry:
-+    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
-+                 iscsilun->lun, action, 0, block_pr_type_to_scsi(type),
-+                 &basic, iscsi_co_generic_cb, &iTask);
-+
-+    if (iTask.task == NULL) {
-+        qemu_mutex_unlock(&iscsilun->mutex);
-+        return -ENOMEM;
-+    }
-+
-+    iscsi_co_wait_for_task(&iTask, iscsilun);
-+
-+    if (iTask.task != NULL) {
-+        scsi_free_scsi_task(iTask.task);
-+        iTask.task = NULL;
-+    }
-+
-+    if (iTask.do_retry) {
-+        iTask.complete = 0;
-+        goto retry;
-+    }
-+
-+    if (iTask.status != SCSI_STATUS_GOOD) {
-+        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
-+        r = iTask.err_code;
-+    }
-+
-+    qemu_mutex_unlock(&iscsilun->mutex);
-+
-+    g_free(iTask.err_str);
-+    return r;
-+}
-+
-+static int coroutine_fn
-+iscsi_co_pr_reserve(BlockDriverState *bs, uint64_t key, BlockPrType type)
-+{
-+    IscsiLun *iscsilun = bs->opaque;
-+    struct IscsiTask iTask;
-+    struct scsi_persistent_reserve_out_basic basic;
-+    int r = 0;
-+
-+    basic.reservation_key = key;
-+    iscsi_co_init_iscsitask(iscsilun, &iTask);
-+    qemu_mutex_lock(&iscsilun->mutex);
-+retry:
-+    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
-+                 iscsilun->lun, SCSI_PR_OUT_RESERVE, 0,
-+                 block_pr_type_to_scsi(type), &basic,
-+                 iscsi_co_generic_cb, &iTask);
-+
-+    if (iTask.task == NULL) {
-+        qemu_mutex_unlock(&iscsilun->mutex);
-+        return -ENOMEM;
-+    }
-+
-+
-+    iscsi_co_wait_for_task(&iTask, iscsilun);
-+
-+    if (iTask.task != NULL) {
-+        scsi_free_scsi_task(iTask.task);
-+        iTask.task = NULL;
-+    }
-+
-+    if (iTask.do_retry) {
-+        iTask.complete = 0;
-+        goto retry;
-+    }
-+
-+    if (iTask.status != SCSI_STATUS_GOOD) {
-+        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
-+        r = iTask.err_code;
-+    }
-+
-+    qemu_mutex_unlock(&iscsilun->mutex);
-+
-+    g_free(iTask.err_str);
-+    return r;
-+}
-+
-+static int coroutine_fn
-+iscsi_co_pr_release(BlockDriverState *bs, uint64_t key, BlockPrType type)
-+{
-+    IscsiLun *iscsilun = bs->opaque;
-+    struct IscsiTask iTask;
-+    struct scsi_persistent_reserve_out_basic basic;
-+    int r = 0;
-+
-+    basic.reservation_key = key;
-+    iscsi_co_init_iscsitask(iscsilun, &iTask);
-+    qemu_mutex_lock(&iscsilun->mutex);
-+retry:
-+    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
-+                 iscsilun->lun, SCSI_PR_OUT_RELEASE, 0,
-+                 block_pr_type_to_scsi(type), &basic,
-+                 iscsi_co_generic_cb, &iTask);
-+
-+    if (iTask.task == NULL) {
-+        qemu_mutex_unlock(&iscsilun->mutex);
-+        return -ENOMEM;
-+    }
-+
-+
-+    iscsi_co_wait_for_task(&iTask, iscsilun);
-+
-+    if (iTask.task != NULL) {
-+        scsi_free_scsi_task(iTask.task);
-+        iTask.task = NULL;
-+    }
-+
-+    if (iTask.do_retry) {
-+        iTask.complete = 0;
-+        goto retry;
-+    }
-+
-+    if (iTask.status != SCSI_STATUS_GOOD) {
-+        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
-+        r = iTask.err_code;
-+    }
-+
-+    qemu_mutex_unlock(&iscsilun->mutex);
-+
-+    g_free(iTask.err_str);
-+    return r;
-+}
-+
-+static int coroutine_fn
-+iscsi_co_pr_clear(BlockDriverState *bs, uint64_t key)
-+{
-+    IscsiLun *iscsilun = bs->opaque;
-+    struct IscsiTask iTask;
-+    struct scsi_persistent_reserve_out_basic basic;
-+    int r = 0;
-+
-+    basic.reservation_key = key;
-+    iscsi_co_init_iscsitask(iscsilun, &iTask);
-+    qemu_mutex_lock(&iscsilun->mutex);
-+retry:
-+    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
-+                 iscsilun->lun, SCSI_PR_OUT_CLEAR, 0, 0, &basic,
-+                 iscsi_co_generic_cb, &iTask);
-+
-+    if (iTask.task == NULL) {
-+        qemu_mutex_unlock(&iscsilun->mutex);
-+        return -ENOMEM;
-+    }
-+
-+
-+    iscsi_co_wait_for_task(&iTask, iscsilun);
-+
-+    if (iTask.task != NULL) {
-+        scsi_free_scsi_task(iTask.task);
-+        iTask.task = NULL;
-+    }
-+
-+    if (iTask.do_retry) {
-+        iTask.complete = 0;
-+        goto retry;
-+    }
-+
-+    if (iTask.status != SCSI_STATUS_GOOD) {
-+        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
-+        r = iTask.err_code;
-+    }
-+
-+    qemu_mutex_unlock(&iscsilun->mutex);
-+
-+    g_free(iTask.err_str);
-+    return r;
-+}
-+
-+static int coroutine_fn
-+iscsi_co_pr_preempt(BlockDriverState *bs, uint64_t old_key,
-+                    uint64_t new_key, BlockPrType type, bool abort)
-+{
-+    IscsiLun *iscsilun = bs->opaque;
-+    struct IscsiTask iTask;
-+    struct scsi_persistent_reserve_out_basic basic;
-+    SCSIPrOutAction action = abort ? SCSI_PR_OUT_PREEMPT_AND_ABORT :
-+                                     SCSI_PR_OUT_PREEMPT;
-+    int r = 0;
-+
-+    basic.reservation_key = old_key;
-+    basic.service_action_reservation_key = new_key;
-+
-+    iscsi_co_init_iscsitask(iscsilun, &iTask);
-+    qemu_mutex_lock(&iscsilun->mutex);
-+retry:
-+    iTask.task = iscsi_persistent_reserve_out_task(iscsilun->iscsi,
-+                 iscsilun->lun, action, 0, block_pr_type_to_scsi(type),
-+                 &basic, iscsi_co_generic_cb, &iTask);
-+
-+    if (iTask.task == NULL) {
-+        qemu_mutex_unlock(&iscsilun->mutex);
-+        return -ENOMEM;
-+    }
-+
-+
-+    iscsi_co_wait_for_task(&iTask, iscsilun);
-+
-+    if (iTask.task != NULL) {
-+        scsi_free_scsi_task(iTask.task);
-+        iTask.task = NULL;
-+    }
-+
-+    if (iTask.do_retry) {
-+        iTask.complete = 0;
-+        goto retry;
-+    }
-+
-+    if (iTask.status != SCSI_STATUS_GOOD) {
-+        error_report("iSCSI PERSISTENT_RESERVE_OUT failed: %s", iTask.err_str);
-+        r = iTask.err_code;
-+    }
-+
-+    qemu_mutex_unlock(&iscsilun->mutex);
-+
-+    g_free(iTask.err_str);
-+    return r;
-+}
-+
- 
- static const char *const iscsi_strong_runtime_opts[] = {
-     "transport",
-@@ -2451,6 +2868,14 @@ static BlockDriver bdrv_iscsi = {
-     .bdrv_co_writev        = iscsi_co_writev,
-     .bdrv_co_flush_to_disk = iscsi_co_flush,
- 
-+    .bdrv_co_pr_read_keys     = iscsi_co_pr_read_keys,
-+    .bdrv_co_pr_read_reservation = iscsi_co_pr_read_reservation,
-+    .bdrv_co_pr_register      = iscsi_co_pr_register,
-+    .bdrv_co_pr_reserve       = iscsi_co_pr_reserve,
-+    .bdrv_co_pr_release       = iscsi_co_pr_release,
-+    .bdrv_co_pr_clear         = iscsi_co_pr_clear,
-+    .bdrv_co_pr_preempt       = iscsi_co_pr_preempt,
-+
- #ifdef __linux__
-     .bdrv_aio_ioctl   = iscsi_aio_ioctl,
- #endif
+     [READ_6]                          = &scsi_disk_dma_reqops,
+     [READ_10]                         = &scsi_disk_dma_reqops,
 -- 
 2.20.1
 
