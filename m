@@ -4,73 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B8EC2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 14:27:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F34CCC2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 14:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRBoc-0004tm-2i; Tue, 09 Jul 2024 10:27:34 -0400
+	id 1sRC0H-0008Oh-Rs; Tue, 09 Jul 2024 10:39:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sRBoa-0004fK-23
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:27:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sRBoY-0002vV-5V
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:27:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720535248;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PHymZ/8S1w6sSbKZaPpokV6jh2oq4br8wNw50Br8l2Y=;
- b=FTngqGEbCkD19sjPpSYQDAKPi9zM/IzYrs7aGV75oxklQJ7Sk/5yrC6NNGxLCQniMER4Yu
- MY0YWNdKRIAoFQwSg0oUU/WDeH4RDcOEA3S0EYw6lI51kpSryZKWc66EffiICdZ2FMNBPO
- OU+L1JufJBIhlpJvqJRXdspNiBsBKcY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-250-923nEj02MyiKVo2vIU0mrA-1; Tue,
- 09 Jul 2024 10:27:27 -0400
-X-MC-Unique: 923nEj02MyiKVo2vIU0mrA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC329196E09B; Tue,  9 Jul 2024 14:27:25 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DBAD53000184; Tue,  9 Jul 2024 14:27:24 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C355721E668B; Tue,  9 Jul 2024 16:27:22 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] qdev-monitor: QAPIfy QMP device_add
-In-Reply-To: <20240708143027.480821-1-stefanha@redhat.com> (Stefan Hajnoczi's
- message of "Mon, 8 Jul 2024 16:30:27 +0200")
-References: <20240708143027.480821-1-stefanha@redhat.com>
-Date: Tue, 09 Jul 2024 16:27:22 +0200
-Message-ID: <87ttgyd4j9.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sRC0F-0008Na-VB
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:39:35 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sRC0E-0005dz-7p
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 10:39:35 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-58b5f7bf3edso3262175a12.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 07:39:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1720535971; x=1721140771; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nTYpZgqpBsEX/fM413Pj9V3El8+8hgmO8+MLcltRclQ=;
+ b=OTsFMF9JTWKWNLJ5QUDoM58Jgg0DA2A11P+PkNKHFTBDSL6rFTYmEc0kkG+slLuk+V
+ 4AeOHhnV4HT4+FCwLkXbZB/nu3YKDApEdMaf6MBeoT6e2xJkuHoFDA7HzgiCtJJV6dPy
+ 6PwCCIW7ToXMmD88LnWCWJcDTxRTsNB3JigNNwY4jXrAiB43MSj6EP86jA+c/1lRJoRt
+ T0Mq22ThpvCshV689lsG4gyhBLWircUTSm9GTxaJ2OJsKmDH8gCqnbduJJVsg9MhmE3q
+ B/IIMIVfK2fbONpC1P/C2wN/WYNl9IS0vSASiAoQscLgRg7wFnSh2n418PQIziz1xkoz
+ doDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720535971; x=1721140771;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nTYpZgqpBsEX/fM413Pj9V3El8+8hgmO8+MLcltRclQ=;
+ b=s/0WWZyhsIvo6hVM6jrJZuu1/dV7lMWWDk/9AXjbGBm1lE8jXa3FqLgbtlweZ9uFsG
+ vAImZROqqyRzbcvQxjbXTXUlyg5k7eTI61+wsDPoCPKcuF4om5I4zBNNPKaM1oGP0YWo
+ gyx8qcqwGTESEMVLe2sNWw0Cn51Qg8K6JopK3QJSSk2bSY5USaOEBCvz4TikRyvqc0ka
+ gNmIekXVnNsADRTWArC4Ug8g3r9FH3K4z2FPUCAlC7IB7hV1iK/j1ESLGbU1bBq0ekmy
+ nOS1XkVGA3NLNizUfyCFm+3+XY0L6qBWNNPnKQTUzmvY3IwzPAJ+90gxI6/BeaKgVu8e
+ wnag==
+X-Gm-Message-State: AOJu0Yzv1dLTr0vXfuCCp+2VbD0IC76FH8V1pDyID/cCAsB8Blg7nIvc
+ fPQ8kiRfAracCFQdVk+wF69HRp/KJAgvgpmgIWawwJhxPG/EqKpf3AVpEAY4+pKJ6rsKZNKgC5f
+ kSIAKe/SKoneHds9ttsTv4N3uH3iJVzSmNGnneA==
+X-Google-Smtp-Source: AGHT+IFFtm+lKRWZz7RgdVp+m7uGM/3J8+v/tgByi7xC687pk4mhd597OxxcxJ6pFFf43Ev5gKgw1J04jlZj2oi7c4k=
+X-Received: by 2002:a05:6402:13c7:b0:57d:4f47:d9f7 with SMTP id
+ 4fb4d7f45d1cf-594b7e7d0f0mr2670036a12.0.1720535970941; Tue, 09 Jul 2024
+ 07:39:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240708112520.106127-1-junjiehua@tencent.com>
+In-Reply-To: <20240708112520.106127-1-junjiehua@tencent.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 9 Jul 2024 15:39:20 +0100
+Message-ID: <CAFEAcA_pR6VLjKcOgcL+m8aONtey5Lm2ODkWAKv2ne_3ziqknw@mail.gmail.com>
+Subject: Re: [PATCH] contrib/elf2dmp: a workaround for the buggy
+ msvcrt.dll!fwrite
+To: junjiehua <halouworls@gmail.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
+ junjiehua <junjiehua@tencent.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,150 +90,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stefan Hajnoczi <stefanha@redhat.com> writes:
-
-> The QMP device_add monitor command converts the QDict arguments to
-> QemuOpts and then back again to QDict. This process only supports scalar
-> types. Device properties like virtio-blk-pci's iothread-vq-mapping (an
-> array of objects) are silently dropped by qemu_opts_from_qdict() during
-> the QemuOpts conversion even though QAPI is capable of validating them.
-> As a result, hotplugging virtio-blk-pci devices with the
-> iothread-vq-mapping property does not work as expected (the property is
-> ignored). It's time to QAPIfy QMP device_add!
-
-This patch doesn't fully QAPIfy device_add: we still lack a schema
-and use 'gen': false.  It gets us closer, though.
-
-> Get rid of the QemuOpts conversion in qmp_device_add() and call
-> qdev_device_add_from_qdict() with from_json=3Dtrue. Using the QMP
-> command's QDict arguments directly allows non-scalar properties.
+On Mon, 8 Jul 2024 at 14:24, junjiehua <halouworls@gmail.com> wrote:
 >
-> The HMP is also adjusted since qmp_device_add()'s now expects properly
-> typed JSON arguments and cannot be used from HMP anymore. Move the code
-> that was previously in qmp_device_add() (with QemuOpts conversion and
-> from_json=3Dfalse) into hmp_device_add() so that its behavior is
-> unchanged.
->
-> This patch changes the behavior of QMP device_add but not HMP
-> device_add. QMP clients that sent incorrectly typed device_add QMP
-> commands no longer work. This is a breaking change but clients should be
-> using the correct types already. See the netdev_add QAPIfication in
-> commit db2a380c8457 for similar reasoning.
+> when building elf2dump with x86_64-w64-mingw32-gcc, fwrite is imported from
+> msvcrt.dll. However, the implementation of msvcrt.dll!fwrite is buggy:
+> it enters an infinite loop when the size of a single write exceeds 4GB.
+> This patch addresses the issue by splitting large physical memory
+> blocks into smaller chunks.
 
-Another one is 9151e59a8b6e: it QAPIfied object-add.
+Hi; thanks for this patch.
 
-Both commits eliminated the roundtrip through QemuOpts, and weaned the
-command off 'gen': false.
+(Does the library fwrite fail for > 4GB, or for >= 4GB ?)
 
-This commit eliminates the roundtrip, but keeps 'gen': false.  Best we
-can do now, but I'd like the commit message to make this clear.
-
-> Markus helped me figure this out and even provided a draft patch. The
-> code ended up very close to what he suggested.
->
-> Suggested-by: Markus Armbruster <armbru@redhat.com>
-> Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: junjiehua <junjiehua@tencent.com>
 > ---
->  system/qdev-monitor.c | 41 ++++++++++++++++++++++++++++-------------
->  1 file changed, 28 insertions(+), 13 deletions(-)
+>  contrib/elf2dmp/main.c | 19 +++++++++++++++----
+>  1 file changed, 15 insertions(+), 4 deletions(-)
 >
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index 6af6ef7d66..1427aa173c 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -849,18 +849,9 @@ void hmp_info_qdm(Monitor *mon, const QDict *qdict)
->=20=20
->  void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
->  {
-> -    QemuOpts *opts;
->      DeviceState *dev;
->=20=20
-> -    opts =3D qemu_opts_from_qdict(qemu_find_opts("device"), qdict, errp);
-> -    if (!opts) {
-> -        return;
-> -    }
-> -    if (!monitor_cur_is_qmp() && qdev_device_help(opts)) {
-> -        qemu_opts_del(opts);
-> -        return;
-> -    }
-> -    dev =3D qdev_device_add(opts, errp);
-> +    dev =3D qdev_device_add_from_qdict(qdict, true, errp);
->      if (!dev) {
->          /*
->           * Drain all pending RCU callbacks. This is done because
-> @@ -872,8 +863,6 @@ void qmp_device_add(QDict *qdict, QObject **ret_data,=
- Error **errp)
->           * to the user
->           */
->          drain_call_rcu();
-> -
-> -        qemu_opts_del(opts);
->          return;
->      }
->      object_unref(OBJECT(dev));
-> @@ -967,8 +956,34 @@ void qmp_device_del(const char *id, Error **errp)
->  void hmp_device_add(Monitor *mon, const QDict *qdict)
->  {
->      Error *err =3D NULL;
-> +    QemuOpts *opts;
-> +    DeviceState *dev;
->=20=20
-> -    qmp_device_add((QDict *)qdict, NULL, &err);
-> +    opts =3D qemu_opts_from_qdict(qemu_find_opts("device"), qdict, &err);
-> +    if (!opts) {
-> +        goto out;
-> +    }
-> +    if (qdev_device_help(opts)) {
-> +        qemu_opts_del(opts);
-> +        return;
-> +    }
+> diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
+> index d046a72ae6..1994553d95 100644
+> --- a/contrib/elf2dmp/main.c
+> +++ b/contrib/elf2dmp/main.c
+> @@ -23,6 +23,8 @@
+>  #define INITIAL_MXCSR   0x1f80
+>  #define MAX_NUMBER_OF_RUNS  42
+>
+> +#define MAX_CHUNK_SIZE (128 * 1024 * 1024)
 
-The part above is moved from qmp_device_add().  The part below is
-copied.  The duplication is a bid sad.  Could we factor it out into
-qdev_device_add_from_qdict()?
+I think we could add a comment here, something like:
 
-> +    dev =3D qdev_device_add(opts, &err);
-> +    if (!dev) {
-> +        /*
-> +         * Drain all pending RCU callbacks. This is done because
-> +         * some bus related operations can delay a device removal
-> +         * (in this case this can happen if device is added and then
-> +         * removed due to a configuration error)
-> +         * to a RCU callback, but user might expect that this interface
-> +         * will finish its job completely once qmp command returns result
-> +         * to the user
-> +         */
-> +        drain_call_rcu();
+/*
+ * Maximum size to fwrite() to the output file at once;
+ * the MSVCRT runtime will not correctly handle fwrite()
+ * of more than 4GB at once.
+ */
+
+That will act as a reminder about why we do it.
+
+(Does the library fwrite fail for > 4GB, or for >= 4GB ?
+Your commit message says the former, so I've gone with that,
+but if it's an "overflows 32 bit variable" kind of bug then
+4GB exactly probably also doesn't work.)
+
+Is there a particular reason to use 128MB here? If the
+runtime only fails on 4GB or more, maybe we should use
+a larger MAX_CHUNK_SIZE, like 2GB ?
+
+
+
 > +
-> +        qemu_opts_del(opts);
-> +    }
-> +    object_unref(OBJECT(dev));
-> +out:
->      hmp_handle_error(mon, err);
->  }
+>  typedef struct idt_desc {
+>      uint16_t offset1;   /* offset bits 0..15 */
+>      uint16_t selector;
+> @@ -434,13 +436,22 @@ static bool write_dump(struct pa_space *ps,
+>
+>      for (i = 0; i < ps->block_nr; i++) {
+>          struct pa_block *b = &ps->block[i];
+> +        size_t offset = 0;
+> +        size_t chunk_size;
+>
+>          printf("Writing block #%zu/%zu of %"PRIu64" bytes to file...\n", i,
+>                  ps->block_nr, b->size);
+> -        if (fwrite(b->addr, b->size, 1, dmp_file) != 1) {
+> -            eprintf("Failed to write block\n");
+> -            fclose(dmp_file);
+> -            return false;
+> +
+> +        while (offset < b->size) {
+> +            chunk_size = (b->size - offset > MAX_CHUNK_SIZE)
+> +                         ? MAX_CHUNK_SIZE
+> +                         : (b->size - offset);
 
-Have a look at this TODO in vl.c:
+You can write this as
+     chunk_size = MIN(b->size - offset, MAX_CHUNK_SIZE);
+which I think is clearer. (Our osdep header provides MIN().)
 
-    QTAILQ_FOREACH(opt, &device_opts, next) {
-        DeviceState *dev;
-        loc_push_restore(&opt->loc);
-        /*
-         * TODO Eventually we should call qmp_device_add() here to make sur=
-e it
-         * behaves the same, but QMP still has to accept incorrectly typed
-         * options until libvirt is fixed and we want to be strict on the C=
-LI
-         * from the start, so call qdev_device_add_from_qdict() directly for
-         * now.
-         */
-        dev =3D qdev_device_add_from_qdict(opt->opts, true, &error_fatal);
-        object_unref(OBJECT(dev));
-        loc_pop(&opt->loc);
-    }
+> +            if (fwrite(b->addr + offset, chunk_size, 1, dmp_file) != 1) {
+> +                eprintf("Failed to write block\n");
+> +                fclose(dmp_file);
+> +                return false;
+> +            }
+> +            offset += chunk_size;
 
-Could we resolve it now?
+I think we should abstract out the bug workaround into a
+separate function, with the same API as fwrite(). Call
+it do_fwrite() or something, and make all the fwrite()
+calls use it. I know at the moment there's only two of
+them, and one of them is the header so never 4GB, but
+I think this more cleanly separates out the "work around
+a runtime library problem" part from the main logic of
+the program, and will mean that if we ever need to rearrange
+how we write out the data in future it will be simple.
 
-Thanks for tackling this!
-
+thanks
+-- PMM
 
