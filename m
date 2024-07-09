@@ -4,147 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD58C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 18:03:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61450C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 18:44:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRFB2-00079k-Hk; Tue, 09 Jul 2024 14:02:57 -0400
+	id 1sRFny-0004yd-6O; Tue, 09 Jul 2024 14:43:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sRFAz-0006sU-8t; Tue, 09 Jul 2024 14:02:54 -0400
-Received: from mail-sn1nam02on20621.outbound.protection.outlook.com
- ([2a01:111:f400:7ea9::621]
- helo=NAM02-SN1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRFnw-0004y2-GB
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 14:43:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1sRFAx-0001IA-33; Tue, 09 Jul 2024 14:02:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=jPeW6h5JBZXZhhnZvRWv8ZjFF7qYPVpt5IXMHpiKTbBHQ6tM8afukV3OHM75mFdinxJcb0Q7mg/zC50DAaDnLyaJT7lIXvEJBo5gwa6bkiAjxo5nxRo/Ee4xCd8w/z9GQnrqkizvxMwf1X2nxwND+0zXP7UEEHXfon5hz7X54yJ2lkfbCXDn5GqnpvjvruW4vmRD1FEkXeLYnhr3T+/4R2nGgoXoa4d+mCxY9VUA4PdtVkdzHgu9Osp+rklcxJekjUBNPGmhrtiVOUaFgfwr6EFIRQ0ZSSftez0johWWkKYDSjWKjgljhKJUqBYHSy1gX1iHspyF+ylx0aUpC831HQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=f0DzYNIbGfrAkNheZJTzM897eJtp6shMoZgDkz+XE2E=;
- b=Vy6SYbY6XxVs3dvjA8L3kblAjzmtQFQpOBo4vCMvImha81J9d3ojXiT7bphqSwD8lNimcDpI9pa9slQm31YmkBrdUj7flvSe1ADeGNqPvLojXR0bgvqDMJpWMsZBCHSP6w6rQNkj+azUVNB/KLgImKX5mG/Lih4dBt2zggiTm6wrHeZEgBHwf0IZxe6UH7p3CyL9B4zhjPfi4gsCnxY9g3Pw1d288nyZBZuZ8/oMkN04uR+mVnL3OfU3iBO+rcoFUXblGBiKZSZ0Uu4ky6/17TvrJDaMvPWczd27yPXGcO4OQMMZAGi5b4wqi6uNt+/D7SHsE/8JB99MPNT7xZcoHw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=f0DzYNIbGfrAkNheZJTzM897eJtp6shMoZgDkz+XE2E=;
- b=Qd2Yb1PWQiE1B5RpFX57qLqeYwao9S56uK50H5MinbW68aJN+ePX5X7yuPbVTxT0ct/JxMEjvBhoghTcxyIWbw/9i1fTU/81BqBH+ng14UwXrMAem7799tX2PduzfApspYESPX4tFwMfYrRY/9NRV7fv8Ss7rbXsSuFksghGXoeAeun7qz4TEYM7WKBok039LQFRFxkrIjNFQf5IlfNh9rgWs+13zRN1m8n5YvH3D8CnSeMxgAhp1HmYolxbahClQDy4O+uV362NeKxpOV7fP7es4rj9srgKB2tzjVBkXectpCzSvqskVgFtjDngJdKgYqpVGDJ6/8vXbbz/OHBPLg==
-Received: from PH7PR17CA0050.namprd17.prod.outlook.com (2603:10b6:510:325::22)
- by MW4PR12MB6873.namprd12.prod.outlook.com (2603:10b6:303:20c::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.29; Tue, 9 Jul
- 2024 18:02:43 +0000
-Received: from CY4PEPF0000EE3B.namprd03.prod.outlook.com
- (2603:10b6:510:325:cafe::a5) by PH7PR17CA0050.outlook.office365.com
- (2603:10b6:510:325::22) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7741.36 via Frontend
- Transport; Tue, 9 Jul 2024 18:02:40 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CY4PEPF0000EE3B.mail.protection.outlook.com (10.167.242.14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7762.17 via Frontend Transport; Tue, 9 Jul 2024 18:02:40 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 9 Jul 2024
- 11:02:09 -0700
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 9 Jul 2024
- 11:02:08 -0700
-Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Tue, 9 Jul 2024 11:02:07 -0700
-Date: Tue, 9 Jul 2024 11:02:06 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>
-CC: <peter.maydell@linaro.org>, <shannon.zhaosl@gmail.com>, <mst@redhat.com>, 
- <imammedo@redhat.com>, <anisinha@redhat.com>, <peterx@redhat.com>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <jgg@nvidia.com>,
- <shameerali.kolothum.thodi@huawei.com>, <jasowang@redhat.com>
-Subject: Re: [PATCH RFCv1 03/10] hw/arm/virt: Get the number of host-level
- SMMUv3 instances
-Message-ID: <Zo17HoZN2KiOorOZ@Asurada-Nvidia>
-References: <cover.1719361174.git.nicolinc@nvidia.com>
- <886883c4cb43117ef26e6c9434247b75cd827f31.1719361174.git.nicolinc@nvidia.com>
- <3d151591-4cc6-4de4-8055-27d6fb7200df@redhat.com>
- <Zo1vW5dwHqBM5zFN@Asurada-Nvidia>
- <33e5c4b7-6f5e-4ef2-9156-9a1e4b6a2dfe@redhat.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRFnu-0000AO-18
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 14:43:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720550583;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h32t5Qeewct+xkpZMKgyT8AtUh95jHno78TnKkUZLSw=;
+ b=ehW07sMXPxXWk1wLbvLoV/wYpjpWt9Msd3gDuhG1sD8Ihe/XhT8SDEPOgQAFUGCHuu30AB
+ ofAnIJzVeQ0WSRmEkPecK8VyANtDNpbMtBBHdoFxCHC18PIwHXbYkcvrlvX+PaGRmN37HE
+ GD4z/1UoqdNqWtQPHzN+Ne3DGWCizIs=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-101-iGmd-U8JPWCo9BPyBajYSw-1; Tue, 09 Jul 2024 14:43:01 -0400
+X-MC-Unique: iGmd-U8JPWCo9BPyBajYSw-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-447dfad3387so10350141cf.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 11:43:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720550580; x=1721155380;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=h32t5Qeewct+xkpZMKgyT8AtUh95jHno78TnKkUZLSw=;
+ b=FG/waSC/5o+mIKaMPtg6DA2YM8g/u+YGLUGA8tql3nkx5om5oZ0G+2/LC9yjXASWQa
+ 4gp0D9Q1p5EpauHAP3r5TiH26ecok7iGLMjnmfBI24k6442fkSkZOl8zdKMJUUWo5y6L
+ mqmfByyY6yRjTUdUQyjr0sH2jOt7zfxN3ag88doWjGfPY0ruJERxhheVZBPRqWXsj+ot
+ h3yWQb+fI4E1Yon3ayhcmSVVdINRiFvJ3HZ1XbmvAJWUHhdSHg9jYVvYUzYOwWWRuSEJ
+ eyP8FoHMj7s2RdByZlKxedTMz8MDAm1iCHkmmKrTHS8hQroly+NK35Jojo6Rute2MmY1
+ mlkw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWuxtiyY39vq0rbhdJYSqwbLRTVAdmCcuwA/QMiwmEEUDagWWRV+GmPSY3ZXljvlWLUvZKmlfiTF8TUTA+umxnomaFF7PY=
+X-Gm-Message-State: AOJu0YyvWx4fa8b35Eo4HivCJw5kxw7Xe3oHRAvIcw5O+ZM5oM9RHpfs
+ oTsvLvDkikhv1+J018ik3t4I+s8jgMTcJ9poIgGMYRKPxjQoF6++bwQr6ycBLm4N5ckTSuaJq0D
+ oAOerkAomqZYYkLf0YhLXuotNSA2/BJ2XHZHftLPNUyQaArG9ewHS
+X-Received: by 2002:a05:622a:253:b0:441:37b:cd7a with SMTP id
+ d75a77b69052e-447faa36adcmr38102731cf.3.1720550580474; 
+ Tue, 09 Jul 2024 11:43:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHd+Oi0ea0lLdibD5p3uV9x1DmP2vgXOyZUfeKD0gUXMvwbJIA9s9KGLV/mGKMPrL02c5E1Zg==
+X-Received: by 2002:a05:622a:253:b0:441:37b:cd7a with SMTP id
+ d75a77b69052e-447faa36adcmr38102461cf.3.1720550579982; 
+ Tue, 09 Jul 2024 11:42:59 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-447f9bf6729sm12863691cf.94.2024.07.09.11.42.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Jul 2024 11:42:59 -0700 (PDT)
+Date: Tue, 9 Jul 2024 14:42:56 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Liu, Yuan1" <yuan1.liu@intel.com>
+Cc: "Wang, Yichen" <yichen.wang@bytedance.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Hao Xiang <hao.xiang@linux.dev>, "Zou, Nanhai" <nanhai.zou@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
+Subject: Re: [PATCH v4 0/4] Implement using Intel QAT to offload ZLIB
+Message-ID: <Zo2EsEqAY5KnkO1V@x1n>
+References: <20240705182901.48948-1-yichen.wang@bytedance.com>
+ <PH7PR11MB5941B008DD622227FB46E95EA3DB2@PH7PR11MB5941.namprd11.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <33e5c4b7-6f5e-4ef2-9156-9a1e4b6a2dfe@redhat.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE3B:EE_|MW4PR12MB6873:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7a57e610-d19a-4ca9-fcfb-08dca041531a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|82310400026|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?UAHqYYANoM94qTrOW+g5DSb2Ay+osQ4wxNAMce+RXl4K6EZ8LTkfG/x0r1A4?=
- =?us-ascii?Q?hcRO5Jj6XCniEPXuakMflLc4X9rZ/9TfoifQwPX3pg5fF/shNrVpF3Lbuclc?=
- =?us-ascii?Q?PGxEq/NKcch1Spv8fa9LykpsYekWiRHUnipk4w+WTpAYs2DZ8Y6rbn+dB9HA?=
- =?us-ascii?Q?o11IDB/DILMglBjElQJnX1PIaiP/d2ZRKXEt9OYO3yNE7xLcf7r/4YzVV9Bg?=
- =?us-ascii?Q?xFKpoYSVe2ET9B2dn+AJ7FzybNSepbWAAbQGr89GYcLeNrzuJxJ521dBqMM+?=
- =?us-ascii?Q?SIDqIbi+SnlXhM0k/ylGVwtUXxmjHXUYFacRgDiDBFw32Vro/QzV0HmRrOBG?=
- =?us-ascii?Q?s9auD38cNZt7MgLfkKPPHRwVH3meqS1wUefuk0Fgd1ItCqbojmZke8WmpGdW?=
- =?us-ascii?Q?oxzM1qHqzcBi1hlezta6rMhnfDZxk5eajEmID1xA8okH+kkXVedn91f6B0E6?=
- =?us-ascii?Q?qMye4Vm/MyS8Jm1FUfm2A8VrcFVo5L6AjPtu0XVV4WGlbH2CF3feR4qgLDVI?=
- =?us-ascii?Q?ydL8MrWq2aVd2QsctNwnMhknGGDDU10Q/9tORi0zhW1f7u1oZT77WtkeJDjj?=
- =?us-ascii?Q?FCVojWVcGX5gGKx1M6qHzsPIlX3M/0okayNtQfq1ZWJFX6n9oY/QRSTo1tQ4?=
- =?us-ascii?Q?RqNxxXDptlDAPvHJWKXu2fiE/M7OJk9OvxLDHXtd1dy0PQWhMrMxSIAv0Zn8?=
- =?us-ascii?Q?5fjZ5legEUU31Y/U55vnxeQNsD42Sq/CaDQxnYDgr9+Dz3Nri/UybXTFYREJ?=
- =?us-ascii?Q?qZkGAaAV+JnFs/QlXbT0FEatKh1STO77BNG0k8AE+Qu53sYiHpoK3DS4lFnQ?=
- =?us-ascii?Q?wCuBRjjXdk0M+09zOAnZ0OW+MlRrcFmH1MalaBWWBibxZmh0h9lrjDtY/LqZ?=
- =?us-ascii?Q?20/EIfYW7vzX0EHptEEvSIDcsWeolBpsbLU/+mBRV42HTGWK63xbow+XpU3A?=
- =?us-ascii?Q?lwojBqyeDHHYymSpXAOOQoh9J6DmRLqsfFtdPQVksW7635WiVk6wtbMMgtaI?=
- =?us-ascii?Q?FyHSr0WOASrZC8/sG01Nd3mQ7/zQ9NPpbIYDkTwKAniH75TOTDXbvzeiend4?=
- =?us-ascii?Q?bmUvdNKsd3QHE2pz3hh3o/CseqJJ4BjywlsmGQ0ElBFdDUJK4P11JZJF8KM2?=
- =?us-ascii?Q?uXYGPhRxnIoZCiPsZfHhuoudAqnimmKzlHujFDkLoBalNWhiVYG1zoI36xQS?=
- =?us-ascii?Q?Gsc0OiAFTHbRkjT2RfRIPcv01wGFyjm3qa84jayNuK/SUIiDzzYFF9heuiki?=
- =?us-ascii?Q?robTFmn4AX3ok89wrvVxI6hKlOoIWesGz2g4EheGmA4ZUYcy8RLDFISlo6KW?=
- =?us-ascii?Q?CDU6Erb/B3P+CWl6lqfNc/ie2Qy0kg7adVGqE3kf9z3tDVcSEHOTB12XhHhu?=
- =?us-ascii?Q?usm9T1R4K830IR6A+odlL4yTMZLmdMCeX+9olO/olRTEoDjsm3MTjLb1FeLd?=
- =?us-ascii?Q?h6meVH5JDyrq1SalDgEz4cAaglNCf1mk?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(82310400026)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jul 2024 18:02:40.5957 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7a57e610-d19a-4ca9-fcfb-08dca041531a
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE3B.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6873
-Received-SPF: softfail client-ip=2a01:111:f400:7ea9::621;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM02-SN1-obe.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <PH7PR11MB5941B008DD622227FB46E95EA3DB2@PH7PR11MB5941.namprd11.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,42 +113,296 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 09, 2024 at 07:22:16PM +0200, Eric Auger wrote:
-> On 7/9/24 19:11, Nicolin Chen wrote:
-> > On Tue, Jul 09, 2024 at 11:20:16AM +0200, Eric Auger wrote:
-> >> On 6/26/24 02:28, Nicolin Chen wrote:
-> >>> Nested SMMUv3 feature requires the support/presence of host-level SMMUv3
-> >>> instance(s). Add a helper to read the sysfs for the number of instances.
-> >>> Log them in a vms list using a new struct VirtNestedSmmu.
-> >>>
-> >>> This will be used by a following patch to assign a passthrough device to
-> >>> corresponding nested SMMUv3 instance.
-> >> Laterly the HostIOMMUDevice has been introduced to allow, among other
-> >> things, to pass information related to the physical IOMMU to the virtual
-> >> IOMMU.
-> >> I guess it would be well fitted to associate the viommu with its
-> >> underlying piommu.
-> > Wow, I missed that part -- backends/host_iommu_device. I will
-> > see how I can fit these well with that.
-> >
-> >> I don't think we have such kind of host introspection in machine type.
-> >> Generally in can happen in the very device or in libvirt.
-> > I think the biggest reason for having such an introspection in
-> > the virt code is because of hotplug, (though it's not properly
-> > implemented yet), as we don't know what new devices requiring
-> > for nested translation would be joining later. So somebody has
-> > to hold a full list.
-> >
-> > Would you mind elaborating how the "device" or "libvirt" can
-> > handle that?
-> If you know that on Grace you have 5 SMMU instances, can't you pre-build
-> a PCIe topology with 5 PXB and root ports at libvirt level.
-> Then when you hotplug your device you specify the corresponding slot
-> just as we do normally. But maybe I misunderstood the hotplug problematics.
+On Tue, Jul 09, 2024 at 08:42:59AM +0000, Liu, Yuan1 wrote:
+> > -----Original Message-----
+> > From: Yichen Wang <yichen.wang@bytedance.com>
+> > Sent: Saturday, July 6, 2024 2:29 AM
+> > To: Paolo Bonzini <pbonzini@redhat.com>; Daniel P. Berrangé
+> > <berrange@redhat.com>; Eduardo Habkost <eduardo@habkost.net>; Marc-André
+> > Lureau <marcandre.lureau@redhat.com>; Thomas Huth <thuth@redhat.com>;
+> > Philippe Mathieu-Daudé <philmd@linaro.org>; Peter Xu <peterx@redhat.com>;
+> > Fabiano Rosas <farosas@suse.de>; Eric Blake <eblake@redhat.com>; Markus
+> > Armbruster <armbru@redhat.com>; Laurent Vivier <lvivier@redhat.com>; qemu-
+> > devel@nongnu.org
+> > Cc: Hao Xiang <hao.xiang@linux.dev>; Liu, Yuan1 <yuan1.liu@intel.com>;
+> > Zou, Nanhai <nanhai.zou@intel.com>; Ho-Ren (Jack) Chuang
+> > <horenchuang@bytedance.com>; Wang, Yichen <yichen.wang@bytedance.com>
+> > Subject: [PATCH v4 0/4] Implement using Intel QAT to offload ZLIB
+> > 
+> > v4:
+> > - Rebase changes on top of 1a2d52c7fcaeaaf4f2fe8d4d5183dccaeab67768
+> > - Move the IOV initialization to qatzip implementation
+> > - Only use qatzip to compress normal pages
+> > 
+> > v3:
+> > - Rebase changes on top of master
+> > - Merge two patches per Fabiano Rosas's comment
+> > - Add versions into comments and documentations
+> > 
+> > v2:
+> > - Rebase changes on top of recent multifd code changes.
+> > - Use QATzip API 'qzMalloc' and 'qzFree' to allocate QAT buffers.
+> > - Remove parameter tuning and use QATzip's defaults for better
+> >   performance.
+> > - Add parameter to enable QAT software fallback.
+> > 
+> > v1:
+> > https://lists.nongnu.org/archive/html/qemu-devel/2023-12/msg03761.html
+> > 
+> > * Performance
+> > 
+> > We present updated performance results. For circumstantial reasons, v1
+> > presented performance on a low-bandwidth (1Gbps) network.
+> > 
+> > Here, we present updated results with a similar setup as before but with
+> > two main differences:
+> > 
+> > 1. Our machines have a ~50Gbps connection, tested using 'iperf3'.
+> > 2. We had a bug in our memory allocation causing us to only use ~1/2 of
+> > the VM's RAM. Now we properly allocate and fill nearly all of the VM's
+> > RAM.
+> > 
+> > Thus, the test setup is as follows:
+> > 
+> > We perform multifd live migration over TCP using a VM with 64GB memory.
+> > We prepare the machine's memory by powering it on, allocating a large
+> > amount of memory (60GB) as a single buffer, and filling the buffer with
+> > the repeated contents of the Silesia corpus[0]. This is in lieu of a more
+> > realistic memory snapshot, which proved troublesome to acquire.
+> > 
+> > We analyze CPU usage by averaging the output of 'top' every second
+> > during migration. This is admittedly imprecise, but we feel that it
+> > accurately portrays the different degrees of CPU usage of varying
+> > compression methods.
+> > 
+> > We present the latency, throughput, and CPU usage results for all of the
+> > compression methods, with varying numbers of multifd threads (4, 8, and
+> > 16).
+> > 
+> > [0] The Silesia corpus can be accessed here:
+> > https://sun.aei.polsl.pl//~sdeor/index.php?page=silesia
+> > 
+> > ** Results
+> > 
+> > 4 multifd threads:
+> > 
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |method         |time(sec)      |throughput(mbps)|send cpu%|recv cpu%|
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |qatzip         | 23.13         | 8749.94        |117.50   |186.49   |
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |zlib           |254.35         |  771.87        |388.20   |144.40   |
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |zstd           | 54.52         | 3442.59        |414.59   |149.77   |
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |none           | 12.45         |43739.60        |159.71   |204.96   |
+> >     |---------------|---------------|----------------|---------|---------|
+> > 
+> > 8 multifd threads:
+> > 
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |method         |time(sec)      |throughput(mbps)|send cpu%|recv cpu%|
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |qatzip         | 16.91         |12306.52        |186.37   |391.84   |
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |zlib           |130.11         | 1508.89        |753.86   |289.35   |
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |zstd           | 27.57         | 6823.23        |786.83   |303.80   |
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |none           | 11.82         |46072.63        |163.74   |238.56   |
+> >     |---------------|---------------|----------------|---------|---------|
+> > 
+> > 16 multifd threads:
+> > 
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |method         |time(sec)      |throughput(mbps)|send cpu%|recv cpu%|
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |qatzip         |18.64          |11044.52        | 573.61  |437.65   |
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |zlib           |66.43          | 2955.79        |1469.68  |567.47   |
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |zstd           |14.17          |13290.66        |1504.08  |615.33   |
+> >     |---------------|---------------|----------------|---------|---------|
+> >     |none           |16.82          |32363.26        | 180.74  |217.17   |
+> >     |---------------|---------------|----------------|---------|---------|
+> > 
+> > ** Observations
+> > 
+> > - In general, not using compression outperforms using compression in a
+> >   non-network-bound environment.
+> > - 'qatzip' outperforms other compression workers with 4 and 8 workers,
+> >   achieving a ~91% latency reduction over 'zlib' with 4 workers, and a
+> > ~58% latency reduction over 'zstd' with 4 workers.
+> > - 'qatzip' maintains comparable performance with 'zstd' at 16 workers,
+> >   showing a ~32% increase in latency. This performance difference
+> > becomes more noticeable with more workers, as CPU compression is highly
+> > parallelizable.
+> > - 'qatzip' compression uses considerably less CPU than other compression
+> >   methods. At 8 workers, 'qatzip' demonstrates a ~75% reduction in
+> > compression CPU usage compared to 'zstd' and 'zlib'.
+> > - 'qatzip' decompression CPU usage is less impressive, and is even
+> >   slightly worse than 'zstd' and 'zlib' CPU usage at 4 and 16 workers.
+> 
+> Hi Peter & Yichen
+> 
+> I have a test based on the V4 patch set
+> VM configuration:16 vCPU, 64G memory, 
+> VM Workload: all vCPUs are idle and 54G memory is filled with Silesia data.
+> QAT Devices: 4
+> 
+> Sender migration parameters
+> migrate_set_capability multifd on
+> migrate_set_parameter multifd-channels 2/4/8
+> migrate_set_parameter max-bandwidth 1G/10G
 
-I guess I got your point: basically, the introspection and sysfs
-node matching for device assigning should happen in libvirt.
+Ah, I think this means GBps... not Gbps, then.
 
-Thanks
-Nicolin
+> migrate_set_parameter multifd-compression qatzip/zstd
+> 
+> Receiver migration parameters
+> migrate_set_capability multifd on
+> migrate_set_parameter multifd-channels 2
+> migrate_set_parameter multifd-compression qatzip/zstd
+> 
+> max-bandwidth: 1GBps
+>      |-----------|--------|---------|----------|------|------|
+>      |2 Channels |Total   |down     |throughput| send | recv |
+>      |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
+>      |-----------|--------|---------|----------|------|------|
+>      |qatzip     |   21607|       77|      8051|    88|   125|
+>      |-----------|--------|---------|----------|------|------|
+>      |zstd       |   78351|       96|      2199|   204|    80|
+>      |-----------|--------|---------|----------|------|------|
+> 
+>      |-----------|--------|---------|----------|------|------|
+>      |4 Channels |Total   |down     |throughput| send | recv |
+>      |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
+>      |-----------|--------|---------|----------|------|------|
+>      |qatzip     |   20336|       25|      8557|   110|   190|
+>      |-----------|--------|---------|----------|------|------|
+>      |zstd       |   39324|       31|      4389|   406|   160|
+>      |-----------|--------|---------|----------|------|------|
+> 
+>      |-----------|--------|---------|----------|------|------|
+>      |8 Channels |Total   |down     |throughput| send | recv |
+>      |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
+>      |-----------|--------|---------|----------|------|------|
+>      |qatzip     |   20208|       22|      8613|   125|   300|
+>      |-----------|--------|---------|----------|------|------|
+>      |zstd       |   20515|       22|      8438|   800|   340|
+>      |-----------|--------|---------|----------|------|------|
+> 
+> max-bandwidth: 10GBps
+>      |-----------|--------|---------|----------|------|------|
+>      |2 Channels |Total   |down     |throughput| send | recv |
+>      |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
+>      |-----------|--------|---------|----------|------|------|
+>      |qatzip     |   22450|       77|      7748|    80|   125|
+>      |-----------|--------|---------|----------|------|------|
+>      |zstd       |   78339|       76|      2199|   204|    80|
+>      |-----------|--------|---------|----------|------|------|
+> 
+>      |-----------|--------|---------|----------|------|------|
+>      |4 Channels |Total   |down     |throughput| send | recv |
+>      |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
+>      |-----------|--------|---------|----------|------|------|
+>      |qatzip     |   13017|       24|     13401|   180|   285|
+>      |-----------|--------|---------|----------|------|------|
+>      |zstd       |   39466|       21|      4373|   406|   160|
+>      |-----------|--------|---------|----------|------|------|
+> 
+>      |-----------|--------|---------|----------|------|------|
+>      |8 Channels |Total   |down     |throughput| send | recv |
+>      |           |time(ms)|time(ms) |(mbps)    | cpu %| cpu% |
+>      |-----------|--------|---------|----------|------|------|
+>      |qatzip     |   10255|       22|     17037|   280|   590|
+>      |-----------|--------|---------|----------|------|------|
+>      |zstd       |   20126|       77|      8595|   810|   340|
+>      |-----------|--------|---------|----------|------|------|
+
+PS: this 77ms downtime smells like it hits some spikes during save/load.
+Doesn't look like reproducable comparing to the rest data.
+
+> 
+> If the user has enabled compression in live migration, using QAT
+> can save the host CPU resources.
+> 
+> When compression is enabled, the bottleneck of migration is usually
+> the compression throughput on the sender side, since CPU decompression
+> throughput is higher than compression, some reference data 
+> https://github.com/inikep/lzbench, so more CPU resources need to be 
+> allocated to the sender side.
+
+Thank you, Yuan.
+
+> 
+> Summary:
+> 1. In the 1GBps case, QAT only uses 88% CPU utilization to reach 1GBps, 
+>    but ZSTD needs 800%.
+> 2. In the 10Gbps case, QAT uses 180% CPU utilization to reach 10GBps
+>    But ZSTD still cannot reach 10Gbps even if it uses 810%.
+
+So I assumed you always meant GBps across all the test results, as only
+that matches with max-bandwidth parameter.
+
+Then in this case 10GBps is actually 80Gbps, which was not a low bandwidth
+test.
+
+And I think the most interesting one that I would be curious is nocomp in
+low network tests.  Would you mind run one more test with the same
+workload, but with: no-comp, 8 channels, 10Gbps (or 1GBps)?
+
+I think in this case multifd shouldn't matter a huge deal, but let's still
+enable that just assume that's the baseline / default setup.  I would
+expect this result should obviously show a win on using compressors, but
+just to check.
+
+> 3. The QAT decompression CPU utilization is higher than compression and ZSTD,
+>    from my analysis
+>    3.1 when using QAT compression, the data needs to be copied to the QAT 
+>        memory (for DMA operations), and the same for decompression. However, 
+>        do_user_addr_fault will be triggered during decompression because the 
+>        QAT decompressed data is copied to the VM address space for the first time,
+>        in addition, both compression and decompression are processed by QAT and 
+>        do not consume CPU resources, so the CPU utilization of the receiver is 
+>        slightly higher than the sender.
+
+I thought you hit this same issue when working on QPL and I remember you
+used -mem-prealloc.  Why not use it here?
+
+>    
+>    3.2 Since zstd decompression decompresses data directly into the VM address space, 
+>        there is one less memory copy than QAT, so the CPU utilization on the receiver
+>        is better than QAT. For the 1GBps case, the receiver CPU utilization is 125%,
+>        and the memory copy occupies ~80% of CPU utilization.
+
+Hmm, yes I read that part in code and I thought it was a design decision to
+do the copy, the comment said "it is faster".  So it's not?
+
+I think we can definitely submit compression tasks per-page rather than
+buffering, if that would be better.
+
+> 
+>    I think this is acceptable. Considering the overall CPU usage of the sender and receiver, 
+>    the QAT benefit is good.
+
+Yes, I don't think there's any major issue to block this from supported,
+it's more about when we are at it we'd better figure all things out.
+
+For example, I think we used to discuss the use case where there's 100G*2
+network deployed, but the admin may still want to have some control plane
+VMs moving around using very limited network for QoS.  In that case, I
+wonder any of you thought about using postcopy?  I assume the control plane
+workload isn't super critical in this case or it won't get provisioned with
+low network for migrations, in that case maybe it'll also be fine to
+post-copy after one round of precopy on the slow-bandwidth network.
+
+Again, I don't think the answer blocks such feature in any form whoever
+simply wants to use a compressor, just to ask.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
