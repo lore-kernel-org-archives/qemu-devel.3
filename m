@@ -4,86 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64427C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 11:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 624A3C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 11:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR98o-0001sh-JI; Tue, 09 Jul 2024 07:36:14 -0400
+	id 1sR9Bu-0006sA-SJ; Tue, 09 Jul 2024 07:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sR98m-0001qr-7C
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 07:36:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sR9Br-0006rS-95; Tue, 09 Jul 2024 07:39:23 -0400
+Received: from out30-100.freemail.mail.aliyun.com ([115.124.30.100])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sR98W-0002uO-Su
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 07:36:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720524955;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=RGhRgs1v32g/5H0w5aUKTxw+RAzFqjgpGlfR2LFu3dA=;
- b=E5ESyKPUcAYO0rNsOdu0Om2g0UyA3L4ZOX1S9+oxFP4VCH/O1m8s3jSZ4kSnqoFFQ4aI46
- CpD+4uxY1I+KrsSHbOedAYjUCX7q7kZcK5sal9QDANn+PzJPfi2fqk0dAE5igcjViwEIq6
- hGYZf7fTFyfW7yIrUlNJQza5TQ2Q96c=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-230-C62S6gBYObecb3IBu95Ryw-1; Tue,
- 09 Jul 2024 07:35:50 -0400
-X-MC-Unique: C62S6gBYObecb3IBu95Ryw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 81C231953962; Tue,  9 Jul 2024 11:35:47 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.4])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 33A7C195605F; Tue,  9 Jul 2024 11:35:46 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 394AB21E668F; Tue,  9 Jul 2024 13:35:44 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Peter Xu
- <peterx@redhat.com>,  qemu-block@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau
- <marcandre.lureau@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Eduardo
- Habkost <eduardo@habkost.net>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,  Stefan Hajnoczi
- <stefanha@redhat.com>,  Jason Wang <jasowang@redhat.com>,  Lukas Straub
- <lukasstraub2@web.de>,  Ani Sinha <anisinha@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Hanna Reitz
- <hreitz@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Alex Williamson
- <alex.williamson@redhat.com>,  Eric Blake <eblake@redhat.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Yanan Wang
- <wangyanan55@huawei.com>,  Jiri Pirko <jiri@resnulli.us>
-Subject: Re: [PATCH 7/8] qapi: convert "Example" sections with longer prose
-In-Reply-To: <20240703210144.339530-8-jsnow@redhat.com> (John Snow's message
- of "Wed, 3 Jul 2024 17:01:42 -0400")
-References: <20240703210144.339530-1-jsnow@redhat.com>
- <20240703210144.339530-8-jsnow@redhat.com>
-Date: Tue, 09 Jul 2024 13:35:44 +0200
-Message-ID: <87o776g5m7.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1sR9Bo-0003Vc-Cg; Tue, 09 Jul 2024 07:39:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1720525150; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=wEY6Jr7pMtyaZGxLj2SSlJPEbEDh3+oK1y9bo1O/OI4=;
+ b=wuunL1U3vFnEQU4APVzB9PM/hapcRJABkTz3LC/2G3QvYrHQZs/IOmTTsT5U3F7IcZidXhrHAk50cfG69dkaxBGrty9o32hBaiSMytN1C7ccW/FAVgI0amOdIa6wGMkr1HyXmpF2QU8yTvAtUg0fBsWDibPKBRbyaD8lSXFsvXM=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R801e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067112;
+ MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=9; SR=0;
+ TI=SMTPD_---0WABxGxT_1720525149; 
+Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WABxGxT_1720525149) by smtp.aliyun-inc.com;
+ Tue, 09 Jul 2024 19:39:10 +0800
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>
+Subject: [PATCH v4 01/11] target/riscv: Add zimop extension
+Date: Tue,  9 Jul 2024 19:36:42 +0800
+Message-Id: <20240709113652.1239-2-zhiwei_liu@linux.alibaba.com>
+X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20240709113652.1239-1-zhiwei_liu@linux.alibaba.com>
+References: <20240709113652.1239-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.100;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-100.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,103 +69,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Zimop extension defines an encoding space for 40 MOPs.The Zimop
+extension defines 32 MOP instructions named MOP.R.n, where n is
+an integer between 0 and 31, inclusive. The Zimop extension
+additionally defines 8 MOP instructions named MOP.RR.n, where n
+is an integer between 0 and 7.
 
-> These examples require longer explanations or have explanations that
-> require markup to look reasonable when rendered and so use the longer
-> form of the ".. qmp-example::" directive.
->
-> By using the :annotated: option, the content in the example block is
-> assumed *not* to be a code block literal and is instead parsed as normal
-> rST - with the exception that any code literal blocks after `::` will
-> assumed to be a QMP code literal block.
->
-> Note: There's one title-less conversion in this patch that comes along
-> for the ride because it's part of a larger "Examples" block that was
-> better to convert all at once.
->
-> See commit-5: "docs/qapidoc: create qmp-example directive", for a
->               detailed explanation of this custom directive syntax.
->
-> See commit+1: "qapi: remove "Example" doc section" for a detailed
->               explanation of why.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  qapi/block.json     | 26 ++++++++++++++++----------
->  qapi/machine.json   | 30 ++++++++++++++++++++----------
->  qapi/migration.json |  7 +++++--
->  qapi/virtio.json    | 24 ++++++++++++++++++------
->  4 files changed, 59 insertions(+), 28 deletions(-)
->
-> diff --git a/qapi/block.json b/qapi/block.json
-> index 5ddd061e964..d95e9fd8140 100644
-> --- a/qapi/block.json
-> +++ b/qapi/block.json
-> @@ -545,31 +545,37 @@
->  #
->  # Since: 4.0
->  #
-> -# Example:
-> +# .. qmp-example::
-> +#    :annotated:
->  #
-> -#     Set new histograms for all io types with intervals
-> -#     [0, 10), [10, 50), [50, 100), [100, +inf):
-> +#    Set new histograms for all io types with intervals
-> +#    [0, 10), [10, 50), [50, 100), [100, +inf)::
->  #
->  #     -> { "execute": "block-latency-histogram-set",
->  #          "arguments": { "id": "drive0",
->  #                         "boundaries": [10, 50, 100] } }
->  #     <- { "return": {} }
->  #
-> -# Example:
-> +# .. qmp-example::
-> +#    :annotated:
->  #
-> -#     Set new histogram only for write, other histograms will remain
-> -#     not changed (or not created):
-> +#    Set new histogram only for write, other histograms will remain
-> +#    not changed (or not created)::
->  #
->  #     -> { "execute": "block-latency-histogram-set",
->  #          "arguments": { "id": "drive0",
->  #                         "boundaries-write": [10, 50, 100] } }
->  #     <- { "return": {} }
->  #
-> -# Example:
-> +# .. qmp-example::
-> +#    :annotated:
->  #
-> -#     Set new histograms with the following intervals:
-> -#       read, flush: [0, 10), [10, 50), [50, 100), [100, +inf)
-> -#       write: [0, 1000), [1000, 5000), [5000, +inf)
-> +#    Set new histograms with the following intervals:
-> +#
-> +#    - read, flush: [0, 10), [10, 50), [50, 100), [100, +inf)
-> +#    - write: [0, 1000), [1000, 5000), [5000, +inf)
-> +#
-> +#    ::
->  #
->  #     -> { "execute": "block-latency-histogram-set",
->  #          "arguments": { "id": "drive0",
-   #                         "boundaries": [10, 50, 100],
-   #                         "boundaries-write": [1000, 5000] } }
-   #     <- { "return": {} }
-   #
-   # .. qmp-example::
-   #    :title: Remove all latency histograms
-   #
-   #     -> { "execute": "block-latency-histogram-set",
-   #          "arguments": { "id": "drive0" } }
-   #     <- { "return": {} }
-   ##
+These 40 MOPs initially are defined to simply write zero to x[rd],
+but are designed to be redefined by later extensions to perform some
+other action.
 
-I think using :annotated: for this one as well will look better.
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Deepak Gupta <debug@rivosinc.com>
+---
+ target/riscv/cpu.c                          |  2 ++
+ target/riscv/cpu_cfg.h                      |  1 +
+ target/riscv/insn32.decode                  | 11 ++++++
+ target/riscv/insn_trans/trans_rvzimop.c.inc | 37 +++++++++++++++++++++
+ target/riscv/translate.c                    |  1 +
+ 5 files changed, 52 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvzimop.c.inc
 
-[...]
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a2640cf259..d3853a5804 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -113,6 +113,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zihintntl, PRIV_VERSION_1_10_0, ext_zihintntl),
+     ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause),
+     ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
++    ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
+     ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+     ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_11),
+     ISA_EXT_DATA_ENTRY(zaamo, PRIV_VERSION_1_12_0, ext_zaamo),
+@@ -1471,6 +1472,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("zicsr", ext_zicsr, true),
+     MULTI_EXT_CFG_BOOL("zihintntl", ext_zihintntl, true),
+     MULTI_EXT_CFG_BOOL("zihintpause", ext_zihintpause, true),
++    MULTI_EXT_CFG_BOOL("zimop", ext_zimop, false),
+     MULTI_EXT_CFG_BOOL("zacas", ext_zacas, false),
+     MULTI_EXT_CFG_BOOL("zaamo", ext_zaamo, false),
+     MULTI_EXT_CFG_BOOL("zalrsc", ext_zalrsc, false),
+diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+index fb7eebde52..9f53512053 100644
+--- a/target/riscv/cpu_cfg.h
++++ b/target/riscv/cpu_cfg.h
+@@ -71,6 +71,7 @@ struct RISCVCPUConfig {
+     bool ext_zihintntl;
+     bool ext_zihintpause;
+     bool ext_zihpm;
++    bool ext_zimop;
+     bool ext_ztso;
+     bool ext_smstateen;
+     bool ext_sstc;
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index f22df04cfd..60da673153 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -38,6 +38,8 @@
+ %imm_bs   30:2                   !function=ex_shift_3
+ %imm_rnum 20:4
+ %imm_z6   26:1 15:5
++%imm_mop5 30:1 26:2 20:2
++%imm_mop3 30:1 26:2
+ 
+ # Argument sets:
+ &empty
+@@ -56,6 +58,8 @@
+ &r2nfvm    vm rd rs1 nf
+ &rnfvm     vm rd rs1 rs2 nf
+ &k_aes     shamt rs2 rs1 rd
++&mop5 imm rd rs1
++&mop3 imm rd rs1 rs2
+ 
+ # Formats 32:
+ @r       .......   ..... ..... ... ..... ....... &r                %rs2 %rs1 %rd
+@@ -98,6 +102,9 @@
+ @k_aes   .. ..... ..... .....  ... ..... ....... &k_aes  shamt=%imm_bs   %rs2 %rs1 %rd
+ @i_aes   .. ..... ..... .....  ... ..... ....... &i      imm=%imm_rnum        %rs1 %rd
+ 
++@mop5 . . .. .. .... .. ..... ... ..... ....... &mop5 imm=%imm_mop5 %rd %rs1
++@mop3 . . .. .. . ..... ..... ... ..... ....... &mop3 imm=%imm_mop3 %rd %rs1 %rs2
++
+ # Formats 64:
+ @sh5     .......  ..... .....  ... ..... ....... &shift  shamt=%sh5      %rs1 %rd
+ 
+@@ -1010,3 +1017,7 @@ amocas_w    00101 . . ..... ..... 010 ..... 0101111 @atom_st
+ amocas_d    00101 . . ..... ..... 011 ..... 0101111 @atom_st
+ # *** RV64 Zacas Standard Extension ***
+ amocas_q    00101 . . ..... ..... 100 ..... 0101111 @atom_st
++
++# *** Zimop may-be-operation extension ***
++mop_r_n     1 . 00 .. 0111 .. ..... 100 ..... 1110011 @mop5
++mop_rr_n    1 . 00 .. 1 ..... ..... 100 ..... 1110011 @mop3
+diff --git a/target/riscv/insn_trans/trans_rvzimop.c.inc b/target/riscv/insn_trans/trans_rvzimop.c.inc
+new file mode 100644
+index 0000000000..165aacd2b6
+--- /dev/null
++++ b/target/riscv/insn_trans/trans_rvzimop.c.inc
+@@ -0,0 +1,37 @@
++/*
++ * RISC-V translation routines for May-Be-Operation(zimop).
++ *
++ * Copyright (c) 2024 Alibaba Group.
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#define REQUIRE_ZIMOP(ctx) do {           \
++    if (!ctx->cfg_ptr->ext_zimop) {       \
++        return false;                     \
++    }                                     \
++} while (0)
++
++static bool trans_mop_r_n(DisasContext *ctx, arg_mop_r_n *a)
++{
++    REQUIRE_ZIMOP(ctx);
++    gen_set_gpr(ctx, a->rd, ctx->zero);
++    return true;
++}
++
++static bool trans_mop_rr_n(DisasContext *ctx, arg_mop_rr_n *a)
++{
++    REQUIRE_ZIMOP(ctx);
++    gen_set_gpr(ctx, a->rd, ctx->zero);
++    return true;
++}
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 0569224e53..379b68289f 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1099,6 +1099,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_rvzacas.c.inc"
+ #include "insn_trans/trans_rvzawrs.c.inc"
+ #include "insn_trans/trans_rvzicbo.c.inc"
++#include "insn_trans/trans_rvzimop.c.inc"
+ #include "insn_trans/trans_rvzfa.c.inc"
+ #include "insn_trans/trans_rvzfh.c.inc"
+ #include "insn_trans/trans_rvk.c.inc"
+-- 
+2.25.1
 
 
