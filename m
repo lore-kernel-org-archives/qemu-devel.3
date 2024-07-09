@@ -4,85 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09837C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D18D6C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRD7g-0005J3-5j; Tue, 09 Jul 2024 11:51:20 -0400
+	id 1sRD88-00079S-GU; Tue, 09 Jul 2024 11:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRD7c-00056u-WC
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:51:17 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRD7Z-0003Ha-S4
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:51:15 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1fb05b0be01so31341335ad.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:51:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720540271; x=1721145071; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LlhSgxXmeIbp9/lrJEjIjrQkX2Q1dIcFiuiUW83SnM4=;
- b=SE6vLJXr2tMjtOWeccvU0CoMse2LcEoZRn4FeXW05CHVqwfQ1QlWE8AYMLXuWDCAV1
- mbK8GQPOSspntpfi26cN9U7j0j6ihK7L1s2j1PBgve4IJ2xms81KDr0oVsrReYG5Srie
- gzRkJvCt1bXVADTlW+V5zXlSlGgwtvbddaq291Zl7NWYcbakfaIAB47tpDIOK6tVibEc
- CGLmtAElUXmRZIkkoa5X25LH+4IuyKKV4GdPHA8bWKEqTy2OjJSeX46zSC3l6uOrzGVf
- mQga8LdvmXgNwMKoVF5pQEmkizFIUGV4IhajgeFIJ1tw/XylXs1q/2rrgtDOTS/aEoY5
- K2Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720540271; x=1721145071;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LlhSgxXmeIbp9/lrJEjIjrQkX2Q1dIcFiuiUW83SnM4=;
- b=SXsj3vJD1WWheK/vnrkBDpatLbNno+vfxBMG1JO9+Xd1hnNt63Tdl5G02iIRzwy/QT
- frXlZ7vlKMmRDZ+x4zG5k16Ftt8dc+mOi5If/ANfa4VX9EmzaJCjTFN4s8AUp9eFPEt8
- Z4a0lJCtyWI6EEMfaWmsbN4lbnliEOZEJP5z9ob8fB937J9N1Xby0+NhMEMt+E0sNuOM
- wiJ4n2S5uyQ6/V6pOR3GQIRiA13M6O0CH8/1f4zDPsUHUDGSmDI1izWKDWs8udovGC/v
- tA2lTWCit6U1Gw4DYdvwIwPtrfu6qDicHUl4528osMjxy2DUTAtdCxFQUeEeLq6K099w
- nl/Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVxGmeq4NUPCGC9tl3EOYmf1N6Mxkhjr6Wda2CjRrJgqUflShviE4g7rSvkNCRNQHLBsHCJXHWtJzajYsqwI/LaqAqCBoI=
-X-Gm-Message-State: AOJu0Yy3OL1IjLe4WqA6A9nztlV5Egv5u8KCRTgEtKUYI1bL6Nzsnr5X
- KBmBPmRA33p+dz7QrIeXKPWxuO1hIiCjxZKPBIPGgmwmmJX4C3lGLsEaJ4jeACA=
-X-Google-Smtp-Source: AGHT+IGVDNcSEoLySu6WfzZoAgY9g5wFajpOcqHpeFxToLzYQJJUbPwf5Yqr9pTotgk4lIRN2/Y+vg==
-X-Received: by 2002:a17:902:9f8f:b0:1fb:7f2c:5644 with SMTP id
- d9443c01a7336-1fbb6d59c22mr19592045ad.31.1720540270809; 
- Tue, 09 Jul 2024 08:51:10 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fbb6a3fd26sm18288665ad.117.2024.07.09.08.51.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jul 2024 08:51:10 -0700 (PDT)
-Message-ID: <5b37a1af-e066-4916-9071-c9bf0c84d837@linaro.org>
-Date: Tue, 9 Jul 2024 08:51:08 -0700
+ (Exim 4.90_1) (envelope-from <SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org>)
+ id 1sRD84-0006rH-98; Tue, 09 Jul 2024 11:51:44 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org>)
+ id 1sRD81-0003Ix-Bc; Tue, 09 Jul 2024 11:51:43 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WJQTP21q9z4wny;
+ Wed, 10 Jul 2024 01:51:37 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WJQTH5zRLz4w2M;
+ Wed, 10 Jul 2024 01:51:31 +1000 (AEST)
+Message-ID: <ec4ab51b-6c9e-410f-a2a1-1fa65f6ebb02@kaod.org>
+Date: Tue, 9 Jul 2024 17:51:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/arm: LDAPR should honour SCTLR_ELx.nAA
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+Subject: Re: [Aspeed PATCH v47 16/19] hw/sd/sdcard: Support boot area in emmc
+ image
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-References: <20240709134504.3500007-1-peter.maydell@linaro.org>
- <20240709134504.3500007-3-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240709134504.3500007-3-peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-block@nongnu.org,
+ Bin Meng <bmeng.cn@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>
+References: <20240709152556.52896-1-philmd@linaro.org>
+ <20240709152556.52896-17-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240709152556.52896-17-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,39 +70,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/24 06:45, Peter Maydell wrote:
-> In commit c1a1f80518d360b when we added the FEAT_LSE2 relaxations to
-> the alignment requirements for atomic and ordered loads and stores,
-> we didn't quite get it right for LDAPR/LDAPRH/LDAPRB with no
-> immediate offset.  These instructions were handled in the old decoder
-> as part of disas_ldst_atomic(), but unlike all the other insns that
-> function decoded (LDADD, LDCLR, etc) these insns are "ordered", not
-> "atomic", so they should be using check_ordered_align() rather than
-> check_atomic_align().  Commit c1a1f80518d360b used
-> check_atomic_align() regardless for everything in
-> disas_ldst_atomic().  We then carried that incorrect check over in
-> the decodetree conversion, where LDAPR/LDAPRH/LDAPRB are now handled
-> by trans_LDAPR().
+On 7/9/24 5:25 PM, Philippe Mathieu-Daudé wrote:
+> From: Joel Stanley <joel@jms.id.au>
 > 
-> The effect is that when FEAT_LSE2 is implemented, these instructions
-> don't honour the SCTLR_ELx.nAA bit and will generate alignment
-> faults when they should not.
+> This assumes a specially constructed image:
 > 
-> (The LDAPR insns with an immediate offset were in disas_ldst_ldapr_stlr()
-> and then in trans_LDAPR_i() and trans_STLR_i(), and have always used
-> the correct check_ordered_align().)
+>    dd if=/dev/zero of=mmc-bootarea.img count=2 bs=1M
+>    dd if=u-boot-spl.bin of=mmc-bootarea.img conv=notrunc
+>    dd if=u-boot.bin of=mmc-bootarea.img conv=notrunc count=64 bs=1K
+>    cat mmc-bootarea.img obmc-phosphor-image.wic > mmc.img
+>    truncate --size 16GB mmc.img
+>    truncate --size 128MB mmc-bootarea.img
 > 
-> Use check_ordered_align() in trans_LDAPR().
+> For now this still requires a mtd image to load the SPL:
 > 
-> Cc:qemu-stable@nongnu.org
-> Fixes: c1a1f80518d360b ("target/arm: Relax ordered/atomic alignment checks for LSE2")
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+>    qemu-system-arm -M tacoma-bmc -nographic \
+>     -global driver=sd-card,property=emmc,value=true \
+>     -drive file=mmc.img,if=sd,index=2 \
+>     -drive file=mmc-bootarea.img,if=mtd,format=raw
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/arm/tcg/translate-a64.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> TODO: Update QEMU command in description
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+hmm, this patch was also modified since last sent.
 
 
-r~
+Thanks,
+
+C.
+
+
+
+
+> ---
+>   include/hw/sd/sd.h |  1 +
+>   hw/sd/sd.c         | 33 +++++++++++++++++++++++++++++++++
+>   2 files changed, 34 insertions(+)
+> 
+> diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
+> index d35a839f5e..07435d2e17 100644
+> --- a/include/hw/sd/sd.h
+> +++ b/include/hw/sd/sd.h
+> @@ -132,6 +132,7 @@ struct SDCardClass {
+>       bool (*get_readonly)(SDState *sd);
+>       void (*set_cid)(SDState *sd);
+>       void (*set_csd)(SDState *sd, uint64_t size);
+> +    uint32_t (*bootpart_offset)(SDState *sd);
+>   
+>       const struct SDProto *proto;
+>   };
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index c7f8ea11c1..5830725629 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -774,6 +774,13 @@ static uint32_t sd_blk_len(SDState *sd)
+>       return sd->blk_len;
+>   }
+>   
+> +static uint32_t sd_bootpart_offset(SDState *sd)
+> +{
+> +    SDCardClass *sc = SDMMC_COMMON_GET_CLASS(sd);
+> +
+> +    return sc->bootpart_offset ? sc->bootpart_offset(sd) : 0;
+> +}
+> +
+>   static uint64_t sd_req_get_address(SDState *sd, SDRequest req)
+>   {
+>       uint64_t addr;
+> @@ -1026,9 +1033,33 @@ void sd_set_cb(SDState *sd, qemu_irq readonly, qemu_irq insert)
+>       qemu_set_irq(insert, sd->blk ? blk_is_inserted(sd->blk) : 0);
+>   }
+>   
+> +/*
+> + * This requires a disk image that has two boot partitions inserted at the
+> + * beginning of it. The size of the boot partitions are configured in the
+> + * ext_csd structure, which is hardcoded in qemu. They are currently set to
+> + * 1MB each.
+> + */
+> +static uint32_t emmc_bootpart_offset(SDState *sd)
+> +{
+> +    unsigned int access = sd->ext_csd[EXT_CSD_PART_CONFIG]
+> +                          & EXT_CSD_PART_CONFIG_ACC_MASK;
+> +
+> +    switch (access) {
+> +    case EXT_CSD_PART_CONFIG_ACC_DEFAULT:
+> +        return sd->boot_part_size * 2;
+> +    case EXT_CSD_PART_CONFIG_ACC_BOOT0:
+> +        return 0;
+> +    case EXT_CSD_PART_CONFIG_ACC_BOOT0 + 1:
+> +        return sd->boot_part_size * 1;
+> +    default:
+> +         g_assert_not_reached();
+> +    }
+> +}
+> +
+>   static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
+>   {
+>       trace_sdcard_read_block(addr, len);
+> +    addr += sd_bootpart_offset(sd);
+>       if (!sd->blk || blk_pread(sd->blk, addr, len, sd->data, 0) < 0) {
+>           fprintf(stderr, "sd_blk_read: read error on host side\n");
+>       }
+> @@ -1037,6 +1068,7 @@ static void sd_blk_read(SDState *sd, uint64_t addr, uint32_t len)
+>   static void sd_blk_write(SDState *sd, uint64_t addr, uint32_t len)
+>   {
+>       trace_sdcard_write_block(addr, len);
+> +    addr += sd_bootpart_offset(sd);
+>       if (!sd->blk || blk_pwrite(sd->blk, addr, len, sd->data, 0) < 0) {
+>           fprintf(stderr, "sd_blk_write: write error on host side\n");
+>       }
+> @@ -2871,6 +2903,7 @@ static void emmc_class_init(ObjectClass *klass, void *data)
+>   
+>       sc->set_cid = emmc_set_cid;
+>       sc->set_csd = emmc_set_csd;
+> +    sc->bootpart_offset = emmc_bootpart_offset;
+>   }
+>   
+>   static const TypeInfo sd_types[] = {
+
 
