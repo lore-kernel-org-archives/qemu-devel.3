@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA261C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 07:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 629CDC2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 07:39:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR5BG-0004Cy-BU; Tue, 09 Jul 2024 03:22:30 -0400
+	id 1sR5RB-0006fb-0u; Tue, 09 Jul 2024 03:38:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1sR5B4-0003aZ-FL
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:22:18 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sR5R9-0006f7-Al
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:38:55 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1sR5B1-0002b7-Js
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:22:18 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-42666b89057so56195e9.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 00:22:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sR5R7-0005hB-OY
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:38:55 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-58ef19aa6b3so2547472a12.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 00:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1720509734; x=1721114534; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=HiOIKrydel/3/HIIHK7QbyCDjwoGhDbVXvljvVWuRkA=;
- b=e7dcDK8k1HDXUa3Mll4gttS3hegjXzGpK52SbHSgJYKOzfuUbEsIb0PowUWOCaUZUs
- Sz+462FxO3Wg7mHN4axFPFHwX+qy6syPbWtiaOmkJ49cvhNzyOxx+l8vMWFggFjUSsRA
- WzRFEkrgQlxmSTeV/au3wgQT1o0gcojfFuE0Tluu+JGdeKcR49vgqogntXX+yDb7jecQ
- iZavAKi4lzI4O4VbBRpSlBfZkis1VrwSWaDoedGtzGfXZYixA1iUy9IyLTSzSWZVZ7dw
- yT7cRfDn7SXkIXc8OdZqlIKVKRA+TAZcJ+64n8wrGXRe2EQY+uze7kCaMcDdJkkcET2+
- lzIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720509734; x=1721114534;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1720510730; x=1721115530; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HiOIKrydel/3/HIIHK7QbyCDjwoGhDbVXvljvVWuRkA=;
- b=S/N7r6R5rpRg0yfbf3MYCejIWubFWkcPZpUShkOFvlEcu5p+I/CuxxioH+DAWwmHRn
- NiiDZaUYi4Xu/u8pdTEDYcJBiCZLST5syuF6t8IvBVYRw9HWX1aFZ13holxHnrQ3Er3O
- DU0HqsFnhIUiffMPELmIIyF3qn0cMZ0veKBzkkJPP+RAp9vmmItsehAhk6u7C/wuQHU5
- d5lN/dno5T3zCTbKZkZ/v/DeXTj/AkC0hEve/viBDgNh3RBQeKQ9B/os0tNpWIe0sWFs
- 1Zb4xa7jNsvS9CU/B0V5/i78aPFB96GP3gaB6sm1pTPpYt1x0t8171gUAbEYHiAtDC3H
- gSzA==
+ bh=/gpCUWUUDAuqYfJpkPsTRK/s6Cjm8F8IuDVTIuMaEKU=;
+ b=GXdNftFkj8rVFJqnYO/Lmm73dW5rv1bO8Mds/V8n8RbYpavwv6J9xf4qkVNUKky05v
+ G1bekjW3UKAavpsZux9FXNvR5lPDq3icEiEHVz26zeXuEiu1JzRy0zK1YNk9SbOyx9RL
+ DwuNHbGIL5PCFhrI6zqGy7hP1kuWHSOKLQFsdFDlhAWhepQFBmxsOnSQXOC8q0LVhnZ7
+ Usj4JaGS07cJWWoZ2M2W6lPzQ0+AbZAecMhJp3bfDf1GX4AicjpTZpJMnzbF2cMQX3Uh
+ JihmrRLaVFQ4AGgWpmYDxcpH/rqOItotBCr08Hak4niW3Jkz5QHO6+12s7yIHWkH3X/t
+ 0kVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720510730; x=1721115530;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/gpCUWUUDAuqYfJpkPsTRK/s6Cjm8F8IuDVTIuMaEKU=;
+ b=D788hmm2CHRQf6yrDoKidJ8/AWfTN+VsP+TNQ/f00kLiSsNg5qJwJhDCXxkhF+ZOc9
+ H7vXQVJQlsF7KoVTfthDaZiig8qO7pqCnZSlFccY9jmWaFlPzRVLurd7VuOa2Boyw5pK
+ 7//joyCtOveqV/fg/okJpNyqOzU9da6n7VYn7tTNaxgjcbNV78LXKAt0oH/tRipa9LK4
+ 5gMxAiWdMojoF44VejSXmqygEs5yXiRs9d1odh0NQdLASNsQ8juAADHOIPuT/oKYW7hl
+ gp7xnTJ0AFXMG5zAX6FMTZ0XHrK2enHONDM9s7G8HgnmjPls14NaECU+0IL6LgcEPxVO
+ V4CQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2/yDca/9cV0inCecqZjz4Lf9tFIpiR1o4NjpBkQlkM1x5MaBt2jAPLrlf0mor2/3f2+a3zAHITW44e7C3QbyBq52u1vs=
-X-Gm-Message-State: AOJu0YyBJAddBrzPMr2m0g0n72NGGUAnyboiZEXUJIO0C5U+HRoxvtf6
- bhbQ13oHa2UN/f3QyZzyRKdpaWVlWujoVIu5YA1/zXRdvKgxcbTPWFJwJDj+Rsmgdva/spxjKMZ
- RjQ==
-X-Google-Smtp-Source: AGHT+IFigFM4qLBDIL/jnti/JdOMcdBFg7vSicH1cKrWsJTkP2El7x4n7FDpiyQDqhBlW6r3Ey/Ibg==
-X-Received: by 2002:a05:600c:1d1f:b0:41a:444b:e1d9 with SMTP id
- 5b1f17b1804b1-42671c0a692mr1305655e9.4.1720509733760; 
- Tue, 09 Jul 2024 00:22:13 -0700 (PDT)
-Received: from google.com (205.215.190.35.bc.googleusercontent.com.
- [35.190.215.205]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-367cde891d9sm1688249f8f.65.2024.07.09.00.22.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jul 2024 00:22:13 -0700 (PDT)
-Date: Tue, 9 Jul 2024 07:22:09 +0000
-From: Mostafa Saleh <smostafa@google.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, qemu-devel@nongnu.org,
- alex.bennee@linaro.org, maz@kernel.org, nicolinc@nvidia.com,
- julien@xen.org, richard.henderson@linaro.org, marcin.juszkiewicz@linaro.org
-Subject: Re: [PATCH v4 18/19] hw/arm/smmuv3: Advertise S2FWB
-Message-ID: <ZozlISfFI48-rrYY@google.com>
-References: <20240701110241.2005222-1-smostafa@google.com>
- <20240701110241.2005222-19-smostafa@google.com>
- <20240704183658.GO1693268@myrica>
- <f2a17216-1a03-4c84-85af-8c3145f305ae@redhat.com>
+ AJvYcCUExP9U63Yai2pRM2XTlz0u+bWzHhc4QbDYpfcw4m25pDu9LDyubHx7F5ZCqnFjZ4LIBOsCXYJqgrOa4n6VnbObIG3FYtQ=
+X-Gm-Message-State: AOJu0YygnCgSSTlM2519dnu7jyJveagzL7OuHc/nR7YDhkSOlrJZj5+Z
+ ahDYFRWbLBqhk0ZPWgBOet/ujAXTLIUPIYi3QdwUBitcPFuf6X0n+EWp6oCkznosCLjRHHftk1E
+ fuXfHms12HC/zENm/HYcfgR3d5uqWfkQFND8DEQ==
+X-Google-Smtp-Source: AGHT+IE3mLebaNuNvKvACUA5TaXl+ZCAqL7IOyBAIvYroGVwsufAPN1JRnDOpnqe8KS4euxR/Mm0MmDn77wUyrKGRb0=
+X-Received: by 2002:a05:6402:1258:b0:57c:dd3a:f399 with SMTP id
+ 4fb4d7f45d1cf-594bb18066emr1388592a12.12.1720510730243; Tue, 09 Jul 2024
+ 00:38:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f2a17216-1a03-4c84-85af-8c3145f305ae@redhat.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=smostafa@google.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
+ <8dfd1047-436d-4157-83cb-9cad399544fe@redhat.com>
+ <ZowUyFX7zcK1FvuG@redhat.com>
+ <CABgObfZfQNSeYeCqcuNHcu=pyKz+f_MUc=9rZGRYxaPNBO-U4A@mail.gmail.com>
+ <Zowd-UxAnPmJSA0G@redhat.com>
+ <CABgObfaDKhKBcpmgypST=bo2KSqoNMCLKP-8oAvppxt9GDxBPA@mail.gmail.com>
+ <CAAjaMXa6E0koPXcytY9hEuUbhLeFcJqZsA3fz10q_HF0grz24w@mail.gmail.com>
+ <CABgObfa8KQOu6RPs1aqKww8qPeOjHppbH15aBCN+KvaOL=_W9A@mail.gmail.com>
+In-Reply-To: <CABgObfa8KQOu6RPs1aqKww8qPeOjHppbH15aBCN+KvaOL=_W9A@mail.gmail.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Date: Tue, 9 Jul 2024 10:38:34 +0300
+Message-ID: <CAAjaMXZ+Sx_+4sNFs=zy+bP0d5gbyf_Buh9JS-ixsRCfxsdN4w@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 0/7] Add Rust support, implement ARM PL011
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,63 +107,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On Mon, 8 Jul 2024 at 21:49, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+>
+>
+> Il lun 8 lug 2024, 20:39 Manos Pitsidianakis <manos.pitsidianakis@linaro.=
+org> ha scritto:
+>>
+>>
+>>
+>> On Mon, 8 Jul 2024, 21:34 Paolo Bonzini, <pbonzini@redhat.com> wrote:
+>>>
+>>>
+>>>
+>>> Il lun 8 lug 2024, 19:12 Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+ha scritto:
+>>>>
+>>>> That's exactly why I suggest its a pre-requisite for merging
+>>>> this. Unless we're able to demonstrate that we can enable
+>>>> Rust on all our CI platforms, the benefits of Rust will
+>>>> not be realized in QEMU, and we'll have never ending debates
+>>>> about whether each given feature needs to be in C or Rust.
+>>>
+>>>
+>>> In that case we should develop it on a branch, so that more than one pe=
+rson can contribute (unlike if we keep iterating on this RFC).
+>>
+>>
+>> If you do, I'd really appreciate it if you did not use any part of my pa=
+tches.
+>
+>
+> "We" means that you would accept patches, review them and apply them unti=
+l any agreed-upon conditions for merging are satisfied, and then send eithe=
+r a final series or a pull request for inclusion in QEMU.
 
-On Mon, Jul 08, 2024 at 07:09:02PM +0200, Eric Auger wrote:
-> Hi Mostafa,
-> 
-> On 7/4/24 20:36, Jean-Philippe Brucker wrote:
-> > On Mon, Jul 01, 2024 at 11:02:40AM +0000, Mostafa Saleh wrote:
-> >> QEMU doesn's support memory attributes, so FWB is NOP, this
-> >> might change in the future if memory attributre would be supported.
-> attributes here and below as reported along with v3
-> >>
-> >> Signed-off-by: Mostafa Saleh <smostafa@google.com>
-> >> ---
-> >>  hw/arm/smmuv3.c | 8 ++++++++
-> >>  1 file changed, 8 insertions(+)
-> >>
-> >> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> >> index 807f26f2da..88378e83dd 100644
-> >> --- a/hw/arm/smmuv3.c
-> >> +++ b/hw/arm/smmuv3.c
-> >> @@ -287,6 +287,14 @@ static void smmuv3_init_regs(SMMUv3State *s)
-> >>      if (FIELD_EX32(s->idr[0], IDR0, S2P)) {
-> >>          /* XNX is a stage-2-specific feature */
-> >>          s->idr[3] = FIELD_DP32(s->idr[3], IDR3, XNX, 1);
-> >> +        if (FIELD_EX32(s->idr[0], IDR0, S1P)) {
-> > Why is this check needed?
-> >
-> >> +            /*
-> >> +             * QEMU doesn's support memory attributes, so FWB is NOP, this
-> > doesn't
-> I have just seen your reply on my v3 comments. I still do not understand
-> why we expose this bit at this stage.
+Ah, alright. That wasn't obvious because that e-mail was not directed
+to me nor did it mention my name :)
 
-As I replied to Jean, I will drop this patch for now, we can always add it later,
-as it doens't add much value.
+I do not want to do that, in any case. I do not think it's the right approa=
+ch.
 
-Thanks,
-Mostafa
 
-> 
-> Thanks
-> 
-> Eric
-> >
-> > Thanks,
-> > Jean
-> >
-> >> +             * might change in the future if memory attributre would be
-> >> +             * supported.
-> >> +             */
-> >> +           s->idr[3] = FIELD_DP32(s->idr[3], IDR3, FWB, 1);
-> >> +        }
-> >>      }
-> >>      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 1);
-> >>      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, BBML, 2);
-> >> -- 
-> >> 2.45.2.803.g4e1b14247a-goog
-> >>
-> 
+--=20
+Manos Pitsidianakis
+Emulation and Virtualization Engineer at Linaro Ltd
 
