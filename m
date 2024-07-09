@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14033C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09837C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRD2r-0001CC-0w; Tue, 09 Jul 2024 11:46:21 -0400
+	id 1sRD7g-0005J3-5j; Tue, 09 Jul 2024 11:51:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRD2i-0000mG-73
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:46:16 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1sRD7c-00056u-WC
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:51:17 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRD2g-0002Od-3h
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:46:11 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-70af8062039so3219904b3a.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:46:08 -0700 (PDT)
+ id 1sRD7Z-0003Ha-S4
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:51:15 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1fb05b0be01so31341335ad.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:51:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720539968; x=1721144768; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720540271; x=1721145071; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9JD0Dbr7T3ZUz9lt7nR+lfIlFQr6E0Gj/yU3KGxEYB0=;
- b=QmkBcCaKZ7skYU0nN0GGDfGiwnAdt8Vqr/N+36GDZk/nfem6dP/U+lcuD7oNsVA/RS
- XHPl+o6axKUvM4bpWR9zkgIy+QF4E5GzLJYqMi8L+hHboMYdUzhvEIiOXquUCiVph4mw
- yYS7b6wjwmNc/xFb+mMreSgH6pyDymV2UkI7B9Z4AaVdub7/M0KENwfAfS1tTaBkmvnM
- z7BTX+2rYeowY72OB2mbITopGcf2xW79XA3mmb84QAD50mygHoeS56MK967+dpds1CQl
- oL1l/6WUIJrMsAGBrE/00X2XngL0aRRRo9fo9kaXciBM1aVreZebKiiPe94wneaq6UVS
- d3GQ==
+ bh=LlhSgxXmeIbp9/lrJEjIjrQkX2Q1dIcFiuiUW83SnM4=;
+ b=SE6vLJXr2tMjtOWeccvU0CoMse2LcEoZRn4FeXW05CHVqwfQ1QlWE8AYMLXuWDCAV1
+ mbK8GQPOSspntpfi26cN9U7j0j6ihK7L1s2j1PBgve4IJ2xms81KDr0oVsrReYG5Srie
+ gzRkJvCt1bXVADTlW+V5zXlSlGgwtvbddaq291Zl7NWYcbakfaIAB47tpDIOK6tVibEc
+ CGLmtAElUXmRZIkkoa5X25LH+4IuyKKV4GdPHA8bWKEqTy2OjJSeX46zSC3l6uOrzGVf
+ mQga8LdvmXgNwMKoVF5pQEmkizFIUGV4IhajgeFIJ1tw/XylXs1q/2rrgtDOTS/aEoY5
+ K2Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720539968; x=1721144768;
+ d=1e100.net; s=20230601; t=1720540271; x=1721145071;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9JD0Dbr7T3ZUz9lt7nR+lfIlFQr6E0Gj/yU3KGxEYB0=;
- b=RgY39g3tNybCHL0qI07p8CUt4gkK5vJZAoFSk7+eUMwqwbmJnSny6yroWQdflABvU2
- VqKVd2o+6J5rDi+22Sp1tt/epNBGBl2Cl7aacnmogZGl/ai1ojrl/I2NfO9bosdTsiq+
- Jo6qdtaLu3NTyI8jb5BrG13kwaIAsVBuXESGGNYU1VZ1Y6tyN62qxJ+dx9g0iCUtuzeT
- rOXz4MN46OaUJwLlZ8xILhrW0bfqGnYbF5oLD+RSa9JmeuZaNq1Zyq6I2wd4rooGfFeW
- re+EIR0o2vnzTGP27YnyyrfnV9KC4/2u/66dLYHGeBMGKqSZGT3cjLXcm7m3J3+SXUrO
- S4PQ==
+ bh=LlhSgxXmeIbp9/lrJEjIjrQkX2Q1dIcFiuiUW83SnM4=;
+ b=SXsj3vJD1WWheK/vnrkBDpatLbNno+vfxBMG1JO9+Xd1hnNt63Tdl5G02iIRzwy/QT
+ frXlZ7vlKMmRDZ+x4zG5k16Ftt8dc+mOi5If/ANfa4VX9EmzaJCjTFN4s8AUp9eFPEt8
+ Z4a0lJCtyWI6EEMfaWmsbN4lbnliEOZEJP5z9ob8fB937J9N1Xby0+NhMEMt+E0sNuOM
+ wiJ4n2S5uyQ6/V6pOR3GQIRiA13M6O0CH8/1f4zDPsUHUDGSmDI1izWKDWs8udovGC/v
+ tA2lTWCit6U1Gw4DYdvwIwPtrfu6qDicHUl4528osMjxy2DUTAtdCxFQUeEeLq6K099w
+ nl/Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJ9dyDILNtHUgAmzTq1uwmGZ7GSpn7K4w8m0/T6gZv8yzWNVBTWuP2nU5BmUmIrglzHC5ozNc0CK3V8mW/m+LP7MDqZyc=
-X-Gm-Message-State: AOJu0YzamQ0lmdIm4+5VkWhnvvPxsGckHuk5xhP6Cy+PFMmFPW8e63CJ
- +TarvADXYJvz4hfUW2mjTxkhtHgn+aJPMiRYSQ7cFRrrA8NhcGL34DL17Q3gesk=
-X-Google-Smtp-Source: AGHT+IH0XnyCvtEHHpJxqK/AnHS/F8YQaHps/BsNn1SwHSPY/KjymlQI5WaPf3MIaNpWa1EsbFGQdw==
-X-Received: by 2002:a05:6a00:4650:b0:706:34d2:62bc with SMTP id
- d2e1a72fcca58-70b435709d9mr3391749b3a.18.1720539961482; 
- Tue, 09 Jul 2024 08:46:01 -0700 (PDT)
+ AJvYcCVxGmeq4NUPCGC9tl3EOYmf1N6Mxkhjr6Wda2CjRrJgqUflShviE4g7rSvkNCRNQHLBsHCJXHWtJzajYsqwI/LaqAqCBoI=
+X-Gm-Message-State: AOJu0Yy3OL1IjLe4WqA6A9nztlV5Egv5u8KCRTgEtKUYI1bL6Nzsnr5X
+ KBmBPmRA33p+dz7QrIeXKPWxuO1hIiCjxZKPBIPGgmwmmJX4C3lGLsEaJ4jeACA=
+X-Google-Smtp-Source: AGHT+IGVDNcSEoLySu6WfzZoAgY9g5wFajpOcqHpeFxToLzYQJJUbPwf5Yqr9pTotgk4lIRN2/Y+vg==
+X-Received: by 2002:a17:902:9f8f:b0:1fb:7f2c:5644 with SMTP id
+ d9443c01a7336-1fbb6d59c22mr19592045ad.31.1720540270809; 
+ Tue, 09 Jul 2024 08:51:10 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b4397ed2esm2035874b3a.149.2024.07.09.08.46.00
+ d9443c01a7336-1fbb6a3fd26sm18288665ad.117.2024.07.09.08.51.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jul 2024 08:46:01 -0700 (PDT)
-Message-ID: <b1edf94a-5003-4075-a92b-87a802e748ab@linaro.org>
-Date: Tue, 9 Jul 2024 08:45:59 -0700
+ Tue, 09 Jul 2024 08:51:10 -0700 (PDT)
+Message-ID: <5b37a1af-e066-4916-9071-c9bf0c84d837@linaro.org>
+Date: Tue, 9 Jul 2024 08:51:08 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/arm: Fix handling of LDAPR/STLR with negative
- offset
+Subject: Re: [PATCH 2/2] target/arm: LDAPR should honour SCTLR_ELx.nAA
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240709134504.3500007-1-peter.maydell@linaro.org>
- <20240709134504.3500007-2-peter.maydell@linaro.org>
+ <20240709134504.3500007-3-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240709134504.3500007-2-peter.maydell@linaro.org>
+In-Reply-To: <20240709134504.3500007-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,24 +99,38 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/9/24 06:45, Peter Maydell wrote:
-> When we converted the LDAPR/STLR instructions to decodetree we
-> accidentally introduced a regression where the offset is negative.
-> The 9-bit immediate field is signed, and the old hand decoder
-> correctly used sextract32() to get it out of the insn word,
-> but the ldapr_stlr_i pattern in the decode file used"imm:9"
-> instead of"imm:s9", so it treated the field as unsigned.
+> In commit c1a1f80518d360b when we added the FEAT_LSE2 relaxations to
+> the alignment requirements for atomic and ordered loads and stores,
+> we didn't quite get it right for LDAPR/LDAPRH/LDAPRB with no
+> immediate offset.  These instructions were handled in the old decoder
+> as part of disas_ldst_atomic(), but unlike all the other insns that
+> function decoded (LDADD, LDCLR, etc) these insns are "ordered", not
+> "atomic", so they should be using check_ordered_align() rather than
+> check_atomic_align().  Commit c1a1f80518d360b used
+> check_atomic_align() regardless for everything in
+> disas_ldst_atomic().  We then carried that incorrect check over in
+> the decodetree conversion, where LDAPR/LDAPRH/LDAPRB are now handled
+> by trans_LDAPR().
 > 
-> Fix the pattern to treat the field as a signed immediate.
+> The effect is that when FEAT_LSE2 is implemented, these instructions
+> don't honour the SCTLR_ELx.nAA bit and will generate alignment
+> faults when they should not.
+> 
+> (The LDAPR insns with an immediate offset were in disas_ldst_ldapr_stlr()
+> and then in trans_LDAPR_i() and trans_STLR_i(), and have always used
+> the correct check_ordered_align().)
+> 
+> Use check_ordered_align() in trans_LDAPR().
 > 
 > Cc:qemu-stable@nongnu.org
-> Fixes: 2521b6073b7 ("target/arm: Convert LDAPR/STLR (imm) to decodetree")
-> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2419
+> Fixes: c1a1f80518d360b ("target/arm: Relax ordered/atomic alignment checks for LSE2")
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/a64.decode | 2 +-
+>   target/arm/tcg/translate-a64.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
