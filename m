@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE654C3DA41
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48CEBC3DA41
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRCkS-0007bF-Uu; Tue, 09 Jul 2024 11:27:20 -0400
+	id 1sRCkB-00060E-Mi; Tue, 09 Jul 2024 11:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCkR-0007Qr-8E
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:19 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCkA-0005tX-5T
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:02 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCkO-0006O7-Fv
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:18 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-52eafa1717bso2595088e87.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:27:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCk7-0006JZ-4U
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:01 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4266dc7591fso12608765e9.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:26:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720538834; x=1721143634; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720538816; x=1721143616; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=W7BjhCdKxXxM0Spf2aaSee+AlxJ5nkV7EMWxkmbyq9c=;
- b=KH5yDK8P4TtEwzPeQg1xdJ15AtIvVWK2QpUHpoKXViQ1qNr4r5TRGGhnCFFR2aC2qU
- YzbnXbWokvz9AXx9WXnzxNI2TgUm9QLAjvh5HBduMXpONGISVsJKQGsFBcUTGvRtoSUt
- cmKztsPpMJnKmULfFO8tLxAK9xCRW7JUPkRj/CzPmNtZTQvs8idAs2/IpjJ5jDhZ06CA
- 5R+V6iJo2gaq4TzOCo02z6ABKt1sPn+5PoFRthjaZKybV3jq0bu1kzqEbDnx3cO9//IL
- S1MasNQKb9MuYN2OWcTk2kxrCqMSljJBSQXTRbdXHcGfTXb7tii5AeUG0mR/TQLareD0
- IpLQ==
+ bh=bwlDS3Fem601L5/uj6bQqEPalzfsgOLIBKrXuQLdMJU=;
+ b=FjYgybO3Sjth2k4OcmUcrv8Qh0KXzPAJniD0aHyIIrE/b9vUfPpka3LgAEyR8KxPGD
+ +UVBbtt246ubUA5crTU4BhgOKDABGM4RX5LdVBnCPYafeWYjQPK2Vs2C6jq8atBiMlM8
+ d96NGOFiu3doqTpdrZXiJ5ui5ODs4kfvDx4hGfU8RF9nCI4a7/hq/5Gf0i4Y5McoLL+p
+ ZfiU2WvW1gzCMd88NcrZbcsw5gN8pPg9Ey9u5nvnlC/P74rr7M6XLGMovoV64sj8hPAF
+ TnfV/tuoKfh1AsCaa96Ve3lx9Hui9zHAv8UaBvAcRdkdJkm66G+Qb7htKvl3V11PSFav
+ gyKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720538834; x=1721143634;
+ d=1e100.net; s=20230601; t=1720538816; x=1721143616;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=W7BjhCdKxXxM0Spf2aaSee+AlxJ5nkV7EMWxkmbyq9c=;
- b=QHPsLgyFJstP6x2NxCQPVs6LrMaYZ5X6JUljVAM/WieXKd18rH+3nYquRdIX3seY1/
- hBejY/jkPZXajF+8IzAvOoynk1MBczQT9ZFP6I58OaUUPU0ql22em2wXfvk934c/A7N3
- EhulL98T2dL/GA3HNRKvtSuVT3aKOu60sX7p7w2XgDFr4hVMP5Xh9OqnFK2gCe3ddOZ/
- C5aL/fdAltJDu549ulL26+93NNUt7N8YaAl00VQ3pUBHePOc/VcaCOK6P/e1FXbtKzGR
- vhViHQe4Fx9LGuKPvFiE6DmB5+JSlobZkIoO5qGJ8WiJIqx9PnH3rAPFSlRElLqwt1wN
- dU+A==
-X-Gm-Message-State: AOJu0Yyg3KC9zr3G6CNzFFV/6MpBdYhBuuilKhM2+xhDmR2+FdOG0fLc
- IMJPasuhyoiB1yzkESDbv8MLq02b2+4ApCY0LC4ZUrLX3L0nhZeSKvEKPTHkS77rqq2Yix030tU
- P
-X-Google-Smtp-Source: AGHT+IG2JdSJwJpl6rQjS4UrGHmRlkAZPwbxo01ivO7OMi3t1029qfANIs7r9YNAE/YSMA0eqCU3Kg==
-X-Received: by 2002:a05:651c:198b:b0:2ed:5c34:4082 with SMTP id
- 38308e7fff4ca-2eeb30ba0abmr27934141fa.8.1720538834345; 
- Tue, 09 Jul 2024 08:27:14 -0700 (PDT)
+ bh=bwlDS3Fem601L5/uj6bQqEPalzfsgOLIBKrXuQLdMJU=;
+ b=tRidMk2rLuXNTwJU7a5qp6ffkj8325rCxaz4yJGeVz/Ml5muPCmjeBf65PdSOny0Y5
+ cL/G5lW0cvpg62pbgqqbA8iollbZUR6OinXmkvvaqx39/J68UnKtORvILDLE+8OL+OmH
+ P3n1crUQaEEc5DSGJOt9h31VrZ0JhWcHkzQPHlOGjkiKM4N3EPx0PCHvIRgjyzHugoig
+ nmv9B+TsMu/Y5BEM0ABUP/WrlXCsFW2bNycRO2YdUrGaK97nc7T3TdAAW1ViMp9gB2if
+ BDPeSArUXnbzNqZxwgnhpq4Xu7AnrYjWGN7MuKiStUFiV/WQnJKIhErbOhr//TzuEEk0
+ reZg==
+X-Gm-Message-State: AOJu0Yz78bGKJE7xpfsff6qpqZ+eKxCGkh8tqzUqWciFaWXoKpIRsmTM
+ sbiAus/xQG6/iRqi/bLfgQtxwxfBBRUiwmbIYzx0WOZTv0wEglQjmbG5VQWNXZkxX2vNmV4CYNS
+ +
+X-Google-Smtp-Source: AGHT+IFt1ohULQ5udOQp6NEinCFL2Fr8z8CNRk1O1D/qQWMs0ElRFxrF7nAS6tF3zbBQBIpDpuuq9w==
+X-Received: by 2002:a05:600c:2112:b0:426:6416:aa7a with SMTP id
+ 5b1f17b1804b1-426708f06damr23851025e9.34.1720538816441; 
+ Tue, 09 Jul 2024 08:26:56 -0700 (PDT)
 Received: from m1x-phil.lan (vau06-h02-176-184-43-20.dsl.sta.abo.bbox.fr.
  [176.184.43.20]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4264a2fc9desm215676235e9.45.2024.07.09.08.27.12
+ 5b1f17b1804b1-4266857c28esm98167515e9.2.2024.07.09.08.26.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Jul 2024 08:27:13 -0700 (PDT)
+ Tue, 09 Jul 2024 08:26:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -65,18 +65,21 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Bin Meng <bmeng.cn@gmail.com>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>
-Subject: [PATCH v47 12/19] hw/sd/sdcard: Simplify EXT_CSD values for spec v4.3
-Date: Tue,  9 Jul 2024 17:25:49 +0200
-Message-ID: <20240709152556.52896-13-philmd@linaro.org>
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Luc Michel <luc.michel@amd.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v47 09/19] hw/sd/sdcard: Implement eMMC sleep state (CMD5)
+Date: Tue,  9 Jul 2024 17:25:46 +0200
+Message-ID: <20240709152556.52896-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240709152556.52896-1-philmd@linaro.org>
 References: <20240709152556.52896-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,108 +102,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Set some keys to not defined / implemented:
-  . EXT_CSD_HPI_FEATURES
-  . EXT_CSD_BKOPS_SUPPORT
-  . EXT_CSD_SEC_FEATURE_SUPPORT
-  . EXT_CSD_ERASE_TIMEOUT_MULT
-  . EXT_CSD_PART_SWITCH_TIME
-  . EXT_CSD_OUT_OF_INTERRUPT_TIME
+From: Luc Michel <luc.michel@amd.com>
 
-- Simplify:
-  . EXT_CSD_ACC_SIZE (6 -> 1)
-      16KB of super_page_size -> 512B (BDRV_SECTOR_SIZE)
-  . EXT_CSD_HC_ERASE_GRP_SIZE (4 -> 1)
-  . EXT_CSD_HC_WP_GRP_SIZE (4 -> 1)
-  . EXT_CSD_S_C_VCC[Q] (8 -> 1)
-  . EXT_CSD_S_A_TIMEOUT (17 -> 1)
-  . EXT_CSD_CARD_TYPE (7 -> 3)
-      Dual data rate -> High-Speed mode
+The JEDEC standards specifies a sleep state where the eMMC won't answer
+any command appart from RESET and WAKEUP and go to low power state.
+Implement this state and the corresponding command number 5.
 
-- Update:
-  . EXT_CSD_CARD_TYPE (7 -> 3)
-      High-Speed MultiMediaCard @ 26MHz & 52MHz
-  . Performances (0xa -> 0x46)
-      Class B at 3MB/s. -> Class J at 21MB/s
-  . EXT_CSD_REV (5 -> 3)
-      Rev 1.5 (spec v4.41) -> Rev 1.3 (spec v4.3)
-
-- Use load/store API to set EXT_CSD_SEC_CNT
-
-- Remove R/W keys, normally zeroed at reset
-  . EXT_CSD_BOOT_INFO
-
+Signed-off-by: Luc Michel <luc.michel@amd.com>
+Signed-off-by: Francisco Iglesias <francisco.iglesias@amd.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Message-Id: <20240628070216.92609-90-philmd@linaro.org>
 ---
- hw/sd/sd.c | 50 ++++++++++++++++++--------------------------------
- 1 file changed, 18 insertions(+), 32 deletions(-)
+ hw/sd/sd.c | 47 +++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 45 insertions(+), 2 deletions(-)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index df0e2345c0..2a687977d1 100644
+index 05c1b85476..adba53e822 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -484,43 +484,29 @@ static void mmc_set_ext_csd(SDState *sd, uint64_t size)
+@@ -1236,8 +1236,19 @@ static sd_rsp_type_t sd_cmd_to_sendingdata(SDState *sd, SDRequest req,
+ /* CMD0 */
+ static sd_rsp_type_t sd_cmd_GO_IDLE_STATE(SDState *sd, SDRequest req)
+ {
+-    sd->state = sd_idle_state;
+-    sd_reset(DEVICE(sd));
++    if (sd->state == sd_sleep_state) {
++        switch (req.arg) {
++        case 0x00000000:
++        case 0xf0f0f0f0:
++            break;
++        default:
++            return sd_r0;
++        }
++    }
++    if (sd->state != sd_inactive_state) {
++        sd->state = sd_idle_state;
++        sd_reset(DEVICE(sd));
++    }
  
-     memset(sd->ext_csd, 0, sizeof(sd->ext_csd));
- 
-+    /* Properties segment (RO) */
-     sd->ext_csd[EXT_CSD_S_CMD_SET] = 0b1; /* supported command sets */
--    sd->ext_csd[EXT_CSD_HPI_FEATURES] = 0x3; /* HPI features  */
--    sd->ext_csd[EXT_CSD_BKOPS_SUPPORT] = 0x1; /* Background operations */
--    sd->ext_csd[241] = 0xA; /* 1st initialization time after partitioning */
--    sd->ext_csd[EXT_CSD_TRIM_MULT] = 0x1; /* Trim multiplier */
--    sd->ext_csd[EXT_CSD_SEC_FEATURE_SUPPORT] = 0x15; /* Secure feature */
--    sd->ext_csd[EXT_CSD_BOOT_INFO] = 0x7; /* Boot information */
-+    sd->ext_csd[EXT_CSD_BOOT_INFO] = 0x0; /* Boot information */
-                                      /* Boot partition size. 128KB unit */
-     sd->ext_csd[EXT_CSD_BOOT_MULT] = sd->boot_part_size / (128 * KiB);
--    sd->ext_csd[EXT_CSD_ACC_SIZE] = 0x6; /* Access size */
--    sd->ext_csd[EXT_CSD_HC_ERASE_GRP_SIZE] = 0x4; /* HC Erase unit size */
-+    sd->ext_csd[EXT_CSD_ACC_SIZE] = 0x1; /* Access size */
-+    sd->ext_csd[EXT_CSD_HC_ERASE_GRP_SIZE] = 0x01; /* HC Erase unit size */
-     sd->ext_csd[EXT_CSD_ERASE_TIMEOUT_MULT] = 0x01; /* HC erase timeout */
-     sd->ext_csd[EXT_CSD_REL_WR_SEC_C] = 0x1; /* Reliable write sector count */
--    sd->ext_csd[EXT_CSD_HC_WP_GRP_SIZE] = 0x4; /* HC write protect group size */
--    sd->ext_csd[EXT_CSD_S_C_VCC] = 0x8; /* Sleep current VCC  */
--    sd->ext_csd[EXT_CSD_S_C_VCCQ] = 0x7; /* Sleep current VCCQ */
--    sd->ext_csd[EXT_CSD_S_A_TIMEOUT] = 0x11; /* Sleep/Awake timeout */
--    sd->ext_csd[215] = (sectcount >> 24) & 0xff; /* Sector count */
--    sd->ext_csd[214] = (sectcount >> 16) & 0xff; /* ... */
--    sd->ext_csd[213] = (sectcount >> 8) & 0xff;  /* ... */
--    sd->ext_csd[EXT_CSD_SEC_CNT] = (sectcount & 0xff);       /* ... */
--    sd->ext_csd[210] = 0xa; /* Min write perf for 8bit@52Mhz */
--    sd->ext_csd[209] = 0xa; /* Min read perf for 8bit@52Mhz  */
--    sd->ext_csd[208] = 0xa; /* Min write perf for 4bit@52Mhz */
--    sd->ext_csd[207] = 0xa; /* Min read perf for 4bit@52Mhz */
--    sd->ext_csd[206] = 0xa; /* Min write perf for 4bit@26Mhz */
--    sd->ext_csd[205] = 0xa; /* Min read perf for 4bit@26Mhz */
--    sd->ext_csd[EXT_CSD_PART_SWITCH_TIME] = 0x1;
--    sd->ext_csd[EXT_CSD_OUT_OF_INTERRUPT_TIME] = 0x1;
--    sd->ext_csd[EXT_CSD_CARD_TYPE] = 0x7;
--    sd->ext_csd[EXT_CSD_STRUCTURE] = 0x2;
--    sd->ext_csd[EXT_CSD_REV] = 0x5;
--    sd->ext_csd[EXT_CSD_RPMB_MULT] = 0x1; /* RPMB size */
--    sd->ext_csd[EXT_CSD_PARTITION_SUPPORT] = 0x3;
--    sd->ext_csd[159] = 0x00; /* Max enhanced area size */
--    sd->ext_csd[158] = 0x00; /* ... */
--    sd->ext_csd[157] = 0xEC; /* ... */
-+    sd->ext_csd[EXT_CSD_HC_WP_GRP_SIZE] = 0x01; /* HC write protect group size */
-+    sd->ext_csd[EXT_CSD_S_C_VCC] = 0x01; /* Sleep current VCC  */
-+    sd->ext_csd[EXT_CSD_S_C_VCCQ] = 0x01; /* Sleep current VCCQ */
-+    sd->ext_csd[EXT_CSD_S_A_TIMEOUT] = 0x01; /* Sleep/Awake timeout */
-+    stl_le_p(&sd->ext_csd[EXT_CSD_SEC_CNT], sectcount); /* Sector count */
-+    sd->ext_csd[210] = 0x46; /* Min write perf for 8bit@52Mhz */
-+    sd->ext_csd[209] = 0x46; /* Min read perf for 8bit@52Mhz  */
-+    sd->ext_csd[208] = 0x46; /* Min write perf for 4bit@52Mhz */
-+    sd->ext_csd[207] = 0x46; /* Min read perf for 4bit@52Mhz */
-+    sd->ext_csd[206] = 0x46; /* Min write perf for 4bit@26Mhz */
-+    sd->ext_csd[205] = 0x46; /* Min read perf for 4bit@26Mhz */
-+    sd->ext_csd[EXT_CSD_CARD_TYPE] = 0b11;
-+    sd->ext_csd[EXT_CSD_STRUCTURE] = 2;
-+    sd->ext_csd[EXT_CSD_REV] = 3;
+     return sd_is_spi(sd) ? sd_r1 : sd_r0;
+ }
+@@ -1294,6 +1305,30 @@ static sd_rsp_type_t emmc_cmd_SET_RELATIVE_ADDR(SDState *sd, SDRequest req)
+     }
  }
  
- static void emmc_set_csd(SDState *sd, uint64_t size)
++/* CMD5 */
++static sd_rsp_type_t emmc_cmd_sleep_awake(SDState *sd, SDRequest req)
++{
++    bool do_sleep = extract32(req.arg, 15, 1);
++
++    switch (sd->state) {
++    case sd_sleep_state:
++        if (!do_sleep) {
++            /* Awake */
++            sd->state = sd_standby_state;
++        }
++        return sd_r1b;
++
++    case sd_standby_state:
++        if (do_sleep) {
++            sd->state = sd_sleep_state;
++        }
++        return sd_r1b;
++
++    default:
++        return sd_invalid_state_for_cmd(sd, req);
++    }
++}
++
+ /* CMD6 */
+ static sd_rsp_type_t sd_cmd_SWITCH_FUNCTION(SDState *sd, SDRequest req)
+ {
+@@ -1696,6 +1731,7 @@ static sd_rsp_type_t sd_cmd_APP_CMD(SDState *sd, SDRequest req)
+     case sd_ready_state:
+     case sd_identification_state:
+     case sd_inactive_state:
++    case sd_sleep_state:
+         return sd_invalid_state_for_cmd(sd, req);
+     case sd_idle_state:
+         if (!sd_is_spi(sd) && sd_req_get_rca(sd, req) != 0x0000) {
+@@ -2018,6 +2054,12 @@ int sd_do_command(SDState *sd, SDRequest *req,
+         req->cmd &= 0x3f;
+     }
+ 
++    if (sd->state == sd_sleep_state && req->cmd) {
++        qemu_log_mask(LOG_GUEST_ERROR, "SD: Card is sleeping\n");
++        rtype = sd_r0;
++        goto send_response;
++    }
++
+     if (sd->card_status & CARD_IS_LOCKED) {
+         if (!cmd_valid_while_locked(sd, req->cmd)) {
+             sd->card_status |= ILLEGAL_COMMAND;
+@@ -2467,6 +2509,7 @@ static const SDProto sd_proto_emmc = {
+         [2]  = {0,  sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
+         [3]  = {0,  sd_ac,   "SET_RELATIVE_ADDR", emmc_cmd_SET_RELATIVE_ADDR},
+         [4]  = {0,  sd_bc,   "SEND_DSR", sd_cmd_unimplemented},
++        [5]  = {0,  sd_ac,   "SLEEP/AWAKE", emmc_cmd_sleep_awake},
+         [7]  = {0,  sd_ac,   "(DE)SELECT_CARD", sd_cmd_DE_SELECT_CARD},
+         [9]  = {0,  sd_ac,   "SEND_CSD", sd_cmd_SEND_CSD},
+         [10] = {0,  sd_ac,   "SEND_CID", sd_cmd_SEND_CID},
 -- 
 2.41.0
 
