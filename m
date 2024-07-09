@@ -4,65 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A322BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 16:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EFB2C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 16:52:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRE0q-00087t-H4; Tue, 09 Jul 2024 12:48:20 -0400
+	id 1sRE4K-0004kU-9Y; Tue, 09 Jul 2024 12:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRE0p-000872-1H
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 12:48:19 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sRE4G-0004jI-2W
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 12:51:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sRE0n-000525-7Z
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 12:48:18 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sRE4E-0005uE-Dj
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 12:51:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720543695;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1720543907;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fOEIMAMP/0J5WABOUJtCCyKZtgwP+NSk+WseQw6WNjc=;
- b=MhJyZCWgvyehhkKPo8QMwIXB1RB4rj3Rz+yv8W/V/RiEEUrI5Y/1NPUgKM5e3eOzX1nyRi
- 6nFLZsgsJswk06+Vp4A870cmK/QaKNcl+hdyKq/Cy77SwwQNvBgptGCtiby6gOLyAHks9x
- DtgaQpW2C6U+vKZEzUmRAbzl0OVmn84=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-HQ-A14CWPlC4WDuH3ZsV6A-1; Tue,
- 09 Jul 2024 12:48:12 -0400
-X-MC-Unique: HQ-A14CWPlC4WDuH3ZsV6A-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1178A1956046; Tue,  9 Jul 2024 16:48:11 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.106])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3175A3000183; Tue,  9 Jul 2024 16:48:08 +0000 (UTC)
-Date: Tue, 9 Jul 2024 17:48:05 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH] qdev-monitor: QAPIfy QMP device_add
-Message-ID: <Zo1pxag7rYg_3D6j@redhat.com>
-References: <20240708143027.480821-1-stefanha@redhat.com>
+ bh=PGW9fd1eBASCRWqSOirHjPcCU8llVEz8mzR6xpxjOCE=;
+ b=NnKUIhzpF7/fej5rpEiut8H0xmiJJC/SE0Obarfa1O0XRSx19+PKUu9tHaF9yrp6PM110T
+ MK367siFSWcI04OTJi/oZ2RAWBgZMytHYbBGBZVCA4hoiR2S+IXVlLnktiVzpWe+5RGX4C
+ ah8xABIQvs2TG2CWAt7A+Qu8wtArfFw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-48-XQtyjvq9P6KIpjxA5_fRZg-1; Tue, 09 Jul 2024 12:51:45 -0400
+X-MC-Unique: XQtyjvq9P6KIpjxA5_fRZg-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3679aa0ee0aso3618212f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 09:51:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720543903; x=1721148703;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PGW9fd1eBASCRWqSOirHjPcCU8llVEz8mzR6xpxjOCE=;
+ b=EFY5A+zV93c2HW+YXoTDjEvbDL1cXygAPznSjvoyj3sgsH9XnPF0Z4fGx/vzi9xKAx
+ snnF7D+cE0YRa6u8ZLAiJ/B0Ch2zX09FQYV3nWJuE12fA0WJLHMCs/JXlc5T6tTPf7bT
+ zukSbpNI0d5wi5vbjBNSgduJQp1CMd9w28bcYRvZP+V78WL09H+QS6QJZq4wVEhpUQce
+ zyLKyTp6EDFs/zaD4JF2+OtqeEd2WJLFPx0O/ZlxifXVRFdeODcWYDmBN1yaafeDYVGV
+ l0VO+MBprIH1sE9CBTpq+hRGzcD0oslrkWxw6BqGX0vBBFFcGe064fH0ccZrmQa8AMGr
+ YspQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVlXroi5AZeuRYk5XZNKZ17eG1Ax6l/zdyPjk42BflQ2YiLmZuxnlrWy1iGZ5C2siZsHstOvZeyHM0F1HFNI8q3FdQ/EDM=
+X-Gm-Message-State: AOJu0Yzsd/mZLz2N84QTStOBKZA/yp07ZuUYkM3ZqnelHFi2YxKoMqo3
+ iNNPsP4xnPOrADcKMX+qN5ed/rP+xT6WL6zLUBwOk7qBl8mCB6UsZKkDtm3/m00CmHByoiesQVL
+ s9eq9Fttu1J0pFp+rKoNcKGC72v1BO95y0K2rog9c+0vBzyqnCezwUDwsL7r9QrelxnoVePIoN6
+ xpUgKf5PEhW2OAYvd9kj9PMbjvszw=
+X-Received: by 2002:adf:ff86:0:b0:360:708c:788e with SMTP id
+ ffacd0b85a97d-367cea67e9emr2180648f8f.17.1720543903657; 
+ Tue, 09 Jul 2024 09:51:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2gKXBzejhL2xwNdmuTjFpMl0MDhpEMTN4IQfgkMKtwPbn4t6JAnuImfnRDREQV3fdw5FJeqFu4tpRpLGWlFM=
+X-Received: by 2002:adf:ff86:0:b0:360:708c:788e with SMTP id
+ ffacd0b85a97d-367cea67e9emr2180631f8f.17.1720543903247; Tue, 09 Jul 2024
+ 09:51:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240708143027.480821-1-stefanha@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+References: <rust-pl011-rfc-v4.git.manos.pitsidianakis@linaro.org>
+ <8dfd1047-436d-4157-83cb-9cad399544fe@redhat.com>
+ <ZowUyFX7zcK1FvuG@redhat.com>
+ <CABgObfZfQNSeYeCqcuNHcu=pyKz+f_MUc=9rZGRYxaPNBO-U4A@mail.gmail.com>
+ <Zowd-UxAnPmJSA0G@redhat.com>
+ <CABgObfaDKhKBcpmgypST=bo2KSqoNMCLKP-8oAvppxt9GDxBPA@mail.gmail.com>
+ <CAAjaMXa6E0koPXcytY9hEuUbhLeFcJqZsA3fz10q_HF0grz24w@mail.gmail.com>
+ <CABgObfa8KQOu6RPs1aqKww8qPeOjHppbH15aBCN+KvaOL=_W9A@mail.gmail.com>
+ <CAAjaMXZ+Sx_+4sNFs=zy+bP0d5gbyf_Buh9JS-ixsRCfxsdN4w@mail.gmail.com>
+ <CABgObfb3mmxZy_cEeUTbuGCN-3Nqs8x8dkGy7Ehyowd9LNbktg@mail.gmail.com>
+ <Zo0qh51MPlmfFVUP@redhat.com>
+In-Reply-To: <Zo0qh51MPlmfFVUP@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 9 Jul 2024 18:51:31 +0200
+Message-ID: <CABgObfa+daKTnJ9ATCqFUHD=ZJK-KM+VDpMA6R_YPrvsGYx00g@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 0/7] Add Rust support, implement ARM PL011
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -83,139 +115,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 08, 2024 at 04:30:27PM +0200, Stefan Hajnoczi wrote:
-> The QMP device_add monitor command converts the QDict arguments to
-> QemuOpts and then back again to QDict. This process only supports scalar
-> types. Device properties like virtio-blk-pci's iothread-vq-mapping (an
-> array of objects) are silently dropped by qemu_opts_from_qdict() during
-> the QemuOpts conversion even though QAPI is capable of validating them.
-> As a result, hotplugging virtio-blk-pci devices with the
-> iothread-vq-mapping property does not work as expected (the property is
-> ignored). It's time to QAPIfy QMP device_add!
-> 
-> Get rid of the QemuOpts conversion in qmp_device_add() and call
-> qdev_device_add_from_qdict() with from_json=true. Using the QMP
-> command's QDict arguments directly allows non-scalar properties.
-> 
-> The HMP is also adjusted since qmp_device_add()'s now expects properly
-> typed JSON arguments and cannot be used from HMP anymore. Move the code
-> that was previously in qmp_device_add() (with QemuOpts conversion and
-> from_json=false) into hmp_device_add() so that its behavior is
-> unchanged.
-> 
-> This patch changes the behavior of QMP device_add but not HMP
-> device_add. QMP clients that sent incorrectly typed device_add QMP
-> commands no longer work. This is a breaking change but clients should be
-> using the correct types already. See the netdev_add QAPIfication in
-> commit db2a380c8457 for similar reasoning.
-> 
-> Markus helped me figure this out and even provided a draft patch. The
-> code ended up very close to what he suggested.
-> 
-> Suggested-by: Markus Armbruster <armbru@redhat.com>
-> Cc: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  system/qdev-monitor.c | 41 ++++++++++++++++++++++++++++-------------
->  1 file changed, 28 insertions(+), 13 deletions(-)
+On Tue, Jul 9, 2024 at 2:18=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+> My thought is that the initial merge focuses only on the build system
+> integration. So that's basically patches 1 + 2 in this series.
+>
+> Patch 3, the high level APIs is where I see most of the work and
+> collaboration being needed, but that doesn't need to be rushed into
+> the first merge. We would have a "rust" subsystem + maintainer who
+> would presumably have a staging tree, etc in the normal way we work
+> and collaborate
 
-I think we're justified in saying that applications should have been
-using the correct types already.
+It's complicated. A "perfect" build system integration would include
+integration with Kconfig, but it's not simple work and it may not be
+Manos's preference for what to work on (or maybe it is), and it's also
+not a blocker for further work on patches 3-4.
 
-On the libvirt side we already switched to using JSON for -device,
-which has forced us to ensure we're using the correct types. So
-the risk of converting device_add is minimal from libvirt's POV.
+On the other hand, patches 3 and 4 are _almost_ ready except for
+requiring a very new Rust - we know how to tackle that, but again it
+may take some time and it's completely separate work from better build
+system integration.
 
-Other non-libvirt mgmt apps might get tripped up. Fixing those
-should not be too difficult and fixed code would remain compatible
-with older QEMU versions too.
+In other words, improving build system integration is harder until
+merge, but merge is blocked by independent work on lowering the
+minimum supported Rust version. This is why I liked the idea of having
+either a development tree to allow a merge into early 9.2.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+On the other hand, given the exceptional scope (completely new code
+that can be disabled at will) and circumstances, even a very early
+merge into 9.1 (disabled by default) might be better to provide
+developers with the easiest base for experimenting. The requirements
+for merging, here, would basically amount to a good roadmap and some
+established good habits.
 
+An merge into early 9.2 would be a bit harder for experimenting, while
+merging it now would sacrifice CI integration in the initial stages of
+the work but make cooperation easier.
 
-> 
-> diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-> index 6af6ef7d66..1427aa173c 100644
-> --- a/system/qdev-monitor.c
-> +++ b/system/qdev-monitor.c
-> @@ -849,18 +849,9 @@ void hmp_info_qdm(Monitor *mon, const QDict *qdict)
->  
->  void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
->  {
-> -    QemuOpts *opts;
->      DeviceState *dev;
->  
-> -    opts = qemu_opts_from_qdict(qemu_find_opts("device"), qdict, errp);
-> -    if (!opts) {
-> -        return;
-> -    }
-> -    if (!monitor_cur_is_qmp() && qdev_device_help(opts)) {
-> -        qemu_opts_del(opts);
-> -        return;
-> -    }
-> -    dev = qdev_device_add(opts, errp);
-> +    dev = qdev_device_add_from_qdict(qdict, true, errp);
->      if (!dev) {
->          /*
->           * Drain all pending RCU callbacks. This is done because
-> @@ -872,8 +863,6 @@ void qmp_device_add(QDict *qdict, QObject **ret_data, Error **errp)
->           * to the user
->           */
->          drain_call_rcu();
-> -
-> -        qemu_opts_del(opts);
->          return;
->      }
->      object_unref(OBJECT(dev));
-> @@ -967,8 +956,34 @@ void qmp_device_del(const char *id, Error **errp)
->  void hmp_device_add(Monitor *mon, const QDict *qdict)
->  {
->      Error *err = NULL;
-> +    QemuOpts *opts;
-> +    DeviceState *dev;
->  
-> -    qmp_device_add((QDict *)qdict, NULL, &err);
-> +    opts = qemu_opts_from_qdict(qemu_find_opts("device"), qdict, &err);
-> +    if (!opts) {
-> +        goto out;
-> +    }
-> +    if (qdev_device_help(opts)) {
-> +        qemu_opts_del(opts);
-> +        return;
-> +    }
-> +    dev = qdev_device_add(opts, &err);
-> +    if (!dev) {
-> +        /*
-> +         * Drain all pending RCU callbacks. This is done because
-> +         * some bus related operations can delay a device removal
-> +         * (in this case this can happen if device is added and then
-> +         * removed due to a configuration error)
-> +         * to a RCU callback, but user might expect that this interface
-> +         * will finish its job completely once qmp command returns result
-> +         * to the user
-> +         */
-> +        drain_call_rcu();
-> +
-> +        qemu_opts_del(opts);
-> +    }
-> +    object_unref(OBJECT(dev));
-> +out:
->      hmp_handle_error(mon, err);
->  }
->  
-> -- 
-> 2.45.2
-> 
+However, it's difficult to say what's best without knowing Manos's
+rationale for preferring not to have a development tree yet.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Paolo
 
 
