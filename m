@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD9DCC2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:29:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CF23C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRCkf-0000vY-I2; Tue, 09 Jul 2024 11:27:33 -0400
+	id 1sRCkl-0001W1-Vs; Tue, 09 Jul 2024 11:27:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCkd-0000jL-FQ
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:31 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCkj-0001IY-AC
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:37 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCka-0006Pp-D1
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:31 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2eeb1ba0468so18543071fa.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:27:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCkh-0006SF-CM
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:27:36 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42561c16ffeso37251885e9.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:27:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720538846; x=1721143646; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720538852; x=1721143652; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/wJ5lOyeKuAdtY89+hnEzjIVRBYuAVyLYyRgy5UbxAE=;
- b=hVndUIm/Xg31HQbSY0OG7nh8Zngf6P+sYMVQa11nKs1EiTZWWbsPvLd2+1Eah02Ub2
- 09T/E1Qql3J1WyoQpKF6As5JfefxyEGSTHkIsJT/J3600XEdE+jMgZVI6KuyOMvpLGdX
- 8h47GOzVw6nmiyEc5r7b8e55I5KW5ZiZWO0eFjfBdjctatFlbayEbjv5IRFIxLXhu6YZ
- hdhvpNiE830gMJpo3dT8le0UU/1Nm4z2p9uDH2evx99Rgkwek5ZiLeflsHoYeWfbBSdC
- hV9Je17jp+nlegTATbwxdScj7MWme8DyE9EYutzAQ1Lve72s7wSQJPPGuVKD+eJzUfWP
- 4F6g==
+ bh=h9uxsmCdFdNFYJS/BApUCrJ5ayaONfYjrqqyp7Nd2Kk=;
+ b=DrscL89fF8J5/9XZLjKneAKdukn+47qS33xmqionyZeilCJUhXrVKuYW1+eG69wV8Y
+ zMfcGO5ZhWujkXifkSx+yXxV6jDcD1Ijs83Pjy3+8qHoLNJSshJGbXVrxuUs3e5kYHtz
+ uP+dGkPUe9Lifkg74PPy1eu62f0aiwyJe1n0b623eRiASPe+O1w+9+4z+ko43s8irVBX
+ H9HcGI0z0rHuJegHi/VEuTYYhGYj7DD4u+ibr1OgizuFFG4lbCVr/yXAZtmMvnoMSCcn
+ zSLemHTIbv9Secu31ssVi1wCsHCYIR9fiB1OV5C52kaWWUh+JoED6iZka6sihQNtMqpJ
+ 0JSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720538846; x=1721143646;
+ d=1e100.net; s=20230601; t=1720538852; x=1721143652;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/wJ5lOyeKuAdtY89+hnEzjIVRBYuAVyLYyRgy5UbxAE=;
- b=ESxcr6VcDZ16D3C0JaXsQx28QGuMQD7cESoI0lHbSTFrMsW91qoWwkLHXgKT37aQli
- nY8xjDr2FLUI1ZWQQaAUgCaJ1VTGZGEQZhqxiJ1ntBksAGeArpuoyWscl3SVjPVhO9Lv
- 4Adxrx0azztSt0ksGTouksYjOu+9X5loy4ZNxuu0LVJ8OSO5gXbn7g0/FEuYX8XFOwvi
- F3P6ba/YTyYLsmDkM93qKUf9qR91EzlWYDw8XO76WQ7RXJ48L+NctOhSL3fnYdix7VZC
- GoGrmyZGgw0gN/9q/pnlZ/UjSaVOi1PeR4QbB6OdXsV7l1MCIPoZDzXalWG4W0w4iRDB
- h7ng==
-X-Gm-Message-State: AOJu0Yyv/eR3p3pgPQl9vMG8tFz+igr/sNbHkX2ufGWvLm07gyZ49Zpt
- ky51gFG4nmH1ku2bVQBSmoFU2d0qXvG3L+P1VL642ZrX3AbS7uHTtcxGW0seVvqzTNlgSPEoFVl
- Z
-X-Google-Smtp-Source: AGHT+IHFTTY947JzlGNKCYTAmdf9b+lfGgD6UHY2uilFzI0AFIm/dOMb7RZ17NN0FVUZlLZ+ERELvQ==
-X-Received: by 2002:a2e:9b86:0:b0:2ec:1708:4daf with SMTP id
- 38308e7fff4ca-2eeb319887amr18505731fa.47.1720538846212; 
- Tue, 09 Jul 2024 08:27:26 -0700 (PDT)
+ bh=h9uxsmCdFdNFYJS/BApUCrJ5ayaONfYjrqqyp7Nd2Kk=;
+ b=RCYlZBX7J5NctmDIwxup5vF52Okwy1Gyf9zuvOuPcxSvYQCKFJrf1CvA5FHPFlkP5I
+ zEp8BlpHs7dErX6jLp6EkWbbQqX+85kY2J5bwNGDV4M+peKLg+CfbvYwcyxauIfmX1Rx
+ gLHsYjT8iz7BY3C+gFcOvaS2pqH/W56TMtBgIu/AGLKFRPWQiWyRsyG82czMR+7Evo0R
+ Z9fvSvQeYqEyypoksV/ZO9CJNB6bDQwsMTiIEdaX64aAes01rThqzyy1ODVEMStH2Oxn
+ E5K6MYMBqDox4RfrKvWJMLtMAPOqv77r0Tam0+4vinTDU13KnCgrc8NlypffJiNlUIYl
+ kiFg==
+X-Gm-Message-State: AOJu0YwYIjoRgps8lHMo8iLfNLdd3jY5K4hxqf8NhD9g5h74rLSOWSmZ
+ Umni26uFUAn7Zeeu55OAUuMr3YX6YUY/2Z7AaAl9rvC/KcihIl0MFgty6RAAZalhL0mjS/QGnQk
+ m
+X-Google-Smtp-Source: AGHT+IG4ruetcFzXiBq/2dXI9M9rrE2v/u03PkeUeT/cCHNWC7TAgNWhJPaZtZ5Q36FNAaIr85TT8g==
+X-Received: by 2002:a05:600c:2207:b0:426:5b3b:88b0 with SMTP id
+ 5b1f17b1804b1-426707db78fmr18982815e9.14.1720538852166; 
+ Tue, 09 Jul 2024 08:27:32 -0700 (PDT)
 Received: from m1x-phil.lan (vau06-h02-176-184-43-20.dsl.sta.abo.bbox.fr.
  [176.184.43.20]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427165c69f0sm23171695e9.30.2024.07.09.08.27.24
+ 5b1f17b1804b1-4264a2fca8bsm212580165e9.47.2024.07.09.08.27.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Jul 2024 08:27:25 -0700 (PDT)
+ Tue, 09 Jul 2024 08:27:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -65,27 +65,25 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Bin Meng <bmeng.cn@gmail.com>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>,
- "Edgar E . Iglesias" <edgar.iglesias@xilinx.com>
-Subject: [PATCH v47 14/19] hw/sd/sdcard: Add mmc SWITCH function support (CMD6)
-Date: Tue,  9 Jul 2024 17:25:51 +0200
-Message-ID: <20240709152556.52896-15-philmd@linaro.org>
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>
+Subject: [PATCH v47 15/19] hw/sd/sdcard: Implement eMMC 'boot-mode'
+Date: Tue,  9 Jul 2024 17:25:52 +0200
+Message-ID: <20240709152556.52896-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240709152556.52896-1-philmd@linaro.org>
 References: <20240709152556.52896-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,126 +99,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
+Spec v4.3 chapter 7.2.2 "Boot operation":
 
-switch operation in mmc cards, updated the ext_csd register to
-request changes in card operations. Here we implement similar
-sequence but requests are mostly dummy and make no change.
+  If the CMD line is held LOW for 74 clock cycles and more
+  after power-up before the first command is issued, the
+  slave recognizes that boot mode is being initiated and
+  starts preparing boot data internally.
 
-Implement SWITCH_ERROR if the write operation offset goes beyond
-length of ext_csd.
+Track uptime since last reset, add the sd_uptime_ns() helper.
 
-Signed-off-by: Sai Pavan Boddu <sai.pavan.boddu@xilinx.com>
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@xilinx.com>
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+When the first command is received, check at least 74 clocks
+are elapsed (during the identification phase, at a 10kHz rate)
+then enable BOOT_MODE in the Ext_CSD register.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sd.c         | 56 ++++++++++++++++++++++++++++++++++++++++++++++
- hw/sd/trace-events |  2 ++
- 2 files changed, 58 insertions(+)
+ hw/sd/sd.c         | 38 ++++++++++++++++++++++++++++++++++++++
+ hw/sd/trace-events |  1 +
+ 2 files changed, 39 insertions(+)
 
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index a391f12b2a..beb8e2730a 100644
+index beb8e2730a..c7f8ea11c1 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -642,6 +642,7 @@ static bool sd_req_rca_same(SDState *s, SDRequest req)
- FIELD(CSR, AKE_SEQ_ERROR,               3,  1)
- FIELD(CSR, APP_CMD,                     5,  1)
- FIELD(CSR, FX_EVENT,                    6,  1)
-+FIELD(CSR, SWITCH_ERROR,                7,  1)
- FIELD(CSR, READY_FOR_DATA,              8,  1)
- FIELD(CSR, CURRENT_STATE,               9,  4)
- FIELD(CSR, ERASE_RESET,                13,  1)
-@@ -1091,6 +1092,47 @@ static uint32_t sd_wpbits(SDState *sd, uint64_t addr)
-     return ret;
+@@ -163,6 +163,8 @@ struct SDState {
+      */
+     bool expecting_acmd;
+     uint32_t blk_written;
++    int64_t reset_time_ns;
++    uint32_t cmd_count;
+ 
+     uint64_t data_start;
+     uint32_t data_offset;
+@@ -352,6 +354,11 @@ static uint8_t sd_crc7(const void *message, size_t width)
+     return shift_reg;
  }
  
-+enum ExtCsdAccessMode {
-+    EXT_CSD_ACCESS_MODE_COMMAND_SET = 0,
-+    EXT_CSD_ACCESS_MODE_SET_BITS    = 1,
-+    EXT_CSD_ACCESS_MODE_CLEAR_BITS  = 2,
-+    EXT_CSD_ACCESS_MODE_WRITE_BYTE  = 3
++static int64_t sd_uptime_ns(SDState *sd)
++{
++    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - sd->reset_time_ns;
++}
++
+ /* Operation Conditions register */
+ 
+ #define OCR_POWER_DELAY_NS      500000 /* 0.5ms */
+@@ -479,6 +486,10 @@ static void emmc_set_cid(SDState *sd)
+ #define CMULT_SHIFT     9        /* 512 times HWBLOCK_SIZE */
+ #define WPGROUP_SIZE    (1 << (HWBLOCK_SHIFT + SECTOR_SHIFT + WPGROUP_SHIFT))
+ 
++#define OD_FREQ_MIN_HZ   10000
++#define OD_FREQ_MAX_HZ  400000
++#define BOOT_MODE_DELAY_CYCLES_MIN 74
++
+ static const uint8_t sd_csd_rw_mask[16] = {
+     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xfe,
+@@ -798,6 +809,8 @@ static void sd_reset(DeviceState *dev)
+ 
+     sect = sd_addr_to_wpnum(size) + 1;
+ 
++    sd->reset_time_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++    sd->cmd_count = 0;
+     sd->state = sd_idle_state;
+ 
+     /* card registers */
+@@ -906,6 +919,18 @@ static const VMStateDescription emmc_extcsd_vmstate = {
+     },
+ };
+ 
++static const VMStateDescription sdmmc_uptime_cmdcnt_vmstate = {
++    .name = "sd-card/uptime-command_count-state",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = vmstate_needed_for_emmc,
++    .fields = (const VMStateField[]) {
++        VMSTATE_INT64(reset_time_ns, SDState),
++        VMSTATE_UINT32(cmd_count, SDState),
++        VMSTATE_END_OF_LIST()
++    },
 +};
 +
-+static void mmc_function_switch(SDState *sd, uint32_t arg)
-+{
-+    uint8_t access = extract32(arg, 24, 2);
-+    uint8_t index = extract32(arg, 16, 8);
-+    uint8_t value = extract32(arg, 8, 8);
-+    uint8_t b = sd->ext_csd[index];
-+
-+    trace_sdcard_switch(access, index, value, extract32(arg, 0, 2));
-+
-+    if (index >= 192) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "MMC switching illegal offset\n");
-+        sd->card_status |= R_CSR_SWITCH_ERROR_MASK;
-+        return;
-+    }
-+
-+    switch (access) {
-+    case EXT_CSD_ACCESS_MODE_COMMAND_SET:
-+        qemu_log_mask(LOG_UNIMP, "MMC Command set switching not supported\n");
-+        return;
-+    case EXT_CSD_ACCESS_MODE_SET_BITS:
-+        b |= value;
-+        break;
-+    case EXT_CSD_ACCESS_MODE_CLEAR_BITS:
-+        b &= ~value;
-+        break;
-+    case EXT_CSD_ACCESS_MODE_WRITE_BYTE:
-+        b = value;
-+        break;
-+    }
-+
-+    trace_sdcard_ext_csd_update(index, sd->ext_csd[index], b);
-+    sd->ext_csd[index] = b;
-+}
-+
- static void sd_function_switch(SDState *sd, uint32_t arg)
+ static int sd_vmstate_pre_load(void *opaque)
  {
-     int i, mode, new_func;
-@@ -1402,6 +1444,19 @@ static sd_rsp_type_t sd_cmd_SWITCH_FUNCTION(SDState *sd, SDRequest req)
-     return sd_cmd_to_sendingdata(sd, req, 0, NULL, 64);
+     SDState *sd = opaque;
+@@ -954,6 +979,7 @@ static const VMStateDescription sd_vmstate = {
+     .subsections = (const VMStateDescription * const []) {
+         &sd_ocr_vmstate,
+         &emmc_extcsd_vmstate,
++        &sdmmc_uptime_cmdcnt_vmstate,
+         NULL
+     },
+ };
+@@ -1980,6 +2006,16 @@ static sd_rsp_type_t sd_cmd_SEND_OP_COND(SDState *sd, SDRequest req)
+         sd->state = sd_ready_state;
+     }
+ 
++    if (sd_is_emmc(sd) && sd->cmd_count == 1) {
++        int64_t clk_cycles = sd_uptime_ns(sd) / OD_FREQ_MIN_HZ;
++
++        trace_sdcard_ext_csd_bootmode(sd_uptime_ns(sd), clk_cycles,
++                                      clk_cycles > BOOT_MODE_DELAY_CYCLES_MIN);
++        if (clk_cycles > BOOT_MODE_DELAY_CYCLES_MIN) {
++            sd->ext_csd[EXT_CSD_PART_CONFIG] |= (1 << 3);
++        }
++    }
++
+     return sd_r3;
  }
  
-+static sd_rsp_type_t emmc_cmd_SWITCH(SDState *sd, SDRequest req)
-+{
-+    switch (sd->state) {
-+    case sd_transfer_state:
-+        sd->state = sd_programming_state;
-+        mmc_function_switch(sd, req.arg);
-+        sd->state = sd_transfer_state;
-+        return sd_r1b;
-+    default:
-+        return sd_invalid_state_for_cmd(sd, req);
-+    }
-+}
+@@ -2162,6 +2198,8 @@ int sd_do_command(SDState *sd, SDRequest *req,
+         return 0;
+     }
+ 
++    ++sd->cmd_count;
 +
- /* CMD7 */
- static sd_rsp_type_t sd_cmd_DE_SELECT_CARD(SDState *sd, SDRequest req)
- {
-@@ -2581,6 +2636,7 @@ static const SDProto sd_proto_emmc = {
-         [3]  = {0,  sd_ac,   "SET_RELATIVE_ADDR", emmc_cmd_SET_RELATIVE_ADDR},
-         [4]  = {0,  sd_bc,   "SEND_DSR", sd_cmd_unimplemented},
-         [5]  = {0,  sd_ac,   "SLEEP/AWAKE", emmc_cmd_sleep_awake},
-+        [6]  = {10, sd_adtc, "SWITCH", emmc_cmd_SWITCH},
-         [7]  = {0,  sd_ac,   "(DE)SELECT_CARD", sd_cmd_DE_SELECT_CARD},
-         [8]  = {0,  sd_adtc, "SEND_EXT_CSD", emmc_cmd_SEND_EXT_CSD},
-         [9]  = {0,  sd_ac,   "SEND_CSD", sd_cmd_SEND_CSD},
+     if (sd->state == sd_inactive_state) {
+         rtype = sd_illegal;
+         goto send_response;
 diff --git a/hw/sd/trace-events b/hw/sd/trace-events
-index 5dfe6be7b7..43671dc791 100644
+index 43671dc791..5454e55077 100644
 --- a/hw/sd/trace-events
 +++ b/hw/sd/trace-events
-@@ -57,6 +57,8 @@ sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
+@@ -57,6 +57,7 @@ sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
  sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
  sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint64_t size, uint32_t blklen) "%s %20s/ CMD%02d ofs %"PRIu32" size %"PRIu64" blklen %" PRIu32
  sdcard_set_voltage(uint16_t millivolts) "%u mV"
-+sdcard_ext_csd_update(unsigned index, uint8_t oval, uint8_t nval) "index %u: 0x%02x -> 0x%02x"
-+sdcard_switch(unsigned access, unsigned index, unsigned value, unsigned set) "SWITCH acc:%u idx:%u val:%u set:%u"
++sdcard_ext_csd_bootmode(int64_t uptime_ns, int64_t clk_cycles, unsigned enabled) "%"PRId64" ns, %"PRId64" cycles, boot mode: %u"
+ sdcard_ext_csd_update(unsigned index, uint8_t oval, uint8_t nval) "index %u: 0x%02x -> 0x%02x"
+ sdcard_switch(unsigned access, unsigned index, unsigned value, unsigned set) "SWITCH acc:%u idx:%u val:%u set:%u"
  
- # pxa2xx_mmci.c
- pxa2xx_mmci_read(uint8_t size, uint32_t addr, uint32_t value) "size %d addr 0x%02x value 0x%08x"
 -- 
 2.41.0
 
