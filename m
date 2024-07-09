@@ -4,89 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4993AC2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A62C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:46:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRD29-0006by-UP; Tue, 09 Jul 2024 11:45:37 -0400
+	id 1sRD2O-0007eW-6C; Tue, 09 Jul 2024 11:45:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRD26-0006U3-Ll
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:45:34 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRD24-0002Ja-Rx
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:45:34 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-70b48dfd6a2so520557b3a.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:45:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720539930; x=1721144730; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oI+T/vBKoAR3CTDqjgpnadHsDq6uZq3RzgUG7UJeC60=;
- b=BV5QEEL7GXav9BmIlPB7iftCtCSpgWjaPlao7++Ytlkyn2I01qPMC1OAKrjwjsYi9O
- 0sDGe8Okxr9vMLpuNYDQ+rVgMVoyRLYfOYn42pJ8f++LvtDsI5LnoUSuhnv6RyYvcDyz
- IPO1qbCWOOMmOBFNP3zKWoFjE/IGYm1/qk1UAEjnrDGCFCoGW5npuJ2FoPIlRSNRfUaP
- YWt5Our42aPXCUXVwFJLm0H80+Mb6kiH6jjY+7hdf/LWqUZwIqkbGpeVFiiIQmDrwzxy
- kWMuDgkojUajPt3tHuvOwjNQcCJ08UrlXJxqR84pzknuEuWzUDzpNn/UuunSzXSAPxwq
- c1Bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720539930; x=1721144730;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oI+T/vBKoAR3CTDqjgpnadHsDq6uZq3RzgUG7UJeC60=;
- b=VTno4pRIAUsf3H8MlLFMYx9DzaenUknFZFqSjFWnjcdzqQgHAZdqtptEBch3ic8GjJ
- nRNCELP7p+rh2N6FH4NzRpaxKATkkJ7OiRA8k742xzedmKOEQpLX2zFWD/ksRWyNCCT2
- XhZVEdKEIIzPD2ei4PMRMvdxeWRzpYmUiZ1z1hHajC3JLUv35SZ0JOmCwkA2iaQaA8BF
- 4otlxbOcssLlSJ5WY4H1e0ETrmIVYtNrwoZHOh4rmnohZGe3Luu1d6sOmHVFEdluAADv
- 2EoGKGYOdhyrkt5JANJhDEEcHsE85Yi1PemgJs1FS53EETv9CO1MI6O4N6WNDu5SjO0Q
- rLhA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXbp1Oe7XmX2pSQo+qbXcrnihs9oMBSByeI90JGzxDnSnohB/4L+0pmQG8tzK32EAGA7Lg4esnYNzPvlN4q8qsmwzQJBEE=
-X-Gm-Message-State: AOJu0YxJ4dqroxy1zxC4ewh9Bt6LW+zLeDRYPSyFRhGniL/QVSNAE9Ns
- nEuxIWPeBOa/R5uT1kCfsGgvMZWssxHercmSNipvvmtXCGBykAALsxGIGY25wDIm0vlMy60SkaR
- +Xtw=
-X-Google-Smtp-Source: AGHT+IF4PlXiRJAg6igeaeGNnf6CZi6grk2bdajOcFZwSR5wg5bRT6ImpgpkPLrwb6l0r0C8jx7IMQ==
-X-Received: by 2002:a05:6a00:2d22:b0:706:6bdc:4de5 with SMTP id
- d2e1a72fcca58-70b434f63bemr3530403b3a.7.1720539930011; 
- Tue, 09 Jul 2024 08:45:30 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b439b1789sm2038990b3a.175.2024.07.09.08.45.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jul 2024 08:45:29 -0700 (PDT)
-Message-ID: <98e73d45-4217-4e75-8440-13a4ceb9042f@linaro.org>
-Date: Tue, 9 Jul 2024 08:45:27 -0700
+ (Exim 4.90_1) (envelope-from <SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org>)
+ id 1sRD2H-0007Bq-CG; Tue, 09 Jul 2024 11:45:45 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org>)
+ id 1sRD2E-0002KN-Ow; Tue, 09 Jul 2024 11:45:45 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WJQLW5dh1z4x1P;
+ Wed, 10 Jul 2024 01:45:39 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WJQLR3Cncz4w2M;
+ Wed, 10 Jul 2024 01:45:35 +1000 (AEST)
+Message-ID: <fd66f8ad-3dc9-4558-80c6-babf308dc90a@kaod.org>
+Date: Tue, 9 Jul 2024 17:45:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/arm: Fix handling of LDAPR/STLR with negative
- offset
+Subject: Re: [PATCH v47 11/19] hw/sd/sdcard: Add eMMC 'boot-size' property
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20240709134504.3500007-1-peter.maydell@linaro.org>
- <20240709134504.3500007-2-peter.maydell@linaro.org>
- <448e03c7-9bf8-48f5-b172-36bb06ec1139@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <448e03c7-9bf8-48f5-b172-36bb06ec1139@linaro.org>
+ qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-block@nongnu.org,
+ Bin Meng <bmeng.cn@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>
+References: <20240709152556.52896-1-philmd@linaro.org>
+ <20240709152556.52896-12-philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240709152556.52896-12-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=H1KF=OJ=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,17 +69,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/24 07:11, Philippe Mathieu-Daudé wrote:
-> BTW I noted some instr formats use 'uimm*' for unsigned immediate.
-> Maybe we could recommend/enforce that, having 'imm*' always signed.
+On 7/9/24 5:25 PM, Philippe Mathieu-Daudé wrote:
+> Avoid hardcoding 1MiB boot size in EXT_CSD_BOOT_MULT,
+> expose it as QOM property.
+> 
+> By default, do not use any size. Board is responsible
+> to set the boot size property.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-With Arm, especially with load/store, some insns have unsigned fields and some have signed 
-fields, but for implementation purposes we need to use the same argument set.  Therefore 
-we cannot mix names like this.
-
-This naming convention works better with more regular encodings such as riscv or loongarch.
+I would move this patch at the end with the other patches adding
+boot support.
 
 
-r~
+Thanks,
+
+C.
+
+
+
+> ---
+>   hw/sd/sd.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index c809961418..df0e2345c0 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -129,6 +129,7 @@ struct SDState {
+>       /* Static properties */
+>   
+>       uint8_t spec_version;
+> +    uint64_t boot_part_size;
+>       BlockBackend *blk;
+>   
+>       const SDProto *proto;
+> @@ -490,7 +491,8 @@ static void mmc_set_ext_csd(SDState *sd, uint64_t size)
+>       sd->ext_csd[EXT_CSD_TRIM_MULT] = 0x1; /* Trim multiplier */
+>       sd->ext_csd[EXT_CSD_SEC_FEATURE_SUPPORT] = 0x15; /* Secure feature */
+>       sd->ext_csd[EXT_CSD_BOOT_INFO] = 0x7; /* Boot information */
+> -    sd->ext_csd[EXT_CSD_BOOT_MULT] = 0x8; /* Boot partition size. 128KB unit */
+> +                                     /* Boot partition size. 128KB unit */
+> +    sd->ext_csd[EXT_CSD_BOOT_MULT] = sd->boot_part_size / (128 * KiB);
+>       sd->ext_csd[EXT_CSD_ACC_SIZE] = 0x6; /* Access size */
+>       sd->ext_csd[EXT_CSD_HC_ERASE_GRP_SIZE] = 0x4; /* HC Erase unit size */
+>       sd->ext_csd[EXT_CSD_ERASE_TIMEOUT_MULT] = 0x01; /* HC erase timeout */
+> @@ -2693,6 +2695,7 @@ static Property sd_properties[] = {
+>   };
+>   
+>   static Property emmc_properties[] = {
+> +    DEFINE_PROP_UINT64("boot-size", SDState, boot_part_size, 0),
+>       DEFINE_PROP_END_OF_LIST()
+>   };
+>   
 
 
