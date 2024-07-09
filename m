@@ -4,118 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 851D7C2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 20:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2669C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 20:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRHcC-0006Qy-Eu; Tue, 09 Jul 2024 16:39:08 -0400
+	id 1sRHva-0005FZ-OP; Tue, 09 Jul 2024 16:59:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sRHc9-0006Ia-95; Tue, 09 Jul 2024 16:39:05 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sRHc7-0002I6-J1; Tue, 09 Jul 2024 16:39:05 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id CD7EB219D6;
- Tue,  9 Jul 2024 20:38:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1720557537; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cHpx3n3sHMhIG2L3Bt6G08nwjnQquLAi28nbPztap5E=;
- b=UyF2CWwMDyuYagZGeBl9eVY752HzPnMAKuF1YqMHjTuKC8D4YpLMI3Cq9jhPuDQaBMxR4U
- P5/VNNvg8+hDQ0uXmLOhb895nyCJM+KbnUVxwjLHqSGC1P+ACO2ZjK8cgWiGCS8Jq1qfge
- FdpfHpMNjxKZC6loP9gW5rBDNpgOboE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1720557537;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cHpx3n3sHMhIG2L3Bt6G08nwjnQquLAi28nbPztap5E=;
- b=tduSe96shX1pcu8i3EJTO0O9rL54Ge+ftUBXeAOA1oiX+tOgYZUZ3lcnXUXLF+SVO8xyPv
- KPcBSYGt7xMH0rBw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1720557537; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cHpx3n3sHMhIG2L3Bt6G08nwjnQquLAi28nbPztap5E=;
- b=UyF2CWwMDyuYagZGeBl9eVY752HzPnMAKuF1YqMHjTuKC8D4YpLMI3Cq9jhPuDQaBMxR4U
- P5/VNNvg8+hDQ0uXmLOhb895nyCJM+KbnUVxwjLHqSGC1P+ACO2ZjK8cgWiGCS8Jq1qfge
- FdpfHpMNjxKZC6loP9gW5rBDNpgOboE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1720557537;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cHpx3n3sHMhIG2L3Bt6G08nwjnQquLAi28nbPztap5E=;
- b=tduSe96shX1pcu8i3EJTO0O9rL54Ge+ftUBXeAOA1oiX+tOgYZUZ3lcnXUXLF+SVO8xyPv
- KPcBSYGt7xMH0rBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4EB411369A;
- Tue,  9 Jul 2024 20:38:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id m/l9BeGfjWaEDAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 09 Jul 2024 20:38:57 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Laurent Vivier <lvivier@redhat.com>, Tyrone Ting
- <kfting@nuvoton.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Bin Meng
- <bmeng.cn@gmail.com>, Hao Wu <wuhaotsh@google.com>, Francisco Iglesias
- <francisco.iglesias@amd.com>, Paolo Bonzini <pbonzini@redhat.com>, Thomas
- Huth <thuth@redhat.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- qemu-arm@nongnu.org, Joel Stanley <joel@jms.id.au>, Sai Pavan Boddu
- <sai.pavan.boddu@amd.com>, devel@lists.libvirt.org, Luc Michel
- <luc.michel@amd.com>, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH v3 06/17] hw/sd/sdcard: Do not store vendor data on
- block drive (CMD56)
-In-Reply-To: <20240627162232.80428-7-philmd@linaro.org>
-References: <20240627162232.80428-1-philmd@linaro.org>
- <20240627162232.80428-7-philmd@linaro.org>
-Date: Tue, 09 Jul 2024 17:38:54 -0300
-Message-ID: <87cynmfggx.fsf@suse.de>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.19 / 50.00]; BAYES_HAM(-2.39)[97.19%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]; RCVD_VIA_SMTP_AUTH(0.00)[];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TAGGED_RCPT(0.00)[]; RCPT_COUNT_TWELVE(0.00)[19];
- RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[];
- FREEMAIL_CC(0.00)[nongnu.org,redhat.com,nuvoton.com,linaro.org,gmail.com,google.com,amd.com,kaod.org,jms.id.au,lists.libvirt.org];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, linaro.org:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1sRHvY-0005Bk-Q2
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 16:59:08 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1sRHvV-0005WI-OO
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 16:59:08 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 469Kta1K013460;
+ Tue, 9 Jul 2024 20:59:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ from:to:cc:subject:date:message-id:in-reply-to:references; s=
+ corp-2023-11-20; bh=O4vGi4YKzgEMRY64Z5ji/8gBNADnjUSW3sNa7rBArQI=; b=
+ Qk0zqQIHG9G88Br9XyFASIF0q+q1vJmUkLdGCi12CipflA+9eGxyZ7gHI/Boalki
+ IxV+78Jr9xLAWFIhtLxUU1wujm3heOc39G2JhKih0tPCkE83aRRKpgtILU4JGCrT
+ 1j4A5A9K318bphp40w2jYgSkTCuPcXqBT/96hqiiJXcyC4ONGpGUnrcV08EPoEkg
+ ZNRznBUK3KjrlIPrBg0uiLpPCXEu3k+k/DCf8OZxf/ssVCKwKoQS3yWbxJUW8Uju
+ eBrbilRDAQ+qGlHBv5jX1bt17T3mw35ltxjOOiPBFMA7RmYOefTywKFE+0xtwfE5
+ aTEjcdM2cyJifuoSUIEYgA==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 406wky60gf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 09 Jul 2024 20:59:00 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 469Jl92n005052; Tue, 9 Jul 2024 20:59:00 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 407tve98ru-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 09 Jul 2024 20:59:00 +0000
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 469KwwCt012128;
+ Tue, 9 Jul 2024 20:58:59 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 407tve98qa-3; Tue, 09 Jul 2024 20:58:59 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V1 2/8] pci: export msix_is_pending
+Date: Tue,  9 Jul 2024 13:58:51 -0700
+Message-Id: <1720558737-451106-3-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1720558737-451106-1-git-send-email-steven.sistare@oracle.com>
+References: <1720558737-451106-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-09_09,2024-07-09_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ mlxscore=0
+ mlxlogscore=999 phishscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2406180000 definitions=main-2407090143
+X-Proofpoint-ORIG-GUID: dt1q4IXdNBTFIU-WXWM4YOAHeGSIz5ad
+X-Proofpoint-GUID: dt1q4IXdNBTFIU-WXWM4YOAHeGSIz5ad
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,47 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Export msix_is_pending for use by cpr.  No functional change.
 
-> "General command" (GEN_CMD, CMD56) is described as:
->
->   GEN_CMD is the same as the single block read or write
->   commands (CMD24 or CMD17). The difference is that [...]
->   the data block is not a memory payload data but has a
->   vendor specific format and meaning.
->
-> Thus this block must not be stored overwriting data block
-> on underlying storage drive. Keep it in a dedicated
-> 'vendor_data[]' array.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Tested-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> ---
-> RFC: Is it safe to reuse VMSTATE_UNUSED_V() (which happens
-> to be the same size)?
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ hw/pci/msix.c         | 2 +-
+ include/hw/pci/msix.h | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-Hi, sorry it took some time to get to this, I had just left for vacation
-when you first posted.
+diff --git a/hw/pci/msix.c b/hw/pci/msix.c
+index 487e498..17ef2b0 100644
+--- a/hw/pci/msix.c
++++ b/hw/pci/msix.c
+@@ -71,7 +71,7 @@ static uint8_t *msix_pending_byte(PCIDevice *dev, int vector)
+     return dev->msix_pba + vector / 8;
+ }
+ 
+-static int msix_is_pending(PCIDevice *dev, int vector)
++int msix_is_pending(PCIDevice *dev, unsigned int vector)
+ {
+     return *msix_pending_byte(dev, vector) & msix_pending_mask(vector);
+ }
+diff --git a/include/hw/pci/msix.h b/include/hw/pci/msix.h
+index 0e6f257..11ef945 100644
+--- a/include/hw/pci/msix.h
++++ b/include/hw/pci/msix.h
+@@ -32,6 +32,7 @@ int msix_present(PCIDevice *dev);
+ bool msix_is_masked(PCIDevice *dev, unsigned vector);
+ void msix_set_pending(PCIDevice *dev, unsigned vector);
+ void msix_clr_pending(PCIDevice *dev, int vector);
++int msix_is_pending(PCIDevice *dev, unsigned vector);
+ 
+ void msix_vector_use(PCIDevice *dev, unsigned vector);
+ void msix_vector_unuse(PCIDevice *dev, unsigned vector);
+-- 
+1.8.3.1
 
-I think it's ok:
-
-{
-  "field": "unused",
-  "version_id": 1,
-  "field_exists": false,
-  "size": 512
-},
-
-vs.
-
-{
-  "field": "vendor_data",
-  "version_id": 0,
-  "field_exists": false,
-  "num": 512,
-  "size": 1
-},
-
-The unused field was introduced in 2016 so there's no chance of
-migrating a QEMU that old to/from 9.1.
 
