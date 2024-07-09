@@ -4,100 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E154BC2BD09
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 07:58:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48157C3DA41
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 08:07:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR5jl-0002E3-Vb; Tue, 09 Jul 2024 03:58:10 -0400
+	id 1sR5rm-0008Ei-Ab; Tue, 09 Jul 2024 04:06:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sR5jk-0002Cc-Gu
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:58:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sR5re-0008Cq-Gb
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 04:06:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1sR5ji-0002Gy-Mm
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:58:08 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sR5rb-0003m6-Dm
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 04:06:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720511886;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1720512373;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c6J+z0Ci5pTyFQJVT66jGF0m2Wt8JtchuNNRk9yGDFg=;
- b=UpI+As5H/XnB/N/XaR3mCxHljOiKswYym8i+PFxQ28+Hlw6rRSicon24aA9or8KdrtZC1B
- RrfLM1vjJCxK/qnNuFE2aWbmzBnsv2Q0NCOBblwCuwozckAR7Az1l193klJPTKp6xaEAsC
- e0maRu7+0Hd9JC24QfyJz4RAg65XdOU=
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
- [209.85.221.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JsaIZ9HZzMUzpYLPC55ncgTyM1+eMIyTk+fOIWY+OSg=;
+ b=OOTi2UZ31NXir/NfeohuNv5BsEQj8KfCKgziRlLhBMbEs35hTVJbTQhWUrjb0uh+ZC/RkI
+ j7fdI/F4aROCfp/wGhw+dF9H4y/NmwE1u7RDByXx+mCpC2oZAFiKiNMQwlSUSde8ylRIoU
+ FTdwjRlwJmG+/R4z7NeY6KKf6yGvScA=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-517-irfepypIPnqlcJEjfvqpxg-1; Tue, 09 Jul 2024 03:58:04 -0400
-X-MC-Unique: irfepypIPnqlcJEjfvqpxg-1
-Received: by mail-vk1-f197.google.com with SMTP id
- 71dfb90a1353d-4f2e6b30167so1861541e0c.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 00:58:04 -0700 (PDT)
+ us-mta-662-tbF7k5tRMfKs48B5Cu-GUQ-1; Tue, 09 Jul 2024 04:06:10 -0400
+X-MC-Unique: tbF7k5tRMfKs48B5Cu-GUQ-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52e969d34bbso5283338e87.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 01:06:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720511883; x=1721116683;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=c6J+z0Ci5pTyFQJVT66jGF0m2Wt8JtchuNNRk9yGDFg=;
- b=UxHfnVThOKQq7S7KGPuBcwYVrcxB7ZJWwLGQG/rOs7+YO3TNkVozpdekC9zKVJtUxY
- f94G5cF7eunNCusEQv/SJxVLy3I57fAtaC4MG33OVKF5FgEekzm+2wrz5sC1BH+FknXm
- rccFiF7g4xf8oz47taMWXwb45QTuzkLHU3JHFeVxiXLrjsM1MsZuUVLYx3TD2w7n6Eaf
- cX8ZZjGlw9oXvdEPo52NCnRe6YHNi0vXByCJqYq1Tb+WbVX0+x3rWdnfbTKSaUvrwmZE
- dN5npkfstjgmlRNxF33TdXRtt6Jy8cEgkG4dYQw5xvjChpW0FX5dZihl60y+bfaEBlwR
- 27zw==
+ d=1e100.net; s=20230601; t=1720512369; x=1721117169;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JsaIZ9HZzMUzpYLPC55ncgTyM1+eMIyTk+fOIWY+OSg=;
+ b=Q/t8sCeI22taYJUT4PjzUZ0/AlG52zAAVqI3mHbvL04iTMIrAYi5L0rL2Lu8U0+6GK
+ 1zeavku30NmyK5+gIfX0GuWGiqJPEAVyERF4H/nirK4rzCB7ozXjr7DhNDWuRU6UJjqL
+ xICmOb4U+3bR5cOo5cmzBtbxEYTMSO8itKdJcwOEnYFO+9elel+SXGs5sLbplF0/sQe6
+ mBPMbiEoSjwq4JVdOGcBuogbnnZupO2+DS/A6YLXenW/lm0x4Nk+Kb4Mu/5cEgr2IUz9
+ rX095P3+1Wt0vPkES6He2iJErAkEmUHph3QeVuCNRsoch2InSLsp6I1b8ZvMdW6yfND5
+ 7F1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4DtbXpfT+itA/jcTtQVKIiaDi+CCy6cAXct9TCFQL9o4vKhNUeAWXv+Pd61oFP2YMXnohaSD9lnxx6m6bEy8xkArLpUg=
-X-Gm-Message-State: AOJu0YyHiG2lKIpg4muvtv4TSev2XEqKKw4xqWWpHfsu1AfqYxy8pLI/
- WPJnEG3tng72MwGeK5WZk5KKGuCmjNWrpIwEd4I5RtdsjNwQ5lX+zbUUdBT0edUC1wr6JcJdnMH
- 4JcU6XK8kXqFRMNpKd0RQP6pfIGpIBzMTJuI0nfXEsn2ReIIUVfdB
-X-Received: by 2002:a05:6122:1797:b0:4e4:ed90:27e6 with SMTP id
- 71dfb90a1353d-4f33f1e8210mr2452468e0c.5.1720511883576; 
- Tue, 09 Jul 2024 00:58:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUrEhc/f571jiY4+baDerLMQmbA/tyfHT1kEPnu7HTmWY77yzf2J1oWUKp8jwYFDmfichiqA==
-X-Received: by 2002:a05:6122:1797:b0:4e4:ed90:27e6 with SMTP id
- 71dfb90a1353d-4f33f1e8210mr2452440e0c.5.1720511883191; 
- Tue, 09 Jul 2024 00:58:03 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79f18ff69ebsm71448185a.22.2024.07.09.00.57.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jul 2024 00:58:02 -0700 (PDT)
-Message-ID: <d30fe053-cc62-4141-9b50-980f7e0b175b@redhat.com>
-Date: Tue, 9 Jul 2024 09:57:57 +0200
+ AJvYcCVhnW1gHXQxuqT8tOhYzbqStJZIRuRiErAu/zOCxgRg+/FRCDe5mB0Ybv92Z1pqNkjMdAsYf1TlVcrxhKDzGg81TxVGOVA=
+X-Gm-Message-State: AOJu0Ywtht2ma4sUMumRUkxTvhNpz7K/L3JcY8goM/H1QZtFiYd97ipF
+ 65CrNSJT2c05OaXKY6D+lRPvgCtvZBGGUr1Go4hh9QO1G6kdDPAYQoLbsgZukfCdBAL5n8dCse2
+ Uw9sXHXd+0H+5tLcydeP/GfVl2aNxCFYztPWA+aEMOrwgvQR2p6qo
+X-Received: by 2002:a19:f817:0:b0:52e:9acf:b698 with SMTP id
+ 2adb3069b0e04-52eb99a272fmr829467e87.36.1720512368720; 
+ Tue, 09 Jul 2024 01:06:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/lFnuKO3i5u6q0FxfaQsvYnVx2R6w0xQEs3PuW6euoqlNzVsoO404c4hhCs0TVVWKyanc5Q==
+X-Received: by 2002:a19:f817:0:b0:52e:9acf:b698 with SMTP id
+ 2adb3069b0e04-52eb99a272fmr829439e87.36.1720512368158; 
+ Tue, 09 Jul 2024 01:06:08 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4266f6f5f25sm29346535e9.26.2024.07.09.01.06.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Jul 2024 01:06:07 -0700 (PDT)
+Date: Tue, 9 Jul 2024 10:06:05 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Salil Mehta <salil.mehta@opnsrc.net>
+Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, maz@kernel.org, jean-philippe@linaro.org,
+ jonathan.cameron@huawei.com, lpieralisi@kernel.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
+ eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
+ mst@redhat.com, will@kernel.org, gshan@redhat.com, rafael@kernel.org,
+ alex.bennee@linaro.org, linux@armlinux.org.uk,
+ darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
+ vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
+ miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
+ wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
+ lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
+ linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>
+Subject: Re: [PATCH V13 1/8] accel/kvm: Extract common KVM vCPU
+ {creation,parking} code
+Message-ID: <20240709100605.5cb52c25@imammedo.users.ipa.redhat.com>
+In-Reply-To: <01c2df70-0189-4519-8f15-7b96ba315d7a@opnsrc.net>
+References: <20240607115649.214622-1-salil.mehta@huawei.com>
+ <20240607115649.214622-2-salil.mehta@huawei.com>
+ <20240706151154.7c430b0a@imammedo.users.ipa.redhat.com>
+ <CAJ7pxeZV6qmDR8aXE5LaDZdjvGCJhnE4RZeL4823XqaiDApe1Q@mail.gmail.com>
+ <20240708153216.0d6d1ad1@imammedo.users.ipa.redhat.com>
+ <01c2df70-0189-4519-8f15-7b96ba315d7a@opnsrc.net>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 11/19] hw/arm/smmu-common: Support nested translation
-Content-Language: en-US
-To: Mostafa Saleh <smostafa@google.com>
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
- jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
- marcin.juszkiewicz@linaro.org
-References: <20240701110241.2005222-1-smostafa@google.com>
- <20240701110241.2005222-12-smostafa@google.com>
- <86fc9221-f24e-4a7f-8a0d-b19102f981f0@redhat.com>
- <ZozkMGIq9VHE3HXS@google.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <ZozkMGIq9VHE3HXS@google.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,201 +120,366 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mostafa,
+On Mon, 8 Jul 2024 23:30:01 +0000
+Salil Mehta <salil.mehta@opnsrc.net> wrote:
 
-On 7/9/24 09:18, Mostafa Saleh wrote:
-> Hi Eric,
->
-> On Mon, Jul 08, 2024 at 05:19:59PM +0200, Eric Auger wrote:
->> Hi Mostafa,
->>
->> On 7/1/24 13:02, Mostafa Saleh wrote:
->>> When nested translation is requested, do the following:
->>>
->>> - Translate stage-1 table address IPA into PA through stage-2.
->>> - Translate stage-1 table walk output (IPA) through stage-2.
->>> - Create a single TLB entry from stage-1 and stage-2 translations
->>>   using logic introduced before.
->>>
->>> For stage-1 table translation, the spec (ARM IHI 0070 F.b) says in:
->>>     7.3.12 F_WALK_EABT:
->>>         Translation of an IPA for Stage 1 descriptor fetch:
->>> 	S2 == 1 (stage 2), CLASS == T
->>> So, F_WALK_EABT is used which propagtes to CLASS == TT.
->>>
->>> smmu_ptw() has a new argument SMMUState which include the TLB as
->>> stage-1 table address can be cached in there.
->>>
->>> Also in smmu_ptw() a separate path used for nesting to simplify the
->>> code, although some logic can be combined.
->>>
->>> Signed-off-by: Mostafa Saleh <smostafa@google.com>
->>> ---
->>>  hw/arm/smmu-common.c         | 72 +++++++++++++++++++++++++++++++-----
->>>  include/hw/arm/smmu-common.h |  2 +-
->>>  2 files changed, 64 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->>> index 24b7d09e2b..71afd486ba 100644
->>> --- a/hw/arm/smmu-common.c
->>> +++ b/hw/arm/smmu-common.c
->>> @@ -318,6 +318,38 @@ SMMUTransTableInfo *select_tt(SMMUTransCfg *cfg, dma_addr_t iova)
->>>      return NULL;
->>>  }
->>>  
->>> +/* Translate stage-1 table address using stage-2 page table. */
->>> +static inline int translate_table_addr_ipa(dma_addr_t *table_addr,
->>> +                                           SMMUTransCfg *cfg,
->>> +                                           SMMUPTWEventInfo *info,
->>> +                                           SMMUState *bs)
->> Nit: in general the SMMUState if the 1st arg, as the most global state.
->>> +{
->>> +    dma_addr_t addr = *table_addr;
->>> +    SMMUTLBEntry *cached_entry;
->>> +    int asid;
->>> +
->>> +    /*
->>> +     * The translation table walks performed from TTB0 or TTB1 are always
->>> +     * performed in IPA space if stage 2 translations are enabled.
->>> +     */
->>> +    asid = cfg->asid;
->>> +    cfg->stage = SMMU_STAGE_2;
->>> +    cfg->asid = -1;
->>> +    cached_entry = smmu_translate(bs, cfg, addr, IOMMU_RO, info);
->>> +    cfg->asid = asid;
->>> +    cfg->stage = SMMU_NESTED;
->>> +
->>> +    if (cached_entry) {
->>> +        *table_addr = CACHED_ENTRY_TO_ADDR(cached_entry, addr);
->>> +        return 0;
->>> +    }
->>> +
->>> +    info->stage = SMMU_STAGE_2;
->>> +    info->type = SMMU_PTW_ERR_WALK_EABT;
->>> +    info->addr = addr;
->> so I guess also here the recorded address should be the IOVA (Jean's
->> previous comment)?
-> This address maps to FetchAddr and not InputAddr, which is set from the
-> calling function, so that should be correct. (besides event type as Jean
-> mentioned it needs be fixed).
-Ah OK I mixed them up. Sorry for the noise then
+> Hi Igor,
+>=20
+> On 08/07/2024 13:32, Igor Mammedov wrote:
+> > On Sat, 6 Jul 2024 15:43:01 +0000
+> > Salil Mehta <salil.mehta@opnsrc.net> wrote:
+> > =20
+> >> Hi Igor,
+> >> Thanks for taking out time to review.
+> >>
+> >> On Sat, Jul 6, 2024 at 1:12=E2=80=AFPM Igor Mammedov <imammedo@redhat.=
+com> wrote:
+> >> =20
+> >>> On Fri, 7 Jun 2024 12:56:42 +0100
+> >>> Salil Mehta <salil.mehta@huawei.com> wrote:
+> >>>    =20
+> >>>> KVM vCPU creation is done once during the vCPU realization when Qemu=
+ =20
+> >>> vCPU thread =20
+> >>>> is spawned. This is common to all the architectures as of now.
+> >>>>
+> >>>> Hot-unplug of vCPU results in destruction of the vCPU object in QOM =
+but =20
+> >>> the =20
+> >>>> corresponding KVM vCPU object in the Host KVM is not destroyed as KV=
+M =20
+> >>> doesn't =20
+> >>>> support vCPU removal. Therefore, its representative KVM vCPU =20
+> >>> object/context in =20
+> >>>> Qemu is parked.
+> >>>>
+> >>>> Refactor architecture common logic so that some APIs could be reused=
+ by =20
+> >>> vCPU =20
+> >>>> Hotplug code of some architectures likes ARM, Loongson etc. Update =
+=20
+> >>> new/old APIs =20
+> >>>> with trace events. No functional change is intended here.
+> >>>>
+> >>>> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+> >>>> Reviewed-by: Gavin Shan <gshan@redhat.com>
+> >>>> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> >>>> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> >>>> Tested-by: Xianglai Li <lixianglai@loongson.cn>
+> >>>> Tested-by: Miguel Luis <miguel.luis@oracle.com>
+> >>>> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+> >>>> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
+> >>>> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+> >>>> Tested-by: Zhao Liu <zhao1.liu@intel.com>
+> >>>> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> >>>> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> >>>> ---
+> >>>>   accel/kvm/kvm-all.c    | 95 ++++++++++++++++++++++++++++----------=
+----
+> >>>>   accel/kvm/kvm-cpus.h   |  1 -
+> >>>>   accel/kvm/trace-events |  5 ++-
+> >>>>   include/sysemu/kvm.h   | 25 +++++++++++
+> >>>>   4 files changed, 92 insertions(+), 34 deletions(-)
+> >>>>
+> >>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> >>>> index c0be9f5eed..8f9128bb92 100644
+> >>>> --- a/accel/kvm/kvm-all.c
+> >>>> +++ b/accel/kvm/kvm-all.c
+> >>>> @@ -340,14 +340,71 @@ err:
+> >>>>       return ret;
+> >>>>   }
+> >>>>
+> >>>> +void kvm_park_vcpu(CPUState *cpu)
+> >>>> +{
+> >>>> +    struct KVMParkedVcpu *vcpu;
+> >>>> +
+> >>>> +    trace_kvm_park_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+> >>>> +
+> >>>> +    vcpu =3D g_malloc0(sizeof(*vcpu));
+> >>>> +    vcpu->vcpu_id =3D kvm_arch_vcpu_id(cpu);
+> >>>> +    vcpu->kvm_fd =3D cpu->kvm_fd;
+> >>>> +    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+> >>>> +}
+> >>>> +
+> >>>> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+> >>>> +{
+> >>>> +    struct KVMParkedVcpu *cpu;
+> >>>> +    int kvm_fd =3D -ENOENT;
+> >>>> +
+> >>>> +    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> >>>> +        if (cpu->vcpu_id =3D=3D vcpu_id) {
+> >>>> +            QLIST_REMOVE(cpu, node);
+> >>>> +            kvm_fd =3D cpu->kvm_fd;
+> >>>> +            g_free(cpu);
+> >>>> +        }
+> >>>> +    }
+> >>>> +
+> >>>> +    trace_kvm_unpark_vcpu(vcpu_id, kvm_fd > 0 ? "unparked" : "not f=
+ound =20
+> >>> parked"); =20
+> >>>> +
+> >>>> +    return kvm_fd;
+> >>>> +}
+> >>>> +
+> >>>> +int kvm_create_vcpu(CPUState *cpu)
+> >>>> +{
+> >>>> +    unsigned long vcpu_id =3D kvm_arch_vcpu_id(cpu);
+> >>>> +    KVMState *s =3D kvm_state;
+> >>>> +    int kvm_fd;
+> >>>> +
+> >>>> +    /* check if the KVM vCPU already exist but is parked */
+> >>>> +    kvm_fd =3D kvm_unpark_vcpu(s, vcpu_id);
+> >>>> +    if (kvm_fd < 0) {
+> >>>> +        /* vCPU not parked: create a new KVM vCPU */
+> >>>> +        kvm_fd =3D kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
+> >>>> +        if (kvm_fd < 0) {
+> >>>> +            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu=
+", =20
+> >>> vcpu_id); =20
+> >>>> +            return kvm_fd;
+> >>>> +        }
+> >>>> +    }
+> >>>> +
+> >>>> +    cpu->kvm_fd =3D kvm_fd;
+> >>>> +    cpu->kvm_state =3D s;
+> >>>> +    cpu->vcpu_dirty =3D true;
+> >>>> +    cpu->dirty_pages =3D 0;
+> >>>> +    cpu->throttle_us_per_full =3D 0;
+> >>>> +
+> >>>> +    trace_kvm_create_vcpu(cpu->cpu_index, vcpu_id, kvm_fd);
+> >>>> +
+> >>>> +    return 0;
+> >>>> +} =20
+> >>> Is there any reason why you are embedding/hiding kvm_state in new API
+> >>> instead of passing it as argument (all callers have it defined, so wh=
+y not
+> >>> reuse that)?
+> >>>    =20
+> >> It is a global variable and I don't think it is a usual practice to sp=
+ecify
+> >> the global variable
+> >> as an input parameter. =20
+> > Ideally, global would be accessed once at API boundary entry
+> > and the passed as an argument to functions it calls.
+> > It makes it easier to follow as opposed to mixed access we have now,
+> > which is harder to review since one has to check both
+> > flavors (argument passed or directly accessed).
+> >
+> > in this patch  kvm_init_vcpu() calls new kvm_create_vcpu()
+> > and the former caches these global into 's' local variable,
+> > so I'd reuse that local variable like kvm_get_vcpu() you are removing h=
+ere did. =20
+> That is one perspective, but:
+> 1. kvm_create_vcpu() will also be called externally from other contexts.
 
-Eric
->
+I'm fine with this as is, it would be better to mention in commit message
+that this (others) new API will be called externally. Otherwise it's not
+clear why KVMState is hidden inside.
+
+>  =C2=A0=C2=A0 It would be awkward to pass this variable from those non-lo=
+cal places
+>  =C2=A0=C2=A0 where it would seem unnecessary.
+> 2. If you look at other symmetrical functions like kvm_destroy_vcpu(),
+>  =C2=A0=C2=A0 they also have a similar prototype.
+>=20
+> I think it is about doing a slight trade-off. If you really believe this
+> change is necessary for us to proceed, I will make the adjustment.
+> However, please note that it will affect the IBM team as well.
+>=20
+> Hi Nick,
+>=20
+> I hope you are okay with this suggested change?
+>=20
 > Thanks,
-> Mostafa
->
->> Eric
->>> +    return -EINVAL;
->>> +}
->>> +
->>>  /**
->>>   * smmu_ptw_64_s1 - VMSAv8-64 Walk of the page tables for a given IOVA
->>>   * @cfg: translation config
->>> @@ -333,7 +365,8 @@ SMMUTransTableInfo *select_tt(SMMUTransCfg *cfg, dma_addr_t iova)
->>>   */
->>>  static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
->>>                            dma_addr_t iova, IOMMUAccessFlags perm,
->>> -                          SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
->>> +                          SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info,
->>> +                          SMMUState *bs)
->>>  {
->>>      dma_addr_t baseaddr, indexmask;
->>>      SMMUStage stage = cfg->stage;
->>> @@ -381,6 +414,11 @@ static int smmu_ptw_64_s1(SMMUTransCfg *cfg,
->>>                  goto error;
->>>              }
->>>              baseaddr = get_table_pte_address(pte, granule_sz);
->>> +            if (cfg->stage == SMMU_NESTED) {
->>> +                if (translate_table_addr_ipa(&baseaddr, cfg, info, bs)) {
->>> +                    goto error;
->>> +                }
->>> +            }
->>>              level++;
->>>              continue;
->>>          } else if (is_page_pte(pte, level)) {
->>> @@ -568,10 +606,8 @@ error:
->>>   * combine S1 and S2 TLB entries into a single entry.
->>>   * As a result the S1 entry is overriden with combined data.
->>>   */
->>> -static void __attribute__((unused)) combine_tlb(SMMUTLBEntry *tlbe,
->>> -                                                SMMUTLBEntry *tlbe_s2,
->>> -                                                dma_addr_t iova,
->>> -                                                SMMUTransCfg *cfg)
->>> +static void combine_tlb(SMMUTLBEntry *tlbe, SMMUTLBEntry *tlbe_s2,
->>> +                        dma_addr_t iova, SMMUTransCfg *cfg)
->>>  {
->>>      if (tlbe_s2->entry.addr_mask < tlbe->entry.addr_mask) {
->>>          tlbe->entry.addr_mask = tlbe_s2->entry.addr_mask;
->>> @@ -596,14 +632,19 @@ static void __attribute__((unused)) combine_tlb(SMMUTLBEntry *tlbe,
->>>   * @perm: tentative access type
->>>   * @tlbe: returned entry
->>>   * @info: ptw event handle
->>> + * @bs: smmu state which includes TLB instance
->>>   *
->>>   * return 0 on success
->>>   */
->>>  int smmu_ptw(SMMUTransCfg *cfg, dma_addr_t iova, IOMMUAccessFlags perm,
->>> -             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info)
->>> +             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info, SMMUState *bs)
->>>  {
->>> +    int ret;
->>> +    SMMUTLBEntry tlbe_s2;
->>> +    dma_addr_t ipa;
->>> +
->>>      if (cfg->stage == SMMU_STAGE_1) {
->>> -        return smmu_ptw_64_s1(cfg, iova, perm, tlbe, info);
->>> +        return smmu_ptw_64_s1(cfg, iova, perm, tlbe, info, bs);
->>>      } else if (cfg->stage == SMMU_STAGE_2) {
->>>          /*
->>>           * If bypassing stage 1(or unimplemented), the input address is passed
->>> @@ -621,7 +662,20 @@ int smmu_ptw(SMMUTransCfg *cfg, dma_addr_t iova, IOMMUAccessFlags perm,
->>>          return smmu_ptw_64_s2(cfg, iova, perm, tlbe, info);
->>>      }
->>>  
->>> -    g_assert_not_reached();
->>> +    /* SMMU_NESTED. */
->>> +    ret = smmu_ptw_64_s1(cfg, iova, perm, tlbe, info, bs);
->>> +    if (ret) {
->>> +        return ret;
->>> +    }
->>> +
->>> +    ipa = CACHED_ENTRY_TO_ADDR(tlbe, iova);
->>> +    ret = smmu_ptw_64_s2(cfg, ipa, perm, &tlbe_s2, info);
->>> +    if (ret) {
->>> +        return ret;
->>> +    }
->>> +
->>> +    combine_tlb(tlbe, &tlbe_s2, iova, cfg);
->>> +    return 0;
->>>  }
->>>  
->>>  SMMUTLBEntry *smmu_translate(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t addr,
->>> @@ -677,7 +731,7 @@ SMMUTLBEntry *smmu_translate(SMMUState *bs, SMMUTransCfg *cfg, dma_addr_t addr,
->>>      }
->>>  
->>>      cached_entry = g_new0(SMMUTLBEntry, 1);
->>> -    status = smmu_ptw(cfg, aligned_addr, flag, cached_entry, info);
->>> +    status = smmu_ptw(cfg, aligned_addr, flag, cached_entry, info, bs);
->>>      if (status) {
->>>              g_free(cached_entry);
->>>              return NULL;
->>> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
->>> index 1db566d451..cf0fd3ec74 100644
->>> --- a/include/hw/arm/smmu-common.h
->>> +++ b/include/hw/arm/smmu-common.h
->>> @@ -185,7 +185,7 @@ static inline uint16_t smmu_get_sid(SMMUDevice *sdev)
->>>   * pair, according to @cfg translation config
->>>   */
->>>  int smmu_ptw(SMMUTransCfg *cfg, dma_addr_t iova, IOMMUAccessFlags perm,
->>> -             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info);
->>> +             SMMUTLBEntry *tlbe, SMMUPTWEventInfo *info, SMMUState *bs);
->>>  
->>>  
->>>  /*
+> Salil
+> >>> otherwise patch lgtm =20
+> >>
+> >> May I request your Reviewed-by for this patch?
+> >>
+> >> Thanks
+> >> Salil.
+> >>
+> >> =20
+> >>>    =20
+> >>>> +
+> >>>>   static int do_kvm_destroy_vcpu(CPUState *cpu)
+> >>>>   {
+> >>>>       KVMState *s =3D kvm_state;
+> >>>>       long mmap_size;
+> >>>> -    struct KVMParkedVcpu *vcpu =3D NULL;
+> >>>>       int ret =3D 0;
+> >>>>
+> >>>> -    trace_kvm_destroy_vcpu();
+> >>>> +    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+> >>>>
+> >>>>       ret =3D kvm_arch_destroy_vcpu(cpu);
+> >>>>       if (ret < 0) {
+> >>>> @@ -373,10 +430,7 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
+> >>>>           }
+> >>>>       }
+> >>>>
+> >>>> -    vcpu =3D g_malloc0(sizeof(*vcpu));
+> >>>> -    vcpu->vcpu_id =3D kvm_arch_vcpu_id(cpu);
+> >>>> -    vcpu->kvm_fd =3D cpu->kvm_fd;
+> >>>> -    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
+> >>>> +    kvm_park_vcpu(cpu);
+> >>>>   err:
+> >>>>       return ret;
+> >>>>   }
+> >>>> @@ -389,24 +443,6 @@ void kvm_destroy_vcpu(CPUState *cpu)
+> >>>>       }
+> >>>>   }
+> >>>>
+> >>>> -static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id)
+> >>>> -{
+> >>>> -    struct KVMParkedVcpu *cpu;
+> >>>> -
+> >>>> -    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> >>>> -        if (cpu->vcpu_id =3D=3D vcpu_id) {
+> >>>> -            int kvm_fd;
+> >>>> -
+> >>>> -            QLIST_REMOVE(cpu, node);
+> >>>> -            kvm_fd =3D cpu->kvm_fd;
+> >>>> -            g_free(cpu);
+> >>>> -            return kvm_fd;
+> >>>> -        }
+> >>>> -    }
+> >>>> -
+> >>>> -    return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id);
+> >>>> -}
+> >>>> -
+> >>>>   int kvm_init_vcpu(CPUState *cpu, Error **errp)
+> >>>>   {
+> >>>>       KVMState *s =3D kvm_state;
+> >>>> @@ -415,19 +451,14 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
+> >>>>
+> >>>>       trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
+> >>>>
+> >>>> -    ret =3D kvm_get_vcpu(s, kvm_arch_vcpu_id(cpu));
+> >>>> +    ret =3D kvm_create_vcpu(cpu);
+> >>>>       if (ret < 0) {
+> >>>> -        error_setg_errno(errp, -ret, "kvm_init_vcpu: kvm_get_vcpu =
+=20
+> >>> failed (%lu)", =20
+> >>>> +        error_setg_errno(errp, -ret,
+> >>>> +                         "kvm_init_vcpu: kvm_create_vcpu failed (%l=
+u)",
+> >>>>                            kvm_arch_vcpu_id(cpu));
+> >>>>           goto err;
+> >>>>       }
+> >>>>
+> >>>> -    cpu->kvm_fd =3D ret;
+> >>>> -    cpu->kvm_state =3D s;
+> >>>> -    cpu->vcpu_dirty =3D true;
+> >>>> -    cpu->dirty_pages =3D 0;
+> >>>> -    cpu->throttle_us_per_full =3D 0;
+> >>>> -
+> >>>>       mmap_size =3D kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
+> >>>>       if (mmap_size < 0) {
+> >>>>           ret =3D mmap_size;
+> >>>> diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
+> >>>> index ca40add32c..171b22fd29 100644
+> >>>> --- a/accel/kvm/kvm-cpus.h
+> >>>> +++ b/accel/kvm/kvm-cpus.h
+> >>>> @@ -22,5 +22,4 @@ bool kvm_supports_guest_debug(void);
+> >>>>   int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vad=
+dr =20
+> >>> len); =20
+> >>>>   int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vad=
+dr =20
+> >>> len); =20
+> >>>>   void kvm_remove_all_breakpoints(CPUState *cpu);
+> >>>> -
+> >>>>   #endif /* KVM_CPUS_H */
+> >>>> diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
+> >>>> index 681ccb667d..37626c1ac5 100644
+> >>>> --- a/accel/kvm/trace-events
+> >>>> +++ b/accel/kvm/trace-events
+> >>>> @@ -9,6 +9,10 @@ kvm_device_ioctl(int fd, int type, void *arg) "dev =
+fd =20
+> >>> %d, type 0x%x, arg %p" =20
+> >>>>   kvm_failed_reg_get(uint64_t id, const char *msg) "Warning: Unable =
+to =20
+> >>> retrieve ONEREG %" PRIu64 " from KVM: %s" =20
+> >>>>   kvm_failed_reg_set(uint64_t id, const char *msg) "Warning: Unable =
+to =20
+> >>> set ONEREG %" PRIu64 " to KVM: %s" =20
+> >>>>   kvm_init_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d=
+ id: =20
+> >>> %lu" =20
+> >>>> +kvm_create_vcpu(int cpu_index, unsigned long arch_cpu_id, int kvm_f=
+d) =20
+> >>> "index: %d, id: %lu, kvm fd: %d" =20
+> >>>> +kvm_destroy_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: =
+%d =20
+> >>> id: %lu" =20
+> >>>> +kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d =
+id: =20
+> >>> %lu" =20
+> >>>> +kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) "id: %l=
+u %s"
+> >>>>   kvm_irqchip_commit_routes(void) ""
+> >>>>   kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %=
+s =20
+> >>> vector %d virq %d" =20
+> >>>>   kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=3D=
+%d"
+> >>>> @@ -25,7 +29,6 @@ kvm_dirty_ring_reaper(const char *s) "%s"
+> >>>>   kvm_dirty_ring_reap(uint64_t count, int64_t t) "reaped %"PRIu64" p=
+ages =20
+> >>> (took %"PRIi64" us)" =20
+> >>>>   kvm_dirty_ring_reaper_kick(const char *reason) "%s"
+> >>>>   kvm_dirty_ring_flush(int finished) "%d"
+> >>>> -kvm_destroy_vcpu(void) ""
+> >>>>   kvm_failed_get_vcpu_mmap_size(void) ""
+> >>>>   kvm_cpu_exec(void) ""
+> >>>>   kvm_interrupt_exit_request(void) ""
+> >>>> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+> >>>> index c31d9c7356..c4a914b3d8 100644
+> >>>> --- a/include/sysemu/kvm.h
+> >>>> +++ b/include/sysemu/kvm.h
+> >>>> @@ -313,6 +313,31 @@ int kvm_create_device(KVMState *s, uint64_t typ=
+e, =20
+> >>> bool test); =20
+> >>>>    */
+> >>>>   bool kvm_device_supported(int vmfd, uint64_t type);
+> >>>>
+> >>>> +/**
+> >>>> + * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
+> >>>> + * @cpu: QOM CPUState object for which KVM vCPU has to be =20
+> >>> fetched/created. =20
+> >>>> + *
+> >>>> + * @returns: 0 when success, errno (<0) when failed.
+> >>>> + */
+> >>>> +int kvm_create_vcpu(CPUState *cpu);
+> >>>> +
+> >>>> +/**
+> >>>> + * kvm_park_vcpu - Park QEMU KVM vCPU context
+> >>>> + * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to=
+ be =20
+> >>> parked. =20
+> >>>> + *
+> >>>> + * @returns: none
+> >>>> + */
+> >>>> +void kvm_park_vcpu(CPUState *cpu);
+> >>>> +
+> >>>> +/**
+> >>>> + * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
+> >>>> + * @s: KVM State
+> >>>> + * @vcpu_id: Architecture vCPU ID of the parked vCPU
+> >>>> + *
+> >>>> + * @returns: KVM fd
+> >>>> + */
+> >>>> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
+> >>>> +
+> >>>>   /* Arch specific hooks */
+> >>>>
+> >>>>   extern const KVMCapabilityInfo kvm_arch_required_capabilities[]; =
+=20
+> >>>    =20
+>=20
 
 
