@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E14EC3DA41
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 07:16:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2DA4C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 07:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR551-0007Vm-3n; Tue, 09 Jul 2024 03:16:03 -0400
+	id 1sR57C-0004CR-4b; Tue, 09 Jul 2024 03:18:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1sR550-0007VD-0A
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:16:02 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1sR57B-0004BS-2T
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:18:17 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <smostafa@google.com>)
- id 1sR54k-0001pO-96
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:16:01 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4266f796e67so32695e9.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 00:15:43 -0700 (PDT)
+ id 1sR579-000208-5N
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 03:18:16 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4266edcc54cso54595e9.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 00:18:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1720509342; x=1721114142; darn=nongnu.org;
+ d=google.com; s=20230601; t=1720509494; x=1721114294; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ceKsXZzQxORr8UWHBarU6dV06z8zBsqvjsSzDv+Qvk4=;
- b=L8IMeXNLCKSjAuqf2+hFH3b+RzBhXCZW5Lu4liBXw0/naagk2SlyZxq7I7sfYjK5G7
- SqTdffDUMOkPZSJnh8G/rPz+Jx+FrMbByOrXS9yKST+uQGfeNzPOaj1UohvI/QCK3fly
- v5zeMtVhcJJPt+qSW4JFqgBXZUtw1t0ZhqUfN2Q7gM3qmQ7nWR2LncFlN6q15FraOMBg
- rg6V6HJkNHtm/yBr4SauaMD9Tv8VcpbzdwhG25b3LpktJfJjL62/K+DKMcT9KjFybNyX
- HaPwrpy1HKaHIpVYf9mNOSf+uKopPM/CPKG7UtNbW+mAro6KHz8O5ayyz1B3ijNlooz3
- lBQw==
+ bh=Musi4DnUVQiysf3Si/fZahewrumXdr82z0dzErgcTnM=;
+ b=WtF+Dkb0+hX/KBLpRblC/brujyaR3YI2jk0JYaEha1g/p9eMTBK3XWdXEYbcwy6nkL
+ drg1HxAsKIc3NQTm5lvKW5an+5SrNW6AveV+HuWLjGlpt/MAZwX6HtXs4Wo7QFtB2anB
+ cIr6SM1oymKmUlpGXj3YmjU3O1HgCphHl/hhWcw2EopDgY/Tb/IH6FhZ3Y9DKUJ4yyGM
+ 2bNZWK4Nov7gHfVtNfBduYkb5xN1x1yDNpDL6MTti4Z4CXOcuUpRWthuOzbDwuo9Pw8P
+ bMYafVWnHKbUcD5KgPJMBvH6kpgwB/QzIZRQ8Gmg/OLhmw4XQffZTmmly1QEzpSgxhDg
+ SPsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720509342; x=1721114142;
+ d=1e100.net; s=20230601; t=1720509494; x=1721114294;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ceKsXZzQxORr8UWHBarU6dV06z8zBsqvjsSzDv+Qvk4=;
- b=wHaO/WqxKL4x/8RA45LGsHMJkYk6E30y2Lx8zIQ1CcslhI0oQRh+P/bh0qIRyW50E+
- Vhkj9OAY5fQinTG30PSnOVasllnI7mCMvlCbhbtsQzI/+9qpw2/Exk5rousT1p7qfxTL
- M2yyF5/UMUTPmit/1vq26Ceb8P5WbVXIpaAiZq/rnQXbiq+9q364WIs6FP+AH4LiBiQX
- FEiWi1rXu8ij3HVbD90WrBH1kPt8olY48SoRgPB1WLKmn6R1rNbo8HY6tA+Q8FQ74HSC
- MUuQvGg0Ok0pVn1GHYo4fFjPncoyT9pFu/01xWdhaB8xAr1vhItPPZ7Qa82/wCoOccjd
- l0Pw==
+ bh=Musi4DnUVQiysf3Si/fZahewrumXdr82z0dzErgcTnM=;
+ b=HRuS3Nq41leDk4lHmahEp5sREvwRFhlujTSQQipuw+OaFcouRG4EGsxcH3OdFxVV/S
+ Kd5dzSYW12r8VIOqQPlQPpKCIH771LjMRD5DxNglGPs3Hz9P92qQEYp81Xgb2tQgkY24
+ gSm0GDtQkJCiBWE+6DQyzZXOs0Iz1M0K0fnebAkpO+NTLvjPhNsQiLZSAzB1J3URnG9f
+ dyinJqyCQzSRkd3vabsLAcKMnw2uDKp4P1l0rv1lwoWggcL0iodKADIsnr1PmQc5mNRG
+ OPAEHRPJCRMDCJ03BdjrP1HF2NpWzPXrn/NhVSE8Vl2ovNaamZsbmNQLK8HBH/goPrwE
+ DhMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVzIrlYCEJ6KjvU19BSiZqXshHEKoJyuWD/vTOnZkois3t+8Yo0WaTLYLwtw34vq/eRxRhp9gODn6MX8sEOmlSi6GM2mHg=
-X-Gm-Message-State: AOJu0YwWjD3zM/VD2EIvQCaOal/Ruuv0D47foczu3bkJRNnE2t6uoNjE
- QqJlfGYn0Fs0GNIBHYJcTdAeUNXnLKbdaqdYbjsy8aozsTQfO3iOv2lxDBfsNQ==
-X-Google-Smtp-Source: AGHT+IG3DMnFJjtxqkCBLCVbSVQFXZsMDyPt+vTKtslQwi5FyD2Km3SczSl5xVdz+eD5SuNGtxPNWQ==
-X-Received: by 2002:a05:600c:1d1f:b0:41a:444b:e1d9 with SMTP id
- 5b1f17b1804b1-42671c0a692mr1287645e9.4.1720509342294; 
- Tue, 09 Jul 2024 00:15:42 -0700 (PDT)
+ AJvYcCVlDhXPo1qMcuSX8b2Zb68EIZHHFM6anLH/IdT9opzj0rPWyi2soMkYqJEe2kxhbjaC6RqNggAVJ84QKOBHx7H6bxcpP6o=
+X-Gm-Message-State: AOJu0Yz2/hfQg3thjEXwNqNx9AxAaiXd6bNilukyBJtrDV5h2NcjTwQQ
+ jxzxcjxKYy3HFyvqEQ6oc1Dcx5sArBduD9ADsFMGhc6Czk0lHFPfx4+Su5WMOw==
+X-Google-Smtp-Source: AGHT+IGp4At/VP2RpsC7Be5pUQN3L8Rl28VlLihB9a4ZAUkZ/jUVIwlwvTTLYSqlz59kJ8ALA2PiEw==
+X-Received: by 2002:a05:600c:1d1f:b0:424:898b:522b with SMTP id
+ 5b1f17b1804b1-42673175a65mr945905e9.1.1720509493343; 
+ Tue, 09 Jul 2024 00:18:13 -0700 (PDT)
 Received: from google.com (205.215.190.35.bc.googleusercontent.com.
  [35.190.215.205]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f7416dbsm26508955e9.39.2024.07.09.00.15.41
+ 5b1f17b1804b1-4266f74159csm26491475e9.42.2024.07.09.00.18.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jul 2024 00:15:41 -0700 (PDT)
-Date: Tue, 9 Jul 2024 07:15:37 +0000
+ Tue, 09 Jul 2024 00:18:12 -0700 (PDT)
+Date: Tue, 9 Jul 2024 07:18:08 +0000
 From: Mostafa Saleh <smostafa@google.com>
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>
-Cc: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org,
- qemu-devel@nongnu.org, alex.bennee@linaro.org, maz@kernel.org,
+To: Eric Auger <eric.auger@redhat.com>
+Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, qemu-devel@nongnu.org,
+ jean-philippe@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
  nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
  marcin.juszkiewicz@linaro.org
 Subject: Re: [PATCH v4 11/19] hw/arm/smmu-common: Support nested translation
-Message-ID: <ZozjmZ1ZodrUBT5s@google.com>
+Message-ID: <ZozkMGIq9VHE3HXS@google.com>
 References: <20240701110241.2005222-1-smostafa@google.com>
  <20240701110241.2005222-12-smostafa@google.com>
- <20240704183110.GH1693268@myrica>
+ <86fc9221-f24e-4a7f-8a0d-b19102f981f0@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240704183110.GH1693268@myrica>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=smostafa@google.com; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+In-Reply-To: <86fc9221-f24e-4a7f-8a0d-b19102f981f0@redhat.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,58 +100,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jean,
+Hi Eric,
 
-On Thu, Jul 04, 2024 at 07:31:10PM +0100, Jean-Philippe Brucker wrote:
-> On Mon, Jul 01, 2024 at 11:02:33AM +0000, Mostafa Saleh wrote:
+On Mon, Jul 08, 2024 at 05:19:59PM +0200, Eric Auger wrote:
+> Hi Mostafa,
+> 
+> On 7/1/24 13:02, Mostafa Saleh wrote:
 > > When nested translation is requested, do the following:
-> > 
+> >
 > > - Translate stage-1 table address IPA into PA through stage-2.
 > > - Translate stage-1 table walk output (IPA) through stage-2.
 > > - Create a single TLB entry from stage-1 and stage-2 translations
 > >   using logic introduced before.
-> > 
+> >
 > > For stage-1 table translation, the spec (ARM IHI 0070 F.b) says in:
 > >     7.3.12 F_WALK_EABT:
 > >         Translation of an IPA for Stage 1 descriptor fetch:
 > > 	S2 == 1 (stage 2), CLASS == T
 > > So, F_WALK_EABT is used which propagtes to CLASS == TT.
-> 
-> I don't think the text applies to this case, the context is:
-> 
-> 	A stage 2 table walk can encounter EABT accessing the physical
-> 	address of a stage 2 descriptor, because of a:
-> 	[...]
-> 	* Translation of an IPA for Stage 1 descriptor fetch
-> 
-> So EABT is when failing to load the stage 2 descriptor. I can't find
-> exact text for this case but looking at the flowchart 15.5, I think
-> this should be F_TRANSLATION/F_ADDR_SIZE/F_PERMISSION/F_ACCESS with
-> CLASS=TT and S2.
-
-I see, thanks for clarifying, I guess that would be another argument that
-we propagate more info in SMMUPTWEventInfo so we can set the fault CLASS.
-
-Thanks,
-Mostafa
-
-> 
-> Thanks,
-> Jean
-> 
-> > 
+> >
 > > smmu_ptw() has a new argument SMMUState which include the TLB as
 > > stage-1 table address can be cached in there.
-> > 
+> >
 > > Also in smmu_ptw() a separate path used for nesting to simplify the
 > > code, although some logic can be combined.
-> > 
+> >
 > > Signed-off-by: Mostafa Saleh <smostafa@google.com>
 > > ---
 > >  hw/arm/smmu-common.c         | 72 +++++++++++++++++++++++++++++++-----
 > >  include/hw/arm/smmu-common.h |  2 +-
 > >  2 files changed, 64 insertions(+), 10 deletions(-)
-> > 
+> >
 > > diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
 > > index 24b7d09e2b..71afd486ba 100644
 > > --- a/hw/arm/smmu-common.c
@@ -164,6 +144,7 @@ Mostafa
 > > +                                           SMMUTransCfg *cfg,
 > > +                                           SMMUPTWEventInfo *info,
 > > +                                           SMMUState *bs)
+> Nit: in general the SMMUState if the 1st arg, as the most global state.
 > > +{
 > > +    dma_addr_t addr = *table_addr;
 > > +    SMMUTLBEntry *cached_entry;
@@ -188,6 +169,18 @@ Mostafa
 > > +    info->stage = SMMU_STAGE_2;
 > > +    info->type = SMMU_PTW_ERR_WALK_EABT;
 > > +    info->addr = addr;
+> so I guess also here the recorded address should be the IOVA (Jean's
+> previous comment)?
+
+This address maps to FetchAddr and not InputAddr, which is set from the
+calling function, so that should be correct. (besides event type as Jean
+mentioned it needs be fixed).
+
+Thanks,
+Mostafa
+
+> 
+> Eric
 > > +    return -EINVAL;
 > > +}
 > > +
@@ -295,7 +288,5 @@ Mostafa
 > >  
 > >  
 > >  /*
-> > -- 
-> > 2.45.2.803.g4e1b14247a-goog
-> > 
+> 
 
