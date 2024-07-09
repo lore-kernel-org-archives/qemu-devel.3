@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51072C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B95CC2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 15:27:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRCjQ-00030D-1t; Tue, 09 Jul 2024 11:26:16 -0400
+	id 1sRCjk-0003ll-O3; Tue, 09 Jul 2024 11:26:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCjN-0002sz-Fm
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:26:13 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCjZ-0003eH-HR
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:26:25 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCjK-0006Bb-Iy
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:26:13 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2eea7e2b0e6so30248081fa.3
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:26:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRCjW-0006DW-I6
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 11:26:25 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-426685732dcso16438035e9.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 08:26:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720538768; x=1721143568; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720538780; x=1721143580; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Qg1OvvbVnYB9NkPyvKNWOuJA/h7PKPgrnxpR3YQLVd8=;
- b=qe79qGCD1MrbcMPa5Gab6KXm3Nom68m4Ba/FUfPkxD7HRbaDMnBpmf71NCmQsMPoaj
- Em3nKRdpmg4bPTlFPRbRj80Z7OfYIHDFpHlxu612pdUb3Sw1LeV2x0KkEu5VuM/Oszim
- jycivY+2dXA4noodsz11gZrjS4gnMkGuORWQqzc1xORX7c/uf5gDmxiOYyqU3uX7H4Ls
- 3bGHS+tcrTODHJRjROmtEts6eA+lO/ZJyiGMRn5MkiKp1JFlnNR6OziIn8f9yZmECK2u
- ELYneF1zN0D1ZqUSlsP7BmwTFGW4UfsQ3Cnhjz5Gb4Av2vDRU6lvn0ZD20OfG3imsJ+R
- s91g==
+ bh=RJVHkR25AopDRjvaFAHlUdf7mDVai3uQRUgz1HxXftQ=;
+ b=gr49xS0INqsXUOZsO2U+iBM3QZI8ngbkFFmN1CowDLIv4UXD2j5jvZ4okSLbaX0nM8
+ UglTSTcGXGoOe65s/r9twpXEew9YKUB+MRDJceq/TfJSCxH4us0Bw9EnvtZQgZLx9w60
+ rGLOjTN1ofxtcA7Yq3Tei/ar1895NLSyubmuC2ElnEc/f38bu1P3YfURcr99B/SE5knV
+ ZqkA9nCRf32qQY5rLT4W0HR8slFZbimhINWbBiw3er9bBr7ofjwCXomDVOODBDjtNTcf
+ PgHEja097UJLCNuM/ZRPkgvs4khQg/otTrMAAgaD1+jmo6Djkz3enUscxU1+fmviEE3s
+ wqNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720538768; x=1721143568;
+ d=1e100.net; s=20230601; t=1720538780; x=1721143580;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Qg1OvvbVnYB9NkPyvKNWOuJA/h7PKPgrnxpR3YQLVd8=;
- b=DQqTKTqnqAzI+PEcgi5jS4xnlIp3zSUO4/qLhSEeVvN1FDqXI+j+6FWl/NYDt46nCU
- ksT68T+t6JKnUeA7bNjMkL4AuZ5wk2dgepKKFvv0I/r4QGDCv+dtcHjnNf1Fzdy7Jslg
- 7Aueicf+eYeAq1ilnrSzM46zAvIKBD9KrOiwaStGolIor8oKeV9T+rQ+iXB2GWmiNQWq
- A+z/fNZ1VklQDQsLx1QScyA/RppMpxANTYQ4jwlF3X+X0YAa7vr94UH6UKqgT5i89vTE
- m/FR99dfw5DMBr15H31gyrEjIksZZEVbSHt2IcvKCrT/Jclxe28lL47y/Ed7fQlql7/H
- TzDw==
-X-Gm-Message-State: AOJu0YxcTi5W10mpTR63o4O96fp5ZYIE+TcL4kcRMQhtVivMBkJahPOd
- Fr/HHd3qXWD2EZntRehhs8tXJYZ6oEKC5jhw3km4it8BQFViZthYe45G+EG04je06h201ramoqk
- q
-X-Google-Smtp-Source: AGHT+IFmIVKvM5DozlK0UPcmolaNhLC/d1xOCEZGb/JK1Jxz+uVEXYB+M+Z+K0XWZu/hUqfIrT8Ybw==
-X-Received: by 2002:a2e:3014:0:b0:2ec:543f:6013 with SMTP id
- 38308e7fff4ca-2eeb30d9814mr18582841fa.13.1720538766585; 
- Tue, 09 Jul 2024 08:26:06 -0700 (PDT)
+ bh=RJVHkR25AopDRjvaFAHlUdf7mDVai3uQRUgz1HxXftQ=;
+ b=Ocu0PuaMG1z+k+zoBpMaOr+dCmUeNSms9PT6PHJl8syFwo58ahpq3op9r1l4kQ+neT
+ 1HlEEPDTqGmm2uMfJKeTJThgwkFtAQhJdmsZUZWBpL3hKET4FVo7jrY7VpBO1EWm7L9T
+ VcOsdNIWcHYDIx/jOlWaWUpHpBVvWo7KcmMVt9M1H09kXElMsVyXciKLfZjKplCoAZYG
+ B2DRBfMQm7okGbqh1PDNCBAvq/y1wUWWPy4m0X362fHi5RCvYS24iQr30Q/4IOaAGm+A
+ JS84BoeJXQdC4xdNCgCL14GaZiZmZ/hAIqrZihdBfW6LvNpiql+X1HF2BlWNjfsaHO/p
+ PgnA==
+X-Gm-Message-State: AOJu0YzpZtq04OQgXgiRDor4Ah9nb0dGJLV5cFvtDFuZvoEUBeRCXSS3
+ BbDnzCvSZQmWu9HKEUKuzDjw6OEhVTEZrfiFct2b3uO/0qdmMIsQczLD8rNrTlYlCVySlH399Kq
+ e
+X-Google-Smtp-Source: AGHT+IEvOdkletwG6c7lL3m9xiyNYI3XMafkRm1k3/Zp3UbZ0smJb/pfwzqbIqtha2qeaTzT8Oz6+A==
+X-Received: by 2002:a5d:5f88:0:b0:367:402f:805b with SMTP id
+ ffacd0b85a97d-367cea46b51mr2726113f8f.2.1720538780582; 
+ Tue, 09 Jul 2024 08:26:20 -0700 (PDT)
 Received: from m1x-phil.lan (vau06-h02-176-184-43-20.dsl.sta.abo.bbox.fr.
  [176.184.43.20]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f6f5f25sm46032035e9.26.2024.07.09.08.26.04
+ ffacd0b85a97d-367cde846a3sm2870777f8f.30.2024.07.09.08.26.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Jul 2024 08:26:06 -0700 (PDT)
+ Tue, 09 Jul 2024 08:26:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -66,18 +66,19 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <f4bug@amsat.org>
-Subject: [PATCH v47 01/19] hw/sd/sdcard: Basis for eMMC support
-Date: Tue,  9 Jul 2024 17:25:38 +0200
-Message-ID: <20240709152556.52896-2-philmd@linaro.org>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v47 03/19] hw/sd/sdcard: Register unimplemented command
+ handlers
+Date: Tue,  9 Jul 2024 17:25:40 +0200
+Message-ID: <20240709152556.52896-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.41.0
 In-Reply-To: <20240709152556.52896-1-philmd@linaro.org>
 References: <20240709152556.52896-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x233.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,159 +101,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <f4bug@amsat.org>
+Per the spec v4.3 these commands are mandatory,
+but we don't implement them.
 
-Add basis for supporting eMMC.
-
-Since eMMC are soldered on boards, it is not user-creatable.
-
-Currently TYPE_EMMC is just a stub, so disabled (marked abstract).
-
-RCA register is initialized to 1, per spec v4.3,
-chapter 8.5 "RCA register":
-
-  The default value of the RCA register is 0x0001.
-  The value 0x0000 is reserved to set all cards into
-  the Stand-by State with CMD7.
-
-Signed-off-by: Philippe Mathieu-Daudé <f4bug@amsat.org>
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Tested-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20240628070216.92609-85-philmd@linaro.org>
 ---
- include/hw/sd/sd.h |  3 +++
- hw/sd/sd.c         | 50 +++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 52 insertions(+), 1 deletion(-)
+ hw/sd/sd.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/include/hw/sd/sd.h b/include/hw/sd/sd.h
-index 0d6d9e452b..d35a839f5e 100644
---- a/include/hw/sd/sd.h
-+++ b/include/hw/sd/sd.h
-@@ -96,6 +96,9 @@ OBJECT_DECLARE_TYPE(SDState, SDCardClass, SD_CARD)
- #define TYPE_SD_CARD_SPI "sd-card-spi"
- DECLARE_INSTANCE_CHECKER(SDState, SD_CARD_SPI, TYPE_SD_CARD_SPI)
- 
-+#define TYPE_EMMC "emmc"
-+DECLARE_INSTANCE_CHECKER(SDState, EMMC, TYPE_EMMC)
-+
- struct SDCardClass {
-     /*< private >*/
-     DeviceClass parent_class;
 diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index d6a07f0ade..91a73aea8d 100644
+index eb50862adb..097c9cc61f 100644
 --- a/hw/sd/sd.c
 +++ b/hw/sd/sd.c
-@@ -2,6 +2,8 @@
-  * SD Memory Card emulation as defined in the "SD Memory Card Physical
-  * layer specification, Version 2.00."
-  *
-+ * eMMC emulation defined in "JEDEC Standard No. 84-A43"
-+ *
-  * Copyright (c) 2006 Andrzej Zaborowski  <balrog@zabor.org>
-  * Copyright (c) 2007 CodeSourcery
-  * Copyright (c) 2018 Philippe Mathieu-Daudé <f4bug@amsat.org>
-@@ -169,12 +171,18 @@ struct SDState {
- static void sd_realize(DeviceState *dev, Error **errp);
- 
- static const SDProto sd_proto_spi;
-+static const SDProto sd_proto_emmc;
- 
- static bool sd_is_spi(SDState *sd)
- {
-     return sd->proto == &sd_proto_spi;
- }
- 
-+static bool sd_is_emmc(SDState *sd)
-+{
-+    return sd->proto == &sd_proto_emmc;
-+}
-+
- static const char *sd_version_str(enum SDPhySpecificationVersion version)
- {
-     static const char *sdphy_version[] = {
-@@ -697,7 +705,7 @@ static void sd_reset(DeviceState *dev)
-     sd->state = sd_idle_state;
- 
-     /* card registers */
--    sd->rca = 0x0000;
-+    sd->rca = sd_is_emmc(sd) ? 0x0001 : 0x0000;
-     sd->size = size;
-     sd_set_ocr(sd);
-     sd_set_scr(sd);
-@@ -2375,6 +2383,13 @@ static const SDProto sd_proto_sd = {
+@@ -2390,24 +2390,33 @@ static const SDProto sd_proto_emmc = {
+         [0]  = {0,  sd_bc,   "GO_IDLE_STATE", sd_cmd_GO_IDLE_STATE},
+         [1]  = {0,  sd_bcr,  "SEND_OP_COND", sd_cmd_SEND_OP_COND},
+         [2]  = {0,  sd_bcr,  "ALL_SEND_CID", sd_cmd_ALL_SEND_CID},
++        [4]  = {0,  sd_bc,   "SEND_DSR", sd_cmd_unimplemented},
+         [7]  = {0,  sd_ac,   "(DE)SELECT_CARD", sd_cmd_DE_SELECT_CARD},
+         [9]  = {0,  sd_ac,   "SEND_CSD", sd_cmd_SEND_CSD},
+         [10] = {0,  sd_ac,   "SEND_CID", sd_cmd_SEND_CID},
++        [11] = {1,  sd_adtc, "READ_DAT_UNTIL_STOP", sd_cmd_unimplemented},
+         [12] = {0,  sd_ac,   "STOP_TRANSMISSION", sd_cmd_STOP_TRANSMISSION},
+         [13] = {0,  sd_ac,   "SEND_STATUS", sd_cmd_SEND_STATUS},
++        [14] = {0,  sd_adtc, "BUSTEST_R", sd_cmd_unimplemented},
+         [15] = {0,  sd_ac,   "GO_INACTIVE_STATE", sd_cmd_GO_INACTIVE_STATE},
+         [16] = {2,  sd_ac,   "SET_BLOCKLEN", sd_cmd_SET_BLOCKLEN},
+         [17] = {2,  sd_adtc, "READ_SINGLE_BLOCK", sd_cmd_READ_SINGLE_BLOCK},
++        [19] = {0,  sd_adtc, "BUSTEST_W", sd_cmd_unimplemented},
++        [20] = {3,  sd_adtc, "WRITE_DAT_UNTIL_STOP", sd_cmd_unimplemented},
+         [23] = {2,  sd_ac,   "SET_BLOCK_COUNT", sd_cmd_SET_BLOCK_COUNT},
+         [24] = {4,  sd_adtc, "WRITE_SINGLE_BLOCK", sd_cmd_WRITE_SINGLE_BLOCK},
+         [27] = {4,  sd_adtc, "PROGRAM_CSD", sd_cmd_PROGRAM_CSD},
+         [28] = {6,  sd_ac,   "SET_WRITE_PROT", sd_cmd_SET_WRITE_PROT},
+         [29] = {6,  sd_ac,   "CLR_WRITE_PROT", sd_cmd_CLR_WRITE_PROT},
+         [30] = {6,  sd_adtc, "SEND_WRITE_PROT", sd_cmd_SEND_WRITE_PROT},
++        [31] = {6,  sd_adtc, "SEND_WRITE_PROT_TYPE", sd_cmd_unimplemented},
+         [35] = {5,  sd_ac,   "ERASE_WR_BLK_START", sd_cmd_ERASE_WR_BLK_START},
+         [36] = {5,  sd_ac,   "ERASE_WR_BLK_END", sd_cmd_ERASE_WR_BLK_END},
+         [38] = {5,  sd_ac,   "ERASE", sd_cmd_ERASE},
++        [39] = {9,  sd_ac,   "FAST_IO", sd_cmd_unimplemented},
++        [40] = {9,  sd_bcr,  "GO_IRQ_STATE", sd_cmd_unimplemented},
+         [42] = {7,  sd_adtc, "LOCK_UNLOCK", sd_cmd_LOCK_UNLOCK},
++        [49] = {0,  sd_adtc, "SET_TIME", sd_cmd_unimplemented},
+         [55] = {8,  sd_ac,   "APP_CMD", sd_cmd_APP_CMD},
+         [56] = {8,  sd_adtc, "GEN_CMD", sd_cmd_GEN_CMD},
      },
- };
- 
-+static const SDProto sd_proto_emmc = {
-+    /* Only v4.3 is supported */
-+    .name = "eMMC",
-+    .cmd = {
-+    },
-+};
-+
- static void sd_instance_init(Object *obj)
- {
-     SDState *sd = SDMMC_COMMON(obj);
-@@ -2446,6 +2461,15 @@ static void sd_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
-+static void emmc_realize(DeviceState *dev, Error **errp)
-+{
-+    SDState *sd = SDMMC_COMMON(dev);
-+
-+    sd->spec_version = SD_PHY_SPECv3_01_VERS; /* Actually v4.3 */
-+
-+    sd_realize(dev, errp);
-+}
-+
- static Property sdmmc_common_properties[] = {
-     DEFINE_PROP_DRIVE("drive", SDState, blk),
-     DEFINE_PROP_END_OF_LIST()
-@@ -2457,6 +2481,10 @@ static Property sd_properties[] = {
-     DEFINE_PROP_END_OF_LIST()
- };
- 
-+static Property emmc_properties[] = {
-+    DEFINE_PROP_END_OF_LIST()
-+};
-+
- static void sdmmc_common_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -2509,6 +2537,20 @@ static void sd_spi_class_init(ObjectClass *klass, void *data)
-     sc->proto = &sd_proto_spi;
- }
- 
-+static void emmc_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    SDCardClass *sc = SDMMC_COMMON_CLASS(klass);
-+
-+    dc->desc = "eMMC";
-+    dc->realize = emmc_realize;
-+    device_class_set_props(dc, emmc_properties);
-+    /* Reason: Soldered on board */
-+    dc->user_creatable = false;
-+
-+    sc->proto = &sd_proto_emmc;
-+}
-+
- static const TypeInfo sd_types[] = {
-     {
-         .name           = TYPE_SDMMC_COMMON,
-@@ -2530,6 +2572,12 @@ static const TypeInfo sd_types[] = {
-         .parent         = TYPE_SD_CARD,
-         .class_init     = sd_spi_class_init,
-     },
-+    {
-+        .name           = TYPE_EMMC,
-+        .parent         = TYPE_SDMMC_COMMON,
-+        .class_init     = emmc_class_init,
-+        .abstract       = true, /* FIXME: Remove once model fully functional */
-+    },
- };
- 
- DEFINE_TYPES(sd_types)
 -- 
 2.41.0
 
