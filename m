@@ -4,83 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82710C3DA41
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 06:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAB85C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 06:51:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR4QD-0004cB-I1; Tue, 09 Jul 2024 02:33:53 -0400
+	id 1sR4gh-00069E-R2; Tue, 09 Jul 2024 02:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sR4QB-0004Yc-3b
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 02:33:51 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sR4Q8-0002JC-8v
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 02:33:50 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-6e7e23b42c3so2416183a12.1
- for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 23:33:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1720506826; x=1721111626;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UomquE8s4ypHQ9KZBxCWi+V0cCvOWgDu1LcmoJBSPTU=;
- b=14eDFpJIZamxH9c4WKRqqAkEviiO8pnwwWJYKdfDEf7D/Di28oYZOhoJww922RRAJ1
- KkrjuzEeEcCL18lGwkMHFtYHmuQ8npKpWRn0bRc7URr+ifRloF/pfmqgUjYeKFVUOHhT
- Y66Cp6mW+4OXKrl2ouqEImO+g/oioiQnAYs0rf+XeWMpiKM/34Zt0uUPuVmYp7Y0qD0/
- Q9O8ykuaHc/5nZIlOwENRCc1bx2SswwyFK5LoDLXY0/g0mHvx4T1Hz0EbAplLf1I2Exc
- d4mabYfw5mUGe3LTD1Q83dRwJWGWAcUDarlHvDW4188WGVPWpQ9Dx2hY72uO4lzlY5F6
- hw5A==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sR4gc-00067o-Ms
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 02:50:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1sR4gX-0005hS-C0
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 02:50:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720507843;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KKOJuzDXUyoKlW7QJ+JBfGZi8J+Ez2Q16s/WDENRbNI=;
+ b=EpAac4mv8MtiA05jqbiKKoDwiyalYnJ5S2LcThi1dpql5VB4xeYdsP5bbh3krrSlNNfaQa
+ sYPiG6YfSriAvM7mivwkyvCq57ml0ueNPR5pyox2a0pVwscuVES76LJKH0tSYvXb6SNswa
+ IrkF5BbTwaRhO2kJADhY/JHRnhLmcjs=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-257-9A7GkTbLNxiE6BK69WLwnw-1; Tue, 09 Jul 2024 02:50:40 -0400
+X-MC-Unique: 9A7GkTbLNxiE6BK69WLwnw-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52e960523ecso4643853e87.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Jul 2024 23:50:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720506826; x=1721111626;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UomquE8s4ypHQ9KZBxCWi+V0cCvOWgDu1LcmoJBSPTU=;
- b=BUVcNZT1EQBdUl1yFJz8G3tAhSlql7dzV8fT6M9SbM34Tc9ce19K3zM6fq4LhMBipG
- mBDBMZCzMczyNchACX9r0AGalI+NKxiX9uzHltXTYOqJJA+SRyfbBfS2hV/ZXChBOIoF
- FsmpCPkRX5f1kQpTduk6IcLuJPJGiXjl3rDQqd5yCl7Ie+ertYJDu5XbJZLjpAZmyp8j
- Qx8KFp80NVN1qecoLGIewkZBhriOaDXYGC1xlimUd1jrn8+m97yjt+E05u0LIBc/1pcT
- lX2HEirHHdIEPCibbJOvGWxVvxFNBYAeK6+HgT/WYCOLY7NRE39G5FghhyLKxAld9VOF
- XUgA==
-X-Gm-Message-State: AOJu0YzteD3iobobdGBeq716g6XLEUSNKDNOU7NJ7qePdNBp2KMdEc8m
- 8aUMHwBXTvvJ/DCN8BH0XX0lbrYKumXJLbXNTS/oYx9P9/gBOgcRaCQpj31b7CXv4WCuadeY0+h
- x1wUg5XCm
-X-Google-Smtp-Source: AGHT+IGLJMHLjYJRlTTNYPtHOWjB1v99nyeGweK7wJp5rO+haVWWQ4SsKcbJS+74rt0rSweX7JgXKA==
-X-Received: by 2002:a05:6a20:439f:b0:1c0:f529:af05 with SMTP id
- adf61e73a8af0-1c2984cda84mr1514833637.43.1720506825860; 
- Mon, 08 Jul 2024 23:33:45 -0700 (PDT)
-Received: from Hyman-Dev-Euler.zelin.local (vps-bd302c4a.vps.ovh.ca.
- [15.235.142.94]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fbb6a0fc38sm8713095ad.17.2024.07.08.23.33.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 08 Jul 2024 23:33:45 -0700 (PDT)
-From: yong.huang@smartx.com
-To: qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>,
-	yong.huang@smartx.com
-Subject: [PATCH v2 1/1] e1000: Fix the overrun check of the receive ring buffer
-Date: Tue,  9 Jul 2024 14:33:38 +0800
-Message-Id: <0586c0bef4a8606a1efe9ccff24e037f1c954cd9.1720506723.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1720506723.git.yong.huang@smartx.com>
-References: <cover.1720506723.git.yong.huang@smartx.com>
+ d=1e100.net; s=20230601; t=1720507838; x=1721112638;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KKOJuzDXUyoKlW7QJ+JBfGZi8J+Ez2Q16s/WDENRbNI=;
+ b=NrSoRdQlH3GgS4JiEvD2OH7YhYzywEnquezqGhoA8Qwl9iKNuplqsl9g4IJut/IBA2
+ cBnpZekQw53RPjrKskmXAAN1xOQ395T+aZIsPnhvRc+ifccA0PZvBm8JG6B0wFsadlzf
+ XnqS3hHui5Yn+L0w4L3DA7+hZNyQrPu038VCWyD0cfvqHFRAkYM2PlV9FgajnZNlrkTx
+ 4/V/8XPFpS6B2pPOisshwNOuqdVy1Nl+2tr1+ytTZ42j/hxXvLxQ4ZaSHjCqQHi8GmHf
+ vJZPf5xKtPjd8uF1Po+UaNnPset4rIutf4R2th5eUoE31pT0WmN5GNtzBeSCwbOrzQVj
+ WdXw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQoXBuGLzhSKouabQL0ZCeeM0fKQiZCGrM2pVgBasMUu/sNf0AzTcVWndfqHU5rCS4p1oat/wjG05d3K+mJ8QE7BaaGrk=
+X-Gm-Message-State: AOJu0Yyp7UcGExgIzaSheL0KBeo5UqO8NU5t6b0DOyAbqgpsNRWPGlQO
+ UbiVyv3mBrepFQSRCMbxKIS3GIR+22j3q1MPGUt0HqdW1K56MD1f87WOYT8Rwn23RxNAtgwiyMh
+ ibfXwNYfldXVZc1ZguT8ZVfzV6urolDHWP/RlP/1xkzUya+nS9LbW
+X-Received: by 2002:a05:6512:318a:b0:52e:7444:162e with SMTP id
+ 2adb3069b0e04-52eb99d1527mr1006375e87.55.1720507838369; 
+ Mon, 08 Jul 2024 23:50:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGGhrFVNqA+NlNfYOcZIt3pexSvP4VGyzPHMGrD6qNTJoZ+bIDNNyugZBEL9b0izeWS/l6UUg==
+X-Received: by 2002:a05:6512:318a:b0:52e:7444:162e with SMTP id
+ 2adb3069b0e04-52eb99d1527mr1006349e87.55.1720507837899; 
+ Mon, 08 Jul 2024 23:50:37 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4266f74462esm25222095e9.48.2024.07.08.23.50.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Jul 2024 23:50:37 -0700 (PDT)
+Message-ID: <6b5f84b5-134c-4507-84aa-5086f20f6eaa@redhat.com>
+Date: Tue, 9 Jul 2024 08:50:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=yong.huang@smartx.com; helo=mail-pg1-x52f.google.com
-X-Spam_score_int: 14
-X-Spam_score: 1.4
-X-Spam_bar: +
-X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 04/10] vfio/iommufd: Introduce auto domain creation
+To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+References: <20240708143420.16953-1-joao.m.martins@oracle.com>
+ <20240708143420.16953-5-joao.m.martins@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+In-Reply-To: <20240708143420.16953-5-joao.m.martins@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,174 +107,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
+On 7/8/24 4:34 PM, Joao Martins wrote:
+> There's generally two modes of operation for IOMMUFD:
+> 
+> * The simple user API which intends to perform relatively simple things
+> with IOMMUs e.g. DPDK. It generally creates an IOAS and attach to VFIO
+> and mainly performs IOAS_MAP and UNMAP.
+> 
+> * The native IOMMUFD API where you have fine grained control of the
+> IOMMU domain and model it accordingly. This is where most new feature
+> are being steered to.
+> 
+> For dirty tracking 2) is required, as it needs to ensure that
+> the stage-2/parent IOMMU domain will only attach devices
+> that support dirty tracking (so far it is all homogeneous in x86, likely
+> not the case for smmuv3). Such invariant on dirty tracking provides a
+> useful guarantee to VMMs that will refuse incompatible device
+> attachments for IOMMU domains.
+> 
+> Dirty tracking insurance is enforced via HWPT_ALLOC, which is
+> responsible for creating an IOMMU domain. This is contrast to the
+> 'simple API' where the IOMMU domain is created by IOMMUFD automatically
+> when it attaches to VFIO (usually referred as autodomains) but it has
+> the needed handling for mdevs.
+> 
+> To support dirty tracking with the advanced IOMMUFD API, it needs
+> similar logic, where IOMMU domains are created and devices attached to
+> compatible domains. Essentially mimmicing kernel
+> iommufd_device_auto_get_domain(). If this fails (i.e. mdevs) it falls back
+> to IOAS attach (which again is always the case for mdevs).
+> 
+> The auto domain logic allows different IOMMU domains to be created when
+> DMA dirty tracking is not desired (and VF can provide it), and others where
+> it is. Here is not used in this way here given how VFIODevice migration
+> state is initialized after the device attachment. But such mixed mode of
+> IOMMU dirty tracking + device dirty tracking is an improvement that can
+> be added on. Keep the 'all of nothing' approach that we have been using
+> so far between container vs device dirty tracking.
+> 
+> Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
+> ---
+>   include/hw/vfio/vfio-common.h |  9 ++++
+>   include/sysemu/iommufd.h      |  4 ++
+>   backends/iommufd.c            | 29 +++++++++++
+>   hw/vfio/iommufd.c             | 91 +++++++++++++++++++++++++++++++++++
+>   backends/trace-events         |  1 +
+>   5 files changed, 134 insertions(+)
+> 
+> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+> index e8ddf92bb185..82c5a4aaa61e 100644
+> --- a/include/hw/vfio/vfio-common.h
+> +++ b/include/hw/vfio/vfio-common.h
+> @@ -95,10 +95,17 @@ typedef struct VFIOHostDMAWindow {
+>   
+>   typedef struct IOMMUFDBackend IOMMUFDBackend;
+>   
+> +typedef struct VFIOIOASHwpt {
+> +    uint32_t hwpt_id;
+> +    QLIST_HEAD(, VFIODevice) device_list;
+> +    QLIST_ENTRY(VFIOIOASHwpt) next;
+> +} VFIOIOASHwpt;
+> +
+>   typedef struct VFIOIOMMUFDContainer {
+>       VFIOContainerBase bcontainer;
+>       IOMMUFDBackend *be;
+>       uint32_t ioas_id;
+> +    QLIST_HEAD(, VFIOIOASHwpt) hwpt_list;
+>   } VFIOIOMMUFDContainer;
+>   
+>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOIOMMUFDContainer, VFIO_IOMMU_IOMMUFD);
+> @@ -134,6 +141,8 @@ typedef struct VFIODevice {
+>       HostIOMMUDevice *hiod;
+>       int devid;
+>       IOMMUFDBackend *iommufd;
+> +    VFIOIOASHwpt *hwpt;
+> +    QLIST_ENTRY(VFIODevice) hwpt_next;
+>   } VFIODevice;
+>   
+>   struct VFIODeviceOps {
+> diff --git a/include/sysemu/iommufd.h b/include/sysemu/iommufd.h
+> index 57d502a1c79a..35a8cec9780f 100644
+> --- a/include/sysemu/iommufd.h
+> +++ b/include/sysemu/iommufd.h
+> @@ -50,6 +50,10 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+>   bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>                                        uint32_t *type, void *data, uint32_t len,
+>                                        uint64_t *caps, Error **errp);
+> +int iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+> +                               uint32_t pt_id, uint32_t flags,
+> +                               uint32_t data_type, uint32_t data_len,
+> +                               void *data_ptr, uint32_t *out_hwpt);
+>   
+>   #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+>   #endif
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index 2b3d51af26d2..f5f73eaf4a1a 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -208,6 +208,35 @@ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+>       return ret;
+>   }
+>   
+> +int iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+> +                               uint32_t pt_id, uint32_t flags,
+> +                               uint32_t data_type, uint32_t data_len,
+> +                               void *data_ptr, uint32_t *out_hwpt)
+> +{
+> +    int ret, fd = be->fd;
+> +    struct iommu_hwpt_alloc alloc_hwpt = {
+> +        .size = sizeof(struct iommu_hwpt_alloc),
+> +        .flags = flags,
+> +        .dev_id = dev_id,
+> +        .pt_id = pt_id,
+> +        .data_type = data_type,
+> +        .data_len = data_len,
+> +        .data_uptr = (uint64_t)data_ptr,
+> +    };
+> +
+> +    ret = ioctl(fd, IOMMU_HWPT_ALLOC, &alloc_hwpt);
+> +    trace_iommufd_backend_alloc_hwpt(fd, dev_id, pt_id, flags, data_type,
+> +                                     data_len, (uint64_t)data_ptr,
+> +                                     alloc_hwpt.out_hwpt_id, ret);
+> +    if (ret) {
+> +        ret = -errno;
+> +        error_report("IOMMU_HWPT_ALLOC failed: %m");
 
-Unexpected work by certain Windows guests equipped with the e1000
-interface can cause the network to go down and never come back up
-again unless the guest's interface is reset.
+Please add an 'Error **errp' parameter.
 
-To reproduce the failure:
-1. Set up two guests with a Windows 2016 or 2019 server operating
-   system.
-2. Set up the e1000 interface for the guests.
-3. Pressurize the network slightly between two guests using the iPerf tool.
+> +    } else {
+> +        *out_hwpt = alloc_hwpt.out_hwpt_id;
+> +    }
+> +    return ret;
+> +}
+> +
+>   bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>                                        uint32_t *type, void *data, uint32_t len,
+>                                        uint64_t *caps, Error **errp)
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 5a5993b17c2e..2ca9a32cc7b6 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -212,10 +212,95 @@ static bool iommufd_cdev_detach_ioas_hwpt(VFIODevice *vbasedev, Error **errp)
+>       return true;
+>   }
+>   
+> +static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+> +                                         VFIOIOMMUFDContainer *container,
+> +                                         Error **errp)
+> +{
+> +    IOMMUFDBackend *iommufd = vbasedev->iommufd;
+> +    uint32_t flags = 0;
+> +    VFIOIOASHwpt *hwpt;
+> +    uint32_t hwpt_id;
+> +    int ret;
+> +
+> +    /* Try to find a domain */
+> +    QLIST_FOREACH(hwpt, &container->hwpt_list, next) {
+> +        ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, NULL);
+> +        if (ret) {
+> +            /* -EINVAL means the domain is incompatible with the device. */
+> +            if (ret == -EINVAL) {
+> +                continue;
+> +            }
 
-The network goes down after a few days (2-5days), and the issue
-is the result of not adhering to the e1000 specification. Refer
-to the details of the specification at the following link:
-https://www.intel.com/content/dam/doc/manual/pci-pci-x-family-gbe-controllers-software-dev-manual.pdf
+We should propagate an error in the false case.
 
-Chapter 3.2.6 describe the Receive Descriptor Tail register(RDT)
-as following:
-This register holds a value that is an offset from the base, and
-identifies the location beyond the last descriptor hardware can
-process. Note that tail should still point to an area in the
-descriptor ring (somewhere between RDBA and RDBA + RDLEN).
-This is because tail points to the location where software writes
-the first new descriptor.
+> +            return false;
+> +        } else {
+> +            vbasedev->hwpt = hwpt;
+> +            QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
+> +            return true;
+> +        }
+> +    }
+> +
+> +    ret = iommufd_backend_alloc_hwpt(iommufd,
+> +                                     vbasedev->devid,
+> +                                     container->ioas_id, flags,
+> +                                     IOMMU_HWPT_DATA_NONE, 0, NULL, &hwpt_id);
+> +    if (ret) {
+> +        /*
+> +         * When there's no domains allocated we can still attempt a hardware
+> +         * pagetable allocation for an mdev, which ends up returning -ENOENT
+> +         * This is benign and meant to fallback into IOAS attach, hence don't
+> +         * set errp.
+> +         */
 
-This means that if the provider—in this case, QEMU—has not yet
-put packets into the descriptior of the receive ring buffer,
-RDT should not point to that descriptior since it is in the range
-of "hardware" handles. While when implementing the emulation of
-the e1000 interface, QEMU evaluates thta the receive ring buffer
-is full once the RDT equals the RDH.
+same here.
 
-We applied the following log patch to assist in analyzing the
-issue and eventually obtained the unexpected information.
-
-Log patch:
------------------------------------------------------------------
-|--- a/hw/net/e1000.c
-|+++ b/hw/net/e1000.c
-|@@ -836,6 +836,9 @@ e1000_set_link_status(NetClientState *nc)
-| static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
-| {
-|     int bufs;
-|+    DBGOUT(RX, "rxbuf_size = %u, s->mac_reg[RDLEN] = %u, s->mac_reg[RDH] = %u, s->mac_reg[RDT] = %u\n",
-|+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], s->mac_reg[RDT]);
-|+
-|     /* Fast-path short packets */
-|     if (total_size <= s->rxbuf_size) {
-|         if (s->mac_reg[RDH] == s->mac_reg[RDT] && s->last_overrun)
-|@@ -1022,6 +1025,9 @@ e1000_receive_iov(NetClientState *nc, const struct iovec *iov, int iovcnt)
-|         s->rxbuf_min_shift)
-|         n |= E1000_ICS_RXDMT0;
-|
-|+    DBGOUT(RX, "rxbuf_size = %u, s->mac_reg[RDLEN] = %u, s->mac_reg[RDH] = %u, s->mac_reg[RDT] = %u\n",
-|+           s->rxbuf_size, s->mac_reg[RDLEN], s->mac_reg[RDH], s->mac_reg[RDT]);
-|+
------------------------------------------------------------------
-
-The last few logs of information before the network shuts down:
-
-e1000: total_size = 1, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 897, s->mac_reg[RDT] = 885
-<- the receive ring buffer is checked for fullness in the
-e1000_has_rxbufs function, not full.
-
-e1000: total_size = 64, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 898, s->mac_reg[RDT] = 885
-<- RDT stays the same, RDH updates to 898, and 1 descriptor
-utilized after putting the packet to ring buffer.
-
-e1000: total_size = 1, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 898, s->mac_reg[RDT] = 885
-<- the receive ring buffer is checked for fullness in the
-e1000_has_rxbufs function, not full.
-
-e1000: total_size = 64, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 899, s->mac_reg[RDT] = 885
-<- RDT stays the same, RDH updates to 899, and 1 descriptor
-utilized after putting the packet to ring buffer.
-
-e1000: total_size = 1, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 899, s->mac_reg[RDT] = 885
-<- the receive ring buffer is checked for fullness in the
-e1000_has_rxbufs function, not full.
-
-e1000: total_size = 64, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 900, s->mac_reg[RDT] = 885
-<- RDT stays the same, RDH updates to 900 , and 1 descriptor
-utilized after putting the packet to ring buffer.
-
-e1000: total_size = 1, rxbuf_size = 2048, s->mac_reg[RDLEN] = 16384, s->mac_reg[RDH] = 900, s->mac_reg[RDT] = 900
-<- The ring is full, according to e1000_has_rxbufs, because
-of the RDT update to 900 and equals RDH ! But in reality,
-the state of the ring buffer is empty because the producer
-only used one descriptor the last time, and the ring buffer
-was not full after that.
-
-To sum up, QEMU claims that the receive ring buffer is full
-in the aforementioned scenario, placing the packet in the
-self-maintained queue and unregistering the tap device's
-readable fd handler and then waiting for the guest to consume
-the receive ring buffer. This brings down the network since
-guests have nothing to consume and never update the RDT
-location.
-
-In the above scenario, QEMU assert that the ring is full,
-put the packet on the queue, unregister the readable fd
-handler of the tap device, waiting the guest to consume
-the receive ring. While, guest have nothing to consume
-on the receive ring and never update the RDT location,
-this makes the network down.
-
-To get around this issue, just mark the overrun if RDH
-equals RDT at the end of placing the packet on the ring
-buffer for the producer.
-
-This revert commit e5b8b0d4ba29fe1268ba049519a1b0cf8552a21a
-in fact but in a kind of different way.
-
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- hw/net/e1000.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
-
-diff --git a/hw/net/e1000.c b/hw/net/e1000.c
-index 5012b96464..0a7d5843f8 100644
---- a/hw/net/e1000.c
-+++ b/hw/net/e1000.c
-@@ -126,6 +126,12 @@ struct E1000State_st {
- 
-     QEMUTimer *flush_queue_timer;
- 
-+    /*
-+     * Indicate that the receive circular buffer queue overrun
-+     * the last time hardware produced packets.
-+     */
-+    bool last_overrun;
-+
- /* Compatibility flags for migration to/from qemu 1.3.0 and older */
- #define E1000_FLAG_MAC_BIT 2
- #define E1000_FLAG_TSO_BIT 3
-@@ -832,7 +838,7 @@ static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
-     int bufs;
-     /* Fast-path short packets */
-     if (total_size <= s->rxbuf_size) {
--        return s->mac_reg[RDH] != s->mac_reg[RDT];
-+        return s->mac_reg[RDH] != s->mac_reg[RDT] || !s->last_overrun;
-     }
-     if (s->mac_reg[RDH] < s->mac_reg[RDT]) {
-         bufs = s->mac_reg[RDT] - s->mac_reg[RDH];
-@@ -840,7 +846,12 @@ static bool e1000_has_rxbufs(E1000State *s, size_t total_size)
-         bufs = s->mac_reg[RDLEN] /  sizeof(struct e1000_rx_desc) +
-             s->mac_reg[RDT] - s->mac_reg[RDH];
-     } else {
--        return false;
-+        if (s->last_overrun) {
-+            return false;
-+        }
-+
-+        /* Receive ring buffer is empty */
-+        bufs = s->mac_reg[RDLEN] / sizeof(struct e1000_rx_desc);
-     }
-     return total_size <= bufs * s->rxbuf_size;
- }
-@@ -998,6 +1009,7 @@ e1000_receive_iov(NetClientState *nc, const struct iovec *iov, int iovcnt)
-     } while (desc_offset < total_size);
- 
-     e1000x_update_rx_total_stats(s->mac_reg, pkt_type, size, total_size);
-+    s->last_overrun = s->mac_reg[RDH] == s->mac_reg[RDT];
- 
-     n = E1000_ICS_RXT0;
-     if ((rdt = s->mac_reg[RDT]) < s->mac_reg[RDH])
--- 
-2.27.0
+> +        return false;
+> +    }
+> +
+> +    hwpt = g_malloc0(sizeof(*hwpt));
+> +    hwpt->hwpt_id = hwpt_id;
+> +    QLIST_INIT(&hwpt->device_list);
+> +
+> +    ret = iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt->hwpt_id, errp);
+> +    if (ret) {
+> +        iommufd_backend_free_id(container->be, hwpt->hwpt_id);
+> +        g_free(hwpt);
+> +        return false;
+> +    }
+> +
+> +    vbasedev->hwpt = hwpt;
+> +    QLIST_INSERT_HEAD(&hwpt->device_list, vbasedev, hwpt_next);
+> +    QLIST_INSERT_HEAD(&container->hwpt_list, hwpt, next);
+> +    return true;
+> +}
+> +
+> +static void iommufd_cdev_autodomains_put(VFIODevice *vbasedev,
+> +                                         VFIOIOMMUFDContainer *container)
+> +{
+> +    VFIOIOASHwpt *hwpt = vbasedev->hwpt;
+> +
+> +    QLIST_REMOVE(vbasedev, hwpt_next);
+> +    if (QLIST_EMPTY(&hwpt->device_list)) {
+> +        QLIST_REMOVE(hwpt, next);
+> +        iommufd_backend_free_id(container->be, hwpt->hwpt_id);
+> +        g_free(hwpt);
+> +    }
+> +}
+> +
+>   static bool iommufd_cdev_attach_container(VFIODevice *vbasedev,
+>                                             VFIOIOMMUFDContainer *container,
+>                                             Error **errp)
+>   {
+> +    if (iommufd_cdev_autodomains_get(vbasedev, container, errp)) {
+> +        return true;
+> +    }
+> +
+> +    /*
+> +     * iommufd_cdev_autodomains_get() may have an expected failure (-ENOENT)
+> +     * for mdevs as they aren't real physical devices. @errp is only set
+> +     * when real failures happened i.e. failing to attach to a newly created
+> +     * hardware pagetable. These are fatal and should fail the attachment.
+> +     */
+> +    if (*errp) {
+> +        return false;
+> +    }
+> +
+>       return !iommufd_cdev_attach_ioas_hwpt(vbasedev, container->ioas_id, errp);
+>   }
+>   
+> @@ -224,6 +309,11 @@ static void iommufd_cdev_detach_container(VFIODevice *vbasedev,
+>   {
+>       Error *err = NULL;
+>   
+> +    if (vbasedev->hwpt) {
+> +        iommufd_cdev_autodomains_put(vbasedev, container);
+> +        return;
+> +    }
+> +
+>       if (!iommufd_cdev_detach_ioas_hwpt(vbasedev, &err)) {
+>           error_report_err(err);
+>       }
+> @@ -354,6 +444,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+>       container = VFIO_IOMMU_IOMMUFD(object_new(TYPE_VFIO_IOMMU_IOMMUFD));
+>       container->be = vbasedev->iommufd;
+>       container->ioas_id = ioas_id;
+> +    QLIST_INIT(&container->hwpt_list);
+>   
+>       bcontainer = &container->bcontainer;
+>       vfio_address_space_insert(space, bcontainer);
+> diff --git a/backends/trace-events b/backends/trace-events
+> index 211e6f374adc..4d8ac02fe7d6 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -14,4 +14,5 @@ iommufd_backend_map_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size
+>   iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " Unmap nonexistent mapping: iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+>   iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+>   iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+> +iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
+>   iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
 
 
