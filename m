@@ -4,109 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48157C3DA41
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 08:07:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8385C2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 08:19:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sR5rm-0008Ei-Ab; Tue, 09 Jul 2024 04:06:27 -0400
+	id 1sR64B-0006z1-9u; Tue, 09 Jul 2024 04:19:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sR5re-0008Cq-Gb
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 04:06:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sR5rb-0003m6-Dm
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 04:06:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720512373;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JsaIZ9HZzMUzpYLPC55ncgTyM1+eMIyTk+fOIWY+OSg=;
- b=OOTi2UZ31NXir/NfeohuNv5BsEQj8KfCKgziRlLhBMbEs35hTVJbTQhWUrjb0uh+ZC/RkI
- j7fdI/F4aROCfp/wGhw+dF9H4y/NmwE1u7RDByXx+mCpC2oZAFiKiNMQwlSUSde8ylRIoU
- FTdwjRlwJmG+/R4z7NeY6KKf6yGvScA=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-tbF7k5tRMfKs48B5Cu-GUQ-1; Tue, 09 Jul 2024 04:06:10 -0400
-X-MC-Unique: tbF7k5tRMfKs48B5Cu-GUQ-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52e969d34bbso5283338e87.1
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 01:06:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sR647-0006yV-UI
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 04:19:12 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1sR643-0006KS-1p
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 04:19:11 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-25e171122fcso1944018fac.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 01:19:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1720513144; x=1721117944;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=+3sXtB8HuOORj4ubRE+C49ZeStKiJeKeSJWvYJQpjhM=;
+ b=tJgQmwMmJtsGs07C6VXeOtgF1Ib37EKsLnfzsqg2HLgC966oysgZ4edqNjqsydJaw6
+ mXQPHso60TntyMssWStZ+siueII5sfRX3fdzvCtKIbPEgV1PN2Zk8LlP3H/fNI8ZFdOU
+ DgnKZ4DLUrmQq0PbwwdGb7ZjmYG3H828xR08SGAEf+0mOha4+TDnYub+XNs3sxvlxKp7
+ AgKlCsA7p0cKc72ecEBtSw33HxZK0UGrrMrcjnl/Vbuo54ECvV9HENT1MhOq6tOah/Bc
+ 7jUwc7SFZRLQoK3Q78Arc+5ahJ7BYzb8ZGZQQlph6bYRReFoYJN2oxgAi1l5kuqUcLwa
+ YXvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720512369; x=1721117169;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JsaIZ9HZzMUzpYLPC55ncgTyM1+eMIyTk+fOIWY+OSg=;
- b=Q/t8sCeI22taYJUT4PjzUZ0/AlG52zAAVqI3mHbvL04iTMIrAYi5L0rL2Lu8U0+6GK
- 1zeavku30NmyK5+gIfX0GuWGiqJPEAVyERF4H/nirK4rzCB7ozXjr7DhNDWuRU6UJjqL
- xICmOb4U+3bR5cOo5cmzBtbxEYTMSO8itKdJcwOEnYFO+9elel+SXGs5sLbplF0/sQe6
- mBPMbiEoSjwq4JVdOGcBuogbnnZupO2+DS/A6YLXenW/lm0x4Nk+Kb4Mu/5cEgr2IUz9
- rX095P3+1Wt0vPkES6He2iJErAkEmUHph3QeVuCNRsoch2InSLsp6I1b8ZvMdW6yfND5
- 7F1Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhnW1gHXQxuqT8tOhYzbqStJZIRuRiErAu/zOCxgRg+/FRCDe5mB0Ybv92Z1pqNkjMdAsYf1TlVcrxhKDzGg81TxVGOVA=
-X-Gm-Message-State: AOJu0Ywtht2ma4sUMumRUkxTvhNpz7K/L3JcY8goM/H1QZtFiYd97ipF
- 65CrNSJT2c05OaXKY6D+lRPvgCtvZBGGUr1Go4hh9QO1G6kdDPAYQoLbsgZukfCdBAL5n8dCse2
- Uw9sXHXd+0H+5tLcydeP/GfVl2aNxCFYztPWA+aEMOrwgvQR2p6qo
-X-Received: by 2002:a19:f817:0:b0:52e:9acf:b698 with SMTP id
- 2adb3069b0e04-52eb99a272fmr829467e87.36.1720512368720; 
- Tue, 09 Jul 2024 01:06:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/lFnuKO3i5u6q0FxfaQsvYnVx2R6w0xQEs3PuW6euoqlNzVsoO404c4hhCs0TVVWKyanc5Q==
-X-Received: by 2002:a19:f817:0:b0:52e:9acf:b698 with SMTP id
- 2adb3069b0e04-52eb99a272fmr829439e87.36.1720512368158; 
- Tue, 09 Jul 2024 01:06:08 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4266f6f5f25sm29346535e9.26.2024.07.09.01.06.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jul 2024 01:06:07 -0700 (PDT)
-Date: Tue, 9 Jul 2024 10:06:05 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Salil Mehta <salil.mehta@opnsrc.net>
-Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, maz@kernel.org, jean-philippe@linaro.org,
- jonathan.cameron@huawei.com, lpieralisi@kernel.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org,
- andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
- eric.auger@redhat.com, oliver.upton@linux.dev, pbonzini@redhat.com,
- mst@redhat.com, will@kernel.org, gshan@redhat.com, rafael@kernel.org,
- alex.bennee@linaro.org, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.com,
- wangyanan55@huawei.com, jiakernel2@gmail.com, maobibo@loongson.cn,
- lixianglai@loongson.cn, npiggin@gmail.com, harshpb@linux.ibm.com,
- linuxarm@huawei.com, Shaoqin Huang <shahuang@redhat.com>, Zhao Liu
- <zhao1.liu@intel.com>
-Subject: Re: [PATCH V13 1/8] accel/kvm: Extract common KVM vCPU
- {creation,parking} code
-Message-ID: <20240709100605.5cb52c25@imammedo.users.ipa.redhat.com>
-In-Reply-To: <01c2df70-0189-4519-8f15-7b96ba315d7a@opnsrc.net>
-References: <20240607115649.214622-1-salil.mehta@huawei.com>
- <20240607115649.214622-2-salil.mehta@huawei.com>
- <20240706151154.7c430b0a@imammedo.users.ipa.redhat.com>
- <CAJ7pxeZV6qmDR8aXE5LaDZdjvGCJhnE4RZeL4823XqaiDApe1Q@mail.gmail.com>
- <20240708153216.0d6d1ad1@imammedo.users.ipa.redhat.com>
- <01c2df70-0189-4519-8f15-7b96ba315d7a@opnsrc.net>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1720513144; x=1721117944;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+3sXtB8HuOORj4ubRE+C49ZeStKiJeKeSJWvYJQpjhM=;
+ b=AcAAlZWZciYnXF5hMxfv8eKnmQ7y533PIFyXeBxxdVMzpoOFh/iEOf0ajKk9kbrkuT
+ M78+pQ6gBxyYVsR/Qxj6WulY6grOPzHVkTdhUEA5Z6vLPh9Je+1Lzbf7BqFPdgQC9tRg
+ eVX0omd+YGIKFcjkWaUzlJOyBaKwsCghSz3do/MU5KK352hg48AuJ3aAbGIPaIAXM0IX
+ ORYWnyWvBMBw3FV6xPnt5BuJOKaPSMGJKXomHp1GmFl41Q9K/62ZQUM3b+Z3yDajJvxb
+ FkbBlrSEU3MUG1SM3ydTxrFyKyUMO617ByCL4Icg+el+Em2GvtVQKRuJNa2h4JVpntK+
+ dMJA==
+X-Gm-Message-State: AOJu0Yx8iw9oB9YjptYscU8np/pvg+PBDXzHsTIWuzc5qTOZSpj1hl7/
+ f+nZGqLpS66Erx1wBpuiVnEPoP72rZ80EaX54IwNAtud6ICwrSDHfpPdTrhag9wq2tncIS3q4FA
+ d+zbcq/MZdbNHk3MO8XH6y36Waf5x7faTFdA8ug==
+X-Google-Smtp-Source: AGHT+IGeIaUqenLdruB9ptycq3IV47ocf4Xlo58fgVdSWWqDSkSnDWd2f5B/9P/oQgRWIbZol3fhrtme+iDHXIKPbKE=
+X-Received: by 2002:a05:6870:1653:b0:25d:f950:f18c with SMTP id
+ 586e51a60fabf-25eafb532f5mr706211fac.26.1720513143671; Tue, 09 Jul 2024
+ 01:19:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+References: <c2049499aa05758b4cf18dcec942694ed454a980.1708358310.git.yong.huang@smartx.com>
+ <87cypzsbgd.fsf@pond.sub.org>
+In-Reply-To: <87cypzsbgd.fsf@pond.sub.org>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Tue, 9 Jul 2024 16:18:47 +0800
+Message-ID: <CAK9dgmZhM4cs0gPX3on1KeixYJ5geEi1kpWzJHpyr7XkMqi7kA@mail.gmail.com>
+Subject: Re: [PATCH] docs/devel: Add introduction to LUKS volume with detached
+ header
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000c2a7c6061ccc2e59"
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=yong.huang@smartx.com; helo=mail-oa1-x33.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,363 +92,576 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 8 Jul 2024 23:30:01 +0000
-Salil Mehta <salil.mehta@opnsrc.net> wrote:
+--000000000000c2a7c6061ccc2e59
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> Hi Igor,
->=20
-> On 08/07/2024 13:32, Igor Mammedov wrote:
-> > On Sat, 6 Jul 2024 15:43:01 +0000
-> > Salil Mehta <salil.mehta@opnsrc.net> wrote:
-> > =20
-> >> Hi Igor,
-> >> Thanks for taking out time to review.
-> >>
-> >> On Sat, Jul 6, 2024 at 1:12=E2=80=AFPM Igor Mammedov <imammedo@redhat.=
-com> wrote:
-> >> =20
-> >>> On Fri, 7 Jun 2024 12:56:42 +0100
-> >>> Salil Mehta <salil.mehta@huawei.com> wrote:
-> >>>    =20
-> >>>> KVM vCPU creation is done once during the vCPU realization when Qemu=
- =20
-> >>> vCPU thread =20
-> >>>> is spawned. This is common to all the architectures as of now.
-> >>>>
-> >>>> Hot-unplug of vCPU results in destruction of the vCPU object in QOM =
-but =20
-> >>> the =20
-> >>>> corresponding KVM vCPU object in the Host KVM is not destroyed as KV=
-M =20
-> >>> doesn't =20
-> >>>> support vCPU removal. Therefore, its representative KVM vCPU =20
-> >>> object/context in =20
-> >>>> Qemu is parked.
-> >>>>
-> >>>> Refactor architecture common logic so that some APIs could be reused=
- by =20
-> >>> vCPU =20
-> >>>> Hotplug code of some architectures likes ARM, Loongson etc. Update =
-=20
-> >>> new/old APIs =20
-> >>>> with trace events. No functional change is intended here.
-> >>>>
-> >>>> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> >>>> Reviewed-by: Gavin Shan <gshan@redhat.com>
-> >>>> Tested-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> >>>> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> >>>> Tested-by: Xianglai Li <lixianglai@loongson.cn>
-> >>>> Tested-by: Miguel Luis <miguel.luis@oracle.com>
-> >>>> Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
-> >>>> Reviewed-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> >>>> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-> >>>> Tested-by: Zhao Liu <zhao1.liu@intel.com>
-> >>>> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> >>>> Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> >>>> ---
-> >>>>   accel/kvm/kvm-all.c    | 95 ++++++++++++++++++++++++++++----------=
-----
-> >>>>   accel/kvm/kvm-cpus.h   |  1 -
-> >>>>   accel/kvm/trace-events |  5 ++-
-> >>>>   include/sysemu/kvm.h   | 25 +++++++++++
-> >>>>   4 files changed, 92 insertions(+), 34 deletions(-)
-> >>>>
-> >>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> >>>> index c0be9f5eed..8f9128bb92 100644
-> >>>> --- a/accel/kvm/kvm-all.c
-> >>>> +++ b/accel/kvm/kvm-all.c
-> >>>> @@ -340,14 +340,71 @@ err:
-> >>>>       return ret;
-> >>>>   }
-> >>>>
-> >>>> +void kvm_park_vcpu(CPUState *cpu)
-> >>>> +{
-> >>>> +    struct KVMParkedVcpu *vcpu;
-> >>>> +
-> >>>> +    trace_kvm_park_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
-> >>>> +
-> >>>> +    vcpu =3D g_malloc0(sizeof(*vcpu));
-> >>>> +    vcpu->vcpu_id =3D kvm_arch_vcpu_id(cpu);
-> >>>> +    vcpu->kvm_fd =3D cpu->kvm_fd;
-> >>>> +    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
-> >>>> +}
-> >>>> +
-> >>>> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
-> >>>> +{
-> >>>> +    struct KVMParkedVcpu *cpu;
-> >>>> +    int kvm_fd =3D -ENOENT;
-> >>>> +
-> >>>> +    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
-> >>>> +        if (cpu->vcpu_id =3D=3D vcpu_id) {
-> >>>> +            QLIST_REMOVE(cpu, node);
-> >>>> +            kvm_fd =3D cpu->kvm_fd;
-> >>>> +            g_free(cpu);
-> >>>> +        }
-> >>>> +    }
-> >>>> +
-> >>>> +    trace_kvm_unpark_vcpu(vcpu_id, kvm_fd > 0 ? "unparked" : "not f=
-ound =20
-> >>> parked"); =20
-> >>>> +
-> >>>> +    return kvm_fd;
-> >>>> +}
-> >>>> +
-> >>>> +int kvm_create_vcpu(CPUState *cpu)
-> >>>> +{
-> >>>> +    unsigned long vcpu_id =3D kvm_arch_vcpu_id(cpu);
-> >>>> +    KVMState *s =3D kvm_state;
-> >>>> +    int kvm_fd;
-> >>>> +
-> >>>> +    /* check if the KVM vCPU already exist but is parked */
-> >>>> +    kvm_fd =3D kvm_unpark_vcpu(s, vcpu_id);
-> >>>> +    if (kvm_fd < 0) {
-> >>>> +        /* vCPU not parked: create a new KVM vCPU */
-> >>>> +        kvm_fd =3D kvm_vm_ioctl(s, KVM_CREATE_VCPU, vcpu_id);
-> >>>> +        if (kvm_fd < 0) {
-> >>>> +            error_report("KVM_CREATE_VCPU IOCTL failed for vCPU %lu=
-", =20
-> >>> vcpu_id); =20
-> >>>> +            return kvm_fd;
-> >>>> +        }
-> >>>> +    }
-> >>>> +
-> >>>> +    cpu->kvm_fd =3D kvm_fd;
-> >>>> +    cpu->kvm_state =3D s;
-> >>>> +    cpu->vcpu_dirty =3D true;
-> >>>> +    cpu->dirty_pages =3D 0;
-> >>>> +    cpu->throttle_us_per_full =3D 0;
-> >>>> +
-> >>>> +    trace_kvm_create_vcpu(cpu->cpu_index, vcpu_id, kvm_fd);
-> >>>> +
-> >>>> +    return 0;
-> >>>> +} =20
-> >>> Is there any reason why you are embedding/hiding kvm_state in new API
-> >>> instead of passing it as argument (all callers have it defined, so wh=
-y not
-> >>> reuse that)?
-> >>>    =20
-> >> It is a global variable and I don't think it is a usual practice to sp=
-ecify
-> >> the global variable
-> >> as an input parameter. =20
-> > Ideally, global would be accessed once at API boundary entry
-> > and the passed as an argument to functions it calls.
-> > It makes it easier to follow as opposed to mixed access we have now,
-> > which is harder to review since one has to check both
-> > flavors (argument passed or directly accessed).
+On Mon, May 6, 2024 at 2:26=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
+> wrote:
+
+> Looks like this fell through the cracks.  Is anyone familiar with LUKS
+> willing to review it?
+>
+:) Ping?
+
+
+>
+> Hyman Huang <yong.huang@smartx.com> writes:
+>
+> > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+> > ---
+> >  MAINTAINERS                         |   1 +
+> >  docs/devel/luks-detached-header.rst | 182 ++++++++++++++++++++++++++++
+> >  2 files changed, 183 insertions(+)
+> >  create mode 100644 docs/devel/luks-detached-header.rst
 > >
-> > in this patch  kvm_init_vcpu() calls new kvm_create_vcpu()
-> > and the former caches these global into 's' local variable,
-> > so I'd reuse that local variable like kvm_get_vcpu() you are removing h=
-ere did. =20
-> That is one perspective, but:
-> 1. kvm_create_vcpu() will also be called externally from other contexts.
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index a24c2b51b6..e8b03032ab 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -3422,6 +3422,7 @@ Detached LUKS header
+> >  M: Hyman Huang <yong.huang@smartx.com>
+> >  S: Maintained
+> >  F: tests/qemu-iotests/tests/luks-detached-header
+> > +F: docs/devel/luks-detached-header.rst
+> >
+> >  D-Bus
+> >  M: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > diff --git a/docs/devel/luks-detached-header.rst
+> b/docs/devel/luks-detached-header.rst
+> > new file mode 100644
+> > index 0000000000..15e9ccde1d
+> > --- /dev/null
+> > +++ b/docs/devel/luks-detached-header.rst
+> > @@ -0,0 +1,182 @@
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +LUKS volume with detached header
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +Introduction
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +This document gives an overview of the design of LUKS volume with
+> detached
+> > +header and how to use it.
+> > +
+> > +Background
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +The LUKS format has ability to store the header in a separate volume
+> from
+> > +the payload. We could extend the LUKS driver in QEMU to support this u=
+se
+> > +case.
+> > +
+> > +Normally a LUKS volume has a layout:
+> > +
+> > +::
+> > +
+> > +         +-----------------------------------------------+
+> > +         |         |                |                    |
+> > + disk    | header  |  key material  |  disk payload data |
+> > +         |         |                |                    |
+> > +         +-----------------------------------------------+
+> > +
+> > +With a detached LUKS header, you need 2 disks so getting:
+> > +
+> > +::
+> > +
+> > +         +--------------------------+
+> > + disk1   |   header  | key material |
+> > +         +--------------------------+
+> > +         +---------------------+
+> > + disk2   |  disk payload data  |
+> > +         +---------------------+
+> > +
+> > +There are a variety of benefits to doing this:
+> > +
+> > + * Secrecy - the disk2 cannot be identified as containing LUKS
+> > +             volume since there's no header
+> > + * Control - if access to the disk1 is restricted, then even
+> > +             if someone has access to disk2 they can't unlock
+> > +             it. Might be useful if you have disks on NFS but
+> > +             want to restrict which host can launch a VM
+> > +             instance from it, by dynamically providing access
+> > +             to the header to a designated host
+> > + * Flexibility - your application data volume may be a given
+> > +                 size and it is inconvenient to resize it to
+> > +                 add encryption.You can store the LUKS header
+> > +                 separately and use the existing storage
+> > +                 volume for payload
+> > + * Recovery - corruption of a bit in the header may make the
+> > +              entire payload inaccessible. It might be
+> > +              convenient to take backups of the header. If
+> > +              your primary disk header becomes corrupt, you
+> > +              can unlock the data still by pointing to the
+> > +              backup detached header
+> > +
+> > +Architecture
+> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > +
+> > +Take the qcow2 encryption, for example. The architecture of the
+> > +LUKS volume with detached header is shown in the diagram below.
+> > +
+> > +There are two children of the root node: a file and a header.
+> > +Data from the disk payload is stored in the file node. The
+> > +LUKS header and key material are located in the header node,
+> > +as previously mentioned.
+> > +
+> > +::
+> > +
+> > +                       +-----------------------------+
+> > +  Root node            |          foo[luks]          |
+> > +                       +-----------------------------+
+> > +                          |                       |
+> > +                     file |                header |
+> > +                          |                       |
+> > +               +---------------------+    +------------------+
+> > +  Child node   |payload-format[qcow2]|    |header-format[raw]|
+> > +               +---------------------+    +------------------+
+> > +                          |                       |
+> > +                     file |                 file  |
+> > +                          |                       |
+> > +               +----------------------+  +---------------------+
+> > +  Child node   |payload-protocol[file]|  |header-protocol[file]|
+> > +               +----------------------+  +---------------------+
+> > +                          |                       |
+> > +                          |                       |
+> > +                          |                       |
+> > +                     Host storage            Host storage
+> > +
+> > +Usage
+> > +=3D=3D=3D=3D=3D
+> > +
+> > +Create a LUKS disk with a detached header using qemu-img
+> > +--------------------------------------------------------
+> > +
+> > +Shell commandline::
+> > +
+> > +# qemu-img create --object secret,id=3Dsec0,data=3Dabc123 -f luks \
+> > +> -o cipher-alg=3Daes-256,cipher-mode=3Dxts -o key-secret=3Dsec0 \
+> > +> -o detached-header=3Dtrue test-header.img
+> > +# qemu-img create -f qcow2 test-payload.qcow2 200G
+> > +# qemu-img info 'json:{"driver":"luks","file":{"filename": \
+> > +> "test-payload.img"},"header":{"filename":"test-header.img"}}'
+> > +
+> > +Set up a VM's LUKS volume with a detached header
+> > +------------------------------------------------
+> > +
+> > +Qemu commandline::
+> > +
+> > +# qemu-system-x86_64 ... \
+> > +> -object '{"qom-type":"secret","id":"libvirt-3-format-secret", \
+> > +> "data":"abc123"}' \
+> > +> -blockdev '{"driver":"file","filename":"/path/to/test-header.img", \
+> > +> "node-name":"libvirt-1-storage"}' \
+> > +> -blockdev '{"node-name":"libvirt-1-format","read-only":false, \
+> > +> "driver":"raw","file":"libvirt-1-storage"}' \
+> > +> -blockdev '{"driver":"file","filename":"/path/to/test-payload.qcow2"=
+,
+> \
+> > +> "node-name":"libvirt-2-storage"}' \
+> > +> -blockdev '{"node-name":"libvirt-2-format","read-only":false, \
+> > +> "driver":"qcow2","file":"libvirt-2-storage"}' \
+> > +> -blockdev '{"node-name":"libvirt-3-format","driver":"luks", \
+> > +> "file":"libvirt-2-format","header":"libvirt-1-format","key-secret": =
+\
+> > +> "libvirt-3-format-secret"}' \
+> > +> -device '{"driver":"virtio-blk-pci","bus":XXX,"addr":YYY,"drive": \
+> > +> "libvirt-3-format","id":"virtio-disk1"}'
+> > +
+> > +Add LUKS volume to a VM with a detached header
+> > +----------------------------------------------
+> > +
+> > +1. object-add the secret for decrypting the cipher stored in
+> > +   LUKS header above::
+> > +
+> > +# virsh qemu-monitor-command vm '{"execute":"object-add", \
+> > +> "arguments":{"qom-type":"secret", "id": \
+> > +> "libvirt-4-format-secret", "data":"abc123"}}'
+> > +
+> > +2. block-add the protocol node for LUKS header::
+> > +
+> > +# virsh qemu-monitor-command vm '{"execute":"blockdev-add", \
+> > +> "arguments":{"node-name":"libvirt-1-storage", "driver":"file", \
+> > +> "filename": "/path/to/test-header.img" }}'
+> > +
+> > +3. block-add the raw-drived node for LUKS header::
+> > +
+> > +# virsh qemu-monitor-command vm '{"execute":"blockdev-add", \
+> > +> "arguments":{"node-name":"libvirt-1-format", "driver":"raw", \
+> > +> "file":"libvirt-1-storage"}}'
+> > +
+> > +4. block-add the protocol node for disk payload image::
+> > +
+> > +# virsh qemu-monitor-command vm '{"execute":"blockdev-add", \
+> > +> "arguments":{"node-name":"libvirt-2-storage", "driver":"file", \
+> > +> "filename":"/path/to/test-payload.qcow2"}}'
+> > +
+> > +5. block-add the qcow2-drived format node for disk payload data::
+> > +
+> > +# virsh qemu-monitor-command vm '{"execute":"blockdev-add", \
+> > +> "arguments":{"node-name":"libvirt-2-format", "driver":"qcow2", \
+> > +> "file":"libvirt-2-storage"}}'
+> > +
+> > +6. block-add the luks-drived format node to link the qcow2 disk
+> > +   with the LUKS header by specifying the field "header"::
+> > +
+> > +# virsh qemu-monitor-command vm '{"execute":"blockdev-add", \
+> > +> "arguments":{"node-name":"libvirt-3-format", "driver":"luks", \
+> > +> "file":"libvirt-2-format", "header":"libvirt-1-format", \
+> > +> "key-secret":"libvirt-2-format-secret"}}'
+> > +
+> > +7. hot-plug the virtio-blk device finally::
+> > +
+> > +# virsh qemu-monitor-command vm '{"execute":"device_add", \
+> > +> "arguments": {"driver":"virtio-blk-pci", \
+> > +> "drive": "libvirt-3-format", "id":"virtio-disk2"}}
+> > +
+> > +TODO
+> > +=3D=3D=3D=3D
+> > +
+> > +1. Support the shared detached LUKS header within the VM.
+>
+>
 
-I'm fine with this as is, it would be better to mention in commit message
-that this (others) new API will be called externally. Otherwise it's not
-clear why KVMState is hidden inside.
+--=20
+Best regards
 
->  =C2=A0=C2=A0 It would be awkward to pass this variable from those non-lo=
-cal places
->  =C2=A0=C2=A0 where it would seem unnecessary.
-> 2. If you look at other symmetrical functions like kvm_destroy_vcpu(),
->  =C2=A0=C2=A0 they also have a similar prototype.
->=20
-> I think it is about doing a slight trade-off. If you really believe this
-> change is necessary for us to proceed, I will make the adjustment.
-> However, please note that it will affect the IBM team as well.
->=20
-> Hi Nick,
->=20
-> I hope you are okay with this suggested change?
->=20
-> Thanks,
-> Salil
-> >>> otherwise patch lgtm =20
-> >>
-> >> May I request your Reviewed-by for this patch?
-> >>
-> >> Thanks
-> >> Salil.
-> >>
-> >> =20
-> >>>    =20
-> >>>> +
-> >>>>   static int do_kvm_destroy_vcpu(CPUState *cpu)
-> >>>>   {
-> >>>>       KVMState *s =3D kvm_state;
-> >>>>       long mmap_size;
-> >>>> -    struct KVMParkedVcpu *vcpu =3D NULL;
-> >>>>       int ret =3D 0;
-> >>>>
-> >>>> -    trace_kvm_destroy_vcpu();
-> >>>> +    trace_kvm_destroy_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
-> >>>>
-> >>>>       ret =3D kvm_arch_destroy_vcpu(cpu);
-> >>>>       if (ret < 0) {
-> >>>> @@ -373,10 +430,7 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
-> >>>>           }
-> >>>>       }
-> >>>>
-> >>>> -    vcpu =3D g_malloc0(sizeof(*vcpu));
-> >>>> -    vcpu->vcpu_id =3D kvm_arch_vcpu_id(cpu);
-> >>>> -    vcpu->kvm_fd =3D cpu->kvm_fd;
-> >>>> -    QLIST_INSERT_HEAD(&kvm_state->kvm_parked_vcpus, vcpu, node);
-> >>>> +    kvm_park_vcpu(cpu);
-> >>>>   err:
-> >>>>       return ret;
-> >>>>   }
-> >>>> @@ -389,24 +443,6 @@ void kvm_destroy_vcpu(CPUState *cpu)
-> >>>>       }
-> >>>>   }
-> >>>>
-> >>>> -static int kvm_get_vcpu(KVMState *s, unsigned long vcpu_id)
-> >>>> -{
-> >>>> -    struct KVMParkedVcpu *cpu;
-> >>>> -
-> >>>> -    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
-> >>>> -        if (cpu->vcpu_id =3D=3D vcpu_id) {
-> >>>> -            int kvm_fd;
-> >>>> -
-> >>>> -            QLIST_REMOVE(cpu, node);
-> >>>> -            kvm_fd =3D cpu->kvm_fd;
-> >>>> -            g_free(cpu);
-> >>>> -            return kvm_fd;
-> >>>> -        }
-> >>>> -    }
-> >>>> -
-> >>>> -    return kvm_vm_ioctl(s, KVM_CREATE_VCPU, (void *)vcpu_id);
-> >>>> -}
-> >>>> -
-> >>>>   int kvm_init_vcpu(CPUState *cpu, Error **errp)
-> >>>>   {
-> >>>>       KVMState *s =3D kvm_state;
-> >>>> @@ -415,19 +451,14 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
-> >>>>
-> >>>>       trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
-> >>>>
-> >>>> -    ret =3D kvm_get_vcpu(s, kvm_arch_vcpu_id(cpu));
-> >>>> +    ret =3D kvm_create_vcpu(cpu);
-> >>>>       if (ret < 0) {
-> >>>> -        error_setg_errno(errp, -ret, "kvm_init_vcpu: kvm_get_vcpu =
-=20
-> >>> failed (%lu)", =20
-> >>>> +        error_setg_errno(errp, -ret,
-> >>>> +                         "kvm_init_vcpu: kvm_create_vcpu failed (%l=
-u)",
-> >>>>                            kvm_arch_vcpu_id(cpu));
-> >>>>           goto err;
-> >>>>       }
-> >>>>
-> >>>> -    cpu->kvm_fd =3D ret;
-> >>>> -    cpu->kvm_state =3D s;
-> >>>> -    cpu->vcpu_dirty =3D true;
-> >>>> -    cpu->dirty_pages =3D 0;
-> >>>> -    cpu->throttle_us_per_full =3D 0;
-> >>>> -
-> >>>>       mmap_size =3D kvm_ioctl(s, KVM_GET_VCPU_MMAP_SIZE, 0);
-> >>>>       if (mmap_size < 0) {
-> >>>>           ret =3D mmap_size;
-> >>>> diff --git a/accel/kvm/kvm-cpus.h b/accel/kvm/kvm-cpus.h
-> >>>> index ca40add32c..171b22fd29 100644
-> >>>> --- a/accel/kvm/kvm-cpus.h
-> >>>> +++ b/accel/kvm/kvm-cpus.h
-> >>>> @@ -22,5 +22,4 @@ bool kvm_supports_guest_debug(void);
-> >>>>   int kvm_insert_breakpoint(CPUState *cpu, int type, vaddr addr, vad=
-dr =20
-> >>> len); =20
-> >>>>   int kvm_remove_breakpoint(CPUState *cpu, int type, vaddr addr, vad=
-dr =20
-> >>> len); =20
-> >>>>   void kvm_remove_all_breakpoints(CPUState *cpu);
-> >>>> -
-> >>>>   #endif /* KVM_CPUS_H */
-> >>>> diff --git a/accel/kvm/trace-events b/accel/kvm/trace-events
-> >>>> index 681ccb667d..37626c1ac5 100644
-> >>>> --- a/accel/kvm/trace-events
-> >>>> +++ b/accel/kvm/trace-events
-> >>>> @@ -9,6 +9,10 @@ kvm_device_ioctl(int fd, int type, void *arg) "dev =
-fd =20
-> >>> %d, type 0x%x, arg %p" =20
-> >>>>   kvm_failed_reg_get(uint64_t id, const char *msg) "Warning: Unable =
-to =20
-> >>> retrieve ONEREG %" PRIu64 " from KVM: %s" =20
-> >>>>   kvm_failed_reg_set(uint64_t id, const char *msg) "Warning: Unable =
-to =20
-> >>> set ONEREG %" PRIu64 " to KVM: %s" =20
-> >>>>   kvm_init_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d=
- id: =20
-> >>> %lu" =20
-> >>>> +kvm_create_vcpu(int cpu_index, unsigned long arch_cpu_id, int kvm_f=
-d) =20
-> >>> "index: %d, id: %lu, kvm fd: %d" =20
-> >>>> +kvm_destroy_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: =
-%d =20
-> >>> id: %lu" =20
-> >>>> +kvm_park_vcpu(int cpu_index, unsigned long arch_cpu_id) "index: %d =
-id: =20
-> >>> %lu" =20
-> >>>> +kvm_unpark_vcpu(unsigned long arch_cpu_id, const char *msg) "id: %l=
-u %s"
-> >>>>   kvm_irqchip_commit_routes(void) ""
-> >>>>   kvm_irqchip_add_msi_route(char *name, int vector, int virq) "dev %=
-s =20
-> >>> vector %d virq %d" =20
-> >>>>   kvm_irqchip_update_msi_route(int virq) "Updating MSI route virq=3D=
-%d"
-> >>>> @@ -25,7 +29,6 @@ kvm_dirty_ring_reaper(const char *s) "%s"
-> >>>>   kvm_dirty_ring_reap(uint64_t count, int64_t t) "reaped %"PRIu64" p=
-ages =20
-> >>> (took %"PRIi64" us)" =20
-> >>>>   kvm_dirty_ring_reaper_kick(const char *reason) "%s"
-> >>>>   kvm_dirty_ring_flush(int finished) "%d"
-> >>>> -kvm_destroy_vcpu(void) ""
-> >>>>   kvm_failed_get_vcpu_mmap_size(void) ""
-> >>>>   kvm_cpu_exec(void) ""
-> >>>>   kvm_interrupt_exit_request(void) ""
-> >>>> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-> >>>> index c31d9c7356..c4a914b3d8 100644
-> >>>> --- a/include/sysemu/kvm.h
-> >>>> +++ b/include/sysemu/kvm.h
-> >>>> @@ -313,6 +313,31 @@ int kvm_create_device(KVMState *s, uint64_t typ=
-e, =20
-> >>> bool test); =20
-> >>>>    */
-> >>>>   bool kvm_device_supported(int vmfd, uint64_t type);
-> >>>>
-> >>>> +/**
-> >>>> + * kvm_create_vcpu - Gets a parked KVM vCPU or creates a KVM vCPU
-> >>>> + * @cpu: QOM CPUState object for which KVM vCPU has to be =20
-> >>> fetched/created. =20
-> >>>> + *
-> >>>> + * @returns: 0 when success, errno (<0) when failed.
-> >>>> + */
-> >>>> +int kvm_create_vcpu(CPUState *cpu);
-> >>>> +
-> >>>> +/**
-> >>>> + * kvm_park_vcpu - Park QEMU KVM vCPU context
-> >>>> + * @cpu: QOM CPUState object for which QEMU KVM vCPU context has to=
- be =20
-> >>> parked. =20
-> >>>> + *
-> >>>> + * @returns: none
-> >>>> + */
-> >>>> +void kvm_park_vcpu(CPUState *cpu);
-> >>>> +
-> >>>> +/**
-> >>>> + * kvm_unpark_vcpu - unpark QEMU KVM vCPU context
-> >>>> + * @s: KVM State
-> >>>> + * @vcpu_id: Architecture vCPU ID of the parked vCPU
-> >>>> + *
-> >>>> + * @returns: KVM fd
-> >>>> + */
-> >>>> +int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id);
-> >>>> +
-> >>>>   /* Arch specific hooks */
-> >>>>
-> >>>>   extern const KVMCapabilityInfo kvm_arch_required_capabilities[]; =
-=20
-> >>>    =20
->=20
+--000000000000c2a7c6061ccc2e59
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 6, 202=
+4 at 2:26=E2=80=AFPM Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.=
+com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-s=
+tyle:solid;border-left-color:rgb(204,204,204);padding-left:1ex">Looks like =
+this fell through the cracks.=C2=A0 Is anyone familiar with LUKS<br>
+willing to review it?<br></blockquote><div><div style=3D"font-family:&quot;=
+comic sans ms&quot;,sans-serif" class=3D"gmail_default"></div><div style=3D=
+"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_default">=
+:) Ping?</div></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid=
+;border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" target=3D"_blank">=
+yong.huang@smartx.com</a>&gt; writes:<br>
+<br>
+&gt; Signed-off-by: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com=
+" target=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
+&gt;=C2=A0 docs/devel/luks-detached-header.rst | 182 ++++++++++++++++++++++=
+++++++<br>
+&gt;=C2=A0 2 files changed, 183 insertions(+)<br>
+&gt;=C2=A0 create mode 100644 docs/devel/luks-detached-header.rst<br>
+&gt;<br>
+&gt; diff --git a/MAINTAINERS b/MAINTAINERS<br>
+&gt; index a24c2b51b6..e8b03032ab 100644<br>
+&gt; --- a/MAINTAINERS<br>
+&gt; +++ b/MAINTAINERS<br>
+&gt; @@ -3422,6 +3422,7 @@ Detached LUKS header<br>
+&gt;=C2=A0 M: Hyman Huang &lt;<a href=3D"mailto:yong.huang@smartx.com" targ=
+et=3D"_blank">yong.huang@smartx.com</a>&gt;<br>
+&gt;=C2=A0 S: Maintained<br>
+&gt;=C2=A0 F: tests/qemu-iotests/tests/luks-detached-header<br>
+&gt; +F: docs/devel/luks-detached-header.rst<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 D-Bus<br>
+&gt;=C2=A0 M: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau=
+@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+&gt; diff --git a/docs/devel/luks-detached-header.rst b/docs/devel/luks-det=
+ached-header.rst<br>
+&gt; new file mode 100644<br>
+&gt; index 0000000000..15e9ccde1d<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/docs/devel/luks-detached-header.rst<br>
+&gt; @@ -0,0 +1,182 @@<br>
+&gt; +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+&gt; +LUKS volume with detached header<br>
+&gt; +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+&gt; +<br>
+&gt; +Introduction<br>
+&gt; +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+&gt; +<br>
+&gt; +This document gives an overview of the design of LUKS volume with det=
+ached<br>
+&gt; +header and how to use it.<br>
+&gt; +<br>
+&gt; +Background<br>
+&gt; +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+&gt; +<br>
+&gt; +The LUKS format has ability to store the header in a separate volume =
+from<br>
+&gt; +the payload. We could extend the LUKS driver in QEMU to support this =
+use<br>
+&gt; +case.<br>
+&gt; +<br>
+&gt; +Normally a LUKS volume has a layout:<br>
+&gt; +<br>
+&gt; +::<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+----------------------------------=
+-------------+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |<br>
+&gt; + disk=C2=A0 =C2=A0 | header=C2=A0 |=C2=A0 key material=C2=A0 |=C2=A0 =
+disk payload data |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+|=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+----------------------------------=
+-------------+<br>
+&gt; +<br>
+&gt; +With a detached LUKS header, you need 2 disks so getting:<br>
+&gt; +<br>
+&gt; +::<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+--------------------------+<br>
+&gt; + disk1=C2=A0 =C2=A0|=C2=A0 =C2=A0header=C2=A0 | key material |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+--------------------------+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+---------------------+<br>
+&gt; + disk2=C2=A0 =C2=A0|=C2=A0 disk payload data=C2=A0 |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+---------------------+<br>
+&gt; +<br>
+&gt; +There are a variety of benefits to doing this:<br>
+&gt; +<br>
+&gt; + * Secrecy - the disk2 cannot be identified as containing LUKS<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0volume since there&#3=
+9;s no header<br>
+&gt; + * Control - if access to the disk1 is restricted, then even<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if someone has access=
+ to disk2 they can&#39;t unlock<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0it. Might be useful i=
+f you have disks on NFS but<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0want to restrict whic=
+h host can launch a VM<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0instance from it, by =
+dynamically providing access<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0to the header to a de=
+signated host<br>
+&gt; + * Flexibility - your application data volume may be a given<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0size an=
+d it is inconvenient to resize it to<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0add enc=
+ryption.You can store the LUKS header<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0separat=
+ely and use the existing storage<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0volume =
+for payload<br>
+&gt; + * Recovery - corruption of a bit in the header may make the<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 entire payload inacc=
+essible. It might be<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 convenient to take b=
+ackups of the header. If<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 your primary disk he=
+ader becomes corrupt, you<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 can unlock the data =
+still by pointing to the<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 backup detached head=
+er<br>
+&gt; +<br>
+&gt; +Architecture<br>
+&gt; +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
+&gt; +<br>
+&gt; +Take the qcow2 encryption, for example. The architecture of the<br>
+&gt; +LUKS volume with detached header is shown in the diagram below.<br>
+&gt; +<br>
+&gt; +There are two children of the root node: a file and a header.<br>
+&gt; +Data from the disk payload is stored in the file node. The<br>
+&gt; +LUKS header and key material are located in the header node,<br>
+&gt; +as previously mentioned.<br>
+&gt; +<br>
+&gt; +::<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0+-----------------------------+<br>
+&gt; +=C2=A0 Root node=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 foo[luks]=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0+-----------------------------+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0file |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 header=
+ |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+-------------=
+--------+=C2=A0 =C2=A0 +------------------+<br>
+&gt; +=C2=A0 Child node=C2=A0 =C2=A0|payload-format[qcow2]|=C2=A0 =C2=A0 |h=
+eader-format[raw]|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+-------------=
+--------+=C2=A0 =C2=A0 +------------------+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0file |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+file=C2=A0 |<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+-------------=
+---------+=C2=A0 +---------------------+<br>
+&gt; +=C2=A0 Child node=C2=A0 =C2=A0|payload-protocol[file]|=C2=A0 |header-=
+protocol[file]|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0+-------------=
+---------+=C2=A0 +---------------------+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0Host storage=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Host storage<b=
+r>
+&gt; +<br>
+&gt; +Usage<br>
+&gt; +=3D=3D=3D=3D=3D<br>
+&gt; +<br>
+&gt; +Create a LUKS disk with a detached header using qemu-img<br>
+&gt; +--------------------------------------------------------<br>
+&gt; +<br>
+&gt; +Shell commandline::<br>
+&gt; +<br>
+&gt; +# qemu-img create --object secret,id=3Dsec0,data=3Dabc123 -f luks \<b=
+r>
+&gt; +&gt; -o cipher-alg=3Daes-256,cipher-mode=3Dxts -o key-secret=3Dsec0 \=
+<br>
+&gt; +&gt; -o detached-header=3Dtrue test-header.img<br>
+&gt; +# qemu-img create -f qcow2 test-payload.qcow2 200G<br>
+&gt; +# qemu-img info &#39;json:{&quot;driver&quot;:&quot;luks&quot;,&quot;=
+file&quot;:{&quot;filename&quot;: \<br>
+&gt; +&gt; &quot;test-payload.img&quot;},&quot;header&quot;:{&quot;filename=
+&quot;:&quot;test-header.img&quot;}}&#39;<br>
+&gt; +<br>
+&gt; +Set up a VM&#39;s LUKS volume with a detached header<br>
+&gt; +------------------------------------------------<br>
+&gt; +<br>
+&gt; +Qemu commandline::<br>
+&gt; +<br>
+&gt; +# qemu-system-x86_64 ... \<br>
+&gt; +&gt; -object &#39;{&quot;qom-type&quot;:&quot;secret&quot;,&quot;id&q=
+uot;:&quot;libvirt-3-format-secret&quot;, \<br>
+&gt; +&gt; &quot;data&quot;:&quot;abc123&quot;}&#39; \<br>
+&gt; +&gt; -blockdev &#39;{&quot;driver&quot;:&quot;file&quot;,&quot;filena=
+me&quot;:&quot;/path/to/test-header.img&quot;, \<br>
+&gt; +&gt; &quot;node-name&quot;:&quot;libvirt-1-storage&quot;}&#39; \<br>
+&gt; +&gt; -blockdev &#39;{&quot;node-name&quot;:&quot;libvirt-1-format&quo=
+t;,&quot;read-only&quot;:false, \<br>
+&gt; +&gt; &quot;driver&quot;:&quot;raw&quot;,&quot;file&quot;:&quot;libvir=
+t-1-storage&quot;}&#39; \<br>
+&gt; +&gt; -blockdev &#39;{&quot;driver&quot;:&quot;file&quot;,&quot;filena=
+me&quot;:&quot;/path/to/test-payload.qcow2&quot;, \<br>
+&gt; +&gt; &quot;node-name&quot;:&quot;libvirt-2-storage&quot;}&#39; \<br>
+&gt; +&gt; -blockdev &#39;{&quot;node-name&quot;:&quot;libvirt-2-format&quo=
+t;,&quot;read-only&quot;:false, \<br>
+&gt; +&gt; &quot;driver&quot;:&quot;qcow2&quot;,&quot;file&quot;:&quot;libv=
+irt-2-storage&quot;}&#39; \<br>
+&gt; +&gt; -blockdev &#39;{&quot;node-name&quot;:&quot;libvirt-3-format&quo=
+t;,&quot;driver&quot;:&quot;luks&quot;, \<br>
+&gt; +&gt; &quot;file&quot;:&quot;libvirt-2-format&quot;,&quot;header&quot;=
+:&quot;libvirt-1-format&quot;,&quot;key-secret&quot;: \<br>
+&gt; +&gt; &quot;libvirt-3-format-secret&quot;}&#39; \<br>
+&gt; +&gt; -device &#39;{&quot;driver&quot;:&quot;virtio-blk-pci&quot;,&quo=
+t;bus&quot;:XXX,&quot;addr&quot;:YYY,&quot;drive&quot;: \<br>
+&gt; +&gt; &quot;libvirt-3-format&quot;,&quot;id&quot;:&quot;virtio-disk1&q=
+uot;}&#39;<br>
+&gt; +<br>
+&gt; +Add LUKS volume to a VM with a detached header<br>
+&gt; +----------------------------------------------<br>
+&gt; +<br>
+&gt; +1. object-add the secret for decrypting the cipher stored in<br>
+&gt; +=C2=A0 =C2=A0LUKS header above::<br>
+&gt; +<br>
+&gt; +# virsh qemu-monitor-command vm &#39;{&quot;execute&quot;:&quot;objec=
+t-add&quot;, \<br>
+&gt; +&gt; &quot;arguments&quot;:{&quot;qom-type&quot;:&quot;secret&quot;, =
+&quot;id&quot;: \<br>
+&gt; +&gt; &quot;libvirt-4-format-secret&quot;, &quot;data&quot;:&quot;abc1=
+23&quot;}}&#39;<br>
+&gt; +<br>
+&gt; +2. block-add the protocol node for LUKS header::<br>
+&gt; +<br>
+&gt; +# virsh qemu-monitor-command vm &#39;{&quot;execute&quot;:&quot;block=
+dev-add&quot;, \<br>
+&gt; +&gt; &quot;arguments&quot;:{&quot;node-name&quot;:&quot;libvirt-1-sto=
+rage&quot;, &quot;driver&quot;:&quot;file&quot;, \<br>
+&gt; +&gt; &quot;filename&quot;: &quot;/path/to/test-header.img&quot; }}&#3=
+9;<br>
+&gt; +<br>
+&gt; +3. block-add the raw-drived node for LUKS header::<br>
+&gt; +<br>
+&gt; +# virsh qemu-monitor-command vm &#39;{&quot;execute&quot;:&quot;block=
+dev-add&quot;, \<br>
+&gt; +&gt; &quot;arguments&quot;:{&quot;node-name&quot;:&quot;libvirt-1-for=
+mat&quot;, &quot;driver&quot;:&quot;raw&quot;, \<br>
+&gt; +&gt; &quot;file&quot;:&quot;libvirt-1-storage&quot;}}&#39;<br>
+&gt; +<br>
+&gt; +4. block-add the protocol node for disk payload image::<br>
+&gt; +<br>
+&gt; +# virsh qemu-monitor-command vm &#39;{&quot;execute&quot;:&quot;block=
+dev-add&quot;, \<br>
+&gt; +&gt; &quot;arguments&quot;:{&quot;node-name&quot;:&quot;libvirt-2-sto=
+rage&quot;, &quot;driver&quot;:&quot;file&quot;, \<br>
+&gt; +&gt; &quot;filename&quot;:&quot;/path/to/test-payload.qcow2&quot;}}&#=
+39;<br>
+&gt; +<br>
+&gt; +5. block-add the qcow2-drived format node for disk payload data::<br>
+&gt; +<br>
+&gt; +# virsh qemu-monitor-command vm &#39;{&quot;execute&quot;:&quot;block=
+dev-add&quot;, \<br>
+&gt; +&gt; &quot;arguments&quot;:{&quot;node-name&quot;:&quot;libvirt-2-for=
+mat&quot;, &quot;driver&quot;:&quot;qcow2&quot;, \<br>
+&gt; +&gt; &quot;file&quot;:&quot;libvirt-2-storage&quot;}}&#39;<br>
+&gt; +<br>
+&gt; +6. block-add the luks-drived format node to link the qcow2 disk<br>
+&gt; +=C2=A0 =C2=A0with the LUKS header by specifying the field &quot;heade=
+r&quot;::<br>
+&gt; +<br>
+&gt; +# virsh qemu-monitor-command vm &#39;{&quot;execute&quot;:&quot;block=
+dev-add&quot;, \<br>
+&gt; +&gt; &quot;arguments&quot;:{&quot;node-name&quot;:&quot;libvirt-3-for=
+mat&quot;, &quot;driver&quot;:&quot;luks&quot;, \<br>
+&gt; +&gt; &quot;file&quot;:&quot;libvirt-2-format&quot;, &quot;header&quot=
+;:&quot;libvirt-1-format&quot;, \<br>
+&gt; +&gt; &quot;key-secret&quot;:&quot;libvirt-2-format-secret&quot;}}&#39=
+;<br>
+&gt; +<br>
+&gt; +7. hot-plug the virtio-blk device finally::<br>
+&gt; +<br>
+&gt; +# virsh qemu-monitor-command vm &#39;{&quot;execute&quot;:&quot;devic=
+e_add&quot;, \<br>
+&gt; +&gt; &quot;arguments&quot;: {&quot;driver&quot;:&quot;virtio-blk-pci&=
+quot;, \<br>
+&gt; +&gt; &quot;drive&quot;: &quot;libvirt-3-format&quot;, &quot;id&quot;:=
+&quot;virtio-disk2&quot;}}<br>
+&gt; +<br>
+&gt; +TODO<br>
+&gt; +=3D=3D=3D=3D<br>
+&gt; +<br>
+&gt; +1. Support the shared detached LUKS header within the VM.<br>
+<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best regards</font>=
+</div></div></div>
+
+--000000000000c2a7c6061ccc2e59--
 
