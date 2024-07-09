@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00657C3DA42
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 17:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C54EC2BD09
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Jul 2024 17:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sREbS-0004UY-OP; Tue, 09 Jul 2024 13:26:10 -0400
+	id 1sREbd-0004jn-FX; Tue, 09 Jul 2024 13:26:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sREbR-0004To-51
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 13:26:09 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1sREba-0004ih-QW
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 13:26:19 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sREbO-0003JX-Tm
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 13:26:08 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70af8062039so3317094b3a.0
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 10:26:04 -0700 (PDT)
+ id 1sREbX-0003Jm-TF
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 13:26:17 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1fa55dbf2e7so27577225ad.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 10:26:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720545964; x=1721150764; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720545974; x=1721150774; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RzSE50T9N8PHLTl0ySlfAZSrWt+jaKUEg4tCnAG1Fq0=;
- b=YJ+aAj8q4N/yILL2Pn2J8ort4CJ0q9bE7usFDXGg6v8KcwQ1h7YSqt2zcHf2h7z6vw
- 1eHo8MDGZ+2isH2i+pfMJucRFKyuQ1VIyB0sN3/BzxhVyxvn4ciR8GEKEprj9+153AlR
- J+BdPUBdk2DiygC4eWpQ+nCIX4K1jHIzv6StVS1SbsOb+4KFSfOo9FbcriEGWdpQWENx
- B4mdO22YUrn2e4xrJaoPl9eB5MgRMimybsFsx1+SbEE7QXv88djyopsh5q7Mtq2YxtSC
- mJhQ+uejs9wF+77SNGAYzdRB/IpEyNmTjkhtV0JzttLQeu/rB9lJ+DfmsVKQodFkWAIr
- nf6A==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1MrsYAq1qM8KidZUR2FHzp/ftNr2vcU51EyVfTZMdh0=;
+ b=U1oQK29C+Y79/xpQmTEaiaQKelN1Nu4gYGSaLzF+54kpCRkHbfYQftXGFX+Toy33Hn
+ xverdG8GOGvkkAiTDGgiy6QRLF0Abo6Y10DzK3nNrz26hLvcDa1SfZj77KuaQpqY20uf
+ SwMOQqP5n8juZZ/cErodaPs6DHdDKv3W8Pz1OjefywqIeQbkR3IwKOo00hw+TDWDJKbc
+ 7zfxnn9FG7c2vzy+Wzws1BR2hfuluQxIwQQ8IRfMQegQtqBdwSUUl/iYy8GAM/b82TpI
+ niL+qhj+H7z0B1PwhMyKmKOGUnreWJY2GMQRUg/nA8FaV0+Crmr83v2iHJCyA7lILIgv
+ jsGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720545964; x=1721150764;
+ d=1e100.net; s=20230601; t=1720545974; x=1721150774;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RzSE50T9N8PHLTl0ySlfAZSrWt+jaKUEg4tCnAG1Fq0=;
- b=EvxX2PmUQMKez2afUzxfl89bHJ1xKfj4OFqeEyLirhavD+N0kU+bmDzezJCFcWEkPu
- wyPH0W+C4RoVv/yP7QJf3FKk9AUwGuAtP0dMQkC+yEDs//DFWoK4XYhbIHvGr4SREn8I
- CJkKfky9GKxpMh7cuDuh+tiNk0fQZzHjRrZX4rtxys/2nOi+A2lSinv4JsKVCdkZwROE
- GXJSeRyVrpiHQGQ1PJhGOgGMDqm/wuSQOnruIX+/alXQdyqIKDGU5kDoE73Q90chQYG3
- PubjGwmslTumcQwwmIclR2pvyNnvxJTrdz77SmHKa/n+GqM1tWml6C6hFRN2Rzo+e6GU
- c9Cg==
+ bh=1MrsYAq1qM8KidZUR2FHzp/ftNr2vcU51EyVfTZMdh0=;
+ b=XYXqILQbswWCIvg1HfNjmwVg7M1I4LgRfQWnMGUWHPy9GP/2k+vKXFfaxelOHWX6J5
+ p23wz9WHtz2j7lzXslAM6XRyTbWGroWkFQOYRp+yXVMmfu/jSDLRuiFXvU/vBxuqMlYQ
+ 8ipexqTRbxPbL5JHgUwrB+VCTQkkmT3Sy7Z0c9J/n9XSXz5VQZmncCn+pY7IOSVSMvOX
+ 4LZ76OLMEFVpNsnz1jjoTswKgDWO+91YOKdO9pVBjec9uAchP4+FsTYd1t7KAGGN5VTA
+ 9xHVm321akHsyJRKz+hTI+eRQTzHyDgm0JlvCzhZRKmdpR1dJZG1mq3zJQdF4aX0Te1N
+ zY7w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUIYjU/2FgOsK4yHtBmMvDFRL4BOuJjogK+diLt+I3Icg8vO94K08SDFajM9/rjk5YjBCOrACNjrBhH5lTOoEAx+CZHJTQ=
-X-Gm-Message-State: AOJu0YwvyHMmSPoW+rCSTZgiHxTiZm9vbXBQbfX9ralXGvbLdSvPLydB
- P/GsVish7epYrnJ3YEq+5OL5VdsTUMNtA/HbT86HErm/5iQpNb205NYxBD5F8TgEBERNYPcgLdD
- mv3g=
-X-Google-Smtp-Source: AGHT+IEqiUUBHRfgo5dEMtfC/XCNKPLGJBkduVqKYq/HblQkcW61CjFdauvMkwc7tUD35LxhqZSiKw==
-X-Received: by 2002:a05:6a00:2e87:b0:706:6272:417 with SMTP id
- d2e1a72fcca58-70b43543583mr3686917b3a.10.1720545963646; 
- Tue, 09 Jul 2024 10:26:03 -0700 (PDT)
+ AJvYcCWy/xcur38mWJnAx7q1gXaBjuCgwUmdiOhLbXTaagFwzC/H+It4rWrudjMPDCrEU2va+0ug1wL8TWWvSArT3J2XQrGpaHc=
+X-Gm-Message-State: AOJu0YzX9c/6PGreE2kEtZhm8uBzAl7I9uoNNvJlKy2YxWXQfPaUOuts
+ I8AO6LEvS0fNYatlUeE4TTOdds7wjUrQHcGC+1cpWJh62nG2GHjoPelqLmSM/54=
+X-Google-Smtp-Source: AGHT+IHmWhRSlKEs4DKlmbrmZdBqGxiNQu3MmX7iEWRlWjN9hKDKDkhBwHVj94d5uGfB3OYdwvsZUw==
+X-Received: by 2002:a17:902:e80d:b0:1fb:93e6:94a3 with SMTP id
+ d9443c01a7336-1fbb6d03da9mr25343525ad.18.1720545974395; 
+ Tue, 09 Jul 2024 10:26:14 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b4397c02fsm2156986b3a.143.2024.07.09.10.26.02
+ d9443c01a7336-1fbb6ab79d0sm18653375ad.174.2024.07.09.10.26.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Jul 2024 10:26:03 -0700 (PDT)
-Message-ID: <7da70fe7-08e0-4715-bb69-079eb16cff70@linaro.org>
-Date: Tue, 9 Jul 2024 10:26:01 -0700
+ Tue, 09 Jul 2024 10:26:13 -0700 (PDT)
+Message-ID: <6af43b0e-d417-4980-9afd-219ad52e3a22@linaro.org>
+Date: Tue, 9 Jul 2024 10:26:12 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/9] vfio queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>
-References: <20240709115017.798043-1-clg@redhat.com>
+Subject: Re: [PULL 0/8] aspeed queue
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20240709115228.798904-1-clg@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240709115017.798043-1-clg@redhat.com>
+In-Reply-To: <20240709115228.798904-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,24 +97,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/9/24 04:50, Cédric Le Goater wrote:
+On 7/9/24 04:52, Cédric Le Goater wrote:
 > The following changes since commit 44b7329de469c121555a1acf9b288f3ae71b8e61:
 > 
 >    Merge tag 'pull-qapi-2024-07-06' ofhttps://repo.or.cz/qemu/armbru  into staging (2024-07-07 13:23:28 -0700)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/legoater/qemu/  tags/pull-vfio-20240709
+>    https://github.com/legoater/qemu/  tags/pull-aspeed-20240709
 > 
-> for you to fetch changes up to 83d90192026eaded6319a6d27466ad7d606a27e0:
+> for you to fetch changes up to d847ea7cfc6321e2519f587d4077428d90557178:
 > 
->    vfio/display: Fix vfio_display_edid_init() error path (2024-07-09 11:50:37 +0200)
+>    machine_aspeed.py: update to test network for AST2700 (2024-07-09 08:05:44 +0200)
 > 
 > ----------------------------------------------------------------
-> vfio queue:
+> aspeed queue:
 > 
-> * Fixes on VFIO display
-> * VIRTIO-IOMMU/HostIOMMUDevice: Fixes and page size mask rework
+> * support AST2700 network
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
