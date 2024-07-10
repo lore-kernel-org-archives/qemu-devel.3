@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C24AC2BD09
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 03:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BC03C2BD09
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 03:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRO0a-0000zq-F9; Tue, 09 Jul 2024 23:28:44 -0400
+	id 1sRO0Z-0000xU-UW; Tue, 09 Jul 2024 23:28:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRO0Y-0000rp-Jp
+ id 1sRO0Y-0000qf-Ad
  for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:42 -0400
-Received: from mail-il1-x132.google.com ([2607:f8b0:4864:20::132])
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sRO0K-0003oG-1h
- for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:42 -0400
-Received: by mail-il1-x132.google.com with SMTP id
- e9e14a558f8ab-381f24d6bc4so23227435ab.2
- for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 20:28:27 -0700 (PDT)
+ id 1sRO0E-0003kn-ET
+ for qemu-devel@nongnu.org; Tue, 09 Jul 2024 23:28:41 -0400
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-7035d5eec5aso2388359a34.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Jul 2024 20:28:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720582107; x=1721186907; darn=nongnu.org;
+ d=linaro.org; s=google; t=1720582101; x=1721186901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=58kkK6wdwKfqQgQ7rCeYXt0gAI3/Luy3O1KMAnd3I2Y=;
- b=exjV27dcGEKyxDKU87mNPd9cTNcnH5x1vNsz/EPFsxUbQ9mzeY4Wwuh3zf1o4FPGmm
- YNd9ZYqk1UVFiaBaCrNmJhVhTd8lvtGiuZnCU3Ek6OYZ4zdlJx6DwTPeo7J8ZH+GHWG1
- 0MDp5uNraGw8g8jG6dWOK19A2cwmiWL2YYfd8MOJfunebhGoqxYNX4fSL3Iv61FDcGMz
- E6e9p+VF/MfA1NCVeNGvtWwBNfRilMExJiVWZABSpJxJeJk3+5xe6U0acU4rcUH7IW9a
- ga6lVTZietyP9AP/JQDpLF6PDENezElLax2x9LJrwnhqYOLxtWCJ+TFtFxOvsaD2caXH
- qsIw==
+ bh=EUYGnB0iFJYfFcduqyWfe3U13R89iRgamOgAr45s1Xw=;
+ b=M7VadgY/pD2ao240HXSVry1FsnDhLFG3ztsQYfsCxr57ztMJo0QLS1aVFSyK8/+05D
+ x+aJy1tDByGwujjvnsuCejWWHtYIeu18P1LSgBbX+Wf2TkR9v1KL1/cHO3B2D2RDrruM
+ LIjhgxzTW8Hd10KpcJ6qytRvW3/UXyqlqn9ZdGE+S47v1r7VVam/+1/V/5YQr7rCWsyv
+ sxqkylsJYOTicPqoZGeeKfoUnZKyvG6BCLY7TKi1HGaUabMH96k1SRsWoKoVgsPA8Lfg
+ 6+nnzmYmnPaCTtxmTk6L0tTC/KQeaCdMmUqip5TXxEbDU9NMn/t5x4m4KYhGn+Q6pJcb
+ xK9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720582107; x=1721186907;
+ d=1e100.net; s=20230601; t=1720582101; x=1721186901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=58kkK6wdwKfqQgQ7rCeYXt0gAI3/Luy3O1KMAnd3I2Y=;
- b=Npu3Y0IEfEb8T4YVvMuZo0mu1mhkic5b7cdbr65EzGzSh9nFncQ06ywRima4eOtWDn
- Apf023V2vdrGCoWfqjNjapDI0Fi3wo1bcOoaAoef/NYr115EcyAV27csbFu/ucsP8RkW
- Lt2dRvWN8xtb+qk9oW3b+rCRk445GV2yLCWtgbiovuNzB8vWx9dXDStNgzmX9rIy4VSy
- 4uoFnPDX4ifK0WlXJ8gJyHLe3oQiTzfBsvwDpwpNh29dCxbQhzzZh9DhwZ3Uku7Dh3v0
- +byCddMMzTs2HEfV9TDkttd/6GsBH6ayLkmsT8lLEUJoRHy0iX83lKkPFj0aUwmZnTu2
- SBbg==
-X-Gm-Message-State: AOJu0YzxIFDPSrSqnlVzEnhUK58ac1RV77uW6yK9clstABng4fP4eJMY
- uyOvUSRGaVrcKGMyHT0+WFQpDeB+rfdpQA5+OIMf+bwhVgPk2WXUwDYEWCJtLv6bmqpA/5AH6Zn
- 0Wjc=
-X-Google-Smtp-Source: AGHT+IFBae8GX5XIygcnsRmbRmPQae2k+cIo4jbEhE517qfthhCcMHfhWFkB2DyRsd6v/zYpj8rdgA==
-X-Received: by 2002:a92:cdab:0:b0:375:a3d8:97be with SMTP id
- e9e14a558f8ab-38a57213d0amr52860625ab.9.1720582106761; 
- Tue, 09 Jul 2024 20:28:26 -0700 (PDT)
+ bh=EUYGnB0iFJYfFcduqyWfe3U13R89iRgamOgAr45s1Xw=;
+ b=Ih2gLN4zPGZSJF28azzHMXJ/RSmtW5Oq+fWap1qtXxvcosInsXCJaotPTFMMJoBS39
+ VVMcfjyPWWm+8XFXlmaHEQPWkspUaS6JVeJUpsK6ddDITLO+Qg06SY4DZeVcU6v3a5hQ
+ j7s5N9uFqgiRFN/aWLksvTuAJCFsM+dVfTTakXK39WJmsEtvwxEKDj2Iwf3Pd0P2QKWK
+ xSone9ADrfnTuAtE2Da/Ri8cJxohEm83fWcXr9Sv6wbxm4Eq/huQaxN9+FeN1TAWpMPB
+ /dv8FNzoAV8v/d/C1oIKAySMG3OghQNlvTr7Jl3zMgmhSxya2+WLe9ZR0u1f8IerSWNg
+ G0oQ==
+X-Gm-Message-State: AOJu0YzSOHUjoNLaB4Zdc/MovMk8e1csmBaiiyyjoAJDUim93/608U2t
+ qHR0apPELgEuQP8+0iy7QN0g5aCyQaGU1754BjzxZtls0QWqQjjoqPI2f4vsK2as+6rR8VEJWxr
+ YdS0=
+X-Google-Smtp-Source: AGHT+IEvyOKdZeqqiDs0BX5+vg15SjeR4CDQqg8OZkbSAxkYcotTSRtN91wP6pDRDElAzsSGxy9Gyg==
+X-Received: by 2002:a05:6830:19d7:b0:703:65ff:5163 with SMTP id
+ 46e09a7af769-70375b4057cmr4621107a34.26.1720582101246; 
+ Tue, 09 Jul 2024 20:28:21 -0700 (PDT)
 Received: from stoup.. (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70b438f5679sm2687280b3a.90.2024.07.09.20.28.26
+ d2e1a72fcca58-70b438f5679sm2687280b3a.90.2024.07.09.20.28.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Jul 2024 20:28:26 -0700 (PDT)
+ Tue, 09 Jul 2024 20:28:20 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongu.org, qemu-s390x@nongnu.org,
  qemu-riscv@nongnu.org, balaton@eik.bme.hu, max.chou@sifive.com
-Subject: [PATCH v2 11/13] target/s390x: Use user_or_likely in access_memmove
-Date: Tue,  9 Jul 2024 20:28:12 -0700
-Message-ID: <20240710032814.104643-12-richard.henderson@linaro.org>
+Subject: [PATCH v2 05/13] target/ppc/mem_helper.c: Remove a conditional from
+ dcbz_common()
+Date: Tue,  9 Jul 2024 20:28:06 -0700
+Message-ID: <20240710032814.104643-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240710032814.104643-1-richard.henderson@linaro.org>
 References: <20240710032814.104643-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x132.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32e.google.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
 X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,86 +95,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Invert the conditional, indent the block, and use the macro
-that expands to true for user-only.
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
+Instead of passing a bool and select a value within dcbz_common() let
+the callers pass in the right value to avoid this conditional
+statement. On PPC dcbz is often used to zero memory and some code uses
+it a lot. This change improves the run time of a test case that copies
+memory with a dcbz call in every iteration from 6.23 to 5.83 seconds.
+
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-Id: <20240622204833.5F7C74E6000@zero.eik.bme.hu>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/s390x/tcg/mem_helper.c | 54 +++++++++++++++++------------------
- 1 file changed, 26 insertions(+), 28 deletions(-)
+ target/ppc/mem_helper.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index 5311a15a09..a76eb6182f 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -296,41 +296,39 @@ static void access_memmove(CPUS390XState *env, S390Access *desta,
-                            S390Access *srca, uintptr_t ra)
- {
-     int len = desta->size1 + desta->size2;
--    int diff;
- 
-     assert(len == srca->size1 + srca->size2);
- 
-     /* Fallback to slow access in case we don't have access to all host pages */
--    if (unlikely(!desta->haddr1 || (desta->size2 && !desta->haddr2) ||
--                 !srca->haddr1 || (srca->size2 && !srca->haddr2))) {
--        int i;
-+    if (user_or_likely(desta->haddr &&
-+                       srca->haddr &&
-+                       (!desta->size2 || desta->haddr2) &&
-+                       (!srca->size2 || srca->haddr2))) {
-+        int diff = desta->size1 - srca->size1;
- 
--        for (i = 0; i < len; i++) {
--            uint8_t byte = access_get_byte(env, srca, i, ra);
--
--            access_set_byte(env, desta, i, byte, ra);
--        }
--        return;
--    }
--
--    diff = desta->size1 - srca->size1;
--    if (likely(diff == 0)) {
--        memmove(desta->haddr1, srca->haddr1, srca->size1);
--        if (unlikely(srca->size2)) {
--            memmove(desta->haddr2, srca->haddr2, srca->size2);
--        }
--    } else if (diff > 0) {
--        memmove(desta->haddr1, srca->haddr1, srca->size1);
--        memmove(desta->haddr1 + srca->size1, srca->haddr2, diff);
--        if (likely(desta->size2)) {
--            memmove(desta->haddr2, srca->haddr2 + diff, desta->size2);
-+        if (likely(diff == 0)) {
-+            memmove(desta->haddr1, srca->haddr1, srca->size1);
-+            if (unlikely(srca->size2)) {
-+                memmove(desta->haddr2, srca->haddr2, srca->size2);
-+            }
-+        } else if (diff > 0) {
-+            memmove(desta->haddr1, srca->haddr1, srca->size1);
-+            memmove(desta->haddr1 + srca->size1, srca->haddr2, diff);
-+            if (likely(desta->size2)) {
-+                memmove(desta->haddr2, srca->haddr2 + diff, desta->size2);
-+            }
-+        } else {
-+            diff = -diff;
-+            memmove(desta->haddr1, srca->haddr1, desta->size1);
-+            memmove(desta->haddr2, srca->haddr1 + desta->size1, diff);
-+            if (likely(srca->size2)) {
-+                memmove(desta->haddr2 + diff, srca->haddr2, srca->size2);
-+            }
-         }
-     } else {
--        diff = -diff;
--        memmove(desta->haddr1, srca->haddr1, desta->size1);
--        memmove(desta->haddr2, srca->haddr1 + desta->size1, diff);
--        if (likely(srca->size2)) {
--            memmove(desta->haddr2 + diff, srca->haddr2, srca->size2);
-+        for (int i = 0; i < len; i++) {
-+            uint8_t byte = access_get_byte(env, srca, i, ra);
-+            access_set_byte(env, desta, i, byte, ra);
-         }
-     }
+diff --git a/target/ppc/mem_helper.c b/target/ppc/mem_helper.c
+index f88155ad45..361fd72226 100644
+--- a/target/ppc/mem_helper.c
++++ b/target/ppc/mem_helper.c
+@@ -271,12 +271,11 @@ void helper_stsw(CPUPPCState *env, target_ulong addr, uint32_t nb,
  }
+ 
+ static void dcbz_common(CPUPPCState *env, target_ulong addr,
+-                        uint32_t opcode, bool epid, uintptr_t retaddr)
++                        uint32_t opcode, int mmu_idx, uintptr_t retaddr)
+ {
+     target_ulong mask, dcbz_size = env->dcache_line_size;
+     uint32_t i;
+     void *haddr;
+-    int mmu_idx = epid ? PPC_TLB_EPID_STORE : ppc_env_mmu_index(env, false);
+ 
+ #if defined(TARGET_PPC64)
+     /* Check for dcbz vs dcbzl on 970 */
+@@ -309,12 +308,12 @@ static void dcbz_common(CPUPPCState *env, target_ulong addr,
+ 
+ void helper_dcbz(CPUPPCState *env, target_ulong addr, uint32_t opcode)
+ {
+-    dcbz_common(env, addr, opcode, false, GETPC());
++    dcbz_common(env, addr, opcode, ppc_env_mmu_index(env, false), GETPC());
+ }
+ 
+ void helper_dcbzep(CPUPPCState *env, target_ulong addr, uint32_t opcode)
+ {
+-    dcbz_common(env, addr, opcode, true, GETPC());
++    dcbz_common(env, addr, opcode, PPC_TLB_EPID_STORE, GETPC());
+ }
+ 
+ void helper_icbi(CPUPPCState *env, target_ulong addr)
 -- 
 2.43.0
 
