@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD57C3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E5CC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 14:38:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRY6s-00035L-W7; Wed, 10 Jul 2024 10:15:55 -0400
+	id 1sRYRQ-0006TK-9f; Wed, 10 Jul 2024 10:37:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY6W-0001Au-Lq
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:15:38 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sRYRO-0006Pb-9d
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:37:06 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sRY6J-0004CJ-74
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:15:30 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2eaa89464a3so67345151fa.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 07:15:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sRYRM-0008Cp-BV
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 10:37:05 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2c980b08b4bso4481610a91.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 07:37:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1720620914; x=1721225714; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xkDhVRq7nOrp337t4BirLj66Emh0tyYky1+9xyZk6N0=;
- b=mBEglw/vxaYJTQyGjFtmt4wRkJb33G63aDCZfvJbMRmvZHQ3OBWQ/FMzNV8zpgDsk0
- rEws8b5OGmEOPs5K+15fq89DqSYZHr9B4VKAEd60tbuFs/dwrIuqUfwv8zTEm9EjLiur
- H5kh2Ld+KHMip2fDmSCtVVkNPC9ckpWwqsZ/GXUNA4IiNQw9EwE/+mlJggFEVfTgP6to
- w1W2ClnMN9hxecqEJewF3zu5IiJyoTo1YBAzI+qvdOZDzSez9LJ+1gZYR93DKvCU6+ZK
- 1OrE1KwpEwPML/j4gOnZGihLUfLP96if31tw1x4hRP177OEY8iago/1LjH1CzysQ1Flc
- bAcw==
+ d=linaro.org; s=google; t=1720622222; x=1721227022; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=KPjBhqTMQQz+zEW5BDmFbWOo9n0F1MrwOUwA8+Jpr6g=;
+ b=vze2vlo9U+iTXnLH0w3Ici/vjKXoD1Nc+Io9Ci6z/zVmI4KkJD3+6TQ2j/ugr/xPbo
+ /Qb8ROFl1DDt2QyLj0cl90KEHzn6fOF4ZRI6PFo7Nn5xNiSRl9UFYGwq4rpxfD5qOnEj
+ gEXD5J+79gIbFsyoGkEAR2l5QMYekYXD7/Q2HR6gKJ57w0xr/qw2xTmek3SrUdO2Umiq
+ +dxBRdktGdoBnKDAc7vzBcBkblzQeBTo7nLYzOLAbVzs0f55GpEVTwt0HZVcFuOxKjl8
+ wsX5pd0/f6RutU9aFo9B7HZugVJ2Afqr01V+K1jgxuolrR0Q/nU+A5xAttg82tKmqWkY
+ xQmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720620914; x=1721225714;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xkDhVRq7nOrp337t4BirLj66Emh0tyYky1+9xyZk6N0=;
- b=E+X/efofXzf0pDLyUQSS+eoB71L6uBnxLWJDiy0sCD6r+NdxHdOk2PbcA1dnxf6jMK
- KIOORyQFXQ/8BhmQZnfHYb7Z5nhCBT5z+CTkg27H8+35r0ZDXXy5sm67UEl5vvSVjfSA
- WZQgm5GhBcI78gpENA11T5oSi+DGsAOfC+jl4nSPw/tX1dPxDa1cb+4nfbBG9narUiA1
- IsUaVYjep2IuQ5iOgvJYkY72IP0cid7JkncJNiSrkUA+9ofcwxAmmME5fO78AnsU88MV
- TRPImvyRVdpnZmx2NGLk7pYcJxNdS82Mpw4S09T13WCafaiG5qeqnLU2Yq32wWLK3iWB
- fLBQ==
-X-Gm-Message-State: AOJu0YzvcYporX1k/yirneWVmt8kxQ6pr5IXOH57I9VCrHSDTL47Gun4
- dk0E0AgF9DEA611GEIDMqRtBT8aniI15cnOaCSygPXcGNX+61FBKMICekK+vUF5HHMQOsz/2MxU
- k
-X-Google-Smtp-Source: AGHT+IHmW6W3R2Mlc6AHsVYFpU68k0NIZresqSdsEt9yGjslc6KJXVNCmJThUQZpSktbUx2C/H96sQ==
-X-Received: by 2002:a05:651c:2129:b0:2ee:87ef:825a with SMTP id
- 38308e7fff4ca-2eeb3198757mr41817341fa.53.1720620914561; 
- Wed, 10 Jul 2024 07:15:14 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.167.117])
+ d=1e100.net; s=20230601; t=1720622222; x=1721227022;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=KPjBhqTMQQz+zEW5BDmFbWOo9n0F1MrwOUwA8+Jpr6g=;
+ b=QSh3zkjS/BHp7ZR6T/RE1k9XJBj3OkEQ62iI76l1evFs0FQsHq0HtJGeJ8L9TpsS1A
+ W7viDjq/m4CgeXIEetQB/ot+biC2Q1kF1uKbOuAsZxmibDw9KrDAe4s+18N1LE++Tv9c
+ AOlqaderkReDdsCnAgowO2mOXtkMz1637kY47t6EwteGzOccFjGUr/5gvd+xIVj+iAyh
+ spK7uP4/6wDjzHbVoVYvrqeJhiuF/Pk/FNDgmAhgmFObvcbetOwVcrAt7z28MVQwZ+mv
+ AFyf0qCDyZC9QvNmkFbeFtj9JpFvtolwBNUVyWeRmp9/1Cvtihw3+FY1S3GQV1J7YfXq
+ rphg==
+X-Gm-Message-State: AOJu0YxqHCtvUdnaDlzxt8PyCyruo6Qp4w8xlQZR7eFEdfLnABFrBRMU
+ Xpey2u0NAqOWiAVcULOHJybhA9FqJMkLQW5FRxq57gDAx4ZISlx/6B/JdXY9n2E=
+X-Google-Smtp-Source: AGHT+IFjx9GNWv+yEnsm84ZlfU0gpq7J1Z1SKA4pJ/tlrGPEaj3CqT3D2sULOmObJv/adFi2TgrMYg==
+X-Received: by 2002:a17:90b:3a84:b0:2ca:7636:2214 with SMTP id
+ 98e67ed59e1d1-2ca763625e3mr1859187a91.4.1720622222226; 
+ Wed, 10 Jul 2024 07:37:02 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-76-141.tukw.qwest.net. [174.21.76.141])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42662315363sm163329185e9.26.2024.07.10.07.15.12
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 10 Jul 2024 07:15:14 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Bin Meng <bmeng.cn@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Luc Michel <luc.michel@amd.com>,
- qemu-arm@nongnu.org, qemu-block@nongnu.org, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v48 10/12] hw/sd/sdcard: Implement eMMC 'boot-mode'
-Date: Wed, 10 Jul 2024 16:14:06 +0200
-Message-ID: <20240710141408.69275-11-philmd@linaro.org>
-X-Mailer: git-send-email 2.41.0
-In-Reply-To: <20240710141408.69275-1-philmd@linaro.org>
-References: <20240710141408.69275-1-philmd@linaro.org>
+ 98e67ed59e1d1-2c99aabab9dsm11978185a91.57.2024.07.10.07.37.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Jul 2024 07:37:01 -0700 (PDT)
+Message-ID: <7059ae89-1181-48ce-b828-0837f7a62c93@linaro.org>
+Date: Wed, 10 Jul 2024 07:36:59 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/13] target/ppc: Hoist dcbz_size out of dcbz_common
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongu.org,
+ qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, max.chou@sifive.com
+References: <20240710032814.104643-1-richard.henderson@linaro.org>
+ <20240710032814.104643-7-richard.henderson@linaro.org>
+ <aedda59d-2a8f-94bd-246d-d32ee6cf19be@eik.bme.hu>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <aedda59d-2a8f-94bd-246d-d32ee6cf19be@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SUSPICIOUS_RECIPS=2.51 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,136 +98,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Spec v4.3 chapter 7.2.2 "Boot operation":
+On 7/10/24 05:11, BALATON Zoltan wrote:
+> On Tue, 9 Jul 2024, Richard Henderson wrote:
+>> The 970 logic does not apply to dcbzep, which is an e500 insn.
+>>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+> 
+> As all callers pass GETPC() to retaddr maybe that could be moved into dcbz_common() as i 
+> had in my patch.
 
-  If the CMD line is held LOW for 74 clock cycles and more
-  after power-up before the first command is issued, the
-  slave recognizes that boot mode is being initiated and
-  starts preparing boot data internally.
+No, that would be incorrect usage of GETPC.
+It *must* be used in the HELPER directly called from TCG.
 
-Track uptime since last reset, add the sd_uptime_ns() helper.
 
-When the first command is received, check at least 74 clocks
-are elapsed (during the identification phase, at a 10kHz rate)
-then enable BOOT_MODE in the Ext_CSD register.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/sd/sd.c         | 38 ++++++++++++++++++++++++++++++++++++++
- hw/sd/trace-events |  1 +
- 2 files changed, 39 insertions(+)
-
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index 57a9eb91d0..c2ea942389 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -163,6 +163,8 @@ struct SDState {
-      */
-     bool expecting_acmd;
-     uint32_t blk_written;
-+    int64_t reset_time_ns;
-+    uint32_t cmd_count;
- 
-     uint64_t data_start;
-     uint32_t data_offset;
-@@ -352,6 +354,11 @@ static uint8_t sd_crc7(const void *message, size_t width)
-     return shift_reg;
- }
- 
-+static int64_t sd_uptime_ns(SDState *sd)
-+{
-+    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - sd->reset_time_ns;
-+}
-+
- /* Operation Conditions register */
- 
- #define OCR_POWER_DELAY_NS      500000 /* 0.5ms */
-@@ -479,6 +486,10 @@ static void emmc_set_cid(SDState *sd)
- #define CMULT_SHIFT     9        /* 512 times HWBLOCK_SIZE */
- #define WPGROUP_SIZE    (1 << (HWBLOCK_SHIFT + SECTOR_SHIFT + WPGROUP_SHIFT))
- 
-+#define OD_FREQ_MIN_HZ   10000
-+#define OD_FREQ_MAX_HZ  400000
-+#define BOOT_MODE_DELAY_CYCLES_MIN 74
-+
- static const uint8_t sd_csd_rw_mask[16] = {
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xfe,
-@@ -797,6 +808,8 @@ static void sd_reset(DeviceState *dev)
- 
-     sect = sd_addr_to_wpnum(size) + 1;
- 
-+    sd->reset_time_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+    sd->cmd_count = 0;
-     sd->state = sd_idle_state;
- 
-     /* card registers */
-@@ -905,6 +918,18 @@ static const VMStateDescription emmc_extcsd_vmstate = {
-     },
- };
- 
-+static const VMStateDescription sdmmc_uptime_cmdcnt_vmstate = {
-+    .name = "sd-card/uptime-command_count-state",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = vmstate_needed_for_emmc,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_INT64(reset_time_ns, SDState),
-+        VMSTATE_UINT32(cmd_count, SDState),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static int sd_vmstate_pre_load(void *opaque)
- {
-     SDState *sd = opaque;
-@@ -953,6 +978,7 @@ static const VMStateDescription sd_vmstate = {
-     .subsections = (const VMStateDescription * const []) {
-         &sd_ocr_vmstate,
-         &emmc_extcsd_vmstate,
-+        &sdmmc_uptime_cmdcnt_vmstate,
-         NULL
-     },
- };
-@@ -1925,6 +1951,16 @@ static sd_rsp_type_t sd_cmd_SEND_OP_COND(SDState *sd, SDRequest req)
-         sd->state = sd_ready_state;
-     }
- 
-+    if (sd_is_emmc(sd) && sd->cmd_count == 1) {
-+        int64_t clk_cycles = sd_uptime_ns(sd) / OD_FREQ_MIN_HZ;
-+
-+        trace_sdcard_ext_csd_bootmode(sd_uptime_ns(sd), clk_cycles,
-+                                      clk_cycles > BOOT_MODE_DELAY_CYCLES_MIN);
-+        if (clk_cycles > BOOT_MODE_DELAY_CYCLES_MIN) {
-+            sd->ext_csd[EXT_CSD_PART_CONFIG] |= (1 << 3);
-+        }
-+    }
-+
-     return sd_r3;
- }
- 
-@@ -2107,6 +2143,8 @@ int sd_do_command(SDState *sd, SDRequest *req,
-         return 0;
-     }
- 
-+    ++sd->cmd_count;
-+
-     if (sd->state == sd_inactive_state) {
-         rtype = sd_illegal;
-         goto send_response;
-diff --git a/hw/sd/trace-events b/hw/sd/trace-events
-index 5dfe6be7b7..7d0de368aa 100644
---- a/hw/sd/trace-events
-+++ b/hw/sd/trace-events
-@@ -57,6 +57,7 @@ sdcard_write_block(uint64_t addr, uint32_t len) "addr 0x%" PRIx64 " size 0x%x"
- sdcard_write_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint8_t value) "%s %20s/ CMD%02d ofs %"PRIu32" value 0x%02x"
- sdcard_read_data(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t offset, uint64_t size, uint32_t blklen) "%s %20s/ CMD%02d ofs %"PRIu32" size %"PRIu64" blklen %" PRIu32
- sdcard_set_voltage(uint16_t millivolts) "%u mV"
-+sdcard_ext_csd_bootmode(int64_t uptime_ns, int64_t clk_cycles, unsigned enabled) "%"PRId64" ns, %"PRId64" cycles, boot mode: %u"
- 
- # pxa2xx_mmci.c
- pxa2xx_mmci_read(uint8_t size, uint32_t addr, uint32_t value) "size %d addr 0x%02x value 0x%08x"
--- 
-2.41.0
-
+r~
 
