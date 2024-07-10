@@ -4,94 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0618AC3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 18:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 330EDC3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 19:11:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRcPK-0008Dq-0J; Wed, 10 Jul 2024 14:51:14 -0400
+	id 1sRci4-0006Zo-Dj; Wed, 10 Jul 2024 15:10:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRcPH-0008DF-Vt
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 14:51:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRci0-0006YP-Ey
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 15:10:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRcPF-000404-0v
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 14:51:11 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRchw-0007Qx-Vh
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 15:10:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720637467;
+ s=mimecast20190719; t=1720638626;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=K7C37G9fIfUCiEohFj0/PJaNeS2xhaIdHpXvfa7FIuw=;
- b=TN00dcXchrqBC0dUlvXEgYPjB658jaLfxhPUDs0zp3uyEjwt2g0EUUuemkcwIyKaHvLgbS
- cCwoZpnooEu7RGmtzCtKUTIA28Gz6Nd2LnLE66Z1uTfKleTAQ/dXBOzKEpXv9RixHFKwXR
- DOTxGAmnDRu/0My7hOg14J7cf2e7pDk=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=b1dzatwcRhBoluw+oSbGKKZbgzg6h0QV0IFr61TRz8Y=;
+ b=ikiyeg5hh8M9ONXZRfI2iaDXqxgukC2CH7ATORE63NI7lZDT4vsQr1BsGl0+vfSbS0lKy0
+ fbVCpuSWPeqWJ2gR85nVjOdIatVxKgNlhfS/JMl1TXU9hgscbAuowlJaXJ0FLYEq2M4VjT
+ umM/oLUBlkI/R+Jx91VQG5Dmjha1zTM=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-568-8DvBlCYCPymp8mqfIQsJwA-1; Wed, 10 Jul 2024 14:51:05 -0400
-X-MC-Unique: 8DvBlCYCPymp8mqfIQsJwA-1
-Received: by mail-oi1-f198.google.com with SMTP id
- 5614622812f47-3d9db343109so26196b6e.0
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 11:51:05 -0700 (PDT)
+ us-mta-147-R_1LRLSIOYWhCwdgH_kKvA-1; Wed, 10 Jul 2024 15:10:25 -0400
+X-MC-Unique: R_1LRLSIOYWhCwdgH_kKvA-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-447dfad3387so199431cf.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 12:10:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720637465; x=1721242265;
+ d=1e100.net; s=20230601; t=1720638625; x=1721243425;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K7C37G9fIfUCiEohFj0/PJaNeS2xhaIdHpXvfa7FIuw=;
- b=UGq+q7Rge9qDX2U8ua+IqKApCWNtjIj/8C1oHjWUryb1HL1oeTFbh4P9AwuZm+cDDQ
- rRo/9hkqLK4Bt/9JD/b2ABgt8abtj4C25tp9/a6fQjOr4rzEKkfB8FBannmgqjbWCCcO
- z04quAXG2XepH/9t3+HkrEXMKldcS9Yx01E8aEPo4/HjpKizJOdiCPUWBqHL4vY2IJpu
- DhJRZu/Q/M7FY0d+Z0iDBGP+t2bE6eDVPqqDHgSU8JYRI45/r1SvGBBVByemFLzQJ3PG
- oWn3wlShdz68LXkb5A+vtcb8UjLS+CgD3GjRr9vEPciddXq71VYUkejfMabGbC2VNsow
- 2lYA==
+ bh=b1dzatwcRhBoluw+oSbGKKZbgzg6h0QV0IFr61TRz8Y=;
+ b=E+YMhJKV0BrH+jEjpuCs9hJ0LnAfxM6AFJzy4rnhI5Hi//vxd47twRogE8y36aVOnZ
+ Qw3Wk24sxQ7zWGwOTR/f4TWedqSeeCAufQzZIqJin0pfmHOfWKliqtnAdzgB9us0kbzK
+ GtbHA5HZ6Wvy7oVIHvwNuSBdmOu15eznV+WCGZzdy0C1nCQK5gT78BJZ18hG6whmlnoA
+ lJfojyGkLafPvcgPSVavt1CJb+tK0zW69BHBxnK2iB4jW2oPUX9eLRpR35vYXvcsXqvj
+ iNsUxCRABi5p4f5BLcIqRBXFk2lBLK1NfJ283DEnR1wAKBOoruK9fb+unwDRaUaBNzh3
+ Lclw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWWt0Tcnu5QmXoeQyJvILoJZXZI54qQORUK16giDXg+Sou3GMVA2TGFMpDzv+OxwCI5AH+oImg4dvTGz1PoM4P9GEuEPcU=
-X-Gm-Message-State: AOJu0YzumvQFfn1qfFFGRMHT0Dm79hgIwZCdPI44UNwP00I1zMlRaHv8
- sK5Sb79sjUCBjZSI+IAz5kXp/H8yaJHAJQTCep6xNk6CfBpN1MyK0QeuuT0GUuThbD1XcG7kG/W
- 4ajMSCG2Fzkc/X06eYsMjRncGwJLID9if8jFV78SPRHsCckFvOT3p
-X-Received: by 2002:a05:6808:1416:b0:3d9:33c1:29ef with SMTP id
- 5614622812f47-3daa0cc5a13mr160961b6e.3.1720637464938; 
- Wed, 10 Jul 2024 11:51:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHywB7E+4FcqgyDuy5jjeN8jDEIRAivaUqhC5XVPSJ9OHQeE2hUDj57p+KkmyWlJQqqJmjerQ==
-X-Received: by 2002:a05:6808:1416:b0:3d9:33c1:29ef with SMTP id
- 5614622812f47-3daa0cc5a13mr160950b6e.3.1720637464599; 
- Wed, 10 Jul 2024 11:51:04 -0700 (PDT)
+ AJvYcCXZFEJZZ+bMvky4YYg5nlBoyLGa553ngegPwlsHQ//qKf+v7T+j/I4YEzLLJ1qJwirgnoRL5JFrjnGHs3MJv+0k6N/5OqM=
+X-Gm-Message-State: AOJu0Yx0YT5wIXD6CaP4hHYsMaK7D6RIlUsiRrDf+ZX0JTgaAAZ6oFrw
+ 5FzK9MEX3XcBzJSEO6pJVkdfwvmKCi29ULHbd97+vlsmTQQuO9FxbD/kKb/CO8iQJfliCjwzX0t
+ LqFu66eq6yp2RAkS0VxNf6EslSPI8P/foYJEq22Irs4bDdSG6FWvA
+X-Received: by 2002:a05:620a:4586:b0:79c:d2fc:8b27 with SMTP id
+ af79cd13be357-79f19c02b26mr700879885a.7.1720638624443; 
+ Wed, 10 Jul 2024 12:10:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHoBKbXYZ0TychSNNpClvjv3qm+3jNNLQusyewBG3rCGR3Uqhm1m/MM0EEELkTNd2lHPg13kA==
+X-Received: by 2002:a05:620a:4586:b0:79c:d2fc:8b27 with SMTP id
+ af79cd13be357-79f19c02b26mr700877685a.7.1720638624069; 
+ Wed, 10 Jul 2024 12:10:24 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-79f19087255sm218684485a.79.2024.07.10.11.51.03
+ af79cd13be357-79f18ff69ebsm220306285a.22.2024.07.10.12.10.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jul 2024 11:51:04 -0700 (PDT)
-Date: Wed, 10 Jul 2024 14:51:01 -0400
+ Wed, 10 Jul 2024 12:10:23 -0700 (PDT)
+Date: Wed, 10 Jul 2024 15:10:21 -0400
 From: Peter Xu <peterx@redhat.com>
-To: "Liu, Yuan1" <yuan1.liu@intel.com>
-Cc: "Wang, Yichen" <yichen.wang@bytedance.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Hao Xiang <hao.xiang@linux.dev>, "Zou, Nanhai" <nanhai.zou@intel.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>
-Subject: Re: [PATCH v4 0/4] Implement using Intel QAT to offload ZLIB
-Message-ID: <Zo7YFZOFDFHW1FrW@x1n>
-References: <20240705182901.48948-1-yichen.wang@bytedance.com>
- <PH7PR11MB5941B008DD622227FB46E95EA3DB2@PH7PR11MB5941.namprd11.prod.outlook.com>
- <Zo2EsEqAY5KnkO1V@x1n>
- <PH7PR11MB594133AD3E08A6E35D07DD97A3A42@PH7PR11MB5941.namprd11.prod.outlook.com>
- <Zo6mWzuxFET1q81j@x1n>
- <PH7PR11MB5941A602FCA617659E0105A9A3A42@PH7PR11MB5941.namprd11.prod.outlook.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: "Wang, Lei" <lei4.wang@intel.com>, qemu-devel@nongnu.org,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
+Subject: Re: [RFC PATCH 6/7] migration/multifd: Move payload storage out of
+ the channel parameters
+Message-ID: <Zo7cncqkxB89AUBe@x1n>
+References: <20240620212111.29319-1-farosas@suse.de>
+ <20240620212111.29319-7-farosas@suse.de>
+ <e60bc0c7-dc49-400e-88f1-a30c32943f25@intel.com>
+ <Zn15y693g0AkDbYD@x1n> <877cdtfcsi.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <PH7PR11MB5941A602FCA617659E0105A9A3A42@PH7PR11MB5941.namprd11.prod.outlook.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <877cdtfcsi.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -115,44 +104,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 10, 2024 at 03:39:43PM +0000, Liu, Yuan1 wrote:
-> > I don't think postcopy will trigger timeout failures - postcopy should use
-> > constant time to complete a migration, that is guest memsize / bw.
+On Wed, Jul 10, 2024 at 01:10:37PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> Yes, the migration total time is predictable, failure due to timeout is incorrect, 
-> migration taking a long time may be more accurate.
+> > On Thu, Jun 27, 2024 at 11:27:08AM +0800, Wang, Lei wrote:
+> >> > Or graphically:
+> >> > 
+> >> > 1) client fills the active slot with data. Channels point to nothing
+> >> >    at this point:
+> >> >   [a]      <-- active slot
+> >> >   [][][][] <-- free slots, one per-channel
+> >> > 
+> >> >   [][][][] <-- channels' p->data pointers
+> >> > 
+> >> > 2) multifd_send() swaps the pointers inside the client slot. Channels
+> >> >    still point to nothing:
+> >> >   []
+> >> >   [a][][][]
+> >> > 
+> >> >   [][][][]
+> >> > 
+> >> > 3) multifd_send() finds an idle channel and updates its pointer:
+> >> 
+> >> It seems the action "finds an idle channel" is in step 2 rather than step 3,
+> >> which means the free slot is selected based on the id of the channel found, am I
+> >> understanding correctly?
+> >
+> > I think you're right.
+> >
+> > Actually I also feel like the desription here is ambiguous, even though I
+> > think I get what Fabiano wanted to say.
+> >
+> > The free slot should be the first step of step 2+3, here what Fabiano
+> > really wanted to suggest is we move the free buffer array from multifd
+> > channels into the callers, then the caller can pass in whatever data to
+> > send.
+> >
+> > So I think maybe it's cleaner to write it as this in code (note: I didn't
+> > really change the code, just some ordering and comments):
+> >
+> > ===8<===
+> > @@ -710,15 +710,11 @@ static bool multifd_send(MultiFDSlots *slots)
+> >       */
+> >      active_slot = slots->active;
+> >      slots->active = slots->free[p->id];
+> > -    p->data = active_slot;
+> > -
+> > -    /*
+> > -     * By the next time we arrive here, the channel will certainly
+> > -     * have consumed the active slot. Put it back on the free list
+> > -     * now.
+> > -     */
+> >      slots->free[p->id] = active_slot;
+> >  
+> > +    /* Assign the current active slot to the chosen thread */
+> > +    p->data = active_slot;
+> > ===8<===
+> >
+> > The comment I removed is slightly misleading to me too, because right now 
+> > active_slot contains the data hasn't yet been delivered to multifd, so
+> > we're "putting it back to free list" not because of it's free, but because
+> > we know it won't get used until the multifd send thread consumes it
+> > (because before that the thread will be busy, and we won't use the buffer
+> > if so in upcoming send()s).
+> >
+> > And then when I'm looking at this again, I think maybe it's a slight
+> > overkill, and maybe we can still keep the "opaque data" managed by multifd.
+> > One reason might be that I don't expect the "opaque data" payload keep
+> > growing at all: it should really be either RAM or device state as I
+> > commented elsewhere in a relevant thread, after all it's a thread model
+> > only for migration purpose to move vmstates..
+> 
+> Some amount of flexibility needs to be baked in. For instance, what
+> about the handshake procedure? Don't we want to use multifd threads to
+> put some information on the wire for that as well?
 
-It shouldn't: postcopy is run always together with precopy, so if you start
-postcopy after one round of precopy, the total migration time should
-alwways be smaller than if you run the precopy two rounds.
+Is this an orthogonal question?
 
-With postcopy after that migration completes, but for precopy two rounds of
-migration will follow with a dirty sync which may say "there's unforunately
-more dirty pages, let's move on with the 3rd round and more".
+What I meant above is it looks fine to me to keep "device state" in
+multifd.c, as long as it is not only about VFIO.
+
+What you were saying seems to be about how to identify this is a device
+state, then I just hope VFIO shares the same flag with any future device
+that would also like to send its state via multifd, like:
+
+#define MULTIFD_FLAG_DEVICE_STATE (32 << 1)
+
+Then set it in MultiFDPacket_t.flags.  The dest qemu should route that
+packet to the device vmsd / save_entry for parsing.
 
 > 
-> > The challenge is normally on the delay of page requests higher than
-> > precopy, but in this case it might not be a big deal. And I wonder if on
-> > 100G*2 cards it can also perform pretty well, as the delay might be
-> > minimal
-> > even if bandwidth is throttled.
+> > Putting it managed by multifd thread should involve less change than this
+> > series, but it could look like this:
+> >
+> > typedef enum {
+> >     MULTIFD_PAYLOAD_RAM = 0,
+> >     MULTIFD_PAYLOAD_DEVICE_STATE = 1,
+> > } MultifdPayloadType;
+> >
+> > typedef enum {
+> >     MultiFDPages_t ram_payload;
+> >     MultifdDeviceState_t device_payload;
+> > } MultifdPayload;
+> >
+> > struct MultiFDSendData {
+> >     MultifdPayloadType type;
+> >     MultifdPayload data;
+> > };
 > 
-> I got your point, I don't have much experience in this area.
-> So you mean to reserve a small amount of bandwidth on a NIC for postcopy 
-> migration, and compare the migration performance with and without traffic
-> on the NIC? Will data plane traffic affect page request delays in postcopy?
+> Is that an union up there? So you want to simply allocate in multifd the
 
-I'm not sure what's the "data plane" you're describing here, but logically
-VMs should be migrated using mgmt networks, and should be somehow separate
-from IOs within the VMs.
+Yes.
 
-I'm not really asking for another test, sorry to cause confusions; it's
-only about some pure discussions.  I just feel like postcopy wasn't really
-seriously considered even for many valid cases, some of them postcopy can
-play pretty well even without any modern hardwares requested.  There's no
-need to prove which is better for this series.
+> max amount of memory between the two types of payload? But then we'll
 
-Thanks,
+Yes.
+
+> need a memset(p->data, 0, ...) at every round of sending to avoid giving
+> stale data from one client to another. That doesn't work with the
+
+I think as long as the one to enqueue will always setup the fields, we
+don't need to do memset.  I am not sure if it's a major concern to always
+set all the relevant fields in the multifd enqueue threads.  It sounds like
+the thing we should always better do.
+
+> current ram migration because it wants p->pages to remain active across
+> several calls of multifd_queue_page().
+
+I don't think I followed here.
+
+What I meant: QEMU maintains SendData[8], now a bunch of pages arrives, it
+enqueues "pages" into a free slot index 2 (set type=pages), then before
+thread 2 finished sending the bunch of pages, SendData[2] will always
+represent those pages without being used by anything else. What did I miss?
+
+> 
+> >
+> > Then the "enum" makes sure the payload only consumes only the max of both
+> > types; a side benefit to save some memory.
+> >
+> > I think we need to make sure MultifdDeviceState_t is generic enough so that
+> > it will work for mostly everything (especially normal VMSDs).  In this case
+> > the VFIO series should be good as that was currently defined as:
+> >
+> > typedef struct {
+> >     MultiFDPacketHdr_t hdr;
+> >
+> >     char idstr[256] QEMU_NONSTRING;
+> >     uint32_t instance_id;
+> >
+> >     /* size of the next packet that contains the actual data */
+> >     uint32_t next_packet_size;
+> > } __attribute__((packed)) MultiFDPacketDeviceState_t;
+> 
+> This is the packet, a different thing. Not sure if your paragraph above
+> means to talk about that or really MultifdDeviceState, which is what is
+> exchanged between the multifd threads and the client code.
+
+I meant the wire protocol looks great from that POV.  We may need similar
+thing for the type==device_state slots just to be generic.
+
+> 
+> >
+> > IIUC that was what we need exactly with idstr+instance_id, so as to nail
+> > exactly at where should the "opaque device state" go to, then load it with
+> > a buffer-based loader when it's ready (starting from VFIO, to get rid of
+> > qemufile).  For VMSDs in the future if ever possible, that should be a
+> > modified version of vmstate_load() where it may take buffers not qemufiles.
+> >
+> > To Maciej: please see whether above makes sense to you, and if you also
+> > agree please consider that with your VFIO work.
+> >
+> > Thanks,
+> >
+> >> 
+> >> >   []
+> >> >   [a][][][]
+> >> > 
+> >> >   [a][][][]
+> >> >   ^idle
+> 
 
 -- 
 Peter Xu
