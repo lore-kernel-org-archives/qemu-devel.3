@@ -4,57 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94AC1C3DA45
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 11:19:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 242DFC3DA45
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 11:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRVKq-0003Lx-Kw; Wed, 10 Jul 2024 07:18:08 -0400
+	id 1sRVR6-0008Vp-IS; Wed, 10 Jul 2024 07:24:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sRVKo-0003Ky-F3
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 07:18:06 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1sRVR3-0008V6-Qx
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 07:24:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sRVKm-0004bp-Pe
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 07:18:06 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1sRVR1-0005ql-Qd
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 07:24:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720610283;
+ s=mimecast20190719; t=1720610670;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=7abA/sUs4O+FT1rN7yDGBje1HYkj85kkJXZndgMyMog=;
- b=LvhKwrvWMm/RhsFpQOGVwl+YQ9sen+Tk85ZFoP6hmxecXJdrwh788NVCQx2f7glugGq9ON
- Tv2/PmiXo4Ozp3jDUSEmIAmEngNvgzx/qE9PrFa1Tc9O6e3vEz51YsGjkpL5HebYXAX82E
- LsaVe8I7kAYiWg4Gseo812cYA36xeLQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-tbtBlsTFOPGWD960Y2XDbA-1; Wed,
- 10 Jul 2024 07:18:00 -0400
-X-MC-Unique: tbtBlsTFOPGWD960Y2XDbA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 112D7196CDF1; Wed, 10 Jul 2024 11:17:59 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.89])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C37D01955E76; Wed, 10 Jul 2024 11:17:56 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-Subject: [PATCH] tests/avocado: Remove non-working sparc leon3 test
-Date: Wed, 10 Jul 2024 13:17:49 +0200
-Message-ID: <20240710111755.60584-1-thuth@redhat.com>
+ bh=zJo5e/BrLfOsarDZ4d3gQo8/j7R+MYdNJBn7lF9aR2k=;
+ b=C2U5R1drKRsMKY27ljkdUWUNko982xMxiWy69cJNPTCuuKx+96o42CBbbpXrGY5nBj0aON
+ SPdyzRENWsE72xeG352Er6w49d86nY7NYMa7tqUXsjFw3sYX6oDzz/ik+QkC3f43VT1INS
+ U5AUXMcs5yLLSnXfd6UNhn9VmjK9Rl8=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-32-1AZHT_9zPyCqFW8iQ6MdRA-1; Wed, 10 Jul 2024 07:23:20 -0400
+X-MC-Unique: 1AZHT_9zPyCqFW8iQ6MdRA-1
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-58b1cfea1f4so5749645a12.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 04:23:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720610598; x=1721215398;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zJo5e/BrLfOsarDZ4d3gQo8/j7R+MYdNJBn7lF9aR2k=;
+ b=lKr0IJnNDZC404oekGnXSUOjSptpiZZOFYWUuc7MzxgMGOAcr3iGkl/ARe6AA8cIAb
+ G38SGKUFo1IGHdu5sRnvyYbOLzbK9ozzXOdFOIfDfwZuvnlZkKAXmo+AlMqDK65BLYuA
+ 3j6eXw4ziIijDtyddsjVsqssI9BLJ44U1rQelkM9XqjU5jMvUtQQn3zVyhBMoPfjzHVT
+ Js5OVnFsdWdj8DZwvLcuTJpNtIGric7/JwRzlIxttdfcOC9TwJZIFfqWVo6TuhUi+N2Z
+ N9wQ5wmz+L7GAQWih2Zdto/MQxIOcgr8d+LxhV5SWftZ5CNh4v6hub+fdbZWlQYf6/vS
+ s9/A==
+X-Gm-Message-State: AOJu0Yxlq5UfcmmEiEEO3eaW3zRH+RHEg5bDGo87ToBEIqgkPXJLQB9c
+ a0B7YvqYHWaO82oZi/UeYwhIt1icQisjTspZkUSnPVrlsKsGzdvbYnePLzXis4l1OCOSV4nmXRv
+ Ft2FIqXpUvheUTGJU0QC096akg3BwAAHbwMUdCYjwglB5qBe/xL/VfnCN8O5WUKcgxbf6+WLcvH
+ ssOpCJZeauNT9WsfF+9RLCr+YIdPYyBdyBMg==
+X-Received: by 2002:a05:6402:27d4:b0:595:698b:c4d4 with SMTP id
+ 4fb4d7f45d1cf-595698bc620mr2995964a12.25.1720610598596; 
+ Wed, 10 Jul 2024 04:23:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGZfMOdnJT2YJ6QDdAVI8Wmhx3zWbXiu2vVZCknqkJSWjEdvXclrEmHqi0yjxjWVFa50iFaJA==
+X-Received: by 2002:a05:6402:27d4:b0:595:698b:c4d4 with SMTP id
+ 4fb4d7f45d1cf-595698bc620mr2995939a12.25.1720610597954; 
+ Wed, 10 Jul 2024 04:23:17 -0700 (PDT)
+Received: from localhost
+ (p200300cfd74b1ce0c033e72e9d5ff8c4.dip0.t-ipconnect.de.
+ [2003:cf:d74b:1ce0:c033:e72e:9d5f:f8c4])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-594bb9605dcsm2114098a12.6.2024.07.10.04.23.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jul 2024 04:23:17 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Czenczek <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: [PATCH] virtio: Always reset vhost devices
+Date: Wed, 10 Jul 2024 13:23:10 +0200
+Message-ID: <20240710112310.316551-1-hreitz@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -78,60 +100,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The test has been marked as broken more than 4 years ago, and
-so far nobody ever cared to fix it. Thus let's simply remove it
-now ... if somebody ever needs it again, they can restore the
-file from an older version of QEMU.
+Requiring `vhost_started` to be true for resetting vhost devices in
+`virtio_reset()` seems like the wrong condition: Most importantly, the
+preceding `virtio_set_status(vdev, 0)` call will (for vhost devices) end
+up in `vhost_dev_stop()` (through vhost devices' `.set_status`
+implementations), setting `vdev->vhost_started = false`.  Therefore, the
+gated `vhost_reset_device()` call is unreachable.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+`vhost_started` is not documented, so it is hard to say what exactly it
+is supposed to mean, but judging from the fact that `vhost_dev_start()`
+sets it and `vhost_dev_stop()` clears it, it seems like it indicates
+whether there is a vhost back-end, and whether that back-end is
+currently running and processing virtio requests.
+
+Making a reset conditional on whether the vhost back-end is processing
+virtio requests seems wrong; in fact, it is probably better to reset it
+only when it is not currently processing requests, which is exactly the
+current order of operations in `virtio_reset()`: First, the back-end is
+stopped through `virtio_set_status(vdev, 0)`, then we want to send a
+reset.
+
+Therefore, we should drop the `vhost_started` condition, but in its
+stead we then have to verify that we can indeed send a reset to this
+vhost device, by not just checking `k->get_vhost != NULL` (introduced by
+commit 95e1019a4a9), but also that the vhost back-end is connected
+(`hdev = k->get_vhost(); hdev != NULL && hdev->vhost_ops != NULL`).
+
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- tests/avocado/machine_sparc_leon3.py | 37 ----------------------------
- 1 file changed, 37 deletions(-)
- delete mode 100644 tests/avocado/machine_sparc_leon3.py
+ hw/virtio/virtio.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tests/avocado/machine_sparc_leon3.py b/tests/avocado/machine_sparc_leon3.py
-deleted file mode 100644
-index e61b223185..0000000000
---- a/tests/avocado/machine_sparc_leon3.py
-+++ /dev/null
-@@ -1,37 +0,0 @@
--# Functional test that boots a Leon3 machine and checks its serial console.
--#
--# Copyright (c) Philippe Mathieu-Daudé <f4bug@amsat.org>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later. See the COPYING file in the top-level directory.
--
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--from avocado import skip
--
--
--class Leon3Machine(QemuSystemTest):
--
--    timeout = 60
--
--    @skip("Test currently broken")
--    # A Window Underflow exception occurs before booting the kernel,
--    # and QEMU exit calling cpu_abort(), which makes this test to fail.
--    def test_leon3_helenos_uimage(self):
--        """
--        :avocado: tags=arch:sparc
--        :avocado: tags=machine:leon3_generic
--        :avocado: tags=binfmt:uimage
--        """
--        kernel_url = ('http://www.helenos.org/releases/'
--                      'HelenOS-0.6.0-sparc32-leon3.bin')
--        kernel_hash = 'a88c9cfdb8430c66650e5290a08765f9bf049a30'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--
--        self.vm.set_console()
--        self.vm.add_args('-kernel', kernel_path)
--
--        self.vm.launch()
--
--        wait_for_console_pattern(self, 'Copyright (c) 2001-2014 HelenOS project')
--        wait_for_console_pattern(self, 'Booting the kernel ...')
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 893a072c9d..4410d62126 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -2146,8 +2146,12 @@ void virtio_reset(void *opaque)
+         vdev->device_endian = virtio_default_endian();
+     }
+ 
+-    if (vdev->vhost_started && k->get_vhost) {
+-        vhost_reset_device(k->get_vhost(vdev));
++    if (k->get_vhost) {
++        struct vhost_dev *hdev = k->get_vhost(vdev);
++        /* Only reset when vhost back-end is connected */
++        if (hdev && hdev->vhost_ops) {
++            vhost_reset_device(hdev);
++        }
+     }
+ 
+     if (k->reset) {
 -- 
 2.45.2
 
