@@ -4,58 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81348C41513
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB548C3DA41
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 18:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRbcb-00081w-Pp; Wed, 10 Jul 2024 14:00:53 -0400
+	id 1sRbce-0008CG-RP; Wed, 10 Jul 2024 14:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sRbcY-00081M-Rk
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 14:00:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sRbcb-00082L-Ty
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 14:00:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sRbcV-0003J4-Eq
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 14:00:50 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sRbcZ-0003JP-QV
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 14:00:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720634445;
+ s=mimecast20190719; t=1720634450;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Ch1+rgI52WYOO+bSoe4qMDe/qVop7S+xFJfa+pskyMQ=;
- b=CDu1HFtuTsH/w6qLiaKojjjzu+SOujjg929xKoUU0bft8HLOITP4sHU9EW/++wYmSvkFyB
- R3OD0e4tfX+y0qiYh8LB1jP/54wcLaFgoxnOcUYIzaE70yuXd8qSSQ5drlA6fe6DG1Hnab
- NYNih4Iml2uqPlkouLWnnvmcsXEpE3s=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=J+znbF9pwZIVd04bzjM+SUKkhSFYNYBhE43jpaEEmEw=;
+ b=OylzPiIW+/IdblRxRuhPMsEvNFpiOOuyG9XEAnbxPejnK1N7C+IdzpFRjWCNpKS/ZRPrxc
+ 4ZFdBWjD+qE7EMhrPW+TGkhhULYEPiMeLu372OhjzmQJ6soFMkp+fbSCINHcJox21FasZP
+ gunRyFdgR0Gck20yScAti8InUhVAePc=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-rrR3tpoRMyWR65Jghhdqvg-1; Wed,
- 10 Jul 2024 14:00:43 -0400
-X-MC-Unique: rrR3tpoRMyWR65Jghhdqvg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-288-beyLO8Q4Phyes2mEywwywA-1; Wed,
+ 10 Jul 2024 14:00:47 -0400
+X-MC-Unique: beyLO8Q4Phyes2mEywwywA-1
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A78841955F3B
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 18:00:42 +0000 (UTC)
+ id 3F5B919560AD
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 18:00:46 +0000 (UTC)
 Received: from t14s.redhat.com (unknown [10.39.192.75])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1CBF31955F40; Wed, 10 Jul 2024 18:00:38 +0000 (UTC)
+ id 544B81955F40; Wed, 10 Jul 2024 18:00:42 +0000 (UTC)
 From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mario Casquero <mcasquer@redhat.com>, Liang Cong <lcong@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  David Hildenbrand <david@redhat.com>
-Subject: [PULL 0/1] Host Memory Backends and Memory devices queue 2024-07-10
-Date: Wed, 10 Jul 2024 20:00:35 +0200
-Message-ID: <20240710180036.101149-1-david@redhat.com>
+Subject: [PULL 1/1] virtio-mem: improve error message when unplug of device
+ fails due to plugged memory
+Date: Wed, 10 Jul 2024 20:00:36 +0200
+Message-ID: <20240710180036.101149-2-david@redhat.com>
+In-Reply-To: <20240710180036.101149-1-david@redhat.com>
+References: <20240710180036.101149-1-david@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -79,32 +83,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 59084feb256c617063e0dbe7e64821ae8852d7cf:
+The error message is actually expressive, considering QEMU only. But
+when called from Libvirt, talking about "size" can be confusing, because
+in Libvirt "size" translates to the memory backend size in QEMU (maximum
+size) and "current" translates to the QEMU "size" property.
 
-  Merge tag 'pull-aspeed-20240709' of https://github.com/legoater/qemu into staging (2024-07-09 07:13:55 -0700)
+Let's simply avoid talking about the "size" property and spell out that
+some device memory is still plugged.
 
-are available in the Git repository at:
-
-  https://github.com/davidhildenbrand/qemu.git tags/mem-2024-07-10
-
-for you to fetch changes up to 4d13ae45ff93fa825ceb39dfd16b305f4baccd18:
-
-  virtio-mem: improve error message when unplug of device fails due to plugged memory (2024-07-10 18:06:24 +0200)
-
-----------------------------------------------------------------
-Hi,
-
-"Host Memory Backends" and "Memory devices" queue ("mem"):
-- Only one error message improvement that causes less confusion when
-  triggered from libvirt
-
-----------------------------------------------------------------
-David Hildenbrand (1):
-      virtio-mem: improve error message when unplug of device fails due to plugged memory
-
+Message-ID: <20240416141426.588544-1-david@redhat.com>
+Tested-by: Mario Casquero <mcasquer@redhat.com>
+Cc: Liang Cong <lcong@redhat.com>
+Cc: Mario Casquero <mcasquer@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
  hw/virtio/virtio-mem.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index ffd119ebac..ef64bf1b4a 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -1832,8 +1832,8 @@ static void virtio_mem_unplug_request_check(VirtIOMEM *vmem, Error **errp)
+     }
+ 
+     if (vmem->size) {
+-        error_setg(errp, "virtio-mem device cannot get unplugged while"
+-                   " '" VIRTIO_MEM_SIZE_PROP "' != '0'");
++        error_setg(errp, "virtio-mem device cannot get unplugged while some"
++                   " of its memory is still plugged");
+         return;
+     }
+     if (vmem->requested_size) {
 -- 
 2.45.2
 
