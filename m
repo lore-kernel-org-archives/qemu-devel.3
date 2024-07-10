@@ -4,70 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DE9DC38150
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 08:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 550ADC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 08:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRSlx-0006Wd-Be; Wed, 10 Jul 2024 04:33:57 -0400
+	id 1sRSrY-0002l8-86; Wed, 10 Jul 2024 04:39:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1sRSlv-0006WA-JL
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:33:55 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1sRSls-0006vp-FU
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:33:55 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8AxG_BnR45meMgCAA--.8424S3;
- Wed, 10 Jul 2024 16:33:43 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by localhost.localdomain (Coremail) with SMTP id
- AQAAf8Bx28ZkR45mUkdCAA--.20973S3; 
- Wed, 10 Jul 2024 16:33:41 +0800 (CST)
-Subject: Re: [PATCH] target/loongarch/gdbstub: Add vector registers support
-From: gaosong <gaosong@loongson.cn>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, philmd@linaro.org, richard.henderson@linaro.org,
- maobibo@loongson.cn
-References: <20240621065406.864232-1-gaosong@loongson.cn>
-Message-ID: <53dfa64f-515c-ffec-9cd1-10c59116d590@loongson.cn>
-Date: Wed, 10 Jul 2024 16:33:51 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1sRSrW-0002kd-BQ
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:39:42 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <smostafa@google.com>)
+ id 1sRSrU-0008Ef-7P
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 04:39:42 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42725f8a789so32875e9.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 01:39:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1720600778; x=1721205578; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=jFmHJfmTGTP47K9khZ7rP9ll6eIMo1T/N9shnRIEclU=;
+ b=2J7I+SYZK77CgK1ukw7+viIZ0hqsvaS32BdOQUwxMXsjJYBBEYrX7HazHMUsacul3U
+ XCMhPtkSdoa/jF6LK9z6xIpy9REBIjVOeNLICjyYqVMpXzx9Wdr7P2wTCTzz+RrtIK7z
+ YFB6QVDB+ndJgMAjhf4a6oUA4mtniJ56cYXR3IOQogw6LWIoCwBQU8jS8j4eAO+6tscX
+ NBrgOgwRFCg2ARrLA29LxY2SL2QK5MwNiMkqryeTRAax5IFE0pDYNdwyNBYKOVA1wm93
+ 1SfFUSW1bE4zfRM6PR1J/nUKLRl71XWQe7jLss+4uJ8CsRh6Ij/5AsyOtjYoINp+GeAQ
+ mzFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1720600778; x=1721205578;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jFmHJfmTGTP47K9khZ7rP9ll6eIMo1T/N9shnRIEclU=;
+ b=h9bamh7fRUmQWu5CTXsURIjw6NXRV5aTCnOQxe4SSRGtEnL98bt40wMJT9rpEm6fyy
+ A4SvLuaYFs4SkZxb2IZkaX3gxxcg4sXBI8+5pp1kCUzsXJLb9dnwJhe12IIXZwCnqxMY
+ Xj1f2fJJyUi6Br6rmkVoLVsjZLdq6526Z75syCVelRCuKOIS3AeB8gNT2xPv52UnLPTN
+ Js3hn4S3Gd66c6F9Ohm8MZ3LnS5qLQX96H9DL9z6THTqMNksLkf6Hpiiu+Ljv+1a8hCf
+ hLzfrGdcEIMce0Lc1M7ukF7RWbjyjN8BrvXWgbFj2thdlh3xlKszaWIYW206Iv6zH5Vz
+ pKAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCURK7meYriTMELg3zBOBxbneoxjDkEUWlLlkAQc0ZJhKpThQujdHD+0BlSpaYDaNjdneRE9YR9QmV0vCaqQnL2vWJO11kE=
+X-Gm-Message-State: AOJu0YxDxusqlkdmShqYe6fHGB4t8cMRAoHGc8H86hRlwVjRWApSCz8p
+ NMbyP+jxPFiRHCbswTIklkuPMxtXfeKnUqhvYtmvUiTTTdOmroF3zrvg71Ou5A==
+X-Google-Smtp-Source: AGHT+IEONpRIjGxgcWGaMYOktbD16oWQacf+RJ4S6rKqwyV84a86i0izLtqZBdKEdNoUt6XgwCV6+g==
+X-Received: by 2002:a05:600c:354e:b0:426:66a0:6df6 with SMTP id
+ 5b1f17b1804b1-427937a580dmr1239115e9.0.1720600777705; 
+ Wed, 10 Jul 2024 01:39:37 -0700 (PDT)
+Received: from google.com (205.215.190.35.bc.googleusercontent.com.
+ [35.190.215.205]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427270238a6sm39968375e9.20.2024.07.10.01.39.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Jul 2024 01:39:37 -0700 (PDT)
+Date: Wed, 10 Jul 2024 08:39:33 +0000
+From: Mostafa Saleh <smostafa@google.com>
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc: qemu-arm@nongnu.org, eric.auger@redhat.com, peter.maydell@linaro.org,
+ qemu-devel@nongnu.org, alex.bennee@linaro.org, maz@kernel.org,
+ nicolinc@nvidia.com, julien@xen.org, richard.henderson@linaro.org,
+ marcin.juszkiewicz@linaro.org
+Subject: Re: [PATCH v4 09/19] hw/arm/smmu-common: Rework TLB lookup for nesting
+Message-ID: <Zo5Ixb3Li81fZPvQ@google.com>
+References: <20240701110241.2005222-1-smostafa@google.com>
+ <20240701110241.2005222-10-smostafa@google.com>
+ <20240704181235.GF1693268@myrica> <ZozjS59a4aluqUju@google.com>
+ <20240709171345.GC2189727@myrica>
 MIME-Version: 1.0
-In-Reply-To: <20240621065406.864232-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: AQAAf8Bx28ZkR45mUkdCAA--.20973S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3ur4DJw45ur4UZF1DKryUJwc_yoWkuw4rpF
- n3Arn8Jr4Igay2yrZIq3s093Z8Ar1xuF4ruF1fX34xCFZ7Xr1jqw4ktryYvrWfWan5Xrya
- gr40qw18Ca13XrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8cz
- VUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
- NICE_REPLY_A=-1.431, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20240709171345.GC2189727@myrica>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=smostafa@google.com; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,262 +103,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping !
+Hi Jean,
 
-ÔÚ 2024/6/21 ÏÂÎç2:54, Song Gao Ð´µÀ:
-> GDB already support LoongArch vector extension[1], QEMU gdb adds
-> LoongArch vector registers support, so that users can use 'info all-registers'
-> to get all vector registers values.
->
-> [1]: https://sourceware.org/git/?p=binutils-gdb.git;a=commitdiff;h=1e9569f383a3d5a88ee07d0c2401bd95613c222e
->
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
-> based-on:
->   https://patchew.org/QEMU/20240607035016.2975799-1-maobibo@loongson.cn/
->
->   configs/targets/loongarch64-linux-user.mak |  2 +-
->   configs/targets/loongarch64-softmmu.mak    |  2 +-
->   gdb-xml/loongarch-lasx.xml                 | 60 +++++++++++++++++++
->   gdb-xml/loongarch-lsx.xml                  | 59 ++++++++++++++++++
->   target/loongarch/gdbstub.c                 | 70 +++++++++++++++++++++-
->   5 files changed, 189 insertions(+), 4 deletions(-)
->   create mode 100644 gdb-xml/loongarch-lasx.xml
->   create mode 100644 gdb-xml/loongarch-lsx.xml
->
-> diff --git a/configs/targets/loongarch64-linux-user.mak b/configs/targets/loongarch64-linux-user.mak
-> index d878e5a113..ea9b7e839a 100644
-> --- a/configs/targets/loongarch64-linux-user.mak
-> +++ b/configs/targets/loongarch64-linux-user.mak
-> @@ -1,4 +1,4 @@
->   # Default configuration for loongarch64-linux-user
->   TARGET_ARCH=loongarch64
->   TARGET_BASE_ARCH=loongarch
-> -TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
-> +TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
-> diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
-> index 65b65e0c34..ce19ab6a16 100644
-> --- a/configs/targets/loongarch64-softmmu.mak
-> +++ b/configs/targets/loongarch64-softmmu.mak
-> @@ -2,6 +2,6 @@ TARGET_ARCH=loongarch64
->   TARGET_BASE_ARCH=loongarch
->   TARGET_KVM_HAVE_GUEST_DEBUG=y
->   TARGET_SUPPORTS_MTTCG=y
-> -TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml
-> +TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
->   # all boards require libfdt
->   TARGET_NEED_FDT=y
-> diff --git a/gdb-xml/loongarch-lasx.xml b/gdb-xml/loongarch-lasx.xml
-> new file mode 100644
-> index 0000000000..753b982c65
-> --- /dev/null
-> +++ b/gdb-xml/loongarch-lasx.xml
-> @@ -0,0 +1,60 @@
-> +<?xml version="1.0"?>
-> +<!-- Copyright (C) 2022-2024 Free Software Foundation, Inc.
-> +
-> +     Copying and distribution of this file, with or without modification,
-> +     are permitted in any medium without royalty provided the copyright
-> +     notice and this notice are preserved.  -->
-> +
-> +<!DOCTYPE feature SYSTEM "gdb-target.dtd">
-> +<feature name="org.gnu.gdb.loongarch.lasx">
-> +  <vector id="v8f32" type="ieee_single" count="8"/>
-> +  <vector id="v4f64" type="ieee_double" count="4"/>
-> +  <vector id="v32i8" type="int8" count="32"/>
-> +  <vector id="v16i16" type="int16" count="16"/>
-> +  <vector id="v8i32" type="int32" count="8"/>
-> +  <vector id="v4i64" type="int64" count="4"/>
-> +  <vector id="v2ui128" type="uint128" count="2"/>
-> +
-> +  <union id="lasxv">
-> +    <field name="v8_float" type="v8f32"/>
-> +    <field name="v4_double" type="v4f64"/>
-> +    <field name="v32_int8" type="v32i8"/>
-> +    <field name="v16_int16" type="v16i16"/>
-> +    <field name="v8_int32" type="v8i32"/>
-> +    <field name="v4_int64" type="v4i64"/>
-> +    <field name="v2_uint128" type="v2ui128"/>
-> +  </union>
-> +
-> +  <reg name="xr0" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr1" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr2" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr3" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr4" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr5" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr6" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr7" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr8" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr9" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr10" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr11" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr12" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr13" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr14" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr15" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr16" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr17" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr18" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr19" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr20" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr21" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr22" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr23" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr24" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr25" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr26" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr27" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr28" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr29" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr30" bitsize="256" type="lasxv" group="lasx"/>
-> +  <reg name="xr31" bitsize="256" type="lasxv" group="lasx"/>
-> +</feature>
-> diff --git a/gdb-xml/loongarch-lsx.xml b/gdb-xml/loongarch-lsx.xml
-> new file mode 100644
-> index 0000000000..51af1c6fd5
-> --- /dev/null
-> +++ b/gdb-xml/loongarch-lsx.xml
-> @@ -0,0 +1,59 @@
-> +<?xml version="1.0"?>
-> +<!-- Copyright (C) 2022-2024 Free Software Foundation, Inc.
-> +
-> +     Copying and distribution of this file, with or without modification,
-> +     are permitted in any medium without royalty provided the copyright
-> +     notice and this notice are preserved.  -->
-> +
-> +<!DOCTYPE feature SYSTEM "gdb-target.dtd">
-> +<feature name="org.gnu.gdb.loongarch.lsx">
-> +  <vector id="v4f32" type="ieee_single" count="4"/>
-> +  <vector id="v2f64" type="ieee_double" count="2"/>
-> +  <vector id="v16i8" type="int8" count="16"/>
-> +  <vector id="v8i16" type="int16" count="8"/>
-> +  <vector id="v4i32" type="int32" count="4"/>
-> +  <vector id="v2i64" type="int64" count="2"/>
-> +
-> +  <union id="lsxv">
-> +    <field name="v4_float" type="v4f32"/>
-> +    <field name="v2_double" type="v2f64"/>
-> +    <field name="v16_int8" type="v16i8"/>
-> +    <field name="v8_int16" type="v8i16"/>
-> +    <field name="v4_int32" type="v4i32"/>
-> +    <field name="v2_int64" type="v2i64"/>
-> +    <field name="uint128" type="uint128"/>
-> +  </union>
-> +
-> +  <reg name="vr0" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr1" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr2" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr3" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr4" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr5" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr6" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr7" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr8" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr9" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr10" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr11" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr12" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr13" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr14" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr15" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr16" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr17" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr18" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr19" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr20" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr21" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr22" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr23" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr26" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr25" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr26" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr27" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr28" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr29" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr30" bitsize="128" type="lsxv" group="lsx"/>
-> +  <reg name="vr31" bitsize="128" type="lsxv" group="lsx"/>
-> +</feature>
-> diff --git a/target/loongarch/gdbstub.c b/target/loongarch/gdbstub.c
-> index a0e1439bd0..c9e2ddd943 100644
-> --- a/target/loongarch/gdbstub.c
-> +++ b/target/loongarch/gdbstub.c
-> @@ -116,8 +116,74 @@ static int loongarch_gdb_set_fpu(CPUState *cs, uint8_t *mem_buf, int n)
->       return length;
->   }
->   
-> +static int loongarch_gdb_get_vec(CPUState *cs, GByteArray *mem_buf, int n, int vl)
-> +{
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-> +    CPULoongArchState *env = &cpu->env;
-> +    int i, length = 0;
-> +
-> +    if (0 <= n && n < 32) {
-> +        for (i = 0; i < vl / 64; i++) {
-> +            length += gdb_get_reg64(mem_buf, env->fpr[n].vreg.D(i));
-> +	}
-> +    }
-> +
-> +    return length;
-> +}
-> +
-> +static int loongarch_gdb_set_vec(CPUState *cs, uint8_t *mem_buf, int n, int vl)
-> +{
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-> +    CPULoongArchState *env = &cpu->env;
-> +    int i, length = 0;
-> +
-> +    if (0 <= n && n < 32) {
-> +        for (i = 0; i < vl / 64; i++) {
-> +            env->fpr[n].vreg.D(i) = ldq_le_p(mem_buf + 8 * i);
-> +            length += 8;
-> +        }
-> +    }
-> +
-> +    return length;
-> +}
-> +
-> +static int loongarch_gdb_get_lsx(CPUState *cs, GByteArray *mem_buf, int n)
-> +{
-> +    return loongarch_gdb_get_vec(cs, mem_buf, n, LSX_LEN);
-> +}
-> +
-> +static int loongarch_gdb_set_lsx(CPUState *cs, uint8_t *mem_buf, int n)
-> +{
-> +    return loongarch_gdb_set_vec(cs, mem_buf, n, LSX_LEN);
-> +}
-> +
-> +static int loongarch_gdb_get_lasx(CPUState *cs, GByteArray *mem_buf, int n)
-> +{
-> +    return loongarch_gdb_get_vec(cs, mem_buf, n, LASX_LEN);
-> +}
-> +
-> +static int loongarch_gdb_set_lasx(CPUState *cs, uint8_t *mem_buf, int n)
-> +{
-> +    return loongarch_gdb_set_vec(cs, mem_buf, n, LASX_LEN);
-> +}
-> +
->   void loongarch_cpu_register_gdb_regs_for_features(CPUState *cs)
->   {
-> -    gdb_register_coprocessor(cs, loongarch_gdb_get_fpu, loongarch_gdb_set_fpu,
-> -                             gdb_find_static_feature("loongarch-fpu.xml"), 0);
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-> +    CPULoongArchState *env = &cpu->env;
-> +
-> +    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, FP)) {
-> +        gdb_register_coprocessor(cs, loongarch_gdb_get_fpu, loongarch_gdb_set_fpu,
-> +                                 gdb_find_static_feature("loongarch-fpu.xml"), 0);
-> +    }
-> +
-> +    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, LSX)) {
-> +        gdb_register_coprocessor(cs, loongarch_gdb_get_lsx, loongarch_gdb_set_lsx,
-> +                                 gdb_find_static_feature("loongarch-lsx.xml"), 0);
-> +    }
-> +
-> +    if (FIELD_EX32(env->cpucfg[2], CPUCFG2, LASX)) {
-> +        gdb_register_coprocessor(cs, loongarch_gdb_get_lasx, loongarch_gdb_set_lasx,
-> +                                 gdb_find_static_feature("loongarch-lasx.xml"), 0);
-> +    }
->   }
+On Tue, Jul 09, 2024 at 06:13:45PM +0100, Jean-Philippe Brucker wrote:
+> On Tue, Jul 09, 2024 at 07:14:19AM +0000, Mostafa Saleh wrote:
+> > Hi Jean,
+> > 
+> > On Thu, Jul 04, 2024 at 07:12:35PM +0100, Jean-Philippe Brucker wrote:
+> > > On Mon, Jul 01, 2024 at 11:02:31AM +0000, Mostafa Saleh wrote:
+> > > > In the next patch, combine_tlb() will be added which combines 2 TLB
+> > > > entries into one for nested translations, which chooses the granule
+> > > > and level from the smallest entry.
+> > > > 
+> > > > This means that with nested translation, an entry can be cached with
+> > > > the granule of stage-2 and not stage-1.
+> > > > 
+> > > > However, currently, the lookup for an IOVA is done with input stage
+> > > > granule, which is stage-1 for nested configuration, which will not
+> > > > work with the above logic.
+> > > > This patch reworks lookup in that case, so it falls back to stage-2
+> > > > granule if no entry is found using stage-1 granule.
+> > > 
+> > > Why not initialize tt_combined to the minimum granule of stages 1 and 2?
+> > > It looks like you introduced it for this. I'm wondering if we lookup the
+> > > wrong IOVA if changing the granule size after the address is masked in
+> > > smmu_translate()
+> > 
+> > I am not sure I fully understand, but I donâ€™t think that would work as it is
+> > not guaranteed that the minimum granule is the one that would be cached,
+> > as we might hit block mappings.
+> > 
+> > The IOVA at first is masked with the first stage mask for the expected page
+> > address, and the lookup logic would mask the address for each level look up,
+> > so It should match the alignment of the cached page of that granule and level,
+> > and as the combine logic is done with the aligned_addr it is guaranteed by
+> > construction that it has to be aligned with stage-1.
+> 
+> I missed something, this is what I had in mind initially:
+> 
+> * s1 granule is 64k, s2 granule is 4k
+> * the tlb already contains a translations for IOVA 0x30000, tg=4k
+> * now we lookup IOVA 0x31000. Masked with the s1 granule, aligned_addr is
+>   0x30000. Not found at first because lookup is with tg=64k, but then we
+>   call smmu_iotlb_lookup_all_levels() again with the s2 granule and the
+>   same IOVA, which returns the wrong translation
 
+If the granules are s1=64k, s2=4k, the only way we get a cached entry as
+(IOVA 0x30000, tg=4k) would be for s2 and level-3 as for level-2 it has
+to be aligned with 0x200000
+
+So when we look up for 0x31000, there is no entry for it anyway.
+
+But I can see some problems here:
+In case also s1 granule is 64k, s2 granule is 4k
+- Translation A: 0x31000
+- TLB is empty => PTW, entry s1 =  64k 0x30000, s2 = 4k, 0x30000 and
+  the cached entry would be 0x30000,tg=4k as the combine logic also
+  uses the aligned address
+- Translation B: 0x31000 => also misses as the only cached entry
+  is 0x30000, 4k
+
+I think this is actually a bug and not just a TLB inefficiency, I need
+to think more about it, but my initial thought is not to align the
+iova until itâ€™s used by a stage so it can use its granule.
+
+> 
+> But it's not actually possible, because if cfg->stage == SMMU_NESTED, then
+> in smmu_translate() we end up with
+> 
+>     } else {
+>         /* Stage2. */
+>         tt_combined.granule_sz = cfg->s2cfg.granule_sz;
+> 
+> So I think the condition
+> 
+> 	(cfg->stage == SMMU_NESTED) && (cfg->s2cfg.granule_sz != tt->granule_sz)
+> 
+> in this patch is never true?
+> 
+
+Ah, thatâ€™s a bug, I will fix it, NESTED should use stage-1 granule.
+
+> 
+> Then the following scenario:
+> 
+> * s1 granule is 4k, s2 granule is 64k
+> * we lookup IOVA A, miss. The translation gets cached with granule 4k
+> * we lookup IOVA A again, but with tt->granule_sz = 64k so we'll
+>   never find the entry?
+> 
+> 
+> I guess we want to start the lookup with the smallest granule, and then if
+> the s1 and s2 granules differ, retry with the other one. Or with
+> SMMU_NESTED, start with the s1 granule and keep this patch to fallback to
+> s2 granule, but without masking the IOVA in smmu_translate() (it will be
+> masked correctly by smmu_iotlb_lookup_all_levels()).
+
+Thanks for pointing that out, I will think more about it but I sense
+that we would need to modify where we align the iova, for translation
+and lookup.
+
+
+Thanks,
+Mostafa
+
+> 
+> Thanks,
+> Jean
+> 
+> > 
+> > Thanks,
+> > Mostafa
+> > 
+> > > 
+> > > Thanks,
+> > > Jean
+> > > 
+> > > > 
+> > > > Signed-off-by: Mostafa Saleh <smostafa@google.com>
+> > > > ---
+> > > >  hw/arm/smmu-common.c | 36 ++++++++++++++++++++++++++++++++++--
+> > > >  1 file changed, 34 insertions(+), 2 deletions(-)
+> > > > 
+> > > > diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
+> > > > index 21982621c0..0840b5cffd 100644
+> > > > --- a/hw/arm/smmu-common.c
+> > > > +++ b/hw/arm/smmu-common.c
+> > > > @@ -66,8 +66,10 @@ SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
+> > > >      return key;
+> > > >  }
+> > > >  
+> > > > -SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
+> > > > -                                SMMUTransTableInfo *tt, hwaddr iova)
+> > > > +static SMMUTLBEntry *smmu_iotlb_lookup_all_levels(SMMUState *bs,
+> > > > +                                                  SMMUTransCfg *cfg,
+> > > > +                                                  SMMUTransTableInfo *tt,
+> > > > +                                                  hwaddr iova)
+> > > >  {
+> > > >      uint8_t tg = (tt->granule_sz - 10) / 2;
+> > > >      uint8_t inputsize = 64 - tt->tsz;
+> > > > @@ -88,6 +90,36 @@ SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
+> > > >          }
+> > > >          level++;
+> > > >      }
+> > > > +    return entry;
+> > > > +}
+> > > > +
+> > > > +/**
+> > > > + * smmu_iotlb_lookup - Look up for a TLB entry.
+> > > > + * @bs: SMMU state which includes the TLB instance
+> > > > + * @cfg: Configuration of the translation
+> > > > + * @tt: Translation table info (granule and tsz)
+> > > > + * @iova: IOVA address to lookup
+> > > > + *
+> > > > + * returns a valid entry on success, otherwise NULL.
+> > > > + * In case of nested translation, tt can be updated to include
+> > > > + * the granule of the found entry as it might different from
+> > > > + * the IOVA granule.
+> > > > + */
+> > > > +SMMUTLBEntry *smmu_iotlb_lookup(SMMUState *bs, SMMUTransCfg *cfg,
+> > > > +                                SMMUTransTableInfo *tt, hwaddr iova)
+> > > > +{
+> > > > +    SMMUTLBEntry *entry = NULL;
+> > > > +
+> > > > +    entry = smmu_iotlb_lookup_all_levels(bs, cfg, tt, iova);
+> > > > +    /*
+> > > > +     * For nested translation also try the s2 granule, as the TLB will insert
+> > > > +     * it if the size of s2 tlb entry was smaller.
+> > > > +     */
+> > > > +    if (!entry && (cfg->stage == SMMU_NESTED) &&
+> > > > +        (cfg->s2cfg.granule_sz != tt->granule_sz)) {
+> > > > +        tt->granule_sz = cfg->s2cfg.granule_sz;
+> > > > +        entry = smmu_iotlb_lookup_all_levels(bs, cfg, tt, iova);
+> > > > +    }
+> > > >  
+> > > >      if (entry) {
+> > > >          cfg->iotlb_hits++;
+> > > > -- 
+> > > > 2.45.2.803.g4e1b14247a-goog
+> > > > 
 
