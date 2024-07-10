@@ -4,101 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 941D9C3DA41
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 19:14:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F392C3DA41
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 19:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sRclO-0002YG-Nc; Wed, 10 Jul 2024 15:14:02 -0400
+	id 1sRcsb-0000MT-Nk; Wed, 10 Jul 2024 15:21:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRclM-0002VS-EO
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 15:14:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=VgH8=OK=kaod.org=clg@ozlabs.org>)
+ id 1sRcsV-0000HG-GP; Wed, 10 Jul 2024 15:21:23 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sRclL-0007ly-1r
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 15:14:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1720638837;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=REcJa6YCgxGB/y/bHQjtJSX7ZuGRFZubRUwpEegRYqA=;
- b=Lvwaxdkf8MUp9b+IPNHFubXp9gx1xEORHeLZBDxfd374OI5z/OdAUDLnAlNa83azVcnBwH
- Ckz757lfD69Fz4kIJ3vw92w1cY0p30oqHVMj8ZR0zT97SLYF2pmJVpzy3qO2e+zDLYmqO9
- FbEDKVaSsn7sTczlxE85uS0yNzwnn/A=
-Received: from mail-vk1-f198.google.com (mail-vk1-f198.google.com
- [209.85.221.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-449-IwvxDQXJOyulJHnKRM5hXw-1; Wed, 10 Jul 2024 15:13:56 -0400
-X-MC-Unique: IwvxDQXJOyulJHnKRM5hXw-1
-Received: by mail-vk1-f198.google.com with SMTP id
- 71dfb90a1353d-4f3074208easo5910e0c.0
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 12:13:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720638835; x=1721243635;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=REcJa6YCgxGB/y/bHQjtJSX7ZuGRFZubRUwpEegRYqA=;
- b=VVQU94Ocn6hV3+VAkHP0nx4hqY9xFuEOSMUv59ZHoAij2lb2RDWHdracHFP/uGlm3L
- E/lpMqfa8l8Q1pplfT9+jHuD6tEuT7WMQqQ6+pVnHawaX0jN3JJB/tyVKpKkWtc90Km7
- Vzj7Vw4fqipAShUZfZUSrUw7Xewcfj2HQPb2+lFCDwwcHs5bNRwFwn9LHz/mg0vjYyvM
- mETmv+H/PN653Y16w8709GOOTLgVAsdu09bPLTkLDVVQsuYfeG+yJ/XBxIK/fbuSN5rK
- v+bzf6hNt2PYRw4CyuF/winY3oHosatlVH1bEezlW0o7Zvy0ABIEdoTQJsjLXt3g3aqu
- adwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWY7gjA0yVGz3pscjmWGIcad4icfCgeUZQPrGdAM1D9fLYiBzKqmwmyPuaQ4X0ZAvu12gW/bz+0Utv5NJXRxzIbxEGIj6U=
-X-Gm-Message-State: AOJu0YyWsUmUDL93uV+Tqo+z+G6tYzCl/Rf6941bCbUnjz9O7iY4LlNc
- e/ug3GcpG2dck4bQobqCMvUzK5RSJUVVNmjGl8w3JrcY1iQZrmamJJ3A0Zil3vau+paeiBCxHZ2
- 9Hs9eZ7j3SrnyvPr/RPW0/aCjkmAq26SRkqbP5BFEWmnqsMZj/EsD
-X-Received: by 2002:a05:6122:14d:b0:4eb:152e:cf92 with SMTP id
- 71dfb90a1353d-4f485113bc9mr447187e0c.0.1720638835455; 
- Wed, 10 Jul 2024 12:13:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGbdMoztdddcRVNOq/asWzgTDTjwBqOf0KlnMD77NSHsBkLEpA8FnwOjdMeHcqtpfsl9ph1Bw==
-X-Received: by 2002:a05:6122:14d:b0:4eb:152e:cf92 with SMTP id
- 71dfb90a1353d-4f485113bc9mr447158e0c.0.1720638835176; 
- Wed, 10 Jul 2024 12:13:55 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-447f9b26c9dsm22781421cf.14.2024.07.10.12.13.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Jul 2024 12:13:54 -0700 (PDT)
-Date: Wed, 10 Jul 2024 15:13:52 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>,
- Tyrone Ting <kfting@nuvoton.com>, Bin Meng <bmeng.cn@gmail.com>,
- Hao Wu <wuhaotsh@google.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- qemu-arm@nongnu.org, Joel Stanley <joel@jms.id.au>,
- Sai Pavan Boddu <sai.pavan.boddu@amd.com>, devel@lists.libvirt.org,
- Luc Michel <luc.michel@amd.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Subject: Re: [PATCH v3 06/17] hw/sd/sdcard: Do not store vendor data on block
- drive (CMD56)
-Message-ID: <Zo7dcF8OKfH92RlR@x1n>
-References: <20240627162232.80428-1-philmd@linaro.org>
- <20240627162232.80428-7-philmd@linaro.org> <87cynmfggx.fsf@suse.de>
- <Zo2lLLAwcZ8bBvO2@x1n> <87a5ipfigb.fsf@suse.de>
- <Zo6iZjc8YpI1_9dW@x1n> <874j8xfc9s.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <SRS0=VgH8=OK=kaod.org=clg@ozlabs.org>)
+ id 1sRcsS-0000mI-NO; Wed, 10 Jul 2024 15:21:22 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WK74n6LGpz4wx5;
+ Thu, 11 Jul 2024 05:21:13 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WK74J5Kvdz4wnx;
+ Thu, 11 Jul 2024 05:20:48 +1000 (AEST)
+Message-ID: <ad434021-8e16-4222-ad91-8026150bacb6@kaod.org>
+Date: Wed, 10 Jul 2024 21:20:43 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <874j8xfc9s.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v48 00/12] hw/sd/sdcard: Add eMMC support
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Bin Meng <bmeng.cn@gmail.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Sai Pavan Boddu <sai.pavan.boddu@amd.com>, Luc Michel <luc.michel@amd.com>,
+ qemu-arm@nongnu.org, qemu-block@nongnu.org, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>
+References: <20240710141408.69275-1-philmd@linaro.org>
+ <09a1a960-5a79-4aa9-a57f-1c1efd809901@kaod.org>
+ <a8af41ee-f4e5-4720-9365-9a7493a5e84f@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <a8af41ee-f4e5-4720-9365-9a7493a5e84f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=VgH8=OK=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,16 +73,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 10, 2024 at 01:21:51PM -0300, Fabiano Rosas wrote:
-> It's not about trust, we simply don't support migrations other than
-> n->n+1 and (maybe) n->n-1. So QEMU from 2016 is certainly not included.
+On 7/10/24 6:57 PM, Philippe Mathieu-Daudé wrote:
+> On 10/7/24 17:35, Cédric Le Goater wrote:
+>> On 7/10/24 4:13 PM, Philippe Mathieu-Daudé wrote:
+>>> Tag to test Aspeed tree:
+>>>    https://gitlab.com/philmd/qemu/-/tags/aspeed_emmc-v8
+>>>
+>>> Since v43:
+>>> - Reordered and squashed commits (Cédric)
+> 
+> 
+>>> Cédric Le Goater (2):
+>>>    hw/sd/sdcard: Add emmc_cmd_SET_RELATIVE_ADDR handler (CMD3)
+>>>    hw/sd/sdcard: Fix SET_BLOCK_COUNT command argument on eMMC (CMD23)
+>>>
+>>> Joel Stanley (1):
+>>>    hw/sd/sdcard: Support boot area in emmc image
+>>>
+>>> Luc Michel (1):
+>>>    hw/sd/sdcard: Implement eMMC sleep state (CMD5)
+>>>
+>>> Philippe Mathieu-Daudé (6):
+>>>    hw/sd/sdcard: Basis for eMMC support
+>>>    hw/sd/sdcard: Register generic command handlers
+>>>    hw/sd/sdcard: Register unimplemented command handlers
+>>>    hw/sd/sdcard: Add mmc_cmd_PROGRAM_CID handler (CMD26)
+>>>    hw/sd/sdcard: Add eMMC 'boot-size' property
+>>>    hw/sd/sdcard: Implement eMMC 'boot-mode'
+>>>
+>>> Sai Pavan Boddu (1):
+>>>    hw/sd/sdcard: Add mmc SWITCH function support (CMD6)
+>>>
+>>> Vincent Palatin (1):
+>>>    hw/sd/sdcard: Add emmc_cmd_SEND_EXT_CSD handler (CMD8)
+>>>
+>>>   include/hw/sd/sd.h |   3 +
+>>>   hw/sd/sd.c         | 418 ++++++++++++++++++++++++++++++++++++++++++++-
+>>>   hw/sd/trace-events |   3 +
+>>>   3 files changed, 418 insertions(+), 6 deletions(-)
+>>
+>>
+>> Shall we merge now ?
+> 
+> Are you OK with this patchset?
+> 
 
-Where does it come from?  I thought we suppport that..
+Sure. let's move forward. I'll adapt the 6/7 patches for aspeed and
+resend, possibly this week.
 
-The same question would be: are we requesting an OpenStack cluster to
-always upgrade QEMU with +1 versions, otherwise migration will fail?
 
--- 
-Peter Xu
+Thanks,
+
+C.
+
 
 
