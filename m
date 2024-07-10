@@ -4,73 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0388DC3DA42
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 21:02:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C22DC3DA42
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Jul 2024 21:09:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sReRH-00079C-TN; Wed, 10 Jul 2024 17:01:23 -0400
+	id 1sReYX-0003na-BS; Wed, 10 Jul 2024 17:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rrh.henry@gmail.com>)
- id 1sReR7-00078N-QZ
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 17:01:13 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rrh.henry@gmail.com>)
- id 1sReR3-0003jm-Q8
- for qemu-devel@nongnu.org; Wed, 10 Jul 2024 17:01:12 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-52ea5185ba7so19554e87.3
- for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 14:01:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1720645265; x=1721250065; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Ej8caCvnV8WdEYJJo0T9sN+3EhuU+AUrqu1zOzWotdM=;
- b=I4hawMRAYfvMVtFTO6gsHy+1+UiZtCqvQ19lhpSCuP/1b3QHK1xvxzBNgafgdwJSSa
- UyDBRyeFZRjefCw5/eS9bvGe5gSbDHRu99XKUvVGk2/RCd4/BG1tRHYaq72+mxR3YdLR
- 9uAlVR1iFtDsx+gga0dR6AkUvpZRa8aHZsLbrWl6jpwYsvlxKBeOYkWk8nnXxZ/x6NNN
- 8i3GBW+nN7x1unWzwpAyuGWZ7kIixxmSSTs8ZAPGPC/4F3WT26GccaoB6x60+D67/81s
- S38VsXb/JJxoZWrKMrtY/+VcALmivApraEB5WhxtVegxD6PAx20buCO2XK3Jax8E/KYD
- lpwQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sReYV-0003mn-0R
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 17:08:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sReYP-00051M-U1
+ for qemu-devel@nongnu.org; Wed, 10 Jul 2024 17:08:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1720645724;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=PiCbPNRVzgqwrnORo/RtJhCR4kBC1pw1pKiWH3RgxyM=;
+ b=NRA27LEsXYHCUpQnxkgTkl+F9URIdTdrF8lmXU94r46zumvGcKVUZgYBkPvJMSB3pX7K7U
+ S1dwXsdQ2oo7Yytc9qpV2pAK7oHjPTN6aRiUIp2ng5hl5t0Bbd7rWzQyNNDygFZo/P4d0v
+ J+jfzTlCrAPXnRs9r536E06FKKVn7ak=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-76-XZdFQQJdNomL4wShGQaP6g-1; Wed, 10 Jul 2024 17:08:42 -0400
+X-MC-Unique: XZdFQQJdNomL4wShGQaP6g-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-36789d3603aso35422f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Jul 2024 14:08:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1720645265; x=1721250065;
+ d=1e100.net; s=20230601; t=1720645721; x=1721250521;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Ej8caCvnV8WdEYJJo0T9sN+3EhuU+AUrqu1zOzWotdM=;
- b=Cq0czVnqkxMOv5eMTk7j3iTyYF55gQ3TUvYUt9s1IDzaglKam8jBWYfbXGnsAPOG86
- 6JFnVff8Hdw+4khKAQTDa1csBukINJCNGXxixHQMPp8A/CpLEZspZw8E49zAsESj5CtZ
- 9uhvcqoXsrCfNpB8D6QRn2UFYxTwE+TxfxeG56QHHC349JPvdEezpjxqN276YhrAvuNM
- 4InlEWYv4FBTojpXrLfT0w6F8ugL21ZjNU/7GgL06+cXQTK2M1Dk4v9roArRHE/ENAuX
- RW9i5yldHah/vRnCEVBhEej0KYxEZw9bQuBk/MneMN+5cxLaqF59sKZ7uCNNLyDpAWEf
- IFUA==
-X-Gm-Message-State: AOJu0YzHhr+0PanmxL8IuykzE55RVUOOd2yUUKlHrFxDrjLhoYbing8D
- +7GjGXMwAqpCC63GTC9tgqVcbf6VliGRNO1DguWL4jfdcmJEUoJX8dIycI90qu0LKgukdSocZpJ
- YBKd8XtZuwTyNX93YkaYiOkMl8FoPYA==
-X-Google-Smtp-Source: AGHT+IF4XNPO2hJgLLHpDFpoJnxRLFaOXKcPbpvlfIaQCJ516DzMq7daZVZorD30BTGQO2NlzDO/gY6UIJOV8yGdpmM=
-X-Received: by 2002:a2e:3606:0:b0:2ee:8d03:9127 with SMTP id
- 38308e7fff4ca-2eec98c6bccmr1738151fa.5.1720645264161; Wed, 10 Jul 2024
- 14:01:04 -0700 (PDT)
+ bh=PiCbPNRVzgqwrnORo/RtJhCR4kBC1pw1pKiWH3RgxyM=;
+ b=HL2pJCFhKHipGO2f4Kiq9gF1Z/ub1auKg6bh3tU43X84RC8a+4hf8FVjLJXm/DrWbC
+ mpuL7GuMA0u3o9pWTU9Dq2tvY6x+KWsGZAQHUejqz7bpjCVhQDQdYsRLoEGwxpSfVzpu
+ Y/m0rkie3USzmEs+YdeWD/2k2fKISpRwJHzbFNR/Lx4IfV+gVUUNxm/0mXSirAPo4uiG
+ mfugB/FwZpZ398AeGwfCsPIrVX1bSCOZH3N/74YfllBEq0mlIBz1fFZdt1aPixRRhTif
+ ME4L4ET47XuKUPhhkfjxTNNDhYIm9GmXRmLr548T8Xdle73N0ukeE6wDHM0hgoqNtQXd
+ E5eQ==
+X-Gm-Message-State: AOJu0YyQax+Y3zMDjn8OgdpYuhMZ3Fpre8cblWXlRpx2kowrkDr7CSPf
+ AumxO9RZJ4Sb1GCaXnBdMqHaGgs5PKz0hUBCaPmDAq986GPewsJAo/pgWwhEGVIn6oTu72atMZB
+ lALxaTlh97hj3Ck4kI+L67dZYZLjucm32pu8PO9J1IcnrdgXVsQVSlFruXHpQWhlAUBKxoAA6z4
+ ku7WeyqD5UsfOz5TWsQ/tjtwVcMEk=
+X-Received: by 2002:a5d:43cd:0:b0:367:9801:9c5b with SMTP id
+ ffacd0b85a97d-367ceacb4f6mr5055537f8f.50.1720645721518; 
+ Wed, 10 Jul 2024 14:08:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRd36lCTaaXmH4o/DaRHx/8k2o1cf+Gkm5bfsEjHXipqcj547vMc3DiYsrgVELknEHeIzx8qcWzNTermaooPM=
+X-Received: by 2002:a5d:43cd:0:b0:367:9801:9c5b with SMTP id
+ ffacd0b85a97d-367ceacb4f6mr5055528f8f.50.1720645721150; Wed, 10 Jul 2024
+ 14:08:41 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240710062920.73063-1-pbonzini@redhat.com>
-In-Reply-To: <20240710062920.73063-1-pbonzini@redhat.com>
-From: Robert Henry <rrh.henry@gmail.com>
-Date: Wed, 10 Jul 2024 14:00:52 -0700
-Message-ID: <CAEYr_8kbN6U3wUntTK_kCBQ4fHRsWhjbQBFiX0V0PS6qXfyECA@mail.gmail.com>
+ <CAEYr_8kbN6U3wUntTK_kCBQ4fHRsWhjbQBFiX0V0PS6qXfyECA@mail.gmail.com>
+In-Reply-To: <CAEYr_8kbN6U3wUntTK_kCBQ4fHRsWhjbQBFiX0V0PS6qXfyECA@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 10 Jul 2024 23:08:28 +0200
+Message-ID: <CABgObfa_fBmPDMuWpdcb6PxAD71sheogwrG6YwO8wrGZr-GNuA@mail.gmail.com>
 Subject: Re: [PATCH 00/10] target/i386/tcg: fixes for seg_helper.c
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
-Content-Type: multipart/alternative; boundary="000000000000c1443b061ceaf1e3"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=rrh.henry@gmail.com; helo=mail-lf1-x12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+To: Robert Henry <rrh.henry@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000fe7506061ceb0c64"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,245 +97,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c1443b061ceaf1e3
+--000000000000fe7506061ceb0c64
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-I have only skimmed the diffs.  Your knowledge of the deep semantics,
-gained by close differential reading of intel and amd docs, is truly
-amazing.  Many thanks for pushing this through!
+Il mer 10 lug 2024, 23:01 Robert Henry <rrh.henry@gmail.com> ha scritto:
+
+> I have only skimmed the diffs.  Your knowledge of the deep semantics,
+> gained by close differential reading of intel and amd docs, is truly
+> amazing.  Many thanks for pushing this through!
+>
+
+Thanks for bringing this to our attention too, apart from the practical bug
+hopefully it will help future readers to have a more precise implementation=
+.
+
+I tried to acknowledge your contribution in the commit messages.
 
 I have 2 nits, perhaps stylistic only.
+>
+> For code like "sp -=3D 2" or "sp +=3D 2" followed or preceded by a write =
+to
+> the stack pointer of a uint16_t variable 'x',  would it be better/more
+> robust to rewrite as: "sp -=3D sizeof(x)"  ?
+>
 
-For code like "sp -=3D 2" or "sp +=3D 2" followed or preceded by a write to=
- the
-stack pointer of a uint16_t variable 'x',  would it be better/more robust
-to rewrite as: "sp -=3D sizeof(x)"  ?
+I think that's intentional because the value subtracted is related to the
+"stw" or "stl" in the store (likewise for incrementing after a load) more
+than to the size of x.
 
 There are a lot of masks constructed using -1.  I think it would be clearer
-to use 0xffffffff (for 32-bit masks) as that reminds the reader that this
-is a bit mask.  But it seems that using -1 is how the original code was
-written.
+> to use 0xffffffff (for 32-bit masks) as that reminds the reader that this
+> is a bit mask.  But it seems that using -1 is how the original code was
+> written.
+>
 
-On Tue, Jul 9, 2024 at 11:29=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
+-1 is used for 64-bit masks only. They get unwieldy quickly. :)
 
-> This includes bugfixes:
-> - allowing IRET from user mode to user mode with SMAP (do not use implici=
+Paolo
+
+
+> On Tue, Jul 9, 2024 at 11:29=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.co=
+m> wrote:
+>
+>> This includes bugfixes:
+>> - allowing IRET from user mode to user mode with SMAP (do not use implic=
+it
+>>   kernel accesses, which break if the stack is in userspace)
+>>
+>> - use DPL-level accesses for interrupts and call gates
+>>
+>> - various fixes for task switching
+>>
+>> And two related cleanups: computing MMU index once for far calls and
+>> returns
+>> (including task switches), and using X86Access for TSS access.
+>>
+>> Tested with a really ugly patch to kvm-unit-tests, included after
+>> signature.
+>>
+>> Paolo Bonzini (7):
+>>   target/i386/tcg: Allow IRET from user mode to user mode with SMAP
+>>   target/i386/tcg: use PUSHL/PUSHW for error code
+>>   target/i386/tcg: Compute MMU index once
+>>   target/i386/tcg: Use DPL-level accesses for interrupts and call gates
+>>   target/i386/tcg: check for correct busy state before switching to a
+>>     new task
+>>   target/i386/tcg: use X86Access for TSS access
+>>   target/i386/tcg: save current task state before loading new one
+>>
+>> Richard Henderson (3):
+>>   target/i386/tcg: Remove SEG_ADDL
+>>   target/i386/tcg: Reorg push/pop within seg_helper.c
+>>   target/i386/tcg: Introduce x86_mmu_index_{kernel_,}pl
+>>
+>>  target/i386/cpu.h            |  11 +-
+>>  target/i386/cpu.c            |  27 +-
+>>  target/i386/tcg/seg_helper.c | 606 +++++++++++++++++++----------------
+>>  3 files changed, 354 insertions(+), 290 deletions(-)
+>>
+>> --
+>> 2.45.2
+>>
+>> diff --git a/lib/x86/usermode.c b/lib/x86/usermode.c
+>> index c3ec0ad7..0bf40c6d 100644
+>> --- a/lib/x86/usermode.c
+>> +++ b/lib/x86/usermode.c
+>> @@ -5,13 +5,15 @@
+>>  #include "x86/desc.h"
+>>  #include "x86/isr.h"
+>>  #include "alloc.h"
+>> +#include "alloc_page.h"
+>>  #include "setjmp.h"
+>>  #include "usermode.h"
+>>
+>>  #include "libcflat.h"
+>>  #include <stdint.h>
+>>
+>> -#define USERMODE_STACK_SIZE    0x2000
+>> +#define USERMODE_STACK_ORDER   1 /* 8k */
+>> +#define USERMODE_STACK_SIZE    (1 << (12 + USERMODE_STACK_ORDER))
+>>  #define RET_TO_KERNEL_IRQ      0x20
+>>
+>>  static jmp_buf jmpbuf;
+>> @@ -37,9 +39,14 @@ uint64_t run_in_user(usermode_func func, unsigned int
+>> fault_vector,
+>>  {
+>>         extern char ret_to_kernel;
+>>         volatile uint64_t rax =3D 0;
+>> -       static unsigned char user_stack[USERMODE_STACK_SIZE];
+>> +       static unsigned char *user_stack;
+>>         handler old_ex;
+>>
+>> +       if (!user_stack) {
+>> +               user_stack =3D alloc_pages(USERMODE_STACK_ORDER);
+>> +               printf("%p\n", user_stack);
+>> +       }
+>> +
+>>         *raised_vector =3D 0;
+>>         set_idt_entry(RET_TO_KERNEL_IRQ, &ret_to_kernel, 3);
+>>         old_ex =3D handle_exception(fault_vector,
+>> @@ -51,6 +58,8 @@ uint64_t run_in_user(usermode_func func, unsigned int
+>> fault_vector,
+>>                 return 0;
+>>         }
+>>
+>> +       memcpy(user_stack + USERMODE_STACK_SIZE - 8, &func, 8);
+>> +
+>>         asm volatile (
+>>                         /* Prepare kernel SP for exception handlers */
+>>                         "mov %%rsp, %[rsp0]\n\t"
+>> @@ -63,12 +72,13 @@ uint64_t run_in_user(usermode_func func, unsigned in=
 t
->   kernel accesses, which break if the stack is in userspace)
->
-> - use DPL-level accesses for interrupts and call gates
->
-> - various fixes for task switching
->
-> And two related cleanups: computing MMU index once for far calls and
-> returns
-> (including task switches), and using X86Access for TSS access.
->
-> Tested with a really ugly patch to kvm-unit-tests, included after
-> signature.
->
-> Paolo Bonzini (7):
->   target/i386/tcg: Allow IRET from user mode to user mode with SMAP
->   target/i386/tcg: use PUSHL/PUSHW for error code
->   target/i386/tcg: Compute MMU index once
->   target/i386/tcg: Use DPL-level accesses for interrupts and call gates
->   target/i386/tcg: check for correct busy state before switching to a
->     new task
->   target/i386/tcg: use X86Access for TSS access
->   target/i386/tcg: save current task state before loading new one
->
-> Richard Henderson (3):
->   target/i386/tcg: Remove SEG_ADDL
->   target/i386/tcg: Reorg push/pop within seg_helper.c
->   target/i386/tcg: Introduce x86_mmu_index_{kernel_,}pl
->
->  target/i386/cpu.h            |  11 +-
->  target/i386/cpu.c            |  27 +-
->  target/i386/tcg/seg_helper.c | 606 +++++++++++++++++++----------------
->  3 files changed, 354 insertions(+), 290 deletions(-)
->
-> --
-> 2.45.2
->
-> diff --git a/lib/x86/usermode.c b/lib/x86/usermode.c
-> index c3ec0ad7..0bf40c6d 100644
-> --- a/lib/x86/usermode.c
-> +++ b/lib/x86/usermode.c
-> @@ -5,13 +5,15 @@
->  #include "x86/desc.h"
->  #include "x86/isr.h"
->  #include "alloc.h"
-> +#include "alloc_page.h"
->  #include "setjmp.h"
->  #include "usermode.h"
->
->  #include "libcflat.h"
->  #include <stdint.h>
->
-> -#define USERMODE_STACK_SIZE    0x2000
-> +#define USERMODE_STACK_ORDER   1 /* 8k */
-> +#define USERMODE_STACK_SIZE    (1 << (12 + USERMODE_STACK_ORDER))
->  #define RET_TO_KERNEL_IRQ      0x20
->
->  static jmp_buf jmpbuf;
-> @@ -37,9 +39,14 @@ uint64_t run_in_user(usermode_func func, unsigned int
-> fault_vector,
->  {
->         extern char ret_to_kernel;
->         volatile uint64_t rax =3D 0;
-> -       static unsigned char user_stack[USERMODE_STACK_SIZE];
-> +       static unsigned char *user_stack;
->         handler old_ex;
->
-> +       if (!user_stack) {
-> +               user_stack =3D alloc_pages(USERMODE_STACK_ORDER);
-> +               printf("%p\n", user_stack);
-> +       }
-> +
->         *raised_vector =3D 0;
->         set_idt_entry(RET_TO_KERNEL_IRQ, &ret_to_kernel, 3);
->         old_ex =3D handle_exception(fault_vector,
-> @@ -51,6 +58,8 @@ uint64_t run_in_user(usermode_func func, unsigned int
-> fault_vector,
->                 return 0;
->         }
->
-> +       memcpy(user_stack + USERMODE_STACK_SIZE - 8, &func, 8);
-> +
->         asm volatile (
->                         /* Prepare kernel SP for exception handlers */
->                         "mov %%rsp, %[rsp0]\n\t"
-> @@ -63,12 +72,13 @@ uint64_t run_in_user(usermode_func func, unsigned int
-> fault_vector,
->                         "pushq %[user_stack_top]\n\t"
->                         "pushfq\n\t"
->                         "pushq %[user_cs]\n\t"
-> -                       "lea user_mode(%%rip), %%rax\n\t"
-> +                       "lea user_mode+0x800000(%%rip), %%rax\n\t" //
-> smap.flat places usermode addresses at 8MB-16MB
->                         "pushq %%rax\n\t"
->                         "iretq\n"
->
->                         "user_mode:\n\t"
->                         /* Back up volatile registers before invoking fun=
-c
-> */
-> +                       "pop %%rax\n\t"
->                         "push %%rcx\n\t"
->                         "push %%rdx\n\t"
->                         "push %%rdi\n\t"
-> @@ -78,11 +88,12 @@ uint64_t run_in_user(usermode_func func, unsigned int
-> fault_vector,
->                         "push %%r10\n\t"
->                         "push %%r11\n\t"
->                         /* Call user mode function */
-> +                       "add $0x800000,%%rbp\n\t"
->                         "mov %[arg1], %%rdi\n\t"
->                         "mov %[arg2], %%rsi\n\t"
->                         "mov %[arg3], %%rdx\n\t"
->                         "mov %[arg4], %%rcx\n\t"
-> -                       "call *%[func]\n\t"
-> +                       "call *%%rax\n\t"
->                         /* Restore registers */
->                         "pop %%r11\n\t"
->                         "pop %%r10\n\t"
-> @@ -112,12 +123,11 @@ uint64_t run_in_user(usermode_func func, unsigned
-> int fault_vector,
->                         [arg2]"m"(arg2),
->                         [arg3]"m"(arg3),
->                         [arg4]"m"(arg4),
-> -                       [func]"m"(func),
->                         [user_ds]"i"(USER_DS),
->                         [user_cs]"i"(USER_CS),
->                         [kernel_ds]"rm"(KERNEL_DS),
->                         [user_stack_top]"r"(user_stack +
-> -                                       sizeof(user_stack)),
-> +                                       USERMODE_STACK_SIZE - 8),
->                         [kernel_entry_vector]"i"(RET_TO_KERNEL_IRQ));
->
->         handle_exception(fault_vector, old_ex);
-> diff --git a/x86/smap.c b/x86/smap.c
-> index 9a823a55..65119442 100644
-> --- a/x86/smap.c
-> +++ b/x86/smap.c
-> @@ -2,6 +2,7 @@
->  #include <alloc_page.h>
->  #include "x86/desc.h"
->  #include "x86/processor.h"
-> +#include "x86/usermode.h"
->  #include "x86/vm.h"
->
->  volatile int pf_count =3D 0;
-> @@ -89,6 +90,31 @@ static void check_smap_nowp(void)
->         write_cr3(read_cr3());
->  }
->
-> +#ifdef __x86_64__
-> +static void iret(void)
-> +{
-> +       asm volatile(
-> +           "mov %%rsp, %%rcx;"
-> +           "movl %%ss, %%ebx; pushq %%rbx; pushq %%rcx;"
-> +           "pushf;"
-> +           "movl %%cs, %%ebx; pushq %%rbx; "
-> +           "lea 1f(%%rip), %%rbx; pushq %%rbx; iretq; 1:"
-> +
-> +               : : : "ebx", "ecx", "cc"); /* RPL=3D0 */
-> +}
-> +
-> +static void test_user_iret(void)
-> +{
-> +       bool raised_vector;
-> +       uintptr_t user_iret =3D (uintptr_t)iret + USER_BASE;
-> +
-> +       run_in_user((usermode_func)user_iret, PF_VECTOR, 0, 0, 0, 0,
-> +                   &raised_vector);
-> +
-> +       report(!raised_vector, "No #PF on CPL=3D3 DPL=3D3 iret");
-> +}
-> +#endif
-> +
->  int main(int ac, char **av)
->  {
->         unsigned long i;
-> @@ -196,7 +222,9 @@ int main(int ac, char **av)
->
->         check_smap_nowp();
->
-> -       // TODO: implicit kernel access from ring 3 (e.g. int)
-> +#ifdef __x86_64__
-> +       test_user_iret();
-> +#endif
->
->         return report_summary();
->  }
->
->
->
->
+>> fault_vector,
+>>                         "pushq %[user_stack_top]\n\t"
+>>                         "pushfq\n\t"
+>>                         "pushq %[user_cs]\n\t"
+>> -                       "lea user_mode(%%rip), %%rax\n\t"
+>> +                       "lea user_mode+0x800000(%%rip), %%rax\n\t" //
+>> smap.flat places usermode addresses at 8MB-16MB
+>>                         "pushq %%rax\n\t"
+>>                         "iretq\n"
+>>
+>>                         "user_mode:\n\t"
+>>                         /* Back up volatile registers before invoking
+>> func */
+>> +                       "pop %%rax\n\t"
+>>                         "push %%rcx\n\t"
+>>                         "push %%rdx\n\t"
+>>                         "push %%rdi\n\t"
+>> @@ -78,11 +88,12 @@ uint64_t run_in_user(usermode_func func, unsigned in=
+t
+>> fault_vector,
+>>                         "push %%r10\n\t"
+>>                         "push %%r11\n\t"
+>>                         /* Call user mode function */
+>> +                       "add $0x800000,%%rbp\n\t"
+>>                         "mov %[arg1], %%rdi\n\t"
+>>                         "mov %[arg2], %%rsi\n\t"
+>>                         "mov %[arg3], %%rdx\n\t"
+>>                         "mov %[arg4], %%rcx\n\t"
+>> -                       "call *%[func]\n\t"
+>> +                       "call *%%rax\n\t"
+>>                         /* Restore registers */
+>>                         "pop %%r11\n\t"
+>>                         "pop %%r10\n\t"
+>> @@ -112,12 +123,11 @@ uint64_t run_in_user(usermode_func func, unsigned
+>> int fault_vector,
+>>                         [arg2]"m"(arg2),
+>>                         [arg3]"m"(arg3),
+>>                         [arg4]"m"(arg4),
+>> -                       [func]"m"(func),
+>>                         [user_ds]"i"(USER_DS),
+>>                         [user_cs]"i"(USER_CS),
+>>                         [kernel_ds]"rm"(KERNEL_DS),
+>>                         [user_stack_top]"r"(user_stack +
+>> -                                       sizeof(user_stack)),
+>> +                                       USERMODE_STACK_SIZE - 8),
+>>                         [kernel_entry_vector]"i"(RET_TO_KERNEL_IRQ));
+>>
+>>         handle_exception(fault_vector, old_ex);
+>> diff --git a/x86/smap.c b/x86/smap.c
+>> index 9a823a55..65119442 100644
+>> --- a/x86/smap.c
+>> +++ b/x86/smap.c
+>> @@ -2,6 +2,7 @@
+>>  #include <alloc_page.h>
+>>  #include "x86/desc.h"
+>>  #include "x86/processor.h"
+>> +#include "x86/usermode.h"
+>>  #include "x86/vm.h"
+>>
+>>  volatile int pf_count =3D 0;
+>> @@ -89,6 +90,31 @@ static void check_smap_nowp(void)
+>>         write_cr3(read_cr3());
+>>  }
+>>
+>> +#ifdef __x86_64__
+>> +static void iret(void)
+>> +{
+>> +       asm volatile(
+>> +           "mov %%rsp, %%rcx;"
+>> +           "movl %%ss, %%ebx; pushq %%rbx; pushq %%rcx;"
+>> +           "pushf;"
+>> +           "movl %%cs, %%ebx; pushq %%rbx; "
+>> +           "lea 1f(%%rip), %%rbx; pushq %%rbx; iretq; 1:"
+>> +
+>> +               : : : "ebx", "ecx", "cc"); /* RPL=3D0 */
+>> +}
+>> +
+>> +static void test_user_iret(void)
+>> +{
+>> +       bool raised_vector;
+>> +       uintptr_t user_iret =3D (uintptr_t)iret + USER_BASE;
+>> +
+>> +       run_in_user((usermode_func)user_iret, PF_VECTOR, 0, 0, 0, 0,
+>> +                   &raised_vector);
+>> +
+>> +       report(!raised_vector, "No #PF on CPL=3D3 DPL=3D3 iret");
+>> +}
+>> +#endif
+>> +
+>>  int main(int ac, char **av)
+>>  {
+>>         unsigned long i;
+>> @@ -196,7 +222,9 @@ int main(int ac, char **av)
+>>
+>>         check_smap_nowp();
+>>
+>> -       // TODO: implicit kernel access from ring 3 (e.g. int)
+>> +#ifdef __x86_64__
+>> +       test_user_iret();
+>> +#endif
+>>
+>>         return report_summary();
+>>  }
+>>
+>>
+>>
+>>
 
---000000000000c1443b061ceaf1e3
+--000000000000fe7506061ceb0c64
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">I have only skimmed the diffs.=C2=A0 Your knowledge of the=
- deep semantics, gained by close differential reading of intel and amd docs=
-, is truly amazing.=C2=A0 Many thanks for pushing this through!<div><br></d=
-iv><div>I have 2 nits, perhaps stylistic only.</div><div><br></div><div>For=
- code like &quot;sp -=3D 2&quot; or &quot;sp=C2=A0+=3D 2&quot; followed or =
-preceded by a write to the stack pointer of a uint16_t variable &#39;x&#39;=
-,=C2=A0 would it be better/more robust to rewrite as: &quot;sp -=3D sizeof(=
-x)&quot;=C2=A0 ?</div><div><br></div><div>There are a lot of masks construc=
-ted using -1.=C2=A0 I think it would be clearer to use 0xffffffff (for 32-b=
-it masks) as that reminds the reader that this is a bit mask.=C2=A0 But it =
-seems that using -1 is how the original code was written.</div></div><br><d=
-iv class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jul =
-9, 2024 at 11:29=E2=80=AFPM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@re=
-dhat.com">pbonzini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex">This includes bugfixes:<br>
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il mer 10 lug 2024, 23:01 Robert Henry &lt;<a href=3D"=
+mailto:rrh.henry@gmail.com">rrh.henry@gmail.com</a>&gt; ha scritto:<br></di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">I have=
+ only skimmed the diffs.=C2=A0 Your knowledge of the deep semantics, gained=
+ by close differential reading of intel and amd docs, is truly amazing.=C2=
+=A0 Many thanks for pushing this through!</div></blockquote></div></div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto">Thanks for bringing this to our =
+attention too, apart from the practical bug hopefully it will help future r=
+eaders to have a more precise implementation.</div><div dir=3D"auto"><br></=
+div><div dir=3D"auto">I tried to acknowledge your contribution in the commi=
+t messages.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=
+=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
+=3D"ltr"><div>I have 2 nits, perhaps stylistic only.</div><div><br></div><d=
+iv>For code like &quot;sp -=3D 2&quot; or &quot;sp=C2=A0+=3D 2&quot; follow=
+ed or preceded by a write to the stack pointer of a uint16_t variable &#39;=
+x&#39;,=C2=A0 would it be better/more robust to rewrite as: &quot;sp -=3D s=
+izeof(x)&quot;=C2=A0 ?</div></div></blockquote></div></div><div dir=3D"auto=
+"><br></div><div dir=3D"auto">I think that&#39;s intentional because the va=
+lue subtracted is related to the &quot;stw&quot; or &quot;stl&quot; in the =
+store (likewise for incrementing after a load) more than to the size of x.<=
+/div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quot=
+e"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bord=
+er-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div>=
+There are a lot of masks constructed using -1.=C2=A0 I think it would be cl=
+earer to use 0xffffffff (for 32-bit masks) as that reminds the reader that =
+this is a bit mask.=C2=A0 But it seems that using -1 is how the original co=
+de was written.<br></div></div></blockquote></div></div><div dir=3D"auto"><=
+br></div><div dir=3D"auto">-1 is used for 64-bit masks only. They get unwie=
+ldy quickly. :)</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo=C2=
+=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_=
+quote"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;=
+border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><=
+div></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gm=
+ail_attr">On Tue, Jul 9, 2024 at 11:29=E2=80=AFPM Paolo Bonzini &lt;<a href=
+=3D"mailto:pbonzini@redhat.com" target=3D"_blank" rel=3D"noreferrer">pbonzi=
+ni@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex">This includes bugfixes:<br>
 - allowing IRET from user mode to user mode with SMAP (do not use implicit<=
 br>
 =C2=A0 kernel accesses, which break if the stack is in userspace)<br>
@@ -580,6 +636,8 @@ g. int)<br>
 <br>
 <br>
 </blockquote></div>
+</blockquote></div></div></div>
 
---000000000000c1443b061ceaf1e3--
+--000000000000fe7506061ceb0c64--
+
 
